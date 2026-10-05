@@ -1,0 +1,103 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-P1-SINGLE-VIEW-WEIGHT-v1
+revision: annotated_support_v2
+scientific_verdict: null
+status: ALL_PREFLIGHTS_PASS_MAIN_TRAINING_ALPHA_0_1_RUNNING
+authorization: User selected manually judged PDF regions only; unknown and outside zero, then training.
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/p1_single_view_weight_v1/PHD-P1-SINGLE-VIEW-WEIGHT-v1
+  experiment_relative: attempt.annotated.uOkHWmgi
+  durability: local external storage; not a durable-backup claim
+controls:
+  target_camera: DJI_20241217084553_0100_D.JPG
+  R1_weights: [0, 1, 4]
+  R2_R3_weights: 1
+  R4_R5_R6_invalid_weights: 0
+  other_97_depths: original fixed supervision
+  rgb_views: 98
+  depth_views: 98
+  mode: mvs
+  prior_weight: 0.005
+  mvs_global_weight: 0.05
+  dynamic_mvs_weight: false
+  native_protection: true
+  preflight_iterations: [8001, 8200]
+  training_iterations: [8001, 30000]
+  anchor_sha256: c08a39aa2deb81b26dd4dd75d0be9e6bb5e150db503f9d422a05423388679274
+  config_sha256: 5fa0d3279ffee5a887bb376c8b2be9399a52c929d3228a8cb49518127a693c2c
+  baseline: new manually masked fixed-0.05 alpha1 control
+mask:
+  relative: mask_support.lrfNvP/result/r1_mask.npz
+  copied_to: attempt.annotated.uOkHWmgi/mask/r1_mask.npz
+  sha256: e18bfac247d92c0985df30ed36cf7a84f7bb68831a9a068460df64177eecadfc
+  keys: [r1_mask, use_mask]
+  dtype: bool
+  shape: [1013, 1400]
+  R1_pixels: 113103
+  R2_pixels: 263641
+  R3_pixels: 194717
+  use_pixels: 571461
+  valid_but_excluded_pixels: 714828
+  origin: assistant visual inspection and manual polygons; no separate segmentation model or calibrated confidence
+  scope: manually classified support in the PDF, not strict 30x30m P1 clipping
+  pdf: mask_support.lrfNvP/result/0100_D_mask_audit.pdf
+  weight_figure: mask_support.lrfNvP/result/0100_D_actual_manual_support_alpha0_1_4.png
+scope_explanation:
+  status: PASS_DISPLAY_OF_FROZEN_TRAINING_MASK
+  training_changed: false
+  relative: scope_explanation.GGlNGAjv
+  pdf: scope_explanation.GGlNGAjv/result/0100_D_current_supervision_scope.pdf
+  png: scope_explanation.GGlNGAjv/result/0100_D_current_supervision_scope.png
+  receipt: scope_explanation.GGlNGAjv/result/receipt.json
+  runtime: scope_explanation.GGlNGAjv/runtime.json
+  config: configs/phd/p1_single_view_weight_v1/scope_explanation_v1.json
+  script: scripts/phd/p1_single_view_weight_v1/explain_scope.py
+  distinction: Depth colors and the original 30m evaluation outline do not define the current manual supervision mask.
+  superseded_display: outside_scope.oh4zEe/result/0100_D_outside_P1_and_actual_weights.pdf
+runtime:
+  image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  service: jbgs-p1-weight-annotated-uokhwmgi.service
+  supervisor: systemd user service
+  max_parallel_training: 2
+  status: attempt.annotated.uOkHWmgi/status.txt
+  supervisor_log: attempt.annotated.uOkHWmgi/supervisor.log
+  gate: attempt.annotated.uOkHWmgi/gate.json
+  result_report: attempt.annotated.uOkHWmgi/REPORT.md
+  final_receipt: attempt.annotated.uOkHWmgi/postprocess/receipt.json
+validation:
+  docker_cpu_tests: 22
+  docker_cpu_status: PASS
+  log: attempt.annotated.uOkHWmgi/cpu_tests.log
+  postprocess_cpu_fixtures: PASS
+  gpu_preflight_status: PASS_ALL_THREE
+  matched_first_render_and_camera_schedule: PASS
+  excluded_depth_gradient_zero: PASS_ALL_ALPHAS
+  alpha0_R1_gradient_zero: PASS
+  alpha4_R1_gradient_factor_four: PASS
+superseded:
+  experiment: attempt.UB7vkBLu
+  status: STOPPED_USER_SCOPE_CHANGE
+  receipt: attempt.UB7vkBLu/interruption_receipt.json
+  preserved: true
+incremental_viewer:
+  url: http://127.0.0.1:8910/app/p1_weights.html
+  service: jbgs-p1-weight-incremental-viewer.service
+  artifact_relative: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/p1_weights_v1
+  source: source
+  worker_status: worker_status.txt
+  manifest: manifest.json
+  per_condition_receipt: alpha_N/publication.json
+  policy: Publish individually sealed 30000-step results in completion order; other arms remain pending.
+  extraction_gpu: 0
+  preserves_gpu1_for_alpha4: true
+  training_and_original_postprocess_changed: false
+  docker_cpu_tests: 5
+  browser_checks: 50
+  browser_receipt: browser_qa.mHWcfTEb/receipt.json
+  status_at_20260915_2134_KST: WAITING_INDIVIDUAL_FINALS
+documents:
+  incremental_viewer: docs/experiments/phd/p1_single_view_weight_v1/INCREMENTAL_VIEWER_ko_v1.md
+  plan: docs/experiments/phd/p1_single_view_weight_v1/EXPERIMENT_PLAN_ko_v1.md
+  mask_audit: docs/experiments/phd/p1_single_view_weight_v1/MASK_AUDIT_ko_v1.md
+  issues: docs/experiments/phd/p1_single_view_weight_v1/ISSUES_ko_v1.md

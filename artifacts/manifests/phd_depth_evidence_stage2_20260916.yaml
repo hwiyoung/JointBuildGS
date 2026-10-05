@@ -1,0 +1,21 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-P1P2P3-DEPTH-EVIDENCE-STAGE2-v1
+status: PASS_STAGE2_EVIDENCE_AND_BROWSER
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  container_artifact_root: /artifacts/JointBuildGS
+  relative: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/depth_evidence_stage2_v1
+active_attempt: attempt.ykHdCXV6
+manifest: review_manifest.json
+manifest_sha256: 8ade9145aa8c56681793583fb0acbb34a9e5f2225f1516d87403824008f2d9f8
+config: configs/phd/region_weight_v1/depth_evidence_stage2_v1.json
+report: docs/experiments/phd/region_weight_v1/DEPTH_EVIDENCE_STAGE2_20260916_ko.md
+viewer: /app/depth_evidence.html
+reference_views: 5
+original_mvs_camera_count: 937
+native_pixel_stride: 4
+training_runs: 0
+gt_accessed: false
+automatic_weights_generated: false
+interpretation: Same-MVS observation diagnostics; all937 includes historical evaluation exposure; not calibrated confidence or accuracy.

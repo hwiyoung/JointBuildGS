@@ -1,0 +1,12 @@
+{
+  "task_id": "PHD-GEOGS-NATIVE-EFFECTIVE-SCALE-AUDIT-v1",
+  "scientific_verdict": null,
+  "native_cameras": "native_example_retry_compat_v1/output/model/cameras.json",
+  "native_llffhold": 8,
+  "regions": ["P1", "P2", "P3"],
+  "percent_dense": 0.01,
+  "position_lr_init": 0.00016,
+  "iterations": 30000,
+  "densify_until_iter": 15000,
+  "scope": "Read-only effective camera scale and initialization path audit. No training, no actual split event count or RGB causality claim."
+}

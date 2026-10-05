@@ -1,0 +1,25 @@
+{
+  "task_id": "PHD-P1-MVS-INPUT-VIS-v1",
+  "scientific_verdict": null,
+  "binding_sha256": "c8afb896b9e6a0cdee1921b49c46e97a3d0cb0c568dd2b37ddce9f592bc1d9d8",
+  "selection_sha256": "25eb55d8e8552cbb9b5a2a2c4b95210c8733bf74dbd8ebf6b443b5ab8b58b22f",
+  "selection_cases": ["P1_train_1", "P1_train_2"],
+  "candidate_rectangles": {
+    "P1_train_1": [
+      {"id": "A", "label": "지면·prior와 차이", "bbox": [180, 225, 260, 345], "role": "current-ground correction candidate"},
+      {"id": "B", "label": "인접 지면 대조", "bbox": [160, 425, 230, 465], "role": "adjacent-ground comparison"},
+      {"id": "C", "label": "주변 지붕·P1 평가 밖", "bbox": [360, 535, 470, 605], "role": "context roof comparison; outside original P1 evaluation prism"},
+      {"id": "D", "label": "수목·제외 검토", "bbox": [390, 255, 470, 320], "role": "nonbuilding-observation exclusion candidate"}
+    ]
+  },
+  "candidate_policy": "Rectangles proposed by inspecting current RGB, MVS and prior input visualizations only. Display and input statistics only, not training masks, semantic ground truth, or cross-view correspondences.",
+  "depth_display_percentiles": [2, 98],
+  "difference_display_limit_m": 8,
+  "height_display_limits_local_z_m": [-50, -20],
+  "evaluation_roi": {"x": [-23, 7], "y": [-21, 9], "z": [-44.272, -25.962]},
+  "training_context": {"x": [-48, 32], "y": [-46, 34], "z": [-90, 80]},
+  "font_path": "/font/NotoSansCJK-Regular.ttc",
+  "selection_policy": "Reuse two input-projected P1 prism bounding boxes selected before scoring GS renders. No reference geometry or result-based selection.",
+  "scope": "Input visualization only; no training, confidence inference, automatic labels, or supervision masks.",
+  "reference_access": false
+}

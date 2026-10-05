@@ -1,0 +1,69 @@
+{
+  "schema": "GEOGS_EXTRACTION_RESOURCE_AMENDMENT_v1",
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "revision": "resource_v3",
+  "scientific_verdict": null,
+  "scientific_config_sha256": "b08bbcc808da060322fc1ed05902edbb08db2a0784dd146f4644adc12228eab4",
+  "runtime_layout_sha256": "28b83d4a462d764cbe0d59b32f7a816db92236141879806a5a1bc8ce4e450cd5",
+  "supplemental_repeat_contract_sha256": "3c62494f13de96dba33b1c36cbadf58e555305fee01ce641dd41f560bdfacafc",
+  "decision_basis": "Confirmed 32GiB and 48GiB MEMCG OOM during auxiliary TSDF; official anchor512 succeeds within32GiB. No UAS payload access or regional render-quality/geometry-result review.",
+  "training_controls_changed": false,
+  "primary_final_mesh_res": 1024,
+  "primary_final_raw_and_post_required": true,
+  "final_sensitivity_mesh_res_required": [
+    512
+  ],
+  "region_anchor": {
+    "owner_condition": "D005_Pnative",
+    "owner_run_family": "primary",
+    "required_mesh_res": 512,
+    "optional_original_mesh_res": 1024,
+    "shared_by_all_primary_and_supplemental_runs": true,
+    "source": "Exact already frozen 8000-step complete-state PLY; regional input/cameras unchanged."
+  },
+  "optional_final_mesh_res": [
+    2048
+  ],
+  "output_directory": "extraction_resource_v3",
+  "run_families": [
+    "primary",
+    "native_repeat_1"
+  ],
+  "variant_names": {
+    "final_512": "mesh_512",
+    "final_2048": "mesh_2048",
+    "anchor_512": "anchor_512",
+    "anchor_1024": "anchor"
+  },
+  "resource_policy": {
+    "memory_limit_bytes": 34359738368,
+    "cpu_threads": 8,
+    "one_extraction_at_a_time": true,
+    "minimum_host_headroom_bytes": 8589934592,
+    "primary_training_allocator_unchanged": true
+  },
+  "optional_failure_policy": {
+    "status": "TECHNICAL_RESOURCE_UNAVAILABLE",
+    "requires_native_sigkill": true,
+    "requires_matching_cgroup_oom_kill_event": true,
+    "unknown_exit_or_invalid_surface_blocks": true,
+    "all_planned_optional_variants_must_be_attempted_or_bound_to_exact_preserved_confirmed_attempt": true,
+    "atomic_raw_post_variant": true
+  },
+  "analysis_policy": {
+    "primary_condition_comparisons_mesh_res": 1024,
+    "anchor_to_refinement_comparison_mesh_res": 512,
+    "optional_resolution_aggregate_requires_complete_matched_condition_inventory": true,
+    "technical_unavailability_is_reference_absence": false,
+    "technical_unavailability_is_reconstruction_failure": false,
+    "technical_unavailability_precision_recall_f1_and_distances": null,
+    "better_resolution_or_repeat_selection_prohibited": true
+  },
+  "preservation_policy": "Existing runs, auxiliary attempts, phase receipts, models and logs retain their paths and bytes. Resource amendment outputs use a new task-local prefix and an explicit resolver.",
+  "evidence_paths": [
+    "runtime/host_memory_recovery_v1/P1_native_anchor_memcg_oom.log",
+    "runtime/host_memory_recovery_v1/P1_weak_mesh2048_memcg_oom.log",
+    "runtime/host_memory_recovery_v1/anchor_mem48_probe/receipt.json",
+    "runtime/host_memory_recovery_v1/anchor_mesh512_mem32_probe/receipt.json"
+  ]
+}

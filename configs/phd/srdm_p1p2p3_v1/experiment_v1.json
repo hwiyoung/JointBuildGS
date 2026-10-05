@@ -1,0 +1,20 @@
+{
+  "task_id": "PHD-SRDM-P1P2P3-v1",
+  "scientific_verdict": null,
+  "execution_authorization": "User 2026-09-08: 일단 P1/P2/P3에 대해 SRDM 적용해보고 정량/정성 분석해보자",
+  "source_config": "configs/phd/geogs_p1p2p3_v1/experiment_v1.json",
+  "als_source_config": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "geogs_task_relative": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1",
+  "geogs_input_manifest_sha256": {"P1": "3257b3604f630a64948606605c3ae46f2e22d4d5829b5ad49a7d46b342a42112", "P2": "6493c602332144510526a54f31700c28cb31eb648250e690d6528fcffe5162a2", "P3": "5f22de0224d255765adc126d3ba587388e56f3234b93a3657c821921c4d8911a"},
+  "output_relative": "phase-payloads/phd/srdm_p1p2p3_v1/PHD-SRDM-P1P2P3-v1",
+  "implementation_status": "paper-based two-stage SRDM reimplementation with documented input and unspecified-parameter choices; not author-code reproduction",
+  "regions": ["P1", "P2", "P3"],
+  "image": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "resource": {"cpus": 4, "memory_gib": 12, "gpu": false, "max_concurrent_stages": 1, "minimum_host_available_gib": 24},
+  "region_resources": {"P3": {"memory_gib": 20, "minimum_host_available_gib": 40}},
+  "core_storage_by_region": {"P1": "ram", "P2": "ram", "P3": "hybrid"},
+  "pair_selection": {"grid_axis_count": 5, "min_angle_deg": 3.0, "max_angle_deg": 20.0, "max_pairs_per_region": 1, "geometry_only": true, "train_only": true, "native_resolution": true, "rectification_alpha": 0.0, "disparity_margin_px": 2.0},
+  "core_config": {"penalty": 0.4, "propagation_sigma": 10.0, "census_weight": 0.5, "census_truncation": 15.0, "hog_truncation": 30.0, "inconsistency_threshold": 2.0, "directions": [0, 45, 90, 135], "weak_sigma": 2.0, "search_radius": 15, "intensity_tolerance": 10.0, "gamma": 2.0, "lr_tolerance": 1.0, "hog_cost_mode": "count_l1", "weak_downsample": 1, "interpolate": false, "threads": 4, "invalid_cost": 100000.0, "max_volume_gib": 5.0},
+  "evaluation": {"distance_thresholds_m": [0.1, 0.2, 0.25, 0.5, 1.0, 2.0], "density_voxel_m": [0.1, 0.25, 0.5], "xy_cell_m": 0.5, "section_width_m": 0.5, "workers": 4},
+  "limits": {"new_registration": false, "all_view_reconstruction": false, "gs_training": false, "gs_after_redecision": false, "reference_for_parameter_selection": false, "canonical_e1_e6_changed": false}
+}

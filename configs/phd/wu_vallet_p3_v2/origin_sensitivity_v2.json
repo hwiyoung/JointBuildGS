@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "acquisition_relative_path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2/acquisition.npz",
+  "trajectory_relative_root": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-TRAJECTORY-v2",
+  "update_relative_root": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run",
+  "output_relative_path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ORIGIN-SENSITIVITY-v2",
+  "main_variant": "sep2_pad025_forward",
+  "variants": ["sep2_pad025_forward", "sep1_pad025_forward", "sep5_pad025_forward", "sep2_pad010_forward", "sep2_pad025_reverse"],
+  "baseline_arm": "estimated_bidir_d0.3_a0",
+  "runtime_config": {"distance_tolerance_m": 0.3, "direction_mode": "BIDIRECTIONAL", "ray_sampling": "vertices_and_centroid", "check_source_visibility": true, "small_region_area_m2": 0.0, "query_chunk_size": 131072, "nthreads": 6, "numeric_epsilon": 1e-9},
+  "matched_support_control": "If an alternative loses source-ray support on meshed vertices, additionally rerun main origins with the exact same supported meshed vertices. Do not extrapolate any trajectory.",
+  "origin_role": "ESTIMATED_SENSOR_ORIGINS_FROM_MULTIRETURN_LINES",
+  "scope": "Same frozen old/new mesh, point memberships, ray algorithm and parameters. Vary ALS origin estimator only; separately report effects of reduced temporal support.",
+  "reference_accessed": false,
+  "scientific_verdict": null
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "jbgs.local_complementary_refinement.v1",
+  "task_id": "PHD-LOCAL-COMPLEMENTARY-REFINEMENT-v1",
+  "scientific_verdict": null,
+  "parent_task_id": "PHD-GEOGS-P1P2P3-v1",
+  "regions": ["P1", "P2", "P3"],
+  "prior_coefficients": [0.005, 0.0005, 0.0],
+  "protection_states": ["native", "release"],
+  "conditions": [
+    {"id": "LC_D005_Pnative", "parent_condition": "D005_Pnative", "lambda_p": 0.005, "protection": "native"},
+    {"id": "LC_D005_Prelease", "parent_condition": "D005_Prelease", "lambda_p": 0.005, "protection": "release"},
+    {"id": "LC_D0005_Pnative", "parent_condition": "D0005_Pnative", "lambda_p": 0.0005, "protection": "native"},
+    {"id": "LC_D0005_Prelease", "parent_condition": "D0005_Prelease", "lambda_p": 0.0005, "protection": "release"},
+    {"id": "LC_D0_Pnative", "parent_condition": "D0_Pnative", "lambda_p": 0.0, "protection": "native"},
+    {"id": "LC_D0_Prelease", "parent_condition": "D0_Prelease", "lambda_p": 0.0, "protection": "release"}
+  ],
+  "training": {
+    "start_iteration": 8000,
+    "end_iteration": 30000,
+    "new_iterations_per_run": 22000,
+    "controller": "unchanged native policy and unweighted raw depth residual inputs",
+    "effect_scope": "local weighting plus native controller response, not identical realized lambda_V trajectories",
+    "new_baseline_training_planned": false,
+    "repetitions": 1
+  },
+  "local_weight": {
+    "input": "absolute difference of frozen prior and DA3 targets on the same ray",
+    "function": "clip((delta-tau0)/(tau1-tau0),0,1)",
+    "threshold_policy": "pooled training-only input discrepancy Q50/Q90, equal region sample counts; one shared metric pair frozen before training",
+    "threshold_quantiles": [0.5, 0.9],
+    "samples_per_train_view": 4096,
+    "max_samples_per_region": 200000,
+    "sampling": "deterministic uniformly spaced valid flattened indices; equally subsample each region to common count",
+    "reference_accessed": false,
+    "validity": "finite strictly positive target; preserve native finite prediction validity in loss",
+    "missing_source": "single available source has local multiplier one; neither available has zero depth loss",
+    "reduction": "native source valid pixel count, never sum of local weights",
+    "interpretation": "discrepancy-based allocation policy; not probability of correct image depth"
+  },
+  "runtime": {
+    "image": "jointbuildgs:geogs-official-db40c95-compat-v1",
+    "image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+    "allocator": "backend:native,max_split_size_mb:128",
+    "cpus_per_job": 8,
+    "memory_gib_per_job": 32,
+    "max_concurrent_training": 2,
+    "minimum_host_available_gib_before_launch": 28,
+    "maximum_idle_gpu_used_mib_before_launch": 1800,
+    "network": "none",
+    "existing_services_unchanged": true,
+    "finish_policy": "user authorized completion without morning deadline"
+  },
+  "evaluation": {
+    "reference_for_training_or_parameter_selection": false,
+    "mesh_resolutions": [512],
+    "mesh_role": "raw TSDF primary and postprocessed secondary, same resolution as existing anchor/final512 comparisons",
+    "dimensions": ["accuracy", "completeness", "supported currentness", "observable detail", "appearance", "compute"],
+    "paired_preservation_correction": true,
+    "prior_ox_image_ox_are_evaluation_strata_not_training_labels": true,
+    "scientific_verdict": null
+  }
+}

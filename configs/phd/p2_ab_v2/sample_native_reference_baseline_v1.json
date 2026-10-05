@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-P2-AB-V2-COMMON-NATIVE-REFERENCE-v1",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "reference_relative_path": "phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/evaluation_v2/evaluation_reference.npz",
+  "native_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-v1/native_geometry.npz",
+  "render_sample_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-NN-PERFORMANCE-v1/uniform_1000_query.npz",
+  "output_relative_root": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-NATIVE-REFERENCE-v1",
+  "xy_bounds": [[110, 86], [158, 132]],
+  "workers": 4,
+  "tolerances_m": [0.25, 0.5, 1.0],
+  "reference_role": "EVALUATION_ONLY_SOURCE_BASELINE; no source fit or parameter selection",
+  "scientific_verdict": null,
+  "docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
+}

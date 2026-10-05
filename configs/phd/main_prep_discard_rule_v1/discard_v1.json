@@ -1,0 +1,118 @@
+{
+ "version": "discard_v1",
+ "task_id": "PHD-MAIN-PREP-DISCARD-RULE-v1",
+ "written": "2026-10-05 01:5x KST, before any stage-1, judgment, label or rule-comparison result of this task (the MVS rebuild of 5.2 was started at 01:32; it produces inputs only)",
+ "scientific_verdict": null,
+ "base_config": "configs/phd/main_prep_measure_v1/prep_v5.json (frame, stage-1 rules, registration v2 gates, tolerance rule, judgment values 2/3 - 5 - 1 m, GT rules v5; all locked)",
+ "user_decisions_1005": {
+  "boxes": "B0, B173nb (B173 + neighbour), B173 only, R1rep (prep step06/boxes_v1.json; evaluation range + 10 m context band)",
+  "fixes_accepted": "the seven fixes of the prep measure (GT v3-v5, case analysis v4, registration gates v2); GT rules locked at v5",
+  "fixed_values_source": "tolerance and registration re-measured on MVS rebuilt from training images only, then fixed",
+  "discard_rule_and_tolerance_size": "compared in this order",
+  "walls": "roof is the main evaluation; walls reported separately with their GT coverage",
+  "observation_amount": "author conditions kept; nadir-including conditions of the same counts added; tolerance fixed to the B0 crop value",
+  "consecutive_15": "not part of the main experiment",
+  "registration_rule": "one translation over the whole range (unchanged)",
+  "implementation": "measurement-only code moved into the shared module; measurement and training use one implementation; seven ablation switches checked without training"
+ },
+ "mvs": {
+  "ranges": {"R1": 588, "R2": 221, "R3E": 311, "R4": 102, "R5": 252, "SW": 266, "B0": 272},
+  "note_R3": "R3 is contained in R3E and is not rebuilt",
+  "views": "prep step01/views.json train lists (1 in 8 evaluation, rule region_view_support_v1)",
+  "image": "colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf (COLMAP 4.0.4, CUDA)",
+  "settings": "patch_match_stereo geom_consistency true, max_image_size 1024, num_iterations 3, filter true, cache_size 32 (= prep measure)",
+  "gpu_queues": {"0": ["R1", "R4", "B0"], "1": ["R3E", "R5", "SW", "R2"]},
+  "estimate": "2,012 images x about 12 s = 6.8 GPU hours, 3.5-4 h wall on two GPUs; stop and ask beyond 8 h"
+ },
+ "module": {
+  "name": "src/phd/prior_propagation_v5",
+  "base": "a copy of prior_propagation_v4 (v4 stays byte-identical)",
+  "moved_in": ["registration (Nuth-Kaab horizontal + conditional vertical, gate on re-rendered height-difference NMAD, final all-view building-face NMAD check)",
+               "party-wall gap caps and probe faces",
+               "fixed tolerance / registration runs",
+               "pass-3 per-view tallies per (patch, view) at the rule thresholds (new output, no change to the existing outputs)",
+               "discard-rule variants and the judgment-level switches (selectable; default = the current rule, all switches on)"]
+ },
+ "equivalence": {
+  "check1": "the moved module re-runs the prep v1.1 inputs (8 search ranges on the 937-image MVS, 4 boxes on their box MVS with the v1.1 fixed values): meshes, stores, tolerance, registration, states, votes, propagated judgments and unplanted points must be equal (arrays compared element by element; counts reported). Any difference: stop and ask.",
+  "check2": "fork r11 (= r10 calling the module v5) initialised without training (dry init) on the 4 boxes x 2 priors from the measurement's box products: states, votes, propagated judgments, patch judgments and the unplanted set must equal the measurement's. Any difference: stop and ask."
+ },
+ "fork_inputs": {
+  "resolution": "the measurement grid 1024 x 741 (training images written resized to it; COLMAP PINHOLE intrinsics scaled as common.Views; calibration K given with cx - 0.5, cy - 0.5 so the rasterizer's pixel i matches the measurement's pixel centre i + 0.5)",
+  "views": "box training views (train) and evaluation views (test) of prep step06/box_views.json; training views without a geometric depth map dropped as in the measurement",
+  "initial_cloud": "image points = sparse points of the training-image subset model (colmap_subset rule) inside the box range; LoD2 prior points = one per patch centre (seat = its surface, normal = the face's Newell normal); ALS prior points = the TIN vertices (class 2 / 6) inside the box range (seat = vertex_surface as the measurement)",
+  "maps": "per training view from the measurement's pass 3: confidence (geometric depth valid), MVS depth (geometric), prior depth (registered prior render), tau_p = tau / max(f, 1e-3), location map, mark map; mask-off sets: photometric depth and its validity",
+  "normal_mode": "cell (the prep 4.2 rule 'initial direction, cell method')"
+ },
+ "switches": {
+  "names": ["confidence_mask", "judgment", "propagation", "prior_band", "protection", "init_exclusion", "prior"],
+  "default": "all on = r10 behaviour with module v5",
+  "off_meaning": {
+   "confidence_mask": "the MVS depth before the geometric consistency filter (COLMAP photometric depth) is the MVS depth and every pixel with a depth has confidence 1; the MVS term weight and the supported / missing split both use it (states and votes from a measurement pass 3 with that confidence)",
+   "judgment": "every patch judgment = agree (support votes and propagated judgments); pixels without a patch also g_p = 1, so nothing is discarded anywhere",
+   "propagation": "missing patches receive no judgment from neighbours: all 'insufficient' (inherit); support votes unchanged",
+   "prior_band": "rho(r) = |r|: no tolerance band and no truncation",
+   "protection": "no protection mask: no learning-rate scaling, no exclusion from densification / pruning, no reset exemption, no opacity floor",
+   "init_exclusion": "points of missing patches judged conflict are planted too; judgments unchanged",
+   "prior": "no prior-origin Gaussians at initialisation and no prior depth term (image-only base)"
+  },
+  "expected_changed_outputs": {
+   "confidence_mask": ["A maps", "MVS depth maps", "states", "votes", "propagated judgments", "patch judgments", "unplanted", "planted prior points", "g_p", "first E", "protection"],
+   "judgment": ["votes", "propagated judgments", "patch judgments", "unplanted", "planted prior points", "g_p", "protection"],
+   "propagation": ["propagated judgments", "patch judgments", "unplanted", "planted prior points", "g_p", "protection"],
+   "prior_band": ["penalty function (test values)"],
+   "protection": ["protection", "protection behaviour (test scene)"],
+   "init_exclusion": ["unplanted", "planted prior points", "first E of the added points"],
+   "prior": ["planted prior points", "prior depth term", "g_p", "protection", "unplanted"]
+  },
+  "test_scene": "protection and the penalty function: a synthetic scene of a few dozen Gaussians and test residual values, computed once (code test, not training)"
+ },
+ "ground_truth": {
+  "rules": "v5 locked: gt_clean method height alignment (per-view z-buffer, bare-ground vertical differences, median, two passes), transient removal, single-return vertical-surface wall points, roof top layer 1 m, >= 5 points",
+  "search_ranges": "the v5 height alignment is re-run against the new training-only MVS of the range (rules unchanged); the evaluation exclusion cells are the prep v1.1 files, reused unchanged (re-computed only to check they are equal)",
+  "boxes": "the prep v1.1 box GT (aligned on the box MVS, which does not change) reused; labels re-made with the new fixed tolerance and registration",
+  "b0_conditions": "the B0 GT (gt_clean) aligned in 5.2 on the new B0 crop MVS, reused for all seven conditions (no per-condition alignment: few-image conditions lack bare-ground samples)",
+  "label_tau": "the base tolerance = the value re-measured in 5.2 for the run's range (boxes and B0 conditions: the fixed value); never the scaled tolerance of a rule"
+ },
+ "rules": {
+  "current": {"marks_t": 1.0, "propagation": "standard"},
+  "margin_all": {"k": [1.5, 2.0, 3.0], "marks_t": "k", "propagation": "standard (on the k-marks)", "meaning": "a pixel with tau < |r| <= k tau counts as agree for the support votes and the propagation"},
+  "margin_propagation": {"k": [1.5, 2.0, 3.0], "marks_t": 1.0, "propagation": "a gathered support patch voted conflict is conflict evidence only when its pooled median |r| > k tau; otherwise it counts in the gathered number (towards 5) but as neither side", "pooled_median": "over the confidence-1 pixels of the patch in its supporting views (all views pooled): median |r| > k tau <=> more than half of those pixels have |r| > k tau"},
+  "asymmetric": {"marks_t": 1.0, "propagation": "only agree is propagated: a missing patch the standard rule judges conflict becomes undetermined (mixed, inherits); support votes unchanged"},
+  "tau_scale": {"s": [0.5, 2.0], "marks_t": "s", "propagation": "standard", "note": "for the judgments tau_scale 2.0 is identical to margin_all 2.0 (both mark at 2 tau; the loss band would differ in training, not here)"},
+  "thresholds_tallied": [0.5, 1.0, 1.5, 2.0, 3.0],
+  "unchanged_by_rules": "states (supported / missing / invisible), the gathering of up to 5 support patches within 1 m on the same surface, the 2/3 majority, the loss band"
+ },
+ "counting": {
+  "discard": "support patch voted conflict, or missing patch with propagated judgment conflict",
+  "keep": "agree, mixed, insufficient (prior planted and inherited)",
+  "patches_counted": "in range, not in an evaluation exclusion cell, true label agree or conflict; supported (measured) and missing (unmeasured) separately; invisible patches (not affected by any rule) reported apart",
+  "classes": {"correct_discard": "discard & true conflict", "wrong_discard": "discard & true agree", "correct_keep": "keep & true agree",
+              "wrong_keep": "keep & true conflict, split by |GT - prior| / base tau in (1, 2], (2, 4], > 4"},
+  "split": ["range or box", "prior", "face kind (roof, wall)", "measured / unmeasured"],
+  "unplanted": "LoD2: missing patches judged conflict (count, area, map); ALS: TIN vertices seated on them (count, map)"
+ },
+ "regions": {
+  "selection": "the seven 5.2 ranges outside the evaluation ranges of the four boxes (patch centre in uv outside every eval_u x eval_v rectangle); in the aggregate a location is counted once: a patch whose centre lies inside a range earlier in the order B0, R1, R2, R3E, R4, R5, SW is left out of the later ranges (per-range tables keep everything)",
+  "confirmation": "the evaluation ranges of the four boxes, on the box runs (box MVS, fixed values of 5.2); reported only"
+ },
+ "b0_conditions": {
+  "author": {"A15": "prep b0.json (train 13)", "A9": "prep b0.json (train 8)", "A3": "prep b0.json (train 2)", "mvs": "prep mvs/B0_A15, B0_A9, B0_A3 (training images only)"},
+  "cover": {"COVER": "prep b0.json (train 209 = 40 nadir + 169 oblique)", "mvs": "prep mvs/B0_COVER"},
+  "nadir_including": {
+   "counts": {"N13": 13, "N8": 8, "N2": 2},
+   "nadir_number": "max(1, round(n x 40 / 209)) -> 2, 2, 1 nadir; the rest oblique",
+   "pool": "the COVER training views (nadir = tilt <= 20 degrees)",
+   "selection": "greedy coverage of the target building's LoD2 patches (DEBY_LOD2_4959323) using the visibility pairs (patch, view, pixels > 0) of the prep COVER stage-1 run: first the nadir views, then the oblique views, each step taking the view that adds the most not-yet-seen target patches (ties: name order); visibility comes from the prior render, not from MVS, residuals, judgments or GT",
+   "mvs": "rebuilt from the selected views only (same COLMAP image and settings)"
+  },
+  "fixed_values": "tolerance and registration = the 5.2 B0 crop values for all seven conditions",
+  "effects": {"image_count": "A15 -> A9 -> A3 and N13 -> N8 -> N2", "view_direction": "A15 vs N13, A9 vs N8, A3 vs N2"}
+ },
+ "sites": {
+  "file": "configs/phd/main_prep_discard_rule_v1/sites_v1.json (written with this config, from prep v1.1 identifications)",
+  "membership": "LoD2: the patches of the listed faces (gml id) in the run; ALS: patches whose centre lies within 0.5 m (plan) of a LoD2 patch centre of the site's faces in the same run"
+ },
+ "rows": "the prep v1.1 photo rule: roof sites in the nadir training view with the most pixels on the site, wall sites in the view with the most pixels; per rule the marks and the patch state / judgment panels side by side",
+ "tolerance_sensitivity_identity": "noted, not a result: the judgments of tau_scale 2.0 and margin_all 2.0 coincide by definition"
+}

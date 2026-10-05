@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1 — 영역 가중치 0·1·4 비교</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./matched.css"></head>
+<body>
+<header><div><p class="eyebrow">JointBuildGS / 수동 영역 가중치 실험</p><h1>같은 영역, 가중치 0 · 1 · 4</h1></div><a href="/app/weights.html">P1/P2/P3 결과 + 영역 통합 뷰어 ↗</a></header>
+<main>
+<p class="intro">0100_D의 R1 가중치만 0·1·4로 바꾼 결과입니다. R2·R3는 1, 미분류·제외 영역은 0이며 다른 97개 depth는 유지합니다. 세 조건 모두 같은 Anchor 8k → 30k, prior 0.005와 native 보호를 사용합니다.</p>
+<div class="toolbar"><div class="segmented" id="region-tabs" role="group" aria-label="표시 범위"></div><label>기하 표현<select id="representation"><option value="mesh">Raw RGB mesh</option></select></label><div class="presets"><button data-preset="top">위에서</button><button data-preset="oblique" class="active">비스듬히</button><button data-preset="side">옆에서</button><button id="reset-camera">전체 맞춤 ↺</button></div><button id="refresh">자료 새로고침</button></div>
+<div class="view-info"><span>● 세 카메라 동기화</span><span>드래그 회전 · Shift / 오른쪽 드래그 이동 · 휠 확대</span><span id="surface-contract">세 조건의 표면 추출 대기</span></div>
+<p class="notice subtle">30m는 원래 P1 평가 범위, 80m는 주변을 포함한 표시 범위입니다. 0100_D의 실제 감독 마스크는 <a href="/data/p1_weights_v1/scope.png" target="_blank">범위 설명 그림 ↗</a>에서 확인하세요. <a href="/app/manual_regions.html">P2/P3 수동 depth 가중치 영역도 ↗</a> · <a href="/app/p2p3_weights.html">P2/P3 가중치 학습 결과 ↗</a></p>
+<p id="error" class="notice error" hidden></p><p id="loading" class="notice">실행 상태를 확인하고 있습니다.</p><p id="representation-note" class="notice subtle"></p>
+<section id="geometry-panels" class="three-columns" aria-label="가중치별 동기화 3D 비교"></section>
+<section class="renders"><div class="section-heading"><div><p class="eyebrow">같은 촬영 카메라</p><h2>원사진 · 실제 GS RGB · depth</h2></div><label>촬영 뷰<select id="photo-view"></select></label></div>
+<p class="render-explanation">0100_D는 가중치를 적용한 학습뷰, 0099_D는 학습에서 제외된 비교뷰입니다. 아래 영상은 고정 촬영 시점이며 위 3D 회전에 따라 바뀌지 않습니다.</p>
+<div class="reference-row"><figure class="original"><figcaption><strong>원사진</strong><span id="photo-name">—</span></figcaption><div class="image-slot" id="original-slot"></div></figure><div class="reference-info"><p id="view-details"></p><p id="depth-scale"></p><p>각 조건의 30k 학습이 끝나는 순서대로 표면과 렌더를 처리해 등록합니다. 60초마다 새 결과를 확인하며, 나머지 조건은 대기로 표시합니다.</p></div></div>
+<div id="render-panels" class="three-columns" aria-label="가중치별 RGB와 depth"></div></section>
+<p id="comparison-downloads"></p><footer><span id="freshness"></span><span>개발 실험 · 과학적 판정 없음</span><a href="/data/p1_weights_v1/manifest.json">자료 manifest ↗</a></footer>
+</main>
+<script type="application/json" id="comparison-config">{"roles":["alpha_0","alpha_1","alpha_4"],"titles":{"alpha_0":"R1 가중치 0","alpha_1":"R1 가중치 1 · 대조군","alpha_4":"R1 가중치 4"},"manifest":"/data/p1_weights_v1/manifest.json","schema":"p1_weight_comparison_v1","regions":["P1","P1_context"],"poll_seconds":60}</script>
+<script type="module" src="./matched.js"></script>
+</body></html>

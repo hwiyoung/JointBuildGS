@@ -1,0 +1,33 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab.decision.v1",
+  "task_id": "PHD-P2-AB-A-v1",
+  "scientific_verdict": null,
+  "artifact_root": "/artifacts/JointBuildGS",
+  "common_root": "phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common",
+  "output_root": "/output",
+  "camera_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+  "sampling": {"max_units": 64, "max_points_per_candidate": 64, "min_native_points": 30, "planar_type": 1, "fusion_xy_match_radius_m": 0.3},
+  "measurement": {"height_min_m": -2.0, "height_max_m": 2.0, "height_step_m": 0.125, "min_pair_angle_deg": 3.0, "max_pair_angle_deg": 60.0, "max_distance_ratio": 2.0, "min_points": 30, "min_gray_std": 2.0, "min_common_pairs": 3},
+  "comparison": {
+    "score_thresholds": [0.3, 0.5, 0.7, 0.9],
+    "tolerances_m": [0.25, 0.5, 1.0],
+    "default_score_threshold": 0.3,
+    "default_tolerance_m": 0.5,
+    "bayes_probability": 0.9,
+    "bayes_pixel_sigma": 1.0,
+    "bayes_pi_bins": 101,
+    "shared_shift_radius_m": 0.5,
+    "fusion_max_normal_angle_deg": 20.0,
+    "controlled_shift_m": 1.0,
+    "methods": ["FIXED_IMAGE", "FIXED_PRIOR", "SCORE_GATE", "BAYES_GAUSS_UNIFORM", "BAYES_GAUSS_UNIFORM_ALL_PAIRS", "DISCRETE_RANGE", "DISCRETE_RANGE_SHARED_SHIFT"],
+    "conditions": ["REAL", "MVS_REMOVED", "MVS_MARKED_UNUSABLE", "PRIOR_SHIFT_PLUS_1", "IMAGE_SHIFT_PLUS_1", "BOTH_SHIFT_PLUS_1", "OBSERVATION_LIMIT", "LOCAL_PRIOR_SHIFT_PLUS_1"],
+    "parameter_status": "Premeasurement development sensitivity; no parameter is calibrated or chosen by reference errors. Defaults are display/handoff settings, not operating thresholds."
+  },
+  "scope": {
+    "height_axis": "scene coordinate Z, not gravity",
+    "reference_reading": "forbidden in this runner; root integration evaluates afterward",
+    "current_use_certification": "unavailable; strict_current_use_action ABSTAIN",
+    "measured_handoff": "actual current-image conditional development evidence, not synthetic approval",
+    "common_frame": "supplied scene transform frozen; no new truth-assisted registration"
+  }
+}

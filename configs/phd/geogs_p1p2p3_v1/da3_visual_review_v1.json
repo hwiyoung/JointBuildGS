@@ -1,0 +1,18 @@
+{
+  "scientific_verdict": null,
+  "reference_role": "Evaluation-only limited regional UAS; out-of-region occluders are absent. Neither UAS visibility nor prior currentness is certified.",
+  "selection": "Post hoc diagnostic examples: first named view of cited batches, including nadir and oblique views. Not representative frequency estimates. flat IDs refer to the previous audit allegation, not an accepted classification.",
+  "block_px": 2,
+  "cases": [
+    {"id":"P1_nadir","region":"P1","batch":0,"name":"DJI_20241217084553_0100_D","role":"nadir contrast"},
+    {"id":"P1_flat","region":"P1","batch":4,"name":"DJI_20241217095513_0039_D","role":"previous audit alleged flattened ROI; verify visibility"},
+    {"id":"P2_nadir","region":"P2","batch":0,"name":"DJI_20241217084505_0076_D","role":"nadir contrast"},
+    {"id":"P2_oblique","region":"P2","batch":4,"name":"DJI_20241217094957_0025_D","role":"large prior discrepancy allegation; verify visibility"},
+    {"id":"P3_nadir","region":"P3","batch":0,"name":"DJI_20241217084555_0101_D","role":"nadir contrast"},
+    {"id":"P3_flat","region":"P3","batch":11,"name":"DJI_20241217101323_0014_D","role":"previous audit alleged flattened ROI; verify visibility"}
+  ],
+  "same_image_pairs": [
+    {"name":"DJI_20241217094957_0025_D","regions":["P1","P2"]},
+    {"name":"DJI_20241217095513_0039_D","regions":["P1","P3"]}
+  ]
+}

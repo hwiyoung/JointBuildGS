@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "scientific_verdict": null,
+  "purpose": "Early official renderer and TSDF route verification while the native 30000-step training completes",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "official_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+  "iteration": 8000,
+  "native_ply_stage": "UPSTREAM_PRE_DENSIFICATION_AND_PRE_PROTECTION_REGISTRATION; not the shared post-boundary experimental anchor",
+  "render_command": ["python", "render.py", "-s", "/scene", "-m", "/output/model", "--iteration", "8000", "--mesh_res", "1024"],
+  "metrics_command": ["python", "metrics.py", "-m", "/output/model"],
+  "gpu": 0,
+  "reference_mount": false,
+  "test_views": 2,
+  "performance_interpretation": "Author example with unknown author DA3 evaluation-view participation; not P1/P2/P3 performance",
+  "scheduling_deviation": "Execute an additional 8000-PLY route diagnostic while unchanged native30000 training continues; no optimization or extraction control is changed"
+}

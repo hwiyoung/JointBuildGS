@@ -1,0 +1,32 @@
+{
+  "scientific_verdict": null,
+  "analysis_role": "POSTHOC_DISPLAY_DIAGNOSTIC_OF_SAVED_DISTANCES",
+  "section_x_m": 134.0,
+  "section_width_m": 0.5,
+  "display_zoom_y_m": [86.0, 114.0],
+  "display_zoom_z_m": [-33.5, -27.0],
+  "display_zoom_reason": "Magnify the repeated roof profiles visible in the previously fixed X=134m section; this display choice does not change any evaluation scope or score.",
+  "cdf_display_max_m": 2.0,
+  "cdf_display_steps": 601,
+  "marked_threshold_m": 0.5,
+  "inputs": [
+    {
+      "id": "native30000",
+      "label": "GeoGS native: 30,000 updates",
+      "iteration": 30000,
+      "color": "#2274a5",
+      "base": "evaluation/geometry/P2/D005_Pnative.mesh_512.raw/sample0.1_reference0.1",
+      "json_sha256": "23deae2141f8a72bb07a714bacff919c4972495c926b522055049a45bb9fcabe",
+      "npz_sha256": "89f51cf36000506d4bf1a5b32a3bdd096ff69db1a81cb1f93f4912c9c7c3a78d"
+    },
+    {
+      "id": "sfm8000",
+      "label": "SfM, no Anchor: 8,000 updates",
+      "iteration": 8000,
+      "color": "#dd6b20",
+      "base": "evaluation/no_anchor_sfm_prefix8000_v1/geometry/P2/SFM_noanchor_D005_Pnative_PREFIX8000.mesh_512.raw/sample0.1_reference0.1",
+      "json_sha256": "a66c52d8114160125667edceb8860482324cd0408ccf523f7e89a0ccd7450f67",
+      "npz_sha256": "0b34dd107bdfc9eeba81841601da6be7ed0ee8e47870bfb8e69728708bbfa40d"
+    }
+  ]
+}

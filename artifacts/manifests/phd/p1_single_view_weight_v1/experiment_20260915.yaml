@@ -1,0 +1,70 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-P1-SINGLE-VIEW-WEIGHT-v1
+scientific_verdict: null
+status: STOPPED_USER_SCOPE_CHANGE
+user_authorization: 2026-09-15 0100_D depth mask recheck followed by alpha 0/1/4 training
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/p1_single_view_weight_v1/PHD-P1-SINGLE-VIEW-WEIGHT-v1
+  experiment_relative: attempt.UB7vkBLu
+  durability: local external storage; not a durable-backup claim
+controls:
+  target_camera: DJI_20241217084553_0100_D.JPG
+  alpha: [0, 1, 4]
+  mode: mvs
+  prior_weight: 0.005
+  mvs_global_weight: 0.05
+  dynamic_mvs_weight: false
+  native_protection: true
+  rgb_views: 98
+  depth_views: 98
+  original_valid_weight_outside_R1: 1
+  preflight_iterations: [8001, 8200]
+  training_iterations: [8001, 30000]
+  anchor_sha256: c08a39aa2deb81b26dd4dd75d0be9e6bb5e150db503f9d422a05423388679274
+  config_sha256: 340590cad3b43da27378480bcebb364b4f75802ceaa2a9e1b950f2ae7ff72e9f
+  baseline: new fixed-0.05 alpha1 control; historical adaptive-MVS run is context only
+mask:
+  relative: mask_audit.2mlId3/result/r1_mask.npz
+  copied_to: attempt.UB7vkBLu/mask/r1_mask.npz
+  key: r1_mask
+  dtype: bool
+  shape: [1013, 1400]
+  pixels: 113103
+  sha256: a9c65e002c430bf2c7a254e7f3d6f56aa7cdbe8c2112e6c725a9d984f4aa9241
+  within_original_P1_prism: 43237
+  outside_original_P1_within_context: 69866
+  policy: R1 spans part of the original P1 and surrounding ground; only R1 multiplier varies
+full_frame_display:
+  relative: outside_scope.oh4zEe/result
+  pdf: 0100_D_outside_P1_and_actual_weights.pdf
+  actual_weights: 0100_D_actual_full_frame_alpha0_1_4.png
+  scope_contours: 0100_D_full_inputs_scope_contours.png
+  original_rgb_valid_depth_pixels: 1286289
+  original_P1_prism_outside_valid_pixels: 1139001
+  context_outside_valid_pixels: 360939
+  previous_display_zero_but_originally_valid_pixels: 714828
+runtime:
+  image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  service: jbgs-p1-weight-attempt-ub7vkblu.service
+  supervisor: systemd user service
+  max_parallel_training: 2
+  status: attempt.UB7vkBLu/status.txt
+  supervisor_log: attempt.UB7vkBLu/supervisor.log
+  gate: attempt.UB7vkBLu/gate.json
+  result_report: attempt.UB7vkBLu/REPORT.md
+  final_receipt: attempt.UB7vkBLu/postprocess/receipt.json
+validation:
+  docker_cpu_tests: 20
+  docker_cpu_status: PASS
+  log: attempt.UB7vkBLu/cpu_tests.log
+  gpu_preflight_status: PASS_ALL_THREE
+interruption:
+  receipt: attempt.UB7vkBLu/interruption_receipt.json
+  last_training_iterations: {alpha0: 8888, alpha1: 8889}
+  main_training_complete: false
+  revised_policy: manually classified R1/R2/R3 support only on 0100_D; unknown and outside zero
+documents:
+  plan: docs/experiments/phd/p1_single_view_weight_v1/EXPERIMENT_PLAN_ko_v1.md
+  mask_audit: docs/experiments/phd/p1_single_view_weight_v1/MASK_AUDIT_ko_v1.md
+  issues: docs/experiments/phd/p1_single_view_weight_v1/ISSUES_ko_v1.md

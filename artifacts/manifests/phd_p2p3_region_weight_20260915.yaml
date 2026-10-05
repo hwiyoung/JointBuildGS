@@ -1,0 +1,24 @@
+schema: jbgs_local_artifact_resolver_v1
+task_id: PHD-P2P3-REGION-WEIGHT-v1
+scientific_verdict: null
+artifact_root: ../JointBuildGS-artifacts
+bundle: phase-payloads/phd/region_weight_v1/PHD-P2P3-REGION-WEIGHT-v1/attempt.wwxHlpSc
+P2:
+  config_sha256: 86a4fc391130da4a72ffcb97e46ab5713840228ca8aaa1c814959a66c4d685c4
+  mask_manifest_sha256: 5a2151f892ce4b1dd7aa1ee00c912cce4b4c48cb6358fd3f51c7c781b95cc226
+  anchor_sha256: 91bc9ad74b115c37d4ae35ec4eb197832e730be165d36f52ebe4bb291f1ebcfd
+  systemd_unit: jbgs-p2-region-weights-attempt.wwxhlpsc.service
+  gpu: 0
+  training_views: 57
+P3:
+  config_sha256: 6eb28a8331bc09cc51a2ebd1a351ef3ba04fcb3b5cfb1e8168e69378f51821b3
+  mask_manifest_sha256: 645d022d91135544a2d71f6f34049f34bf49f1c8759e96d2c3a1ce0204fca4f1
+  anchor_sha256: 3b0de04d99435e36d05ffca49951976352bd663192cce14e59f2bddb58bdf567
+  systemd_unit: jbgs-p3-region-weights-attempt.wwxhlpsc.service
+  gpu: 1
+  training_views: 137
+alphas: [0, 1, 4]
+iterations: [8000, 30000]
+viewer_payload: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/p2p3_weights_v1
+viewer_url: http://127.0.0.1:8910/app/p2p3_weights.html
+completion: All six PASS training receipts, PASS extraction receipts, individual publication.json and combined viewer count 6/6.

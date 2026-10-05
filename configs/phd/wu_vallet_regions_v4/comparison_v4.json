@@ -1,0 +1,23 @@
+{
+  "task_id": "PHD-WU-VALLET-REGIONS-COMPARISON-v4",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "evaluations": [
+    "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/receipt.json",
+    "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-VISIBLE-EVALUATION-v4/run/receipt.json"
+  ],
+  "region_order": ["P1", "P1_visible", "P2", "P2_visible", "P3"],
+  "notes": {
+    "P1": "기본 hash40 시점 838. 전경 가림과 깊이 지원 부족을 별도 확인했습니다. 영역 내 영상 지지가 적은 조건이며 논문 전체의 변화 판정 실패로 해석할 수 없습니다.",
+    "P1_visible": "같은 P1·ALS·궤적·갱신 규칙. 기존 113개 영상 전체에서 native 0.5m XY 지지 셀이 가장 많은 시점을 선택했습니다. 참조·갱신 성능으로 선택하지 않았습니다. 기본 시점과 입력 지원 영향을 비교합니다.",
+    "P2": "기본 hash40 시점 295. 과거 지붕과 현재 구조가 다른 개발 구역입니다. 실제 변화 라벨은 점별로 제공되지 않으며 레퍼런스는 사후 평가 전용입니다.",
+    "P2_visible": "같은 P2·ALS·궤적·갱신 규칙. 기존 66개 영상 전체의 native 0.5m XY 지지 셀 최대 시점입니다. 시점 선택·입력 지원의 영향을 분리하는 추가 대조이며 새 판단법의 기여가 아닙니다.",
+    "P3": "기존 v3 교정 결과를 그대로 재사용합니다. 영상 결손 보완과 신규 영상점 오류 후보의 유입을 함께 봅니다. 기존 ALS의 정확도·현재 적합성을 미리 정답으로 두지 않습니다."
+  },
+  "support_figures": {
+    "P1": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-IMAGE-SUPPORT-v4/run/P1_selected_support.png",
+    "P2": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-IMAGE-SUPPORT-v4/run/P2_selected_support.png",
+    "P1_visible": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-VISIBLE-IMAGE-SUPPORT-v4/run/P1_selected_support.png",
+    "P2_visible": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P2-VISIBLE-IMAGE-SUPPORT-v4/run/P2_selected_support.png"
+  },
+  "scientific_verdict": null
+}

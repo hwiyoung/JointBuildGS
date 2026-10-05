@@ -1,0 +1,50 @@
+{
+  "schema": "GEOGS_NATIVE_REPEAT_OPERATIONAL_RETRY_v1",
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "task_root": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1",
+  "scientific_verdict": null,
+  "repeat_id": "native_repeat_1",
+  "condition": "D005_Pnative",
+  "maximum_additional_attempts_per_region": 1,
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "scientific_config_sha256": "b08bbcc808da060322fc1ed05902edbb08db2a0784dd146f4644adc12228eab4",
+  "runtime_layout_sha256": "28b83d4a462d764cbe0d59b32f7a816db92236141879806a5a1bc8ce4e450cd5",
+  "repeat_contract_sha256": "3c62494f13de96dba33b1c36cbadf58e555305fee01ce641dd41f560bdfacafc",
+  "scientific_controls_changed": false,
+  "source_bytes_changed": false,
+  "input_bytes_changed": false,
+  "seed": 0,
+  "allocator": "backend:native,max_split_size_mb:128",
+  "environment": {
+    "LD_PRELOAD": "/opt/geogs/lib/libstdc++.so.6",
+    "LD_LIBRARY_PATH": "/opt/geogs/lib:/usr/local/cuda/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
+    "TORCH_HOME": "/weights/torch",
+    "OMP_NUM_THREADS": "8",
+    "PYTORCH_CUDA_ALLOC_CONF": "backend:native,max_split_size_mb:128",
+    "JBGS_RUNTIME_REVISION": "allocator_v2"
+  },
+  "targets": {
+    "P1": {
+      "gpu_lock_index": 0,
+      "relative_directory": "native_repeat_allocator_v2/P1/D005_Pnative",
+      "failed_receipt_sha256": "9f4438bbd0e91c3286b4f9cc7af2add51cc5b2a84972c5340db89a4c69d7a1e1",
+      "failed_invocation_sha256": "aaf4905e4688ef4a04dfb8b2b3e53d8415d310d758190f40f95f82dbb4a83931",
+      "input_manifest_sha256": "3257b3604f630a64948606605c3ae46f2e22d4d5829b5ad49a7d46b342a42112",
+      "anchor_checkpoint_sha256": "c08a39aa2deb81b26dd4dd75d0be9e6bb5e150db503f9d422a05423388679274",
+      "anchor_gate_sha256": "4af6cd7db3456fe155080dfa20b70d9f906b45103adaf7468d128ef0686a657a"
+    },
+    "P2": {
+      "gpu_lock_index": 1,
+      "relative_directory": "native_repeat_allocator_v2/P2/D005_Pnative",
+      "failed_receipt_sha256": "0383f1b4abc82cf2cf46381f8e03b43d3f359735c7b96f92bf1d740ad3306d31",
+      "failed_invocation_sha256": "750050331dba791496fd818a1ce211afb408b3e61405953aeb67898aeae933da",
+      "input_manifest_sha256": "6493c602332144510526a54f31700c28cb31eb648250e690d6528fcffe5162a2",
+      "anchor_checkpoint_sha256": "91bc9ad74b115c37d4ae35ec4eb197832e730be165d36f52ebe4bb291f1ebcfd",
+      "anchor_gate_sha256": "0f2559c2637cd394cba36dd08dbf1bf7ba29a948acbf1a82c868b1917feecc0a"
+    }
+  },
+  "retention_policy": "Move only the exact original failed directory once, on the same filesystem, to runtime/native_repeat_retry_v1/<region>/attempt.XXXXXX/preserved_failed_run. Preserve every byte, path, mode and empty directory; preserve original relative paths and resolve them using the recorded mapping. No deletion or model-quality analysis.",
+  "retry_policy": "Archive verification must pass before the unchanged native repeat runner may be invoked once. This wrapper never starts a retry. Original failure hashes are the sole admission identities; a later failure is not eligible for another archive/retry under this contract.",
+  "cost_policy": "Original failed driver duration and memory evidence remain part of resource and reproducibility reporting, separately from the completed retry; never erase failed-attempt cost or equate it with anchor cost.",
+  "interpretation": "Comparisons of the two completed executions are conditional on completion (completion-conditioning). Preserve original CUDA OOM failures and disclose the one operational retry; this is not unconditional repeat variability, an isolated causal allocator effect, a noise bound, or a scientific verdict."
+}

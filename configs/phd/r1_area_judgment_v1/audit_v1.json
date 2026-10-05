@@ -1,0 +1,23 @@
+{
+  "task_id": "PHD-R1-AREA-JUDGMENT-v1",
+  "scientific_verdict": null,
+  "authorization": "2026-09-16 user requested judgments across the entire adopted R1 area, beyond three local examples.",
+  "scope": "CPU input-evidence census and regional review; no training, reference geometry, or manual loss weights",
+  "input_manifest_sha256": "26cba2200d6a49589270f8f6c66f4f1670705f05fa1447056e31371d6531223a",
+  "audit_receipt_sha256": "9abf36630ccfbda9f48549fbebf4515081c2afec76f13107676406e3145a09e4",
+  "region": {"id":"R1", "u_m":[-135,70], "v_m":[-65,35]},
+  "frame": {"crs":"EPSG:25832", "world_shift_xyz_m":[690953,5336071,604], "u_axis_angle_degrees_ccw_from_easting":70, "z_m":[-90,80]},
+  "xy_coverage_cell_m": 0.5,
+  "depth_agreement_m": [0.25,0.5,1.0],
+  "primary_depth_agreement_m": 0.5,
+  "large_disagreement_m": 1.0,
+  "minimum_support_views": 3,
+  "minimum_camera_span_m": 5.0,
+  "dominant_relation_fraction": 0.67,
+  "minimum_prior_visibility_tolerance_m": 0.10,
+  "inspection_view_count": 16,
+  "threshold_role": "Exploratory input relation diagnostics only; not calibrated correctness thresholds or training weights",
+  "surface_role": "Keep MVS and ALS samples separate, including stacked roofs, facade and courtyard surfaces; plan-view coverage is presence only",
+  "unobserved_policy": "Explicit unknown; no implicit preservation or source preference",
+  "resources": {"cpu":4,"ram_gib":8,"gpu":false,"network":"none"}
+}

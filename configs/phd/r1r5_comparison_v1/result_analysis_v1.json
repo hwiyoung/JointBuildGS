@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-R1R5-COMPARISON-v1",
+  "analysis": "PAIRED_INPUT_DISTANCE_DIAGNOSTIC_v1",
+  "scientific_verdict": null,
+  "artifact_root": "/art",
+  "attempt_relative": "phase-payloads/phd/r1r5_comparison_v1/PHD-R1R5-COMPARISON-v1/attempt_20260917T132641Z_aa9r3kak",
+  "r1_review_relative": "phase-payloads/phd/r1_area_judgment_v1/PHD-R1-AREA-JUDGMENT-v1/attempt_20260916T134132Z_9keJVvIo/review_20260916T140058Z_pvyQNrYK/result",
+  "regions": ["R1", "R2", "R3", "R4", "R5"],
+  "branches": ["mvs", "da3", "local_prior0"],
+  "distance_cap_m": 10.0,
+  "mesh": "native fuse.ply before component filtering; hash bound",
+  "queries": "All existing input-reviewed surface samples, exact same XYZ/zone/judgment in each branch",
+  "crs": "EPSG:25832 source; inherited local metric XYZ; no new alignment",
+  "purpose": "Input agreement and paired movement diagnostic, not independent geometry accuracy",
+  "thresholds": "0.5/1/2m descriptive distance summaries; 0.1m descriptive paired change; no pass/fail meaning",
+  "runtime": "CPU Docker, 4 threads, no training or input mutation"
+}

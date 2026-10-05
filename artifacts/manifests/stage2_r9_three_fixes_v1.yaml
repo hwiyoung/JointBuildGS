@@ -1,0 +1,38 @@
+schema_version: 1
+task_id: PHD-STAGE2-R9-THREE-FIXES-v1
+scientific_verdict: null
+kind: implementation-fixes-and-short-trainings
+purpose: put the three rules the method document changed after the r8 review into the code - eq. (7) excludes every Gaussian whose patch judgment is conflict (support vote or propagated), prior-origin Gaussians start with the disk normal on the prior face normal, the LoD2 bottom face (GroundSurface; ClosureSurface) is not part of the prior surface - and check with r8's schedule of 3,500-iteration trainings that the fixes work and that the four cases of r8 did not get worse; plus one control run of the r8 code to 3,050 iterations for the opacity reset. No claim about the method's effect.
+parent_tasks: [PHD-STAGE2-R8-FOUR-CASES-v1]
+terms: {patch judgment: "패치의 판정 (code: J_loc / unit_judgment; the state a Gaussian carries; r8 wording '전파된 판정')", propagated judgment: "전파된 판정 (code: J; what a missing patch receives)"}
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R9-THREE-FIXES-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R9-THREE-FIXES-v1
+status: COMPLETE_TECHNICAL
+report: docs/experiments/phd/stage2_conf_guided_gs_v1/R9_THREE_FIXES_ko_v1.md
+summary_figure: docs/experiments/phd/stage2_conf_guided_gs_v1/figures/r9_three_fixes_summary_v1.png
+shared_module: src/phd/prior_propagation_v3 (conversion, tolerance, surfaces, outlines, locations, seat byte-identical to v2; rule.py + protected(); new faces.py, orientation.py); v2 kept unchanged as the r8 lineage
+settings: [M_N, M_B, L_N, L_B]
+inputs_reused_read_only: PHD-STAGE2-R8-FOUR-CASES-v1 (fork r8, stage-1 products and inputs of the control run, r8 runs, meshes and cases for comparison); PHD-STAGE2-R7-PROPAGATION-v1/stage1/{meshes, ids}; PHD-STAGE2-CONF-GUIDED-GS-v1/inputs/maps and runs/<condition>/scene
+outputs:
+  lod2_without_bottom_faces: stage1/meshes/{M_N.npz, M_B.npz, faces_M_N.npz, faces_M_B.npz, meshes_r9.json}
+  lod2_prior_render: stage1/ids/<setting>/<view>.npz, stage1/prior/<setting>/raw_depth/<view>.npy, stage1/ids/render_check.json (r8 prior depth except the rays that hit a bottom face)
+  stage1: stage1/{tolerance.json, residuals_{M,L}.npz, products/<setting>/{store_<variant>_c0.25.npz, surfaces_<variant>.json, tri_surface_<variant>.npy, fconv/, locmap/, markmap/, summary.json}}
+  stage2_inputs: inputs/<setting>/{tau/, seat_surface.npy, prior_normal.npy, prior_normal_rule.npy, prior_normal_r8cloud.npy (LoD2), removed_bottom_points.npy (LoD2), prepare_<setting>.json}; scenes/{M_N, M_B} (initial cloud without the points on bottom faces)
+  fork_r9: sources/GeoGS-conf-guided-v1-r9 (changed vs r8: jbgs_judgment.py; added src/phd/prior_propagation_v3/*; removed src/phd/prior_propagation_v2/*; provenance/build_report_r9.json, provenance/patches/)
+  dry_runs: runs/dry_<setting>/{model/monitor/{init_report.json, init_points.npz, unplanted.npz, locations.npz, gate_check.npz}, receipt.json}
+  trainings: runs/{M_N, M_B, L_N, L_B, M_N_noprior}/{model/{point_cloud/iteration_3500, dump/iteration_3500 (M_N also 3000, 3001, 3050), monitor/...}, receipt.json}
+  control_run: runs/ctrl_M_N_r8/{model/{point_cloud/iteration_3050, dump/iteration_{3000,3001,3050}, monitor/...}, receipt.json} (fork r8 and r8 inputs unchanged)
+  extra_runs: runs/{r8rep_M_N, r8rep_L_N (r8 fork and inputs again: run-to-run spread), M_N_noorient, L_N_noorient (r9 without fix 'da')}/{model, receipt.json} - outside the order, for the attribution of the differences
+  meshes: mesh/<run>/{mesh_train.ply, mesh_train_virtual.ply, mesh.json, invisible.npz, virtual_view.npz, virtual_view_r8cam.npz, dist_region_*.npy}; mesh/{M_N,L_N}_r8cams (r9 meshed with r8's virtual cameras); mesh/{r8rep_M_N, M_N_noorient}; mesh/M_N/views_shared.{npz,json} (r8's 16 virtual cameras, both scenes; masking check)
+  verification: verify/verify_dry.json
+  premeasure_v4: premeasure_v4/{tables.md, tables.json}
+  cases: cases/{cases.json, fixes.json, cases_extra.json, sections_na.npy, reset_layers.json, occluders.json, tables.md, r8_initial_quaternions.npy, r8_initial_quaternions.json}
+  figures: figures/r9_three_fixes_summary_v1.png
+  superseded: sources_superseded/, logs/superseded/ (first render rule, replaced before any product was kept)
+runtime_images: [jointbuildgs:geogs-conf-guided-v1 (fork dry runs, trainings, control run, GPU tests, meshes, r8 rotation draw), jointbuildgs:geogs-official-db40c95-compat-v1 (LoD2Depth renders), jointbuildgs:dev (all other steps)]
+config: configs/phd/stage2_r9_three_fixes_v1/r9.json
+scripts: scripts/phd/stage2_r9_three_fixes_v1 (run_all.sh)
+tests: [tests/phd/test_prior_propagation_v2.py (CPU, 24 pass), tests/phd/test_prior_propagation_v3.py (CPU, 24 v2 tests on v3 + 10 new, pass), scripts/phd/stage2_r9_three_fixes_v1/gpu_tests_r9.py (GPU, r8's 6 groups + 2 new, pass), verify_dry_r9.py (4 settings pass)]
+training_schedule: "as PHD-STAGE2-R8-FOUR-CASES-v1: 3,500 iterations, seed 0, 13 training + 2 test views at 1600 x 1157, base settings; read-out red/green checks recorded, not stopping; control run 3,050 iterations; four extra runs 3,500 iterations"
+payload_size: about 35 GB
+retention: preserve stage1, inputs, scenes, sources, runs, mesh, verify, premeasure_v4, cases, figures, logs, provenance; superseded folders may be removed after review

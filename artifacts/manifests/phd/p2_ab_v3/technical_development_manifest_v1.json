@@ -1,0 +1,319 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab_v3.development.v1",
+  "task_id": "PHD-P2-AB-V3-CONCRETE-METHODS-v1",
+  "status": "DEVELOPMENT_COMPONENTS_VERIFIED",
+  "scientific_verdict": null,
+  "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "source_sha256": {
+    "configs/phd/p2_ab_v3/a_joint_error_probe_v1.json": "9af5dd2d0129a7247458ddf3db502a508ca3df0fc08e4b27347acce0ba459b31",
+    "configs/phd/p2_ab_v3/b_appearance_probe_v1.json": "1ae2991ba00e6b14204dde6f8938bf77351628b3cae47ae01e0011ce2f378280",
+    "configs/phd/p2_ab_v3/b_sh_probe_v1.json": "94e64189a49d5eb83ea6d3dd2cc2e7ee87dfeda25f6517f11593462d5bf4f56f",
+    "configs/phd/p2_ab_v3/handoff_probe_v1.json": "eaa9fc68fbabbe8a4419a6f4fdcd257f010d2798cebab2d240d2d67a0f833272",
+    "docs/experiments/phd/p2_ab_v3/00_CONTRIBUTION_AND_METHOD_DESIGN_ko_v3.md": "716fbe24c402e1cecde70435cae47bccd15fc230977804ee8c85bd727c62f1ac",
+    "docs/experiments/phd/p2_ab_v3/01_IMPLEMENTATION_ENTRY_ko_v3.md": "0b2d572b9d3d3b4f0566ebc14b9086883880102c42c917e76b6707282b928984",
+    "docs/experiments/phd/p2_ab_v3/02_DEVELOPMENT_RETURN_ko_v3.md": "973d5dfa1257afca4dd148f87beb3c47348a07bdd596f24fa21123b203a38a55",
+    "docs/experiments/phd/p2_ab_v3/A_CONCRETE_METHOD_ko_v3.md": "1ccdfb25a430198afc4781800cffb67d87dc039c6fcc2b156556a8a50337c738",
+    "docs/experiments/phd/p2_ab_v3/B_CONCRETE_METHOD_ko_v3.md": "03570c7cba102b31ea057139ec3bed7f4260d1518ff86228d43f93625e746130",
+    "docs/experiments/phd/p2_ab_v3/ISSUES_ko_v3.md": "80c02697c6bf200ade8cdcdf741d0f6679cc7fc7b86cb35e9c4dbd20e17d76c1",
+    "scripts/phd/p2_ab_v3/a_joint_error_probe.py": "1a2f2e78725e49e1e0c6c559941d37ba3314b3e3a70fc3f666a3a11b7a501bf6",
+    "scripts/phd/p2_ab_v3/b_appearance_probe.py": "d82c0fb9f604c6cc631026fbd849a6f5432e8db67916eb318f97d07c8c63487a",
+    "scripts/phd/p2_ab_v3/b_sh_probe.py": "f801eab8479a93afb5541563fc7e6f9c2e396ab77fc1843792f2cef7e194457f",
+    "scripts/phd/p2_ab_v3/handoff_probe.py": "5ed9eedfe7adaf23fdd10b50939d7ebd0b286758c3fd9c0c2483c61035d765d7",
+    "scripts/phd/p2_ab_v3/handoff_probe_docker.sh": "a78122c51eecf4624487cbf3776912a2b538e799b606d65312d576c43ad77390",
+    "scripts/phd/p2_ab_v3/package_development.py": "ce42de441bce86f48d38c5d349c5ce395667d4a34f1c311d2c002cd5f9e3c609",
+    "scripts/phd/p2_ab_v3/verify_development.py": "01045873241d902b6b80e10748b94553fb5d5819d54e13c05529cbc6577cde13",
+    "src/phd/p2_ab_v3/appearance.py": "62b0b85a04b4539aeaceec131b74d8eeaa2200c669dcb227f9d2e074d86b7d13",
+    "src/phd/p2_ab_v3/appearance_sh.py": "b726cc299cfef05987f48a9a4880287f8c0a795af39657ab6410f57d7ffd8024",
+    "src/phd/p2_ab_v3/handoff.py": "0f0b254d48f1711cd12e8941d144910ddeb56de860b7172d168e2041a7552096",
+    "src/phd/p2_ab_v3/joint_error.py": "e426ec118724361fb6f239e8c744300f0023403e4293ecc3fd5fbf383272a69f",
+    "tests/phd/test_p2_ab_v3_appearance.py": "431c812b7a797cfa167e186c34dc1615064750b6b477910509c45276b8f877b0",
+    "tests/phd/test_p2_ab_v3_appearance_sh.py": "2d3190b1622d2d93ae52b6a0040389e40dc8ac66fd42026a74e3c39646eff57b",
+    "tests/phd/test_p2_ab_v3_handoff.py": "b014cf4b33db7ccce8d63207933a38d6a7e41e31f4f9e6ef54e23cd8b50af313",
+    "tests/phd/test_p2_ab_v3_joint_error.py": "86fdec5c058df79796434b7ede8e30d7c17fe4832689acf5129e35555c40007b"
+  },
+  "receipts": {
+    "A_synthetic": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v3/PHD-P2-AB-V3-A-JOINT-ERROR-PROBE-v2/receipt.json",
+      "sha256": "d7ce8aeb7bf4977dedfdb421ea0dd6e6162c227272c035e6fea5876844484f68"
+    },
+    "B_SH0": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v3/PHD-P2-AB-V3-B-APPEARANCE-v1/result.json",
+      "sha256": "4c07431048027055f21c48fdaaa320aa6fe7a2966ff7533a71d01327cb0be9b0"
+    },
+    "B_SH3": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v3/PHD-P2-AB-V3-B-SH3-v1/result.json",
+      "sha256": "4f72ab80a70b5e7184ef3e343708776e2db2b85a19654873dcd8dd6f02c8f5fc"
+    },
+    "handoff_fixture": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v3/PHD-P2-AB-V3-HANDOFF-v1/return/receipt.json",
+      "sha256": "d6a1fb9ded4ebb3caaba422944a0b6ea40427180918d5b50afbb549b799c9801"
+    },
+    "verification": {
+      "artifact_relative_path": "phase-payloads/phd/p2_ab_v3/PHD-P2-AB-V3-VERIFICATION-v1/return/receipt.json",
+      "sha256": "f8809c0835fab8f0c76b9271ef76de33bb205259cf6ffedc27d64842a83af13c"
+    }
+  },
+  "all_executed_sources_match": true,
+  "all_SH0_SH3_initial_images_masks_and_depths_match": true,
+  "cross_representation_initial_checks": {
+    "rgb_542.png": true,
+    "target_542.png": true,
+    "support_542.png": true,
+    "quality_542.npy": true,
+    "depth_542.npy": true,
+    "geometry_mass_542.npy": true,
+    "rgb_435.png": true,
+    "target_435.png": true,
+    "support_435.png": true,
+    "quality_435.npy": true,
+    "depth_435.npy": true,
+    "geometry_mass_435.npy": true,
+    "rgb_331.png": true,
+    "target_331.png": true,
+    "support_331.png": true,
+    "quality_331.npy": true,
+    "depth_331.npy": true,
+    "geometry_mass_331.npy": true,
+    "rgb_555.png": true,
+    "target_555.png": true,
+    "support_555.png": true,
+    "quality_555.npy": true,
+    "depth_555.npy": true,
+    "geometry_mass_555.npy": true,
+    "rgb_427.png": true,
+    "target_427.png": true,
+    "support_427.png": true,
+    "quality_427.npy": true,
+    "depth_427.npy": true,
+    "geometry_mass_427.npy": true,
+    "rgb_412.png": true,
+    "target_412.png": true,
+    "support_412.png": true,
+    "quality_412.npy": true,
+    "depth_412.npy": true,
+    "geometry_mass_412.npy": true,
+    "rgb_333.png": true,
+    "target_333.png": true,
+    "support_333.png": true,
+    "quality_333.npy": true,
+    "depth_333.npy": true,
+    "geometry_mass_333.npy": true,
+    "rgb_543.png": true,
+    "target_543.png": true,
+    "support_543.png": true,
+    "quality_543.npy": true,
+    "depth_543.npy": true,
+    "geometry_mass_543.npy": true,
+    "rgb_338.png": true,
+    "target_338.png": true,
+    "support_338.png": true,
+    "quality_338.npy": true,
+    "depth_338.npy": true,
+    "geometry_mass_338.npy": true,
+    "rgb_394.png": true,
+    "target_394.png": true,
+    "support_394.png": true,
+    "quality_394.npy": true,
+    "depth_394.npy": true,
+    "geometry_mass_394.npy": true,
+    "rgb_361.png": true,
+    "target_361.png": true,
+    "support_361.png": true,
+    "quality_361.npy": true,
+    "depth_361.npy": true,
+    "geometry_mass_361.npy": true
+  },
+  "A_designed_case_summary": {
+    "joint": {
+      "case_count": 9,
+      "accepted_count": 5,
+      "false_adoption_count": 0,
+      "false_adoption_fraction": 0.0,
+      "action_counts": {
+        "FUSION": 1,
+        "IMAGE": 2,
+        "PRIOR": 2,
+        "ABSTAIN": 4
+      },
+      "status_counts": {
+        "SOLVED_NUMERICAL": 6,
+        "UNBOUNDED": 1,
+        "CALIBRATION_UNKNOWN": 1,
+        "MODEL_INCONSISTENT": 1
+      },
+      "full_generating_latent_truth_in_declared_model_count": 8,
+      "current_x_truth_feasible_count": 8,
+      "current_x_truth_unsolved_count": 0
+    },
+    "prior_error_zero": {
+      "case_count": 9,
+      "accepted_count": 4,
+      "false_adoption_count": 0,
+      "false_adoption_fraction": 0.0,
+      "action_counts": {
+        "ABSTAIN": 5,
+        "IMAGE": 2,
+        "PRIOR": 2
+      },
+      "status_counts": {
+        "MODEL_INCONSISTENT": 2,
+        "SOLVED_NUMERICAL": 5,
+        "UNBOUNDED": 1,
+        "CALIBRATION_UNKNOWN": 1
+      },
+      "full_generating_latent_truth_in_declared_model_count": 0,
+      "current_x_truth_feasible_count": 6,
+      "current_x_truth_unsolved_count": 0
+    },
+    "image_error_zero": {
+      "case_count": 9,
+      "accepted_count": 3,
+      "false_adoption_count": 0,
+      "false_adoption_fraction": 0.0,
+      "action_counts": {
+        "ABSTAIN": 6,
+        "PRIOR": 1,
+        "IMAGE": 2
+      },
+      "status_counts": {
+        "MODEL_INCONSISTENT": 3,
+        "SOLVED_NUMERICAL": 4,
+        "UNBOUNDED": 1,
+        "CALIBRATION_UNKNOWN": 1
+      },
+      "full_generating_latent_truth_in_declared_model_count": 0,
+      "current_x_truth_feasible_count": 5,
+      "current_x_truth_unsolved_count": 0
+    },
+    "drop_noise_link": {
+      "case_count": 9,
+      "accepted_count": 5,
+      "false_adoption_count": 0,
+      "false_adoption_fraction": 0.0,
+      "action_counts": {
+        "FUSION": 1,
+        "IMAGE": 2,
+        "PRIOR": 2,
+        "ABSTAIN": 4
+      },
+      "status_counts": {
+        "SOLVED_NUMERICAL": 6,
+        "UNBOUNDED": 1,
+        "CALIBRATION_UNKNOWN": 1,
+        "MODEL_INCONSISTENT": 1
+      },
+      "full_generating_latent_truth_in_declared_model_count": 8,
+      "current_x_truth_feasible_count": 8,
+      "current_x_truth_unsolved_count": 0
+    },
+    "shared_error_zero": {
+      "case_count": 9,
+      "accepted_count": 6,
+      "false_adoption_count": 1,
+      "false_adoption_fraction": 0.16666666666666666,
+      "action_counts": {
+        "FUSION": 2,
+        "IMAGE": 2,
+        "PRIOR": 2,
+        "ABSTAIN": 3
+      },
+      "status_counts": {
+        "SOLVED_NUMERICAL": 6,
+        "UNBOUNDED": 1,
+        "CALIBRATION_UNKNOWN": 1,
+        "MODEL_INCONSISTENT": 1
+      },
+      "full_generating_latent_truth_in_declared_model_count": 5,
+      "current_x_truth_feasible_count": 7,
+      "current_x_truth_unsolved_count": 0
+    },
+    "force_same_epoch": {
+      "case_count": 9,
+      "accepted_count": 4,
+      "false_adoption_count": 0,
+      "false_adoption_fraction": 0.0,
+      "action_counts": {
+        "FUSION": 1,
+        "ABSTAIN": 5,
+        "PRIOR": 3
+      },
+      "status_counts": {
+        "SOLVED_NUMERICAL": 6,
+        "MODEL_INCONSISTENT": 2,
+        "CALIBRATION_UNKNOWN": 1
+      },
+      "full_generating_latent_truth_in_declared_model_count": 5,
+      "current_x_truth_feasible_count": 6,
+      "current_x_truth_unsolved_count": 0
+    }
+  },
+  "B_summary": {
+    "B_SH0": [
+      {
+        "arm": "uniform",
+        "steps": 512,
+        "checks": {
+          "geometry_parameters_exact": true,
+          "geometry_and_alpha_renders_exact": true,
+          "raw_sh0_export_matches": true
+        },
+        "fixed_support_pixel_weighted_mae": 0.18554275389153266,
+        "mean_view_mae": 0.18464803831143814,
+        "mean_view_ssim": 0.3452688997442072
+      },
+      {
+        "arm": "residual_weighted",
+        "steps": 512,
+        "checks": {
+          "geometry_parameters_exact": true,
+          "geometry_and_alpha_renders_exact": true,
+          "raw_sh0_export_matches": true
+        },
+        "fixed_support_pixel_weighted_mae": 0.1850169383885368,
+        "mean_view_mae": 0.18512671914967624,
+        "mean_view_ssim": 0.3450377028096806
+      }
+    ],
+    "B_SH3": [
+      {
+        "arm": "uniform",
+        "steps": 512,
+        "checks": {
+          "geometry_parameters_exact": true,
+          "geometry_and_alpha_renders_exact": true,
+          "higher_sh_nonzero": true,
+          "raw_sh0_export_matches": true
+        },
+        "fixed_support_pixel_weighted_mae": 0.1715143505271379,
+        "mean_view_mae": 0.17149586365981537,
+        "mean_view_ssim": 0.3677655336531726
+      },
+      {
+        "arm": "residual_weighted",
+        "steps": 512,
+        "checks": {
+          "geometry_parameters_exact": true,
+          "geometry_and_alpha_renders_exact": true,
+          "higher_sh_nonzero": true,
+          "raw_sh0_export_matches": true
+        },
+        "fixed_support_pixel_weighted_mae": 0.17105860193516428,
+        "mean_view_mae": 0.17187866297635165,
+        "mean_view_ssim": 0.36683172393928876
+      }
+    ]
+  },
+  "preservation": {
+    "v2_source_files": 89,
+    "v2_receipts": 20,
+    "original_v3_design_unchanged": true
+  },
+  "limitations": [
+    "A uses supplied synthetic scalar constraints; no calibrated real-P2 A decisions",
+    "Handoff uses an explicit same-P2 source-routing fixture, not inferred decisions",
+    "B uses fixed ALS diagnostic geometry; no actual A handoff consumed",
+    "SH appearance and weight probes do not execute surface binding or geometry detail recovery",
+    "No strong published baseline reproduction or scientific/generalization verdict"
+  ]
+}

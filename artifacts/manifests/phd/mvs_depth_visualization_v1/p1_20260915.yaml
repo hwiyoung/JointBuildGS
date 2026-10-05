@@ -1,0 +1,38 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-P1-MVS-INPUT-VIS-v1
+status: PASS_INPUT_VISUALIZATION_ONLY
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/mvs_depth_visualization_v1/PHD-P1-MVS-INPUT-VIS-v1/attempt.zI9b4d
+  durability: local external storage; not a durable-backup claim
+receipt:
+  relative: figures/receipt.json
+  sha256: 0b87c2ec7f6fcdf3a09087a486da6b6aec6ee30150c041abcf17c860618a910d
+source:
+  script: scripts/phd/mvs_depth_visualization_v1/visualize.py
+  driver: scripts/phd/mvs_depth_visualization_v1/run_p1.sh
+  config: configs/phd/mvs_depth_visualization_v1/p1_v1.json
+  snapshot_relative: source
+  runtime_image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+scope:
+  cameras: [DJI_20241217084553_0100_D.JPG, DJI_20241217102955_0023_D.JPG]
+  input_only: true
+  training: false
+  gpu: false
+  reference_access: false
+  confidence_inferred: false
+  supervision_masks_created: false
+  candidate_rectangles: display-only input-based proposals; no cross-view mapping
+  source_hashes: binding plus RGB, native MVS depth, prior NPY and parent manifest checked
+  raw_depth_preserved: true
+  diagnostic_ray_difference: MVS nearest-native lookup and original prior half-pixel rays are nonidentical
+  candidate_c: outside original P1 evaluation prism, inside existing training context
+figures:
+  primary: figures/P1_train_1/depth_comparison.png
+  candidates: figures/P1_train_1/region_candidates.png
+  heights: figures/P1_train_1/height_comparison.png
+  oblique: figures/P1_train_2/depth_comparison.png
+documents:
+  result: docs/experiments/phd/mvs_depth_visualization_v1/RESULT_ko_v1.md
+  issues: docs/experiments/phd/mvs_depth_visualization_v1/ISSUES_ko_v1.md

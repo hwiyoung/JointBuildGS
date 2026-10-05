@@ -1,0 +1,8 @@
+# Stage-2 judgment-guided GeoGS image: the frozen official GeoGS image plus TensorBoard (offline wheels).
+# numpy/pillow/setuptools of the base image are deliberately left untouched (wheels installed --no-deps).
+FROM jointbuildgs:geogs-official-db40c95-compat-v1
+COPY wheels /tmp/wheels
+RUN pip install --no-index --no-deps --find-links /tmp/wheels \
+      tensorboard absl-py grpcio markdown protobuf tensorboard-data-server werkzeug packaging markupsafe \
+    && rm -rf /tmp/wheels \
+    && python -c "import torch.utils.tensorboard as t; print('tensorboard ok', t.__name__)"

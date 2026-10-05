@@ -1,0 +1,40 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-R1R5-VIEW-SUPPORT-v1
+status: PASS_INPUT_SUPPORT_AUDIT
+scientific_verdict: null
+snapshot_utc: '2026-09-15T13:19:56Z'
+scope: Five object-aligned region input image and native MVS supervision support census; no new training
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  container_artifact_root: /artifacts/JointBuildGS
+  relative: phase-payloads/phd/region_view_support_v1/PHD-R1R5-VIEW-SUPPORT-v1
+  durability: local external storage; not a durable-backup claim
+active_attempt: attempt_20260915T130845Z_TkeMtl
+region_version: R1R5_OBJECT_ALIGNED_v1
+config: configs/phd/region_view_support_v1/regions_v1.json
+report: docs/experiments/phd/region_view_support_v1/RESULT_ko_v1.md
+receipts:
+  census:
+    relative: attempt_20260915T130845Z_TkeMtl/result/receipt.json
+    sha256: 9abf36630ccfbda9f48549fbebf4515081c2afec76f13107676406e3145a09e4
+  validation:
+    relative: attempt_20260915T130845Z_TkeMtl/review/validation.json
+    sha256: 8fecfa015fa63726d95c48e2ae0e503dd7193e3f7cc02ac73818956b2b4f4f1d
+  old_selection:
+    relative: attempt_20260915T130845Z_TkeMtl/selection_review/receipt.json
+    sha256: 08a072b741fe4ca898733d020484c57158e2ee6e4b3b32ba7d828e408f130dee
+  explicit_lists:
+    relative: attempt_20260915T130845Z_TkeMtl/exports/receipt.json
+    sha256: 4310979c69f53065465d8e5d231a93a344b74e45e317f76e81361f32b5ad3463
+failed_attempts:
+  - relative: attempt_20260915T130749Z_VUSB9Q
+    issue: RV-004; missing result path segment, fixed before camera census; failure and source preserved
+training_runs: 0
+input_cameras: 937
+coordinate_crs: EPSG:25832
+interpretation:
+  actual_loss_or_gradient_measured: false
+  independent_reference_evaluation: false
+  source_currentness_or_accuracy_decided: false
+  overlapping_regions: true
+  historical_mvs_uses_evaluation_images: true

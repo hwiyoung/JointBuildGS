@@ -1,0 +1,29 @@
+{
+  "task_id":"PHD-P2P3-REGION-WEIGHT-v1",
+  "scientific_verdict":null,
+  "authorization":"2026-09-15 user accepted P2/P3 manual region drafts and requested training and viewer connection; inherited alpha 0/1/4 and per-completion display",
+  "regions":["P2","P3"],
+  "alphas":[0,1,4],
+  "anchor_iteration":8000,
+  "preflight_stop":8300,
+  "final_iteration":30000,
+  "mode":"mvs",
+  "prior_weight":0.005,
+  "visual_weight":0.05,
+  "dynamic_visual_weight":false,
+  "protection":"native",
+  "mask_policy":"Every bound train depth uses the accepted generated mask: R1 alpha; R2/R3 one; R4/R5/R6 and invalid zero. RGB and camera sampling remain unchanged.",
+  "loss_denominator":"original per-view finite-prediction and positive-finite-target count; independent of support and alpha",
+  "p1_comparison_limit":"P1 intervenes in one camera only; P2/P3 use all generated camera masks. Alpha comparisons are matched within each region.",
+  "runtime_image_id":"sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "allocator":"backend:native,max_split_size_mb:128",
+  "parent_config_sha256":"3555f528c7b2c91941c4f9e4812bcf918351605ec6c793c272be7e42a8785c5c",
+  "annotation_receipts":{
+    "P2":"0408bfe86cdaac35b72ac7120b07b6a83a39289f9f1bff10c5f6f1d0d2224a5c",
+    "P3":"a398c345e21c97c397a3e11f58afd625249dadbd2a86e923be9568f09295de8b"
+  },
+  "resource_policy":"At most one job per GPU; P2 GPU0 and P3 GPU1; preserve P1 complete training, postprocessing and incremental viewer priority; each condition extraction/publication precedes the next alpha on that GPU.",
+  "viewer_depth_ranges_m":{"P2":[50,85],"P3":[10,125]},
+  "crs":"EPSG:25832 inherited local coordinates and datum limitations",
+  "scientific_scope":"Non-confirmatory development; input-fit and rendering are not independent geometry accuracy"
+}

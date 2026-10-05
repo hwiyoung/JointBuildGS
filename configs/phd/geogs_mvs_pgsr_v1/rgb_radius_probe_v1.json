@@ -1,0 +1,18 @@
+{
+  "task_id": "PHD-GEOGS-RGB-RADIUS-PROBE-v1",
+  "scientific_verdict": null,
+  "diagnostic_attempt": "attempt.Ym5F9Uzs",
+  "diagnostic_manifest_sha256": "f2b338a0da04831a9eabd3abb0a69fab27b844a8ceb9874658b2c18a1246c70b",
+  "radius_thresholds_px": [20, 50, 100],
+  "cases": [
+    {"case": "P1_train_1", "condition": "mvs_0.0005"},
+    {"case": "P1_train_2", "condition": "mvs_0.0005"},
+    {"case": "P1_train_1", "condition": "mvs_0.005"},
+    {"case": "P2_evaluation_2", "condition": "mvs_0.005"},
+    {"case": "P2_evaluation_2", "condition": "mvs_0.0005"},
+    {"case": "P2_train_1", "condition": "da3_0.005"},
+    {"case": "P3_evaluation_2", "condition": "mvs_0.005"}
+  ],
+  "selection": "Previously displayed failures and paired conditions, plus P1 train_2 as a less-blurred same-model comparison; diagnostic selection, not independent evaluation.",
+  "scope": "Forward rendering only from immutable 30k PLY. No optimizer, training, extraction, camera change or source modification. Thresholds are diagnostic interventions, not recommended pruning settings."
+}

@@ -1,0 +1,33 @@
+{
+  "task_id": "PHD-P2-AB-C-v1",
+  "status": "USER_DIRECTED_DEVELOPMENT_NON_CONFIRMATORY",
+  "scientific_verdict": null,
+  "horizontal_crs": "EPSG:25832",
+  "tolerances_m": [0.25, 0.5, 1.0],
+  "reference_xy_radius_m": 0.5,
+  "candidate_error_statistic": "prediction_to_reference nearest3d p90 on exact candidate points",
+  "candidate_error_interpretation": "reference-conditioned point-set diagnostic, not continuous surface certification",
+  "candidate_reference_support": "all sampled candidate points must have a UAS point within 0.5m XY to label candidate_ok; otherwise unknown",
+  "denominators": ["all frozen P2 cells", "geometry-selected A cells", "evaluated accepted cells", "native UAS points in selected cells", "reconstruction-rendered points"],
+  "missing_prediction": "zero reference recovery; precision and prediction error null",
+  "missing_reference": "unknown; never zero error or success",
+  "reference_uncertainty_m": null,
+  "reference_use": "evaluation only; no registration, candidate selection, thresholds or optimizer updates",
+  "parameter_provenance": {
+    "tolerances_m": "retained unvalidated sensitivity axes of prior_use_height_probe_v2, fixed before current UAS measurements",
+    "reference_xy_radius_m": "new diagnostic matching support radius for this development comparison; report distances and unmatched counts, no official accuracy claim",
+    "p90": "new descriptive candidate point-set error statistic; no tuning on current reference"
+  },
+  "comparison_axes": {
+    "decision_only": "A methods passed to identical fixed-source/texturing geometry and identical fixed-geometry GS where executed",
+    "reconstruction_only": "same measured A handoff, candidate points, support, and view roles across B arms",
+    "full_method": "matched A/B crossings only; no extrapolation from missing cells or unexecuted strong published solvers"
+  },
+  "visual_contract": {
+    "surface": "standalone scientific PNG/PDF plus local interactive 3D inspection application",
+    "risk_coverage": "scatter of every preregistered sensitivity setting, stratified tolerance and condition, denominator = selected unique cells; null risk absent from axis and listed separately",
+    "reconstruction": "same-view initial/final/target images and native MVS/ALS/UAS with extracted surfaces; UAS evaluation-only",
+    "palette": "blue, orange, olive, gold, pink; marker/line shape also distinguishes methods",
+    "unknown": "explicit null/unknown values, no interpolation across unmatched risk or coverage"
+  }
+}

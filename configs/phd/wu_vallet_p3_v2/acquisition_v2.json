@@ -1,0 +1,16 @@
+{
+  "schema": "jointbuildgs.wu_vallet.acquisition.v2",
+  "task_id": "PHD-WU-VALLET-P3-ACQUISITION-v2",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "native_relative_path": "phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-v1-r2/common/native.npz",
+  "native_sha256": "ef75f95818fb7d7edc7b3eebd43f794b91986e30a6020d946849a1c4b3908f57",
+  "source_config": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "output_relative_path": "phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-ACQUISITION-v2",
+  "expected_p3_points": 52762,
+  "context_time_padding_seconds": 0.25,
+  "scan_reset_degrees": 5.0,
+  "scan_reset_sensitivity_degrees": [2.0, 5.0, 10.0, 20.0],
+  "minimum_scan_boundaries": 4,
+  "scientific_verdict": null,
+  "scope": "Recover every P3 ALS raw row and same-strip temporal context from four frozen raw tiles; derive pulse groups and scan-time coordinates. No guessed origins, GT, GS or spatial XY mesh."
+}

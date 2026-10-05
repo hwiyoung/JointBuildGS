@@ -1,0 +1,52 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-MAIN-PREP-DISCARD-RULE-v1
+status: DISCARD_RULE_COMPARISON_COMPLETE_ANALYST_RECOMMENDATION_PENDING_USER_DECISION
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1
+  durability: local external storage; not a durable-backup claim
+report: docs/experiments/phd/main_prep_discard_rule_v1/버리는기준_보고서_v1.md
+decision_request: docs/experiments/phd/main_prep_discard_rule_v1/버리는기준_결정요청_v1.md   # summary for the order side (decisions 가~마, draft table for the next order)
+figures: docs/experiments/phd/main_prep_discard_rule_v1/figures/
+scripts: scripts/phd/main_prep_discard_rule_v1/
+module: src/phd/prior_propagation_v5/   # new; v4 kept byte-identical (r10 lineage)
+tests: tests/phd/test_prior_propagation_v5.py
+configs:
+  - configs/phd/main_prep_discard_rule_v1/discard_v1.json   # written before any result (rules, k, counting, regions, B0 selection rule, switches)
+  - configs/phd/main_prep_discard_rule_v1/sites_v1.json     # representative sites, written before any result
+base_config: configs/phd/main_prep_measure_v1/prep_v5.json   # GT rules v5 (locked by the user)
+upstream: artifacts/manifests/phd/main_prep_measure_v1/manifest_v1.yaml   # prep measure v1.1 (ranges, boxes, GT, exclusion cells)
+training_code: fork GeoGS-conf-guided-v1 r11 (r10 + module v5 + seven switches + rule choice); payload sources/GeoGS-conf-guided-v1-r11/, generated patch files scripts/phd/main_prep_discard_rule_v1/fork_r11/
+constraints: no Gaussian training (initialisation-only runs; protection and penalty as code tests on a 40-Gaussian scene); MVS rebuilt from training images only (pinned COLMAP GPU image); Docker, network off, inputs read-only; GT v5 and exclusion cells unchanged; no commit
+docker_images:
+  - jointbuildgs:dev
+  - jointbuildgs:geogs-conf-guided-v1   # fork r11 initialisation and GPU code tests
+  - colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf
+pending_user_decisions:
+  - "discard rule and k per prior (analyst: ALS margin_prop k=2, LoD2 current; ALS measured margin_all k=2 is a trade-off left to the user)"
+  - "B0 nadir-including conditions: N2 MVS failed (17 shared sparse points, 0 depth maps); options (a) keep rule, (b) N2 = MVS-feasible pair, (c) re-select all N with connected greedy (analyst)"
+  - "store-shift implementation difference (registered hits located in the unregistered patch store): fix before the main experiment or not"
+  - "commit of module v5, tests, scripts, configs and fork r11 files"
+payload_files:
+  mvs/: training-only MVS of R1, R2, R3E, R4, R5, SW, B0 and B0_N13 / N8 / N2 with COLMAP receipts
+  mvs_lists/: images of each MVS
+  s02/, s02_box/: meshes and patch stores with module v5 (element-equal to the prep)
+  eq1/: equivalence check 1 (prep inputs re-run; compare.json all equal)
+  s52/s03/: stage 1 on the new MVS per range and prior (new tolerance and registration, tallies at 0.5-3 tau, knn.npz)
+  s52/gt/: GT re-aligned on the new MVS (v5 rules) and labels; exclusion cells = prep files (recomputed equal)
+  s52/box/, s52/box_maskoff/, s52/box_gt/: the four boxes re-scored with the new fixed values; confidence-mask-off variant; box labels
+  s52/export/, s52/export_maskoff/: per-view maps read by the fork (confidence, MVS depth, prior depth, tau, patch map, marks, mark codes)
+  s53/, s53_gt/: B0 observation-amount conditions (COVER, A15, A9, A3, N13, N8) stage 1 and labels
+  b0_conditions.json: views of the B0 conditions and selection order
+  sources/, provenance/: fork r11 sources and build report
+  fork_inputs/s52/: fork r11 inputs per box
+  fork_runs/s52/: fork r11 initialisation runs (all on, each switch off; 4 boxes x 2 priors x 8)
+  fork_checks/: equivalence check 2 and the switch table (s52.json; ft.json = first smoke test on v1.1 values)
+  gpu_tests_r11.json: fork code tests (unchanged functions, defaults, penalty function, protection)
+  rules/: counts per rule (counts.json, counts_long.csv), per-patch discard flags (decisions/), sites.json
+  tables/: report tables (report_tables.md), tau_registration, box_rescore, b0_conditions, tradeoff.csv
+  figs/: figure sources (copied to the report figures/)
+  diag/: observation-only diagnostics (store shift, N options)
+  logs/: progress.md, queue.log, step logs
+  receipt_task.json: commit, Docker image ids, COLMAP digest, script / config / input hashes, step times

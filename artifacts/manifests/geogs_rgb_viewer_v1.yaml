@@ -1,0 +1,65 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-GEOGS-MVS-PGSR-RGB-VIEWER-v1
+scientific_verdict: null
+viewer_url: http://127.0.0.1:8910/
+status: PASS_RGB_VIEWER_MVS_SURFACE_ONLY_WITH_ACTIVE_TRAINING_QUEUE
+verified_at_utc: '2026-09-15T04:37:00Z'
+parent_resolver: artifacts/manifests/geogs_mvs_pgsr_v1.yaml
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1
+  durability: local external storage; not a durable-backup claim
+runtime:
+  viewer_container: jbgs-geogs-rgb-viewer-8910
+  builder_container: jbgs-geogs-rgb-builder-v1
+  image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  gpu_devices: none
+  source_inputs_read_only: true
+  source_snapshot_relative: sources/attempt.96SnSkp0
+  previous_source_snapshot_relative: sources/attempt.RcUoSdza
+  rollback_builder_container: jbgs-geogs-rgb-builder-v1-rollback-attempt.9ipopwga
+  refresh_seconds: 60
+data:
+  current_manifest_relative: manifest.json
+  current_builder_status_relative: builder_status.json
+  immutable_exports_relative: cache
+  manifest_history_relative: snapshots
+  browser_evidence_relative: browser_qa
+  roles: [prior, mvs, anchor, vanilla, geogs, mvs_geogs, gt]
+  regions: [P1, P2, P3]
+  native_rgb_mesh_resolution: 512
+  point_cap: 200000
+  source_geometry_changed: false
+  scoring_uses_display_data: false
+  gaussian_centers_are_surfaces: false
+  mvs_geogs_representation_policy: surface_only
+  absent_mvs_surface_behavior: explicit_pending_no_center_fallback
+  mvs_surface_resolution_order: [canonical_finalization, completed_matched_comparison]
+  available_mvs_surfaces_at_verification: 4
+  pending_mvs_surfaces_at_verification: 8
+code:
+  app: src/apps/geogs_rgb_comparison_v1
+  driver: scripts/phd/geogs_mvs_pgsr_v1/viewer
+  config: configs/phd/geogs_mvs_pgsr_v1/viewer_rgb_v1.json
+documents:
+  description: docs/experiments/phd/geogs_mvs_pgsr_v1/RGB_VIEWER_ko_v1.md
+  issues: docs/experiments/phd/geogs_mvs_pgsr_v1/ISSUES_ko_v1.md
+  refinement_diagnostic: docs/experiments/phd/geogs_mvs_pgsr_v1/REFINE_QUALITATIVE_GAP_ko_v1.md
+validation:
+  initial_cpu_export_baseline_tests: 12
+  surface_update_cpu_export_selection_pending_tests: 21
+  actual_browser_status: PASS
+  actual_browser_checks: 422
+  actual_browser_conditions_selected: 36
+  additional_surface_only_conditions_selected: 12
+  browser_receipt_relative: browser_qa/attempt.20260915T043509Z.LtRnBEbg/receipt.json
+  browser_receipt_sha256: 58619787259d0bf8a3f37b8fee4c689cde180ceb4cbd7a10b65bf84bb29cb97f
+  initial_browser_receipt_relative: browser_qa/attempt.20260915T011018Z.HcvqY51O/receipt.json
+  publication_receipt_relative: surface_only_updates/attempt.9IPoPwgA/publication_receipt.json
+  unchanged_other_panel_candidates: 33
+  staged_buffer_hash_checks: 167
+  screenshot_count: 4
+  earlier_failed_attempts_preserved: true
+  completed_training_at_viewer_verification: 11
+  pending_training_at_viewer_verification: 1
+  training_completion_is_not_viewer_completion: true

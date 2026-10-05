@@ -1,0 +1,31 @@
+{
+  "task_id": "PHD-STAGE2-R6-FIX-v1",
+  "purpose": "Fix the five places where the r5 stage-2 implementation departs from method chapter 4 (found by PHD-STAGE2-PROTECTION-AUDIT-v1), as fork r6, and check briefly with the same instrumentation that the fixed rules behave as intended; decide 4.4. The 11 main conditions are not rerun.",
+  "parent_task": "PHD-STAGE2-CONF-GUIDED-GS-v1",
+  "reference_audit": "PHD-STAGE2-PROTECTION-AUDIT-v1 (r5 numbers: runs A = P_M_N, A_bias = P_M_B)",
+  "r5_fork": "PHD-STAGE2-CONF-GUIDED-GS-v1/sources/GeoGS-conf-guided-v1 (read only)",
+  "r6_fork": "PHD-STAGE2-R6-FIX-v1/sources/GeoGS-conf-guided-v1-r6",
+  "r6_audit_fork": "PHD-STAGE2-R6-FIX-v1/sources/GeoGS-conf-guided-v1-r6-audit",
+  "image": "jointbuildgs:geogs-conf-guided-v1",
+  "iterations": 3500,
+  "seed": "safe_state(): random.seed(0), np.random.seed(0), torch.manual_seed(0) (fork default, unchanged)",
+  "r6_parameters": {
+    "jbgs_e_alpha_min": 0.05,
+    "jbgs_e_alpha_min_rule": "accumulated opacity below which a rendered pixel occludes nothing (background); chosen, reported",
+    "jbgs_lock_drift_tau_mult": 4.0,
+    "lock_drift_max_M": "4 x 0.05677 = 0.2271 m",
+    "lock_drift_max_L": "4 x 0.04053 = 0.1621 m",
+    "jbgs_init_visible_only": 1,
+    "jbgs_depth_norm": "pixels",
+    "unchanged": "lambda_mvs = lambda_prior = 0.05, e_threshold 0.5, e_depth_tol 0.5, e_interval 500, lock_lr_scale 0.01, lock_opacity_floor 0.5, trunc_hi 4"
+  },
+  "runs": {
+    "N": {"condition": "P_M_N", "extra": ["--jbgs_audit_grad_iter", "2999"], "save_extra": [2999],
+          "meaning": "r6 on the LoD2 nominal scene; gradient analysis of fix 5 at the end of iteration 2999 (before the reset)"},
+    "B": {"condition": "P_M_B", "extra": [], "save_extra": [],
+          "meaning": "r6 on the main-roof +1 m scene"}
+  },
+  "gpu_plan": {"0": ["N"], "1": ["B"]},
+  "compare": {"r5_last_E_before_reset": 2501, "r6_last_E_before_reset": 3000},
+  "scientific_verdict": null
+}

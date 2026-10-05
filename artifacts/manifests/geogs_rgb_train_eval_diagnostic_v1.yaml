@@ -1,0 +1,58 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-GEOGS-MVS-PGSR-v1-RGB-TRAIN-EVAL
+scientific_verdict: null
+status: PASS_SAVED_RGB_DIAGNOSTIC_AND_BROWSER
+viewer_url: http://127.0.0.1:8910/app/rgb_diagnostic.html
+parent_resolver: artifacts/manifests/geogs_rgb_viewer_v1.yaml
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/rgb_diagnostic_v1
+  durability: local external storage; not a durable-backup claim
+data:
+  pointer: latest.json
+  attempt: attempt.Ym5F9Uzs
+  manifest: attempt.Ym5F9Uzs/manifest.json
+  manifest_sha256: f2b338a0da04831a9eabd3abb0a69fab27b844a8ceb9874658b2c18a1246c70b
+  receipt: attempt.Ym5F9Uzs/receipt.json
+  metrics: attempt.Ym5F9Uzs/per_case_metrics.csv
+  summary: attempt.Ym5F9Uzs/summary.csv
+  cases: 12
+  matched_rgb_pairs: 72
+  regions: [P1, P2, P3]
+  splits: [train, evaluation]
+  modes: [da3, mvs, mvs_pgsr]
+  prior_weights: [0.005, 0.0005]
+  iteration: 30000
+  native_protection: true
+  input_camera_calibrations_checked: 336
+  exported_photo_max_abs_u8_delta: 0
+  selection: two largest input-only projected fixed-prism bbox areas per region and split
+runtime:
+  image_id: sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e
+  cpu_threads: 2
+  new_training: false
+  new_rendering: false
+  inputs_read_only: true
+validation:
+  browser_receipt: browser_qa/attempt.20260915T074105Z.eVPADQVf/receipt.json
+  browser_receipt_sha256: 8553a4d6c958778a0208caf8f241b40be2742c9e370feeec18242df8bd4d0df4
+  browser_status: PASS_RGB_DIAGNOSTIC_BROWSER_QA
+  checks: 373
+  actual_crop_png_sha256_bindings: 84
+  screenshots: 5
+  native_and_200_percent_detail: true
+  synchronized_scroll: true
+  mobile_width_px: 390
+code:
+  driver: scripts/phd/geogs_mvs_pgsr_v1/rgb_train_eval_diagnostic.sh
+  config: configs/phd/geogs_mvs_pgsr_v1/rgb_train_eval_v1.json
+  app: src/apps/geogs_rgb_comparison_v1/rgb_diagnostic.html
+  browser_qa: scripts/phd/geogs_mvs_pgsr_v1/viewer/rgb_diagnostic_browser_qa.sh
+documents:
+  result: docs/experiments/phd/geogs_mvs_pgsr_v1/RGB_TRAIN_EVAL_DIAGNOSTIC_ko_v1.md
+  issues: docs/experiments/phd/geogs_mvs_pgsr_v1/ISSUES_ko_v1.md
+limits:
+  generalization_estimate: false
+  mvs_independent_evaluation: false
+  als_vs_lod2_causal_comparison: false
+  source_render_failures_preserved: true

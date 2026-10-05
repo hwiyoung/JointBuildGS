@@ -1,0 +1,16 @@
+{
+  "schema": "GEOGS_RGB_TRAIN_EVAL_DIAGNOSTIC_CONFIG_v1",
+  "task_id": "PHD-GEOGS-MVS-PGSR-v1-RGB-TRAIN-EVAL",
+  "scientific_verdict": null,
+  "evaluation_attempt": "attempt.LwEnygWG",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "regions": ["P1", "P2", "P3"],
+  "modes": ["da3", "mvs", "mvs_pgsr"],
+  "prior_weights": [0.005, 0.0005],
+  "iteration": 30000,
+  "views_per_region_split": 2,
+  "selection": "Descending area of the input-camera projection bbox of the frozen regional prism; ties by filename. Select before opening or scoring renders.",
+  "exported_photo_max_abs_u8_tolerance": 1,
+  "cpu_threads": 2,
+  "scope": "Twelve input-selected train/evaluation camera cases, six conditions each; descriptive RGB diagnosis only. Different cameras and visibility prevent a statistical train/evaluation generalization claim. Existing MVS lineage is non-confirmatory."
+}

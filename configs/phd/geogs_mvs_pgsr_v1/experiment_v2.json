@@ -1,0 +1,119 @@
+{
+  "task_id": "PHD-GEOGS-MVS-PGSR-v1",
+  "scientific_verdict": null,
+  "status": "IMPLEMENTATION_AND_PREFLIGHT",
+  "user_scope": "2026-09-14: existing COLMAP depth; P1/P2/P3; prior 0.005 and 0.0005; native protection",
+  "base_relative": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1",
+  "output_relative": "phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1",
+  "geogs_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+  "pgsr_reference_commit": "de24f1a38b350387e8d8fe381b2cd70c1ae946e7",
+  "runtime_image": "jointbuildgs:geogs-official-db40c95-compat-v1",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "allocator": "backend:native,max_split_size_mb:128",
+  "seed": 0,
+  "regions": [
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "prior_weights": [
+    0.005,
+    0.0005
+  ],
+  "protection": "native",
+  "modes": [
+    "mvs",
+    "mvs_pgsr"
+  ],
+  "anchor_iteration": 8000,
+  "final_iteration": 30000,
+  "anchors": {
+    "P1": {
+      "relative": "runs/P1/D005_Pnative/model/jbgs_complete/iteration_8000",
+      "sha256": "c08a39aa2deb81b26dd4dd75d0be9e6bb5e150db503f9d422a05423388679274"
+    },
+    "P2": {
+      "relative": "runs_allocator_v2/P2/D005_Pnative/model/jbgs_complete/iteration_8000",
+      "sha256": "91bc9ad74b115c37d4ae35ec4eb197832e730be165d36f52ebe4bb291f1ebcfd"
+    },
+    "P3": {
+      "relative": "runs_allocator_v2/P3/D005_Pnative/model/jbgs_complete/iteration_8000",
+      "sha256": "3b0de04d99435e36d05ffca49951976352bd663192cce14e59f2bddb58bdf567"
+    }
+  },
+  "depth": {
+    "source": "existing_colmap_geometric_camera_Z",
+    "units": "meters",
+    "mapping": "integer RGB ray through native K; nearest native sample; preserve <=0/nonfinite holes",
+    "hole_filling": false,
+    "scale_alignment": false,
+    "confidence_weighting": false,
+    "dynamic_visual_weight": "native controller using actual MVS residual, initial 0.05; realized weights logged",
+    "independent_of_evaluation_images": false,
+    "historical_effective_mvs_neighbors_recovered": false
+  },
+  "geometry": {
+    "svgeo_weight": 0.015,
+    "mvrgb_weight": 0.15,
+    "mvgeom_weight": 0.03,
+    "replace_native_normal_in_pgsr_mode": true,
+    "start_iteration": 8001,
+    "patch_radius": 3,
+    "max_samples": 4096,
+    "microbatch_size": 512,
+    "reprojection_threshold": 1.0,
+    "alpha_min": 0.5,
+    "grazing_cos_min": 0.05,
+    "maximum_neighbors": 8,
+    "depth_renderer": "unchanged GeoGS expected surf_depth; derived local plane, not PGSR unbiased-depth renderer",
+    "sampling": "private deterministic seed per region/camera/iteration; no native RNG consumption",
+    "adaptations": [
+      "expected-depth local plane",
+      "aerial overlap and baseline neighbor graph",
+      "4096 patch budget vs official maximum 102400",
+      "finite and border/alpha/grazing masks",
+      "replace existing normal penalty after shared Anchor8k"
+    ],
+    "neighbor_axis_angle_degrees": 30.0,
+    "neighbor_baseline_depth_ratio": 1.0,
+    "empty_neighbor_policy": "single_view_only_record_skip"
+  },
+  "preflight": {
+    "stop_after": 8100,
+    "require_cpu_geometry_and_gradient_tests": true,
+    "require_all_regions_native_depth_and_camera_hashes": true,
+    "require_nonempty_neighbor_graph": "per_region; per-camera absence logged",
+    "require_actual_geometry_counts_and_finite_loss": true,
+    "require_complete_anchor_restore": true,
+    "main_queue_enabled": false
+  },
+  "resources": {
+    "gpu_count_per_process": 1,
+    "max_parallel_training": 2,
+    "cpus": 8,
+    "ram_gib": 32,
+    "preserve_existing_services": true
+  },
+  "evaluation": {
+    "controls": "sealed existing DA3 D005_Pnative and D0005_Pnative for every region",
+    "same_reference_ids": true,
+    "reference_used_in_training": false,
+    "training_mvs_fit_is_accuracy": false,
+    "targets": [
+      "P1 old roof residual and current floor recovery",
+      "P2 large roof change and valleys/detail",
+      "P3 preservation and coverage loss"
+    ],
+    "outputs": [
+      "same-view real RGB and depth",
+      "matched raw TSDF512 sections and distance maps",
+      "accuracy and completeness separately",
+      "correction and damage separately",
+      "actual loss masks, counts, weights and resource traces"
+    ],
+    "crs": "EPSG:25832 with inherited world shift/datum limitations",
+    "nonconfirmatory": true
+  },
+  "revision": "v2_explicit_missing_neighbor_support",
+  "parent_config": "experiment_v1.json"
+}

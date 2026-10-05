@@ -1,0 +1,29 @@
+{
+  "base_root": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v2",
+  "results": [
+    {"label":"native/geometry_fixed","path":"PHD-P2-AB-V2-B-NATIVE-FIXED-v2/geometry_fixed"},
+    {"label":"native/color_fixed","path":"PHD-P2-AB-V2-B-NATIVE-v1/color_fixed"},
+    {"label":"native/prior_free","path":"PHD-P2-AB-V2-B-NATIVE-v1/prior_free"},
+    {"label":"native/soft_prior_weak","path":"PHD-P2-AB-V2-B-NATIVE-v1/soft_prior_weak"},
+    {"label":"native/soft_prior","path":"PHD-P2-AB-V2-B-NATIVE-v1/soft_prior"},
+    {"label":"native/soft_prior_strong","path":"PHD-P2-AB-V2-B-NATIVE-v1/soft_prior_strong"},
+    {"label":"native/structured_detail","path":"PHD-P2-AB-V2-B-NATIVE-v1/structured_detail"},
+    {"label":"native/image_only","path":"PHD-P2-AB-V2-B-NATIVE-v1/image_only"},
+    {"label":"subdivision4/geometry_fixed","path":"PHD-P2-AB-V2-B-REPRESENTATION-v1/geometry_fixed"},
+    {"label":"subdivision4/structured_detail","path":"PHD-P2-AB-V2-B-REPRESENTATION-v1/structured_detail"},
+    {"label":"prior_shift_z1/prior_free","path":"PHD-P2-AB-V2-B-PRIOR-SHIFT-v1/prior_free"},
+    {"label":"prior_shift_z1/structured_detail","path":"PHD-P2-AB-V2-B-PRIOR-SHIFT-v1/structured_detail"}
+  ],
+  "matched_initialization_groups": {
+    "native_prior": ["native/geometry_fixed","native/color_fixed","native/prior_free","native/soft_prior_weak","native/soft_prior","native/soft_prior_strong","native/structured_detail"],
+    "subdivision4": ["subdivision4/geometry_fixed","subdivision4/structured_detail"],
+    "prior_shift_z1": ["prior_shift_z1/prior_free","prior_shift_z1/structured_detail"]
+  },
+  "excluded_results": [
+    {"path":"PHD-P2-AB-V2-B-NATIVE-v1/geometry_fixed","reason":"B2-007: decoded color domain differed from other arms; corrected run replaces it"},
+    {"path":"PHD-P2-AB-V2-B-PREFLIGHT-v1","reason":"B2-003 Float/Double runtime failure; preserved"},
+    {"path":"PHD-P2-AB-V2-B-PREFLIGHT-v2","reason":"32-step software preflight, before foreground observation mask"},
+    {"path":"PHD-P2-AB-V2-B-PREFLIGHT-v3","reason":"32-step software preflight; preliminary nearest-depth mask differs from final conservative footprint mask"}
+  ],
+  "scientific_verdict": null
+}

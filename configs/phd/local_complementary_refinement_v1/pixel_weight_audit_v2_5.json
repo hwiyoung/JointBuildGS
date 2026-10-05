@@ -1,0 +1,23 @@
+{
+  "schema": "JBGS_PIXEL_WEIGHT_AUDIT_v2_5",
+  "scientific_verdict": null,
+  "scope": "Full sealed target rasters with synthetic prediction; no Gaussian, renderer, optimizer or CUDA execution",
+  "expected_training_config_sha256": "579369916b854f05088ed8427c3b6010e0532343b7b09afb93336ae495c5889e",
+  "expected_binding_sha256": "75b7a3c8d5ca2c0633587af76cd68e86076e4ffc4c7add53cf3462e5821d8a14",
+  "cases": [
+    {"region": "P1", "camera": "DJI_20241217084553_0100_D.JPG", "context_label": "Existing case A camera; full raster, not case tile"},
+    {"region": "P2", "camera": "DJI_20241217084505_0076_D.JPG", "context_label": "Existing case C camera; full raster, not case tile"}
+  ],
+  "lambda_visual": 0.05,
+  "lambda_prior_scenarios": [0.005, 0.0005, 0.0],
+  "coefficient_scope": "Diagnostic scenarios; not observed whole-run coefficients or parameter updates",
+  "synthetic_predictions": ["midpoint", "above", "below"],
+  "single_source_offset_m": 1.0,
+  "dtypes": ["float64", "float32"],
+  "tolerances": {
+    "float64": {"loss_atol": 1e-10, "loss_rtol": 1e-10, "gradient_atol": 1e-16, "gradient_rtol": 1e-10, "gate_atol": 1e-12},
+    "float32": {"loss_atol": 1e-5, "loss_rtol": 2e-5, "gradient_atol": 1e-13, "gradient_rtol": 2e-5, "gate_atol": 2e-7}
+  },
+  "selection_scope": "Camera names fixed from previous contextual cases; no reference or performance data read by this audit",
+  "visuals": {"dpi": 140, "raster_axes": "original image pixel column/row", "missing_color": "#bdbdbd"}
+}

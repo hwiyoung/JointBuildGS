@@ -1,0 +1,150 @@
+{
+  "task_id": "PHD-MVS-SURFACE-UPDATE-v1",
+  "scientific_verdict": null,
+  "authorization": "2026-09-15 user: proceed with seven-stage evidence and compare before/after shape, image fit and surrounding damage",
+  "parent_evidence_receipt_sha256": "44482f4dcaa41ce08ef891c65b7aa75bbfaaa1c8a38fee6989d8f30607e16739",
+  "mvs_receipt_sha256": "9c008994d4827a7f1401bd6d6f9fc77484ad88f49880759e63ad86087a98e475",
+  "regions": [
+    "P2",
+    "P3"
+  ],
+  "cases_per_region": null,
+  "case_roles": [
+    "best_supported_candidate_or_abstain",
+    "ambiguous_candidate",
+    "agree_control"
+  ],
+  "selected_cases": {
+    "P2": [
+      {
+        "camera": "P2_1",
+        "point": 2382,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_1",
+        "point": 2385,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_2",
+        "point": 3420,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_2",
+        "point": 3930,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_2",
+        "point": 4203,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_2",
+        "point": 4455,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_3",
+        "point": 2637,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_3",
+        "point": 3924,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_3",
+        "point": 4185,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_3",
+        "point": 4443,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P2_3",
+        "point": 4701,
+        "role": "best_supported_candidate_or_abstain"
+      }
+    ],
+    "P3": [
+      {
+        "camera": "P3_3",
+        "point": 2379,
+        "role": "best_supported_candidate_or_abstain"
+      },
+      {
+        "camera": "P3_3",
+        "point": 2385,
+        "role": "best_supported_candidate_or_abstain"
+      }
+    ]
+  },
+  "selection": "All prior observation-gate-admitted candidates ordered by camera ID then sample point ID; screening chooses no outcomes and does not relax any observation or association gate.",
+  "candidate_threshold_m": 0.5,
+  "minimum_joint_views": 2,
+  "minimum_photo_margin": 0.03,
+  "profile_maximum_cost": 0.2,
+  "profile_maximum_width_m": 0.5,
+  "profile_maximum_spacing_m": 0.25,
+  "profile_maximum_mvs_offset_m": 0.5,
+  "require_single_profile_interval": true,
+  "reject_profile_boundary": true,
+  "joint_support": "same neighbor must have prior self status 3, MVS self status 3, paired photo margin >0.03, and complete depth profile support; cross-source depth compatibility is diagnostic only",
+  "profile_reaggregation": "Recompute median cost over all visibility/photo/profile-admissible neighbors including opposing signs; do not select only MVS-positive views for the curve",
+  "region_support": "Case selection uses frozen source-region XY bounds, not reference-derived Z or outcome labels",
+  "minimum_patch_parallax_degrees": 1,
+  "evidence_radius_px": 3,
+  "display_radius_px": 64,
+  "annulus_radius_px": 31,
+  "threshold_status": "Frozen conservative technical probe conventions; not calibrated probabilities or validated temporal change decisions",
+  "intervention": {
+    "type": "cloned_Gaussian_center_only_bounded_local_plane_correction",
+    "maximum_displacement_m": 0.1,
+    "maximum_gaussians": 256,
+    "minimum_reference_contribution_locality": 0.5,
+    "source_checkpoint": "complete regional D005_Pnative Anchor8k",
+    "optimization_continuation": false,
+    "appearance_parameters_changed": false,
+    "unsupported_cases": "ABSTAIN_NO_UPDATE",
+    "automatic_adoption": false
+  },
+  "evaluation": {
+    "domains": [
+      "frozen_target_union",
+      "frozen_surrounding_annulus",
+      "outside"
+    ],
+    "views": "reference plus all bound candidate neighbors; same image/MVS lineage, not independent test",
+    "baseline": "identical checkpoint unchanged and repeated no-op render",
+    "metrics": [
+      "RGB MAE/RMSE/PSNR",
+      "expected depth change",
+      "normal change where available",
+      "actual Gaussian XYZ displacement",
+      "outside/annulus change counts and maxima"
+    ],
+    "reference": "separate CPU scoring after intervention freeze; never input to selection or displacement",
+    "scientific_verdict": null
+  },
+  "resources": {
+    "image": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+    "gpu_uuid": "GPU-4bdfcab8-1464-94b0-0a2f-dd9693ace2a0",
+    "maximum_gpu_processes": 1,
+    "cpus": 4,
+    "ram_gib": 24,
+    "preserve_existing_training": true
+  },
+  "crs": "EPSG:25832 shifted local; inherited absolute datum limitations",
+  "world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "parent_config_sha256": "see frozen original config and prepare_v2 receipt"
+}

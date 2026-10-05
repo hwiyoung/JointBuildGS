@@ -1,0 +1,22 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab_v2.sample.v1",
+  "task_id": "PHD-P2-AB-V2-COMMON-v1",
+  "scientific_verdict": null,
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-v1",
+  "common_relative_root": "phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common",
+  "expected_native_sha256": "a772a429707e764725d83679f920f23f9d4aed7f1edcd86b86553f95fe6096f8",
+  "raw_image_relative_root": "phase-payloads/p0-audit/data/work/images/Images",
+  "raw_model_relative_root": "phase-payloads/p0-audit/data/work/mvs/triangulated",
+  "dense_relative_root": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+  "member_inventory": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+  "derivative_lineage": "artifacts/manifests/gate_s0/common_base_r2b/existing_common_base_derivative_lineage_v1.json",
+  "crop_padding_px": 24,
+  "crop_rule": "Bounding rectangle of all positive-depth native P2 MVS and ALS projections, clipped to original-size pinhole canvas; no reference accessed",
+  "rectification": "FULL_OPENCV to PINHOLE with original fx,fy,cx,cy and original canvas extent; direct raw-image bilinear remap, crop only, no requested upscale",
+  "view_split": "Reuse exact existing 22 decision / 33 train / 11 appearance_eval roles; all historically development-used; exact937 MVS shares every role",
+  "reference_role": "EVALUATION_ONLY; not read by this builder",
+  "projection_pixel_probe_length_m": 0.1,
+  "docker_image": "jointbuildgs:dev",
+  "docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
+}

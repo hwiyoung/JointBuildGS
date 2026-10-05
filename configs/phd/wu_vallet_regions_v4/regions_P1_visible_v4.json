@@ -1,0 +1,90 @@
+{
+  "schema": "jointbuildgs.wu_vallet.regions.v4",
+  "task_id": "PHD-WU-VALLET-P1-VISIBLE-v4",
+  "scientific_verdict": null,
+  "artifact_root": "/artifacts/JointBuildGS",
+  "source_config": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "working_crs": "EPSG:25832",
+  "frame": {
+    "horizontal_crs": "EPSG:25832",
+    "working_coordinates": "SCENE_LOCAL_XYZ",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "regions": {
+    "P1": {
+      "region_id": "P1",
+      "patch_config": "configs/phd/surface_patch_rg_v1/run_v1.json",
+      "camera_config": "configs/phd/evidence_bank_v1/run_v1.json",
+      "tile_xy": [
+        3,
+        4
+      ],
+      "domain": {
+        "x": [
+          -23.0,
+          7.0
+        ],
+        "y": [
+          -21.0,
+          9.0
+        ],
+        "z": [
+          -44.272,
+          -25.962
+        ]
+      },
+      "context_domain": {
+        "x": [
+          -48.0,
+          32.0
+        ],
+        "y": [
+          -46.0,
+          34.0
+        ],
+        "z": [
+          -90.0,
+          80.0
+        ]
+      },
+      "patch_manifest_sha256": "1a3c5cfb7e8e08c802959e69e240fa6e9831f53556fc1d70582e96fd31b4f742",
+      "evidence_manifest_sha256": "d80c5f41eb1aee73a8d6b58d91d84098d9400801fb5bd81b42c332d5abfa705a",
+      "common_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-VISIBLE-INPUT-v4/run/common",
+      "acquisition_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-ACQUISITION-v4/run",
+      "trajectory_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-P1-TRAJECTORY-v4/run"
+    }
+  },
+  "view_selection": {
+    "seed": "PHD-WU-VALLET-P3-v1",
+    "decision_count": 113,
+    "minimum_faces": 64,
+    "rule": "Audit all 113 already frozen P1 views; among views with >=64 native pixel-adjacency faces, maximize occupied 0.5m XY cells of each image native sensor-mesh vertices within the unchanged P1 prism. Tie breaks by original P3-seed hash rank. Only the image candidate own geometry supports selection; no UAS, other-source agreement, image similarity or update-result selection.",
+    "status": "historical development views; no independent confirmatory claim",
+    "mode": "max_native_xy_cells",
+    "xy_cell_size_m": 0.5
+  },
+  "image_mesh": {
+    "max_edge_length_m": 2.0,
+    "max_depth_jump_m": 1.0,
+    "pixel_center_offset": 0.0,
+    "retain_isolated_vertices": false
+  },
+  "als_mesh": {
+    "max_scan_gap": 1,
+    "max_beam_coordinate_gap": 32.0,
+    "max_edge_length_m": 2.0
+  },
+  "distance_tolerance_m": 0.3,
+  "area_sensitivity_m2": [
+    0.25,
+    1.0,
+    4.0
+  ],
+  "primary_area_m2": 1.0,
+  "changed_only_sensitivity_area_m2": 1.0,
+  "scope": "Additional P1 visible-master development sensitivity, introduced after initial master838 support audit. Same source XYZ, prism, ray tolerances, filter and ALS estimated origins; selected master alone changes. Historical113-view membership retained; no all-master fusion or coverage outside this set."
+}

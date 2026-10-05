@@ -1,0 +1,66 @@
+{
+  "task_id": "PHD-STAGE1-VERIFY-v2",
+  "scientific_verdict": null,
+  "purpose_ko": "1단계 산출물(관측 신뢰도 지도 A, 허용 오차 τ)의 검증 설계 v2: 부분 주입 편향판(참값 기반 마스크 있음), 주입량 ≥ 3τ, 폭의 풀 = 지붕, 잔차 축 = 연직(사양과 같은 축), 두 prior의 정합 이동 반영. 측정(A, MVS, 정상 장면 통계)은 다시 하지 않고 검증 장면과 정의만 바꾼다.",
+  "stage1_relative": "phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-CONF-TOL-CONFLICT-v1",
+  "inspection_relative": "phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-INSPECTION-v1",
+  "payload_relative": "phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-VERIFY-v2",
+  "definitions": {
+    "width_pool": "roof (target-building roof faces; L walls are 2.5D-TIN bridging surfaces per the stage-1 order §7, so excluded)",
+    "residual_axis": "vertical on roof faces: r_v = r_camZ * |n.d| / |n_z| with the LoD2 face normal; camera-Z reported as reference",
+    "tau_rule": "tau = 2.5 * s2 (data width; user decision 2026-09-23); spec kept as error_scale for saturation and injection sizing",
+    "out_of_width": "yes AND |r_v - m2_nominal| > tau_nominal (3s and 4tau reported as reference)",
+    "conflict_reference_scene": "nominal scene of the same prior",
+    "tau_rule_mode": "data"
+  },
+  "registration": {
+    "L_dz_m": 0.018605859950184822,
+    "L_source": "stage-1 nominal roof vertical m2 = -0.0186 m (block shift consistent over 15 views); ALS raised by +0.0186 m",
+    "M_dz_m": 0.12155407667160034,
+    "M_source": "author-supplied LoD2Depth arrays minus recovered-CityGML render, roof vertical median = -0.1216 m; recovered mesh raised by +0.1216 m so the clean nominal/biased pair sits in the author's frame"
+  },
+  "injection": {
+    "sets": {
+      "small": {
+        "faces": [
+          3387,
+          3389,
+          3404
+        ],
+        "note": "three small roof faces (annex and corner), ~7% of visible roof pixels; keeps nominal statistics intact for the two-scene check"
+      },
+      "main": {
+        "faces": [
+          3396
+        ],
+        "note": "main front roof slope, ~92% of visible roof pixels; sensitivity where the prior agrees best"
+      }
+    },
+    "delta_m": {
+      "L": 1.0,
+      "M": 3.0
+    },
+    "delta_rule": "delta >= 3 * tau_prior (L: 8.3x of 0.12 m; M: 3.0x of 1.0 m)",
+    "M_step_faces": "vertical quads added along the boundary edges of the raised faces so no gap is left",
+    "L_method": "ALS points inside the XY footprints of the selected faces raised by delta; TIN topology unchanged"
+  },
+  "constants": {
+    "k_tolerance": 2.5,
+    "outlier_sigma": 3.0,
+    "nmad_factor": 1.4826,
+    "tau_spec_m": {
+      "L": 0.12,
+      "M": 1.0
+    },
+    "sensitivity_pass": 0.9,
+    "right_scene_pass_L": 0.05,
+    "two_scene_rel": 0.1,
+    "hist_range_m": [
+      -3.0,
+      3.0
+    ],
+    "hist_bin_m": 0.02,
+    "viewer_long_side_px": 1200
+  },
+  "figure_view": "DJI_20241217101305_0005_D"
+}

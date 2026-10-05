@@ -1,0 +1,14 @@
+schema: jointbuildgs.artifact_resolver.v1
+task_id: PHD-GEOGS-RGB-RADIUS-PROBE-v1
+scientific_verdict: null
+status: PASS_RENDER_ONLY_DIAGNOSTIC
+storage_root: ../JointBuildGS-artifacts
+payload: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/rgb_radius_probe_v1/attempt.r4dC0sQH
+receipt: receipt.json
+receipt_sha256: 1178276264b1084a14f97a28bc5d19c033bc54633876e2d0170800d5ca4710cf
+new_training_steps: 0
+case_condition_count: 7
+report: docs/experiments/phd/geogs_mvs_pgsr_v1/RGB_RADIUS_PROBE_ko_v1.md
+script: scripts/phd/geogs_mvs_pgsr_v1/rgb_radius_probe.py
+config: configs/phd/geogs_mvs_pgsr_v1/rgb_radius_probe_v1.json
+scope: Forward-only diagnostic from saved 30k models; no canonical result modification or scientific verdict.

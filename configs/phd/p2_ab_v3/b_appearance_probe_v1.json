@@ -1,0 +1,19 @@
+{
+  "source_run": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-NATIVE-v1",
+  "source_arm": "geometry_fixed",
+  "frozen_source_manifest": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-RETURN-v1/manifest.json",
+  "arms": {"uniform":0.0,"residual_weighted":1.0},
+  "steps":512,
+  "seed":1709,
+  "color_lr":0.015,
+  "ssim_fraction":0.2,
+  "residual_cap":2.0,
+  "residual_scale_floor":0.00392156862745098,
+  "quality_low":0.00392156862745098,
+  "quality_high":0.996078431372549,
+  "clipped_quality_weight":0.25,
+  "log_every":64,
+  "evaluation_every":128,
+  "scientific_verdict":null,
+  "scope":"Color-only mechanism probe from frozen native ALS G0, no A action consumed, no vanilla/surface-binding reproduction; all geometry parameters and topology fixed."
+}

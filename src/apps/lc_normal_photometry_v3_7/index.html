@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Normal을 반영한 관측 비용 비교 · JointBuildGS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="eyebrow">JointBuildGS · source별 관측 비용 진단 v3.7</div>
+    <h1>Normal을 반영하면 패치 비교가 달라질까?</h1>
+    <p>같은 위치를 원 depth로 투영한 결과와 depth·normal 평면으로 투영한 결과를 비교합니다.</p>
+    <div class="badges"><span>기존 8개 진단 위치</span><span>가중치 계산 전</span><span>점수 계산 GT 미사용 · 참조는 별도 평가</span></div>
+  </header>
+  <main>
+    <aside class="notice"><strong>먼저 패턴과 표본을 보고, 그다음 비용을 읽으세요.</strong> 낮은 비용은 해당 사진에서 밝기 패턴이 더 비슷하다는 뜻입니다. 정확한 표면이나 최종 감독 가중치를 확정한 결과는 아닙니다.</aside>
+    <div class="controls">
+      <label>확인할 위치<select id="case-select" aria-label="확인할 위치"></select></label>
+      <label>비교할 source<select id="pair-select" aria-label="비교할 source"><option value="prior_da3">Prior ↔ DA3</option><option value="prior_mvs">Prior ↔ MVS</option></select></label>
+      <label>점수 패치 크기<select id="patch-select" aria-label="점수 패치 크기"><option value="9">9 × 9 · 최대 81 표본</option><option value="17">17 × 17 · 최대 289 표본</option><option value="33">33 × 33 · 최대 1,089 표본</option></select></label>
+      <label>확인할 이웃 사진<select id="neighbor-select" aria-label="확인할 이웃 사진"></select></label>
+    </div>
+    <div id="case-info" class="case-info" aria-live="polite"></div>
+    <section id="case-body" aria-live="polite"><p>진단 자료를 읽고 있습니다.</p></section>
+    <details class="overview" open>
+      <summary>전체 위치 비교 · 현재 source 쌍과 패치 크기</summary>
+      <p class="hint">위치를 고를 때 비용 순위를 사용하지 않았습니다. 아래 행을 눌러 같은 조건에서 패치와 수치를 확인하세요.</p>
+      <div id="overview-body"><p>전체 위치를 읽고 있습니다.</p></div>
+    </details>
+    <details class="help">
+      <summary>계산과 해석의 범위</summary>
+      <p><strong>원 depth 투영:</strong> 패치의 각 픽셀에 저장된 depth로 이웃 사진의 위치를 계산합니다. 원 depth 안에 있는 국소 표면 변화가 그대로 반영됩니다.</p>
+      <p><strong>Depth·normal 평면 투영:</strong> 각 source의 중심 주변 9×9 depth에서 normal을 추정하고, 원래 중심 depth를 지나는 평면을 만듭니다. normal을 독립적인 추가 관측으로 세지 않습니다. 패치 크기를 바꿔도 normal 추정 범위는 9×9로 유지합니다.</p>
+      <p><strong>같은 표본으로 비교:</strong> Prior 원 depth, 영상 원 depth, Prior 평면, 영상 평면 네 결과가 모두 계산 가능한 표본의 교집합에서 네 비용을 구합니다. 따라서 기존 v3.2의 두 source 공통 mask와 표본이 달라질 수 있습니다.</p>
+      <p>평면을 만들 수 있어도 원 depth의 결손은 채우지 않습니다. 계산 가능한 투영은 실제로 가려지지 않았다는 증거가 아닙니다. MVS 생성에 사용된 사진과의 일치는 독립 정확성 평가가 아닙니다.</p>
+      <p>작은 패치는 무늬가 부족할 수 있고 큰 패치는 여러 표면이나 가림 경계를 포함할 수 있습니다. 9·17·33은 크기 민감도를 확인하는 진단 조건이며 최적 크기라는 뜻은 아닙니다.</p>
+      <p>이 화면은 비용, 관측 지원과 민감도를 보여줍니다. source별 가중치 함수와 전체 가중치 지도는 아직 계산하지 않습니다.</p>
+    </details>
+    <footer><a href="data.json" target="_blank" rel="noopener">자료 목록 JSON</a><a id="case-link" href="data.json" target="_blank" rel="noopener">현재 위치 수치 JSON</a><span>scientific_verdict: null</span></footer>
+  </main>
+  <dialog id="zoom"><button id="close-zoom" aria-label="확대 닫기">닫기 ×</button><img id="zoom-image" alt=""><p id="zoom-caption"></p></dialog>
+  <script src="app.js"></script>
+</body>
+</html>

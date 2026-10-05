@@ -1,0 +1,30 @@
+{
+  "schema": "jointbuildgs.external-task-resolver.v1",
+  "task_id": "PHD-SRDM-JUDGMENT-STAGES-v2",
+  "scientific_verdict": null,
+  "status": "STAGEWISE_DIAGNOSTIC_COMPLETE",
+  "backend": {
+    "local_sibling": "../JointBuildGS-artifacts",
+    "container_artifact_root": "/artifacts/JointBuildGS",
+    "relative": "phase-payloads/phd/srdm_p1p2p3_v1/PHD-SRDM-JUDGMENT-STAGES-v2",
+    "durability": "local external storage; not a durable-backup claim"
+  },
+  "parent_task_id": "PHD-SRDM-P1P2P3-v1",
+  "scope": "Post-hoc audit of saved weak stereo and ALS decisions on previously recorded P1/P2 change surfaces and P3 roof; no new matching, reconstruction, or source decision rule",
+  "matching_runs": 0,
+  "training_runs": 0,
+  "audit": "run/stage_audit.json",
+  "audit_sha256": "2b51ac622aa195d815b1990d3f92f778b736675dc918cc42d73437a9a467d315",
+  "verification": "verification.json",
+  "analysis": "docs/experiments/phd/srdm_p1p2p3_v1/STAGEWISE_JUDGMENT_ANALYSIS_ko_v2.md",
+  "config": "configs/phd/srdm_p1p2p3_v1/judgment_stage_audit_v2.json",
+  "script": "scripts/phd/srdm_p1p2p3_v1/analyze_judgment_stages_v2.py",
+  "verifier": "scripts/phd/srdm_p1p2p3_v1/verify_judgment_stages_v2.py",
+  "claims": {
+    "P1": "Weak stereo does not support the intended current surface; rejecting ALS does not demonstrate correct image use",
+    "P2": "Observed target surface supports rejection of stale upper ALS where the single pair can judge; incomplete coverage",
+    "P3": "Target roof ALS is rejected despite closer reference agreement than the weak stereo candidate",
+    "source_choice_accuracy": null,
+    "original_SRDM_general_verdict": null
+  }
+}

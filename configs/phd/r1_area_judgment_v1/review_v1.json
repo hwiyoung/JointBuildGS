@@ -1,0 +1,43 @@
+{
+  "task_id":"PHD-R1-AREA-JUDGMENT-v1",
+  "scientific_verdict":null,
+  "status":"WHOLE_R1_INPUT_BASED_REVIEW_DRAFT",
+  "review_revision":2,
+  "revision_note":"After inspecting all region cards, Z11 is a rear passage with roof pieces, Z12/Z13 are circulation with structural connectors; use visible source polygons to admit connectors rather than blanket structure labels.",
+  "role":"Object-context polygons reviewed from current RGB and top-height MVS display. Polygons group inspection; point judgments retain height and source separation.",
+  "membership_rule":"Start with Z00 covering full R1, then apply zones in listed order. Last covering polygon owns the point or 0.5m coverage cell. No unassigned remainder.",
+  "gravity_manifest":"artifacts/manifests/gate_s0/freeze_recovery_v1/technical_freeze_manifest_v1.json",
+  "normal_neighbors":20,
+  "maximum_normal_radius_m":4.0,
+  "maximum_surface_variation":0.06,
+  "wall_max_abs_dot_up":0.35,
+  "ground_min_abs_dot_up":0.60,
+  "ground_height_above_C1_median_m":3.0,
+  "landscape_low_height_above_C1_median_m":4.0,
+  "C1_current_point_match_m":0.9,
+  "judgments":{"0":"판단 유보","1":"보존 후보","2":"보정 후보","3":"보완 후보","4":"비대상 후보"},
+  "colors":{"0":"#9a9da3","1":"#2787ba","2":"#e6a01a","3":"#9a59b5","4":"#477b55"},
+  "candidate_policy":"Current/ALS agreement plus stable local surface and reviewed building context suggests preservation; consistent current structural surface with absent/behind prior suggests completion. Only the inherited input-reviewed C1 ground/old-upper-surface correspondence receives correction. Other front-prior conflicts remain unresolved.",
+  "source_accuracy_certified":false,
+  "manual_loss_weights":null,
+  "visible_structural_polygons":[
+    {"name":"DJI_20241217084727_0147_D.JPG","zones":[12],"note":"Visible raised connector and protruding white building volume; no landscape pixels intentionally included", "polygons":[[[314,736],[348,769],[617,608],[596,576]],[[145,139],[287,114],[419,262],[420,311],[310,340],[171,271]]]},
+    {"name":"DJI_20241217090905_0035_D.JPG","zones":[13],"note":"Visible diagonal connector; current-depth visibility required", "polygons":[[[609,894],[634,915],[769,618],[741,615]]]}
+  ],
+  "zones":[
+    {"id":"Z00","name":"잔여·경계 및 모서리","kind":"mixed","label_xy":[-64,-47],"polygon":[[-135,-65],[70,-65],[70,35],[-135,35]],"review":"경계 조각과 건물·통로 혼합은 표면별 근거가 충분한 부분만 후보로 두고 나머지는 유보."},
+    {"id":"Z01","name":"왼쪽 경계 장방형 경사지붕동","kind":"building","label_xy":[-128,-30],"polygon":[[-135,-65],[-115,-65],[-115,35],[-135,35]],"review":"경사지붕 내부는 보존 후보. 채광창·처마·외벽은 누락/불일치 근거를 따로 본다."},
+    {"id":"Z02","name":"왼쪽 건물 사이 좁은 통로","kind":"circulation","label_xy":[-111,-8],"polygon":[[-115,-65],[-108,-65],[-108,35],[-115,35]],"review":"통로 지면은 건물 연구 비대상 후보. 측면 외벽은 보완/보존 근거가 충분한 표면만 후보로 유지."},
+    {"id":"Z03","name":"왼쪽 ㄷ·L자형 경사지붕 본체","kind":"building","label_xy":[-97,-23],"polygon":[[-108,-50],[-84,-50],[-84,-45],[-67,-45],[-67,16],[-108,16]],"review":"지붕면의 일치 부분은 보존 후보. 구조물 경계와 측벽의 일방 관측은 유보/보완 후보."},
+    {"id":"Z04","name":"중앙 왼쪽 옥상 설비·굴뚝·테라스","kind":"building","label_xy":[-76,-24],"polygon":[[-84,-45],[-67,-45],[-67,5],[-84,5]],"review":"옥상 설비·굴뚝의 큰 차이는 실변화로 단정하지 않는다. 안정된 면의 일치는 보존, prior 누락 표면은 보완 후보."},
+    {"id":"Z09","name":"중앙 왼쪽 녹지·수목대","kind":"landscape","label_xy":[-52,14],"polygon":[[-68,-24],[-40,-24],[-40,22],[-68,22]],"review":"현재 영상에서 보이는 녹지·수목 맥락은 건물 기하 평가 비대상 후보. 별도 반원형 부속동은 Z05로 분리."},
+    {"id":"Z05","name":"반원형 계단·설비 부속동","kind":"building","label_xy":[-61,-6],"polygon":[[-68,-21],[-58,-19],[-52,-12],[-52,-4],[-58,3],[-68,5]],"review":"작은 곡면·다층 구조는 혼합이 많다. 일치하는 면만 보존하고 수목 가림과 결측은 유보."},
+    {"id":"Z08","name":"중앙 안뜰·과거 상부 표면 위치","kind":"courtyard","label_xy":[-24,3],"polygon":[[-40,-24],[6,-24],[6,24],[-40,24]],"review":"C1의 확인된 현재 지면 대응은 보정 후보. 나머지 안뜰 지면과 물체는 동일 판단을 확대하지 않는다."},
+    {"id":"Z07","name":"오른쪽 큰 부채꼴·곡면지붕동","kind":"building","label_xy":[35,-5],"polygon":[[12,-25],[54,-25],[54,24],[40,24],[25,21],[14,14],[7,3],[5,-12],[7,-20]],"review":"곡면지붕 내부의 일치는 보존 후보. 처마·곡면 끝·지붕 하부는 표면 경계/가림 때문에 별도 유보/보완."},
+    {"id":"Z10","name":"하단 통로·녹지 및 경계 건물 조각","kind":"circulation","label_xy":[-34,30],"polygon":[[-115,22],[70,22],[70,35],[-115,35]],"review":"보행·차량·녹지 맥락의 낮은 면은 비대상 후보. 경계 건물·외벽 조각은 개별 표면 관계를 남긴다."},
+    {"id":"Z11","name":"상단 왼쪽 배후 통로·옥상 연결부","kind":"circulation","label_xy":[-93,-58],"polygon":[[-115,-65],[-61,-65],[-61,-50],[-115,-50]],"review":"원영상에서 배후 통로가 주 부분임을 확인했다. 낮은 통로는 비대상 후보, 외벽/연결 모서리는 보존·보완 또는 유보로 나눈다."},
+    {"id":"Z12","name":"긴 건물 배후 중정·연결교·주차 공간","kind":"circulation","label_xy":[4,-54],"polygon":[[-61,-65],[62,-65],[62,-42],[-61,-42]],"review":"낮은 통로 지면은 비대상 후보. 외벽과 원영상에서 직접 표시한 연결교·돌출 건물의 면을 보존/보완 후보로 분리하고 수목 가림과 혼합은 유보."},
+    {"id":"Z13","name":"오른쪽 경계 통로·건물 조각","kind":"circulation","label_xy":[64,5],"polygon":[[54,-65],[70,-65],[70,35],[54,35]],"review":"낮은 통로는 비대상 후보. 외벽과 원영상에 표시한 연결교 표면은 지지/일치 근거를 보며 나머지는 유보."},
+    {"id":"Z06","name":"긴 은색 곡면지붕·양측 외벽","kind":"building","label_xy":[-2,-33],"polygon":[[-66,-42],[63,-40],[63,-24],[-66,-25]],"review":"S1을 포함한 지붕 내부는 보존 후보. U1을 포함한 외벽에서 prior 누락/뒤쪽 hit가 반복되는 평면은 보완 후보, 처마·개구부·가림은 유보."}
+  ]
+}

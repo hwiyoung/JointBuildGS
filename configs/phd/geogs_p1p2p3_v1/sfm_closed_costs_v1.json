@@ -1,0 +1,48 @@
+{
+  "schema": "GEOGS_SFM_CLOSED_COST_POLICY_v1",
+  "task_id": "PHD-GEOGS-SFM-CLOSED-COSTS-v1",
+  "scientific_verdict": null,
+  "resource_profile": "evaluation/no_anchor_sfm_v1/resources_main_final_partial_v1",
+  "input_tables": {
+    "new_phase_resources.csv": "7703741f562b3f2c276fc35a9aba6f2de114df21e80f56ebf257cdb5ea03115c",
+    "new_failed_training_attempts.csv": "408ba614d34de1d86b242af74bde329a489ef55c0b44f3c07ff2a7023e31e53f"
+  },
+  "availability_sha256": "aca06bebb57ad40cdf08b2747db569f8dea40bdb0eba63adf75307dd0f322316",
+  "resource_summary_sha256": "b18b6d77840b8d0279d4fc87647bca225a00b602c82efd5e70220ffbb7f0bd79",
+  "selected_attempts": {
+    "P1": "no_anchor_sfm_gradient_memory_v3_P1",
+    "P2": "no_anchor_sfm_gradient_memory_v3_P2",
+    "P3": "no_anchor_sfm_gradient_memory_v3_P3"
+  },
+  "condition_id": "SFM_noanchor_D005_Pnative",
+  "expected_selected_training_status": "FAIL",
+  "expected_selected_native_exit_code": 1,
+  "expected_resource_summary_status": "NO_COMPLETED_TRAINING_REGIONS",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "science_config_sha256": "42c741c8682a7830bd53cde3add9a93b41030f1dcb718b9e2f23d78389834c13",
+  "unique_key": ["source_path", "source_sha256"],
+  "time_field": "wall_seconds",
+  "time_arithmetic": "Exact Decimal sum of producer JSON numbers, checked against every CSV row",
+  "phase_scope": ["train", "export"],
+  "timestamp_interval_tolerance_seconds": "0.01",
+  "excluded_cost_views": [
+    "new_training.csv",
+    "new_prior_resource_attempts.csv",
+    "new_prior_initialization_failures.csv",
+    "new_final_retry_predecessors.csv",
+    "baseline_resources.csv",
+    "baseline_training_intervals.csv",
+    "baseline_failed_attempt_resources.csv"
+  ],
+  "scope": {
+    "work_seconds_are_additive_across_distinct_producer_receipts": true,
+    "calendar_wall_time": false,
+    "whole_system_compute_cost": false,
+    "gpu_hours": false,
+    "memory_peaks_additive": false,
+    "training_attempt_count_includes_pre_first_step_failure_and_intentional_replacement": true,
+    "prefix8000_export_and_evaluation_costs_included": false,
+    "preparation_validation_benchmark_and_viewer_costs_included": false,
+    "interpretation": "Closed producer training/export work in the two named tables only; phase wall includes the producer's recorded launch-to-output-validation interval. Existing subtotal/history views are not additional work. Missing quality results are unavailable, never zero."
+  }
+}

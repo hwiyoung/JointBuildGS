@@ -1,0 +1,125 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-R1R5-COMPARISON-v1
+status: BASE15_COMPLETE_R1_CAUSAL_RUNNING
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/r1r5_comparison_v1/PHD-R1R5-COMPARISON-v1
+  durability: local external storage; not a durable-backup claim
+active_attempt: attempt_20260917T132641Z_aa9r3kak
+report: docs/experiments/phd/r1r5_comparison_v1/RUN_ko_v1.md
+issues: docs/experiments/phd/r1r5_comparison_v1/ISSUES_ko_v1.md
+regions: [R1, R2, R3, R4, R5]
+panels: [prior, mvs, anchor, mvs_geogs, da3_geogs, local_prior0]
+gpus: [0, 1]
+execution_unit: jbgs-r1r2-causal-recovery-20260918.service
+superseded_execution_unit: jbgs-r1r5-parallel-recovery-20260918T062211Z.service
+parallel_execution: attempt_20260917T132641Z_aa9r3kak/parallel_recovery_20260918T062211Z
+parallel_report: docs/experiments/phd/r1r5_comparison_v1/ACCELERATION_20260918_ko.md
+previous_failed_unit: jbgs-r1r5-execution-attempt_20260917T132641Z_aa9r3kak.service
+recovery: attempt_20260917T132641Z_aa9r3kak/resource_recovery_20260918T014542Z
+artifact_overrides: attempt_20260917T132641Z_aa9r3kak/execution/artifact_overrides.json
+execution_status: attempt_20260917T132641Z_aa9r3kak/execution/status.json
+execution_source: attempt_20260917T132641Z_aa9r3kak/causal_recovery_20260918/source
+causal_recovery:
+  report: docs/experiments/phd/r1r5_comparison_v1/CAUSAL_RECOVERY_20260918_ko.md
+  folder: attempt_20260917T132641Z_aa9r3kak/causal_recovery_20260918
+  status: attempt_20260917T132641Z_aa9r3kak/causal_recovery_20260918/status.json
+  plan: attempt_20260917T132641Z_aa9r3kak/causal_recovery_20260918/plan.json
+  raster_validation: attempt_20260917T132641Z_aa9r3kak/causal_recovery_20260918/raster_validation_v2/receipt.json
+  r1_direct_contribution: attempt_20260917T132641Z_aa9r3kak/causal_recovery_20260918/r1_splat_counterfactual/receipt.json
+  r1_scale_audit: attempt_20260917T132641Z_aa9r3kak/causal_recovery_20260918/r1_large_splat_state_v2/receipt.json
+review_source: attempt_20260917T132641Z_aa9r3kak/review_source_v2
+viewer:
+  url: http://127.0.0.1:8913/
+  server_container: jbgs-r1r5-viewer-8913-v5
+  publisher_container: jbgs-r1r5-publisher-8913-v5
+  app: attempt_20260917T132641Z_aa9r3kak/viewer/app_v5
+  data: attempt_20260917T132641Z_aa9r3kak/viewer/data
+  status: attempt_20260917T132641Z_aa9r3kak/viewer/data/status.json
+  qa: attempt_20260917T132641Z_aa9r3kak/viewer/crop_validation_v5/receipt.json
+  qa_status: PASS_HTTP_GEOMETRY_CROP_VALIDATION
+  browser_visual_check_v5: false
+  previous_browser_qa: attempt_20260917T132641Z_aa9r3kak/viewer/qa_v4/receipt.json
+  previous_browser_qa_checks_passed: 19
+  r1_common_display_crop: [[-135, -35, -90], [70, 65, 80]]
+  inline_review: maps, zone tables, original-image review cards, R1 paired sky depth
+  refresh_seconds: 60
+mask_validation: attempt_20260917T132641Z_aa9r3kak/mask_validation/receipt.json
+conditions:
+  prior_anchor_weight: 0.08
+  prior_refinement_weight: 0.005
+  local_prior_multiplier_inside: 0
+  local_prior_multiplier_outside: 1
+  denominator: original valid prior pixels, not retained-weight sum
+  image_depth_initial_weight: 0.05
+  dynamic_visual_weight: native
+  protection: native
+  pgsr: false
+  sky_steam_masks_added: false
+reference_used: false
+scientific_completion_claim: false
+result_analysis:
+  status: PASS_PAIRED_INPUT_DISTANCE_DIAGNOSTIC
+  folder: attempt_20260917T132641Z_aa9r3kak/result_analysis_20260918T203139_v3
+  report: docs/experiments/phd/r1r5_comparison_v1/RESULT_ANALYSIS_20260918_ko.md
+  url: http://127.0.0.1:8913/data/result_analysis_20260918_v1/index.html
+  metric: exact same input samples to native TSDF triangles; not independent accuracy
+  reference_used: false
+  scientific_verdict: null
+automatic_chat_notifications: false
+local_effect_explanation:
+  folder: attempt_20260917T132641Z_aa9r3kak/local_effect_explanation_20260918T205426
+  report: docs/experiments/phd/r1r5_comparison_v1/LOCAL_EFFECT_EXPLANATION_20260918_ko.md
+  url: http://127.0.0.1:8913/data/local_effect_explanation_20260918_v1/index.html
+  status: PASS_MASKED_RAY_AND_SAMPLE_SUPPORT_DIAGNOSTIC
+  keep_intermediate_scale_audit: iteration 12000, 15000, 20000; not final floater attribution
+  scientific_verdict: null
+cohort_selection_audit:
+  folder: attempt_20260917T132641Z_aa9r3kak/cohort_selection_audit_20260918T121849Z
+  report: docs/experiments/phd/r1r5_comparison_v1/COHORT_SELECTION_AUDIT_20260918_ko.md
+  status: PASS_FROZEN_COHORT_REPLAY
+  interpretation: one-sided input relation and agreement cohorts do not cover all correction/preservation failures
+  scientific_verdict: null
+uas_evaluation:
+  folder: attempt_20260917T132641Z_aa9r3kak/uas_evaluation_20260918T124240Z_v2
+  report: docs/experiments/phd/r1r5_comparison_v1/UAS_EVALUATION_20260918_ko.md
+  url: http://127.0.0.1:8913/data/uas_evaluation_20260918_v1/index.html
+  status: PASS_UAS_REFERENCE_DISTANCE_DIAGNOSTIC
+  reference_role: evaluation_only_no_mask_or_weight_changes
+  reference_sample_count: 3874852
+  metric: same UAS points to native triangles, 0.25m first-row voxel sample, 10m cap
+  scientific_verdict: null
+resource_recovery_allocator: cudaMallocAsync
+resource_recovery_condition_retry_limit: 1
+independent_condition_failures: record and continue remaining conditions
+sky_comparison: attempt_20260917T132641Z_aa9r3kak/sky_comparison_20260918_v2/receipt.json
+sky_crop_audit: attempt_20260917T132641Z_aa9r3kak/sky_crop_audit_20260918/receipt.json
+review_display_revision: attempt_20260917T132641Z_aa9r3kak/review_display_revision_20260918_v3/receipt.json
+
+failure_inspection:
+  folder: attempt_20260917T132641Z_aa9r3kak/failure_inspector_20260918T133424Z
+  report: docs/experiments/phd/r1r5_comparison_v1/FAILURE_INSPECTION_20260918_ko.md
+  url: http://127.0.0.1:8913/data/failure_inspector_20260918_v1/index.html
+  status: PASS_FULL_REFERENCE_CENSUS_AND_NATIVE_CASE_EXPORT
+  reference_role: evaluation_only_not_source_authority_or_training_masks
+  occupied_3d_cells_region_sum: 53725
+  focused_case: R1 Z07 u42-44 v14-16 local_z-34--32
+  scientific_verdict: null
+  browser_qa: attempt_20260917T132641Z_aa9r3kak/failure_inspector_20260918T133424Z/qa_v4/receipt.json
+  browser_qa_checks_passed: 15
+
+improvement_sites:
+  folder: attempt_20260917T132641Z_aa9r3kak/improvement_sites_20260918T135645Z
+  report: docs/experiments/phd/r1r5_comparison_v1/IMPROVEMENT_SITES_20260918_ko.md
+  url: http://127.0.0.1:8913/data/improvement_sites_20260918_v1/index.html
+  status: PASS_TECHNICAL_SITE_INSPECTION
+  receipt: attempt_20260917T132641Z_aa9r3kak/improvement_sites_20260918T135645Z/receipt.json
+  recommended_cases: [C04, C03, C05, C06, C07]
+  held_cases: [C10, C01, C02, C08, C09]
+  previous_R1_Z07_interpretation: held_pending_reference_surface_correspondence
+  reference_role: evaluation_only_not_source_authority_or_training_masks
+  browser_qa: attempt_20260917T132641Z_aa9r3kak/improvement_sites_20260918T135645Z/qa_v2/receipt.json
+  browser_qa_checks_passed: 37
+  training_changes: false
+  scientific_verdict: null

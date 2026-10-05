@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prior · MVS 영상 증거 점검</title>
+  <style>
+    :root { color-scheme: light; --ink:#172b38; --muted:#526572; --line:#d5dfe4; --paper:#fff; --bg:#edf2f4; --accent:#176b80; --gold:#ffd348; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.55 system-ui,-apple-system,"Noto Sans KR",sans-serif; }
+    button,select,input { font:inherit; }
+    button,select { min-height:36px; border:1px solid #bdccd3; border-radius:6px; background:#fff; color:var(--ink); padding:6px 10px; }
+    button { cursor:pointer; }
+    button:hover { background:#e9f4f7; }
+    button:disabled { opacity:.45; cursor:default; }
+    a { color:#08637c; text-underline-offset:3px; }
+    :focus-visible { outline:3px solid #f0ae1c; outline-offset:2px; }
+    header { background:var(--paper); border-bottom:1px solid var(--line); padding:18px 24px 14px; }
+    .eyebrow { font-size:11px; font-weight:750; letter-spacing:.09em; color:var(--accent); }
+    h1 { margin:4px 0 5px; font-size:clamp(21px,2.1vw,29px); line-height:1.35; }
+    h2 { margin:0; font-size:16px; }
+    h3 { margin:0 0 8px; font-size:14px; }
+    p { margin:5px 0; }
+    .muted { color:var(--muted); }
+    .small { font-size:12px; }
+    .scope { display:flex; gap:10px; align-items:center; flex-wrap:wrap; color:var(--muted); }
+    .tag { display:inline-block; border:1px solid #bccbd2; border-radius:4px; padding:1px 6px; font-size:11px; background:#f5f8fa; }
+    .notice { margin:14px 24px 0; padding:10px 14px; background:#fff7df; border:1px solid #e8d69b; border-radius:7px; font-size:13px; }
+    main { padding:14px 24px 24px; }
+    .controls { display:flex; align-items:end; gap:10px 16px; flex-wrap:wrap; margin-bottom:12px; }
+    label.control { display:grid; gap:4px; color:var(--muted); font-size:12px; }
+    select { max-width:320px; }
+    .controls .grow { flex:1; }
+    .workbench { display:grid; grid-template-columns:minmax(0,1fr) 318px; gap:14px; align-items:start; }
+    .card { background:var(--paper); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    .bar { padding:10px 12px; border-bottom:1px solid var(--line); display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .bar .spacer { flex:1; }
+    .bar button { padding:3px 8px; min-height:30px; }
+    .bar label { display:flex; align-items:center; gap:5px; font-size:12px; }
+    input[type=range] { width:100px; accent-color:var(--accent); }
+    input[type=checkbox] { accent-color:var(--accent); }
+    .panes { display:grid; grid-template-columns:1fr 1fr; }
+    .pane + .pane { border-left:1px solid var(--line); }
+    .pane-title { display:flex; justify-content:space-between; gap:8px; align-items:center; padding:8px 10px; font-size:12px; border-bottom:1px solid var(--line); min-height:36px; }
+    .viewport { position:relative; height:clamp(340px,57vh,720px); background:#25303a; overflow:hidden; }
+    canvas { display:block; width:100%; height:100%; touch-action:none; cursor:crosshair; }
+    canvas.dragging { cursor:grabbing; }
+    .pane-label { position:absolute; left:9px; bottom:8px; color:#fff; padding:3px 7px; font-size:11px; background:#17212ad9; border-radius:4px; pointer-events:none; }
+    .layer-note { padding:10px 12px; min-height:64px; border-top:1px solid var(--line); }
+    .legend { display:flex; align-items:center; flex-wrap:wrap; gap:6px 14px; margin:7px 0; font-size:12px; }
+    .legend-item { display:inline-flex; align-items:center; gap:5px; }
+    .swatch { width:13px; height:13px; border-radius:3px; border:1px solid #53687766; display:inline-block; }
+    .scale-label { padding:2px 7px; border:1px solid var(--line); border-radius:4px; font-variant-numeric:tabular-nums; }
+    .help { font-size:12px; color:var(--muted); }
+    #load-status { padding:7px 12px; font-size:12px; color:#425866; border-top:1px solid var(--line); }
+    #load-status.error { color:#972a22; background:#fff0ed; }
+    aside { display:grid; gap:12px; }
+    .section-head { padding:10px 12px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .section-body { padding:10px 12px; }
+    .selection-heading { font-variant-numeric:tabular-nums; color:var(--accent); font-weight:650; }
+    dl.fields { margin:0; }
+    .fields div { display:grid; grid-template-columns:minmax(0,1fr) minmax(70px,1fr); gap:9px; padding:5px 0; border-bottom:1px solid #edf1f3; }
+    .fields dt { color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
+    .fields dd { margin:0; font-variant-numeric:tabular-nums; font-size:12px; overflow-wrap:anywhere; text-align:right; }
+    .fields .unknown { color:#7f6a47; }
+    .group-title { padding:11px 0 3px; color:#314e5e; font-size:11px; font-weight:700; letter-spacing:.02em; }
+    .facts { max-height:290px; overflow:auto; }
+    details { border-top:1px solid var(--line); }
+    details > summary { cursor:pointer; padding:9px 12px; color:var(--muted); font-size:12px; }
+    details .detail-content { padding:0 12px 12px; }
+    pre { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font:11px/1.6 ui-monospace,monospace; max-height:280px; overflow:auto; }
+    .links { display:flex; gap:7px 13px; flex-wrap:wrap; font-size:12px; }
+    .cases { margin-top:14px; }
+    .case-list { display:flex; gap:10px; overflow-x:auto; padding:12px; }
+    .case-button { flex:0 0 180px; text-align:left; padding:0; overflow:hidden; min-height:0; }
+    .case-button img { display:block; width:100%; height:92px; object-fit:contain; background:#edf1f3; }
+    .case-button span { display:block; padding:7px 9px; font-size:12px; }
+    .case-button[aria-pressed=true] { outline:2px solid var(--accent); outline-offset:1px; }
+    .case-detail { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:14px; padding:0 12px 14px; }
+    .case-figure { margin:0; min-width:0; }
+    .case-figure img { display:block; width:100%; max-height:550px; object-fit:contain; background:#f4f7f8; border:1px solid var(--line); }
+    .case-figure.raw-patches { grid-column:1/-1; }
+    .case-figure.raw-patches img { image-rendering:pixelated; max-height:none; }
+    figcaption { padding-top:5px; color:var(--muted); font-size:12px; }
+    .case-summary { grid-column:1/-1; }
+    #empty-state { margin:14px 0; padding:22px; }
+    #empty-state code { background:#edf2f4; padding:2px 5px; }
+    #inspection:fullscreen { padding:14px; overflow:auto; background:var(--bg); }
+    #inspection:fullscreen .viewport { height:calc(100vh - 235px); }
+    [hidden] { display:none !important; }
+    @media (max-width:1100px) { .workbench { grid-template-columns:minmax(0,1fr); } aside { grid-template-columns:1fr 1fr; } .viewport { height:52vh; } .facts { max-height:390px; } }
+    @media (max-width:650px) { header { padding:14px; } main { padding:12px; } .notice { margin:12px 12px 0; } .panes { grid-template-columns:1fr; } .pane + .pane { border-left:0; border-top:1px solid var(--line); } .viewport { height:320px; } aside { grid-template-columns:1fr; } .case-detail { grid-template-columns:1fr; } select { max-width:100%; } .control { flex:1; min-width:120px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">JOINTBUILDGS · IMAGE EVIDENCE INSPECTION</div>
+    <h1 id="title">Prior · MVS 영상 증거 점검</h1>
+    <div class="scope"><span id="scope">MVS를 조건으로 한 관측 증거 점검</span><span class="tag">개발 진단</span><span class="tag">scientific_verdict: null</span><span id="created" class="small"></span></div>
+  </header>
+  <div class="notice"><strong>MVS를 조건으로 한 점검입니다.</strong> MVS는 현재 영상에서 파생되므로 독립적인 정답이 아닙니다. 깊이 불일치, 보임, 사진 오차와 모호성을 함께 읽으세요. 각 표본은 변화 확정이나 자동 업데이트 지시를 뜻하지 않습니다. 미확인 값은 <strong>null</strong>로 유지합니다.</div>
+  <main>
+    <section id="empty-state" class="card" hidden><h2>점검 데이터가 준비되지 않았습니다</h2><p>이 HTML과 같은 위치의 <code>data.js</code>가 <code>window.MVS_EVIDENCE</code>를 정의해야 합니다.</p><p id="empty-reason" class="muted"></p></section>
+    <div id="app" hidden>
+      <div class="controls">
+        <label class="control">영역<select id="region" aria-label="영역 선택"></select></label>
+        <label class="control">기준 카메라<select id="camera" aria-label="기준 카메라 선택"></select></label>
+        <label class="control grow">오른쪽 증거 지도<select id="layer" aria-label="증거 지도 선택"></select></label>
+        <span id="camera-meta" class="small muted"></span>
+      </div>
+      <div id="inspection">
+        <div class="workbench">
+          <section class="card">
+            <div class="bar">
+              <button id="fit" title="전체 영상 맞춤 (F)">전체 맞춤</button><button id="zoom-in" aria-label="확대">＋</button><button id="zoom-out" aria-label="축소">−</button><span id="zoom-text" class="small muted">100%</span>
+              <span class="spacer"></span>
+              <label><input id="show-grid" type="checkbox">격자 표본</label>
+              <label for="opacity">지도 진하기<input id="opacity" type="range" min="0" max="100" value="100"><output id="opacity-text">100%</output></label>
+              <button id="fullscreen">전체 화면</button>
+            </div>
+            <div class="panes">
+              <div class="pane"><div class="pane-title"><strong>현재 원본 영상</strong><a id="photo-link" target="_blank" rel="noopener">원본 열기 ↗</a></div><div class="viewport"><canvas id="photo-canvas" tabindex="0" aria-label="원본 영상. 클릭하면 가까운 격자 표본 선택. 드래그 이동, 휠 확대, 방향키로 이웃 표본 선택."></canvas><span class="pane-label">같은 영상 좌표 · 동기 이동 / 확대</span></div></div>
+              <div class="pane"><div class="pane-title"><strong id="map-title">증거 지도</strong><a id="map-link" target="_blank" rel="noopener">PNG 열기 ↗</a></div><div class="viewport"><canvas id="map-canvas" tabindex="0" aria-label="증거 지도. 원본 영상과 동기화된 좌표. 클릭으로 표본 선택."></canvas><span id="map-label" class="pane-label">격자 표본의 공간 분포</span></div></div>
+            </div>
+            <div class="layer-note"><div id="layer-description"></div><div id="layer-legend" class="legend"></div><div id="sign-definition" class="small muted"></div><div class="help">입력·깊이차는 전체 화소 지도입니다. 관측 지지는 16px, 비용곡선은 48px 격자에서 계산한 점만 표시합니다. 투명한 곳은 해당 값이 없으며 격자 사이를 보간하지 않습니다.</div><div class="help">클릭: 가장 가까운 격자 표본 · 드래그: 두 영상 함께 이동 · 휠 / ＋−: 확대 · 방향키: 이웃 표본 · F: 전체 맞춤</div></div>
+            <div id="load-status" role="status" aria-live="polite">영상 불러오는 중…</div>
+          </section>
+          <aside>
+            <section class="card">
+              <div class="section-head"><h2>선택 표본</h2><button id="clear-point" class="small">해제</button></div>
+              <div class="section-body"><div id="point-heading" class="selection-heading">영상을 클릭해 표본을 선택하세요</div><p id="point-help" class="small muted">지도는 표본 사이의 실제 연속 표면을 보장하지 않습니다.</p><div id="point-fields"></div></div>
+            </section>
+            <section class="card">
+              <div class="section-head"><h2>카메라별 집계와 원자료</h2></div>
+              <div class="section-body"><p class="small muted">비율은 제공된 분모와 함께 읽으세요. 미확인 표본을 유효 표본으로 간주하지 않습니다.</p><div id="summary" class="facts"></div><div id="raw-links" class="links"></div></div>
+              <details><summary>원본 집계 JSON</summary><div class="detail-content"><pre id="summary-json"></pre></div></details>
+              <details><summary>설정 및 부호 정의</summary><div class="detail-content"><pre id="config-json"></pre></div></details>
+            </section>
+          </aside>
+        </div>
+      </div>
+      <section class="card cases"><div class="section-head"><h2>위치별 사례와 깊이 후보 비교</h2><span class="small muted">사례 선택 시 해당 영상 위치를 함께 표시합니다</span></div><div id="case-list" class="case-list"></div><div id="case-detail" class="case-detail" hidden></div></section>
+    </div>
+  </main>
+  <script src="data.js"></script>
+  <script>
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const data = window.MVS_EVIDENCE;
+    if (!data || !Array.isArray(data.regions) || !data.regions.length) {
+      $('empty-state').hidden = false;
+      $('empty-reason').textContent = data ? 'regions 목록이 비어 있거나 데이터 형식이 올바르지 않습니다.' : 'data.js를 찾을 수 없거나 데이터가 정의되지 않았습니다.';
+      return;
+    }
+    const state = { region:0, camera:0, layer:0, selected:-1, zoom:1, cx:0, cy:0, caseId:null, photo:null, map:null, loadId:0 };
+    const canvases = [$('photo-canvas'), $('map-canvas')];
+    const contexts = canvases.map(canvas => canvas.getContext('2d'));
+    const images = new Map();
+    const viewSizes = [{w:1,h:1},{w:1,h:1}];
+    let fitScale = 1;
+    let frameRequested = false;
+    let summaryURL = null;
+    let pointURL = null;
+    const currentRegion = () => data.regions[state.region];
+    const camera = () => (currentRegion().cameras || [])[state.camera];
+    const layers = () => Array.isArray(camera()?.layers) ? camera().layers : [];
+    const currentLayer = () => layers()[state.layer];
+    const points = () => (camera()?.points || []).filter(point => Number.isFinite(point.u) && Number.isFinite(point.v));
+    let cameraPoints = [];
+    const missing = value => value === null || value === undefined || (typeof value === 'number' && !Number.isFinite(value));
+    function format(value, digits = 3) {
+      if (missing(value)) return '미확인 (null)';
+      if (typeof value === 'boolean') return value ? '예 (true)' : '아니오 (false)';
+      if (typeof value === 'number') return Number.isInteger(value) ? value.toLocaleString('ko-KR') : value.toLocaleString('ko-KR', {maximumFractionDigits:digits});
+      if (typeof value === 'object') return JSON.stringify(value);
+      return String(value);
+    }
+    function safeURL(path) {
+      if (typeof path !== 'string' || !path) return null;
+      try {
+        const url = new URL(path, location.href);
+        if (url.protocol === 'file:' && location.protocol === 'file:') return url.href;
+        if ((url.protocol === 'http:' || url.protocol === 'https:') && url.origin === location.origin) return url.href;
+      } catch (_) { /* Invalid paths remain unavailable. */ }
+      return null;
+    }
+    function setLink(element, path) {
+      const url = safeURL(path);
+      element.hidden = !url;
+      if (url) element.href = url;
+      else element.removeAttribute('href');
+    }
+    function loadImage(path) {
+      const url = safeURL(path);
+      if (!url) return Promise.reject(new Error('로컬 이미지 경로가 없거나 허용되지 않습니다: ' + String(path)));
+      if (!images.has(url)) {
+        images.set(url, new Promise((resolve, reject) => {
+          const image = new Image();
+          image.onload = () => resolve(image);
+          image.onerror = () => { images.delete(url); reject(new Error('이미지를 열 수 없습니다: ' + path)); };
+          image.src = url;
+        }));
+      }
+      return images.get(url);
+    }
+    function appendField(list, label, value) {
+      const row = document.createElement('div');
+      const dt = document.createElement('dt'); dt.textContent = label;
+      const dd = document.createElement('dd'); dd.textContent = format(value);
+      if (missing(value)) dd.className = 'unknown';
+      row.append(dt, dd); list.append(row);
+    }
+    function makeFields(values) {
+      const dl = document.createElement('dl'); dl.className = 'fields';
+      Object.entries(values || {}).forEach(([label,value]) => appendField(dl,label,value));
+      return dl;
+    }
+    function setOptions(element, values, label) {
+      element.replaceChildren();
+      values.forEach((value,index) => { const option = document.createElement('option'); option.value = String(index); option.textContent = label(value,index); element.append(option); });
+    }
+    function status(text, isError=false) { $('load-status').textContent = text; $('load-status').classList.toggle('error',isError); }
+    function dimensions() { const cam = camera(); return {w:Number(cam?.width) || state.photo?.naturalWidth || 1,h:Number(cam?.height) || state.photo?.naturalHeight || 1}; }
+    function transform(index) { const {w,h} = viewSizes[index]; const scale = fitScale * state.zoom; return {scale,x:w/2-state.cx*scale,y:h/2-state.cy*scale}; }
+    function drawSoon() { if (!frameRequested) { frameRequested = true; requestAnimationFrame(() => { frameRequested=false; draw(); }); } }
+    function draw() {
+      const dims = dimensions();
+      contexts.forEach((ctx,index) => {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        const {w,h} = viewSizes[index];
+        ctx.setTransform(ratio,0,0,ratio,0,0); ctx.clearRect(0,0,w,h);
+        ctx.fillStyle='#25303a'; ctx.fillRect(0,0,w,h);
+        const t=transform(index);
+        ctx.save(); ctx.translate(t.x,t.y); ctx.scale(t.scale,t.scale);
+        if (state.photo) ctx.drawImage(state.photo,0,0,dims.w,dims.h);
+        if (index===1 && state.map) { ctx.imageSmoothingEnabled=false;ctx.globalAlpha=Number($('opacity').value)/100; ctx.drawImage(state.map,0,0,dims.w,dims.h); ctx.globalAlpha=1;ctx.imageSmoothingEnabled=true; }
+        ctx.restore();
+        if ($('show-grid').checked) {
+          ctx.fillStyle='#ffffffc9'; ctx.strokeStyle='#162531aa'; ctx.lineWidth=1;
+          cameraPoints.forEach(point => { const x=t.x+point.u*t.scale,y=t.y+point.v*t.scale; if(x<0||y<0||x>w||y>h)return; ctx.beginPath();ctx.arc(x,y,2.2,0,Math.PI*2);ctx.fill();ctx.stroke(); });
+        }
+        const selected=cameraPoints[state.selected];
+        if(selected) {
+          const x=t.x+selected.u*t.scale,y=t.y+selected.v*t.scale;
+          ctx.lineWidth=5;ctx.strokeStyle='#10202ac9';ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.stroke();
+          ctx.lineWidth=2;ctx.strokeStyle='#ffd348';ctx.stroke();ctx.beginPath();ctx.moveTo(x-15,y);ctx.lineTo(x-10,y);ctx.moveTo(x+10,y);ctx.lineTo(x+15,y);ctx.moveTo(x,y-15);ctx.lineTo(x,y-10);ctx.moveTo(x,y+10);ctx.lineTo(x,y+15);ctx.stroke();
+        }
+        if(!state.photo) { ctx.fillStyle='#dce7ed';ctx.font='13px system-ui';ctx.textAlign='center';ctx.fillText('원본 영상 불러오는 중',w/2,h/2); }
+        else if(index===1 && !state.map) { ctx.fillStyle='#17212ade';ctx.fillRect(10,10,Math.max(0,w-20),36);ctx.fillStyle='#fff';ctx.font='12px system-ui';ctx.textAlign='left';ctx.fillText('증거 지도가 아직 표시되지 않았습니다',20,33); }
+      });
+      $('zoom-text').textContent=Math.round(state.zoom*100)+'%';
+    }
+    function resize() {
+      canvases.forEach((canvas,index) => { const rect=canvas.getBoundingClientRect();const ratio=Math.min(window.devicePixelRatio||1,2);viewSizes[index]={w:rect.width,h:rect.height};canvas.width=Math.max(1,Math.round(rect.width*ratio));canvas.height=Math.max(1,Math.round(rect.height*ratio)); });
+      const dims=dimensions();fitScale=Math.min(...viewSizes.map(size=>Math.min(size.w/dims.w,size.h/dims.h)));
+      drawSoon();
+    }
+    function fit() { const dims=dimensions();state.zoom=1;state.cx=dims.w/2;state.cy=dims.h/2;resize(); }
+    function zoomBy(factor,index=0,x=viewSizes[index].w/2,y=viewSizes[index].h/2) {
+      const before=transform(index);const ix=(x-before.x)/before.scale,iy=(y-before.y)/before.scale;
+      state.zoom=Math.max(.5,Math.min(32,state.zoom*factor));const scale=fitScale*state.zoom;
+      state.cx=ix-(x-viewSizes[index].w/2)/scale;state.cy=iy-(y-viewSizes[index].h/2)/scale;drawSoon();
+    }
+    function nearest(u,v) {
+      let found=-1,dist=Infinity;
+      cameraPoints.forEach((point,index)=>{const d=(point.u-u)**2+(point.v-v)**2;if(d<dist){dist=d;found=index;}});
+      return found;
+    }
+    const groups = [
+      ['깊이와 거리', [['prior_depth','Prior 깊이 (m)'],['mvs_depth','MVS 깊이 (m)'],['delta','깊이 차이 δ (m)']]],
+      ['가시성과 비교 가능성', [['prior_self_visible','Prior 내부 깊이 일치 수'],['mvs_self_consistent','MVS 내부 깊이 일치 수'],['prior_cross_compatible','Prior→MVS 호환 수'],['prior_occluded','Prior가 MVS 뒤에 있는 수'],['mvs_occluded','MVS 자체 가림 후보 수']]],
+      ['공통 영상 증거', [['common_photo_views','공통 사진 비교 뷰 수'],['photo_prior','Prior 후보 사진 오차'],['photo_mvs','MVS 후보 사진 오차'],['photo_margin','사진 오차 차이'],['rank_disagreement','뷰별 순위 불일치']]],
+      ['관측 조건과 모호성', [['parallax_deg','시차각 (°)'],['texture','텍스처 지표'],['ambiguity_width_m','모호성 폭 (m)'],['ambiguity_modes','저비용 구간 수']]],
+      ['깊이 후보 프로파일', [['profile_neighbor_count','프로파일 이웃 영상 수'],['profile_edge','최저 비용이 탐색 경계에 있음'],['profile_low_cost_boundary','저비용 구간이 탐색 경계에 닿음'],['profile_grid_spacing_m','깊이 탐색 간격 (m)'],['profile_min_cost','프로파일 최저 비용']]]
+    ];
+    function selectPoint(index,center=false) {
+      state.selected=index;
+      const point=cameraPoints[index];$('point-fields').replaceChildren();
+      $('clear-point').disabled=!point;
+      if(!point) {$('point-heading').textContent='영상을 클릭해 표본을 선택하세요';$('point-help').textContent='지도는 표본 사이의 실제 연속 표면을 보장하지 않습니다.';drawSoon();return;}
+      $('point-heading').textContent=`표본 ${index+1} / ${cameraPoints.length} · (u ${format(point.u)}, v ${format(point.v)})`;
+      $('point-help').textContent='좌표는 기준 영상의 픽셀 단위입니다. 화소 하나의 확정 판정이 아니라 가장 가까운 격자 표본의 기록입니다.';
+      groups.forEach(([title,fields])=>{const heading=document.createElement('div');heading.className='group-title';heading.textContent=title;$('point-fields').append(heading);const dl=document.createElement('dl');dl.className='fields';fields.forEach(([key,label])=>appendField(dl,label,point[key]));$('point-fields').append(dl);});
+      const ambiguityNote=document.createElement('p');ambiguityNote.className='small muted';ambiguityNote.textContent='모호성 폭 0 m는 저비용 구간에 샘플 깊이 하나만 포함되었다는 뜻입니다. 불확실성이 0이라는 뜻이 아닙니다. 탐색 간격, 탐색 경계 도달 여부와 이웃 영상 수를 함께 확인하세요.';$('point-fields').append(ambiguityNote);
+      if(center){state.cx=point.u;state.cy=point.v;}
+      drawSoon();
+    }
+    function selectNeighbor(dx,dy) {
+      const point=cameraPoints[state.selected];
+      if(!point){selectPoint(nearest(state.cx,state.cy));return;}
+      let best=-1,score=Infinity;
+      cameraPoints.forEach((other,index)=>{const u=other.u-point.u,v=other.v-point.v;const along=u*dx+v*dy,across=Math.abs(u*dy-v*dx);if(along<=.1)return;const s=along+across*5;if(s<score){score=s;best=index;}});
+      if(best>=0) selectPoint(best);
+    }
+    function buildDownload(label,values,filename) {
+      const link=document.createElement('a');link.textContent=label;link.download=filename;
+      const url=URL.createObjectURL(new Blob([JSON.stringify(values,null,2)],{type:'application/json'}));link.href=url;return {link,url};
+    }
+    function updateSummary() {
+      const cam=camera();const summary=cam.summary || {};
+      $('summary').replaceChildren(makeFields(summary));$('summary-json').textContent=JSON.stringify(summary,null,2);
+      $('raw-links').replaceChildren();
+      if(summaryURL)URL.revokeObjectURL(summaryURL);if(pointURL)URL.revokeObjectURL(pointURL);
+      const summaryFile=buildDownload('집계 JSON',summary,`${currentRegion().id}_${cam.id}_summary.json`);summaryURL=summaryFile.url;$('raw-links').append(summaryFile.link);
+      const pointFile=buildDownload('격자 표본 JSON',cam.points || [],`${currentRegion().id}_${cam.id}_points.json`);pointURL=pointFile.url;$('raw-links').append(pointFile.link);
+      if(cam.overview){const a=document.createElement('a');a.textContent='전체 진단 패널 PNG ↗';a.target='_blank';a.rel='noopener';setLink(a,cam.overview);$('raw-links').append(a);}
+      const raw=cam.raw_arrays || cam.arrays;
+      const entries=typeof raw==='string'?[{label:'원본 배열',path:raw}]:Array.isArray(raw)?raw:raw&&raw.path?[raw]:[];
+      entries.forEach(entry=>{const a=document.createElement('a');a.textContent=entry.label || '원본 배열';a.target='_blank';a.rel='noopener';setLink(a,entry.path);$('raw-links').append(a);});
+    }
+    function caseFigure(path,label) {
+      const fig=document.createElement('figure');fig.className='case-figure';
+      const a=document.createElement('a');a.target='_blank';a.rel='noopener';setLink(a,path);
+      const image=document.createElement('img');image.alt=label;image.loading='lazy';const url=safeURL(path);if(url)image.src=url;
+      image.onerror=()=>{image.alt=label+' — 이미지를 열 수 없습니다';};a.append(image);fig.append(a);
+      const caption=document.createElement('figcaption');caption.textContent=label+' · 클릭하여 원본 PNG 열기';fig.append(caption);return fig;
+    }
+    function showCase(item,index) {
+      state.caseId=index;document.querySelectorAll('.case-button').forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));
+      $('case-detail').replaceChildren();$('case-detail').hidden=false;
+      if(item.figure)$('case-detail').append(caseFigure(item.figure,item.label || item.id || '사례 영상'));
+      if(item.profile)$('case-detail').append(caseFigure(item.profile,'깊이 후보별 사진 오차와 모호성'));
+      if(item.patches){const patches=caseFigure(item.patches,'실제 이웃별 7 × 7 화소 · 기준 영상 / Prior 재투영 / MVS 재투영 / 공통 마스크 · 최근접 확대');patches.classList.add('raw-patches');patches.querySelector('figcaption').textContent+=' · 이 패널에는 가시성 gate를 적용하지 않았습니다.';$('case-detail').append(patches);}
+      const summary=document.createElement('div');summary.className='case-summary';const title=document.createElement('h3');title.textContent=(item.label || item.id || `사례 ${index+1}`)+' · 제공된 원자료';summary.append(title,makeFields(item.summary || {}));$('case-detail').append(summary);
+      if(Number.isFinite(item.u)&&Number.isFinite(item.v))selectPoint(nearest(item.u,item.v),true);
+    }
+    function updateCases() {
+      $('case-list').replaceChildren();$('case-detail').replaceChildren();$('case-detail').hidden=true;state.caseId=null;
+      const cases=camera().cases || [];
+      if(!cases.length){const p=document.createElement('p');p.className='muted small';p.textContent='이 카메라에 저장된 사례가 없습니다.';$('case-list').append(p);return;}
+      cases.forEach((item,index)=>{const button=document.createElement('button');button.className='case-button';button.setAttribute('aria-pressed','false');const path=safeURL(item.figure || item.profile);if(path){const img=document.createElement('img');img.src=path;img.alt='';img.loading='lazy';button.append(img);}const label=document.createElement('span');label.textContent=item.label || item.id || `사례 ${index+1}`;button.append(label);button.addEventListener('click',()=>showCase(item,index));$('case-list').append(button);});
+    }
+    function updateLegend(layer) {
+      $('layer-legend').replaceChildren();
+      if(!layer)return;
+      if(Number.isFinite(layer.vmin)&&Number.isFinite(layer.vmax)){
+        const label=document.createElement('span');label.className='scale-label';label.textContent=`표시 범위 ${format(layer.vmin)} … ${format(layer.vmax)} ${layer.units || ''}`;$('layer-legend').append(label);
+      }
+      (Array.isArray(layer.legend)?layer.legend:[]).forEach(item=>{
+        const span=document.createElement('span');span.className='legend-item';const swatch=document.createElement('i');swatch.className='swatch';
+        if(typeof item.color==='string'&&CSS.supports('color',item.color))swatch.style.backgroundColor=item.color;
+        const text=document.createElement('span');text.textContent=item.label || '';span.append(swatch,text);$('layer-legend').append(span);
+      });
+      const definitions=[data.config?.delta_definition,data.config?.photo_margin_definition].filter(value=>typeof value==='string'&&value);
+      $('sign-definition').textContent=definitions.join(' · ');
+    }
+    async function updateImages() {
+      const id=++state.loadId,cam=camera(),layer=currentLayer();state.photo=null;state.map=null;
+      $('map-title').textContent=layer?.label || '저장된 증거 지도 없음';$('map-label').textContent=layer?.label || '증거 지도 미제공';
+      $('layer-description').textContent=layer?.description || '이 카메라에 등록된 증거 지도가 없습니다.';
+      updateLegend(layer);
+      setLink($('photo-link'),cam.photo);setLink($('map-link'),layer?.path);status('영상과 증거 지도를 불러오는 중…');drawSoon();
+      const results=await Promise.allSettled([loadImage(cam.photo),layer ? loadImage(layer.path) : Promise.reject(new Error('증거 지도 미제공'))]);
+      if(id!==state.loadId)return;
+      const errors=[];
+      if(results[0].status==='fulfilled')state.photo=results[0].value;else errors.push(results[0].reason.message);
+      if(results[1].status==='fulfilled')state.map=results[1].value;else errors.push(results[1].reason.message);
+      const dims=dimensions();
+      if(state.photo&&(state.photo.naturalWidth!==dims.w||state.photo.naturalHeight!==dims.h)){errors.push('원본 영상 크기와 데이터 좌표 크기가 다릅니다. 잘못된 비교를 막기 위해 영상과 지도 표시를 중지했습니다.');state.photo=null;state.map=null;}
+      if(state.map&&(state.map.naturalWidth!==dims.w||state.map.naturalHeight!==dims.h)) {errors.push('지도 PNG 크기가 원본 영상 좌표와 다릅니다. 잘못된 비교를 막기 위해 지도 표시를 중지했습니다.');state.map=null;}
+      status(errors.length?errors.join(' / '):`${cam.name || cam.id} · ${dims.w} × ${dims.h} px · ${cameraPoints.length.toLocaleString('ko-KR')}개 표본 · 원본 / 지도 좌표 일치`,Boolean(errors.length));resize();
+    }
+    function updateCamera() {
+      const cam=camera();
+      if(!cam){$('app').hidden=true;$('empty-state').hidden=false;$('empty-reason').textContent='선택한 영역에 카메라가 없습니다.';return;}
+      cameraPoints=points();state.layer=0;state.selected=-1;
+      setOptions($('layer'),layers(),layer=>layer.label || layer.id);$('layer').disabled=!layers().length;
+      const dims=dimensions();state.zoom=1;state.cx=dims.w/2;state.cy=dims.h/2;
+      $('camera-meta').textContent=`격자 간격 ${format(cam.grid_step)} px · ${cameraPoints.length.toLocaleString('ko-KR')}개 표본`;
+      updateSummary();updateCases();selectPoint(-1);fit();void updateImages();
+    }
+    function updateRegion() {
+      const cameras=currentRegion().cameras || [];state.camera=0;setOptions($('camera'),cameras,cam=>cam.name || cam.id);updateCamera();
+    }
+    canvases.forEach((canvas,index)=>{
+      let drag=null;
+      const local=event=>{const r=canvas.getBoundingClientRect();return {x:event.clientX-r.left,y:event.clientY-r.top};};
+      canvas.addEventListener('pointerdown',event=>{if(event.button!==0)return;canvas.focus({preventScroll:true});const p=local(event);drag={id:event.pointerId,x:p.x,y:p.y,lastX:p.x,lastY:p.y,moved:false};canvas.setPointerCapture(event.pointerId);});
+      canvas.addEventListener('pointermove',event=>{if(!drag||drag.id!==event.pointerId)return;const p=local(event);if(Math.hypot(p.x-drag.x,p.y-drag.y)>4)drag.moved=true;if(drag.moved){const scale=fitScale*state.zoom;state.cx-=(p.x-drag.lastX)/scale;state.cy-=(p.y-drag.lastY)/scale;canvas.classList.add('dragging');drawSoon();}drag.lastX=p.x;drag.lastY=p.y;});
+      canvas.addEventListener('pointerup',event=>{if(!drag||drag.id!==event.pointerId)return;const p=local(event);if(!drag.moved){const t=transform(index);selectPoint(nearest((p.x-t.x)/t.scale,(p.y-t.y)/t.scale));}drag=null;canvas.classList.remove('dragging');if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId);});
+      canvas.addEventListener('pointercancel',()=>{drag=null;canvas.classList.remove('dragging');});
+      canvas.addEventListener('wheel',event=>{event.preventDefault();const p=local(event);zoomBy(Math.exp(-Math.max(-200,Math.min(200,event.deltaY))*.0018),index,p.x,p.y);},{passive:false});
+      canvas.addEventListener('keydown',event=>{const arrows={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};if(arrows[event.key]){event.preventDefault();selectNeighbor(...arrows[event.key]);}else if(event.key==='+'||event.key==='='){event.preventDefault();zoomBy(1.3,index);}else if(event.key==='-'){event.preventDefault();zoomBy(1/1.3,index);}else if(event.key.toLowerCase()==='f'){event.preventDefault();fit();}});
+    });
+    $('region').addEventListener('change',()=>{state.region=Number($('region').value);updateRegion();});
+    $('camera').addEventListener('change',()=>{state.camera=Number($('camera').value);updateCamera();});
+    $('layer').addEventListener('change',()=>{state.layer=Number($('layer').value);void updateImages();});
+    $('fit').addEventListener('click',fit);$('zoom-in').addEventListener('click',()=>zoomBy(1.3));$('zoom-out').addEventListener('click',()=>zoomBy(1/1.3));
+    $('show-grid').addEventListener('change',drawSoon);$('opacity').addEventListener('input',()=>{$('opacity-text').textContent=$('opacity').value+'%';drawSoon();});
+    $('clear-point').addEventListener('click',()=>selectPoint(-1));
+    $('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await $('inspection').requestFullscreen();}catch(error){status('전체 화면을 사용할 수 없습니다: '+error.message,true);}});
+    document.addEventListener('fullscreenchange',()=>{$('fullscreen').textContent=document.fullscreenElement?'전체 화면 종료':'전체 화면';resize();});
+    $('title').textContent=data.title || 'Prior · MVS 영상 증거 점검';document.title=$('title').textContent;
+    $('scope').textContent=typeof data.scope==='string'?data.scope:'MVS를 조건으로 한 관측 증거 점검';$('created').textContent=data.created_at ? '생성 '+data.created_at : '';
+    $('config-json').textContent=JSON.stringify(data.config || {},null,2);
+    $('app').hidden=false;
+    setOptions($('region'),data.regions,region=>region.label || region.id);
+    new ResizeObserver(resize).observe($('inspection'));
+    window.addEventListener('resize',resize);updateRegion();
+  })();
+  </script>
+</body>
+</html>

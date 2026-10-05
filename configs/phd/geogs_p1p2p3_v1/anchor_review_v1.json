@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-GEOGS-ASSET-REVIEW-v1",
+  "scientific_verdict": null,
+  "source_manifest": "evaluation/viewer/manifest_v2.json",
+  "source_manifest_sha256": "12ba0d9a54b7313a7ded96fb9ceb255d0489948e1e18f4d3dadfb1ebcfda61d6",
+  "output": "evaluation/anchor_review_v1",
+  "default_condition": "D0005_Pnative",
+  "resolution": "512",
+  "regions": ["P1", "P2", "P3"],
+  "conditions": ["D005_Pnative", "D0005_Pnative", "D0_Pnative", "D005_Prelease", "D0005_Prelease", "D0_Prelease"],
+  "surface_kinds": ["raw", "post"],
+  "section_rows": ["prior_mesh", "D005_Pnative.anchor_512", "D005_Pnative.mesh_512", "selected.mesh_512"],
+  "scope": "Reuse existing sealed anchor512 and final512 surfaces, real renders and fixed sections; display review only. No retraining, extraction, metric recomputation or reference-driven parameter selection."
+}

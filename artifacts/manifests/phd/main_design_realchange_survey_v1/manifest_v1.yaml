@@ -1,0 +1,27 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1
+status: SURVEY_COMPLETE_ANALYST_READING_PENDING_HUMAN_REVIEW
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/main_design_realchange_survey_v1/PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1
+  durability: local external storage; not a durable-backup claim
+report: docs/experiments/phd/main_design_realchange_survey_v1/REPORT_ko_v1.md
+figures: docs/experiments/phd/main_design_realchange_survey_v1/figures/
+scripts: scripts/phd/main_design_realchange_survey_v1/
+config: configs/phd/main_design_realchange_survey_v1/survey_v1.json
+analyst_labels: configs/phd/main_design_realchange_survey_v1/visual_labels_v1.json
+constraints: no training, no downloads, existing outputs and code unmodified, Docker CPU only
+payload_files:
+  s1/: 0.5 m grids (ALS 2022, ULS 2024-12-17, current-image MVS, LoD2) + LoD2 building list + receipts
+  derived.npz: DSMs and masks used by every figure and statistic
+  offsets.json: vertical agreement on bare ground / flat roofs
+  buildings.csv: per-LoD2-building current-minus-prior statistics
+  change_components.csv: footprint-independent change components (ULS and MVS, ALS and LoD2, 1.0 / 2.5 m)
+  candidates.csv: ULS-based strong components + R1 Z08 with analyst category and view counts
+  crosscheck_199.csv: journal1 change tiers / AX-10 user labels vs this survey
+  regions.json / region_views.json: R1-R5 and B0 cards (geometry, buildings, densities, vintages, views)
+  targets_views.json / image_tilts.json / crops/: view counts and photo crops
+  rows/ rows_final/ figures/: figure rows and pages
+  qa/: quick-look, horizontal-shift probe, B0 GT identity, masked removals, candidate multi-return
+  receipt_task.json: commit, Docker image id, script/config hashes, input hashes, step seconds

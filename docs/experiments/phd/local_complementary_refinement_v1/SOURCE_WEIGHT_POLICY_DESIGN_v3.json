@@ -1,0 +1,163 @@
+{
+  "schema": "JBGS_SOURCE_WEIGHT_POLICY_DESIGN_v3",
+  "task_id": "PHD-LOCAL-SOURCE-WEIGHT-DESIGN-v3",
+  "status": "DESIGN_COMPLETE_NUMERICAL_CALIBRATION_AND_EXECUTION_BINDING_PENDING",
+  "execution_ready": false,
+  "design_supplement": "OBSERVATION_WALKTHROUGH_ko_v3_2.md",
+  "view_role_contract": {
+    "default_operation": "existing reconstruction inputs retained; same-input candidate photometry may drive a method but is internal fit, not independent accuracy validation",
+    "generation_decision_split_required_for_default_operation": false,
+    "G_V_scope": "optional unused-generation-view diagnostic; quantify input-subset effects separately",
+    "G": "depth candidate generation from a frozen training-photo subset",
+    "V": "for optional G/V diagnostic only, neighbors excluded from candidate generation/refinement/fusion/joint inference; method inputs, not final evaluation",
+    "T": "final evaluation photos excluded from G and V",
+    "existing_same_view_scores": "INTERNAL_FIT_DIAGNOSTIC unless source membership proves separation",
+    "independence_limit": "reference photo and poses may be shared; not independent sensor or scene validation"
+  },
+  "scientific_verdict": null,
+  "scope": "Design only; does not replace or enqueue main_v2",
+  "method": {
+    "candidate_sources": [
+      "prior",
+      "DA3"
+    ],
+    "future_source_comparator": "MVS",
+    "observation": "symmetric_raw_depth_patch_warp_ZNCC",
+    "grayscale_range": [
+      0,
+      1
+    ],
+    "interpolation": "bilinear",
+    "patch_width_development": 9,
+    "max_neighbors_development": 6,
+    "min_common_neighbors_development": 3,
+    "min_parallax_groups_development": 2,
+    "aggregation": "median per-source costs and median paired cost difference stored separately",
+    "cost": "(1-ZNCC)/2",
+    "low_texture": "UNRESOLVED_TEXTURE",
+    "visibility_missing": "UNRESOLVED_VISIBILITY",
+    "visibility_evidence": "independent current-image correspondence; own-source depth or inverse candidate warp does not certify visibility",
+    "primary_allocation": "hard supported winner; baseline ratio on observed agreement",
+    "source_coefficient": "c_s=lambda_s*valid_s/N_s; N_s fixed source-valid target count before evidence gate",
+    "total_budget": "B=c_prior+c_image",
+    "weights": {
+      "image_supported": "0,B",
+      "prior_supported": "B,0",
+      "observed_agreement": "c_prior,c_image",
+      "unresolved_with_prior": "c_prior,0",
+      "prior_only": "c_prior,0",
+      "image_only_supported": "0,c_image",
+      "image_only_unsupported": "0,0",
+      "neither": "0,0"
+    },
+    "zero_lambda": "never reactivate disabled source; inspect active-source absolute support",
+    "fallback": "prior depth at baseline prior strength; not Gaussian freezing",
+    "loss": "sum of source weighted L1 residuals; no outer mean or weight-sum renormalization",
+    "policy_gradient": "detached",
+    "source_targets": "frozen",
+    "supervision_targets_updated": false
+  },
+  "unresolved_before_execution": [
+    "source/camera/split hashes",
+    "common ray conversion and control",
+    "camera grouping rule and tie break",
+    "minimum texture",
+    "maximum absolute photo cost",
+    "paired selection margin",
+    "minimum common support fraction",
+    "pose and reprojection tolerances",
+    "surface agreement tolerance",
+    "neighbor winner support fraction",
+    "profile ambiguity threshold",
+    "GT-free threshold candidate grid and selection receipt",
+    "source/helper/container/Anchor/cache/evaluation hashes",
+    "candidate-independent correspondence and visibility support implementation"
+  ],
+  "selection_boundary": {
+    "gt": "evaluation_only",
+    "heldout_photos": "not_scoring_or_source_generation_inputs_for_honest_arm",
+    "existing_cases": "posthoc explanation layer, not threshold labels",
+    "recipe_revisions": "never call reused evaluation independent validation"
+  },
+  "stages": [
+    {
+      "id": "G0",
+      "purpose": "input and projection binding"
+    },
+    {
+      "id": "G1",
+      "purpose": "photometric technical validation and GT-free recipe freeze"
+    },
+    {
+      "id": "G2",
+      "purpose": "evaluation-only source selection and oracle gap"
+    },
+    {
+      "id": "G3",
+      "purpose": "weight and analytic gradient verification"
+    },
+    {
+      "id": "G4",
+      "purpose": "actual Gaussian gradient and Adam update fork",
+      "planned_regions": [
+        "P1",
+        "P2"
+      ],
+      "lambda_prior": 0.005,
+      "lambda_image": 0.05,
+      "controller": "fixed, not native replay",
+      "protection": "native",
+      "arms": [
+        "G_fixed",
+        "LC_fixed",
+        "E_support_only",
+        "E_budget",
+        "E_global_mass",
+        "E_old_strength"
+      ],
+      "steps_per_fork": 1,
+      "planned_forks": 12,
+      "executed": false
+    },
+    {
+      "id": "G5",
+      "purpose": "bounded optimization comparison; resources/steps to bind after G4",
+      "executed": false
+    },
+    {
+      "id": "G6",
+      "purpose": "separate source, protection, controller, repeat and independent validation",
+      "executed": false
+    }
+  ],
+  "resource_proposal": {
+    "cpu_development": {
+      "cpus": 4,
+      "ram_gib": 8,
+      "gpus": 0,
+      "concurrency": 1,
+      "attempt_wall_limit_seconds": 7200,
+      "output_limit_gib": 10
+    },
+    "gaussian_probe": {
+      "cpus": 8,
+      "ram_gib": 32,
+      "gpus": 1,
+      "concurrency": 1,
+      "availability": "recheck without stopping current jobs or services"
+    }
+  },
+  "completion": {
+    "design": true,
+    "implementation": false,
+    "technical_v3_validation": false,
+    "scientific_validation": false
+  },
+  "proposed_artifact_root": "JBGS_ARTIFACT_ROOT/phase-payloads/phd/local_source_weight_v3/PHD-LOCAL-SOURCE-WEIGHT-DESIGN-v3",
+  "ownership": {
+    "new_files_only": true,
+    "existing_main_v2": "preserve",
+    "canonical_e1_e6": "unchanged",
+    "training_execution_authorization": "not granted by this design file"
+  }
+}

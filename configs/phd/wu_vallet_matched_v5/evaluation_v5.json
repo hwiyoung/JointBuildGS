@@ -1,0 +1,144 @@
+{
+  "task_id": "PHD-WU-VALLET-MATCHED-EVALUATION-v5",
+  "output_artifact_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run",
+  "scientific_verdict": null,
+  "frame": {
+    "working_crs": "EPSG:25832",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ]
+  },
+  "workers": 4,
+  "xy_cell_m": 0.5,
+  "distance_thresholds_m": [
+    0.1,
+    0.25,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "reference_chunk_points": 1000000,
+  "section_half_width_m": 0.25,
+  "display_max_points": 200000,
+  "interpretation": "Native point numerical reference discrepancy in fixed half-open prisms. UAS header EPSG:32632 versus working EPSG:25832; no reprojection, registration, datum/epoch correction, calibrated accuracy or ground-truth change labels. Reference is accessed only after every candidate is frozen and hash-verified. All native points remain in metrics; plots may display a deterministic subset. P1/P2/P3 are development regions, not confirmatory test sets.",
+  "regions": [
+    {
+      "id": "P1",
+      "label": "P1 · 동일 규칙 v5",
+      "domain": {
+        "bbox_min": [
+          -23.0,
+          -21.0,
+          -44.272
+        ],
+        "bbox_max": [
+          7.0,
+          9.0,
+          -25.962
+        ]
+      },
+      "update_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run",
+      "candidate_receipt": "receipt.json",
+      "common_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/common.npz",
+      "native_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz",
+      "view_json": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/selected_master.json",
+      "view_json_kind": "selected_master",
+      "primary_arm": "corrected_area1",
+      "method_arms": {
+        "Wu_area0": "corrected_area0",
+        "Wu_area0.25": "corrected_area0.25",
+        "Wu_area1": "corrected_area1",
+        "Wu_area4": "corrected_area4",
+        "Wu_changed_only_area1": "changed_only_area1"
+      },
+      "input_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run",
+      "frozen_reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P1/reference.npz",
+      "frozen_reference_sha256": "3d111cf0cd8ab39fccb85ce0075486ec40f4f60584b5c68b2ab122918b321543"
+    },
+    {
+      "id": "P2",
+      "label": "P2 · 동일 규칙 v5",
+      "domain": {
+        "bbox_min": [
+          110.0,
+          86.0,
+          -49.386
+        ],
+        "bbox_max": [
+          158.0,
+          132.0,
+          -17.679
+        ]
+      },
+      "update_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run",
+      "candidate_receipt": "receipt.json",
+      "common_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/common.npz",
+      "native_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz",
+      "view_json": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/selected_master.json",
+      "view_json_kind": "selected_master",
+      "primary_arm": "corrected_area1",
+      "method_arms": {
+        "Wu_area0": "corrected_area0",
+        "Wu_area0.25": "corrected_area0.25",
+        "Wu_area1": "corrected_area1",
+        "Wu_area4": "corrected_area4",
+        "Wu_changed_only_area1": "changed_only_area1"
+      },
+      "input_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run",
+      "frozen_reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P2/reference.npz",
+      "frozen_reference_sha256": "9dc75111e8a5e83808d566c0b6621092423898a1f6badb9438f1a0d75e16e7ba"
+    },
+    {
+      "id": "P3",
+      "label": "P3 · 동일 규칙 v5",
+      "domain": {
+        "bbox_min": [
+          -60.0,
+          -42.0,
+          -49.223
+        ],
+        "bbox_max": [
+          -20.0,
+          12.0,
+          -16.993
+        ]
+      },
+      "update_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run",
+      "candidate_receipt": "receipt.json",
+      "common_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/common.npz",
+      "native_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz",
+      "view_json": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/selected_master.json",
+      "view_json_kind": "selected_master",
+      "primary_arm": "corrected_area1",
+      "method_arms": {
+        "Wu_area0": "corrected_area0",
+        "Wu_area0.25": "corrected_area0.25",
+        "Wu_area1": "corrected_area1",
+        "Wu_area4": "corrected_area4",
+        "Wu_changed_only_area1": "changed_only_area1"
+      },
+      "frozen_reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P3/reference.npz",
+      "frozen_reference_sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81",
+      "input_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run"
+    }
+  ],
+  "frozen_reference_metadata": {
+    "P1": {
+      "source_evaluation_json": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P1/evaluation.json",
+      "sha256": "071b56beeb0288d533143458b0ff4eff7dd25c80c3976041efac1463449290be"
+    },
+    "P2": {
+      "source_evaluation_json": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P2/evaluation.json",
+      "sha256": "3f7bb9e0e15557a8ef68fb9c4a35177700b600660531291a68e53e3afb16b683"
+    },
+    "P3": {
+      "source_evaluation_json": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P3/evaluation.json",
+      "sha256": "84c831675f19123291755d5043ea768f69a3e55fd3d241ab05e9ea205c17c0e1"
+    }
+  },
+  "matched_protocol_config": "configs/phd/wu_vallet_matched_v5/regions_v5.json",
+  "scope_addendum": "P1/P2/P3 are rerun with one shared implementation and one common selection, meshing, visibility, refinement and evaluation policy. All three candidates and protocols are verified before reading any UAS reference payload. MVS_context is retained as separately labelled context only and excluded from the matched comparison table.",
+  "core_audit_receipt": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-CORE-AUDIT-v5/run/receipt.json"
+}

@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-P2-AB-V2-C-FINAL",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "common": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-v1",
+  "reference": "phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/evaluation_v2",
+  "b_runs": [
+    "PHD-P2-AB-V2-B-NATIVE-v1",
+    "PHD-P2-AB-V2-B-NATIVE-FIXED-v2",
+    "PHD-P2-AB-V2-B-REPRESENTATION-v1",
+    "PHD-P2-AB-V2-B-PRIOR-SHIFT-v1"
+  ],
+  "exclude_arms": ["PHD-P2-AB-V2-B-NATIVE-v1/geometry_fixed"],
+  "exclusion_reason": "Geometry-fixed-only decoded-color domain mismatch; exact corrected rerun replaces this arm. Original is preserved.",
+  "prior_anchor": "PHD-P2-AB-V2-B-NATIVE-FIXED-v2/geometry_fixed",
+  "scientific_verdict": null
+}

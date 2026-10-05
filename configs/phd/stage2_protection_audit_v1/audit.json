@@ -1,0 +1,24 @@
+{
+  "task_id": "PHD-STAGE2-PROTECTION-AUDIT-v1",
+  "purpose": "Method document 4.4 audit: does the stage-2 implementation match 4.4, and does protection slow Gaussian motion (instrumented runs A/B/C + biased-scene A)",
+  "parent_task": "PHD-STAGE2-CONF-GUIDED-GS-v1",
+  "parent_fork": "PHD-STAGE2-CONF-GUIDED-GS-v1/sources/GeoGS-conf-guided-v1 (build r5, frozen)",
+  "audit_fork": "PHD-STAGE2-PROTECTION-AUDIT-v1/sources/GeoGS-conf-guided-v1-audit",
+  "image": "jointbuildgs:geogs-conf-guided-v1",
+  "iterations": 3500,
+  "iterations_rule": "opacity_reset_interval 3000 -> 3500 so that one reset (iteration 3000) and one E update after it (3001) are included",
+  "seed": "safe_state(): random.seed(0), np.random.seed(0), torch.manual_seed(0) (fork default, unchanged)",
+  "scene_rule": "handoff v2 has no single default scene; the order's smoke/lambda runs used P M-N, which is also the prompt fallback (LoD2 nominal)",
+  "runs": {
+    "A": {"condition": "P_M_N", "variant": "A", "extra": [],
+          "meaning": "current implementation with read-only instrumentation"},
+    "B": {"condition": "P_M_N", "variant": "B", "extra": ["--jbgs_lock_lr_scale", "1.0", "--jbgs_lock_opacity_floor", "0.0"],
+          "meaning": "protection off by configuration only: update scale 1, no opacity floor; E, protected set, density-control exemptions and reset exemption as in A"},
+    "C": {"condition": "P_M_N", "variant": "C", "extra": ["--jbgs_lock_lr_scale", "1.0", "--jbgs_audit_c_scale", "0.01"],
+          "meaning": "measurement reference: the judgment's blend set to 1 and an independent post-step blend old + 0.01*(new-old) on protected rows (xyz, rotation, scaling) in the audit copy; floor 0.5 as in A"},
+    "A_bias": {"condition": "P_M_B", "variant": "A", "extra": [],
+               "meaning": "current implementation on the height-biased scene (main roof prior raised 1 m) for the occlusion comparison of check 2"}
+  },
+  "gpu_plan": {"0": ["A", "C"], "1": ["B", "A_bias"]},
+  "scientific_verdict": null
+}

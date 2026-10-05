@@ -1,0 +1,284 @@
+{
+  "task_id": "PHD-GEOGS-CAUSAL-FOLLOWUP-v1",
+  "scientific_verdict": null,
+  "status": "PASS_CACHED_CHANGE_CONTRAST",
+  "config": {
+    "task_id": "PHD-GEOGS-CAUSAL-FOLLOWUP-v1",
+    "scientific_verdict": null,
+    "cached_evaluation": "sample0.1_reference0.1",
+    "selection_status": "POST_HOC_DIAGNOSTIC_FROM_PREVIOUS_SECTIONS_NOT_CONFIRMATORY",
+    "y_bin_width_m": 0.5,
+    "regions": [
+      {
+        "id": "P1",
+        "title": "P1 | residual elevated surface",
+        "bounds_half_open_m": [
+          [
+            -8.25,
+            -7.75
+          ],
+          [
+            -21.0,
+            -5.0
+          ],
+          [
+            -44.0,
+            -35.0
+          ]
+        ]
+      },
+      {
+        "id": "P2",
+        "title": "P2 | surface lowered near current reference",
+        "bounds_half_open_m": [
+          [
+            133.75,
+            134.25
+          ],
+          [
+            125.0,
+            129.0
+          ],
+          [
+            -30.0,
+            -22.0
+          ]
+        ]
+      }
+    ],
+    "candidates": [
+      {
+        "id": "prior_mesh",
+        "label": "Input ALS-derived prior",
+        "color": "#19835d"
+      },
+      {
+        "id": "D005_Pnative.mesh_512.raw",
+        "label": "Refined | prior weight 0.005 | 512 raw",
+        "color": "#df8319"
+      },
+      {
+        "id": "D0005_Pnative.mesh_512.raw",
+        "label": "Refined | prior weight 0.0005 | 512 raw",
+        "color": "#087fce"
+      }
+    ],
+    "interpretation": "All cached surface/reference samples in two independently selected 0.5 m X bands. Different local axis ranges explicitly displayed. Not mesh-plane intersections, paired errors, global change success rates or proof of actual demolition. UAS is evaluation-only."
+  },
+  "input_sha256": {
+    "evaluation/geometry/P1/prior_mesh/sample0.1_reference0.1.npz": "c2018997de22b10a5933c12bd3a9518d5f74dc92cdb6cea0603bf024a72de67c",
+    "evaluation/geometry/P1/prior_mesh/sample0.1_reference0.1.json": "78aec43b341f5e7a0c5a4488782e9763f38c4d3514c59fdd024cc5cbfbbb8fb4",
+    "evaluation/geometry/P1/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz": "2ca288b28daabfbf89b76ada7848cc55e79fb5f4b209bbfcf0b1f946745a551d",
+    "evaluation/geometry/P1/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.json": "f2900cb1359ba1807238c9019c28ba75477ef408d37650cafcb0a3e78b6e601d",
+    "evaluation/geometry/P1/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz": "1b354bef249c7375edb99de571e2c2e324960f01856d5638c0be1d7fcb4b706d",
+    "evaluation/geometry/P1/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.json": "0e5d81ebfe93d0ae2f1a252846e1b348dbab8e9c87c4c170057ef3acb32bdef9",
+    "evaluation/geometry/P2/prior_mesh/sample0.1_reference0.1.npz": "cafdab59fe12f0f5f7c46ae5e939ef017180d61f84727728d64bf6ccc88c289f",
+    "evaluation/geometry/P2/prior_mesh/sample0.1_reference0.1.json": "4a3eda892ca51ca74f61dc4a4bb1b2160ae729750f78d2e838496272917ec7f1",
+    "evaluation/geometry/P2/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz": "89f51cf36000506d4bf1a5b32a3bdd096ff69db1a81cb1f93f4912c9c7c3a78d",
+    "evaluation/geometry/P2/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.json": "23deae2141f8a72bb07a714bacff919c4972495c926b522055049a45bb9fcabe",
+    "evaluation/geometry/P2/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz": "685010cc28ca132181e3a8d6fb9313921b78e7bc9418b3be2b4b20799c24ed20",
+    "evaluation/geometry/P2/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.json": "5c9650c5ebefaed878f06dfb79fccf5ff4b738045741ef978a87b7844ba79435"
+  },
+  "script_sha256": "45c512de3e28a970ac534a33ab7fb694b571e19c331bf0d5285b8528229b1760",
+  "helper_script_sha256": "262c0925f78f18aeb3bb01796f5e5e7d925586d16dc915b0cd276017dcc9f78f",
+  "config_sha256": "5c396d065d7e33b06a0b5c174c65543764b4a1977a6d21030d35b48430459487",
+  "git_commit": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "docker_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "versions": {
+    "python": "3.10.20",
+    "numpy": "1.26.4",
+    "matplotlib": "3.9.2"
+  },
+  "source_metadata": {
+    "P1/prior_mesh": {
+      "mesh_res": null,
+      "iteration": null,
+      "source_sha256": "5ac4783e19a0f80843da75bd04534f4e809e274968e2f4176d89b06bb043e3b8",
+      "crs": {
+        "working": "EPSG:25832",
+        "world_shift": [
+          690953,
+          5336071,
+          604
+        ],
+        "als_z_bridge_m": 45.7,
+        "uas_header": "EPSG:32632",
+        "new_reference_alignment": false,
+        "absolute_datum_calibration_verified": false
+      },
+      "surface_samples": 235951
+    },
+    "P1/D005_Pnative.mesh_512.raw": {
+      "mesh_res": 512,
+      "iteration": 30000,
+      "source_sha256": "8efdaab7eb76516eb01988d7c521b4de4f38d3e1d80cd3253b00140ec4761249",
+      "crs": {
+        "working": "EPSG:25832",
+        "world_shift": [
+          690953,
+          5336071,
+          604
+        ],
+        "als_z_bridge_m": 45.7,
+        "uas_header": "EPSG:32632",
+        "new_reference_alignment": false,
+        "absolute_datum_calibration_verified": false
+      },
+      "surface_samples": 261480
+    },
+    "P1/D0005_Pnative.mesh_512.raw": {
+      "mesh_res": 512,
+      "iteration": 30000,
+      "source_sha256": "2176247912f9b22a7d6f42e1af0427e76cf8cd8bd8e15b02ade92cef5b13632d",
+      "crs": {
+        "working": "EPSG:25832",
+        "world_shift": [
+          690953,
+          5336071,
+          604
+        ],
+        "als_z_bridge_m": 45.7,
+        "uas_header": "EPSG:32632",
+        "new_reference_alignment": false,
+        "absolute_datum_calibration_verified": false
+      },
+      "surface_samples": 172594
+    },
+    "P2/prior_mesh": {
+      "mesh_res": null,
+      "iteration": null,
+      "source_sha256": "cb953d820447a633a4c2c73f30caa5846c5259fd3fb79d420b604c4a35a24714",
+      "crs": {
+        "working": "EPSG:25832",
+        "world_shift": [
+          690953,
+          5336071,
+          604
+        ],
+        "als_z_bridge_m": 45.7,
+        "uas_header": "EPSG:32632",
+        "new_reference_alignment": false,
+        "absolute_datum_calibration_verified": false
+      },
+      "surface_samples": 495013
+    },
+    "P2/D005_Pnative.mesh_512.raw": {
+      "mesh_res": 512,
+      "iteration": 30000,
+      "source_sha256": "29718ffdd8599f9273bae763be0f378b1ace0e1a5a43a9f03fbb4dc61df7f375",
+      "crs": {
+        "working": "EPSG:25832",
+        "world_shift": [
+          690953,
+          5336071,
+          604
+        ],
+        "als_z_bridge_m": 45.7,
+        "uas_header": "EPSG:32632",
+        "new_reference_alignment": false,
+        "absolute_datum_calibration_verified": false
+      },
+      "surface_samples": 543784
+    },
+    "P2/D0005_Pnative.mesh_512.raw": {
+      "mesh_res": 512,
+      "iteration": 30000,
+      "source_sha256": "b9d84eb2529b84c3dcb89dedff47a7c5976bb7f5db59183428d6c11996ddfcfd",
+      "crs": {
+        "working": "EPSG:25832",
+        "world_shift": [
+          690953,
+          5336071,
+          604
+        ],
+        "als_z_bridge_m": 45.7,
+        "uas_header": "EPSG:32632",
+        "new_reference_alignment": false,
+        "absolute_datum_calibration_verified": false
+      },
+      "surface_samples": 387131
+    }
+  },
+  "same_reference_points_and_original_ids_within_each_region": true,
+  "source_preserved_sha256_before_after": true,
+  "band_statistics": {
+    "P1": {
+      "prior_mesh": {
+        "count": 1682,
+        "z_min_m": -41.77065706758151,
+        "z_q10_m": -37.649050761437756,
+        "z_median_m": -37.25457802984831,
+        "z_q90_m": -36.83400714476707,
+        "z_max_m": -36.729407878024375
+      },
+      "D005_Pnative.mesh_512.raw": {
+        "count": 2471,
+        "z_min_m": -41.14266689573602,
+        "z_q10_m": -39.12092664751301,
+        "z_median_m": -37.846945267950055,
+        "z_q90_m": -37.098506299051905,
+        "z_max_m": -36.73761883563879
+      },
+      "D0005_Pnative.mesh_512.raw": {
+        "count": 930,
+        "z_min_m": -42.146416852894276,
+        "z_q10_m": -41.7394048616613,
+        "z_median_m": -41.24225643098579,
+        "z_q90_m": -40.35798113661525,
+        "z_max_m": -40.23983068588141
+      },
+      "observed_UAS": {
+        "count": 1054,
+        "z_min_m": -41.91019999999992,
+        "z_q10_m": -41.85169999999994,
+        "z_median_m": -41.79239999999993,
+        "z_q90_m": -41.73422999999998,
+        "z_max_m": -41.670999999999935
+      }
+    },
+    "P2": {
+      "prior_mesh": {
+        "count": 395,
+        "z_min_m": -24.001533340897918,
+        "z_q10_m": -23.937944713079517,
+        "z_median_m": -23.71630588683881,
+        "z_q90_m": -23.540960149481286,
+        "z_max_m": -23.474510630224813
+      },
+      "D005_Pnative.mesh_512.raw": {
+        "count": 950,
+        "z_min_m": -29.945527801067676,
+        "z_q10_m": -29.131475088554772,
+        "z_median_m": -26.1595933718533,
+        "z_q90_m": -25.039784146497656,
+        "z_max_m": -24.751117883776196
+      },
+      "D0005_Pnative.mesh_512.raw": {
+        "count": 197,
+        "z_min_m": -27.21305380900747,
+        "z_q10_m": -27.172874505996962,
+        "z_median_m": -27.127145845717543,
+        "z_q90_m": -27.115831263824678,
+        "z_max_m": -27.109362876439757
+      },
+      "observed_UAS": {
+        "count": 214,
+        "z_min_m": -27.70569999999998,
+        "z_q10_m": -27.670799999999986,
+        "z_median_m": -27.653299999999945,
+        "z_q90_m": -27.555069999999965,
+        "z_max_m": -27.430799999999977
+      }
+    }
+  },
+  "new_training_runs": 0,
+  "new_scene_renders": 0,
+  "new_mesh_extractions": 0,
+  "new_registration": 0,
+  "new_distance_queries": 0,
+  "output_sha256": {
+    "figures/change_contrast.png": "436df70f384af932d5730deabb8f7cca54ee6d38ce2eb9a4936b985340e75e63",
+    "analysis/change_samples.csv": "724a31fea4c12ac625c5634798a221ff70c368629e21d54cbbae5d46664cfe93",
+    "analysis/change_bins.csv": "0fd1288487334647384fd6f9a4e10e6508c4025b7058add564d0d1d6bb58d56c"
+  }
+}

@@ -1,0 +1,13 @@
+schema: jointbuildgs.artifact_resolver.v1
+task_id: PHD-GEOGS-NATIVE-EFFECTIVE-SCALE-AUDIT-v1
+scientific_verdict: null
+status: PASS_READONLY_EFFECTIVE_SCALE_AUDIT
+storage_root: ../JointBuildGS-artifacts
+payload: phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/input_diagnostics_v1/native_effective_scale_audit_v1/attempt.VwpI4ip5
+receipt: receipt.json
+receipt_sha256: b20bdf8ea18f4083b18b6d6148c8ec95721f28fa77ad6731e329a8618869ab5a
+new_training_steps: 0
+report: docs/experiments/phd/geogs_p1p2p3_v1/NATIVE_EFFECTIVE_SCALE_AUDIT_ko_v1.md
+script: scripts/phd/geogs_p1p2p3_v1/analysis/native_effective_scale_audit.py
+config: configs/phd/geogs_p1p2p3_v1/native_effective_scale_audit_v1.json
+scope: Camera-dependent scale boundaries and initialization path audit; no measured split events or causal RGB attribution.

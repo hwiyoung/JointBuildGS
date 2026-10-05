@@ -1,0 +1,151 @@
+{
+  "task_id": "PHD-P2-GEOMETRY-REASSESSMENT-v1",
+  "scientific_verdict": null,
+  "status": "PASS_DESCRIPTIVE_REANALYSIS",
+  "config_sha256": "fcba749d1cd76a03e365cb65e42c11a1722c2bb149bcbc646607662670a1553e",
+  "script_sha256": "1c70365d562075403f3f9c81ba382354e8171d91271814c5f7d27d6125ebeb26",
+  "git_commit": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "python": "3.10.20",
+  "numpy": "1.26.4",
+  "matplotlib": "3.9.2",
+  "input_files": [
+    {
+      "path": "/source/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz",
+      "sha256": "89f51cf36000506d4bf1a5b32a3bdd096ff69db1a81cb1f93f4912c9c7c3a78d",
+      "metrics_path": "/source/D005_Pnative.mesh_512.raw/sample0.1_reference0.1.json",
+      "metrics_sha256": "23deae2141f8a72bb07a714bacff919c4972495c926b522055049a45bb9fcabe"
+    },
+    {
+      "path": "/source/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.npz",
+      "sha256": "685010cc28ca132181e3a8d6fb9313921b78e7bc9418b3be2b4b20799c24ed20",
+      "metrics_path": "/source/D0005_Pnative.mesh_512.raw/sample0.1_reference0.1.json",
+      "metrics_sha256": "5c9650c5ebefaed878f06dfb79fccf5ff4b738045741ef978a87b7844ba79435"
+    },
+    {
+      "path": "/source/D005_Pnative.mesh_512.raw/sample0.05_reference0.1.npz",
+      "sha256": "f2f85b7db09865574dffc891ec4e473aca93756fd8c754212acfcca472e814cf",
+      "metrics_path": "/source/D005_Pnative.mesh_512.raw/sample0.05_reference0.1.json",
+      "metrics_sha256": "49ad8b0023b28c71a6fb40e3e2a9ba37c4ff7ee98cae7efced83a59b4994a649"
+    },
+    {
+      "path": "/source/D0005_Pnative.mesh_512.raw/sample0.05_reference0.1.npz",
+      "sha256": "6209966e18ed09997fa4834b33413c39a1a0b537d69e95b12d5c0dc142a664da",
+      "metrics_path": "/source/D0005_Pnative.mesh_512.raw/sample0.05_reference0.1.json",
+      "metrics_sha256": "d6c5f210b9809d96cb10a100cb67a9762fb680cdd18a4ad8c2f39b52fb7244cd"
+    },
+    {
+      "path": "/source/D005_Pnative.mesh_512.raw/sample0.2_reference0.1.npz",
+      "sha256": "966d2c6e09e2c926a9a8d23f40c87da77155f34d677bcf43495a9d49573aa3a1",
+      "metrics_path": "/source/D005_Pnative.mesh_512.raw/sample0.2_reference0.1.json",
+      "metrics_sha256": "ba1fcf283af9cf3ba6d80d73e69eb5b5908b79cfa4848a78b9b98460050e74d8"
+    },
+    {
+      "path": "/source/D0005_Pnative.mesh_512.raw/sample0.2_reference0.1.npz",
+      "sha256": "8e5968baebecc700580005297eec291f797a047330428653dc1cd40c8e60d5ad",
+      "metrics_path": "/source/D0005_Pnative.mesh_512.raw/sample0.2_reference0.1.json",
+      "metrics_sha256": "1fbfc39201a6a5891c5c2f8ff3fb4f23bba809299f121492db1ee9adfb38fb1f"
+    },
+    {
+      "path": "/source/D005_Pnative.mesh_512.raw/sample0.1_reference0.05.npz",
+      "sha256": "fadf5e8209a25c322ba0529d212311796fb0be9d43b0bb94049c82ceb2fbe123",
+      "metrics_path": "/source/D005_Pnative.mesh_512.raw/sample0.1_reference0.05.json",
+      "metrics_sha256": "53c8447f101c9cf2d9ad487842111abaf438d253749f07a59985a826753746b6"
+    },
+    {
+      "path": "/source/D0005_Pnative.mesh_512.raw/sample0.1_reference0.05.npz",
+      "sha256": "4f3035eb33a5ac534d3df05d09a8fc32832e46b966268358e8ec0056655aaf15",
+      "metrics_path": "/source/D0005_Pnative.mesh_512.raw/sample0.1_reference0.05.json",
+      "metrics_sha256": "91bb4a7a1b2cb27b575965d7dfed7368ef5f41b4c74215d4fd8d6d28ddc1c212"
+    },
+    {
+      "path": "/source/D005_Pnative.mesh_512.raw/sample0.1_reference0.2.npz",
+      "sha256": "19252e59fe3443de0a913bb0c549b417152be5e80fd87831bae34e386659b9b4",
+      "metrics_path": "/source/D005_Pnative.mesh_512.raw/sample0.1_reference0.2.json",
+      "metrics_sha256": "a1b9a6a3b1db20fae31a161508769f6f7ebb3f6031228f07a698d74ab81608a3"
+    },
+    {
+      "path": "/source/D0005_Pnative.mesh_512.raw/sample0.1_reference0.2.npz",
+      "sha256": "2aa5c92824c4c68b338ec2160c1e5a2a55b6ae659ebde169a134dd3dff52ac71",
+      "metrics_path": "/source/D0005_Pnative.mesh_512.raw/sample0.1_reference0.2.json",
+      "metrics_sha256": "f54960f09ae08b94c86f04f996519b0ecfbd13dcd61b5d598c3ca53f86f72016"
+    },
+    {
+      "path": "/source/D005_Pnative.final.raw/sample0.1_reference0.1.npz",
+      "sha256": "811581fb92fee1495ad14e713f349c1d7618d116371704d8334b7bca97578014",
+      "metrics_path": "/source/D005_Pnative.final.raw/sample0.1_reference0.1.json",
+      "metrics_sha256": "f486b2aee08bc92b10669360e837317c6d2f5418c4222f190732853118cd7a07"
+    },
+    {
+      "path": "/source/D0005_Pnative.final.raw/sample0.1_reference0.1.npz",
+      "sha256": "c75ef9d725a73f49d08d613b698cec3e7b377bf82aac04d9dd1871934bf8957e",
+      "metrics_path": "/source/D0005_Pnative.final.raw/sample0.1_reference0.1.json",
+      "metrics_sha256": "0d883acf62230b2fee9f777ff2fe43f1adbf5262e09352405c979d47040ddd01"
+    },
+    {
+      "path": "/source/D005_Pnative.final.raw/sample0.05_reference0.1.npz",
+      "sha256": "8db6af989c5285c30116ac5b712f2ca507a8b7d7d431413d95ecbea2d74a1c70",
+      "metrics_path": "/source/D005_Pnative.final.raw/sample0.05_reference0.1.json",
+      "metrics_sha256": "7667c954034df59e32810e6094dc3340e05c08bc353ebb001c4be8e07a732c74"
+    },
+    {
+      "path": "/source/D0005_Pnative.final.raw/sample0.05_reference0.1.npz",
+      "sha256": "dd14851742e235bf84e93b7721f64ed1d1a8b782282e4ae55368cdbe7505980e",
+      "metrics_path": "/source/D0005_Pnative.final.raw/sample0.05_reference0.1.json",
+      "metrics_sha256": "5e1fc6645fd5c06ebff02772f20d54c08db5b23ec846f3436eda93f1d7b13a7c"
+    },
+    {
+      "path": "/source/D005_Pnative.final.raw/sample0.2_reference0.1.npz",
+      "sha256": "a07536315e10f2530a21428fd9af4ea8c85f881fee3dbbcadb91eaa5bced96fc",
+      "metrics_path": "/source/D005_Pnative.final.raw/sample0.2_reference0.1.json",
+      "metrics_sha256": "5d6c58221129ea292b3028c0671edad28928cc0aec115d0aef462c0edb960f15"
+    },
+    {
+      "path": "/source/D0005_Pnative.final.raw/sample0.2_reference0.1.npz",
+      "sha256": "5253cffe577831c5cc54731628f4718fc9fd07688272eb96654ebbf347e7668d",
+      "metrics_path": "/source/D0005_Pnative.final.raw/sample0.2_reference0.1.json",
+      "metrics_sha256": "cc615c920759d5d92f160b46f022a334c6d496488a10ae484ba5c2ceae6f2936"
+    },
+    {
+      "path": "/source/D005_Pnative.final.raw/sample0.1_reference0.05.npz",
+      "sha256": "fea2137004a4e4b0930375a1a4d2a94e9f0d2ea9de5e28c33a2aa1ecf2dd9578",
+      "metrics_path": "/source/D005_Pnative.final.raw/sample0.1_reference0.05.json",
+      "metrics_sha256": "e9ee115a75fb630475225df25336e0f86f4c07ef7633a6a3194b6038091f8174"
+    },
+    {
+      "path": "/source/D0005_Pnative.final.raw/sample0.1_reference0.05.npz",
+      "sha256": "41bbad514ffe70273431fb66294aa076c244d59cb003872633ec586e88e19aa9",
+      "metrics_path": "/source/D0005_Pnative.final.raw/sample0.1_reference0.05.json",
+      "metrics_sha256": "2e44befb66ffdb33198fe31ff7d3a133db47656f25dac85d488a447cf536e904"
+    },
+    {
+      "path": "/source/D005_Pnative.final.raw/sample0.1_reference0.2.npz",
+      "sha256": "76eabca2219b5761648603f89b76b9b66375be05dc0f54a3cb9fab2384829eb7",
+      "metrics_path": "/source/D005_Pnative.final.raw/sample0.1_reference0.2.json",
+      "metrics_sha256": "da4ab9739bf7a6fd6a6fb6e2702acd2e99ed5da3fcddd30ce6702dd1aea99633"
+    },
+    {
+      "path": "/source/D0005_Pnative.final.raw/sample0.1_reference0.2.npz",
+      "sha256": "b9b2f2bb4037151b1796701b70fb442e980754602da6357bd7605efa7195f92e",
+      "metrics_path": "/source/D0005_Pnative.final.raw/sample0.1_reference0.2.json",
+      "metrics_sha256": "55b6ca05a07d485bb7cd89ab9fa72db56eff593fb7d4a3725567634aeefeb5d6"
+    }
+  ],
+  "global_rows_reconciled": 120,
+  "max_global_metric_difference_tolerance": 1e-12,
+  "same_reference_coordinate_and_original_identity_checks": "PASS",
+  "paired_partition_checks": "PASS",
+  "methodology": {
+    "height_bins": "Uniform absolute-local-Z bins over the whole prism, not building/roof/ground semantic labels; declared before numerical stratification",
+    "reference_membership": "Exact common saved UAS coordinates and original indices must match within each comparison",
+    "prediction_membership": "Different meshes have different area samples; never pair predictions by row index",
+    "distance_queries": "Reuse distances to the original full-prism candidate/reference; do not recrop nearest-neighbor targets per stratum",
+    "area": "Same area-uniform Monte Carlo estimate as existing scoring; distance from observed UAS is not proof of false surface where reference support is absent",
+    "inference": "Descriptive diagnostic only; no optimal threshold selection or confirmatory/scientific verdict"
+  },
+  "models_retrained": 0,
+  "scene_renders": 0,
+  "meshes_extracted": 0,
+  "new_distance_queries": 0,
+  "inputs_unchanged": true
+}

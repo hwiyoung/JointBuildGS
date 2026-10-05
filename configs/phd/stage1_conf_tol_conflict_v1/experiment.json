@@ -1,0 +1,57 @@
+{
+  "task_id": "PHD-STAGE1-CONF-TOL-CONFLICT-v1",
+  "scientific_verdict": null,
+  "title_ko": "첫 단계: 관측 신뢰도 지도·허용 오차·충돌 지도 (LiDAR prior L vs LoD2 prior M, 정상/편향 +1.0 m)",
+  "purpose_ko": "학습 없이 (1) 영상이 이 건물의 어디를 잴 수 있는가(신뢰도·커버리지), (2) 영상과 prior의 정상 어긋남(허용 오차 τ), (3) 그 이상 어긋난 자리(충돌 지도)를 prior 2종 × 조건 2종에 같은 절차로 측정한다. 둘째 단계(신뢰도 기반 GS 학습)의 입력과 판독 기대치를 만든다.",
+  "scene": {
+    "example_scene_relative": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/scene",
+    "supplied_lod2_depth_relative": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/scene/lod2_prior/raw_depth",
+    "diagnostic_relative": "phase-payloads/phd/geogs_roof_bias_v1/GEOGS-ROOF-BIAS-20260921",
+    "diagnostic_biased_condition": "B+1.0",
+    "diagnostic_nominal_summary_relative": "phase-payloads/phd/geogs_roof_bias_v1/GEOGS-ROOF-BIAS-20260921/conditions/N/analysis/summary.json",
+    "colmap_dense_relative": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "als_tiles_relative": [
+      "phase-payloads/p0-audit/data/raw/als/690_5335.laz",
+      "phase-payloads/p0-audit/data/raw/als/690_5336.laz",
+      "phase-payloads/p0-audit/data/raw/als/691_5335.laz",
+      "phase-payloads/p0-audit/data/raw/als/691_5336.laz"
+    ],
+    "citygml_relative": "phase-payloads/p0-audit/data/raw/lod2",
+    "target_building": "DEBY_LOD2_4959323",
+    "gt_reference_relative": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/evaluation_reference/r1_b1_sub002_transformed.ply",
+    "gt_reference_use": "recorded only; ALS substitute not needed",
+    "z_offset_m": 45.66,
+    "crs_note": "CityGML/ALS: EPSG:25832 with DHHN orthometric heights; scene local frame = global + reference_frame shift + z_offset 45.66 (author LoD2Depth convention); depth arrays are camera-Z metres"
+  },
+  "constants": {
+    "consistent_views_threshold": 3,
+    "k_tolerance": 2.5,
+    "outlier_sigma": 3.0,
+    "nmad_factor": 1.4826,
+    "tau_n_default_deg": 10.0,
+    "roof_abs_nz_min": 0.2,
+    "bias_m": 1.0,
+    "bias_check_window_m": [0.8, 1.2],
+    "run_both_priors_rel_diff": 0.2,
+    "als_classes": [2, 6],
+    "als_crop_margin_m": 15.0,
+    "als_point_visibility_tol_m": 0.1,
+    "res_png_range_m": [-1.5, 1.5],
+    "depth_png_range_m": [30.0, 130.0],
+    "hist_range_m": [-3.0, 3.0],
+    "hist_bin_m": 0.02,
+    "edge_band_px_fullres": 40,
+    "viewer_long_side_px": 1200,
+    "readout_long_side_px": 600,
+    "als_viewer_point_stride": 4
+  },
+  "priors": {
+    "L": {"name_ko": "과거 ALS(바이에른 LDBV, 2.5D TIN)", "tau_spec_m": 0.12, "tau_spec_source": "TUM2TWIN 기재 바이에른 ALS 수직 정확도 0.12 m"},
+    "M": {"name_ko": "과거 LoD2(바이에른 CityGML)", "tau_spec_m": 1.0, "tau_spec_source": "LoD2 높이 정확도 약 1 m(발주서 3절)"}
+  },
+  "conditions": {"nominal": 0.0, "biased": 1.0},
+  "regions_ko": {"roof": "지붕", "wall": "벽면", "ground": "지면", "all": "전체(지붕+벽면)", "other": "다른 건물(집계 제외)"},
+  "tau_region": "roof",
+  "tau_n_definition": "tau_n = m2_n + k*s2_n on unsigned angle residuals (two-pass); literal k*s2_n also recorded",
+  "conflict_reference": "nominal-condition two-pass (m2, s2) of the pixel's own region"
+}

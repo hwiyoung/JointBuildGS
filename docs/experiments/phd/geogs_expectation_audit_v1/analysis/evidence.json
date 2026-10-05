@@ -1,0 +1,429 @@
+{
+  "task_id": "PHD-GEOGS-EXPECTATION-AUDIT-v1",
+  "scientific_verdict": null,
+  "selected_p2_photos": [
+    {
+      "name": "DJI_20241217084505_0076_D.JPG",
+      "image_id": 67,
+      "sha256": "e51ff7398569f390b1428b8969d8625bfe4cc9ab24c7369221219791009b67d1",
+      "role": "train",
+      "source_relative_path": "inputs/P2/scene/images/DJI_20241217084505_0076_D.JPG"
+    },
+    {
+      "name": "DJI_20241217091125_0105_D.JPG",
+      "image_id": 294,
+      "sha256": "6d94c213687f8d5c0fb08b0206d3cff4d10f3586ba74f05646a32fda4e926e99",
+      "role": "train",
+      "source_relative_path": "inputs/P2/scene/images/DJI_20241217091125_0105_D.JPG"
+    },
+    {
+      "name": "DJI_20241217101359_0032_D.JPG",
+      "image_id": 656,
+      "sha256": "fd34ddc0b9491c949670586e746700a5f71bb5b7cc2d46b2bac6dc7a6061ac43",
+      "role": "evaluation",
+      "source_relative_path": "inputs/P2/scene/images/DJI_20241217101359_0032_D.JPG"
+    }
+  ],
+  "input_roles": [
+    {
+      "region": "P1",
+      "train_count": 98,
+      "evaluation_count": 15,
+      "prior_depth_count": 98,
+      "da3_depth_count": 98,
+      "training_paths": {
+        "prior_depth": "prior",
+        "da3_depth": "da3",
+        "protection_pcd": "initialization/lod2_pcd.ply"
+      },
+      "source_role": "ALS_SURFACE_ADAPTATION_WITH_EXPLICIT_CALIBRATION"
+    },
+    {
+      "region": "P2",
+      "train_count": 57,
+      "evaluation_count": 9,
+      "prior_depth_count": 57,
+      "da3_depth_count": 57,
+      "training_paths": {
+        "prior_depth": "prior",
+        "da3_depth": "da3",
+        "protection_pcd": "initialization/lod2_pcd.ply"
+      },
+      "source_role": "ALS_SURFACE_ADAPTATION_WITH_EXPLICIT_CALIBRATION"
+    },
+    {
+      "region": "P3",
+      "train_count": 137,
+      "evaluation_count": 20,
+      "prior_depth_count": 137,
+      "da3_depth_count": 137,
+      "training_paths": {
+        "prior_depth": "prior",
+        "da3_depth": "da3",
+        "protection_pcd": "initialization/lod2_pcd.ply"
+      },
+      "source_role": "ALS_SURFACE_ADAPTATION_WITH_EXPLICIT_CALIBRATION"
+    }
+  ],
+  "comparison_mvs_lineage": [
+    {
+      "region": "P1",
+      "path": "evaluation_inputs/P1/native.npz",
+      "original_relative": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz",
+      "sha256": "ef4dba8cf7946ebc7e0337c234298ae9af27e6c46add561cbecdca298e7db794",
+      "bytes": 2465805,
+      "arrays": [
+        "als_xyz.npy",
+        "als_tile_rows.npy",
+        "als_original_row.npy",
+        "als_original_file_index.npy",
+        "mvs_xyz.npy",
+        "mvs_tile_rows.npy",
+        "mvs_original_row.npy",
+        "mvs_original_file_index.npy",
+        "mvs_rgb.npy"
+      ],
+      "image_geometry_lineage": "historical common-base OpenMVS fused geometry; all-view production, distinct from Wu selected COLMAP depth mesh"
+    },
+    {
+      "region": "P2",
+      "path": "evaluation_inputs/P2/native.npz",
+      "original_relative": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz",
+      "sha256": "4d64f75d2acdb9ccf3db1f1bdff6c37b954c0519cf349c4ae7330c4302981d6a",
+      "bytes": 5854267,
+      "arrays": [
+        "als_xyz.npy",
+        "als_tile_rows.npy",
+        "als_original_row.npy",
+        "als_original_file_index.npy",
+        "mvs_xyz.npy",
+        "mvs_tile_rows.npy",
+        "mvs_original_row.npy",
+        "mvs_original_file_index.npy",
+        "mvs_rgb.npy"
+      ],
+      "image_geometry_lineage": "historical common-base OpenMVS fused geometry; all-view production, distinct from Wu selected COLMAP depth mesh"
+    },
+    {
+      "region": "P3",
+      "path": "evaluation_inputs/P3/native.npz",
+      "original_relative": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz",
+      "sha256": "b2a30325d0742ee1c426ea24cdac8519fd39d148189e98566b82214bb2db7acf",
+      "bytes": 14566081,
+      "arrays": [
+        "als_xyz.npy",
+        "als_tile_rows.npy",
+        "als_original_row.npy",
+        "als_original_file_index.npy",
+        "mvs_xyz.npy",
+        "mvs_tile_rows.npy",
+        "mvs_original_row.npy",
+        "mvs_original_file_index.npy",
+        "mvs_rgb.npy"
+      ],
+      "image_geometry_lineage": "historical common-base OpenMVS fused geometry; all-view production, distinct from Wu selected COLMAP depth mesh"
+    }
+  ],
+  "p2_initialization_window": {
+    "config": {
+      "bounds_half_open": [
+        [
+          133.75,
+          134.25
+        ],
+        [
+          90.0,
+          112.0
+        ],
+        [
+          -33.0,
+          -30.0
+        ]
+      ],
+      "y_bin_width_m": 2.0,
+      "status": "POST_HOC_DIAGNOSTIC_FROM_EXISTING_SECTION; NOT_A_TRAINING_MASK_OR_FEATURE_GROUND_TRUTH",
+      "meaning": "Count existing samples and visibility-retained IDs near the previously inspected roof valleys; do not infer metric surface accuracy or sufficient image observability from membership."
+    },
+    "source_total": 100000,
+    "retained_total": 93497,
+    "sampled_in_window": 52,
+    "retained_in_window": 50,
+    "actual_trainer_xyz_max_abs_delta_m": 7.6293671043004e-06,
+    "y_bins": [
+      {
+        "y_min": 90.0,
+        "y_max": 92.0,
+        "sampled": 4,
+        "retained": 3,
+        "excluded": 1
+      },
+      {
+        "y_min": 92.0,
+        "y_max": 94.0,
+        "sampled": 9,
+        "retained": 9,
+        "excluded": 0
+      },
+      {
+        "y_min": 94.0,
+        "y_max": 96.0,
+        "sampled": 2,
+        "retained": 2,
+        "excluded": 0
+      },
+      {
+        "y_min": 96.0,
+        "y_max": 98.0,
+        "sampled": 6,
+        "retained": 6,
+        "excluded": 0
+      },
+      {
+        "y_min": 98.0,
+        "y_max": 100.0,
+        "sampled": 1,
+        "retained": 1,
+        "excluded": 0
+      },
+      {
+        "y_min": 100.0,
+        "y_max": 102.0,
+        "sampled": 13,
+        "retained": 13,
+        "excluded": 0
+      },
+      {
+        "y_min": 102.0,
+        "y_max": 104.0,
+        "sampled": 5,
+        "retained": 5,
+        "excluded": 0
+      },
+      {
+        "y_min": 104.0,
+        "y_max": 106.0,
+        "sampled": 7,
+        "retained": 6,
+        "excluded": 1
+      },
+      {
+        "y_min": 106.0,
+        "y_max": 108.0,
+        "sampled": 0,
+        "retained": 0,
+        "excluded": 0
+      },
+      {
+        "y_min": 108.0,
+        "y_max": 110.0,
+        "sampled": 5,
+        "retained": 5,
+        "excluded": 0
+      },
+      {
+        "y_min": 110.0,
+        "y_max": 112.0,
+        "sampled": 0,
+        "retained": 0,
+        "excluded": 0
+      }
+    ],
+    "interpretation": "Spatial sample membership and trainer transfer, not correctness, visibility sufficiency, or surface continuity."
+  },
+  "raw_post_transitions": [
+    {
+      "condition": "D005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.1,
+      "reference_count": 572214,
+      "raw_hits": 82644,
+      "post_hits": 77849,
+      "lost": 4795,
+      "gained": 0,
+      "raw_recall": 0.1444284830500477,
+      "post_recall": 0.13604875099176184,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.2,
+      "reference_count": 572214,
+      "raw_hits": 170820,
+      "post_hits": 157786,
+      "lost": 13034,
+      "gained": 0,
+      "raw_recall": 0.2985246778303222,
+      "post_recall": 0.27574648645436844,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.25,
+      "reference_count": 572214,
+      "raw_hits": 210087,
+      "post_hits": 193025,
+      "lost": 17062,
+      "gained": 0,
+      "raw_recall": 0.3671476056160807,
+      "post_recall": 0.33733008979158147,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.5,
+      "reference_count": 572214,
+      "raw_hits": 356906,
+      "post_hits": 320399,
+      "lost": 36507,
+      "gained": 0,
+      "raw_recall": 0.6237281856088805,
+      "post_recall": 0.5599286281006757,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 1.0,
+      "reference_count": 572214,
+      "raw_hits": 491507,
+      "post_hits": 439278,
+      "lost": 52229,
+      "gained": 0,
+      "raw_recall": 0.858956614133873,
+      "post_recall": 0.7676813220228795,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 2.0,
+      "reference_count": 572214,
+      "raw_hits": 542250,
+      "post_hits": 508558,
+      "lost": 33692,
+      "gained": 0,
+      "raw_recall": 0.9476349757258647,
+      "post_recall": 0.888754906381179,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D0005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.1,
+      "reference_count": 572214,
+      "raw_hits": 35826,
+      "post_hits": 35204,
+      "lost": 622,
+      "gained": 0,
+      "raw_recall": 0.06260944332015644,
+      "post_recall": 0.06152243740978026,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D0005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.2,
+      "reference_count": 572214,
+      "raw_hits": 89928,
+      "post_hits": 88216,
+      "lost": 1712,
+      "gained": 0,
+      "raw_recall": 0.157157986347765,
+      "post_recall": 0.1541660986973405,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D0005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.25,
+      "reference_count": 572214,
+      "raw_hits": 126979,
+      "post_hits": 124498,
+      "lost": 2481,
+      "gained": 0,
+      "raw_recall": 0.22190823712806748,
+      "post_recall": 0.21757244667204928,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D0005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 0.5,
+      "reference_count": 572214,
+      "raw_hits": 270845,
+      "post_hits": 263062,
+      "lost": 7783,
+      "gained": 0,
+      "raw_recall": 0.4733281604434704,
+      "post_recall": 0.4597266057803549,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D0005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 1.0,
+      "reference_count": 572214,
+      "raw_hits": 424144,
+      "post_hits": 415507,
+      "lost": 8637,
+      "gained": 0,
+      "raw_recall": 0.7412331750009612,
+      "post_recall": 0.7261391717084866,
+      "distance_decreased_over_1e_6m": 0
+    },
+    {
+      "condition": "D0005_Pnative",
+      "mesh_res": 1024,
+      "threshold_m": 2.0,
+      "reference_count": 572214,
+      "raw_hits": 500559,
+      "post_hits": 483173,
+      "lost": 17386,
+      "gained": 0,
+      "raw_recall": 0.8747758705659071,
+      "post_recall": 0.8443921330131734,
+      "distance_decreased_over_1e_6m": 0
+    }
+  ],
+  "input_files": {
+    "inputs/P1/input_manifest.json": "3257b3604f630a64948606605c3ae46f2e22d4d5829b5ad49a7d46b342a42112",
+    "inputs/P1/scene/split_manifest_da3_v2.json": "7110f9509821cb9704e23ec9f0b5f3727fe3f997b3c7ff1a96ba179b819803f8",
+    "inputs/P2/input_manifest.json": "6493c602332144510526a54f31700c28cb31eb648250e690d6528fcffe5162a2",
+    "inputs/P2/scene/split_manifest_da3_v2.json": "3a40213d46ee611b56f28910081c74517c26a9ed1b320899ebf692146744cd16",
+    "inputs/P2/scene/images/DJI_20241217084505_0076_D.JPG": "e51ff7398569f390b1428b8969d8625bfe4cc9ab24c7369221219791009b67d1",
+    "inputs/P2/scene/images/DJI_20241217091125_0105_D.JPG": "6d94c213687f8d5c0fb08b0206d3cff4d10f3586ba74f05646a32fda4e926e99",
+    "inputs/P2/scene/images/DJI_20241217101359_0032_D.JPG": "fd34ddc0b9491c949670586e746700a5f71bb5b7cc2d46b2bac6dc7a6061ac43",
+    "inputs/P3/input_manifest.json": "5f22de0224d255765adc126d3ba587388e56f3234b93a3657c821921c4d8911a",
+    "inputs/P3/scene/split_manifest_da3_v2.json": "1ba0abb0108ac26a72c6ca13c8e6bcab17ad3c214abdad7125dd01bd1d247d36",
+    "contracts/evaluation_sources_v1.json": "2415b7dfcdab1e34dd3455df99d74f8691298c748d298f137667ca4ddfab4aa4",
+    "inputs/P2/initialization/receipt.json": "5cae65d1e912db004168cbc4392593e747fafd89744998cf880967c2a9a4be7a",
+    "inputs/P2/initialization/all_surface_samples.npz": "f353ee4b98f0d2a9454ad8eb3bebe94833cc718d7173a7d64a304ae30ac99b75",
+    "inputs/P2/initialization/retained_sample_ids.npy": "8ebc01dd484a6f3079478a3a240702c6a10dfe5a6d5230b27537dac322566b97",
+    "inputs/P2/initialization/lod2_pcd.ply": "8b47077a7c5baaf33105232046e4f6e117d9c227b152d8868ea1422b3b919b60",
+    "inputs/P2/scene/sparse_lod/0/points3D.ply": "8b47077a7c5baaf33105232046e4f6e117d9c227b152d8868ea1422b3b919b60",
+    "evaluation/geometry/P2/D005_Pnative.final.raw/sample0.1_reference0.1.json": "f486b2aee08bc92b10669360e837317c6d2f5418c4222f190732853118cd7a07",
+    "evaluation/geometry/P2/D005_Pnative.final.raw/sample0.1_reference0.1.npz": "811581fb92fee1495ad14e713f349c1d7618d116371704d8334b7bca97578014",
+    "evaluation/geometry/P2/D005_Pnative.final.post/sample0.1_reference0.1.json": "3294ccf9494a8e1a5d78d157aa01fa7e4c5cf6174ab771ac382ecb7ed452c79b",
+    "evaluation/geometry/P2/D005_Pnative.final.post/sample0.1_reference0.1.npz": "b50103f724e7f7ece61a47371494fd5744fef336841c1ccfc5ffb9f10d201585",
+    "evaluation/geometry/P2/D0005_Pnative.final.raw/sample0.1_reference0.1.json": "0d883acf62230b2fee9f777ff2fe43f1adbf5262e09352405c979d47040ddd01",
+    "evaluation/geometry/P2/D0005_Pnative.final.raw/sample0.1_reference0.1.npz": "c75ef9d725a73f49d08d613b698cec3e7b377bf82aac04d9dd1871934bf8957e",
+    "evaluation/geometry/P2/D0005_Pnative.final.post/sample0.1_reference0.1.json": "edf49c363e5cf8dae1e40b7ca3692ee3633dc4351629cde3e094ff9d5a43e960",
+    "evaluation/geometry/P2/D0005_Pnative.final.post/sample0.1_reference0.1.npz": "aa3bc54bdc9c038b71835730a42ac8dfb350315456ff93a4931d02c121ab78c6"
+  },
+  "inputs_unchanged": true,
+  "execution": {
+    "python": "3.10.20",
+    "numpy": "1.26.4",
+    "image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+    "git_commit": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+    "script_sha256": "1b892a9b3b76e527338fb7aa897656e61423f0c200a9195e974b724d7112c3c5",
+    "config_sha256": "120522178a2b5d11d4df2e45e2161cb073d3c12ad13b994fe48ff33a9406c7fd",
+    "new_training": 0,
+    "new_scene_renders": 0,
+    "new_mesh_extractions": 0,
+    "new_distance_queries": 0
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "extends": "configs/phd/p2_ab_v2/b_native_v1.json",
+  "arms": ["prior_free", "structured_detail"],
+  "source_shift_xyz_m": [0.0, 0.0, 1.0],
+  "purpose": "Declared relative prior-Z misregistration stress, not temporal validity or shared camera/scene-bias validation"
+}

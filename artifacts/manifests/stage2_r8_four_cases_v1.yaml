@@ -1,0 +1,33 @@
+schema_version: 1
+task_id: PHD-STAGE2-R8-FOUR-CASES-v1
+scientific_verdict: null
+kind: implementation-pre-measurement-and-short-trainings
+purpose: make the stage-2 code do chapter 4 of the method document (2026-10-01 version) - prior-term weight g_p instead of 1 - c_p, pixels without a prior patch, marks on every observed prior pixel, tolerance 2.5 x NMAD without the agency spec lower bound, second outline source, invisible points planted and protected, protection eq. (7) with u like the residuals, planting rule, evaluation records, mesh with the Gaussians no training view sees - re-run the pre-measurement against r7 (no training) and check the four cases of the research intent with five 3,500-iteration trainings (LoD2 nominal / main roof +1 m, airborne LiDAR nominal / main roof +1 m, LoD2 nominal with the prior depth term off). No claim about the method's effect.
+parent_tasks: [PHD-STAGE2-R7-PROPAGATION-v1, PHD-STAGE2-R6-FIX-v1]
+terms: {prior patch: "사전 정보 패치 (code: location; earlier 판정 단위)", observation confidence mask: "관측 신뢰도 마스크 (code: A; earlier 관측 신뢰도 지도)"}
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R8-FOUR-CASES-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R8-FOUR-CASES-v1
+status: COMPLETE_TECHNICAL
+report: docs/experiments/phd/stage2_conf_guided_gs_v1/R8_FOUR_CASES_ko_v1.md
+summary_figure: docs/experiments/phd/stage2_conf_guided_gs_v1/figures/r8_four_cases_summary_v1.png
+shared_module: src/phd/prior_propagation_v2 (conversion, tolerance, surfaces, outlines, rule, locations, seat); v1 kept unchanged as the r7 lineage
+settings: [M_N, M_B, L_N, L_B, M_C (optional; pre-measurement tables only)]
+inputs_reused_read_only: PHD-STAGE2-R7-PROPAGATION-v1/stage1/{meshes, ids, prior_M_C}; PHD-STAGE2-CONF-GUIDED-GS-v1/inputs/maps and runs/<condition>/scene
+outputs:
+  stage1: stage1/{tolerance.json, residuals_{M,L}.npz, products/<setting>/{store_<variant>_c0.25.npz, surfaces_<variant>.json, tri_surface_<variant>.npy, fconv/, locmap/, markmap/, summary.json}}
+  stage2_inputs: inputs/<setting>/{tau/, seat_surface.npy, prepare_<setting>.json}
+  fork_r8: sources/GeoGS-conf-guided-v1-r8 (changed vs r7: jbgs_judgment.py; added src/phd/prior_propagation_v2/*; removed src/phd/prior_propagation_v1/*; provenance/build_report_r8.json, provenance/patches/)
+  dry_runs: runs/dry_<setting>/{model/monitor/{init_report.json, init_points.npz, unplanted.npz, locations.npz, gate_check.npz}, receipt.json}
+  trainings: runs/{M_N, M_B, L_N, L_B, M_N_noprior}/{model/{point_cloud/iteration_3500, dump/iteration_3500, monitor/{E.jsonl, locations.npz, init_points.npz, scalars.jsonl, checklist.jsonl}}, receipt.json}
+  meshes: mesh/<run>/{mesh_train.ply, mesh_train_virtual.ply, mesh.json, invisible.npz, virtual_view.npz, dist_region_*.npy}
+  verification: verify/verify_dry.json
+  premeasure_v3: premeasure_v3/{tables.md, tables.json}
+  cases: cases/{cases.json, tables.md}
+  figures: figures/r8_four_cases_summary_v1.png
+  superseded: mesh_superseded/ (region over every invisible prior Gaussian; 0.05 m voxel runs stopped for host memory), sources_superseded/
+runtime_images: [jointbuildgs:geogs-conf-guided-v1 (fork dry runs, trainings, GPU tests, meshes), jointbuildgs:dev (all other steps)]
+config: configs/phd/stage2_r8_four_cases_v1/r8.json
+scripts: scripts/phd/stage2_r8_four_cases_v1 (run_all.sh)
+tests: [tests/phd/test_prior_propagation_v2.py (CPU, 24 pass), scripts/phd/stage2_r8_four_cases_v1/gpu_tests_r8.py (GPU, 6 groups pass), verify_dry_r8.py (4 settings pass)]
+training_schedule: "as PHD-STAGE2-R6-FIX-v1: 3,500 iterations, seed 0, 13 training + 2 test views at 1600 x 1157, base settings; read-out red/green checks recorded, not stopping"
+retention: preserve stage1, inputs, sources, runs, mesh, verify, premeasure_v3, cases, figures, logs, provenance; superseded folders may be removed after review

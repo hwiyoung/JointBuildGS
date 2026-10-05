@@ -1,0 +1,43 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-R1-MVS-CONTROL-PREP-v1
+status: PASS_CPU_PREPARATION_NOT_GPU_EXECUTED
+scientific_verdict: null
+scope: R1 input observation draft and basic MVS GeoGS control preparation
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  container_artifact_root: /artifacts/JointBuildGS
+  relative: phase-payloads/phd/r1_mvs_control_v1/PHD-R1-MVS-CONTROL-PREP-v1
+  durability: local external storage; not a durable-backup claim
+active_attempt: attempt_20260916T130151Z_jm4gu7vc
+report: docs/experiments/phd/r1_mvs_control_v1/RESULT_ko_v1.md
+observation_config: configs/phd/r1_mvs_control_v1/observation_draft_v1.json
+runtime_config: configs/phd/r1_mvs_control_v1/runtime_v1.json
+receipts:
+  input_preparation:
+    relative: attempt_20260916T130151Z_jm4gu7vc/result/receipt.json
+    sha256: fc773f58f2448d9dc8fb4510648693fc82f5647e67c9d8ded212b86007319ffe
+  observation_draft:
+    relative: attempt_20260916T130151Z_jm4gu7vc/review_20260916T131111Z_U24q6NUr/result/receipt.json
+    sha256: c5d4c589403b1903e580890a162c7553cfd8503d50f90cb424c531f180d2a310
+  validation_and_runtime:
+    relative: attempt_20260916T130151Z_jm4gu7vc/finalize_20260916T131410Z_ZpnUStaZ/runtime/receipt.json
+    sha256: d6ab6f540ecd8d7542a6b6006c95e9cb989ce59f5a3713de9da60a602872df93
+sealed_input_manifest:
+  relative: attempt_20260916T130151Z_jm4gu7vc/result/input/input_manifest.json
+  sha256: 26cba2200d6a49589270f8f6c66f4f1670705f05fa1447056e31371d6531223a
+counts:
+  all_cameras: 672
+  train: 588
+  evaluation: 84
+  initialization_points: 96106
+  validated_input_files: 2473
+training_runs: 0
+manual_weights: null
+gpu_preflight: NOT_RUN
+interpretation:
+  independent_reference_evaluation: false
+  source_accuracy_or_currentness_decided: false
+  historical_mvs_uses_evaluation_images: true
+  observation_draft_is_training_weight: false
+  final_observation_sources_train_only: true
+  earlier_evaluation_image_inspected: DJI_20241217103041_0046_D.JPG

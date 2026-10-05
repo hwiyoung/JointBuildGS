@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-P2-AB-V2-COMMON-NN-PERFORMANCE-v1",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "reference_relative_path": "phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/evaluation_v2/evaluation_reference.npz",
+  "prediction_relative_path": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-NATIVE-v1/color_fixed/initial_extracted_surface.npz",
+  "output_relative_root": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-NN-PERFORMANCE-v1",
+  "xy_bounds": [[110, 86], [158, 132]],
+  "sample_count": 1000,
+  "sample_rule": "fixed evenly spaced original order rows after exact C XY filtering; also first 1000 rows separately",
+  "worker_order": [1, 4, 4, 1],
+  "reference_role": "EVALUATION_ONLY_PERFORMANCE_PROBE; no source fit or parameter selection",
+  "scientific_verdict": null,
+  "docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
+}

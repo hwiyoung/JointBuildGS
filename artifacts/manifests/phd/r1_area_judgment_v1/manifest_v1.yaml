@@ -1,0 +1,51 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-R1-AREA-JUDGMENT-v1
+status: PASS_CPU_WHOLE_REGION_CANDIDATE_DRAFT
+scientific_verdict: null
+judgment_completeness: PARTIAL_WITH_EXPLICIT_UNRESOLVED_AND_UNSAMPLED_CELLS
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  container_artifact_root: /artifacts/JointBuildGS
+  relative: phase-payloads/phd/r1_area_judgment_v1/PHD-R1-AREA-JUDGMENT-v1
+  durability: local external storage; not a durable-backup claim
+active_attempt: attempt_20260916T134132Z_9keJVvIo
+active_review: review_20260916T140058Z_pvyQNrYK
+active_validation: validation_20260916T140730Z_ZUNJ9PVu
+report: docs/experiments/phd/r1_area_judgment_v1/RESULT_ko_v1.md
+protocol: docs/experiments/phd/r1_area_judgment_v1/PROTOCOL_ko_v1.md
+issues: docs/experiments/phd/r1_area_judgment_v1/ISSUES_ko_v1.md
+audit_config: configs/phd/r1_area_judgment_v1/audit_v1.json
+review_config: configs/phd/r1_area_judgment_v1/review_v1.json
+receipts:
+  audit:
+    relative: attempt_20260916T134132Z_9keJVvIo/result/receipt.json
+    sha256: aad2672b88c67ce375373bff2582e3a4f5fa4f1835bdf67091b8b40c9d5cfc2c
+  display_overview:
+    relative: attempt_20260916T134132Z_9keJVvIo/overview/receipt.json
+    sha256: 6cf97a0fd1f53c79c6fbb028be34aeadc66d705c7ba997b2503780f177694f5d
+  review:
+    relative: attempt_20260916T134132Z_9keJVvIo/review_20260916T140058Z_pvyQNrYK/result/receipt.json
+    sha256: eadce291ee2d580ab62595758433039c45a3572494131ac2a15cdafb03946d78
+  validation:
+    relative: attempt_20260916T134132Z_9keJVvIo/review_20260916T140058Z_pvyQNrYK/validation_20260916T140730Z_ZUNJ9PVu/result/receipt.json
+    sha256: 6bd0153130de82254f38c35855982dce151f4f4d0b77cb9cb722c04639db9fe6
+counts:
+  train_views: 588
+  reviewed_source_photos: 17
+  zones: 14
+  xy_cells: 82000
+  cell_size_m: 0.5
+  mvs_points: 63061
+  prior_points: 55595
+  unassigned_context_cells: 0
+  unsampled_judgment_cells: 27011
+  mixed_source_or_surface_cells: 8970
+training_runs: 0
+manual_loss_weights: null
+interpretation:
+  source_accuracy_or_currentness_certified: false
+  independent_reference_evaluation: false
+  historical_mvs_uses_evaluation_images: true
+  coverage_is_xy_endpoint_presence_not_surface_accuracy: true
+  judgments_are_training_weights: false
+  geometric_change_cause_certified: false

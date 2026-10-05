@@ -1,0 +1,29 @@
+schema_version: 1
+task_id: PHD-STAGE2-PROPAGATION-PREMEASURE-v1
+scientific_verdict: null
+kind: pre-measurement-without-training
+purpose: stage-1 surface numbers and agree/conflict marks of the prior (LoD2 and airborne LiDAR, nominal and main roof +1 m), per-surface support/missing locations, in-surface distance from missing to support locations, judgment counts over the propagation grid (majority 0.55-0.8, minimum evidence 1-10 locations, maximum distance = 25/50/75/90th percentile), conflict-propagated area, injected-face check, and three implementation checks (conversion factor, MVS term band, initialisation-time computation)
+parent_task: PHD-STAGE2-CONF-GUIDED-GS-v1 (scene B0 of r5 / r6)
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-PROPAGATION-PREMEASURE-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-PROPAGATION-PREMEASURE-v1
+status: COMPLETE_TECHNICAL
+report: docs/experiments/phd/stage2_conf_guided_gs_v1/PROPAGATION_PREMEASURE_ko_v1.md
+summary_figure: docs/experiments/phd/stage2_conf_guided_gs_v1/figures/propagation_premeasure_summary_v1.png
+inputs:
+  stage1: PHD-STAGE1-CONF-TOL-CONFLICT-v1 (A maps, ALS points and TIN, LoD2 polygons), PHD-STAGE1-VERIFY-v2 (registered meshes, tau_v handover L 0.040533 / M 0.056770 m)
+  stage2_maps: PHD-STAGE2-CONF-GUIDED-GS-v1/inputs/maps (conf, mvs, prior_{M,L}_{N,B}, tau_{M,L}); initial clouds runs/P_{M,L}_{N,B}/scene/sparse/0
+  stage1_rerun: not needed (all stage-1 products present)
+settings: [M_N, M_B, L_N, L_B]
+outputs:
+  surfaces: surfaces/<setting>/{mesh.npz, surfaces.json}
+  surface_number_renders: ids/<setting>/<view>.npz (triangle ids, 15 views; depth identical to the stage-2 prior maps, ids/render_check.json)
+  measure: measure/<setting>/{locations.npz, surfaces.csv, grid.csv, distance.csv, injected.csv, pixels.json, check_a.json, map_<view>.npz, summary.json}
+  candidates: candidates/{candidates.json, candidates_<setting>.npz}
+  tables: tables/{tables.md, tables.json, stable_ranges.csv}
+  figures: figures/propagation_premeasure_summary_v1.png
+  logs: logs/*.log and *.host_receipt.json (run_all.sh)
+runtime_images: [jointbuildgs:geogs-official-db40c95-compat-v1 (sha256:c5445549fe7f..., render_ids.py), jointbuildgs:dev (sha256:251f83c17879..., all other steps)]
+config: configs/phd/stage2_propagation_premeasure_v1/premeasure.json
+scripts: scripts/phd/stage2_propagation_premeasure_v1 (run_all.sh drives surfaces.py, render_ids.py, measure.py + propagation_rule.py, candidates.py, tables.py, figure.py)
+tests: [tests/phd/test_stage2_propagation_premeasure_v1.py (CPU, 9 pass)]
+retention: preserve surfaces, ids, measure, candidates, tables, figures, logs

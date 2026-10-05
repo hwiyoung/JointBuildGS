@@ -1,0 +1,152 @@
+{
+  "schema": "jbgs.source_selected_2dgs.experiment.v1",
+  "task_id": "PHD-SOURCE-SELECTED-2DGS-v1",
+  "scientific_verdict": null,
+  "authorization": "2026-09-15 user: derive source-judgment regions from previous experiment results, run experiments in background, show every stage.",
+  "scope": "Non-confirmatory bounded source-assembly and gsplat planar-2D optimization comparison; fresh primitives, no old Gaussian-ID admission requirement.",
+  "regions": [
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "arms": [
+    "prior_only",
+    "source_selected"
+  ],
+  "inputs": {
+    "parent_surface_update_relative": "phase-payloads/phd/mvs_surface_update_v1/PHD-MVS-SURFACE-UPDATE-v1/attempt_20260914T162810Z_5j6JQY",
+    "parent_technical_manifest_sha256": "71b2b740f31c3eed227eca0b7c3198d5be3a2e5f9571f74c9c6e46b425cefee5",
+    "base_relative": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1",
+    "mvs_relative": "phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/inputs_v2",
+    "observation_evidence_relative": "phase-payloads/phd/mvs_evidence_v1/PHD-MVS-EVIDENCE-v1/attempt_20260914T144906Z_OBsE9y/evidence",
+    "prior_role": "ALS_SURFACE_ADAPTATION_WITH_EXPLICIT_CALIBRATION",
+    "depth_axis": "camera_Z_m",
+    "reference_access_for_selection": false
+  },
+  "preparation": {
+    "seed_stride_px": 8,
+    "patch_radius_px": 3,
+    "prior_replacement_depth_tolerance_m": 0.25,
+    "projection_depth_tolerance_m": 0.5,
+    "normal_patch_radius_px": 1,
+    "voxel_size_m": 0,
+    "maximum_seed_points": 300000,
+    "authority": "Only the frozen P2 11 and P3 2 observation-gate-admitted exact 7x7 patches. P1 has no selected patch. No region dilation or GT-derived source choice.",
+    "replacement": "Record all original prior seed IDs within actual admitted prior patch footprint and depth-consistent with that prior hypothesis; preserve others.",
+    "normal_validity": "Derive raw geometric normals only where valid finite neighbors exist; omit invalid seeds with counts.",
+    "sampling_control": "Same three parent reference cameras, stride and insertion of exact candidate/control patch pixels in both arms; retain stable source IDs and actual point-count differences.",
+    "view_selection": "Three parent reference cameras plus unique bound selected/control neighbors; fixed native integer RGB grid.",
+    "projected_support": "Diagnostic only; exact projected prior/MVS support has no new MVS authority. Suppress conflicting depth/normal supervision in both arms while retaining RGB.",
+    "depth_valid": "Same fixed paired source-valid domain in both arms; no alpha-dependent denominator or depth filling.",
+    "geometry_scope": "Selected source patch primitives are eligible for bounded geometry optimization. Outside primitives keep xyz,normal,scale,opacity; RGB appearance may optimize."
+  },
+  "training": {
+    "backend": "gsplat.rasterization_2dgs",
+    "gsplat_version": "1.4.0",
+    "iterations": 2000,
+    "checkpoints": [
+      0,
+      50,
+      200,
+      500,
+      2000
+    ],
+    "seed": 0,
+    "initial_opacity": 0.8,
+    "maximum_rotation_degrees": 10.0,
+    "coverage_alpha_minimum": 0.5,
+    "maximum_center_displacement_m": 0.25,
+    "maximum_scale_ratio": 2,
+    "minimum_scale_ratio": 0.5,
+    "learning_rates": {
+      "xyz": 0.00016,
+      "rotation": 0.001,
+      "scale": 0.001,
+      "opacity": 0.01,
+      "color": 0.0025
+    },
+    "loss_weights": {
+      "rgb": 1,
+      "ssim": 0.2,
+      "source_depth": 0.05,
+      "source_normal": 0.01,
+      "normal_consistency": 0.05,
+      "depth_distortion": 0.01,
+      "coverage": 0.1
+    },
+    "depth_huber_delta_m": 0.1,
+    "target_context_balance": 0.5,
+    "loss_reduction": "Fixed target/context strata, normalize by their own fixed valid counts; skip empty terms explicitly. Photo mask independent of after-alpha.",
+    "densification": false,
+    "pruning": false,
+    "optimizer": "Adam",
+    "appearance": "RGB features, shared configuration across arms",
+    "camera_order": "Persisted deterministic order identical across arms",
+    "renderer_depth": "Unmodified gsplat 1.4 alpha-weighted Gaussian center camera-Z; not exact surfel ray-intersection depth.",
+    "camera_adapter": "Original rays use integer pixels; renderer principal point +0.5 validated by preflight.",
+    "status": "Bounded 2000-step technical comparison; not full unconstrained 2DGS convergence or faithful GeoGS continuation."
+  },
+  "resources": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "gpu_uuid": "GPU-4bdfcab8-1464-94b0-0a2f-dd9693ace2a0",
+    "gpu_minimum_free_mib": 22000,
+    "gpu_maximum_utilization": 5,
+    "gpu_stable_polls": 3,
+    "poll_seconds": 30,
+    "cpus": 4,
+    "ram_gib": 24,
+    "preparation_ram_gib": 16,
+    "compile_jobs": 2,
+    "max_parallel_training": 1,
+    "priority_after_existing_queue": "phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/queue/attempt.eh1jxGEn",
+    "wait_for": "Existing queue training phase finishes and target GPU is idle; never stop or alter existing jobs.",
+    "automatic_retries": 0
+  },
+  "evaluation": {
+    "comparisons": [
+      "prior_only assembly versus source_selected assembly",
+      "each arm iteration0 versus checkpoints/final",
+      "matched arm finals"
+    ],
+    "reference_relative": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run",
+    "reference_usage": "Only separate post-seal evaluation container mounts UAS; never train/prepare.",
+    "domains": [
+      "frozen target union",
+      "31px surrounding ring",
+      "remaining valid regional context"
+    ],
+    "metrics": [
+      "RGB MAE/RMSE/PSNR",
+      "paired expected depth and normal change",
+      "alpha coverage and fixed-denominator failures",
+      "actual XYZ/normal/scale/opacity changes",
+      "same-UAS-ID paired distance/coverage and improvement/damage counts"
+    ],
+    "stage_outputs": [
+      "original RGB and raw Prior/MVS depth",
+      "raw discrepancy",
+      "same-neighbor visibility/photo/profile evidence",
+      "frozen source decision and abstention masks",
+      "direct source assembly and preserved context",
+      "iteration source losses and snapshots",
+      "before-after shape and RGB fit",
+      "surrounding damage and separate UAS evaluation"
+    ],
+    "reference_is_accuracy_verdict": false,
+    "scientific_verdict": null
+  },
+  "completion": {
+    "require_all_arms": true,
+    "require_gpu_fixture_pass": true,
+    "require_finite_gradients_and_losses": true,
+    "require_frozen_geometry_unchanged": true,
+    "require_stages_and_mobile_report": true,
+    "source_decisions_reestimated_during_training": false
+  },
+  "crs": "EPSG:25832 shifted local; inherited absolute datum limitations",
+  "world_shift": [
+    690953,
+    5336071,
+    604
+  ]
+}

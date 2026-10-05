@@ -1,0 +1,116 @@
+{
+  "status": "P1_P2_FOCUSED_ANALYSIS_COMPLETE",
+  "scientific_verdict": null,
+  "task_id": "PHD-WU-VALLET-P1P2-ANALYSIS-v6",
+  "full_author_reproduction": false,
+  "new_update_runs": 0,
+  "new_posthoc_analysis_runs": 1,
+  "previous_package": {
+    "path": "artifacts/manifests/phd/wu_vallet_matched_v5/technical_result_manifest_v5.json",
+    "sha256": "660c8bfdc08c5542aac7bf4173e28aafbe45dfb67d734fcc6180ddb09a746f00",
+    "payload_hashes_verified": 698
+  },
+  "preservation": {
+    "start_files": 425,
+    "unchanged_files": 424,
+    "additive_handoff_only": [
+      "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md"
+    ],
+    "original_handoff_exact": true
+  },
+  "repo_files": [
+    {
+      "path": "configs/phd/wu_vallet_p1p2_analysis_v6/analysis_v6.json",
+      "sha256": "f08266224cb1e9016d12118a20b6ec7e173b98702005ff39633387a119b8210e"
+    },
+    {
+      "path": "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md",
+      "sha256": "c5c8603507642ceb58979a8fd5ea5e81e2413df963cfacfa7a4cd5e5d0a2c2f5"
+    },
+    {
+      "path": "docs/experiments/phd/wu_vallet_p1p2_analysis_v6/ANALYSIS_AND_FUTURE_WORK_ko_v6.md",
+      "sha256": "49f52e9ca305d43e6daf1494065ff48c8bc51ac6ce628bd67f3aa44fa1306ca5"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p1p2_analysis_v6/analyze.py",
+      "sha256": "d4f8fdc36442b4fed2da39c5fc987267ee553043cdb6d57cb84c1a7f502ca785"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p1p2_analysis_v6/run.py",
+      "sha256": "6fe3cf401b3c0cf89fc57c02063d67c77d10c192ed92c233ebc624f846f1b653"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_p1p2_analysis_v6/seal.py",
+      "sha256": "3ce3b6ef3ba72b491731aa4b11ff5c273f272b2c1dad1336ba79e575aa646346"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6/completion.json",
+      "sha256": "65cb8e450c97c853c503cd10646c10fe02f52638b107048b85f0bbe6451fa3d7",
+      "bytes": 2333
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6/console.log",
+      "sha256": "d2d104badc8f3a36829de8d6ba434d43e0c80ce7b2e34e96c37e69e106912b17",
+      "bytes": 4192
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6/invocation.json",
+      "sha256": "78d07a48861c5a47d18333c56c834937945aa99b4d64da169d551a114047a8a2",
+      "bytes": 2172
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6/run/p1p2_update_quality.pdf",
+      "sha256": "9b2c384857b7e1eb6986bb17d405660656366187f1b8fd04a398745e114a5f39",
+      "bytes": 23525
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6/run/p1p2_update_quality.png",
+      "sha256": "6dc2bb220323e5e78fd535c8f4d0c24880b5ed7c2c6013d0552ecab9f86ee2a2",
+      "bytes": 227600
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6/run/receipt.json",
+      "sha256": "d8e3e39e27368662ee9b5132be25db984eff7034b6aaf4d189b5739a343619eb",
+      "bytes": 61413
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6_source/AGENTS.md",
+      "sha256": "2f381c7710df2271399b3dc542b046741a932d4e2e4a2e5ea0b71e7437db0ae5",
+      "bytes": 11172
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6_source/SOURCE_MANIFEST.json",
+      "sha256": "7218b3b1ad6ac4244dd61543f815f08f9d4f02ed090a0f64a355546173e35b66",
+      "bytes": 457
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6_source/configs/phd/wu_vallet_p1p2_analysis_v6/analysis_v6.json",
+      "sha256": "f08266224cb1e9016d12118a20b6ec7e173b98702005ff39633387a119b8210e",
+      "bytes": 2743
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6_source/scripts/phd/wu_vallet_p1p2_analysis_v6/analyze.py",
+      "sha256": "d4f8fdc36442b4fed2da39c5fc987267ee553043cdb6d57cb84c1a7f502ca785",
+      "bytes": 8585
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/PHD-WU-VALLET-P1P2-ANALYSIS-v6_source/scripts/phd/wu_vallet_p1p2_analysis_v6/run.py",
+      "sha256": "6fe3cf401b3c0cf89fc57c02063d67c77d10c192ed92c233ebc624f846f1b653",
+      "bytes": 2912
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/preservation_start_v6/preexisting_work.tar.gz",
+      "sha256": "20fa57eb6d526156380e9acc41cd0c2be5ea9431713647209972678b616fec88",
+      "bytes": 1131257
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_p1p2_analysis_v6/preservation_start_v6/preservation.json",
+      "sha256": "cf292e6ed01e791c3af0ffad732b8e7bf9b9d78b347309d2bc46dd3ddae9903c",
+      "bytes": 68554
+    }
+  ],
+  "viewer_url": "http://127.0.0.1:8901/",
+  "viewer_instructions": "Select P1 or P2 in the region selector; no region query URL is supported"
+}

@@ -1,0 +1,275 @@
+{
+  "task_id": "PHD-STAGE2-R9-THREE-FIXES-v1",
+  "purpose": "Put the three rules the method document changed after the r8 review into the code -- the protection excludes every Gaussian whose patch judgment is conflict (support vote or propagated), prior-origin Gaussians start oriented with the prior face, the LoD2 bottom face is not part of the prior surface -- and check with the r8 schedule of short trainings that the three fixes work and that the four cases of r8 did not get worse. No claim about the method's effect; no baseline comparison, no multi-building evaluation.",
+  "parent_tasks": [
+    "PHD-STAGE2-R8-FOUR-CASES-v1 (fork r8, shared module v2, stage-1 products, five trainings)"
+  ],
+  "method_document": "2026-10-01 version with the r8 review (sections 2.6, 3.1, 3.3-3.6, 4.1-4.6, tables 5-9 transcribed in the appendix of the order; the appendix wins over the order text)",
+  "shared_module": "src/phd/prior_propagation_v3 (v2 byte-identical apart from rule.py + protected(); new faces.py, orientation.py)",
+  "code_names": {
+    "location": "판정 단위 (judgment unit)",
+    "E": "가우시안 신뢰도 c-bar_i (Gaussian confidence)",
+    "A": "관측 신뢰도 c_p",
+    "g": "g_p",
+    "J_loc": "패치의 판정 (patch judgment; was '전파된 판정' as the Gaussian's state in r8 wording)"
+  },
+  "fixes": {
+    "na": "eq. (7): G^X = Gaussians whose patch judgment is conflict (support patch: its vote; missing patch: propagated); Gaussians without a patch are not excluded by this condition (as r8)",
+    "da": "prior-origin Gaussians start with the disk normal = the outward normal of the prior face of their point (LoD2: the face the point was drawn from; TIN: orientation.tin_vertex_normals); the angle about the normal = the face's horizontal line (implementation choice); scale, opacity, colour and image-origin rotation = base implementation",
+    "ra": "LoD2 GroundSurface (and ClosureSurface, none in this scene) left out of the prior surface in stage 1 (render, residuals, tolerance, surface numbers, marks, patches) and stage 2 (sampling, planting): the sampled points that lie on a bottom face are removed from the initial cloud; the rest of the r8 sample is kept as it is"
+  },
+  "settings": {
+    "M_N": {
+      "prior": "LoD2",
+      "scene": "nominal",
+      "name_ko": "LoD2 정상",
+      "condition": "P_M_N",
+      "train": true
+    },
+    "M_B": {
+      "prior": "LoD2",
+      "scene": "main roof 3396 +1 m",
+      "name_ko": "LoD2 주지붕 +1 m",
+      "condition": "P_M_B",
+      "injected": [
+        3396
+      ],
+      "train": true
+    },
+    "L_N": {
+      "prior": "airborne LiDAR TIN",
+      "scene": "nominal",
+      "name_ko": "항공 LiDAR 정상",
+      "condition": "P_L_N",
+      "train": true
+    },
+    "L_B": {
+      "prior": "airborne LiDAR TIN",
+      "scene": "points inside the 3396 footprint +1 m",
+      "name_ko": "항공 LiDAR 주지붕 +1 m",
+      "condition": "P_L_B",
+      "injected": "raised surfaces",
+      "train": true
+    }
+  },
+  "settings_note": "the optional r8 scene M_C (shaded roof end +1 m) is not part of this order",
+  "values": {
+    "majority": 0.6666666666666666,
+    "min_evidence_locations": 5,
+    "max_distance_m": 1.0,
+    "cell_m": 0.25,
+    "reread_interval": 500,
+    "e_threshold": 0.5,
+    "lock_lr_scale": 0.01,
+    "lock_opacity_floor": 0.5,
+    "truncation_tau_mult": 4.0,
+    "protection_tau_mult": 4.0,
+    "nmad_k": 2.5,
+    "clip_nmad": 3.0,
+    "lambda_mvs": 0.05,
+    "lambda_prior": 0.05
+  },
+  "tolerance": {
+    "rule": "tau = 2.5 x NMAD after one clip at 3 NMAD, per prior and surface kind; the agency spec is never a lower bound, it is recorded with its source and compared; tau > spec leaves a warning",
+    "spec_m": {
+      "L": {
+        "roof": 0.12,
+        "wall": null
+      },
+      "M": {
+        "roof": 1.0,
+        "wall": null
+      }
+    },
+    "spec_source": {
+      "L_roof": "TUM2TWIN: Bavarian ALS vertical accuracy 0.12 m (configs/phd/stage1_conf_tol_conflict_v1/experiment.json)",
+      "M_roof": "LoD2 height accuracy about 1 m (same file)",
+      "walls": "no agency wall accuracy in the data (recorded as 'no spec')"
+    },
+    "pool": "nominal scene, 15 views, A = 1, building faces of the target building DEBY_LOD2_4959323 (LoD2 roof and wall polygons of that building -- the bottom face is no longer a prior face; TIN building surfaces inside its LoD2 GroundSurface outline, as r8)",
+    "registration": "unchanged (L +0.0186 m, M +0.1216 m, estimated on inclined roof faces in stage 1 v2)"
+  },
+  "marks": {
+    "rule": "every prior pixel with A = 1: |MVS - prior| x f <= tau -> agree, else conflict; tau of the pixel's surface kind on building faces, the roof tau on pixels that are not building faces (TIN ground, steep triangles); the per-pixel map is a stage-1 product (markmap/)",
+    "codes": {
+      "none": -1,
+      "agree": 0,
+      "conflict": 1
+    }
+  },
+  "surfaces": {
+    "steep_nz": 0.5,
+    "tin_outline_main": "LoD2 GroundSurface polygons (given outline; as r7)",
+    "tin_building_surface_main": "majority of the surface's vertices carry class 6 (as r7)",
+    "tin_outline_second_source": "decision 4: the classification decides building against non-building only (a triangle is a building triangle when >= 2 of its vertices carry class 6); buildings are split by steep triangles; non-building and steep triangles carry no number. Built for the pre-measurement comparison (variant cls2)",
+    "building_class": 6,
+    "lod2_excluded_types": [
+      "GroundSurface",
+      "ClosureSurface"
+    ],
+    "lod2_untyped_rule": "normal n_z <= -0.5 and the face's highest vertex within 0.1 m of its building's lowest vertex (cross-check only: this scene has types)",
+    "party_wall_rule": "a wall cell (patch centre) within 0.1 m of a wall of another building whose outward normal is opposite (cosine <= -0.9)"
+  },
+  "locations": {
+    "views": "13 training views of r5/r6/r7 (test views 0002 and 0016 excluded)",
+    "view_mark": "a supporting view marks the unit agree when its agree pixels >= its conflict pixels (implementation choice, as r7)",
+    "vote_tie": "agree"
+  },
+  "prior_weight": "g_p = 0 where the pixel's unit is judged conflict (support vote or propagated, alike); 1 where agree / mixed / insufficient; pixel without a unit: 1 where A = 0, own mark where A = 1. Decided once at initialisation; the MVS term keeps c_p = A",
+  "initialisation": "plant every prior point except those of missing units with a propagated conflict; support units regardless of their vote, invisible units and points without a unit are planted; r9: points on LoD2 bottom faces are not in the prior sample; prior-origin Gaussians oriented with the face (fix da)",
+  "prior_render": "LoD2 prior depth and triangle ids re-rendered without the bottom faces with the LoD2Depth ray setup (Open3D 0.19, jointbuildgs:geogs-official-db40c95-compat-v1), cropped to the airborne LiDAR rectangle by the XY of the hit point as prepare_stage2_inputs; checked: the same procedure on the r8 meshes reproduces the stage-2 prior depth exactly",
+  "gaussian_confidence": "unit: its E (product at initialisation; 3 x 3 cell samples with the current render as one-sided occluder every 500 iterations). No unit: share of the views seeing the centre (one-sided) whose centre pixel has A = 1 (prior depth as occluder at initialisation, the render later). No seeing view: 0",
+  "protection": "prior origin & patch judgment != conflict & E < 0.5 & u <= 4 tau (rule.protected); u as r8 (vertical over the initial patch's surface on roof-like, along its normal on wall-like, vertical without a patch; tau of that surface kind, roof tau without a patch)",
+  "training": {
+    "schedule": "as the last training experiment (PHD-STAGE2-R6-FIX-v1): 3,500 iterations, seed 0 (safe_state), 13 training views + 2 test views at 1600 x 1157, base GeoGS/2DGS settings unchanged (densify 500-15,000 every 100, opacity reset every 3,000, normal consistency from 7,000 i.e. not reached, depth distortion weight 0)",
+    "iterations": 3500,
+    "runs": {
+      "M_N": {
+        "setting": "M_N",
+        "lambda_prior": 0.05,
+        "meaning": "LoD2 nominal"
+      },
+      "M_B": {
+        "setting": "M_B",
+        "lambda_prior": 0.05,
+        "meaning": "LoD2 main roof +1 m"
+      },
+      "L_N": {
+        "setting": "L_N",
+        "lambda_prior": 0.05,
+        "meaning": "airborne LiDAR nominal"
+      },
+      "L_B": {
+        "setting": "L_B",
+        "lambda_prior": 0.05,
+        "meaning": "airborne LiDAR main roof +1 m"
+      },
+      "M_N_noprior": {
+        "setting": "M_N",
+        "lambda_prior": 0.0,
+        "meaning": "LoD2 nominal with the prior depth term off (compare with M_N where observed and within tolerance)"
+      }
+    },
+    "gpu_plan": {
+      "0": [
+        "M_N",
+        "M_N_noprior",
+        "L_N"
+      ],
+      "1": [
+        "ctrl_M_N_r8",
+        "M_B",
+        "L_B"
+      ]
+    },
+    "extra_dumps": {
+      "M_N": [
+        3000,
+        3001,
+        3050
+      ],
+      "why": "fix ra: the state before the opacity reset (3,000: after the step, before densification and the reset) and after it"
+    },
+    "control": {
+      "name": "ctrl_M_N_r8",
+      "fork": "r8 (unchanged)",
+      "inputs": "r8 (bottom face included)",
+      "setting": "M_N",
+      "iterations": 3050,
+      "dumps": [
+        3000,
+        3001,
+        3050
+      ],
+      "meaning": "the r8 code as it is up to 3,050 iterations: the opacity reset at 3,000 with the bottom face planted and protected"
+    },
+    "extra_runs": {
+      "why": "attribution of the differences between r9 and r8 (order: say which fix a worse place comes from): the spread between two runs of the same code and inputs (r8 again) and r9 without fix 'da' (the base implementation's random initial rotation)",
+      "r8rep_M_N": {
+        "fork": "r8",
+        "setting": "M_N",
+        "iterations": 3500,
+        "dumps": [
+          3500
+        ],
+        "meaning": "r8 LoD2 nominal again: same code, same inputs (run-to-run spread)"
+      },
+      "r8rep_L_N": {
+        "fork": "r8",
+        "setting": "L_N",
+        "iterations": 3500,
+        "dumps": [
+          3500
+        ],
+        "meaning": "r8 airborne LiDAR nominal again"
+      },
+      "M_N_noorient": {
+        "fork": "r9",
+        "setting": "M_N",
+        "lambda_prior": 0.05,
+        "orient": false,
+        "meaning": "r9 LoD2 nominal without fix 'da' (fixes 'na' and 'ra' only)"
+      },
+      "L_N_noorient": {
+        "fork": "r9",
+        "setting": "L_N",
+        "lambda_prior": 0.05,
+        "orient": false,
+        "meaning": "r9 airborne LiDAR nominal without fix 'da' (fix 'na' only)"
+      },
+      "gpu_plan": {
+        "0": [
+          "r8rep_M_N",
+          "M_N_noorient"
+        ],
+        "1": [
+          "r8rep_L_N",
+          "L_N_noorient"
+        ]
+      },
+      "meshes": [
+        "r8rep_M_N",
+        "M_N_noorient"
+      ]
+    }
+  },
+  "mesh": {
+    "rule": "TSDF of the rendered expected depth of the 13 training views plus virtual views that look at the Gaussians no training view sees (the base implementation's create_virtual_cameras_for_completion, rings of 8 cameras at elevations 0.2 and 0.5, distance 1.5 x 2 x region radius), Open3D ScalableTSDFVolume via GaussianExtractor.extract_mesh_bounded. The region the views aim at = invisible prior Gaussians (opacity >= 0.5) on outward faces of the target building (aiming at every invisible prior Gaussian of the crop put the ring 200 m away at a low elevation; the LoD2 bottom face lies inside the walls and is reported, not aimed at)",
+    "voxel_m": 0.1,
+    "sdf_trunc_m": 0.5,
+    "depth_trunc_m": 200.0,
+    "voxel_note": "0.05 m (sdf_trunc 0.25 m) ran out of host memory (more than 43 GB for one run) once the added views were aimed at the target building; 0.10 m with the base ratio sdf_trunc = 5 x voxel",
+    "box": "fusion bounded to the crop rectangle of the stage-1 products (als_crop_local_xy) + box_margin_m and z in box_z_m: pixels whose rendered point lies outside get depth 0 through the base implementation's background mask (gt_alpha_mask); without it the fusion at 5 cm voxels ran out of memory on Gaussians that drifted hundreds of metres away",
+    "box_margin_m": 2.0,
+    "box_z_m": [
+      -50.0,
+      -3.0
+    ],
+    "invisible_definition": "no training view sees the Gaussian's centre with the final render as the one-sided occluder (depth tolerance 0.5 m, accumulated opacity < 0.05 occludes nothing)",
+    "in_mesh_distance_m": [
+      0.1,
+      0.25,
+      0.5
+    ],
+    "r8_views": "the r9 scene is also rendered from r8's virtual cameras (rebuilt from r8's aimed Gaussians) for side-by-side figures",
+    "mesh_to_prior": "mesh vertices within 0.5 m of an aimed Gaussian's initial position -> distance to the prior surface (median, 95 %)"
+  },
+  "analysis": {
+    "angle": "angle between a Gaussian's disk normal and its prior face normal, unsigned (a disk has two sides): arccos |n_g . n_f|; the sign is checked at initialisation",
+    "na_faces": {
+      "M": [
+        3837,
+        3391,
+        3386
+      ],
+      "L": [
+        3,
+        4,
+        7
+      ]
+    },
+    "da_face": 3393,
+    "ra_depth_change": "training pixels whose LoD2 face is a target roof or wall (maps/faceid, faces.json); |D_after - D_3000| at 3,001 and 3,050"
+  },
+  "scientific_verdict": null
+}

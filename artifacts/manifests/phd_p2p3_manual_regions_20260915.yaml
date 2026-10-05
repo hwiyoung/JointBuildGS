@@ -1,0 +1,31 @@
+schema: jbgs_local_artifact_resolver_v1
+task_id: PHD-P2P3-MANUAL-REGIONS-v1
+scientific_verdict: null
+training_executed: false
+artifact_root: ../JointBuildGS-artifacts
+payload_root: phase-payloads/phd/manual_region_masks_v1/PHD-P2P3-MANUAL-REGIONS-v1
+P2:
+  inspection: inspect.P2.Qn3aLga2
+  annotation: annotation.P2.fur6lKVS
+  annotation_receipt_sha256: 0408bfe86cdaac35b72ac7120b07b6a83a39289f9f1bff10c5f6f1d0d2224a5c
+  config_sha256: 7d7c051a40fc4eee6e614c37b2f7cc582437300ea3a5c138773d3f601eff925b
+  review: review.P2.EuYjocmS
+  retained_superseded_annotation: annotation.P2.VB6hd6dQ
+  train_views: 57
+  manual_sources: [10, 4]
+  views_with_R1_rgb_samples: 14
+P3:
+  inspection: inspect.P3.w4bEb3UQ
+  annotation: annotation.P3.5CQlJP1P
+  annotation_receipt_sha256: a398c345e21c97c397a3e11f58afd625249dadbd2a86e923be9568f09295de8b
+  config_sha256: 06a869c6c8e015b7387045209206dc8dd7d0c8d8ca57058f89d3cbfed0815389
+  review: review.P3.keaol6t3
+  train_views: 137
+  manual_sources: [119, 4]
+  views_with_R1_rgb_samples: 74
+viewer_payload: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1/p2p3_manual_regions_v1
+viewer_url: http://127.0.0.1:8910/app/manual_regions.html
+browser_qa: browser_qa.FK8ki4Kw
+browser_qa_status: PASS_REGION_REVIEW_BROWSER
+browser_checks: 17
+note: Complete region rasters; unclassified, excluded, invalid, and outside context have zero weight. Manual source annotations plus checked transfer are not calibrated confidence or semantic truth.

@@ -1,0 +1,56 @@
+{
+  "research_scope": {
+    "A": "Primary literature, error-aware candidate usability and judgment design; no new calibrated P2 decisions executed",
+    "B": "Twelve conditional same-P2 gsplat development comparisons after the renderer contract correction; same-ALS-G0 comparisons, separate MVS initialization, density and prior-shift controls",
+    "C": "Fixed common observation pixels, reference-only geometry and detail diagnostics, actual Gaussian viewer and browser validation"
+  },
+  "receipts": {
+    "sample": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-v1/sample_manifest.json",
+    "sample_audit": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-AUDIT-v1/audit_receipt.json",
+    "depth_context": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-GLOBAL-DEPTH-AUDIT-v1/global_depth_audit_receipt.json",
+    "native_reference": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-NATIVE-REFERENCE-v1/native_reference_receipt.json",
+    "geometry_adapter": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-v2/adapter_manifest.json",
+    "geometry_adapter_audit": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-AUDIT-v3/corrected/audit.json",
+    "geometry_adapter_audit_inputs": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-AUDIT-BINDING-v1/audit_provenance_binding.json",
+    "B_native": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-NATIVE-v1/result.json",
+    "B_representation": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-REPRESENTATION-v1/result.json",
+    "B_prior_shift": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-PRIOR-SHIFT-v1/result.json",
+    "B_verification": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-VERIFICATION-v1/verification.json",
+    "B_loss_gradients": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-GRADIENT-AUDIT-v1/gradient_audit.json",
+    "B_frozen_return": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-CORRECTED-RETURN-v1/manifest.json",
+    "C_geometry": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-C-GEOMETRY-CORRECTED-v1/geometry/technical_receipt.json",
+    "C_appearance": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-C-APPEARANCE-CORRECTED-v1/appearance/technical_receipt.json",
+    "C_summary": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-C-SUMMARY-CORRECTED-v1/summary/summary.json",
+    "viewer": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-VIEWER-CORRECTED-v3/viewer/technical_receipt.json",
+    "browser_qa": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-VIEWER-QA-CORRECTED-v2/browser_qa.json",
+    "browser_full_fit": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-VIEWER-QA-CORRECTED-v2/gaussian_full_fit_audit.json",
+    "source_check": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-SOURCE-CHECK-v2/receipt.json"
+  },
+  "viewer": {
+    "url": "http://127.0.0.1:8894/PHD-P2-AB-V2-VIEWER-CORRECTED-v3/viewer/",
+    "container": "jbgs-p2-ab-inspector-v2-8894",
+    "access": "loopback, read-only artifact subtree; existing 8893 viewer retained"
+  },
+  "excluded_runs": {
+    "PHD-P2-AB-V2-B-NATIVE-v1": "Preserved, invalid for method conclusion: screen-only low-pass contributions polluted geometry auxiliaries and dependent masks/losses",
+    "PHD-P2-AB-V2-B-NATIVE-FIXED-v2": "Preserved, color-domain repair did not repair the geometry auxiliary contract",
+    "PHD-P2-AB-V2-B-REPRESENTATION-v1": "Preserved, invalid geometry auxiliary contract",
+    "PHD-P2-AB-V2-B-PRIOR-SHIFT-v1": "Preserved, invalid geometry auxiliary contract",
+    "PHD-P2-AB-V2-C-GEOMETRY-v1": "Stopped and preserved after confirmed input geometry contract error",
+    "PHD-P2-AB-V2-C-APPEARANCE-v1": "Preserved, uses observations and models from invalid geometry path",
+    "PHD-P2-AB-V2-VIEWER-v1": "UI validation only; old Gaussian fits are excluded from method conclusions",
+    "PHD-P2-AB-V2-VIEWER-CORRECTED-v1": "Corrected research data retained; superseded by v3 display fit repair",
+    "PHD-P2-AB-V2-VIEWER-CORRECTED-v2": "Aspect-only fit repair retained; superseded by v3 bounding-sphere fit"
+  },
+  "limitations": [
+    "A has not produced new calibrated candidate-usability decisions; B assumes conditional source use for a solver experiment",
+    "All images and P2 are historical development material, not independent confirmatory data",
+    "The B comparison isolates components of a local solver; it is not a full reproduction of strong published systems",
+    "Parameter bounds do not certify the extracted surface, currentness, or calibrated metric accuracy",
+    "Independent plane-hit expected depth can mix multiple valid surfaces; shared tile culling and center-depth ordering remain",
+    "Reference datum, epoch, completeness and absolute accuracy are not fully calibrated; NN sampling is not surface area",
+    "Cell-median height detail diagnostics are affected by sampling, mixed layers and reference noise",
+    "No Roofer, LoD2, semantic textured-mesh pass or scientific verdict is inferred"
+  ],
+  "scientific_verdict": null
+}

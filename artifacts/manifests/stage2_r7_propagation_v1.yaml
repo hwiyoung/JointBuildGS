@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: PHD-STAGE2-R7-PROPAGATION-v1
+scientific_verdict: null
+kind: implementation-and-pre-measurement-without-training
+purpose: make the stage-2 code do the method document's location-based judgments and their propagation (as transcribed in the order; the attached document did not reach the session) and check it before training - unified height conversion with the scene's own normals, tolerance per surface kind (2.5 x NMAD with the agency spec lower bound), building outlines as TIN surface boundaries, the propagation rule as one shared module used by the fork r7 (initialisation, re-read every 500 iterations, protection, prior-term gate, density control, attributes) - and the pre-measurement again with the fixed values (majority 2/3, minimum 5 locations, maximum distance 1 m, cells 0.25 m)
+parent_tasks: [PHD-STAGE2-R6-FIX-v1, PHD-STAGE2-PROPAGATION-PREMEASURE-v1]
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R7-PROPAGATION-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R7-PROPAGATION-v1
+status: COMPLETE_TECHNICAL
+report: docs/experiments/phd/stage2_conf_guided_gs_v1/R7_PROPAGATION_ko_v1.md
+summary_figure: docs/experiments/phd/stage2_conf_guided_gs_v1/figures/r7_propagation_summary_v1.png
+shared_module: src/phd/prior_propagation_v1 (conversion, tolerance, surfaces, outlines, rule, locations, seat)
+settings: [M_N, M_B, M_C (optional: LoD2 polygon 3394 +1 m), L_N, L_B]
+outputs:
+  stage1: stage1/{meshes, ids (triangle ids, depth identical to the stage-2 prior maps), prior_M_C, tolerance.json, products/<setting>/{store_<variant>_c<cell>.npz, surfaces_<variant>.json, tri_surface_<variant>.npy, fconv/, locmap/, summary.json}}
+  stage2_inputs: inputs/<setting>/{tau_spec/, tau_data/, seat_surface.npy, prepare_<setting>.json}
+  fork_r7: sources/GeoGS-conf-guided-v1-r7 (changed vs r6: jbgs_judgment.py, scene/gaussian_model.py; added src/phd/prior_propagation_v1/*; provenance/build_report_r7.json, provenance/patches/)
+  dry_runs: runs/<setting>_<variant>/{model/monitor/{init_report.json, init_points.npz, unplanted.npz, gate_check.npz}, receipt.json} (13 runs, no training)
+  verification: verify/verify_dry.json
+  premeasure_v2: premeasure_v2/{tables.md, tables.json}
+  figures: figures/r7_propagation_summary_v1.png
+  superseded: provenance/superseded/ (originals of verify_v2.py, prepare_stage2_inputs.py, premeasure v1 propagation_rule.py with sha256), sources_superseded/, runs_superseded/
+runtime_images: [jointbuildgs:geogs-official-db40c95-compat-v1 (renders), jointbuildgs:geogs-conf-guided-v1 (fork dry runs, GPU tests), jointbuildgs:dev (all other steps)]
+config: configs/phd/stage2_r7_propagation_v1/r7.json
+scripts: scripts/phd/stage2_r7_propagation_v1 (run_all.sh)
+modified_existing: [scripts/phd/stage1_verify_v2/verify_v2.py (conversion -> shared module, not rerun), scripts/phd/stage2_conf_guided_gs_v1/prepare_stage2_inputs.py (conversion -> shared module, not rerun), scripts/phd/stage2_propagation_premeasure_v1/propagation_rule.py (shim over the shared module; v1 rerun CSVs byte-identical)]
+tests: [tests/phd/test_prior_propagation_v1.py (CPU, 16 pass), tests/phd/test_stage2_propagation_premeasure_v1.py (CPU, 9 pass), scripts/phd/stage2_r7_propagation_v1/gpu_tests_r7.py (GPU, 4 groups pass), verify_dry.py (all pass)]
+retention: preserve stage1, inputs, sources, runs, verify, premeasure_v2, figures, logs, provenance

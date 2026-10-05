@@ -1,0 +1,23 @@
+{
+  "task_id": "PHD-P2-AB-B-PRIOR-v1",
+  "scientific_verdict": null,
+  "authorization": "2026-09-06 user requested A/B independent design, implementation and development comparison in identical P2",
+  "common_root": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/common",
+  "handoff_path": "/artifacts/JointBuildGS/phase-payloads/phd/p2_ab_v1/PHD-P2-AB-A-v1/handoff.jsonl",
+  "output_root": "/output",
+  "decision_method": "FIXED_PRIOR",
+  "condition": "REAL",
+  "arms": ["surface_texturing", "fixed_gs", "prior_loss_gs", "constrained_gs"],
+  "representation_spacing_m": 0.2,
+  "maximum_seeds_per_unit": 64,
+  "maximum_crop_dimension_px": 384,
+  "steps": 96,
+  "warmup_steps": 24,
+  "lr_color": 0.025,
+  "lr_geometry": 0.005,
+  "prior_weight": 1.0,
+  "conditional_solver_fixture_depth_budget_m": null,
+  "parameter_status": "development computational and optimizer controls fixed before reconstruction metrics; not application tolerance calibration",
+  "surface_rule": "gsplat expected camera depth at alpha>=0.5; pixel-center backprojection; no smoothing or cross-unit welding",
+  "geometry_authority": "conditional selected point representation only; certified current surface output withheld"
+}

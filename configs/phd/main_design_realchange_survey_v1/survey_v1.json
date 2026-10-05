@@ -1,0 +1,72 @@
+{
+  "task_id": "PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1",
+  "scientific_verdict": null,
+  "purpose_ko": "본 실험 설계용 실제 변화 지역 조사. 학습 없음, 기존 자료만 읽음, 기존 산출 무수정. R1~R5 지역 카드, 사용자 기억 대조, 실제 변화 후보 탐색, 그림.",
+  "authorization": "2026-10-02 user task PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1: read existing data only, no training, no downloads, new outputs in a new work folder.",
+  "artifact_root_container": "/art",
+  "output_relative": "phase-payloads/phd/main_design_realchange_survey_v1/PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1",
+  "grid": {
+    "crs": "EPSG:25832",
+    "e_min": 690700.0,
+    "e_max": 691200.0,
+    "n_min": 5335820.0,
+    "n_max": 5336410.0,
+    "res_m": 0.5,
+    "note": "Covers the image-supported MVS domain of mvs_als_source_relation_v1 (E 690712-691176, N 5335851-5336372), all five R boxes and the B0 crop."
+  },
+  "vertical": {
+    "working_frame": "camera/ULS ellipsoidal-like heights (global metres); MVS local z + 604",
+    "als_add_m": 45.7,
+    "lod2_add_m": 45.7,
+    "provenance": "ALS/LoD2 are DHHN2016 orthometric; +45.7 m is the inherited scalar bridge used by r1r5 (configs/phd/mvs_als_source_relation_v1/run_v1.json z_shift_m) and the v22 LoD2 viewer bridge (configs/p2/journal1_phase_b_v1/run_v1.json). Residual offsets are measured here on ground and flat roofs, not corrected silently."
+  },
+  "world_shift_xyz_m": [690953.0, 5336071.0, 604.0],
+  "inputs": {
+    "als_tiles": [
+      "phase-payloads/p0-audit/data/raw/als/690_5335.laz",
+      "phase-payloads/p0-audit/data/raw/als/690_5336.laz",
+      "phase-payloads/p0-audit/data/raw/als/691_5335.laz",
+      "phase-payloads/p0-audit/data/raw/als/691_5336.laz"
+    ],
+    "uls_nadir": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+    "uls_manual": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_manual.laz",
+    "photogrammetry_not_independent": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_Photogrammetry_20241217.laz",
+    "mvs_fused": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+    "lod2_tiles": [
+      "phase-payloads/p0-audit/data/raw/lod2/690_5334.gml",
+      "phase-payloads/p0-audit/data/raw/lod2/690_5336.gml"
+    ],
+    "colmap_sparse": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse",
+    "colmap_images": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+    "colmap_depth_maps": "phase-payloads/p0-audit/data/work/mvs/colmap_dense/stereo/depth_maps",
+    "region_config_repo": "configs/phd/region_view_support_v1/regions_v1.json",
+    "region_view_exports": "phase-payloads/phd/region_view_support_v1/PHD-R1R5-VIEW-SUPPORT-v1/attempt_20260915T130845Z_TkeMtl/exports",
+    "review_zones_repo": "configs/phd/r1r5_comparison_v1/review_zones.json",
+    "r1_zones": "phase-payloads/phd/r1_area_judgment_v1/PHD-R1-AREA-JUDGMENT-v1/attempt_20260916T134132Z_9keJVvIo/review_20260916T140058Z_pvyQNrYK/result",
+    "b0_stage1_polygons": "phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-CONF-TOL-CONFLICT-v1/inputs/lod2_polygons.json",
+    "b0_scene": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example",
+    "b0_stage2_maps": "phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-CONF-GUIDED-GS-v1/inputs/maps",
+    "change_label_candidates_199": "phase-payloads/p2/journal1_phase_a_v1/P2-JOURNAL1-PHASE-A-v1/labels/change_label_candidates_v1.csv",
+    "uas_eval_r1r5": "phase-payloads/phd/r1r5_comparison_v1/PHD-R1R5-COMPARISON-v1/attempt_20260917T132641Z_aa9r3kak/uas_evaluation_20260918T124240Z_v2"
+  },
+  "rasters": {
+    "als_noise_classes": [7, 18],
+    "als_ground_class": 2,
+    "als_building_class": 6,
+    "uls_dsm": "max z per 0.5 m cell (all returns), then 3x3 median filter",
+    "mvs_dsm": "90th percentile z per 0.5 m cell, then 3x3 median filter",
+    "lod2_dsm": "max plane z of RoofSurface polygons whose 2D polygon contains the cell centre"
+  },
+  "building_stats": {
+    "core_erosion_m": 1.0,
+    "thresholds_m": [1.0, 2.5],
+    "min_component_area_m2": 25.0,
+    "veg_multireturn_fraction": 0.3,
+    "note": "Descriptive candidate rules stated before reading the result. Not a change verdict; candidates are checked against image crops and the independent ULS."
+  },
+  "views": {
+    "nadir_max_tilt_deg": 20.0,
+    "tilt_provenance": "docs/experiments/input-and-alignment/pointcloud_attributes/reports/flight_meta_summary.md (nadir <= 20 deg: 392 of 937)"
+  },
+  "resources": {"cpus": 6, "memory_gib": 24, "gpu": false, "network": "none"}
+}

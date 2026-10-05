@@ -1,0 +1,8 @@
+{
+  "extends": "configs/phd/p2_ab_v2/b_native_v1.json",
+  "arms": ["structured_detail"],
+  "steps": 32,
+  "log_every": 8,
+  "evaluation_every": 32,
+  "purpose": "Runtime and real geometry-gradient preflight only; no performance inference"
+}

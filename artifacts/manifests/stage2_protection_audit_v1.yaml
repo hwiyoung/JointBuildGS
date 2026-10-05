@@ -1,0 +1,31 @@
+schema_version: 1
+task_id: PHD-STAGE2-PROTECTION-AUDIT-v1
+scientific_verdict: null
+kind: instrumented-training-audit
+purpose: method document 4.4 (conditional gradient protection and Gaussian confidence) against the stage-2 implementation; does protection slow Gaussian motion
+parent_task: PHD-STAGE2-CONF-GUIDED-GS-v1
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-PROTECTION-AUDIT-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-PROTECTION-AUDIT-v1
+status: COMPLETE_TECHNICAL
+verdict_first_line: "구현을 고친 뒤 다시 확인해야 한다" (check 1 motion and check 4 colour match; check 2 E occludes with the prior depth; check 3 newly protected disks render once below the floor)
+report: docs/experiments/phd/stage2_conf_guided_gs_v1/PROTECTION_AUDIT_4_4_ko_v1.md
+summary_figure: docs/experiments/phd/stage2_conf_guided_gs_v1/figures/protection_audit_4_4_summary_v1.png
+results: out/results.json
+tables: out/csv/*.csv
+figures: out/figures/*.png, out/toy/toy_adam.png
+runs:
+  A: {condition: P_M_N, variant: current implementation + read-only instrumentation, receipt: runs/A/receipt.json, status: PASS}
+  B: {condition: P_M_N, variant: protection off by configuration (lock_lr_scale 1.0, lock_opacity_floor 0.0), receipt: runs/B/receipt.json, status: PASS}
+  C: {condition: P_M_N, variant: independent post-step update x0.01 on protected rows, receipt: runs/C/receipt.json, status: PASS}
+  A_bias: {condition: P_M_B, variant: A on the main-roof +1 m scene, receipt: runs/A_bias/receipt.json, status: PASS}
+smoke_runs: [runs/A_smoke700_r1 (superseded audit module r1), runs/B_smoke30, runs/C_smoke30]
+iterations: 3500
+seed: 0 (safe_state)
+parent_fork: phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-CONF-GUIDED-GS-v1/sources/GeoGS-conf-guided-v1 (r5, read only)
+audit_fork: sources/GeoGS-conf-guided-v1-audit (parent + 9 guarded lines; superseded r1 under sources/superseded/)
+provenance: provenance/build_report.json, provenance/patches/train.py.diff
+runtime_images: [jointbuildgs:geogs-conf-guided-v1, jointbuildgs:dev]
+config: configs/phd/stage2_protection_audit_v1/audit.json
+scripts: scripts/phd/stage2_protection_audit_v1
+tests: tests/phd/test_stage2_protection_audit_v1.py
+retention: preserve runs, out, logs and provenance

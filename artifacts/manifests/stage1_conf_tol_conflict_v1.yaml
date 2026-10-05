@@ -1,0 +1,50 @@
+schema_version: 1
+task_id: PHD-STAGE1-CONF-TOL-CONFLICT-v1
+scientific_verdict: null
+kind: training-free-measurement
+payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-CONF-TOL-CONFLICT-v1
+container_payload: /artifacts/JointBuildGS/phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-CONF-TOL-CONFLICT-v1
+status: COMPLETE_TECHNICAL_NOT_ALL_GREEN
+runtime_status: status.json
+browser_check: logs/viewer_check.json (PASS, Google Chrome 146 headless, 255 png + 75 sidecars, 60 condition switches, 0 js errors)
+flags_summary: L R1 registration_ok=false (roof m2 -0.024 m vs s2 0.020 m), M R1 true; R2 true both; R3 spec both; R5 run_both_priors=true; R6 true both
+issues: logs/issues.jsonl (GEOM-001 qhull centring, VERT-001 vertical conversion; both resolved)
+report: out/report.md
+viewer: out/viewer.html
+stage2_configs: [out/stage2_config_L.json, out/stage2_config_M.json]
+tables: [out/stats.csv, out/tolerance.json, out/coverage.csv, out/conflict.csv, out/compare_L_vs_M.csv, out/checks.json]
+inputs:
+  scene: phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/scene
+  supplied_lod2_depth: phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/scene/lod2_prior/raw_depth
+  diagnostic: phase-payloads/phd/geogs_roof_bias_v1/GEOGS-ROOF-BIAS-20260921
+  biased_lod2_obj: phase-payloads/phd/geogs_roof_bias_v1/GEOGS-ROOF-BIAS-20260921/conditions/B+1.0/scene/lod2_biased.obj
+  mvs_depth: phase-payloads/p0-audit/data/work/mvs/colmap_dense/stereo (geometric)
+  als_raw: phase-payloads/p0-audit/data/raw/als/691_5336.laz
+  citygml_raw: phase-payloads/p0-audit/data/raw/lod2
+priors: {L: existing ALS 2.5D TIN (class 2/6), M: existing LoD2 CityGML}
+conditions: [nominal, biased+1.0m]
+runtime_images: [jointbuildgs:dev, jointbuildgs:geogs-official-db40c95-compat-v1]
+config: configs/phd/stage1_conf_tol_conflict_v1/experiment.json
+scripts: scripts/phd/stage1_conf_tol_conflict_v1
+docs: docs/experiments/phd/stage1_conf_tol_conflict_v1/README.md
+retention: preserve inputs, outputs, logs and provenance
+inspection:
+  task_id: PHD-STAGE1-INSPECTION-v1
+  payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-INSPECTION-v1
+  report: inspection_report.md (promoted docs/experiments/phd/stage1_conf_tol_conflict_v1/INSPECTION_ko_v1.md)
+  verdict_first_line: "다시 재야 한다"
+  reproduction: repro/reproduce.py (no agent code imported), repro/reproduction_match.csv 705/714 (9 L-biased-ground rows = agent-internal pool inconsistency), repro/reproduction_stats.csv, repro/checks.json
+  figures: figures/fig1..fig7
+  scripts: scripts/phd/stage1_inspection_v1
+  scientific_verdict: null
+verify_v2:
+  task_id: PHD-STAGE1-VERIFY-v2
+  payload: file:../JointBuildGS-artifacts/phase-payloads/phd/stage1_conf_tol_conflict_v1/PHD-STAGE1-VERIFY-v2
+  report: out_v2/report_v2.md (promoted docs/experiments/phd/stage1_conf_tol_conflict_v1/VERIFY_v2_ko.md)
+  verdict_first_line: "다시 재야 한다" (single item: L nominal right-scene 7.3% vs inspector's <=5% reading of "수 %"; data property, not test design)
+  design: partial injection (3 small roof faces; main roof), delta L 1.0 m / M 3.0 m (>= 3 tau), width pool roof, residual axis vertical, registration L +0.0186 m / M +0.1216 m
+  results: L sens 0.968/0.965 (variant 0.978/0.990), M sens 0.988/0.994, centre L -0.0001 / M +0.0029 m, two-scene tau identical, tau_L 0.12 / tau_M 1.0 (spec)
+  configs: out_v2/stage2_config_v2_L.json, out_v2/stage2_config_v2_M.json (spec-floor rule) ; out_v2_data/stage2_config_v2_{L,M}.json (data-width rule, user decision 2026-09-23: tau_L 0.041 m, tau_M 0.057 m; handover)
+  scripts: scripts/phd/stage1_verify_v2
+  config: configs/phd/stage1_verify_v2/experiment.json
+  scientific_verdict: null

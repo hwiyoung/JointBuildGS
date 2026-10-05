@@ -1,0 +1,140 @@
+{
+  "schema": "jointbuildgs.phd.p2_ab.frame_audit.v1",
+  "scientific_verdict": null,
+  "source_frames": {
+    "camera_and_mvs": {
+      "horizontal_source_epsg": 32632,
+      "working": "SCENE_LOCAL_XYZ",
+      "local_shift": [
+        -690953.0,
+        -5336071.0,
+        -604.0
+      ],
+      "provenance": {
+        "path": "/workspace/JointBuildGS/artifacts/manifests/gate_s0/common_base_r2b/existing_common_base_derivative_lineage_v1.json",
+        "sha256": "b2458e97af5f8e6fc9c500b0590be53092c7577b216bf49cc7ee0b57d628bdb4",
+        "bytes": 10011
+      },
+      "vertical_datum_header_or_producer_binding": "UNKNOWN in frozen source ancestry; later project policy uses current camera ellipsoidal frame"
+    },
+    "current_uas": {
+      "horizontal_source_epsg": 32632,
+      "working": "SCENE_LOCAL_XYZ",
+      "local_shift": [
+        -690953.0,
+        -5336071.0,
+        -604.0
+      ],
+      "vertical_datum_vlr": null,
+      "project_policy": "Same current acquisition camera frame; no +45.7 bridge applied"
+    },
+    "existing_als": {
+      "horizontal_source_epsg": 25832,
+      "source_crs_basis": "Provider declaration; original LAZ VLR absent",
+      "source_vertical_datum": "DHHN2016 provider declared",
+      "already_applied_z_bridge_m": 45.7,
+      "local_shift": [
+        -690953.0,
+        -5336071.0,
+        -604.0
+      ],
+      "bridge_role": "Existing project scalar bridge; not new fitted registration or calibrated geodetic uncertainty"
+    }
+  },
+  "projection_contract": {
+    "record": {
+      "path": "/workspace/JointBuildGS/docs/research/preregistration/gate_s0/integrated_freeze_closure_v1/frame_datum_registration_gravity_receipt_v1.json",
+      "sha256": "be52737576ce7df88450fefb1e7dc7a7ed2e4748fec802da10af73493012537f",
+      "bytes": 1440
+    },
+    "frozen": {
+      "source": "EPSG:32632",
+      "target": "EPSG:25832",
+      "pipeline": "+proj=pipeline +step +inv +proj=utm +zone=32 +ellps=WGS84 +step +proj=utm +zone=32 +ellps=GRS80",
+      "implementation": "pure Python vectorized UTM inverse/forward",
+      "host_proj_9_3_1_cross_check_points": 3,
+      "maximum_observed_cross_check_residual_m": 0.000231,
+      "unit_test_tolerance_m": 0.0003,
+      "C1_points_transformed": 0,
+      "status": "READY_CONTRACT_ONLY_PROCESSING_NOT_COMPLETED"
+    },
+    "p2_corner_implementation_delta_xy_m": [
+      [
+        0.00012786942534148693,
+        0.00010785553604364395
+      ],
+      [
+        0.00012809154577553272,
+        0.00010785553604364395
+      ],
+      [
+        0.00012787675950676203,
+        0.00010786671191453934
+      ],
+      [
+        0.000128098763525486,
+        0.00010786578059196472
+      ]
+    ],
+    "p2_max_implementation_numeric_displacement_m": 0.00016746438379390481,
+    "point_arrays_changed": false,
+    "datum_epoch_realization_uncertainty_m": null,
+    "interpretation": "Numerical projection-ellipsoid conversion checks are distinct from physical datum/epoch and survey uncertainty."
+  },
+  "evaluation_interpretation": "Native MVS and UAS share declared EPSG32632 source numerical frame. Within-dataset relative errors are valid conditional on existing camera/georeferencing bridge. ALS cross-frame/scalar bridge and absolute current accuracy remain uncertainty limitations; no reference-based alignment was fit.",
+  "gravity": {
+    "input_record": {
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+      "sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+      "bytes": 2951
+    },
+    "value": {
+      "angular_median_deg": 0.33476087033589746,
+      "angular_p95_deg": 13.599275413721086,
+      "gravity": [
+        0.0022003022295437485,
+        -0.0038866451918428023,
+        -0.9999900262798882
+      ],
+      "hardcoded_gravity": false,
+      "inlier_normal_count": 8013,
+      "method": "filtered dense-MVS multiscale lower-envelope normals; observed delta<=0.35m; slope<=0.35; 20-degree consensus",
+      "terrain_cell_count": 8013,
+      "up": [
+        -0.0022003022295437485,
+        0.0038866451918428023,
+        0.9999900262798882
+      ]
+    },
+    "source_mvs": {
+      "bytes": 659138498,
+      "digest_method": "same_stream_as_dense_grid_consumer",
+      "full_passes": 1,
+      "header_lines": [
+        "ply",
+        "format binary_little_endian 1.0",
+        "element vertex 43942554",
+        "property float32 x",
+        "property float32 y",
+        "property float32 z",
+        "property uint8 red",
+        "property uint8 green",
+        "property uint8 blue",
+        "end_header"
+      ],
+      "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/work/mvs/openmvs/dim_dense.ply",
+      "sha256": "b4bc250a6c97de50295f08023194a55c8a9744dc2b225db8618fd594b52ae28f",
+      "vertex_count": 43942554,
+      "vertex_properties": [
+        "x",
+        "y",
+        "z",
+        "red",
+        "green",
+        "blue"
+      ]
+    },
+    "reuse_status": "FROZEN_TERRAIN_NORMAL_GRAVITY_REUSED; historical source bytes differ from recovered native candidate; no recalculation or hardcoding"
+  },
+  "common_manifest_statement_correction": "sample_manifest unresolved list says no measured terrain gravity supplied by this sample; this additive audit binds the existing frozen gravity without changing any native arrays."
+}

@@ -1,0 +1,28 @@
+{
+  "scientific_verdict": null,
+  "scope": "Posthoc descriptive evaluation of existing final surfaces; no training or input-mask change",
+  "viewer": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/viewer_rgb_v1",
+  "bundle": "prior_weight_followup_v1/PHD-P1P2P3-PRIOR0005-R1A4-v1/attempt.rNaCh1sO",
+  "global_root": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1",
+  "global_extractions": "geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/evaluation/attempt.LwEnygWG/extractions",
+  "reference_root": "wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run",
+  "reference_voxel_m": 0.1,
+  "reference_selection": "Original point nearest fixed 0.1m voxel center; same raw row IDs in every condition",
+  "roi_selection": "Evaluation only, frozen before distance measurement using current UAS spatial extent and the displayed P1 roof strip. P1 tips mean ends of the displayed strip, not certified physical building ends.",
+  "runtime": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "rois": {
+    "P1": {
+      "ground": {"xy": [[-10,-18],[5,-18],[5,3],[-10,3]], "z": [-43,-40]},
+      "roof_strip": {"xy": [[-11,4],[7,4],[7,9],[-11,9]], "z": [-38,-33]},
+      "roof_tip_west": {"xy": [[-11,4],[-6,4],[-6,9],[-11,9]], "z": [-38,-33]},
+      "roof_middle": {"xy": [[-6,4],[2,4],[2,9],[-6,9]], "z": [-38,-33]},
+      "roof_tip_east": {"xy": [[2,4],[7,4],[7,9],[2,9]], "z": [-38,-33]}
+    },
+    "P2": {
+      "target_roof": {"xy": [[116,86],[144,86],[160,132],[133,132]], "z": [-34,-25]}
+    },
+    "P3": {
+      "target_roof": {"xy": [[-59,-42],[-43,-42],[-21,12],[-38,12]], "z": [-28,-18]}
+    }
+  }
+}

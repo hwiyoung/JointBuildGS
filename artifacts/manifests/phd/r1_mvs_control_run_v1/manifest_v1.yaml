@@ -1,0 +1,65 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-R1-MVS-CONTROL-RUN-v1
+status: TRAINING_AND_BOTH_MESH_EXTRACTIONS_COMPLETE_SKY_ARTIFACT_DIAGNOSED
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  container_artifact_root: /artifacts/JointBuildGS
+  relative: phase-payloads/phd/r1_mvs_control_run_v1/PHD-R1-MVS-CONTROL-RUN-v1
+  durability: local external storage; not a durable-backup claim
+active_attempt: attempt_20260916T141804Z_0zDUJ0xj
+active_mesh_recovery: mesh_recovery_20260917T022937Z_ODNcoWVm
+mesh_recovery_unit: jbgs-r1-mesh_recovery_20260917T022937Z_ODNcoWVm.service
+report: docs/experiments/phd/r1_mvs_control_run_v1/RUN_ko_v1.md
+issues: docs/experiments/phd/r1_mvs_control_run_v1/ISSUES_ko_v1.md
+sky_diagnostic: docs/experiments/phd/r1_mvs_control_run_v1/SKY_DIAGNOSTIC_ko_v1.md
+pixel_weight_literature: docs/experiments/phd/r1_mvs_control_run_v1/PIXEL_WEIGHT_LITERATURE_ko_v1.md
+frozen_input_resolver: artifacts/manifests/phd/r1_mvs_control_v1/manifest_v1.yaml
+judgment_resolver: artifacts/manifests/phd/r1_area_judgment_v1/manifest_v1.yaml
+systemd_unit: jbgs-r1-attempt_20260916T141804Z_0zDUJ0xj.service
+gpu: 1
+viewer:
+  url: http://127.0.0.1:8912/
+  app_source_relative: attempt_20260916T141804Z_0zDUJ0xj/viewer/source_v2/app
+  publisher_source_relative: attempt_20260916T141804Z_0zDUJ0xj/viewer/source_v3
+  publisher_container: jbgs-r1-control-publisher-8912-v3
+  server_container: jbgs-r1-control-viewer-8912-v2
+  live_state_relative: attempt_20260916T141804Z_0zDUJ0xj/viewer/data/status.json
+  refresh_seconds: 60
+receipts:
+  input_verification:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/verify/receipt.json
+    sha256: 49235456db4cbf4aee9cdeb8a80caa74b743648515cecdef16dbf340b373c049
+  browser_v1:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/viewer/qa_v1/receipt.json
+    sha256: c73d5fba5b078db7156dfcecb2f5e0b6f3ca48f160e1144e1279cfbeee8cd8da
+  browser_v2:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/viewer/qa_v2/receipt.json
+    sha256: 0ea619e2d2f33fe12bbec68767982890d55eee8ed65df1619454286e0a3b1f7d
+  extract_final_recovery:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/mesh_recovery_20260917T022937Z_ODNcoWVm/extract_final/receipt.json
+    sha256: 680196688a6c3e3eac002a390e878782a7a17cb9242481ffb049aac7124de473
+  browser_final_mesh:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/viewer/qa_mesh_20260917T025011Z_tXDsAlOH/receipt.json
+    sha256: bf186e86e22fcc48664d78ee9c405bb2bc202b21747a6ee1fd91097d4ac78cad
+  extract_anchor_recovery:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/mesh_recovery_20260917T022937Z_ODNcoWVm/extract_anchor/receipt.json
+    sha256: 1a84150b7534c49d1d5f2f5747808021b2b32b03769ae0258d6b36b30d6bc737
+  sky_diagnostic_view370:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/sky_audit_20260917/view370_v2/receipt.json
+    sha256: c043ef8b8db7d9cc20e4f1f547c6fce17db301de1cbfe58e4adc505c11116075
+  browser_both_meshes:
+    relative: attempt_20260916T141804Z_0zDUJ0xj/viewer/qa_complete_20260917_9MJo27dY/receipt.json
+    sha256: f22e3060a6ac5b7a0bf88b001828e8f08f64a344aedb907beb4581e682da28e1
+completion_contract:
+  original_status_relative: attempt_20260916T141804Z_0zDUJ0xj/status.txt
+  live_status_relative: attempt_20260916T141804Z_0zDUJ0xj/mesh_recovery_20260917T022937Z_ODNcoWVm/status.txt
+  extraction_root_relative: attempt_20260916T141804Z_0zDUJ0xj/mesh_recovery_20260917T022937Z_ODNcoWVm
+  stages: [verify, anchor, preflight, refinement, extract_final, extract_anchor]
+  required_receipt_status: PASS
+  complete_status: COMPLETE
+  final_iteration: 30000
+  interpretation: Completion is technical; scientific_verdict remains null.
+manual_weights: null
+pgsr: false
+current_reference_used: false

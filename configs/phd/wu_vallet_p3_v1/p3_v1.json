@@ -1,0 +1,50 @@
+{
+  "schema": "jointbuildgs.phd.wu_vallet_p3.preflight.v1",
+  "task_id": "PHD-WU-VALLET-P3-v1",
+  "scientific_verdict": null,
+  "authorization": "2026-09-07 user requested original-method reproduction and P3-first non-confirmatory development while preserving existing work",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "output_relative_root": "phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-v1",
+  "patch_config": "configs/phd/surface_patch_rg_v1/run_v1_p3.json",
+  "camera_config": "configs/phd/evidence_bank_v1/run_v1_p3.json",
+  "source_config": "configs/phd/mvs_als_source_relation_v1/run_v1.json",
+  "patch_manifest_sha256": "30cb8e00dc504d1c4392daaadea697475624fbc50059dce0e74852b8dcf3788d",
+  "evidence_manifest_sha256": "20ab53839cb17408163de69cbf0262bf5be9ccd35efef7432cc74281ba7fcaf1",
+  "native_expected_points": {"mvs": 865108, "als": 52762},
+  "tile_xy": [3, 4],
+  "raw_image_relative_root": "phase-payloads/p0-audit/data/work/images/Images",
+  "raw_camera_relative_root": "phase-payloads/p0-audit/data/work/mvs/triangulated",
+  "image_member_inventory": "artifacts/manifests/gate_s0/gate_s0_image_member_inventory_v1.csv",
+  "derivative_lineage": "artifacts/manifests/gate_s0/common_base_r2b/existing_common_base_derivative_lineage_v1.json",
+  "gravity_relative_path": "phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+  "gravity_sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+  "view_split": {
+    "seed": "PHD-WU-VALLET-P3-v1",
+    "decision_count": 40,
+    "train_count": 24,
+    "appearance_eval_count": 8,
+    "reserve_count": 85,
+    "rule": "Ascending SHA256(seed + decimal COLMAP image ID), consecutive decision/train/appearance_eval/reserve roles",
+    "status": "Disjoint new processing roles; all 157 historically development-used and candidate MVS shares exact937; not independent confirmatory views"
+  },
+  "trajectory_search": {
+    "roots": ["phase-payloads/p0-audit/data/raw", "phase-payloads/p0-audit/data/work", "data"],
+    "maximum_entries_per_root": 30000,
+    "maximum_depth": 6,
+    "name_pattern": "(?i)(trajectory|trajectories|sbet|smrmsg|flight.?path|scan.?line|sensor.?mesh|beam.?origin|\\.pos$)",
+    "sample_las_points": 100000,
+    "scope_note": "Bounded filename search and LAS header/sample inspection; absence here is not proof of absence outside these roots"
+  },
+  "validated_original_method_inputs": {
+    "als_sensor_topology": null,
+    "image_sensor_mesh": null,
+    "validated_implementation": null,
+    "policy": "Only exact pinned artifacts with validated method-specific acquisition topology qualify; spatial triangulation or estimated flight positions do not silently substitute"
+  },
+  "reference_config": "configs/p2/c1_c2_shared_footprint_199_v1/run_v1.json",
+  "reference_role": "LOCATION_AND_EXPECTED_HASH_ONLY; reference bytes not read by preflight or candidate construction",
+  "coordinate_policy": "Use frozen SCENE_LOCAL_XYZ/EPSG:25832 declaration and source transforms; no new registration, terrain gravity estimation, temporal decision, source authority or GT fitting",
+  "native_policy": "Every P3 prism row is preserved with tile and original raw-file row membership, native RGB where available, frozen normals and patch labels; no top-surface replacement or downsampling",
+  "cell_size_m": 0.5,
+  "allowed_outputs": ["input manifest", "native crop and memberships", "camera/view roles", "LAS metadata and bounded file search", "reproduction requirement status", "runtime provenance"]
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "PHD_SYNTHETIC_JOINT_ERROR_PROBE_v1",
+  "scientific_verdict": null,
+  "input_kind": "KNOWN_TRUTH_SYNTHETIC_SCALAR_NORMAL_COMPONENT",
+  "crs": "NOT_APPLICABLE_SYNTHETIC_METRES",
+  "methods": ["joint", "prior_error_zero", "image_error_zero", "drop_noise_link", "shared_error_zero", "force_same_epoch"],
+  "base_problem": {
+    "bounds": {"x": [null, null], "c": [-0.02, 0.02], "delta": [-0.02, 0.02], "eta": [-0.25, 0.25], "nu": [-0.1, 0.1], "e_I": [-0.25, 0.25], "e_P": [-0.25, 0.25], "Delta": [null, null]},
+    "branches": [{"id": "stable", "relation": "same", "change_bounds": [0.0, 0.0]}],
+    "prior_shared_loading": 0.0,
+    "link_image_noise": true,
+    "calibration_status": "SYNTHETIC_DECLARED",
+    "tolerance_m": 0.1,
+    "solver_tolerance": 1e-8,
+    "numerical_guard_m": 1e-8,
+    "fusion_image_weight": 0.5
+  },
+  "cases": [
+    {
+      "case_id": "opposed_source_errors_fusion",
+      "purpose": "Both source candidates exceed tolerance; their supported same-surface combination may improve precision.",
+      "truth": {"x": 0.0, "c": 0.0, "delta": 0.0, "eta": 0.12, "nu": 0.08, "e_P": -0.2, "Delta": 0.0}
+    },
+    {
+      "case_id": "changed_prior",
+      "purpose": "True old surface; do not fuse merely because a nuisance can fit some observations.",
+      "truth": {"x": 0.0, "c": 0.02, "delta": 0.0, "eta": -0.01, "nu": 0.04, "e_P": 0.03, "Delta": -0.97},
+      "bounds": {"c": [-0.03, 0.03], "delta": [-0.02, 0.02], "eta": [-0.03, 0.03], "nu": [-0.05, 0.05], "e_I": [-0.08, 0.08], "e_P": [-0.05, 0.05]},
+      "problem": {"tolerance_m": 0.15, "branches": [{"id": "changed", "relation": "changed", "change_bounds": [-1.1, -0.9]}]}
+    },
+    {
+      "case_id": "prior_only_current_scalar_evidence",
+      "purpose": "MVS absent; current geometric summary can still constrain prior usability.",
+      "truth": {"x": 0.0, "c": 0.01, "delta": 0.0, "eta": 0.02, "nu": 0.0, "e_P": -0.02, "Delta": 0.0},
+      "missing": ["mvs"],
+      "bounds": {"c": [-0.03, 0.03], "eta": [-0.04, 0.04], "e_P": [-0.04, 0.04]},
+      "problem": {"tolerance_m": 0.15}
+    },
+    {
+      "case_id": "both_wrong_shared_coordinate_bias",
+      "purpose": "Shared coordinate shift affects both sources; source agreement cannot cancel it.",
+      "truth": {"x": 0.0, "c": 0.8, "delta": 0.0, "eta": 0.02, "nu": 0.01, "e_P": -0.02, "Delta": 0.0},
+      "bounds": {"c": [0.7, 0.9], "delta": [-0.03, 0.03], "eta": [-0.05, 0.05], "nu": [-0.04, 0.04], "e_I": [-0.09, 0.09], "e_P": [-0.05, 0.05]},
+      "problem": {"prior_shared_loading": 1.0, "tolerance_m": 0.2}
+    },
+    {
+      "case_id": "registration_same_epoch",
+      "purpose": "Evaluate a new registered prior candidate, preserving remaining source errors.",
+      "truth": {"x": 0.0, "c": 0.0, "delta": -0.58, "eta": 0.01, "nu": 0.01, "e_P": 0.02, "Delta": 0.0},
+      "bounds": {"c": [-0.02, 0.02], "delta": [-0.7, -0.5], "eta": [-0.03, 0.03], "nu": [-0.03, 0.03], "e_I": [-0.06, 0.06], "e_P": [-0.04, 0.04]}
+    },
+    {
+      "case_id": "registration_or_change_ambiguous",
+      "purpose": "Stable+registration and changed+registered explanations both survive; retain both.",
+      "truth": {"x": 0.0, "c": 0.0, "delta": 0.0, "eta": 0.01, "nu": 0.01, "e_P": 0.02, "Delta": -0.58},
+      "bounds": {"c": [-0.02, 0.02], "delta": [-0.7, 0.1], "eta": [-0.03, 0.03], "nu": [-0.03, 0.03], "e_I": [-0.06, 0.06], "e_P": [-0.04, 0.04]},
+      "problem": {"branches": [{"id": "stable_registration", "relation": "same", "change_bounds": [0.0, 0.0]}, {"id": "changed_surface", "relation": "changed", "change_bounds": [-0.8, -0.4]}]}
+    },
+    {
+      "case_id": "unobserved_unmatched_prior",
+      "purpose": "No valid current observation or prior correspondence gives no finite current bound.",
+      "truth": {"x": 0.0, "c": 0.0, "delta": 0.0, "eta": 0.01, "nu": 0.01, "e_P": 0.02, "Delta": -0.28},
+      "missing": ["mvs", "photo"],
+      "problem": {"branches": [{"id": "unmatched", "relation": "unmatched", "change_bounds": [null, null]}]}
+    },
+    {
+      "case_id": "calibration_unavailable",
+      "purpose": "Diagnostic feasible numbers do not authorize calibrated real-world adoption.",
+      "truth": {"x": 0.0, "c": 0.0, "delta": 0.0, "eta": 0.12, "nu": 0.08, "e_P": -0.2, "Delta": 0.0},
+      "problem": {"calibration_status": "UNAVAILABLE"}
+    },
+    {
+      "case_id": "deliberately_misspecified_prior_error",
+      "purpose": "Known truth violates the declared prior error budget; inconsistent model is not proof of source truth.",
+      "truth": {"x": 0.0, "c": 0.0, "delta": 0.0, "eta": 0.01, "nu": 0.01, "e_P": 2.0, "Delta": 0.0},
+      "bounds": {"eta": [-0.03, 0.03], "nu": [-0.03, 0.03], "e_I": [-0.06, 0.06], "e_P": [-0.04, 0.04]}
+    }
+  ]
+}

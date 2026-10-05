@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-GEOGS-CONTRIBUTION-v1",
+  "source_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+  "train_sha256": "4c09f6a117d7f4a13e3bd3c5d9eb49b1830e428950a53c0f86be4001637c7a10",
+  "source_root": "/audit/sources/GeoGS",
+  "output_root": "/audit/probe_v1",
+  "synthetic_trace_steps": 2400,
+  "synthetic_rgb_decay_per_step": 0.0002,
+  "synthetic_adam_lr": 0.001,
+  "synthetic_adam_steps": 250,
+  "synthetic_adam_warmup": 50,
+  "scientific_verdict": null,
+  "scope": "Official-source control-flow and optimizer diagnostic; no scene reconstruction or performance claim"
+}

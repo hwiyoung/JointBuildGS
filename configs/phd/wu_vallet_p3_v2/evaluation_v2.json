@@ -1,0 +1,11 @@
+{
+  "task_id": "PHD-WU-VALLET-P3-EVALUATION-v2",
+  "update_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v2/PHD-WU-VALLET-P3-UPDATE-v2/run",
+  "reference_npz": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-EVALUATION-v1-r2/evaluation/evaluation_reference.npz",
+  "reference_sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81",
+  "reference_receipt": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-EVALUATION-v1-r2/evaluation/evaluation.json",
+  "primary_display_arm": "estimated_bidir_d0.3_a0",
+  "sections": {"x": -40.0, "y": -15.0, "half_width_m": 0.25},
+  "scope": "Evaluate only after all native-point update arms complete. Reuse exact frozen UAS raw-row crop; no registration, matching, candidate or parameter feedback. Header EPSG:32632 versus working EPSG:25832, raw-shift numerical discrepancy only.",
+  "scientific_verdict": null
+}

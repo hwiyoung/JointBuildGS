@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1/P2/P3 · 가중치에 따른 변화 위치</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./matched.css">
+<style>
+main{max-width:1560px}.controls{display:flex;gap:20px;flex-wrap:wrap;margin:24px 0}label{display:flex;flex-direction:column;gap:7px}select{max-width:100%;padding:9px}#camera{overflow-wrap:anywhere}#frame{display:block;width:100%;height:auto;background:white}.summary{padding:18px;background:#edf4f8;border-left:4px solid #317497;line-height:1.8}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;margin:16px 0}th,td{padding:12px;text-align:right;border-bottom:1px solid #dce3e8;white-space:nowrap}th:first-child,td:first-child{text-align:left}p{line-height:1.8}nav{display:flex;gap:24px;flex-wrap:wrap}#status{color:#566d82;font-size:13px}.legend{font-size:14px;color:#526272}#figure-link{display:block;margin:12px 0}footer{margin-top:30px}@media(max-width:600px){header{display:block}label{width:100%}h1{font-size:26px}}
+</style></head>
+<body><header><div><p class="eyebrow">JointBuildGS / 최종 30k 결과의 추가 진단</p><h1>가중치를 바꾸자, 어디가 달라졌나</h1></div><a href="./weights.html">3D 결과 · depth 가중치 ↗</a></header>
+<main><p>같은 촬영 영상에서 가중치 0·1·4의 최종 GS depth와 입력 MVS depth를 비교합니다. 아래 차이는 카메라 깊이 방향의 입력 적합도이며, 지붕의 수직 높이 변화나 독립적인 복원 정확도를 뜻하지 않습니다.</p>
+<nav><a id="result-link" href="./weights.html">선택 지역의 3D 결과</a><a href="./manual_regions.html">P2/P3 전체 영상의 영역도</a><a href="/data/weight_response_v1/response.json">측정값 · 입력 기록</a></nav>
+<div class="controls"><label>지역<select id="region"><option>P1</option><option>P2</option><option>P3</option></select></label><label>촬영 영상<select id="view-select"></select></label></div>
+<p id="error" class="notice error" hidden></p><p id="status" role="status">자료를 읽는 중입니다.</p>
+<h2 id="camera"></h2><p id="exposure"></p><p class="summary" id="interpretation"></p>
+<h2>R1 전체의 입력 적합도</h2><div class="table-wrap"><table><thead><tr><th>R1 가중치</th><th>평균 절대차</th><th>중앙값</th><th>95백분위</th><th>10cm 이하</th></tr></thead><tbody id="metrics"></tbody></table></div>
+<p id="scope" class="legend"></p>
+<h2>변화 위치와 예시 픽셀</h2><p class="legend">노란 선은 R1 경계, A/B는 수치를 확인할 예시 픽셀입니다. 잔차 그림에서 어두울수록 MVS에 가깝습니다. 회색은 집계에서 제외한 픽셀이며 잔차 0을 뜻하지 않습니다. 색상 범위 상한을 넘는 값은 가장 밝은 색으로 표시합니다.</p>
+<a id="figure-link" target="_blank" rel="noopener">그림을 원래 크기로 열기 ↗</a><img id="frame" alt="원사진, 가중치별 depth 잔차, 1과 4의 차이, 잔차 분포">
+<div class="table-wrap"><table><thead><tr><th>예시 · 픽셀 좌표</th><th>MVS</th><th>prior</th><th>GS 0</th><th>GS 1</th><th>GS 4</th><th>MVS 점의 표시 범위</th></tr></thead><tbody id="probes"></tbody></table></div>
+<p class="legend">예시 값의 단위는 m입니다. A/B는 명시한 잔차 집단의 영상 좌표 중앙에 가까운 픽셀을 고른 설명용 표본입니다. 이 표본이나 최종 잔차로 학습 마스크를 수정하지 않았습니다.</p>
+<footer>기존 결과를 읽은 개발 진단 · 새 학습 없음 · 과학적 판정 없음</footer>
+</main><script type="module" src="./weight_response.js"></script></body></html>

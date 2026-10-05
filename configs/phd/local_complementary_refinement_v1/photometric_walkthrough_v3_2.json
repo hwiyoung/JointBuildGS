@@ -1,0 +1,32 @@
+{
+  "schema": "jbgs.photometric_walkthrough.config.v3.2",
+  "scope": "INTERNAL_FIT_DIAGNOSTIC",
+  "scientific_verdict": null,
+  "references": [
+    {"region": "P1", "camera": "DJI_20241217084553_0100_D.JPG"},
+    {"region": "P2", "camera": "DJI_20241217084505_0076_D.JPG"}
+  ],
+  "patch_size": 9,
+  "context_size": 65,
+  "grid_spacing_px": 64,
+  "selection": "First row-major full-support grid patch in each fixed raw prior-DA3 disagreement band; no RGB score, GT, or LC outcome is read. Prior hole requires all 81 prior pixels invalid and all DA3 pixels valid. Independently add first prior/DA3-full patch with MVS count<81; this does not change earlier category selections.",
+  "revision": "v3.2.1_add_mvs_hole_and_exclude_live_log_from_output_seal",
+  "disagreement_bands_m": {"low_max": 0.5, "high_min": 2.0},
+  "maximum_neighbors": 6,
+  "minimum_baseline_m": 0.01,
+  "maximum_optical_axis_angle_deg": 45.0,
+  "neighbor_selection": "Train membership only; center distance ascending, camera name tie-break; nonzero baseline and optical-axis angle only. No photometric or projected-support selection.",
+  "numeric_flat_epsilon": 1e-12,
+  "pixel_conventions": {
+    "reference_rgb_and_da3": "Integer raster centers (u,v), current RGB/GS adapter convention.",
+    "prior": "Open3D samples lie at (u+0.5,v+0.5); query prior array at (u-0.5,v-0.5), bilinear only when all four source samples are finite positive. Diagnostic alignment only; sealed training targets unchanged.",
+    "mvs": "Map common integer reference ray through native K; nearest native sample, floor(coord+0.5); preserve native holes. Recorded-version COLMAP source supports integer centers; historical producer image is unavailable, so exact producer binary and half-pixel sensitivity remain unverified. No generated or filled target.",
+    "neighbor_rgb": "Project world point with original neighbor K/R/t, then bilinear RGB at resulting integer-center coordinates."
+  },
+  "colors": {"prior": "#8e44ad", "da3": "#2378c7", "mvs": "#e28a16"},
+  "score": "Gray=0.299R+0.587G+0.114B on [0,1]; population means/std on pairwise common valid 9x9 pixels; ZNCC=mean(zref*zwarp), cost=(1-ZNCC)/2. No support/texture/photo quality gate beyond mathematical undefined cases.",
+  "visibility_status": "unknown",
+  "winner_selection": false,
+  "q_computed": false,
+  "context_used_for_score": false
+}

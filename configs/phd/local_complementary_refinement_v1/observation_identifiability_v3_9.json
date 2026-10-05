@@ -1,0 +1,32 @@
+{
+  "task_id": "PHD-OBSERVATION-IDENTIFIABILITY-v3.9",
+  "scientific_verdict": null,
+  "scope": "controlled_synthetic_photometry_only_not_scene_accuracy",
+  "real_gt_input": false,
+  "training": false,
+  "image_size": 129,
+  "focal_px": 80.0,
+  "center": [64,64],
+  "neighbor_baselines": [1.0,2.0],
+  "patch_sizes": [9,17,33],
+  "plane_offset": 10.0,
+  "wrong_plane_offset": 20.0,
+  "slanted_normal": [0.2,-0.1,1.0],
+  "fixture_names": ["textured_plane","slanted_textured_plane","affine_brightness","periodic_texture","linear_brightness_ramp","flat_texture","occluding_patch"],
+  "occluder_random_seed": 3901,
+  "minimum_texture_std": 0.02,
+  "minimum_common_fraction": 0.8,
+  "epsilon": 1e-12,
+  "policy_gate": {"operational":0,"cost_only_hypothetical":1},
+  "expectations": {
+    "textured_plane":"correct_lower_cost",
+    "slanted_textured_plane":"raw_and_same_depth_normal_plane_equivalent",
+    "affine_brightness":"correct_cost_preserved_under_positive_affine_brightness",
+    "periodic_texture":"known_wrong_plane_can_have_same_low_cost",
+    "linear_brightness_ramp":"known_wrong_plane_can_have_same_low_cost_despite_texture_gate",
+    "flat_texture":"cost_undefined_not_wrong_source",
+    "occluding_patch":"in_frame_high_texture_does_not_certify_visibility"
+  },
+  "docker_image":"sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "resources":{"cpus":2,"memory":"2g","network":"none","gpu":false}
+}

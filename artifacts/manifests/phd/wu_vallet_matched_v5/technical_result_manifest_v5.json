@@ -1,0 +1,3740 @@
+{
+  "schema": "jointbuildgs.phd.wu_vallet.matched_package.v5",
+  "task_id": "PHD-WU-VALLET-MATCHED-v5",
+  "status": "MATCHED_THREE_REGION_EXECUTION_EVALUATION_AND_VIEWER_COMPLETE",
+  "scientific_verdict": null,
+  "full_author_reproduction": false,
+  "GS_executed": false,
+  "git_head": "72f45bcf861c5fe6e0c70e28e0686a72e9424b17",
+  "commit_or_push_performed": false,
+  "created_utc": "2026-09-07T09:27:04.870158+00:00",
+  "container_artifact_root": "/artifacts/JointBuildGS",
+  "host_artifact_root_relative_to_repository": "../JointBuildGS-artifacts",
+  "viewer_url": "http://127.0.0.1:8901/",
+  "cases": [
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "arms_per_case": 5,
+  "completed_receipts": {
+    "core_audit": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-CORE-AUDIT-v5/run/receipt.json",
+      "sha256": "8c46d2f2b1fe80c09b4c71074c0de96031805e554fe6b0a313cb119f6929008a"
+    },
+    "core_author_predicate_correction": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-CORE-AUDIT-v5/AUTHOR_PREDICATE_CLARIFICATION.json",
+      "sha256": "2d5b4a3a57ba90a6a025031e495d33bf8cc91584c0e10349e299d457f2094c84"
+    },
+    "evaluation_tests": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-TESTS-v5/run/receipt.json",
+      "sha256": "8a3afa77007d84f87317d7bf5ce9ecefff1c956f8d6db7ee058f7516b10392ed"
+    },
+    "evaluation": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/receipt.json",
+      "sha256": "1524ddda7da35eea701464c3e9a88737ebd1b31434444f6bdec9cc971ba156a6"
+    },
+    "matched_gate": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/MATCHED_PROTOCOL.json",
+      "sha256": "f65590eda24cee3f5c2a607002d6ef9cea0ba290d6769f125764100b496946cf"
+    },
+    "comparison": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-COMPARISON-v5/run/receipt.json",
+      "sha256": "b2681125ce245a84467de1149622b86f06c1b666a55737d7dcbb5ee4b1691f0f"
+    },
+    "previous_comparison": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-PREVIOUS-COMPARISON-v5/run/receipt.json",
+      "sha256": "dad960ae21b817a4d039909fdfa8149c7bd05c720631613570cb6a96b5ebfa79"
+    },
+    "decision_support": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-DECISION-SUPPORT-v5/run/receipt.json",
+      "sha256": "c64ffa896776356c0f65c3bfb57e87499ab93f369d3a594df048369006e02422"
+    },
+    "viewer": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/viewer_manifest.json",
+      "sha256": "da830e90112ec8319947a0e936dd5343e2df6f24c5c707425fdded019f2f9faa"
+    },
+    "browser_qa": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/browser_qa.json",
+      "sha256": "e26b18c631398bd11d6808dc708ca6d2047f15346337e1fe57591eed0169cb22"
+    },
+    "P1_INPUT": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/receipt.json",
+      "sha256": "17f14c42840d39fe07eaeff8c37adfbbaef1f01d0487cd03aaa23e58d90f354e"
+    },
+    "P1_UPDATE": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/receipt.json",
+      "sha256": "cab2efc4bf5106a3a992f8154d29aefbad13c1604559795d36045071e45858b8"
+    },
+    "P2_INPUT": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/receipt.json",
+      "sha256": "eefbf53c225ebacf4dc99bbe66d944e2d49168e07a6bc3092a2fe8d421f09833"
+    },
+    "P2_UPDATE": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/receipt.json",
+      "sha256": "d9943101d088907dbed3091786f7dd3fab2c63377cfc16419e2d2a19873b7d48"
+    },
+    "P3_INPUT": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/receipt.json",
+      "sha256": "5829343086b9fc3921e8dddcc274c9e78fd28ed10141861c75197589ec058271"
+    },
+    "P3_UPDATE": {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/receipt.json",
+      "sha256": "e4d81814e13b86177bafe8cfb44bf1f22c3b3d180a679fd0a1d75a70cb099795"
+    }
+  },
+  "preservation": {
+    "start_files": 396,
+    "unchanged_files": 395,
+    "additive_handoff_only": [
+      "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md"
+    ],
+    "original_handoff_content_exact": true,
+    "prior_payload_hashes_verified": {
+      "wu_vallet_p3_v2": 528,
+      "wu_vallet_p3_v3": 225,
+      "wu_vallet_regions_v4": 2329
+    }
+  },
+  "validation": {
+    "core_tests": 59,
+    "evaluation_and_gate_tests": 18,
+    "browser_checks": 1722,
+    "browser_assets": 455,
+    "browser_screenshots": 17
+  },
+  "repo_files": [
+    {
+      "path": "configs/phd/wu_vallet_matched_v5/comparison_v5.json",
+      "bytes": 267,
+      "sha256": "2a2b8c673e4e8e372354ca3cac06d25e9272d8bcc2821b2d0ea0d5a1f9940f7f"
+    },
+    {
+      "path": "configs/phd/wu_vallet_matched_v5/evaluation_v5.json",
+      "bytes": 7059,
+      "sha256": "7798a011336168bf88814033cdf13d0dca08eebfe31b583ed3ffe929da7c5c8c"
+    },
+    {
+      "path": "configs/phd/wu_vallet_matched_v5/regions_v5.json",
+      "bytes": 7136,
+      "sha256": "a88eb9e58ff8bdaf39fc4e9439c0ace124697c371f96225a46549b1872b69dbf"
+    },
+    {
+      "path": "configs/phd/wu_vallet_matched_v5/viewer_v5.json",
+      "bytes": 391,
+      "sha256": "aab78e648af317a84faac6938a95ffb21ac0c48d08a8a80b3912793e3405978c"
+    },
+    {
+      "path": "docs/experiments/phd/thesis_topic_v1/04_NEXT_SESSION_HANDOFF_ko_v1.md",
+      "bytes": 41005,
+      "sha256": "42f7ff81a5fd57be3e154178e5f4fa93bbcc816057e0f55e2834ec74eb135f93"
+    },
+    {
+      "path": "docs/experiments/phd/wu_vallet_matched_v5/ISSUES_ko_v5.md",
+      "bytes": 2900,
+      "sha256": "a76b74b20537fab6ec7e56251786778a59a688ee12e5339a32acdeea64956a2a"
+    },
+    {
+      "path": "docs/experiments/phd/wu_vallet_matched_v5/PROTOCOL_ko_v5.md",
+      "bytes": 4665,
+      "sha256": "a18b625e765b3f299cb50f375ea67fd1c92df13be11ca40f7e99e0fe8c51420e"
+    },
+    {
+      "path": "docs/experiments/phd/wu_vallet_matched_v5/TECHNICAL_RETURN_ko_v5.md",
+      "bytes": 10432,
+      "sha256": "b5e9b0929f6931996d632e8ee23422417043c3cc1607682bd54b2d31486a4e55"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/adapter_recovery.py",
+      "bytes": 5292,
+      "sha256": "f1951eeb2d62e1d1e016c74af153eea4f1145918d049ea60a26134588ae832c9"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/browser_qa.mjs",
+      "bytes": 18684,
+      "sha256": "4a33a02c29bf0f111ec6f20d5cca20ab2a0cc8a440f51fae3282be0764bd6d42"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/browser_qa.sh",
+      "bytes": 1659,
+      "sha256": "b3aab3821dac81f499e61a581dda2546f9767ff17dbf3d0c978e5e3f3a260a86"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/build_comparison_viewer.py",
+      "bytes": 16523,
+      "sha256": "7e26aec6a0386352ee0a1e291e9660d8b61c9f58f042d1d14e22d31b03a71156"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/compare_previous.py",
+      "bytes": 3225,
+      "sha256": "0f1f564fde11f8ef50d710e057066e91840dfb6eb45b55a1a2c3de07c851ba6a"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/compose_comparison.py",
+      "bytes": 3355,
+      "sha256": "df5f314d6577b4196d5f1910093795e45400558a50ba50ee9e909c96f880da76"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/evaluate_regions.py",
+      "bytes": 8565,
+      "sha256": "99a9413c0dcbfe6e29bbacc177960c2cb1d35e7a2c24dc8826255321a7855c65"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/prepare_docker.sh",
+      "bytes": 4921,
+      "sha256": "afa5b8d3550c7611abbe4ea849e54fa494b2285cfe51d1b31156bdb6da060307"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/prepare_inputs.py",
+      "bytes": 9024,
+      "sha256": "8722dca2d3ed653ce44631a44dcad1b9c25a4f6198e609722f6660fd573537e3"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/run_core_audit.py",
+      "bytes": 4547,
+      "sha256": "77fb6eaa48874bb77c9e4a07e731f84acbd1f2a2057ef9f0c55a9c8eb85cbb7c"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/run_stage.py",
+      "bytes": 6087,
+      "sha256": "85b0cf36f20bf8a7087d4e87ac1aca6343d1dc7b761b63f32c7a6b163e09d15c"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/run_stage.sh",
+      "bytes": 154,
+      "sha256": "38ae48ffc3f6dd2a95b6d5cbc7a2c6be22bb6467f524cc289a926ed41f2b793f"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/seal_package.py",
+      "bytes": 6133,
+      "sha256": "2d75b79a8b95e6b7e4c739b79926a427998e8497fba40197a9d96bbaec16f691"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/serve_viewer.sh",
+      "bytes": 996,
+      "sha256": "f2f2f79311c9954e269dbf4b17b81d1d37ce2ad7a6f19eb3e835660d9ee6f45a"
+    },
+    {
+      "path": "scripts/phd/wu_vallet_matched_v5/update_regions.py",
+      "bytes": 13153,
+      "sha256": "5a44cf6c4c55ec2a5d653f11babcfd8254314826cfecdbcf01a5af19fabc8a8e"
+    },
+    {
+      "path": "src/apps/wu_vallet_matched_v5/index.html",
+      "bytes": 6832,
+      "sha256": "53fb050aa5765201b416fa16c51c3ccc80a638ebe304a09314cf29581f329b12"
+    },
+    {
+      "path": "src/apps/wu_vallet_matched_v5/style.css",
+      "bytes": 4089,
+      "sha256": "62669c76d9fca8c0a7633f1eb101857719cf624868e69b42537ea42b1aa46a05"
+    },
+    {
+      "path": "src/apps/wu_vallet_matched_v5/viewer.js",
+      "bytes": 18722,
+      "sha256": "bf562d67a8078fb79f491df568e488c3f303d56394da091271dab4e70c5b5fe1"
+    },
+    {
+      "path": "src/phd/wu_vallet_matched_v5/core.py",
+      "bytes": 3956,
+      "sha256": "4b9bf7cda025472c1d9cb2d1ef709b140fdfc36062ba44e05d9b0d6fddc79ee6"
+    },
+    {
+      "path": "tests/phd/test_wu_vallet_matched_v5_core.py",
+      "bytes": 8459,
+      "sha256": "e44f92ff2c6fe06281a845c8b9c743f8c045eec477167b7d5448b7c7ef0e365b"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/browser_qa.json",
+      "bytes": 278524,
+      "sha256": "e26b18c631398bd11d6808dc708ca6d2047f15346337e1fe57591eed0169cb22"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/browser_qa_source.mjs",
+      "bytes": 18684,
+      "sha256": "4a33a02c29bf0f111ec6f20d5cca20ab2a0cc8a440f51fae3282be0764bd6d42"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/browser_qa_wrapper.sh",
+      "bytes": 1659,
+      "sha256": "b3aab3821dac81f499e61a581dda2546f9767ff17dbf3d0c978e5e3f3a260a86"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P1_before_after_reference.png",
+      "bytes": 392332,
+      "sha256": "22cca6fbce8bcac706b0d61e4c57cbd131608539a39edb2295ff9ac7b67c008c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P1_metrics.png",
+      "bytes": 225227,
+      "sha256": "7b34954ac7e49a7ffd2d28cd0c4f4c22cf64294c93dca13fa305d5fa7c676bf7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P1_native_sections.png",
+      "bytes": 173523,
+      "sha256": "24575c0dae0c5295a2f4b0c9df907c1a0d5eefae15b75c988de570f798ec3c60"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P1_updated_source.png",
+      "bytes": 359724,
+      "sha256": "b4f94ee5edc3e6a2210aff79e813284b64ce3bea6de81dfb72f50d5d4caa908d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P2_before_after_reference.png",
+      "bytes": 367812,
+      "sha256": "88ccd41c7d3918d9112484bdcc9fb99b59ca8af5bc258c7006283a71cb19e439"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P2_metrics.png",
+      "bytes": 235491,
+      "sha256": "09f0f092f6658ffc7e708f3e3d1100189e192501e3359e5cd328dd33a7ebed70"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P2_native_sections.png",
+      "bytes": 164621,
+      "sha256": "cc03af6bf3e7d266ebe50ac037e125cd63c63ce58ffff8123e03868223d9c078"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P2_updated_source.png",
+      "bytes": 338163,
+      "sha256": "3024f3b84372c0c3d84748758e7490a54cc35da1a7ab8db12d646250cf02bd36"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P3_before_after_reference.png",
+      "bytes": 376579,
+      "sha256": "ebd001fb93a982daee61eb1b7e7a99a888b17b96419df013caf5a691c14ff1c6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P3_metrics.png",
+      "bytes": 246406,
+      "sha256": "32a808190e96d00398cc8ca03d15263d54463d883f373b5dab9fd401a8d44042"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P3_native_sections.png",
+      "bytes": 157617,
+      "sha256": "53222363c70669ef10082391e5af99ba91ca99d09dcb27f737818a3002dcbc09"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/desktop_P3_updated_source.png",
+      "bytes": 339781,
+      "sha256": "cda33fe9a183f596d954d03c04d7b8e5500516319b9f08ed86e3fcaf29705901"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/mobile_als.png",
+      "bytes": 109435,
+      "sha256": "db6867ddd768d7db1cac44a0c117226fbd47b3fa7449117cf6944a865138ef5f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/mobile_image.png",
+      "bytes": 124567,
+      "sha256": "829eda948ef6f354b8cbb0fce62dab6607cb20e10e8490b6d3205a5f8686a5cf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/mobile_overview.png",
+      "bytes": 85934,
+      "sha256": "f938c8c8c57dd470d40b0c6f49b84a613bf4c42020c50824a219efb4e1d66e53"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/mobile_reference.png",
+      "bytes": 128856,
+      "sha256": "5a10652d3f9eb941291b45b5b96fc2aa5b0ba9f6e62adc7fe7a5d9ca8e9f5577"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-BROWSER-QA-v5/mobile_update.png",
+      "bytes": 135539,
+      "sha256": "08a77c1ed304c62bfcbf55a42e7ad6ce74727a8c04fe2fba436115c32590ecb6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-COMPARISON-v5/LAUNCH.json",
+      "bytes": 2893,
+      "sha256": "ccde0badaeaddb01072913db49ad1835593c45d5f829e2a0076e5d56d426c9cb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-COMPARISON-v5/LAUNCH_COMPLETED.json",
+      "bytes": 2966,
+      "sha256": "71a9ed626aad947e78c2753c1d4b70db3a42a1a67b0d784b7fff40df88bc6912"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-COMPARISON-v5/run/receipt.json",
+      "bytes": 27053,
+      "sha256": "b2681125ce245a84467de1149622b86f06c1b666a55737d7dcbb5ee4b1691f0f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-COMPARISON-v5.console.log",
+      "bytes": 82,
+      "sha256": "3bb9ebb58f81c0990420596ed5ea61236c5f5e0561c5c1278a0756c25228744a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-COMPARISON-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297981,
+      "sha256": "505e7e92e2b3bfa3774f2ed18fd1506f2b78857407477060ac1b569728abfec1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-CORE-AUDIT-v5/AUTHOR_PREDICATE_CLARIFICATION.json",
+      "bytes": 1107,
+      "sha256": "2d5b4a3a57ba90a6a025031e495d33bf8cc91584c0e10349e299d457f2094c84"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-CORE-AUDIT-v5/run/receipt.json",
+      "bytes": 4101,
+      "sha256": "8c46d2f2b1fe80c09b4c71074c0de96031805e554fe6b0a313cb119f6929008a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-CORE-AUDIT-v5/run/tests.log",
+      "bytes": 10892,
+      "sha256": "06e4bba922add544883fb01d588c35d5bccebca0e63c2f19e58274cb7d166c4e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-DECISION-SUPPORT-v5/completion.json",
+      "bytes": 297,
+      "sha256": "2d8f0f55fcedbb14de939782670012043b5487b220341356b05effc63709e7d3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-DECISION-SUPPORT-v5/console.log",
+      "bytes": 7986,
+      "sha256": "9b076cc7955a3a71c72bc254b806f6eae2be8a5fedc5f5fc09725193d5f479b3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-DECISION-SUPPORT-v5/invocation.json",
+      "bytes": 2925,
+      "sha256": "f0d1513a995261c4172f85300d9e37171b4d7f6afaace788a798f7b3c5ef759b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-DECISION-SUPPORT-v5/run/receipt.json",
+      "bytes": 13627,
+      "sha256": "c64ffa896776356c0f65c3bfb57e87499ab93f369d3a594df048369006e02422"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-TESTS-v5/run/receipt.json",
+      "bytes": 820,
+      "sha256": "8a3afa77007d84f87317d7bf5ce9ecefff1c956f8d6db7ee058f7516b10392ed"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-TESTS-v5/run/tests.log",
+      "bytes": 3320,
+      "sha256": "ef102ef88bfd44226f0e91e9b5a67cb77a0cf8e5b5bd5bf5f1657ad7cc18c997"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/LAUNCH.json",
+      "bytes": 2891,
+      "sha256": "716690bc6dafa3ebff2d773f850a6c40bcb12f854cb01fe5a8dc18074bbbbdf1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/LAUNCH_COMPLETED.json",
+      "bytes": 2964,
+      "sha256": "50540bbb0ed48e81dd2e84db277055b522aaf6ae49098a7c9ff61b3d9e5582bd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/MATCHED_PROTOCOL.json",
+      "bytes": 7532,
+      "sha256": "f65590eda24cee3f5c2a607002d6ef9cea0ba290d6769f125764100b496946cf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/context.npz",
+      "bytes": 1675367,
+      "sha256": "59d71d7f8d8cc4b322db30c8ff5c793f7514dda4160f1267a06ca4f4f1dd80af"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/cross_sections.png",
+      "bytes": 155884,
+      "sha256": "d8ee352a53e5fe40f88de7ab575187439564b9da22f6ce5c12567cc8430e833d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/evaluation.json",
+      "bytes": 39469,
+      "sha256": "ca6ed0a781588f7f9edc916d996d0f2451e21e02cf7731acb2a6090cdb931f3a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/fixed_grids.npz",
+      "bytes": 434543,
+      "sha256": "17b083f9b867d885ba128bc59bb5c9c0f2c7bb84057395ff671e99a0bd2d562c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/median_height_differences.png",
+      "bytes": 134812,
+      "sha256": "8cd0acd7a9a4ba95216e29f9f9b5d634491911490085619e95a642a12aa0a924"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/median_heights.png",
+      "bytes": 120864,
+      "sha256": "274e01315f66a4eb54ebfca751cecd9ddc80174ec92196828ef77166ee1e97bb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/reference.npz",
+      "bytes": 16993957,
+      "sha256": "3d111cf0cd8ab39fccb85ce0075486ec40f4f60584b5c68b2ab122918b321543"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/source_decisions.png",
+      "bytes": 626972,
+      "sha256": "ae6e60847172790dfa7c9144a17f91db718469bea6cdd440eb904a620ce7b878"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/source_distances.npz",
+      "bytes": 854833,
+      "sha256": "d2037f755615c64e1ff6d7a9cbec2ed9bf01f7ad4bad5cbd743f251fc2c3eddc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P1/source_maps.png",
+      "bytes": 3811627,
+      "sha256": "d2b6eee0d049d5297c6470830a49490738a4083c412692bd80f55690f25f04c5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/context.npz",
+      "bytes": 3726911,
+      "sha256": "b4a6a5487274430b08ad1d5abd581a6e1f6f63d6f21337a93efb0f4eba32e362"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/cross_sections.png",
+      "bytes": 161379,
+      "sha256": "13f601d943410065edeb9ded08e2583b377561b02f12f071e37c3ffe0fe95503"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/evaluation.json",
+      "bytes": 39597,
+      "sha256": "3d0e03e83b4669b938a127bb302bdbae19acbbe793eefc5d8a30332432747090"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/fixed_grids.npz",
+      "bytes": 1087613,
+      "sha256": "3805bca98b7737dc3eeb3034e93e35cf6e9761cffb8e7b8c4d4ae5408a203fbd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/median_height_differences.png",
+      "bytes": 216587,
+      "sha256": "4e6f8c445572dd183f7bdb1e1746b00095e63f5d36046be67e0ddbfdc9a8112f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/median_heights.png",
+      "bytes": 174205,
+      "sha256": "0e06c5446fef50ba74ef0fae822faa945b95e2bb48ce3c3e10c6268e2d0d66d4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/reference.npz",
+      "bytes": 33978541,
+      "sha256": "9dc75111e8a5e83808d566c0b6621092423898a1f6badb9438f1a0d75e16e7ba"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/source_decisions.png",
+      "bytes": 891746,
+      "sha256": "bfa4f15995cb3bab5b90e8c46f0f31e8b02b9626c9905d19ab563075d4078db7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/source_distances.npz",
+      "bytes": 2440534,
+      "sha256": "1a29695db7d78cafce64b26072bf19f317b47d95e35460c5176bd07866cea39d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P2/source_maps.png",
+      "bytes": 3469305,
+      "sha256": "4fcecfa7432066514a18e705f2110410614dc31ba6d1067aeb28b5e76bf89417"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/context.npz",
+      "bytes": 10205227,
+      "sha256": "3b4caeccc2d8cf54b6cda469643019ca5c414a7c59d72246985e3c3e96eefac4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/cross_sections.png",
+      "bytes": 178579,
+      "sha256": "19c91a876964fbf68a093302548cc5e0ac2bf1f0567ea2eadeb44fdb266a687a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/evaluation.json",
+      "bytes": 39535,
+      "sha256": "5d329aa234d62573829a23cf27a73ca590aa0099bc9bc87fd423261d81f30cd0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/fixed_grids.npz",
+      "bytes": 988951,
+      "sha256": "ee487376c81929e359b31729b20d8e8ebbef1c29a5ce74f83909a0517f24cc27"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/median_height_differences.png",
+      "bytes": 222107,
+      "sha256": "729a86ab32b7f90f0903458f745b82398bc08ae48aa6ffdb11139b819ea53935"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/median_heights.png",
+      "bytes": 195723,
+      "sha256": "3aa41a7e2e3d3782b5afc6db9c226b7c19509b49d0afcb30d99f5a42ae888623"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/reference.npz",
+      "bytes": 47065567,
+      "sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/source_decisions.png",
+      "bytes": 694752,
+      "sha256": "b00e9ddd8e1ad743aee9fcd5bfbcc7fbebe78092b328a4977ecb44f7d14369b7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/source_distances.npz",
+      "bytes": 1787384,
+      "sha256": "a64c0e0872f9e39aebede8153975baf755ae8ace474ee08179a0b7555983f8bf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/P3/source_maps.png",
+      "bytes": 4714815,
+      "sha256": "36ab3b4c71cad4697943cba8bc94361cb38bb94c7cd1ed874d3d626dc02ff6e9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/PRE_REFERENCE_CANDIDATE_SEAL.json",
+      "bytes": 13311,
+      "sha256": "b3f902d5d747c74ddc5196b94b11e2ffd5aa3456f006588f1670bae1cfa8ed8f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/config.json",
+      "bytes": 7059,
+      "sha256": "7798a011336168bf88814033cdf13d0dca08eebfe31b583ed3ffe929da7c5c8c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5/run/receipt.json",
+      "bytes": 16189,
+      "sha256": "1524ddda7da35eea701464c3e9a88737ebd1b31434444f6bdec9cc971ba156a6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5.console.log",
+      "bytes": 2279,
+      "sha256": "0492b144a6338ebd1e2aba825c9772ece551c294900dcd2c36ba1be7a7725bc8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-EVALUATION-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297981,
+      "sha256": "d288f4e3e756fb1dba7767a08bfc3588a3a80026af2fd2b72ae9cf7d0ce626a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-PREVIOUS-COMPARISON-v5/completion.json",
+      "bytes": 297,
+      "sha256": "08311b3b9d504d5fcd43a6d1cedc50414a7b88eb6df2d1f1fce91132a3d41861"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-PREVIOUS-COMPARISON-v5/console.log",
+      "bytes": 918,
+      "sha256": "2fb476f787ffe9e8044327385a0de693c2314f911a933feb57ddffea99456932"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-PREVIOUS-COMPARISON-v5/invocation.json",
+      "bytes": 2821,
+      "sha256": "4cf86ecbbe15664ff8357adb04fda8e8de8f9a5d94a22d184c21b9376a22b4ab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-PREVIOUS-COMPARISON-v5/run/receipt.json",
+      "bytes": 157004,
+      "sha256": "dad960ae21b817a4d039909fdfa8149c7bd05c720631613570cb6a96b5ebfa79"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/LAUNCH.json",
+      "bytes": 2862,
+      "sha256": "a9a138f3aa0082e1d2733acff36fccf1c5eaa0b1a6af7359ee7e9a2e5738618a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/LAUNCH_COMPLETED.json",
+      "bytes": 2935,
+      "sha256": "6b952e62bc806d46b780f3754e79070706eae6dd4c9d3aae29940ec4f96f8a36"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/SERVICE_RECEIPT.json",
+      "bytes": 959,
+      "sha256": "3f0da718d34aedd2b30de0cb96ef433242d7107e1f193d21c23059cddcf94f70"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/data.json",
+      "bytes": 225807,
+      "sha256": "b8bb9963b43e96b32c0a1c474d36b850cbaf1ee25e7bec75ffc5f67ff1be8558"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/als/native_indices.bin",
+      "bytes": 161512,
+      "sha256": "8d5ae7028dfd99d1579fe309c7edfa173f408a38c299ea64850ce2a536fa488a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/als/section_x_native_indices.bin",
+      "bytes": 2728,
+      "sha256": "7b2c38d7aa5480d56c0ef4fc943a610c82a8e960844a81557026e407cdfd7250"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/als/section_x_xyz.bin",
+      "bytes": 4092,
+      "sha256": "3d8b7fe08dc5dad4fdef259839b2c61871358a97eaae96da57a120f0e96f1123"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/als/section_y_native_indices.bin",
+      "bytes": 3448,
+      "sha256": "4e72cf665ec7dad8546c711c86e28c6eadd71163d6a79dab30c174724bf5c563"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/als/section_y_xyz.bin",
+      "bytes": 5172,
+      "sha256": "fe5f50d21a8dccc279bc8ea15d968137e2daac25e5ed8d7e3f6ebc97b3452425"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/als/xyz.bin",
+      "bytes": 242268,
+      "sha256": "febb490d88c10b25b686f7f05713d8efb52a23831fbb17c7dfbf10343338f1c2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/added_new/native_indices.bin",
+      "bytes": 243664,
+      "sha256": "8eba9c4e2835dca5fbc4cc24bb4ba35b910ece658fc2c05cd00e5fa8fc453411"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/added_new/section_x_native_indices.bin",
+      "bytes": 4952,
+      "sha256": "5664edfb5cc1b9bd754672619a40bcce4d17c9e528cdbedc362ce1d13172788f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/added_new/section_x_xyz.bin",
+      "bytes": 7428,
+      "sha256": "7b1cd50daad2677d990021dacc4c4b5e2da19eb2ebb247bc4dc52880f18ba138"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/added_new/section_y_native_indices.bin",
+      "bytes": 1944,
+      "sha256": "04c1413f96e9b4e5d375c2c82975d44c172a7106e0aea5e15beb2c7810866059"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/added_new/section_y_xyz.bin",
+      "bytes": 2916,
+      "sha256": "079e1e86ba4548242731f4eb327b709620ee2b39425a94cf4d93a75a10a02e2f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/added_new/xyz.bin",
+      "bytes": 365496,
+      "sha256": "fa5372abf3973b2eaeb8bccfd1b85682260bb490acc4c13d6ef32944bdd89c12"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/removed_old/native_indices.bin",
+      "bytes": 58016,
+      "sha256": "a1c1aaa6850e43ddb43ffce22edcfc29086a9c27a881be804b86f9d41b06d1b9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/removed_old/section_x_native_indices.bin",
+      "bytes": 1320,
+      "sha256": "714365aff2c61e617ac76c8423040f316d6aae8ca4b0d2b8cdf3b50900fea9c6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/removed_old/section_x_xyz.bin",
+      "bytes": 1980,
+      "sha256": "14a4a42068c0c783c35cfe6ba19f964f4109ee37f510352334c82baf5c6eb1db"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/removed_old/section_y_native_indices.bin",
+      "bytes": 672,
+      "sha256": "39d3e43676cb496d2e7d6284732cafddd21e202a9ca1f02b46a004e67e38ee2a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/removed_old/section_y_xyz.bin",
+      "bytes": 1008,
+      "sha256": "fceddd4deeb47d54f8c282aa7e2a90735acb26294707580067192bdc472ae042"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/removed_old/xyz.bin",
+      "bytes": 87024,
+      "sha256": "4c90b53ca7fffc819d072a618814b8ee6e18280ad17defb8edb5e55f9757fab8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/native_indices.bin",
+      "bytes": 347160,
+      "sha256": "651bccdba2f6d63277e726cef688a47effa0868400eed4b2ecb463dac6dc237f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/section_x_native_indices.bin",
+      "bytes": 6360,
+      "sha256": "5b6d32394f4e65105d6f4c14121543a48f426c012e6b1d85aae95cc86984f487"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/section_x_source.bin",
+      "bytes": 795,
+      "sha256": "3cdabe0b550ee480381f8c814c8d3976a0579b1ce3ac0f54cbbf0dd43fc6b5a9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/section_x_xyz.bin",
+      "bytes": 9540,
+      "sha256": "a1fea45a9d1c64f26967b5d3f73dec12b709e482fdeb6ac07b7559062b072e02"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/section_y_native_indices.bin",
+      "bytes": 4720,
+      "sha256": "77c04c97ebfc2ef9d7d86a9782167efc35541a01e0720456e03575de859ace09"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/section_y_source.bin",
+      "bytes": 590,
+      "sha256": "1d700f087bc8181c4e53ed089c8a8606f185511658a4d6c754d80c9b6cfa7aff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/section_y_xyz.bin",
+      "bytes": 7080,
+      "sha256": "9130b3c745580acd87e8a98b25deabedee2c46ff808931e681e8297e5aa86329"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/source.bin",
+      "bytes": 43395,
+      "sha256": "dff8f4af8252da106a0e7ce91f8068ceb0156491b2745807a8c96c1181b334f9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/changed_only_area1/update/xyz.bin",
+      "bytes": 520740,
+      "sha256": "0138c4cce16b3421292410d755b5beccb46c012d50c93b75b4b95dbac2558b94"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/added_new/native_indices.bin",
+      "bytes": 281408,
+      "sha256": "86b2a617035084a2c7b4bbba494eb2a9583c41fdaae3c25bdb725d044744bea4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/added_new/section_x_native_indices.bin",
+      "bytes": 4968,
+      "sha256": "7ff58b0b5c30fd9743fe50c727aa381f180b8ca4a327de55a494d84c19333005"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/added_new/section_x_xyz.bin",
+      "bytes": 7452,
+      "sha256": "5bd012588d0a85aac3dbdb210f552cd5e5696d4003158a278b50169ed6263a87"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/added_new/section_y_native_indices.bin",
+      "bytes": 3320,
+      "sha256": "935ba2ab8abb65a09d39e5d0e484525911cf820e1407dc12303442f97686db30"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/added_new/section_y_xyz.bin",
+      "bytes": 4980,
+      "sha256": "0064d81daaf5b90e029e55315446ff0cbe63fc55ca580969ff4307bd1802880a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/added_new/xyz.bin",
+      "bytes": 422112,
+      "sha256": "a1a0d0e7c5217cfc99b768c881f413e2b63c6f74095715351b1d9a5f68cfa1d6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/removed_old/native_indices.bin",
+      "bytes": 65272,
+      "sha256": "81e9db7a96eac8430f379dbdf38cf9eed3333eb1b1c236f6e2387a5d57443074"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/removed_old/section_x_native_indices.bin",
+      "bytes": 1352,
+      "sha256": "961834f3b41fc251648441c67d751313043569bfdf915e36f4b2c1ee6308121b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/removed_old/section_x_xyz.bin",
+      "bytes": 2028,
+      "sha256": "8bcb2e009a487304b3d1f1ed4c3868ead02f6155f8fe21a4ccd88d76b69973b3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/removed_old/section_y_native_indices.bin",
+      "bytes": 928,
+      "sha256": "c4372a73bac3f134dfa154cf18fe116732269144a954a4358b853cdb27530bf9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/removed_old/section_y_xyz.bin",
+      "bytes": 1392,
+      "sha256": "f112e72aac0d8288a56bd15dc786cd603e09bdad843cf082dfa1e57e364d277c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/removed_old/xyz.bin",
+      "bytes": 97908,
+      "sha256": "93404a525f94b039cbe945ab4206f4ecb738beeff72423846d9656d6ae68e0b6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/native_indices.bin",
+      "bytes": 377648,
+      "sha256": "401670a5d4b22f2f9ffac6a427830e92c866fb7912333509cfa4906b468ae9fd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/section_x_native_indices.bin",
+      "bytes": 6344,
+      "sha256": "d2667ddf737e8a53173d9d0aa2daa2fd6e3cbc62bb03ff32a08baffde9f8628c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/section_x_source.bin",
+      "bytes": 793,
+      "sha256": "81f4d919ddf07ebd9226b1719c699f42c0df76ba080216122283a88c8649b7e6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/section_x_xyz.bin",
+      "bytes": 9516,
+      "sha256": "6174e54f4ee1a8d53a3e1afd30fa417bb8ee8a3cb9367ecf8643e7fa3b7706e2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/section_y_native_indices.bin",
+      "bytes": 5840,
+      "sha256": "a16bcf9fc143a6d9ec2f6cad0d3b7e6d3870dd2c2a03ff4bae06ec281d3bab55"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/section_y_source.bin",
+      "bytes": 730,
+      "sha256": "0a60276da7897c61881d288c718cbf3429fc8fff0ac58254c4e1e8cdd7cedb73"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/section_y_xyz.bin",
+      "bytes": 8760,
+      "sha256": "03478665e58a6479c211a0adbc76308d533666d9d724430f8d566b72765c6618"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/source.bin",
+      "bytes": 47206,
+      "sha256": "9f104a5cfeaaff9daacebc747ea074fa31b8db8b335e30fcfed820166ac124f0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0/update/xyz.bin",
+      "bytes": 566472,
+      "sha256": "3623d9916e89ff4126aab4268b5d3bf3b26ae17d720991013084abb5a4aaa320"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/added_new/native_indices.bin",
+      "bytes": 280440,
+      "sha256": "fff1e0261b25227920ab2635ed381fbb0a0f909829bd78f702bd054dab8e05f0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/added_new/section_x_native_indices.bin",
+      "bytes": 4968,
+      "sha256": "aa03de254328abf01462d66a5449293557cd523eaf8759089ac540d9000c741a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/added_new/section_x_xyz.bin",
+      "bytes": 7452,
+      "sha256": "5bd012588d0a85aac3dbdb210f552cd5e5696d4003158a278b50169ed6263a87"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/added_new/section_y_native_indices.bin",
+      "bytes": 3312,
+      "sha256": "ca7353505f4aa5c21f65ba3ba5a4d78f1215ccad2c8a6704690cd86c05de2a2b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/added_new/section_y_xyz.bin",
+      "bytes": 4968,
+      "sha256": "223cc44c1fd515ddeafcfc1cbb57976207861d0c95207421c3c8cda2b5ac7fb9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/added_new/xyz.bin",
+      "bytes": 420660,
+      "sha256": "857ff8bf92e12482e95a5f7990068b90b22674f1106c7e4f7186e9bfe2d8b57b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/removed_old/native_indices.bin",
+      "bytes": 61696,
+      "sha256": "7aa6ffe62ae676f5c20daa29c871ec26befe9148783c81a5a189ca14b4c540bf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/removed_old/section_x_native_indices.bin",
+      "bytes": 1352,
+      "sha256": "c0b16b73638e02f7681ebe62fb8e2e351c8908a18e00def066f83c812354166b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/removed_old/section_x_xyz.bin",
+      "bytes": 2028,
+      "sha256": "8bcb2e009a487304b3d1f1ed4c3868ead02f6155f8fe21a4ccd88d76b69973b3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/removed_old/section_y_native_indices.bin",
+      "bytes": 792,
+      "sha256": "f3d1874a1f4bf6b29f2f798d2fbcdba5811308988f93579c7e55deb68e9124cd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/removed_old/section_y_xyz.bin",
+      "bytes": 1188,
+      "sha256": "68d07deb112957bbfd175091f53fb8980c8370734c830355e299497faf3a765f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/removed_old/xyz.bin",
+      "bytes": 92544,
+      "sha256": "8511da9b5cafd3b0f4774b5cdd46f3c2dc62b782d8746fc421d2f99f27327552"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/native_indices.bin",
+      "bytes": 380256,
+      "sha256": "2f44e8db7a88beaca4a83e78764e102edcbf7e5d3ff0c23f5e3281be8570b9d9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/section_x_native_indices.bin",
+      "bytes": 6344,
+      "sha256": "3ec3ec4c06bff6c877b7041922d794fb7433b4c7a35c4c7a2523e0565a0ca94a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/section_x_source.bin",
+      "bytes": 793,
+      "sha256": "81f4d919ddf07ebd9226b1719c699f42c0df76ba080216122283a88c8649b7e6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/section_x_xyz.bin",
+      "bytes": 9516,
+      "sha256": "6174e54f4ee1a8d53a3e1afd30fa417bb8ee8a3cb9367ecf8643e7fa3b7706e2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/section_y_native_indices.bin",
+      "bytes": 5968,
+      "sha256": "f11570aecdb66e42e46eeba4ca16218434186cdc408901412244e4303b5ba373"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/section_y_source.bin",
+      "bytes": 746,
+      "sha256": "3bee7127ac8ef99af49523b3d7b99903740ffec6ccc5360163930c2546ad274d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/section_y_xyz.bin",
+      "bytes": 8952,
+      "sha256": "8733b18b274546393e1e244903892861ea800a744d1c8ef07e1041e65ef843b9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/source.bin",
+      "bytes": 47532,
+      "sha256": "6cced03021c5379ce3f296169286a6c22273f053f61f46e9d966df942b4322d5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area0.25/update/xyz.bin",
+      "bytes": 570384,
+      "sha256": "ca6785a3c43630e1ba446f85bca51b5fac2f423e0ca329f720a42e97deadc94c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/added_new/native_indices.bin",
+      "bytes": 278752,
+      "sha256": "37392e3c2019fe39000669dfac27fa397cc060629cf93d7e81a715f2ca0cf2ad"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/added_new/section_x_native_indices.bin",
+      "bytes": 4968,
+      "sha256": "c6a52e26867fa72a8deb561b60371e680264f46a83432430c540f637457bc797"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/added_new/section_x_xyz.bin",
+      "bytes": 7452,
+      "sha256": "5bd012588d0a85aac3dbdb210f552cd5e5696d4003158a278b50169ed6263a87"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/added_new/section_y_native_indices.bin",
+      "bytes": 3312,
+      "sha256": "41e9449e8d039f8ff11abef7277ef601d5cc42f3b73f640fc67dbcb954092e42"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/added_new/section_y_xyz.bin",
+      "bytes": 4968,
+      "sha256": "223cc44c1fd515ddeafcfc1cbb57976207861d0c95207421c3c8cda2b5ac7fb9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/added_new/xyz.bin",
+      "bytes": 418128,
+      "sha256": "210deba88e2c1da21a4379ba3263ce04cc7e2677b5daa23a66bd16940dcea955"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/removed_old/native_indices.bin",
+      "bytes": 58016,
+      "sha256": "a1c1aaa6850e43ddb43ffce22edcfc29086a9c27a881be804b86f9d41b06d1b9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/removed_old/section_x_native_indices.bin",
+      "bytes": 1320,
+      "sha256": "714365aff2c61e617ac76c8423040f316d6aae8ca4b0d2b8cdf3b50900fea9c6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/removed_old/section_x_xyz.bin",
+      "bytes": 1980,
+      "sha256": "14a4a42068c0c783c35cfe6ba19f964f4109ee37f510352334c82baf5c6eb1db"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/removed_old/section_y_native_indices.bin",
+      "bytes": 672,
+      "sha256": "39d3e43676cb496d2e7d6284732cafddd21e202a9ca1f02b46a004e67e38ee2a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/removed_old/section_y_xyz.bin",
+      "bytes": 1008,
+      "sha256": "fceddd4deeb47d54f8c282aa7e2a90735acb26294707580067192bdc472ae042"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/removed_old/xyz.bin",
+      "bytes": 87024,
+      "sha256": "4c90b53ca7fffc819d072a618814b8ee6e18280ad17defb8edb5e55f9757fab8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/native_indices.bin",
+      "bytes": 382248,
+      "sha256": "74627c7710b493f4d2d98bc2e5849040cddfe86e5bd6d4e4ea19b36e5d4f721a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/section_x_native_indices.bin",
+      "bytes": 6376,
+      "sha256": "a9797177edc516d7a8df2ff2d2995646a05fb760030233558e484be1bd8db5e5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/section_x_source.bin",
+      "bytes": 797,
+      "sha256": "94a264ac8fe7f08b7ba0d9e71dae40871013547b5e2c4c983d2ae66eb82cc351"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/section_x_xyz.bin",
+      "bytes": 9564,
+      "sha256": "c2c60aaedbf3dc6996bd46080dae722cebfbb608cd88f4e38aa4b64489e66d8b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/section_y_native_indices.bin",
+      "bytes": 6088,
+      "sha256": "f8527330dfea2b9e00e5d270b4a06c82ef3988074610e3e656707784ea0f51de"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/section_y_source.bin",
+      "bytes": 761,
+      "sha256": "a44f9203baa54d97938634064096a91ed6655070773933e701ca1882a63f9dfd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/section_y_xyz.bin",
+      "bytes": 9132,
+      "sha256": "3bc79d4b7aca1300468cecc44ddcbf7caef6aba79bd5c346563a8b33858a53ff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/source.bin",
+      "bytes": 47781,
+      "sha256": "1da08264adcfc6bab0cac033d087a47a6f5bd32c92e16be74cf070531bdc28d0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area1/update/xyz.bin",
+      "bytes": 573372,
+      "sha256": "1b679340d49817386b1af112a0cf1097d7bf8addbcf26f545814185c5a5033d8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/added_new/native_indices.bin",
+      "bytes": 278504,
+      "sha256": "bd3a25f0a6cfb5e7173c67df2d3df915a2fb277a660663b06c49f9824b9bb880"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/added_new/section_x_native_indices.bin",
+      "bytes": 4968,
+      "sha256": "c6a52e26867fa72a8deb561b60371e680264f46a83432430c540f637457bc797"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/added_new/section_x_xyz.bin",
+      "bytes": 7452,
+      "sha256": "5bd012588d0a85aac3dbdb210f552cd5e5696d4003158a278b50169ed6263a87"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/added_new/section_y_native_indices.bin",
+      "bytes": 3312,
+      "sha256": "41e9449e8d039f8ff11abef7277ef601d5cc42f3b73f640fc67dbcb954092e42"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/added_new/section_y_xyz.bin",
+      "bytes": 4968,
+      "sha256": "223cc44c1fd515ddeafcfc1cbb57976207861d0c95207421c3c8cda2b5ac7fb9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/added_new/xyz.bin",
+      "bytes": 417756,
+      "sha256": "889f5087fc544fd836af56a2e7f644e21deda6e10f416221b8270160e1c11d35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/removed_old/native_indices.bin",
+      "bytes": 55296,
+      "sha256": "8342db5da5c1cfda37d307388439dbd493c34c0259ff17e512477908d8e4911d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/removed_old/section_x_native_indices.bin",
+      "bytes": 1288,
+      "sha256": "c3aebe3da2cdcb1af7c7812077146df4ea3a831adee23db84417cd6f6404915b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/removed_old/section_x_xyz.bin",
+      "bytes": 1932,
+      "sha256": "a1b96cdd066ae3ebfd3a852fe7c7f0b88d04fa17b0cae347575b154752203a5a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/removed_old/section_y_native_indices.bin",
+      "bytes": 560,
+      "sha256": "1f040caa35c24c9cd1744f2bbefbf670351414ee53176a084ad3232ca205227f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/removed_old/section_y_xyz.bin",
+      "bytes": 840,
+      "sha256": "155557ce51eeb8c31ad991d534af2f1d44f6a738626f10b4f41418b48ec05ac3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/removed_old/xyz.bin",
+      "bytes": 82944,
+      "sha256": "4814007dee3a248fffba2e14a48c62f44c3adbbb2749149f5a899f2e31ff2f5b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/native_indices.bin",
+      "bytes": 384720,
+      "sha256": "97e95fae87517a310be1875dbb9fa629550c525bb9d9321347a876d3d65d7d88"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/section_x_native_indices.bin",
+      "bytes": 6408,
+      "sha256": "588e614909d511c1ff12db24d7191b6b719d3184ccfbe26080395cdc739a1d5f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/section_x_source.bin",
+      "bytes": 801,
+      "sha256": "6e32ebfb9105d223218a5737db92c55c1428a5f4fdd4c38a78aed17ec1f5a8f6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/section_x_xyz.bin",
+      "bytes": 9612,
+      "sha256": "3b9ba21680a0a3fc903c8ac8ce445e58055ea3bb4d9ed87021f7eb83fb80637b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/section_y_native_indices.bin",
+      "bytes": 6200,
+      "sha256": "06bfba7c52dbe2979cde6f20da28c5a43aa929dad222168583378aa6682139fe"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/section_y_source.bin",
+      "bytes": 775,
+      "sha256": "623e271d2abd3431db867f3834beda2d552b94dd4fcf3cb76c6a045961f80877"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/section_y_xyz.bin",
+      "bytes": 9300,
+      "sha256": "c2602f054c76bf3bffb2a0dbf0027952d6abdf9c65893c40590a19d0a09d9a6e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/source.bin",
+      "bytes": 48090,
+      "sha256": "6f1537bb856cd5081fee678a3535766753c9630657f615fdc4234b241ac92721"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/corrected_area4/update/xyz.bin",
+      "bytes": 577080,
+      "sha256": "8121d57ac14767a16d6bb9da32d62c3466d6c6e7e6ccd8b8cdc735803cd11ce5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/image/native_indices.bin",
+      "bytes": 309416,
+      "sha256": "7bd5f4180fa85fc09995d22aeb39abe782c0153e30cf9f1df136950446338af8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/image/section_x_native_indices.bin",
+      "bytes": 10200,
+      "sha256": "b2b22bcfb1abf7420ca812656092bc6da3166522aaebb770abc77e5ea45c69d1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/image/section_x_xyz.bin",
+      "bytes": 15300,
+      "sha256": "dae9030d25821fc92a92b06e0c345713bbe2e311f371bb631f9926b0c8d12c02"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/image/section_y_native_indices.bin",
+      "bytes": 10640,
+      "sha256": "1204248cb3268856bc6bd54d5f34a6d78e48c0e4c19795619a0f1f8e63870e9a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/image/section_y_xyz.bin",
+      "bytes": 15960,
+      "sha256": "8975f19cb22345c29d9bc79d35bdb2a65eb427df2a2c13d82dc26440c0700945"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/image/xyz.bin",
+      "bytes": 464124,
+      "sha256": "d570dbb55ee9c35b3b7b2306cb0777f5207a805d96b418d2da362279c31ea74f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/mvs_context/native_indices.bin",
+      "bytes": 370760,
+      "sha256": "b975d68b2a9a662e2e827a7290f6f81e85c0f2b8848b1b9e2c5eb36ab06e8b37"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/mvs_context/section_x_native_indices.bin",
+      "bytes": 18584,
+      "sha256": "54b9fc2837242d58d2760df80245bc364450cab1c8afce04bd1d873aaa4240a4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/mvs_context/section_x_xyz.bin",
+      "bytes": 27876,
+      "sha256": "0fd2d9732e258c6d5931c7b02ae58164b8f5ec824c6a45800b9a672915e0810d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/mvs_context/section_y_native_indices.bin",
+      "bytes": 17968,
+      "sha256": "fb642c0a348eea348af2bd274778be57664819da770cfc76c055fa5222cebc43"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/mvs_context/section_y_xyz.bin",
+      "bytes": 26952,
+      "sha256": "251b3b5dbd0e422d19b7cd51f6bda028edeebc86131f9e9c290ab0009291c27b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/mvs_context/xyz.bin",
+      "bytes": 556140,
+      "sha256": "a47a7cc923c185d925c22e4a593c30a1b0e9de273761116145f7836ebcdff01e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/reference/native_indices.bin",
+      "bytes": 474800,
+      "sha256": "90e72f06515b454f07704ad11f2ba16b62d030881104815630ab93621b50741c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/reference/section_x_native_indices.bin",
+      "bytes": 138240,
+      "sha256": "2b24a3cbe78b13df8dbfb887b8eb15e8176f4ad88ccc4b2e0e1ff860e6a34a8f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/reference/section_x_xyz.bin",
+      "bytes": 207360,
+      "sha256": "1647331b5c9c8be6464ae72132fa1f16fcda8032c9af53c4c9109d8f38bf707f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/reference/section_y_native_indices.bin",
+      "bytes": 179432,
+      "sha256": "cb71ee9e00e0371bdadeadfb8384ed7eceadb2e4a8997caff53473bf61f07f40"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/reference/section_y_xyz.bin",
+      "bytes": 269148,
+      "sha256": "76cac538eaac6a4a646bb4060a76205c7e049d4d4a9b728319bb55a8d8417e42"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P1/reference/xyz.bin",
+      "bytes": 712200,
+      "sha256": "473c167eb63c8d0292d3df46afabb80a636bb74031242fb095fa0d60c01f01e3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/als/native_indices.bin",
+      "bytes": 367888,
+      "sha256": "a44d3598cadd90abba105052a88d3787ac11791b65115933ea193db44679d5c5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/als/section_x_native_indices.bin",
+      "bytes": 4392,
+      "sha256": "a25941275260ee10fc10388d3ddc4ef39afccbca513271ec5dd89d20561b75ab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/als/section_x_xyz.bin",
+      "bytes": 6588,
+      "sha256": "564aa4b114afb9a73171f6b12aad18a54d98e460d65495acf9bdbe847524cd9f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/als/section_y_native_indices.bin",
+      "bytes": 4216,
+      "sha256": "18fae64863e6962443ab5f7aab2f3f0ae01464dccf0d88a783a20c645e079ac5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/als/section_y_xyz.bin",
+      "bytes": 6324,
+      "sha256": "cffbb5937a30e9ecc297f2cff434a39d101a6946bd2ed3ba89bf503cffb59df3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/als/xyz.bin",
+      "bytes": 551832,
+      "sha256": "57aa9e895fbcd65be0c323d62caccdb9eded7c96316f84283cb047eb33a7a7c9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/added_new/native_indices.bin",
+      "bytes": 355416,
+      "sha256": "c3651af6f84ee27deaf08f3e2cc58fbe1ad910bbbca963042ae813f8d0ef9859"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/added_new/section_x_native_indices.bin",
+      "bytes": 9128,
+      "sha256": "f88684b25c1f36f0b06b342181b5d5c1910e6f7a55562941c858bedd265003e7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/added_new/section_x_xyz.bin",
+      "bytes": 13692,
+      "sha256": "49b7b6dc11bc3c25725069e0def5737e05cebe816a047963979d7323dbb83618"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/added_new/section_y_native_indices.bin",
+      "bytes": 7696,
+      "sha256": "792cbeec5393c1532d57ed82a32de6c6feb10b0d14c7c0961a15392235c9b0ba"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/added_new/section_y_xyz.bin",
+      "bytes": 11544,
+      "sha256": "b61314753da7da6de880a308e1def74f27bf176bd1bb66f466b1430236405c76"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/added_new/xyz.bin",
+      "bytes": 533124,
+      "sha256": "217a0242f7ef27b3177f525782c6f42acedcf6a72fb21406e8094ec88953ebaf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/removed_old/native_indices.bin",
+      "bytes": 107464,
+      "sha256": "13674ebb481d6d8a221fbc735f93084b64b740c9281f0978be9537c08535f1b2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/removed_old/section_x_native_indices.bin",
+      "bytes": 1304,
+      "sha256": "7914c4977246d4de80da36164db76f8933e4fb9bf9922f6159f2b1162f9dc614"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/removed_old/section_x_xyz.bin",
+      "bytes": 1956,
+      "sha256": "c2e5fd6a3d6d8068d25956151da71eed88a2380ac5acefb9751e90f95315c726"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/removed_old/section_y_native_indices.bin",
+      "bytes": 1296,
+      "sha256": "6932296186bd260a447082599d60e04fff31be1fb536fccca40a978a92824c58"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/removed_old/section_y_xyz.bin",
+      "bytes": 1944,
+      "sha256": "b7bb9a448f4644aacb4a983a3f1603ef8a9447b2fdd4288c2ffe5cd6230082a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/removed_old/xyz.bin",
+      "bytes": 161196,
+      "sha256": "25ff535d40e7cb21366e013cc9b5028fe4f5c5d35c1451e941ea8dca0139e26f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/native_indices.bin",
+      "bytes": 323752,
+      "sha256": "3a28e4361a4bd367487661c31c2ac86f5a685535181ab20552d06ecc397e60a1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/section_x_native_indices.bin",
+      "bytes": 12216,
+      "sha256": "ad2fcad2c379bd123d07bf61e6de30b62b03ec908a8bd3a1b1763b36fe031629"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/section_x_source.bin",
+      "bytes": 1527,
+      "sha256": "507dcfd24a249a7cb0f34c378c14f2c3635e87f27e1c6e03a6e3dd336dc041b7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/section_x_xyz.bin",
+      "bytes": 18324,
+      "sha256": "f6fd1e4ad17d19a50134fa4cb0e604f7fbe3dceec71a073e8ee7ac8c2003aa71"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/section_y_native_indices.bin",
+      "bytes": 10616,
+      "sha256": "c30d3ecc2ec4a72dc75d800f9a2c1d015e34b35b77bcf411527aca135e88c135"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/section_y_source.bin",
+      "bytes": 1327,
+      "sha256": "113b37bd06126a27ae422c8928bd9ff25a08061f3923de2d62db946fdaab4f8f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/section_y_xyz.bin",
+      "bytes": 15924,
+      "sha256": "fbbfed412bdd1e8175291840ed2f8eeef9a2a9503e3e9b2dc1c2f35df771e4e3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/source.bin",
+      "bytes": 40469,
+      "sha256": "66b3227556cac88de5b76cd5b639a89d26df7fba3f659220827b2ae3e48986d5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/changed_only_area1/update/xyz.bin",
+      "bytes": 485628,
+      "sha256": "65881e4b5d17237075dbe98f04a1f71ad4e9cc00b613785fa1584c6822cff567"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/added_new/native_indices.bin",
+      "bytes": 398768,
+      "sha256": "4ff0881cc5316372d6844d02fc1cf0150f4c7e8daaeadf4c997cb5b76ffc143c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/added_new/section_x_native_indices.bin",
+      "bytes": 11272,
+      "sha256": "80b1b66431c4e671279b3f13cf464fc9f837b21f4d6396f716524668ed729190"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/added_new/section_x_xyz.bin",
+      "bytes": 16908,
+      "sha256": "48fc7f8184caa86cbd61287040e618b1df7c298ab69ae540fbb73a68f2b0294f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/added_new/section_y_native_indices.bin",
+      "bytes": 13576,
+      "sha256": "f4b915dd3f95d70b1c3796932ddae4531e51a7c04ff4c6deb8172f1a5527d3ec"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/added_new/section_y_xyz.bin",
+      "bytes": 20364,
+      "sha256": "93b7d61034b14975704d69332ef0fd57a42c059d80f2bd2006c548fbc49f93ac"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/added_new/xyz.bin",
+      "bytes": 598152,
+      "sha256": "f7c0d9ade90169b2edd6c842f97ff78ec5d2233107f2513bd49f9c671c1b76d7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/removed_old/native_indices.bin",
+      "bytes": 129008,
+      "sha256": "d6d887ba6966a563ebe6abf764008349cbdd82d208d8c0c39352514297df91ae"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/removed_old/section_x_native_indices.bin",
+      "bytes": 2128,
+      "sha256": "695a41dae69ac186b99784e2321bbba37adc4ddc7e48eaad8229a4dd96f4ef5d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/removed_old/section_x_xyz.bin",
+      "bytes": 3192,
+      "sha256": "ffbcd9d7ff7dd1deca278734b346a41f1faf1a01aefa5992bfc7d06be27eabd4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/removed_old/section_y_native_indices.bin",
+      "bytes": 1560,
+      "sha256": "c9b32d2c20a725b35704e158b9a0e831449894d0b1b20641c39581268588fe88"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/removed_old/section_y_xyz.bin",
+      "bytes": 2340,
+      "sha256": "41b73aaed32183c0afdfe65727ff58e40ea5516aaafbdf7a433230d76ac91360"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/removed_old/xyz.bin",
+      "bytes": 193512,
+      "sha256": "665d93f28ba3b146ba0064a18364bad4d5813f25e203a79976c64d9c4a8faf36"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/native_indices.bin",
+      "bytes": 478392,
+      "sha256": "e81b463ad1afe8a49f35f3efd21e9502d767ff39de655df50b29f186ea476f70"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/section_x_native_indices.bin",
+      "bytes": 13536,
+      "sha256": "b621fd49e59b91d590c78e1b05b74e587e6f5355415c89e5e1998659f31651e6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/section_x_source.bin",
+      "bytes": 1692,
+      "sha256": "b28ceffcf8521770d35235f4006a6aa6ac8cfbb780d4b2411331884f83787063"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/section_x_xyz.bin",
+      "bytes": 20304,
+      "sha256": "fedcc6a10ac8768aab21d40c6c06e058f6854c86af1af28494a13aa9e49ff595"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/section_y_native_indices.bin",
+      "bytes": 16232,
+      "sha256": "097a4ee408103bfb58d4c4f28b6923097f9faacaff709ba0cd6f5dfb74425956"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/section_y_source.bin",
+      "bytes": 2029,
+      "sha256": "e3d5398f17eb473c835c034b05739c5311f02d4a551c7a51f49bde4e1a98fd69"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/section_y_xyz.bin",
+      "bytes": 24348,
+      "sha256": "365668a025f4632cc246005fb0ca6775938bd550eb814992e04b9da6ac18f2cb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/source.bin",
+      "bytes": 59799,
+      "sha256": "11e9546d5c1499fbfc4f681722ccc2d5906fb2308f1d6adcd1161a1367cd1234"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0/update/xyz.bin",
+      "bytes": 717588,
+      "sha256": "86235f48f2586654857e413c9f2e235155c1289ceac4602ab8c6a45f6f0fb8c8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/added_new/native_indices.bin",
+      "bytes": 396944,
+      "sha256": "ec35788fe81ab9cca590be2c0053569f9ebfddab04298ed27527ed14ba4591a4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/added_new/section_x_native_indices.bin",
+      "bytes": 11160,
+      "sha256": "a8576c9ebb346297c57b75863af85ac5d9e5f07fa3628e1e43486ff2ec23834b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/added_new/section_x_xyz.bin",
+      "bytes": 16740,
+      "sha256": "ded99baf87a961eb812427767904bfb9799cee61d6a02de92999f84766b397f7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/added_new/section_y_native_indices.bin",
+      "bytes": 13464,
+      "sha256": "724ce72a2d8d575f25a59a27e42216fe6874473b5bad10648c68dede6de54714"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/added_new/section_y_xyz.bin",
+      "bytes": 20196,
+      "sha256": "764fdfe4b4f6ea0d9c30116abb8b98c6f00638376a6a2ea03a625942fe8da272"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/added_new/xyz.bin",
+      "bytes": 595416,
+      "sha256": "38ca390f60b0b44d2ff6a48653bbe992f5dead51e633534a0a1f91e3255d96c0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/removed_old/native_indices.bin",
+      "bytes": 121032,
+      "sha256": "f1cbf85ebe82fa7c7057c1854de8d5b1b5a42e73a89274724e6947ee5d3fbb0a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/removed_old/section_x_native_indices.bin",
+      "bytes": 1848,
+      "sha256": "c47640f6bb0df99f05c877937075f00fd989324241d8aea4f022992cd8f9dbf7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/removed_old/section_x_xyz.bin",
+      "bytes": 2772,
+      "sha256": "6e6f0f9c305e672391edb0627cb92aee57517837da0e4ef83fa9025c0d035fae"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/removed_old/section_y_native_indices.bin",
+      "bytes": 1416,
+      "sha256": "809df65aa6477e901f1fe8a313ca59b74d02a49b653704defc81f334601d9ddc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/removed_old/section_y_xyz.bin",
+      "bytes": 2124,
+      "sha256": "733ad8a36a9f91edd79e563f2c2e08b154f5296423c7f96ed50ada9fe48ac6e8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/removed_old/xyz.bin",
+      "bytes": 181548,
+      "sha256": "251f7cfbc62f6f716c109636fb735765541cd3de00b6863ddc1c0f794a192f30"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/native_indices.bin",
+      "bytes": 479232,
+      "sha256": "687244a5f1583276dc1db3de4b273704749c7187f4bd8c1ceed152f5cc6e7e80"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/section_x_native_indices.bin",
+      "bytes": 13704,
+      "sha256": "2d547fa975fbef9026434583e5bd577abc161b940b7c973efd8ecb1ecd750079"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/section_x_source.bin",
+      "bytes": 1713,
+      "sha256": "03aa1a90a7464937569bb1d7e65a6ee52bf22ea53405febb8b1aefc88d734e9d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/section_x_xyz.bin",
+      "bytes": 20556,
+      "sha256": "819af085469aac13e200e48d3bda1833c173dc81099554878e096c1dc914362a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/section_y_native_indices.bin",
+      "bytes": 16264,
+      "sha256": "181e3426eb98b5c9217d2088415e12c299e539031105a8d6d271b556da2a6137"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/section_y_source.bin",
+      "bytes": 2033,
+      "sha256": "22c1459dd0b3b5b9b986aef83d5e402eb1f67a3083e965ea4e36e013cfdb17b0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/section_y_xyz.bin",
+      "bytes": 24396,
+      "sha256": "3ee62f38d5f40a6d0f5b8158ecda27a89b21fb13a7a1bca662809557b03b6e61"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/source.bin",
+      "bytes": 59904,
+      "sha256": "672500f1dad6808f5abfd2e15f7f45fd24482b44d4d2f7921807a92a86fe7eed"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area0.25/update/xyz.bin",
+      "bytes": 718848,
+      "sha256": "74ffb35f1cbf1d35fe3cbe8e77cdaef13b4da85cab00b7b9451808497ce6a92e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/added_new/native_indices.bin",
+      "bytes": 393584,
+      "sha256": "f35e322e6f2d2274eaf6fc2896c1970a9d146430b87f43528f7c4b941ece654f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/added_new/section_x_native_indices.bin",
+      "bytes": 10896,
+      "sha256": "847e31015eb35730698d2d401577c35b66c953aa256690ed30b8856c9e4c570d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/added_new/section_x_xyz.bin",
+      "bytes": 16344,
+      "sha256": "60619b70e73528e302cd0c5c8d6bcf58324e6416808a9bafca42d09b54647dd6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/added_new/section_y_native_indices.bin",
+      "bytes": 13192,
+      "sha256": "38b9879d353b84c3ed75e8f2b34581b2672903017537bc9185442e2323afb6ec"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/added_new/section_y_xyz.bin",
+      "bytes": 19788,
+      "sha256": "1d6cd90c0bbe26218ae68c97070ab5be62b087075bead6bc0acb595c4faffb7a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/added_new/xyz.bin",
+      "bytes": 590376,
+      "sha256": "0366cf82df6109481c1a8aa0964e8b4097acb668c0b8113d589b4772539509ed"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/removed_old/native_indices.bin",
+      "bytes": 107464,
+      "sha256": "13674ebb481d6d8a221fbc735f93084b64b740c9281f0978be9537c08535f1b2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/removed_old/section_x_native_indices.bin",
+      "bytes": 1304,
+      "sha256": "7914c4977246d4de80da36164db76f8933e4fb9bf9922f6159f2b1162f9dc614"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/removed_old/section_x_xyz.bin",
+      "bytes": 1956,
+      "sha256": "c2e5fd6a3d6d8068d25956151da71eed88a2380ac5acefb9751e90f95315c726"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/removed_old/section_y_native_indices.bin",
+      "bytes": 1296,
+      "sha256": "6932296186bd260a447082599d60e04fff31be1fb536fccca40a978a92824c58"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/removed_old/section_y_xyz.bin",
+      "bytes": 1944,
+      "sha256": "b7bb9a448f4644aacb4a983a3f1603ef8a9447b2fdd4288c2ffe5cd6230082a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/removed_old/xyz.bin",
+      "bytes": 161196,
+      "sha256": "25ff535d40e7cb21366e013cc9b5028fe4f5c5d35c1451e941ea8dca0139e26f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/native_indices.bin",
+      "bytes": 360296,
+      "sha256": "7a77a8a998ead70f67529de9014598d78e673060bbb05562e5a4c16ef2013ecc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/section_x_native_indices.bin",
+      "bytes": 13984,
+      "sha256": "d800f24af05c7ee6c0433ef947a258739e8bc8574740696e10eb490eb69ff428"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/section_x_source.bin",
+      "bytes": 1748,
+      "sha256": "e2fabf3c6350f0ae44161d3f363d794e7caada9e867ebd86979a423c077a8f50"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/section_x_xyz.bin",
+      "bytes": 20976,
+      "sha256": "edc54748bff374645921162db605d4682b16f69f2b398d30ce1a1d525666cd0c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/section_y_native_indices.bin",
+      "bytes": 16112,
+      "sha256": "839acbb7f1fd9ae2304ec5beef2b62f9092c1ffbce4218c1ee0761df931a7929"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/section_y_source.bin",
+      "bytes": 2014,
+      "sha256": "a70cc3d7e7e93d46bfe6951c11db2d3abd79f44c687e26c2b03308dabb5a3598"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/section_y_xyz.bin",
+      "bytes": 24168,
+      "sha256": "7526a002b254b2aaf7718ec64c4c2694dfea3bb46b3527018e75f718ddbda6c9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/source.bin",
+      "bytes": 45037,
+      "sha256": "8c27b3118f52979c0bbfb140f0fd8b98b82068575badba76277625dd695b75e4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area1/update/xyz.bin",
+      "bytes": 540444,
+      "sha256": "d24495fb691c51e3ed69375fb8b23c006a27edce353e12dbf3e6b921d9bc0940"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/added_new/native_indices.bin",
+      "bytes": 385688,
+      "sha256": "f3bdad36b65e4a95bc9ec0d0086a9617c1cc40a996d10a74278088bc1c9d3b7b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/added_new/section_x_native_indices.bin",
+      "bytes": 10328,
+      "sha256": "7270f290cf0519432c86c1f4e6cc3719216596fbfab0aa729b2728f0aa0d84f9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/added_new/section_x_xyz.bin",
+      "bytes": 15492,
+      "sha256": "2ad69da70c940947f168925f7411293d955aa1c6786597e9b159f53f7be3384f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/added_new/section_y_native_indices.bin",
+      "bytes": 12784,
+      "sha256": "4478ebd59f537fb9d09eb9fd54ee221b468e817191c63c44043a00ff04f59be5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/added_new/section_y_xyz.bin",
+      "bytes": 19176,
+      "sha256": "3e33fbf88290201d128b6e3ac0b55e6baf341a60e74e0a4c1eae8df59dad69d5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/added_new/xyz.bin",
+      "bytes": 578532,
+      "sha256": "6f3955b0a8d145d78faea2aa097a75ba972712f8d508f46734b7a23fa4de530d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/removed_old/native_indices.bin",
+      "bytes": 99792,
+      "sha256": "5b72e7a76633a30b31de4fb03445f49e498291f0bc79bc8f60a454edac8ac3c0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/removed_old/section_x_native_indices.bin",
+      "bytes": 1208,
+      "sha256": "2065f3bedd4110574ddd1213d9b0f03e81c4f7b8018e0cfbcd4f24b73d94f0ab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/removed_old/section_x_xyz.bin",
+      "bytes": 1812,
+      "sha256": "fd38b82fee2d731cfd56c119fdb3c20e66be0c3c23c9b11802b5f7543ab60467"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/removed_old/section_y_native_indices.bin",
+      "bytes": 1200,
+      "sha256": "e934496870ba949547274df7b7ea1c743348bc9ef3060e4a91947baa6f1ca24c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/removed_old/section_y_xyz.bin",
+      "bytes": 1800,
+      "sha256": "77f77f7efa93aba531f3af0a33f612387de34dd7aacf980bb3c681fd532a3567"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/removed_old/xyz.bin",
+      "bytes": 149688,
+      "sha256": "66080a52a59bc01f6630fad509e1a023d346f6c317e178012be36afe2e94ba66"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/native_indices.bin",
+      "bytes": 475048,
+      "sha256": "1513bb579fc7caaf8f99e3c6d563fdd128d7cca053c1946563dba4ece51e1d7d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/section_x_native_indices.bin",
+      "bytes": 13512,
+      "sha256": "1f7055ccce6707d5988d4db740a5b2fc97f0be13b32adc4539b79bc3df0bce78"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/section_x_source.bin",
+      "bytes": 1689,
+      "sha256": "6c756730b30bd448b655f287c37a746252e0489953f5ff4e103fa41f5c2dba38"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/section_x_xyz.bin",
+      "bytes": 20268,
+      "sha256": "3c0286006b585014dfc395855077f767de3192a8468f0d32ecfaaf6daa5f1378"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/section_y_native_indices.bin",
+      "bytes": 15800,
+      "sha256": "92afa20befcb9cd26da01af3661c2c61f609504286dcd46d0b2b37a9657afcf9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/section_y_source.bin",
+      "bytes": 1975,
+      "sha256": "528b4bdfd79689461ed72cf8f9735397b31a7963f15fe666bc9de717f67771d1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/section_y_xyz.bin",
+      "bytes": 23700,
+      "sha256": "94d43085a59492a2263f394409a37fc5d82c52ad9ba7819b4bd057ec58486eb0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/source.bin",
+      "bytes": 59381,
+      "sha256": "2a9f1a8d923a3d203f15bc3d3cc393b860e473f9528aab94ffc476092b91df80"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/corrected_area4/update/xyz.bin",
+      "bytes": 712572,
+      "sha256": "e5214b0782c835c96ac7462e59bf8d06334821f75e82eda978327feea8457a89"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/image/native_indices.bin",
+      "bytes": 460456,
+      "sha256": "235617797c273fe18f9e297f1204995aaa2fc388da470158b8a9b76330daec3c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/image/section_x_native_indices.bin",
+      "bytes": 20912,
+      "sha256": "bc6a2468a155ef3b9b411fb84de1d963cd982a731cae5ccbe7eb28135320a1bd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/image/section_x_xyz.bin",
+      "bytes": 31368,
+      "sha256": "12dffb5d9174b18d808146ef004969bf32327672d258ab0655c69eedb9a65d3f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/image/section_y_native_indices.bin",
+      "bytes": 19888,
+      "sha256": "064d9ebc88eb2495e214a7164f068f9d7b9f8766ed3cb715712a7a0076a33100"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/image/section_y_xyz.bin",
+      "bytes": 29832,
+      "sha256": "91c107b33a04e212f0c33b702b888f427b71f08964f774de95d9e9a64d3c2526"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/image/xyz.bin",
+      "bytes": 690684,
+      "sha256": "6f8d753c37da4890d86682a773fbf6781ba0d85973edba57aa87546040b3b894"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/mvs_context/native_indices.bin",
+      "bytes": 440912,
+      "sha256": "f5ccb716ca4c54e9e770ffcf92b72c9eec3d51ac98df45f297825a2e520a133b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/mvs_context/section_x_native_indices.bin",
+      "bytes": 26784,
+      "sha256": "c666249e56f76b3f7803ed2cfb15ef6f5c1cdba3e825ee4e9852e6c11d0082a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/mvs_context/section_x_xyz.bin",
+      "bytes": 40176,
+      "sha256": "86921a54a2b753b6292886418f35fcdaf6477869d50c909fdf146d2e124fcee9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/mvs_context/section_y_native_indices.bin",
+      "bytes": 24136,
+      "sha256": "80346296880aea23726a110bed7f9503768439f327d2459e6160bea145185c3c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/mvs_context/section_y_xyz.bin",
+      "bytes": 36204,
+      "sha256": "5126c96badfd1993713b08ec4c4e48f0c3b9c44fc5ffcda3d80da2d5c3c8cc3a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/mvs_context/xyz.bin",
+      "bytes": 661368,
+      "sha256": "9d848c58ba841f37b1c597c1153d21a078a299a0b84fd1c9c93ada248451a9a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/reference/native_indices.bin",
+      "bytes": 477128,
+      "sha256": "a9bbf1cfd4f249c66cc2c4eecb2ec34bf5d87aba11a859f6371c9e1e81114104"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/reference/section_x_native_indices.bin",
+      "bytes": 177208,
+      "sha256": "0f55af6e20af9635a9cb7da10f18fc7f0fcb64a6f974675c9c139c8f272377c4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/reference/section_x_xyz.bin",
+      "bytes": 265812,
+      "sha256": "9a92e9f68acdc96060b9ad69872982c731a4f0e3fded7efa4772acd6b64665a4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/reference/section_y_native_indices.bin",
+      "bytes": 179272,
+      "sha256": "d45f0da7e1bcd6103dfa1da1c87fd2b90f9f872d5cb37384f7585929095dac9e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/reference/section_y_xyz.bin",
+      "bytes": 268908,
+      "sha256": "933ff0da6185542ef7787df1ebe06993b0535590fa04fe92adc0255abe5ad65f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P2/reference/xyz.bin",
+      "bytes": 715692,
+      "sha256": "747fb4ef7a2c977d0b40c8d1279f22b57153156c432cf923bce9fc3af19e51e6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/als/native_indices.bin",
+      "bytes": 422096,
+      "sha256": "a32c4544dd3be195123660320ffd73d2b98ddb09ce062b58adbf7e290276581e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/als/section_x_native_indices.bin",
+      "bytes": 3672,
+      "sha256": "4f1e9203aaf83eb2541076aa91c75b4fb9055cfd687cfe5f63b1f41e5fc36949"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/als/section_x_xyz.bin",
+      "bytes": 5508,
+      "sha256": "4adfa4ac546f5da0d5c6f9acaac111148ad94720f5fef22814b2c2debe81a229"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/als/section_y_native_indices.bin",
+      "bytes": 2784,
+      "sha256": "916ee824f61f65c5487e5f207211a2b47fcf899ec918aac7baf240c09995e535"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/als/section_y_xyz.bin",
+      "bytes": 4176,
+      "sha256": "535548a1d180f934e92d548612ef12e73ec74151788437d99e9a862a5c4ce2a9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/als/xyz.bin",
+      "bytes": 633144,
+      "sha256": "871d9d13c421e73620f874f9fada1ad031b22e72f9e7aa02437b0319f867a214"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/added_new/native_indices.bin",
+      "bytes": 120344,
+      "sha256": "0499a4cd4d6bd95586c21b4ca3a9e55473afac62eb87da6f9968985212c78122"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/added_new/section_x_native_indices.bin",
+      "bytes": 1272,
+      "sha256": "762908aa71ecba7408a770d722b4fb25620c584edeb99f4398d0cbfd6d67512a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/added_new/section_x_xyz.bin",
+      "bytes": 1908,
+      "sha256": "90c1703a7aa8c212683e65cb3b2f3c21b31f50c67a25fd3c7adbf79beece2b29"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/added_new/section_y_native_indices.bin",
+      "bytes": 1728,
+      "sha256": "dcbc51083fd2e9237d1706cb6fd3cb842f555e9e674e491f80d2a611fa2d0b76"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/added_new/section_y_xyz.bin",
+      "bytes": 2592,
+      "sha256": "546415ba03e5a7ba6155054ce9c2ef72d2d7c6c5f6b064339414eea0336ff214"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/added_new/xyz.bin",
+      "bytes": 180516,
+      "sha256": "f1ba421b312bdb25a36d072b0f4445cd6d5ede8b4497ed47ff95142432f26378"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/removed_old/native_indices.bin",
+      "bytes": 57760,
+      "sha256": "14ca9ca5615d61120d0e349773fc751e95b4e2d3ab33a740ff3047a9ae0cac16"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/removed_old/section_x_native_indices.bin",
+      "bytes": 560,
+      "sha256": "2f54fc49c193110acaad9f6ef58ed0822b1ca261288c107a81887f21d4188760"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/removed_old/section_x_xyz.bin",
+      "bytes": 840,
+      "sha256": "8ef4309d64ca4b9ef556f957939450c209f3777734f76733a7a16495942cbc51"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/removed_old/section_y_native_indices.bin",
+      "bytes": 632,
+      "sha256": "b22e144fe015c1cec8182d95f9d650ee738ae658705adc72c10b69d94a232667"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/removed_old/section_y_xyz.bin",
+      "bytes": 948,
+      "sha256": "cbb98c4431461e4540d5fb83bef2d715157fdad800e49c0106c43d9fba7bfa61"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/removed_old/xyz.bin",
+      "bytes": 86640,
+      "sha256": "dd60c84a52a758ad5cf6770ed7ae7f6c60f99a78fb0ccb93bf085924c3c8f011"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/native_indices.bin",
+      "bytes": 242344,
+      "sha256": "8dcc7f462b7e0acf61eb61184e9eac366da8ded082d78b7c7c111b8cb9531cd3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/section_x_native_indices.bin",
+      "bytes": 4384,
+      "sha256": "42f158e5b6b7fdbdabeb56c1c86f04a4f780c1bdf85f696e1550918ab01df131"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/section_x_source.bin",
+      "bytes": 548,
+      "sha256": "e56e680a374b5107007bb8e608aa587fe4ec2b3beaafc671bfed659a26223ed3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/section_x_xyz.bin",
+      "bytes": 6576,
+      "sha256": "3ca07fb3b42df69492cdaef5ed2d0c6bed1d5de07689632b667433af9027660c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/section_y_native_indices.bin",
+      "bytes": 3880,
+      "sha256": "82b0123062dfd6c2ba5bdb488b9af210eba97c178a17b8b09d921165012f7cb7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/section_y_source.bin",
+      "bytes": 485,
+      "sha256": "e1bec38b25d366a5131aee5934de49c199679f92126d849c0cc154a17dfc941e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/section_y_xyz.bin",
+      "bytes": 5820,
+      "sha256": "5d4a85f5554dbb0f1cff74460b3b79da75b2d591c2cfdb91fa2dca303f778d3f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/source.bin",
+      "bytes": 30293,
+      "sha256": "c015182f0bf10bae385845b11ceeb0a0c1876c558d5ee4bda16590ca057e1b6a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/changed_only_area1/update/xyz.bin",
+      "bytes": 363516,
+      "sha256": "73ebf1cc63a481c9eaf31f60c3bb68f2b36936ffce1c1b7d6ab815669b598897"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/added_new/native_indices.bin",
+      "bytes": 287224,
+      "sha256": "fe891113182cf70bddb74efffb0fc4da7b3f16e82504562e091f4b11b745133d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/added_new/section_x_native_indices.bin",
+      "bytes": 3336,
+      "sha256": "f88ab840157e14c9e3622082d8422048d4c1a2811d7c277ad9f529374d268530"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/added_new/section_x_xyz.bin",
+      "bytes": 5004,
+      "sha256": "3fb51febf80bf2a65590f851a7eede1e2c01001d07353ebb945991d3a937a0f9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/added_new/section_y_native_indices.bin",
+      "bytes": 3656,
+      "sha256": "955fd51f48ccd11e4447923678c2afb18fef4b0761ef691230dac9ab278f6dab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/added_new/section_y_xyz.bin",
+      "bytes": 5484,
+      "sha256": "eb5e2e87665e3ba0022ccc76d94fda63cb5776cee574608fb1289f6946b2fac5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/added_new/xyz.bin",
+      "bytes": 430836,
+      "sha256": "2e277544e08896cd6d98445fd44de8042958a01a3ec444a0a588dd681cd3ce52"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/removed_old/native_indices.bin",
+      "bytes": 97384,
+      "sha256": "0bd2caaed2b91521ef8a7f1e45b8580726ad94f76f9413fc24e8d60278bd2b6c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/removed_old/section_x_native_indices.bin",
+      "bytes": 936,
+      "sha256": "712cc4044884bcbb00dbe9ffb238ac8c38ebb8fe2f1efcd2370ee171994a1af9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/removed_old/section_x_xyz.bin",
+      "bytes": 1404,
+      "sha256": "fe96ba45a3027ba440ce0c9ec0821c502264e2f7cc552920f0dd9776a59e73cd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/removed_old/section_y_native_indices.bin",
+      "bytes": 848,
+      "sha256": "7c49ed2b416dded7083107280a23cc2628b4d2035c6b147482f749da0a3a828c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/removed_old/section_y_xyz.bin",
+      "bytes": 1272,
+      "sha256": "565bf37fab1a27fd4b586cf2bc3bf08a43bf2c0a62439e055f56908db6c6a9f7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/removed_old/xyz.bin",
+      "bytes": 146076,
+      "sha256": "89393b4b31807183f38a9c18c5bf37d94cae4501cfe6870d639e6591815743c8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/native_indices.bin",
+      "bytes": 305968,
+      "sha256": "3bef36aeb06440154ddf0cfcd23d9970922afec6837589fa780d29037c4775e2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/section_x_native_indices.bin",
+      "bytes": 6072,
+      "sha256": "b1e4e296b4586d277989ddd88f686d45fbe7ff068c24a9f6eec6c55572cbc4b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/section_x_source.bin",
+      "bytes": 759,
+      "sha256": "93640a8897dd51c51c52b8c10c6fd0e4c1ce34c0a75ee4aa225a748c99f9f4d6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/section_x_xyz.bin",
+      "bytes": 9108,
+      "sha256": "f2875bbc22f8be7dbac7f7ba9b8373b52279f617c7b2a7ef22f28c09446bb76a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/section_y_native_indices.bin",
+      "bytes": 5592,
+      "sha256": "b1a0f9bdb6b38532e4b3bb1a495d7587a1af94e0485e48e75d322a1369d1f8b9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/section_y_source.bin",
+      "bytes": 699,
+      "sha256": "77c364a753860974e5072c8c588f7af552759865e9394c17e451fb9850153105"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/section_y_xyz.bin",
+      "bytes": 8388,
+      "sha256": "fe53a230d891445ab2f5af20a8419f9849094d9b70119b99bea5c27e08cef742"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/source.bin",
+      "bytes": 38246,
+      "sha256": "b892db00d9340b55ceae304c4a94b6b7d64db30f222add1bbfe25f194f5dfe16"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0/update/xyz.bin",
+      "bytes": 458952,
+      "sha256": "0484330e6175ac731f8431061f33218181ce6e73f2c8a2defd6e29994ad61b51"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/added_new/native_indices.bin",
+      "bytes": 273280,
+      "sha256": "9c125dc200ae4852bab7614bf067c73b4cf2a648ea45f1f994267200f98119c6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/added_new/section_x_native_indices.bin",
+      "bytes": 3296,
+      "sha256": "ccd89e627de89401d8ccb49b791506790aac74f5a0b89adacb5bfd8f49f5e7fc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/added_new/section_x_xyz.bin",
+      "bytes": 4944,
+      "sha256": "8ef37ce0ad8a2c35ea3248a9e250c6ee8d6b808451a66fe8850fcd885b2000b4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/added_new/section_y_native_indices.bin",
+      "bytes": 3208,
+      "sha256": "c3065ec0b1a7885c5044cdee74c0b316813873004afa2c7d2faec8c65dba6b40"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/added_new/section_y_xyz.bin",
+      "bytes": 4812,
+      "sha256": "111d78f7633c527fa3156a8c6f85e7916c00b7cecab51c879ee3aa5f4d94508b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/added_new/xyz.bin",
+      "bytes": 409920,
+      "sha256": "16e2dc31fbf8a4dbefa7d98982d7e4369190ee18b261ef34ac0d47669abce5de"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/removed_old/native_indices.bin",
+      "bytes": 80712,
+      "sha256": "e87833e1ea650e851412d1b6f82ea9744bcb29e0c3d45715d11369ddb1834838"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/removed_old/section_x_native_indices.bin",
+      "bytes": 872,
+      "sha256": "3df00e332836c6d3dc0edc81e61d5e066cee9d3713252b92dc43b81a45121f67"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/removed_old/section_x_xyz.bin",
+      "bytes": 1308,
+      "sha256": "6bfe88bd13c22fea6ae2caba28baa21306e4f8a7ddd59f4e1e52d63fad51e165"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/removed_old/section_y_native_indices.bin",
+      "bytes": 760,
+      "sha256": "785ce445e40bc79224b54752981d57cd13f29077c60f3176cacf4304bf786804"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/removed_old/section_y_xyz.bin",
+      "bytes": 1140,
+      "sha256": "fb510cdcfc68d2bad6825f6389303e8b65a18b9b6ae0cd8e2143f05629abbd3c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/removed_old/xyz.bin",
+      "bytes": 121068,
+      "sha256": "8808df1147ed4061df4428a87b18390c195bf4dd99d5cdd0682896ad7e1440ee"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/native_indices.bin",
+      "bytes": 307336,
+      "sha256": "053ef8022d145e53add3796f8a44a5ae37bf1e174e2411ae45a5cf1f9809d7e0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/section_x_native_indices.bin",
+      "bytes": 6096,
+      "sha256": "2c437071025aa2dbbb71f27b024eafd754e710ee34bfe8896ccf2fed60a4aa95"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/section_x_source.bin",
+      "bytes": 762,
+      "sha256": "32c739f7b5fc6d002c242b37864bf84a758c03222866488ced3e49cb09dc692f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/section_x_xyz.bin",
+      "bytes": 9144,
+      "sha256": "0d5548f1fca2c1f34b8a1f00e4f41e65f3bcd5f7c1d3dabf9565c778c06adcb9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/section_y_native_indices.bin",
+      "bytes": 5232,
+      "sha256": "8ff1d9b9448929e529a7fdd293e3d44cdfa2421c164a2aaa6c07f136307f66e0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/section_y_source.bin",
+      "bytes": 654,
+      "sha256": "fd3586a205380b1201e9fc784c13e2feddc373960dabfb700f2b93bd173a66b3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/section_y_xyz.bin",
+      "bytes": 7848,
+      "sha256": "6c44265902463c2d9d23097669b3169336f73cc177f0e727569709db9da77231"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/source.bin",
+      "bytes": 38417,
+      "sha256": "f1af9c3ceac4e518f0bcc4fd3837ab9c776fbda13b4ccf5792aa323d0a062a83"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area0.25/update/xyz.bin",
+      "bytes": 461004,
+      "sha256": "aededa98b52f83705822d5e16252125152e9e48f0fa36e4959177b0b95f307fe"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/added_new/native_indices.bin",
+      "bytes": 257568,
+      "sha256": "2cc69955ee32a5485bf62cdb1c94958fbb4fb08e8f96b6f6241fd5210f150b02"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/added_new/section_x_native_indices.bin",
+      "bytes": 2760,
+      "sha256": "609b3441ae96be32aa4f0af257ead3ecf288a93b851e4d0c277d015180770323"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/added_new/section_x_xyz.bin",
+      "bytes": 4140,
+      "sha256": "d3769507ca67726e0c23d6d6f3a1105186e80ef848c2ed8c5a99594801e12643"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/added_new/section_y_native_indices.bin",
+      "bytes": 3048,
+      "sha256": "8c6b36d1f1b41def641c51f8a4f1b18950b2f72c7f75b2768749f1bc5b5737b0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/added_new/section_y_xyz.bin",
+      "bytes": 4572,
+      "sha256": "e4f9d932b2fc3d559ba1130f5710bcd040d229a545a3b193e5df8a0d5894d593"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/added_new/xyz.bin",
+      "bytes": 386352,
+      "sha256": "cb60b08bbfc3be51b9313799b22f8aa38e448ca672125997d61051b4c6e5af68"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/removed_old/native_indices.bin",
+      "bytes": 57760,
+      "sha256": "14ca9ca5615d61120d0e349773fc751e95b4e2d3ab33a740ff3047a9ae0cac16"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/removed_old/section_x_native_indices.bin",
+      "bytes": 560,
+      "sha256": "2f54fc49c193110acaad9f6ef58ed0822b1ca261288c107a81887f21d4188760"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/removed_old/section_x_xyz.bin",
+      "bytes": 840,
+      "sha256": "8ef4309d64ca4b9ef556f957939450c209f3777734f76733a7a16495942cbc51"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/removed_old/section_y_native_indices.bin",
+      "bytes": 632,
+      "sha256": "b22e144fe015c1cec8182d95f9d650ee738ae658705adc72c10b69d94a232667"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/removed_old/section_y_xyz.bin",
+      "bytes": 948,
+      "sha256": "cbb98c4431461e4540d5fb83bef2d715157fdad800e49c0106c43d9fba7bfa61"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/removed_old/xyz.bin",
+      "bytes": 86640,
+      "sha256": "dd60c84a52a758ad5cf6770ed7ae7f6c60f99a78fb0ccb93bf085924c3c8f011"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/native_indices.bin",
+      "bytes": 310952,
+      "sha256": "c24844da0a8ccb33fa3c0ae9ef0dedba7b12f525e7b68729ffdfabc39f897d32"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/section_x_native_indices.bin",
+      "bytes": 5872,
+      "sha256": "e961749c702792c2ab85276fa19d947196fb1890e6d043a5e9a0ea49ce0cd432"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/section_x_source.bin",
+      "bytes": 734,
+      "sha256": "b563f15e1f2dacebeced2d592119821f415b2881e0653ff5f38da2d59811936a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/section_x_xyz.bin",
+      "bytes": 8808,
+      "sha256": "a3b67bf09cb68bb5bc0bdc4b725296ca4624dd3a37cfdd4359b8c97f5ba9812c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/section_y_native_indices.bin",
+      "bytes": 5200,
+      "sha256": "af86e240e0f2a2d177cae310c9689ec49480e4207a853929264610fc0efa26ba"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/section_y_source.bin",
+      "bytes": 650,
+      "sha256": "ca0cf06ddab75f5bdc173b5b25eae53dc877d899de27af04d36d4c32c5d0bc56"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/section_y_xyz.bin",
+      "bytes": 7800,
+      "sha256": "7baa3db10f08be48ffe70e7e32ceaad91c2549c53a78c6c84d02396645be5219"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/source.bin",
+      "bytes": 38869,
+      "sha256": "bf9fecf5c24e4c0ac6f47536ffe0355abbbae251e182eba78e27a1c5838eeae5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area1/update/xyz.bin",
+      "bytes": 466428,
+      "sha256": "961fdcc946e081e17ecc0390b0f081b703c7fd2f0327c3a5b11c9df14e32bd40"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/added_new/native_indices.bin",
+      "bytes": 202808,
+      "sha256": "4a833d038d6d98fe1cd44988487213d117bc21fedb18831bc5be52438ebb8718"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/added_new/section_x_native_indices.bin",
+      "bytes": 1488,
+      "sha256": "a23946d13de39d14ea47a58ce47ccee0bc29381f0e4bde62774a8e7a5ab2b54c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/added_new/section_x_xyz.bin",
+      "bytes": 2232,
+      "sha256": "f0bd319a09761ad6bc7758d8bef154b82af6d7b1aa20b7b78d5efd5e629a0b7d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/added_new/section_y_native_indices.bin",
+      "bytes": 1680,
+      "sha256": "b974be5ea8218607dde28ae8425ce27f508fee3f8764b3d702ff874f7dbb947b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/added_new/section_y_xyz.bin",
+      "bytes": 2520,
+      "sha256": "16c08bf83d04e2fcb2e5a609f1b426433b0d12c000de09ba06609c8c525b030f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/added_new/xyz.bin",
+      "bytes": 304212,
+      "sha256": "5d99390b2c159e21fd95c7294235a65be9c2e58e75d17bd85d95fe7d23b9bdb8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/removed_old/native_indices.bin",
+      "bytes": 34896,
+      "sha256": "f2987562369c0400c6a961bc276554ec351ead91c531c7253c1f842da503c5fb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/removed_old/section_x_native_indices.bin",
+      "bytes": 384,
+      "sha256": "6222aceb1d9055cf630813fb61b5f16529baac550f50f78014002a9f0b4218e4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/removed_old/section_x_xyz.bin",
+      "bytes": 576,
+      "sha256": "9230039917d7dbb67874375bf08d8fcb0e0fa5f879703e7cb2fa2bebd830636a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/removed_old/section_y_native_indices.bin",
+      "bytes": 448,
+      "sha256": "5115f302326c47a5c4af97ea1f40386e52323b8bfdcf4ccbfaeec6c897a3e70a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/removed_old/section_y_xyz.bin",
+      "bytes": 672,
+      "sha256": "b4c6a8ee784cbcb02434ef936656b8ff580e78fea3ed7c4d2b643540a73d6307"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/removed_old/xyz.bin",
+      "bytes": 52344,
+      "sha256": "374b06d6b19b669995334729878c0f727664cfed99108f0cf7c8ba16bd580d35"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/native_indices.bin",
+      "bytes": 295008,
+      "sha256": "f989753578bad5f6ea873fb86916de68907923b63dd296cd8c9b961ba401cdb4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/section_x_native_indices.bin",
+      "bytes": 4776,
+      "sha256": "b39c74811cb78711f1240a69499c6fa003607bc5bf2235235e157e676279d0b9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/section_x_source.bin",
+      "bytes": 597,
+      "sha256": "661b1624cf61b90d382ff52b4bd69ac540cafc3920e9c8756e5a1956be096c49"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/section_x_xyz.bin",
+      "bytes": 7164,
+      "sha256": "794950bff112a9a82c5ca55f8d1d50904272388b9906bff75b22be78ee222039"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/section_y_native_indices.bin",
+      "bytes": 4016,
+      "sha256": "bf4f93a17f78f81e2768ca4a18be0c7df5258cde12aded6e8006986105dc9c62"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/section_y_source.bin",
+      "bytes": 502,
+      "sha256": "2a88596d05f7766f30549b042c086332dc9cb06d1ce3f6536931b64c3322e6df"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/section_y_xyz.bin",
+      "bytes": 6024,
+      "sha256": "7d217978ca2c545c924c91bb1af06d75c1c5ff5da8c6650bb3138b45ed6d5376"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/source.bin",
+      "bytes": 36876,
+      "sha256": "12d1322e4674b909e5c32efe05d66e7d9b140b8fdf09386e03a0acf8c419da23"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/corrected_area4/update/xyz.bin",
+      "bytes": 442512,
+      "sha256": "ba15ffd5c560129674a7f6de6000ca43f3d3eeb4b14d19a5b8c89c018252ceba"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/image/native_indices.bin",
+      "bytes": 408840,
+      "sha256": "8e9d3f39582dfb1e67cb56f1c6052aff2f38ff302b4a96d77a62ed0fd1801553"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/image/section_x_native_indices.bin",
+      "bytes": 14736,
+      "sha256": "3c1ecf004e73d7951bba1e074b49ac445b2ad09283175f7247d60a3b5014c1f1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/image/section_x_xyz.bin",
+      "bytes": 22104,
+      "sha256": "024555a34c7f8886e5bb24679a78bfffffe706971c8057199fc3d9d2620d7177"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/image/section_y_native_indices.bin",
+      "bytes": 12608,
+      "sha256": "025ba8d71b70d6e0bc0c3f2db3f59769f2a7f328d6481a431e18c83c5e323372"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/image/section_y_xyz.bin",
+      "bytes": 18912,
+      "sha256": "de21c1c0287347f0a35f5d8f6227d429f18bd28d5b2cf2945d852ba8c22a8b11"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/image/xyz.bin",
+      "bytes": 613260,
+      "sha256": "16182214b6c468f2121327173d0f090e07bb068b0efe35fcf3ee764c18918bfd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/mvs_context/native_indices.bin",
+      "bytes": 461392,
+      "sha256": "1d04ba3e622508464e318ee555457d491656a953e6e11ca65cc68e46bfc94f9e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/mvs_context/section_x_native_indices.bin",
+      "bytes": 145632,
+      "sha256": "ae56a66b037a1b395de6720d4c350540bdcf2ac9b485b6fc6c7c517bb485f396"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/mvs_context/section_x_xyz.bin",
+      "bytes": 218448,
+      "sha256": "e3bb3cf7c445b43e4d9d9ed61d8120394c6638ad0edbcfbffb60c8f8e93562bb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/mvs_context/section_y_native_indices.bin",
+      "bytes": 62072,
+      "sha256": "18ea06ae9faf11c40aab7bee4b25091a22816f4dea570d9be34e5b861d49bf13"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/mvs_context/section_y_xyz.bin",
+      "bytes": 93108,
+      "sha256": "075e5b15b72df5883d105784d73df4453e33a186d511930f8d85a114896c120b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/mvs_context/xyz.bin",
+      "bytes": 692088,
+      "sha256": "ae239431664ff12f0a5a7dfeebd2948e77bf075c940426a21bb26bc9ae076247"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/reference/native_indices.bin",
+      "bytes": 475040,
+      "sha256": "57c3797a143c2d9d151687632b429a3422aab1c0a155eabfeee3416affaa99b0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/reference/section_x_native_indices.bin",
+      "bytes": 356408,
+      "sha256": "95859375aa0bf47cebaa3fa1b19b5f7860e15154380992f2d9e0640e918aa264"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/reference/section_x_xyz.bin",
+      "bytes": 534612,
+      "sha256": "2dcbfe192de26d588f089637719de2e66c4a81fe07cd53d90f16488136066139"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/reference/section_y_native_indices.bin",
+      "bytes": 193072,
+      "sha256": "12f806fd2454e5c2e3c3969eba29c5e91b5139d266083096ac2fb57636eec60f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/reference/section_y_xyz.bin",
+      "bytes": 289608,
+      "sha256": "0e4853f4ec4d3672fca34b8415f651c7c52bb4778e19522615c1d8777a4d7cda"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/display/P3/reference/xyz.bin",
+      "bytes": 712560,
+      "sha256": "a337a89bd16361b1559198b36db6fbc9be3ca64554cf47ec7aff05c608372b30"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/changed_only_area1.npz",
+      "bytes": 1105810,
+      "sha256": "1d2561c771c4d72bbbb1ef1c40a5dbf17c8c304f20ab807d791528e1cebcb7e8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/changed_only_area1.ply",
+      "bytes": 1085066,
+      "sha256": "0b1f23b2d2119bd6375599512532171aa57191a267aab1f13a94878de91e6dff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/common.npz",
+      "bytes": 2091814,
+      "sha256": "1381e9f7bcedd0ce84fca8921eb0ddecaed2c677f2ed40875e181e9428e39e86"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area0.25.npz",
+      "bytes": 1214219,
+      "sha256": "e6ddcaeb9bc6beee49deda821b033561edc418d13b605bfeb8d478c1d7cef838"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area0.25.ply",
+      "bytes": 1188491,
+      "sha256": "fb72c36f0b9a67193333fde2584e8a5d15aecae61fd3f195402d3ed5a9225a25"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area0.npz",
+      "bytes": 1211875,
+      "sha256": "5002d5ff2c13ae6f5e2d03d4e4add319e3ab231dd83baef0d63fdf0f7e93f011"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area0.ply",
+      "bytes": 1180341,
+      "sha256": "7feebb2b5e8ed64cdd709997b57b2d7e406fef5e47493a5061ca0a4ad76c3710"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area1.npz",
+      "bytes": 1214088,
+      "sha256": "cab9e584112d88643f7353595de556e417948278309972a503af9fb24f261245"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area1.ply",
+      "bytes": 1194716,
+      "sha256": "1ccf5ed80257b4226f6dbdc25e0287a7e37a1de23b46a81e57705ea8982565fa"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area4.npz",
+      "bytes": 1216881,
+      "sha256": "e24a3d1e5f0b72e85d62dc416d8a51c3a16fbb880268ca26a318ec286ac14606"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/corrected_area4.ply",
+      "bytes": 1202441,
+      "sha256": "3c3157c361ea9ac0745cac51fb0bca48d661977e3b45eadb7b9b45130ec590ce"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/mvs_context.npz",
+      "bytes": 1675367,
+      "sha256": "59d71d7f8d8cc4b322db30c8ff5c793f7514dda4160f1267a06ca4f4f1dd80af"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P1/reference.npz",
+      "bytes": 16993957,
+      "sha256": "3d111cf0cd8ab39fccb85ce0075486ec40f4f60584b5c68b2ab122918b321543"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/changed_only_area1.npz",
+      "bytes": 3102212,
+      "sha256": "ae93be38cbc110d6554345b44a134ccdcd4f1f808411d6723bd090366bc85ae6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/changed_only_area1.ply",
+      "bytes": 3035342,
+      "sha256": "fda8033efd23f3137f82847e8ae628f18438b831fd89f72b19f2cd1a667ef2ea"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/common.npz",
+      "bytes": 5969769,
+      "sha256": "2044cbcbeb77dffa47e4a65a0642f7da38942edb0f3107d8ed3d548ed1a9d0dc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area0.25.npz",
+      "bytes": 4529306,
+      "sha256": "66b4b4292ed36c9bea960d9d0967e8f70295ce24ea61723ea29e619fc4d5ebb2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area0.25.ply",
+      "bytes": 4492942,
+      "sha256": "68aa11a8f3e16bd6b15be00258f07aec792c7c1c9e17a292ce7f70a7d48f88f4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area0.npz",
+      "bytes": 4529865,
+      "sha256": "4f1d9c3007ddaa48e06c6508b709fa23f007a2b04b8aafaeb940f44515e9798c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area0.ply",
+      "bytes": 4485092,
+      "sha256": "416c792dbb3003394d3b6b31968d41e4521c9531b605ef6cae8902aaf42d5665"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area1.npz",
+      "bytes": 4515543,
+      "sha256": "f8d052af59e8205b4553ec4979fa16c441571af4a69de42bbd222e27acfd3c26"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area1.ply",
+      "bytes": 4503817,
+      "sha256": "c5930ebfb03d3e828a86193529f147ccc98598b5fc939b952a38995a48f4e4d4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area4.npz",
+      "bytes": 4453241,
+      "sha256": "2a18a6e92c5fae46d15ee872cdeef44446878985b2147dda1b4bd408d6f2c10f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/corrected_area4.ply",
+      "bytes": 4453767,
+      "sha256": "e6cbb15ec600eb6fdeebc5814027789bea06bd49dfc3a408f772a98bd125e20d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/mvs_context.npz",
+      "bytes": 3726911,
+      "sha256": "b4a6a5487274430b08ad1d5abd581a6e1f6f63d6f21337a93efb0f4eba32e362"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P2/reference.npz",
+      "bytes": 33978541,
+      "sha256": "9dc75111e8a5e83808d566c0b6621092423898a1f6badb9438f1a0d75e16e7ba"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/changed_only_area1.npz",
+      "bytes": 1441963,
+      "sha256": "b3bb63f1642addeeb62fa261a58dfd62c5cd83c97b95f3b77e67b457fe6481d1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/changed_only_area1.ply",
+      "bytes": 1514816,
+      "sha256": "36c993d1bf09bfd715bd3a1b3e641c7e2db471ea4c3907e8cb8b800418578526"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/common.npz",
+      "bytes": 4299339,
+      "sha256": "171efd2f3c37c5d1f6dd6a4899e36f0613496d23200ea12f97f3757d9ee37070"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area0.25.npz",
+      "bytes": 1878205,
+      "sha256": "f33beaa3e7e40c205ab8948f52d62bc0e294d60f635b0c8e65c904c833dbf10c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area0.25.ply",
+      "bytes": 1921016,
+      "sha256": "936d5aee79546e3b8aa29d0decc0381b8017a448c539e3d3fe42958bfba932c2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area0.npz",
+      "bytes": 1892488,
+      "sha256": "388d9cb6d8ac2823ea73cc7ddd8d8a4d73aebce6efca2eb59949c1547d286506"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area0.ply",
+      "bytes": 1912491,
+      "sha256": "00d4623cb1bcf0739e9e19d61a824dd5c5a2df6aa09a226b9477357eb2089cff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area1.npz",
+      "bytes": 1862305,
+      "sha256": "2892bc89198ea24db5414227240dbd96b2b987ef0ee05181f3a448ba16d85387"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area1.ply",
+      "bytes": 1943641,
+      "sha256": "0a7f1239712a399c868f46453f21bee39c33d3abce79621ed9f80009673c530b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area4.npz",
+      "bytes": 1722381,
+      "sha256": "ba3de3e655a8407618cdbb0a2e80a4396df4a890f7e5b24aef0bf083d42c1cc2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/corrected_area4.ply",
+      "bytes": 1843966,
+      "sha256": "1da3c5aaaa4f66400b84f5ff935d93060e01a62bad7ce5eca885d835825dd8b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/mvs_context.npz",
+      "bytes": 10205227,
+      "sha256": "3b4caeccc2d8cf54b6cda469643019ca5c414a7c59d72246985e3c3e96eefac4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/downloads/P3/reference.npz",
+      "bytes": 47065567,
+      "sha256": "a72041a28c8242d3901f5696d88e607473814299baab43103fda89fc179b1f81"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P1/decisions.png",
+      "bytes": 626972,
+      "sha256": "ae6e60847172790dfa7c9144a17f91db718469bea6cdd440eb904a620ce7b878"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P1/height_delta.png",
+      "bytes": 134812,
+      "sha256": "8cd0acd7a9a4ba95216e29f9f9b5d634491911490085619e95a642a12aa0a924"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P1/heights.png",
+      "bytes": 120864,
+      "sha256": "274e01315f66a4eb54ebfca751cecd9ddc80174ec92196828ef77166ee1e97bb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P1/sections.png",
+      "bytes": 155884,
+      "sha256": "d8ee352a53e5fe40f88de7ab575187439564b9da22f6ce5c12567cc8430e833d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P1/sources.png",
+      "bytes": 3811627,
+      "sha256": "d2b6eee0d049d5297c6470830a49490738a4083c412692bd80f55690f25f04c5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P2/decisions.png",
+      "bytes": 891746,
+      "sha256": "bfa4f15995cb3bab5b90e8c46f0f31e8b02b9626c9905d19ab563075d4078db7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P2/height_delta.png",
+      "bytes": 216587,
+      "sha256": "4e6f8c445572dd183f7bdb1e1746b00095e63f5d36046be67e0ddbfdc9a8112f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P2/heights.png",
+      "bytes": 174205,
+      "sha256": "0e06c5446fef50ba74ef0fae822faa945b95e2bb48ce3c3e10c6268e2d0d66d4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P2/sections.png",
+      "bytes": 161379,
+      "sha256": "13f601d943410065edeb9ded08e2583b377561b02f12f071e37c3ffe0fe95503"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P2/sources.png",
+      "bytes": 3469305,
+      "sha256": "4fcecfa7432066514a18e705f2110410614dc31ba6d1067aeb28b5e76bf89417"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P3/decisions.png",
+      "bytes": 694752,
+      "sha256": "b00e9ddd8e1ad743aee9fcd5bfbcc7fbebe78092b328a4977ecb44f7d14369b7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P3/height_delta.png",
+      "bytes": 222107,
+      "sha256": "729a86ab32b7f90f0903458f745b82398bc08ae48aa6ffdb11139b819ea53935"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P3/heights.png",
+      "bytes": 195723,
+      "sha256": "3aa41a7e2e3d3782b5afc6db9c226b7c19509b49d0afcb30d99f5a42ae888623"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P3/sections.png",
+      "bytes": 178579,
+      "sha256": "19c91a876964fbf68a093302548cc5e0ac2bf1f0567ea2eadeb44fdb266a687a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/figures/P3/sources.png",
+      "bytes": 4714815,
+      "sha256": "36ab3b4c71cad4697943cba8bc94361cb38bb94c7cd1ed874d3d626dc02ff6e9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/index.html",
+      "bytes": 6832,
+      "sha256": "53fb050aa5765201b416fa16c51c3ccc80a638ebe304a09314cf29581f329b12"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/photos/P1/master.jpg",
+      "bytes": 904418,
+      "sha256": "a973b430489c227dfa9b3084e0ec99db88c5906add644d8bd8d86c0e3e2cbcb4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/photos/P2/master.jpg",
+      "bytes": 1010275,
+      "sha256": "3480c137a4c129adb59d2e8fbd3dc894bcb125dcc640b22c1608f6223e65efc9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/photos/P3/master.jpg",
+      "bytes": 915511,
+      "sha256": "28a3b2b66413a2b86edd5312c5ae749601c590d9af427bda7814c44a5b1c4d58"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/receipts/P1/evaluation.json",
+      "bytes": 39469,
+      "sha256": "ca6ed0a781588f7f9edc916d996d0f2451e21e02cf7731acb2a6090cdb931f3a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/receipts/P2/evaluation.json",
+      "bytes": 39597,
+      "sha256": "3d0e03e83b4669b938a127bb302bdbae19acbbe793eefc5d8a30332432747090"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/receipts/P3/evaluation.json",
+      "bytes": 39535,
+      "sha256": "5d329aa234d62573829a23cf27a73ca590aa0099bc9bc87fd423261d81f30cd0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/receipts/comparison.json",
+      "bytes": 27053,
+      "sha256": "b2681125ce245a84467de1149622b86f06c1b666a55737d7dcbb5ee4b1691f0f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/receipts/matched_protocol.json",
+      "bytes": 7532,
+      "sha256": "f65590eda24cee3f5c2a607002d6ef9cea0ba290d6769f125764100b496946cf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/receipts/viewer_config.json",
+      "bytes": 391,
+      "sha256": "aab78e648af317a84faac6938a95ffb21ac0c48d08a8a80b3912793e3405978c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/style.css",
+      "bytes": 4089,
+      "sha256": "62669c76d9fca8c0a7633f1eb101857719cf624868e69b42537ea42b1aa46a05"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/three.module.min.js",
+      "bytes": 670681,
+      "sha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/viewer.js",
+      "bytes": 18722,
+      "sha256": "bf562d67a8078fb79f491df568e488c3f303d56394da091271dab4e70c5b5fe1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5/run/viewer_manifest.json",
+      "bytes": 158282,
+      "sha256": "da830e90112ec8319947a0e936dd5343e2df6f24c5c707425fdded019f2f9faa"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5.console.log",
+      "bytes": 129,
+      "sha256": "19354bed4786c2f3de903eef256e55ecfcfcdfe0565a696b37849abd7f5e6a6b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-MATCHED-VIEWER-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297981,
+      "sha256": "505e7e92e2b3bfa3774f2ed18fd1506f2b78857407477060ac1b569728abfec1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/console.log",
+      "bytes": 454,
+      "sha256": "910e888dc56731dc1c4ca3cb4d6ebfb0b1ce38d04e3a918ca348d300922d17f3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/launch.json",
+      "bytes": 9362,
+      "sha256": "18cb24adc4bd38d8b367dec025f5ea33e34b96ba6058026ba9b4622606fae9e8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/resolved_config.json",
+      "bytes": 7112,
+      "sha256": "deeeb15fcbfae3d0a17998c199094178d4119107fcf167686c3326a99424381e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/ALS_READY.json",
+      "bytes": 184,
+      "sha256": "a4dca157d95668656ae97b571a0cedb9998ec00b3976f690fd91c74b8a9897ab"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/NATIVE_READY.json",
+      "bytes": 220,
+      "sha256": "8fe0dea2f958d910d0569a5b8ba2560addb9474293101177b3c544ec103ea7dc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/als_native.npz",
+      "bytes": 231731,
+      "sha256": "34b287d6dd17e7b61922366d8bffe28a663a21a31c88e12b1bcf3cdf55fd877e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/native.npz",
+      "bytes": 2465805,
+      "sha256": "ef4dba8cf7946ebc7e0337c234298ae9af27e6c46add561cbecdca298e7db794"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/selected_master.json",
+      "bytes": 2870,
+      "sha256": "cf31caff3996d993564b6326e3978d6189d9403ef4296ce1661da6264b58be36"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/common/views.json",
+      "bytes": 224842,
+      "sha256": "c31f3bed179b9fc59ea48203d7cb5a65d72e2399bad170eba064624e22d12a04"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/config.json",
+      "bytes": 7112,
+      "sha256": "deeeb15fcbfae3d0a17998c199094178d4119107fcf167686c3326a99424381e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/coverage_audit.json",
+      "bytes": 31341,
+      "sha256": "a99375a160b272b5d7b13b330775871b506e8f81a5a54b7a79229171bf7171da"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/protocol_receipt.json",
+      "bytes": 6183,
+      "sha256": "ecde4e73953432e68bc28a1b1312ddb434a362e86663b5a337961d5085446386"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run/receipt.json",
+      "bytes": 65991,
+      "sha256": "17f14c42840d39fe07eaeff8c37adfbbaef1f01d0487cd03aaa23e58d90f354e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5/run.sh",
+      "bytes": 5190,
+      "sha256": "0d6450b97f494ed247869cc5833d3463f5492e8fe1ab9ee56d14b793cf692b0a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-INPUT-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297610,
+      "sha256": "62f033648f45609d22b7dcee85cfe4414d19555b5da6cb6f5520628c1ece9a9d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/LAUNCH.json",
+      "bytes": 5106,
+      "sha256": "e649bbab6ef4e412700ab2564e5ad705cfc27fbac903bf718fa465b3ff9b656e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/LAUNCH_COMPLETED.json",
+      "bytes": 5179,
+      "sha256": "2d9db145baec3352f7aa3f47c2cbcd1dd60ae77d97d319777da8ace0d2164fdd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/changed_only_area1/face_decisions.npz",
+      "bytes": 345915,
+      "sha256": "467afff0b3129c127fc957dfc5e60d3ba7c0d777e418cdd0718ee46ead206bd7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/changed_only_area1/result.json",
+      "bytes": 1398,
+      "sha256": "938a05327a426a4a9b940bac890c72b8777feff2db67edb240322a2aa9e05ff5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/changed_only_area1/updated_points.npz",
+      "bytes": 1105810,
+      "sha256": "1d2561c771c4d72bbbb1ef1c40a5dbf17c8c304f20ab807d791528e1cebcb7e8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/changed_only_area1/updated_points.ply",
+      "bytes": 1085066,
+      "sha256": "0b1f23b2d2119bd6375599512532171aa57191a267aab1f13a94878de91e6dff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/common.npz",
+      "bytes": 2091814,
+      "sha256": "1381e9f7bcedd0ce84fca8921eb0ddecaed2c677f2ed40875e181e9428e39e86"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/components.npz",
+      "bytes": 174513,
+      "sha256": "678fbfa33b046ffc3b0481a59c748cdd9bc4de9b3fd8b3694ba973cf8e6123b7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/config.json",
+      "bytes": 7136,
+      "sha256": "a88eb9e58ff8bdaf39fc4e9439c0ace124697c371f96225a46549b1872b69dbf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0/face_decisions.npz",
+      "bytes": 319876,
+      "sha256": "b3c17462b6bfb60d010d5d373cfdd023db3925ea34eabdef1e8380f67da869fe"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0/result.json",
+      "bytes": 1297,
+      "sha256": "3a5c6fddb1a4be44632edd8fcd3a96254e662cea2d6f5e70185685d1b339abd9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0/updated_points.npz",
+      "bytes": 1211875,
+      "sha256": "5002d5ff2c13ae6f5e2d03d4e4add319e3ab231dd83baef0d63fdf0f7e93f011"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0/updated_points.ply",
+      "bytes": 1180341,
+      "sha256": "7feebb2b5e8ed64cdd709997b57b2d7e406fef5e47493a5061ca0a4ad76c3710"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0.25/face_decisions.npz",
+      "bytes": 337987,
+      "sha256": "4482538dfcf3a6db315a8a6d892eaf4d1dfa68db143c6a73c8a08e2d09374edd"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0.25/result.json",
+      "bytes": 1395,
+      "sha256": "939ca18f80f88542360fcce8816e37ef2479a5242d84596d64f80898731ab5d3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0.25/updated_points.npz",
+      "bytes": 1214219,
+      "sha256": "e6ddcaeb9bc6beee49deda821b033561edc418d13b605bfeb8d478c1d7cef838"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area0.25/updated_points.ply",
+      "bytes": 1188491,
+      "sha256": "fb72c36f0b9a67193333fde2584e8a5d15aecae61fd3f195402d3ed5a9225a25"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area1/face_decisions.npz",
+      "bytes": 345915,
+      "sha256": "467afff0b3129c127fc957dfc5e60d3ba7c0d777e418cdd0718ee46ead206bd7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area1/result.json",
+      "bytes": 1391,
+      "sha256": "e2fa09926e42e596b20c02b2254e48c337a5825d248fae9813db6919eb8e7302"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area1/updated_points.npz",
+      "bytes": 1214088,
+      "sha256": "cab9e584112d88643f7353595de556e417948278309972a503af9fb24f261245"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area1/updated_points.ply",
+      "bytes": 1194716,
+      "sha256": "1ccf5ed80257b4226f6dbdc25e0287a7e37a1de23b46a81e57705ea8982565fa"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area4/face_decisions.npz",
+      "bytes": 351462,
+      "sha256": "507e21c7c13f6ef756e2bbbe0af1f4705a4573bb6d1866bcd2803e193658c2ae"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area4/result.json",
+      "bytes": 1391,
+      "sha256": "beecb53e26170b40a2bba1508d8b9ca1adc6b45c6261b1dd4618e597c316db1f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area4/updated_points.npz",
+      "bytes": 1216881,
+      "sha256": "e24a3d1e5f0b72e85d62dc416d8a51c3a16fbb880268ca26a318ec286ac14606"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/corrected_area4/updated_points.ply",
+      "bytes": 1202441,
+      "sha256": "3c3157c361ea9ac0745cac51fb0bca48d661977e3b45eadb7b9b45130ec590ce"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/meshes.npz",
+      "bytes": 25501299,
+      "sha256": "37702944275211e3fab170e7ca37b3d8d2148f17ef7a20f21fa0448e08976d5f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/raw_face_decisions.npz",
+      "bytes": 7034998,
+      "sha256": "0e7a95c55465841f97331284ca2e9bc50eb34ba2354205effa6dea2eb657c00c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/receipt.json",
+      "bytes": 19926,
+      "sha256": "cab2efc4bf5106a3a992f8154d29aefbad13c1604559795d36045071e45858b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5/run/selected_master.json",
+      "bytes": 2870,
+      "sha256": "cf31caff3996d993564b6326e3978d6189d9403ef4296ce1661da6264b58be36"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5.console.log",
+      "bytes": 3889,
+      "sha256": "cbc0347f35e05ab08e67e2bc009d44fb3a8096abc3ace5c7c11695693c960f94"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P1-UPDATE-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297610,
+      "sha256": "1d085ea8b469dbf34548b04b5cc41c6f7757f1ed74312c67bb2e3621405c609b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/console.log",
+      "bytes": 455,
+      "sha256": "5531202c6951a012ee74cbcd536cfcb32c4a8810dcdf625fcdfa8de706c5cb52"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/launch.json",
+      "bytes": 9398,
+      "sha256": "baddb80ec3559d40db1842e09b5224534175de436a79f75b7b386c2b6c6e36a2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/resolved_config.json",
+      "bytes": 7111,
+      "sha256": "3e8f4dcc551e15bf098e0b5b311f4938c88f32b07ef326412af60f6caea2eee0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/ALS_READY.json",
+      "bytes": 184,
+      "sha256": "d857dc60e491ef2c3f1bd95f0a397e2b1f54e944edc4786cd42060e022c4c0b7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/NATIVE_READY.json",
+      "bytes": 220,
+      "sha256": "5ccd9f1524d511459cac36523e1d0b5e2bbf0e210746452f5ead4e2ed315318b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/als_native.npz",
+      "bytes": 528642,
+      "sha256": "795e32f053957e22e90a1685147b57c551ddf3538cd061cff7b503cf69a4691c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/native.npz",
+      "bytes": 5854267,
+      "sha256": "4d64f75d2acdb9ccf3db1f1bdff6c37b954c0519cf349c4ae7330c4302981d6a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/selected_master.json",
+      "bytes": 2876,
+      "sha256": "a5b30ffa90457ff48ee678f1b954a2b7967b59bcec3d598f18ec6def0d7ff1c2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/common/views.json",
+      "bytes": 131699,
+      "sha256": "c58fabaa43a5ab65934601e0e677eb845449900c9a362ee2a5b998b78056975e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/config.json",
+      "bytes": 7111,
+      "sha256": "3e8f4dcc551e15bf098e0b5b311f4938c88f32b07ef326412af60f6caea2eee0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/coverage_audit.json",
+      "bytes": 18749,
+      "sha256": "e2b86c36d53f35eb79df929f6d65fdcbabba0f4d2291d4f9e8ccb4ef085279da"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/protocol_receipt.json",
+      "bytes": 6186,
+      "sha256": "7a73e0b0a139cd25f088693daed248dd84453117f193fb4dc23bc7937e436216"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run/receipt.json",
+      "bytes": 41490,
+      "sha256": "eefbf53c225ebacf4dc99bbe66d944e2d49168e07a6bc3092a2fe8d421f09833"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5/run.sh",
+      "bytes": 5208,
+      "sha256": "4233cd69913eb7781a7850c485d2b4f6cd0a0595342d14e7471b835fe4ab9885"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-INPUT-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297610,
+      "sha256": "62f033648f45609d22b7dcee85cfe4414d19555b5da6cb6f5520628c1ece9a9d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/LAUNCH.json",
+      "bytes": 5106,
+      "sha256": "fc0ee8c2616d123ba221d1c267a1b1fbe35bdfe4462aa72aa4863e7d1da68a10"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/LAUNCH_COMPLETED.json",
+      "bytes": 5179,
+      "sha256": "8359a7cc7995c24cc44806c6a8bf9c97adc7e70d0979582d327c46508a0e1172"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/changed_only_area1/face_decisions.npz",
+      "bytes": 347878,
+      "sha256": "3ae9961ad6a2af6d36b896ef7e10b40747bf584057b97aa7cd39327fbd2e07ff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/changed_only_area1/result.json",
+      "bytes": 1415,
+      "sha256": "fc83287757811e245b88a172574b23f2e130c2449b18282d88b987dca139ffb6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/changed_only_area1/updated_points.npz",
+      "bytes": 3102212,
+      "sha256": "ae93be38cbc110d6554345b44a134ccdcd4f1f808411d6723bd090366bc85ae6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/changed_only_area1/updated_points.ply",
+      "bytes": 3035342,
+      "sha256": "fda8033efd23f3137f82847e8ae628f18438b831fd89f72b19f2cd1a667ef2ea"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/common.npz",
+      "bytes": 5969769,
+      "sha256": "2044cbcbeb77dffa47e4a65a0642f7da38942edb0f3107d8ed3d548ed1a9d0dc"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/components.npz",
+      "bytes": 175409,
+      "sha256": "574bbb894a6c5517fa8f95574d39231181533d290818fb72a902c65f6a11149c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/config.json",
+      "bytes": 7136,
+      "sha256": "a88eb9e58ff8bdaf39fc4e9439c0ace124697c371f96225a46549b1872b69dbf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0/face_decisions.npz",
+      "bytes": 327734,
+      "sha256": "ce5583ce9a7660c05c41a7889fdd5121c293dc5891691fd3782c875ff60ff9f5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0/result.json",
+      "bytes": 1309,
+      "sha256": "6cb30671cef4ddd4073ec1fe875145268382db6343627153cf45b8ea612932f3"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0/updated_points.npz",
+      "bytes": 4529865,
+      "sha256": "4f1d9c3007ddaa48e06c6508b709fa23f007a2b04b8aafaeb940f44515e9798c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0/updated_points.ply",
+      "bytes": 4485092,
+      "sha256": "416c792dbb3003394d3b6b31968d41e4521c9531b605ef6cae8902aaf42d5665"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0.25/face_decisions.npz",
+      "bytes": 342504,
+      "sha256": "a85302bbd11c96a7173530e97c87f6dd19e9faebcc5b39dc9715585c37ea6968"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0.25/result.json",
+      "bytes": 1407,
+      "sha256": "e613a850bb73e7554f63f2ce9781ed4d5ed947dcca50fcd552c3abaaf87cf994"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0.25/updated_points.npz",
+      "bytes": 4529306,
+      "sha256": "66b4b4292ed36c9bea960d9d0967e8f70295ce24ea61723ea29e619fc4d5ebb2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area0.25/updated_points.ply",
+      "bytes": 4492942,
+      "sha256": "68aa11a8f3e16bd6b15be00258f07aec792c7c1c9e17a292ce7f70a7d48f88f4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area1/face_decisions.npz",
+      "bytes": 347878,
+      "sha256": "3ae9961ad6a2af6d36b896ef7e10b40747bf584057b97aa7cd39327fbd2e07ff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area1/result.json",
+      "bytes": 1408,
+      "sha256": "6ef53dd72105999e93b7e33fed108401a9d105df68e9668f3c4d279279f0b72e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area1/updated_points.npz",
+      "bytes": 4515543,
+      "sha256": "f8d052af59e8205b4553ec4979fa16c441571af4a69de42bbd222e27acfd3c26"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area1/updated_points.ply",
+      "bytes": 4503817,
+      "sha256": "c5930ebfb03d3e828a86193529f147ccc98598b5fc939b952a38995a48f4e4d4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area4/face_decisions.npz",
+      "bytes": 351909,
+      "sha256": "d301bce16b1bb09ec73ee82b71159b1f274b4eb903c05f594c67cbef242c83b0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area4/result.json",
+      "bytes": 1408,
+      "sha256": "24927982d9779e50cef143cd6ecc9b8d6d75722dffb453c5ede904c19988f5be"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area4/updated_points.npz",
+      "bytes": 4453241,
+      "sha256": "2a18a6e92c5fae46d15ee872cdeef44446878985b2147dda1b4bd408d6f2c10f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/corrected_area4/updated_points.ply",
+      "bytes": 4453767,
+      "sha256": "e6cbb15ec600eb6fdeebc5814027789bea06bd49dfc3a408f772a98bd125e20d"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/meshes.npz",
+      "bytes": 28484303,
+      "sha256": "76c65d7cc670da0f148847736a1eba657d142637a0de8f1f0ec0f33432b315c5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/raw_face_decisions.npz",
+      "bytes": 8534918,
+      "sha256": "bfbe5a2b00b01b626d9fff02215c8ddb171d4c51c2de4807a0b1d3e60fd23a6e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/receipt.json",
+      "bytes": 20499,
+      "sha256": "d9943101d088907dbed3091786f7dd3fab2c63377cfc16419e2d2a19873b7d48"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5/run/selected_master.json",
+      "bytes": 2876,
+      "sha256": "a5b30ffa90457ff48ee678f1b954a2b7967b59bcec3d598f18ec6def0d7ff1c2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5.console.log",
+      "bytes": 3966,
+      "sha256": "9b19976eb4282d4675bdcf5566df467c21c0ecdd07103d8de3f7f503aab700f7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P2-UPDATE-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297610,
+      "sha256": "1d085ea8b469dbf34548b04b5cc41c6f7757f1ed74312c67bb2e3621405c609b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/console.log",
+      "bytes": 243,
+      "sha256": "ec354bfef918246d11e1d7ee44913ba80f654ff0ddf0d4828f0780faee705260"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/launch.json",
+      "bytes": 3395,
+      "sha256": "4e4ff4cf013ba42199a0de682dc05c4d07dcc381f5b58288b05d37e3351c6f4c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/run/acquisition.npz",
+      "bytes": 68776048,
+      "sha256": "79a5712718e206ac8f8a12997e18adcc56aa3d228a38b818cf0f124031f56af4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/run/original_config.json",
+      "bytes": 930,
+      "sha256": "bf365a0dfc78ff6c449c94a04082b8ae88c126779ef4198459fe0d3da83f4ed9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/run/original_receipt.json",
+      "bytes": 15773,
+      "sha256": "cafa0f9b3dfaf1873f4ac6661fbc22c9ac9d86c3e8a10eda6a511ac26a563855"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/run/receipt.json",
+      "bytes": 14916,
+      "sha256": "430f7220117df84cddb84b7b5b23e9553fef90fd7acdf26f72ad5cc558990976"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5/run.sh",
+      "bytes": 2301,
+      "sha256": "26e8c18f4e3a0e602cbd129680cbf31b9b55b68f3e8f92afa9551e54ad3a50df"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-ACQUISITION-ADAPTER-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297610,
+      "sha256": "1d085ea8b469dbf34548b04b5cc41c6f7757f1ed74312c67bb2e3621405c609b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/console.log",
+      "bytes": 456,
+      "sha256": "dba1ac8f910181d2d28d1f2374b422724f3f655d247c99c8d77845d3da9ebde2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/launch.json",
+      "bytes": 9350,
+      "sha256": "d39b5619fa61f2f4aa97cb8f221554c1a6e5d118c6e16005fe34ce6da9e23918"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/launcher_completion_note.json",
+      "bytes": 2708,
+      "sha256": "4984bfd8db4930c6f07110e8a10947518bb18180e9f7d128c3754e50f3170352"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/resolved_config.json",
+      "bytes": 7112,
+      "sha256": "b9ea09470e4104eed2bb067a32550ec4451e47ec975bc9457420c7f071d6d8cb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/ALS_READY.json",
+      "bytes": 184,
+      "sha256": "276f4d2b077bd56687677183eb00fe7700c7947255bb5242adbd7e5481811e66"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/NATIVE_READY.json",
+      "bytes": 220,
+      "sha256": "70328d22ba2f5c76ac89e588fcb4248dfab63aac50389e51c52ae3391b50c172"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/als_native.npz",
+      "bytes": 607563,
+      "sha256": "b7986f4b58341d467bf5770f27ca7dbcc585ff0ee13c9b54dd77c30f7f8e69d0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/native.npz",
+      "bytes": 14566081,
+      "sha256": "b2a30325d0742ee1c426ea24cdac8519fd39d148189e98566b82214bb2db7acf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/selected_master.json",
+      "bytes": 2874,
+      "sha256": "48b9fa497a7914a48c6092e2db6ae0831b4395b8edc44567fbfae5e412c8577c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/common/views.json",
+      "bytes": 312136,
+      "sha256": "165af276acdc1abc99afa578cc78908849ede0512bc2022368c8a6542f6b057a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/config.json",
+      "bytes": 7112,
+      "sha256": "b9ea09470e4104eed2bb067a32550ec4451e47ec975bc9457420c7f071d6d8cb"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/coverage_audit.json",
+      "bytes": 44456,
+      "sha256": "8f658b30311f6ded306f3018877822ec293178a873a94fbf794b08b1e3c400e9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/protocol_receipt.json",
+      "bytes": 6271,
+      "sha256": "97d441351a66e8325ae7fcf124c0550d7de80b990974f71a9e78e154cb798634"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run/receipt.json",
+      "bytes": 88981,
+      "sha256": "5829343086b9fc3921e8dddcc274c9e78fd28ed10141861c75197589ec058271"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5/run.sh",
+      "bytes": 5184,
+      "sha256": "7ace0150a4ac8cd96519f4c4b77063543bb84f49266e09f0f5f44cc1cdf93a03"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-INPUT-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297733,
+      "sha256": "87a05b37dcf438edc30a3b1e5abfee86862ffb3e01e0c128af608f85c3d1800f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/console.log",
+      "bytes": 910,
+      "sha256": "63afe0af22d51088e33171ecd96aa82ec584e8965167b8cd0689d6c2f77393e4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/console_validation_r2.log",
+      "bytes": 242,
+      "sha256": "649ed0e431f1b0997cb564f388358ef1bef49b3c0b0ac6ec13dce27890439e16"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/launch.json",
+      "bytes": 3402,
+      "sha256": "30fb5d93f614771fcd0788a3d6f1735d02d1969d453f021c46ec58c02e6c3a11"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/launch_validation_r2.json",
+      "bytes": 3468,
+      "sha256": "e3f9c0a4d27530d70e2e08da8732b089d61fb68c94cd6ad21b53d3e997b1e616"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/run/estimated_origins.npz",
+      "bytes": 23114897,
+      "sha256": "3d1523ec14e8079d25ee2ff075ac8975d060b33be33c6c091789175be231249b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/run/original_config.json",
+      "bytes": 2682,
+      "sha256": "76ca8a47193c743ac2283a0e4c6197308befd134474008aea61a5df54e87b010"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/run/original_receipt.json",
+      "bytes": 9706,
+      "sha256": "8ad378397ac92c610dcfa8118949fd437de9c31cba4cd8b50faa12de83660bf0"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/run/receipt.json",
+      "bytes": 4748,
+      "sha256": "ae77774801db8ce041818772d7ce7f0c0d3aa4108c528df14fc81b8cd79ac6f9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/run.sh",
+      "bytes": 2301,
+      "sha256": "e21ffcb5de8f7e7b3ff206f73f2d50d6f9387035a3aa0bcdd0f40661bfcb5c19"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5/run_validation_r2.sh",
+      "bytes": 2374,
+      "sha256": "ded850bf282edef62d4fb962209093e72d8c00be10a4197877b7b989f3502338"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297610,
+      "sha256": "1d085ea8b469dbf34548b04b5cc41c6f7757f1ed74312c67bb2e3621405c609b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-TRAJECTORY-ADAPTER-v5_source_validation_r2/SOURCE_MANIFEST.json",
+      "bytes": 297733,
+      "sha256": "987205f83cafb5ad18869a152afe5a89d01b32198b89bb70118a5dc2c8b267aa"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/LAUNCH.json",
+      "bytes": 5170,
+      "sha256": "c1d09f2db6ca998495f23095f53a53262e3eb8565f58473bb41483c711c61422"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/LAUNCH_COMPLETED.json",
+      "bytes": 5243,
+      "sha256": "6813f9b932dbbc748821090fd953f4d232295b70784e73fe2eeec12c21560d04"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/changed_only_area1/face_decisions.npz",
+      "bytes": 459592,
+      "sha256": "4b79447d9c90a84e4880fb74f90d0e89adcfc66b77f9177fe1a131a08db787b6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/changed_only_area1/result.json",
+      "bytes": 1414,
+      "sha256": "370f5cc959ed5e1f133e5177c23443e16815dd9ca21f0f8a8bcef55238268f4f"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/changed_only_area1/updated_points.npz",
+      "bytes": 1441963,
+      "sha256": "b3bb63f1642addeeb62fa261a58dfd62c5cd83c97b95f3b77e67b457fe6481d1"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/changed_only_area1/updated_points.ply",
+      "bytes": 1514816,
+      "sha256": "36c993d1bf09bfd715bd3a1b3e641c7e2db471ea4c3907e8cb8b800418578526"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/common.npz",
+      "bytes": 4299339,
+      "sha256": "171efd2f3c37c5d1f6dd6a4899e36f0613496d23200ea12f97f3757d9ee37070"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/components.npz",
+      "bytes": 338986,
+      "sha256": "224525790b3eb4aca4d51286a073984233a9de29ce5099244f6acae5dc45c10e"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/config.json",
+      "bytes": 7136,
+      "sha256": "a88eb9e58ff8bdaf39fc4e9439c0ace124697c371f96225a46549b1872b69dbf"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0/face_decisions.npz",
+      "bytes": 414545,
+      "sha256": "c43fbd04ad06098e0da969f3aad43198a3ae083008c58477298f8278674eb681"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0/result.json",
+      "bytes": 1308,
+      "sha256": "4e9b2463cb434cd9be0204f33d7b257f2405fbc75788cc79260e095e328bba76"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0/updated_points.npz",
+      "bytes": 1892488,
+      "sha256": "388d9cb6d8ac2823ea73cc7ddd8d8a4d73aebce6efca2eb59949c1547d286506"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0/updated_points.ply",
+      "bytes": 1912491,
+      "sha256": "00d4623cb1bcf0739e9e19d61a824dd5c5a2df6aa09a226b9477357eb2089cff"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0.25/face_decisions.npz",
+      "bytes": 447928,
+      "sha256": "f6325a0b777f88c7010ee0b3f543526d543a85a6120a5f6c03c4224f49deb244"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0.25/result.json",
+      "bytes": 1411,
+      "sha256": "ae5e83049fb48113c1038684e6e0405bc5684112588d1b2e7c582daf89c5202a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0.25/updated_points.npz",
+      "bytes": 1878205,
+      "sha256": "f33beaa3e7e40c205ab8948f52d62bc0e294d60f635b0c8e65c904c833dbf10c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area0.25/updated_points.ply",
+      "bytes": 1921016,
+      "sha256": "936d5aee79546e3b8aa29d0decc0381b8017a448c539e3d3fe42958bfba932c2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area1/face_decisions.npz",
+      "bytes": 459592,
+      "sha256": "4b79447d9c90a84e4880fb74f90d0e89adcfc66b77f9177fe1a131a08db787b6"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area1/result.json",
+      "bytes": 1406,
+      "sha256": "da2ba51bdba61e9dccbb562f609f0a0931bf62c09c16ec273e631873438f8bf9"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area1/updated_points.npz",
+      "bytes": 1862305,
+      "sha256": "2892bc89198ea24db5414227240dbd96b2b987ef0ee05181f3a448ba16d85387"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area1/updated_points.ply",
+      "bytes": 1943641,
+      "sha256": "0a7f1239712a399c868f46453f21bee39c33d3abce79621ed9f80009673c530b"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area4/face_decisions.npz",
+      "bytes": 469802,
+      "sha256": "e5f07f6c83c321a866eb7264e4850120593dec0c78be0849e01ef0be5d7f8328"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area4/result.json",
+      "bytes": 1407,
+      "sha256": "2708e8fc1814635da31c6b21a1f27f0ae7c67935ab5dc27009a224234e366e1a"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area4/updated_points.npz",
+      "bytes": 1722381,
+      "sha256": "ba3de3e655a8407618cdbb0a2e80a4396df4a890f7e5b24aef0bf083d42c1cc2"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/corrected_area4/updated_points.ply",
+      "bytes": 1843966,
+      "sha256": "1da3c5aaaa4f66400b84f5ff935d93060e01a62bad7ce5eca885d835825dd8b8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/meshes.npz",
+      "bytes": 26014888,
+      "sha256": "54e50033eec3634a167d014fce260411257a28f84dbeeab74f5903136e24ae16"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/raw_face_decisions.npz",
+      "bytes": 6942031,
+      "sha256": "57e7312f95c2824bd7621531be9761909ca2d182ad7e698c0d6b1d4d5ce5e3b7"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/receipt.json",
+      "bytes": 20170,
+      "sha256": "e4d81814e13b86177bafe8cfb44bf1f22c3b3d180a679fd0a1d75a70cb099795"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5/run/selected_master.json",
+      "bytes": 2874,
+      "sha256": "48b9fa497a7914a48c6092e2db6ae0831b4395b8edc44567fbfae5e412c8577c"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5.console.log",
+      "bytes": 3965,
+      "sha256": "609f59a72854ddb7be8b44488d6b964f4af14e5f189f355ca74df9775b27a6e4"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/PHD-WU-VALLET-P3-UPDATE-v5_source/SOURCE_MANIFEST.json",
+      "bytes": 297981,
+      "sha256": "d288f4e3e756fb1dba7767a08bfc3588a3a80026af2fd2b72ae9cf7d0ce626a5"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/preservation_start_v5/preexisting_work.tar.gz",
+      "bytes": 1042467,
+      "sha256": "06647a60d4deced2378b3052a8991de61c73117f717a8c2bc4cba53a0f7170d8"
+    },
+    {
+      "path": "phase-payloads/phd/wu_vallet_matched_v5/preservation_start_v5/preservation.json",
+      "bytes": 72370,
+      "sha256": "d10749dc48a1ff7a7caaec8f32e766971a09685d4cfa00c9ef0b664331e7edd4"
+    }
+  ]
+}

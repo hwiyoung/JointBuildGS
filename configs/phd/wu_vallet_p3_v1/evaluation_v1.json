@@ -1,0 +1,46 @@
+{
+  "schema": "jointbuildgs.phd.wu_vallet_p3.reference_evaluation.config.v1",
+  "task_id": "PHD-WU-VALLET-P3-REFERENCE-EVALUATION-v1",
+  "scientific_verdict": null,
+  "expected_common": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-v1-r2/common/native.npz",
+  "expected_b_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WU-VALLET-P3-B-DEVELOPMENT-v1/run",
+  "scope": "Post-training reference-only numerical common-frame discrepancy; not a calibrated geometric accuracy claim or source authority decision",
+  "b_completion_status": "COMPLETED_SOURCE_CONDITIONED_DEVELOPMENT",
+  "reference": {
+    "path": "/artifacts/JointBuildGS/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+    "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4",
+    "bytes": 1277996022,
+    "point_count": 177981904,
+    "world_shift_xyz": [690953.0, 5336071.0, 604.0],
+    "additional_vertical_shift_m": 0.0,
+    "identity_source": "configs/p2/c1_c2_shared_footprint_199_v1/run_v1.json inputs.c1_current_uas_lidar"
+  },
+  "crop": {
+    "x": [-60.0, -20.0],
+    "y": [-42.0, 12.0],
+    "z": [-49.223, -16.993]
+  },
+  "crop_membership": "half-open on all axes; fixed P3 region before evaluation",
+  "horizontal_crs": "EPSG:25832",
+  "xy_cell_m": 0.5,
+  "xy_total_cells": 8640,
+  "sections": {
+    "x_m": -40.0,
+    "y_m": -15.0,
+    "width_m": 0.5,
+    "membership": "half-open"
+  },
+  "metrics": [
+    "Native prediction-to-reference and reference-to-prediction nearest distances with all in-crop points retained",
+    "Fixed-domain and reference-occupied XY cell coverage with missing counts",
+    "Signed median-Z differences in common XY cells, with missing denominator recorded",
+    "Each B arm own initial and final surfaces, plus reference errors on the same triple-common cells"
+  ],
+  "limits": [
+    "UAS datum, epoch and measurement precision are not newly calibrated",
+    "Raw UAS is evaluation-only and must not be used by A judgment or B training",
+    "No registration fitting, error-based filtering, reference-driven crop or parameter selection",
+    "2.5D XY median is not roof, wall, window or semantic detail truth",
+    "Point maps and cross sections are diagnostic figures; actual camera renders are separate B artifacts"
+  ]
+}

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+  <title>국소 가중치 후보 · 위치와 근거</title>
+</head>
+<body>
+<header class="page-header">
+  <div><div class="eyebrow">JOINTBUILDGS / R1–R5</div><h1>국소 가중치 후보 · 위치와 근거</h1>
+    <p>v5 · 원영상 투영점 + MVS 20사례 재검토. C10 우선 · C05 작은 보존 손실 · 보류 사례는 개선 불필요 판정이 아닙니다.</p></div>
+  <div class="header-links"><a href="/" target="_blank" rel="noopener">전체 실험 뷰어 ↗</a><a href="assets/candidate_ledger.md" target="_blank">통합 근거 기록 ↗</a></div>
+</header>
+<div id="error" class="error" role="alert" hidden></div>
+<div class="layout">
+<aside aria-label="위치 선택">
+  <section class="map-card"><div class="section-heading"><h2>위치 지도</h2><button id="map-all" type="button">전체 범위</button></div>
+    <canvas id="map" aria-label="현재 MVS 평면도와 후보 위치. 아래 목록으로도 선택할 수 있습니다."></canvas>
+    <div class="map-caption"><span id="map-label">MVS 관측 평면도</span><button id="map-region" type="button">선택 영역 맞춤</button></div>
+    <p class="muted small">점 클릭: 선택 · 휠: 확대 · 드래그: 이동<br>회색: MVS 위치 · 원: 사례 · u/v 단위 m</p>
+  </section>
+  <section class="case-browser"><div class="section-heading"><h2>검토 위치</h2><span id="case-count" class="small"></span></div>
+    <div class="filters"><label>범위<select id="filter-region"><option value="all">R1–R5 전체</option><option>R1</option><option>R2</option><option>R3</option><option>R4</option><option>R5</option></select></label>
+    <label>검토 대상<select id="filter-role"><option value="all">모든 기록</option><option value="priority">우선 가설 검토</option><option value="mvs">MVS 관련</option><option value="da3">DA3 관련</option><option value="held">대응·관측 보류</option><option value="excluded">비건물 제외 기록</option></select></label></div>
+    <div id="case-list"></div><p class="muted small">20개는 검토 기록 수입니다. 독립 지역 수나 가중치 필요성이 입증된 지역 수가 아닙니다.</p>
+  </section>
+</aside>
+<main>
+  <section id="case-heading" class="card hero" aria-live="polite"><div class="section-heading"><span id="status-badge" class="badge">불러오는 중</span><span id="case-baseline" class="muted small"></span></div>
+    <h2 id="case-title">R1 Z07 · 낮은 지붕 띠</h2><p id="case-location" class="muted small"></p>
+    <div class="reason-grid"><div><h3>왜 검토하는가</h3><p id="reason"></p></div><div><h3>검토할 가중치 방향</h3><p id="hypothesis"></p></div></div>
+    <p id="limitation" class="caution"></p>
+    <nav class="jump-links"><a href="#mvs-audit-card">MVS 재검토</a><a href="#surfaces">같은 위치의 3D</a><a href="#cross-section">단면</a><a href="#photos-section">원영상</a><a href="#observation-section">관측별 수치</a></nav>
+  </section>
+  <section class="card" id="mvs-audit-card"><div class="section-heading"><h2>MVS도 개선이 필요한가</h2><span class="badge" id="mvs-audit-status"></span></div>
+    <p id="mvs-audit-reason"></p><div id="mvs-audit-facts" class="fact-grid"></div><p id="mvs-audit-paired" class="small"></p>
+    <p class="caution">보류는 개선 불필요가 아닙니다. 작은 점→표면 거리도 누락·추가 면·전체 건물 품질을 보증하지 않습니다. 0.1/0.25/0.5m는 비교용 구간이며 합격 기준이 아닙니다.</p>
+    <details id="mvs-audit-all"><summary>기존 20개 사례의 MVS 재검토 펼치기</summary><div class="table-scroll"><table><thead><tr><th>사례</th><th>표본 기준</th><th>MVS 중앙값 (m)</th><th>P90 (m)</th><th>현재 해석</th></tr></thead><tbody id="mvs-audit-table"></tbody></table></div></details>
+    <div class="jump-links"><a href="assets/mvs_reaudit.csv" download>20개 재집계 CSV ↓</a><a href="assets/mvs_reaudit_report.md" target="_blank">재검토 근거 ↗</a></div>
+  </section>
+  <section class="card" id="numbers"><div class="section-heading"><h2>같은 표본에서 얼마나 다른가</h2><label id="cohort-control" hidden>평가 표본 <select id="cohort"><option value="all">전체 155점</option><option value="upper">상단 대응 80점</option><option value="lower">나머지 75점</option></select></label></div>
+    <p id="metric-definition" class="metric-definition"></p><div id="metric-cards"></div>
+    <p id="cohort-note" class="small"></p><p class="muted small">값은 표본점→삼각형 표면 최단거리입니다. 동일 XY의 높이 차나 지붕 전체 오차가 아닙니다. 아래 단면 표시 범위를 바꿔도 평가 상자 전체의 수치는 유지됩니다.</p>
+    <details><summary>거리 분포와 P90 보기</summary><div class="table-scroll"><table><thead><tr><th>대상 표면</th><th>표본 수</th><th>중앙값 (m)</th><th>P90 (m)</th><th>0.5m 이내</th></tr></thead><tbody id="distribution-table"></tbody></table></div>
+      <svg id="distribution" viewBox="0 0 760 205" role="img" aria-label="표본에서 표면까지 거리의 누적 분포"></svg><p class="muted small">0.5m는 탐색용 거리 구간이며 공식 합격 기준이 아닙니다. 거리 상한 10m를 상속합니다.</p></details>
+  </section>
+  <section class="card" id="surfaces"><div class="section-heading"><h2>같은 위치의 입력과 결과</h2><span id="load-state" class="small" role="status">기하를 불러오는 중…</span></div>
+    <div class="toolbar"><div class="button-group"><button id="side">옆면</button><button id="oblique">사시</button><button id="top">위에서</button><button id="reset">위치 초기화</button></div>
+      <label>단면 방향<select id="section-axis"><option value="u">u–z (v 고정)</option><option value="v">v–z (u 고정)</option></select></label>
+      <label>표시 두께<select id="slice"><option value="0.5">0.5m 단면</option><option value="2">2m 단면</option><option value="all">주변 전체 3D</option></select></label>
+      <label>네 번째 화면<select id="fourth"><option value="da3">DA3–GeoGS</option><option value="local_prior0">기존 국소 prior0 결과</option></select></label>
+    </div>
+    <div class="toolbar layers"><label><input id="show-uas" type="checkbox" checked> UAS 주변점</label><label><input id="show-mvs" type="checkbox"> MVS 점 겹치기</label><label><input id="show-scored" type="checkbox" checked> 평가점</label><label><input id="xray" type="checkbox" checked> 평가점 가림 없이</label><label><input id="connectors" type="checkbox" checked> 최근접 거리선</label><label><input id="wireframe" type="checkbox"> 와이어프레임</label></div>
+    <div class="legend"><span><i style="background:#f4c74f"></i>평가점</span><span><i style="background:#a2afbd"></i>주변 UAS</span><span><i style="background:#20bed0"></i>MVS 입력</span><span><i style="background:#ed6670"></i>평가 범위</span></div>
+    <div id="panels"></div>
+    <p class="small muted">드래그: 회전 · Shift+드래그: 이동 · 휠: 확대. 네 화면의 카메라·축척을 함께 바꿉니다. 높이 과장 없이 1m 격자를 표시합니다. 노란 거리선은 평가점에서 각 표면의 가장 가까운 삼각형까지 연결합니다.</p>
+    <p id="geometry-note" class="small"></p>
+  </section>
+  <section class="card" id="cross-section"><div class="section-heading"><h2>표면을 겹쳐 본 단면</h2><span id="section-label" class="small muted"></span></div>
+    <div id="section-legend" class="legend"></div><svg id="section-plot" viewBox="0 0 960 360" role="img" aria-label="동일 위치의 원본 메시 교선과 관측점"></svg>
+    <p class="muted small">선은 원본 삼각형과 중앙 절단면의 교선입니다. 점은 절단면 주변의 관측이며, 위 3D 두께와 함께 바뀝니다. 가로·세로 1m를 같은 길이로 그립니다.</p>
+  </section>
+  <section class="card" id="photos-section"><div class="section-heading"><h2>현재 원영상의 실제 위치</h2><button id="photo-open">크게 보기 ↗</button></div>
+    <p id="photo-note" class="small muted"></p>
+    <div id="photo-controls" class="toolbar photo-controls">
+      <label>시점 <select id="photo-view" aria-label="원영상 시점"></select></label>
+      <label><input id="photo-points" type="checkbox" checked> 투영점 표시</label>
+      <label><input id="photo-labels" type="checkbox"> 점 번호</label>
+      <label>같은 점 찾기 <select id="photo-point"><option value="all">전체 점</option></select></label>
+    </div>
+    <div id="photo-empty" class="empty" hidden></div>
+    <div id="photos" class="photo-grid">
+      <figure><figcaption>원영상 전체 · 빨간 상자가 오른쪽 확대 범위</figcaption><svg id="photo-context" role="img" aria-label="원영상 전체와 평가점 투영"></svg></figure>
+      <figure><figcaption>평가 위치 확대 · 점을 누르면 다른 시점과 3D에서도 강조</figcaption><svg id="photo-detail" role="img" aria-label="확대한 원영상과 개별 평가점"></svg></figure>
+    </div>
+    <p id="photo-point-info" class="small"></p><p id="photo-support-note" class="small muted"></p>
+    <div class="legend"><span><i style="background:#ffdc39"></i>UAS 평가점 / MVS 지지점</span><span><i style="background:#ef7b37"></i>해당 시점의 MVS 지지 미확인</span><span><i style="background:#ff3daa"></i>선택한 점</span></div>
+    <div class="jump-links"><a id="photo-original" target="_blank" rel="noopener">표시 없는 원영상 ↗</a></div>
+  </section>
+  <section class="card" id="observation-section"><h2>관측이 뒷받침하는 범위</h2><div id="support-facts" class="fact-grid"></div><p id="observation-definition" class="small muted"></p>
+    <div class="table-scroll"><table id="observation-table"><thead></thead><tbody></tbody></table></div><div id="reference-secondary"></div>
+    <p id="related" class="small"></p><div class="jump-links"><a id="raw-observations" target="_blank">영상별 관측 원자료 ↗</a><a id="raw-geometry" target="_blank">기하·수치·출처 ↗</a><a href="assets/candidate_ledger.md" target="_blank">이전 P1–P3·플로터 검토 기록 ↗</a></div>
+  </section>
+  <footer>완료된 입력·결과를 사용한 개발 사례 검토입니다. 가중치가 원인인지, 국소 가중치로 회복되는지, 최선의 전역 가중치보다 나은지는 아직 검증되지 않았습니다. UAS 참조는 평가에만 사용합니다.</footer>
+</main>
+</div>
+<dialog id="photo-dialog"><div class="dialog-tools"><label>확대 <input type="range" id="photo-zoom" min="100" max="300" value="100"></label><button id="photo-close">닫기</button></div><div class="photo-scroll"><div id="photo-large"></div></div></dialog>
+<script type="module" src="viewer.js"></script>
+</body></html>

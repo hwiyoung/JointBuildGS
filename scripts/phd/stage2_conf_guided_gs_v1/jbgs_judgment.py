@@ -1,0 +1,686 @@
+"""Judgment-guided stage-2 optimization for GeoGS (JointBuildGS PHD-STAGE2-CONF-GUIDED-GS-v1).
+
+Implements ORDER_ko_v1 section 4 on top of the unchanged 2DGS/GeoGS renderer:
+  (2) per-pixel weighted losses   : MVS term  sum A |D-M| / sum A,
+                                    prior term sum (1-A) rho_tau(D-P) / sum (1-A)   (P mode)
+                                    prior term plain L1 on every prior pixel        (P0 mode)
+  (3) disk judgment E and locking : E_k = mean over seeing train views of A at the disk's projection;
+                                    prior-origin disks with E < 0.5 are locked (Adam update x0.01 on
+                                    xyz/rot/scale, opacity floor 0.5, exempt from prune/split/clone/opacity reset);
+                                    a prior disk with no seeing view that has moved > 0.5 m from its initial position
+                                    has left the prior surface and is not locked (lock_rule)
+  (4) origin bookkeeping          : GaussianModel.origin (0 = image/SfM, 1 = prior) and GaussianModel.init_id
+                                    (index of the initial disk, -1 for none), both inherited by children
+  (5) read-outs                   : per-face d_F, e_F, cov_F, g_F every N iterations from rendered surf_depth
+
+Sign convention (stage 1, REPORT section 2): d_F = median((D - P) * f) is positive when the prior lies ABOVE the
+rendered surface (camera depth grows downward). A prior raised by +1 m that the render leaves behind gives d_F = +1.
+e_F = median((D - M) * f) and g_F = median((D - G) * f) follow the same rule (+ = MVS / GT above the render).
+
+Lock implementation: Adam normalises the gradient, so scaling the gradient of a disk (the native GeoGS
+attenuate_*_lr hooks) leaves its step almost unchanged. The lock therefore scales the applied update:
+p <- p_old + s * (p_adam - p_old) for locked rows, which is exactly lr x s for that disk.
+
+Modes: off (module inert, native GeoGS path) | P (judgment on) | P0 (judgment off, plain prior L1) | I (image only).
+Only cameras of the training split enter the losses; test cameras are used for read-outs only.
+"""
+import json
+import math
+import os
+import time
+from pathlib import Path
+
+import cv2
+import numpy as np
+import torch
+
+MODES = ("off", "P", "P0", "I")
+ORIGIN_IMAGE, ORIGIN_PRIOR = 0, 1
+LABELS = ("preserve", "correct", "undecided", "other")
+
+
+# ----------------------------------------------------------------------------------------------------------- args
+def register_args(parser):
+    g = parser.add_argument_group("jbgs_judgment")
+    g.add_argument("--jbgs_judgment", default="off", choices=MODES, help="off | P | P0 | I (ORDER section 5)")
+    g.add_argument("--jbgs_maps_root", default="", help="inputs/maps root holding <set>/raw_depth/<view>.npy")
+    g.add_argument("--jbgs_prior_set", default="", help="prior depth set name, e.g. prior_M_N")
+    g.add_argument("--jbgs_tau_set", default="", help="per-pixel width set name, e.g. tau_M")
+    g.add_argument("--jbgs_tau_v", type=float, default=float("nan"), help="vertical width tau_v (m) for read-out labels")
+    g.add_argument("--jbgs_origin_path", default="", help="origin.npy aligned with the initial point cloud")
+    g.add_argument("--jbgs_faces_json", default="", help="faces.json with roof/wall polygon ids")
+    g.add_argument("--jbgs_scene", default="N", choices=["N", "B"], help="N nominal | B main roof raised 1 m")
+    g.add_argument("--jbgs_injected_face", type=int, default=3396)
+    g.add_argument("--jbgs_injected_delta", type=float, default=1.0, help="vertical raise (m) of the injected roof (B)")
+    g.add_argument("--jbgs_lambda_mvs", type=float, default=0.05)
+    g.add_argument("--jbgs_lambda_prior", type=float, default=0.05)
+    g.add_argument("--jbgs_trunc_hi", type=float, default=4.0, help="rho_tau is constant beyond hi*tau")
+    g.add_argument("--jbgs_e_interval", type=int, default=500)
+    g.add_argument("--jbgs_e_threshold", type=float, default=0.5)
+    g.add_argument("--jbgs_e_depth_tol", type=float, default=0.5, help="|z_v - P_v| tolerance (m) for a seeing view")
+    g.add_argument("--jbgs_lock_lr_scale", type=float, default=0.01)
+    g.add_argument("--jbgs_lock_opacity_floor", type=float, default=0.5)
+    g.add_argument("--jbgs_log_interval", type=int, default=100)
+    g.add_argument("--jbgs_readout_interval", type=int, default=1000)
+    g.add_argument("--jbgs_snapshot_iterations", type=int, nargs="+", default=[2000, 5000, 10000, 15000, 20000, 30000])
+    g.add_argument("--jbgs_dump_iterations", type=int, nargs="+", default=[15000, 30000])
+    g.add_argument("--jbgs_monitor_views", nargs="+", default=["DJI_20241217101305_0005_D", "DJI_20241217101343_0024_D"])
+    g.add_argument("--jbgs_stop_on_red", type=int, default=1, help="1: a red binding check stops the run (ORDER 4/7)")
+
+
+# -------------------------------------------------------------------------------------------------------- pure math
+def rho_truncated(r, tau, hi=4.0):
+    """rho_tau(r) = 0 (|r|<=tau); |r|-tau (tau<|r|<=hi*tau); (hi-1)*tau (|r|>hi*tau). Gradient is 0 beyond hi*tau."""
+    a = torch.clamp(torch.abs(r) - tau, min=0.0)
+    return torch.minimum(a, (hi - 1.0) * tau)
+
+
+@torch.no_grad()
+def scale_locked_update(param, old_rows, mask, scale):
+    """Locked rows keep `scale` of the optimizer's step: p[mask] <- old + scale * (p[mask] - old) (= lr x scale)."""
+    param.data[mask] = old_rows + scale * (param.data[mask] - old_rows)
+
+
+def roof_check(scene, iteration, d, tau, delta=1.0):
+    """ORDER section 7 rule for the main roof 3396. Returns (name, status, rule).
+    Sign: d = median((D - P) * f), + = prior above the render. Scene B raises the prior by +delta, so a surface that
+    follows the photos gives d -> +delta. Rules start at iteration 2000 (status 'pending' before)."""
+    if iteration < 2000:
+        return ("main_roof_d" if scene == "N" else "injected_roof_moving"), "pending", "rules start at iteration 2000"
+    if scene == "N":
+        st = "green" if abs(d) < tau else ("red" if abs(d) > 4 * tau else "yellow")
+        return "main_roof_d", st, f"green |d|<{tau:.3f}; red |d|>{4 * tau:.3f}"
+    if iteration < 15000:
+        st = "green" if d > tau else ("red" if d < tau else "yellow")
+        return "injected_roof_moving", st, f"green d>+{tau:.3f} (moving toward the photos); red d<{tau:.3f} (not moving or opposite)"
+    st = "green" if abs(d - delta) < 4 * tau else ("red" if abs(d - delta) > 0.3 else "yellow")
+    return "injected_roof_returned", st, f"green |d-{delta:g}|<{4 * tau:.3f}; red |d-{delta:g}|>0.3"
+
+
+def weighted_l1(D, T, w):
+    """sum w|D-T| / sum w over pixels where T and D are valid and w > 0. Returns (loss, n_valid, n_hole)."""
+    valid_t = torch.isfinite(T) & (T > 0) & (w > 0)
+    rendered = torch.isfinite(D) & (D > 0)
+    valid = valid_t & rendered
+    n_hole = int((valid_t & ~rendered).sum())
+    n = int(valid.sum())
+    if n == 0:
+        return torch.zeros((), device=D.device), 0, n_hole
+    ww = w[valid]
+    return (torch.abs(D[valid] - T[valid]) * ww).sum() / (ww.sum() + 1e-9), n, n_hole
+
+
+def truncated_prior_loss(D, P, tau, w, hi=4.0):
+    """sum w rho_tau(D-P) / sum w over prior pixels (tau finite) with w > 0. Returns (loss, n_valid, n_hole, n_beyond)."""
+    valid_t = torch.isfinite(P) & (P > 0) & torch.isfinite(tau) & (w > 0)
+    rendered = torch.isfinite(D) & (D > 0)
+    valid = valid_t & rendered
+    n_hole = int((valid_t & ~rendered).sum())
+    n = int(valid.sum())
+    if n == 0:
+        return torch.zeros((), device=D.device), 0, n_hole, 0
+    r = D[valid] - P[valid]
+    t = tau[valid]
+    ww = w[valid]
+    n_beyond = int((torch.abs(r) > hi * t).sum())
+    return (rho_truncated(r, t, hi) * ww).sum() / (ww.sum() + 1e-9), n, n_hole, n_beyond
+
+
+@torch.no_grad()
+def project_points(xyz, camera):
+    """Project world points with the camera's own transforms (same convention as the rasterizer:
+    p_hom = [x,1] @ full_proj_transform, ndc = p_hom.xy / p_hom.w, pixel = ((ndc+1)*size-1)/2).
+    Returns (u, v, z) with z = camera depth."""
+    n = xyz.shape[0]
+    hom = torch.cat([xyz, torch.ones((n, 1), device=xyz.device, dtype=xyz.dtype)], dim=1)
+    pv = hom @ camera.world_view_transform
+    pc = hom @ camera.full_proj_transform
+    w = pc[:, 3:4]
+    w = torch.where(torch.abs(w) < 1e-7, torch.full_like(w, 1e-7), w)
+    ndc = pc[:, :2] / w
+    u = ((ndc[:, 0] + 1.0) * camera.image_width - 1.0) * 0.5
+    v = ((ndc[:, 1] + 1.0) * camera.image_height - 1.0) * 0.5
+    return u, v, pv[:, 2]
+
+
+@torch.no_grad()
+def compute_E(xyz, cameras, A_maps, P_maps, depth_tol):
+    """E_k over the given (training) cameras. A seeing view: projection inside the image, prior depth finite there,
+    and |z_v - P_v| < depth_tol. E_k = mean of A over seeing views; 0 when no view sees the disk.
+    Returns (E [N], n_seeing [N])."""
+    n = xyz.shape[0]
+    ssum = torch.zeros(n, device=xyz.device)
+    cnt = torch.zeros(n, device=xyz.device)
+    for cam in cameras:
+        A = A_maps.get(cam.image_name)
+        P = P_maps.get(cam.image_name)
+        if A is None or P is None:
+            continue
+        H, W = A.shape
+        u, v, z = project_points(xyz, cam)
+        ui = torch.round(u).long()
+        vi = torch.round(v).long()
+        inside = (z > 0.01) & (ui >= 0) & (ui < W) & (vi >= 0) & (vi < H)
+        idx = (vi.clamp(0, H - 1) * W + ui.clamp(0, W - 1))
+        Pv = P.reshape(-1)[idx]
+        Av = A.reshape(-1)[idx]
+        sees = inside & torch.isfinite(Pv) & (torch.abs(z - Pv) < depth_tol)
+        ssum[sees] += Av[sees]
+        cnt[sees] += 1.0
+    E = torch.where(cnt > 0, ssum / cnt.clamp_min(1.0), torch.zeros_like(ssum))
+    return E, cnt
+
+
+def lock_rule(E, cnt, drift, is_prior, threshold=0.5, depth_tol=0.5):
+    """ORDER 4.3 lock with the off-prior exception. V_k counts views in which the disk lies on the PRIOR surface
+    (|z - P| < depth_tol), so V_k is also empty for a disk that has moved off the prior surface; such a disk no longer
+    carries prior shape and is not locked. Off-prior = no seeing view AND moved more than depth_tol from its initial
+    position. Returns (lock, off_prior)."""
+    off_prior = (cnt == 0) & (drift > depth_tol)
+    return is_prior & (E < threshold) & ~off_prior, is_prior & off_prior
+
+
+def face_readout(records, tau_v, faces_roof, faces_wall):
+    """records: dict face_id -> dict(d=list of tensors, e=..., g=..., n_pixels=int, n_A=int).
+    Returns list of dict rows with medians, NMAD and the ORDER labels."""
+    rows = []
+    groups = [(int(f), [int(f)]) for f in faces_roof]
+    if faces_wall:
+        groups.append(("wall", [int(f) for f in faces_wall]))
+
+    def med_nmad(chunks):
+        if not chunks:
+            return float("nan"), float("nan"), 0
+        x = torch.cat(chunks).double()
+        if x.numel() == 0:
+            return float("nan"), float("nan"), 0
+        m = x.median()
+        nmad = 1.4826 * (x - m).abs().median()
+        return float(m), float(nmad), int(x.numel())
+
+    for name, members in groups:
+        d_chunks, e_chunks, g_chunks, dall_chunks = [], [], [], []
+        n_pix = n_a = 0
+        for f in members:
+            r = records.get(f)
+            if r is None:
+                continue
+            d_chunks += r["d"]; e_chunks += r["e"]; g_chunks += r["g"]; dall_chunks += r["d_all"]
+            n_pix += r["n_pixels"]; n_a += r["n_A"]
+        d, d_nmad, nd = med_nmad(d_chunks)
+        e, e_nmad, ne = med_nmad(e_chunks)
+        gm, g_nmad, ng = med_nmad(g_chunks)
+        dall, dall_nmad, ndall = med_nmad(dall_chunks)
+        cov = n_a / n_pix if n_pix else float("nan")
+        if not (cov == cov) or math.isnan(tau_v):
+            label = "other"
+        elif cov < 0.5:
+            label = "undecided"
+        elif not math.isnan(d) and abs(d) < tau_v:
+            label = "preserve"
+        elif not math.isnan(d) and not math.isnan(e) and abs(e) < tau_v:
+            label = "correct"
+        else:
+            label = "other"
+        rows.append(dict(face=name, n_pixels=n_pix, n_A=n_a, cov=cov, d=d, d_nmad=d_nmad, n_d=nd,
+                         d_all=dall, d_all_nmad=dall_nmad, n_d_all=ndall,
+                         e=e, e_nmad=e_nmad, n_e=ne, g=gm, g_nmad=g_nmad, n_g=ng, label=label))
+    return rows
+
+
+# --------------------------------------------------------------------------------------------------------- loading
+def _load_set(root, names, size, device, dtype=np.float32, interpolation=cv2.INTER_NEAREST):
+    d = Path(root) / "raw_depth"
+    if not d.exists():
+        d = Path(root)
+    H, W = size
+    out = {}
+    for n in names:
+        p = d / f"{n}.npy"
+        if not p.exists():
+            continue
+        a = np.load(p)
+        if a.shape != (H, W):
+            a = cv2.resize(a.astype(np.float32), (W, H), interpolation=interpolation)
+        a = a.astype(dtype)
+        out[n] = torch.from_numpy(np.ascontiguousarray(a)).to(device)
+    return out
+
+
+def colorize_diverging(arr, vmax, nan_bgr=(90, 90, 90)):
+    """float [H,W] -> BGR uint8; blue (-vmax) .. white (0) .. red (+vmax); NaN gray."""
+    x = np.clip(np.nan_to_num(arr, nan=0.0) / max(vmax, 1e-9), -1, 1)
+    r = np.where(x >= 0, 255, 255 * (1 + x)); b = np.where(x <= 0, 255, 255 * (1 - x))
+    g = 255 * (1 - np.abs(x))
+    img = np.stack([b, g, r], -1).astype(np.uint8)
+    img[~np.isfinite(arr)] = nan_bgr
+    return img
+
+
+# --------------------------------------------------------------------------------------------------------- Judgment
+class Judgment:
+    def __init__(self, args, opt, scene, gaussians, tb_writer=None):
+        self.mode = args.jbgs_judgment
+        assert self.mode in MODES and self.mode != "off"
+        self.args = args
+        self.tb = tb_writer
+        self.model_path = Path(args.model_path)
+        self.mon = self.model_path / "monitor"
+        self.mon.mkdir(parents=True, exist_ok=True)
+        self.train_cams = scene.getTrainCameras()
+        self.test_cams = scene.getTestCameras()
+        self.all_cams = self.train_cams + self.test_cams
+        self.train_names = {c.image_name for c in self.train_cams}
+        H, W = self.all_cams[0].image_height, self.all_cams[0].image_width
+        self.size = (H, W)
+        names = [c.image_name for c in self.all_cams]
+        root = Path(args.jbgs_maps_root)
+        self.A = _load_set(root / "conf", names, self.size, "cuda")
+        self.M = _load_set(root / "mvs", names, self.size, "cuda")
+        self.P = _load_set(root / args.jbgs_prior_set, names, self.size, "cuda") if self.mode in ("P", "P0") else {}
+        self.TAU = _load_set(root / args.jbgs_tau_set, names, self.size, "cuda") if self.mode == "P" else {}
+        self.FACE = _load_set(root / "faceid", names, self.size, "cpu", dtype=np.int32)
+        self.FV = _load_set(root / "fvert", names, self.size, "cpu")
+        self.G = _load_set(root / "gt", names, self.size, "cpu")
+        faces = json.loads(Path(args.jbgs_faces_json).read_text()) if args.jbgs_faces_json else {"roof": [], "wall": []}
+        self.faces_roof = [int(f) for f in faces.get("roof", [])]
+        self.faces_wall = [int(f) for f in faces.get("wall", [])]
+        self.tau_v = float(args.jbgs_tau_v)
+        self.lambda_mvs = float(args.jbgs_lambda_mvs)
+        self.lambda_prior = float(args.jbgs_lambda_prior) if self.mode in ("P", "P0") else 0.0
+        # origin
+        n = gaussians.get_xyz.shape[0]
+        if args.jbgs_origin_path:
+            origin = np.load(args.jbgs_origin_path).astype(np.int8)
+            if origin.shape[0] != n:
+                raise ValueError(f"origin.npy length {origin.shape[0]} != initial gaussians {n}")
+            gaussians.origin = torch.from_numpy(origin).cuda()
+        else:
+            gaussians.origin = torch.zeros(n, dtype=torch.int8, device="cuda")
+        if gaussians.frozen_mask is None:
+            gaussians.frozen_mask = torch.zeros(n, dtype=torch.bool, device="cuda")
+        # initial disks: id, position, origin; last iteration at which a disk carrying the id was alive
+        gaussians.init_id = torch.arange(n, dtype=torch.int32, device="cuda")
+        self.init_xyz = gaussians.get_xyz.detach().clone()
+        self.init_origin = gaussians.origin.clone()
+        self.last_seen = torch.zeros(n, dtype=torch.int32, device="cuda")
+        self.E = None
+        self.E_cnt = None
+        self._saved = None
+        self.counters = {"added": 0, "removed": 0}
+        self._wrap_counters(gaussians)
+        self.scalars = (self.mon / "scalars.jsonl").open("a", buffering=1)
+        self.faces_csv = self.mon / "faces.csv"
+        if not self.faces_csv.exists():
+            self.faces_csv.write_text("iteration,face,n_pixels,n_A,cov,d,d_nmad,n_d,d_all,d_all_nmad,n_d_all,e,e_nmad,n_e,g,g_nmad,n_g,label\n")
+        self.started = time.monotonic()
+        self.last_stats = {}
+        meta = dict(mode=self.mode, size=[H, W], views=names, train_views=sorted(self.train_names),
+                    maps=dict(A=len(self.A), M=len(self.M), P=len(self.P), TAU=len(self.TAU), FACE=len(self.FACE),
+                              FV=len(self.FV), G=len(self.G)),
+                    lambda_mvs=self.lambda_mvs, lambda_prior=self.lambda_prior, tau_v=self.tau_v,
+                    n_init=n, n_init_prior=int((gaussians.origin == ORIGIN_PRIOR).sum()),
+                    n_init_image=int((gaussians.origin == ORIGIN_IMAGE).sum()),
+                    faces_roof=self.faces_roof, faces_wall=self.faces_wall, scene=args.jbgs_scene,
+                    e_interval=args.jbgs_e_interval, e_threshold=args.jbgs_e_threshold,
+                    e_depth_tol=args.jbgs_e_depth_tol, lock_lr_scale=args.jbgs_lock_lr_scale,
+                    lock_mechanism="adam update x lock_lr_scale on xyz/rotation/scaling (post-step blend)",
+                    lock_opacity_floor=args.jbgs_lock_opacity_floor, trunc_hi=args.jbgs_trunc_hi,
+                    injected_face=args.jbgs_injected_face, injected_delta=args.jbgs_injected_delta,
+                    sign_convention="d=(D-P)*f, e=(D-M)*f, g=(D-G)*f; + = reference above the rendered surface",
+                    dump_depth_dtype="float32")
+        (self.mon / "meta.json").write_text(json.dumps(meta, indent=1))
+        print(f"[jbgs_judgment] mode={self.mode} maps={meta['maps']} init={n} prior={meta['n_init_prior']} image={meta['n_init_image']}")
+        missing = [nm for nm in self.train_names if nm not in self.A or nm not in self.M]
+        if missing:
+            raise ValueError(f"A/MVS maps missing for training views: {missing}")
+        if self.mode in ("P", "P0"):
+            missing = [nm for nm in self.train_names if nm not in self.P]
+            if missing:
+                raise ValueError(f"prior maps missing for training views: {missing}")
+        if self.mode == "P":
+            missing = [nm for nm in self.train_names if nm not in self.TAU]
+            if missing:
+                raise ValueError(f"tau maps missing for training views: {missing}")
+
+    # ------------------------------------------------------------------------------------------- bookkeeping
+    def _wrap_counters(self, gaussians):
+        orig_postfix = gaussians.densification_postfix
+        orig_prune = gaussians.prune_points
+        me = self
+
+        def postfix(*a, **k):
+            before = gaussians.get_xyz.shape[0]
+            r = orig_postfix(*a, **k)
+            me.counters["added"] += gaussians.get_xyz.shape[0] - before
+            return r
+
+        def prune(*a, **k):
+            before = gaussians.get_xyz.shape[0]
+            r = orig_prune(*a, **k)
+            me.counters["removed"] += before - gaussians.get_xyz.shape[0]
+            return r
+
+        gaussians.densification_postfix = postfix
+        gaussians.prune_points = prune
+
+    # ------------------------------------------------------------------------------------------------ losses
+    def losses(self, cam_name, render_pkg):
+        """Returns (mvs_term, prior_term, stats). Both terms are unweighted; multiply by lambdas in train.py."""
+        D = render_pkg["surf_depth"].squeeze(0)
+        zero = torch.zeros((), device=D.device)
+        stats = {}
+        A = self.A.get(cam_name)
+        M = self.M.get(cam_name)
+        if A is not None and M is not None:
+            mvs, n, hole = weighted_l1(D, M, A)
+            stats.update(mvs_n=n, mvs_hole=hole)
+        else:
+            mvs = zero
+        prior = zero
+        if self.mode in ("P", "P0"):
+            P = self.P.get(cam_name)
+            if P is not None:
+                if self.mode == "P":
+                    prior, n, hole, beyond = truncated_prior_loss(D, P, self.TAU[cam_name], 1.0 - A, self.args.jbgs_trunc_hi)
+                    stats.update(prior_n=n, prior_hole=hole, prior_beyond=beyond)
+                else:
+                    prior, n, hole = weighted_l1(D, P, torch.ones_like(P))
+                    stats.update(prior_n=n, prior_hole=hole)
+        self.last_stats = stats
+        return mvs, prior, stats
+
+    # ---------------------------------------------------------------------------------------- E and locking
+    def due_E(self, iteration):
+        return self.mode in ("P", "P0") and ((iteration - 1) % self.args.jbgs_e_interval == 0)
+
+    @torch.no_grad()
+    def update_E(self, iteration, gaussians):
+        xyz = gaussians.get_xyz
+        E, cnt = compute_E(xyz, self.train_cams, self.A, self.P, self.args.jbgs_e_depth_tol)
+        self.E, self.E_cnt = E, cnt
+        prior = gaussians.origin == ORIGIN_PRIOR
+        prev = gaussians.frozen_mask.clone() if gaussians.frozen_mask is not None else torch.zeros_like(prior)
+        ids = gaussians.init_id.long()
+        drift = torch.full_like(E, float("nan"))
+        has = ids >= 0
+        drift[has] = (xyz[has] - self.init_xyz[ids[has]]).norm(dim=1)
+        lock, off_prior = lock_rule(E, cnt, drift, prior, self.args.jbgs_e_threshold, self.args.jbgs_e_depth_tol)
+        if self.mode == "P":
+            gaussians.set_frozen_mask(lock)
+        else:
+            lock = torch.zeros_like(prior)
+        hist_p = torch.histc(E[prior].float(), bins=10, min=0.0, max=1.0).tolist() if prior.any() else [0] * 10
+        hist_i = torch.histc(E[~prior].float(), bins=10, min=0.0, max=1.0).tolist() if (~prior).any() else [0] * 10
+        row = dict(iteration=iteration, n=int(xyz.shape[0]), n_prior=int(prior.sum()),
+                   n_prior_unseen=int((prior & (cnt == 0)).sum()), n_image_unseen=int((~prior & (cnt == 0)).sum()),
+                   n_prior_off_prior=int(off_prior.sum()),
+                   prior_drift_q=[float(v) for v in torch.nanquantile(drift[prior].float(), torch.tensor([0.5, 0.9, 0.99], device=drift.device))] if prior.any() else None,
+                   E_hist_prior=hist_p, E_hist_image=hist_i, E_mean_prior=float(E[prior].mean()) if prior.any() else None,
+                   n_locked=int(lock.sum()), n_newly_locked=int((lock & ~prev).sum()), n_released=int((prev & ~lock).sum()))
+        with (self.mon / "E.jsonl").open("a") as f:
+            f.write(json.dumps(row) + "\n")
+        if self.tb is not None:
+            self.tb.add_scalar("judgment/n_locked", row["n_locked"], iteration)
+            self.tb.add_scalar("judgment/n_prior_unseen", row["n_prior_unseen"], iteration)
+            self.tb.add_scalar("judgment/n_prior_off_prior", row["n_prior_off_prior"], iteration)
+            if row["E_mean_prior"] is not None:
+                self.tb.add_scalar("judgment/E_mean_prior", row["E_mean_prior"], iteration)
+        print(f"[jbgs_judgment] iter {iteration}: E updated, prior={row['n_prior']} locked={row['n_locked']} "
+              f"(+{row['n_newly_locked']}/-{row['n_released']}) unseen prior={row['n_prior_unseen']} "
+              f"off-prior (unseen, moved >{self.args.jbgs_e_depth_tol} m, not locked)={row['n_prior_off_prior']}")
+
+    @torch.no_grad()
+    def before_step(self, gaussians):
+        """Remember the locked rows of xyz/rotation/scaling right before optimizer.step()."""
+        self._saved = None
+        if self.mode != "P" or gaussians.frozen_mask is None or not bool(gaussians.frozen_mask.any()):
+            return
+        m = gaussians.frozen_mask.clone()
+        self._saved = (m, {name: getattr(gaussians, name).detach()[m].clone() for name in ("_xyz", "_rotation", "_scaling")})
+
+    @torch.no_grad()
+    def after_step(self, gaussians):
+        """Locked disks: keep lock_lr_scale of the Adam step on xyz/rotation/scaling, then the opacity floor."""
+        if self._saved is not None:
+            m, rows = self._saved
+            self._saved = None
+            if m.shape[0] == gaussians.get_xyz.shape[0]:
+                for name, old in rows.items():
+                    scale_locked_update(getattr(gaussians, name), old, m, float(self.args.jbgs_lock_lr_scale))
+        if self.mode != "P" or gaussians.frozen_mask is None or not bool(gaussians.frozen_mask.any()):
+            return
+        floor = gaussians.inverse_opacity_activation(torch.tensor(self.args.jbgs_lock_opacity_floor, device="cuda"))
+        m = gaussians.frozen_mask
+        gaussians._opacity.data[m] = torch.clamp(gaussians._opacity.data[m], min=float(floor))
+
+    def exempt_mask(self, gaussians):
+        """Mask passed to reset_opacity: locked disks keep their opacity."""
+        if self.mode != "P":
+            return None
+        return gaussians.frozen_mask
+
+    # ------------------------------------------------------------------------------------------- monitoring
+    @torch.no_grad()
+    def mark_alive(self, iteration, gaussians):
+        ids = gaussians.init_id
+        ids = ids[ids >= 0].long()
+        if ids.numel():
+            self.last_seen[ids] = int(iteration)
+
+    def log_scalars(self, iteration, terms, gaussians):
+        self.mark_alive(iteration, gaussians)
+        bad = {k: float(v) for k, v in terms.items() if not math.isfinite(float(v))}
+        if bad:  # ORDER section 7 'always: loss terms finite' -> red, stop the run
+            with (self.mon / "checklist.jsonl").open("a") as f:
+                f.write(json.dumps(dict(iteration=iteration, items=[dict(name="loss_terms_finite", status="red", binding=True,
+                                                                            value=str(bad), rule="all loss terms finite")])) + "\n")
+            raise RuntimeError(f"[jbgs_judgment] non-finite loss terms at iteration {iteration}: {bad}")
+        prior = gaussians.origin == ORIGIN_PRIOR
+        lock = gaussians.frozen_mask if gaussians.frozen_mask is not None else torch.zeros_like(prior)
+        op = gaussians.get_opacity.squeeze(-1)
+
+        def q(mask):
+            if not bool(mask.any()):
+                return None
+            x = op[mask].float()
+            return [float(v) for v in torch.quantile(x, torch.tensor([0.1, 0.5, 0.9], device=x.device))]
+        row = dict(iteration=iteration, elapsed=time.monotonic() - self.started, n=int(prior.shape[0]),
+                   n_prior=int(prior.sum()), n_image=int((~prior).sum()), n_locked=int(lock.sum()),
+                   n_prior_free=int((prior & ~lock).sum()), added=self.counters["added"], removed=self.counters["removed"],
+                   opacity_q_prior=q(prior), opacity_q_image=q(~prior), opacity_q_locked=q(lock),
+                   n_locked_below_floor=int((lock & (op < self.args.jbgs_lock_opacity_floor - 1e-3)).sum()),
+                   peak_cuda_gb=torch.cuda.max_memory_allocated() / 1e9, **{k: float(v) for k, v in terms.items()},
+                   **{f"px_{k}": v for k, v in self.last_stats.items()})
+        self.counters = {"added": 0, "removed": 0}
+        self.scalars.write(json.dumps(row) + "\n")
+        if self.tb is not None:
+            for k, v in terms.items():
+                self.tb.add_scalar(f"terms/{k}", float(v), iteration)
+            for k in ("n", "n_prior", "n_image", "n_locked", "n_prior_free", "added", "removed", "n_locked_below_floor"):
+                self.tb.add_scalar(f"disks/{k}", row[k], iteration)
+            for k in ("opacity_q_prior", "opacity_q_image", "opacity_q_locked"):
+                if row[k] is not None:
+                    self.tb.add_scalar(f"opacity/{k}_median", row[k][1], iteration)
+
+    # --------------------------------------------------------------------------------------------- read-outs
+    @torch.no_grad()
+    def readout(self, iteration, gaussians, render, pipe, background, snapshot=False, dump=False, stop_check=True):
+        records = {}
+        faces_all = set(self.faces_roof) | set(self.faces_wall)
+        dump_dir = self.model_path / "dump" / f"iteration_{iteration}"
+        if dump:
+            dump_dir.mkdir(parents=True, exist_ok=True)
+        lock = gaussians.frozen_mask
+        for cam in self.all_cams:
+            name = cam.image_name
+            pkg = render(cam, gaussians, pipe, background)
+            D = pkg["surf_depth"].squeeze(0)
+            alpha = pkg["rend_alpha"].squeeze(0)
+            rendered = torch.isfinite(D) & (D > 0)
+            A = self.A.get(name)
+            M = self.M.get(name)
+            P = self.P.get(name)
+            F = self.FACE.get(name)
+            fv = self.FV.get(name)
+            G = self.G.get(name)
+            if F is not None and fv is not None:
+                Fc = F.cuda(); fvc = fv.cuda()
+                Gc = G.cuda() if G is not None else None
+                for f in faces_all:
+                    fm = Fc == f
+                    if not bool(fm.any()):
+                        continue
+                    r = records.setdefault(f, dict(d=[], e=[], g=[], d_all=[], n_pixels=0, n_A=0))
+                    r["n_pixels"] += int(fm.sum())
+                    a1 = fm & (A > 0) if A is not None else torch.zeros_like(fm)
+                    r["n_A"] += int(a1.sum())
+                    if P is not None:
+                        pm = fm & rendered & torch.isfinite(P) & (P > 0)
+                        r["d_all"].append(((D - P) * fvc)[pm].cpu())
+                        r["d"].append(((D - P) * fvc)[pm & a1].cpu())
+                    if M is not None:
+                        em = a1 & rendered & torch.isfinite(M) & (M > 0)
+                        r["e"].append(((D - M) * fvc)[em].cpu())
+                    if Gc is not None:
+                        gm = fm & rendered & torch.isfinite(Gc) & (Gc > 0)
+                        r["g"].append(((D - Gc) * fvc)[gm].cpu())
+            if dump:  # float32: float16 spacing at 44 m is 3.1 cm, the size of tau
+                np.save(dump_dir / f"{name}_depth.npy", D.cpu().numpy().astype(np.float32))
+                np.save(dump_dir / f"{name}_alpha.npy", alpha.cpu().numpy().astype(np.float16))
+                rgb = (pkg["render"].clamp(0, 1).permute(1, 2, 0).cpu().numpy() * 255).astype(np.uint8)
+                cv2.imwrite(str(dump_dir / f"{name}_rgb.png"), cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR))
+            if snapshot and name in set(self.args.jbgs_monitor_views):
+                self._snapshot(iteration, cam, pkg, D, gaussians, lock)
+        rows = face_readout(records, self.tau_v, self.faces_roof, self.faces_wall)
+        if not stop_check:  # evidence pass of a stopping read-out: files only, no second record
+            if dump:
+                self.dump_gaussians(iteration, gaussians, dump_dir)
+            return rows
+        (self.mon / f"faces_{iteration}.json").write_text(json.dumps(rows, indent=1))
+        with self.faces_csv.open("a") as f:
+            for r in rows:
+                f.write(",".join(str(r[k]) for k in ["face", "n_pixels", "n_A", "cov", "d", "d_nmad", "n_d", "d_all",
+                                                     "d_all_nmad", "n_d_all", "e", "e_nmad", "n_e", "g", "g_nmad",
+                                                     "n_g", "label"]).join([f"{iteration},", "\n"]))
+        if self.tb is not None:
+            for r in rows:
+                for k in ("d", "e", "g", "cov"):
+                    if r[k] == r[k]:
+                        self.tb.add_scalar(f"faces/{r['face']}_{k}", r[k], iteration)
+        if dump:
+            self.dump_gaussians(iteration, gaussians, dump_dir)
+        check = self.checklist(iteration, rows)
+        summary = {r["face"]: (round(r["d"], 4) if r["d"] == r["d"] else None, r["label"]) for r in rows}
+        print(f"[jbgs_judgment] iter {iteration} read-out: {summary}")
+        red = [it for it in check["items"] if it["binding"] and it["status"] == "red"]
+        if red and stop_check and self.args.jbgs_stop_on_red:  # ORDER 7: stop, keep the evidence, record the cause
+            if not dump:
+                self.readout(iteration, gaussians, render, pipe, background, snapshot=True, dump=True, stop_check=False)
+            gaussians.save_ply(str(self.model_path / "point_cloud" / f"iteration_{iteration}_stopped" / "point_cloud.ply"))
+            with (self.mon / "stop.json").open("w") as f:
+                json.dump(dict(iteration=iteration, red=red, scientific_verdict=None), f, indent=1)
+            raise RuntimeError(f"[jbgs_judgment] red binding check at iteration {iteration}: {red}")
+        return rows
+
+    @torch.no_grad()
+    def dump_gaussians(self, iteration, gaussians, dump_dir):
+        """Disk records (ORDER 4.5): origin, E at the last update (NaN for disks born after it), opacity, lock,
+        init_id and displacement from the initial disk; per initial disk: origin, position and last alive iteration
+        (a disk id not alive now was removed between last_seen and last_seen + log interval)."""
+        self.mark_alive(iteration, gaussians)
+        prior = gaussians.origin == ORIGIN_PRIOR
+        n = prior.shape[0]
+        E = self.E if (self.E is not None and self.E.shape[0] == n) else torch.full((n,), float("nan"), device=prior.device)
+        cnt = self.E_cnt if (self.E_cnt is not None and self.E_cnt.shape[0] == n) else torch.zeros_like(E)
+        ids = gaussians.init_id.long()
+        disp = torch.full((n, 3), float("nan"), device=prior.device)
+        ok = ids >= 0
+        disp[ok] = gaussians.get_xyz[ok] - self.init_xyz[ids[ok]]
+        np.savez(dump_dir / "gaussians.npz", iteration=iteration, xyz=gaussians.get_xyz.cpu().numpy(),
+                 origin=gaussians.origin.cpu().numpy(), init_id=gaussians.init_id.cpu().numpy(), displacement=disp.cpu().numpy(),
+                 E=E.cpu().numpy(), E_cnt=cnt.cpu().numpy(), opacity=gaussians.get_opacity.squeeze(-1).cpu().numpy(),
+                 locked=(gaussians.frozen_mask.cpu().numpy() if gaussians.frozen_mask is not None else np.zeros(n, bool)),
+                 scale=gaussians.get_scaling.cpu().numpy(), init_xyz=self.init_xyz.cpu().numpy(),
+                 init_origin=self.init_origin.cpu().numpy(), init_last_seen=self.last_seen.cpu().numpy(),
+                 log_interval=self.args.jbgs_log_interval)
+
+    @torch.no_grad()
+    def _snapshot(self, iteration, cam, pkg, D, gaussians, lock):
+        name = cam.image_name
+        A = self.A.get(name); M = self.M.get(name); P = self.P.get(name)
+        rgb = (pkg["render"].clamp(0, 1).permute(1, 2, 0).cpu().numpy() * 255).astype(np.uint8)
+        bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+        Dn = D.cpu().numpy().astype(np.float32); Dn[Dn <= 0] = np.nan
+        panels = [("render", bgr)]
+        if P is not None:
+            panels.append(("D-P (+/-1.5 m, red: prior above)", colorize_diverging(Dn - P.cpu().numpy(), 1.5)))
+        if M is not None:
+            panels.append(("D-M (+/-1.5 m, red: MVS above)", colorize_diverging(Dn - M.cpu().numpy(), 1.5)))
+        if A is not None:
+            ov = bgr.copy(); a = A.cpu().numpy() > 0
+            ov[a] = (0.5 * ov[a] + 0.5 * np.array([0, 200, 0])).astype(np.uint8)
+            panels.append(("A overlay", ov))
+        if lock is not None and bool(lock.any()):  # only locked disks lying on this view's rendered surface
+            u, v, z = project_points(gaussians.get_xyz[lock], cam)
+            H, W = D.shape
+            ui, vi = torch.round(u).long(), torch.round(v).long()
+            ok = (z > 0) & (ui >= 0) & (ui < W) & (vi >= 0) & (vi < H)
+            Dz = D.reshape(-1)[(vi.clamp(0, H - 1) * W + ui.clamp(0, W - 1))]
+            vis = ok & (torch.abs(z - Dz) < self.args.jbgs_e_depth_tol)
+            lk = bgr.copy()
+            for uu, vv in zip(ui[vis].cpu().numpy()[::2], vi[vis].cpu().numpy()[::2]):
+                cv2.circle(lk, (int(uu), int(vv)), 1, (0, 0, 255), -1)
+            panels.append((f"locked disks visible here {int(vis.sum())} / in frame {int(ok.sum())}", lk))
+        raw = dict(depth=Dn.astype(np.float16))
+        np.savez_compressed(self.mon / f"snap_{iteration}_{name}.npz", **raw)
+        scale = 640 / max(bgr.shape[1], 1)
+        tiles = []
+        for title, img in panels:
+            t = cv2.resize(img, (int(img.shape[1] * scale), int(img.shape[0] * scale)), interpolation=cv2.INTER_AREA)
+            cv2.putText(t, title, (6, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(t, title, (6, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1, cv2.LINE_AA)
+            tiles.append(t)
+        while len(tiles) % 3:
+            tiles.append(np.zeros_like(tiles[0]))
+        rows = [np.concatenate(tiles[i:i + 3], axis=1) for i in range(0, len(tiles), 3)]
+        cv2.imwrite(str(self.mon / f"snap_{iteration}_{name}.png"), np.concatenate(rows, axis=0))
+
+    def checklist(self, iteration, rows):
+        """ORDER section 7 automatic red/green checks, written to monitor/checklist.jsonl. The roof rules state the
+        intent of the method, so they bind (stop-and-record on red) only in mode P; for the ablations they are
+        recorded as information (binding=False). Sign convention: see roof_check."""
+        by = {r["face"]: r for r in rows}
+        inj = by.get(self.args.jbgs_injected_face)
+        tau = self.tau_v
+        items = []
+
+        def item(name, status, value, rule, binding):
+            items.append(dict(name=name, status=status, value=value, rule=rule, binding=binding))
+        if inj is not None and inj["d"] == inj["d"] and not math.isnan(tau):
+            name, st, rule = roof_check(self.args.jbgs_scene, iteration, inj["d"], tau, self.args.jbgs_injected_delta)
+            item(name, st, inj["d"], rule, self.mode == "P")
+        n_und = sum(1 for r in rows if r["face"] != "wall" and r["label"] == "undecided")
+        n_roof = sum(1 for r in rows if r["face"] != "wall")
+        if n_roof:
+            item("undecided_roof_faces", "green" if n_und == 0 else "yellow", n_und, "faces with cov<0.5", False)
+        row = dict(iteration=iteration, items=items)
+        with (self.mon / "checklist.jsonl").open("a") as f:
+            f.write(json.dumps(row) + "\n")
+        return row
+
+
+class NullController:
+    """Stands in for jbgs_mvs_pgsr.Controller when the MVS-PGSR environment is not requested."""
+
+    def load_mvs_depth_set(self, all_cameras, target_size, *, train_camera_names):
+        return {}
+
+    def geometry_loss(self, camera, render_pkg, gaussians, pipe, background, iteration, *, native_normal_loss):
+        return native_normal_loss
+
+    def training_trace(self, **kwargs):
+        return None
+
+    def after_backward(self, iteration, gaussians):
+        return None

@@ -1,0 +1,33 @@
+{
+  "task_id": "PHD-LOCAL-WEIGHT-SITES-MVS-REAUDIT-v1",
+  "scientific_verdict": null,
+  "parent_relative": "phase-payloads/phd/local_weight_sites_v1/PHD-LOCAL-WEIGHT-SITES-v1/photo_overlay_20260921_v1",
+  "original_viewer_relative": "phase-payloads/phd/local_weight_sites_v1/PHD-LOCAL-WEIGHT-SITES-v1/viewer_20260920_v1",
+  "publication_name": "local_weight_sites_20260921_v5",
+  "bands_m": [0.1, 0.25, 0.5, 1.0],
+  "paired_change_m": 0.1,
+  "bands_role": "Descriptive sensitivity bands only, not accuracy acceptance gates or noise tolerances",
+  "classifications": {
+    "C10": {"status": "priority", "label": "MVS 우선 개선 검토", "reason": "상단 대응 표본에서도 prior에 비해 큰 잔차가 유지된다. 실제 가시성 및 가중치 원인은 미확정이다."},
+    "C03": {"status": "close", "label": "현재 표본에서 MVS 잔차 작음", "reason": "동일 UAS 표본에서 prior의 큰 차이가 줄고 MVS의 P90도 작다. 이 패치의 DA3 문제와 구분한다."},
+    "C04": {"status": "close", "label": "현재 표본에서 MVS 잔차 작음", "reason": "UAS 표본에서 MVS가 prior와 DA3보다 가까우며 상위 거리도 작다."},
+    "C05": {"status": "small_degradation", "label": "MVS의 작은 보존 손실 재검토", "reason": "DA3보다 훨씬 가깝지만 prior보다 약 9.5cm 멀다. MVS 개선 불필요로 제외하지 않고, 작은 보존 손실의 보조 사례로 둔다. 노이즈·정합 대비 유의성은 미확정이다."},
+    "C06": {"status": "close", "label": "현재 표본에서 MVS 잔차 작음", "reason": "UAS 표본에서 MVS가 prior보다 가까우며 DA3의 큰 차이는 MVS에 나타나지 않는다."},
+    "C07": {"status": "close", "label": "현재 표본에서 MVS 잔차 작음", "reason": "UAS 표본에서 MVS의 중앙값과 P90이 모두 작다. 전체 건물의 완전성 판정은 아니다."},
+    "W011": {"status": "close", "label": "MVS 회복 대조", "reason": "MVS 입력 잔차와 주변 UAS 거리가 모두 작다. 같은 지붕의 C03과 인접하지만 같은 표본은 아니다."},
+    "W125": {"status": "partial", "label": "부분 개선 · 잔차 남음", "reason": "prior보다 상당히 개선됐지만 MVS 입력과 약 0.61m 잔차가 남는다. 주변 UAS는 1점뿐이어서 개선 불필요로 판정하지 않는다."},
+    "W150": {"status": "partial", "label": "부분 개선 · 경계 진단", "reason": "prior보다 개선됐지만 MVS 입력과 약 1.18m 잔차가 남는다. 외벽·경계의 대응과 추출을 확인해야 한다."},
+    "W139": {"status": "extraction", "label": "렌더·메시 불일치 진단", "reason": "메시 잔차는 크지만 검사한 렌더 잔차는 더 작다. 개선 불필요가 아니라 추출·가림 원인 진단이 우선이다."},
+    "W019": {"status": "unresolved", "label": "잔차 있음 · 출입구 표면 대응 보류", "reason": "출입구 단상 주변의 입력·출력 및 렌더 잔차는 남는다. 작은 구조의 누락인지 가림·대응 문제인지 미확정이다."},
+    "W138": {"status": "unresolved", "label": "잔차 있음 · 지붕 경계 대응 보류", "reason": "MVS 입력과 약 1.35m 차이가 있지만 가까운 UAS가 없고 패치 공동 관측이 부족하다."},
+    "W145": {"status": "unresolved", "label": "잔차 있음 · 공동 관측 보류", "reason": "MVS 입력과 약 0.84m 차이가 있다. 패치 절반 이상을 함께 보는 시점과 가까운 UAS가 없어 판단을 유보한다."},
+    "W015": {"status": "unresolved", "label": "잔차 있음 · 얇은 구조 대응 보류", "reason": "약 3.20m 잔차가 있지만 얇은 시설물의 정확한 객체·가시 표면 대응이 미확정이다."},
+    "C01": {"status": "unresolved", "label": "큰 거리 · 아래층 대응 보류", "reason": "UAS 표본과 MVS 결과의 거리는 크다. 평가점이 상단 표면보다 아래에 있어 roof 실패나 개선 불필요 어느 쪽도 확정하지 않는다."},
+    "C02": {"status": "unresolved", "label": "큰 거리 · 아래층 대응 보류", "reason": "prior 대비 MVS 거리가 크지만 아래층·가림 표본의 실제 영상 대응이 불명확하다."},
+    "C08": {"status": "unresolved", "label": "큰 거리 · 아래층 대응 보류", "reason": "prior와 MVS 모두 참조에서 멀며 아래층 대응 문제가 남는다. 개선이 끝난 사례가 아니다."},
+    "C09": {"status": "unresolved", "label": "큰 거리 · 옥상/외벽 대응 보류", "reason": "낮은 참조 표본과 상단 표면의 대응 차이가 커서 잔차의 의미를 먼저 확인해야 한다."},
+    "W013": {"status": "outside_building", "label": "수목 · 건물 실험 범위 밖", "reason": "잔차를 좋은 MVS 결과로 해석하지 않는다. 사진상 수목이므로 건물 가중치 실험과 분리한다."},
+    "W020": {"status": "outside_building", "label": "선형 구조 · 건물 실험 범위 밖", "reason": "큰 잔차를 유지하되 사진상 도로 위 선형 구조이므로 건물 지붕 실험과 분리한다."}
+  },
+  "training_changes": false
+}

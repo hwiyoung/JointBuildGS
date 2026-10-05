@@ -1,0 +1,15 @@
+schema: jointbuildgs.artifact_resolver.v1
+task_id: PHD-GEOGS-RGB-CHECKPOINT-TIMELINE-v1
+scientific_verdict: null
+status: PASS_SAVED_CHECKPOINT_TIMELINE
+storage_root: ../JointBuildGS-artifacts
+payload: phase-payloads/phd/geogs_mvs_pgsr_v1/PHD-GEOGS-MVS-PGSR-v1/rgb_checkpoint_timeline_v1/attempt.35V1kE74
+receipt: receipt.json
+receipt_sha256: b19538e22c71f41f6339b1727f6f1f09fecfe50cd8e1f1c0ba3201c99fbf2a6b
+new_training_steps: 0
+inventoried_run_count: 12
+rendered_state_count: 7
+report: docs/experiments/phd/geogs_mvs_pgsr_v1/RGB_CHECKPOINT_TIMELINE_ko_v1.md
+script: scripts/phd/geogs_mvs_pgsr_v1/rgb_checkpoint_timeline.py
+config: configs/phd/geogs_mvs_pgsr_v1/rgb_checkpoint_timeline_v1.json
+scope: Saved P1 states rendered with exact same-state protection masks; no optimizer, missing-state reconstruction, or individual Gaussian ancestry claims.

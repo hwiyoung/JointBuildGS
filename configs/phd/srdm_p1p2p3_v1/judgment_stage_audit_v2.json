@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-SRDM-JUDGMENT-STAGES-v2",
+  "scientific_verdict": null,
+  "task_relative": "phase-payloads/phd/srdm_p1p2p3_v1/PHD-SRDM-P1P2P3-v1",
+  "native_relative": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/evaluation_inputs",
+  "cell_m": 0.5,
+  "section_half_width_m": 0.25,
+  "target_definition_source": "docs/experiments/phd/warp_ncc_v1/TECHNICAL_RETURN_ko_v1.md: P1/P2 top PRIOR_ABOVE planar; P3 top mvs_z > -30 and ALS patch exists. No SRDM output used to choose cells.",
+  "point_membership": "Join original ALS file index and row, verify native tile rows equal frozen patch rows, then match XY cell AND original point patch_id == cell als_patch. No new height tolerance.",
+  "evaluation_limit": "Post-hoc diagnostic of frozen outputs. Legacy source-defined target surfaces are analysis strata, not pointwise truth labels. UAS is evaluation-only in the existing uncalibrated datum/epoch frame. Nearest distances and same-seed rays do not certify visibility, source correctness, or temporal change. Existing MVS is shown for interpretation only and is not substituted into the SRDM rule.",
+  "regions": {
+    "P1": {"source": "IMAGE", "legacy_target_cells": 1229, "section": [0, -8], "reference_relative": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P1/reference.npz"},
+    "P2": {"source": "IMAGE", "legacy_target_cells": 3737, "section": [1, 109], "reference_relative": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P2/reference.npz"},
+    "P3": {"source": "ALS", "legacy_target_cells": 3904, "section": [0, -40], "reference_relative": "phase-payloads/phd/wu_vallet_regions_v4/PHD-WU-VALLET-REGIONS-EVALUATION-v4/run/P3/reference.npz"}
+  }
+}

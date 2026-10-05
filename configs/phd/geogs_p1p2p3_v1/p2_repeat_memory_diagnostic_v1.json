@@ -1,0 +1,43 @@
+{
+  "schema": "GEOGS_REPEAT_MEMORY_DIAGNOSTIC_v1",
+  "task_id": "PHD-GEOGS-P1P2P3-v1",
+  "diagnostic_id": "p2_repeat_memory_diagnostic_v1",
+  "region": "P2",
+  "condition": "D005_Pnative",
+  "run_family": "diagnostic_only",
+  "scientific_verdict": null,
+  "replaces_official_repeat": false,
+  "start_iteration": 8000,
+  "stop_after_iteration": 8100,
+  "sample_every_completed_steps": 10,
+  "gpu_index": 1,
+  "gpu_uuid": "GPU-fab8b9b4-e6eb-9f2b-71e3-7997f092d21e",
+  "runtime_image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+  "failed_invocation_relative_path": "native_repeat_allocator_v2/P2/D005_Pnative/train_invocation.json",
+  "failed_invocation_sha256": "750050331dba791496fd818a1ce211afb408b3e61405953aeb67898aeae933da",
+  "scientific_config_sha256": "b08bbcc808da060322fc1ed05902edbb08db2a0784dd146f4644adc12228eab4",
+  "runtime_layout_sha256": "28b83d4a462d764cbe0d59b32f7a816db92236141879806a5a1bc8ce4e450cd5",
+  "input_manifest_sha256": "6493c602332144510526a54f31700c28cb31eb648250e690d6528fcffe5162a2",
+  "anchor_relative_directory": "runs_allocator_v2/P2/D005_Pnative/model/jbgs_complete/iteration_8000",
+  "anchor_checkpoint_sha256": "91bc9ad74b115c37d4ae35ec4eb197832e730be165d36f52ebe4bb291f1ebcfd",
+  "anchor_gate_sha256": "0f2559c2637cd394cba36dd08dbf1bf7ba29a948acbf1a82c868b1917feecc0a",
+  "native_repeat_contract_sha256": "3c62494f13de96dba33b1c36cbadf58e555305fee01ce641dd41f560bdfacafc",
+  "implementation_file_count": 45,
+  "environment": {
+    "LD_PRELOAD": "/opt/geogs/lib/libstdc++.so.6",
+    "LD_LIBRARY_PATH": "/opt/geogs/lib:/usr/local/cuda/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
+    "TORCH_HOME": "/weights/torch",
+    "OMP_NUM_THREADS": "8",
+    "PYTORCH_CUDA_ALLOC_CONF": "backend:native,max_split_size_mb:128",
+    "JBGS_RUNTIME_REVISION": "allocator_v2"
+  },
+  "forbidden_environment": [
+    "CUDA_LAUNCH_BLOCKING",
+    "PYTORCH_NO_CUDA_MEMORY_CACHING"
+  ],
+  "native_command_policy": "Exact failed invocation command plus --jbgs_stop_after 8100 only",
+  "native_model_path": "/output/model",
+  "native_process_policy": "CPU byte preflight and original effective-allocator child both exit before a fresh instrumented Python process; logger CUDA APIs begin only after native restore completes",
+  "instrumentation_policy": "Original return values/exceptions and iteration8100 capture retained; allocator metadata only; no tensor values, RNG draws, synchronization, cache clearing or peak reset added",
+  "interpretation": "Instrumentation can change timing. Completion is diagnostic evidence only, not proof that the original failure is resolved, bitwise parity, or a replacement for native_repeat_1."
+}

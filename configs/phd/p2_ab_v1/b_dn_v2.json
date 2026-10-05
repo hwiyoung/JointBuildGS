@@ -1,0 +1,31 @@
+{
+  "task_id": "PHD-P2-AB-B-DN-v2",
+  "status": "PINNED_UPSTREAM_BOUNDED_DEVELOPMENT_COMPLETE",
+  "scientific_verdict": null,
+  "container_image_id": "sha256:2214f492a2956f8a455117e68959fa9895617083f874286aff8341163b457c04",
+  "upstream_commit": "97588b4290128ce7ba6fdbfaac3020b42b17de4c",
+  "source": "PHD-P2-AB-B-PRIOR-v2 exact selected-source points and common crops",
+  "torch": "2.2.2+cu118",
+  "gsplat": "1.0.0",
+  "training": {
+    "iterations": 96,
+    "seed": 0,
+    "sh_degree": 3,
+    "sh_degree_interval": 1000,
+    "num_downscales": 0,
+    "depth_loss_type": "EdgeAwareLogL1",
+    "depth_lambda": 0.2,
+    "normal_supervision": "depth",
+    "normal_loss": true,
+    "normal_tv_loss": true,
+    "two_d_gaussians": true,
+    "warmup_length": 500,
+    "stop_split_at": 0,
+    "camera_optimizer": "off"
+  },
+  "reference_input": "No current UAS or LoD2 reference; API sensor_depth is selected-source expected-depth adapter",
+  "initialization": "native upstream 3DGS source-PCA normal/scale/opacity, different from B planar 2DGS initialization",
+  "reproduction_status": "upstream source unchanged, input-adapted short development run; not converged paper reproduction",
+  "training_driver": "scripts/phd/p2_ab_v1/b_dn_run.sh",
+  "evaluation_driver": "scripts/phd/p2_ab_v1/b_dn_evaluate_docker.sh"
+}

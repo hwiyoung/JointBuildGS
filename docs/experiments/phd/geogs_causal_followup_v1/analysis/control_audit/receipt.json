@@ -1,0 +1,112 @@
+{
+  "task_id": "PHD-GEOGS-CAUSAL-FOLLOWUP-v1",
+  "scientific_verdict": null,
+  "status": "PASS_SAVED_CONTROL_AUDIT",
+  "rows": [
+    {
+      "region": "P1",
+      "condition": "D005_Pnative",
+      "samples": 220,
+      "iteration_min": 8100,
+      "iteration_max": 30000,
+      "prior_weights": [
+        0.005
+      ],
+      "da3_weights": [
+        0.05
+      ],
+      "protected_counts": [
+        236015
+      ],
+      "da3_confidence_flag_present": false,
+      "training_input_manifest_sha256": "3257b3604f630a64948606605c3ae46f2e22d4d5829b5ad49a7d46b342a42112",
+      "actual_training_source_sha256": "08cfab996b144488b1a583bf722b991c627d90136a9031f85f7d33b1cae0c44b",
+      "source_trace": "runs_allocator_v2/P1/D005_Pnative/model/jbgs_trace.jsonl",
+      "interpretation": "Whole-context sampled controls; not local visibility, effective gradient contribution, or proof of cause."
+    },
+    {
+      "region": "P1",
+      "condition": "D0005_Pnative",
+      "samples": 220,
+      "iteration_min": 8100,
+      "iteration_max": 30000,
+      "prior_weights": [
+        0.0005
+      ],
+      "da3_weights": [
+        0.05
+      ],
+      "protected_counts": [
+        236015
+      ],
+      "da3_confidence_flag_present": false,
+      "training_input_manifest_sha256": "3257b3604f630a64948606605c3ae46f2e22d4d5829b5ad49a7d46b342a42112",
+      "actual_training_source_sha256": "08cfab996b144488b1a583bf722b991c627d90136a9031f85f7d33b1cae0c44b",
+      "source_trace": "runs_allocator_v2/P1/D0005_Pnative/model/jbgs_trace.jsonl",
+      "interpretation": "Whole-context sampled controls; not local visibility, effective gradient contribution, or proof of cause."
+    },
+    {
+      "region": "P2",
+      "condition": "D005_Pnative",
+      "samples": 220,
+      "iteration_min": 8100,
+      "iteration_max": 30000,
+      "prior_weights": [
+        0.005
+      ],
+      "da3_weights": [
+        0.05
+      ],
+      "protected_counts": [
+        114521
+      ],
+      "da3_confidence_flag_present": false,
+      "training_input_manifest_sha256": "6493c602332144510526a54f31700c28cb31eb648250e690d6528fcffe5162a2",
+      "actual_training_source_sha256": "08cfab996b144488b1a583bf722b991c627d90136a9031f85f7d33b1cae0c44b",
+      "source_trace": "runs_allocator_v2/P2/D005_Pnative/model/jbgs_trace.jsonl",
+      "interpretation": "Whole-context sampled controls; not local visibility, effective gradient contribution, or proof of cause."
+    },
+    {
+      "region": "P2",
+      "condition": "D0005_Pnative",
+      "samples": 220,
+      "iteration_min": 8100,
+      "iteration_max": 30000,
+      "prior_weights": [
+        0.0005
+      ],
+      "da3_weights": [
+        0.05
+      ],
+      "protected_counts": [
+        114521
+      ],
+      "da3_confidence_flag_present": false,
+      "training_input_manifest_sha256": "6493c602332144510526a54f31700c28cb31eb648250e690d6528fcffe5162a2",
+      "actual_training_source_sha256": "08cfab996b144488b1a583bf722b991c627d90136a9031f85f7d33b1cae0c44b",
+      "source_trace": "runs_allocator_v2/P2/D0005_Pnative/model/jbgs_trace.jsonl",
+      "interpretation": "Whole-context sampled controls; not local visibility, effective gradient contribution, or proof of cause."
+    }
+  ],
+  "input_hashes": {
+    "evaluation/control_trajectories_v1/attempt.M6kKT8/results/run_control_summary.csv": "2f6534af5997cb7129dea8ed4661f2dff53cf2367604b60babd46e742fdc9dab",
+    "runs_allocator_v2/P1/D005_Pnative/model/jbgs_trace.jsonl": "fbdb423111995ddc0ed833e21c441eeb5a3b966d1088cb0298541b02d827a87e",
+    "runs_allocator_v2/P1/D005_Pnative/train_receipt.json": "0dc343a67bf47595c22b7f1ba10086064cfff30d99c8f90fcd717a0e2863053d",
+    "runs_allocator_v2/P1/D0005_Pnative/model/jbgs_trace.jsonl": "dc708b9992af23705e963ede4ea9994cace3662d4a53867444b6496776cfe6e4",
+    "runs_allocator_v2/P1/D0005_Pnative/train_receipt.json": "77a400cc5dd9e8dc683b076494833b37ecb6409ebfc7e9f3008f0b6f390a0142",
+    "runs_allocator_v2/P2/D005_Pnative/model/jbgs_trace.jsonl": "74cefb1788214eff0ac6475b9bc50a7b2120fa4d84accd7b43a4ddb3fb2ae296",
+    "runs_allocator_v2/P2/D005_Pnative/train_receipt.json": "47bac5349dc8975425204c004bbfc5f2ae7137a078f523b7cb7359b95946bd57",
+    "runs_allocator_v2/P2/D0005_Pnative/model/jbgs_trace.jsonl": "573342d2129a4dc17c9862c8293c6be11b2303f588c775bb4bca2754252e857f",
+    "runs_allocator_v2/P2/D0005_Pnative/train_receipt.json": "1e5517d45d6ee25742731d01caef1ddede4563f477cb80028628001306dba4ef"
+  },
+  "inputs_unchanged": true,
+  "execution": {
+    "image_id": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+    "script_sha256": "9793984f17ef4a819bee8bafd060c694f984ede3dbe64089d0de26fc91ec5079",
+    "config_sha256": "7d19844f1ae17da1b46ed29dea53f2437a4290b670d947312e0ca50df5e1e873",
+    "new_training": 0,
+    "new_renders": 0,
+    "new_mesh_extractions": 0,
+    "new_model_inference": 0
+  }
+}

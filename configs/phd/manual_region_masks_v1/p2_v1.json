@@ -1,0 +1,629 @@
+{
+  "task_id": "PHD-P2P3-MANUAL-REGIONS-v1",
+  "status": "MANUAL_SOURCE_MULTIVIEW_DRAFT",
+  "scientific_verdict": null,
+  "reference_access": false,
+  "depth_match_m": 0.5,
+  "roundtrip_native_px": 2,
+  "source_boundary_native_px": 2,
+  "target_boundary_native_px": 1,
+  "depth_edge_native_px": 1,
+  "depth_edge_m": 0.75,
+  "display_alpha": 4,
+  "candidate_alpha_values": [
+    0,
+    1,
+    4
+  ],
+  "intervention_base_regions": [
+    2
+  ],
+  "font_path": "/font/NotoSansCJK-Regular.ttc",
+  "depth_display_percentiles": [
+    2,
+    98
+  ],
+  "policy": "Input-only manual RGB polygons after native MVS and prior inspection. R1 is a roof/facade intervention trial, not a change or source-authority label. Complete native/RGB partitions for bound train cameras. Unknown, invalid, excluded and outside context are zero. No training.",
+  "unknown_policy": "Unannotated abstains; current MVS depth agreement <=0.5 m and roundtrip <=2 native pixels required for transfer. Accepted exclusion vetoes other-source labels. Local manual source labels take priority. Depth/label boundaries abstain. Invalid is R5; valid outside context R6.",
+  "region_labels": {
+    "1": "보정 시험 대상",
+    "2": "기타 건물 표면",
+    "3": "정적 지면",
+    "4": "관측 제외 대상",
+    "5": "미분류·판단 유보",
+    "6": "설정 범위 밖"
+  },
+  "colors": {
+    "1": "#E69F00",
+    "2": "#267DB3",
+    "3": "#6F8C62",
+    "4": "#BD5C86",
+    "5": "#B8B8BE",
+    "6": "#353A40"
+  },
+  "region": "P2",
+  "annotation_revision": 2,
+  "supersedes_annotation_attempt": "annotation.P2.VB6hd6dQ: source-10 road polygon touched visible vehicles; narrowed clear-ground strip and added exclusions after visual QA",
+  "train_view_count": 57,
+  "binding_sha256": "64a9d28a22f1679bb63efeac22f91ba569f04c7bee674840638e4924b120cbdf",
+  "training_context": {
+    "x": [
+      85,
+      183
+    ],
+    "y": [
+      61,
+      157
+    ],
+    "z": [
+      -90,
+      80
+    ]
+  },
+  "evaluation_roi": {
+    "x": [
+      110,
+      158
+    ],
+    "y": [
+      86,
+      132
+    ],
+    "z": [
+      -49.386,
+      -17.679
+    ]
+  },
+  "input_inspection_attempt": "inspect.P2.Qn3aLga2",
+  "rationale": "Target repeated vaulted roof and outer roof/parapet are R1. Neighbouring building surfaces R2; confidently traced paved ground R3. Rooftop structure/roof fittings retained. Vegetation texture on a roof is not automatically a nonbuilding tree. Native depth does not certify accuracy.",
+  "manual_sources": [
+    {
+      "train_index": 10,
+      "name": "DJI_20241217091247_0146_D.JPG",
+      "coordinates": "Full input RGB 1400x1013 integer pixel coordinates; ordered polygons overwrite; manually inspected draft",
+      "default_region": 5,
+      "polygons": [
+        {
+          "region": 2,
+          "note": "Target vaulted roof and outer roof surface",
+          "xy": [
+            [
+              648,
+              29
+            ],
+            [
+              1040,
+              29
+            ],
+            [
+              1053,
+              1013
+            ],
+            [
+              652,
+              1013
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Eastern neighbouring visible facade",
+          "xy": [
+            [
+              1197,
+              0
+            ],
+            [
+              1400,
+              0
+            ],
+            [
+              1400,
+              1013
+            ],
+            [
+              1288,
+              936
+            ],
+            [
+              1250,
+              600
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Clear road strip narrowed after full-resolution vehicle review",
+          "xy": [
+            [
+              465,
+              0
+            ],
+            [
+              488,
+              0
+            ],
+            [
+              488,
+              1013
+            ],
+            [
+              465,
+              1013
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Paved passage beside target, conservatively inside margins",
+          "xy": [
+            [
+              1075,
+              80
+            ],
+            [
+              1138,
+              80
+            ],
+            [
+              1190,
+              930
+            ],
+            [
+              1090,
+              985
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Trees and vegetation west of street",
+          "xy": [
+            [
+              0,
+              0
+            ],
+            [
+              388,
+              0
+            ],
+            [
+              409,
+              1013
+            ],
+            [
+              0,
+              1013
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Narrow tree row west of target",
+          "xy": [
+            [
+              575,
+              0
+            ],
+            [
+              633,
+              0
+            ],
+            [
+              643,
+              1013
+            ],
+            [
+              579,
+              1013
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Parked curb vehicles conservative strip",
+          "xy": [
+            [
+              405,
+              0
+            ],
+            [
+              454,
+              0
+            ],
+            [
+              454,
+              1013
+            ],
+            [
+              405,
+              1013
+            ]
+          ]
+        },
+        {"region":4,"note":"Visible vehicles in eastern road lanes, excluded conservatively","xy":[[494,154],[569,154],[569,967],[494,967]]},
+        {"region":4,"note":"Parked car in eastern passage","xy":[[1124,157],[1166,157],[1166,225],[1124,225]]},
+        {"region":4,"note":"Small passage tree near upper facade","xy":[[1122,107],[1168,107],[1168,158],[1122,158]]},
+        {"region":4,"note":"Small passage tree near pole","xy":[[1124,243],[1170,243],[1170,290],[1124,290]]}
+      ],
+      "intervention_polygon": {
+        "region": 1,
+        "note": "Manually selected target building surface; no prior-minus-MVS threshold and no change truth claim; clipped to observed building labels",
+        "xy": [
+          [
+            648,
+            29
+          ],
+          [
+            1040,
+            29
+          ],
+          [
+            1053,
+            1013
+          ],
+          [
+            652,
+            1013
+          ]
+        ]
+      }
+    },
+    {
+      "train_index": 4,
+      "name": "DJI_20241217091131_0108_D.JPG",
+      "coordinates": "Full input RGB 1400x1013 integer pixel coordinates; ordered polygons overwrite; manually inspected draft",
+      "default_region": 5,
+      "polygons": [
+        {
+          "region": 2,
+          "note": "Target vaulted and outer roof",
+          "xy": [
+            [
+              995,
+              0
+            ],
+            [
+              1390,
+              0
+            ],
+            [
+              1390,
+              903
+            ],
+            [
+              1002,
+              903
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Target side facade outside intervention roof polygon",
+          "xy": [
+            [
+              928,
+              0
+            ],
+            [
+              992,
+              0
+            ],
+            [
+              997,
+              889
+            ],
+            [
+              944,
+              841
+            ]
+          ]
+        },
+        {
+          "region": 2,
+          "note": "Western neighbouring roof incl permanent roof fittings",
+          "xy": [
+            [
+              0,
+              8
+            ],
+            [
+              739,
+              8
+            ],
+            [
+              746,
+              1013
+            ],
+            [
+              604,
+              1013
+            ],
+            [
+              593,
+              671
+            ],
+            [
+              0,
+              671
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Passage between buildings",
+          "xy": [
+            [
+              780,
+              8
+            ],
+            [
+              877,
+              8
+            ],
+            [
+              930,
+              50
+            ],
+            [
+              934,
+              700
+            ],
+            [
+              894,
+              739
+            ],
+            [
+              879,
+              839
+            ],
+            [
+              922,
+              864
+            ],
+            [
+              975,
+              899
+            ],
+            [
+              974,
+              908
+            ],
+            [
+              762,
+              908
+            ],
+            [
+              762,
+              841
+            ],
+            [
+              782,
+              724
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Southern road beyond parked curb",
+          "xy": [
+            [
+              772,
+              947
+            ],
+            [
+              1360,
+              947
+            ],
+            [
+              1360,
+              1013
+            ],
+            [
+              772,
+              1013
+            ]
+          ]
+        },
+        {
+          "region": 3,
+          "note": "Western clear road lane",
+          "xy": [
+            [
+              0,
+              952
+            ],
+            [
+              579,
+              952
+            ],
+            [
+              579,
+              989
+            ],
+            [
+              0,
+              989
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Yellow van",
+          "xy": [
+            [
+              846,
+              333
+            ],
+            [
+              933,
+              333
+            ],
+            [
+              933,
+              383
+            ],
+            [
+              846,
+              383
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Mobile containers and courtyard equipment",
+          "xy": [
+            [
+              842,
+              124
+            ],
+            [
+              918,
+              124
+            ],
+            [
+              918,
+              308
+            ],
+            [
+              842,
+              308
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Covered stored equipment",
+          "xy": [
+            [
+              840,
+              457
+            ],
+            [
+              902,
+              457
+            ],
+            [
+              902,
+              548
+            ],
+            [
+              840,
+              548
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Parked car",
+          "xy": [
+            [
+              756,
+              730
+            ],
+            [
+              789,
+              730
+            ],
+            [
+              789,
+              806
+            ],
+            [
+              756,
+              806
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Courtyard vegetation",
+          "xy": [
+            [
+              872,
+              745
+            ],
+            [
+              930,
+              736
+            ],
+            [
+              939,
+              843
+            ],
+            [
+              873,
+              844
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Southern parked cars",
+          "xy": [
+            [
+              982,
+              900
+            ],
+            [
+              1173,
+              900
+            ],
+            [
+              1173,
+              939
+            ],
+            [
+              982,
+              939
+            ]
+          ]
+        },
+        {
+          "region": 4,
+          "note": "Western courtyard trees and bicycles",
+          "xy": [
+            [
+              0,
+              692
+            ],
+            [
+              566,
+              692
+            ],
+            [
+              577,
+              915
+            ],
+            [
+              0,
+              927
+            ]
+          ]
+        }
+      ],
+      "intervention_polygon": {
+        "region": 1,
+        "note": "Manually selected target building surface; no prior-minus-MVS threshold and no change truth claim; clipped to observed building labels",
+        "xy": [
+          [
+            995,
+            0
+          ],
+          [
+            1390,
+            0
+          ],
+          [
+            1390,
+            903
+          ],
+          [
+            1002,
+            903
+          ]
+        ]
+      }
+    }
+  ]
+}

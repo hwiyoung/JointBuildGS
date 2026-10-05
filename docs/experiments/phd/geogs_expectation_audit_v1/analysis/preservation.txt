@@ -1,0 +1,29 @@
+task_id: PHD-GEOGS-EXPECTATION-AUDIT-v1
+scientific_verdict: null
+status: TRACKED_DIFF_UNCHANGED; 3_CONCURRENT_DOCUMENT_CHANGES_OBSERVED_AND_LEFT_IN_PLACE
+
+Before snapshot: /tmp/jbgs-geogs-expectation-before-20260910.sha256
+Existing PhD Markdown count: 251
+Unchanged at final check: 248
+Changed at final check: 3
+Tracked binary diff: byte-identical before/after (cmp exit 0)
+git diff --check: exit 0
+Static audit input files: 23, SHA unchanged across audit execution
+Report QA: PASS_REPORT_LINKS_AND_AUDIT_CONTRACT (3 Markdown files, 39 local links at initial QA)
+
+Concurrent document changes (not edited or reverted by this audit):
+docs/experiments/phd/geogs_p1p2p3_v1/SFM_NO_ANCHOR_HANDOFF_ko_v1.md
+ before d47220eef8545d48221a8c85211d8beb945b8d3a4567b66a434124f017b349c3
+ after  ec01bb61a66994c603a0fc607bb574d10ec4758d285731584f84095ea9d5b321
+ mtime  2026-09-10 01:07:02.832044074 +0900
+docs/experiments/phd/geogs_p1p2p3_v1/ISSUES_ko_v1.md
+ before 82044da592ae0fa920048c736e14102b17978a11e19247360b73c30df8e4068b
+ after  462084cad4a49fd4953fb19f81148a2a9772cddf43968addac098fcbe92cc2ae
+ mtime  2026-09-10 01:07:51.621794997 +0900
+docs/experiments/phd/geogs_p1p2p3_v1/SFM_NO_ANCHOR_EXECUTION_ko_v1.md
+ before eea91c52365b742af258cad41965d36785aa45cd5d3ea44582e5ac22ba7dc52a
+ after  a054e5a2e63480f09a70ffa2a4edf1416b77d2c1944c5abf5015ce8cad25a83e
+ mtime  2026-09-10 01:07:51.641796125 +0900
+
+This receipt records observed bytes at the check, not ownership or durability of concurrent changes.
+No existing file was restored, staged, or committed. No active service or training job was managed.

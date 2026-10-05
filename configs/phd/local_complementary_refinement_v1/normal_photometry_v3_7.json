@@ -1,0 +1,29 @@
+{
+  "schema": "jbgs.normal_photometry.config.v3.7",
+  "task_id": "PHD-LOCAL-NORMAL-PHOTOMETRY-v3.7",
+  "scope": "INTERNAL_FIT_DIAGNOSTIC",
+  "scientific_verdict": null,
+  "parent_attempt": "attempt_20260911T093732Z_WiqKix",
+  "parent_receipt_sha256": "9a45f274843a0e0525b4e57efa1d3501b13e8df3bf47315011dbe27ad69cd5e0",
+  "selection": "Reuse all eight parent case centers and all original selected train neighbors; no new ranking or selection by RGB, GT, or outcomes.",
+  "patch_sizes": [9, 17, 33],
+  "normal_fit_size": 9,
+  "normal_fit_minimum_fraction": 0.8,
+  "normal_source": "Same-source sampled camera-space depth, unweighted TLS orientation over fixed 9x9 patch. Plane offset anchored at original center depth. No independent normal evidence claimed.",
+  "holes": "Require valid center; retain raw per-ray validity. Missing normal is unavailable, with no fallback plane and no source-hole filling.",
+  "comparison": "Each size/view/pair uses intersection of both sources and both raw/plane projectable masks for all four costs. Single-source own-support scores are separate descriptive outputs.",
+  "score": "cost=(1-ZNCC)/2; grayscale 0.299R+0.587G+0.114B; population std on identical mask; numeric flat epsilon 1e-12",
+  "diagnostic_gates": {
+    "minimum_fraction": 0.8,
+    "texture_std": 0.02,
+    "texture_sensitivity": [0.01, 0.02, 0.04],
+    "cost_margin": 0.02,
+    "minimum_views": 2,
+    "consistent_fraction": 0.75,
+    "meaning": "Pre-run development reading aids, not learned accuracy thresholds, supervision weights, source correctness, or execution authority. No absolute fit threshold has been calibrated."
+  },
+  "visibility_status": "unknown",
+  "weights_computed": false,
+  "training_execution_ready": false,
+  "gt_input": false
+}

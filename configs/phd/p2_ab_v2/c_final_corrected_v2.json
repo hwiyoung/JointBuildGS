@@ -1,0 +1,27 @@
+{
+  "task_id": "PHD-P2-AB-V2-C-FINAL-CORRECTED",
+  "artifact_root": "/artifacts/JointBuildGS",
+  "common": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-COMMON-v1",
+  "reference": "phase-payloads/phd/p2_ab_v1/PHD-P2-AB-COMMON-v2/evaluation_v2",
+  "b_runs": [
+    "PHD-P2-AB-V2-B-CORRECTED-NATIVE-v1",
+    "PHD-P2-AB-V2-B-CORRECTED-REPRESENTATION-v1",
+    "PHD-P2-AB-V2-B-CORRECTED-PRIOR-SHIFT-v1"
+  ],
+  "exclude_arms": [],
+  "required_geometry_contract": "independent_plane_hit_v1",
+  "geometry_adapter_manifest": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-v2/adapter_manifest.json",
+  "geometry_adapter_audit": "phase-payloads/phd/p2_ab_v2/PHD-P2-AB-V2-B-GEOMETRY-ADAPTER-AUDIT-v3/corrected/audit.json",
+  "expected_eval_image_ids": [542, 435, 331, 555, 427, 412, 333, 543, 338, 394, 361],
+  "expected_arms": {
+    "PHD-P2-AB-V2-B-CORRECTED-NATIVE-v1": ["geometry_fixed", "color_fixed", "prior_free", "soft_prior_weak", "soft_prior", "soft_prior_strong", "structured_detail", "image_only"],
+    "PHD-P2-AB-V2-B-CORRECTED-REPRESENTATION-v1": ["geometry_fixed", "structured_detail"],
+    "PHD-P2-AB-V2-B-CORRECTED-PRIOR-SHIFT-v1": ["prior_free", "structured_detail"]
+  },
+  "prior_anchor": "PHD-P2-AB-V2-B-CORRECTED-NATIVE-v1/geometry_fixed",
+  "c_geometry_run": "PHD-P2-AB-V2-C-GEOMETRY-CORRECTED-v1",
+  "c_appearance_run": "PHD-P2-AB-V2-C-APPEARANCE-CORRECTED-v1",
+  "c_viewer_run": "PHD-P2-AB-V2-VIEWER-CORRECTED-v1",
+  "prior_runs_status": "Preserved but excluded: old geometry adapter mixed screen-only low-pass contributions into ray-plane geometry auxiliaries, affecting depth, masks and geometry losses. This correction is not selected from UAS scores.",
+  "scientific_verdict": null
+}

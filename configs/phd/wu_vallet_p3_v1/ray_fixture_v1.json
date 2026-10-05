@@ -1,0 +1,60 @@
+{
+  "task_id": "PHD-WV26-RAY-FIXTURE-v1",
+  "scientific_verdict": null,
+  "scope": "synthetic_paper_based_sampled_ray_component_not_real_P3",
+  "coordinate_frame": "SYNTHETIC_LOCAL_CARTESIAN",
+  "units": "metres",
+  "crs": null,
+  "output_root": "/artifacts/JointBuildGS/phase-payloads/phd/wu_vallet_p3_v1/PHD-WV26-RAY-FIXTURE-v1",
+  "algorithm": {
+    "distance_tolerance_m": 0.1,
+    "ray_sampling": "vertices_and_centroid",
+    "check_source_visibility": true,
+    "numeric_epsilon": 1e-9,
+    "bvh_leaf_faces": 16
+  },
+  "optical_origin_height_m": 10.0,
+  "square_size_m": 1.0,
+  "scenes": [
+    {
+      "id": "unchanged_ground",
+      "old_surfaces": [{"x": 0, "y": 0, "z": 0}],
+      "new_surfaces": [{"x": 0, "y": 0, "z": 0.02}],
+      "expected": {"retained_old_vertices": 4, "admitted_new_vertices": 0, "output_points": 4}
+    },
+    {
+      "id": "demolished_roof",
+      "old_surfaces": [{"x": 0, "y": 0, "z": 2}],
+      "new_surfaces": [{"x": 0, "y": 0, "z": 0}],
+      "expected": {"retained_old_vertices": 0, "admitted_new_vertices": 4, "output_points": 4}
+    },
+    {
+      "id": "new_construction_fig6_policy",
+      "old_surfaces": [{"x": 0, "y": 0, "z": 0}],
+      "new_surfaces": [{"x": 0, "y": 0, "z": 2}],
+      "expected": {"retained_old_vertices": 0, "admitted_new_vertices": 4, "output_points": 4}
+    },
+    {
+      "id": "single_coverage",
+      "old_surfaces": [{"x": 0, "y": 0, "z": 0}],
+      "new_surfaces": [{"x": 3, "y": 0, "z": 1}],
+      "expected": {"retained_old_vertices": 4, "admitted_new_vertices": 4, "output_points": 8}
+    },
+    {
+      "id": "mixed_scene",
+      "old_surfaces": [
+        {"x": 0, "y": 0, "z": 0},
+        {"x": 3, "y": 0, "z": 2},
+        {"x": 6, "y": 0, "z": 0},
+        {"x": 9, "y": 0, "z": 1}
+      ],
+      "new_surfaces": [
+        {"x": 0, "y": 0, "z": 0.02},
+        {"x": 3, "y": 0, "z": 0},
+        {"x": 6, "y": 0, "z": 2},
+        {"x": 12, "y": 0, "z": 1}
+      ],
+      "expected": {"retained_old_vertices": 8, "admitted_new_vertices": 12, "output_points": 20}
+    }
+  ]
+}
