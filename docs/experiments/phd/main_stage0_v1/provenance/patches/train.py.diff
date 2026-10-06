@@ -1,0 +1,10 @@
+--- r11/train.py
++++ r12/train.py
+@@ -1393,6 +1393,7 @@
+ 
+     # Initialize system state (RNG)
+     safe_state(args.quiet)
++    jbgs_judgment.apply_seed(args)  # [jbgs_judgment r12] --jbgs_seed (0 = safe_state's seed)
+ 
+     # Start GUI server, configure and run training
+     network_gui.init(args.ip, args.port)

@@ -1,0 +1,140 @@
+{
+ "task_id": "PHD-MAIN-STAGE0-v1",
+ "fork": "r12",
+ "parent": "src/phd/forks/GeoGS-conf-guided-v1-r11",
+ "out": "src/phd/forks/GeoGS-conf-guided-v1-r12",
+ "built_at": "2026-10-06T05:00:04.028705+00:00",
+ "repo_commit": "205bc2b07a7ec85858c33ba3aeecc8d644925597 + uncommitted 5.1 files",
+ "n_files": 102,
+ "changed_or_added": {
+  "jbgs_judgment.py": {
+   "r11": "87f490be3dfedcb8eedea090b6a52fc6fe0fa754616afc3798c1ce233da9f6b6",
+   "r12": "8e0484edea3a0ca668c2ce4658df075d81748822b8b7d54a6c3385ee05d11b69"
+  },
+  "src/phd/prior_propagation_v6/caps.py": {
+   "r11": null,
+   "r12": "bc0b53fb6b16092a041ecc016b5103af7188c8e82890fcc24d4de58315e8c92b"
+  },
+  "src/phd/prior_propagation_v6/conversion.py": {
+   "r11": null,
+   "r12": "2899076f8d90ecdb7e06ce3407fa84ab94caff81c65adc5c003b53dc6625b3af"
+  },
+  "src/phd/prior_propagation_v6/faces.py": {
+   "r11": null,
+   "r12": "747644ec6957a530aa185fcac6fc37a8a13bf9d2daf04910c1546a3c3eb84359"
+  },
+  "src/phd/prior_propagation_v6/locations.py": {
+   "r11": null,
+   "r12": "aecb9859bf4f66e041fbb6090d029624c7740d3e4654eeaa522ef2bbf556f2e6"
+  },
+  "src/phd/prior_propagation_v6/orientation.py": {
+   "r11": null,
+   "r12": "edd9539ac4110273aa67618fdd700a7eb71be40956bb2ecf8a004f8c0b852e57"
+  },
+  "src/phd/prior_propagation_v6/outlines.py": {
+   "r11": null,
+   "r12": "6d99f2c62433052eed3cbb32d13c593270ae3989f01ce22fb02c12d8f3c08a5b"
+  },
+  "src/phd/prior_propagation_v6/registration.py": {
+   "r11": null,
+   "r12": "a103741bbcc55d4c3726f7a7a3a5a5b6a1e99a4c6d44c111336bc5369dca5e22"
+  },
+  "src/phd/prior_propagation_v6/rule.py": {
+   "r11": null,
+   "r12": "c889de5c951432ff51394938d321a3146e4c9c366e47c9576ff826f01fd74b50"
+  },
+  "src/phd/prior_propagation_v6/rules.py": {
+   "r11": null,
+   "r12": "83cbdc6460c64acdc1898c10f24a528d7372eeb241e2e00bd297c176930db563"
+  },
+  "src/phd/prior_propagation_v6/seat.py": {
+   "r11": null,
+   "r12": "a1a97aee79c35cbadbf22ad3282c5838887251e8d6b46986576748b764c0efc6"
+  },
+  "src/phd/prior_propagation_v6/surfaces.py": {
+   "r11": null,
+   "r12": "aac55f8caf2272a97a9c35bab708ac15930ff36be99a82e6e7e6282b06d1122d"
+  },
+  "src/phd/prior_propagation_v6/switches.py": {
+   "r11": null,
+   "r12": "03a1d70476d5a7bde2c5ae66403d63e424bd6bc450c1675c67d3f9be8933b54e"
+  },
+  "src/phd/prior_propagation_v6/tallies.py": {
+   "r11": null,
+   "r12": "d95327d23876905a32c4cbcef422b9b3a19025d816875f8ba866dd239d598866"
+  },
+  "src/phd/prior_propagation_v6/tolerance.py": {
+   "r11": null,
+   "r12": "9dbb1421b657dc2686cd6ad64300483553664463cc3036419caab33cf50808ec"
+  },
+  "train.py": {
+   "r11": "daa279b99566fc0085ae3c429ea966971aec54521af6927d8512fc7648e7c91e",
+   "r12": "9203ec68b328bf244bef316c748a60a116af0f63e46d4fc8b6b4fc1d0a7974a7"
+  }
+ },
+ "removed": [],
+ "shared_module_v6": {
+  "caps.py": {
+   "repo": "bc0b53fb6b16092a041ecc016b5103af7188c8e82890fcc24d4de58315e8c92b",
+   "fork": "bc0b53fb6b16092a041ecc016b5103af7188c8e82890fcc24d4de58315e8c92b"
+  },
+  "conversion.py": {
+   "repo": "2899076f8d90ecdb7e06ce3407fa84ab94caff81c65adc5c003b53dc6625b3af",
+   "fork": "2899076f8d90ecdb7e06ce3407fa84ab94caff81c65adc5c003b53dc6625b3af"
+  },
+  "faces.py": {
+   "repo": "747644ec6957a530aa185fcac6fc37a8a13bf9d2daf04910c1546a3c3eb84359",
+   "fork": "747644ec6957a530aa185fcac6fc37a8a13bf9d2daf04910c1546a3c3eb84359"
+  },
+  "locations.py": {
+   "repo": "aecb9859bf4f66e041fbb6090d029624c7740d3e4654eeaa522ef2bbf556f2e6",
+   "fork": "aecb9859bf4f66e041fbb6090d029624c7740d3e4654eeaa522ef2bbf556f2e6"
+  },
+  "orientation.py": {
+   "repo": "edd9539ac4110273aa67618fdd700a7eb71be40956bb2ecf8a004f8c0b852e57",
+   "fork": "edd9539ac4110273aa67618fdd700a7eb71be40956bb2ecf8a004f8c0b852e57"
+  },
+  "outlines.py": {
+   "repo": "6d99f2c62433052eed3cbb32d13c593270ae3989f01ce22fb02c12d8f3c08a5b",
+   "fork": "6d99f2c62433052eed3cbb32d13c593270ae3989f01ce22fb02c12d8f3c08a5b"
+  },
+  "registration.py": {
+   "repo": "a103741bbcc55d4c3726f7a7a3a5a5b6a1e99a4c6d44c111336bc5369dca5e22",
+   "fork": "a103741bbcc55d4c3726f7a7a3a5a5b6a1e99a4c6d44c111336bc5369dca5e22"
+  },
+  "rule.py": {
+   "repo": "c889de5c951432ff51394938d321a3146e4c9c366e47c9576ff826f01fd74b50",
+   "fork": "c889de5c951432ff51394938d321a3146e4c9c366e47c9576ff826f01fd74b50"
+  },
+  "rules.py": {
+   "repo": "83cbdc6460c64acdc1898c10f24a528d7372eeb241e2e00bd297c176930db563",
+   "fork": "83cbdc6460c64acdc1898c10f24a528d7372eeb241e2e00bd297c176930db563"
+  },
+  "seat.py": {
+   "repo": "a1a97aee79c35cbadbf22ad3282c5838887251e8d6b46986576748b764c0efc6",
+   "fork": "a1a97aee79c35cbadbf22ad3282c5838887251e8d6b46986576748b764c0efc6"
+  },
+  "surfaces.py": {
+   "repo": "aac55f8caf2272a97a9c35bab708ac15930ff36be99a82e6e7e6282b06d1122d",
+   "fork": "aac55f8caf2272a97a9c35bab708ac15930ff36be99a82e6e7e6282b06d1122d"
+  },
+  "switches.py": {
+   "repo": "03a1d70476d5a7bde2c5ae66403d63e424bd6bc450c1675c67d3f9be8933b54e",
+   "fork": "03a1d70476d5a7bde2c5ae66403d63e424bd6bc450c1675c67d3f9be8933b54e"
+  },
+  "tallies.py": {
+   "repo": "d95327d23876905a32c4cbcef422b9b3a19025d816875f8ba866dd239d598866",
+   "fork": "d95327d23876905a32c4cbcef422b9b3a19025d816875f8ba866dd239d598866"
+  },
+  "tolerance.py": {
+   "repo": "9dbb1421b657dc2686cd6ad64300483553664463cc3036419caab33cf50808ec",
+   "fork": "9dbb1421b657dc2686cd6ad64300483553664463cc3036419caab33cf50808ec"
+  }
+ },
+ "fork_r12_sources": {
+  "jbgs_judgment.py": "8e0484edea3a0ca668c2ce4658df075d81748822b8b7d54a6c3385ee05d11b69",
+  "train.py": "9203ec68b328bf244bef316c748a60a116af0f63e46d4fc8b6b4fc1d0a7974a7"
+ },
+ "only_expected_changes": true,
+ "scientific_verdict": null
+}

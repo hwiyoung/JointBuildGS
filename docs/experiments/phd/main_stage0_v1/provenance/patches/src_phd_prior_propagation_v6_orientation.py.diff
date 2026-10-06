@@ -1,0 +1,127 @@
+--- r11/src/phd/prior_propagation_v6/orientation.py
++++ r12/src/phd/prior_propagation_v6/orientation.py
+@@ -0,0 +1,124 @@
++"""Initial orientation of the prior-origin Gaussians (prior_propagation_v3, PHD-STAGE2-R9-THREE-FIXES-v1).
++numpy, or torch where a function is given tensors (the training fork calls quat_from_normal with tensors).
++
++Method document 2026-10-01 (r8 review) 4.3: a prior-origin Gaussian starts with its flat ellipse on the prior face: its
++normal (the axis perpendicular to its two tangent axes) is the normal of the prior face its point lies on, signed
++outward (roofs and ground up, walls out of the building):
++  LoD2               the face the point was drawn from (the caller gives that face's outward normal)
++  airborne LiDAR TIN the point is a vertex of the TIN; tin_vertex_normals: the area-weighted mean normal of the incident
++                     triangles of the surface the vertex is seated on (its patch surface); a vertex without a seat (ground,
++                     steep triangles) uses its incident triangles of the kind (gentle / steep) with the larger incident
++                     area. TIN normals point up (n_z >= 0), the outward side of a height field (walls: away from the
++                     building, since the height drops outward)
++The angle about the normal is not fixed by the document (implementation choice): the first tangent axis is the
++horizontal line of the face, e1 = z x n / |z x n| (the x axis on a horizontal face), the axes of the cell grid of
++locations._plane_axes, and e2 = n x e1. The base implementation starts every disk with equal scales on its two tangent
++axes (a round disk), so this angle does not change the initial shape.
++Quaternion convention of the GeoGS / 2DGS GaussianModel: q = (w, x, y, z); build_rotation(q)[:, :, k] is the k-th axis,
++the third column (k = 2) is the disk normal (the surfel rasteriser's L[2])."""
++import numpy as np
++
++from .surfaces import tri_geometry
++
++
++def _is_torch(a):
++    return type(a).__module__.split(".")[0] == "torch"
++
++
++def tangent_frame(n):
++    """(e1, e2) for unit normals n [N, 3] (numpy or torch)."""
++    if _is_torch(n):
++        import torch
++        h = torch.sqrt(n[:, 0] ** 2 + n[:, 1] ** 2)
++        e1 = torch.stack([-n[:, 1], n[:, 0], torch.zeros_like(n[:, 0])], 1) / h.clamp_min(1e-12)[:, None]
++        flat = h < 1e-6
++        e1[flat] = torch.tensor([1.0, 0.0, 0.0], dtype=n.dtype, device=n.device)
++        e2 = torch.cross(n, e1, dim=1)
++        return e1, e2 / e2.norm(dim=1, keepdim=True).clamp_min(1e-12)
++    n = np.asarray(n, np.float64)
++    h = np.sqrt(n[:, 0] ** 2 + n[:, 1] ** 2)
++    e1 = np.stack([-n[:, 1], n[:, 0], np.zeros(len(n))], 1) / np.maximum(h, 1e-12)[:, None]
++    e1[h < 1e-6] = [1.0, 0.0, 0.0]
++    e2 = np.cross(n, e1)
++    return e1, e2 / np.maximum(np.linalg.norm(e2, axis=1, keepdims=True), 1e-12)
++
++
++def quat_from_frame(e1, e2, n):
++    """unit quaternions (w, x, y, z) of the rotations with columns (e1, e2, n) (Shepperd's method; numpy or torch)."""
++    t = _is_torch(n)
++    if t:
++        import torch
++        sqrt, where, stack = torch.sqrt, torch.where, (lambda xs: torch.stack(xs, 1))
++    else:
++        sqrt, where, stack = np.sqrt, np.where, (lambda xs: np.stack(xs, 1))
++    R00, R10, R20 = e1[:, 0], e1[:, 1], e1[:, 2]
++    R01, R11, R21 = e2[:, 0], e2[:, 1], e2[:, 2]
++    R02, R12, R22 = n[:, 0], n[:, 1], n[:, 2]
++    tr = R00 + R11 + R22
++
++    def s_(x):
++        return 2.0 * sqrt(x.clamp_min(1e-12) if t else np.maximum(x, 1e-12))
++    s0 = s_(tr + 1.0); s1 = s_(1.0 + R00 - R11 - R22); s2 = s_(1.0 + R11 - R00 - R22); s3 = s_(1.0 + R22 - R00 - R11)
++    q0 = stack([0.25 * s0, (R21 - R12) / s0, (R02 - R20) / s0, (R10 - R01) / s0])
++    q1 = stack([(R21 - R12) / s1, 0.25 * s1, (R01 + R10) / s1, (R02 + R20) / s1])
++    q2 = stack([(R02 - R20) / s2, (R01 + R10) / s2, 0.25 * s2, (R12 + R21) / s2])
++    q3 = stack([(R10 - R01) / s3, (R02 + R20) / s3, (R12 + R21) / s3, 0.25 * s3])
++    c0 = (tr > 0)[:, None]
++    c1 = ((R00 > R11) & (R00 > R22))[:, None]
++    c2 = (R11 > R22)[:, None]
++    q = where(c0, q0, where(c1, q1, where(c2, q2, q3)))
++    nq = q.norm(dim=1, keepdim=True).clamp_min(1e-12) if t else np.maximum(np.linalg.norm(q, axis=1, keepdims=True), 1e-12)
++    return q / nq
++
++
++def quat_from_normal(n):
++    """unit quaternions whose third axis is n (unit normals [N, 3]) and whose first axis is the face's horizontal line."""
++    e1, e2 = tangent_frame(n)
++    return quat_from_frame(e1, e2, n)
++
++
++def axes_of_quat(q):
++    """(first axis, second axis, normal) of quaternions (w, x, y, z), the columns of build_rotation (numpy or torch)."""
++    if _is_torch(q):
++        q = q / q.norm(dim=1, keepdim=True).clamp_min(1e-12)
++        import torch
++        stack = lambda xs: torch.stack(xs, 1)  # noqa: E731
++    else:
++        q = np.asarray(q, np.float64); q = q / np.maximum(np.linalg.norm(q, axis=1, keepdims=True), 1e-12)
++        stack = lambda xs: np.stack(xs, 1)  # noqa: E731
++    w, x, y, z = q[:, 0], q[:, 1], q[:, 2], q[:, 3]
++    a1 = stack([1 - 2 * (y * y + z * z), 2 * (x * y + w * z), 2 * (x * z - w * y)])
++    a2 = stack([2 * (x * y - w * z), 1 - 2 * (x * x + z * z), 2 * (y * z + w * x)])
++    a3 = stack([2 * (x * z + w * y), 2 * (y * z - w * x), 1 - 2 * (x * x + y * y)])
++    return a1, a2, a3
++
++
++def normal_of_quat(q):
++    return axes_of_quat(q)[2]
++
++
++def tin_vertex_normals(V, F, tri_surface, vertex_seat, steep_nz=0.5):
++    """(normals [Nv, 3] up-oriented unit vectors, rule [Nv] int8: 1 = seat surface triangles, 2 = gentle triangles of a
++    vertex without a seat, 3 = steep triangles of a vertex without a seat, 0 = no incident triangle) for the vertices of a
++    TIN. tri_surface [T] the surface numbers (surfaces.tin_surfaces), vertex_seat [Nv] the surface a vertex is seated on
++    (surfaces.vertex_surface; -1 = none)."""
++    V = np.asarray(V, np.float64); F = np.asarray(F, np.int64); ts = np.asarray(tri_surface, np.int64)
++    seat = np.asarray(vertex_seat, np.int64)
++    n, a = tri_geometry(V, F)
++    n = np.where(n[:, 2:3] < 0, -n, n)
++    gentle = np.abs(n[:, 2]) >= steep_nz
++    nv = len(V)
++    vv = F.reshape(-1); tt = np.repeat(np.arange(len(F)), 3)
++    ag = np.bincount(vv, weights=a[tt] * gentle[tt], minlength=nv)
++    ast = np.bincount(vv, weights=a[tt] * ~gentle[tt], minlength=nv)
++    seated = seat[vv] >= 0
++    use_gentle = ag >= ast
++    take = np.where(seated, ts[tt] == seat[vv], gentle[tt] == use_gentle[vv])
++    w = a[tt] * take
++    S = np.stack([np.bincount(vv, weights=w * n[tt, k], minlength=nv) for k in range(3)], 1)
++    nrm = np.linalg.norm(S, axis=1)
++    out = S / np.maximum(nrm, 1e-300)[:, None]
++    rule = np.where(seat >= 0, 1, np.where(use_gentle, 2, 3)).astype(np.int8)
++    rule[nrm <= 0] = 0
++    out[nrm <= 0] = [0.0, 0.0, 1.0]
++    return out, rule

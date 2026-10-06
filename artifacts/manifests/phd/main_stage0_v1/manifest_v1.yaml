@@ -1,0 +1,48 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-MAIN-STAGE0-v1
+status: IN_PROGRESS_5_1_TO_5_3_DONE_STAGE0_TRAINING_RUNNING
+scientific_verdict: null
+branch: exp/main-experiment   # worktree ../JointBuildGS-exp; the operator worktree was not modified
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1
+  durability: local external storage; not a durable-backup claim
+report: docs/experiments/phd/main_stage0_v1/본실험준비_0단계_보고서_v1.md
+figures: docs/experiments/phd/main_stage0_v1/figures/
+provenance: docs/experiments/phd/main_stage0_v1/provenance/   # fork r12 build report and patches against r11
+config: configs/phd/main_stage0_v1/stage0_v1.json   # written 2026-10-06 13:39 KST before any computation of the task (sha256 f1e03da676fe...)
+configs_read:
+  - configs/phd/main_prep_measure_v1/prep_v5.json          # frame, stage-1 and GT rules (locked)
+  - configs/phd/main_prep_discard_rule_v1/discard_v1.json  # switches' expected outputs, B0 pool
+  - configs/phd/main_prep_discard_rule_v1/sites_v1.json    # representative sites (B173 wings, middle)
+scripts: scripts/phd/main_stage0_v1/
+module: src/phd/prior_propagation_v6/   # = v5 + locations.move_store / frame_shift + rules.default_rule / resolve; v5 kept
+tests: tests/phd/test_prior_propagation_v6.py
+training_code: src/phd/forks/GeoGS-conf-guided-v1-r12/   # built from the committed r11 by scripts/phd/main_stage0_v1/build_fork_r12.py (fork_r12/ = the two changed files)
+upstream:
+  - artifacts/manifests/phd/main_prep_measure_v1/manifest_v1.yaml        # /prep: box ranges and views, box MVS, box GT
+  - artifacts/manifests/phd/main_prep_discard_rule_v1/manifest_v1.yaml   # /dr: s02_box, s52 (range runs = fixed values, box runs v5, box GT), rules/decisions, fork_runs/s52 (r11)
+docker_images:
+  - jointbuildgs:dev                     # measurement, labels, checks, figures (CPU)
+  - jointbuildgs:geogs-conf-guided-v1    # fork r12 initialisations, trainings, renders, TSDF
+  - colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf   # MVS of the new B0 conditions
+constraints: Docker, network off, inputs read-only, at most three Docker jobs; criteria written before results and not changed
+payload_files:
+  progress.md: progress record (tasks, training every 1,000 iterations, expected end)
+  s61/box/, s61/box_maskoff/, s61/box_gt/: 5.1 v6 stage 1 of the four boxes (moved store, default rules, per-patch MVS residual medians), the switch site with the confidence mask off, v6 labels and GT-point ownership
+  s61/export/, s61/export_maskoff/: per-view maps read by the fork
+  s61/box_gt_v5code/: labels of the v5 code on the same (float32) GT points (splits the label changes)
+  fork_inputs/s61/: fork r12 inputs per box
+  fork_runs/s61/: r12 initialisations (4 boxes x 2 priors, ALS also rule current, 7 switches x 2 priors at B173nb_b10)
+  fork_checks/s61.json: same-judgment check, r11 equality (LoD2), switch table
+  compare51/: v5 vs v6 decomposition (store fix, rule default) and label counts
+  mvs_lists/, mvs/B0_N13|N8|N2: 5.2 re-selected B0 conditions and their MVS (COLMAP receipts)
+  b0_conditions_v2.json: selection order, coverage, start pair
+  s62/, s62_gt/: 5.2 stage 1 (v6) and labels of the seven B0 conditions
+  regions/: 5.3 agreement regions per site x prior (npz), summary json / csv
+  stage0/fig_defs.json: figure views and section planes, fixed before training
+  stage0/b<k>_<prior>/: 5.4 trainings (model, monitor, receipt, post: renders, TSDF mesh)
+  quick/: 5.4 quick GT check
+  tables/, figs/: tables and figure sources
+  logs/: queue.log, step logs, git state at the training start
+  receipt_task.json: commit, uncommitted files, image ids, hashes, step times

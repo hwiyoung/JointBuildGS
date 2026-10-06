@@ -1,0 +1,149 @@
+{
+ "version": "stage0_v1",
+ "task_id": "PHD-MAIN-STAGE0-v1",
+ "written": "2026-10-06 13:4x KST, before any computation of this task (the file time and sha256 go to progress.md and the receipt)",
+ "scientific_verdict": null,
+ "order": "본 실험 준비와 첫 시험 학습(0단계) 발주문 PHD-MAIN-STAGE0-v1 (2026-10-06)",
+ "parents": {
+  "PHD-MAIN-PREP-MEASURE-v1": "../JointBuildGS-artifacts/phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1 (read-only /prep): box ranges and views, box MVS, box GT, step01",
+  "PHD-MAIN-PREP-DISCARD-RULE-v1": "../JointBuildGS-artifacts/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1 (read-only /dr): s02_box meshes and stores, s52/s03 range runs (fixed values), s52/box v5 runs, s52/box_gt, rules/decisions, fork_runs/s52 (r11), mvs/B0, b0_conditions.json, diag/",
+  "PHD-REPO-BRANCH-SETUP-v1": "exp/main-experiment commit 205bc2b0: module v5, fork r11 (src/phd/forks/GeoGS-conf-guided-v1-r11, submodules excluded; compiled in the image)"
+ },
+ "user_decisions_1006": {
+  "discard_rule": "LoD2 = current (conflict beyond 1 tau); airborne LiDAR and DSM = margin_all_2 (conflict only beyond 2 tau, measured and unmeasured patches alike)",
+  "patch_store_mismatch": "fix as recommended in the decision request v1 item 'da' (option 1), for the measurement and the training alike",
+  "b0_nadir_conditions": "re-select with the rule that only adds views overlapping the views already chosen (decision request v1 item 'na', option 3 = 'config v2')",
+  "agreement_region": "patches where both sources are right, fixed before results; completeness against image-only, detail accuracy against prior-as-is and always-trust (research question 2)",
+  "stages": "stage 0 = 2 trial trainings (here two batches = 4) -> stage 1 (22) -> stage 2 (9) -> stage 3 (18); decided stage by stage",
+  "stage0": "site B173nb_b10, the method with both priors (LoD2, airborne LiDAR), 30,000 iterations, all switches on; batch 1 one seed, batch 2 another seed only without a stop signal in batch 1; the four trainings go into stage 1 if they run well",
+  "versions": "fixed code under new names (module v6, fork r12); v5 and r11 stay runnable"
+ },
+ "module_v6": {
+  "path": "src/phd/prior_propagation_v6 (= v5 copied; changed: locations.py, rules.py; the other twelve files byte-identical to v5)",
+  "store_fix": {
+   "what_v5_did": "stage 1 looked the ray hits on the registered prior (prior moved by the registration shift) up in the patch store built on the unregistered prior; labels (s04), the ALS seats of the counting and the fork's seating / cell samples did the same",
+   "v6_rule": "the store is moved with the registered prior (locations.move_store(store, shift): o, loc_center and rect + shift; key frame_shift records it). Every lookup of a point of the registered prior (stage-1 pass 3, unplanted points, labels, counting seats, fork seating, re-read cell samples) uses the moved store. Equivalent to v5's diagnostic --locate-unshifted (lookup at X - shift). Cells, their surfaces, areas, the graph and the propagation are unchanged; loc_in_range and evaluation masks use the moved centres",
+   "applies_to": "runs with a non-zero registration shift: airborne LiDAR B0 (crop values), B173nb_b10 and B173_b0 (R2 values); LoD2 has no shift anywhere and R1rep ALS has none -> identical to v5"
+  },
+  "rule_defaults": {
+   "by_prior_kind": {"LoD2": "current", "ALS": "margin_all_2", "DSM": "margin_all_2"},
+   "configurable": "measurement: s03_stage1_v6.py --rule <name|auto>; fork r12: --jbgs_rule <name|auto> (auto = rules.default_rule of the prior kind)",
+   "loss_band": "tau in every rule (unchanged)",
+   "labels": "true labels always at the base tau (|GT - prior| <= tau agree), never the rule's scaled tau"
+  }
+ },
+ "fork_r12": {
+  "path": "src/phd/forks/GeoGS-conf-guided-v1-r12, built from the committed r11 by scripts/phd/main_stage0_v1/build_fork_r12.py (files in fork_r12/ next to it; build report docs/experiments/phd/main_stage0_v1/provenance/build_report_r12.json)",
+  "changes": [
+   "imports src/phd/prior_propagation_v6 (copied at build time, sha256 checked); v5 and v3 stay in the tree unused",
+   "--jbgs_rule default 'auto' = rules.default_rule(prior kind); --jbgs_prior_kind (LoD2 / ALS / DSM; default: the store's prior_kind) ",
+   "the store given by --jbgs_prop_store is the moved store of the v6 measurement (frame_shift recorded; checked against --jbgs_prior_shift when given)",
+   "--jbgs_seed (default 0 = r11: safe_state's seed 0; another value re-seeds random / numpy / torch right after safe_state)",
+   "records only: seconds of every re-read (E.jsonl), of the initialisation (init_report / meta), of the read-outs; share of prior-origin Gaussians with opacity >= 0.5 and max_memory_reserved in scalars.jsonl"
+  ],
+  "unchanged": "losses, g_p, u_i, protection, density control, the seven switches (--jbgs_sw_<name>), the re-read and the base GeoGS / 2DGS optimisation"
+ },
+ "check_51": {
+  "sites": ["B0_b10", "B173nb_b10", "B173_b0", "R1rep_b10"],
+  "inputs": "box MVS of the prep measure (training images only), box meshes / stores of the discard task (s02_box), fixed values of the discard task's range runs: B0_b10 <- s52/s03/B0, B173nb_b10 and B173_b0 <- s52/s03/R2, R1rep_b10 <- s52/s03/R1 (as the discard task's s52/box)",
+  "runs": "s03_stage1_v6 per box x prior (rule auto), labels s04_gt_v6 (GT points / exclusion / alignment of the discard task's s52/box_gt, labels re-made with the moved store), fork inputs v6, r12 dry initialisation (rule auto) per box x prior; for the ALS boxes also r12 with --jbgs_rule current",
+  "decomposition": {
+   "store_fix": "v6 with rule current against v5 with rule current (discard task s52/box units and rules/decisions 'current')",
+   "rule_default": "v6 with the default rule against v6 with rule current (same run, rules.apply on its tallies)",
+   "also": "v6 margin_all_2 against v5 margin_all_2 (rules/decisions) = the store fix under the new rule"
+  },
+  "counted": "patches of the box (all) and of the box evaluation range; changed states, votes, propagated judgments and discard decisions; unplanted points; with labels (v5 labels for v5 decisions, v6 labels for v6 decisions; same counting as the discard task's rules_eval: wrong discard = discarded true agree, wrong keep = kept true conflict, invisible apart, roof / wall, measured / unmeasured)",
+  "stop_rule": "stop and ask when (a) any LoD2 box or R1rep ALS differs from v5 in any state / vote / judgment / discard (no shift there), or (b) for an ALS box with a shift the store fix changes the discard decision of more than 3 % of the judged patches (support + missing) of the box (expected 0.5-1.5 % from the discard task's diagnostic), under rule current or margin_all_2",
+  "fork_check": "r12's states, votes, propagated judgments, patch judgments and unplanted points equal the v6 measurement's (rule auto and, ALS, rule current); LoD2: r12 outputs equal r11's s52 runs element-wise",
+  "switch_site": "B173nb_b10 (the stage-0 site), both priors, each of the seven switches off alone (rule auto); expected changed outputs = discard_v1.json switches.expected_changed_outputs; pass = no unexpected change"
+ },
+ "b0_conditions_v2": {
+  "rule_source": "decision request v1 (docs/experiments/phd/main_prep_discard_rule_v1/버리는기준_결정요청_v1.md) 2 'na' option 3, chosen by the user on 2026-10-06; written here as the config v2 the order refers to (no v2 file existed before)",
+  "pool": "the COVER training views (prep step01/b0.json, 209 = 40 nadir + 169 oblique; nadir = tilt <= 20 degrees)",
+  "counts": {"N13": {"train": 13, "nadir": 2, "oblique": 11}, "N8": {"train": 8, "nadir": 2, "oblique": 6}, "N2": {"train": 2, "nadir": 1, "oblique": 1}},
+  "shared_points": "3-D points of the 937-image sparse model observed in both views (COLMAP images.bin point ids); a pair overlaps when it shares >= 29 points (the author A3 pair)",
+  "selection": "1) start pair = the (nadir, oblique) pair sharing >= 29 points with the largest number of target-building patches seen by either view (ties: lexicographic order of the two names); 2) then add views one by one, first nadir views up to the nadir count, then oblique views: a candidate must share >= 29 points with at least one view already chosen; take the candidate adding the most not-yet-seen target patches (ties: name order). Target patches and visibility = discard_v1 b0_conditions (LoD2 patches of DEBY_LOD2_4959323, visibility pairs of the prep COVER stage-1 run, prior render only)",
+  "mvs": "training images only, the pinned COLMAP image colmap/colmap@sha256:187ca5ec98e5... and the settings of the discard task (geom_consistency, max_image_size 1024, 3 iterations, filter)",
+  "mvs_stands": "a condition's MVS stands when at least 2 training views and at least half of its training views get a geometric depth map; otherwise stop and ask",
+  "fixed_values": "tolerance and registration = the B0 crop values of the discard task (s52/s03/B0: LoD2 roof 0.198 / wall 0.547 m, no shift; ALS 0.127 m, shift (-0.048, 0.043, 0) m)",
+  "runs": "s03_stage1_v6 (rule auto) for N13, N8, N2 and, again with v6, the author conditions A15, A9, A3 and COVER; labels s04_gt_v6 on the B0 GT of the discard task (s52/gt/B0)",
+  "table": "per condition and prior / face kind, counting area = target building footprint + 2 m (prep case 6): share of confidence-1 pixels among the prior pixels of the target building (coverage_footprints), patch states support / missing / invisible, inherit share, discard counts and wrong discard / wrong keep against the labels"
+ },
+ "agreement_regions": {
+  "sites": ["B0_b10", "B173nb_b10", "B173_b0", "R1rep_b10"],
+  "priors": ["LoD2", "ALS"],
+  "data": "pre-training only: the v6 box stage-1 run (box MVS = training images, fixed values) and its v6 labels",
+  "patches": "patches of the box evaluation range (moved centres)",
+  "no_gt": "patches without a label (< 5 GT points) or in an excluded cell (trees, transient; ALS also prior-side trees): shown, never compared",
+  "all": "true agree: |GT - prior| <= tau (tau of the patch kind, base value)",
+  "measured": "all & state support & |MVS - GT| <= tau, MVS - prior = -(median of the signed residual r over the patch's confidence-1 pixels in its supporting views), GT - prior = the label's median (vertical on roof-like, along the outward normal on wall-like patches)",
+  "unmeasured": "all & state missing or invisible",
+  "remainder": "all & support & |MVS - GT| > tau: measured but the image is off by more than tau; shown, in neither comparison",
+  "compare_later": {"measured": "detail accuracy against prior-as-is and always-trust (image-only also shown)", "unmeasured": "completeness against image-only"},
+  "metrics": "decided separately by the user; this task fixes the regions only",
+  "outputs": "per site x prior regions_<site>_<prior>.npz (patch id, moved centre, kind, area, label, state, region code), summary counts and areas, GT coverage (share of evaluation-range patches / area with a label), plan maps"
+ },
+ "stage0": {
+  "site": "B173nb_b10",
+  "priors": {"LoD2": {"gpu": 0, "rule": "auto -> current"}, "ALS": {"gpu": 1, "rule": "auto -> margin_all_2"}},
+  "inputs": "fork inputs v6 of B173nb_b10 (training views = box training views with a geometric depth map, evaluation views = box evaluation views; 1024 x 741)",
+  "iterations": 30000,
+  "batches": {"1": {"seed": 0}, "2": {"seed": 1, "run_only_if": "no stop signal in batch 1"}},
+  "switches": "all on",
+  "values_as_r10": {"lambda_mvs": 0.05, "lambda_prior": 0.05, "majority": 0.6666666666666666, "min_evidence": 5, "max_distance_m": 1.0, "reread_interval": 500, "e_threshold": 0.5, "lock_lr_scale": 0.01, "lock_opacity_floor": 0.5, "protection_tau_mult": 4.0, "truncation_tau_mult": 4.0, "e_depth_tol_m": 0.5, "e_alpha_min": 0.05, "reread_samples": 3, "depth_norm": "pixels"},
+  "normal_mode": "cell for both priors (r10: ALS cell = main comparison; LoD2 file = the same plane normal for planar faces; r11's run_fork used cell for both)",
+  "base_optimisation": "GeoGS / 2DGS defaults of the fork (r10 'training.schedule'): densify 500-15,000 every 100, opacity reset every 3,000, normal consistency from 7,000 (lambda_normal 0.05), depth distortion 0, position lr schedule to 30,000; resolution -r 1 (1024 x 741)",
+  "records": {"log_interval": 100, "readout_interval": 30000, "snapshot_iterations": [2000, 5000, 10000, 15000, 20000, 30000], "dump_iterations": [30000], "save_iterations": [15000, 30000], "test_iterations": [7000, 15000, 30000], "monitor_views": "the first two training views of split.json"},
+  "stop_signals": {
+   "error": "exit code != 0, a traceback, or no point cloud at 30,000",
+   "nan": "a non-finite loss term in any scalars row (r12 itself raises at it)",
+   "opacity_collapse": "at a logged iteration that is a multiple of 1,000 and >= 2,000: median opacity of the prior-origin Gaussians < 0.05 AND share of prior-origin Gaussians with opacity >= 0.5 < 0.05 (the July trial: roof material at opacity 0.004)",
+   "action": "the watcher stops that training (docker stop), writes stop.json and progress.md; the other training continues; batch 2 is not started; then ask"
+  },
+  "progress": "payload progress.md: rewritten when a task changes and every 1,000 iterations (iteration, s / 1,000 iterations, expected end); after the first 1,000 iterations the 30,000 estimate is recomputed from that speed",
+  "timing_method": {
+   "wall": "docker run wall time on the host (monotonic)",
+   "pre_training": "stage-1 measurement of the site (s03 timings pass1 + pass2 + pass3 + judgment, per prior) + fork inputs + the fork's initialisation (r12 init seconds: product load, rule, propagation, seating, first E, g_p maps)",
+   "reread": "sum of r12's per-call seconds of the re-read (cuda-synchronised), first call excluded",
+   "monitoring": "read-outs, snapshots, dumps (r12 seconds) = record keeping, not the method",
+   "loop": "wall - initialisation - re-read - monitoring = the base loop with the method's loss terms",
+   "memory": "torch.cuda.max_memory_allocated and max_memory_reserved (scalars), and the GPU's memory.used sampled by nvidia-smi every 30 s on the host (peak minus the idle value before the start)",
+   "for_image_only": "the stage-1 image-only training (switch prior 0) is measured the same way (its re-read time is reported separately; the base implementation without the judgment = jbgs_judgment off)"
+  },
+  "post": {
+   "renders": "evaluation views: RGB, expected depth (surf_depth), rendered normal (rend_normal), accumulated opacity",
+   "tsdf": "training views only, expected depth, Open3D ScalableTSDFVolume (fork GaussianExtractor.extract_mesh_bounded), voxel 0.05 m, sdf_trunc 0.25 m, depth_trunc 300 m, fusion limited to the box rectangle + 2 m and z in [5th percentile of the box GT z - 5 m, max GT z + 5 m] (pixels outside -> depth 0), one mesh at a time"
+  },
+  "quick_gt_check": {
+   "status": "a check only (점검용), not the main experiment's metrics",
+   "gt": "B173nb_b10 box GT points of the discard task (s52/box_gt: cleaned ULS 2024-12-17 nadir, aligned), excluded cells removed (any: trees, transient)",
+   "range": "the box evaluation range (eval_u 115.4..191.0, eval_v 55.0..109.1)",
+   "roof_points": "GT points inside a LoD2 GroundSurface footprint of the box and not on vertical surfaces (v4 rule: 0.5 m voxel PCA |n_z| < 0.5 with >= 5 points; single-return)",
+   "wall_points": "GT points on vertical surfaces (same rule), single-return",
+   "height_difference": "roof points: z_result - z_GT, z_result = the highest intersection of the TSDF mesh with the vertical line through the point; median and NMAD (1.4826 MAD)",
+   "within": "unsigned distance from each GT point to the TSDF mesh; shares <= 0.2 m and <= 0.5 m (roof points, wall points, all)",
+   "splits": {
+    "changed": "roof points inside the plan polygons of the two B173 wing roof faces (sites_v1 B173_wings)",
+    "agreement": "points owned by patches of the prior's agreement region (5.3), and its measured / unmeasured parts; ownership = the s04 label rule (roof: vertical line to the registered prior, top layer 1 m; wall: along the wall normal within 2 m)",
+    "unseen": "old upper wall: points owned by LoD2 wall patches of DEBY_LOD2_4959326 whose state is invisible in the v6 LoD2 box run (the same point set for both priors' results); plus the share of those patch centres within 0.2 / 0.5 m of the result mesh (does the result keep the old prior wall)"
+   },
+   "spread": "per prior: the difference of every check number between seed 0 and seed 1 (batch 2), and the visible differences in the figures"
+  },
+  "figures": {
+   "views": "evaluation views: the 2 nadir (tilt <= 20 deg) and 2 oblique views whose projection of the B173 roof centroid lies nearest the image centre",
+   "eval_vs_render": "photo and render side by side (both priors, each seed)",
+   "depth": "rendered expected depth (common colour scale) and rendered normal",
+   "mesh": "TSDF mesh shaded: top view (orthographic, box rectangle) and one oblique view (the first oblique figure view's camera)",
+   "sections": {
+    "B173_wing": "vertical plane through the centroid of the larger B173 wing roof face, along its horizontal normal (across the ridge), +-15 m",
+    "B173_middle": "vertical plane through the area-weighted centroid of the 17 sawtooth faces (sites_v1 B173_middle), along the principal direction of their horizontal normals, +-20 m",
+    "neighbour_wall": "the LoD2 wall face of DEBY_LOD2_4959460 with the most patches inside the evaluation range (v6 LoD2 box run): vertical plane along its horizontal normal through the centroid of those patches, +-10 m",
+    "old_upper_wall": "the LoD2 wall face of DEBY_LOD2_4959326 with the most invisible patches (v6 LoD2 box run): vertical plane along its horizontal normal through the centroid of those patches, +-10 m",
+    "content": "prior (LoD2 or ALS mesh, registered), result seed 0 and seed 1 (TSDF mesh), GT points within 0.25 m of the plane"
+   }
+  },
+  "remaining_runs": "47 trainings of stages 1-3 (order) after stage 0; estimated from the measured time per run scaled by training views"
+ },
+ "concurrency": "at most three Docker jobs at a time (shared host); trainings one per GPU; meshes one at a time",
+ "images": {"dev": "jointbuildgs:dev", "train": "jointbuildgs:geogs-conf-guided-v1", "colmap": "colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf"}
+}

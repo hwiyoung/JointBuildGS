@@ -1,0 +1,275 @@
+--- r11/jbgs_judgment.py
++++ r12/jbgs_judgment.py
+@@ -1,4 +1,24 @@
+-"""Judgment-guided stage-2 optimization for GeoGS, revision r11 (JointBuildGS PHD-MAIN-PREP-DISCARD-RULE-v1).
++"""Judgment-guided stage-2 optimization for GeoGS, revision r12 (JointBuildGS PHD-MAIN-STAGE0-v1).
++
++r12 = r11 calling the shared module src/phd/prior_propagation_v6 (= v5 + locations.move_store + rules.default_rule), plus
++  (r12-1) rule default  : --jbgs_rule auto (new default) = rules.default_rule(prior kind): LoD2 current, ALS / DSM
++                          margin_all_2 (user decision 2026-10-06). The prior kind comes from --jbgs_prior_kind or the
++                          store's 'prior_kind' (v6 measurement); both given -> they must agree. With the stage-1 tallies and
++                          the gathered support ids (--jbgs_prop_pairs, --jbgs_prop_knn) every rule, 'current' included, is
++                          read through rules.apply (the gathering of the measurement: in-surface distances of the unmoved
++                          store); the states must equal the product's, and for 'current' the votes too. Without them only
++                          'current' runs (r11 path).
++  (r12-2) moved store   : the product store of the v6 measurement is moved with the registered prior (frame_shift); seating,
++                          the re-read cell samples and the recorded centres therefore sit on the registered prior. With
++                          --jbgs_prior_shift the store's frame_shift must equal it (else the run stops).
++  (r12-3) seed          : --jbgs_seed (default 0 = r11: safe_state's seed 0); another value re-seeds random, numpy and torch
++                          right after safe_state (train.py calls apply_seed), before the scene is read.
++  (r12-4) records       : seconds of the initialisation (meta / init_report), of every re-read (E.jsonl 'seconds', cuda-
++                          synchronised) and of every read-out (monitor/timing.jsonl); scalars.jsonl adds the share of prior-
++                          origin and image-origin Gaussians with opacity >= 0.5 and torch.cuda.max_memory_reserved.
++  Losses, g_p, u_i, protection, density control, the seven switches and the base optimisation are r11's.
++--- r11 text follows ---
++Judgment-guided stage-2 optimization for GeoGS, revision r11 (JointBuildGS PHD-MAIN-PREP-DISCARD-RULE-v1).
+ 
+ r11 = r10 calling the shared module src/phd/prior_propagation_v5 (the one implementation of the measurement and the training:
+ registration, party-wall caps and fixed runs moved in from the prep measure; the rules r10 calls are v3's, byte-identical), plus
+@@ -147,21 +167,21 @@
+ import numpy as np
+ import torch
+ 
+-try:  # r11: the shared module is copied into the fork root as src/phd/prior_propagation_v5 (build_fork_r11.py)
+-    from src.phd.prior_propagation_v5 import conversion as ppc
+-    from src.phd.prior_propagation_v5 import locations as ppl
+-    from src.phd.prior_propagation_v5 import orientation as ppo
+-    from src.phd.prior_propagation_v5 import rule as ppr
+-    from src.phd.prior_propagation_v5 import rules as pprules
+-    from src.phd.prior_propagation_v5 import seat as pps
+-    from src.phd.prior_propagation_v5 import switches as ppsw
++try:  # r12: the shared module is copied into the fork root as src/phd/prior_propagation_v6 (build_fork_r12.py)
++    from src.phd.prior_propagation_v6 import conversion as ppc
++    from src.phd.prior_propagation_v6 import locations as ppl
++    from src.phd.prior_propagation_v6 import orientation as ppo
++    from src.phd.prior_propagation_v6 import rule as ppr
++    from src.phd.prior_propagation_v6 import rules as pprules
++    from src.phd.prior_propagation_v6 import seat as pps
++    from src.phd.prior_propagation_v6 import switches as ppsw
+ except ImportError:  # pragma: no cover - r6 behaviour stays available without the module
+     ppc = ppl = ppo = ppr = pps = pprules = ppsw = None
+ 
+ MODES = ("off", "P", "P0", "I")
+ ORIGIN_IMAGE, ORIGIN_PRIOR = 0, 1
+ LABELS = ("preserve", "correct", "undecided", "other")
+-REVISION = "r11"
++REVISION = "r12"
+ 
+ 
+ # ----------------------------------------------------------------------------------------------------------- args
+@@ -222,12 +242,47 @@
+     g.add_argument("--jbgs_monitor_views", nargs="+", default=["DJI_20241217101305_0005_D", "DJI_20241217101343_0024_D"])
+     g.add_argument("--jbgs_stop_on_red", type=int, default=1, help="1: a red binding check stops the run (ORDER 4/7)")
+     # r11: discard-rule variants and ablation switches (shared module v5)
+-    g.add_argument("--jbgs_rule", default="current", help="r11: discard rule (prior_propagation_v5.rules.RULES); current = r10")
++    g.add_argument("--jbgs_rule", default="auto", help="r12: discard rule: auto (default of the prior kind, prior_propagation_v6.rules.default_rule) "
++                   "or a rules.RULES name; r11's default was current")
++    g.add_argument("--jbgs_prior_kind", default="", choices=["", "LoD2", "ALS", "DSM"], help="r12: prior kind (default: the store's prior_kind)")
++    g.add_argument("--jbgs_prior_shift", type=float, nargs=3, default=None, help="r12: the registration shift of the product; the store's frame_shift must equal it")
++    g.add_argument("--jbgs_seed", type=int, default=0, help="r12: 0 = safe_state's seed (r11); other values re-seed random / numpy / torch after safe_state")
+     g.add_argument("--jbgs_prop_pairs", default="", help="r11: unit_view_pairs.npz of the stage-1 product (rule variants)")
+     g.add_argument("--jbgs_prop_knn", default="", help="r11: knn.npz of the stage-1 product (rule variants)")
+     g.add_argument("--jbgs_markcode_dir", default="", help="r11: per-view mark codes (threshold index at which a pixel turns agree)")
+     for _n in ("confidence_mask", "judgment", "propagation", "prior_band", "protection", "init_exclusion", "prior"):
+         g.add_argument(f"--jbgs_sw_{_n}", type=int, default=1, help=f"r11 switch {_n}: 1 = on (the method), 0 = off")
++
++
++def apply_seed(args):
++    """r12-3: called by train.py right after safe_state (which seeds 0). Seed 0 leaves that state as it is (r11)."""
++    seed = int(getattr(args, "jbgs_seed", 0))
++    if seed != 0:
++        import random
++        random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
++    print(f"[jbgs_judgment] r12 seed {seed}" + (" (safe_state's)" if seed == 0 else " (re-seeded after safe_state)"))
++    return seed
++
++
++def resolve_rule(args):
++    """r12-1: (rule name, prior kind, source) from --jbgs_rule, --jbgs_prior_kind and the store's prior_kind."""
++    kind_arg = getattr(args, "jbgs_prior_kind", "") or ""
++    kind_store = ""
++    sp = getattr(args, "jbgs_prop_store", "")
++    if sp:
++        with np.load(sp, allow_pickle=False) as z:
++            kind_store = str(z["prior_kind"]) if "prior_kind" in z.files else ""
++    if kind_arg and kind_store and kind_arg != kind_store:
++        raise RuntimeError(f"--jbgs_prior_kind {kind_arg} differs from the store's prior_kind {kind_store}")
++    kind = kind_arg or kind_store
++    name = getattr(args, "jbgs_rule", "auto")
++    if name in ("", "auto", None):
++        if not kind:
++            if sp:
++                raise RuntimeError("--jbgs_rule auto needs the prior kind (--jbgs_prior_kind or the store's prior_kind)")
++            return "current", kind, "auto without a product store: nothing to apply (current)"
++        return pprules.default_rule(kind), kind, f"auto: default of {kind} (prior_propagation_v6.rules.DEFAULT_BY_PRIOR)"
++    return pprules.resolve(name, kind or "LoD2"), kind, "given"
+ 
+ 
+ # -------------------------------------------------------------------------------------------------------- pure math
+@@ -523,6 +578,9 @@
+     def __init__(self, args, opt, scene, gaussians, tb_writer=None, render_fn=None, pipe=None, background=None):
+         self.mode = args.jbgs_judgment
+         assert self.mode in MODES and self.mode != "off"
++        if torch.cuda.is_available():
++            torch.cuda.synchronize()
++        self._t_init0 = time.time()                                   # r12-4
+         self.args = args
+         self.tb = tb_writer
+         self.render_fn, self.pipe, self.background = render_fn, pipe, background   # r6 (1): E renders the training views
+@@ -535,7 +593,8 @@
+         self.train_names = {c.image_name for c in self.train_cams}
+         self.sw = {n: bool(int(getattr(args, f"jbgs_sw_{n}", 1))) for n in ("confidence_mask", "judgment", "propagation", "prior_band",
+                                                                           "protection", "init_exclusion", "prior")}
+-        self.rule_name = getattr(args, "jbgs_rule", "current")
++        self.rule_name, self.prior_kind, self.rule_source = resolve_rule(args)          # r12-1
++        self.timing = (Path(args.model_path) / "monitor" / "timing.jsonl")
+         if ppsw is not None and tuple(self.sw) != tuple(ppsw.NAMES):
+             raise RuntimeError("switch names differ from the shared module")
+         H, W = self.all_cams[0].image_height, self.all_cams[0].image_width
+@@ -635,7 +694,14 @@
+             self.faces_csv.write_text("iteration,face,n_pixels,n_A,cov,d,d_nmad,n_d,d_all,d_all_nmad,n_d_all,e,e_nmad,n_e,g,g_nmad,n_g,label\n")
+         self.started = time.monotonic()
+         self.last_stats = {}
+-        meta = dict(mode=self.mode, revision=REVISION, switches=self.sw, rule=self.rule_name, size=[H, W], views=names, train_views=sorted(self.train_names),
++        if torch.cuda.is_available():
++            torch.cuda.synchronize()
++        self.init_seconds = time.time() - self._t_init0               # r12-4 (to here: maps, product, seats, first E, g_p)
++        self.init_filter["init_seconds"] = round(self.init_seconds, 2)
++        meta = dict(mode=self.mode, revision=REVISION, switches=self.sw, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
++                    seed=int(getattr(args, "jbgs_seed", 0)), init_seconds=round(self.init_seconds, 2),
++                    store_frame_shift=(self.prop["frame_shift"] if self.prop is not None else None),
++                    size=[H, W], views=names, train_views=sorted(self.train_names),
+                     maps=dict(A=len(self.A), M=len(self.M), P=len(self.P), TAU=len(self.TAU), FACE=len(self.FACE),
+                               FV=len(self.FV), G=len(self.G)),
+                     lambda_mvs=self.lambda_mvs, lambda_prior=self.lambda_prior, tau_v=self.tau_v,
+@@ -897,20 +963,28 @@
+             raise RuntimeError("src/phd/prior_propagation_v2 is not importable from the fork root")
+         t0 = time.time()
+         st = ppl.load_store(args.jbgs_prop_store)
++        fshift = ppl.frame_shift(st)                                   # r12-2: the moved store of the v6 measurement
++        if getattr(args, "jbgs_prior_shift", None) is not None and not np.array_equal(fshift, np.asarray(args.jbgs_prior_shift, np.float64)):
++            raise RuntimeError(f"store frame_shift {fshift.tolist()} != --jbgs_prior_shift {list(args.jbgs_prior_shift)}")
+         tag = args.jbgs_prop_tag if self.sw["confidence_mask"] else f"{args.jbgs_prop_tag}_maskoff"   # r11 switch confidence_mask
+         state, vote, E0, ns0 = st[f"state_{tag}"], st[f"vote_{tag}"], st[f"E_{tag}"], st[f"n_seeing_{tag}"]
+         q, k, r = args.jbgs_prop_majority, int(args.jbgs_prop_min_evidence), float(args.jbgs_prop_max_distance)
+-        if self.rule_name == "current":
+-            J, (mis, kd, kv) = ppl.propagate(st, state, vote, q, k, r)
+-        else:   # r11-1: rule variant from the stage-1 tallies and the gathered support ids (same gathering as propagate)
++        if args.jbgs_prop_pairs and args.jbgs_prop_knn:   # r12-1: every rule through the tallies and the gathered support ids
+             sfx = "" if self.sw["confidence_mask"] else "_maskoff"
+             pairs = dict(np.load(args.jbgs_prop_pairs.replace(".npz", f"{sfx}.npz")))
+             kn = np.load(args.jbgs_prop_knn.replace(".npz", f"{sfx}.npz"))
+             mis, kd, kid = kn["mis"], kn["k_dist"], kn["k_id"]
+-            st_r, vote, J, _ = pprules.apply(pairs, len(state), mis, kd, kid, self.rule_name, q, k, r)
++            st_r, vote_r, J, _ = pprules.apply(pairs, len(state), mis, kd, kid, self.rule_name, q, k, r)
+             if not np.array_equal(st_r, state):
+                 raise RuntimeError("rule tallies give other states than the product")
++            if self.rule_name == "current" and not np.array_equal(vote_r, vote):
++                raise RuntimeError("the current rule on the tallies gives other votes than the product")
++            vote = vote_r
+             kv = np.where(kid >= 0, vote[np.maximum(kid, 0)], ppr.V_NONE)
++        elif self.rule_name == "current":
++            J, (mis, kd, kv) = ppl.propagate(st, state, vote, q, k, r)
++        else:
++            raise RuntimeError(f"rule {self.rule_name} needs --jbgs_prop_pairs and --jbgs_prop_knn")
+         vote, J, J_loc = ppsw.judgment_level(state, vote, J, self.sw)   # r11-2: judgment / propagation switches (identity when on)
+         why = ppr.undetermined_why(state, J, kd, mis, k, r)
+         within = kd[:, :k] <= r + 1e-9 if len(mis) else np.zeros((0, k), bool)
+@@ -923,10 +997,11 @@
+                             surface_ext=st["surf_ext"][st["loc_surface"]], kind=st["loc_kind"], area=st["loc_area"],
+                             center=st["loc_center"].astype(np.float32))
+         dev = "cuda"
+-        P = dict(store=st, st_t=pps.to_torch(st, dev), state=torch.as_tensor(state, device=dev).long(),
++        st_num = {kk: vv for kk, vv in st.items() if np.asarray(vv).dtype.kind not in ("U", "S", "O")}   # r12: v6 stores carry text keys (prior_kind)
++        P = dict(store=st, st_t=pps.to_torch(st_num, dev), state=torch.as_tensor(state, device=dev).long(),
+                  vote=torch.as_tensor(vote, device=dev).long(), E0=torch.as_tensor(E0, device=dev).float(),
+                  ns0=torch.as_tensor(ns0, device=dev).float(), J=torch.as_tensor(J, device=dev).long(),
+-                 J_loc=torch.as_tensor(J_loc, device=dev).long(), prop_seconds=time.time() - t0)
++                 J_loc=torch.as_tensor(J_loc, device=dev).long(), prop_seconds=time.time() - t0, frame_shift=fshift.tolist())
+         # unit normals (u of eq. 7): the cell's in-surface steps t1 x t2; units without cells ('extra') have none
+         nrm = torch.cross(P["st_t"]["loc_t1"], P["st_t"]["loc_t2"], dim=1)
+         nn = nrm.norm(dim=1, keepdim=True)
+@@ -974,7 +1049,8 @@
+                             face_normal_file=self._fn_file.cpu().numpy(), face_normal_cell=self._fn_cell.cpu().numpy())
+         info = dict(applied=True, rule="r8: every prior point is planted except those of missing units whose propagated judgment is "
+                     "conflict (support units whatever their vote, invisible units and points without a unit are planted)",
+-                    store=str(args.jbgs_prop_store), tag=tag, majority=q, min_evidence=k, max_distance=r,
++                    store=str(args.jbgs_prop_store), tag=tag, majority=q, min_evidence=k, max_distance=r, discard_rule=self.rule_name,
++                    rule_source=self.rule_source, prior_kind=self.prior_kind, store_frame_shift=fshift.tolist(),
+                     prop_seconds=round(P["prop_seconds"], 2), n_units=int(len(state)), n_support=int((state == ppr.ST_SUPPORT).sum()),
+                     n_missing=int((state == ppr.ST_MISSING).sum()), n_invisible=int((state == ppr.ST_INVISIBLE).sum()),
+                     missing_judgments={ppr.J_NAMES[j]: int((J[state == ppr.ST_MISSING] == j).sum()) for j in ppr.J_NAMES},
+@@ -1199,6 +1275,8 @@
+ 
+     @torch.no_grad()
+     def update_E(self, iteration, gaussians):
++        torch.cuda.synchronize()
++        self._t_e0 = time.time()                                      # r12-4: seconds of this re-read (E.jsonl)
+         if self.prop is not None:
+             return self.update_E_r8(iteration, gaussians)
+         a = self.args
+@@ -1246,6 +1324,8 @@
+                    E_hist_prior=hist_p, E_hist_image=hist_i, E_mean_prior=float(E[prior].mean()) if prior.any() else None,
+                    n_locked=int(lock.sum()), n_newly_locked=int(newly.sum()), n_released=int(released.sum()),
+                    n_released_far=int(released_far.sum()), newly_drift_q=q(drift[newly]), locked_drift_q=q(drift[lock]), **extra)
++        torch.cuda.synchronize()
++        row["seconds"] = time.time() - self._t_e0
+         with (self.mon / "E.jsonl").open("a") as f:
+             f.write(json.dumps(row) + "\n")
+         if self.tb is not None:
+@@ -1358,6 +1438,8 @@
+                                                       not_protected_now_but_3d_within=int((low & ~conflict & ~near & near3).sum())),
+                    drift_bound_roof=float(self.tau_kind[1] * a.jbgs_lock_drift_tau_mult),
+                    drift_bound_wall=float(self.tau_kind[2] * a.jbgs_lock_drift_tau_mult), **extra)
++        torch.cuda.synchronize()
++        row["seconds"] = time.time() - self._t_e0                      # r12-4
+         with (self.mon / "E.jsonl").open("a") as f:
+             f.write(json.dumps(row) + "\n")
+         if self.tb is not None:
+@@ -1371,7 +1453,8 @@
+     def dry_init_report(self, gaussians):
+         """r7-6: the values right before the first iteration, without training."""
+         row = self.update_E(1, gaussians)
+-        rep = dict(revision=REVISION, switches=self.sw, rule=self.rule_name, init=self.init_filter, first_E=row)
++        rep = dict(revision=REVISION, switches=self.sw, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
++                   seed=int(getattr(self.args, "jbgs_seed", 0)), init_seconds=round(self.init_seconds, 2), init=self.init_filter, first_E=row)
+         # r11: MVS-term weight check (A at the pixels with an MVS depth) and the prior term's presence
+         wa = dict(pixels_with_mvs_depth=0, of_them_A1=0, A1_without_mvs_depth=0)
+         for nm in sorted(self.train_names):
+@@ -1534,6 +1617,9 @@
+                    n_prior=int(prior.sum()), n_image=int((~prior).sum()), n_locked=int(lock.sum()),
+                    n_prior_free=int((prior & ~lock).sum()), added=self.counters["added"], removed=self.counters["removed"],
+                    opacity_q_prior=q(prior), opacity_q_image=q(~prior), opacity_q_locked=q(lock),
++                   opacity_share_ge05_prior=float((op[prior] >= 0.5).float().mean()) if bool(prior.any()) else None,      # r12-4
++                   opacity_share_ge05_image=float((op[~prior] >= 0.5).float().mean()) if bool((~prior).any()) else None,
++                   max_reserved_gb=torch.cuda.max_memory_reserved() / 1e9,
+                    n_locked_below_floor=int((lock & (op < self.args.jbgs_lock_opacity_floor - 1e-3)).sum()),
+                    peak_cuda_gb=torch.cuda.max_memory_allocated() / 1e9, **{k: float(v) for k, v in terms.items()},
+                    **{f"px_{k}": v for k, v in self.last_stats.items()})
+@@ -1551,6 +1637,17 @@
+     # --------------------------------------------------------------------------------------------- read-outs
+     @torch.no_grad()
+     def readout(self, iteration, gaussians, render, pipe, background, snapshot=False, dump=False, stop_check=True):
++        """r12-4: the r11 read-out (_readout_r11) timed (monitor/timing.jsonl; record keeping, not the method)."""
++        torch.cuda.synchronize(); t0 = time.time()
++        try:
++            return self._readout_r11(iteration, gaussians, render, pipe, background, snapshot=snapshot, dump=dump, stop_check=stop_check)
++        finally:
++            torch.cuda.synchronize()
++            with self.timing.open("a") as f:
++                f.write(json.dumps(dict(kind="readout", iteration=iteration, snapshot=bool(snapshot), dump=bool(dump), seconds=time.time() - t0)) + "\n")
++
++    @torch.no_grad()
++    def _readout_r11(self, iteration, gaussians, render, pipe, background, snapshot=False, dump=False, stop_check=True):
+         records = {}
+         faces_all = set(self.faces_roof) | set(self.faces_wall)
+         dump_dir = self.model_path / "dump" / f"iteration_{iteration}"
+@@ -1621,7 +1718,7 @@
+         red = [it for it in check["items"] if it["binding"] and it["status"] == "red"]
+         if red and stop_check and self.args.jbgs_stop_on_red:  # ORDER 7: stop, keep the evidence, record the cause
+             if not dump:
+-                self.readout(iteration, gaussians, render, pipe, background, snapshot=True, dump=True, stop_check=False)
++                self._readout_r11(iteration, gaussians, render, pipe, background, snapshot=True, dump=True, stop_check=False)
+             gaussians.save_ply(str(self.model_path / "point_cloud" / f"iteration_{iteration}_stopped" / "point_cloud.ply"))
+             with (self.mon / "stop.json").open("w") as f:
+                 json.dump(dict(iteration=iteration, red=red, scientific_verdict=None), f, indent=1)

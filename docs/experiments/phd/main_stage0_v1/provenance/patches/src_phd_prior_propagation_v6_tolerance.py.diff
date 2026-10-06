@@ -1,0 +1,54 @@
+--- r11/src/phd/prior_propagation_v6/tolerance.py
++++ r12/src/phd/prior_propagation_v6/tolerance.py
+@@ -0,0 +1,51 @@
++"""Tolerance per surface kind (roof-like, wall-like) from the registered residuals (prior_propagation_v2,
++PHD-STAGE2-R8-FOUR-CASES-v1; method document 3.4, decision 2 of 2026-10-01).
++
++  median m1 and NMAD s1 of the residuals (metres: vertical on roof-like, along the normal on wall-like surfaces)
++  one clip: keep |x - m1| <= clip * s1
++  median m2 and NMAD s2 of the kept residuals
++  tolerance = k * s2 (k = 2.5). The agency accuracy spec is never a lower bound: it is recorded with its source and
++  compared; a tolerance larger than the spec leaves a warning (the prior misses its stated accuracy, or the registration
++  is incomplete). A prior whose walls are not surfaces (airborne LiDAR TIN: steep triangles are boundaries) or whose wall
++  sample is empty takes the roof value (recorded as 'roof value').
++v1 took max(k * s2, spec); that rule is gone (there is no switch to bring it back).
++The registration shift is estimated elsewhere, on inclined (roof-like) faces only; m2 is the median after it."""
++import numpy as np
++
++NMAD_C = 1.4826
++
++
++def robust_width(x, k=2.5, clip=3.0):
++    x = np.asarray(x, np.float64)
++    x = x[np.isfinite(x)]
++    out = dict(n=int(x.size), median_before=None, nmad_before=None, n_kept=0, clipped_share=None, median_after=None,
++               nmad_after=None, width=None)
++    if x.size == 0:
++        return out
++    m1 = float(np.median(x))
++    s1 = float(NMAD_C * np.median(np.abs(x - m1)))
++    keep = np.abs(x - m1) <= clip * s1 if s1 > 0 else np.ones(x.size, bool)
++    m2 = float(np.median(x[keep]))
++    s2 = float(NMAD_C * np.median(np.abs(x[keep] - m2)))
++    out.update(median_before=m1, nmad_before=s1, n_kept=int(keep.sum()), clipped_share=float(1.0 - keep.mean()),
++               median_after=m2, nmad_after=s2, width=float(k * s2))
++    return out
++
++
++def tolerance(stats, spec=None, spec_source=None, fallback=None):
++    """stats from robust_width. spec: agency accuracy for this surface kind (None = no spec in the data), recorded and
++    compared only. fallback: tolerance dict of the roof when this kind has no sample (or is not a surface).
++    Returns dict(tau, width, spec, spec_source, side, exceeds_spec, warning); tau is always the data width (or the roof
++    value for the fallback)."""
++    if stats.get("width") is None:
++        if fallback is None:
++            return dict(tau=None, width=None, spec=spec, spec_source=spec_source, side="no sample", exceeds_spec=None,
++                        warning=None)
++        exceeds = None if spec is None else bool(fallback["tau"] > spec)
++        return dict(tau=fallback["tau"], width=None, spec=spec, spec_source=spec_source,
++                    side="roof value (no sample or not a surface)", exceeds_spec=exceeds,
++                    warning="tolerance exceeds the agency spec" if exceeds else None)
++    w = float(stats["width"])
++    exceeds = None if spec is None else bool(w > spec)
++    return dict(tau=w, width=w, spec=spec, spec_source=spec_source, side="data" if spec is not None else "data (no spec)",
++                exceeds_spec=exceeds, warning="tolerance exceeds the agency spec" if exceeds else None)
