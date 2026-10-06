@@ -1,0 +1,141 @@
+{
+ "version": "metrics_fix_v1",
+ "task_id": "PHD-MAIN-METRICS-FIX-v1",
+ "written": "2026-10-06 23:35 KST, before any computation of this task. Values come from the order, from the eight accepted proposals of the metric trial (order 2.2) or were decided from pre-training data only (patch stores, labels, GT points, MVS depth maps, prior surfaces, camera poses). No training output of the stage-0 runs was read to set them.",
+ "scientific_verdict": null,
+ "order": "PHD-MAIN-METRICS-FIX-v1 (2026-10-06): fix and confirm the metric definitions for stage 1; region file v2, edge band v2, bias / dispersion, check of the observation-error region, height-proportional check, virtual-view test, recomputation; no training",
+ "parents": {
+  "trial_config": "configs/phd/metrics_trial_v1/metrics_trial_v1.json (sha256 1d10513b...)",
+  "trial_payload": "phase-payloads/phd/metrics_trial_v1/PHD-MAIN-METRICS-TRIAL-v1 (read-only, mounted /mt: regions_ext v1, defs, gpu, paths, metrics)",
+  "stage0_payload": "phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1 (read-only, mounted /s0)",
+  "discard_payload": "read-only, mounted /dr (prior meshes s02_box, box GT)",
+  "prep_payload": "read-only, mounted /prep (boxes, box MVS of the four sites)"
+ },
+ "constraints": {
+  "no_training": "no training; fork r12, module v6, module metrics_v1, the stage-0 and trial outputs are not changed (mounted read-only)",
+  "execution": "Docker only (jointbuildgs:dev CPU, jointbuildgs:geogs-conf-guided-v1 GPU), network off, at most three Docker jobs, one TSDF job at a time (GPU container capped at 46 GB)",
+  "stops": "script errors before computing (file names, import order): fix, continue, record; errors that can change results or need a judgement outside the order: stop and ask; out of memory: larger voxel or smaller range, record; a running shell script is never edited",
+  "names": "report and figures use the names of 2026-10-06 (order 2.3); code names may stay"
+ },
+
+ "module_v2": {
+  "path": "src/phd/metrics_v2/",
+  "rule": "copy of metrics_v1 (unchanged files byte-identical, checked by the tests); changed: band.py (+ slope-adjusted band), stats.py (+ bias / dispersion split); new: regions.py (MVS-at-GT split), bins.py (merging of small size bins, correction boundary)",
+  "why": "the trial numbers stay reproducible with metrics_v1"
+ },
+
+ "regions_v2": {
+  "sites": ["B0_b10", "B173nb_b10", "B173_b0", "R1rep_b10"],
+  "priors": ["LoD2", "ALS"],
+  "mvs_at_gt": "per site: the COLMAP geometric depth maps of the box MVS (/prep/mvs/box_<site>, confidence 1 = valid geometric depth) back-projected with the stage-1 camera convention; z_MVS at a GT point = median of the MVS points in its 0.1 m cell, >= 3 points (the trial's proxy_check / path 5 reading)",
+  "gt_points_of_a_patch": "the ownership rows of the patch's label source (B0 sites: gt_clean labels -> gt_owner_<prior> on gt_primary.npz, ULS labels -> gt_owner_uls_<prior> on gt_points.npz; other sites: gt_owner_<prior> on gt_points.npz)",
+  "patch_value": "d = median over the patch's GT points with an MVS value of (z_MVS - z_GT); |MVS - GT| = |d|",
+  "split": "roof-like patches with v1 code 2 or 3 -> 2 when |d| <= tau else 3; with v1 code 11 or 12 -> 11 when |d| <= tau else 12 (the same implementation for both boundaries)",
+  "kept_v1": "patches with fewer than 5 GT points with an MVS value and every wall-like patch keep their v1 code; flagged in the array v1_kept",
+  "min_points": 5,
+  "cell_m": 0.1,
+  "cell_min_points": 3,
+  "outputs": "regions_v2/regions_ext_v2_<site>_<prior>.npz (v1 arrays + code_ext_v2, mvs_minus_gt_at_gt, n_mvs_at_gt, v1_kept; gt_suspect added by 4.5), a table of the patches and area that moved per code (site x prior), maps with the moved patches outlined",
+  "why": "order 4.2; the trial's proxy_check showed that the per-patch residual median misreads large offsets (86 % of the B173 wing 'both wrong' patches are within tau at the GT points)"
+ },
+
+ "edge_band_v2": {
+  "rule": "a roof point is in the band when (range of the GT heights within r = 0.5 m) - 2 r tan(theta) > 0.3 m, theta = the slope of the owning patch's prior face (patch normal), capped at 80 degrees",
+  "radius_m": 0.5,
+  "height_range_m": 0.3,
+  "slope_cap_deg": 80,
+  "raster": "the trial's 0.1 m raster of the per-cell max / min GT z with a disk filter (unchanged)",
+  "why": "order 4.3; on a plane of slope theta the range within r is about 2 r tan(theta), which the trial band counted as an edge"
+ },
+ "height_range": {
+  "rule": "support-agreement roof points outside the band: faces of slope <= 17 degrees -> vertical height difference (highest crossing of the vertical line, as the trial); faces steeper than 17 degrees -> signed distance along the prior-face normal (nearest crossing within 2 m); band points and wall points -> signed distance along the prior-face normal (as the trial)",
+  "steep_deg": 17,
+  "why": "order 4.3; at slope theta the vertical difference is 1 / cos(theta) times the normal distance (1.15 at 30, 1.41 at 45 degrees)"
+ },
+ "accuracy_v2": {
+  "region": "support agreement (code 2, regions v2)",
+  "classes": "gentle roof (<= 17 degrees, vertical), steep roof (> 17 degrees, normal), roof outside the band (both), band (normal), wall (normal)",
+  "bias": "signed median of the height difference (or normal distance)",
+  "dispersion": "NMAD (1.4826 x median |d - median|), median |d - median|, 68.3 % and 95 % quantiles of |d - median|",
+  "also": "removed share by slope; remaining points per building (B173 recovery)",
+  "results": "the four trainings and the four prior-as-is results (surface, same path)",
+  "why": "order 4.3, 4.4"
+ },
+
+ "observation_error_check": {
+  "sites": "the four sites; training-result sections only at B173nb_b10",
+  "overlay": "region v2 patches (roof-like, centres projected; visible = the first crossing of the camera ray with the registered prior lies within 0.3 m of the patch centre) drawn on: B173nb_b10 the two nadir evaluation views of the stage-0 figures (DJI_20241217091245_0145_D, DJI_20241217091127_0106_D); the other sites one nadir training view each = the box training view with tilt <= 20 degrees whose projection of the centroid of the site's roof-like region patches lies nearest the image centre; colours: observation error (3), support agreement (2), GT missing (0)",
+  "gt_appearance": "per site x prior, observation error (3) vs support agreement (2), roof-like: per 0.25 m cell of the patches' footprint (cells holding a patch centre) the GT point count; the share of cells whose GT height range exceeds 0.3 m (a double layer); the share of 0.5 m survey cells within 1 m of the patch centre that hold no GT point or are excluded; from the raw ULS laz (matched to the GT points by position, 0.5 mm): intensity, return number and number of returns distributions",
+  "cell_m": 0.25,
+  "double_layer_m": 0.3,
+  "missing_ring_m": 1.0,
+  "match_tolerance_m": 0.0005,
+  "sections": "B173nb_b10, LoD2 regions v2: the five observation-error roof-like patches owning the most GT points, each more than 2 m from the ones chosen before (greedy by GT point count); vertical section through the patch centre along the dip direction of the face (u axis when flatter than 5 degrees), 12 m long, points within 0.25 m of the plane: GT points, MVS points (box MVS back-projected), the registered LoD2 and ALS surfaces, the four training meshes; chosen from pre-training data before any training result of this task is read (written to defs/sections_obs.json)",
+  "suspect_rule": "proposed from the GT / MVS evidence above (pre-training data) and written to configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json with its time and sha256 before its effect on the trainings is computed; stored as the array gt_suspect in the region v2 files; region codes unchanged; its effect (observation-error area, error inflow rate at B173nb_b10 with and without the flagged patches) reported, removal decided by the user",
+  "why": "order 4.5"
+ },
+
+ "height_proportional": {
+  "sites": "the four sites",
+  "points": "per building (LoD2 footprints of the site box): GT roof points (ULS gt_points of the site; ownership of the ULS label source) of roof-like patches that are support agreement (code 2, regions v2) under both priors, outside the band v2, prior-face slope <= 17 degrees; at least 500 points, else the building is listed but not fitted",
+  "offsets": "median of z_MVS - z_GT (0.1 m cell median, the trial path 5), z_LoD2 - z_GT and z_ALS - z_GT (highest crossing of the registered prior surface, the trial path 3)",
+  "ground": "GT points (in the evaluation range, not excluded) outside every footprint buffered by 1 m, inside the ring 2-20 m around the building's footprint, with z <= DTM + 0.3 m (survey DTM, 0.5 m cells); height above ground = median roof z - median ground z of the ring; the ground offsets (MVS - GT, ALS - GT) per site as the height-0 reference",
+  "ring_m": [2.0, 20.0],
+  "fit": "per site and offset: ordinary least squares offset = a + b x height over the buildings plus the site's ground point (height 0; not for LoD2, which has no ground); slope b in per mille, a, 95 % intervals (t, n - 2 degrees of freedom; none when n <= 2); a pooled fit of the four sites recorded",
+  "image_sets": "training views per site (fork_inputs split.json) and their overlaps; all sites share one SfM (937 posed images)",
+  "no_fix": "only listed: ways to correct (image-side height scale, GT re-alignment, ...) and what each would make re-run",
+  "why": "order 4.6"
+ },
+
+ "virtual_view_test": {
+  "site": "B173nb_b10, the four trainings",
+  "voxel_m": 0.10,
+  "sdf_trunc_m": 0.5,
+  "aim": "the main unseen wall ext 53 (18,298 of the 18,747 unseen patches): centre (153.56, 111.76, -33.79), outward normal (0.9308, -0.3655, 0), along-wall axis (0.3655, 0.9308), span -39.6..30.15 m",
+  "current": "the trial's 16 views (r10 rule: rings of 8 at 124.3 m, elevations 0.2 / 0.5), all Gaussians (trial gpu/<run>/mesh_virtual.ply reused)",
+  "option1": {
+   "rule": "10 views 25 m in front of the wall along its outward normal (order: 20-30 m), 5 positions along the wall 14 m apart centred on its span (along -32.73, -18.73, -4.73, 9.27, 23.27 m) x 2 heights: z -21.5 m (3 m above the highest GT point, 98th percentile, of the 20-30 m strip in front: -24.5) and z -14.0 m (steeper look); each looks at the wall's mid-height point (z -33.79) at its along position; intrinsics of the first training view; camera axes as the fork's helper (right = up x forward); all Gaussians",
+   "why_only_ext53": "the four small unseen faces (ext 58, 67, 76, 79; 341 patches) are corner pieces whose 25 m outward point lies over or inside B173",
+   "cameras": [
+    {"centre": [164.87, 72.16, -21.5], "look_at": [141.6, 81.3, -33.79]},
+    {"centre": [164.87, 72.16, -14.0], "look_at": [141.6, 81.3, -33.79]},
+    {"centre": [169.99, 85.19, -21.5], "look_at": [146.72, 94.33, -33.79]},
+    {"centre": [169.99, 85.19, -14.0], "look_at": [146.72, 94.33, -33.79]},
+    {"centre": [175.11, 98.22, -21.5], "look_at": [151.84, 107.36, -33.79]},
+    {"centre": [175.11, 98.22, -14.0], "look_at": [151.84, 107.36, -33.79]},
+    {"centre": [180.22, 111.26, -21.5], "look_at": [156.95, 120.39, -33.79]},
+    {"centre": [180.22, 111.26, -14.0], "look_at": [156.95, 120.39, -33.79]},
+    {"centre": [185.34, 124.29, -21.5], "look_at": [162.07, 133.42, -33.79]},
+    {"centre": [185.34, 124.29, -14.0], "look_at": [162.07, 133.42, -33.79]}
+   ]
+  },
+  "option2": {
+   "rule": "the trial's 16 views unchanged; every view (training and virtual) rendered with only the Gaussians whose centre lies inside the stage-0 TSDF box (x 76.34-182.66, y 56.31-175.49, z -49.03 - -0.86)"
+  },
+  "compare": "per option and training: below-roof patch centres within 0.5 m (mesh-level inheritance), above-roof patch centres within 0.2 m (past shape), seed variation of both, share of mesh vertices around the walls within 0.2 m of the wall plane (the ALS blur), GPU seconds and host memory",
+  "choice_rule": "written before the test: prefer the option with the largest LoD2 - ALS gap of the below-roof 0.5 m share (agreement with the Gaussian-level inheritance rate, 78-81 % vs 5 %) whose mean seed variation (both priors, both shares) is not larger than the current option's; ties broken by GPU time",
+  "why": "order 4.7"
+ },
+
+ "accepted_proposals": {
+  "1_error_inflow": "the window t = min(0.5 m, |W - GT| / 2) unchanged; the main error inflow rate counts the points with |W - GT| >= 0.2 m; the indeterminable share (|W - GT| < 0.2 m) is written next to it",
+  "2_size_bins": "bins [1, 1.5), [1.5, 2), [2, 3), [3, 4), [4, 8), 8+ (tau multiples) unchanged, with point and patch counts; a bin with fewer than 10,000 points (main points) is merged into the next larger bin, the last one into the previous (single site; decided per prior from pre-training point counts); the '< 1' bin reported apart; correction rate = GT-side share over the main points; correction boundary = lower edge of the first bin from which every larger bin has a correction rate >= 50 %",
+  "3_past_shape": "past-shape persistence rate only for patches whose W lies more than 0.5 m from the GT (|patch value| > 0.5 m); in the observation-error region the Gaussians of any origin are counted",
+  "4_floating": "floating Gaussians reported as 3-20 m and above 20 m over the highest GT surface; 3-20 m read with the past-shape persistence rate",
+  "5_unmeasured": "missing / invisible regions: within one site a record only (stage 1 reads them pooled over the sites)",
+  "6_invisible": "invisible agreement / error split by the current-roof inferred label, written 'inferred'",
+  "7_virtual_mesh": "virtual-view mesh at 0.10 m in the stage-1 post step, read with the inheritance rate; views = the option chosen by 4.7",
+  "8_m3c2": "M3C2 radii unchanged (record)"
+ },
+ "observation_error_W_v2": {
+  "rule": "for observation-error rows of roof-like patches split by v2: W at a GT point = z_MVS of its 0.1 m cell (vertical), else the patch value d; the patch's W centre = patch centre moved vertically by (gt_med + d); v1-kept patches keep the trial W (prior + MVS residual median)",
+  "why": "the same MVS reading as the region boundary (order 4.2: one implementation for both boundaries)"
+ },
+ "recompute": {
+  "results": "the four trainings and the four prior-as-is results",
+  "names": "every metric under the names of 2026-10-06, next to the trial (v1) numbers, one line on what changed and why",
+  "seed": "seed 1 - seed 0 of every number; repetition input table again"
+ },
+ "payload": "phase-payloads/phd/metrics_fix_v1/PHD-MAIN-METRICS-FIX-v1/",
+ "report": "docs/experiments/phd/metrics_fix_v1/평가지표_확정손질_보고서_v1.md"
+}
