@@ -1,0 +1,217 @@
+{
+ "version": "metrics_trial_v1",
+ "task_id": "PHD-MAIN-METRICS-TRIAL-v1",
+ "written": "2026-10-06 21:50 KST, before any metric of this task was computed. Values come from the order (trial values used as given) or were decided from pre-training data only (patch stores, labels, GT points, prior surfaces, camera poses); no stage-0 training output was read to set them.",
+ "scientific_verdict": null,
+ "order": "PHD-MAIN-METRICS-TRIAL-v1 (2026-10-06): try the metrics the user fixed on 10-06 on the stage-0 outputs; widen and fix the evaluation regions for stage 1; no training",
+ "parents": {
+  "stage0_payload": "phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1 (read-only, mounted /s0)",
+  "stage0_config": "configs/phd/main_stage0_v1/stage0_v1.json (sha256 f1e03da676fe7e4d...)",
+  "prep_config": "configs/phd/main_prep_measure_v1/prep_v5.json (sha256 ba95c27a82af00b1...)",
+  "discard_config": "configs/phd/main_prep_discard_rule_v1/discard_v1.json (sha256 08a85ceb6e27b841...)",
+  "discard_payload": "phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1 (read-only, mounted /dr: s02_box prior meshes, s52/box_gt GT points)",
+  "prep_payload": "phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1 (read-only, mounted /prep: boxes, box MVS)"
+ },
+ "constraints": {
+  "no_training": "no training; fork r12, module v6 and the stage-0 outputs are not changed (all mounted read-only)",
+  "execution": "Docker only (jointbuildgs:dev for CPU steps, jointbuildgs:geogs-conf-guided-v1 for renders and TSDF), network off, at most three Docker jobs at once, one TSDF job at a time (host memory)",
+  "after_results": "a definition or value changed after results is recorded in the report section of changes; the definitions confirmed here are fixed before stage-1 results are seen"
+ },
+
+ "regions_ext": {
+  "why": "4.2: one more region code per patch so that stage 1 reads every comparison region from one file; stage-0 region files stay unchanged",
+  "sites": ["B0_b10", "B173nb_b10", "B173_b0", "R1rep_b10"],
+  "priors": ["LoD2", "ALS"],
+  "data": "pre-training only: the v6 box stage-1 runs (s61/box), their v6 labels (s61/box_gt; B0 sites: gt_clean labels, ULS where gt_clean has none, as the stage-0 regions) and the stage-0 region files (regions/)",
+  "codes": {
+   "-1": "outside the evaluation range",
+   "0": "no GT (stage 0 unchanged: label < 0 or excluded cell)",
+   "2": "measured agreement (stage 0 unchanged): true agree, support, |MVS - GT| <= tau",
+   "3": "image wrong (stage-0 code 3 renamed): true agree, support, |MVS - GT| > tau or no MVS value",
+   "4": "unmeasured agreement, missing (stage 0 unchanged)",
+   "5": "unmeasured agreement, invisible (stage 0 unchanged)",
+   "11": "prior wrong: true conflict, support, |MVS - GT| <= tau",
+   "12": "both wrong: true conflict, support, |MVS - GT| > tau or no MVS value (area only)",
+   "13": "unmeasured wrong prior, missing: true conflict, state missing (seen but not measured)",
+   "14": "unmeasured wrong prior, invisible: true conflict, state invisible (no view sees it)"
+  },
+  "no_mvs_value": "a support patch without a finite MVS residual median goes with the 'off' side (3 or 12), as stage-0 code 3 did",
+  "mvs_minus_gt": "|MVS - GT| = |(-mvs_r_med) - gt_med| (vertical on roof-like, along the outward normal on wall-like patches; the stage-0 region rule)",
+  "tables": "per site x prior x face kind (roof-like, wall-like): patches, area (m2), GT points owned (rows of gt_owner; B0 sites: the owner file of the patch's label source), tau of the kind",
+  "maps": "per site the stage-0 map layout (LoD2 roofs, LoD2 walls seen from above, ALS), colours per code",
+  "output": "regions_ext/regions_ext_<site>_<prior>.npz (code_ext + the stage-0 arrays + gt_points + unseen split), regions_ext/summary.json and .csv, figs/regions_ext_<site>.png"
+ },
+ "unseen_split": {
+  "why": "the order splits the unseen B173 wall patches into true agreement (wall that still stands) and true conflict (gone old upper wall); 18,720 of the 18,747 unseen patches have no GT label (the ULS nadir GT does not see that wall either; 3 agree, 24 conflict), so a rule from the current roof behind the wall decides it; recorded as a departure from the order",
+  "patches": "LoD2 wall patches of DEBY_LOD2_4959326 whose state is invisible in the v6 LoD2 box run, inside the evaluation range (stage-0 quick-check definition; 18,747 at B173nb_b10)",
+  "rule": "current top behind the wall = highest GT point (gt_points of the box) in the strip 0.3-2.0 m behind the patch centre (against the outward normal) and within 0.5 m along the wall, >= 5 points; patch centre z > top + tau_wall -> 'above the current roof' (gone old upper wall, inferred conflict); z < top - tau_wall -> 'below the current roof' (wall expected to stand, inferred agreement; its horizontal position is not verified); otherwise ambiguous; fewer than 5 points -> no top",
+  "values_why": "0.3 m keeps wall points out of the strip, 2.0 m reaches the roof edge behind a parapet, 0.5 m along the wall = two patch widths, tau_wall = the label tolerance of the box (0.228 m at B173nb_b10)",
+  "pre_count": "computed on pre-training data before this config was written (B173nb_b10): above 2,991, below 15,375, ambiguous 381, no top 0; of the 24 true-conflict labels 21 lie below the current roof (wall faces displaced from the LoD2 plane, not gone), so the inferred split and the true labels answer different questions; both are reported",
+  "sites": "B173nb_b10 and B173_b0 (the sites containing B173)"
+ },
+
+ "site": "B173nb_b10",
+ "results": {
+  "runs": ["b1_LoD2", "b1_ALS", "b2_LoD2", "b2_ALS"],
+  "run_mesh": "stage0/<run>/post/mesh_tsdf.ply (training-view TSDF, 0.05 m; stage-0 post unchanged)",
+  "prior_as_is": "the registered prior surface itself put in place of the result: LoD2 = s02_box lod2_mesh without the GroundSurface (bottom) triangles (tri_type 2; r9 removed them from the prior), ALS = s02_box als_mesh (the TIN of ALS ground and building points) + the registration shift of the v6 box run (LoD2 0, ALS (-0.056, +0.063, 0))",
+  "prior_same_path": "4.4 path 4: the prior surface rendered at the 203 training views (camera-Z depth of the first ray hit, the fork's camera model via to_cam_open3d) and fused with the stage-0 TSDF settings (voxel 0.05 m, sdf_trunc 0.25 m, depth_trunc 300 m, the stage-0 box mask) -> one mesh per prior; used as a second 'prior as-is' in every 4.3 metric",
+  "why": "the order: every metric for the four trainings and for the prior as-is (surface and same-path mesh)"
+ },
+ "gt_points": {
+  "points": "the stage-0 quick-check GT: s52/box_gt/B173nb_b10/gt_points.npz inside the evaluation range (eval_u 115.4-191.0, eval_v 55.0-109.1), excluded cells (any) removed",
+  "roof_points": "inside a LoD2 footprint of the box and not on vertical surfaces (v4 rule)",
+  "wall_points": "on vertical surfaces (v4 rule) and single-return",
+  "ownership": "s61/box_gt/B173nb_b10/gt_owner_<prior>.npz rows (point, patch, value = GT - prior along the line); a roof point counts through rows of roof-like patches, a wall point through rows of wall-like patches",
+  "region_of_a_row": "the extended region code of the row's patch (regions_ext)",
+  "why": "the order: the same GT points, roof / wall rule and excluded cells as the stage-0 check"
+ },
+ "edge_band": {
+  "rule": "a roof point is in the edge band when the range (max - min) of GT heights within 0.5 m (horizontal) around it exceeds 0.3 m; computed on a 0.1 m raster of the per-cell max and min GT z of all box GT points with a disk filter of radius 5 cells",
+  "radius_m": 0.5,
+  "height_range_m": 0.3,
+  "raster_cell_m": 0.1,
+  "why": "order trial values; the 0.1 m raster is the computing approximation of 'within 0.5 m'",
+  "known_before_results": "on a plane steeper than about 17 degrees the height range within 0.5 m already exceeds 0.3 m, so steep roof faces (gables, sawtooth faces) fall in the band; kept as the trial value, the excluded share is reported by roof slope for 4.7"
+ },
+ "line": {
+  "roof_like": "vertical line through the GT point (+z)",
+  "wall_like": "line through the GT point along the outward normal of the owning LoD2 wall face",
+  "why": "the order"
+ },
+ "spread": {
+  "regions": {"prior_wrong": [11], "image_wrong": [3], "unmeasured_wrong_prior_missing": [13], "unmeasured_wrong_prior_invisible": [14]},
+  "wrong_data": {
+   "prior_wrong_and_unmeasured": "W = the registered prior surface: offset of W from the GT point along the line s_W = -value",
+   "image_wrong": "W = the patch's MVS surface = prior + (-mvs_r_med) along the line: s_W = -value + (-mvs_r_med)"
+  },
+  "near": "a surface is near the GT point (near W) when the result mesh crosses the line within +-t of the GT point (of W); t = min(0.5 m, |s_W| / 2)",
+  "t_max_m": 0.5,
+  "t_fraction": 0.5,
+  "classes": {"gt_side": "near GT only", "wrong_side": "near W only", "both": "near both", "neither": "near neither (holes included)"},
+  "spread_share": "(wrong_side + both) / all points of the region",
+  "ambiguous": "points with |s_W| < 0.2 m: share recorded; spread shares reported over all points and over the points with |s_W| >= 0.2 m",
+  "ambiguous_m": 0.2,
+  "mechanism_layer": "per patch of the region: is a prior-origin Gaussian with opacity >= 0.5 of the final dump within 0.25 m of the patch's W centre (prior wrong: the moved patch centre; image wrong: the centre moved by -mvs_r_med along the line); share of patches; image wrong additionally with Gaussians of any origin (record: Gaussians following a wrong image need not come from the prior)",
+  "mechanism_radius_m": 0.25,
+  "mechanism_opacity": 0.5,
+  "invisible_patches": "no training view sees them, so the training-view mesh cannot hold them: their spread is given by the mechanism layer and the virtual-view mesh (4.5) only",
+  "why": "order trial values (t, 0.2 m, 0.25 m, 0.5)"
+ },
+ "size_curve": {
+  "region": "prior wrong (11)",
+  "bins_tau": [[1.0, 1.5], [1.5, 2.0], [2.0, 3.0], [3.0, 4.0], [4.0, 8.0], [8.0, null]],
+  "below_one": "points of prior-wrong patches whose own |s_W| < tau are reported as a separate bin '< 1' (the region is decided per patch, the bin per point)",
+  "variable": "per point |s_W| / tau of the owning patch's kind (LoD2: roof 0.176 m, wall 0.228 m; ALS 0.147 m at B173nb_b10)",
+  "curve": "share of 'GT side' per bin, both seeds per prior; vertical lines at tau, at the conflict threshold (LoD2 1 tau: rule current; ALS 2 tau: rule margin_all_2) and at the truncation 4 tau",
+  "bins_in_m": "reported per prior and kind",
+  "representative_sections": "per prior and bin: the prior-wrong patch whose |gt_med| / tau lies in the bin and that owns the most GT points; vertical section through its centre, 12 m long, along the horizontal direction of the face's dip (u axis when the face is flat within 5 degrees), GT points within 0.25 m of the plane; chosen from pre-training data before the metrics (written to defs/sections.json)",
+  "why": "order bins; section choice decided here (the order left it open)"
+ },
+ "accuracy": {
+  "region": "measured agreement (2)",
+  "roof": "roof points owned by roof-like patches, edge band removed (share removed recorded): z_result - z_GT with z_result = the highest crossing of the result mesh with the vertical line (stage 0); signed median, NMAD (1.4826 MAD), median |dz|, 68.3 % and 95 % quantiles of |dz|",
+  "edge_band_and_walls": "signed distance along the normal of the owning patch's prior face (roof-like: up-oriented patch normal; wall-like: outward wall normal) to the nearest crossing of the result mesh within +-2 m; median and NMAD; no crossing within 2 m counted",
+  "search_m": 2.0,
+  "results": "the four trainings, the prior surface as-is and the same-path prior mesh, side by side",
+  "why": "the order; 2 m search = beyond the largest tolerance multiple used (4 tau < 1 m) with room for a misplaced surface"
+ },
+ "completeness": {
+  "regions": {"unmeasured_agreement_missing": [4], "unmeasured_agreement_invisible": [5]},
+  "rule": "unsigned 3-D distance from each owned GT point to the result mesh: shares <= 0.2 m and <= 0.5 m",
+  "thresholds_m": [0.2, 0.5],
+  "unseen": "B173 unseen wall patches (unseen_split): share of patch centres with a prior-origin Gaussian of opacity >= 0.5 within 0.25 m (stage-0 count), split by the inferred label: below the current roof = inheritance share, above = wrongly remaining share; the 27 labelled patches reported by their true label; also the share of patch centres within 0.2 / 0.5 m of the training-view mesh and of the virtual-view mesh (4.5)",
+  "why": "the order"
+ },
+ "floaters": {
+  "gaussians": "Gaussians of the final dump with opacity >= 0.5 whose centre lies inside the evaluation range and more than 3 m above the highest GT surface there",
+  "highest_gt_surface": "per 1 m cell: max GT z (all box GT points, excluded cells included: trees are real surfaces), then a 3 x 3 cell maximum; a cell without GT in its 3 x 3 neighbourhood uses the highest GT point of the evaluation range",
+  "above_m": 3.0,
+  "opacity": 0.5,
+  "cell_m": 1.0,
+  "pixels": "evaluation views (29): a pixel counts when the render with all Gaussians has accumulated opacity >= 0.5 and the render without the floater Gaussians has accumulated opacity < 0.5 or an expected depth more than 0.5 m larger; share of all pixels of the 29 views",
+  "pixel_depth_m": 0.5,
+  "why": "order trial value 3 m; 1 m cells with a 3 x 3 maximum keep wall tops and tree crowns from making false floaters; 'the depth comes from those Gaussians' is decided by removing them and rendering again"
+ },
+ "summary_numbers": {
+  "building_surface": "0.5 m cells of the survey grid that lie within 2 m of a LoD2 GroundSurface footprint of the box, inside the evaluation range, not excluded and holding at least one GT point; GT points = the GT points in these cells; result points = area-weighted random samples of the result mesh triangles whose centroid lies in these cells, 400 per m2 (one per 0.05 m x 0.05 m), seed 0",
+  "sample_density_per_m2": 400,
+  "chamfer": "mean nearest-neighbour distance result -> GT, GT -> result, and their mean",
+  "precision_completeness_f1": "precision = share of result points within t of a GT point, completeness = share of GT points within t of a result point, F1 = harmonic mean; t = 0.2 m and 0.5 m",
+  "m3c2": {
+   "core_points": "GT points of the building surface, one per 0.5 m voxel (the point nearest the voxel centre)",
+   "normal_scale_m": 1.0,
+   "projection_diameter_m": 0.5,
+   "max_depth_m": 1.0,
+   "clouds": "reference = GT points, compared = result points, both thinned to one point per 0.05 m voxel",
+   "normal_orientation": "PCA normal of the GT points within 0.5 m (>= 10 points); |n_z| >= 0.5 oriented up, otherwise oriented with the outward normal of the nearest LoD2 wall triangle",
+   "distance": "mean position of the compared points in the cylinder minus that of the reference points, along the normal; at least 5 points of each cloud; else no distance (share reported)",
+   "summary": "signed median and NMAD over the core points with a distance",
+   "why": "Lague et al. 2013: normal scale >= 20 x roughness and >= ~30 points in the projection cylinder (GT ~1,000 points / m2 -> ~200 in a 0.5 m cylinder); max depth 1 m = above the largest tolerance multiple of interest"
+  },
+  "why": "the order: records for comparison with other studies, not used for the research questions"
+ },
+ "seed_spread": "every number of 4.3 and 4.4: seed 1 (batch 2) minus seed 0 (batch 1), per prior",
+ "timing": "per metric bundle and result: seconds (wall, inside the container), to estimate the stage-1 post time",
+
+ "bias_paths": {
+  "points": "the 4.3 roof accuracy points (measured agreement, roof-like, edge band removed) of each prior; also on the points common to both priors",
+  "paths": {
+   "1": "result TSDF mesh: highest crossing of the vertical line (stage 0)",
+   "2": "result render depth of the 29 evaluation views (stage-0 post/eval, expected depth, accumulated opacity >= 0.5) back-projected to 3-D points with the fork's camera model; z = median of the points in the GT point's 0.1 m cell (>= 3 points)",
+   "3": "prior surface as-is: highest crossing of the vertical line",
+   "4": "same-path prior mesh: highest crossing of the vertical line",
+   "5": "MVS of the training images: COLMAP geometric depth (confidence 1 = valid geometric depth, the r10 confidence mask) of the 203 box training views back-projected with the stage-1 camera convention; z = median of the points in the GT point's 0.1 m cell (>= 3 points)"
+  },
+  "cell_m": 0.1,
+  "min_points": 3,
+  "summary": "signed median and NMAD of z_path - z_GT on the same points (the points with a value on every path in the common table)",
+  "reading": "1 - 2 = the mesh-making part; 4 - 3 = what the same path adds to a known surface; 3 vs 5 = the height fit of GT and the two data",
+  "why": "the order; the 0.1 m cell median is the decided way to read a height from a point cloud at a GT point"
+ },
+ "virtual_view_mesh": {
+  "method": "r10 (mesh_r10.py product layer): TSDF of the rendered expected depth of the training views plus virtual views made by the fork's create_virtual_cameras_for_completion, whole scene, the stage-0 box mask",
+  "aim": "the B173 unseen wall patches (unseen_split.patches) instead of r10's invisible Gaussians, so that all four runs use the same 16 views",
+  "count": 16,
+  "rings": "two rings of 8 at elevations 0.2 and 0.5 (z offset = elevation x distance), azimuths 0, 45, ..., 315 degrees from +x, looking at the centre (r10 / base helper values)",
+  "centre_local_m": [153.59, 111.97, -33.80],
+  "radius_m": 41.42,
+  "distance_m": 124.26,
+  "distance_rule": "1.5 x 2 x radius (base helper, distance_scale 1.5); radius = largest distance of an unseen patch centre from their mean",
+  "intrinsics": "of the first training view (base helper)",
+  "front_of_main_wall": "8 of the 16 views lie in front of the main unseen wall (ext 53, outward normal (0.93, -0.37, 0)): azimuths 0 and 315 (cos 0.92-0.93) and 45 and 270 (cos 0.37-0.40) in both rings",
+  "voxel_m": 0.05,
+  "sdf_trunc_m": 0.25,
+  "depth_trunc_m": 300.0,
+  "fallback": "host out-of-memory -> voxel 0.10 m, sdf_trunc 0.5 m (r10), recorded",
+  "mechanism_layer": "not built: r10's second layer needs an 'aimed Gaussians' set; the Gaussian count of 4.3 plays that part",
+  "per_view_record": "unseen patch centres inside the view and in front of the rendered depth by at most 0.5 m (seen) per virtual view",
+  "measures": "below-the-roof side: owned GT points (359 points) within 0.2 / 0.5 m (3-D) and the GT cover there (share of patches with an owned GT point, with a label), share of patch centres within 0.2 / 0.5 m; above-the-roof side: share of patch centres within 0.2 / 0.5 m (the gone wall left in the mesh); mesh vertices within 0.2 m (in the wall plane) of an unseen patch centre and within 2 m of the wall: signed distance to the LoD2 wall plane (quantiles, histogram); time and host memory",
+  "why": "the order: r10's method, views fixed before computing, 0.05 m unless memory runs out"
+ },
+ "figures": {
+  "regions_ext": "per site, the stage-0 layout",
+  "spread_map": "plan view of B173 and neighbours, GT points of the spread regions coloured by class, the four trainings and both prior-as-is",
+  "size_curve": "per prior, both seeds; vertical lines tau, conflict threshold, 4 tau; one representative section per bin (sections.json)",
+  "height_map": "z_result - z_GT of the accuracy roof points, common colour range +-0.5 m, edge band grey; the four trainings and the prior as-is",
+  "bias_paths": "signed median bars and NMAD of the five paths",
+  "unseen": "the virtual-view mesh at the main wall and the Gaussians there coloured by origin",
+  "floaters": "side view of the Gaussians (opacity >= 0.5), floaters highlighted",
+  "reading": "every figure with a 1-2 sentence 'how to read'"
+ },
+ "repetition_input": {
+  "rule": "per metric: seed spread |seed 1 - seed 0| next to the difference between the method and the prior as-is at the same place (|training mean - prior-as-is surface|), and the ratio spread / difference; a small ratio means one run per condition can separate them",
+  "why": "the order (4.7)"
+ },
+ "stop": {
+  "virtual_mesh_oom": "redo at 0.10 m and record",
+  "other_errors": "stop at the error and ask",
+  "time": "estimates per task in progress.md at the start; stop and ask when the whole task looks like exceeding twice the estimate"
+ },
+ "payload": "phase-payloads/phd/metrics_trial_v1/PHD-MAIN-METRICS-TRIAL-v1/",
+ "report": "docs/experiments/phd/metrics_trial_v1/평가지표_시험계산_보고서_v1.md",
+ "images": {
+  "cpu": "jointbuildgs:dev",
+  "gpu": "jointbuildgs:geogs-conf-guided-v1"
+ }
+}
