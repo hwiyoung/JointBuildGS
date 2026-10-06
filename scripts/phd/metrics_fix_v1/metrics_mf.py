@@ -257,14 +257,16 @@ def virtual(name, I, gs, res, rows):
     if gs is None or not vj.exists():
         return
     ch = json.loads(vj.read_text())
-    p = OUT / "virtual" / ch["option"] / name / "mesh_virtual.ply"
+    p = MT / "gpu" / name / "mesh_virtual.ply" if ch["option"] == "current" else OUT / "virtual" / ch["option"] / name / "mesh_virtual.ply"
     if not p.exists():
         return
+    import sys as _s
+    _s.path.insert(0, "/repo/scripts/phd/metrics_fix_v1")
+    from virtual_mf import measures
     un = np.load(MT / "defs/unseen.npz")
-    cu, li = un["centre"], un["label_inferred"]
-    sc = MeshScene.from_ply(p)
-    dc = sc.distance(cu)
-    res["virtual"] = dict(option=ch["option"], below_roof_within_0_5=round(float((dc[li == 0] <= 0.5).mean()), 4), above_roof_within_0_2=round(float((dc[li == 1] <= 0.2).mean()), 4),
+    m = measures(ch["option"], name, un)
+    res["virtual"] = dict(option=ch["option"], below_roof_within_0_5=m["below_roof_within_0_5"], above_roof_within_0_2=m["above_roof_within_0_2"],
+                          wall_plane_within_0_2=m["wall_plane_within_0_2"], gpu_seconds=m["gpu_seconds"], peak_host_gb=m["peak_host_gb"],
                           note="mesh level; read with the inheritance rate (Gaussian level)")
 
 
