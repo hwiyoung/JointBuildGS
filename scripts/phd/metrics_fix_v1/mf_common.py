@@ -14,7 +14,7 @@ sys.path.insert(0, "/repo/scripts/phd/main_stage0_v1")
 sys.path.insert(0, "/repo")
 import numpy as np  # noqa: E402
 
-from common import CFG, DENSE, DR, GRID_H, GRID_W, PREP, SURVEY, Views, basis, jdump, log, read_depth_bin, sha256, uv_to_xy, xy_to_uv  # noqa: E402,F401
+from common import ART, CFG, DENSE, DR, GRID_H, GRID_W, PREP, SURVEY, Views, basis, jdump, log, read_depth_bin, sha256, uv_to_xy, xy_to_uv  # noqa: E402,F401
 
 S0 = Path("/s0")
 MT = Path("/mt")

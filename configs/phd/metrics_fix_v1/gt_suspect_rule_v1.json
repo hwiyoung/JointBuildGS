@@ -1,0 +1,23 @@
+{
+ "version": "gt_suspect_rule_v1",
+ "task_id": "PHD-MAIN-METRICS-FIX-v1",
+ "written": "2026-10-06 KST (time and sha256 in progress.md), after the pre-training evidence of obs_check.py and obs_rule.py and before any training result of this task is read; the effect on the trainings is computed after this file is saved",
+ "scientific_verdict": null,
+ "purpose": "order 4.5.4: one proposed rule to mark roof-like patches where the GT (ULS nadir) may not represent the surface the images see (glass, translucent faces); a flag only (array gt_suspect in the region v2 files), region codes unchanged, removal decided by the user",
+ "rule": "a roof-like patch with an owned ULS GT point is GT suspect when (a) the GT height range in the 0.25 m cell of its centre minus the range a plane of its prior face's slope makes over the cell diagonal (0.354 m x tan(theta), theta capped at 80 degrees) exceeds 0.3 m (two layers), or (b) at least 5 % of its owned ULS GT points come from pulses with more than one return (the laser went through)",
+ "values": {"cell_m": 0.25, "double_layer_m": 0.3, "multi_return_share": 0.05, "slope_cap_deg": 80},
+ "evaluated_patches": "roof-like patches of codes 2 and 3 (regions v2), whose owned ULS GT points were matched to the raw laz; other patches are not evaluated (gt_suspect_evaluated False)",
+ "choice": {
+  "criterion": "written before choosing: among the candidates whose mean flagged share in the support agreement (code 2) is at most 15 %, the largest mean contrast (flagged share in 3 minus in 2) over the four sites x two priors",
+  "candidates_mean_share_3_vs_2": {
+   "double": "36.0 vs 17.7 % (+18.3 %p; fails the 15 % bound)",
+   "multi": "7.5 vs 2.4 % (+5.1)",
+   "ring": "47.3 vs 20.9 % (+26.4; fails)",
+   "double_and_multi": "3.0 vs 1.2 % (+1.8)",
+   "double_or_multi": "40.5 vs 18.9 % (+21.6; fails)",
+   "double_adj": "21.9 vs 12.8 % (+9.1)",
+   "double_adj_or_multi": "27.0 vs 14.1 % (+12.8) -> chosen"
+  },
+  "note": "no candidate separates the two regions well at every site: at B173nb_b10 (LoD2, faces <= 17 degrees) the double layer is 80 % vs 16 %, at B173_b0 and R1rep_b10 there is no contrast; R1rep's observation errors are the translucent roof where the MVS lies 2.6 m above both GT and LoD2 (a premise case, not a GT defect)"
+ }
+}
