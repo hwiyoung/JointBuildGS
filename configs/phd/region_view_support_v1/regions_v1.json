@@ -1,0 +1,63 @@
+{
+  "task_id": "PHD-R1R5-VIEW-SUPPORT-v1",
+  "scientific_verdict": null,
+  "authorization": "2026-09-15 user adopted the five object-aligned region candidates and requested image counts and dominant MVS supervision support counts. No new training.",
+  "region_version": "R1R5_OBJECT_ALIGNED_v1",
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz_m": [690953.0, 5336071.0, 604.0],
+    "u_axis_angle_degrees_ccw_from_easting": 70.0,
+    "v_direction": "clockwise perpendicular to u; downward in the approved overview",
+    "basis_provenance": "Object/road alignment from the source MVS layout; rounded 20 degree campus-axis rotation used in the preceding coordinate inspection. Not a fitted georeferencing transform of the generated image.",
+    "z_m": [-90.0, 80.0]
+  },
+  "regions": [
+    {"id": "R1", "label_ko": "중앙 안뜰·연결동·곡면지붕", "color": "#e5b719", "u_m": [-135.0, 70.0], "v_m": [-65.0, 35.0], "contains_legacy": ["P1", "P3"]},
+    {"id": "R2", "label_ko": "P2 긴 건물 전체와 주변", "color": "#ed8336", "u_m": [105.0, 245.0], "v_m": [50.0, 125.0], "contains_legacy": ["P2"]},
+    {"id": "R3", "label_ko": "중앙 오른쪽 장방형동·중정", "color": "#c75cae", "u_m": [100.0, 190.0], "v_m": [-30.0, 70.0], "contains_legacy": []},
+    {"id": "R4", "label_ko": "오른쪽 연결동·중정형 건물", "color": "#35a776", "u_m": [240.0, 325.0], "v_m": [-65.0, 125.0], "contains_legacy": []},
+    {"id": "R5", "label_ko": "오른쪽 위 독립동·L자형동", "color": "#667085", "u_m": [100.0, 240.0], "v_m": [-90.0, -10.0], "contains_legacy": []}
+  ],
+  "legacy_prisms": {
+    "P1": {"x": [-23, 7], "y": [-21, 9], "z": [-44.272, -25.962]},
+    "P2": {"x": [110, 158], "y": [86, 132], "z": [-49.386, -17.679]},
+    "P3": {"x": [-60, -20], "y": [-42, 12], "z": [-49.223, -16.993]}
+  },
+  "inputs": {
+    "camera_root_relative": "phase-payloads/p0-audit/data/work/mvs/colmap_dense",
+    "cameras_bin_sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+    "images_bin_sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+    "crosswalk_repo_relative": "artifacts/manifests/gate_s0/common_base_r2b/exact_937_member_crosswalk_v1.json",
+    "crosswalk_sha256": "b4af779ecfae859de9772ce50cb24326b20c3f86614f6a8957453779d1cd4c17",
+    "fused_mvs_relative": "phase-payloads/p2/mvs_native_textured_mesh_preflight_v1/P2-MVS-NATIVE-DENSE-SCENE-RECOVERY-v2/work/mvs/openmvs/dim_dense.ply",
+    "fused_mvs_sha256": "fc2561ab3e41adaa64a5cbc1f7a13c5f887999d2d81f94d4dca082c2c43c02ce",
+    "p1_ground_probe_relative": "phase-payloads/phd/manual_region_masks_v1/support_audit.rvEKKQ/result/reference_sample_support.npz",
+    "p1_ground_probe_role": "0100_D native MVS points in the old P1 manual R1; source-conditioned diagnostic coordinates, not truth",
+    "depth_type": "COLMAP geometric CAMERA_Z meters",
+    "historical_mvs_uses_evaluation_images": true
+  },
+  "audit": {
+    "all_camera_count": 937,
+    "fused_point_stride": 16,
+    "fused_reference_voxel_m": 1.0,
+    "fused_reference_selection": "first original PLY row per 1m XYZ voxel from deterministic stride-16 sample; input support diagnostic only",
+    "candidate_min_reference_projection_fraction": 0.01,
+    "candidate_min_reference_projection_points": 10,
+    "candidate_native_pixel_override": 100,
+    "candidate_rule": "At least max(10,1 percent) sampled region MVS points project in frame OR at least 100 native MVS pixels backproject inside the region. Pose projection is not visibility.",
+    "split_rule": "Within each region's candidate list sorted by exact name, indices divisible by 8 are evaluation candidates; remaining are training candidates. This is a development planning split, not independent test data.",
+    "llffhold": 8,
+    "material_native_pixels": [1, 100, 1000],
+    "dominant_cumulative_fractions": [0.5, 0.8, 0.9],
+    "supervision_mass": "Per view: exact RGB-ray-resampled positive finite MVS pixels landing in region / all positive finite MVS RGB pixels in that frame. Normalize across equally sampled training views. Assumes finite render depth, equal scalar depth weight, and no extra masks; excludes residuals and geometry Jacobians.",
+    "depth_agreement_tolerances_m": [0.25, 0.5, 1.0],
+    "primary_depth_agreement_tolerance_m": 0.5,
+    "point_support": "Same input MVS XYZ point projected into each camera; positive finite native depth and absolute camera-Z residual <= tolerance. Same-estimator agreement, not independent accuracy.",
+    "spatial_bin_uv_m": 5.0,
+    "spatial_bin_z_m": 2.0,
+    "minimum_rgb_samples_per_spatial_bin": 10,
+    "scope": "R1-R5 full region plus old P1/P2/P3 core and old P1 correction-ground probe. No optimization, new MVS, rendering, or UAS/reference evaluation."
+  },
+  "region_boundary_note": "Metric v1 interpretation of the accepted conceptual boxes. Includes full old P1/P2/P3 prism XY, including a slightly wider R2 context. Overlap is retained and reported, not treated as independent area.",
+  "resources": {"cpus": 4, "memory_gib": 6, "gpu": false, "network": "none"}
+}

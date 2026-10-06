@@ -1,0 +1,50 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-MAIN-PREP-MEASURE-v1
+status: PREP_MEASURE_COMPLETE_ANALYST_READING_PENDING_HUMAN_REVIEW
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1
+  durability: local external storage; not a durable-backup claim
+report: docs/experiments/phd/main_prep_measure_v1/준비측정_보고서_v1.1.md   # current (v1.1, 2026-10-04/05, after the user's review)
+report_v1: docs/experiments/phd/main_prep_measure_v1/준비측정_보고서_v1.md   # kept unchanged
+decision_request: docs/experiments/phd/main_prep_measure_v1/준비측정_결정요청_v1.1.md   # summary for the order side (v1 kept)
+report_revisions:
+  - "v1.1: roof rows re-drawn in a nadir view (order 5.4); case 4 location figures; coverage tables also as CSV; reading notes <= 2 sentences; ALS has no wall patches stated; two analyst readings corrected (R2 agree row is a wall, R1 fan roof mostly confidence 1 in nadir views); no threshold, rule, label or table value changed"
+figures: docs/experiments/phd/main_prep_measure_v1/figures/
+scripts: scripts/phd/main_prep_measure_v1/
+tests: tests/phd/test_main_prep_measure_v1.py
+configs:
+  - configs/phd/main_prep_measure_v1/prep_v1.json   # before any result
+  - configs/phd/main_prep_measure_v1/prep_v2.json   # registration acceptance (fixes 3, 4)
+  - configs/phd/main_prep_measure_v1/prep_v3.json   # GT height alignment = gt_clean method, transient unit fix; user decision 23:02 (boxes)
+  - configs/phd/main_prep_measure_v1/prep_v4.json   # wall GT points on vertical surfaces; case-analysis refinements
+  - configs/phd/main_prep_measure_v1/prep_v5.json   # wall GT points single-return (in use for the report)
+constraints: no Gaussian training; MVS rebuilt from training images only (pinned COLMAP GPU image); Docker, network off, inputs read-only; no data download (the pinned COLMAP image pulled once with user approval); existing outputs and code unmodified; no commit
+docker_images:
+  - jointbuildgs:dev
+  - colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf
+user_decisions:
+  - "20:45 confidence mask = r10 (COLMAP geometric filter); registration = method 4.1 new (Nuth-Kaab); MVS rebuild with the official COLMAP GPU image; party-wall gap caps new with before/after"
+  - "23:02 boxes: tolerance and registration fixed from the search range holding the box; box = evaluation range + 10 m; recommended set only (B0, B173nb, B173, R1rep)"
+payload_files:
+  step01/: ranges, view splits (1 in 8 evaluation), B0 conditions
+  step02/: LoD2 / ALS meshes, patch stores, footprints, party-wall caps and probes per search range
+  step03/: stage 1 per search range and prior (registration, tolerance, marks, patch states and judgments, coverage, gaps)
+  step03_b0cond/: stage 1 of the B0 conditions A15 / A9 / A3 / COVER on their rebuilt MVS
+  step04/: GT (config v5) per search range; frozen evaluation exclusion cells
+  step04_b0cond/, step05_b0cond/: GT and cases of the B0 conditions
+  step05/: cases 1-5 and 8 per search range (tables, CSV lists)
+  step06/: case boxes (bands, size rule, consecutive-15, final box runs on rebuilt MVS with fixed tolerance / registration)
+  step08/: GeoGS Fig. 6(a) regions (approximate homography) and inputs with provenance
+  step09/: pre-training judgment maps
+  step10/: cases 6, 7, 9
+  step11/: implementation checks (gaps, ALS cell-method orientation)
+  figrows/: representative figure rows (all candidates) and selection spec; v1_1/ + spec_v1_1*.json = v1.1 photo rule (nadir for roof items)
+  step14/: v1.1 additions (case 4 location figures and counts, agree-propagation location check, coverage CSV list)
+  "**/coverage_*.csv": v1.1 CSV copies of every coverage table (beside the JSON)
+  mvs/: rebuilt MVS workspaces with COLMAP receipts
+  tables_v1.md: every report table, generated (unchanged in v1.1)
+  superseded/: all outputs before each fix
+  logs/: progress.md, queue.log, step logs
+  receipt_task.json: commit, Docker image ids, COLMAP digest, script / config / input hashes, step times

@@ -1,0 +1,270 @@
+{
+ "task_id": "PHD-MAIN-PREP-MEASURE-v1",
+ "scientific_verdict": null,
+ "version": "v5 (2026-10-02 23:45) = v4 with the wall GT points also restricted to single-return drone LiDAR points (reason below); v1-v4 are kept beside this file",
+ "order": "PHD-MAIN-PREP-MEASURE-v1 (2026-10-02), user decisions of 2026-10-02 20:45: confidence mask = r10 as is (COLMAP geometric filter pass); registration = method 4.1 implemented new (Nuth-Kaab); MVS rebuilt with the official CUDA COLMAP image pinned by digest; party-wall gap caps implemented new with before/after counts",
+ "artifact_root_container": "/art",
+ "output_relative": "phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1",
+ "survey_relative": "phase-payloads/phd/main_design_realchange_survey_v1/PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1",
+ "frame": {
+  "world_shift_xyz_m": [
+   690953.0,
+   5336071.0,
+   604.0
+  ],
+  "u_axis_angle_degrees_ccw_from_easting": 70.0,
+  "z_bridge_als_lod2_m": 45.7,
+  "note": "Working frame = the COLMAP model of the 937 current images (EPSG:25832 minus the world shift; heights ellipsoidal-like). ALS and LoD2 (DHHN2016) get the inherited +45.7 m scalar bridge; the residual offset is what the registration estimates."
+ },
+ "ranges": {
+  "regions_config": "configs/phd/region_view_support_v1/regions_v1.json",
+  "search": [
+   "R1",
+   "R2",
+   "R3",
+   "R4",
+   "R5",
+   "B0",
+   "SW",
+   "R3E"
+  ],
+  "B0": {
+   "kind": "xy_rect",
+   "source": "stage1 lod2_polygons.json als_crop_local_xy + shift_global_to_local",
+   "target_building": "DEBY_LOD2_4959323"
+  },
+  "SW": {
+   "kind": "uv_box",
+   "rule": "u,v bounding box of the LoD2 GroundSurface footprints of DEBY_LOD2_4907510, DEBY_LOD2_4907508, DEBY_LOD2_4907207, widened by 15 m on every side"
+  },
+  "R3E": {
+   "kind": "uv_box",
+   "u_m": [
+    100.0,
+    200.0
+   ],
+   "v_m": [
+    -30.0,
+    70.0
+   ],
+   "rule": "R3 widened 10 m towards +u (east in the approved overview) to hold C04 (u = 191)"
+  },
+  "prior_margin_m": 20.0,
+  "z_m": [
+   -90.0,
+   80.0
+  ]
+ },
+ "views": {
+  "candidate_rule": "region_view_support_v1 audit: reference = dim_dense.ply rows with stride 16, first row per 1 m voxel; a view is a candidate when >= max(10, ceil(1 % of the region reference points)) reference points project into its native depth frame in front of the camera, or >= 100 valid native depth pixels back-project inside the region (z in [-90, 80)). Pose projection, not visibility.",
+  "evaluation_split": "candidates sorted by image name; position % 8 == 0 -> evaluation, others -> training",
+  "search_stage_views": "training candidates only (evaluation candidates kept out), with the current 937-image MVS (which used the evaluation images when it was made: recorded limitation of the search stage, accepted by the order)",
+  "nadir_max_tilt_deg": 20.0,
+  "b0_conditions": {
+   "A15": "the 15 author views (13 training + 2 test as r5-r10: test 0002 and 0016)",
+   "A9": "9 of the 15: indices round(linspace(0, 14, 9)) of the 15 sorted by name (= capture order); test view by GeoGS llffhold = 8 (position 0 of the subset = 0002), 8 training",
+   "A3": "3 of the 15: indices round(linspace(0, 14, 3)); test view by GeoGS llffhold = 8 (0002), 2 training",
+   "COVER": "common images covering the B0 target building footprint by the candidate rule (region = footprint polygon), 1 in 8 for evaluation",
+   "revision_note": "20:58, before any result: GeoGS has no 9/3-view lists (data/sample_colmap.py copies a given subset folder) and splits test views by llffhold = 8 (scene/dataset_readers.py:375); the first draft's 'test 0016' was replaced by that rule so the subsets follow GeoGS's sparse tests",
+   "revision_note_2": "21:02, before any result: llffhold = 8 on 9 views gives two test views (positions 0 and 8); the order fixes 8 + 1 and 2 + 1, so A9 / A3 keep only position 0 (0002) as the test view"
+  }
+ },
+ "render": {
+  "grid": "native COLMAP depth-map grid 1024 x 741, PINHOLE intrinsics of the 1400 x 1013 undistorted camera scaled by 1024/1400 and 741/1013; pixel centres +0.5; camera-Z depth (LoD2Depth convention)",
+  "engine": "Open3D 0.18 RaycastingScene (jointbuildgs:dev)"
+ },
+ "confidence_mask": {
+  "rule": "r10 as is (user decision): c = 1 where the COLMAP geometric depth map holds a valid depth (d > 0, finite), else 0; no prior used",
+  "colmap_values_recorded": {
+   "PatchMatchStereo.filter": true,
+   "filter_min_num_consistent": 2,
+   "filter_geom_consistency_max_cost_px": 1.0,
+   "filter_min_ncc": 0.1,
+   "filter_min_triangulation_angle_deg": 3.0,
+   "source_images": "__auto__, 20",
+   "depth_ratio_criterion": "none in COLMAP's filter"
+  },
+  "mvs_run": {
+   "image": "colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf (COLMAP 4.0.4, CUDA; the P0-pinned digest)",
+   "patch_match_stereo": "--PatchMatchStereo.geom_consistency true --PatchMatchStereo.max_image_size 1024 --PatchMatchStereo.num_iterations 3 --PatchMatchStereo.filter true --PatchMatchStereo.cache_size 32 (the settings of the 937-image MVS: scripts/input_and_alignment/tum_transfer/prior_full_stereo.sh)",
+   "images": "the undistorted 1400 x 1013 images and poses of the 937-image COLMAP model, restricted to the condition's training images"
+  }
+ },
+ "priors": {
+  "LoD2": {
+   "surfaces": "RoofSurface and WallSurface polygons of the buildings whose footprint meets the range + margin; GroundSurface / ClosureSurface left out",
+   "triangulation": "polygon plane, shapely hole split (faces._no_holes), ear clipping (faces.ear_clip)",
+   "party_wall": "faces.party_wall_overlaps (cos <= -0.9, planes within 0.1 m) and faces.cut_triangles (r10)",
+   "gap_caps": "new (method 4.1): for every party-wall overlap region, each boundary edge of the region that is not at the bottom of the walls (edge midpoint above the lowest vertex of the two walls by more than 0.05 m) gets a thin quad joining the edge lifted onto wall a's plane and onto wall b's plane",
+   "gap_probe": "the cut overlap regions lifted onto both walls are rendered as probe faces only to count the pixels whose first hit would be inside the gap (target 0 after the caps)"
+  },
+  "ALS": {
+   "points": "LDBV tiles 690_5335 690_5336 691_5335 691_5336, classes 2 and 6 only, inside range + margin",
+   "tin": "scipy Delaunay on XY centred coordinates (the qhull caveat of stage 1)",
+   "surfaces": "method 4.1 = r10 second outline source ('cls2'): a triangle is a building triangle when >= 2 of its vertices carry class 6; gentle (|n_z| >= 0.5) building triangles joined across shared edges; steep and non-building triangles carry no number (surfaces.tin_surfaces(building=...))",
+   "difference_from_r10_main": "r10's main ALS surfaces used the LoD2 GroundSurface polygons as outlines; this task does not (order section 3: the priors are used separately)"
+  },
+  "spec_m": {
+   "ALS": {
+    "roof": 0.12,
+    "wall": null
+   },
+   "LoD2": {
+    "roof": 1.0,
+    "wall": null
+   }
+  }
+ },
+ "residual": "r = (MVS camera-Z depth - prior camera-Z depth) x conversion.factor (vertical on roof-like faces |n_z| >= 0.5, along the normal on wall-like faces, |d_z| without a surface); negative = current surface nearer the camera",
+ "registration": {
+  "rule": "method 4.1 (new implementation): Nuth & Kaab (2011) horizontal shift from the height differences of confidence-1 building-face pixels; an iteration is accepted only when the NMAD of the height differences decreases; repeat until it no longer decreases; then a vertical shift by the median when |median| > NMAD",
+  "fit_pixels": "confidence 1, building face, roof-like with slope between 5 and 60 degrees (|n_z| in [0.5, 0.9962]), height difference within 3 NMAD of its median (recomputed every iteration)",
+  "model": "dh / tan(slope) = a cos(b - aspect) + c by linear least squares on [cos(aspect), sin(aspect), 1]; shift = a along azimuth b",
+  "iterations_max": 10,
+  "stop_increment_m": 0.01,
+  "horizontal_estimable": "at least 3 of the 4 aspect quadrants hold >= 5 % of the fit pixels each and the fit has >= 2,000 pixels; otherwise vertical only (recorded)",
+  "inner_loop": "height differences of the shifted prior are updated with the face plane (dh_new = dh - (n_x/n_z) dx - (n_y/n_z) dy for the prior translated by +(dx, dy)); the accepted shift is then applied to the mesh and every view re-rendered; the final NMAD of the re-render is compared with the unregistered NMAD and the shift is rejected (recorded) if it is not lower",
+  "tile_check": {
+   "ranges": [
+    "R1",
+    "R4"
+   ],
+   "tile_m": 80.0,
+   "grid_origin": "EPSG:25832 690700 / 5335820 (survey v1)",
+   "rule": "the same estimator inside each tile, observation only"
+  },
+  "revision_note": "21:20, before any result: sign of the inner-loop update written out (a prior translated by +(dx, dy) has height h(x - d) = h + (n_x/n_z) dx + (n_y/n_z) dy); the vertical step uses all roof-like confidence-1 building-face pixels; the re-rendered NMAD is recorded, not a gate (a pure vertical shift cannot lower the NMAD)",
+  "revision_v2": {
+   "fix3_2140": "after the R2 LoD2 result: the plane-update NMAD of the fit pixels decreased while the prior was being pulled 4 m sideways onto the changed B173 roof (re-rendered height-difference NMAD 0.16 -> 2.0 m). Every Nuth-Kaab step is now accepted only when the NMAD of the re-rendered height differences decreases: roof-like (|n_z| >= 0.5) confidence-1 building-face pixels in range, up to 40 training views evenly spaced by name, up to 20,000 pixels per view. The vertical step uses the median and NMAD of the same re-rendered gate pixels after the horizontal shift. Tiles (R1, R4): the same gate inside each tile with 20 views and at most 5 steps.",
+   "fix4_2150": "after the R3E LoD2 result: the gate pixels are mostly flat roofs, which barely react to a horizontal shift; 3 small gate decreases (0.0736 -> 0.0724 m) accepted a 1.06 m shift fitted on one sloped roof (83 % of the fit pixels in one aspect quadrant) while the NMAD of all confidence-1 building-face residuals over all views doubled (0.100 -> 0.194 m) and the wall tolerance became 1.45 m. The final re-render check written in v1 'inner_loop' is restored for the horizontal shift: it is kept only when the NMAD of all confidence-1 building-face residuals in range (roof-like vertical and wall normal residuals; up to 4,000 pixels per view, every training view) is lower than without registration; otherwise the horizontal shift is set to 0 (recorded as final_check.passed = false), the vertical step is recomputed with no horizontal shift and the tolerance pass is repeated. The vertical shift is not subject to this check (a pure vertical shift cannot lower the NMAD, v1 note 21:20).",
+   "scope": "affects step 03 and everything after it; step 01-02 outputs depend on no registration value and are unchanged"
+  }
+ },
+ "tolerance": {
+  "rule": "tolerance.robust_width: k = 2.5 x NMAD after one clip at 3 NMAD, per prior and surface kind, on the registered residuals of confidence-1 building-face pixels of the range's training views",
+  "wall_min_pixels": 2000,
+  "wall_fallback": "roof value when walls have fewer than 2,000 pixels (LoD2) or are not surfaces (ALS TIN)",
+  "spec": "recorded and compared, never a floor"
+ },
+ "marks": "every prior pixel with confidence 1: |r| <= tau of its surface kind on building faces (LoD2: every polygon; ALS: numbered building surfaces) -> agree, else conflict; roof tau on pixels that are not building faces",
+ "judgment": {
+  "cell_m": 0.25,
+  "majority": 0.6666666666666666,
+  "min_evidence": 5,
+  "max_distance_m": 1.0,
+  "states": "rule.location_state over the training views (sparse accumulation, identical counts)",
+  "view_mark": "agree when agree pixels >= conflict pixels (r7-r10)",
+  "propagation": "locations.propagate (in-surface grid paths, 16 directions)",
+  "unplanted": "prior points seated in missing patches whose propagated judgment is conflict: ALS = class 2/6 points of the TIN; LoD2 = one sample per patch centre (recorded as patch count and area; r10's LoD2 sample cloud is a GeoGS sampling of the B0 scene only)",
+  "als_orientation": "cell method of r10: a prior point's initial normal = the normal of the patch face it first sits in; points without a patch: area-weighted mean normal of the incident TIN triangles"
+ },
+ "ground_truth": {
+  "source": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz (B0 additionally: gt_clean of stage 2)",
+  "height_alignment": "gt_clean method (stage-2 ORDER item 12, approved 2026-09-25): per range, up to 40 training views evenly spaced by name; per view the cleaned GT points are z-buffered (9 x 9 leak filter 0.3 m) and compared with the MVS geometric depth (confidence 1) on bare-ground pixels (the MVS point falls in a bare hard ground cell of the v1 definition inside the range; range + 20 m when fewer than 5,000 pixels); vertical difference = (d_MVS - d_GT) * ray_z; the GT is moved by the median; repeated twice (as gt_clean). B0 primary GT stays gt_clean as given by the order; its residual ground offset is recorded",
+  "transient_rule": "0.5 m cells where the ULS DSM is more than 1.5 m above both the MVS DSM (valid) and the ALS 2022 DSM: ULS points in them higher than max(MVS DSM, ALS DSM) + 0.75 m are removed (present only in the drone LiDAR: steam, vehicles, cranes); counts recorded",
+  "occlusion_leak": "per-view GT depth: z-buffer of the cleaned points; a pixel is dropped when it is more than 0.3 m behind the nearest GT depth in its 9 x 9 window (gt_clean rule of stage 2); holes stay empty",
+  "patch_value": "roof-like patch: GT points whose vertical line meets the patch (XY inside the cell of the registered prior face; TIN: the XY cell), keeping those within 1.0 m of the highest of them (top layer), median of z_GT - z_prior; wall-like patch: SINGLE-RETURN GT points ON VERTICAL SURFACES (gt_clean of B0 has no return numbers: vertical surfaces only) (0.5 m voxels of the GT cloud with >= 5 points whose smallest-variance direction has |n_z| < 0.5) whose projection along the wall normal falls in the cell and within +-2.0 m of the plane, median of the outward normal distance; >= 5 points, else 'no GT'",
+  "true_label": "|median| <= tau (range, prior, kind) -> true agree; > tau -> true conflict; < 5 points -> no GT",
+  "wall_coverage": "share of wall patches with >= 5 GT points, per range and prior",
+  "height_alignment_v2_superseded": "per range: shift = median(MVS DSM - ULS DSM) on bare hard ground cells (0.5 m cells, ALS class-2 ground, outside LoD2 footprints, ULS max-min < 0.25 m, ULS multi-return < 5 %, |ULS - DTM| < 1 m) as in survey v1",
+  "revision_v3": {
+   "height_alignment": "after the first labels: with the survey-cell rule (median of MVS DSM - ULS DSM, 0.5 m cell maxima) the ULS was 8-10 cm too high against the MVS per pixel (bare ground: R1 -9.7, R3 -8.2, SW -8.7 cm; buildings > 3 m: -8.3, -8.0, -6.1 cm), because the maximum of a noisy MVS cell is biased upward; on the B0 roofs the ULS sat 10.9 cm above gt_clean and 11.7 cm above the ALS, while gt_clean sat 1.0 cm above the ALS. With the tight ALS tolerances (0.08-0.16 m) this turned 87-95 % of the ALS roof patches of R1 and SW into 'true conflict'. The order (5.6) names the gt_clean method, which v1/v2 did not implement; v3 implements it. The v2 labels are kept in superseded/.",
+   "transient_rule": "the point test compared local z (EPSG - 604 m) with the absolute survey DSM heights and removed no point in any range; v3 compares in the same frame (DSM - 604 m)",
+   "scope": "step 04 and everything that uses its labels (05, 07, 09, 10, box GT); stage 1 is unchanged"
+  },
+  "patch_value_v3_superseded": "roof-like patch: GT points whose vertical line meets the patch (XY inside the cell of the registered prior face; TIN: the XY cell), keeping those within 1.0 m of the highest of them (top layer), median of z_GT - z_prior; wall-like patch: GT points whose projection along the wall normal falls in the cell and within +-2.0 m of the plane, median of the outward normal distance; >= 5 points, else 'no GT'",
+  "revision_v4": {
+   "wall_points": "after the v3 labels: the invisible walls of R2 (1,675 with GT, 1,476 'true conflict') were labelled by points of horizontal surfaces touching the wall (82 % of the points more than 0.5 m from the plane, median 0.88 m inside; height spread per patch 0.14 m), not by wall returns. The order (5.4) defines the wall value from 'the GT points in the patch'; points of a lower roof or of the ground next to a wall are not in the wall patch. v4 keeps only GT points on vertical surfaces for wall patches. In R2 this changes all walls with GT from 61,116 (32 % true conflict) to 49,106 (15 %), invisible walls from 1,675 (88 % conflict) to 353.",
+   "scope": "step 04 wall labels and everything that uses them; roof labels unchanged; v3 labels kept in superseded/"
+  },
+  "patch_value_v4_superseded": "roof-like patch: GT points whose vertical line meets the patch (XY inside the cell of the registered prior face; TIN: the XY cell), keeping those within 1.0 m of the highest of them (top layer), median of z_GT - z_prior; wall-like patch: GT points ON VERTICAL SURFACES (0.5 m voxels of the GT cloud with >= 5 points whose smallest-variance direction has |n_z| < 0.5) whose projection along the wall normal falls in the cell and within +-2.0 m of the plane, median of the outward normal distance; >= 5 points, else 'no GT'",
+  "revision_v5": {
+   "wall_points_single_return": "after the v4 labels: the remaining invisible 'true conflict' walls of R2 (333) are labelled by points that are 81 % multi-return (street trees next to the old B173 wing walls; true-agree walls 5 %, true-conflict walls 19 % in R2, R1 8 % / 10 %). The tree rule of the configuration identifies trees by drone-LiDAR multi-return; v5 applies it to the points of the wall labels. Roof labels are unchanged.",
+   "scope": "step 04 wall labels and everything after; v4 outputs kept in superseded/"
+  }
+ },
+ "exclusion": {
+  "trees": "0.5 m cells with ULS multi-return share > 0.3 (3 x 3 mean) or ALS class-20 share > 0.5 with ALS multi-return share > 0.5",
+  "transient": "cells of the transient rule",
+  "prior_side_trees": "ALS class-6 points in 0.5 m cells whose ALS multi-return share > 0.5 (C12-like): their TIN patches are excluded",
+  "frozen": "the list is written by step04 before any case table is computed"
+ },
+ "cases": {
+  "c1_bins_tau": [
+   1.0,
+   2.0,
+   4.0
+  ],
+  "c1_types_auto": {
+   "wall position": "wall-like patch with true conflict",
+   "eave": "roof-like true-conflict patch within 1.0 m (in-plane) of its face boundary",
+   "rooftop structure": "roof-like true-conflict patch with GT above the prior and >= 1.0 m from the face boundary",
+   "curved": "face whose GT plane fit RMS > 0.15 m over >= 50 GT-labelled patches",
+   "other": "the rest (read by the analyst on rows)"
+  },
+  "c2_missing_reason": {
+   "views": "seeing training views of the patch",
+   "brightness": "median over views of the mean luminance (0-255) in a 5 x 5 window of the undistorted image at the projected patch centre",
+   "texture": "median over views of the luminance standard deviation in a 9 x 9 window",
+   "angle": "median over views of the angle between the viewing ray and the face normal",
+   "thresholds": {
+    "shadow_brightness_lt": 60.0,
+    "textureless_std_lt": 6.0,
+    "oblique_angle_gt_deg": 70.0
+   },
+   "primary": "shadow, else textureless, else oblique, else other"
+  },
+  "c3_views_per_range": 40,
+  "c3_note": "MVS minus GT camera-Z depth per pixel; (a) confidence 1 and |r_gt| > tau; (b) confidence 0 where the photometric (first-pass) depth exists and |r_gt| > tau",
+  "c5_front_back": "true-conflict patch: prior in front = roof prior above GT / wall prior outside GT; behind = the reverse; GT clusters in front of the prior by > tau with no prior surface count as behind",
+  "c5_cause": "same place: ALS registered TIN within the ALS tau of GT -> representation difference; ALS also off -> time-change candidate (cross-checked with survey v1 candidates)",
+  "rows_per_case_per_range_max": 8,
+  "c5_absent_structure": {
+   "added": "22:20, before any absent-structure result: implementation of the c5_front_back text 'GT clusters in front of the prior by > tau with no prior surface count as behind'",
+   "ALS": "GT points (in range, not in the frozen exclusion cells) whose vertical line meets the registered ALS TIN on a triangle without a building surface number (ground or steep) or meets nothing, and lie more than the ALS roof tau above it",
+   "LoD2": "GT points (in range, not excluded) whose vertical line meets no LoD2 face and lie more than 2.0 m above the survey DTM (LoD2 has no ground; 2.0 m separates structures from ground, cars and low objects)",
+   "clusters": "0.5 m XY cells, 8-connected, area >= 2 m2 (same as the case-3 blobs); listed by area with the median height above the prior / DTM; counted as 'behind'",
+   "note": "the DTM is an evaluation-side reference (survey v1), not an input of the method; ALS and LoD2 are still used separately"
+  },
+  "revision_v4_analysis": {
+   "added": "23:25, after reading the v3 rows, before the v4 case tables",
+   "case3_roof_only": "case 3 is also counted on roof-like LoD2 faces only (|n_z| >= 0.5): the nadir drone LiDAR leaves walls and dark roofs without returns, the z-buffer then fills those pixels with points behind them, which reads as an 'image error'; the all-face counts are kept",
+   "case3_blobs": "blobs are 0.5 m cells in 3-D (x, y, z) of the GT points of the wrong pixels, 26-connected, area = occupied XY cells x 0.25 m2; the 2-D cells of v3 merged roofs across streets",
+   "case5_absent_ALS": "the vertical line must meet a gentle (|n_z| >= 0.5) ALS triangle without a building number, or nothing, and the GT point must lie more than 2.0 m above it (as the 2.0 m of the LoD2 rule): the steep TIN facets at eaves and ground objects (cars) are not structures absent from the prior"
+  }
+ },
+ "boxes": {
+  "bands_m": [
+   10.0,
+   20.0,
+   40.0
+  ],
+  "stability": "the smallest band whose roof and wall tau are within 10 % of the next band's and whose registration shift is within 5 cm (vector) of the next band's, with enough samples",
+  "enough_samples": "roof >= 5,000 confidence-1 building-face pixels, wall >= 2,000 (else the wall takes the roof value and the box is marked)",
+  "size_stage_mvs": "the current MVS for the band comparison (cost); the chosen size is then rebuilt with training images only and its stage-1 values are reported next to the current-MVS values",
+  "upper_limit_side_m": 100.0,
+  "consecutive_15": "among the box's training candidates sorted by capture time (file name), the 15 consecutive images with the largest share of confidence-1 pixels on the evaluation range's building faces (counted on the rebuilt MVS when present)",
+  "consecutive_15_detail": {
+   "added": "22:47, before any consecutive-15 result",
+   "candidates": "the box's training candidates of the smallest band (b10; the evaluation range does not depend on the band), sorted by file name = capture time",
+   "share": "window share = sum over its 15 images of confidence-1 pixels on the evaluation range's LoD2 building faces / sum of those building-face pixels (current MVS for the selection)",
+   "guard": "every image of the window sees at least 5,000 evaluation building-face pixels (0.66 % of the 1024 x 741 frame), so that a window is not chosen through images that barely see the range",
+   "then": "the chosen 15 are split like A15 (1 in 8 by position: positions 0 and 8 for evaluation, 13 training) and an MVS is rebuilt from the 13 training images with the pinned COLMAP; the mask-1 share of the evaluation range is reported on that MVS (the 'then' of the order) and on the current MVS"
+  },
+  "user_decision_2302": {
+   "asked": "order 8: the size rule gave no stable band within the 100 m limit for most boxes (tau changes 10-40 % between bands with abundant samples; it follows the building composition)",
+   "size": "user answer 23:02: tolerance and registration FIXED from the search range that holds the box (B0 -> B0 crop, B173nb / B173 -> R2, R1rep -> R1; step 03 values on the current MVS); box = evaluation range + 10 m band; the box MVS is rebuilt from its training images and used for the marks, states and judgments; the box's own tau / shift on the rebuilt MVS are reported next to the fixed values",
+   "set": "user answer 23:02: the recommended set only: B0, B173nb, B173 (B173-only, outside the size rule), R1rep; R4weak, R5agree, SWdemo stay search-stage material",
+   "note": "the fixed values were measured on the current MVS, which used the evaluation images when it was made (one value per prior and kind; recorded limitation)"
+  }
+ },
+ "resources": {
+  "cpus_per_job": 16,
+  "memory_gib_per_job": 48,
+  "gpus": [
+   0,
+   1
+  ],
+  "network": "none (except the one approved image pull)"
+ }
+}
