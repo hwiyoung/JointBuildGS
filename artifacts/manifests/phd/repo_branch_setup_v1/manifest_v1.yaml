@@ -1,0 +1,27 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-REPO-BRANCH-SETUP-v1
+status: BRANCHES_CREATED_CLEAN_CHECKOUT_REPRODUCES_PREP_MEASURES_ALL_EQUAL   # 3.5: tests 9/9, r11 rebuilt = original (1,645 files), 22 dry inits element-wise equal, check 2 equal, unexpected switch changes 0
+scientific_verdict: null
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/repo_branch_setup_v1/PHD-REPO-BRANCH-SETUP-v1
+  durability: local external storage; not a durable-backup claim
+report: docs/experiments/phd/repo_branch_setup_v1/커밋정리_보고서_v1.md
+branches:
+  archive: "archive/wip-20261005 = fc550e5fdfaf76cdf08b4b33a298cf841dd7417e (git status of phd/narrative-v1 at 72f45bcf on 2026-10-05: 4 modified + 2,259 new files, nothing left out)"
+  experiment: "exp/main-experiment, worktree ../JointBuildGS-exp; commits 32a720af (modules v5/v4 + test v5), 3ae3d3d2 (fork r11 + Dockerfiles), fb2509eb (PHD-MAIN-PREP-MEASURE-v1), 2f3562e5 (PHD-MAIN-PREP-DISCARD-RULE-v1), then this task's commit"
+fork_in_repo: src/phd/forks/GeoGS-conf-guided-v1-r11/   # r11 without submodules/ (88 files = payload r11, sha256)
+scripts: scripts/phd/repo_branch_setup_v1/   # run_all.sh (driver), run_fork_check.py, compare_r11.py, compare_runs.py, receipt.py
+config: configs/phd/repo_branch_setup_v1/checks_v1.json
+constraints: no training; the discard-rule and prep payloads and the r10 sources mounted read-only; Docker, network off; nothing pushed; the operator working folder, its branch and its index unchanged
+docker_images:
+  - jointbuildgs:dev   # sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774
+  - jointbuildgs:geogs-conf-guided-v1   # sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be
+payload_files:
+  logs/: progress.md, steps.jsonl, one log per step, fork run logs, queue logs
+  rebuild/: r11 rebuilt from the r10 sources by build_fork_r11.py of the repository (sources/, provenance/), compare_r11.json (three-way sha256)
+  fork_runs/chk/: 22 dry initialisations of the committed r11 (4 boxes x 2 priors all on; B0_b10 x 2 priors x 7 switches off)
+  fork_checks/chk.json: fork_checks.py of the repository on those runs (check 2, switch table)
+  compare/compare_chk.json: element-wise comparison with the discard-rule originals (fork_runs/s52, fork_checks/s52.json)
+  s52/, fork_inputs/: empty mount points of the read-only originals
+  receipt_task.json: commit, image ids, script / config hashes, step times, results

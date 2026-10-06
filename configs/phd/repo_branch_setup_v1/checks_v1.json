@@ -1,0 +1,36 @@
+{
+ "task_id": "PHD-REPO-BRANCH-SETUP-v1",
+ "purpose": "order 3.5: from the clean checkout exp/main-experiment (../JointBuildGS-exp), with the same Docker images, check that the committed code reproduces the second prep measure (PHD-MAIN-PREP-DISCARD-RULE-v1). No training.",
+ "payload_relative": "phase-payloads/phd/repo_branch_setup_v1/PHD-REPO-BRANCH-SETUP-v1",
+ "originals": {
+  "discard_rule_payload": "phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1",
+  "prep_payload": "phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1",
+  "r10_sources": "phase-payloads/phd/stage2_conf_guided_gs_v1/PHD-STAGE2-R10-TWO-FIXES-THREE-CHECKS-v1/sources/GeoGS-conf-guided-v1-r10",
+  "r11_sources": "phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/sources/GeoGS-conf-guided-v1-r11",
+  "fork_runs_tag": "s52",
+  "fork_checks": "fork_checks/s52.json",
+  "access": "read-only mounts only; nothing under the original payloads is written"
+ },
+ "fork_in_repo": "src/phd/forks/GeoGS-conf-guided-v1-r11",
+ "images": {"dev": "jointbuildgs:dev", "fork": "jointbuildgs:geogs-conf-guided-v1"},
+ "tests": ["tests.phd.test_prior_propagation_v5", "tests.phd.test_main_prep_measure_v1"],
+ "tag": "chk",
+ "inputs": "fork_inputs/s52",
+ "run_sub": "s52/box",
+ "boxes": ["B0_b10", "B173nb_b10", "B173_b0", "R1rep_b10"],
+ "priors": ["LoD2", "ALS"],
+ "gpu_per_prior": {"LoD2": "0", "ALS": "1"},
+ "switch_box": "B0_b10",
+ "switches": ["confidence_mask", "judgment", "propagation", "prior_band", "protection", "init_exclusion", "prior"],
+ "compare": {
+  "order_items_exact": {
+   "locations.npz": ["state", "vote", "judgment", "unit_judgment"],
+   "init_points.npz": ["planted"],
+   "unplanted.npz": "all arrays"
+  },
+  "recorded_only": "every other array of locations / init_points / unplanted / gate_check.npz (exact equality; max |difference| and count when not exact), bytes of input.ply / cameras.json / faces.csv, E.jsonl / meta.json / init_report.json without keys containing 'seconds', cfg_args without model_path, the docker command with the replaced mounts put back",
+  "fork_checks": "fork_checks.py of the repository on the new runs (check 2 against the measurement's units.npz, switch table of switch_box) and its rows against the original fork_checks/s52.json",
+  "ignored_as_volatile": ["keys containing 'seconds'", "model path /p/fork_runs/s52/<run>/model vs /pv/fork_runs/chk/<run>/model", "events.out.tfevents.*", "container name"]
+ },
+ "scientific_verdict": null
+}
