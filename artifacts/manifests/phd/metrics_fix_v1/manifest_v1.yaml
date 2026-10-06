@@ -1,0 +1,50 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-MAIN-METRICS-FIX-v1
+status: METRICS_FIX_COMPLETE_DEFINITIONS_PENDING_USER_APPROVAL
+scientific_verdict: null
+branch: exp/main-experiment   # worktree ../JointBuildGS-exp; the operator worktree was not modified
+training: none   # stage-0 outputs, trial outputs, fork r12, module v6 and module metrics_v1 were read-only
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/metrics_fix_v1/PHD-MAIN-METRICS-FIX-v1
+  durability: local external storage; not a durable-backup claim
+report: docs/experiments/phd/metrics_fix_v1/평가지표_확정손질_보고서_v1.md
+figures: docs/experiments/phd/metrics_fix_v1/figures/
+config: configs/phd/metrics_fix_v1/metrics_fix_v1.json   # saved 2026-10-06 23:35 KST before any computation (sha256 4fb5771b...), unchanged after
+gt_suspect_rule: configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json   # saved 23:53:13 from pre-training evidence, before its effect on the trainings (sha256 257ca279...)
+module: src/phd/metrics_v2/   # metrics_v1 files copied byte-identical; band / stats functions appended; regions, bins, readings new
+tests: tests/phd/test_metrics_v2.py   # 9 hand-made scenes (with the 19 of v1)
+scripts: scripts/phd/metrics_fix_v1/
+upstream:
+  - artifacts/manifests/phd/metrics_trial_v1/manifest_v1.yaml          # /mt: trial rows, W centres, unseen patches, current-option virtual meshes, summary numbers
+  - artifacts/manifests/phd/main_stage0_v1/manifest_v1.yaml            # /s0: trainings, regions, box GT, fork inputs
+  - artifacts/manifests/phd/main_prep_discard_rule_v1/manifest_v1.yaml # /dr: box GT height alignment, prior meshes
+  - artifacts/manifests/phd/main_prep_measure_v1/manifest_v1.yaml      # /prep: boxes, box MVS depth maps (919)
+docker_images:
+  - jointbuildgs:dev                     # region files v2, metrics, observation-error check, height check, tables, figures, receipt (CPU)
+  - jointbuildgs:geogs-conf-guided-v1    # virtual-view meshes of options 1 and 2 (render + TSDF, 0.10 m)
+constraints: Docker, network off, inputs read-only, at most three Docker jobs, one TSDF job at a time (GPU container capped at 46 GB)
+stop_events: []   # no stop-and-ask event; no out-of-memory; two pre-computation script errors fixed and recorded (test expectation, function name)
+for_stage1:
+  regions: regions_v2/regions_ext_v2_<site>_<prior>.npz   # code_ext_v2 per patch (2, 3, 4, 5, 11, 12, 13, 14, 0, -1); v1_kept; gt_suspect (flag only)
+  definitions: report section 9.1 (the table the stage-1 order quotes once approved)
+  virtual_view_option: option2   # the trial's 16 views, only the Gaussians inside the TSDF box, voxel 0.10 m (virtual/chosen.json)
+pending_user_decisions:
+  - "approve or change the definition table (report section 9.1)"
+  - "glass places: keep, keep with the unflagged number beside it, or remove the gt_suspect patches (section 9.2 a)"
+  - "height offsets: no fix with relative bias, one common GT alignment, roof alignment, or image-side scale (section 9.2 b)"
+  - "mutual complementarity judged by dispersion, bias, or both (section 9.2 c)"
+  - "number of repetitions and the pass criteria (section 8.3 is the input)"
+payload_files:
+  progress.md: progress record (expected and actual times, the config and rule hashes, errors, after-result changes)
+  regions_v2/: region files v2 of the four sites x two priors, MVS heights at the GT points per site, moves json / md
+  obs/: GT appearance, ULS attributes, rule candidates, suspect areas and effect
+  height/: height-proportionality check
+  virtual/: option1 / option2 meshes and records per training, compare.json, chosen.json
+  metrics/: per result json (all v2 metrics, seconds) and rows npz
+  tables/: accuracy.md, all.md, seed.md, seed.json, repetition.json
+  figs/: figure sources (PNG)
+  defs/: observation-error sections (rule and steep record)
+  logs/: queue.log, per-job logs (renamed reruns kept)
+  receipt_task.json: commit, uncommitted files, image ids, hashes, step times
+  handover/: the zip bundle (report, tables, figures, configs, progress.md, receipt)
