@@ -1,0 +1,10 @@
+ARG GEOGS_ORIGINAL_IMAGE=jointbuildgs:geogs-official-db40c95-v1
+FROM ${GEOGS_ORIGINAL_IMAGE}
+LABEL jbgs.runtime.deviation="CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence"
+# Official general_utils.colormap uses FigureCanvasAgg.tostring_rgb, removed in
+# Matplotlib3.10. The unmodified native run failed at its first8000 evaluation.
+RUN python -m pip install --no-deps matplotlib==3.9.2 && python -m pip check
+# The new Python environment's ICU78 requires this matching C++ runtime.
+ENV LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6
+ENV LD_LIBRARY_PATH=/opt/geogs/lib:/usr/local/cuda/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
+RUN python -m pip freeze > /opt/geogs-runtime-freeze.txt

@@ -1,0 +1,64 @@
+--- official/train.py
++++ instrumented/train.py
+@@ -676,6 +676,9 @@
+     n_completed = completed_mask.sum().item()
+     n_regular = building_mask.sum().item() - n_completed
+     print(f"[LoD2] Rotation LR: {n_regular} regular building @ {regular_scale}, {n_completed} completed @ {completion_scale}")
++
++
++import jbgs_state
+ 
+ 
+ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint):
+@@ -769,6 +772,31 @@
+         print("  DA3 confidence weighting disabled or maps missing")
+     print("  Distortion weight activates at 3000, normal weight at 7000 (same as base)")
+     print("-" * 80)
++
++    if args.jbgs_resume_full:
++        jbgs_restored = jbgs_state.restore_state(args.jbgs_resume_full, locals(), globals())
++        first_iter = jbgs_restored["first_iter"]
++        building_freeze_mask = jbgs_restored["building_freeze_mask"]
++        viewpoint_stack = jbgs_restored["viewpoint_stack"]
++        ema_loss_for_log = jbgs_restored["ema_loss_for_log"]
++        ema_dist_for_log = jbgs_restored["ema_dist_for_log"]
++        ema_normal_for_log = jbgs_restored["ema_normal_for_log"]
++        ema_lod_loss = jbgs_restored["ema_lod_loss"]
++        ema_da_loss = jbgs_restored["ema_da_loss"]
++        freeze_done = jbgs_restored["freeze_done"]
++        dynamic_switch_triggered = jbgs_restored["dynamic_switch_triggered"]
++        dynamic_switch_iter = jbgs_restored["dynamic_switch_iter"]
++        dynamic_switch_forced = jbgs_restored["dynamic_switch_forced"]
++        lod_loss_history = jbgs_restored["lod_loss_history"]
++        last_dynamic_check = jbgs_restored["last_dynamic_check"]
++        da_phase = jbgs_restored["da_phase"]
++        da_weight = jbgs_restored["da_weight"]
++        da_depth_history = jbgs_restored["da_depth_history"]
++        da_monitor_depth = jbgs_restored["da_monitor_depth"]
++        da_monitor_rgb = jbgs_restored["da_monitor_rgb"]
++        da_last_check = jbgs_restored["da_last_check"]
++        da_consecutive = jbgs_restored["da_consecutive"]
++        da_locked_weight = jbgs_restored["da_locked_weight"]
+ 
+     progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
+     first_iter += 1
+@@ -1170,6 +1198,9 @@
+                         freeze_done = True
+                 else:
+                     print("[Warning] Building freeze skipped (no LoD2 PCD or mask empty).")
++
++        if jbgs_state.after_step(locals()):
++            break
+ 
+         with torch.no_grad():
+             if network_gui.conn is None:
+@@ -1311,7 +1342,9 @@
+     parser.add_argument("--sparse_dir_name", type=str, default="",
+                         help="Override sparse directory name (overrides --lod_init default)")
+ 
++    jbgs_state.register_args(parser)
+     args = parser.parse_args(sys.argv[1:])
++    jbgs_state.validate_args(args)
+     args.save_iterations.append(args.iterations)
+ 
+     # Initialize system state (RNG)
