@@ -13,7 +13,7 @@ sys.path.insert(0, "/repo/scripts/phd/main_stage0_v1")
 sys.path.insert(0, "/repo")
 import numpy as np  # noqa: E402
 
-from common import CFG, DR, GRID_H, GRID_W, PREP, SURVEY, Views, jdump, log, read_depth_bin, sha256, uv_to_xy, xy_to_uv  # noqa: E402,F401
+from common import CFG, DR, GRID_H, GRID_W, PREP, SURVEY, Views, basis, jdump, log, read_depth_bin, sha256, uv_to_xy, xy_to_uv  # noqa: E402,F401
 
 S0 = Path("/s0")
 OUT = Path("/out")
@@ -57,6 +57,11 @@ def setup_fonts():
 def in_eval_uv(xy, box):
     uv = xy_to_uv(np.asarray(xy, np.float64)[:, :2])
     return (uv[:, 0] >= box["eval_u"][0]) & (uv[:, 0] <= box["eval_u"][1]) & (uv[:, 1] >= box["eval_v"][0]) & (uv[:, 1] <= box["eval_v"][1])
+
+
+def basis_u():
+    """the u axis of the frame as a local XY direction."""
+    return basis()[0]
 
 
 def boxes():

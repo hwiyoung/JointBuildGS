@@ -54,7 +54,7 @@
  "results": {
   "runs": ["b1_LoD2", "b1_ALS", "b2_LoD2", "b2_ALS"],
   "run_mesh": "stage0/<run>/post/mesh_tsdf.ply (training-view TSDF, 0.05 m; stage-0 post unchanged)",
-  "prior_as_is": "the registered prior surface itself put in place of the result: LoD2 = s02_box lod2_mesh without the GroundSurface (bottom) triangles (tri_type 2; r9 removed them from the prior), ALS = s02_box als_mesh (the TIN of ALS ground and building points) + the registration shift of the v6 box run (LoD2 0, ALS (-0.056, +0.063, 0))",
+  "prior_as_is": "the registered prior surface itself put in place of the result: LoD2 = the roof and wall polygon triangles of s02_box lod2_mesh (GroundSurface / ClosureSurface were never in it; the thin cap quads that close cut party walls, tri_type 2, left out as in the stage-0 section figures) [description corrected 22:09, before any metric was read; the selection is unchanged], ALS = s02_box als_mesh (the TIN of ALS ground and building points) + the registration shift of the v6 box run (LoD2 0, ALS (-0.056, +0.063, 0))",
   "prior_same_path": "4.4 path 4: the prior surface rendered at the 203 training views (camera-Z depth of the first ray hit, the fork's camera model via to_cam_open3d) and fused with the stage-0 TSDF settings (voxel 0.05 m, sdf_trunc 0.25 m, depth_trunc 300 m, the stage-0 box mask) -> one mesh per prior; used as a second 'prior as-is' in every 4.3 metric",
   "why": "the order: every metric for the four trainings and for the prior as-is (surface and same-path mesh)"
  },
@@ -134,7 +134,7 @@
   "why": "order trial value 3 m; 1 m cells with a 3 x 3 maximum keep wall tops and tree crowns from making false floaters; 'the depth comes from those Gaussians' is decided by removing them and rendering again"
  },
  "summary_numbers": {
-  "building_surface": "0.5 m cells of the survey grid that lie within 2 m of a LoD2 GroundSurface footprint of the box, inside the evaluation range, not excluded and holding at least one GT point; GT points = the GT points in these cells; result points = area-weighted random samples of the result mesh triangles whose centroid lies in these cells, 400 per m2 (one per 0.05 m x 0.05 m), seed 0",
+  "building_surface": "0.5 m cells of the survey grid that lie within 2 m of a LoD2 GroundSurface footprint of the box, inside the evaluation range, not excluded and holding at least one GT point; GT points = the GT points in these cells; result points = area-weighted random samples of the result mesh, 400 per m2 (one per 0.05 m x 0.05 m), seed 0, kept when they lie in these cells (drawn from the triangles whose centroid lies in a cell or whose area exceeds 0.01 m2) [sampling corrected 22:09 after the first test on the LoD2 surface: the centroid-only rule dropped large prior polygons]",
   "sample_density_per_m2": 400,
   "chamfer": "mean nearest-neighbour distance result -> GT, GT -> result, and their mean",
   "precision_completeness_f1": "precision = share of result points within t of a GT point, completeness = share of GT points within t of a result point, F1 = harmonic mean; t = 0.2 m and 0.5 m",
