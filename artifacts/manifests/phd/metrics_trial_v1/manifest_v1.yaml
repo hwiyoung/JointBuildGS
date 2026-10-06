@@ -1,0 +1,43 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-MAIN-METRICS-TRIAL-v1
+status: METRICS_TRIAL_COMPLETE_PROPOSALS_PENDING_USER_DECISIONS
+scientific_verdict: null
+branch: exp/main-experiment   # worktree ../JointBuildGS-exp; the operator worktree was not modified
+training: none   # stage-0 outputs, fork r12 and module v6 were mounted read-only
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/metrics_trial_v1/PHD-MAIN-METRICS-TRIAL-v1
+  durability: local external storage; not a durable-backup claim
+report: docs/experiments/phd/metrics_trial_v1/평가지표_시험계산_보고서_v1.md
+figures: docs/experiments/phd/metrics_trial_v1/figures/
+config: configs/phd/metrics_trial_v1/metrics_trial_v1.json   # saved 2026-10-06 21:49 KST before any computation (sha256 f5a93a89...); two corrections at 22:09 before any training metric was read (sha256 1d10513b...)
+module: src/phd/metrics_v1/
+tests: tests/phd/test_metrics_v1.py   # 19 hand-made scenes
+scripts: scripts/phd/metrics_trial_v1/
+upstream:
+  - artifacts/manifests/phd/main_stage0_v1/manifest_v1.yaml          # /s0: trainings, regions, v6 stage 1 and labels
+  - artifacts/manifests/phd/main_prep_discard_rule_v1/manifest_v1.yaml   # /dr: prior meshes (s02_box), box GT
+  - artifacts/manifests/phd/main_prep_measure_v1/manifest_v1.yaml        # /prep: boxes, box MVS
+docker_images:
+  - jointbuildgs:dev                     # regions, preparation, MVS path, metrics, tables, figures (CPU)
+  - jointbuildgs:geogs-conf-guided-v1    # same-path prior meshes, evaluation-view points, floater renders, virtual-view meshes
+constraints: Docker, network off, inputs read-only, at most three Docker jobs, one TSDF job at a time (GPU container capped at 46 GB)
+stop_events:
+  - "22:18 virtual-view mesh of b1_LoD2 reached the 46 GB memory cap at voxel 0.05 m (rc 137); redone at 0.10 m as the order says; the other three trainings at 0.10 m too (logs/voxel_0.10_for_all.txt)"
+  - "22:21 the GPU runner script was edited while bash ran it and ended with a syntax error (rc 2); the container had finished with all outputs; the remaining three trainings were queued again"
+for_stage1:
+  regions: regions_ext/regions_ext_<site>_<prior>.npz   # code_ext per patch (2, 3, 4, 5, 11, 12, 13, 14, 0, -1); B173 sites also unseen_label_inferred
+pending_user_decisions:
+  - "confirm or change the metric definitions (report section 8): edge band, height-difference range, spread window and ambiguity, size bins, the 11/12 boundary (region file v2 with the MVS height at the GT points?), mechanism-layer radius, floater bands, unmeasured regions, the unseen split, the virtual-view mesh in the stage-1 post step"
+  - "number of repetitions (report section 7): wide-area metrics vary <= 1.2 %p / 0.1 cm / 1.3 cm between seeds; small samples vary 5-35 %p"
+payload_files:
+  progress.md: progress record (tasks, expected and actual times, errors)
+  regions_ext/: 4.2 widened region files of the four sites x two priors, summary json / csv, table md
+  defs/: pre-training inputs fixed before the metrics (GT classes, rows and W centres, unseen patches, top raster, building surface and M3C2 core points, sections, prior surfaces)
+  gpu/: same-path prior meshes; per training evaluation-view points, floater mask / pixels, virtual-view mesh (0.10 m) and its record
+  paths/: MVS heights at the GT roof points (path 5)
+  metrics/: per result json (all metrics, seconds) and rows npz (classes, readings)
+  tables/: metrics_tables.md, spread_seed.json, repetition.json, proxy_check.json, proposal_band.json, proposal_more.json
+  figs/: figure sources
+  logs/: queue.log, per-job logs, voxel and fallback records
+  receipt_task.json: commit, uncommitted files, image ids, hashes, step times
