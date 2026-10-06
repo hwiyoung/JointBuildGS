@@ -1,6 +1,6 @@
 schema: jointbuildgs.external-task-resolver.v1
 task_id: PHD-MAIN-STAGE0-v1
-status: IN_PROGRESS_5_1_TO_5_3_DONE_STAGE0_TRAINING_RUNNING
+status: STAGE0_COMPLETE_ANALYST_OPINION_PROCEED_PENDING_USER_DECISIONS
 scientific_verdict: null
 branch: exp/main-experiment   # worktree ../JointBuildGS-exp; the operator worktree was not modified
 backend:
@@ -27,6 +27,12 @@ docker_images:
   - jointbuildgs:geogs-conf-guided-v1    # fork r12 initialisations, trainings, renders, TSDF
   - colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf   # MVS of the new B0 conditions
 constraints: Docker, network off, inputs read-only, at most three Docker jobs; criteria written before results and not changed
+stop_events:
+  - "b1_ALS (seed 0) stopped by CUDA out-of-memory at the re-read of iteration 15,000 (14:55 KST); user decision: rerun with PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True only (no code or method change), batch 2 with the same setting; the stopped run kept as stage0/b1_ALS_old_20261006T145815 (its log was overwritten by the rerun; oom_record.txt holds the copied error lines)"
+pending_user_decisions:
+  - "go to stage 1 (analyst: yes, with the allocator setting for all trainings and R1rep first to check memory)"
+  - "number of repetitions (seed spread: <= 0.1 cm / 0.2 %p on large splits; 10-20 cm / 5-20 %p on small splits)"
+  - "metrics of the agreement regions; how to measure unseen places (the training-view TSDF cannot show them) and the small unmeasured-agreement region"
 payload_files:
   progress.md: progress record (tasks, training every 1,000 iterations, expected end)
   s61/box/, s61/box_maskoff/, s61/box_gt/: 5.1 v6 stage 1 of the four boxes (moved store, default rules, per-patch MVS residual medians), the switch site with the confidence mask off, v6 labels and GT-point ownership
@@ -42,7 +48,8 @@ payload_files:
   regions/: 5.3 agreement regions per site x prior (npz), summary json / csv
   stage0/fig_defs.json: figure views and section planes, fixed before training
   stage0/b<k>_<prior>/: 5.4 trainings (model, monitor, receipt, post: renders, TSDF mesh)
-  quick/: 5.4 quick GT check
+  quick/: 5.4 quick GT check (per run json / npz, spread.json)
+  tables/stage0_tables.md: 5.4 report tables (time and resources, scene, quick check, spread)
   tables/, figs/: tables and figure sources
   logs/: queue.log, step logs, git state at the training start
   receipt_task.json: commit, uncommitted files, image ids, hashes, step times

@@ -28,8 +28,9 @@ V = SCFG["stage0"]["values_as_r10"]
 SWITCHES = ("confidence_mask", "judgment", "propagation", "prior_band", "protection", "init_exclusion", "prior")
 
 
-def command(name, box, prior, inputs, model_dir, gpu, cpus, switch=None, rule="auto", schedule=None, seed=0):
-    """docker command of fork r12. schedule None = dry initialisation; else a list of training arguments."""
+def command(name, box, prior, inputs, model_dir, gpu, cpus, switch=None, rule="auto", schedule=None, seed=0, alloc_conf=None):
+    """docker command of fork r12. schedule None = dry initialisation; else a list of training arguments. alloc_conf: value of
+    PYTORCH_CUDA_ALLOC_CONF (allocator setting only; 2026-10-06 user decision after the out-of-memory stop of b1_ALS)."""
     I = f"/p/{inputs}/{box}"
     fi = json.loads((P / inputs / box / "fork_inputs.json").read_text())[prior]
     split = json.loads((P / inputs / box / "split.json").read_text())
@@ -39,6 +40,7 @@ def command(name, box, prior, inputs, model_dir, gpu, cpus, switch=None, rule="a
             "--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "--cpus", str(cpus), "--shm-size", "8g",
             "-e", "PYTHONUNBUFFERED=1", "-e", "PYTHONDONTWRITEBYTECODE=1", "-e", "MPLCONFIGDIR=/tmp/mpl", "-e", "TORCH_HOME=/weights/torch", "-e", "HOME=/tmp",
             "-e", f"OMP_NUM_THREADS={cpus}", "-e", f"JBGS_SPLIT_JSON={I}/split.json",
+            *(["-e", f"PYTORCH_CUDA_ALLOC_CONF={alloc_conf}"] if alloc_conf else []),
             "-v", f"{ART}:/artifacts/JointBuildGS:ro", "-v", f"{P}:/p", "-v", f"{WEIGHTS}:/weights:ro", "-v", f"{SRC}:/source:ro",
             "-w", "/source", "--entrypoint", "python", IMG,
             "train.py", "-s", f"{I}/scene_{prior}", "-m", model_dir, "--eval", "-r", "1",
