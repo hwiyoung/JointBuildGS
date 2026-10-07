@@ -1,16 +1,16 @@
 schema: jointbuildgs.external-task-resolver.v1
 task_id: PHD-MAIN-STAGE1-v1
-status: PREP_DONE_TRAININGS_RUNNING_GEOGS_WAITS_FOR_USER_DECISION
+status: TRAININGS_RUNNING_GEOGS_AFTER_THE_QUEUE
 scientific_verdict: null
 branch: exp/main-experiment   # worktree ../JointBuildGS-exp; the operator worktree was not modified
-training: "stage 1: 27 new trainings planned (train_plan_v1.json); 23 started after the preparation report, the 4 GeoGS ones wait for the user's decision"
+training: "stage 1: 27 new trainings planned (train_plan_v1.json); 23 started after the preparation report (run_stage1.py); the 4 GeoGS ones (decided 2026-10-07) follow the queue (run_geogs.py)"
 backend:
   local_sibling: ../JointBuildGS-artifacts
   relative: phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1
   durability: local external storage; not a durable-backup claim
 reports:
   prep: docs/experiments/phd/main_stage1_v1/본실험_1단계_준비보고_v1.md
-  interim: docs/experiments/phd/main_stage1_v1/본실험_1단계_중간보고_B173nb_v1.md   # later
+  interim: docs/experiments/phd/main_stage1_v1/본실험_1단계_중간보고_B173nb_v1.md   # 2026-10-07, provisional gate (B173nb_b10 cells), GeoGS pending
   final: docs/experiments/phd/main_stage1_v1/본실험_1단계_보고서_v1.md               # later
 figures: docs/experiments/phd/main_stage1_v1/figures/
 configs:
@@ -19,7 +19,7 @@ configs:
   sections: configs/phd/main_stage1_v1/sections_v1.json      # before any stage-1 training result
 module: src/phd/metrics_v3/   # metrics_v2 copied unchanged + align, thin, premise, gate
 tests: tests/phd/test_metrics_v3.py
-scripts: scripts/phd/main_stage1_v1/
+scripts: scripts/phd/main_stage1_v1/   # queue runner run_stage1.py until the post failure of 16:37, then run_stage1_v2.py (post steps on the run's own idle GPU)
 upstream:
   - artifacts/manifests/phd/main_stage0_v1/manifest_v1.yaml            # /s0 (read-only): fork inputs, box runs, labels, stage-0 trainings
   - artifacts/manifests/phd/metrics_trial_v1/manifest_v1.yaml          # /mt (read-only): B173nb same-path meshes, floater masks
@@ -34,8 +34,12 @@ for_the_trainings:
   regions: regions_v3/regions_ext_v3_<site>_<prior>.npz   # code_ext_v3, v1_kept, gt_suspect, premise_violation, obs_within_threshold, premise_band
   definitions: defs/<site>/ and defs/gate_samples.json
   common_gt_shift_m: -0.0438
-pending_user_decisions:
-  - "GeoGS (always-trust LoD2): DA3 visual depth (batched / none / MVS instead), principal point (official / adapter), R1rep split (official / adapter) - preparation report section 9"
+user_decisions:
+  - "2026-10-07 GeoGS (always-trust LoD2): the recommendations of the preparation report section 9 - DA3 in batches (the earlier work's revision 2 rule) with a scale check against MVS, the camera adapter (principal point), the split adapter (split.json)"
+geogs:
+  source: geogs/source/GeoGS-official-adapters-v1   # official db40c95 + the two adapters only (source_manifest.json)
+  inputs: geogs/<site>/scene/                        # same images, poses, camera model, split and LoD2 surface as the method; official generate_pcd.py and LoD2Depth; DA3 in batches
+  scripts: [geogs_source.py, geogs_prep.py, run_geogs_prep.sh, geogs_da3.py, geogs_scale.py, run_geogs.py]
 payload_files:
   progress.md: progress (training block rewritten every 1,000 iterations)
   v3/: common alignment, labels v3, reproduction checks

@@ -161,8 +161,93 @@ def gate(sites=None, tag="final"):
     print("\n".join(md))
 
 
+# ------------------------------------------------------------------------------------------------ result tables of a site (order 5)
+def _num(x, f):
+    return "—" if x is None else f(x)
+
+
+P1 = lambda x: _num(x, lambda v: f"{100 * v:.1f}")          # share -> %
+C1 = lambda x: _num(x, lambda v: f"{100 * v:+.1f}")         # m -> cm, signed
+D1 = lambda x: _num(x, lambda v: f"{100 * v:.1f}")          # m -> cm
+RES_ROWS = [  # (section, label, [(path, fmt), ...]) - several paths are joined by ' / '
+    ("오류 차단", "유입률 · 사전 정보 오류 [조건 1]", [(("spread", "prior_error", "main", "spread"), P1)]),
+    ("오류 차단", "판별 불가 · 사전 정보 오류", [(("spread", "prior_error", "indeterminable_share"), P1)]),
+    ("오류 차단", "유입률 · 관측 오류 문턱 이내 [조건 2]", [(("spread", "observation_error_within_threshold", "main", "spread"), P1)]),
+    ("오류 차단", "판별 불가 · 관측 오류 문턱 이내", [(("spread", "observation_error_within_threshold", "indeterminable_share"), P1)]),
+    ("오류 차단", "유입률 · 관측 오류 문턱 이내, 의심 뺌", [(("spread", "observation_error_within_threshold", "main_without_suspect", "spread"), P1)]),
+    ("오류 차단", "유입률 · 관측 오류 전체", [(("spread", "observation_error", "main", "spread"), P1)]),
+    ("오류 차단", "유입률 · 전제 위배 안", [(("spread", "premise_violation_interior", "main", "spread"), P1)]),
+    ("오류 차단", "유입률 · 이중 오류(기록)", [(("spread", "double_error_record", "main", "spread"), P1)]),
+    ("오류 차단", "유입률 · 결측 사전 정보 오류(기록)", [(("spread", "missing_prior_error_record", "main", "spread"), P1)]),
+    ("오류 차단", "과거 형상 · 사전 정보 오류", [(("spread", "past_shape", "prior_error", "rate"), P1)]),
+    ("오류 차단", "과거 형상 · 관측 오류(출신 무관)", [(("spread", "past_shape", "observation_error_any_origin", "rate"), P1)]),
+    ("오류 차단", "보정 경계 (τ / m)", [(("spread", "size_curve", "boundary_tau"), lambda x: _num(x, lambda v: f"{v:g}")),
+                                    (("spread", "size_curve", "boundary_roof_m"), lambda x: _num(x, lambda v: f"{v:.2f}"))]),
+    ("기하", "완만한 지붕 편향 / NMAD [조건 3 = NMAD]", [(("accuracy", "thinned", "gentle", "bias"), C1), (("accuracy", "thinned", "gentle", "nmad"), D1)]),
+    ("기하", "완만한 지붕 편향, 의심 뺌", [(("accuracy", "thinned", "gentle_without_suspect", "bias"), C1)]),
+    ("기하", "완만한 지붕 산포 q68.3 / q95", [(("accuracy", "thinned", "gentle", "dev_q683"), D1), (("accuracy", "thinned", "gentle", "dev_q95"), D1)]),
+    ("기하", "가파른 지붕 편향 / NMAD", [(("accuracy", "thinned", "steep", "bias"), C1), (("accuracy", "thinned", "steep", "nmad"), D1)]),
+    ("기하", "가파른 지붕 산포 q68.3 / q95", [(("accuracy", "thinned", "steep", "dev_q683"), D1), (("accuracy", "thinned", "steep", "dev_q95"), D1)]),
+    ("기하", "띠 편향 / NMAD", [(("accuracy", "thinned", "band", "bias"), C1), (("accuracy", "thinned", "band", "nmad"), D1)]),
+    ("기하", "벽 편향 / NMAD", [(("accuracy", "thinned", "wall", "bias"), C1), (("accuracy", "thinned", "wall", "nmad"), D1)]),
+    ("완전성", "결측 일치 0.2 / 0.5 m", [(("completeness", "missing_agreement", "all", "le_0.2"), P1), (("completeness", "missing_agreement", "all", "le_0.5"), P1)]),
+    ("완전성", "비가시 일치 0.2 / 0.5 m", [(("completeness", "invisible_agreement", "all", "le_0.2"), P1), (("completeness", "invisible_agreement", "all", "le_0.5"), P1)]),
+    ("완전성", "전제 위배 둘레 0.2 m [조건 4]", [(("completeness", "premise_band", "all", "le_0.2"), P1)]),
+    ("완전성", "못 본 곳 상속률 / 과거 형상 (가우시안)", [(("unseen", "inheritance_rate_inferred"), P1), (("unseen", "past_shape_invisible_inferred"), P1)]),
+    ("완전성", "가상 시점 메시: 맞음 미룸 0.5 m / 틀림 미룸 0.2 m", [(("virtual", "below_roof_within_0_5"), P1), (("virtual", "above_roof_within_0_2"), P1)]),
+    ("부유", "3~20 m / 그중 사전 정보 출신 / 20 m 넘게 (개)", [(("floating", "near_3_20m"), lambda x: _num(x, lambda v: f"{v:,}")),
+                                                     (("floating", "near_prior"), lambda x: _num(x, lambda v: f"{v:,}")),
+                                                     (("floating", "above_20m"), lambda x: _num(x, lambda v: f"{v:,}"))]),
+    ("부유", "평가 영상 화소 몫 (‰)", [(("floating", "pixel_share_all"), lambda x: _num(x, lambda v: f"{1000 * v:.2f}"))]),
+    ("요약", "Chamfer 평균 (m)", [(("summary", "chamfer_mean"), lambda x: _num(x, lambda v: f"{v:.3f}"))]),
+    ("요약", "정밀도 / 완전성 / F1 @0.2 m", [(("summary", "precision_0.2"), P1), (("summary", "completeness_0.2"), P1), (("summary", "f1_0.2"), P1)]),
+    ("요약", "M3C2 중앙값 / NMAD (cm)", [(("summary", "m3c2", "median"), C1), (("summary", "m3c2", "nmad"), D1)]),
+    ("요약", "학습 시간 (분) / GPU 최대 (GB)", [(("summary", "time_memory", "wall_seconds"), lambda x: _num(x, lambda v: f"{v / 60:.0f}")),
+                                       (("summary", "time_memory", "gpu_memory_used_mib", "peak_minus_idle"), lambda x: _num(x, lambda v: f"{v / 1024:.1f}"))]),
+    ("요약", "화질 PSNR / SSIM / LPIPS", [(("summary", "image_quality", "psnr"), lambda x: _num(x, lambda v: f"{v:.2f}")),
+                                       (("summary", "image_quality", "ssim"), lambda x: _num(x, lambda v: f"{v:.3f}")),
+                                       (("summary", "image_quality", "lpips_vgg"), lambda x: _num(x, lambda v: f"{v:.3f}"))]),
+]
+RES_COLS = {  # unit -> [(result, label)]; a column is shown when its metrics file exists
+    "LoD2": [("prop_LoD2_s0", "본 방법 0"), ("prop_LoD2_s1", "본 방법 1"), ("imgonly_s0", "영상만 0"), ("imgonly_s1", "영상만 1"),
+             ("trust_LoD2", "늘 믿음(GeoGS)"), ("samepath_LoD2", "그대로(같은 길)"), ("surface_LoD2", "그대로(표면)")],
+    "ALS": [("prop_ALS_s0", "본 방법 0"), ("prop_ALS_s1", "본 방법 1"), ("prop_ALS1x_s0", "1배 0"), ("imgonly_s0", "영상만 0"), ("imgonly_s1", "영상만 1"),
+            ("trust_ALS", "늘 믿음"), ("samepath_ALS", "그대로(같은 길)"), ("surface_ALS", "그대로(표면)")],
+}
+
+
+def results(site):
+    """per unit: the metrics of every result present (columns) by the rows of RES_ROWS, plus the reference biases (refbias)."""
+    rb = json.loads((OUT / "tables/refbias.json").read_text())["sites"] if (OUT / "tables/refbias.json").exists() else {}
+    md, js = [], {}
+    for unit, cols in RES_COLS.items():
+        have = [(r, lab, json.loads(f.read_text())) for r, lab in cols if (f := OUT / "metrics" / site / f"{r}__{unit}.json").exists()]
+        if not have:
+            continue
+        ref = rb.get(f"{site}/{unit}", {})
+        bm = g(ref, "building_mvs_minus_gt", "bias")
+        md.append(f"\n**{site} · {unit}** (참고: 지면 MVS − 참값 {C1(ref.get('ground_mvs_minus_gt'))} cm, 같은 건물들의 완만한 지붕 MVS − 참값 {C1(bm)} cm)\n")
+        md.append("| 묶음 | 지표 | " + " | ".join(lab for _, lab, _ in have) + " |")
+        md.append("|---|---|" + "---|" * len(have))
+        for sec, lab, paths in RES_ROWS:
+            cells, vals = [], {}
+            for r, _, d in have:
+                parts = [fmt(g(d, *p)) for p, fmt in paths]
+                vals[r] = [g(d, *p) for p, _ in paths]
+                cells.append(" / ".join(parts) if any(x != "—" for x in parts) else "—")
+            if all(c == "—" for c in cells):
+                continue
+            md.append(f"| {sec} | {lab} | " + " | ".join(cells) + " |")
+            js.setdefault(unit, {})[lab] = vals
+    (OUT / "tables" / f"results_{site}.md").write_text("\n".join(md) + "\n")
+    jdump(OUT / "tables" / f"results_{site}.json", dict(site=site, rows=js, refbias={k: v for k, v in rb.items() if k.startswith(site)}, scientific_verdict=None))
+    print("\n".join(md))
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "gate":
         gate(sys.argv[2:] or None, "final" if not sys.argv[2:] else "interim")
+    elif sys.argv[1] == "results":
+        results(sys.argv[2])
     else:
         {"prep35": prep35}[sys.argv[1]]()

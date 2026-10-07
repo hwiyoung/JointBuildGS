@@ -44,7 +44,8 @@ def result_paths(site, res):
         p = (MT / "gpu" / f"samepath_{res.split('_')[1]}" / "mesh.ply") if site == B173NB else (OUT / "stage1" / site / res / "mesh.ply")
         return dict(mesh=p)
     R = OUT / "stage1" / site / res
-    return dict(mesh=R / "post/mesh_tsdf.ply", dump=R / "model/dump/iteration_30000/gaussians.npz", floater_mask=R / "gpu/floater_mask.npy",
+    return dict(mesh=R / "post/mesh_tsdf.ply", dump=R / "model/dump/iteration_30000/gaussians.npz", ply=R / "model/point_cloud/iteration_30000/point_cloud.ply",
+                floater_mask=R / "gpu/floater_mask.npy",
                 floaters=R / "gpu/floaters.json", virtual=R / "gpu/virtual/mesh_virtual.ply", virtual_json=R / "gpu/virtual/virtual.json",
                 receipt=R / "receipt.json", post=R / "post/post.json", quality=R / "post/quality.json", eval_points=R / "gpu/eval_points.npz")
 
@@ -58,6 +59,13 @@ def load_result(site, res):
     if p.get("dump") is not None and p["dump"].exists():
         d = np.load(p["dump"])
         gs = dict(xyz=d["xyz"].astype(np.float64), origin=d["origin"] if "origin" in d.files else None, opacity=d["opacity"])
+    elif p.get("ply") is not None and Path(p["ply"]).exists():
+        # a result without the fork's dump (GeoGS, added 2026-10-07 before its training): positions and opacities from its PLY (same
+        # rows as the floater mask of gpu_s1.run_steps), origin unknown -> the origin-based numbers stay empty
+        from plyfile import PlyData
+        v = PlyData.read(str(p["ply"]))["vertex"]
+        gs = dict(xyz=np.stack([v["x"], v["y"], v["z"]], 1).astype(np.float64), origin=None,
+                  opacity=1.0 / (1.0 + np.exp(-np.asarray(v["opacity"], np.float64))))
     return (lambda: MeshScene.from_ply(p["mesh"])), gs, p
 
 
