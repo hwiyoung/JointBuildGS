@@ -124,7 +124,8 @@ def sections(only=None):
     S = json.loads((OUT / "defs/sections_v1.json").read_text())["sections"]
     V = Views()
     names = [k for k in S if only is None or S[k]["site"] == only]
-    fig, axs = plt.subplots(len(names), 1, figsize=(15, 4.8 * len(names)), constrained_layout=True)
+    fig, axs = plt.subplots(len(names), 1, figsize=(15, 4.8 * len(names)), constrained_layout=True, squeeze=False)
+    axs = axs[:, 0]
     cols = {"prop": "#1f77b4", "imgonly": "#ff7f0e", "trust": "#8c564b", "samepath": "#7f7f7f", "prop_other": "#9467bd"}
     for k, nm in enumerate(names):
         s = S[nm]
