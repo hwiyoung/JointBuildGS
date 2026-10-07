@@ -1,0 +1,47 @@
+schema: jointbuildgs.external-task-resolver.v1
+task_id: PHD-MAIN-STAGE1-v1
+status: PREP_DONE_TRAININGS_RUNNING_GEOGS_WAITS_FOR_USER_DECISION
+scientific_verdict: null
+branch: exp/main-experiment   # worktree ../JointBuildGS-exp; the operator worktree was not modified
+training: "stage 1: 27 new trainings planned (train_plan_v1.json); 23 started after the preparation report, the 4 GeoGS ones wait for the user's decision"
+backend:
+  local_sibling: ../JointBuildGS-artifacts
+  relative: phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1
+  durability: local external storage; not a durable-backup claim
+reports:
+  prep: docs/experiments/phd/main_stage1_v1/본실험_1단계_준비보고_v1.md
+  interim: docs/experiments/phd/main_stage1_v1/본실험_1단계_중간보고_B173nb_v1.md   # later
+  final: docs/experiments/phd/main_stage1_v1/본실험_1단계_보고서_v1.md               # later
+figures: docs/experiments/phd/main_stage1_v1/figures/
+configs:
+  main: configs/phd/main_stage1_v1/main_stage1_v1.json        # 2026-10-07 13:19:12 before any computation (sha256 fde8803d...)
+  train_plan: configs/phd/main_stage1_v1/train_plan_v1.json  # 13:57:31 before the first training (sha256 79ad787c...)
+  sections: configs/phd/main_stage1_v1/sections_v1.json      # before any stage-1 training result
+module: src/phd/metrics_v3/   # metrics_v2 copied unchanged + align, thin, premise, gate
+tests: tests/phd/test_metrics_v3.py
+scripts: scripts/phd/main_stage1_v1/
+upstream:
+  - artifacts/manifests/phd/main_stage0_v1/manifest_v1.yaml            # /s0 (read-only): fork inputs, box runs, labels, stage-0 trainings
+  - artifacts/manifests/phd/metrics_trial_v1/manifest_v1.yaml          # /mt (read-only): B173nb same-path meshes, floater masks
+  - artifacts/manifests/phd/metrics_fix_v1/manifest_v1.yaml            # /mf (read-only): region files v2, MVS at the GT points, option-2 virtual meshes
+  - artifacts/manifests/phd/main_prep_discard_rule_v1/manifest_v1.yaml # /dr (read-only): box meshes / stores, box GT and its per-box alignment
+  - artifacts/manifests/phd/main_prep_measure_v1/manifest_v1.yaml      # /prep (read-only): boxes, box MVS
+docker_images:
+  - jointbuildgs:dev                     # alignment, labels, regions, definitions, metrics, sensitivity judgments, tables (CPU)
+  - jointbuildgs:geogs-conf-guided-v1    # trainings (fork r12), post steps, same-path meshes, confidence re-computation (GPU)
+constraints: Docker, network off, inputs read-only, two trainings (one per GPU) + one other Docker job, one TSDF at a time
+for_the_trainings:
+  regions: regions_v3/regions_ext_v3_<site>_<prior>.npz   # code_ext_v3, v1_kept, gt_suspect, premise_violation, obs_within_threshold, premise_band
+  definitions: defs/<site>/ and defs/gate_samples.json
+  common_gt_shift_m: -0.0438
+pending_user_decisions:
+  - "GeoGS (always-trust LoD2): DA3 visual depth (batched / none / MVS instead), principal point (official / adapter), R1rep split (official / adapter) - preparation report section 9"
+payload_files:
+  progress.md: progress (training block rewritten every 1,000 iterations)
+  v3/: common alignment, labels v3, reproduction checks
+  regions_v3/: region files v3, MVS at the GT points (float64), moves, premise areas and checks
+  defs/: evaluation definitions of the four sites, gate samples, sections
+  sens/: sensitivity (confidence masks, variant stores, judgment runs, labels, counts)
+  settings/: settings tables, mask check
+  stage1/: same-path prior meshes; trainings (model, post, gpu, receipt)
+  metrics/, tables/, figs/, logs/, receipt_task.json, handover/

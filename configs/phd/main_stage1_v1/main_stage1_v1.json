@@ -1,0 +1,138 @@
+{
+ "version": "main_stage1_v1",
+ "task_id": "PHD-MAIN-STAGE1-v1",
+ "written": "2026-10-07 KST, before any computation of this task (the file time and sha256 go to progress.md and the receipt)",
+ "scientific_verdict": null,
+ "order": "본 실험 1단계 발주문 PHD-MAIN-STAGE1-v1 (2026-10-07)",
+ "scope_of_this_file": "the preparation stage (order 3.1-3.7) and the evaluation / gate definitions (order 2, 5). The training plan (order 4) is written in train_plan_v1.json before the first training; the section positions of the figures (order 5.1) in sections_v1.json before any stage-1 training result is read.",
+ "parents": {
+  "S0": "phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1 (read-only /s0): v6 box stage-1 runs s61/box, labels s61/box_gt, fork inputs fork_inputs/s61, the four stage-0 trainings stage0/",
+  "MT": "phase-payloads/phd/metrics_trial_v1/PHD-MAIN-METRICS-TRIAL-v1 (read-only /mt): B173nb_b10 rows, W centres, unseen patches, top raster, same-path prior meshes, current-option virtual meshes, summary numbers",
+  "MF": "phase-payloads/phd/metrics_fix_v1/PHD-MAIN-METRICS-FIX-v1 (read-only /mf): region files v2, MVS heights at the GT points (mvs_at_gt_<site>.npz), GT appearance and the gt_suspect inputs, option-2 virtual meshes, metrics v2 of the eight stage-0 results",
+  "DR": "phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1 (read-only /dr): s02_box meshes and stores, s52/box_gt (per-box GT and its alignment record), s52/s03 fixed values",
+  "PREP": "phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1 (read-only /prep): boxes_v1.json, box_views.json, box MVS (geometric and photometric depth maps)"
+ },
+ "user_decisions_1007": {
+  "metrics": "the fix report 9.1 table plus the six decisions of order 2.4; names of 2026-10-06",
+  "glass_places": "gt_suspect does not change region codes; observation-error and support-agreement numbers are counted as they are, the numbers without the flagged patches written next to them",
+  "gt_height": "the GT is moved into the image frame by one common shift of the four boxes (3.1)",
+  "condition2_samples": "counted per judgment unit before training (3.3)",
+  "premise_violation_region": "fixed by rule before training (3.2)",
+  "condition4_metric": "completeness (0.2 m) of the support-agreement patches within 2 m of the premise-violation region, against image-only",
+  "area": "GT points thinned (3.4)",
+  "gate": "order 2.2 (ISO 5725 repeatability limit r = 2.8 s_r), repetitions order 2.3"
+ },
+ "common_alignment": {
+  "gt_points": "per box the cleaned ULS GT points of the discard task (s52/box_gt/<box>/gt_points.npz = s61/box_gt gt_points.npz) with the box shift taken back (z - shift_box) = the cleaned ULS before any alignment",
+  "pixels": "per box exactly as the per-box alignment (s04_gt_v6.align_px): up to 40 training views of the box (box_views.json, with a geometric depth map) evenly spaced by name; per view the GT z-buffer (9 x 9 leak filter 0.3 m) and the box MVS geometric depth (confidence 1) on bare-ground pixels (the MVS point in a bare hard ground cell of the s04 definition inside the box range); a box with fewer than 5,000 pixels in a pass uses range + 20 m",
+  "pooled": "per pass the pixels of the four boxes are pooled (each pixel once; no weighting by box) and their median vertical MVS - GT difference is the pass shift; two passes (the second with the first applied); C = sum of the two",
+  "reproduction_check": "per box, the pass-1 median of its own pixels equals the recorded pass-1 median of s52/box_gt (tolerance 1e-4 m); otherwise stop (a calculation error)",
+  "apply": "every ULS GT point of box b: z + (C - shift_b). B0's primary GT (gt_clean, GeoGS evaluation cloud, z - 0.0746 m) is moved by the same amount as B0's ULS points (C - shift_B0), so the two B0 sources keep their relation (primary - aligned ULS top layer = +0.030 m, NMAD 0.031 m, 3,161 roof cells of 0.5 m; measured 2026-10-07 before this file); recorded as a reading of the decision for the one source that has no ground",
+  "stop": "|C - shift_b| > 0.10 m for any box -> stop and ask (order 3.8)",
+  "table": "C, the four per-box shifts (-0.0533, -0.0422, +0.0415, -0.0262 m) and C - shift_b; the same building 108580335 in B173nb_b10 and B173_b0: identical raw ULS points (matched by xyz within 1 mm after taking the box shifts back) must have equal z after the move (before: 8.4 cm apart)",
+  "why": "order 2.4 and 3.1"
+ },
+ "labels_v3": {
+  "script": "s04_gt_v7.py = s04_gt_v6.py with one change: --z-shift d added to the z of the GT points read with --gt-from and of the B0 primary GT; everything else the v6 logic unchanged",
+  "run": "per box exactly the stage-0 command (run_51.sh boxgt): --gt-from /dr/s52/box_gt/<box> --mesh-sub /dr/s02_box --stage1-sub /s0/s61/box --views-file /prep/step06/box_views.json --mvs /prep/mvs/box_<box> --no-depth, plus --z-shift (C - shift_b)",
+  "reproduction_check": "s04_gt_v7 with --z-shift 0 reproduces the stage-0 labels and ownership files (s61/box_gt) exactly for the four boxes before the v3 run; otherwise stop",
+  "outputs": "v3/box_gt/<box>: labels_<prior>.npz, labels_uls_<prior>.npz (B0), gt_owner_*.npz, gt_points.npz, gt_primary.npz, exclusion_cells.npz, gt_summary.json"
+ },
+ "regions_v3": {
+  "chain": "the stage-0 agreement codes (regions_v1.py rule) -> the trial's codes 11-14, GT point counts and the B173 unseen split (regions_ext_v1 rule; the unseen split's current top uses the moved GT) -> the fix's v2 split (2/3 and 11/12 by the patch median over its GT points of z_MVS - z_GT; z_MVS = the 0.1 m cell median of the fix's mvs_at_gt_<site>.npz (same MVS, same XY), z_GT moved; >= 5 values, else the v1 code, v1_kept; wall-like patches v1); all with the v3 labels",
+  "reproduction_check": "the same chain run on the stage-0 labels (no move) reproduces code_ext_v2 of the fix's region files exactly for every site x prior before the v3 run; otherwise stop",
+  "gt_suspect": "the fix rule (configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json) on the v3 codes: double_adj (from the fix's per-patch GT appearance; unchanged by a uniform z move) OR multi-return share >= 5 % of the patch's owned ULS points; evaluated on roof-like codes 2 and 3; flag only",
+  "outputs": "regions_v3/regions_ext_v3_<site>_<prior>.npz: the arrays of the v2 file, code_ext_v3 (the final code), code_ext_v2_prev (the fix's code, for the moves), mvs_minus_gt_at_gt, n_mvs_at_gt, v1_kept, gt_suspect, gt_suspect_evaluated, premise_violation, premise_band, obs_within_threshold, premise_value; moves v2 -> v3 per code (patches, area m2); maps per site with the moved patches outlined",
+  "why": "order 3.1"
+ },
+ "premise": {
+  "violation": "a code-3 patch (observation error, v3) whose premise value |m| > k tau, k = 1 (LoD2), 2 (airborne LiDAR) = the conflict thresholds of the discard rules (LoD2 current, ALS margin_all_2); tau = the patch's tau",
+  "premise_value": "m = median over the patch's GT points with an MVS value of (z_MVS - z_prior) at the point = (z_MVS - z_GT) + (z_GT - z_prior) (the label value of the ownership row, vertical on roof-like patches); v1-kept patches (fewer than 5 values; wall-like): the stage-1 value MVS - prior (= -mvs_r_med, vertical / along the outward normal)",
+  "within_threshold": "code 3 and not a premise violation (obs_within_threshold)",
+  "band": "a code-2 patch (support agreement, v3) whose centre (moved store centre) lies within 2.0 m (3-D) of the centre of a premise-violation patch of the same file (premise_band)",
+  "checks": "R1 translucent roof = the discard task's site 'R1_hall' (LoD2 face DEBY_LOD2_4906968_6446cb86-cefc-4c77-9ac7-79641e44b940_2; ALS = patches within 0.5 m in plan of a LoD2 patch centre of that face, R1rep_b10 runs); B173 glass and gutters = site 'B173_middle' (17 LoD2 faces of 4959326; ALS by the same 0.5 m rule): share of their code-3 patches and of their patches that are premise violations, per prior",
+  "stop": "no R1 translucent-roof patch is a premise violation in either prior -> stop and ask (order 3.8)",
+  "figure": "nadir photos (the fix's overlay views) with premise violation, within threshold, band and support agreement",
+  "why": "order 3.2"
+ },
+ "thinning": {
+  "rule": "one GT point per 0.1 m cell, the one nearest the cell centre (ties: lowest point index); roof-like rows: horizontal cells of the local frame (x, y on multiples of 0.1 m); wall-like rows: cells on the wall plane per LoD2 surface (s = horizontal coordinate along the face, z), multiples of 0.1 m",
+  "rows": "the ownership rows of the patches' label sources (as regions_v2), per site x prior; cells per GT array (B0: gt_primary and the ULS supplement separately) and per kind; a point owned by both a roof-like and a wall-like patch is thinned in each kind",
+  "use": "every area-ratio metric (error inflow rate, indeterminable share, completeness, correction rate, the band completeness) and the gate samples; geometric accuracy reported thinned and unthinned, judged on thinned",
+  "why": "order 3.4"
+ },
+ "gate_samples": {
+  "units": "site x prior; B173_b0 counted for the report, not a gate unit",
+  "condition_1": "thinned rows of code 11 (prior error) with |W - GT| >= 0.2 m (W = registered prior surface; |W - GT| = |label value| of the row)",
+  "condition_2": "thinned rows of code 3 within threshold with |W - GT| >= 0.2 m (W = z_MVS of the point's 0.1 m cell, else the patch value d)",
+  "condition_3": "LoD2 only: thinned support-agreement (code 2) roof-like rows outside the band v2 with prior-face slope <= 17 degrees",
+  "condition_4": "thinned rows of the premise-band patches (code 2, roof-like and wall-like)",
+  "minimum": 10000,
+  "rule": "a unit with fewer than 10,000 points is 'judgment impossible (planned)' for that condition",
+  "why": "order 3.3"
+ },
+ "gate": {
+  "units": "site x prior: B0_b10, B173nb_b10, R1rep_b10 (x LoD2, ALS); B173_b0 reported only",
+  "metrics": {
+   "1": "error inflow rate of the prior-error region (thinned, |W - GT| >= 0.2 m), proposed (mean of seeds 0, 1) vs always-trust (seed 0); pass when lower",
+   "2": "error inflow rate of the observation-error region within threshold, proposed vs image-only (seed 0); pass when lower",
+   "3": "LoD2 support agreement: NMAD of the vertical height difference on gentle roofs (<= 17 degrees) outside the band v2 (thinned), proposed vs prior as-is (same-path mesh); pass when smaller",
+   "4": "completeness (share of thinned GT points within 0.2 m of the result mesh) of the premise band, proposed vs image-only; fails only when the proposed one is lower by more than r"
+  },
+  "s_r": "per metric: pooled within-cell variance of the proposed method over its cells (site x prior, two seeds each): s_r^2 = sum over cells of (x1 - x2)^2 / 2 divided by the number of cells (ISO 5725-2 with n = 2 per cell; degrees of freedom = number of cells); condition 3 pools the LoD2 cells only; the cells' own |x1 - x2| reported and a cell flagged when |x1 - x2| > 2.8 s_r",
+  "r": "2.8 s_r (ISO 5725-6 repeatability limit), used unchanged for the mean of two seeds against a single run (conservative, order 2.2)",
+  "decision": "'lower / smaller' conditions: comparator - proposed > r -> met; proposed - comparator > r -> not met; otherwise undecidable; condition 4: image-only - proposed > r -> not met, else met; a unit with fewer than 10,000 samples (3.3) -> undecidable for that condition",
+  "pass": "no unit 'not met' in any condition and at least one unit 'met' in every condition that has a decidable unit; a condition without a decidable unit is recorded 'cannot be decided' and the others judge",
+  "interim": "the B173nb_b10 interim table uses the s_r of the cells available then (B173nb_b10 LoD2 and ALS, degrees of freedom 2, condition 3: 1) and is marked provisional; the final table uses all eight cells (four sites x two priors, B173_b0 included for s_r)",
+  "comparator_variation": "image-only seeds 0 and 1 at B173nb_b10: |x1 - x2| against 2.8 s_r of the proposed method (the equal-variation assumption of order 2.3), written next to the gate",
+  "diagnosis": "a unit 'not met': the judgment share (pre-training judgment wrong at the unit's points: kept true conflicts / released true agreements) and the path share (judgment right, result not following) by table and figure; re-run or limitation decided by the user"
+ },
+ "metrics_v3": {
+  "module": "src/phd/metrics_v3/ = metrics_v2 copied unchanged plus: thin.py (thinning), premise.py (premise value, violation, band), gate.py (s_r, r, three-way decision, pass rule), align.py (pooled two-pass median); metrics_v2 left as it is",
+  "tests": "tests/phd/test_metrics_v3.py: hand-made scenes for the common alignment (pooled median, two passes, per-box reproduction), the premise split and band, the thinning (roof and wall cells, nearest point), the gate decision (three ways, pass rule, undecidable units, s_r pooling)",
+  "why": "order 3.5"
+ },
+ "recompute_stage0": {
+  "results": "the eight stage-0 results of B173nb_b10 (four trainings, four prior-as-is: surface and same-path mesh) with module v3 and the v3 regions (thinned), next to the fix's numbers, one line per change on what changed and why",
+  "why": "order 3.5"
+ },
+ "sensitivity": {
+  "what": "pre-training validity judgment only (no training): s03_stage1_v6 (rule auto, the box's fixed tolerance / registration --fix-from, box views and MVS, the box store) with one value changed, four sites x two priors; counted against the v3 true labels (patch-size variants: labels re-made on the variant store with the v3 GT)",
+  "counts": "patches in the box evaluation range, not excluded, with a true label; per face kind and measured (support) / unmeasured (missing): correct keep (kept, true agree), wrong keep (kept, true conflict), correct release (discarded, true conflict), wrong release (discarded, true agree), undetermined (unmeasured patch with an undetermined judgment, inherited; counted apart from keep); invisible patches apart",
+  "variants": {
+   "confidence_current_reimplemented": "the consistency check below with the current values (2 agreeing views, reprojection 1 px, no depth ratio) on the depth maps before the filter",
+   "confidence_strict": "3 agreeing views and depth difference <= 1 % (on the same pre-filter maps)",
+   "confidence_loose": "reprojection 2 px (COLMAP fusion default), 2 views, no depth ratio",
+   "patch_0125": "patch (judgment unit) 0.125 m",
+   "patch_05": "patch 0.5 m",
+   "majority_half": "majority > 1/2",
+   "majority_34": "majority 3/4",
+   "min_evidence_3": "3 places",
+   "min_evidence_10": "10 places",
+   "max_distance_05": "0.5 m",
+   "max_distance_2": "2 m"
+  },
+  "pre_filter_maps": "the COLMAP photometric depth maps of the box MVS (the depth before the geometric consistency filter; the same maps the confidence-mask switch uses)",
+  "consistency_check": "per pixel of a view with a pre-filter depth: back-project, project into each source view (the 20 views sharing most sparse points with the view, COLMAP's automatic source count), read that view's pre-filter depth at the nearest pixel, back-project it and project into the view: consistent when the forward-backward pixel distance <= the reprojection threshold (and |depth in the source - its pre-filter depth| / its pre-filter depth <= the depth ratio when set); confidence 1 when the consistent sources >= the agreeing views; the depth used = the pre-filter depth at confidence-1 pixels",
+  "reference_rows": "the current COLMAP mask (as trained) and the re-implementation at current values are both reported; the variants are compared with the re-implementation (same maps, same code), and the re-implementation with COLMAP (agreement of the confidence-1 pixels)",
+  "propagation_largest": "among the six propagation values, the one whose judgment changes most (patches whose discard decision differs from the current, all units pooled) is named for stage 2",
+  "why": "order 3.6 (plan of 2026-10-06)"
+ },
+ "settings_tables": {
+  "common": "orientation (SfM: tool, version, number of posed images, georeference), MVS (COLMAP 4.0.4 image digest, training images only, max_image_size 1024, geom_consistency, 3 iterations, filter values), confidence criteria (2 agreeing views, 1 px, no depth ratio), GT height alignment (C and the method of 3.1) - collected from the prep / discard / stage-0 records",
+  "per_site": "site x prior: training / evaluation views, registration shift (horizontal, vertical, whether only the vertical was taken back), tolerances (roof, wall) - from fork_inputs.json and the s52 / s61 summaries",
+  "mask_check": "per site: share of confidence-1 pixels among the pixels of building faces (LoD2 roof and wall triangles hit by the camera ray, training views, box evaluation range); one sample view per site (nadir view whose projection of the site's roof-like patch centroid lies nearest the image centre) with the mask over the photo",
+  "why": "order 3.7"
+ },
+ "prep_stops": [
+  "|C - shift_b| > 0.10 m for a box",
+  "no R1 translucent-roof patch in the premise-violation region of either prior",
+  "a reproduction check fails (calculation error)"
+ ],
+ "payload": "phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1",
+ "reports": {
+  "prep": "docs/experiments/phd/main_stage1_v1/본실험_1단계_준비보고_v1.md",
+  "interim": "docs/experiments/phd/main_stage1_v1/본실험_1단계_중간보고_B173nb_v1.md",
+  "final": "docs/experiments/phd/main_stage1_v1/본실험_1단계_보고서_v1.md"
+ }
+}

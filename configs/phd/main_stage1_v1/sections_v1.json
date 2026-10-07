@@ -1,0 +1,114 @@
+{
+ "version": "sections_v1",
+ "task_id": "PHD-MAIN-STAGE1-v1",
+ "rule": "PHD-MAIN-STAGE1-v1 5.1: the section positions of the stage-1 figures, chosen by rule from pre-training data before any stage-1\ntraining result is read (jointbuildgs:dev, CPU). Writes configs/phd/main_stage1_v1/sections_v1.json (through /out/defs/sections_v1.json;\nthe copy into the repository is done on the host).\n\nRule (each section: a vertical plane through a patch centre, 12 m long, points within 0.25 m of the plane; direction = the dip direction\nof the patch's prior face, the box u axis when the face is flatter than 5 degrees; wall patches: the horizontal outward normal):\n  B173_wing        B173nb_b10 LoD2: the roof-like code-11 patch of the south-wing faces (discard sites 'B173_wings') owning most GT points\n  B173_sawtooth    B173nb_b10 LoD2: the roof-like patch of the sawtooth faces ('B173_middle') steeper than 17 degrees owning most GT points\n  R1_low_roof      R1rep_b10 LoD2: the roof-like code-11 patch with GT below the prior (gt_med < 0) owning most GT points, outside the\n                   building of the translucent roof (else both sections fall on the same hall roof)\n  R1_translucent   R1rep_b10 LoD2: the roof-like patch of the translucent-roof face ('R1_hall') in the evaluation range owning most GT points\n  B0_wall_eaves    B0_b10 LoD2: the wall-like patch of the facade face ('B0_facade') owning most GT points (the plane runs across the wall\n                   and the eaves above it)\nscientific_verdict: null.",
+ "sections": {
+  "B173_wing": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "patch": 40592,
+   "kind": 1,
+   "centre": [
+    126.34397997377678,
+    82.07199204297335,
+    -20.645004132279308
+   ],
+   "t": [
+    -0.9309399018867978,
+    0.3651724237603371
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 11,
+   "gt_med": -6.953034400939941,
+   "gt_points": 697,
+   "why": "south wing, prior error"
+  },
+  "B173_sawtooth": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "patch": 57366,
+   "kind": 1,
+   "centre": [
+    145.8573898185912,
+    111.19480351012703,
+    -29.160527296853928
+   ],
+   "t": [
+    -0.3654518144211199,
+    -0.9308302591430466
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 12,
+   "gt_med": 1.4272241592407227,
+   "gt_points": 113,
+   "why": "sawtooth glass roof"
+  },
+  "R1_low_roof": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "patch": 102044,
+   "kind": 1,
+   "centre": [
+    22.983430165905766,
+    28.576477565814496,
+    -29.493468147884336
+   ],
+   "t": [
+    0.3420201433256688,
+    0.9396926207859083
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 11,
+   "gt_med": -1.2663201093673706,
+   "gt_points": 132,
+   "why": "roof lower than LoD2 (prior error), outside the translucent-roof building"
+  },
+  "R1_translucent": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "patch": 18503,
+   "kind": 1,
+   "centre": [
+    -11.38846522365082,
+    46.17741605656442,
+    -19.687588770740557
+   ],
+   "t": [
+    0.9311089079593134,
+    -0.36474128025055597
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 11,
+   "gt_med": -1.4257696866989136,
+   "gt_points": 321,
+   "why": "translucent roof (R1_hall)"
+  },
+  "B0_wall_eaves": {
+   "site": "B0_b10",
+   "prior": "LoD2",
+   "patch": 84514,
+   "kind": 2,
+   "centre": [
+    132.932138604007,
+    45.976862710711956,
+    -39.753999999999905
+   ],
+   "t": [
+    0.9302475133883368,
+    -0.36693264209499843
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 11,
+   "gt_med": -0.72279292345047,
+   "gt_points": 587,
+   "why": "facade wall and eaves"
+  }
+ },
+ "written_before_training_results": true,
+ "scientific_verdict": null
+}

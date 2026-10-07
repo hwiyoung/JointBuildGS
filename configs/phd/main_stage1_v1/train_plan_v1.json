@@ -1,0 +1,243 @@
+{
+ "version": "train_plan_v1",
+ "task_id": "PHD-MAIN-STAGE1-v1",
+ "written": "2026-10-07 KST, before the first stage-1 training (time and sha256 in progress.md)",
+ "scientific_verdict": null,
+ "common": {
+  "code": "fork r12 (src/phd/forks/GeoGS-conf-guided-v1-r12, read-only as /source), module v6 inside it; image jointbuildgs:geogs-conf-guided-v1",
+  "command": "the stage-0 command (scripts/phd/main_stage0_v1/run_fork_v6.command + run_stage0.schedule) with the stage-0 values (configs main_stage0_v1 stage0.values_as_r10), 30,000 iterations, -r 1 (1024 x 741), LoD2 initial direction cell method (--jbgs_prior_normal_mode cell for both priors), records of stage 0 (logs every 100, snapshots 2,000 / 5,000 / 10,000 / 15,000 / 20,000 / 30,000, dump 30,000, saves 15,000 / 30,000, tests 7,000 / 15,000 / 30,000); inputs = the stage-0 fork inputs fork_inputs/s61/<site> (training views = the box training views with a geometric depth map; evaluation views = every eighth, split.json); PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True for every training",
+  "mounts": "the stage-0 payload read-only (/p), this payload (/o) for the model; nothing written into the stage-0 payload",
+  "gpus": "two RTX 3090 (24 GB), one training per GPU; the post steps (renders, TSDF, run steps, metrics) one at a time"
+ },
+ "methods": {
+  "prop": "all seven switches on; rule auto (LoD2 current = conflict beyond 1 tau; airborne LiDAR margin_all_2 = beyond 2 tau)",
+  "imgonly": "only the 'prior' switch off (no prior-origin Gaussians at initialisation, no prior depth term); the LoD2 scene's files (its images, cameras and image-origin initial points equal those of the ALS scene: 11,970 points at B173nb_b10, 7,442 at R1rep_b10, checked 2026-10-07)",
+  "trust_ALS": "the 'judgment' and 'prior_band' switches off (every patch agree, rho(r) = |r|: the prior is pulled everywhere without a band)",
+  "prop_ALS1x": "the method on the airborne LiDAR with the discard multiplier 1 (rule current) instead of 2 (margin_all_2); everything else as prop",
+  "geogs": "official GeoGS (zqlin0521/GeoGS, commit db40c95c657ec03ff21c83cb99cf39f4e90247a6) with the author settings; NOT started: inputs cannot be made equal with the author settings without a decision (DA3 visual depth = one inference over all images, beyond 24 GB here; the official reader drops the principal point (ours: up to 4.4 px off centre at 1024 x 741); R1rep split) -> asked before any GeoGS training"
+ },
+ "order": "B173nb_b10 (3 + GeoGS) -> R1rep_b10 (7 + GeoGS) -> B0_b10 (7 + GeoGS) -> B173_b0 (6 + GeoGS), in this list order on the first free GPU",
+ "stop": {
+  "oom": "a CUDA out-of-memory: the same training once more; a second one: stop and ask",
+  "other": "an exit code != 0, a non-finite loss term, or (method / trust / ALS1x) the opacity collapse of the stage-0 signal: stop and ask",
+  "time": "if the whole task is likely to exceed twice the estimate: stop and ask"
+ },
+ "runs": [
+  {
+   "site": "B173nb_b10",
+   "result": "imgonly_s0",
+   "method": "imgonly",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "imgonly_s1",
+   "method": "imgonly",
+   "scene_prior": "LoD2",
+   "seed": 1,
+   "note": ""
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "trust_ALS",
+   "method": "trust_ALS",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "trust_LoD2",
+   "method": "geogs",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": "official GeoGS: waits for the user's decision on the inputs (DA3, principal point)"
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "prop_LoD2_s0",
+   "method": "prop",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "prop_LoD2_s1",
+   "method": "prop",
+   "scene_prior": "LoD2",
+   "seed": 1,
+   "note": ""
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "prop_ALS_s0",
+   "method": "prop",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "prop_ALS_s1",
+   "method": "prop",
+   "scene_prior": "ALS",
+   "seed": 1,
+   "note": ""
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "imgonly_s0",
+   "method": "imgonly",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "trust_ALS",
+   "method": "trust_ALS",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "prop_ALS1x_s0",
+   "method": "prop_ALS1x",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "trust_LoD2",
+   "method": "geogs",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": "official GeoGS: waits for the user's decision (and the split: the official reader's every-8th rule gives 48 evaluation views here, ours 49)"
+  },
+  {
+   "site": "B0_b10",
+   "result": "prop_LoD2_s0",
+   "method": "prop",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B0_b10",
+   "result": "prop_LoD2_s1",
+   "method": "prop",
+   "scene_prior": "LoD2",
+   "seed": 1,
+   "note": ""
+  },
+  {
+   "site": "B0_b10",
+   "result": "prop_ALS_s0",
+   "method": "prop",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B0_b10",
+   "result": "prop_ALS_s1",
+   "method": "prop",
+   "scene_prior": "ALS",
+   "seed": 1,
+   "note": ""
+  },
+  {
+   "site": "B0_b10",
+   "result": "imgonly_s0",
+   "method": "imgonly",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B0_b10",
+   "result": "trust_ALS",
+   "method": "trust_ALS",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B0_b10",
+   "result": "prop_ALS1x_s0",
+   "method": "prop_ALS1x",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B0_b10",
+   "result": "trust_LoD2",
+   "method": "geogs",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": "official GeoGS: waits for the user's decision"
+  },
+  {
+   "site": "B173_b0",
+   "result": "prop_LoD2_s0",
+   "method": "prop",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B173_b0",
+   "result": "prop_LoD2_s1",
+   "method": "prop",
+   "scene_prior": "LoD2",
+   "seed": 1,
+   "note": ""
+  },
+  {
+   "site": "B173_b0",
+   "result": "prop_ALS_s0",
+   "method": "prop",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B173_b0",
+   "result": "prop_ALS_s1",
+   "method": "prop",
+   "scene_prior": "ALS",
+   "seed": 1,
+   "note": ""
+  },
+  {
+   "site": "B173_b0",
+   "result": "imgonly_s0",
+   "method": "imgonly",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B173_b0",
+   "result": "trust_ALS",
+   "method": "trust_ALS",
+   "scene_prior": "ALS",
+   "seed": 0,
+   "note": ""
+  },
+  {
+   "site": "B173_b0",
+   "result": "trust_LoD2",
+   "method": "geogs",
+   "scene_prior": "LoD2",
+   "seed": 0,
+   "note": "official GeoGS: waits for the user's decision"
+  }
+ ]
+}
