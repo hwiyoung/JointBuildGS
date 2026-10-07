@@ -245,7 +245,7 @@ def post(site, gpu):
     with open(SLOT, "a") as lk:
         fcntl.flock(lk, fcntl.LOCK_EX)
         for st in steps:
-            rc = subprocess.run(st, env=dict(os.environ, GPU=str(gpu), CPUS="12"), capture_output=True, text=True).returncode
+            rc = subprocess.run(st, env=dict(os.environ, GPU=str(gpu), CPUS="12", MEM="72g"), capture_output=True, text=True).returncode   # 72g: the GeoGS TSDF passed 46 GB (03:40)
             if rc != 0:
                 fcntl.flock(lk, fcntl.LOCK_UN)
                 stop(f"{site}/{res} 후처리 실패 {st[2]} (rc {rc})", run=f"{site}/{res}", step=st[2], rc=rc)

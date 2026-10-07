@@ -3,6 +3,7 @@
   python tables_s1.py prep35       3.5: the eight stage-0 results of B173nb_b10 with module v3 (thinned) next to the fix's numbers -> /out/tables/prep35.md, .json
   python tables_s1.py gate [site]  the gate table (order 2.2): all gate units with s_r of the eight cells (final), or the given units with the
                                    s_r of their cells (interim, provisional) -> /out/tables/gate_<final|interim>.md, .json
+  python tables_s1.py gate_preview the three gate units with the s_r of their six cells (B173_b0 pending) -> /out/tables/gate_preview.md, .json
 scientific_verdict: null."""
 import json
 import sys
@@ -247,6 +248,8 @@ def results(site):
 if __name__ == "__main__":
     if sys.argv[1] == "gate":
         gate(sys.argv[2:] or None, "final" if not sys.argv[2:] else "interim")
+    elif sys.argv[1] == "gate_preview":          # the three gate units with the s_r of their own cells (B173_b0 pending), 2026-10-08
+        gate(None, "preview")
     elif sys.argv[1] == "results":
         results(sys.argv[2])
     else:

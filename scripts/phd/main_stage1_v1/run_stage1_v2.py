@@ -81,8 +81,11 @@ def gpu_post(run, g):
         for attempt in (0, 1):
             if not wait_idle(g, f"{site}/{res} 후처리 {mode} 전"):
                 return False
-            rc = subprocess.run(["bash", str(HERE.parent / "run_gpu.sh"), tag, mode, site, res], env=dict(os.environ, GPU=str(g)),
-                                capture_output=True, text=True).returncode
+            with open(OUT / "logs/tsdf.lock", "a") as tl:                # one TSDF at a time (standing rule), added 2026-10-08
+                fcntl.flock(tl, fcntl.LOCK_EX)
+                rc = subprocess.run(["bash", str(HERE.parent / "run_gpu.sh"), tag, mode, site, res], env=dict(os.environ, GPU=str(g)),
+                                    capture_output=True, text=True).returncode
+                fcntl.flock(tl, fcntl.LOCK_UN)
             if rc == 0:
                 break
             oom = "out of memory" in (OUT / "logs" / f"{tag}.log").read_text(errors="ignore").lower()
