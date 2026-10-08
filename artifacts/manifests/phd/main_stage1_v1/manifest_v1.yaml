@@ -1,9 +1,9 @@
 schema: jointbuildgs.external-task-resolver.v1
 task_id: PHD-MAIN-STAGE1-v1
-status: TRAININGS_RUNNING_GEOGS_AFTER_THE_QUEUE
+status: STAGE1_DONE_GATE_PASS_RULE_MET_B173_B0_TWO_RUNS_NO_RESULT
 scientific_verdict: null
 branch: exp/main-experiment   # worktree ../JointBuildGS-exp; the operator worktree was not modified
-training: "stage 1: 27 new trainings planned (train_plan_v1.json); 23 started after the preparation report (run_stage1.py); the 4 GeoGS ones (decided 2026-10-07) follow the queue (run_geogs.py)"
+training: "stage 1: 27 new trainings planned (train_plan_v1.json); 25 with results, 2 without (B173_b0 prop_LoD2_s0 and imgonly_s0: CUDA out of memory on 24 GB, also with --data_device cpu on GPU 1; user decision 2026-10-08)"
 backend:
   local_sibling: ../JointBuildGS-artifacts
   relative: phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1
@@ -11,7 +11,7 @@ backend:
 reports:
   prep: docs/experiments/phd/main_stage1_v1/본실험_1단계_준비보고_v1.md
   interim: docs/experiments/phd/main_stage1_v1/본실험_1단계_중간보고_B173nb_v1.md   # 2026-10-07, provisional gate (B173nb_b10 cells), GeoGS pending
-  final: docs/experiments/phd/main_stage1_v1/본실험_1단계_보고서_v1.md               # later
+  final: docs/experiments/phd/main_stage1_v1/본실험_1단계_보고서_v1.md               # 2026-10-08; gate_final: pass rule met, no unit not met
 figures: docs/experiments/phd/main_stage1_v1/figures/
 configs:
   main: configs/phd/main_stage1_v1/main_stage1_v1.json        # 2026-10-07 13:19:12 before any computation (sha256 fde8803d...)
@@ -35,6 +35,7 @@ for_the_trainings:
   definitions: defs/<site>/ and defs/gate_samples.json
   common_gt_shift_m: -0.0438
 user_decisions:
+  - "2026-10-08 B173_b0 kept as far as possible: the six runs with the training images in host memory (--data_device cpu), the proposed LoD2 runs only on GPU 1, a second out-of-memory recorded as no result (run_stage1_v2.py --cpu-images/--gpu1/--keep-going)"
   - "2026-10-07 GeoGS (always-trust LoD2): the recommendations of the preparation report section 9 - DA3 in batches (the earlier work's revision 2 rule) with a scale check against MVS, the camera adapter (principal point), the split adapter (split.json)"
 geogs:
   source: geogs/source/GeoGS-official-adapters-v1   # official db40c95 + the two adapters only (source_manifest.json)
@@ -49,3 +50,8 @@ payload_files:
   settings/: settings tables, mask check
   stage1/: same-path prior meshes; trainings (model, post, gpu, receipt)
   metrics/, tables/, figs/, logs/, receipt_task.json, handover/
+tables_final:
+  gate: tables/gate_final.md (.json)            # s_r over 7 cells (conditions 1, 2, 4) and 3 cells (condition 3)
+  pooled: tables/final_extra.md (.json)         # completeness / inheritance / correction curves pooled over the sites, ALS 1x vs 2x, time and memory per attempt
+  per_site: tables/results_<site>.md (.json)
+hardware_note: "B173_b0 proposed LoD2 seed 0 and image-only need about 24.3-24.4 GB at the failure point; a 48 GB GPU of sm_86/sm_89 (RTX A6000, A40, RTX 6000 Ada, L40S) runs the current images unchanged"

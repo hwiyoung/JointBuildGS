@@ -151,7 +151,8 @@ def times():
         j = json.loads(r.read_text())
         R = r.parent
         post = json.loads((R / "post/post.json").read_text()) if (R / "post/post.json").exists() else {}
-        out[f"{j.get('site')}/{j.get('result')}"] = dict(status=j.get("status"), minutes=round(j.get("wall_seconds", 0) / 60, 1), gpu=j.get("gpu"),
+        # one row per attempt (earlier attempts keep their _old_<time> folder)
+        out[f"{j.get('site')}/{R.name}"] = dict(status=j.get("status"), minutes=round(j.get("wall_seconds", 0) / 60, 1), gpu=j.get("gpu"),
                                                         gpu_peak_gb=round(j.get("gpu_memory_used_mib", {}).get("peak_minus_idle", 0) / 1024, 1),
                                                         gaussians=post.get("gaussians", {}).get("n"), post_host_peak_gb=post.get("peak_host_gb"),
                                                         post_seconds=post.get("seconds", {}).get("tsdf"))
