@@ -477,17 +477,26 @@ def floating_fig(site):
     for i, (res, lab) in enumerate(ms):
         ax = axs[i, 0]
         p = result_paths(site, res)
-        if not (p.get("floater_mask") and Path(p["floater_mask"]).exists() and p.get("dump") is not None and Path(p["dump"]).exists()):
+        has_dump = p.get("dump") is not None and Path(p["dump"]).exists()
+        has_ply = p.get("ply") is not None and Path(p["ply"]).exists()
+        if not (p.get("floater_mask") and Path(p["floater_mask"]).exists() and (has_dump or has_ply)):
             blank(ax)
             ax.set_title(lab, fontsize=10)
             continue
         fm = np.load(p["floater_mask"])
-        dm = np.load(p["dump"])
-        X = dm["xyz"].astype(np.float64)
-        og = dm["origin"] if "origin" in dm.files else np.zeros(len(X), np.int8)
+        if has_dump:
+            dm = np.load(p["dump"])
+            X, opac = dm["xyz"].astype(np.float64), dm["opacity"]
+            og = dm["origin"] if "origin" in dm.files else np.zeros(len(X), np.int8)
+        else:                       # GeoGS: positions and opacities from the PLY, origin not recorded (drawn as image-origin colour)
+            from plyfile import PlyData
+            v = PlyData.read(str(p["ply"]))["vertex"]
+            X = np.stack([v["x"], v["y"], v["z"]], 1).astype(np.float64)
+            opac = 1.0 / (1.0 + np.exp(-np.asarray(v["opacity"], np.float64)))
+            og = np.zeros(len(X), np.int8)
         uvx = xy_to_uv(X[:, :2])
         ine = in_eval(uvx, b)
-        bg = np.nonzero(ine & (dm["opacity"] >= 0.5) & ~fm)[0]
+        bg = np.nonzero(ine & (opac >= 0.5) & ~fm)[0]
         bg = rng.choice(bg, min(len(bg), 200_000), replace=False) if len(bg) else bg
         ax.scatter(uvx[bg, 0], X[bg, 2], s=0.1, c="0.8", linewidths=0, rasterized=True)
         ax.plot(ubu * 0.5 + 0.25, zmax, "k-", lw=0.6)
@@ -496,7 +505,10 @@ def floating_fig(site):
         for code in (0, 1):
             mk = fm & (og == code)
             above += int((mk & (X[:, 2] > ylim[1])).sum())
-            ax.scatter(uvx[mk, 0], np.minimum(X[mk, 2], ylim[1] - 0.3), s=3, c=[ORG_COL[code]], linewidths=0, label=f"{ORG_KO[code]} {int(mk.sum()):,}")
+            if not has_dump and code == 1:
+                continue
+            ax.scatter(uvx[mk, 0], np.minimum(X[mk, 2], ylim[1] - 0.3), s=3, c=[ORG_COL[code]], linewidths=0,
+                       label=f"{ORG_KO[code] if has_dump else '출신 기록 없음(GeoGS)'} {int(mk.sum()):,}")
         fl = metric_json(site, res).get("floating", {})
         ax.set_title(f"{lab} — 부유 {int(fm.sum()):,}개(3~20 m {fl.get('near_3_20m', '—')}, 그중 사전 정보 출신 {fl.get('near_prior', '—')}; 20 m 넘게 "
                      f"{fl.get('above_20m', '—')}), 평가 영상 화소 몫 {fl.get('pixel_share_all', '—')}" + (f"; 위쪽 경계에 붙여 그린 {above}개" if above else ""), fontsize=9)

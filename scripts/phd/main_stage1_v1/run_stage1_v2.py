@@ -13,8 +13,12 @@ then stopped its queue as designed):
     run that ends out of memory is trained once more here, any other failure stops
   - pending first: runs with a PASS receipt whose post / run / metrics outputs are missing
   - progress.md end line: '학습 대기열 v2 끝'
+  - options added 2026-10-08 for B173_b0 (decided by the user after its two out-of-memory stops; the training computation is unchanged):
+    --cpu-images <site>: the training images of that site stay in host memory ('--data_device cpu' appended to the command; ~1.3 GB of
+    GPU memory freed), --gpu1 <site>/<result>: those runs only on GPU 1 (no resident desktop process there), --keep-going <site>: a
+    second out-of-memory of that site is recorded as 'no result' and the queue goes on instead of stopping
 
-  python3 run_stage1_v2.py [--sites <site> ...] [--only <site>/<result> ...]
+  python3 run_stage1_v2.py [--sites <site> ...] [--only <site>/<result> ...] [--cpu-images <site> ...] [--gpu1 <site>/<result> ...] [--keep-going <site> ...]
 scientific_verdict: null."""
 import argparse
 import fcntl
@@ -33,6 +37,18 @@ OUT, HERE = rs.OUT, rs.HERE
 PENDING, ADOPT, POSTQ = [], [], []
 LK = threading.Lock()
 DONE = threading.Event()
+OPT = dict(cpu_images=set(), gpu1=set(), keep_going=set())
+NO_RESULT = []
+_command = rs.command
+
+
+def command_v2(run, gpu):
+    """rs.command with '--data_device cpu' for the sites of --cpu-images (rs.train looks rs.command up at call time)."""
+    name, cmd = _command(run, gpu)
+    return name, (cmd + ["--data_device", "cpu"] if run["site"] in OPT["cpu_images"] else cmd)
+
+
+rs.command = command_v2
 
 
 def units_of(run):
@@ -125,8 +141,13 @@ def post_worker():
             rs.write_progress(f"{site}/{res} 후처리·지표 끝")
 
 
-def next_job(queue):
-    """('post', run) for pending post steps (adopted runs whose receipt came), ('train', run), ('wait', None) or (None, None)."""
+def allowed(run, g):
+    return g == 1 or f"{run['site']}/{run['result']}" not in OPT["gpu1"]
+
+
+def next_job(queue, g=None):
+    """('post', run) for pending post steps (adopted runs whose receipt came), ('train', run), ('wait', None) or (None, None).
+    A training restricted to GPU 1 (--gpu1) is skipped by the GPU 0 worker; when only such trainings are left that worker ends."""
     with LK:
         for run in list(ADOPT):
             rec = receipt(run)
@@ -144,18 +165,19 @@ def next_job(queue):
                 return None, None
         if PENDING:
             return "post", PENDING.pop(0)
-        if queue:
-            return "train", queue.pop(0)
+        for i, run in enumerate(queue):
+            if g is None or allowed(run, g):
+                return "train", queue.pop(i)
         if ADOPT:
             return "wait", None
-    return None, None
+    return None, None          # nothing this GPU may take (only GPU-1 trainings left for the GPU 0 worker): the worker ends
 
 
 def gpu_worker(g, queue):
     while not rs.STOP.is_set():
         if not wait_idle(g, "다음 일 전"):          # a job is taken only by a worker whose GPU is idle (the first idle GPU gets it)
             return
-        kind, run = next_job(queue)
+        kind, run = next_job(queue, g)
         if kind is None:
             return
         if kind == "wait":
@@ -168,6 +190,10 @@ def gpu_worker(g, queue):
                 rs.write_progress(f"{run['site']}/{run['result']} GPU 메모리 부족 — 같은 학습을 한 번 더 돌림")
                 st = rs.train(run, g, 1)
             rs.RUNNING[g] = None
+            if st == "OOM" and run["site"] in OPT["keep_going"]:
+                NO_RESULT.append(f"{run['site']}/{run['result']}")
+                rs.write_progress(f"{run['site']}/{run['result']} 두 번째 GPU 메모리 부족 — 결과 없음으로 적고 다음 학습으로(사용자 결정 10-08)")
+                continue
             if st != "PASS":
                 rs.write_progress(f"{run['site']}/{run['result']} 실행 조건이 깨짐({st}) — 멈추고 여쭙는다")
                 stop(run=f"{run['site']}/{run['result']}", reason=st)
@@ -185,7 +211,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sites", nargs="+", default=None)
     ap.add_argument("--only", nargs="+", default=None)
+    ap.add_argument("--cpu-images", nargs="+", default=[])
+    ap.add_argument("--gpu1", nargs="+", default=[])
+    ap.add_argument("--keep-going", nargs="+", default=[])
     a = ap.parse_args()
+    OPT.update(cpu_images=set(a.cpu_images), gpu1=set(a.gpu1), keep_going=set(a.keep_going))
     running = set(subprocess.run(["docker", "ps", "--format", "{{.Names}}"], capture_output=True, text=True).stdout.split())
     queue = []
     for r in rs.PLAN["runs"]:
@@ -215,7 +245,7 @@ def main():
         w.join()
     DONE.set()
     pw.join()
-    rs.write_progress("학습 대기열 v2 끝" + (" (멈춤: logs/STOP_v2.json)" if rs.STOP.is_set() else ""))
+    rs.write_progress("학습 대기열 v2 끝" + (" (멈춤: logs/STOP_v2.json)" if rs.STOP.is_set() else "") + (f" (결과 없음: {', '.join(NO_RESULT)})" if NO_RESULT else ""))
 
 
 if __name__ == "__main__":
