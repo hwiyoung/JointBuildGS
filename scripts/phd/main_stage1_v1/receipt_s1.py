@@ -87,7 +87,7 @@ def main(tag):
     trains = {}
     for r in sorted((OUT / "stage1").glob("*/*/receipt.json")):
         j = json.loads(r.read_text())
-        trains[f"{j.get('site')}/{j.get('result')}"] = dict(status=j.get("status"), wall_seconds=j.get("wall_seconds"), gpu=j.get("gpu"),
+        trains[f"{j.get('site')}/{r.parent.name}"] = dict(status=j.get("status"), wall_seconds=j.get("wall_seconds"), gpu=j.get("gpu"),   # one per attempt
                                                            gpu_memory_used_mib=j.get("gpu_memory_used_mib"))
     rec["trainings"] = trains
     (OUT / f"receipt_{tag}.json").write_text(json.dumps(rec, indent=1, ensure_ascii=False))
