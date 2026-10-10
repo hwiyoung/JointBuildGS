@@ -1,6 +1,620 @@
 {
  "rule": "  python tables_s2.py         -> S2/tables/stage2_results.json, stage2_results.md (every run whose metrics exist)",
  "runs": {
+  "B173nb_b10/abl_mask_LoD2_s0": {
+   "site": "B173nb_b10",
+   "unit": "LoD2",
+   "result": "abl_mask_LoD2_s0",
+   "what": "마스크 끄기",
+   "comparison": [
+    "B173nb_b10/prop_LoD2_s0",
+    "B173nb_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "obs_inflow",
+     "ko": "관측 오류 영역 전체의 유입률",
+     "share": true,
+     "comparison": [
+      0.6193,
+      0.6058
+     ],
+     "comparison_mean": 0.6125499999999999,
+     "run": null,
+     "diff": null,
+     "samples": 12410,
+     "threshold": 0.026728636328851408,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.026728636328851408,
+      "three_points": 0.00024174053182917003
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": null,
+     "diff": null,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": null,
+     "diff": null,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": null,
+     "diff": null,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.2399999999999998,
+      2.17
+     ],
+     "comparison_mean": 2.205,
+     "run": null,
+     "diff": null,
+     "samples": 32634,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.138592929112563
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0124,
+      0.0137
+     ],
+     "comparison_mean": 0.013049999999999999,
+     "run": null,
+     "diff": null,
+     "samples": 32634,
+     "threshold": 0.0025738686835190343,
+     "threshold_parts": {
+      "unit": 0.0025738686835190343,
+      "three_points": 9.192866335723479e-05
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    }
+   ],
+   "workload": 15564,
+   "stopped": "OOM",
+   "pretraining_judgment": {
+    "agree_to_conflict": {
+     "patches": 8793,
+     "area_m2": 549.6
+    },
+    "conflict_to_agree": {
+     "patches": 1152,
+     "area_m2": 72.0
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 6527,
+     "area_m2": 407.9
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 15564,
+     "area_m2": 972.8
+    },
+    "states_default": {
+     "invisible": 19496,
+     "support": 115511,
+     "missing": 6527
+    },
+    "states_maskoff": {
+     "invisible": 19496,
+     "support": 122038,
+     "missing": 0
+    },
+    "prior_pixels": 31522581,
+    "prior_pixels_confidence0_share": 0.1315,
+    "amount": 15564,
+    "judgment_default": {
+     "wrong_release": 0.0355,
+     "correct_release": 0.3599,
+     "wrong_keep": 0.0919,
+     "correct_keep": 0.5108,
+     "undetermined": 0.0016,
+     "invisible": 0.0004,
+     "wrong_release_patches": 2337,
+     "labelled_area_m2": 4116.1
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.0711,
+     "correct_release": 0.3843,
+     "wrong_keep": 0.0677,
+     "correct_keep": 0.4766,
+     "undetermined": 0.0,
+     "invisible": 0.0004,
+     "wrong_release_patches": 4680,
+     "labelled_area_m2": 4116.1
+    }
+   }
+  },
+  "R1rep_b10/abl_mask_ALS_s0": {
+   "site": "R1rep_b10",
+   "unit": "ALS",
+   "result": "abl_mask_ALS_s0",
+   "what": "마스크 끄기",
+   "comparison": [
+    "R1rep_b10/prop_ALS_s0",
+    "R1rep_b10/prop_ALS_s1"
+   ],
+   "rows": [
+    {
+     "metric": "obs_inflow",
+     "ko": "관측 오류 영역 전체의 유입률",
+     "share": true,
+     "comparison": [
+      0.414,
+      0.4093
+     ],
+     "comparison_mean": 0.41164999999999996,
+     "run": null,
+     "diff": null,
+     "samples": 15581,
+     "threshold": 0.015746732994497574,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.00930552524041493,
+      "three_points": 0.00019254219883191065
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      4.45,
+      4.72
+     ],
+     "comparison_mean": 4.585,
+     "run": null,
+     "diff": null,
+     "samples": 79249,
+     "threshold": 0.534572726577029,
+     "threshold_parts": {
+      "pooled": 0.4551615097962475,
+      "unit": 0.534572726577029
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      null,
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.040340897362354154,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.2703,
+      0.227
+     ],
+     "comparison_mean": 0.24864999999999998,
+     "run": null,
+     "diff": null,
+     "samples": 555,
+     "threshold": 0.08572962615105696,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.08572962615105696,
+      "three_points": 0.005405405405405406
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      4.7,
+      4.97
+     ],
+     "comparison_mean": 4.835,
+     "run": null,
+     "diff": null,
+     "samples": 79382,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.534572726577029
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0419,
+      0.042
+     ],
+     "comparison_mean": 0.04195,
+     "run": null,
+     "diff": null,
+     "samples": 79447,
+     "threshold": 0.00019798989873223894,
+     "threshold_parts": {
+      "unit": 0.00019798989873223894,
+      "three_points": 3.77610230719851e-05
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    }
+   ],
+   "workload": 3080,
+   "stopped": "OOM",
+   "pretraining_judgment": {
+    "agree_to_conflict": {
+     "patches": 2868,
+     "area_m2": 187.9
+    },
+    "conflict_to_agree": {
+     "patches": 121,
+     "area_m2": 7.9
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 91,
+     "area_m2": 6.1
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 3080,
+     "area_m2": 202.0
+    },
+    "states_default": {
+     "invisible": 46,
+     "support": 24052,
+     "missing": 91
+    },
+    "states_maskoff": {
+     "invisible": 46,
+     "support": 24143,
+     "missing": 0
+    },
+    "prior_pixels": 50465958,
+    "prior_pixels_confidence0_share": 0.1425,
+    "amount": 3080,
+    "judgment_default": {
+     "wrong_release": 0.2788,
+     "correct_release": 0.0223,
+     "wrong_keep": 0.0045,
+     "correct_keep": 0.6938,
+     "undetermined": 0.0001,
+     "invisible": 0.0005,
+     "wrong_release_patches": 5801,
+     "labelled_area_m2": 1524.6
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.3884,
+     "correct_release": 0.0245,
+     "wrong_keep": 0.0024,
+     "correct_keep": 0.5843,
+     "undetermined": 0.0,
+     "invisible": 0.0005,
+     "wrong_release_patches": 8358,
+     "labelled_area_m2": 1524.6
+    }
+   }
+  },
+  "R1rep_b10/abl_band_LoD2_s0": {
+   "site": "R1rep_b10",
+   "unit": "LoD2",
+   "result": "abl_band_LoD2_s0",
+   "what": "허용 구간 없애기",
+   "comparison": [
+    "R1rep_b10/prop_LoD2_s0",
+    "R1rep_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      4.91,
+      5.27
+     ],
+     "comparison_mean": 5.09,
+     "run": 9.89,
+     "diff": 4.800000000000001,
+     "samples": 74638,
+     "threshold": 0.7127636354360387,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.7127636354360387
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_bias_new",
+     "ko": "완만한 지붕 편향, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      -5.43,
+      -6.39
+     ],
+     "comparison_mean": -5.91,
+     "run": -7.59,
+     "diff": -1.6799999999999997,
+     "samples": 74638,
+     "threshold": 1.9007030278294395,
+     "threshold_parts": {
+      "unit": 1.9007030278294395
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "fine_support",
+     "ko": "고운 자: 지지 일치 거리 중앙값 (cm)",
+     "share": false,
+     "comparison": [
+      5.302,
+      6.044
+     ],
+     "comparison_mean": 5.673,
+     "run": 8.067,
+     "diff": 2.394,
+     "samples": 114245,
+     "threshold": 1.469085048593171,
+     "threshold_parts": {
+      "pooled": 0.5770499458452447,
+      "unit": 1.469085048593171
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "fine_obs_within",
+     "ko": "고운 자: 문턱 이내 거리 중앙값 (cm)",
+     "share": false,
+     "comparison": [
+      31.3,
+      26.637
+     ],
+     "comparison_mean": 28.9685,
+     "run": 33.105,
+     "diff": 4.136499999999998,
+     "samples": 223,
+     "threshold": 9.232268977884038,
+     "threshold_parts": {
+      "pooled": 1.1285424227737302,
+      "unit": 9.232268977884038
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0851,
+      0.0676
+     ],
+     "comparison_mean": 0.07635,
+     "run": 0.1278,
+     "diff": 0.051449999999999996,
+     "samples": 54345,
+     "threshold": 0.03464823227814083,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.03464823227814083,
+      "three_points": 5.520287054926856e-05
+     },
+     "reading": "나빠짐",
+     "role": "함께"
+    },
+    {
+     "metric": "band_lt1_all",
+     "ko": "렌더 1τ 미만 몫(전체)",
+     "share": true,
+     "comparison": [
+      0.9121,
+      0.9145
+     ],
+     "comparison_mean": 0.9133,
+     "run": 0.9213,
+     "diff": 0.008000000000000007,
+     "samples": 11835117,
+     "threshold": 0.004751757569573516,
+     "threshold_parts": {
+      "pooled": 0.003512112374815613,
+      "unit": 0.004751757569573516,
+      "three_points": 2.5348291867330084e-07
+     },
+     "reading": "달라짐(커짐)",
+     "role": "함께"
+    },
+    {
+     "metric": "band_1to2_all",
+     "ko": "렌더 1~2τ 몫(전체)",
+     "share": true,
+     "comparison": [
+      0.0318,
+      0.0296
+     ],
+     "comparison_mean": 0.0307,
+     "run": 0.0236,
+     "diff": -0.007100000000000002,
+     "samples": 11835117,
+     "threshold": 0.0043557777721091335,
+     "threshold_parts": {
+      "pooled": 0.0031471468560163003,
+      "unit": 0.0043557777721091335,
+      "three_points": 2.5348291867330084e-07
+     },
+     "reading": "달라짐(작아짐)",
+     "role": "함께"
+    },
+    {
+     "metric": "band_1to2_obs_within",
+     "ko": "렌더 1~2τ 몫(문턱 이내)",
+     "share": true,
+     "comparison": [
+      0.0727,
+      0.0824
+     ],
+     "comparison_mean": 0.07755000000000001,
+     "run": 0.0448,
+     "diff": -0.03275000000000001,
+     "samples": 2366,
+     "threshold": 0.01920502017702663,
+     "threshold_parts": {
+      "unit": 0.01920502017702663,
+      "three_points": 0.001267962806424345
+     },
+     "reading": "달라짐(작아짐)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      6.370000000000001,
+      5.7
+     ],
+     "comparison_mean": 6.035,
+     "run": 10.5,
+     "diff": 4.465,
+     "samples": 76404,
+     "threshold": 1.3265323215059646,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 1.3265323215059646
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.161,
+      0.0599
+     ],
+     "comparison_mean": 0.11045,
+     "run": 0.0598,
+     "diff": -0.05065000000000001,
+     "samples": 76434,
+     "threshold": 0.20016778761828782,
+     "threshold_parts": {
+      "unit": 0.20016778761828782,
+      "three_points": 3.924954863019075e-05
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": 10808744,
+   "stopped": null
+  },
   "B173nb_b10/abl_band_ALS_s0": {
    "site": "B173nb_b10",
    "unit": "ALS",
@@ -215,6 +829,7 @@
     }
    ],
    "workload": 19205163,
+   "stopped": null,
    "decision6": {
     "verdict": "허용 구간이 항공 LiDAR의 정밀함을 막았다. 허용 구간을 없애도 잃은 것이 없다.",
     "distance_diff_cm": -3.9384999999999977,
@@ -250,6 +865,306 @@
      }
     }
    }
+  },
+  "B173nb_b10/abl_prop_LoD2_s0": {
+   "site": "B173nb_b10",
+   "unit": "LoD2",
+   "result": "abl_prop_LoD2_s0",
+   "what": "판정 빌려 오기 끄기",
+   "comparison": [
+    "B173nb_b10/prop_LoD2_s0",
+    "B173nb_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "missing_prior_error_inflow",
+     "ko": "결측 영역의 사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.2183,
+      0.1968
+     ],
+     "comparison_mean": 0.20755,
+     "run": null,
+     "diff": null,
+     "samples": 371,
+     "threshold": 0.04256782822743014,
+     "threshold_parts": {
+      "unit": 0.04256782822743014,
+      "three_points": 0.008086253369272238
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "주"
+    },
+    {
+     "metric": "missing_agreement_completeness",
+     "ko": "결측 일치 완전성(0.2 m)",
+     "share": true,
+     "comparison": [
+      0.962,
+      0.9671
+     ],
+     "comparison_mean": 0.96455,
+     "run": null,
+     "diff": null,
+     "samples": 6314,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.010097484835343885,
+      "three_points": 0.0004751346214760849
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": null,
+     "diff": null,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": null,
+     "diff": null,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": null,
+     "diff": null,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.2399999999999998,
+      2.17
+     ],
+     "comparison_mean": 2.205,
+     "run": null,
+     "diff": null,
+     "samples": 32634,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.138592929112563
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0124,
+      0.0137
+     ],
+     "comparison_mean": 0.013049999999999999,
+     "run": null,
+     "diff": null,
+     "samples": 32634,
+     "threshold": 0.0025738686835190343,
+     "threshold_parts": {
+      "unit": 0.0025738686835190343,
+      "three_points": 9.192866335723479e-05
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    }
+   ],
+   "workload": 2749,
+   "stopped": "OOM"
+  },
+  "B0a15/abl_prop_LoD2_s0": {
+   "site": "B0a15",
+   "unit": "LoD2",
+   "result": "abl_prop_LoD2_s0",
+   "what": "판정 빌려 오기 끄기",
+   "comparison": [
+    "B0a15/prop_LoD2_s0"
+   ],
+   "rows": [
+    {
+     "metric": "missing_prior_error_inflow",
+     "ko": "결측 영역의 사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.2462
+     ],
+     "comparison_mean": 0.2462,
+     "run": 0.3255,
+     "diff": 0.07930000000000001,
+     "samples": 1625,
+     "threshold": 0.04256782822743014,
+     "threshold_parts": {
+      "median_unit_terms": 0.04256782822743014,
+      "three_points": 0.0018461538461538461
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "missing_agreement_completeness",
+     "ko": "결측 일치 완전성(0.2 m)",
+     "share": true,
+     "comparison": [
+      0.7387
+     ],
+     "comparison_mean": 0.7387,
+     "run": 0.7686,
+     "diff": 0.029899999999999927,
+     "samples": 37860,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "three_points": 7.92393026941363e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0431
+     ],
+     "comparison_mean": 0.0431,
+     "run": 0.0449,
+     "diff": 0.001800000000000003,
+     "samples": 20268,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "three_points": 0.00014801657785671994
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.1728
+     ],
+     "comparison_mean": 0.1728,
+     "run": 0.1694,
+     "diff": -0.003400000000000014,
+     "samples": 2709,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "three_points": 0.0011074197120708748
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0
+     ],
+     "comparison_mean": 0.0,
+     "run": 0.0,
+     "diff": 0.0,
+     "samples": 0,
+     "threshold": 0.027223611075682077,
+     "threshold_parts": {
+      "median_unit_terms": 0.027223611075682077
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": 4243,
+   "stopped": null
   },
   "R1rep_b10/abl_prop_ALS_s0": {
    "site": "R1rep_b10",
@@ -405,7 +1320,994 @@
      "role": "늘"
     }
    ],
-   "workload": 88
+   "workload": 88,
+   "stopped": null
+  },
+  "R1rep_b10/abl_initx_ALS_s0": {
+   "site": "R1rep_b10",
+   "unit": "ALS",
+   "result": "abl_initx_ALS_s0",
+   "what": "틀린 옛 점 빼기 끄기",
+   "comparison": [
+    "R1rep_b10/prop_ALS_s0",
+    "R1rep_b10/prop_ALS_s1"
+   ],
+   "rows": [
+    {
+     "metric": "missing_prior_error_inflow",
+     "ko": "결측 영역의 사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0333,
+      0.0
+     ],
+     "comparison_mean": 0.01665,
+     "run": 0.0,
+     "diff": -0.01665,
+     "samples": 30,
+     "threshold": 0.1,
+     "threshold_parts": {
+      "unit": 0.06593063627783369,
+      "three_points": 0.1
+     },
+     "reading": "표본 부족",
+     "role": "주"
+    },
+    {
+     "metric": "missing_agreement_completeness",
+     "ko": "결측 일치 완전성(0.2 m)",
+     "share": true,
+     "comparison": [
+      0.3211,
+      0.3133
+     ],
+     "comparison_mean": 0.31720000000000004,
+     "run": 0.3238,
+     "diff": 0.006599999999999939,
+     "samples": 383,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.015443212101114144,
+      "three_points": 0.007832898172323759
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.2703,
+      0.227
+     ],
+     "comparison_mean": 0.24864999999999998,
+     "run": 0.2,
+     "diff": -0.04864999999999997,
+     "samples": 555,
+     "threshold": 0.08572962615105696,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.08572962615105696,
+      "three_points": 0.005405405405405406
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0989,
+      0.1319
+     ],
+     "comparison_mean": 0.1154,
+     "run": 0.1099,
+     "diff": -0.005500000000000005,
+     "samples": 91,
+     "threshold": 0.06533666658163695,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.06533666658163695,
+      "three_points": 0.03296703296703297
+     },
+     "reading": "표본 부족",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      4.45,
+      4.72
+     ],
+     "comparison_mean": 4.585,
+     "run": 4.31,
+     "diff": -0.27500000000000036,
+     "samples": 79249,
+     "threshold": 0.534572726577029,
+     "threshold_parts": {
+      "pooled": 0.4551615097962475,
+      "unit": 0.534572726577029
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      4.7,
+      4.97
+     ],
+     "comparison_mean": 4.835,
+     "run": 4.53,
+     "diff": -0.3049999999999997,
+     "samples": 79382,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.534572726577029
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0419,
+      0.042
+     ],
+     "comparison_mean": 0.04195,
+     "run": 0.0399,
+     "diff": -0.002050000000000003,
+     "samples": 79447,
+     "threshold": 0.00019798989873223894,
+     "threshold_parts": {
+      "unit": 0.00019798989873223894,
+      "three_points": 3.77610230719851e-05
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": 359,
+   "stopped": null,
+   "fates": {
+    "run": {
+     "site": "R1rep_b10",
+     "unit": "ALS",
+     "result": "abl_initx_ALS_s0",
+     "regions": {
+      "prior_error": {
+       "patches": 177,
+       "area_m2": 13.9
+      },
+      "missing_agreement": {
+       "patches": 63,
+       "area_m2": 4.2
+      }
+     },
+     "prior_error": {
+      "status": "ok",
+      "seeds_seated": 250,
+      "seeds_planted": 250,
+      "not_planted": 0,
+      "counts": {
+       "removed": 204,
+       "old_place": 26,
+       "current_surface": 0,
+       "neither": 20
+      },
+      "shares": {
+       "removed": 0.816,
+       "old_place": 0.104,
+       "current_surface": 0.0,
+       "neither": 0.08
+      },
+      "last_alive_of_removed": {
+       "min": 600,
+       "median": 3100,
+       "max": 13800
+      },
+      "descendants": 303,
+      "opaque_descendants": 164
+     },
+     "missing_agreement": {
+      "status": "ok",
+      "seeds_seated": 61,
+      "seeds_planted": 61,
+      "not_planted": 0,
+      "counts": {
+       "removed": 54,
+       "kept": 0,
+       "other": 7
+      },
+      "shares": {
+       "removed": 0.8852,
+       "kept": 0.0,
+       "other": 0.1148
+      },
+      "last_alive_of_removed": {
+       "min": 900,
+       "median": 3100,
+       "max": 12100
+      },
+      "descendants": 17,
+      "opaque_descendants": 9
+     },
+     "seconds": 5.4,
+     "scientific_verdict": null
+    },
+    "comparison": {
+     "prop_ALS_s0": {
+      "site": "R1rep_b10",
+      "unit": "ALS",
+      "result": "prop_ALS_s0",
+      "regions": {
+       "prior_error": {
+        "patches": 177,
+        "area_m2": 13.9
+       },
+       "missing_agreement": {
+        "patches": 63,
+        "area_m2": 4.2
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 250,
+       "seeds_planted": 250,
+       "not_planted": 0,
+       "counts": {
+        "removed": 208,
+        "old_place": 25,
+        "current_surface": 0,
+        "neither": 17
+       },
+       "shares": {
+        "removed": 0.832,
+        "old_place": 0.1,
+        "current_surface": 0.0,
+        "neither": 0.068
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 3100,
+        "max": 14000
+       },
+       "descendants": 257,
+       "opaque_descendants": 156
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 61,
+       "seeds_planted": 1,
+       "not_planted": 60,
+       "counts": {
+        "removed": 0,
+        "kept": 0,
+        "other": 1
+       },
+       "shares": {
+        "removed": 0.0,
+        "kept": 0.0,
+        "other": 1.0
+       },
+       "last_alive_of_removed": null,
+       "descendants": 1,
+       "opaque_descendants": 1
+      },
+      "seconds": 38.8,
+      "scientific_verdict": null
+     },
+     "prop_ALS_s1": {
+      "site": "R1rep_b10",
+      "unit": "ALS",
+      "result": "prop_ALS_s1",
+      "regions": {
+       "prior_error": {
+        "patches": 177,
+        "area_m2": 13.9
+       },
+       "missing_agreement": {
+        "patches": 63,
+        "area_m2": 4.2
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 250,
+       "seeds_planted": 250,
+       "not_planted": 0,
+       "counts": {
+        "removed": 206,
+        "old_place": 24,
+        "current_surface": 0,
+        "neither": 20
+       },
+       "shares": {
+        "removed": 0.824,
+        "old_place": 0.096,
+        "current_surface": 0.0,
+        "neither": 0.08
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 3100,
+        "max": 12400
+       },
+       "descendants": 517,
+       "opaque_descendants": 273
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 61,
+       "seeds_planted": 1,
+       "not_planted": 60,
+       "counts": {
+        "removed": 1,
+        "kept": 0,
+        "other": 0
+       },
+       "shares": {
+        "removed": 1.0,
+        "kept": 0.0,
+        "other": 0.0
+       },
+       "last_alive_of_removed": {
+        "min": 3100,
+        "median": 3100,
+        "max": 3100
+       },
+       "descendants": 0,
+       "opaque_descendants": 0
+      },
+      "seconds": 5.4,
+      "scientific_verdict": null
+     }
+    }
+   }
+  },
+  "B0a15/abl_prot_LoD2_s0": {
+   "site": "B0a15",
+   "unit": "LoD2",
+   "result": "abl_prot_LoD2_s0",
+   "what": "보호 끄기",
+   "comparison": [
+    "B0a15/prop_LoD2_s0"
+   ],
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.9925
+     ],
+     "comparison_mean": 0.9925,
+     "run": 0.0645,
+     "diff": -0.928,
+     "samples": 22993,
+     "threshold": 0.040340897362354154,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "three_points": 0.0001304744922367677
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "supported",
+     "ko": "가우시안이 받친 몫",
+     "share": true,
+     "comparison": [
+      0.9926
+     ],
+     "comparison_mean": 0.9926,
+     "run": 0.0653,
+     "diff": -0.9273,
+     "samples": 22993,
+     "threshold": 0.03809801044674118,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118,
+      "three_points": 0.0001304744922367677
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.1728
+     ],
+     "comparison_mean": 0.1728,
+     "run": 0.1347,
+     "diff": -0.03810000000000002,
+     "samples": 2709,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "three_points": 0.0011074197120708748
+     },
+     "reading": "좋아짐",
+     "role": "함께"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0431
+     ],
+     "comparison_mean": 0.0431,
+     "run": 0.0426,
+     "diff": -0.0005000000000000004,
+     "samples": 20268,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "three_points": 0.00014801657785671994
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0
+     ],
+     "comparison_mean": 0.0,
+     "run": 0.0,
+     "diff": 0.0,
+     "samples": 0,
+     "threshold": 0.027223611075682077,
+     "threshold_parts": {
+      "median_unit_terms": 0.027223611075682077
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": 76245,
+   "stopped": null,
+   "fates": {
+    "run": {
+     "site": "B0a15",
+     "unit": "LoD2",
+     "result": "abl_prot_LoD2_s0",
+     "regions": {
+      "prior_error": {
+       "patches": 3974,
+       "area_m2": 248.4
+      },
+      "missing_agreement": {
+       "patches": 6362,
+       "area_m2": 397.6
+      }
+     },
+     "prior_error": {
+      "status": "ok",
+      "seeds_seated": 3974,
+      "seeds_planted": 3974,
+      "not_planted": 0,
+      "counts": {
+       "removed": 2445,
+       "old_place": 525,
+       "current_surface": 585,
+       "neither": 419
+      },
+      "shares": {
+       "removed": 0.6152,
+       "old_place": 0.1321,
+       "current_surface": 0.1472,
+       "neither": 0.1054
+      },
+      "last_alive_of_removed": {
+       "min": 600,
+       "median": 1100,
+       "max": 14900
+      },
+      "descendants": 19158,
+      "opaque_descendants": 9996
+     },
+     "missing_agreement": {
+      "status": "ok",
+      "seeds_seated": 6362,
+      "seeds_planted": 5904,
+      "not_planted": 458,
+      "counts": {
+       "removed": 4363,
+       "kept": 317,
+       "other": 1224
+      },
+      "shares": {
+       "removed": 0.739,
+       "kept": 0.0537,
+       "other": 0.2073
+      },
+      "last_alive_of_removed": {
+       "min": 600,
+       "median": 3100,
+       "max": 14900
+      },
+      "descendants": 4397,
+      "opaque_descendants": 2810
+     },
+     "seconds": 6.3,
+     "scientific_verdict": null
+    },
+    "comparison": {
+     "prop_LoD2_s0": {
+      "site": "B0a15",
+      "unit": "LoD2",
+      "result": "prop_LoD2_s0",
+      "regions": {
+       "prior_error": {
+        "patches": 3974,
+        "area_m2": 248.4
+       },
+       "missing_agreement": {
+        "patches": 6362,
+        "area_m2": 397.6
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 3974,
+       "seeds_planted": 3974,
+       "not_planted": 0,
+       "counts": {
+        "removed": 1801,
+        "old_place": 649,
+        "current_surface": 707,
+        "neither": 817
+       },
+       "shares": {
+        "removed": 0.4532,
+        "old_place": 0.1633,
+        "current_surface": 0.1779,
+        "neither": 0.2056
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 1300,
+        "max": 14900
+       },
+       "descendants": 19309,
+       "opaque_descendants": 9925
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 6362,
+       "seeds_planted": 5904,
+       "not_planted": 458,
+       "counts": {
+        "removed": 154,
+        "kept": 5639,
+        "other": 111
+       },
+       "shares": {
+        "removed": 0.0261,
+        "kept": 0.9551,
+        "other": 0.0188
+       },
+       "last_alive_of_removed": {
+        "min": 800,
+        "median": 4050,
+        "max": 12100
+       },
+       "descendants": 6412,
+       "opaque_descendants": 6209
+      },
+      "seconds": 6.4,
+      "scientific_verdict": null
+     }
+    }
+   }
+  },
+  "B173nb_b10/abl_prot_LoD2_s0": {
+   "site": "B173nb_b10",
+   "unit": "LoD2",
+   "result": "abl_prot_LoD2_s0",
+   "what": "보호 끄기",
+   "comparison": [
+    "B173nb_b10/prop_LoD2_s0",
+    "B173nb_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": 0.0114,
+     "diff": -0.7819,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "supported",
+     "ko": "가우시안이 받친 몫",
+     "share": true,
+     "comparison": [
+      0.8205,
+      0.7873
+     ],
+     "comparison_mean": 0.8039000000000001,
+     "run": 0.02,
+     "diff": -0.7839,
+     "samples": 15366,
+     "threshold": 0.06573264637910146,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118,
+      "unit": 0.06573264637910146,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": 0.0048,
+     "diff": -0.0042000000000000015,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": 0.0707,
+     "diff": 0.002600000000000005,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": 2.19,
+     "diff": 0.010000000000000231,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.2399999999999998,
+      2.17
+     ],
+     "comparison_mean": 2.205,
+     "run": 2.21,
+     "diff": 0.004999999999999893,
+     "samples": 32634,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.138592929112563
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0124,
+      0.0137
+     ],
+     "comparison_mean": 0.013049999999999999,
+     "run": 0.0117,
+     "diff": -0.0013499999999999988,
+     "samples": 32634,
+     "threshold": 0.0025738686835190343,
+     "threshold_parts": {
+      "unit": 0.0025738686835190343,
+      "three_points": 9.192866335723479e-05
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": 39366,
+   "stopped": null,
+   "fates": {
+    "run": {
+     "site": "B173nb_b10",
+     "unit": "LoD2",
+     "result": "abl_prot_LoD2_s0",
+     "regions": {
+      "prior_error": {
+       "patches": 21741,
+       "area_m2": 1358.8
+      },
+      "missing_agreement": {
+       "patches": 1225,
+       "area_m2": 76.6
+      }
+     },
+     "prior_error": {
+      "status": "ok",
+      "seeds_seated": 21741,
+      "seeds_planted": 21741,
+      "not_planted": 0,
+      "counts": {
+       "removed": 21301,
+       "old_place": 253,
+       "current_surface": 67,
+       "neither": 120
+      },
+      "shares": {
+       "removed": 0.9798,
+       "old_place": 0.0116,
+       "current_surface": 0.0031,
+       "neither": 0.0055
+      },
+      "last_alive_of_removed": {
+       "min": 600,
+       "median": 600,
+       "max": 14900
+      },
+      "descendants": 3701,
+      "opaque_descendants": 2292
+     },
+     "missing_agreement": {
+      "status": "ok",
+      "seeds_seated": 1225,
+      "seeds_planted": 1168,
+      "not_planted": 57,
+      "counts": {
+       "removed": 1096,
+       "kept": 36,
+       "other": 36
+      },
+      "shares": {
+       "removed": 0.9384,
+       "kept": 0.0308,
+       "other": 0.0308
+      },
+      "last_alive_of_removed": {
+       "min": 600,
+       "median": 3100,
+       "max": 14500
+      },
+      "descendants": 378,
+      "opaque_descendants": 248
+     },
+     "seconds": 6.2,
+     "scientific_verdict": null
+    },
+    "comparison": {
+     "prop_LoD2_s0": {
+      "site": "B173nb_b10",
+      "unit": "LoD2",
+      "result": "prop_LoD2_s0",
+      "regions": {
+       "prior_error": {
+        "patches": 21741,
+        "area_m2": 1358.8
+       },
+       "missing_agreement": {
+        "patches": 1225,
+        "area_m2": 76.6
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 21741,
+       "seeds_planted": 21741,
+       "not_planted": 0,
+       "counts": {
+        "removed": 20480,
+        "old_place": 585,
+        "current_surface": 162,
+        "neither": 514
+       },
+       "shares": {
+        "removed": 0.942,
+        "old_place": 0.0269,
+        "current_surface": 0.0075,
+        "neither": 0.0236
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 600,
+        "max": 14900
+       },
+       "descendants": 6025,
+       "opaque_descendants": 3625
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 1225,
+       "seeds_planted": 1168,
+       "not_planted": 57,
+       "counts": {
+        "removed": 739,
+        "kept": 165,
+        "other": 264
+       },
+       "shares": {
+        "removed": 0.6327,
+        "kept": 0.1413,
+        "other": 0.226
+       },
+       "last_alive_of_removed": {
+        "min": 700,
+        "median": 3100,
+        "max": 14900
+       },
+       "descendants": 813,
+       "opaque_descendants": 656
+      },
+      "seconds": 8.7,
+      "scientific_verdict": null
+     },
+     "prop_LoD2_s1": {
+      "site": "B173nb_b10",
+      "unit": "LoD2",
+      "result": "prop_LoD2_s1",
+      "regions": {
+       "prior_error": {
+        "patches": 21741,
+        "area_m2": 1358.8
+       },
+       "missing_agreement": {
+        "patches": 1225,
+        "area_m2": 76.6
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 21741,
+       "seeds_planted": 21741,
+       "not_planted": 0,
+       "counts": {
+        "removed": 20471,
+        "old_place": 600,
+        "current_surface": 154,
+        "neither": 516
+       },
+       "shares": {
+        "removed": 0.9416,
+        "old_place": 0.0276,
+        "current_surface": 0.0071,
+        "neither": 0.0237
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 600,
+        "max": 14900
+       },
+       "descendants": 5707,
+       "opaque_descendants": 3252
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 1225,
+       "seeds_planted": 1168,
+       "not_planted": 57,
+       "counts": {
+        "removed": 820,
+        "kept": 142,
+        "other": 206
+       },
+       "shares": {
+        "removed": 0.7021,
+        "kept": 0.1216,
+        "other": 0.1764
+       },
+       "last_alive_of_removed": {
+        "min": 700,
+        "median": 3100,
+        "max": 14900
+       },
+       "descendants": 874,
+       "opaque_descendants": 636
+      },
+      "seconds": 11.3,
+      "scientific_verdict": null
+     }
+    }
+   }
   },
   "R1rep_b10/abl_lossj_LoD2_s0": {
    "site": "R1rep_b10",
@@ -562,6 +2464,7 @@
     }
    ],
    "workload": 21278,
+   "stopped": null,
    "fates": {
     "run": {
      "site": "R1rep_b10",
@@ -629,10 +2532,1533 @@
      "scientific_verdict": null
     },
     "comparison": {
-     "prop_LoD2_s0": null,
-     "prop_LoD2_s1": null
+     "prop_LoD2_s0": {
+      "site": "R1rep_b10",
+      "unit": "LoD2",
+      "result": "prop_LoD2_s0",
+      "regions": {
+       "prior_error": {
+        "patches": 11518,
+        "area_m2": 719.9
+       },
+       "missing_agreement": {
+        "patches": 198,
+        "area_m2": 12.4
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 11518,
+       "seeds_planted": 11518,
+       "not_planted": 0,
+       "counts": {
+        "removed": 10703,
+        "old_place": 137,
+        "current_surface": 219,
+        "neither": 459
+       },
+       "shares": {
+        "removed": 0.9292,
+        "old_place": 0.0119,
+        "current_surface": 0.019,
+        "neither": 0.0399
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 3100,
+        "max": 14800
+       },
+       "descendants": 4627,
+       "opaque_descendants": 2789
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 198,
+       "seeds_planted": 99,
+       "not_planted": 99,
+       "counts": {
+        "removed": 64,
+        "kept": 12,
+        "other": 23
+       },
+       "shares": {
+        "removed": 0.6465,
+        "kept": 0.1212,
+        "other": 0.2323
+       },
+       "last_alive_of_removed": {
+        "min": 2900,
+        "median": 3100,
+        "max": 9100
+       },
+       "descendants": 35,
+       "opaque_descendants": 34
+      },
+      "seconds": 5.3,
+      "scientific_verdict": null
+     },
+     "prop_LoD2_s1": {
+      "site": "R1rep_b10",
+      "unit": "LoD2",
+      "result": "prop_LoD2_s1",
+      "regions": {
+       "prior_error": {
+        "patches": 11518,
+        "area_m2": 719.9
+       },
+       "missing_agreement": {
+        "patches": 198,
+        "area_m2": 12.4
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 11518,
+       "seeds_planted": 11518,
+       "not_planted": 0,
+       "counts": {
+        "removed": 10858,
+        "old_place": 127,
+        "current_surface": 175,
+        "neither": 358
+       },
+       "shares": {
+        "removed": 0.9427,
+        "old_place": 0.011,
+        "current_surface": 0.0152,
+        "neither": 0.0311
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 3100,
+        "max": 14900
+       },
+       "descendants": 4538,
+       "opaque_descendants": 2723
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 198,
+       "seeds_planted": 99,
+       "not_planted": 99,
+       "counts": {
+        "removed": 77,
+        "kept": 14,
+        "other": 8
+       },
+       "shares": {
+        "removed": 0.7778,
+        "kept": 0.1414,
+        "other": 0.0808
+       },
+       "last_alive_of_removed": {
+        "min": 2400,
+        "median": 3100,
+        "max": 12100
+       },
+       "descendants": 26,
+       "opaque_descendants": 25
+      },
+      "seconds": 5.9,
+      "scientific_verdict": null
+     }
     }
    }
+  },
+  "B0_b10/abl_densj_LoD2_s0": {
+   "site": "B0_b10",
+   "unit": "LoD2",
+   "result": "abl_densj_LoD2_s0",
+   "what": "밀도 제어에서만 판정 끄기",
+   "comparison": [
+    "B0_b10/prop_LoD2_s0",
+    "B0_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.1144,
+      0.1256
+     ],
+     "comparison_mean": 0.12,
+     "run": 0.1119,
+     "diff": -0.008099999999999996,
+     "samples": 4468,
+     "threshold": 0.022174868658010105,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.022174868658010105,
+      "three_points": 0.0006714413607878246
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.121,
+      0.1186
+     ],
+     "comparison_mean": 0.11979999999999999,
+     "run": 0.0907,
+     "diff": -0.029099999999999987,
+     "samples": 32880,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.004751757569573597,
+      "three_points": 9.124087591240875e-05
+     },
+     "reading": "좋아짐",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      39.879999999999995,
+      60.89
+     ],
+     "comparison_mean": 50.385,
+     "run": 46.339999999999996,
+     "diff": -4.045000000000002,
+     "samples": 392,
+     "threshold": 41.59767772364222,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 41.59767772364222
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      128.99,
+      124.49
+     ],
+     "comparison_mean": 126.74000000000001,
+     "run": 190.76999999999998,
+     "diff": 64.02999999999997,
+     "samples": 483,
+     "threshold": 8.909545442950526,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 8.909545442950526
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.3949,
+      0.2996
+     ],
+     "comparison_mean": 0.34724999999999995,
+     "run": 0.4903,
+     "diff": 0.14305000000000007,
+     "samples": 514,
+     "threshold": 0.1886843734918183,
+     "threshold_parts": {
+      "unit": 0.1886843734918183,
+      "three_points": 0.005836575875486381
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": 15431,
+   "stopped": null,
+   "fates": {
+    "run": {
+     "site": "B0_b10",
+     "unit": "LoD2",
+     "result": "abl_densj_LoD2_s0",
+     "regions": {
+      "prior_error": {
+       "patches": 6421,
+       "area_m2": 401.3
+      },
+      "missing_agreement": {
+       "patches": 2052,
+       "area_m2": 128.2
+      }
+     },
+     "prior_error": {
+      "status": "ok",
+      "seeds_seated": 6421,
+      "seeds_planted": 6421,
+      "not_planted": 0,
+      "counts": {
+       "removed": 5079,
+       "old_place": 414,
+       "current_surface": 321,
+       "neither": 607
+      },
+      "shares": {
+       "removed": 0.791,
+       "old_place": 0.0645,
+       "current_surface": 0.05,
+       "neither": 0.0945
+      },
+      "last_alive_of_removed": {
+       "min": 600,
+       "median": 3100,
+       "max": 14900
+      },
+      "descendants": 4484,
+      "opaque_descendants": 2826
+     },
+     "missing_agreement": {
+      "status": "ok",
+      "seeds_seated": 2052,
+      "seeds_planted": 1944,
+      "not_planted": 108,
+      "counts": {
+       "removed": 429,
+       "kept": 1274,
+       "other": 241
+      },
+      "shares": {
+       "removed": 0.2207,
+       "kept": 0.6553,
+       "other": 0.124
+      },
+      "last_alive_of_removed": {
+       "min": 900,
+       "median": 6100,
+       "max": 14800
+      },
+      "descendants": 2624,
+      "opaque_descendants": 2372
+     },
+     "seconds": 6.5,
+     "scientific_verdict": null
+    },
+    "comparison": {
+     "prop_LoD2_s0": {
+      "site": "B0_b10",
+      "unit": "LoD2",
+      "result": "prop_LoD2_s0",
+      "regions": {
+       "prior_error": {
+        "patches": 6421,
+        "area_m2": 401.3
+       },
+       "missing_agreement": {
+        "patches": 2052,
+        "area_m2": 128.2
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 6421,
+       "seeds_planted": 6421,
+       "not_planted": 0,
+       "counts": {
+        "removed": 5028,
+        "old_place": 452,
+        "current_surface": 344,
+        "neither": 597
+       },
+       "shares": {
+        "removed": 0.7831,
+        "old_place": 0.0704,
+        "current_surface": 0.0536,
+        "neither": 0.093
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 3100,
+        "max": 14800
+       },
+       "descendants": 4680,
+       "opaque_descendants": 3126
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 2052,
+       "seeds_planted": 1944,
+       "not_planted": 108,
+       "counts": {
+        "removed": 415,
+        "kept": 1246,
+        "other": 283
+       },
+       "shares": {
+        "removed": 0.2135,
+        "kept": 0.6409,
+        "other": 0.1456
+       },
+       "last_alive_of_removed": {
+        "min": 800,
+        "median": 6100,
+        "max": 12100
+       },
+       "descendants": 2453,
+       "opaque_descendants": 2246
+      },
+      "seconds": 21.2,
+      "scientific_verdict": null
+     },
+     "prop_LoD2_s1": {
+      "site": "B0_b10",
+      "unit": "LoD2",
+      "result": "prop_LoD2_s1",
+      "regions": {
+       "prior_error": {
+        "patches": 6421,
+        "area_m2": 401.3
+       },
+       "missing_agreement": {
+        "patches": 2052,
+        "area_m2": 128.2
+       }
+      },
+      "prior_error": {
+       "status": "ok",
+       "seeds_seated": 6421,
+       "seeds_planted": 6421,
+       "not_planted": 0,
+       "counts": {
+        "removed": 4799,
+        "old_place": 482,
+        "current_surface": 378,
+        "neither": 762
+       },
+       "shares": {
+        "removed": 0.7474,
+        "old_place": 0.0751,
+        "current_surface": 0.0589,
+        "neither": 0.1187
+       },
+       "last_alive_of_removed": {
+        "min": 600,
+        "median": 3100,
+        "max": 14900
+       },
+       "descendants": 6071,
+       "opaque_descendants": 3578
+      },
+      "missing_agreement": {
+       "status": "ok",
+       "seeds_seated": 2052,
+       "seeds_planted": 1944,
+       "not_planted": 108,
+       "counts": {
+        "removed": 444,
+        "kept": 1270,
+        "other": 230
+       },
+       "shares": {
+        "removed": 0.2284,
+        "kept": 0.6533,
+        "other": 0.1183
+       },
+       "last_alive_of_removed": {
+        "min": 800,
+        "median": 6100,
+        "max": 14200
+       },
+       "descendants": 3150,
+       "opaque_descendants": 2732
+      },
+      "seconds": 22.9,
+      "scientific_verdict": null
+     }
+    }
+   }
+  },
+  "B0a15/sens_dist05_LoD2_s0": {
+   "site": "B0a15",
+   "unit": "LoD2",
+   "result": "sens_dist05_LoD2_s0",
+   "what": "민감도: 판정 전파 최대 거리 0.5 m",
+   "comparison": [
+    "B0a15/prop_LoD2_s0"
+   ],
+   "rows": [
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0431
+     ],
+     "comparison_mean": 0.0431,
+     "run": 0.0442,
+     "diff": 0.0011000000000000038,
+     "samples": 20268,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "three_points": 0.00014801657785671994
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.4096
+     ],
+     "comparison_mean": 0.4096,
+     "run": 0.3914,
+     "diff": -0.018199999999999994,
+     "samples": 769,
+     "threshold": 0.011483414126469475,
+     "threshold_parts": {
+      "median_unit_terms": 0.011483414126469475,
+      "three_points": 0.0039011703511053317
+     },
+     "reading": "좋아짐",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016
+     },
+     "reading": "값 없음",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9478
+     ],
+     "comparison_mean": 0.9478,
+     "run": 0.9486,
+     "diff": 0.0008000000000000229,
+     "samples": 49369,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "three_points": 6.07668780003646e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "missing_prior_error_inflow",
+     "ko": "결측 영역의 사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.2462
+     ],
+     "comparison_mean": 0.2462,
+     "run": 0.3169,
+     "diff": 0.07070000000000001,
+     "samples": 1625,
+     "threshold": 0.04256782822743014,
+     "threshold_parts": {
+      "median_unit_terms": 0.04256782822743014,
+      "three_points": 0.0018461538461538461
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "missing_agreement_completeness",
+     "ko": "결측 일치 완전성(0.2 m)",
+     "share": true,
+     "comparison": [
+      0.7387
+     ],
+     "comparison_mean": 0.7387,
+     "run": 0.7552,
+     "diff": 0.01649999999999996,
+     "samples": 37860,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "three_points": 7.92393026941363e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0
+     ],
+     "comparison_mean": 0.0,
+     "run": 0.0,
+     "diff": 0.0,
+     "samples": 0,
+     "threshold": 0.027223611075682077,
+     "threshold_parts": {
+      "median_unit_terms": 0.027223611075682077
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": null,
+   "stopped": null
+  },
+  "B173nb_b10/sens_e250_LoD2_s0": {
+   "site": "B173nb_b10",
+   "unit": "LoD2",
+   "result": "sens_e250_LoD2_s0",
+   "what": "민감도: 다시 읽는 주기 250회",
+   "comparison": [
+    "B173nb_b10/prop_LoD2_s0",
+    "B173nb_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": 0.7157,
+     "diff": -0.0776,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": 0.0094,
+     "diff": 0.0003999999999999993,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": 0.0661,
+     "diff": -0.001999999999999988,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.6625,
+      0.655
+     ],
+     "comparison_mean": 0.65875,
+     "run": 0.6587,
+     "diff": -4.999999999999449e-05,
+     "samples": 1594,
+     "threshold": 0.0148492424049174,
+     "threshold_parts": {
+      "unit": 0.0148492424049174,
+      "three_points": 0.0018820577164366374
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": 2.13,
+     "diff": -0.04999999999999982,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9562,
+      0.956
+     ],
+     "comparison_mean": 0.9561,
+     "run": 0.9574,
+     "diff": 0.0013000000000000789,
+     "samples": 73287,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.2399999999999998,
+      2.17
+     ],
+     "comparison_mean": 2.205,
+     "run": 2.15,
+     "diff": -0.05500000000000016,
+     "samples": 32634,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.138592929112563
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0124,
+      0.0137
+     ],
+     "comparison_mean": 0.013049999999999999,
+     "run": 0.0131,
+     "diff": 5.000000000000143e-05,
+     "samples": 32634,
+     "threshold": 0.0025738686835190343,
+     "threshold_parts": {
+      "unit": 0.0025738686835190343,
+      "three_points": 9.192866335723479e-05
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": null,
+   "stopped": null,
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.0661,
+     "comparator": 0.1017,
+     "method": 0.0681,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.6587,
+     "comparator": 0.5721,
+     "method": 0.65875,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 2.13,
+     "comparator": 2.94,
+     "method": 2.18,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.9574,
+     "comparator": 0.9416,
+     "method": 0.9561,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ]
+  },
+  "B173nb_b10/sens_e1000_LoD2_s0": {
+   "site": "B173nb_b10",
+   "unit": "LoD2",
+   "result": "sens_e1000_LoD2_s0",
+   "what": "민감도: 다시 읽는 주기 1,000회",
+   "comparison": [
+    "B173nb_b10/prop_LoD2_s0",
+    "B173nb_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": 0.8609,
+     "diff": 0.0676,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": 0.0077,
+     "diff": -0.0013000000000000008,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": 0.067,
+     "diff": -0.0010999999999999899,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.6625,
+      0.655
+     ],
+     "comparison_mean": 0.65875,
+     "run": 0.66,
+     "diff": 0.0012500000000000844,
+     "samples": 1594,
+     "threshold": 0.0148492424049174,
+     "threshold_parts": {
+      "unit": 0.0148492424049174,
+      "three_points": 0.0018820577164366374
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": 2.13,
+     "diff": -0.04999999999999982,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9562,
+      0.956
+     ],
+     "comparison_mean": 0.9561,
+     "run": 0.9579,
+     "diff": 0.0018000000000000238,
+     "samples": 73287,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.2399999999999998,
+      2.17
+     ],
+     "comparison_mean": 2.205,
+     "run": 2.16,
+     "diff": -0.04499999999999993,
+     "samples": 32634,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.138592929112563
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0124,
+      0.0137
+     ],
+     "comparison_mean": 0.013049999999999999,
+     "run": 0.019,
+     "diff": 0.00595,
+     "samples": 32634,
+     "threshold": 0.0025738686835190343,
+     "threshold_parts": {
+      "unit": 0.0025738686835190343,
+      "three_points": 9.192866335723479e-05
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": null,
+   "stopped": null,
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.067,
+     "comparator": 0.1017,
+     "method": 0.0681,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.66,
+     "comparator": 0.5721,
+     "method": 0.65875,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 2.13,
+     "comparator": 2.94,
+     "method": 2.18,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.9579,
+     "comparator": 0.9416,
+     "method": 0.9561,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ]
+  },
+  "B173nb_b10/sens_enone_LoD2_s0": {
+   "site": "B173nb_b10",
+   "unit": "LoD2",
+   "result": "sens_enone_LoD2_s0",
+   "what": "민감도: 다시 읽지 않음",
+   "comparison": [
+    "B173nb_b10/prop_LoD2_s0",
+    "B173nb_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": 0.9993,
+     "diff": 0.20599999999999996,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "좋아짐",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": 0.0091,
+     "diff": 9.99999999999994e-05,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": 0.0672,
+     "diff": -0.000899999999999998,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.6625,
+      0.655
+     ],
+     "comparison_mean": 0.65875,
+     "run": 0.6738,
+     "diff": 0.015050000000000008,
+     "samples": 1594,
+     "threshold": 0.0148492424049174,
+     "threshold_parts": {
+      "unit": 0.0148492424049174,
+      "three_points": 0.0018820577164366374
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": 2.13,
+     "diff": -0.04999999999999982,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9562,
+      0.956
+     ],
+     "comparison_mean": 0.9561,
+     "run": 0.9599,
+     "diff": 0.0038000000000000256,
+     "samples": 73287,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.2399999999999998,
+      2.17
+     ],
+     "comparison_mean": 2.205,
+     "run": 2.16,
+     "diff": -0.04499999999999993,
+     "samples": 32634,
+     "threshold": 0.9431055084135607,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 0.138592929112563
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.0124,
+      0.0137
+     ],
+     "comparison_mean": 0.013049999999999999,
+     "run": 0.0167,
+     "diff": 0.0036500000000000005,
+     "samples": 32634,
+     "threshold": 0.0025738686835190343,
+     "threshold_parts": {
+      "unit": 0.0025738686835190343,
+      "three_points": 9.192866335723479e-05
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": null,
+   "stopped": null,
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.0672,
+     "comparator": 0.1017,
+     "method": 0.0681,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.6738,
+     "comparator": 0.5721,
+     "method": 0.65875,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 2.13,
+     "comparator": 2.94,
+     "method": 2.18,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.9599,
+     "comparator": 0.9416,
+     "method": 0.9561,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ]
+  },
+  "R1rep_b10/sens_trunc2_LoD2_s0": {
+   "site": "R1rep_b10",
+   "unit": "LoD2",
+   "result": "sens_trunc2_LoD2_s0",
+   "what": "민감도: 절단 배수 2배",
+   "comparison": [
+    "R1rep_b10/prop_LoD2_s0",
+    "R1rep_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0851,
+      0.0676
+     ],
+     "comparison_mean": 0.07635,
+     "run": 0.0552,
+     "diff": -0.021150000000000002,
+     "samples": 54345,
+     "threshold": 0.03464823227814083,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.03464823227814083,
+      "three_points": 5.520287054926856e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0421,
+      0.0289
+     ],
+     "comparison_mean": 0.0355,
+     "run": 0.0369,
+     "diff": 0.0014000000000000054,
+     "samples": 11518,
+     "threshold": 0.026134666632654794,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.026134666632654794,
+      "three_points": 0.0002604618857440528
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      4.91,
+      5.27
+     ],
+     "comparison_mean": 5.09,
+     "run": 4.91,
+     "diff": -0.17999999999999972,
+     "samples": 74638,
+     "threshold": 0.7127636354360387,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.7127636354360387
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      6.370000000000001,
+      5.7
+     ],
+     "comparison_mean": 6.035,
+     "run": 5.34,
+     "diff": -0.6950000000000003,
+     "samples": 76410,
+     "threshold": 1.3265323215059646,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 1.3265323215059646
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.161,
+      0.0599
+     ],
+     "comparison_mean": 0.11045,
+     "run": 0.0633,
+     "diff": -0.04715000000000001,
+     "samples": 76434,
+     "threshold": 0.20016778761828782,
+     "threshold_parts": {
+      "unit": 0.20016778761828782,
+      "three_points": 3.924954863019075e-05
+     },
+     "reading": "—(늘 적는 값)",
+     "role": "늘"
+    }
+   ],
+   "workload": null,
+   "stopped": null,
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.0552,
+     "comparator": 0.3696,
+     "method": 0.07635,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.1268,
+     "comparator": 0.122,
+     "method": 0.10650000000000001,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 4.91,
+     "comparator": 17.849999999999998,
+     "method": 5.09,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.8916,
+     "comparator": 0.8832,
+     "method": 0.8909,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ]
+  },
+  "R1rep_b10/sens_trunc8_LoD2_s0": {
+   "site": "R1rep_b10",
+   "unit": "LoD2",
+   "result": "sens_trunc8_LoD2_s0",
+   "what": "민감도: 절단 배수 8배",
+   "comparison": [
+    "R1rep_b10/prop_LoD2_s0",
+    "R1rep_b10/prop_LoD2_s1"
+   ],
+   "rows": [
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0851,
+      0.0676
+     ],
+     "comparison_mean": 0.07635,
+     "run": null,
+     "diff": null,
+     "samples": 54345,
+     "threshold": 0.03464823227814083,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.03464823227814083,
+      "three_points": 5.520287054926856e-05
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0421,
+      0.0289
+     ],
+     "comparison_mean": 0.0355,
+     "run": null,
+     "diff": null,
+     "samples": 11518,
+     "threshold": 0.026134666632654794,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.026134666632654794,
+      "three_points": 0.0002604618857440528
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "함께"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      4.91,
+      5.27
+     ],
+     "comparison_mean": 5.09,
+     "run": null,
+     "diff": null,
+     "samples": 74638,
+     "threshold": 0.7127636354360387,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.7127636354360387
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "지지 일치 완만한 지붕 산포, 지금 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      6.370000000000001,
+      5.7
+     ],
+     "comparison_mean": 6.035,
+     "run": null,
+     "diff": null,
+     "samples": 76410,
+     "threshold": 1.3265323215059646,
+     "threshold_parts": {
+      "pooled": 0.9431055084135607,
+      "unit": 1.3265323215059646
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    },
+    {
+     "metric": "floating_share",
+     "ko": "뜬 조각 몫",
+     "share": true,
+     "comparison": [
+      0.161,
+      0.0599
+     ],
+     "comparison_mean": 0.11045,
+     "run": null,
+     "diff": null,
+     "samples": 76434,
+     "threshold": 0.20016778761828782,
+     "threshold_parts": {
+      "unit": 0.20016778761828782,
+      "three_points": 3.924954863019075e-05
+     },
+     "reading": "결과 없음(GPU 메모리 부족)",
+     "role": "늘"
+    }
+   ],
+   "workload": null,
+   "stopped": "OOM"
   },
   "B0a15/prop_LoD2_s0": {
    "site": "B0a15",
@@ -812,7 +4238,8 @@
      "role": "늘"
     }
    ],
-   "workload": null
+   "workload": null,
+   "stopped": null
   }
  },
  "scientific_verdict": null

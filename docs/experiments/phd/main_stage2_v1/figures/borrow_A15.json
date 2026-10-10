@@ -1,0 +1,45 @@
+{
+ "place": {
+  "site": "B0a15",
+  "prior": "LoD2",
+  "kind": "map",
+  "u_range": [
+   78.84871156935735,
+   88.58484203368636
+  ],
+  "v_range": [
+   78.25413474528361,
+   92.64281825647048
+  ],
+  "component": {
+   "patches": 136,
+   "area_m2": 8.5,
+   "gt_points": 13946
+  },
+  "candidates": {
+   "patches": 350,
+   "area_m2": 21.9,
+   "components": 36
+  },
+  "why": "missing prior error (code 13)",
+  "layers": [
+   "결측 사전 정보 오류 패치",
+   "옛 자리에 남은 가우시안(사전 정보 출신, 불투명도 0.5 이상, 사전 정보 면 0.25 m 안)"
+  ],
+  "panels": [
+   "켬: 짝(본 방법)",
+   "끔: 판정 빌려 오기 끄기"
+  ]
+ },
+ "patches": 78,
+ "panels": {
+  "prop_LoD2_s0": {
+   "old_place_share": 0.24358974358974358,
+   "gaussians": 15
+  },
+  "abl_prop_LoD2_s0": {
+   "old_place_share": 0.9871794871794872,
+   "gaussians": 106
+  }
+ }
+}

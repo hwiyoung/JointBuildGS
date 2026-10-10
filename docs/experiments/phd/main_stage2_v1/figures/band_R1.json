@@ -1,0 +1,28 @@
+{
+ "place": {
+  "site": "R1rep_b10",
+  "prior": "LoD2",
+  "kind": "face_map",
+  "face": 25,
+  "source": "VIS-v1 scene 4",
+  "rows": "code 2, roof-like, thinned rows of the face; colour = (result - GT) height, same symmetric range in both panels",
+  "panels": [
+   "켬: 본 방법 씨앗 0",
+   "끔: 허용 구간 없애기"
+  ],
+  "ends": "bias / NMAD at both ends of each panel"
+ },
+ "rows": 4196,
+ "panels": {
+  "prop_LoD2_s0": {
+   "bias_cm": -1.3519287109375,
+   "nmad_cm": 5.823078002929687,
+   "unread": 5
+  },
+  "abl_band_LoD2_s0": {
+   "bias_cm": -1.15509033203125,
+   "nmad_cm": 11.1487398147583,
+   "unread": 12
+  }
+ }
+}

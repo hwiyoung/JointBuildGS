@@ -1,0 +1,806 @@
+{
+ "sensitivity": {
+  "B0a15/sens_dist05_LoD2_s0": {
+   "what": "판정 전파 최대 거리 0.5 m",
+   "rows": [
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0431
+     ],
+     "comparison_mean": 0.0431,
+     "run": 0.0442,
+     "diff": 0.0011000000000000038,
+     "samples": 20268,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "three_points": 0.00014801657785671994
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.4096
+     ],
+     "comparison_mean": 0.4096,
+     "run": 0.3914,
+     "diff": -0.018199999999999994,
+     "samples": 769,
+     "threshold": 0.011483414126469475,
+     "threshold_parts": {
+      "median_unit_terms": 0.011483414126469475,
+      "three_points": 0.0039011703511053317
+     },
+     "reading": "좋아짐",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      null
+     ],
+     "comparison_mean": null,
+     "run": null,
+     "diff": null,
+     "samples": null,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016
+     },
+     "reading": "값 없음",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9478
+     ],
+     "comparison_mean": 0.9478,
+     "run": 0.9486,
+     "diff": 0.0008000000000000229,
+     "samples": 49369,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "three_points": 6.07668780003646e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "missing_prior_error_inflow",
+     "ko": "결측 영역의 사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.2462
+     ],
+     "comparison_mean": 0.2462,
+     "run": 0.3169,
+     "diff": 0.07070000000000001,
+     "samples": 1625,
+     "threshold": 0.04256782822743014,
+     "threshold_parts": {
+      "median_unit_terms": 0.04256782822743014,
+      "three_points": 0.0018461538461538461
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "missing_agreement_completeness",
+     "ko": "결측 일치 완전성(0.2 m)",
+     "share": true,
+     "comparison": [
+      0.7387
+     ],
+     "comparison_mean": 0.7387,
+     "run": 0.7552,
+     "diff": 0.01649999999999996,
+     "samples": 37860,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "three_points": 7.92393026941363e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    }
+   ],
+   "gate_again": [],
+   "gate_changed": [],
+   "curve": null,
+   "changed": [
+    "관측 오류 문턱 이내 유입률(조건 2)",
+    "결측 영역의 사전 정보 오류 유입률"
+   ],
+   "verdict": "둔감하지 않다(가능, 근거 불완전: 두 씨앗 없음, 견줌 학습 없음)"
+  },
+  "B173nb_b10/sens_e250_LoD2_s0": {
+   "what": "다시 읽는 주기 250회",
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": 0.7157,
+     "diff": -0.0776,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": 0.0094,
+     "diff": 0.0003999999999999993,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": 0.0661,
+     "diff": -0.001999999999999988,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.6625,
+      0.655
+     ],
+     "comparison_mean": 0.65875,
+     "run": 0.6587,
+     "diff": -4.999999999999449e-05,
+     "samples": 1594,
+     "threshold": 0.0148492424049174,
+     "threshold_parts": {
+      "unit": 0.0148492424049174,
+      "three_points": 0.0018820577164366374
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": 2.13,
+     "diff": -0.04999999999999982,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9562,
+      0.956
+     ],
+     "comparison_mean": 0.9561,
+     "run": 0.9574,
+     "diff": 0.0013000000000000789,
+     "samples": 73287,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    }
+   ],
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.0661,
+     "comparator": 0.1017,
+     "method": 0.0681,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.6587,
+     "comparator": 0.5721,
+     "method": 0.65875,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 2.13,
+     "comparator": 2.94,
+     "method": 2.18,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.9574,
+     "comparator": 0.9416,
+     "method": 0.9561,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ],
+   "gate_changed": [],
+   "curve": null,
+   "changed": [
+    "상속률"
+   ],
+   "verdict": "둔감하지 않다"
+  },
+  "B173nb_b10/sens_e1000_LoD2_s0": {
+   "what": "다시 읽는 주기 1,000회",
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": 0.8609,
+     "diff": 0.0676,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": 0.0077,
+     "diff": -0.0013000000000000008,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": 0.067,
+     "diff": -0.0010999999999999899,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.6625,
+      0.655
+     ],
+     "comparison_mean": 0.65875,
+     "run": 0.66,
+     "diff": 0.0012500000000000844,
+     "samples": 1594,
+     "threshold": 0.0148492424049174,
+     "threshold_parts": {
+      "unit": 0.0148492424049174,
+      "three_points": 0.0018820577164366374
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": 2.13,
+     "diff": -0.04999999999999982,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9562,
+      0.956
+     ],
+     "comparison_mean": 0.9561,
+     "run": 0.9579,
+     "diff": 0.0018000000000000238,
+     "samples": 73287,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    }
+   ],
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.067,
+     "comparator": 0.1017,
+     "method": 0.0681,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.66,
+     "comparator": 0.5721,
+     "method": 0.65875,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 2.13,
+     "comparator": 2.94,
+     "method": 2.18,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.9579,
+     "comparator": 0.9416,
+     "method": 0.9561,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ],
+   "gate_changed": [],
+   "curve": null,
+   "changed": [],
+   "verdict": "둔감하다"
+  },
+  "B173nb_b10/sens_enone_LoD2_s0": {
+   "what": "다시 읽지 않음",
+   "rows": [
+    {
+     "metric": "inheritance",
+     "ko": "상속률",
+     "share": true,
+     "comparison": [
+      0.8108,
+      0.7758
+     ],
+     "comparison_mean": 0.7933,
+     "run": 0.9993,
+     "diff": 0.20599999999999996,
+     "samples": 15366,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "좋아짐",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0094,
+      0.0086
+     ],
+     "comparison_mean": 0.009000000000000001,
+     "run": 0.0091,
+     "diff": 9.99999999999994e-05,
+     "samples": 16846,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0654,
+      0.0708
+     ],
+     "comparison_mean": 0.0681,
+     "run": 0.0672,
+     "diff": -0.000899999999999998,
+     "samples": 119763,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 문턱 이내 유입률(조건 2)",
+     "share": true,
+     "comparison": [
+      0.6625,
+      0.655
+     ],
+     "comparison_mean": 0.65875,
+     "run": 0.6738,
+     "diff": 0.015050000000000008,
+     "samples": 1594,
+     "threshold": 0.0148492424049174,
+     "threshold_parts": {
+      "unit": 0.0148492424049174,
+      "three_points": 0.0018820577164366374
+     },
+     "reading": "나빠짐",
+     "role": "주"
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "지지 일치 완만한 지붕 산포, 새 읽기 (cm)",
+     "share": false,
+     "comparison": [
+      2.22,
+      2.1399999999999997
+     ],
+     "comparison_mean": 2.1799999999999997,
+     "run": 2.13,
+     "diff": -0.04999999999999982,
+     "samples": 32634,
+     "threshold": 0.5162944896084016,
+     "threshold_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.15839191898578764
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "band_completeness",
+     "ko": "전제 위배 둘레 완전성(조건 4)",
+     "share": true,
+     "comparison": [
+      0.9562,
+      0.956
+     ],
+     "comparison_mean": 0.9561,
+     "run": 0.9599,
+     "diff": 0.0038000000000000256,
+     "samples": 73287,
+     "threshold": 0.00977329695309276,
+     "threshold_parts": {
+      "pooled": 0.00977329695309276,
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    }
+   ],
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.0672,
+     "comparator": 0.1017,
+     "method": 0.0681,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.6738,
+     "comparator": 0.5721,
+     "method": 0.65875,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 2.13,
+     "comparator": 2.94,
+     "method": 2.18,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.9599,
+     "comparator": 0.9416,
+     "method": 0.9561,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ],
+   "gate_changed": [],
+   "curve": null,
+   "changed": [
+    "상속률",
+    "관측 오류 문턱 이내 유입률(조건 2)"
+   ],
+   "verdict": "둔감하지 않다"
+  },
+  "R1rep_b10/sens_trunc2_LoD2_s0": {
+   "what": "절단 배수 2배",
+   "rows": [
+    {
+     "metric": "prior_error_inflow",
+     "ko": "사전 정보 오류 유입률",
+     "share": true,
+     "comparison": [
+      0.0851,
+      0.0676
+     ],
+     "comparison_mean": 0.07635,
+     "run": 0.0552,
+     "diff": -0.021150000000000002,
+     "samples": 54345,
+     "threshold": 0.03464823227814083,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.03464823227814083,
+      "three_points": 5.520287054926856e-05
+     },
+     "reading": "같음(기준 안)",
+     "role": "주"
+    },
+    {
+     "metric": "past_shape",
+     "ko": "과거 형상 잔존율",
+     "share": true,
+     "comparison": [
+      0.0421,
+      0.0289
+     ],
+     "comparison_mean": 0.0355,
+     "run": 0.0369,
+     "diff": 0.0014000000000000054,
+     "samples": 11518,
+     "threshold": 0.026134666632654794,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.026134666632654794,
+      "three_points": 0.0002604618857440528
+     },
+     "reading": "같음(기준 안)",
+     "role": "함께"
+    }
+   ],
+   "gate_again": [
+    {
+     "condition": "1",
+     "run": 0.0552,
+     "comparator": 0.3696,
+     "method": 0.07635,
+     "r": 0.01635593103433736,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "2",
+     "run": 0.1268,
+     "comparator": 0.122,
+     "method": 0.10650000000000001,
+     "r": null,
+     "decision_run": "undecidable (samples < 10,000)",
+     "decision_method": "undecidable (samples < 10,000)"
+    },
+    {
+     "condition": "3",
+     "run": 4.91,
+     "comparator": 17.849999999999998,
+     "method": 5.09,
+     "r": 0.5162944896084016,
+     "decision_run": "met",
+     "decision_method": "met"
+    },
+    {
+     "condition": "4",
+     "run": 0.8916,
+     "comparator": 0.8832,
+     "method": 0.8909,
+     "r": 0.00977329695309276,
+     "decision_run": "met",
+     "decision_method": "met"
+    }
+   ],
+   "gate_changed": [],
+   "curve": [
+    {
+     "bin": [
+      0.0,
+      1.0
+     ],
+     "run": 0.6926,
+     "comparison": [
+      0.6074,
+      0.6191
+     ],
+     "mean": 0.6132500000000001,
+     "threshold": 0.023164818151671162,
+     "points": 940,
+     "reading": "커짐"
+    },
+    {
+     "bin": [
+      1.0,
+      1.5
+     ],
+     "run": 0.8903,
+     "comparison": [
+      0.8188,
+      0.8715
+     ],
+     "mean": 0.8451500000000001,
+     "threshold": 0.1043406766318871,
+     "points": 15560,
+     "reading": "같음(기준 안)"
+    },
+    {
+     "bin": [
+      1.5,
+      2.0
+     ],
+     "run": 0.9327,
+     "comparison": [
+      0.9198,
+      0.9292
+     ],
+     "mean": 0.9245,
+     "threshold": 0.018611050480830078,
+     "points": 12726,
+     "reading": "같음(기준 안)"
+    },
+    {
+     "bin": [
+      2.0,
+      null
+     ],
+     "run": 0.8496,
+     "comparison": [
+      0.8392,
+      0.8456
+     ],
+     "mean": 0.8424,
+     "threshold": 0.012671353518863072,
+     "points": 25119,
+     "reading": "같음(기준 안)"
+    }
+   ],
+   "changed": [
+    "보정률 0~1τ"
+   ],
+   "verdict": "둔감하지 않다"
+  },
+  "R1rep_b10/sens_trunc8_LoD2_s0": {
+   "what": "절단 배수 8배",
+   "verdict": "결과 없음",
+   "why": "학습이 멈춤(GPU 메모리 부족; tables/stops.md)"
+  }
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,45 @@
+{
+ "place": {
+  "site": "B0_b10",
+  "prior": "LoD2",
+  "kind": "map",
+  "u_range": [
+   27.723935661149806,
+   43.941278660351664
+  ],
+  "v_range": [
+   86.72346715019755,
+   109.3787005059041
+  ],
+  "component": {
+   "patches": 1453,
+   "area_m2": 90.8,
+   "gt_points": 143734
+  },
+  "candidates": {
+   "patches": 6421,
+   "area_m2": 401.3,
+   "components": 136
+  },
+  "why": "density: prior error (code 11)",
+  "layers": [
+   "사전 정보 오류 패치",
+   "옛 자리에 남은 가우시안(사전 정보 출신, 불투명도 0.5 이상, 사전 정보 면 0.25 m 안)"
+  ],
+  "panels": [
+   "켬: 본 방법 씨앗 0",
+   "끔: 밀도 제어에서만 판정 끄기"
+  ]
+ },
+ "patches": 1496,
+ "panels": {
+  "prop_LoD2_s0": {
+   "old_place_share": 0.06684491978609626,
+   "gaussians": 136
+  },
+  "abl_densj_LoD2_s0": {
+   "old_place_share": 0.07085561497326204,
+   "gaussians": 118
+  }
+ }
+}
