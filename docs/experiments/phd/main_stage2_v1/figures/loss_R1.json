@@ -1,0 +1,47 @@
+{
+ "place": {
+  "site": "R1rep_b10",
+  "prior": "LoD2",
+  "kind": "section",
+  "patch": 103296,
+  "centre": [
+   10.50057931475835,
+   25.88932401184229,
+   -29.635385043928395
+  ],
+  "t": [
+   0.3420201433256688,
+   0.9396926207859083
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "code_v3": 11,
+  "gt_med": 1.2192050218582153,
+  "tau": 0.6827602982521057,
+  "tilt_deg": 1.6,
+  "component": {
+   "patches": 2621,
+   "gt_points": 213666,
+   "area_m2": 163.8
+  },
+  "candidates": {
+   "patches": 5414,
+   "components": 119
+  },
+  "why": "loss: roof-like prior error judged conflict, tau < |GT - prior| <= 4 tau",
+  "lines": [
+   "옛 면(사전 정보)",
+   "참값",
+   "켬: 본 방법 씨앗 0",
+   "끔: 손실에서만 판정 끄기"
+  ]
+ },
+ "panels": {
+  "prop_LoD2_s0": {
+   "segments": 1183
+  },
+  "abl_lossj_LoD2_s0": {
+   "segments": 1554
+  }
+ }
+}

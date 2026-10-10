@@ -1,0 +1,44 @@
+{
+ "place": {
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "kind": "face_hist",
+  "face": 1,
+  "source": "VIS-v1 scene 6",
+  "rows": "code 2, roof-like, thinned rows of the face; z - z_GT, bins 0.5 cm",
+  "curves": [
+   "학습 전 항공 LiDAR",
+   "MVS",
+   "켬: 본 방법 씨앗 0",
+   "끔: 허용 구간 없애기"
+  ],
+  "peaks": "a name over each curve's mode"
+ },
+ "rows": 32932,
+ "curves": {
+  "학습 전 항공 LiDAR": {
+   "median_cm": -1.2277603149414062,
+   "nmad_cm": 1.6257223892211914,
+   "mode_cm": -1.25,
+   "n": 32932
+  },
+  "MVS": {
+   "median_cm": 7.632350921630859,
+   "nmad_cm": 2.2020351791381834,
+   "mode_cm": 7.25,
+   "n": 32932
+  },
+  "켬: 본 방법 씨앗 0": {
+   "median_cm": 6.964969635009766,
+   "nmad_cm": 2.159617652893066,
+   "mode_cm": 6.75,
+   "n": 32932
+  },
+  "끔: 허용 구간 없애기": {
+   "median_cm": 2.2675514221191406,
+   "nmad_cm": 2.0071973419189453,
+   "mode_cm": 2.25,
+   "n": 32932
+  }
+ }
+}

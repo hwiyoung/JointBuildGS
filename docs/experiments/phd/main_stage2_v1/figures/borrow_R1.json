@@ -1,0 +1,48 @@
+{
+ "place": {
+  "site": "R1rep_b10",
+  "prior": "ALS",
+  "kind": "map",
+  "u_range": [
+   7.145811230674482,
+   13.872172648561689
+  ],
+  "v_range": [
+   -19.650499458100224,
+   -11.685609180696991
+  ],
+  "component": {
+   "patches": 14,
+   "area_m2": 0.9,
+   "gt_points": 464
+  },
+  "candidates": {
+   "patches": 63,
+   "area_m2": 4.2,
+   "components": 24
+  },
+  "why": "missing agreement (code 4)",
+  "layers": [
+   "결측 일치 패치",
+   "심은 점(사전 정보 출신 처음 점)",
+   "참값 점: 결과 메시 0.2 m 안 / 밖"
+  ],
+  "panels": [
+   "켬: 본 방법 씨앗 0",
+   "끔: 판정 빌려 오기 끄기"
+  ]
+ },
+ "gt_rows": 83,
+ "panels": {
+  "prop_ALS_s0": {
+   "covered_share": 0.04819277108433735,
+   "seeds_planted": 1,
+   "seeds_not_planted": 12
+  },
+  "abl_prop_ALS_s0": {
+   "covered_share": 0.0,
+   "seeds_planted": 13,
+   "seeds_not_planted": 0
+  }
+ }
+}
