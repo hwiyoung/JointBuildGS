@@ -1,0 +1,328 @@
+{
+ "task_id": "PHD-MAIN-STAGE1-VIS-v3",
+ "config_sha256": "c2eb7a1023a431e0d321f3fcfe00b8c5dd2b16d59425ec2111dc3d6c66443027",
+ "fate": {
+  "region": {
+   "LoD2": {
+    "patches": 16336,
+    "area_m2": 1021.0
+   },
+   "ALS": {
+    "patches": 14515,
+    "area_m2": 964.3
+   },
+   "LoD2_wing_units": 18329
+  },
+  "ALS/prop_ALS_s0": {
+   "status": "ok",
+   "seeds_seated": 15360,
+   "seeds_planted": 15360,
+   "not_planted": 0,
+   "counts": {
+    "removed": 15304,
+    "old_place": 4,
+    "current_roof": 40,
+    "neither": 12
+   },
+   "shares": {
+    "removed": 0.9964,
+    "old_place": 0.0003,
+    "current_roof": 0.0026,
+    "neither": 0.0008
+   },
+   "neither_all_transparent": 7,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 13500
+   },
+   "opaque_descendants": 760,
+   "descendants": 1115,
+   "seed_xyz_mean": [
+    138.01,
+    107.01,
+    -23.04
+   ]
+  },
+  "ALS/prop_ALS_s1": {
+   "status": "ok",
+   "seeds_seated": 15360,
+   "seeds_planted": 15360,
+   "not_planted": 0,
+   "counts": {
+    "removed": 15269,
+    "old_place": 6,
+    "current_roof": 64,
+    "neither": 21
+   },
+   "shares": {
+    "removed": 0.9941,
+    "old_place": 0.0004,
+    "current_roof": 0.0042,
+    "neither": 0.0014
+   },
+   "neither_all_transparent": 7,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 14800
+   },
+   "opaque_descendants": 941,
+   "descendants": 1489,
+   "seed_xyz_mean": [
+    138.01,
+    107.01,
+    -23.04
+   ]
+  },
+  "ALS/trust_ALS": {
+   "status": "ok",
+   "seeds_seated": 15360,
+   "seeds_planted": 15360,
+   "not_planted": 0,
+   "counts": {
+    "removed": 14702,
+    "old_place": 118,
+    "current_roof": 137,
+    "neither": 403
+   },
+   "shares": {
+    "removed": 0.9572,
+    "old_place": 0.0077,
+    "current_roof": 0.0089,
+    "neither": 0.0262
+   },
+   "neither_all_transparent": 296,
+   "removed_at": {
+    "min": 600,
+    "median": 1300,
+    "max": 14700
+   },
+   "opaque_descendants": 1816,
+   "descendants": 4209,
+   "seed_xyz_mean": [
+    138.01,
+    107.01,
+    -23.04
+   ]
+  },
+  "LoD2/prop_LoD2_s0": {
+   "status": "ok",
+   "seeds_seated": 16336,
+   "seeds_planted": 16336,
+   "not_planted": 0,
+   "counts": {
+    "removed": 16242,
+    "old_place": 3,
+    "current_roof": 71,
+    "neither": 20
+   },
+   "shares": {
+    "removed": 0.9942,
+    "old_place": 0.0002,
+    "current_roof": 0.0043,
+    "neither": 0.0012
+   },
+   "neither_all_transparent": 10,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 14400
+   },
+   "opaque_descendants": 759,
+   "descendants": 1150,
+   "seed_xyz_mean": [
+    138.81,
+    109.15,
+    -23.07
+   ]
+  },
+  "LoD2/prop_LoD2_s1": {
+   "status": "ok",
+   "seeds_seated": 16336,
+   "seeds_planted": 16336,
+   "not_planted": 0,
+   "counts": {
+    "removed": 16254,
+    "old_place": 12,
+    "current_roof": 52,
+    "neither": 18
+   },
+   "shares": {
+    "removed": 0.995,
+    "old_place": 0.0007,
+    "current_roof": 0.0032,
+    "neither": 0.0011
+   },
+   "neither_all_transparent": 7,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 12100
+   },
+   "opaque_descendants": 540,
+   "descendants": 931,
+   "seed_xyz_mean": [
+    138.81,
+    109.15,
+    -23.07
+   ]
+  },
+  "seconds": 8.4,
+  "scientific_verdict": null
+ },
+ "wall": {
+  "imgonly_s0": {
+   "patches": 15366,
+   "present": 343,
+   "share": 0.022322,
+   "vis2_share": 0.0223,
+   "check_same_as_vis2": true
+  },
+  "imgonly_s1": {
+   "patches": 15366,
+   "present": 326,
+   "share": 0.021216,
+   "vis2_share": 0.0212,
+   "check_same_as_vis2": true
+  },
+  "prop_LoD2_s0": {
+   "patches": 15366,
+   "present": 12608,
+   "share": 0.820513,
+   "vis2_share": 0.8205,
+   "check_same_as_vis2": true
+  },
+  "prop_LoD2_s1": {
+   "patches": 15366,
+   "present": 12097,
+   "share": 0.787258,
+   "vis2_share": 0.7873,
+   "check_same_as_vis2": true
+  },
+  "trust_LoD2": {
+   "patches": 15366,
+   "present": 187,
+   "share": 0.01217,
+   "vis2_share": 0.0122,
+   "check_same_as_vis2": true
+  },
+  "prop_ALS_s0": {
+   "patches": 15366,
+   "present": 1109,
+   "share": 0.072172,
+   "vis2_share": 0.0722,
+   "check_same_as_vis2": true
+  },
+  "prop_ALS_s1": {
+   "patches": 15366,
+   "present": 1116,
+   "share": 0.072628,
+   "vis2_share": 0.0726,
+   "check_same_as_vis2": true
+  },
+  "seconds": 14.0,
+  "scientific_verdict": null
+ },
+ "figure_values": {
+  "c1": {
+   "ALS/prop_ALS_s0": {
+    "removed": 0.9964,
+    "old_place": 0.0003,
+    "current_roof": 0.0026,
+    "neither": 0.0008
+   },
+   "ALS/prop_ALS_s1": {
+    "removed": 0.9941,
+    "old_place": 0.0004,
+    "current_roof": 0.0042,
+    "neither": 0.0014
+   },
+   "ALS/trust_ALS": {
+    "removed": 0.9572,
+    "old_place": 0.0077,
+    "current_roof": 0.0089,
+    "neither": 0.0262
+   }
+  },
+  "c2": {
+   "imgonly_s0": 0.022322,
+   "imgonly_s1": 0.021216,
+   "prop_LoD2_s0": 0.820513,
+   "prop_LoD2_s1": 0.787258,
+   "trust_LoD2": 0.01217,
+   "prop_ALS_s0": 0.072172,
+   "prop_ALS_s1": 0.072628
+  },
+  "c3": {
+   "range_m": 0.7000000000000001,
+   "ends_m": {
+    "samepath_LoD2": {
+     "lo": 0.25920677185058594,
+     "hi": -0.6037483215332031
+    },
+    "prop_LoD2_s0": {
+     "lo": -0.06521415710449219,
+     "hi": 0.020099639892578125
+    },
+    "imgonly_s0": {
+     "lo": -0.07112884521484375,
+     "hi": -0.028264999389648438
+    }
+   }
+  },
+  "c4": {
+   "x": [
+    0.125,
+    0.375,
+    0.625,
+    0.875,
+    1.125,
+    1.375,
+    1.625,
+    1.875
+   ],
+   "prop_mean": [
+    86.38,
+    89.96,
+    94.18,
+    96.5,
+    97.22,
+    98.36,
+    98.6,
+    99.54
+   ],
+   "imgonly_mean": [
+    84.72,
+    87.58,
+    92.28,
+    94.88,
+    95.7,
+    97.68,
+    98.36,
+    99.28
+   ]
+  },
+  "c5a": {
+   "face_bias_cm": {
+    "samepath_ALS": -1.39,
+    "mvs": 7.63,
+    "prop_ALS_s0": 6.99
+   },
+   "tau_m": 0.147
+  },
+  "c5b": {
+   "prop_ALS_s0": {
+    "seeds_planted": 1,
+    "covered_pct": 32.1,
+    "gt_points": 383
+   },
+   "trust_ALS": {
+    "seeds_planted": 61,
+    "covered_pct": 91.9,
+    "gt_points": 383
+   }
+  }
+ },
+ "scientific_verdict": null
+}
