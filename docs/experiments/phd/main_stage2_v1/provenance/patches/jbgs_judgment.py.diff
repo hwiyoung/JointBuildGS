@@ -1,0 +1,151 @@
+--- r12/jbgs_judgment.py
++++ r13/jbgs_judgment.py
+@@ -1,4 +1,22 @@
+-"""Judgment-guided stage-2 optimization for GeoGS, revision r12 (JointBuildGS PHD-MAIN-STAGE0-v1).
++"""Judgment-guided stage-2 optimization for GeoGS, revision r13 (JointBuildGS PHD-MAIN-STAGE2-v1).
++
++r13 = r12 + three ablation flags of the stage-2 order (4.2), each 0 by default; with all three at 0 every decision is r12's
++(same code path; the flags only add a branch). Module v6 unchanged.
++  (r13-1) --jbgs_ablate_loss_judgment 1   : the prior depth term does not read the judgment: g_p = 1 on every prior pixel (also
++                                            where the patch judgment or the pixel's own mark is conflict); the band split of the
++                                            term (tolerance / pull / truncation) is kept. Initialisation, protection (eq. 7) and
++                                            density control read the judgment as r12.
++  (r13-2) --jbgs_ablate_density_judgment 1: density control does not read the judgment: split, clone and prune leave alone (and
++                                            the densification statistics skip) every prior-origin Gaussian with E < threshold and
++                                            u <= mult x tau (eq. 7 without its judgment term), also on a patch judged conflict.
++                                            The gradient protection (lr x lock_lr_scale), the opacity-reset exemption and the
++                                            opacity floor stay eq. 7 with the judgment (frozen_mask, r12).
++  (r13-3) --jbgs_ablate_tolerance_band 1  : the prior term has no tolerance band: rho(r) = min(|r|, hi tau) -- pulled like the
++                                            pull band from 0 up to hi tau, released beyond hi tau (truncation kept). g_p as r12.
++                                            (The r11 switch prior_band 0 = rho |r| without truncation, a different change.)
++  Records: meta.json / init_report.json 'ablations'; with r13-2 on, E.jsonl adds n_density_exempt and its conflict part.
++--- r12 text follows ---
++Judgment-guided stage-2 optimization for GeoGS, revision r12 (JointBuildGS PHD-MAIN-STAGE0-v1).
+ 
+ r12 = r11 calling the shared module src/phd/prior_propagation_v6 (= v5 + locations.move_store + rules.default_rule), plus
+   (r12-1) rule default  : --jbgs_rule auto (new default) = rules.default_rule(prior kind): LoD2 current, ALS / DSM
+@@ -179,9 +197,14 @@
+     ppc = ppl = ppo = ppr = pps = pprules = ppsw = None
+ 
+ MODES = ("off", "P", "P0", "I")
++ABLATIONS = {   # r13 (stage-2 order 4.2): name -> what 1 changes
++    "loss_judgment": "the prior depth term ignores the judgment (g_p = 1 on every prior pixel); bands kept",
++    "density_judgment": "split / clone / prune exemption = prior & E < threshold & u <= bound, judgment not read; gradient protection keeps it",
++    "tolerance_band": "rho(r) = min(|r|, hi tau): no tolerance band, truncation beyond hi tau kept",
++}
+ ORIGIN_IMAGE, ORIGIN_PRIOR = 0, 1
+ LABELS = ("preserve", "correct", "undecided", "other")
+-REVISION = "r12"
++REVISION = "r13"
+ 
+ 
+ # ----------------------------------------------------------------------------------------------------------- args
+@@ -252,6 +275,8 @@
+     g.add_argument("--jbgs_markcode_dir", default="", help="r11: per-view mark codes (threshold index at which a pixel turns agree)")
+     for _n in ("confidence_mask", "judgment", "propagation", "prior_band", "protection", "init_exclusion", "prior"):
+         g.add_argument(f"--jbgs_sw_{_n}", type=int, default=1, help=f"r11 switch {_n}: 1 = on (the method), 0 = off")
++    for _n, _h in ABLATIONS.items():   # r13: ablation flags, 0 = r12
++        g.add_argument(f"--jbgs_ablate_{_n}", type=int, default=0, choices=[0, 1], help=f"r13 ablation {_n}: {_h} (0 = r12)")
+ 
+ 
+ def apply_seed(args):
+@@ -344,6 +369,11 @@
+     return (torch.abs(D[valid] - P[valid]) * ww).sum() / den, n, n_hole, 0
+ 
+ 
++def rho_noband(r, tau, hi=4.0):
++    """r13-3: rho(r) = |r| (|r| <= hi*tau), hi*tau beyond: the pull band widened to start at 0; gradient 0 beyond hi*tau."""
++    return torch.minimum(torch.abs(r), hi * tau)
++
++
+ def rho_plain(r, tau, hi=4.0):
+     """r11 switch prior_band off: rho(r) = |r| (for the code test of the penalty shape)."""
+     return torch.abs(r)
+@@ -357,9 +387,10 @@
+     return lock, low, near, conflict
+ 
+ 
+-def truncated_prior_loss(D, P, tau, w, hi=4.0, denom=None):
++def truncated_prior_loss(D, P, tau, w, hi=4.0, denom=None, rho=None):
+     """sum w rho_tau(D-P) over prior pixels (tau finite) with w > 0, divided by `denom` (r6 (5): the pixel count of the
+-    view) or, when denom is None, by sum w (r5). Returns (loss, n_valid, n_hole, n_beyond)."""
++    view) or, when denom is None, by sum w (r5). Returns (loss, n_valid, n_hole, n_beyond). r13: rho = rho_noband for the
++    ablation of the tolerance band (None = rho_truncated, r12)."""
+     valid_t = torch.isfinite(P) & (P > 0) & torch.isfinite(tau) & (w > 0)
+     rendered = torch.isfinite(D) & (D > 0)
+     valid = valid_t & rendered
+@@ -372,7 +403,7 @@
+     ww = w[valid]
+     n_beyond = int((torch.abs(r) > hi * t).sum())
+     den = (ww.sum() + 1e-9) if denom is None else denom
+-    return (rho_truncated(r, t, hi) * ww).sum() / den, n, n_hole, n_beyond
++    return ((rho_truncated if rho is None else rho)(r, t, hi) * ww).sum() / den, n, n_hole, n_beyond
+ 
+ 
+ @torch.no_grad()
+@@ -593,6 +624,7 @@
+         self.train_names = {c.image_name for c in self.train_cams}
+         self.sw = {n: bool(int(getattr(args, f"jbgs_sw_{n}", 1))) for n in ("confidence_mask", "judgment", "propagation", "prior_band",
+                                                                           "protection", "init_exclusion", "prior")}
++        self.ab = {n: bool(int(getattr(args, f"jbgs_ablate_{n}", 0))) for n in ABLATIONS}   # r13: all False = r12
+         self.rule_name, self.prior_kind, self.rule_source = resolve_rule(args)          # r12-1
+         self.timing = (Path(args.model_path) / "monitor" / "timing.jsonl")
+         if ppsw is not None and tuple(self.sw) != tuple(ppsw.NAMES):
+@@ -698,7 +730,7 @@
+             torch.cuda.synchronize()
+         self.init_seconds = time.time() - self._t_init0               # r12-4 (to here: maps, product, seats, first E, g_p)
+         self.init_filter["init_seconds"] = round(self.init_seconds, 2)
+-        meta = dict(mode=self.mode, revision=REVISION, switches=self.sw, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
++        meta = dict(mode=self.mode, revision=REVISION, switches=self.sw, ablations=self.ab, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
+                     seed=int(getattr(args, "jbgs_seed", 0)), init_seconds=round(self.init_seconds, 2),
+                     store_frame_shift=(self.prop["frame_shift"] if self.prop is not None else None),
+                     size=[H, W], views=names, train_views=sorted(self.train_names),
+@@ -1161,6 +1193,8 @@
+             off = ppr.prior_term_off(located, Jl, A, mk)
+             if not self.sw["judgment"]:   # r11 switch judgment off: nothing discarded anywhere
+                 off = torch.zeros_like(off)
++            if self.ab["loss_judgment"]:   # r13-1: the depth term alone ignores the judgment (the patch tables stay)
++                off = torch.zeros_like(off)
+             g = (~off).float()
+             self.GW[name] = g
+             if P is not None:
+@@ -1237,7 +1271,8 @@
+                     gw = getattr(self, "GW", {}).get(cam_name)        # r8-1: g_p (eq. 4); r6 path: 1 - c_p
+                     w = gw if gw is not None else 1.0 - A
+                     if self.sw["prior_band"]:
+-                        prior, n, hole, beyond = truncated_prior_loss(D, P, self.TAU[cam_name], w, self.args.jbgs_trunc_hi, denom)
++                        prior, n, hole, beyond = truncated_prior_loss(D, P, self.TAU[cam_name], w, self.args.jbgs_trunc_hi, denom,
++                                                                      rho=rho_noband if self.ab["tolerance_band"] else None)   # r13-3
+                     else:   # r11 switch prior_band off: rho = |r|
+                         prior, n, hole, beyond = plain_prior_loss(D, P, self.TAU[cam_name], w, denom)
+                     stats.update(prior_n=n, prior_hole=hole, prior_beyond=beyond)
+@@ -1408,6 +1443,10 @@
+             self.floor_now(gaussians)
+         else:
+             lock = torch.zeros_like(prior)
++        dens = None
++        if self.ab["density_judgment"] and self.mode == "P":   # r13-2: density control's own exemption, eq. 7 without the judgment
++            dens = (low & near) if self.sw["protection"] else torch.zeros_like(lock)
++            gaussians.set_density_mask(dens)
+         self.E, self.E_cnt, self.E_how = E, cnt.float(), how
+         self.g_J, self.g_Jl, self.g_loc, self.g_located, self._g_surface = Jn, Jl, loc, located, s
+         self.g_state = St
+@@ -1438,6 +1477,9 @@
+                                                       not_protected_now_but_3d_within=int((low & ~conflict & ~near & near3).sum())),
+                    drift_bound_roof=float(self.tau_kind[1] * a.jbgs_lock_drift_tau_mult),
+                    drift_bound_wall=float(self.tau_kind[2] * a.jbgs_lock_drift_tau_mult), **extra)
++        if dens is not None:   # r13-2 records
++            row["n_density_exempt"] = int(dens.sum()); row["n_density_exempt_conflict"] = int((dens & conflict).sum())
++            row["n_density_exempt_not_protected"] = int((dens & ~lock).sum())
+         torch.cuda.synchronize()
+         row["seconds"] = time.time() - self._t_e0                      # r12-4
+         with (self.mon / "E.jsonl").open("a") as f:
+@@ -1453,7 +1495,7 @@
+     def dry_init_report(self, gaussians):
+         """r7-6: the values right before the first iteration, without training."""
+         row = self.update_E(1, gaussians)
+-        rep = dict(revision=REVISION, switches=self.sw, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
++        rep = dict(revision=REVISION, switches=self.sw, ablations=self.ab, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
+                    seed=int(getattr(self.args, "jbgs_seed", 0)), init_seconds=round(self.init_seconds, 2), init=self.init_filter, first_E=row)
+         # r11: MVS-term weight check (A at the pixels with an MVS depth) and the prior term's presence
+         wa = dict(pixels_with_mvs_depth=0, of_them_A1=0, A1_without_mvs_depth=0)

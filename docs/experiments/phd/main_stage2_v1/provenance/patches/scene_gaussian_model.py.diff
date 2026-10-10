@@ -1,0 +1,94 @@
+--- r12/scene/gaussian_model.py
++++ r13/scene/gaussian_model.py
+@@ -57,10 +57,18 @@
+         self.percent_dense = 0
+         self.spatial_lr_scale = 0
+         self.frozen_mask = None
++        self.density_mask = None  # [jbgs_judgment r13] density-control exemption when it differs from frozen_mask (None = frozen_mask, r12)
+         self.completed_mask = None  # Track completed Gaussians for opacity floor protection
+         self.origin = None  # [jbgs_judgment] per-disk origin: 0 image/SfM, 1 prior; inherited by children
+         self.init_id = None  # [jbgs_judgment] index of the initial disk (-1: none); inherited by children
+         self.setup_functions()
++
++    def density_exempt(self):
++        """[jbgs_judgment r13] rows that split / clone / prune and the densification statistics leave alone: the r13 density mask
++        when one is set (ablation 'density control without the judgment'), else frozen_mask (r12, unchanged)."""
++        if self.density_mask is not None and self.density_mask.shape[0] == self.get_xyz.shape[0]:
++            return self.density_mask
++        return self.frozen_mask
+ 
+     def capture(self):
+         return (
+@@ -300,6 +308,9 @@
+         else:
+             self.frozen_mask = mask.to("cuda").bool()
+ 
++    def set_density_mask(self, mask: torch.Tensor):  # [jbgs_judgment r13]
++        self.density_mask = None if mask is None else mask.to("cuda").bool()
++
+     def set_completed_mask(self, mask: torch.Tensor):
+         """Set the completed mask for opacity floor protection."""
+         if mask is None:
+@@ -374,6 +385,8 @@
+         self.max_radii2D = self.max_radii2D[valid_points_mask]
+         if self.frozen_mask is not None:
+             self.frozen_mask = self.frozen_mask[valid_points_mask]
++        if self.density_mask is not None:  # [jbgs_judgment r13]
++            self.density_mask = self.density_mask[valid_points_mask]
+         if self.completed_mask is not None:
+             self.completed_mask = self.completed_mask[valid_points_mask]
+         if self.origin is not None:  # [jbgs_judgment]
+@@ -430,6 +443,8 @@
+         self.max_radii2D = torch.zeros((self.get_xyz.shape[0]), device="cuda")
+         if self.frozen_mask is not None:
+             self.frozen_mask = torch.cat((self.frozen_mask, torch.zeros((new_xyz.shape[0]), dtype=torch.bool, device="cuda")), dim=0)
++        if self.density_mask is not None:  # [jbgs_judgment r13] new rows: no exemption until the next re-read (as frozen_mask)
++            self.density_mask = torch.cat((self.density_mask, torch.zeros((new_xyz.shape[0]), dtype=torch.bool, device="cuda")), dim=0)
+         if self.completed_mask is not None:
+             self.completed_mask = torch.cat((self.completed_mask, torch.zeros((new_xyz.shape[0]), dtype=torch.bool, device="cuda")), dim=0)
+         if self.origin is not None:  # [jbgs_judgment] children inherit the parent's origin
+@@ -449,8 +464,9 @@
+         selected_pts_mask = torch.where(padded_grad >= grad_threshold, True, False)
+         selected_pts_mask = torch.logical_and(selected_pts_mask,
+                                               torch.max(self.get_scaling, dim=1).values > self.percent_dense*scene_extent)
+-        if self.frozen_mask is not None:
+-            selected_pts_mask = torch.logical_and(selected_pts_mask, ~self.frozen_mask)
++        _ex = self.density_exempt()  # [jbgs_judgment r13] r12: frozen_mask
++        if _ex is not None:
++            selected_pts_mask = torch.logical_and(selected_pts_mask, ~_ex)
+ 
+         stds = self.get_scaling[selected_pts_mask].repeat(N,1)
+         stds = torch.cat([stds, 0 * torch.ones_like(stds[:,:1])], dim=-1)
+@@ -476,8 +492,9 @@
+         selected_pts_mask = torch.where(torch.norm(grads, dim=-1) >= grad_threshold, True, False)
+         selected_pts_mask = torch.logical_and(selected_pts_mask,
+                                               torch.max(self.get_scaling, dim=1).values <= self.percent_dense*scene_extent)
+-        if self.frozen_mask is not None:
+-            selected_pts_mask = torch.logical_and(selected_pts_mask, ~self.frozen_mask)
++        _ex = self.density_exempt()  # [jbgs_judgment r13] r12: frozen_mask
++        if _ex is not None:
++            selected_pts_mask = torch.logical_and(selected_pts_mask, ~_ex)
+         
+         new_xyz = self._xyz[selected_pts_mask]
+         new_features_dc = self._features_dc[selected_pts_mask]
+@@ -502,14 +519,16 @@
+             big_points_vs = self.max_radii2D > max_screen_size
+             big_points_ws = self.get_scaling.max(dim=1).values > 0.1 * extent
+             prune_mask = torch.logical_or(torch.logical_or(prune_mask, big_points_vs), big_points_ws)
+-        if self.frozen_mask is not None:
+-            prune_mask = torch.logical_and(prune_mask, ~self.frozen_mask)
++        _ex = self.density_exempt()  # [jbgs_judgment r13] r12: frozen_mask
++        if _ex is not None:
++            prune_mask = torch.logical_and(prune_mask, ~_ex)
+         self.prune_points(prune_mask)
+ 
+         torch.cuda.empty_cache()
+ 
+     def add_densification_stats(self, viewspace_point_tensor, update_filter):
+-        if self.frozen_mask is not None:
+-            update_filter = torch.logical_and(update_filter, ~self.frozen_mask)
++        _ex = self.density_exempt()  # [jbgs_judgment r13] r12: frozen_mask
++        if _ex is not None:
++            update_filter = torch.logical_and(update_filter, ~_ex)
+         self.xyz_gradient_accum[update_filter] += torch.norm(viewspace_point_tensor.grad[update_filter], dim=-1, keepdim=True)
+         self.denom[update_filter] += 1

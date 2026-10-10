@@ -1,0 +1,27 @@
+{
+ "task_id": "PHD-MAIN-STAGE2-v1",
+ "fork": "r13",
+ "parent": "src/phd/forks/GeoGS-conf-guided-v1-r12",
+ "out": "src/phd/forks/GeoGS-conf-guided-v1-r13",
+ "built_at": "2026-10-10T05:23:02.275188+00:00",
+ "repo_commit": "8d864fb45f7a14fc945e6fa87543c595a4a1fc23",
+ "n_files": 102,
+ "changed_or_added": {
+  "jbgs_judgment.py": {
+   "r12": "8e0484edea3a0ca668c2ce4658df075d81748822b8b7d54a6c3385ee05d11b69",
+   "r13": "6ca75c9ccbbffb33b6759939c079e8ff923358ef115147bb4f1fe63c2f2e2ff0"
+  },
+  "scene/gaussian_model.py": {
+   "r12": "8252f8f2d159591042b08e809f1a83bdb402953e3c35924799bf4ae8c12a49c8",
+   "r13": "3503252cf971a1d8294af982e18ae8beb849834d3b131e815790e849a7194b2e"
+  }
+ },
+ "removed": [],
+ "train_py_equal_r12": true,
+ "fork_r13_sources": {
+  "jbgs_judgment.py": "6ca75c9ccbbffb33b6759939c079e8ff923358ef115147bb4f1fe63c2f2e2ff0",
+  "scene/gaussian_model.py": "3503252cf971a1d8294af982e18ae8beb849834d3b131e815790e849a7194b2e"
+ },
+ "only_expected_changes": true,
+ "scientific_verdict": null
+}

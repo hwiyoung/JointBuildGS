@@ -1,0 +1,24 @@
+| 견줌 | 다른 배열·값 | 예상 밖 |
+|---|---|---|
+| r13_B0_b10_LoD2 ↔ r12_B0_b10_LoD2 | 0 | 없음 |
+| r13_B173nb_b10_LoD2 ↔ r12_B173nb_b10_LoD2 | 0 | 없음 |
+| r13_B173nb_b10_ALS ↔ r12_B173nb_b10_ALS | 0 | 없음 |
+| r13_R1rep_b10_LoD2 ↔ r12_R1rep_b10_LoD2 | 0 | 없음 |
+| r13_R1rep_b10_ALS ↔ r12_R1rep_b10_ALS | 0 | 없음 |
+| r13_B0a15_LoD2 ↔ r12_B0a15_LoD2 | 0 | 없음 |
+| r13_R1rep_b10_ALS_inputs-s2 ↔ r13_R1rep_b10_ALS | 0 | 없음 |
+| r13_B0_b10_LoD2_ab-density_judgment ↔ r13_B0_b10_LoD2 | 3 | 없음 |
+| r13_B0a15_LoD2_sw-propagation ↔ r13_B0a15_LoD2 | 174 | 없음 |
+| r13_B0a15_LoD2_sw-protection ↔ r13_B0a15_LoD2 | 8 | 없음 |
+| r13_B0a15_LoD2_val-max_distance0.5 ↔ r13_B0a15_LoD2 | 176 | 없음 |
+| r13_B173nb_b10_ALS_ab-tolerance_band ↔ r13_B173nb_b10_ALS | 0 | 없음 |
+| r13_B173nb_b10_LoD2_sw-confidence_mask ↔ r13_B173nb_b10_LoD2 | 1878 | 없음 |
+| r13_B173nb_b10_LoD2_sw-propagation ↔ r13_B173nb_b10_LoD2 | 1399 | 없음 |
+| r13_B173nb_b10_LoD2_sw-protection ↔ r13_B173nb_b10_LoD2 | 8 | 없음 |
+| r13_R1rep_b10_ALS_sw-confidence_mask ↔ r13_R1rep_b10_ALS | 3679 | 없음 |
+| r13_R1rep_b10_ALS_sw-init_exclusion ↔ r13_R1rep_b10_ALS | 32 | 없음 |
+| r13_R1rep_b10_ALS_sw-propagation ↔ r13_R1rep_b10_ALS | 1532 | 없음 |
+| r13_R1rep_b10_LoD2_ab-loss_judgment ↔ r13_R1rep_b10_LoD2 | 1514 | 없음 |
+| r13_R1rep_b10_LoD2_ab-tolerance_band ↔ r13_R1rep_b10_LoD2 | 0 | 없음 |
+| r13_R1rep_b10_LoD2_val-trunc_hi2 ↔ r13_R1rep_b10_LoD2 | 0 | 없음 |
+| r13_R1rep_b10_LoD2_val-trunc_hi8 ↔ r13_R1rep_b10_LoD2 | 0 | 없음 |

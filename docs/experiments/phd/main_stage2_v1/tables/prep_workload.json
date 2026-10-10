@@ -1,0 +1,1443 @@
+{
+ "rule": "The judgment of a unit is recomputed exactly as the fork's initialisation does it (jbgs_judgment.prop_init: rules.apply on the\nstage-1 product's per-(patch, view) tallies and gathered support ids, then switches.judgment_level) from the s03 run folder of the\nunit (the stage-0 box runs, this payload's mask-off runs and the A15 runs); the default judgment is checked against the r12 dry\ninitialisation of the unit (locations.npz). True labels and areas = the region file v3 of the unit (label 0 true agreement, 1 true\nconflict; patches of the box evaluation range, not excluded, with a label).",
+ "units": {
+  "B0_b10/LoD2": {
+   "check_default_equals_dry_init": true,
+   "mask": {
+    "agree_to_conflict": {
+     "patches": 7024,
+     "area_m2": 439.0
+    },
+    "conflict_to_agree": {
+     "patches": 279,
+     "area_m2": 17.4
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 3231,
+     "area_m2": 201.9
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 8898,
+     "area_m2": 556.1
+    },
+    "states_default": {
+     "invisible": 508,
+     "support": 78378,
+     "missing": 3231
+    },
+    "states_maskoff": {
+     "invisible": 508,
+     "support": 81609,
+     "missing": 0
+    },
+    "prior_pixels": 44722286,
+    "prior_pixels_confidence0_share": 0.1325,
+    "amount": 8898,
+    "judgment_default": {
+     "wrong_release": 0.0584,
+     "correct_release": 0.0777,
+     "wrong_keep": 0.0364,
+     "correct_keep": 0.8268,
+     "undetermined": 0.0008,
+     "invisible": 0.0,
+     "wrong_release_patches": 3800,
+     "labelled_area_m2": 4069.1
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.1418,
+     "correct_release": 0.0817,
+     "wrong_keep": 0.0324,
+     "correct_keep": 0.7441,
+     "undetermined": 0.0,
+     "invisible": 0.0,
+     "wrong_release_patches": 9231,
+     "labelled_area_m2": 4069.1
+    }
+   },
+   "band": {
+    "prop_LoD2_s0": {
+     "g1_valid": 28903127,
+     "inside": 25658592,
+     "inside_unit_agree": 25623196,
+     "inside_unit_undetermined": 35042,
+     "inside_no_unit": 354
+    },
+    "prop_LoD2_s1": {
+     "g1_valid": 28903127,
+     "inside": 25628661,
+     "inside_unit_agree": 25591865,
+     "inside_unit_undetermined": 36422,
+     "inside_no_unit": 374
+    },
+    "amount": 25643626,
+    "note": null
+   },
+   "propagation": {
+    "borrowed_agree__true_agree": {
+     "patches": 1992,
+     "area_m2": 124.5
+    },
+    "borrowed_agree__true_conflict": {
+     "patches": 4,
+     "area_m2": 0.2
+    },
+    "borrowed_agree__no_label": {
+     "patches": 88,
+     "area_m2": 5.5
+    },
+    "borrowed_conflict__true_agree": {
+     "patches": 119,
+     "area_m2": 7.4
+    },
+    "borrowed_conflict__true_conflict": {
+     "patches": 22,
+     "area_m2": 1.4
+    },
+    "borrowed_conflict__no_label": {
+     "patches": 532,
+     "area_m2": 33.2
+    },
+    "mixed": {
+     "patches": 104,
+     "area_m2": 6.5
+    },
+    "insufficient": {
+     "patches": 370,
+     "area_m2": 23.1
+    },
+    "missing_patches": {
+     "patches": 3231,
+     "area_m2": 201.9
+    },
+    "amount": 2757
+   },
+   "init_exclusion": {
+    "points_dropped": 921,
+    "dropped_in_eval": 673,
+    "true_conflict": 35,
+    "true_agree": 130,
+    "no_label": 756,
+    "true_conflict_in_eval": 22,
+    "true_agree_in_eval": 119,
+    "amount": 921
+   },
+   "protection": {
+    "protected": 4094,
+    "invisible_unit": 558,
+    "E_below_threshold_other": 3536,
+    "by_category": {
+     "image": 0,
+     "support unit": 0,
+     "missing unit": 3536,
+     "invisible unit": 558,
+     "prior without a unit": 0
+    },
+    "prior_gaussians": 142731,
+    "conflict_excluded": 0,
+    "amount": 4094
+   },
+   "loss_judgment": {
+    "conflict_patches": {
+     "patches": 13700,
+     "area_m2": 856.2
+    },
+    "within_cut": {
+     "patches": 7883,
+     "area_m2": 492.7
+    },
+    "beyond_cut": {
+     "patches": 1254,
+     "area_m2": 78.4
+    },
+    "no_label": {
+     "patches": 4563,
+     "area_m2": 285.2
+    },
+    "within_cut_true_conflict": {
+     "patches": 3955,
+     "area_m2": 247.2
+    },
+    "within_cut_true_agree": {
+     "patches": 3928,
+     "area_m2": 245.5
+    },
+    "cut_multiple": 4.0,
+    "amount": 7883
+   },
+   "density_judgment": {
+    "prop_LoD2_s0": {
+     "max": 14891,
+     "at_iteration": 500,
+     "first": 0,
+     "rereads": 61
+    },
+    "prop_LoD2_s1": {
+     "max": 15431,
+     "at_iteration": 500,
+     "first": 0,
+     "rereads": 61
+    },
+    "amount": 15431
+   }
+  },
+  "B0_b10/ALS": {
+   "check_default_equals_dry_init": true,
+   "mask": {
+    "agree_to_conflict": {
+     "patches": 332,
+     "area_m2": 23.0
+    },
+    "conflict_to_agree": {
+     "patches": 23,
+     "area_m2": 1.6
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 31,
+     "area_m2": 2.1
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 374,
+     "area_m2": 25.9
+    },
+    "states_default": {
+     "invisible": 5,
+     "support": 23244,
+     "missing": 31
+    },
+    "states_maskoff": {
+     "invisible": 5,
+     "support": 23275,
+     "missing": 0
+    },
+    "prior_pixels": 44589167,
+    "prior_pixels_confidence0_share": 0.1426,
+    "amount": 374,
+    "judgment_default": {
+     "wrong_release": 0.018,
+     "correct_release": 0.0029,
+     "wrong_keep": 0.0123,
+     "correct_keep": 0.9665,
+     "undetermined": 0.0002,
+     "invisible": 0.0001,
+     "wrong_release_patches": 424,
+     "labelled_area_m2": 1580.7
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.0309,
+     "correct_release": 0.0034,
+     "wrong_keep": 0.0118,
+     "correct_keep": 0.9538,
+     "undetermined": 0.0,
+     "invisible": 0.0001,
+     "wrong_release_patches": 718,
+     "labelled_area_m2": 1580.7
+    }
+   },
+   "band": {
+    "prop_ALS_s0": {
+     "g1_valid": 28368539,
+     "inside": 20546079,
+     "inside_unit_agree": 9632417,
+     "inside_unit_undetermined": 240,
+     "inside_no_unit": 10913422
+    },
+    "prop_ALS_s1": {
+     "g1_valid": 28368083,
+     "inside": 20617714,
+     "inside_unit_agree": 9642107,
+     "inside_unit_undetermined": 255,
+     "inside_no_unit": 10975352
+    },
+    "amount": 20581896,
+    "note": null
+   },
+   "propagation": {
+    "borrowed_agree__true_agree": {
+     "patches": 26,
+     "area_m2": 1.8
+    },
+    "borrowed_agree__true_conflict": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_agree__no_label": {
+     "patches": 1,
+     "area_m2": 0.1
+    },
+    "borrowed_conflict__true_agree": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_conflict__true_conflict": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_conflict__no_label": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "mixed": {
+     "patches": 4,
+     "area_m2": 0.3
+    },
+    "insufficient": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_patches": {
+     "patches": 31,
+     "area_m2": 2.1
+    },
+    "amount": 27
+   },
+   "init_exclusion": {
+    "points_dropped": 1,
+    "dropped_in_eval": 0,
+    "true_conflict": 1,
+    "true_agree": 0,
+    "no_label": 0,
+    "true_conflict_in_eval": 0,
+    "true_agree_in_eval": 0,
+    "amount": 1
+   },
+   "protection": {
+    "protected": 1986,
+    "invisible_unit": 10,
+    "E_below_threshold_other": 1976,
+    "by_category": {
+     "image": 0,
+     "support unit": 0,
+     "missing unit": 35,
+     "invisible unit": 10,
+     "prior without a unit": 1941
+    },
+    "prior_gaussians": 76452,
+    "conflict_excluded": 0,
+    "amount": 1986
+   },
+   "loss_judgment": {
+    "conflict_patches": {
+     "patches": 545,
+     "area_m2": 37.8
+    },
+    "within_cut": {
+     "patches": 449,
+     "area_m2": 30.5
+    },
+    "beyond_cut": {
+     "patches": 84,
+     "area_m2": 6.4
+    },
+    "no_label": {
+     "patches": 12,
+     "area_m2": 1.0
+    },
+    "within_cut_true_conflict": {
+     "patches": 19,
+     "area_m2": 1.5
+    },
+    "within_cut_true_agree": {
+     "patches": 430,
+     "area_m2": 29.0
+    },
+    "cut_multiple": 4.0,
+    "amount": 449
+   },
+   "density_judgment": {
+    "prop_ALS_s0": {
+     "max": 183,
+     "at_iteration": 23500,
+     "first": 0,
+     "rereads": 61
+    },
+    "prop_ALS_s1": {
+     "max": 215,
+     "at_iteration": 11000,
+     "first": 0,
+     "rereads": 61
+    },
+    "amount": 215
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "check_default_equals_dry_init": true,
+   "mask": {
+    "agree_to_conflict": {
+     "patches": 8793,
+     "area_m2": 549.6
+    },
+    "conflict_to_agree": {
+     "patches": 1152,
+     "area_m2": 72.0
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 6527,
+     "area_m2": 407.9
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 15564,
+     "area_m2": 972.8
+    },
+    "states_default": {
+     "invisible": 19496,
+     "support": 115511,
+     "missing": 6527
+    },
+    "states_maskoff": {
+     "invisible": 19496,
+     "support": 122038,
+     "missing": 0
+    },
+    "prior_pixels": 31522581,
+    "prior_pixels_confidence0_share": 0.1315,
+    "amount": 15564,
+    "judgment_default": {
+     "wrong_release": 0.0355,
+     "correct_release": 0.3599,
+     "wrong_keep": 0.0919,
+     "correct_keep": 0.5108,
+     "undetermined": 0.0016,
+     "invisible": 0.0004,
+     "wrong_release_patches": 2337,
+     "labelled_area_m2": 4116.1
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.0711,
+     "correct_release": 0.3843,
+     "wrong_keep": 0.0677,
+     "correct_keep": 0.4766,
+     "undetermined": 0.0,
+     "invisible": 0.0004,
+     "wrong_release_patches": 4680,
+     "labelled_area_m2": 4116.1
+    }
+   },
+   "band": {
+    "prop_LoD2_s0": {
+     "g1_valid": 17206029,
+     "inside": 15686121,
+     "inside_unit_agree": 15599572,
+     "inside_unit_undetermined": 86540,
+     "inside_no_unit": 9
+    },
+    "prop_LoD2_s1": {
+     "g1_valid": 17206029,
+     "inside": 15688720,
+     "inside_unit_agree": 15603156,
+     "inside_unit_undetermined": 85555,
+     "inside_no_unit": 9
+    },
+    "amount": 15687420,
+    "note": null
+   },
+   "propagation": {
+    "borrowed_agree__true_agree": {
+     "patches": 1146,
+     "area_m2": 71.6
+    },
+    "borrowed_agree__true_conflict": {
+     "patches": 70,
+     "area_m2": 4.4
+    },
+    "borrowed_agree__no_label": {
+     "patches": 555,
+     "area_m2": 34.7
+    },
+    "borrowed_conflict__true_agree": {
+     "patches": 63,
+     "area_m2": 3.9
+    },
+    "borrowed_conflict__true_conflict": {
+     "patches": 29,
+     "area_m2": 1.8
+    },
+    "borrowed_conflict__no_label": {
+     "patches": 886,
+     "area_m2": 55.4
+    },
+    "mixed": {
+     "patches": 326,
+     "area_m2": 20.4
+    },
+    "insufficient": {
+     "patches": 3452,
+     "area_m2": 215.8
+    },
+    "missing_patches": {
+     "patches": 6527,
+     "area_m2": 407.9
+    },
+    "amount": 2749
+   },
+   "init_exclusion": {
+    "points_dropped": 2427,
+    "dropped_in_eval": 978,
+    "true_conflict": 149,
+    "true_agree": 170,
+    "no_label": 2108,
+    "true_conflict_in_eval": 29,
+    "true_agree_in_eval": 63,
+    "amount": 2427
+   },
+   "protection": {
+    "protected": 39366,
+    "invisible_unit": 28380,
+    "E_below_threshold_other": 10986,
+    "by_category": {
+     "image": 0,
+     "support unit": 0,
+     "missing unit": 10986,
+     "invisible unit": 28380,
+     "prior without a unit": 0
+    },
+    "prior_gaussians": 255670,
+    "conflict_excluded": 0,
+    "amount": 39366
+   },
+   "loss_judgment": {
+    "conflict_patches": {
+     "patches": 52028,
+     "area_m2": 3251.8
+    },
+    "within_cut": {
+     "patches": 7675,
+     "area_m2": 479.7
+    },
+    "beyond_cut": {
+     "patches": 19505,
+     "area_m2": 1219.1
+    },
+    "no_label": {
+     "patches": 24848,
+     "area_m2": 1553.0
+    },
+    "within_cut_true_conflict": {
+     "patches": 4833,
+     "area_m2": 302.1
+    },
+    "within_cut_true_agree": {
+     "patches": 2842,
+     "area_m2": 177.6
+    },
+    "cut_multiple": 4.0,
+    "amount": 7675
+   },
+   "density_judgment": {
+    "prop_LoD2_s0": {
+     "max": 9803,
+     "at_iteration": 16000,
+     "first": 0,
+     "rereads": 61
+    },
+    "prop_LoD2_s1": {
+     "max": 11963,
+     "at_iteration": 15000,
+     "first": 0,
+     "rereads": 61
+    },
+    "amount": 11963
+   }
+  },
+  "B173nb_b10/ALS": {
+   "check_default_equals_dry_init": true,
+   "mask": {
+    "agree_to_conflict": {
+     "patches": 1197,
+     "area_m2": 86.3
+    },
+    "conflict_to_agree": {
+     "patches": 146,
+     "area_m2": 10.8
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 41,
+     "area_m2": 3.9
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 1382,
+     "area_m2": 100.9
+    },
+    "states_default": {
+     "invisible": 1,
+     "support": 34231,
+     "missing": 41
+    },
+    "states_maskoff": {
+     "invisible": 1,
+     "support": 34272,
+     "missing": 0
+    },
+    "prior_pixels": 34755628,
+    "prior_pixels_confidence0_share": 0.1151,
+    "amount": 1382,
+    "judgment_default": {
+     "wrong_release": 0.0247,
+     "correct_release": 0.6037,
+     "wrong_keep": 0.0038,
+     "correct_keep": 0.3675,
+     "undetermined": 0.0003,
+     "invisible": 0.0,
+     "wrong_release_patches": 686,
+     "labelled_area_m2": 2048.7
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.0457,
+     "correct_release": 0.603,
+     "wrong_keep": 0.0045,
+     "correct_keep": 0.3468,
+     "undetermined": 0.0,
+     "invisible": 0.0,
+     "wrong_release_patches": 1287,
+     "labelled_area_m2": 2048.7
+    }
+   },
+   "band": {
+    "prop_ALS_s0": {
+     "g1_valid": 23879128,
+     "inside": 19227074,
+     "inside_unit_agree": 10054432,
+     "inside_unit_undetermined": 2114,
+     "inside_no_unit": 9170528
+    },
+    "prop_ALS_s1": {
+     "g1_valid": 23879128,
+     "inside": 19183253,
+     "inside_unit_agree": 10050159,
+     "inside_unit_undetermined": 2126,
+     "inside_no_unit": 9130968
+    },
+    "amount": 19205163,
+    "note": null
+   },
+   "propagation": {
+    "borrowed_agree__true_agree": {
+     "patches": 2,
+     "area_m2": 0.2
+    },
+    "borrowed_agree__true_conflict": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_agree__no_label": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_conflict__true_agree": {
+     "patches": 15,
+     "area_m2": 1.6
+    },
+    "borrowed_conflict__true_conflict": {
+     "patches": 11,
+     "area_m2": 0.9
+    },
+    "borrowed_conflict__no_label": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "mixed": {
+     "patches": 11,
+     "area_m2": 1.2
+    },
+    "insufficient": {
+     "patches": 2,
+     "area_m2": 0.2
+    },
+    "missing_patches": {
+     "patches": 41,
+     "area_m2": 3.9
+    },
+    "amount": 28
+   },
+   "init_exclusion": {
+    "points_dropped": 18,
+    "dropped_in_eval": 18,
+    "true_conflict": 10,
+    "true_agree": 8,
+    "no_label": 0,
+    "true_conflict_in_eval": 10,
+    "true_agree_in_eval": 8,
+    "amount": 18
+   },
+   "protection": {
+    "protected": 4639,
+    "invisible_unit": 3,
+    "E_below_threshold_other": 4636,
+    "by_category": {
+     "image": 0,
+     "support unit": 0,
+     "missing unit": 18,
+     "invisible unit": 3,
+     "prior without a unit": 4618
+    },
+    "prior_gaussians": 100569,
+    "conflict_excluded": 0,
+    "amount": 4639
+   },
+   "loss_judgment": {
+    "conflict_patches": {
+     "patches": 20801,
+     "area_m2": 1395.1
+    },
+    "within_cut": {
+     "patches": 1656,
+     "area_m2": 121.9
+    },
+    "beyond_cut": {
+     "patches": 18875,
+     "area_m2": 1255.7
+    },
+    "no_label": {
+     "patches": 270,
+     "area_m2": 17.6
+    },
+    "within_cut_true_conflict": {
+     "patches": 316,
+     "area_m2": 23.2
+    },
+    "within_cut_true_agree": {
+     "patches": 1340,
+     "area_m2": 98.7
+    },
+    "cut_multiple": 4.0,
+    "amount": 1656
+   },
+   "density_judgment": {
+    "prop_ALS_s0": {
+     "max": 677,
+     "at_iteration": 26500,
+     "first": 0,
+     "rereads": 61
+    },
+    "prop_ALS_s1": {
+     "max": 934,
+     "at_iteration": 1500,
+     "first": 0,
+     "rereads": 61
+    },
+    "amount": 934
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "check_default_equals_dry_init": true,
+   "mask": {
+    "agree_to_conflict": {
+     "patches": 1982,
+     "area_m2": 123.9
+    },
+    "conflict_to_agree": {
+     "patches": 427,
+     "area_m2": 26.7
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 852,
+     "area_m2": 53.2
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 3197,
+     "area_m2": 199.8
+    },
+    "states_default": {
+     "invisible": 1641,
+     "support": 76561,
+     "missing": 852
+    },
+    "states_maskoff": {
+     "invisible": 1641,
+     "support": 77413,
+     "missing": 0
+    },
+    "prior_pixels": 35905814,
+    "prior_pixels_confidence0_share": 0.1342,
+    "amount": 3197,
+    "judgment_default": {
+     "wrong_release": 0.2022,
+     "correct_release": 0.3457,
+     "wrong_keep": 0.0266,
+     "correct_keep": 0.4237,
+     "undetermined": 0.0013,
+     "invisible": 0.0004,
+     "wrong_release_patches": 8504,
+     "labelled_area_m2": 2628.1
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.228,
+     "correct_release": 0.3505,
+     "wrong_keep": 0.0222,
+     "correct_keep": 0.3988,
+     "undetermined": 0.0,
+     "invisible": 0.0004,
+     "wrong_release_patches": 9589,
+     "labelled_area_m2": 2628.1
+    }
+   },
+   "band": {
+    "prop_LoD2_s0": {
+     "g1_valid": 11835117,
+     "inside": 10794339,
+     "inside_unit_agree": 10714449,
+     "inside_unit_undetermined": 79887,
+     "inside_no_unit": 3
+    },
+    "prop_LoD2_s1": {
+     "g1_valid": 11835117,
+     "inside": 10823149,
+     "inside_unit_agree": 10742888,
+     "inside_unit_undetermined": 80259,
+     "inside_no_unit": 2
+    },
+    "amount": 10808744,
+    "note": null
+   },
+   "propagation": {
+    "borrowed_agree__true_agree": {
+     "patches": 69,
+     "area_m2": 4.3
+    },
+    "borrowed_agree__true_conflict": {
+     "patches": 2,
+     "area_m2": 0.1
+    },
+    "borrowed_agree__no_label": {
+     "patches": 60,
+     "area_m2": 3.8
+    },
+    "borrowed_conflict__true_agree": {
+     "patches": 116,
+     "area_m2": 7.2
+    },
+    "borrowed_conflict__true_conflict": {
+     "patches": 161,
+     "area_m2": 10.1
+    },
+    "borrowed_conflict__no_label": {
+     "patches": 346,
+     "area_m2": 21.6
+    },
+    "mixed": {
+     "patches": 77,
+     "area_m2": 4.8
+    },
+    "insufficient": {
+     "patches": 21,
+     "area_m2": 1.3
+    },
+    "missing_patches": {
+     "patches": 852,
+     "area_m2": 53.2
+    },
+    "amount": 754
+   },
+   "init_exclusion": {
+    "points_dropped": 1266,
+    "dropped_in_eval": 623,
+    "true_conflict": 495,
+    "true_agree": 425,
+    "no_label": 346,
+    "true_conflict_in_eval": 161,
+    "true_agree_in_eval": 116,
+    "amount": 1266
+   },
+   "protection": {
+    "protected": 3025,
+    "invisible_unit": 1641,
+    "E_below_threshold_other": 1384,
+    "by_category": {
+     "image": 0,
+     "support unit": 0,
+     "missing unit": 1384,
+     "invisible unit": 1641,
+     "prior without a unit": 0
+    },
+    "prior_gaussians": 137313,
+    "conflict_excluded": 0,
+    "amount": 3025
+   },
+   "loss_judgment": {
+    "conflict_patches": {
+     "patches": 55770,
+     "area_m2": 3485.6
+    },
+    "within_cut": {
+     "patches": 21278,
+     "area_m2": 1329.9
+    },
+    "beyond_cut": {
+     "patches": 5495,
+     "area_m2": 343.4
+    },
+    "no_label": {
+     "patches": 28997,
+     "area_m2": 1812.3
+    },
+    "within_cut_true_conflict": {
+     "patches": 11631,
+     "area_m2": 726.9
+    },
+    "within_cut_true_agree": {
+     "patches": 9647,
+     "area_m2": 602.9
+    },
+    "cut_multiple": 4.0,
+    "amount": 21278
+   },
+   "density_judgment": {
+    "prop_LoD2_s0": {
+     "max": 61353,
+     "at_iteration": 20500,
+     "first": 0,
+     "rereads": 61
+    },
+    "prop_LoD2_s1": {
+     "max": 52402,
+     "at_iteration": 500,
+     "first": 0,
+     "rereads": 61
+    },
+    "amount": 61353
+   }
+  },
+  "R1rep_b10/ALS": {
+   "check_default_equals_dry_init": true,
+   "mask": {
+    "agree_to_conflict": {
+     "patches": 2868,
+     "area_m2": 187.9
+    },
+    "conflict_to_agree": {
+     "patches": 121,
+     "area_m2": 7.9
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 91,
+     "area_m2": 6.1
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 3080,
+     "area_m2": 202.0
+    },
+    "states_default": {
+     "invisible": 46,
+     "support": 24052,
+     "missing": 91
+    },
+    "states_maskoff": {
+     "invisible": 46,
+     "support": 24143,
+     "missing": 0
+    },
+    "prior_pixels": 50465958,
+    "prior_pixels_confidence0_share": 0.1425,
+    "amount": 3080,
+    "judgment_default": {
+     "wrong_release": 0.2788,
+     "correct_release": 0.0223,
+     "wrong_keep": 0.0045,
+     "correct_keep": 0.6938,
+     "undetermined": 0.0001,
+     "invisible": 0.0005,
+     "wrong_release_patches": 5801,
+     "labelled_area_m2": 1524.6
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.3884,
+     "correct_release": 0.0245,
+     "wrong_keep": 0.0024,
+     "correct_keep": 0.5843,
+     "undetermined": 0.0,
+     "invisible": 0.0005,
+     "wrong_release_patches": 8358,
+     "labelled_area_m2": 1524.6
+    }
+   },
+   "band": {
+    "prop_ALS_s0": {
+     "g1_valid": 23425682,
+     "inside": 14777371,
+     "inside_unit_agree": 6559505,
+     "inside_unit_undetermined": 57677,
+     "inside_no_unit": 8160189
+    },
+    "prop_ALS_s1": {
+     "g1_valid": 23425682,
+     "inside": 14812328,
+     "inside_unit_agree": 6629014,
+     "inside_unit_undetermined": 58258,
+     "inside_no_unit": 8125056
+    },
+    "amount": 14794849,
+    "note": null
+   },
+   "propagation": {
+    "borrowed_agree__true_agree": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_agree__true_conflict": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_agree__no_label": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "borrowed_conflict__true_agree": {
+     "patches": 68,
+     "area_m2": 4.6
+    },
+    "borrowed_conflict__true_conflict": {
+     "patches": 10,
+     "area_m2": 0.7
+    },
+    "borrowed_conflict__no_label": {
+     "patches": 10,
+     "area_m2": 0.7
+    },
+    "mixed": {
+     "patches": 2,
+     "area_m2": 0.1
+    },
+    "insufficient": {
+     "patches": 1,
+     "area_m2": 0.1
+    },
+    "missing_patches": {
+     "patches": 91,
+     "area_m2": 6.1
+    },
+    "amount": 88
+   },
+   "init_exclusion": {
+    "points_dropped": 359,
+    "dropped_in_eval": 87,
+    "true_conflict": 14,
+    "true_agree": 338,
+    "no_label": 7,
+    "true_conflict_in_eval": 14,
+    "true_agree_in_eval": 66,
+    "amount": 359
+   },
+   "protection": {
+    "protected": 1564,
+    "invisible_unit": 93,
+    "E_below_threshold_other": 1471,
+    "by_category": {
+     "image": 0,
+     "support unit": 0,
+     "missing unit": 743,
+     "invisible unit": 93,
+     "prior without a unit": 728
+    },
+    "prior_gaussians": 83069,
+    "conflict_excluded": 0,
+    "amount": 1564
+   },
+   "loss_judgment": {
+    "conflict_patches": {
+     "patches": 7171,
+     "area_m2": 523.7
+    },
+    "within_cut": {
+     "patches": 6439,
+     "area_m2": 472.6
+    },
+    "beyond_cut": {
+     "patches": 492,
+     "area_m2": 34.5
+    },
+    "no_label": {
+     "patches": 240,
+     "area_m2": 16.6
+    },
+    "within_cut_true_conflict": {
+     "patches": 250,
+     "area_m2": 21.0
+    },
+    "within_cut_true_agree": {
+     "patches": 6189,
+     "area_m2": 451.6
+    },
+    "cut_multiple": 4.0,
+    "amount": 6439
+   },
+   "density_judgment": {
+    "prop_ALS_s0": {
+     "max": 1525,
+     "at_iteration": 500,
+     "first": 0,
+     "rereads": 61
+    },
+    "prop_ALS_s1": {
+     "max": 1531,
+     "at_iteration": 500,
+     "first": 0,
+     "rereads": 61
+    },
+    "amount": 1531
+   }
+  },
+  "B0a15/LoD2": {
+   "check_default_equals_dry_init": true,
+   "mask": {
+    "agree_to_conflict": {
+     "patches": 2605,
+     "area_m2": 162.8
+    },
+    "conflict_to_agree": {
+     "patches": 311,
+     "area_m2": 19.4
+    },
+    "support_to_missing": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "missing_to_support": {
+     "patches": 8030,
+     "area_m2": 501.9
+    },
+    "invisible_to_support": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "other_state_change": {
+     "patches": 0,
+     "area_m2": 0.0
+    },
+    "changed_patches": {
+     "patches": 8924,
+     "area_m2": 557.8
+    },
+    "states_default": {
+     "invisible": 38427,
+     "support": 35660,
+     "missing": 8030
+    },
+    "states_maskoff": {
+     "invisible": 38427,
+     "support": 43690,
+     "missing": 0
+    },
+    "prior_pixels": 4889648,
+    "prior_pixels_confidence0_share": 0.1555,
+    "amount": 8924,
+    "judgment_default": {
+     "wrong_release": 0.0348,
+     "correct_release": 0.0519,
+     "wrong_keep": 0.0228,
+     "correct_keep": 0.4534,
+     "undetermined": 0.046,
+     "invisible": 0.391,
+     "wrong_release_patches": 2267,
+     "labelled_area_m2": 4069.1
+    },
+    "judgment_maskoff": {
+     "wrong_release": 0.09,
+     "correct_release": 0.0537,
+     "wrong_keep": 0.0225,
+     "correct_keep": 0.4427,
+     "undetermined": 0.0,
+     "invisible": 0.391,
+     "wrong_release_patches": 5860,
+     "labelled_area_m2": 4069.1
+    }
+   },
+   "band": {
+    "amount": null,
+    "note": "1단계 학습 없음(B0 저자 15장): 짝 학습 뒤에 셀 수 있음"
+   },
+   "propagation": {
+    "borrowed_agree__true_agree": {
+     "patches": 3066,
+     "area_m2": 191.6
+    },
+    "borrowed_agree__true_conflict": {
+     "patches": 72,
+     "area_m2": 4.5
+    },
+    "borrowed_agree__no_label": {
+     "patches": 173,
+     "area_m2": 10.8
+    },
+    "borrowed_conflict__true_agree": {
+     "patches": 462,
+     "area_m2": 28.9
+    },
+    "borrowed_conflict__true_conflict": {
+     "patches": 178,
+     "area_m2": 11.1
+    },
+    "borrowed_conflict__no_label": {
+     "patches": 292,
+     "area_m2": 18.2
+    },
+    "mixed": {
+     "patches": 207,
+     "area_m2": 12.9
+    },
+    "insufficient": {
+     "patches": 3580,
+     "area_m2": 223.8
+    },
+    "missing_patches": {
+     "patches": 8030,
+     "area_m2": 501.9
+    },
+    "amount": 4243
+   },
+   "init_exclusion": {
+    "points_dropped": 2674,
+    "dropped_in_eval": 932,
+    "true_conflict": 259,
+    "true_agree": 1123,
+    "no_label": 1292,
+    "true_conflict_in_eval": 178,
+    "true_agree_in_eval": 462,
+    "amount": 2674
+   },
+   "protection": {
+    "protected": 76245,
+    "invisible_unit": 62981,
+    "E_below_threshold_other": 13264,
+    "by_category": {
+     "image": 0,
+     "support unit": 0,
+     "missing unit": 13264,
+     "invisible unit": 62981,
+     "prior without a unit": 0
+    },
+    "prior_gaussians": 140978,
+    "conflict_excluded": 0,
+    "amount": 76245
+   },
+   "loss_judgment": {
+    "conflict_patches": {
+     "patches": 6666,
+     "area_m2": 416.6
+    },
+    "within_cut": {
+     "patches": 5165,
+     "area_m2": 322.8
+    },
+    "beyond_cut": {
+     "patches": 560,
+     "area_m2": 35.0
+    },
+    "no_label": {
+     "patches": 941,
+     "area_m2": 58.8
+    },
+    "within_cut_true_conflict": {
+     "patches": 2873,
+     "area_m2": 179.6
+    },
+    "within_cut_true_agree": {
+     "patches": 2292,
+     "area_m2": 143.2
+    },
+    "cut_multiple": 4.0,
+    "amount": 5165
+   },
+   "density_judgment": {
+    "dry_init_first": {
+     "max": 0,
+     "at_iteration": 1,
+     "note": "1단계 학습 없음: 학습 전(첫 읽기)만"
+    },
+    "amount": 0
+   }
+  }
+ },
+ "default_sites": {
+  "mask": [
+   "B173nb_b10/LoD2",
+   "R1rep_b10/ALS"
+  ],
+  "band": [
+   "R1rep_b10/LoD2",
+   "B173nb_b10/ALS"
+  ],
+  "propagation": [
+   "B173nb_b10/LoD2",
+   "B0a15/LoD2",
+   "R1rep_b10/ALS"
+  ],
+  "init_exclusion": [
+   "R1rep_b10/ALS"
+  ],
+  "protection": [
+   "B173nb_b10/LoD2",
+   "B0a15/LoD2"
+  ],
+  "loss_judgment": [
+   "R1rep_b10/LoD2"
+  ],
+  "density_judgment": [
+   "B0_b10/LoD2"
+  ]
+ },
+ "stop_rule": {
+  "mask": 50,
+  "band": 10000,
+  "propagation": 50,
+  "init_exclusion": 30,
+  "protection": 1000,
+  "loss_judgment": 50,
+  "density_judgment": 100
+ },
+ "verdict": {
+  "mask @ B173nb_b10/LoD2": {
+   "amount": 15564,
+   "stop_below": 50,
+   "stop": false,
+   "unknown": false
+  },
+  "mask @ R1rep_b10/ALS": {
+   "amount": 3080,
+   "stop_below": 50,
+   "stop": false,
+   "unknown": false
+  },
+  "mask five-times": [],
+  "band @ R1rep_b10/LoD2": {
+   "amount": 10808744,
+   "stop_below": 10000,
+   "stop": false,
+   "unknown": false
+  },
+  "band @ B173nb_b10/ALS": {
+   "amount": 19205163,
+   "stop_below": 10000,
+   "stop": false,
+   "unknown": false
+  },
+  "band five-times": [],
+  "propagation @ B173nb_b10/LoD2": {
+   "amount": 2749,
+   "stop_below": 50,
+   "stop": false,
+   "unknown": false
+  },
+  "propagation @ B0a15/LoD2": {
+   "amount": 4243,
+   "stop_below": 50,
+   "stop": false,
+   "unknown": false
+  },
+  "propagation @ R1rep_b10/ALS": {
+   "amount": 88,
+   "stop_below": 50,
+   "stop": false,
+   "unknown": false
+  },
+  "propagation five-times": [],
+  "init_exclusion @ R1rep_b10/ALS": {
+   "amount": 359,
+   "stop_below": 30,
+   "stop": false,
+   "unknown": false
+  },
+  "init_exclusion five-times": [
+   "B173nb_b10/LoD2",
+   "B0a15/LoD2"
+  ],
+  "protection @ B173nb_b10/LoD2": {
+   "amount": 39366,
+   "stop_below": 1000,
+   "stop": false,
+   "unknown": false
+  },
+  "protection @ B0a15/LoD2": {
+   "amount": 76245,
+   "stop_below": 1000,
+   "stop": false,
+   "unknown": false
+  },
+  "protection five-times": [],
+  "loss_judgment @ R1rep_b10/LoD2": {
+   "amount": 21278,
+   "stop_below": 50,
+   "stop": false,
+   "unknown": false
+  },
+  "loss_judgment five-times": [],
+  "density_judgment @ B0_b10/LoD2": {
+   "amount": 15431,
+   "stop_below": 100,
+   "stop": false,
+   "unknown": false
+  },
+  "density_judgment five-times": []
+ },
+ "scientific_verdict": null
+}

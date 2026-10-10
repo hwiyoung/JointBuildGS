@@ -1,0 +1,399 @@
+{
+ "rule": "  python figdefs_s2.py      -> S2/prep/figdefs.json",
+ "figures": {
+  "mask/B173nb_b10/LoD2": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "kind": "section",
+   "patch": 43213,
+   "centre": [
+    133.49549900054726,
+    85.84394723310214,
+    -30.69433880560156
+   ],
+   "t": [
+    -0.36543740307769335,
+    -0.9308359170293288
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 3,
+   "gt_med": -0.000611330266110599,
+   "tau": 0.17595741152763367,
+   "tilt_deg": 28.8,
+   "component": {
+    "patches": 5,
+    "gt_points": 259,
+    "area_m2": 0.3
+   },
+   "candidates": {
+    "patches": 14,
+    "components": 6
+   },
+   "why": "mask: roof-like codes 2/3, not GT-suspect, >= 50 % confidence-0 prior pixels",
+   "panels": [
+    "참값(선)",
+    "켬: 본 방법 씨앗 0",
+    "끔: 마스크 끄기"
+   ],
+   "conf0_share_of_patch": 0.575
+  },
+  "mask/R1rep_b10/ALS": {
+   "site": "R1rep_b10",
+   "prior": "ALS",
+   "kind": "section",
+   "patch": 32862,
+   "centre": [
+    -18.095931210695262,
+    24.69950571184489,
+    -23.7783970175526
+   ],
+   "t": [
+    0.9516295912278421,
+    -0.3072476543434144
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 3,
+   "gt_med": 0.03335581347346306,
+   "tau": 0.10341712832450867,
+   "tilt_deg": 42.1,
+   "component": {
+    "patches": 69,
+    "gt_points": 5976,
+    "area_m2": 5.9
+   },
+   "candidates": {
+    "patches": 479,
+    "components": 73
+   },
+   "why": "mask: roof-like codes 2/3, not GT-suspect, >= 50 % confidence-0 prior pixels",
+   "panels": [
+    "참값(선)",
+    "켬: 본 방법 씨앗 0",
+    "끔: 마스크 끄기"
+   ],
+   "conf0_share_of_patch": 0.556
+  },
+  "band/R1rep_b10/LoD2": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "kind": "face_map",
+   "face": 25,
+   "source": "VIS-v1 scene 4",
+   "rows": "code 2, roof-like, thinned rows of the face; colour = (result - GT) height, same symmetric range in both panels",
+   "panels": [
+    "켬: 본 방법 씨앗 0",
+    "끔: 허용 구간 없애기"
+   ],
+   "ends": "bias / NMAD at both ends of each panel"
+  },
+  "band/B173nb_b10/ALS": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "kind": "face_hist",
+   "face": 1,
+   "source": "VIS-v1 scene 6",
+   "rows": "code 2, roof-like, thinned rows of the face; z - z_GT, bins 0.5 cm",
+   "curves": [
+    "학습 전 항공 LiDAR",
+    "MVS",
+    "켬: 본 방법 씨앗 0",
+    "끔: 허용 구간 없애기"
+   ],
+   "peaks": "a name over each curve's mode"
+  },
+  "borrow/R1rep_b10/ALS": {
+   "site": "R1rep_b10",
+   "prior": "ALS",
+   "kind": "map",
+   "u_range": [
+    7.145811230674482,
+    13.872172648561689
+   ],
+   "v_range": [
+    -19.650499458100224,
+    -11.685609180696991
+   ],
+   "component": {
+    "patches": 14,
+    "area_m2": 0.9,
+    "gt_points": 464
+   },
+   "candidates": {
+    "patches": 63,
+    "area_m2": 4.2,
+    "components": 24
+   },
+   "why": "missing agreement (code 4)",
+   "layers": [
+    "결측 일치 패치",
+    "심은 점(사전 정보 출신 처음 점)",
+    "참값 점: 결과 메시 0.2 m 안 / 밖"
+   ],
+   "panels": [
+    "켬: 본 방법 씨앗 0",
+    "끔: 판정 빌려 오기 끄기"
+   ]
+  },
+  "initx/R1rep_b10/ALS": {
+   "site": "R1rep_b10",
+   "prior": "ALS",
+   "kind": "map",
+   "u_range": [
+    7.145811230674482,
+    13.872172648561689
+   ],
+   "v_range": [
+    -19.650499458100224,
+    -11.685609180696991
+   ],
+   "component": {
+    "patches": 14,
+    "area_m2": 0.9,
+    "gt_points": 464
+   },
+   "candidates": {
+    "patches": 63,
+    "area_m2": 4.2,
+    "components": 24
+   },
+   "why": "missing agreement (code 4)",
+   "layers": [
+    "결측 일치 패치",
+    "심은 점(사전 정보 출신 처음 점)",
+    "참값 점: 결과 메시 0.2 m 안 / 밖"
+   ],
+   "panels": [
+    "켬: 본 방법 씨앗 0",
+    "끔: 틀린 옛 점 빼기 끄기"
+   ],
+   "bars": "심긴 점의 운명(6.4) 막대"
+  },
+  "borrow/B173nb_b10/LoD2": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "kind": "map",
+   "u_range": [
+    139.93037729930958,
+    147.9297637960131
+   ],
+   "v_range": [
+    84.06531563872244,
+    90.96219435300179
+   ],
+   "component": {
+    "patches": 24,
+    "area_m2": 1.5,
+    "gt_points": 193
+   },
+   "candidates": {
+    "patches": 105,
+    "area_m2": 6.6,
+    "components": 37
+   },
+   "why": "missing prior error (code 13)",
+   "layers": [
+    "결측 사전 정보 오류 패치",
+    "옛 자리에 남은 가우시안(사전 정보 출신, 불투명도 0.5 이상, 사전 정보 면 0.25 m 안)"
+   ],
+   "panels": [
+    "켬: 본 방법 씨앗 0",
+    "끔: 판정 빌려 오기 끄기"
+   ]
+  },
+  "borrow/B0a15/LoD2": {
+   "site": "B0a15",
+   "prior": "LoD2",
+   "kind": "map",
+   "u_range": [
+    78.84871156935735,
+    88.58484203368636
+   ],
+   "v_range": [
+    78.25413474528361,
+    92.64281825647048
+   ],
+   "component": {
+    "patches": 136,
+    "area_m2": 8.5,
+    "gt_points": 13946
+   },
+   "candidates": {
+    "patches": 350,
+    "area_m2": 21.9,
+    "components": 36
+   },
+   "why": "missing prior error (code 13)",
+   "layers": [
+    "결측 사전 정보 오류 패치",
+    "옛 자리에 남은 가우시안(사전 정보 출신, 불투명도 0.5 이상, 사전 정보 면 0.25 m 안)"
+   ],
+   "panels": [
+    "켬: 짝(본 방법)",
+    "끔: 판정 빌려 오기 끄기"
+   ]
+  },
+  "protect/B173nb_b10/LoD2": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "kind": "wall_front",
+   "face": 53,
+   "source": "VIS-v1 scene 3",
+   "wall": {
+    "surf_ext": 53,
+    "patches": 18298,
+    "of_patches": 18747,
+    "centre": [
+     153.565,
+     111.76,
+     -33.786
+    ],
+    "normal": [
+     0.930814,
+     -0.365493,
+     0.0
+    ],
+    "t": [
+     0.365493,
+     0.930814,
+     0.0
+    ],
+    "s_range": [
+     -39.6,
+     30.15
+    ],
+    "z_range": [
+     -43.51,
+     -24.51
+    ]
+   },
+   "cells": "the 'inferred correct' unseen patches (unseen.npz label 0); colour = wall present (an opaque Gaussian within 0.25 m)",
+   "panels": [
+    "켬: 본 방법 씨앗 0",
+    "끔: 보호 끄기"
+   ],
+   "big_number": "벽 있음 몫(%)"
+  },
+  "protect/B0a15/LoD2": {
+   "site": "B0a15",
+   "prior": "LoD2",
+   "kind": "wall_front",
+   "face": 23,
+   "area_m2": 411.6,
+   "patches": 6586,
+   "wall": {
+    "centre": [
+     105.79082258603788,
+     29.899114466091486,
+     -32.91239295475729
+    ],
+    "normal": [
+     -0.9307956226983384,
+     0.36554002347979964,
+     0.0
+    ],
+    "t": [
+     -0.36554002347979964,
+     -0.9307956226983384,
+     0.0
+    ],
+    "s_range": [
+     -17.16223808077774,
+     15.587761919222263
+    ],
+    "z_range": [
+     -43.444999999999936,
+     -24.694999999999936
+    ]
+   },
+   "cells": "the invisible-agreement patches (code 5) of the face; colour = wall present (an opaque Gaussian within 0.25 m)",
+   "panels": [
+    "켬: 짝(본 방법)",
+    "끔: 보호 끄기"
+   ],
+   "big_number": "벽 있음 몫(%)",
+   "faces_top5": {
+    "23": 411.6,
+    "20": 292.1,
+    "21": 46.3,
+    "2": 41.1,
+    "13": 23.2
+   }
+  },
+  "loss/R1rep_b10/LoD2": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "kind": "section",
+   "patch": 103296,
+   "centre": [
+    10.50057931475835,
+    25.88932401184229,
+    -29.635385043928395
+   ],
+   "t": [
+    0.3420201433256688,
+    0.9396926207859083
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 11,
+   "gt_med": 1.2192050218582153,
+   "tau": 0.6827602982521057,
+   "tilt_deg": 1.6,
+   "component": {
+    "patches": 2621,
+    "gt_points": 213666,
+    "area_m2": 163.8
+   },
+   "candidates": {
+    "patches": 5414,
+    "components": 119
+   },
+   "why": "loss: roof-like prior error judged conflict, tau < |GT - prior| <= 4 tau",
+   "lines": [
+    "옛 면(사전 정보)",
+    "참값",
+    "켬: 본 방법 씨앗 0",
+    "끔: 손실에서만 판정 끄기"
+   ]
+  },
+  "density/B0_b10/LoD2": {
+   "site": "B0_b10",
+   "prior": "LoD2",
+   "kind": "map",
+   "u_range": [
+    27.723935661149806,
+    43.941278660351664
+   ],
+   "v_range": [
+    86.72346715019755,
+    109.3787005059041
+   ],
+   "component": {
+    "patches": 1453,
+    "area_m2": 90.8,
+    "gt_points": 143734
+   },
+   "candidates": {
+    "patches": 6421,
+    "area_m2": 401.3,
+    "components": 136
+   },
+   "why": "density: prior error (code 11)",
+   "layers": [
+    "사전 정보 오류 패치",
+    "옛 자리에 남은 가우시안(사전 정보 출신, 불투명도 0.5 이상, 사전 정보 면 0.25 m 안)"
+   ],
+   "panels": [
+    "켬: 본 방법 씨앗 0",
+    "끔: 밀도 제어에서만 판정 끄기"
+   ]
+  },
+  "sensitivity": {
+   "kind": "points_and_band",
+   "what": "per value the main metric as a point (seed-0 run; the comparison as the mean of two seeds); the pooled spread (6.1 'different' threshold) as a band around the comparison"
+  }
+ },
+ "scientific_verdict": null
+}

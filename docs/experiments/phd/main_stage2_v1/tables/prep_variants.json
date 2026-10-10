@@ -1,0 +1,994 @@
+{
+ "rule": "The judgment of a unit is recomputed exactly as the fork's initialisation does it (jbgs_judgment.prop_init: rules.apply on the\nstage-1 product's per-(patch, view) tallies and gathered support ids, then switches.judgment_level) from the s03 run folder of the\nunit (the stage-0 box runs, this payload's mask-off runs and the A15 runs); the default judgment is checked against the r12 dry\ninitialisation of the unit (locations.npz). True labels and areas = the region file v3 of the unit (label 0 true agreement, 1 true\nconflict; patches of the box evaluation range, not excluded, with a label).",
+ "note": "ALS: the variants change only the propagation on top of the unit's current marks (2 tau, margin_all_2); the module's names asymmetric / margin_prop_2 mark at 1 tau and change the votes too (kept as reference rows)",
+ "margin_prop_k": 2.0,
+ "units": {
+  "B0_b10/LoD2": {
+   "current_rule": "current",
+   "mark_threshold_tau": 1.0,
+   "rules": {
+    "current": {
+     "correct_keep": {
+      "patches": 1895,
+      "area_share": 0.9115
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_share": 0.001
+     },
+     "correct_release": {
+      "patches": 22,
+      "area_share": 0.0106
+     },
+     "wrong_release": {
+      "patches": 108,
+      "area_share": 0.0519
+     },
+     "undetermined": {
+      "patches": 52,
+      "area_share": 0.025
+     },
+     "missing_patches": 2079,
+     "missing_area_m2": 129.9,
+     "missing_agreement_region_conflicts": {
+      "patches": 2052,
+      "conflict": 108
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 27,
+      "conflict": 22
+     }
+    },
+    "asymmetric": {
+     "correct_keep": {
+      "patches": 1895,
+      "area_share": 0.9115
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_share": 0.001
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 182,
+      "area_share": 0.0875
+     },
+     "missing_patches": 2079,
+     "missing_area_m2": 129.9,
+     "missing_agreement_region_conflicts": {
+      "patches": 2052,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 27,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 22,
+     "conflicts_gone_in_missing_agreement": 108
+    },
+    "margin_prop_2": {
+     "correct_keep": {
+      "patches": 1895,
+      "area_share": 0.9115
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_share": 0.001
+     },
+     "correct_release": {
+      "patches": 17,
+      "area_share": 0.0082
+     },
+     "wrong_release": {
+      "patches": 93,
+      "area_share": 0.0447
+     },
+     "undetermined": {
+      "patches": 72,
+      "area_share": 0.0346
+     },
+     "missing_patches": 2079,
+     "missing_area_m2": 129.9,
+     "missing_agreement_region_conflicts": {
+      "patches": 2052,
+      "conflict": 93
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 27,
+      "conflict": 17
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 5,
+     "conflicts_gone_in_missing_agreement": 15
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "current_rule": "margin_all_2",
+   "mark_threshold_tau": 2.0,
+   "rules": {
+    "current": {
+     "correct_keep": {
+      "patches": 26,
+      "area_share": 0.8757
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 4,
+      "area_share": 0.1243
+     },
+     "missing_patches": 30,
+     "missing_area_m2": 2.0,
+     "missing_agreement_region_conflicts": {
+      "patches": 30,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 0,
+      "conflict": 0
+     }
+    },
+    "asymmetric": {
+     "correct_keep": {
+      "patches": 26,
+      "area_share": 0.8757
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 4,
+      "area_share": 0.1243
+     },
+     "missing_patches": 30,
+     "missing_area_m2": 2.0,
+     "missing_agreement_region_conflicts": {
+      "patches": 30,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 0,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 0
+    },
+    "margin_prop_2": {
+     "correct_keep": {
+      "patches": 26,
+      "area_share": 0.8757
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 4,
+      "area_share": 0.1243
+     },
+     "missing_patches": 30,
+     "missing_area_m2": 2.0,
+     "missing_agreement_region_conflicts": {
+      "patches": 30,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 0,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 0
+    },
+    "asymmetric_module_t1": {
+     "correct_keep": {
+      "patches": 26,
+      "area_share": 0.8757
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 4,
+      "area_share": 0.1243
+     },
+     "missing_patches": 30,
+     "missing_area_m2": 2.0,
+     "missing_agreement_region_conflicts": {
+      "patches": 30,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 0,
+      "conflict": 0
+     },
+     "votes_equal_current": false,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 0
+    },
+    "margin_prop_2_module_t1": {
+     "correct_keep": {
+      "patches": 26,
+      "area_share": 0.8757
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 4,
+      "area_share": 0.1243
+     },
+     "missing_patches": 30,
+     "missing_area_m2": 2.0,
+     "missing_agreement_region_conflicts": {
+      "patches": 30,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 0,
+      "conflict": 0
+     },
+     "votes_equal_current": false,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 0
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "current_rule": "current",
+   "mark_threshold_tau": 1.0,
+   "rules": {
+    "current": {
+     "correct_keep": {
+      "patches": 1077,
+      "area_share": 0.8098
+     },
+     "wrong_keep": {
+      "patches": 64,
+      "area_share": 0.0481
+     },
+     "correct_release": {
+      "patches": 26,
+      "area_share": 0.0195
+     },
+     "wrong_release": {
+      "patches": 57,
+      "area_share": 0.0429
+     },
+     "undetermined": {
+      "patches": 106,
+      "area_share": 0.0797
+     },
+     "missing_patches": 1330,
+     "missing_area_m2": 83.1,
+     "missing_agreement_region_conflicts": {
+      "patches": 1225,
+      "conflict": 57
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 105,
+      "conflict": 26
+     }
+    },
+    "asymmetric": {
+     "correct_keep": {
+      "patches": 1077,
+      "area_share": 0.8098
+     },
+     "wrong_keep": {
+      "patches": 64,
+      "area_share": 0.0481
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 189,
+      "area_share": 0.1421
+     },
+     "missing_patches": 1330,
+     "missing_area_m2": 83.1,
+     "missing_agreement_region_conflicts": {
+      "patches": 1225,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 105,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 26,
+     "conflicts_gone_in_missing_agreement": 57
+    },
+    "margin_prop_2": {
+     "correct_keep": {
+      "patches": 1077,
+      "area_share": 0.8098
+     },
+     "wrong_keep": {
+      "patches": 64,
+      "area_share": 0.0481
+     },
+     "correct_release": {
+      "patches": 9,
+      "area_share": 0.0068
+     },
+     "wrong_release": {
+      "patches": 24,
+      "area_share": 0.018
+     },
+     "undetermined": {
+      "patches": 156,
+      "area_share": 0.1173
+     },
+     "missing_patches": 1330,
+     "missing_area_m2": 83.1,
+     "missing_agreement_region_conflicts": {
+      "patches": 1225,
+      "conflict": 24
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 105,
+      "conflict": 9
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 17,
+     "conflicts_gone_in_missing_agreement": 33
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "current_rule": "margin_all_2",
+   "mark_threshold_tau": 2.0,
+   "rules": {
+    "current": {
+     "correct_keep": {
+      "patches": 1,
+      "area_share": 0.0463
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 9,
+      "area_share": 0.264
+     },
+     "wrong_release": {
+      "patches": 10,
+      "area_share": 0.439
+     },
+     "undetermined": {
+      "patches": 6,
+      "area_share": 0.2506
+     },
+     "missing_patches": 26,
+     "missing_area_m2": 2.4,
+     "missing_agreement_region_conflicts": {
+      "patches": 17,
+      "conflict": 10
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 9
+     }
+    },
+    "asymmetric": {
+     "correct_keep": {
+      "patches": 1,
+      "area_share": 0.0463
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 25,
+      "area_share": 0.9537
+     },
+     "missing_patches": 26,
+     "missing_area_m2": 2.4,
+     "missing_agreement_region_conflicts": {
+      "patches": 17,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 9,
+     "conflicts_gone_in_missing_agreement": 10
+    },
+    "margin_prop_2": {
+     "correct_keep": {
+      "patches": 1,
+      "area_share": 0.0463
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 9,
+      "area_share": 0.264
+     },
+     "wrong_release": {
+      "patches": 10,
+      "area_share": 0.439
+     },
+     "undetermined": {
+      "patches": 6,
+      "area_share": 0.2506
+     },
+     "missing_patches": 26,
+     "missing_area_m2": 2.4,
+     "missing_agreement_region_conflicts": {
+      "patches": 17,
+      "conflict": 10
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 9
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 0
+    },
+    "asymmetric_module_t1": {
+     "correct_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 26,
+      "area_share": 1.0
+     },
+     "missing_patches": 26,
+     "missing_area_m2": 2.4,
+     "missing_agreement_region_conflicts": {
+      "patches": 17,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 0
+     },
+     "votes_equal_current": false,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 9,
+     "conflicts_gone_in_missing_agreement": 10
+    },
+    "margin_prop_2_module_t1": {
+     "correct_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 9,
+      "area_share": 0.264
+     },
+     "wrong_release": {
+      "patches": 10,
+      "area_share": 0.439
+     },
+     "undetermined": {
+      "patches": 7,
+      "area_share": 0.297
+     },
+     "missing_patches": 26,
+     "missing_area_m2": 2.4,
+     "missing_agreement_region_conflicts": {
+      "patches": 17,
+      "conflict": 10
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 9
+     },
+     "votes_equal_current": false,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 0
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "current_rule": "current",
+   "mark_threshold_tau": 1.0,
+   "rules": {
+    "current": {
+     "correct_keep": {
+      "patches": 60,
+      "area_share": 0.1685
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_share": 0.0056
+     },
+     "correct_release": {
+      "patches": 139,
+      "area_share": 0.3904
+     },
+     "wrong_release": {
+      "patches": 99,
+      "area_share": 0.2781
+     },
+     "undetermined": {
+      "patches": 56,
+      "area_share": 0.1573
+     },
+     "missing_patches": 356,
+     "missing_area_m2": 22.2,
+     "missing_agreement_region_conflicts": {
+      "patches": 198,
+      "conflict": 99
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 158,
+      "conflict": 139
+     }
+    },
+    "asymmetric": {
+     "correct_keep": {
+      "patches": 60,
+      "area_share": 0.1685
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_share": 0.0056
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 294,
+      "area_share": 0.8258
+     },
+     "missing_patches": 356,
+     "missing_area_m2": 22.2,
+     "missing_agreement_region_conflicts": {
+      "patches": 198,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 158,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 139,
+     "conflicts_gone_in_missing_agreement": 99
+    },
+    "margin_prop_2": {
+     "correct_keep": {
+      "patches": 60,
+      "area_share": 0.1685
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_share": 0.0056
+     },
+     "correct_release": {
+      "patches": 98,
+      "area_share": 0.2753
+     },
+     "wrong_release": {
+      "patches": 55,
+      "area_share": 0.1545
+     },
+     "undetermined": {
+      "patches": 141,
+      "area_share": 0.3961
+     },
+     "missing_patches": 356,
+     "missing_area_m2": 22.2,
+     "missing_agreement_region_conflicts": {
+      "patches": 198,
+      "conflict": 55
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 158,
+      "conflict": 98
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 41,
+     "conflicts_gone_in_missing_agreement": 44
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "current_rule": "margin_all_2",
+   "mark_threshold_tau": 2.0,
+   "rules": {
+    "current": {
+     "correct_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 8,
+      "area_share": 0.1072
+     },
+     "wrong_release": {
+      "patches": 61,
+      "area_share": 0.8525
+     },
+     "undetermined": {
+      "patches": 3,
+      "area_share": 0.0403
+     },
+     "missing_patches": 72,
+     "missing_area_m2": 4.8,
+     "missing_agreement_region_conflicts": {
+      "patches": 63,
+      "conflict": 61
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 8
+     }
+    },
+    "asymmetric": {
+     "correct_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 72,
+      "area_share": 1.0
+     },
+     "missing_patches": 72,
+     "missing_area_m2": 4.8,
+     "missing_agreement_region_conflicts": {
+      "patches": 63,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 8,
+     "conflicts_gone_in_missing_agreement": 61
+    },
+    "margin_prop_2": {
+     "correct_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 8,
+      "area_share": 0.1072
+     },
+     "wrong_release": {
+      "patches": 48,
+      "area_share": 0.6398
+     },
+     "undetermined": {
+      "patches": 16,
+      "area_share": 0.253
+     },
+     "missing_patches": 72,
+     "missing_area_m2": 4.8,
+     "missing_agreement_region_conflicts": {
+      "patches": 63,
+      "conflict": 48
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 8
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 13
+    },
+    "asymmetric_module_t1": {
+     "correct_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 72,
+      "area_share": 1.0
+     },
+     "missing_patches": 72,
+     "missing_area_m2": 4.8,
+     "missing_agreement_region_conflicts": {
+      "patches": 63,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 0
+     },
+     "votes_equal_current": false,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 8,
+     "conflicts_gone_in_missing_agreement": 61
+    },
+    "margin_prop_2_module_t1": {
+     "correct_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "correct_release": {
+      "patches": 8,
+      "area_share": 0.1072
+     },
+     "wrong_release": {
+      "patches": 49,
+      "area_share": 0.6529
+     },
+     "undetermined": {
+      "patches": 15,
+      "area_share": 0.2398
+     },
+     "missing_patches": 72,
+     "missing_area_m2": 4.8,
+     "missing_agreement_region_conflicts": {
+      "patches": 63,
+      "conflict": 49
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 9,
+      "conflict": 8
+     },
+     "votes_equal_current": false,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 0,
+     "conflicts_gone_in_missing_agreement": 13
+    }
+   }
+  },
+  "B0a15/LoD2": {
+   "current_rule": "current",
+   "mark_threshold_tau": 1.0,
+   "rules": {
+    "current": {
+     "correct_keep": {
+      "patches": 3007,
+      "area_share": 0.448
+     },
+     "wrong_keep": {
+      "patches": 71,
+      "area_share": 0.0106
+     },
+     "correct_release": {
+      "patches": 178,
+      "area_share": 0.0265
+     },
+     "wrong_release": {
+      "patches": 458,
+      "area_share": 0.0682
+     },
+     "undetermined": {
+      "patches": 2998,
+      "area_share": 0.4467
+     },
+     "missing_patches": 6712,
+     "missing_area_m2": 419.5,
+     "missing_agreement_region_conflicts": {
+      "patches": 6362,
+      "conflict": 458
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 350,
+      "conflict": 178
+     }
+    },
+    "asymmetric": {
+     "correct_keep": {
+      "patches": 3007,
+      "area_share": 0.448
+     },
+     "wrong_keep": {
+      "patches": 71,
+      "area_share": 0.0106
+     },
+     "correct_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_share": 0.0
+     },
+     "undetermined": {
+      "patches": 3634,
+      "area_share": 0.5414
+     },
+     "missing_patches": 6712,
+     "missing_area_m2": 419.5,
+     "missing_agreement_region_conflicts": {
+      "patches": 6362,
+      "conflict": 0
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 350,
+      "conflict": 0
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 178,
+     "conflicts_gone_in_missing_agreement": 458
+    },
+    "margin_prop_2": {
+     "correct_keep": {
+      "patches": 3007,
+      "area_share": 0.448
+     },
+     "wrong_keep": {
+      "patches": 71,
+      "area_share": 0.0106
+     },
+     "correct_release": {
+      "patches": 159,
+      "area_share": 0.0237
+     },
+     "wrong_release": {
+      "patches": 248,
+      "area_share": 0.0369
+     },
+     "undetermined": {
+      "patches": 3227,
+      "area_share": 0.4808
+     },
+     "missing_patches": 6712,
+     "missing_area_m2": 419.5,
+     "missing_agreement_region_conflicts": {
+      "patches": 6362,
+      "conflict": 248
+     },
+     "missing_prior_error_region_conflicts": {
+      "patches": 350,
+      "conflict": 159
+     },
+     "votes_equal_current": true,
+     "states_equal_current": true,
+     "conflicts_gone_in_prior_error_missing": 19,
+     "conflicts_gone_in_missing_agreement": 210
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}
