@@ -1,0 +1,21 @@
+--- adapters-v1/data/generate_pcd.py
++++ adapters-v1-fix1/data/generate_pcd.py
+@@ -46,7 +46,7 @@
+     """
+     mesh = trimesh.Trimesh(vertices=vertices, faces=faces)
+     scene = trimesh.Scene(mesh)
+-    return scene
++    return mesh  # PHD-MAIN-FIX-v1: the mesh has .ray (a Scene has none)
+ 
+ 
+ def sample_points_from_mesh(vertices, faces, num_points=60000):
+@@ -97,7 +97,8 @@
+     # Cast ray and get intersections
+     locations, index_ray, index_tri = scene.ray.intersects_location(
+         ray_origins=ray_origins,
+-        ray_directions=ray_directions
++        ray_directions=ray_directions,
++        multiple_hits=False  # PHD-MAIN-FIX-v1: the first intersection, as the comment below
+     )
+     
+     # If no intersections, the point is not visible

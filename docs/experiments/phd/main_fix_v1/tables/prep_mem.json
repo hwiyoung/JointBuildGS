@@ -1,0 +1,176 @@
+{
+ "rule": "PHD-MAIN-FIX-v1 4.1 (4)-(5): memory and speed of fork r13 against fork r14 on the 1,000-iteration checks (jointbuildgs:dev, CPU;\nrun_cpu_fix.sh; reads SF/checks/mem only; never read as a result).\n\nPer check: the PyTorch allocation peak (torch.cuda.max_memory_allocated, logged every 100 iterations: the value at 500 and at 1,000),\nthe nvidia-smi peak over the whole short run (the host sampled every 2 s, initialisation included) minus the GPU's idle use, the seconds\nper 100 iterations (scalars' elapsed, 100 -> 1,000). The host bytes r14 keeps pinned = the four maps of every view (train and test) and\ng_p of every training view at 1024 x 741 float32 (what r13 held on the GPU), from the scene's view counts.\n  python mem_summary.py      -> SF/checks/mem_summary.json, .md\nscientific_verdict: null.",
+ "rows": [
+  {
+   "unit": "R1rep_b10/LoD2",
+   "fork": "r13",
+   "runs": [
+    {
+     "tag": "r13_R1rep_b10_LoD2_1000_a",
+     "gpu": "0",
+     "alloc_peak_500_gib": 12.635279178619385,
+     "alloc_peak_1000_gib": 12.635279178619385,
+     "nvsmi_peak_gib": 13.0322265625,
+     "seconds_per_100": 3.09731922371106,
+     "wall_seconds": 278.2,
+     "status": "PASS"
+    },
+    {
+     "tag": "r13_R1rep_b10_LoD2_1000_d",
+     "gpu": "0",
+     "alloc_peak_500_gib": 12.635279178619385,
+     "alloc_peak_1000_gib": 12.635279178619385,
+     "nvsmi_peak_gib": 13.0322265625,
+     "seconds_per_100": 3.038110634932915,
+     "wall_seconds": 99.6,
+     "status": "PASS"
+    }
+   ],
+   "seconds_per_100_mean": 3.067714929321988,
+   "alloc_peak_500_gib": 12.635279178619385,
+   "nvsmi_peak_gib": 13.0322265625,
+   "host_maps_gib": 0.0,
+   "views_all": 382,
+   "views_train": 333
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "fork": "r14",
+   "runs": [
+    {
+     "tag": "r14_R1rep_b10_LoD2_1000_b",
+     "gpu": "0",
+     "alloc_peak_500_gib": 7.928839206695557,
+     "alloc_peak_1000_gib": 7.928839206695557,
+     "nvsmi_peak_gib": 8.3427734375,
+     "seconds_per_100": 3.714294403584467,
+     "wall_seconds": 163.4,
+     "status": "PASS"
+    },
+    {
+     "tag": "r14_R1rep_b10_LoD2_1000_c",
+     "gpu": "0",
+     "alloc_peak_500_gib": 7.928839206695557,
+     "alloc_peak_1000_gib": 7.928839206695557,
+     "nvsmi_peak_gib": 8.3427734375,
+     "seconds_per_100": 4.145538237049347,
+     "wall_seconds": 147.6,
+     "status": "PASS"
+    }
+   ],
+   "seconds_per_100_mean": 3.929916320316907,
+   "alloc_peak_500_gib": 7.928839206695557,
+   "nvsmi_peak_gib": 8.3427734375,
+   "host_maps_gib": 5.260471343994141,
+   "views_all": 382,
+   "views_train": 333
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "fork": "r13",
+   "runs": [
+    {
+     "tag": "r13_B173nb_b10_LoD2_1000_a",
+     "gpu": "1",
+     "alloc_peak_500_gib": 8.124735832214355,
+     "alloc_peak_1000_gib": 8.124735832214355,
+     "nvsmi_peak_gib": 8.6103515625,
+     "seconds_per_100": 3.021198311303225,
+     "wall_seconds": 231.5,
+     "status": "PASS"
+    },
+    {
+     "tag": "r13_B173nb_b10_LoD2_1000_d",
+     "gpu": "1",
+     "alloc_peak_500_gib": 8.12488603591919,
+     "alloc_peak_1000_gib": 8.12488603591919,
+     "nvsmi_peak_gib": 8.5712890625,
+     "seconds_per_100": 3.0137695186874933,
+     "wall_seconds": 48.7,
+     "status": "PASS"
+    }
+   ],
+   "seconds_per_100_mean": 3.017483914995359,
+   "alloc_peak_500_gib": 8.124735832214355,
+   "nvsmi_peak_gib": 8.6103515625,
+   "host_maps_gib": 0.0,
+   "views_all": 232,
+   "views_train": 203
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "fork": "r14",
+   "runs": [
+    {
+     "tag": "r14_B173nb_b10_LoD2_1000_b",
+     "gpu": "1",
+     "alloc_peak_500_gib": 5.258401393890381,
+     "alloc_peak_1000_gib": 5.258401393890381,
+     "nvsmi_peak_gib": 5.7099609375,
+     "seconds_per_100": 3.8135210811677904,
+     "wall_seconds": 56.8,
+     "status": "PASS"
+    },
+    {
+     "tag": "r14_B173nb_b10_LoD2_1000_c",
+     "gpu": "1",
+     "alloc_peak_500_gib": 5.258903980255127,
+     "alloc_peak_1000_gib": 5.258903980255127,
+     "nvsmi_peak_gib": 5.7314453125,
+     "seconds_per_100": 4.08913416777634,
+     "wall_seconds": 163.4,
+     "status": "PASS"
+    }
+   ],
+   "seconds_per_100_mean": 3.951327624472065,
+   "alloc_peak_500_gib": 5.258401393890381,
+   "nvsmi_peak_gib": 5.7314453125,
+   "host_maps_gib": 3.1969871520996094,
+   "views_all": 232,
+   "views_train": 203
+  }
+ ],
+ "first_measurement_record": [
+  {
+   "tag": "r13_R1rep_b10_LoD2_1000",
+   "gpu": "1",
+   "alloc_peak_500_gib": 12.635279178619385,
+   "alloc_peak_1000_gib": 12.635279178619385,
+   "nvsmi_peak_gib": 13.0322265625,
+   "seconds_per_100": 3.082259847989513,
+   "wall_seconds": 146.3,
+   "status": "PASS"
+  },
+  {
+   "tag": "r14_R1rep_b10_LoD2_1000",
+   "gpu": "0",
+   "alloc_peak_500_gib": 7.928839206695557,
+   "alloc_peak_1000_gib": 7.928839206695557,
+   "nvsmi_peak_gib": 8.3427734375,
+   "seconds_per_100": 4.6889540867673025,
+   "wall_seconds": 165.4,
+   "status": "PASS"
+  },
+  {
+   "tag": "r13_B173nb_b10_LoD2_1000",
+   "gpu": "1",
+   "alloc_peak_500_gib": 8.124898433685303,
+   "alloc_peak_1000_gib": 8.124898433685303,
+   "nvsmi_peak_gib": 8.5712890625,
+   "seconds_per_100": 3.0125910729790726,
+   "wall_seconds": 183.6,
+   "status": "PASS"
+  },
+  {
+   "tag": "r14_B173nb_b10_LoD2_1000",
+   "gpu": "0",
+   "alloc_peak_500_gib": 5.258618354797363,
+   "alloc_peak_1000_gib": 5.258618354797363,
+   "nvsmi_peak_gib": 5.708984375,
+   "seconds_per_100": 6.214757113717496,
+   "wall_seconds": 231.6,
+   "status": "PASS"
+  }
+ ],
+ "scientific_verdict": null
+}

@@ -1,0 +1,11 @@
+--- r13/train.py
++++ r14/train.py
+@@ -833,6 +833,8 @@
+             da_conf_weight = da_conf / (da_conf.mean() + 1e-6)
+ 
+         render_pkg = render(viewpoint_cam, gaussians, pipe, background)
++        if judgment is not None:  # [jbgs_judgment] r14-3: memory records (default off; reads the render outputs only)
++            judgment.memlog(iteration, viewpoint_cam, gaussians, render_pkg)
+         image = render_pkg["render"]
+         viewspace_point_tensor = render_pkg["viewspace_points"]
+         visibility_filter = render_pkg["visibility_filter"]

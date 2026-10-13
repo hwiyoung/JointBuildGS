@@ -1,0 +1,254 @@
+{
+ "kind": "probe",
+ "rule": "PHD-MAIN-FIX-v1 4.1 (3): fork r14 against fork r13 on the GPU checks (jointbuildgs:dev, CPU; run_cpu_fix.sh; reads the checks only).\n\n  python f_compare.py dry      every array of monitor/{locations, init_points, unplanted, gate_check}.npz and every decision number of\n                               init_report.json (time and revision records skipped, stage 2's SKIP_REPORT); r13 at the six stage-2\n                               units = stage 2's checks (S2/checks/dry/r13_<unit>), at B173\ub9cc LoD2 = this task's\n  python f_compare.py probe    every array of probe.npz (protection, density exemption, reset exemption, prune candidates, the per-view\n                               pixels where the prior term acts, its gradient sums and the two loss values of every view) and probe.json\nr14 must equal r13 everywhere (r14 changes where data sit, not what is computed): any difference is listed and is a stop (order 3.8).\nWrites SF/checks/compare_<kind>.json and .md. scientific_verdict: null.",
+ "rows": [
+  {
+   "checkpoint": "B0_b10/LoD2/s0",
+   "arrays": 255,
+   "loss_sums_r13": {
+    "mvs": 222.145172432065,
+    "prior": 7.281681240677813,
+    "views": 243
+   },
+   "loss_sums_r14": {
+    "mvs": 222.145172432065,
+    "prior": 7.281681240677813,
+    "views": 243
+   },
+   "differences": {},
+   "decisions_r13": {
+    "gradient_protected": 6699,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 6699,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 6699,
+    "prune_candidates": 37258,
+    "prune_candidates_opacity": 37187,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 6699
+   },
+   "decisions_r14": {
+    "gradient_protected": 6699,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 6699,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 6699,
+    "prune_candidates": 37258,
+    "prune_candidates_opacity": 37187,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 6699
+   }
+  },
+  {
+   "checkpoint": "B173nb_b10/LoD2/s0",
+   "arrays": 215,
+   "loss_sums_r13": {
+    "mvs": 140.53675168845803,
+    "prior": 1.8414101171638322,
+    "views": 203
+   },
+   "loss_sums_r14": {
+    "mvs": 140.53675168845803,
+    "prior": 1.8414101171638322,
+    "views": 203
+   },
+   "differences": {},
+   "decisions_r13": {
+    "gradient_protected": 30359,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 30359,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 30359,
+    "prune_candidates": 52179,
+    "prune_candidates_opacity": 52126,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 30359
+   },
+   "decisions_r14": {
+    "gradient_protected": 30359,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 30359,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 30359,
+    "prune_candidates": 52179,
+    "prune_candidates_opacity": 52126,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 30359
+   }
+  },
+  {
+   "checkpoint": "B173nb_b10/ALS/s0",
+   "arrays": 215,
+   "loss_sums_r13": {
+    "mvs": 127.43290089815855,
+    "prior": 2.5202165130958747,
+    "views": 203
+   },
+   "loss_sums_r14": {
+    "mvs": 127.43290089815855,
+    "prior": 2.5202165130958747,
+    "views": 203
+   },
+   "differences": {},
+   "decisions_r13": {
+    "gradient_protected": 22535,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 22535,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 22535,
+    "prune_candidates": 48671,
+    "prune_candidates_opacity": 48623,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 22535
+   },
+   "decisions_r14": {
+    "gradient_protected": 22535,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 22535,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 22535,
+    "prune_candidates": 48671,
+    "prune_candidates_opacity": 48623,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 22535
+   }
+  },
+  {
+   "checkpoint": "R1rep_b10/LoD2/s0",
+   "arrays": 345,
+   "loss_sums_r13": {
+    "mvs": 325.07452899217606,
+    "prior": 4.7752346840651185,
+    "views": 333
+   },
+   "loss_sums_r14": {
+    "mvs": 325.07452899217606,
+    "prior": 4.7752346840651185,
+    "views": 333
+   },
+   "differences": {},
+   "decisions_r13": {
+    "gradient_protected": 6522,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 6522,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 6522,
+    "prune_candidates": 47723,
+    "prune_candidates_opacity": 47553,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 6522
+   },
+   "decisions_r14": {
+    "gradient_protected": 6522,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 6522,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 6522,
+    "prune_candidates": 47723,
+    "prune_candidates_opacity": 47553,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 6522
+   }
+  },
+  {
+   "checkpoint": "R1rep_b10/ALS/s0",
+   "arrays": 345,
+   "loss_sums_r13": {
+    "mvs": 342.99661583453417,
+    "prior": 3.2950134378531857,
+    "views": 333
+   },
+   "loss_sums_r14": {
+    "mvs": 342.99661583453417,
+    "prior": 3.2950134378531857,
+    "views": 333
+   },
+   "differences": {},
+   "decisions_r13": {
+    "gradient_protected": 4222,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 4222,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 4222,
+    "prune_candidates": 41952,
+    "prune_candidates_opacity": 41832,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 4222
+   },
+   "decisions_r14": {
+    "gradient_protected": 4222,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 4222,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 4222,
+    "prune_candidates": 41952,
+    "prune_candidates_opacity": 41832,
+    "prune_kept_by_exemption": 0,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 4222
+   }
+  },
+  {
+   "checkpoint": "B173_b0/LoD2/s1",
+   "arrays": 152,
+   "loss_sums_r13": {
+    "mvs": 93.88001408241689,
+    "prior": 0.3920850300702483,
+    "views": 140
+   },
+   "loss_sums_r14": {
+    "mvs": 93.88001408241689,
+    "prior": 0.3920850300702483,
+    "views": 140
+   },
+   "differences": {},
+   "decisions_r13": {
+    "gradient_protected": 25981,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 25981,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 25981,
+    "prune_candidates": 47463,
+    "prune_candidates_opacity": 47393,
+    "prune_kept_by_exemption": 1,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 25981
+   },
+   "decisions_r14": {
+    "gradient_protected": 25981,
+    "gradient_protected_on_conflict": 0,
+    "density_exempt": 25981,
+    "density_exempt_on_conflict": 0,
+    "density_exempt_not_protected": 0,
+    "reset_exempt": 25981,
+    "prune_candidates": 47463,
+    "prune_candidates_opacity": 47393,
+    "prune_kept_by_exemption": 1,
+    "prune_kept_by_exemption_on_conflict": 0,
+    "floor_rows": 25981
+   }
+  }
+ ],
+ "all_equal": true,
+ "scientific_verdict": null
+}

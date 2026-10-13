@@ -1,0 +1,339 @@
+{
+ "rule": "PHD-MAIN-FIX-v1 4.2 tables of the GeoGS fix (jointbuildgs:dev, CPU; run_cpu_fix.sh; reads SF/geogs and stage 1's GeoGS records only).\n\n  initial points  per site: the 100,000 samples (equal to stage 1's), kept / dropped before (stage 1: the fallback kept all) and after\n                  (the working check), by face kind (roof 0 / wall 1 of the LoD2 faces generate_pcd samples), the (point, camera) pairs\n                  projected (= stage 1's fallback warnings), visible, occluded; the 300-point check against the official function\n  DA3 batches     per site: stage 1's batches (reproduced) and the rule of this task: batch scale DA3 / MVS (min, median, max), batches and\n                  views outside 0.9-1.1, the official alignment's fit residual (camera centres after the Sim(3), relative); the depth\n                  the fixed GeoGS uses (B173 \uc8fc\ubcc0: consec12; the others: stage 1's)\n  python geogs_tables.py      -> SF/prep/geogs_fix.json, .md\nscientific_verdict: null.",
+ "sites": {
+  "B0_b10": {
+   "init": {
+    "samples": 100000,
+    "samples_equal_stage1": true,
+    "stage1_kept": 100000,
+    "stage1_warnings": 12563932,
+    "kept": 99881,
+    "dropped": 119,
+    "dropped_wall": 119,
+    "dropped_roof": 0,
+    "wall": 69989,
+    "roof": 30011,
+    "pairs_projected": 12563932,
+    "pairs_visible": 5017834,
+    "pairs_occluded": 7546098,
+    "verify": {
+     "points": 300,
+     "official_kept": 299,
+     "three_pass_kept": 299,
+     "equal": true,
+     "detail": "equal",
+     "seconds": 22.6
+    },
+    "seconds": 3717.0
+   },
+   "da3": {
+    "stage1_saved": {
+     "batch_scale": {
+      "n": 31,
+      "min": 0.9679556556080245,
+      "median": 0.9872812709737813,
+      "max": 1.00291454181574,
+      "max_over_min": 1.0361162063625278
+     },
+     "batches_outside": [],
+     "views_outside": 3,
+     "fit_residual_rel_max": 0.05290040170125883,
+     "fit_residual_rel_batch_median_max": 0.018391005440694476,
+     "ransac": [
+      false
+     ],
+     "used_by_fixed_geogs": true,
+     "views": {
+      "n": 243,
+      "scale_q05_q95": [
+       0.971906144272915,
+       1.0021283903218499
+      ],
+      "nmad_log_median": 0.005291428689374994,
+      "median_abs_m": 0.7129669189453125,
+      "within_5pct": 0.932419360091027
+     }
+    },
+    "consec12": {
+     "batch_scale": {
+      "n": 21,
+      "min": 0.97694182080191,
+      "median": 0.9904432216826717,
+      "max": 1.2602093715626697,
+      "max_over_min": 1.289953346994853
+     },
+     "batches_outside": [
+      5
+     ],
+     "views_outside": 11,
+     "fit_residual_rel_max": 0.6379401630409754,
+     "fit_residual_rel_batch_median_max": 0.029288449065168944,
+     "ransac": [
+      true
+     ],
+     "used_by_fixed_geogs": false,
+     "views": {
+      "n": 243,
+      "scale_q05_q95": [
+       0.9783043961315853,
+       1.019872398923537
+      ],
+      "nmad_log_median": 0.00507075650810417,
+      "median_abs_m": 0.588104248046875,
+      "within_5pct": 0.9376772523197172
+     }
+    }
+   }
+  },
+  "B173nb_b10": {
+   "init": {
+    "samples": 100000,
+    "samples_equal_stage1": true,
+    "stage1_kept": 100000,
+    "stage1_warnings": null,
+    "kept": 92120,
+    "dropped": 7880,
+    "dropped_wall": 7880,
+    "dropped_roof": 0,
+    "wall": 66597,
+    "roof": 33403,
+    "pairs_projected": 7549221,
+    "pairs_visible": 3428386,
+    "pairs_occluded": 4120835,
+    "verify": {
+     "points": 300,
+     "official_kept": 272,
+     "three_pass_kept": 272,
+     "equal": true,
+     "detail": "equal",
+     "seconds": 14.4
+    },
+    "seconds": 2927.8
+   },
+   "da3": {
+    "stage1_saved": {
+     "batch_scale": {
+      "n": 26,
+      "min": 0.12952793719769934,
+      "median": 0.9904748552986932,
+      "max": 1.212624687042004,
+      "max_over_min": 9.361877547630263
+     },
+     "batches_outside": [
+      10,
+      19
+     ],
+     "views_outside": 12,
+     "fit_residual_rel_max": 0.5577310320438725,
+     "fit_residual_rel_batch_median_max": 0.23570673921397378,
+     "ransac": [
+      false
+     ],
+     "used_by_fixed_geogs": false,
+     "views": {
+      "n": 203,
+      "scale_q05_q95": [
+       0.975739609518806,
+       1.006983147549239
+      ],
+      "nmad_log_median": 0.0051980859814182365,
+      "median_abs_m": 0.7156887054443359,
+      "within_5pct": 0.9559537665648367
+     }
+    },
+    "consec12": {
+     "batch_scale": {
+      "n": 17,
+      "min": 0.9746156713729629,
+      "median": 0.9934660284888759,
+      "max": 1.074485919793329,
+      "max_over_min": 1.1024714165325051
+     },
+     "batches_outside": [],
+     "views_outside": 2,
+     "fit_residual_rel_max": 1.5471065817643652,
+     "fit_residual_rel_batch_median_max": 0.05307644477073683,
+     "ransac": [
+      true
+     ],
+     "used_by_fixed_geogs": true,
+     "views": {
+      "n": 203,
+      "scale_q05_q95": [
+       0.9794241492843886,
+       1.065485753761461
+      ],
+      "nmad_log_median": 0.0057961528906090715,
+      "median_abs_m": 0.4588642120361328,
+      "within_5pct": 0.9581878818861219
+     }
+    }
+   }
+  },
+  "B173_b0": {
+   "init": {
+    "samples": 100000,
+    "samples_equal_stage1": true,
+    "stage1_kept": 100000,
+    "stage1_warnings": 6739647,
+    "kept": 75214,
+    "dropped": 24786,
+    "dropped_wall": 24776,
+    "dropped_roof": 10,
+    "wall": 69640,
+    "roof": 30360,
+    "pairs_projected": 6739647,
+    "pairs_visible": 2305484,
+    "pairs_occluded": 4434163,
+    "verify": {
+     "points": 300,
+     "official_kept": 228,
+     "three_pass_kept": 228,
+     "equal": true,
+     "detail": "equal",
+     "seconds": 12.9
+    },
+    "seconds": 2884.3
+   },
+   "da3": {
+    "stage1_saved": {
+     "batch_scale": {
+      "n": 18,
+      "min": 0.9650321436873474,
+      "median": 0.9852411761563025,
+      "max": 1.0122505475816017,
+      "max_over_min": 1.048929358677976
+     },
+     "batches_outside": [],
+     "views_outside": 0,
+     "fit_residual_rel_max": 0.0346109459713745,
+     "fit_residual_rel_batch_median_max": 0.023917805009808796,
+     "ransac": [
+      false
+     ],
+     "used_by_fixed_geogs": true,
+     "views": {
+      "n": 140,
+      "scale_q05_q95": [
+       0.9652125176899,
+       1.0037939125866038
+      ],
+      "nmad_log_median": 0.005523843799867648,
+      "median_abs_m": 0.8991398811340332,
+      "within_5pct": 0.9326311136856986
+     }
+    },
+    "consec12": {
+     "batch_scale": {
+      "n": 12,
+      "min": 0.9455351573387907,
+      "median": 0.9868559066949959,
+      "max": 0.9986529219852,
+      "max_over_min": 1.0561774612336037
+     },
+     "batches_outside": [],
+     "views_outside": 4,
+     "fit_residual_rel_max": 0.3570098602999175,
+     "fit_residual_rel_batch_median_max": 0.015790105360404885,
+     "ransac": [
+      true
+     ],
+     "used_by_fixed_geogs": false,
+     "views": {
+      "n": 140,
+      "scale_q05_q95": [
+       0.9459168122454077,
+       1.0089870298954378
+      ],
+      "nmad_log_median": 0.006487962827379909,
+      "median_abs_m": 0.7092132568359375,
+      "within_5pct": 0.939953532104768
+     }
+    }
+   }
+  },
+  "R1rep_b10": {
+   "init": {
+    "samples": 100000,
+    "samples_equal_stage1": true,
+    "stage1_kept": 100000,
+    "stage1_warnings": 15494388,
+    "kept": 99314,
+    "dropped": 686,
+    "dropped_wall": 686,
+    "dropped_roof": 0,
+    "wall": 69172,
+    "roof": 30828,
+    "pairs_projected": 15494388,
+    "pairs_visible": 7309238,
+    "pairs_occluded": 8185150,
+    "verify": {
+     "points": 300,
+     "official_kept": 298,
+     "three_pass_kept": 298,
+     "equal": true,
+     "detail": "equal",
+     "seconds": 27.5
+    },
+    "seconds": 4076.3
+   },
+   "da3": {
+    "stage1_saved": {
+     "batch_scale": {
+      "n": 42,
+      "min": 0.9721276061042985,
+      "median": 0.9911050479717842,
+      "max": 1.017743002257677,
+      "max_over_min": 1.0469232597314848
+     },
+     "batches_outside": [],
+     "views_outside": 0,
+     "fit_residual_rel_max": 0.056214045957836446,
+     "fit_residual_rel_batch_median_max": 0.03080454519134509,
+     "ransac": [
+      false
+     ],
+     "used_by_fixed_geogs": true,
+     "views": {
+      "n": 333,
+      "scale_q05_q95": [
+       0.9754020675420211,
+       1.0060552516120076
+      ],
+      "nmad_log_median": 0.005039435610518188,
+      "median_abs_m": 0.5200386047363281,
+      "within_5pct": 0.9486584327405565
+     }
+    },
+    "consec12": {
+     "batch_scale": {
+      "n": 28,
+      "min": 0.9702277910091602,
+      "median": 0.9918402709639704,
+      "max": 1.0121611460351767,
+      "max_over_min": 1.0432201132709262
+     },
+     "batches_outside": [],
+     "views_outside": 2,
+     "fit_residual_rel_max": 0.9527189373746912,
+     "fit_residual_rel_batch_median_max": 0.011281024955152461,
+     "ransac": [
+      true
+     ],
+     "used_by_fixed_geogs": false,
+     "views": {
+      "n": 333,
+      "scale_q05_q95": [
+       0.9785998897786026,
+       1.0120356851332455
+      ],
+      "nmad_log_median": 0.005093837922506532,
+      "median_abs_m": 0.5009536743164062,
+      "within_5pct": 0.9492201369841866
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

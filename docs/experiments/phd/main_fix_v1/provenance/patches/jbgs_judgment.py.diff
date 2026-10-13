@@ -1,0 +1,179 @@
+--- r13/jbgs_judgment.py
++++ r14/jbgs_judgment.py
+@@ -1,4 +1,21 @@
+-"""Judgment-guided stage-2 optimization for GeoGS, revision r13 (JointBuildGS PHD-MAIN-STAGE2-v1).
++"""Judgment-guided stage-2 optimization for GeoGS, revision r14 (JointBuildGS PHD-MAIN-FIX-v1).
++
++r14 = r13 with the per-view maps of this module kept in pinned host memory instead of on the GPU (order 4.1, memory only):
++  (r14-1) the observation confidence A, the MVS depth M, the prior depth P and the tolerance TAU of every view (train and test
++          views, as r13 loaded them) and the judgment weight g_p (GW, decided once in _g_init) sit in HostMaps: reading a view
++          ([name], .get, .items(), .values()) returns a CUDA copy of the stored tensor, bit for bit; nothing writes into a map
++          after it is built (checked: every reader indexes and compares only). Every computation, its order and the random state
++          are r13's.
++  (r14-2) _g_init reads the location / mark / mark-code maps of one view at a time from host memory (r13 put every view's on the GPU
++          at once and built the thresholded marks of all views on the GPU); g_p is computed on the GPU per view and stored on the host.
++  (r14-3) records only: --jbgs_memlog_from / _to / _every (default 0 = off) write monitor/memlog.jsonl every _every iterations in
++          [_from, _to]: Gaussians, the screen radius (99th percentile, maximum) and the tiles the visible Gaussians cover (re-counted
++          from the radii and the projected centres as the rasterizer's getRect, 16 x 16 tiles), torch allocated / reserved / peak and
++          the device's used memory (torch.cuda.mem_get_info = nvidia-smi's used). Reads the render outputs only.
++  The images were already kept on the CPU by scene/cameras.py (r13 too) and moved per iteration by train.py; r14 does not change that.
++  The re-read render (the depth and opacity of every training view at each re-read) stays on the GPU as r13.
++--- r13 text follows ---
++Judgment-guided stage-2 optimization for GeoGS, revision r13 (JointBuildGS PHD-MAIN-STAGE2-v1).
+ 
+ r13 = r12 + three ablation flags of the stage-2 order (4.2), each 0 by default; with all three at 0 every decision is r12's
+ (same code path; the flags only add a branch). Module v6 unchanged.
+@@ -204,7 +221,7 @@
+ }
+ ORIGIN_IMAGE, ORIGIN_PRIOR = 0, 1
+ LABELS = ("preserve", "correct", "undecided", "other")
+-REVISION = "r13"
++REVISION = "r14"
+ 
+ 
+ # ----------------------------------------------------------------------------------------------------------- args
+@@ -277,6 +294,9 @@
+         g.add_argument(f"--jbgs_sw_{_n}", type=int, default=1, help=f"r11 switch {_n}: 1 = on (the method), 0 = off")
+     for _n, _h in ABLATIONS.items():   # r13: ablation flags, 0 = r12
+         g.add_argument(f"--jbgs_ablate_{_n}", type=int, default=0, choices=[0, 1], help=f"r13 ablation {_n}: {_h} (0 = r12)")
++    g.add_argument("--jbgs_memlog_from", type=int, default=0, help="r14-3: first iteration of monitor/memlog.jsonl (0 = off)")
++    g.add_argument("--jbgs_memlog_to", type=int, default=0, help="r14-3: last iteration of monitor/memlog.jsonl")
++    g.add_argument("--jbgs_memlog_every", type=int, default=100, help="r14-3: interval of monitor/memlog.jsonl")
+ 
+ 
+ def apply_seed(args):
+@@ -594,6 +614,49 @@
+     return out
+ 
+ 
++class HostMaps:
++    """r14-1: per-view maps in pinned host memory; reading a view returns a CUDA copy of the stored tensor (values unchanged).
++    Writing (self.GW[name] = g) stores a host copy. Readers only index and compare (r13 had the same tensors on the GPU)."""
++
++    def __init__(self, maps=None, device="cuda"):
++        self._h, self._dev = {}, device
++        for k, v in (maps or {}).items():
++            self[k] = v
++
++    def __setitem__(self, k, v):
++        v = v.detach()
++        if v.is_cuda:
++            v = v.cpu()
++        self._h[k] = v.pin_memory() if torch.cuda.is_available() else v
++
++    def __getitem__(self, k):
++        return self._h[k].to(self._dev, non_blocking=True)
++
++    def get(self, k, default=None):
++        return self[k] if k in self._h else default
++
++    def __contains__(self, k):
++        return k in self._h
++
++    def __len__(self):
++        return len(self._h)
++
++    def __iter__(self):
++        return iter(self._h)
++
++    def keys(self):
++        return self._h.keys()
++
++    def items(self):
++        return ((k, self[k]) for k in self._h)
++
++    def values(self):
++        return (self[k] for k in self._h)
++
++    def host_bytes(self):
++        return int(sum(v.numel() * v.element_size() for v in self._h.values()))
++
++
+ def colorize_diverging(arr, vmax, nan_bgr=(90, 90, 90)):
+     """float [H,W] -> BGR uint8; blue (-vmax) .. white (0) .. red (+vmax); NaN gray."""
+     x = np.clip(np.nan_to_num(arr, nan=0.0) / max(vmax, 1e-9), -1, 1)
+@@ -634,11 +697,11 @@
+         names = [c.image_name for c in self.all_cams]
+         root = Path(args.jbgs_maps_root)
+         conf_set, mvs_set = ("conf", "mvs") if self.sw["confidence_mask"] else ("conf_photometric", "mvs_photometric")   # r11
+-        self.A = _load_set(root / conf_set, names, self.size, "cuda")
+-        self.M = _load_set(root / mvs_set, names, self.size, "cuda")
+-        self.P = _load_set(root / args.jbgs_prior_set, names, self.size, "cuda") if self.mode in ("P", "P0") else {}
++        self.A = HostMaps(_load_set(root / conf_set, names, self.size, "cpu"))          # r14-1: host, read as CUDA copies
++        self.M = HostMaps(_load_set(root / mvs_set, names, self.size, "cpu"))
++        self.P = HostMaps(_load_set(root / args.jbgs_prior_set, names, self.size, "cpu")) if self.mode in ("P", "P0") else {}
+         tau_root = Path(args.jbgs_tau_dir) if getattr(args, "jbgs_tau_dir", "") else root / args.jbgs_tau_set   # r7
+-        self.TAU = _load_set(tau_root, names, self.size, "cuda") if self.mode == "P" else {}
++        self.TAU = HostMaps(_load_set(tau_root, names, self.size, "cpu")) if self.mode == "P" else {}
+         self.FACE = _load_set(root / "faceid", names, self.size, "cpu", dtype=np.int32)
+         self.FV = _load_set(root / "fvert", names, self.size, "cpu")
+         self.G = _load_set(root / "gt", names, self.size, "cpu")
+@@ -1171,23 +1234,28 @@
+         """r8-1: g_p per training view at the training resolution, decided once. Pixel -> unit through the product's unit
+         map, its judgment from the unit table (support vote / propagated, alike); pixels without a unit use c_p and their
+         own mark. Counts per view: prior pixels by (unit / no unit) x (c_p 1 / 0) x g_p."""
+-        self.GW, self.g_counts = {}, {}
++        self.GW, self.g_counts = HostMaps(), {}          # r14-1: g_p kept on the host
+         if not args.jbgs_locmap_dir or not args.jbgs_markmap_dir:
+             raise ValueError("r8 needs --jbgs_locmap_dir and --jbgs_markmap_dir")
+         names = sorted(self.train_names)
+-        LM = _load_set(Path(args.jbgs_locmap_dir), names, self.size, "cuda", dtype=np.int32)
++        LM = HostMaps(_load_set(Path(args.jbgs_locmap_dir), names, self.size, "cpu", dtype=np.int32))   # r14-2: one view at a time
+         sfx = "" if self.sw["confidence_mask"] else "_maskoff"
+         t_rule = pprules.RULES[self.rule_name]["t"] if pprules is not None else 1.0
+         if t_rule == 1.0:
+-            MK = _load_set(Path(args.jbgs_markmap_dir + sfx), names, self.size, "cuda", dtype=np.int32)
++            MK = HostMaps(_load_set(Path(args.jbgs_markmap_dir + sfx), names, self.size, "cpu", dtype=np.int32))
++            mark_of = MK.__getitem__
+         else:   # r11-1: own mark of a pixel without a patch at the rule's threshold (mark code <= threshold index -> agree)
+             ti = pprules.THRESHOLDS.index(float(t_rule))
+-            MC = _load_set(Path(args.jbgs_markcode_dir + sfx), names, self.size, "cuda", dtype=np.int32)
+-            MK = {kk: torch.where(v < 0, torch.full_like(v, ppr.MARK_NONE),
+-                                  torch.where(v <= ti, torch.full_like(v, ppr.MARK_AGREE), torch.full_like(v, ppr.MARK_CONFLICT))) for kk, v in MC.items()}
++            MC = HostMaps(_load_set(Path(args.jbgs_markcode_dir + sfx), names, self.size, "cpu", dtype=np.int32))
++            MK = MC
++
++            def mark_of(kk):   # r14-2: r13's thresholded mark of one view (the same torch.where), on the GPU
++                v = MC[kk]
++                return torch.where(v < 0, torch.full_like(v, ppr.MARK_NONE),
++                                   torch.where(v <= ti, torch.full_like(v, ppr.MARK_AGREE), torch.full_like(v, ppr.MARK_CONFLICT)))
+         Jl_t = self.prop["J_loc"]
+         for name in names:
+-            lm = LM[name].long(); mk = MK[name].long(); A = self.A[name]; P = self.P.get(name)
++            lm = LM[name].long(); mk = mark_of(name).long(); A = self.A[name]; P = self.P.get(name)
+             located = lm >= 0
+             Jl = torch.full_like(lm, ppr.J_NONE); Jl[located] = Jl_t[lm[located]]
+             off = ppr.prior_term_off(located, Jl, A, mk)
+@@ -1638,6 +1706,32 @@
+         if ids.numel():
+             self.last_seen[ids] = int(iteration)
+ 
++    @torch.no_grad()
++    def memlog(self, iteration, camera, gaussians, render_pkg):
++        """r14-3: records only (default off). The tiles the visible Gaussians cover are re-counted from the returned radii and the
++        projected centres (project_points, as the rasterizer) with the rasterizer's getRect over 16 x 16 tiles."""
++        a = self.args
++        lo, hi, ev = int(getattr(a, "jbgs_memlog_from", 0)), int(getattr(a, "jbgs_memlog_to", 0)), max(int(getattr(a, "jbgs_memlog_every", 100)), 1)
++        if lo <= 0 or iteration < lo or iteration > hi or (iteration - lo) % ev:
++            return
++        radii = render_pkg["radii"]
++        vis = radii > 0
++        r = radii[vis].float()
++        W, H = int(camera.image_width), int(camera.image_height)
++        gx, gy = (W + 15) // 16, (H + 15) // 16
++        u, v, _ = project_points(gaussians.get_xyz[vis].detach(), camera)
++        rr = radii[vis].to(u.dtype)
++        x0 = torch.clamp(torch.floor((u - rr) / 16).long(), 0, gx); x1 = torch.clamp(torch.floor((u + rr + 15) / 16).long(), 0, gx)
++        y0 = torch.clamp(torch.floor((v - rr) / 16).long(), 0, gy); y1 = torch.clamp(torch.floor((v + rr + 15) / 16).long(), 0, gy)
++        tiles = int(((x1 - x0).clamp_min(0) * (y1 - y0).clamp_min(0)).sum())
++        free, total = torch.cuda.mem_get_info()
++        rec = dict(iteration=iteration, view=camera.image_name, n=int(gaussians.get_xyz.shape[0]), visible=int(vis.sum()),
++                   radius_q99=float(torch.quantile(r, 0.99)) if r.numel() else 0.0, radius_max=float(r.max()) if r.numel() else 0.0,
++                   tiles_covered=tiles, allocated_gib=torch.cuda.memory_allocated() / 2 ** 30, reserved_gib=torch.cuda.memory_reserved() / 2 ** 30,
++                   max_allocated_gib=torch.cuda.max_memory_allocated() / 2 ** 30, device_used_gib=(total - free) / 2 ** 30)
++        with (self.mon / "memlog.jsonl").open("a") as f:
++            f.write(json.dumps(rec) + "\n")
++
+     def log_scalars(self, iteration, terms, gaussians):
+         self.mark_alive(iteration, gaussians)
+         bad = {k: float(v) for k, v in terms.items() if not math.isfinite(float(v))}

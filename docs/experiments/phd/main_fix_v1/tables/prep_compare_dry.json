@@ -1,0 +1,64 @@
+{
+ "kind": "dry",
+ "rule": "PHD-MAIN-FIX-v1 4.1 (3): fork r14 against fork r13 on the GPU checks (jointbuildgs:dev, CPU; run_cpu_fix.sh; reads the checks only).\n\n  python f_compare.py dry      every array of monitor/{locations, init_points, unplanted, gate_check}.npz and every decision number of\n                               init_report.json (time and revision records skipped, stage 2's SKIP_REPORT); r13 at the six stage-2\n                               units = stage 2's checks (S2/checks/dry/r13_<unit>), at B173\ub9cc LoD2 = this task's\n  python f_compare.py probe    every array of probe.npz (protection, density exemption, reset exemption, prune candidates, the per-view\n                               pixels where the prior term acts, its gradient sums and the two loss values of every view) and probe.json\nr14 must equal r13 everywhere (r14 changes where data sit, not what is computed): any difference is listed and is a stop (order 3.8).\nWrites SF/checks/compare_<kind>.json and .md. scientific_verdict: null.",
+ "rows": [
+  {
+   "unit": "B0_b10/LoD2",
+   "r13": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/checks/dry/r13_B0_b10_LoD2",
+   "r14": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_B0_b10_LoD2",
+   "arrays": 1014,
+   "report_keys": 3300,
+   "differences": {}
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "r13": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/checks/dry/r13_B173nb_b10_LoD2",
+   "r14": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_B173nb_b10_LoD2",
+   "arrays": 854,
+   "report_keys": 2780,
+   "differences": {}
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "r13": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/checks/dry/r13_B173nb_b10_ALS",
+   "r14": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_B173nb_b10_ALS",
+   "arrays": 854,
+   "report_keys": 2780,
+   "differences": {}
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "r13": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/checks/dry/r13_R1rep_b10_LoD2",
+   "r14": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_R1rep_b10_LoD2",
+   "arrays": 1374,
+   "report_keys": 4470,
+   "differences": {}
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "r13": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/checks/dry/r13_R1rep_b10_ALS",
+   "r14": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_R1rep_b10_ALS",
+   "arrays": 1374,
+   "report_keys": 4470,
+   "differences": {}
+  },
+  {
+   "unit": "B0a15/LoD2",
+   "r13": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/checks/dry/r13_B0a15_LoD2",
+   "r14": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_B0a15_LoD2",
+   "arrays": 94,
+   "report_keys": 310,
+   "differences": {}
+  },
+  {
+   "unit": "B173_b0/LoD2",
+   "r13": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r13_B173_b0_LoD2",
+   "r14": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_B173_b0_LoD2",
+   "arrays": 602,
+   "report_keys": 1961,
+   "differences": {}
+  }
+ ],
+ "all_equal": true,
+ "scientific_verdict": null
+}
