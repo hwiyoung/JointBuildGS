@@ -1,0 +1,297 @@
+{
+ "rule": "PHD-MAIN-FIX-v1 3.4 / 6.3: the spread pooled again with the B173\ub9cc LoD2 cell that the r14 re-run of prop_LoD2_s0 makes two-seeded, for\nreference only (never used in a decision) (jointbuildgs:dev, CPU; run_cpu_fix.sh; reads the stage-1 gate file, the metrics and the\nmeasure outputs only).\n\n  - gate conditions 1 and 4: stage 2's ruler cells (stage-1 gate_final s0 / s1, the gate samples >= 10,000 rule) with the B173\ub9cc LoD2\n    cell's seed 0 = the r14 re-run (the gate quantities: 1 = spread.prior_error.main.spread, 4 = completeness.premise_band.all.le_0.2);\n    conditions 2 and 3 keep their pools (the B173\ub9cc LoD2 gate samples are 1,080 and 781 < 10,000);\n  - the non-gate metrics of stage 2's ruler (ruler_s2.NONGATE, the metric's own sample unit), the r14 re-run's metrics read where they\n    live (f_common.metrics_file);\n  - ruler_s2.pooled unchanged (s_r^2 = mean of (x0 - x1)^2 / 2 over the kept cells, r = 2.8 s_r), next to the fixed ruler (SF/prep/ruler.json).\n  python ruler_ref_fix.py      -> SF/tables/fix_ruler_ref.json, .md\nscientific_verdict: null.",
+ "cell": "B173_b0/LoD2",
+ "seed0_rerun_present": true,
+ "gate": {
+  "1": {
+   "fixed": {
+    "r": 0.01635593103433736,
+    "dof": 5
+   },
+   "again": {
+    "r": 0.015260000000000001,
+    "dof": 6,
+    "kept": [
+     "B0_b10/LoD2",
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "B173_b0/LoD2",
+     "B173_b0/ALS",
+     "R1rep_b10/LoD2"
+    ]
+   },
+   "cell": [
+    0.0547,
+    0.0508,
+    116310
+   ]
+  },
+  "4": {
+   "fixed": {
+    "r": 0.00977329695309276,
+    "dof": 6
+   },
+   "again": {
+    "r": 0.009484640214578446,
+    "dof": 7,
+    "kept": [
+     "B0_b10/LoD2",
+     "B0_b10/ALS",
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "B173_b0/LoD2",
+     "R1rep_b10/LoD2",
+     "R1rep_b10/ALS"
+    ]
+   },
+   "cell": [
+    0.954,
+    0.9502,
+    58782
+   ]
+  }
+ },
+ "nongate": {
+  "inheritance_rate": {
+   "fixed": {
+    "r": 0.040340897362354154,
+    "dof": 3
+   },
+   "again": {
+    "r": 0.03799987894717553,
+    "dof": 4,
+    "kept": [
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "B173_b0/LoD2",
+     "B173_b0/ALS"
+    ]
+   },
+   "cell": [
+    0.8301,
+    0.8452,
+    15369
+   ]
+  },
+  "past_shape_prior_error": {
+   "fixed": {
+    "r": 0.013130178978216557,
+    "dof": 4
+   },
+   "again": {
+    "r": 0.011829130145534793,
+    "dof": 5,
+    "kept": [
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "B173_b0/LoD2",
+     "B173_b0/ALS",
+     "R1rep_b10/LoD2"
+    ]
+   },
+   "cell": [
+    0.008,
+    0.0096,
+    16835
+   ]
+  },
+  "missing_agreement_completeness_0_2": {
+   "fixed": {
+    "r": 0.03286632318955062,
+    "dof": 1
+   },
+   "again": {
+    "r": 0.03286632318955062,
+    "dof": 1,
+    "kept": [
+     "B0_b10/LoD2"
+    ]
+   },
+   "cell": [
+    0.9299,
+    0.9315,
+    1984
+   ]
+  },
+  "missing_prior_error_inflow": {
+   "fixed": {
+    "r": null,
+    "dof": 0
+   },
+   "again": {
+    "r": null,
+    "dof": 0,
+    "kept": []
+   },
+   "cell": [
+    0.1714,
+    0.1048,
+    210
+   ]
+  },
+  "observation_error_inflow": {
+   "fixed": {
+    "r": 0.015746732994497574,
+    "dof": 4
+   },
+   "again": {
+    "r": 0.014124327948614008,
+    "dof": 5,
+    "kept": [
+     "B0_b10/LoD2",
+     "B173nb_b10/LoD2",
+     "B173_b0/LoD2",
+     "R1rep_b10/LoD2",
+     "R1rep_b10/ALS"
+    ]
+   },
+   "cell": [
+    0.4625,
+    0.4637,
+    15169
+   ]
+  },
+  "supported_share_unseen": {
+   "fixed": {
+    "r": 0.03809801044674118,
+    "dof": 3
+   },
+   "again": {
+    "r": 0.03809801044674118,
+    "dof": 3,
+    "kept": [
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "B173_b0/ALS"
+    ]
+   },
+   "cell": null
+  },
+  "fine_distance_obs_within_cm": {
+   "fixed": {
+    "r": 1.1285424227737302,
+    "dof": 1
+   },
+   "again": {
+    "r": 1.1285424227737302,
+    "dof": 1,
+    "kept": [
+     "R1rep_b10/ALS"
+    ]
+   },
+   "cell": [
+    22.729,
+    22.649,
+    1468
+   ]
+  },
+  "fine_distance_support_cm": {
+   "fixed": {
+    "r": 0.5770499458452447,
+    "dof": 7
+   },
+   "again": {
+    "r": 0.5661589441137531,
+    "dof": 8,
+    "kept": [
+     "B0_b10/LoD2",
+     "B0_b10/ALS",
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "B173_b0/LoD2",
+     "B173_b0/ALS",
+     "R1rep_b10/LoD2",
+     "R1rep_b10/ALS"
+    ]
+   },
+   "cell": [
+    5.21,
+    5.454,
+    83202
+   ]
+  },
+  "fine_distance_prior_error_cm": {
+   "fixed": {
+    "r": 0.14873509337073063,
+    "dof": 5
+   },
+   "again": {
+    "r": 0.1367349260430559,
+    "dof": 6,
+    "kept": [
+     "B0_b10/LoD2",
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "B173_b0/LoD2",
+     "B173_b0/ALS",
+     "R1rep_b10/LoD2"
+    ]
+   },
+   "cell": [
+    4.829,
+    4.849,
+    116969
+   ]
+  },
+  "gentle_roof_nmad_new_cm": {
+   "fixed": {
+    "r": 0.4551615097962475,
+    "dof": 4
+   },
+   "again": {
+    "r": 0.4551615097962475,
+    "dof": 4,
+    "kept": [
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "R1rep_b10/LoD2",
+     "R1rep_b10/ALS"
+    ]
+   },
+   "cell": [
+    9.19,
+    4.6,
+    781
+   ]
+  },
+  "band_share_1to2_all": {
+   "fixed": {
+    "r": 0.0031471468560163003,
+    "dof": 6
+   },
+   "again": {
+    "r": 0.0031471468560163003,
+    "dof": 6,
+    "kept": [
+     "B0_b10/LoD2",
+     "B0_b10/ALS",
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "R1rep_b10/LoD2",
+     "R1rep_b10/ALS"
+    ]
+   },
+   "cell": null
+  },
+  "band_share_lt1_all": {
+   "fixed": {
+    "r": 0.003512112374815613,
+    "dof": 6
+   },
+   "again": {
+    "r": 0.003512112374815613,
+    "dof": 6,
+    "kept": [
+     "B0_b10/LoD2",
+     "B0_b10/ALS",
+     "B173nb_b10/LoD2",
+     "B173nb_b10/ALS",
+     "R1rep_b10/LoD2",
+     "R1rep_b10/ALS"
+    ]
+   },
+   "cell": null
+  }
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,192 @@
+{
+ "rule": "PHD-MAIN-FIX-v1 6.4: the four r14 trainings next to the trainings they re-ran (jointbuildgs:dev, CPU; run_cpu_fix.sh; reads receipts,\nmonitor scalars, the stop records and the memory records only).\n\nPer training: status and the last scalar record; the failed render request and the PyTorch allocation at that moment (from the CUDA\nerror in the stop record); the allocation peak (torch.cuda.max_memory_allocated, every 100) at 10,000 / 12,000 / 14,000 and at the end;\nthe minutes to the same iteration as the original (the last iteration both have). The original: the stage-2 r13 run (stage-2 trainings)\nor stage 1's r12 run (B173\ub9cc). The memory record of 13,000-15,000 (r14 only): the largest 99th percentile of the screen radius and the\nlargest tile count of the records.\n  python r14_status.py      -> SF/tables/fix_r14_status.json, .md\nscientific_verdict: null.",
+ "runs": [
+  {
+   "site": "B173nb_b10",
+   "result": "abl_prop_LoD2_s0",
+   "what": "B173 \uc8fc\ubcc0 \u00b7 \ud310\uc815 \ube4c\ub824 \uc624\uae30 \ub044\uae30 LoD2",
+   "r14": {
+    "status": "OOM",
+    "last": 13200,
+    "oom": {
+     "request_gib": 19.02,
+     "total_gib": 23.56,
+     "free_gib": 18.92,
+     "allocated_gib": 3.52,
+     "short_gib": 0.09999999999999787
+    },
+    "peaks": {
+     "10000": 8.108827590942383,
+     "12000": 16.18599796295166,
+     "end": 16.511744022369385
+    },
+    "minutes_to_common": 19.46344296905833,
+    "nvsmi_peak_gib": 17.7099609375
+   },
+   "original": {
+    "fork": "r13",
+    "status": "OOM",
+    "last": 14400,
+    "oom": {
+     "request_gib": 15.06,
+     "total_gib": 23.56,
+     "free_gib": 14.5,
+     "allocated_gib": 7.94,
+     "short_gib": 0.5600000000000005
+    },
+    "peaks": {
+     "10000": 10.905776023864746,
+     "12000": 11.962648391723633,
+     "14000": 16.935692310333252,
+     "end": 21.99037456512451
+    },
+    "minutes_to_common": 18.85543988243056
+   },
+   "common_iteration": 13200,
+   "memlog": {
+    "records": 3,
+    "radius_q99_max": 213500.53125,
+    "tiles_max": 16250373
+   }
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "sens_trunc8_LoD2_s0",
+   "what": "R1 \u00b7 \uc808\ub2e8 \ubc30\uc218 8\ubc30 LoD2",
+   "r14": {
+    "status": "OOM",
+    "last": 14200,
+    "oom": {
+     "request_gib": 19.77,
+     "total_gib": 23.56,
+     "free_gib": 19.33,
+     "allocated_gib": 3.53,
+     "short_gib": 0.4400000000000013
+    },
+    "peaks": {
+     "10000": 10.88552713394165,
+     "12000": 12.586941242218018,
+     "14000": 19.559438705444336,
+     "end": 19.559438705444336
+    },
+    "minutes_to_common": 22.321135580213742,
+    "nvsmi_peak_gib": 13.5380859375
+   },
+   "original": {
+    "fork": "r13",
+    "status": "OOM",
+    "last": 14300,
+    "oom": {
+     "request_gib": 15.23,
+     "total_gib": 23.56,
+     "free_gib": 13.94,
+     "allocated_gib": 8.81,
+     "short_gib": 1.290000000000001
+    },
+    "peaks": {
+     "10000": 15.541437149047852,
+     "12000": 16.677175045013428,
+     "14000": 19.598069190979004,
+     "end": 19.598069190979004
+    },
+    "minutes_to_common": 21.677381571863467
+   },
+   "common_iteration": 14200,
+   "memlog": {
+    "records": 13,
+    "radius_q99_max": 306669.8125,
+    "tiles_max": 23037728
+   }
+  },
+  {
+   "site": "B173_b0",
+   "result": "prop_LoD2_s0",
+   "what": "B173\ub9cc \u00b7 \ubcf8 \ubc29\ubc95 LoD2 \uc528\uc557 0",
+   "r14": {
+    "status": "PASS",
+    "last": 30000,
+    "oom": null,
+    "peaks": {
+     "10000": 6.75990629196167,
+     "12000": 8.085282802581787,
+     "14000": 8.458389282226562,
+     "end": 16.462320804595947
+    },
+    "minutes_to_common": 21.727298331509033,
+    "nvsmi_peak_gib": 18.1064453125
+   },
+   "original": {
+    "fork": "r12",
+    "status": "OOM",
+    "last": 14800,
+    "oom": {
+     "request_gib": 11.7,
+     "total_gib": 23.56,
+     "free_gib": 10.86,
+     "allocated_gib": 11.83,
+     "short_gib": 0.8399999999999999
+    },
+    "peaks": {
+     "10000": 8.714672565460205,
+     "12000": 13.309420585632324,
+     "14000": 16.301680088043213,
+     "end": 22.04072856903076
+    },
+    "minutes_to_common": 23.14601331598436
+   },
+   "common_iteration": 14800,
+   "memlog": {
+    "records": 21,
+    "radius_q99_max": 381087.21875,
+    "tiles_max": 22116119
+   }
+  },
+  {
+   "site": "B173_b0",
+   "result": "imgonly_s0",
+   "what": "B173\ub9cc \u00b7 \uc601\uc0c1\ub9cc \uc528\uc557 0",
+   "r14": {
+    "status": "OOM",
+    "last": 10800,
+    "oom": {
+     "request_gib": 22.41,
+     "total_gib": 23.56,
+     "free_gib": 19.37,
+     "allocated_gib": 3.53,
+     "short_gib": 3.039999999999999
+    },
+    "peaks": {
+     "10000": 9.585419178009033,
+     "end": 22.39459753036499
+    },
+    "minutes_to_common": 13.136399591512356,
+    "nvsmi_peak_gib": 9.5302734375
+   },
+   "original": {
+    "fork": "r12",
+    "status": "OOM",
+    "last": 13600,
+    "oom": {
+     "request_gib": 0.09375,
+     "total_gib": 23.56,
+     "free_gib": 0.03943359375,
+     "allocated_gib": 22.85,
+     "short_gib": 0.05431640625
+    },
+    "peaks": {
+     "10000": 8.113743782043457,
+     "12000": 15.680964469909668,
+     "end": 20.849689483642578
+    },
+    "minutes_to_common": 12.947027031580607
+   },
+   "common_iteration": 10800,
+   "memlog": {
+    "records": 0,
+    "radius_q99_max": null,
+    "tiles_max": null
+   }
+  }
+ ],
+ "scientific_verdict": null
+}
