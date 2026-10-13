@@ -1,0 +1,63 @@
+{
+ "place": {
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "kind": "map",
+  "u_range": [
+   114.68864588610323,
+   191.8393093039404
+  ],
+  "v_range": [
+   76.46707733135226,
+   110.03253253922274
+  ],
+  "component": {
+   "patches": 16336,
+   "area_m2": 1021.0,
+   "gt_points": 1148830
+  },
+  "candidates": {
+   "patches": 21741,
+   "area_m2": 1358.8,
+   "components": 111
+  },
+  "why": "GeoGS prior error (code 11)",
+  "panels": [
+   "사전 정보 신뢰(GeoGS) 1단계",
+   "고친 GeoGS",
+   "본 방법 씨앗 0"
+  ]
+ },
+ "patches": 16838,
+ "panels": {
+  "trust_LoD2": {
+   "old_place_share": 0.010274379379973868,
+   "gaussians": 176,
+   "zoom_share": 0.24324324324324326
+  },
+  "trust_LoD2_fix1": {
+   "old_place_share": 0.016153937522271053,
+   "gaussians": 204,
+   "zoom_share": 0.2882882882882883
+  },
+  "prop_LoD2_s0": {
+   "old_place_share": 0.009858653046680129,
+   "gaussians": 136,
+   "zoom_share": 0.19369369369369369
+  }
+ },
+ "zoom": {
+  "u_range": [
+   180.68864588610325,
+   190.68864588610325
+  ],
+  "v_range": [
+   88.46707733135226,
+   98.46707733135226
+  ],
+  "patches": 222,
+  "area_share_of_cluster": 0.01318446371303005,
+  "patches_differing_two_geogs": 363,
+  "differing_inside": 84
+ }
+}

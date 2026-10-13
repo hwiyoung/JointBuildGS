@@ -1,0 +1,628 @@
+{
+ "rule": "PHD-MAIN-FIX-v1 6.1-4: the stage-1 tables outside the gate that compared with \uc0ac\uc804 \uc815\ubcf4 \uc2e0\ub8b0(GeoGS), made again with the fixed GeoGS\nnext to stage 1's (jointbuildgs:dev, CPU; run_cpu_fix.sh; reads the metrics only).\n\n  - the stage-1 report's 5.5 (completeness of the missing / invisible agreement rows, pooled over the sites) and 5.6 (the correction-rate\n    curve and boundary, pooled, with the per-site boundaries), LoD2: stage 1's final_s1.pooled_completeness / pooled_curves unchanged, the\n    metric rows of a result read where they live (f_common.metrics_file: the fixed GeoGS from this task, the others from stage 1);\n  - the pools are stage 1's (final_s1.common_sites: the sites where the method has both seeds in stage 1 = B0, B173 \uc8fc\ubcc0, R1), so the stage-1\n    rows of the table are reproduced as they were and the fixed GeoGS is pooled over the same sites.\n  python pooled_fix.py      -> SF/tables/fix_pooled.json, .md\nscientific_verdict: null.",
+ "completeness": {
+  "LoD2/prop_LoD2_s0/missing_agreement": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 19459,
+   "le_0_2": 0.933,
+   "le_0_5": 0.9776
+  },
+  "LoD2/prop_LoD2_s0/invisible_agreement": {
+   "sites": [
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 20,
+   "le_0_2": 0.75,
+   "le_0_5": 0.9
+  },
+  "LoD2/prop_LoD2_s1/missing_agreement": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 19459,
+   "le_0_2": 0.9255,
+   "le_0_5": 0.9851
+  },
+  "LoD2/prop_LoD2_s1/invisible_agreement": {
+   "sites": [
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 20,
+   "le_0_2": 0.75,
+   "le_0_5": 0.9
+  },
+  "LoD2/imgonly_s0/missing_agreement": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 19459,
+   "le_0_2": 0.901,
+   "le_0_5": 0.9699
+  },
+  "LoD2/imgonly_s0/invisible_agreement": {
+   "sites": [
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 20,
+   "le_0_2": 0.5,
+   "le_0_5": 0.9
+  },
+  "LoD2/trust_LoD2/missing_agreement": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 19459,
+   "le_0_2": 0.5789,
+   "le_0_5": 0.9766
+  },
+  "LoD2/trust_LoD2/invisible_agreement": {
+   "sites": [
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "n": 20,
+   "le_0_2": 0.8,
+   "le_0_5": 1.0
+  },
+  "LoD2/trust_LoD2_fix1/missing_agreement": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10"
+   ],
+   "n": 18747,
+   "le_0_2": 0.5103,
+   "le_0_5": 0.986
+  },
+  "LoD2/trust_LoD2_fix1/invisible_agreement": {
+   "sites": [
+    "B173nb_b10"
+   ],
+   "n": 17,
+   "le_0_2": 0.8824,
+   "le_0_5": 1.0
+  },
+  "LoD2/trust_LoD2@same/missing_agreement": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10"
+   ],
+   "n": 18747,
+   "le_0_2": 0.5698,
+   "le_0_5": 0.9769
+  },
+  "LoD2/trust_LoD2@same/invisible_agreement": {
+   "sites": [
+    "B173nb_b10"
+   ],
+   "n": 17,
+   "le_0_2": 0.7647,
+   "le_0_5": 1.0
+  }
+ },
+ "curves": {
+  "LoD2/prop_LoD2_s0": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "raw_counts": [
+    39735,
+    24605,
+    12932,
+    4201,
+    19436,
+    102713
+   ],
+   "groups": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     5
+    ]
+   ],
+   "curve": [
+    {
+     "bin": [
+      1.0,
+      1.5
+     ],
+     "points": 39735,
+     "correction_rate": 0.7329
+    },
+    {
+     "bin": [
+      1.5,
+      2.0
+     ],
+     "points": 24605,
+     "correction_rate": 0.8021
+    },
+    {
+     "bin": [
+      2.0,
+      3.0
+     ],
+     "points": 12932,
+     "correction_rate": 0.7746
+    },
+    {
+     "bin": [
+      3.0,
+      8.0
+     ],
+     "points": 23637,
+     "correction_rate": 0.8574
+    },
+    {
+     "bin": [
+      8.0,
+      null
+     ],
+     "points": 102713,
+     "correction_rate": 0.9891
+    }
+   ],
+   "boundary_tau": 1.0,
+   "per_site": {
+    "B0_b10": {
+     "boundary_tau": 1.0,
+     "boundary_roof_m": 0.198
+    },
+    "B173nb_b10": {
+     "boundary_tau": 1.5,
+     "boundary_roof_m": 0.264
+    },
+    "R1rep_b10": {
+     "boundary_tau": 1.0,
+     "boundary_roof_m": 0.683
+    }
+   }
+  },
+  "LoD2/prop_LoD2_s1": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "raw_counts": [
+    39735,
+    24605,
+    12932,
+    4201,
+    19436,
+    102713
+   ],
+   "groups": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     5
+    ]
+   ],
+   "curve": [
+    {
+     "bin": [
+      1.0,
+      1.5
+     ],
+     "points": 39735,
+     "correction_rate": 0.7501
+    },
+    {
+     "bin": [
+      1.5,
+      2.0
+     ],
+     "points": 24605,
+     "correction_rate": 0.7927
+    },
+    {
+     "bin": [
+      2.0,
+      3.0
+     ],
+     "points": 12932,
+     "correction_rate": 0.8044
+    },
+    {
+     "bin": [
+      3.0,
+      8.0
+     ],
+     "points": 23637,
+     "correction_rate": 0.8536
+    },
+    {
+     "bin": [
+      8.0,
+      null
+     ],
+     "points": 102713,
+     "correction_rate": 0.9876
+    }
+   ],
+   "boundary_tau": 1.0,
+   "per_site": {
+    "B0_b10": {
+     "boundary_tau": 1.0,
+     "boundary_roof_m": 0.198
+    },
+    "B173nb_b10": {
+     "boundary_tau": 1.5,
+     "boundary_roof_m": 0.264
+    },
+    "R1rep_b10": {
+     "boundary_tau": 1.0,
+     "boundary_roof_m": 0.683
+    }
+   }
+  },
+  "LoD2/imgonly_s0": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "raw_counts": [
+    39735,
+    24605,
+    12932,
+    4201,
+    19436,
+    102713
+   ],
+   "groups": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     5
+    ]
+   ],
+   "curve": [
+    {
+     "bin": [
+      1.0,
+      1.5
+     ],
+     "points": 39735,
+     "correction_rate": 0.6581
+    },
+    {
+     "bin": [
+      1.5,
+      2.0
+     ],
+     "points": 24605,
+     "correction_rate": 0.7649
+    },
+    {
+     "bin": [
+      2.0,
+      3.0
+     ],
+     "points": 12932,
+     "correction_rate": 0.7331
+    },
+    {
+     "bin": [
+      3.0,
+      8.0
+     ],
+     "points": 23637,
+     "correction_rate": 0.8469
+    },
+    {
+     "bin": [
+      8.0,
+      null
+     ],
+     "points": 102713,
+     "correction_rate": 0.9871
+    }
+   ],
+   "boundary_tau": 1.0,
+   "per_site": {
+    "B0_b10": {
+     "boundary_tau": 1.0,
+     "boundary_roof_m": 0.198
+    },
+    "B173nb_b10": {
+     "boundary_tau": 1.5,
+     "boundary_roof_m": 0.264
+    },
+    "R1rep_b10": {
+     "boundary_tau": 1.0,
+     "boundary_roof_m": 0.683
+    }
+   }
+  },
+  "LoD2/trust_LoD2": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+   ],
+   "raw_counts": [
+    39735,
+    24605,
+    12932,
+    4201,
+    19436,
+    102713
+   ],
+   "groups": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     5
+    ]
+   ],
+   "curve": [
+    {
+     "bin": [
+      1.0,
+      1.5
+     ],
+     "points": 39735,
+     "correction_rate": 0.3826
+    },
+    {
+     "bin": [
+      1.5,
+      2.0
+     ],
+     "points": 24605,
+     "correction_rate": 0.3606
+    },
+    {
+     "bin": [
+      2.0,
+      3.0
+     ],
+     "points": 12932,
+     "correction_rate": 0.5312
+    },
+    {
+     "bin": [
+      3.0,
+      8.0
+     ],
+     "points": 23637,
+     "correction_rate": 0.3632
+    },
+    {
+     "bin": [
+      8.0,
+      null
+     ],
+     "points": 102713,
+     "correction_rate": 0.6035
+    }
+   ],
+   "boundary_tau": 8.0,
+   "per_site": {
+    "B0_b10": {
+     "boundary_tau": 1.5,
+     "boundary_roof_m": 0.296
+    },
+    "B173nb_b10": {
+     "boundary_tau": 8.0,
+     "boundary_roof_m": 1.408
+    },
+    "R1rep_b10": {
+     "boundary_tau": null,
+     "boundary_roof_m": null
+    }
+   }
+  },
+  "LoD2/trust_LoD2_fix1": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10"
+   ],
+   "raw_counts": [
+    24175,
+    11879,
+    7318,
+    2845,
+    4979,
+    99021
+   ],
+   "groups": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     4,
+     5
+    ]
+   ],
+   "curve": [
+    {
+     "bin": [
+      1.0,
+      1.5
+     ],
+     "points": 24175,
+     "correction_rate": 0.257
+    },
+    {
+     "bin": [
+      1.5,
+      2.0
+     ],
+     "points": 11879,
+     "correction_rate": 0.2577
+    },
+    {
+     "bin": [
+      2.0,
+      4.0
+     ],
+     "points": 10163,
+     "correction_rate": 0.5545
+    },
+    {
+     "bin": [
+      4.0,
+      null
+     ],
+     "points": 104000,
+     "correction_rate": 0.8925
+    }
+   ],
+   "boundary_tau": 2.0,
+   "per_site": {
+    "B0_b10": {
+     "boundary_tau": 1.5,
+     "boundary_roof_m": 0.296
+    },
+    "B173nb_b10": {
+     "boundary_tau": 8.0,
+     "boundary_roof_m": 1.408
+    }
+   }
+  },
+  "LoD2/trust_LoD2@same": {
+   "sites": [
+    "B0_b10",
+    "B173nb_b10"
+   ],
+   "raw_counts": [
+    24175,
+    11879,
+    7318,
+    2845,
+    4979,
+    99021
+   ],
+   "groups": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     4,
+     5
+    ]
+   ],
+   "curve": [
+    {
+     "bin": [
+      1.0,
+      1.5
+     ],
+     "points": 24175,
+     "correction_rate": 0.3043
+    },
+    {
+     "bin": [
+      1.5,
+      2.0
+     ],
+     "points": 11879,
+     "correction_rate": 0.224
+    },
+    {
+     "bin": [
+      2.0,
+      4.0
+     ],
+     "points": 10163,
+     "correction_rate": 0.644
+    },
+    {
+     "bin": [
+      4.0,
+      null
+     ],
+     "points": 104000,
+     "correction_rate": 0.6263
+    }
+   ],
+   "boundary_tau": 2.0,
+   "per_site": {
+    "B0_b10": {
+     "boundary_tau": 1.5,
+     "boundary_roof_m": 0.296
+    },
+    "B173nb_b10": {
+     "boundary_tau": 8.0,
+     "boundary_roof_m": 1.408
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

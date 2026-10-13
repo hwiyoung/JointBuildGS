@@ -1,0 +1,112 @@
+{
+ "rule": "PHD-MAIN-FIX-v1 6.1-3: which of the two GeoGS fixes reaches the condition-1 region of a unit (jointbuildgs:dev, CPU; run_cpu_fix.sh;\nreads the regions, the initial points and the DA3 pre-training check only; no result is read).\n\nPer LoD2 gate unit (B0, B173 \uc8fc\ubcc0, R1): the region = the evaluated prior-error patches (code 11, the cells of condition 1).\n  occlusion fix   the initial samples the working visibility check dropped (pcd_fix1.npz, ~kept) within 0.5 m of a region patch centre\n                  (the centres lie on the registered prior surface, the samples on the LoD2 faces): their count and the share of the region's\n                  patches with one of them (and with any of the 100,000 samples, for scale)\n  DA3 scale fix   (only B173 \uc8fc\ubcc0 has new depth) the training views whose DA3 map changed by more than 10 % (preload_fix1.json, median new / old):\n                  the share of the region's patches inside such a view's frame (in front of the camera, inside 1024 x 741; no occlusion test:\n                  the depth loss of that view acts on whatever the rays through those pixels render), next to the share inside any training\n                  view's frame\n  python touch_fix.py       -> SF/tables/fix_touch.json, .md\nscientific_verdict: null.",
+ "units": {
+  "B0_b10": {
+   "region_patches": 6421,
+   "region_area_m2": 401.3125,
+   "dropped": 119,
+   "dropped_near_region": 0,
+   "patches_with_dropped": {
+    "patches": 0,
+    "share": 0.0,
+    "area_share": 0.0
+   },
+   "patches_with_any_sample": {
+    "patches": 6204,
+    "share": 0.9662046410216477,
+    "area_share": 0.9662046410216477
+   },
+   "views_train": 243,
+   "views_changed": [],
+   "patches_in_changed_views": {
+    "patches": 0,
+    "share": 0.0,
+    "area_share": 0.0
+   },
+   "patches_in_any_view": {
+    "patches": 6421,
+    "share": 1.0,
+    "area_share": 1.0
+   },
+   "views_per_patch_median": 118.0,
+   "changed_views_per_patch_median": 0.0,
+   "changed_share_of_patch_view_pairs": 0.0
+  },
+  "B173nb_b10": {
+   "region_patches": 21741,
+   "region_area_m2": 1358.8125,
+   "dropped": 7880,
+   "dropped_near_region": 107,
+   "patches_with_dropped": {
+    "patches": 301,
+    "share": 0.01384480934639621,
+    "area_share": 0.01384480934639621
+   },
+   "patches_with_any_sample": {
+    "patches": 20716,
+    "share": 0.9528540545513086,
+    "area_share": 0.9528540545513086
+   },
+   "views_train": 203,
+   "views_changed": [
+    "DJI_20241217093907_0027_D",
+    "DJI_20241217093909_0028_D",
+    "DJI_20241217093911_0029_D",
+    "DJI_20241217094010_0030_D",
+    "DJI_20241217100329_0019_D",
+    "DJI_20241217100331_0020_D",
+    "DJI_20241217100337_0023_D",
+    "DJI_20241217100339_0024_D",
+    "DJI_20241217100341_0025_D",
+    "DJI_20241217100343_0026_D",
+    "DJI_20241217100345_0027_D",
+    "DJI_20241217100347_0028_D"
+   ],
+   "patches_in_changed_views": {
+    "patches": 21741,
+    "share": 1.0,
+    "area_share": 1.0
+   },
+   "patches_in_any_view": {
+    "patches": 21741,
+    "share": 1.0,
+    "area_share": 1.0
+   },
+   "views_per_patch_median": 57.0,
+   "changed_views_per_patch_median": 5.0,
+   "changed_share_of_patch_view_pairs": 0.08547553027011984
+  },
+  "R1rep_b10": {
+   "region_patches": 11518,
+   "region_area_m2": 719.875,
+   "dropped": 686,
+   "dropped_near_region": 0,
+   "patches_with_dropped": {
+    "patches": 0,
+    "share": 0.0,
+    "area_share": 0.0
+   },
+   "patches_with_any_sample": {
+    "patches": 11490,
+    "share": 0.9975690223997222,
+    "area_share": 0.9975690223997222
+   },
+   "views_train": 333,
+   "views_changed": [],
+   "patches_in_changed_views": {
+    "patches": 0,
+    "share": 0.0,
+    "area_share": 0.0
+   },
+   "patches_in_any_view": {
+    "patches": 11518,
+    "share": 1.0,
+    "area_share": 1.0
+   },
+   "views_per_patch_median": 137.0,
+   "changed_views_per_patch_median": 0.0,
+   "changed_share_of_patch_view_pairs": 0.0
+  }
+ },
+ "scientific_verdict": null
+}
