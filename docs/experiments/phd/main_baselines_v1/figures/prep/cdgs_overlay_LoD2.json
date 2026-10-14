@@ -1,0 +1,20 @@
+{
+ "site": "B173nb_b10",
+ "prior": "LoD2",
+ "view": "DJI_20241217084503_0075_D",
+ "selection": "training view whose LoD2 hit share is closest to the site's 90th percentile",
+ "hit_share": 0.538,
+ "sfm_points_used": 4596,
+ "scale": 0.9315,
+ "shift_m": 7.526,
+ "L_align": 0.28853,
+ "depth_weight": 9.59e-20,
+ "confidence_mean_on_hit": 0.6063,
+ "confidence_median_on_hit": 0.6482,
+ "confidence_share_ge_0_5_on_hit": 0.8081,
+ "boundary_pixels": 14305,
+ "boundary_rule": "edge of the hit region + depth steps > max(1 m, 2 %) between 4-neighbours",
+ "scientific_verdict": null,
+ "line": "DJI_20241217084503_0075_D  ·  닿은 화소 53.8 %  ·  SfM 점 4596  ·  축척 0.9315  ·  이동 7.526 m  ·  정렬 손실 0.28853  ·  깊이 가중 9.59e-20  ·  닿은 화소의 신뢰도 평균 0.6063",
+ "title": "LoD2 렌더 깊이의 경계는 영상의 건물 윤곽 위에 놓이고, CDGS 신뢰도는 닿은 화소 전체에서 0.6 안팎으로 고르다"
+}

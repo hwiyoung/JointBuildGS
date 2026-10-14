@@ -1,0 +1,43 @@
+# PHD-MAIN-BASELINES-v1 (order v1.1, 5.1 item 2): runtime of the official 2D Gaussian Splatting comparator
+# (github.com/hbb1/2d-gaussian-splatting f3e3b9fa67bbd1c75e05167ff37391d8dab2a678, Inria/MPII Gaussian-Splatting licence,
+# non-commercial research use). Only the environment is built here; the code runs from a read-only mount of
+# SB/sources/2d-gaussian-splatting-adapters-v1 (the clone + the adapters of order 5.2, diffs in
+# docs/experiments/phd/main_baselines_v1/provenance/twodgs/).
+#
+# Base = the frozen official GeoGS image (Python 3.10.20 env /opt/geogs, PyTorch 2.1.2+cu121, CUDA compiler 12.1.105,
+# gcc 11.4, sm_86). 2DGS's own submodule pins are rebuilt from its clone and replace the base image's builds:
+#   diff-surfel-rasterization e0ed0207b3e0669960cfad70852200a4a5847f61 (the same commit and the same source as GeoGS's),
+#   simple-knn                f155ec04131cb579f53443a06879d37115f4612f (GeoGS pins 86710c2, which adds only #include <cfloat>).
+# Build context = the untouched clone:
+#   docker build -f Dockerfile.2dgs-official-v1 -t jointbuildgs:2dgs-official-f3e3b9f-v1 \
+#     ../JointBuildGS-artifacts/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting
+# Differences from the README environment (environment.yml: Python 3.8.18, PyTorch 2.0.0, torchvision 0.15.0, open3d 0.18.0,
+# mediapy 1.1.2, scikit-image 0.21.0, tqdm 4.66.2, trimesh 4.3.2, pillow 10.2.0, ffmpeg 4.2.2) are those of the base image;
+# the full list with versions is in docs/experiments/phd/main_baselines_v1/provenance/twodgs/environment.md.
+# No tensorboard (not in environment.yml either), so train.py logs to stdout only, as the README environment does.
+# scientific_verdict: null
+ARG TWODGS_BASE_IMAGE=jointbuildgs:geogs-official-db40c95-v1
+FROM ${TWODGS_BASE_IMAGE}
+
+LABEL org.opencontainers.image.title="JointBuildGS official 2D Gaussian Splatting comparator runtime"
+LABEL org.opencontainers.image.revision="f3e3b9fa67bbd1c75e05167ff37391d8dab2a678"
+LABEL jbgs.task_id="PHD-MAIN-BASELINES-v1"
+LABEL jbgs.submodules="diff-surfel-rasterization e0ed0207b3e0669960cfad70852200a4a5847f61; simple-knn f155ec04131cb579f53443a06879d37115f4612f"
+LABEL jbgs.runtime.deviation="Python 3.10.20, PyTorch 2.1.2+cu121, CUDA compiler 12.1.105 (base image jointbuildgs:geogs-official-db40c95-v1) instead of the README's Python 3.8.18, PyTorch 2.0.0; source unchanged"
+
+ENV PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PIP_NO_CACHE_DIR=1
+ENV TORCH_CUDA_ARCH_LIST=8.6 MAX_JOBS=2
+COPY submodules/diff-surfel-rasterization /opt/2dgs-source/submodules/diff-surfel-rasterization
+COPY submodules/simple-knn /opt/2dgs-source/submodules/simple-knn
+RUN python -m pip uninstall -y diff-surfel-rasterization simple-knn \
+    && python -m pip install /opt/2dgs-source/submodules/diff-surfel-rasterization --no-build-isolation \
+    && python -m pip install /opt/2dgs-source/submodules/simple-knn --no-build-isolation \
+    && python -c "import torch, diff_surfel_rasterization, simple_knn._C; print('2dgs runtime ok', torch.__version__, torch.version.cuda)"
+RUN python -m pip freeze > /opt/2dgs-runtime-freeze.txt
+# The base env's ICU 78 needs a newer C++ runtime than the system one: without this, importing the official
+# utils/mesh_utils.py (render.py) stops with "CXXABI_1.3.15 not found" (train.py imports fine). The same preload as
+# jointbuildgs:geogs-official-db40c95-compat-v1 and the fix task's GeoGS command; no Python package changes.
+ENV LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6
+WORKDIR /workspace/2dgs
+ENTRYPOINT []
+CMD ["python", "--version"]

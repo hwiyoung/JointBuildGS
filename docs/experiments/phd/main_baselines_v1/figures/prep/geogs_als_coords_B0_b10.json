@@ -1,0 +1,48 @@
+{
+ "site": "B0_b10",
+ "figure": "geogs_als_coords_B0_b10.png",
+ "rule": "PHD-MAIN-BASELINES-v1 5.4 item 5 (and 8 'input check' figures): the coordinate check of the GeoGS ALS input, one figure per site\n(jointbuildgs:dev, CPU; IMG=dev run_als_cpu.sh). Rules of the figures (order 8): the title is the one thing to see; one colour job (the ALS\nbuilding part in orange against LoD2 in black; the rest of the ALS TIN, not given to GeoGS, in grey as context); names on the figure, no\nlegend; the numbers in one line under it; the numbers in a json beside the png.\n\n  left   plan view (local frame x = E - 690953, y = N - 5336071, m) over the extent of the ALS building part + 5 m (the LoD2 buildings\n         run past the box): the ALS building part given to GeoGS (als_building.obj faces) filled, the LoD2 surfaces' outlines (faces of\n         type 0 roof and 1 wall, as lod2.obj) on top, the section line dashed\n  right  the vertical section along that line: LoD2, the ALS building part, the left-out ALS faces (ground and faces with one building\n         vertex) in grey\nSection by rule, fixed before drawing: the building with the largest footprint among those wholly inside the box (DR footprints.json,\ninside_share >= 0.99), through its footprint centroid along the footprint's shorter principal axis (across the roof), from 8 m before to\n8 m after the footprint. Its numbers: the roof-height difference ALS building part - LoD2 at 0.25 m steps inside the footprint where\nvertical rays from above hit both (median, count).\n  python als_figs.py <site>     -> /figs/geogs_als_coords_<site>.png, .json\nscientific_verdict: null.",
+ "title": "항공 LiDAR 건물 부분은 LoD2와 같은 자리에 놓이고, 지붕 끝에서 땅까지 비스듬한 면이 함께 들어간다",
+ "footer": "B0 · 정합 이동 (-0.048, +0.043, 0) m, 정합 사본과 꼭짓점 좌표 차 0 m · 건물 부분 삼각형 121,146개, 26,477 m², 가파른 면 넓이 몫 88.5 % · 지역 전체 깊이(학습 영상): 본 방법 렌더와 차의 중앙값 0 m, 1 cm 넘게 다른 화소 5.3 %(그 가운데 98.7 %는 넣지 않은 면 뒤) · 이 단면: 지붕 높이 차(건물 부분 − LoD2) 중앙값 +0.08 m (77점)",
+ "site_numbers": {
+  "registration_shift_m": [
+   -0.048193370826016664,
+   0.04305113898865463,
+   0.0
+  ],
+  "max_vertex_diff_to_registered_copy_m": 0.0,
+  "building_faces": 121146,
+  "area_m2": 26477.4,
+  "steep_area_share": 0.8850716449362097,
+  "depth_median_abs_diff_m": 0.0,
+  "depth_share_gt_1cm": 0.05301752615500866,
+  "gt_1cm_share_behind_left_out_face": 0.9873565611046412,
+  "full_tin_first_face_one_building_vertex_share": 0.056903488908718665
+ },
+ "section": {
+  "building": "DEBY_LOD2_4959323",
+  "footprint_area_m2": 1358.7774499975208,
+  "centre_local": [
+   113.46040145391784,
+   24.94543093311135
+  ],
+  "direction": [
+   0.9244563936348406,
+   -0.3812877866751892
+  ],
+  "s_from_m": -22.50421421374545,
+  "s_to_m": 18.888374170830332,
+  "roof_height_diff_als_minus_lod2_m": {
+   "n": 77,
+   "median": 0.07825469970703125,
+   "q10": 0.0635894775390625,
+   "q90": 0.09551544189453125
+  },
+  "segments": {
+   "lod2": 17,
+   "als_building_part": 249,
+   "als_left_out": 124
+  }
+ },
+ "scientific_verdict": null
+}

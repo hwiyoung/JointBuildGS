@@ -1,0 +1,20 @@
+{
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "view": "DJI_20241217084503_0075_D",
+ "selection": "training view whose LoD2 hit share is closest to the site's 90th percentile",
+ "hit_share": 0.6528,
+ "sfm_points_used": 6467,
+ "scale": 0.8521,
+ "shift_m": 11.749,
+ "L_align": 0.19249,
+ "depth_weight": 1.73e-13,
+ "confidence_mean_on_hit": 0.6569,
+ "confidence_median_on_hit": 0.698,
+ "confidence_share_ge_0_5_on_hit": 0.8837,
+ "boundary_pixels": 11779,
+ "boundary_rule": "edge of the hit region + depth steps > max(1 m, 2 %) between 4-neighbours",
+ "scientific_verdict": null,
+ "line": "DJI_20241217084503_0075_D  ·  닿은 화소 65.3 %  ·  SfM 점 6467  ·  축척 0.8521  ·  이동 11.749 m  ·  정렬 손실 0.19249  ·  깊이 가중 1.73e-13  ·  닿은 화소의 신뢰도 평균 0.6569",
+ "title": "항공 LiDAR 렌더 깊이의 단차는 영상의 건물 윤곽을 따르고, CDGS 신뢰도는 닿은 화소 전체에서 0.65 안팎으로 고르다"
+}

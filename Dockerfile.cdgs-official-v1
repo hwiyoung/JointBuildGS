@@ -1,0 +1,61 @@
+# PHD-MAIN-BASELINES-v1 (order v1.1, 5.1 item 2): runtime of the official CDGS comparator
+# (github.com/zqlin0521/cdgs-release db853c1, "CDGS: Confidence-Aware Depth Regularization for 3D Gaussian Splatting";
+# Inria/MPII Gaussian-Splatting licence, non-commercial research use). Only the environment is built here; the code runs from a
+# read-only mount of SB/sources/cdgs-release-adapters-v1 (the clone + the adapters of order 5.2 and 5.5, diffs in
+# docs/experiments/phd/main_baselines_v1/provenance/cdgs/).
+#
+# README environment: Ubuntu 22.04, CUDA 11.8, Python 3.8 (conda), torch 2.0.1+cu118, torchvision 0.15.2+cu118,
+# torchaudio 2.0.2+cu118, requirements.txt (plyfile, tqdm, matplotlib, opencv-python, joblib, timm==0.6.7,
+# pytorch3d==0.7.4+pt201cu118, the two in-repo submodules editable). Built the same, with these differences:
+#   - CUDA 11.8 comes from the base image nvidia/cuda:11.8.0-devel-ubuntu22.04 instead of `conda install cuda-toolkit`.
+#   - pytorch3d 0.7.4 is installed from the same wheel index with `-f` (the requirements line `pytorch3d==... @ <html page>`
+#     is not an installable pip reference).
+#   - scipy and imageio are added: scene/dataset_readers.py imports them at module level and requirements.txt omits them.
+#   - tiny-cuda-nn (README step 3) is not installed: no file of the training, rendering or reading path imports tinycudann.
+#   - the two submodules are installed from a copy (not editable) after deleting the prebuilt _C.*.so files that the
+#     repository ships, and rebuilt for sm_86 (TORCH_CUDA_ARCH_LIST=8.6).
+#   - lpips is NOT pip-installed (repository issue 5: it shadows the in-repo lpipsPyTorch). No tensorboard (not in the
+#     README environment either): train.py then prints its "tb_writer is None" line every 10 iterations, as it would there.
+#   - opencv-python is pinned to 4.12.0.88, the last release before the commit date (2025-09-23); unpinned it resolves to
+#     5.0.0.93 on the build day.
+# The other unpinned requirements resolve to the newest versions for Python 3.8 on the build day; the full list is
+# /opt/cdgs-runtime-freeze.txt in the image (copied to the provenance folder).
+# Build context = the untouched clone:
+#   docker build -f Dockerfile.cdgs-official-v1 -t jointbuildgs:cdgs-official-db853c1-v1 \
+#     ../JointBuildGS-artifacts/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/cdgs-release
+# scientific_verdict: null
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+
+LABEL org.opencontainers.image.title="JointBuildGS official CDGS comparator runtime"
+LABEL org.opencontainers.image.revision="db853c1"
+LABEL jbgs.task_id="PHD-MAIN-BASELINES-v1"
+LABEL jbgs.submodules="diff-gaussian-rasterization-depth-acc, simple-knn (in-repo copies of db853c1, prebuilt .so deleted, rebuilt sm_86)"
+LABEL jbgs.runtime.deviation="CUDA 11.8 from the base image; pytorch3d via -f wheel index; scipy and imageio added; no tiny-cuda-nn, no lpips, no tensorboard"
+
+ARG MINIFORGE=24.11.3-2
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends wget ca-certificates git build-essential ninja-build libgl1 libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+RUN wget -q "https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE}/Miniforge3-${MINIFORGE}-Linux-x86_64.sh" -O /tmp/miniforge.sh \
+    && bash /tmp/miniforge.sh -b -p /opt/conda && rm /tmp/miniforge.sh \
+    && /opt/conda/bin/conda create -y -p /opt/cdgs --override-channels -c conda-forge python=3.8.20 pip \
+    && /opt/conda/bin/conda clean -afy
+ENV PATH="/opt/cdgs/bin:${PATH}"
+ENV PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PIP_NO_CACHE_DIR=1
+ENV TORCH_CUDA_ARCH_LIST=8.6 MAX_JOBS=4
+RUN python -m pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 torchaudio==2.0.2+cu118 \
+      --extra-index-url https://download.pytorch.org/whl/cu118
+COPY requirements.txt /opt/cdgs-source/requirements.txt
+RUN python -m pip install ninja plyfile tqdm matplotlib opencv-python==4.12.0.88 joblib timm==0.6.7 \
+    && python -m pip install pytorch3d==0.7.4 -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py38_cu118_pyt201/download.html \
+    && python -m pip install scipy imageio
+COPY submodules /opt/cdgs-source/submodules
+RUN find /opt/cdgs-source/submodules -name '*.so' -print -delete \
+    && python -m pip install /opt/cdgs-source/submodules/diff-gaussian-rasterization-depth-acc --no-build-isolation \
+    && python -m pip install /opt/cdgs-source/submodules/simple-knn --no-build-isolation \
+    && python -c "import torch, pytorch3d, timm, scipy, imageio, cv2, plyfile, matplotlib; from diff_gaussian_rasterization_depth_acc import _C; from simple_knn._C import distCUDA2; print('cdgs runtime ok', torch.__version__, torch.version.cuda, pytorch3d.__version__, matplotlib.__version__)"
+RUN python -m pip freeze > /opt/cdgs-runtime-freeze.txt
+WORKDIR /workspace/cdgs
+ENTRYPOINT []
+CMD ["python", "--version"]

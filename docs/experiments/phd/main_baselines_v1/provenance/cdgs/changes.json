@@ -1,0 +1,131 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "method": "CDGS",
+ "repository": "github.com/zqlin0521/cdgs-release",
+ "commit": "db853c11f185a5a6cf6fe40e26cc106d209fa012",
+ "commit_date": "2025-09-23",
+ "licence": "Inria/MPII Gaussian-Splatting licence (non-commercial research and evaluation)",
+ "untouched_clone": "SB/sources/cdgs-release",
+ "adapted_copy": "SB/sources/cdgs-release-adapters-v1",
+ "diff": "cdgs-release-adapters-v1.diff",
+ "changes": [
+  {
+   "file": "jbgs_camera_adapter.py",
+   "kind": "added",
+   "order_4_2": "input reading: principal point",
+   "what": "byte-identical copy of GeoGS's adapter (S1/geogs/source/GeoGS-official-adapters-v1, sha256 06510fab...): the projection matrix's P00, P11 = 2 fx / W, 2 fy / H and P02, P12 = (2 cx + 1 - W) / W, (2 cy + 1 - H) / H from the scene's jbgs_calibration.json (cx, cy in the rasterizers' pixel convention = the measurement's centre - 0.5), so the 3DGS rasterizer's ndc2Pix puts a point where the fork's camera does"
+  },
+  {
+   "file": "utils/camera_utils.py",
+   "kind": "modified",
+   "order_4_2": "input reading: principal point",
+   "what": "loadCam returns maybe_calibrate_camera(Camera(...), args, cam_info) (training, evaluation and CDGS's render.py cameras)"
+  },
+  {
+   "file": "scene/dataset_readers.py",
+   "kind": "modified",
+   "order_4_2": "input reading: principal point",
+   "what": "readColmapCameras: K of the SfM-depth projection (the alignment targets) from jbgs_calibration.json instead of (W/2, H/2)"
+  },
+  {
+   "file": "scene/dataset_readers.py",
+   "kind": "modified",
+   "order_4_2": "input reading: prior depth incl. masking of no-hit pixels (order 5.5 2)",
+   "what": "a prior pixel without a hit (NaN, inf, <= 0) is left out: (i) of the alignment: its SfM target and weight are set to 0 before the weights' max-normalisation and the code's own 0.1 % prune (the code's existing mask = target > 0); (ii) of the aligned depth: set to 0 after the fit (the training loss's existing mask original_depth > 0); (iii) of the confidence map: jbgs_calculate_confidence_hit = the same Canny/Laplacian/Sobel features and weights 0.2/0.5/0.3 with every statistic (Laplacian max, each min-max, the final min-max) over the hit pixels, the Sobel input extended at no-hit pixels by the nearest hit pixel's depth (no artificial step at the end of the prior's coverage, as the image border), 0 at no-hit pixels; with every pixel hit it equals calculate_confidence. A view with no SfM target left on hit pixels after the code's own prune (the alignment would return NaN) gets no depth and no depth loss"
+  },
+  {
+   "file": "scene/dataset_readers.py",
+   "kind": "modified",
+   "order_4_2": "logging: alignment scale, shift, loss",
+   "what": "optimize_depth keeps scale, shift, loss, SfM targets used, Adam steps (_JBGS_LAST); readColmapCameras logs them per training view with the hit share and weight 0.6 exp(-150 L) to <scene>/jbgs_alignment.json; JBGS_KEEP_ALIGN_ARRAYS=1 (checks only) keeps the target pixels in memory. The fit itself is unchanged"
+  },
+  {
+   "file": "arguments/__init__.py",
+   "kind": "modified",
+   "order_4_2": "input reading: prior depth",
+   "what": "predefined_depth_path default None -> '' so that --predefined_depth_path parses (with None argparse types it NoneType and rejects every value: 'invalid NoneType value'); '' is falsy, so the reader's own test 'if use_predefined_depth and predefined_depth_path' is unchanged"
+  },
+  {
+   "file": "train.py",
+   "kind": "modified",
+   "order_4_2": "input reading: prior depth incl. masking of no-hit pixels (order 5.5 2)",
+   "what": "with --use_predefined_depth the per-view min-max normalisation of the prior depth and of the rendered depth is taken over the loss's own mask (original_depth > 0 = the prior-hit pixels) and is 0 outside it (official: over the whole image, which with a partial prior would put the prior's minimum at 0 and compare two differently normalised depths); the rest of the depth loss is the official line (mean over all pixels, so a no-hit pixel weighs 0); a view-iteration whose hit pixels cannot be normalised (prior or render constant on them) has no depth loss and is counted (jbgs_depth_skipped.jsonl)"
+  },
+  {
+   "file": "train.py",
+   "kind": "modified",
+   "order_4_2": "logging: weights, memory; order 3.7 and 4.10",
+   "what": "jbgs_cameras.json (the training and evaluation views the run uses), jbgs_train_log.jsonl every 100 iterations (loss terms, depth weight, Gaussians, PyTorch memory), jbgs_train_summary.json; a NaN loss raises and stops (order 3.7); any stop writes jbgs_stop.json (iteration, image, Gaussians, PyTorch memory, nvidia-smi, traceback; order 4.10) and re-raises"
+  },
+  {
+   "file": "submodules/diff-gaussian-rasterization-depth-acc/diff_gaussian_rasterization_depth_acc/_C.cpython-3{7m,8}-x86_64-linux-gnu.so",
+   "kind": "deleted",
+   "order_4_2": "version pinning in the Docker build",
+   "what": "the repository's prebuilt binaries are deleted; the image rebuilds the rasterizer and simple-knn for sm_86 from the in-repo sources"
+  }
+ ],
+ "not_changed": [
+  "the alignment (optimize_depth: Adam lr 1.0, decay 0.8 per 100 steps, stop rule, 0.1 % prune, reprojection-error weights)",
+  "the confidence features and weights",
+  "the loss 0.8 L1 + 0.2 (1 - SSIM) + mean(|gt - render * mask| * confidence) * 0.6 exp(-150 L_align)",
+  "densification, optimiser, learning rates, iterations, test and save iterations",
+  "the renderer and its depth out_depth = D / A",
+  "split_index.json and the scene files are inputs (cdgs_scenes.py), not code"
+ ],
+ "deviations": {
+  "data_device": "cuda (default): --data_device cpu raises at official train.py line 133 (depth * depth_mask: the CUDA render times the mask on the data device), prep/cdgs/envcheck.json; order 5.2 3 keeps the default then",
+  "seed": "the official train.py does not fix a seed (safe_state(args.quiet) is commented out); only np.random.seed(42) in the split reader. Runs are not bit-reproducible; no seed is added (order 4.2)",
+  "pipeline_debug": "PipelineParams.debug defaults to True in CDGS (copies every rasterizer input to the CPU before each call for its error dump); kept in training; the post-processing renders with debug False (same values)",
+  "test_renders": "training_report writes the test renders to a path built from model_path.split('/') that drops the leading '/', so they land under <working dir>/ph/... (official behaviour, kept)",
+  "debug_dir": "debug/ (relative) in the working directory = the run folder; aligned depths and PNGs per training view (official default debug_output True)"
+ },
+ "file_sha256": {
+  "train.py": {
+   "official": "30a92965bf278c778967947f0a1d70f1b90e30e57f24848cfda827aeae09bbba",
+   "adapted": "5b909e5305e158029dc536ef7248e5700896b361437ac7e4c5d3f2c45f162950"
+  },
+  "scene/dataset_readers.py": {
+   "official": "e70163ada9a3371e90caaac4f0f3ed4a7e8a617a933c12e394b5799b7dfdf284",
+   "adapted": "0070455111b54edbac95eaff904db0d8b9a764605c3145d61ec9b1b5396d30e7"
+  },
+  "utils/camera_utils.py": {
+   "official": "a62b53e5bc565127ee1e0c36c95668966292c714489dd80a91c451add11360da",
+   "adapted": "16d76c4e997e00e68e40fd2d0cce53371d9ecd451c390c77e1fabcec3d668d15"
+  },
+  "arguments/__init__.py": {
+   "official": "26619bd6487dbf3600d12799fe12efe85c238bec7a7450aad11701879f115198",
+   "adapted": "65e346c61ae2af91f16faf3295f3c46bcff792b6b98caeca62cfe7b2d0d30a4f"
+  },
+  "jbgs_camera_adapter.py": {
+   "official": null,
+   "adapted": "06510fab2e5d3e348eab0621d504cef450b051f1d19efddfaabe3d80ba9a8109"
+  }
+ },
+ "environment": {
+  "image": "jointbuildgs:cdgs-official-db853c1-v1",
+  "image_id": "sha256:4670d5d67bfc12c59147371da19cc9a3b4bfe7cd6debd1519a643c2766ced754",
+  "dockerfile": "Dockerfile.cdgs-official-v1",
+  "base": "nvidia/cuda:11.8.0-devel-ubuntu22.04",
+  "python": "3.8.20 (conda-forge, Miniforge 24.11.3-2)",
+  "torch": "2.0.1+cu118",
+  "torchvision": "0.15.2+cu118",
+  "torchaudio": "2.0.2+cu118",
+  "nvcc": "11.8.89",
+  "gcc": "11.4.0",
+  "pytorch3d": "0.7.4 (fbaipublicfiles py38_cu118_pyt201 wheel via -f)",
+  "timm": "0.6.7",
+  "opencv_python": "4.12.0.88 (pinned: last release before the commit date 2025-09-23; unpinned 5.0.0.93)",
+  "numpy": "1.24.4",
+  "scipy": "1.10.1 (added: imported by scene/dataset_readers.py, not in requirements.txt)",
+  "imageio": "2.35.1 (added, same reason)",
+  "not_installed": [
+   "tiny-cuda-nn (README step 3; nothing imports tinycudann)",
+   "lpips (issue 5)",
+   "tensorboard (not in the README environment)"
+  ],
+  "TORCH_CUDA_ARCH_LIST": "8.6",
+  "gpu": "NVIDIA GeForce RTX 3090 (sm_86)",
+  "freeze": "environment_freeze.txt"
+ },
+ "scientific_verdict": null
+}
