@@ -1,0 +1,436 @@
+{
+ "rule": "What must hold:\n  r15 (out-of-memory record on) vs r14 default: nothing differs (dry and probe; the record acts only on an out-of-memory error).\n  r14 --jbgs_sw_judgment 0 vs r14 default: only what reads the judgment may differ; deep checks: the patch states, E, the image points and\n  the geometry of the initial points are equal; votes change only on support patches and only to agree; judgments change only on\n  missing patches and only to agree; planted changes only False -> True; g_p changes only 0 -> 1; the confidence (A), patch (lm) and\n  mark (mk) maps are equal; in the probe E and the prior-origin set are equal and every added protection sits on a Gaussian that the\n  default judged conflict or that only the switched run planted.\n  python compare_s3.py dry|probe        -> S3/checks/compare_<kind>.json, .md\nscientific_verdict: null.",
+ "r15_vs_r14": [
+  {
+   "a": "r14_B0_b10_LoD2_s0",
+   "b": "r15_B0_b10_LoD2_s0",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_B0_b10_ALS_s0",
+   "b": "r15_B0_b10_ALS_s0",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_B173nb_b10_LoD2_s0",
+   "b": "r15_B173nb_b10_LoD2_s0",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_B173nb_b10_ALS_s0",
+   "b": "r15_B173nb_b10_ALS_s0",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_R1rep_b10_LoD2_s0",
+   "b": "r15_R1rep_b10_LoD2_s0",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_R1rep_b10_ALS_s0",
+   "b": "r15_R1rep_b10_ALS_s0",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  }
+ ],
+ "judgment_off": [
+  {
+   "a": "r14_B0_b10_LoD2_s0",
+   "b": "r14sj_B0_b10_LoD2_s0",
+   "n_differences": 263,
+   "unexpected": [],
+   "differences": {
+    "json:checkpoint.here_planted [expected]": 1,
+    "json:checkpoint.same_planted [expected]": 1,
+    "json:decisions.density_exempt [expected]": 1,
+    "json:decisions.floor_rows [expected]": 1,
+    "json:decisions.gradient_protected [expected]": 1,
+    "json:decisions.prune_candidates [expected]": 1,
+    "json:decisions.prune_candidates_opacity [expected]": 1,
+    "json:decisions.reset_exempt [expected]": 1,
+    "json:depth_term.off_gt_hi [expected]": 1,
+    "json:depth_term.off_lt1 [expected]": 1,
+    "json:depth_term.off_w0 [expected]": 1,
+    "json:depth_term.on [expected]": 1,
+    "json:depth_term.on_1_hi [expected]": 1,
+    "json:loss_sums.mvs [expected]": 1,
+    "json:loss_sums.prior [expected]": 1,
+    "json:re_read.n_conflict_excluded [expected]": 1,
+    "json:re_read.n_locked [expected]": 1,
+    "json:switches.judgment [expected]": 1,
+    "probe:conflict [expected]": 1,
+    "probe:dens [expected]": 1,
+    "probe:grad_abs_sum [expected]": 1,
+    "probe:init_id [expected]": 1,
+    "probe:lock [expected]": 1,
+    "probe:mvs_loss [expected]": 1,
+    "probe:on_<view> [expected]": 236,
+    "probe:prior_loss [expected]": 1,
+    "probe:prune_cand [expected]": 1,
+    "probe:reset_ex [expected]": 1
+   }
+  },
+  {
+   "a": "r14_B0_b10_ALS_s0",
+   "b": "r14sj_B0_b10_ALS_s0",
+   "n_differences": 247,
+   "unexpected": [],
+   "differences": {
+    "json:checkpoint.here_planted [expected]": 1,
+    "json:checkpoint.same_planted [expected]": 1,
+    "json:decisions.density_exempt [expected]": 1,
+    "json:decisions.floor_rows [expected]": 1,
+    "json:decisions.gradient_protected [expected]": 1,
+    "json:decisions.prune_candidates [expected]": 1,
+    "json:decisions.prune_candidates_opacity [expected]": 1,
+    "json:decisions.reset_exempt [expected]": 1,
+    "json:depth_term.off_gt_hi [expected]": 1,
+    "json:depth_term.off_lt1 [expected]": 1,
+    "json:depth_term.off_w0 [expected]": 1,
+    "json:depth_term.on [expected]": 1,
+    "json:depth_term.on_1_hi [expected]": 1,
+    "json:loss_sums.mvs [expected]": 1,
+    "json:loss_sums.prior [expected]": 1,
+    "json:re_read.n_conflict_excluded [expected]": 1,
+    "json:re_read.n_locked [expected]": 1,
+    "json:switches.judgment [expected]": 1,
+    "probe:conflict [expected]": 1,
+    "probe:dens [expected]": 1,
+    "probe:grad_abs_sum [expected]": 1,
+    "probe:init_id [expected]": 1,
+    "probe:lock [expected]": 1,
+    "probe:mvs_loss [expected]": 1,
+    "probe:on_<view> [expected]": 220,
+    "probe:prior_loss [expected]": 1,
+    "probe:prune_cand [expected]": 1,
+    "probe:reset_ex [expected]": 1
+   }
+  },
+  {
+   "a": "r14_B173nb_b10_LoD2_s0",
+   "b": "r14sj_B173nb_b10_LoD2_s0",
+   "n_differences": 212,
+   "unexpected": [],
+   "differences": {
+    "json:checkpoint.here_planted [expected]": 1,
+    "json:checkpoint.same_planted [expected]": 1,
+    "json:decisions.density_exempt [expected]": 1,
+    "json:decisions.floor_rows [expected]": 1,
+    "json:decisions.gradient_protected [expected]": 1,
+    "json:decisions.prune_candidates [expected]": 1,
+    "json:decisions.prune_candidates_opacity [expected]": 1,
+    "json:decisions.reset_exempt [expected]": 1,
+    "json:depth_term.off_gt_hi [expected]": 1,
+    "json:depth_term.off_lt1 [expected]": 1,
+    "json:depth_term.off_w0 [expected]": 1,
+    "json:depth_term.on [expected]": 1,
+    "json:depth_term.on_1_hi [expected]": 1,
+    "json:loss_sums.mvs [expected]": 1,
+    "json:loss_sums.prior [expected]": 1,
+    "json:re_read.n_conflict_excluded [expected]": 1,
+    "json:re_read.n_locked [expected]": 1,
+    "json:switches.judgment [expected]": 1,
+    "probe:conflict [expected]": 1,
+    "probe:dens [expected]": 1,
+    "probe:grad_abs_sum [expected]": 1,
+    "probe:init_id [expected]": 1,
+    "probe:lock [expected]": 1,
+    "probe:mvs_loss [expected]": 1,
+    "probe:on_<view> [expected]": 185,
+    "probe:prior_loss [expected]": 1,
+    "probe:prune_cand [expected]": 1,
+    "probe:reset_ex [expected]": 1
+   }
+  },
+  {
+   "a": "r14_B173nb_b10_ALS_s0",
+   "b": "r14sj_B173nb_b10_ALS_s0",
+   "n_differences": 214,
+   "unexpected": [],
+   "differences": {
+    "json:checkpoint.here_planted [expected]": 1,
+    "json:checkpoint.same_planted [expected]": 1,
+    "json:decisions.density_exempt [expected]": 1,
+    "json:decisions.floor_rows [expected]": 1,
+    "json:decisions.gradient_protected [expected]": 1,
+    "json:decisions.prune_candidates [expected]": 1,
+    "json:decisions.prune_candidates_opacity [expected]": 1,
+    "json:decisions.reset_exempt [expected]": 1,
+    "json:depth_term.off_gt_hi [expected]": 1,
+    "json:depth_term.off_lt1 [expected]": 1,
+    "json:depth_term.off_w0 [expected]": 1,
+    "json:depth_term.on [expected]": 1,
+    "json:depth_term.on_1_hi [expected]": 1,
+    "json:loss_sums.mvs [expected]": 1,
+    "json:loss_sums.prior [expected]": 1,
+    "json:re_read.n_conflict_excluded [expected]": 1,
+    "json:re_read.n_locked [expected]": 1,
+    "json:switches.judgment [expected]": 1,
+    "probe:conflict [expected]": 1,
+    "probe:dens [expected]": 1,
+    "probe:grad_abs_sum [expected]": 1,
+    "probe:init_id [expected]": 1,
+    "probe:lock [expected]": 1,
+    "probe:mvs_loss [expected]": 1,
+    "probe:on_<view> [expected]": 187,
+    "probe:prior_loss [expected]": 1,
+    "probe:prune_cand [expected]": 1,
+    "probe:reset_ex [expected]": 1
+   }
+  },
+  {
+   "a": "r14_R1rep_b10_LoD2_s0",
+   "b": "r14sj_R1rep_b10_LoD2_s0",
+   "n_differences": 301,
+   "unexpected": [],
+   "differences": {
+    "json:checkpoint.here_planted [expected]": 1,
+    "json:checkpoint.same_planted [expected]": 1,
+    "json:decisions.density_exempt [expected]": 1,
+    "json:decisions.floor_rows [expected]": 1,
+    "json:decisions.gradient_protected [expected]": 1,
+    "json:decisions.prune_candidates [expected]": 1,
+    "json:decisions.prune_candidates_opacity [expected]": 1,
+    "json:decisions.reset_exempt [expected]": 1,
+    "json:depth_term.off_gt_hi [expected]": 1,
+    "json:depth_term.off_lt1 [expected]": 1,
+    "json:depth_term.off_w0 [expected]": 1,
+    "json:depth_term.on [expected]": 1,
+    "json:depth_term.on_1_hi [expected]": 1,
+    "json:loss_sums.mvs [expected]": 1,
+    "json:loss_sums.prior [expected]": 1,
+    "json:re_read.n_conflict_excluded [expected]": 1,
+    "json:re_read.n_locked [expected]": 1,
+    "json:switches.judgment [expected]": 1,
+    "probe:conflict [expected]": 1,
+    "probe:dens [expected]": 1,
+    "probe:grad_abs_sum [expected]": 1,
+    "probe:init_id [expected]": 1,
+    "probe:lock [expected]": 1,
+    "probe:mvs_loss [expected]": 1,
+    "probe:on_<view> [expected]": 274,
+    "probe:prior_loss [expected]": 1,
+    "probe:prune_cand [expected]": 1,
+    "probe:reset_ex [expected]": 1
+   }
+  },
+  {
+   "a": "r14_R1rep_b10_ALS_s0",
+   "b": "r14sj_R1rep_b10_ALS_s0",
+   "n_differences": 341,
+   "unexpected": [],
+   "differences": {
+    "json:checkpoint.here_planted [expected]": 1,
+    "json:checkpoint.same_planted [expected]": 1,
+    "json:decisions.density_exempt [expected]": 1,
+    "json:decisions.floor_rows [expected]": 1,
+    "json:decisions.gradient_protected [expected]": 1,
+    "json:decisions.reset_exempt [expected]": 1,
+    "json:depth_term.off_gt_hi [expected]": 1,
+    "json:depth_term.off_lt1 [expected]": 1,
+    "json:depth_term.off_w0 [expected]": 1,
+    "json:depth_term.on [expected]": 1,
+    "json:depth_term.on_1_hi [expected]": 1,
+    "json:loss_sums.mvs [expected]": 1,
+    "json:loss_sums.prior [expected]": 1,
+    "json:re_read.n_conflict_excluded [expected]": 1,
+    "json:re_read.n_locked [expected]": 1,
+    "json:switches.judgment [expected]": 1,
+    "probe:conflict [expected]": 1,
+    "probe:dens [expected]": 1,
+    "probe:grad_abs_sum [expected]": 1,
+    "probe:init_id [expected]": 1,
+    "probe:lock [expected]": 1,
+    "probe:mvs_loss [expected]": 1,
+    "probe:on_<view> [expected]": 317,
+    "probe:prior_loss [expected]": 1,
+    "probe:reset_ex [expected]": 1
+   }
+  }
+ ],
+ "deep": {
+  "B0_b10/LoD2": {
+   "E_equal": true,
+   "prior_equal": true,
+   "init_id_mapped_differs": 2215582,
+   "lock": {
+    "added": 5137,
+    "removed": 0,
+    "added_not_conflict_or_new": 0
+   },
+   "conflict_after": 0,
+   "re_read_equal": {
+    "n": true,
+    "n_prior": true,
+    "n_located": true,
+    "n_prior_E_below": true,
+    "n_prior_far": true
+   },
+   "ok": true
+  },
+  "B0_b10/ALS": {
+   "E_equal": true,
+   "prior_equal": true,
+   "init_id_mapped_differs": 153433,
+   "lock": {
+    "added": 162,
+    "removed": 0,
+    "added_not_conflict_or_new": 0
+   },
+   "conflict_after": 0,
+   "re_read_equal": {
+    "n": true,
+    "n_prior": true,
+    "n_located": true,
+    "n_prior_E_below": true,
+    "n_prior_far": true
+   },
+   "ok": true
+  },
+  "B173nb_b10/LoD2": {
+   "E_equal": true,
+   "prior_equal": true,
+   "init_id_mapped_differs": 2215939,
+   "lock": {
+    "added": 9514,
+    "removed": 0,
+    "added_not_conflict_or_new": 0
+   },
+   "conflict_after": 0,
+   "re_read_equal": {
+    "n": true,
+    "n_prior": true,
+    "n_located": true,
+    "n_prior_E_below": true,
+    "n_prior_far": true
+   },
+   "ok": true
+  },
+  "B173nb_b10/ALS": {
+   "E_equal": true,
+   "prior_equal": true,
+   "init_id_mapped_differs": 342449,
+   "lock": {
+    "added": 525,
+    "removed": 0,
+    "added_not_conflict_or_new": 0
+   },
+   "conflict_after": 0,
+   "re_read_equal": {
+    "n": true,
+    "n_prior": true,
+    "n_located": true,
+    "n_prior_E_below": true,
+    "n_prior_far": true
+   },
+   "ok": true
+  },
+  "R1rep_b10/LoD2": {
+   "E_equal": true,
+   "prior_equal": true,
+   "init_id_mapped_differs": 1385699,
+   "lock": {
+    "added": 60984,
+    "removed": 0,
+    "added_not_conflict_or_new": 0
+   },
+   "conflict_after": 0,
+   "re_read_equal": {
+    "n": true,
+    "n_prior": true,
+    "n_located": true,
+    "n_prior_E_below": true,
+    "n_prior_far": true
+   },
+   "ok": true
+  },
+  "R1rep_b10/ALS": {
+   "E_equal": true,
+   "prior_equal": true,
+   "init_id_mapped_differs": 137699,
+   "lock": {
+    "added": 71,
+    "removed": 0,
+    "added_not_conflict_or_new": 0
+   },
+   "conflict_after": 0,
+   "re_read_equal": {
+    "n": true,
+    "n_prior": true,
+    "n_located": true,
+    "n_prior_E_below": true,
+    "n_prior_far": true
+   },
+   "ok": true
+  }
+ },
+ "radii": {
+  "B0_b10/LoD2": {
+   "visible_rasterizer": 138081061,
+   "visible_python": 138080717,
+   "visible_both": 138080451,
+   "radius_equal": 137657157,
+   "radius_diff_1": 306000,
+   "radius_diff_gt1": 117294,
+   "equal_share": 0.9969344393291415
+  },
+  "B0_b10/ALS": {
+   "visible_rasterizer": 146538711,
+   "visible_python": 146538307,
+   "visible_both": 146538030,
+   "radius_equal": 146109778,
+   "radius_diff_1": 316410,
+   "radius_diff_gt1": 111842,
+   "equal_share": 0.9970775368005153
+  },
+  "B173nb_b10/LoD2": {
+   "visible_rasterizer": 121186637,
+   "visible_python": 121186360,
+   "visible_both": 121186143,
+   "radius_equal": 120871633,
+   "radius_diff_1": 234766,
+   "radius_diff_gt1": 79744,
+   "equal_share": 0.9974047362824312
+  },
+  "B173nb_b10/ALS": {
+   "visible_rasterizer": 128463790,
+   "visible_python": 128463467,
+   "visible_both": 128463239,
+   "radius_equal": 128113889,
+   "radius_diff_1": 262200,
+   "radius_diff_gt1": 87150,
+   "equal_share": 0.9972805449814324
+  },
+  "R1rep_b10/LoD2": {
+   "visible_rasterizer": 190244375,
+   "visible_python": 190243884,
+   "visible_both": 190243512,
+   "radius_equal": 189753989,
+   "radius_diff_1": 365074,
+   "radius_diff_gt1": 124449,
+   "equal_share": 0.9974268610011783
+  },
+  "R1rep_b10/ALS": {
+   "visible_rasterizer": 187079265,
+   "visible_python": 187078820,
+   "visible_both": 187078453,
+   "radius_equal": 186426388,
+   "radius_diff_1": 449767,
+   "radius_diff_gt1": 202298,
+   "equal_share": 0.9965144836856226
+  }
+ },
+ "scientific_verdict": null,
+ "note": "compact copy for the repository: per pair the differing keys and their class (expected / UNEXPECTED); the full differences are in the payload checks/compare_probe.json"
+}

@@ -1,0 +1,3478 @@
+{
+ "rule": "PHD-MAIN-STAGE3-v1 5.4-2: what the observation-confidence mask filters before training, per B0 image-count condition and for '영상 전체'\n(jointbuildgs:dev, CPU; run_cpu3.sh). Per training view of the condition (the per-view maps the fork reads, exported by the s03 run at the\nfork's 1024 x 741 grid: prior depth P, tolerance in depth units TAU (tau map = tau / f), the confidence mask A (conf, 0/1), the MVS\ngeometric depth M (filtered), the patch of each pixel (locmap); the mask-off run's photometric depth Mp = the depth BEFORE filtering):\n  GT depth G   = camera-Z z-buffer of the box GT points (stage 0's s61/box_gt gt_points, the aligned GT of every metric) with the 9 x 9 leak\n                 filter 0.3 m (the prep task's zbuf / gt_clean rule, s04_gt_v6.zbuf unchanged)\n  pixels       = P finite > 0, G finite, Mp finite > 0, the pixel's patch in the B0 evaluation range (region file in_eval)\n  image error  = |Mp - G| > TAU (order: 'the photometric depth before filtering is farther than tau from the GT'; the mask removes the MVS\n                 depth where it filters, so the photometric depth decides)\n  filtered     = image-error pixels with A = 0; missed = image-error pixels with A = 1\n  missed split = r = |M - P| / TAU (the judgment's own height conversion: TAU is tau / f of the pixel): r < 1 (tolerance band: the loss\n                 does not pull), 1 <= r <= k (pull band: the prior pulls), r > k (the judgment releases the prior); k = the conflict\n                 threshold (LoD2 1 tau, ALS 2 tau; LoD2's middle branch is empty by construction)\nPer condition: totals, roof-like / wall-like (the patch kind), and per region code (code_ext_v3 of the condition's region file).\n  python mask_s3.py [<key> ...]      (default: B0_full and the six conditions)  -> S3/prep/mask.json, .md\nscientific_verdict: null.",
+ "rows": {
+  "B0a3": {
+   "views": 2,
+   "total": {
+    "pixels": 84205,
+    "error": 59492,
+    "filtered": 41088,
+    "missed": 18404,
+    "missed_lt1": 11434,
+    "missed_band": 0,
+    "missed_gtk": 6970,
+    "missed_no_mvs": 0,
+    "error_share": 0.7065138649723888,
+    "filtered_share": 0.6906474820143885,
+    "missed_share": 0.30935251798561153,
+    "missed_lt1_share": 0.19219390842466214,
+    "missed_band_share": 0.0,
+    "missed_gtk_share": 0.11715860956094937
+   },
+   "by_kind": {
+    "roof": {
+     "pixels": 60909,
+     "error": 39508,
+     "filtered": 30367,
+     "missed": 9141,
+     "missed_lt1": 4414,
+     "missed_band": 0,
+     "missed_gtk": 4727,
+     "missed_no_mvs": 0,
+     "error_share": 0.648639774089215,
+     "filtered_share": 0.7686291384023489,
+     "missed_share": 0.2313708615976511,
+     "missed_lt1_share": 0.11172420775539131,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.1196466538422598
+    },
+    "wall": {
+     "pixels": 23296,
+     "error": 19984,
+     "filtered": 10721,
+     "missed": 9263,
+     "missed_lt1": 7020,
+     "missed_band": 0,
+     "missed_gtk": 2243,
+     "missed_no_mvs": 0,
+     "error_share": 0.8578296703296703,
+     "filtered_share": 0.5364791833466773,
+     "missed_share": 0.4635208166533227,
+     "missed_lt1_share": 0.3512810248198559,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.11223979183346677
+    }
+   },
+   "by_code": {
+    "0": {
+     "pixels": 2880,
+     "error": 1682,
+     "filtered": 1175,
+     "missed": 507,
+     "missed_lt1": 239,
+     "missed_band": 0,
+     "missed_gtk": 268,
+     "missed_no_mvs": 0,
+     "error_share": 0.5840277777777778,
+     "filtered_share": 0.6985731272294887,
+     "missed_share": 0.3014268727705113,
+     "missed_lt1_share": 0.14209274673008324,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.15933412604042807
+    },
+    "2": {
+     "pixels": 31545,
+     "error": 14842,
+     "filtered": 4998,
+     "missed": 9844,
+     "missed_lt1": 9090,
+     "missed_band": 0,
+     "missed_gtk": 754,
+     "missed_no_mvs": 0,
+     "error_share": 0.470502456807735,
+     "filtered_share": 0.33674706912814983,
+     "missed_share": 0.6632529308718501,
+     "missed_lt1_share": 0.6124511521358308,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.050801778736019404
+    },
+    "3": {
+     "pixels": 13581,
+     "error": 10272,
+     "filtered": 4530,
+     "missed": 5742,
+     "missed_lt1": 1317,
+     "missed_band": 0,
+     "missed_gtk": 4425,
+     "missed_no_mvs": 0,
+     "error_share": 0.7563507841837862,
+     "filtered_share": 0.44100467289719625,
+     "missed_share": 0.5589953271028038,
+     "missed_lt1_share": 0.1282126168224299,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.43078271028037385
+    },
+    "4": {
+     "pixels": 33251,
+     "error": 31611,
+     "filtered": 29609,
+     "missed": 2002,
+     "missed_lt1": 639,
+     "missed_band": 0,
+     "missed_gtk": 1363,
+     "missed_no_mvs": 0,
+     "error_share": 0.9506781750924784,
+     "filtered_share": 0.9366676157033944,
+     "missed_share": 0.0633323842966056,
+     "missed_lt1_share": 0.020214482300465027,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.04311790199614059
+    },
+    "5": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    },
+    "11": {
+     "pixels": 1629,
+     "error": 227,
+     "filtered": 96,
+     "missed": 131,
+     "missed_lt1": 112,
+     "missed_band": 0,
+     "missed_gtk": 19,
+     "missed_no_mvs": 0,
+     "error_share": 0.13934929404542665,
+     "filtered_share": 0.42290748898678415,
+     "missed_share": 0.5770925110132159,
+     "missed_lt1_share": 0.4933920704845815,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.08370044052863436
+    },
+    "12": {
+     "pixels": 590,
+     "error": 255,
+     "filtered": 112,
+     "missed": 143,
+     "missed_lt1": 29,
+     "missed_band": 0,
+     "missed_gtk": 114,
+     "missed_no_mvs": 0,
+     "error_share": 0.4322033898305085,
+     "filtered_share": 0.4392156862745098,
+     "missed_share": 0.5607843137254902,
+     "missed_lt1_share": 0.11372549019607843,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.4470588235294118
+    },
+    "13": {
+     "pixels": 729,
+     "error": 603,
+     "filtered": 568,
+     "missed": 35,
+     "missed_lt1": 8,
+     "missed_band": 0,
+     "missed_gtk": 27,
+     "missed_no_mvs": 0,
+     "error_share": 0.8271604938271605,
+     "filtered_share": 0.9419568822553898,
+     "missed_share": 0.05804311774461028,
+     "missed_lt1_share": 0.013266998341625208,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.04477611940298507
+    },
+    "14": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    }
+   },
+   "per_view": [
+    {
+     "view": "DJI_20241217101323_0014_D",
+     "pixels": 77546,
+     "error": 53556,
+     "filtered": 36773,
+     "missed": 16783
+    },
+    {
+     "view": "DJI_20241217101359_0032_D",
+     "pixels": 6659,
+     "error": 5936,
+     "filtered": 4315,
+     "missed": 1621
+    }
+   ],
+   "paths": [
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a3/export/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a3/export_maskoff/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0a3_LoD2.npz",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a3/box/B0_b10/LoD2/units.npz"
+   ]
+  },
+  "B0n2": {
+   "views": 2,
+   "total": {
+    "pixels": 23484,
+    "error": 14358,
+    "filtered": 9383,
+    "missed": 4975,
+    "missed_lt1": 1816,
+    "missed_band": 0,
+    "missed_gtk": 3159,
+    "missed_no_mvs": 0,
+    "error_share": 0.611394992335207,
+    "filtered_share": 0.6535032734364118,
+    "missed_share": 0.34649672656358826,
+    "missed_lt1_share": 0.12648001114361332,
+    "missed_band_share": 0.0,
+    "missed_gtk_share": 0.22001671541997492
+   },
+   "by_kind": {
+    "roof": {
+     "pixels": 20676,
+     "error": 12280,
+     "filtered": 8014,
+     "missed": 4266,
+     "missed_lt1": 1760,
+     "missed_band": 0,
+     "missed_gtk": 2506,
+     "missed_no_mvs": 0,
+     "error_share": 0.5939253240472044,
+     "filtered_share": 0.6526058631921824,
+     "missed_share": 0.3473941368078176,
+     "missed_lt1_share": 0.14332247557003258,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.20407166123778503
+    },
+    "wall": {
+     "pixels": 2808,
+     "error": 2078,
+     "filtered": 1369,
+     "missed": 709,
+     "missed_lt1": 56,
+     "missed_band": 0,
+     "missed_gtk": 653,
+     "missed_no_mvs": 0,
+     "error_share": 0.74002849002849,
+     "filtered_share": 0.6588065447545717,
+     "missed_share": 0.3411934552454283,
+     "missed_lt1_share": 0.026948989412897015,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.3142444658325313
+    }
+   },
+   "by_code": {
+    "0": {
+     "pixels": 1414,
+     "error": 1060,
+     "filtered": 697,
+     "missed": 363,
+     "missed_lt1": 17,
+     "missed_band": 0,
+     "missed_gtk": 346,
+     "missed_no_mvs": 0,
+     "error_share": 0.7496463932107497,
+     "filtered_share": 0.6575471698113208,
+     "missed_share": 0.3424528301886792,
+     "missed_lt1_share": 0.016037735849056604,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.3264150943396226
+    },
+    "2": {
+     "pixels": 10552,
+     "error": 3004,
+     "filtered": 704,
+     "missed": 2300,
+     "missed_lt1": 1560,
+     "missed_band": 0,
+     "missed_gtk": 740,
+     "missed_no_mvs": 0,
+     "error_share": 0.28468536770280517,
+     "filtered_share": 0.23435419440745672,
+     "missed_share": 0.7656458055925432,
+     "missed_lt1_share": 0.5193075898801598,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.24633821571238348
+    },
+    "3": {
+     "pixels": 3007,
+     "error": 2336,
+     "filtered": 877,
+     "missed": 1459,
+     "missed_lt1": 109,
+     "missed_band": 0,
+     "missed_gtk": 1350,
+     "missed_no_mvs": 0,
+     "error_share": 0.7768540073162621,
+     "filtered_share": 0.3754280821917808,
+     "missed_share": 0.6245719178082192,
+     "missed_lt1_share": 0.04666095890410959,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.5779109589041096
+    },
+    "4": {
+     "pixels": 2802,
+     "error": 2566,
+     "filtered": 2379,
+     "missed": 187,
+     "missed_lt1": 58,
+     "missed_band": 0,
+     "missed_gtk": 129,
+     "missed_no_mvs": 0,
+     "error_share": 0.9157744468236974,
+     "filtered_share": 0.9271239282930631,
+     "missed_share": 0.07287607170693687,
+     "missed_lt1_share": 0.02260327357755261,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.050272798129384254
+    },
+    "5": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    },
+    "11": {
+     "pixels": 229,
+     "error": 153,
+     "filtered": 39,
+     "missed": 114,
+     "missed_lt1": 50,
+     "missed_band": 0,
+     "missed_gtk": 64,
+     "missed_no_mvs": 0,
+     "error_share": 0.6681222707423581,
+     "filtered_share": 0.2549019607843137,
+     "missed_share": 0.7450980392156863,
+     "missed_lt1_share": 0.32679738562091504,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.41830065359477125
+    },
+    "12": {
+     "pixels": 717,
+     "error": 577,
+     "filtered": 144,
+     "missed": 433,
+     "missed_lt1": 17,
+     "missed_band": 0,
+     "missed_gtk": 416,
+     "missed_no_mvs": 0,
+     "error_share": 0.8047419804741981,
+     "filtered_share": 0.24956672443674177,
+     "missed_share": 0.7504332755632582,
+     "missed_lt1_share": 0.029462738301559793,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.7209705372616985
+    },
+    "13": {
+     "pixels": 4763,
+     "error": 4662,
+     "filtered": 4543,
+     "missed": 119,
+     "missed_lt1": 5,
+     "missed_band": 0,
+     "missed_gtk": 114,
+     "missed_no_mvs": 0,
+     "error_share": 0.978794877178249,
+     "filtered_share": 0.9744744744744744,
+     "missed_share": 0.025525525525525526,
+     "missed_lt1_share": 0.0010725010725010724,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.02445302445302445
+    },
+    "14": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    }
+   },
+   "per_view": [
+    {
+     "view": "DJI_20241217084453_0070_D",
+     "pixels": 22138,
+     "error": 13250,
+     "filtered": 8643,
+     "missed": 4607
+    },
+    {
+     "view": "DJI_20241217100333_0021_D",
+     "pixels": 1346,
+     "error": 1108,
+     "filtered": 740,
+     "missed": 368
+    }
+   ],
+   "paths": [
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n2/export/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n2/export_maskoff/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n2_LoD2.npz",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n2/box/B0_b10/LoD2/units.npz"
+   ]
+  },
+  "B0a9": {
+   "views": 8,
+   "total": {
+    "pixels": 447053,
+    "error": 83360,
+    "filtered": 18170,
+    "missed": 65190,
+    "missed_lt1": 61501,
+    "missed_band": 0,
+    "missed_gtk": 3689,
+    "missed_no_mvs": 0,
+    "error_share": 0.18646558685435508,
+    "filtered_share": 0.21797024952015356,
+    "missed_share": 0.7820297504798465,
+    "missed_lt1_share": 0.7377759117082534,
+    "missed_band_share": 0.0,
+    "missed_gtk_share": 0.04425383877159309
+   },
+   "by_kind": {
+    "roof": {
+     "pixels": 348566,
+     "error": 9924,
+     "filtered": 2783,
+     "missed": 7141,
+     "missed_lt1": 4999,
+     "missed_band": 0,
+     "missed_gtk": 2142,
+     "missed_no_mvs": 0,
+     "error_share": 0.02847093520308923,
+     "filtered_share": 0.28043127771060056,
+     "missed_share": 0.7195687222893994,
+     "missed_lt1_share": 0.5037283353486497,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.2158403869407497
+    },
+    "wall": {
+     "pixels": 98487,
+     "error": 73436,
+     "filtered": 15387,
+     "missed": 58049,
+     "missed_lt1": 56502,
+     "missed_band": 0,
+     "missed_gtk": 1547,
+     "missed_no_mvs": 0,
+     "error_share": 0.7456415567536833,
+     "filtered_share": 0.20952938613214228,
+     "missed_share": 0.7904706138678578,
+     "missed_lt1_share": 0.7694046516694809,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.02106596219837682
+    }
+   },
+   "by_code": {
+    "0": {
+     "pixels": 14164,
+     "error": 4824,
+     "filtered": 1370,
+     "missed": 3454,
+     "missed_lt1": 3168,
+     "missed_band": 0,
+     "missed_gtk": 286,
+     "missed_no_mvs": 0,
+     "error_share": 0.3405817565659418,
+     "filtered_share": 0.2839966832504146,
+     "missed_share": 0.7160033167495854,
+     "missed_lt1_share": 0.6567164179104478,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.059286898839137646
+    },
+    "2": {
+     "pixels": 374721,
+     "error": 60217,
+     "filtered": 3515,
+     "missed": 56702,
+     "missed_lt1": 54941,
+     "missed_band": 0,
+     "missed_gtk": 1761,
+     "missed_no_mvs": 0,
+     "error_share": 0.16069822614691998,
+     "filtered_share": 0.05837222046930269,
+     "missed_share": 0.9416277795306973,
+     "missed_lt1_share": 0.9123835461746683,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.029244233356029027
+    },
+    "3": {
+     "pixels": 23522,
+     "error": 2496,
+     "filtered": 223,
+     "missed": 2273,
+     "missed_lt1": 1687,
+     "missed_band": 0,
+     "missed_gtk": 586,
+     "missed_no_mvs": 0,
+     "error_share": 0.10611342572910466,
+     "filtered_share": 0.08934294871794872,
+     "missed_share": 0.9106570512820513,
+     "missed_lt1_share": 0.6758814102564102,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.23477564102564102
+    },
+    "4": {
+     "pixels": 16158,
+     "error": 13506,
+     "filtered": 12446,
+     "missed": 1060,
+     "missed_lt1": 897,
+     "missed_band": 0,
+     "missed_gtk": 163,
+     "missed_no_mvs": 0,
+     "error_share": 0.8358707760861492,
+     "filtered_share": 0.9215163630978824,
+     "missed_share": 0.07848363690211757,
+     "missed_lt1_share": 0.06641492669924479,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.012068710202872797
+    },
+    "5": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    },
+    "11": {
+     "pixels": 15425,
+     "error": 1431,
+     "filtered": 183,
+     "missed": 1248,
+     "missed_lt1": 665,
+     "missed_band": 0,
+     "missed_gtk": 583,
+     "missed_no_mvs": 0,
+     "error_share": 0.09277147487844409,
+     "filtered_share": 0.1278825995807128,
+     "missed_share": 0.8721174004192872,
+     "missed_lt1_share": 0.4647099930118798,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.4074074074074074
+    },
+    "12": {
+     "pixels": 2386,
+     "error": 542,
+     "filtered": 137,
+     "missed": 405,
+     "missed_lt1": 132,
+     "missed_band": 0,
+     "missed_gtk": 273,
+     "missed_no_mvs": 0,
+     "error_share": 0.22715842414082146,
+     "filtered_share": 0.25276752767527677,
+     "missed_share": 0.7472324723247232,
+     "missed_lt1_share": 0.24354243542435425,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.503690036900369
+    },
+    "13": {
+     "pixels": 677,
+     "error": 344,
+     "filtered": 296,
+     "missed": 48,
+     "missed_lt1": 11,
+     "missed_band": 0,
+     "missed_gtk": 37,
+     "missed_no_mvs": 0,
+     "error_share": 0.5081240768094535,
+     "filtered_share": 0.8604651162790697,
+     "missed_share": 0.13953488372093023,
+     "missed_lt1_share": 0.03197674418604651,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.10755813953488372
+    },
+    "14": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    }
+   },
+   "per_view": [
+    {
+     "view": "DJI_20241217101307_0006_D",
+     "pixels": 52897,
+     "error": 12736,
+     "filtered": 2362,
+     "missed": 10374
+    },
+    {
+     "view": "DJI_20241217101315_0010_D",
+     "pixels": 74351,
+     "error": 15294,
+     "filtered": 2991,
+     "missed": 12303
+    },
+    {
+     "view": "DJI_20241217101317_0011_D",
+     "pixels": 80165,
+     "error": 14877,
+     "filtered": 2001,
+     "missed": 12876
+    },
+    {
+     "view": "DJI_20241217101323_0014_D",
+     "pixels": 77546,
+     "error": 15902,
+     "filtered": 2839,
+     "missed": 13063
+    },
+    {
+     "view": "DJI_20241217101331_0018_D",
+     "pixels": 76230,
+     "error": 7941,
+     "filtered": 1773,
+     "missed": 6168
+    },
+    {
+     "view": "DJI_20241217101333_0019_D",
+     "pixels": 58250,
+     "error": 6444,
+     "filtered": 1054,
+     "missed": 5390
+    },
+    {
+     "view": "DJI_20241217101343_0024_D",
+     "pixels": 20955,
+     "error": 4580,
+     "filtered": 1699,
+     "missed": 2881
+    },
+    {
+     "view": "DJI_20241217101359_0032_D",
+     "pixels": 6659,
+     "error": 5586,
+     "filtered": 3451,
+     "missed": 2135
+    }
+   ],
+   "paths": [
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a9/export/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a9/export_maskoff/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0a9_LoD2.npz",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a9/box/B0_b10/LoD2/units.npz"
+   ]
+  },
+  "B0n8": {
+   "views": 8,
+   "total": {
+    "pixels": 302406,
+    "error": 242299,
+    "filtered": 225458,
+    "missed": 16841,
+    "missed_lt1": 3480,
+    "missed_band": 0,
+    "missed_gtk": 13361,
+    "missed_no_mvs": 0,
+    "error_share": 0.8012374093106618,
+    "filtered_share": 0.9304949669623069,
+    "missed_share": 0.06950503303769309,
+    "missed_lt1_share": 0.014362419985224867,
+    "missed_band_share": 0.0,
+    "missed_gtk_share": 0.05514261305246823
+   },
+   "by_kind": {
+    "roof": {
+     "pixels": 263099,
+     "error": 224889,
+     "filtered": 209818,
+     "missed": 15071,
+     "missed_lt1": 2539,
+     "missed_band": 0,
+     "missed_gtk": 12532,
+     "missed_no_mvs": 0,
+     "error_share": 0.8547694974135212,
+     "filtered_share": 0.9329847169047841,
+     "missed_share": 0.06701528309521586,
+     "missed_lt1_share": 0.0112900141847756,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.05572526891044026
+    },
+    "wall": {
+     "pixels": 39307,
+     "error": 17410,
+     "filtered": 15640,
+     "missed": 1770,
+     "missed_lt1": 941,
+     "missed_band": 0,
+     "missed_gtk": 829,
+     "missed_no_mvs": 0,
+     "error_share": 0.4429236522756761,
+     "filtered_share": 0.8983342906375646,
+     "missed_share": 0.10166570936243538,
+     "missed_lt1_share": 0.05404939689833429,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.04761631246410109
+    }
+   },
+   "by_code": {
+    "0": {
+     "pixels": 17986,
+     "error": 8754,
+     "filtered": 7594,
+     "missed": 1160,
+     "missed_lt1": 471,
+     "missed_band": 0,
+     "missed_gtk": 689,
+     "missed_no_mvs": 0,
+     "error_share": 0.4867118870232403,
+     "filtered_share": 0.8674891478181402,
+     "missed_share": 0.13251085218185973,
+     "missed_lt1_share": 0.053803975325565453,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.07870687685629427
+    },
+    "2": {
+     "pixels": 72310,
+     "error": 52295,
+     "filtered": 46933,
+     "missed": 5362,
+     "missed_lt1": 1214,
+     "missed_band": 0,
+     "missed_gtk": 4148,
+     "missed_no_mvs": 0,
+     "error_share": 0.7232056423731158,
+     "filtered_share": 0.8974662969691175,
+     "missed_share": 0.1025337030308825,
+     "missed_lt1_share": 0.0232144564489913,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0793192465818912
+    },
+    "3": {
+     "pixels": 9746,
+     "error": 8872,
+     "filtered": 5810,
+     "missed": 3062,
+     "missed_lt1": 109,
+     "missed_band": 0,
+     "missed_gtk": 2953,
+     "missed_no_mvs": 0,
+     "error_share": 0.910322183459881,
+     "filtered_share": 0.6548692515779982,
+     "missed_share": 0.3451307484220018,
+     "missed_lt1_share": 0.012285843101893597,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.3328449053201082
+    },
+    "4": {
+     "pixels": 169351,
+     "error": 146162,
+     "filtered": 139735,
+     "missed": 6427,
+     "missed_lt1": 1620,
+     "missed_band": 0,
+     "missed_gtk": 4807,
+     "missed_no_mvs": 0,
+     "error_share": 0.8630713724749189,
+     "filtered_share": 0.9560282426348846,
+     "missed_share": 0.04397175736511542,
+     "missed_lt1_share": 0.011083592178541619,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0328881651865738
+    },
+    "5": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    },
+    "11": {
+     "pixels": 1761,
+     "error": 1444,
+     "filtered": 1282,
+     "missed": 162,
+     "missed_lt1": 8,
+     "missed_band": 0,
+     "missed_gtk": 154,
+     "missed_no_mvs": 0,
+     "error_share": 0.8199886428165815,
+     "filtered_share": 0.8878116343490304,
+     "missed_share": 0.11218836565096953,
+     "missed_lt1_share": 0.00554016620498615,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.10664819944598337
+    },
+    "12": {
+     "pixels": 3332,
+     "error": 2949,
+     "filtered": 2639,
+     "missed": 310,
+     "missed_lt1": 14,
+     "missed_band": 0,
+     "missed_gtk": 296,
+     "missed_no_mvs": 0,
+     "error_share": 0.8850540216086434,
+     "filtered_share": 0.8948796202102408,
+     "missed_share": 0.10512037978975924,
+     "missed_lt1_share": 0.004747371990505256,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.10037300779925398
+    },
+    "13": {
+     "pixels": 27920,
+     "error": 21823,
+     "filtered": 21465,
+     "missed": 358,
+     "missed_lt1": 44,
+     "missed_band": 0,
+     "missed_gtk": 314,
+     "missed_no_mvs": 0,
+     "error_share": 0.7816260744985674,
+     "filtered_share": 0.9835952893735966,
+     "missed_share": 0.016404710626403335,
+     "missed_lt1_share": 0.0020162214177702423,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.014388489208633094
+    },
+    "14": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    }
+   },
+   "per_view": [
+    {
+     "view": "DJI_20241217084247_0007_D",
+     "pixels": 184112,
+     "error": 169074,
+     "filtered": 157093,
+     "missed": 11981
+    },
+    {
+     "view": "DJI_20241217084453_0070_D",
+     "pixels": 22138,
+     "error": 13109,
+     "filtered": 11046,
+     "missed": 2063
+    },
+    {
+     "view": "DJI_20241217100329_0019_D",
+     "pixels": 1603,
+     "error": 721,
+     "filtered": 668,
+     "missed": 53
+    },
+    {
+     "view": "DJI_20241217100331_0020_D",
+     "pixels": 897,
+     "error": 594,
+     "filtered": 547,
+     "missed": 47
+    },
+    {
+     "view": "DJI_20241217100333_0021_D",
+     "pixels": 1346,
+     "error": 581,
+     "filtered": 482,
+     "missed": 99
+    },
+    {
+     "view": "DJI_20241217101128_0013_D",
+     "pixels": 5487,
+     "error": 1746,
+     "filtered": 1054,
+     "missed": 692
+    },
+    {
+     "view": "DJI_20241217101130_0014_D",
+     "pixels": 12646,
+     "error": 2394,
+     "filtered": 1563,
+     "missed": 831
+    },
+    {
+     "view": "DJI_20241217101146_0022_D",
+     "pixels": 74177,
+     "error": 54080,
+     "filtered": 53005,
+     "missed": 1075
+    }
+   ],
+   "paths": [
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n8/export/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n8/export_maskoff/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n8_LoD2.npz",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n8/box/B0_b10/LoD2/units.npz"
+   ]
+  },
+  "B0a15": {
+   "views": 13,
+   "total": {
+    "pixels": 729415,
+    "error": 132205,
+    "filtered": 23886,
+    "missed": 108319,
+    "missed_lt1": 101039,
+    "missed_band": 0,
+    "missed_gtk": 7280,
+    "missed_no_mvs": 0,
+    "error_share": 0.18124798640006032,
+    "filtered_share": 0.1806739533300556,
+    "missed_share": 0.8193260466699444,
+    "missed_lt1_share": 0.7642600506788699,
+    "missed_band_share": 0.0,
+    "missed_gtk_share": 0.055065995991074465
+   },
+   "by_kind": {
+    "roof": {
+     "pixels": 573445,
+     "error": 15832,
+     "filtered": 2023,
+     "missed": 13809,
+     "missed_lt1": 9828,
+     "missed_band": 0,
+     "missed_gtk": 3981,
+     "missed_no_mvs": 0,
+     "error_share": 0.02760857623660508,
+     "filtered_share": 0.12777918140474986,
+     "missed_share": 0.8722208185952501,
+     "missed_lt1_share": 0.6207680646791309,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.25145275391611926
+    },
+    "wall": {
+     "pixels": 155970,
+     "error": 116373,
+     "filtered": 21863,
+     "missed": 94510,
+     "missed_lt1": 91211,
+     "missed_band": 0,
+     "missed_gtk": 3299,
+     "missed_no_mvs": 0,
+     "error_share": 0.7461242546643585,
+     "filtered_share": 0.1878700385828328,
+     "missed_share": 0.8121299614171672,
+     "missed_lt1_share": 0.7837814613355332,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.028348500081634056
+    }
+   },
+   "by_code": {
+    "0": {
+     "pixels": 23192,
+     "error": 8281,
+     "filtered": 1533,
+     "missed": 6748,
+     "missed_lt1": 5886,
+     "missed_band": 0,
+     "missed_gtk": 862,
+     "missed_no_mvs": 0,
+     "error_share": 0.3570627802690583,
+     "filtered_share": 0.18512256973795435,
+     "missed_share": 0.8148774302620456,
+     "missed_lt1_share": 0.7107837217727327,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.10409370848931289
+    },
+    "2": {
+     "pixels": 619574,
+     "error": 97508,
+     "filtered": 5187,
+     "missed": 92321,
+     "missed_lt1": 88984,
+     "missed_band": 0,
+     "missed_gtk": 3337,
+     "missed_no_mvs": 0,
+     "error_share": 0.15737910241553066,
+     "filtered_share": 0.05319563522992985,
+     "missed_share": 0.9468043647700701,
+     "missed_lt1_share": 0.912581531771752,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.03422283299831809
+    },
+    "3": {
+     "pixels": 38377,
+     "error": 4412,
+     "filtered": 447,
+     "missed": 3965,
+     "missed_lt1": 3064,
+     "missed_band": 0,
+     "missed_gtk": 901,
+     "missed_no_mvs": 0,
+     "error_share": 0.11496469239388175,
+     "filtered_share": 0.10131459655485041,
+     "missed_share": 0.8986854034451496,
+     "missed_lt1_share": 0.6944696282864914,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.2042157751586582
+    },
+    "4": {
+     "pixels": 19177,
+     "error": 18231,
+     "filtered": 16103,
+     "missed": 2128,
+     "missed_lt1": 1823,
+     "missed_band": 0,
+     "missed_gtk": 305,
+     "missed_no_mvs": 0,
+     "error_share": 0.9506700735255775,
+     "filtered_share": 0.883275739125665,
+     "missed_share": 0.11672426087433492,
+     "missed_lt1_share": 0.09999451483736493,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.016729746036969997
+    },
+    "5": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    },
+    "11": {
+     "pixels": 25742,
+     "error": 2624,
+     "filtered": 204,
+     "missed": 2420,
+     "missed_lt1": 1032,
+     "missed_band": 0,
+     "missed_gtk": 1388,
+     "missed_no_mvs": 0,
+     "error_share": 0.10193458161758993,
+     "filtered_share": 0.07774390243902439,
+     "missed_share": 0.9222560975609756,
+     "missed_lt1_share": 0.3932926829268293,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.5289634146341463
+    },
+    "12": {
+     "pixels": 2737,
+     "error": 802,
+     "filtered": 116,
+     "missed": 686,
+     "missed_lt1": 244,
+     "missed_band": 0,
+     "missed_gtk": 442,
+     "missed_no_mvs": 0,
+     "error_share": 0.2930215564486664,
+     "filtered_share": 0.14463840399002495,
+     "missed_share": 0.8553615960099751,
+     "missed_lt1_share": 0.30423940149625933,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.5511221945137157
+    },
+    "13": {
+     "pixels": 616,
+     "error": 347,
+     "filtered": 296,
+     "missed": 51,
+     "missed_lt1": 6,
+     "missed_band": 0,
+     "missed_gtk": 45,
+     "missed_no_mvs": 0,
+     "error_share": 0.5633116883116883,
+     "filtered_share": 0.8530259365994236,
+     "missed_share": 0.14697406340057637,
+     "missed_lt1_share": 0.01729106628242075,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.12968299711815562
+    },
+    "14": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    }
+   },
+   "per_view": [
+    {
+     "view": "DJI_20241217101305_0005_D",
+     "pixels": 94490,
+     "error": 11447,
+     "filtered": 1688,
+     "missed": 9759
+    },
+    {
+     "view": "DJI_20241217101307_0006_D",
+     "pixels": 52897,
+     "error": 12619,
+     "filtered": 1783,
+     "missed": 10836
+    },
+    {
+     "view": "DJI_20241217101313_0009_D",
+     "pixels": 42001,
+     "error": 15669,
+     "filtered": 2390,
+     "missed": 13279
+    },
+    {
+     "view": "DJI_20241217101315_0010_D",
+     "pixels": 74342,
+     "error": 14910,
+     "filtered": 1653,
+     "missed": 13257
+    },
+    {
+     "view": "DJI_20241217101317_0011_D",
+     "pixels": 80165,
+     "error": 14799,
+     "filtered": 1796,
+     "missed": 13003
+    },
+    {
+     "view": "DJI_20241217101321_0013_D",
+     "pixels": 106412,
+     "error": 11382,
+     "filtered": 1777,
+     "missed": 9605
+    },
+    {
+     "view": "DJI_20241217101323_0014_D",
+     "pixels": 77545,
+     "error": 15851,
+     "filtered": 2504,
+     "missed": 13347
+    },
+    {
+     "view": "DJI_20241217101331_0018_D",
+     "pixels": 76230,
+     "error": 7939,
+     "filtered": 1606,
+     "missed": 6333
+    },
+    {
+     "view": "DJI_20241217101333_0019_D",
+     "pixels": 58250,
+     "error": 6430,
+     "filtered": 809,
+     "missed": 5621
+    },
+    {
+     "view": "DJI_20241217101341_0023_D",
+     "pixels": 31464,
+     "error": 4824,
+     "filtered": 807,
+     "missed": 4017
+    },
+    {
+     "view": "DJI_20241217101343_0024_D",
+     "pixels": 20937,
+     "error": 4617,
+     "filtered": 1149,
+     "missed": 3468
+    },
+    {
+     "view": "DJI_20241217101357_0031_D",
+     "pixels": 8023,
+     "error": 6300,
+     "filtered": 3326,
+     "missed": 2974
+    },
+    {
+     "view": "DJI_20241217101359_0032_D",
+     "pixels": 6659,
+     "error": 5418,
+     "filtered": 2598,
+     "missed": 2820
+    }
+   ],
+   "paths": [
+    "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/a15/export/B0_b10/LoD2",
+    "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/a15/export_maskoff/B0_b10/LoD2",
+    "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/regions_v3/regions_ext_v3_B0a15_LoD2.npz",
+    "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/a15/box/B0_b10/LoD2/units.npz"
+   ]
+  },
+  "B0n13": {
+   "views": 13,
+   "total": {
+    "pixels": 331393,
+    "error": 235084,
+    "filtered": 210028,
+    "missed": 25056,
+    "missed_lt1": 10695,
+    "missed_band": 0,
+    "missed_gtk": 14361,
+    "missed_no_mvs": 0,
+    "error_share": 0.7093813085973452,
+    "filtered_share": 0.8934168212213507,
+    "missed_share": 0.10658317877864934,
+    "missed_lt1_share": 0.04549437647819503,
+    "missed_band_share": 0.0,
+    "missed_gtk_share": 0.061088802300454305
+   },
+   "by_kind": {
+    "roof": {
+     "pixels": 280748,
+     "error": 216342,
+     "filtered": 196125,
+     "missed": 20217,
+     "missed_lt1": 6893,
+     "missed_band": 0,
+     "missed_gtk": 13324,
+     "missed_no_mvs": 0,
+     "error_share": 0.7705914200635445,
+     "filtered_share": 0.9065507391075242,
+     "missed_share": 0.09344926089247581,
+     "missed_lt1_share": 0.031861589520296565,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.061587671372179235
+    },
+    "wall": {
+     "pixels": 50645,
+     "error": 18742,
+     "filtered": 13903,
+     "missed": 4839,
+     "missed_lt1": 3802,
+     "missed_band": 0,
+     "missed_gtk": 1037,
+     "missed_no_mvs": 0,
+     "error_share": 0.37006614670747356,
+     "filtered_share": 0.7418098388645822,
+     "missed_share": 0.25819016113541776,
+     "missed_lt1_share": 0.20285988688507095,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.05533027425034681
+    }
+   },
+   "by_code": {
+    "0": {
+     "pixels": 24597,
+     "error": 8978,
+     "filtered": 6315,
+     "missed": 2663,
+     "missed_lt1": 1805,
+     "missed_band": 0,
+     "missed_gtk": 858,
+     "missed_no_mvs": 0,
+     "error_share": 0.36500386225962517,
+     "filtered_share": 0.7033860548006238,
+     "missed_share": 0.2966139451993762,
+     "missed_lt1_share": 0.20104700378703497,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.09556694141234127
+    },
+    "2": {
+     "pixels": 171030,
+     "error": 108198,
+     "filtered": 92879,
+     "missed": 15319,
+     "missed_lt1": 7828,
+     "missed_band": 0,
+     "missed_gtk": 7491,
+     "missed_no_mvs": 0,
+     "error_share": 0.6326258551131381,
+     "filtered_share": 0.8584169762842196,
+     "missed_share": 0.14158302371578033,
+     "missed_lt1_share": 0.0723488419379286,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.06923418177785172
+    },
+    "3": {
+     "pixels": 22262,
+     "error": 16478,
+     "filtered": 12560,
+     "missed": 3918,
+     "missed_lt1": 739,
+     "missed_band": 0,
+     "missed_gtk": 3179,
+     "missed_no_mvs": 0,
+     "error_share": 0.7401850687269788,
+     "filtered_share": 0.7622284257798276,
+     "missed_share": 0.23777157422017234,
+     "missed_lt1_share": 0.04484767568879718,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.19292389853137518
+    },
+    "4": {
+     "pixels": 79788,
+     "error": 75269,
+     "filtered": 73782,
+     "missed": 1487,
+     "missed_lt1": 100,
+     "missed_band": 0,
+     "missed_gtk": 1387,
+     "missed_no_mvs": 0,
+     "error_share": 0.943362410387527,
+     "filtered_share": 0.9802441908355365,
+     "missed_share": 0.01975580916446346,
+     "missed_lt1_share": 0.0013285682020486521,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.018427240962414805
+    },
+    "5": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    },
+    "11": {
+     "pixels": 5288,
+     "error": 3959,
+     "filtered": 3278,
+     "missed": 681,
+     "missed_lt1": 143,
+     "missed_band": 0,
+     "missed_gtk": 538,
+     "missed_no_mvs": 0,
+     "error_share": 0.7486762481089259,
+     "filtered_share": 0.827986865370043,
+     "missed_share": 0.17201313462995707,
+     "missed_lt1_share": 0.03612023238191463,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.13589290224804243
+    },
+    "12": {
+     "pixels": 6684,
+     "error": 5889,
+     "filtered": 5196,
+     "missed": 693,
+     "missed_lt1": 75,
+     "missed_band": 0,
+     "missed_gtk": 618,
+     "missed_no_mvs": 0,
+     "error_share": 0.8810592459605027,
+     "filtered_share": 0.8823229750382068,
+     "missed_share": 0.11767702496179318,
+     "missed_lt1_share": 0.01273560876209883,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.10494141619969434
+    },
+    "13": {
+     "pixels": 21744,
+     "error": 16313,
+     "filtered": 16018,
+     "missed": 295,
+     "missed_lt1": 5,
+     "missed_band": 0,
+     "missed_gtk": 290,
+     "missed_no_mvs": 0,
+     "error_share": 0.7502299484915379,
+     "filtered_share": 0.9819162631030467,
+     "missed_share": 0.01808373689695335,
+     "missed_lt1_share": 0.00030650401520259914,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.01777723288175075
+    },
+    "14": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    }
+   },
+   "per_view": [
+    {
+     "view": "DJI_20241217084247_0007_D",
+     "pixels": 184112,
+     "error": 169074,
+     "filtered": 157935,
+     "missed": 11139
+    },
+    {
+     "view": "DJI_20241217084453_0070_D",
+     "pixels": 22138,
+     "error": 10329,
+     "filtered": 7405,
+     "missed": 2924
+    },
+    {
+     "view": "DJI_20241217100036_0024_D",
+     "pixels": 174,
+     "error": 40,
+     "filtered": 0,
+     "missed": 40
+    },
+    {
+     "view": "DJI_20241217100038_0025_D",
+     "pixels": 273,
+     "error": 80,
+     "filtered": 0,
+     "missed": 80
+    },
+    {
+     "view": "DJI_20241217100040_0026_D",
+     "pixels": 259,
+     "error": 99,
+     "filtered": 0,
+     "missed": 99
+    },
+    {
+     "view": "DJI_20241217100114_0043_D",
+     "pixels": 461,
+     "error": 77,
+     "filtered": 37,
+     "missed": 40
+    },
+    {
+     "view": "DJI_20241217100329_0019_D",
+     "pixels": 1603,
+     "error": 273,
+     "filtered": 67,
+     "missed": 206
+    },
+    {
+     "view": "DJI_20241217100331_0020_D",
+     "pixels": 897,
+     "error": 384,
+     "filtered": 197,
+     "missed": 187
+    },
+    {
+     "view": "DJI_20241217100333_0021_D",
+     "pixels": 1346,
+     "error": 300,
+     "filtered": 57,
+     "missed": 243
+    },
+    {
+     "view": "DJI_20241217101128_0013_D",
+     "pixels": 5487,
+     "error": 1541,
+     "filtered": 685,
+     "missed": 856
+    },
+    {
+     "view": "DJI_20241217101130_0014_D",
+     "pixels": 12646,
+     "error": 1528,
+     "filtered": 422,
+     "missed": 1106
+    },
+    {
+     "view": "DJI_20241217101134_0016_D",
+     "pixels": 27808,
+     "error": 4605,
+     "filtered": 2551,
+     "missed": 2054
+    },
+    {
+     "view": "DJI_20241217101146_0022_D",
+     "pixels": 74189,
+     "error": 46754,
+     "filtered": 40672,
+     "missed": 6082
+    }
+   ],
+   "paths": [
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n13/export/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n13/export_maskoff/B0_b10/LoD2",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n13_LoD2.npz",
+    "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n13/box/B0_b10/LoD2/units.npz"
+   ]
+  },
+  "B0_full": {
+   "views": 243,
+   "total": {
+    "pixels": 4411836,
+    "error": 606821,
+    "filtered": 226724,
+    "missed": 380097,
+    "missed_lt1": 280561,
+    "missed_band": 0,
+    "missed_gtk": 99536,
+    "missed_no_mvs": 0,
+    "error_share": 0.13754387062438406,
+    "filtered_share": 0.3736258303519489,
+    "missed_share": 0.626374169648051,
+    "missed_lt1_share": 0.46234556813294203,
+    "missed_band_share": 0.0,
+    "missed_gtk_share": 0.16402860151510906
+   },
+   "by_kind": {
+    "roof": {
+     "pixels": 3769450,
+     "error": 289833,
+     "filtered": 152239,
+     "missed": 137594,
+     "missed_lt1": 78207,
+     "missed_band": 0,
+     "missed_gtk": 59387,
+     "missed_no_mvs": 0,
+     "error_share": 0.07688999721444773,
+     "filtered_share": 0.5252645488953984,
+     "missed_share": 0.47473545110460164,
+     "missed_lt1_share": 0.269834697912246,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.2049007531923556
+    },
+    "wall": {
+     "pixels": 642386,
+     "error": 316988,
+     "filtered": 74485,
+     "missed": 242503,
+     "missed_lt1": 202354,
+     "missed_band": 0,
+     "missed_gtk": 40149,
+     "missed_no_mvs": 0,
+     "error_share": 0.4934540914652561,
+     "filtered_share": 0.23497734930028896,
+     "missed_share": 0.765022650699711,
+     "missed_lt1_share": 0.6383648592375737,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.12665779146213738
+    }
+   },
+   "by_code": {
+    "0": {
+     "pixels": 222545,
+     "error": 66140,
+     "filtered": 21775,
+     "missed": 44365,
+     "missed_lt1": 24243,
+     "missed_band": 0,
+     "missed_gtk": 20122,
+     "missed_no_mvs": 0,
+     "error_share": 0.29719831944101194,
+     "filtered_share": 0.3292258844874509,
+     "missed_share": 0.6707741155125492,
+     "missed_lt1_share": 0.36654067130329604,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.3042334442092531
+    },
+    "2": {
+     "pixels": 3458504,
+     "error": 419659,
+     "filtered": 150789,
+     "missed": 268870,
+     "missed_lt1": 230195,
+     "missed_band": 0,
+     "missed_gtk": 38675,
+     "missed_no_mvs": 0,
+     "error_share": 0.12134119260813346,
+     "filtered_share": 0.359313156634315,
+     "missed_share": 0.640686843365685,
+     "missed_lt1_share": 0.5485286863858514,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.09215815697983362
+    },
+    "3": {
+     "pixels": 243781,
+     "error": 49840,
+     "filtered": 16083,
+     "missed": 33757,
+     "missed_lt1": 16082,
+     "missed_band": 0,
+     "missed_gtk": 17675,
+     "missed_no_mvs": 0,
+     "error_share": 0.20444579356061382,
+     "filtered_share": 0.32269261637239166,
+     "missed_share": 0.6773073836276083,
+     "missed_lt1_share": 0.3226725521669342,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.35463483146067415
+    },
+    "4": {
+     "pixels": 31434,
+     "error": 27359,
+     "filtered": 23009,
+     "missed": 4350,
+     "missed_lt1": 3677,
+     "missed_band": 0,
+     "missed_gtk": 673,
+     "missed_no_mvs": 0,
+     "error_share": 0.8703633008843927,
+     "filtered_share": 0.8410029606345261,
+     "missed_share": 0.15899703936547388,
+     "missed_lt1_share": 0.1343981870682408,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.024598852297233086
+    },
+    "5": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    },
+    "11": {
+     "pixels": 407315,
+     "error": 32044,
+     "filtered": 9822,
+     "missed": 22222,
+     "missed_lt1": 3982,
+     "missed_band": 0,
+     "missed_gtk": 18240,
+     "missed_no_mvs": 0,
+     "error_share": 0.07867129862637025,
+     "filtered_share": 0.30651604044438896,
+     "missed_share": 0.693483959555611,
+     "missed_lt1_share": 0.12426663337910374,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.5692173261765073
+    },
+    "12": {
+     "pixels": 47633,
+     "error": 11649,
+     "filtered": 5157,
+     "missed": 6492,
+     "missed_lt1": 2380,
+     "missed_band": 0,
+     "missed_gtk": 4112,
+     "missed_no_mvs": 0,
+     "error_share": 0.2445573446980035,
+     "filtered_share": 0.4426989441153747,
+     "missed_share": 0.5573010558846253,
+     "missed_lt1_share": 0.20430938277963773,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.3529916731049876
+    },
+    "13": {
+     "pixels": 624,
+     "error": 130,
+     "filtered": 89,
+     "missed": 41,
+     "missed_lt1": 2,
+     "missed_band": 0,
+     "missed_gtk": 39,
+     "missed_no_mvs": 0,
+     "error_share": 0.20833333333333334,
+     "filtered_share": 0.6846153846153846,
+     "missed_share": 0.3153846153846154,
+     "missed_lt1_share": 0.015384615384615385,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.3
+    },
+    "14": {
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0,
+     "missed_lt1": 0,
+     "missed_band": 0,
+     "missed_gtk": 0,
+     "missed_no_mvs": 0,
+     "error_share": 0.0,
+     "filtered_share": 0.0,
+     "missed_share": 0.0,
+     "missed_lt1_share": 0.0,
+     "missed_band_share": 0.0,
+     "missed_gtk_share": 0.0
+    }
+   },
+   "per_view": [
+    {
+     "view": "DJI_20241217084241_0004_D",
+     "pixels": 114374,
+     "error": 2764,
+     "filtered": 167,
+     "missed": 2597
+    },
+    {
+     "view": "DJI_20241217084243_0005_D",
+     "pixels": 135784,
+     "error": 4523,
+     "filtered": 220,
+     "missed": 4303
+    },
+    {
+     "view": "DJI_20241217084245_0006_D",
+     "pixels": 169700,
+     "error": 5967,
+     "filtered": 442,
+     "missed": 5525
+    },
+    {
+     "view": "DJI_20241217084247_0007_D",
+     "pixels": 195125,
+     "error": 3677,
+     "filtered": 295,
+     "missed": 3382
+    },
+    {
+     "view": "DJI_20241217084249_0008_D",
+     "pixels": 162324,
+     "error": 3271,
+     "filtered": 413,
+     "missed": 2858
+    },
+    {
+     "view": "DJI_20241217084251_0009_D",
+     "pixels": 130916,
+     "error": 2183,
+     "filtered": 246,
+     "missed": 1937
+    },
+    {
+     "view": "DJI_20241217084253_0010_D",
+     "pixels": 105992,
+     "error": 2076,
+     "filtered": 339,
+     "missed": 1737
+    },
+    {
+     "view": "DJI_20241217084256_0012_D",
+     "pixels": 55452,
+     "error": 2929,
+     "filtered": 753,
+     "missed": 2176
+    },
+    {
+     "view": "DJI_20241217084258_0013_D",
+     "pixels": 20535,
+     "error": 2326,
+     "filtered": 1326,
+     "missed": 1000
+    },
+    {
+     "view": "DJI_20241217084300_0014_D",
+     "pixels": 3044,
+     "error": 639,
+     "filtered": 182,
+     "missed": 457
+    },
+    {
+     "view": "DJI_20241217084302_0015_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217084304_0016_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217084431_0059_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217084433_0060_D",
+     "pixels": 757,
+     "error": 653,
+     "filtered": 590,
+     "missed": 63
+    },
+    {
+     "view": "DJI_20241217084437_0062_D",
+     "pixels": 28549,
+     "error": 6594,
+     "filtered": 5774,
+     "missed": 820
+    },
+    {
+     "view": "DJI_20241217084439_0063_D",
+     "pixels": 36903,
+     "error": 5679,
+     "filtered": 4456,
+     "missed": 1223
+    },
+    {
+     "view": "DJI_20241217084441_0064_D",
+     "pixels": 41356,
+     "error": 7019,
+     "filtered": 5380,
+     "missed": 1639
+    },
+    {
+     "view": "DJI_20241217084443_0065_D",
+     "pixels": 42085,
+     "error": 7844,
+     "filtered": 5708,
+     "missed": 2136
+    },
+    {
+     "view": "DJI_20241217084445_0066_D",
+     "pixels": 45555,
+     "error": 8064,
+     "filtered": 5829,
+     "missed": 2235
+    },
+    {
+     "view": "DJI_20241217084447_0067_D",
+     "pixels": 50049,
+     "error": 7523,
+     "filtered": 1314,
+     "missed": 6209
+    },
+    {
+     "view": "DJI_20241217084449_0068_D",
+     "pixels": 36761,
+     "error": 4797,
+     "filtered": 907,
+     "missed": 3890
+    },
+    {
+     "view": "DJI_20241217084453_0070_D",
+     "pixels": 22138,
+     "error": 1570,
+     "filtered": 344,
+     "missed": 1226
+    },
+    {
+     "view": "DJI_20241217084455_0071_D",
+     "pixels": 22192,
+     "error": 1622,
+     "filtered": 369,
+     "missed": 1253
+    },
+    {
+     "view": "DJI_20241217084457_0072_D",
+     "pixels": 19774,
+     "error": 1119,
+     "filtered": 126,
+     "missed": 993
+    },
+    {
+     "view": "DJI_20241217084459_0073_D",
+     "pixels": 15606,
+     "error": 899,
+     "filtered": 165,
+     "missed": 734
+    },
+    {
+     "view": "DJI_20241217084501_0074_D",
+     "pixels": 9851,
+     "error": 572,
+     "filtered": 60,
+     "missed": 512
+    },
+    {
+     "view": "DJI_20241217084503_0075_D",
+     "pixels": 4983,
+     "error": 111,
+     "filtered": 10,
+     "missed": 101
+    },
+    {
+     "view": "DJI_20241217084505_0076_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217084509_0078_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217084539_0093_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217084541_0094_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217084543_0095_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091039_0082_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091041_0083_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091043_0084_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091047_0086_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091049_0087_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091051_0088_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091053_0089_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091055_0090_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091057_0091_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091059_0092_D",
+     "pixels": 375,
+     "error": 72,
+     "filtered": 0,
+     "missed": 72
+    },
+    {
+     "view": "DJI_20241217091105_0095_D",
+     "pixels": 1280,
+     "error": 94,
+     "filtered": 0,
+     "missed": 94
+    },
+    {
+     "view": "DJI_20241217091107_0096_D",
+     "pixels": 15868,
+     "error": 1637,
+     "filtered": 317,
+     "missed": 1320
+    },
+    {
+     "view": "DJI_20241217091109_0097_D",
+     "pixels": 74476,
+     "error": 15881,
+     "filtered": 11212,
+     "missed": 4669
+    },
+    {
+     "view": "DJI_20241217091111_0098_D",
+     "pixels": 90295,
+     "error": 31724,
+     "filtered": 20615,
+     "missed": 11109
+    },
+    {
+     "view": "DJI_20241217091113_0099_D",
+     "pixels": 128469,
+     "error": 27295,
+     "filtered": 24730,
+     "missed": 2565
+    },
+    {
+     "view": "DJI_20241217091115_0100_D",
+     "pixels": 109139,
+     "error": 7564,
+     "filtered": 1769,
+     "missed": 5795
+    },
+    {
+     "view": "DJI_20241217091117_0101_D",
+     "pixels": 87579,
+     "error": 3942,
+     "filtered": 443,
+     "missed": 3499
+    },
+    {
+     "view": "DJI_20241217091121_0103_D",
+     "pixels": 54314,
+     "error": 2535,
+     "filtered": 360,
+     "missed": 2175
+    },
+    {
+     "view": "DJI_20241217091123_0104_D",
+     "pixels": 55757,
+     "error": 2661,
+     "filtered": 316,
+     "missed": 2345
+    },
+    {
+     "view": "DJI_20241217091125_0105_D",
+     "pixels": 41665,
+     "error": 1748,
+     "filtered": 287,
+     "missed": 1461
+    },
+    {
+     "view": "DJI_20241217091127_0106_D",
+     "pixels": 17432,
+     "error": 1801,
+     "filtered": 708,
+     "missed": 1093
+    },
+    {
+     "view": "DJI_20241217091129_0107_D",
+     "pixels": 684,
+     "error": 52,
+     "filtered": 14,
+     "missed": 38
+    },
+    {
+     "view": "DJI_20241217091131_0108_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091247_0146_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217091251_0148_D",
+     "pixels": 1248,
+     "error": 502,
+     "filtered": 270,
+     "missed": 232
+    },
+    {
+     "view": "DJI_20241217091253_0149_D",
+     "pixels": 32052,
+     "error": 1612,
+     "filtered": 369,
+     "missed": 1243
+    },
+    {
+     "view": "DJI_20241217091255_0150_D",
+     "pixels": 62721,
+     "error": 5904,
+     "filtered": 2750,
+     "missed": 3154
+    },
+    {
+     "view": "DJI_20241217091257_0151_D",
+     "pixels": 66920,
+     "error": 8814,
+     "filtered": 5354,
+     "missed": 3460
+    },
+    {
+     "view": "DJI_20241217091300_0152_D",
+     "pixels": 63524,
+     "error": 5857,
+     "filtered": 2256,
+     "missed": 3601
+    },
+    {
+     "view": "DJI_20241217093905_0026_D",
+     "pixels": 4026,
+     "error": 4022,
+     "filtered": 2575,
+     "missed": 1447
+    },
+    {
+     "view": "DJI_20241217093907_0027_D",
+     "pixels": 3995,
+     "error": 3991,
+     "filtered": 2571,
+     "missed": 1420
+    },
+    {
+     "view": "DJI_20241217093911_0029_D",
+     "pixels": 4043,
+     "error": 4042,
+     "filtered": 2618,
+     "missed": 1424
+    },
+    {
+     "view": "DJI_20241217094010_0030_D",
+     "pixels": 4062,
+     "error": 4061,
+     "filtered": 2596,
+     "missed": 1465
+    },
+    {
+     "view": "DJI_20241217094012_0031_D",
+     "pixels": 4046,
+     "error": 4046,
+     "filtered": 2591,
+     "missed": 1455
+    },
+    {
+     "view": "DJI_20241217094014_0032_D",
+     "pixels": 4264,
+     "error": 4264,
+     "filtered": 2803,
+     "missed": 1461
+    },
+    {
+     "view": "DJI_20241217094104_0057_D",
+     "pixels": 5836,
+     "error": 5835,
+     "filtered": 3078,
+     "missed": 2757
+    },
+    {
+     "view": "DJI_20241217094106_0058_D",
+     "pixels": 5194,
+     "error": 5194,
+     "filtered": 2541,
+     "missed": 2653
+    },
+    {
+     "view": "DJI_20241217094108_0059_D",
+     "pixels": 5175,
+     "error": 5175,
+     "filtered": 2512,
+     "missed": 2663
+    },
+    {
+     "view": "DJI_20241217094925_0009_D",
+     "pixels": 732,
+     "error": 716,
+     "filtered": 360,
+     "missed": 356
+    },
+    {
+     "view": "DJI_20241217094927_0010_D",
+     "pixels": 458,
+     "error": 448,
+     "filtered": 398,
+     "missed": 50
+    },
+    {
+     "view": "DJI_20241217094933_0013_D",
+     "pixels": 673,
+     "error": 630,
+     "filtered": 545,
+     "missed": 85
+    },
+    {
+     "view": "DJI_20241217094935_0014_D",
+     "pixels": 548,
+     "error": 533,
+     "filtered": 258,
+     "missed": 275
+    },
+    {
+     "view": "DJI_20241217094945_0019_D",
+     "pixels": 53,
+     "error": 52,
+     "filtered": 12,
+     "missed": 40
+    },
+    {
+     "view": "DJI_20241217094947_0020_D",
+     "pixels": 45,
+     "error": 45,
+     "filtered": 12,
+     "missed": 33
+    },
+    {
+     "view": "DJI_20241217094953_0023_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217094957_0025_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217094959_0026_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095009_0031_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095011_0032_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095013_0033_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095015_0034_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095017_0035_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095029_0041_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095039_0046_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095051_0052_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095053_0053_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095055_0054_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095057_0055_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095103_0058_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095123_0068_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095125_0069_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095127_0070_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095139_0076_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095141_0077_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095143_0078_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095145_0079_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095149_0081_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095419_0012_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095421_0013_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095427_0016_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095429_0017_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095447_0026_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095451_0028_D",
+     "pixels": 2,
+     "error": 2,
+     "filtered": 0,
+     "missed": 2
+    },
+    {
+     "view": "DJI_20241217095455_0030_D",
+     "pixels": 5,
+     "error": 5,
+     "filtered": 1,
+     "missed": 4
+    },
+    {
+     "view": "DJI_20241217095457_0031_D",
+     "pixels": 19,
+     "error": 18,
+     "filtered": 2,
+     "missed": 16
+    },
+    {
+     "view": "DJI_20241217095507_0036_D",
+     "pixels": 45,
+     "error": 42,
+     "filtered": 1,
+     "missed": 41
+    },
+    {
+     "view": "DJI_20241217095509_0037_D",
+     "pixels": 471,
+     "error": 194,
+     "filtered": 13,
+     "missed": 181
+    },
+    {
+     "view": "DJI_20241217095511_0038_D",
+     "pixels": 233,
+     "error": 223,
+     "filtered": 17,
+     "missed": 206
+    },
+    {
+     "view": "DJI_20241217095513_0039_D",
+     "pixels": 158,
+     "error": 135,
+     "filtered": 7,
+     "missed": 128
+    },
+    {
+     "view": "DJI_20241217095523_0044_D",
+     "pixels": 51,
+     "error": 46,
+     "filtered": 31,
+     "missed": 15
+    },
+    {
+     "view": "DJI_20241217095541_0053_D",
+     "pixels": 923,
+     "error": 437,
+     "filtered": 165,
+     "missed": 272
+    },
+    {
+     "view": "DJI_20241217095543_0054_D",
+     "pixels": 947,
+     "error": 504,
+     "filtered": 174,
+     "missed": 330
+    },
+    {
+     "view": "DJI_20241217095545_0055_D",
+     "pixels": 983,
+     "error": 449,
+     "filtered": 150,
+     "missed": 299
+    },
+    {
+     "view": "DJI_20241217095547_0056_D",
+     "pixels": 1242,
+     "error": 558,
+     "filtered": 95,
+     "missed": 463
+    },
+    {
+     "view": "DJI_20241217095549_0057_D",
+     "pixels": 323,
+     "error": 263,
+     "filtered": 88,
+     "missed": 175
+    },
+    {
+     "view": "DJI_20241217095551_0058_D",
+     "pixels": 310,
+     "error": 274,
+     "filtered": 111,
+     "missed": 163
+    },
+    {
+     "view": "DJI_20241217095553_0059_D",
+     "pixels": 413,
+     "error": 396,
+     "filtered": 145,
+     "missed": 251
+    },
+    {
+     "view": "DJI_20241217095613_0069_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217095629_0077_D",
+     "pixels": 402,
+     "error": 388,
+     "filtered": 122,
+     "missed": 266
+    },
+    {
+     "view": "DJI_20241217095631_0078_D",
+     "pixels": 641,
+     "error": 631,
+     "filtered": 211,
+     "missed": 420
+    },
+    {
+     "view": "DJI_20241217095633_0079_D",
+     "pixels": 326,
+     "error": 318,
+     "filtered": 85,
+     "missed": 233
+    },
+    {
+     "view": "DJI_20241217095635_0080_D",
+     "pixels": 317,
+     "error": 305,
+     "filtered": 86,
+     "missed": 219
+    },
+    {
+     "view": "DJI_20241217095637_0081_D",
+     "pixels": 314,
+     "error": 302,
+     "filtered": 85,
+     "missed": 217
+    },
+    {
+     "view": "DJI_20241217095827_0018_D",
+     "pixels": 184,
+     "error": 177,
+     "filtered": 112,
+     "missed": 65
+    },
+    {
+     "view": "DJI_20241217095901_0035_D",
+     "pixels": 644,
+     "error": 590,
+     "filtered": 439,
+     "missed": 151
+    },
+    {
+     "view": "DJI_20241217095903_0036_D",
+     "pixels": 643,
+     "error": 547,
+     "filtered": 475,
+     "missed": 72
+    },
+    {
+     "view": "DJI_20241217095905_0037_D",
+     "pixels": 659,
+     "error": 600,
+     "filtered": 513,
+     "missed": 87
+    },
+    {
+     "view": "DJI_20241217095907_0038_D",
+     "pixels": 666,
+     "error": 608,
+     "filtered": 517,
+     "missed": 91
+    },
+    {
+     "view": "DJI_20241217100036_0024_D",
+     "pixels": 174,
+     "error": 39,
+     "filtered": 0,
+     "missed": 39
+    },
+    {
+     "view": "DJI_20241217100038_0025_D",
+     "pixels": 273,
+     "error": 65,
+     "filtered": 23,
+     "missed": 42
+    },
+    {
+     "view": "DJI_20241217100040_0026_D",
+     "pixels": 259,
+     "error": 112,
+     "filtered": 50,
+     "missed": 62
+    },
+    {
+     "view": "DJI_20241217100056_0034_D",
+     "pixels": 209,
+     "error": 48,
+     "filtered": 0,
+     "missed": 48
+    },
+    {
+     "view": "DJI_20241217100112_0042_D",
+     "pixels": 470,
+     "error": 104,
+     "filtered": 26,
+     "missed": 78
+    },
+    {
+     "view": "DJI_20241217100114_0043_D",
+     "pixels": 461,
+     "error": 145,
+     "filtered": 14,
+     "missed": 131
+    },
+    {
+     "view": "DJI_20241217100319_0014_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217100329_0019_D",
+     "pixels": 1603,
+     "error": 488,
+     "filtered": 260,
+     "missed": 228
+    },
+    {
+     "view": "DJI_20241217100331_0020_D",
+     "pixels": 897,
+     "error": 309,
+     "filtered": 146,
+     "missed": 163
+    },
+    {
+     "view": "DJI_20241217100333_0021_D",
+     "pixels": 1346,
+     "error": 431,
+     "filtered": 314,
+     "missed": 117
+    },
+    {
+     "view": "DJI_20241217100339_0024_D",
+     "pixels": 589,
+     "error": 138,
+     "filtered": 28,
+     "missed": 110
+    },
+    {
+     "view": "DJI_20241217101108_0003_D",
+     "pixels": 4970,
+     "error": 463,
+     "filtered": 33,
+     "missed": 430
+    },
+    {
+     "view": "DJI_20241217101110_0004_D",
+     "pixels": 4967,
+     "error": 482,
+     "filtered": 2,
+     "missed": 480
+    },
+    {
+     "view": "DJI_20241217101112_0005_D",
+     "pixels": 2344,
+     "error": 230,
+     "filtered": 2,
+     "missed": 228
+    },
+    {
+     "view": "DJI_20241217101118_0008_D",
+     "pixels": 2266,
+     "error": 401,
+     "filtered": 16,
+     "missed": 385
+    },
+    {
+     "view": "DJI_20241217101120_0009_D",
+     "pixels": 4560,
+     "error": 636,
+     "filtered": 71,
+     "missed": 565
+    },
+    {
+     "view": "DJI_20241217101122_0010_D",
+     "pixels": 5406,
+     "error": 735,
+     "filtered": 85,
+     "missed": 650
+    },
+    {
+     "view": "DJI_20241217101126_0012_D",
+     "pixels": 21,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217101128_0013_D",
+     "pixels": 5487,
+     "error": 1043,
+     "filtered": 128,
+     "missed": 915
+    },
+    {
+     "view": "DJI_20241217101130_0014_D",
+     "pixels": 12645,
+     "error": 1380,
+     "filtered": 161,
+     "missed": 1219
+    },
+    {
+     "view": "DJI_20241217101132_0015_D",
+     "pixels": 26491,
+     "error": 1788,
+     "filtered": 278,
+     "missed": 1510
+    },
+    {
+     "view": "DJI_20241217101134_0016_D",
+     "pixels": 27808,
+     "error": 1770,
+     "filtered": 251,
+     "missed": 1519
+    },
+    {
+     "view": "DJI_20241217101136_0017_D",
+     "pixels": 25022,
+     "error": 1151,
+     "filtered": 171,
+     "missed": 980
+    },
+    {
+     "view": "DJI_20241217101138_0018_D",
+     "pixels": 3039,
+     "error": 389,
+     "filtered": 159,
+     "missed": 230
+    },
+    {
+     "view": "DJI_20241217101142_0020_D",
+     "pixels": 39854,
+     "error": 1742,
+     "filtered": 429,
+     "missed": 1313
+    },
+    {
+     "view": "DJI_20241217101144_0021_D",
+     "pixels": 64296,
+     "error": 1657,
+     "filtered": 629,
+     "missed": 1028
+    },
+    {
+     "view": "DJI_20241217101146_0022_D",
+     "pixels": 74189,
+     "error": 2148,
+     "filtered": 507,
+     "missed": 1641
+    },
+    {
+     "view": "DJI_20241217101148_0023_D",
+     "pixels": 83089,
+     "error": 3915,
+     "filtered": 1499,
+     "missed": 2416
+    },
+    {
+     "view": "DJI_20241217101150_0024_D",
+     "pixels": 84017,
+     "error": 3916,
+     "filtered": 343,
+     "missed": 3573
+    },
+    {
+     "view": "DJI_20241217101152_0025_D",
+     "pixels": 83209,
+     "error": 3769,
+     "filtered": 317,
+     "missed": 3452
+    },
+    {
+     "view": "DJI_20241217101259_0002_D",
+     "pixels": 68370,
+     "error": 9842,
+     "filtered": 1188,
+     "missed": 8654
+    },
+    {
+     "view": "DJI_20241217101303_0004_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217101305_0005_D",
+     "pixels": 94490,
+     "error": 11302,
+     "filtered": 1506,
+     "missed": 9796
+    },
+    {
+     "view": "DJI_20241217101307_0006_D",
+     "pixels": 52897,
+     "error": 12547,
+     "filtered": 1775,
+     "missed": 10772
+    },
+    {
+     "view": "DJI_20241217101309_0007_D",
+     "pixels": 49494,
+     "error": 13426,
+     "filtered": 2197,
+     "missed": 11229
+    },
+    {
+     "view": "DJI_20241217101311_0008_D",
+     "pixels": 28043,
+     "error": 15993,
+     "filtered": 2611,
+     "missed": 13382
+    },
+    {
+     "view": "DJI_20241217101313_0009_D",
+     "pixels": 41998,
+     "error": 15367,
+     "filtered": 2393,
+     "missed": 12974
+    },
+    {
+     "view": "DJI_20241217101315_0010_D",
+     "pixels": 74343,
+     "error": 14880,
+     "filtered": 1463,
+     "missed": 13417
+    },
+    {
+     "view": "DJI_20241217101319_0012_D",
+     "pixels": 105196,
+     "error": 11673,
+     "filtered": 1209,
+     "missed": 10464
+    },
+    {
+     "view": "DJI_20241217101321_0013_D",
+     "pixels": 106412,
+     "error": 11308,
+     "filtered": 1492,
+     "missed": 9816
+    },
+    {
+     "view": "DJI_20241217101323_0014_D",
+     "pixels": 77546,
+     "error": 15605,
+     "filtered": 2281,
+     "missed": 13324
+    },
+    {
+     "view": "DJI_20241217101325_0015_D",
+     "pixels": 57316,
+     "error": 16524,
+     "filtered": 2117,
+     "missed": 14407
+    },
+    {
+     "view": "DJI_20241217101327_0016_D",
+     "pixels": 69396,
+     "error": 16494,
+     "filtered": 2469,
+     "missed": 14025
+    },
+    {
+     "view": "DJI_20241217101329_0017_D",
+     "pixels": 82290,
+     "error": 10627,
+     "filtered": 1409,
+     "missed": 9218
+    },
+    {
+     "view": "DJI_20241217101331_0018_D",
+     "pixels": 76230,
+     "error": 7390,
+     "filtered": 1344,
+     "missed": 6046
+    },
+    {
+     "view": "DJI_20241217101335_0020_D",
+     "pixels": 35380,
+     "error": 4252,
+     "filtered": 511,
+     "missed": 3741
+    },
+    {
+     "view": "DJI_20241217101337_0021_D",
+     "pixels": 33142,
+     "error": 3864,
+     "filtered": 441,
+     "missed": 3423
+    },
+    {
+     "view": "DJI_20241217101339_0022_D",
+     "pixels": 40464,
+     "error": 4209,
+     "filtered": 517,
+     "missed": 3692
+    },
+    {
+     "view": "DJI_20241217101341_0023_D",
+     "pixels": 31464,
+     "error": 4394,
+     "filtered": 432,
+     "missed": 3962
+    },
+    {
+     "view": "DJI_20241217101343_0024_D",
+     "pixels": 20955,
+     "error": 4463,
+     "filtered": 406,
+     "missed": 4057
+    },
+    {
+     "view": "DJI_20241217101345_0025_D",
+     "pixels": 7228,
+     "error": 1900,
+     "filtered": 196,
+     "missed": 1704
+    },
+    {
+     "view": "DJI_20241217101347_0026_D",
+     "pixels": 1457,
+     "error": 567,
+     "filtered": 14,
+     "missed": 553
+    },
+    {
+     "view": "DJI_20241217101351_0028_D",
+     "pixels": 1477,
+     "error": 612,
+     "filtered": 8,
+     "missed": 604
+    },
+    {
+     "view": "DJI_20241217101353_0029_D",
+     "pixels": 4475,
+     "error": 2755,
+     "filtered": 105,
+     "missed": 2650
+    },
+    {
+     "view": "DJI_20241217101355_0030_D",
+     "pixels": 5294,
+     "error": 3745,
+     "filtered": 182,
+     "missed": 3563
+    },
+    {
+     "view": "DJI_20241217101357_0031_D",
+     "pixels": 8035,
+     "error": 5573,
+     "filtered": 764,
+     "missed": 4809
+    },
+    {
+     "view": "DJI_20241217101359_0032_D",
+     "pixels": 6659,
+     "error": 4775,
+     "filtered": 832,
+     "missed": 3943
+    },
+    {
+     "view": "DJI_20241217101453_0037_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217101530_0002_D",
+     "pixels": 12409,
+     "error": 2677,
+     "filtered": 332,
+     "missed": 2345
+    },
+    {
+     "view": "DJI_20241217101534_0004_D",
+     "pixels": 2229,
+     "error": 1203,
+     "filtered": 204,
+     "missed": 999
+    },
+    {
+     "view": "DJI_20241217101536_0005_D",
+     "pixels": 12286,
+     "error": 2431,
+     "filtered": 243,
+     "missed": 2188
+    },
+    {
+     "view": "DJI_20241217101538_0006_D",
+     "pixels": 11254,
+     "error": 2425,
+     "filtered": 224,
+     "missed": 2201
+    },
+    {
+     "view": "DJI_20241217101540_0007_D",
+     "pixels": 8490,
+     "error": 2752,
+     "filtered": 104,
+     "missed": 2648
+    },
+    {
+     "view": "DJI_20241217101542_0008_D",
+     "pixels": 8161,
+     "error": 2960,
+     "filtered": 240,
+     "missed": 2720
+    },
+    {
+     "view": "DJI_20241217101544_0009_D",
+     "pixels": 5736,
+     "error": 3267,
+     "filtered": 209,
+     "missed": 3058
+    },
+    {
+     "view": "DJI_20241217101546_0010_D",
+     "pixels": 3218,
+     "error": 2555,
+     "filtered": 127,
+     "missed": 2428
+    },
+    {
+     "view": "DJI_20241217101550_0012_D",
+     "pixels": 1115,
+     "error": 721,
+     "filtered": 209,
+     "missed": 512
+    },
+    {
+     "view": "DJI_20241217101552_0013_D",
+     "pixels": 420,
+     "error": 188,
+     "filtered": 36,
+     "missed": 152
+    },
+    {
+     "view": "DJI_20241217101554_0014_D",
+     "pixels": 48,
+     "error": 29,
+     "filtered": 0,
+     "missed": 29
+    },
+    {
+     "view": "DJI_20241217101556_0015_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217102533_0019_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217102535_0020_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217102537_0021_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217102957_0024_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217102959_0025_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103001_0026_D",
+     "pixels": 682,
+     "error": 648,
+     "filtered": 371,
+     "missed": 277
+    },
+    {
+     "view": "DJI_20241217103003_0027_D",
+     "pixels": 553,
+     "error": 532,
+     "filtered": 345,
+     "missed": 187
+    },
+    {
+     "view": "DJI_20241217103005_0028_D",
+     "pixels": 412,
+     "error": 367,
+     "filtered": 213,
+     "missed": 154
+    },
+    {
+     "view": "DJI_20241217103021_0036_D",
+     "pixels": 1354,
+     "error": 1166,
+     "filtered": 497,
+     "missed": 669
+    },
+    {
+     "view": "DJI_20241217103023_0037_D",
+     "pixels": 4477,
+     "error": 3341,
+     "filtered": 2249,
+     "missed": 1092
+    },
+    {
+     "view": "DJI_20241217103027_0039_D",
+     "pixels": 1424,
+     "error": 1158,
+     "filtered": 565,
+     "missed": 593
+    },
+    {
+     "view": "DJI_20241217103029_0040_D",
+     "pixels": 266,
+     "error": 234,
+     "filtered": 79,
+     "missed": 155
+    },
+    {
+     "view": "DJI_20241217103033_0042_D",
+     "pixels": 485,
+     "error": 338,
+     "filtered": 91,
+     "missed": 247
+    },
+    {
+     "view": "DJI_20241217103035_0043_D",
+     "pixels": 801,
+     "error": 658,
+     "filtered": 126,
+     "missed": 532
+    },
+    {
+     "view": "DJI_20241217103039_0045_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103041_0046_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103051_0002_D",
+     "pixels": 394,
+     "error": 270,
+     "filtered": 52,
+     "missed": 218
+    },
+    {
+     "view": "DJI_20241217103059_0006_D",
+     "pixels": 376,
+     "error": 277,
+     "filtered": 54,
+     "missed": 223
+    },
+    {
+     "view": "DJI_20241217103101_0007_D",
+     "pixels": 328,
+     "error": 260,
+     "filtered": 43,
+     "missed": 217
+    },
+    {
+     "view": "DJI_20241217103103_0008_D",
+     "pixels": 48,
+     "error": 30,
+     "filtered": 3,
+     "missed": 27
+    },
+    {
+     "view": "DJI_20241217103105_0009_D",
+     "pixels": 4,
+     "error": 4,
+     "filtered": 0,
+     "missed": 4
+    },
+    {
+     "view": "DJI_20241217103107_0010_D",
+     "pixels": 110,
+     "error": 82,
+     "filtered": 36,
+     "missed": 46
+    },
+    {
+     "view": "DJI_20241217103113_0013_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103115_0014_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103119_0016_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103121_0017_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103123_0018_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103125_0019_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103127_0020_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    },
+    {
+     "view": "DJI_20241217103613_0076_D",
+     "pixels": 472,
+     "error": 270,
+     "filtered": 35,
+     "missed": 235
+    },
+    {
+     "view": "DJI_20241217103615_0077_D",
+     "pixels": 4184,
+     "error": 1908,
+     "filtered": 944,
+     "missed": 964
+    },
+    {
+     "view": "DJI_20241217103619_0079_D",
+     "pixels": 23445,
+     "error": 16043,
+     "filtered": 10170,
+     "missed": 5873
+    },
+    {
+     "view": "DJI_20241217103621_0080_D",
+     "pixels": 42493,
+     "error": 16946,
+     "filtered": 15199,
+     "missed": 1747
+    },
+    {
+     "view": "DJI_20241217103623_0081_D",
+     "pixels": 34659,
+     "error": 15346,
+     "filtered": 13584,
+     "missed": 1762
+    },
+    {
+     "view": "DJI_20241217103625_0082_D",
+     "pixels": 28401,
+     "error": 8663,
+     "filtered": 3391,
+     "missed": 5272
+    },
+    {
+     "view": "DJI_20241217103627_0083_D",
+     "pixels": 19860,
+     "error": 4050,
+     "filtered": 2032,
+     "missed": 2018
+    },
+    {
+     "view": "DJI_20241217103629_0084_D",
+     "pixels": 8151,
+     "error": 3115,
+     "filtered": 2173,
+     "missed": 942
+    },
+    {
+     "view": "DJI_20241217103631_0085_D",
+     "pixels": 2683,
+     "error": 587,
+     "filtered": 414,
+     "missed": 173
+    },
+    {
+     "view": "DJI_20241217103635_0087_D",
+     "pixels": 1099,
+     "error": 175,
+     "filtered": 14,
+     "missed": 161
+    },
+    {
+     "view": "DJI_20241217103637_0088_D",
+     "pixels": 704,
+     "error": 252,
+     "filtered": 3,
+     "missed": 249
+    },
+    {
+     "view": "DJI_20241217103639_0089_D",
+     "pixels": 643,
+     "error": 99,
+     "filtered": 8,
+     "missed": 91
+    },
+    {
+     "view": "DJI_20241217103641_0090_D",
+     "pixels": 276,
+     "error": 31,
+     "filtered": 1,
+     "missed": 30
+    },
+    {
+     "view": "DJI_20241217103651_0095_D",
+     "pixels": 0,
+     "error": 0,
+     "filtered": 0,
+     "missed": 0
+    }
+   ],
+   "paths": [
+    "/s0/s61/export/B0_b10/LoD2",
+    "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/s61/export_maskoff/B0_b10/LoD2",
+    "/out/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+    "/s0/s61/box/B0_b10/LoD2/units.npz"
+   ]
+  }
+ },
+ "scientific_verdict": null
+}

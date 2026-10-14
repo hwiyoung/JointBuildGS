@@ -1,0 +1,27 @@
+--- r14/train.py
++++ r15/train.py
+@@ -681,6 +681,7 @@
+ import jbgs_state
+ import jbgs_mvs_pgsr
+ import jbgs_judgment  # [jbgs_judgment]
++import jbgs_oom_record  # [jbgs r15] read-only record of a CUDA out-of-memory stop (default off)
+ 
+ 
+ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint):
+@@ -1389,6 +1390,7 @@
+ 
+     jbgs_state.register_args(parser)
+     jbgs_judgment.register_args(parser)  # [jbgs_judgment]
++    jbgs_oom_record.register_args(parser)  # [jbgs r15]
+     args = parser.parse_args(sys.argv[1:])
+     jbgs_state.validate_args(args)
+     args.save_iterations.append(args.iterations)
+@@ -1415,6 +1417,7 @@
+     else:
+         dataset.sparse_dir_name = "sparse_lod" if args.lod_init else "sparse"
+ 
+-    training(dataset, opt, pipe, args, args.test_iterations, args.save_iterations, args.checkpoint_iterations, args.start_checkpoint)
++    jbgs_oom_record.run_guarded(training, args, dataset, opt, pipe, args, args.test_iterations, args.save_iterations,  # [jbgs r15]
++                                args.checkpoint_iterations, args.start_checkpoint)
+ 
+     print("\nTraining complete.")

@@ -1,0 +1,300 @@
+{
+ "rule": "PHD-MAIN-STAGE3-v1 5.5: the places of the figures, fixed before any training (jointbuildgs:dev, CPU; run_cpu3.sh). Rules (written\nbefore they were run; the places come from the region files only, never from a result):\n  ex31  3-1 example (the fewest author condition B0a3): the LoD2 wall surface with the most GT points in its invisible-agreement patches\n        (code 5, wall-like, in the evaluation range) of B0a3's region file; drawn front-on (outward normal), the same surface and view in\n        every condition\n  ex33  3-3 example: a place observed as prior error (code 11); first rule: code 11 in all seven region files (영상 전체 + the six; the\n        patch store is the B0 box's in all) -> none; changed at 10-14 10:20 (before any training, on the region files only; see ex33's\n        text): code 11 in 영상 전체 and B0a3 (the two drawn), pieces >= 1 m2 (patch centres within 0.5 m), the one common to the most\n        conditions, ties by GT points. Section: 12 m through the piece's GT-weighted centre, along the roof-plane steepest-descent\n        direction of its face (a flat face: along the piece's longer extent), +-0.25 m wide\n  map34 3-4 pair map: the 13-view pair (저자 15장 B0a15 vs 연직 포함 13장 B0n13), top view of the B0 box evaluation range, support\n        agreement (code 2) in one colour\n  r1miss 8.5: R1 LoD2 and R1 ALS missing-agreement (code 4) region, top view of the R1 box; section through the R1 LoD2 code-4 piece with\n        the most GT points (12 m, along its longer extent)\n  reused (stage 1 / 2 definitions, same place and view): 보강-1 example and 8.4 = stage 2 figdefs 'loss/R1rep_b10/LoD2' (the loss-judgment\n        piece, 2,621 patches); 보강-2 = stage 1 sections_v1 'B173_wing' (12 m, +-0.25 m) and VIS v3 'a_fate' wing seeds; 보강-4 = stage 2\n        figdefs 'protect/B173nb_b10/LoD2' (the long wall, front view)\n  python figpos_s3.py   -> S3/prep/figpos.json\nscientific_verdict: null.",
+ "ex31": {
+  "rule": "B0a3 invisible-agreement wall surface with the most GT points",
+  "surface_ext": 20,
+  "candidates": {
+   "20": {
+    "gt_points": 196790,
+    "patches": 4674,
+    "area_m2": 292.1
+   },
+   "23": {
+    "gt_points": 152250,
+    "patches": 6586,
+    "area_m2": 411.6
+   },
+   "2": {
+    "gt_points": 31471,
+    "patches": 657,
+    "area_m2": 41.1
+   },
+   "21": {
+    "gt_points": 12707,
+    "patches": 741,
+    "area_m2": 46.3
+   },
+   "13": {
+    "gt_points": 8530,
+    "patches": 372,
+    "area_m2": 23.2
+   }
+  },
+  "centre": [
+   126.76091014358715,
+   56.604935081977196,
+   -34.070000000004626
+  ],
+  "view": "front-on, outward normal of the surface, the same in every condition",
+  "codes_of_surface_per_condition": {
+   "B0_full": {
+    "2": 4537,
+    "3": 1,
+    "4": 136,
+    "5": 0,
+    "11": 327,
+    "12": 46,
+    "13": 1,
+    "14": 0
+   },
+   "B0a15": {
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 4674,
+    "11": 0,
+    "12": 0,
+    "13": 0,
+    "14": 374
+   },
+   "B0a9": {
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 4674,
+    "11": 0,
+    "12": 0,
+    "13": 0,
+    "14": 374
+   },
+   "B0a3": {
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 4674,
+    "11": 0,
+    "12": 0,
+    "13": 0,
+    "14": 374
+   },
+   "B0n13": {
+    "2": 3051,
+    "3": 130,
+    "4": 1493,
+    "5": 0,
+    "11": 228,
+    "12": 28,
+    "13": 118,
+    "14": 0
+   },
+   "B0n8": {
+    "2": 17,
+    "3": 2,
+    "4": 4655,
+    "5": 0,
+    "11": 0,
+    "12": 0,
+    "13": 374,
+    "14": 0
+   },
+   "B0n2": {
+    "2": 155,
+    "3": 1311,
+    "4": 2551,
+    "5": 657,
+    "11": 7,
+    "12": 86,
+    "13": 231,
+    "14": 50
+   }
+  }
+ },
+ "ex33": {
+  "rule": "first rule (code 11 in all seven) found no patch, and the most-conditions variant one 0.06 m2 patch (B0n2 missing); the figure shows\n    영상 전체 and B0a3 only, so the place must be code 11 in those two: their common code-11 pieces (>= 1 m2), the piece common (majority of\n    its patches code 11) to the most conditions, ties by GT points. The conditions where it is not code 11 are written.",
+  "patches_all7": 0,
+  "candidates": [
+   {
+    "area_m2": 16.9,
+    "gt_points": 27787,
+    "n_conditions": 4
+   },
+   {
+    "area_m2": 3.4,
+    "gt_points": 7021,
+    "n_conditions": 4
+   },
+   {
+    "area_m2": 3.2,
+    "gt_points": 5663,
+    "n_conditions": 4
+   },
+   {
+    "area_m2": 3.2,
+    "gt_points": 4609,
+    "n_conditions": 4
+   },
+   {
+    "area_m2": 3.3,
+    "gt_points": 4484,
+    "n_conditions": 4
+   }
+  ],
+  "piece": {
+   "patches": 270,
+   "gt_points": 27787,
+   "area_m2": 16.88,
+   "kind": 1,
+   "surface_ext": [
+    1
+   ]
+  },
+  "code11_share_per_condition": {
+   "B0_full": 1.0,
+   "B0a15": 1.0,
+   "B0a9": 0.981,
+   "B0a3": 1.0,
+   "B0n13": 0.004,
+   "B0n8": 0.0,
+   "B0n2": 0.0
+  },
+  "not_code11_conditions": [
+   "B0n13",
+   "B0n8",
+   "B0n2"
+  ],
+  "section": {
+   "centre": [
+    107.11322494189024,
+    51.15294492541537,
+    -23.545333895691318
+   ],
+   "t": [
+    0.3764307699212338,
+    0.9264447503529324
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25
+  },
+  "gt_med_median": 0.42274636030197144
+ },
+ "map34": {
+  "pair": [
+   "B0a15",
+   "B0n13"
+  ],
+  "what": "support agreement (code 2), top view"
+ },
+ "r1miss": {
+  "LoD2": {
+   "patches": 198,
+   "area_m2": 12.38,
+   "gt_points": 2970
+  },
+  "section_piece": {
+   "patches": 101,
+   "gt_points": 1225,
+   "area_m2": 6.31
+  },
+  "section": {
+   "centre": [
+    -4.5893428869521005,
+    56.276417222468574,
+    -34.94542857142711
+   ],
+   "t": [
+    -0.9310620428759865,
+    0.3648608944729412
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25
+  },
+  "ALS": {
+   "patches": 63,
+   "area_m2": 4.24,
+   "gt_points": 4140
+  },
+  "map": "top view of the R1 box evaluation range: the missing-agreement patches coloured by the origin of the Gaussian in front (8.5)"
+ },
+ "reused": {
+  "loss/R1rep_b10/LoD2": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "kind": "section",
+   "patch": 103296,
+   "centre": [
+    10.50057931475835,
+    25.88932401184229,
+    -29.635385043928395
+   ],
+   "t": [
+    0.3420201433256688,
+    0.9396926207859083
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "code_v3": 11,
+   "gt_med": 1.2192050218582153,
+   "tau": 0.6827602982521057,
+   "tilt_deg": 1.6,
+   "component": {
+    "patches": 2621,
+    "gt_points": 213666,
+    "area_m2": 163.8
+   },
+   "candidates": {
+    "patches": 5414,
+    "components": 119
+   },
+   "why": "loss: roof-like prior error judged conflict, tau < |GT - prior| <= 4 tau",
+   "lines": [
+    "옛 면(사전 정보)",
+    "참값",
+    "켬: 본 방법 씨앗 0",
+    "끔: 손실에서만 판정 끄기"
+   ]
+  },
+  "protect/B173nb_b10/LoD2": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "kind": "wall_front",
+   "face": 53,
+   "source": "VIS-v1 scene 3",
+   "wall": {
+    "surf_ext": 53,
+    "patches": 18298,
+    "of_patches": 18747,
+    "centre": [
+     153.565,
+     111.76,
+     -33.786
+    ],
+    "normal": [
+     0.930814,
+     -0.365493,
+     0.0
+    ],
+    "t": [
+     0.365493,
+     0.930814,
+     0.0
+    ],
+    "s_range": [
+     -39.6,
+     30.15
+    ],
+    "z_range": [
+     -43.51,
+     -24.51
+    ]
+   },
+   "cells": "the 'inferred correct' unseen patches (unseen.npz label 0); colour = wall present (an opaque Gaussian within 0.25 m)",
+   "panels": [
+    "켬: 본 방법 씨앗 0",
+    "끔: 보호 끄기"
+   ],
+   "big_number": "벽 있음 몫(%)"
+  },
+  "B173_wing": "configs/phd/main_stage1_v1/sections_v1.json B173_wing (12 m, +-0.25 m); VIS v3 measures.a_fate wing seeds"
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,42 @@
+{
+ "rule": "PHD-MAIN-STAGE3-v1 6.1 (the virtual-view mesh of stage 1's post-processing for the B0 image-count conditions): the patch list that\ngpu_s1.run_steps reads (defs/<site>/unseen.npz) to place its 8 virtual views and fuse the option-2 virtual-view mesh (training views +\nvirtual views, 0.10 m, the box's Gaussians). Stage 1 made it only where unseen wall patches existed (B173); in the B0 conditions the\ninvisible region (codes 5 and 14) is 1,437-2,401 m2. The list = the condition's invisible patches in the evaluation range: centre (the\nB0 box store), label_inferred = label_true = 0 for code 5 (invisible agreement), 1 for code 14 (invisible prior error)\n(jointbuildgs:dev, CPU; run_cpu3.sh). For B0a15 (stage 2's defs, read only) S3/gpu_root/defs/B0a15 becomes a folder of links to\nstage 2's files plus this list.\nPurpose (added 10-14 10:5x, after the config was saved and before any stage-3 result; not a pass criterion): the order's '비가시 영역\n완전성' reads the result surface = the TSDF of the training views, which by construction holds no surface seen by no training view\n(stage 2's B0 저자 15장 pair: 6.8 % within 0.2 m while 99.3 % of its invisible-agreement patches carry prior-origin Gaussians), so the\nsame count is also made on the virtual-view mesh (virtual_s3.py) next to it.\n  python unseen_s3.py\nscientific_verdict: null.",
+ "lists": {
+  "B0a15": {
+   "patches": 25458,
+   "code5": 22993,
+   "code14": 2465,
+   "area_m2": 1591.1
+  },
+  "B0a9": {
+   "patches": 25553,
+   "code5": 23078,
+   "code14": 2475,
+   "area_m2": 1597.1
+  },
+  "B0a3": {
+   "patches": 28045,
+   "code5": 25498,
+   "code14": 2547,
+   "area_m2": 1752.8
+  },
+  "B0n13": {
+   "patches": 24903,
+   "code5": 22245,
+   "code14": 2658,
+   "area_m2": 1556.4
+  },
+  "B0n8": {
+   "patches": 24903,
+   "code5": 22245,
+   "code14": 2658,
+   "area_m2": 1556.4
+  },
+  "B0n2": {
+   "patches": 38409,
+   "code5": 33676,
+   "code14": 4733,
+   "area_m2": 2400.6
+  }
+ },
+ "scientific_verdict": null
+}

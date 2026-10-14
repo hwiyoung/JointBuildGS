@@ -1,0 +1,2165 @@
+{
+ "rule": "PHD-MAIN-FIX-v1 tables of the eight trainings (jointbuildgs:dev, CPU; run_cpu_fix.sh; reads the metrics, measure, bands, support and\nfates outputs only; f_common routes this task's results to SF and the others to where they are).\n\n  python fix_tables.py geogs      6.1: per site the fixed GeoGS next to stage 1's GeoGS and the method's two seeds: the stage-1 result rows\n                                  (tables_s1.RES_ROWS, the same paths) + condition 3's two readings, the floating share and the fine rulers\n                                  (s2_metrics); gate condition 1 again at B0 / B173 \uc8fc\ubcc0 / R1 LoD2 with the fixed GeoGS ('\ub2e4\uc2dc \uc7bc(\uace0\uce5c GeoGS)':\n                                  method = the stage-1 two-seed mean, r = the stage-2 fixed ruler's 1.64 %p, the gate's samples rule) next to\n                                  the official decision and the fixed-ruler decision\n  python fix_tables.py r14        6.2 / 6.3: the two stage-2 trainings by stage 2's rows and readings (tables_s2.row, the trade-off and the\n                                  sensitivity rules), the cut x8 next to x2; the B173\ub9cc two in the stage-1 table ('\ub2e4\uc2dc \ub3cc\ub9bc(r14)'), the\n                                  method's two seeds and their difference, a pooled spread with this cell for reference only\nWrites SF/tables/fix_<kind>.json and .md. scientific_verdict: null.",
+ "sites": {
+  "B0_b10": {
+   "\uc720\uc785\ub960 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 [\uc870\uac74 1]": {
+    "prop_LoD2_s0": [
+     0.121
+    ],
+    "prop_LoD2_s1": [
+     0.1186
+    ],
+    "trust_LoD2": [
+     0.4356
+    ],
+    "trust_LoD2_fix1": [
+     0.4283
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.0289
+    ],
+    "prop_LoD2_s1": [
+     0.0289
+    ],
+    "trust_LoD2": [
+     0.0289
+    ],
+    "trust_LoD2_fix1": [
+     0.0289
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4 [\uc870\uac74 2]": {
+    "prop_LoD2_s0": [
+     0.1484
+    ],
+    "prop_LoD2_s1": [
+     0.1615
+    ],
+    "trust_LoD2": [
+     0.4609
+    ],
+    "trust_LoD2_fix1": [
+     0.4635
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4": {
+    "prop_LoD2_s0": [
+     0.1253
+    ],
+    "prop_LoD2_s1": [
+     0.1253
+    ],
+    "trust_LoD2": [
+     0.1253
+    ],
+    "trust_LoD2_fix1": [
+     0.1253
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     0.1504
+    ],
+    "prop_LoD2_s1": [
+     0.1609
+    ],
+    "trust_LoD2": [
+     0.467
+    ],
+    "trust_LoD2_fix1": [
+     0.4697
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \uc804\uccb4": {
+    "prop_LoD2_s0": [
+     0.21
+    ],
+    "prop_LoD2_s1": [
+     0.2132
+    ],
+    "trust_LoD2": [
+     0.1365
+    ],
+    "trust_LoD2_fix1": [
+     0.1271
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc804\uc81c \uc704\ubc30 \uc548": {
+    "prop_LoD2_s0": [
+     0.2113
+    ],
+    "prop_LoD2_s1": [
+     0.2142
+    ],
+    "trust_LoD2": [
+     0.1297
+    ],
+    "trust_LoD2_fix1": [
+     0.1201
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc774\uc911 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.5193
+    ],
+    "prop_LoD2_s1": [
+     0.4927
+    ],
+    "trust_LoD2": [
+     0.5325
+    ],
+    "trust_LoD2_fix1": [
+     0.4853
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uacb0\uce21 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.1667
+    ],
+    "prop_LoD2_s1": [
+     0.0833
+    ],
+    "trust_LoD2": [
+     0.2143
+    ],
+    "trust_LoD2_fix1": [
+     0.0893
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.1144
+    ],
+    "prop_LoD2_s1": [
+     0.1256
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uad00\uce21 \uc624\ub958(\ucd9c\uc2e0 \ubb34\uad00)": {
+    "prop_LoD2_s0": [
+     0.1606
+    ],
+    "prop_LoD2_s1": [
+     0.1675
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\ubcf4\uc815 \uacbd\uacc4 (\u03c4 / m)": {
+    "prop_LoD2_s0": [
+     1.0,
+     0.198
+    ],
+    "prop_LoD2_s1": [
+     1.0,
+     0.198
+    ],
+    "trust_LoD2": [
+     1.5,
+     0.296
+    ],
+    "trust_LoD2_fix1": [
+     1.5,
+     0.296
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5 / NMAD [\uc870\uac74 3 = NMAD]": {
+    "prop_LoD2_s0": [
+     0.698,
+     1.2899
+    ],
+    "prop_LoD2_s1": [
+     0.4353,
+     1.2449
+    ],
+    "trust_LoD2": [
+     10.5668,
+     5.7761
+    ],
+    "trust_LoD2_fix1": [
+     4.9146,
+     6.8206
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     0.698
+    ],
+    "prop_LoD2_s1": [
+     0.4353
+    ],
+    "trust_LoD2": [
+     10.5668
+    ],
+    "trust_LoD2_fix1": [
+     4.9146
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec q68.3 / q95": {
+    "prop_LoD2_s0": [
+     2.1356,
+     13.1302
+    ],
+    "prop_LoD2_s1": [
+     1.3183,
+     12.6396
+    ],
+    "trust_LoD2": [
+     9.3867,
+     11.026
+    ],
+    "trust_LoD2_fix1": [
+     7.9958,
+     9.4169
+    ]
+   },
+   "\uac00\ud30c\ub978 \uc9c0\ubd95 \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.011,
+     0.0353
+    ],
+    "prop_LoD2_s1": [
+     -0.0106,
+     0.0348
+    ],
+    "trust_LoD2": [
+     0.0509,
+     0.1341
+    ],
+    "trust_LoD2_fix1": [
+     0.0754,
+     0.1276
+    ]
+   },
+   "\uac00\ud30c\ub978 \uc9c0\ubd95 \uc0b0\ud3ec q68.3 / q95": {
+    "prop_LoD2_s0": [
+     0.0359,
+     0.0826
+    ],
+    "prop_LoD2_s1": [
+     0.0354,
+     0.0848
+    ],
+    "trust_LoD2": [
+     0.1387,
+     0.3342
+    ],
+    "trust_LoD2_fix1": [
+     0.1348,
+     0.3133
+    ]
+   },
+   "\ub760 \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.0122,
+     0.0394
+    ],
+    "prop_LoD2_s1": [
+     -0.0153,
+     0.0384
+    ],
+    "trust_LoD2": [
+     0.1032,
+     0.1175
+    ],
+    "trust_LoD2_fix1": [
+     0.1065,
+     0.1122
+    ]
+   },
+   "\ubcbd \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.0179,
+     0.0747
+    ],
+    "prop_LoD2_s1": [
+     -0.0174,
+     0.0737
+    ],
+    "trust_LoD2": [
+     0.2322,
+     0.1408
+    ],
+    "trust_LoD2_fix1": [
+     0.2498,
+     0.1449
+    ]
+   },
+   "\uacb0\uce21 \uc77c\uce58 0.2 / 0.5 m": {
+    "prop_LoD2_s0": [
+     0.9438,
+     0.983
+    ],
+    "prop_LoD2_s1": [
+     0.9272,
+     0.9914
+    ],
+    "trust_LoD2": [
+     0.4012,
+     0.9697
+    ],
+    "trust_LoD2_fix1": [
+     0.2932,
+     0.9819
+    ]
+   },
+   "\uc804\uc81c \uc704\ubc30 \ub458\ub808 0.2 m [\uc870\uac74 4]": {
+    "prop_LoD2_s0": [
+     0.9529
+    ],
+    "prop_LoD2_s1": [
+     0.955
+    ],
+    "trust_LoD2": [
+     0.7336
+    ],
+    "trust_LoD2_fix1": [
+     0.6891
+    ]
+   },
+   "3~20 m / \uadf8\uc911 \uc0ac\uc804 \uc815\ubcf4 \ucd9c\uc2e0 / 20 m \ub118\uac8c (\uac1c)": {
+    "prop_LoD2_s0": [
+     1037,
+     708,
+     0
+    ],
+    "prop_LoD2_s1": [
+     1116,
+     851,
+     26
+    ],
+    "trust_LoD2": [
+     819,
+     0,
+     0
+    ],
+    "trust_LoD2_fix1": [
+     873,
+     0,
+     0
+    ]
+   },
+   "\ud3c9\uac00 \uc601\uc0c1 \ud654\uc18c \ubaab (\u2030)": {
+    "prop_LoD2_s0": [
+     0.000542
+    ],
+    "prop_LoD2_s1": [
+     0.000654
+    ],
+    "trust_LoD2": [
+     0.000397
+    ],
+    "trust_LoD2_fix1": [
+     0.000344
+    ]
+   },
+   "Chamfer \ud3c9\uade0 (m)": {
+    "prop_LoD2_s0": [
+     1.2332
+    ],
+    "prop_LoD2_s1": [
+     1.2169
+    ],
+    "trust_LoD2": [
+     1.2704
+    ],
+    "trust_LoD2_fix1": [
+     1.2061
+    ]
+   },
+   "\uc815\ubc00\ub3c4 / \uc644\uc804\uc131 / F1 @0.2 m": {
+    "prop_LoD2_s0": [
+     0.477,
+     0.9571,
+     0.6367
+    ],
+    "prop_LoD2_s1": [
+     0.475,
+     0.9534,
+     0.6341
+    ],
+    "trust_LoD2": [
+     0.3349,
+     0.7592,
+     0.4648
+    ],
+    "trust_LoD2_fix1": [
+     0.3411,
+     0.7451,
+     0.4679
+    ]
+   },
+   "M3C2 \uc911\uc559\uac12 / NMAD (cm)": {
+    "prop_LoD2_s0": [
+     -0.0192,
+     0.0552
+    ],
+    "prop_LoD2_s1": [
+     -0.0198,
+     0.0529
+    ],
+    "trust_LoD2": [
+     0.1289,
+     0.1811
+    ],
+    "trust_LoD2_fix1": [
+     0.1421,
+     0.1719
+    ]
+   },
+   "\ud559\uc2b5 \uc2dc\uac04 (\ubd84) / GPU \ucd5c\ub300 (GB)": {
+    "prop_LoD2_s0": [
+     3934.3,
+     18265.0
+    ],
+    "prop_LoD2_s1": [
+     4144.5,
+     16528.0
+    ],
+    "trust_LoD2": [
+     3183.5,
+     10692.0
+    ],
+    "trust_LoD2_fix1": [
+     3243.8,
+     9377.0
+    ]
+   },
+   "\ud654\uc9c8 PSNR / SSIM / LPIPS": {
+    "prop_LoD2_s0": [
+     23.0507,
+     0.7471,
+     0.325
+    ],
+    "prop_LoD2_s1": [
+     22.2875,
+     0.7338,
+     0.335
+    ],
+    "trust_LoD2": [
+     22.667,
+     0.7161,
+     0.3653
+    ],
+    "trust_LoD2_fix1": [
+     22.6535,
+     0.716,
+     0.3663
+    ]
+   },
+   "\ud45c\ubcf8 \uc218 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uc720\uc785\ub960": {
+    "prop_LoD2_s0": 32880,
+    "prop_LoD2_s1": 32880,
+    "trust_LoD2": 32880,
+    "trust_LoD2_fix1": 32880
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 13.73,
+    "prop_LoD2_s1": -17.580000000000002,
+    "trust_LoD2": -1.72,
+    "trust_LoD2_fix1": 28.249999999999996
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 39.879999999999995,
+    "prop_LoD2_s1": 60.89,
+    "trust_LoD2": 24.6,
+    "trust_LoD2_fix1": 12.25
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc9c0\uae08 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 128.99,
+    "prop_LoD2_s1": 124.49,
+    "trust_LoD2": 577.6099999999999,
+    "trust_LoD2_fix1": 682.06
+   },
+   "\ub72c \uc870\uac01 \ubaab": {
+    "prop_LoD2_s0": 0.3949,
+    "prop_LoD2_s1": 0.2996,
+    "trust_LoD2": 0.7335,
+    "trust_LoD2_fix1": 0.821
+   },
+   "\uace0\uc6b4 \uc790: \ubb38\ud131 \uc774\ub0b4 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 16.828,
+    "prop_LoD2_s1": 13.316,
+    "trust_LoD2": 40.445,
+    "trust_LoD2_fix1": 33.206
+   },
+   "\uace0\uc6b4 \uc790: \uc9c0\uc9c0 \uc77c\uce58 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 3.974,
+    "prop_LoD2_s1": 3.946,
+    "trust_LoD2": 18.363,
+    "trust_LoD2_fix1": 19.367
+   },
+   "\uace0\uc6b4 \uc790: \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 6.187,
+    "prop_LoD2_s1": 6.275,
+    "trust_LoD2": 21.085,
+    "trust_LoD2_fix1": 22.039
+   }
+  },
+  "B173nb_b10": {
+   "\uc720\uc785\ub960 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 [\uc870\uac74 1]": {
+    "prop_LoD2_s0": [
+     0.0654
+    ],
+    "prop_LoD2_s1": [
+     0.0708
+    ],
+    "trust_LoD2": [
+     0.1017
+    ],
+    "trust_LoD2_fix1": [
+     0.0867
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.0303
+    ],
+    "prop_LoD2_s1": [
+     0.0303
+    ],
+    "trust_LoD2": [
+     0.0303
+    ],
+    "trust_LoD2_fix1": [
+     0.0303
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4 [\uc870\uac74 2]": {
+    "prop_LoD2_s0": [
+     0.6625
+    ],
+    "prop_LoD2_s1": [
+     0.655
+    ],
+    "trust_LoD2": [
+     0.2842
+    ],
+    "trust_LoD2_fix1": [
+     0.2729
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4": {
+    "prop_LoD2_s0": [
+     0.356
+    ],
+    "prop_LoD2_s1": [
+     0.356
+    ],
+    "trust_LoD2": [
+     0.356
+    ],
+    "trust_LoD2_fix1": [
+     0.356
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     0.6913
+    ],
+    "prop_LoD2_s1": [
+     0.6758
+    ],
+    "trust_LoD2": [
+     0.2853
+    ],
+    "trust_LoD2_fix1": [
+     0.2642
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \uc804\uccb4": {
+    "prop_LoD2_s0": [
+     0.6193
+    ],
+    "prop_LoD2_s1": [
+     0.6058
+    ],
+    "trust_LoD2": [
+     0.2508
+    ],
+    "trust_LoD2_fix1": [
+     0.2409
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc804\uc81c \uc704\ubc30 \uc548": {
+    "prop_LoD2_s0": [
+     0.613
+    ],
+    "prop_LoD2_s1": [
+     0.5986
+    ],
+    "trust_LoD2": [
+     0.2459
+    ],
+    "trust_LoD2_fix1": [
+     0.2362
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc774\uc911 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.4026
+    ],
+    "prop_LoD2_s1": [
+     0.4038
+    ],
+    "trust_LoD2": [
+     0.3711
+    ],
+    "trust_LoD2_fix1": [
+     0.3504
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uacb0\uce21 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.2183
+    ],
+    "prop_LoD2_s1": [
+     0.1968
+    ],
+    "trust_LoD2": [
+     0.3423
+    ],
+    "trust_LoD2_fix1": [
+     0.3423
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.0094
+    ],
+    "prop_LoD2_s1": [
+     0.0086
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uad00\uce21 \uc624\ub958(\ucd9c\uc2e0 \ubb34\uad00)": {
+    "prop_LoD2_s0": [
+     0.2369
+    ],
+    "prop_LoD2_s1": [
+     0.2236
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\ubcf4\uc815 \uacbd\uacc4 (\u03c4 / m)": {
+    "prop_LoD2_s0": [
+     1.5,
+     0.264
+    ],
+    "prop_LoD2_s1": [
+     1.5,
+     0.264
+    ],
+    "trust_LoD2": [
+     8.0,
+     1.408
+    ],
+    "trust_LoD2_fix1": [
+     8.0,
+     1.408
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5 / NMAD [\uc870\uac74 3 = NMAD]": {
+    "prop_LoD2_s0": [
+     0.0709,
+     0.0224
+    ],
+    "prop_LoD2_s1": [
+     0.0718,
+     0.0217
+    ],
+    "trust_LoD2": [
+     0.7138,
+     0.1711
+    ],
+    "trust_LoD2_fix1": [
+     0.3415,
+     0.1596
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     0.0711
+    ],
+    "prop_LoD2_s1": [
+     0.0719
+    ],
+    "trust_LoD2": [
+     0.7116
+    ],
+    "trust_LoD2_fix1": [
+     0.3387
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec q68.3 / q95": {
+    "prop_LoD2_s0": [
+     0.0229,
+     0.057
+    ],
+    "prop_LoD2_s1": [
+     0.0221,
+     0.0553
+    ],
+    "trust_LoD2": [
+     0.2204,
+     18.2429
+    ],
+    "trust_LoD2_fix1": [
+     0.1589,
+     0.9555
+    ]
+   },
+   "\uac00\ud30c\ub978 \uc9c0\ubd95 \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.0861,
+     0.0598
+    ],
+    "prop_LoD2_s1": [
+     -0.0859,
+     0.065
+    ],
+    "trust_LoD2": [
+     -0.1178,
+     0.15
+    ],
+    "trust_LoD2_fix1": [
+     -0.1184,
+     0.1376
+    ]
+   },
+   "\uac00\ud30c\ub978 \uc9c0\ubd95 \uc0b0\ud3ec q68.3 / q95": {
+    "prop_LoD2_s0": [
+     0.0623,
+     0.1321
+    ],
+    "prop_LoD2_s1": [
+     0.0661,
+     0.131
+    ],
+    "trust_LoD2": [
+     0.1486,
+     0.276
+    ],
+    "trust_LoD2_fix1": [
+     0.1443,
+     0.3249
+    ]
+   },
+   "\ub760 \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     0.058,
+     0.0479
+    ],
+    "prop_LoD2_s1": [
+     0.0582,
+     0.0471
+    ],
+    "trust_LoD2": [
+     0.2361,
+     0.325
+    ],
+    "trust_LoD2_fix1": [
+     0.1368,
+     0.193
+    ]
+   },
+   "\ubcbd \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.0368,
+     0.0606
+    ],
+    "prop_LoD2_s1": [
+     -0.0364,
+     0.0576
+    ],
+    "trust_LoD2": [
+     0.1255,
+     0.1209
+    ],
+    "trust_LoD2_fix1": [
+     0.0216,
+     0.0744
+    ]
+   },
+   "\uacb0\uce21 \uc77c\uce58 0.2 / 0.5 m": {
+    "prop_LoD2_s0": [
+     0.962,
+     0.9777
+    ],
+    "prop_LoD2_s1": [
+     0.9671,
+     0.9783
+    ],
+    "trust_LoD2": [
+     0.9018,
+     0.9911
+    ],
+    "trust_LoD2_fix1": [
+     0.9379,
+     0.9941
+    ]
+   },
+   "\ube44\uac00\uc2dc \uc77c\uce58 0.2 / 0.5 m": {
+    "prop_LoD2_s0": [
+     0.7059,
+     0.8824
+    ],
+    "prop_LoD2_s1": [
+     0.7059,
+     0.8824
+    ],
+    "trust_LoD2": [
+     0.7647,
+     1.0
+    ],
+    "trust_LoD2_fix1": [
+     0.8824,
+     1.0
+    ]
+   },
+   "\uc804\uc81c \uc704\ubc30 \ub458\ub808 0.2 m [\uc870\uac74 4]": {
+    "prop_LoD2_s0": [
+     0.9562
+    ],
+    "prop_LoD2_s1": [
+     0.956
+    ],
+    "trust_LoD2": [
+     0.6615
+    ],
+    "trust_LoD2_fix1": [
+     0.7404
+    ]
+   },
+   "\ubabb \ubcf8 \uacf3 \uc0c1\uc18d\ub960 / \uacfc\uac70 \ud615\uc0c1 (\uac00\uc6b0\uc2dc\uc548)": {
+    "prop_LoD2_s0": [
+     0.8108,
+     0.0649
+    ],
+    "prop_LoD2_s1": [
+     0.7758,
+     0.0863
+    ],
+    "trust_LoD2": [
+     null,
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null,
+     null
+    ]
+   },
+   "\uac00\uc0c1 \uc2dc\uc810 \uba54\uc2dc: \ub9de\uc74c \ubbf8\ub8f8 0.5 m / \ud2c0\ub9bc \ubbf8\ub8f8 0.2 m": {
+    "prop_LoD2_s0": [
+     0.9962,
+     0.0929
+    ],
+    "prop_LoD2_s1": [
+     0.9891,
+     0.1127
+    ],
+    "trust_LoD2": [
+     0.4657,
+     0.0629
+    ],
+    "trust_LoD2_fix1": [
+     0.4546,
+     0.0669
+    ]
+   },
+   "3~20 m / \uadf8\uc911 \uc0ac\uc804 \uc815\ubcf4 \ucd9c\uc2e0 / 20 m \ub118\uac8c (\uac1c)": {
+    "prop_LoD2_s0": [
+     55,
+     55,
+     1803
+    ],
+    "prop_LoD2_s1": [
+     165,
+     165,
+     2
+    ],
+    "trust_LoD2": [
+     1136,
+     0,
+     783
+    ],
+    "trust_LoD2_fix1": [
+     856,
+     0,
+     0
+    ]
+   },
+   "\ud3c9\uac00 \uc601\uc0c1 \ud654\uc18c \ubaab (\u2030)": {
+    "prop_LoD2_s0": [
+     0.000825
+    ],
+    "prop_LoD2_s1": [
+     0.000168
+    ],
+    "trust_LoD2": [
+     0.001034
+    ],
+    "trust_LoD2_fix1": [
+     0.00053
+    ]
+   },
+   "Chamfer \ud3c9\uade0 (m)": {
+    "prop_LoD2_s0": [
+     0.2161
+    ],
+    "prop_LoD2_s1": [
+     0.2033
+    ],
+    "trust_LoD2": [
+     1.3448
+    ],
+    "trust_LoD2_fix1": [
+     0.5417
+    ]
+   },
+   "\uc815\ubc00\ub3c4 / \uc644\uc804\uc131 / F1 @0.2 m": {
+    "prop_LoD2_s0": [
+     0.7087,
+     0.8904,
+     0.7893
+    ],
+    "prop_LoD2_s1": [
+     0.7055,
+     0.8892,
+     0.7868
+    ],
+    "trust_LoD2": [
+     0.248,
+     0.349,
+     0.29
+    ],
+    "trust_LoD2_fix1": [
+     0.4374,
+     0.5765,
+     0.4974
+    ]
+   },
+   "M3C2 \uc911\uc559\uac12 / NMAD (cm)": {
+    "prop_LoD2_s0": [
+     0.0021,
+     0.1238
+    ],
+    "prop_LoD2_s1": [
+     0.0,
+     0.1224
+    ],
+    "trust_LoD2": [
+     0.1872,
+     0.3198
+    ],
+    "trust_LoD2_fix1": [
+     0.0669,
+     0.2062
+    ]
+   },
+   "\ud559\uc2b5 \uc2dc\uac04 (\ubd84) / GPU \ucd5c\ub300 (GB)": {
+    "prop_LoD2_s0": [
+     3815.7,
+     18568.0
+    ],
+    "prop_LoD2_s1": [
+     4059.0,
+     15427.0
+    ],
+    "trust_LoD2": [
+     3844.2,
+     11256.0
+    ],
+    "trust_LoD2_fix1": [
+     4264.6,
+     18176.0
+    ]
+   },
+   "\ud654\uc9c8 PSNR / SSIM / LPIPS": {
+    "prop_LoD2_s0": [
+     22.7182,
+     0.7617,
+     0.2966
+    ],
+    "prop_LoD2_s1": [
+     23.5455,
+     0.7776,
+     0.2859
+    ],
+    "trust_LoD2": [
+     22.6438,
+     0.7323,
+     0.3438
+    ],
+    "trust_LoD2_fix1": [
+     22.8299,
+     0.7342,
+     0.3406
+    ]
+   },
+   "\ud45c\ubcf8 \uc218 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uc720\uc785\ub960": {
+    "prop_LoD2_s0": 119763,
+    "prop_LoD2_s1": 119763,
+    "trust_LoD2": 119763,
+    "trust_LoD2_fix1": 119763
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 7.049999999999999,
+    "prop_LoD2_s1": 7.140000000000001,
+    "trust_LoD2": 69.37,
+    "trust_LoD2_fix1": 33.019999999999996
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 2.22,
+    "prop_LoD2_s1": 2.1399999999999997,
+    "trust_LoD2": 14.280000000000001,
+    "trust_LoD2_fix1": 15.010000000000002
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc9c0\uae08 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 2.2399999999999998,
+    "prop_LoD2_s1": 2.17,
+    "trust_LoD2": 17.11,
+    "trust_LoD2_fix1": 15.959999999999999
+   },
+   "\ub72c \uc870\uac01 \ubaab": {
+    "prop_LoD2_s0": 0.0124,
+    "prop_LoD2_s1": 0.0137,
+    "trust_LoD2": 0.1435,
+    "trust_LoD2_fix1": 0.0531
+   },
+   "\uace0\uc6b4 \uc790: \ubb38\ud131 \uc774\ub0b4 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 18.894,
+    "prop_LoD2_s1": 18.421,
+    "trust_LoD2": 24.049,
+    "trust_LoD2_fix1": 20.824
+   },
+   "\uace0\uc6b4 \uc790: \uc9c0\uc9c0 \uc77c\uce58 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 6.175,
+    "prop_LoD2_s1": 6.118,
+    "trust_LoD2": 19.193,
+    "trust_LoD2_fix1": 9.721
+   },
+   "\uace0\uc6b4 \uc790: \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 5.187,
+    "prop_LoD2_s1": 5.099,
+    "trust_LoD2": 38.21,
+    "trust_LoD2_fix1": 13.68
+   }
+  },
+  "R1rep_b10": {
+   "\uc720\uc785\ub960 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 [\uc870\uac74 1]": {
+    "prop_LoD2_s0": [
+     0.0851
+    ],
+    "prop_LoD2_s1": [
+     0.0676
+    ],
+    "trust_LoD2": [
+     0.3696
+    ],
+    "trust_LoD2_fix1": [
+     0.432
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.0155
+    ],
+    "prop_LoD2_s1": [
+     0.0155
+    ],
+    "trust_LoD2": [
+     0.0155
+    ],
+    "trust_LoD2_fix1": [
+     0.0155
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4 [\uc870\uac74 2]": {
+    "prop_LoD2_s0": [
+     0.1073
+    ],
+    "prop_LoD2_s1": [
+     0.1057
+    ],
+    "trust_LoD2": [
+     0.2211
+    ],
+    "trust_LoD2_fix1": [
+     0.2228
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4": {
+    "prop_LoD2_s0": [
+     0.016
+    ],
+    "prop_LoD2_s1": [
+     0.016
+    ],
+    "trust_LoD2": [
+     0.016
+    ],
+    "trust_LoD2_fix1": [
+     0.016
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     0.0786
+    ],
+    "prop_LoD2_s1": [
+     0.0906
+    ],
+    "trust_LoD2": [
+     0.2017
+    ],
+    "trust_LoD2_fix1": [
+     0.2137
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \uc804\uccb4": {
+    "prop_LoD2_s0": [
+     0.1995
+    ],
+    "prop_LoD2_s1": [
+     0.2057
+    ],
+    "trust_LoD2": [
+     0.0982
+    ],
+    "trust_LoD2_fix1": [
+     0.0963
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc804\uc81c \uc704\ubc30 \uc548": {
+    "prop_LoD2_s0": [
+     0.2013
+    ],
+    "prop_LoD2_s1": [
+     0.2076
+    ],
+    "trust_LoD2": [
+     0.0957
+    ],
+    "trust_LoD2_fix1": [
+     0.0938
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc774\uc911 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.0987
+    ],
+    "prop_LoD2_s1": [
+     0.0906
+    ],
+    "trust_LoD2": [
+     0.5929
+    ],
+    "trust_LoD2_fix1": [
+     0.6302
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uacb0\uce21 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.0211
+    ],
+    "prop_LoD2_s1": [
+     0.0223
+    ],
+    "trust_LoD2": [
+     0.1901
+    ],
+    "trust_LoD2_fix1": [
+     0.0869
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.0421
+    ],
+    "prop_LoD2_s1": [
+     0.0289
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uad00\uce21 \uc624\ub958(\ucd9c\uc2e0 \ubb34\uad00)": {
+    "prop_LoD2_s0": [
+     0.0307
+    ],
+    "prop_LoD2_s1": [
+     0.033
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\ubcf4\uc815 \uacbd\uacc4 (\u03c4 / m)": {
+    "prop_LoD2_s0": [
+     1.0,
+     0.683
+    ],
+    "prop_LoD2_s1": [
+     1.0,
+     0.683
+    ],
+    "trust_LoD2": [
+     null,
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null,
+     null
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5 / NMAD [\uc870\uac74 3 = NMAD]": {
+    "prop_LoD2_s0": [
+     -0.0413,
+     0.0637
+    ],
+    "prop_LoD2_s1": [
+     -0.0596,
+     0.057
+    ],
+    "trust_LoD2": [
+     0.0606,
+     0.2727
+    ],
+    "trust_LoD2_fix1": [
+     0.1066,
+     0.4314
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     -0.0414
+    ],
+    "prop_LoD2_s1": [
+     -0.0596
+    ],
+    "trust_LoD2": [
+     0.0597
+    ],
+    "trust_LoD2_fix1": [
+     0.1049
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec q68.3 / q95": {
+    "prop_LoD2_s0": [
+     0.0667,
+     7.4102
+    ],
+    "prop_LoD2_s1": [
+     0.0583,
+     1.7382
+    ],
+    "trust_LoD2": [
+     0.2753,
+     6.9644
+    ],
+    "trust_LoD2_fix1": [
+     1.1997,
+     8.1745
+    ]
+   },
+   "\ub760 \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.0024,
+     0.0733
+    ],
+    "prop_LoD2_s1": [
+     -0.0155,
+     0.0814
+    ],
+    "trust_LoD2": [
+     0.0071,
+     0.2082
+    ],
+    "trust_LoD2_fix1": [
+     -0.0145,
+     0.2173
+    ]
+   },
+   "\ubcbd \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     0.0271,
+     0.0332
+    ],
+    "prop_LoD2_s1": [
+     0.0161,
+     0.0341
+    ],
+    "trust_LoD2": [
+     0.0829,
+     0.0399
+    ],
+    "trust_LoD2_fix1": [
+     0.0784,
+     0.0409
+    ]
+   },
+   "\uacb0\uce21 \uc77c\uce58 0.2 / 0.5 m": {
+    "prop_LoD2_s0": [
+     0.4888,
+     0.8834
+    ],
+    "prop_LoD2_s1": [
+     0.5267,
+     0.9368
+    ],
+    "trust_LoD2": [
+     0.8188,
+     0.9691
+    ],
+    "trust_LoD2_fix1": [
+     0.7191,
+     0.9059
+    ]
+   },
+   "\ube44\uac00\uc2dc \uc77c\uce58 0.2 / 0.5 m": {
+    "prop_LoD2_s0": [
+     1.0,
+     1.0
+    ],
+    "prop_LoD2_s1": [
+     1.0,
+     1.0
+    ],
+    "trust_LoD2": [
+     1.0,
+     1.0
+    ],
+    "trust_LoD2_fix1": [
+     1.0,
+     1.0
+    ]
+   },
+   "\uc804\uc81c \uc704\ubc30 \ub458\ub808 0.2 m [\uc870\uac74 4]": {
+    "prop_LoD2_s0": [
+     0.892
+    ],
+    "prop_LoD2_s1": [
+     0.8898
+    ],
+    "trust_LoD2": [
+     0.8183
+    ],
+    "trust_LoD2_fix1": [
+     0.7785
+    ]
+   },
+   "3~20 m / \uadf8\uc911 \uc0ac\uc804 \uc815\ubcf4 \ucd9c\uc2e0 / 20 m \ub118\uac8c (\uac1c)": {
+    "prop_LoD2_s0": [
+     0,
+     0,
+     1538
+    ],
+    "prop_LoD2_s1": [
+     0,
+     0,
+     0
+    ],
+    "trust_LoD2": [
+     0,
+     0,
+     0
+    ],
+    "trust_LoD2_fix1": [
+     0,
+     0,
+     0
+    ]
+   },
+   "\ud3c9\uac00 \uc601\uc0c1 \ud654\uc18c \ubaab (\u2030)": {
+    "prop_LoD2_s0": [
+     0.020179
+    ],
+    "prop_LoD2_s1": [
+     0.0
+    ],
+    "trust_LoD2": [
+     0.0
+    ],
+    "trust_LoD2_fix1": [
+     0.0
+    ]
+   },
+   "Chamfer \ud3c9\uade0 (m)": {
+    "prop_LoD2_s0": [
+     0.4515
+    ],
+    "prop_LoD2_s1": [
+     0.3099
+    ],
+    "trust_LoD2": [
+     0.5291
+    ],
+    "trust_LoD2_fix1": [
+     0.6218
+    ]
+   },
+   "\uc815\ubc00\ub3c4 / \uc644\uc804\uc131 / F1 @0.2 m": {
+    "prop_LoD2_s0": [
+     0.5524,
+     0.8656,
+     0.6744
+    ],
+    "prop_LoD2_s1": [
+     0.5776,
+     0.8587,
+     0.6906
+    ],
+    "trust_LoD2": [
+     0.3724,
+     0.6529,
+     0.4743
+    ],
+    "trust_LoD2_fix1": [
+     0.3361,
+     0.6501,
+     0.4431
+    ]
+   },
+   "M3C2 \uc911\uc559\uac12 / NMAD (cm)": {
+    "prop_LoD2_s0": [
+     -0.0477,
+     0.1448
+    ],
+    "prop_LoD2_s1": [
+     -0.0432,
+     0.1345
+    ],
+    "trust_LoD2": [
+     0.0015,
+     0.3189
+    ],
+    "trust_LoD2_fix1": [
+     -0.0104,
+     0.3202
+    ]
+   },
+   "\ud559\uc2b5 \uc2dc\uac04 (\ubd84) / GPU \ucd5c\ub300 (GB)": {
+    "prop_LoD2_s0": [
+     4054.9,
+     18504.0
+    ],
+    "prop_LoD2_s1": [
+     3785.2,
+     18145.0
+    ],
+    "trust_LoD2": [
+     3333.7,
+     16275.0
+    ],
+    "trust_LoD2_fix1": [
+     3153.5,
+     11032.0
+    ]
+   },
+   "\ud654\uc9c8 PSNR / SSIM / LPIPS": {
+    "prop_LoD2_s0": [
+     22.6537,
+     0.7493,
+     0.3262
+    ],
+    "prop_LoD2_s1": [
+     22.935,
+     0.746,
+     0.3303
+    ],
+    "trust_LoD2": [
+     22.5827,
+     0.7255,
+     0.3611
+    ],
+    "trust_LoD2_fix1": [
+     22.5912,
+     0.7263,
+     0.3606
+    ]
+   },
+   "\ud45c\ubcf8 \uc218 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uc720\uc785\ub960": {
+    "prop_LoD2_s0": 54345,
+    "prop_LoD2_s1": 54345,
+    "trust_LoD2": 54345,
+    "trust_LoD2_fix1": 54345
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": -5.43,
+    "prop_LoD2_s1": -6.39,
+    "trust_LoD2": 1.23,
+    "trust_LoD2_fix1": 0.05
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 4.91,
+    "prop_LoD2_s1": 5.27,
+    "trust_LoD2": 19.96,
+    "trust_LoD2_fix1": 18.740000000000002
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc9c0\uae08 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 6.370000000000001,
+    "prop_LoD2_s1": 5.7,
+    "trust_LoD2": 27.27,
+    "trust_LoD2_fix1": 43.14
+   },
+   "\ub72c \uc870\uac01 \ubaab": {
+    "prop_LoD2_s0": 0.161,
+    "prop_LoD2_s1": 0.0599,
+    "trust_LoD2": 0.1998,
+    "trust_LoD2_fix1": 0.3475
+   },
+   "\uace0\uc6b4 \uc790: \ubb38\ud131 \uc774\ub0b4 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 31.3,
+    "prop_LoD2_s1": 26.637,
+    "trust_LoD2": 68.303,
+    "trust_LoD2_fix1": 60.924
+   },
+   "\uace0\uc6b4 \uc790: \uc9c0\uc9c0 \uc77c\uce58 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 5.302,
+    "prop_LoD2_s1": 6.044,
+    "trust_LoD2": 10.158,
+    "trust_LoD2_fix1": 9.718
+   },
+   "\uace0\uc6b4 \uc790: \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 8.835,
+    "prop_LoD2_s1": 8.797,
+    "trust_LoD2": 30.894,
+    "trust_LoD2_fix1": 30.267
+   }
+  },
+  "B173_b0": {
+   "\uc720\uc785\ub960 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 [\uc870\uac74 1]": {
+    "prop_LoD2_s0": [
+     0.0547
+    ],
+    "prop_LoD2_s1": [
+     0.0508
+    ],
+    "trust_LoD2": [
+     0.1949
+    ],
+    "trust_LoD2_fix1": [
+     0.208
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.0212
+    ],
+    "prop_LoD2_s1": [
+     0.0212
+    ],
+    "trust_LoD2": [
+     0.0212
+    ],
+    "trust_LoD2_fix1": [
+     0.0212
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4 [\uc870\uac74 2]": {
+    "prop_LoD2_s0": [
+     0.6731
+    ],
+    "prop_LoD2_s1": [
+     0.6796
+    ],
+    "trust_LoD2": [
+     0.3528
+    ],
+    "trust_LoD2_fix1": [
+     0.3574
+    ]
+   },
+   "\ud310\ubcc4 \ubd88\uac00 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4": {
+    "prop_LoD2_s0": [
+     0.3288
+    ],
+    "prop_LoD2_s1": [
+     0.3288
+    ],
+    "trust_LoD2": [
+     0.3288
+    ],
+    "trust_LoD2_fix1": [
+     0.3288
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \ubb38\ud131 \uc774\ub0b4, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     0.6758
+    ],
+    "prop_LoD2_s1": [
+     0.6853
+    ],
+    "trust_LoD2": [
+     0.3484
+    ],
+    "trust_LoD2_fix1": [
+     0.3526
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uad00\uce21 \uc624\ub958 \uc804\uccb4": {
+    "prop_LoD2_s0": [
+     0.4625
+    ],
+    "prop_LoD2_s1": [
+     0.4637
+    ],
+    "trust_LoD2": [
+     0.175
+    ],
+    "trust_LoD2_fix1": [
+     0.1893
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc804\uc81c \uc704\ubc30 \uc548": {
+    "prop_LoD2_s0": [
+     0.4464
+    ],
+    "prop_LoD2_s1": [
+     0.4472
+    ],
+    "trust_LoD2": [
+     0.1613
+    ],
+    "trust_LoD2_fix1": [
+     0.1764
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uc774\uc911 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.3342
+    ],
+    "prop_LoD2_s1": [
+     0.3297
+    ],
+    "trust_LoD2": [
+     0.2899
+    ],
+    "trust_LoD2_fix1": [
+     0.3451
+    ]
+   },
+   "\uc720\uc785\ub960 \u00b7 \uacb0\uce21 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958(\uae30\ub85d)": {
+    "prop_LoD2_s0": [
+     0.1714
+    ],
+    "prop_LoD2_s1": [
+     0.1048
+    ],
+    "trust_LoD2": [
+     0.4476
+    ],
+    "trust_LoD2_fix1": [
+     0.4238
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958": {
+    "prop_LoD2_s0": [
+     0.008
+    ],
+    "prop_LoD2_s1": [
+     0.0096
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\uacfc\uac70 \ud615\uc0c1 \u00b7 \uad00\uce21 \uc624\ub958(\ucd9c\uc2e0 \ubb34\uad00)": {
+    "prop_LoD2_s0": [
+     0.0853
+    ],
+    "prop_LoD2_s1": [
+     0.1078
+    ],
+    "trust_LoD2": [
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null
+    ]
+   },
+   "\ubcf4\uc815 \uacbd\uacc4 (\u03c4 / m)": {
+    "prop_LoD2_s0": [
+     1.0,
+     0.176
+    ],
+    "prop_LoD2_s1": [
+     1.0,
+     0.176
+    ],
+    "trust_LoD2": [
+     null,
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null,
+     null
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5 / NMAD [\uc870\uac74 3 = NMAD]": {
+    "prop_LoD2_s0": [
+     0.0732,
+     0.1122
+    ],
+    "prop_LoD2_s1": [
+     0.0269,
+     0.0575
+    ],
+    "trust_LoD2": [
+     0.0665,
+     0.0992
+    ],
+    "trust_LoD2_fix1": [
+     0.0599,
+     0.093
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc758\uc2ec \ube8c": {
+    "prop_LoD2_s0": [
+     0.067
+    ],
+    "prop_LoD2_s1": [
+     0.0231
+    ],
+    "trust_LoD2": [
+     0.0599
+    ],
+    "trust_LoD2_fix1": [
+     0.0573
+    ]
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec q68.3 / q95": {
+    "prop_LoD2_s0": [
+     0.1049,
+     2.5125
+    ],
+    "prop_LoD2_s1": [
+     0.0527,
+     2.1725
+    ],
+    "trust_LoD2": [
+     0.1341,
+     6.6196
+    ],
+    "trust_LoD2_fix1": [
+     0.1308,
+     6.5335
+    ]
+   },
+   "\uac00\ud30c\ub978 \uc9c0\ubd95 \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.0886,
+     0.0662
+    ],
+    "prop_LoD2_s1": [
+     -0.0847,
+     0.0651
+    ],
+    "trust_LoD2": [
+     0.0383,
+     0.1162
+    ],
+    "trust_LoD2_fix1": [
+     0.0049,
+     0.1398
+    ]
+   },
+   "\uac00\ud30c\ub978 \uc9c0\ubd95 \uc0b0\ud3ec q68.3 / q95": {
+    "prop_LoD2_s0": [
+     0.0671,
+     0.1353
+    ],
+    "prop_LoD2_s1": [
+     0.0657,
+     0.132
+    ],
+    "trust_LoD2": [
+     0.1276,
+     0.4092
+    ],
+    "trust_LoD2_fix1": [
+     0.1364,
+     0.3724
+    ]
+   },
+   "\ub760 \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     0.0004,
+     0.0659
+    ],
+    "prop_LoD2_s1": [
+     0.0017,
+     0.0664
+    ],
+    "trust_LoD2": [
+     0.0961,
+     0.1448
+    ],
+    "trust_LoD2_fix1": [
+     0.0513,
+     0.1536
+    ]
+   },
+   "\ubcbd \ud3b8\ud5a5 / NMAD": {
+    "prop_LoD2_s0": [
+     -0.0386,
+     0.0472
+    ],
+    "prop_LoD2_s1": [
+     -0.0444,
+     0.0441
+    ],
+    "trust_LoD2": [
+     0.063,
+     0.1003
+    ],
+    "trust_LoD2_fix1": [
+     0.047,
+     0.0916
+    ]
+   },
+   "\uacb0\uce21 \uc77c\uce58 0.2 / 0.5 m": {
+    "prop_LoD2_s0": [
+     0.9299,
+     0.9496
+    ],
+    "prop_LoD2_s1": [
+     0.9315,
+     0.9511
+    ],
+    "trust_LoD2": [
+     0.8841,
+     0.9612
+    ],
+    "trust_LoD2_fix1": [
+     0.874,
+     0.9587
+    ]
+   },
+   "\ube44\uac00\uc2dc \uc77c\uce58 0.2 / 0.5 m": {
+    "prop_LoD2_s0": [
+     0.8824,
+     1.0
+    ],
+    "prop_LoD2_s1": [
+     0.7647,
+     1.0
+    ],
+    "trust_LoD2": [
+     0.4706,
+     1.0
+    ],
+    "trust_LoD2_fix1": [
+     0.5294,
+     0.8824
+    ]
+   },
+   "\uc804\uc81c \uc704\ubc30 \ub458\ub808 0.2 m [\uc870\uac74 4]": {
+    "prop_LoD2_s0": [
+     0.954
+    ],
+    "prop_LoD2_s1": [
+     0.9502
+    ],
+    "trust_LoD2": [
+     0.8438
+    ],
+    "trust_LoD2_fix1": [
+     0.8722
+    ]
+   },
+   "\ubabb \ubcf8 \uacf3 \uc0c1\uc18d\ub960 / \uacfc\uac70 \ud615\uc0c1 (\uac00\uc6b0\uc2dc\uc548)": {
+    "prop_LoD2_s0": [
+     0.8301,
+     0.0493
+    ],
+    "prop_LoD2_s1": [
+     0.8452,
+     0.0496
+    ],
+    "trust_LoD2": [
+     null,
+     null
+    ],
+    "trust_LoD2_fix1": [
+     null,
+     null
+    ]
+   },
+   "\uac00\uc0c1 \uc2dc\uc810 \uba54\uc2dc: \ub9de\uc74c \ubbf8\ub8f8 0.5 m / \ud2c0\ub9bc \ubbf8\ub8f8 0.2 m": {
+    "prop_LoD2_s0": [
+     0.9875,
+     0.1475
+    ],
+    "prop_LoD2_s1": [
+     0.9855,
+     0.1297
+    ],
+    "trust_LoD2": [
+     0.3691,
+     0.2319
+    ],
+    "trust_LoD2_fix1": [
+     0.3676,
+     0.1565
+    ]
+   },
+   "3~20 m / \uadf8\uc911 \uc0ac\uc804 \uc815\ubcf4 \ucd9c\uc2e0 / 20 m \ub118\uac8c (\uac1c)": {
+    "prop_LoD2_s0": [
+     75,
+     75,
+     0
+    ],
+    "prop_LoD2_s1": [
+     53,
+     53,
+     1356
+    ],
+    "trust_LoD2": [
+     84323,
+     0,
+     1888
+    ],
+    "trust_LoD2_fix1": [
+     64242,
+     0,
+     1759
+    ]
+   },
+   "\ud3c9\uac00 \uc601\uc0c1 \ud654\uc18c \ubaab (\u2030)": {
+    "prop_LoD2_s0": [
+     9.7e-05
+    ],
+    "prop_LoD2_s1": [
+     0.001086
+    ],
+    "trust_LoD2": [
+     0.005005
+    ],
+    "trust_LoD2_fix1": [
+     0.004791
+    ]
+   },
+   "Chamfer \ud3c9\uade0 (m)": {
+    "prop_LoD2_s0": [
+     0.2108
+    ],
+    "prop_LoD2_s1": [
+     0.1988
+    ],
+    "trust_LoD2": [
+     0.9259
+    ],
+    "trust_LoD2_fix1": [
+     0.916
+    ]
+   },
+   "\uc815\ubc00\ub3c4 / \uc644\uc804\uc131 / F1 @0.2 m": {
+    "prop_LoD2_s0": [
+     0.6538,
+     0.8418,
+     0.736
+    ],
+    "prop_LoD2_s1": [
+     0.6838,
+     0.8416,
+     0.7545
+    ],
+    "trust_LoD2": [
+     0.2721,
+     0.3403,
+     0.3024
+    ],
+    "trust_LoD2_fix1": [
+     0.2672,
+     0.3566,
+     0.3055
+    ]
+   },
+   "M3C2 \uc911\uc559\uac12 / NMAD (cm)": {
+    "prop_LoD2_s0": [
+     -0.0203,
+     0.1443
+    ],
+    "prop_LoD2_s1": [
+     -0.0212,
+     0.1388
+    ],
+    "trust_LoD2": [
+     0.1151,
+     0.3295
+    ],
+    "trust_LoD2_fix1": [
+     0.0928,
+     0.3274
+    ]
+   },
+   "\ud559\uc2b5 \uc2dc\uac04 (\ubd84) / GPU \ucd5c\ub300 (GB)": {
+    "prop_LoD2_s0": [
+     4475.2,
+     18541.0
+    ],
+    "prop_LoD2_s1": [
+     3874.2,
+     13493.0
+    ],
+    "trust_LoD2": [
+     8319.3,
+     16793.0
+    ],
+    "trust_LoD2_fix1": [
+     11734.2,
+     21713.0
+    ]
+   },
+   "\ud654\uc9c8 PSNR / SSIM / LPIPS": {
+    "prop_LoD2_s0": [
+     22.7862,
+     0.7307,
+     0.3213
+    ],
+    "prop_LoD2_s1": [
+     22.8742,
+     0.7465,
+     0.3049
+    ],
+    "trust_LoD2": [
+     22.1949,
+     0.6947,
+     0.3677
+    ],
+    "trust_LoD2_fix1": [
+     22.2421,
+     0.6971,
+     0.3673
+    ]
+   },
+   "\ud45c\ubcf8 \uc218 \u00b7 \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uc720\uc785\ub960": {
+    "prop_LoD2_s0": 116310,
+    "prop_LoD2_s1": 116310,
+    "trust_LoD2": 116310,
+    "trust_LoD2_fix1": 116310
+   },
+   "\uc644\ub9cc\ud55c \uc9c0\ubd95 \ud3b8\ud5a5, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 5.050000000000001,
+    "prop_LoD2_s1": 1.8900000000000001,
+    "trust_LoD2": 3.8899999999999997,
+    "trust_LoD2_fix1": 3.51
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc0c8 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 9.19,
+    "prop_LoD2_s1": 4.6,
+    "trust_LoD2": 6.03,
+    "trust_LoD2_fix1": 6.78
+   },
+   "\uc9c0\uc9c0 \uc77c\uce58 \uc644\ub9cc\ud55c \uc9c0\ubd95 \uc0b0\ud3ec, \uc9c0\uae08 \uc77d\uae30 (cm)": {
+    "prop_LoD2_s0": 11.219999999999999,
+    "prop_LoD2_s1": 5.75,
+    "trust_LoD2": 9.92,
+    "trust_LoD2_fix1": 9.3
+   },
+   "\ub72c \uc870\uac01 \ubaab": {
+    "prop_LoD2_s0": 0.137,
+    "prop_LoD2_s1": 0.1088,
+    "trust_LoD2": 0.2433,
+    "trust_LoD2_fix1": 0.2087
+   },
+   "\uace0\uc6b4 \uc790: \ubb38\ud131 \uc774\ub0b4 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 22.729,
+    "prop_LoD2_s1": 22.649,
+    "trust_LoD2": 15.299,
+    "trust_LoD2_fix1": 17.603
+   },
+   "\uace0\uc6b4 \uc790: \uc9c0\uc9c0 \uc77c\uce58 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 5.21,
+    "prop_LoD2_s1": 5.454,
+    "trust_LoD2": 9.249,
+    "trust_LoD2_fix1": 8.083
+   },
+   "\uace0\uc6b4 \uc790: \uc0ac\uc804 \uc815\ubcf4 \uc624\ub958 \uac70\ub9ac \uc911\uc559\uac12 (cm)": {
+    "prop_LoD2_s0": 4.829,
+    "prop_LoD2_s1": 4.849,
+    "trust_LoD2": 87.02,
+    "trust_LoD2_fix1": 82.13
+   }
+  }
+ },
+ "gate_condition1_again": [
+  {
+   "unit": "B0_b10/LoD2",
+   "method": 0.11979999999999999,
+   "geogs_stage1": 0.4356,
+   "geogs_fixed": 0.4283,
+   "samples": 32880,
+   "samples_fixed": 32880,
+   "r_official": 0.0821692156467372,
+   "decision_official": "met",
+   "r_fixed": 0.01635593103433736,
+   "decision_fixed": "met",
+   "decision_again": "met",
+   "changed": false
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "method": 0.0681,
+   "geogs_stage1": 0.1017,
+   "geogs_fixed": 0.0867,
+   "samples": 119763,
+   "samples_fixed": 119763,
+   "r_official": 0.0821692156467372,
+   "decision_official": "undecidable",
+   "r_fixed": 0.01635593103433736,
+   "decision_fixed": "met",
+   "decision_again": "met",
+   "changed": false
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "method": 0.07635,
+   "geogs_stage1": 0.3696,
+   "geogs_fixed": 0.432,
+   "samples": 54345,
+   "samples_fixed": 54345,
+   "r_official": 0.0821692156467372,
+   "decision_official": "met",
+   "r_fixed": 0.01635593103433736,
+   "decision_fixed": "met",
+   "decision_again": "met",
+   "changed": false
+  }
+ ],
+ "not_met": [],
+ "scientific_verdict": null
+}

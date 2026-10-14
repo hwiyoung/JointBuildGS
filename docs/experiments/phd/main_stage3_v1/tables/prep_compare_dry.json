@@ -1,0 +1,688 @@
+{
+ "rule": "What must hold:\n  r15 (out-of-memory record on) vs r14 default: nothing differs (dry and probe; the record acts only on an out-of-memory error).\n  r14 --jbgs_sw_judgment 0 vs r14 default: only what reads the judgment may differ; deep checks: the patch states, E, the image points and\n  the geometry of the initial points are equal; votes change only on support patches and only to agree; judgments change only on\n  missing patches and only to agree; planted changes only False -> True; g_p changes only 0 -> 1; the confidence (A), patch (lm) and\n  mark (mk) maps are equal; in the probe E and the prior-origin set are equal and every added protection sits on a Gaussian that the\n  default judged conflict or that only the switched run planted.\n  python compare_s3.py dry|probe        -> S3/checks/compare_<kind>.json, .md\nscientific_verdict: null.",
+ "r15_vs_r14": [
+  {
+   "a": "r14_B0_b10_LoD2",
+   "b": "r15_B0_b10_LoD2",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_B0_b10_ALS",
+   "b": "r15_B0_b10_ALS",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_B173nb_b10_LoD2",
+   "b": "r15_B173nb_b10_LoD2",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_B173nb_b10_ALS",
+   "b": "r15_B173nb_b10_ALS",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_R1rep_b10_LoD2",
+   "b": "r15_R1rep_b10_LoD2",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  },
+  {
+   "a": "r14_R1rep_b10_ALS",
+   "b": "r15_R1rep_b10_ALS",
+   "n_differences": 0,
+   "unexpected": [],
+   "differences": {}
+  }
+ ],
+ "judgment_off": [
+  {
+   "a": "r14_B0_b10_LoD2",
+   "b": "r14sj_B0_b10_LoD2",
+   "n_differences": 2099,
+   "unexpected": [],
+   "differences": {
+    "gate_check:J [expected]": 1,
+    "gate_check:J_loc [expected]": 1,
+    "gate_check:g_<view> [expected]": 239,
+    "init_points:judgment [expected]": 1,
+    "init_points:planted [expected]": 1,
+    "init_points:reason [expected]": 1,
+    "init_points:unit_judgment [expected]": 1,
+    "locations:judgment [expected]": 1,
+    "locations:unit_judgment [expected]": 1,
+    "locations:vote [expected]": 1,
+    "locations:why [expected]": 1,
+    "report:first_E.E_hist_prior [expected]": 1,
+    "report:first_E.judgments_located [expected]": 3,
+    "report:first_E.locked_by_initial_category [expected]": 1,
+    "report:first_E.n [expected]": 1,
+    "report:first_E.n_located [expected]": 1,
+    "report:first_E.n_locked [expected]": 1,
+    "report:first_E.n_newly_locked [expected]": 1,
+    "report:first_E.n_prior [expected]": 1,
+    "report:first_E.n_prior_E_below [expected]": 1,
+    "report:first_E.prior_on_support_conflict_unit [expected]": 1,
+    "report:init.missing_judgments [expected]": 4,
+    "report:init.n_conflict_points [expected]": 1,
+    "report:init.n_dropped_conflict [expected]": 1,
+    "report:init.n_prior_kept [expected]": 1,
+    "report:init.planted_by_category [expected]": 1,
+    "report:init.why_undetermined [expected]": 4,
+    "report:prior_term.n_prior_now [expected]": 1,
+    "report:prior_weight.per_view [expected]": 1798,
+    "report:prior_weight.totals [expected]": 10,
+    "report:protection.by_initial_category [expected]": 1,
+    "report:protection.n_located [expected]": 1,
+    "report:protection.n_prior [expected]": 1,
+    "report:protection.n_protected [expected]": 1,
+    "report:reread_method_vs_product_E.mean_abs_diff [expected]": 1,
+    "report:reread_method_vs_product_E.n_cells [expected]": 1,
+    "report:reread_method_vs_product_E.n_product_below [expected]": 1,
+    "report:reread_method_vs_product_E.n_sampled_below [expected]": 1,
+    "report:reread_method_vs_product_E.same_side_of_threshold [expected]": 1,
+    "report:reread_test.cell_changed_share [expected]": 1,
+    "report:reread_test.n_cells_after [expected]": 1,
+    "report:reread_test.n_moved [expected]": 1,
+    "report:switches.judgment [expected]": 1,
+    "unplanted:location [expected]": 1,
+    "unplanted:reason [expected]": 1,
+    "unplanted:surface [expected]": 1,
+    "unplanted:xyz [expected]": 1
+   }
+  },
+  {
+   "a": "r14_B0_b10_ALS",
+   "b": "r14sj_B0_b10_ALS",
+   "n_differences": 2161,
+   "unexpected": [],
+   "differences": {
+    "gate_check:J [expected]": 1,
+    "gate_check:J_loc [expected]": 1,
+    "gate_check:g_<view> [expected]": 243,
+    "init_points:judgment [expected]": 1,
+    "init_points:planted [expected]": 1,
+    "init_points:reason [expected]": 1,
+    "init_points:unit_judgment [expected]": 1,
+    "locations:judgment [expected]": 1,
+    "locations:unit_judgment [expected]": 1,
+    "locations:vote [expected]": 1,
+    "locations:why [expected]": 1,
+    "report:first_E.E_hist_prior [expected]": 1,
+    "report:first_E.judgments_located [expected]": 3,
+    "report:first_E.locked_by_initial_category [expected]": 1,
+    "report:first_E.n [expected]": 1,
+    "report:first_E.n_located [expected]": 1,
+    "report:first_E.n_locked [expected]": 1,
+    "report:first_E.n_newly_locked [expected]": 1,
+    "report:first_E.n_prior [expected]": 1,
+    "report:first_E.n_prior_E_below [expected]": 1,
+    "report:first_E.prior_on_support_conflict_unit [expected]": 1,
+    "report:init.missing_judgments [expected]": 4,
+    "report:init.n_conflict_points [expected]": 1,
+    "report:init.n_dropped_conflict [expected]": 1,
+    "report:init.n_prior_kept [expected]": 1,
+    "report:init.planted_by_category [expected]": 1,
+    "report:init.why_undetermined [expected]": 4,
+    "report:prior_term.n_prior_now [expected]": 1,
+    "report:prior_weight.per_view [expected]": 1855,
+    "report:prior_weight.totals [expected]": 10,
+    "report:protection.by_initial_category [expected]": 1,
+    "report:protection.n_located [expected]": 1,
+    "report:protection.n_prior [expected]": 1,
+    "report:protection.n_protected [expected]": 1,
+    "report:reread_method_vs_product_E.mean_abs_diff [expected]": 1,
+    "report:reread_method_vs_product_E.n_cells [expected]": 1,
+    "report:reread_method_vs_product_E.n_product_below [expected]": 1,
+    "report:reread_method_vs_product_E.same_side_of_threshold [expected]": 1,
+    "report:reread_test.cell_changed_share [expected]": 3,
+    "report:reread_test.n_cells_after [expected]": 1,
+    "report:reread_test.n_moved [expected]": 1,
+    "report:switches.judgment [expected]": 1,
+    "unplanted:location [expected]": 1,
+    "unplanted:reason [expected]": 1,
+    "unplanted:surface [expected]": 1,
+    "unplanted:xyz [expected]": 1
+   }
+  },
+  {
+   "a": "r14_B173nb_b10_LoD2",
+   "b": "r14sj_B173nb_b10_LoD2",
+   "n_differences": 1662,
+   "unexpected": [],
+   "differences": {
+    "gate_check:J [expected]": 1,
+    "gate_check:J_loc [expected]": 1,
+    "gate_check:g_<view> [expected]": 196,
+    "init_points:judgment [expected]": 1,
+    "init_points:planted [expected]": 1,
+    "init_points:reason [expected]": 1,
+    "init_points:unit_judgment [expected]": 1,
+    "locations:judgment [expected]": 1,
+    "locations:unit_judgment [expected]": 1,
+    "locations:vote [expected]": 1,
+    "locations:why [expected]": 1,
+    "report:first_E.E_hist_prior [expected]": 1,
+    "report:first_E.judgments_located [expected]": 3,
+    "report:first_E.locked_by_initial_category [expected]": 1,
+    "report:first_E.n [expected]": 1,
+    "report:first_E.n_located [expected]": 1,
+    "report:first_E.n_locked [expected]": 1,
+    "report:first_E.n_newly_locked [expected]": 1,
+    "report:first_E.n_prior [expected]": 1,
+    "report:first_E.n_prior_E_below [expected]": 1,
+    "report:first_E.prior_on_support_conflict_unit [expected]": 1,
+    "report:init.missing_judgments [expected]": 4,
+    "report:init.n_conflict_points [expected]": 1,
+    "report:init.n_dropped_conflict [expected]": 1,
+    "report:init.n_prior_kept [expected]": 1,
+    "report:init.planted_by_category [expected]": 1,
+    "report:init.why_undetermined [expected]": 4,
+    "report:prior_term.n_prior_now [expected]": 1,
+    "report:prior_weight.per_view [expected]": 1404,
+    "report:prior_weight.totals [expected]": 10,
+    "report:protection.by_initial_category [expected]": 1,
+    "report:protection.n_located [expected]": 1,
+    "report:protection.n_prior [expected]": 1,
+    "report:protection.n_protected [expected]": 1,
+    "report:reread_method_vs_product_E.mean_abs_diff [expected]": 1,
+    "report:reread_method_vs_product_E.n_cells [expected]": 1,
+    "report:reread_method_vs_product_E.n_product_below [expected]": 1,
+    "report:reread_method_vs_product_E.n_sampled_below [expected]": 1,
+    "report:reread_method_vs_product_E.same_side_of_threshold [expected]": 1,
+    "report:reread_test.cell_changed_share [expected]": 1,
+    "report:reread_test.n_cells_after [expected]": 1,
+    "report:reread_test.n_moved [expected]": 1,
+    "report:switches.judgment [expected]": 1,
+    "unplanted:location [expected]": 1,
+    "unplanted:reason [expected]": 1,
+    "unplanted:surface [expected]": 1,
+    "unplanted:xyz [expected]": 1
+   }
+  },
+  {
+   "a": "r14_B173nb_b10_ALS",
+   "b": "r14sj_B173nb_b10_ALS",
+   "n_differences": 1777,
+   "unexpected": [],
+   "differences": {
+    "gate_check:J [expected]": 1,
+    "gate_check:J_loc [expected]": 1,
+    "gate_check:g_<view> [expected]": 202,
+    "init_points:judgment [expected]": 1,
+    "init_points:planted [expected]": 1,
+    "init_points:reason [expected]": 1,
+    "init_points:unit_judgment [expected]": 1,
+    "locations:judgment [expected]": 1,
+    "locations:unit_judgment [expected]": 1,
+    "locations:vote [expected]": 1,
+    "locations:why [expected]": 1,
+    "report:first_E.E_hist_prior [expected]": 1,
+    "report:first_E.judgments_located [expected]": 3,
+    "report:first_E.locked_by_initial_category [expected]": 1,
+    "report:first_E.n [expected]": 1,
+    "report:first_E.n_located [expected]": 1,
+    "report:first_E.n_locked [expected]": 1,
+    "report:first_E.n_newly_locked [expected]": 1,
+    "report:first_E.n_prior [expected]": 1,
+    "report:first_E.n_prior_E_below [expected]": 1,
+    "report:first_E.prior_on_support_conflict_unit [expected]": 1,
+    "report:init.missing_judgments [expected]": 4,
+    "report:init.n_conflict_points [expected]": 1,
+    "report:init.n_dropped_conflict [expected]": 1,
+    "report:init.n_prior_kept [expected]": 1,
+    "report:init.planted_by_category [expected]": 1,
+    "report:init.why_undetermined [expected]": 4,
+    "report:prior_term.n_prior_now [expected]": 1,
+    "report:prior_weight.per_view [expected]": 1511,
+    "report:prior_weight.totals [expected]": 10,
+    "report:protection.by_initial_category [expected]": 1,
+    "report:protection.n_located [expected]": 1,
+    "report:protection.n_prior [expected]": 1,
+    "report:protection.n_protected [expected]": 1,
+    "report:reread_method_vs_product_E.mean_abs_diff [expected]": 1,
+    "report:reread_method_vs_product_E.n_cells [expected]": 1,
+    "report:reread_method_vs_product_E.n_product_below [expected]": 1,
+    "report:reread_method_vs_product_E.n_sampled_below [expected]": 1,
+    "report:reread_method_vs_product_E.same_side_of_threshold [expected]": 1,
+    "report:reread_test.cell_changed_share [expected]": 3,
+    "report:reread_test.n_cells_after [expected]": 1,
+    "report:reread_test.n_moved [expected]": 1,
+    "report:switches.judgment [expected]": 1,
+    "unplanted:location [expected]": 1,
+    "unplanted:reason [expected]": 1,
+    "unplanted:surface [expected]": 1,
+    "unplanted:xyz [expected]": 1
+   }
+  },
+  {
+   "a": "r14_R1rep_b10_LoD2",
+   "b": "r14sj_R1rep_b10_LoD2",
+   "n_differences": 2496,
+   "unexpected": [],
+   "differences": {
+    "gate_check:J [expected]": 1,
+    "gate_check:J_loc [expected]": 1,
+    "gate_check:g_<view> [expected]": 302,
+    "init_points:judgment [expected]": 1,
+    "init_points:planted [expected]": 1,
+    "init_points:reason [expected]": 1,
+    "init_points:unit_judgment [expected]": 1,
+    "locations:judgment [expected]": 1,
+    "locations:unit_judgment [expected]": 1,
+    "locations:vote [expected]": 1,
+    "locations:why [expected]": 1,
+    "report:first_E.E_hist_prior [expected]": 1,
+    "report:first_E.judgments_located [expected]": 3,
+    "report:first_E.locked_by_initial_category [expected]": 1,
+    "report:first_E.n [expected]": 1,
+    "report:first_E.n_located [expected]": 1,
+    "report:first_E.n_locked [expected]": 1,
+    "report:first_E.n_newly_locked [expected]": 1,
+    "report:first_E.n_prior [expected]": 1,
+    "report:first_E.n_prior_E_below [expected]": 1,
+    "report:first_E.prior_on_support_conflict_unit [expected]": 1,
+    "report:init.missing_judgments [expected]": 4,
+    "report:init.n_conflict_points [expected]": 1,
+    "report:init.n_dropped_conflict [expected]": 1,
+    "report:init.n_prior_kept [expected]": 1,
+    "report:init.planted_by_category [expected]": 1,
+    "report:init.why_undetermined [expected]": 4,
+    "report:prior_term.n_prior_now [expected]": 1,
+    "report:prior_weight.per_view [expected]": 2132,
+    "report:prior_weight.totals [expected]": 10,
+    "report:protection.by_initial_category [expected]": 1,
+    "report:protection.n_located [expected]": 1,
+    "report:protection.n_prior [expected]": 1,
+    "report:protection.n_protected [expected]": 1,
+    "report:reread_method_vs_product_E.mean_abs_diff [expected]": 1,
+    "report:reread_method_vs_product_E.n_cells [expected]": 1,
+    "report:reread_method_vs_product_E.n_product_below [expected]": 1,
+    "report:reread_method_vs_product_E.n_sampled_below [expected]": 1,
+    "report:reread_method_vs_product_E.same_side_of_threshold [expected]": 1,
+    "report:reread_test.cell_changed_share [expected]": 1,
+    "report:reread_test.n_cells_after [expected]": 1,
+    "report:reread_test.n_moved [expected]": 1,
+    "report:switches.judgment [expected]": 1,
+    "unplanted:location [expected]": 1,
+    "unplanted:reason [expected]": 1,
+    "unplanted:surface [expected]": 1,
+    "unplanted:xyz [expected]": 1
+   }
+  },
+  {
+   "a": "r14_R1rep_b10_ALS",
+   "b": "r14sj_R1rep_b10_ALS",
+   "n_differences": 3022,
+   "unexpected": [],
+   "differences": {
+    "gate_check:J [expected]": 1,
+    "gate_check:J_loc [expected]": 1,
+    "gate_check:g_<view> [expected]": 331,
+    "init_points:judgment [expected]": 1,
+    "init_points:planted [expected]": 1,
+    "init_points:reason [expected]": 1,
+    "init_points:unit_judgment [expected]": 1,
+    "locations:judgment [expected]": 1,
+    "locations:unit_judgment [expected]": 1,
+    "locations:vote [expected]": 1,
+    "locations:why [expected]": 1,
+    "report:first_E.E_hist_prior [expected]": 1,
+    "report:first_E.judgments_located [expected]": 3,
+    "report:first_E.locked_by_initial_category [expected]": 1,
+    "report:first_E.n [expected]": 1,
+    "report:first_E.n_located [expected]": 1,
+    "report:first_E.n_locked [expected]": 1,
+    "report:first_E.n_newly_locked [expected]": 1,
+    "report:first_E.n_prior [expected]": 1,
+    "report:first_E.n_prior_E_below [expected]": 1,
+    "report:first_E.prior_on_support_conflict_unit [expected]": 1,
+    "report:init.missing_judgments [expected]": 4,
+    "report:init.n_conflict_points [expected]": 1,
+    "report:init.n_dropped_conflict [expected]": 1,
+    "report:init.n_prior_kept [expected]": 1,
+    "report:init.planted_by_category [expected]": 1,
+    "report:init.why_undetermined [expected]": 4,
+    "report:prior_term.n_prior_now [expected]": 1,
+    "report:prior_weight.per_view [expected]": 2627,
+    "report:prior_weight.totals [expected]": 10,
+    "report:protection.by_initial_category [expected]": 1,
+    "report:protection.n_located [expected]": 1,
+    "report:protection.n_prior [expected]": 1,
+    "report:protection.n_protected [expected]": 1,
+    "report:reread_method_vs_product_E.mean_abs_diff [expected]": 1,
+    "report:reread_method_vs_product_E.n_cells [expected]": 1,
+    "report:reread_method_vs_product_E.n_product_below [expected]": 1,
+    "report:reread_method_vs_product_E.n_sampled_below [expected]": 1,
+    "report:reread_method_vs_product_E.same_side_of_threshold [expected]": 1,
+    "report:reread_test.cell_changed_share [expected]": 3,
+    "report:reread_test.n_cells_after [expected]": 1,
+    "report:reread_test.n_moved [expected]": 1,
+    "report:switches.judgment [expected]": 1,
+    "unplanted:location [expected]": 1,
+    "unplanted:reason [expected]": 1,
+    "unplanted:surface [expected]": 1,
+    "unplanted:xyz [expected]": 1
+   }
+  }
+ ],
+ "deep": {
+  "B0_b10/LoD2": {
+   "states_equal": true,
+   "E_equal": true,
+   "vote": {
+    "changed": 35427,
+    "changed_not_support": 0,
+    "changed_not_to_agree": 0
+   },
+   "judgment": {
+    "changed": 1589,
+    "changed_not_missing": 0,
+    "changed_not_to_agree": 0
+   },
+   "unit_judgment": {
+    "changed": 37016,
+    "changed_not_to_agree": 0,
+    "base_conflict": 36348,
+    "switched_conflict": 0
+   },
+   "init_geometry_equal": {
+    "xyz": true,
+    "origin": true,
+    "seat": true,
+    "surface": true,
+    "location": true,
+    "state": true,
+    "E_first": true,
+    "category": true
+   },
+   "planted": {
+    "changed": 921,
+    "false_to_true": 921,
+    "changed_not_missing_conflict": 0,
+    "switched_unplanted": 0
+   },
+   "g_p": {
+    "zero_to_one": 15819159,
+    "one_to_zero": 0,
+    "all_one_after": true
+   },
+   "maps_changed": 0,
+   "n_locked_first": [
+    4094,
+    5015
+   ],
+   "n_dropped_conflict": [
+    921,
+    0
+   ],
+   "ok": true
+  },
+  "B0_b10/ALS": {
+   "states_equal": true,
+   "E_equal": true,
+   "vote": {
+    "changed": 2903,
+    "changed_not_support": 0,
+    "changed_not_to_agree": 0
+   },
+   "judgment": {
+    "changed": 126,
+    "changed_not_missing": 0,
+    "changed_not_to_agree": 0
+   },
+   "unit_judgment": {
+    "changed": 3029,
+    "changed_not_to_agree": 0,
+    "base_conflict": 3006,
+    "switched_conflict": 0
+   },
+   "init_geometry_equal": {
+    "xyz": true,
+    "origin": true,
+    "seat": true,
+    "surface": true,
+    "location": true,
+    "state": true,
+    "E_first": true,
+    "category": true
+   },
+   "planted": {
+    "changed": 1,
+    "false_to_true": 1,
+    "changed_not_missing_conflict": 0,
+    "switched_unplanted": 0
+   },
+   "g_p": {
+    "zero_to_one": 16220627,
+    "one_to_zero": 0,
+    "all_one_after": true
+   },
+   "maps_changed": 0,
+   "n_locked_first": [
+    1986,
+    1987
+   ],
+   "n_dropped_conflict": [
+    1,
+    0
+   ],
+   "ok": true
+  },
+  "B173nb_b10/LoD2": {
+   "states_equal": true,
+   "E_equal": true,
+   "vote": {
+    "changed": 81380,
+    "changed_not_support": 0,
+    "changed_not_to_agree": 0
+   },
+   "judgment": {
+    "changed": 7769,
+    "changed_not_missing": 0,
+    "changed_not_to_agree": 0
+   },
+   "unit_judgment": {
+    "changed": 89149,
+    "changed_not_to_agree": 0,
+    "base_conflict": 83807,
+    "switched_conflict": 0
+   },
+   "init_geometry_equal": {
+    "xyz": true,
+    "origin": true,
+    "seat": true,
+    "surface": true,
+    "location": true,
+    "state": true,
+    "E_first": true,
+    "category": true
+   },
+   "planted": {
+    "changed": 2427,
+    "false_to_true": 2427,
+    "changed_not_missing_conflict": 0,
+    "switched_unplanted": 0
+   },
+   "g_p": {
+    "zero_to_one": 14316552,
+    "one_to_zero": 0,
+    "all_one_after": true
+   },
+   "maps_changed": 0,
+   "n_locked_first": [
+    39366,
+    41793
+   ],
+   "n_dropped_conflict": [
+    2427,
+    0
+   ],
+   "ok": true
+  },
+  "B173nb_b10/ALS": {
+   "states_equal": true,
+   "E_equal": true,
+   "vote": {
+    "changed": 23424,
+    "changed_not_support": 0,
+    "changed_not_to_agree": 0
+   },
+   "judgment": {
+    "changed": 87,
+    "changed_not_missing": 0,
+    "changed_not_to_agree": 0
+   },
+   "unit_judgment": {
+    "changed": 23511,
+    "changed_not_to_agree": 0,
+    "base_conflict": 23456,
+    "switched_conflict": 0
+   },
+   "init_geometry_equal": {
+    "xyz": true,
+    "origin": true,
+    "seat": true,
+    "surface": true,
+    "location": true,
+    "state": true,
+    "E_first": true,
+    "category": true
+   },
+   "planted": {
+    "changed": 18,
+    "false_to_true": 18,
+    "changed_not_missing_conflict": 0,
+    "switched_unplanted": 0
+   },
+   "g_p": {
+    "zero_to_one": 10876500,
+    "one_to_zero": 0,
+    "all_one_after": true
+   },
+   "maps_changed": 0,
+   "n_locked_first": [
+    4639,
+    4657
+   ],
+   "n_dropped_conflict": [
+    18,
+    0
+   ],
+   "ok": true
+  },
+  "R1rep_b10/LoD2": {
+   "states_equal": true,
+   "E_equal": true,
+   "vote": {
+    "changed": 99679,
+    "changed_not_support": 0,
+    "changed_not_to_agree": 0
+   },
+   "judgment": {
+    "changed": 1733,
+    "changed_not_missing": 0,
+    "changed_not_to_agree": 0
+   },
+   "unit_judgment": {
+    "changed": 101412,
+    "changed_not_to_agree": 0,
+    "base_conflict": 100945,
+    "switched_conflict": 0
+   },
+   "init_geometry_equal": {
+    "xyz": true,
+    "origin": true,
+    "seat": true,
+    "surface": true,
+    "location": true,
+    "state": true,
+    "E_first": true,
+    "category": true
+   },
+   "planted": {
+    "changed": 1266,
+    "false_to_true": 1266,
+    "changed_not_missing_conflict": 0,
+    "switched_unplanted": 0
+   },
+   "g_p": {
+    "zero_to_one": 24070697,
+    "one_to_zero": 0,
+    "all_one_after": true
+   },
+   "maps_changed": 0,
+   "n_locked_first": [
+    3025,
+    4291
+   ],
+   "n_dropped_conflict": [
+    1266,
+    0
+   ],
+   "ok": true
+  },
+  "R1rep_b10/ALS": {
+   "states_equal": true,
+   "E_equal": true,
+   "vote": {
+    "changed": 13712,
+    "changed_not_support": 0,
+    "changed_not_to_agree": 0
+   },
+   "judgment": {
+    "changed": 616,
+    "changed_not_missing": 0,
+    "changed_not_to_agree": 0
+   },
+   "unit_judgment": {
+    "changed": 14328,
+    "changed_not_to_agree": 0,
+    "base_conflict": 14058,
+    "switched_conflict": 0
+   },
+   "init_geometry_equal": {
+    "xyz": true,
+    "origin": true,
+    "seat": true,
+    "surface": true,
+    "location": true,
+    "state": true,
+    "E_first": true,
+    "category": true
+   },
+   "planted": {
+    "changed": 359,
+    "false_to_true": 359,
+    "changed_not_missing_conflict": 0,
+    "switched_unplanted": 0
+   },
+   "g_p": {
+    "zero_to_one": 27040276,
+    "one_to_zero": 0,
+    "all_one_after": true
+   },
+   "maps_changed": 0,
+   "n_locked_first": [
+    1564,
+    1923
+   ],
+   "n_dropped_conflict": [
+    359,
+    0
+   ],
+   "ok": true
+  }
+ },
+ "scientific_verdict": null,
+ "note": "compact copy for the repository: per pair the differing keys and their class (expected / UNEXPECTED); the full differences are in the payload checks/compare_dry.json"
+}
