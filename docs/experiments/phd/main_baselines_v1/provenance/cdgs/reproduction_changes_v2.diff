@@ -1,0 +1,108 @@
+# PHD-MAIN-BASELINES-v1 CDGS: reproduction changes beyond order 4.2, user decision 10-15 (option 나, '권함대로').
+# cdgs-release-adapters-v1 (order 4.2 adapters) -> cdgs-release-adapters-v2. Switched on per scene by jbgs_cdgs_options.json
+# (alignment_targets own_observations; depth_unit_divisor_s = the site's median own-observation target depth / TT, TT = mean of the
+# 3DGS Tanks and Temples truck and train medians, SB/prep/cdgs/units.json). Without that file the reader behaves as v1.
+# 1 the alignment targets of a training view = only the SfM points that view observed (its 2-D observations; tracks restricted to the
+#   training views as before), not every point projected into every view; weights, 0.1 % prune, Adam and the stopping rule unchanged.
+# 2 the alignment runs on prior and SfM depths divided by s (L_align and 0.6 exp(-150 L_align) in the authors' units); the aligned depth
+#   is multiplied back by s, so the confidence map and the min-max normalised depth loss see metres as in v1 (scale-free check in align_<unit>.json).
+# scientific_verdict: null
+--- a/scene/dataset_readers.py	2026-10-15 06:22:59.536438031 +0900
++++ b/scene/dataset_readers.py	2026-10-15 10:28:29.192644128 +0900
+@@ -110,6 +110,7 @@
+ JBGS_ALIGN_LOG = []
+ JBGS_ALIGN_ARRAYS = {}
+ _JBGS_LAST = {}
++_JBGS_PCD = {}   # JBGS reproduction change 1: the point3D ids of the initial cloud's rows (refineColmapWithIndex)
+ 
+ def jbgs_calculate_confidence_hit(depthmap, image, valid, window_size=5):
+     """JBGS (order 5.5 2): calculate_confidence with the pixels without a prior hit left out. The same three features and
+@@ -191,6 +192,16 @@
+     # JBGS adapter (order 5.2 1): the principal point of the SfM-depth projection from the scene's jbgs_calibration.json
+     from jbgs_camera_adapter import read_calibration as _jbgs_read_calibration
+     _jbgs_calib = _jbgs_read_calibration(os.path.join(os.path.dirname(images_folder), "jbgs_calibration.json"))
++    # JBGS reproduction changes beyond order 4.2 (PHD-MAIN-BASELINES-v1, user decision 10-15, option 나), switched on by the scene's
++    # jbgs_cdgs_options.json (absent = the official behaviour): 1 'alignment_targets': 'own_observations' = a training view's SfM targets
++    # are only the points that view observed (its 2-D observations; tracks restricted to the training views as before) instead of every
++    # point projected into every view; 2 'depth_unit_divisor_s': s = the alignment runs on prior and SfM depths divided by s (the site's
++    # median target depth over the authors' Tanks and Temples median), so L_align and 0.6 exp(-150 L_align) are in the authors' units;
++    # the aligned depth is multiplied back by s, so the confidence map and the training loss see metres as before.
++    _jbgs_opt_f = os.path.join(os.path.dirname(images_folder), "jbgs_cdgs_options.json")
++    _jbgs_opt = json.load(open(_jbgs_opt_f)) if os.path.exists(_jbgs_opt_f) else {}
++    _jbgs_own = _jbgs_opt.get("alignment_targets") == "own_observations"
++    _jbgs_s = float(_jbgs_opt.get("depth_unit_divisor_s", 1.0))
+ 
+     # Create debug directory if needed
+     if debug_output:
+@@ -284,7 +295,16 @@
+                 if _jbgs_calib is not None:   # JBGS adapter (order 5.2 1): calibrated K (fx, fy as cameras.bin; cx, cy of the rasterizer's pixels)
+                     K = np.asarray(_jbgs_calib["images"][image_name]["K"], dtype=np.float64)
+ 
+-                cam_coord = np.matmul(K, np.matmul(R.transpose(), pcd.points.transpose()) + T.reshape(3,1)) ### for coordinate definition, see getWorld2View2() function
++                _jbgs_pts, _jbgs_errs, _jbgs_nobs = pcd.points, pcd.errors, None
++                if _jbgs_own:   # JBGS reproduction change 1: only the SfM points this view observed
++                    _ids = np.unique(np.asarray(extr.point3D_ids).astype(np.int64))
++                    _ids = _ids[_ids >= 0]
++                    _all = _JBGS_PCD["ids"]
++                    _r = np.clip(np.searchsorted(_all, _ids), 0, len(_all) - 1)
++                    _r = _r[_all[_r] == _ids]
++                    _jbgs_pts, _jbgs_nobs = pcd.points[_r], int(len(_r))
++                    _jbgs_errs = pcd.errors[_r] if pcd.errors is not None else None
++                cam_coord = np.matmul(K, np.matmul(R.transpose(), _jbgs_pts.transpose()) + T.reshape(3,1)) ### for coordinate definition, see getWorld2View2() function
+                 valid_idx = np.where(np.logical_and.reduce((
+                     cam_coord[2]>0, 
+                     cam_coord[0]/cam_coord[2]>=0, 
+@@ -300,7 +320,7 @@
+                 x_indices = np.round(cam_coord[0]).astype(np.int32).clip(0, width-1)
+                 
+                 depthmap[y_indices, x_indices] = pts_depths
+-                depth_weight[y_indices, x_indices] = 1/pcd.errors[valid_idx] if pcd.errors is not None else 1
++                depth_weight[y_indices, x_indices] = 1/_jbgs_errs[valid_idx] if _jbgs_errs is not None else 1
+                 depth_weight = depth_weight/depth_weight.max()
+ 
+                 # Try to load predefined depth if requested
+@@ -342,6 +362,8 @@
+                     source_depth = np.asarray(source_depth)
+                     _jbgs_valid = np.isfinite(source_depth) & (source_depth > 0)
+                     _jbgs_rec = dict(image=image_name, hit_share=float(_jbgs_valid.mean()), sfm_pixels_projected=int((depthmap > 0).sum()),
++                                     alignment_targets="own_observations" if _jbgs_own else "all_points_projected", sfm_points_observed=_jbgs_nobs,
++                                     unit_divisor_s=_jbgs_s,
+                                      K_used=K.tolist(), K_fx_fy_minus_cameras_bin=[float(K[0, 0] - focal_length_x), float(K[1, 1] - focal_length_y)])
+                     source_depth = np.where(_jbgs_valid, source_depth, 0).astype(source_depth.dtype)
+                     depthmap[~_jbgs_valid] = 0
+@@ -357,10 +379,15 @@
+                 if not _jbgs_skip:
+                     _jbgs_target = depthmap.copy() if os.environ.get("JBGS_KEEP_ALIGN_ARRAYS") == "1" else None
+                     _jbgs_weight = depth_weight.copy() if _jbgs_target is not None else None
++                    if _jbgs_s != 1.0:   # JBGS reproduction change 2: the alignment in the authors' depth units
++                        source_depth, depthmap = source_depth / _jbgs_s, depthmap / _jbgs_s
+                     depthmap, depthloss = optimize_depth(source=source_depth, target=depthmap, mask=depthmap>0.0, depth_weight=depth_weight)
++                    if _jbgs_s != 1.0:   # the aligned depth (and the source) back in metres
++                        source_depth, depthmap = source_depth * _jbgs_s, depthmap * _jbgs_s
+                     if _jbgs_valid is not None:
+                         depthmap[~_jbgs_valid] = 0
+                         _jbgs_rec.update(_JBGS_LAST, depth=True, weight=float(0.6 * np.exp(-150 * depthloss)))
++                        _jbgs_rec.update(shift_m=float(_JBGS_LAST["shift"] * _jbgs_s), loss_m2=float(_JBGS_LAST["loss"] * _jbgs_s ** 2))
+                         JBGS_ALIGN_LOG.append(_jbgs_rec)
+                         if _jbgs_target is not None:
+                             _yy, _xx = np.nonzero(_jbgs_target > 0)
+@@ -575,6 +602,7 @@
+     assert len(valid_totalptsidx)==len(xyz)
+     
+     valid3didx = np.isin(valid_totalptsidx, valid_ptsidx) # select the points seen from train-view
++    _JBGS_PCD["ids"] = np.asarray(valid_totalptsidx[valid3didx]).astype(np.int64)   # JBGS reproduction change 1: the rows' point ids
+     xyz = xyz[valid3didx]
+     rgb = rgb[valid3didx]
+     err = err[valid3didx]
+@@ -846,8 +874,10 @@
+ 
+     if JBGS_ALIGN_LOG:   # JBGS logging (order 5.5 3)
+         with open(os.path.join(path, "jbgs_alignment.json"), "w") as _f:
++            _of = os.path.join(path, "jbgs_cdgs_options.json")
+             json.dump(dict(views=JBGS_ALIGN_LOG, views_without_depth=[r["image"] for r in JBGS_ALIGN_LOG if not r["depth"]],
+-                           predefined_depth_path=predefined_depth_path, k_scale=150, weight_max=0.6, scientific_verdict=None), _f, indent=1)
++                           predefined_depth_path=predefined_depth_path, k_scale=150, weight_max=0.6,
++                           options=json.load(open(_of)) if os.path.exists(_of) else None, scientific_verdict=None), _f, indent=1)
+ 
+     if eval:
+         train_cam_infos = [cam_infos[i] for i in train_idx]

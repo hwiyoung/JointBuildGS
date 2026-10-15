@@ -77,7 +77,8 @@
   "seed": "the official train.py does not fix a seed (safe_state(args.quiet) is commented out); only np.random.seed(42) in the split reader. Runs are not bit-reproducible; no seed is added (order 4.2)",
   "pipeline_debug": "PipelineParams.debug defaults to True in CDGS (copies every rasterizer input to the CPU before each call for its error dump); kept in training; the post-processing renders with debug False (same values)",
   "test_renders": "training_report writes the test renders to a path built from model_path.split('/') that drops the leading '/', so they land under <working dir>/ph/... (official behaviour, kept)",
-  "debug_dir": "debug/ (relative) in the working directory = the run folder; aligned depths and PNGs per training view (official default debug_output True)"
+  "debug_dir": "debug/ (relative) in the working directory = the run folder; aligned depths and PNGs per training view (official default debug_output True)",
+  "allocator": "no PYTORCH_CUDA_ALLOC_CONF for CDGS: torch 2.0.1 rejects expandable_segments ('Unrecognized CachingAllocator option', runner test 10-15); the fork-image steps (run_gpu_bl.sh) keep it"
  },
  "file_sha256": {
   "train.py": {
@@ -127,5 +128,42 @@
   "gpu": "NVIDIA GeForce RTX 3090 (sm_86)",
   "freeze": "environment_freeze.txt"
  },
- "scientific_verdict": null
+ "scientific_verdict": null,
+ "reproduction_changes_v2": {
+  "marking": "reproduction changes beyond order 4.2, user decision 10-15 (option 나, '권함대로')",
+  "adapted_copy": "SB/sources/cdgs-release-adapters-v2 (= v1 + these two changes in scene/dataset_readers.py only)",
+  "diff": "reproduction_changes_v2.diff (v1 -> v2); cdgs-release-adapters-v2.diff (official -> v2)",
+  "switch": "the scene's jbgs_cdgs_options.json (written by scripts/phd/main_baselines_v1/cdgs/cdgs_units.py); absent = v1 behaviour",
+  "changes": [
+   {
+    "n": 1,
+    "what": "alignment targets: a training view uses only the SfM points it observed (its 2-D observations in the scene's images.bin; tracks restricted to the training views as before) instead of every point projected into every view; the reprojection-error weights, the per-view max-normalisation, the 0.1 % prune, Adam (lr 1.0, x0.8 per 100 steps) and the stopping rule are unchanged",
+    "why": "the official target map has no visibility test: at scale 1 / shift 0, 55-80 % of the v1 targets lay > 1 m behind the prior surface and carried 93-99.9 % of the weighted alignment loss (prep/cdgs/v1_official_alignment)"
+   },
+   {
+    "n": 2,
+    "what": "units: the alignment runs on the prior (source) and SfM (target) depths divided by s = the site's median own-observation target depth / TT, so L_align and the weight 0.6 exp(-150 L_align) are in the authors' data scale; the aligned depth is multiplied back by s, so the confidence map and the per-view min-max normalised depth loss are computed on metres exactly as in v1",
+    "TT": 2.646066780584012,
+    "truck_median": 2.8335176934900312,
+    "train_median": 2.4586158676779926,
+    "tandt_source": "https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/datasets/input/tandt_db.zip, sha256 816e62f22a161abbfe841d2a6b10cdf036e297c9fa289b3bfeee9c6ec526d7e1 (SB/sources/tandt_db; only tandt/{truck,train}/sparse/0 extracted)",
+    "s": {
+     "B0_b10": 19.775443386853258,
+     "B173nb_b10": 23.228709533331475,
+     "B173_b0": 22.920709202398083,
+     "R1rep_b10": 28.596961184333374
+    },
+    "site_median_target_m": {
+     "B0_b10": 52.32714381727219,
+     "B173nb_b10": 61.464716651983565,
+     "B173_b0": 60.64972720789183,
+     "R1rep_b10": 75.66946901551496
+    }
+   }
+  ],
+  "file_sha256_v2": {
+   "scene/dataset_readers.py": "55074df8236aa6c8edb3066077e6636b21ab7fd05b16efa3cb6dc03643e6e059"
+  },
+  "scientific_verdict": null
+ }
 }

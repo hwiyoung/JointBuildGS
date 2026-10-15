@@ -1,0 +1,1377 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "written": "2026-10-15 13:19:16 KST",
+ "rows": [
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "github.com/hbb1/2d-gaussian-splatting f3e3b9f + 어댑터 v1; 이미지 jointbuildgs:2dgs-official-f3e3b9f-v1",
+   "attempt": 1,
+   "train_minutes": 32.80833333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 4.9794921875,
+   "torch_max_allocated_gib": 4.0337890625,
+   "last_gaussians": 1440563,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-15 10:29",
+    "t1": "10-15 11:02"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 395,
+     "host_min_available_gb": 19.0,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 11:02",
+     "t1": "10-15 11:08",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 208,
+     "host_min_available_gb": 37.2,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 11:08",
+     "t1": "10-15 11:12",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 307,
+     "host_min_available_gb": 48.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:12",
+     "t1": "10-15 11:17",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 293,
+     "host_min_available_gb": 51.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:17",
+     "t1": "10-15 11:22",
+     "log_tail": null
+    },
+    "cpu2": {
+     "status": "PASS",
+     "seconds": 44,
+     "host_min_available_gb": 57.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:22",
+     "t1": "10-15 11:23",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "B0_b10",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "github.com/hbb1/2d-gaussian-splatting f3e3b9f + 어댑터 v1; 이미지 jointbuildgs:2dgs-official-f3e3b9f-v1",
+   "attempt": 1,
+   "train_minutes": 26.425,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 3.384765625,
+   "torch_max_allocated_gib": 2.60380859375,
+   "last_gaussians": 1024176,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-15 11:23",
+    "t1": "10-15 11:49"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 451,
+     "host_min_available_gb": 3.0,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 11:49",
+     "t1": "10-15 11:57",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 41,
+     "host_min_available_gb": 52.0,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 11:57",
+     "t1": "10-15 11:58",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 326,
+     "host_min_available_gb": 47.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:58",
+     "t1": "10-15 12:07",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 310,
+     "host_min_available_gb": 39.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:29",
+     "t1": "10-15 12:35",
+     "log_tail": null
+    },
+    "cpu2": {
+     "status": "PASS",
+     "seconds": 53,
+     "host_min_available_gb": 49.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:35",
+     "t1": "10-15 12:39",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "github.com/hbb1/2d-gaussian-splatting f3e3b9f + 어댑터 v1; 이미지 jointbuildgs:2dgs-official-f3e3b9f-v1",
+   "attempt": 1,
+   "train_minutes": 25.921666666666667,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 3.810546875,
+   "torch_max_allocated_gib": 3.072265625,
+   "last_gaussians": 1053603,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-15 12:25",
+    "t1": "10-15 12:51"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 533,
+     "host_min_available_gb": 34.5,
+     "mem": "96g",
+     "gpu": 0,
+     "t0": "10-15 12:51",
+     "t1": "10-15 13:04",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 32,
+     "host_min_available_gb": 91.7,
+     "mem": "96g",
+     "gpu": 0,
+     "t0": "10-15 13:04",
+     "t1": "10-15 13:10",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "B173_b0",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "진행 중: train",
+   "code": null,
+   "attempt": 1,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": "RUNNING",
+    "gpu": 1,
+    "t0": "10-15 13:15",
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 71.07666666666667,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 17.75,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 54.06333333333334,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 9.1572265625,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B0_b10/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 52.55833333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 10.7734375,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 195.57000000000002,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 21.2041015625,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173_b0/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": 1,
+   "train_minutes": 66.89666666666668,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 13.4306640625,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": 3605015,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-15 11:31",
+    "t1": "10-15 12:38"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 382,
+     "host_min_available_gb": 11.4,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 12:38",
+     "t1": "10-15 12:47",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 186,
+     "host_min_available_gb": 36.5,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 12:47",
+     "t1": "10-15 12:52",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 217,
+     "host_min_available_gb": 58.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 13:04",
+     "t1": "10-15 13:09",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 41,
+     "host_min_available_gb": 57.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 13:15",
+     "t1": "10-15 13:17",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": null,
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": null,
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": null,
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_LoD2_s0",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 LoD2 학습 영상 35.5 %, 항공 LiDAR 학습 영상 27.6 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤"
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_ALS_s0",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 LoD2 학습 영상 35.5 %, 항공 LiDAR 학습 영상 27.6 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤"
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_LoD2_s0",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 항공 LiDAR 학습 영상 32.1 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤"
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_ALS_s0",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 항공 LiDAR 학습 영상 32.1 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤"
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_LoD2_s0",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 LoD2 학습 영상 38.1 %, 항공 LiDAR 학습 영상 47.1 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤; 가중 규칙: 깊이 가중 중앙값 0.000312 < 0.006이라 이 사전 정보가 멈춤"
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_ALS_s0",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 LoD2 학습 영상 38.1 %, 항공 LiDAR 학습 영상 47.1 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤"
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_LoD2_s0",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 LoD2 학습 영상 31.4 %, 항공 LiDAR 학습 영상 36.4 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤; 가중 규칙: 깊이 가중 중앙값 0.000000 < 0.006이라 이 사전 정보가 멈춤"
+  },
+  {
+   "method": "CDGS",
+   "result": "cdgs_ALS_s0",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "결과 없음 (학습하지 않음: 5.5 점검)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2; 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": null,
+   "steps": {},
+   "note": "축척 규칙: 이 지역의 LoD2 학습 영상 31.4 %, 항공 LiDAR 학습 영상 36.4 %가 축척 0.9~1.1 밖(4분의 1 초과)이라 이 지역의 두 사전 정보가 멈춤; 가중 규칙: 깊이 가중 중앙값 0.000000 < 0.006이라 이 사전 정보가 멈춤"
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 10.211666666666666,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 87,
+     "host_min_available_gb": 42.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:35",
+     "t1": "10-15 10:36",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 537,
+     "host_min_available_gb": 21.9,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 10:37",
+     "t1": "10-15 10:50",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 113,
+     "host_min_available_gb": 47.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:50",
+     "t1": "10-15 10:59",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 31,
+     "host_min_available_gb": 51.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:59",
+     "t1": "10-15 10:59",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 7.451666666666667,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 65,
+     "host_min_available_gb": 46.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:36",
+     "t1": "10-15 10:41",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 392,
+     "host_min_available_gb": 22.5,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 10:50",
+     "t1": "10-15 10:57",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 116,
+     "host_min_available_gb": 46.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:59",
+     "t1": "10-15 11:01",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 37,
+     "host_min_available_gb": 49.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:01",
+     "t1": "10-15 11:02",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 4.465,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 46,
+     "host_min_available_gb": 52.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:23",
+     "t1": "10-15 11:23",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 230,
+     "host_min_available_gb": 35.1,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 12:11",
+     "t1": "10-15 12:18",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 69,
+     "host_min_available_gb": 50.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:39",
+     "t1": "10-15 12:48",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 23,
+     "host_min_available_gb": 61.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:48",
+     "t1": "10-15 12:52",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.42,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 62,
+     "host_min_available_gb": 47.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:23",
+     "t1": "10-15 11:24",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 271,
+     "host_min_available_gb": 34.5,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 12:18",
+     "t1": "10-15 12:25",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.671666666666667,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 31,
+     "host_min_available_gb": 47.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:38",
+     "t1": "10-15 11:38",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 322,
+     "host_min_available_gb": 38.0,
+     "mem": "96g",
+     "gpu": 1,
+     "t0": "10-15 13:04",
+     "t1": "10-15 13:15",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "진행 중: post0",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 1.285,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 78,
+     "host_min_available_gb": 47.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:28",
+     "t1": "10-15 11:29",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "RUNNING",
+     "seconds": null,
+     "host_min_available_gb": null,
+     "mem": null,
+     "gpu": 0,
+     "t0": "10-15 13:15",
+     "t1": null,
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 0.7983333333333333,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 48,
+     "host_min_available_gb": 52.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:29",
+     "t1": "10-15 11:30",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 0.6216666666666666,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 38,
+     "host_min_available_gb": 51.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:30",
+     "t1": "10-15 11:31",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.0233333333333325,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 87,
+     "host_min_available_gb": 55.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:25",
+     "t1": "10-15 11:27",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 222,
+     "host_min_available_gb": 33.7,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 11:58",
+     "t1": "10-15 12:01",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 72,
+     "host_min_available_gb": 51.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:07",
+     "t1": "10-15 12:15",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 27,
+     "host_min_available_gb": 55.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:15",
+     "t1": "10-15 12:21",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.12,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 58,
+     "host_min_available_gb": 54.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:27",
+     "t1": "10-15 11:28",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 256,
+     "host_min_available_gb": 28.8,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 12:01",
+     "t1": "10-15 12:11",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 121,
+     "host_min_available_gb": 41.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:21",
+     "t1": "10-15 12:28",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 35,
+     "host_min_available_gb": 46.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:28",
+     "t1": "10-15 12:29",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": null,
+   "status": "아직 (대기열)",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": null,
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {},
+   "note": null
+  }
+ ],
+ "scientific_verdict": null
+}

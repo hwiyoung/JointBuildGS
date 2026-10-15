@@ -1,0 +1,100 @@
+{
+ "site": "B173nb_b10",
+ "unit": "LoD2",
+ "question": "비교-2",
+ "comparator": "trust_LoD2_fix1",
+ "panels": [
+  {
+   "metric": "prior_error_inflow",
+   "ko": "과거 형상 유입률",
+   "code": "11",
+   "unit": "%",
+   "method_seeds": [
+    0.0654,
+    0.0708
+   ],
+   "prior": 0.9972,
+   "comparator": 0.0867,
+   "method_mean": 0.0681,
+   "criterion": 0.01635593103433736,
+   "criterion_parts": {
+    "pooled": 0.01635593103433736,
+    "unit": 0.010691454531540601,
+    "three_points": 2.5049472708599484e-05
+   },
+   "n": 119763,
+   "diff": -0.018600000000000005,
+   "grade": "가능, 근거 불완전",
+   "reading": "바뀐 곳의 과거 형상을 덜 들였다"
+  },
+  {
+   "metric": "obs_inflow",
+   "ko": "관측 오류 유입률 (영역 전체)",
+   "code": "3",
+   "unit": "%",
+   "method_seeds": [
+    0.6193,
+    0.6058
+   ],
+   "prior": 0.1115,
+   "comparator": 0.2409,
+   "method_mean": 0.6125499999999999,
+   "criterion": 0.026728636328851408,
+   "criterion_parts": {
+    "pooled": 0.015746732994497574,
+    "unit": 0.026728636328851408,
+    "three_points": 0.00024174053182917003
+   },
+   "n": 12410,
+   "diff": 0.3716499999999999,
+   "grade": "확인",
+   "reading": "그 대가로 관측 오류 유입률 (영역 전체)에서 GeoGS보다 못했다"
+  },
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "code": "4",
+   "unit": "%",
+   "method_seeds": [
+    0.962,
+    0.9671
+   ],
+   "prior": 0.9777,
+   "comparator": 0.9379,
+   "method_mean": 0.96455,
+   "criterion": 0.03286632318955062,
+   "criterion_parts": {
+    "pooled": 0.03286632318955062,
+    "unit": 0.010097484835343885,
+    "three_points": 0.0004751346214760849
+   },
+   "n": 6314,
+   "diff": 0.026650000000000063,
+   "grade": "기준 안",
+   "reading": "다르지 않았다"
+  },
+  {
+   "metric": "invisible_completeness",
+   "ko": "비가시 영역 완전성 (0.2 m)",
+   "code": "5",
+   "unit": "%",
+   "method_seeds": [
+    0.7059,
+    0.7059
+   ],
+   "prior": 1.0,
+   "comparator": 0.8824,
+   "method_mean": 0.7059,
+   "criterion": 0.17647058823529413,
+   "criterion_parts": {
+    "unit": 0.0,
+    "three_points": 0.17647058823529413
+   },
+   "n": 17,
+   "diff": -0.1765,
+   "grade": "표본 부족",
+   "reading": null
+  }
+ ],
+ "scientific_verdict": null
+}
