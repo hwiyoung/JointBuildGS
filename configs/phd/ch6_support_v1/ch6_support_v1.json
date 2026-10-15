@@ -1,0 +1,83 @@
+{
+ "task_id": "PHD-CH6-SUPPORT-v1",
+ "request": "6장 보조 작업 요청 v1 (문서 세션 -> 실험 세션, 2026-10-15). 학습 없음, 본 방법 고치지 않음, 3단계·비교 방법 발주 바꾸지 않음.",
+ "written": "2026-10-15 17:45 KST, before any result of this task",
+ "scientific_verdict": null,
+ "payload": "phase-payloads/phd/ch6_support_v1/PHD-CH6-SUPPORT-v1",
+ "final_judgment_code": {
+  "module": "src/phd/prior_propagation_v6",
+  "rule": "auto = rules.default_rule: LoD2 current (marks at 1 tau), ALS margin_all_2 (marks at 2 tau)",
+  "first_stage_script": "scripts/phd/main_stage0_v1/s03_stage1_v6.py (unchanged)",
+  "label_script": "scripts/phd/main_stage0_v1/s04_gt_v6.py (unchanged, GT rules v5)",
+  "training_code": "fork r12 (stage 1) .. r15 (stage 3) read the same judgments (stage 0 fork check; r13-r15 judgment defaults = r12)"
+ },
+ "task5_judgment": {
+  "ranges": ["B0", "R1", "R2", "R3E", "R4", "R5", "SW"],
+  "range_note": "R3 is inside R3E (R3 widened 10 m to the east), so R3 is counted through R3E, as in the discard-rule task",
+  "range_inputs": "training-only MVS of the discard-rule task (/dr/mvs/<range>), its meshes and stores (/dr/s02), own tolerance and registration (= the values the boxes fix), GT labels of /dr/s52/gt/<range> recomputed on the v6 store (--gt-from)",
+  "boxes": ["B0_b10", "B173nb_b10", "B173_b0", "R1rep_b10"],
+  "box_inputs": "stage-0 v6 runs (/s0/s61/box: the judgments the trainings read) and the stage-1 region files v3 (/s1/regions_v3: codes, labels with the common GT height alignment, premise flags)",
+  "areas": {
+   "selection": "range patches outside every box evaluation range, counted once in the order B0, R1, R2, R3E, R4, R5, SW (the data the fixed values and the rule were chosen on)",
+   "evaluation": "box patches inside the box evaluation range (the four experiment regions)"
+  },
+  "patch_filter": "in range (moved centre), not in an evaluation-exclusion cell, true label agree (0) or conflict (1)",
+  "truth": "label 0 = prior right (|GT - prior| <= tau), 1 = prior wrong; tau = the base tau of the patch kind",
+  "judgment": "release = patch judgment J_loc == conflict (a support patch's vote or a missing patch's propagated judgment); keep = agree, mixed, insufficient (inherit), and invisible patches (no judgment, the prior is kept)",
+  "four_counts": {"correct_keep": "keep & label 0", "wrong_keep": "keep & label 1", "correct_release": "release & label 1", "wrong_release": "release & label 0"},
+  "groups": {"direct": "support patches (own vote)", "propagated": "missing patches (propagated judgment)", "none": "invisible patches (no judgment)"},
+  "undetermined_note": "mixed / insufficient are counted as keep and also shown separately",
+  "units": "area m2 (primary) and patch count",
+  "items": {
+   "both_right": "code 2: support, prior right, |MVS - GT| <= tau",
+   "prior_wrong": "code 11: support, prior wrong, |MVS - GT| <= tau; split |GT - prior| / tau in [1, 4) and >= 4",
+   "prior_slightly_wrong": "code 11 with |GT - prior| / tau in [1, 4)",
+   "image_wrong": "code 3 within the conflict threshold (stage-1 gate condition 2 region): support, prior right, |MVS - GT| > tau, |MVS - prior| <= threshold (LoD2 1 tau, ALS 2 tau)",
+   "undecidable_passed": "code 3 beyond the threshold (stage-1 premise violation): the wrong observation passed the confidence mask",
+   "undecidable_scene": "B173_b0 whole evaluation range (most of the building faces changed); also with the box's own tolerance and registration",
+   "undecidable_region_offset": "buildings confirmed as cases by task 4, if any: false conflicts = patches released whose |GT - prior - building offset| <= tau",
+   "unseen_missing": "codes 4 (prior right) and 13 (prior wrong): missing",
+   "unseen_invisible": "codes 5 (prior right) and 14 (prior wrong): invisible",
+   "both_wrong_record": "code 12: prior wrong and |MVS - GT| > tau (recorded, not one of the seven items)",
+   "few_images": "B0 image-count conditions of stage 3 (judge5 table, cond/<c>/box) cited, not recomputed"
+  },
+  "box_code_source": "boxes: code_ext_v3 and premise_violation of the region files v3 (MVS read at GT points for roof-like patches); ranges: the stage-0 rule on the patch medians (code 2/3 and 11/12 split by |-mvs_r_med - gt_med| <= tau, premise by |-mvs_r_med| > threshold)",
+  "confidence_excluded_supplement": {
+   "purpose": "6.2 defines 'image wrong' as an observation the confidence mask excluded; the stage-1 regions hold only observations that passed the mask. This supplement finds the excluded wrong observations. Recorded, not a criterion.",
+   "rule": "mask-off run (--conf photometric) with the mask-on tolerance and registration fixed; prior right (label 0) and |m_off - GT| > tau and (mask-on state missing or |m_on - GT| <= tau), m = MVS - prior of the patch median",
+   "runs": "7 ranges x 2 priors, boxes B0_b10, B173_b0, R1rep_b10 x 2 priors (B173nb_b10 mask-off exists in /s0/s61/box_maskoff)"
+  },
+  "concentration": "per building (footprint containing the patch centre; outside every footprint = 'no building'): wrong releases and wrong keeps by area; share of the five largest buildings; maps",
+  "b173_self": "s03 v6 on B173_b0 without --fix-from (own tolerance and registration on the box MVS), labels from the stage-1 v3 GT (--gt-from /s1/v3/box_gt/B173_b0), truth re-labelled with the fixed tau of the stage-0 box run so that only the judgment changes"
+ },
+ "task4_region_offset": {
+  "ranges": ["B0", "R1", "R2", "R3E", "R4", "R5", "SW"],
+  "priors": ["LoD2", "ALS"],
+  "data": "the task-5 mask-on v6 range runs (scene-wide registration of each range applied): roof-like (kind 1) support patches in range, not excluded, finite MVS value",
+  "residual": "r = MVS - prior per patch (vertical, = -mvs_r_med); patch medians, not pixels (pixel residuals are not stored per patch)",
+  "building": "footprint (/dr/s02/<range>/footprints.json) containing the patch centre",
+  "min_roof_area_m2": 10.0,
+  "statistic": "per building median m_b and NMAD s_b = 1.4826 median |r - m_b|",
+  "candidate": "|m_b| > s_b (the vertical-bias rule of the method: median larger than NMAD)",
+  "dedupe": "a building in several ranges is reported once, from the first range in the order of 'ranges'; the other values are kept in the CSV",
+  "gt_check": "per building GT - prior over roof-like labelled patches: median g_b, NMAD sg_b, area with GT; MVS - GT median",
+  "classes": {
+   "real_change": "building in the real-change survey list (4959326, 4907510, 4907508, 4907207, R1 Z08 structure, C04, C27) or |g_b| > 2.0 m; checked on the photos",
+   "prior_offset_case": "not real change, GT confirms: |g_b| > sg_b with the sign of m_b",
+   "image_side_offset": "GT does not confirm (|g_b| <= sg_b): the offset is in the MVS",
+   "no_gt": "less than 10 m2 of labelled roof"
+  },
+  "effect_flag": "|m_b| >= tau of the range and prior (the offset alone moves agreement to conflict)",
+  "horizontal_supplement": {
+   "purpose": "not to miss buildings offset only horizontally (walls cancel in a median). Recorded, not a criterion.",
+   "rule": "LoD2 only: wall-like support patches of the building, residual along the horizontal outward normal, robust 2D translation t_b (Huber, scale = NMAD); reported with the NMAD after the fit and the wall-normal direction spread"
+  }
+ },
+ "task3_figure": {
+  "panels": "(a) campus image with the eight search ranges and the four evaluation ranges + 10 m band, named; (b)-(e) one per region with the evaluation range and the item sites (new names), short labels, colour never alone",
+  "sites_source": "item sites from the task-5 region codes and earlier reports (real-change survey, stage 1)",
+  "not_marked": ["R1 flat roofs measured 20-30 cm low (doc decision 10-15)", "both_right and image_wrong (whole regions)"],
+  "outputs": "PNG for the text, source (script + data), list of marked sites (region, item, coordinate range)"
+ },
+ "limits": {"parallel_containers": 2, "cpus_per_job": 10, "memory_gb_per_job": 14, "gpu": "none"}
+}
