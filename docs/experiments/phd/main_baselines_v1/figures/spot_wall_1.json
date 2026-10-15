@@ -1,0 +1,145 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "spot": "B173 긴 벽",
+ "key": "wall",
+ "figure": 1,
+ "site": "B173nb_b10",
+ "prior": "LoD2",
+ "place": {
+  "face": 53,
+  "face_patches": 18298,
+  "counted_patches": 14970,
+  "excluded_patches": {
+   "틀림으로 미룸": 2953,
+   "모호": 375
+  },
+  "gt_points_on_wall": 12988,
+  "frame": {
+   "centre": [
+    153.565,
+    111.76,
+    -33.786
+   ],
+   "t": [
+    0.365493,
+    0.930814,
+    0.0
+   ],
+   "normal": [
+    0.930814,
+    -0.365493,
+    0.0
+   ],
+   "s_range": [
+    -39.6,
+    30.15
+   ],
+   "z_range": [
+    -43.51,
+    -24.51
+   ]
+  }
+ },
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "mesh": "virtual",
+   "count_mesh": "virtual",
+   "count_mesh_ko": "가상 시점 메시",
+   "patches": 14970,
+   "present": 13771,
+   "share": 0.919906,
+   "by_label": {
+    "맞음으로 미룸": {
+     "patches": 14970,
+     "present": 13771,
+     "share": 0.919906
+    },
+    "틀림으로 미룸": {
+     "patches": 2953,
+     "present": 405,
+     "share": 0.137149
+    },
+    "모호": {
+     "patches": 375,
+     "present": 344,
+     "share": 0.917333
+    }
+   },
+   "tsdf_share": 0.084168,
+   "share_tsdf": 0.084168,
+   "share_virtual": 0.919906,
+   "stage1_value": {
+    "share": 0.820513,
+    "patches": 15366,
+    "present": 12608,
+    "source": "VIS-v3 measures/wall.json",
+    "recomputed_same": true
+   },
+   "gaussian_supported": {
+    "stage1_patch_set": {
+     "patches": 15366,
+     "present": 12608,
+     "share": 0.820513
+    },
+    "counted": {
+     "patches": 14970,
+     "present": 12297,
+     "share": 0.821443
+    }
+   }
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "mesh": "virtual",
+   "count_mesh": "virtual",
+   "count_mesh_ko": "가상 시점 메시",
+   "patches": 14970,
+   "present": 3415,
+   "share": 0.228123,
+   "by_label": {
+    "맞음으로 미룸": {
+     "patches": 14970,
+     "present": 3415,
+     "share": 0.228123
+    },
+    "틀림으로 미룸": {
+     "patches": 2953,
+     "present": 1197,
+     "share": 0.40535
+    },
+    "모호": {
+     "patches": 375,
+     "present": 143,
+     "share": 0.381333
+    }
+   },
+   "tsdf_share": 0.009486,
+   "share_tsdf": 0.009486,
+   "share_virtual": 0.228123,
+   "stage1_value": null,
+   "gaussian_supported": {
+    "stage1_patch_set": {
+     "patches": 15366,
+     "present": 175,
+     "share": 0.011389
+    },
+    "counted": {
+     "patches": 14970,
+     "present": 139,
+     "share": 0.009285
+    }
+   }
+  },
+  "CDGS": {
+   "result": "cdgs_LoD2_s0",
+   "status": "not_trained"
+  }
+ },
+ "scientific_verdict": null,
+ "title": "영상이 보지 못한 긴 벽은 본 방법에서 섰고, 2차원 가우시안 스플래팅에서는 조각만 섰다 — B173 주변 LoD2",
+ "title_kind": "statement written after viewing (10-15 12:2x-13:1x, panels viewed)",
+ "foot": "이 벽(LoD2 면 53, 학습 영상이 보지 못한 패치 18,298개)을 바깥에서 정면으로 본 것. 파랑 = 결과 메시가 패치 중심 0.25 m 안에 있음(벽 있음), 흰 칸 = 없음, 옅은 회색 칸 = 뺀 칸(지금 지붕보다 위라 '틀림으로 미룸' 2,953개와 '모호' 375개), 회색 윤곽 = 학습 전 사전 정보(LoD2)의 벽, 검은 점 = 벽면 0.25 m 안의 참값 점 12,988개(지금 지붕 가장자리; 벽 자체에는 참값 점이 거의 없다). 벽 있음(맞음으로 미룬 14,970패치): 본 방법 (씨앗 0) 92.0 %(학습 시점 메시 8.4 %), 2차원 가우시안 스플래팅 22.8 %(학습 시점 메시 0.9 %), CDGS 결과 없음(학습하지 않음); 학습 전 사전 정보는 정합한 면 자체 100.0 %, 같은 길 메시 8.3 %. 가상 시점 메시가 있는 결과는 그 메시로, 없는 결과는 학습 시점 메시로 셌다."
+}

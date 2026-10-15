@@ -1,0 +1,100 @@
+{
+ "site": "B173nb_b10",
+ "unit": "ALS",
+ "question": "비교-1",
+ "comparator": "imgonly_2dgs_s0",
+ "panels": [
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "code": "4",
+   "unit": "%",
+   "method_seeds": [
+    0.0,
+    0.0
+   ],
+   "prior": 0.991,
+   "comparator": 0.009,
+   "method_mean": 0.0,
+   "criterion": 0.03286632318955062,
+   "criterion_parts": {
+    "pooled": 0.03286632318955062,
+    "unit": 0.0,
+    "three_points": 0.02702702702702703
+   },
+   "n": 111,
+   "diff": -0.009,
+   "grade": "기준 안",
+   "reading": "다르지 않았다"
+  },
+  {
+   "metric": "wall_present",
+   "ko": "벽 있음 (B173 긴 벽, 0.25 m)",
+   "code": "5 (면 53의 패치)",
+   "unit": "%",
+   "method_seeds": [
+    0.698731,
+    0.671009
+   ],
+   "prior": 0.07515,
+   "comparator": 0.228123,
+   "method_mean": 0.68487,
+   "criterion": 0.054886759726549765,
+   "criterion_parts": {
+    "unit": 0.054886759726549765,
+    "three_points": 0.0002004008016032064
+   },
+   "n": 14970,
+   "diff": 0.456747,
+   "grade": "가능, 근거 불완전",
+   "reading": "본 방법이 더 채웠다"
+  },
+  {
+   "metric": "obs_inflow",
+   "ko": "관측 오류 유입률 (영역 전체)",
+   "code": "3",
+   "unit": "%",
+   "method_seeds": [
+    0.843,
+    0.8428
+   ],
+   "prior": 0.0222,
+   "comparator": 0.5483,
+   "method_mean": 0.8429,
+   "criterion": 0.015746732994497574,
+   "criterion_parts": {
+    "pooled": 0.015746732994497574,
+    "unit": 0.0003959797974644229,
+    "three_points": 0.00038066235249333843
+   },
+   "n": 7881,
+   "diff": 0.2946,
+   "grade": "확인",
+   "reading": "영상이 틀린 곳의 유입이 2차원 가우시안 스플래팅보다 많았다"
+  },
+  {
+   "metric": "prior_error_inflow",
+   "ko": "과거 형상 유입률",
+   "code": "11",
+   "unit": "%",
+   "method_seeds": [
+    0.0002,
+    0.0003
+   ],
+   "prior": 0.9996,
+   "comparator": 0.0227,
+   "method_mean": 0.00025,
+   "criterion": 0.01635593103433736,
+   "criterion_parts": {
+    "pooled": 0.01635593103433736,
+    "unit": 0.0001979898987322332,
+    "three_points": 3.1211960423234184e-05
+   },
+   "n": 96117,
+   "diff": -0.02245,
+   "grade": "가능, 근거 불완전",
+   "reading": "영상만 방법보다 과거 형상을 덜 들였다"
+  }
+ ],
+ "scientific_verdict": null
+}

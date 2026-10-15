@@ -1,0 +1,157 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "spot": "B173 날개",
+ "key": "wing_aux",
+ "figure": 1,
+ "site": "B173nb_b10",
+ "prior": "LoD2",
+ "auxiliary": true,
+ "place": {
+  "section": "B173_wing",
+  "centre": [
+   126.34397997377678,
+   82.07199204297335,
+   -20.645004132279308
+  ],
+  "t": [
+   -0.9309399018867978,
+   0.3651724237603371
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "z_range": [
+   -30.59803853321925,
+   -17.645004132279308
+  ],
+  "z_range_stage1_rule": [
+   -30.59803853321925,
+   -17.645004132279308
+  ],
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "view_note": null,
+  "counted_rows": 607,
+  "band": "|s| <= 6 m, |d| <= 0.25 m, thinned GT rows, |sW| >= 0.2 m",
+  "band_codes_main_rows": {
+   "11": 607
+  }
+ },
+ "code": 11,
+ "value_name": "과거 형상 유입률",
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 607,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   },
+   "value": {
+    "points": 607,
+    "gt_side": 1.0,
+    "wrong_side": 0.0,
+    "both": 0.0,
+    "neither": 0.0,
+    "spread": 0.0
+   },
+   "unit_wide": {
+    "share": 0.0654,
+    "points": 119763
+   },
+   "segments": 822
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 607,
+     "gt_side": 0.6474,
+     "wrong_side": 0.0066,
+     "both": 0.0,
+     "neither": 0.346,
+     "spread": 0.0066
+    }
+   },
+   "value": {
+    "points": 607,
+    "gt_side": 0.6474,
+    "wrong_side": 0.0066,
+    "both": 0.0,
+    "neither": 0.346,
+    "spread": 0.0066
+   },
+   "unit_wide": {
+    "share": 0.0867,
+    "points": 119763
+   },
+   "segments": 2135
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 607,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   },
+   "value": {
+    "points": 607,
+    "gt_side": 1.0,
+    "wrong_side": 0.0,
+    "both": 0.0,
+    "neither": 0.0,
+    "spread": 0.0
+   },
+   "unit_wide": {
+    "share": 0.1696,
+    "points": 119763
+   },
+   "segments": 649
+  }
+ },
+ "references": {
+  "gt_points": 12589,
+  "prior_result": "samepath_LoD2",
+  "prior_segments": 804,
+  "prior_value": {
+   "points": 607,
+   "gt_side": 0.0,
+   "wrong_side": 1.0,
+   "both": 0.0,
+   "neither": 0.0,
+   "spread": 1.0
+  }
+ },
+ "scientific_verdict": null,
+ "title": "옛 박공은 본 방법과 MVS 기반 결합에 남지 않았고, GeoGS만 두 지붕 사이에 작은 조각을 남겼다 — B173 주변 LoD2 (보조)",
+ "title_kind": "statement written after viewing (10-15 12:2x-13:1x, panels viewed)",
+ "seed1": {
+  "points": 607,
+  "gt_side": 1.0,
+  "wrong_side": 0.0,
+  "both": 0.0,
+  "neither": 0.0,
+  "spread": 0.0
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 사전 정보 오류(코드 11) 참값 607점에서 결과 면이 틀린 쪽에 선 몫(과거 형상 유입률): 본 방법 (씨앗 0) 0.0 %(씨앗 1: 0.0 %), GeoGS 0.7 %, MVS 기반 결합 0.0 %; 학습 전 사전 정보 100.0 %. 단위 전체(B173 주변 LoD2): 본 방법 (씨앗 0) 6.5 %, GeoGS 8.7 %, MVS 기반 결합 17.0 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면."
+}

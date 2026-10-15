@@ -1,0 +1,97 @@
+{
+ "site": "B0_b10",
+ "unit": "LoD2",
+ "question": "비교-3",
+ "comparator": "mvsfuse_LoD2",
+ "panels": [
+  {
+   "metric": "split:real_change",
+   "ko": "과거 형상 유입률 · 실제 변화로 봄",
+   "code": "11 (항공 LiDAR도 참값과 어긋남)",
+   "unit": "%",
+   "method_seeds": [
+    0.3514,
+    0.3581
+   ],
+   "prior": 1.0,
+   "comparator": 0.9932,
+   "method_mean": 0.35475,
+   "criterion": 0.01635593103433736,
+   "criterion_parts": {
+    "pooled": 0.01635593103433736,
+    "unit": 0.013265323215059598,
+    "three_points": 0.010135135135135136
+   },
+   "n": 296,
+   "diff": -0.63845,
+   "grade": "가능, 근거 불완전",
+   "reading": "바뀐 곳의 과거 형상을 덜 들였다 (재현)"
+  },
+  {
+   "metric": "obs_inflow",
+   "ko": "관측 오류 유입률 (영역 전체)",
+   "code": "3",
+   "unit": "%",
+   "method_seeds": [
+    0.21,
+    0.2132
+   ],
+   "prior": 0.0308,
+   "comparator": 0.0401,
+   "method_mean": 0.2116,
+   "criterion": 0.015746732994497574,
+   "criterion_parts": {
+    "pooled": 0.015746732994497574,
+    "unit": 0.006335676759431482,
+    "three_points": 0.0001590836780146357
+   },
+   "n": 18858,
+   "diff": 0.1715,
+   "grade": "확인",
+   "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)"
+  },
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "code": "4",
+   "unit": "%",
+   "method_seeds": [
+    0.9438,
+    0.9272
+   ],
+   "prior": 0.2614,
+   "comparator": 0.2614,
+   "method_mean": 0.9355,
+   "criterion": 0.03286632318955062,
+   "criterion_parts": {
+    "pooled": 0.03286632318955062,
+    "unit": 0.03286632318955062,
+    "three_points": 0.00024129333226091852
+   },
+   "n": 12433,
+   "diff": 0.6740999999999999,
+   "grade": "확인",
+   "reading": "본 방법이 더 채웠다 (재현)"
+  },
+  {
+   "metric": "invisible_completeness",
+   "ko": "비가시 영역 완전성 (0.2 m)",
+   "code": "5",
+   "unit": "%",
+   "method_seeds": [
+    null,
+    null
+   ],
+   "prior": null,
+   "comparator": null,
+   "method_mean": null,
+   "criterion": null,
+   "criterion_parts": {},
+   "n": 0,
+   "diff": null,
+   "grade": "표본 부족",
+   "reading": null
+  }
+ ],
+ "scientific_verdict": null
+}

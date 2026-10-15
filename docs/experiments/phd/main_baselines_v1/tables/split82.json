@@ -1,0 +1,839 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "written": "2026-10-15 17:39:10 KST",
+ "rule": "measure8_s3.change's rule (scripts/phd/main_stage3_v1/measure8_s3.py change(); copied, not imported: it calls s3_common.patch()\n    at import), the per-patch loop vectorised with the same arithmetic: for code 11 then 13, every patch of that code is told by the ALS\n    rows of the same GT points (src, point): fewer than half of the patch's rows with an ALS row whose patch has a v3 true label -> undecided;\n    else representation when at least half of those rows' ALS patches agree (label 0), else real change. Every row of a classified patch\n    takes the patch's class (code 13 after code 11, as the loop). Returns (row class codes 0 none / 1 real / 2 repr / 3 undecided,\n    {code: {patch: class}}, {code: {class: area m2}}).",
+ "rows": {
+  "B0_b10": {
+   "patch_classes": {
+    "11": {
+     "real_change": 81,
+     "representation": 3281,
+     "undecided": 2978
+    },
+    "13": {
+     "real_change": 0,
+     "representation": 13,
+     "undecided": 14
+    }
+   },
+   "areas_m2": {
+    "11": {
+     "real_change": 5.1,
+     "representation": 205.1,
+     "undecided": 186.1
+    },
+    "13": {
+     "real_change": 0.0,
+     "representation": 0.8,
+     "undecided": 0.9
+    }
+   },
+   "new_here": false,
+   "results": {
+    "prop_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.3514,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.1284,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.1082,
+      "points": 15361
+     }
+    },
+    "prop_LoD2_s1": {
+     "real_change": {
+      "inflow": 0.3581,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.1229,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.109,
+      "points": 15361
+     }
+    },
+    "samepath_LoD2": {
+     "real_change": {
+      "inflow": 1.0,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 1.0,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.9995,
+      "points": 15361
+     }
+    },
+    "imgonly_s0": {
+     "real_change": {
+      "inflow": 0.3142,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.1694,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.0885,
+      "points": 15361
+     }
+    },
+    "trust_LoD2": {
+     "real_change": {
+      "inflow": 0.4189,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.1708,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.7329,
+      "points": 15361
+     }
+    },
+    "trust_LoD2_fix1": {
+     "real_change": {
+      "inflow": 0.2432,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.1763,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.7145,
+      "points": 15361
+     }
+    },
+    "nojudge_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.5608,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.1614,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.124,
+      "points": 15361
+     }
+    },
+    "imgonly_2dgs_s0": {
+     "real_change": {
+      "inflow": 0.4628,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.3041,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.3308,
+      "points": 15361
+     }
+    },
+    "mvsfuse_LoD2": {
+     "real_change": {
+      "inflow": 0.9932,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.9877,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.9827,
+      "points": 15361
+     }
+    },
+    "judgefuse_LoD2": {
+     "real_change": {
+      "inflow": 0.7264,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.1984,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.4597,
+      "points": 15361
+     }
+    },
+    "abl_densj_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.2872,
+      "points": 296
+     },
+     "representation": {
+      "inflow": 0.0847,
+      "points": 17223
+     },
+     "undecided": {
+      "inflow": 0.0937,
+      "points": 15361
+     }
+    }
+   },
+   "check_vs_stage3": {
+    "patch_counts_equal": true,
+    "areas_equal": true,
+    "results_compared": 7,
+    "cells_compared": 21,
+    "cells_equal": 21,
+    "unequal": []
+   },
+   "seconds": 6.9
+  },
+  "B173nb_b10": {
+   "patch_classes": {
+    "11": {
+     "real_change": 16168,
+     "representation": 2146,
+     "undecided": 3375
+    },
+    "13": {
+     "real_change": 7,
+     "representation": 0,
+     "undecided": 84
+    }
+   },
+   "areas_m2": {
+    "11": {
+     "real_change": 1010.5,
+     "representation": 134.1,
+     "undecided": 210.9
+    },
+    "13": {
+     "real_change": 0.4,
+     "representation": 0.0,
+     "undecided": 5.2
+    }
+   },
+   "new_here": false,
+   "results": {
+    "prop_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0071,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5252,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1362,
+      "points": 14846
+     }
+    },
+    "prop_LoD2_s1": {
+     "real_change": {
+      "inflow": 0.0083,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5796,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1367,
+      "points": 14846
+     }
+    },
+    "samepath_LoD2": {
+     "real_change": {
+      "inflow": 0.9999,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.9998,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.9785,
+      "points": 14846
+     }
+    },
+    "imgonly_s0": {
+     "real_change": {
+      "inflow": 0.0111,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5635,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1448,
+      "points": 14846
+     }
+    },
+    "imgonly_s1": {
+     "real_change": {
+      "inflow": 0.0096,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5563,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.139,
+      "points": 14846
+     }
+    },
+    "trust_LoD2": {
+     "real_change": {
+      "inflow": 0.0628,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.3357,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1973,
+      "points": 14846
+     }
+    },
+    "trust_LoD2_fix1": {
+     "real_change": {
+      "inflow": 0.0298,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.4913,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1848,
+      "points": 14846
+     }
+    },
+    "nojudge_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0106,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.6161,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1716,
+      "points": 14846
+     }
+    },
+    "imgonly_2dgs_s0": {
+     "real_change": {
+      "inflow": 0.0357,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.4598,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.2833,
+      "points": 14846
+     }
+    },
+    "mvsfuse_LoD2": {
+     "real_change": {
+      "inflow": 0.0441,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.9919,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.4334,
+      "points": 14846
+     }
+    },
+    "judgefuse_LoD2": {
+     "real_change": {
+      "inflow": 0.0097,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.6767,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.2789,
+      "points": 14846
+     }
+    },
+    "abl_prop_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0095,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5373,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.144,
+      "points": 14846
+     }
+    },
+    "abl_prot_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0107,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5279,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1543,
+      "points": 14846
+     }
+    },
+    "sens_e250_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0078,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5134,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1455,
+      "points": 14846
+     }
+    },
+    "sens_e1000_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0072,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.543,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1371,
+      "points": 14846
+     }
+    },
+    "sens_enone_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0083,
+      "points": 95157
+     },
+     "representation": {
+      "inflow": 0.5216,
+      "points": 9760
+     },
+     "undecided": {
+      "inflow": 0.1459,
+      "points": 14846
+     }
+    }
+   },
+   "check_vs_stage3": {
+    "patch_counts_equal": true,
+    "areas_equal": true,
+    "results_compared": 11,
+    "cells_compared": 33,
+    "cells_equal": 33,
+    "unequal": []
+   },
+   "seconds": 35.1
+  },
+  "R1rep_b10": {
+   "patch_classes": {
+    "11": {
+     "real_change": 255,
+     "representation": 6154,
+     "undecided": 4164
+    },
+    "13": {
+     "real_change": 1,
+     "representation": 89,
+     "undecided": 63
+    }
+   },
+   "areas_m2": {
+    "11": {
+     "real_change": 15.9,
+     "representation": 384.6,
+     "undecided": 260.2
+    },
+    "13": {
+     "real_change": 0.1,
+     "representation": 5.6,
+     "undecided": 3.9
+    }
+   },
+   "new_here": false,
+   "results": {
+    "prop_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0928,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.0782,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.0983,
+      "points": 17876
+     }
+    },
+    "prop_LoD2_s1": {
+     "real_change": {
+      "inflow": 0.1218,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.049,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.1013,
+      "points": 17876
+     }
+    },
+    "samepath_LoD2": {
+     "real_change": {
+      "inflow": 0.9963,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.9997,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.9822,
+      "points": 17876
+     }
+    },
+    "imgonly_s0": {
+     "real_change": {
+      "inflow": 0.1321,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.165,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.0875,
+      "points": 17876
+     }
+    },
+    "trust_LoD2": {
+     "real_change": {
+      "inflow": 0.3533,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.3125,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.4838,
+      "points": 17876
+     }
+    },
+    "trust_LoD2_fix1": {
+     "real_change": {
+      "inflow": 0.3758,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.397,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.5047,
+      "points": 17876
+     }
+    },
+    "nojudge_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.2015,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.2641,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.2386,
+      "points": 17876
+     }
+    },
+    "imgonly_2dgs_s0": {
+     "real_change": {
+      "inflow": 0.0881,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.1483,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.1401,
+      "points": 17876
+     }
+    },
+    "mvsfuse_LoD2": {
+     "real_change": {
+      "inflow": 0.5211,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.8035,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.5685,
+      "points": 17876
+     }
+    },
+    "judgefuse_LoD2": {
+     "real_change": {
+      "inflow": 0.1846,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.1121,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.2829,
+      "points": 17876
+     }
+    },
+    "abl_band_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.1303,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.1342,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.1151,
+      "points": 17876
+     }
+    },
+    "abl_lossj_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.1828,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.2059,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.1821,
+      "points": 17876
+     }
+    },
+    "sens_trunc2_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0797,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.0391,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.0855,
+      "points": 17876
+     }
+    },
+    "sens_trunc8_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.1031,
+      "points": 1067
+     },
+     "representation": {
+      "inflow": 0.0921,
+      "points": 35402
+     },
+     "undecided": {
+      "inflow": 0.1029,
+      "points": 17876
+     }
+    }
+   },
+   "check_vs_stage3": {
+    "patch_counts_equal": true,
+    "areas_equal": true,
+    "results_compared": 10,
+    "cells_compared": 30,
+    "cells_equal": 30,
+    "unequal": []
+   },
+   "seconds": 10.3
+  },
+  "B173_b0": {
+   "patch_classes": {
+    "11": {
+     "real_change": 16196,
+     "representation": 1466,
+     "undecided": 3219
+    },
+    "13": {
+     "real_change": 7,
+     "representation": 1,
+     "undecided": 43
+    }
+   },
+   "areas_m2": {
+    "11": {
+     "real_change": 1012.2,
+     "representation": 91.6,
+     "undecided": 201.2
+    },
+    "13": {
+     "real_change": 0.4,
+     "representation": 0.1,
+     "undecided": 2.7
+    }
+   },
+   "new_here": true,
+   "results": {
+    "prop_LoD2_s0": {
+     "real_change": {
+      "inflow": 0.0094,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.4736,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.1561,
+      "points": 14180
+     }
+    },
+    "prop_LoD2_s1": {
+     "real_change": {
+      "inflow": 0.0082,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.458,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.1403,
+      "points": 14180
+     }
+    },
+    "samepath_LoD2": {
+     "real_change": {
+      "inflow": 0.9999,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.9997,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.9778,
+      "points": 14180
+     }
+    },
+    "trust_LoD2": {
+     "real_change": {
+      "inflow": 0.1491,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.453,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.3779,
+      "points": 14180
+     }
+    },
+    "trust_LoD2_fix1": {
+     "real_change": {
+      "inflow": 0.1638,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.5039,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.3616,
+      "points": 14180
+     }
+    },
+    "imgonly_2dgs_s0": {
+     "real_change": {
+      "inflow": 0.0217,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.5171,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.341,
+      "points": 14180
+     }
+    },
+    "mvsfuse_LoD2": {
+     "real_change": {
+      "inflow": 0.0451,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.9856,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.4027,
+      "points": 14180
+     }
+    },
+    "judgefuse_LoD2": {
+     "real_change": {
+      "inflow": 0.0102,
+      "points": 95263
+     },
+     "representation": {
+      "inflow": 0.5586,
+      "points": 6867
+     },
+     "undecided": {
+      "inflow": 0.2343,
+      "points": 14180
+     }
+    }
+   },
+   "check_vs_stage3": null,
+   "seconds": 16.9
+  }
+ },
+ "scientific_verdict": null
+}

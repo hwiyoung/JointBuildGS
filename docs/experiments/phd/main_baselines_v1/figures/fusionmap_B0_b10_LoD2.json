@@ -1,0 +1,292 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "figure": "fusionmap_B0_b10_LoD2",
+ "order": "v1.1 8 'MVS 기반 결합의 판정 그림'",
+ "role": "aux",
+ "site": "B0_b10",
+ "prior": "LoD2",
+ "result": "mvsfuse_LoD2",
+ "title": "MVS 기반 결합(재현)의 판정은 바뀐 곳을 어디서 잡고 어디서 놓쳤는가 — B0 · LoD2",
+ "one_thing_to_see": "결합(재현)의 판정이 코드 11·12를 어디서 잡고 어디서 놓쳤는지, 어디서 코드 2·3·4를 잘못 잡았는지",
+ "place": "the evaluation range of the unit (the place of this figure is the whole evaluation range, so the numbers are the unit's)",
+ "frame": "box frame u, v (s1_common.xy_to_uv), as the stage-1 / stage-3 maps; patch centres drawn as 0.25 m squares",
+ "drawing": {
+  "roof_like": "one square per patch, in the order excluded, none, false24, false3, caught, missed_nj, missed, c13, c14 (later on top)",
+  "walls": "LoD2 wall patches (kind 2) stand above each other: one square per 0.25 m (u, v) cell, the category with the largest wall-patch area in the cell (ties: the later category), drawn over the roofs",
+  "wall_cells": {
+   "cells": 933,
+   "cells_mixed": 711,
+   "cells_by_category": {
+    "excluded": 376,
+    "none": 549,
+    "false24": 2,
+    "false3": 1,
+    "missed": 5
+   }
+  },
+  "sections": "order 8's spot sections of this site (SB/prep/figpos.json, chosen before training), for orientation only",
+  "section_marks": [
+   {
+    "tag": "단면 1",
+    "spot": "B0 지붕 가장자리",
+    "centre_uv": [
+     88.66958771407297,
+     109.19033653749266
+    ],
+    "t_uv": [
+     -0.02664050824472082,
+     0.9996450786756583
+    ],
+    "length_m": 12.0,
+    "drawn_inside_range_m": 8.199999999999998
+   }
+  ]
+ },
+ "added_after_first_render": [
+  "결과를 본 뒤 더함(그림 꼴만): 첫 그림을 본 뒤 8절 자리 그림의 단면 위치(단면 1, 2)를 자리 표시로 더함",
+  "결과를 본 뒤 고침(그림 꼴만): 첫 그림은 LoD2 벽 패치를 범주 차례대로 겹쳐 그려 나중 색이 덮었다. 0.25 m 칸마다 넓이가 가장 큰 범주로 바꿈. 표의 숫자는 그대로"
+ ],
+ "categories": {
+  "excluded": {
+   "name": "참값 결여 패치 (코드 0, 평가에서 뺌)",
+   "colour": "#e3cfa6",
+   "patches": 17012,
+   "area_m2": 1063.191,
+   "wall_area_m2": 1051.441
+  },
+  "none": {
+   "name": "그 밖의 라벨 패치 (변화 칸 밖의 코드 2·3·4, 코드 5)",
+   "colour": "#d0d0d0",
+   "patches": 57467,
+   "area_m2": 3591.688,
+   "wall_area_m2": 2160.875
+  },
+  "false24": {
+   "name": "잘못 잡은 변화 (코드 2·4, 변화 칸 안)",
+   "colour": "#e08a1e",
+   "patches": 123,
+   "area_m2": 7.688,
+   "wall_area_m2": 4.438,
+   "share": 0.0022687029659141213,
+   "share_of": "코드 2·4 넓이"
+  },
+  "false3": {
+   "name": "잘못 잡은 변화 (코드 3 관측 오류, 변화 칸 안)",
+   "colour": "#e6007e",
+   "patches": 85,
+   "area_m2": 5.312,
+   "wall_area_m2": 2.375,
+   "share": 0.024573576178086153,
+   "share_of": "코드 3 넓이"
+  },
+  "caught": {
+   "name": "맞게 잡은 변화 (코드 11·12, 변화 칸 안)",
+   "colour": "#1f5fbf",
+   "patches": 140,
+   "area_m2": 8.75,
+   "wall_area_m2": 0.062,
+   "share": 0.018911252195056058,
+   "share_of": "코드 11·12 넓이"
+  },
+  "missed_nj": {
+   "name": "놓친 변화 (코드 11·12, 짝 있는 시점 둘 미만이라 판정 못 함)",
+   "colour": "#f1a1a1",
+   "patches": 271,
+   "area_m2": 16.938,
+   "wall_area_m2": 10.312,
+   "share": 0.03660678103471566,
+   "share_of": "코드 11·12 넓이"
+  },
+  "missed": {
+   "name": "놓친 변화 (코드 11·12, 판정했으나 변화 아님)",
+   "colour": "#c62828",
+   "patches": 6992,
+   "area_m2": 437.0,
+   "wall_area_m2": 191.75,
+   "share": 0.9444819667702283,
+   "share_of": "코드 11·12 넓이"
+  },
+  "c13": {
+   "name": "코드 13 결측 사전 정보 오류",
+   "colour": "#6a3d9a",
+   "patches": 27,
+   "area_m2": 1.688,
+   "wall_area_m2": 0.375,
+   "in_change_share": 0.33333
+  },
+  "c14": {
+   "name": "코드 14 비가시 사전 정보 오류",
+   "colour": "#00897b",
+   "patches": 0,
+   "area_m2": 0.0,
+   "wall_area_m2": 0.0,
+   "in_change_share": null
+  }
+ },
+ "categories_equal_to_detect_counts": {
+  "caught": true,
+  "missed": true,
+  "missed_nj": true,
+  "false24": true,
+  "false3": true
+ },
+ "wall_patch_area_share": 0.666691239652109,
+ "records": {
+  "line": "변화로 판정된 넓이 몫 1.2 % (61 / 5,132 m²) · 넓히기로 더한 넓이 15 m² · 철거 규칙으로 더한 넓이 0 m² · 쓴 문턱 색 25, 높이 2 m, 작은 덩어리 지우기 크기 중앙값 3화소 (5~95 분위 1~15, 열기 안 함 58 / 221쌍) · 합친 경계 53 m · 비운 넓이 20 m² · MVS로 채운 넓이 880 m² · 짝 없어 판정에 쓰지 않은 영상 4장",
+  "values": {
+   "change_area_share": 0.01197,
+   "change_patch_m2": 61.438,
+   "eval_patch_m2": 5132.253,
+   "growth_added_m2": {
+    "all": 55.81,
+    "in_eval": 14.94,
+    "in_final_in_eval": 14.94
+   },
+   "removal_added_m2": {
+    "all": 0.0,
+    "in_eval": 0.0
+   },
+   "boundary_m": 53.25,
+   "plan_cell_seam_eval_m": 54.75,
+   "emptied": {
+    "pixels": 54507,
+    "share_of_change_px": 0.29152,
+    "pixel_weighted_area_eval_m2": 20.062,
+    "fully_emptied_area_eval_m2": 0.688,
+    "change_patches_eval_without_pixels": 15,
+    "plan_cells_change_without_any_mvs_eval_m2": 0.0
+   },
+   "mvs_filled": {
+    "area_eval_m2": 880.0,
+    "pixels": 96773339,
+    "share_of_all_px": 0.524845
+   },
+   "views_without_pair": 4,
+   "thresholds": {
+    "colour": 25.0,
+    "colour_reference": [
+     20.0,
+     30.0
+    ],
+    "height_m": 2.0,
+    "height_reference_m": 1.5,
+    "opening_k_counts": {
+     "0": 6,
+     "1": 52,
+     "2": 40,
+     "3": 13,
+     "4": 12,
+     "5": 15,
+     "6": 8,
+     "7": 9,
+     "8": 9,
+     "9": 16,
+     "10": 4,
+     "11": 7,
+     "12": 3,
+     "13": 5,
+     "14": 9,
+     "15": 6,
+     "16": 2,
+     "17": 1,
+     "18": 1,
+     "19": 1,
+     "24": 1,
+     "25": 1
+    },
+    "opening_k_px_q5_50_95": [
+     1.0,
+     3.0,
+     15.0
+    ],
+    "pairs_with_size": 221,
+    "pairs_without_opening": 58,
+    "relief_disp_px_q5_50_95": [
+     0.83,
+     4.63,
+     20.99
+    ],
+    "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+   }
+  }
+ },
+ "lod2_split_8_2": {
+  "real_change": {
+   "patches": 81,
+   "area_m2": 5.062,
+   "change_patches": 3,
+   "change_m2": 0.188,
+   "change_share": 0.03704,
+   "judged_no_change_patches": 63,
+   "judged_no_change_m2": 3.938,
+   "judged_no_change_share": 0.77778,
+   "not_judged_patches": 15,
+   "not_judged_m2": 0.938,
+   "not_judged_share": 0.18519,
+   "main_rows": 296,
+   "change_main_rows": 12
+  },
+  "representation": {
+   "patches": 3281,
+   "area_m2": 205.062,
+   "change_patches": 42,
+   "change_m2": 2.625,
+   "change_share": 0.0128,
+   "judged_no_change_patches": 3179,
+   "judged_no_change_m2": 198.688,
+   "judged_no_change_share": 0.96891,
+   "not_judged_patches": 60,
+   "not_judged_m2": 3.75,
+   "not_judged_share": 0.01829,
+   "main_rows": 17223,
+   "change_main_rows": 239
+  },
+  "undecided": {
+   "patches": 2978,
+   "area_m2": 186.125,
+   "change_patches": 69,
+   "change_m2": 4.312,
+   "change_share": 0.02317,
+   "judged_no_change_patches": 2762,
+   "judged_no_change_m2": 172.625,
+   "judged_no_change_share": 0.92747,
+   "not_judged_patches": 147,
+   "not_judged_m2": 9.188,
+   "not_judged_share": 0.04936,
+   "main_rows": 15361,
+   "change_main_rows": 427
+  },
+  "no_rows": {
+   "patches": 81,
+   "area_m2": 5.062,
+   "change_patches": 0,
+   "change_m2": 0.0,
+   "change_share": 0.0,
+   "judged_no_change_patches": 73,
+   "judged_no_change_m2": 4.562,
+   "judged_no_change_share": 0.90123,
+   "not_judged_patches": 8,
+   "not_judged_m2": 0.5,
+   "not_judged_share": 0.09877,
+   "main_rows": 0,
+   "change_main_rows": 0
+  }
+ },
+ "eval_range": {
+  "u": [
+   28.1,
+   98.8
+  ],
+  "v": [
+   80.6,
+   111.4
+  ]
+ },
+ "sources": {
+  "patches": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_LoD2/detect/patches.npz",
+  "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_LoD2/detect/detect.json",
+  "region": "S1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz"
+ },
+ "made": "2026-10-15 17:40:34",
+ "scientific_verdict": null
+}

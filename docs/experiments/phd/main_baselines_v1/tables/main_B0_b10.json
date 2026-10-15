@@ -1,0 +1,8103 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "written": "2026-10-15 17:39:10 KST",
+ "rule": "Criterion (order 7.1): max of (1) the pooled spread of stage 2's prep (S2REAL/prep/ruler.json through s2_metrics.pooled_r) for the four\nmetrics the order names (past-shape inflow 1.64 %p, detail accuracy new reading 0.52 cm, missing-region completeness 0.2 m 3.29 %p,\nobservation-error inflow over the region 1.57 %p; config reading_rules 'others: null'), (2) the unit spread 2.8 |s0 - s1| / sqrt 2 of\nthe method's two seeds in that unit, (3) three points 300 / n %p for shares, n = the smaller sample of the two compared. Single-seed\ncomparators (2D Gaussian Splatting, GeoGS, CDGS): '확인' only beyond twice the criterion, between once and twice '가능, 근거 불완전'.\nThe fusions (MVS-based fusion, the judgment-swapped variant) are deterministic: beyond the criterion = '확인'. Fewer than 100 samples:\n'표본 부족'. Past-shape inflow, observation-error inflow within the threshold and detail accuracy below 10,000 samples: at most\n'가능, 근거 불완전'. B0's detail accuracy is not read; B173만 is report-only.\nscientific_verdict: null.",
+ "site": "B0_b10",
+ "units": {
+  "LoD2": {
+   "site": "B0_b10",
+   "unit": "LoD2",
+   "report_only": false,
+   "columns": {
+    "m0": {
+     "result": "prop_LoD2_s0",
+     "ko": "본 방법 씨앗 0",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/prop_LoD2_s0__LoD2.json"
+    },
+    "m1": {
+     "result": "prop_LoD2_s1",
+     "ko": "본 방법 씨앗 1",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/prop_LoD2_s1__LoD2.json"
+    },
+    "prior": {
+     "result": "samepath_LoD2",
+     "ko": "학습 전 사전 정보",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/samepath_LoD2__LoD2.json"
+    },
+    "twodgs": {
+     "result": "imgonly_2dgs_s0",
+     "ko": "2차원 가우시안 스플래팅",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/imgonly_2dgs_s0__LoD2.json"
+    },
+    "geogs": {
+     "result": "trust_LoD2_fix1",
+     "ko": "GeoGS",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/metrics/B0_b10/trust_LoD2_fix1__LoD2.json"
+    },
+    "mvsfuse": {
+     "result": "mvsfuse_LoD2",
+     "ko": "MVS 기반 결합",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/mvsfuse_LoD2__LoD2.json"
+    },
+    "cdgs": {
+     "result": "cdgs_LoD2_s0",
+     "ko": "CDGS",
+     "state": "none",
+     "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/cdgs_LoD2_s0__LoD2.json"
+    },
+    "img0": {
+     "result": "imgonly_s0",
+     "ko": "장치 빼기: 영상만 (씨앗 0)",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/imgonly_s0__LoD2.json"
+    },
+    "trust": {
+     "result": null,
+     "ko": "장치 빼기: 사전 정보 신뢰",
+     "state": "none",
+     "why": "LoD2 단위는 처음부터 돌리지 않음",
+     "metrics_file": null
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "ko": "장치 빼기: 판정만 끈 본 방법",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_LoD2_s0__LoD2.json"
+    },
+    "judgefuse": {
+     "result": "judgefuse_LoD2",
+     "ko": "장치 빼기: 본 방법의 판정으로 갈아 끼운 변형",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/judgefuse_LoD2__LoD2.json"
+    }
+   },
+   "table_a": [
+    {
+     "metric": "prior_error_inflow",
+     "ko": "과거 형상 유입률",
+     "code": "11",
+     "samples": 32880,
+     "method_mean": 0.11979999999999999,
+     "criterion": 0.01635593103433736,
+     "criterion_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.004751757569573597,
+      "three_points": 9.124087591240875e-05
+     },
+     "values": {
+      "m0": 0.121,
+      "m1": 0.1186,
+      "prior": 0.9998,
+      "twodgs": 0.318,
+      "geogs": 0.4283,
+      "mvsfuse": 0.9854,
+      "cdgs": null,
+      "img0": 0.1329,
+      "trust": null,
+      "nojudge": 0.1475,
+      "judgefuse": 0.3252
+     },
+     "n": {
+      "m0": 32880,
+      "m1": 32880,
+      "prior": 32880,
+      "twodgs": 32880,
+      "geogs": 32880,
+      "mvsfuse": 32880,
+      "cdgs": null,
+      "img0": 32880,
+      "trust": null,
+      "nojudge": 32880,
+      "judgefuse": 32880
+     },
+     "readings": {
+      "twodgs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "영상만 방법보다 과거 형상을 덜 들였다"
+      },
+      "geogs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "바뀐 곳의 과거 형상을 덜 들였다"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.18510000000000001
+     ]
+    },
+    {
+     "metric": "split:real_change",
+     "ko": "과거 형상 유입률 · 실제 변화로 봄",
+     "code": "11 (항공 LiDAR도 참값과 어긋남)",
+     "samples": 296,
+     "method_mean": 0.35475,
+     "criterion": 0.01635593103433736,
+     "criterion_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.013265323215059598,
+      "three_points": 0.010135135135135136
+     },
+     "values": {
+      "m0": 0.3514,
+      "m1": 0.3581,
+      "prior": 1.0,
+      "twodgs": 0.4628,
+      "geogs": 0.2432,
+      "mvsfuse": 0.9932,
+      "cdgs": null,
+      "img0": 0.3142,
+      "trust": null,
+      "nojudge": 0.5608,
+      "judgefuse": 0.7264
+     },
+     "n": {
+      "m0": 296,
+      "m1": 296,
+      "prior": 296,
+      "twodgs": 296,
+      "geogs": 296,
+      "mvsfuse": 296,
+      "cdgs": null,
+      "img0": 296,
+      "trust": null,
+      "nojudge": 296,
+      "judgefuse": 296
+     },
+     "readings": {
+      "mvsfuse": {
+       "short": "나음",
+       "grade": "가능, 근거 불완전",
+       "reading": "바뀐 곳의 과거 형상을 덜 들였다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.1486
+     ]
+    },
+    {
+     "metric": "split:representation",
+     "ko": "과거 형상 유입률 · 표현 차이로 봄",
+     "code": "11 (항공 LiDAR는 참값과 맞음)",
+     "samples": 17223,
+     "method_mean": 0.12564999999999998,
+     "criterion": 0.01635593103433736,
+     "criterion_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010889444430272814,
+      "three_points": 0.00017418568193694478
+     },
+     "values": {
+      "m0": 0.1284,
+      "m1": 0.1229,
+      "prior": 1.0,
+      "twodgs": 0.3041,
+      "geogs": 0.1763,
+      "mvsfuse": 0.9877,
+      "cdgs": null,
+      "img0": 0.1694,
+      "trust": null,
+      "nojudge": 0.1614,
+      "judgefuse": 0.1984
+     },
+     "n": {
+      "m0": 17223,
+      "m1": 17223,
+      "prior": 17223,
+      "twodgs": 17223,
+      "geogs": 17223,
+      "mvsfuse": 17223,
+      "cdgs": null,
+      "img0": 17223,
+      "trust": null,
+      "nojudge": 17223,
+      "judgefuse": 17223
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.1347
+     ]
+    },
+    {
+     "metric": "split:undecided",
+     "ko": "과거 형상 유입률 · 가르지 못함",
+     "code": "11 (그 자리에 항공 LiDAR 면 없음)",
+     "samples": 15361,
+     "method_mean": 0.1086,
+     "criterion": 0.01635593103433736,
+     "criterion_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.0015839191898578567,
+      "three_points": 0.00019529978517023632
+     },
+     "values": {
+      "m0": 0.1082,
+      "m1": 0.109,
+      "prior": 0.9995,
+      "twodgs": 0.3308,
+      "geogs": 0.7145,
+      "mvsfuse": 0.9827,
+      "cdgs": null,
+      "img0": 0.0885,
+      "trust": null,
+      "nojudge": 0.124,
+      "judgefuse": 0.4597
+     },
+     "n": {
+      "m0": 15361,
+      "m1": 15361,
+      "prior": 15361,
+      "twodgs": 15361,
+      "geogs": 15361,
+      "mvsfuse": 15361,
+      "cdgs": null,
+      "img0": 15361,
+      "trust": null,
+      "nojudge": 15361,
+      "judgefuse": 15361
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.2423
+     ]
+    },
+    {
+     "metric": "obs_inflow",
+     "ko": "관측 오류 유입률 (영역 전체)",
+     "code": "3",
+     "samples": 18858,
+     "method_mean": 0.2116,
+     "criterion": 0.015746732994497574,
+     "criterion_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.006335676759431482,
+      "three_points": 0.0001590836780146357
+     },
+     "values": {
+      "m0": 0.21,
+      "m1": 0.2132,
+      "prior": 0.0308,
+      "twodgs": 0.1844,
+      "geogs": 0.1271,
+      "mvsfuse": 0.0401,
+      "cdgs": null,
+      "img0": 0.2104,
+      "trust": null,
+      "nojudge": 0.205,
+      "judgefuse": 0.1291
+     },
+     "n": {
+      "m0": 18858,
+      "m1": 18858,
+      "prior": 18858,
+      "twodgs": 18858,
+      "geogs": 18858,
+      "mvsfuse": 18858,
+      "cdgs": null,
+      "img0": 18858,
+      "trust": null,
+      "nojudge": 18858,
+      "judgefuse": 18858
+     },
+     "readings": {
+      "twodgs": {
+       "short": "못함",
+       "grade": "가능, 근거 불완전",
+       "reading": "영상이 틀린 곳의 유입이 2차원 가우시안 스플래팅보다 많았다"
+      },
+      "geogs": {
+       "short": "못함",
+       "grade": "확인",
+       "reading": "그 대가로 관측 오류 유입률 (영역 전체)에서 GeoGS보다 못했다"
+      },
+      "mvsfuse": {
+       "short": "못함",
+       "grade": "확인",
+       "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.025999999999999995
+     ]
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 유입률 (문턱 이내)",
+     "code": "3 (문턱 이내)",
+     "samples": 384,
+     "method_mean": 0.15495,
+     "criterion": 0.02593667673392256,
+     "criterion_parts": {
+      "unit": 0.02593667673392256,
+      "three_points": 0.0078125
+     },
+     "values": {
+      "m0": 0.1484,
+      "m1": 0.1615,
+      "prior": 0.4115,
+      "twodgs": 0.1693,
+      "geogs": 0.4635,
+      "mvsfuse": 0.4115,
+      "cdgs": null,
+      "img0": 0.1562,
+      "trust": null,
+      "nojudge": 0.1406,
+      "judgefuse": 0.3828
+     },
+     "n": {
+      "m0": 384,
+      "m1": 384,
+      "prior": 384,
+      "twodgs": 384,
+      "geogs": 384,
+      "mvsfuse": 384,
+      "cdgs": null,
+      "img0": 384,
+      "trust": null,
+      "nojudge": 384,
+      "judgefuse": 384
+     },
+     "readings": {
+      "twodgs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다"
+      },
+      "geogs": {
+       "short": "나음",
+       "grade": "가능, 근거 불완전",
+       "reading": "관측 오류 유입률 (문턱 이내)에서 GeoGS보다 나았다"
+      },
+      "mvsfuse": {
+       "short": "나음",
+       "grade": "가능, 근거 불완전",
+       "reading": "영상이 틀린 곳에서 맞는 사전 정보를 지켰다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.0131
+     ]
+    },
+    {
+     "metric": "missing_agreement_completeness",
+     "ko": "결측 영역 완전성 (0.2 m)",
+     "code": "4",
+     "samples": 12433,
+     "method_mean": 0.9355,
+     "criterion": 0.03286632318955062,
+     "criterion_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.03286632318955062,
+      "three_points": 0.00024129333226091852
+     },
+     "values": {
+      "m0": 0.9438,
+      "m1": 0.9272,
+      "prior": 0.2614,
+      "twodgs": 0.8717,
+      "geogs": 0.2932,
+      "mvsfuse": 0.2614,
+      "cdgs": null,
+      "img0": 0.9228,
+      "trust": null,
+      "nojudge": 0.9455,
+      "judgefuse": 0.259
+     },
+     "n": {
+      "m0": 12433,
+      "m1": 12433,
+      "prior": 12433,
+      "twodgs": 12433,
+      "geogs": 12433,
+      "mvsfuse": 12433,
+      "cdgs": null,
+      "img0": 12433,
+      "trust": null,
+      "nojudge": 12433,
+      "judgefuse": 12433
+     },
+     "readings": {
+      "twodgs": {
+       "short": "나음",
+       "grade": "가능, 근거 불완전",
+       "reading": "본 방법이 더 채웠다"
+      },
+      "geogs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "결측 영역 완전성 (0.2 m)에서 GeoGS보다 나았다"
+      },
+      "mvsfuse": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "본 방법이 더 채웠다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.05109999999999992
+     ]
+    },
+    {
+     "metric": "missing_completeness_05",
+     "ko": "결측 영역 완전성 (0.5 m)",
+     "code": "4",
+     "samples": 12433,
+     "method_mean": 0.9872,
+     "criterion": 0.016631151493507523,
+     "criterion_parts": {
+      "unit": 0.016631151493507523,
+      "three_points": 0.00024129333226091852
+     },
+     "values": {
+      "m0": 0.983,
+      "m1": 0.9914,
+      "prior": 0.9958,
+      "twodgs": 0.941,
+      "geogs": 0.9819,
+      "mvsfuse": 0.9959,
+      "cdgs": null,
+      "img0": 0.9759,
+      "trust": null,
+      "nojudge": 0.9946,
+      "judgefuse": 0.9862
+     },
+     "n": {
+      "m0": 12433,
+      "m1": 12433,
+      "prior": 12433,
+      "twodgs": 12433,
+      "geogs": 12433,
+      "mvsfuse": 12433,
+      "cdgs": null,
+      "img0": 12433,
+      "trust": null,
+      "nojudge": 12433,
+      "judgefuse": 12433
+     },
+     "readings": {
+      "twodgs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "본 방법이 더 채웠다"
+      },
+      "geogs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다"
+      },
+      "mvsfuse": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.03490000000000004
+     ]
+    },
+    {
+     "metric": "invisible_completeness",
+     "ko": "비가시 영역 완전성 (0.2 m)",
+     "code": "5",
+     "samples": 0,
+     "method_mean": null,
+     "criterion": null,
+     "criterion_parts": {},
+     "values": {
+      "m0": null,
+      "m1": null,
+      "prior": null,
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "cdgs": null,
+      "img0": null,
+      "trust": null,
+      "nojudge": null,
+      "judgefuse": null
+     },
+     "n": {
+      "m0": 0,
+      "m1": 0,
+      "prior": 0,
+      "twodgs": 0,
+      "geogs": 0,
+      "mvsfuse": 0,
+      "cdgs": null,
+      "img0": 0,
+      "trust": null,
+      "nojudge": 0,
+      "judgefuse": 0
+     },
+     "readings": {
+      "twodgs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "geogs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "mvsfuse": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      null
+     ]
+    },
+    {
+     "metric": "invisible_completeness_05",
+     "ko": "비가시 영역 완전성 (0.5 m)",
+     "code": "5",
+     "samples": 0,
+     "method_mean": null,
+     "criterion": null,
+     "criterion_parts": {},
+     "values": {
+      "m0": null,
+      "m1": null,
+      "prior": null,
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "cdgs": null,
+      "img0": null,
+      "trust": null,
+      "nojudge": null,
+      "judgefuse": null
+     },
+     "n": {
+      "m0": 0,
+      "m1": 0,
+      "prior": 0,
+      "twodgs": 0,
+      "geogs": 0,
+      "mvsfuse": 0,
+      "cdgs": null,
+      "img0": 0,
+      "trust": null,
+      "nojudge": 0,
+      "judgefuse": 0
+     },
+     "readings": {
+      "twodgs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "geogs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "mvsfuse": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      null
+     ]
+    },
+    {
+     "metric": "overall_completeness",
+     "ko": "전체 완전성 (0.2 m)",
+     "code": "전체",
+     "samples": 2063378,
+     "method_mean": 0.9552499999999999,
+     "criterion": 0.0073256262530924845,
+     "criterion_parts": {
+      "unit": 0.0073256262530924845,
+      "three_points": 1.4539265224306938e-06
+     },
+     "values": {
+      "m0": 0.9571,
+      "m1": 0.9534,
+      "prior": 0.7059,
+      "twodgs": 0.7534,
+      "geogs": 0.7451,
+      "mvsfuse": 0.776,
+      "cdgs": null,
+      "img0": 0.9521,
+      "trust": null,
+      "nojudge": 0.9539,
+      "judgefuse": 0.9019
+     },
+     "n": {
+      "m0": 2063378,
+      "m1": 2063378,
+      "prior": 2063378,
+      "twodgs": 2063378,
+      "geogs": 2063378,
+      "mvsfuse": 2063378,
+      "cdgs": null,
+      "img0": 2063378,
+      "trust": null,
+      "nojudge": 2063378,
+      "judgefuse": 2063378
+     },
+     "readings": {
+      "twodgs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "본 방법이 더 채웠다"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.1987
+     ]
+    },
+    {
+     "metric": "overall_completeness_05",
+     "ko": "전체 완전성 (0.5 m)",
+     "code": "전체",
+     "samples": 2063378,
+     "method_mean": 0.97845,
+     "criterion": 0.0021778888860545464,
+     "criterion_parts": {
+      "unit": 0.0021778888860545464,
+      "three_points": 1.4539265224306938e-06
+     },
+     "values": {
+      "m0": 0.979,
+      "m1": 0.9779,
+      "prior": 0.8691,
+      "twodgs": 0.9135,
+      "geogs": 0.9369,
+      "mvsfuse": 0.94,
+      "cdgs": null,
+      "img0": 0.9779,
+      "trust": null,
+      "nojudge": 0.98,
+      "judgefuse": 0.9802
+     },
+     "n": {
+      "m0": 2063378,
+      "m1": 2063378,
+      "prior": 2063378,
+      "twodgs": 2063378,
+      "geogs": 2063378,
+      "mvsfuse": 2063378,
+      "cdgs": null,
+      "img0": 2063378,
+      "trust": null,
+      "nojudge": 2063378,
+      "judgefuse": 2063378
+     },
+     "readings": {
+      "twodgs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "본 방법이 더 채웠다"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.06440000000000001
+     ]
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "세부 정확도, 새 읽기 (cm)",
+     "code": "2 (완만한 지붕)",
+     "samples": 481,
+     "method_mean": 50.385,
+     "criterion": 41.59767772364222,
+     "criterion_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 41.59767772364222
+     },
+     "values": {
+      "m0": 39.879999999999995,
+      "m1": 60.89,
+      "prior": 1.4500000000000002,
+      "twodgs": 17.39,
+      "geogs": 12.25,
+      "mvsfuse": 2.17,
+      "cdgs": null,
+      "img0": 45.89,
+      "trust": null,
+      "nojudge": 13.139999999999999,
+      "judgefuse": 1.87
+     },
+     "n": {
+      "m0": 481,
+      "m1": 457,
+      "prior": 514,
+      "twodgs": 514,
+      "geogs": 514,
+      "mvsfuse": 505,
+      "cdgs": null,
+      "img0": 510,
+      "trust": null,
+      "nojudge": 512,
+      "judgefuse": 505
+     },
+     "readings": {
+      "twodgs": {
+       "short": null,
+       "grade": "읽지 않음 (B0, 7.1)",
+       "reading": null
+      },
+      "geogs": {
+       "short": null,
+       "grade": "읽지 않음 (B0, 7.1)",
+       "reading": null
+      },
+      "mvsfuse": {
+       "short": null,
+       "grade": "읽지 않음 (B0, 7.1)",
+       "reading": null
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      28.5
+     ]
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "세부 정확도, 지금 읽기 (cm)",
+     "code": "2 (완만한 지붕)",
+     "samples": 497,
+     "method_mean": 126.74000000000001,
+     "criterion": 8.909545442950526,
+     "criterion_parts": {
+      "unit": 8.909545442950526
+     },
+     "values": {
+      "m0": 128.99,
+      "m1": 124.49,
+      "prior": 1.4500000000000002,
+      "twodgs": 413.08,
+      "geogs": 682.06,
+      "mvsfuse": 2.19,
+      "cdgs": null,
+      "img0": 115.84,
+      "trust": null,
+      "nojudge": 22.54,
+      "judgefuse": 2.31
+     },
+     "n": {
+      "m0": 497,
+      "m1": 483,
+      "prior": 514,
+      "twodgs": 514,
+      "geogs": 514,
+      "mvsfuse": 505,
+      "cdgs": null,
+      "img0": 514,
+      "trust": null,
+      "nojudge": 512,
+      "judgefuse": 505
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -297.24
+     ]
+    },
+    {
+     "metric": "floating_share",
+     "ko": "세부 정확도의 뜬 조각 몫",
+     "code": "2 (완만한 지붕)",
+     "samples": 514,
+     "method_mean": 0.34724999999999995,
+     "criterion": 0.1886843734918183,
+     "criterion_parts": {
+      "unit": 0.1886843734918183,
+      "three_points": 0.005836575875486381
+     },
+     "values": {
+      "m0": 0.3949,
+      "m1": 0.2996,
+      "prior": 0.0,
+      "twodgs": 0.6537,
+      "geogs": 0.821,
+      "mvsfuse": 0.0097,
+      "cdgs": null,
+      "img0": 0.4163,
+      "trust": null,
+      "nojudge": 0.2588,
+      "judgefuse": 0.1304
+     },
+     "n": {
+      "m0": 514,
+      "m1": 514,
+      "prior": 514,
+      "twodgs": 514,
+      "geogs": 514,
+      "mvsfuse": 514,
+      "cdgs": null,
+      "img0": 514,
+      "trust": null,
+      "nojudge": 514,
+      "judgefuse": 514
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.23739999999999994
+     ]
+    },
+    {
+     "metric": "double_error_inflow",
+     "ko": "이중 오류 유입률",
+     "code": "12",
+     "samples": 3495,
+     "method_mean": 0.506,
+     "criterion": 0.05266531306277397,
+     "criterion_parts": {
+      "unit": 0.05266531306277397,
+      "three_points": 0.0008583690987124463
+     },
+     "values": {
+      "m0": 0.5193,
+      "m1": 0.4927,
+      "prior": 0.9906,
+      "twodgs": 0.4615,
+      "geogs": 0.4853,
+      "mvsfuse": 0.9694,
+      "cdgs": null,
+      "img0": 0.4658,
+      "trust": null,
+      "nojudge": 0.5391,
+      "judgefuse": 0.8255
+     },
+     "n": {
+      "m0": 3495,
+      "m1": 3495,
+      "prior": 3495,
+      "twodgs": 3495,
+      "geogs": 3495,
+      "mvsfuse": 3495,
+      "cdgs": null,
+      "img0": 3495,
+      "trust": null,
+      "nojudge": 3495,
+      "judgefuse": 3495
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.0042999999999999705
+     ]
+    },
+    {
+     "metric": "missing_prior_error_inflow",
+     "ko": "결측 영역의 과거 형상 유입률",
+     "code": "13",
+     "samples": 168,
+     "method_mean": 0.125,
+     "criterion": 0.16512357554268253,
+     "criterion_parts": {
+      "unit": 0.16512357554268253,
+      "three_points": 0.017857142857142856
+     },
+     "values": {
+      "m0": 0.1667,
+      "m1": 0.0833,
+      "prior": 0.9821,
+      "twodgs": 0.3869,
+      "geogs": 0.0893,
+      "mvsfuse": 0.5298,
+      "cdgs": null,
+      "img0": 0.0417,
+      "trust": null,
+      "nojudge": 0.2262,
+      "judgefuse": 0.131
+     },
+     "n": {
+      "m0": 168,
+      "m1": 168,
+      "prior": 168,
+      "twodgs": 168,
+      "geogs": 168,
+      "mvsfuse": 168,
+      "cdgs": null,
+      "img0": 168,
+      "trust": null,
+      "nojudge": 168,
+      "judgefuse": 168
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.3452
+     ]
+    }
+   ],
+   "table_b": [
+    {
+     "section": "오류 차단",
+     "ko": "과거 형상 유입률",
+     "stage1_label": "유입률 · 사전 정보 오류 [조건 1]",
+     "code": "11",
+     "samples": 32880,
+     "cells": {
+      "m0": "12.1",
+      "m1": "11.9",
+      "prior": "100.0",
+      "twodgs": "31.8",
+      "geogs": "42.8",
+      "mvsfuse": "98.5",
+      "cdgs": "결과 없음",
+      "img0": "13.3",
+      "trust": "결과 없음",
+      "nojudge": "14.8",
+      "judgefuse": "32.5"
+     },
+     "values": {
+      "m0": [
+       0.121
+      ],
+      "m1": [
+       0.1186
+      ],
+      "prior": [
+       0.9998
+      ],
+      "twodgs": [
+       0.318
+      ],
+      "geogs": [
+       0.4283
+      ],
+      "mvsfuse": [
+       0.9854
+      ],
+      "img0": [
+       0.1329
+      ],
+      "nojudge": [
+       0.1475
+      ],
+      "judgefuse": [
+       0.3252
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "판별 불가 (과거 형상 유입률의 행)",
+     "stage1_label": "판별 불가 · 사전 정보 오류",
+     "code": "11",
+     "samples": 33860,
+     "cells": {
+      "m0": "2.9",
+      "m1": "2.9",
+      "prior": "2.9",
+      "twodgs": "2.9",
+      "geogs": "2.9",
+      "mvsfuse": "2.9",
+      "cdgs": "결과 없음",
+      "img0": "2.9",
+      "trust": "결과 없음",
+      "nojudge": "2.9",
+      "judgefuse": "2.9"
+     },
+     "values": {
+      "m0": [
+       0.0289
+      ],
+      "m1": [
+       0.0289
+      ],
+      "prior": [
+       0.0289
+      ],
+      "twodgs": [
+       0.0289
+      ],
+      "geogs": [
+       0.0289
+      ],
+      "mvsfuse": [
+       0.0289
+      ],
+      "img0": [
+       0.0289
+      ],
+      "nojudge": [
+       0.0289
+      ],
+      "judgefuse": [
+       0.0289
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (문턱 이내)",
+     "stage1_label": "유입률 · 관측 오류 문턱 이내 [조건 2]",
+     "code": "3 (문턱 이내)",
+     "samples": 384,
+     "cells": {
+      "m0": "14.8",
+      "m1": "16.2",
+      "prior": "41.1",
+      "twodgs": "16.9",
+      "geogs": "46.4",
+      "mvsfuse": "41.1",
+      "cdgs": "결과 없음",
+      "img0": "15.6",
+      "trust": "결과 없음",
+      "nojudge": "14.1",
+      "judgefuse": "38.3"
+     },
+     "values": {
+      "m0": [
+       0.1484
+      ],
+      "m1": [
+       0.1615
+      ],
+      "prior": [
+       0.4115
+      ],
+      "twodgs": [
+       0.1693
+      ],
+      "geogs": [
+       0.4635
+      ],
+      "mvsfuse": [
+       0.4115
+      ],
+      "img0": [
+       0.1562
+      ],
+      "nojudge": [
+       0.1406
+      ],
+      "judgefuse": [
+       0.3828
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "판별 불가 (관측 오류 문턱 이내의 행)",
+     "stage1_label": "판별 불가 · 관측 오류 문턱 이내",
+     "code": "3 (문턱 이내)",
+     "samples": 439,
+     "cells": {
+      "m0": "12.5",
+      "m1": "12.5",
+      "prior": "12.5",
+      "twodgs": "12.5",
+      "geogs": "12.5",
+      "mvsfuse": "12.5",
+      "cdgs": "결과 없음",
+      "img0": "12.5",
+      "trust": "결과 없음",
+      "nojudge": "12.5",
+      "judgefuse": "12.5"
+     },
+     "values": {
+      "m0": [
+       0.1253
+      ],
+      "m1": [
+       0.1253
+      ],
+      "prior": [
+       0.1253
+      ],
+      "twodgs": [
+       0.1253
+      ],
+      "geogs": [
+       0.1253
+      ],
+      "mvsfuse": [
+       0.1253
+      ],
+      "img0": [
+       0.1253
+      ],
+      "nojudge": [
+       0.1253
+      ],
+      "judgefuse": [
+       0.1253
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (문턱 이내, 의심 뺌)",
+     "stage1_label": "유입률 · 관측 오류 문턱 이내, 의심 뺌",
+     "code": "3 (문턱 이내)",
+     "samples": 379,
+     "cells": {
+      "m0": "15.0",
+      "m1": "16.1",
+      "prior": "41.2",
+      "twodgs": "16.4",
+      "geogs": "47.0",
+      "mvsfuse": "41.2",
+      "cdgs": "결과 없음",
+      "img0": "15.8",
+      "trust": "결과 없음",
+      "nojudge": "14.2",
+      "judgefuse": "38.3"
+     },
+     "values": {
+      "m0": [
+       0.1504
+      ],
+      "m1": [
+       0.1609
+      ],
+      "prior": [
+       0.4116
+      ],
+      "twodgs": [
+       0.1636
+      ],
+      "geogs": [
+       0.4697
+      ],
+      "mvsfuse": [
+       0.4116
+      ],
+      "img0": [
+       0.1583
+      ],
+      "nojudge": [
+       0.1425
+      ],
+      "judgefuse": [
+       0.3826
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (영역 전체)",
+     "stage1_label": "유입률 · 관측 오류 전체",
+     "code": "3",
+     "samples": 18858,
+     "cells": {
+      "m0": "21.0",
+      "m1": "21.3",
+      "prior": "3.1",
+      "twodgs": "18.4",
+      "geogs": "12.7",
+      "mvsfuse": "4.0",
+      "cdgs": "결과 없음",
+      "img0": "21.0",
+      "trust": "결과 없음",
+      "nojudge": "20.5",
+      "judgefuse": "12.9"
+     },
+     "values": {
+      "m0": [
+       0.21
+      ],
+      "m1": [
+       0.2132
+      ],
+      "prior": [
+       0.0308
+      ],
+      "twodgs": [
+       0.1844
+      ],
+      "geogs": [
+       0.1271
+      ],
+      "mvsfuse": [
+       0.0401
+      ],
+      "img0": [
+       0.2104
+      ],
+      "nojudge": [
+       0.205
+      ],
+      "judgefuse": [
+       0.1291
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (전제 위배 안)",
+     "stage1_label": "유입률 · 전제 위배 안",
+     "code": "3 (전제 위배 안)",
+     "samples": 18474,
+     "cells": {
+      "m0": "21.1",
+      "m1": "21.4",
+      "prior": "2.3",
+      "twodgs": "18.5",
+      "geogs": "12.0",
+      "mvsfuse": "3.2",
+      "cdgs": "결과 없음",
+      "img0": "21.1",
+      "trust": "결과 없음",
+      "nojudge": "20.6",
+      "judgefuse": "12.4"
+     },
+     "values": {
+      "m0": [
+       0.2113
+      ],
+      "m1": [
+       0.2142
+      ],
+      "prior": [
+       0.0228
+      ],
+      "twodgs": [
+       0.1847
+      ],
+      "geogs": [
+       0.1201
+      ],
+      "mvsfuse": [
+       0.0324
+      ],
+      "img0": [
+       0.2115
+      ],
+      "nojudge": [
+       0.2063
+      ],
+      "judgefuse": [
+       0.1238
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "이중 오류 유입률",
+     "stage1_label": "유입률 · 이중 오류(기록)",
+     "code": "12",
+     "samples": 3495,
+     "cells": {
+      "m0": "51.9",
+      "m1": "49.3",
+      "prior": "99.1",
+      "twodgs": "46.2",
+      "geogs": "48.5",
+      "mvsfuse": "96.9",
+      "cdgs": "결과 없음",
+      "img0": "46.6",
+      "trust": "결과 없음",
+      "nojudge": "53.9",
+      "judgefuse": "82.5"
+     },
+     "values": {
+      "m0": [
+       0.5193
+      ],
+      "m1": [
+       0.4927
+      ],
+      "prior": [
+       0.9906
+      ],
+      "twodgs": [
+       0.4615
+      ],
+      "geogs": [
+       0.4853
+      ],
+      "mvsfuse": [
+       0.9694
+      ],
+      "img0": [
+       0.4658
+      ],
+      "nojudge": [
+       0.5391
+      ],
+      "judgefuse": [
+       0.8255
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "결측 영역의 과거 형상 유입률",
+     "stage1_label": "유입률 · 결측 사전 정보 오류(기록)",
+     "code": "13",
+     "samples": 168,
+     "cells": {
+      "m0": "16.7",
+      "m1": "8.3",
+      "prior": "98.2",
+      "twodgs": "38.7",
+      "geogs": "8.9",
+      "mvsfuse": "53.0",
+      "cdgs": "결과 없음",
+      "img0": "4.2",
+      "trust": "결과 없음",
+      "nojudge": "22.6",
+      "judgefuse": "13.1"
+     },
+     "values": {
+      "m0": [
+       0.1667
+      ],
+      "m1": [
+       0.0833
+      ],
+      "prior": [
+       0.9821
+      ],
+      "twodgs": [
+       0.3869
+      ],
+      "geogs": [
+       0.0893
+      ],
+      "mvsfuse": [
+       0.5298
+      ],
+      "img0": [
+       0.0417
+      ],
+      "nojudge": [
+       0.2262
+      ],
+      "judgefuse": [
+       0.131
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "과거 형상 잔존율 (가우시안 출신)",
+     "stage1_label": "과거 형상 · 사전 정보 오류",
+     "code": "11 (패치)",
+     "samples": 4468,
+     "cells": {
+      "m0": "11.4",
+      "m1": "12.6",
+      "prior": "—",
+      "twodgs": "없음(출신 기록 없음)",
+      "geogs": "없음(출신 기록 없음)",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "0.0",
+      "trust": "결과 없음",
+      "nojudge": "14.2",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       0.1144
+      ],
+      "m1": [
+       0.1256
+      ],
+      "prior": [
+       null
+      ],
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "img0": [
+       0.0
+      ],
+      "nojudge": [
+       0.1421
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "과거 형상 잔존율 · 관측 오류 (가우시안, 출신 무관)",
+     "stage1_label": "과거 형상 · 관측 오류(출신 무관)",
+     "code": "3 (패치)",
+     "samples": 3325,
+     "cells": {
+      "m0": "16.1",
+      "m1": "16.8",
+      "prior": "—",
+      "twodgs": "없음(출신 기록 없음)",
+      "geogs": "없음(출신 기록 없음)",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "10.4",
+      "trust": "결과 없음",
+      "nojudge": "16.6",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       0.1606
+      ],
+      "m1": [
+       0.1675
+      ],
+      "prior": [
+       null
+      ],
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "img0": [
+       0.1044
+      ],
+      "nojudge": [
+       0.166
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "보정 경계 (τ / m)",
+     "stage1_label": "보정 경계 (τ / m)",
+     "code": "11",
+     "samples": null,
+     "cells": {
+      "m0": "1 / 0.20",
+      "m1": "1 / 0.20",
+      "prior": "—",
+      "twodgs": "1 / 0.20",
+      "geogs": "1.5 / 0.30",
+      "mvsfuse": "—",
+      "cdgs": "결과 없음",
+      "img0": "1 / 0.20",
+      "trust": "결과 없음",
+      "nojudge": "1 / 0.20",
+      "judgefuse": "1.5 / 0.30"
+     },
+     "values": {
+      "m0": [
+       1.0,
+       0.198
+      ],
+      "m1": [
+       1.0,
+       0.198
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": [
+       1.0,
+       0.198
+      ],
+      "geogs": [
+       1.5,
+       0.296
+      ],
+      "mvsfuse": [
+       null,
+       null
+      ],
+      "img0": [
+       1.0,
+       0.198
+      ],
+      "nojudge": [
+       1.0,
+       0.198
+      ],
+      "judgefuse": [
+       1.5,
+       0.296
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "완만한 지붕 편향 / NMAD (cm, 1단계 읽기)",
+     "stage1_label": "완만한 지붕 편향 / NMAD [조건 3 = NMAD]",
+     "code": "2",
+     "samples": 497,
+     "cells": {
+      "m0": "+69.8 / 129.0",
+      "m1": "+43.5 / 124.5",
+      "prior": "+0.9 / 1.5",
+      "twodgs": "+342.9 / 413.1",
+      "geogs": "+491.5 / 682.1",
+      "mvsfuse": "+2.5 / 2.2",
+      "cdgs": "결과 없음",
+      "img0": "+35.6 / 115.8",
+      "trust": "결과 없음",
+      "nojudge": "+17.8 / 22.5",
+      "judgefuse": "+3.6 / 2.3"
+     },
+     "values": {
+      "m0": [
+       0.698,
+       1.2899
+      ],
+      "m1": [
+       0.4353,
+       1.2449
+      ],
+      "prior": [
+       0.009,
+       0.0145
+      ],
+      "twodgs": [
+       3.4294,
+       4.1308
+      ],
+      "geogs": [
+       4.9146,
+       6.8206
+      ],
+      "mvsfuse": [
+       0.0249,
+       0.0219
+      ],
+      "img0": [
+       0.3561,
+       1.1584
+      ],
+      "nojudge": [
+       0.1775,
+       0.2254
+      ],
+      "judgefuse": [
+       0.0358,
+       0.0231
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "완만한 지붕 편향, 의심 뺌 (cm)",
+     "stage1_label": "완만한 지붕 편향, 의심 뺌",
+     "code": "2",
+     "samples": 497,
+     "cells": {
+      "m0": "+69.8",
+      "m1": "+43.5",
+      "prior": "+0.9",
+      "twodgs": "+342.9",
+      "geogs": "+491.5",
+      "mvsfuse": "+2.5",
+      "cdgs": "결과 없음",
+      "img0": "+35.6",
+      "trust": "결과 없음",
+      "nojudge": "+17.8",
+      "judgefuse": "+3.6"
+     },
+     "values": {
+      "m0": [
+       0.698
+      ],
+      "m1": [
+       0.4353
+      ],
+      "prior": [
+       0.009
+      ],
+      "twodgs": [
+       3.4294
+      ],
+      "geogs": [
+       4.9146
+      ],
+      "mvsfuse": [
+       0.0249
+      ],
+      "img0": [
+       0.3561
+      ],
+      "nojudge": [
+       0.1775
+      ],
+      "judgefuse": [
+       0.0358
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "완만한 지붕 산포 q68.3 / q95 (cm)",
+     "stage1_label": "완만한 지붕 산포 q68.3 / q95",
+     "code": "2",
+     "samples": 497,
+     "cells": {
+      "m0": "213.6 / 1313.0",
+      "m1": "131.8 / 1264.0",
+      "prior": "1.5 / 3.2",
+      "twodgs": "301.9 / 2974.8",
+      "geogs": "799.6 / 941.7",
+      "mvsfuse": "2.2 / 4.9",
+      "cdgs": "결과 없음",
+      "img0": "143.9 / 1780.1",
+      "trust": "결과 없음",
+      "nojudge": "25.5 / 1179.6",
+      "judgefuse": "2.7 / 1062.7"
+     },
+     "values": {
+      "m0": [
+       2.1356,
+       13.1302
+      ],
+      "m1": [
+       1.3183,
+       12.6396
+      ],
+      "prior": [
+       0.0153,
+       0.032
+      ],
+      "twodgs": [
+       3.019,
+       29.7477
+      ],
+      "geogs": [
+       7.9958,
+       9.4169
+      ],
+      "mvsfuse": [
+       0.022,
+       0.0492
+      ],
+      "img0": [
+       1.4386,
+       17.801
+      ],
+      "nojudge": [
+       0.2554,
+       11.7961
+      ],
+      "judgefuse": [
+       0.0273,
+       10.6269
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "가파른 지붕 편향 / NMAD (cm)",
+     "stage1_label": "가파른 지붕 편향 / NMAD",
+     "code": "2",
+     "samples": 67735,
+     "cells": {
+      "m0": "-1.1 / 3.5",
+      "m1": "-1.1 / 3.5",
+      "prior": "-7.4 / 3.6",
+      "twodgs": "+0.2 / 15.7",
+      "geogs": "+7.5 / 12.8",
+      "mvsfuse": "-7.4 / 3.6",
+      "cdgs": "결과 없음",
+      "img0": "-1.2 / 3.7",
+      "trust": "결과 없음",
+      "nojudge": "-1.0 / 3.5",
+      "judgefuse": "-7.3 / 3.7"
+     },
+     "values": {
+      "m0": [
+       -0.011,
+       0.0353
+      ],
+      "m1": [
+       -0.0106,
+       0.0348
+      ],
+      "prior": [
+       -0.0738,
+       0.0361
+      ],
+      "twodgs": [
+       0.0024,
+       0.1568
+      ],
+      "geogs": [
+       0.0754,
+       0.1276
+      ],
+      "mvsfuse": [
+       -0.0738,
+       0.0361
+      ],
+      "img0": [
+       -0.0124,
+       0.0371
+      ],
+      "nojudge": [
+       -0.0096,
+       0.0351
+      ],
+      "judgefuse": [
+       -0.0726,
+       0.0367
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "가파른 지붕 산포 q68.3 / q95 (cm)",
+     "stage1_label": "가파른 지붕 산포 q68.3 / q95",
+     "code": "2",
+     "samples": 67735,
+     "cells": {
+      "m0": "3.6 / 8.3",
+      "m1": "3.5 / 8.5",
+      "prior": "4.0 / 12.0",
+      "twodgs": "17.1 / 95.2",
+      "geogs": "13.5 / 31.3",
+      "mvsfuse": "4.0 / 12.0",
+      "cdgs": "결과 없음",
+      "img0": "3.8 / 8.8",
+      "trust": "결과 없음",
+      "nojudge": "3.6 / 8.2",
+      "judgefuse": "4.0 / 11.9"
+     },
+     "values": {
+      "m0": [
+       0.0359,
+       0.0826
+      ],
+      "m1": [
+       0.0354,
+       0.0848
+      ],
+      "prior": [
+       0.0395,
+       0.1205
+      ],
+      "twodgs": [
+       0.1709,
+       0.9515
+      ],
+      "geogs": [
+       0.1348,
+       0.3133
+      ],
+      "mvsfuse": [
+       0.0395,
+       0.12
+      ],
+      "img0": [
+       0.038,
+       0.0879
+      ],
+      "nojudge": [
+       0.0358,
+       0.0821
+      ],
+      "judgefuse": [
+       0.04,
+       0.1193
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "띠 편향 / NMAD (cm)",
+     "stage1_label": "띠 편향 / NMAD",
+     "code": "2 (띠)",
+     "samples": 54170,
+     "cells": {
+      "m0": "-1.2 / 3.9",
+      "m1": "-1.5 / 3.8",
+      "prior": "-8.2 / 4.2",
+      "twodgs": "+3.6 / 18.1",
+      "geogs": "+10.7 / 11.2",
+      "mvsfuse": "-8.2 / 4.2",
+      "cdgs": "결과 없음",
+      "img0": "-1.2 / 4.0",
+      "trust": "결과 없음",
+      "nojudge": "-1.1 / 3.9",
+      "judgefuse": "-8.0 / 4.2"
+     },
+     "values": {
+      "m0": [
+       -0.0122,
+       0.0394
+      ],
+      "m1": [
+       -0.0153,
+       0.0384
+      ],
+      "prior": [
+       -0.082,
+       0.0416
+      ],
+      "twodgs": [
+       0.0364,
+       0.1813
+      ],
+      "geogs": [
+       0.1065,
+       0.1122
+      ],
+      "mvsfuse": [
+       -0.082,
+       0.0416
+      ],
+      "img0": [
+       -0.0125,
+       0.0399
+      ],
+      "nojudge": [
+       -0.0111,
+       0.0391
+      ],
+      "judgefuse": [
+       -0.0804,
+       0.0421
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "벽 편향 / NMAD (cm)",
+     "stage1_label": "벽 편향 / NMAD",
+     "code": "2 (벽)",
+     "samples": 178835,
+     "cells": {
+      "m0": "-1.8 / 7.5",
+      "m1": "-1.7 / 7.4",
+      "prior": "+19.7 / 6.8",
+      "twodgs": "-2.3 / 12.1",
+      "geogs": "+25.0 / 14.5",
+      "mvsfuse": "+19.7 / 6.8",
+      "cdgs": "결과 없음",
+      "img0": "-2.1 / 7.6",
+      "trust": "결과 없음",
+      "nojudge": "-1.7 / 7.3",
+      "judgefuse": "+19.1 / 7.2"
+     },
+     "values": {
+      "m0": [
+       -0.0179,
+       0.0747
+      ],
+      "m1": [
+       -0.0174,
+       0.0737
+      ],
+      "prior": [
+       0.1973,
+       0.0683
+      ],
+      "twodgs": [
+       -0.0232,
+       0.1213
+      ],
+      "geogs": [
+       0.2498,
+       0.1449
+      ],
+      "mvsfuse": [
+       0.1974,
+       0.0684
+      ],
+      "img0": [
+       -0.0211,
+       0.0756
+      ],
+      "nojudge": [
+       -0.0167,
+       0.0732
+      ],
+      "judgefuse": [
+       0.1914,
+       0.0718
+      ]
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "결측 영역 완전성 0.2 / 0.5 m",
+     "stage1_label": "결측 일치 0.2 / 0.5 m",
+     "code": "4",
+     "samples": 12433,
+     "cells": {
+      "m0": "94.4 / 98.3",
+      "m1": "92.7 / 99.1",
+      "prior": "26.1 / 99.6",
+      "twodgs": "87.2 / 94.1",
+      "geogs": "29.3 / 98.2",
+      "mvsfuse": "26.1 / 99.6",
+      "cdgs": "결과 없음",
+      "img0": "92.3 / 97.6",
+      "trust": "결과 없음",
+      "nojudge": "94.5 / 99.5",
+      "judgefuse": "25.9 / 98.6"
+     },
+     "values": {
+      "m0": [
+       0.9438,
+       0.983
+      ],
+      "m1": [
+       0.9272,
+       0.9914
+      ],
+      "prior": [
+       0.2614,
+       0.9958
+      ],
+      "twodgs": [
+       0.8717,
+       0.941
+      ],
+      "geogs": [
+       0.2932,
+       0.9819
+      ],
+      "mvsfuse": [
+       0.2614,
+       0.9959
+      ],
+      "img0": [
+       0.9228,
+       0.9759
+      ],
+      "nojudge": [
+       0.9455,
+       0.9946
+      ],
+      "judgefuse": [
+       0.259,
+       0.9862
+      ]
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "전제 위배 둘레 완전성 0.2 m",
+     "stage1_label": "전제 위배 둘레 0.2 m [조건 4]",
+     "code": "2 (둘레 2 m)",
+     "samples": 78950,
+     "cells": {
+      "m0": "95.3",
+      "m1": "95.5",
+      "prior": "75.4",
+      "twodgs": "75.3",
+      "geogs": "68.9",
+      "mvsfuse": "75.5",
+      "cdgs": "결과 없음",
+      "img0": "94.5",
+      "trust": "결과 없음",
+      "nojudge": "96.1",
+      "judgefuse": "80.8"
+     },
+     "values": {
+      "m0": [
+       0.9529
+      ],
+      "m1": [
+       0.955
+      ],
+      "prior": [
+       0.7539
+      ],
+      "twodgs": [
+       0.7534
+      ],
+      "geogs": [
+       0.6891
+      ],
+      "mvsfuse": [
+       0.7549
+      ],
+      "img0": [
+       0.9446
+      ],
+      "nojudge": [
+       0.9614
+      ],
+      "judgefuse": [
+       0.8077
+      ]
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "상속률 / 못 본 곳 과거 형상 (가우시안 출신)",
+     "stage1_label": "못 본 곳 상속률 / 과거 형상 (가우시안)",
+     "code": "5 / 14 (추정)",
+     "samples": null,
+     "cells": {
+      "m0": "—",
+      "m1": "—",
+      "prior": "—",
+      "twodgs": "없음(출신 기록 없음)",
+      "geogs": "없음(출신 기록 없음)",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "—",
+      "trust": "결과 없음",
+      "nojudge": "—",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       null,
+       null
+      ],
+      "m1": [
+       null,
+       null
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "img0": [
+       null,
+       null
+      ],
+      "nojudge": [
+       null,
+       null
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "가상 시점 메시: 맞음 미룸 0.5 m / 틀림 미룸 0.2 m",
+     "stage1_label": "가상 시점 메시: 맞음 미룸 0.5 m / 틀림 미룸 0.2 m",
+     "code": "5 / 14 (추정)",
+     "samples": null,
+     "cells": {
+      "m0": "—",
+      "m1": "—",
+      "prior": "—",
+      "twodgs": "—",
+      "geogs": "—",
+      "mvsfuse": "없음(렌더러 없음)",
+      "cdgs": "결과 없음",
+      "img0": "—",
+      "trust": "결과 없음",
+      "nojudge": "—",
+      "judgefuse": "없음(렌더러 없음)"
+     },
+     "values": {
+      "m0": [
+       null,
+       null
+      ],
+      "m1": [
+       null,
+       null
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": [
+       null,
+       null
+      ],
+      "geogs": [
+       null,
+       null
+      ],
+      "mvsfuse": null,
+      "img0": [
+       null,
+       null
+      ],
+      "nojudge": [
+       null,
+       null
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "부유",
+     "ko": "부유 가우시안 3~20 m / 그중 사전 정보 출신 / 20 m 넘게 (개)",
+     "stage1_label": "3~20 m / 그중 사전 정보 출신 / 20 m 넘게 (개)",
+     "code": "전체",
+     "samples": null,
+     "cells": {
+      "m0": "1,037 / 708 / 0",
+      "m1": "1,116 / 851 / 26",
+      "prior": "—",
+      "twodgs": "2,291 / 없음(출신 기록 없음) / 84",
+      "geogs": "873 / 없음(출신 기록 없음) / 0",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "901 / 0 / 184",
+      "trust": "결과 없음",
+      "nojudge": "1,078 / 743 / 171",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       1037,
+       708,
+       0
+      ],
+      "m1": [
+       1116,
+       851,
+       26
+      ],
+      "prior": [
+       null,
+       null,
+       null
+      ],
+      "twodgs": [
+       2291,
+       null,
+       84
+      ],
+      "geogs": [
+       873,
+       null,
+       0
+      ],
+      "mvsfuse": null,
+      "img0": [
+       901,
+       0,
+       184
+      ],
+      "nojudge": [
+       1078,
+       743,
+       171
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "부유",
+     "ko": "부유 가우시안의 평가 영상 화소 몫 (‰)",
+     "stage1_label": "평가 영상 화소 몫 (‰)",
+     "code": "전체",
+     "samples": null,
+     "cells": {
+      "m0": "0.54",
+      "m1": "0.65",
+      "prior": "—",
+      "twodgs": "6.06",
+      "geogs": "0.34",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "0.80",
+      "trust": "결과 없음",
+      "nojudge": "0.75",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       0.000542
+      ],
+      "m1": [
+       0.000654
+      ],
+      "prior": [
+       null
+      ],
+      "twodgs": [
+       0.006057
+      ],
+      "geogs": [
+       0.000344
+      ],
+      "mvsfuse": null,
+      "img0": [
+       0.000804
+      ],
+      "nojudge": [
+       0.000748
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "Chamfer 평균 (m)",
+     "stage1_label": "Chamfer 평균 (m)",
+     "code": "전체",
+     "samples": 2063378,
+     "cells": {
+      "m0": "1.233",
+      "m1": "1.217",
+      "prior": "1.323",
+      "twodgs": "2.203",
+      "geogs": "1.206",
+      "mvsfuse": "1.269",
+      "cdgs": "결과 없음",
+      "img0": "1.196",
+      "trust": "결과 없음",
+      "nojudge": "1.216",
+      "judgefuse": "1.202"
+     },
+     "values": {
+      "m0": [
+       1.2332
+      ],
+      "m1": [
+       1.2169
+      ],
+      "prior": [
+       1.3225
+      ],
+      "twodgs": [
+       2.2031
+      ],
+      "geogs": [
+       1.2061
+      ],
+      "mvsfuse": [
+       1.2688
+      ],
+      "img0": [
+       1.1958
+      ],
+      "nojudge": [
+       1.2159
+      ],
+      "judgefuse": [
+       1.2018
+      ]
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "정밀도 / 완전성 / F1 @0.2 m",
+     "stage1_label": "정밀도 / 완전성 / F1 @0.2 m",
+     "code": "전체",
+     "samples": 2063378,
+     "cells": {
+      "m0": "47.7 / 95.7 / 63.7",
+      "m1": "47.5 / 95.3 / 63.4",
+      "prior": "45.3 / 70.6 / 55.2",
+      "twodgs": "19.6 / 75.3 / 31.1",
+      "geogs": "34.1 / 74.5 / 46.8",
+      "mvsfuse": "46.5 / 77.6 / 58.1",
+      "cdgs": "결과 없음",
+      "img0": "46.7 / 95.2 / 62.6",
+      "trust": "결과 없음",
+      "nojudge": "47.9 / 95.4 / 63.8",
+      "judgefuse": "50.3 / 90.2 / 64.6"
+     },
+     "values": {
+      "m0": [
+       0.477,
+       0.9571,
+       0.6367
+      ],
+      "m1": [
+       0.475,
+       0.9534,
+       0.6341
+      ],
+      "prior": [
+       0.4529,
+       0.7059,
+       0.5518
+      ],
+      "twodgs": [
+       0.1959,
+       0.7534,
+       0.311
+      ],
+      "geogs": [
+       0.3411,
+       0.7451,
+       0.4679
+      ],
+      "mvsfuse": [
+       0.4645,
+       0.776,
+       0.5811
+      ],
+      "img0": [
+       0.4669,
+       0.9521,
+       0.6265
+      ],
+      "nojudge": [
+       0.4793,
+       0.9539,
+       0.6381
+      ],
+      "judgefuse": [
+       0.5035,
+       0.9019,
+       0.6463
+      ]
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "M3C2 중앙값 / NMAD (cm)",
+     "stage1_label": "M3C2 중앙값 / NMAD (cm)",
+     "code": "전체",
+     "samples": 19158,
+     "cells": {
+      "m0": "-1.9 / 5.5",
+      "m1": "-2.0 / 5.3",
+      "prior": "-5.9 / 9.5",
+      "twodgs": "-2.1 / 23.1",
+      "geogs": "+14.2 / 17.2",
+      "mvsfuse": "-5.2 / 10.6",
+      "cdgs": "결과 없음",
+      "img0": "-2.0 / 5.8",
+      "trust": "결과 없음",
+      "nojudge": "-1.9 / 5.5",
+      "judgefuse": "-4.9 / 9.6"
+     },
+     "values": {
+      "m0": [
+       -0.0192,
+       0.0552
+      ],
+      "m1": [
+       -0.0198,
+       0.0529
+      ],
+      "prior": [
+       -0.0595,
+       0.0953
+      ],
+      "twodgs": [
+       -0.0211,
+       0.2309
+      ],
+      "geogs": [
+       0.1421,
+       0.1719
+      ],
+      "mvsfuse": [
+       -0.0525,
+       0.1056
+      ],
+      "img0": [
+       -0.0202,
+       0.0582
+      ],
+      "nojudge": [
+       -0.0192,
+       0.0548
+      ],
+      "judgefuse": [
+       -0.0493,
+       0.0961
+      ]
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "걸린 시간 (분) / GPU 최대 (GB)",
+     "stage1_label": "학습 시간 (분) / GPU 최대 (GB)",
+     "code": "—",
+     "samples": null,
+     "cells": {
+      "m0": "66 / 17.8",
+      "m1": "69 / 16.1",
+      "prior": "—",
+      "twodgs": "26 / 3.4",
+      "geogs": "54 / 9.2",
+      "mvsfuse": "4 (판정·합치기 + TSDF) / 없음",
+      "cdgs": "결과 없음",
+      "img0": "63 / 15.0",
+      "trust": "결과 없음",
+      "nojudge": "70 / 11.9",
+      "judgefuse": "5 (판정·합치기 + TSDF) / 없음"
+     },
+     "values": {
+      "m0": [
+       3934.3,
+       18265.0
+      ],
+      "m1": [
+       4144.5,
+       16528.0
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": [
+       1585.5,
+       3466.0
+      ],
+      "geogs": [
+       3243.8,
+       9377.0
+      ],
+      "mvsfuse": 4.465,
+      "img0": [
+       3784.1,
+       15397.0
+      ],
+      "nojudge": [
+       4204.6,
+       12182.0
+      ],
+      "judgefuse": 5.278333333333333
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "화질 PSNR / SSIM / LPIPS",
+     "stage1_label": "화질 PSNR / SSIM / LPIPS",
+     "code": "평가 영상",
+     "samples": null,
+     "cells": {
+      "m0": "23.05 / 0.747 / 0.325",
+      "m1": "22.29 / 0.734 / 0.335",
+      "prior": "—",
+      "twodgs": "21.74 / 0.707 / 0.361",
+      "geogs": "22.65 / 0.716 / 0.366",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "22.44 / 0.736 / 0.337",
+      "trust": "결과 없음",
+      "nojudge": "22.46 / 0.739 / 0.330",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       23.0507,
+       0.7471,
+       0.325
+      ],
+      "m1": [
+       22.2875,
+       0.7338,
+       0.335
+      ],
+      "prior": [
+       null,
+       null,
+       null
+      ],
+      "twodgs": [
+       21.7359,
+       0.7067,
+       0.3607
+      ],
+      "geogs": [
+       22.6535,
+       0.716,
+       0.3663
+      ],
+      "mvsfuse": null,
+      "img0": [
+       22.4447,
+       0.7364,
+       0.3369
+      ],
+      "nojudge": [
+       22.4627,
+       0.7388,
+       0.3295
+      ],
+      "judgefuse": null
+     }
+    }
+   ],
+   "readings": {
+    "site": "B0_b10",
+    "unit": "LoD2",
+    "report_only": false,
+    "availability": {
+     "m0": {
+      "result": "prop_LoD2_s0",
+      "state": "ok",
+      "why": null
+     },
+     "m1": {
+      "result": "prop_LoD2_s1",
+      "state": "ok",
+      "why": null
+     },
+     "prior": {
+      "result": "samepath_LoD2",
+      "state": "ok",
+      "why": null
+     },
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "state": "ok",
+      "why": null
+     },
+     "geogs": {
+      "result": "trust_LoD2_fix1",
+      "state": "ok",
+      "why": null
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_LoD2",
+      "state": "ok",
+      "why": null
+     },
+     "cdgs": {
+      "result": "cdgs_LoD2_s0",
+      "state": "none",
+      "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)"
+     },
+     "img0": {
+      "result": "imgonly_s0",
+      "state": "ok",
+      "why": null
+     },
+     "img1": {
+      "result": null,
+      "state": "none",
+      "why": "씨앗 1은 B173 주변에서만 돌림"
+     },
+     "trust": {
+      "result": null,
+      "state": "none",
+      "why": "LoD2 단위는 처음부터 돌리지 않음"
+     },
+     "nojudge": {
+      "result": "nojudge_LoD2_s0",
+      "state": "ok",
+      "why": null
+     },
+     "judgefuse": {
+      "result": "judgefuse_LoD2",
+      "state": "ok",
+      "why": null
+     }
+    },
+    "questions": {
+     "q1": {
+      "comparator": "imgonly_2dgs_s0",
+      "column": "twodgs",
+      "availability": {
+       "state": "ok",
+       "why": null
+      },
+      "rows": [
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9438,
+         0.9272
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9355,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.8717,
+        "comparator_n": 12433,
+        "diff_method_minus_comparator": 0.06379999999999997,
+        "n": 12433,
+        "criterion": 0.03286632318955062,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.03286632318955062,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.06573264637910124,
+        "deterministic": false,
+        "grade": "가능, 근거 불완전",
+        "side": 1,
+        "short": "나음",
+        "reading": "본 방법이 더 채웠다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.2614,
+        "prior_n": 12433
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         0.983,
+         0.9914
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9872,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.941,
+        "comparator_n": 12433,
+        "diff_method_minus_comparator": 0.04620000000000002,
+        "n": 12433,
+        "criterion": 0.016631151493507523,
+        "criterion_parts": {
+         "unit": 0.016631151493507523,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.03326230298701505,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "본 방법이 더 채웠다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.9958,
+        "prior_n": 12433
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "overall_completeness",
+        "ko": "전체 완전성 (0.2 m)",
+        "code": "전체",
+        "method_seeds": [
+         0.9571,
+         0.9534
+        ],
+        "method_n": [
+         2063378,
+         2063378
+        ],
+        "method_mean": 0.9552499999999999,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.7534,
+        "comparator_n": 2063378,
+        "diff_method_minus_comparator": 0.20184999999999997,
+        "n": 2063378,
+        "criterion": 0.0073256262530924845,
+        "criterion_parts": {
+         "unit": 0.0073256262530924845,
+         "three_points": 1.4539265224306938e-06
+        },
+        "twice": 0.014651252506184969,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "본 방법이 더 채웠다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.7059,
+        "prior_n": 2063378
+       },
+       {
+        "metric": "overall_completeness_05",
+        "ko": "전체 완전성 (0.5 m)",
+        "code": "전체",
+        "method_seeds": [
+         0.979,
+         0.9779
+        ],
+        "method_n": [
+         2063378,
+         2063378
+        ],
+        "method_mean": 0.97845,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.9135,
+        "comparator_n": 2063378,
+        "diff_method_minus_comparator": 0.06495000000000006,
+        "n": 2063378,
+        "criterion": 0.0021778888860545464,
+        "criterion_parts": {
+         "unit": 0.0021778888860545464,
+         "three_points": 1.4539265224306938e-06
+        },
+        "twice": 0.004355777772109093,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "본 방법이 더 채웠다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.8691,
+        "prior_n": 2063378
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.21,
+         0.2132
+        ],
+        "method_n": [
+         18858,
+         18858
+        ],
+        "method_mean": 0.2116,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.1844,
+        "comparator_n": 18858,
+        "diff_method_minus_comparator": 0.027200000000000002,
+        "n": 18858,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.006335676759431482,
+         "three_points": 0.0001590836780146357
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": false,
+        "grade": "가능, 근거 불완전",
+        "side": -1,
+        "short": "못함",
+        "reading": "영상이 틀린 곳의 유입이 2차원 가우시안 스플래팅보다 많았다",
+        "reading_in_order": false,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.0308,
+        "prior_n": 18858
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.1484,
+         0.1615
+        ],
+        "method_n": [
+         384,
+         384
+        ],
+        "method_mean": 0.15495,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.1693,
+        "comparator_n": 384,
+        "diff_method_minus_comparator": -0.014350000000000002,
+        "n": 384,
+        "criterion": 0.02593667673392256,
+        "criterion_parts": {
+         "unit": 0.02593667673392256,
+         "three_points": 0.0078125
+        },
+        "twice": 0.05187335346784512,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다",
+        "reading_in_order": true,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.4115,
+        "prior_n": 384
+       },
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "code": "11",
+        "method_seeds": [
+         0.121,
+         0.1186
+        ],
+        "method_n": [
+         32880,
+         32880
+        ],
+        "method_mean": 0.11979999999999999,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.318,
+        "comparator_n": 32880,
+        "diff_method_minus_comparator": -0.19820000000000002,
+        "n": 32880,
+        "criterion": 0.01635593103433736,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.004751757569573597,
+         "three_points": 9.124087591240875e-05
+        },
+        "twice": 0.03271186206867472,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "영상만 방법보다 과거 형상을 덜 들였다",
+        "reading_in_order": false,
+        "group": "오류 차단, 사전 정보 쪽",
+        "prior_value": 0.9998,
+        "prior_n": 32880
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         39.879999999999995,
+         60.89
+        ],
+        "method_n": [
+         481,
+         457
+        ],
+        "method_mean": 50.385,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 17.39,
+        "comparator_n": 514,
+        "diff_method_minus_comparator": 32.995,
+        "n": 457,
+        "criterion": 41.59767772364222,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 41.59767772364222
+        },
+        "twice": 83.19535544728444,
+        "deterministic": false,
+        "grade": "읽지 않음 (B0, 7.1)",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도",
+        "prior_value": 1.4500000000000002,
+        "prior_n": 514
+       }
+      ],
+      "imgonly_minus_2dgs": {
+       "missing_agreement_completeness": {
+        "imgonly": [
+         0.9228
+        ],
+        "twodgs": 0.8717,
+        "diff": [
+         0.05109999999999992
+        ]
+       },
+       "missing_completeness_05": {
+        "imgonly": [
+         0.9759
+        ],
+        "twodgs": 0.941,
+        "diff": [
+         0.03490000000000004
+        ]
+       },
+       "invisible_completeness": {
+        "imgonly": [
+         null
+        ],
+        "twodgs": null,
+        "diff": [
+         null
+        ]
+       },
+       "invisible_completeness_05": {
+        "imgonly": [
+         null
+        ],
+        "twodgs": null,
+        "diff": [
+         null
+        ]
+       },
+       "overall_completeness": {
+        "imgonly": [
+         0.9521
+        ],
+        "twodgs": 0.7534,
+        "diff": [
+         0.1987
+        ]
+       },
+       "overall_completeness_05": {
+        "imgonly": [
+         0.9779
+        ],
+        "twodgs": 0.9135,
+        "diff": [
+         0.06440000000000001
+        ]
+       },
+       "obs_inflow": {
+        "imgonly": [
+         0.2104
+        ],
+        "twodgs": 0.1844,
+        "diff": [
+         0.025999999999999995
+        ]
+       },
+       "obs_within_inflow": {
+        "imgonly": [
+         0.1562
+        ],
+        "twodgs": 0.1693,
+        "diff": [
+         -0.0131
+        ]
+       },
+       "prior_error_inflow": {
+        "imgonly": [
+         0.1329
+        ],
+        "twodgs": 0.318,
+        "diff": [
+         -0.18510000000000001
+        ]
+       },
+       "gentle_nmad_new": {
+        "imgonly": [
+         45.89
+        ],
+        "twodgs": 17.39,
+        "diff": [
+         28.5
+        ]
+       }
+      }
+     },
+     "q2": {
+      "comparator": "trust_LoD2_fix1",
+      "column": "geogs",
+      "availability": {
+       "state": "ok",
+       "why": null
+      },
+      "rows": [
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "code": "11",
+        "method_seeds": [
+         0.121,
+         0.1186
+        ],
+        "method_n": [
+         32880,
+         32880
+        ],
+        "method_mean": 0.11979999999999999,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": 0.4283,
+        "comparator_n": 32880,
+        "diff_method_minus_comparator": -0.3085,
+        "n": 32880,
+        "criterion": 0.01635593103433736,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.004751757569573597,
+         "three_points": 9.124087591240875e-05
+        },
+        "twice": 0.03271186206867472,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "바뀐 곳의 과거 형상을 덜 들였다",
+        "reading_in_order": true,
+        "group": "오류 차단",
+        "prior_value": 0.9998,
+        "prior_n": 32880
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.21,
+         0.2132
+        ],
+        "method_n": [
+         18858,
+         18858
+        ],
+        "method_mean": 0.2116,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": 0.1271,
+        "comparator_n": 18858,
+        "diff_method_minus_comparator": 0.08450000000000002,
+        "n": 18858,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.006335676759431482,
+         "three_points": 0.0001590836780146357
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": false,
+        "grade": "확인",
+        "side": -1,
+        "short": "못함",
+        "reading": "그 대가로 관측 오류 유입률 (영역 전체)에서 GeoGS보다 못했다",
+        "reading_in_order": true,
+        "group": "대가",
+        "prior_value": 0.0308,
+        "prior_n": 18858
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.1484,
+         0.1615
+        ],
+        "method_n": [
+         384,
+         384
+        ],
+        "method_mean": 0.15495,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": 0.4635,
+        "comparator_n": 384,
+        "diff_method_minus_comparator": -0.30855,
+        "n": 384,
+        "criterion": 0.02593667673392256,
+        "criterion_parts": {
+         "unit": 0.02593667673392256,
+         "three_points": 0.0078125
+        },
+        "twice": 0.05187335346784512,
+        "deterministic": false,
+        "grade": "가능, 근거 불완전",
+        "side": 1,
+        "short": "나음",
+        "reading": "관측 오류 유입률 (문턱 이내)에서 GeoGS보다 나았다",
+        "reading_in_order": false,
+        "group": "대가",
+        "prior_value": 0.4115,
+        "prior_n": 384
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9438,
+         0.9272
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9355,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": 0.2932,
+        "comparator_n": 12433,
+        "diff_method_minus_comparator": 0.6423,
+        "n": 12433,
+        "criterion": 0.03286632318955062,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.03286632318955062,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.06573264637910124,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "결측 영역 완전성 (0.2 m)에서 GeoGS보다 나았다",
+        "reading_in_order": false,
+        "group": "대가",
+        "prior_value": 0.2614,
+        "prior_n": 12433
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         0.983,
+         0.9914
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9872,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": 0.9819,
+        "comparator_n": 12433,
+        "diff_method_minus_comparator": 0.005299999999999971,
+        "n": 12433,
+        "criterion": 0.016631151493507523,
+        "criterion_parts": {
+         "unit": 0.016631151493507523,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.03326230298701505,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다",
+        "reading_in_order": true,
+        "group": "대가",
+        "prior_value": 0.9958,
+        "prior_n": 12433
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "대가",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "대가",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         39.879999999999995,
+         60.89
+        ],
+        "method_n": [
+         481,
+         457
+        ],
+        "method_mean": 50.385,
+        "comparator": "trust_LoD2_fix1",
+        "comparator_value": 12.25,
+        "comparator_n": 514,
+        "diff_method_minus_comparator": 38.135,
+        "n": 457,
+        "criterion": 41.59767772364222,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 41.59767772364222
+        },
+        "twice": 83.19535544728444,
+        "deterministic": false,
+        "grade": "읽지 않음 (B0, 7.1)",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도",
+        "prior_value": 1.4500000000000002,
+        "prior_n": 514
+       }
+      ]
+     },
+     "q3": {
+      "comparator": "mvsfuse_LoD2",
+      "column": "mvsfuse",
+      "availability": {
+       "state": "ok",
+       "why": null
+      },
+      "rows": [
+       {
+        "metric": "split:real_change",
+        "ko": "과거 형상 유입률 · 실제 변화로 봄",
+        "code": "11 (항공 LiDAR도 참값과 어긋남)",
+        "method_seeds": [
+         0.3514,
+         0.3581
+        ],
+        "method_n": [
+         296,
+         296
+        ],
+        "method_mean": 0.35475,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": 0.9932,
+        "comparator_n": 296,
+        "diff_method_minus_comparator": -0.63845,
+        "n": 296,
+        "criterion": 0.01635593103433736,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.013265323215059598,
+         "three_points": 0.010135135135135136
+        },
+        "twice": 0.03271186206867472,
+        "deterministic": true,
+        "grade": "가능, 근거 불완전",
+        "side": 1,
+        "short": "나음",
+        "reading": "바뀐 곳의 과거 형상을 덜 들였다 (재현)",
+        "reading_in_order": true,
+        "group": "오류 차단, 사전 정보 쪽",
+        "prior_value": 1.0,
+        "prior_n": 296
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.21,
+         0.2132
+        ],
+        "method_n": [
+         18858,
+         18858
+        ],
+        "method_mean": 0.2116,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": 0.0401,
+        "comparator_n": 18858,
+        "diff_method_minus_comparator": 0.1715,
+        "n": 18858,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.006335676759431482,
+         "three_points": 0.0001590836780146357
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": true,
+        "grade": "확인",
+        "side": -1,
+        "short": "못함",
+        "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)",
+        "reading_in_order": false,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.0308,
+        "prior_n": 18858
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.1484,
+         0.1615
+        ],
+        "method_n": [
+         384,
+         384
+        ],
+        "method_mean": 0.15495,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": 0.4115,
+        "comparator_n": 384,
+        "diff_method_minus_comparator": -0.25654999999999994,
+        "n": 384,
+        "criterion": 0.02593667673392256,
+        "criterion_parts": {
+         "unit": 0.02593667673392256,
+         "three_points": 0.0078125
+        },
+        "twice": 0.05187335346784512,
+        "deterministic": true,
+        "grade": "가능, 근거 불완전",
+        "side": 1,
+        "short": "나음",
+        "reading": "영상이 틀린 곳에서 맞는 사전 정보를 지켰다 (재현)",
+        "reading_in_order": true,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.4115,
+        "prior_n": 384
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9438,
+         0.9272
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9355,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": 0.2614,
+        "comparator_n": 12433,
+        "diff_method_minus_comparator": 0.6740999999999999,
+        "n": 12433,
+        "criterion": 0.03286632318955062,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.03286632318955062,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.06573264637910124,
+        "deterministic": true,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "본 방법이 더 채웠다 (재현)",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.2614,
+        "prior_n": 12433
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         0.983,
+         0.9914
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9872,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": 0.9959,
+        "comparator_n": 12433,
+        "diff_method_minus_comparator": -0.008700000000000041,
+        "n": 12433,
+        "criterion": 0.016631151493507523,
+        "criterion_parts": {
+         "unit": 0.016631151493507523,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.03326230298701505,
+        "deterministic": true,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다 (재현)",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.9958,
+        "prior_n": 12433
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": true,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": true,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         39.879999999999995,
+         60.89
+        ],
+        "method_n": [
+         481,
+         457
+        ],
+        "method_mean": 50.385,
+        "comparator": "mvsfuse_LoD2",
+        "comparator_value": 2.17,
+        "comparator_n": 505,
+        "diff_method_minus_comparator": 48.214999999999996,
+        "n": 457,
+        "criterion": 41.59767772364222,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 41.59767772364222
+        },
+        "twice": 83.19535544728444,
+        "deterministic": true,
+        "grade": "읽지 않음 (B0, 7.1)",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도",
+        "prior_value": 1.4500000000000002,
+        "prior_n": 514
+       }
+      ],
+      "two_way": [
+       {
+        "metric": "split:real_change",
+        "ko": "과거 형상 유입률 · 실제 변화로 봄",
+        "group": "오류 차단, 사전 정보 쪽",
+        "mvsfuse": 0.9932,
+        "judgefuse": 0.7264,
+        "method_mean": 0.35475,
+        "method_seeds": [
+         0.3514,
+         0.3581
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": -0.2667999999999999,
+        "basis_criterion": 0.01635593103433736,
+        "basis_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.013265323215059598,
+         "three_points": 0.010135135135135136
+        },
+        "basis_n": 296,
+        "basis_grade": "가능, 근거 불완전",
+        "basis_reading": "판정의 근거에서 차이가 났다",
+        "use_diff_method_minus_judgefuse": -0.37165000000000004,
+        "use_criterion": 0.01635593103433736,
+        "use_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.013265323215059598,
+         "three_points": 0.010135135135135136
+        },
+        "use_n": 296,
+        "use_grade": "가능, 근거 불완전",
+        "use_reading": "판정을 쓰는 방식에서 차이가 났다"
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "group": "오류 차단, 영상 쪽",
+        "mvsfuse": 0.0401,
+        "judgefuse": 0.1291,
+        "method_mean": 0.2116,
+        "method_seeds": [
+         0.21,
+         0.2132
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": 0.089,
+        "basis_criterion": 0.015746732994497574,
+        "basis_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.006335676759431482,
+         "three_points": 0.0001590836780146357
+        },
+        "basis_n": 18858,
+        "basis_grade": "확인",
+        "basis_reading": "판정의 근거에서 차이가 났다",
+        "use_diff_method_minus_judgefuse": 0.08250000000000002,
+        "use_criterion": 0.015746732994497574,
+        "use_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.006335676759431482,
+         "three_points": 0.0001590836780146357
+        },
+        "use_n": 18858,
+        "use_grade": "확인",
+        "use_reading": "판정을 쓰는 방식에서 차이가 났다"
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "group": "오류 차단, 영상 쪽",
+        "mvsfuse": 0.4115,
+        "judgefuse": 0.3828,
+        "method_mean": 0.15495,
+        "method_seeds": [
+         0.1484,
+         0.1615
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": -0.028700000000000003,
+        "basis_criterion": 0.02593667673392256,
+        "basis_parts": {
+         "unit": 0.02593667673392256,
+         "three_points": 0.0078125
+        },
+        "basis_n": 384,
+        "basis_grade": "가능, 근거 불완전",
+        "basis_reading": "판정의 근거에서 차이가 났다",
+        "use_diff_method_minus_judgefuse": -0.22784999999999997,
+        "use_criterion": 0.02593667673392256,
+        "use_parts": {
+         "unit": 0.02593667673392256,
+         "three_points": 0.0078125
+        },
+        "use_n": 384,
+        "use_grade": "가능, 근거 불완전",
+        "use_reading": "판정을 쓰는 방식에서 차이가 났다"
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "group": "상호 보완",
+        "mvsfuse": 0.2614,
+        "judgefuse": 0.259,
+        "method_mean": 0.9355,
+        "method_seeds": [
+         0.9438,
+         0.9272
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": -0.0024000000000000132,
+        "basis_criterion": 0.03286632318955062,
+        "basis_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.03286632318955062,
+         "three_points": 0.00024129333226091852
+        },
+        "basis_n": 12433,
+        "basis_grade": "기준 안",
+        "basis_reading": "다르지 않았다",
+        "use_diff_method_minus_judgefuse": 0.6765,
+        "use_criterion": 0.03286632318955062,
+        "use_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.03286632318955062,
+         "three_points": 0.00024129333226091852
+        },
+        "use_n": 12433,
+        "use_grade": "확인",
+        "use_reading": "판정을 쓰는 방식에서 차이가 났다"
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "group": "상호 보완",
+        "mvsfuse": 0.9959,
+        "judgefuse": 0.9862,
+        "method_mean": 0.9872,
+        "method_seeds": [
+         0.983,
+         0.9914
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": -0.009700000000000042,
+        "basis_criterion": 0.016631151493507523,
+        "basis_parts": {
+         "unit": 0.016631151493507523,
+         "three_points": 0.00024129333226091852
+        },
+        "basis_n": 12433,
+        "basis_grade": "기준 안",
+        "basis_reading": "다르지 않았다",
+        "use_diff_method_minus_judgefuse": 0.0010000000000000009,
+        "use_criterion": 0.016631151493507523,
+        "use_parts": {
+         "unit": 0.016631151493507523,
+         "three_points": 0.00024129333226091852
+        },
+        "use_n": 12433,
+        "use_grade": "기준 안",
+        "use_reading": "다르지 않았다"
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "group": "상호 보완",
+        "mvsfuse": null,
+        "judgefuse": null,
+        "method_mean": null,
+        "method_seeds": [
+         null,
+         null
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": null,
+        "basis_criterion": null,
+        "basis_parts": {},
+        "basis_n": 0,
+        "basis_grade": "표본 부족",
+        "basis_reading": null,
+        "use_diff_method_minus_judgefuse": null,
+        "use_criterion": null,
+        "use_parts": {},
+        "use_n": 0,
+        "use_grade": "표본 부족",
+        "use_reading": null
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "group": "상호 보완",
+        "mvsfuse": null,
+        "judgefuse": null,
+        "method_mean": null,
+        "method_seeds": [
+         null,
+         null
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": null,
+        "basis_criterion": null,
+        "basis_parts": {},
+        "basis_n": 0,
+        "basis_grade": "표본 부족",
+        "basis_reading": null,
+        "use_diff_method_minus_judgefuse": null,
+        "use_criterion": null,
+        "use_parts": {},
+        "use_n": 0,
+        "use_grade": "표본 부족",
+        "use_reading": null
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "group": "세부 정확도",
+        "mvsfuse": 2.17,
+        "judgefuse": 1.87,
+        "method_mean": 50.385,
+        "method_seeds": [
+         39.879999999999995,
+         60.89
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": -0.2999999999999998,
+        "basis_criterion": 41.59767772364222,
+        "basis_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 41.59767772364222
+        },
+        "basis_n": 505,
+        "basis_grade": "읽지 않음 (B0, 7.1)",
+        "basis_reading": null,
+        "use_diff_method_minus_judgefuse": 48.515,
+        "use_criterion": 41.59767772364222,
+        "use_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 41.59767772364222
+        },
+        "use_n": 457,
+        "use_grade": "읽지 않음 (B0, 7.1)",
+        "use_reading": null
+       }
+      ]
+     },
+     "q4": {
+      "comparator": "cdgs_LoD2_s0",
+      "column": "cdgs",
+      "availability": {
+       "state": "none",
+       "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)"
+      },
+      "rows": [
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "code": "11",
+        "method_seeds": [
+         0.121,
+         0.1186
+        ],
+        "method_n": [
+         32880,
+         32880
+        ],
+        "method_mean": 0.11979999999999999,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 32880,
+        "criterion": 0.01635593103433736,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.004751757569573597,
+         "three_points": 9.124087591240875e-05
+        },
+        "twice": 0.03271186206867472,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "오류 차단",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.9998,
+        "prior_n": 32880
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.21,
+         0.2132
+        ],
+        "method_n": [
+         18858,
+         18858
+        ],
+        "method_mean": 0.2116,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 18858,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.006335676759431482,
+         "three_points": 0.0001590836780146357
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "오류 차단",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.0308,
+        "prior_n": 18858
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.1484,
+         0.1615
+        ],
+        "method_n": [
+         384,
+         384
+        ],
+        "method_mean": 0.15495,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 384,
+        "criterion": 0.02593667673392256,
+        "criterion_parts": {
+         "unit": 0.02593667673392256,
+         "three_points": 0.0078125
+        },
+        "twice": 0.05187335346784512,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "오류 차단",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.4115,
+        "prior_n": 384
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9438,
+         0.9272
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9355,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 12433,
+        "criterion": 0.03286632318955062,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.03286632318955062,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.06573264637910124,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.2614,
+        "prior_n": 12433
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         0.983,
+         0.9914
+        ],
+        "method_n": [
+         12433,
+         12433
+        ],
+        "method_mean": 0.9872,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 12433,
+        "criterion": 0.016631151493507523,
+        "criterion_parts": {
+         "unit": 0.016631151493507523,
+         "three_points": 0.00024129333226091852
+        },
+        "twice": 0.03326230298701505,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.9958,
+        "prior_n": 12433
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         39.879999999999995,
+         60.89
+        ],
+        "method_n": [
+         481,
+         457
+        ],
+        "method_mean": 50.385,
+        "comparator": "cdgs_LoD2_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 457,
+        "criterion": 41.59767772364222,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 41.59767772364222
+        },
+        "twice": 83.19535544728444,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도 (참고)",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 1.4500000000000002,
+        "prior_n": 514
+       }
+      ]
+     }
+    }
+   }
+  },
+  "ALS": {
+   "site": "B0_b10",
+   "unit": "ALS",
+   "report_only": false,
+   "columns": {
+    "m0": {
+     "result": "prop_ALS_s0",
+     "ko": "본 방법 씨앗 0",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/prop_ALS_s0__ALS.json"
+    },
+    "m1": {
+     "result": "prop_ALS_s1",
+     "ko": "본 방법 씨앗 1",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/prop_ALS_s1__ALS.json"
+    },
+    "prior": {
+     "result": "samepath_ALS",
+     "ko": "학습 전 사전 정보",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/samepath_ALS__ALS.json"
+    },
+    "twodgs": {
+     "result": "imgonly_2dgs_s0",
+     "ko": "2차원 가우시안 스플래팅",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/imgonly_2dgs_s0__ALS.json"
+    },
+    "geogs": {
+     "result": "geogs_ALS_fix1",
+     "ko": "GeoGS",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/geogs_ALS_fix1__ALS.json"
+    },
+    "mvsfuse": {
+     "result": "mvsfuse_ALS",
+     "ko": "MVS 기반 결합",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/mvsfuse_ALS__ALS.json"
+    },
+    "cdgs": {
+     "result": "cdgs_ALS_s0",
+     "ko": "CDGS",
+     "state": "none",
+     "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/cdgs_ALS_s0__ALS.json"
+    },
+    "img0": {
+     "result": "imgonly_s0",
+     "ko": "장치 빼기: 영상만 (씨앗 0)",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/imgonly_s0__ALS.json"
+    },
+    "trust": {
+     "result": "trust_ALS",
+     "ko": "장치 빼기: 사전 정보 신뢰",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/out/metrics/B0_b10/trust_ALS__ALS.json"
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "ko": "장치 빼기: 판정만 끈 본 방법",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_ALS_s0__ALS.json"
+    },
+    "judgefuse": {
+     "result": "judgefuse_ALS",
+     "ko": "장치 빼기: 본 방법의 판정으로 갈아 끼운 변형",
+     "state": "ok",
+     "why": null,
+     "metrics_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/metrics/B0_b10/judgefuse_ALS__ALS.json"
+    }
+   },
+   "table_a": [
+    {
+     "metric": "prior_error_inflow",
+     "ko": "과거 형상 유입률",
+     "code": "11",
+     "samples": 262,
+     "method_mean": 0.4275,
+     "criterion": 0.19640597954237543,
+     "criterion_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.19640597954237543,
+      "three_points": 0.011450381679389313
+     },
+     "values": {
+      "m0": 0.4771,
+      "m1": 0.3779,
+      "prior": 0.9809,
+      "twodgs": 0.4962,
+      "geogs": 0.1527,
+      "mvsfuse": 0.9809,
+      "cdgs": null,
+      "img0": 0.2214,
+      "trust": 0.542,
+      "nojudge": 0.4122,
+      "judgefuse": 0.8206
+     },
+     "n": {
+      "m0": 262,
+      "m1": 262,
+      "prior": 262,
+      "twodgs": 262,
+      "geogs": 262,
+      "mvsfuse": 262,
+      "cdgs": null,
+      "img0": 262,
+      "trust": 262,
+      "nojudge": 262,
+      "judgefuse": 262
+     },
+     "readings": {
+      "twodgs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "바뀐 곳에서 영상만 수준으로 막았다"
+      },
+      "geogs": {
+       "short": "못함",
+       "grade": "가능, 근거 불완전",
+       "reading": "GeoGS보다 더 들였다"
+      },
+      "mvsfuse": {
+       "short": "나음",
+       "grade": "가능, 근거 불완전",
+       "reading": "바뀐 곳의 과거 형상을 덜 들였다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.27479999999999993
+     ]
+    },
+    {
+     "metric": "obs_inflow",
+     "ko": "관측 오류 유입률 (영역 전체)",
+     "code": "3",
+     "samples": 4231,
+     "method_mean": 0.35665,
+     "criterion": 0.015746732994497574,
+     "criterion_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.005741707063234683,
+      "three_points": 0.0007090522335145356
+     },
+     "values": {
+      "m0": 0.3552,
+      "m1": 0.3581,
+      "prior": 0.0399,
+      "twodgs": 0.2957,
+      "geogs": 0.1633,
+      "mvsfuse": 0.0437,
+      "cdgs": null,
+      "img0": 0.3429,
+      "trust": 0.1302,
+      "nojudge": 0.2985,
+      "judgefuse": 0.4479
+     },
+     "n": {
+      "m0": 4231,
+      "m1": 4231,
+      "prior": 4231,
+      "twodgs": 4231,
+      "geogs": 4231,
+      "mvsfuse": 4231,
+      "cdgs": null,
+      "img0": 4231,
+      "trust": 4231,
+      "nojudge": 4231,
+      "judgefuse": 4231
+     },
+     "readings": {
+      "twodgs": {
+       "short": "못함",
+       "grade": "확인",
+       "reading": "영상이 틀린 곳의 유입이 2차원 가우시안 스플래팅보다 많았다"
+      },
+      "geogs": {
+       "short": "못함",
+       "grade": "확인",
+       "reading": "그 대가로 관측 오류 유입률 (영역 전체)에서 GeoGS보다 못했다"
+      },
+      "mvsfuse": {
+       "short": "못함",
+       "grade": "확인",
+       "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.047199999999999964
+     ]
+    },
+    {
+     "metric": "obs_within_inflow",
+     "ko": "관측 오류 유입률 (문턱 이내)",
+     "code": "3 (문턱 이내)",
+     "samples": 489,
+     "method_mean": 0.49485,
+     "criterion": 0.008117585848021549,
+     "criterion_parts": {
+      "unit": 0.008117585848021549,
+      "three_points": 0.006134969325153374
+     },
+     "values": {
+      "m0": 0.4928,
+      "m1": 0.4969,
+      "prior": 0.1513,
+      "twodgs": 0.499,
+      "geogs": 0.411,
+      "mvsfuse": 0.1513,
+      "cdgs": null,
+      "img0": 0.5153,
+      "trust": 0.319,
+      "nojudge": 0.4969,
+      "judgefuse": 0.2802
+     },
+     "n": {
+      "m0": 489,
+      "m1": 489,
+      "prior": 489,
+      "twodgs": 489,
+      "geogs": 489,
+      "mvsfuse": 489,
+      "cdgs": null,
+      "img0": 489,
+      "trust": 489,
+      "nojudge": 489,
+      "judgefuse": 489
+     },
+     "readings": {
+      "twodgs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다"
+      },
+      "geogs": {
+       "short": "못함",
+       "grade": "가능, 근거 불완전",
+       "reading": "그 대가로 관측 오류 유입률 (문턱 이내)에서 GeoGS보다 못했다"
+      },
+      "mvsfuse": {
+       "short": "못함",
+       "grade": "가능, 근거 불완전",
+       "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.01629999999999998
+     ]
+    },
+    {
+     "metric": "missing_agreement_completeness",
+     "ko": "결측 영역 완전성 (0.2 m)",
+     "code": "4",
+     "samples": 177,
+     "method_mean": 0.88985,
+     "criterion": 0.1676974442262016,
+     "criterion_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.1676974442262016,
+      "three_points": 0.01694915254237288
+     },
+     "values": {
+      "m0": 0.9322,
+      "m1": 0.8475,
+      "prior": 1.0,
+      "twodgs": 0.7966,
+      "geogs": 0.8927,
+      "mvsfuse": 1.0,
+      "cdgs": null,
+      "img0": 0.7966,
+      "trust": 0.9774,
+      "nojudge": 0.9492,
+      "judgefuse": 1.0
+     },
+     "n": {
+      "m0": 177,
+      "m1": 177,
+      "prior": 177,
+      "twodgs": 177,
+      "geogs": 177,
+      "mvsfuse": 177,
+      "cdgs": null,
+      "img0": 177,
+      "trust": 177,
+      "nojudge": 177,
+      "judgefuse": 177
+     },
+     "readings": {
+      "twodgs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다"
+      },
+      "geogs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다"
+      },
+      "mvsfuse": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.0
+     ]
+    },
+    {
+     "metric": "missing_completeness_05",
+     "ko": "결측 영역 완전성 (0.5 m)",
+     "code": "4",
+     "samples": 177,
+     "method_mean": 1.0,
+     "criterion": 0.01694915254237288,
+     "criterion_parts": {
+      "unit": 0.0,
+      "three_points": 0.01694915254237288
+     },
+     "values": {
+      "m0": 1.0,
+      "m1": 1.0,
+      "prior": 1.0,
+      "twodgs": 1.0,
+      "geogs": 1.0,
+      "mvsfuse": 1.0,
+      "cdgs": null,
+      "img0": 0.8362,
+      "trust": 1.0,
+      "nojudge": 1.0,
+      "judgefuse": 1.0
+     },
+     "n": {
+      "m0": 177,
+      "m1": 177,
+      "prior": 177,
+      "twodgs": 177,
+      "geogs": 177,
+      "mvsfuse": 177,
+      "cdgs": null,
+      "img0": 177,
+      "trust": 177,
+      "nojudge": 177,
+      "judgefuse": 177
+     },
+     "readings": {
+      "twodgs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다"
+      },
+      "geogs": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다"
+      },
+      "mvsfuse": {
+       "short": "같음",
+       "grade": "기준 안",
+       "reading": "다르지 않았다 (재현)"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.16379999999999995
+     ]
+    },
+    {
+     "metric": "invisible_completeness",
+     "ko": "비가시 영역 완전성 (0.2 m)",
+     "code": "5",
+     "samples": 0,
+     "method_mean": null,
+     "criterion": null,
+     "criterion_parts": {},
+     "values": {
+      "m0": null,
+      "m1": null,
+      "prior": null,
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "cdgs": null,
+      "img0": null,
+      "trust": null,
+      "nojudge": null,
+      "judgefuse": null
+     },
+     "n": {
+      "m0": 0,
+      "m1": 0,
+      "prior": 0,
+      "twodgs": 0,
+      "geogs": 0,
+      "mvsfuse": 0,
+      "cdgs": null,
+      "img0": 0,
+      "trust": 0,
+      "nojudge": 0,
+      "judgefuse": 0
+     },
+     "readings": {
+      "twodgs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "geogs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "mvsfuse": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      null
+     ]
+    },
+    {
+     "metric": "invisible_completeness_05",
+     "ko": "비가시 영역 완전성 (0.5 m)",
+     "code": "5",
+     "samples": 0,
+     "method_mean": null,
+     "criterion": null,
+     "criterion_parts": {},
+     "values": {
+      "m0": null,
+      "m1": null,
+      "prior": null,
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "cdgs": null,
+      "img0": null,
+      "trust": null,
+      "nojudge": null,
+      "judgefuse": null
+     },
+     "n": {
+      "m0": 0,
+      "m1": 0,
+      "prior": 0,
+      "twodgs": 0,
+      "geogs": 0,
+      "mvsfuse": 0,
+      "cdgs": null,
+      "img0": 0,
+      "trust": 0,
+      "nojudge": 0,
+      "judgefuse": 0
+     },
+     "readings": {
+      "twodgs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "geogs": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      },
+      "mvsfuse": {
+       "short": null,
+       "grade": "표본 부족",
+       "reading": null
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      null
+     ]
+    },
+    {
+     "metric": "overall_completeness",
+     "ko": "전체 완전성 (0.2 m)",
+     "code": "전체",
+     "samples": 2063378,
+     "method_mean": 0.9595,
+     "criterion": 0.0019798989873223345,
+     "criterion_parts": {
+      "unit": 0.0019798989873223345,
+      "three_points": 1.4539265224306938e-06
+     },
+     "values": {
+      "m0": 0.96,
+      "m1": 0.959,
+      "prior": 0.8676,
+      "twodgs": 0.7534,
+      "geogs": 0.7577,
+      "mvsfuse": 0.8717,
+      "cdgs": null,
+      "img0": 0.9521,
+      "trust": 0.916,
+      "nojudge": 0.9575,
+      "judgefuse": 0.9493
+     },
+     "n": {
+      "m0": 2063378,
+      "m1": 2063378,
+      "prior": 2063378,
+      "twodgs": 2063378,
+      "geogs": 2063378,
+      "mvsfuse": 2063378,
+      "cdgs": null,
+      "img0": 2063378,
+      "trust": 2063378,
+      "nojudge": 2063378,
+      "judgefuse": 2063378
+     },
+     "readings": {
+      "twodgs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "본 방법이 더 채웠다"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.1987
+     ]
+    },
+    {
+     "metric": "overall_completeness_05",
+     "ko": "전체 완전성 (0.5 m)",
+     "code": "전체",
+     "samples": 2063378,
+     "method_mean": 0.97975,
+     "criterion": 0.00019798989873221146,
+     "criterion_parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 1.4539265224306938e-06
+     },
+     "values": {
+      "m0": 0.9798,
+      "m1": 0.9797,
+      "prior": 0.9367,
+      "twodgs": 0.9135,
+      "geogs": 0.9387,
+      "mvsfuse": 0.9436,
+      "cdgs": null,
+      "img0": 0.9779,
+      "trust": 0.9672,
+      "nojudge": 0.9799,
+      "judgefuse": 0.9862
+     },
+     "n": {
+      "m0": 2063378,
+      "m1": 2063378,
+      "prior": 2063378,
+      "twodgs": 2063378,
+      "geogs": 2063378,
+      "mvsfuse": 2063378,
+      "cdgs": null,
+      "img0": 2063378,
+      "trust": 2063378,
+      "nojudge": 2063378,
+      "judgefuse": 2063378
+     },
+     "readings": {
+      "twodgs": {
+       "short": "나음",
+       "grade": "확인",
+       "reading": "본 방법이 더 채웠다"
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.06440000000000001
+     ]
+    },
+    {
+     "metric": "gentle_nmad_new",
+     "ko": "세부 정확도, 새 읽기 (cm)",
+     "code": "2 (완만한 지붕)",
+     "samples": 4446,
+     "method_mean": 4.720000000000001,
+     "criterion": 0.5162944896084016,
+     "criterion_parts": {
+      "pooled": 0.5162944896084016,
+      "unit": 0.277185858225126
+     },
+     "values": {
+      "m0": 4.79,
+      "m1": 4.65,
+      "prior": 2.88,
+      "twodgs": 16.25,
+      "geogs": 14.75,
+      "mvsfuse": 2.9899999999999998,
+      "cdgs": null,
+      "img0": 5.18,
+      "trust": 3.7900000000000005,
+      "nojudge": 4.64,
+      "judgefuse": 3.2399999999999998
+     },
+     "n": {
+      "m0": 4446,
+      "m1": 4443,
+      "prior": 4445,
+      "twodgs": 4167,
+      "geogs": 4424,
+      "mvsfuse": 4445,
+      "cdgs": null,
+      "img0": 4441,
+      "trust": 4446,
+      "nojudge": 4445,
+      "judgefuse": 4444
+     },
+     "readings": {
+      "twodgs": {
+       "short": null,
+       "grade": "읽지 않음 (B0, 7.1)",
+       "reading": null
+      },
+      "geogs": {
+       "short": null,
+       "grade": "읽지 않음 (B0, 7.1)",
+       "reading": null
+      },
+      "mvsfuse": {
+       "short": null,
+       "grade": "읽지 않음 (B0, 7.1)",
+       "reading": null
+      }
+     },
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -11.07
+     ]
+    },
+    {
+     "metric": "gentle_nmad_current",
+     "ko": "세부 정확도, 지금 읽기 (cm)",
+     "code": "2 (완만한 지붕)",
+     "samples": 4446,
+     "method_mean": 5.25,
+     "criterion": 0.4751757569573603,
+     "criterion_parts": {
+      "unit": 0.4751757569573603
+     },
+     "values": {
+      "m0": 5.13,
+      "m1": 5.37,
+      "prior": 2.88,
+      "twodgs": 42.11,
+      "geogs": 19.43,
+      "mvsfuse": 2.9899999999999998,
+      "cdgs": null,
+      "img0": 5.43,
+      "trust": 3.9899999999999998,
+      "nojudge": 5.08,
+      "judgefuse": 3.3000000000000003
+     },
+     "n": {
+      "m0": 4446,
+      "m1": 4445,
+      "prior": 4445,
+      "twodgs": 4412,
+      "geogs": 4434,
+      "mvsfuse": 4445,
+      "cdgs": null,
+      "img0": 4446,
+      "trust": 4446,
+      "nojudge": 4445,
+      "judgefuse": 4444
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -36.68
+     ]
+    },
+    {
+     "metric": "floating_share",
+     "ko": "세부 정확도의 뜬 조각 몫",
+     "code": "2 (완만한 지붕)",
+     "samples": 4446,
+     "method_mean": 0.0884,
+     "criterion": 0.05068541407545172,
+     "criterion_parts": {
+      "unit": 0.05068541407545172,
+      "three_points": 0.0006747638326585695
+     },
+     "values": {
+      "m0": 0.0756,
+      "m1": 0.1012,
+      "prior": 0.0,
+      "twodgs": 0.3342,
+      "geogs": 0.173,
+      "mvsfuse": 0.002,
+      "cdgs": null,
+      "img0": 0.0825,
+      "trust": 0.052,
+      "nojudge": 0.0785,
+      "judgefuse": 0.0173
+     },
+     "n": {
+      "m0": 4446,
+      "m1": 4446,
+      "prior": 4446,
+      "twodgs": 4446,
+      "geogs": 4446,
+      "mvsfuse": 4446,
+      "cdgs": null,
+      "img0": 4446,
+      "trust": 4446,
+      "nojudge": 4446,
+      "judgefuse": 4446
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      -0.2517
+     ]
+    },
+    {
+     "metric": "double_error_inflow",
+     "ko": "이중 오류 유입률",
+     "code": "12",
+     "samples": 397,
+     "method_mean": 0.7985,
+     "criterion": 0.0898874140244339,
+     "criterion_parts": {
+      "unit": 0.0898874140244339,
+      "three_points": 0.007556675062972292
+     },
+     "values": {
+      "m0": 0.8212,
+      "m1": 0.7758,
+      "prior": 0.9673,
+      "twodgs": 0.7229,
+      "geogs": 0.6045,
+      "mvsfuse": 0.9673,
+      "cdgs": null,
+      "img0": 0.7758,
+      "trust": 0.8035,
+      "nojudge": 0.8111,
+      "judgefuse": 0.8665
+     },
+     "n": {
+      "m0": 397,
+      "m1": 397,
+      "prior": 397,
+      "twodgs": 397,
+      "geogs": 397,
+      "mvsfuse": 397,
+      "cdgs": null,
+      "img0": 397,
+      "trust": 397,
+      "nojudge": 397,
+      "judgefuse": 397
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      0.05290000000000006
+     ]
+    },
+    {
+     "metric": "missing_prior_error_inflow",
+     "ko": "결측 영역의 과거 형상 유입률",
+     "code": "13",
+     "samples": 0,
+     "method_mean": null,
+     "criterion": null,
+     "criterion_parts": {},
+     "values": {
+      "m0": null,
+      "m1": null,
+      "prior": null,
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "cdgs": null,
+      "img0": null,
+      "trust": null,
+      "nojudge": null,
+      "judgefuse": null
+     },
+     "n": {
+      "m0": 0,
+      "m1": 0,
+      "prior": 0,
+      "twodgs": 0,
+      "geogs": 0,
+      "mvsfuse": 0,
+      "cdgs": null,
+      "img0": 0,
+      "trust": 0,
+      "nojudge": 0,
+      "judgefuse": 0
+     },
+     "readings": {},
+     "new_here": false,
+     "imgonly_minus_2dgs": [
+      null
+     ]
+    }
+   ],
+   "table_b": [
+    {
+     "section": "오류 차단",
+     "ko": "과거 형상 유입률",
+     "stage1_label": "유입률 · 사전 정보 오류 [조건 1]",
+     "code": "11",
+     "samples": 262,
+     "cells": {
+      "m0": "47.7",
+      "m1": "37.8",
+      "prior": "98.1",
+      "twodgs": "49.6",
+      "geogs": "15.3",
+      "mvsfuse": "98.1",
+      "cdgs": "결과 없음",
+      "img0": "22.1",
+      "trust": "54.2",
+      "nojudge": "41.2",
+      "judgefuse": "82.1"
+     },
+     "values": {
+      "m0": [
+       0.4771
+      ],
+      "m1": [
+       0.3779
+      ],
+      "prior": [
+       0.9809
+      ],
+      "twodgs": [
+       0.4962
+      ],
+      "geogs": [
+       0.1527
+      ],
+      "mvsfuse": [
+       0.9809
+      ],
+      "img0": [
+       0.2214
+      ],
+      "trust": [
+       0.542
+      ],
+      "nojudge": [
+       0.4122
+      ],
+      "judgefuse": [
+       0.8206
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "판별 불가 (과거 형상 유입률의 행)",
+     "stage1_label": "판별 불가 · 사전 정보 오류",
+     "code": "11",
+     "samples": 359,
+     "cells": {
+      "m0": "27.0",
+      "m1": "27.0",
+      "prior": "27.0",
+      "twodgs": "27.0",
+      "geogs": "27.0",
+      "mvsfuse": "27.0",
+      "cdgs": "결과 없음",
+      "img0": "27.0",
+      "trust": "27.0",
+      "nojudge": "27.0",
+      "judgefuse": "27.0"
+     },
+     "values": {
+      "m0": [
+       0.2702
+      ],
+      "m1": [
+       0.2702
+      ],
+      "prior": [
+       0.2702
+      ],
+      "twodgs": [
+       0.2702
+      ],
+      "geogs": [
+       0.2702
+      ],
+      "mvsfuse": [
+       0.2702
+      ],
+      "img0": [
+       0.2702
+      ],
+      "trust": [
+       0.2702
+      ],
+      "nojudge": [
+       0.2702
+      ],
+      "judgefuse": [
+       0.2702
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (문턱 이내)",
+     "stage1_label": "유입률 · 관측 오류 문턱 이내 [조건 2]",
+     "code": "3 (문턱 이내)",
+     "samples": 489,
+     "cells": {
+      "m0": "49.3",
+      "m1": "49.7",
+      "prior": "15.1",
+      "twodgs": "49.9",
+      "geogs": "41.1",
+      "mvsfuse": "15.1",
+      "cdgs": "결과 없음",
+      "img0": "51.5",
+      "trust": "31.9",
+      "nojudge": "49.7",
+      "judgefuse": "28.0"
+     },
+     "values": {
+      "m0": [
+       0.4928
+      ],
+      "m1": [
+       0.4969
+      ],
+      "prior": [
+       0.1513
+      ],
+      "twodgs": [
+       0.499
+      ],
+      "geogs": [
+       0.411
+      ],
+      "mvsfuse": [
+       0.1513
+      ],
+      "img0": [
+       0.5153
+      ],
+      "trust": [
+       0.319
+      ],
+      "nojudge": [
+       0.4969
+      ],
+      "judgefuse": [
+       0.2802
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "판별 불가 (관측 오류 문턱 이내의 행)",
+     "stage1_label": "판별 불가 · 관측 오류 문턱 이내",
+     "code": "3 (문턱 이내)",
+     "samples": 1707,
+     "cells": {
+      "m0": "71.4",
+      "m1": "71.4",
+      "prior": "71.4",
+      "twodgs": "71.4",
+      "geogs": "71.4",
+      "mvsfuse": "71.4",
+      "cdgs": "결과 없음",
+      "img0": "71.4",
+      "trust": "71.4",
+      "nojudge": "71.4",
+      "judgefuse": "71.4"
+     },
+     "values": {
+      "m0": [
+       0.7135
+      ],
+      "m1": [
+       0.7135
+      ],
+      "prior": [
+       0.7135
+      ],
+      "twodgs": [
+       0.7135
+      ],
+      "geogs": [
+       0.7135
+      ],
+      "mvsfuse": [
+       0.7135
+      ],
+      "img0": [
+       0.7135
+      ],
+      "trust": [
+       0.7135
+      ],
+      "nojudge": [
+       0.7135
+      ],
+      "judgefuse": [
+       0.7135
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (문턱 이내, 의심 뺌)",
+     "stage1_label": "유입률 · 관측 오류 문턱 이내, 의심 뺌",
+     "code": "3 (문턱 이내)",
+     "samples": 296,
+     "cells": {
+      "m0": "44.9",
+      "m1": "43.9",
+      "prior": "13.5",
+      "twodgs": "42.2",
+      "geogs": "44.9",
+      "mvsfuse": "13.5",
+      "cdgs": "결과 없음",
+      "img0": "43.6",
+      "trust": "28.7",
+      "nojudge": "43.9",
+      "judgefuse": "25.3"
+     },
+     "values": {
+      "m0": [
+       0.4493
+      ],
+      "m1": [
+       0.4392
+      ],
+      "prior": [
+       0.1351
+      ],
+      "twodgs": [
+       0.4223
+      ],
+      "geogs": [
+       0.4493
+      ],
+      "mvsfuse": [
+       0.1351
+      ],
+      "img0": [
+       0.4358
+      ],
+      "trust": [
+       0.2872
+      ],
+      "nojudge": [
+       0.4392
+      ],
+      "judgefuse": [
+       0.2534
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (영역 전체)",
+     "stage1_label": "유입률 · 관측 오류 전체",
+     "code": "3",
+     "samples": 4231,
+     "cells": {
+      "m0": "35.5",
+      "m1": "35.8",
+      "prior": "4.0",
+      "twodgs": "29.6",
+      "geogs": "16.3",
+      "mvsfuse": "4.4",
+      "cdgs": "결과 없음",
+      "img0": "34.3",
+      "trust": "13.0",
+      "nojudge": "29.8",
+      "judgefuse": "44.8"
+     },
+     "values": {
+      "m0": [
+       0.3552
+      ],
+      "m1": [
+       0.3581
+      ],
+      "prior": [
+       0.0399
+      ],
+      "twodgs": [
+       0.2957
+      ],
+      "geogs": [
+       0.1633
+      ],
+      "mvsfuse": [
+       0.0437
+      ],
+      "img0": [
+       0.3429
+      ],
+      "trust": [
+       0.1302
+      ],
+      "nojudge": [
+       0.2985
+      ],
+      "judgefuse": [
+       0.4479
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "관측 오류 유입률 (전제 위배 안)",
+     "stage1_label": "유입률 · 전제 위배 안",
+     "code": "3 (전제 위배 안)",
+     "samples": 3742,
+     "cells": {
+      "m0": "33.7",
+      "m1": "34.0",
+      "prior": "2.5",
+      "twodgs": "26.9",
+      "geogs": "13.1",
+      "mvsfuse": "3.0",
+      "cdgs": "결과 없음",
+      "img0": "32.0",
+      "trust": "10.6",
+      "nojudge": "27.3",
+      "judgefuse": "47.0"
+     },
+     "values": {
+      "m0": [
+       0.3373
+      ],
+      "m1": [
+       0.3399
+      ],
+      "prior": [
+       0.0254
+      ],
+      "twodgs": [
+       0.2691
+      ],
+      "geogs": [
+       0.1309
+      ],
+      "mvsfuse": [
+       0.0297
+      ],
+      "img0": [
+       0.3204
+      ],
+      "trust": [
+       0.1056
+      ],
+      "nojudge": [
+       0.2726
+      ],
+      "judgefuse": [
+       0.4698
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "이중 오류 유입률",
+     "stage1_label": "유입률 · 이중 오류(기록)",
+     "code": "12",
+     "samples": 397,
+     "cells": {
+      "m0": "82.1",
+      "m1": "77.6",
+      "prior": "96.7",
+      "twodgs": "72.3",
+      "geogs": "60.5",
+      "mvsfuse": "96.7",
+      "cdgs": "결과 없음",
+      "img0": "77.6",
+      "trust": "80.3",
+      "nojudge": "81.1",
+      "judgefuse": "86.7"
+     },
+     "values": {
+      "m0": [
+       0.8212
+      ],
+      "m1": [
+       0.7758
+      ],
+      "prior": [
+       0.9673
+      ],
+      "twodgs": [
+       0.7229
+      ],
+      "geogs": [
+       0.6045
+      ],
+      "mvsfuse": [
+       0.9673
+      ],
+      "img0": [
+       0.7758
+      ],
+      "trust": [
+       0.8035
+      ],
+      "nojudge": [
+       0.8111
+      ],
+      "judgefuse": [
+       0.8665
+      ]
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "과거 형상 잔존율 (가우시안 출신)",
+     "stage1_label": "과거 형상 · 사전 정보 오류",
+     "code": "11 (패치)",
+     "samples": 42,
+     "cells": {
+      "m0": "16.7",
+      "m1": "4.8",
+      "prior": "—",
+      "twodgs": "없음(출신 기록 없음)",
+      "geogs": "없음(출신 기록 없음)",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "0.0",
+      "trust": "21.4",
+      "nojudge": "14.3",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       0.1667
+      ],
+      "m1": [
+       0.0476
+      ],
+      "prior": [
+       null
+      ],
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "img0": [
+       0.0
+      ],
+      "trust": [
+       0.2143
+      ],
+      "nojudge": [
+       0.1429
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "과거 형상 잔존율 · 관측 오류 (가우시안, 출신 무관)",
+     "stage1_label": "과거 형상 · 관측 오류(출신 무관)",
+     "code": "3 (패치)",
+     "samples": 549,
+     "cells": {
+      "m0": "36.2",
+      "m1": "31.1",
+      "prior": "—",
+      "twodgs": "없음(출신 기록 없음)",
+      "geogs": "없음(출신 기록 없음)",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "17.3",
+      "trust": "33.9",
+      "nojudge": "30.4",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       0.3625
+      ],
+      "m1": [
+       0.3115
+      ],
+      "prior": [
+       null
+      ],
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "img0": [
+       0.173
+      ],
+      "trust": [
+       0.3388
+      ],
+      "nojudge": [
+       0.3042
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "오류 차단",
+     "ko": "보정 경계 (τ / m)",
+     "stage1_label": "보정 경계 (τ / m)",
+     "code": "11",
+     "samples": null,
+     "cells": {
+      "m0": "1 / 0.13",
+      "m1": "1 / 0.13",
+      "prior": "—",
+      "twodgs": "—",
+      "geogs": "1 / 0.13",
+      "mvsfuse": "—",
+      "cdgs": "결과 없음",
+      "img0": "1 / 0.13",
+      "trust": "—",
+      "nojudge": "1 / 0.13",
+      "judgefuse": "—"
+     },
+     "values": {
+      "m0": [
+       1.0,
+       0.127
+      ],
+      "m1": [
+       1.0,
+       0.127
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": [
+       null,
+       null
+      ],
+      "geogs": [
+       1.0,
+       0.127
+      ],
+      "mvsfuse": [
+       null,
+       null
+      ],
+      "img0": [
+       1.0,
+       0.127
+      ],
+      "trust": [
+       null,
+       null
+      ],
+      "nojudge": [
+       1.0,
+       0.127
+      ],
+      "judgefuse": [
+       null,
+       null
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "완만한 지붕 편향 / NMAD (cm, 1단계 읽기)",
+     "stage1_label": "완만한 지붕 편향 / NMAD [조건 3 = NMAD]",
+     "code": "2",
+     "samples": 4446,
+     "cells": {
+      "m0": "-0.9 / 5.1",
+      "m1": "-0.6 / 5.4",
+      "prior": "-2.0 / 2.9",
+      "twodgs": "+10.3 / 42.1",
+      "geogs": "+9.6 / 19.4",
+      "mvsfuse": "-1.8 / 3.0",
+      "cdgs": "결과 없음",
+      "img0": "-1.4 / 5.4",
+      "trust": "-1.5 / 4.0",
+      "nojudge": "-0.9 / 5.1",
+      "judgefuse": "-1.5 / 3.3"
+     },
+     "values": {
+      "m0": [
+       -0.009,
+       0.0513
+      ],
+      "m1": [
+       -0.0056,
+       0.0537
+      ],
+      "prior": [
+       -0.0197,
+       0.0288
+      ],
+      "twodgs": [
+       0.1027,
+       0.4211
+      ],
+      "geogs": [
+       0.096,
+       0.1943
+      ],
+      "mvsfuse": [
+       -0.0182,
+       0.0299
+      ],
+      "img0": [
+       -0.0136,
+       0.0543
+      ],
+      "trust": [
+       -0.0153,
+       0.0399
+      ],
+      "nojudge": [
+       -0.0087,
+       0.0508
+      ],
+      "judgefuse": [
+       -0.0154,
+       0.033
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "완만한 지붕 편향, 의심 뺌 (cm)",
+     "stage1_label": "완만한 지붕 편향, 의심 뺌",
+     "code": "2",
+     "samples": 4328,
+     "cells": {
+      "m0": "-0.9",
+      "m1": "-0.6",
+      "prior": "-2.0",
+      "twodgs": "+10.4",
+      "geogs": "+9.9",
+      "mvsfuse": "-1.8",
+      "cdgs": "결과 없음",
+      "img0": "-1.4",
+      "trust": "-1.5",
+      "nojudge": "-0.9",
+      "judgefuse": "-1.5"
+     },
+     "values": {
+      "m0": [
+       -0.0093
+      ],
+      "m1": [
+       -0.0058
+      ],
+      "prior": [
+       -0.0198
+      ],
+      "twodgs": [
+       0.1036
+      ],
+      "geogs": [
+       0.0989
+      ],
+      "mvsfuse": [
+       -0.0183
+      ],
+      "img0": [
+       -0.0139
+      ],
+      "trust": [
+       -0.0152
+      ],
+      "nojudge": [
+       -0.0088
+      ],
+      "judgefuse": [
+       -0.0154
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "완만한 지붕 산포 q68.3 / q95 (cm)",
+     "stage1_label": "완만한 지붕 산포 q68.3 / q95",
+     "code": "2",
+     "samples": 4446,
+     "cells": {
+      "m0": "5.8 / 400.6",
+      "m1": "6.2 / 1057.9",
+      "prior": "3.1 / 7.8",
+      "twodgs": "139.7 / 1726.9",
+      "geogs": "24.5 / 1044.7",
+      "mvsfuse": "3.2 / 8.1",
+      "cdgs": "결과 없음",
+      "img0": "6.4 / 213.9",
+      "trust": "4.2 / 120.3",
+      "nojudge": "5.9 / 474.3",
+      "judgefuse": "3.5 / 9.8"
+     },
+     "values": {
+      "m0": [
+       0.0584,
+       4.006
+      ],
+      "m1": [
+       0.062,
+       10.5793
+      ],
+      "prior": [
+       0.0313,
+       0.0778
+      ],
+      "twodgs": [
+       1.3969,
+       17.269
+      ],
+      "geogs": [
+       0.2453,
+       10.4472
+      ],
+      "mvsfuse": [
+       0.0323,
+       0.0807
+      ],
+      "img0": [
+       0.0644,
+       2.1394
+      ],
+      "trust": [
+       0.0424,
+       1.2034
+      ],
+      "nojudge": [
+       0.0585,
+       4.7427
+      ],
+      "judgefuse": [
+       0.0354,
+       0.0984
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "가파른 지붕 편향 / NMAD (cm)",
+     "stage1_label": "가파른 지붕 편향 / NMAD",
+     "code": "2",
+     "samples": 74002,
+     "cells": {
+      "m0": "-0.9 / 3.6",
+      "m1": "-1.1 / 3.5",
+      "prior": "-1.2 / 2.5",
+      "twodgs": "-0.9 / 14.5",
+      "geogs": "+5.4 / 11.2",
+      "mvsfuse": "-1.2 / 2.5",
+      "cdgs": "결과 없음",
+      "img0": "-1.3 / 3.8",
+      "trust": "-1.2 / 2.9",
+      "nojudge": "-0.9 / 3.6",
+      "judgefuse": "-1.2 / 2.5"
+     },
+     "values": {
+      "m0": [
+       -0.0091,
+       0.0361
+      ],
+      "m1": [
+       -0.0107,
+       0.0349
+      ],
+      "prior": [
+       -0.0119,
+       0.0251
+      ],
+      "twodgs": [
+       -0.0092,
+       0.1447
+      ],
+      "geogs": [
+       0.0541,
+       0.1123
+      ],
+      "mvsfuse": [
+       -0.0119,
+       0.0251
+      ],
+      "img0": [
+       -0.0128,
+       0.0381
+      ],
+      "trust": [
+       -0.0124,
+       0.0291
+      ],
+      "nojudge": [
+       -0.0094,
+       0.036
+      ],
+      "judgefuse": [
+       -0.0125,
+       0.025
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "가파른 지붕 산포 q68.3 / q95 (cm)",
+     "stage1_label": "가파른 지붕 산포 q68.3 / q95",
+     "code": "2",
+     "samples": 74002,
+     "cells": {
+      "m0": "3.7 / 8.2",
+      "m1": "3.5 / 8.1",
+      "prior": "2.6 / 6.4",
+      "twodgs": "15.6 / 86.3",
+      "geogs": "12.1 / 31.1",
+      "mvsfuse": "2.6 / 6.4",
+      "cdgs": "결과 없음",
+      "img0": "3.9 / 8.7",
+      "trust": "3.0 / 7.2",
+      "nojudge": "3.6 / 8.0",
+      "judgefuse": "2.6 / 6.5"
+     },
+     "values": {
+      "m0": [
+       0.0366,
+       0.0816
+      ],
+      "m1": [
+       0.0354,
+       0.0807
+      ],
+      "prior": [
+       0.0258,
+       0.0639
+      ],
+      "twodgs": [
+       0.1564,
+       0.8631
+      ],
+      "geogs": [
+       0.121,
+       0.3108
+      ],
+      "mvsfuse": [
+       0.0258,
+       0.0639
+      ],
+      "img0": [
+       0.0389,
+       0.0869
+      ],
+      "trust": [
+       0.0296,
+       0.0718
+      ],
+      "nojudge": [
+       0.0362,
+       0.0803
+      ],
+      "judgefuse": [
+       0.0258,
+       0.0645
+      ]
+     }
+    },
+    {
+     "section": "기하",
+     "ko": "띠 편향 / NMAD (cm)",
+     "stage1_label": "띠 편향 / NMAD",
+     "code": "2 (띠)",
+     "samples": 58886,
+     "cells": {
+      "m0": "-1.0 / 3.9",
+      "m1": "-1.5 / 4.0",
+      "prior": "-1.8 / 3.3",
+      "twodgs": "+2.3 / 17.7",
+      "geogs": "+8.7 / 11.4",
+      "mvsfuse": "-1.8 / 3.3",
+      "cdgs": "결과 없음",
+      "img0": "-1.2 / 4.1",
+      "trust": "-1.5 / 3.5",
+      "nojudge": "-1.1 / 4.0",
+      "judgefuse": "-1.8 / 3.2"
+     },
+     "values": {
+      "m0": [
+       -0.0103,
+       0.0387
+      ],
+      "m1": [
+       -0.0146,
+       0.0395
+      ],
+      "prior": [
+       -0.0177,
+       0.0326
+      ],
+      "twodgs": [
+       0.0231,
+       0.1768
+      ],
+      "geogs": [
+       0.0866,
+       0.1141
+      ],
+      "mvsfuse": [
+       -0.0176,
+       0.0326
+      ],
+      "img0": [
+       -0.0117,
+       0.0406
+      ],
+      "trust": [
+       -0.015,
+       0.0348
+      ],
+      "nojudge": [
+       -0.011,
+       0.04
+      ],
+      "judgefuse": [
+       -0.0183,
+       0.0319
+      ]
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "결측 영역 완전성 0.2 / 0.5 m",
+     "stage1_label": "결측 일치 0.2 / 0.5 m",
+     "code": "4",
+     "samples": 177,
+     "cells": {
+      "m0": "93.2 / 100.0",
+      "m1": "84.8 / 100.0",
+      "prior": "100.0 / 100.0",
+      "twodgs": "79.7 / 100.0",
+      "geogs": "89.3 / 100.0",
+      "mvsfuse": "100.0 / 100.0",
+      "cdgs": "결과 없음",
+      "img0": "79.7 / 83.6",
+      "trust": "97.7 / 100.0",
+      "nojudge": "94.9 / 100.0",
+      "judgefuse": "100.0 / 100.0"
+     },
+     "values": {
+      "m0": [
+       0.9322,
+       1.0
+      ],
+      "m1": [
+       0.8475,
+       1.0
+      ],
+      "prior": [
+       1.0,
+       1.0
+      ],
+      "twodgs": [
+       0.7966,
+       1.0
+      ],
+      "geogs": [
+       0.8927,
+       1.0
+      ],
+      "mvsfuse": [
+       1.0,
+       1.0
+      ],
+      "img0": [
+       0.7966,
+       0.8362
+      ],
+      "trust": [
+       0.9774,
+       1.0
+      ],
+      "nojudge": [
+       0.9492,
+       1.0
+      ],
+      "judgefuse": [
+       1.0,
+       1.0
+      ]
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "전제 위배 둘레 완전성 0.2 m",
+     "stage1_label": "전제 위배 둘레 0.2 m [조건 4]",
+     "code": "2 (둘레 2 m)",
+     "samples": 34677,
+     "cells": {
+      "m0": "99.8",
+      "m1": "99.8",
+      "prior": "99.9",
+      "twodgs": "83.0",
+      "geogs": "90.1",
+      "mvsfuse": "99.9",
+      "cdgs": "결과 없음",
+      "img0": "99.1",
+      "trust": "99.9",
+      "nojudge": "99.6",
+      "judgefuse": "99.9"
+     },
+     "values": {
+      "m0": [
+       0.9981
+      ],
+      "m1": [
+       0.9982
+      ],
+      "prior": [
+       0.9985
+      ],
+      "twodgs": [
+       0.83
+      ],
+      "geogs": [
+       0.9012
+      ],
+      "mvsfuse": [
+       0.9985
+      ],
+      "img0": [
+       0.9909
+      ],
+      "trust": [
+       0.9987
+      ],
+      "nojudge": [
+       0.9957
+      ],
+      "judgefuse": [
+       0.9986
+      ]
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "상속률 / 못 본 곳 과거 형상 (가우시안 출신)",
+     "stage1_label": "못 본 곳 상속률 / 과거 형상 (가우시안)",
+     "code": "5 / 14 (추정)",
+     "samples": null,
+     "cells": {
+      "m0": "—",
+      "m1": "—",
+      "prior": "—",
+      "twodgs": "없음(출신 기록 없음)",
+      "geogs": "없음(출신 기록 없음)",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "—",
+      "trust": "—",
+      "nojudge": "—",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       null,
+       null
+      ],
+      "m1": [
+       null,
+       null
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": null,
+      "geogs": null,
+      "mvsfuse": null,
+      "img0": [
+       null,
+       null
+      ],
+      "trust": [
+       null,
+       null
+      ],
+      "nojudge": [
+       null,
+       null
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "완전성",
+     "ko": "가상 시점 메시: 맞음 미룸 0.5 m / 틀림 미룸 0.2 m",
+     "stage1_label": "가상 시점 메시: 맞음 미룸 0.5 m / 틀림 미룸 0.2 m",
+     "code": "5 / 14 (추정)",
+     "samples": null,
+     "cells": {
+      "m0": "—",
+      "m1": "—",
+      "prior": "—",
+      "twodgs": "—",
+      "geogs": "—",
+      "mvsfuse": "없음(렌더러 없음)",
+      "cdgs": "결과 없음",
+      "img0": "—",
+      "trust": "—",
+      "nojudge": "—",
+      "judgefuse": "없음(렌더러 없음)"
+     },
+     "values": {
+      "m0": [
+       null,
+       null
+      ],
+      "m1": [
+       null,
+       null
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": [
+       null,
+       null
+      ],
+      "geogs": [
+       null,
+       null
+      ],
+      "mvsfuse": null,
+      "img0": [
+       null,
+       null
+      ],
+      "trust": [
+       null,
+       null
+      ],
+      "nojudge": [
+       null,
+       null
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "부유",
+     "ko": "부유 가우시안 3~20 m / 그중 사전 정보 출신 / 20 m 넘게 (개)",
+     "stage1_label": "3~20 m / 그중 사전 정보 출신 / 20 m 넘게 (개)",
+     "code": "전체",
+     "samples": null,
+     "cells": {
+      "m0": "1,020 / 496 / 236",
+      "m1": "1,056 / 407 / 118",
+      "prior": "—",
+      "twodgs": "2,291 / 없음(출신 기록 없음) / 84",
+      "geogs": "1,011 / 없음(출신 기록 없음) / 0",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "901 / 0 / 184",
+      "trust": "1,201 / 712 / 62",
+      "nojudge": "969 / 444 / 117",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       1020,
+       496,
+       236
+      ],
+      "m1": [
+       1056,
+       407,
+       118
+      ],
+      "prior": [
+       null,
+       null,
+       null
+      ],
+      "twodgs": [
+       2291,
+       null,
+       84
+      ],
+      "geogs": [
+       1011,
+       null,
+       0
+      ],
+      "mvsfuse": null,
+      "img0": [
+       901,
+       0,
+       184
+      ],
+      "trust": [
+       1201,
+       712,
+       62
+      ],
+      "nojudge": [
+       969,
+       444,
+       117
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "부유",
+     "ko": "부유 가우시안의 평가 영상 화소 몫 (‰)",
+     "stage1_label": "평가 영상 화소 몫 (‰)",
+     "code": "전체",
+     "samples": null,
+     "cells": {
+      "m0": "2.29",
+      "m1": "0.65",
+      "prior": "—",
+      "twodgs": "6.06",
+      "geogs": "0.37",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "0.80",
+      "trust": "0.53",
+      "nojudge": "1.28",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       0.002291
+      ],
+      "m1": [
+       0.000653
+      ],
+      "prior": [
+       null
+      ],
+      "twodgs": [
+       0.006057
+      ],
+      "geogs": [
+       0.000371
+      ],
+      "mvsfuse": null,
+      "img0": [
+       0.000804
+      ],
+      "trust": [
+       0.000532
+      ],
+      "nojudge": [
+       0.001278
+      ],
+      "judgefuse": null
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "Chamfer 평균 (m)",
+     "stage1_label": "Chamfer 평균 (m)",
+     "code": "전체",
+     "samples": 2063378,
+     "cells": {
+      "m0": "1.193",
+      "m1": "1.328",
+      "prior": "1.512",
+      "twodgs": "2.203",
+      "geogs": "1.618",
+      "mvsfuse": "1.506",
+      "cdgs": "결과 없음",
+      "img0": "1.196",
+      "trust": "1.242",
+      "nojudge": "1.225",
+      "judgefuse": "1.200"
+     },
+     "values": {
+      "m0": [
+       1.1928
+      ],
+      "m1": [
+       1.3276
+      ],
+      "prior": [
+       1.5116
+      ],
+      "twodgs": [
+       2.2031
+      ],
+      "geogs": [
+       1.6179
+      ],
+      "mvsfuse": [
+       1.5058
+      ],
+      "img0": [
+       1.1958
+      ],
+      "trust": [
+       1.2419
+      ],
+      "nojudge": [
+       1.2248
+      ],
+      "judgefuse": [
+       1.1996
+      ]
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "정밀도 / 완전성 / F1 @0.2 m",
+     "stage1_label": "정밀도 / 완전성 / F1 @0.2 m",
+     "code": "전체",
+     "samples": 2063378,
+     "cells": {
+      "m0": "48.7 / 96.0 / 64.6",
+      "m1": "47.4 / 95.9 / 63.5",
+      "prior": "31.9 / 86.8 / 46.6",
+      "twodgs": "19.6 / 75.3 / 31.1",
+      "geogs": "25.8 / 75.8 / 38.5",
+      "mvsfuse": "31.8 / 87.2 / 46.7",
+      "cdgs": "결과 없음",
+      "img0": "46.7 / 95.2 / 62.6",
+      "trust": "44.9 / 91.6 / 60.2",
+      "nojudge": "47.6 / 95.8 / 63.6",
+      "judgefuse": "39.3 / 94.9 / 55.6"
+     },
+     "values": {
+      "m0": [
+       0.4868,
+       0.96,
+       0.646
+      ],
+      "m1": [
+       0.4742,
+       0.959,
+       0.6346
+      ],
+      "prior": [
+       0.3189,
+       0.8676,
+       0.4663
+      ],
+      "twodgs": [
+       0.1959,
+       0.7534,
+       0.311
+      ],
+      "geogs": [
+       0.2578,
+       0.7577,
+       0.3847
+      ],
+      "mvsfuse": [
+       0.3184,
+       0.8717,
+       0.4665
+      ],
+      "img0": [
+       0.4669,
+       0.9521,
+       0.6265
+      ],
+      "trust": [
+       0.4489,
+       0.916,
+       0.6025
+      ],
+      "nojudge": [
+       0.476,
+       0.9575,
+       0.6358
+      ],
+      "judgefuse": [
+       0.3934,
+       0.9493,
+       0.5563
+      ]
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "M3C2 중앙값 / NMAD (cm)",
+     "stage1_label": "M3C2 중앙값 / NMAD (cm)",
+     "code": "전체",
+     "samples": 19158,
+     "cells": {
+      "m0": "-1.7 / 5.3",
+      "m1": "-1.7 / 5.0",
+      "prior": "-1.5 / 3.0",
+      "twodgs": "-2.1 / 23.1",
+      "geogs": "+12.7 / 19.1",
+      "mvsfuse": "-1.4 / 3.1",
+      "cdgs": "결과 없음",
+      "img0": "-2.0 / 5.8",
+      "trust": "-0.8 / 5.3",
+      "nojudge": "-1.3 / 5.3",
+      "judgefuse": "-2.6 / 4.6"
+     },
+     "values": {
+      "m0": [
+       -0.0166,
+       0.0527
+      ],
+      "m1": [
+       -0.0174,
+       0.0501
+      ],
+      "prior": [
+       -0.0148,
+       0.0303
+      ],
+      "twodgs": [
+       -0.0211,
+       0.2309
+      ],
+      "geogs": [
+       0.1274,
+       0.1915
+      ],
+      "mvsfuse": [
+       -0.0141,
+       0.0315
+      ],
+      "img0": [
+       -0.0202,
+       0.0582
+      ],
+      "trust": [
+       -0.0081,
+       0.0526
+      ],
+      "nojudge": [
+       -0.0133,
+       0.0531
+      ],
+      "judgefuse": [
+       -0.0264,
+       0.0462
+      ]
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "걸린 시간 (분) / GPU 최대 (GB)",
+     "stage1_label": "학습 시간 (분) / GPU 최대 (GB)",
+     "code": "—",
+     "samples": null,
+     "cells": {
+      "m0": "64 / 15.1",
+      "m1": "72 / 16.1",
+      "prior": "—",
+      "twodgs": "26 / 3.4",
+      "geogs": "56 / 9.7",
+      "mvsfuse": "5 (판정·합치기 + TSDF) / 없음",
+      "cdgs": "결과 없음",
+      "img0": "63 / 15.0",
+      "trust": "66 / 15.2",
+      "nojudge": "64 / 11.1",
+      "judgefuse": "5 (판정·합치기 + TSDF) / 없음"
+     },
+     "values": {
+      "m0": [
+       3814.2,
+       15451.0
+      ],
+      "m1": [
+       4324.7,
+       16474.0
+      ],
+      "prior": [
+       null,
+       null
+      ],
+      "twodgs": [
+       1585.5,
+       3466.0
+      ],
+      "geogs": [
+       3341.3,
+       9893.0
+      ],
+      "mvsfuse": 5.42,
+      "img0": [
+       3784.1,
+       15397.0
+      ],
+      "trust": [
+       3934.3,
+       15613.0
+      ],
+      "nojudge": [
+       3814.2,
+       11363.0
+      ],
+      "judgefuse": 5.483333333333333
+     }
+    },
+    {
+     "section": "요약",
+     "ko": "화질 PSNR / SSIM / LPIPS",
+     "stage1_label": "화질 PSNR / SSIM / LPIPS",
+     "code": "평가 영상",
+     "samples": null,
+     "cells": {
+      "m0": "23.04 / 0.753 / 0.318",
+      "m1": "22.58 / 0.745 / 0.326",
+      "prior": "—",
+      "twodgs": "21.74 / 0.707 / 0.361",
+      "geogs": "22.28 / 0.708 / 0.372",
+      "mvsfuse": "없음",
+      "cdgs": "결과 없음",
+      "img0": "22.44 / 0.736 / 0.337",
+      "trust": "22.33 / 0.739 / 0.330",
+      "nojudge": "22.96 / 0.753 / 0.318",
+      "judgefuse": "없음"
+     },
+     "values": {
+      "m0": [
+       23.0433,
+       0.7534,
+       0.3176
+      ],
+      "m1": [
+       22.5843,
+       0.7448,
+       0.3262
+      ],
+      "prior": [
+       null,
+       null,
+       null
+      ],
+      "twodgs": [
+       21.7359,
+       0.7067,
+       0.3607
+      ],
+      "geogs": [
+       22.2817,
+       0.7079,
+       0.3721
+      ],
+      "mvsfuse": null,
+      "img0": [
+       22.4447,
+       0.7364,
+       0.3369
+      ],
+      "trust": [
+       22.3257,
+       0.7391,
+       0.3295
+      ],
+      "nojudge": [
+       22.957,
+       0.753,
+       0.318
+      ],
+      "judgefuse": null
+     }
+    }
+   ],
+   "readings": {
+    "site": "B0_b10",
+    "unit": "ALS",
+    "report_only": false,
+    "availability": {
+     "m0": {
+      "result": "prop_ALS_s0",
+      "state": "ok",
+      "why": null
+     },
+     "m1": {
+      "result": "prop_ALS_s1",
+      "state": "ok",
+      "why": null
+     },
+     "prior": {
+      "result": "samepath_ALS",
+      "state": "ok",
+      "why": null
+     },
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "state": "ok",
+      "why": null
+     },
+     "geogs": {
+      "result": "geogs_ALS_fix1",
+      "state": "ok",
+      "why": null
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_ALS",
+      "state": "ok",
+      "why": null
+     },
+     "cdgs": {
+      "result": "cdgs_ALS_s0",
+      "state": "none",
+      "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)"
+     },
+     "img0": {
+      "result": "imgonly_s0",
+      "state": "ok",
+      "why": null
+     },
+     "img1": {
+      "result": null,
+      "state": "none",
+      "why": "씨앗 1은 B173 주변에서만 돌림"
+     },
+     "trust": {
+      "result": "trust_ALS",
+      "state": "ok",
+      "why": null
+     },
+     "nojudge": {
+      "result": "nojudge_ALS_s0",
+      "state": "ok",
+      "why": null
+     },
+     "judgefuse": {
+      "result": "judgefuse_ALS",
+      "state": "ok",
+      "why": null
+     }
+    },
+    "questions": {
+     "q1": {
+      "comparator": "imgonly_2dgs_s0",
+      "column": "twodgs",
+      "availability": {
+       "state": "ok",
+       "why": null
+      },
+      "rows": [
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9322,
+         0.8475
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 0.88985,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.7966,
+        "comparator_n": 177,
+        "diff_method_minus_comparator": 0.09325000000000006,
+        "n": 177,
+        "criterion": 0.1676974442262016,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.1676974442262016,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.3353948884524032,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         1.0,
+         1.0
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 1.0,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 1.0,
+        "comparator_n": 177,
+        "diff_method_minus_comparator": 0.0,
+        "n": 177,
+        "criterion": 0.01694915254237288,
+        "criterion_parts": {
+         "unit": 0.0,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.03389830508474576,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "overall_completeness",
+        "ko": "전체 완전성 (0.2 m)",
+        "code": "전체",
+        "method_seeds": [
+         0.96,
+         0.959
+        ],
+        "method_n": [
+         2063378,
+         2063378
+        ],
+        "method_mean": 0.9595,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.7534,
+        "comparator_n": 2063378,
+        "diff_method_minus_comparator": 0.20610000000000006,
+        "n": 2063378,
+        "criterion": 0.0019798989873223345,
+        "criterion_parts": {
+         "unit": 0.0019798989873223345,
+         "three_points": 1.4539265224306938e-06
+        },
+        "twice": 0.003959797974644669,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "본 방법이 더 채웠다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.8676,
+        "prior_n": 2063378
+       },
+       {
+        "metric": "overall_completeness_05",
+        "ko": "전체 완전성 (0.5 m)",
+        "code": "전체",
+        "method_seeds": [
+         0.9798,
+         0.9797
+        ],
+        "method_n": [
+         2063378,
+         2063378
+        ],
+        "method_mean": 0.97975,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.9135,
+        "comparator_n": 2063378,
+        "diff_method_minus_comparator": 0.06625000000000003,
+        "n": 2063378,
+        "criterion": 0.00019798989873221146,
+        "criterion_parts": {
+         "unit": 0.00019798989873221146,
+         "three_points": 1.4539265224306938e-06
+        },
+        "twice": 0.0003959797974644229,
+        "deterministic": false,
+        "grade": "확인",
+        "side": 1,
+        "short": "나음",
+        "reading": "본 방법이 더 채웠다",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 0.9367,
+        "prior_n": 2063378
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.3552,
+         0.3581
+        ],
+        "method_n": [
+         4231,
+         4231
+        ],
+        "method_mean": 0.35665,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.2957,
+        "comparator_n": 4231,
+        "diff_method_minus_comparator": 0.060950000000000004,
+        "n": 4231,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.005741707063234683,
+         "three_points": 0.0007090522335145356
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": false,
+        "grade": "확인",
+        "side": -1,
+        "short": "못함",
+        "reading": "영상이 틀린 곳의 유입이 2차원 가우시안 스플래팅보다 많았다",
+        "reading_in_order": false,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.0399,
+        "prior_n": 4231
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.4928,
+         0.4969
+        ],
+        "method_n": [
+         489,
+         489
+        ],
+        "method_mean": 0.49485,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.499,
+        "comparator_n": 489,
+        "diff_method_minus_comparator": -0.004149999999999987,
+        "n": 489,
+        "criterion": 0.008117585848021549,
+        "criterion_parts": {
+         "unit": 0.008117585848021549,
+         "three_points": 0.006134969325153374
+        },
+        "twice": 0.016235171696043098,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다",
+        "reading_in_order": true,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.1513,
+        "prior_n": 489
+       },
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "code": "11",
+        "method_seeds": [
+         0.4771,
+         0.3779
+        ],
+        "method_n": [
+         262,
+         262
+        ],
+        "method_mean": 0.4275,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 0.4962,
+        "comparator_n": 262,
+        "diff_method_minus_comparator": -0.06869999999999998,
+        "n": 262,
+        "criterion": 0.19640597954237543,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.19640597954237543,
+         "three_points": 0.011450381679389313
+        },
+        "twice": 0.39281195908475086,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "바뀐 곳에서 영상만 수준으로 막았다",
+        "reading_in_order": true,
+        "group": "오류 차단, 사전 정보 쪽",
+        "prior_value": 0.9809,
+        "prior_n": 262
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         4.79,
+         4.65
+        ],
+        "method_n": [
+         4446,
+         4443
+        ],
+        "method_mean": 4.720000000000001,
+        "comparator": "imgonly_2dgs_s0",
+        "comparator_value": 16.25,
+        "comparator_n": 4167,
+        "diff_method_minus_comparator": -11.53,
+        "n": 4167,
+        "criterion": 0.5162944896084016,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 0.277185858225126
+        },
+        "twice": 1.0325889792168033,
+        "deterministic": false,
+        "grade": "읽지 않음 (B0, 7.1)",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도",
+        "prior_value": 2.88,
+        "prior_n": 4445
+       }
+      ],
+      "imgonly_minus_2dgs": {
+       "missing_agreement_completeness": {
+        "imgonly": [
+         0.7966
+        ],
+        "twodgs": 0.7966,
+        "diff": [
+         0.0
+        ]
+       },
+       "missing_completeness_05": {
+        "imgonly": [
+         0.8362
+        ],
+        "twodgs": 1.0,
+        "diff": [
+         -0.16379999999999995
+        ]
+       },
+       "invisible_completeness": {
+        "imgonly": [
+         null
+        ],
+        "twodgs": null,
+        "diff": [
+         null
+        ]
+       },
+       "invisible_completeness_05": {
+        "imgonly": [
+         null
+        ],
+        "twodgs": null,
+        "diff": [
+         null
+        ]
+       },
+       "overall_completeness": {
+        "imgonly": [
+         0.9521
+        ],
+        "twodgs": 0.7534,
+        "diff": [
+         0.1987
+        ]
+       },
+       "overall_completeness_05": {
+        "imgonly": [
+         0.9779
+        ],
+        "twodgs": 0.9135,
+        "diff": [
+         0.06440000000000001
+        ]
+       },
+       "obs_inflow": {
+        "imgonly": [
+         0.3429
+        ],
+        "twodgs": 0.2957,
+        "diff": [
+         0.047199999999999964
+        ]
+       },
+       "obs_within_inflow": {
+        "imgonly": [
+         0.5153
+        ],
+        "twodgs": 0.499,
+        "diff": [
+         0.01629999999999998
+        ]
+       },
+       "prior_error_inflow": {
+        "imgonly": [
+         0.2214
+        ],
+        "twodgs": 0.4962,
+        "diff": [
+         -0.27479999999999993
+        ]
+       },
+       "gentle_nmad_new": {
+        "imgonly": [
+         5.18
+        ],
+        "twodgs": 16.25,
+        "diff": [
+         -11.07
+        ]
+       }
+      }
+     },
+     "q2": {
+      "comparator": "geogs_ALS_fix1",
+      "column": "geogs",
+      "availability": {
+       "state": "ok",
+       "why": null
+      },
+      "rows": [
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "code": "11",
+        "method_seeds": [
+         0.4771,
+         0.3779
+        ],
+        "method_n": [
+         262,
+         262
+        ],
+        "method_mean": 0.4275,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": 0.1527,
+        "comparator_n": 262,
+        "diff_method_minus_comparator": 0.2748,
+        "n": 262,
+        "criterion": 0.19640597954237543,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.19640597954237543,
+         "three_points": 0.011450381679389313
+        },
+        "twice": 0.39281195908475086,
+        "deterministic": false,
+        "grade": "가능, 근거 불완전",
+        "side": -1,
+        "short": "못함",
+        "reading": "GeoGS보다 더 들였다",
+        "reading_in_order": true,
+        "group": "오류 차단",
+        "prior_value": 0.9809,
+        "prior_n": 262
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.3552,
+         0.3581
+        ],
+        "method_n": [
+         4231,
+         4231
+        ],
+        "method_mean": 0.35665,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": 0.1633,
+        "comparator_n": 4231,
+        "diff_method_minus_comparator": 0.19335000000000002,
+        "n": 4231,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.005741707063234683,
+         "three_points": 0.0007090522335145356
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": false,
+        "grade": "확인",
+        "side": -1,
+        "short": "못함",
+        "reading": "그 대가로 관측 오류 유입률 (영역 전체)에서 GeoGS보다 못했다",
+        "reading_in_order": true,
+        "group": "대가",
+        "prior_value": 0.0399,
+        "prior_n": 4231
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.4928,
+         0.4969
+        ],
+        "method_n": [
+         489,
+         489
+        ],
+        "method_mean": 0.49485,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": 0.411,
+        "comparator_n": 489,
+        "diff_method_minus_comparator": 0.08385000000000004,
+        "n": 489,
+        "criterion": 0.008117585848021549,
+        "criterion_parts": {
+         "unit": 0.008117585848021549,
+         "three_points": 0.006134969325153374
+        },
+        "twice": 0.016235171696043098,
+        "deterministic": false,
+        "grade": "가능, 근거 불완전",
+        "side": -1,
+        "short": "못함",
+        "reading": "그 대가로 관측 오류 유입률 (문턱 이내)에서 GeoGS보다 못했다",
+        "reading_in_order": true,
+        "group": "대가",
+        "prior_value": 0.1513,
+        "prior_n": 489
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9322,
+         0.8475
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 0.88985,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": 0.8927,
+        "comparator_n": 177,
+        "diff_method_minus_comparator": -0.002850000000000019,
+        "n": 177,
+        "criterion": 0.1676974442262016,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.1676974442262016,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.3353948884524032,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다",
+        "reading_in_order": true,
+        "group": "대가",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         1.0,
+         1.0
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 1.0,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": 1.0,
+        "comparator_n": 177,
+        "diff_method_minus_comparator": 0.0,
+        "n": 177,
+        "criterion": 0.01694915254237288,
+        "criterion_parts": {
+         "unit": 0.0,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.03389830508474576,
+        "deterministic": false,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다",
+        "reading_in_order": true,
+        "group": "대가",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "대가",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "대가",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         4.79,
+         4.65
+        ],
+        "method_n": [
+         4446,
+         4443
+        ],
+        "method_mean": 4.720000000000001,
+        "comparator": "geogs_ALS_fix1",
+        "comparator_value": 14.75,
+        "comparator_n": 4424,
+        "diff_method_minus_comparator": -10.03,
+        "n": 4424,
+        "criterion": 0.5162944896084016,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 0.277185858225126
+        },
+        "twice": 1.0325889792168033,
+        "deterministic": false,
+        "grade": "읽지 않음 (B0, 7.1)",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도",
+        "prior_value": 2.88,
+        "prior_n": 4445
+       }
+      ]
+     },
+     "q3": {
+      "comparator": "mvsfuse_ALS",
+      "column": "mvsfuse",
+      "availability": {
+       "state": "ok",
+       "why": null
+      },
+      "rows": [
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "code": "11",
+        "method_seeds": [
+         0.4771,
+         0.3779
+        ],
+        "method_n": [
+         262,
+         262
+        ],
+        "method_mean": 0.4275,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": 0.9809,
+        "comparator_n": 262,
+        "diff_method_minus_comparator": -0.5534,
+        "n": 262,
+        "criterion": 0.19640597954237543,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.19640597954237543,
+         "three_points": 0.011450381679389313
+        },
+        "twice": 0.39281195908475086,
+        "deterministic": true,
+        "grade": "가능, 근거 불완전",
+        "side": 1,
+        "short": "나음",
+        "reading": "바뀐 곳의 과거 형상을 덜 들였다 (재현)",
+        "reading_in_order": true,
+        "group": "오류 차단, 사전 정보 쪽",
+        "prior_value": 0.9809,
+        "prior_n": 262
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.3552,
+         0.3581
+        ],
+        "method_n": [
+         4231,
+         4231
+        ],
+        "method_mean": 0.35665,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": 0.0437,
+        "comparator_n": 4231,
+        "diff_method_minus_comparator": 0.31295,
+        "n": 4231,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.005741707063234683,
+         "three_points": 0.0007090522335145356
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": true,
+        "grade": "확인",
+        "side": -1,
+        "short": "못함",
+        "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)",
+        "reading_in_order": false,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.0399,
+        "prior_n": 4231
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.4928,
+         0.4969
+        ],
+        "method_n": [
+         489,
+         489
+        ],
+        "method_mean": 0.49485,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": 0.1513,
+        "comparator_n": 489,
+        "diff_method_minus_comparator": 0.34355,
+        "n": 489,
+        "criterion": 0.008117585848021549,
+        "criterion_parts": {
+         "unit": 0.008117585848021549,
+         "three_points": 0.006134969325153374
+        },
+        "twice": 0.016235171696043098,
+        "deterministic": true,
+        "grade": "가능, 근거 불완전",
+        "side": -1,
+        "short": "못함",
+        "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)",
+        "reading_in_order": false,
+        "group": "오류 차단, 영상 쪽",
+        "prior_value": 0.1513,
+        "prior_n": 489
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9322,
+         0.8475
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 0.88985,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": 1.0,
+        "comparator_n": 177,
+        "diff_method_minus_comparator": -0.11014999999999997,
+        "n": 177,
+        "criterion": 0.1676974442262016,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.1676974442262016,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.3353948884524032,
+        "deterministic": true,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다 (재현)",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         1.0,
+         1.0
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 1.0,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": 1.0,
+        "comparator_n": 177,
+        "diff_method_minus_comparator": 0.0,
+        "n": 177,
+        "criterion": 0.01694915254237288,
+        "criterion_parts": {
+         "unit": 0.0,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.03389830508474576,
+        "deterministic": true,
+        "grade": "기준 안",
+        "side": 0,
+        "short": "같음",
+        "reading": "다르지 않았다 (재현)",
+        "reading_in_order": true,
+        "group": "상호 보완",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": true,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": null,
+        "comparator_n": 0,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": true,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         4.79,
+         4.65
+        ],
+        "method_n": [
+         4446,
+         4443
+        ],
+        "method_mean": 4.720000000000001,
+        "comparator": "mvsfuse_ALS",
+        "comparator_value": 2.9899999999999998,
+        "comparator_n": 4445,
+        "diff_method_minus_comparator": 1.7300000000000009,
+        "n": 4443,
+        "criterion": 0.5162944896084016,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 0.277185858225126
+        },
+        "twice": 1.0325889792168033,
+        "deterministic": true,
+        "grade": "읽지 않음 (B0, 7.1)",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도",
+        "prior_value": 2.88,
+        "prior_n": 4445
+       }
+      ],
+      "two_way": [
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "group": "오류 차단, 사전 정보 쪽",
+        "mvsfuse": 0.9809,
+        "judgefuse": 0.8206,
+        "method_mean": 0.4275,
+        "method_seeds": [
+         0.4771,
+         0.3779
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": -0.1603,
+        "basis_criterion": 0.19640597954237543,
+        "basis_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.19640597954237543,
+         "three_points": 0.011450381679389313
+        },
+        "basis_n": 262,
+        "basis_grade": "기준 안",
+        "basis_reading": "다르지 않았다",
+        "use_diff_method_minus_judgefuse": -0.3931,
+        "use_criterion": 0.19640597954237543,
+        "use_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.19640597954237543,
+         "three_points": 0.011450381679389313
+        },
+        "use_n": 262,
+        "use_grade": "가능, 근거 불완전",
+        "use_reading": "판정을 쓰는 방식에서 차이가 났다"
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "group": "오류 차단, 영상 쪽",
+        "mvsfuse": 0.0437,
+        "judgefuse": 0.4479,
+        "method_mean": 0.35665,
+        "method_seeds": [
+         0.3552,
+         0.3581
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": 0.4042,
+        "basis_criterion": 0.015746732994497574,
+        "basis_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.005741707063234683,
+         "three_points": 0.0007090522335145356
+        },
+        "basis_n": 4231,
+        "basis_grade": "확인",
+        "basis_reading": "판정의 근거에서 차이가 났다",
+        "use_diff_method_minus_judgefuse": -0.09125,
+        "use_criterion": 0.015746732994497574,
+        "use_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.005741707063234683,
+         "three_points": 0.0007090522335145356
+        },
+        "use_n": 4231,
+        "use_grade": "확인",
+        "use_reading": "판정을 쓰는 방식에서 차이가 났다"
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "group": "오류 차단, 영상 쪽",
+        "mvsfuse": 0.1513,
+        "judgefuse": 0.2802,
+        "method_mean": 0.49485,
+        "method_seeds": [
+         0.4928,
+         0.4969
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": 0.12890000000000001,
+        "basis_criterion": 0.008117585848021549,
+        "basis_parts": {
+         "unit": 0.008117585848021549,
+         "three_points": 0.006134969325153374
+        },
+        "basis_n": 489,
+        "basis_grade": "가능, 근거 불완전",
+        "basis_reading": "판정의 근거에서 차이가 났다",
+        "use_diff_method_minus_judgefuse": 0.21465,
+        "use_criterion": 0.008117585848021549,
+        "use_parts": {
+         "unit": 0.008117585848021549,
+         "three_points": 0.006134969325153374
+        },
+        "use_n": 489,
+        "use_grade": "가능, 근거 불완전",
+        "use_reading": "판정을 쓰는 방식에서 차이가 났다"
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "group": "상호 보완",
+        "mvsfuse": 1.0,
+        "judgefuse": 1.0,
+        "method_mean": 0.88985,
+        "method_seeds": [
+         0.9322,
+         0.8475
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": 0.0,
+        "basis_criterion": 0.1676974442262016,
+        "basis_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.1676974442262016,
+         "three_points": 0.01694915254237288
+        },
+        "basis_n": 177,
+        "basis_grade": "기준 안",
+        "basis_reading": "다르지 않았다",
+        "use_diff_method_minus_judgefuse": -0.11014999999999997,
+        "use_criterion": 0.1676974442262016,
+        "use_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.1676974442262016,
+         "three_points": 0.01694915254237288
+        },
+        "use_n": 177,
+        "use_grade": "기준 안",
+        "use_reading": "다르지 않았다"
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "group": "상호 보완",
+        "mvsfuse": 1.0,
+        "judgefuse": 1.0,
+        "method_mean": 1.0,
+        "method_seeds": [
+         1.0,
+         1.0
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": 0.0,
+        "basis_criterion": 0.01694915254237288,
+        "basis_parts": {
+         "unit": 0.0,
+         "three_points": 0.01694915254237288
+        },
+        "basis_n": 177,
+        "basis_grade": "기준 안",
+        "basis_reading": "다르지 않았다",
+        "use_diff_method_minus_judgefuse": 0.0,
+        "use_criterion": 0.01694915254237288,
+        "use_parts": {
+         "unit": 0.0,
+         "three_points": 0.01694915254237288
+        },
+        "use_n": 177,
+        "use_grade": "기준 안",
+        "use_reading": "다르지 않았다"
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "group": "상호 보완",
+        "mvsfuse": null,
+        "judgefuse": null,
+        "method_mean": null,
+        "method_seeds": [
+         null,
+         null
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": null,
+        "basis_criterion": null,
+        "basis_parts": {},
+        "basis_n": 0,
+        "basis_grade": "표본 부족",
+        "basis_reading": null,
+        "use_diff_method_minus_judgefuse": null,
+        "use_criterion": null,
+        "use_parts": {},
+        "use_n": 0,
+        "use_grade": "표본 부족",
+        "use_reading": null
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "group": "상호 보완",
+        "mvsfuse": null,
+        "judgefuse": null,
+        "method_mean": null,
+        "method_seeds": [
+         null,
+         null
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": null,
+        "basis_criterion": null,
+        "basis_parts": {},
+        "basis_n": 0,
+        "basis_grade": "표본 부족",
+        "basis_reading": null,
+        "use_diff_method_minus_judgefuse": null,
+        "use_criterion": null,
+        "use_parts": {},
+        "use_n": 0,
+        "use_grade": "표본 부족",
+        "use_reading": null
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "group": "세부 정확도",
+        "mvsfuse": 2.9899999999999998,
+        "judgefuse": 3.2399999999999998,
+        "method_mean": 4.720000000000001,
+        "method_seeds": [
+         4.79,
+         4.65
+        ],
+        "basis_diff_judgefuse_minus_mvsfuse": 0.25,
+        "basis_criterion": 0.5162944896084016,
+        "basis_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 0.277185858225126
+        },
+        "basis_n": 4444,
+        "basis_grade": "읽지 않음 (B0, 7.1)",
+        "basis_reading": null,
+        "use_diff_method_minus_judgefuse": 1.4800000000000009,
+        "use_criterion": 0.5162944896084016,
+        "use_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 0.277185858225126
+        },
+        "use_n": 4443,
+        "use_grade": "읽지 않음 (B0, 7.1)",
+        "use_reading": null
+       }
+      ]
+     },
+     "q4": {
+      "comparator": "cdgs_ALS_s0",
+      "column": "cdgs",
+      "availability": {
+       "state": "none",
+       "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)"
+      },
+      "rows": [
+       {
+        "metric": "prior_error_inflow",
+        "ko": "과거 형상 유입률",
+        "code": "11",
+        "method_seeds": [
+         0.4771,
+         0.3779
+        ],
+        "method_n": [
+         262,
+         262
+        ],
+        "method_mean": 0.4275,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 262,
+        "criterion": 0.19640597954237543,
+        "criterion_parts": {
+         "pooled": 0.01635593103433736,
+         "unit": 0.19640597954237543,
+         "three_points": 0.011450381679389313
+        },
+        "twice": 0.39281195908475086,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "오류 차단",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.9809,
+        "prior_n": 262
+       },
+       {
+        "metric": "obs_inflow",
+        "ko": "관측 오류 유입률 (영역 전체)",
+        "code": "3",
+        "method_seeds": [
+         0.3552,
+         0.3581
+        ],
+        "method_n": [
+         4231,
+         4231
+        ],
+        "method_mean": 0.35665,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 4231,
+        "criterion": 0.015746732994497574,
+        "criterion_parts": {
+         "pooled": 0.015746732994497574,
+         "unit": 0.005741707063234683,
+         "three_points": 0.0007090522335145356
+        },
+        "twice": 0.03149346598899515,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "오류 차단",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.0399,
+        "prior_n": 4231
+       },
+       {
+        "metric": "obs_within_inflow",
+        "ko": "관측 오류 유입률 (문턱 이내)",
+        "code": "3 (문턱 이내)",
+        "method_seeds": [
+         0.4928,
+         0.4969
+        ],
+        "method_n": [
+         489,
+         489
+        ],
+        "method_mean": 0.49485,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 489,
+        "criterion": 0.008117585848021549,
+        "criterion_parts": {
+         "unit": 0.008117585848021549,
+         "three_points": 0.006134969325153374
+        },
+        "twice": 0.016235171696043098,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "오류 차단",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 0.1513,
+        "prior_n": 489
+       },
+       {
+        "metric": "missing_agreement_completeness",
+        "ko": "결측 영역 완전성 (0.2 m)",
+        "code": "4",
+        "method_seeds": [
+         0.9322,
+         0.8475
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 0.88985,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 177,
+        "criterion": 0.1676974442262016,
+        "criterion_parts": {
+         "pooled": 0.03286632318955062,
+         "unit": 0.1676974442262016,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.3353948884524032,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "missing_completeness_05",
+        "ko": "결측 영역 완전성 (0.5 m)",
+        "code": "4",
+        "method_seeds": [
+         1.0,
+         1.0
+        ],
+        "method_n": [
+         177,
+         177
+        ],
+        "method_mean": 1.0,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 177,
+        "criterion": 0.01694915254237288,
+        "criterion_parts": {
+         "unit": 0.0,
+         "three_points": 0.01694915254237288
+        },
+        "twice": 0.03389830508474576,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 1.0,
+        "prior_n": 177
+       },
+       {
+        "metric": "invisible_completeness",
+        "ko": "비가시 영역 완전성 (0.2 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "invisible_completeness_05",
+        "ko": "비가시 영역 완전성 (0.5 m)",
+        "code": "5",
+        "method_seeds": [
+         null,
+         null
+        ],
+        "method_n": [
+         0,
+         0
+        ],
+        "method_mean": null,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 0,
+        "criterion": null,
+        "criterion_parts": {},
+        "twice": null,
+        "deterministic": false,
+        "grade": "표본 부족",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "상호 보완",
+        "prior_value": null,
+        "prior_n": 0
+       },
+       {
+        "metric": "gentle_nmad_new",
+        "ko": "세부 정확도, 새 읽기 (cm)",
+        "code": "2 (완만한 지붕)",
+        "method_seeds": [
+         4.79,
+         4.65
+        ],
+        "method_n": [
+         4446,
+         4443
+        ],
+        "method_mean": 4.720000000000001,
+        "comparator": "cdgs_ALS_s0",
+        "comparator_value": null,
+        "comparator_n": null,
+        "diff_method_minus_comparator": null,
+        "n": 4443,
+        "criterion": 0.5162944896084016,
+        "criterion_parts": {
+         "pooled": 0.5162944896084016,
+         "unit": 0.277185858225126
+        },
+        "twice": 1.0325889792168033,
+        "deterministic": false,
+        "grade": "결과 없음",
+        "side": null,
+        "short": null,
+        "reading": null,
+        "reading_in_order": null,
+        "group": "세부 정확도 (참고)",
+        "why": "학습하지 않음: 학습 전에 정한 5.5절의 두 점검(축척 0.9~1.1 밖 시점이 학습 영상의 4분의 1 초과, 깊이 가중 중앙값 0.006 미만)이 사용자 결정(10-15) 뒤 다시 본 점검에서도 걸림 (설정 고친 것 5번, READY 0/8)",
+        "prior_value": 2.88,
+        "prior_n": 4445
+       }
+      ]
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,207 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "spot": "R1 낮은 계단 지붕",
+ "key": "r1low",
+ "figure": 1,
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "auxiliary": false,
+ "place": {
+  "section": "R1_low_roof",
+  "centre": [
+   22.983430165905766,
+   28.576477565814496,
+   -29.493468147884336
+  ],
+  "t": [
+   0.3420201433256688,
+   0.9396926207859083
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "z_range": [
+   -37.19858019244471,
+   -26.493468147884336
+  ],
+  "z_range_stage1_rule": [
+   -33.75978825725171,
+   -26.493468147884336
+  ],
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "view_note": null,
+  "counted_rows": 84,
+  "band": "|s| <= 6 m, |d| <= 0.25 m, thinned GT rows, |sW| >= 0.2 m",
+  "band_codes_main_rows": {
+   "3": 237,
+   "11": 84,
+   "12": 83
+  }
+ },
+ "code": 11,
+ "value_name": "과거 형상 유입률",
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 84,
+     "gt_side": 0.881,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.119,
+     "spread": 0.0
+    },
+    "3": {
+     "points": 237,
+     "gt_side": 0.3418,
+     "wrong_side": 0.2869,
+     "both": 0.0,
+     "neither": 0.3713,
+     "spread": 0.2869
+    },
+    "12": {
+     "points": 83,
+     "gt_side": 0.4458,
+     "wrong_side": 0.4096,
+     "both": 0.0843,
+     "neither": 0.0602,
+     "spread": 0.494
+    }
+   },
+   "value": {
+    "points": 84,
+    "gt_side": 0.881,
+    "wrong_side": 0.0,
+    "both": 0.0,
+    "neither": 0.119,
+    "spread": 0.0
+   },
+   "unit_wide": {
+    "share": 0.0851,
+    "points": 54345
+   },
+   "segments": 2132
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 84,
+     "gt_side": 0.2381,
+     "wrong_side": 0.2976,
+     "both": 0.0,
+     "neither": 0.4643,
+     "spread": 0.2976
+    },
+    "3": {
+     "points": 237,
+     "gt_side": 0.4726,
+     "wrong_side": 0.1013,
+     "both": 0.0,
+     "neither": 0.4262,
+     "spread": 0.1013
+    },
+    "12": {
+     "points": 83,
+     "gt_side": 0.0,
+     "wrong_side": 0.988,
+     "both": 0.0,
+     "neither": 0.012,
+     "spread": 0.988
+    }
+   },
+   "value": {
+    "points": 84,
+    "gt_side": 0.2381,
+    "wrong_side": 0.2976,
+    "both": 0.0,
+    "neither": 0.4643,
+    "spread": 0.2976
+   },
+   "unit_wide": {
+    "share": 0.432,
+    "points": 54345
+   },
+   "segments": 2161
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 84,
+     "gt_side": 0.1905,
+     "wrong_side": 0.2976,
+     "both": 0.3214,
+     "neither": 0.1905,
+     "spread": 0.619
+    },
+    "3": {
+     "points": 237,
+     "gt_side": 0.5527,
+     "wrong_side": 0.0506,
+     "both": 0.038,
+     "neither": 0.3586,
+     "spread": 0.0886
+    },
+    "12": {
+     "points": 83,
+     "gt_side": 0.0,
+     "wrong_side": 0.4699,
+     "both": 0.4699,
+     "neither": 0.0602,
+     "spread": 0.9398
+    }
+   },
+   "value": {
+    "points": 84,
+    "gt_side": 0.1905,
+    "wrong_side": 0.2976,
+    "both": 0.3214,
+    "neither": 0.1905,
+    "spread": 0.619
+   },
+   "unit_wide": {
+    "share": 0.7207,
+    "points": 54345
+   },
+   "segments": 1455
+  }
+ },
+ "references": {
+  "gt_points": 7220,
+  "prior_result": "samepath_LoD2",
+  "prior_segments": 842,
+  "prior_value": {
+   "points": 84,
+   "gt_side": 0.0,
+   "wrong_side": 0.9881,
+   "both": 0.0119,
+   "neither": 0.0,
+   "spread": 1.0
+  }
+ },
+ "scientific_verdict": null,
+ "title": "LoD2보다 낮은 지붕에서 MVS 기반 결합은 LoD2 면에 남았고 GeoGS는 일부 남았으며, 본 방법은 LoD2 면을 떠났다(참값 84점, 표본 부족) — R1 LoD2 · 1단계 정의: 두 자료 모두 불분명",
+ "title_kind": "statement written after viewing (10-15 17:5x, all panels viewed by the orchestrating session)",
+ "seed1": {
+  "points": 84,
+  "gt_side": 0.869,
+  "wrong_side": 0.0,
+  "both": 0.0,
+  "neither": 0.131,
+  "spread": 0.0
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 사전 정보 오류(코드 11) 참값 84점에서 결과 면이 틀린 쪽에 선 몫(과거 형상 유입률): 본 방법 (씨앗 0) 0.0 %(씨앗 1: 0.0 %), GeoGS 29.8 %, MVS 기반 결합 61.9 %; 학습 전 사전 정보 100.0 %. 100점 미만이라 표본 부족이다(7.1절). 단위 전체(R1 LoD2): 본 방법 (씨앗 0) 8.5 %, GeoGS 43.2 %, MVS 기반 결합 72.1 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면."
+}

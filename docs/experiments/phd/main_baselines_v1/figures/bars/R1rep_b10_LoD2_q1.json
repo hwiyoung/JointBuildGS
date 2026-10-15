@@ -1,0 +1,100 @@
+{
+ "site": "R1rep_b10",
+ "unit": "LoD2",
+ "question": "비교-1",
+ "comparator": "imgonly_2dgs_s0",
+ "panels": [
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "code": "4",
+   "unit": "%",
+   "method_seeds": [
+    0.4888,
+    0.5267
+   ],
+   "prior": 0.927,
+   "comparator": 0.264,
+   "method_mean": 0.5077499999999999,
+   "criterion": 0.07503817161951629,
+   "criterion_parts": {
+    "pooled": 0.03286632318955062,
+    "unit": 0.07503817161951629,
+    "three_points": 0.004213483146067416
+   },
+   "n": 712,
+   "diff": 0.2437499999999999,
+   "grade": "확인",
+   "reading": "본 방법이 더 채웠다"
+  },
+  {
+   "metric": "invisible_completeness",
+   "ko": "비가시 영역 완전성 (0.2 m)",
+   "code": "5",
+   "unit": "%",
+   "method_seeds": [
+    1.0,
+    1.0
+   ],
+   "prior": 1.0,
+   "comparator": 1.0,
+   "method_mean": 1.0,
+   "criterion": 1.0,
+   "criterion_parts": {
+    "unit": 0.0,
+    "three_points": 1.0
+   },
+   "n": 3,
+   "diff": 0.0,
+   "grade": "표본 부족",
+   "reading": null
+  },
+  {
+   "metric": "obs_inflow",
+   "ko": "관측 오류 유입률 (영역 전체)",
+   "code": "3",
+   "unit": "%",
+   "method_seeds": [
+    0.1995,
+    0.2057
+   ],
+   "prior": 0.0116,
+   "comparator": 0.2163,
+   "method_mean": 0.2026,
+   "criterion": 0.015746732994497574,
+   "criterion_parts": {
+    "pooled": 0.015746732994497574,
+    "unit": 0.01227537372139843,
+    "three_points": 9.444654325651681e-05
+   },
+   "n": 31764,
+   "diff": -0.01369999999999999,
+   "grade": "기준 안",
+   "reading": "다르지 않았다"
+  },
+  {
+   "metric": "prior_error_inflow",
+   "ko": "과거 형상 유입률",
+   "code": "11",
+   "unit": "%",
+   "method_seeds": [
+    0.0851,
+    0.0676
+   ],
+   "prior": 0.9939,
+   "comparator": 0.1444,
+   "method_mean": 0.07635,
+   "criterion": 0.03464823227814083,
+   "criterion_parts": {
+    "pooled": 0.01635593103433736,
+    "unit": 0.03464823227814083,
+    "three_points": 5.520287054926856e-05
+   },
+   "n": 54345,
+   "diff": -0.06805,
+   "grade": "가능, 근거 불완전",
+   "reading": "영상만 방법보다 과거 형상을 덜 들였다"
+  }
+ ],
+ "scientific_verdict": null
+}

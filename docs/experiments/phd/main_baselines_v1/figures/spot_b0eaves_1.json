@@ -1,0 +1,207 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "spot": "B0 지붕 가장자리",
+ "key": "b0eaves",
+ "figure": 1,
+ "site": "B0_b10",
+ "prior": "LoD2",
+ "auxiliary": false,
+ "place": {
+  "section": "B0_wall_eaves",
+  "centre": [
+   132.932138604007,
+   45.976862710711956,
+   -39.753999999999905
+  ],
+  "t": [
+   0.9302475133883368,
+   -0.36693264209499843
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "z_range": [
+   -44.275000000000006,
+   -21.16800778088031
+  ],
+  "z_range_stage1_rule": [
+   -43.476792923450375,
+   -36.753999999999905
+  ],
+  "view_s": [
+   -3.0,
+   2.0
+  ],
+  "view_note": "결과의 차이가 벽면 1 m 안에서 나서 단면 12 m 가운데 벽 쪽 5 m(42 %)를 키워 보였다(8절 10번). 센 참값 점은 모두 이 안에 있다.",
+  "counted_rows": 94,
+  "band": "|s| <= 6 m, |d| <= 0.25 m, thinned GT rows, |sW| >= 0.2 m",
+  "band_codes_main_rows": {
+   "3": 39,
+   "11": 94,
+   "12": 7
+  }
+ },
+ "code": 11,
+ "value_name": "과거 형상 유입률",
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 94,
+     "gt_side": 0.5851,
+     "wrong_side": 0.4043,
+     "both": 0.0106,
+     "neither": 0.0,
+     "spread": 0.4149
+    },
+    "3": {
+     "points": 39,
+     "gt_side": 0.5128,
+     "wrong_side": 0.0,
+     "both": 0.4872,
+     "neither": 0.0,
+     "spread": 0.4872
+    },
+    "12": {
+     "points": 7,
+     "gt_side": 0.1429,
+     "wrong_side": 0.5714,
+     "both": 0.2857,
+     "neither": 0.0,
+     "spread": 0.8571
+    }
+   },
+   "value": {
+    "points": 94,
+    "gt_side": 0.5851,
+    "wrong_side": 0.4043,
+    "both": 0.0106,
+    "neither": 0.0,
+    "spread": 0.4149
+   },
+   "unit_wide": {
+    "share": 0.121,
+    "points": 32880
+   },
+   "segments": 2286
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 94,
+     "gt_side": 0.4894,
+     "wrong_side": 0.3404,
+     "both": 0.0,
+     "neither": 0.1702,
+     "spread": 0.3404
+    },
+    "3": {
+     "points": 39,
+     "gt_side": 0.5897,
+     "wrong_side": 0.0,
+     "both": 0.4103,
+     "neither": 0.0,
+     "spread": 0.4103
+    },
+    "12": {
+     "points": 7,
+     "gt_side": 0.4286,
+     "wrong_side": 0.5714,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.5714
+    }
+   },
+   "value": {
+    "points": 94,
+    "gt_side": 0.4894,
+    "wrong_side": 0.3404,
+    "both": 0.0,
+    "neither": 0.1702,
+    "spread": 0.3404
+   },
+   "unit_wide": {
+    "share": 0.318,
+    "points": 32880
+   },
+   "segments": 3966
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 94,
+     "gt_side": 0.1702,
+     "wrong_side": 0.7979,
+     "both": 0.0213,
+     "neither": 0.0106,
+     "spread": 0.8191
+    },
+    "3": {
+     "points": 39,
+     "gt_side": 0.7692,
+     "wrong_side": 0.0,
+     "both": 0.2308,
+     "neither": 0.0,
+     "spread": 0.2308
+    },
+    "12": {
+     "points": 7,
+     "gt_side": 0.1429,
+     "wrong_side": 0.8571,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.8571
+    }
+   },
+   "value": {
+    "points": 94,
+    "gt_side": 0.1702,
+    "wrong_side": 0.7979,
+    "both": 0.0213,
+    "neither": 0.0106,
+    "spread": 0.8191
+   },
+   "unit_wide": {
+    "share": 0.4283,
+    "points": 32880
+   },
+   "segments": 3440
+  }
+ },
+ "references": {
+  "gt_points": 25978,
+  "prior_result": "samepath_LoD2",
+  "prior_segments": 1386,
+  "prior_value": {
+   "points": 94,
+   "gt_side": 0.0,
+   "wrong_side": 1.0,
+   "both": 0.0,
+   "neither": 0.0,
+   "spread": 1.0
+  }
+ },
+ "scientific_verdict": null,
+ "title": "벽에서 GeoGS는 LoD2 벽선 곁에 섰고, 본 방법과 2차원 가우시안 스플래팅은 참값 쪽으로 들어왔다 — B0 LoD2",
+ "title_kind": "statement written after viewing (10-15 12:2x-13:1x, panels viewed)",
+ "seed1": {
+  "points": 94,
+  "gt_side": 0.5745,
+  "wrong_side": 0.3511,
+  "both": 0.0638,
+  "neither": 0.0106,
+  "spread": 0.4149
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 사전 정보 오류(코드 11) 참값 94점에서 결과 면이 틀린 쪽에 선 몫(과거 형상 유입률): 본 방법 (씨앗 0) 41.5 %(씨앗 1: 41.5 %), 2차원 가우시안 스플래팅 34.0 %, GeoGS 81.9 %; 학습 전 사전 정보 100.0 %. 100점 미만이라 표본 부족이다(7.1절). 단위 전체(B0 LoD2): 본 방법 (씨앗 0) 12.1 %, 2차원 가우시안 스플래팅 31.8 %, GeoGS 42.8 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면. 결과의 차이가 벽면 1 m 안에서 나서 단면 12 m 가운데 벽 쪽 5 m(42 %)를 키워 보였다(8절 10번). 센 참값 점은 모두 이 안에 있다."
+}

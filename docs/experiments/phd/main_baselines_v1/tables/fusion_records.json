@@ -1,0 +1,1473 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "what": "order v1.1 6.5 / 6.6 '적을 것' (MVS-based fusion reproduced; judgment-swapped variant)",
+ "made": "2026-10-15 17:40:30",
+ "units": {
+  "B0_b10/LoD2": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:23:55",
+     "mesh": "2026-10-15 12:18:52",
+     "metrics": "2026-10-15 12:48:24",
+     "rows": "2026-10-15 12:48:25",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.01197,
+    "change_patch_m2": 61.438,
+    "eval_patch_m2": 5132.253,
+    "plan_cells": {
+     "change_cells_eval_m2": 17.56,
+     "prior_cells_eval_m2": 1601.62,
+     "share": 0.01097,
+     "change_cells_outside_eval_m2": 42.69
+    },
+    "vote_m2": {
+     "all": 32.19,
+     "in_eval": 18.5
+    },
+    "growth_added_m2": {
+     "all": 55.81,
+     "in_eval": 14.94,
+     "in_final_in_eval": 14.94
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 60.25,
+    "size_filter": {
+     "dropped_components": 108,
+     "dropped_m2": 27.75,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 6,
+      "1": 52,
+      "2": 40,
+      "3": 13,
+      "4": 12,
+      "5": 15,
+      "6": 8,
+      "7": 9,
+      "8": 9,
+      "9": 16,
+      "10": 4,
+      "11": 7,
+      "12": 3,
+      "13": 5,
+      "14": 9,
+      "15": 6,
+      "16": 2,
+      "17": 1,
+      "18": 1,
+      "19": 1,
+      "24": 1,
+      "25": 1
+     },
+     "opening_k_px_q5_50_95": [
+      1.0,
+      3.0,
+      15.0
+     ],
+     "pairs_with_size": 221,
+     "pairs_without_opening": 58,
+     "relief_disp_px_q5_50_95": [
+      0.83,
+      4.63,
+      20.99
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 53.25,
+    "boundary_to_cells_without_patch_m": 8.25,
+    "boundary_change_cells": 272,
+    "plan_cell_seam_eval_m": 54.75,
+    "plan_cell_seam_all_m": 129.0,
+    "emptied": {
+     "pixels": 54507,
+     "share_of_change_px": 0.29152,
+     "pixel_weighted_area_eval_m2": 20.062,
+     "fully_emptied_area_eval_m2": 0.688,
+     "change_patches_eval_without_pixels": 15,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 880.0,
+     "pixels": 96773339,
+     "share_of_all_px": 0.524845
+    },
+    "views_without_pair": 4,
+    "training_views": 243,
+    "paired_views": 239,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_LoD2/detect/detect.json",
+     "detect_time": "2026-10-15 11:23:55"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1710.625,
+      "change_m2": 16.8125
+     },
+     "wall": {
+      "area_m2": 3421.62834436015,
+      "change_m2": 44.625
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 14:12:58",
+     "mesh": "2026-10-15 15:31:33",
+     "metrics": "2026-10-15 15:42:46",
+     "rows": "2026-10-15 15:42:47",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_LoD2/model/monitor/locations.npz",
+     "sha256": "a26f095f182d4bbd8c0571c502c2ba48abcd3f43ee635765f8c19be9ae9046aa"
+    },
+    "conflict_area_share": 0.1668370484751958,
+    "conflict_m2": 856.25,
+    "eval_patch_m2": 5132.25334436015,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1710.625,
+      "conflict_m2": 296.5625,
+      "share": 0.17336499817318232
+     },
+     "wall": {
+      "area_m2": 3421.62834436015,
+      "conflict_m2": 559.6875,
+      "share": 0.1635734345381285
+     }
+    },
+    "boundary_m": 345.0,
+    "boundary_to_cells_without_patch_m": 239.5,
+    "boundary_conflict_cells": 3949,
+    "emptied": {
+     "pixels": 2808286,
+     "share_of_replaced_px": 0.17752435511900475,
+     "pixel_weighted_area_eval_m2": 160.5587730064094,
+     "fully_emptied_area_eval_m2": 2.75
+    },
+    "mvs_filled": {
+     "area_eval_m2": 880.0,
+     "pixels": 96773339,
+     "share_of_all_px": 0.5248452700842899
+    },
+    "replaced": {
+     "share_of_prior_px": 0.3537198210306155,
+     "pixels": 15819159,
+     "without_patch_px": 490
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_B0_b10_LoD2.json",
+     "judge_time": "2026-10-15 10:39:53",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/judgefuse_LoD2/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "B0_b10",
+   "prior": "LoD2",
+   "made": "2026-10-15 17:40:29",
+   "scientific_verdict": null
+  },
+  "B0_b10/ALS": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:24:57",
+     "mesh": "2026-10-15 12:25:53",
+     "metrics": "2026-10-15 14:10:51",
+     "rows": "2026-10-15 14:10:52",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.00125,
+    "change_patch_m2": 1.987,
+    "eval_patch_m2": 1592.893,
+    "plan_cells": {
+     "change_cells_eval_m2": 53.75,
+     "prior_cells_eval_m2": 2176.94,
+     "share": 0.02469,
+     "change_cells_outside_eval_m2": 1452.12
+    },
+    "vote_m2": {
+     "all": 495.38,
+     "in_eval": 43.44
+    },
+    "growth_added_m2": {
+     "all": 1162.5,
+     "in_eval": 51.31,
+     "in_final_in_eval": 50.94
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 1505.88,
+    "size_filter": {
+     "dropped_components": 402,
+     "dropped_m2": 152.0,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 17,
+      "1": 75,
+      "2": 12,
+      "3": 10,
+      "4": 16,
+      "5": 22,
+      "6": 16,
+      "7": 5,
+      "8": 11,
+      "9": 13,
+      "10": 7,
+      "11": 15,
+      "12": 1,
+      "13": 3,
+      "14": 2,
+      "16": 1,
+      "17": 1,
+      "18": 3,
+      "25": 1
+     },
+     "opening_k_px_q5_50_95": [
+      0.0,
+      4.0,
+      11.5
+     ],
+     "pairs_with_size": 231,
+     "pairs_without_opening": 92,
+     "relief_disp_px_q5_50_95": [
+      0.47,
+      5.18,
+      16.54
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 5.5,
+    "boundary_to_cells_without_patch_m": 8.5,
+    "boundary_change_cells": 30,
+    "plan_cell_seam_eval_m": 62.25,
+    "plan_cell_seam_all_m": 2208.0,
+    "emptied": {
+     "pixels": 1352967,
+     "share_of_change_px": 0.32803,
+     "pixel_weighted_area_eval_m2": 0.194,
+     "fully_emptied_area_eval_m2": 0.0,
+     "change_patches_eval_without_pixels": 0,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 261.6875,
+     "pixels": 97341028,
+     "share_of_all_px": 0.527924
+    },
+    "views_without_pair": 4,
+    "training_views": 243,
+    "paired_views": 239,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_ALS/detect/detect.json",
+     "detect_time": "2026-10-15 11:24:57"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1592.8931141923629,
+      "change_m2": 1.9866998503197157
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 14:14:13",
+     "mesh": "2026-10-15 15:35:52",
+     "metrics": "2026-10-15 15:51:39",
+     "rows": "2026-10-15 15:51:40",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_ALS/model/monitor/locations.npz",
+     "sha256": "c4b7541d1cc426fc4344875dcebcebcd2a65f87d560bf31b5a4979e95c21fa64"
+    },
+    "conflict_area_share": 0.0237523170166749,
+    "conflict_m2": 37.83490222197553,
+    "eval_patch_m2": 1592.8931141923629,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1592.8931141923629,
+      "conflict_m2": 37.83490222197553,
+      "share": 0.0237523170166749
+     }
+    },
+    "boundary_m": 145.0,
+    "boundary_to_cells_without_patch_m": 71.0,
+    "boundary_conflict_cells": 545,
+    "emptied": {
+     "pixels": 88786,
+     "share_of_replaced_px": 0.005473647843575961,
+     "pixel_weighted_area_eval_m2": 7.687932891127888,
+     "fully_emptied_area_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 261.6875,
+     "pixels": 97341028,
+     "share_of_all_px": 0.5279241024322043
+    },
+    "replaced": {
+     "share_of_prior_px": 0.3637795476197167,
+     "pixels": 16220627,
+     "without_patch_px": 15805003
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_B0_b10_ALS.json",
+     "judge_time": "2026-10-15 10:41:14",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/judgefuse_ALS/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "B0_b10",
+   "prior": "ALS",
+   "made": "2026-10-15 17:40:29",
+   "scientific_verdict": null
+  },
+  "B173nb_b10/LoD2": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 10:36:49",
+     "mesh": "2026-10-15 10:50:47",
+     "metrics": "2026-10-15 10:59:16",
+     "rows": "2026-10-15 10:59:17",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.56081,
+    "change_patch_m2": 4960.812,
+    "eval_patch_m2": 8845.875,
+    "plan_cells": {
+     "change_cells_eval_m2": 1086.62,
+     "prior_cells_eval_m2": 2505.69,
+     "share": 0.43366,
+     "change_cells_outside_eval_m2": 0.0
+    },
+    "vote_m2": {
+     "all": 258.5,
+     "in_eval": 255.06
+    },
+    "growth_added_m2": {
+     "all": 831.69,
+     "in_eval": 831.69,
+     "in_final_in_eval": 831.69
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 1086.62,
+    "size_filter": {
+     "dropped_components": 20,
+     "dropped_m2": 3.56,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 24,
+      "1": 23,
+      "2": 2,
+      "3": 7,
+      "4": 1,
+      "5": 6,
+      "6": 5,
+      "7": 9,
+      "8": 14,
+      "9": 7,
+      "10": 4,
+      "11": 8,
+      "12": 12,
+      "13": 16,
+      "14": 7,
+      "15": 2,
+      "16": 11,
+      "17": 4,
+      "18": 1,
+      "19": 3
+     },
+     "opening_k_px_q5_50_95": [
+      0.0,
+      8.0,
+      16.0
+     ],
+     "pairs_with_size": 166,
+     "pairs_without_opening": 47,
+     "relief_disp_px_q5_50_95": [
+      0.24,
+      11.22,
+      23.49
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 340.25,
+    "boundary_to_cells_without_patch_m": 1408.75,
+    "boundary_change_cells": 16105,
+    "plan_cell_seam_eval_m": 382.5,
+    "plan_cell_seam_all_m": 382.5,
+    "emptied": {
+     "pixels": 743266,
+     "share_of_change_px": 0.20518,
+     "pixel_weighted_area_eval_m2": 892.643,
+     "fully_emptied_area_eval_m2": 205.562,
+     "change_patches_eval_without_pixels": 18045,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 1665.1875,
+     "pixels": 86554832,
+     "share_of_all_px": 0.561923
+    },
+    "views_without_pair": 6,
+    "training_views": 203,
+    "paired_views": 197,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_LoD2/detect/detect.json",
+     "detect_time": "2026-10-15 10:36:49"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 2646.5,
+      "change_m2": 1125.125
+     },
+     "wall": {
+      "area_m2": 6199.375,
+      "change_m2": 3835.6875
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:27:22",
+     "mesh": "2026-10-15 12:01:46",
+     "metrics": "2026-10-15 12:14:59",
+     "rows": "2026-10-15 12:14:59",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B173nb_b10_LoD2/model/monitor/locations.npz",
+     "sha256": "7468eea8bf7674354f927217a37623f1d5165e5e11c6ae4079c196e6135d9a13"
+    },
+    "conflict_area_share": 0.3676007178487148,
+    "conflict_m2": 3251.75,
+    "eval_patch_m2": 8845.875,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 2646.5,
+      "conflict_m2": 1541.25,
+      "share": 0.5823729453995844
+     },
+     "wall": {
+      "area_m2": 6199.375,
+      "conflict_m2": 1710.5,
+      "share": 0.2759149107772961
+     }
+    },
+    "boundary_m": 1382.0,
+    "boundary_to_cells_without_patch_m": 1462.0,
+    "boundary_conflict_cells": 20463,
+    "emptied": {
+     "pixels": 2552044,
+     "share_of_replaced_px": 0.17825828453666775,
+     "pixel_weighted_area_eval_m2": 471.28480029875715,
+     "fully_emptied_area_eval_m2": 1.375
+    },
+    "mvs_filled": {
+     "area_eval_m2": 1665.1875,
+     "pixels": 86554832,
+     "share_of_all_px": 0.5619233968542044
+    },
+    "replaced": {
+     "share_of_prior_px": 0.45416814061005983,
+     "pixels": 14316552,
+     "without_patch_px": 21
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_B173nb_b10_LoD2.json",
+     "judge_time": "2026-10-15 10:44:19",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/judgefuse_LoD2/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "made": "2026-10-15 17:40:29",
+   "scientific_verdict": null
+  },
+  "B173nb_b10/ALS": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 10:41:55",
+     "mesh": "2026-10-15 10:57:20",
+     "metrics": "2026-10-15 11:01:43",
+     "rows": "2026-10-15 11:01:43",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.53458,
+    "change_patch_m2": 1221.971,
+    "eval_patch_m2": 2285.867,
+    "plan_cells": {
+     "change_cells_eval_m2": 1382.81,
+     "prior_cells_eval_m2": 4057.19,
+     "share": 0.34083,
+     "change_cells_outside_eval_m2": 922.81
+    },
+    "vote_m2": {
+     "all": 857.31,
+     "in_eval": 320.81
+    },
+    "growth_added_m2": {
+     "all": 1655.19,
+     "in_eval": 1064.25,
+     "in_final_in_eval": 1064.25
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 2305.62,
+    "size_filter": {
+     "dropped_components": 831,
+     "dropped_m2": 206.88,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 37,
+      "1": 31,
+      "2": 9,
+      "3": 5,
+      "4": 6,
+      "5": 11,
+      "6": 4,
+      "7": 9,
+      "8": 13,
+      "9": 12,
+      "10": 10,
+      "11": 13,
+      "12": 12,
+      "13": 9,
+      "14": 5,
+      "15": 2,
+      "16": 1,
+      "17": 1,
+      "18": 4
+     },
+     "opening_k_px_q5_50_95": [
+      0.0,
+      5.0,
+      14.0
+     ],
+     "pairs_with_size": 194,
+     "pairs_without_opening": 68,
+     "relief_disp_px_q5_50_95": [
+      0.2,
+      7.41,
+      19.73
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 183.0,
+    "boundary_to_cells_without_patch_m": 775.0,
+    "boundary_change_cells": 18395,
+    "plan_cell_seam_eval_m": 863.25,
+    "plan_cell_seam_all_m": 3043.25,
+    "emptied": {
+     "pixels": 750132,
+     "share_of_change_px": 0.19598,
+     "pixel_weighted_area_eval_m2": 118.663,
+     "fully_emptied_area_eval_m2": 0.0,
+     "change_patches_eval_without_pixels": 0,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 144.0,
+     "pixels": 83176912,
+     "share_of_all_px": 0.539994
+    },
+    "views_without_pair": 6,
+    "training_views": 203,
+    "paired_views": 197,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_ALS/detect/detect.json",
+     "detect_time": "2026-10-15 10:41:55"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 2285.8673805676904,
+      "change_m2": 1221.9707441489534
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:28:20",
+     "mesh": "2026-10-15 12:11:27",
+     "metrics": "2026-10-15 12:28:03",
+     "rows": "2026-10-15 12:28:04",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B173nb_b10_ALS/model/monitor/locations.npz",
+     "sha256": "578796b66e3c995aeba0034f0a0c94a97b82ece01c0d4072b064c47786bc09ec"
+    },
+    "conflict_area_share": 0.6103354498809664,
+    "conflict_m2": 1395.1458960870077,
+    "eval_patch_m2": 2285.8673805676904,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 2285.8673805676904,
+      "conflict_m2": 1395.1458960870077,
+      "share": 0.6103354498809664
+     }
+    },
+    "boundary_m": 332.0,
+    "boundary_to_cells_without_patch_m": 1301.5,
+    "boundary_conflict_cells": 20795,
+    "emptied": {
+     "pixels": 325297,
+     "share_of_replaced_px": 0.02990824254125868,
+     "pixel_weighted_area_eval_m2": 130.71942471913172,
+     "fully_emptied_area_eval_m2": 0.10425659959218427
+    },
+    "mvs_filled": {
+     "area_eval_m2": 144.0,
+     "pixels": 83176912,
+     "share_of_all_px": 0.539993572292801
+    },
+    "replaced": {
+     "share_of_prior_px": 0.3129421226398211,
+     "pixels": 10876500,
+     "without_patch_px": 8175152
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_B173nb_b10_ALS.json",
+     "judge_time": "2026-10-15 10:35:02",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/judgefuse_ALS/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "made": "2026-10-15 17:40:30",
+   "scientific_verdict": null
+  },
+  "B173_b0/LoD2": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:30:27",
+     "mesh": "2026-10-15 15:50:20",
+     "metrics": "2026-10-15 16:07:17",
+     "rows": "2026-10-15 16:07:17",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.68257,
+    "change_patch_m2": 4866.062,
+    "eval_patch_m2": 7129.062,
+    "plan_cells": {
+     "change_cells_eval_m2": 1085.44,
+     "prior_cells_eval_m2": 1912.38,
+     "share": 0.56759,
+     "change_cells_outside_eval_m2": 0.0
+    },
+    "vote_m2": {
+     "all": 233.19,
+     "in_eval": 232.69
+    },
+    "growth_added_m2": {
+     "all": 853.31,
+     "in_eval": 853.31,
+     "in_final_in_eval": 853.31
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 1085.44,
+    "size_filter": {
+     "dropped_components": 5,
+     "dropped_m2": 1.06,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 23,
+      "1": 17,
+      "4": 3,
+      "8": 3,
+      "9": 5,
+      "11": 6,
+      "12": 3,
+      "14": 2,
+      "15": 1,
+      "18": 4,
+      "19": 1,
+      "20": 3
+     },
+     "opening_k_px_q5_50_95": [
+      0.0,
+      1.0,
+      18.5
+     ],
+     "pairs_with_size": 71,
+     "pairs_without_opening": 40,
+     "relief_disp_px_q5_50_95": [
+      0.2,
+      1.09,
+      26.84
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 324.25,
+    "boundary_to_cells_without_patch_m": 1401.25,
+    "boundary_change_cells": 16095,
+    "plan_cell_seam_eval_m": 365.25,
+    "plan_cell_seam_all_m": 365.25,
+    "emptied": {
+     "pixels": 670397,
+     "share_of_change_px": 0.1773,
+     "pixel_weighted_area_eval_m2": 814.938,
+     "fully_emptied_area_eval_m2": 201.125,
+     "change_patches_eval_without_pixels": 17954,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 533.25,
+     "pixels": 64004367,
+     "share_of_all_px": 0.602509
+    },
+    "views_without_pair": 5,
+    "training_views": 140,
+    "paired_views": 135,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173_b0/mvsfuse_LoD2/detect/detect.json",
+     "detect_time": "2026-10-15 11:30:27"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 2065.0625,
+      "change_m2": 1124.5625
+     },
+     "wall": {
+      "area_m2": 5064.0,
+      "change_m2": 3741.5
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 16:09:36",
+     "mesh": "2026-10-15 16:11:48",
+     "metrics": "2026-10-15 16:14:06",
+     "rows": "2026-10-15 16:14:07",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/checks/dry/r14_B173_b0_LoD2/model/monitor/locations.npz",
+     "sha256": "d6a20272d2ed33be53c83253d29d630308c9cc13f9399b52c1f432fb1b354066"
+    },
+    "conflict_area_share": 0.48844956822864155,
+    "conflict_m2": 3482.1875,
+    "eval_patch_m2": 7129.0625,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 2065.0625,
+      "conflict_m2": 1577.1875,
+      "share": 0.7637480705789776
+     },
+     "wall": {
+      "area_m2": 5064.0,
+      "conflict_m2": 1905.0,
+      "share": 0.37618483412322273
+     }
+    },
+    "boundary_m": 1447.5,
+    "boundary_to_cells_without_patch_m": 1505.0,
+    "boundary_conflict_cells": 20914,
+    "emptied": {
+     "pixels": 682676,
+     "share_of_replaced_px": 0.15735249442551066,
+     "pixel_weighted_area_eval_m2": 500.09226960486643,
+     "fully_emptied_area_eval_m2": 1.25
+    },
+    "mvs_filled": {
+     "area_eval_m2": 533.25,
+     "pixels": 64004367,
+     "share_of_all_px": 0.6025088167383603
+    },
+    "replaced": {
+     "share_of_prior_px": 0.6607131353794333,
+     "pixels": 4338514,
+     "without_patch_px": 20
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_B173_b0_LoD2.json",
+     "judge_time": "2026-10-15 10:45:20",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173_b0/judgefuse_LoD2/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "B173_b0",
+   "prior": "LoD2",
+   "made": "2026-10-15 17:40:30",
+   "scientific_verdict": null
+  },
+  "B173_b0/ALS": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:31:05",
+     "mesh": "2026-10-15 15:53:23",
+     "metrics": "2026-10-15 16:08:41",
+     "rows": "2026-10-15 16:08:42",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.70566,
+    "change_patch_m2": 1220.502,
+    "eval_patch_m2": 1729.583,
+    "plan_cells": {
+     "change_cells_eval_m2": 1389.12,
+     "prior_cells_eval_m2": 2386.69,
+     "share": 0.58203,
+     "change_cells_outside_eval_m2": 168.38
+    },
+    "vote_m2": {
+     "all": 486.88,
+     "in_eval": 275.75
+    },
+    "growth_added_m2": {
+     "all": 1236.75,
+     "in_eval": 1115.88,
+     "in_final_in_eval": 1115.88
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 1557.5,
+    "size_filter": {
+     "dropped_components": 357,
+     "dropped_m2": 166.12,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 34,
+      "1": 29,
+      "2": 7,
+      "3": 1,
+      "4": 3,
+      "5": 7,
+      "7": 4,
+      "8": 6,
+      "9": 2,
+      "10": 5,
+      "11": 14,
+      "12": 6,
+      "13": 5,
+      "14": 5,
+      "15": 3,
+      "16": 3,
+      "23": 1
+     },
+     "opening_k_px_q5_50_95": [
+      0.0,
+      2.0,
+      14.299999999999997
+     ],
+     "pairs_with_size": 135,
+     "pairs_without_opening": 63,
+     "relief_disp_px_q5_50_95": [
+      0.24,
+      2.9,
+      20.72
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 198.25,
+    "boundary_to_cells_without_patch_m": 783.75,
+    "boundary_change_cells": 18369,
+    "plan_cell_seam_eval_m": 908.75,
+    "plan_cell_seam_all_m": 1354.0,
+    "emptied": {
+     "pixels": 456659,
+     "share_of_change_px": 0.1518,
+     "pixel_weighted_area_eval_m2": 113.02,
+     "fully_emptied_area_eval_m2": 0.0,
+     "change_patches_eval_without_pixels": 0,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 100.75,
+     "pixels": 61422776,
+     "share_of_all_px": 0.578207
+    },
+    "views_without_pair": 5,
+    "training_views": 140,
+    "paired_views": 135,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173_b0/mvsfuse_ALS/detect/detect.json",
+     "detect_time": "2026-10-15 11:31:05"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1729.5833237743834,
+      "change_m2": 1220.5024711196343
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 16:10:10",
+     "mesh": "2026-10-15 16:13:24",
+     "metrics": "2026-10-15 16:15:46",
+     "rows": "2026-10-15 16:15:46",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/checks/dry/r14_B173_b0_ALS/model/monitor/locations.npz",
+     "sha256": "cc49da187cc3d6ed20b7b4e68e0b3993afe15017e36a8441626c7c10260b7e5f"
+    },
+    "conflict_area_share": 0.8248127055148942,
+    "conflict_m2": 1426.5823006957924,
+    "eval_patch_m2": 1729.5833237743834,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1729.5833237743834,
+      "conflict_m2": 1426.5823006957924,
+      "share": 0.8248127055148942
+     }
+    },
+    "boundary_m": 370.25,
+    "boundary_to_cells_without_patch_m": 1356.75,
+    "boundary_conflict_cells": 21208,
+    "emptied": {
+     "pixels": 275738,
+     "share_of_replaced_px": 0.05020188133706855,
+     "pixel_weighted_area_eval_m2": 127.01744229911472,
+     "fully_emptied_area_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 100.75,
+     "pixels": 61422776,
+     "share_of_all_px": 0.578206860299788
+    },
+    "replaced": {
+     "share_of_prior_px": 0.5770332168603564,
+     "pixels": 5492583,
+     "without_patch_px": 3093412
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_B173_b0_ALS.json",
+     "judge_time": "2026-10-15 10:45:51",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173_b0/judgefuse_ALS/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "B173_b0",
+   "prior": "ALS",
+   "made": "2026-10-15 17:40:30",
+   "scientific_verdict": null
+  },
+  "R1rep_b10/LoD2": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:38:36",
+     "mesh": "2026-10-15 13:15:46",
+     "metrics": "2026-10-15 14:27:56",
+     "rows": "2026-10-15 14:27:57",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.34365,
+    "change_patch_m2": 1697.938,
+    "eval_patch_m2": 4940.875,
+    "plan_cells": {
+     "change_cells_eval_m2": 400.19,
+     "prior_cells_eval_m2": 1958.94,
+     "share": 0.20429,
+     "change_cells_outside_eval_m2": 242.75
+    },
+    "vote_m2": {
+     "all": 137.81,
+     "in_eval": 92.56
+    },
+    "growth_added_m2": {
+     "all": 537.56,
+     "in_eval": 333.31,
+     "in_final_in_eval": 321.88
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 642.94,
+    "size_filter": {
+     "dropped_components": 235,
+     "dropped_m2": 32.44,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 18,
+      "1": 52,
+      "2": 24,
+      "3": 21,
+      "4": 7,
+      "5": 8,
+      "6": 7,
+      "7": 6,
+      "8": 18,
+      "9": 6,
+      "10": 7,
+      "11": 10,
+      "12": 3,
+      "13": 7,
+      "14": 6,
+      "15": 6,
+      "16": 4,
+      "17": 4,
+      "19": 2,
+      "20": 1,
+      "21": 1
+     },
+     "opening_k_px_q5_50_95": [
+      0.0,
+      3.0,
+      16.0
+     ],
+     "pairs_with_size": 218,
+     "pairs_without_opening": 70,
+     "relief_disp_px_q5_50_95": [
+      0.62,
+      4.57,
+      22.52
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 570.25,
+    "boundary_to_cells_without_patch_m": 166.25,
+    "boundary_change_cells": 6298,
+    "plan_cell_seam_eval_m": 610.0,
+    "plan_cell_seam_all_m": 1164.75,
+    "emptied": {
+     "pixels": 1140067,
+     "share_of_change_px": 0.29962,
+     "pixel_weighted_area_eval_m2": 404.187,
+     "fully_emptied_area_eval_m2": 0.5,
+     "change_patches_eval_without_pixels": 1099,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 1389.8125,
+     "pixels": 166937199,
+     "share_of_all_px": 0.660679
+    },
+    "views_without_pair": 3,
+    "training_views": 333,
+    "paired_views": 330,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/detect/detect.json",
+     "detect_time": "2026-10-15 11:38:36"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1978.875,
+      "change_m2": 433.0625
+     },
+     "wall": {
+      "area_m2": 2962.0,
+      "change_m2": 1264.875
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_LoD2",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 15:04:47",
+     "mesh": "2026-10-15 15:41:37",
+     "metrics": "2026-10-15 15:59:15",
+     "rows": "2026-10-15 15:59:16",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_R1rep_b10_LoD2/model/monitor/locations.npz",
+     "sha256": "b530f23862ea0e90cdc8b084ba08d66703db358d6bfb3d062eb4a9af82663aa8"
+    },
+    "conflict_area_share": 0.7054671490373668,
+    "conflict_m2": 3485.625,
+    "eval_patch_m2": 4940.875,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1978.875,
+      "conflict_m2": 972.0625,
+      "share": 0.4912197587012823
+     },
+     "wall": {
+      "area_m2": 2962.0,
+      "conflict_m2": 2513.5625,
+      "share": 0.8486031397704253
+     }
+    },
+    "boundary_m": 817.75,
+    "boundary_to_cells_without_patch_m": 1085.25,
+    "boundary_conflict_cells": 14501,
+    "emptied": {
+     "pixels": 3202170,
+     "share_of_replaced_px": 0.1330318768916413,
+     "pixel_weighted_area_eval_m2": 726.4982144174018,
+     "fully_emptied_area_eval_m2": 3.1875
+    },
+    "mvs_filled": {
+     "area_eval_m2": 1389.8125,
+     "pixels": 166937199,
+     "share_of_all_px": 0.660679336820373
+    },
+    "replaced": {
+     "share_of_prior_px": 0.6703843839886209,
+     "pixels": 24070697,
+     "without_patch_px": 6
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_R1rep_b10_LoD2.json",
+     "judge_time": "2026-10-15 10:49:27",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/judgefuse_LoD2/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "made": "2026-10-15 17:40:30",
+   "scientific_verdict": null
+  },
+  "R1rep_b10/ALS": {
+   "fusion": {
+    "status": "있음",
+    "result": "mvsfuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 11:29:38",
+     "mesh": "2026-10-15 14:07:23",
+     "metrics": "2026-10-15 14:29:42",
+     "rows": "2026-10-15 14:29:43",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "change_area_share": 0.05426,
+    "change_patch_m2": 87.395,
+    "eval_patch_m2": 1610.529,
+    "plan_cells": {
+     "change_cells_eval_m2": 186.81,
+     "prior_cells_eval_m2": 2679.81,
+     "share": 0.06971,
+     "change_cells_outside_eval_m2": 570.75
+    },
+    "vote_m2": {
+     "all": 109.56,
+     "in_eval": 45.69
+    },
+    "growth_added_m2": {
+     "all": 751.62,
+     "in_eval": 188.62,
+     "in_final_in_eval": 184.81
+    },
+    "removal_added_m2": {
+     "all": 0.0,
+     "in_eval": 0.0
+    },
+    "removed_buildings": [],
+    "final_m2_whole_grid": 757.56,
+    "size_filter": {
+     "dropped_components": 477,
+     "dropped_m2": 103.62,
+     "kept_without_height_components": 0,
+     "kept_without_height_m2": 0.0
+    },
+    "thresholds": {
+     "colour": 25.0,
+     "colour_reference": [
+      20.0,
+      30.0
+     ],
+     "height_m": 2.0,
+     "height_reference_m": 1.5,
+     "opening_k_counts": {
+      "0": 19,
+      "1": 69,
+      "2": 57,
+      "3": 33,
+      "4": 12,
+      "5": 32,
+      "6": 9,
+      "7": 8,
+      "8": 11,
+      "9": 6,
+      "10": 21,
+      "11": 12,
+      "12": 4,
+      "13": 9,
+      "14": 7,
+      "15": 4,
+      "16": 4,
+      "17": 3,
+      "19": 3
+     },
+     "opening_k_px_q5_50_95": [
+      0.0,
+      3.0,
+      14.0
+     ],
+     "pairs_with_size": 323,
+     "pairs_without_opening": 88,
+     "relief_disp_px_q5_50_95": [
+      0.64,
+      3.97,
+      20.23
+     ],
+     "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+    },
+    "boundary_m": 98.25,
+    "boundary_to_cells_without_patch_m": 126.75,
+    "boundary_change_cells": 1321,
+    "plan_cell_seam_eval_m": 415.25,
+    "plan_cell_seam_all_m": 1221.0,
+    "emptied": {
+     "pixels": 484107,
+     "share_of_change_px": 0.1745,
+     "pixel_weighted_area_eval_m2": 30.332,
+     "fully_emptied_area_eval_m2": 0.0,
+     "change_patches_eval_without_pixels": 0,
+     "plan_cells_change_without_any_mvs_eval_m2": 0.0
+    },
+    "mvs_filled": {
+     "area_eval_m2": 320.375,
+     "pixels": 154751225,
+     "share_of_all_px": 0.612451
+    },
+    "views_without_pair": 3,
+    "training_views": 333,
+    "paired_views": 330,
+    "source": {
+     "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_ALS/detect/detect.json",
+     "detect_time": "2026-10-15 11:29:38"
+    },
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1610.529317564144,
+      "change_m2": 87.39467370851871
+     },
+     "note": "결과를 본 뒤 더함: 발주문에 없는 참고 값. 변형의 판정 기록에 있는 지붕·벽 나눔(conflict_area_share.by_kind)과 같은 셈으로 맞춰 둠. 읽지 않음"
+    }
+   },
+   "variant": {
+    "status": "있음",
+    "result": "judgefuse_ALS",
+    "chain": {
+     "receipt_status": "PASS",
+     "first": "2026-10-15 15:24:18",
+     "mesh": "2026-10-15 15:48:14",
+     "metrics": "2026-10-15 16:01:24",
+     "rows": "2026-10-15 16:01:25",
+     "stale": [],
+     "metrics_ready": true
+    },
+    "compose_status": "PASS",
+    "same_as_compose": true,
+    "rule_version": "v2 (나), 10-15: patch judgment + the fork's own mark of pixels without a patch (= r14 g_p = 0 -> MVS)",
+    "judgment": {
+     "file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_R1rep_b10_ALS/model/monitor/locations.npz",
+     "sha256": "97918012f52ae7dfa5a785a5aa88338b2310df89a7d2d9bcc3a7424fcefaad80"
+    },
+    "conflict_area_share": 0.3251918441865695,
+    "conflict_m2": 523.7309988952212,
+    "eval_patch_m2": 1610.529317564144,
+    "by_kind_reference": {
+     "roof": {
+      "area_m2": 1610.529317564144,
+      "conflict_m2": 523.7309988952212,
+      "share": 0.3251918441865695
+     }
+    },
+    "boundary_m": 957.25,
+    "boundary_to_cells_without_patch_m": 1126.75,
+    "boundary_conflict_cells": 7167,
+    "emptied": {
+     "pixels": 810257,
+     "share_of_replaced_px": 0.029964819885714183,
+     "pixel_weighted_area_eval_m2": 152.09365506587642,
+     "fully_emptied_area_eval_m2": 0.379566326416041
+    },
+    "mvs_filled": {
+     "area_eval_m2": 320.375,
+     "pixels": 154751225,
+     "share_of_all_px": 0.6124514926426933
+    },
+    "replaced": {
+     "share_of_prior_px": 0.5358122003747556,
+     "pixels": 27040276,
+     "without_patch_px": 24592147
+    },
+    "source": {
+     "judge": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/judgefuse/units/judge_R1rep_b10_ALS.json",
+     "judge_time": "2026-10-15 10:52:04",
+     "compose": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/judgefuse_ALS/compose.json"
+    }
+   },
+   "kind": "records",
+   "site": "R1rep_b10",
+   "prior": "ALS",
+   "made": "2026-10-15 17:40:30",
+   "scientific_verdict": null
+  }
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,100 @@
+{
+ "site": "B173_b0",
+ "unit": "LoD2",
+ "question": "비교-3",
+ "comparator": "mvsfuse_LoD2",
+ "panels": [
+  {
+   "metric": "split:real_change",
+   "ko": "과거 형상 유입률 · 실제 변화로 봄",
+   "code": "11 (항공 LiDAR도 참값과 어긋남)",
+   "unit": "%",
+   "method_seeds": [
+    0.0094,
+    0.0082
+   ],
+   "prior": 0.9999,
+   "comparator": 0.0451,
+   "method_mean": 0.0088,
+   "criterion": 0.01635593103433736,
+   "criterion_parts": {
+    "pooled": 0.01635593103433736,
+    "unit": 0.0023758787847867986,
+    "three_points": 3.149176490347774e-05
+   },
+   "n": 95263,
+   "diff": -0.0363,
+   "grade": "확인",
+   "reading": "바뀐 곳의 과거 형상을 덜 들였다 (재현)"
+  },
+  {
+   "metric": "obs_inflow",
+   "ko": "관측 오류 유입률 (영역 전체)",
+   "code": "3",
+   "unit": "%",
+   "method_seeds": [
+    0.4625,
+    0.4637
+   ],
+   "prior": 0.0672,
+   "comparator": 0.1363,
+   "method_mean": 0.4631,
+   "criterion": 0.015746732994497574,
+   "criterion_parts": {
+    "pooled": 0.015746732994497574,
+    "unit": 0.002375878784786758,
+    "three_points": 0.00019777177137583228
+   },
+   "n": 15169,
+   "diff": 0.3268,
+   "grade": "확인",
+   "reading": "영상이 틀린 곳의 유입이 MVS 기반 결합보다 많았다 (재현)"
+  },
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "code": "4",
+   "unit": "%",
+   "method_seeds": [
+    0.9299,
+    0.9315
+   ],
+   "prior": 0.9793,
+   "comparator": 0.9622,
+   "method_mean": 0.9307,
+   "criterion": 0.03286632318955062,
+   "criterion_parts": {
+    "pooled": 0.03286632318955062,
+    "unit": 0.003167838379715823,
+    "three_points": 0.0015120967741935483
+   },
+   "n": 1984,
+   "diff": -0.031500000000000083,
+   "grade": "기준 안",
+   "reading": "다르지 않았다 (재현)"
+  },
+  {
+   "metric": "invisible_completeness",
+   "ko": "비가시 영역 완전성 (0.2 m)",
+   "code": "5",
+   "unit": "%",
+   "method_seeds": [
+    0.8824,
+    0.7647
+   ],
+   "prior": 1.0,
+   "comparator": 1.0,
+   "method_mean": 0.82355,
+   "criterion": 0.2330341108078384,
+   "criterion_parts": {
+    "unit": 0.2330341108078384,
+    "three_points": 0.17647058823529413
+   },
+   "n": 17,
+   "diff": -0.17645,
+   "grade": "표본 부족",
+   "reading": null
+  }
+ ],
+ "scientific_verdict": null
+}

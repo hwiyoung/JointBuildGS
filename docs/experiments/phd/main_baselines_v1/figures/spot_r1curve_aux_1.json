@@ -1,0 +1,182 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "spot": "R1 반투명 곡면 지붕",
+ "key": "r1curve_aux",
+ "figure": 1,
+ "site": "R1rep_b10",
+ "prior": "ALS",
+ "auxiliary": true,
+ "place": {
+  "section": "R1_translucent",
+  "centre": [
+   -11.38846522365082,
+   46.17741605656442,
+   -19.687588770740557
+  ],
+  "t": [
+   0.9311089079593134,
+   -0.36474128025055597
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "z_range": [
+   -31.775000000000002,
+   -16.687588770740557
+  ],
+  "z_range_stage1_rule": [
+   -24.11335845743947,
+   -16.687588770740557
+  ],
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "view_note": null,
+  "counted_rows": 27,
+  "band": "|s| <= 6 m, |d| <= 0.25 m, thinned GT rows, |sW| >= 0.2 m",
+  "band_codes_main_rows": {
+   "3": 27,
+   "12": 4
+  }
+ },
+ "code": 3,
+ "value_name": "관측 오류 유입률",
+ "panels": {
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "3": {
+     "points": 27,
+     "gt_side": 0.7407,
+     "wrong_side": 0.2593,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.2593
+    },
+    "12": {
+     "points": 4,
+     "gt_side": 0.0,
+     "wrong_side": 0.75,
+     "both": 0.25,
+     "neither": 0.0,
+     "spread": 1.0
+    }
+   },
+   "value": {
+    "points": 27,
+    "gt_side": 0.7407,
+    "wrong_side": 0.2593,
+    "both": 0.0,
+    "neither": 0.0,
+    "spread": 0.2593
+   },
+   "unit_wide": {
+    "share": 0.414,
+    "points": 15581
+   },
+   "segments": 1271
+  },
+  "GeoGS": {
+   "result": "geogs_ALS_fix1",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "3": {
+     "points": 27,
+     "gt_side": 0.5556,
+     "wrong_side": 0.1481,
+     "both": 0.1481,
+     "neither": 0.1481,
+     "spread": 0.2963
+    },
+    "12": {
+     "points": 4,
+     "gt_side": 0.0,
+     "wrong_side": 0.75,
+     "both": 0.25,
+     "neither": 0.0,
+     "spread": 1.0
+    }
+   },
+   "value": {
+    "points": 27,
+    "gt_side": 0.5556,
+    "wrong_side": 0.1481,
+    "both": 0.1481,
+    "neither": 0.1481,
+    "spread": 0.2963
+   },
+   "unit_wide": {
+    "share": 0.3109,
+    "points": 15581
+   },
+   "segments": 2391
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_ALS",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "3": {
+     "points": 27,
+     "gt_side": 0.963,
+     "wrong_side": 0.037,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.037
+    },
+    "12": {
+     "points": 4,
+     "gt_side": 0.0,
+     "wrong_side": 1.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 1.0
+    }
+   },
+   "value": {
+    "points": 27,
+    "gt_side": 0.963,
+    "wrong_side": 0.037,
+    "both": 0.0,
+    "neither": 0.0,
+    "spread": 0.037
+   },
+   "unit_wide": {
+    "share": 0.0988,
+    "points": 15581
+   },
+   "segments": 1471
+  }
+ },
+ "references": {
+  "gt_points": 7173,
+  "prior_result": "samepath_ALS",
+  "prior_segments": 1468,
+  "prior_value": {
+   "points": 27,
+   "gt_side": 0.963,
+   "wrong_side": 0.037,
+   "both": 0.0,
+   "neither": 0.0,
+   "spread": 0.037
+  }
+ },
+ "scientific_verdict": null,
+ "title": "같은 지붕에서 항공 LiDAR 면은 참값과 맞았고, MVS 기반 결합은 그 면을 그대로 두었으며, 본 방법과 GeoGS도 대체로 그 면을 따랐다(참값 27점, 표본 부족) — R1 항공 LiDAR (보조) · 1단계 정의: LoD2 단순화",
+ "title_kind": "statement written after viewing (10-15 17:5x, all panels viewed by the orchestrating session)",
+ "seed1": {
+  "points": 27,
+  "gt_side": 0.7037,
+  "wrong_side": 0.2963,
+  "both": 0.0,
+  "neither": 0.0,
+  "spread": 0.2963
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 관측 오류(코드 3) 참값 27점에서 결과 면이 틀린 쪽에 선 몫(관측 오류 유입률): 본 방법 (씨앗 0) 25.9 %(씨앗 1: 29.6 %), GeoGS 29.6 %, MVS 기반 결합 3.7 %; 학습 전 사전 정보 3.7 %. 100점 미만이라 표본 부족이다(7.1절). 단위 전체(R1 항공 LiDAR): 본 방법 (씨앗 0) 41.4 %, GeoGS 31.1 %, MVS 기반 결합 9.9 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면."
+}

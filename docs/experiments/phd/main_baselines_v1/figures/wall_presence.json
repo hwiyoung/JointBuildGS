@@ -1,0 +1,2778 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "what": "order 8 'B173 긴 벽': wall present = a result mesh within 0.25 m of the unseen wall patch centre; this file is read by the tables (order 7.2: units with < 100 invisible GT points)",
+ "rule": {
+  "patches": "the unseen patches of the stage-1 unseen face (S1/defs/fig_views_v1.json unseen_face; unseen.npz surf_ext); counted = label_inferred 0 ('맞음으로 미룸', the wall stands there now); label 1 ('틀림으로 미룸', above the current roof) and 2 ('모호') are reported apart (by_label) and left out of 'share'",
+  "mesh": "'virtual' = the virtual-view mesh (option 2, order 6.1) where the result has one (the training-view TSDF mesh cannot hold a surface no training view sees); 'tsdf' = the training-view mesh for a result without a renderer (MVS-based fusion, the judgment-swapped variant, samepath); 'surface' = the registered prior surface itself (stage 1 scene 3)",
+  "distance": "Open3D distance from the patch centre to the mesh crop within 1.5 m of the wall plane (exact for distances <= 0.25 m given TSDF triangles of ~0.05-0.1 m)",
+  "stage1_value": "VIS-v3 measures/wall.json (B173 주변 only): any-origin Gaussians with opacity >= 0.5 within 0.25 m of the centre, over the 15,366 '맞음으로 미룸' unseen patches of all faces; 'gaussian_supported' = the same count recomputed here on that set and on this wall's counted set"
+ },
+ "units": {
+  "B173_b0/ALS": {
+   "site": "B173_b0",
+   "prior": "ALS",
+   "face": 25,
+   "face_patches": 18298,
+   "counted_patches": 14970,
+   "labels_on_face": {
+    "맞음으로 미룸": 14970,
+    "틀림으로 미룸": 2953,
+    "모호": 375
+   },
+   "stage1_patch_set": 15369,
+   "results": {
+    "prop_ALS_s0": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 0",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 9052,
+     "share": 0.604676,
+     "share_tsdf": 0.045157,
+     "present_tsdf": 676,
+     "share_virtual": 0.604676,
+     "present_virtual": 9052,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 676,
+      "share": 0.045157,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 676,
+        "share": 0.045157
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 88,
+        "share": 0.0298
+       },
+       "모호": {
+        "patches": 375,
+        "present": 331,
+        "share": 0.882667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 9052,
+      "share": 0.604676,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 9052,
+        "share": 0.604676
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 436,
+        "share": 0.147646
+       },
+       "모호": {
+        "patches": 375,
+        "present": 342,
+        "share": 0.912
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 1065,
+       "share": 0.069295
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 1012,
+       "share": 0.067602
+      }
+     },
+     "stage1_value": null
+    },
+    "prop_ALS_s1": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 1",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 8512,
+     "share": 0.568604,
+     "share_tsdf": 0.039212,
+     "present_tsdf": 587,
+     "share_virtual": 0.568604,
+     "present_virtual": 8512,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 587,
+      "share": 0.039212,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 587,
+        "share": 0.039212
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 124,
+        "share": 0.041991
+       },
+       "모호": {
+        "patches": 375,
+        "present": 331,
+        "share": 0.882667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 8512,
+      "share": 0.568604,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 8512,
+        "share": 0.568604
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 224,
+        "share": 0.075855
+       },
+       "모호": {
+        "patches": 375,
+        "present": 342,
+        "share": 0.912
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 1110,
+       "share": 0.072223
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 1040,
+       "share": 0.069472
+      }
+     },
+     "stage1_value": null
+    },
+    "samepath_ALS": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(같은 길 메시)",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1125,
+     "share": 0.07515,
+     "share_tsdf": 0.07515,
+     "present_tsdf": 1125,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1125,
+      "share": 0.07515,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1125,
+        "share": 0.07515
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1466,
+        "share": 0.496444
+       },
+       "모호": {
+        "patches": 375,
+        "present": 55,
+        "share": 0.146667
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "surface_ALS": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(정합한 면 자체)",
+     "status": "ok",
+     "mesh": "surface",
+     "count_mesh": "surface",
+     "count_mesh_ko": "정합한 사전 정보 면",
+     "patches": 14970,
+     "present": 14375,
+     "share": 0.960254,
+     "share_tsdf": null,
+     "present_tsdf": null,
+     "share_virtual": null,
+     "present_virtual": null,
+     "prior_surface": {
+      "patches": 14970,
+      "present": 14375,
+      "share": 0.960254,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 14375,
+        "share": 0.960254
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 2606,
+        "share": 0.882492
+       },
+       "모호": {
+        "patches": 375,
+        "present": 348,
+        "share": 0.928
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "imgonly_2dgs_s0": {
+     "method": "2차원 가우시안 스플래팅",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3465,
+     "share": 0.231463,
+     "share_tsdf": 0.005611,
+     "present_tsdf": 84,
+     "share_virtual": 0.231463,
+     "present_virtual": 3465,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 84,
+      "share": 0.005611,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 84,
+        "share": 0.005611
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1869,
+        "share": 0.632916
+       },
+       "모호": {
+        "patches": 375,
+        "present": 67,
+        "share": 0.178667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3465,
+      "share": 0.231463,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3465,
+        "share": 0.231463
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1952,
+        "share": 0.661023
+       },
+       "모호": {
+        "patches": 375,
+        "present": 260,
+        "share": 0.693333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 103,
+       "share": 0.006702
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 78,
+       "share": 0.00521
+      }
+     },
+     "stage1_value": null
+    },
+    "geogs_ALS_fix1": {
+     "method": "GeoGS",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 2833,
+     "share": 0.189245,
+     "share_tsdf": 0.038277,
+     "present_tsdf": 573,
+     "share_virtual": 0.189245,
+     "present_virtual": 2833,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 573,
+      "share": 0.038277,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 573,
+        "share": 0.038277
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 887,
+        "share": 0.300373
+       },
+       "모호": {
+        "patches": 375,
+        "present": 252,
+        "share": 0.672
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 2833,
+      "share": 0.189245,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 2833,
+        "share": 0.189245
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 722,
+        "share": 0.244497
+       },
+       "모호": {
+        "patches": 375,
+        "present": 270,
+        "share": 0.72
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 234,
+       "share": 0.015225
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 187,
+       "share": 0.012492
+      }
+     },
+     "stage1_value": null
+    },
+    "mvsfuse_ALS": {
+     "method": "MVS 기반 결합",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1204,
+     "share": 0.080428,
+     "share_tsdf": 0.080428,
+     "present_tsdf": 1204,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1204,
+      "share": 0.080428,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1204,
+        "share": 0.080428
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 432,
+        "share": 0.146292
+       },
+       "모호": {
+        "patches": 375,
+        "present": 316,
+        "share": 0.842667
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "cdgs_ALS_s0": {
+     "method": "CDGS",
+     "role": "비교 방법",
+     "status": "not_trained",
+     "note": "결과 없음 (학습하지 않음; 설정 고침 기록 5번)"
+    },
+    "imgonly_s0": {
+     "method": "영상만",
+     "role": "장치 빼기",
+     "status": "no_result",
+     "note": "결과 없음 (1단계와 고침 발주에서 GPU 메모리 부족으로 멈춤)"
+    },
+    "imgonly_s1": {
+     "method": "영상만",
+     "role": "장치 빼기 씨앗 1",
+     "status": "no_result",
+     "note": "결과 없음 (1단계에서 돌리지 않음; B173만 영상만은 씨앗 0 하나였고 GPU 메모리 부족으로 멈춤)"
+    },
+    "trust_ALS": {
+     "method": "사전 정보 신뢰",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 7467,
+     "share": 0.498798,
+     "share_tsdf": 0.077956,
+     "present_tsdf": 1167,
+     "share_virtual": 0.498798,
+     "present_virtual": 7467,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1167,
+      "share": 0.077956,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1167,
+        "share": 0.077956
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 686,
+        "share": 0.232306
+       },
+       "모호": {
+        "patches": 375,
+        "present": 375,
+        "share": 1.0
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 7467,
+      "share": 0.498798,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 7467,
+        "share": 0.498798
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 309,
+        "share": 0.104639
+       },
+       "모호": {
+        "patches": 375,
+        "present": 371,
+        "share": 0.989333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 755,
+       "share": 0.049125
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 730,
+       "share": 0.048764
+      }
+     },
+     "stage1_value": null
+    },
+    "nojudge_ALS_s0": {
+     "method": "판정만 끈 본 방법",
+     "role": "장치 빼기",
+     "status": "no_result",
+     "note": "결과 없음 (3단계 발주에서 돌리지 않음)"
+    },
+    "judgefuse_ALS": {
+     "method": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1407,
+     "share": 0.093988,
+     "share_tsdf": 0.093988,
+     "present_tsdf": 1407,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1407,
+      "share": 0.093988,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1407,
+        "share": 0.093988
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 708,
+        "share": 0.239756
+       },
+       "모호": {
+        "patches": 375,
+        "present": 318,
+        "share": 0.848
+       }
+      }
+     },
+     "stage1_value": null
+    }
+   },
+   "rows": {
+    "same_mesh_tsdf": {
+     "prop_ALS_s0": 0.045157,
+     "prop_ALS_s1": 0.039212,
+     "samepath_ALS": 0.07515,
+     "imgonly_2dgs_s0": 0.005611,
+     "geogs_ALS_fix1": 0.038277,
+     "mvsfuse_ALS": 0.080428,
+     "trust_ALS": 0.077956,
+     "judgefuse_ALS": 0.093988
+    },
+    "same_mesh_virtual": {
+     "prop_ALS_s0": 0.604676,
+     "prop_ALS_s1": 0.568604,
+     "imgonly_2dgs_s0": 0.231463,
+     "geogs_ALS_fix1": 0.189245,
+     "trust_ALS": 0.498798
+    },
+    "main": {
+     "prop_ALS_s0": {
+      "share": 0.604676,
+      "mesh": "virtual"
+     },
+     "prop_ALS_s1": {
+      "share": 0.568604,
+      "mesh": "virtual"
+     },
+     "samepath_ALS": {
+      "share": 0.07515,
+      "mesh": "tsdf"
+     },
+     "surface_ALS": {
+      "share": 0.960254,
+      "mesh": "surface"
+     },
+     "imgonly_2dgs_s0": {
+      "share": 0.231463,
+      "mesh": "virtual"
+     },
+     "geogs_ALS_fix1": {
+      "share": 0.189245,
+      "mesh": "virtual"
+     },
+     "mvsfuse_ALS": {
+      "share": 0.080428,
+      "mesh": "tsdf"
+     },
+     "trust_ALS": {
+      "share": 0.498798,
+      "mesh": "virtual"
+     },
+     "judgefuse_ALS": {
+      "share": 0.093988,
+      "mesh": "tsdf"
+     }
+    },
+    "note": "same_mesh_tsdf: every result on its training-view TSDF mesh (the evaluated surface; the same patches and 0.25 m) - one row with one mesh kind for all; same_mesh_virtual: the results with a renderer on their virtual-view meshes; main: the figure's count (virtual where a renderer exists, else tsdf; surface = the registered prior itself)"
+   },
+   "written": "2026-10-15 17:43:30 KST"
+  },
+  "B173_b0/LoD2": {
+   "site": "B173_b0",
+   "prior": "LoD2",
+   "face": 25,
+   "face_patches": 18298,
+   "counted_patches": 14970,
+   "labels_on_face": {
+    "맞음으로 미룸": 14970,
+    "틀림으로 미룸": 2953,
+    "모호": 375
+   },
+   "stage1_patch_set": 15369,
+   "results": {
+    "prop_LoD2_s0": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 0",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 13534,
+     "share": 0.904075,
+     "share_tsdf": 0.091249,
+     "present_tsdf": 1366,
+     "share_virtual": 0.904075,
+     "present_virtual": 13534,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1366,
+      "share": 0.091249,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1366,
+        "share": 0.091249
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 286,
+        "share": 0.096851
+       },
+       "모호": {
+        "patches": 375,
+        "present": 350,
+        "share": 0.933333
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 13534,
+      "share": 0.904075,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 13534,
+        "share": 0.904075
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 605,
+        "share": 0.204876
+       },
+       "모호": {
+        "patches": 375,
+        "present": 333,
+        "share": 0.888
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 12908,
+       "share": 0.839872
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 12628,
+       "share": 0.843554
+      }
+     },
+     "stage1_value": null
+    },
+    "prop_LoD2_s1": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 1",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 13542,
+     "share": 0.904609,
+     "share_tsdf": 0.081764,
+     "present_tsdf": 1224,
+     "share_virtual": 0.904609,
+     "present_virtual": 13542,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1224,
+      "share": 0.081764,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1224,
+        "share": 0.081764
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 313,
+        "share": 0.105994
+       },
+       "모호": {
+        "patches": 375,
+        "present": 352,
+        "share": 0.938667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 13542,
+      "share": 0.904609,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 13542,
+        "share": 0.904609
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 527,
+        "share": 0.178463
+       },
+       "모호": {
+        "patches": 375,
+        "present": 344,
+        "share": 0.917333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 13112,
+       "share": 0.853146
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 12811,
+       "share": 0.855778
+      }
+     },
+     "stage1_value": null
+    },
+    "samepath_LoD2": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(같은 길 메시)",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1242,
+     "share": 0.082966,
+     "share_tsdf": 0.082966,
+     "present_tsdf": 1242,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1242,
+      "share": 0.082966,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1242,
+        "share": 0.082966
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 355,
+        "share": 0.120217
+       },
+       "모호": {
+        "patches": 375,
+        "present": 20,
+        "share": 0.053333
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "surface_LoD2": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(정합한 면 자체)",
+     "status": "ok",
+     "mesh": "surface",
+     "count_mesh": "surface",
+     "count_mesh_ko": "정합한 사전 정보 면",
+     "patches": 14970,
+     "present": 14970,
+     "share": 1.0,
+     "share_tsdf": null,
+     "present_tsdf": null,
+     "share_virtual": null,
+     "present_virtual": null,
+     "prior_surface": {
+      "patches": 14970,
+      "present": 14970,
+      "share": 1.0,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 14970,
+        "share": 1.0
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 2953,
+        "share": 1.0
+       },
+       "모호": {
+        "patches": 375,
+        "present": 375,
+        "share": 1.0
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "imgonly_2dgs_s0": {
+     "method": "2차원 가우시안 스플래팅",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3465,
+     "share": 0.231463,
+     "share_tsdf": 0.005611,
+     "present_tsdf": 84,
+     "share_virtual": 0.231463,
+     "present_virtual": 3465,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 84,
+      "share": 0.005611,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 84,
+        "share": 0.005611
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1869,
+        "share": 0.632916
+       },
+       "모호": {
+        "patches": 375,
+        "present": 67,
+        "share": 0.178667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3465,
+      "share": 0.231463,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3465,
+        "share": 0.231463
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1952,
+        "share": 0.661023
+       },
+       "모호": {
+        "patches": 375,
+        "present": 260,
+        "share": 0.693333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 103,
+       "share": 0.006702
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 78,
+       "share": 0.00521
+      }
+     },
+     "stage1_value": null
+    },
+    "trust_LoD2_fix1": {
+     "method": "GeoGS",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 2410,
+     "share": 0.160989,
+     "share_tsdf": 0.036607,
+     "present_tsdf": 548,
+     "share_virtual": 0.160989,
+     "present_virtual": 2410,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 548,
+      "share": 0.036607,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 548,
+        "share": 0.036607
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 997,
+        "share": 0.337623
+       },
+       "모호": {
+        "patches": 375,
+        "present": 275,
+        "share": 0.733333
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 2410,
+      "share": 0.160989,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 2410,
+        "share": 0.160989
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 564,
+        "share": 0.190992
+       },
+       "모호": {
+        "patches": 375,
+        "present": 275,
+        "share": 0.733333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15369,
+       "present": 217,
+       "share": 0.014119
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 172,
+       "share": 0.01149
+      }
+     },
+     "stage1_value": null
+    },
+    "mvsfuse_LoD2": {
+     "method": "MVS 기반 결합",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 377,
+     "share": 0.025184,
+     "share_tsdf": 0.025184,
+     "present_tsdf": 377,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 377,
+      "share": 0.025184,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 377,
+        "share": 0.025184
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 128,
+        "share": 0.043346
+       },
+       "모호": {
+        "patches": 375,
+        "present": 316,
+        "share": 0.842667
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "cdgs_LoD2_s0": {
+     "method": "CDGS",
+     "role": "비교 방법",
+     "status": "not_trained",
+     "note": "결과 없음 (학습하지 않음; 설정 고침 기록 5번)"
+    },
+    "imgonly_s0": {
+     "method": "영상만",
+     "role": "장치 빼기",
+     "status": "no_result",
+     "note": "결과 없음 (1단계와 고침 발주에서 GPU 메모리 부족으로 멈춤)"
+    },
+    "imgonly_s1": {
+     "method": "영상만",
+     "role": "장치 빼기 씨앗 1",
+     "status": "no_result",
+     "note": "결과 없음 (1단계에서 돌리지 않음; B173만 영상만은 씨앗 0 하나였고 GPU 메모리 부족으로 멈춤)"
+    },
+    "nojudge_LoD2_s0": {
+     "method": "판정만 끈 본 방법",
+     "role": "장치 빼기",
+     "status": "no_result",
+     "note": "결과 없음 (3단계 발주에서 돌리지 않음)"
+    },
+    "judgefuse_LoD2": {
+     "method": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1498,
+     "share": 0.100067,
+     "share_tsdf": 0.100067,
+     "present_tsdf": 1498,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1498,
+      "share": 0.100067,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1498,
+        "share": 0.100067
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 179,
+        "share": 0.060616
+       },
+       "모호": {
+        "patches": 375,
+        "present": 316,
+        "share": 0.842667
+       }
+      }
+     },
+     "stage1_value": null
+    }
+   },
+   "rows": {
+    "same_mesh_tsdf": {
+     "prop_LoD2_s0": 0.091249,
+     "prop_LoD2_s1": 0.081764,
+     "samepath_LoD2": 0.082966,
+     "imgonly_2dgs_s0": 0.005611,
+     "trust_LoD2_fix1": 0.036607,
+     "mvsfuse_LoD2": 0.025184,
+     "judgefuse_LoD2": 0.100067
+    },
+    "same_mesh_virtual": {
+     "prop_LoD2_s0": 0.904075,
+     "prop_LoD2_s1": 0.904609,
+     "imgonly_2dgs_s0": 0.231463,
+     "trust_LoD2_fix1": 0.160989
+    },
+    "main": {
+     "prop_LoD2_s0": {
+      "share": 0.904075,
+      "mesh": "virtual"
+     },
+     "prop_LoD2_s1": {
+      "share": 0.904609,
+      "mesh": "virtual"
+     },
+     "samepath_LoD2": {
+      "share": 0.082966,
+      "mesh": "tsdf"
+     },
+     "surface_LoD2": {
+      "share": 1.0,
+      "mesh": "surface"
+     },
+     "imgonly_2dgs_s0": {
+      "share": 0.231463,
+      "mesh": "virtual"
+     },
+     "trust_LoD2_fix1": {
+      "share": 0.160989,
+      "mesh": "virtual"
+     },
+     "mvsfuse_LoD2": {
+      "share": 0.025184,
+      "mesh": "tsdf"
+     },
+     "judgefuse_LoD2": {
+      "share": 0.100067,
+      "mesh": "tsdf"
+     }
+    },
+    "note": "same_mesh_tsdf: every result on its training-view TSDF mesh (the evaluated surface; the same patches and 0.25 m) - one row with one mesh kind for all; same_mesh_virtual: the results with a renderer on their virtual-view meshes; main: the figure's count (virtual where a renderer exists, else tsdf; surface = the registered prior itself)"
+   },
+   "written": "2026-10-15 17:43:30 KST"
+  },
+  "B173nb_b10/ALS": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "face": 53,
+   "face_patches": 18298,
+   "counted_patches": 14970,
+   "labels_on_face": {
+    "맞음으로 미룸": 14970,
+    "틀림으로 미룸": 2953,
+    "모호": 375
+   },
+   "stage1_patch_set": 15366,
+   "results": {
+    "prop_ALS_s0": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 0",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 10460,
+     "share": 0.698731,
+     "share_tsdf": 0.046627,
+     "present_tsdf": 698,
+     "share_virtual": 0.698731,
+     "present_virtual": 10460,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 698,
+      "share": 0.046627,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 698,
+        "share": 0.046627
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 205,
+        "share": 0.069421
+       },
+       "모호": {
+        "patches": 375,
+        "present": 334,
+        "share": 0.890667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 10460,
+      "share": 0.698731,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 10460,
+        "share": 0.698731
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 382,
+        "share": 0.12936
+       },
+       "모호": {
+        "patches": 375,
+        "present": 328,
+        "share": 0.874667
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 1109,
+       "share": 0.072172
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 1061,
+       "share": 0.070875
+      }
+     },
+     "stage1_value": {
+      "share": 0.072172,
+      "patches": 15366,
+      "present": 1109,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "prop_ALS_s1": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 1",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 10045,
+     "share": 0.671009,
+     "share_tsdf": 0.045291,
+     "present_tsdf": 678,
+     "share_virtual": 0.671009,
+     "present_virtual": 10045,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 678,
+      "share": 0.045291,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 678,
+        "share": 0.045291
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 122,
+        "share": 0.041314
+       },
+       "모호": {
+        "patches": 375,
+        "present": 331,
+        "share": 0.882667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 10045,
+      "share": 0.671009,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 10045,
+        "share": 0.671009
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 365,
+        "share": 0.123603
+       },
+       "모호": {
+        "patches": 375,
+        "present": 331,
+        "share": 0.882667
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 1116,
+       "share": 0.072628
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 1066,
+       "share": 0.071209
+      }
+     },
+     "stage1_value": {
+      "share": 0.072628,
+      "patches": 15366,
+      "present": 1116,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "samepath_ALS": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(같은 길 메시)",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1125,
+     "share": 0.07515,
+     "share_tsdf": 0.07515,
+     "present_tsdf": 1125,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1125,
+      "share": 0.07515,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1125,
+        "share": 0.07515
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1466,
+        "share": 0.496444
+       },
+       "모호": {
+        "patches": 375,
+        "present": 55,
+        "share": 0.146667
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "surface_ALS": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(정합한 면 자체)",
+     "status": "ok",
+     "mesh": "surface",
+     "count_mesh": "surface",
+     "count_mesh_ko": "정합한 사전 정보 면",
+     "patches": 14970,
+     "present": 14375,
+     "share": 0.960254,
+     "share_tsdf": null,
+     "present_tsdf": null,
+     "share_virtual": null,
+     "present_virtual": null,
+     "prior_surface": {
+      "patches": 14970,
+      "present": 14375,
+      "share": 0.960254,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 14375,
+        "share": 0.960254
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 2606,
+        "share": 0.882492
+       },
+       "모호": {
+        "patches": 375,
+        "present": 348,
+        "share": 0.928
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "imgonly_2dgs_s0": {
+     "method": "2차원 가우시안 스플래팅",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3415,
+     "share": 0.228123,
+     "share_tsdf": 0.009486,
+     "present_tsdf": 142,
+     "share_virtual": 0.228123,
+     "present_virtual": 3415,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 142,
+      "share": 0.009486,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 142,
+        "share": 0.009486
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1436,
+        "share": 0.486285
+       },
+       "모호": {
+        "patches": 375,
+        "present": 48,
+        "share": 0.128
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3415,
+      "share": 0.228123,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3415,
+        "share": 0.228123
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1197,
+        "share": 0.40535
+       },
+       "모호": {
+        "patches": 375,
+        "present": 143,
+        "share": 0.381333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 175,
+       "share": 0.011389
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 139,
+       "share": 0.009285
+      }
+     },
+     "stage1_value": null
+    },
+    "geogs_ALS_fix1": {
+     "method": "GeoGS",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3384,
+     "share": 0.226052,
+     "share_tsdf": 0.074749,
+     "present_tsdf": 1119,
+     "share_virtual": 0.226052,
+     "present_virtual": 3384,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1119,
+      "share": 0.074749,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1119,
+        "share": 0.074749
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 452,
+        "share": 0.153065
+       },
+       "모호": {
+        "patches": 375,
+        "present": 336,
+        "share": 0.896
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3384,
+      "share": 0.226052,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3384,
+        "share": 0.226052
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 245,
+        "share": 0.082966
+       },
+       "모호": {
+        "patches": 375,
+        "present": 318,
+        "share": 0.848
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 222,
+       "share": 0.014447
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 207,
+       "share": 0.013828
+      }
+     },
+     "stage1_value": null
+    },
+    "mvsfuse_ALS": {
+     "method": "MVS 기반 결합",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1174,
+     "share": 0.078424,
+     "share_tsdf": 0.078424,
+     "present_tsdf": 1174,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1174,
+      "share": 0.078424,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1174,
+        "share": 0.078424
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 362,
+        "share": 0.122587
+       },
+       "모호": {
+        "patches": 375,
+        "present": 315,
+        "share": 0.84
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "cdgs_ALS_s0": {
+     "method": "CDGS",
+     "role": "비교 방법",
+     "status": "not_trained",
+     "note": "결과 없음 (학습하지 않음; 설정 고침 기록 5번)"
+    },
+    "imgonly_s0": {
+     "method": "영상만",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3192,
+     "share": 0.213226,
+     "share_tsdf": 0.019906,
+     "present_tsdf": 298,
+     "share_virtual": 0.213226,
+     "present_virtual": 3192,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 298,
+      "share": 0.019906,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 298,
+        "share": 0.019906
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 108,
+        "share": 0.036573
+       },
+       "모호": {
+        "patches": 375,
+        "present": 321,
+        "share": 0.856
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3192,
+      "share": 0.213226,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3192,
+        "share": 0.213226
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 123,
+        "share": 0.041653
+       },
+       "모호": {
+        "patches": 375,
+        "present": 324,
+        "share": 0.864
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 343,
+       "share": 0.022322
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 309,
+       "share": 0.020641
+      }
+     },
+     "stage1_value": {
+      "share": 0.022322,
+      "patches": 15366,
+      "present": 343,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "imgonly_s1": {
+     "method": "영상만",
+     "role": "장치 빼기 씨앗 1",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3836,
+     "share": 0.256246,
+     "share_tsdf": 0.024582,
+     "present_tsdf": 368,
+     "share_virtual": 0.256246,
+     "present_virtual": 3836,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 368,
+      "share": 0.024582,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 368,
+        "share": 0.024582
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 55,
+        "share": 0.018625
+       },
+       "모호": {
+        "patches": 375,
+        "present": 319,
+        "share": 0.850667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3836,
+      "share": 0.256246,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3836,
+        "share": 0.256246
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 192,
+        "share": 0.065019
+       },
+       "모호": {
+        "patches": 375,
+        "present": 327,
+        "share": 0.872
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 326,
+       "share": 0.021216
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 290,
+       "share": 0.019372
+      }
+     },
+     "stage1_value": {
+      "share": 0.021216,
+      "patches": 15366,
+      "present": 326,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "trust_ALS": {
+     "method": "사전 정보 신뢰",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 8030,
+     "share": 0.536406,
+     "share_tsdf": 0.102338,
+     "present_tsdf": 1532,
+     "share_virtual": 0.536406,
+     "present_virtual": 8030,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1532,
+      "share": 0.102338,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1532,
+        "share": 0.102338
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 902,
+        "share": 0.305452
+       },
+       "모호": {
+        "patches": 375,
+        "present": 375,
+        "share": 1.0
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 8030,
+      "share": 0.536406,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 8030,
+        "share": 0.536406
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 362,
+        "share": 0.122587
+       },
+       "모호": {
+        "patches": 375,
+        "present": 299,
+        "share": 0.797333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 808,
+       "share": 0.052584
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 774,
+       "share": 0.051703
+      }
+     },
+     "stage1_value": null
+    },
+    "nojudge_ALS_s0": {
+     "method": "판정만 끈 본 방법",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 10289,
+     "share": 0.687308,
+     "share_tsdf": 0.043821,
+     "present_tsdf": 656,
+     "share_virtual": 0.687308,
+     "present_virtual": 10289,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 656,
+      "share": 0.043821,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 656,
+        "share": 0.043821
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 233,
+        "share": 0.078903
+       },
+       "모호": {
+        "patches": 375,
+        "present": 339,
+        "share": 0.904
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 10289,
+      "share": 0.687308,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 10289,
+        "share": 0.687308
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 239,
+        "share": 0.080935
+       },
+       "모호": {
+        "patches": 375,
+        "present": 324,
+        "share": 0.864
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 1109,
+       "share": 0.072172
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 1059,
+       "share": 0.070741
+      }
+     },
+     "stage1_value": null
+    },
+    "judgefuse_ALS": {
+     "method": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1397,
+     "share": 0.09332,
+     "share_tsdf": 0.09332,
+     "present_tsdf": 1397,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1397,
+      "share": 0.09332,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1397,
+        "share": 0.09332
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 696,
+        "share": 0.235693
+       },
+       "모호": {
+        "patches": 375,
+        "present": 325,
+        "share": 0.866667
+       }
+      }
+     },
+     "stage1_value": null
+    }
+   },
+   "rows": {
+    "same_mesh_tsdf": {
+     "prop_ALS_s0": 0.046627,
+     "prop_ALS_s1": 0.045291,
+     "samepath_ALS": 0.07515,
+     "imgonly_2dgs_s0": 0.009486,
+     "geogs_ALS_fix1": 0.074749,
+     "mvsfuse_ALS": 0.078424,
+     "imgonly_s0": 0.019906,
+     "imgonly_s1": 0.024582,
+     "trust_ALS": 0.102338,
+     "nojudge_ALS_s0": 0.043821,
+     "judgefuse_ALS": 0.09332
+    },
+    "same_mesh_virtual": {
+     "prop_ALS_s0": 0.698731,
+     "prop_ALS_s1": 0.671009,
+     "imgonly_2dgs_s0": 0.228123,
+     "geogs_ALS_fix1": 0.226052,
+     "imgonly_s0": 0.213226,
+     "imgonly_s1": 0.256246,
+     "trust_ALS": 0.536406,
+     "nojudge_ALS_s0": 0.687308
+    },
+    "main": {
+     "prop_ALS_s0": {
+      "share": 0.698731,
+      "mesh": "virtual"
+     },
+     "prop_ALS_s1": {
+      "share": 0.671009,
+      "mesh": "virtual"
+     },
+     "samepath_ALS": {
+      "share": 0.07515,
+      "mesh": "tsdf"
+     },
+     "surface_ALS": {
+      "share": 0.960254,
+      "mesh": "surface"
+     },
+     "imgonly_2dgs_s0": {
+      "share": 0.228123,
+      "mesh": "virtual"
+     },
+     "geogs_ALS_fix1": {
+      "share": 0.226052,
+      "mesh": "virtual"
+     },
+     "mvsfuse_ALS": {
+      "share": 0.078424,
+      "mesh": "tsdf"
+     },
+     "imgonly_s0": {
+      "share": 0.213226,
+      "mesh": "virtual"
+     },
+     "imgonly_s1": {
+      "share": 0.256246,
+      "mesh": "virtual"
+     },
+     "trust_ALS": {
+      "share": 0.536406,
+      "mesh": "virtual"
+     },
+     "nojudge_ALS_s0": {
+      "share": 0.687308,
+      "mesh": "virtual"
+     },
+     "judgefuse_ALS": {
+      "share": 0.09332,
+      "mesh": "tsdf"
+     }
+    },
+    "note": "same_mesh_tsdf: every result on its training-view TSDF mesh (the evaluated surface; the same patches and 0.25 m) - one row with one mesh kind for all; same_mesh_virtual: the results with a renderer on their virtual-view meshes; main: the figure's count (virtual where a renderer exists, else tsdf; surface = the registered prior itself)"
+   },
+   "written": "2026-10-15 17:43:30 KST"
+  },
+  "B173nb_b10/LoD2": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "face": 53,
+   "face_patches": 18298,
+   "counted_patches": 14970,
+   "labels_on_face": {
+    "맞음으로 미룸": 14970,
+    "틀림으로 미룸": 2953,
+    "모호": 375
+   },
+   "stage1_patch_set": 15366,
+   "results": {
+    "prop_LoD2_s0": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 0",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 13771,
+     "share": 0.919906,
+     "share_tsdf": 0.084168,
+     "present_tsdf": 1260,
+     "share_virtual": 0.919906,
+     "present_virtual": 13771,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1260,
+      "share": 0.084168,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1260,
+        "share": 0.084168
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 356,
+        "share": 0.120555
+       },
+       "모호": {
+        "patches": 375,
+        "present": 350,
+        "share": 0.933333
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 13771,
+      "share": 0.919906,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 13771,
+        "share": 0.919906
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 405,
+        "share": 0.137149
+       },
+       "모호": {
+        "patches": 375,
+        "present": 344,
+        "share": 0.917333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 12608,
+       "share": 0.820513
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 12297,
+       "share": 0.821443
+      }
+     },
+     "stage1_value": {
+      "share": 0.820513,
+      "patches": 15366,
+      "present": 12608,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "prop_LoD2_s1": {
+     "method": "본 방법",
+     "role": "본 방법 씨앗 1",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 13871,
+     "share": 0.926587,
+     "share_tsdf": 0.100735,
+     "present_tsdf": 1508,
+     "share_virtual": 0.926587,
+     "present_virtual": 13871,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1508,
+      "share": 0.100735,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1508,
+        "share": 0.100735
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 372,
+        "share": 0.125974
+       },
+       "모호": {
+        "patches": 375,
+        "present": 349,
+        "share": 0.930667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 13871,
+      "share": 0.926587,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 13871,
+        "share": 0.926587
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 445,
+        "share": 0.150694
+       },
+       "모호": {
+        "patches": 375,
+        "present": 330,
+        "share": 0.88
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 12097,
+       "share": 0.787258
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 11818,
+       "share": 0.789446
+      }
+     },
+     "stage1_value": {
+      "share": 0.787258,
+      "patches": 15366,
+      "present": 12097,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "samepath_LoD2": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(같은 길 메시)",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1242,
+     "share": 0.082966,
+     "share_tsdf": 0.082966,
+     "present_tsdf": 1242,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1242,
+      "share": 0.082966,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1242,
+        "share": 0.082966
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 355,
+        "share": 0.120217
+       },
+       "모호": {
+        "patches": 375,
+        "present": 20,
+        "share": 0.053333
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "surface_LoD2": {
+     "method": "학습 전 사전 정보",
+     "role": "학습 전 사전 정보(정합한 면 자체)",
+     "status": "ok",
+     "mesh": "surface",
+     "count_mesh": "surface",
+     "count_mesh_ko": "정합한 사전 정보 면",
+     "patches": 14970,
+     "present": 14970,
+     "share": 1.0,
+     "share_tsdf": null,
+     "present_tsdf": null,
+     "share_virtual": null,
+     "present_virtual": null,
+     "prior_surface": {
+      "patches": 14970,
+      "present": 14970,
+      "share": 1.0,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 14970,
+        "share": 1.0
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 2953,
+        "share": 1.0
+       },
+       "모호": {
+        "patches": 375,
+        "present": 375,
+        "share": 1.0
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "imgonly_2dgs_s0": {
+     "method": "2차원 가우시안 스플래팅",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3415,
+     "share": 0.228123,
+     "share_tsdf": 0.009486,
+     "present_tsdf": 142,
+     "share_virtual": 0.228123,
+     "present_virtual": 3415,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 142,
+      "share": 0.009486,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 142,
+        "share": 0.009486
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1436,
+        "share": 0.486285
+       },
+       "모호": {
+        "patches": 375,
+        "present": 48,
+        "share": 0.128
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3415,
+      "share": 0.228123,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3415,
+        "share": 0.228123
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 1197,
+        "share": 0.40535
+       },
+       "모호": {
+        "patches": 375,
+        "present": 143,
+        "share": 0.381333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 175,
+       "share": 0.011389
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 139,
+       "share": 0.009285
+      }
+     },
+     "stage1_value": null
+    },
+    "trust_LoD2_fix1": {
+     "method": "GeoGS",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3342,
+     "share": 0.223246,
+     "share_tsdf": 0.043554,
+     "present_tsdf": 652,
+     "share_virtual": 0.223246,
+     "present_virtual": 3342,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 652,
+      "share": 0.043554,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 652,
+        "share": 0.043554
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 320,
+        "share": 0.108364
+       },
+       "모호": {
+        "patches": 375,
+        "present": 331,
+        "share": 0.882667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3342,
+      "share": 0.223246,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3342,
+        "share": 0.223246
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 288,
+        "share": 0.097528
+       },
+       "모호": {
+        "patches": 375,
+        "present": 322,
+        "share": 0.858667
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 209,
+       "share": 0.013601
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 185,
+       "share": 0.012358
+      }
+     },
+     "stage1_value": null
+    },
+    "mvsfuse_LoD2": {
+     "method": "MVS 기반 결합",
+     "role": "비교 방법",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 336,
+     "share": 0.022445,
+     "share_tsdf": 0.022445,
+     "present_tsdf": 336,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 336,
+      "share": 0.022445,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 336,
+        "share": 0.022445
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 107,
+        "share": 0.036234
+       },
+       "모호": {
+        "patches": 375,
+        "present": 318,
+        "share": 0.848
+       }
+      }
+     },
+     "stage1_value": null
+    },
+    "cdgs_LoD2_s0": {
+     "method": "CDGS",
+     "role": "비교 방법",
+     "status": "not_trained",
+     "note": "결과 없음 (학습하지 않음; 설정 고침 기록 5번)"
+    },
+    "imgonly_s0": {
+     "method": "영상만",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3192,
+     "share": 0.213226,
+     "share_tsdf": 0.019906,
+     "present_tsdf": 298,
+     "share_virtual": 0.213226,
+     "present_virtual": 3192,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 298,
+      "share": 0.019906,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 298,
+        "share": 0.019906
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 108,
+        "share": 0.036573
+       },
+       "모호": {
+        "patches": 375,
+        "present": 321,
+        "share": 0.856
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3192,
+      "share": 0.213226,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3192,
+        "share": 0.213226
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 123,
+        "share": 0.041653
+       },
+       "모호": {
+        "patches": 375,
+        "present": 324,
+        "share": 0.864
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 343,
+       "share": 0.022322
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 309,
+       "share": 0.020641
+      }
+     },
+     "stage1_value": {
+      "share": 0.022322,
+      "patches": 15366,
+      "present": 343,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "imgonly_s1": {
+     "method": "영상만",
+     "role": "장치 빼기 씨앗 1",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 3836,
+     "share": 0.256246,
+     "share_tsdf": 0.024582,
+     "present_tsdf": 368,
+     "share_virtual": 0.256246,
+     "present_virtual": 3836,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 368,
+      "share": 0.024582,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 368,
+        "share": 0.024582
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 55,
+        "share": 0.018625
+       },
+       "모호": {
+        "patches": 375,
+        "present": 319,
+        "share": 0.850667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 3836,
+      "share": 0.256246,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 3836,
+        "share": 0.256246
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 192,
+        "share": 0.065019
+       },
+       "모호": {
+        "patches": 375,
+        "present": 327,
+        "share": 0.872
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 326,
+       "share": 0.021216
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 290,
+       "share": 0.019372
+      }
+     },
+     "stage1_value": {
+      "share": 0.021216,
+      "patches": 15366,
+      "present": 326,
+      "source": "VIS-v3 measures/wall.json",
+      "recomputed_same": true
+     }
+    },
+    "nojudge_LoD2_s0": {
+     "method": "판정만 끈 본 방법",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "virtual",
+     "count_mesh": "virtual",
+     "count_mesh_ko": "가상 시점 메시",
+     "patches": 14970,
+     "present": 13362,
+     "share": 0.892585,
+     "share_tsdf": 0.068671,
+     "present_tsdf": 1028,
+     "share_virtual": 0.892585,
+     "present_virtual": 13362,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1028,
+      "share": 0.068671,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1028,
+        "share": 0.068671
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 382,
+        "share": 0.12936
+       },
+       "모호": {
+        "patches": 375,
+        "present": 355,
+        "share": 0.946667
+       }
+      }
+     },
+     "virtual_mesh": {
+      "patches": 14970,
+      "present": 13362,
+      "share": 0.892585,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 13362,
+        "share": 0.892585
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 325,
+        "share": 0.110058
+       },
+       "모호": {
+        "patches": 375,
+        "present": 338,
+        "share": 0.901333
+       }
+      }
+     },
+     "gaussian_supported": {
+      "stage1_patch_set": {
+       "patches": 15366,
+       "present": 12349,
+       "share": 0.803657
+      },
+      "counted": {
+       "patches": 14970,
+       "present": 12059,
+       "share": 0.805544
+      }
+     },
+     "stage1_value": null
+    },
+    "judgefuse_LoD2": {
+     "method": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "장치 빼기",
+     "status": "ok",
+     "mesh": "tsdf",
+     "count_mesh": "tsdf",
+     "count_mesh_ko": "학습 시점 TSDF 메시",
+     "patches": 14970,
+     "present": 1517,
+     "share": 0.101336,
+     "share_tsdf": 0.101336,
+     "present_tsdf": 1517,
+     "share_virtual": null,
+     "present_virtual": null,
+     "tsdf_mesh": {
+      "patches": 14970,
+      "present": 1517,
+      "share": 0.101336,
+      "by_label": {
+       "맞음으로 미룸": {
+        "patches": 14970,
+        "present": 1517,
+        "share": 0.101336
+       },
+       "틀림으로 미룸": {
+        "patches": 2953,
+        "present": 171,
+        "share": 0.057907
+       },
+       "모호": {
+        "patches": 375,
+        "present": 318,
+        "share": 0.848
+       }
+      }
+     },
+     "stage1_value": null
+    }
+   },
+   "rows": {
+    "same_mesh_tsdf": {
+     "prop_LoD2_s0": 0.084168,
+     "prop_LoD2_s1": 0.100735,
+     "samepath_LoD2": 0.082966,
+     "imgonly_2dgs_s0": 0.009486,
+     "trust_LoD2_fix1": 0.043554,
+     "mvsfuse_LoD2": 0.022445,
+     "imgonly_s0": 0.019906,
+     "imgonly_s1": 0.024582,
+     "nojudge_LoD2_s0": 0.068671,
+     "judgefuse_LoD2": 0.101336
+    },
+    "same_mesh_virtual": {
+     "prop_LoD2_s0": 0.919906,
+     "prop_LoD2_s1": 0.926587,
+     "imgonly_2dgs_s0": 0.228123,
+     "trust_LoD2_fix1": 0.223246,
+     "imgonly_s0": 0.213226,
+     "imgonly_s1": 0.256246,
+     "nojudge_LoD2_s0": 0.892585
+    },
+    "main": {
+     "prop_LoD2_s0": {
+      "share": 0.919906,
+      "mesh": "virtual"
+     },
+     "prop_LoD2_s1": {
+      "share": 0.926587,
+      "mesh": "virtual"
+     },
+     "samepath_LoD2": {
+      "share": 0.082966,
+      "mesh": "tsdf"
+     },
+     "surface_LoD2": {
+      "share": 1.0,
+      "mesh": "surface"
+     },
+     "imgonly_2dgs_s0": {
+      "share": 0.228123,
+      "mesh": "virtual"
+     },
+     "trust_LoD2_fix1": {
+      "share": 0.223246,
+      "mesh": "virtual"
+     },
+     "mvsfuse_LoD2": {
+      "share": 0.022445,
+      "mesh": "tsdf"
+     },
+     "imgonly_s0": {
+      "share": 0.213226,
+      "mesh": "virtual"
+     },
+     "imgonly_s1": {
+      "share": 0.256246,
+      "mesh": "virtual"
+     },
+     "nojudge_LoD2_s0": {
+      "share": 0.892585,
+      "mesh": "virtual"
+     },
+     "judgefuse_LoD2": {
+      "share": 0.101336,
+      "mesh": "tsdf"
+     }
+    },
+    "note": "same_mesh_tsdf: every result on its training-view TSDF mesh (the evaluated surface; the same patches and 0.25 m) - one row with one mesh kind for all; same_mesh_virtual: the results with a renderer on their virtual-view meshes; main: the figure's count (virtual where a renderer exists, else tsdf; surface = the registered prior itself)"
+   },
+   "written": "2026-10-15 17:43:30 KST"
+  }
+ },
+ "scientific_verdict": null,
+ "written": "2026-10-15 17:43:30 KST"
+}

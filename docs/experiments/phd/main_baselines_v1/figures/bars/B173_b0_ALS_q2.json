@@ -1,0 +1,100 @@
+{
+ "site": "B173_b0",
+ "unit": "ALS",
+ "question": "비교-2",
+ "comparator": "geogs_ALS_fix1",
+ "panels": [
+  {
+   "metric": "prior_error_inflow",
+   "ko": "과거 형상 유입률",
+   "code": "11",
+   "unit": "%",
+   "method_seeds": [
+    0.0004,
+    0.0006
+   ],
+   "prior": 0.9995,
+   "comparator": 0.0675,
+   "method_mean": 0.0005,
+   "criterion": 0.01635593103433736,
+   "criterion_parts": {
+    "pooled": 0.01635593103433736,
+    "unit": 0.0003959797974644664,
+    "three_points": 3.139980322789977e-05
+   },
+   "n": 95542,
+   "diff": -0.067,
+   "grade": "확인",
+   "reading": "바뀐 곳의 과거 형상을 덜 들였다"
+  },
+  {
+   "metric": "obs_inflow",
+   "ko": "관측 오류 유입률 (영역 전체)",
+   "code": "3",
+   "unit": "%",
+   "method_seeds": [
+    0.8514,
+    0.8515
+   ],
+   "prior": 0.0166,
+   "comparator": 0.1953,
+   "method_mean": 0.85145,
+   "criterion": 0.015746732994497574,
+   "criterion_parts": {
+    "pooled": 0.015746732994497574,
+    "unit": 0.00019798989873221146,
+    "three_points": 0.00036850509765385086
+   },
+   "n": 8141,
+   "diff": 0.65615,
+   "grade": "확인",
+   "reading": "그 대가로 관측 오류 유입률 (영역 전체)에서 GeoGS보다 못했다"
+  },
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "code": "4",
+   "unit": "%",
+   "method_seeds": [
+    0.0,
+    0.0
+   ],
+   "prior": 1.0,
+   "comparator": 0.1429,
+   "method_mean": 0.0,
+   "criterion": 0.14285714285714285,
+   "criterion_parts": {
+    "pooled": 0.03286632318955062,
+    "unit": 0.0,
+    "three_points": 0.14285714285714285
+   },
+   "n": 21,
+   "diff": -0.1429,
+   "grade": "표본 부족",
+   "reading": null
+  },
+  {
+   "metric": "invisible_completeness",
+   "ko": "비가시 영역 완전성 (0.2 m)",
+   "code": "5",
+   "unit": "%",
+   "method_seeds": [
+    1.0,
+    1.0
+   ],
+   "prior": 1.0,
+   "comparator": 1.0,
+   "method_mean": 1.0,
+   "criterion": 1.5,
+   "criterion_parts": {
+    "unit": 0.0,
+    "three_points": 1.5
+   },
+   "n": 2,
+   "diff": 0.0,
+   "grade": "표본 부족",
+   "reading": null
+  }
+ ],
+ "scientific_verdict": null
+}

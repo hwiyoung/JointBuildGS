@@ -1,0 +1,168 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "spot": "R1 낮은 계단 지붕",
+ "key": "r1low_aux",
+ "figure": 2,
+ "site": "R1rep_b10",
+ "prior": "ALS",
+ "auxiliary": true,
+ "place": {
+  "section": "R1_low_roof",
+  "centre": [
+   22.983430165905766,
+   28.576477565814496,
+   -29.493468147884336
+  ],
+  "t": [
+   0.3420201433256688,
+   0.9396926207859083
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "z_range": [
+   -34.60860045865992,
+   -26.493468147884336
+  ],
+  "z_range_stage1_rule": [
+   -33.75978825725171,
+   -26.493468147884336
+  ],
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "view_note": null,
+  "counted_rows": 169,
+  "band": "|s| <= 6 m, |d| <= 0.25 m, thinned GT rows, |sW| >= 0.2 m",
+  "band_codes_main_rows": {
+   "3": 169,
+   "11": 7,
+   "12": 2
+  }
+ },
+ "code": 3,
+ "value_name": "관측 오류 유입률",
+ "panels": {
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 7,
+     "gt_side": 0.2857,
+     "wrong_side": 0.1429,
+     "both": 0.1429,
+     "neither": 0.4286,
+     "spread": 0.2857
+    },
+    "3": {
+     "points": 169,
+     "gt_side": 0.0828,
+     "wrong_side": 0.4438,
+     "both": 0.0,
+     "neither": 0.4734,
+     "spread": 0.4438
+    },
+    "12": {
+     "points": 2,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   },
+   "value": {
+    "points": 169,
+    "gt_side": 0.0828,
+    "wrong_side": 0.4438,
+    "both": 0.0,
+    "neither": 0.4734,
+    "spread": 0.4438
+   },
+   "unit_wide": {
+    "share": 0.414,
+    "points": 15581
+   },
+   "segments": 1019
+  },
+  "CDGS": {
+   "result": "cdgs_ALS_s0",
+   "status": "not_trained",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)"
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 7,
+     "gt_side": 0.2857,
+     "wrong_side": 0.1429,
+     "both": 0.5714,
+     "neither": 0.0,
+     "spread": 0.7143
+    },
+    "3": {
+     "points": 169,
+     "gt_side": 0.0947,
+     "wrong_side": 0.3432,
+     "both": 0.0651,
+     "neither": 0.497,
+     "spread": 0.4083
+    },
+    "12": {
+     "points": 2,
+     "gt_side": 0.0,
+     "wrong_side": 0.5,
+     "both": 0.5,
+     "neither": 0.0,
+     "spread": 1.0
+    }
+   },
+   "value": {
+    "points": 169,
+    "gt_side": 0.0947,
+    "wrong_side": 0.3432,
+    "both": 0.0651,
+    "neither": 0.497,
+    "spread": 0.4083
+   },
+   "unit_wide": {
+    "share": 0.4378,
+    "points": 15581
+   },
+   "segments": 2749
+  }
+ },
+ "references": {
+  "gt_points": 7220,
+  "prior_result": "samepath_ALS",
+  "prior_segments": 1180,
+  "prior_value": {
+   "points": 169,
+   "gt_side": 0.9941,
+   "wrong_side": 0.0,
+   "both": 0.0,
+   "neither": 0.0059,
+   "spread": 0.0
+  }
+ },
+ "scientific_verdict": null,
+ "title": "영상이 틀린 낮은 지붕에서 본 방법도 2차원 가우시안 스플래팅도 비스듬한 영상 면을 남겼다 — R1 항공 LiDAR (보조) · 1단계 정의: 두 자료 모두 불분명",
+ "title_kind": "statement written after viewing (10-15 17:5x, all panels viewed by the orchestrating session)",
+ "seed1": {
+  "points": 169,
+  "gt_side": 0.0237,
+  "wrong_side": 0.503,
+  "both": 0.0,
+  "neither": 0.4734,
+  "spread": 0.503
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 관측 오류(코드 3) 참값 169점에서 결과 면이 틀린 쪽에 선 몫(관측 오류 유입률): 본 방법 (씨앗 0) 44.4 %(씨앗 1: 50.3 %), CDGS 결과 없음(학습하지 않음), 2차원 가우시안 스플래팅 40.8 %; 학습 전 사전 정보 0.0 %. 단위 전체(R1 항공 LiDAR): 본 방법 (씨앗 0) 41.4 %, 2차원 가우시안 스플래팅 43.8 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면."
+}

@@ -1,0 +1,201 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "figure": "fusionmap_B173_b0_ALS",
+ "order": "v1.1 8 'MVS 기반 결합의 판정 그림'",
+ "role": "aux",
+ "site": "B173_b0",
+ "prior": "ALS",
+ "result": "mvsfuse_ALS",
+ "title": "MVS 기반 결합(재현)의 판정은 바뀐 곳을 어디서 잡고 어디서 놓쳤는가 — B173만 · 항공 LiDAR",
+ "one_thing_to_see": "결합(재현)의 판정이 코드 11·12를 어디서 잡고 어디서 놓쳤는지, 어디서 코드 2·3·4를 잘못 잡았는지",
+ "place": "the evaluation range of the unit (the place of this figure is the whole evaluation range, so the numbers are the unit's)",
+ "frame": "box frame u, v (s1_common.xy_to_uv), as the stage-1 / stage-3 maps; patch centres drawn as 0.25 m squares",
+ "drawing": {
+  "roof_like": "one square per patch, in the order excluded, none, false24, false3, caught, missed_nj, missed, c13, c14 (later on top)",
+  "walls": "LoD2 wall patches (kind 2) stand above each other: one square per 0.25 m (u, v) cell, the category with the largest wall-patch area in the cell (ties: the later category), drawn over the roofs",
+  "wall_cells": {},
+  "sections": "order 8's spot sections of this site (SB/prep/figpos.json, chosen before training), for orientation only",
+  "section_marks": []
+ },
+ "added_after_first_render": [
+  "결과를 본 뒤 더함(그림 꼴만): 첫 그림을 본 뒤 8절 자리 그림의 단면 위치(단면 1, 2)를 자리 표시로 더함",
+  "결과를 본 뒤 고침(그림 꼴만): 첫 그림은 LoD2 벽 패치를 범주 차례대로 겹쳐 그려 나중 색이 덮었다. 0.25 m 칸마다 넓이가 가장 큰 범주로 바꿈. 표의 숫자는 그대로"
+ ],
+ "categories": {
+  "excluded": {
+   "name": "참값 결여 패치 (코드 0, 평가에서 뺌)",
+   "colour": "#e3cfa6",
+   "patches": 3404,
+   "area_m2": 242.264,
+   "wall_area_m2": 0.0
+  },
+  "none": {
+   "name": "그 밖의 라벨 패치 (변화 칸 밖의 코드 2·3·4, 코드 5)",
+   "colour": "#d0d0d0",
+   "patches": 3449,
+   "area_m2": 245.454,
+   "wall_area_m2": 0.0
+  },
+  "false24": {
+   "name": "잘못 잡은 변화 (코드 2·4, 변화 칸 안)",
+   "colour": "#e08a1e",
+   "patches": 2,
+   "area_m2": 0.133,
+   "wall_area_m2": 0.0,
+   "share": 0.0011221998890262055,
+   "share_of": "코드 2·4 넓이"
+  },
+  "false3": {
+   "name": "잘못 잡은 변화 (코드 3 관측 오류, 변화 칸 안)",
+   "colour": "#e6007e",
+   "patches": 14,
+   "area_m2": 1.458,
+   "wall_area_m2": 0.0,
+   "share": 0.011325468942936956,
+   "share_of": "코드 3 넓이"
+  },
+  "caught": {
+   "name": "맞게 잡은 변화 (코드 11·12, 변화 칸 안)",
+   "colour": "#1f5fbf",
+   "patches": 17805,
+   "area_m2": 1183.072,
+   "wall_area_m2": 0.0,
+   "share": 0.9539821769961794,
+   "share_of": "코드 11·12 넓이"
+  },
+  "missed_nj": {
+   "name": "놓친 변화 (코드 11·12, 짝 있는 시점 둘 미만이라 판정 못 함)",
+   "colour": "#f1a1a1",
+   "patches": 157,
+   "area_m2": 12.17,
+   "wall_area_m2": 0.0,
+   "share": 0.009813524780901467,
+   "share_of": "코드 11·12 넓이"
+  },
+  "missed": {
+   "name": "놓친 변화 (코드 11·12, 판정했으나 변화 아님)",
+   "colour": "#c62828",
+   "patches": 649,
+   "area_m2": 44.898,
+   "wall_area_m2": 0.0,
+   "share": 0.03620429822291911,
+   "share_of": "코드 11·12 넓이"
+  },
+  "c13": {
+   "name": "코드 13 결측 사전 정보 오류",
+   "colour": "#6a3d9a",
+   "patches": 2,
+   "area_m2": 0.134,
+   "wall_area_m2": 0.0,
+   "in_change_share": 1.0
+  },
+  "c14": {
+   "name": "코드 14 비가시 사전 정보 오류",
+   "colour": "#00897b",
+   "patches": 0,
+   "area_m2": 0.0,
+   "wall_area_m2": 0.0,
+   "in_change_share": null
+  }
+ },
+ "categories_equal_to_detect_counts": {
+  "caught": true,
+  "missed": true,
+  "missed_nj": true,
+  "false24": true,
+  "false3": true
+ },
+ "wall_patch_area_share": 0.0,
+ "records": {
+  "line": "변화로 판정된 넓이 몫 70.6 % (1,221 / 1,730 m²) · 넓히기로 더한 넓이 1,116 m² · 철거 규칙으로 더한 넓이 0 m² · 쓴 문턱 색 25, 높이 2 m, 작은 덩어리 지우기 크기 중앙값 2화소 (5~95 분위 0~14.3, 열기 안 함 63 / 135쌍) · 합친 경계 198 m · 비운 넓이 113 m² · MVS로 채운 넓이 101 m² · 짝 없어 판정에 쓰지 않은 영상 5장",
+  "values": {
+   "change_area_share": 0.70566,
+   "change_patch_m2": 1220.502,
+   "eval_patch_m2": 1729.583,
+   "growth_added_m2": {
+    "all": 1236.75,
+    "in_eval": 1115.88,
+    "in_final_in_eval": 1115.88
+   },
+   "removal_added_m2": {
+    "all": 0.0,
+    "in_eval": 0.0
+   },
+   "boundary_m": 198.25,
+   "plan_cell_seam_eval_m": 908.75,
+   "emptied": {
+    "pixels": 456659,
+    "share_of_change_px": 0.1518,
+    "pixel_weighted_area_eval_m2": 113.02,
+    "fully_emptied_area_eval_m2": 0.0,
+    "change_patches_eval_without_pixels": 0,
+    "plan_cells_change_without_any_mvs_eval_m2": 0.0
+   },
+   "mvs_filled": {
+    "area_eval_m2": 100.75,
+    "pixels": 61422776,
+    "share_of_all_px": 0.578207
+   },
+   "views_without_pair": 5,
+   "thresholds": {
+    "colour": 25.0,
+    "colour_reference": [
+     20.0,
+     30.0
+    ],
+    "height_m": 2.0,
+    "height_reference_m": 1.5,
+    "opening_k_counts": {
+     "0": 34,
+     "1": 29,
+     "2": 7,
+     "3": 1,
+     "4": 3,
+     "5": 7,
+     "7": 4,
+     "8": 6,
+     "9": 2,
+     "10": 5,
+     "11": 14,
+     "12": 6,
+     "13": 5,
+     "14": 5,
+     "15": 3,
+     "16": 3,
+     "23": 1
+    },
+    "opening_k_px_q5_50_95": [
+     0.0,
+     2.0,
+     14.299999999999997
+    ],
+    "pairs_with_size": 135,
+    "pairs_without_opening": 63,
+    "relief_disp_px_q5_50_95": [
+     0.24,
+     2.9,
+     20.72
+    ],
+    "note": "opening = square k x k, k = round(0.7 x the 2 m relief displacement of the pair); k < 2 -> no opening"
+   }
+  }
+ },
+ "lod2_split_8_2": null,
+ "eval_range": {
+  "u": [
+   115.4,
+   191.0
+  ],
+  "v": [
+   77.1,
+   109.1
+  ]
+ },
+ "sources": {
+  "patches": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173_b0/mvsfuse_ALS/detect/patches.npz",
+  "detect": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173_b0/mvsfuse_ALS/detect/detect.json",
+  "region": "S1/regions_v3/regions_ext_v3_B173_b0_ALS.npz"
+ },
+ "made": "2026-10-15 17:40:35",
+ "scientific_verdict": null
+}

@@ -1,0 +1,187 @@
+{
+ "task_id": "PHD-MAIN-BASELINES-v1",
+ "spot": "B173 유리 채광창",
+ "key": "skylight_aux",
+ "figure": 1,
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "auxiliary": true,
+ "place": {
+  "section": "B173_sawtooth",
+  "centre": [
+   145.8573898185912,
+   111.19480351012703,
+   -29.160527296853928
+  ],
+  "t": [
+   -0.3654518144211199,
+   -0.9308302591430466
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "z_range": [
+   -32.16052729685393,
+   -20.987480063259547
+  ],
+  "z_range_stage1_rule": [
+   -32.16052729685393,
+   -24.733303137613206
+  ],
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "view_note": null,
+  "counted_rows": 421,
+  "band": "|s| <= 6 m, |d| <= 0.25 m, thinned GT rows, |sW| >= 0.2 m",
+  "band_codes_main_rows": {
+   "11": 33,
+   "12": 421
+  }
+ },
+ "code": 12,
+ "value_name": "이중 오류 유입률",
+ "panels": {
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 33,
+     "gt_side": 0.7273,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.2727,
+     "spread": 0.0
+    },
+    "12": {
+     "points": 421,
+     "gt_side": 0.4703,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.5297,
+     "spread": 0.0
+    }
+   },
+   "value": {
+    "points": 421,
+    "gt_side": 0.4703,
+    "wrong_side": 0.0,
+    "both": 0.0,
+    "neither": 0.5297,
+    "spread": 0.0
+   },
+   "unit_wide": {
+    "share": 0.0056,
+    "points": 19791
+   },
+   "segments": 994
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 33,
+     "gt_side": 0.8788,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.1212,
+     "spread": 0.0
+    },
+    "12": {
+     "points": 421,
+     "gt_side": 0.4798,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.5202,
+     "spread": 0.0
+    }
+   },
+   "value": {
+    "points": 421,
+    "gt_side": 0.4798,
+    "wrong_side": 0.0,
+    "both": 0.0,
+    "neither": 0.5202,
+    "spread": 0.0
+   },
+   "unit_wide": {
+    "share": 0.0294,
+    "points": 19791
+   },
+   "segments": 1951
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_ALS",
+   "status": "ok",
+   "count_mesh": "tsdf",
+   "count_mesh_ko": "학습 시점 TSDF 메시 (평가 표면; 지표 행의 분류와 같음)",
+   "values": {
+    "11": {
+     "points": 33,
+     "gt_side": 0.8182,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.1818,
+     "spread": 0.0
+    },
+    "12": {
+     "points": 421,
+     "gt_side": 0.5629,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.4371,
+     "spread": 0.0
+    }
+   },
+   "value": {
+    "points": 421,
+    "gt_side": 0.5629,
+    "wrong_side": 0.0,
+    "both": 0.0,
+    "neither": 0.4371,
+    "spread": 0.0
+   },
+   "unit_wide": {
+    "share": 0.0695,
+    "points": 19791
+   },
+   "segments": 1323
+  }
+ },
+ "references": {
+  "gt_points": 17379,
+  "prior_result": "samepath_ALS",
+  "prior_segments": 507,
+  "prior_value": {
+   "points": 421,
+   "gt_side": 0.0,
+   "wrong_side": 1.0,
+   "both": 0.0,
+   "neither": 0.0,
+   "spread": 1.0
+  },
+  "mvs_points": {
+   "n": 18587,
+   "source": "VIS-v2 cells/B173nb_b10/sec_B173_sawtooth.npz 'mvs' (box MVS geometric depth maps within +-0.25 m of the plane)"
+  }
+ },
+ "scientific_verdict": null,
+ "title": "5 m 위의 학습 전 항공 LiDAR 면은 세 방법 어디에도 남지 않았다 — B173 주변 항공 LiDAR (보조)",
+ "title_kind": "statement written after viewing (10-15 12:2x-13:1x, panels viewed)",
+ "seed1": {
+  "points": 421,
+  "gt_side": 0.4276,
+  "wrong_side": 0.0,
+  "both": 0.0,
+  "neither": 0.5724,
+  "spread": 0.0
+ },
+ "rule_check_note": "이 자리는 참값이 유리 위 첫 층(약 −27.4 m)과 그 아래 여러 층(유리 안쪽, 바닥 약 −31.5 m)으로 갈린다. 8절 5번이 피하라는 자리이나 미리 정한 자리라 그대로 그렸다. 센 참값 점도 여러 층에 흩어져 있어, 칸 위의 값과 선의 모습을 한 가지로 읽기 어렵다.",
+ "foot": "이 자리는 참값이 유리 위 첫 층(약 −27.4 m)과 그 아래 여러 층(유리 안쪽, 바닥 약 −31.5 m)으로 갈린다. 8절 5번이 피하라는 자리이나 미리 정한 자리라 그대로 그렸다. 센 참값 점도 여러 층에 흩어져 있어, 칸 위의 값과 선의 모습을 한 가지로 읽기 어렵다. 이 자리(단면 띠 12 m × 0.5 m)의 이중 오류(코드 12) 참값 421점에서 결과 면이 틀린 쪽에 선 몫(이중 오류 유입률): 본 방법 (씨앗 0) 0.0 %(씨앗 1: 0.0 %), 2차원 가우시안 스플래팅 0.0 %, MVS 기반 결합 0.0 %; 학습 전 사전 정보 100.0 %. 단위 전체(B173 주변 항공 LiDAR): 본 방법 (씨앗 0) 0.6 %, 2차원 가우시안 스플래팅 2.9 %, MVS 기반 결합 7.0 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면, 주황 점 = MVS 깊이."
+}
