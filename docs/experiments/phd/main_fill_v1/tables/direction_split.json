@@ -1,0 +1,3890 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "direction",
+ "written": "2026-10-15 21:07:53 KST",
+ "definitions": "SL/prep/direction/definitions.json",
+ "rule": "  python direction_split.py      -> SL/tables/direction_split.json, .md",
+ "split81": {
+  "B0_b10/LoD2": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.2002
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.227
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.038
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.0599
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.0102
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.0917
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.1846
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.192
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.1053
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.1905
+     }
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.1949
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2223
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0291
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.0598
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.007
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.0935
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.0769
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.08
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.1053
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.1905
+     }
+    }
+   },
+   "samepath_LoD2": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.9994
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.9961
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 1.0
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.9211
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.8571
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.4054
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.4684
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0237
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.2507
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.0813
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.359
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.5
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.52
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.0
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.1891
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2138
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.04
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.6125
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.127
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.923
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.0077
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.008
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.3684
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0588
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.619
+     }
+    }
+   },
+   "mvsfuse_LoD2": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.9665
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.9618
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.9951
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 1.0
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.4154
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.392
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.9211
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.8571
+     }
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "cdgs_LoD2_s0": {
+    "key": "cdgs_official",
+    "label": "CDGS 공식 확인",
+    "role": "official",
+    "status": "아직"
+   },
+   "judgefuse_LoD2": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.3884
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.3506
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.6177
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.2765
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.015
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.4437
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.1308
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.096
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.1316
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.2381
+     }
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "prop_ALS_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.4877
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.4877
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.3333
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.3333
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "prop_ALS_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.3852
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.3852
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.2778
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.2778
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "samepath_ALS": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.9795
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.9795
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.4836
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.4836
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.6667
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.6667
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "geogs_ALS_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.127
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.127
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.5
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.5
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "mvsfuse_ALS": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.9795
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.9795
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "cdgsnofit_ALS_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "judgefuse_ALS": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.8074
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.8074
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4303
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4388
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.241
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0163
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0144
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.05
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1622
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1748
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2423
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2757
+     }
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4736
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4867
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.184
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0167
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0149
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0466
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1622
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1748
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2115
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2383
+     }
+    }
+   },
+   "samepath_LoD2": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.9979
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.9999
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.9544
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.9971
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.9991
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.9626
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.9189
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.9126
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.9577
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.9486
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.3986
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4048
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.2606
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0609
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0404
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.4152
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.3784
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.4078
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.55
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0652
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.6542
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4766
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.486
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.2704
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0342
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0272
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.155
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.2613
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.2816
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.3769
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.4579
+     }
+    }
+   },
+   "mvsfuse_LoD2": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.9762
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.989
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.6922
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0612
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.049
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.2719
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.4865
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.125
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.5146
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.55
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.1522
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.6355
+     }
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "judgefuse_LoD2": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.5954
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.601
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.4723
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0305
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0179
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.248
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.7117
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.25
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.7476
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.5115
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.6215
+     }
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "prop_ALS_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0149
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0149
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "prop_ALS_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0192
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0192
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "samepath_ALS": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.9808
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.9808
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.9997
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.9997
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0416
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0416
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0225
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0225
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "geogs_ALS_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.5597
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.5597
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0256
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0256
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0392
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0392
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "mvsfuse_ALS": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.9808
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.9808
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0215
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0215
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "cdgsnofit_ALS_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "judgefuse_ALS": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.3625
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.3625
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0146
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0146
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.5
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.5
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0196
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0196
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1075
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.1106
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0789
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0149
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0137
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.028
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0267
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0276
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.0858
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.0869
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0748
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0109
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0102
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0178
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0281
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0291
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "samepath_LoD2": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.9948
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.9987
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.9584
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.9909
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.9989
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.9
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.8192
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.8171
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.9941
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.8261
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1318
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.117
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.2728
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.1838
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.1848
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.172
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0056
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.5
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.077
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0798
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.4716
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.4326
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.843
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.3081
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.2745
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.6888
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.1096
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0936
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.5652
+     }
+    }
+   },
+   "mvsfuse_LoD2": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.8102
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.8397
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.5299
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.4405
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.4469
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.3692
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0339
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0286
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.5
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.4874
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.4954
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.2609
+     }
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "judgefuse_LoD2": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1956
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.1782
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.3606
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0889
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0549
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.4738
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.157
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.1534
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.2609
+     }
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "prop_ALS_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2984
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2984
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.0725
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.0725
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0385
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0385
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "prop_ALS_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": true,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2531
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2531
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.0435
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.0435
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "samepath_ALS": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.9527
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.9527
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.9615
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.9615
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2407
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2407
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.1594
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.1594
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.2308
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.2308
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "geogs_ALS_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.1235
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.1235
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.6232
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.6232
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "mvsfuse_ALS": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.7531
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.7531
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0769
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0769
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "cdgsnofit_ALS_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "judgefuse_ALS": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.5165
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.5165
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.1304
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.1304
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0769
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0769
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   }
+  },
+  "B173_b0/LoD2": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.4806
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.4865
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.3686
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.0035
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.0017
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.0365
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.093
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.1143
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.1916
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.3261
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.1405
+     }
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.4507
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.4621
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.2324
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.0028
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.0013
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.03
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.0698
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.0857
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.1138
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.3043
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.0413
+     }
+    }
+   },
+   "samepath_LoD2": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.9981
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.9998
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.9647
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.9971
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.9992
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.9595
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.9767
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.9714
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.9341
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.9091
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.5291
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.5371
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.3766
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.0372
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.0133
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.4702
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.2093
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.2571
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.491
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.3478
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.5455
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.4798
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.4904
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.2788
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.1754
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.1577
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.4958
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.186
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.2286
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.485
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.413
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.5124
+     }
+    }
+   },
+   "mvsfuse_LoD2": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.9683
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.9826
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.6955
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.0452
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.0363
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.2063
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.2326
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.2857
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.3832
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.6304
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.2893
+     }
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "judgefuse_LoD2": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.5388
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.5422
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.4744
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.0136
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.0037
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.1919
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.6744
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.25
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.7714
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.4251
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.4348
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.4215
+     }
+    }
+   }
+  },
+  "B173_b0/ALS": {
+   "prop_ALS_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.0187
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.0187
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.0002
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.0002
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "prop_ALS_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.02
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.02
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.0004
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.0004
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "samepath_ALS": {
+    "key": "prior",
+    "label": "학습 전 사전 정보",
+    "role": "prior",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.9713
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.9713
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.9998
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.9998
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.0337
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.0337
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.0081
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.0081
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "geogs_ALS_fix1": {
+    "key": "geogs",
+    "label": "GeoGS",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.0824
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.0824
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.0674
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.0674
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "mvsfuse_ALS": {
+    "key": "mvsfuse",
+    "label": "MVS 기반 결합",
+    "role": "comp",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.9675
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.9675
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.0207
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.0207
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 0.2143
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 0.2143
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "cdgsnofit_ALS_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "judgefuse_ALS": {
+    "key": "judgefuse",
+    "label": "갈아 끼운 변형",
+    "role": "ref",
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.2984
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.2984
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.0135
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.0135
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   }
+  }
+ },
+ "split81_check_vs_stage3": {
+  "compared": 46,
+  "equal": 46,
+  "unequal": []
+ },
+ "split82_cdgs": {
+  "B0_b10": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 296,
+     "inflow": 0.3514
+    },
+    "representation": {
+     "points": 17223,
+     "inflow": 0.1284
+    },
+    "undecided": {
+     "points": 15361,
+     "inflow": 0.1082
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 296,
+     "inflow": 0.3581
+    },
+    "representation": {
+     "points": 17223,
+     "inflow": 0.1229
+    },
+    "undecided": {
+     "points": 15361,
+     "inflow": 0.109
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "check",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 296,
+     "inflow": 0.4628
+    },
+    "representation": {
+     "points": 17223,
+     "inflow": 0.3041
+    },
+    "undecided": {
+     "points": 15361,
+     "inflow": 0.3308
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   },
+   "cdgs_LoD2_s0": {
+    "key": "cdgs_official",
+    "label": "CDGS 공식 확인",
+    "role": "official",
+    "status": "아직"
+   }
+  },
+  "B173nb_b10": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 95157,
+     "inflow": 0.0071
+    },
+    "representation": {
+     "points": 9760,
+     "inflow": 0.5252
+    },
+    "undecided": {
+     "points": 14846,
+     "inflow": 0.1362
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 95157,
+     "inflow": 0.0083
+    },
+    "representation": {
+     "points": 9760,
+     "inflow": 0.5796
+    },
+    "undecided": {
+     "points": 14846,
+     "inflow": 0.1367
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "check",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 95157,
+     "inflow": 0.0357
+    },
+    "representation": {
+     "points": 9760,
+     "inflow": 0.4598
+    },
+    "undecided": {
+     "points": 14846,
+     "inflow": 0.2833
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   }
+  },
+  "R1rep_b10": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 1067,
+     "inflow": 0.0928
+    },
+    "representation": {
+     "points": 35402,
+     "inflow": 0.0782
+    },
+    "undecided": {
+     "points": 17876,
+     "inflow": 0.0983
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 1067,
+     "inflow": 0.1218
+    },
+    "representation": {
+     "points": 35402,
+     "inflow": 0.049
+    },
+    "undecided": {
+     "points": 17876,
+     "inflow": 0.1013
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "check",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 1067,
+     "inflow": 0.0881
+    },
+    "representation": {
+     "points": 35402,
+     "inflow": 0.1483
+    },
+    "undecided": {
+     "points": 17876,
+     "inflow": 0.1401
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   }
+  },
+  "B173_b0": {
+   "prop_LoD2_s0": {
+    "key": "m0",
+    "label": "본 방법 씨앗 0",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 95263,
+     "inflow": 0.0094
+    },
+    "representation": {
+     "points": 6867,
+     "inflow": 0.4736
+    },
+    "undecided": {
+     "points": 14180,
+     "inflow": 0.1561
+    }
+   },
+   "prop_LoD2_s1": {
+    "key": "m1",
+    "label": "본 방법 씨앗 1",
+    "role": "method",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 95263,
+     "inflow": 0.0082
+    },
+    "representation": {
+     "points": 6867,
+     "inflow": 0.458
+    },
+    "undecided": {
+     "points": 14180,
+     "inflow": 0.1403
+    }
+   },
+   "imgonly_2dgs_s0": {
+    "key": "twodgs",
+    "label": "2차원 가우시안 스플래팅",
+    "role": "check",
+    "status": "ok",
+    "in_split82": true,
+    "real_change": {
+     "points": 95263,
+     "inflow": 0.0217
+    },
+    "representation": {
+     "points": 6867,
+     "inflow": 0.5171
+    },
+    "undecided": {
+     "points": 14180,
+     "inflow": 0.341
+    }
+   },
+   "cdgsnofit_LoD2_s0": {
+    "key": "cdgs",
+    "label": "CDGS 변형",
+    "role": "comp",
+    "status": "아직"
+   }
+  }
+ },
+ "split82_check_vs_baselines": {
+  "compared": 12,
+  "equal": 12,
+  "unequal": []
+ },
+ "cautions": [
+  "늘어난 곳에는 옛 면 자리에 다른 면이 실제로 있는 경우가 섞인다. 방법 사이의 차이로만 본다(3단계 8.1).",
+  "항공 LiDAR 벽은 패치 면 법선을 z ≥ 0으로 뒤집은 방향이라 바깥이 보장되지 않는다(이번 단위의 항공 LiDAR 행은 모두 지붕)."
+ ],
+ "scientific_verdict": null
+}

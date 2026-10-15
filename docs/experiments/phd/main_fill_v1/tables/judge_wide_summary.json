@@ -1,0 +1,163 @@
+{
+ "component": "judge_wide",
+ "written": "2026-10-15 23:21 KST",
+ "decision": "본실험_채우기_결정반영_v1.md 1절, 2절; fill_v1_amendments.json 1",
+ "rows": [
+  {
+   "item": "both_right",
+   "cat": "wrong_release",
+   "reference_ch6": [
+    "3.8 % (28,575 m²)",
+    "4.4 % (6,492 m²)",
+    "1.4 % (18,606 m²)",
+    "7.6 % (3,315 m²)"
+   ],
+   "comparison_this_task": [
+    "3.8 % (28,575 m²)",
+    "4.4 % (6,492 m²)",
+    "1.4 % (18,606 m²)",
+    "7.6 % (3,315 m²)"
+   ]
+  },
+  {
+   "item": "prior_wrong",
+   "cat": "correct_release",
+   "reference_ch6": [
+    "80.7 % (5,475 m²)",
+    "87.2 % (2,480 m²)",
+    "31.6 % (255 m²)",
+    "99.1 % (1,036 m²)"
+   ],
+   "comparison_this_task": [
+    "80.7 % (5,475 m²)",
+    "87.2 % (2,480 m²)",
+    "31.6 % (255 m²)",
+    "99.1 % (1,036 m²)"
+   ]
+  },
+  {
+   "item": "prior_slightly_wrong",
+   "cat": "correct_release",
+   "reference_ch6": [
+    "78.9 % (4,927 m²)",
+    "72.2 % (1,089 m²)",
+    "19.3 % (216 m²)",
+    "60.9 % (19 m²)"
+   ],
+   "comparison_this_task": [
+    "78.9 % (4,927 m²)",
+    "72.2 % (1,089 m²)",
+    "19.3 % (216 m²)",
+    "60.9 % (19 m²)"
+   ]
+  },
+  {
+   "item": "code3_within",
+   "cat": "wrong_release",
+   "reference_ch6": [
+    "10.0 % (157 m²)",
+    "13.0 % (44 m²)",
+    "7.0 % (1,380 m²)",
+    "17.3 % (262 m²)"
+   ],
+   "comparison_this_task": [
+    "10.0 % (157 m²)",
+    "13.0 % (44 m²)",
+    "7.0 % (1,380 m²)",
+    "17.3 % (262 m²)"
+   ]
+  },
+  {
+   "item": "undecidable_premise",
+   "cat": "wrong_release",
+   "reference_ch6": [
+    "84.8 % (1,488 m²)",
+    "80.8 % (753 m²)",
+    "86.5 % (839 m²)",
+    "78.7 % (258 m²)"
+   ],
+   "comparison_this_task": [
+    "84.8 % (1,488 m²)",
+    "80.8 % (753 m²)",
+    "86.5 % (839 m²)",
+    "78.7 % (258 m²)"
+   ]
+  },
+  {
+   "item": "missing_right",
+   "cat": "wrong_release",
+   "reference_ch6": [
+    "15.4 % (923 m²)",
+    "7.6 % (217 m²)",
+    "12.1 % (431 m²)",
+    "64.2 % (8 m²)"
+   ],
+   "comparison_this_task": [
+    "15.4 % (923 m²)",
+    "7.6 % (217 m²)",
+    "12.1 % (431 m²)",
+    "64.2 % (8 m²)"
+   ]
+  },
+  {
+   "item": "missing_wrong",
+   "cat": "correct_release",
+   "reference_ch6": [
+    "56.9 % (155 m²)",
+    "64.5 % (18 m²)",
+    "17.4 % (30 m²)",
+    "94.6 % (1 m²)"
+   ],
+   "comparison_this_task": [
+    "56.9 % (155 m²)",
+    "64.5 % (18 m²)",
+    "17.4 % (30 m²)",
+    "94.6 % (1 m², 표본 부족)"
+   ]
+  }
+ ],
+ "obs_masked_reference_this_task": [
+  "30.3 % (873 m²)",
+  "23.5 % (94 m²)",
+  "26.0 % (798 m²)",
+  "92.5 % (30 m²)"
+ ],
+ "obs_masked_ch6_wide_definition": [
+  "21.0 % (1,111 m²)",
+  "21.5 % (220 m²)",
+  "12.9 % (1,131 m²)",
+  "46.8 % (90 m²)"
+ ],
+ "case_regions": [
+  "해당 없음",
+  "92.4 % (37 m²)",
+  "해당 없음",
+  "92.3 % (15 m²)"
+ ],
+ "totals_8_3_record": {
+  "LoD2": {
+   "buildings_with_gt": 85,
+   "buildings_n100": 75,
+   "sample_insufficient": 10,
+   "candidates": 17,
+   "excluded_real_change": 1,
+   "kept_candidates": 16,
+   "kept_in_evaluation_box": 1,
+   "kept_abs_median_ge_tau": 1,
+   "area_no_gt_m2": 81175.5
+  },
+  "ALS": {
+   "buildings_with_gt": 84,
+   "buildings_n100": 67,
+   "sample_insufficient": 17,
+   "candidates": 50,
+   "excluded_real_change": 1,
+   "kept_candidates": 49,
+   "kept_in_evaluation_box": 8,
+   "kept_abs_median_ge_tau": 0,
+   "area_no_gt_m2": 7280.9
+  }
+ },
+ "six_conditions_all_equal": true,
+ "scientific_verdict": null
+}

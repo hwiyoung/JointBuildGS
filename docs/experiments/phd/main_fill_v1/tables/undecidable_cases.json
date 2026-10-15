@@ -1,0 +1,1767 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "undecidable",
+ "written": "2026-10-15 23:10:43 KST",
+ "mark": "이 발주에서 냄",
+ "definitions": {
+  "file": "SL/prep/undecidable/definitions.json",
+  "written": "2026-10-15 20:56:23 KST"
+ },
+ "scientific_verdict": null,
+ "cases": {
+  "skylight": {
+   "LoD2": {
+    "case_patches": 593,
+    "case_area_m2": 37.06,
+    "place_patches": 13631,
+    "band_patches": 7753,
+    "band_area_m2": 484.56,
+    "multi_layer_gt": {
+     "rule": "gt_suspect of the region file (configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json: a roof-like patch whose GT height range in the 0.25 m cell exceeds the plane's rise over the cell diagonal by 0.3 m (two layers), or with >= 5 % of its ULS GT points from multi-return pulses); evaluated on roof-like code-2/3 patches with matched ULS points",
+     "evaluated": 593,
+     "multi_layer": 150,
+     "share": 0.253
+    },
+    "results": {
+     "ours_s0": {
+      "ko": "본 방법 씨앗 0",
+      "result": "prop_LoD2_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.8958,
+       "gt_side": 0.0278,
+       "wrong_side": 0.8722,
+       "both": 0.0236,
+       "neither": 0.0764
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.8116,
+       "gt_side": 0.1295,
+       "wrong_side": 0.8,
+       "both": 0.0116,
+       "neither": 0.0589
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9247,
+        "le_0.5": 0.9885
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.2235,
+        "le_0.5": 0.2458
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.4118,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5882
+       }
+      }
+     },
+     "ours_s1": {
+      "ko": "본 방법 씨앗 1",
+      "result": "prop_LoD2_s1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.855,
+       "gt_side": 0.032,
+       "wrong_side": 0.8113,
+       "both": 0.0436,
+       "neither": 0.113
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.7976,
+       "gt_side": 0.1244,
+       "wrong_side": 0.7775,
+       "both": 0.0202,
+       "neither": 0.078
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9271,
+        "le_0.5": 0.9898
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.2458,
+        "le_0.5": 0.2458
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.4118,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5882
+       }
+      }
+     },
+     "prior": {
+      "ko": "학습 전 사전 정보",
+      "result": "samepath_LoD2",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.0408,
+       "gt_side": 0.9159,
+       "wrong_side": 0.0155,
+       "both": 0.0253,
+       "neither": 0.0433
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.1191,
+       "gt_side": 0.8365,
+       "wrong_side": 0.0811,
+       "both": 0.038,
+       "neither": 0.0445
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9782,
+        "le_0.5": 0.9977
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.9777,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 1.0,
+        "gt_side": 0.0,
+        "wrong_side": 0.5882,
+        "both": 0.4118,
+        "neither": 0.0
+       }
+      }
+     },
+     "2dgs": {
+      "ko": "2차원 가우시안 스플래팅",
+      "result": "imgonly_2dgs_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.6065,
+       "gt_side": 0.2077,
+       "wrong_side": 0.5611,
+       "both": 0.0454,
+       "neither": 0.1859
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.4954,
+       "gt_side": 0.2539,
+       "wrong_side": 0.4745,
+       "both": 0.0209,
+       "neither": 0.2507
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.6553,
+        "le_0.5": 0.8719
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.0,
+        "le_0.5": 0.3128
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.1765,
+        "gt_side": 0.1176,
+        "wrong_side": 0.1765,
+        "both": 0.0,
+        "neither": 0.7059
+       }
+      }
+     },
+     "geogs": {
+      "ko": "GeoGS",
+      "result": "trust_LoD2_fix1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.4132,
+       "gt_side": 0.3861,
+       "wrong_side": 0.4122,
+       "both": 0.0011,
+       "neither": 0.2006
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.2864,
+       "gt_side": 0.4099,
+       "wrong_side": 0.283,
+       "both": 0.0034,
+       "neither": 0.3037
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.6216,
+        "le_0.5": 0.9706
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.4413,
+        "le_0.5": 0.838
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.7059,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.2941
+       }
+      }
+     },
+     "mvsfuse": {
+      "ko": "MVS 기반 결합",
+      "result": "mvsfuse_LoD2",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.144,
+       "gt_side": 0.8127,
+       "wrong_side": 0.0549,
+       "both": 0.0891,
+       "neither": 0.0433
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.2108,
+       "gt_side": 0.7446,
+       "wrong_side": 0.132,
+       "both": 0.0787,
+       "neither": 0.0446
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9788,
+        "le_0.5": 0.999
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.9162,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.2353,
+        "gt_side": 0.6471,
+        "wrong_side": 0.1765,
+        "both": 0.0588,
+        "neither": 0.1176
+       }
+      }
+     },
+     "cdgs": {
+      "ko": "CDGS 변형",
+      "result": "cdgsnofit_LoD2_s0",
+      "status": "아직"
+     },
+     "imgonly_s0": {
+      "ko": "영상만 씨앗 0",
+      "result": "imgonly_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.8634,
+       "gt_side": 0.0253,
+       "wrong_side": 0.8314,
+       "both": 0.032,
+       "neither": 0.1112
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.7772,
+       "gt_side": 0.1179,
+       "wrong_side": 0.7613,
+       "both": 0.0159,
+       "neither": 0.1049
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.899,
+        "le_0.5": 0.9857
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.2067,
+        "le_0.5": 0.2458
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.4118,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5882
+       }
+      }
+     },
+     "imgonly_s1": {
+      "ko": "영상만 씨앗 1",
+      "result": "imgonly_s1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.8624,
+       "gt_side": 0.0285,
+       "wrong_side": 0.8233,
+       "both": 0.0391,
+       "neither": 0.1091
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.7724,
+       "gt_side": 0.1307,
+       "wrong_side": 0.7538,
+       "both": 0.0187,
+       "neither": 0.0969
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9049,
+        "le_0.5": 0.9866
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.2011,
+        "le_0.5": 0.2458
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.4118,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5882
+       }
+      }
+     },
+     "nojudge": {
+      "ko": "판정만 끈 본 방법",
+      "result": "nojudge_LoD2_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.7265,
+       "gt_side": 0.1654,
+       "wrong_side": 0.686,
+       "both": 0.0405,
+       "neither": 0.1081
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.7094,
+       "gt_side": 0.2165,
+       "wrong_side": 0.6894,
+       "both": 0.02,
+       "neither": 0.074
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9449,
+        "le_0.5": 0.9937
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.2458,
+        "le_0.5": 0.2458
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.4118,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5882
+       }
+      }
+     },
+     "judgefuse": {
+      "ko": "본 방법의 판정으로 갈아 끼운 변형",
+      "result": "judgefuse_LoD2",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.7314,
+       "gt_side": 0.0961,
+       "wrong_side": 0.6698,
+       "both": 0.0616,
+       "neither": 0.1725
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.647,
+       "gt_side": 0.2058,
+       "wrong_side": 0.5665,
+       "both": 0.0805,
+       "neither": 0.1472
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9841,
+        "le_0.5": 0.9996
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.352,
+        "le_0.5": 0.7654
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.5294,
+        "gt_side": 0.2941,
+        "wrong_side": 0.4118,
+        "both": 0.1176,
+        "neither": 0.1765
+       }
+      }
+     },
+     "abl_prop": {
+      "ko": "판정 빌려 오기 끄기",
+      "result": "abl_prop_LoD2_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.8757,
+       "gt_side": 0.032,
+       "wrong_side": 0.8472,
+       "both": 0.0285,
+       "neither": 0.0922
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.8014,
+       "gt_side": 0.1342,
+       "wrong_side": 0.7863,
+       "both": 0.0152,
+       "neither": 0.0643
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.9325,
+        "le_0.5": 0.9899
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.2291,
+        "le_0.5": 0.2458
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.4118,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5882
+       }
+      }
+     }
+    },
+    "rows": {
+     "case_c3": 2841,
+     "place_c3": 6794,
+     "band": {
+      "c2": 6930,
+      "c4": 179,
+      "c13": 17
+     }
+    },
+    "judgment_spread_band": {
+     "missing_code4_13": 45,
+     "missing_area_m2": 2.81,
+     "borrowed": 45,
+     "insufficient": 0,
+     "branches": {
+      "from_premise": {
+       "patches": 33,
+       "area_m2": 2.06,
+       "code4": 31,
+       "code13": 2,
+       "wrong_release": {
+        "patches": 29,
+        "area_m2": 1.81,
+        "share": 0.8788
+       },
+       "wrong_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_release": {
+        "patches": 1,
+        "area_m2": 0.06,
+        "share": 0.0303
+       },
+       "undetermined": {
+        "patches": 3,
+        "area_m2": 0.19,
+        "share": 0.0909
+       },
+       "premise_neighbours_per_patch_median": 4.0
+      },
+      "elsewhere": {
+       "patches": 12,
+       "area_m2": 0.75,
+       "code4": 9,
+       "code13": 3,
+       "wrong_release": {
+        "patches": 1,
+        "area_m2": 0.06,
+        "share": 0.0833
+       },
+       "wrong_keep": {
+        "patches": 1,
+        "area_m2": 0.06,
+        "share": 0.0833
+       },
+       "correct_keep": {
+        "patches": 4,
+        "area_m2": 0.25,
+        "share": 0.3333
+       },
+       "correct_release": {
+        "patches": 2,
+        "area_m2": 0.12,
+        "share": 0.1667
+       },
+       "undetermined": {
+        "patches": 4,
+        "area_m2": 0.25,
+        "share": 0.3333
+       }
+      },
+      "all": {
+       "patches": 45,
+       "area_m2": 2.81,
+       "code4": 40,
+       "code13": 5,
+       "wrong_release": {
+        "patches": 30,
+        "area_m2": 1.88,
+        "share": 0.6667
+       },
+       "wrong_keep": {
+        "patches": 1,
+        "area_m2": 0.06,
+        "share": 0.0222
+       },
+       "correct_keep": {
+        "patches": 4,
+        "area_m2": 0.25,
+        "share": 0.0889
+       },
+       "correct_release": {
+        "patches": 3,
+        "area_m2": 0.19,
+        "share": 0.0667
+       },
+       "undetermined": {
+        "patches": 7,
+        "area_m2": 0.44,
+        "share": 0.1556
+       }
+      }
+     }
+    }
+   },
+   "ALS": {
+    "case_patches": 163,
+    "case_area_m2": 12.64,
+    "place_patches": 8716,
+    "band_patches": 751,
+    "band_area_m2": 55.9,
+    "multi_layer_gt": {
+     "rule": "gt_suspect of the region file (configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json: a roof-like patch whose GT height range in the 0.25 m cell exceeds the plane's rise over the cell diagonal by 0.3 m (two layers), or with >= 5 % of its ULS GT points from multi-return pulses); evaluated on roof-like code-2/3 patches with matched ULS points",
+     "evaluated": 163,
+     "multi_layer": 24,
+     "share": 0.1472
+    },
+    "results": {
+     "ours_s0": {
+      "ko": "본 방법 씨앗 0",
+      "result": "prop_ALS_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.8091,
+       "gt_side": 0.0334,
+       "wrong_side": 0.8091,
+       "both": 0.0,
+       "neither": 0.1576
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.8755,
+       "gt_side": 0.0778,
+       "wrong_side": 0.8712,
+       "both": 0.0043,
+       "neither": 0.0468
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.9646,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.0,
+        "le_0.5": 0.009
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 1.0,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.0
+       }
+      }
+     },
+     "ours_s1": {
+      "ko": "본 방법 씨앗 1",
+      "result": "prop_ALS_s1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.8174,
+       "gt_side": 0.0287,
+       "wrong_side": 0.8174,
+       "both": 0.0,
+       "neither": 0.1538
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.8782,
+       "gt_side": 0.0758,
+       "wrong_side": 0.8636,
+       "both": 0.0146,
+       "neither": 0.046
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.9635,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.0,
+        "le_0.5": 0.0
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 1.0,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.0
+       }
+      }
+     },
+     "prior": {
+      "ko": "학습 전 사전 정보",
+      "result": "samepath_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.0028,
+       "gt_side": 0.9787,
+       "wrong_side": 0.0028,
+       "both": 0.0,
+       "neither": 0.0185
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.0202,
+       "gt_side": 0.9561,
+       "wrong_side": 0.0196,
+       "both": 0.0006,
+       "neither": 0.0237
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.991,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 1.0,
+        "gt_side": 0.0,
+        "wrong_side": 1.0,
+        "both": 0.0,
+        "neither": 0.0
+       }
+      }
+     },
+     "2dgs": {
+      "ko": "2차원 가우시안 스플래팅",
+      "result": "imgonly_2dgs_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.5487,
+       "gt_side": 0.2614,
+       "wrong_side": 0.5487,
+       "both": 0.0,
+       "neither": 0.19
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.5593,
+       "gt_side": 0.1116,
+       "wrong_side": 0.549,
+       "both": 0.0103,
+       "neither": 0.3291
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.6167,
+        "le_0.5": 0.9698
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.009,
+        "le_0.5": 0.4505
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 0.5,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5
+       }
+      }
+     },
+     "geogs": {
+      "ko": "GeoGS",
+      "result": "geogs_ALS_fix1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.354,
+       "gt_side": 0.4588,
+       "wrong_side": 0.3411,
+       "both": 0.013,
+       "neither": 0.1872
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.3901,
+       "gt_side": 0.4071,
+       "wrong_side": 0.3456,
+       "both": 0.0445,
+       "neither": 0.2027
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.5792,
+        "le_0.5": 0.976
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.8919,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 0.5,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.5
+       }
+      }
+     },
+     "mvsfuse": {
+      "ko": "MVS 기반 결합",
+      "result": "mvsfuse_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.3086,
+       "gt_side": 0.6691,
+       "wrong_side": 0.1594,
+       "both": 0.1492,
+       "neither": 0.0222
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.3101,
+       "gt_side": 0.6656,
+       "wrong_side": 0.1989,
+       "both": 0.1112,
+       "neither": 0.0243
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.9969,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.991,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 1.0,
+        "gt_side": 0.0,
+        "wrong_side": 0.0,
+        "both": 1.0,
+        "neither": 0.0
+       }
+      }
+     },
+     "cdgs": {
+      "ko": "CDGS 변형",
+      "result": "cdgsnofit_ALS_s0",
+      "status": "아직"
+     },
+     "imgonly_s0": {
+      "ko": "영상만 씨앗 0",
+      "result": "imgonly_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.8156,
+       "gt_side": 0.0278,
+       "wrong_side": 0.8156,
+       "both": 0.0,
+       "neither": 0.1566
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.8831,
+       "gt_side": 0.0396,
+       "wrong_side": 0.8761,
+       "both": 0.007,
+       "neither": 0.0773
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.9531,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.0,
+        "le_0.5": 0.0
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 1.0,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.0
+       }
+      }
+     },
+     "imgonly_s1": {
+      "ko": "영상만 씨앗 1",
+      "result": "imgonly_s1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.8406,
+       "gt_side": 0.0158,
+       "wrong_side": 0.8397,
+       "both": 0.0009,
+       "neither": 0.1437
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.8843,
+       "gt_side": 0.036,
+       "wrong_side": 0.8729,
+       "both": 0.0114,
+       "neither": 0.0797
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.951,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.0,
+        "le_0.5": 0.0
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 1.0,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.0
+       }
+      }
+     },
+     "trust_als": {
+      "ko": "사전 정보 신뢰",
+      "result": "trust_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.2966,
+       "gt_side": 0.6182,
+       "wrong_side": 0.2938,
+       "both": 0.0028,
+       "neither": 0.0853
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.5066,
+       "gt_side": 0.4606,
+       "wrong_side": 0.4964,
+       "both": 0.0102,
+       "neither": 0.0328
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.9812,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.6306,
+        "le_0.5": 0.8108
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 0.0,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 1.0
+       }
+      }
+     },
+     "nojudge": {
+      "ko": "판정만 끈 본 방법",
+      "result": "nojudge_ALS_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.6589,
+       "gt_side": 0.2169,
+       "wrong_side": 0.658,
+       "both": 0.0009,
+       "neither": 0.1242
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.8123,
+       "gt_side": 0.1519,
+       "wrong_side": 0.8008,
+       "both": 0.0115,
+       "neither": 0.0358
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.9771,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.0,
+        "le_0.5": 0.009
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 1.0,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.0
+       }
+      }
+     },
+     "judgefuse": {
+      "ko": "본 방법의 판정으로 갈아 끼운 변형",
+      "result": "judgefuse_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.6654,
+       "gt_side": 0.0825,
+       "wrong_side": 0.5922,
+       "both": 0.0732,
+       "neither": 0.2521
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.6582,
+       "gt_side": 0.2481,
+       "wrong_side": 0.571,
+       "both": 0.0872,
+       "neither": 0.0937
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.9854,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.6757,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.5,
+        "gt_side": 0.5,
+        "wrong_side": 0.0,
+        "both": 0.5,
+        "neither": 0.0
+       }
+      }
+     }
+    },
+    "rows": {
+     "case_c3": 1079,
+     "place_c3": 6585,
+     "band": {
+      "c2": 960,
+      "c4": 111,
+      "c13": 2
+     }
+    },
+    "judgment_spread_band": {
+     "missing_code4_13": 18,
+     "missing_area_m2": 1.83,
+     "borrowed": 18,
+     "insufficient": 0,
+     "branches": {
+      "from_premise": {
+       "patches": 18,
+       "area_m2": 1.83,
+       "code4": 17,
+       "code13": 1,
+       "wrong_release": {
+        "patches": 10,
+        "area_m2": 1.04,
+        "share": 0.5556
+       },
+       "wrong_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_keep": {
+        "patches": 1,
+        "area_m2": 0.11,
+        "share": 0.0556
+       },
+       "correct_release": {
+        "patches": 1,
+        "area_m2": 0.09,
+        "share": 0.0556
+       },
+       "undetermined": {
+        "patches": 6,
+        "area_m2": 0.59,
+        "share": 0.3333
+       },
+       "premise_neighbours_per_patch_median": 4.0
+      },
+      "elsewhere": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "code4": 0,
+       "code13": 0,
+       "wrong_release": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": null
+       },
+       "wrong_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": null
+       },
+       "correct_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": null
+       },
+       "correct_release": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": null
+       },
+       "undetermined": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": null
+       }
+      },
+      "all": {
+       "patches": 18,
+       "area_m2": 1.83,
+       "code4": 17,
+       "code13": 1,
+       "wrong_release": {
+        "patches": 10,
+        "area_m2": 1.04,
+        "share": 0.5556
+       },
+       "wrong_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_keep": {
+        "patches": 1,
+        "area_m2": 0.11,
+        "share": 0.0556
+       },
+       "correct_release": {
+        "patches": 1,
+        "area_m2": 0.09,
+        "share": 0.0556
+       },
+       "undetermined": {
+        "patches": 6,
+        "area_m2": 0.59,
+        "share": 0.3333
+       }
+      }
+     }
+    }
+   }
+  },
+  "translucent": {
+   "LoD2": {
+    "case_patches": 0,
+    "note": "사례 영역 없음. 자리 면(평가 범위) 113패치에 전제 위배가 0패치다 (코드 11 60패치, 코드 13 53패치). 이 사전 정보는 그 자리에서 참값과 τ 넘게 다르다(사전 정보 오류)."
+   },
+   "ALS": {
+    "case_patches": 27,
+    "case_area_m2": 2.17,
+    "place_patches": 262,
+    "band_patches": 201,
+    "band_area_m2": 15.04,
+    "multi_layer_gt": {
+     "rule": "gt_suspect of the region file (configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json: a roof-like patch whose GT height range in the 0.25 m cell exceeds the plane's rise over the cell diagonal by 0.3 m (two layers), or with >= 5 % of its ULS GT points from multi-return pulses); evaluated on roof-like code-2/3 patches with matched ULS points",
+     "evaluated": 27,
+     "multi_layer": 16,
+     "share": 0.5926
+    },
+    "results": {
+     "ours_s0": {
+      "ko": "본 방법 씨앗 0",
+      "result": "prop_ALS_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.6154,
+       "gt_side": 0.3782,
+       "wrong_side": 0.1538,
+       "both": 0.4615,
+       "neither": 0.0064
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.7256,
+       "gt_side": 0.248,
+       "wrong_side": 0.1187,
+       "both": 0.6069,
+       "neither": 0.0264
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 0.9978,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "ours_s1": {
+      "ko": "본 방법 씨앗 1",
+      "result": "prop_ALS_s1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.4487,
+       "gt_side": 0.5321,
+       "wrong_side": 0.1731,
+       "both": 0.2756,
+       "neither": 0.0192
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.6887,
+       "gt_side": 0.2929,
+       "wrong_side": 0.124,
+       "both": 0.5646,
+       "neither": 0.0185
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "prior": {
+      "ko": "학습 전 사전 정보",
+      "result": "samepath_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.0,
+       "gt_side": 1.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.0026,
+       "gt_side": 0.9947,
+       "wrong_side": 0.0026,
+       "both": 0.0,
+       "neither": 0.0026
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "2dgs": {
+      "ko": "2차원 가우시안 스플래팅",
+      "result": "imgonly_2dgs_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.5513,
+       "gt_side": 0.2821,
+       "wrong_side": 0.2756,
+       "both": 0.2756,
+       "neither": 0.1667
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.6544,
+       "gt_side": 0.2243,
+       "wrong_side": 0.2164,
+       "both": 0.438,
+       "neither": 0.1214
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 0.9202,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 0.85,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "geogs": {
+      "ko": "GeoGS",
+      "result": "geogs_ALS_fix1",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.3782,
+       "gt_side": 0.6218,
+       "wrong_side": 0.0,
+       "both": 0.3782,
+       "neither": 0.0
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.5594,
+       "gt_side": 0.4354,
+       "wrong_side": 0.0528,
+       "both": 0.5066,
+       "neither": 0.0053
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "mvsfuse": {
+      "ko": "MVS 기반 결합",
+      "result": "mvsfuse_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.0,
+       "gt_side": 1.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.0026,
+       "gt_side": 0.9947,
+       "wrong_side": 0.0026,
+       "both": 0.0,
+       "neither": 0.0026
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "cdgs": {
+      "ko": "CDGS 변형",
+      "result": "cdgsnofit_ALS_s0",
+      "status": "아직"
+     },
+     "imgonly_s0": {
+      "ko": "영상만 씨앗 0",
+      "result": "imgonly_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.7115,
+       "gt_side": 0.2692,
+       "wrong_side": 0.2179,
+       "both": 0.4936,
+       "neither": 0.0192
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.8179,
+       "gt_side": 0.1478,
+       "wrong_side": 0.1741,
+       "both": 0.6438,
+       "neither": 0.0343
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "trust_als": {
+      "ko": "사전 정보 신뢰",
+      "result": "trust_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.1603,
+       "gt_side": 0.8333,
+       "wrong_side": 0.0833,
+       "both": 0.0769,
+       "neither": 0.0064
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.2955,
+       "gt_side": 0.6887,
+       "wrong_side": 0.0871,
+       "both": 0.2084,
+       "neither": 0.0158
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "nojudge": {
+      "ko": "판정만 끈 본 방법",
+      "result": "nojudge_ALS_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.2821,
+       "gt_side": 0.7115,
+       "wrong_side": 0.0641,
+       "both": 0.2179,
+       "neither": 0.0064
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.5831,
+       "gt_side": 0.4011,
+       "wrong_side": 0.058,
+       "both": 0.5251,
+       "neither": 0.0158
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "judgefuse": {
+      "ko": "본 방법의 판정으로 갈아 끼운 변형",
+      "result": "judgefuse_ALS",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.5449,
+       "gt_side": 0.0577,
+       "wrong_side": 0.4038,
+       "both": 0.141,
+       "neither": 0.3974
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.7414,
+       "gt_side": 0.0686,
+       "wrong_side": 0.2691,
+       "both": 0.4723,
+       "neither": 0.19
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 0.8736,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     },
+     "abl_prop": {
+      "ko": "판정 빌려 오기 끄기",
+      "result": "abl_prop_ALS_s0",
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.5449,
+       "gt_side": 0.4423,
+       "wrong_side": 0.1603,
+       "both": 0.3846,
+       "neither": 0.0128
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.6992,
+       "gt_side": 0.2823,
+       "wrong_side": 0.1398,
+       "both": 0.5594,
+       "neither": 0.0185
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 1.0,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
+     }
+    },
+    "rows": {
+     "case_c3": 156,
+     "place_c3": 379,
+     "band": {
+      "c2": 451,
+      "c4": 20,
+      "c13": 0
+     }
+    },
+    "judgment_spread_band": {
+     "missing_code4_13": 3,
+     "missing_area_m2": 0.24,
+     "borrowed": 3,
+     "insufficient": 0,
+     "branches": {
+      "from_premise": {
+       "patches": 1,
+       "area_m2": 0.08,
+       "code4": 1,
+       "code13": 0,
+       "wrong_release": {
+        "patches": 1,
+        "area_m2": 0.08,
+        "share": 1.0
+       },
+       "wrong_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_release": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "undetermined": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "premise_neighbours_per_patch_median": 1.0
+      },
+      "elsewhere": {
+       "patches": 2,
+       "area_m2": 0.16,
+       "code4": 2,
+       "code13": 0,
+       "wrong_release": {
+        "patches": 2,
+        "area_m2": 0.16,
+        "share": 1.0
+       },
+       "wrong_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_release": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "undetermined": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       }
+      },
+      "all": {
+       "patches": 3,
+       "area_m2": 0.24,
+       "code4": 3,
+       "code13": 0,
+       "wrong_release": {
+        "patches": 3,
+        "area_m2": 0.24,
+        "share": 1.0
+       },
+       "wrong_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_keep": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "correct_release": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       },
+       "undetermined": {
+        "patches": 0,
+        "area_m2": 0.0,
+        "share": 0.0
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

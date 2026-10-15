@@ -1,0 +1,398 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "correction",
+ "written": "2026-10-15 21:12:21 KST",
+ "prior": "ALS",
+ "title": "조금 어긋난 항공 LiDAR 지붕을 어느 방법이 참값으로 고치는가 — 항공 LiDAR 보정률 곡선",
+ "cells": [
+  {
+   "cell": "B173 주변 · 항공 LiDAR",
+   "source": "B173nb_b10/ALS",
+   "kind": "unit",
+   "groups": [
+    [
+     [
+      1.0,
+      1.5
+     ],
+     [
+      1.5,
+      2.0
+     ],
+     [
+      2.0,
+      3.0
+     ],
+     [
+      3.0,
+      4.0
+     ]
+    ],
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      8.0,
+      null
+     ]
+    ]
+   ],
+   "lines": [
+    {
+     "result": "prop_ALS_s0",
+     "label": "본 방법 씨앗 0",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 535,
+       "rate": 0.9234
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 95582,
+       "rate": 0.998
+      }
+     ],
+     "corr_1to4": 0.9234,
+     "corr_1to4_points": 535,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "prop_ALS_s1",
+     "label": "본 방법 씨앗 1",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 535,
+       "rate": 0.9178
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 95582,
+       "rate": 0.9978
+      }
+     ],
+     "corr_1to4": 0.9178,
+     "corr_1to4_points": 535,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "samepath_ALS",
+     "label": "학습 전 사전 정보",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 535,
+       "rate": 0.0075
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 95582,
+       "rate": 0.0
+      }
+     ],
+     "corr_1to4": 0.0075,
+     "corr_1to4_points": 535,
+     "boundary_tau": null
+    },
+    {
+     "result": "imgonly_2dgs_s0",
+     "label": "2차원 가우시안 스플래팅",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 535,
+       "rate": 0.6897
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 95582,
+       "rate": 0.6753
+      }
+     ],
+     "corr_1to4": 0.6897,
+     "corr_1to4_points": 535,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "geogs_ALS_fix1",
+     "label": "GeoGS",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 535,
+       "rate": 0.3645
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 95582,
+       "rate": 0.9225
+      }
+     ],
+     "corr_1to4": 0.3645,
+     "corr_1to4_points": 535,
+     "boundary_tau": 4.0
+    },
+    {
+     "result": "mvsfuse_ALS",
+     "label": "MVS 기반 결합",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 535,
+       "rate": 0.0318
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 95582,
+       "rate": 0.971
+      }
+     ],
+     "corr_1to4": 0.0318,
+     "corr_1to4_points": 535,
+     "boundary_tau": 4.0
+    },
+    {
+     "result": "cdgsnofit_ALS_s0",
+     "label": "CDGS 변형",
+     "status": "아직"
+    }
+   ]
+  },
+  {
+   "cell": "항공 LiDAR 지역 합침 (참고)",
+   "source": "ALS",
+   "kind": "pooled",
+   "groups": [
+    [
+     [
+      1.0,
+      1.5
+     ],
+     [
+      1.5,
+      2.0
+     ],
+     [
+      2.0,
+      3.0
+     ],
+     [
+      3.0,
+      4.0
+     ]
+    ],
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      8.0,
+      null
+     ]
+    ]
+   ],
+   "lines": [
+    {
+     "result": "prop_ALS_s0",
+     "label": "본 방법 씨앗 0",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 739,
+       "rate": 0.8363
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 96195,
+       "rate": 0.9944
+      }
+     ],
+     "corr_1to4": 0.8363,
+     "corr_1to4_points": 739,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "prop_ALS_s1",
+     "label": "본 방법 씨앗 1",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 739,
+       "rate": 0.8444
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 96195,
+       "rate": 0.9946
+      }
+     ],
+     "corr_1to4": 0.8444,
+     "corr_1to4_points": 739,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "samepath_ALS",
+     "label": "학습 전 사전 정보",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 739,
+       "rate": 0.0054
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 96195,
+       "rate": 0.0
+      }
+     ],
+     "corr_1to4": 0.0054,
+     "corr_1to4_points": 739,
+     "boundary_tau": null
+    },
+    {
+     "result": "imgonly_2dgs_s0",
+     "label": "2차원 가우시안 스플래팅",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 739,
+       "rate": 0.6062
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 96195,
+       "rate": 0.6746
+      }
+     ],
+     "corr_1to4": 0.6062,
+     "corr_1to4_points": 739,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "geogs_ALS_fix1",
+     "label": "GeoGS",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 739,
+       "rate": 0.3802
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 96195,
+       "rate": 0.9198
+      }
+     ],
+     "corr_1to4": 0.3802,
+     "corr_1to4_points": 739,
+     "boundary_tau": 4.0
+    },
+    {
+     "result": "mvsfuse_ALS",
+     "label": "MVS 기반 결합",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "points": 739,
+       "rate": 0.023
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 96195,
+       "rate": 0.9649
+      }
+     ],
+     "corr_1to4": 0.023,
+     "corr_1to4_points": 739,
+     "boundary_tau": 4.0
+    },
+    {
+     "result": "cdgsnofit_ALS_s0",
+     "label": "CDGS 변형",
+     "status": "아직"
+    }
+   ]
+  }
+ ],
+ "scientific_verdict": null,
+ "numbers_under": [
+  "B173 주변 · 항공 LiDAR: 1~4τ 보정률 본 방법 씨앗 0 92.3 %, 본 방법 씨앗 1 91.8 %, 학습 전 사전 정보 0.8 %, 2차원 가우시안 스플래팅 69.0 %, GeoGS 36.4 %, MVS 기반 결합 3.2 % (점 535); CDGS 변형 아직",
+  "항공 LiDAR 지역 합침 (참고): 1~4τ 보정률 본 방법 씨앗 0 83.6 %, 본 방법 씨앗 1 84.4 %, 학습 전 사전 정보 0.5 %, 2차원 가우시안 스플래팅 60.6 %, GeoGS 38.0 %, MVS 기반 결합 2.3 % (점 739, 단위 셋을 합침); CDGS 변형 아직"
+ ]
+}

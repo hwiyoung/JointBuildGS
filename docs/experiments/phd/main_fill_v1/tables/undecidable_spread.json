@@ -1,0 +1,2625 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "undecidable",
+ "written": "2026-10-15 23:10:43 KST",
+ "mark": "이 발주에서 냄",
+ "definitions": {
+  "file": "SL/prep/undecidable/definitions.json",
+  "written": "2026-10-15 20:56:23 KST"
+ },
+ "scientific_verdict": null,
+ "units": {
+  "B0_b10/LoD2": {
+   "band2": {
+    "missing_code4_13": 521,
+    "missing_area_m2": 32.56,
+    "borrowed": 519,
+    "insufficient": 2,
+    "branches": {
+     "from_premise": {
+      "patches": 158,
+      "area_m2": 9.88,
+      "code4": 156,
+      "code13": 2,
+      "wrong_release": {
+       "patches": 97,
+       "area_m2": 6.06,
+       "share": 0.6139
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 32,
+       "area_m2": 2.0,
+       "share": 0.2025
+      },
+      "correct_release": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0127
+      },
+      "undetermined": {
+       "patches": 27,
+       "area_m2": 1.69,
+       "share": 0.1709
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 361,
+      "area_m2": 22.56,
+      "code4": 343,
+      "code13": 18,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0055
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0055
+      },
+      "correct_keep": {
+       "patches": 333,
+       "area_m2": 20.81,
+       "share": 0.9224
+      },
+      "correct_release": {
+       "patches": 15,
+       "area_m2": 0.94,
+       "share": 0.0416
+      },
+      "undetermined": {
+       "patches": 9,
+       "area_m2": 0.56,
+       "share": 0.0249
+      }
+     },
+     "all": {
+      "patches": 519,
+      "area_m2": 32.44,
+      "code4": 499,
+      "code13": 20,
+      "wrong_release": {
+       "patches": 99,
+       "area_m2": 6.19,
+       "share": 0.1908
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0039
+      },
+      "correct_keep": {
+       "patches": 365,
+       "area_m2": 22.81,
+       "share": 0.7033
+      },
+      "correct_release": {
+       "patches": 17,
+       "area_m2": 1.06,
+       "share": 0.0328
+      },
+      "undetermined": {
+       "patches": 36,
+       "area_m2": 2.25,
+       "share": 0.0694
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 997,
+    "missing_area_m2": 62.31,
+    "borrowed": 993,
+    "insufficient": 4,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 993,
+      "area_m2": 62.06,
+      "code4": 988,
+      "code13": 5,
+      "wrong_release": {
+       "patches": 9,
+       "area_m2": 0.56,
+       "share": 0.0091
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 971,
+       "area_m2": 60.69,
+       "share": 0.9778
+      },
+      "correct_release": {
+       "patches": 5,
+       "area_m2": 0.31,
+       "share": 0.005
+      },
+      "undetermined": {
+       "patches": 8,
+       "area_m2": 0.5,
+       "share": 0.0081
+      }
+     },
+     "all": {
+      "patches": 993,
+      "area_m2": 62.06,
+      "code4": 988,
+      "code13": 5,
+      "wrong_release": {
+       "patches": 9,
+       "area_m2": 0.56,
+       "share": 0.0091
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 971,
+       "area_m2": 60.69,
+       "share": 0.9778
+      },
+      "correct_release": {
+       "patches": 5,
+       "area_m2": 0.31,
+       "share": 0.005
+      },
+      "undetermined": {
+       "patches": 8,
+       "area_m2": 0.5,
+       "share": 0.0081
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 2079,
+    "missing_area_m2": 129.94,
+    "borrowed": 2071,
+    "insufficient": 8,
+    "branches": {
+     "from_premise": {
+      "patches": 158,
+      "area_m2": 9.88,
+      "code4": 156,
+      "code13": 2,
+      "wrong_release": {
+       "patches": 97,
+       "area_m2": 6.06,
+       "share": 0.6139
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 32,
+       "area_m2": 2.0,
+       "share": 0.2025
+      },
+      "correct_release": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0127
+      },
+      "undetermined": {
+       "patches": 27,
+       "area_m2": 1.69,
+       "share": 0.1709
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 1913,
+      "area_m2": 119.56,
+      "code4": 1890,
+      "code13": 23,
+      "wrong_release": {
+       "patches": 11,
+       "area_m2": 0.69,
+       "share": 0.0058
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.001
+      },
+      "correct_keep": {
+       "patches": 1863,
+       "area_m2": 116.44,
+       "share": 0.9739
+      },
+      "correct_release": {
+       "patches": 20,
+       "area_m2": 1.25,
+       "share": 0.0105
+      },
+      "undetermined": {
+       "patches": 17,
+       "area_m2": 1.06,
+       "share": 0.0089
+      }
+     },
+     "all": {
+      "patches": 2071,
+      "area_m2": 129.44,
+      "code4": 2046,
+      "code13": 25,
+      "wrong_release": {
+       "patches": 108,
+       "area_m2": 6.75,
+       "share": 0.0521
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.001
+      },
+      "correct_keep": {
+       "patches": 1895,
+       "area_m2": 118.44,
+       "share": 0.915
+      },
+      "correct_release": {
+       "patches": 22,
+       "area_m2": 1.38,
+       "share": 0.0106
+      },
+      "undetermined": {
+       "patches": 44,
+       "area_m2": 2.75,
+       "share": 0.0212
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": "판정의 전파가 결측 영역으로 번졌다",
+    "grade": "가능, 근거 불완전",
+    "diff": 0.6084,
+    "criterion": 0.019,
+    "n_from": 158,
+    "n_else": 361
+   }
+  },
+  "B0_b10/ALS": {
+   "band2": {
+    "missing_code4_13": 18,
+    "missing_area_m2": 1.21,
+    "borrowed": 18,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 3,
+      "area_m2": 0.19,
+      "code4": 3,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 0.6667
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.3333
+      },
+      "premise_neighbours_per_patch_median": 1.0
+     },
+     "elsewhere": {
+      "patches": 15,
+      "area_m2": 1.02,
+      "code4": 15,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 12,
+       "area_m2": 0.83,
+       "share": 0.8
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 3,
+       "area_m2": 0.19,
+       "share": 0.2
+      }
+     },
+     "all": {
+      "patches": 18,
+      "area_m2": 1.21,
+      "code4": 18,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 14,
+       "area_m2": 0.95,
+       "share": 0.7778
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 4,
+       "area_m2": 0.25,
+       "share": 0.2222
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 6,
+    "missing_area_m2": 0.42,
+    "borrowed": 6,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 6,
+      "area_m2": 0.42,
+      "code4": 6,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 6,
+       "area_m2": 0.42,
+       "share": 1.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     },
+     "all": {
+      "patches": 6,
+      "area_m2": 0.42,
+      "code4": 6,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 6,
+       "area_m2": 0.42,
+       "share": 1.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 30,
+    "missing_area_m2": 2.04,
+    "borrowed": 30,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 3,
+      "area_m2": 0.19,
+      "code4": 3,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 0.6667
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.3333
+      },
+      "premise_neighbours_per_patch_median": 1.0
+     },
+     "elsewhere": {
+      "patches": 27,
+      "area_m2": 1.85,
+      "code4": 27,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 24,
+       "area_m2": 1.66,
+       "share": 0.8889
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 3,
+       "area_m2": 0.19,
+       "share": 0.1111
+      }
+     },
+     "all": {
+      "patches": 30,
+      "area_m2": 2.04,
+      "code4": 30,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 26,
+       "area_m2": 1.78,
+       "share": 0.8667
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 4,
+       "area_m2": 0.25,
+       "share": 0.1333
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": null,
+    "grade": "표본 부족",
+    "n_from": 3,
+    "n_else": 15
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "band2": {
+    "missing_code4_13": 645,
+    "missing_area_m2": 40.31,
+    "borrowed": 645,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 115,
+      "area_m2": 7.19,
+      "code4": 112,
+      "code13": 3,
+      "wrong_release": {
+       "patches": 50,
+       "area_m2": 3.12,
+       "share": 0.4348
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 19,
+       "area_m2": 1.19,
+       "share": 0.1652
+      },
+      "correct_release": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0174
+      },
+      "undetermined": {
+       "patches": 44,
+       "area_m2": 2.75,
+       "share": 0.3826
+      },
+      "premise_neighbours_per_patch_median": 2.0
+     },
+     "elsewhere": {
+      "patches": 530,
+      "area_m2": 33.12,
+      "code4": 466,
+      "code13": 64,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0038
+      },
+      "wrong_keep": {
+       "patches": 43,
+       "area_m2": 2.69,
+       "share": 0.0811
+      },
+      "correct_keep": {
+       "patches": 445,
+       "area_m2": 27.81,
+       "share": 0.8396
+      },
+      "correct_release": {
+       "patches": 15,
+       "area_m2": 0.94,
+       "share": 0.0283
+      },
+      "undetermined": {
+       "patches": 25,
+       "area_m2": 1.56,
+       "share": 0.0472
+      }
+     },
+     "all": {
+      "patches": 645,
+      "area_m2": 40.31,
+      "code4": 578,
+      "code13": 67,
+      "wrong_release": {
+       "patches": 52,
+       "area_m2": 3.25,
+       "share": 0.0806
+      },
+      "wrong_keep": {
+       "patches": 43,
+       "area_m2": 2.69,
+       "share": 0.0667
+      },
+      "correct_keep": {
+       "patches": 464,
+       "area_m2": 29.0,
+       "share": 0.7194
+      },
+      "correct_release": {
+       "patches": 17,
+       "area_m2": 1.06,
+       "share": 0.0264
+      },
+      "undetermined": {
+       "patches": 69,
+       "area_m2": 4.31,
+       "share": 0.107
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 651,
+    "missing_area_m2": 40.69,
+    "borrowed": 633,
+    "insufficient": 18,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 633,
+      "area_m2": 39.56,
+      "code4": 603,
+      "code13": 30,
+      "wrong_release": {
+       "patches": 5,
+       "area_m2": 0.31,
+       "share": 0.0079
+      },
+      "wrong_keep": {
+       "patches": 19,
+       "area_m2": 1.19,
+       "share": 0.03
+      },
+      "correct_keep": {
+       "patches": 587,
+       "area_m2": 36.69,
+       "share": 0.9273
+      },
+      "correct_release": {
+       "patches": 3,
+       "area_m2": 0.19,
+       "share": 0.0047
+      },
+      "undetermined": {
+       "patches": 19,
+       "area_m2": 1.19,
+       "share": 0.03
+      }
+     },
+     "all": {
+      "patches": 633,
+      "area_m2": 39.56,
+      "code4": 603,
+      "code13": 30,
+      "wrong_release": {
+       "patches": 5,
+       "area_m2": 0.31,
+       "share": 0.0079
+      },
+      "wrong_keep": {
+       "patches": 19,
+       "area_m2": 1.19,
+       "share": 0.03
+      },
+      "correct_keep": {
+       "patches": 587,
+       "area_m2": 36.69,
+       "share": 0.9273
+      },
+      "correct_release": {
+       "patches": 3,
+       "area_m2": 0.19,
+       "share": 0.0047
+      },
+      "undetermined": {
+       "patches": 19,
+       "area_m2": 1.19,
+       "share": 0.03
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 1330,
+    "missing_area_m2": 83.12,
+    "borrowed": 1312,
+    "insufficient": 18,
+    "branches": {
+     "from_premise": {
+      "patches": 115,
+      "area_m2": 7.19,
+      "code4": 112,
+      "code13": 3,
+      "wrong_release": {
+       "patches": 50,
+       "area_m2": 3.12,
+       "share": 0.4348
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 19,
+       "area_m2": 1.19,
+       "share": 0.1652
+      },
+      "correct_release": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0174
+      },
+      "undetermined": {
+       "patches": 44,
+       "area_m2": 2.75,
+       "share": 0.3826
+      },
+      "premise_neighbours_per_patch_median": 2.0
+     },
+     "elsewhere": {
+      "patches": 1197,
+      "area_m2": 74.81,
+      "code4": 1095,
+      "code13": 102,
+      "wrong_release": {
+       "patches": 7,
+       "area_m2": 0.44,
+       "share": 0.0058
+      },
+      "wrong_keep": {
+       "patches": 64,
+       "area_m2": 4.0,
+       "share": 0.0535
+      },
+      "correct_keep": {
+       "patches": 1058,
+       "area_m2": 66.12,
+       "share": 0.8839
+      },
+      "correct_release": {
+       "patches": 24,
+       "area_m2": 1.5,
+       "share": 0.0201
+      },
+      "undetermined": {
+       "patches": 44,
+       "area_m2": 2.75,
+       "share": 0.0368
+      }
+     },
+     "all": {
+      "patches": 1312,
+      "area_m2": 82.0,
+      "code4": 1207,
+      "code13": 105,
+      "wrong_release": {
+       "patches": 57,
+       "area_m2": 3.56,
+       "share": 0.0434
+      },
+      "wrong_keep": {
+       "patches": 64,
+       "area_m2": 4.0,
+       "share": 0.0488
+      },
+      "correct_keep": {
+       "patches": 1077,
+       "area_m2": 67.31,
+       "share": 0.8209
+      },
+      "correct_release": {
+       "patches": 26,
+       "area_m2": 1.62,
+       "share": 0.0198
+      },
+      "undetermined": {
+       "patches": 88,
+       "area_m2": 5.5,
+       "share": 0.0671
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": "판정의 전파가 결측 영역으로 번졌다",
+    "grade": "가능, 근거 불완전",
+    "diff": 0.431,
+    "criterion": 0.0261,
+    "n_from": 115,
+    "n_else": 530
+   },
+   "reference": {
+    "ko": "판정 빌려 오기 끄기",
+    "result": "abl_prop_LoD2_s0",
+    "kind": "ref",
+    "status": "ok",
+    "band2": {
+     "c2": {
+      "n": 73287,
+      "le_0.2": 0.9616,
+      "le_0.5": 0.995
+     },
+     "c4": {
+      "n": 2913,
+      "le_0.2": 0.9241,
+      "le_0.5": 0.9509
+     },
+     "c13": {
+      "n": 222,
+      "inflow": 0.1757,
+      "gt_side": 0.536,
+      "wrong_side": 0.0991,
+      "both": 0.0766,
+      "neither": 0.2883
+     }
+    },
+    "far": {
+     "c2": {
+      "n": 73122,
+      "le_0.2": 0.9947,
+      "le_0.5": 0.9991
+     },
+     "c4": {
+      "n": 3272,
+      "le_0.2": 0.9924,
+      "le_0.5": 0.9997
+     },
+     "c13": {
+      "n": 105,
+      "inflow": 0.4381,
+      "gt_side": 0.4667,
+      "wrong_side": 0.4286,
+      "both": 0.0095,
+      "neither": 0.0952
+     }
+    },
+    "gate4_metric": {
+     "n": 73287,
+     "le_0.2": 0.9616,
+     "le_0.5": 0.995
+    },
+    "gate4_reproduced": true
+   }
+  },
+  "B173nb_b10/ALS": {
+   "band2": {
+    "missing_code4_13": 18,
+    "missing_area_m2": 1.83,
+    "borrowed": 18,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 18,
+      "area_m2": 1.83,
+      "code4": 17,
+      "code13": 1,
+      "wrong_release": {
+       "patches": 10,
+       "area_m2": 1.04,
+       "share": 0.5556
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 1,
+       "area_m2": 0.11,
+       "share": 0.0556
+      },
+      "correct_release": {
+       "patches": 1,
+       "area_m2": 0.09,
+       "share": 0.0556
+      },
+      "undetermined": {
+       "patches": 6,
+       "area_m2": 0.59,
+       "share": 0.3333
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "all": {
+      "patches": 18,
+      "area_m2": 1.83,
+      "code4": 17,
+      "code13": 1,
+      "wrong_release": {
+       "patches": 10,
+       "area_m2": 1.04,
+       "share": 0.5556
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 1,
+       "area_m2": 0.11,
+       "share": 0.0556
+      },
+      "correct_release": {
+       "patches": 1,
+       "area_m2": 0.09,
+       "share": 0.0556
+      },
+      "undetermined": {
+       "patches": 6,
+       "area_m2": 0.59,
+       "share": 0.3333
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 0,
+    "missing_area_m2": 0.0,
+    "borrowed": 0,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "all": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 26,
+    "missing_area_m2": 2.36,
+    "borrowed": 26,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 18,
+      "area_m2": 1.83,
+      "code4": 17,
+      "code13": 1,
+      "wrong_release": {
+       "patches": 10,
+       "area_m2": 1.04,
+       "share": 0.5556
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 1,
+       "area_m2": 0.11,
+       "share": 0.0556
+      },
+      "correct_release": {
+       "patches": 1,
+       "area_m2": 0.09,
+       "share": 0.0556
+      },
+      "undetermined": {
+       "patches": 6,
+       "area_m2": 0.59,
+       "share": 0.3333
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 8,
+      "area_m2": 0.53,
+      "code4": 0,
+      "code13": 8,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 8,
+       "area_m2": 0.53,
+       "share": 1.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     },
+     "all": {
+      "patches": 26,
+      "area_m2": 2.36,
+      "code4": 17,
+      "code13": 9,
+      "wrong_release": {
+       "patches": 10,
+       "area_m2": 1.04,
+       "share": 0.3846
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 1,
+       "area_m2": 0.11,
+       "share": 0.0385
+      },
+      "correct_release": {
+       "patches": 9,
+       "area_m2": 0.62,
+       "share": 0.3462
+      },
+      "undetermined": {
+       "patches": 6,
+       "area_m2": 0.59,
+       "share": 0.2308
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": null,
+    "grade": "표본 부족",
+    "n_from": 18,
+    "n_else": 0
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "band2": {
+    "missing_code4_13": 233,
+    "missing_area_m2": 14.56,
+    "borrowed": 233,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 139,
+      "area_m2": 8.69,
+      "code4": 138,
+      "code13": 1,
+      "wrong_release": {
+       "patches": 98,
+       "area_m2": 6.12,
+       "share": 0.705
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 7,
+       "area_m2": 0.44,
+       "share": 0.0504
+      },
+      "correct_release": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.0072
+      },
+      "undetermined": {
+       "patches": 33,
+       "area_m2": 2.06,
+       "share": 0.2374
+      },
+      "premise_neighbours_per_patch_median": 3.0
+     },
+     "elsewhere": {
+      "patches": 94,
+      "area_m2": 5.88,
+      "code4": 60,
+      "code13": 34,
+      "wrong_release": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.0106
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0213
+      },
+      "correct_keep": {
+       "patches": 53,
+       "area_m2": 3.31,
+       "share": 0.5638
+      },
+      "correct_release": {
+       "patches": 29,
+       "area_m2": 1.81,
+       "share": 0.3085
+      },
+      "undetermined": {
+       "patches": 9,
+       "area_m2": 0.56,
+       "share": 0.0957
+      }
+     },
+     "all": {
+      "patches": 233,
+      "area_m2": 14.56,
+      "code4": 198,
+      "code13": 35,
+      "wrong_release": {
+       "patches": 99,
+       "area_m2": 6.19,
+       "share": 0.4249
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0086
+      },
+      "correct_keep": {
+       "patches": 60,
+       "area_m2": 3.75,
+       "share": 0.2575
+      },
+      "correct_release": {
+       "patches": 30,
+       "area_m2": 1.88,
+       "share": 0.1288
+      },
+      "undetermined": {
+       "patches": 42,
+       "area_m2": 2.62,
+       "share": 0.1803
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 78,
+    "missing_area_m2": 4.88,
+    "borrowed": 65,
+    "insufficient": 13,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 65,
+      "area_m2": 4.06,
+      "code4": 0,
+      "code13": 65,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 65,
+       "area_m2": 4.06,
+       "share": 1.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     },
+     "all": {
+      "patches": 65,
+      "area_m2": 4.06,
+      "code4": 0,
+      "code13": 65,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 65,
+       "area_m2": 4.06,
+       "share": 1.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 356,
+    "missing_area_m2": 22.25,
+    "borrowed": 342,
+    "insufficient": 14,
+    "branches": {
+     "from_premise": {
+      "patches": 139,
+      "area_m2": 8.69,
+      "code4": 138,
+      "code13": 1,
+      "wrong_release": {
+       "patches": 98,
+       "area_m2": 6.12,
+       "share": 0.705
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 7,
+       "area_m2": 0.44,
+       "share": 0.0504
+      },
+      "correct_release": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.0072
+      },
+      "undetermined": {
+       "patches": 33,
+       "area_m2": 2.06,
+       "share": 0.2374
+      },
+      "premise_neighbours_per_patch_median": 3.0
+     },
+     "elsewhere": {
+      "patches": 203,
+      "area_m2": 12.69,
+      "code4": 60,
+      "code13": 143,
+      "wrong_release": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.0049
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0099
+      },
+      "correct_keep": {
+       "patches": 53,
+       "area_m2": 3.31,
+       "share": 0.2611
+      },
+      "correct_release": {
+       "patches": 138,
+       "area_m2": 8.62,
+       "share": 0.6798
+      },
+      "undetermined": {
+       "patches": 9,
+       "area_m2": 0.56,
+       "share": 0.0443
+      }
+     },
+     "all": {
+      "patches": 342,
+      "area_m2": 21.38,
+      "code4": 198,
+      "code13": 144,
+      "wrong_release": {
+       "patches": 99,
+       "area_m2": 6.19,
+       "share": 0.2895
+      },
+      "wrong_keep": {
+       "patches": 2,
+       "area_m2": 0.12,
+       "share": 0.0058
+      },
+      "correct_keep": {
+       "patches": 60,
+       "area_m2": 3.75,
+       "share": 0.1754
+      },
+      "correct_release": {
+       "patches": 139,
+       "area_m2": 8.69,
+       "share": 0.4064
+      },
+      "undetermined": {
+       "patches": 42,
+       "area_m2": 2.62,
+       "share": 0.1228
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": null,
+    "grade": "표본 부족",
+    "n_from": 139,
+    "n_else": 94
+   }
+  },
+  "R1rep_b10/ALS": {
+   "band2": {
+    "missing_code4_13": 70,
+    "missing_area_m2": 4.66,
+    "borrowed": 69,
+    "insufficient": 1,
+    "branches": {
+     "from_premise": {
+      "patches": 60,
+      "area_m2": 3.89,
+      "code4": 52,
+      "code13": 8,
+      "wrong_release": {
+       "patches": 50,
+       "area_m2": 3.25,
+       "share": 0.8333
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 8,
+       "area_m2": 0.52,
+       "share": 0.1333
+      },
+      "undetermined": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 0.0333
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 9,
+      "area_m2": 0.71,
+      "code4": 9,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 9,
+       "area_m2": 0.71,
+       "share": 1.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     },
+     "all": {
+      "patches": 69,
+      "area_m2": 4.6,
+      "code4": 61,
+      "code13": 8,
+      "wrong_release": {
+       "patches": 59,
+       "area_m2": 3.95,
+       "share": 0.8551
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 8,
+       "area_m2": 0.52,
+       "share": 0.1159
+      },
+      "undetermined": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 0.029
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 2,
+    "missing_area_m2": 0.16,
+    "borrowed": 2,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 2,
+      "area_m2": 0.16,
+      "code4": 2,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.16,
+       "share": 1.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     },
+     "all": {
+      "patches": 2,
+      "area_m2": 0.16,
+      "code4": 2,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.16,
+       "share": 1.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 72,
+    "missing_area_m2": 4.82,
+    "borrowed": 71,
+    "insufficient": 1,
+    "branches": {
+     "from_premise": {
+      "patches": 60,
+      "area_m2": 3.89,
+      "code4": 52,
+      "code13": 8,
+      "wrong_release": {
+       "patches": 50,
+       "area_m2": 3.25,
+       "share": 0.8333
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 8,
+       "area_m2": 0.52,
+       "share": 0.1333
+      },
+      "undetermined": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 0.0333
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 11,
+      "area_m2": 0.86,
+      "code4": 11,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 11,
+       "area_m2": 0.86,
+       "share": 1.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     },
+     "all": {
+      "patches": 71,
+      "area_m2": 4.76,
+      "code4": 63,
+      "code13": 8,
+      "wrong_release": {
+       "patches": 61,
+       "area_m2": 4.11,
+       "share": 0.8592
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 8,
+       "area_m2": 0.52,
+       "share": 0.1127
+      },
+      "undetermined": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 0.0282
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": null,
+    "grade": "표본 부족",
+    "n_from": 60,
+    "n_else": 9
+   },
+   "reference": {
+    "ko": "판정 빌려 오기 끄기",
+    "result": "abl_prop_ALS_s0",
+    "kind": "ref",
+    "status": "ok",
+    "band2": {
+     "c2": {
+      "n": 43186,
+      "le_0.2": 0.9783,
+      "le_0.5": 0.9968
+     },
+     "c4": {
+      "n": 371,
+      "le_0.2": 0.2776,
+      "le_0.5": 0.3881
+     },
+     "c13": {
+      "n": 30,
+      "inflow": 0.0,
+      "gt_side": 0.6333,
+      "wrong_side": 0.0,
+      "both": 0.0,
+      "neither": 0.3667
+     }
+    },
+    "far": {
+     "c2": {
+      "n": 47996,
+      "le_0.2": 0.9995,
+      "le_0.5": 1.0
+     },
+     "c4": {
+      "n": 12,
+      "le_0.2": 1.0,
+      "le_0.5": 1.0
+     },
+     "c13": {
+      "n": 0,
+      "inflow": null,
+      "gt_side": null,
+      "wrong_side": null,
+      "both": null,
+      "neither": null
+     }
+    },
+    "gate4_metric": {
+     "n": 43186,
+     "le_0.2": 0.9783,
+     "le_0.5": 0.9968
+    },
+    "gate4_reproduced": true
+   }
+  },
+  "B173_b0/LoD2": {
+   "band2": {
+    "missing_code4_13": 299,
+    "missing_area_m2": 18.69,
+    "borrowed": 299,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 95,
+      "area_m2": 5.94,
+      "code4": 82,
+      "code13": 13,
+      "wrong_release": {
+       "patches": 37,
+       "area_m2": 2.31,
+       "share": 0.3895
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 20,
+       "area_m2": 1.25,
+       "share": 0.2105
+      },
+      "correct_release": {
+       "patches": 9,
+       "area_m2": 0.56,
+       "share": 0.0947
+      },
+      "undetermined": {
+       "patches": 29,
+       "area_m2": 1.81,
+       "share": 0.3053
+      },
+      "premise_neighbours_per_patch_median": 3.0
+     },
+     "elsewhere": {
+      "patches": 204,
+      "area_m2": 12.75,
+      "code4": 172,
+      "code13": 32,
+      "wrong_release": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.0049
+      },
+      "wrong_keep": {
+       "patches": 14,
+       "area_m2": 0.88,
+       "share": 0.0686
+      },
+      "correct_keep": {
+       "patches": 163,
+       "area_m2": 10.19,
+       "share": 0.799
+      },
+      "correct_release": {
+       "patches": 6,
+       "area_m2": 0.38,
+       "share": 0.0294
+      },
+      "undetermined": {
+       "patches": 20,
+       "area_m2": 1.25,
+       "share": 0.098
+      }
+     },
+     "all": {
+      "patches": 299,
+      "area_m2": 18.69,
+      "code4": 254,
+      "code13": 45,
+      "wrong_release": {
+       "patches": 38,
+       "area_m2": 2.38,
+       "share": 0.1271
+      },
+      "wrong_keep": {
+       "patches": 14,
+       "area_m2": 0.88,
+       "share": 0.0468
+      },
+      "correct_keep": {
+       "patches": 183,
+       "area_m2": 11.44,
+       "share": 0.612
+      },
+      "correct_release": {
+       "patches": 15,
+       "area_m2": 0.94,
+       "share": 0.0502
+      },
+      "undetermined": {
+       "patches": 49,
+       "area_m2": 3.06,
+       "share": 0.1639
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 171,
+    "missing_area_m2": 10.69,
+    "borrowed": 171,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 171,
+      "area_m2": 10.69,
+      "code4": 165,
+      "code13": 6,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 162,
+       "area_m2": 10.12,
+       "share": 0.9474
+      },
+      "correct_release": {
+       "patches": 3,
+       "area_m2": 0.19,
+       "share": 0.0175
+      },
+      "undetermined": {
+       "patches": 6,
+       "area_m2": 0.38,
+       "share": 0.0351
+      }
+     },
+     "all": {
+      "patches": 171,
+      "area_m2": 10.69,
+      "code4": 165,
+      "code13": 6,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 162,
+       "area_m2": 10.12,
+       "share": 0.9474
+      },
+      "correct_release": {
+       "patches": 3,
+       "area_m2": 0.19,
+       "share": 0.0175
+      },
+      "undetermined": {
+       "patches": 6,
+       "area_m2": 0.38,
+       "share": 0.0351
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 472,
+    "missing_area_m2": 29.5,
+    "borrowed": 472,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 95,
+      "area_m2": 5.94,
+      "code4": 82,
+      "code13": 13,
+      "wrong_release": {
+       "patches": 37,
+       "area_m2": 2.31,
+       "share": 0.3895
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 20,
+       "area_m2": 1.25,
+       "share": 0.2105
+      },
+      "correct_release": {
+       "patches": 9,
+       "area_m2": 0.56,
+       "share": 0.0947
+      },
+      "undetermined": {
+       "patches": 29,
+       "area_m2": 1.81,
+       "share": 0.3053
+      },
+      "premise_neighbours_per_patch_median": 3.0
+     },
+     "elsewhere": {
+      "patches": 377,
+      "area_m2": 23.56,
+      "code4": 337,
+      "code13": 40,
+      "wrong_release": {
+       "patches": 1,
+       "area_m2": 0.06,
+       "share": 0.0027
+      },
+      "wrong_keep": {
+       "patches": 14,
+       "area_m2": 0.88,
+       "share": 0.0371
+      },
+      "correct_keep": {
+       "patches": 325,
+       "area_m2": 20.31,
+       "share": 0.8621
+      },
+      "correct_release": {
+       "patches": 11,
+       "area_m2": 0.69,
+       "share": 0.0292
+      },
+      "undetermined": {
+       "patches": 26,
+       "area_m2": 1.62,
+       "share": 0.069
+      }
+     },
+     "all": {
+      "patches": 472,
+      "area_m2": 29.5,
+      "code4": 419,
+      "code13": 53,
+      "wrong_release": {
+       "patches": 38,
+       "area_m2": 2.38,
+       "share": 0.0805
+      },
+      "wrong_keep": {
+       "patches": 14,
+       "area_m2": 0.88,
+       "share": 0.0297
+      },
+      "correct_keep": {
+       "patches": 345,
+       "area_m2": 21.56,
+       "share": 0.7309
+      },
+      "correct_release": {
+       "patches": 20,
+       "area_m2": 1.25,
+       "share": 0.0424
+      },
+      "undetermined": {
+       "patches": 55,
+       "area_m2": 3.44,
+       "share": 0.1165
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": null,
+    "grade": "표본 부족",
+    "n_from": 95,
+    "n_else": 204
+   }
+  },
+  "B173_b0/ALS": {
+   "band2": {
+    "missing_code4_13": 2,
+    "missing_area_m2": 0.23,
+    "borrowed": 2,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 2,
+      "area_m2": 0.23,
+      "code4": 2,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.23,
+       "share": 1.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "all": {
+      "patches": 2,
+      "area_m2": 0.23,
+      "code4": 2,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.23,
+       "share": 1.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     }
+    }
+   },
+   "far": {
+    "missing_code4_13": 0,
+    "missing_area_m2": 0.0,
+    "borrowed": 0,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "elsewhere": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     },
+     "all": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "code4": 0,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": null
+      }
+     }
+    }
+   },
+   "unit": {
+    "missing_code4_13": 4,
+    "missing_area_m2": 0.37,
+    "borrowed": 4,
+    "insufficient": 0,
+    "branches": {
+     "from_premise": {
+      "patches": 2,
+      "area_m2": 0.23,
+      "code4": 2,
+      "code13": 0,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.23,
+       "share": 1.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "premise_neighbours_per_patch_median": 4.0
+     },
+     "elsewhere": {
+      "patches": 2,
+      "area_m2": 0.13,
+      "code4": 0,
+      "code13": 2,
+      "wrong_release": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 1.0
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     },
+     "all": {
+      "patches": 4,
+      "area_m2": 0.37,
+      "code4": 2,
+      "code13": 2,
+      "wrong_release": {
+       "patches": 2,
+       "area_m2": 0.23,
+       "share": 0.5
+      },
+      "wrong_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_keep": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      },
+      "correct_release": {
+       "patches": 2,
+       "area_m2": 0.13,
+       "share": 0.5
+      },
+      "undetermined": {
+       "patches": 0,
+       "area_m2": 0.0,
+       "share": 0.0
+      }
+     }
+    }
+   },
+   "reading": {
+    "reading": null,
+    "grade": "표본 부족",
+    "n_from": 2,
+    "n_else": 0
+   }
+  }
+ }
+}

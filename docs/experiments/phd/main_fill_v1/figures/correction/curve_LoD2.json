@@ -1,0 +1,598 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "correction",
+ "written": "2026-10-15 21:12:21 KST",
+ "prior": "LoD2",
+ "title": "한 배에서 네 배 어긋난 지붕을 어느 방법이 참값으로 고치는가 — LoD2 보정률 곡선",
+ "cells": [
+  {
+   "cell": "R1 · LoD2 (단면 띠의 단위)",
+   "source": "R1rep_b10/LoD2",
+   "kind": "unit",
+   "groups": [
+    [
+     [
+      1.0,
+      1.5
+     ]
+    ],
+    [
+     [
+      1.5,
+      2.0
+     ],
+     [
+      2.0,
+      3.0
+     ],
+     [
+      3.0,
+      4.0
+     ]
+    ],
+    [
+     [
+      4.0,
+      8.0
+     ],
+     [
+      8.0,
+      null
+     ]
+    ]
+   ],
+   "lines": [
+    {
+     "result": "prop_LoD2_s0",
+     "label": "본 방법 씨앗 0",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 15560,
+       "rate": 0.8188
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "points": 19696,
+       "rate": 0.8803
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 18149,
+       "rate": 0.8511
+      }
+     ],
+     "corr_1to4": 0.8532,
+     "corr_1to4_points": 35256,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "prop_LoD2_s1",
+     "label": "본 방법 씨앗 1",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 15560,
+       "rate": 0.8715
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "points": 19696,
+       "rate": 0.889
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 18149,
+       "rate": 0.8571
+      }
+     ],
+     "corr_1to4": 0.8813,
+     "corr_1to4_points": 35256,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "samepath_LoD2",
+     "label": "학습 전 사전 정보",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 15560,
+       "rate": 0.0013
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "points": 19696,
+       "rate": 0.0001
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 18149,
+       "rate": 0.0006
+      }
+     ],
+     "corr_1to4": 0.0006,
+     "corr_1to4_points": 35256,
+     "boundary_tau": null
+    },
+    {
+     "result": "imgonly_2dgs_s0",
+     "label": "2차원 가우시안 스플래팅",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 15560,
+       "rate": 0.649
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "points": 19696,
+       "rate": 0.6025
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 18149,
+       "rate": 0.6406
+      }
+     ],
+     "corr_1to4": 0.623,
+     "corr_1to4_points": 35256,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "trust_LoD2_fix1",
+     "label": "GeoGS",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 15560,
+       "rate": 0.4084
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "points": 19696,
+       "rate": 0.4019
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 18149,
+       "rate": 0.2898
+      }
+     ],
+     "corr_1to4": 0.4047,
+     "corr_1to4_points": 35256,
+     "boundary_tau": null
+    },
+    {
+     "result": "mvsfuse_LoD2",
+     "label": "MVS 기반 결합",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 15560,
+       "rate": 0.0028
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "points": 19696,
+       "rate": 0.0655
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "points": 18149,
+       "rate": 0.3903
+      }
+     ],
+     "corr_1to4": 0.0378,
+     "corr_1to4_points": 35256,
+     "boundary_tau": null
+    },
+    {
+     "result": "cdgsnofit_LoD2_s0",
+     "label": "CDGS 변형",
+     "status": "아직"
+    }
+   ]
+  },
+  {
+   "cell": "LoD2 지역 합침 (참고)",
+   "source": "LoD2",
+   "kind": "pooled",
+   "groups": [
+    [
+     [
+      1.0,
+      1.5
+     ]
+    ],
+    [
+     [
+      1.5,
+      2.0
+     ]
+    ],
+    [
+     [
+      2.0,
+      3.0
+     ],
+     [
+      3.0,
+      4.0
+     ]
+    ],
+    [
+     [
+      4.0,
+      8.0
+     ]
+    ],
+    [
+     [
+      8.0,
+      null
+     ]
+    ]
+   ],
+   "lines": [
+    {
+     "result": "prop_LoD2_s0",
+     "label": "본 방법 씨앗 0",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 39735,
+       "rate": 0.7329
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "points": 24605,
+       "rate": 0.8021
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "points": 17133,
+       "rate": 0.7758
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "points": 19436,
+       "rate": 0.8743
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "points": 102713,
+       "rate": 0.9891
+      }
+     ],
+     "corr_1to4": 0.7628,
+     "corr_1to4_points": 81473,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "prop_LoD2_s1",
+     "label": "본 방법 씨앗 1",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 39735,
+       "rate": 0.7501
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "points": 24605,
+       "rate": 0.7927
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "points": 17133,
+       "rate": 0.7888
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "points": 19436,
+       "rate": 0.878
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "points": 102713,
+       "rate": 0.9876
+      }
+     ],
+     "corr_1to4": 0.7711,
+     "corr_1to4_points": 81473,
+     "boundary_tau": 1.0
+    },
+    {
+     "result": "samepath_LoD2",
+     "label": "학습 전 사전 정보",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 39735,
+       "rate": 0.0005
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "points": 24605,
+       "rate": 0.0
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "points": 17133,
+       "rate": 0.0
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "points": 19436,
+       "rate": 0.0005
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "points": 102713,
+       "rate": 0.0001
+      }
+     ],
+     "corr_1to4": 0.0003,
+     "corr_1to4_points": 81473,
+     "boundary_tau": null
+    },
+    {
+     "result": "imgonly_2dgs_s0",
+     "label": "2차원 가우시안 스플래팅",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 39735,
+       "rate": 0.5419
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "points": 24605,
+       "rate": 0.4505
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "points": 17133,
+       "rate": 0.5263
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "points": 19436,
+       "rate": 0.6806
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "points": 102713,
+       "rate": 0.6574
+      }
+     ],
+     "corr_1to4": 0.511,
+     "corr_1to4_points": 81473,
+     "boundary_tau": 2.0
+    },
+    {
+     "result": "trust_LoD2_fix1",
+     "label": "GeoGS",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 39735,
+       "rate": 0.3163
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "points": 24605,
+       "rate": 0.3395
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "points": 17133,
+       "rate": 0.4819
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "points": 19436,
+       "rate": 0.4383
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "points": 102713,
+       "rate": 0.872
+      }
+     ],
+     "corr_1to4": 0.3581,
+     "corr_1to4_points": 81473,
+     "boundary_tau": 8.0
+    },
+    {
+     "result": "mvsfuse_LoD2",
+     "label": "MVS 기반 결합",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "points": 39735,
+       "rate": 0.0585
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "points": 24605,
+       "rate": 0.012
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "points": 17133,
+       "rate": 0.0703
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "points": 19436,
+       "rate": 0.293
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "points": 102713,
+       "rate": 0.9359
+      }
+     ],
+     "corr_1to4": 0.047,
+     "corr_1to4_points": 81473,
+     "boundary_tau": 8.0
+    },
+    {
+     "result": "cdgsnofit_LoD2_s0",
+     "label": "CDGS 변형",
+     "status": "아직"
+    }
+   ]
+  }
+ ],
+ "scientific_verdict": null,
+ "numbers_under": [
+  "R1 · LoD2 (단면 띠의 단위): 1~4τ 보정률 본 방법 씨앗 0 85.3 %, 본 방법 씨앗 1 88.1 %, 학습 전 사전 정보 0.1 %, 2차원 가우시안 스플래팅 62.3 %, GeoGS 40.5 %, MVS 기반 결합 3.8 % (점 35,256); CDGS 변형 아직",
+  "LoD2 지역 합침 (참고): 1~4τ 보정률 본 방법 씨앗 0 76.3 %, 본 방법 씨앗 1 77.1 %, 학습 전 사전 정보 0.0 %, 2차원 가우시안 스플래팅 51.1 %, GeoGS 35.8 %, MVS 기반 결합 4.7 % (점 81,473, 단위 셋을 합침); CDGS 변형 아직"
+ ]
+}

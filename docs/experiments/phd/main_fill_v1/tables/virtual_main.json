@@ -1,0 +1,3880 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "virtual",
+ "work_item": 6,
+ "written": "2026-10-15 22:29:41 KST",
+ "answer": {
+  "line": "일 6 (비교-3의 상호 보완, 가상 시점 메시, 벽 있음으로 대신 읽음): 여섯 단위 가운데 하나에서 '본 방법이 더 채웠다 (재현)' [B173 주변 · LoD2 가능, 근거 불완전], 하나에서 'MVS 기반 결합이 더 채웠다 (재현)' [B173 주변 · 항공 LiDAR 가능, 근거 불완전], 넷은 가상 시점 메시가 없어 해당 없음 [B0 · LoD2; B0 · 항공 LiDAR; R1 · LoD2; R1 · 항공 LiDAR].",
+  "grade": "가능, 근거 불완전",
+  "values": "B173 주변 · LoD2 본 방법 92.3 % 대 MVS 기반 결합 10.5 %, 차 +81.8 %p, 기준 1.32 %p; B173 주변 · 항공 LiDAR 본 방법 68.5 % 대 MVS 기반 결합 92.0 %, 차 -23.5 %p, 기준 5.49 %p",
+  "why": "비가시 영역의 참값 점이 B173 주변 LoD2 17개, 항공 LiDAR 2개라 표본 부족이다. 9.5절대로 벽 있음(긴 벽의 맞음으로 미룬 14,970패치)의 차로 대신 읽었고, 그래서 '가능, 근거 불완전'까지 쓴다. MVS 기반 결합은 재현이다."
+ },
+ "units": {
+  "B173nb_b10/LoD2": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "unit_ko": "B173 주변 · LoD2",
+   "report_only": false,
+   "columns": {
+    "m0": {
+     "result": "prop_LoD2_s0",
+     "name_ko": "본 방법 씨앗 0",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "m1": {
+     "result": "prop_LoD2_s1",
+     "name_ko": "본 방법 씨앗 1",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "samepath": {
+     "result": "samepath_LoD2",
+     "name_ko": "학습 전 사전 정보",
+     "role": "prior",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "twodgs": {
+     "result": "imgonly_2dgs_s0",
+     "name_ko": "2차원 가우시안 스플래팅",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "geogs": {
+     "result": "trust_LoD2_fix1",
+     "name_ko": "GeoGS",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "mvsfuse": {
+     "result": "mvsfuse_LoD2",
+     "name_ko": "MVS 기반 결합",
+     "role": "fusion",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "name_ko": "CDGS 변형",
+     "role": "comparator",
+     "state": "아직",
+     "mark": null
+    },
+    "imgonly0": {
+     "result": "imgonly_s0",
+     "name_ko": "영상만 (씨앗 0)",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "imgonly1": {
+     "result": "imgonly_s1",
+     "name_ko": "영상만 (씨앗 1)",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "name_ko": "판정만 끈 본 방법",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "judgefuse": {
+     "result": "judgefuse_LoD2",
+     "name_ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "reference",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    }
+   },
+   "gt": {
+    "invisible_agreement": {
+     "code": 5,
+     "gt_rows_thinned": 17,
+     "roof": 0,
+     "wall": 17,
+     "patches": 4
+    },
+    "invisible_prior_error": {
+     "code": 14,
+     "gt_rows_thinned": 73,
+     "roof": 0,
+     "wall": 73,
+     "patches": 20
+    },
+    "missing_agreement": {
+     "code": 4,
+     "gt_rows_thinned": 6314,
+     "roof": 136,
+     "wall": 6178,
+     "patches": 1215
+    },
+    "support_agreement": {
+     "code": 2,
+     "gt_rows_thinned": 172508,
+     "roof": 70735,
+     "wall": 101773,
+     "patches": 32061
+    }
+   },
+   "wall_place": {
+    "face": 53,
+    "face_patches": 18298,
+    "counted_patches": 14970,
+    "labels_on_face": {
+     "맞음으로 미룸": 14970,
+     "틀림으로 미룸": 2953,
+     "모호": 375
+    },
+    "unseen_patches": 18747,
+    "label_inferred_all": {
+     "맞음으로 미룸": 15366,
+     "틀림으로 미룸": 2991,
+     "모호": 390
+    }
+   },
+   "rows": {
+    "wall_virtual": {
+     "m0": {
+      "value": 0.919906,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.926587,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.228123,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.223246,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.10481,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.213226,
+      "n": 14970
+     },
+     "imgonly1": {
+      "value": 0.256246,
+      "n": 14970
+     },
+     "nojudge": {
+      "value": 0.892585,
+      "n": 14970
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 14970
+     }
+    },
+    "invisible_0_2": {
+     "m0": {
+      "value": 0.7059,
+      "n": 17
+     },
+     "m1": {
+      "value": 0.4706,
+      "n": 17
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 17
+     },
+     "twodgs": {
+      "value": 0.7647,
+      "n": 17
+     },
+     "geogs": {
+      "value": 0.7647,
+      "n": 17
+     },
+     "mvsfuse": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.7647,
+      "n": 17
+     },
+     "imgonly1": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "nojudge": {
+      "value": 0.6471,
+      "n": 17
+     },
+     "judgefuse": {
+      "value": 0.8235,
+      "n": 17
+     }
+    },
+    "invisible_0_5": {
+     "m0": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "m1": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 17
+     },
+     "twodgs": {
+      "value": 1.0,
+      "n": 17
+     },
+     "geogs": {
+      "value": 1.0,
+      "n": 17
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 17
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "imgonly1": {
+      "value": 1.0,
+      "n": 17
+     },
+     "nojudge": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 17
+     }
+    },
+    "below_0_5": {
+     "m0": {
+      "value": 0.9962,
+      "n": 15366
+     },
+     "m1": {
+      "value": 0.9891,
+      "n": 15366
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 15366
+     },
+     "twodgs": {
+      "value": 0.4918,
+      "n": 15366
+     },
+     "geogs": {
+      "value": 0.4546,
+      "n": 15366
+     },
+     "mvsfuse": {
+      "value": 0.2509,
+      "n": 15366
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.4246,
+      "n": 15366
+     },
+     "imgonly1": {
+      "value": 0.4805,
+      "n": 15366
+     },
+     "nojudge": {
+      "value": 0.9867,
+      "n": 15366
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 15366
+     }
+    },
+    "above_0_2": {
+     "m0": {
+      "value": 0.0929,
+      "n": 2991
+     },
+     "m1": {
+      "value": 0.1127,
+      "n": 2991
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 2991
+     },
+     "twodgs": {
+      "value": 0.324,
+      "n": 2991
+     },
+     "geogs": {
+      "value": 0.0669,
+      "n": 2991
+     },
+     "mvsfuse": {
+      "value": 0.0214,
+      "n": 2991
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.0211,
+      "n": 2991
+     },
+     "imgonly1": {
+      "value": 0.0361,
+      "n": 2991
+     },
+     "nojudge": {
+      "value": 0.0786,
+      "n": 2991
+     },
+     "judgefuse": {
+      "value": 0.5092,
+      "n": 2991
+     }
+    },
+    "invisible_prior_error_0_2": {
+     "m0": {
+      "value": 0.3973,
+      "n": 73
+     },
+     "m1": {
+      "value": 0.1507,
+      "n": 73
+     },
+     "samepath": {
+      "value": 0.1918,
+      "n": 73
+     },
+     "twodgs": {
+      "value": 0.6027,
+      "n": 73
+     },
+     "geogs": {
+      "value": 0.3425,
+      "n": 73
+     },
+     "mvsfuse": {
+      "value": 0.3288,
+      "n": 73
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.274,
+      "n": 73
+     },
+     "imgonly1": {
+      "value": 0.2466,
+      "n": 73
+     },
+     "nojudge": {
+      "value": 0.4384,
+      "n": 73
+     },
+     "judgefuse": {
+      "value": 0.3562,
+      "n": 73
+     }
+    },
+    "missing_agreement_0_2": {
+     "m0": {
+      "value": 0.9538,
+      "n": 6314
+     },
+     "m1": {
+      "value": 0.9539,
+      "n": 6314
+     },
+     "samepath": {
+      "value": 0.9778,
+      "n": 6314
+     },
+     "twodgs": {
+      "value": 0.6634,
+      "n": 6314
+     },
+     "geogs": {
+      "value": 0.8888,
+      "n": 6314
+     },
+     "mvsfuse": {
+      "value": 0.9644,
+      "n": 6314
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.8217,
+      "n": 6314
+     },
+     "imgonly1": {
+      "value": 0.9073,
+      "n": 6314
+     },
+     "nojudge": {
+      "value": 0.9555,
+      "n": 6314
+     },
+     "judgefuse": {
+      "value": 0.9606,
+      "n": 6314
+     }
+    },
+    "missing_agreement_0_5": {
+     "m0": {
+      "value": 0.9827,
+      "n": 6314
+     },
+     "m1": {
+      "value": 0.9791,
+      "n": 6314
+     },
+     "samepath": {
+      "value": 0.9979,
+      "n": 6314
+     },
+     "twodgs": {
+      "value": 0.92,
+      "n": 6314
+     },
+     "geogs": {
+      "value": 0.9856,
+      "n": 6314
+     },
+     "mvsfuse": {
+      "value": 0.9964,
+      "n": 6314
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.9826,
+      "n": 6314
+     },
+     "imgonly1": {
+      "value": 0.9823,
+      "n": 6314
+     },
+     "nojudge": {
+      "value": 0.9816,
+      "n": 6314
+     },
+     "judgefuse": {
+      "value": 0.9907,
+      "n": 6314
+     }
+    },
+    "support_agreement_0_2": {
+     "m0": {
+      "value": 0.9665,
+      "n": 172508
+     },
+     "m1": {
+      "value": 0.9668,
+      "n": 172508
+     },
+     "samepath": {
+      "value": 0.9878,
+      "n": 172508
+     },
+     "twodgs": {
+      "value": 0.7094,
+      "n": 172508
+     },
+     "geogs": {
+      "value": 0.8059,
+      "n": 172508
+     },
+     "mvsfuse": {
+      "value": 0.9886,
+      "n": 172508
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.9458,
+      "n": 172508
+     },
+     "imgonly1": {
+      "value": 0.9546,
+      "n": 172508
+     },
+     "nojudge": {
+      "value": 0.9713,
+      "n": 172508
+     },
+     "judgefuse": {
+      "value": 0.9895,
+      "n": 172508
+     }
+    },
+    "overall_0_2": {
+     "m0": {
+      "value": 0.8948640509848742,
+      "n": 3881308
+     },
+     "m1": {
+      "value": 0.8924849561024273,
+      "n": 3881308
+     },
+     "samepath": {
+      "value": 0.536423030586596,
+      "n": 3881308
+     },
+     "twodgs": {
+      "value": 0.5637939581192732,
+      "n": 3881308
+     },
+     "geogs": {
+      "value": 0.6686763843529037,
+      "n": 3881308
+     },
+     "mvsfuse": {
+      "value": 0.8694878118407506,
+      "n": 3881308
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.8867992439662093,
+      "n": 3881308
+     },
+     "imgonly1": {
+      "value": 0.890812581737909,
+      "n": 3881308
+     },
+     "nojudge": {
+      "value": 0.8922394203191295,
+      "n": 3881308
+     },
+     "judgefuse": {
+      "value": 0.8798005723843612,
+      "n": 3881308
+     }
+    },
+    "wall_tsdf": {
+     "m0": {
+      "value": 0.084168,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.100735,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 0.082966,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.009486,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.043554,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.022445,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": 14970
+     },
+     "imgonly0": {
+      "value": 0.019906,
+      "n": 14970
+     },
+     "imgonly1": {
+      "value": 0.024582,
+      "n": 14970
+     },
+     "nojudge": {
+      "value": 0.068671,
+      "n": 14970
+     },
+     "judgefuse": {
+      "value": 0.101336,
+      "n": 14970
+     }
+    }
+   },
+   "surface_wall_share": 1.0,
+   "readings": {
+    "invisible_0_2": {
+     "metric": "invisible_0_2",
+     "ko": "비가시 영역 완전성 0.2 m, 가상 시점 메시",
+     "method_seeds": [
+      0.7059,
+      0.4706
+     ],
+     "method_mean": 0.5882499999999999,
+     "comparator_value": 0.8824,
+     "n": 17,
+     "criterion": 0.46587023171694486,
+     "criterion_parts": {
+      "unit": 0.46587023171694486,
+      "three_points": 0.17647058823529413
+     },
+     "diff_method_minus_comparator": -0.29415,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.919906,
+       0.926587
+      ],
+      "method_mean": 0.9232465000000001,
+      "comparator_value": 0.10481,
+      "n": 14970,
+      "criterion": 0.013227705134300601,
+      "criterion_parts": {
+       "unit": 0.013227705134300601,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": 0.8184365000000001,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "본 방법이 더 채웠다 (재현)"
+     }
+    },
+    "invisible_0_5": {
+     "metric": "invisible_0_5",
+     "ko": "비가시 영역 완전성 0.5 m, 가상 시점 메시",
+     "method_seeds": [
+      0.8824,
+      0.8824
+     ],
+     "method_mean": 0.8824,
+     "comparator_value": 1.0,
+     "n": 17,
+     "criterion": 0.17647058823529413,
+     "criterion_parts": {
+      "unit": 0.0,
+      "three_points": 0.17647058823529413
+     },
+     "diff_method_minus_comparator": -0.11760000000000004,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.919906,
+       0.926587
+      ],
+      "method_mean": 0.9232465000000001,
+      "comparator_value": 0.10481,
+      "n": 14970,
+      "criterion": 0.013227705134300601,
+      "criterion_parts": {
+       "unit": 0.013227705134300601,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": 0.8184365000000001,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "본 방법이 더 채웠다 (재현)"
+     }
+    }
+   },
+   "recomputed_vs_existing": {
+    "prop_LoD2_s0": {
+     "virtual_below": [
+      0.9962,
+      0.9962
+     ],
+     "virtual_above": [
+      0.0929,
+      0.0929
+     ],
+     "wall": [
+      0.919906,
+      0.919906
+     ],
+     "wall_present": [
+      13771,
+      13771
+     ],
+     "all_equal": true
+    },
+    "prop_LoD2_s1": {
+     "virtual_below": [
+      0.9891,
+      0.9891
+     ],
+     "virtual_above": [
+      0.1127,
+      0.1127
+     ],
+     "wall": [
+      0.926587,
+      0.926587
+     ],
+     "wall_present": [
+      13871,
+      13871
+     ],
+     "all_equal": true
+    },
+    "imgonly_2dgs_s0": {
+     "virtual_below": [
+      0.4918,
+      0.4918
+     ],
+     "virtual_above": [
+      0.324,
+      0.324
+     ],
+     "wall": [
+      0.228123,
+      0.228123
+     ],
+     "wall_present": [
+      3415,
+      3415
+     ],
+     "all_equal": true
+    },
+    "trust_LoD2_fix1": {
+     "virtual_below": [
+      0.4546,
+      0.4546
+     ],
+     "virtual_above": [
+      0.0669,
+      0.0669
+     ],
+     "wall": [
+      0.223246,
+      0.223246
+     ],
+     "wall_present": [
+      3342,
+      3342
+     ],
+     "all_equal": true
+    },
+    "imgonly_s0": {
+     "virtual_below": [
+      0.4246,
+      0.4246
+     ],
+     "virtual_above": [
+      0.0211,
+      0.0211
+     ],
+     "wall": [
+      0.213226,
+      0.213226
+     ],
+     "wall_present": [
+      3192,
+      3192
+     ],
+     "all_equal": true
+    },
+    "imgonly_s1": {
+     "virtual_below": [
+      0.4805,
+      0.4805
+     ],
+     "virtual_above": [
+      0.0361,
+      0.0361
+     ],
+     "wall": [
+      0.256246,
+      0.256246
+     ],
+     "wall_present": [
+      3836,
+      3836
+     ],
+     "all_equal": true
+    },
+    "nojudge_LoD2_s0": {
+     "virtual_below": [
+      0.9867,
+      0.9867
+     ],
+     "virtual_above": [
+      0.0786,
+      0.0786
+     ],
+     "wall": [
+      0.892585,
+      0.892585
+     ],
+     "wall_present": [
+      13362,
+      13362
+     ],
+     "all_equal": true
+    }
+   },
+   "new_meshes": {
+    "mvsfuse": {
+     "prior_hit_in_box_px": 1995891,
+     "emptied_in_box_px": 581177,
+     "emptied_share_in_box": 0.2911867431638301,
+     "vertices": 3972030,
+     "triangles": 7584107,
+     "seconds": {
+      "load": 2.6,
+      "virtual_renders": 4.5,
+      "tsdf": 43.1
+     },
+     "peak_host_gb": 5.76,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15366,
+      15319,
+      2944,
+      10449,
+      10266,
+      13292,
+      15366,
+      15364,
+      15366,
+      15317,
+      7200,
+      12284,
+      12984,
+      11116,
+      15360,
+      15366
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/mvsfuse_LoD2/mesh_virtual.ply"
+    },
+    "judgefuse": {
+     "prior_hit_in_box_px": 1995891,
+     "emptied_in_box_px": 671185,
+     "emptied_share_in_box": 0.3362833942334526,
+     "vertices": 4238658,
+     "triangles": 8039557,
+     "seconds": {
+      "load": 2.5,
+      "virtual_renders": 4.5,
+      "tsdf": 44.0
+     },
+     "peak_host_gb": 5.97,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15318,
+      15226,
+      7110,
+      5676,
+      5104,
+      13977,
+      15286,
+      15318,
+      15366,
+      15253,
+      9050,
+      13170,
+      13579,
+      12539,
+      15254,
+      15366
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/judgefuse_LoD2/mesh_virtual.ply"
+    },
+    "samepath": {
+     "prior_hit_in_box_px": 1995891,
+     "emptied_in_box_px": 0,
+     "emptied_share_in_box": 0.0,
+     "vertices": 2223636,
+     "triangles": 4434002,
+     "seconds": {
+      "load": 5.1,
+      "virtual_renders": 6.7,
+      "tsdf": 38.5
+     },
+     "peak_host_gb": 3.13,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15318,
+      15223,
+      0,
+      0,
+      0,
+      29,
+      15239,
+      15318,
+      15318,
+      15242,
+      0,
+      0,
+      0,
+      16,
+      15210,
+      15318
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/samepath_LoD2/mesh_virtual.ply"
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "unit_ko": "B173 주변 · 항공 LiDAR",
+   "report_only": false,
+   "columns": {
+    "m0": {
+     "result": "prop_ALS_s0",
+     "name_ko": "본 방법 씨앗 0",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "m1": {
+     "result": "prop_ALS_s1",
+     "name_ko": "본 방법 씨앗 1",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "samepath": {
+     "result": "samepath_ALS",
+     "name_ko": "학습 전 사전 정보",
+     "role": "prior",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "twodgs": {
+     "result": "imgonly_2dgs_s0",
+     "name_ko": "2차원 가우시안 스플래팅",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "geogs": {
+     "result": "geogs_ALS_fix1",
+     "name_ko": "GeoGS",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "mvsfuse": {
+     "result": "mvsfuse_ALS",
+     "name_ko": "MVS 기반 결합",
+     "role": "fusion",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "name_ko": "CDGS 변형",
+     "role": "comparator",
+     "state": "아직",
+     "mark": null
+    },
+    "imgonly0": {
+     "result": "imgonly_s0",
+     "name_ko": "영상만 (씨앗 0)",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "imgonly1": {
+     "result": "imgonly_s1",
+     "name_ko": "영상만 (씨앗 1)",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "trust": {
+     "result": "trust_ALS",
+     "name_ko": "사전 정보 신뢰",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "name_ko": "판정만 끈 본 방법",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "judgefuse": {
+     "result": "judgefuse_ALS",
+     "name_ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "reference",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    }
+   },
+   "gt": {
+    "invisible_agreement": {
+     "code": 5,
+     "gt_rows_thinned": 2,
+     "roof": 2,
+     "wall": 0,
+     "patches": 1
+    },
+    "invisible_prior_error": {
+     "code": 14,
+     "gt_rows_thinned": 0,
+     "roof": 0,
+     "wall": 0,
+     "patches": 0
+    },
+    "missing_agreement": {
+     "code": 4,
+     "gt_rows_thinned": 111,
+     "roof": 111,
+     "wall": 0,
+     "patches": 17
+    },
+    "support_agreement": {
+     "code": 2,
+     "gt_rows_thinned": 64322,
+     "roof": 64322,
+     "wall": 0,
+     "patches": 10140
+    }
+   },
+   "wall_place": {
+    "face": 53,
+    "face_patches": 18298,
+    "counted_patches": 14970,
+    "labels_on_face": {
+     "맞음으로 미룸": 14970,
+     "틀림으로 미룸": 2953,
+     "모호": 375
+    },
+    "unseen_patches": 18747,
+    "label_inferred_all": {
+     "맞음으로 미룸": 15366,
+     "틀림으로 미룸": 2991,
+     "모호": 390
+    }
+   },
+   "rows": {
+    "wall_virtual": {
+     "m0": {
+      "value": 0.698731,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.671009,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 0.944021,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.228123,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.226052,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.919973,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.213226,
+      "n": 14970
+     },
+     "imgonly1": {
+      "value": 0.256246,
+      "n": 14970
+     },
+     "trust": {
+      "value": 0.536406,
+      "n": 14970
+     },
+     "nojudge": {
+      "value": 0.687308,
+      "n": 14970
+     },
+     "judgefuse": {
+      "value": 0.948096,
+      "n": 14970
+     }
+    },
+    "invisible_0_2": {
+     "m0": {
+      "value": 1.0,
+      "n": 2
+     },
+     "m1": {
+      "value": 1.0,
+      "n": 2
+     },
+     "samepath": {
+      "value": 0.5,
+      "n": 2
+     },
+     "twodgs": {
+      "value": 1.0,
+      "n": 2
+     },
+     "geogs": {
+      "value": 0.0,
+      "n": 2
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 2
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 1.0,
+      "n": 2
+     },
+     "imgonly1": {
+      "value": 1.0,
+      "n": 2
+     },
+     "trust": {
+      "value": 1.0,
+      "n": 2
+     },
+     "nojudge": {
+      "value": 1.0,
+      "n": 2
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 2
+     }
+    },
+    "invisible_0_5": {
+     "m0": {
+      "value": 1.0,
+      "n": 2
+     },
+     "m1": {
+      "value": 1.0,
+      "n": 2
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 2
+     },
+     "twodgs": {
+      "value": 1.0,
+      "n": 2
+     },
+     "geogs": {
+      "value": 0.0,
+      "n": 2
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 2
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 1.0,
+      "n": 2
+     },
+     "imgonly1": {
+      "value": 1.0,
+      "n": 2
+     },
+     "trust": {
+      "value": 1.0,
+      "n": 2
+     },
+     "nojudge": {
+      "value": 1.0,
+      "n": 2
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 2
+     }
+    },
+    "below_0_5": {
+     "m0": {
+      "value": 0.8825,
+      "n": 15366
+     },
+     "m1": {
+      "value": 0.8622,
+      "n": 15366
+     },
+     "samepath": {
+      "value": 0.9969,
+      "n": 15366
+     },
+     "twodgs": {
+      "value": 0.4918,
+      "n": 15366
+     },
+     "geogs": {
+      "value": 0.4347,
+      "n": 15366
+     },
+     "mvsfuse": {
+      "value": 0.9969,
+      "n": 15366
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.4246,
+      "n": 15366
+     },
+     "imgonly1": {
+      "value": 0.4805,
+      "n": 15366
+     },
+     "trust": {
+      "value": 0.8067,
+      "n": 15366
+     },
+     "nojudge": {
+      "value": 0.8906,
+      "n": 15366
+     },
+     "judgefuse": {
+      "value": 0.9982,
+      "n": 15366
+     }
+    },
+    "above_0_2": {
+     "m0": {
+      "value": 0.0832,
+      "n": 2991
+     },
+     "m1": {
+      "value": 0.0819,
+      "n": 2991
+     },
+     "samepath": {
+      "value": 0.5406,
+      "n": 2991
+     },
+     "twodgs": {
+      "value": 0.324,
+      "n": 2991
+     },
+     "geogs": {
+      "value": 0.0572,
+      "n": 2991
+     },
+     "mvsfuse": {
+      "value": 0.0371,
+      "n": 2991
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.0211,
+      "n": 2991
+     },
+     "imgonly1": {
+      "value": 0.0361,
+      "n": 2991
+     },
+     "trust": {
+      "value": 0.0863,
+      "n": 2991
+     },
+     "nojudge": {
+      "value": 0.0515,
+      "n": 2991
+     },
+     "judgefuse": {
+      "value": 0.0384,
+      "n": 2991
+     }
+    },
+    "invisible_prior_error_0_2": {
+     "m0": {
+      "value": null,
+      "n": 0
+     },
+     "m1": {
+      "value": null,
+      "n": 0
+     },
+     "samepath": {
+      "value": null,
+      "n": 0
+     },
+     "twodgs": {
+      "value": null,
+      "n": 0
+     },
+     "geogs": {
+      "value": null,
+      "n": 0
+     },
+     "mvsfuse": {
+      "value": null,
+      "n": 0
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": 0
+     },
+     "imgonly1": {
+      "value": null,
+      "n": 0
+     },
+     "trust": {
+      "value": null,
+      "n": 0
+     },
+     "nojudge": {
+      "value": null,
+      "n": 0
+     },
+     "judgefuse": {
+      "value": null,
+      "n": 0
+     }
+    },
+    "missing_agreement_0_2": {
+     "m0": {
+      "value": 0.036,
+      "n": 111
+     },
+     "m1": {
+      "value": 0.0,
+      "n": 111
+     },
+     "samepath": {
+      "value": 0.991,
+      "n": 111
+     },
+     "twodgs": {
+      "value": 0.009,
+      "n": 111
+     },
+     "geogs": {
+      "value": 0.4414,
+      "n": 111
+     },
+     "mvsfuse": {
+      "value": 0.991,
+      "n": 111
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.009,
+      "n": 111
+     },
+     "imgonly1": {
+      "value": 0.0,
+      "n": 111
+     },
+     "trust": {
+      "value": 0.4054,
+      "n": 111
+     },
+     "nojudge": {
+      "value": 0.027,
+      "n": 111
+     },
+     "judgefuse": {
+      "value": 0.6126,
+      "n": 111
+     }
+    },
+    "missing_agreement_0_5": {
+     "m0": {
+      "value": 0.2703,
+      "n": 111
+     },
+     "m1": {
+      "value": 0.2432,
+      "n": 111
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 111
+     },
+     "twodgs": {
+      "value": 0.4144,
+      "n": 111
+     },
+     "geogs": {
+      "value": 0.9189,
+      "n": 111
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 111
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.3333,
+      "n": 111
+     },
+     "imgonly1": {
+      "value": 0.2162,
+      "n": 111
+     },
+     "trust": {
+      "value": 0.7748,
+      "n": 111
+     },
+     "nojudge": {
+      "value": 0.3423,
+      "n": 111
+     },
+     "judgefuse": {
+      "value": 0.991,
+      "n": 111
+     }
+    },
+    "support_agreement_0_2": {
+     "m0": {
+      "value": 0.994,
+      "n": 64322
+     },
+     "m1": {
+      "value": 0.9949,
+      "n": 64322
+     },
+     "samepath": {
+      "value": 0.9995,
+      "n": 64322
+     },
+     "twodgs": {
+      "value": 0.6171,
+      "n": 64322
+     },
+     "geogs": {
+      "value": 0.6812,
+      "n": 64322
+     },
+     "mvsfuse": {
+      "value": 0.9995,
+      "n": 64322
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.9871,
+      "n": 64322
+     },
+     "imgonly1": {
+      "value": 0.9867,
+      "n": 64322
+     },
+     "trust": {
+      "value": 0.9965,
+      "n": 64322
+     },
+     "nojudge": {
+      "value": 0.996,
+      "n": 64322
+     },
+     "judgefuse": {
+      "value": 0.9988,
+      "n": 64322
+     }
+    },
+    "overall_0_2": {
+     "m0": {
+      "value": 0.9020371483015519,
+      "n": 3881308
+     },
+     "m1": {
+      "value": 0.9021775648827663,
+      "n": 3881308
+     },
+     "samepath": {
+      "value": 0.5265119387587895,
+      "n": 3881308
+     },
+     "twodgs": {
+      "value": 0.5637939581192732,
+      "n": 3881308
+     },
+     "geogs": {
+      "value": 0.6622540648667923,
+      "n": 3881308
+     },
+     "mvsfuse": {
+      "value": 0.8734643063627004,
+      "n": 3881308
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": 0.8867992439662093,
+      "n": 3881308
+     },
+     "imgonly1": {
+      "value": 0.890812581737909,
+      "n": 3881308
+     },
+     "trust": {
+      "value": 0.5983408170647627,
+      "n": 3881308
+     },
+     "nojudge": {
+      "value": 0.9093313388167081,
+      "n": 3881308
+     },
+     "judgefuse": {
+      "value": 0.911951074225493,
+      "n": 3881308
+     }
+    },
+    "wall_tsdf": {
+     "m0": {
+      "value": 0.046627,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.045291,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 0.07515,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.009486,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.074749,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.078424,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": 14970
+     },
+     "imgonly0": {
+      "value": 0.019906,
+      "n": 14970
+     },
+     "imgonly1": {
+      "value": 0.024582,
+      "n": 14970
+     },
+     "trust": {
+      "value": 0.102338,
+      "n": 14970
+     },
+     "nojudge": {
+      "value": 0.043821,
+      "n": 14970
+     },
+     "judgefuse": {
+      "value": 0.09332,
+      "n": 14970
+     }
+    }
+   },
+   "surface_wall_share": 0.960254,
+   "readings": {
+    "invisible_0_2": {
+     "metric": "invisible_0_2",
+     "ko": "비가시 영역 완전성 0.2 m, 가상 시점 메시",
+     "method_seeds": [
+      1.0,
+      1.0
+     ],
+     "method_mean": 1.0,
+     "comparator_value": 1.0,
+     "n": 2,
+     "criterion": 1.5,
+     "criterion_parts": {
+      "unit": 0.0,
+      "three_points": 1.5
+     },
+     "diff_method_minus_comparator": 0.0,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.698731,
+       0.671009
+      ],
+      "method_mean": 0.68487,
+      "comparator_value": 0.919973,
+      "n": 14970,
+      "criterion": 0.054886759726549765,
+      "criterion_parts": {
+       "unit": 0.054886759726549765,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": -0.23510300000000006,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "MVS 기반 결합이 더 채웠다 (재현)"
+     }
+    },
+    "invisible_0_5": {
+     "metric": "invisible_0_5",
+     "ko": "비가시 영역 완전성 0.5 m, 가상 시점 메시",
+     "method_seeds": [
+      1.0,
+      1.0
+     ],
+     "method_mean": 1.0,
+     "comparator_value": 1.0,
+     "n": 2,
+     "criterion": 1.5,
+     "criterion_parts": {
+      "unit": 0.0,
+      "three_points": 1.5
+     },
+     "diff_method_minus_comparator": 0.0,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.698731,
+       0.671009
+      ],
+      "method_mean": 0.68487,
+      "comparator_value": 0.919973,
+      "n": 14970,
+      "criterion": 0.054886759726549765,
+      "criterion_parts": {
+       "unit": 0.054886759726549765,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": -0.23510300000000006,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "MVS 기반 결합이 더 채웠다 (재현)"
+     }
+    }
+   },
+   "recomputed_vs_existing": {
+    "prop_ALS_s0": {
+     "virtual_below": [
+      0.8825,
+      0.8825
+     ],
+     "virtual_above": [
+      0.0832,
+      0.0832
+     ],
+     "wall": [
+      0.698731,
+      0.698731
+     ],
+     "wall_present": [
+      10460,
+      10460
+     ],
+     "all_equal": true
+    },
+    "prop_ALS_s1": {
+     "virtual_below": [
+      0.8622,
+      0.8622
+     ],
+     "virtual_above": [
+      0.0819,
+      0.0819
+     ],
+     "wall": [
+      0.671009,
+      0.671009
+     ],
+     "wall_present": [
+      10045,
+      10045
+     ],
+     "all_equal": true
+    },
+    "imgonly_2dgs_s0": {
+     "virtual_below": [
+      0.4918,
+      0.4918
+     ],
+     "virtual_above": [
+      0.324,
+      0.324
+     ],
+     "wall": [
+      0.228123,
+      0.228123
+     ],
+     "wall_present": [
+      3415,
+      3415
+     ],
+     "all_equal": true
+    },
+    "geogs_ALS_fix1": {
+     "virtual_below": [
+      0.4347,
+      0.4347
+     ],
+     "virtual_above": [
+      0.0572,
+      0.0572
+     ],
+     "wall": [
+      0.226052,
+      0.226052
+     ],
+     "wall_present": [
+      3384,
+      3384
+     ],
+     "all_equal": true
+    },
+    "imgonly_s0": {
+     "virtual_below": [
+      0.4246,
+      0.4246
+     ],
+     "virtual_above": [
+      0.0211,
+      0.0211
+     ],
+     "wall": [
+      0.213226,
+      0.213226
+     ],
+     "wall_present": [
+      3192,
+      3192
+     ],
+     "all_equal": true
+    },
+    "imgonly_s1": {
+     "virtual_below": [
+      0.4805,
+      0.4805
+     ],
+     "virtual_above": [
+      0.0361,
+      0.0361
+     ],
+     "wall": [
+      0.256246,
+      0.256246
+     ],
+     "wall_present": [
+      3836,
+      3836
+     ],
+     "all_equal": true
+    },
+    "trust_ALS": {
+     "virtual_below": [
+      0.8067,
+      0.8067
+     ],
+     "virtual_above": [
+      0.0863,
+      0.0863
+     ],
+     "wall": [
+      0.536406,
+      0.536406
+     ],
+     "wall_present": [
+      8030,
+      8030
+     ],
+     "all_equal": true
+    },
+    "nojudge_ALS_s0": {
+     "virtual_below": [
+      0.8906,
+      0.8906
+     ],
+     "virtual_above": [
+      0.0515,
+      0.0515
+     ],
+     "wall": [
+      0.687308,
+      0.687308
+     ],
+     "wall_present": [
+      10289,
+      10289
+     ],
+     "all_equal": true
+    }
+   },
+   "new_meshes": {
+    "mvsfuse": {
+     "prior_hit_in_box_px": 3131050,
+     "emptied_in_box_px": 472401,
+     "emptied_share_in_box": 0.1508762236310503,
+     "vertices": 5189523,
+     "triangles": 10007559,
+     "seconds": {
+      "load": 2.6,
+      "virtual_renders": 4.6,
+      "tsdf": 47.6
+     },
+     "peak_host_gb": 6.07,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15302,
+      13689,
+      1811,
+      3068,
+      3082,
+      6250,
+      13526,
+      15306,
+      15319,
+      13317,
+      7717,
+      10328,
+      10337,
+      9712,
+      13340,
+      15279
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/mvsfuse_ALS/mesh_virtual.ply"
+    },
+    "judgefuse": {
+     "prior_hit_in_box_px": 3131050,
+     "emptied_in_box_px": 165224,
+     "emptied_share_in_box": 0.05276951821274013,
+     "vertices": 5695570,
+     "triangles": 10967263,
+     "seconds": {
+      "load": 2.6,
+      "virtual_renders": 4.6,
+      "tsdf": 62.9
+     },
+     "peak_host_gb": 6.68,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15105,
+      13333,
+      245,
+      1198,
+      1044,
+      2177,
+      13257,
+      15101,
+      15207,
+      12997,
+      4464,
+      7095,
+      7529,
+      5964,
+      13088,
+      15192
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/judgefuse_ALS/mesh_virtual.ply"
+    },
+    "samepath": {
+     "prior_hit_in_box_px": 3131050,
+     "emptied_in_box_px": 0,
+     "emptied_share_in_box": 0.0,
+     "vertices": 4577361,
+     "triangles": 9062851,
+     "seconds": {
+      "load": 2.6,
+      "virtual_renders": 4.4,
+      "tsdf": 45.1
+     },
+     "peak_host_gb": 4.86,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15105,
+      13329,
+      59,
+      0,
+      0,
+      31,
+      13251,
+      15101,
+      15159,
+      12971,
+      0,
+      0,
+      0,
+      34,
+      13067,
+      15144
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/samepath_ALS/mesh_virtual.ply"
+    }
+   }
+  },
+  "B173_b0/LoD2": {
+   "site": "B173_b0",
+   "prior": "LoD2",
+   "unit_ko": "B173만 · LoD2",
+   "report_only": true,
+   "columns": {
+    "m0": {
+     "result": "prop_LoD2_s0",
+     "name_ko": "본 방법 씨앗 0",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "m1": {
+     "result": "prop_LoD2_s1",
+     "name_ko": "본 방법 씨앗 1",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "samepath": {
+     "result": "samepath_LoD2",
+     "name_ko": "학습 전 사전 정보",
+     "role": "prior",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "twodgs": {
+     "result": "imgonly_2dgs_s0",
+     "name_ko": "2차원 가우시안 스플래팅",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "geogs": {
+     "result": "trust_LoD2_fix1",
+     "name_ko": "GeoGS",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "mvsfuse": {
+     "result": "mvsfuse_LoD2",
+     "name_ko": "MVS 기반 결합",
+     "role": "fusion",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "name_ko": "CDGS 변형",
+     "role": "comparator",
+     "state": "아직",
+     "mark": null
+    },
+    "imgonly0": {
+     "result": "imgonly_s0",
+     "name_ko": "영상만 (씨앗 0)",
+     "role": "reference",
+     "state": "결과 없음",
+     "mark": null
+    },
+    "imgonly1": {
+     "result": "imgonly_s1",
+     "name_ko": "영상만 (씨앗 1)",
+     "role": "reference",
+     "state": "결과 없음",
+     "mark": null
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "name_ko": "판정만 끈 본 방법",
+     "role": "reference",
+     "state": "결과 없음",
+     "mark": null
+    },
+    "judgefuse": {
+     "result": "judgefuse_LoD2",
+     "name_ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "reference",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    }
+   },
+   "gt": {
+    "invisible_agreement": {
+     "code": 5,
+     "gt_rows_thinned": 17,
+     "roof": 0,
+     "wall": 17,
+     "patches": 4
+    },
+    "invisible_prior_error": {
+     "code": 14,
+     "gt_rows_thinned": 73,
+     "roof": 0,
+     "wall": 73,
+     "patches": 20
+    },
+    "missing_agreement": {
+     "code": 4,
+     "gt_rows_thinned": 1984,
+     "roof": 87,
+     "wall": 1897,
+     "patches": 412
+    },
+    "support_agreement": {
+     "code": 2,
+     "gt_rows_thinned": 84677,
+     "roof": 18390,
+     "wall": 66287,
+     "patches": 17001
+    }
+   },
+   "wall_place": {
+    "face": 25,
+    "face_patches": 18298,
+    "counted_patches": 14970,
+    "labels_on_face": {
+     "맞음으로 미룸": 14970,
+     "틀림으로 미룸": 2953,
+     "모호": 375
+    },
+    "unseen_patches": 18743,
+    "label_inferred_all": {
+     "맞음으로 미룸": 15369,
+     "틀림으로 미룸": 2984,
+     "모호": 390
+    }
+   },
+   "rows": {
+    "wall_virtual": {
+     "m0": {
+      "value": 0.904075,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.904609,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.231463,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.160989,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.109953,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 14970
+     }
+    },
+    "invisible_0_2": {
+     "m0": {
+      "value": 0.8235,
+      "n": 17
+     },
+     "m1": {
+      "value": 0.7059,
+      "n": 17
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 17
+     },
+     "twodgs": {
+      "value": 0.6471,
+      "n": 17
+     },
+     "geogs": {
+      "value": 0.4706,
+      "n": 17
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 17
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.8824,
+      "n": 17
+     }
+    },
+    "invisible_0_5": {
+     "m0": {
+      "value": 1.0,
+      "n": 17
+     },
+     "m1": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 17
+     },
+     "twodgs": {
+      "value": 1.0,
+      "n": 17
+     },
+     "geogs": {
+      "value": 0.8824,
+      "n": 17
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 17
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 17
+     }
+    },
+    "below_0_5": {
+     "m0": {
+      "value": 0.9875,
+      "n": 15369
+     },
+     "m1": {
+      "value": 0.9855,
+      "n": 15369
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 15369
+     },
+     "twodgs": {
+      "value": 0.5172,
+      "n": 15369
+     },
+     "geogs": {
+      "value": 0.3676,
+      "n": 15369
+     },
+     "mvsfuse": {
+      "value": 0.2547,
+      "n": 15369
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 15369
+     }
+    },
+    "above_0_2": {
+     "m0": {
+      "value": 0.1475,
+      "n": 2984
+     },
+     "m1": {
+      "value": 0.1297,
+      "n": 2984
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 2984
+     },
+     "twodgs": {
+      "value": 0.5824,
+      "n": 2984
+     },
+     "geogs": {
+      "value": 0.1565,
+      "n": 2984
+     },
+     "mvsfuse": {
+      "value": 0.0204,
+      "n": 2984
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.5054,
+      "n": 2984
+     }
+    },
+    "invisible_prior_error_0_2": {
+     "m0": {
+      "value": 0.274,
+      "n": 73
+     },
+     "m1": {
+      "value": 0.1918,
+      "n": 73
+     },
+     "samepath": {
+      "value": 0.1918,
+      "n": 73
+     },
+     "twodgs": {
+      "value": 0.6712,
+      "n": 73
+     },
+     "geogs": {
+      "value": 0.4795,
+      "n": 73
+     },
+     "mvsfuse": {
+      "value": 0.2466,
+      "n": 73
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.2055,
+      "n": 73
+     }
+    },
+    "missing_agreement_0_2": {
+     "m0": {
+      "value": 0.9078,
+      "n": 1984
+     },
+     "m1": {
+      "value": 0.9284,
+      "n": 1984
+     },
+     "samepath": {
+      "value": 0.9778,
+      "n": 1984
+     },
+     "twodgs": {
+      "value": 0.3982,
+      "n": 1984
+     },
+     "geogs": {
+      "value": 0.381,
+      "n": 1984
+     },
+     "mvsfuse": {
+      "value": 0.9637,
+      "n": 1984
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.9244,
+      "n": 1984
+     }
+    },
+    "missing_agreement_0_5": {
+     "m0": {
+      "value": 0.9546,
+      "n": 1984
+     },
+     "m1": {
+      "value": 0.9622,
+      "n": 1984
+     },
+     "samepath": {
+      "value": 0.9985,
+      "n": 1984
+     },
+     "twodgs": {
+      "value": 0.8805,
+      "n": 1984
+     },
+     "geogs": {
+      "value": 0.7041,
+      "n": 1984
+     },
+     "mvsfuse": {
+      "value": 0.997,
+      "n": 1984
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.9798,
+      "n": 1984
+     }
+    },
+    "support_agreement_0_2": {
+     "m0": {
+      "value": 0.9451,
+      "n": 84677
+     },
+     "m1": {
+      "value": 0.9411,
+      "n": 84677
+     },
+     "samepath": {
+      "value": 0.9851,
+      "n": 84677
+     },
+     "twodgs": {
+      "value": 0.7048,
+      "n": 84677
+     },
+     "geogs": {
+      "value": 0.5209,
+      "n": 84677
+     },
+     "mvsfuse": {
+      "value": 0.9859,
+      "n": 84677
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.9869,
+      "n": 84677
+     }
+    },
+    "overall_0_2": {
+     "m0": {
+      "value": 0.8397498262067794,
+      "n": 2261308
+     },
+     "m1": {
+      "value": 0.8386566535827936,
+      "n": 2261308
+     },
+     "samepath": {
+      "value": 0.2776994553594645,
+      "n": 2261308
+     },
+     "twodgs": {
+      "value": 0.6586931103591372,
+      "n": 2261308
+     },
+     "geogs": {
+      "value": 0.49417284155895613,
+      "n": 2261308
+     },
+     "mvsfuse": {
+      "value": 0.8321551066904641,
+      "n": 2261308
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.8361205107840242,
+      "n": 2261308
+     }
+    },
+    "wall_tsdf": {
+     "m0": {
+      "value": 0.091249,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.081764,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 0.082966,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.005611,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.036607,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.025184,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": 14970
+     },
+     "imgonly0": {
+      "value": null,
+      "n": 14970
+     },
+     "imgonly1": {
+      "value": null,
+      "n": 14970
+     },
+     "nojudge": {
+      "value": null,
+      "n": 14970
+     },
+     "judgefuse": {
+      "value": 0.100067,
+      "n": 14970
+     }
+    }
+   },
+   "surface_wall_share": 1.0,
+   "readings": {
+    "invisible_0_2": {
+     "metric": "invisible_0_2",
+     "ko": "비가시 영역 완전성 0.2 m, 가상 시점 메시",
+     "method_seeds": [
+      0.8235,
+      0.7059
+     ],
+     "method_mean": 0.7646999999999999,
+     "comparator_value": 1.0,
+     "n": 17,
+     "criterion": 0.2328361209091064,
+     "criterion_parts": {
+      "unit": 0.2328361209091064,
+      "three_points": 0.17647058823529413
+     },
+     "diff_method_minus_comparator": -0.23530000000000006,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.904075,
+       0.904609
+      ],
+      "method_mean": 0.904342,
+      "comparator_value": 0.109953,
+      "n": 14970,
+      "criterion": 0.001057266059230194,
+      "criterion_parts": {
+       "unit": 0.001057266059230194,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": 0.794389,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "본 방법이 더 채웠다 (재현)"
+     }
+    },
+    "invisible_0_5": {
+     "metric": "invisible_0_5",
+     "ko": "비가시 영역 완전성 0.5 m, 가상 시점 메시",
+     "method_seeds": [
+      1.0,
+      0.8824
+     ],
+     "method_mean": 0.9412,
+     "comparator_value": 1.0,
+     "n": 17,
+     "criterion": 0.2328361209091064,
+     "criterion_parts": {
+      "unit": 0.2328361209091064,
+      "three_points": 0.17647058823529413
+     },
+     "diff_method_minus_comparator": -0.05879999999999996,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.904075,
+       0.904609
+      ],
+      "method_mean": 0.904342,
+      "comparator_value": 0.109953,
+      "n": 14970,
+      "criterion": 0.001057266059230194,
+      "criterion_parts": {
+       "unit": 0.001057266059230194,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": 0.794389,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "본 방법이 더 채웠다 (재현)"
+     }
+    }
+   },
+   "recomputed_vs_existing": {
+    "prop_LoD2_s0": {
+     "virtual_below": [
+      0.9875,
+      0.9875
+     ],
+     "virtual_above": [
+      0.1475,
+      0.1475
+     ],
+     "wall": [
+      0.904075,
+      0.904075
+     ],
+     "wall_present": [
+      13534,
+      13534
+     ],
+     "all_equal": true
+    },
+    "prop_LoD2_s1": {
+     "virtual_below": [
+      0.9855,
+      0.9855
+     ],
+     "virtual_above": [
+      0.1297,
+      0.1297
+     ],
+     "wall": [
+      0.904609,
+      0.904609
+     ],
+     "wall_present": [
+      13542,
+      13542
+     ],
+     "all_equal": true
+    },
+    "imgonly_2dgs_s0": {
+     "virtual_below": [
+      0.5172,
+      0.5172
+     ],
+     "virtual_above": [
+      0.5824,
+      0.5824
+     ],
+     "wall": [
+      0.231463,
+      0.231463
+     ],
+     "wall_present": [
+      3465,
+      3465
+     ],
+     "all_equal": true
+    },
+    "trust_LoD2_fix1": {
+     "virtual_below": [
+      0.3676,
+      0.3676
+     ],
+     "virtual_above": [
+      0.1565,
+      0.1565
+     ],
+     "wall": [
+      0.160989,
+      0.160989
+     ],
+     "wall_present": [
+      2410,
+      2410
+     ],
+     "all_equal": true
+    }
+   },
+   "new_meshes": {
+    "mvsfuse": {
+     "prior_hit_in_box_px": 809045,
+     "emptied_in_box_px": 623805,
+     "emptied_share_in_box": 0.771038693768579,
+     "vertices": 1705794,
+     "triangles": 3229632,
+     "seconds": {
+      "load": 1.3,
+      "virtual_renders": 3.0,
+      "tsdf": 24.3
+     },
+     "peak_host_gb": 2.65,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15366,
+      15318,
+      3233,
+      11256,
+      12761,
+      14934,
+      15369,
+      15357,
+      15366,
+      15319,
+      7266,
+      11583,
+      12481,
+      10025,
+      15361,
+      15369
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173_b0/mvsfuse_LoD2/mesh_virtual.ply"
+    },
+    "judgefuse": {
+     "prior_hit_in_box_px": 809045,
+     "emptied_in_box_px": 388170,
+     "emptied_share_in_box": 0.47978789807736283,
+     "vertices": 1790738,
+     "triangles": 3410470,
+     "seconds": {
+      "load": 2.3,
+      "virtual_renders": 4.1,
+      "tsdf": 24.4
+     },
+     "peak_host_gb": 2.62,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15318,
+      15226,
+      8072,
+      5983,
+      5622,
+      13835,
+      15287,
+      15318,
+      15366,
+      15251,
+      8907,
+      13172,
+      13593,
+      12535,
+      15257,
+      15369
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173_b0/judgefuse_LoD2/mesh_virtual.ply"
+    },
+    "samepath": {
+     "prior_hit_in_box_px": 809045,
+     "emptied_in_box_px": 0,
+     "emptied_share_in_box": 0.0,
+     "vertices": 1061210,
+     "triangles": 2117931,
+     "seconds": {
+      "load": 1.4,
+      "virtual_renders": 3.0,
+      "tsdf": 24.2
+     },
+     "peak_host_gb": 1.64,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      15318,
+      15223,
+      3,
+      3,
+      3,
+      31,
+      15239,
+      15318,
+      15318,
+      15240,
+      3,
+      3,
+      3,
+      18,
+      15210,
+      15318
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173_b0/samepath_LoD2/mesh_virtual.ply"
+    }
+   }
+  },
+  "B173_b0/ALS": {
+   "site": "B173_b0",
+   "prior": "ALS",
+   "unit_ko": "B173만 · 항공 LiDAR",
+   "report_only": true,
+   "columns": {
+    "m0": {
+     "result": "prop_ALS_s0",
+     "name_ko": "본 방법 씨앗 0",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "m1": {
+     "result": "prop_ALS_s1",
+     "name_ko": "본 방법 씨앗 1",
+     "role": "method",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "samepath": {
+     "result": "samepath_ALS",
+     "name_ko": "학습 전 사전 정보",
+     "role": "prior",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "twodgs": {
+     "result": "imgonly_2dgs_s0",
+     "name_ko": "2차원 가우시안 스플래팅",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "geogs": {
+     "result": "geogs_ALS_fix1",
+     "name_ko": "GeoGS",
+     "role": "comparator",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "mvsfuse": {
+     "result": "mvsfuse_ALS",
+     "name_ko": "MVS 기반 결합",
+     "role": "fusion",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "name_ko": "CDGS 변형",
+     "role": "comparator",
+     "state": "아직",
+     "mark": null
+    },
+    "imgonly0": {
+     "result": "imgonly_s0",
+     "name_ko": "영상만 (씨앗 0)",
+     "role": "reference",
+     "state": "결과 없음",
+     "mark": null
+    },
+    "imgonly1": {
+     "result": "imgonly_s1",
+     "name_ko": "영상만 (씨앗 1)",
+     "role": "reference",
+     "state": "결과 없음",
+     "mark": null
+    },
+    "trust": {
+     "result": "trust_ALS",
+     "name_ko": "사전 정보 신뢰",
+     "role": "reference",
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "name_ko": "판정만 끈 본 방법",
+     "role": "reference",
+     "state": "결과 없음",
+     "mark": null
+    },
+    "judgefuse": {
+     "result": "judgefuse_ALS",
+     "name_ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "role": "reference",
+     "state": "ok",
+     "mark": "이 발주에서 냄"
+    }
+   },
+   "gt": {
+    "invisible_agreement": {
+     "code": 5,
+     "gt_rows_thinned": 2,
+     "roof": 2,
+     "wall": 0,
+     "patches": 1
+    },
+    "invisible_prior_error": {
+     "code": 14,
+     "gt_rows_thinned": 0,
+     "roof": 0,
+     "wall": 0,
+     "patches": 0
+    },
+    "missing_agreement": {
+     "code": 4,
+     "gt_rows_thinned": 21,
+     "roof": 21,
+     "wall": 0,
+     "patches": 2
+    },
+    "support_agreement": {
+     "code": 2,
+     "gt_rows_thinned": 11115,
+     "roof": 11115,
+     "wall": 0,
+     "patches": 1726
+    }
+   },
+   "wall_place": {
+    "face": 25,
+    "face_patches": 18298,
+    "counted_patches": 14970,
+    "labels_on_face": {
+     "맞음으로 미룸": 14970,
+     "틀림으로 미룸": 2953,
+     "모호": 375
+    },
+    "unseen_patches": 18743,
+    "label_inferred_all": {
+     "맞음으로 미룸": 15369,
+     "틀림으로 미룸": 2984,
+     "모호": 390
+    }
+   },
+   "rows": {
+    "wall_virtual": {
+     "m0": {
+      "value": 0.604676,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.568604,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 0.952705,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.231463,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.189245,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.922645,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 0.498798,
+      "n": 14970
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.95658,
+      "n": 14970
+     }
+    },
+    "invisible_0_2": {
+     "m0": {
+      "value": 1.0,
+      "n": 2
+     },
+     "m1": {
+      "value": 1.0,
+      "n": 2
+     },
+     "samepath": {
+      "value": 0.5,
+      "n": 2
+     },
+     "twodgs": {
+      "value": 1.0,
+      "n": 2
+     },
+     "geogs": {
+      "value": 1.0,
+      "n": 2
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 2
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 1.0,
+      "n": 2
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 2
+     }
+    },
+    "invisible_0_5": {
+     "m0": {
+      "value": 1.0,
+      "n": 2
+     },
+     "m1": {
+      "value": 1.0,
+      "n": 2
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 2
+     },
+     "twodgs": {
+      "value": 1.0,
+      "n": 2
+     },
+     "geogs": {
+      "value": 1.0,
+      "n": 2
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 2
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 1.0,
+      "n": 2
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 2
+     }
+    },
+    "below_0_5": {
+     "m0": {
+      "value": 0.8544,
+      "n": 15369
+     },
+     "m1": {
+      "value": 0.8106,
+      "n": 15369
+     },
+     "samepath": {
+      "value": 0.9971,
+      "n": 15369
+     },
+     "twodgs": {
+      "value": 0.5172,
+      "n": 15369
+     },
+     "geogs": {
+      "value": 0.4227,
+      "n": 15369
+     },
+     "mvsfuse": {
+      "value": 0.9953,
+      "n": 15369
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 0.8186,
+      "n": 15369
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.9984,
+      "n": 15369
+     }
+    },
+    "above_0_2": {
+     "m0": {
+      "value": 0.1039,
+      "n": 2984
+     },
+     "m1": {
+      "value": 0.0436,
+      "n": 2984
+     },
+     "samepath": {
+      "value": 0.5409,
+      "n": 2984
+     },
+     "twodgs": {
+      "value": 0.5824,
+      "n": 2984
+     },
+     "geogs": {
+      "value": 0.2071,
+      "n": 2984
+     },
+     "mvsfuse": {
+      "value": 0.0462,
+      "n": 2984
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 0.0687,
+      "n": 2984
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.0385,
+      "n": 2984
+     }
+    },
+    "invisible_prior_error_0_2": {
+     "m0": {
+      "value": null,
+      "n": 0
+     },
+     "m1": {
+      "value": null,
+      "n": 0
+     },
+     "samepath": {
+      "value": null,
+      "n": 0
+     },
+     "twodgs": {
+      "value": null,
+      "n": 0
+     },
+     "geogs": {
+      "value": null,
+      "n": 0
+     },
+     "mvsfuse": {
+      "value": null,
+      "n": 0
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": null,
+      "n": 0
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": null,
+      "n": 0
+     }
+    },
+    "missing_agreement_0_2": {
+     "m0": {
+      "value": 0.0,
+      "n": 21
+     },
+     "m1": {
+      "value": 0.0,
+      "n": 21
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 21
+     },
+     "twodgs": {
+      "value": 0.1429,
+      "n": 21
+     },
+     "geogs": {
+      "value": 0.0,
+      "n": 21
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 21
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 0.0,
+      "n": 21
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.5714,
+      "n": 21
+     }
+    },
+    "missing_agreement_0_5": {
+     "m0": {
+      "value": 0.8571,
+      "n": 21
+     },
+     "m1": {
+      "value": 0.1429,
+      "n": 21
+     },
+     "samepath": {
+      "value": 1.0,
+      "n": 21
+     },
+     "twodgs": {
+      "value": 1.0,
+      "n": 21
+     },
+     "geogs": {
+      "value": 0.3333,
+      "n": 21
+     },
+     "mvsfuse": {
+      "value": 1.0,
+      "n": 21
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 0.6667,
+      "n": 21
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 1.0,
+      "n": 21
+     }
+    },
+    "support_agreement_0_2": {
+     "m0": {
+      "value": 0.9633,
+      "n": 11115
+     },
+     "m1": {
+      "value": 0.9801,
+      "n": 11115
+     },
+     "samepath": {
+      "value": 0.9976,
+      "n": 11115
+     },
+     "twodgs": {
+      "value": 0.6662,
+      "n": 11115
+     },
+     "geogs": {
+      "value": 0.8445,
+      "n": 11115
+     },
+     "mvsfuse": {
+      "value": 0.9976,
+      "n": 11115
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 0.9861,
+      "n": 11115
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.994,
+      "n": 11115
+     }
+    },
+    "overall_0_2": {
+     "m0": {
+      "value": 0.8460762532127424,
+      "n": 2261308
+     },
+     "m1": {
+      "value": 0.8547446875878916,
+      "n": 2261308
+     },
+     "samepath": {
+      "value": 0.23595149356036418,
+      "n": 2261308
+     },
+     "twodgs": {
+      "value": 0.6586931103591372,
+      "n": 2261308
+     },
+     "geogs": {
+      "value": 0.5027674248709154,
+      "n": 2261308
+     },
+     "mvsfuse": {
+      "value": 0.8265495014389902,
+      "n": 2261308
+     },
+     "cdgs": {
+      "value": null,
+      "n": null
+     },
+     "imgonly0": {
+      "value": null,
+      "n": null
+     },
+     "imgonly1": {
+      "value": null,
+      "n": null
+     },
+     "trust": {
+      "value": 0.39712148897894495,
+      "n": 2261308
+     },
+     "nojudge": {
+      "value": null,
+      "n": null
+     },
+     "judgefuse": {
+      "value": 0.8666245376569667,
+      "n": 2261308
+     }
+    },
+    "wall_tsdf": {
+     "m0": {
+      "value": 0.045157,
+      "n": 14970
+     },
+     "m1": {
+      "value": 0.039212,
+      "n": 14970
+     },
+     "samepath": {
+      "value": 0.07515,
+      "n": 14970
+     },
+     "twodgs": {
+      "value": 0.005611,
+      "n": 14970
+     },
+     "geogs": {
+      "value": 0.038277,
+      "n": 14970
+     },
+     "mvsfuse": {
+      "value": 0.080428,
+      "n": 14970
+     },
+     "cdgs": {
+      "value": null,
+      "n": 14970
+     },
+     "imgonly0": {
+      "value": null,
+      "n": 14970
+     },
+     "imgonly1": {
+      "value": null,
+      "n": 14970
+     },
+     "trust": {
+      "value": 0.077956,
+      "n": 14970
+     },
+     "nojudge": {
+      "value": null,
+      "n": 14970
+     },
+     "judgefuse": {
+      "value": 0.093988,
+      "n": 14970
+     }
+    }
+   },
+   "surface_wall_share": 0.960254,
+   "readings": {
+    "invisible_0_2": {
+     "metric": "invisible_0_2",
+     "ko": "비가시 영역 완전성 0.2 m, 가상 시점 메시",
+     "method_seeds": [
+      1.0,
+      1.0
+     ],
+     "method_mean": 1.0,
+     "comparator_value": 1.0,
+     "n": 2,
+     "criterion": 1.5,
+     "criterion_parts": {
+      "unit": 0.0,
+      "three_points": 1.5
+     },
+     "diff_method_minus_comparator": 0.0,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.604676,
+       0.568604
+      ],
+      "method_mean": 0.58664,
+      "comparator_value": 0.922645,
+      "n": 14970,
+      "criterion": 0.07141891627069118,
+      "criterion_parts": {
+       "unit": 0.07141891627069118,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": -0.336005,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "MVS 기반 결합이 더 채웠다 (재현)"
+     }
+    },
+    "invisible_0_5": {
+     "metric": "invisible_0_5",
+     "ko": "비가시 영역 완전성 0.5 m, 가상 시점 메시",
+     "method_seeds": [
+      1.0,
+      1.0
+     ],
+     "method_mean": 1.0,
+     "comparator_value": 1.0,
+     "n": 2,
+     "criterion": 1.5,
+     "criterion_parts": {
+      "unit": 0.0,
+      "three_points": 1.5
+     },
+     "diff_method_minus_comparator": 0.0,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null,
+     "instead": {
+      "metric": "wall_virtual",
+      "ko": "벽 있음, 가상 시점 메시 (0.25 m)",
+      "method_seeds": [
+       0.604676,
+       0.568604
+      ],
+      "method_mean": 0.58664,
+      "comparator_value": 0.922645,
+      "n": 14970,
+      "criterion": 0.07141891627069118,
+      "criterion_parts": {
+       "unit": 0.07141891627069118,
+       "three_points": 0.0002004008016032064
+      },
+      "diff_method_minus_comparator": -0.336005,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "MVS 기반 결합이 더 채웠다 (재현)"
+     }
+    }
+   },
+   "recomputed_vs_existing": {
+    "prop_ALS_s0": {
+     "virtual_below": [
+      0.8544,
+      0.8544
+     ],
+     "virtual_above": [
+      0.1039,
+      0.1039
+     ],
+     "wall": [
+      0.604676,
+      0.604676
+     ],
+     "wall_present": [
+      9052,
+      9052
+     ],
+     "all_equal": true
+    },
+    "prop_ALS_s1": {
+     "virtual_below": [
+      0.8106,
+      0.8106
+     ],
+     "virtual_above": [
+      0.0436,
+      0.0436
+     ],
+     "wall": [
+      0.568604,
+      0.568604
+     ],
+     "wall_present": [
+      8512,
+      8512
+     ],
+     "all_equal": true
+    },
+    "imgonly_2dgs_s0": {
+     "virtual_below": [
+      0.5172,
+      0.5172
+     ],
+     "virtual_above": [
+      0.5824,
+      0.5824
+     ],
+     "wall": [
+      0.231463,
+      0.231463
+     ],
+     "wall_present": [
+      3465,
+      3465
+     ],
+     "all_equal": true
+    },
+    "geogs_ALS_fix1": {
+     "virtual_below": [
+      0.4227,
+      0.4227
+     ],
+     "virtual_above": [
+      0.2071,
+      0.2071
+     ],
+     "wall": [
+      0.189245,
+      0.189245
+     ],
+     "wall_present": [
+      2833,
+      2833
+     ],
+     "all_equal": true
+    },
+    "trust_ALS": {
+     "virtual_below": [
+      0.8186,
+      0.8186
+     ],
+     "virtual_above": [
+      0.0687,
+      0.0687
+     ],
+     "wall": [
+      0.498798,
+      0.498798
+     ],
+     "wall_present": [
+      7467,
+      7467
+     ],
+     "all_equal": true
+    }
+   },
+   "new_meshes": {
+    "mvsfuse": {
+     "prior_hit_in_box_px": 1169945,
+     "emptied_in_box_px": 349350,
+     "emptied_share_in_box": 0.2986037805195971,
+     "vertices": 2095141,
+     "triangles": 4021311,
+     "seconds": {
+      "load": 3.2,
+      "virtual_renders": 5.0,
+      "tsdf": 31.1
+     },
+     "peak_host_gb": 2.87,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      14858,
+      13261,
+      4773,
+      2821,
+      2827,
+      6738,
+      13497,
+      15225,
+      15001,
+      13186,
+      8729,
+      10489,
+      10464,
+      10164,
+      13331,
+      15249
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173_b0/mvsfuse_ALS/mesh_virtual.ply"
+    },
+    "judgefuse": {
+     "prior_hit_in_box_px": 1169945,
+     "emptied_in_box_px": 153830,
+     "emptied_share_in_box": 0.13148481338866358,
+     "vertices": 2355414,
+     "triangles": 4548703,
+     "seconds": {
+      "load": 1.4,
+      "virtual_renders": 3.1,
+      "tsdf": 25.7
+     },
+     "peak_host_gb": 3.08,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      14664,
+      12355,
+      2567,
+      1061,
+      1034,
+      2192,
+      13257,
+      15024,
+      14888,
+      12442,
+      4778,
+      7106,
+      7529,
+      5947,
+      13071,
+      15162
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173_b0/judgefuse_ALS/mesh_virtual.ply"
+    },
+    "samepath": {
+     "prior_hit_in_box_px": 1169945,
+     "emptied_in_box_px": 0,
+     "emptied_share_in_box": 0.0,
+     "vertices": 1873110,
+     "triangles": 3709646,
+     "seconds": {
+      "load": 1.3,
+      "virtual_renders": 2.9,
+      "tsdf": 23.1
+     },
+     "peak_host_gb": 2.35,
+     "open3d": "0.19.0",
+     "seen_below_roof_per_view": [
+      14664,
+      12351,
+      2331,
+      1,
+      2,
+      43,
+      13248,
+      15024,
+      14840,
+      12416,
+      324,
+      1,
+      1,
+      34,
+      13050,
+      15111
+     ],
+     "mesh": "PH/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173_b0/samepath_ALS/mesh_virtual.ply"
+    }
+   }
+  }
+ },
+ "not_applicable": {
+  "B0 · LoD2": "가상 시점 메시 없음 (S1/defs/<site>/unseen.npz 없음)",
+  "B0 · 항공 LiDAR": "가상 시점 메시 없음 (S1/defs/<site>/unseen.npz 없음)",
+  "R1 · LoD2": "가상 시점 메시 없음 (S1/defs/<site>/unseen.npz 없음)",
+  "R1 · 항공 LiDAR": "가상 시점 메시 없음 (S1/defs/<site>/unseen.npz 없음)"
+ },
+ "definitions": "PH/main_fill_v1/PHD-MAIN-FILL-v1/prep/virtual/definitions.json",
+ "scientific_verdict": null
+}

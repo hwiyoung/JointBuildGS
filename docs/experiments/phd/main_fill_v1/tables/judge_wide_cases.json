@@ -1,0 +1,6543 @@
+{
+ "component": "judge_wide",
+ "order_section": "8.3 (+ 8.4 거짓 충돌)",
+ "written": "2026-10-15 23:15 KST",
+ "started": "2026-10-15 23:13 KST",
+ "definitions": {
+  "rule_order": "장면 전체 정합 뒤 건물마다 남은 잔차(사전 정보 − 참값, 허용 오차와 같은 방향)의 중앙값과 NMAD를 구하고, 중앙값의 크기가 NMAD보다 큰 건물을 사례 후보로 본다(발주 8.3 문장 그대로).",
+  "residual": "패치마다 r = 사전 정보 − 참값 = −gt_med (라벨 파일; 지붕 같은 패치는 연직, LoD2 벽 같은 패치는 벽 법선 방향; s04_gt_v6.py 242~280행). 장면 전체 정합 = 그 범위의 v6 첫째 단계가 적용한 정합(units.npz frame_shift)",
+  "als_note": "항공 LiDAR는 벽 참값이 없고(s04_gt_v6는 LoD2만 벽 값을 냄), 패치도 모두 지붕 같은 패치로 다룬다. 그래서 항공 LiDAR의 잔차는 연직 값만이다.",
+  "patches": "범위 안(loc_in_range), 뺀 칸이 아님, 참값 라벨 있음(label 0 또는 1), 건물에 속함. B0 범위는 앞 작업과 같이 gt_clean 라벨이 없는 곳을 드론 LiDAR 보충 라벨로 채운다(ch6_common.labels_of).",
+  "building": "패치 중심(정합 뒤)을 담은 LoD2 발자국, 없으면 1 m 안의 가장 가까운 발자국(ch6_common.footprint_index와 같음)",
+  "statistic": "건물마다 패치 하나를 표본 하나로 하는 중앙값 m과 NMAD s = 1.4826 × 중앙값(|r − m|). 넓이 가중 없음. 지붕만, 벽만의 m과 s는 참고 열",
+  "candidate": "|m| > s. 패치가 100개 미만인 건물은 '표본 부족'으로 두고 후보로 읽지 않는다(발주 9.1의 표본 규칙)",
+  "per_range": "건물마다 범위별로 구한다(그 범위의 정합 뒤). 여러 범위에 걸친 건물은 참값 패치가 가장 많은 범위의 줄을 주 줄로 쓰고(같으면 범위 차례 B0, R1, R2, R3E, R4, R5, SW), 다른 줄은 json에 남긴다. [20:59 고침, 값을 구하기 전: 처음 적은 '범위 차례의 첫 범위'는 범위 끝에 조금 걸친 건물을 표본 부족 줄로 대표할 수 있어 바꿈]",
+  "real_change_check": {
+   "survey": "변화 조사 후보 가운데 category REAL(C02 4907207 증축, C05 4907510 철거, C06 4907508 철거, C11 4959326 B173 지붕 재건)에 든 건물은, 그 사전 정보에 대해 change_vs_<사전 정보>가 참이면 실제 변화로 뺀다",
+   "data": "또는 두 사전 정보가 모두 그 건물에서 참값과 2 m 넘게 같은 쪽으로 다르면(m_LoD2, m_ALS 모두 |m| > 2 m, 같은 부호) 두 사전 정보 뒤의 실제 변화로 뺀다",
+   "kept_reason": "남긴 후보마다 다른 사전 정보의 같은 건물 중앙값과 그 τ, 변화 조사의 다른 갈래(LOD2_ONLY, TRANSIENT, EDGE)에 든 경우 그 이름을 적는다. 다른 사전 정보가 참값과 τ 안이면 '이 사전 정보만의 어긋남'으로 적는다",
+   "reason_per_building": "뺀 건물과 남긴 후보 모두 까닭 한 줄을 적는다"
+  },
+  "in_box": "후보 건물의 패치(그 범위 실행) 가운데 중심이 상자의 평가 범위(u, v 직사각형) 안인 패치 수와 넓이를 상자마다 적는다",
+  "context_only": "범위 공통값(그 범위 건물 중앙값들의 중앙값)과 m/τ는 참고로만 적는다. 규칙에 쓰지 않는다",
+  "reference_ch6": "앞 작업의 미리 정한 분류(MVS 기준 후보)와 엄격한 읽기(결과를 본 뒤 더함)는 '앞 작업(PHD-CH6-SUPPORT-v1)의 읽기, 참고'로 따로 적고 섞지 않는다",
+  "outputs": "SL/tables/judge_wide_cases.md/.json, SL/prep/judge_wide/case_candidates.json (status: order rule), SL/figs/judge_wide/fig_cases_<사전 정보>.png + .json",
+  "other_prior_tau": "다른 사전 정보가 참값과 맞는지는 그 건물의 다른 사전 정보 중앙값을 그 사전 정보의 지붕 τ와 비교한다(같은 범위의 실행)"
+ },
+ "note": "이 발주에서 냄. 탐색 지역 R3은 R3E 안이라 R3E로 셈. 겹친 탐색 지역의 같은 건물은 참값 패치가 가장 많은 지역의 줄이 주 줄",
+ "per_run": {
+  "B0/LoD2": {
+   "tau_roof": 0.1975,
+   "tau_wall": 0.547,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 153881,
+   "patch_kinds_in_range": {
+    "1": 49396,
+    "2": 104485
+   },
+   "area_in_range_m2": 9617.5,
+   "area_no_gt_m2": {
+    "roof": 65.2,
+    "wall": 3422.8,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 6129.4,
+   "buildings_with_gt": 9,
+   "buildings_n100": 8,
+   "range_common_median_m": -0.0449
+  },
+  "B0/ALS": {
+   "tau_roof": 0.1266,
+   "tau_wall": 0.1266,
+   "shift_applied": [
+    -0.0482,
+    0.0431,
+    0.0
+   ],
+   "patches_in_range": 41705,
+   "patch_kinds_in_range": {
+    "1": 41705
+   },
+   "area_in_range_m2": 2834.5,
+   "area_no_gt_m2": {
+    "roof": 69.1,
+    "wall": 0.0,
+    "outside_buildings": 2.3
+   },
+   "area_gt_m2": 2765.5,
+   "buildings_with_gt": 9,
+   "buildings_n100": 8,
+   "range_common_median_m": -0.0345
+  },
+  "R1/LoD2": {
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 511970,
+   "patch_kinds_in_range": {
+    "1": 152495,
+    "2": 359475
+   },
+   "area_in_range_m2": 31997.9,
+   "area_no_gt_m2": {
+    "roof": 1230.0,
+    "wall": 15714.5,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 15053.4,
+   "buildings_with_gt": 19,
+   "buildings_n100": 19,
+   "range_common_median_m": -0.0619
+  },
+  "R1/ALS": {
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 112487,
+   "patch_kinds_in_range": {
+    "1": 112487
+   },
+   "area_in_range_m2": 7917.5,
+   "area_no_gt_m2": {
+    "roof": 1023.4,
+    "wall": 0.0,
+    "outside_buildings": 16.9
+   },
+   "area_gt_m2": 6894.1,
+   "buildings_with_gt": 19,
+   "buildings_n100": 18,
+   "range_common_median_m": -0.0419
+  },
+  "R2/LoD2": {
+   "tau_roof": 0.176,
+   "tau_wall": 0.2278,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 250432,
+   "patch_kinds_in_range": {
+    "1": 74298,
+    "2": 176134
+   },
+   "area_in_range_m2": 15652.0,
+   "area_no_gt_m2": {
+    "roof": 241.8,
+    "wall": 8109.1,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 7301.2,
+   "buildings_with_gt": 4,
+   "buildings_n100": 4,
+   "range_common_median_m": 0.0239
+  },
+  "R2/ALS": {
+   "tau_roof": 0.147,
+   "tau_wall": 0.147,
+   "shift_applied": [
+    -0.0562,
+    0.0629,
+    0.0
+   ],
+   "patches_in_range": 62592,
+   "patch_kinds_in_range": {
+    "1": 62592
+   },
+   "area_in_range_m2": 4123.1,
+   "area_no_gt_m2": {
+    "roof": 382.7,
+    "wall": 0.0,
+    "outside_buildings": 0.3
+   },
+   "area_gt_m2": 3740.4,
+   "buildings_with_gt": 4,
+   "buildings_n100": 4,
+   "range_common_median_m": 0.0134
+  },
+  "R3E/LoD2": {
+   "tau_roof": 0.1586,
+   "tau_wall": 0.1881,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 218902,
+   "patch_kinds_in_range": {
+    "1": 80223,
+    "2": 138679
+   },
+   "area_in_range_m2": 13681.4,
+   "area_no_gt_m2": {
+    "roof": 85.6,
+    "wall": 6514.4,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 7081.3,
+   "buildings_with_gt": 4,
+   "buildings_n100": 4,
+   "range_common_median_m": -0.0051
+  },
+  "R3E/ALS": {
+   "tau_roof": 0.1132,
+   "tau_wall": 0.1132,
+   "shift_applied": [
+    -0.0127,
+    0.0273,
+    0.0629
+   ],
+   "patches_in_range": 74678,
+   "patch_kinds_in_range": {
+    "1": 74678
+   },
+   "area_in_range_m2": 4755.3,
+   "area_no_gt_m2": {
+    "roof": 92.2,
+    "wall": 0.0,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 4663.0,
+   "buildings_with_gt": 4,
+   "buildings_n100": 4,
+   "range_common_median_m": 0.0576
+  },
+  "R4/LoD2": {
+   "tau_roof": 0.3671,
+   "tau_wall": 0.7884,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 440932,
+   "patch_kinds_in_range": {
+    "1": 128718,
+    "2": 312214
+   },
+   "area_in_range_m2": 27557.8,
+   "area_no_gt_m2": {
+    "roof": 2574.8,
+    "wall": 17158.3,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 7824.7,
+   "buildings_with_gt": 33,
+   "buildings_n100": 27,
+   "range_common_median_m": 0.0105
+  },
+  "R4/ALS": {
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "shift_applied": [
+    0.0049,
+    0.0365,
+    0.0
+   ],
+   "patches_in_range": 107396,
+   "patch_kinds_in_range": {
+    "1": 107396
+   },
+   "area_in_range_m2": 7243.5,
+   "area_no_gt_m2": {
+    "roof": 2298.0,
+    "wall": 0.0,
+    "outside_buildings": 2.6
+   },
+   "area_gt_m2": 4945.5,
+   "buildings_with_gt": 33,
+   "buildings_n100": 24,
+   "range_common_median_m": 0.0223
+  },
+  "R5/LoD2": {
+   "tau_roof": 0.2356,
+   "tau_wall": 0.1821,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 246378,
+   "patch_kinds_in_range": {
+    "1": 70951,
+    "2": 175427
+   },
+   "area_in_range_m2": 15398.6,
+   "area_no_gt_m2": {
+    "roof": 110.7,
+    "wall": 8040.3,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 7247.6,
+   "buildings_with_gt": 5,
+   "buildings_n100": 5,
+   "range_common_median_m": -0.027
+  },
+  "R5/ALS": {
+   "tau_roof": 0.1195,
+   "tau_wall": 0.1195,
+   "shift_applied": [
+    -0.0023,
+    0.0213,
+    0.0728
+   ],
+   "patches_in_range": 65086,
+   "patch_kinds_in_range": {
+    "1": 65086
+   },
+   "area_in_range_m2": 4168.1,
+   "area_no_gt_m2": {
+    "roof": 120.2,
+    "wall": 0.0,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 4047.9,
+   "buildings_with_gt": 5,
+   "buildings_n100": 5,
+   "range_common_median_m": 0.0192
+  },
+  "SW/LoD2": {
+   "tau_roof": 0.851,
+   "tau_wall": 0.4749,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 368087,
+   "patch_kinds_in_range": {
+    "1": 118748,
+    "2": 249339
+   },
+   "area_in_range_m2": 23005.1,
+   "area_no_gt_m2": {
+    "roof": 3746.7,
+    "wall": 14161.3,
+    "outside_buildings": 0.0
+   },
+   "area_gt_m2": 5097.2,
+   "buildings_with_gt": 20,
+   "buildings_n100": 16,
+   "range_common_median_m": -0.0726
+  },
+  "SW/ALS": {
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "shift_applied": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "patches_in_range": 87591,
+   "patch_kinds_in_range": {
+    "1": 87591
+   },
+   "area_in_range_m2": 6397.1,
+   "area_no_gt_m2": {
+    "roof": 3295.3,
+    "wall": 0.0,
+    "outside_buildings": 1.0
+   },
+   "area_gt_m2": 3101.8,
+   "buildings_with_gt": 19,
+   "buildings_n100": 12,
+   "range_common_median_m": -0.025
+  }
+ },
+ "totals": {
+  "LoD2": {
+   "buildings_with_gt": 85,
+   "buildings_n100": 75,
+   "sample_insufficient": 10,
+   "candidates": 17,
+   "excluded_real_change": 1,
+   "kept_candidates": 16,
+   "kept_in_evaluation_box": 1,
+   "kept_abs_median_ge_tau": 1,
+   "area_no_gt_m2": 81175.5
+  },
+  "ALS": {
+   "buildings_with_gt": 84,
+   "buildings_n100": 67,
+   "sample_insufficient": 17,
+   "candidates": 50,
+   "excluded_real_change": 1,
+   "kept_candidates": 49,
+   "kept_in_evaluation_box": 8,
+   "kept_abs_median_ge_tau": 0,
+   "area_no_gt_m2": 7280.9
+  }
+ },
+ "kept_candidates": [
+  {
+   "range": "B0",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4959458",
+   "fp_index": 5,
+   "n": 4567,
+   "area_gt_m2": 285.44,
+   "area_no_gt_m2": 174.75,
+   "tau_roof": 0.1975,
+   "tau_wall": 0.547,
+   "median_m": -0.0335,
+   "nmad_m": 0.0266,
+   "ratio": 1.257,
+   "median_over_tau_roof": -0.169,
+   "n_roof": 4033,
+   "median_roof_m": -0.0357,
+   "nmad_roof_m": 0.0241,
+   "n_wall": 534,
+   "median_wall_m": 0.0063,
+   "nmad_wall_m": 0.0289,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.029,
+    "nmad_m": 0.0079,
+    "n": 3189,
+    "tau_roof": 0.1266
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.029 m, 지붕 τ 0.127 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 264.69,
+     "released_m2": 13.06,
+     "share": 0.0494,
+     "patches": 4235,
+     "released_patches": 209
+    },
+    "borrowed": {
+     "prior_right_m2": 4.69,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 75,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 269.38,
+     "released_m2": 13.06,
+     "share": 0.0485,
+     "patches": 4310,
+     "released_patches": 209
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 26.19,
+     "within_tau_after_median_m2": 17.88,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0114
+  },
+  {
+   "range": "B0",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4959793",
+   "fp_index": 8,
+   "n": 3523,
+   "area_gt_m2": 220.19,
+   "area_no_gt_m2": 94.56,
+   "tau_roof": 0.1975,
+   "tau_wall": 0.547,
+   "median_m": -0.0639,
+   "nmad_m": 0.0314,
+   "ratio": 2.036,
+   "median_over_tau_roof": -0.323,
+   "n_roof": 3203,
+   "median_roof_m": -0.0639,
+   "nmad_roof_m": 0.0292,
+   "n_wall": 320,
+   "median_wall_m": -0.0605,
+   "nmad_wall_m": 0.1649,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0346,
+    "nmad_m": 0.0114,
+    "n": 2931,
+    "tau_roof": 0.1266
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.035 m, 지붕 τ 0.127 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {
+    "B0_b10": {
+     "patches": 889,
+     "area_m2": 55.56
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 185.62,
+     "released_m2": 2.5,
+     "share": 0.0135,
+     "patches": 2970,
+     "released_patches": 40
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 185.62,
+     "released_m2": 2.5,
+     "share": 0.0135,
+     "patches": 2970,
+     "released_patches": 40
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 30.69,
+     "within_tau_after_median_m2": 9.88,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "B0_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_LoD2",
+     "direct": {
+      "prior_right_m2": 22.62,
+      "released_m2": 0.0,
+      "share": 0.0,
+      "patches": 362,
+      "released_patches": 0
+     },
+     "borrowed": {
+      "prior_right_m2": 0.0,
+      "released_m2": 0.0,
+      "share": null,
+      "patches": 0,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 22.62,
+      "released_m2": 0.0,
+      "share": 0.0,
+      "patches": 362,
+      "released_patches": 0
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 0.0,
+      "within_tau_after_median_m2": 0.0,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": -0.019
+  },
+  {
+   "range": "B0",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959322",
+   "fp_index": 0,
+   "n": 5510,
+   "area_gt_m2": 383.01,
+   "area_no_gt_m2": 3.61,
+   "tau_roof": 0.1266,
+   "tau_wall": 0.1266,
+   "median_m": -0.0238,
+   "nmad_m": 0.0079,
+   "ratio": 3.019,
+   "median_over_tau_roof": -0.188,
+   "n_roof": 5510,
+   "median_roof_m": -0.0238,
+   "nmad_roof_m": 0.0079,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0562,
+    "nmad_m": 0.1731,
+    "n": 8630,
+    "tau_roof": 0.1975
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.056 m, 지붕 τ 0.198 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {
+    "B0_b10": {
+     "patches": 1896,
+     "area_m2": 132.87
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 378.27,
+     "released_m2": 0.43,
+     "share": 0.0011,
+     "patches": 5449,
+     "released_patches": 7
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 378.27,
+     "released_m2": 0.43,
+     "share": 0.0011,
+     "patches": 5449,
+     "released_patches": 7
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 2.16,
+     "within_tau_after_median_m2": 0.43,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "B0_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_ALS",
+     "direct": {
+      "prior_right_m2": 125.83,
+      "released_m2": 0.22,
+      "share": 0.0017,
+      "patches": 1813,
+      "released_patches": 3
+     },
+     "borrowed": {
+      "prior_right_m2": 0.0,
+      "released_m2": 0.0,
+      "share": null,
+      "patches": 0,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 125.83,
+      "released_m2": 0.22,
+      "share": 0.0017,
+      "patches": 1813,
+      "released_patches": 3
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 1.98,
+      "within_tau_after_median_m2": 0.22,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": 0.0107
+  },
+  {
+   "range": "B0",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959324",
+   "fp_index": 2,
+   "n": 330,
+   "area_gt_m2": 21.28,
+   "area_no_gt_m2": 2.08,
+   "tau_roof": 0.1266,
+   "tau_wall": 0.1266,
+   "median_m": -0.0363,
+   "nmad_m": 0.0107,
+   "ratio": 3.403,
+   "median_over_tau_roof": -0.286,
+   "n_roof": 330,
+   "median_roof_m": -0.0363,
+   "nmad_roof_m": 0.0107,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.003,
+    "nmad_m": 0.1541,
+    "n": 960,
+    "tau_roof": 0.1975
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.003 m, 지붕 τ 0.198 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {
+    "B0_b10": {
+     "patches": 253,
+     "area_m2": 16.24
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 17.67,
+     "released_m2": 8.42,
+     "share": 0.4767,
+     "patches": 276,
+     "released_patches": 134
+    },
+    "borrowed": {
+     "prior_right_m2": 0.38,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 6,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 18.05,
+     "released_m2": 8.42,
+     "share": 0.4667,
+     "patches": 282,
+     "released_patches": 134
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 10.13,
+     "within_tau_after_median_m2": 8.54,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "B0_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_ALS",
+     "direct": {
+      "prior_right_m2": 13.08,
+      "released_m2": 4.6,
+      "share": 0.3515,
+      "patches": 204,
+      "released_patches": 73
+     },
+     "borrowed": {
+      "prior_right_m2": 0.44,
+      "released_m2": 0.0,
+      "share": 0.0,
+      "patches": 7,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 13.52,
+      "released_m2": 4.6,
+      "share": 0.3401,
+      "patches": 211,
+      "released_patches": 73
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 5.01,
+      "within_tau_after_median_m2": 4.6,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": -0.0018
+  },
+  {
+   "range": "B0",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959458",
+   "fp_index": 5,
+   "n": 3189,
+   "area_gt_m2": 222.04,
+   "area_no_gt_m2": 4.79,
+   "tau_roof": 0.1266,
+   "tau_wall": 0.1266,
+   "median_m": -0.029,
+   "nmad_m": 0.0079,
+   "ratio": 3.661,
+   "median_over_tau_roof": -0.229,
+   "n_roof": 3189,
+   "median_roof_m": -0.029,
+   "nmad_roof_m": 0.0079,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0335,
+    "nmad_m": 0.0266,
+    "n": 4567,
+    "tau_roof": 0.1975
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.034 m, 지붕 τ 0.198 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 218.16,
+     "released_m2": 0.76,
+     "share": 0.0035,
+     "patches": 3137,
+     "released_patches": 11
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 218.16,
+     "released_m2": 0.76,
+     "share": 0.0035,
+     "patches": 3137,
+     "released_patches": 11
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 1.74,
+     "within_tau_after_median_m2": 0.76,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0055
+  },
+  {
+   "range": "B0",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959459",
+   "fp_index": 6,
+   "n": 3153,
+   "area_gt_m2": 206.17,
+   "area_no_gt_m2": 10.01,
+   "tau_roof": 0.1266,
+   "tau_wall": 0.1266,
+   "median_m": -0.0379,
+   "nmad_m": 0.0091,
+   "ratio": 4.145,
+   "median_over_tau_roof": -0.299,
+   "n_roof": 3153,
+   "median_roof_m": -0.0379,
+   "nmad_roof_m": 0.0091,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1248,
+    "nmad_m": 0.1707,
+    "n": 6155,
+    "tau_roof": 0.1975
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.125 m, 지붕 τ 0.198 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 162.33,
+     "released_m2": 8.28,
+     "share": 0.051,
+     "patches": 2558,
+     "released_patches": 114
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 162.33,
+     "released_m2": 8.28,
+     "share": 0.051,
+     "patches": 2558,
+     "released_patches": 114
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 35.83,
+     "within_tau_after_median_m2": 13.04,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0034
+  },
+  {
+   "range": "B0",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959793",
+   "fp_index": 8,
+   "n": 2931,
+   "area_gt_m2": 196.03,
+   "area_no_gt_m2": 1.08,
+   "tau_roof": 0.1266,
+   "tau_wall": 0.1266,
+   "median_m": -0.0346,
+   "nmad_m": 0.0114,
+   "ratio": 3.043,
+   "median_over_tau_roof": -0.273,
+   "n_roof": 2931,
+   "median_roof_m": -0.0346,
+   "nmad_roof_m": 0.0114,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0639,
+    "nmad_m": 0.0314,
+    "n": 3523,
+    "tau_roof": 0.1975
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.064 m, 지붕 τ 0.198 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {
+    "B0_b10": {
+     "patches": 219,
+     "area_m2": 14.54
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 195.44,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 2922,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 195.44,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 2922,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.59,
+     "within_tau_after_median_m2": 0.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "B0_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_ALS",
+     "direct": {
+      "prior_right_m2": 14.14,
+      "released_m2": 0.0,
+      "share": 0.0,
+      "patches": 213,
+      "released_patches": 0
+     },
+     "borrowed": {
+      "prior_right_m2": 0.0,
+      "released_m2": 0.0,
+      "share": null,
+      "patches": 0,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 14.14,
+      "released_m2": 0.0,
+      "share": 0.0,
+      "patches": 213,
+      "released_patches": 0
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 0.0,
+      "within_tau_after_median_m2": 0.0,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": -0.0001
+  },
+  {
+   "range": "B0",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_108580336",
+   "fp_index": 9,
+   "n": 4362,
+   "area_gt_m2": 282.65,
+   "area_no_gt_m2": 37.01,
+   "tau_roof": 0.1266,
+   "tau_wall": 0.1266,
+   "median_m": -0.0407,
+   "nmad_m": 0.0137,
+   "ratio": 2.972,
+   "median_over_tau_roof": -0.321,
+   "n_roof": 4362,
+   "median_roof_m": -0.0407,
+   "nmad_roof_m": 0.0137,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0792,
+    "nmad_m": 0.1351,
+    "n": 12872,
+    "tau_roof": 0.1975
+   },
+   "survey": [
+    {
+     "tid": "C20",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C21",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C23",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.079 m, 지붕 τ 0.198 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C20 LoD2만 다름(LOD2_ONLY), C21 LoD2만 다름(LOD2_ONLY), C23 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {
+    "B0_b10": {
+     "patches": 423,
+     "area_m2": 28.36
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 270.04,
+     "released_m2": 35.95,
+     "share": 0.1331,
+     "patches": 4172,
+     "released_patches": 555
+    },
+    "borrowed": {
+     "prior_right_m2": 0.94,
+     "released_m2": 0.57,
+     "share": 0.6013,
+     "patches": 15,
+     "released_patches": 9
+    },
+    "judged": {
+     "prior_right_m2": 270.99,
+     "released_m2": 36.52,
+     "share": 0.1348,
+     "patches": 4187,
+     "released_patches": 564
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 40.6,
+     "within_tau_after_median_m2": 37.1,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "B0_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_ALS",
+     "direct": {
+      "prior_right_m2": 28.32,
+      "released_m2": 0.87,
+      "share": 0.0306,
+      "patches": 421,
+      "released_patches": 13
+     },
+     "borrowed": {
+      "prior_right_m2": 0.0,
+      "released_m2": 0.0,
+      "share": null,
+      "patches": 0,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 28.32,
+      "released_m2": 0.87,
+      "share": 0.0306,
+      "patches": 421,
+      "released_patches": 13
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 0.87,
+      "within_tau_after_median_m2": 0.87,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": -0.0062
+  },
+  {
+   "range": "R1",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_104586480",
+   "fp_index": 13,
+   "n": 213,
+   "area_gt_m2": 13.31,
+   "area_no_gt_m2": 69.19,
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "median_m": 2.9452,
+   "nmad_m": 0.0224,
+   "ratio": 131.569,
+   "median_over_tau_roof": 4.314,
+   "n_roof": 208,
+   "median_roof_m": 2.9456,
+   "nmad_roof_m": 0.0214,
+   "n_wall": 5,
+   "median_wall_m": 0.3579,
+   "nmad_wall_m": 0.2195,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0444,
+    "nmad_m": 0.0076,
+    "n": 158,
+    "tau_roof": 0.1034
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.044 m, 지붕 τ 0.103 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 0.31,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 5,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 0.31,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 5,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 12.81,
+     "within_tau_after_median_m2": 10.69,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 3.0071
+  },
+  {
+   "range": "R1",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_60042",
+   "fp_index": 14,
+   "n": 20761,
+   "area_gt_m2": 1297.56,
+   "area_no_gt_m2": 780.06,
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "median_m": -0.3257,
+   "nmad_m": 0.2956,
+   "ratio": 1.102,
+   "median_over_tau_roof": -0.477,
+   "n_roof": 1531,
+   "median_roof_m": -0.0607,
+   "nmad_roof_m": 0.0434,
+   "n_wall": 19230,
+   "median_wall_m": -0.3311,
+   "nmad_wall_m": 0.2789,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0297,
+    "nmad_m": 0.0193,
+    "n": 977,
+    "tau_roof": 0.1034
+   },
+   "survey": [
+    {
+     "tid": "C26",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": true
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.030 m, 지붕 τ 0.103 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C26 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 1195.38,
+     "released_m2": 60.38,
+     "share": 0.0505,
+     "patches": 19126,
+     "released_patches": 966
+    },
+    "borrowed": {
+     "prior_right_m2": 51.5,
+     "released_m2": 8.0,
+     "share": 0.1553,
+     "patches": 824,
+     "released_patches": 128
+    },
+    "judged": {
+     "prior_right_m2": 1246.88,
+     "released_m2": 68.38,
+     "share": 0.0548,
+     "patches": 19950,
+     "released_patches": 1094
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 89.06,
+     "within_tau_after_median_m2": 70.69,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.2638
+  },
+  {
+   "range": "R1",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4908024",
+   "fp_index": 20,
+   "n": 597,
+   "area_gt_m2": 37.31,
+   "area_no_gt_m2": 62.38,
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "median_m": -0.0562,
+   "nmad_m": 0.0262,
+   "ratio": 2.148,
+   "median_over_tau_roof": -0.082,
+   "n_roof": 343,
+   "median_roof_m": -0.0606,
+   "nmad_roof_m": 0.0115,
+   "n_wall": 254,
+   "median_wall_m": -0.0236,
+   "nmad_wall_m": 0.0552,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0479,
+    "nmad_m": 0.0076,
+    "n": 293,
+    "tau_roof": 0.1034
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.048 m, 지붕 τ 0.103 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 33.06,
+     "released_m2": 0.06,
+     "share": 0.0019,
+     "patches": 529,
+     "released_patches": 1
+    },
+    "borrowed": {
+     "prior_right_m2": 0.62,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 10,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 33.69,
+     "released_m2": 0.06,
+     "share": 0.0019,
+     "patches": 539,
+     "released_patches": 1
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.12,
+     "within_tau_after_median_m2": 0.06,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0057
+  },
+  {
+   "range": "R1",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4908025",
+   "fp_index": 21,
+   "n": 548,
+   "area_gt_m2": 34.25,
+   "area_no_gt_m2": 65.31,
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "median_m": -0.0383,
+   "nmad_m": 0.0154,
+   "ratio": 2.487,
+   "median_over_tau_roof": -0.056,
+   "n_roof": 343,
+   "median_roof_m": -0.0408,
+   "nmad_roof_m": 0.0072,
+   "n_wall": 205,
+   "median_wall_m": -0.0128,
+   "nmad_wall_m": 0.0455,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0518,
+    "nmad_m": 0.0073,
+    "n": 300,
+    "tau_roof": 0.1034
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.052 m, 지붕 τ 0.103 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 32.25,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 516,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 0.12,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 2,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 32.38,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 518,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.06,
+    "reference_ch6_sense": {
+     "released_m2": 0.0,
+     "within_tau_after_median_m2": 0.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0236
+  },
+  {
+   "range": "R1",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4908026",
+   "fp_index": 22,
+   "n": 534,
+   "area_gt_m2": 33.38,
+   "area_no_gt_m2": 66.25,
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "median_m": -0.0619,
+   "nmad_m": 0.0192,
+   "ratio": 3.223,
+   "median_over_tau_roof": -0.091,
+   "n_roof": 337,
+   "median_roof_m": -0.0651,
+   "nmad_roof_m": 0.0095,
+   "n_wall": 197,
+   "median_wall_m": -0.0175,
+   "nmad_wall_m": 0.0685,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0502,
+    "nmad_m": 0.0068,
+    "n": 293,
+    "tau_roof": 0.1034
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.050 m, 지붕 τ 0.103 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 30.62,
+     "released_m2": 0.69,
+     "share": 0.0224,
+     "patches": 490,
+     "released_patches": 11
+    },
+    "borrowed": {
+     "prior_right_m2": 0.12,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 2,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 30.75,
+     "released_m2": 0.69,
+     "share": 0.0224,
+     "patches": 492,
+     "released_patches": 11
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.69,
+     "within_tau_after_median_m2": 0.69,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0
+  },
+  {
+   "range": "R1",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4908027",
+   "fp_index": 23,
+   "n": 598,
+   "area_gt_m2": 37.38,
+   "area_no_gt_m2": 62.25,
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "median_m": -0.0415,
+   "nmad_m": 0.0337,
+   "ratio": 1.234,
+   "median_over_tau_roof": -0.061,
+   "n_roof": 336,
+   "median_roof_m": -0.0439,
+   "nmad_roof_m": 0.0171,
+   "n_wall": 262,
+   "median_wall_m": -0.0185,
+   "nmad_wall_m": 0.0696,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0244,
+    "nmad_m": 0.0273,
+    "n": 296,
+    "tau_roof": 0.1034
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.024 m, 지붕 τ 0.103 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 33.94,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 543,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 0.19,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 3,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 34.12,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 546,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.0,
+     "within_tau_after_median_m2": 0.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0204
+  },
+  {
+   "range": "R1",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_108580336",
+   "fp_index": 30,
+   "n": 13495,
+   "area_gt_m2": 843.44,
+   "area_no_gt_m2": 594.69,
+   "tau_roof": 0.6828,
+   "tau_wall": 0.7246,
+   "median_m": -0.1876,
+   "nmad_m": 0.0126,
+   "ratio": 14.94,
+   "median_over_tau_roof": -0.275,
+   "n_roof": 1737,
+   "median_roof_m": 0.1175,
+   "nmad_roof_m": 0.1644,
+   "n_wall": 11758,
+   "median_wall_m": -0.1887,
+   "nmad_wall_m": 0.0104,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.0356,
+    "nmad_m": 0.0153,
+    "n": 1474,
+    "tau_roof": 0.1034
+   },
+   "survey": [
+    {
+     "tid": "C20",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": true
+    },
+    {
+     "tid": "C21",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": true
+    },
+    {
+     "tid": "C23",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": true
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.036 m, 지붕 τ 0.103 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C20 LoD2만 다름(LOD2_ONLY), C21 LoD2만 다름(LOD2_ONLY), C23 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 804.38,
+     "released_m2": 94.5,
+     "share": 0.1175,
+     "patches": 12870,
+     "released_patches": 1512
+    },
+    "borrowed": {
+     "prior_right_m2": 20.44,
+     "released_m2": 0.69,
+     "share": 0.0336,
+     "patches": 327,
+     "released_patches": 11
+    },
+    "judged": {
+     "prior_right_m2": 824.81,
+     "released_m2": 95.19,
+     "share": 0.1154,
+     "patches": 13197,
+     "released_patches": 1523
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 95.69,
+     "within_tau_after_median_m2": 95.19,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.1257
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906967",
+   "fp_index": 1,
+   "n": 24490,
+   "area_gt_m2": 1763.97,
+   "area_no_gt_m2": 664.0,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0435,
+   "nmad_m": 0.0136,
+   "ratio": 3.202,
+   "median_over_tau_roof": -0.421,
+   "n_roof": 24490,
+   "median_roof_m": -0.0435,
+   "nmad_roof_m": 0.0136,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0083,
+    "nmad_m": 0.1575,
+    "n": 50589,
+    "tau_roof": 0.6828
+   },
+   "survey": [
+    {
+     "tid": "C03",
+     "category": "TRANSIENT",
+     "type_ko": "굴뚝 수증기",
+     "share": 1.0,
+     "change_for_this_prior": true
+    },
+    {
+     "tid": "C08",
+     "category": "TRANSIENT",
+     "type_ko": "크레인(2022)",
+     "share": 0.87,
+     "change_for_this_prior": true
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.008 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C03 굴뚝 수증기(TRANSIENT), C08 크레인(2022)(TRANSIENT)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 1652.56,
+     "released_m2": 114.74,
+     "share": 0.0694,
+     "patches": 23098,
+     "released_patches": 1596
+    },
+    "borrowed": {
+     "prior_right_m2": 6.32,
+     "released_m2": 2.6,
+     "share": 0.4112,
+     "patches": 89,
+     "released_patches": 37
+    },
+    "judged": {
+     "prior_right_m2": 1658.88,
+     "released_m2": 117.34,
+     "share": 0.0707,
+     "patches": 23187,
+     "released_patches": 1633
+    },
+    "prior_right_invisible_m2": 0.13,
+    "reference_ch6_sense": {
+     "released_m2": 157.85,
+     "within_tau_after_median_m2": 126.7,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0016
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906970",
+   "fp_index": 2,
+   "n": 1563,
+   "area_gt_m2": 119.23,
+   "area_no_gt_m2": 14.84,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0376,
+   "nmad_m": 0.0264,
+   "ratio": 1.421,
+   "median_over_tau_roof": -0.363,
+   "n_roof": 1563,
+   "median_roof_m": -0.0376,
+   "nmad_roof_m": 0.0264,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.5113,
+    "nmad_m": 0.6445,
+    "n": 3536,
+    "tau_roof": 0.6828
+   },
+   "survey": [
+    {
+     "tid": "C14",
+     "category": "EDGE",
+     "type_ko": "외벽 경계 띠",
+     "share": 0.05,
+     "change_for_this_prior": true
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.511 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C14 외벽 경계 띠(EDGE)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 98.87,
+     "released_m2": 5.42,
+     "share": 0.0549,
+     "patches": 1306,
+     "released_patches": 74
+    },
+    "borrowed": {
+     "prior_right_m2": 13.19,
+     "released_m2": 0.4,
+     "share": 0.0302,
+     "patches": 173,
+     "released_patches": 5
+    },
+    "judged": {
+     "prior_right_m2": 112.06,
+     "released_m2": 5.82,
+     "share": 0.0519,
+     "patches": 1479,
+     "released_patches": 79
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 8.12,
+     "within_tau_after_median_m2": 5.91,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0043
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906972",
+   "fp_index": 3,
+   "n": 1380,
+   "area_gt_m2": 100.22,
+   "area_no_gt_m2": 1.04,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0344,
+   "nmad_m": 0.017,
+   "ratio": 2.018,
+   "median_over_tau_roof": -0.332,
+   "n_roof": 1380,
+   "median_roof_m": -0.0344,
+   "nmad_roof_m": 0.017,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1336,
+    "nmad_m": 0.1478,
+    "n": 2371,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.134 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 98.97,
+     "released_m2": 0.46,
+     "share": 0.0046,
+     "patches": 1365,
+     "released_patches": 6
+    },
+    "borrowed": {
+     "prior_right_m2": 0.5,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 7,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 99.47,
+     "released_m2": 0.46,
+     "share": 0.0046,
+     "patches": 1372,
+     "released_patches": 6
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.64,
+     "within_tau_after_median_m2": 0.58,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0075
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_104586480",
+   "fp_index": 13,
+   "n": 158,
+   "area_gt_m2": 9.89,
+   "area_no_gt_m2": 2.23,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0444,
+   "nmad_m": 0.0076,
+   "ratio": 5.813,
+   "median_over_tau_roof": -0.43,
+   "n_roof": 158,
+   "median_roof_m": -0.0444,
+   "nmad_roof_m": 0.0076,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 2.9452,
+    "nmad_m": 0.0224,
+    "n": 213,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 반대쪽으로 어긋남(+2.945 m, 지붕 τ 0.683 m)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 9.5,
+     "released_m2": 0.07,
+     "share": 0.007,
+     "patches": 152,
+     "released_patches": 1
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 9.5,
+     "released_m2": 0.07,
+     "share": 0.007,
+     "patches": 152,
+     "released_patches": 1
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.07,
+     "within_tau_after_median_m2": 0.07,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0025
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_60042",
+   "fp_index": 14,
+   "n": 977,
+   "area_gt_m2": 65.2,
+   "area_no_gt_m2": 4.77,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0297,
+   "nmad_m": 0.0193,
+   "ratio": 1.537,
+   "median_over_tau_roof": -0.287,
+   "n_roof": 977,
+   "median_roof_m": -0.0297,
+   "nmad_roof_m": 0.0193,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.3257,
+    "nmad_m": 0.2956,
+    "n": 20761,
+    "tau_roof": 0.6828
+   },
+   "survey": [
+    {
+     "tid": "C26",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.326 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C26 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 60.36,
+     "released_m2": 9.73,
+     "share": 0.1612,
+     "patches": 905,
+     "released_patches": 151
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 60.36,
+     "released_m2": 9.73,
+     "share": 0.1612,
+     "patches": 905,
+     "released_patches": 151
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 11.86,
+     "within_tau_after_median_m2": 9.73,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0122
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906968",
+   "fp_index": 16,
+   "n": 23765,
+   "area_gt_m2": 1681.75,
+   "area_no_gt_m2": 105.12,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0482,
+   "nmad_m": 0.015,
+   "ratio": 3.217,
+   "median_over_tau_roof": -0.466,
+   "n_roof": 23765,
+   "median_roof_m": -0.0482,
+   "nmad_roof_m": 0.015,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0343,
+    "nmad_m": 0.607,
+    "n": 56305,
+    "tau_roof": 0.6828
+   },
+   "survey": [
+    {
+     "tid": "C22",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.76,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C34",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름(곡면 지붕 가장자리)",
+     "share": 1.0,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C35",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.034 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C22 LoD2만 다름(LOD2_ONLY), C34 LoD2만 다름(곡면 지붕 가장자리)(LOD2_ONLY), C35 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {
+    "R1rep_b10": {
+     "patches": 1798,
+     "area_m2": 159.5
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 1443.74,
+     "released_m2": 274.61,
+     "share": 0.1902,
+     "patches": 20377,
+     "released_patches": 3596
+    },
+    "borrowed": {
+     "prior_right_m2": 217.96,
+     "released_m2": 38.56,
+     "share": 0.1769,
+     "patches": 3141,
+     "released_patches": 523
+    },
+    "judged": {
+     "prior_right_m2": 1661.7,
+     "released_m2": 313.17,
+     "share": 0.1885,
+     "patches": 23518,
+     "released_patches": 4119
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 326.99,
+     "within_tau_after_median_m2": 314.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "R1rep_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_R1rep_b10_ALS",
+     "direct": {
+      "prior_right_m2": 152.73,
+      "released_m2": 148.24,
+      "share": 0.9706,
+      "patches": 1721,
+      "released_patches": 1675
+     },
+     "borrowed": {
+      "prior_right_m2": 1.11,
+      "released_m2": 1.11,
+      "share": 1.0,
+      "patches": 14,
+      "released_patches": 14
+     },
+     "judged": {
+      "prior_right_m2": 153.84,
+      "released_m2": 149.34,
+      "share": 0.9708,
+      "patches": 1735,
+      "released_patches": 1689
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 152.27,
+      "within_tau_after_median_m2": 149.52,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": -0.0063
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906969",
+   "fp_index": 17,
+   "n": 763,
+   "area_gt_m2": 49.53,
+   "area_no_gt_m2": 77.42,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0426,
+   "nmad_m": 0.0077,
+   "ratio": 5.549,
+   "median_over_tau_roof": -0.412,
+   "n_roof": 763,
+   "median_roof_m": -0.0426,
+   "nmad_roof_m": 0.0077,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0109,
+    "nmad_m": 0.0328,
+    "n": 1889,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.011 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 47.8,
+     "released_m2": 18.75,
+     "share": 0.3922,
+     "patches": 739,
+     "released_patches": 293
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 47.8,
+     "released_m2": 18.75,
+     "share": 0.3922,
+     "patches": 739,
+     "released_patches": 293
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 19.78,
+     "within_tau_after_median_m2": 18.68,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0007
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906975",
+   "fp_index": 18,
+   "n": 21147,
+   "area_gt_m2": 1365.94,
+   "area_no_gt_m2": 80.52,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0392,
+   "nmad_m": 0.0134,
+   "ratio": 2.92,
+   "median_over_tau_roof": -0.379,
+   "n_roof": 21147,
+   "median_roof_m": -0.0392,
+   "nmad_roof_m": 0.0134,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1834,
+    "nmad_m": 0.3744,
+    "n": 36246,
+    "tau_roof": 0.6828
+   },
+   "survey": [
+    {
+     "tid": "C10",
+     "category": "TRANSIENT",
+     "type_ko": "나무 제거로 보임(2022 수관 약 19~23 m)",
+     "share": 0.97,
+     "change_for_this_prior": true
+    },
+    {
+     "tid": "C24",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.99,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C25",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.99,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.183 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C10 나무 제거로 보임(2022 수관 약 19~23 m)(TRANSIENT), C24 LoD2만 다름(LOD2_ONLY), C25 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {
+    "R1rep_b10": {
+     "patches": 22332,
+     "area_m2": 1446.46
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 1327.34,
+     "released_m2": 156.43,
+     "share": 0.1179,
+     "patches": 20619,
+     "released_patches": 2379
+    },
+    "borrowed": {
+     "prior_right_m2": 2.68,
+     "released_m2": 2.11,
+     "share": 0.7865,
+     "patches": 41,
+     "released_patches": 33
+    },
+    "judged": {
+     "prior_right_m2": 1330.02,
+     "released_m2": 158.54,
+     "share": 0.1192,
+     "patches": 20660,
+     "released_patches": 2412
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 182.6,
+     "within_tau_after_median_m2": 160.08,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "R1rep_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_R1rep_b10_ALS",
+     "direct": {
+      "prior_right_m2": 1325.46,
+      "released_m2": 272.65,
+      "share": 0.2057,
+      "patches": 20596,
+      "released_patches": 4065
+     },
+     "borrowed": {
+      "prior_right_m2": 3.13,
+      "released_m2": 3.0,
+      "share": 0.9586,
+      "patches": 49,
+      "released_patches": 47
+     },
+     "judged": {
+      "prior_right_m2": 1328.59,
+      "released_m2": 275.65,
+      "share": 0.2075,
+      "patches": 20645,
+      "released_patches": 4112
+     },
+     "prior_right_invisible_m2": 0.06,
+     "reference_ch6_sense": {
+      "released_m2": 306.76,
+      "within_tau_after_median_m2": 278.43,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": 0.0027
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4908023",
+   "fp_index": 19,
+   "n": 288,
+   "area_gt_m2": 19.04,
+   "area_no_gt_m2": 0.66,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0316,
+   "nmad_m": 0.0313,
+   "ratio": 1.008,
+   "median_over_tau_roof": -0.305,
+   "n_roof": 288,
+   "median_roof_m": -0.0316,
+   "nmad_roof_m": 0.0313,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0279,
+    "nmad_m": 0.0474,
+    "n": 845,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.028 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 16.26,
+     "released_m2": 0.23,
+     "share": 0.014,
+     "patches": 248,
+     "released_patches": 3
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 16.26,
+     "released_m2": 0.23,
+     "share": 0.014,
+     "patches": 248,
+     "released_patches": 3
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.5,
+     "within_tau_after_median_m2": 0.23,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0103
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4908024",
+   "fp_index": 20,
+   "n": 293,
+   "area_gt_m2": 18.7,
+   "area_no_gt_m2": 0.45,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0479,
+   "nmad_m": 0.0076,
+   "ratio": 6.275,
+   "median_over_tau_roof": -0.463,
+   "n_roof": 293,
+   "median_roof_m": -0.0479,
+   "nmad_roof_m": 0.0076,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0562,
+    "nmad_m": 0.0262,
+    "n": 597,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.056 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 17.74,
+     "released_m2": 0.06,
+     "share": 0.0036,
+     "patches": 282,
+     "released_patches": 1
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 17.74,
+     "released_m2": 0.06,
+     "share": 0.0036,
+     "patches": 282,
+     "released_patches": 1
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.73,
+     "within_tau_after_median_m2": 0.06,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.006
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4908025",
+   "fp_index": 21,
+   "n": 300,
+   "area_gt_m2": 19.32,
+   "area_no_gt_m2": 1.02,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0518,
+   "nmad_m": 0.0073,
+   "ratio": 7.098,
+   "median_over_tau_roof": -0.501,
+   "n_roof": 300,
+   "median_roof_m": -0.0518,
+   "nmad_roof_m": 0.0073,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0383,
+    "nmad_m": 0.0154,
+    "n": 548,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.038 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 18.05,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 286,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 18.05,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 286,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.48,
+     "within_tau_after_median_m2": 0.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0099
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4908026",
+   "fp_index": 22,
+   "n": 293,
+   "area_gt_m2": 18.87,
+   "area_no_gt_m2": 0.77,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0502,
+   "nmad_m": 0.0068,
+   "ratio": 7.419,
+   "median_over_tau_roof": -0.486,
+   "n_roof": 293,
+   "median_roof_m": -0.0502,
+   "nmad_roof_m": 0.0068,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0619,
+    "nmad_m": 0.0192,
+    "n": 534,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.062 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 17.95,
+     "released_m2": 0.23,
+     "share": 0.0129,
+     "patches": 283,
+     "released_patches": 3
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 17.95,
+     "released_m2": 0.23,
+     "share": 0.0129,
+     "patches": 283,
+     "released_patches": 3
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.43,
+     "within_tau_after_median_m2": 0.23,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0083
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_42364663",
+   "fp_index": 27,
+   "n": 197,
+   "area_gt_m2": 12.39,
+   "area_no_gt_m2": 7.03,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0493,
+   "nmad_m": 0.0075,
+   "ratio": 6.585,
+   "median_over_tau_roof": -0.477,
+   "n_roof": 197,
+   "median_roof_m": -0.0493,
+   "nmad_roof_m": 0.0075,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0135,
+    "nmad_m": 0.014,
+    "n": 2375,
+    "tau_roof": 0.6828
+   },
+   "survey": [
+    {
+     "tid": "C22",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.08,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.013 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C22 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 9.75,
+     "released_m2": 9.75,
+     "share": 1.0,
+     "patches": 155,
+     "released_patches": 155
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 9.75,
+     "released_m2": 9.75,
+     "share": 1.0,
+     "patches": 155,
+     "released_patches": 155
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 12.32,
+     "within_tau_after_median_m2": 9.75,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0074
+  },
+  {
+   "range": "R1",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_42364667",
+   "fp_index": 29,
+   "n": 101,
+   "area_gt_m2": 4.79,
+   "area_no_gt_m2": 3.35,
+   "tau_roof": 0.1034,
+   "tau_wall": 0.1034,
+   "median_m": -0.0617,
+   "nmad_m": 0.0398,
+   "ratio": 1.549,
+   "median_over_tau_roof": -0.596,
+   "n_roof": 101,
+   "median_roof_m": -0.0617,
+   "nmad_roof_m": 0.0398,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1516,
+    "nmad_m": 0.1943,
+    "n": 978,
+    "tau_roof": 0.6828
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.152 m, 지붕 τ 0.683 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 2.39,
+     "released_m2": 0.12,
+     "share": 0.0495,
+     "patches": 55,
+     "released_patches": 2
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 2.39,
+     "released_m2": 0.12,
+     "share": 0.0495,
+     "patches": 55,
+     "released_patches": 2
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 1.15,
+     "within_tau_after_median_m2": 0.12,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0198
+  },
+  {
+   "range": "R2",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_108580335",
+   "fp_index": 13,
+   "n": 14277,
+   "area_gt_m2": 921.41,
+   "area_no_gt_m2": 38.67,
+   "tau_roof": 0.147,
+   "tau_wall": 0.147,
+   "median_m": 0.0189,
+   "nmad_m": 0.0087,
+   "ratio": 2.161,
+   "median_over_tau_roof": 0.128,
+   "n_roof": 14277,
+   "median_roof_m": 0.0189,
+   "nmad_roof_m": 0.0087,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0005,
+    "nmad_m": 0.0968,
+    "n": 25673,
+    "tau_roof": 0.176
+   },
+   "survey": [
+    {
+     "tid": "C11",
+     "category": "REAL",
+     "type_ko": "지붕 재건(박공 → 평지붕, 약 −4.6 m)",
+     "share": 0.0,
+     "change_for_this_prior": true
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.001 m, 지붕 τ 0.176 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C11 지붕 재건(박공 → 평지붕, 약 −4.6 m)(REAL)",
+   "in_evaluation_boxes": {
+    "B173nb_b10": {
+     "patches": 865,
+     "area_m2": 61.18
+    },
+    "B173_b0": {
+     "patches": 865,
+     "area_m2": 61.18
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 900.05,
+     "released_m2": 37.35,
+     "share": 0.0415,
+     "patches": 14006,
+     "released_patches": 569
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 900.05,
+     "released_m2": 37.35,
+     "share": 0.0415,
+     "patches": 14006,
+     "released_patches": 569
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 47.14,
+     "within_tau_after_median_m2": 37.28,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "B173nb_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B173nb_b10_ALS",
+     "direct": {
+      "prior_right_m2": 47.37,
+      "released_m2": 2.2,
+      "share": 0.0465,
+      "patches": 692,
+      "released_patches": 35
+     },
+     "borrowed": {
+      "prior_right_m2": 0.0,
+      "released_m2": 0.0,
+      "share": null,
+      "patches": 0,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 47.37,
+      "released_m2": 2.2,
+      "share": 0.0465,
+      "patches": 692,
+      "released_patches": 35
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 4.17,
+      "within_tau_after_median_m2": 2.2,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    },
+    "B173_b0": {
+     "judgment": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/checks/dry/r14_B173_b0_ALS",
+     "direct": {
+      "prior_right_m2": 48.88,
+      "released_m2": 2.67,
+      "share": 0.0547,
+      "patches": 714,
+      "released_patches": 42
+     },
+     "borrowed": {
+      "prior_right_m2": 0.0,
+      "released_m2": 0.0,
+      "share": null,
+      "patches": 0,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 48.88,
+      "released_m2": 2.67,
+      "share": 0.0547,
+      "patches": 714,
+      "released_patches": 42
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 5.05,
+      "within_tau_after_median_m2": 2.67,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": 0.0055
+  },
+  {
+   "range": "R3E",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959460",
+   "fp_index": 10,
+   "n": 68887,
+   "area_gt_m2": 4376.5,
+   "area_no_gt_m2": 48.97,
+   "tau_roof": 0.1132,
+   "tau_wall": 0.1132,
+   "median_m": 0.046,
+   "nmad_m": 0.0186,
+   "ratio": 2.467,
+   "median_over_tau_roof": 0.406,
+   "n_roof": 68887,
+   "median_roof_m": 0.046,
+   "nmad_roof_m": 0.0186,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0598,
+    "nmad_m": 0.0941,
+    "n": 105819,
+    "tau_roof": 0.1586
+   },
+   "survey": [
+    {
+     "tid": "C28",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.060 m, 지붕 τ 0.159 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C28 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {
+    "B173nb_b10": {
+     "patches": 8899,
+     "area_m2": 563.47
+    }
+   },
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 4287.24,
+     "released_m2": 65.9,
+     "share": 0.0154,
+     "patches": 67609,
+     "released_patches": 959
+    },
+    "borrowed": {
+     "prior_right_m2": 10.71,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 169,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 4297.95,
+     "released_m2": 65.9,
+     "share": 0.0153,
+     "patches": 67778,
+     "released_patches": 959
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 80.24,
+     "within_tau_after_median_m2": 67.16,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "false_conflict_box": {
+    "B173nb_b10": {
+     "judgment": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B173nb_b10_ALS",
+     "direct": {
+      "prior_right_m2": 558.3,
+      "released_m2": 1.22,
+      "share": 0.0022,
+      "patches": 8814,
+      "released_patches": 19
+     },
+     "borrowed": {
+      "prior_right_m2": 0.0,
+      "released_m2": 0.0,
+      "share": null,
+      "patches": 0,
+      "released_patches": 0
+     },
+     "judged": {
+      "prior_right_m2": 558.3,
+      "released_m2": 1.22,
+      "share": 0.0022,
+      "patches": 8814,
+      "released_patches": 19
+     },
+     "prior_right_invisible_m2": 0.0,
+     "reference_ch6_sense": {
+      "released_m2": 1.54,
+      "within_tau_after_median_m2": 1.22,
+      "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+     }
+    }
+   },
+   "median_minus_range_common_m": -0.0116
+  },
+  {
+   "range": "R3E",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959461",
+   "fp_index": 11,
+   "n": 2254,
+   "area_gt_m2": 146.09,
+   "area_no_gt_m2": 8.63,
+   "tau_roof": 0.1132,
+   "tau_wall": 0.1132,
+   "median_m": 0.0602,
+   "nmad_m": 0.0068,
+   "ratio": 8.815,
+   "median_over_tau_roof": 0.532,
+   "n_roof": 2254,
+   "median_roof_m": 0.0602,
+   "nmad_roof_m": 0.0068,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0699,
+    "nmad_m": 0.1146,
+    "n": 3213,
+    "tau_roof": 0.1586
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.070 m, 지붕 τ 0.159 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 138.6,
+     "released_m2": 32.75,
+     "share": 0.2363,
+     "patches": 2145,
+     "released_patches": 518
+    },
+    "borrowed": {
+     "prior_right_m2": 2.4,
+     "released_m2": 1.96,
+     "share": 0.8166,
+     "patches": 38,
+     "released_patches": 31
+    },
+    "judged": {
+     "prior_right_m2": 141.0,
+     "released_m2": 34.7,
+     "share": 0.2461,
+     "patches": 2183,
+     "released_patches": 549
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 35.42,
+     "within_tau_after_median_m2": 34.55,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0026
+  },
+  {
+   "range": "R4",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4906989",
+   "fp_index": 7,
+   "n": 6138,
+   "area_gt_m2": 383.62,
+   "area_no_gt_m2": 202.88,
+   "tau_roof": 0.3671,
+   "tau_wall": 0.7884,
+   "median_m": -0.1769,
+   "nmad_m": 0.1667,
+   "ratio": 1.061,
+   "median_over_tau_roof": -0.482,
+   "n_roof": 1650,
+   "median_roof_m": -1.7942,
+   "nmad_roof_m": 0.6157,
+   "n_wall": 4488,
+   "median_wall_m": -0.134,
+   "nmad_wall_m": 0.1135,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": 0.0171,
+    "nmad_m": 0.0089,
+    "n": 1228,
+    "tau_roof": 0.1629
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(+0.017 m, 지붕 τ 0.163 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 277.25,
+     "released_m2": 26.19,
+     "share": 0.0945,
+     "patches": 4436,
+     "released_patches": 419
+    },
+    "borrowed": {
+     "prior_right_m2": 13.88,
+     "released_m2": 1.5,
+     "share": 0.1081,
+     "patches": 222,
+     "released_patches": 24
+    },
+    "judged": {
+     "prior_right_m2": 291.12,
+     "released_m2": 27.69,
+     "share": 0.0951,
+     "patches": 4658,
+     "released_patches": 443
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 112.0,
+     "within_tau_after_median_m2": 29.56,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.1874
+  },
+  {
+   "range": "R4",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4906992",
+   "fp_index": 10,
+   "n": 214,
+   "area_gt_m2": 13.38,
+   "area_no_gt_m2": 392.81,
+   "tau_roof": 0.3671,
+   "tau_wall": 0.7884,
+   "median_m": 0.3311,
+   "nmad_m": 0.233,
+   "ratio": 1.421,
+   "median_over_tau_roof": 0.902,
+   "n_roof": 130,
+   "median_roof_m": 1.7061,
+   "nmad_roof_m": 2.2589,
+   "n_wall": 84,
+   "median_wall_m": 0.2569,
+   "nmad_wall_m": 0.205,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": 3.3319,
+    "nmad_m": 4.7492,
+    "n": 79,
+    "tau_roof": 0.1629
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김(확인 필요): 항공 LiDAR도 같은 쪽으로 τ 넘게 어긋남(+3.332 m, 지붕 τ 0.163 m). 2 m 아래라 변화로 보지 않음",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 8.38,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 134,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 8.38,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 134,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.38,
+    "reference_ch6_sense": {
+     "released_m2": 0.0,
+     "within_tau_after_median_m2": 0.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.3206
+  },
+  {
+   "range": "R4",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4959340",
+   "fp_index": 26,
+   "n": 8377,
+   "area_gt_m2": 523.56,
+   "area_no_gt_m2": 1091.88,
+   "tau_roof": 0.3671,
+   "tau_wall": 0.7884,
+   "median_m": 0.0709,
+   "nmad_m": 0.0296,
+   "ratio": 2.394,
+   "median_over_tau_roof": 0.193,
+   "n_roof": 6042,
+   "median_roof_m": 0.0791,
+   "nmad_roof_m": 0.0162,
+   "n_wall": 2335,
+   "median_wall_m": -0.0565,
+   "nmad_wall_m": 0.0213,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": 0.0519,
+    "nmad_m": 0.013,
+    "n": 5742,
+    "tau_roof": 0.1629
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(+0.052 m, 지붕 τ 0.163 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 503.88,
+     "released_m2": 13.75,
+     "share": 0.0273,
+     "patches": 8062,
+     "released_patches": 220
+    },
+    "borrowed": {
+     "prior_right_m2": 1.38,
+     "released_m2": 0.38,
+     "share": 0.2727,
+     "patches": 22,
+     "released_patches": 6
+    },
+    "judged": {
+     "prior_right_m2": 505.25,
+     "released_m2": 14.12,
+     "share": 0.028,
+     "patches": 8084,
+     "released_patches": 226
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 16.25,
+     "within_tau_after_median_m2": 13.94,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0604
+  },
+  {
+   "range": "R4",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4959758",
+   "fp_index": 40,
+   "n": 318,
+   "area_gt_m2": 19.88,
+   "area_no_gt_m2": 91.88,
+   "tau_roof": 0.3671,
+   "tau_wall": 0.7884,
+   "median_m": 0.0597,
+   "nmad_m": 0.0531,
+   "ratio": 1.125,
+   "median_over_tau_roof": 0.163,
+   "n_roof": 39,
+   "median_roof_m": 6.2729,
+   "nmad_roof_m": 0.088,
+   "n_wall": 279,
+   "median_wall_m": 0.053,
+   "nmad_wall_m": 0.0457,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.87,
+    "nmad_m": 0.1773,
+    "n": 4,
+    "tau_roof": 0.1629
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 반대쪽으로 어긋남(-0.870 m, 지붕 τ 0.163 m)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 16.62,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 266,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 0.25,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 4,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 16.88,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 270,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.56,
+    "reference_ch6_sense": {
+     "released_m2": 0.0,
+     "within_tau_after_median_m2": 0.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0492
+  },
+  {
+   "range": "R4",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_42364657",
+   "fp_index": 55,
+   "n": 1820,
+   "area_gt_m2": 113.75,
+   "area_no_gt_m2": 141.65,
+   "tau_roof": 0.3671,
+   "tau_wall": 0.7884,
+   "median_m": 0.1634,
+   "nmad_m": 0.0457,
+   "ratio": 3.575,
+   "median_over_tau_roof": 0.445,
+   "n_roof": 1365,
+   "median_roof_m": 0.1528,
+   "nmad_roof_m": 0.0327,
+   "n_wall": 455,
+   "median_wall_m": 0.2072,
+   "nmad_wall_m": 0.0105,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": 0.0409,
+    "nmad_m": 0.0081,
+    "n": 1246,
+    "tau_roof": 0.1629
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(+0.041 m, 지붕 τ 0.163 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 109.31,
+     "released_m2": 0.81,
+     "share": 0.0074,
+     "patches": 1749,
+     "released_patches": 13
+    },
+    "borrowed": {
+     "prior_right_m2": 2.25,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 36,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 111.56,
+     "released_m2": 0.81,
+     "share": 0.0073,
+     "patches": 1785,
+     "released_patches": 13
+    },
+    "prior_right_invisible_m2": 0.31,
+    "reference_ch6_sense": {
+     "released_m2": 0.94,
+     "within_tau_after_median_m2": 0.94,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.1529
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906986",
+   "fp_index": 4,
+   "n": 3352,
+   "area_gt_m2": 217.01,
+   "area_no_gt_m2": 5.8,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0175,
+   "nmad_m": 0.0102,
+   "ratio": 1.704,
+   "median_over_tau_roof": 0.107,
+   "n_roof": 3352,
+   "median_roof_m": 0.0175,
+   "nmad_roof_m": 0.0102,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1073,
+    "nmad_m": 0.219,
+    "n": 3736,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.107 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 215.72,
+     "released_m2": 7.13,
+     "share": 0.0331,
+     "patches": 3338,
+     "released_patches": 105
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 215.72,
+     "released_m2": 7.13,
+     "share": 0.0331,
+     "patches": 3338,
+     "released_patches": 105
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 7.3,
+     "within_tau_after_median_m2": 7.08,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0048
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906987",
+   "fp_index": 5,
+   "n": 3404,
+   "area_gt_m2": 220.42,
+   "area_no_gt_m2": 6.23,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0164,
+   "nmad_m": 0.01,
+   "ratio": 1.648,
+   "median_over_tau_roof": 0.101,
+   "n_roof": 3404,
+   "median_roof_m": 0.0164,
+   "nmad_roof_m": 0.01,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0611,
+    "nmad_m": 0.2221,
+    "n": 7782,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.061 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 218.69,
+     "released_m2": 1.52,
+     "share": 0.0069,
+     "patches": 3387,
+     "released_patches": 22
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 218.69,
+     "released_m2": 1.52,
+     "share": 0.0069,
+     "patches": 3387,
+     "released_patches": 22
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 1.81,
+     "within_tau_after_median_m2": 1.52,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0059
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906988",
+   "fp_index": 6,
+   "n": 1467,
+   "area_gt_m2": 95.03,
+   "area_no_gt_m2": 26.85,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0177,
+   "nmad_m": 0.009,
+   "ratio": 1.966,
+   "median_over_tau_roof": 0.108,
+   "n_roof": 1467,
+   "median_roof_m": 0.0177,
+   "nmad_roof_m": 0.009,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0268,
+    "nmad_m": 0.1247,
+    "n": 1767,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.027 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 92.87,
+     "released_m2": 5.05,
+     "share": 0.0544,
+     "patches": 1444,
+     "released_patches": 75
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 92.87,
+     "released_m2": 5.05,
+     "share": 0.0544,
+     "patches": 1444,
+     "released_patches": 75
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 5.49,
+     "within_tau_after_median_m2": 4.94,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0046
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906989",
+   "fp_index": 7,
+   "n": 1228,
+   "area_gt_m2": 85.34,
+   "area_no_gt_m2": 0.45,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0171,
+   "nmad_m": 0.0089,
+   "ratio": 1.91,
+   "median_over_tau_roof": 0.105,
+   "n_roof": 1228,
+   "median_roof_m": 0.0171,
+   "nmad_roof_m": 0.0089,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1769,
+    "nmad_m": 0.1667,
+    "n": 6138,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.177 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 85.02,
+     "released_m2": 0.09,
+     "share": 0.0011,
+     "patches": 1224,
+     "released_patches": 1
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 85.02,
+     "released_m2": 0.09,
+     "share": 0.0011,
+     "patches": 1224,
+     "released_patches": 1
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.09,
+     "within_tau_after_median_m2": 0.09,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0052
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906990",
+   "fp_index": 8,
+   "n": 1060,
+   "area_gt_m2": 70.41,
+   "area_no_gt_m2": 33.57,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0351,
+   "nmad_m": 0.0264,
+   "ratio": 1.329,
+   "median_over_tau_roof": 0.216,
+   "n_roof": 1060,
+   "median_roof_m": 0.0351,
+   "nmad_roof_m": 0.0264,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0233,
+    "nmad_m": 0.1459,
+    "n": 2069,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.023 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 44.35,
+     "released_m2": 0.62,
+     "share": 0.0141,
+     "patches": 665,
+     "released_patches": 9
+    },
+    "borrowed": {
+     "prior_right_m2": 25.93,
+     "released_m2": 1.39,
+     "share": 0.0538,
+     "patches": 393,
+     "released_patches": 21
+    },
+    "judged": {
+     "prior_right_m2": 70.28,
+     "released_m2": 2.02,
+     "share": 0.0287,
+     "patches": 1058,
+     "released_patches": 30
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 2.08,
+     "within_tau_after_median_m2": 2.02,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0128
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4908034",
+   "fp_index": 15,
+   "n": 212,
+   "area_gt_m2": 14.39,
+   "area_no_gt_m2": 102.38,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": -0.0207,
+   "nmad_m": 0.0169,
+   "ratio": 1.225,
+   "median_over_tau_roof": -0.127,
+   "n_roof": 212,
+   "median_roof_m": -0.0207,
+   "nmad_roof_m": 0.0169,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0897,
+    "nmad_m": 0.1518,
+    "n": 272,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.090 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 9.7,
+     "released_m2": 2.34,
+     "share": 0.241,
+     "patches": 151,
+     "released_patches": 37
+    },
+    "borrowed": {
+     "prior_right_m2": 1.13,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 17,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 10.83,
+     "released_m2": 2.34,
+     "share": 0.2159,
+     "patches": 168,
+     "released_patches": 37
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 3.0,
+     "within_tau_after_median_m2": 2.34,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.043
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959327",
+   "fp_index": 23,
+   "n": 7206,
+   "area_gt_m2": 546.48,
+   "area_no_gt_m2": 17.07,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0261,
+   "nmad_m": 0.0225,
+   "ratio": 1.159,
+   "median_over_tau_roof": 0.16,
+   "n_roof": 7206,
+   "median_roof_m": 0.0261,
+   "nmad_roof_m": 0.0225,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0014,
+    "nmad_m": 0.1793,
+    "n": 15022,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.001 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 543.9,
+     "released_m2": 2.46,
+     "share": 0.0045,
+     "patches": 7170,
+     "released_patches": 38
+    },
+    "borrowed": {
+     "prior_right_m2": 0.09,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 1,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 544.0,
+     "released_m2": 2.46,
+     "share": 0.0045,
+     "patches": 7171,
+     "released_patches": 38
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 3.21,
+     "within_tau_after_median_m2": 2.61,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0038
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959336",
+   "fp_index": 25,
+   "n": 6581,
+   "area_gt_m2": 483.45,
+   "area_no_gt_m2": 115.82,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0383,
+   "nmad_m": 0.0112,
+   "ratio": 3.428,
+   "median_over_tau_roof": 0.235,
+   "n_roof": 6581,
+   "median_roof_m": 0.0383,
+   "nmad_roof_m": 0.0112,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1714,
+    "nmad_m": 0.3886,
+    "n": 12396,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.171 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 463.77,
+     "released_m2": 37.83,
+     "share": 0.0816,
+     "patches": 6335,
+     "released_patches": 465
+    },
+    "borrowed": {
+     "prior_right_m2": 9.37,
+     "released_m2": 1.9,
+     "share": 0.2023,
+     "patches": 118,
+     "released_patches": 22
+    },
+    "judged": {
+     "prior_right_m2": 473.14,
+     "released_m2": 39.72,
+     "share": 0.084,
+     "patches": 6453,
+     "released_patches": 487
+    },
+    "prior_right_invisible_m2": 0.16,
+    "reference_ch6_sense": {
+     "released_m2": 42.46,
+     "within_tau_after_median_m2": 39.66,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.016
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959340",
+   "fp_index": 26,
+   "n": 5742,
+   "area_gt_m2": 373.71,
+   "area_no_gt_m2": 17.0,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0519,
+   "nmad_m": 0.013,
+   "ratio": 3.985,
+   "median_over_tau_roof": 0.318,
+   "n_roof": 5742,
+   "median_roof_m": 0.0519,
+   "nmad_roof_m": 0.013,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0709,
+    "nmad_m": 0.0296,
+    "n": 8377,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.071 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 371.95,
+     "released_m2": 4.35,
+     "share": 0.0117,
+     "patches": 5716,
+     "released_patches": 67
+    },
+    "borrowed": {
+     "prior_right_m2": 1.23,
+     "released_m2": 0.58,
+     "share": 0.4725,
+     "patches": 19,
+     "released_patches": 9
+    },
+    "judged": {
+     "prior_right_m2": 373.18,
+     "released_m2": 4.93,
+     "share": 0.0132,
+     "patches": 5735,
+     "released_patches": 76
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 4.93,
+     "within_tau_after_median_m2": 4.93,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0296
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959463",
+   "fp_index": 33,
+   "n": 625,
+   "area_gt_m2": 39.21,
+   "area_no_gt_m2": 13.95,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0183,
+   "nmad_m": 0.0052,
+   "ratio": 3.556,
+   "median_over_tau_roof": 0.112,
+   "n_roof": 625,
+   "median_roof_m": 0.0183,
+   "nmad_roof_m": 0.0052,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0111,
+    "nmad_m": 0.1033,
+    "n": 1037,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.011 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 38.58,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 615,
+     "released_patches": 0
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 38.58,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 615,
+     "released_patches": 0
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.0,
+     "within_tau_after_median_m2": 0.0,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.004
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959464",
+   "fp_index": 34,
+   "n": 3036,
+   "area_gt_m2": 192.01,
+   "area_no_gt_m2": 11.19,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0183,
+   "nmad_m": 0.0054,
+   "ratio": 3.378,
+   "median_over_tau_roof": 0.113,
+   "n_roof": 3036,
+   "median_roof_m": 0.0183,
+   "nmad_roof_m": 0.0054,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0105,
+    "nmad_m": 0.1161,
+    "n": 6905,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.011 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 188.43,
+     "released_m2": 1.95,
+     "share": 0.0103,
+     "patches": 2983,
+     "released_patches": 31
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 188.43,
+     "released_m2": 1.95,
+     "share": 0.0103,
+     "patches": 2983,
+     "released_patches": 31
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 2.55,
+     "within_tau_after_median_m2": 1.95,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.004
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959465",
+   "fp_index": 35,
+   "n": 2428,
+   "area_gt_m2": 157.13,
+   "area_no_gt_m2": 30.14,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0104,
+   "nmad_m": 0.0092,
+   "ratio": 1.121,
+   "median_over_tau_roof": 0.064,
+   "n_roof": 2428,
+   "median_roof_m": 0.0104,
+   "nmad_roof_m": 0.0092,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0394,
+    "nmad_m": 0.0958,
+    "n": 3919,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.039 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 154.39,
+     "released_m2": 16.35,
+     "share": 0.1059,
+     "patches": 2397,
+     "released_patches": 242
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 154.39,
+     "released_m2": 16.35,
+     "share": 0.1059,
+     "patches": 2397,
+     "released_patches": 242
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 17.99,
+     "within_tau_after_median_m2": 16.35,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0119
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959753",
+   "fp_index": 38,
+   "n": 208,
+   "area_gt_m2": 13.63,
+   "area_no_gt_m2": 26.25,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0247,
+   "nmad_m": 0.0065,
+   "ratio": 3.767,
+   "median_over_tau_roof": 0.151,
+   "n_roof": 208,
+   "median_roof_m": 0.0247,
+   "nmad_roof_m": 0.0065,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.1162,
+    "nmad_m": 0.1531,
+    "n": 285,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.116 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 12.82,
+     "released_m2": 0.25,
+     "share": 0.0198,
+     "patches": 195,
+     "released_patches": 4
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 12.82,
+     "released_m2": 0.25,
+     "share": 0.0198,
+     "patches": 195,
+     "released_patches": 4
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.96,
+     "within_tau_after_median_m2": 0.25,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0024
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959794",
+   "fp_index": 46,
+   "n": 539,
+   "area_gt_m2": 34.56,
+   "area_no_gt_m2": 62.95,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0204,
+   "nmad_m": 0.0156,
+   "ratio": 1.309,
+   "median_over_tau_roof": 0.125,
+   "n_roof": 539,
+   "median_roof_m": 0.0204,
+   "nmad_roof_m": 0.0156,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0055,
+    "nmad_m": 0.0513,
+    "n": 606,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.005 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 34.12,
+     "released_m2": 3.35,
+     "share": 0.0983,
+     "patches": 533,
+     "released_patches": 53
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 34.12,
+     "released_m2": 3.35,
+     "share": 0.0983,
+     "patches": 533,
+     "released_patches": 53
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 3.42,
+     "within_tau_after_median_m2": 3.35,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0019
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_8573847",
+   "fp_index": 52,
+   "n": 3653,
+   "area_gt_m2": 249.55,
+   "area_no_gt_m2": 408.16,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0329,
+   "nmad_m": 0.0268,
+   "ratio": 1.229,
+   "median_over_tau_roof": 0.202,
+   "n_roof": 3653,
+   "median_roof_m": 0.0329,
+   "nmad_roof_m": 0.0268,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.27,
+    "nmad_m": 0.4983,
+    "n": 4691,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.270 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 218.86,
+     "released_m2": 36.06,
+     "share": 0.1648,
+     "patches": 3251,
+     "released_patches": 513
+    },
+    "borrowed": {
+     "prior_right_m2": 6.22,
+     "released_m2": 1.41,
+     "share": 0.2273,
+     "patches": 92,
+     "released_patches": 20
+    },
+    "judged": {
+     "prior_right_m2": 225.08,
+     "released_m2": 37.47,
+     "share": 0.1665,
+     "patches": 3343,
+     "released_patches": 533
+    },
+    "prior_right_invisible_m2": 0.13,
+    "reference_ch6_sense": {
+     "released_m2": 40.99,
+     "within_tau_after_median_m2": 37.3,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0106
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_8573848",
+   "fp_index": 53,
+   "n": 15176,
+   "area_gt_m2": 966.67,
+   "area_no_gt_m2": 603.14,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0246,
+   "nmad_m": 0.0133,
+   "ratio": 1.852,
+   "median_over_tau_roof": 0.151,
+   "n_roof": 15176,
+   "median_roof_m": 0.0246,
+   "nmad_roof_m": 0.0133,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0374,
+    "nmad_m": 0.0626,
+    "n": 20314,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.037 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 814.22,
+     "released_m2": 45.28,
+     "share": 0.0556,
+     "patches": 12835,
+     "released_patches": 706
+    },
+    "borrowed": {
+     "prior_right_m2": 124.23,
+     "released_m2": 3.44,
+     "share": 0.0277,
+     "patches": 1951,
+     "released_patches": 53
+    },
+    "judged": {
+     "prior_right_m2": 938.45,
+     "released_m2": 48.73,
+     "share": 0.0519,
+     "patches": 14786,
+     "released_patches": 759
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 59.55,
+     "within_tau_after_median_m2": 48.91,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0023
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_8573849",
+   "fp_index": 54,
+   "n": 11735,
+   "area_gt_m2": 837.03,
+   "area_no_gt_m2": 29.01,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0368,
+   "nmad_m": 0.0132,
+   "ratio": 2.781,
+   "median_over_tau_roof": 0.226,
+   "n_roof": 11735,
+   "median_roof_m": 0.0368,
+   "nmad_roof_m": 0.0132,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.039,
+    "nmad_m": 0.1779,
+    "n": 20161,
+    "tau_roof": 0.3671
+   },
+   "survey": [
+    {
+     "tid": "C31",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.44,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C32",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 1.0,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.039 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C31 LoD2만 다름(LOD2_ONLY), C32 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 828.85,
+     "released_m2": 18.76,
+     "share": 0.0226,
+     "patches": 11618,
+     "released_patches": 259
+    },
+    "borrowed": {
+     "prior_right_m2": 0.06,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 1,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 828.91,
+     "released_m2": 18.76,
+     "share": 0.0226,
+     "patches": 11619,
+     "released_patches": 259
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 20.58,
+     "within_tau_after_median_m2": 18.76,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0145
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_42364657",
+   "fp_index": 55,
+   "n": 1246,
+   "area_gt_m2": 78.33,
+   "area_no_gt_m2": 20.03,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0409,
+   "nmad_m": 0.0081,
+   "ratio": 5.035,
+   "median_over_tau_roof": 0.251,
+   "n_roof": 1246,
+   "median_roof_m": 0.0409,
+   "nmad_roof_m": 0.0081,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.1634,
+    "nmad_m": 0.0457,
+    "n": 1820,
+    "tau_roof": 0.3671
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(+0.163 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 76.44,
+     "released_m2": 0.26,
+     "share": 0.0034,
+     "patches": 1214,
+     "released_patches": 4
+    },
+    "borrowed": {
+     "prior_right_m2": 0.06,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 1,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 76.5,
+     "released_m2": 0.26,
+     "share": 0.0034,
+     "patches": 1215,
+     "released_patches": 4
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.26,
+     "within_tau_after_median_m2": 0.26,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0186
+  },
+  {
+   "range": "R4",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_42364659",
+   "fp_index": 56,
+   "n": 786,
+   "area_gt_m2": 51.79,
+   "area_no_gt_m2": 4.44,
+   "tau_roof": 0.1629,
+   "tau_wall": 0.1629,
+   "median_m": 0.0296,
+   "nmad_m": 0.0239,
+   "ratio": 1.239,
+   "median_over_tau_roof": 0.182,
+   "n_roof": 786,
+   "median_roof_m": 0.0296,
+   "nmad_roof_m": 0.0239,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0214,
+    "nmad_m": 0.0407,
+    "n": 2510,
+    "tau_roof": 0.3671
+   },
+   "survey": [
+    {
+     "tid": "C31",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.56,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.021 m, 지붕 τ 0.367 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C31 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 50.26,
+     "released_m2": 2.31,
+     "share": 0.0459,
+     "patches": 767,
+     "released_patches": 36
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 50.26,
+     "released_m2": 2.31,
+     "share": 0.0459,
+     "patches": 767,
+     "released_patches": 36
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 2.79,
+     "within_tau_after_median_m2": 2.31,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0073
+  },
+  {
+   "range": "SW",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_108247714",
+   "fp_index": 23,
+   "n": 319,
+   "area_gt_m2": 19.94,
+   "area_no_gt_m2": 78.25,
+   "tau_roof": 0.851,
+   "tau_wall": 0.4749,
+   "median_m": -0.2221,
+   "nmad_m": 0.052,
+   "ratio": 4.267,
+   "median_over_tau_roof": -0.261,
+   "n_roof": 312,
+   "median_roof_m": -0.2231,
+   "nmad_roof_m": 0.0501,
+   "n_wall": 7,
+   "median_wall_m": -0.1145,
+   "nmad_wall_m": 0.0229,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": null,
+    "nmad_m": null,
+    "n": 0,
+    "tau_roof": null
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR의 같은 건물 값이 없음",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 19.94,
+     "released_m2": 0.06,
+     "share": 0.0031,
+     "patches": 319,
+     "released_patches": 1
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 19.94,
+     "released_m2": 0.06,
+     "share": 0.0031,
+     "patches": 319,
+     "released_patches": 1
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.06,
+     "within_tau_after_median_m2": 0.06,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.1495
+  },
+  {
+   "range": "SW",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4907205",
+   "fp_index": 27,
+   "n": 161,
+   "area_gt_m2": 10.06,
+   "area_no_gt_m2": 273.56,
+   "tau_roof": 0.851,
+   "tau_wall": 0.4749,
+   "median_m": -0.0516,
+   "nmad_m": 0.0102,
+   "ratio": 5.039,
+   "median_over_tau_roof": -0.061,
+   "n_roof": 161,
+   "median_roof_m": -0.0516,
+   "nmad_roof_m": 0.0102,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": -0.027,
+    "nmad_m": 0.0081,
+    "n": 189,
+    "tau_roof": 0.0843
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: 항공 LiDAR는 참값과 τ 안(-0.027 m, 지붕 τ 0.084 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 9.94,
+     "released_m2": 0.31,
+     "share": 0.0314,
+     "patches": 159,
+     "released_patches": 5
+    },
+    "borrowed": {
+     "prior_right_m2": 0.12,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 2,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 10.06,
+     "released_m2": 0.31,
+     "share": 0.0311,
+     "patches": 161,
+     "released_patches": 5
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.31,
+     "within_tau_after_median_m2": 0.31,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.021
+  },
+  {
+   "range": "SW",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4906965",
+   "fp_index": 2,
+   "n": 20510,
+   "area_gt_m2": 1549.28,
+   "area_no_gt_m2": 18.79,
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "median_m": -0.0206,
+   "nmad_m": 0.0177,
+   "ratio": 1.169,
+   "median_over_tau_roof": -0.245,
+   "n_roof": 20510,
+   "median_roof_m": -0.0206,
+   "nmad_roof_m": 0.0177,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.2007,
+    "nmad_m": 0.4317,
+    "n": 39748,
+    "tau_roof": 0.851
+   },
+   "survey": [
+    {
+     "tid": "C15",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.7,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C16",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.87,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C17",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름(계단 vs 경사 지붕)",
+     "share": 0.38,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C18",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.89,
+     "change_for_this_prior": false
+    },
+    {
+     "tid": "C19",
+     "category": "LOD2_ONLY",
+     "type_ko": "LoD2만 다름",
+     "share": 0.94,
+     "change_for_this_prior": false
+    }
+   ],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.201 m, 지붕 τ 0.851 m)이라 이 사전 정보만의 어긋남 · 변화 조사: C15 LoD2만 다름(LOD2_ONLY), C16 LoD2만 다름(LOD2_ONLY), C17 LoD2만 다름(계단 vs 경사 지붕)(LOD2_ONLY), C18 LoD2만 다름(LOD2_ONLY), C19 LoD2만 다름(LOD2_ONLY)",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 1518.96,
+     "released_m2": 66.36,
+     "share": 0.0437,
+     "patches": 20138,
+     "released_patches": 870
+    },
+    "borrowed": {
+     "prior_right_m2": 0.42,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 6,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 1519.38,
+     "released_m2": 66.36,
+     "share": 0.0437,
+     "patches": 20144,
+     "released_patches": 870
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 74.7,
+     "within_tau_after_median_m2": 66.82,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0044
+  },
+  {
+   "range": "SW",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4907505",
+   "fp_index": 6,
+   "n": 509,
+   "area_gt_m2": 44.31,
+   "area_no_gt_m2": 205.72,
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "median_m": -0.0279,
+   "nmad_m": 0.0267,
+   "ratio": 1.045,
+   "median_over_tau_roof": -0.331,
+   "n_roof": 509,
+   "median_roof_m": -0.0279,
+   "nmad_roof_m": 0.0267,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0723,
+    "nmad_m": 0.0751,
+    "n": 889,
+    "tau_roof": 0.851
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.072 m, 지붕 τ 0.851 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 31.44,
+     "released_m2": 2.03,
+     "share": 0.0646,
+     "patches": 360,
+     "released_patches": 27
+    },
+    "borrowed": {
+     "prior_right_m2": 0.62,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 7,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 32.06,
+     "released_m2": 2.03,
+     "share": 0.0634,
+     "patches": 367,
+     "released_patches": 27
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 5.54,
+     "within_tau_after_median_m2": 2.27,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0029
+  },
+  {
+   "range": "SW",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4907514",
+   "fp_index": 12,
+   "n": 4028,
+   "area_gt_m2": 302.7,
+   "area_no_gt_m2": 6.7,
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "median_m": -0.0238,
+   "nmad_m": 0.0174,
+   "ratio": 1.367,
+   "median_over_tau_roof": -0.282,
+   "n_roof": 4028,
+   "median_roof_m": -0.0238,
+   "nmad_roof_m": 0.0174,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.1819,
+    "nmad_m": 0.3038,
+    "n": 9281,
+    "tau_roof": 0.851
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.182 m, 지붕 τ 0.851 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 286.38,
+     "released_m2": 14.35,
+     "share": 0.0501,
+     "patches": 3812,
+     "released_patches": 200
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 286.38,
+     "released_m2": 14.35,
+     "share": 0.0501,
+     "patches": 3812,
+     "released_patches": 200
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 24.02,
+     "within_tau_after_median_m2": 15.06,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0012
+  },
+  {
+   "range": "SW",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4907515",
+   "fp_index": 13,
+   "n": 230,
+   "area_gt_m2": 16.36,
+   "area_no_gt_m2": 1.61,
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "median_m": -0.0192,
+   "nmad_m": 0.0111,
+   "ratio": 1.733,
+   "median_over_tau_roof": -0.228,
+   "n_roof": 230,
+   "median_roof_m": -0.0192,
+   "nmad_roof_m": 0.0111,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0488,
+    "nmad_m": 0.1594,
+    "n": 442,
+    "tau_roof": 0.851
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.049 m, 지붕 τ 0.851 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 14.63,
+     "released_m2": 2.29,
+     "share": 0.1568,
+     "patches": 208,
+     "released_patches": 32
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 14.63,
+     "released_m2": 2.29,
+     "share": 0.1568,
+     "patches": 208,
+     "released_patches": 32
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 3.22,
+     "within_tau_after_median_m2": 2.29,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0058
+  },
+  {
+   "range": "SW",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4908353",
+   "fp_index": 18,
+   "n": 1194,
+   "area_gt_m2": 84.16,
+   "area_no_gt_m2": 63.62,
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "median_m": -0.0217,
+   "nmad_m": 0.0199,
+   "ratio": 1.09,
+   "median_over_tau_roof": -0.257,
+   "n_roof": 1194,
+   "median_roof_m": -0.0217,
+   "nmad_roof_m": 0.0199,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0695,
+    "nmad_m": 0.3197,
+    "n": 1333,
+    "tau_roof": 0.851
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.070 m, 지붕 τ 0.851 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 76.99,
+     "released_m2": 4.62,
+     "share": 0.0599,
+     "patches": 1114,
+     "released_patches": 60
+    },
+    "borrowed": {
+     "prior_right_m2": 0.0,
+     "released_m2": 0.0,
+     "share": null,
+     "patches": 0,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 76.99,
+     "released_m2": 4.62,
+     "share": 0.0599,
+     "patches": 1114,
+     "released_patches": 60
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 7.54,
+     "within_tau_after_median_m2": 4.74,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": 0.0033
+  },
+  {
+   "range": "SW",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4907205",
+   "fp_index": 27,
+   "n": 189,
+   "area_gt_m2": 11.92,
+   "area_no_gt_m2": 78.7,
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "median_m": -0.027,
+   "nmad_m": 0.0081,
+   "ratio": 3.325,
+   "median_over_tau_roof": -0.32,
+   "n_roof": 189,
+   "median_roof_m": -0.027,
+   "nmad_roof_m": 0.0081,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.0516,
+    "nmad_m": 0.0102,
+    "n": 161,
+    "tau_roof": 0.851
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.052 m, 지붕 τ 0.851 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 11.79,
+     "released_m2": 0.65,
+     "share": 0.0547,
+     "patches": 187,
+     "released_patches": 10
+    },
+    "borrowed": {
+     "prior_right_m2": 0.13,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 2,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 11.92,
+     "released_m2": 0.65,
+     "share": 0.0541,
+     "patches": 189,
+     "released_patches": 10
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 0.65,
+     "within_tau_after_median_m2": 0.65,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.002
+  },
+  {
+   "range": "SW",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4907206",
+   "fp_index": 28,
+   "n": 2892,
+   "area_gt_m2": 216.37,
+   "area_no_gt_m2": 2.86,
+   "tau_roof": 0.0843,
+   "tau_wall": 0.0843,
+   "median_m": -0.0276,
+   "nmad_m": 0.0094,
+   "ratio": 2.939,
+   "median_over_tau_roof": -0.327,
+   "n_roof": 2892,
+   "median_roof_m": -0.0276,
+   "nmad_roof_m": 0.0094,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": -0.243,
+    "nmad_m": 0.3047,
+    "n": 6210,
+    "tau_roof": 0.851
+   },
+   "survey": [],
+   "real_change": false,
+   "reason": "남김: LoD2는 참값과 τ 안(-0.243 m, 지붕 τ 0.851 m)이라 이 사전 정보만의 어긋남",
+   "in_evaluation_boxes": {},
+   "false_conflict_range": {
+    "direct": {
+     "prior_right_m2": 209.83,
+     "released_m2": 4.92,
+     "share": 0.0234,
+     "patches": 2812,
+     "released_patches": 60
+    },
+    "borrowed": {
+     "prior_right_m2": 1.2,
+     "released_m2": 0.0,
+     "share": 0.0,
+     "patches": 16,
+     "released_patches": 0
+    },
+    "judged": {
+     "prior_right_m2": 211.03,
+     "released_m2": 4.92,
+     "share": 0.0233,
+     "patches": 2828,
+     "released_patches": 60
+    },
+    "prior_right_invisible_m2": 0.0,
+    "reference_ch6_sense": {
+     "released_m2": 6.54,
+     "within_tau_after_median_m2": 5.4,
+     "note": "놓은 패치 가운데 건물 중앙값을 빼면 τ 안인 곳(앞 작업의 뜻), 참고"
+    }
+   },
+   "median_minus_range_common_m": -0.0026
+  }
+ ],
+ "excluded_real_change": [
+  {
+   "range": "R2",
+   "prior": "ALS",
+   "building": "DEBY_LOD2_4959326",
+   "fp_index": 5,
+   "n": 21394,
+   "area_gt_m2": 1439.12,
+   "area_no_gt_m2": 231.97,
+   "tau_roof": 0.147,
+   "tau_wall": 0.147,
+   "median_m": 4.4521,
+   "nmad_m": 1.1703,
+   "ratio": 3.804,
+   "median_over_tau_roof": 30.283,
+   "n_roof": 21394,
+   "median_roof_m": 4.4521,
+   "nmad_roof_m": 1.1703,
+   "n_wall": 0,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "LoD2",
+    "median_m": 0.0484,
+    "nmad_m": 0.4454,
+    "n": 48154,
+    "tau_roof": 0.176
+   },
+   "survey": [
+    {
+     "tid": "C11",
+     "category": "REAL",
+     "type_ko": "지붕 재건(박공 → 평지붕, 약 −4.6 m)",
+     "share": 0.97,
+     "change_for_this_prior": true
+    }
+   ],
+   "real_change": true,
+   "reason": "뺌: 변화 조사 C11(지붕 재건(박공 → 평지붕, 약 −4.6 m)), 이 사전 정보에 대한 실제 변화. 중앙값 +4.45 m",
+   "median_minus_range_common_m": 4.4387
+  },
+  {
+   "range": "SW",
+   "prior": "LoD2",
+   "building": "DEBY_LOD2_4907508",
+   "fp_index": 9,
+   "n": 116,
+   "area_gt_m2": 7.25,
+   "area_no_gt_m2": 298.62,
+   "tau_roof": 0.851,
+   "tau_wall": 0.4749,
+   "median_m": 3.528,
+   "nmad_m": 0.2655,
+   "ratio": 13.288,
+   "median_over_tau_roof": 4.146,
+   "n_roof": 103,
+   "median_roof_m": 3.5434,
+   "nmad_roof_m": 0.2403,
+   "n_wall": 13,
+   "median_wall_m": 0.2997,
+   "nmad_wall_m": 0.0427,
+   "sample": "ok",
+   "candidate": true,
+   "primary": true,
+   "other_prior": {
+    "prior": "ALS",
+    "median_m": 3.5566,
+    "nmad_m": 0.2569,
+    "n": 82,
+    "tau_roof": 0.0843
+   },
+   "survey": [
+    {
+     "tid": "C06",
+     "category": "REAL",
+     "type_ko": "철거(약 3.7 m)",
+     "share": 0.95,
+     "change_for_this_prior": true
+    }
+   ],
+   "real_change": true,
+   "reason": "뺌: 변화 조사 C06(철거(약 3.7 m)), 이 사전 정보에 대한 실제 변화. 중앙값 +3.53 m",
+   "median_minus_range_common_m": 3.6006
+  }
+ ],
+ "after_results_reference": {
+  "label": "결과를 본 뒤 더함(21:05), 참고: 규칙은 바꾸지 않음",
+  "roof_only_same_rule": [
+   {
+    "prior": "LoD2",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959323",
+    "n_roof": 23555,
+    "median_roof_m": -0.083,
+    "nmad_roof_m": 0.0417,
+    "other_prior_roof_median_m": -0.0113,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {
+     "B0_b10": {
+      "patches": 68560,
+      "area_m2": 4284.94
+     }
+    }
+   },
+   {
+    "prior": "LoD2",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959458",
+    "n_roof": 4033,
+    "median_roof_m": -0.0357,
+    "nmad_roof_m": 0.0241,
+    "other_prior_roof_median_m": -0.029,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959459",
+    "n_roof": 3456,
+    "median_roof_m": -0.2457,
+    "nmad_roof_m": 0.0927,
+    "other_prior_roof_median_m": -0.0379,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959793",
+    "n_roof": 3203,
+    "median_roof_m": -0.0639,
+    "nmad_roof_m": 0.0292,
+    "other_prior_roof_median_m": -0.0346,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B0_b10": {
+      "patches": 889,
+      "area_m2": 55.56
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959322",
+    "n_roof": 5510,
+    "median_roof_m": -0.0238,
+    "nmad_roof_m": 0.0079,
+    "other_prior_roof_median_m": -0.0766,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B0_b10": {
+      "patches": 1896,
+      "area_m2": 132.87
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959324",
+    "n_roof": 330,
+    "median_roof_m": -0.0363,
+    "nmad_roof_m": 0.0107,
+    "other_prior_roof_median_m": -0.3396,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B0_b10": {
+      "patches": 253,
+      "area_m2": 16.24
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959458",
+    "n_roof": 3189,
+    "median_roof_m": -0.029,
+    "nmad_roof_m": 0.0079,
+    "other_prior_roof_median_m": -0.0357,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959459",
+    "n_roof": 3153,
+    "median_roof_m": -0.0379,
+    "nmad_roof_m": 0.0091,
+    "other_prior_roof_median_m": -0.2457,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "B0",
+    "building": "DEBY_LOD2_4959793",
+    "n_roof": 2931,
+    "median_roof_m": -0.0346,
+    "nmad_roof_m": 0.0114,
+    "other_prior_roof_median_m": -0.0639,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B0_b10": {
+      "patches": 219,
+      "area_m2": 14.54
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "B0",
+    "building": "DEBY_LOD2_108580336",
+    "n_roof": 4362,
+    "median_roof_m": -0.0407,
+    "nmad_roof_m": 0.0137,
+    "other_prior_roof_median_m": -0.0096,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B0_b10": {
+      "patches": 423,
+      "area_m2": 28.36
+     }
+    }
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906970",
+    "n_roof": 3182,
+    "median_roof_m": -0.6037,
+    "nmad_roof_m": 0.5691,
+    "other_prior_roof_median_m": -0.0376,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906972",
+    "n_roof": 1786,
+    "median_roof_m": -0.1712,
+    "nmad_roof_m": 0.1133,
+    "other_prior_roof_median_m": -0.0344,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_104586480",
+    "n_roof": 208,
+    "median_roof_m": 2.9456,
+    "nmad_roof_m": 0.0214,
+    "other_prior_roof_median_m": -0.0444,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_60042",
+    "n_roof": 1531,
+    "median_roof_m": -0.0607,
+    "nmad_roof_m": 0.0434,
+    "other_prior_roof_median_m": -0.0297,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908023",
+    "n_roof": 340,
+    "median_roof_m": -0.0533,
+    "nmad_roof_m": 0.0097,
+    "other_prior_roof_median_m": -0.0316,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908024",
+    "n_roof": 343,
+    "median_roof_m": -0.0606,
+    "nmad_roof_m": 0.0115,
+    "other_prior_roof_median_m": -0.0479,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908025",
+    "n_roof": 343,
+    "median_roof_m": -0.0408,
+    "nmad_roof_m": 0.0072,
+    "other_prior_roof_median_m": -0.0518,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908026",
+    "n_roof": 337,
+    "median_roof_m": -0.0651,
+    "nmad_roof_m": 0.0095,
+    "other_prior_roof_median_m": -0.0502,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908027",
+    "n_roof": 336,
+    "median_roof_m": -0.0439,
+    "nmad_roof_m": 0.0171,
+    "other_prior_roof_median_m": -0.0244,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908028",
+    "n_roof": 341,
+    "median_roof_m": -0.0674,
+    "nmad_roof_m": 0.0095,
+    "other_prior_roof_median_m": -0.0076,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_42364663",
+    "n_roof": 531,
+    "median_roof_m": -0.0401,
+    "nmad_roof_m": 0.0139,
+    "other_prior_roof_median_m": -0.0493,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R1",
+    "building": "DEBY_LOD2_42364667",
+    "n_roof": 435,
+    "median_roof_m": -0.1386,
+    "nmad_roof_m": 0.0211,
+    "other_prior_roof_median_m": -0.0617,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906967",
+    "n_roof": 24490,
+    "median_roof_m": -0.0435,
+    "nmad_roof_m": 0.0136,
+    "other_prior_roof_median_m": -0.0362,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906970",
+    "n_roof": 1563,
+    "median_roof_m": -0.0376,
+    "nmad_roof_m": 0.0264,
+    "other_prior_roof_median_m": -0.6037,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906972",
+    "n_roof": 1380,
+    "median_roof_m": -0.0344,
+    "nmad_roof_m": 0.017,
+    "other_prior_roof_median_m": -0.1712,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_104586480",
+    "n_roof": 158,
+    "median_roof_m": -0.0444,
+    "nmad_roof_m": 0.0076,
+    "other_prior_roof_median_m": 2.9456,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_60042",
+    "n_roof": 977,
+    "median_roof_m": -0.0297,
+    "nmad_roof_m": 0.0193,
+    "other_prior_roof_median_m": -0.0607,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906968",
+    "n_roof": 23765,
+    "median_roof_m": -0.0482,
+    "nmad_roof_m": 0.015,
+    "other_prior_roof_median_m": 0.0885,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "R1rep_b10": {
+      "patches": 1798,
+      "area_m2": 159.5
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906969",
+    "n_roof": 763,
+    "median_roof_m": -0.0426,
+    "nmad_roof_m": 0.0077,
+    "other_prior_roof_median_m": 0.0181,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4906975",
+    "n_roof": 21147,
+    "median_roof_m": -0.0392,
+    "nmad_roof_m": 0.0134,
+    "other_prior_roof_median_m": -0.2677,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "R1rep_b10": {
+      "patches": 22332,
+      "area_m2": 1446.46
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908023",
+    "n_roof": 288,
+    "median_roof_m": -0.0316,
+    "nmad_roof_m": 0.0313,
+    "other_prior_roof_median_m": -0.0533,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908024",
+    "n_roof": 293,
+    "median_roof_m": -0.0479,
+    "nmad_roof_m": 0.0076,
+    "other_prior_roof_median_m": -0.0606,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908025",
+    "n_roof": 300,
+    "median_roof_m": -0.0518,
+    "nmad_roof_m": 0.0073,
+    "other_prior_roof_median_m": -0.0408,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_4908026",
+    "n_roof": 293,
+    "median_roof_m": -0.0502,
+    "nmad_roof_m": 0.0068,
+    "other_prior_roof_median_m": -0.0651,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_42364663",
+    "n_roof": 197,
+    "median_roof_m": -0.0493,
+    "nmad_roof_m": 0.0075,
+    "other_prior_roof_median_m": -0.0401,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R1",
+    "building": "DEBY_LOD2_42364667",
+    "n_roof": 101,
+    "median_roof_m": -0.0617,
+    "nmad_roof_m": 0.0398,
+    "other_prior_roof_median_m": -0.1386,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R2",
+    "building": "DEBY_LOD2_4959326",
+    "n_roof": 29984,
+    "median_roof_m": 3.7134,
+    "nmad_roof_m": 2.328,
+    "other_prior_roof_median_m": 4.4521,
+    "real_change": true,
+    "real_change_reason": "변화 조사 C11",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {
+     "B173nb_b10": {
+      "patches": 110818,
+      "area_m2": 6926.12
+     },
+     "B173_b0": {
+      "patches": 110818,
+      "area_m2": 6926.12
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "R2",
+    "building": "DEBY_LOD2_4959326",
+    "n_roof": 21394,
+    "median_roof_m": 4.4521,
+    "nmad_roof_m": 1.1703,
+    "other_prior_roof_median_m": 3.7134,
+    "real_change": true,
+    "real_change_reason": "변화 조사 C11",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B173nb_b10": {
+      "patches": 24642,
+      "area_m2": 1671.09
+     },
+     "B173_b0": {
+      "patches": 24642,
+      "area_m2": 1671.09
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "R2",
+    "building": "DEBY_LOD2_108580335",
+    "n_roof": 14277,
+    "median_roof_m": 0.0189,
+    "nmad_roof_m": 0.0087,
+    "other_prior_roof_median_m": 0.0532,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B173nb_b10": {
+      "patches": 865,
+      "area_m2": 61.18
+     },
+     "B173_b0": {
+      "patches": 865,
+      "area_m2": 61.18
+     }
+    }
+   },
+   {
+    "prior": "LoD2",
+    "range": "R3E",
+    "building": "DEBY_LOD2_4959460",
+    "n_roof": 73707,
+    "median_roof_m": 0.0883,
+    "nmad_roof_m": 0.0723,
+    "other_prior_roof_median_m": 0.046,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {
+     "B173nb_b10": {
+      "patches": 27469,
+      "area_m2": 1716.81
+     }
+    }
+   },
+   {
+    "prior": "LoD2",
+    "range": "R3E",
+    "building": "DEBY_LOD2_4959461",
+    "n_roof": 2343,
+    "median_roof_m": -0.1073,
+    "nmad_roof_m": 0.0854,
+    "other_prior_roof_median_m": 0.0602,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R3E",
+    "building": "DEBY_LOD2_4959460",
+    "n_roof": 68887,
+    "median_roof_m": 0.046,
+    "nmad_roof_m": 0.0186,
+    "other_prior_roof_median_m": 0.0883,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {
+     "B173nb_b10": {
+      "patches": 8899,
+      "area_m2": 563.47
+     }
+    }
+   },
+   {
+    "prior": "ALS",
+    "range": "R3E",
+    "building": "DEBY_LOD2_4959461",
+    "n_roof": 2254,
+    "median_roof_m": 0.0602,
+    "nmad_roof_m": 0.0068,
+    "other_prior_roof_median_m": -0.1073,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R4",
+    "building": "DEBY_LOD2_4906987",
+    "n_roof": 3668,
+    "median_roof_m": 0.0884,
+    "nmad_roof_m": 0.0372,
+    "other_prior_roof_median_m": 0.0164,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R4",
+    "building": "DEBY_LOD2_4906989",
+    "n_roof": 1650,
+    "median_roof_m": -1.7942,
+    "nmad_roof_m": 0.6157,
+    "other_prior_roof_median_m": 0.0171,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959340",
+    "n_roof": 6042,
+    "median_roof_m": 0.0791,
+    "nmad_roof_m": 0.0162,
+    "other_prior_roof_median_m": 0.0519,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R4",
+    "building": "DEBY_LOD2_42364657",
+    "n_roof": 1365,
+    "median_roof_m": 0.1528,
+    "nmad_roof_m": 0.0327,
+    "other_prior_roof_median_m": 0.0409,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4906986",
+    "n_roof": 3352,
+    "median_roof_m": 0.0175,
+    "nmad_roof_m": 0.0102,
+    "other_prior_roof_median_m": -0.1069,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4906987",
+    "n_roof": 3404,
+    "median_roof_m": 0.0164,
+    "nmad_roof_m": 0.01,
+    "other_prior_roof_median_m": 0.0884,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4906988",
+    "n_roof": 1467,
+    "median_roof_m": 0.0177,
+    "nmad_roof_m": 0.009,
+    "other_prior_roof_median_m": 0.0343,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4906989",
+    "n_roof": 1228,
+    "median_roof_m": 0.0171,
+    "nmad_roof_m": 0.0089,
+    "other_prior_roof_median_m": -1.7942,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4906990",
+    "n_roof": 1060,
+    "median_roof_m": 0.0351,
+    "nmad_roof_m": 0.0264,
+    "other_prior_roof_median_m": 0.0389,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4908034",
+    "n_roof": 212,
+    "median_roof_m": -0.0207,
+    "nmad_roof_m": 0.0169,
+    "other_prior_roof_median_m": -0.0976,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959327",
+    "n_roof": 7206,
+    "median_roof_m": 0.0261,
+    "nmad_roof_m": 0.0225,
+    "other_prior_roof_median_m": 0.13,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959336",
+    "n_roof": 6581,
+    "median_roof_m": 0.0383,
+    "nmad_roof_m": 0.0112,
+    "other_prior_roof_median_m": -0.1131,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959340",
+    "n_roof": 5742,
+    "median_roof_m": 0.0519,
+    "nmad_roof_m": 0.013,
+    "other_prior_roof_median_m": 0.0791,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959463",
+    "n_roof": 625,
+    "median_roof_m": 0.0183,
+    "nmad_roof_m": 0.0052,
+    "other_prior_roof_median_m": 0.0208,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959464",
+    "n_roof": 3036,
+    "median_roof_m": 0.0183,
+    "nmad_roof_m": 0.0054,
+    "other_prior_roof_median_m": 0.0561,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959465",
+    "n_roof": 2428,
+    "median_roof_m": 0.0104,
+    "nmad_roof_m": 0.0092,
+    "other_prior_roof_median_m": -0.0751,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959753",
+    "n_roof": 208,
+    "median_roof_m": 0.0247,
+    "nmad_roof_m": 0.0065,
+    "other_prior_roof_median_m": 0.1274,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_4959794",
+    "n_roof": 539,
+    "median_roof_m": 0.0204,
+    "nmad_roof_m": 0.0156,
+    "other_prior_roof_median_m": -0.0066,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_8573847",
+    "n_roof": 3653,
+    "median_roof_m": 0.0329,
+    "nmad_roof_m": 0.0268,
+    "other_prior_roof_median_m": -0.2937,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_8573848",
+    "n_roof": 15176,
+    "median_roof_m": 0.0246,
+    "nmad_roof_m": 0.0133,
+    "other_prior_roof_median_m": 0.0391,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_8573849",
+    "n_roof": 11735,
+    "median_roof_m": 0.0368,
+    "nmad_roof_m": 0.0132,
+    "other_prior_roof_median_m": 0.0726,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_42364657",
+    "n_roof": 1246,
+    "median_roof_m": 0.0409,
+    "nmad_roof_m": 0.0081,
+    "other_prior_roof_median_m": 0.1528,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "R4",
+    "building": "DEBY_LOD2_42364659",
+    "n_roof": 786,
+    "median_roof_m": 0.0296,
+    "nmad_roof_m": 0.0239,
+    "other_prior_roof_median_m": 0.0313,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R5",
+    "building": "DEBY_LOD2_4906984",
+    "n_roof": 3558,
+    "median_roof_m": -0.1086,
+    "nmad_roof_m": 0.0517,
+    "other_prior_roof_median_m": -0.0052,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "R5",
+    "building": "DEBY_LOD2_4906985",
+    "n_roof": 13526,
+    "median_roof_m": -0.2359,
+    "nmad_roof_m": 0.1434,
+    "other_prior_roof_median_m": 0.0257,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907505",
+    "n_roof": 705,
+    "median_roof_m": -0.0624,
+    "nmad_roof_m": 0.0403,
+    "other_prior_roof_median_m": -0.0279,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907508",
+    "n_roof": 103,
+    "median_roof_m": 3.5434,
+    "nmad_roof_m": 0.2403,
+    "other_prior_roof_median_m": 3.5566,
+    "real_change": true,
+    "real_change_reason": "변화 조사 C06",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907510",
+    "n_roof": 101,
+    "median_roof_m": 3.2659,
+    "nmad_roof_m": 0.1456,
+    "other_prior_roof_median_m": 3.635,
+    "real_change": true,
+    "real_change_reason": "변화 조사 C05",
+    "pooled_candidate": false,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "SW",
+    "building": "DEBY_LOD2_108247714",
+    "n_roof": 312,
+    "median_roof_m": -0.2231,
+    "nmad_roof_m": 0.0501,
+    "other_prior_roof_median_m": null,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "LoD2",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907205",
+    "n_roof": 161,
+    "median_roof_m": -0.0516,
+    "nmad_roof_m": 0.0102,
+    "other_prior_roof_median_m": -0.027,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "SW",
+    "building": "DEBY_LOD2_4906965",
+    "n_roof": 20510,
+    "median_roof_m": -0.0206,
+    "nmad_roof_m": 0.0177,
+    "other_prior_roof_median_m": -0.3663,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907505",
+    "n_roof": 509,
+    "median_roof_m": -0.0279,
+    "nmad_roof_m": 0.0267,
+    "other_prior_roof_median_m": -0.0624,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907514",
+    "n_roof": 4028,
+    "median_roof_m": -0.0238,
+    "nmad_roof_m": 0.0174,
+    "other_prior_roof_median_m": -0.2993,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907515",
+    "n_roof": 230,
+    "median_roof_m": -0.0192,
+    "nmad_roof_m": 0.0111,
+    "other_prior_roof_median_m": -0.0713,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "SW",
+    "building": "DEBY_LOD2_4908353",
+    "n_roof": 1194,
+    "median_roof_m": -0.0217,
+    "nmad_roof_m": 0.0199,
+    "other_prior_roof_median_m": -0.0686,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907205",
+    "n_roof": 189,
+    "median_roof_m": -0.027,
+    "nmad_roof_m": 0.0081,
+    "other_prior_roof_median_m": -0.0516,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   },
+   {
+    "prior": "ALS",
+    "range": "SW",
+    "building": "DEBY_LOD2_4907206",
+    "n_roof": 2892,
+    "median_roof_m": -0.0276,
+    "nmad_roof_m": 0.0094,
+    "other_prior_roof_median_m": -0.0457,
+    "real_change": false,
+    "real_change_reason": "",
+    "pooled_candidate": true,
+    "in_evaluation_boxes": {}
+   }
+  ],
+  "roof_only_counts": {
+   "LoD2": {
+    "candidates": 30,
+    "kept": 27,
+    "kept_abs_ge_tau": 4
+   },
+   "ALS": {
+    "candidates": 50,
+    "kept": 49,
+    "kept_abs_ge_tau": 0
+   }
+  }
+ },
+ "scientific_verdict": null,
+ "reference_ch6": {
+  "label": "앞 작업(PHD-CH6-SUPPORT-v1)의 읽기, 참고",
+  "preregistered_rule": "MVS − 사전 정보(지붕 패치 중앙값, 넓이 가중, 지붕 10 m² 이상), |m| > NMAD; 참값 − 사전 정보로 확인",
+  "preregistered_totals": {
+   "LoD2": {
+    "buildings": 80,
+    "candidates": 30,
+    "by_class": {
+     "real_change": 3,
+     "prior_offset_case": 21,
+     "image_side_offset": 5,
+     "no_gt": 1
+    },
+    "candidates_with_effect": 8,
+    "cases_with_effect": 5,
+    "horizontal_flags": 18
+   },
+   "ALS": {
+    "buildings": 77,
+    "candidates": 37,
+    "by_class": {
+     "real_change": 3,
+     "prior_offset_case": 18,
+     "image_side_offset": 15,
+     "no_gt": 1
+    },
+    "candidates_with_effect": 5,
+    "cases_with_effect": 2,
+    "horizontal_flags": 0
+   }
+  },
+  "strict_reading": {
+   "LoD2": {
+    "buildings": 68,
+    "strict_cases": 13,
+    "strict_cases_effect": 2,
+    "cases": [
+     [
+      "B0",
+      "DEBY_LOD2_4959458",
+      -0.0346,
+      0.175
+     ],
+     [
+      "B0",
+      "DEBY_LOD2_4959459",
+      0.1754,
+      0.888
+     ],
+     [
+      "B0",
+      "DEBY_LOD2_4959460",
+      -0.1064,
+      0.538
+     ],
+     [
+      "R1",
+      "DEBY_LOD2_4908025",
+      -0.0187,
+      0.027
+     ],
+     [
+      "R1",
+      "DEBY_LOD2_42364667",
+      0.0791,
+      0.116
+     ],
+     [
+      "R3E",
+      "DEBY_LOD2_4906985",
+      0.1969,
+      1.241
+     ],
+     [
+      "R3E",
+      "DEBY_LOD2_4959461",
+      0.0978,
+      0.617
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_4906987",
+      -0.0542,
+      0.148
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_4906989",
+      1.8284,
+      4.981
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_4959340",
+      -0.0448,
+      0.122
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_4959465",
+      0.1094,
+      0.298
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_42364657",
+      -0.1185,
+      0.323
+     ],
+     [
+      "R5",
+      "DEBY_LOD2_4906984",
+      0.0572,
+      0.243
+     ]
+    ],
+    "range_common_g": {
+     "B0": 0.0703,
+     "R1": 0.0595,
+     "R2": -0.0767,
+     "R3E": 0.0095,
+     "R4": -0.0343,
+     "R5": 0.0514,
+     "SW": 0.0713
+    }
+   },
+   "ALS": {
+    "buildings": 64,
+    "strict_cases": 9,
+    "strict_cases_effect": 0,
+    "cases": [
+     [
+      "B0",
+      "DEBY_LOD2_4959322",
+      -0.0107,
+      0.085
+     ],
+     [
+      "B0",
+      "DEBY_LOD2_4959323",
+      -0.0231,
+      0.183
+     ],
+     [
+      "R1",
+      "DEBY_LOD2_4908025",
+      0.012,
+      0.116
+     ],
+     [
+      "R1",
+      "DEBY_LOD2_4908026",
+      0.0103,
+      0.1
+     ],
+     [
+      "R1",
+      "DEBY_LOD2_42364663",
+      0.0093,
+      0.09
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_4906991",
+      0.0118,
+      0.072
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_4908034",
+      0.0417,
+      0.256
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_4959340",
+      -0.0312,
+      0.192
+     ],
+     [
+      "R4",
+      "DEBY_LOD2_8573849",
+      -0.0161,
+      0.099
+     ]
+    ],
+    "range_common_g": {
+     "B0": 0.0345,
+     "R1": 0.04,
+     "R2": -0.0133,
+     "R3E": -0.0576,
+     "R4": -0.0207,
+     "R5": -0.0192,
+     "SW": 0.025
+    }
+   }
+  },
+  "strict_rule": "Per range and prior: G_r = median over the range's buildings of g_b (GT - prior). A building is a strict case when\n  S1 its GT offset differs from the range's common offset beyond its own spread: |g_b - G_r| > sg_b\n  S2 the MVS sees the deviation in the same direction: sign(m_b - M_r) = sign(g_b - G_r), M_r = range median of m_b\n     (first version: |m_b - g_b| <= max(s_b, sg_b); dropped R3E 4906985 whose MVS doubled a 0.2 m GT offset, so replaced)\n  S3 not a change: not in the survey list, |g_b| <= 2 m, sg_b < |g_b - G_r| (a shift of the whole roof, not a part), and for\n     LoD2 the airborne LiDAR of the same building agrees with the GT: |g_b(ALS) - G_r(ALS)| <= tau(ALS) (when the ALS row exists)\n  S4 effect: |g_b - G_r| >= tau of the range and prior (also written: |g_b| / tau, the offset the judgment meets when the\n     registration left the common part)\nWrites /out/t4/strict.csv and strict.json. scientific_verdict: null.",
+  "conclusion": "LoD2에는 사례가 있고 항공 LiDAR에는 없다(엄격한 읽기, 결과를 본 뒤 더함): 4906985 +0.197 m(1.24τ), 4959459 +0.175 m(0.89τ, 절대 1.24τ)",
+  "files": [
+   "PH/ch6_support_v1/PHD-CH6-SUPPORT-v1/t4/candidates.csv",
+   "PH/ch6_support_v1/PHD-CH6-SUPPORT-v1/t4/strict.csv",
+   "PH/ch6_support_v1/PHD-CH6-SUPPORT-v1/t4/cases.json"
+  ]
+ },
+ "decision_v1_section2": {
+  "label": "결정 반영 v1 2절(사용자 승인, 10-15 23:07): 보고서 8절의 기준은 앞 작업(PHD-CH6-SUPPORT-v1)의 엄격한 읽기다. 이 발주의 발주 규칙 목록은 기록이다",
+  "reference_cases": [
+   {
+    "prior": "LoD2",
+    "building": "DEBY_LOD2_4906985",
+    "area": "R3E·R5",
+    "offset_from_common_m": 0.197,
+    "offset_over_tau": 1.24,
+    "false_conflict": "R5 쪽: 놓은 640 m² 가운데 450 m²가 건물 어긋남만 빼면 τ 안(앞 작업 보고서 5절)"
+   },
+   {
+    "prior": "LoD2",
+    "building": "DEBY_LOD2_4959459",
+    "area": "B0",
+    "offset_from_common_m": 0.175,
+    "offset_over_tau": 0.89,
+    "abs_offset_over_tau": 1.24,
+    "false_conflict": "놓은 258 m² 가운데 221 m²가 건물 어긋남만 빼면 τ 안(앞 작업 보고서 5절)"
+   }
+  ],
+  "reference_als": "항공 LiDAR에는 사례가 없다(건물마다 0.26τ 안)",
+  "reference_in_evaluation_boxes": {
+   "B0/DEBY_LOD2_4959459": {},
+   "R3E/DEBY_LOD2_4906985": {},
+   "R5/DEBY_LOD2_4906985": {}
+  },
+  "record_note": "4959793은 B0 탐색 지역의 공통 치우침(+7 cm)과 같은 크기라 사례가 아니다",
+  "undecidable_7_2_5": "두 동 모두 평가 상자 밖이므로 7.2.5는 '밖이면 거짓 충돌만 센다'에 해당하고, 그 값은 앞 작업 보고서 5절의 표다"
+ }
+}

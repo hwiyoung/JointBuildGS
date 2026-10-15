@@ -1,0 +1,470 @@
+{
+ "component": "judge_wide",
+ "order_section": "8.4 함께 할 것 1",
+ "written": "2026-10-15 23:21 KST",
+ "module": "src/phd/prior_propagation_v6, scripts/phd/main_stage0_v1/s03_stage1_v6.py, 규칙 auto (앞 작업 PHD-CH6-SUPPORT-v1이 B173만 상자 자료만으로 돌림; r12~r15 포크가 부르는 같은 모듈)",
+ "note": "같은 패치(B173만 평가 범위, 두 줄 모두 참값 라벨이 있는 패치). 참 라벨: 지금 값의 줄 = 영역 파일 v3, 장면 안 값의 줄 = 그 정합으로 옮긴 사전 정보의 정오(고정 τ, 앞 작업과 같음)",
+ "priors": {
+  "LoD2": {
+   "current": {
+    "tau_m": {
+     "roof": 0.17595741568870737,
+     "wall": 0.22782853520583887
+    },
+    "shift_m": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "judgment": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/checks/dry/r14_B173_b0_LoD2",
+    "counts": {
+     "direct": {
+      "correct_keep": [
+       608.625,
+       9738
+      ],
+      "wrong_keep": [
+       219.438,
+       3511
+      ],
+      "correct_release": [
+       1417.938,
+       22687
+      ],
+      "wrong_release": [
+       176.812,
+       2829
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "borrowed": {
+      "correct_keep": [
+       16.562,
+       265
+      ],
+      "wrong_keep": [
+       0.25,
+       4
+      ],
+      "correct_release": [
+       0.625,
+       10
+      ],
+      "wrong_release": [
+       1.625,
+       26
+      ],
+      "undetermined": [
+       1.562,
+       25
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "judged": {
+      "correct_keep": [
+       625.187,
+       10003
+      ],
+      "wrong_keep": [
+       219.688,
+       3515
+      ],
+      "correct_release": [
+       1418.563,
+       22697
+      ],
+      "wrong_release": [
+       178.437,
+       2855
+      ],
+      "undetermined": [
+       1.562,
+       25
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "invisible": [
+      0.0,
+      0
+     ],
+     "invisible_by_truth": {
+      "prior_right": 0.0,
+      "prior_wrong": 0.0
+     }
+    }
+   },
+   "scene_only": {
+    "tau_m": {
+     "roof": 3.646792199154107,
+     "wall": 0.6367984788107246
+    },
+    "shift_m": [
+     0.0,
+     0.0,
+     -4.2306499613374235
+    ],
+    "horizontal_steps_rejected": [
+     [
+      -3.912317394507535,
+      -14.187669690480037
+     ]
+    ],
+    "run": "PH/ch6_support_v1/PHD-CH6-SUPPORT-v1/t5/b173self/B173_b0/LoD2",
+    "counts": {
+     "direct": {
+      "correct_keep": [
+       517.875,
+       8286
+      ],
+      "wrong_keep": [
+       1076.875,
+       17230
+      ],
+      "correct_release": [
+       717.688,
+       11483
+      ],
+      "wrong_release": [
+       129.25,
+       2068
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "borrowed": {
+      "correct_keep": [
+       1.562,
+       25
+      ],
+      "wrong_keep": [
+       0.062,
+       1
+      ],
+      "correct_release": [
+       0.0,
+       0
+      ],
+      "wrong_release": [
+       0.0,
+       0
+      ],
+      "undetermined": [
+       0.125,
+       2
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "judged": {
+      "correct_keep": [
+       519.437,
+       8311
+      ],
+      "wrong_keep": [
+       1076.937,
+       17231
+      ],
+      "correct_release": [
+       717.688,
+       11483
+      ],
+      "wrong_release": [
+       129.25,
+       2068
+      ],
+      "undetermined": [
+       0.125,
+       2
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "invisible": [
+      0.0,
+      0
+     ],
+     "invisible_by_truth": {
+      "prior_right": 0.0,
+      "prior_wrong": 0.0
+     }
+    }
+   },
+   "common_patches": 39095,
+   "common_area_m2": 2443.4,
+   "area_equal": true,
+   "changed_judgment_m2": 1701.3,
+   "ch6_reference": {
+    "correct_keep": [
+     954.0,
+     15264
+    ],
+    "wrong_keep": [
+     1237.25,
+     19796
+    ],
+    "correct_release": [
+     730.0,
+     11680
+    ],
+    "wrong_release": [
+     156.56,
+     2505
+    ]
+   }
+  },
+  "ALS": {
+   "current": {
+    "tau_m": {
+     "roof": 0.14701597917790277,
+     "wall": 0.14701597917790277
+    },
+    "shift_m": [
+     -0.05619434746608162,
+     0.06288884357338685,
+     0.0
+    ],
+    "judgment": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/checks/dry/r14_B173_b0_ALS",
+    "counts": {
+     "direct": {
+      "correct_keep": [
+       152.485,
+       2178
+      ],
+      "wrong_keep": [
+       7.187,
+       84
+      ],
+      "correct_release": [
+       1207.699,
+       18151
+      ],
+      "wrong_release": [
+       56.72,
+       761
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "borrowed": {
+      "correct_keep": [
+       0.0,
+       0
+      ],
+      "wrong_keep": [
+       0.0,
+       0
+      ],
+      "correct_release": [
+       0.134,
+       2
+      ],
+      "wrong_release": [
+       0.232,
+       2
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "judged": {
+      "correct_keep": [
+       152.485,
+       2178
+      ],
+      "wrong_keep": [
+       7.187,
+       84
+      ],
+      "correct_release": [
+       1207.833,
+       18153
+      ],
+      "wrong_release": [
+       56.952,
+       763
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "invisible": [
+      0.0,
+      0
+     ],
+     "invisible_by_truth": {
+      "prior_right": 0.0,
+      "prior_wrong": 0.0
+     }
+    }
+   },
+   "scene_only": {
+    "tau_m": {
+     "roof": 2.856885170963763,
+     "wall": 2.856885170963763
+    },
+    "shift_m": [
+     0.0,
+     0.0,
+     -4.618265218505195
+    ],
+    "horizontal_steps_rejected": [
+     [
+      1.1673324712089546,
+      -4.540816626429364
+     ]
+    ],
+    "run": "PH/ch6_support_v1/PHD-CH6-SUPPORT-v1/t5/b173self/B173_b0/ALS",
+    "counts": {
+     "direct": {
+      "correct_keep": [
+       130.087,
+       1957
+      ],
+      "wrong_keep": [
+       1275.209,
+       18968
+      ],
+      "correct_release": [
+       19.028,
+       251
+      ],
+      "wrong_release": [
+       0.0,
+       0
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "borrowed": {
+      "correct_keep": [
+       0.0,
+       0
+      ],
+      "wrong_keep": [
+       0.131,
+       2
+      ],
+      "correct_release": [
+       0.0,
+       0
+      ],
+      "wrong_release": [
+       0.0,
+       0
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "judged": {
+      "correct_keep": [
+       130.087,
+       1957
+      ],
+      "wrong_keep": [
+       1275.34,
+       18970
+      ],
+      "correct_release": [
+       19.028,
+       251
+      ],
+      "wrong_release": [
+       0.0,
+       0
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "invisible": [
+      0.0,
+      0
+     ],
+     "invisible_by_truth": {
+      "prior_right": 0.0,
+      "prior_wrong": 0.0
+     }
+    }
+   },
+   "common_patches": 21178,
+   "common_area_m2": 1424.5,
+   "area_equal": true,
+   "changed_judgment_m2": 1257.8,
+   "ch6_reference": {
+    "correct_keep": [
+     130.28,
+     1960
+    ],
+    "wrong_keep": [
+     1337.74,
+     19865
+    ],
+    "correct_release": [
+     25.51,
+     334
+    ],
+    "wrong_release": [
+     0.0,
+     0
+    ]
+   }
+  }
+ },
+ "scientific_verdict": null
+}

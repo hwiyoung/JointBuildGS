@@ -1,0 +1,5781 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "undecidable",
+ "written": "2026-10-15 23:10:43 KST",
+ "mark": "이 발주에서 냄",
+ "definitions": {
+  "file": "SL/prep/undecidable/definitions.json",
+  "written": "2026-10-15 20:56:23 KST"
+ },
+ "scientific_verdict": null,
+ "gate4_check": {
+  "results_ok": 76,
+  "reproduced": 76,
+  "not_reproduced": 0,
+  "no_metric": 0
+ },
+ "units": {
+  "B0_b10/LoD2": {
+   "site": "B0_b10",
+   "prior": "LoD2",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_LoD2_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.9529,
+       "le_0.5": 0.9973
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.8383,
+       "le_0.5": 0.9346
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.0465,
+       "gt_side": 0.8682,
+       "wrong_side": 0.031,
+       "both": 0.0155,
+       "neither": 0.0853
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.968,
+       "le_0.5": 0.996
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.9743,
+       "le_0.5": 0.9974
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.5641,
+       "gt_side": 0.4359,
+       "wrong_side": 0.0,
+       "both": 0.5641,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.9529,
+      "le_0.5": 0.9973
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_LoD2_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.955,
+       "le_0.5": 0.9967
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.8211,
+       "le_0.5": 0.9708
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.031,
+       "gt_side": 0.9225,
+       "wrong_side": 0.031,
+       "both": 0.0,
+       "neither": 0.0465
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.9681,
+       "le_0.5": 0.9964
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.9537,
+       "le_0.5": 0.9972
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.2564,
+       "gt_side": 0.7436,
+       "wrong_side": 0.0,
+       "both": 0.2564,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.955,
+      "le_0.5": 0.9967
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.7539,
+       "le_0.5": 0.9821
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.4441,
+       "le_0.5": 0.9893
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.9767,
+       "gt_side": 0.0,
+       "wrong_side": 0.9302,
+       "both": 0.0465,
+       "neither": 0.0233
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.7108,
+       "le_0.5": 0.9775
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.2029,
+       "le_0.5": 0.9965
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 1.0,
+       "gt_side": 0.0,
+       "wrong_side": 0.9487,
+       "both": 0.0513,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.7539,
+      "le_0.5": 0.9821
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.7534,
+       "le_0.5": 0.9203
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.7262,
+       "le_0.5": 0.8583
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.4961,
+       "gt_side": 0.3101,
+       "wrong_side": 0.0,
+       "both": 0.4961,
+       "neither": 0.1938
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.7511,
+       "le_0.5": 0.9268
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.8837,
+       "le_0.5": 0.949
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.0256,
+       "gt_side": 0.8205,
+       "wrong_side": 0.0,
+       "both": 0.0256,
+       "neither": 0.1538
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.7534,
+      "le_0.5": 0.9203
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "trust_LoD2_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.6891,
+       "le_0.5": 0.9768
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.5198,
+       "le_0.5": 0.978
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.062,
+       "gt_side": 0.8217,
+       "wrong_side": 0.062,
+       "both": 0.0,
+       "neither": 0.1163
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.6552,
+       "le_0.5": 0.9653
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.2895,
+       "le_0.5": 0.9743
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.1795,
+       "gt_side": 0.8205,
+       "wrong_side": 0.1538,
+       "both": 0.0256,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.6891,
+      "le_0.5": 0.9768
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.7549,
+       "le_0.5": 0.984
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.4441,
+       "le_0.5": 0.9897
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.3953,
+       "gt_side": 0.0233,
+       "wrong_side": 0.2946,
+       "both": 0.1008,
+       "neither": 0.5814
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.7112,
+       "le_0.5": 0.9777
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.2029,
+       "le_0.5": 0.9965
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.9744,
+       "gt_side": 0.0256,
+       "wrong_side": 0.9487,
+       "both": 0.0256,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.7549,
+      "le_0.5": 0.984
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_LoD2_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "cdgs_official": {
+     "ko": "CDGS 공식 확인",
+     "result": "cdgs_LoD2_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.9446,
+       "le_0.5": 0.9941
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.7726,
+       "le_0.5": 0.9078
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.031,
+       "gt_side": 0.8837,
+       "wrong_side": 0.031,
+       "both": 0.0,
+       "neither": 0.0853
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.9625,
+       "le_0.5": 0.9961
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.9637,
+       "le_0.5": 0.9957
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.0769,
+       "gt_side": 0.8205,
+       "wrong_side": 0.0513,
+       "both": 0.0256,
+       "neither": 0.1026
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.9446,
+      "le_0.5": 0.9941
+     },
+     "gate4_reproduced": true
+    },
+    "nojudge": {
+     "ko": "판정만 끈 본 방법",
+     "result": "nojudge_LoD2_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.9614,
+       "le_0.5": 0.9978
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.8514,
+       "le_0.5": 0.9859
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.2093,
+       "gt_side": 0.7054,
+       "wrong_side": 0.0233,
+       "both": 0.186,
+       "neither": 0.0853
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.974,
+       "le_0.5": 0.9965
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.97,
+       "le_0.5": 0.9967
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.2821,
+       "gt_side": 0.7179,
+       "wrong_side": 0.1538,
+       "both": 0.1282,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.9614,
+      "le_0.5": 0.9978
+     },
+     "gate4_reproduced": true
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_LoD2",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.8077,
+       "le_0.5": 0.9929
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.3983,
+       "le_0.5": 0.9474
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.0775,
+       "gt_side": 0.3101,
+       "wrong_side": 0.0543,
+       "both": 0.0233,
+       "neither": 0.6124
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.7521,
+       "le_0.5": 0.9891
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.2199,
+       "le_0.5": 0.997
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.3077,
+       "gt_side": 0.641,
+       "wrong_side": 0.2564,
+       "both": 0.0513,
+       "neither": 0.0513
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.8077,
+      "le_0.5": 0.9929
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 78950,
+     "c4": 2907,
+     "c13": 129,
+     "patches": 22849,
+     "area_m2": 1428.1
+    },
+    "far": {
+     "c2": 150965,
+     "c4": 6063,
+     "c13": 39,
+     "patches": 42873,
+     "area_m2": 2679.5
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "site": "B0_b10",
+   "prior": "ALS",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_ALS_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9981,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.9159,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.999,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9981,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_ALS_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9982,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.7664,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.9989,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9982,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9985,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.9994,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9985,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.83,
+       "le_0.5": 0.973
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.7944,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.7018,
+       "le_0.5": 0.9114
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.83,
+      "le_0.5": 0.973
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "geogs_ALS_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9012,
+       "le_0.5": 0.9972
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.9065,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.8564,
+       "le_0.5": 0.9997
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 0.973,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9012,
+      "le_0.5": 0.9972
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9985,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.9994,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9985,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_ALS_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9909,
+       "le_0.5": 0.9998
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.6916,
+       "le_0.5": 0.729
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.9987,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 0.973,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9909,
+      "le_0.5": 0.9998
+     },
+     "gate4_reproduced": true
+    },
+    "trust_als": {
+     "ko": "사전 정보 신뢰",
+     "result": "trust_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9987,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.9626,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.9992,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9987,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "nojudge": {
+     "ko": "판정만 끈 본 방법",
+     "result": "nojudge_ALS_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9957,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.9626,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.9991,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9957,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.9986,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.9993,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.9986,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 34677,
+     "c4": 107,
+     "c13": 0,
+     "patches": 6001,
+     "area_m2": 410.7
+    },
+    "far": {
+     "c2": 80588,
+     "c4": 37,
+     "c13": 0,
+     "patches": 13655,
+     "area_m2": 933.3
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_LoD2_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9562,
+       "le_0.5": 0.9952
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.9279,
+       "le_0.5": 0.953
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.1351,
+       "gt_side": 0.473,
+       "wrong_side": 0.1261,
+       "both": 0.009,
+       "neither": 0.3919
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9948,
+       "le_0.5": 0.999
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9911,
+       "le_0.5": 0.9991
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.4571,
+       "gt_side": 0.4095,
+       "wrong_side": 0.4286,
+       "both": 0.0286,
+       "neither": 0.1333
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9562,
+      "le_0.5": 0.9952
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_LoD2_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.956,
+       "le_0.5": 0.9947
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.9337,
+       "le_0.5": 0.953
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.1126,
+       "gt_side": 0.5541,
+       "wrong_side": 0.0901,
+       "both": 0.0225,
+       "neither": 0.3333
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9947,
+       "le_0.5": 0.9989
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9957,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.4286,
+       "gt_side": 0.4476,
+       "wrong_side": 0.4095,
+       "both": 0.019,
+       "neither": 0.1238
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.956,
+      "le_0.5": 0.9947
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9892,
+       "le_0.5": 0.9982
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.989,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.9099,
+       "gt_side": 0.009,
+       "wrong_side": 0.7973,
+       "both": 0.1126,
+       "neither": 0.0811
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9902,
+       "le_0.5": 0.9993
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9685,
+       "le_0.5": 0.9963
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 1.0,
+       "gt_side": 0.0,
+       "wrong_side": 1.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9892,
+      "le_0.5": 0.9982
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.7461,
+       "le_0.5": 0.95
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.816,
+       "le_0.5": 0.954
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.5991,
+       "gt_side": 0.1667,
+       "wrong_side": 0.4685,
+       "both": 0.1306,
+       "neither": 0.2342
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.7214,
+       "le_0.5": 0.9678
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.8774,
+       "le_0.5": 0.9942
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.4667,
+       "gt_side": 0.2571,
+       "wrong_side": 0.419,
+       "both": 0.0476,
+       "neither": 0.2762
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.7461,
+      "le_0.5": 0.95
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "trust_LoD2_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.7404,
+       "le_0.5": 0.9815
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.9035,
+       "le_0.5": 0.9894
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.1892,
+       "gt_side": 0.3604,
+       "wrong_side": 0.1351,
+       "both": 0.0541,
+       "neither": 0.4505
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.7607,
+       "le_0.5": 0.9905
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9679,
+       "le_0.5": 0.9982
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.781,
+       "gt_side": 0.0952,
+       "wrong_side": 0.7429,
+       "both": 0.0381,
+       "neither": 0.1238
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.7404,
+      "le_0.5": 0.9815
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9886,
+       "le_0.5": 0.9991
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.9619,
+       "le_0.5": 0.9976
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.4775,
+       "gt_side": 0.2477,
+       "wrong_side": 0.3468,
+       "both": 0.1306,
+       "neither": 0.2748
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9911,
+       "le_0.5": 0.9996
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9719,
+       "le_0.5": 0.9988
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.819,
+       "gt_side": 0.0571,
+       "wrong_side": 0.781,
+       "both": 0.0381,
+       "neither": 0.1238
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9886,
+      "le_0.5": 0.9991
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_LoD2_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9416,
+       "le_0.5": 0.993
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.8232,
+       "le_0.5": 0.9478
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.1081,
+       "gt_side": 0.3919,
+       "wrong_side": 0.0766,
+       "both": 0.0315,
+       "neither": 0.5
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9925,
+       "le_0.5": 0.9992
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9804,
+       "le_0.5": 0.9994
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.4095,
+       "gt_side": 0.4095,
+       "wrong_side": 0.3048,
+       "both": 0.1048,
+       "neither": 0.181
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9416,
+      "le_0.5": 0.993
+     },
+     "gate4_reproduced": true
+    },
+    "imgonly_s1": {
+     "ko": "영상만 씨앗 1",
+     "result": "imgonly_s1",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9451,
+       "le_0.5": 0.9932
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.8551,
+       "le_0.5": 0.9495
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.1261,
+       "gt_side": 0.4234,
+       "wrong_side": 0.1126,
+       "both": 0.0135,
+       "neither": 0.4505
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9938,
+       "le_0.5": 0.999
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.993,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.4,
+       "gt_side": 0.4476,
+       "wrong_side": 0.381,
+       "both": 0.019,
+       "neither": 0.1524
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9451,
+      "le_0.5": 0.9932
+     },
+     "gate4_reproduced": true
+    },
+    "nojudge": {
+     "ko": "판정만 끈 본 방법",
+     "result": "nojudge_LoD2_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9625,
+       "le_0.5": 0.9961
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.9276,
+       "le_0.5": 0.9533
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.2477,
+       "gt_side": 0.482,
+       "wrong_side": 0.2297,
+       "both": 0.018,
+       "neither": 0.2703
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9952,
+       "le_0.5": 0.999
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9921,
+       "le_0.5": 0.9994
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.381,
+       "gt_side": 0.5048,
+       "wrong_side": 0.381,
+       "both": 0.0,
+       "neither": 0.1143
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9625,
+      "le_0.5": 0.9961
+     },
+     "gate4_reproduced": true
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_LoD2",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9929,
+       "le_0.5": 0.9993
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.9475,
+       "le_0.5": 0.9856
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.5315,
+       "gt_side": 0.2072,
+       "wrong_side": 0.3874,
+       "both": 0.1441,
+       "neither": 0.2613
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9928,
+       "le_0.5": 0.9997
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9783,
+       "le_0.5": 0.9994
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.8476,
+       "gt_side": 0.0476,
+       "wrong_side": 0.781,
+       "both": 0.0667,
+       "neither": 0.1048
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9929,
+      "le_0.5": 0.9993
+     },
+     "gate4_reproduced": true
+    },
+    "abl_prop": {
+     "ko": "판정 빌려 오기 끄기",
+     "result": "abl_prop_LoD2_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.9616,
+       "le_0.5": 0.995
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.9241,
+       "le_0.5": 0.9509
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.1757,
+       "gt_side": 0.536,
+       "wrong_side": 0.0991,
+       "both": 0.0766,
+       "neither": 0.2883
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.9947,
+       "le_0.5": 0.9991
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.9924,
+       "le_0.5": 0.9997
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.4381,
+       "gt_side": 0.4667,
+       "wrong_side": 0.4286,
+       "both": 0.0095,
+       "neither": 0.0952
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.9616,
+      "le_0.5": 0.995
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 73287,
+     "c4": 2913,
+     "c13": 222,
+     "patches": 41685,
+     "area_m2": 2605.3
+    },
+    "far": {
+     "c2": 73122,
+     "c4": 3272,
+     "c13": 105,
+     "patches": 51499,
+     "area_m2": 3218.7
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_ALS_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9887,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.0,
+       "le_0.5": 0.009
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 1.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9998,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9887,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_ALS_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9888,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.0,
+       "le_0.5": 0.0
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 1.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9998,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9888,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9988,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.991,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 1.0,
+       "gt_side": 0.0,
+       "wrong_side": 1.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9997,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9988,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.6042,
+       "le_0.5": 0.8884
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.009,
+       "le_0.5": 0.4505
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 0.5,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.5
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.6267,
+       "le_0.5": 0.9893
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.6042,
+      "le_0.5": 0.8884
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "geogs_ALS_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.7296,
+       "le_0.5": 0.9957
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.8919,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 0.5,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.5
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.6118,
+       "le_0.5": 0.9979
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.7296,
+      "le_0.5": 0.9957
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9987,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.991,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 1.0,
+       "gt_side": 0.0,
+       "wrong_side": 0.0,
+       "both": 1.0,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9998,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9987,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_ALS_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9716,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.0,
+       "le_0.5": 0.0
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 1.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9995,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9716,
+      "le_0.5": 0.9999
+     },
+     "gate4_reproduced": true
+    },
+    "imgonly_s1": {
+     "ko": "영상만 씨앗 1",
+     "result": "imgonly_s1",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9788,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.0,
+       "le_0.5": 0.0
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 1.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9996,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9788,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "trust_als": {
+     "ko": "사전 정보 신뢰",
+     "result": "trust_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9917,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.6306,
+       "le_0.5": 0.8108
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 0.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 1.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9997,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9917,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "nojudge": {
+     "ko": "판정만 끈 본 방법",
+     "result": "nojudge_ALS_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.9912,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.0,
+       "le_0.5": 0.009
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 1.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9997,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.9912,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.998,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.6757,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.5,
+       "gt_side": 0.5,
+       "wrong_side": 0.0,
+       "both": 0.5,
+       "neither": 0.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.9998,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.998,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 14136,
+     "c4": 111,
+     "c13": 2,
+     "patches": 6144,
+     "area_m2": 436.0
+    },
+    "far": {
+     "c2": 31659,
+     "c4": 0,
+     "c13": 0,
+     "patches": 8964,
+     "area_m2": 584.5
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_LoD2_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.892,
+       "le_0.5": 0.9339
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.4888,
+       "le_0.5": 0.8834
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.0,
+       "gt_side": 0.9725,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0275
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.9837,
+       "le_0.5": 0.999
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.0382,
+       "gt_side": 0.7707,
+       "wrong_side": 0.0,
+       "both": 0.0382,
+       "neither": 0.1911
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.892,
+      "le_0.5": 0.9339
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_LoD2_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.8898,
+       "le_0.5": 0.9348
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.5267,
+       "le_0.5": 0.9368
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.0,
+       "gt_side": 0.9358,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0642
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.9858,
+       "le_0.5": 0.9982
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.0382,
+       "gt_side": 0.7431,
+       "wrong_side": 0.0,
+       "both": 0.0382,
+       "neither": 0.2187
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.8898,
+      "le_0.5": 0.9348
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.4924,
+       "le_0.5": 0.8793
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.927,
+       "le_0.5": 0.9888
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.8716,
+       "gt_side": 0.0092,
+       "wrong_side": 0.8716,
+       "both": 0.0,
+       "neither": 0.1193
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.5027,
+       "le_0.5": 0.833
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.9533,
+       "gt_side": 0.0,
+       "wrong_side": 0.9533,
+       "both": 0.0,
+       "neither": 0.0467
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.4924,
+      "le_0.5": 0.8793
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.6927,
+       "le_0.5": 0.8816
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.264,
+       "le_0.5": 0.632
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.0092,
+       "gt_side": 0.4495,
+       "wrong_side": 0.0092,
+       "both": 0.0,
+       "neither": 0.5413
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.7125,
+       "le_0.5": 0.9939
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.0467,
+       "gt_side": 0.5669,
+       "wrong_side": 0.0127,
+       "both": 0.034,
+       "neither": 0.3864
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.6927,
+      "le_0.5": 0.8816
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "trust_LoD2_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.7785,
+       "le_0.5": 0.9586
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.7191,
+       "le_0.5": 0.9059
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.1193,
+       "gt_side": 0.0826,
+       "wrong_side": 0.1193,
+       "both": 0.0,
+       "neither": 0.7982
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.8083,
+       "le_0.5": 0.9986
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.0488,
+       "gt_side": 0.6645,
+       "wrong_side": 0.017,
+       "both": 0.0318,
+       "neither": 0.2866
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.7785,
+      "le_0.5": 0.9586
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.5278,
+       "le_0.5": 0.9297
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.6938,
+       "le_0.5": 0.9551
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.0734,
+       "gt_side": 0.3303,
+       "wrong_side": 0.055,
+       "both": 0.0183,
+       "neither": 0.5963
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.527,
+       "le_0.5": 0.8511
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.1614,
+       "gt_side": 0.3609,
+       "wrong_side": 0.0892,
+       "both": 0.0722,
+       "neither": 0.4777
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.5278,
+      "le_0.5": 0.9297
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_LoD2_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.8832,
+       "le_0.5": 0.9286
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.4593,
+       "le_0.5": 0.816
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.0,
+       "gt_side": 0.9725,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.0275
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.9876,
+       "le_0.5": 0.998
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.0127,
+       "gt_side": 0.7728,
+       "wrong_side": 0.0064,
+       "both": 0.0064,
+       "neither": 0.2144
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.8832,
+      "le_0.5": 0.9286
+     },
+     "gate4_reproduced": true
+    },
+    "nojudge": {
+     "ko": "판정만 끈 본 방법",
+     "result": "nojudge_LoD2_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.9151,
+       "le_0.5": 0.989
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.7374,
+       "le_0.5": 0.9831
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.0092,
+       "gt_side": 0.5229,
+       "wrong_side": 0.0092,
+       "both": 0.0,
+       "neither": 0.4679
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.9892,
+       "le_0.5": 0.9991
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.3758,
+       "gt_side": 0.4416,
+       "wrong_side": 0.3397,
+       "both": 0.0361,
+       "neither": 0.1826
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.9151,
+      "le_0.5": 0.989
+     },
+     "gate4_reproduced": true
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_LoD2",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.5846,
+       "le_0.5": 0.9587
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.7683,
+       "le_0.5": 0.9663
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.055,
+       "gt_side": 0.6055,
+       "wrong_side": 0.055,
+       "both": 0.0,
+       "neither": 0.3394
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.6148,
+       "le_0.5": 0.9085
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.2017,
+       "gt_side": 0.3503,
+       "wrong_side": 0.1614,
+       "both": 0.0403,
+       "neither": 0.448
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.5846,
+      "le_0.5": 0.9587
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 34789,
+     "c4": 712,
+     "c13": 109,
+     "patches": 34826,
+     "area_m2": 2176.6
+    },
+    "far": {
+     "c2": 50639,
+     "c4": 0,
+     "c13": 471,
+     "patches": 33559,
+     "area_m2": 2097.4
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "site": "R1rep_b10",
+   "prior": "ALS",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_ALS_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.979,
+       "le_0.5": 0.9972
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.2992,
+       "le_0.5": 0.442
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0333,
+       "gt_side": 0.6,
+       "wrong_side": 0.0,
+       "both": 0.0333,
+       "neither": 0.3667
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9997,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.979,
+      "le_0.5": 0.9972
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_ALS_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.9673,
+       "le_0.5": 0.9961
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.2911,
+       "le_0.5": 0.3774
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0,
+       "gt_side": 0.6333,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.3667
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9981,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.9673,
+      "le_0.5": 0.9961
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.9965,
+       "le_0.5": 0.9998
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.9667,
+       "gt_side": 0.0,
+       "wrong_side": 0.9667,
+       "both": 0.0,
+       "neither": 0.0333
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9997,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.9965,
+      "le_0.5": 0.9998
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.7239,
+       "le_0.5": 0.9378
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.1968,
+       "le_0.5": 0.2291
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.2,
+       "gt_side": 0.2,
+       "wrong_side": 0.0667,
+       "both": 0.1333,
+       "neither": 0.6
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.663,
+       "le_0.5": 0.9857
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.7239,
+      "le_0.5": 0.9378
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "geogs_ALS_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.8497,
+       "le_0.5": 0.9832
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.2453,
+       "le_0.5": 0.3881
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0,
+       "gt_side": 0.5333,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.4667
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9285,
+       "le_0.5": 0.9832
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.8497,
+      "le_0.5": 0.9832
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.9965,
+       "le_0.5": 0.9998
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.7332,
+       "le_0.5": 0.9892
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0667,
+       "gt_side": 0.0,
+       "wrong_side": 0.0667,
+       "both": 0.0,
+       "neither": 0.9333
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9997,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.9965,
+      "le_0.5": 0.9998
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_ALS_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.9414,
+       "le_0.5": 0.9938
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.2884,
+       "le_0.5": 0.3827
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0,
+       "gt_side": 0.7333,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.2667
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9952,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.9414,
+      "le_0.5": 0.9938
+     },
+     "gate4_reproduced": true
+    },
+    "trust_als": {
+     "ko": "사전 정보 신뢰",
+     "result": "trust_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.9948,
+       "le_0.5": 0.9997
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.9164,
+       "le_0.5": 0.9838
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.8,
+       "gt_side": 0.1333,
+       "wrong_side": 0.4333,
+       "both": 0.3667,
+       "neither": 0.0667
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9995,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.9948,
+      "le_0.5": 0.9997
+     },
+     "gate4_reproduced": true
+    },
+    "nojudge": {
+     "ko": "판정만 끈 본 방법",
+     "result": "nojudge_ALS_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.9884,
+       "le_0.5": 0.9976
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.3073,
+       "le_0.5": 0.4097
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0,
+       "gt_side": 0.5667,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.4333
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9998,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.9884,
+      "le_0.5": 0.9976
+     },
+     "gate4_reproduced": true
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.97,
+       "le_0.5": 0.9983
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.4744,
+       "le_0.5": 0.973
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0667,
+       "gt_side": 0.1,
+       "wrong_side": 0.0667,
+       "both": 0.0,
+       "neither": 0.8333
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9962,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.97,
+      "le_0.5": 0.9983
+     },
+     "gate4_reproduced": true
+    },
+    "abl_prop": {
+     "ko": "판정 빌려 오기 끄기",
+     "result": "abl_prop_ALS_s0",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.9783,
+       "le_0.5": 0.9968
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.2776,
+       "le_0.5": 0.3881
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0,
+       "gt_side": 0.6333,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.3667
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.9995,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.9783,
+      "le_0.5": 0.9968
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 43186,
+     "c4": 371,
+     "c13": 30,
+     "patches": 9866,
+     "area_m2": 686.7
+    },
+    "far": {
+     "c2": 47996,
+     "c4": 12,
+     "c13": 0,
+     "patches": 12251,
+     "area_m2": 808.6
+    }
+   }
+  },
+  "B173_b0/LoD2": {
+   "site": "B173_b0",
+   "prior": "LoD2",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_LoD2_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.954,
+       "le_0.5": 0.9961
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.8858,
+       "le_0.5": 0.9172
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.1488,
+       "gt_side": 0.4107,
+       "wrong_side": 0.1131,
+       "both": 0.0357,
+       "neither": 0.4405
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.9967,
+       "le_0.5": 0.9993
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.9987,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 0.25,
+       "gt_side": 0.1875,
+       "wrong_side": 0.25,
+       "both": 0.0,
+       "neither": 0.5625
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.954,
+      "le_0.5": 0.9961
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_LoD2_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.9502,
+       "le_0.5": 0.9961
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.8882,
+       "le_0.5": 0.9197
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.0893,
+       "gt_side": 0.5536,
+       "wrong_side": 0.0833,
+       "both": 0.006,
+       "neither": 0.3571
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.9976,
+       "le_0.5": 0.9993
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.9987,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 0.125,
+       "gt_side": 0.5938,
+       "wrong_side": 0.125,
+       "both": 0.0,
+       "neither": 0.2812
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.9502,
+      "le_0.5": 0.9961
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.9835,
+       "le_0.5": 0.9976
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.976,
+       "le_0.5": 0.9975
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.9286,
+       "gt_side": 0.0,
+       "wrong_side": 0.8274,
+       "both": 0.1012,
+       "neither": 0.0714
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.9931,
+       "le_0.5": 0.9995
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.9845,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 1.0,
+       "gt_side": 0.0,
+       "wrong_side": 1.0,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.9835,
+      "le_0.5": 0.9976
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.8023,
+       "le_0.5": 0.9446
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.87,
+       "le_0.5": 0.9387
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.3929,
+       "gt_side": 0.1548,
+       "wrong_side": 0.3571,
+       "both": 0.0357,
+       "neither": 0.4524
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.9679,
+       "le_0.5": 0.9971
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.9536,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 0.6875,
+       "gt_side": 0.1562,
+       "wrong_side": 0.6562,
+       "both": 0.0312,
+       "neither": 0.1562
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.8023,
+      "le_0.5": 0.9446
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "trust_LoD2_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.8722,
+       "le_0.5": 0.9876
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.8171,
+       "le_0.5": 0.9321
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.4524,
+       "gt_side": 0.2798,
+       "wrong_side": 0.4107,
+       "both": 0.0417,
+       "neither": 0.2679
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.9791,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.9626,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 0.4062,
+       "gt_side": 0.5938,
+       "wrong_side": 0.4062,
+       "both": 0.0,
+       "neither": 0.0
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.8722,
+      "le_0.5": 0.9876
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_LoD2",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.9874,
+       "le_0.5": 0.9989
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.9387,
+       "le_0.5": 0.9967
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.369,
+       "gt_side": 0.2262,
+       "wrong_side": 0.3393,
+       "both": 0.0298,
+       "neither": 0.4048
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.993,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.9987,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 0.2812,
+       "gt_side": 0.3125,
+       "wrong_side": 0.2188,
+       "both": 0.0625,
+       "neither": 0.4062
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.9874,
+      "le_0.5": 0.9989
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_LoD2_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "결과 없음"
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_LoD2",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.989,
+       "le_0.5": 0.9989
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.8899,
+       "le_0.5": 0.9719
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.5476,
+       "gt_side": 0.0595,
+       "wrong_side": 0.4464,
+       "both": 0.1012,
+       "neither": 0.3929
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.9942,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.9845,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 0.1562,
+       "gt_side": 0.375,
+       "wrong_side": 0.1562,
+       "both": 0.0,
+       "neither": 0.4688
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.989,
+      "le_0.5": 0.9989
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 58782,
+     "c4": 1208,
+     "c13": 168,
+     "patches": 37749,
+     "area_m2": 2359.3
+    },
+    "far": {
+     "c2": 24490,
+     "c4": 776,
+     "c13": 32,
+     "patches": 29509,
+     "area_m2": 1844.3
+    }
+   }
+  },
+  "B173_b0/ALS": {
+   "site": "B173_b0",
+   "prior": "ALS",
+   "results": {
+    "ours_s0": {
+     "ko": "본 방법 씨앗 0",
+     "result": "prop_ALS_s0",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.9818,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 0.0,
+       "le_0.5": 0.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 0.9957,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.9818,
+      "le_0.5": 0.9999
+     },
+     "gate4_reproduced": true
+    },
+    "ours_s1": {
+     "ko": "본 방법 씨앗 1",
+     "result": "prop_ALS_s1",
+     "kind": "seed",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.9852,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 0.0,
+       "le_0.5": 0.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 0.9962,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.9852,
+      "le_0.5": 0.9999
+     },
+     "gate4_reproduced": true
+    },
+    "prior": {
+     "ko": "학습 전 사전 정보",
+     "result": "samepath_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.9983,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 0.9946,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.9983,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "2dgs": {
+     "ko": "2차원 가우시안 스플래팅",
+     "result": "imgonly_2dgs_s0",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.6273,
+       "le_0.5": 0.8554
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 0.0,
+       "le_0.5": 0.5238
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 0.9557,
+       "le_0.5": 0.9951
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.6273,
+      "le_0.5": 0.8554
+     },
+     "gate4_reproduced": true
+    },
+    "geogs": {
+     "ko": "GeoGS",
+     "result": "geogs_ALS_fix1",
+     "kind": "single",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.8597,
+       "le_0.5": 0.9829
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 0.1429,
+       "le_0.5": 0.381
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 0.7863,
+       "le_0.5": 0.9779
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.8597,
+      "le_0.5": 0.9829
+     },
+     "gate4_reproduced": true
+    },
+    "mvsfuse": {
+     "ko": "MVS 기반 결합",
+     "result": "mvsfuse_ALS",
+     "kind": "det",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.9985,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.9985,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    },
+    "cdgs": {
+     "ko": "CDGS 변형",
+     "result": "cdgsnofit_ALS_s0",
+     "kind": "single",
+     "status": "아직"
+    },
+    "imgonly_s0": {
+     "ko": "영상만 씨앗 0",
+     "result": "imgonly_s0",
+     "kind": "ref",
+     "status": "결과 없음"
+    },
+    "trust_als": {
+     "ko": "사전 정보 신뢰",
+     "result": "trust_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.994,
+       "le_0.5": 0.9999
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 0.0,
+       "le_0.5": 0.8571
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 0.9995,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.994,
+      "le_0.5": 0.9999
+     },
+     "gate4_reproduced": true
+    },
+    "judgefuse": {
+     "ko": "본 방법의 판정으로 갈아 끼운 변형",
+     "result": "judgefuse_ALS",
+     "kind": "ref",
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.9969,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 0.5714,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.9969,
+      "le_0.5": 1.0
+     },
+     "gate4_reproduced": true
+    }
+   },
+   "rows": {
+    "band2": {
+     "c2": 9262,
+     "c4": 21,
+     "c13": 0,
+     "patches": 5463,
+     "area_m2": 391.8
+    },
+    "far": {
+     "c2": 1853,
+     "c4": 0,
+     "c13": 0,
+     "patches": 2466,
+     "area_m2": 166.4
+    }
+   }
+  }
+ },
+ "readings": {
+  "B0_b10/LoD2": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.8383,
+      0.8211
+     ],
+     "ours_mean": 0.8297000000000001,
+     "value": 0.7262,
+     "diff": 0.10350000000000015,
+     "n": 2907,
+     "criterion": 0.03405426258194411,
+     "parts": {
+      "unit": 0.03405426258194411,
+      "three_points": 0.0010319917440660474
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.8383,
+      0.8211
+     ],
+     "ours_mean": 0.8297000000000001,
+     "value": 0.5198,
+     "diff": 0.30990000000000006,
+     "n": 2907,
+     "criterion": 0.03405426258194411,
+     "parts": {
+      "unit": 0.03405426258194411,
+      "three_points": 0.0010319917440660474
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.8383,
+      0.8211
+     ],
+     "ours_mean": 0.8297000000000001,
+     "value": 0.4441,
+     "diff": 0.3856000000000001,
+     "n": 2907,
+     "criterion": 0.03405426258194411,
+     "parts": {
+      "unit": 0.03405426258194411,
+      "three_points": 0.0010319917440660474
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "MVS 기반 결합",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.8383,
+      0.8211
+     ],
+     "ours_mean": 0.8297000000000001,
+     "value": 0.4441,
+     "diff": 0.3856000000000001,
+     "n": 2907,
+     "criterion": 0.03405426258194411,
+     "parts": {
+      "unit": 0.03405426258194411,
+      "three_points": 0.0010319917440660474
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "학습 전 사전 정보",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.9529,
+      0.955
+     ],
+     "ours_mean": 0.95395,
+     "value": 0.7534,
+     "diff": 0.20055,
+     "n": 78950,
+     "criterion": 0.004157787873376881,
+     "parts": {
+      "unit": 0.004157787873376881,
+      "three_points": 3.799873337555415e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.9529,
+      0.955
+     ],
+     "ours_mean": 0.95395,
+     "value": 0.6891,
+     "diff": 0.2648499999999999,
+     "n": 78950,
+     "criterion": 0.004157787873376881,
+     "parts": {
+      "unit": 0.004157787873376881,
+      "three_points": 3.799873337555415e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.9529,
+      0.955
+     ],
+     "ours_mean": 0.95395,
+     "value": 0.7549,
+     "diff": 0.19904999999999995,
+     "n": 78950,
+     "criterion": 0.004157787873376881,
+     "parts": {
+      "unit": 0.004157787873376881,
+      "three_points": 3.799873337555415e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.9529,
+      0.955
+     ],
+     "ours_mean": 0.95395,
+     "value": 0.7539,
+     "diff": 0.20004999999999995,
+     "n": 78950,
+     "criterion": 0.004157787873376881,
+     "parts": {
+      "unit": 0.004157787873376881,
+      "three_points": 3.799873337555415e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     0.136,
+     0.13259999999999994
+    ],
+    "drop_2dgs": 0.15750000000000008,
+    "n": 2907,
+    "drop_reference": {
+     "nojudge": 0.11859999999999993
+    },
+    "drop_ours_mean": 0.13429999999999997,
+    "criterion": 0.00673165655689607,
+    "criterion_parts": {
+     "unit": 0.00673165655689607,
+     "three_points": 0.0010319917440660474
+    },
+    "diff_of_drops": -0.02320000000000011,
+    "criterion_sqrt2": 0.009520000000000195,
+    "reading": "번지지 않았다",
+    "grade": "기준 안"
+   }
+  },
+  "B0_b10/ALS": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.9159,
+      0.7664
+     ],
+     "ours_mean": 0.8411500000000001,
+     "value": 0.7944,
+     "diff": 0.04675000000000007,
+     "n": 107,
+     "criterion": 0.2959948986046889,
+     "parts": {
+      "unit": 0.2959948986046889,
+      "three_points": 0.028037383177570093
+     },
+     "deterministic": false,
+     "grade": "기준 안",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "다르지 않았다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.9159,
+      0.7664
+     ],
+     "ours_mean": 0.8411500000000001,
+     "value": 0.9065,
+     "diff": -0.06534999999999991,
+     "n": 107,
+     "criterion": 0.2959948986046889,
+     "parts": {
+      "unit": 0.2959948986046889,
+      "three_points": 0.028037383177570093
+     },
+     "deterministic": false,
+     "grade": "기준 안",
+     "ko": "GeoGS",
+     "word": "다르지 않았다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.9159,
+      0.7664
+     ],
+     "ours_mean": 0.8411500000000001,
+     "value": 1.0,
+     "diff": -0.15884999999999994,
+     "n": 107,
+     "criterion": 0.2959948986046889,
+     "parts": {
+      "unit": 0.2959948986046889,
+      "three_points": 0.028037383177570093
+     },
+     "deterministic": true,
+     "grade": "기준 안",
+     "ko": "MVS 기반 결합",
+     "word": "다르지 않았다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.9159,
+      0.7664
+     ],
+     "ours_mean": 0.8411500000000001,
+     "value": 1.0,
+     "diff": -0.15884999999999994,
+     "n": 107,
+     "criterion": 0.2959948986046889,
+     "parts": {
+      "unit": 0.2959948986046889,
+      "three_points": 0.028037383177570093
+     },
+     "deterministic": true,
+     "grade": "기준 안",
+     "ko": "학습 전 사전 정보",
+     "word": "다르지 않았다"
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.9981,
+      0.9982
+     ],
+     "ours_mean": 0.99815,
+     "value": 0.83,
+     "diff": 0.16815000000000002,
+     "n": 34677,
+     "criterion": 0.00019798989873221146,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 8.651267410675664e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.9981,
+      0.9982
+     ],
+     "ours_mean": 0.99815,
+     "value": 0.9012,
+     "diff": 0.09694999999999998,
+     "n": 34677,
+     "criterion": 0.00019798989873221146,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 8.651267410675664e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.9981,
+      0.9982
+     ],
+     "ours_mean": 0.99815,
+     "value": 0.9985,
+     "diff": -0.0003500000000000725,
+     "n": 34677,
+     "criterion": 0.00019798989873221146,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 8.651267410675664e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.9981,
+      0.9982
+     ],
+     "ours_mean": 0.99815,
+     "value": 0.9985,
+     "diff": -0.0003500000000000725,
+     "n": 34677,
+     "criterion": 0.00019798989873221146,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 8.651267410675664e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     0.08409999999999995,
+     0.23360000000000003
+    ],
+    "drop_2dgs": 0.2056,
+    "n": 37,
+    "drop_reference": {
+     "nojudge": 0.03739999999999999
+    },
+    "reading": null,
+    "grade": "표본 부족"
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.9279,
+      0.9337
+     ],
+     "ours_mean": 0.9308,
+     "value": 0.816,
+     "diff": 0.11480000000000001,
+     "n": 2913,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.9279,
+      0.9337
+     ],
+     "ours_mean": 0.9308,
+     "value": 0.9035,
+     "diff": 0.02729999999999999,
+     "n": 2913,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.9279,
+      0.9337
+     ],
+     "ours_mean": 0.9308,
+     "value": 0.9619,
+     "diff": -0.031100000000000017,
+     "n": 2913,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.9279,
+      0.9337
+     ],
+     "ours_mean": 0.9308,
+     "value": 0.989,
+     "diff": -0.05820000000000003,
+     "n": 2913,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.9562,
+      0.956
+     ],
+     "ours_mean": 0.9561,
+     "value": 0.7461,
+     "diff": 0.20999999999999996,
+     "n": 73287,
+     "criterion": 0.00039597979746464274,
+     "parts": {
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.9562,
+      0.956
+     ],
+     "ours_mean": 0.9561,
+     "value": 0.7404,
+     "diff": 0.2157,
+     "n": 73287,
+     "criterion": 0.00039597979746464274,
+     "parts": {
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.9562,
+      0.956
+     ],
+     "ours_mean": 0.9561,
+     "value": 0.9886,
+     "diff": -0.032500000000000084,
+     "n": 73287,
+     "criterion": 0.00039597979746464274,
+     "parts": {
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.9562,
+      0.956
+     ],
+     "ours_mean": 0.9561,
+     "value": 0.9892,
+     "diff": -0.03310000000000002,
+     "n": 73287,
+     "criterion": 0.00039597979746464274,
+     "parts": {
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     0.06320000000000003,
+     0.062000000000000055
+    ],
+    "drop_2dgs": 0.06140000000000001,
+    "n": 2913,
+    "drop_reference": {
+     "nojudge": 0.0645,
+     "abl_prop": 0.06829999999999992
+    },
+    "drop_ours_mean": 0.06260000000000004,
+    "criterion": 0.002375878784786758,
+    "criterion_parts": {
+     "unit": 0.002375878784786758,
+     "three_points": 0.0010298661174047373
+    },
+    "diff_of_drops": 0.0012000000000000344,
+    "criterion_sqrt2": 0.003359999999999941,
+    "reading": "번지지 않았다",
+    "grade": "기준 안"
+   }
+  },
+  "B173nb_b10/ALS": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.009,
+     "diff": -0.009,
+     "n": 111,
+     "criterion": 0.02702702702702703,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "deterministic": false,
+     "grade": "기준 안",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "다르지 않았다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.8919,
+     "diff": -0.8919,
+     "n": 111,
+     "criterion": 0.02702702702702703,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "GeoGS",
+     "word": "덜 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.991,
+     "diff": -0.991,
+     "n": 111,
+     "criterion": 0.02702702702702703,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.991,
+     "diff": -0.991,
+     "n": 111,
+     "criterion": 0.02702702702702703,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.9887,
+      0.9888
+     ],
+     "ours_mean": 0.98875,
+     "value": 0.6042,
+     "diff": 0.38455000000000006,
+     "n": 14136,
+     "criterion": 0.00021222410865874363,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 0.00021222410865874363
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.9887,
+      0.9888
+     ],
+     "ours_mean": 0.98875,
+     "value": 0.7296,
+     "diff": 0.25915,
+     "n": 14136,
+     "criterion": 0.00021222410865874363,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 0.00021222410865874363
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.9887,
+      0.9888
+     ],
+     "ours_mean": 0.98875,
+     "value": 0.9987,
+     "diff": -0.009950000000000014,
+     "n": 14136,
+     "criterion": 0.00021222410865874363,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 0.00021222410865874363
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.9887,
+      0.9888
+     ],
+     "ours_mean": 0.98875,
+     "value": 0.9988,
+     "diff": -0.010050000000000003,
+     "n": 14136,
+     "criterion": 0.00021222410865874363,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 0.00021222410865874363
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     null,
+     null
+    ],
+    "drop_2dgs": null,
+    "n": 0,
+    "drop_reference": {
+     "nojudge": null
+    },
+    "reading": null,
+    "grade": "표본 부족"
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.4888,
+      0.5267
+     ],
+     "ours_mean": 0.5077499999999999,
+     "value": 0.264,
+     "diff": 0.2437499999999999,
+     "n": 712,
+     "criterion": 0.07503817161951629,
+     "parts": {
+      "unit": 0.07503817161951629,
+      "three_points": 0.004213483146067416
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.4888,
+      0.5267
+     ],
+     "ours_mean": 0.5077499999999999,
+     "value": 0.7191,
+     "diff": -0.21135000000000004,
+     "n": 712,
+     "criterion": 0.07503817161951629,
+     "parts": {
+      "unit": 0.07503817161951629,
+      "three_points": 0.004213483146067416
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "GeoGS",
+     "word": "덜 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.4888,
+      0.5267
+     ],
+     "ours_mean": 0.5077499999999999,
+     "value": 0.6938,
+     "diff": -0.18605000000000005,
+     "n": 712,
+     "criterion": 0.07503817161951629,
+     "parts": {
+      "unit": 0.07503817161951629,
+      "three_points": 0.004213483146067416
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.4888,
+      0.5267
+     ],
+     "ours_mean": 0.5077499999999999,
+     "value": 0.927,
+     "diff": -0.4192500000000001,
+     "n": 712,
+     "criterion": 0.07503817161951629,
+     "parts": {
+      "unit": 0.07503817161951629,
+      "three_points": 0.004213483146067416
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.892,
+      0.8898
+     ],
+     "ours_mean": 0.8909,
+     "value": 0.6927,
+     "diff": 0.19820000000000004,
+     "n": 34789,
+     "criterion": 0.004355777772109093,
+     "parts": {
+      "unit": 0.004355777772109093,
+      "three_points": 8.623415447411539e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.892,
+      0.8898
+     ],
+     "ours_mean": 0.8909,
+     "value": 0.7785,
+     "diff": 0.11240000000000006,
+     "n": 34789,
+     "criterion": 0.004355777772109093,
+     "parts": {
+      "unit": 0.004355777772109093,
+      "three_points": 8.623415447411539e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.892,
+      0.8898
+     ],
+     "ours_mean": 0.8909,
+     "value": 0.5278,
+     "diff": 0.3631,
+     "n": 34789,
+     "criterion": 0.004355777772109093,
+     "parts": {
+      "unit": 0.004355777772109093,
+      "three_points": 8.623415447411539e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.892,
+      0.8898
+     ],
+     "ours_mean": 0.8909,
+     "value": 0.4924,
+     "diff": 0.3985,
+     "n": 34789,
+     "criterion": 0.004355777772109093,
+     "parts": {
+      "unit": 0.004355777772109093,
+      "three_points": 8.623415447411539e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     null,
+     null
+    ],
+    "drop_2dgs": null,
+    "n": 0,
+    "drop_reference": {
+     "nojudge": null
+    },
+    "reading": null,
+    "grade": "표본 부족"
+   }
+  },
+  "R1rep_b10/ALS": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.2992,
+      0.2911
+     ],
+     "ours_mean": 0.29515,
+     "value": 0.1968,
+     "diff": 0.09835000000000002,
+     "n": 371,
+     "criterion": 0.01603718179731089,
+     "parts": {
+      "unit": 0.01603718179731089,
+      "three_points": 0.008086253369272238
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.2992,
+      0.2911
+     ],
+     "ours_mean": 0.29515,
+     "value": 0.2453,
+     "diff": 0.04985000000000003,
+     "n": 371,
+     "criterion": 0.01603718179731089,
+     "parts": {
+      "unit": 0.01603718179731089,
+      "three_points": 0.008086253369272238
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.2992,
+      0.2911
+     ],
+     "ours_mean": 0.29515,
+     "value": 0.7332,
+     "diff": -0.43804999999999994,
+     "n": 371,
+     "criterion": 0.01603718179731089,
+     "parts": {
+      "unit": 0.01603718179731089,
+      "three_points": 0.008086253369272238
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.2992,
+      0.2911
+     ],
+     "ours_mean": 0.29515,
+     "value": 1.0,
+     "diff": -0.70485,
+     "n": 371,
+     "criterion": 0.01603718179731089,
+     "parts": {
+      "unit": 0.01603718179731089,
+      "three_points": 0.008086253369272238
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.979,
+      0.9673
+     ],
+     "ours_mean": 0.97315,
+     "value": 0.7239,
+     "diff": 0.24924999999999997,
+     "n": 43186,
+     "criterion": 0.023164818151671162,
+     "parts": {
+      "unit": 0.023164818151671162,
+      "three_points": 6.946695688417543e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.979,
+      0.9673
+     ],
+     "ours_mean": 0.97315,
+     "value": 0.8497,
+     "diff": 0.12344999999999995,
+     "n": 43186,
+     "criterion": 0.023164818151671162,
+     "parts": {
+      "unit": 0.023164818151671162,
+      "three_points": 6.946695688417543e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.979,
+      0.9673
+     ],
+     "ours_mean": 0.97315,
+     "value": 0.9965,
+     "diff": -0.023350000000000093,
+     "n": 43186,
+     "criterion": 0.023164818151671162,
+     "parts": {
+      "unit": 0.023164818151671162,
+      "three_points": 6.946695688417543e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.979,
+      0.9673
+     ],
+     "ours_mean": 0.97315,
+     "value": 0.9965,
+     "diff": -0.023350000000000093,
+     "n": 43186,
+     "criterion": 0.023164818151671162,
+     "parts": {
+      "unit": 0.023164818151671162,
+      "three_points": 6.946695688417543e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     0.7008,
+     0.7089
+    ],
+    "drop_2dgs": 0.8032,
+    "n": 12,
+    "drop_reference": {
+     "nojudge": 0.6927,
+     "abl_prop": 0.7223999999999999
+    },
+    "reading": null,
+    "grade": "표본 부족"
+   }
+  },
+  "B173_b0/LoD2": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.8858,
+      0.8882
+     ],
+     "ours_mean": 0.887,
+     "value": 0.87,
+     "diff": 0.017000000000000015,
+     "n": 1208,
+     "criterion": 0.004751757569573516,
+     "parts": {
+      "unit": 0.004751757569573516,
+      "three_points": 0.0024834437086092716
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.8858,
+      0.8882
+     ],
+     "ours_mean": 0.887,
+     "value": 0.8171,
+     "diff": 0.06989999999999996,
+     "n": 1208,
+     "criterion": 0.004751757569573516,
+     "parts": {
+      "unit": 0.004751757569573516,
+      "three_points": 0.0024834437086092716
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.8858,
+      0.8882
+     ],
+     "ours_mean": 0.887,
+     "value": 0.9387,
+     "diff": -0.05169999999999997,
+     "n": 1208,
+     "criterion": 0.004751757569573516,
+     "parts": {
+      "unit": 0.004751757569573516,
+      "three_points": 0.0024834437086092716
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.8858,
+      0.8882
+     ],
+     "ours_mean": 0.887,
+     "value": 0.976,
+     "diff": -0.08899999999999997,
+     "n": 1208,
+     "criterion": 0.004751757569573516,
+     "parts": {
+      "unit": 0.004751757569573516,
+      "three_points": 0.0024834437086092716
+     },
+     "deterministic": true,
+     "grade": "가능, 근거 불완전",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.954,
+      0.9502
+     ],
+     "ours_mean": 0.9521,
+     "value": 0.8023,
+     "diff": 0.14979999999999993,
+     "n": 58782,
+     "criterion": 0.007523616151824696,
+     "parts": {
+      "unit": 0.007523616151824696,
+      "three_points": 5.103603143819537e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.954,
+      0.9502
+     ],
+     "ours_mean": 0.9521,
+     "value": 0.8722,
+     "diff": 0.07989999999999997,
+     "n": 58782,
+     "criterion": 0.007523616151824696,
+     "parts": {
+      "unit": 0.007523616151824696,
+      "three_points": 5.103603143819537e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.954,
+      0.9502
+     ],
+     "ours_mean": 0.9521,
+     "value": 0.9874,
+     "diff": -0.03530000000000011,
+     "n": 58782,
+     "criterion": 0.007523616151824696,
+     "parts": {
+      "unit": 0.007523616151824696,
+      "three_points": 5.103603143819537e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.954,
+      0.9502
+     ],
+     "ours_mean": 0.9521,
+     "value": 0.9835,
+     "diff": -0.031400000000000095,
+     "n": 58782,
+     "criterion": 0.007523616151824696,
+     "parts": {
+      "unit": 0.007523616151824696,
+      "three_points": 5.103603143819537e-05
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     0.1129,
+     0.11050000000000004
+    ],
+    "drop_2dgs": 0.08360000000000001,
+    "n": 776,
+    "drop_reference": {},
+    "drop_ours_mean": 0.11170000000000002,
+    "criterion": 0.004751757569573516,
+    "criterion_parts": {
+     "unit": 0.004751757569573516,
+     "three_points": 0.003865979381443299
+    },
+    "diff_of_drops": 0.028100000000000014,
+    "criterion_sqrt2": 0.006719999999999882,
+    "reading": "본 방법에서 오류가 그 영역 밖의 결측 영역으로 번졌다",
+    "grade": "가능, 근거 불완전"
+   }
+  },
+  "B173_b0/ALS": {
+   "band_c4": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.0,
+     "diff": 0.0,
+     "n": 21,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "deterministic": false,
+     "grade": "표본 부족",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": null
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.1429,
+     "diff": -0.1429,
+     "n": 21,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "deterministic": false,
+     "grade": "표본 부족",
+     "ko": "GeoGS",
+     "word": null
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 1.0,
+     "diff": -1.0,
+     "n": 21,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "deterministic": true,
+     "grade": "표본 부족",
+     "ko": "MVS 기반 결합",
+     "word": null
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 1.0,
+     "diff": -1.0,
+     "n": 21,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "deterministic": true,
+     "grade": "표본 부족",
+     "ko": "학습 전 사전 정보",
+     "word": null
+    }
+   },
+   "band_c2": {
+    "2dgs": {
+     "comparator": "2dgs",
+     "ours": [
+      0.9818,
+      0.9852
+     ],
+     "ours_mean": 0.9835,
+     "value": 0.6273,
+     "diff": 0.35620000000000007,
+     "n": 9262,
+     "criterion": 0.006731656556895849,
+     "parts": {
+      "unit": 0.006731656556895849,
+      "three_points": 0.0003239041243791838
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "2차원 가우시안 스플래팅",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "geogs",
+     "ours": [
+      0.9818,
+      0.9852
+     ],
+     "ours_mean": 0.9835,
+     "value": 0.8597,
+     "diff": 0.12380000000000002,
+     "n": 9262,
+     "criterion": 0.006731656556895849,
+     "parts": {
+      "unit": 0.006731656556895849,
+      "three_points": 0.0003239041243791838
+     },
+     "deterministic": false,
+     "grade": "확인",
+     "ko": "GeoGS",
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "mvsfuse",
+     "ours": [
+      0.9818,
+      0.9852
+     ],
+     "ours_mean": 0.9835,
+     "value": 0.9985,
+     "diff": -0.015000000000000013,
+     "n": 9262,
+     "criterion": 0.006731656556895849,
+     "parts": {
+      "unit": 0.006731656556895849,
+      "three_points": 0.0003239041243791838
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "MVS 기반 결합",
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "cdgs",
+     "status": "아직",
+     "grade": "아직",
+     "ko": "CDGS 변형",
+     "word": null
+    },
+    "prior": {
+     "comparator": "prior",
+     "ours": [
+      0.9818,
+      0.9852
+     ],
+     "ours_mean": 0.9835,
+     "value": 0.9983,
+     "diff": -0.014799999999999924,
+     "n": 9262,
+     "criterion": 0.006731656556895849,
+     "parts": {
+      "unit": 0.006731656556895849,
+      "three_points": 0.0003239041243791838
+     },
+     "deterministic": true,
+     "grade": "확인",
+     "ko": "학습 전 사전 정보",
+     "word": "덜 채웠다"
+    }
+   },
+   "own_spread": {
+    "drop_ours": [
+     null,
+     null
+    ],
+    "drop_2dgs": null,
+    "n": 0,
+    "drop_reference": {},
+    "reading": null,
+    "grade": "표본 부족"
+   }
+  }
+ }
+}

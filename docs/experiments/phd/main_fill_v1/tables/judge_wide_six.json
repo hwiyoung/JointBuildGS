@@ -1,0 +1,1009 @@
+{
+ "component": "judge_wide",
+ "order_section": "8.4 영상이 적을 때 (B0 3단계 여섯 조건, 3단계 5.4 꼴)",
+ "written": "2026-10-15 23:21 KST",
+ "rule": "sens_count.counts (1단계, 고치지 않음): 평가 범위, 뺀 칸 아님, v3 라벨 있음; 지지와 결측, 지붕과 벽; 비가시는 넓이만. 판정 = r14 시험 초기화의 unit_judgment",
+ "rows": {
+  "B0_full": {
+   "condition": "영상 전체 (학습 243장)",
+   "units_file": "S0/s61/box/B0_b10/LoD2/units.npz",
+   "dry": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0_b10_LoD2",
+   "dry_equals_units_J_loc": true,
+   "dry_equals_units_state": true,
+   "counts": {
+    "roof_measured": {
+     "correct_keep": {
+      "patches": 22011,
+      "area_m2": 1375.7
+     },
+     "wrong_keep": {
+      "patches": 508,
+      "area_m2": 31.8
+     },
+     "correct_release": {
+      "patches": 3661,
+      "area_m2": 228.8
+     },
+     "wrong_release": {
+      "patches": 941,
+      "area_m2": 58.8
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "roof_unmeasured": {
+     "correct_keep": {
+      "patches": 38,
+      "area_m2": 2.4
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_m2": 0.0
+     },
+     "correct_release": {
+      "patches": 19,
+      "area_m2": 1.2
+     },
+     "wrong_release": {
+      "patches": 2,
+      "area_m2": 0.1
+     },
+     "undetermined": {
+      "patches": 2,
+      "area_m2": 0.1
+     }
+    },
+    "wall_measured": {
+     "correct_keep": {
+      "patches": 29920,
+      "area_m2": 1870.0
+     },
+     "wrong_keep": {
+      "patches": 1857,
+      "area_m2": 116.1
+     },
+     "correct_release": {
+      "patches": 1377,
+      "area_m2": 86.1
+     },
+     "wrong_release": {
+      "patches": 2751,
+      "area_m2": 171.9
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "wall_unmeasured": {
+     "correct_keep": {
+      "patches": 1857,
+      "area_m2": 116.1
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_m2": 0.1
+     },
+     "correct_release": {
+      "patches": 3,
+      "area_m2": 0.2
+     },
+     "wrong_release": {
+      "patches": 106,
+      "area_m2": 6.6
+     },
+     "undetermined": {
+      "patches": 50,
+      "area_m2": 3.1
+     }
+    },
+    "total": {
+     "correct_keep": {
+      "patches": 53826,
+      "area_m2": 3364.2
+     },
+     "wrong_keep": {
+      "patches": 2367,
+      "area_m2": 148.0
+     },
+     "correct_release": {
+      "patches": 5060,
+      "area_m2": 316.3
+     },
+     "wrong_release": {
+      "patches": 3800,
+      "area_m2": 237.4
+     },
+     "undetermined": {
+      "patches": 52,
+      "area_m2": 3.2
+     }
+    }
+   },
+   "judged_m2": 4069.1,
+   "invisible_m2": 0,
+   "shares": {
+    "correct_keep": 0.8267675898847411,
+    "wrong_keep": 0.03637167924110983,
+    "correct_release": 0.07773217664839892,
+    "wrong_release": 0.058342139539455905,
+    "undetermined": 0.0007864146862942666
+   },
+   "borrowed_m2": {
+    "correct_keep": 118.5,
+    "wrong_keep": 0.1,
+    "correct_release": 1.4,
+    "wrong_release": 6.7,
+    "undetermined": 3.2
+   },
+   "same_as_stage3_judge5": true
+  },
+  "B0a15": {
+   "condition": "저자 15장",
+   "units_file": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/a15/box/B0_b10/LoD2/units.npz",
+   "dry": "PH/main_fix_v1/PHD-MAIN-FIX-v1/checks/dry/r14_B0a15_LoD2",
+   "dry_equals_units_J_loc": true,
+   "dry_equals_units_state": true,
+   "counts": {
+    "roof_measured": {
+     "correct_keep": {
+      "patches": 11312,
+      "area_m2": 707.0
+     },
+     "wrong_keep": {
+      "patches": 237,
+      "area_m2": 14.8
+     },
+     "correct_release": {
+      "patches": 2181,
+      "area_m2": 136.3
+     },
+     "wrong_release": {
+      "patches": 960,
+      "area_m2": 60.0
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "roof_unmeasured": {
+     "correct_keep": {
+      "patches": 301,
+      "area_m2": 18.8
+     },
+     "wrong_keep": {
+      "patches": 1,
+      "area_m2": 0.1
+     },
+     "correct_release": {
+      "patches": 173,
+      "area_m2": 10.8
+     },
+     "wrong_release": {
+      "patches": 209,
+      "area_m2": 13.1
+     },
+     "undetermined": {
+      "patches": 1002,
+      "area_m2": 62.6
+     }
+    },
+    "roof_invisible": {
+     "patches": 10806,
+     "area_m2": 675.4
+    },
+    "wall_measured": {
+     "correct_keep": {
+      "patches": 15199,
+      "area_m2": 949.9
+     },
+     "wrong_keep": {
+      "patches": 1177,
+      "area_m2": 73.6
+     },
+     "correct_release": {
+      "patches": 1020,
+      "area_m2": 63.8
+     },
+     "wrong_release": {
+      "patches": 849,
+      "area_m2": 53.1
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "wall_unmeasured": {
+     "correct_keep": {
+      "patches": 2706,
+      "area_m2": 169.1
+     },
+     "wrong_keep": {
+      "patches": 70,
+      "area_m2": 4.4
+     },
+     "correct_release": {
+      "patches": 5,
+      "area_m2": 0.3
+     },
+     "wrong_release": {
+      "patches": 249,
+      "area_m2": 15.6
+     },
+     "undetermined": {
+      "patches": 1996,
+      "area_m2": 124.8
+     }
+    },
+    "wall_invisible": {
+     "patches": 14652,
+     "area_m2": 915.8
+    },
+    "total": {
+     "correct_keep": {
+      "patches": 29518,
+      "area_m2": 1844.8
+     },
+     "wrong_keep": {
+      "patches": 1485,
+      "area_m2": 92.9
+     },
+     "correct_release": {
+      "patches": 3379,
+      "area_m2": 211.2
+     },
+     "wrong_release": {
+      "patches": 2267,
+      "area_m2": 141.8
+     },
+     "undetermined": {
+      "patches": 2998,
+      "area_m2": 187.4
+     }
+    }
+   },
+   "judged_m2": 2478.1,
+   "invisible_m2": 1591.2,
+   "shares": {
+    "correct_keep": 0.7444413058391508,
+    "wrong_keep": 0.037488398369718734,
+    "correct_release": 0.08522658488358015,
+    "wrong_release": 0.05722125822202494,
+    "undetermined": 0.0756224526855252
+   },
+   "borrowed_m2": {
+    "correct_keep": 187.9,
+    "wrong_keep": 4.5,
+    "correct_release": 11.1,
+    "wrong_release": 28.7,
+    "undetermined": 187.4
+   },
+   "same_as_stage3_judge5": true
+  },
+  "B0a9": {
+   "condition": "저자 9장",
+   "units_file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a9/box/B0_b10/LoD2/units.npz",
+   "dry": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0a9_LoD2",
+   "dry_equals_units_J_loc": true,
+   "dry_equals_units_state": true,
+   "counts": {
+    "roof_measured": {
+     "correct_keep": {
+      "patches": 10645,
+      "area_m2": 665.3
+     },
+     "wrong_keep": {
+      "patches": 240,
+      "area_m2": 15.0
+     },
+     "correct_release": {
+      "patches": 2010,
+      "area_m2": 125.6
+     },
+     "wrong_release": {
+      "patches": 906,
+      "area_m2": 56.6
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "roof_unmeasured": {
+     "correct_keep": {
+      "patches": 544,
+      "area_m2": 34.0
+     },
+     "wrong_keep": {
+      "patches": 8,
+      "area_m2": 0.5
+     },
+     "correct_release": {
+      "patches": 298,
+      "area_m2": 18.6
+     },
+     "wrong_release": {
+      "patches": 302,
+      "area_m2": 18.9
+     },
+     "undetermined": {
+      "patches": 1329,
+      "area_m2": 83.1
+     }
+    },
+    "roof_invisible": {
+     "patches": 10900,
+     "area_m2": 681.2
+    },
+    "wall_measured": {
+     "correct_keep": {
+      "patches": 13632,
+      "area_m2": 852.0
+     },
+     "wrong_keep": {
+      "patches": 1092,
+      "area_m2": 68.2
+     },
+     "correct_release": {
+      "patches": 987,
+      "area_m2": 61.7
+     },
+     "wrong_release": {
+      "patches": 750,
+      "area_m2": 46.9
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "wall_unmeasured": {
+     "correct_keep": {
+      "patches": 1848,
+      "area_m2": 115.5
+     },
+     "wrong_keep": {
+      "patches": 110,
+      "area_m2": 6.9
+     },
+     "correct_release": {
+      "patches": 5,
+      "area_m2": 0.3
+     },
+     "wrong_release": {
+      "patches": 139,
+      "area_m2": 8.7
+     },
+     "undetermined": {
+      "patches": 4707,
+      "area_m2": 294.2
+     }
+    },
+    "wall_invisible": {
+     "patches": 14653,
+     "area_m2": 915.8
+    },
+    "total": {
+     "correct_keep": {
+      "patches": 26669,
+      "area_m2": 1666.8
+     },
+     "wrong_keep": {
+      "patches": 1450,
+      "area_m2": 90.6
+     },
+     "correct_release": {
+      "patches": 3300,
+      "area_m2": 206.2
+     },
+     "wrong_release": {
+      "patches": 2097,
+      "area_m2": 131.1
+     },
+     "undetermined": {
+      "patches": 6036,
+      "area_m2": 377.3
+     }
+    }
+   },
+   "judged_m2": 2472.0,
+   "invisible_m2": 1597.0,
+   "shares": {
+    "correct_keep": 0.6742718446601942,
+    "wrong_keep": 0.0366504854368932,
+    "correct_release": 0.08341423948220064,
+    "wrong_release": 0.053033980582524266,
+    "undetermined": 0.15262944983818771
+   },
+   "borrowed_m2": {
+    "correct_keep": 149.5,
+    "wrong_keep": 7.4,
+    "correct_release": 18.9,
+    "wrong_release": 27.6,
+    "undetermined": 377.3
+   },
+   "same_as_stage3_judge5": true
+  },
+  "B0a3": {
+   "condition": "저자 3장",
+   "units_file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0a3/box/B0_b10/LoD2/units.npz",
+   "dry": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0a3_LoD2",
+   "dry_equals_units_J_loc": true,
+   "dry_equals_units_state": true,
+   "counts": {
+    "roof_measured": {
+     "correct_keep": {
+      "patches": 4161,
+      "area_m2": 260.1
+     },
+     "wrong_keep": {
+      "patches": 56,
+      "area_m2": 3.5
+     },
+     "correct_release": {
+      "patches": 787,
+      "area_m2": 49.2
+     },
+     "wrong_release": {
+      "patches": 1095,
+      "area_m2": 68.4
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "roof_unmeasured": {
+     "correct_keep": {
+      "patches": 1151,
+      "area_m2": 71.9
+     },
+     "wrong_keep": {
+      "patches": 19,
+      "area_m2": 1.2
+     },
+     "correct_release": {
+      "patches": 1133,
+      "area_m2": 70.8
+     },
+     "wrong_release": {
+      "patches": 1506,
+      "area_m2": 94.1
+     },
+     "undetermined": {
+      "patches": 3894,
+      "area_m2": 243.4
+     }
+    },
+    "roof_invisible": {
+     "patches": 13380,
+     "area_m2": 836.2
+    },
+    "wall_measured": {
+     "correct_keep": {
+      "patches": 8826,
+      "area_m2": 551.6
+     },
+     "wrong_keep": {
+      "patches": 828,
+      "area_m2": 51.8
+     },
+     "correct_release": {
+      "patches": 568,
+      "area_m2": 35.5
+     },
+     "wrong_release": {
+      "patches": 2519,
+      "area_m2": 157.4
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "wall_unmeasured": {
+     "correct_keep": {
+      "patches": 1510,
+      "area_m2": 94.4
+     },
+     "wrong_keep": {
+      "patches": 111,
+      "area_m2": 6.9
+     },
+     "correct_release": {
+      "patches": 389,
+      "area_m2": 24.3
+     },
+     "wrong_release": {
+      "patches": 2970,
+      "area_m2": 185.6
+     },
+     "undetermined": {
+      "patches": 5537,
+      "area_m2": 346.1
+     }
+    },
+    "wall_invisible": {
+     "patches": 14665,
+     "area_m2": 916.6
+    },
+    "total": {
+     "correct_keep": {
+      "patches": 15648,
+      "area_m2": 978.0
+     },
+     "wrong_keep": {
+      "patches": 1014,
+      "area_m2": 63.4
+     },
+     "correct_release": {
+      "patches": 2877,
+      "area_m2": 179.8
+     },
+     "wrong_release": {
+      "patches": 8090,
+      "area_m2": 505.5
+     },
+     "undetermined": {
+      "patches": 9431,
+      "area_m2": 589.5
+     }
+    }
+   },
+   "judged_m2": 2316.2,
+   "invisible_m2": 1752.8,
+   "shares": {
+    "correct_keep": 0.42224332959157246,
+    "wrong_keep": 0.02737242034366635,
+    "correct_release": 0.07762714791468786,
+    "wrong_release": 0.21824540195147227,
+    "undetermined": 0.2545117001986012
+   },
+   "borrowed_m2": {
+    "correct_keep": 166.3,
+    "wrong_keep": 8.1,
+    "correct_release": 95.1,
+    "wrong_release": 279.7,
+    "undetermined": 589.5
+   },
+   "same_as_stage3_judge5": true
+  },
+  "B0n13": {
+   "condition": "연직 포함 13장",
+   "units_file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n13/box/B0_b10/LoD2/units.npz",
+   "dry": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0n13_LoD2",
+   "dry_equals_units_J_loc": true,
+   "dry_equals_units_state": true,
+   "counts": {
+    "roof_measured": {
+     "correct_keep": {
+      "patches": 10462,
+      "area_m2": 653.9
+     },
+     "wrong_keep": {
+      "patches": 374,
+      "area_m2": 23.4
+     },
+     "correct_release": {
+      "patches": 740,
+      "area_m2": 46.2
+     },
+     "wrong_release": {
+      "patches": 1827,
+      "area_m2": 114.2
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "roof_unmeasured": {
+     "correct_keep": {
+      "patches": 246,
+      "area_m2": 15.4
+     },
+     "wrong_keep": {
+      "patches": 9,
+      "area_m2": 0.6
+     },
+     "correct_release": {
+      "patches": 402,
+      "area_m2": 25.1
+     },
+     "wrong_release": {
+      "patches": 1696,
+      "area_m2": 106.0
+     },
+     "undetermined": {
+      "patches": 10870,
+      "area_m2": 679.4
+     }
+    },
+    "roof_invisible": {
+     "patches": 556,
+     "area_m2": 34.8
+    },
+    "wall_measured": {
+     "correct_keep": {
+      "patches": 7306,
+      "area_m2": 456.6
+     },
+     "wrong_keep": {
+      "patches": 301,
+      "area_m2": 18.8
+     },
+     "correct_release": {
+      "patches": 269,
+      "area_m2": 16.8
+     },
+     "wrong_release": {
+      "patches": 2099,
+      "area_m2": 131.2
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "wall_unmeasured": {
+     "correct_keep": {
+      "patches": 405,
+      "area_m2": 25.3
+     },
+     "wrong_keep": {
+      "patches": 10,
+      "area_m2": 0.6
+     },
+     "correct_release": {
+      "patches": 57,
+      "area_m2": 3.6
+     },
+     "wrong_release": {
+      "patches": 770,
+      "area_m2": 48.1
+     },
+     "undetermined": {
+      "patches": 2359,
+      "area_m2": 147.4
+     }
+    },
+    "wall_invisible": {
+     "patches": 24347,
+     "area_m2": 1521.7
+    },
+    "total": {
+     "correct_keep": {
+      "patches": 18419,
+      "area_m2": 1151.2
+     },
+     "wrong_keep": {
+      "patches": 694,
+      "area_m2": 43.4
+     },
+     "correct_release": {
+      "patches": 1468,
+      "area_m2": 91.7
+     },
+     "wrong_release": {
+      "patches": 6392,
+      "area_m2": 399.5
+     },
+     "undetermined": {
+      "patches": 13229,
+      "area_m2": 826.8
+     }
+    }
+   },
+   "judged_m2": 2512.6,
+   "invisible_m2": 1556.5,
+   "shares": {
+    "correct_keep": 0.4581708190718777,
+    "wrong_keep": 0.017272944360423464,
+    "correct_release": 0.03649605985831409,
+    "wrong_release": 0.15899864682002704,
+    "undetermined": 0.32906152988935755
+   },
+   "borrowed_m2": {
+    "correct_keep": 40.7,
+    "wrong_keep": 1.2,
+    "correct_release": 28.7,
+    "wrong_release": 154.1,
+    "undetermined": 826.8
+   },
+   "same_as_stage3_judge5": true
+  },
+  "B0n8": {
+   "condition": "연직 포함 8장",
+   "units_file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n8/box/B0_b10/LoD2/units.npz",
+   "dry": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0n8_LoD2",
+   "dry_equals_units_J_loc": true,
+   "dry_equals_units_state": true,
+   "counts": {
+    "roof_measured": {
+     "correct_keep": {
+      "patches": 6441,
+      "area_m2": 402.6
+     },
+     "wrong_keep": {
+      "patches": 387,
+      "area_m2": 24.2
+     },
+     "correct_release": {
+      "patches": 348,
+      "area_m2": 21.8
+     },
+     "wrong_release": {
+      "patches": 998,
+      "area_m2": 62.4
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "roof_unmeasured": {
+     "correct_keep": {
+      "patches": 633,
+      "area_m2": 39.6
+     },
+     "wrong_keep": {
+      "patches": 45,
+      "area_m2": 2.8
+     },
+     "correct_release": {
+      "patches": 359,
+      "area_m2": 22.4
+     },
+     "wrong_release": {
+      "patches": 1682,
+      "area_m2": 105.1
+     },
+     "undetermined": {
+      "patches": 15733,
+      "area_m2": 983.3
+     }
+    },
+    "roof_invisible": {
+     "patches": 556,
+     "area_m2": 34.8
+    },
+    "wall_measured": {
+     "correct_keep": {
+      "patches": 3602,
+      "area_m2": 225.1
+     },
+     "wrong_keep": {
+      "patches": 55,
+      "area_m2": 3.4
+     },
+     "correct_release": {
+      "patches": 47,
+      "area_m2": 2.9
+     },
+     "wrong_release": {
+      "patches": 570,
+      "area_m2": 35.6
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "wall_unmeasured": {
+     "correct_keep": {
+      "patches": 333,
+      "area_m2": 20.8
+     },
+     "wrong_keep": {
+      "patches": 2,
+      "area_m2": 0.1
+     },
+     "correct_release": {
+      "patches": 78,
+      "area_m2": 4.9
+     },
+     "wrong_release": {
+      "patches": 708,
+      "area_m2": 44.2
+     },
+     "undetermined": {
+      "patches": 8181,
+      "area_m2": 511.3
+     }
+    },
+    "wall_invisible": {
+     "patches": 24347,
+     "area_m2": 1521.7
+    },
+    "total": {
+     "correct_keep": {
+      "patches": 11009,
+      "area_m2": 688.1
+     },
+     "wrong_keep": {
+      "patches": 489,
+      "area_m2": 30.5
+     },
+     "correct_release": {
+      "patches": 832,
+      "area_m2": 52.0
+     },
+     "wrong_release": {
+      "patches": 3958,
+      "area_m2": 247.3
+     },
+     "undetermined": {
+      "patches": 23914,
+      "area_m2": 1494.6
+     }
+    }
+   },
+   "judged_m2": 2512.5,
+   "invisible_m2": 1556.5,
+   "shares": {
+    "correct_keep": 0.2738706467661692,
+    "wrong_keep": 0.012139303482587065,
+    "correct_release": 0.020696517412935322,
+    "wrong_release": 0.09842786069651742,
+    "undetermined": 0.594865671641791
+   },
+   "borrowed_m2": {
+    "correct_keep": 60.4,
+    "wrong_keep": 2.9,
+    "correct_release": 27.3,
+    "wrong_release": 149.3,
+    "undetermined": 1494.6
+   },
+   "same_as_stage3_judge5": true
+  },
+  "B0n2": {
+   "condition": "연직 포함 2장",
+   "units_file": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/cond/B0n2/box/B0_b10/LoD2/units.npz",
+   "dry": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/checks/dry/r14_B0n2_LoD2",
+   "dry_equals_units_J_loc": true,
+   "dry_equals_units_state": true,
+   "counts": {
+    "roof_measured": {
+     "correct_keep": {
+      "patches": 1193,
+      "area_m2": 74.6
+     },
+     "wrong_keep": {
+      "patches": 26,
+      "area_m2": 1.6
+     },
+     "correct_release": {
+      "patches": 247,
+      "area_m2": 15.4
+     },
+     "wrong_release": {
+      "patches": 1438,
+      "area_m2": 89.9
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "roof_unmeasured": {
+     "correct_keep": {
+      "patches": 65,
+      "area_m2": 4.1
+     },
+     "wrong_keep": {
+      "patches": 8,
+      "area_m2": 0.5
+     },
+     "correct_release": {
+      "patches": 351,
+      "area_m2": 21.9
+     },
+     "wrong_release": {
+      "patches": 2329,
+      "area_m2": 145.6
+     },
+     "undetermined": {
+      "patches": 8423,
+      "area_m2": 526.4
+     }
+    },
+    "roof_invisible": {
+     "patches": 13102,
+     "area_m2": 818.9
+    },
+    "wall_measured": {
+     "correct_keep": {
+      "patches": 880,
+      "area_m2": 55.0
+     },
+     "wrong_keep": {
+      "patches": 39,
+      "area_m2": 2.4
+     },
+     "correct_release": {
+      "patches": 169,
+      "area_m2": 10.6
+     },
+     "wrong_release": {
+      "patches": 3390,
+      "area_m2": 211.9
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0
+     }
+    },
+    "wall_unmeasured": {
+     "correct_keep": {
+      "patches": 282,
+      "area_m2": 17.6
+     },
+     "wrong_keep": {
+      "patches": 13,
+      "area_m2": 0.8
+     },
+     "correct_release": {
+      "patches": 263,
+      "area_m2": 16.4
+     },
+     "wrong_release": {
+      "patches": 4242,
+      "area_m2": 265.1
+     },
+     "undetermined": {
+      "patches": 3338,
+      "area_m2": 208.6
+     }
+    },
+    "wall_invisible": {
+     "patches": 25307,
+     "area_m2": 1581.7
+    },
+    "total": {
+     "correct_keep": {
+      "patches": 2420,
+      "area_m2": 151.3
+     },
+     "wrong_keep": {
+      "patches": 86,
+      "area_m2": 5.3
+     },
+     "correct_release": {
+      "patches": 1030,
+      "area_m2": 64.3
+     },
+     "wrong_release": {
+      "patches": 11399,
+      "area_m2": 712.5
+     },
+     "undetermined": {
+      "patches": 11761,
+      "area_m2": 735.0
+     }
+    }
+   },
+   "judged_m2": 1668.4,
+   "invisible_m2": 2400.6,
+   "shares": {
+    "correct_keep": 0.09068568688563894,
+    "wrong_keep": 0.0031766962359146486,
+    "correct_release": 0.03853991848477583,
+    "wrong_release": 0.4270558619036202,
+    "undetermined": 0.4405418364900503
+   },
+   "borrowed_m2": {
+    "correct_keep": 21.7,
+    "wrong_keep": 1.3,
+    "correct_release": 38.3,
+    "wrong_release": 410.7,
+    "undetermined": 735.0
+   },
+   "same_as_stage3_judge5": true
+  }
+ },
+ "scientific_verdict": null
+}

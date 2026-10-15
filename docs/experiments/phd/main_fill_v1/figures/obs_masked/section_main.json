@@ -1,0 +1,124 @@
+{
+ "place": "B0_b10/LoD2",
+ "section": {
+  "patch": 72310,
+  "centre": [
+   118.16309975968332,
+   8.5344002968314,
+   -31.753999999999905
+  ],
+  "t": [
+   0.9302475133883368,
+   -0.36693264209499843
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "tilt_deg": 90.0,
+  "direction_rule": "벽 같은 패치: 면의 수평 바깥 법선",
+  "ends_xy": [
+   [
+    112.5816146793533,
+    10.735996149401391
+   ],
+   [
+    123.74458484001335,
+    6.332804444261409
+   ]
+  ],
+  "code_v3": 4,
+  "kind": 2,
+  "gt_med": -0.21868330240249634,
+  "tau": 0.546984076499939
+ },
+ "values": {
+  "method_s0": {
+   "result": "prop_LoD2_s0",
+   "band_region": {
+    "rows": 80,
+    "kept_0_2": 1.0,
+    "kept_0_5": 1.0,
+    "inflow": 0.0,
+    "inflow_rows": 48,
+    "dropped_rows": 32,
+    "no_sW_rows": 0,
+    "classes": {
+     "points": 48,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   }
+  },
+  "twodgs": {
+   "result": "imgonly_2dgs_s0",
+   "band_region": {
+    "rows": 80,
+    "kept_0_2": 1.0,
+    "kept_0_5": 1.0,
+    "inflow": 0.0,
+    "inflow_rows": 48,
+    "dropped_rows": 32,
+    "no_sW_rows": 0,
+    "classes": {
+     "points": 48,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   }
+  },
+  "geogs": {
+   "result": "trust_LoD2_fix1",
+   "band_region": {
+    "rows": 80,
+    "kept_0_2": 0.0,
+    "kept_0_5": 1.0,
+    "inflow": 0.0,
+    "inflow_rows": 48,
+    "dropped_rows": 32,
+    "no_sW_rows": 0,
+    "classes": {
+     "points": 48,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   }
+  },
+  "mvsfuse": {
+   "result": "mvsfuse_LoD2",
+   "band_region": {
+    "rows": 80,
+    "kept_0_2": 0.2,
+    "kept_0_5": 1.0,
+    "inflow": 0.0,
+    "inflow_rows": 48,
+    "dropped_rows": 32,
+    "no_sW_rows": 0,
+    "classes": {
+     "points": 48,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   }
+  },
+  "cdgs": {
+   "result": "cdgsnofit_LoD2_s0",
+   "band_region": null
+  }
+ },
+ "gt_points_in_band": 10608,
+ "photo_points_in_band": 5712,
+ "geo_points_in_band": 4608,
+ "note": "값은 그림 자리(12 m 단면의 띠 ±0.25 m, 거른 영상 오류 패치의 솎은 참값 행)의 값",
+ "scientific_verdict": null
+}

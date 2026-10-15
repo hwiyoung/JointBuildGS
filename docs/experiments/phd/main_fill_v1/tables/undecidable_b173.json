@@ -1,0 +1,2936 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "undecidable",
+ "written": "2026-10-15 23:10:43 KST",
+ "mark": "이 발주에서 냄",
+ "definitions": {
+  "file": "SL/prep/undecidable/definitions.json",
+  "written": "2026-10-15 20:56:23 KST"
+ },
+ "scientific_verdict": null,
+ "match": {
+  "LoD2": {
+   "patches_b0": 119384,
+   "patches_nb": 258097,
+   "matched": 119373,
+   "matched_unique": true,
+   "max_centre_distance_m": 0.0,
+   "matched_in_eval_both": 114065,
+   "matched_in_eval_both_area_m2": 7129.1,
+   "code_differs": 3560,
+   "code_differs_area_m2": 222.5,
+   "code_pairs_b0_to_nb": {
+    "3->2": 1465,
+    "12->11": 688,
+    "11->12": 478,
+    "2->4": 360,
+    "2->3": 226,
+    "4->2": 166,
+    "3->4": 63,
+    "12->13": 30,
+    "11->13": 26,
+    "4->3": 21,
+    "13->12": 21,
+    "13->11": 12,
+    "2->0": 2,
+    "12->0": 1,
+    "2->12": 1
+   },
+   "b0_in_eval": 114065,
+   "b0_in_eval_matched_share": 1.0,
+   "grid_origin_offset_m": [
+    0.0843,
+    0.0671
+   ],
+   "note": "LoD2 cells lie on each polygon's own grid (the same cells in both boxes)"
+  },
+  "ALS": {
+   "patches_b0": 29955,
+   "patches_nb": 76657,
+   "matched": 36,
+   "matched_unique": true,
+   "max_centre_distance_m": 0.0,
+   "matched_in_eval_both": 36,
+   "matched_in_eval_both_area_m2": 0.8,
+   "code_differs": 3,
+   "code_differs_area_m2": 0.1,
+   "code_pairs_b0_to_nb": {
+    "12->11": 2,
+    "3->2": 1
+   },
+   "b0_in_eval": 25482,
+   "b0_in_eval_matched_share": 0.0014,
+   "grid_origin_offset_m": [
+    0.0843,
+    0.0671
+   ],
+   "note": "ALS cells lie on the XY grid of each box's crop rectangle; the two grids are offset by grid_origin_offset_m, so only the patches listed match within 1 cm: the ALS comparison on matched patches has too few patches (order rule kept)"
+  }
+ },
+ "priors": {
+  "LoD2": {
+   "matched": 114065,
+   "matched_area_m2": 7129.1,
+   "same_code": 110505,
+   "code_differs": 3560,
+   "boxes": {
+    "B173_b0": {
+     "rows": {
+      "c11": 116310,
+      "c3": 15169,
+      "c4": 1984,
+      "band": 58782
+     },
+     "results": {
+      "ours_s0": {
+       "ko": "본 방법 씨앗 0",
+       "result": "prop_LoD2_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 116310,
+         "inflow": 0.0547,
+         "gt_side": 0.9242,
+         "wrong_side": 0.0493,
+         "both": 0.0054,
+         "neither": 0.0211
+        },
+        "obs_inflow": {
+         "n": 15169,
+         "inflow": 0.4625,
+         "gt_side": 0.4283,
+         "wrong_side": 0.4338,
+         "both": 0.0287,
+         "neither": 0.1092
+        },
+        "missing_completeness": {
+         "n": 1984,
+         "le_0.2": 0.9299,
+         "le_0.5": 0.9496
+        },
+        "band_completeness": {
+         "n": 58782,
+         "le_0.2": 0.954,
+         "le_0.5": 0.9961
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0484,
+         "gt_side": 0.9314,
+         "wrong_side": 0.0432,
+         "both": 0.0052,
+         "neither": 0.0202
+        },
+        "obs_inflow": {
+         "n": 8550,
+         "inflow": 0.7418,
+         "gt_side": 0.1464,
+         "wrong_side": 0.6972,
+         "both": 0.0446,
+         "neither": 0.1118
+        },
+        "missing_completeness": {
+         "n": 1085,
+         "le_0.2": 0.9604,
+         "le_0.5": 0.976
+        },
+        "band_completeness": {
+         "n": 56752,
+         "le_0.2": 0.9559,
+         "le_0.5": 0.9962
+        }
+       }
+      },
+      "ours_s1": {
+       "ko": "본 방법 씨앗 1",
+       "result": "prop_LoD2_s1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 116310,
+         "inflow": 0.0508,
+         "gt_side": 0.9289,
+         "wrong_side": 0.0474,
+         "both": 0.0034,
+         "neither": 0.0202
+        },
+        "obs_inflow": {
+         "n": 15169,
+         "inflow": 0.4637,
+         "gt_side": 0.4248,
+         "wrong_side": 0.4407,
+         "both": 0.023,
+         "neither": 0.1115
+        },
+        "missing_completeness": {
+         "n": 1984,
+         "le_0.2": 0.9315,
+         "le_0.5": 0.9511
+        },
+        "band_completeness": {
+         "n": 58782,
+         "le_0.2": 0.9502,
+         "le_0.5": 0.9961
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0445,
+         "gt_side": 0.936,
+         "wrong_side": 0.0412,
+         "both": 0.0033,
+         "neither": 0.0196
+        },
+        "obs_inflow": {
+         "n": 8550,
+         "inflow": 0.7444,
+         "gt_side": 0.1407,
+         "wrong_side": 0.7109,
+         "both": 0.0336,
+         "neither": 0.1149
+        },
+        "missing_completeness": {
+         "n": 1085,
+         "le_0.2": 0.9576,
+         "le_0.5": 0.9751
+        },
+        "band_completeness": {
+         "n": 56752,
+         "le_0.2": 0.9523,
+         "le_0.5": 0.9964
+        }
+       }
+      },
+      "2dgs": {
+       "ko": "2차원 가우시안 스플래팅",
+       "result": "imgonly_2dgs_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 116310,
+         "inflow": 0.0899,
+         "gt_side": 0.6456,
+         "wrong_side": 0.0816,
+         "both": 0.0083,
+         "neither": 0.2644
+        },
+        "obs_inflow": {
+         "n": 15169,
+         "inflow": 0.2555,
+         "gt_side": 0.4716,
+         "wrong_side": 0.2213,
+         "both": 0.0341,
+         "neither": 0.273
+        },
+        "missing_completeness": {
+         "n": 1984,
+         "le_0.2": 0.9027,
+         "le_0.5": 0.9627
+        },
+        "band_completeness": {
+         "n": 58782,
+         "le_0.2": 0.8023,
+         "le_0.5": 0.9446
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0827,
+         "gt_side": 0.652,
+         "wrong_side": 0.0746,
+         "both": 0.0081,
+         "neither": 0.2653
+        },
+        "obs_inflow": {
+         "n": 8550,
+         "inflow": 0.3953,
+         "gt_side": 0.3091,
+         "wrong_side": 0.3502,
+         "both": 0.0451,
+         "neither": 0.2956
+        },
+        "missing_completeness": {
+         "n": 1085,
+         "le_0.2": 0.9475,
+         "le_0.5": 0.9714
+        },
+        "band_completeness": {
+         "n": 56752,
+         "le_0.2": 0.8012,
+         "le_0.5": 0.9438
+        }
+       }
+      },
+      "geogs": {
+       "ko": "GeoGS",
+       "result": "trust_LoD2_fix1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 116310,
+         "inflow": 0.208,
+         "gt_side": 0.1733,
+         "wrong_side": 0.196,
+         "both": 0.012,
+         "neither": 0.6187
+        },
+        "obs_inflow": {
+         "n": 15169,
+         "inflow": 0.1893,
+         "gt_side": 0.6014,
+         "wrong_side": 0.1624,
+         "both": 0.0269,
+         "neither": 0.2093
+        },
+        "missing_completeness": {
+         "n": 1984,
+         "le_0.2": 0.874,
+         "le_0.5": 0.9587
+        },
+        "band_completeness": {
+         "n": 58782,
+         "le_0.2": 0.8722,
+         "le_0.5": 0.9876
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.206,
+         "gt_side": 0.1703,
+         "wrong_side": 0.1939,
+         "both": 0.012,
+         "neither": 0.6237
+        },
+        "obs_inflow": {
+         "n": 8550,
+         "inflow": 0.2911,
+         "gt_side": 0.4924,
+         "wrong_side": 0.2647,
+         "both": 0.0264,
+         "neither": 0.2165
+        },
+        "missing_completeness": {
+         "n": 1085,
+         "le_0.2": 0.906,
+         "le_0.5": 0.976
+        },
+        "band_completeness": {
+         "n": 56752,
+         "le_0.2": 0.8727,
+         "le_0.5": 0.9878
+        }
+       }
+      },
+      "mvsfuse": {
+       "ko": "MVS 기반 결합",
+       "result": "mvsfuse_LoD2",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 116310,
+         "inflow": 0.1442,
+         "gt_side": 0.8351,
+         "wrong_side": 0.1209,
+         "both": 0.0232,
+         "neither": 0.0207
+        },
+        "obs_inflow": {
+         "n": 15169,
+         "inflow": 0.1363,
+         "gt_side": 0.7599,
+         "wrong_side": 0.0862,
+         "both": 0.0501,
+         "neither": 0.1038
+        },
+        "missing_completeness": {
+         "n": 1984,
+         "le_0.2": 0.9622,
+         "le_0.5": 0.998
+        },
+        "band_completeness": {
+         "n": 58782,
+         "le_0.2": 0.9874,
+         "le_0.5": 0.9989
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.1336,
+         "gt_side": 0.8462,
+         "wrong_side": 0.1116,
+         "both": 0.022,
+         "neither": 0.0202
+        },
+        "obs_inflow": {
+         "n": 8550,
+         "inflow": 0.1927,
+         "gt_side": 0.7007,
+         "wrong_side": 0.1202,
+         "both": 0.0725,
+         "neither": 0.1065
+        },
+        "missing_completeness": {
+         "n": 1085,
+         "le_0.2": 0.9677,
+         "le_0.5": 0.9982
+        },
+        "band_completeness": {
+         "n": 56752,
+         "le_0.2": 0.9877,
+         "le_0.5": 0.9988
+        }
+       }
+      },
+      "cdgs": {
+       "ko": "CDGS 변형",
+       "result": "cdgsnofit_LoD2_s0",
+       "status": "아직"
+      },
+      "judgefuse": {
+       "ko": "본 방법의 판정으로 갈아 끼운 변형",
+       "result": "judgefuse_LoD2",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 116310,
+         "inflow": 0.0699,
+         "gt_side": 0.9006,
+         "wrong_side": 0.0595,
+         "both": 0.0104,
+         "neither": 0.0295
+        },
+        "obs_inflow": {
+         "n": 15169,
+         "inflow": 0.3773,
+         "gt_side": 0.442,
+         "wrong_side": 0.3323,
+         "both": 0.0451,
+         "neither": 0.1806
+        },
+        "missing_completeness": {
+         "n": 1984,
+         "le_0.2": 0.9269,
+         "le_0.5": 0.9829
+        },
+        "band_completeness": {
+         "n": 58782,
+         "le_0.2": 0.989,
+         "le_0.5": 0.9989
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0621,
+         "gt_side": 0.9099,
+         "wrong_side": 0.0529,
+         "both": 0.0092,
+         "neither": 0.028
+        },
+        "obs_inflow": {
+         "n": 8550,
+         "inflow": 0.5949,
+         "gt_side": 0.2026,
+         "wrong_side": 0.5287,
+         "both": 0.0662,
+         "neither": 0.2026
+        },
+        "missing_completeness": {
+         "n": 1085,
+         "le_0.2": 0.9484,
+         "le_0.5": 0.9834
+        },
+        "band_completeness": {
+         "n": 56752,
+         "le_0.2": 0.9891,
+         "le_0.5": 0.9989
+        }
+       }
+      }
+     }
+    },
+    "B173nb_b10": {
+     "rows": {
+      "c11": 117419,
+      "c3": 9374,
+      "c4": 3097,
+      "band": 38673
+     },
+     "results": {
+      "ours_s0": {
+       "ko": "본 방법 씨앗 0",
+       "result": "prop_LoD2_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 117419,
+         "inflow": 0.0544,
+         "gt_side": 0.9238,
+         "wrong_side": 0.0522,
+         "both": 0.0022,
+         "neither": 0.0219
+        },
+        "obs_inflow": {
+         "n": 9374,
+         "inflow": 0.7112,
+         "gt_side": 0.168,
+         "wrong_side": 0.6763,
+         "both": 0.0349,
+         "neither": 0.1208
+        },
+        "missing_completeness": {
+         "n": 3097,
+         "le_0.2": 0.9299,
+         "le_0.5": 0.9554
+        },
+        "band_completeness": {
+         "n": 38673,
+         "le_0.2": 0.9336,
+         "le_0.5": 0.9941
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0401,
+         "gt_side": 0.9384,
+         "wrong_side": 0.0379,
+         "both": 0.0021,
+         "neither": 0.0215
+        },
+        "obs_inflow": {
+         "n": 8431,
+         "inflow": 0.7285,
+         "gt_side": 0.1556,
+         "wrong_side": 0.694,
+         "both": 0.0345,
+         "neither": 0.1159
+        },
+        "missing_completeness": {
+         "n": 1084,
+         "le_0.2": 0.9585,
+         "le_0.5": 0.976
+        },
+        "band_completeness": {
+         "n": 36524,
+         "le_0.2": 0.9404,
+         "le_0.5": 0.9959
+        }
+       }
+      },
+      "ours_s1": {
+       "ko": "본 방법 씨앗 1",
+       "result": "prop_LoD2_s1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 117419,
+         "inflow": 0.0591,
+         "gt_side": 0.9195,
+         "wrong_side": 0.0543,
+         "both": 0.0048,
+         "neither": 0.0214
+        },
+        "obs_inflow": {
+         "n": 9374,
+         "inflow": 0.6975,
+         "gt_side": 0.1582,
+         "wrong_side": 0.6523,
+         "both": 0.0451,
+         "neither": 0.1443
+        },
+        "missing_completeness": {
+         "n": 3097,
+         "le_0.2": 0.9387,
+         "le_0.5": 0.9558
+        },
+        "band_completeness": {
+         "n": 38673,
+         "le_0.2": 0.9341,
+         "le_0.5": 0.9933
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0436,
+         "gt_side": 0.9353,
+         "wrong_side": 0.0388,
+         "both": 0.0048,
+         "neither": 0.0211
+        },
+        "obs_inflow": {
+         "n": 8431,
+         "inflow": 0.7155,
+         "gt_side": 0.1448,
+         "wrong_side": 0.6712,
+         "both": 0.0442,
+         "neither": 0.1397
+        },
+        "missing_completeness": {
+         "n": 1084,
+         "le_0.2": 0.9603,
+         "le_0.5": 0.9742
+        },
+        "band_completeness": {
+         "n": 36524,
+         "le_0.2": 0.9405,
+         "le_0.5": 0.9964
+        }
+       }
+      },
+      "2dgs": {
+       "ko": "2차원 가우시안 스플래팅",
+       "result": "imgonly_2dgs_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 117419,
+         "inflow": 0.09,
+         "gt_side": 0.5921,
+         "wrong_side": 0.0841,
+         "both": 0.006,
+         "neither": 0.3179
+        },
+        "obs_inflow": {
+         "n": 9374,
+         "inflow": 0.4191,
+         "gt_side": 0.2777,
+         "wrong_side": 0.3732,
+         "both": 0.046,
+         "neither": 0.3032
+        },
+        "missing_completeness": {
+         "n": 3097,
+         "le_0.2": 0.8079,
+         "le_0.5": 0.9574
+        },
+        "band_completeness": {
+         "n": 38673,
+         "le_0.2": 0.7269,
+         "le_0.5": 0.9338
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0831,
+         "gt_side": 0.6023,
+         "wrong_side": 0.0772,
+         "both": 0.0059,
+         "neither": 0.3146
+        },
+        "obs_inflow": {
+         "n": 8431,
+         "inflow": 0.4319,
+         "gt_side": 0.2628,
+         "wrong_side": 0.3903,
+         "both": 0.0415,
+         "neither": 0.3053
+        },
+        "missing_completeness": {
+         "n": 1084,
+         "le_0.2": 0.8349,
+         "le_0.5": 0.9696
+        },
+        "band_completeness": {
+         "n": 36524,
+         "le_0.2": 0.7383,
+         "le_0.5": 0.9402
+        }
+       }
+      },
+      "geogs": {
+       "ko": "GeoGS",
+       "result": "trust_LoD2_fix1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 117419,
+         "inflow": 0.0792,
+         "gt_side": 0.7812,
+         "wrong_side": 0.065,
+         "both": 0.0142,
+         "neither": 0.1396
+        },
+        "obs_inflow": {
+         "n": 9374,
+         "inflow": 0.2561,
+         "gt_side": 0.415,
+         "wrong_side": 0.2515,
+         "both": 0.0046,
+         "neither": 0.3289
+        },
+        "missing_completeness": {
+         "n": 3097,
+         "le_0.2": 0.8905,
+         "le_0.5": 0.99
+        },
+        "band_completeness": {
+         "n": 38673,
+         "le_0.2": 0.6894,
+         "le_0.5": 0.9681
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0733,
+         "gt_side": 0.7978,
+         "wrong_side": 0.0592,
+         "both": 0.0142,
+         "neither": 0.1288
+        },
+        "obs_inflow": {
+         "n": 8431,
+         "inflow": 0.2735,
+         "gt_side": 0.4053,
+         "wrong_side": 0.2696,
+         "both": 0.0039,
+         "neither": 0.3212
+        },
+        "missing_completeness": {
+         "n": 1084,
+         "le_0.2": 0.9004,
+         "le_0.5": 0.9899
+        },
+        "band_completeness": {
+         "n": 36524,
+         "le_0.2": 0.7002,
+         "le_0.5": 0.9739
+        }
+       }
+      },
+      "mvsfuse": {
+       "ko": "MVS 기반 결합",
+       "result": "mvsfuse_LoD2",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 117419,
+         "inflow": 0.153,
+         "gt_side": 0.8279,
+         "wrong_side": 0.1303,
+         "both": 0.0227,
+         "neither": 0.0191
+        },
+        "obs_inflow": {
+         "n": 9374,
+         "inflow": 0.2109,
+         "gt_side": 0.6687,
+         "wrong_side": 0.1396,
+         "both": 0.0713,
+         "neither": 0.1204
+        },
+        "missing_completeness": {
+         "n": 3097,
+         "le_0.2": 0.9667,
+         "le_0.5": 0.9977
+        },
+        "band_completeness": {
+         "n": 38673,
+         "le_0.2": 0.9838,
+         "le_0.5": 0.9986
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.1341,
+         "gt_side": 0.8469,
+         "wrong_side": 0.112,
+         "both": 0.0221,
+         "neither": 0.019
+        },
+        "obs_inflow": {
+         "n": 8431,
+         "inflow": 0.1999,
+         "gt_side": 0.6914,
+         "wrong_side": 0.1293,
+         "both": 0.0706,
+         "neither": 0.1088
+        },
+        "missing_completeness": {
+         "n": 1084,
+         "le_0.2": 0.9603,
+         "le_0.5": 0.9982
+        },
+        "band_completeness": {
+         "n": 36524,
+         "le_0.2": 0.9852,
+         "le_0.5": 0.999
+        }
+       }
+      },
+      "cdgs": {
+       "ko": "CDGS 변형",
+       "result": "cdgsnofit_LoD2_s0",
+       "status": "아직"
+      },
+      "judgefuse": {
+       "ko": "본 방법의 판정으로 갈아 끼운 변형",
+       "result": "judgefuse_LoD2",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 117419,
+         "inflow": 0.0844,
+         "gt_side": 0.89,
+         "wrong_side": 0.0747,
+         "both": 0.0097,
+         "neither": 0.0256
+        },
+        "obs_inflow": {
+         "n": 9374,
+         "inflow": 0.5506,
+         "gt_side": 0.2268,
+         "wrong_side": 0.4754,
+         "both": 0.0752,
+         "neither": 0.2226
+        },
+        "missing_completeness": {
+         "n": 3097,
+         "le_0.2": 0.9496,
+         "le_0.5": 0.9864
+        },
+        "band_completeness": {
+         "n": 38673,
+         "le_0.2": 0.9895,
+         "le_0.5": 0.9988
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0666,
+         "gt_side": 0.909,
+         "wrong_side": 0.0578,
+         "both": 0.0089,
+         "neither": 0.0244
+        },
+        "obs_inflow": {
+         "n": 8431,
+         "inflow": 0.5636,
+         "gt_side": 0.2158,
+         "wrong_side": 0.4899,
+         "both": 0.0738,
+         "neither": 0.2206
+        },
+        "missing_completeness": {
+         "n": 1084,
+         "le_0.2": 0.9585,
+         "le_0.5": 0.9871
+        },
+        "band_completeness": {
+         "n": 36524,
+         "le_0.2": 0.9907,
+         "le_0.5": 0.9992
+        }
+       }
+      }
+     }
+    }
+   },
+   "judgment": {
+    "B173_b0": {
+     "judged_patches": 49629,
+     "judged_area_m2": 3101.8,
+     "correct_keep": {
+      "patches": 16188,
+      "area_m2": 1011.8,
+      "share": 0.3262
+     },
+     "wrong_keep": {
+      "patches": 4797,
+      "area_m2": 299.8,
+      "share": 0.0967
+     },
+     "correct_release": {
+      "patches": 23975,
+      "area_m2": 1498.4,
+      "share": 0.4831
+     },
+     "wrong_release": {
+      "patches": 4614,
+      "area_m2": 288.4,
+      "share": 0.093
+     },
+     "undetermined": {
+      "patches": 55,
+      "area_m2": 3.4,
+      "share": 0.0011
+     },
+     "invisible_area_m2": 1.6,
+     "no_gt_area_m2": 4025.7
+    },
+    "B173nb_b10": {
+     "judged_patches": 49626,
+     "judged_area_m2": 3101.6,
+     "correct_keep": {
+      "patches": 18814,
+      "area_m2": 1175.9,
+      "share": 0.3791
+     },
+     "wrong_keep": {
+      "patches": 5336,
+      "area_m2": 333.5,
+      "share": 0.1075
+     },
+     "correct_release": {
+      "patches": 23446,
+      "area_m2": 1465.4,
+      "share": 0.4725
+     },
+     "wrong_release": {
+      "patches": 1957,
+      "area_m2": 122.3,
+      "share": 0.0394
+     },
+     "undetermined": {
+      "patches": 73,
+      "area_m2": 4.6,
+      "share": 0.0015
+     },
+     "invisible_area_m2": 1.6,
+     "no_gt_area_m2": 4025.9
+    }
+   }
+  },
+  "ALS": {
+   "matched": 36,
+   "matched_area_m2": 0.8,
+   "same_code": 33,
+   "code_differs": 3,
+   "boxes": {
+    "B173_b0": {
+     "rows": {
+      "c11": 48,
+      "c3": 0,
+      "c4": 0,
+      "band": 0
+     },
+     "results": {
+      "ours_s0": {
+       "ko": "본 방법 씨앗 0",
+       "result": "prop_ALS_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "ours_s1": {
+       "ko": "본 방법 씨앗 1",
+       "result": "prop_ALS_s1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "2dgs": {
+       "ko": "2차원 가우시안 스플래팅",
+       "result": "imgonly_2dgs_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 0.6042,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.3958
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 0.6042,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.3958
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "geogs": {
+       "ko": "GeoGS",
+       "result": "geogs_ALS_fix1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0208,
+         "gt_side": 0.3542,
+         "wrong_side": 0.0208,
+         "both": 0.0,
+         "neither": 0.625
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0208,
+         "gt_side": 0.3542,
+         "wrong_side": 0.0208,
+         "both": 0.0,
+         "neither": 0.625
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "mvsfuse": {
+       "ko": "MVS 기반 결합",
+       "result": "mvsfuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 0.8542,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.1458
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 0.8542,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.1458
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "cdgs": {
+       "ko": "CDGS 변형",
+       "result": "cdgsnofit_ALS_s0",
+       "status": "아직"
+      },
+      "judgefuse": {
+       "ko": "본 방법의 판정으로 갈아 끼운 변형",
+       "result": "judgefuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0625,
+         "gt_side": 0.8542,
+         "wrong_side": 0.0,
+         "both": 0.0625,
+         "neither": 0.0833
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0625,
+         "gt_side": 0.8542,
+         "wrong_side": 0.0,
+         "both": 0.0625,
+         "neither": 0.0833
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      }
+     }
+    },
+    "B173nb_b10": {
+     "rows": {
+      "c11": 56,
+      "c3": 0,
+      "c4": 0,
+      "band": 5
+     },
+     "results": {
+      "ours_s0": {
+       "ko": "본 방법 씨앗 0",
+       "result": "prop_ALS_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 56,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5,
+         "le_0.2": 1.0,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "ours_s1": {
+       "ko": "본 방법 씨앗 1",
+       "result": "prop_ALS_s1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 56,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5,
+         "le_0.2": 1.0,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 1.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.0
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "2dgs": {
+       "ko": "2차원 가우시안 스플래팅",
+       "result": "imgonly_2dgs_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 56,
+         "inflow": 0.0,
+         "gt_side": 0.5893,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.4107
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5,
+         "le_0.2": 0.0,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 0.5625,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.4375
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "geogs": {
+       "ko": "GeoGS",
+       "result": "geogs_ALS_fix1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 56,
+         "inflow": 0.0179,
+         "gt_side": 0.6786,
+         "wrong_side": 0.0179,
+         "both": 0.0,
+         "neither": 0.3036
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5,
+         "le_0.2": 0.8,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 0.7917,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.2083
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "mvsfuse": {
+       "ko": "MVS 기반 결합",
+       "result": "mvsfuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 56,
+         "inflow": 0.0,
+         "gt_side": 0.8929,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.1071
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5,
+         "le_0.2": 1.0,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0,
+         "gt_side": 0.875,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 0.125
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      },
+      "cdgs": {
+       "ko": "CDGS 변형",
+       "result": "cdgsnofit_ALS_s0",
+       "status": "아직"
+      },
+      "judgefuse": {
+       "ko": "본 방법의 판정으로 갈아 끼운 변형",
+       "result": "judgefuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 56,
+         "inflow": 0.0714,
+         "gt_side": 0.875,
+         "wrong_side": 0.0179,
+         "both": 0.0536,
+         "neither": 0.0536
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5,
+         "le_0.2": 1.0,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0833,
+         "gt_side": 0.875,
+         "wrong_side": 0.0208,
+         "both": 0.0625,
+         "neither": 0.0417
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
+      }
+     }
+    }
+   },
+   "judgment": {
+    "B173_b0": {
+     "judged_patches": 20,
+     "judged_area_m2": 0.5,
+     "correct_keep": {
+      "patches": 1,
+      "area_m2": 0.0,
+      "share": 0.0659
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "share": 0.0
+     },
+     "correct_release": {
+      "patches": 19,
+      "area_m2": 0.4,
+      "share": 0.9341
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "share": 0.0
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "share": 0.0
+     },
+     "invisible_area_m2": 0.0,
+     "no_gt_area_m2": 0.3
+    },
+    "B173nb_b10": {
+     "judged_patches": 20,
+     "judged_area_m2": 0.5,
+     "correct_keep": {
+      "patches": 1,
+      "area_m2": 0.0,
+      "share": 0.0659
+     },
+     "wrong_keep": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "share": 0.0
+     },
+     "correct_release": {
+      "patches": 19,
+      "area_m2": 0.4,
+      "share": 0.9341
+     },
+     "wrong_release": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "share": 0.0
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "share": 0.0
+     },
+     "invisible_area_m2": 0.0,
+     "no_gt_area_m2": 0.3
+    }
+   }
+  }
+ },
+ "als_halfcell": {
+  "label": "결과를 본 뒤 더함",
+  "match": {
+   "task_id": "PHD-MAIN-FILL-v1",
+   "component": "undecidable",
+   "written": "2026-10-15 23:02:31 KST",
+   "label": "결과를 본 뒤 더함",
+   "why": "the order's 1 cm matching gives 36 ALS patches (the ALS grids of the two boxes are offset by 8.4, 6.7 cm); chosen after seeing that count and before any method value of this matching; the 1 cm result is kept as it is",
+   "rule": "Rule: each B173_b0 ALS patch takes the nearest B173nb_b10 ALS patch centre in plan (x, y) within half a cell (0.125 m), one to one (when two B173_b0 patches take the same partner, the closer pair is kept); both patches in the evaluation range. Plan distance, because the ALS cells are the XY grid of each box's crop rectangle (offset by 8.4, 6.7 cm between the boxes) on one height field; the 3-D distances of the kept pairs are written too. scientific_verdict: null.",
+   "half_cell_m": 0.125,
+   "b0_patches": 29955,
+   "b0_in_eval": 25482,
+   "nb_patches": 76657,
+   "candidates_within_half_cell": 28869,
+   "dropped_as_not_one_to_one": 1,
+   "matched_in_eval_both": 24458,
+   "matched_area_m2": 1653.4,
+   "b0_in_eval_matched_share": 0.9598,
+   "plan_distance_m": {
+    "median": 0.1078,
+    "max": 0.1222
+   },
+   "dist3d_m": {
+    "median": 0.1098,
+    "max": 0.2356,
+    "over_half_cell": 1122
+   },
+   "code_differs": 2892,
+   "code_differs_area_m2": 201.4,
+   "code_pairs_b0_to_nb": {
+    "11->12": 449,
+    "12->11": 375,
+    "3->0": 363,
+    "0->3": 295,
+    "0->2": 259,
+    "12->0": 200,
+    "2->0": 193,
+    "0->12": 176,
+    "2->3": 154,
+    "3->2": 121,
+    "0->11": 117,
+    "11->0": 61,
+    "12->3": 32,
+    "3->12": 28,
+    "3->4": 15,
+    "2->11": 13,
+    "11->3": 10,
+    "11->13": 8,
+    "11->2": 6,
+    "2->12": 5
+   },
+   "scientific_verdict": null
+  },
+  "values": {
+   "matched": 24458,
+   "matched_area_m2": 1653.4,
+   "same_code": 21566,
+   "code_differs": 2892,
+   "boxes": {
+    "B173_b0": {
+     "rows": {
+      "c11": 94693,
+      "c3": 7336,
+      "c4": 21,
+      "band": 8936
+     },
+     "results": {
+      "ours_s0": {
+       "ko": "본 방법 씨앗 0",
+       "result": "prop_ALS_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94693,
+         "inflow": 0.0004,
+         "gt_side": 0.9973,
+         "wrong_side": 0.0002,
+         "both": 0.0002,
+         "neither": 0.0023
+        },
+        "obs_inflow": {
+         "n": 7336,
+         "inflow": 0.8495,
+         "gt_side": 0.1009,
+         "wrong_side": 0.8438,
+         "both": 0.0057,
+         "neither": 0.0496
+        },
+        "missing_completeness": {
+         "n": 21,
+         "le_0.2": 0.0,
+         "le_0.5": 0.0
+        },
+        "band_completeness": {
+         "n": 8936,
+         "le_0.2": 0.9828,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91366,
+         "inflow": 0.0002,
+         "gt_side": 0.9986,
+         "wrong_side": 0.0,
+         "both": 0.0002,
+         "neither": 0.0011
+        },
+        "obs_inflow": {
+         "n": 4958,
+         "inflow": 0.8659,
+         "gt_side": 0.1008,
+         "wrong_side": 0.8602,
+         "both": 0.0056,
+         "neither": 0.0333
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 6849,
+         "le_0.2": 0.9874,
+         "le_0.5": 1.0
+        }
+       }
+      },
+      "ours_s1": {
+       "ko": "본 방법 씨앗 1",
+       "result": "prop_ALS_s1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94693,
+         "inflow": 0.0006,
+         "gt_side": 0.9971,
+         "wrong_side": 0.0002,
+         "both": 0.0004,
+         "neither": 0.0023
+        },
+        "obs_inflow": {
+         "n": 7336,
+         "inflow": 0.8477,
+         "gt_side": 0.1031,
+         "wrong_side": 0.833,
+         "both": 0.0147,
+         "neither": 0.0492
+        },
+        "missing_completeness": {
+         "n": 21,
+         "le_0.2": 0.0,
+         "le_0.5": 0.0
+        },
+        "band_completeness": {
+         "n": 8936,
+         "le_0.2": 0.986,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91366,
+         "inflow": 0.0004,
+         "gt_side": 0.9986,
+         "wrong_side": 0.0,
+         "both": 0.0003,
+         "neither": 0.001
+        },
+        "obs_inflow": {
+         "n": 4958,
+         "inflow": 0.8643,
+         "gt_side": 0.1019,
+         "wrong_side": 0.8463,
+         "both": 0.018,
+         "neither": 0.0339
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 6849,
+         "le_0.2": 0.9905,
+         "le_0.5": 1.0
+        }
+       }
+      },
+      "2dgs": {
+       "ko": "2차원 가우시안 스플래팅",
+       "result": "imgonly_2dgs_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94693,
+         "inflow": 0.0082,
+         "gt_side": 0.7366,
+         "wrong_side": 0.0047,
+         "both": 0.0035,
+         "neither": 0.2552
+        },
+        "obs_inflow": {
+         "n": 7336,
+         "inflow": 0.5085,
+         "gt_side": 0.2082,
+         "wrong_side": 0.4955,
+         "both": 0.0129,
+         "neither": 0.2834
+        },
+        "missing_completeness": {
+         "n": 21,
+         "le_0.2": 0.0,
+         "le_0.5": 0.5238
+        },
+        "band_completeness": {
+         "n": 8936,
+         "le_0.2": 0.6387,
+         "le_0.5": 0.8523
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91366,
+         "inflow": 0.0082,
+         "gt_side": 0.7354,
+         "wrong_side": 0.0047,
+         "both": 0.0035,
+         "neither": 0.2564
+        },
+        "obs_inflow": {
+         "n": 4958,
+         "inflow": 0.4958,
+         "gt_side": 0.2267,
+         "wrong_side": 0.4831,
+         "both": 0.0127,
+         "neither": 0.2775
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 6849,
+         "le_0.2": 0.6616,
+         "le_0.5": 0.823
+        }
+       }
+      },
+      "geogs": {
+       "ko": "GeoGS",
+       "result": "geogs_ALS_fix1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94693,
+         "inflow": 0.0671,
+         "gt_side": 0.0578,
+         "wrong_side": 0.06,
+         "both": 0.0071,
+         "neither": 0.8751
+        },
+        "obs_inflow": {
+         "n": 7336,
+         "inflow": 0.1915,
+         "gt_side": 0.6332,
+         "wrong_side": 0.1857,
+         "both": 0.0059,
+         "neither": 0.1753
+        },
+        "missing_completeness": {
+         "n": 21,
+         "le_0.2": 0.1429,
+         "le_0.5": 0.381
+        },
+        "band_completeness": {
+         "n": 8936,
+         "le_0.2": 0.8603,
+         "le_0.5": 0.9824
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91366,
+         "inflow": 0.0662,
+         "gt_side": 0.0508,
+         "wrong_side": 0.0596,
+         "both": 0.0066,
+         "neither": 0.883
+        },
+        "obs_inflow": {
+         "n": 4958,
+         "inflow": 0.2051,
+         "gt_side": 0.643,
+         "wrong_side": 0.1995,
+         "both": 0.0056,
+         "neither": 0.1519
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 6849,
+         "le_0.2": 0.8721,
+         "le_0.5": 0.9848
+        }
+       }
+      },
+      "mvsfuse": {
+       "ko": "MVS 기반 결합",
+       "result": "mvsfuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94693,
+         "inflow": 0.0278,
+         "gt_side": 0.9692,
+         "wrong_side": 0.0102,
+         "both": 0.0176,
+         "neither": 0.003
+        },
+        "obs_inflow": {
+         "n": 7336,
+         "inflow": 0.3221,
+         "gt_side": 0.6441,
+         "wrong_side": 0.1858,
+         "both": 0.1363,
+         "neither": 0.0338
+        },
+        "missing_completeness": {
+         "n": 21,
+         "le_0.2": 1.0,
+         "le_0.5": 1.0
+        },
+        "band_completeness": {
+         "n": 8936,
+         "le_0.2": 0.9987,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91366,
+         "inflow": 0.0242,
+         "gt_side": 0.974,
+         "wrong_side": 0.0068,
+         "both": 0.0174,
+         "neither": 0.0018
+        },
+        "obs_inflow": {
+         "n": 4958,
+         "inflow": 0.3201,
+         "gt_side": 0.6515,
+         "wrong_side": 0.1773,
+         "both": 0.1428,
+         "neither": 0.0284
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 6849,
+         "le_0.2": 0.9993,
+         "le_0.5": 1.0
+        }
+       }
+      },
+      "cdgs": {
+       "ko": "CDGS 변형",
+       "result": "cdgsnofit_ALS_s0",
+       "status": "아직"
+      },
+      "judgefuse": {
+       "ko": "본 방법의 판정으로 갈아 끼운 변형",
+       "result": "judgefuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94693,
+         "inflow": 0.0129,
+         "gt_side": 0.9843,
+         "wrong_side": 0.002,
+         "both": 0.0109,
+         "neither": 0.0028
+        },
+        "obs_inflow": {
+         "n": 7336,
+         "inflow": 0.7162,
+         "gt_side": 0.1818,
+         "wrong_side": 0.6249,
+         "both": 0.0913,
+         "neither": 0.102
+        },
+        "missing_completeness": {
+         "n": 21,
+         "le_0.2": 0.5714,
+         "le_0.5": 1.0
+        },
+        "band_completeness": {
+         "n": 8936,
+         "le_0.2": 0.997,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91366,
+         "inflow": 0.0106,
+         "gt_side": 0.9879,
+         "wrong_side": 0.0011,
+         "both": 0.0095,
+         "neither": 0.0014
+        },
+        "obs_inflow": {
+         "n": 4958,
+         "inflow": 0.7346,
+         "gt_side": 0.1775,
+         "wrong_side": 0.6374,
+         "both": 0.0972,
+         "neither": 0.0879
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 6849,
+         "le_0.2": 0.9981,
+         "le_0.5": 1.0
+        }
+       }
+      }
+     }
+    },
+    "B173nb_b10": {
+     "rows": {
+      "c11": 94832,
+      "c3": 6735,
+      "c4": 105,
+      "band": 7687
+     },
+     "results": {
+      "ours_s0": {
+       "ko": "본 방법 씨앗 0",
+       "result": "prop_ALS_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94832,
+         "inflow": 0.0002,
+         "gt_side": 0.9977,
+         "wrong_side": 0.0001,
+         "both": 0.0001,
+         "neither": 0.0021
+        },
+        "obs_inflow": {
+         "n": 6735,
+         "inflow": 0.8594,
+         "gt_side": 0.0961,
+         "wrong_side": 0.85,
+         "both": 0.0094,
+         "neither": 0.0445
+        },
+        "missing_completeness": {
+         "n": 105,
+         "le_0.2": 0.0,
+         "le_0.5": 0.0095
+        },
+        "band_completeness": {
+         "n": 7687,
+         "le_0.2": 0.9815,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91814,
+         "inflow": 0.0001,
+         "gt_side": 0.9984,
+         "wrong_side": 0.0,
+         "both": 0.0001,
+         "neither": 0.0015
+        },
+        "obs_inflow": {
+         "n": 5211,
+         "inflow": 0.8513,
+         "gt_side": 0.0979,
+         "wrong_side": 0.8407,
+         "both": 0.0106,
+         "neither": 0.0509
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5943,
+         "le_0.2": 0.9894,
+         "le_0.5": 1.0
+        }
+       }
+      },
+      "ours_s1": {
+       "ko": "본 방법 씨앗 1",
+       "result": "prop_ALS_s1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94832,
+         "inflow": 0.0003,
+         "gt_side": 0.9975,
+         "wrong_side": 0.0002,
+         "both": 0.0001,
+         "neither": 0.0022
+        },
+        "obs_inflow": {
+         "n": 6735,
+         "inflow": 0.8576,
+         "gt_side": 0.0987,
+         "wrong_side": 0.8395,
+         "both": 0.0181,
+         "neither": 0.0437
+        },
+        "missing_completeness": {
+         "n": 105,
+         "le_0.2": 0.0,
+         "le_0.5": 0.0
+        },
+        "band_completeness": {
+         "n": 7687,
+         "le_0.2": 0.9814,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91814,
+         "inflow": 0.0001,
+         "gt_side": 0.9982,
+         "wrong_side": 0.0,
+         "both": 0.0001,
+         "neither": 0.0017
+        },
+        "obs_inflow": {
+         "n": 5211,
+         "inflow": 0.8482,
+         "gt_side": 0.1027,
+         "wrong_side": 0.8279,
+         "both": 0.0203,
+         "neither": 0.0491
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5943,
+         "le_0.2": 0.9884,
+         "le_0.5": 1.0
+        }
+       }
+      },
+      "2dgs": {
+       "ko": "2차원 가우시안 스플래팅",
+       "result": "imgonly_2dgs_s0",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94832,
+         "inflow": 0.0229,
+         "gt_side": 0.6757,
+         "wrong_side": 0.0216,
+         "both": 0.0012,
+         "neither": 0.3014
+        },
+        "obs_inflow": {
+         "n": 6735,
+         "inflow": 0.537,
+         "gt_side": 0.1117,
+         "wrong_side": 0.5249,
+         "both": 0.0122,
+         "neither": 0.3513
+        },
+        "missing_completeness": {
+         "n": 105,
+         "le_0.2": 0.0095,
+         "le_0.5": 0.4286
+        },
+        "band_completeness": {
+         "n": 7687,
+         "le_0.2": 0.5444,
+         "le_0.5": 0.8232
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91814,
+         "inflow": 0.0226,
+         "gt_side": 0.6738,
+         "wrong_side": 0.0216,
+         "both": 0.0011,
+         "neither": 0.3036
+        },
+        "obs_inflow": {
+         "n": 5211,
+         "inflow": 0.5268,
+         "gt_side": 0.1199,
+         "wrong_side": 0.5126,
+         "both": 0.0142,
+         "neither": 0.3533
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5943,
+         "le_0.2": 0.5613,
+         "le_0.5": 0.7942
+        }
+       }
+      },
+      "geogs": {
+       "ko": "GeoGS",
+       "result": "geogs_ALS_fix1",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94832,
+         "inflow": 0.0289,
+         "gt_side": 0.9218,
+         "wrong_side": 0.0059,
+         "both": 0.0231,
+         "neither": 0.0493
+        },
+        "obs_inflow": {
+         "n": 6735,
+         "inflow": 0.4043,
+         "gt_side": 0.3942,
+         "wrong_side": 0.3589,
+         "both": 0.0454,
+         "neither": 0.2015
+        },
+        "missing_completeness": {
+         "n": 105,
+         "le_0.2": 0.8857,
+         "le_0.5": 1.0
+        },
+        "band_completeness": {
+         "n": 7687,
+         "le_0.2": 0.7324,
+         "le_0.5": 0.9921
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91814,
+         "inflow": 0.0279,
+         "gt_side": 0.9266,
+         "wrong_side": 0.005,
+         "both": 0.023,
+         "neither": 0.0455
+        },
+        "obs_inflow": {
+         "n": 5211,
+         "inflow": 0.4022,
+         "gt_side": 0.3982,
+         "wrong_side": 0.3652,
+         "both": 0.037,
+         "neither": 0.1996
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5943,
+         "le_0.2": 0.7577,
+         "le_0.5": 0.9936
+        }
+       }
+      },
+      "mvsfuse": {
+       "ko": "MVS 기반 결합",
+       "result": "mvsfuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94832,
+         "inflow": 0.028,
+         "gt_side": 0.9687,
+         "wrong_side": 0.0102,
+         "both": 0.0179,
+         "neither": 0.0032
+        },
+        "obs_inflow": {
+         "n": 6735,
+         "inflow": 0.2854,
+         "gt_side": 0.6934,
+         "wrong_side": 0.1803,
+         "both": 0.1051,
+         "neither": 0.0212
+        },
+        "missing_completeness": {
+         "n": 105,
+         "le_0.2": 0.9905,
+         "le_0.5": 1.0
+        },
+        "band_completeness": {
+         "n": 7687,
+         "le_0.2": 0.9975,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91814,
+         "inflow": 0.0238,
+         "gt_side": 0.974,
+         "wrong_side": 0.007,
+         "both": 0.0168,
+         "neither": 0.0022
+        },
+        "obs_inflow": {
+         "n": 5211,
+         "inflow": 0.2748,
+         "gt_side": 0.7056,
+         "wrong_side": 0.1675,
+         "both": 0.1073,
+         "neither": 0.0196
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5943,
+         "le_0.2": 0.9993,
+         "le_0.5": 1.0
+        }
+       }
+      },
+      "cdgs": {
+       "ko": "CDGS 변형",
+       "result": "cdgsnofit_ALS_s0",
+       "status": "아직"
+      },
+      "judgefuse": {
+       "ko": "본 방법의 판정으로 갈아 끼운 변형",
+       "result": "judgefuse_ALS",
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94832,
+         "inflow": 0.0161,
+         "gt_side": 0.981,
+         "wrong_side": 0.0024,
+         "both": 0.0137,
+         "neither": 0.0029
+        },
+        "obs_inflow": {
+         "n": 6735,
+         "inflow": 0.6386,
+         "gt_side": 0.2747,
+         "wrong_side": 0.55,
+         "both": 0.0886,
+         "neither": 0.0867
+        },
+        "missing_completeness": {
+         "n": 105,
+         "le_0.2": 0.6571,
+         "le_0.5": 1.0
+        },
+        "band_completeness": {
+         "n": 7687,
+         "le_0.2": 0.9965,
+         "le_0.5": 1.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91814,
+         "inflow": 0.0134,
+         "gt_side": 0.9847,
+         "wrong_side": 0.0012,
+         "both": 0.0122,
+         "neither": 0.0019
+        },
+        "obs_inflow": {
+         "n": 5211,
+         "inflow": 0.6337,
+         "gt_side": 0.2677,
+         "wrong_side": 0.5435,
+         "both": 0.0902,
+         "neither": 0.0986
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5943,
+         "le_0.2": 0.9985,
+         "le_0.5": 1.0
+        }
+       }
+      }
+     }
+    }
+   },
+   "judgment": {
+    "B173_b0": {
+     "judged_patches": 21519,
+     "judged_area_m2": 1446.4,
+     "correct_keep": {
+      "patches": 2400,
+      "area_m2": 167.3,
+      "share": 0.1156
+     },
+     "wrong_keep": {
+      "patches": 75,
+      "area_m2": 6.3,
+      "share": 0.0044
+     },
+     "correct_release": {
+      "patches": 18190,
+      "area_m2": 1209.1,
+      "share": 0.836
+     },
+     "wrong_release": {
+      "patches": 854,
+      "area_m2": 63.6,
+      "share": 0.044
+     },
+     "undetermined": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "share": 0.0
+     },
+     "invisible_area_m2": 0.0,
+     "no_gt_area_m2": 207.0
+    },
+    "B173nb_b10": {
+     "judged_patches": 21550,
+     "judged_area_m2": 1448.9,
+     "correct_keep": {
+      "patches": 2621,
+      "area_m2": 184.0,
+      "share": 0.127
+     },
+     "wrong_keep": {
+      "patches": 77,
+      "area_m2": 6.4,
+      "share": 0.0044
+     },
+     "correct_release": {
+      "patches": 18219,
+      "area_m2": 1211.3,
+      "share": 0.836
+     },
+     "wrong_release": {
+      "patches": 627,
+      "area_m2": 46.6,
+      "share": 0.0321
+     },
+     "undetermined": {
+      "patches": 6,
+      "area_m2": 0.6,
+      "share": 0.0004
+     },
+     "invisible_area_m2": 0.0,
+     "no_gt_area_m2": 207.8
+    }
+   }
+  }
+ },
+ "notes": {
+  "training_views": {
+   "B173_b0": {
+    "train_views": 140,
+    "test_views": 20
+   },
+   "B173nb_b10": {
+    "train_views": 203,
+    "test_views": 29
+   }
+  },
+  "ranges": {
+   "B173_b0": {
+    "eval_patches_LoD2": 114065,
+    "eval_bbox_xy": [
+     114.7,
+     74.3,
+     165.9,
+     151.6
+    ]
+   },
+   "B173nb_b10": {
+    "eval_patches_LoD2": 141534,
+    "eval_bbox_xy": [
+     91.4,
+     74.3,
+     165.9,
+     151.6
+    ]
+   }
+  },
+  "b173_b0_lod2_seeds": "본 방법 B173만 LoD2: 씨앗 0 = 고침 작업의 r14 학습(prop_LoD2_s0, SF), 씨앗 1 = 1단계의 r12 학습(prop_LoD2_s1, S1)",
+  "als_matching": "항공 LiDAR 패치는 두 상자의 XY 격자가 (8.4, 6.7) cm 어긋나 1 cm 안으로 36개만 맞는다(definitions.json match_b173). 맞춘 패치의 값은 표본 부족이다."
+ },
+ "scene_only_criterion_5_4": {
+  "source": "SL/prep/judge_wide/b173_scene_only.json 'counts_5_4' (SL/tables/judge_wide_b173.md, .json)",
+  "written": "2026-10-15 21:30 KST",
+  "note": "같은 패치(B173만 평가 범위, 두 줄 모두 참값 라벨이 있는 패치). 참 라벨: 지금 값의 줄 = 영역 파일 v3, 장면 안 값의 줄 = 그 정합으로 옮긴 사전 정보의 정오(고정 τ, 앞 작업과 같음)",
+  "priors": {
+   "LoD2": {
+    "current": {
+     "tau_m": {
+      "roof": 0.17595741568870737,
+      "wall": 0.22782853520583887
+     },
+     "shift_m": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "judgment": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/checks/dry/r14_B173_b0_LoD2",
+     "judged": {
+      "correct_keep": [
+       625.187,
+       10003
+      ],
+      "wrong_keep": [
+       219.688,
+       3515
+      ],
+      "correct_release": [
+       1418.563,
+       22697
+      ],
+      "wrong_release": [
+       178.437,
+       2855
+      ],
+      "undetermined": [
+       1.562,
+       25
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "shares": {
+      "correct_keep": 0.2559,
+      "wrong_keep": 0.0899,
+      "correct_release": 0.5806,
+      "wrong_release": 0.073,
+      "undetermined": 0.0006,
+      "other": 0.0
+     }
+    },
+    "scene_only": {
+     "tau_m": {
+      "roof": 3.646792199154107,
+      "wall": 0.6367984788107246
+     },
+     "shift_m": [
+      0.0,
+      0.0,
+      -4.2306499613374235
+     ],
+     "judgment": "PH/ch6_support_v1/PHD-CH6-SUPPORT-v1/t5/b173self/B173_b0/LoD2",
+     "judged": {
+      "correct_keep": [
+       519.437,
+       8311
+      ],
+      "wrong_keep": [
+       1076.937,
+       17231
+      ],
+      "correct_release": [
+       717.688,
+       11483
+      ],
+      "wrong_release": [
+       129.25,
+       2068
+      ],
+      "undetermined": [
+       0.125,
+       2
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "shares": {
+      "correct_keep": 0.2126,
+      "wrong_keep": 0.4407,
+      "correct_release": 0.2937,
+      "wrong_release": 0.0529,
+      "undetermined": 0.0001,
+      "other": 0.0
+     }
+    },
+    "common_patches": 39095,
+    "common_area_m2": 2443.4,
+    "changed_judgment_m2": 1701.3
+   },
+   "ALS": {
+    "current": {
+     "tau_m": {
+      "roof": 0.14701597917790277,
+      "wall": 0.14701597917790277
+     },
+     "shift_m": [
+      -0.05619434746608162,
+      0.06288884357338685,
+      0.0
+     ],
+     "judgment": "PH/main_baselines_v1/PHD-MAIN-BASELINES-v1/checks/dry/r14_B173_b0_ALS",
+     "judged": {
+      "correct_keep": [
+       152.485,
+       2178
+      ],
+      "wrong_keep": [
+       7.187,
+       84
+      ],
+      "correct_release": [
+       1207.833,
+       18153
+      ],
+      "wrong_release": [
+       56.952,
+       763
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "shares": {
+      "correct_keep": 0.107,
+      "wrong_keep": 0.005,
+      "correct_release": 0.8479,
+      "wrong_release": 0.04,
+      "undetermined": 0.0,
+      "other": 0.0
+     }
+    },
+    "scene_only": {
+     "tau_m": {
+      "roof": 2.856885170963763,
+      "wall": 2.856885170963763
+     },
+     "shift_m": [
+      0.0,
+      0.0,
+      -4.618265218505195
+     ],
+     "judgment": "PH/ch6_support_v1/PHD-CH6-SUPPORT-v1/t5/b173self/B173_b0/ALS",
+     "judged": {
+      "correct_keep": [
+       130.087,
+       1957
+      ],
+      "wrong_keep": [
+       1275.34,
+       18970
+      ],
+      "correct_release": [
+       19.028,
+       251
+      ],
+      "wrong_release": [
+       0.0,
+       0
+      ],
+      "undetermined": [
+       0.0,
+       0
+      ],
+      "other": [
+       0.0,
+       0
+      ]
+     },
+     "shares": {
+      "correct_keep": 0.0913,
+      "wrong_keep": 0.8953,
+      "correct_release": 0.0134,
+      "wrong_release": 0.0,
+      "undetermined": 0.0,
+      "other": 0.0
+     }
+    },
+    "common_patches": 21178,
+    "common_area_m2": 1424.5,
+    "changed_judgment_m2": 1257.8
+   }
+  }
+ },
+ "scene_only_criterion": {
+  "source": "SL/prep/judge_wide/b173_scene_only.json",
+  "written": "2026-10-15 21:30 KST",
+  "kind": "pointer + this task's 5.4-form recount (SL/tables/judge_wide_b173.json, 이 발주에서 냄)",
+  "priors": {
+   "LoD2": {
+    "scene_only": {
+     "roof": 3.646792199154107,
+     "wall": 0.6367984788107246
+    },
+    "scene_only_shift": [
+     0.0,
+     0.0,
+     -4.2306499613374235
+    ],
+    "current": {
+     "roof": 0.17595741568870737,
+     "wall": 0.22782853520583887
+    },
+    "four_counts": {
+     "correct_keep": [
+      954.0,
+      15264
+     ],
+     "wrong_keep": [
+      1237.25,
+      19796
+     ],
+     "correct_release": [
+      730.0,
+      11680
+     ],
+     "wrong_release": [
+      156.56,
+      2505
+     ]
+    }
+   },
+   "ALS": {
+    "scene_only": {
+     "roof": 2.856885170963763,
+     "wall": 2.856885170963763
+    },
+    "scene_only_shift": [
+     0.0,
+     0.0,
+     -4.618265218505195
+    ],
+    "current": {
+     "roof": 0.14701597917790277,
+     "wall": 0.14701597917790277
+    },
+    "four_counts": {
+     "correct_keep": [
+      130.28,
+      1960
+     ],
+     "wrong_keep": [
+      1337.74,
+      19865
+     ],
+     "correct_release": [
+      25.51,
+      334
+     ],
+     "wrong_release": [
+      0.0,
+      0
+     ]
+    }
+   }
+  }
+ }
+}
