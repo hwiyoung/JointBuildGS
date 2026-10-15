@@ -1,0 +1,59 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "conf_codes",
+ "item": "기존 방법과의 비교 (CDGS 기제)",
+ "runs": {
+  "B0_b10/cdgsnofit_LoD2_s0": {
+   "kind": "변형",
+   "mean": {
+    "2": 0.6548708959892939,
+    "3": 0.597281825238831,
+    "4": 0.7031685980193423,
+    "11": 0.645308391460006
+   },
+   "pixels": {
+    "2": 8427843,
+    "3": 490159,
+    "4": 320291,
+    "11": 1087689
+   },
+   "views": 152
+  },
+  "B0_b10/cdgs_LoD2_s0": {
+   "kind": "공식 확인",
+   "mean": {
+    "2": 0.6548856397213766,
+    "3": 0.5972952782090535,
+    "4": 0.7031694991635148,
+    "11": 0.6453226503189093
+   },
+   "pixels": {
+    "2": 8427843,
+    "3": 490159,
+    "4": 320291,
+    "11": 1087689
+   },
+   "views": 152
+  }
+ },
+ "pending": [
+  "B0 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0)",
+  "B173 주변 · LoD2 변형 (cdgsnofit_LoD2_s0)",
+  "B173 주변 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0)",
+  "R1 · LoD2 변형 (cdgsnofit_LoD2_s0)",
+  "R1 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0)",
+  "B173만 · LoD2 변형 (cdgsnofit_LoD2_s0)",
+  "B173만 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0)"
+ ],
+ "scientific_verdict": null,
+ "title": "CDGS의 화소 신뢰도는 사전 정보가 틀린 곳(코드 11, 0.65)에서도 맞는 곳(코드 2, 0.65)과 같았다 — B0 LoD2 변형과 공식 확인(다른 단위는 아직)",
+ "title_kind": "statement written after viewing (2026-10-15 23:52 KST)",
+ "foot": "사전 정보가 닿은 평가 범위 화소의 CDGS 신뢰도 평균(학습 시작 때 만든 지도, 모든 학습 영상): B0_b10/cdgsnofit_LoD2_s0: 코드 2 0.655(8,427,843화소), 코드 3 0.597(490,159화소), 코드 4 0.703(320,291화소), 코드 11 0.645(1,087,689화소); B0_b10/cdgs_LoD2_s0: 코드 2 0.655(8,427,843화소), 코드 3 0.597(490,159화소), 코드 4 0.703(320,291화소), 코드 11 0.645(1,087,689화소). 아직(학습이 시작되지 않아 신뢰도 지도가 없음): B0 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0), B173 주변 · LoD2 변형 (cdgsnofit_LoD2_s0), B173 주변 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0), R1 · LoD2 변형 (cdgsnofit_LoD2_s0), R1 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0), B173만 · LoD2 변형 (cdgsnofit_LoD2_s0), B173만 · 항공 LiDAR 변형 (cdgsnofit_ALS_s0).",
+ "rule7": {
+  "result": "통과",
+  "note": "코드 11(주황) 막대가 코드 2 막대와 같은 높이다. 나머지 단위는 '아직'.",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

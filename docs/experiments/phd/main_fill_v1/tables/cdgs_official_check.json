@@ -1,0 +1,560 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "written": "2026-10-16 04:09:16 KST",
+ "site": "B0_b10",
+ "unit": "LoD2",
+ "official": "cdgs_LoD2_s0",
+ "variant": "cdgsnofit_LoD2_s0",
+ "rows": [
+  {
+   "metric": "prior_error_inflow",
+   "ko": "과거 형상 유입률",
+   "code": "11",
+   "official": null,
+   "variant": null,
+   "n_official": null,
+   "n_variant": null,
+   "method_s0": 0.121,
+   "method_s1": 0.1186,
+   "criterion": 0.01635593103433736,
+   "criterion_parts": {
+    "pooled": 0.01635593103433736,
+    "unit": 0.004751757569573597
+   },
+   "diff_official_minus_variant": null,
+   "reading": "결과 없음"
+  },
+  {
+   "metric": "obs_inflow",
+   "ko": "관측 오류 유입률 (영역 전체)",
+   "code": "3",
+   "official": null,
+   "variant": null,
+   "n_official": null,
+   "n_variant": null,
+   "method_s0": 0.21,
+   "method_s1": 0.2132,
+   "criterion": 0.015746732994497574,
+   "criterion_parts": {
+    "pooled": 0.015746732994497574,
+    "unit": 0.006335676759431482
+   },
+   "diff_official_minus_variant": null,
+   "reading": "결과 없음"
+  },
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "code": "4",
+   "official": null,
+   "variant": null,
+   "n_official": null,
+   "n_variant": null,
+   "method_s0": 0.9438,
+   "method_s1": 0.9272,
+   "criterion": 0.03286632318955062,
+   "criterion_parts": {
+    "pooled": 0.03286632318955062,
+    "unit": 0.03286632318955062
+   },
+   "diff_official_minus_variant": null,
+   "reading": "결과 없음"
+  },
+  {
+   "metric": "overall_completeness",
+   "ko": "전체 완전성 (0.2 m)",
+   "code": "전체",
+   "official": null,
+   "variant": null,
+   "n_official": null,
+   "n_variant": null,
+   "method_s0": 0.9571,
+   "method_s1": 0.9534,
+   "criterion": 0.0073256262530924845,
+   "criterion_parts": {
+    "unit": 0.0073256262530924845
+   },
+   "diff_official_minus_variant": null,
+   "reading": "결과 없음"
+  },
+  {
+   "metric": "floating_count",
+   "ko": "부유 가우시안 수 (3~20 m, 개)",
+   "code": "전체",
+   "official": null,
+   "variant": null,
+   "n_official": null,
+   "n_variant": null,
+   "method_s0": 1037.0,
+   "method_s1": 1116.0,
+   "criterion": 156.4120199984643,
+   "criterion_parts": {
+    "unit": 156.4120199984643
+   },
+   "diff_official_minus_variant": null,
+   "reading": "결과 없음"
+  }
+ ],
+ "runs": {
+  "공식": {
+   "result": "cdgs_LoD2_s0",
+   "status": "PASS",
+   "attempt": 1,
+   "seconds": 19755.1,
+   "gpu_peak_mib": 9566.0,
+   "gpu_peak_minus_idle_mib": 9475.0,
+   "host_memory_peak_gib": 8.91,
+   "torch_memory_gb": {
+    "allocated_gb": 1.346,
+    "reserved_gb": 7.428,
+    "max_allocated_gb": 7.095,
+    "max_reserved_gb": 9.133
+   },
+   "final_gaussians": 1501228,
+   "alignment": {
+    "options": {
+     "alignment_targets": "own_observations",
+     "depth_unit_divisor_s": 19.775443386853258,
+     "site_median_target_depth_m": 52.32714381727219,
+     "TT": 2.646066780584012,
+     "decision": "user 10-15, option 나: reproduction changes beyond order 4.2 (provenance/cdgs/reproduction_changes_v2.diff)",
+     "scientific_verdict": null
+    },
+    "training_views": 243,
+    "views_with_depth": 152,
+    "share_views_with_depth": 0.6255144032921811,
+    "weight_median_views_with_depth": 0.5856434800073813,
+    "weight_q10_q50_q90_views_with_depth": [
+     0.16616,
+     0.585444,
+     0.598591
+    ],
+    "L_align_q10_q50_q90": [
+     1.3e-05,
+     0.000159,
+     0.007536
+    ],
+    "scale_q10_q50_q90": [
+     0.888668,
+     0.959134,
+     1.010999
+    ],
+    "shift_m_q10_q50_q90": [
+     -0.719368,
+     2.92598,
+     9.365662
+    ],
+    "sfm_points_used_q10_q50_q90": [
+     7.0,
+     142.0,
+     638.0
+    ]
+   },
+   "views_ok": true,
+   "marks": [
+    {
+     "iteration": 0,
+     "seconds": 0.0
+    },
+    {
+     "iteration": 1000,
+     "seconds": 178.2
+    },
+    {
+     "iteration": 2000,
+     "seconds": 209.9
+    },
+    {
+     "iteration": 3000,
+     "seconds": 294.8
+    },
+    {
+     "iteration": 4000,
+     "seconds": 399.7
+    },
+    {
+     "iteration": 5000,
+     "seconds": 579.5
+    },
+    {
+     "iteration": 6000,
+     "seconds": 864.2
+    },
+    {
+     "iteration": 7000,
+     "seconds": 1317.1
+    },
+    {
+     "iteration": 8000,
+     "seconds": 1929.6
+    },
+    {
+     "iteration": 9000,
+     "seconds": 2593.8
+    },
+    {
+     "iteration": 10000,
+     "seconds": 3353.1
+    },
+    {
+     "iteration": 11000,
+     "seconds": 4238.7
+    },
+    {
+     "iteration": 12000,
+     "seconds": 5071.1
+    },
+    {
+     "iteration": 13000,
+     "seconds": 5871.7
+    },
+    {
+     "iteration": 14000,
+     "seconds": 6683.9
+    },
+    {
+     "iteration": 15000,
+     "seconds": 7527.9
+    },
+    {
+     "iteration": 16000,
+     "seconds": 8413.4
+    },
+    {
+     "iteration": 17000,
+     "seconds": 9214.1
+    },
+    {
+     "iteration": 18000,
+     "seconds": 10014.7
+    },
+    {
+     "iteration": 19000,
+     "seconds": 10826.9
+    },
+    {
+     "iteration": 20000,
+     "seconds": 11627.6
+    },
+    {
+     "iteration": 21000,
+     "seconds": 12429.7
+    },
+    {
+     "iteration": 22000,
+     "seconds": 13240.4
+    },
+    {
+     "iteration": 23000,
+     "seconds": 14042.6
+    },
+    {
+     "iteration": 24000,
+     "seconds": 14853.3
+    },
+    {
+     "iteration": 25000,
+     "seconds": 15655.5
+    },
+    {
+     "iteration": 26000,
+     "seconds": 16466.2
+    },
+    {
+     "iteration": 27000,
+     "seconds": 17278.4
+    },
+    {
+     "iteration": 28000,
+     "seconds": 18079.0
+    },
+    {
+     "iteration": 29000,
+     "seconds": 18891.2
+    },
+    {
+     "iteration": 30000,
+     "seconds": 19703.5
+    }
+   ],
+   "post": {
+    "status": "FAILED",
+    "wall_seconds": 557.8,
+    "peak_host_gb": null,
+    "tsdf": null,
+    "steps": [
+     [
+      "renders",
+      0,
+      109.2
+     ],
+     [
+      "fuse",
+      137,
+      448.6
+     ]
+    ]
+   },
+   "metric_steps": [],
+   "files": {
+    "mesh_tsdf": [
+     "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgs_LoD2_s0/post/mesh_tsdf.ply",
+     false,
+     null
+    ],
+    "metrics": [
+     "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B0_b10/cdgs_LoD2_s0__LoD2.json",
+     false,
+     null
+    ],
+    "measure": [
+     "/ph/main_fill_v1/PHD-MAIN-FILL-v1/measure/B0_b10/LoD2__cdgs_LoD2_s0.json",
+     false,
+     null
+    ]
+   }
+  },
+  "변형": {
+   "result": "cdgsnofit_LoD2_s0",
+   "status": "PASS",
+   "attempt": 1,
+   "seconds": 19789.7,
+   "gpu_peak_mib": 10702.0,
+   "gpu_peak_minus_idle_mib": 10244.0,
+   "host_memory_peak_gib": 8.93,
+   "torch_memory_gb": {
+    "allocated_gb": 1.357,
+    "reserved_gb": 7.525,
+    "max_allocated_gb": 7.134,
+    "max_reserved_gb": 9.652
+   },
+   "final_gaussians": 1513717,
+   "alignment": {
+    "options": {
+     "alignment_targets": "own_observations",
+     "depth_unit_divisor_s": 19.775443386853258,
+     "site_median_target_depth_m": 52.32714381727219,
+     "TT": 2.646066780584012,
+     "decision": "user 10-15, option 나: reproduction changes beyond order 4.2 (provenance/cdgs/reproduction_changes_v2.diff)",
+     "scientific_verdict": null,
+     "alignment": "identity",
+     "v2_reference": "jbgs_v2_alignment.json",
+     "task_id_variant": "PHD-MAIN-FILL-v1",
+     "variant": "order 5.1 2 (user decision 10-15): the per-view fit is skipped, scale 1 and shift 0; L_align and the depth weight 0.6 exp(-150 L_align) computed in place with the same formula; supervision depth and confidence map from the prior render depth in metres (adapter v3, SL/sources/cdgs-release-adapters-v3)"
+    },
+    "training_views": 243,
+    "views_with_depth": 152,
+    "share_views_with_depth": 0.6255144032921811,
+    "weight_median_views_with_depth": 0.5805701305226287,
+    "weight_q10_q50_q90_views_with_depth": [
+     0.106731,
+     0.580219,
+     0.597594
+    ],
+    "L_align_q10_q50_q90": [
+     2.5e-05,
+     0.000215,
+     0.007797
+    ],
+    "scale_q10_q50_q90": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "shift_m_q10_q50_q90": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "sfm_points_used_q10_q50_q90": [
+     7.0,
+     142.0,
+     638.0
+    ],
+    "v2_official_beside": {
+     "views_with_depth": 152,
+     "scale_q10_q50_q90": [
+      0.888668,
+      0.959134,
+      1.010999
+     ],
+     "shift_m_q10_q50_q90": [
+      -0.719368,
+      2.92598,
+      9.365662
+     ],
+     "L_align_q10_q50_q90": [
+      1.3e-05,
+      0.000159,
+      0.007536
+     ],
+     "weight_median_views_with_depth": 0.5856434800073813
+    }
+   },
+   "views_ok": true,
+   "marks": [
+    {
+     "iteration": 0,
+     "seconds": 0.0
+    },
+    {
+     "iteration": 1000,
+     "seconds": 107.0
+    },
+    {
+     "iteration": 2000,
+     "seconds": 128.5
+    },
+    {
+     "iteration": 3000,
+     "seconds": 223.4
+    },
+    {
+     "iteration": 4000,
+     "seconds": 338.5
+    },
+    {
+     "iteration": 5000,
+     "seconds": 529.3
+    },
+    {
+     "iteration": 6000,
+     "seconds": 782.4
+    },
+    {
+     "iteration": 7000,
+     "seconds": 1236.7
+    },
+    {
+     "iteration": 8000,
+     "seconds": 1837.7
+    },
+    {
+     "iteration": 9000,
+     "seconds": 2512.0
+    },
+    {
+     "iteration": 10000,
+     "seconds": 3281.2
+    },
+    {
+     "iteration": 11000,
+     "seconds": 4178.3
+    },
+    {
+     "iteration": 12000,
+     "seconds": 5010.6
+    },
+    {
+     "iteration": 13000,
+     "seconds": 5822.9
+    },
+    {
+     "iteration": 14000,
+     "seconds": 6633.5
+    },
+    {
+     "iteration": 15000,
+     "seconds": 7487.5
+    },
+    {
+     "iteration": 16000,
+     "seconds": 8384.6
+    },
+    {
+     "iteration": 17000,
+     "seconds": 9195.3
+    },
+    {
+     "iteration": 18000,
+     "seconds": 9997.5
+    },
+    {
+     "iteration": 19000,
+     "seconds": 10808.2
+    },
+    {
+     "iteration": 20000,
+     "seconds": 11620.4
+    },
+    {
+     "iteration": 21000,
+     "seconds": 12432.6
+    },
+    {
+     "iteration": 22000,
+     "seconds": 13243.3
+    },
+    {
+     "iteration": 23000,
+     "seconds": 14055.5
+    },
+    {
+     "iteration": 24000,
+     "seconds": 14867.7
+    },
+    {
+     "iteration": 25000,
+     "seconds": 15678.4
+    },
+    {
+     "iteration": 26000,
+     "seconds": 16490.6
+    },
+    {
+     "iteration": 27000,
+     "seconds": 17302.9
+    },
+    {
+     "iteration": 28000,
+     "seconds": 18113.6
+    },
+    {
+     "iteration": 29000,
+     "seconds": 18925.8
+    },
+    {
+     "iteration": 30000,
+     "seconds": 19738.0
+    }
+   ],
+   "post": {
+    "status": "FAILED",
+    "wall_seconds": 573.0,
+    "peak_host_gb": null,
+    "tsdf": null,
+    "steps": [
+     [
+      "renders",
+      0,
+      95.1
+     ],
+     [
+      "fuse",
+      137,
+      477.9
+     ]
+    ]
+   },
+   "metric_steps": [],
+   "files": {
+    "mesh_tsdf": [
+     "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+     false,
+     null
+    ],
+    "metrics": [
+     "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json",
+     false,
+     null
+    ],
+    "measure": [
+     "/ph/main_fill_v1/PHD-MAIN-FILL-v1/measure/B0_b10/LoD2__cdgsnofit_LoD2_s0.json",
+     false,
+     null
+    ]
+   }
+  }
+ },
+ "scientific_verdict": null
+}

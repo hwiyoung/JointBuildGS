@@ -1,0 +1,183 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "weights",
+ "item": "기존 방법과의 비교 (CDGS 기제)",
+ "units": {
+  "B0_b10/LoD2": {
+   "variant": {
+    "views": 152,
+    "median": 0.5805701305226287,
+    "q05": 0.030575991529985184,
+    "q95": 0.5990199224815385,
+    "share_below_0_3": 0.14473684210526316
+   },
+   "official_v2": {
+    "views": 152,
+    "median": 0.5856434800073813,
+    "q05": 0.08575929030948017,
+    "q95": 0.5991080218562886,
+    "share_below_0_3": 0.11842105263157894
+   },
+   "training_views": 243,
+   "depth_share": 0.6255144032921811,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_B0_b10_LoD2_v3id.json"
+  },
+  "B0_b10/ALS": {
+   "variant": {
+    "views": 159,
+    "median": 0.5158933203284465,
+    "q05": 2.0924842160210268e-106,
+    "q95": 0.5963916716526858,
+    "share_below_0_3": 0.33962264150943394
+   },
+   "official_v2": {
+    "views": 159,
+    "median": 0.5392058116025227,
+    "q05": 0.004564454124706722,
+    "q95": 0.5976360346967996,
+    "share_below_0_3": 0.23270440251572327
+   },
+   "training_views": 243,
+   "depth_share": 0.654320987654321,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_B0_b10_ALS_v3id.json"
+  },
+  "B173nb_b10/LoD2": {
+   "variant": {
+    "views": 140,
+    "median": 0.5284402650846088,
+    "q05": 0.027841899052113733,
+    "q95": 0.5994395973444157,
+    "share_below_0_3": 0.18571428571428572
+   },
+   "official_v2": {
+    "views": 140,
+    "median": 0.5583607803180567,
+    "q05": 0.20781712489070428,
+    "q95": 0.5998063629820648,
+    "share_below_0_3": 0.1
+   },
+   "training_views": 203,
+   "depth_share": 0.6896551724137931,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_B173nb_b10_LoD2_v3id.json"
+  },
+  "B173nb_b10/ALS": {
+   "variant": {
+    "views": 142,
+    "median": 0.5304686431652729,
+    "q05": 0.02265055758611711,
+    "q95": 0.5981248240999559,
+    "share_below_0_3": 0.11267605633802817
+   },
+   "official_v2": {
+    "views": 142,
+    "median": 0.5527661317065226,
+    "q05": 0.24203337023011856,
+    "q95": 0.5984871850644359,
+    "share_below_0_3": 0.07746478873239436
+   },
+   "training_views": 203,
+   "depth_share": 0.6995073891625616,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_B173nb_b10_ALS_v3id.json"
+  },
+  "R1rep_b10/LoD2": {
+   "variant": {
+    "views": 181,
+    "median": 0.3506026875288392,
+    "q05": 3.63978926538235e-24,
+    "q95": 0.5908038198189751,
+    "share_below_0_3": 0.4585635359116022
+   },
+   "official_v2": {
+    "views": 181,
+    "median": 0.5144683797302245,
+    "q05": 9.423654522418138e-06,
+    "q95": 0.5999999999976876,
+    "share_below_0_3": 0.292817679558011
+   },
+   "training_views": 333,
+   "depth_share": 0.5435435435435435,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_R1rep_b10_LoD2_v3id.json"
+  },
+  "R1rep_b10/ALS": {
+   "variant": {
+    "views": 225,
+    "median": 0.48583139653615737,
+    "q05": 2.1773656661119652e-14,
+    "q95": 0.5994167085264095,
+    "share_below_0_3": 0.40444444444444444
+   },
+   "official_v2": {
+    "views": 225,
+    "median": 0.5590488550613137,
+    "q05": 0.0053854665494656815,
+    "q95": 0.5999798421441549,
+    "share_below_0_3": 0.28444444444444444
+   },
+   "training_views": 333,
+   "depth_share": 0.6756756756756757,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_R1rep_b10_ALS_v3id.json"
+  },
+  "B173_b0/LoD2": {
+   "variant": {
+    "views": 53,
+    "median": 0.4631183612724715,
+    "q05": 0.04075423610561324,
+    "q95": 0.5826058229469933,
+    "share_below_0_3": 0.24528301886792453
+   },
+   "official_v2": {
+    "views": 53,
+    "median": 0.5791261433825832,
+    "q05": 0.3094137417780593,
+    "q95": 0.5953142684014527,
+    "share_below_0_3": 0.05660377358490566
+   },
+   "training_views": 140,
+   "depth_share": 0.37857142857142856,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_B173_b0_LoD2_v3id.json"
+  },
+  "B173_b0/ALS": {
+   "variant": {
+    "views": 60,
+    "median": 0.4565594831589108,
+    "q05": 0.09961533447982732,
+    "q95": 0.5783233825292952,
+    "share_below_0_3": 0.21666666666666667
+   },
+   "official_v2": {
+    "views": 60,
+    "median": 0.5650511739375249,
+    "q05": 0.40311293097963247,
+    "q95": 0.5908194814581407,
+    "share_below_0_3": 0.05
+   },
+   "training_views": 140,
+   "depth_share": 0.42857142857142855,
+   "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/read_B173_b0_ALS_v3id.json"
+  }
+ },
+ "run_records": {
+  "B0_b10/cdgsnofit_LoD2_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_LoD2_s0/scene/jbgs_alignment.json",
+   "views": 152,
+   "max_abs_diff": 0.0
+  },
+  "B0_b10/cdgs_LoD2_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgs_LoD2_s0/scene/jbgs_alignment.json",
+   "views": 152,
+   "max_abs_diff": 0.0
+  }
+ },
+ "rule": "깊이가 있는 학습 시점만. 가중 = 0.6 × exp(−150 × 정렬 손실). 변형 = 축척 1, 이동 0에서 구한 정렬 손실; 공식 v2 = 앞 발주의 맞춘 축척·이동에서 구한 정렬 손실",
+ "scientific_verdict": null,
+ "title": "크기 맞추기를 생략한 변형에서 시점 가중은 여덟 단위 모두 공식 판보다 낮고 더 흩어졌다(중앙값 0.35~0.58 대 0.51~0.59)",
+ "title_kind": "statement written after viewing (2026-10-15 23:52 KST)",
+ "foot": "깊이 가중의 중앙값(깊이가 있는 학습 시점, 변형 대 공식 v2): B0 · LoD2 0.581 대 0.586, B0 · 항공 LiDAR 0.516 대 0.539, B173 주변 · LoD2 0.528 대 0.558, B173 주변 · 항공 LiDAR 0.530 대 0.553, R1 · LoD2 0.351 대 0.514, R1 · 항공 LiDAR 0.486 대 0.559, B173만 · LoD2 0.463 대 0.579, B173만 · 항공 LiDAR 0.457 대 0.565. 상자는 25~75 %, 수염은 5~95 %, 숫자는 중앙값. 깊이가 없는 시점(사전 정보가 닿은 화소에 SfM 점이 없음)은 두 판 모두 깊이 항이 없어 뺐다(발주 5.2절 2번). B0_b10/cdgsnofit_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(152시점); B0_b10/cdgs_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(152시점).",
+ "rule7": {
+  "result": "통과",
+  "note": "주황 상자가 여덟 단위 모두 회색 상자보다 낮고 길다(막대 위 중앙값).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}
