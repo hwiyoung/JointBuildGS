@@ -1,0 +1,361 @@
+{
+ "rule": "PHD-MAIN-STAGE3-v1 \ubcf4\uac15-2 and 8.4 (a): the B173 \uc8fc\ubcc0 wing (jointbuildgs:dev, CPU; run_vis3s3.sh: the VIS-v3 mounts + this payload).\n  fate   : VIS-v3 measure \u3260 unchanged (measure_v3.wing_regions, measure_v3.fate: the planted prior-origin initial points of the wing's\n           prior-error patches followed through the 30,000 dump by init_id: removed / old place / current roof / neither; the last-removal\n           iteration), for the judgment-only-off method (this task) next to VIS-v3's method seeds and \uc0ac\uc804 \uc815\ubcf4 \uc2e0\ub8b0 (ALS; LoD2 apart).\n  band   : the inflow (four-way judgment of metrics_s1.spread, the result's metric rows 'cls') of the code-11 thinned main rows whose GT point\n           lies in the 12 m section band B173_wing (sections_v1.json: centre, direction t, half length 6 m, half width 0.25 m) and of the\n           whole wing piece (measure_v3.wing_regions' patch mask), per result; points counted.\n  python wing_s3.py   -> S3/meas8/wing.json, wing.md\nscientific_verdict: null.",
+ "region": {
+  "LoD2": {
+   "patches": 16336,
+   "area_m2": 1021.0
+  },
+  "ALS": {
+   "patches": 14515,
+   "area_m2": 964.3
+  },
+  "LoD2_wing_units": 18329
+ },
+ "section": {
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "patch": 40592,
+  "kind": 1,
+  "centre": [
+   126.34397997377678,
+   82.07199204297335,
+   -20.645004132279308
+  ],
+  "t": [
+   -0.9309399018867978,
+   0.3651724237603371
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "code_v3": 11,
+  "gt_med": -6.953034400939941,
+  "gt_points": 697,
+  "why": "south wing, prior error"
+ },
+ "fate": {
+  "ALS/prop_ALS_s0": {
+   "status": "ok",
+   "seeds_seated": 15360,
+   "seeds_planted": 15360,
+   "not_planted": 0,
+   "counts": {
+    "removed": 15304,
+    "old_place": 4,
+    "current_roof": 40,
+    "neither": 12
+   },
+   "shares": {
+    "removed": 0.9964,
+    "old_place": 0.0003,
+    "current_roof": 0.0026,
+    "neither": 0.0008
+   },
+   "neither_all_transparent": 7,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 13500
+   },
+   "opaque_descendants": 760,
+   "descendants": 1115,
+   "seed_xyz_mean": [
+    138.01,
+    107.01,
+    -23.04
+   ]
+  },
+  "ALS/prop_ALS_s1": {
+   "status": "ok",
+   "seeds_seated": 15360,
+   "seeds_planted": 15360,
+   "not_planted": 0,
+   "counts": {
+    "removed": 15269,
+    "old_place": 6,
+    "current_roof": 64,
+    "neither": 21
+   },
+   "shares": {
+    "removed": 0.9941,
+    "old_place": 0.0004,
+    "current_roof": 0.0042,
+    "neither": 0.0014
+   },
+   "neither_all_transparent": 7,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 14800
+   },
+   "opaque_descendants": 941,
+   "descendants": 1489,
+   "seed_xyz_mean": [
+    138.01,
+    107.01,
+    -23.04
+   ]
+  },
+  "ALS/trust_ALS": {
+   "status": "ok",
+   "seeds_seated": 15360,
+   "seeds_planted": 15360,
+   "not_planted": 0,
+   "counts": {
+    "removed": 14702,
+    "old_place": 118,
+    "current_roof": 137,
+    "neither": 403
+   },
+   "shares": {
+    "removed": 0.9572,
+    "old_place": 0.0077,
+    "current_roof": 0.0089,
+    "neither": 0.0262
+   },
+   "neither_all_transparent": 296,
+   "removed_at": {
+    "min": 600,
+    "median": 1300,
+    "max": 14700
+   },
+   "opaque_descendants": 1816,
+   "descendants": 4209,
+   "seed_xyz_mean": [
+    138.01,
+    107.01,
+    -23.04
+   ]
+  },
+  "ALS/nojudge_ALS_s0": {
+   "status": "ok",
+   "seeds_seated": 15360,
+   "seeds_planted": 15360,
+   "not_planted": 0,
+   "counts": {
+    "removed": 15110,
+    "old_place": 91,
+    "current_roof": 57,
+    "neither": 102
+   },
+   "shares": {
+    "removed": 0.9837,
+    "old_place": 0.0059,
+    "current_roof": 0.0037,
+    "neither": 0.0066
+   },
+   "neither_all_transparent": 7,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 12200
+   },
+   "opaque_descendants": 986,
+   "descendants": 1589,
+   "seed_xyz_mean": [
+    138.01,
+    107.01,
+    -23.04
+   ]
+  },
+  "LoD2/prop_LoD2_s0": {
+   "status": "ok",
+   "seeds_seated": 16336,
+   "seeds_planted": 16336,
+   "not_planted": 0,
+   "counts": {
+    "removed": 16242,
+    "old_place": 3,
+    "current_roof": 71,
+    "neither": 20
+   },
+   "shares": {
+    "removed": 0.9942,
+    "old_place": 0.0002,
+    "current_roof": 0.0043,
+    "neither": 0.0012
+   },
+   "neither_all_transparent": 10,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 14400
+   },
+   "opaque_descendants": 759,
+   "descendants": 1150,
+   "seed_xyz_mean": [
+    138.81,
+    109.15,
+    -23.07
+   ]
+  },
+  "LoD2/prop_LoD2_s1": {
+   "status": "ok",
+   "seeds_seated": 16336,
+   "seeds_planted": 16336,
+   "not_planted": 0,
+   "counts": {
+    "removed": 16254,
+    "old_place": 12,
+    "current_roof": 52,
+    "neither": 18
+   },
+   "shares": {
+    "removed": 0.995,
+    "old_place": 0.0007,
+    "current_roof": 0.0032,
+    "neither": 0.0011
+   },
+   "neither_all_transparent": 7,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 12100
+   },
+   "opaque_descendants": 540,
+   "descendants": 931,
+   "seed_xyz_mean": [
+    138.81,
+    109.15,
+    -23.07
+   ]
+  },
+  "LoD2/nojudge_LoD2_s0": {
+   "status": "ok",
+   "seeds_seated": 16336,
+   "seeds_planted": 16336,
+   "not_planted": 0,
+   "counts": {
+    "removed": 16106,
+    "old_place": 79,
+    "current_roof": 53,
+    "neither": 98
+   },
+   "shares": {
+    "removed": 0.9859,
+    "old_place": 0.0048,
+    "current_roof": 0.0032,
+    "neither": 0.006
+   },
+   "neither_all_transparent": 9,
+   "removed_at": {
+    "min": 600,
+    "median": 600,
+    "max": 14700
+   },
+   "opaque_descendants": 644,
+   "descendants": 909,
+   "seed_xyz_mean": [
+    138.81,
+    109.15,
+    -23.07
+   ]
+  }
+ },
+ "band": {
+  "ALS/prop_ALS_s0": {
+   "band_points": 591,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.0001,
+   "piece_gt_side": 0.9983
+  },
+  "ALS/prop_ALS_s1": {
+   "band_points": 591,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.0001,
+   "piece_gt_side": 0.9982
+  },
+  "ALS/imgonly_s0": {
+   "band_points": 591,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.0001,
+   "piece_gt_side": 0.9987
+  },
+  "ALS/imgonly_s1": {
+   "band_points": 591,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.0004,
+   "piece_gt_side": 0.998
+  },
+  "ALS/trust_ALS": {
+   "band_points": 591,
+   "band_inflow": 0.0237,
+   "band_gt_side": 0.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.1855,
+   "piece_gt_side": 0.0179
+  },
+  "ALS/nojudge_ALS_s0": {
+   "band_points": 591,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.0015,
+   "piece_gt_side": 0.997
+  },
+  "LoD2/prop_LoD2_s0": {
+   "band_points": 607,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 96872,
+   "piece_inflow": 0.0004,
+   "piece_gt_side": 0.9991
+  },
+  "LoD2/prop_LoD2_s1": {
+   "band_points": 607,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 96872,
+   "piece_inflow": 0.0006,
+   "piece_gt_side": 0.9987
+  },
+  "LoD2/imgonly_s0": {
+   "band_points": 607,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 96872,
+   "piece_inflow": 0.0003,
+   "piece_gt_side": 0.9991
+  },
+  "LoD2/imgonly_s1": {
+   "band_points": 607,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 96872,
+   "piece_inflow": 0.0004,
+   "piece_gt_side": 0.999
+  },
+  "LoD2/trust_LoD2": {
+   "band_points": 607,
+   "band_inflow": 0.1104,
+   "band_gt_side": 0.1499,
+   "piece_points": 96872,
+   "piece_inflow": 0.0562,
+   "piece_gt_side": 0.6152
+  },
+  "LoD2/trust_LoD2_fix1": {
+   "band_points": 607,
+   "band_inflow": 0.0066,
+   "band_gt_side": 0.6474,
+   "piece_points": 96872,
+   "piece_inflow": 0.0204,
+   "piece_gt_side": 0.8978
+  },
+  "LoD2/nojudge_LoD2_s0": {
+   "band_points": 607,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 96872,
+   "piece_inflow": 0.0017,
+   "piece_gt_side": 0.9966
+  }
+ },
+ "scientific_verdict": null
+}

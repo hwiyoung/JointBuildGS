@@ -1,0 +1,344 @@
+{
+ "rule": "Per B0 condition (영상 전체 = stage 1 B0, 저자 15장 = the stage-2 pair, the five stage-3 conditions) and per result (본 방법 seeds, 영상만 seeds),\nwith support_s2's rule (an opaque, >= 0.5, Gaussian within 0.25 m of the patch centre; prior-born = dump origin 1):\n  missing agreement (code 4) patches: prior-born share and any-origin share (the same count as the inheritance rate's, on code 4);\n  support agreement (code 2) patches: prior-born share (reference only: with fewer images there are fewer image points, so this share can\n    grow whether or not the result leaned on the prior) and any-origin share;\n  the initial points: planted prior points and image (SfM) points (init_points.npz of the method; 영상만 has no monitor file, so the Gaussian\n    count of its first trace line, iteration 100 before any densification, is its image points; its input.ply holds the unplanted prior too).\n  python support32_s3.py      -> S3/tables/q32_extra.json, .md\nscientific_verdict: null.",
+ "rows": {
+  "B0_b10": {
+   "ko": "영상 전체",
+   "method": {
+    "prop_LoD2_s0": {
+     "missing_agreement": {
+      "patches": 2052,
+      "prior_share": 0.7437,
+      "any_share": 0.7544
+     },
+     "support_agreement": {
+      "patches": 52164,
+      "prior_share": 0.3434,
+      "any_share": 0.4011
+     },
+     "init": {
+      "prior": 142731,
+      "image": 14503,
+      "source": "monitor/init_points.npz"
+     }
+    },
+    "prop_LoD2_s1": {
+     "missing_agreement": {
+      "patches": 2052,
+      "prior_share": 0.7442,
+      "any_share": 0.7515
+     },
+     "support_agreement": {
+      "patches": 52164,
+      "prior_share": 0.3496,
+      "any_share": 0.3936
+     },
+     "init": {
+      "prior": 142731,
+      "image": 14503,
+      "source": "monitor/init_points.npz"
+     }
+    }
+   },
+   "imgonly": {
+    "imgonly_s0": {
+     "missing_agreement": {
+      "patches": 2052,
+      "prior_share": 0.0,
+      "any_share": 0.0731
+     },
+     "support_agreement": {
+      "patches": 52164,
+      "prior_share": 0.0,
+      "any_share": 0.2924
+     },
+     "init": {
+      "prior": 0,
+      "image": 14503,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    }
+   }
+  },
+  "B0a15": {
+   "ko": "저자 15장",
+   "method": {
+    "prop_LoD2_s0": {
+     "missing_agreement": {
+      "patches": 6362,
+      "prior_share": 0.9373,
+      "any_share": 0.9403
+     },
+     "support_agreement": {
+      "patches": 26180,
+      "prior_share": 0.6045,
+      "any_share": 0.6373
+     },
+     "init": {
+      "prior": 140978,
+      "image": 4689,
+      "source": "monitor/init_points.npz"
+     }
+    }
+   },
+   "imgonly": {
+    "imgonly_s0": {
+     "missing_agreement": {
+      "patches": 6362,
+      "prior_share": 0.0,
+      "any_share": 0.1319
+     },
+     "support_agreement": {
+      "patches": 26180,
+      "prior_share": 0.0,
+      "any_share": 0.6047
+     },
+     "init": {
+      "prior": 0,
+      "image": 4689,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    }
+   }
+  },
+  "B0a9": {
+   "ko": "저자 9장",
+   "method": {
+    "prop_LoD2_s0": {
+     "missing_agreement": {
+      "patches": 8664,
+      "prior_share": 0.9699,
+      "any_share": 0.9702
+     },
+     "support_agreement": {
+      "patches": 24021,
+      "prior_share": 0.6409,
+      "any_share": 0.6645
+     },
+     "init": {
+      "prior": 141379,
+      "image": 2824,
+      "source": "monitor/init_points.npz"
+     }
+    }
+   },
+   "imgonly": {
+    "imgonly_s0": {
+     "missing_agreement": {
+      "patches": 8664,
+      "prior_share": 0.0,
+      "any_share": 0.1318
+     },
+     "support_agreement": {
+      "patches": 24021,
+      "prior_share": 0.0,
+      "any_share": 0.651
+     },
+     "init": {
+      "prior": 0,
+      "image": 2824,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    }
+   }
+  },
+  "B0a3": {
+   "ko": "저자 3장",
+   "method": {
+    "prop_LoD2_s0": {
+     "missing_agreement": {
+      "patches": 15576,
+      "prior_share": 0.8784,
+      "any_share": 0.8784
+     },
+     "support_agreement": {
+      "patches": 12254,
+      "prior_share": 0.5776,
+      "any_share": 0.5779
+     },
+     "init": {
+      "prior": 130696,
+      "image": 23,
+      "source": "monitor/init_points.npz"
+     }
+    },
+    "prop_LoD2_s1": {
+     "missing_agreement": {
+      "patches": 15576,
+      "prior_share": 0.8713,
+      "any_share": 0.8714
+     },
+     "support_agreement": {
+      "patches": 12254,
+      "prior_share": 0.5787,
+      "any_share": 0.579
+     },
+     "init": {
+      "prior": 130696,
+      "image": 23,
+      "source": "monitor/init_points.npz"
+     }
+    }
+   },
+   "imgonly": {
+    "imgonly_s0": {
+     "missing_agreement": {
+      "patches": 15576,
+      "prior_share": 0.0,
+      "any_share": 0.211
+     },
+     "support_agreement": {
+      "patches": 12254,
+      "prior_share": 0.0,
+      "any_share": 0.3698
+     },
+     "init": {
+      "prior": 0,
+      "image": 23,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    },
+    "imgonly_s1": {
+     "missing_agreement": {
+      "patches": 15576,
+      "prior_share": 0.0,
+      "any_share": 0.2648
+     },
+     "support_agreement": {
+      "patches": 12254,
+      "prior_share": 0.0,
+      "any_share": 0.4355
+     },
+     "init": {
+      "prior": 0,
+      "image": 23,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    }
+   }
+  },
+  "B0n13": {
+   "ko": "연직 포함 13장",
+   "method": {
+    "prop_LoD2_s0": {
+     "missing_agreement": {
+      "patches": 13736,
+      "prior_share": 0.8676,
+      "any_share": 0.8676
+     },
+     "support_agreement": {
+      "patches": 17746,
+      "prior_share": 0.5573,
+      "any_share": 0.561
+     },
+     "init": {
+      "prior": 137232,
+      "image": 470,
+      "source": "monitor/init_points.npz"
+     }
+    }
+   },
+   "imgonly": {
+    "imgonly_s0": {
+     "missing_agreement": {
+      "patches": 13736,
+      "prior_share": 0.0,
+      "any_share": 0.1135
+     },
+     "support_agreement": {
+      "patches": 17746,
+      "prior_share": 0.0,
+      "any_share": 0.4998
+     },
+     "init": {
+      "prior": 0,
+      "image": 470,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    }
+   }
+  },
+  "B0n8": {
+   "ko": "연직 포함 8장",
+   "method": {
+    "prop_LoD2_s0": {
+     "missing_agreement": {
+      "patches": 23819,
+      "prior_share": 0.9201,
+      "any_share": 0.9201
+     },
+     "support_agreement": {
+      "patches": 9872,
+      "prior_share": 0.676,
+      "any_share": 0.6824
+     },
+     "init": {
+      "prior": 134844,
+      "image": 247,
+      "source": "monitor/init_points.npz"
+     }
+    }
+   },
+   "imgonly": {
+    "imgonly_s0": {
+     "missing_agreement": {
+      "patches": 23819,
+      "prior_share": 0.0,
+      "any_share": 0.1739
+     },
+     "support_agreement": {
+      "patches": 9872,
+      "prior_share": 0.0,
+      "any_share": 0.5601
+     },
+     "init": {
+      "prior": 0,
+      "image": 247,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    }
+   }
+  },
+  "B0n2": {
+   "ko": "연직 포함 2장",
+   "method": {
+    "prop_LoD2_s0": {
+     "missing_agreement": {
+      "patches": 17098,
+      "prior_share": 0.7458,
+      "any_share": 0.7458
+     },
+     "support_agreement": {
+      "patches": 2019,
+      "prior_share": 0.7251,
+      "any_share": 0.7256
+     },
+     "init": {
+      "prior": 127205,
+      "image": 3,
+      "source": "monitor/init_points.npz"
+     }
+    }
+   },
+   "imgonly": {
+    "imgonly_s0": {
+     "missing_agreement": {
+      "patches": 17098,
+      "prior_share": 0.0,
+      "any_share": 0.0225
+     },
+     "support_agreement": {
+      "patches": 2019,
+      "prior_share": 0.0,
+      "any_share": 0.3526
+     },
+     "init": {
+      "prior": 0,
+      "image": 3,
+      "source": "jbgs_trace.jsonl iteration 100"
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

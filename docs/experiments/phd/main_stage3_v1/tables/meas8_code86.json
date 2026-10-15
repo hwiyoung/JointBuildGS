@@ -1,0 +1,543 @@
+{
+ "rule": "PHD-MAIN-STAGE3-v1 order 8.6: what the threshold of '관측 오류 문턱 이내 유입률' (gate condition 2) is tied to (jointbuildgs:dev, CPU;\nrun_cpu3.sh; no training; reads code and the stage inputs only).\nPart 1, the code lines (found by their text, so the line numbers are the files' own): the metric's mask (metrics_s1.spread reads the rows'\nobs_within, defs_s1 copies the region file's obs_within_threshold), its rule (src/phd/metrics_v3/premise.split), the value it is put on\n(regions_v3: premise_value = MVS - prior per patch) and its factor (regions_v3.K_CONFLICT); the judgment's own threshold (prior_propagation_v6\nrules: RULES t, DEFAULT_BY_PRIOR) and the loss's tolerance band (fork r14 jbgs_judgment.rho_truncated, the same in r15).\nThe stage-0 store lines that make the judgment's residual and the fork's tau map (s03_stage1_v6: r = (MVS depth - prior depth) * f, the\nmarks compare |r| with t tau of the surface kind, the tau map = tau / f) and f (prior_propagation_v6.conversion.factor: metres per metre of\ndepth, vertical on roof-like faces, along the normal on wall-like ones). A direct pixel comparison of the region file's tau with the tau map\nis therefore not a test (the map is in depth units; first trial of this script, 10-14 21:12, kept in the log).\nPart 2, the numbers: (a) the region file's tau per surface kind against the stage-0 tolerance of the unit (summary.json: roof, wall; the\nB0 condition keys use B0's, order 4.x 'the tolerance and registration of B0'); (b) per unit, the code-3 patches split by the rule, and\n|premise value| / tau of the 'within' patches (LoD2: all <= 1 = inside the loss's tolerance band, in the same measuring direction).\n  python code86_s3.py      -> S3/meas8/code86.json\nscientific_verdict: null.",
+ "code": {
+  "premise": {
+   "file": "src/phd/metrics_v3/premise.py",
+   "lines": [
+    {
+     "pattern": "def split\\(",
+     "line": 9,
+     "text": "def split(code, premise_value, tau, k, centre, radius=2.0):"
+    },
+    {
+     "pattern": "viol = \\(code == OBS_ERROR\\)",
+     "line": 15,
+     "text": "viol = (code == OBS_ERROR) & np.isfinite(pv) & (np.abs(pv) > k * t)"
+    },
+    {
+     "pattern": "within = \\(code == OBS_ERROR\\) & ~viol",
+     "line": 16,
+     "text": "within = (code == OBS_ERROR) & ~viol"
+    }
+   ]
+  },
+  "regions_v3": {
+   "file": "scripts/phd/main_stage1_v1/regions_v3.py",
+   "lines": [
+    {
+     "pattern": "^K_CONFLICT = ",
+     "line": 36,
+     "text": "K_CONFLICT = {\"LoD2\": 1.0, \"ALS\": 2.0}"
+    },
+    {
+     "pattern": "pv\\.append\\(dz \\+ va",
+     "line": 174,
+     "text": "pv.append(dz + va[m].astype(np.float64))            # z_MVS - z_prior = (z_MVS - z_GT) + (z_GT - z_prior)"
+    },
+    {
+     "pattern": "pval = np\\.where\\(a\\[\\\"v1_kept\\\"\\]",
+     "line": 286,
+     "text": "pval = np.where(a[\"v1_kept\"], a[\"mvs_minus_prior\"].astype(np.float64), pmed)"
+    },
+    {
+     "pattern": "viol, within, band = prem\\.split",
+     "line": 300,
+     "text": "viol, within, band = prem.split(a[\"code_ext_v3\"], a[\"premise_value\"], a[\"tau\"], K_CONFLICT[prior], a[\"centre\"], radius=2.0)"
+    }
+   ]
+  },
+  "defs_s1": {
+   "file": "scripts/phd/main_stage1_v1/defs_s1.py",
+   "lines": [
+    {
+     "pattern": "obs_within=R\\[\\\"obs_within_threshold\\\"\\]",
+     "line": 134,
+     "text": "premise_band=R[\"premise_band\"][pa], obs_within=R[\"obs_within_threshold\"][pa]))"
+    }
+   ]
+  },
+  "metrics_s1": {
+   "file": "scripts/phd/main_stage1_v1/metrics_s1.py",
+   "lines": [
+    {
+     "pattern": "within, viol = I\\.r\\[\\\"obs_within\\\"\\]",
+     "line": 146,
+     "text": "within, viol = I.r[\"obs_within\"], I.r[\"premise_violation\"]"
+    },
+    {
+     "pattern": "\\(\\\"observation_error_within_threshold\\\"",
+     "line": 148,
+     "text": "regions_ = ((\"prior_error\", I.code == 11), (\"observation_error_within_threshold\", (I.code == 3) & within),"
+    }
+   ]
+  },
+  "rules": {
+   "file": "src/phd/prior_propagation_v6/rules.py",
+   "lines": [
+    {
+     "pattern": "\\\"current\\\": dict\\(t=1\\.0",
+     "line": 22,
+     "text": "\"current\": dict(t=1.0, prop=\"standard\"),"
+    },
+    {
+     "pattern": "\\\"margin_all_2\\\": dict\\(t=2\\.0",
+     "line": 23,
+     "text": "\"margin_all_1.5\": dict(t=1.5, prop=\"standard\"), \"margin_all_2\": dict(t=2.0, prop=\"standard\"), \"margin_all_3\": dict(t=3.0, prop=\"standard\"),"
+    },
+    {
+     "pattern": "^DEFAULT_BY_PRIOR = ",
+     "line": 112,
+     "text": "DEFAULT_BY_PRIOR = {\"LoD2\": \"current\", \"ALS\": \"margin_all_2\", \"DSM\": \"margin_all_2\"}"
+    }
+   ]
+  },
+  "fork_r14_judgment": {
+   "file": "src/phd/forks/GeoGS-conf-guided-v1-r14/jbgs_judgment.py",
+   "lines": [
+    {
+     "pattern": "def rho_truncated",
+     "line": 334,
+     "text": "def rho_truncated(r, tau, hi=4.0):"
+    },
+    {
+     "pattern": "rho_tau\\(r\\) = 0",
+     "line": 335,
+     "text": "\"\"\"rho_tau(r) = 0 (|r|<=tau); |r|-tau (tau<|r|<=hi*tau); (hi-1)*tau (|r|>hi*tau). Gradient is 0 beyond hi*tau.\"\"\""
+    },
+    {
+     "pattern": "torch\\.where\\(v <= ti",
+     "line": 1255,
+     "text": "torch.where(v <= ti, torch.full_like(v, ppr.MARK_AGREE), torch.full_like(v, ppr.MARK_CONFLICT)))"
+    }
+   ]
+  },
+  "stage0_store": {
+   "file": "scripts/phd/main_stage0_v1/s03_stage1_v6.py",
+   "lines": [
+    {
+     "pattern": "r = \\(dm\\.ravel\\(\\)\\[idx\\]",
+     "line": 152,
+     "text": "r = (dm.ravel()[idx].astype(np.float64) - t.ravel()[idx]) * f"
+    },
+    {
+     "pattern": "tau_px = np\\.where\\(bf",
+     "line": 353,
+     "text": "tau_px = np.where(bf, np.where(kind == conv.KIND_ROOF, TAU[1], TAU[2]), TAU[1])"
+    },
+    {
+     "pattern": "tm\\[q\\[\\\"idx\\\"\\]\\] = \\(tau_px / np\\.maximum",
+     "line": 380,
+     "text": "tm = np.full(H * W, np.nan, np.float32); tm[q[\"idx\"]] = (tau_px / np.maximum(q[\"f\"], 1e-3)).astype(np.float32)"
+    }
+   ]
+  },
+  "conversion": {
+   "file": "src/phd/prior_propagation_v6/conversion.py",
+   "lines": [
+    {
+     "pattern": "def factor\\(",
+     "line": 47,
+     "text": "def factor(n, d, has_surface=None, roof_nz=ROOF_NZ):"
+    },
+    {
+     "pattern": "f = np\\.where\\(nz >= roof_nz",
+     "line": 53,
+     "text": "f = np.where(nz >= roof_nz, nd / np.maximum(nz, 1e-12), nd)"
+    }
+   ]
+  }
+ },
+ "units": {
+  "B0_b10/LoD2": {
+   "region_file": "/out/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B0_b10/LoD2",
+    "stage0_roof": 0.19752371710393812,
+    "stage0_wall": 0.5469840905753184,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.197524
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.546984
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 3459,
+    "within": 88,
+    "violation": 3371,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9944798171925722,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.19752371311187744,
+    "area_m2": {
+     "within": 5.5,
+     "violation": 210.7
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "region_file": "/out/regions_v3/regions_ext_v3_B0_b10_ALS.npz",
+   "k": 2.0,
+   "tau": {
+    "stage0_unit": "B0_b10/ALS",
+    "stage0_roof": 0.1265954507091962,
+    "stage0_wall": 0.1265954507091962,
+    "wall_source": "roof value (walls are not TIN surfaces)",
+    "region_roof_values": [
+     0.126595
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [],
+    "region_wall_equals_stage0": false
+   },
+   "split": {
+    "code3_patches": 878,
+    "within": 277,
+    "violation": 601,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 1.9773383569078722,
+    "within_ratio_le_1": 0.5054151624548736,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.12659545242786407,
+    "area_m2": {
+     "within": 19.8,
+     "violation": 42.7
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "region_file": "/out/regions_v3/regions_ext_v3_B173nb_b10_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B173nb_b10/LoD2",
+    "stage0_roof": 0.17595741568870737,
+    "stage0_wall": 0.22782853520583887,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.175957
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.227829
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 2712,
+    "within": 481,
+    "violation": 2231,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9998529692045045,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.17595741152763367,
+    "area_m2": {
+     "within": 30.1,
+     "violation": 139.4
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "region_file": "/out/regions_v3/regions_ext_v3_B173nb_b10_ALS.npz",
+   "k": 2.0,
+   "tau": {
+    "stage0_unit": "B173nb_b10/ALS",
+    "stage0_roof": 0.14701597917790277,
+    "stage0_wall": 0.14701597917790277,
+    "wall_source": "roof value (walls are not TIN surfaces)",
+    "region_roof_values": [
+     0.147016
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [],
+    "region_wall_equals_stage0": false
+   },
+   "split": {
+    "code3_patches": 2115,
+    "within": 1419,
+    "violation": 696,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 1.9937835461417028,
+    "within_ratio_le_1": 0.3361522198731501,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.14701597392559052,
+    "area_m2": {
+     "within": 100.5,
+     "violation": 51.8
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "region_file": "/out/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "R1rep_b10/LoD2",
+    "stage0_roof": 0.6827603118471609,
+    "stage0_wall": 0.7245754508391767,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.68276
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.724575
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 6576,
+    "within": 133,
+    "violation": 6443,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9991253461316755,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.7245754599571228,
+    "area_m2": {
+     "within": 8.3,
+     "violation": 402.7
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "region_file": "/out/regions_v3/regions_ext_v3_R1rep_b10_ALS.npz",
+   "k": 2.0,
+   "tau": {
+    "stage0_unit": "R1rep_b10/ALS",
+    "stage0_roof": 0.10341712496901895,
+    "stage0_wall": 0.10341712496901895,
+    "wall_source": "roof value (walls are not TIN surfaces)",
+    "region_roof_values": [
+     0.103417
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [],
+    "region_wall_equals_stage0": false
+   },
+   "split": {
+    "code3_patches": 4517,
+    "within": 2117,
+    "violation": 2400,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 1.999455491666962,
+    "within_ratio_le_1": 0.7005196032120926,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.10341712832450867,
+    "area_m2": {
+     "within": 141.7,
+     "violation": 163.4
+    }
+   }
+  },
+  "B0a15/LoD2": {
+   "region_file": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/regions_v3/regions_ext_v3_B0a15_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B0_b10/LoD2",
+    "stage0_roof": 0.19752371710393812,
+    "stage0_wall": 0.5469840905753184,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.197524
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.546984
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 2140,
+    "within": 164,
+    "violation": 1976,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9947878600970821,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.19752371311187744,
+    "area_m2": {
+     "within": 10.2,
+     "violation": 123.5
+    }
+   }
+  },
+  "B0a9/LoD2": {
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0a9_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B0_b10/LoD2",
+    "stage0_roof": 0.19752371710393812,
+    "stage0_wall": 0.5469840905753184,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.197524
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.546984
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 1912,
+    "within": 209,
+    "violation": 1703,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9976480114958276,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.19752371311187744,
+    "area_m2": {
+     "within": 13.1,
+     "violation": 106.4
+    }
+   }
+  },
+  "B0a3/LoD2": {
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0a3_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B0_b10/LoD2",
+    "stage0_roof": 0.19752371710393812,
+    "stage0_wall": 0.5469840905753184,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.197524
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.546984
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 4347,
+    "within": 189,
+    "violation": 4158,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9948322249307225,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.546984076499939,
+    "area_m2": {
+     "within": 11.8,
+     "violation": 259.9
+    }
+   }
+  },
+  "B0n13/LoD2": {
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n13_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B0_b10/LoD2",
+    "stage0_roof": 0.19752371710393812,
+    "stage0_wall": 0.5469840905753184,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.197524
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.546984
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 3948,
+    "within": 49,
+    "violation": 3899,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9921575739506768,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.546984076499939,
+    "area_m2": {
+     "within": 3.1,
+     "violation": 243.7
+    }
+   }
+  },
+  "B0n8/LoD2": {
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n8_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B0_b10/LoD2",
+    "stage0_roof": 0.19752371710393812,
+    "stage0_wall": 0.5469840905753184,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.197524
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.546984
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 1739,
+    "within": 59,
+    "violation": 1680,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9907169743908835,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.19752371311187744,
+    "area_m2": {
+     "within": 3.7,
+     "violation": 105.0
+    }
+   }
+  },
+  "B0n2/LoD2": {
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n2_LoD2.npz",
+   "k": 1.0,
+   "tau": {
+    "stage0_unit": "B0_b10/LoD2",
+    "stage0_roof": 0.19752371710393812,
+    "stage0_wall": 0.5469840905753184,
+    "wall_source": "data (no spec)",
+    "region_roof_values": [
+     0.197524
+    ],
+    "region_roof_equals_stage0": true,
+    "region_wall_values": [
+     0.546984
+    ],
+    "region_wall_equals_stage0": true
+   },
+   "split": {
+    "code3_patches": 4882,
+    "within": 67,
+    "violation": 4815,
+    "within_nan_premise_value": 0,
+    "within_ratio_max": 0.9901615692496462,
+    "within_ratio_le_1": 1.0,
+    "within_ratio_le_k": 1.0,
+    "rule_recomputed_equal": true,
+    "tau_median_m": 0.546984076499939,
+    "area_m2": {
+     "within": 4.2,
+     "violation": 300.9
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

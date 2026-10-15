@@ -1,0 +1,3671 @@
+{
+ "rule": "  python measure8_s3.py dir      8.1: the past-shape inflow split by the direction of the change. The thinned main rows (|s_W| >= 0.2 m) of\n                                 code 11 (and 13 apart) of every result's metric rows (cls = the four-way judgment of metrics_s1.spread);\n                                 '늘어난 곳' = the GT lies outside the prior surface (row value = GT - prior along the row's line direction\n                                 D > 0: roofs D = +z, LoD2 walls D = the LoD2 surface normal of lod2_surfaces.json; ALS walls D = the patch\n                                 normal flipped to z >= 0, so 'outside' is not guaranteed there: written apart), '줄어든 곳' = value < 0.\n                                 The share = (wrong side + both) / all, as the inflow.\n  python measure8_s3.py change   8.2 (LoD2 only): each LoD2 prior-error patch (code 11; 13 apart) is told by the ALS prior at the same GT points\n                                 (the ALS rows of the same unit, matched by the GT point): the ALS patch's v3 true label agree (|ALS - GT| <= the\n                                 ALS unit's tau) on the majority of the patch's matched points -> '표현 차이로 봄'; conflict -> '실제 변화로 봄';\n                                 fewer than half of the patch's points with an ALS row (walls etc.) -> '가르지 못함'. Per class: area, points,\n                                 inflow per result; and the 2 x 2 table with 8.1's direction.\nWrites S3/meas8/<kind>.json and .md. scientific_verdict: null.",
+ "rows": {
+  "prop_LoD2_s0": {
+   "interval": 500,
+   "rereads": 61,
+   "locked_first": 39366,
+   "locked_last": 30179,
+   "released_total": 81272,
+   "released_by": {
+    "E_at_or_above_threshold": 80864,
+    "propagated_conflict": 37,
+    "support_conflict": 250,
+    "u_beyond_bound": 301,
+    "several_reasons": 180,
+    "no_reason_found": 0
+   },
+   "inheritance": 0.8108,
+   "by_iteration": [
+    {
+     "iteration": 1,
+     "locked": 39366,
+     "released": 0,
+     "released_by": {
+      "E_at_or_above_threshold": 0,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 500,
+     "locked": 28887,
+     "released": 13124,
+     "released_by": {
+      "E_at_or_above_threshold": 13124,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1000,
+     "locked": 28959,
+     "released": 3599,
+     "released_by": {
+      "E_at_or_above_threshold": 3583,
+      "propagated_conflict": 0,
+      "support_conflict": 39,
+      "u_beyond_bound": 13,
+      "several_reasons": 36,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1500,
+     "locked": 31975,
+     "released": 2073,
+     "released_by": {
+      "E_at_or_above_threshold": 2057,
+      "propagated_conflict": 1,
+      "support_conflict": 19,
+      "u_beyond_bound": 8,
+      "several_reasons": 12,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2000,
+     "locked": 31115,
+     "released": 3255,
+     "released_by": {
+      "E_at_or_above_threshold": 3242,
+      "propagated_conflict": 1,
+      "support_conflict": 8,
+      "u_beyond_bound": 13,
+      "several_reasons": 9,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2500,
+     "locked": 31628,
+     "released": 2416,
+     "released_by": {
+      "E_at_or_above_threshold": 2394,
+      "propagated_conflict": 2,
+      "support_conflict": 12,
+      "u_beyond_bound": 17,
+      "several_reasons": 9,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3000,
+     "locked": 30139,
+     "released": 3501,
+     "released_by": {
+      "E_at_or_above_threshold": 3492,
+      "propagated_conflict": 0,
+      "support_conflict": 10,
+      "u_beyond_bound": 11,
+      "several_reasons": 12,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3500,
+     "locked": 28877,
+     "released": 2368,
+     "released_by": {
+      "E_at_or_above_threshold": 2318,
+      "propagated_conflict": 4,
+      "support_conflict": 16,
+      "u_beyond_bound": 47,
+      "several_reasons": 17,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4000,
+     "locked": 28932,
+     "released": 1357,
+     "released_by": {
+      "E_at_or_above_threshold": 1344,
+      "propagated_conflict": 2,
+      "support_conflict": 6,
+      "u_beyond_bound": 9,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4500,
+     "locked": 29040,
+     "released": 1279,
+     "released_by": {
+      "E_at_or_above_threshold": 1266,
+      "propagated_conflict": 3,
+      "support_conflict": 9,
+      "u_beyond_bound": 10,
+      "several_reasons": 9,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5000,
+     "locked": 29304,
+     "released": 1108,
+     "released_by": {
+      "E_at_or_above_threshold": 1102,
+      "propagated_conflict": 2,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5500,
+     "locked": 29617,
+     "released": 1175,
+     "released_by": {
+      "E_at_or_above_threshold": 1160,
+      "propagated_conflict": 2,
+      "support_conflict": 8,
+      "u_beyond_bound": 11,
+      "several_reasons": 6,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6000,
+     "locked": 30114,
+     "released": 1027,
+     "released_by": {
+      "E_at_or_above_threshold": 1018,
+      "propagated_conflict": 1,
+      "support_conflict": 4,
+      "u_beyond_bound": 7,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6500,
+     "locked": 28902,
+     "released": 1660,
+     "released_by": {
+      "E_at_or_above_threshold": 1630,
+      "propagated_conflict": 2,
+      "support_conflict": 12,
+      "u_beyond_bound": 32,
+      "several_reasons": 16,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7000,
+     "locked": 29203,
+     "released": 968,
+     "released_by": {
+      "E_at_or_above_threshold": 951,
+      "propagated_conflict": 1,
+      "support_conflict": 9,
+      "u_beyond_bound": 10,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7500,
+     "locked": 29107,
+     "released": 1262,
+     "released_by": {
+      "E_at_or_above_threshold": 1251,
+      "propagated_conflict": 1,
+      "support_conflict": 10,
+      "u_beyond_bound": 7,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8000,
+     "locked": 29720,
+     "released": 1107,
+     "released_by": {
+      "E_at_or_above_threshold": 1100,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 4,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8500,
+     "locked": 30362,
+     "released": 948,
+     "released_by": {
+      "E_at_or_above_threshold": 938,
+      "propagated_conflict": 2,
+      "support_conflict": 4,
+      "u_beyond_bound": 8,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9000,
+     "locked": 30713,
+     "released": 997,
+     "released_by": {
+      "E_at_or_above_threshold": 990,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 6,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9500,
+     "locked": 30210,
+     "released": 1306,
+     "released_by": {
+      "E_at_or_above_threshold": 1285,
+      "propagated_conflict": 1,
+      "support_conflict": 8,
+      "u_beyond_bound": 14,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10000,
+     "locked": 30122,
+     "released": 909,
+     "released_by": {
+      "E_at_or_above_threshold": 900,
+      "propagated_conflict": 1,
+      "support_conflict": 6,
+      "u_beyond_bound": 4,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10500,
+     "locked": 30334,
+     "released": 735,
+     "released_by": {
+      "E_at_or_above_threshold": 730,
+      "propagated_conflict": 1,
+      "support_conflict": 4,
+      "u_beyond_bound": 2,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11000,
+     "locked": 30122,
+     "released": 1417,
+     "released_by": {
+      "E_at_or_above_threshold": 1413,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 5,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11500,
+     "locked": 30771,
+     "released": 675,
+     "released_by": {
+      "E_at_or_above_threshold": 672,
+      "propagated_conflict": 1,
+      "support_conflict": 0,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12000,
+     "locked": 30382,
+     "released": 1370,
+     "released_by": {
+      "E_at_or_above_threshold": 1364,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 5,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12500,
+     "locked": 29955,
+     "released": 1004,
+     "released_by": {
+      "E_at_or_above_threshold": 985,
+      "propagated_conflict": 1,
+      "support_conflict": 8,
+      "u_beyond_bound": 14,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13000,
+     "locked": 30216,
+     "released": 787,
+     "released_by": {
+      "E_at_or_above_threshold": 782,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 4,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13500,
+     "locked": 30446,
+     "released": 754,
+     "released_by": {
+      "E_at_or_above_threshold": 751,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14000,
+     "locked": 29934,
+     "released": 1364,
+     "released_by": {
+      "E_at_or_above_threshold": 1355,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 6,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14500,
+     "locked": 30077,
+     "released": 662,
+     "released_by": {
+      "E_at_or_above_threshold": 654,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 4,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15000,
+     "locked": 30486,
+     "released": 945,
+     "released_by": {
+      "E_at_or_above_threshold": 943,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15500,
+     "locked": 30510,
+     "released": 748,
+     "released_by": {
+      "E_at_or_above_threshold": 743,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16000,
+     "locked": 30775,
+     "released": 598,
+     "released_by": {
+      "E_at_or_above_threshold": 596,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16500,
+     "locked": 30132,
+     "released": 1175,
+     "released_by": {
+      "E_at_or_above_threshold": 1173,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17000,
+     "locked": 30584,
+     "released": 729,
+     "released_by": {
+      "E_at_or_above_threshold": 726,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17500,
+     "locked": 30296,
+     "released": 968,
+     "released_by": {
+      "E_at_or_above_threshold": 966,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18000,
+     "locked": 30706,
+     "released": 672,
+     "released_by": {
+      "E_at_or_above_threshold": 667,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18500,
+     "locked": 30411,
+     "released": 1004,
+     "released_by": {
+      "E_at_or_above_threshold": 1002,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19000,
+     "locked": 30457,
+     "released": 788,
+     "released_by": {
+      "E_at_or_above_threshold": 787,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19500,
+     "locked": 30491,
+     "released": 697,
+     "released_by": {
+      "E_at_or_above_threshold": 687,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 6,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20000,
+     "locked": 30639,
+     "released": 854,
+     "released_by": {
+      "E_at_or_above_threshold": 854,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20500,
+     "locked": 30397,
+     "released": 1033,
+     "released_by": {
+      "E_at_or_above_threshold": 1033,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21000,
+     "locked": 30512,
+     "released": 830,
+     "released_by": {
+      "E_at_or_above_threshold": 827,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21500,
+     "locked": 30207,
+     "released": 1159,
+     "released_by": {
+      "E_at_or_above_threshold": 1158,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22000,
+     "locked": 30407,
+     "released": 921,
+     "released_by": {
+      "E_at_or_above_threshold": 920,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22500,
+     "locked": 29795,
+     "released": 1370,
+     "released_by": {
+      "E_at_or_above_threshold": 1368,
+      "propagated_conflict": 1,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23000,
+     "locked": 29433,
+     "released": 1159,
+     "released_by": {
+      "E_at_or_above_threshold": 1158,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23500,
+     "locked": 30328,
+     "released": 813,
+     "released_by": {
+      "E_at_or_above_threshold": 813,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24000,
+     "locked": 30428,
+     "released": 734,
+     "released_by": {
+      "E_at_or_above_threshold": 732,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24500,
+     "locked": 29961,
+     "released": 1225,
+     "released_by": {
+      "E_at_or_above_threshold": 1225,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25000,
+     "locked": 29901,
+     "released": 929,
+     "released_by": {
+      "E_at_or_above_threshold": 929,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25500,
+     "locked": 30339,
+     "released": 805,
+     "released_by": {
+      "E_at_or_above_threshold": 801,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26000,
+     "locked": 30180,
+     "released": 876,
+     "released_by": {
+      "E_at_or_above_threshold": 876,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26500,
+     "locked": 30245,
+     "released": 769,
+     "released_by": {
+      "E_at_or_above_threshold": 769,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27000,
+     "locked": 30195,
+     "released": 712,
+     "released_by": {
+      "E_at_or_above_threshold": 712,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27500,
+     "locked": 30211,
+     "released": 653,
+     "released_by": {
+      "E_at_or_above_threshold": 652,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28000,
+     "locked": 29709,
+     "released": 1109,
+     "released_by": {
+      "E_at_or_above_threshold": 1109,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28500,
+     "locked": 30182,
+     "released": 610,
+     "released_by": {
+      "E_at_or_above_threshold": 609,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29000,
+     "locked": 30172,
+     "released": 703,
+     "released_by": {
+      "E_at_or_above_threshold": 701,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29500,
+     "locked": 30118,
+     "released": 833,
+     "released_by": {
+      "E_at_or_above_threshold": 833,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 30000,
+     "locked": 30179,
+     "released": 644,
+     "released_by": {
+      "E_at_or_above_threshold": 644,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    }
+   ]
+  },
+  "prop_LoD2_s1": {
+   "interval": 500,
+   "rereads": 61,
+   "locked_first": 39366,
+   "locked_last": 29134,
+   "released_total": 79794,
+   "released_by": {
+    "E_at_or_above_threshold": 79427,
+    "propagated_conflict": 35,
+    "support_conflict": 242,
+    "u_beyond_bound": 256,
+    "several_reasons": 166,
+    "no_reason_found": 0
+   },
+   "inheritance": 0.7758,
+   "by_iteration": [
+    {
+     "iteration": 1,
+     "locked": 39366,
+     "released": 0,
+     "released_by": {
+      "E_at_or_above_threshold": 0,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 500,
+     "locked": 28119,
+     "released": 12957,
+     "released_by": {
+      "E_at_or_above_threshold": 12957,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1000,
+     "locked": 29570,
+     "released": 2884,
+     "released_by": {
+      "E_at_or_above_threshold": 2882,
+      "propagated_conflict": 1,
+      "support_conflict": 21,
+      "u_beyond_bound": 3,
+      "several_reasons": 23,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1500,
+     "locked": 29858,
+     "released": 2878,
+     "released_by": {
+      "E_at_or_above_threshold": 2861,
+      "propagated_conflict": 0,
+      "support_conflict": 25,
+      "u_beyond_bound": 13,
+      "several_reasons": 21,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2000,
+     "locked": 29061,
+     "released": 2951,
+     "released_by": {
+      "E_at_or_above_threshold": 2940,
+      "propagated_conflict": 4,
+      "support_conflict": 12,
+      "u_beyond_bound": 6,
+      "several_reasons": 11,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2500,
+     "locked": 29574,
+     "released": 1847,
+     "released_by": {
+      "E_at_or_above_threshold": 1836,
+      "propagated_conflict": 3,
+      "support_conflict": 7,
+      "u_beyond_bound": 8,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3000,
+     "locked": 28963,
+     "released": 2580,
+     "released_by": {
+      "E_at_or_above_threshold": 2567,
+      "propagated_conflict": 1,
+      "support_conflict": 14,
+      "u_beyond_bound": 10,
+      "several_reasons": 12,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3500,
+     "locked": 27980,
+     "released": 1989,
+     "released_by": {
+      "E_at_or_above_threshold": 1948,
+      "propagated_conflict": 3,
+      "support_conflict": 17,
+      "u_beyond_bound": 44,
+      "several_reasons": 23,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4000,
+     "locked": 28349,
+     "released": 1215,
+     "released_by": {
+      "E_at_or_above_threshold": 1200,
+      "propagated_conflict": 2,
+      "support_conflict": 7,
+      "u_beyond_bound": 13,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4500,
+     "locked": 28591,
+     "released": 1242,
+     "released_by": {
+      "E_at_or_above_threshold": 1234,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 6,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5000,
+     "locked": 28698,
+     "released": 1331,
+     "released_by": {
+      "E_at_or_above_threshold": 1323,
+      "propagated_conflict": 1,
+      "support_conflict": 6,
+      "u_beyond_bound": 4,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5500,
+     "locked": 28427,
+     "released": 1591,
+     "released_by": {
+      "E_at_or_above_threshold": 1580,
+      "propagated_conflict": 5,
+      "support_conflict": 6,
+      "u_beyond_bound": 7,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6000,
+     "locked": 28814,
+     "released": 1297,
+     "released_by": {
+      "E_at_or_above_threshold": 1287,
+      "propagated_conflict": 2,
+      "support_conflict": 2,
+      "u_beyond_bound": 8,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6500,
+     "locked": 28407,
+     "released": 1218,
+     "released_by": {
+      "E_at_or_above_threshold": 1186,
+      "propagated_conflict": 3,
+      "support_conflict": 12,
+      "u_beyond_bound": 26,
+      "several_reasons": 9,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7000,
+     "locked": 28113,
+     "released": 1354,
+     "released_by": {
+      "E_at_or_above_threshold": 1349,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 6,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7500,
+     "locked": 28860,
+     "released": 1029,
+     "released_by": {
+      "E_at_or_above_threshold": 1022,
+      "propagated_conflict": 1,
+      "support_conflict": 4,
+      "u_beyond_bound": 4,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8000,
+     "locked": 29413,
+     "released": 826,
+     "released_by": {
+      "E_at_or_above_threshold": 818,
+      "propagated_conflict": 1,
+      "support_conflict": 7,
+      "u_beyond_bound": 2,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8500,
+     "locked": 30025,
+     "released": 831,
+     "released_by": {
+      "E_at_or_above_threshold": 823,
+      "propagated_conflict": 1,
+      "support_conflict": 6,
+      "u_beyond_bound": 3,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9000,
+     "locked": 29490,
+     "released": 1430,
+     "released_by": {
+      "E_at_or_above_threshold": 1422,
+      "propagated_conflict": 1,
+      "support_conflict": 6,
+      "u_beyond_bound": 3,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9500,
+     "locked": 28989,
+     "released": 1102,
+     "released_by": {
+      "E_at_or_above_threshold": 1076,
+      "propagated_conflict": 1,
+      "support_conflict": 14,
+      "u_beyond_bound": 17,
+      "several_reasons": 6,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10000,
+     "locked": 29148,
+     "released": 800,
+     "released_by": {
+      "E_at_or_above_threshold": 793,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 5,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10500,
+     "locked": 29353,
+     "released": 992,
+     "released_by": {
+      "E_at_or_above_threshold": 989,
+      "propagated_conflict": 0,
+      "support_conflict": 5,
+      "u_beyond_bound": 1,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11000,
+     "locked": 29783,
+     "released": 779,
+     "released_by": {
+      "E_at_or_above_threshold": 770,
+      "propagated_conflict": 0,
+      "support_conflict": 7,
+      "u_beyond_bound": 5,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11500,
+     "locked": 29116,
+     "released": 1637,
+     "released_by": {
+      "E_at_or_above_threshold": 1630,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 5,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12000,
+     "locked": 29908,
+     "released": 952,
+     "released_by": {
+      "E_at_or_above_threshold": 948,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12500,
+     "locked": 29304,
+     "released": 1167,
+     "released_by": {
+      "E_at_or_above_threshold": 1154,
+      "propagated_conflict": 0,
+      "support_conflict": 9,
+      "u_beyond_bound": 7,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13000,
+     "locked": 29431,
+     "released": 945,
+     "released_by": {
+      "E_at_or_above_threshold": 938,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 4,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13500,
+     "locked": 29807,
+     "released": 717,
+     "released_by": {
+      "E_at_or_above_threshold": 714,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14000,
+     "locked": 29610,
+     "released": 906,
+     "released_by": {
+      "E_at_or_above_threshold": 905,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14500,
+     "locked": 29740,
+     "released": 958,
+     "released_by": {
+      "E_at_or_above_threshold": 957,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 1,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15000,
+     "locked": 29313,
+     "released": 1424,
+     "released_by": {
+      "E_at_or_above_threshold": 1423,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15500,
+     "locked": 29882,
+     "released": 713,
+     "released_by": {
+      "E_at_or_above_threshold": 707,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16000,
+     "locked": 29804,
+     "released": 952,
+     "released_by": {
+      "E_at_or_above_threshold": 945,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 4,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16500,
+     "locked": 29841,
+     "released": 1070,
+     "released_by": {
+      "E_at_or_above_threshold": 1069,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17000,
+     "locked": 29884,
+     "released": 926,
+     "released_by": {
+      "E_at_or_above_threshold": 916,
+      "propagated_conflict": 2,
+      "support_conflict": 3,
+      "u_beyond_bound": 5,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17500,
+     "locked": 29315,
+     "released": 1209,
+     "released_by": {
+      "E_at_or_above_threshold": 1206,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18000,
+     "locked": 29296,
+     "released": 1083,
+     "released_by": {
+      "E_at_or_above_threshold": 1079,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18500,
+     "locked": 28864,
+     "released": 1152,
+     "released_by": {
+      "E_at_or_above_threshold": 1150,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19000,
+     "locked": 29222,
+     "released": 715,
+     "released_by": {
+      "E_at_or_above_threshold": 714,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19500,
+     "locked": 29572,
+     "released": 797,
+     "released_by": {
+      "E_at_or_above_threshold": 791,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20000,
+     "locked": 29668,
+     "released": 708,
+     "released_by": {
+      "E_at_or_above_threshold": 706,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20500,
+     "locked": 29310,
+     "released": 1169,
+     "released_by": {
+      "E_at_or_above_threshold": 1166,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21000,
+     "locked": 29672,
+     "released": 811,
+     "released_by": {
+      "E_at_or_above_threshold": 808,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21500,
+     "locked": 28955,
+     "released": 1371,
+     "released_by": {
+      "E_at_or_above_threshold": 1369,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22000,
+     "locked": 29067,
+     "released": 711,
+     "released_by": {
+      "E_at_or_above_threshold": 708,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22500,
+     "locked": 28948,
+     "released": 866,
+     "released_by": {
+      "E_at_or_above_threshold": 863,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23000,
+     "locked": 29046,
+     "released": 746,
+     "released_by": {
+      "E_at_or_above_threshold": 744,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23500,
+     "locked": 28737,
+     "released": 1043,
+     "released_by": {
+      "E_at_or_above_threshold": 1039,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24000,
+     "locked": 28827,
+     "released": 863,
+     "released_by": {
+      "E_at_or_above_threshold": 862,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24500,
+     "locked": 28805,
+     "released": 768,
+     "released_by": {
+      "E_at_or_above_threshold": 768,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 0,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25000,
+     "locked": 28799,
+     "released": 718,
+     "released_by": {
+      "E_at_or_above_threshold": 717,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25500,
+     "locked": 28911,
+     "released": 674,
+     "released_by": {
+      "E_at_or_above_threshold": 673,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26000,
+     "locked": 28760,
+     "released": 874,
+     "released_by": {
+      "E_at_or_above_threshold": 873,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26500,
+     "locked": 28947,
+     "released": 610,
+     "released_by": {
+      "E_at_or_above_threshold": 609,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27000,
+     "locked": 28940,
+     "released": 646,
+     "released_by": {
+      "E_at_or_above_threshold": 645,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27500,
+     "locked": 29043,
+     "released": 865,
+     "released_by": {
+      "E_at_or_above_threshold": 864,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28000,
+     "locked": 29164,
+     "released": 781,
+     "released_by": {
+      "E_at_or_above_threshold": 781,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28500,
+     "locked": 28939,
+     "released": 982,
+     "released_by": {
+      "E_at_or_above_threshold": 982,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29000,
+     "locked": 28773,
+     "released": 768,
+     "released_by": {
+      "E_at_or_above_threshold": 768,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29500,
+     "locked": 28933,
+     "released": 635,
+     "released_by": {
+      "E_at_or_above_threshold": 634,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 30000,
+     "locked": 29134,
+     "released": 739,
+     "released_by": {
+      "E_at_or_above_threshold": 739,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    }
+   ]
+  },
+  "sens_e250_LoD2_s0": {
+   "interval": 250,
+   "rereads": 121,
+   "locked_first": 39366,
+   "locked_last": 30209,
+   "released_total": 152178,
+   "released_by": {
+    "E_at_or_above_threshold": 151572,
+    "propagated_conflict": 61,
+    "support_conflict": 335,
+    "u_beyond_bound": 432,
+    "several_reasons": 221,
+    "no_reason_found": 0
+   },
+   "inheritance": 0.7157,
+   "by_iteration": [
+    {
+     "iteration": 1,
+     "locked": 39366,
+     "released": 0,
+     "released_by": {
+      "E_at_or_above_threshold": 0,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 250,
+     "locked": 27448,
+     "released": 14756,
+     "released_by": {
+      "E_at_or_above_threshold": 14756,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 500,
+     "locked": 29264,
+     "released": 3971,
+     "released_by": {
+      "E_at_or_above_threshold": 3959,
+      "propagated_conflict": 0,
+      "support_conflict": 23,
+      "u_beyond_bound": 8,
+      "several_reasons": 19,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 750,
+     "locked": 29672,
+     "released": 4063,
+     "released_by": {
+      "E_at_or_above_threshold": 4046,
+      "propagated_conflict": 3,
+      "support_conflict": 18,
+      "u_beyond_bound": 12,
+      "several_reasons": 16,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1000,
+     "locked": 29545,
+     "released": 3907,
+     "released_by": {
+      "E_at_or_above_threshold": 3892,
+      "propagated_conflict": 3,
+      "support_conflict": 16,
+      "u_beyond_bound": 12,
+      "several_reasons": 16,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1250,
+     "locked": 31764,
+     "released": 2261,
+     "released_by": {
+      "E_at_or_above_threshold": 2249,
+      "propagated_conflict": 2,
+      "support_conflict": 7,
+      "u_beyond_bound": 10,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1500,
+     "locked": 29997,
+     "released": 4243,
+     "released_by": {
+      "E_at_or_above_threshold": 4236,
+      "propagated_conflict": 1,
+      "support_conflict": 16,
+      "u_beyond_bound": 10,
+      "several_reasons": 20,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1750,
+     "locked": 30494,
+     "released": 2771,
+     "released_by": {
+      "E_at_or_above_threshold": 2763,
+      "propagated_conflict": 1,
+      "support_conflict": 6,
+      "u_beyond_bound": 7,
+      "several_reasons": 6,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2000,
+     "locked": 29963,
+     "released": 2782,
+     "released_by": {
+      "E_at_or_above_threshold": 2765,
+      "propagated_conflict": 0,
+      "support_conflict": 11,
+      "u_beyond_bound": 12,
+      "several_reasons": 6,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2250,
+     "locked": 30494,
+     "released": 2242,
+     "released_by": {
+      "E_at_or_above_threshold": 2234,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 6,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2500,
+     "locked": 30039,
+     "released": 2780,
+     "released_by": {
+      "E_at_or_above_threshold": 2767,
+      "propagated_conflict": 2,
+      "support_conflict": 6,
+      "u_beyond_bound": 9,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2750,
+     "locked": 30059,
+     "released": 2289,
+     "released_by": {
+      "E_at_or_above_threshold": 2284,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 6,
+      "several_reasons": 5,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3000,
+     "locked": 29932,
+     "released": 2416,
+     "released_by": {
+      "E_at_or_above_threshold": 2407,
+      "propagated_conflict": 1,
+      "support_conflict": 5,
+      "u_beyond_bound": 6,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3250,
+     "locked": 28632,
+     "released": 2778,
+     "released_by": {
+      "E_at_or_above_threshold": 2729,
+      "propagated_conflict": 2,
+      "support_conflict": 13,
+      "u_beyond_bound": 51,
+      "several_reasons": 17,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3500,
+     "locked": 28610,
+     "released": 1924,
+     "released_by": {
+      "E_at_or_above_threshold": 1913,
+      "propagated_conflict": 2,
+      "support_conflict": 4,
+      "u_beyond_bound": 10,
+      "several_reasons": 5,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3750,
+     "locked": 28994,
+     "released": 1135,
+     "released_by": {
+      "E_at_or_above_threshold": 1131,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4000,
+     "locked": 28902,
+     "released": 1427,
+     "released_by": {
+      "E_at_or_above_threshold": 1418,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 10,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4250,
+     "locked": 29238,
+     "released": 1058,
+     "released_by": {
+      "E_at_or_above_threshold": 1046,
+      "propagated_conflict": 3,
+      "support_conflict": 7,
+      "u_beyond_bound": 5,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4500,
+     "locked": 29056,
+     "released": 1526,
+     "released_by": {
+      "E_at_or_above_threshold": 1517,
+      "propagated_conflict": 2,
+      "support_conflict": 1,
+      "u_beyond_bound": 7,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4750,
+     "locked": 29326,
+     "released": 1238,
+     "released_by": {
+      "E_at_or_above_threshold": 1226,
+      "propagated_conflict": 2,
+      "support_conflict": 12,
+      "u_beyond_bound": 6,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5000,
+     "locked": 28614,
+     "released": 1817,
+     "released_by": {
+      "E_at_or_above_threshold": 1808,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 7,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5250,
+     "locked": 29524,
+     "released": 1015,
+     "released_by": {
+      "E_at_or_above_threshold": 1011,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5500,
+     "locked": 29288,
+     "released": 1281,
+     "released_by": {
+      "E_at_or_above_threshold": 1266,
+      "propagated_conflict": 2,
+      "support_conflict": 8,
+      "u_beyond_bound": 12,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5750,
+     "locked": 29949,
+     "released": 1027,
+     "released_by": {
+      "E_at_or_above_threshold": 1022,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 4,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6000,
+     "locked": 29785,
+     "released": 1222,
+     "released_by": {
+      "E_at_or_above_threshold": 1213,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 8,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6250,
+     "locked": 27895,
+     "released": 2285,
+     "released_by": {
+      "E_at_or_above_threshold": 2247,
+      "propagated_conflict": 1,
+      "support_conflict": 9,
+      "u_beyond_bound": 36,
+      "several_reasons": 8,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6500,
+     "locked": 28592,
+     "released": 1020,
+     "released_by": {
+      "E_at_or_above_threshold": 1011,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 7,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6750,
+     "locked": 28599,
+     "released": 1199,
+     "released_by": {
+      "E_at_or_above_threshold": 1193,
+      "propagated_conflict": 4,
+      "support_conflict": 8,
+      "u_beyond_bound": 3,
+      "several_reasons": 9,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7000,
+     "locked": 28849,
+     "released": 952,
+     "released_by": {
+      "E_at_or_above_threshold": 947,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7250,
+     "locked": 29424,
+     "released": 725,
+     "released_by": {
+      "E_at_or_above_threshold": 721,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7500,
+     "locked": 29046,
+     "released": 1229,
+     "released_by": {
+      "E_at_or_above_threshold": 1225,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7750,
+     "locked": 29354,
+     "released": 822,
+     "released_by": {
+      "E_at_or_above_threshold": 817,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 5,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8000,
+     "locked": 29361,
+     "released": 1077,
+     "released_by": {
+      "E_at_or_above_threshold": 1067,
+      "propagated_conflict": 2,
+      "support_conflict": 3,
+      "u_beyond_bound": 7,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8250,
+     "locked": 29710,
+     "released": 885,
+     "released_by": {
+      "E_at_or_above_threshold": 878,
+      "propagated_conflict": 2,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8500,
+     "locked": 29473,
+     "released": 1551,
+     "released_by": {
+      "E_at_or_above_threshold": 1540,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 8,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8750,
+     "locked": 30414,
+     "released": 756,
+     "released_by": {
+      "E_at_or_above_threshold": 748,
+      "propagated_conflict": 2,
+      "support_conflict": 5,
+      "u_beyond_bound": 3,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9000,
+     "locked": 30085,
+     "released": 1291,
+     "released_by": {
+      "E_at_or_above_threshold": 1286,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 3,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9250,
+     "locked": 29530,
+     "released": 1079,
+     "released_by": {
+      "E_at_or_above_threshold": 1053,
+      "propagated_conflict": 2,
+      "support_conflict": 4,
+      "u_beyond_bound": 25,
+      "several_reasons": 5,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9500,
+     "locked": 29679,
+     "released": 906,
+     "released_by": {
+      "E_at_or_above_threshold": 904,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 2,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9750,
+     "locked": 30060,
+     "released": 863,
+     "released_by": {
+      "E_at_or_above_threshold": 859,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10000,
+     "locked": 29812,
+     "released": 1226,
+     "released_by": {
+      "E_at_or_above_threshold": 1220,
+      "propagated_conflict": 2,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10250,
+     "locked": 29718,
+     "released": 1305,
+     "released_by": {
+      "E_at_or_above_threshold": 1303,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10500,
+     "locked": 30200,
+     "released": 896,
+     "released_by": {
+      "E_at_or_above_threshold": 890,
+      "propagated_conflict": 0,
+      "support_conflict": 5,
+      "u_beyond_bound": 3,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10750,
+     "locked": 30280,
+     "released": 853,
+     "released_by": {
+      "E_at_or_above_threshold": 850,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11000,
+     "locked": 30320,
+     "released": 792,
+     "released_by": {
+      "E_at_or_above_threshold": 783,
+      "propagated_conflict": 2,
+      "support_conflict": 3,
+      "u_beyond_bound": 4,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11250,
+     "locked": 30726,
+     "released": 723,
+     "released_by": {
+      "E_at_or_above_threshold": 719,
+      "propagated_conflict": 1,
+      "support_conflict": 0,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11500,
+     "locked": 30332,
+     "released": 1134,
+     "released_by": {
+      "E_at_or_above_threshold": 1128,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11750,
+     "locked": 30676,
+     "released": 898,
+     "released_by": {
+      "E_at_or_above_threshold": 892,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12000,
+     "locked": 30950,
+     "released": 908,
+     "released_by": {
+      "E_at_or_above_threshold": 901,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 5,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12250,
+     "locked": 30021,
+     "released": 1334,
+     "released_by": {
+      "E_at_or_above_threshold": 1316,
+      "propagated_conflict": 1,
+      "support_conflict": 9,
+      "u_beyond_bound": 11,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12500,
+     "locked": 29553,
+     "released": 1512,
+     "released_by": {
+      "E_at_or_above_threshold": 1508,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12750,
+     "locked": 30136,
+     "released": 871,
+     "released_by": {
+      "E_at_or_above_threshold": 866,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13000,
+     "locked": 30336,
+     "released": 753,
+     "released_by": {
+      "E_at_or_above_threshold": 748,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13250,
+     "locked": 29803,
+     "released": 1363,
+     "released_by": {
+      "E_at_or_above_threshold": 1361,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13500,
+     "locked": 30738,
+     "released": 491,
+     "released_by": {
+      "E_at_or_above_threshold": 487,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13750,
+     "locked": 30413,
+     "released": 939,
+     "released_by": {
+      "E_at_or_above_threshold": 939,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14000,
+     "locked": 30506,
+     "released": 860,
+     "released_by": {
+      "E_at_or_above_threshold": 857,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14250,
+     "locked": 30006,
+     "released": 1347,
+     "released_by": {
+      "E_at_or_above_threshold": 1340,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14500,
+     "locked": 30435,
+     "released": 838,
+     "released_by": {
+      "E_at_or_above_threshold": 834,
+      "propagated_conflict": 2,
+      "support_conflict": 2,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14750,
+     "locked": 30608,
+     "released": 713,
+     "released_by": {
+      "E_at_or_above_threshold": 712,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15000,
+     "locked": 30124,
+     "released": 1304,
+     "released_by": {
+      "E_at_or_above_threshold": 1296,
+      "propagated_conflict": 2,
+      "support_conflict": 5,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15250,
+     "locked": 30153,
+     "released": 1054,
+     "released_by": {
+      "E_at_or_above_threshold": 1053,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15500,
+     "locked": 30402,
+     "released": 832,
+     "released_by": {
+      "E_at_or_above_threshold": 832,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15750,
+     "locked": 30798,
+     "released": 736,
+     "released_by": {
+      "E_at_or_above_threshold": 734,
+      "propagated_conflict": 1,
+      "support_conflict": 2,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16000,
+     "locked": 29958,
+     "released": 1464,
+     "released_by": {
+      "E_at_or_above_threshold": 1464,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16250,
+     "locked": 30179,
+     "released": 696,
+     "released_by": {
+      "E_at_or_above_threshold": 691,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16500,
+     "locked": 29960,
+     "released": 877,
+     "released_by": {
+      "E_at_or_above_threshold": 873,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16750,
+     "locked": 30669,
+     "released": 624,
+     "released_by": {
+      "E_at_or_above_threshold": 621,
+      "propagated_conflict": 1,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17000,
+     "locked": 30419,
+     "released": 979,
+     "released_by": {
+      "E_at_or_above_threshold": 974,
+      "propagated_conflict": 1,
+      "support_conflict": 3,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17250,
+     "locked": 30521,
+     "released": 666,
+     "released_by": {
+      "E_at_or_above_threshold": 663,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17500,
+     "locked": 30035,
+     "released": 1250,
+     "released_by": {
+      "E_at_or_above_threshold": 1249,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17750,
+     "locked": 30171,
+     "released": 1102,
+     "released_by": {
+      "E_at_or_above_threshold": 1098,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18000,
+     "locked": 30290,
+     "released": 912,
+     "released_by": {
+      "E_at_or_above_threshold": 909,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18250,
+     "locked": 30108,
+     "released": 936,
+     "released_by": {
+      "E_at_or_above_threshold": 935,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18500,
+     "locked": 30202,
+     "released": 905,
+     "released_by": {
+      "E_at_or_above_threshold": 904,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18750,
+     "locked": 30466,
+     "released": 633,
+     "released_by": {
+      "E_at_or_above_threshold": 632,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19000,
+     "locked": 30477,
+     "released": 652,
+     "released_by": {
+      "E_at_or_above_threshold": 650,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19250,
+     "locked": 30316,
+     "released": 899,
+     "released_by": {
+      "E_at_or_above_threshold": 894,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19500,
+     "locked": 30255,
+     "released": 628,
+     "released_by": {
+      "E_at_or_above_threshold": 626,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19750,
+     "locked": 30461,
+     "released": 700,
+     "released_by": {
+      "E_at_or_above_threshold": 694,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20000,
+     "locked": 29895,
+     "released": 1288,
+     "released_by": {
+      "E_at_or_above_threshold": 1287,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20250,
+     "locked": 30399,
+     "released": 493,
+     "released_by": {
+      "E_at_or_above_threshold": 491,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20500,
+     "locked": 30207,
+     "released": 680,
+     "released_by": {
+      "E_at_or_above_threshold": 679,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20750,
+     "locked": 29987,
+     "released": 927,
+     "released_by": {
+      "E_at_or_above_threshold": 924,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21000,
+     "locked": 30165,
+     "released": 564,
+     "released_by": {
+      "E_at_or_above_threshold": 564,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21250,
+     "locked": 29276,
+     "released": 1477,
+     "released_by": {
+      "E_at_or_above_threshold": 1474,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21500,
+     "locked": 29746,
+     "released": 979,
+     "released_by": {
+      "E_at_or_above_threshold": 977,
+      "propagated_conflict": 1,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21750,
+     "locked": 30379,
+     "released": 521,
+     "released_by": {
+      "E_at_or_above_threshold": 520,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22000,
+     "locked": 29558,
+     "released": 1260,
+     "released_by": {
+      "E_at_or_above_threshold": 1259,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22250,
+     "locked": 30078,
+     "released": 689,
+     "released_by": {
+      "E_at_or_above_threshold": 688,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22500,
+     "locked": 30161,
+     "released": 658,
+     "released_by": {
+      "E_at_or_above_threshold": 656,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22750,
+     "locked": 29846,
+     "released": 980,
+     "released_by": {
+      "E_at_or_above_threshold": 978,
+      "propagated_conflict": 0,
+      "support_conflict": 4,
+      "u_beyond_bound": 0,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23000,
+     "locked": 30236,
+     "released": 634,
+     "released_by": {
+      "E_at_or_above_threshold": 633,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23250,
+     "locked": 30229,
+     "released": 620,
+     "released_by": {
+      "E_at_or_above_threshold": 619,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23500,
+     "locked": 30213,
+     "released": 568,
+     "released_by": {
+      "E_at_or_above_threshold": 568,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23750,
+     "locked": 30049,
+     "released": 793,
+     "released_by": {
+      "E_at_or_above_threshold": 793,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24000,
+     "locked": 30113,
+     "released": 706,
+     "released_by": {
+      "E_at_or_above_threshold": 705,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24250,
+     "locked": 29945,
+     "released": 1119,
+     "released_by": {
+      "E_at_or_above_threshold": 1118,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24500,
+     "locked": 29990,
+     "released": 870,
+     "released_by": {
+      "E_at_or_above_threshold": 869,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24750,
+     "locked": 30144,
+     "released": 656,
+     "released_by": {
+      "E_at_or_above_threshold": 656,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25000,
+     "locked": 29731,
+     "released": 1017,
+     "released_by": {
+      "E_at_or_above_threshold": 1017,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25250,
+     "locked": 30049,
+     "released": 751,
+     "released_by": {
+      "E_at_or_above_threshold": 751,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25500,
+     "locked": 30160,
+     "released": 677,
+     "released_by": {
+      "E_at_or_above_threshold": 677,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25750,
+     "locked": 29880,
+     "released": 943,
+     "released_by": {
+      "E_at_or_above_threshold": 941,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26000,
+     "locked": 30137,
+     "released": 659,
+     "released_by": {
+      "E_at_or_above_threshold": 659,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26250,
+     "locked": 29952,
+     "released": 775,
+     "released_by": {
+      "E_at_or_above_threshold": 775,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26500,
+     "locked": 30167,
+     "released": 617,
+     "released_by": {
+      "E_at_or_above_threshold": 616,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 0,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26750,
+     "locked": 29840,
+     "released": 956,
+     "released_by": {
+      "E_at_or_above_threshold": 956,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27000,
+     "locked": 29729,
+     "released": 719,
+     "released_by": {
+      "E_at_or_above_threshold": 718,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27250,
+     "locked": 29837,
+     "released": 849,
+     "released_by": {
+      "E_at_or_above_threshold": 849,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27500,
+     "locked": 30077,
+     "released": 645,
+     "released_by": {
+      "E_at_or_above_threshold": 645,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27750,
+     "locked": 29862,
+     "released": 889,
+     "released_by": {
+      "E_at_or_above_threshold": 888,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28000,
+     "locked": 29842,
+     "released": 549,
+     "released_by": {
+      "E_at_or_above_threshold": 548,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28250,
+     "locked": 29638,
+     "released": 1019,
+     "released_by": {
+      "E_at_or_above_threshold": 1019,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28500,
+     "locked": 29782,
+     "released": 708,
+     "released_by": {
+      "E_at_or_above_threshold": 708,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28750,
+     "locked": 30118,
+     "released": 571,
+     "released_by": {
+      "E_at_or_above_threshold": 570,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29000,
+     "locked": 30060,
+     "released": 546,
+     "released_by": {
+      "E_at_or_above_threshold": 545,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29250,
+     "locked": 29980,
+     "released": 668,
+     "released_by": {
+      "E_at_or_above_threshold": 668,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29500,
+     "locked": 30275,
+     "released": 444,
+     "released_by": {
+      "E_at_or_above_threshold": 444,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29750,
+     "locked": 29756,
+     "released": 1007,
+     "released_by": {
+      "E_at_or_above_threshold": 1007,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 30000,
+     "locked": 30209,
+     "released": 513,
+     "released_by": {
+      "E_at_or_above_threshold": 513,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    }
+   ]
+  },
+  "sens_e1000_LoD2_s0": {
+   "interval": 1000,
+   "rereads": 31,
+   "locked_first": 39366,
+   "locked_last": 30758,
+   "released_total": 45147,
+   "released_by": {
+    "E_at_or_above_threshold": 44908,
+    "propagated_conflict": 26,
+    "support_conflict": 156,
+    "u_beyond_bound": 182,
+    "several_reasons": 125,
+    "no_reason_found": 0
+   },
+   "inheritance": 0.8609,
+   "by_iteration": [
+    {
+     "iteration": 1,
+     "locked": 39366,
+     "released": 0,
+     "released_by": {
+      "E_at_or_above_threshold": 0,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 1000,
+     "locked": 30091,
+     "released": 12701,
+     "released_by": {
+      "E_at_or_above_threshold": 12701,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 2000,
+     "locked": 29498,
+     "released": 4135,
+     "released_by": {
+      "E_at_or_above_threshold": 4129,
+      "propagated_conflict": 2,
+      "support_conflict": 24,
+      "u_beyond_bound": 17,
+      "several_reasons": 37,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 3000,
+     "locked": 29757,
+     "released": 2115,
+     "released_by": {
+      "E_at_or_above_threshold": 2091,
+      "propagated_conflict": 4,
+      "support_conflict": 17,
+      "u_beyond_bound": 13,
+      "several_reasons": 10,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 4000,
+     "locked": 28743,
+     "released": 2085,
+     "released_by": {
+      "E_at_or_above_threshold": 2063,
+      "propagated_conflict": 3,
+      "support_conflict": 15,
+      "u_beyond_bound": 26,
+      "several_reasons": 22,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 5000,
+     "locked": 29384,
+     "released": 1266,
+     "released_by": {
+      "E_at_or_above_threshold": 1251,
+      "propagated_conflict": 0,
+      "support_conflict": 11,
+      "u_beyond_bound": 11,
+      "several_reasons": 7,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 6000,
+     "locked": 29909,
+     "released": 1216,
+     "released_by": {
+      "E_at_or_above_threshold": 1204,
+      "propagated_conflict": 2,
+      "support_conflict": 6,
+      "u_beyond_bound": 6,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 7000,
+     "locked": 28809,
+     "released": 1587,
+     "released_by": {
+      "E_at_or_above_threshold": 1543,
+      "propagated_conflict": 3,
+      "support_conflict": 17,
+      "u_beyond_bound": 34,
+      "several_reasons": 10,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 8000,
+     "locked": 29774,
+     "released": 781,
+     "released_by": {
+      "E_at_or_above_threshold": 776,
+      "propagated_conflict": 2,
+      "support_conflict": 4,
+      "u_beyond_bound": 5,
+      "several_reasons": 6,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 9000,
+     "locked": 30308,
+     "released": 917,
+     "released_by": {
+      "E_at_or_above_threshold": 904,
+      "propagated_conflict": 0,
+      "support_conflict": 13,
+      "u_beyond_bound": 4,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 10000,
+     "locked": 28566,
+     "released": 2260,
+     "released_by": {
+      "E_at_or_above_threshold": 2249,
+      "propagated_conflict": 0,
+      "support_conflict": 10,
+      "u_beyond_bound": 9,
+      "several_reasons": 8,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 11000,
+     "locked": 30750,
+     "released": 526,
+     "released_by": {
+      "E_at_or_above_threshold": 515,
+      "propagated_conflict": 1,
+      "support_conflict": 4,
+      "u_beyond_bound": 10,
+      "several_reasons": 4,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 12000,
+     "locked": 30696,
+     "released": 1269,
+     "released_by": {
+      "E_at_or_above_threshold": 1264,
+      "propagated_conflict": 0,
+      "support_conflict": 5,
+      "u_beyond_bound": 3,
+      "several_reasons": 3,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 13000,
+     "locked": 30181,
+     "released": 1252,
+     "released_by": {
+      "E_at_or_above_threshold": 1233,
+      "propagated_conflict": 3,
+      "support_conflict": 12,
+      "u_beyond_bound": 10,
+      "several_reasons": 6,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 14000,
+     "locked": 30859,
+     "released": 749,
+     "released_by": {
+      "E_at_or_above_threshold": 743,
+      "propagated_conflict": 1,
+      "support_conflict": 5,
+      "u_beyond_bound": 2,
+      "several_reasons": 2,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 15000,
+     "locked": 31077,
+     "released": 664,
+     "released_by": {
+      "E_at_or_above_threshold": 656,
+      "propagated_conflict": 2,
+      "support_conflict": 1,
+      "u_beyond_bound": 5,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 16000,
+     "locked": 30657,
+     "released": 1068,
+     "released_by": {
+      "E_at_or_above_threshold": 1064,
+      "propagated_conflict": 1,
+      "support_conflict": 0,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 17000,
+     "locked": 30971,
+     "released": 541,
+     "released_by": {
+      "E_at_or_above_threshold": 534,
+      "propagated_conflict": 1,
+      "support_conflict": 1,
+      "u_beyond_bound": 5,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 18000,
+     "locked": 30852,
+     "released": 748,
+     "released_by": {
+      "E_at_or_above_threshold": 745,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 2,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 19000,
+     "locked": 30627,
+     "released": 895,
+     "released_by": {
+      "E_at_or_above_threshold": 891,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 4,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 20000,
+     "locked": 30891,
+     "released": 790,
+     "released_by": {
+      "E_at_or_above_threshold": 787,
+      "propagated_conflict": 0,
+      "support_conflict": 2,
+      "u_beyond_bound": 1,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 21000,
+     "locked": 30365,
+     "released": 1243,
+     "released_by": {
+      "E_at_or_above_threshold": 1242,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 22000,
+     "locked": 30899,
+     "released": 579,
+     "released_by": {
+      "E_at_or_above_threshold": 574,
+      "propagated_conflict": 1,
+      "support_conflict": 1,
+      "u_beyond_bound": 3,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 23000,
+     "locked": 30867,
+     "released": 684,
+     "released_by": {
+      "E_at_or_above_threshold": 681,
+      "propagated_conflict": 0,
+      "support_conflict": 3,
+      "u_beyond_bound": 1,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 24000,
+     "locked": 30904,
+     "released": 689,
+     "released_by": {
+      "E_at_or_above_threshold": 687,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 25000,
+     "locked": 30654,
+     "released": 804,
+     "released_by": {
+      "E_at_or_above_threshold": 800,
+      "propagated_conflict": 0,
+      "support_conflict": 1,
+      "u_beyond_bound": 4,
+      "several_reasons": 1,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 26000,
+     "locked": 30714,
+     "released": 686,
+     "released_by": {
+      "E_at_or_above_threshold": 686,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 27000,
+     "locked": 30574,
+     "released": 874,
+     "released_by": {
+      "E_at_or_above_threshold": 874,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 28000,
+     "locked": 30911,
+     "released": 574,
+     "released_by": {
+      "E_at_or_above_threshold": 572,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 2,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 29000,
+     "locked": 30689,
+     "released": 774,
+     "released_by": {
+      "E_at_or_above_threshold": 774,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    },
+    {
+     "iteration": 30000,
+     "locked": 30758,
+     "released": 675,
+     "released_by": {
+      "E_at_or_above_threshold": 675,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    }
+   ]
+  },
+  "sens_enone_LoD2_s0": {
+   "interval": null,
+   "rereads": 1,
+   "locked_first": 39366,
+   "locked_last": 39366,
+   "released_total": 0,
+   "released_by": {
+    "E_at_or_above_threshold": 0,
+    "propagated_conflict": 0,
+    "support_conflict": 0,
+    "u_beyond_bound": 0,
+    "several_reasons": 0,
+    "no_reason_found": 0
+   },
+   "inheritance": 0.9993,
+   "by_iteration": [
+    {
+     "iteration": 1,
+     "locked": 39366,
+     "released": 0,
+     "released_by": {
+      "E_at_or_above_threshold": 0,
+      "propagated_conflict": 0,
+      "support_conflict": 0,
+      "u_beyond_bound": 0,
+      "several_reasons": 0,
+      "no_reason_found": 0
+     }
+    }
+   ]
+  }
+ },
+ "scientific_verdict": null
+}

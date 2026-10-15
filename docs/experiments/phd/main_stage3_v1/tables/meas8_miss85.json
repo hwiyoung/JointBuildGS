@@ -1,0 +1,253 @@
+{
+ "rule": "Rows: R1 LoD2 method, R1 ALS method, R1 image-only (LoD2's region), R1 ALS with the propagation off (stage 2), and the B0 / B173 surroundings\nLoD2 / ALS method rows as the summary for comparison. Columns: pixels and code-4 patches, the front by origin and family (prior alone /\ndescendants, image alone / descendants, mixed = no single group within 0.05 m), the place (same face / other face), the median distance of the\nfront point to the box GT, the pre-training judgment of the patches (0 conflict, 1 agreement, 2 mixed).\nReading (order 8.5): over the two priors' method rows, the largest origin group (the mixed pixels left out: they are not one group) and the\nlargest place group; the same group for both priors with a share over half for both -> 'R1 결측 영역이라는 자리의 탓으로 봄'; different largest\ngroups each over half -> '사전 정보 종류의 탓으로 봄'; else '가르지 못함'. At most '가능, 근거 불완전' (the two code-4 regions are not the same pixels).\n  python miss85_table_s3.py      -> S3/meas8/miss85.md, miss85.json\nscientific_verdict: null.",
+ "largest": {
+  "LoD2": {
+   "origin": "prior_family",
+   "origin_share": 0.2879205193783199,
+   "place": "other_face",
+   "place_share": 0.5373795002951013
+  },
+  "ALS": {
+   "origin": "prior_family",
+   "origin_share": 0.32798165137614677,
+   "place": "other_face",
+   "place_share": 0.511085626911315
+  }
+ },
+ "reading": "가르지 못함 (가능, 근거 불완전)",
+ "rows": {
+  "R1rep_b10|LoD2|prop_LoD2_s0": {
+   "ko": "R1 LoD2 본 방법",
+   "pixels": 10166,
+   "patches": 198,
+   "front_share": {
+    "prior_alone": 0.016919142238835335,
+    "prior_family": 0.2879205193783199,
+    "image_alone": 0.0004918355301987016,
+    "image_family": 0.21630926618138893,
+    "none": 0.4783592366712571
+   },
+   "place_share": {
+    "same_face": 0.46262049970489866,
+    "other_face": 0.5373795002951013
+   },
+   "gt_distance": {
+    "median": 0.23003466605942116,
+    "within_0_2": 0.45652173913043476,
+    "beyond_5m": 0.005016722408026756
+   },
+   "judgment_of_patches": {
+    "0": 99,
+    "1": 60,
+    "2": 39
+   }
+  },
+  "R1rep_b10|ALS|prop_ALS_s0": {
+   "ko": "R1 항공 LiDAR 본 방법",
+   "pixels": 5232,
+   "patches": 63,
+   "front_share": {
+    "prior_alone": 0.00038226299694189603,
+    "prior_family": 0.32798165137614677,
+    "image_alone": 0.0,
+    "image_family": 0.16494648318042812,
+    "none": 0.5066896024464832
+   },
+   "place_share": {
+    "same_face": 0.488914373088685,
+    "other_face": 0.511085626911315
+   },
+   "gt_distance": {
+    "median": 0.07416212138221788,
+    "within_0_2": 0.5753058103975535,
+    "beyond_5m": 0.0028669724770642203
+   },
+   "judgment_of_patches": {
+    "0": 61,
+    "2": 2
+   }
+  },
+  "R1rep_b10|LoD2|imgonly_s0": {
+   "ko": "R1 영상만 (LoD2 영역)",
+   "pixels": 10166,
+   "patches": 198,
+   "front_share": {
+    "prior_alone": 0.0,
+    "prior_family": 0.0,
+    "image_alone": 0.0,
+    "image_family": 0.9967538855006886,
+    "none": 0.0032461144993114303
+   },
+   "place_share": {
+    "same_face": 0.36631910289199293,
+    "other_face": 0.6336808971080071
+   },
+   "gt_distance": {
+    "median": 0.2355668553553788,
+    "within_0_2": 0.44294707849695064,
+    "beyond_5m": 0.007180798740901042
+   },
+   "judgment_of_patches": {
+    "0": 99,
+    "1": 60,
+    "2": 39
+   }
+  },
+  "R1rep_b10|ALS|imgonly_s0": {
+   "ko": "R1 영상만 (항공 LiDAR 영역)",
+   "pixels": 5232,
+   "patches": 63,
+   "front_share": {
+    "prior_alone": 0.0,
+    "prior_family": 0.0,
+    "image_alone": 0.0,
+    "image_family": 0.9900440359946391,
+    "none": 0.009955964005360904
+   },
+   "place_share": {
+    "same_face": 0.4910970706490523,
+    "other_face": 0.5089029293509477
+   },
+   "gt_distance": {
+    "median": 0.08053735433058265,
+    "within_0_2": 0.5640436530729466,
+    "beyond_5m": 0.0022975301550832855
+   },
+   "judgment_of_patches": {
+    "0": 61,
+    "2": 2
+   }
+  },
+  "R1rep_b10|ALS|abl_prop_ALS_s0": {
+   "ko": "R1 항공 LiDAR 유효성 판정의 전파 끄기 (2단계)",
+   "pixels": 5232,
+   "patches": 63,
+   "front_share": {
+    "prior_alone": 0.001337920489296636,
+    "prior_family": 0.5055428134556575,
+    "image_alone": 0.00191131498470948,
+    "image_family": 0.08830275229357798,
+    "none": 0.4029051987767584
+   },
+   "place_share": {
+    "same_face": 0.4954128440366973,
+    "other_face": 0.5045871559633027
+   },
+   "gt_distance": {
+    "median": 0.07669416483666708,
+    "within_0_2": 0.566322629969419,
+    "beyond_5m": 0.0030581039755351682
+   },
+   "judgment_of_patches": {
+    "0": 61,
+    "2": 2
+   }
+  },
+  "B0_b10|LoD2|prop_LoD2_s0": {
+   "ko": "(요약) B0 LoD2 본 방법",
+   "pixels": 326462,
+   "patches": 2052,
+   "front_share": {
+    "prior_alone": 0.22605941419005435,
+    "prior_family": 0.18275469131945082,
+    "image_alone": 0.01821083521721284,
+    "image_family": 0.10567491897786518,
+    "none": 0.46730014029541683
+   },
+   "place_share": {
+    "same_face": 0.9623898007069909,
+    "other_face": 0.03761019929300912
+   },
+   "gt_distance": {
+    "median": 3.6892177697777826,
+    "within_0_2": 0.07418503066281927,
+    "beyond_5m": 0.6090812181808156
+   },
+   "judgment_of_patches": {
+    "0": 108,
+    "1": 1895,
+    "2": 43,
+    "3": 6
+   }
+  },
+  "B0_b10|ALS|prop_ALS_s0": {
+   "ko": "(요약) B0 항공 LiDAR 본 방법",
+   "pixels": 3606,
+   "patches": 30,
+   "front_share": {
+    "prior_alone": 0.10787576261785913,
+    "prior_family": 0.15030504714364948,
+    "image_alone": 0.0,
+    "image_family": 0.11092623405435385,
+    "none": 0.6308929561841375
+   },
+   "place_share": {
+    "same_face": 0.8835274542429284,
+    "other_face": 0.11647254575707154
+   },
+   "gt_distance": {
+    "median": 0.08812467846546879,
+    "within_0_2": 0.6333887964503605,
+    "beyond_5m": 0.03716028840820854
+   },
+   "judgment_of_patches": {
+    "1": 26,
+    "2": 4
+   }
+  },
+  "B173nb_b10|LoD2|prop_LoD2_s0": {
+   "ko": "(요약) B173 주변 LoD2 본 방법",
+   "pixels": 58281,
+   "patches": 1225,
+   "front_share": {
+    "prior_alone": 0.13263782837728855,
+    "prior_family": 0.2874277183891282,
+    "image_alone": 0.0,
+    "image_family": 0.09514576434050001,
+    "none": 0.4847886888930833
+   },
+   "place_share": {
+    "same_face": 0.9082173681772165,
+    "other_face": 0.09178263182278351
+   },
+   "gt_distance": {
+    "median": 0.06626173308288526,
+    "within_0_2": 0.877468728015237,
+    "beyond_5m": 0.03213850615144392
+   },
+   "judgment_of_patches": {
+    "0": 57,
+    "1": 1077,
+    "2": 73,
+    "3": 18
+   }
+  },
+  "B173nb_b10|ALS|prop_ALS_s0": {
+   "ko": "(요약) B173 주변 항공 LiDAR 본 방법",
+   "pixels": 401,
+   "patches": 17,
+   "front_share": {
+    "prior_alone": 0.0,
+    "prior_family": 0.26932668329177056,
+    "image_alone": 0.0,
+    "image_family": 0.004987531172069825,
+    "none": 0.7256857855361596
+   },
+   "place_share": {
+    "same_face": 0.32418952618453867,
+    "other_face": 0.6758104738154613
+   },
+   "gt_distance": {
+    "median": 0.5924492869085703,
+    "within_0_2": 0.0,
+    "beyond_5m": 0.0
+   },
+   "judgment_of_patches": {
+    "0": 10,
+    "1": 1,
+    "2": 6
+   }
+  }
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,45 @@
+{
+ "place": {
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "kind": "map",
+  "u_range": [
+   139.93037729930958,
+   147.9297637960131
+  ],
+  "v_range": [
+   84.06531563872244,
+   90.96219435300179
+  ],
+  "component": {
+   "patches": 24,
+   "area_m2": 1.5,
+   "gt_points": 193
+  },
+  "candidates": {
+   "patches": 105,
+   "area_m2": 6.6,
+   "components": 37
+  },
+  "why": "missing prior error (code 13)",
+  "layers": [
+   "결측 사전 정보 오류 패치",
+   "옛 자리에 남은 가우시안(사전 정보 출신, 불투명도 0.5 이상, 사전 정보 면 0.25 m 안)"
+  ],
+  "panels": [
+   "켬: 본 방법 씨앗 0",
+   "끔: 판정 빌려 오기 끄기"
+  ]
+ },
+ "patches": 10,
+ "panels": {
+  "prop_LoD2_s0": {
+   "old_place_share": 0.5,
+   "gaussians": 4
+  },
+  "abl_prop_LoD2_s0": {
+   "old_place_share": 0.2,
+   "gaussians": 1
+  }
+ }
+}

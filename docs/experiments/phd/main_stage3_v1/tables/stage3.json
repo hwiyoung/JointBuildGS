@@ -1,0 +1,4370 @@
+{
+ "rule": "  python tables_s3.py stage3     7.2: 3-1 ~ 3-4 over '영상 전체' (stage 1 B0) and the six conditions\n  python tables_s3.py sup        7.3: 보강-1 ~ 4 at the six stage-1 units\n  python tables_s3.py retry      7.4: the two stage-2 retries (stage 2's rows and readings, tables_s2.row / gate_again)\nWrites S3/tables/<kind>.json and .md. Every 'different' threshold is order 7.1: max(pooled spread of stage 2's prep 3 (the order's table),\nthe unit spread 2.8 |x0 - x1| / sqrt 2, three points 300 / n %p for shares); x sqrt 2 for a difference of differences; stage 3's unit spread\n= the larger of the fewest author condition's two seeds and 영상 전체's two seeds (method; image-only: the fewest author condition's only),\nthe larger of the two methods' when two methods are compared, the method's when compared with the fixed GeoGS; a condition without two\nseeds is '확인' only beyond twice the threshold. scientific_verdict: null.",
+ "values": {
+  "overall_completeness": {
+   "B0_b10": {
+    "method": 0.9552499999999999,
+    "method_seeds": [
+     0.9571,
+     0.9534
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.9521,
+    "imgonly_seeds": [
+     0.9521
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.7451,
+    "n_geogs": 2063378
+   },
+   "B0a15": {
+    "method": 0.4019,
+    "method_seeds": [
+     0.4019
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.3931,
+    "imgonly_seeds": [
+     0.3931
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.4074,
+    "n_geogs": 2063378
+   },
+   "B0a9": {
+    "method": 0.3801,
+    "method_seeds": [
+     0.3801
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.3497,
+    "imgonly_seeds": [
+     0.3497
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.4091,
+    "n_geogs": 2063378
+   },
+   "B0a3": {
+    "method": 0.26875,
+    "method_seeds": [
+     0.2698,
+     0.2677
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.1637,
+    "imgonly_seeds": [
+     0.1536,
+     0.1738
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.1909,
+    "n_geogs": 2063378
+   },
+   "B0n13": {
+    "method": 0.7283,
+    "method_seeds": [
+     0.7283
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.5892,
+    "imgonly_seeds": [
+     0.5892
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.7148,
+    "n_geogs": 2063378
+   },
+   "B0n8": {
+    "method": 0.7581,
+    "method_seeds": [
+     0.7581
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.491,
+    "imgonly_seeds": [
+     0.491
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.7469,
+    "n_geogs": 2063378
+   },
+   "B0n2": {
+    "method": 0.3945,
+    "method_seeds": [
+     0.3945
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.1741,
+    "imgonly_seeds": [
+     0.1741
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.2481,
+    "n_geogs": 2063378
+   }
+  },
+  "overall_completeness_05": {
+   "B0_b10": {
+    "method": 0.97845,
+    "method_seeds": [
+     0.979,
+     0.9779
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.9779,
+    "imgonly_seeds": [
+     0.9779
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.9369,
+    "n_geogs": 2063378
+   },
+   "B0a15": {
+    "method": 0.5354,
+    "method_seeds": [
+     0.5354
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.5475,
+    "imgonly_seeds": [
+     0.5475
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.5538,
+    "n_geogs": 2063378
+   },
+   "B0a9": {
+    "method": 0.5052,
+    "method_seeds": [
+     0.5052
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.4923,
+    "imgonly_seeds": [
+     0.4923
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.5513,
+    "n_geogs": 2063378
+   },
+   "B0a3": {
+    "method": 0.3942,
+    "method_seeds": [
+     0.3953,
+     0.3931
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.29045,
+    "imgonly_seeds": [
+     0.2848,
+     0.2961
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.3793,
+    "n_geogs": 2063378
+   },
+   "B0n13": {
+    "method": 0.8627,
+    "method_seeds": [
+     0.8627
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.6681,
+    "imgonly_seeds": [
+     0.6681
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.887,
+    "n_geogs": 2063378
+   },
+   "B0n8": {
+    "method": 0.9092,
+    "method_seeds": [
+     0.9092
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.6899,
+    "imgonly_seeds": [
+     0.6899
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.907,
+    "n_geogs": 2063378
+   },
+   "B0n2": {
+    "method": 0.5618,
+    "method_seeds": [
+     0.5618
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.2263,
+    "imgonly_seeds": [
+     0.2263
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.5586,
+    "n_geogs": 2063378
+   }
+  },
+  "virtual_overall": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.7767045107585716,
+    "method_seeds": [
+     0.7767045107585716
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.5243673238737643,
+    "imgonly_seeds": [
+     0.5243673238737643
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.386759478873963,
+    "n_geogs": 2063378
+   },
+   "B0a9": {
+    "method": 0.7826350770435664,
+    "method_seeds": [
+     0.7826350770435664
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.48327742178117633,
+    "imgonly_seeds": [
+     0.48327742178117633
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.4074488532881518,
+    "n_geogs": 2063378
+   },
+   "B0a3": {
+    "method": 0.5738226345342443,
+    "method_seeds": [
+     0.5243285524998328,
+     0.6233167165686558
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.3034533662760774,
+    "imgonly_seeds": [
+     0.2918045069783627,
+     0.3151022255737921
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.1857143964896398,
+    "n_geogs": 2063378
+   },
+   "B0n13": {
+    "method": 0.7563592322880248,
+    "method_seeds": [
+     0.7563592322880248
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.6360836453621198,
+    "imgonly_seeds": [
+     0.6360836453621198
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.7282068530341993,
+    "n_geogs": 2063378
+   },
+   "B0n8": {
+    "method": 0.7731768003729806,
+    "method_seeds": [
+     0.7731768003729806
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.5921711872473197,
+    "imgonly_seeds": [
+     0.5921711872473197
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.7416799054753903,
+    "n_geogs": 2063378
+   },
+   "B0n2": {
+    "method": 0.6676265812662537,
+    "method_seeds": [
+     0.6676265812662537
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.2893764496859034,
+    "imgonly_seeds": [
+     0.2893764496859034
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.3560510967937043,
+    "n_geogs": 2063378
+   }
+  },
+  "training_overall_exact": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.4166851638429798,
+    "method_seeds": [
+     0.4166851638429798
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.4096588216022464,
+    "imgonly_seeds": [
+     0.4096588216022464
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.42871689045826794,
+    "n_geogs": 2063378
+   },
+   "B0a9": {
+    "method": 0.39344705623497006,
+    "method_seeds": [
+     0.39344705623497006
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.3620214037369789,
+    "imgonly_seeds": [
+     0.3620214037369789
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.42942398339034343,
+    "n_geogs": 2063378
+   },
+   "B0a3": {
+    "method": 0.28596238789014905,
+    "method_seeds": [
+     0.28677489049510074,
+     0.28514988528519736
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.17689560516783642,
+    "imgonly_seeds": [
+     0.1672030040060522,
+     0.18658820632962064
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.20597437793753737,
+    "n_geogs": 2063378
+   },
+   "B0n13": {
+    "method": 0.7381919357480792,
+    "method_seeds": [
+     0.7381919357480792
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.5949457636942916,
+    "imgonly_seeds": [
+     0.5949457636942916
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.7349118775134755,
+    "n_geogs": 2063378
+   },
+   "B0n8": {
+    "method": 0.7719671335063183,
+    "method_seeds": [
+     0.7719671335063183
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.5112679305488379,
+    "imgonly_seeds": [
+     0.5112679305488379
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.7611770601411859,
+    "n_geogs": 2063378
+   },
+   "B0n2": {
+    "method": 0.4088223292096746,
+    "method_seeds": [
+     0.4088223292096746
+    ],
+    "n_method": 2063378,
+    "imgonly": 0.17926720164700796,
+    "imgonly_seeds": [
+     0.17926720164700796
+    ],
+    "n_imgonly": 2063378,
+    "geogs": 0.2679765898444202,
+    "n_geogs": 2063378
+   }
+  },
+  "missing_agreement_completeness": {
+   "B0_b10": {
+    "method": 0.9355,
+    "method_seeds": [
+     0.9438,
+     0.9272
+    ],
+    "n_method": 12433,
+    "imgonly": 0.9228,
+    "imgonly_seeds": [
+     0.9228
+    ],
+    "n_imgonly": 12433,
+    "geogs": 0.2932,
+    "n_geogs": 12433
+   },
+   "B0a15": {
+    "method": 0.7387,
+    "method_seeds": [
+     0.7387
+    ],
+    "n_method": 37860,
+    "imgonly": 0.7105,
+    "imgonly_seeds": [
+     0.7105
+    ],
+    "n_imgonly": 37860,
+    "geogs": 0.7126,
+    "n_geogs": 37860
+   },
+   "B0a9": {
+    "method": 0.695,
+    "method_seeds": [
+     0.695
+    ],
+    "n_method": 51373,
+    "imgonly": 0.3678,
+    "imgonly_seeds": [
+     0.3678
+    ],
+    "n_imgonly": 51373,
+    "geogs": 0.482,
+    "n_geogs": 51373
+   },
+   "B0a3": {
+    "method": 0.6427,
+    "method_seeds": [
+     0.6351,
+     0.6503
+    ],
+    "n_method": 91100,
+    "imgonly": 0.32689999999999997,
+    "imgonly_seeds": [
+     0.3044,
+     0.3494
+    ],
+    "n_imgonly": 91100,
+    "geogs": 0.5748,
+    "n_geogs": 91100
+   },
+   "B0n13": {
+    "method": 0.8077,
+    "method_seeds": [
+     0.8077
+    ],
+    "n_method": 78830,
+    "imgonly": 0.1244,
+    "imgonly_seeds": [
+     0.1244
+    ],
+    "n_imgonly": 78830,
+    "geogs": 0.7529,
+    "n_geogs": 78830
+   },
+   "B0n8": {
+    "method": 0.799,
+    "method_seeds": [
+     0.799
+    ],
+    "n_method": 136557,
+    "imgonly": 0.2567,
+    "imgonly_seeds": [
+     0.2567
+    ],
+    "n_imgonly": 136557,
+    "geogs": 0.7637,
+    "n_geogs": 136557
+   },
+   "B0n2": {
+    "method": 0.546,
+    "method_seeds": [
+     0.546
+    ],
+    "n_method": 97332,
+    "imgonly": 0.0235,
+    "imgonly_seeds": [
+     0.0235
+    ],
+    "n_imgonly": 97332,
+    "geogs": 0.4352,
+    "n_geogs": 97332
+   }
+  },
+  "missing_completeness_05": {
+   "B0_b10": {
+    "method": 0.9872,
+    "method_seeds": [
+     0.983,
+     0.9914
+    ],
+    "n_method": 12433,
+    "imgonly": 0.9759,
+    "imgonly_seeds": [
+     0.9759
+    ],
+    "n_imgonly": 12433,
+    "geogs": 0.9819,
+    "n_geogs": 12433
+   },
+   "B0a15": {
+    "method": 0.9848,
+    "method_seeds": [
+     0.9848
+    ],
+    "n_method": 37860,
+    "imgonly": 0.8843,
+    "imgonly_seeds": [
+     0.8843
+    ],
+    "n_imgonly": 37860,
+    "geogs": 0.8783,
+    "n_geogs": 37860
+   },
+   "B0a9": {
+    "method": 0.9748,
+    "method_seeds": [
+     0.9748
+    ],
+    "n_method": 51373,
+    "imgonly": 0.4612,
+    "imgonly_seeds": [
+     0.4612
+    ],
+    "n_imgonly": 51373,
+    "geogs": 0.832,
+    "n_geogs": 51373
+   },
+   "B0a3": {
+    "method": 0.9317,
+    "method_seeds": [
+     0.9274,
+     0.936
+    ],
+    "n_method": 91100,
+    "imgonly": 0.51945,
+    "imgonly_seeds": [
+     0.5018,
+     0.5371
+    ],
+    "n_imgonly": 91100,
+    "geogs": 0.8284,
+    "n_geogs": 91100
+   },
+   "B0n13": {
+    "method": 0.9795,
+    "method_seeds": [
+     0.9795
+    ],
+    "n_method": 78830,
+    "imgonly": 0.26,
+    "imgonly_seeds": [
+     0.26
+    ],
+    "n_imgonly": 78830,
+    "geogs": 0.9328,
+    "n_geogs": 78830
+   },
+   "B0n8": {
+    "method": 0.9917,
+    "method_seeds": [
+     0.9917
+    ],
+    "n_method": 136557,
+    "imgonly": 0.5585,
+    "imgonly_seeds": [
+     0.5585
+    ],
+    "n_imgonly": 136557,
+    "geogs": 0.9628,
+    "n_geogs": 136557
+   },
+   "B0n2": {
+    "method": 0.7809,
+    "method_seeds": [
+     0.7809
+    ],
+    "n_method": 97332,
+    "imgonly": 0.0728,
+    "imgonly_seeds": [
+     0.0728
+    ],
+    "n_imgonly": 97332,
+    "geogs": 0.819,
+    "n_geogs": 97332
+   }
+  },
+  "invisible_completeness": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": 0,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": 0,
+    "geogs": null,
+    "n_geogs": 0
+   },
+   "B0a15": {
+    "method": 0.068,
+    "method_seeds": [
+     0.068
+    ],
+    "n_method": 129710,
+    "imgonly": 0.0747,
+    "imgonly_seeds": [
+     0.0747
+    ],
+    "n_imgonly": 129710,
+    "geogs": 0.0749,
+    "n_geogs": 129710
+   },
+   "B0a9": {
+    "method": 0.0595,
+    "method_seeds": [
+     0.0595
+    ],
+    "n_method": 130201,
+    "imgonly": 0.0594,
+    "imgonly_seeds": [
+     0.0594
+    ],
+    "n_imgonly": 130201,
+    "geogs": 0.07,
+    "n_geogs": 130201
+   },
+   "B0a3": {
+    "method": 0.051250000000000004,
+    "method_seeds": [
+     0.0531,
+     0.0494
+    ],
+    "n_method": 144160,
+    "imgonly": 0.0342,
+    "imgonly_seeds": [
+     0.0323,
+     0.0361
+    ],
+    "n_imgonly": 144160,
+    "geogs": 0.0537,
+    "n_geogs": 144160
+   },
+   "B0n13": {
+    "method": 0.0504,
+    "method_seeds": [
+     0.0504
+    ],
+    "n_method": 132005,
+    "imgonly": 0.0009,
+    "imgonly_seeds": [
+     0.0009
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.0034,
+    "n_geogs": 132005
+   },
+   "B0n8": {
+    "method": 0.0304,
+    "method_seeds": [
+     0.0304
+    ],
+    "n_method": 132005,
+    "imgonly": 0.0097,
+    "imgonly_seeds": [
+     0.0097
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.0059,
+    "n_geogs": 132005
+   },
+   "B0n2": {
+    "method": 0.0094,
+    "method_seeds": [
+     0.0094
+    ],
+    "n_method": 197786,
+    "imgonly": 0.0021,
+    "imgonly_seeds": [
+     0.0021
+    ],
+    "n_imgonly": 197786,
+    "geogs": 0.0143,
+    "n_geogs": 197786
+   }
+  },
+  "invisible_completeness_05": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": 0,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": 0,
+    "geogs": null,
+    "n_geogs": 0
+   },
+   "B0a15": {
+    "method": 0.166,
+    "method_seeds": [
+     0.166
+    ],
+    "n_method": 129710,
+    "imgonly": 0.1767,
+    "imgonly_seeds": [
+     0.1767
+    ],
+    "n_imgonly": 129710,
+    "geogs": 0.1757,
+    "n_geogs": 129710
+   },
+   "B0a9": {
+    "method": 0.1469,
+    "method_seeds": [
+     0.1469
+    ],
+    "n_method": 130201,
+    "imgonly": 0.1499,
+    "imgonly_seeds": [
+     0.1499
+    ],
+    "n_imgonly": 130201,
+    "geogs": 0.1609,
+    "n_geogs": 130201
+   },
+   "B0a3": {
+    "method": 0.1386,
+    "method_seeds": [
+     0.1376,
+     0.1396
+    ],
+    "n_method": 144160,
+    "imgonly": 0.10855000000000001,
+    "imgonly_seeds": [
+     0.1113,
+     0.1058
+    ],
+    "n_imgonly": 144160,
+    "geogs": 0.1206,
+    "n_geogs": 144160
+   },
+   "B0n13": {
+    "method": 0.1256,
+    "method_seeds": [
+     0.1256
+    ],
+    "n_method": 132005,
+    "imgonly": 0.0067,
+    "imgonly_seeds": [
+     0.0067
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.0133,
+    "n_geogs": 132005
+   },
+   "B0n8": {
+    "method": 0.0954,
+    "method_seeds": [
+     0.0954
+    ],
+    "n_method": 132005,
+    "imgonly": 0.0645,
+    "imgonly_seeds": [
+     0.0645
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.0136,
+    "n_geogs": 132005
+   },
+   "B0n2": {
+    "method": 0.0255,
+    "method_seeds": [
+     0.0255
+    ],
+    "n_method": 197786,
+    "imgonly": 0.008,
+    "imgonly_seeds": [
+     0.008
+    ],
+    "n_imgonly": 197786,
+    "geogs": 0.0351,
+    "n_geogs": 197786
+   }
+  },
+  "virtual_invisible": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.7322,
+    "method_seeds": [
+     0.7322
+    ],
+    "n_method": 129710,
+    "imgonly": 0.1721,
+    "imgonly_seeds": [
+     0.1721
+    ],
+    "n_imgonly": 129710,
+    "geogs": 0.1078,
+    "n_geogs": 129710
+   },
+   "B0a9": {
+    "method": 0.6731,
+    "method_seeds": [
+     0.6731
+    ],
+    "n_method": 130201,
+    "imgonly": 0.1659,
+    "imgonly_seeds": [
+     0.1659
+    ],
+    "n_imgonly": 130201,
+    "geogs": 0.1072,
+    "n_geogs": 130201
+   },
+   "B0a3": {
+    "method": 0.53425,
+    "method_seeds": [
+     0.4689,
+     0.5996
+    ],
+    "n_method": 144160,
+    "imgonly": 0.17475000000000002,
+    "imgonly_seeds": [
+     0.1792,
+     0.1703
+    ],
+    "n_imgonly": 144160,
+    "geogs": 0.1152,
+    "n_geogs": 144160
+   },
+   "B0n13": {
+    "method": 0.504,
+    "method_seeds": [
+     0.504
+    ],
+    "n_method": 132005,
+    "imgonly": 0.0262,
+    "imgonly_seeds": [
+     0.0262
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.112,
+    "n_geogs": 132005
+   },
+   "B0n8": {
+    "method": 0.4767,
+    "method_seeds": [
+     0.4767
+    ],
+    "n_method": 132005,
+    "imgonly": 0.0341,
+    "imgonly_seeds": [
+     0.0341
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.1227,
+    "n_geogs": 132005
+   },
+   "B0n2": {
+    "method": 0.7817,
+    "method_seeds": [
+     0.7817
+    ],
+    "n_method": 197786,
+    "imgonly": 0.0759,
+    "imgonly_seeds": [
+     0.0759
+    ],
+    "n_imgonly": 197786,
+    "geogs": 0.1377,
+    "n_geogs": 197786
+   }
+  },
+  "virtual_invisible_05": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.9416,
+    "method_seeds": [
+     0.9416
+    ],
+    "n_method": 129710,
+    "imgonly": 0.3979,
+    "imgonly_seeds": [
+     0.3979
+    ],
+    "n_imgonly": 129710,
+    "geogs": 0.3695,
+    "n_geogs": 129710
+   },
+   "B0a9": {
+    "method": 0.8815,
+    "method_seeds": [
+     0.8815
+    ],
+    "n_method": 130201,
+    "imgonly": 0.3886,
+    "imgonly_seeds": [
+     0.3886
+    ],
+    "n_imgonly": 130201,
+    "geogs": 0.3488,
+    "n_geogs": 130201
+   },
+   "B0a3": {
+    "method": 0.8219,
+    "method_seeds": [
+     0.7575,
+     0.8863
+    ],
+    "n_method": 144160,
+    "imgonly": 0.5177499999999999,
+    "imgonly_seeds": [
+     0.5428,
+     0.4927
+    ],
+    "n_imgonly": 144160,
+    "geogs": 0.4075,
+    "n_geogs": 144160
+   },
+   "B0n13": {
+    "method": 0.9376,
+    "method_seeds": [
+     0.9376
+    ],
+    "n_method": 132005,
+    "imgonly": 0.132,
+    "imgonly_seeds": [
+     0.132
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.3721,
+    "n_geogs": 132005
+   },
+   "B0n8": {
+    "method": 0.864,
+    "method_seeds": [
+     0.864
+    ],
+    "n_method": 132005,
+    "imgonly": 0.1611,
+    "imgonly_seeds": [
+     0.1611
+    ],
+    "n_imgonly": 132005,
+    "geogs": 0.401,
+    "n_geogs": 132005
+   },
+   "B0n2": {
+    "method": 0.9662,
+    "method_seeds": [
+     0.9662
+    ],
+    "n_method": 197786,
+    "imgonly": 0.2948,
+    "imgonly_seeds": [
+     0.2948
+    ],
+    "n_imgonly": 197786,
+    "geogs": 0.4238,
+    "n_geogs": 197786
+   }
+  },
+  "virtual_support": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.9524,
+    "method_seeds": [
+     0.9524
+    ],
+    "n_method": 154143,
+    "imgonly": 0.9564,
+    "imgonly_seeds": [
+     0.9564
+    ],
+    "n_imgonly": 154143,
+    "geogs": 0.8108,
+    "n_geogs": 154143
+   },
+   "B0a9": {
+    "method": 0.9532,
+    "method_seeds": [
+     0.9532
+    ],
+    "n_method": 141344,
+    "imgonly": 0.9559,
+    "imgonly_seeds": [
+     0.9559
+    ],
+    "n_imgonly": 141344,
+    "geogs": 0.8904,
+    "n_geogs": 141344
+   },
+   "B0a3": {
+    "method": 0.91255,
+    "method_seeds": [
+     0.9164,
+     0.9087
+    ],
+    "n_method": 73342,
+    "imgonly": 0.8855500000000001,
+    "imgonly_seeds": [
+     0.8823,
+     0.8888
+    ],
+    "n_imgonly": 73342,
+    "geogs": 0.6631,
+    "n_geogs": 73342
+   },
+   "B0n13": {
+    "method": 0.9617,
+    "method_seeds": [
+     0.9617
+    ],
+    "n_method": 100514,
+    "imgonly": 0.9618,
+    "imgonly_seeds": [
+     0.9618
+    ],
+    "n_imgonly": 100514,
+    "geogs": 0.7747,
+    "n_geogs": 100514
+   },
+   "B0n8": {
+    "method": 0.9421,
+    "method_seeds": [
+     0.9421
+    ],
+    "n_method": 55499,
+    "imgonly": 0.9437,
+    "imgonly_seeds": [
+     0.9437
+    ],
+    "n_imgonly": 55499,
+    "geogs": 0.8796,
+    "n_geogs": 55499
+   },
+   "B0n2": {
+    "method": 0.8944,
+    "method_seeds": [
+     0.8944
+    ],
+    "n_method": 11262,
+    "imgonly": 0.8147,
+    "imgonly_seeds": [
+     0.8147
+    ],
+    "n_imgonly": 11262,
+    "geogs": 0.5113,
+    "n_geogs": 11262
+   }
+  },
+  "inheritance": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.9925,
+    "method_seeds": [
+     0.9925
+    ],
+    "n_method": 22993,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 22993,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a9": {
+    "method": 0.9962,
+    "method_seeds": [
+     0.9962
+    ],
+    "n_method": 23078,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 23078,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a3": {
+    "method": 0.9621999999999999,
+    "method_seeds": [
+     0.964,
+     0.9604
+    ],
+    "n_method": 25498,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0,
+     0.0
+    ],
+    "n_imgonly": 25498,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n13": {
+    "method": 0.9806,
+    "method_seeds": [
+     0.9806
+    ],
+    "n_method": 22245,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 22245,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n8": {
+    "method": 0.9643,
+    "method_seeds": [
+     0.9643
+    ],
+    "n_method": 22245,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 22245,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n2": {
+    "method": 0.996,
+    "method_seeds": [
+     0.996
+    ],
+    "n_method": 33676,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 33676,
+    "geogs": null,
+    "n_geogs": null
+   }
+  },
+  "supported": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.9926,
+    "method_seeds": [
+     0.9926
+    ],
+    "n_method": 22993,
+    "imgonly": 0.0501,
+    "imgonly_seeds": [
+     0.0501
+    ],
+    "n_imgonly": 22993,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a9": {
+    "method": 0.9962,
+    "method_seeds": [
+     0.9962
+    ],
+    "n_method": 23078,
+    "imgonly": 0.047,
+    "imgonly_seeds": [
+     0.047
+    ],
+    "n_imgonly": 23078,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a3": {
+    "method": 0.9621999999999999,
+    "method_seeds": [
+     0.964,
+     0.9604
+    ],
+    "n_method": 25498,
+    "imgonly": 0.03565,
+    "imgonly_seeds": [
+     0.0307,
+     0.0406
+    ],
+    "n_imgonly": 25498,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n13": {
+    "method": 0.9806,
+    "method_seeds": [
+     0.9806
+    ],
+    "n_method": 22245,
+    "imgonly": 0.0004,
+    "imgonly_seeds": [
+     0.0004
+    ],
+    "n_imgonly": 22245,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n8": {
+    "method": 0.9643,
+    "method_seeds": [
+     0.9643
+    ],
+    "n_method": 22245,
+    "imgonly": 0.0018,
+    "imgonly_seeds": [
+     0.0018
+    ],
+    "n_imgonly": 22245,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n2": {
+    "method": 0.996,
+    "method_seeds": [
+     0.996
+    ],
+    "n_method": 33676,
+    "imgonly": 0.0054,
+    "imgonly_seeds": [
+     0.0054
+    ],
+    "n_imgonly": 33676,
+    "geogs": null,
+    "n_geogs": null
+   }
+  },
+  "unseen_past_shape": {
+   "B0_b10": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": 0,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": 0,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.8609,
+    "method_seeds": [
+     0.8609
+    ],
+    "n_method": 2465,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 2465,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a9": {
+    "method": 0.8764,
+    "method_seeds": [
+     0.8764
+    ],
+    "n_method": 2475,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 2475,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a3": {
+    "method": 0.9062,
+    "method_seeds": [
+     0.9058,
+     0.9066
+    ],
+    "n_method": 2547,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0,
+     0.0
+    ],
+    "n_imgonly": 2547,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n13": {
+    "method": 0.9853,
+    "method_seeds": [
+     0.9853
+    ],
+    "n_method": 2658,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 2658,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n8": {
+    "method": 0.9552,
+    "method_seeds": [
+     0.9552
+    ],
+    "n_method": 2658,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 2658,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n2": {
+    "method": 0.9958,
+    "method_seeds": [
+     0.9958
+    ],
+    "n_method": 4733,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 4733,
+    "geogs": null,
+    "n_geogs": null
+   }
+  },
+  "prior_error_inflow": {
+   "B0_b10": {
+    "method": 0.11979999999999999,
+    "method_seeds": [
+     0.121,
+     0.1186
+    ],
+    "n_method": 32880,
+    "imgonly": 0.1329,
+    "imgonly_seeds": [
+     0.1329
+    ],
+    "n_imgonly": 32880,
+    "geogs": 0.4283,
+    "n_geogs": 32880
+   },
+   "B0a15": {
+    "method": 0.0431,
+    "method_seeds": [
+     0.0431
+    ],
+    "n_method": 20268,
+    "imgonly": 0.0398,
+    "imgonly_seeds": [
+     0.0398
+    ],
+    "n_imgonly": 20268,
+    "geogs": 0.3876,
+    "n_geogs": 20268
+   },
+   "B0a9": {
+    "method": 0.0461,
+    "method_seeds": [
+     0.0461
+    ],
+    "n_method": 18816,
+    "imgonly": 0.0435,
+    "imgonly_seeds": [
+     0.0435
+    ],
+    "n_imgonly": 18816,
+    "geogs": 0.3214,
+    "n_geogs": 18816
+   },
+   "B0a3": {
+    "method": 0.2625,
+    "method_seeds": [
+     0.2763,
+     0.2487
+    ],
+    "n_method": 5465,
+    "imgonly": 0.11795,
+    "imgonly_seeds": [
+     0.1096,
+     0.1263
+    ],
+    "n_imgonly": 5465,
+    "geogs": 0.2975,
+    "n_geogs": 5465
+   },
+   "B0n13": {
+    "method": 0.2163,
+    "method_seeds": [
+     0.2163
+    ],
+    "n_method": 3338,
+    "imgonly": 0.1881,
+    "imgonly_seeds": [
+     0.1881
+    ],
+    "n_imgonly": 3338,
+    "geogs": 0.4395,
+    "n_geogs": 3338
+   },
+   "B0n8": {
+    "method": 0.1646,
+    "method_seeds": [
+     0.1646
+    ],
+    "n_method": 1665,
+    "imgonly": 0.2012,
+    "imgonly_seeds": [
+     0.2012
+    ],
+    "n_imgonly": 1665,
+    "geogs": 0.4667,
+    "n_geogs": 1665
+   },
+   "B0n2": {
+    "method": 0.2448,
+    "method_seeds": [
+     0.2448
+    ],
+    "n_method": 192,
+    "imgonly": 0.1979,
+    "imgonly_seeds": [
+     0.1979
+    ],
+    "n_imgonly": 192,
+    "geogs": 0.75,
+    "n_geogs": 192
+   }
+  },
+  "double_error_inflow": {
+   "B0_b10": {
+    "method": 0.506,
+    "method_seeds": [
+     0.5193,
+     0.4927
+    ],
+    "n_method": 3495,
+    "imgonly": 0.4658,
+    "imgonly_seeds": [
+     0.4658
+    ],
+    "n_imgonly": 3495,
+    "geogs": 0.4853,
+    "n_geogs": 3495
+   },
+   "B0a15": {
+    "method": 0.329,
+    "method_seeds": [
+     0.329
+    ],
+    "n_method": 2827,
+    "imgonly": 0.3039,
+    "imgonly_seeds": [
+     0.3039
+    ],
+    "n_imgonly": 2827,
+    "geogs": 0.4729,
+    "n_geogs": 2827
+   },
+   "B0a9": {
+    "method": 0.2692,
+    "method_seeds": [
+     0.2692
+    ],
+    "n_method": 3013,
+    "imgonly": 0.2549,
+    "imgonly_seeds": [
+     0.2549
+    ],
+    "n_imgonly": 3013,
+    "geogs": 0.3594,
+    "n_geogs": 3013
+   },
+   "B0a3": {
+    "method": 0.2772,
+    "method_seeds": [
+     0.2808,
+     0.2736
+    ],
+    "n_method": 5976,
+    "imgonly": 0.1547,
+    "imgonly_seeds": [
+     0.1473,
+     0.1621
+    ],
+    "n_imgonly": 5976,
+    "geogs": 0.217,
+    "n_geogs": 5976
+   },
+   "B0n13": {
+    "method": 0.3761,
+    "method_seeds": [
+     0.3761
+    ],
+    "n_method": 4254,
+    "imgonly": 0.2706,
+    "imgonly_seeds": [
+     0.2706
+    ],
+    "n_imgonly": 4254,
+    "geogs": 0.3343,
+    "n_geogs": 4254
+   },
+   "B0n8": {
+    "method": 0.533,
+    "method_seeds": [
+     0.533
+    ],
+    "n_method": 1893,
+    "imgonly": 0.2588,
+    "imgonly_seeds": [
+     0.2588
+    ],
+    "n_imgonly": 1893,
+    "geogs": 0.2969,
+    "n_geogs": 1893
+   },
+   "B0n2": {
+    "method": 0.1265,
+    "method_seeds": [
+     0.1265
+    ],
+    "n_method": 2048,
+    "imgonly": 0.0518,
+    "imgonly_seeds": [
+     0.0518
+    ],
+    "n_imgonly": 2048,
+    "geogs": 0.3481,
+    "n_geogs": 2048
+   }
+  },
+  "missing_prior_error_inflow": {
+   "B0_b10": {
+    "method": 0.125,
+    "method_seeds": [
+     0.1667,
+     0.0833
+    ],
+    "n_method": 168,
+    "imgonly": 0.0417,
+    "imgonly_seeds": [
+     0.0417
+    ],
+    "n_imgonly": 168,
+    "geogs": 0.0893,
+    "n_geogs": 168
+   },
+   "B0a15": {
+    "method": 0.2462,
+    "method_seeds": [
+     0.2462
+    ],
+    "n_method": 1625,
+    "imgonly": 0.1095,
+    "imgonly_seeds": [
+     0.1095
+    ],
+    "n_imgonly": 1625,
+    "geogs": 0.2406,
+    "n_geogs": 1625
+   },
+   "B0a9": {
+    "method": 0.2681,
+    "method_seeds": [
+     0.2681
+    ],
+    "n_method": 2831,
+    "imgonly": 0.0487,
+    "imgonly_seeds": [
+     0.0487
+    ],
+    "n_imgonly": 2831,
+    "geogs": 0.2148,
+    "n_geogs": 2831
+   },
+   "B0a3": {
+    "method": 0.36595,
+    "method_seeds": [
+     0.389,
+     0.3429
+    ],
+    "n_method": 12892,
+    "imgonly": 0.06534999999999999,
+    "imgonly_seeds": [
+     0.0523,
+     0.0784
+    ],
+    "n_imgonly": 12892,
+    "geogs": 0.1961,
+    "n_geogs": 12892
+   },
+   "B0n13": {
+    "method": 0.708,
+    "method_seeds": [
+     0.708
+    ],
+    "n_method": 15971,
+    "imgonly": 0.0569,
+    "imgonly_seeds": [
+     0.0569
+    ],
+    "n_imgonly": 15971,
+    "geogs": 0.2536,
+    "n_geogs": 15971
+   },
+   "B0n8": {
+    "method": 0.7999,
+    "method_seeds": [
+     0.7999
+    ],
+    "n_method": 20005,
+    "imgonly": 0.0833,
+    "imgonly_seeds": [
+     0.0833
+    ],
+    "n_imgonly": 20005,
+    "geogs": 0.2669,
+    "n_geogs": 20005
+   },
+   "B0n2": {
+    "method": 0.5718,
+    "method_seeds": [
+     0.5718
+    ],
+    "n_method": 10905,
+    "imgonly": 0.0167,
+    "imgonly_seeds": [
+     0.0167
+    ],
+    "n_imgonly": 10905,
+    "geogs": 0.1428,
+    "n_geogs": 10905
+   }
+  },
+  "obs_inflow": {
+   "B0_b10": {
+    "method": 0.2116,
+    "method_seeds": [
+     0.21,
+     0.2132
+    ],
+    "n_method": 18858,
+    "imgonly": 0.2104,
+    "imgonly_seeds": [
+     0.2104
+    ],
+    "n_imgonly": 18858,
+    "geogs": 0.1271,
+    "n_geogs": 18858
+   },
+   "B0a15": {
+    "method": 0.3207,
+    "method_seeds": [
+     0.3207
+    ],
+    "n_method": 11539,
+    "imgonly": 0.3418,
+    "imgonly_seeds": [
+     0.3418
+    ],
+    "n_imgonly": 11539,
+    "geogs": 0.1375,
+    "n_geogs": 11539
+   },
+   "B0a9": {
+    "method": 0.3174,
+    "method_seeds": [
+     0.3174
+    ],
+    "n_method": 10379,
+    "imgonly": 0.3321,
+    "imgonly_seeds": [
+     0.3321
+    ],
+    "n_imgonly": 10379,
+    "geogs": 0.0972,
+    "n_geogs": 10379
+   },
+   "B0a3": {
+    "method": 0.0939,
+    "method_seeds": [
+     0.094,
+     0.0938
+    ],
+    "n_method": 24885,
+    "imgonly": 0.10505,
+    "imgonly_seeds": [
+     0.1079,
+     0.1022
+    ],
+    "n_imgonly": 24885,
+    "geogs": 0.0737,
+    "n_geogs": 24885
+   },
+   "B0n13": {
+    "method": 0.1477,
+    "method_seeds": [
+     0.1477
+    ],
+    "n_method": 21935,
+    "imgonly": 0.1495,
+    "imgonly_seeds": [
+     0.1495
+    ],
+    "n_imgonly": 21935,
+    "geogs": 0.0693,
+    "n_geogs": 21935
+   },
+   "B0n8": {
+    "method": 0.1511,
+    "method_seeds": [
+     0.1511
+    ],
+    "n_method": 9528,
+    "imgonly": 0.1513,
+    "imgonly_seeds": [
+     0.1513
+    ],
+    "n_imgonly": 9528,
+    "geogs": 0.0391,
+    "n_geogs": 9528
+   },
+   "B0n2": {
+    "method": 0.0329,
+    "method_seeds": [
+     0.0329
+    ],
+    "n_method": 27436,
+    "imgonly": 0.0283,
+    "imgonly_seeds": [
+     0.0283
+    ],
+    "n_imgonly": 27436,
+    "geogs": 0.0182,
+    "n_geogs": 27436
+   }
+  },
+  "obs_within_inflow": {
+   "B0_b10": {
+    "method": 0.15495,
+    "method_seeds": [
+     0.1484,
+     0.1615
+    ],
+    "n_method": 384,
+    "imgonly": 0.1562,
+    "imgonly_seeds": [
+     0.1562
+    ],
+    "n_imgonly": 384,
+    "geogs": 0.4635,
+    "n_geogs": 384
+   },
+   "B0a15": {
+    "method": 0.4096,
+    "method_seeds": [
+     0.4096
+    ],
+    "n_method": 769,
+    "imgonly": 0.4486,
+    "imgonly_seeds": [
+     0.4486
+    ],
+    "n_imgonly": 769,
+    "geogs": 0.1209,
+    "n_geogs": 769
+   },
+   "B0a9": {
+    "method": 0.3126,
+    "method_seeds": [
+     0.3126
+    ],
+    "n_method": 995,
+    "imgonly": 0.3317,
+    "imgonly_seeds": [
+     0.3317
+    ],
+    "n_imgonly": 995,
+    "geogs": 0.194,
+    "n_geogs": 995
+   },
+   "B0a3": {
+    "method": 0.51415,
+    "method_seeds": [
+     0.5071,
+     0.5212
+    ],
+    "n_method": 919,
+    "imgonly": 0.49185,
+    "imgonly_seeds": [
+     0.506,
+     0.4777
+    ],
+    "n_imgonly": 919,
+    "geogs": 0.6202,
+    "n_geogs": 919
+   },
+   "B0n13": {
+    "method": 0.7915,
+    "method_seeds": [
+     0.7915
+    ],
+    "n_method": 235,
+    "imgonly": 0.6723,
+    "imgonly_seeds": [
+     0.6723
+    ],
+    "n_imgonly": 235,
+    "geogs": 0.1319,
+    "n_geogs": 235
+   },
+   "B0n8": {
+    "method": 0.623,
+    "method_seeds": [
+     0.623
+    ],
+    "n_method": 305,
+    "imgonly": 0.5148,
+    "imgonly_seeds": [
+     0.5148
+    ],
+    "n_imgonly": 305,
+    "geogs": 0.0459,
+    "n_geogs": 305
+   },
+   "B0n2": {
+    "method": 0.2983,
+    "method_seeds": [
+     0.2983
+    ],
+    "n_method": 362,
+    "imgonly": 0.1823,
+    "imgonly_seeds": [
+     0.1823
+    ],
+    "n_imgonly": 362,
+    "geogs": 0.1823,
+    "n_geogs": 362
+   }
+  },
+  "past_shape": {
+   "B0_b10": {
+    "method": 0.12,
+    "method_seeds": [
+     0.1144,
+     0.1256
+    ],
+    "n_method": 4468,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 4468,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a15": {
+    "method": 0.1728,
+    "method_seeds": [
+     0.1728
+    ],
+    "n_method": 2709,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 2709,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a9": {
+    "method": 0.1524,
+    "method_seeds": [
+     0.1524
+    ],
+    "n_method": 2532,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 2532,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a3": {
+    "method": 0.652,
+    "method_seeds": [
+     0.6699,
+     0.6341
+    ],
+    "n_method": 727,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0,
+     0.0
+    ],
+    "n_imgonly": 727,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n13": {
+    "method": 0.5202,
+    "method_seeds": [
+     0.5202
+    ],
+    "n_method": 346,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 346,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n8": {
+    "method": 0.4048,
+    "method_seeds": [
+     0.4048
+    ],
+    "n_method": 42,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 42,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n2": {
+    "method": 0.75,
+    "method_seeds": [
+     0.75
+    ],
+    "n_method": 20,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 20,
+    "geogs": null,
+    "n_geogs": null
+   }
+  },
+  "gentle_nmad_new": {
+   "B0_b10": {
+    "method": 50.385,
+    "method_seeds": [
+     39.879999999999995,
+     60.89
+    ],
+    "n_method": 457,
+    "imgonly": 45.89,
+    "imgonly_seeds": [
+     45.89
+    ],
+    "n_imgonly": 510,
+    "geogs": 12.25,
+    "n_geogs": 514
+   },
+   "B0a15": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a9": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a3": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null,
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n13": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n8": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n2": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   }
+  },
+  "gentle_bias_new": {
+   "B0_b10": {
+    "method": -1.9250000000000007,
+    "method_seeds": [
+     13.73,
+     -17.580000000000002
+    ],
+    "n_method": 457,
+    "imgonly": -17.22,
+    "imgonly_seeds": [
+     -17.22
+    ],
+    "n_imgonly": 510,
+    "geogs": 28.249999999999996,
+    "n_geogs": 514
+   },
+   "B0a15": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a9": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0a3": {
+    "method": null,
+    "method_seeds": [
+     null,
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null,
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n13": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n8": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   },
+   "B0n2": {
+    "method": null,
+    "method_seeds": [
+     null
+    ],
+    "n_method": null,
+    "imgonly": null,
+    "imgonly_seeds": [
+     null
+    ],
+    "n_imgonly": null,
+    "geogs": null,
+    "n_geogs": null
+   }
+  },
+  "floating_share": {
+   "B0_b10": {
+    "method": 0.34724999999999995,
+    "method_seeds": [
+     0.3949,
+     0.2996
+    ],
+    "n_method": 514,
+    "imgonly": 0.4163,
+    "imgonly_seeds": [
+     0.4163
+    ],
+    "n_imgonly": 514,
+    "geogs": 0.821,
+    "n_geogs": 514
+   },
+   "B0a15": {
+    "method": 0.0,
+    "method_seeds": [
+     0.0
+    ],
+    "n_method": 0,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 0,
+    "geogs": 0.0,
+    "n_geogs": 0
+   },
+   "B0a9": {
+    "method": 0.0,
+    "method_seeds": [
+     0.0
+    ],
+    "n_method": 0,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 0,
+    "geogs": 0.0,
+    "n_geogs": 0
+   },
+   "B0a3": {
+    "method": 0.0,
+    "method_seeds": [
+     0.0,
+     0.0
+    ],
+    "n_method": 0,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0,
+     0.0
+    ],
+    "n_imgonly": 0,
+    "geogs": 0.0,
+    "n_geogs": 0
+   },
+   "B0n13": {
+    "method": 0.0,
+    "method_seeds": [
+     0.0
+    ],
+    "n_method": 0,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 0,
+    "geogs": 0.0,
+    "n_geogs": 0
+   },
+   "B0n8": {
+    "method": 0.0,
+    "method_seeds": [
+     0.0
+    ],
+    "n_method": 0,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 0,
+    "geogs": 0.0,
+    "n_geogs": 0
+   },
+   "B0n2": {
+    "method": 0.0,
+    "method_seeds": [
+     0.0
+    ],
+    "n_method": 0,
+    "imgonly": 0.0,
+    "imgonly_seeds": [
+     0.0
+    ],
+    "n_imgonly": 0,
+    "geogs": 0.0,
+    "n_geogs": 0
+   }
+  }
+ },
+ "spreads": {
+  "overall_completeness": {
+   "method": 0.0073256262530924845,
+   "imgonly": 0.03999395954391117,
+   "method_few": 0.004157787873376881,
+   "method_b0": 0.0073256262530924845,
+   "imgonly_few": 0.03999395954391117,
+   "fallback": false
+  },
+  "overall_completeness_05": {
+   "method": 0.004355777772109093,
+   "imgonly": 0.022372858556742314,
+   "method_few": 0.004355777772109093,
+   "method_b0": 0.0021778888860545464,
+   "imgonly_few": 0.022372858556742314,
+   "fallback": false
+  },
+  "virtual_overall": {
+   "method": 0.1959865657967597,
+   "imgonly": 0.046127129454011345,
+   "method_few": 0.1959865657967597,
+   "method_b0": null,
+   "imgonly_few": 0.046127129454011345,
+   "fallback": false
+  },
+  "training_overall_exact": {
+   "method": 0.0032173461694812266,
+   "imgonly": 0.03838074244947169,
+   "method_few": 0.0032173461694812266,
+   "method_b0": null,
+   "imgonly_few": 0.03838074244947169,
+   "fallback": false
+  },
+  "missing_agreement_completeness": {
+   "method": 0.03286632318955062,
+   "imgonly": 0.08909545442950495,
+   "method_few": 0.03009446460729944,
+   "method_b0": 0.03286632318955062,
+   "imgonly_few": 0.08909545442950495,
+   "fallback": false
+  },
+  "missing_completeness_05": {
+   "method": 0.017027131290972164,
+   "imgonly": 0.06989043425247835,
+   "method_few": 0.017027131290972164,
+   "method_b0": 0.016631151493507523,
+   "imgonly_few": 0.06989043425247835,
+   "fallback": false
+  },
+  "invisible_completeness": {
+   "method": 0.007325626253092635,
+   "imgonly": 0.00752361615182486,
+   "method_few": 0.007325626253092635,
+   "method_b0": null,
+   "imgonly_few": 0.00752361615182486,
+   "fallback": false
+  },
+  "invisible_completeness_05": {
+   "method": 0.003959797974644669,
+   "imgonly": 0.010889444430272814,
+   "method_few": 0.003959797974644669,
+   "method_b0": null,
+   "imgonly_few": 0.010889444430272814,
+   "fallback": false
+  },
+  "virtual_invisible": {
+   "method": 0.25877279764302896,
+   "imgonly": 0.017621100987168743,
+   "method_few": 0.25877279764302896,
+   "method_b0": null,
+   "imgonly_few": 0.017621100987168743,
+   "fallback": false
+  },
+  "virtual_invisible_05": {
+   "method": 0.25501098956711654,
+   "imgonly": 0.09919293926484872,
+   "method_few": 0.25501098956711654,
+   "method_b0": null,
+   "imgonly_few": 0.09919293926484872,
+   "fallback": false
+  },
+  "virtual_support": {
+   "method": 0.015245222202382041,
+   "imgonly": 0.012869343417595285,
+   "method_few": 0.015245222202382041,
+   "method_b0": null,
+   "imgonly_few": 0.012869343417595285,
+   "fallback": false
+  },
+  "inheritance": {
+   "method": 0.007127636354360273,
+   "imgonly": 0.0,
+   "method_few": 0.007127636354360273,
+   "method_b0": null,
+   "imgonly_few": 0.0,
+   "fallback": false
+  },
+  "supported": {
+   "method": 0.007127636354360273,
+   "imgonly": 0.019600999974491086,
+   "method_few": 0.007127636354360273,
+   "method_b0": null,
+   "imgonly_few": 0.019600999974491086,
+   "fallback": false
+  },
+  "unseen_past_shape": {
+   "method": 0.0015839191898576917,
+   "imgonly": 0.0,
+   "method_few": 0.0015839191898576917,
+   "method_b0": null,
+   "imgonly_few": 0.0,
+   "fallback": false
+  },
+  "prior_error_inflow": {
+   "method": 0.05464521205009636,
+   "imgonly": 0.03306431308828294,
+   "method_few": 0.05464521205009636,
+   "method_b0": 0.004751757569573597,
+   "imgonly_few": 0.03306431308828294,
+   "fallback": false
+  },
+  "double_error_inflow": {
+   "method": 0.05266531306277397,
+   "imgonly": 0.02930250501237054,
+   "method_few": 0.014255272708720765,
+   "method_b0": 0.05266531306277397,
+   "imgonly_few": 0.02930250501237054,
+   "fallback": false
+  },
+  "missing_prior_error_inflow": {
+   "method": 0.16512357554268253,
+   "imgonly": 0.051675363569112884,
+   "method_few": 0.09127334331555961,
+   "method_b0": 0.16512357554268253,
+   "imgonly_few": 0.051675363569112884,
+   "fallback": false
+  },
+  "obs_inflow": {
+   "method": 0.006335676759431482,
+   "imgonly": 0.011285424227737291,
+   "method_few": 0.0003959797974644779,
+   "method_b0": 0.006335676759431482,
+   "imgonly_few": 0.011285424227737291,
+   "fallback": false
+  },
+  "obs_within_inflow": {
+   "method": 0.027916575721244896,
+   "imgonly": 0.05603114134122201,
+   "method_few": 0.027916575721244896,
+   "method_b0": 0.02593667673392256,
+   "imgonly_few": 0.05603114134122201,
+   "fallback": false
+  },
+  "past_shape": {
+   "method": 0.07088038374613963,
+   "imgonly": 0.0,
+   "method_few": 0.07088038374613963,
+   "method_b0": 0.022174868658010105,
+   "imgonly_few": 0.0,
+   "fallback": false
+  },
+  "gentle_nmad_new": {
+   "method": 41.59767772364222,
+   "imgonly": 41.59767772364222,
+   "method_few": null,
+   "method_b0": 41.59767772364222,
+   "imgonly_few": null,
+   "fallback": true
+  },
+  "gentle_bias_new": {
+   "method": 61.99063729306225,
+   "imgonly": 61.99063729306225,
+   "method_few": null,
+   "method_b0": 61.99063729306225,
+   "imgonly_few": null,
+   "fallback": true
+  },
+  "floating_share": {
+   "method": 0.1886843734918183,
+   "imgonly": 0.0,
+   "method_few": 0.0,
+   "method_b0": 0.1886843734918183,
+   "imgonly_few": 0.0,
+   "fallback": false
+  }
+ },
+ "statuses": {
+  "B0_b10": {
+   "prop_LoD2_s0": "PASS",
+   "prop_LoD2_s1": "PASS",
+   "imgonly_s0": "PASS",
+   "trust_LoD2_fix1": "PASS"
+  },
+  "B0a15": {
+   "prop_LoD2_s0": "PASS",
+   "imgonly_s0": "PASS",
+   "trust_LoD2_fix1": "PASS"
+  },
+  "B0a9": {
+   "prop_LoD2_s0": "PASS",
+   "imgonly_s0": "PASS",
+   "trust_LoD2_fix1": "PASS"
+  },
+  "B0a3": {
+   "prop_LoD2_s0": "PASS",
+   "prop_LoD2_s1": "PASS",
+   "imgonly_s0": "PASS",
+   "imgonly_s1": "PASS",
+   "trust_LoD2_fix1": "PASS"
+  },
+  "B0n13": {
+   "prop_LoD2_s0": "PASS",
+   "imgonly_s0": "PASS",
+   "trust_LoD2_fix1": "PASS"
+  },
+  "B0n8": {
+   "prop_LoD2_s0": "PASS",
+   "imgonly_s0": "PASS",
+   "trust_LoD2_fix1": "PASS"
+  },
+  "B0n2": {
+   "prop_LoD2_s0": "PASS",
+   "imgonly_s0": "PASS",
+   "trust_LoD2_fix1": "PASS"
+  }
+ },
+ "areas": {
+  "B0_b10": {
+   "condition": "영상 전체 (1단계 B0, 학습 243장)",
+   "n_train": 243,
+   "area_m2": {
+    "2": 3260.25,
+    "3": 216.1875,
+    "4": 128.25,
+    "5": 0.0,
+    "11": 401.3125,
+    "12": 61.375,
+    "13": 1.6875,
+    "14": 0.0
+   },
+   "code0_m2": 1063.19084436015,
+   "labelled_m2": 4069.0625,
+   "unseen_m2": 129.9375,
+   "unseen_share": 0.03193303125719991,
+   "patches": {
+    "2": 52164,
+    "3": 3459,
+    "4": 2052,
+    "5": 0,
+    "11": 6421,
+    "12": 982,
+    "13": 27,
+    "14": 0
+   },
+   "states_all_eval_m2": {
+    "support": 4898.625,
+    "missing": 201.9375,
+    "invisible": 31.690844360150237
+   },
+   "region_file": "/out/regions_v3/regions_ext_v3_B0_b10_LoD2.npz"
+  },
+  "B0a15": {
+   "condition": "저자 15장",
+   "n_train": 13,
+   "area_m2": {
+    "2": 1636.25,
+    "3": 133.75,
+    "4": 397.625,
+    "5": 1437.0625,
+    "11": 248.375,
+    "12": 40.0625,
+    "13": 21.875,
+    "14": 154.0625
+   },
+   "code0_m2": 1063.19084436015,
+   "labelled_m2": 4069.0625,
+   "unseen_m2": 2010.625,
+   "unseen_share": 0.4941248752015974,
+   "patches": {
+    "2": 26180,
+    "3": 2140,
+    "4": 6362,
+    "5": 22993,
+    "11": 3974,
+    "12": 641,
+    "13": 350,
+    "14": 2465
+   },
+   "states_all_eval_m2": {
+    "support": 2228.75,
+    "missing": 501.875,
+    "invisible": 2401.62834436015
+   },
+   "region_file": "/ph/main_stage2_v1/PHD-MAIN-STAGE2-v1/regions_v3/regions_ext_v3_B0a15_LoD2.npz"
+  },
+  "B0a9": {
+   "condition": "저자 9장",
+   "n_train": 8,
+   "area_m2": {
+    "2": 1501.3125,
+    "3": 119.5,
+    "4": 541.5,
+    "5": 1442.375,
+    "11": 229.25,
+    "12": 41.3125,
+    "13": 39.125,
+    "14": 154.6875
+   },
+   "code0_m2": 1063.19084436015,
+   "labelled_m2": 4069.0625,
+   "unseen_m2": 2177.6875,
+   "unseen_share": 0.5351816296751402,
+   "patches": {
+    "2": 24021,
+    "3": 1912,
+    "4": 8664,
+    "5": 23078,
+    "11": 3668,
+    "12": 661,
+    "13": 626,
+    "14": 2475
+   },
+   "states_all_eval_m2": {
+    "support": 2011.125,
+    "missing": 712.5625,
+    "invisible": 2408.56584436015
+   },
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0a9_LoD2.npz"
+  },
+  "B0a3": {
+   "condition": "저자 3장",
+   "n_train": 2,
+   "area_m2": {
+    "2": 765.875,
+    "3": 271.6875,
+    "4": 973.5,
+    "5": 1593.625,
+    "11": 64.1875,
+    "12": 75.75,
+    "13": 165.25,
+    "14": 159.1875
+   },
+   "code0_m2": 1063.19084436015,
+   "labelled_m2": 4069.0625,
+   "unseen_m2": 2891.5625,
+   "unseen_share": 0.7106213040473082,
+   "patches": {
+    "2": 12254,
+    "3": 4347,
+    "4": 15576,
+    "5": 25498,
+    "11": 1027,
+    "12": 1212,
+    "13": 2644,
+    "14": 2547
+   },
+   "states_all_eval_m2": {
+    "support": 1265.5625,
+    "missing": 1299.3125,
+    "invisible": 2567.37834436015
+   },
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0a3_LoD2.npz"
+  },
+  "B0n13": {
+   "condition": "연직 포함 13장",
+   "n_train": 13,
+   "area_m2": {
+    "2": 1109.125,
+    "3": 246.75,
+    "4": 858.5,
+    "5": 1390.3125,
+    "11": 45.3125,
+    "12": 59.9375,
+    "13": 193.0,
+    "14": 166.125
+   },
+   "code0_m2": 1063.19084436015,
+   "labelled_m2": 4069.0625,
+   "unseen_m2": 2607.9375,
+   "unseen_share": 0.6409185162429921,
+   "patches": {
+    "2": 17746,
+    "3": 3948,
+    "4": 13736,
+    "5": 22245,
+    "11": 725,
+    "12": 959,
+    "13": 3088,
+    "14": 2658
+   },
+   "states_all_eval_m2": {
+    "support": 1806.1875,
+    "missing": 1319.9375,
+    "invisible": 2006.12834436015
+   },
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n13_LoD2.npz"
+  },
+  "B0n8": {
+   "condition": "연직 포함 8장",
+   "n_train": 8,
+   "area_m2": {
+    "2": 617.0,
+    "3": 108.6875,
+    "4": 1488.6875,
+    "5": 1390.3125,
+    "11": 21.875,
+    "12": 30.4375,
+    "13": 245.9375,
+    "14": 166.125
+   },
+   "code0_m2": 1063.19084436015,
+   "labelled_m2": 4069.0625,
+   "unseen_m2": 3291.0625,
+   "unseen_share": 0.808801167345058,
+   "patches": {
+    "2": 9872,
+    "3": 1739,
+    "4": 23819,
+    "5": 22245,
+    "11": 350,
+    "12": 487,
+    "13": 3935,
+    "14": 2658
+   },
+   "states_all_eval_m2": {
+    "support": 939.5,
+    "missing": 2186.5625,
+    "invisible": 2006.19084436015
+   },
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n8_LoD2.npz"
+  },
+  "B0n2": {
+   "condition": "연직 포함 2장",
+   "n_train": 2,
+   "area_m2": {
+    "2": 126.1875,
+    "3": 305.125,
+    "4": 1068.625,
+    "5": 2104.75,
+    "11": 2.9375,
+    "12": 27.125,
+    "13": 138.5,
+    "14": 295.8125
+   },
+   "code0_m2": 1063.19084436015,
+   "labelled_m2": 4069.0625,
+   "unseen_m2": 3607.6875,
+   "unseen_share": 0.8866139313416789,
+   "patches": {
+    "2": 2019,
+    "3": 4882,
+    "4": 17098,
+    "5": 33676,
+    "11": 47,
+    "12": 434,
+    "13": 2216,
+    "14": 4733
+   },
+   "states_all_eval_m2": {
+    "support": 612.875,
+    "missing": 1502.5625,
+    "invisible": 3016.81584436015
+   },
+   "region_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/regions_v3/regions_ext_v3_B0n2_LoD2.npz"
+  }
+ },
+ "q3_1": {
+  "overall": {
+   "overall_completeness": {
+    "B0_b10": {
+     "diff_method_minus_imgonly": 0.003149999999999986,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05656000000000006,
+     "threshold_parts": {
+      "unit": 0.03999395954391117,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a15": {
+     "diff_method_minus_imgonly": 0.008799999999999975,
+     "diff_vs_full": 0.005649999999999988,
+     "threshold_dd": 0.05656000000000006,
+     "threshold_parts": {
+      "unit": 0.03999395954391117,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "기준 안",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0a9": {
+     "diff_method_minus_imgonly": 0.030399999999999983,
+     "diff_vs_full": 0.027249999999999996,
+     "threshold_dd": 0.05656000000000006,
+     "threshold_parts": {
+      "unit": 0.03999395954391117,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "기준 안",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0a3": {
+     "diff_method_minus_imgonly": 0.10504999999999998,
+     "diff_vs_full": 0.10189999999999999,
+     "threshold_dd": 0.05656000000000006,
+     "threshold_parts": {
+      "unit": 0.03999395954391117,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0n13": {
+     "diff_method_minus_imgonly": 0.1391,
+     "diff_vs_full": 0.13595000000000002,
+     "threshold_dd": 0.05656000000000006,
+     "threshold_parts": {
+      "unit": 0.03999395954391117,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0n8": {
+     "diff_method_minus_imgonly": 0.2671,
+     "diff_vs_full": 0.26395,
+     "threshold_dd": 0.05656000000000006,
+     "threshold_parts": {
+      "unit": 0.03999395954391117,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0n2": {
+     "diff_method_minus_imgonly": 0.2204,
+     "diff_vs_full": 0.21725000000000003,
+     "threshold_dd": 0.05656000000000006,
+     "threshold_parts": {
+      "unit": 0.03999395954391117,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    }
+   },
+   "overall_completeness_05": {
+    "B0_b10": {
+     "diff_method_minus_imgonly": 0.0005500000000000504,
+     "diff_vs_full": null,
+     "threshold_dd": 0.03163999999999993,
+     "threshold_parts": {
+      "unit": 0.022372858556742314,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a15": {
+     "diff_method_minus_imgonly": -0.0121,
+     "diff_vs_full": -0.01265000000000005,
+     "threshold_dd": 0.03163999999999993,
+     "threshold_parts": {
+      "unit": 0.022372858556742314,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "기준 안",
+     "direction": "더 나빠짐(차이가 작아짐)"
+    },
+    "B0a9": {
+     "diff_method_minus_imgonly": 0.012899999999999967,
+     "diff_vs_full": 0.012349999999999917,
+     "threshold_dd": 0.03163999999999993,
+     "threshold_parts": {
+      "unit": 0.022372858556742314,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "기준 안",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0a3": {
+     "diff_method_minus_imgonly": 0.10375000000000001,
+     "diff_vs_full": 0.10319999999999996,
+     "threshold_dd": 0.03163999999999993,
+     "threshold_parts": {
+      "unit": 0.022372858556742314,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0n13": {
+     "diff_method_minus_imgonly": 0.1946,
+     "diff_vs_full": 0.19404999999999994,
+     "threshold_dd": 0.03163999999999993,
+     "threshold_parts": {
+      "unit": 0.022372858556742314,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0n8": {
+     "diff_method_minus_imgonly": 0.21930000000000005,
+     "diff_vs_full": 0.21875,
+     "threshold_dd": 0.03163999999999993,
+     "threshold_parts": {
+      "unit": 0.022372858556742314,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    },
+    "B0n2": {
+     "diff_method_minus_imgonly": 0.33549999999999996,
+     "diff_vs_full": 0.3349499999999999,
+     "threshold_dd": 0.03163999999999993,
+     "threshold_parts": {
+      "unit": 0.022372858556742314,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "확인",
+     "direction": "덜 나빠짐(차이가 커짐)"
+    }
+   },
+   "virtual_overall": {
+    "B0_b10": {
+     "diff_method_minus_imgonly": null,
+     "diff_vs_full": null,
+     "threshold_dd": 0.2771668593927045,
+     "threshold_parts": {
+      "unit": 0.1959865657967597
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a15": {
+     "diff_method_minus_imgonly": 0.25233718688480733,
+     "diff_vs_full": null,
+     "threshold_dd": 0.2771668593927045,
+     "threshold_parts": {
+      "unit": 0.1959865657967597,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a9": {
+     "diff_method_minus_imgonly": 0.29935765526239005,
+     "diff_vs_full": null,
+     "threshold_dd": 0.2771668593927045,
+     "threshold_parts": {
+      "unit": 0.1959865657967597,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a3": {
+     "diff_method_minus_imgonly": 0.27036926825816693,
+     "diff_vs_full": null,
+     "threshold_dd": 0.2771668593927045,
+     "threshold_parts": {
+      "unit": 0.1959865657967597,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0n13": {
+     "diff_method_minus_imgonly": 0.12027558692590501,
+     "diff_vs_full": null,
+     "threshold_dd": 0.2771668593927045,
+     "threshold_parts": {
+      "unit": 0.1959865657967597,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0n8": {
+     "diff_method_minus_imgonly": 0.181005613125661,
+     "diff_vs_full": null,
+     "threshold_dd": 0.2771668593927045,
+     "threshold_parts": {
+      "unit": 0.1959865657967597,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0n2": {
+     "diff_method_minus_imgonly": 0.3782501315803503,
+     "diff_vs_full": null,
+     "threshold_dd": 0.2771668593927045,
+     "threshold_parts": {
+      "unit": 0.1959865657967597,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    }
+   },
+   "training_overall_exact": {
+    "B0_b10": {
+     "diff_method_minus_imgonly": null,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05427856650599164,
+     "threshold_parts": {
+      "unit": 0.03838074244947169
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a15": {
+     "diff_method_minus_imgonly": 0.007026342240733396,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05427856650599164,
+     "threshold_parts": {
+      "unit": 0.03838074244947169,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a9": {
+     "diff_method_minus_imgonly": 0.031425652497991174,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05427856650599164,
+     "threshold_parts": {
+      "unit": 0.03838074244947169,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0a3": {
+     "diff_method_minus_imgonly": 0.10906678272231263,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05427856650599164,
+     "threshold_parts": {
+      "unit": 0.03838074244947169,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0n13": {
+     "diff_method_minus_imgonly": 0.14324617205378753,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05427856650599164,
+     "threshold_parts": {
+      "unit": 0.03838074244947169,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0n8": {
+     "diff_method_minus_imgonly": 0.2606992029574804,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05427856650599164,
+     "threshold_parts": {
+      "unit": 0.03838074244947169,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    },
+    "B0n2": {
+     "diff_method_minus_imgonly": 0.22955512756266663,
+     "diff_vs_full": null,
+     "threshold_dd": 0.05427856650599164,
+     "threshold_parts": {
+      "unit": 0.03838074244947169,
+      "three_points": 1.4539265224306938e-06
+     },
+     "grade": "값 없음",
+     "direction": null
+    }
+   }
+  },
+  "where": {
+   "missing_agreement_completeness": {
+    "B0_b10": {
+     "diff": 0.012700000000000045,
+     "n": 12433,
+     "threshold": 0.08909545442950495,
+     "grade": "기준 안"
+    },
+    "B0a15": {
+     "diff": 0.028200000000000003,
+     "n": 37860,
+     "threshold": 0.08909545442950495,
+     "grade": "기준 안"
+    },
+    "B0a9": {
+     "diff": 0.32719999999999994,
+     "n": 51373,
+     "threshold": 0.08909545442950495,
+     "grade": "확인"
+    },
+    "B0a3": {
+     "diff": 0.3158000000000001,
+     "n": 91100,
+     "threshold": 0.08909545442950495,
+     "grade": "확인"
+    },
+    "B0n13": {
+     "diff": 0.6833,
+     "n": 78830,
+     "threshold": 0.08909545442950495,
+     "grade": "확인"
+    },
+    "B0n8": {
+     "diff": 0.5423,
+     "n": 136557,
+     "threshold": 0.08909545442950495,
+     "grade": "확인"
+    },
+    "B0n2": {
+     "diff": 0.5225000000000001,
+     "n": 97332,
+     "threshold": 0.08909545442950495,
+     "grade": "확인"
+    }
+   },
+   "missing_completeness_05": {
+    "B0_b10": {
+     "diff": 0.011299999999999977,
+     "n": 12433,
+     "threshold": 0.06989043425247835,
+     "grade": "기준 안"
+    },
+    "B0a15": {
+     "diff": 0.10050000000000003,
+     "n": 37860,
+     "threshold": 0.06989043425247835,
+     "grade": "가능, 근거 불완전"
+    },
+    "B0a9": {
+     "diff": 0.5136000000000001,
+     "n": 51373,
+     "threshold": 0.06989043425247835,
+     "grade": "확인"
+    },
+    "B0a3": {
+     "diff": 0.41225,
+     "n": 91100,
+     "threshold": 0.06989043425247835,
+     "grade": "확인"
+    },
+    "B0n13": {
+     "diff": 0.7195,
+     "n": 78830,
+     "threshold": 0.06989043425247835,
+     "grade": "확인"
+    },
+    "B0n8": {
+     "diff": 0.43320000000000003,
+     "n": 136557,
+     "threshold": 0.06989043425247835,
+     "grade": "확인"
+    },
+    "B0n2": {
+     "diff": 0.7081000000000001,
+     "n": 97332,
+     "threshold": 0.06989043425247835,
+     "grade": "확인"
+    }
+   },
+   "invisible_completeness": {
+    "B0_b10": {
+     "diff": null,
+     "n": 0,
+     "threshold": 0.00752361615182486,
+     "grade": "값 없음"
+    },
+    "B0a15": {
+     "diff": -0.006699999999999998,
+     "n": 129710,
+     "threshold": 0.00752361615182486,
+     "grade": "기준 안"
+    },
+    "B0a9": {
+     "diff": 9.999999999999593e-05,
+     "n": 130201,
+     "threshold": 0.00752361615182486,
+     "grade": "기준 안"
+    },
+    "B0a3": {
+     "diff": 0.017050000000000003,
+     "n": 144160,
+     "threshold": 0.00752361615182486,
+     "grade": "확인"
+    },
+    "B0n13": {
+     "diff": 0.0495,
+     "n": 132005,
+     "threshold": 0.00752361615182486,
+     "grade": "확인"
+    },
+    "B0n8": {
+     "diff": 0.0207,
+     "n": 132005,
+     "threshold": 0.00752361615182486,
+     "grade": "확인"
+    },
+    "B0n2": {
+     "diff": 0.007300000000000001,
+     "n": 197786,
+     "threshold": 0.00752361615182486,
+     "grade": "기준 안"
+    }
+   },
+   "invisible_completeness_05": {
+    "B0_b10": {
+     "diff": null,
+     "n": 0,
+     "threshold": 0.010889444430272814,
+     "grade": "값 없음"
+    },
+    "B0a15": {
+     "diff": -0.010699999999999987,
+     "n": 129710,
+     "threshold": 0.010889444430272814,
+     "grade": "기준 안"
+    },
+    "B0a9": {
+     "diff": -0.0030000000000000027,
+     "n": 130201,
+     "threshold": 0.010889444430272814,
+     "grade": "기준 안"
+    },
+    "B0a3": {
+     "diff": 0.030049999999999993,
+     "n": 144160,
+     "threshold": 0.010889444430272814,
+     "grade": "확인"
+    },
+    "B0n13": {
+     "diff": 0.11889999999999999,
+     "n": 132005,
+     "threshold": 0.010889444430272814,
+     "grade": "확인"
+    },
+    "B0n8": {
+     "diff": 0.030899999999999997,
+     "n": 132005,
+     "threshold": 0.010889444430272814,
+     "grade": "확인"
+    },
+    "B0n2": {
+     "diff": 0.017499999999999998,
+     "n": 197786,
+     "threshold": 0.010889444430272814,
+     "grade": "가능, 근거 불완전"
+    }
+   },
+   "virtual_invisible": {
+    "B0_b10": {
+     "diff": null,
+     "n": null,
+     "threshold": 0.25877279764302896,
+     "grade": "값 없음"
+    },
+    "B0a15": {
+     "diff": 0.5600999999999999,
+     "n": 129710,
+     "threshold": 0.25877279764302896,
+     "grade": "확인"
+    },
+    "B0a9": {
+     "diff": 0.5072000000000001,
+     "n": 130201,
+     "threshold": 0.25877279764302896,
+     "grade": "가능, 근거 불완전"
+    },
+    "B0a3": {
+     "diff": 0.3595,
+     "n": 144160,
+     "threshold": 0.25877279764302896,
+     "grade": "확인"
+    },
+    "B0n13": {
+     "diff": 0.4778,
+     "n": 132005,
+     "threshold": 0.25877279764302896,
+     "grade": "가능, 근거 불완전"
+    },
+    "B0n8": {
+     "diff": 0.4426,
+     "n": 132005,
+     "threshold": 0.25877279764302896,
+     "grade": "가능, 근거 불완전"
+    },
+    "B0n2": {
+     "diff": 0.7058,
+     "n": 197786,
+     "threshold": 0.25877279764302896,
+     "grade": "확인"
+    }
+   },
+   "virtual_invisible_05": {
+    "B0_b10": {
+     "diff": null,
+     "n": null,
+     "threshold": 0.25501098956711654,
+     "grade": "값 없음"
+    },
+    "B0a15": {
+     "diff": 0.5437000000000001,
+     "n": 129710,
+     "threshold": 0.25501098956711654,
+     "grade": "확인"
+    },
+    "B0a9": {
+     "diff": 0.49289999999999995,
+     "n": 130201,
+     "threshold": 0.25501098956711654,
+     "grade": "가능, 근거 불완전"
+    },
+    "B0a3": {
+     "diff": 0.30415000000000003,
+     "n": 144160,
+     "threshold": 0.25501098956711654,
+     "grade": "확인"
+    },
+    "B0n13": {
+     "diff": 0.8056,
+     "n": 132005,
+     "threshold": 0.25501098956711654,
+     "grade": "확인"
+    },
+    "B0n8": {
+     "diff": 0.7029,
+     "n": 132005,
+     "threshold": 0.25501098956711654,
+     "grade": "확인"
+    },
+    "B0n2": {
+     "diff": 0.6714,
+     "n": 197786,
+     "threshold": 0.25501098956711654,
+     "grade": "확인"
+    }
+   },
+   "supported": {
+    "B0_b10": {
+     "diff": null,
+     "n": null,
+     "threshold": 0.03809801044674118,
+     "grade": "값 없음"
+    },
+    "B0a15": {
+     "diff": 0.9425,
+     "n": 22993,
+     "threshold": 0.03809801044674118,
+     "grade": "확인"
+    },
+    "B0a9": {
+     "diff": 0.9491999999999999,
+     "n": 23078,
+     "threshold": 0.03809801044674118,
+     "grade": "확인"
+    },
+    "B0a3": {
+     "diff": 0.92655,
+     "n": 25498,
+     "threshold": 0.03809801044674118,
+     "grade": "확인"
+    },
+    "B0n13": {
+     "diff": 0.9802000000000001,
+     "n": 22245,
+     "threshold": 0.03809801044674118,
+     "grade": "확인"
+    },
+    "B0n8": {
+     "diff": 0.9625,
+     "n": 22245,
+     "threshold": 0.03809801044674118,
+     "grade": "확인"
+    },
+    "B0n2": {
+     "diff": 0.9906,
+     "n": 33676,
+     "threshold": 0.03809801044674118,
+     "grade": "확인"
+    }
+   }
+  },
+  "answer": "일부 조건에서만 덜 나빠졌다: 저자 3장"
+ },
+ "q3_2": {
+  "unseen_share": {
+   "B0_b10": 0.03193303125719991,
+   "B0a15": 0.4941248752015974,
+   "B0a9": 0.5351816296751402,
+   "B0a3": 0.7106213040473082,
+   "B0n13": 0.6409185162429921,
+   "B0n8": 0.808801167345058,
+   "B0n2": 0.8866139313416789
+  },
+  "inheritance": {
+   "B0a15": {
+    "value": 0.9925,
+    "seeds": [
+     0.9925
+    ],
+    "n": 22993,
+    "diff_vs_A15": 0.0,
+    "threshold": 0.040340897362354154,
+    "grade": "—"
+   },
+   "B0a9": {
+    "value": 0.9962,
+    "seeds": [
+     0.9962
+    ],
+    "n": 23078,
+    "diff_vs_A15": 0.0036999999999999256,
+    "threshold": 0.040340897362354154,
+    "grade": "기준 안"
+   },
+   "B0a3": {
+    "value": 0.9621999999999999,
+    "seeds": [
+     0.964,
+     0.9604
+    ],
+    "n": 25498,
+    "diff_vs_A15": -0.030300000000000105,
+    "threshold": 0.040340897362354154,
+    "grade": "기준 안"
+   },
+   "B0n13": {
+    "value": 0.9806,
+    "seeds": [
+     0.9806
+    ],
+    "n": 22245,
+    "diff_vs_A15": null,
+    "threshold": 0.040340897362354154,
+    "grade": "3-4에서 짝과 비교"
+   },
+   "B0n8": {
+    "value": 0.9643,
+    "seeds": [
+     0.9643
+    ],
+    "n": 22245,
+    "diff_vs_A15": null,
+    "threshold": 0.040340897362354154,
+    "grade": "3-4에서 짝과 비교"
+   },
+   "B0n2": {
+    "value": 0.996,
+    "seeds": [
+     0.996
+    ],
+    "n": 33676,
+    "diff_vs_A15": null,
+    "threshold": 0.040340897362354154,
+    "grade": "3-4에서 짝과 비교"
+   }
+  },
+  "supported": {
+   "B0a15": {
+    "value": 0.9926,
+    "seeds": [
+     0.9926
+    ],
+    "n": 22993,
+    "diff_vs_A15": 0.0,
+    "threshold": 0.03809801044674118,
+    "grade": "—"
+   },
+   "B0a9": {
+    "value": 0.9962,
+    "seeds": [
+     0.9962
+    ],
+    "n": 23078,
+    "diff_vs_A15": 0.0035999999999999366,
+    "threshold": 0.03809801044674118,
+    "grade": "기준 안"
+   },
+   "B0a3": {
+    "value": 0.9621999999999999,
+    "seeds": [
+     0.964,
+     0.9604
+    ],
+    "n": 25498,
+    "diff_vs_A15": -0.030400000000000094,
+    "threshold": 0.03809801044674118,
+    "grade": "기준 안"
+   },
+   "B0n13": {
+    "value": 0.9806,
+    "seeds": [
+     0.9806
+    ],
+    "n": 22245,
+    "diff_vs_A15": null,
+    "threshold": 0.03809801044674118,
+    "grade": "3-4에서 짝과 비교"
+   },
+   "B0n8": {
+    "value": 0.9643,
+    "seeds": [
+     0.9643
+    ],
+    "n": 22245,
+    "diff_vs_A15": null,
+    "threshold": 0.03809801044674118,
+    "grade": "3-4에서 짝과 비교"
+   },
+   "B0n2": {
+    "value": 0.996,
+    "seeds": [
+     0.996
+    ],
+    "n": 33676,
+    "diff_vs_A15": null,
+    "threshold": 0.03809801044674118,
+    "grade": "3-4에서 짝과 비교"
+   }
+  },
+  "answer": "영상이 줄어 사전 정보에 맡긴 곳이 늘어도, 결과는 그곳을 사전 정보로 받쳤다"
+ },
+ "q3_3": {
+  "rows": {
+   "B0_b10": {
+    "method": 0.11979999999999999,
+    "seeds": [
+     0.121,
+     0.1186
+    ],
+    "imgonly": 0.1329,
+    "geogs": 0.4283,
+    "n": 32880,
+    "diff_vs_geogs": -0.3085,
+    "diff_vs_imgonly": -0.0131,
+    "threshold_geogs": 0.05464521205009636,
+    "threshold_imgonly": 0.05464521205009636,
+    "grade_geogs": "확인",
+    "grade_imgonly": "기준 안",
+    "label": "막았다",
+    "geogs_init_points": 99881
+   },
+   "B0a15": {
+    "method": 0.0431,
+    "seeds": [
+     0.0431
+    ],
+    "imgonly": 0.0398,
+    "geogs": 0.3876,
+    "n": 20268,
+    "diff_vs_geogs": -0.34450000000000003,
+    "diff_vs_imgonly": 0.0032999999999999974,
+    "threshold_geogs": 0.05464521205009636,
+    "threshold_imgonly": 0.05464521205009636,
+    "grade_geogs": "확인",
+    "grade_imgonly": "기준 안",
+    "label": "막았다",
+    "geogs_init_points": 29835
+   },
+   "B0a9": {
+    "method": 0.0461,
+    "seeds": [
+     0.0461
+    ],
+    "imgonly": 0.0435,
+    "geogs": 0.3214,
+    "n": 18816,
+    "diff_vs_geogs": -0.2753,
+    "diff_vs_imgonly": 0.002600000000000005,
+    "threshold_geogs": 0.05464521205009636,
+    "threshold_imgonly": 0.05464521205009636,
+    "grade_geogs": "확인",
+    "grade_imgonly": "기준 안",
+    "label": "막았다",
+    "geogs_init_points": 26865
+   },
+   "B0a3": {
+    "method": 0.2625,
+    "seeds": [
+     0.2763,
+     0.2487
+    ],
+    "imgonly": 0.11795,
+    "geogs": 0.2975,
+    "n": 5465,
+    "diff_vs_geogs": -0.034999999999999976,
+    "diff_vs_imgonly": 0.14455,
+    "threshold_geogs": 0.05464521205009636,
+    "threshold_imgonly": 0.05464521205009636,
+    "grade_geogs": "기준 안",
+    "grade_imgonly": "가능, 근거 불완전",
+    "label": "사전 정보 신뢰와 다르지 않았다",
+    "geogs_init_points": 14458
+   },
+   "B0n13": {
+    "method": 0.2163,
+    "seeds": [
+     0.2163
+    ],
+    "imgonly": 0.1881,
+    "geogs": 0.4395,
+    "n": 3338,
+    "diff_vs_geogs": -0.2232,
+    "diff_vs_imgonly": 0.028200000000000003,
+    "threshold_geogs": 0.05464521205009636,
+    "threshold_imgonly": 0.05464521205009636,
+    "grade_geogs": "가능, 근거 불완전",
+    "grade_imgonly": "기준 안",
+    "label": "막았다",
+    "geogs_init_points": 61801
+   },
+   "B0n8": {
+    "method": 0.1646,
+    "seeds": [
+     0.1646
+    ],
+    "imgonly": 0.2012,
+    "geogs": 0.4667,
+    "n": 1665,
+    "diff_vs_geogs": -0.30210000000000004,
+    "diff_vs_imgonly": -0.036599999999999994,
+    "threshold_geogs": 0.05464521205009636,
+    "threshold_imgonly": 0.05464521205009636,
+    "grade_geogs": "가능, 근거 불완전",
+    "grade_imgonly": "기준 안",
+    "label": "막았다",
+    "geogs_init_points": 38403
+   },
+   "B0n2": {
+    "method": 0.2448,
+    "seeds": [
+     0.2448
+    ],
+    "imgonly": 0.1979,
+    "geogs": 0.75,
+    "n": 192,
+    "diff_vs_geogs": -0.5052,
+    "diff_vs_imgonly": 0.0469,
+    "threshold_geogs": 0.05464521205009636,
+    "threshold_imgonly": 0.05464521205009636,
+    "grade_geogs": "가능, 근거 불완전",
+    "grade_imgonly": "기준 안",
+    "label": "막았다",
+    "geogs_init_points": 6776
+   }
+  },
+  "read": [
+   "B0a15",
+   "B0a9",
+   "B0a3",
+   "B0n13",
+   "B0n8",
+   "B0n2"
+  ],
+  "excluded": [],
+  "answer": "막지 못한 조건: 저자 3장(사전 정보 신뢰와 다르지 않았다)",
+  "cost": {
+   "B0_b10": {
+    "areas": {
+     "11": 401.3125,
+     "12": 61.375,
+     "13": 1.6875,
+     "14": 0.0
+    },
+    "inflow": {
+     "11": {
+      "method": 0.11979999999999999,
+      "imgonly": 0.1329,
+      "geogs": 0.4283
+     },
+     "12": {
+      "method": 0.506,
+      "imgonly": 0.4658,
+      "geogs": 0.4853
+     },
+     "13": {
+      "method": 0.125,
+      "imgonly": 0.0417,
+      "geogs": 0.0893
+     }
+    },
+    "unseen_past_shape": null
+   },
+   "B0a15": {
+    "areas": {
+     "11": 248.375,
+     "12": 40.0625,
+     "13": 21.875,
+     "14": 154.0625
+    },
+    "inflow": {
+     "11": {
+      "method": 0.0431,
+      "imgonly": 0.0398,
+      "geogs": 0.3876
+     },
+     "12": {
+      "method": 0.329,
+      "imgonly": 0.3039,
+      "geogs": 0.4729
+     },
+     "13": {
+      "method": 0.2462,
+      "imgonly": 0.1095,
+      "geogs": 0.2406
+     }
+    },
+    "unseen_past_shape": 0.8609
+   },
+   "B0a9": {
+    "areas": {
+     "11": 229.25,
+     "12": 41.3125,
+     "13": 39.125,
+     "14": 154.6875
+    },
+    "inflow": {
+     "11": {
+      "method": 0.0461,
+      "imgonly": 0.0435,
+      "geogs": 0.3214
+     },
+     "12": {
+      "method": 0.2692,
+      "imgonly": 0.2549,
+      "geogs": 0.3594
+     },
+     "13": {
+      "method": 0.2681,
+      "imgonly": 0.0487,
+      "geogs": 0.2148
+     }
+    },
+    "unseen_past_shape": 0.8764
+   },
+   "B0a3": {
+    "areas": {
+     "11": 64.1875,
+     "12": 75.75,
+     "13": 165.25,
+     "14": 159.1875
+    },
+    "inflow": {
+     "11": {
+      "method": 0.2625,
+      "imgonly": 0.11795,
+      "geogs": 0.2975
+     },
+     "12": {
+      "method": 0.2772,
+      "imgonly": 0.1547,
+      "geogs": 0.217
+     },
+     "13": {
+      "method": 0.36595,
+      "imgonly": 0.06534999999999999,
+      "geogs": 0.1961
+     }
+    },
+    "unseen_past_shape": 0.9062
+   },
+   "B0n13": {
+    "areas": {
+     "11": 45.3125,
+     "12": 59.9375,
+     "13": 193.0,
+     "14": 166.125
+    },
+    "inflow": {
+     "11": {
+      "method": 0.2163,
+      "imgonly": 0.1881,
+      "geogs": 0.4395
+     },
+     "12": {
+      "method": 0.3761,
+      "imgonly": 0.2706,
+      "geogs": 0.3343
+     },
+     "13": {
+      "method": 0.708,
+      "imgonly": 0.0569,
+      "geogs": 0.2536
+     }
+    },
+    "unseen_past_shape": 0.9853
+   },
+   "B0n8": {
+    "areas": {
+     "11": 21.875,
+     "12": 30.4375,
+     "13": 245.9375,
+     "14": 166.125
+    },
+    "inflow": {
+     "11": {
+      "method": 0.1646,
+      "imgonly": 0.2012,
+      "geogs": 0.4667
+     },
+     "12": {
+      "method": 0.533,
+      "imgonly": 0.2588,
+      "geogs": 0.2969
+     },
+     "13": {
+      "method": 0.7999,
+      "imgonly": 0.0833,
+      "geogs": 0.2669
+     }
+    },
+    "unseen_past_shape": 0.9552
+   },
+   "B0n2": {
+    "areas": {
+     "11": 2.9375,
+     "12": 27.125,
+     "13": 138.5,
+     "14": 295.8125
+    },
+    "inflow": {
+     "11": {
+      "method": 0.2448,
+      "imgonly": 0.1979,
+      "geogs": 0.75
+     },
+     "12": {
+      "method": 0.1265,
+      "imgonly": 0.0518,
+      "geogs": 0.3481
+     },
+     "13": {
+      "method": 0.5718,
+      "imgonly": 0.0167,
+      "geogs": 0.1428
+     }
+    },
+    "unseen_past_shape": 0.9958
+   }
+  }
+ },
+ "q3_4": {
+  "B0a15|B0n13": {
+   "overall_completeness": {
+    "author": {
+     "m_minus_i": 0.008799999999999975,
+     "m_minus_g": -0.005500000000000005,
+     "method": 0.4019
+    },
+    "nadir": {
+     "m_minus_i": 0.1391,
+     "m_minus_g": 0.013499999999999956,
+     "method": 0.7283
+    },
+    "dd_imgonly": 0.13030000000000003,
+    "dd_geogs": 0.01899999999999996,
+    "threshold_dd_imgonly": 0.05656000000000006,
+    "threshold_dd_geogs": 0.010359999999999791,
+    "grade_dd_imgonly": "확인",
+    "grade_dd_geogs": "가능, 근거 불완전",
+    "direct_method": 0.32639999999999997,
+    "threshold_direct": 0.0073256262530924845,
+    "grade_direct": "확인"
+   },
+   "prior_error_inflow": {
+    "author": {
+     "m_minus_i": 0.0032999999999999974,
+     "m_minus_g": -0.34450000000000003,
+     "method": 0.0431
+    },
+    "nadir": {
+     "m_minus_i": 0.028200000000000003,
+     "m_minus_g": -0.2232,
+     "method": 0.2163
+    },
+    "dd_imgonly": 0.024900000000000005,
+    "dd_geogs": 0.12130000000000002,
+    "threshold_dd_imgonly": 0.07727999999999996,
+    "threshold_dd_geogs": 0.07727999999999996,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "가능, 근거 불완전",
+    "direct_method": 0.1732,
+    "threshold_direct": 0.05464521205009636,
+    "grade_direct": "확인"
+   },
+   "missing_agreement_completeness": {
+    "author": {
+     "m_minus_i": 0.028200000000000003,
+     "m_minus_g": 0.026100000000000012,
+     "method": 0.7387
+    },
+    "nadir": {
+     "m_minus_i": 0.6833,
+     "m_minus_g": 0.05479999999999996,
+     "method": 0.8077
+    },
+    "dd_imgonly": 0.6551,
+    "dd_geogs": 0.028699999999999948,
+    "threshold_dd_imgonly": 0.12599999999999995,
+    "threshold_dd_geogs": 0.04647999999999985,
+    "grade_dd_imgonly": "확인",
+    "grade_dd_geogs": "기준 안",
+    "direct_method": 0.06899999999999995,
+    "threshold_direct": 0.03286632318955062,
+    "grade_direct": "확인"
+   },
+   "invisible_completeness": {
+    "author": {
+     "m_minus_i": -0.006699999999999998,
+     "m_minus_g": -0.0068999999999999895,
+     "method": 0.068
+    },
+    "nadir": {
+     "m_minus_i": 0.0495,
+     "m_minus_g": 0.047,
+     "method": 0.0504
+    },
+    "dd_imgonly": 0.0562,
+    "dd_geogs": 0.05389999999999999,
+    "threshold_dd_imgonly": 0.010639999999999993,
+    "threshold_dd_geogs": 0.010360000000000005,
+    "grade_dd_imgonly": "확인",
+    "grade_dd_geogs": "확인",
+    "direct_method": -0.017600000000000005,
+    "threshold_direct": 0.007325626253092635,
+    "grade_direct": "확인"
+   },
+   "virtual_invisible": {
+    "author": {
+     "m_minus_i": 0.5600999999999999,
+     "m_minus_g": 0.6244,
+     "method": 0.7322
+    },
+    "nadir": {
+     "m_minus_i": 0.4778,
+     "m_minus_g": 0.392,
+     "method": 0.504
+    },
+    "dd_imgonly": -0.08229999999999993,
+    "dd_geogs": -0.23239999999999994,
+    "threshold_dd_imgonly": 0.36596000000000006,
+    "threshold_dd_geogs": 0.36596000000000006,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "기준 안",
+    "direct_method": -0.22819999999999996,
+    "threshold_direct": 0.25877279764302896,
+    "grade_direct": "기준 안"
+   },
+   "inheritance": {
+    "author": {
+     "m_minus_i": 0.9925,
+     "m_minus_g": null,
+     "method": 0.9925
+    },
+    "nadir": {
+     "m_minus_i": 0.9806,
+     "m_minus_g": null,
+     "method": 0.9806
+    },
+    "dd_imgonly": -0.011900000000000022,
+    "dd_geogs": null,
+    "threshold_dd_imgonly": 0.05705064416814227,
+    "threshold_dd_geogs": 0.05705064416814227,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "값 없음",
+    "direct_method": -0.011900000000000022,
+    "threshold_direct": 0.040340897362354154,
+    "grade_direct": "기준 안"
+   },
+   "unseen_share": {
+    "author": 0.4941248752015974,
+    "nadir": 0.6409185162429921
+   },
+   "what_changed": {
+    "nadir_views": 2,
+    "support_m2": [
+     1636.25,
+     1109.125
+    ],
+    "missing_m2": [
+     419.5,
+     1051.5
+    ],
+    "invisible_m2": [
+     1591.125,
+     1556.4375
+    ]
+   }
+  },
+  "B0a9|B0n8": {
+   "overall_completeness": {
+    "author": {
+     "m_minus_i": 0.030399999999999983,
+     "m_minus_g": -0.029000000000000026,
+     "method": 0.3801
+    },
+    "nadir": {
+     "m_minus_i": 0.2671,
+     "m_minus_g": 0.011199999999999988,
+     "method": 0.7581
+    },
+    "dd_imgonly": 0.23670000000000002,
+    "dd_geogs": 0.040200000000000014,
+    "threshold_dd_imgonly": 0.05656000000000006,
+    "threshold_dd_geogs": 0.010359999999999791,
+    "grade_dd_imgonly": "확인",
+    "grade_dd_geogs": "확인",
+    "direct_method": 0.378,
+    "threshold_direct": 0.0073256262530924845,
+    "grade_direct": "확인"
+   },
+   "prior_error_inflow": {
+    "author": {
+     "m_minus_i": 0.002600000000000005,
+     "m_minus_g": -0.2753,
+     "method": 0.0461
+    },
+    "nadir": {
+     "m_minus_i": -0.036599999999999994,
+     "m_minus_g": -0.30210000000000004,
+     "method": 0.1646
+    },
+    "dd_imgonly": -0.0392,
+    "dd_geogs": -0.026800000000000046,
+    "threshold_dd_imgonly": 0.07727999999999996,
+    "threshold_dd_geogs": 0.07727999999999996,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "기준 안",
+    "direct_method": 0.1185,
+    "threshold_direct": 0.05464521205009636,
+    "grade_direct": "확인"
+   },
+   "missing_agreement_completeness": {
+    "author": {
+     "m_minus_i": 0.32719999999999994,
+     "m_minus_g": 0.21299999999999997,
+     "method": 0.695
+    },
+    "nadir": {
+     "m_minus_i": 0.5423,
+     "m_minus_g": 0.0353,
+     "method": 0.799
+    },
+    "dd_imgonly": 0.21510000000000007,
+    "dd_geogs": -0.17769999999999997,
+    "threshold_dd_imgonly": 0.12599999999999995,
+    "threshold_dd_geogs": 0.04647999999999985,
+    "grade_dd_imgonly": "가능, 근거 불완전",
+    "grade_dd_geogs": "확인",
+    "direct_method": 0.10400000000000009,
+    "threshold_direct": 0.03286632318955062,
+    "grade_direct": "확인"
+   },
+   "invisible_completeness": {
+    "author": {
+     "m_minus_i": 9.999999999999593e-05,
+     "m_minus_g": -0.01050000000000001,
+     "method": 0.0595
+    },
+    "nadir": {
+     "m_minus_i": 0.0207,
+     "m_minus_g": 0.0245,
+     "method": 0.0304
+    },
+    "dd_imgonly": 0.020600000000000004,
+    "dd_geogs": 0.03500000000000001,
+    "threshold_dd_imgonly": 0.010639999999999993,
+    "threshold_dd_geogs": 0.010360000000000005,
+    "grade_dd_imgonly": "가능, 근거 불완전",
+    "grade_dd_geogs": "확인",
+    "direct_method": -0.029099999999999997,
+    "threshold_direct": 0.007325626253092635,
+    "grade_direct": "확인"
+   },
+   "virtual_invisible": {
+    "author": {
+     "m_minus_i": 0.5072000000000001,
+     "m_minus_g": 0.5659000000000001,
+     "method": 0.6731
+    },
+    "nadir": {
+     "m_minus_i": 0.4426,
+     "m_minus_g": 0.354,
+     "method": 0.4767
+    },
+    "dd_imgonly": -0.0646000000000001,
+    "dd_geogs": -0.2119000000000001,
+    "threshold_dd_imgonly": 0.36596000000000006,
+    "threshold_dd_geogs": 0.36596000000000006,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "기준 안",
+    "direct_method": -0.19640000000000002,
+    "threshold_direct": 0.25877279764302896,
+    "grade_direct": "기준 안"
+   },
+   "inheritance": {
+    "author": {
+     "m_minus_i": 0.9962,
+     "m_minus_g": null,
+     "method": 0.9962
+    },
+    "nadir": {
+     "m_minus_i": 0.9643,
+     "m_minus_g": null,
+     "method": 0.9643
+    },
+    "dd_imgonly": -0.03189999999999993,
+    "dd_geogs": null,
+    "threshold_dd_imgonly": 0.05705064416814227,
+    "threshold_dd_geogs": 0.05705064416814227,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "값 없음",
+    "direct_method": -0.03189999999999993,
+    "threshold_direct": 0.040340897362354154,
+    "grade_direct": "기준 안"
+   },
+   "unseen_share": {
+    "author": 0.5351816296751402,
+    "nadir": 0.808801167345058
+   },
+   "what_changed": {
+    "nadir_views": 2,
+    "support_m2": [
+     1501.3125,
+     617.0
+    ],
+    "missing_m2": [
+     580.625,
+     1734.625
+    ],
+    "invisible_m2": [
+     1597.0625,
+     1556.4375
+    ]
+   }
+  },
+  "B0a3|B0n2": {
+   "overall_completeness": {
+    "author": {
+     "m_minus_i": 0.10504999999999998,
+     "m_minus_g": 0.07785,
+     "method": 0.26875
+    },
+    "nadir": {
+     "m_minus_i": 0.2204,
+     "m_minus_g": 0.14640000000000003,
+     "method": 0.3945
+    },
+    "dd_imgonly": 0.11535000000000004,
+    "dd_geogs": 0.06855000000000003,
+    "threshold_dd_imgonly": 0.05656000000000006,
+    "threshold_dd_geogs": 0.010359999999999791,
+    "grade_dd_imgonly": "확인",
+    "grade_dd_geogs": "확인",
+    "direct_method": 0.12575000000000003,
+    "threshold_direct": 0.0073256262530924845,
+    "grade_direct": "확인"
+   },
+   "prior_error_inflow": {
+    "author": {
+     "m_minus_i": 0.14455,
+     "m_minus_g": -0.034999999999999976,
+     "method": 0.2625
+    },
+    "nadir": {
+     "m_minus_i": 0.0469,
+     "m_minus_g": -0.5052,
+     "method": 0.2448
+    },
+    "dd_imgonly": -0.09765000000000001,
+    "dd_geogs": -0.4702,
+    "threshold_dd_imgonly": 0.07727999999999996,
+    "threshold_dd_geogs": 0.07727999999999996,
+    "grade_dd_imgonly": "가능, 근거 불완전",
+    "grade_dd_geogs": "확인",
+    "direct_method": -0.01770000000000002,
+    "threshold_direct": 0.05464521205009636,
+    "grade_direct": "기준 안"
+   },
+   "missing_agreement_completeness": {
+    "author": {
+     "m_minus_i": 0.3158000000000001,
+     "m_minus_g": 0.06790000000000007,
+     "method": 0.6427
+    },
+    "nadir": {
+     "m_minus_i": 0.5225000000000001,
+     "m_minus_g": 0.11080000000000007,
+     "method": 0.546
+    },
+    "dd_imgonly": 0.2067,
+    "dd_geogs": 0.042899999999999994,
+    "threshold_dd_imgonly": 0.12599999999999995,
+    "threshold_dd_geogs": 0.04647999999999985,
+    "grade_dd_imgonly": "가능, 근거 불완전",
+    "grade_dd_geogs": "기준 안",
+    "direct_method": -0.09670000000000001,
+    "threshold_direct": 0.03286632318955062,
+    "grade_direct": "확인"
+   },
+   "invisible_completeness": {
+    "author": {
+     "m_minus_i": 0.017050000000000003,
+     "m_minus_g": -0.002449999999999994,
+     "method": 0.051250000000000004
+    },
+    "nadir": {
+     "m_minus_i": 0.007300000000000001,
+     "m_minus_g": -0.0049,
+     "method": 0.0094
+    },
+    "dd_imgonly": -0.009750000000000002,
+    "dd_geogs": -0.002450000000000006,
+    "threshold_dd_imgonly": 0.010639999999999993,
+    "threshold_dd_geogs": 0.010360000000000005,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "기준 안",
+    "direct_method": -0.041850000000000005,
+    "threshold_direct": 0.007325626253092635,
+    "grade_direct": "확인"
+   },
+   "virtual_invisible": {
+    "author": {
+     "m_minus_i": 0.3595,
+     "m_minus_g": 0.41905000000000003,
+     "method": 0.53425
+    },
+    "nadir": {
+     "m_minus_i": 0.7058,
+     "m_minus_g": 0.6439999999999999,
+     "method": 0.7817
+    },
+    "dd_imgonly": 0.3463,
+    "dd_geogs": 0.22494999999999987,
+    "threshold_dd_imgonly": 0.36596000000000006,
+    "threshold_dd_geogs": 0.36596000000000006,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "기준 안",
+    "direct_method": 0.24744999999999995,
+    "threshold_direct": 0.25877279764302896,
+    "grade_direct": "기준 안"
+   },
+   "inheritance": {
+    "author": {
+     "m_minus_i": 0.9621999999999999,
+     "m_minus_g": null,
+     "method": 0.9621999999999999
+    },
+    "nadir": {
+     "m_minus_i": 0.996,
+     "m_minus_g": null,
+     "method": 0.996
+    },
+    "dd_imgonly": 0.03380000000000005,
+    "dd_geogs": null,
+    "threshold_dd_imgonly": 0.05705064416814227,
+    "threshold_dd_geogs": 0.05705064416814227,
+    "grade_dd_imgonly": "기준 안",
+    "grade_dd_geogs": "값 없음",
+    "direct_method": 0.03380000000000005,
+    "threshold_direct": 0.040340897362354154,
+    "grade_direct": "기준 안"
+   },
+   "unseen_share": {
+    "author": 0.7106213040473082,
+    "nadir": 0.8866139313416789
+   },
+   "what_changed": {
+    "nadir_views": 1,
+    "support_m2": [
+     765.875,
+     126.1875
+    ],
+    "missing_m2": [
+     1138.75,
+     1207.125
+    ],
+    "invisible_m2": [
+     1752.8125,
+     2400.5625
+    ]
+   }
+  }
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,1453 @@
+{
+ "rows": {
+  "B0_b10/LoD2": {
+   "status": "PASS",
+   "metrics": {
+    "prior_error_inflow": {
+     "nojudge": 0.1475,
+     "n": 32880,
+     "method_seeds": [
+      0.121,
+      0.1186
+     ],
+     "method_mean": 0.11979999999999999,
+     "imgonly": [
+      0.1329
+     ],
+     "trust": 0.4283,
+     "diff": 0.027700000000000002,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.004751757569573597,
+      "three_points": 9.124087591240875e-05
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐)",
+     "where": 0.08978930307941654
+    },
+    "past_shape": {
+     "nojudge": 0.1421,
+     "n": 4468,
+     "method_seeds": [
+      0.1144,
+      0.1256
+     ],
+     "method_mean": 0.12,
+     "imgonly": [
+      0.0
+     ],
+     "trust": null,
+     "diff": 0.02210000000000001,
+     "threshold": 0.022174868658010105,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.022174868658010105,
+      "three_points": 0.0006714413607878246
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "obs_inflow": {
+     "nojudge": 0.205,
+     "n": 18858,
+     "method_seeds": [
+      0.21,
+      0.2132
+     ],
+     "method_mean": 0.2116,
+     "imgonly": [
+      0.2104
+     ],
+     "trust": 0.1271,
+     "diff": -0.0066000000000000225,
+     "threshold": 0.015746732994497574,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.006335676759431482,
+      "three_points": 0.0001590836780146357
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": 0.07810650887573989
+    },
+    "obs_within_inflow": {
+     "nojudge": 0.1406,
+     "n": 384,
+     "method_seeds": [
+      0.1484,
+      0.1615
+     ],
+     "method_mean": 0.15495,
+     "imgonly": [
+      0.1562
+     ],
+     "trust": 0.4635,
+     "diff": -0.014350000000000002,
+     "threshold": 0.02593667673392256,
+     "threshold_parts": {
+      "unit": 0.02593667673392256,
+      "three_points": 0.0078125
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": -0.04650785934208395
+    },
+    "inheritance": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.040340897362354154,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "supported": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.03809801044674118,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "unseen_past_shape": {
+     "nojudge": null,
+     "n": 0,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": null,
+     "threshold_parts": {},
+     "reading": "값 없음",
+     "where": null
+    },
+    "missing_agreement_completeness": {
+     "nojudge": 0.9455,
+     "n": 12433,
+     "method_seeds": [
+      0.9438,
+      0.9272
+     ],
+     "method_mean": 0.9355,
+     "imgonly": [
+      0.9228
+     ],
+     "trust": 0.2932,
+     "diff": 0.010000000000000009,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.03286632318955062,
+      "three_points": 0.00024129333226091852
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": -0.015569048731122543
+    },
+    "missing_prior_error_inflow": {
+     "nojudge": 0.2262,
+     "n": 168,
+     "method_seeds": [
+      0.1667,
+      0.0833
+     ],
+     "method_mean": 0.125,
+     "imgonly": [
+      0.0417
+     ],
+     "trust": 0.0893,
+     "diff": 0.10120000000000001,
+     "threshold": 0.16512357554268253,
+     "threshold_parts": {
+      "unit": 0.16512357554268253,
+      "three_points": 0.017857142857142856
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    }
+   },
+   "fates": {
+    "nojudge": {
+     "seeds": 6421,
+     "shares": {
+      "removed": 0.7589,
+      "old_place": 0.0843,
+      "current_surface": 0.0433,
+      "neither": 0.1135
+     },
+     "counts": {
+      "removed": 4873,
+      "old_place": 541,
+      "current_surface": 278,
+      "neither": 729
+     }
+    },
+    "seeds": [
+     {
+      "seeds": 6421,
+      "shares": {
+       "removed": 0.7831,
+       "old_place": 0.0704,
+       "current_surface": 0.0536,
+       "neither": 0.093
+      },
+      "counts": {
+       "removed": 5028,
+       "old_place": 452,
+       "current_surface": 344,
+       "neither": 597
+      }
+     },
+     {
+      "seeds": 6421,
+      "shares": {
+       "removed": 0.7474,
+       "old_place": 0.0751,
+       "current_surface": 0.0589,
+       "neither": 0.1187
+      },
+      "counts": {
+       "removed": 4799,
+       "old_place": 482,
+       "current_surface": 378,
+       "neither": 762
+      }
+     }
+    ],
+    "trust": null
+   }
+  },
+  "B0_b10/ALS": {
+   "status": "PASS",
+   "metrics": {
+    "prior_error_inflow": {
+     "nojudge": 0.4122,
+     "n": 262,
+     "method_seeds": [
+      0.4771,
+      0.3779
+     ],
+     "method_mean": 0.4275,
+     "imgonly": [
+      0.2214
+     ],
+     "trust": 0.542,
+     "diff": -0.01529999999999998,
+     "threshold": 0.19640597954237543,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.19640597954237543,
+      "three_points": 0.011450381679389313
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "past_shape": {
+     "nojudge": 0.1429,
+     "n": 42,
+     "method_seeds": [
+      0.1667,
+      0.0476
+     ],
+     "method_mean": 0.10715,
+     "imgonly": [
+      0.0
+     ],
+     "trust": 0.2143,
+     "diff": 0.035750000000000004,
+     "threshold": 0.23580596939008983,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.23580596939008983,
+      "three_points": 0.07142857142857142
+     },
+     "reading": "표본 부족",
+     "where": null
+    },
+    "obs_inflow": {
+     "nojudge": 0.2985,
+     "n": 4231,
+     "method_seeds": [
+      0.3552,
+      0.3581
+     ],
+     "method_mean": 0.35665,
+     "imgonly": [
+      0.3429
+     ],
+     "trust": 0.1302,
+     "diff": -0.058150000000000035,
+     "threshold": 0.015746732994497574,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.005741707063234683,
+      "three_points": 0.0007090522335145356
+     },
+     "reading": "이 자리에서는 판정이 손해였다(끄니 좋아짐)",
+     "where": 0.25678957827334964
+    },
+    "obs_within_inflow": {
+     "nojudge": 0.4969,
+     "n": 489,
+     "method_seeds": [
+      0.4928,
+      0.4969
+     ],
+     "method_mean": 0.49485,
+     "imgonly": [
+      0.5153
+     ],
+     "trust": 0.319,
+     "diff": 0.0020499999999999963,
+     "threshold": 0.008117585848021549,
+     "threshold_parts": {
+      "unit": 0.008117585848021549,
+      "three_points": 0.006134969325153374
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": -0.011657662780779052
+    },
+    "inheritance": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.040340897362354154,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "supported": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.03809801044674118,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "unseen_past_shape": {
+     "nojudge": 0.0,
+     "n": 2,
+     "method_seeds": [
+      0.0,
+      0.0
+     ],
+     "method_mean": 0.0,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": 0.0,
+     "threshold": 1.5,
+     "threshold_parts": {
+      "unit": 0.0,
+      "three_points": 1.5
+     },
+     "reading": "표본 부족",
+     "where": null
+    },
+    "missing_agreement_completeness": {
+     "nojudge": 0.9492,
+     "n": 177,
+     "method_seeds": [
+      0.9322,
+      0.8475
+     ],
+     "method_mean": 0.88985,
+     "imgonly": [
+      0.7966
+     ],
+     "trust": 0.9774,
+     "diff": 0.059350000000000014,
+     "threshold": 0.1676974442262016,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.1676974442262016,
+      "three_points": 0.01694915254237288
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "missing_prior_error_inflow": {
+     "nojudge": null,
+     "n": 0,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": null,
+     "threshold_parts": {},
+     "reading": "값 없음",
+     "where": null
+    }
+   },
+   "fates": {
+    "nojudge": {
+     "seeds": 76,
+     "shares": {
+      "removed": 0.6316,
+      "old_place": 0.2105,
+      "current_surface": 0.0263,
+      "neither": 0.1316
+     },
+     "counts": {
+      "removed": 48,
+      "old_place": 16,
+      "current_surface": 2,
+      "neither": 10
+     }
+    },
+    "seeds": [
+     null,
+     null
+    ],
+    "trust": null
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "status": "PASS",
+   "metrics": {
+    "prior_error_inflow": {
+     "nojudge": 0.0799,
+     "n": 119763,
+     "method_seeds": [
+      0.0654,
+      0.0708
+     ],
+     "method_mean": 0.0681,
+     "imgonly": [
+      0.0727,
+      0.0702
+     ],
+     "trust": 0.0867,
+     "diff": 0.011800000000000005,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.010691454531540601,
+      "three_points": 2.5049472708599484e-05
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": "가르지 못함"
+    },
+    "past_shape": {
+     "nojudge": 0.0161,
+     "n": 16846,
+     "method_seeds": [
+      0.0094,
+      0.0086
+     ],
+     "method_mean": 0.009000000000000001,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": null,
+     "diff": 0.007099999999999999,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.0015839191898578669,
+      "three_points": 0.00017808381811706042
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "obs_inflow": {
+     "nojudge": 0.5503,
+     "n": 12410,
+     "method_seeds": [
+      0.6193,
+      0.6058
+     ],
+     "method_mean": 0.6125499999999999,
+     "imgonly": [
+      0.5857,
+      0.5917
+     ],
+     "trust": 0.2409,
+     "diff": -0.062249999999999917,
+     "threshold": 0.026728636328851408,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.026728636328851408,
+      "three_points": 0.00024174053182917003
+     },
+     "reading": "이 자리에서는 판정이 손해였다(끄니 좋아짐)",
+     "where": 0.16749630028252369
+    },
+    "obs_within_inflow": {
+     "nojudge": 0.6744,
+     "n": 1594,
+     "method_seeds": [
+      0.6625,
+      0.655
+     ],
+     "method_mean": 0.65875,
+     "imgonly": [
+      0.5721,
+      0.6023
+     ],
+     "trust": 0.2729,
+     "diff": 0.015650000000000053,
+     "threshold": 0.0148492424049174,
+     "threshold_parts": {
+      "unit": 0.0148492424049174,
+      "three_points": 0.0018820577164366374
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐) — 가능, 근거 불완전(표본 1만 미만)",
+     "where": -0.04055980303226656
+    },
+    "inheritance": {
+     "nojudge": 0.7948,
+     "n": 15366,
+     "method_seeds": [
+      0.8108,
+      0.7758
+     ],
+     "method_mean": 0.7933,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": null,
+     "diff": 0.0014999999999999458,
+     "threshold": 0.0692964645562815,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.0692964645562815,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "supported": {
+     "nojudge": 0.8037,
+     "n": 15366,
+     "method_seeds": [
+      0.8205,
+      0.7873
+     ],
+     "method_mean": 0.8039000000000001,
+     "imgonly": [
+      0.0223,
+      0.0212
+     ],
+     "trust": null,
+     "diff": -0.000200000000000089,
+     "threshold": 0.06573264637910146,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118,
+      "unit": 0.06573264637910146,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "unseen_past_shape": {
+     "nojudge": 0.0625,
+     "n": 2991,
+     "method_seeds": [
+      0.0649,
+      0.0863
+     ],
+     "method_mean": 0.0756,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": null,
+     "diff": -0.0131,
+     "threshold": 0.04236983832869792,
+     "threshold_parts": {
+      "unit": 0.04236983832869792,
+      "three_points": 0.0010030090270812437
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "missing_agreement_completeness": {
+     "nojudge": 0.9623,
+     "n": 6314,
+     "method_seeds": [
+      0.962,
+      0.9671
+     ],
+     "method_mean": 0.96455,
+     "imgonly": [
+      0.908,
+      0.9294
+     ],
+     "trust": 0.9379,
+     "diff": -0.0022499999999999742,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.010097484835343885,
+      "three_points": 0.0004751346214760849
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "missing_prior_error_inflow": {
+     "nojudge": 0.2642,
+     "n": 371,
+     "method_seeds": [
+      0.2183,
+      0.1968
+     ],
+     "method_mean": 0.20755,
+     "imgonly": [
+      0.1887,
+      0.1968
+     ],
+     "trust": 0.3423,
+     "diff": 0.05664999999999998,
+     "threshold": 0.04256782822743014,
+     "threshold_parts": {
+      "unit": 0.04256782822743014,
+      "three_points": 0.008086253369272238
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐)",
+     "where": 0.420408163265306
+    }
+   },
+   "fates": {
+    "nojudge": {
+     "seeds": 21741,
+     "shares": {
+      "removed": 0.9351,
+      "old_place": 0.0305,
+      "current_surface": 0.0063,
+      "neither": 0.028
+     },
+     "counts": {
+      "removed": 20331,
+      "old_place": 664,
+      "current_surface": 137,
+      "neither": 609
+     }
+    },
+    "seeds": [
+     {
+      "seeds": 21741,
+      "shares": {
+       "removed": 0.942,
+       "old_place": 0.0269,
+       "current_surface": 0.0075,
+       "neither": 0.0236
+      },
+      "counts": {
+       "removed": 20480,
+       "old_place": 585,
+       "current_surface": 162,
+       "neither": 514
+      }
+     },
+     {
+      "seeds": 21741,
+      "shares": {
+       "removed": 0.9416,
+       "old_place": 0.0276,
+       "current_surface": 0.0071,
+       "neither": 0.0237
+      },
+      "counts": {
+       "removed": 20471,
+       "old_place": 600,
+       "current_surface": 154,
+       "neither": 516
+      }
+     }
+    ],
+    "trust": null
+   }
+  },
+  "B173nb_b10/ALS": {
+   "status": "PASS",
+   "metrics": {
+    "prior_error_inflow": {
+     "nojudge": 0.0015,
+     "n": 96117,
+     "method_seeds": [
+      0.0002,
+      0.0003
+     ],
+     "method_mean": 0.00025,
+     "imgonly": [
+      0.0004,
+      0.0007
+     ],
+     "trust": 0.1794,
+     "diff": 0.00125,
+     "threshold": 0.01635593103433736,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.0001979898987322332,
+      "three_points": 3.1211960423234184e-05
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": 0.006977393245883338
+    },
+    "past_shape": {
+     "nojudge": 0.0078,
+     "n": 15195,
+     "method_seeds": [
+      0.0013,
+      0.0011
+     ],
+     "method_mean": 0.0012000000000000001,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": 0.013,
+     "diff": 0.0066,
+     "threshold": 0.013130178978216557,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.00039597979746446634,
+      "three_points": 0.00019743336623889436
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "obs_inflow": {
+     "nojudge": 0.7825,
+     "n": 7881,
+     "method_seeds": [
+      0.843,
+      0.8428
+     ],
+     "method_mean": 0.8429,
+     "imgonly": [
+      0.8501,
+      0.8606
+     ],
+     "trust": 0.4917,
+     "diff": -0.06040000000000001,
+     "threshold": 0.015746732994497574,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.0003959797974644229,
+      "three_points": 0.00038066235249333843
+     },
+     "reading": "이 자리에서는 판정이 손해였다(끄니 좋아짐)",
+     "where": 0.1719817767653759
+    },
+    "obs_within_inflow": {
+     "nojudge": 0.8778,
+     "n": 3388,
+     "method_seeds": [
+      0.892,
+      0.8884
+     ],
+     "method_mean": 0.8902,
+     "imgonly": [
+      0.8633,
+      0.8639
+     ],
+     "trust": 0.526,
+     "diff": -0.012399999999999967,
+     "threshold": 0.007127636354360492,
+     "threshold_parts": {
+      "unit": 0.007127636354360492,
+      "three_points": 0.0008854781582054309
+     },
+     "reading": "이 자리에서는 판정이 손해였다(끄니 좋아짐) — 가능, 근거 불완전(표본 1만 미만)",
+     "where": 0.034047226798462296
+    },
+    "inheritance": {
+     "nojudge": 0.0532,
+     "n": 15366,
+     "method_seeds": [
+      0.0501,
+      0.0538
+     ],
+     "method_mean": 0.051949999999999996,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": 0.0417,
+     "diff": 0.0012500000000000011,
+     "threshold": 0.040340897362354154,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154,
+      "unit": 0.007325626253092635,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "supported": {
+     "nojudge": 0.0722,
+     "n": 15366,
+     "method_seeds": [
+      0.0722,
+      0.0726
+     ],
+     "method_mean": 0.07239999999999999,
+     "imgonly": [
+      null,
+      null
+     ],
+     "trust": 0.0526,
+     "diff": -0.00019999999999999185,
+     "threshold": 0.03809801044674118,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118,
+      "unit": 0.0007919595949289283,
+      "three_points": 0.0001952362358453729
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": null
+    },
+    "unseen_past_shape": {
+     "nojudge": 0.009,
+     "n": 2991,
+     "method_seeds": [
+      0.002,
+      0.002
+     ],
+     "method_mean": 0.002,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": 0.0214,
+     "diff": 0.006999999999999999,
+     "threshold": 0.0010030090270812437,
+     "threshold_parts": {
+      "unit": 0.0,
+      "three_points": 0.0010030090270812437
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐)",
+     "where": 0.3608247422680412
+    },
+    "missing_agreement_completeness": {
+     "nojudge": 0.0,
+     "n": 111,
+     "method_seeds": [
+      0.0,
+      0.0
+     ],
+     "method_mean": 0.0,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": 0.6306,
+     "diff": 0.0,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": 0.0
+    },
+    "missing_prior_error_inflow": {
+     "nojudge": 0.0,
+     "n": 53,
+     "method_seeds": [
+      0.0,
+      0.0
+     ],
+     "method_mean": 0.0,
+     "imgonly": [
+      0.0,
+      0.0
+     ],
+     "trust": 0.3019,
+     "diff": 0.0,
+     "threshold": 0.05660377358490566,
+     "threshold_parts": {
+      "unit": 0.0,
+      "three_points": 0.05660377358490566
+     },
+     "reading": "표본 부족",
+     "where": 0.0
+    }
+   },
+   "fates": {
+    "nojudge": {
+     "seeds": 16405,
+     "shares": {
+      "removed": 0.9821,
+      "old_place": 0.0069,
+      "current_surface": 0.0038,
+      "neither": 0.0072
+     },
+     "counts": {
+      "removed": 16111,
+      "old_place": 113,
+      "current_surface": 63,
+      "neither": 118
+     }
+    },
+    "seeds": [
+     null,
+     null
+    ],
+    "trust": null
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "status": "PASS",
+   "metrics": {
+    "prior_error_inflow": {
+     "nojudge": 0.2545,
+     "n": 54345,
+     "method_seeds": [
+      0.0851,
+      0.0676
+     ],
+     "method_mean": 0.07635,
+     "imgonly": [
+      0.1388
+     ],
+     "trust": 0.432,
+     "diff": 0.17815,
+     "threshold": 0.03464823227814083,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.03464823227814083,
+      "three_points": 5.520287054926856e-05
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐)",
+     "where": 0.5009138197666244
+    },
+    "past_shape": {
+     "nojudge": 0.2329,
+     "n": 11518,
+     "method_seeds": [
+      0.0421,
+      0.0289
+     ],
+     "method_mean": 0.0355,
+     "imgonly": [
+      0.0
+     ],
+     "trust": null,
+     "diff": 0.1974,
+     "threshold": 0.026134666632654794,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.026134666632654794,
+      "three_points": 0.0002604618857440528
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐)",
+     "where": null
+    },
+    "obs_inflow": {
+     "nojudge": 0.0809,
+     "n": 31764,
+     "method_seeds": [
+      0.1995,
+      0.2057
+     ],
+     "method_mean": 0.2026,
+     "imgonly": [
+      0.1996
+     ],
+     "trust": 0.0963,
+     "diff": -0.1217,
+     "threshold": 0.015746732994497574,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.01227537372139843,
+      "three_points": 9.444654325651681e-05
+     },
+     "reading": "이 자리에서는 판정이 손해였다(끄니 좋아짐)",
+     "where": 1.1448730009407337
+    },
+    "obs_within_inflow": {
+     "nojudge": 0.1447,
+     "n": 615,
+     "method_seeds": [
+      0.1073,
+      0.1057
+     ],
+     "method_mean": 0.10650000000000001,
+     "imgonly": [
+      0.122
+     ],
+     "trust": 0.2228,
+     "diff": 0.038199999999999984,
+     "threshold": 0.004878048780487805,
+     "threshold_parts": {
+      "unit": 0.003167838379715741,
+      "three_points": 0.004878048780487805
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐) — 가능, 근거 불완전(표본 1만 미만)",
+     "where": 0.32846087704213234
+    },
+    "inheritance": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.040340897362354154,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "supported": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.03809801044674118,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "unseen_past_shape": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": null,
+     "threshold_parts": {},
+     "reading": "값 없음",
+     "where": null
+    },
+    "missing_agreement_completeness": {
+     "nojudge": 0.7374,
+     "n": 712,
+     "method_seeds": [
+      0.4888,
+      0.5267
+     ],
+     "method_mean": 0.5077499999999999,
+     "imgonly": [
+      0.4593
+     ],
+     "trust": 0.7191,
+     "diff": 0.22965000000000013,
+     "threshold": 0.07503817161951629,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.07503817161951629,
+      "three_points": 0.004213483146067416
+     },
+     "reading": "이 자리에서는 판정이 손해였다(끄니 좋아짐)",
+     "where": 1.0865862313697663
+    },
+    "missing_prior_error_inflow": {
+     "nojudge": 0.392,
+     "n": 852,
+     "method_seeds": [
+      0.0211,
+      0.0223
+     ],
+     "method_mean": 0.0217,
+     "imgonly": [
+      0.0082
+     ],
+     "trust": 0.0869,
+     "diff": 0.3703,
+     "threshold": 0.0035211267605633804,
+     "threshold_parts": {
+      "unit": 0.0023758787847867986,
+      "three_points": 0.0035211267605633804
+     },
+     "reading": "유효성 판정이 이 자리에서 일했다(끄니 나빠짐)",
+     "where": 5.6794478527607355
+    }
+   },
+   "fates": {
+    "nojudge": {
+     "seeds": 11518,
+     "shares": {
+      "removed": 0.5748,
+      "old_place": 0.1285,
+      "current_surface": 0.0544,
+      "neither": 0.2422
+     },
+     "counts": {
+      "removed": 6621,
+      "old_place": 1480,
+      "current_surface": 627,
+      "neither": 2790
+     }
+    },
+    "seeds": [
+     {
+      "seeds": 11518,
+      "shares": {
+       "removed": 0.9292,
+       "old_place": 0.0119,
+       "current_surface": 0.019,
+       "neither": 0.0399
+      },
+      "counts": {
+       "removed": 10703,
+       "old_place": 137,
+       "current_surface": 219,
+       "neither": 459
+      }
+     },
+     {
+      "seeds": 11518,
+      "shares": {
+       "removed": 0.9427,
+       "old_place": 0.011,
+       "current_surface": 0.0152,
+       "neither": 0.0311
+      },
+      "counts": {
+       "removed": 10858,
+       "old_place": 127,
+       "current_surface": 175,
+       "neither": 358
+      }
+     }
+    ],
+    "trust": null
+   }
+  },
+  "R1rep_b10/ALS": {
+   "status": "PASS",
+   "metrics": {
+    "prior_error_inflow": {
+     "nojudge": 0.2378,
+     "n": 555,
+     "method_seeds": [
+      0.2703,
+      0.227
+     ],
+     "method_mean": 0.24864999999999998,
+     "imgonly": [
+      0.2234
+     ],
+     "trust": 0.4757,
+     "diff": -0.01084999999999997,
+     "threshold": 0.08572962615105696,
+     "threshold_parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.08572962615105696,
+      "three_points": 0.005405405405405406
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": -0.047786831094472446
+    },
+    "past_shape": {
+     "nojudge": 0.2967,
+     "n": 91,
+     "method_seeds": [
+      0.0989,
+      0.1319
+     ],
+     "method_mean": 0.1154,
+     "imgonly": [
+      0.0
+     ],
+     "trust": 0.2527,
+     "diff": 0.18130000000000002,
+     "threshold": 0.06533666658163695,
+     "threshold_parts": {
+      "pooled": 0.013130178978216557,
+      "unit": 0.06533666658163695,
+      "three_points": 0.03296703296703297
+     },
+     "reading": "표본 부족",
+     "where": 1.3204661325564462
+    },
+    "obs_inflow": {
+     "nojudge": 0.3484,
+     "n": 15581,
+     "method_seeds": [
+      0.414,
+      0.4093
+     ],
+     "method_mean": 0.41164999999999996,
+     "imgonly": [
+      0.4527
+     ],
+     "trust": 0.073,
+     "diff": -0.06324999999999997,
+     "threshold": 0.015746732994497574,
+     "threshold_parts": {
+      "pooled": 0.015746732994497574,
+      "unit": 0.00930552524041493,
+      "three_points": 0.00019254219883191065
+     },
+     "reading": "이 자리에서는 판정이 손해였다(끄니 좋아짐)",
+     "where": 0.18677100250996598
+    },
+    "obs_within_inflow": {
+     "nojudge": 0.3944,
+     "n": 1506,
+     "method_seeds": [
+      0.427,
+      0.4024
+     ],
+     "method_mean": 0.41469999999999996,
+     "imgonly": [
+      0.425
+     ],
+     "trust": 0.3074,
+     "diff": -0.020299999999999985,
+     "threshold": 0.048705515088129404,
+     "threshold_parts": {
+      "unit": 0.048705515088129404,
+      "three_points": 0.00199203187250996
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": 0.18918918918918914
+    },
+    "inheritance": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.040340897362354154,
+     "threshold_parts": {
+      "pooled": 0.040340897362354154
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "supported": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": 0.03809801044674118,
+     "threshold_parts": {
+      "pooled": 0.03809801044674118
+     },
+     "reading": "값 없음",
+     "where": null
+    },
+    "unseen_past_shape": {
+     "nojudge": null,
+     "n": null,
+     "method_seeds": [
+      null,
+      null
+     ],
+     "method_mean": null,
+     "imgonly": [
+      null
+     ],
+     "trust": null,
+     "diff": null,
+     "threshold": null,
+     "threshold_parts": {},
+     "reading": "값 없음",
+     "where": null
+    },
+    "missing_agreement_completeness": {
+     "nojudge": 0.329,
+     "n": 383,
+     "method_seeds": [
+      0.3211,
+      0.3133
+     ],
+     "method_mean": 0.31720000000000004,
+     "imgonly": [
+      0.3107
+     ],
+     "trust": 0.9191,
+     "diff": 0.011799999999999977,
+     "threshold": 0.03286632318955062,
+     "threshold_parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.015443212101114144,
+      "three_points": 0.007832898172323759
+     },
+     "reading": "이 자리에서는 판정 없이도 같았다",
+     "where": 0.019604585479315463
+    },
+    "missing_prior_error_inflow": {
+     "nojudge": 0.0,
+     "n": 30,
+     "method_seeds": [
+      0.0333,
+      0.0
+     ],
+     "method_mean": 0.01665,
+     "imgonly": [
+      0.0
+     ],
+     "trust": 0.8,
+     "diff": -0.01665,
+     "threshold": 0.1,
+     "threshold_parts": {
+      "unit": 0.06593063627783369,
+      "three_points": 0.1
+     },
+     "reading": "표본 부족",
+     "where": -0.021254866917725157
+    }
+   },
+   "fates": {
+    "nojudge": {
+     "seeds": 250,
+     "shares": {
+      "removed": 0.732,
+      "old_place": 0.152,
+      "current_surface": 0.004,
+      "neither": 0.112
+     },
+     "counts": {
+      "removed": 183,
+      "old_place": 38,
+      "current_surface": 1,
+      "neither": 28
+     }
+    },
+    "seeds": [
+     {
+      "seeds": 250,
+      "shares": {
+       "removed": 0.832,
+       "old_place": 0.1,
+       "current_surface": 0.0,
+       "neither": 0.068
+      },
+      "counts": {
+       "removed": 208,
+       "old_place": 25,
+       "current_surface": 0,
+       "neither": 17
+      }
+     },
+     {
+      "seeds": 250,
+      "shares": {
+       "removed": 0.824,
+       "old_place": 0.096,
+       "current_surface": 0.0,
+       "neither": 0.08
+      },
+      "counts": {
+       "removed": 206,
+       "old_place": 24,
+       "current_surface": 0,
+       "neither": 20
+      }
+     }
+    ],
+    "trust": {
+     "seeds": 250,
+     "shares": {
+      "removed": 0.76,
+      "old_place": 0.116,
+      "current_surface": 0.004,
+      "neither": 0.12
+     },
+     "counts": {
+      "removed": 190,
+      "old_place": 29,
+      "current_surface": 1,
+      "neither": 30
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

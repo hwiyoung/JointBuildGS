@@ -1,0 +1,59 @@
+--- a/cuda_rasterizer/rasterizer_impl.cu	2026-10-15 01:10:18.125541967 +0900
++++ b/cuda_rasterizer/rasterizer_impl.cu	2026-10-15 01:10:18.150543438 +0900
+@@ -67,6 +67,35 @@
+ 
+ // Generates one key/value pair for all Gaussian / tile overlaps. 
+ // Run once per Gaussian (1:N mapping).
++// JBGS cull3 (PHD-MAIN-STAGE3-v1, user decision 2026-10-14): a kernel of its own, so that the preprocess and render kernels compile as
++// before. After preprocess, only a degenerate drawn Gaussian is left out of the tile lists: its 3-sigma disk crosses the camera plane
++// (compute_aabb's d = 9 (T2x^2 + T2y^2) - T2z^2 > 0, the case where the screen box diverges), its 3.4-sigma sphere lies wholly outside the
++// view frustum (the side planes of the symmetric pinhole, or wholly before near_n) and its screen centre lies more than 3 px outside the
++// image. cull1/cull2 also left out ordinary Gaussians just below the image that do paint the last rows (diagnosis 10-15 01:07); none of
++// the degenerate ones painted a pixel there. Its tile count is set to 0; its radius and every other preprocess output stay as they were.
++__global__ void jbgsCullTiles(int P, const float* orig_points, const glm::vec2* scales, const float scale_modifier, const float* viewmatrix,
++	const float tan_fovx, const float tan_fovy, const int W, const int H, const int* radii, const float2* points_xy, const float* transMats,
++	uint32_t* tiles_touched)
++{
++	auto idx = cg::this_grid().thread_rank();
++	if (idx >= P || radii[idx] <= 0)
++		return;
++	const float3 T2 = ((const float3*)transMats)[idx * 3 + 2];     // the third column of T, as preprocess stores it
++	if (!(9.0f * (T2.x * T2.x + T2.y * T2.y) - T2.z * T2.z > 0.0f))
++		return;
++	const float3 p_orig = { orig_points[3 * idx], orig_points[3 * idx + 1], orig_points[3 * idx + 2] };
++	const float3 p_view = transformPoint4x3(p_orig, viewmatrix);
++	const float smax = max(scales[idx].x, scales[idx].y) * scale_modifier;
++	const float rho = 3.4f * smax;
++	const bool out_x = (fabsf(p_view.x) - tan_fovx * p_view.z) * rsqrtf(1.0f + tan_fovx * tan_fovx) > rho;
++	const bool out_y = (fabsf(p_view.y) - tan_fovy * p_view.z) * rsqrtf(1.0f + tan_fovy * tan_fovy) > rho;
++	const bool out_near = p_view.z + rho < near_n;
++	const float2 c = points_xy[idx];
++	const bool centre_in = c.x >= -3.0f && c.x <= (float)W + 2.0f && c.y >= -3.0f && c.y <= (float)H + 2.0f;
++	if ((out_x || out_y || out_near) && !centre_in)
++		tiles_touched[idx] = 0;
++}
++
+ __global__ void duplicateWithKeys(
+ 	int P,
+ 	const float2* points_xy,
+@@ -86,6 +115,9 @@
+ 	{
+ 		// Find this Gaussian's offset in buffer for writing keys/values.
+ 		uint32_t off = (idx == 0) ? 0 : offsets[idx - 1];
++		// JBGS cull3: a Gaussian left out of the tile lists (tiles_touched 0, radius kept) writes no key
++		if (offsets[idx] == off)
++			return;
+ 		uint2 rect_min, rect_max;
+ 
+ 		getRect(points_xy[idx], radii[idx], rect_min, rect_max, grid);
+@@ -273,6 +305,10 @@
+ 		prefiltered
+ 	), debug)
+ 
++	// JBGS cull3: leave the degenerate Gaussians that touch no pixel out of the tile lists (jbgsCullTiles)
++	jbgsCullTiles << <(P + 255) / 256, 256 >> > (P, means3D, (glm::vec2*)scales, scale_modifier, viewmatrix, tan_fovx, tan_fovy, width, height,
++		radii, geomState.means2D, geomState.transMat, geomState.tiles_touched);
++
+ 	// Compute prefix sum over full list of touched tile counts by Gaussians
+ 	// E.g., [2, 3, 0, 2, 1] -> [2, 5, 5, 7, 8]
+ 	CHECK_CUDA(cub::DeviceScan::InclusiveSum(geomState.scanning_space, geomState.scan_size, geomState.tiles_touched, geomState.point_offsets, P), debug)

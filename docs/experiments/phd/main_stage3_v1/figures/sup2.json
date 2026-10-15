@@ -1,0 +1,54 @@
+{
+ "place": {
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "centre": [
+   126.34397997377678,
+   82.07199204297335,
+   -20.645004132279308
+  ],
+  "t": [
+   -0.9309399018867978,
+   0.3651724237603371
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25
+ },
+ "panels": {
+  "prop_ALS_s0": {
+   "segments": 833
+  },
+  "nojudge_ALS_s0": {
+   "segments": 704
+  },
+  "trust_ALS": {
+   "segments": 3258
+  }
+ },
+ "band": {
+  "prop_ALS_s0": {
+   "band_points": 591,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.0001,
+   "piece_gt_side": 0.9983
+  },
+  "nojudge_ALS_s0": {
+   "band_points": 591,
+   "band_inflow": 0.0,
+   "band_gt_side": 1.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.0015,
+   "piece_gt_side": 0.997
+  },
+  "trust_ALS": {
+   "band_points": 591,
+   "band_inflow": 0.0237,
+   "band_gt_side": 0.0,
+   "piece_points": 91433,
+   "piece_inflow": 0.1855,
+   "piece_gt_side": 0.0179
+  }
+ }
+}

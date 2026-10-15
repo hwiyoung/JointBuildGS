@@ -1,0 +1,625 @@
+{
+ "rule": "PHD-MAIN-STAGE3-v1: which Gaussians get the exploding screen size behind the GPU out-of-memory stops (the user's question of 10-14 22:0x,\n'why does it keep running out of memory'; jointbuildgs:dev, CPU only, numpy; reads a finished result's PLY and cameras.json; no training,\nno GPU). Diagnosis, not part of the order's measurements; nothing is changed.\nThe screen radius of every Gaussian in every camera of cameras.json is computed with the surfel rasterizer's preprocess rules, as the r15\nrecorder does (jbgs_oom_record.surfel_radii: near cut 0.2 m, T = S2W[:, [0, 1, 3]] @ world2pix, compute_aabb with cutoff 3, radius =\nceil(max(hx, hy, 3 * 0.7071)), 16-px tiles clipped to the image), here in float64 on the CPU from the PLY (2DGS layout: scale_0..1 as logs,\nrot_0..3 = (w, x, y, z), opacity as logit) and the 3DGS camera (znear 0.01, zfar 100, symmetric frustum). The denominator of compute_aabb is\nd = 9 (T2x^2 + T2y^2) - T2z^2: d -> 0 when the 3-sigma disk's rim reaches the camera plane (depth 0), d > 0 when the disk crosses it.\nFrustum test (added 10-14 22:3x): a Gaussian's pixel weight is opacity * exp(-r^2 / 2) and the rasterizer skips alpha < 1/255, so nothing\nbeyond r = 3.33 sigma can reach a pixel; a sphere of radius 3.4 * max scale around the centre lying wholly outside the view frustum (four\nside planes of the symmetric pinhole, and the near plane at 0.2 m) therefore touches no pixel. Counted for the huge ones, with the tiles that\nwould remain if those were left out of the tile lists only.\nPer camera: the Gaussians drawn, the tiles they touch (the sort buffers scale with this sum), the 'huge' ones (radius >= 10,000 px; the\nimage is 1,024 px wide) and what they are: camera depth, distance to the camera centre, the disk's 3-sigma radius (3 * max scale), the\nratio (3 * max scale) / depth, the sign of d, opacity, origin (prior = 1 / image = 0, from the dump when present).\n  python oomdiag_s3.py <site> <result> [<iteration>]     -> S3/meas8/oomdiag_<site>_<result>.json\nscientific_verdict: null.",
+ "site": "B0n13",
+ "result": "imgonly_s0",
+ "iteration": 30000,
+ "gaussians": 2592823,
+ "non_finite": 0,
+ "huge_in_any_view": 47410,
+ "huge_share": 0.018285089263709864,
+ "huge_nearest_camera_m": {
+  "q10": 30.91007317746596,
+  "q50": 42.111426422192295,
+  "q90": 60.18686593604037
+ },
+ "huge_disk_3sigma_m": {
+  "q10": 0.8228037696925553,
+  "q50": 1.9715474508991875,
+  "q90": 4.059946015118356
+ },
+ "all_disk_3sigma_m": {
+  "q50": 1.1824292259306128,
+  "q99": 6.687311227948732
+ },
+ "huge_z": {
+  "q10": -46.61616096496582,
+  "q50": -31.02635383605957,
+  "q90": -20.242106246948243
+ },
+ "camera_z": {
+  "min": -7.859769480659797,
+  "max": 32.875886141420516
+ },
+ "scene_z": {
+  "q1": -57.80025016784668,
+  "q99": -1.9903699350357136
+ },
+ "per_view": [
+  {
+   "view": "DJI_20241217101259_0002_D",
+   "drawn": 311288,
+   "tiles_sum": 9122964,
+   "radius_q99": 180.0,
+   "huge": 1328,
+   "huge_tiles": 3980947,
+   "huge_depth_m": {
+    "q10": 0.36847285317630707,
+    "q50": 1.3591111647002023,
+    "q90": 5.578636385929863
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 31.293833164505052,
+    "q50": 86.20158791375934,
+    "q90": 253.02304425619275
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 1.8264542061218043,
+    "q50": 4.282608749715695,
+    "q90": 12.19353911440786
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.3627914765044375,
+    "q50": 2.724376275834606,
+    "q90": 8.561316295624447
+   },
+   "huge_d_positive_share": 0.9962349397590361,
+   "huge_opacity_q50": 0.8841338623575468,
+   "huge_near_camera_5m": 1151,
+   "huge_big_disk": 177,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 1315,
+   "huge_inside_frustum": 13,
+   "tiles_if_outside_left_out": 3629563,
+   "drawn_outside_frustum": 2398,
+   "outside_with_centre_in_image": 356,
+   "huge_outside_with_centre_in_image": 1
+  },
+  {
+   "view": "DJI_20241217101327_0016_D",
+   "drawn": 1772297,
+   "tiles_sum": 16971985,
+   "radius_q99": 45.0,
+   "huge": 2209,
+   "huge_tiles": 6598325,
+   "huge_depth_m": {
+    "q10": 0.4180980868862378,
+    "q50": 1.3572870695706172,
+    "q90": 4.112539060112642
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 24.529565215180998,
+    "q50": 53.47935977490318,
+    "q90": 105.5035844454801
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 1.5477571722851862,
+    "q50": 3.0981674753973594,
+    "q90": 8.29883796996015
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.2500859785573897,
+    "q50": 2.149864333149852,
+    "q90": 5.872003174912673
+   },
+   "huge_d_positive_share": 0.9927569035762789,
+   "huge_opacity_q50": 0.48626860355774126,
+   "huge_near_camera_5m": 2046,
+   "huge_big_disk": 163,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 2175,
+   "huge_inside_frustum": 34,
+   "tiles_if_outside_left_out": 8018488,
+   "drawn_outside_frustum": 3451,
+   "outside_with_centre_in_image": 316,
+   "huge_outside_with_centre_in_image": 4
+  },
+  {
+   "view": "DJI_20241217084247_0007_D",
+   "drawn": 365794,
+   "tiles_sum": 4349298,
+   "radius_q99": 78.0,
+   "huge": 11,
+   "huge_tiles": 31854,
+   "huge_depth_m": {
+    "q10": 7.672279164820555,
+    "q50": 12.993996279582156,
+    "q90": 20.441685378607183
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 47.538623615880944,
+    "q50": 128.32860871613738,
+    "q90": 171.59386934545597
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 19.906639573358355,
+    "q50": 29.60235975009971,
+    "q90": 76.1795207249117
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.5573620299283797,
+    "q50": 2.3140508076108297,
+    "q90": 5.723835051617086
+   },
+   "huge_d_positive_share": 0.9090909090909091,
+   "huge_opacity_q50": 0.9952579001435562,
+   "huge_near_camera_5m": 1,
+   "huge_big_disk": 10,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 6,
+   "huge_inside_frustum": 5,
+   "tiles_if_outside_left_out": 4300451,
+   "drawn_outside_frustum": 4633,
+   "outside_with_centre_in_image": 60,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217084453_0070_D",
+   "drawn": 704085,
+   "tiles_sum": 6169512,
+   "radius_q99": 57.0,
+   "huge": 13,
+   "huge_tiles": 37376,
+   "huge_depth_m": {
+    "q10": 6.780608020532829,
+    "q50": 13.279792340140528,
+    "q90": 19.493603406594545
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 82.84626147306126,
+    "q50": 116.803210628868,
+    "q90": 164.72090471699178
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 19.809767291498694,
+    "q50": 25.46699009218009,
+    "q90": 81.14467171612806
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.510627451050517,
+    "q50": 2.273421981498861,
+    "q90": 5.198298633818381
+   },
+   "huge_d_positive_share": 0.9230769230769231,
+   "huge_opacity_q50": 0.9965177607579015,
+   "huge_near_camera_5m": 0,
+   "huge_big_disk": 13,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 12,
+   "huge_inside_frustum": 1,
+   "tiles_if_outside_left_out": 6102488,
+   "drawn_outside_frustum": 400,
+   "outside_with_centre_in_image": 75,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217100036_0024_D",
+   "drawn": 1218412,
+   "tiles_sum": 12795279,
+   "radius_q99": 60.0,
+   "huge": 24,
+   "huge_tiles": 72192,
+   "huge_depth_m": {
+    "q10": 1.6326144550309365,
+    "q50": 2.9926968208316325,
+    "q90": 8.108379453195926
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 14.486978229933047,
+    "q50": 49.27183277591374,
+    "q90": 70.49323573404789
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 1.8407800781278791,
+    "q50": 4.900465075767654,
+    "q90": 12.552924431208746
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.1156498419078644,
+    "q50": 1.3773642904934702,
+    "q90": 3.1513321454760512
+   },
+   "huge_d_positive_share": 0.9583333333333334,
+   "huge_opacity_q50": 0.8142755339364554,
+   "huge_near_camera_5m": 18,
+   "huge_big_disk": 6,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 23,
+   "huge_inside_frustum": 1,
+   "tiles_if_outside_left_out": 12665123,
+   "drawn_outside_frustum": 3418,
+   "outside_with_centre_in_image": 109,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217100038_0025_D",
+   "drawn": 1399392,
+   "tiles_sum": 13404972,
+   "radius_q99": 59.0,
+   "huge": 25,
+   "huge_tiles": 72803,
+   "huge_depth_m": {
+    "q10": 0.6934861095612603,
+    "q50": 0.7174054188917722,
+    "q90": 1.1262876009349783
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 13.868456437799189,
+    "q50": 13.911948005909384,
+    "q90": 14.12418897399289
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.8944108020050124,
+    "q50": 0.95501268063646,
+    "q90": 1.8300881514074345
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.2412758915078201,
+    "q50": 1.3383523759749665,
+    "q90": 1.6246097077425494
+   },
+   "huge_d_positive_share": 0.92,
+   "huge_opacity_q50": 0.08200139340587716,
+   "huge_near_camera_5m": 23,
+   "huge_big_disk": 2,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 23,
+   "huge_inside_frustum": 2,
+   "tiles_if_outside_left_out": 13320664,
+   "drawn_outside_frustum": 3169,
+   "outside_with_centre_in_image": 124,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217100040_0026_D",
+   "drawn": 1535666,
+   "tiles_sum": 12932808,
+   "radius_q99": 58.0,
+   "huge": 2,
+   "huge_tiles": 3619,
+   "huge_depth_m": {
+    "q10": 84.57652513502615,
+    "q50": 89.94696527217677,
+    "q90": 95.31740540932739
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 133.0699678919268,
+    "q50": 153.29108886388707,
+    "q90": 173.5122098358473
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 134.6162825414464,
+    "q50": 198.41210132382952,
+    "q90": 262.2079201062126
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.439096707227151,
+    "q50": 2.284773464293354,
+    "q90": 3.1304502213595566
+   },
+   "huge_d_positive_share": 0.0,
+   "huge_opacity_q50": 0.9149474492983212,
+   "huge_near_camera_5m": 0,
+   "huge_big_disk": 2,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 0,
+   "huge_inside_frustum": 2,
+   "tiles_if_outside_left_out": 12927838,
+   "drawn_outside_frustum": 2707,
+   "outside_with_centre_in_image": 196,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217100114_0043_D",
+   "drawn": 1391291,
+   "tiles_sum": 18403087,
+   "radius_q99": 70.0,
+   "huge": 1456,
+   "huge_tiles": 4372974,
+   "huge_depth_m": {
+    "q10": 0.30947986297443464,
+    "q50": 0.8530170916885158,
+    "q90": 2.9106163392546502
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 149.83442951258243,
+    "q50": 177.8025303801527,
+    "q90": 220.45577606024136
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 1.5081114511162945,
+    "q50": 3.001480036516029,
+    "q90": 7.776185818644985
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.6098773372135093,
+    "q50": 3.0693714187113805,
+    "q90": 8.934766049899073
+   },
+   "huge_d_positive_share": 0.9993131868131868,
+   "huge_opacity_q50": 0.32898497233595514,
+   "huge_near_camera_5m": 1406,
+   "huge_big_disk": 50,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 1452,
+   "huge_inside_frustum": 4,
+   "tiles_if_outside_left_out": 13911618,
+   "drawn_outside_frustum": 1814,
+   "outside_with_centre_in_image": 120,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217100329_0019_D",
+   "drawn": 644523,
+   "tiles_sum": 35613666,
+   "radius_q99": 32319.82000000053,
+   "huge": 9279,
+   "huge_tiles": 27905274,
+   "huge_depth_m": {
+    "q10": 0.24345137882893228,
+    "q50": 0.5629065127416126,
+    "q90": 1.5718738305411721
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 41.44881310102141,
+    "q50": 53.07846043423997,
+    "q90": 59.09460761424824
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.692652097746339,
+    "q50": 1.7246978106343533,
+    "q90": 3.3248648509702523
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.4382158819247246,
+    "q50": 2.4894167464469015,
+    "q90": 5.91076297650618
+   },
+   "huge_d_positive_share": 0.9997844595322772,
+   "huge_opacity_q50": 0.23947540165236444,
+   "huge_near_camera_5m": 9247,
+   "huge_big_disk": 32,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 9275,
+   "huge_inside_frustum": 4,
+   "tiles_if_outside_left_out": 6657508,
+   "drawn_outside_frustum": 10092,
+   "outside_with_centre_in_image": 58,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217100331_0020_D",
+   "drawn": 799176,
+   "tiles_sum": 40233112,
+   "radius_q99": 18818.25,
+   "huge": 10417,
+   "huge_tiles": 31332992,
+   "huge_depth_m": {
+    "q10": 0.26531520348355286,
+    "q50": 0.6936428963444428,
+    "q90": 1.9477529931236741
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 42.76826347847222,
+    "q50": 47.159140960750776,
+    "q90": 54.5181519536885
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.9204535626896132,
+    "q50": 2.0288192551242266,
+    "q90": 3.7269814335070692
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.3952376281711254,
+    "q50": 2.418106428799113,
+    "q90": 6.296478867483179
+   },
+   "huge_d_positive_share": 1.0,
+   "huge_opacity_q50": 0.46102579896861623,
+   "huge_near_camera_5m": 10366,
+   "huge_big_disk": 51,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 10416,
+   "huge_inside_frustum": 1,
+   "tiles_if_outside_left_out": 6660831,
+   "drawn_outside_frustum": 12269,
+   "outside_with_centre_in_image": 39,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217100333_0021_D",
+   "drawn": 742602,
+   "tiles_sum": 35937048,
+   "radius_q99": 25658.809999999823,
+   "huge": 9331,
+   "huge_tiles": 28064628,
+   "huge_depth_m": {
+    "q10": 0.260154624040112,
+    "q50": 0.6631894063784074,
+    "q90": 1.8912875123797548
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 42.1677566073964,
+    "q50": 52.71647351246948,
+    "q90": 61.83572424210268
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.8004489835685661,
+    "q50": 1.9114128591124422,
+    "q90": 3.5876720750985673
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.4224732694141136,
+    "q50": 2.372149703142916,
+    "q90": 5.527598821415815
+   },
+   "huge_d_positive_share": 0.9998928303504447,
+   "huge_opacity_q50": 0.25711963136643595,
+   "huge_near_camera_5m": 9303,
+   "huge_big_disk": 28,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 9327,
+   "huge_inside_frustum": 4,
+   "tiles_if_outside_left_out": 6988705,
+   "drawn_outside_frustum": 10600,
+   "outside_with_centre_in_image": 58,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217101128_0013_D",
+   "drawn": 570228,
+   "tiles_sum": 17279286,
+   "radius_q99": 117.0,
+   "huge": 3105,
+   "huge_tiles": 9339840,
+   "huge_depth_m": {
+    "q10": 0.25240510048405157,
+    "q50": 0.5946769843368287,
+    "q90": 1.9008823080921102
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 32.47612583649856,
+    "q50": 63.775310176248965,
+    "q90": 81.34674570113546
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.7415158670002217,
+    "q50": 1.715174593831751,
+    "q90": 4.3147853840280534
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.294455326889168,
+    "q50": 2.511706631984701,
+    "q90": 6.146029182031909
+   },
+   "huge_d_positive_share": 1.0,
+   "huge_opacity_q50": 0.7052420393950658,
+   "huge_near_camera_5m": 3072,
+   "huge_big_disk": 33,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 3104,
+   "huge_inside_frustum": 1,
+   "tiles_if_outside_left_out": 7372620,
+   "drawn_outside_frustum": 3670,
+   "outside_with_centre_in_image": 70,
+   "huge_outside_with_centre_in_image": 1
+  },
+  {
+   "view": "DJI_20241217101130_0014_D",
+   "drawn": 601009,
+   "tiles_sum": 24404032,
+   "radius_q99": 301.0,
+   "huge": 5436,
+   "huge_tiles": 16351488,
+   "huge_depth_m": {
+    "q10": 0.2532833603560576,
+    "q50": 0.7199104199639521,
+    "q90": 2.3983759913254303
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 26.59359513560672,
+    "q50": 73.28573310890727,
+    "q90": 80.75270128598848
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.8243592817204134,
+    "q50": 2.0040271501905575,
+    "q90": 3.851151661356451
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.1848617309806455,
+    "q50": 2.1759744158122705,
+    "q90": 6.514686654236797
+   },
+   "huge_d_positive_share": 1.0,
+   "huge_opacity_q50": 0.26085383193805134,
+   "huge_near_camera_5m": 5373,
+   "huge_big_disk": 63,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 5435,
+   "huge_inside_frustum": 1,
+   "tiles_if_outside_left_out": 6747148,
+   "drawn_outside_frustum": 6926,
+   "outside_with_centre_in_image": 41,
+   "huge_outside_with_centre_in_image": 1
+  },
+  {
+   "view": "DJI_20241217101134_0016_D",
+   "drawn": 606883,
+   "tiles_sum": 17490002,
+   "radius_q99": 107.0,
+   "huge": 3281,
+   "huge_tiles": 9869248,
+   "huge_depth_m": {
+    "q10": 0.25279121968966933,
+    "q50": 0.6325612375596137,
+    "q90": 2.26020775730251
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 31.35626695849405,
+    "q50": 76.35730219064338,
+    "q90": 85.84881153018405
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.8840604104258932,
+    "q50": 2.089059419226953,
+    "q90": 4.361116157217651
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.2229723695618981,
+    "q50": 2.548019181236461,
+    "q90": 7.969897551438992
+   },
+   "huge_d_positive_share": 0.9996952148735142,
+   "huge_opacity_q50": 0.3143457649823942,
+   "huge_near_camera_5m": 3235,
+   "huge_big_disk": 46,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 3279,
+   "huge_inside_frustum": 2,
+   "tiles_if_outside_left_out": 6887834,
+   "drawn_outside_frustum": 4243,
+   "outside_with_centre_in_image": 46,
+   "huge_outside_with_centre_in_image": 0
+  },
+  {
+   "view": "DJI_20241217101146_0022_D",
+   "drawn": 404516,
+   "tiles_sum": 16209579,
+   "radius_q99": 239.84999999997672,
+   "huge": 3101,
+   "huge_tiles": 9311634,
+   "huge_depth_m": {
+    "q10": 0.2736852171238837,
+    "q50": 0.7375017929226146,
+    "q90": 2.0507407756408185
+   },
+   "huge_distance_to_camera_m": {
+    "q10": 14.162037373408955,
+    "q50": 86.43877657562982,
+    "q90": 114.00399359028222
+   },
+   "huge_disk_3sigma_m": {
+    "q10": 0.8168698211652545,
+    "q50": 1.76515053120673,
+    "q90": 4.173831788025019
+   },
+   "huge_disk_over_depth": {
+    "q10": 1.2404771012971125,
+    "q50": 2.1144426059541765,
+    "q90": 5.64271012203988
+   },
+   "huge_d_positive_share": 0.9980651402773298,
+   "huge_opacity_q50": 0.7547516261341204,
+   "huge_near_camera_5m": 3063,
+   "huge_big_disk": 38,
+   "huge_prior_origin": 0,
+   "huge_outside_frustum": 3086,
+   "huge_inside_frustum": 15,
+   "tiles_if_outside_left_out": 5626672,
+   "drawn_outside_frustum": 3637,
+   "outside_with_centre_in_image": 57,
+   "huge_outside_with_centre_in_image": 0
+  }
+ ],
+ "scientific_verdict": null
+}

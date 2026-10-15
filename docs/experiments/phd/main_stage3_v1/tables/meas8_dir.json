@@ -1,0 +1,3036 @@
+{
+ "rule": "  python measure8_s3.py dir      8.1: the past-shape inflow split by the direction of the change. The thinned main rows (|s_W| >= 0.2 m) of\n                                 code 11 (and 13 apart) of every result's metric rows (cls = the four-way judgment of metrics_s1.spread);\n                                 '늘어난 곳' = the GT lies outside the prior surface (row value = GT - prior along the row's line direction\n                                 D > 0: roofs D = +z, LoD2 walls D = the LoD2 surface normal of lod2_surfaces.json; ALS walls D = the patch\n                                 normal flipped to z >= 0, so 'outside' is not guaranteed there: written apart), '줄어든 곳' = value < 0.\n                                 The share = (wrong side + both) / all, as the inflow.\n  python measure8_s3.py change   8.2 (LoD2 only): each LoD2 prior-error patch (code 11; 13 apart) is told by the ALS prior at the same GT points\n                                 (the ALS rows of the same unit, matched by the GT point): the ALS patch's v3 true label agree (|ALS - GT| <= the\n                                 ALS unit's tau) on the majority of the patch's matched points -> '표현 차이로 봄'; conflict -> '실제 변화로 봄';\n                                 fewer than half of the patch's points with an ALS row (walls etc.) -> '가르지 못함'. Per class: area, points,\n                                 inflow per result; and the 2 x 2 table with 8.1's direction.\nWrites S3/meas8/<kind>.json and .md. scientific_verdict: null.",
+ "rows": {
+  "B0_b10/LoD2": {
+   "prop_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.2002
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.227
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.038
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.0599
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.0102
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.0917
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.1846
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.192
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.1053
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.1905
+     }
+    }
+   },
+   "prop_LoD2_s1": {
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.1949
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2223
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0291
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.0598
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.007
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.0935
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.0769
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.08
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.1053
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.1905
+     }
+    }
+   },
+   "imgonly_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.2476
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2853
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0192
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.0446
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.0072
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.0685
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.0231
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.024
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.1053
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.1905
+     }
+    }
+   },
+   "trust_LoD2": {
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.2008
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2298
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0252
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.6164
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.1354
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.9239
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.1846
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.192
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.3158
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.5714
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.1891
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2138
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.04
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.6125
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.127
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.923
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.0077
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.008
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.3684
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0588
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.619
+     }
+    }
+   },
+   "abl_densj_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.1402
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.1562
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0429
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.0526
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.0059
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.0825
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.0615
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.064
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.2368
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.4286
+     }
+    }
+   },
+   "nojudge_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.2601
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2989
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0252
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.0608
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.0095
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.0936
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.2615
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.272
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.1053
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.1905
+     }
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "prop_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.4877
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.4877
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.3333
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.3333
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "prop_ALS_s1": {
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.3852
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.3852
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.2778
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.2778
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "imgonly_s0": {
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.2049
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.2049
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.4444
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.4444
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "trust_ALS": {
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.5533
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.5533
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.3889
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.3889
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "nojudge_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.4016
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.4016
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.5556
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.5556
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "prop_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4303
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4388
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.241
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0163
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0144
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.05
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1622
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1748
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2423
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2757
+     }
+    }
+   },
+   "prop_LoD2_s1": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4736
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4867
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.184
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0167
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0149
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0466
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1622
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1748
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2115
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2383
+     }
+    }
+   },
+   "imgonly_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4879
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.5
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.2199
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0168
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0149
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0497
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1622
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1748
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0217
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2383
+     }
+    }
+   },
+   "trust_LoD2": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.3884
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.3936
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.2736
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0632
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0583
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.1475
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.4685
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.5049
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2885
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0435
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.3411
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4766
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.486
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.2704
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0342
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0272
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.155
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.2613
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.2816
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.3769
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.4579
+     }
+    }
+   },
+   "abl_prop_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4569
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4674
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.2248
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0171
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.015
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0526
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.2072
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.2233
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2577
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.1304
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.285
+     }
+    }
+   },
+   "abl_prot_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4706
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4778
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.3111
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0169
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0146
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0575
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1622
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1748
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2231
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2523
+     }
+    }
+   },
+   "sens_e250_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4375
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4416
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.3469
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0161
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0143
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0478
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1712
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1845
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2423
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2757
+     }
+    }
+   },
+   "sens_e1000_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4466
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.454
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.2834
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.016
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0144
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0428
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1622
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.1748
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.2
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.2243
+     }
+    }
+   },
+   "sens_enone_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.4423
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.4494
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.285
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0167
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0143
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0587
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.2703
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.2913
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.4462
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.5234
+     }
+    }
+   },
+   "nojudge_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.5336
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.5419
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.3518
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0189
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0165
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.0604
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.1532
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.165
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.3115
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.3598
+     }
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "prop_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0149
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0149
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "prop_ALS_s1": {
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0192
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0192
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "imgonly_s0": {
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0299
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0299
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "trust_ALS": {
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0341
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0341
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.1808
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.1808
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.3137
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.3137
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "abl_band_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0117
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0117
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0001
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "nojudge_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0139
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0139
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.0014
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.0014
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "prop_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1075
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.1106
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0789
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0149
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0137
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.028
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0267
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0276
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "prop_LoD2_s1": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.0858
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.0869
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0748
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0109
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0102
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0178
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0281
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0291
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "imgonly_s0": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1791
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.1916
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0595
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0131
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0114
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0318
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0104
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0107
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "trust_LoD2": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.3846
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.3368
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.8389
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.3228
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.2992
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.5897
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.24
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.2193
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.8261
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.4716
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.4326
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.843
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.3081
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.2745
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.6888
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.1096
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0936
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.5652
+     }
+    }
+   },
+   "abl_band_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1653
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.1752
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0707
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0108
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0077
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0458
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0113
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.003
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0031
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "abl_lossj_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.2505
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.2518
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.2379
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0323
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.033
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0252
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0169
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0057
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0815
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0844
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "sens_trunc2_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.069
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.0672
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.087
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0118
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.01
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0318
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0113
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0089
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0092
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "sens_trunc8_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1224
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.1272
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0771
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.013
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.011
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0355
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0113
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 1.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0074
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0077
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   },
+   "nojudge_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.3186
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.3224
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.282
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.0541
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.0561
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.0308
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0056
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.5
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.4933
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.5107
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "prop_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2984
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2984
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.0725
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.0725
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0385
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0385
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "prop_ALS_s1": {
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2531
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2531
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.0435
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.0435
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "imgonly_s0": {
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2449
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2449
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.0725
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.0725
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "trust_ALS": {
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.5309
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.5309
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.087
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.7692
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.7692
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 1.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 1.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "abl_prop_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2407
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2407
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.1739
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.1739
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "abl_initx_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.216
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.216
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.087
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.087
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   },
+   "nojudge_ALS_s0": {
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.2551
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.2551
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.1159
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.1159
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
+   }
+  },
+  "B0a15/LoD2": {
+   "prop_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 7303,
+      "inflow": 0.0203
+     },
+     "roof": {
+      "points": 5803,
+      "inflow": 0.0233
+     },
+     "wall": {
+      "points": 1500,
+      "inflow": 0.0087
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 12965,
+      "inflow": 0.0559
+     },
+     "roof": {
+      "points": 5049,
+      "inflow": 0.0048
+     },
+     "wall": {
+      "points": 7916,
+      "inflow": 0.0886
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 1388,
+      "inflow": 0.1635
+     },
+     "roof": {
+      "points": 1270,
+      "inflow": 0.1677
+     },
+     "wall": {
+      "points": 118,
+      "inflow": 0.1186
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 237,
+      "inflow": 0.73
+     },
+     "roof": {
+      "points": 5,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 232,
+      "inflow": 0.7457
+     }
+    }
+   },
+   "abl_prop_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 7303,
+      "inflow": 0.027
+     },
+     "roof": {
+      "points": 5803,
+      "inflow": 0.031
+     },
+     "wall": {
+      "points": 1500,
+      "inflow": 0.0113
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 12965,
+      "inflow": 0.0551
+     },
+     "roof": {
+      "points": 5049,
+      "inflow": 0.0051
+     },
+     "wall": {
+      "points": 7916,
+      "inflow": 0.0869
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 1388,
+      "inflow": 0.2666
+     },
+     "roof": {
+      "points": 1270,
+      "inflow": 0.2811
+     },
+     "wall": {
+      "points": 118,
+      "inflow": 0.1102
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 237,
+      "inflow": 0.6709
+     },
+     "roof": {
+      "points": 5,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 232,
+      "inflow": 0.6853
+     }
+    }
+   },
+   "abl_prot_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 7303,
+      "inflow": 0.0203
+     },
+     "roof": {
+      "points": 5803,
+      "inflow": 0.0227
+     },
+     "wall": {
+      "points": 1500,
+      "inflow": 0.0107
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 12965,
+      "inflow": 0.0552
+     },
+     "roof": {
+      "points": 5049,
+      "inflow": 0.005
+     },
+     "wall": {
+      "points": 7916,
+      "inflow": 0.0873
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 1388,
+      "inflow": 0.0951
+     },
+     "roof": {
+      "points": 1270,
+      "inflow": 0.0913
+     },
+     "wall": {
+      "points": 118,
+      "inflow": 0.1356
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 237,
+      "inflow": 0.5949
+     },
+     "roof": {
+      "points": 5,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 232,
+      "inflow": 0.6078
+     }
+    }
+   },
+   "sens_dist05_LoD2_s0": {
+    "11_grown": {
+     "all": {
+      "points": 7303,
+      "inflow": 0.0237
+     },
+     "roof": {
+      "points": 5803,
+      "inflow": 0.0271
+     },
+     "wall": {
+      "points": 1500,
+      "inflow": 0.0107
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 12965,
+      "inflow": 0.0558
+     },
+     "roof": {
+      "points": 5049,
+      "inflow": 0.0051
+     },
+     "wall": {
+      "points": 7916,
+      "inflow": 0.088
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 1388,
+      "inflow": 0.2493
+     },
+     "roof": {
+      "points": 1270,
+      "inflow": 0.2622
+     },
+     "wall": {
+      "points": 118,
+      "inflow": 0.1102
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 237,
+      "inflow": 0.7131
+     },
+     "roof": {
+      "points": 5,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 232,
+      "inflow": 0.7284
+     }
+    }
+   },
+   "imgonly_s0": {
+    "11_grown": {
+     "all": {
+      "points": 7303,
+      "inflow": 0.016
+     },
+     "roof": {
+      "points": 5803,
+      "inflow": 0.0176
+     },
+     "wall": {
+      "points": 1500,
+      "inflow": 0.01
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 12965,
+      "inflow": 0.0531
+     },
+     "roof": {
+      "points": 5049,
+      "inflow": 0.0048
+     },
+     "wall": {
+      "points": 7916,
+      "inflow": 0.084
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 1388,
+      "inflow": 0.0274
+     },
+     "roof": {
+      "points": 1270,
+      "inflow": 0.0236
+     },
+     "wall": {
+      "points": 118,
+      "inflow": 0.0678
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 237,
+      "inflow": 0.5907
+     },
+     "roof": {
+      "points": 5,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 232,
+      "inflow": 0.6034
+     }
+    }
+   },
+   "trust_LoD2_fix1": {
+    "11_grown": {
+     "all": {
+      "points": 7303,
+      "inflow": 0.1957
+     },
+     "roof": {
+      "points": 5803,
+      "inflow": 0.238
+     },
+     "wall": {
+      "points": 1500,
+      "inflow": 0.032
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 12965,
+      "inflow": 0.4957
+     },
+     "roof": {
+      "points": 5049,
+      "inflow": 0.0061
+     },
+     "wall": {
+      "points": 7916,
+      "inflow": 0.808
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 1388,
+      "inflow": 0.1664
+     },
+     "roof": {
+      "points": 1270,
+      "inflow": 0.1717
+     },
+     "wall": {
+      "points": 118,
+      "inflow": 0.1102
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 237,
+      "inflow": 0.6751
+     },
+     "roof": {
+      "points": 5,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 232,
+      "inflow": 0.6897
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

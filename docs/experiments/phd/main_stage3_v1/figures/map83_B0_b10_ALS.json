@@ -1,0 +1,37 @@
+{
+ "site": "B0_b10",
+ "prior": "ALS",
+ "rows": 262,
+ "panels": {
+  "prop_ALS_s0": {
+   "shares": {
+    "gt_side": 0.5038167938931297,
+    "wrong_side": 0.2595419847328244,
+    "both": 0.21755725190839695,
+    "neither": 0.019083969465648856
+   },
+   "unit_prior_error_inflow": 0.4771,
+   "samples": 262
+  },
+  "imgonly_s0": {
+   "shares": {
+    "gt_side": 0.6526717557251909,
+    "wrong_side": 0.16793893129770993,
+    "both": 0.05343511450381679,
+    "neither": 0.12595419847328243
+   },
+   "unit_prior_error_inflow": 0.2214,
+   "samples": 262
+  },
+  "trust_ALS": {
+   "shares": {
+    "gt_side": 0.3053435114503817,
+    "wrong_side": 0.5190839694656488,
+    "both": 0.022900763358778626,
+    "neither": 0.15267175572519084
+   },
+   "unit_prior_error_inflow": 0.542,
+   "samples": 262
+  }
+ }
+}

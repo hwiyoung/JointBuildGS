@@ -1,0 +1,263 @@
+{
+ "rule": "  python measure8_s3.py dir      8.1: the past-shape inflow split by the direction of the change. The thinned main rows (|s_W| >= 0.2 m) of\n                                 code 11 (and 13 apart) of every result's metric rows (cls = the four-way judgment of metrics_s1.spread);\n                                 '늘어난 곳' = the GT lies outside the prior surface (row value = GT - prior along the row's line direction\n                                 D > 0: roofs D = +z, LoD2 walls D = the LoD2 surface normal of lod2_surfaces.json; ALS walls D = the patch\n                                 normal flipped to z >= 0, so 'outside' is not guaranteed there: written apart), '줄어든 곳' = value < 0.\n                                 The share = (wrong side + both) / all, as the inflow.\n  python measure8_s3.py change   8.2 (LoD2 only): each LoD2 prior-error patch (code 11; 13 apart) is told by the ALS prior at the same GT points\n                                 (the ALS rows of the same unit, matched by the GT point): the ALS patch's v3 true label agree (|ALS - GT| <= the\n                                 ALS unit's tau) on the majority of the patch's matched points -> '표현 차이로 봄'; conflict -> '실제 변화로 봄';\n                                 fewer than half of the patch's points with an ALS row (walls etc.) -> '가르지 못함'. Per class: area, points,\n                                 inflow per result; and the 2 x 2 table with 8.1's direction.\nWrites S3/meas8/<kind>.json and .md. scientific_verdict: null.",
+ "rows": {
+  "piece": {
+   "patches": 2621,
+   "area_m2": 163.8,
+   "gt_points": 213666,
+   "same_as_stage2": true
+  },
+  "section": {
+   "centre": [
+    10.50057931475835,
+    25.88932401184229,
+    -29.635385043928395
+   ],
+   "t": [
+    0.3420201433256688,
+    0.9396926207859083
+   ]
+  },
+  "results": {
+   "prop_LoD2_s0": {
+    "piece_11": {
+     "points": 16032,
+     "inflow": 0.1272
+    },
+    "piece_12": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_3": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_11": {
+     "points": 218,
+     "inflow": 0.0
+    },
+    "band_12": {
+     "points": 52,
+     "inflow": 0.25
+    },
+    "band_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_3": {
+     "points": 29,
+     "inflow": 0.0
+    }
+   },
+   "prop_LoD2_s1": {
+    "piece_11": {
+     "points": 16032,
+     "inflow": 0.0535
+    },
+    "piece_12": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_3": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_11": {
+     "points": 218,
+     "inflow": 0.0138
+    },
+    "band_12": {
+     "points": 52,
+     "inflow": 0.1346
+    },
+    "band_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_3": {
+     "points": 29,
+     "inflow": 0.0
+    }
+   },
+   "abl_lossj_LoD2_s0": {
+    "piece_11": {
+     "points": 16032,
+     "inflow": 0.2386
+    },
+    "piece_12": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_3": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_11": {
+     "points": 218,
+     "inflow": 0.5826
+    },
+    "band_12": {
+     "points": 52,
+     "inflow": 0.6154
+    },
+    "band_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_3": {
+     "points": 29,
+     "inflow": 0.0
+    }
+   },
+   "imgonly_s0": {
+    "piece_11": {
+     "points": 16032,
+     "inflow": 0.1533
+    },
+    "piece_12": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_3": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_11": {
+     "points": 218,
+     "inflow": 0.0413
+    },
+    "band_12": {
+     "points": 52,
+     "inflow": 0.3462
+    },
+    "band_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_3": {
+     "points": 29,
+     "inflow": 0.0
+    }
+   },
+   "trust_LoD2": {
+    "piece_11": {
+     "points": 16032,
+     "inflow": 0.3672
+    },
+    "piece_12": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_3": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_11": {
+     "points": 218,
+     "inflow": 0.4128
+    },
+    "band_12": {
+     "points": 52,
+     "inflow": 0.9808
+    },
+    "band_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_3": {
+     "points": 29,
+     "inflow": 0.4483
+    }
+   },
+   "trust_LoD2_fix1": {
+    "piece_11": {
+     "points": 16032,
+     "inflow": 0.4701
+    },
+    "piece_12": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_3": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_11": {
+     "points": 218,
+     "inflow": 0.789
+    },
+    "band_12": {
+     "points": 52,
+     "inflow": 0.9808
+    },
+    "band_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_3": {
+     "points": 29,
+     "inflow": 0.6207
+    }
+   },
+   "nojudge_LoD2_s0": {
+    "piece_11": {
+     "points": 16032,
+     "inflow": 0.3143
+    },
+    "piece_12": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "piece_3": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_11": {
+     "points": 218,
+     "inflow": 0.6284
+    },
+    "band_12": {
+     "points": 52,
+     "inflow": 0.2115
+    },
+    "band_13": {
+     "points": 0,
+     "inflow": null
+    },
+    "band_3": {
+     "points": 29,
+     "inflow": 0.0
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

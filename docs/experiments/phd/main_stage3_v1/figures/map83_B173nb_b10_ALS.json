@@ -1,0 +1,37 @@
+{
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "rows": 96117,
+ "panels": {
+  "prop_ALS_s0": {
+   "shares": {
+    "gt_side": 0.9976070830342187,
+    "wrong_side": 0.0001456558153084262,
+    "both": 0.00010403986807744728,
+    "neither": 0.0021432212823954138
+   },
+   "unit_prior_error_inflow": 0.0002,
+   "samples": 96117
+  },
+  "imgonly_s0": {
+   "shares": {
+    "gt_side": 0.9971597116014856,
+    "wrong_side": 0.00019767574934714984,
+    "both": 0.00021848372296263927,
+    "neither": 0.0024241289262045217
+   },
+   "unit_prior_error_inflow": 0.0004,
+   "samples": 96117
+  },
+  "trust_ALS": {
+   "shares": {
+    "gt_side": 0.05865767762206477,
+    "wrong_side": 0.1735489039399898,
+    "both": 0.005805424638721558,
+    "neither": 0.7619879937992239
+   },
+   "unit_prior_error_inflow": 0.1794,
+   "samples": 96117
+  }
+ }
+}

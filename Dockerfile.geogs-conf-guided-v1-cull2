@@ -1,0 +1,19 @@
+# Stage-3 memory-only fix of the surfel rasterizer, built from a patch argument (PHD-MAIN-STAGE3-v1, user decision 2026-10-14 22:2x).
+# cull1 (inside the preprocess kernel) and cull2 (a kernel of its own, rasterizer_impl.cu only) both changed the forward output; the
+# diagnosis of 2026-10-15 01:07 (scripts/phd/main_stage3_v1/cull_diag_s3.py) found that their frustum rule also removed ordinary Gaussians
+# at the lower image edge (an earlier guess, that the compilation of the preprocess kernel had changed, was wrong: rebuild0 below matches
+# the base image's machine code). cull3 (used, user decision 2026-10-15 09:2x) culls only the diverging Gaussians (d > 0); see
+# src/phd/forks/diff-surfel-rasterization-cull3/README.md. The build context is the directory holding the patch:
+#   docker build -f Dockerfile.geogs-conf-guided-v1-cull2 --build-arg PATCH=cull3.patch -t jointbuildgs:geogs-conf-guided-v1-cull3 src/phd/forks/diff-surfel-rasterization-cull3
+#   docker build -f Dockerfile.geogs-conf-guided-v1-cull2 -t jointbuildgs:geogs-conf-guided-v1-cull2 src/phd/forks/diff-surfel-rasterization-cull2
+#   docker build -f Dockerfile.geogs-conf-guided-v1-cull2 --build-arg PATCH=empty.patch -t jointbuildgs:geogs-conf-guided-v1-rebuild0 src/phd/forks/diff-surfel-rasterization-cull2
+FROM jointbuildgs:geogs-conf-guided-v1
+ARG PATCH=cull2.patch
+COPY ${PATCH} /tmp/jbgs.patch
+# build/ (the base image's object files) is removed so that every source is compiled again; the import check runs outside the source dir
+RUN cd /opt/geogs-source/submodules/diff-surfel-rasterization \
+    && (test ! -s /tmp/jbgs.patch || patch -p1 < /tmp/jbgs.patch) \
+    && rm -rf build diff_surfel_rasterization.egg-info \
+    && TORCH_CUDA_ARCH_LIST=8.6 MAX_JOBS=8 python -m pip install . --no-build-isolation --no-deps --force-reinstall -v \
+    && cd / && python -c "import diff_surfel_rasterization as d, os; print('installed at', os.path.dirname(d.__file__))" \
+    && sha256sum /opt/geogs/lib/python3.10/site-packages/diff_surfel_rasterization/_C*.so
