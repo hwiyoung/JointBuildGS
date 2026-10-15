@@ -1,0 +1,40 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "method": "CDGS",
+ "repository": "github.com/zqlin0521/cdgs-release",
+ "commit": "db853c11f185a5a6cf6fe40e26cc106d209fa012",
+ "image": "jointbuildgs:cdgs-official-db853c1-v1",
+ "image_id": "sha256:4670d5d67bfc12c59147371da19cc9a3b4bfe7cd6debd1519a643c2766ced754",
+ "marking": "재현의 변형 (order 5.1 5): the one change beyond adapter v2 that order 5.1 2 names, user decision 10-15",
+ "base": "SB/sources/cdgs-release-adapters-v2 (PHD-MAIN-BASELINES-v1: adapters v1 + reproduction changes 1 and 2; docs/experiments/phd/main_baselines_v1/provenance/cdgs/changes.json)",
+ "adapted_copy": "SL/sources/cdgs-release-adapters-v3 (a byte copy of v2, then the change below)",
+ "diffs": {
+  "v2_to_v3": "cdgs-release-adapters-v3.diff",
+  "official_to_v3": "cdgs-release-adapters-v3_vs_official.diff (its arguments, train.py, utils/camera_utils.py and jbgs_camera_adapter.py sections are identical to the previous task's cdgs-release-adapters-v2.diff; only scene/dataset_readers.py differs)"
+ },
+ "change": {
+  "file": "scene/dataset_readers.py",
+  "switch": "\"alignment\": \"identity\" in the scene's jbgs_cdgs_options.json (SL/scenes/cdgs/<site>_<prior>, written by scripts/phd/main_fill_v1/cdgs/cdgs_fl_scenes.py); absent = adapter v2 exactly",
+  "what": "the per-view fit (optimize_depth's Adam) is skipped: scale 1, shift 0. The alignment loss is computed in place by jbgs_identity_depth with optimize_depth's own lines: the targets = the view's own observed SfM points (v2 change 1), the same reprojection-error weights and their max-normalisation, the same 0.1 % prune, both depths divided by the site's s (v2 change 2: B0 19.78, B173 주변 23.23, B173만 22.92, R1 28.60), the mean of the weighted squared residuals plus the negative-depth term (0: the prior depth is positive on every target). The depth weight 0.6 exp(-150 L_align) is the official line. The supervision depth and the confidence map are made from the prior render depth in metres as read (0 at no hit). The per-view record (jbgs_alignment.json) keeps scale, shift, shift_m, loss, loss_m2, weight, SfM points used, prior-hit pixel share, and puts the v2 official values of the same view beside them (v2_official, from the scene's jbgs_v2_alignment.json = the previous task's GPU check reading SB/prep/cdgs/check/<unit>/align_views.json).",
+  "why": "the previous task's per-view fit did not separate scale and shift on aerial views whose depths lie within 50-75 m (scale 0.13 or below 0 at some views; order 3 item 1). With a positive scale and a positive fitted depth on every prior-hit pixel the loss's per-view min-max normalisation makes the supervision independent of scale and shift (order 3 item 2), so the fit reaches the result only through the per-view weight and through views whose depth vanishes; the variant keeps the weight's formula and removes the fit."
+ },
+ "official_check": "the result cdgs_LoD2_s0 at B0_b10 runs adapter v2 itself (SB/sources/cdgs-release-adapters-v2, read-only) on SL/scenes/cdgs/B0_b10_LoD2_official (the previous scene, options byte-identical): order 6.2 '어댑터 v2, 공식 크기 맞추기'",
+ "not_changed": [
+  "optimize_depth itself (Adam lr 1.0, x0.8 per 100 steps, stopping rule, prune, weights), used as before when the switch is off",
+  "the confidence features and weights (Canny 0.2, Laplacian 0.5, Sobel 0.3; the hit-pixel version of adapter v1)",
+  "train.py (the loss, the min-max normalisation over the prior-hit pixels, densification, iterations), the renderer, every other file"
+ ],
+ "file_sha256": {
+  "scene/dataset_readers.py": {
+   "official": "e70163ada9a3371e90caaac4f0f3ed4a7e8a617a933c12e394b5799b7dfdf284",
+   "v2": "55074df8236aa6c8edb3066077e6636b21ab7fd05b16efa3cb6dc03643e6e059",
+   "v3": "cccffd875260227f23371161992995822d005b52dc6768ef8b27ca3886b6901d"
+  },
+  "train.py": "5b909e5305e158029dc536ef7248e5700896b361437ac7e4c5d3f2c45f162950 (= v2)",
+  "utils/camera_utils.py": "16d76c4e997e00e68e40fd2d0cce53371d9ecd451c390c77e1fabcec3d668d15 (= v2)",
+  "arguments/__init__.py": "65e346c61ae2af91f16faf3295f3c46bcff792b6b98caeca62cfe7b2d0d30a4f (= v2)",
+  "jbgs_camera_adapter.py": "06510fab2e5d3e348eab0621d504cef450b051f1d19efddfaabe3d80ba9a8109 (= v2)"
+ },
+ "checks_before_training": "SL/prep/cdgs/checks_5_2.json and .md (order 5.2: switch off = v2, same supervision, depth weights, runner test)",
+ "scientific_verdict": null
+}

@@ -1,0 +1,499 @@
+# PHD-MAIN-FILL-v1 CDGS: the official repository github.com/zqlin0521/cdgs-release at db853c11f185a5a6cf6fe40e26cc106d209fa012
+# (SB/sources/cdgs-release, untouched) -> cdgs-release-adapters-v3 (SL/sources/cdgs-release-adapters-v3) = the adapters of order v1.1 4.2
+# (PHD-MAIN-BASELINES-v1: principal point, no-hit pixels, logging), the reproduction changes 1 and 2 (user decision 10-15, option 나) and
+# the variant change of PHD-MAIN-FILL-v1 order 5.1 (switch "alignment": "identity"). Not shown: the two prebuilt rasterizer binaries
+# submodules/diff-gaussian-rasterization-depth-acc/diff_gaussian_rasterization_depth_acc/_C.cpython-3{7m,8}-x86_64-linux-gnu.so are
+# deleted (the image rebuilds the rasterizer for sm_86), as in the previous task's provenance/cdgs/changes.json.
+# scientific_verdict: null
+diff --git a/arguments/__init__.py b/arguments/__init__.py
+index 38a767a..bcf9a67 100644
+--- a/arguments/__init__.py
++++ b/arguments/__init__.py
+@@ -60,7 +60,7 @@ class ModelParams(ParamGroup):
+ 
+         self.depth_model_type = 'depthanything'
+         self.use_predefined_depth = False
+-        self.predefined_depth_path = None
++        self.predefined_depth_path = ""  # JBGS (order 5.5 1): str, so --predefined_depth_path parses (None made argparse type it NoneType); "" = not set
+         self.confidence_map_output = True
+         self.debug_output = True
+         self.debug_dir = "debug"
+diff --git a/scene/dataset_readers.py b/scene/dataset_readers.py
+index 6f1beb2..f5513a1 100644
+--- a/scene/dataset_readers.py
++++ b/scene/dataset_readers.py
+@@ -104,6 +104,49 @@ def calculate_confidence(depthmap, image, window_size=5):
+ 
+     return final_confidence_map
+ 
++# JBGS logging (PHD-MAIN-BASELINES-v1, order 5.5 3): per training view the alignment's scale, shift, loss, SfM points used and
++# depth weight 0.6 exp(-150 loss); written to <scene>/jbgs_alignment.json by readColmapSceneInfo. JBGS_KEEP_ALIGN_ARRAYS=1 also
++# keeps the SfM target pixels per view in memory (JBGS_ALIGN_ARRAYS; the preparation's checks only).
++JBGS_ALIGN_LOG = []
++JBGS_ALIGN_ARRAYS = {}
++_JBGS_LAST = {}
++_JBGS_PCD = {}   # JBGS reproduction change 1: the point3D ids of the initial cloud's rows (refineColmapWithIndex)
++
++def jbgs_calculate_confidence_hit(depthmap, image, valid, window_size=5):
++    """JBGS (order 5.5 2): calculate_confidence with the pixels without a prior hit left out. The same three features and
++    weights; every statistic (the Laplacian's maximum, each feature's min-max, the final min-max) is taken over the hit pixels;
++    the Sobel input takes at a no-hit pixel the nearest hit pixel's depth (the end of the prior's coverage is extended as the
++    image border is, so it makes no depth step); the confidence is 0 at no-hit pixels. With every pixel hit it equals
++    calculate_confidence."""
++    from scipy.ndimage import distance_transform_edt
++    if isinstance(image, Image.Image):
++        image = np.array(image)
++    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
++    edges = cv2.Canny(gray_image, 100, 200)
++    edge_confidence = 1 - edges / 255.0
++    laplacian = cv2.Laplacian(gray_image, cv2.CV_64F)
++    texture_confidence = 1 - np.abs(laplacian) / np.max(np.abs(laplacian)[valid])
++    if valid.all():
++        filled = depthmap
++    else:
++        iy, ix = distance_transform_edt(~valid, return_distances=False, return_indices=True)
++        filled = depthmap[iy, ix]
++    grad_x = cv2.Sobel(filled, cv2.CV_64F, 1, 0, ksize=5)
++    grad_y = cv2.Sobel(filled, cv2.CV_64F, 0, 1, ksize=5)
++    grad_magnitude = np.sqrt(grad_x ** 2 + grad_y ** 2)
++    gradient_confidence = 1 / (grad_magnitude + 1e-6)
++
++    def _mm(x):
++        lo, hi = x[valid].min(), x[valid].max()
++        return (x - lo) / (hi - lo) if hi > lo else np.ones_like(x)
++    edge_confidence = _mm(edge_confidence)
++    texture_confidence = _mm(texture_confidence)
++    gradient_confidence = _mm(gradient_confidence)
++    final_confidence_map = 0.2 * edge_confidence + 0.5 * texture_confidence + 0.3 * gradient_confidence
++    final_confidence_map = _mm(final_confidence_map)
++    final_confidence_map[~valid] = 0.0
++    return final_confidence_map
++
+ def getNerfppNorm(cam_info):
+     def get_center_and_diag(cam_centers):
+         cam_centers = np.hstack(cam_centers)
+@@ -146,6 +189,27 @@ def readColmapCameras(
+     cam_infos = []
+     model_zoe = None
+     model_depthanything = None
++    # JBGS adapter (order 5.2 1): the principal point of the SfM-depth projection from the scene's jbgs_calibration.json
++    from jbgs_camera_adapter import read_calibration as _jbgs_read_calibration
++    _jbgs_calib = _jbgs_read_calibration(os.path.join(os.path.dirname(images_folder), "jbgs_calibration.json"))
++    # JBGS reproduction changes beyond order 4.2 (PHD-MAIN-BASELINES-v1, user decision 10-15, option 나), switched on by the scene's
++    # jbgs_cdgs_options.json (absent = the official behaviour): 1 'alignment_targets': 'own_observations' = a training view's SfM targets
++    # are only the points that view observed (its 2-D observations; tracks restricted to the training views as before) instead of every
++    # point projected into every view; 2 'depth_unit_divisor_s': s = the alignment runs on prior and SfM depths divided by s (the site's
++    # median target depth over the authors' Tanks and Temples median), so L_align and 0.6 exp(-150 L_align) are in the authors' units;
++    # the aligned depth is multiplied back by s, so the confidence map and the training loss see metres as before.
++    _jbgs_opt_f = os.path.join(os.path.dirname(images_folder), "jbgs_cdgs_options.json")
++    _jbgs_opt = json.load(open(_jbgs_opt_f)) if os.path.exists(_jbgs_opt_f) else {}
++    _jbgs_own = _jbgs_opt.get("alignment_targets") == "own_observations"
++    _jbgs_s = float(_jbgs_opt.get("depth_unit_divisor_s", 1.0))
++    # JBGS variant (PHD-MAIN-FILL-v1, order 5.1 2-4, user decision 10-15), switched on by "alignment": "identity" in the same file (absent =
++    # adapter v2 exactly): the per-view fit (optimize_depth's Adam) is skipped, scale 1 and shift 0; the alignment loss and the depth weight
++    # 0.6 exp(-150 L_align) are computed in place with the same formula (jbgs_identity_depth); the supervision depth and the confidence map
++    # are made from the prior render depth in metres as read. The log puts the v2 official values of the same view beside it
++    # ("v2_reference": a file in the scene folder with the previous task's per-view records).
++    _jbgs_identity = _jbgs_opt.get("alignment") == "identity"
++    _jbgs_v2ref = json.load(open(os.path.join(os.path.dirname(images_folder), _jbgs_opt["v2_reference"])))["views"] \
++        if _jbgs_identity and _jbgs_opt.get("v2_reference") else {}
+ 
+     # Create debug directory if needed
+     if debug_output:
+@@ -236,8 +300,19 @@ def readColmapCameras(
+                     [0, focal_length_y, height/2],
+                     [0, 0, 1]
+                 ])
+-
+-                cam_coord = np.matmul(K, np.matmul(R.transpose(), pcd.points.transpose()) + T.reshape(3,1)) ### for coordinate definition, see getWorld2View2() function
++                if _jbgs_calib is not None:   # JBGS adapter (order 5.2 1): calibrated K (fx, fy as cameras.bin; cx, cy of the rasterizer's pixels)
++                    K = np.asarray(_jbgs_calib["images"][image_name]["K"], dtype=np.float64)
++
++                _jbgs_pts, _jbgs_errs, _jbgs_nobs = pcd.points, pcd.errors, None
++                if _jbgs_own:   # JBGS reproduction change 1: only the SfM points this view observed
++                    _ids = np.unique(np.asarray(extr.point3D_ids).astype(np.int64))
++                    _ids = _ids[_ids >= 0]
++                    _all = _JBGS_PCD["ids"]
++                    _r = np.clip(np.searchsorted(_all, _ids), 0, len(_all) - 1)
++                    _r = _r[_all[_r] == _ids]
++                    _jbgs_pts, _jbgs_nobs = pcd.points[_r], int(len(_r))
++                    _jbgs_errs = pcd.errors[_r] if pcd.errors is not None else None
++                cam_coord = np.matmul(K, np.matmul(R.transpose(), _jbgs_pts.transpose()) + T.reshape(3,1)) ### for coordinate definition, see getWorld2View2() function
+                 valid_idx = np.where(np.logical_and.reduce((
+                     cam_coord[2]>0, 
+                     cam_coord[0]/cam_coord[2]>=0, 
+@@ -253,7 +328,7 @@ def readColmapCameras(
+                 x_indices = np.round(cam_coord[0]).astype(np.int32).clip(0, width-1)
+                 
+                 depthmap[y_indices, x_indices] = pts_depths
+-                depth_weight[y_indices, x_indices] = 1/pcd.errors[valid_idx] if pcd.errors is not None else 1
++                depth_weight[y_indices, x_indices] = 1/_jbgs_errs[valid_idx] if _jbgs_errs is not None else 1
+                 depth_weight = depth_weight/depth_weight.max()
+ 
+                 # Try to load predefined depth if requested
+@@ -284,12 +359,63 @@ def readColmapCameras(
+                         if isinstance(source_depth, torch.Tensor):
+                             source_depth = source_depth.cpu().numpy()
+ 
++                # JBGS (order 5.5 2): the prior depth reaches part of the image only. A pixel without a hit (NaN, inf or <= 0) is left out
++                # of the alignment (its SfM target and weight are removed before the weights' max-normalisation and the 0.1 % prune),
++                # of the aligned depth (set to 0 = outside the training loss's own mask original_depth > 0), of the confidence map
++                # (jbgs_calculate_confidence_hit) and so of the per-view min-max normalisation and the depth loss (train.py). A view
++                # with no SfM target left after the code's own prune cannot be aligned: it gets no depth (no depth loss), as a view
++                # whose pixels are all without a hit.
++                _jbgs_valid, _jbgs_skip = None, False
++                if use_predefined_depth and source_depth is not None:
++                    source_depth = np.asarray(source_depth)
++                    _jbgs_valid = np.isfinite(source_depth) & (source_depth > 0)
++                    _jbgs_rec = dict(image=image_name, hit_share=float(_jbgs_valid.mean()), sfm_pixels_projected=int((depthmap > 0).sum()),
++                                     alignment_targets="own_observations" if _jbgs_own else "all_points_projected", sfm_points_observed=_jbgs_nobs,
++                                     unit_divisor_s=_jbgs_s,
++                                     K_used=K.tolist(), K_fx_fy_minus_cameras_bin=[float(K[0, 0] - focal_length_x), float(K[1, 1] - focal_length_y)])
++                    source_depth = np.where(_jbgs_valid, source_depth, 0).astype(source_depth.dtype)
++                    depthmap[~_jbgs_valid] = 0
++                    depth_weight[~_jbgs_valid] = 0
++                    if depth_weight.max() > 0:
++                        depth_weight = depth_weight / depth_weight.max()
++                    _t = np.sort(depthmap[depthmap > 1e-7])
++                    _jbgs_rec["sfm_pixels_on_hit"] = int(_t.size)
++                    if _t.size == 0 or not ((_t > _t[int(_t.size * 0.001)]) & (_t < _t[int(_t.size * (1.0 - 0.001))])).any():
++                        _jbgs_skip = True
+                 target=depthmap.copy()
+                 target=((target != 0) * 255).astype(np.uint8)
+-                depthmap, depthloss = optimize_depth(source=source_depth, target=depthmap, mask=depthmap>0.0, depth_weight=depth_weight)
++                if not _jbgs_skip:
++                    _jbgs_target = depthmap.copy() if os.environ.get("JBGS_KEEP_ALIGN_ARRAYS") == "1" else None
++                    _jbgs_weight = depth_weight.copy() if _jbgs_target is not None else None
++                    _jbgs_source_m = source_depth if _jbgs_identity else None   # JBGS variant: the prior render depth in metres as read
++                    if _jbgs_s != 1.0:   # JBGS reproduction change 2: the alignment in the authors' depth units
++                        source_depth, depthmap = source_depth / _jbgs_s, depthmap / _jbgs_s
++                    depthmap, depthloss = (jbgs_identity_depth if _jbgs_identity else optimize_depth)(source=source_depth, target=depthmap, mask=depthmap>0.0, depth_weight=depth_weight)
++                    if _jbgs_s != 1.0:   # the aligned depth (and the source) back in metres
++                        source_depth, depthmap = source_depth * _jbgs_s, depthmap * _jbgs_s
++                    if _jbgs_identity:   # JBGS variant: scale 1, shift 0, so the supervision depth is the prior render depth in metres as read
++                        source_depth, depthmap = _jbgs_source_m, _jbgs_source_m.copy()
++                    if _jbgs_valid is not None:
++                        depthmap[~_jbgs_valid] = 0
++                        _jbgs_rec.update(_JBGS_LAST, depth=True, weight=float(0.6 * np.exp(-150 * depthloss)))
++                        _jbgs_rec.update(shift_m=float(_JBGS_LAST["shift"] * _jbgs_s), loss_m2=float(_JBGS_LAST["loss"] * _jbgs_s ** 2))
++                        if _jbgs_identity:   # JBGS variant: the v2 official values of the same view beside (the previous task's records)
++                            _jbgs_rec.update(alignment="identity: scale 1, shift 0, no fit", v2_official=_jbgs_v2ref.get(image_name))
++                        JBGS_ALIGN_LOG.append(_jbgs_rec)
++                        if _jbgs_target is not None:
++                            _yy, _xx = np.nonzero(_jbgs_target > 0)
++                            JBGS_ALIGN_ARRAYS[image_name] = dict(y=_yy.astype(np.int32), x=_xx.astype(np.int32), z=_jbgs_target[_yy, _xx],
++                                                                 w=_jbgs_weight[_yy, _xx], used=_JBGS_LAST.get("_used_mask")[_yy, _xx])
++                        _jbgs_rec.pop("_used_mask", None)
++                else:
++                    depthmap, depth_weight, depthloss = None, None, 1e8
++                    _jbgs_rec.update(depth=False, scale=None, shift=None, loss=None, sfm_points_used=0, weight=None)
++                    if _jbgs_identity:   # JBGS variant: the v2 official values of the same view beside (no depth there either)
++                        _jbgs_rec.update(alignment="identity: scale 1, shift 0, no fit", v2_official=_jbgs_v2ref.get(image_name))
++                    JBGS_ALIGN_LOG.append(_jbgs_rec)
+ 
+                 # Generate debug outputs if requested
+-                if debug_output:
++                if debug_output and depthmap is not None:
+                     import cv2
+                     from render import depth_colorize_with_mask
+                         
+@@ -304,9 +430,9 @@ def readColmapCameras(
+                     np.save(refined_npy_path, depthmap)
+ 
+                 # Calculate and save confidence maps if requested
+-                if confidence_map_output:
++                if confidence_map_output and depthmap is not None:
+                     import cv2
+-                    confidence_map = calculate_confidence(depthmap, image)
++                    confidence_map = calculate_confidence(depthmap, image) if _jbgs_valid is None else jbgs_calculate_confidence_hit(depthmap, image, _jbgs_valid)
+ 
+                     if confidence_map.shape != (resized_height, resized_width):
+                         from scipy.ndimage import zoom
+@@ -412,6 +538,9 @@ def optimize_depth(source, target, mask, depth_weight, prune_ratio=0.001):
+ 
+     loss = loss.item()
+     print(f"loss ={loss:10.5f}")
++    _JBGS_LAST.clear()   # JBGS logging (order 5.5 3)
++    _JBGS_LAST.update(scale=float(scale.item()), shift=float(shift.item()), loss=float(loss), sfm_points_used=int(mask.sum().item()),
++                      adam_iterations=int(iteration - 1), _used_mask=mask.detach().cpu().numpy())
+ 
+     with torch.no_grad():
+         refined_source = (scale*source + shift) 
+@@ -423,6 +552,48 @@ def optimize_depth(source, target, mask, depth_weight, prune_ratio=0.001):
+     return refined_source.cpu().numpy(), loss
+ 
+ 
++def jbgs_identity_depth(source, target, mask, depth_weight, prune_ratio=0.001):
++    """JBGS variant (PHD-MAIN-FILL-v1, order 5.1 2; "alignment": "identity"): optimize_depth without its Adam fit. The prior depth is
++    already in metres, so scale 1 and shift 0. The alignment loss is optimize_depth's own loss at those values, with its own lines: the
++    same targets and weights (the caller's), the same 0.1 % prune, the mean of the weighted squared residuals and the negative-depth
++    term (0 here: the prior depth is positive on every target). Called with the same arguments (in the authors' units, divided by s)."""
++    source = torch.from_numpy(source).cuda()
++    target = torch.from_numpy(target).cuda()
++    mask = torch.from_numpy(mask).cuda()
++    depth_weight = torch.from_numpy(depth_weight).cuda()
++
++    with torch.no_grad():   # = optimize_depth's prune
++        target_depth_sorted = target[target>1e-7].sort().values
++        min_prune_threshold = target_depth_sorted[int(target_depth_sorted.numel()*prune_ratio)]
++        max_prune_threshold = target_depth_sorted[int(target_depth_sorted.numel()*(1.0-prune_ratio))]
++
++        mask2 = target > min_prune_threshold
++        mask3 = target < max_prune_threshold
++        mask = torch.logical_and( torch.logical_and(mask, mask2), mask3)
++
++        source_masked = source[mask]
++        target_masked = target[mask]
++        depth_weight_masked = depth_weight[mask]
++
++        scale = torch.ones(1).cuda()
++        shift = torch.zeros(1).cuda()
++        source_hat = scale*source_masked + shift   # = optimize_depth's loss at scale 1, shift 0, without a step
++        loss = torch.mean(((target_masked - source_hat)**2)*depth_weight_masked)
++        loss_hinge1 = loss_hinge2 = 0.0
++        if (source_hat<=0.0).any():
++            loss_hinge1 = 2.0*((source_hat[source_hat<=0.0])**2).mean()
++        loss = loss + loss_hinge1 + loss_hinge2
++        refined_source = (scale*source + shift)
++
++    loss = loss.item()
++    print(f"loss ={loss:10.5f} (scale 1, shift 0, no fit)")
++    _JBGS_LAST.clear()
++    _JBGS_LAST.update(scale=1.0, shift=0.0, loss=float(loss), sfm_points_used=int(mask.sum().item()), adam_iterations=0,
++                      _used_mask=mask.detach().cpu().numpy())
++    torch.cuda.empty_cache()
++    return refined_source.cpu().numpy(), loss
++
++
+ def fetchPly(path):
+     plydata = PlyData.read(path)
+     vertices = plydata['vertex']
+@@ -488,6 +659,7 @@ def refineColmapWithIndex(path, train_index):
+     assert len(valid_totalptsidx)==len(xyz)
+     
+     valid3didx = np.isin(valid_totalptsidx, valid_ptsidx) # select the points seen from train-view
++    _JBGS_PCD["ids"] = np.asarray(valid_totalptsidx[valid3didx]).astype(np.int64)   # JBGS reproduction change 1: the rows' point ids
+     xyz = xyz[valid3didx]
+     rgb = rgb[valid3didx]
+     err = err[valid3didx]
+@@ -757,6 +929,13 @@ def readColmapSceneInfo(
+         debug_dir=debug_dir
+     ).copy()
+ 
++    if JBGS_ALIGN_LOG:   # JBGS logging (order 5.5 3)
++        with open(os.path.join(path, "jbgs_alignment.json"), "w") as _f:
++            _of = os.path.join(path, "jbgs_cdgs_options.json")
++            json.dump(dict(views=JBGS_ALIGN_LOG, views_without_depth=[r["image"] for r in JBGS_ALIGN_LOG if not r["depth"]],
++                           predefined_depth_path=predefined_depth_path, k_scale=150, weight_max=0.6,
++                           options=json.load(open(_of)) if os.path.exists(_of) else None, scientific_verdict=None), _f, indent=1)
++
+     if eval:
+         train_cam_infos = [cam_infos[i] for i in train_idx]
+         test_cam_infos = [cam_infos[i] for i in test_idx]
+diff --git a/train.py b/train.py
+index b3505c4..729215d 100644
+--- a/train.py
++++ b/train.py
+@@ -38,12 +38,53 @@ try:
+ except ImportError:
+     TENSORBOARD_FOUND = False
+ 
++# ---- JBGS (PHD-MAIN-BASELINES-v1): the prior-depth mask in the depth loss's normalisation (order 5.5 2) and logging only (order 4.2,
++# 4.10: memory, the iteration's image and Gaussian count at a stop, a NaN loss stops). Nothing else of the training changes.
++import json as _jbgs_json
++import math as _jbgs_math
++import time as _jbgs_time
++_JBGS = dict(iteration=None, image=None, gaussians=None, model_path=None, t0=_jbgs_time.time(), skipped_flat=0)
++
++
++def jbgs_normalize_depth_masked(depth, mask):
++    """normalize_depth with its min and max over the prior-hit pixels (mask) only; 0 outside the mask."""
++    mask = mask.to(depth.device)
++    lo, hi = depth[mask].min(), depth[mask].max()
++    return (depth - lo) / (hi - lo) * mask
++
++
++def jbgs_flat(gt_depth, depth):
++    """True when the min-max normalisation over the prior-hit pixels is undefined for this view and iteration (no hit pixel, or
++    the prior depth or the render constant over them): the view then has no depth loss at this iteration (counted, logged)."""
++    mask = (gt_depth > 0).to(depth.device)
++    flat = (not bool(mask.any())) or bool(gt_depth.to(depth.device)[mask].max() <= gt_depth.to(depth.device)[mask].min()) or bool(depth[mask].max() <= depth[mask].min())
++    if flat:
++        _JBGS["skipped_flat"] += 1
++        jbgs_log("jbgs_depth_skipped.jsonl", dict(iteration=_JBGS["iteration"], image=_JBGS["image"]))
++    return flat
++
++
++def jbgs_memory():
++    return dict(allocated_gb=round(torch.cuda.memory_allocated() / 1024 ** 3, 3), reserved_gb=round(torch.cuda.memory_reserved() / 1024 ** 3, 3),
++                max_allocated_gb=round(torch.cuda.max_memory_allocated() / 1024 ** 3, 3), max_reserved_gb=round(torch.cuda.max_memory_reserved() / 1024 ** 3, 3))
++
++
++def jbgs_log(name, rec, mode="a"):
++    if _JBGS["model_path"]:
++        with open(os.path.join(_JBGS["model_path"], name), mode) as f:
++            f.write(_jbgs_json.dumps(rec) + ("\n" if mode == "a" else ""))
++
+ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from, usedepth=False, usedepthReg=False):
+     first_iter = 0
+     tb_writer = prepare_output_and_logger(dataset)
+     gaussians = GaussianModel(dataset.sh_degree)
+     scene = Scene(dataset, gaussians)
+     gaussians.training_setup(opt)
++    _JBGS.update(model_path=dataset.model_path, gaussians=gaussians)   # JBGS logging: the cameras the training uses (order 5.3 3)
++    jbgs_log("jbgs_cameras.json", dict(train=[c.image_name for c in scene.getTrainCameras()], test=[c.image_name for c in scene.getTestCameras()],
++                                       train_with_depth=sum(c.original_depth is not None for c in scene.getTrainCameras()),
++                                       initial_gaussians=int(gaussians.get_xyz.shape[0]), data_device=dataset.data_device,
++                                       seconds_to_here=round(_jbgs_time.time() - _JBGS["t0"], 1), memory=jbgs_memory()), mode="w")
+     if checkpoint:
+         (model_params, first_iter) = torch.load(checkpoint)
+         gaussians.restore(model_params, opt)
+@@ -92,6 +133,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
+         if not viewpoint_stack:
+             viewpoint_stack = scene.getTrainCameras().copy()
+         viewpoint_cam = viewpoint_stack.pop(randint(0, len(viewpoint_stack)-1))
++        _JBGS.update(iteration=iteration, image=viewpoint_cam.image_name)   # JBGS logging
+ 
+         depthloss_align = viewpoint_cam.original_depthloss 
+         # if depthloss_align is not None:
+@@ -117,12 +159,16 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
+         # Depth Loss with confidence map
+         depth = render_pkg["depth"]
+ 
+-        if usedepth and viewpoint_cam.original_depth is not None:
++        if usedepth and viewpoint_cam.original_depth is not None and not (dataset.use_predefined_depth and jbgs_flat(viewpoint_cam.original_depth, depth)):
+             depth_mask = (viewpoint_cam.original_depth>0) # render_pkg["acc"][0]
+             gt_maskeddepth = (viewpoint_cam.original_depth * depth_mask).cuda()
+ 
+-            gt_maskeddepth = normalize_depth(gt_maskeddepth)
+-            depth = normalize_depth(depth)
++            if dataset.use_predefined_depth:   # JBGS (order 5.5 2): min-max over the prior-hit pixels (the mask) for both depths
++                gt_maskeddepth = jbgs_normalize_depth_masked(gt_maskeddepth, depth_mask)
++                depth = jbgs_normalize_depth_masked(depth, depth_mask)
++            else:
++                gt_maskeddepth = normalize_depth(gt_maskeddepth)
++                depth = normalize_depth(depth)
+ 
+             k_scale = 150
+             depthloss_align_tensor = torch.tensor(depthloss_align)
+@@ -159,6 +205,12 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
+         iter_end.record()
+ 
+         with torch.no_grad():
++            if not _jbgs_math.isfinite(loss.item()):   # JBGS (order 3.7): a NaN loss stops the run (recorded in jbgs_stop.json)
++                raise FloatingPointError(f"loss {loss.item()} at iteration {iteration}")
++            if iteration % 100 == 0 or iteration == opt.iterations:   # JBGS logging: loss terms, depth weight, Gaussians, memory
++                jbgs_log("jbgs_train_log.jsonl", dict(iteration=iteration, loss=float(loss.item()), image_loss=float(composite_image_loss.item()),
++                                                     depth_loss=float(deploss.item()), depth_weight=float(current_depth_weight),
++                                                     gaussians=int(gaussians.get_xyz.shape[0]), seconds=round(_jbgs_time.time() - _JBGS["t0"], 1), **jbgs_memory()))
+             # Progress bar
+             ema_loss_for_log = 0.1 * loss.item() + 0.9 * ema_loss_for_log
+             ema_imageloss_for_log = 0.1 * composite_image_loss.item() + 0.9 * ema_imageloss_for_log
+@@ -342,8 +394,24 @@ if __name__ == "__main__":
+     network_gui.init(args.ip, args.port)
+     torch.autograd.set_detect_anomaly(args.detect_anomaly)
+     
+-    training(lp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, 
+-             args.start_checkpoint, args.debug_from, usedepth=args.depth, usedepthReg=args.usedepthReg)
++    try:
++        training(lp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, 
++                 args.start_checkpoint, args.debug_from, usedepth=args.depth, usedepthReg=args.usedepthReg)
++    except BaseException as _e:   # JBGS logging (order 4.10): where a run stopped, its image, Gaussians and memory
++        import subprocess, traceback
++        try:
++            _smi = subprocess.run(["nvidia-smi", "--query-gpu=index,memory.used,memory.total", "--format=csv"], capture_output=True, text=True).stdout
++        except Exception as _x:
++            _smi = str(_x)
++        _g = _JBGS["gaussians"]
++        jbgs_log("jbgs_stop.json", dict(kind=type(_e).__name__, message=str(_e)[:2000], iteration=_JBGS["iteration"], image=_JBGS["image"],
++                                        gaussians=int(_g.get_xyz.shape[0]) if _g is not None else None, memory=jbgs_memory(), nvidia_smi=_smi,
++                                        seconds=round(_jbgs_time.time() - _JBGS["t0"], 1), traceback=traceback.format_exc()[-4000:],
++                                        scientific_verdict=None), mode="w")
++        raise
++    jbgs_log("jbgs_train_summary.json", dict(iterations=args.iterations, seconds=round(_jbgs_time.time() - _JBGS["t0"], 1), memory=jbgs_memory(),
++                                             final_gaussians=int(_JBGS["gaussians"].get_xyz.shape[0]), depth_loss_skipped_flat=_JBGS["skipped_flat"],
++                                             scientific_verdict=None), mode="w")
+ 
+     # All done
+     with open( os.path.join(args.model_path, "DONE.txt"), "w") as fp:
+diff --git a/utils/camera_utils.py b/utils/camera_utils.py
+index de0e47e..c84c7c3 100644
+--- a/utils/camera_utils.py
++++ b/utils/camera_utils.py
+@@ -10,6 +10,7 @@
+ #
+ 
+ from scene.cameras import Camera
++from jbgs_camera_adapter import maybe_calibrate_camera  # JBGS adapter (order 5.2 1): principal point from jbgs_calibration.json
+ import numpy as np
+ import torch
+ import torch.nn.functional as F
+@@ -51,10 +52,11 @@ def loadCam(args, id, cam_info, resolution_scale):
+     if resized_image_rgb.shape[0] == 4:
+         loaded_mask = resized_image_rgb[3:4, ...]>0.5
+         
+-    return Camera(colmap_id=cam_info.uid, R=cam_info.R, T=cam_info.T, 
++    camera = Camera(colmap_id=cam_info.uid, R=cam_info.R, T=cam_info.T, 
+                   FoVx=cam_info.FovX, FoVy=cam_info.FovY, 
+                   image=gt_image, depth=gt_norm_depth, depth_weight=depth_weight, depthloss = depthloss, gt_alpha_mask=loaded_mask,
+                   image_name=cam_info.image_name, uid=id, data_device=args.data_device)
++    return maybe_calibrate_camera(camera, args, cam_info)
+ 
+ def cameraList_from_camInfos(cam_infos, resolution_scale, args):
+     camera_list = []
+diff --git a/jbgs_camera_adapter.py b/jbgs_camera_adapter.py
+new file mode 100644
+index 0000000..29bd879
+--- /dev/null
++++ b/jbgs_camera_adapter.py
+@@ -0,0 +1,50 @@
++"""Opt-in source-camera calibration for the unchanged native GeoGS rasterizer.
++
++The native ndc2pix mapping is ((ndc+1)*size-1)/2. A metadata-only
++adapter restores principal points lost by GeoGS's FoV-only camera constructor.
++No image is warped, and scenes without explicit metadata retain native behavior.
++"""
++import functools
++import json
++from pathlib import Path
++
++import numpy as np
++
++
++def apply_projection(camera, calibration):
++    width, height = calibration["width"], calibration["height"]
++    if (camera.image_width, camera.image_height) != (width, height):
++        raise ValueError("Calibrated input adapter requires unchanged image resolution")
++    K = np.asarray(calibration["K"], dtype=np.float64)
++    if K.shape != (3, 3) or not np.isfinite(K).all() or K[0, 1] != 0 or K[1, 0] != 0:
++        raise ValueError("Expected finite zero-skew PINHOLE K")
++    projection = camera.projection_matrix.T.clone()
++    projection[0, 0] = 2 * K[0, 0] / width
++    projection[1, 1] = 2 * K[1, 1] / height
++    projection[0, 2] = (2 * K[0, 2] + 1 - width) / width
++    projection[1, 2] = (2 * K[1, 2] + 1 - height) / height
++    camera.projection_matrix = projection.T.contiguous()
++    camera.full_proj_transform = camera.world_view_transform @ camera.projection_matrix
++    camera.jbgs_source_intrinsics = K.copy()
++    return camera
++
++
++@functools.lru_cache(maxsize=8)
++def read_calibration(path):
++    path = Path(path)
++    if not path.exists():
++        return None
++    value = json.loads(path.read_text())
++    if value["schema"] != "jointbuildgs.geogs.source_calibration.v1":
++        raise ValueError("Unexpected source-camera calibration schema")
++    return value
++
++
++def maybe_calibrate_camera(camera, args, cam_info):
++    value = read_calibration(str(Path(args.source_path) / "jbgs_calibration.json"))
++    if value is None:
++        return camera
++    name = cam_info.image_name
++    if name not in value["images"]:
++        raise ValueError(f"Calibrated camera is missing from the explicit manifest: {name}")
++    return apply_projection(camera, value["images"][name])

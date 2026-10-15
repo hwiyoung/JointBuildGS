@@ -1,0 +1,107 @@
+# PHD-MAIN-FILL-v1 CDGS variant: the one change beyond adapter v2 (order 5.1 2-4, user decision 10-15; a reproduction variant, order 5.1 5).
+# cdgs-release-adapters-v2 (SB/sources, PHD-MAIN-BASELINES-v1) -> cdgs-release-adapters-v3 (SL/sources). Only scene/dataset_readers.py.
+# Switched on per scene by "alignment": "identity" in jbgs_cdgs_options.json; without that line adapter v3 runs exactly as v2
+# (checked: SL/prep/cdgs/same_supervision_B0_b10_LoD2.json, switch_off_equals_v2).
+# With the switch: the per-view fit (optimize_depth's Adam) is skipped, scale 1 and shift 0; the alignment loss is computed in place by
+# jbgs_identity_depth with optimize_depth's own lines (the view's own observed SfM points, the same reprojection-error weights and their
+# max-normalisation, the same 0.1 % prune, both depths divided by the site's s as v2, the negative-depth term 0); the depth weight
+# 0.6 exp(-150 L_align) is the official line; the supervision depth and the confidence map are made from the prior render depth in
+# metres as read. Each view's record in jbgs_alignment.json gets the v2 official values of the same view beside ("v2_reference").
+# scientific_verdict: null
+--- a/scene/dataset_readers.py
++++ b/scene/dataset_readers.py
+@@ -202,6 +202,14 @@
+     _jbgs_opt = json.load(open(_jbgs_opt_f)) if os.path.exists(_jbgs_opt_f) else {}
+     _jbgs_own = _jbgs_opt.get("alignment_targets") == "own_observations"
+     _jbgs_s = float(_jbgs_opt.get("depth_unit_divisor_s", 1.0))
++    # JBGS variant (PHD-MAIN-FILL-v1, order 5.1 2-4, user decision 10-15), switched on by "alignment": "identity" in the same file (absent =
++    # adapter v2 exactly): the per-view fit (optimize_depth's Adam) is skipped, scale 1 and shift 0; the alignment loss and the depth weight
++    # 0.6 exp(-150 L_align) are computed in place with the same formula (jbgs_identity_depth); the supervision depth and the confidence map
++    # are made from the prior render depth in metres as read. The log puts the v2 official values of the same view beside it
++    # ("v2_reference": a file in the scene folder with the previous task's per-view records).
++    _jbgs_identity = _jbgs_opt.get("alignment") == "identity"
++    _jbgs_v2ref = json.load(open(os.path.join(os.path.dirname(images_folder), _jbgs_opt["v2_reference"])))["views"] \
++        if _jbgs_identity and _jbgs_opt.get("v2_reference") else {}
+ 
+     # Create debug directory if needed
+     if debug_output:
+@@ -379,15 +387,20 @@
+                 if not _jbgs_skip:
+                     _jbgs_target = depthmap.copy() if os.environ.get("JBGS_KEEP_ALIGN_ARRAYS") == "1" else None
+                     _jbgs_weight = depth_weight.copy() if _jbgs_target is not None else None
++                    _jbgs_source_m = source_depth if _jbgs_identity else None   # JBGS variant: the prior render depth in metres as read
+                     if _jbgs_s != 1.0:   # JBGS reproduction change 2: the alignment in the authors' depth units
+                         source_depth, depthmap = source_depth / _jbgs_s, depthmap / _jbgs_s
+-                    depthmap, depthloss = optimize_depth(source=source_depth, target=depthmap, mask=depthmap>0.0, depth_weight=depth_weight)
++                    depthmap, depthloss = (jbgs_identity_depth if _jbgs_identity else optimize_depth)(source=source_depth, target=depthmap, mask=depthmap>0.0, depth_weight=depth_weight)
+                     if _jbgs_s != 1.0:   # the aligned depth (and the source) back in metres
+                         source_depth, depthmap = source_depth * _jbgs_s, depthmap * _jbgs_s
++                    if _jbgs_identity:   # JBGS variant: scale 1, shift 0, so the supervision depth is the prior render depth in metres as read
++                        source_depth, depthmap = _jbgs_source_m, _jbgs_source_m.copy()
+                     if _jbgs_valid is not None:
+                         depthmap[~_jbgs_valid] = 0
+                         _jbgs_rec.update(_JBGS_LAST, depth=True, weight=float(0.6 * np.exp(-150 * depthloss)))
+                         _jbgs_rec.update(shift_m=float(_JBGS_LAST["shift"] * _jbgs_s), loss_m2=float(_JBGS_LAST["loss"] * _jbgs_s ** 2))
++                        if _jbgs_identity:   # JBGS variant: the v2 official values of the same view beside (the previous task's records)
++                            _jbgs_rec.update(alignment="identity: scale 1, shift 0, no fit", v2_official=_jbgs_v2ref.get(image_name))
+                         JBGS_ALIGN_LOG.append(_jbgs_rec)
+                         if _jbgs_target is not None:
+                             _yy, _xx = np.nonzero(_jbgs_target > 0)
+@@ -397,6 +410,8 @@
+                 else:
+                     depthmap, depth_weight, depthloss = None, None, 1e8
+                     _jbgs_rec.update(depth=False, scale=None, shift=None, loss=None, sfm_points_used=0, weight=None)
++                    if _jbgs_identity:   # JBGS variant: the v2 official values of the same view beside (no depth there either)
++                        _jbgs_rec.update(alignment="identity: scale 1, shift 0, no fit", v2_official=_jbgs_v2ref.get(image_name))
+                     JBGS_ALIGN_LOG.append(_jbgs_rec)
+ 
+                 # Generate debug outputs if requested
+@@ -536,6 +551,48 @@
+     torch.cuda.empty_cache()
+     return refined_source.cpu().numpy(), loss
+ 
++
++def jbgs_identity_depth(source, target, mask, depth_weight, prune_ratio=0.001):
++    """JBGS variant (PHD-MAIN-FILL-v1, order 5.1 2; "alignment": "identity"): optimize_depth without its Adam fit. The prior depth is
++    already in metres, so scale 1 and shift 0. The alignment loss is optimize_depth's own loss at those values, with its own lines: the
++    same targets and weights (the caller's), the same 0.1 % prune, the mean of the weighted squared residuals and the negative-depth
++    term (0 here: the prior depth is positive on every target). Called with the same arguments (in the authors' units, divided by s)."""
++    source = torch.from_numpy(source).cuda()
++    target = torch.from_numpy(target).cuda()
++    mask = torch.from_numpy(mask).cuda()
++    depth_weight = torch.from_numpy(depth_weight).cuda()
++
++    with torch.no_grad():   # = optimize_depth's prune
++        target_depth_sorted = target[target>1e-7].sort().values
++        min_prune_threshold = target_depth_sorted[int(target_depth_sorted.numel()*prune_ratio)]
++        max_prune_threshold = target_depth_sorted[int(target_depth_sorted.numel()*(1.0-prune_ratio))]
++
++        mask2 = target > min_prune_threshold
++        mask3 = target < max_prune_threshold
++        mask = torch.logical_and( torch.logical_and(mask, mask2), mask3)
++
++        source_masked = source[mask]
++        target_masked = target[mask]
++        depth_weight_masked = depth_weight[mask]
++
++        scale = torch.ones(1).cuda()
++        shift = torch.zeros(1).cuda()
++        source_hat = scale*source_masked + shift   # = optimize_depth's loss at scale 1, shift 0, without a step
++        loss = torch.mean(((target_masked - source_hat)**2)*depth_weight_masked)
++        loss_hinge1 = loss_hinge2 = 0.0
++        if (source_hat<=0.0).any():
++            loss_hinge1 = 2.0*((source_hat[source_hat<=0.0])**2).mean()
++        loss = loss + loss_hinge1 + loss_hinge2
++        refined_source = (scale*source + shift)
++
++    loss = loss.item()
++    print(f"loss ={loss:10.5f} (scale 1, shift 0, no fit)")
++    _JBGS_LAST.clear()
++    _JBGS_LAST.update(scale=1.0, shift=0.0, loss=float(loss), sfm_points_used=int(mask.sum().item()), adam_iterations=0,
++                      _used_mask=mask.detach().cpu().numpy())
++    torch.cuda.empty_cache()
++    return refined_source.cpu().numpy(), loss
++
+ 
+ def fetchPly(path):
+     plydata = PlyData.read(path)

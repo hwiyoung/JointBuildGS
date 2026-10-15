@@ -1,0 +1,10 @@
+--- r14/jbgs_judgment.py
++++ r14_rec/jbgs_judgment.py
+@@ -1091,6 +1091,7 @@
+                             n_supporting=st[f"n_supporting_{tag}"], evidence_within=got, evidence_conflict=ncf,
+                             surface_ext=st["surf_ext"][st["loc_surface"]], kind=st["loc_kind"], area=st["loc_area"],
+                             center=st["loc_center"].astype(np.float32))
++        np.savez_compressed(self.mon / "borrowed.npz", mis=np.asarray(mis), k_dist=np.asarray(kd)[:, :k], k_id=(np.asarray(locals()["kid"])[:, :k] if "kid" in locals() else np.full((len(mis), k), -1)), within=within)   # PHD-MAIN-FILL-v1 work item 3: read-only record of the borrowed support patches
+         dev = "cuda"
+         st_num = {kk: vv for kk, vv in st.items() if np.asarray(vv).dtype.kind not in ("U", "S", "O")}   # r12: v6 stores carry text keys (prior_kind)
+         P = dict(store=st, st_t=pps.to_torch(st_num, dev), state=torch.as_tensor(state, device=dev).long(),
