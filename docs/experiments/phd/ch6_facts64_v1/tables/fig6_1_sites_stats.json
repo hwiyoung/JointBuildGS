@@ -1,0 +1,241 @@
+{
+ "B0_b10/wrong": {
+  "place": "정면·지붕 가장자리",
+  "patches": 1189,
+  "area_m2": 74.3,
+  "by_prior": {
+   "LoD2": 74.3
+  }
+ },
+ "B0_b10/slight": {
+  "place": "1~4τ 패치",
+  "patches": 5270,
+  "area_m2": 329.9,
+  "by_prior": {
+   "LoD2": 327.0,
+   "ALS": 2.9
+  }
+ },
+ "B0_b10/missing": {
+  "place": "깊이 없는 창",
+  "patches": 3169,
+  "area_m2": 198.1,
+  "by_prior": {
+   "LoD2": 198.1
+  }
+ },
+ "B0_b10/undecidable": {
+  "place": "",
+  "patches": 3972,
+  "area_m2": 253.4,
+  "by_prior": {
+   "LoD2": 210.7,
+   "ALS": 42.7
+  }
+ },
+ "B173nb_b10/wrong": {
+  "place": "날개",
+  "patches": 31460,
+  "area_m2": 2025.2,
+  "by_prior": {
+   "LoD2": 1022.1,
+   "ALS": 1003.1
+  }
+ },
+ "B173nb_b10/invisible": {
+  "place": "긴 벽",
+  "patches": 19496,
+  "area_m2": 1218.5,
+  "by_prior": {
+   "LoD2": 1218.5
+  }
+ },
+ "B173nb_b10/missing": {
+  "place": "이웃 건물 벽",
+  "patches": 1068,
+  "area_m2": 66.8,
+  "by_prior": {
+   "LoD2": 66.8
+  }
+ },
+ "B173nb_b10/undecidable": {
+  "place": "유리 채광창",
+  "patches": 2927,
+  "area_m2": 191.2,
+  "by_prior": {
+   "LoD2": 139.4,
+   "ALS": 51.8
+  }
+ },
+ "B173_b0/undecidable": {
+  "place": "대부분 바뀐 장면",
+  "whole_range": true
+ },
+ "R1rep_b10/wrong": {
+  "place": "낮은 지붕",
+  "patches": 2575,
+  "area_m2": 160.9,
+  "by_prior": {
+   "LoD2": 160.9
+  }
+ },
+ "R1rep_b10/slight": {
+  "place": "1~4τ 패치",
+  "patches": 7021,
+  "area_m2": 441.1,
+  "by_prior": {
+   "LoD2": 433.5,
+   "ALS": 7.6
+  }
+ },
+ "R1rep_b10/missing": {
+  "place": "지붕 빈 곳",
+  "patches": 295,
+  "area_m2": 18.8,
+  "by_prior": {
+   "LoD2": 12.8,
+   "ALS": 6.1
+  }
+ },
+ "R1rep_b10/undecidable": {
+  "place": "",
+  "patches": 8843,
+  "area_m2": 566.1,
+  "by_prior": {
+   "LoD2": 402.7,
+   "ALS": 163.4
+  }
+ },
+ "B0_b10/undecidable_premise": {
+  "by_prior": {
+   "LoD2": 210.7,
+   "ALS": 42.7
+  },
+  "total_m2": 253.4,
+  "top3_faces": [
+   {
+    "face": "DEBY_LOD2_4959323_2b4a324e-1c0a-4549-92b9-90bd13ffc2fc_2",
+    "building": "DEBY_LOD2_4959323",
+    "face_type": "wall",
+    "LoD2_m2": 86.6,
+    "ALS_m2": 0.0,
+    "total_m2": 86.6
+   },
+   {
+    "face": "DEBY_LOD2_4959323_8636e7e8-148f-41bf-b7d4-aac18d0bb8ee_2",
+    "building": "DEBY_LOD2_4959323",
+    "face_type": "roof",
+    "LoD2_m2": 44.4,
+    "ALS_m2": 19.7,
+    "total_m2": 64.1
+   },
+   {
+    "face": "DEBY_LOD2_4959323_4bf01220-5d01-4002-8b3f-59ff0d3c8563_2",
+    "building": "DEBY_LOD2_4959323",
+    "face_type": "roof",
+    "LoD2_m2": 26.6,
+    "ALS_m2": 17.9,
+    "total_m2": 44.5
+   }
+  ]
+ },
+ "B173nb_b10/undecidable_premise": {
+  "by_prior": {
+   "LoD2": 139.4,
+   "ALS": 51.8
+  },
+  "total_m2": 191.2,
+  "top3_faces": [
+   {
+    "face": "DEBY_LOD2_4959460_5095dd14-db91-4782-9966-5e6cf2c4220c_2",
+    "building": "DEBY_LOD2_4959460",
+    "face_type": "roof",
+    "LoD2_m2": 17.9,
+    "ALS_m2": 1.9,
+    "total_m2": 19.8
+   },
+   {
+    "face": "DEBY_LOD2_4959326_e9c0e4af-cc1f-4027-9a39-9606c9b46e3a_2",
+    "building": "DEBY_LOD2_4959326",
+    "face_type": "roof",
+    "LoD2_m2": 8.2,
+    "ALS_m2": 8.4,
+    "total_m2": 16.6
+   },
+   {
+    "face": "DEBY_LOD2_4959326_6bee2fab-f03a-4e36-84f4-968d077efbbe_2",
+    "building": "DEBY_LOD2_4959326",
+    "face_type": "wall",
+    "LoD2_m2": 14.6,
+    "ALS_m2": 0.0,
+    "total_m2": 14.6
+   }
+  ]
+ },
+ "B173_b0/undecidable_premise": {
+  "by_prior": {
+   "LoD2": 188.9,
+   "ALS": 71.2
+  },
+  "total_m2": 260.1,
+  "top3_faces": [
+   {
+    "face": "DEBY_LOD2_4959326_9c3c8f2b-27ca-468f-97cc-9a88e6862b7e_2",
+    "building": "DEBY_LOD2_4959326",
+    "face_type": "wall",
+    "LoD2_m2": 79.4,
+    "ALS_m2": 0.0,
+    "total_m2": 79.4
+   },
+   {
+    "face": "DEBY_LOD2_4959326_f3f5377f-0009-45cd-9df3-66fd05a3b6c2_2",
+    "building": "DEBY_LOD2_4959326",
+    "face_type": "roof",
+    "LoD2_m2": 15.2,
+    "ALS_m2": 4.0,
+    "total_m2": 19.3
+   },
+   {
+    "face": "DEBY_LOD2_4959326_e9c0e4af-cc1f-4027-9a39-9606c9b46e3a_2",
+    "building": "DEBY_LOD2_4959326",
+    "face_type": "roof",
+    "LoD2_m2": 7.6,
+    "ALS_m2": 8.5,
+    "total_m2": 16.2
+   }
+  ]
+ },
+ "R1rep_b10/undecidable_premise": {
+  "by_prior": {
+   "LoD2": 402.7,
+   "ALS": 163.4
+  },
+  "total_m2": 566.1,
+  "top3_faces": [
+   {
+    "face": "DEBY_LOD2_4906975_31c00249-e945-4335-a745-9eba208cfc70_2",
+    "building": "DEBY_LOD2_4906975",
+    "face_type": "roof",
+    "LoD2_m2": 68.8,
+    "ALS_m2": 75.0,
+    "total_m2": 143.8
+   },
+   {
+    "face": "DEBY_LOD2_4906975_5bc495c6-447e-43ab-9b25-084765106e8b_2",
+    "building": "DEBY_LOD2_4906975",
+    "face_type": "wall",
+    "LoD2_m2": 125.4,
+    "ALS_m2": 0.1,
+    "total_m2": 125.6
+   },
+   {
+    "face": "DEBY_LOD2_4906968_ddf7ad8d-e9e5-4826-a75d-e5fe0b38f73b_2",
+    "building": "DEBY_LOD2_4906968",
+    "face_type": "wall",
+    "LoD2_m2": 50.7,
+    "ALS_m2": 0.7,
+    "total_m2": 51.4
+   }
+  ]
+ }
+}

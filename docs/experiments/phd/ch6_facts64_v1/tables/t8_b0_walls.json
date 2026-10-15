@@ -1,0 +1,52 @@
+{
+ "building": "DEBY_LOD2_4959323",
+ "box": "B0_b10",
+ "source_dir": "/s1/v3/box_gt/B0_b10",
+ "gt_primary": {
+  "source": "/art/phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/evaluation_reference/r1_b1_sub002_transformed.ply",
+  "points": 4709500,
+  "transform": "author + [2, -29, 0]; z - 0.0746 (gt_clean) + 0.00947731472977685 (v7 z-shift)",
+  "note": "covers the target building only"
+ },
+ "vertical_surface_points": {
+  "gt_primary_share": 0.5819511625437944,
+  "uls_share": 0.06608234686147287,
+  "rule": "roof-like patch: GT points whose vertical line meets the patch (XY inside the cell of the registered prior face; TIN: the XY cell), keeping those within 1.0 m of the highest of them (top layer), median of z_GT - z_prior; wall-like patch: SINGLE-RETURN GT points ON VERTICAL SURFACES (gt_clean of B0 has no return numbers: vertical surfaces only) (0.5 m voxels of the GT cloud with >= 5 points whose smallest-variance direction has |n_z| < 0.5) whose projection along the wall normal falls in the cell and within +-2.0 m of the plane, median of the outward normal distance; >= 5 points, else 'no GT'"
+ },
+ "box_range": {
+  "wall_patches": 45997,
+  "wall_area_m2": 2874.8,
+  "with_gt_clean_label": 34271,
+  "with_uls_label": 10032,
+  "with_either_label": 38962,
+  "with_both_labels": 5341,
+  "label_used_gt_clean": 34271,
+  "label_used_uls": 4691,
+  "excluded": 2888,
+  "scored_gt_clean": 32491,
+  "scored_uls": 4189,
+  "gt_clean_points_on_these_walls": 2548190,
+  "uls_single_return_points_on_these_walls": 254479,
+  "gt_clean_points_on_walls_whose_label_was_used": 2541377,
+  "uls_points_on_walls_whose_label_was_used": 89094
+ },
+ "evaluation_range": {
+  "wall_patches": 45997,
+  "wall_area_m2": 2874.8,
+  "with_gt_clean_label": 34271,
+  "with_uls_label": 10032,
+  "with_either_label": 38962,
+  "with_both_labels": 5341,
+  "label_used_gt_clean": 34271,
+  "label_used_uls": 4691,
+  "excluded": 2888,
+  "scored_gt_clean": 32491,
+  "scored_uls": 4189,
+  "gt_clean_points_on_these_walls": 2548190,
+  "uls_single_return_points_on_these_walls": 254479,
+  "gt_clean_points_on_walls_whose_label_was_used": 2541377,
+  "uls_points_on_walls_whose_label_was_used": 89094
+ },
+ "rule": "PHD-CH6-FACTS64-v1 task 8: wall ground truth of the B0 target building (DEBY_LOD2_4959323), counted from EXISTING records\nonly (no new GT, no new labels): the stage-1 box GT of B0 (v3, common height alignment) holds per GT point the patch that owns\nit (gt_owner_LoD2.npz = gt_clean, the GeoGS example cloud r1_b1_sub002; gt_owner_uls_LoD2.npz = the ULS supplement, single-return\npoints on vertical surfaces) and the labels of both sources (labels_LoD2.npz, labels_uls_LoD2.npz), written by\nscripts/phd/main_stage1_v1/s04_gt_v7.py (lines 332-348; wall rule vertical_points line 107). The evaluation reads the gt_clean\nlabel where it exists, else the ULS label; the exclusion flag follows the label used (labels_of: scripts/phd/main_stage0_v1/\nregions_v1.py lines 45-55, scripts/phd/main_stage1_v1/sens_count.py line 25; owners: s1_common.py lines 76-100). (jointbuildgs:dev, CPU)",
+ "scientific_verdict": null
+}
