@@ -1,6 +1,6 @@
 # 기록 값 대조 (요청 6절, PHD-MAIN-NUMBERS-v1)
 
-- 만든 때 2026-10-16 09:55:54 KST, 스크립트 `scripts/phd/main_numbers_v1/check6.py`. 반올림은 저장된 값의 사사오입(99.25 → 99.3)이다. 어긋나면 둘 다 적고 고르지 않는다.
+- 만든 때 2026-10-16 10:35:09 KST, 스크립트 `scripts/phd/main_numbers_v1/check6.py`. 반올림은 저장된 값의 사사오입(99.25 → 99.3)이다. 어긋나면 둘 다 적고 고르지 않는다.
 
 | 절 | 항목 | 기록 | 묶음 (반올림 전) | 판단 | 출처 | 비고 |
 |---|---|---|---|---|---|---|
@@ -14,11 +14,11 @@
 | 7.1 | 과거 형상 유입률 · GeoGS(고친 판) · B173 주변 · LoD2 | 8.7 | 8.67 (119,763점) | 같음 | SF/metrics/B173nb_b10/trust_LoD2_fix1__LoD2.json: spread.prior_error.main.spread |  |
 | 7.1 | 과거 형상 유입률 · GeoGS(고친 판) · R1 · LoD2 | 43.2 | 43.20 (54,345점) | 같음 | SF/metrics/R1rep_b10/trust_LoD2_fix1__LoD2.json: spread.prior_error.main.spread |  |
 | 7.1 | 세부 정확도 · 본 방법 · B173 주변 · LoD2 (cm) | 2.2 | 2.180 (씨앗 2.22, 2.14; 32,634점) | 같음 | S2/measure/B173nb_b10/LoD2__prop_LoD2_s0.json: condition3.new.nmad; S2/measure/B173nb_b10/LoD2__prop_LoD2_s1.json: condition3.new.nmad |  |
-| 7.1 | 세부 정확도 · 본 방법 · B173 주변 · 항공 LiDAR (cm) | 2.3 | 2.325 (씨앗 2.35, 2.30; 35,345점) | 같음 | S2/measure/B173nb_b10/ALS__prop_ALS_s0.json: condition3.new.nmad; S2/measure/B173nb_b10/ALS__prop_ALS_s1.json: condition3.new.nmad |  |
+| 7.1 | 세부 정확도 · 본 방법 · B173 주변 · 항공 LiDAR (cm) | 2.3 | 2.327 (씨앗 2.35, 2.30; 35,345점) | 같음 | S2/measure/B173nb_b10/ALS__prop_ALS_s0.json: condition3.new.nmad; S2/measure/B173nb_b10/ALS__prop_ALS_s1.json: condition3.new.nmad | 저장값 2.35 cm는 반올림 경계라 측정 행에서 반올림 전 값 2.3536 cm를 다시 구해 맞대었다 |
 | 7.1 | 세부 정확도 · 본 방법 · R1 · LoD2 (cm) | 5.1 | 5.090 (씨앗 4.91, 5.27; 74,638점) | 같음 | S2/measure/R1rep_b10/LoD2__prop_LoD2_s0.json: condition3.new.nmad; S2/measure/R1rep_b10/LoD2__prop_LoD2_s1.json: condition3.new.nmad |  |
 | 7.1 | 세부 정확도 · 학습 전 사전 정보 · B173 주변 · LoD2 (cm) | 2.9 | 2.94 (32,634점) | 같음 | S2/measure/B173nb_b10/LoD2__samepath_LoD2.json: condition3.new.nmad |  |
-| 7.1 | 세부 정확도 · 학습 전 사전 정보 · B173 주변 · 항공 LiDAR (cm) | 1.8 | 1.75 (35,345점) | 같음 | S2/measure/B173nb_b10/ALS__samepath_ALS.json: condition3.new.nmad |  |
-| 7.1 | 세부 정확도 · 학습 전 사전 정보 · R1 · LoD2 (cm) | 17.8 (검토 기록 11절) / 17.85 (1단계 결론 3) | 파일 값 17.85(4자리 m 저장), 반올림 전 17.8476 cm (76,433점) [새로 셈: 측정 행에서 같은 식으로 다시 구함] | 같음 | S2/measure/R1rep_b10/LoD2__samepath_LoD2.json: condition3.new.nmad; S2/measure/R1rep_b10/LoD2__samepath_LoD2.npz: new | 반올림 전 값으로 한 자리 반올림하면 기록 17.8과 같다. 4자리로 저장한 17.85를 다시 반올림하면 17.9가 된다 |
+| 7.1 | 세부 정확도 · 학습 전 사전 정보 · B173 주변 · 항공 LiDAR (cm) | 1.8 | 1.7482 (저장값 1.75; 35,345점) | 어긋남(저장값의 반올림 경계) | S2/measure/B173nb_b10/ALS__samepath_ALS.json: condition3.new.nmad | 저장값 1.75 cm는 반올림 경계라 측정 행에서 반올림 전 값 1.7482 cm를 다시 구해 맞대었다 |
+| 7.1 | 세부 정확도 · 학습 전 사전 정보 · R1 · LoD2 (cm) | 17.8 (검토 기록 11절) / 17.85 (1단계 결론 3) | 파일 값 17.85(4자리 m 저장), 반올림 전 17.8476 cm (76,433점) [새로 셈: 측정 행에서 같은 식으로 다시 구함] | 같음 | S2/measure/R1rep_b10/LoD2__samepath_LoD2.json: condition3.new.nmad; S2/measure/R1rep_b10/LoD2__samepath_LoD2.npz: new | 반올림 전 값으로 한 자리 반올림하면 기록 17.8과 같다. 4자리로 저장한 17.85를 다시 반올림하면 17.9가 된다. 저장값 17.85 cm는 반올림 경계라 측정 행에서 반올림 전 값 17.8476 cm를 다시 구해 맞대었다 |
 | 7.1 | 세부 정확도 · 결합 · B173 주변 · 항공 LiDAR (cm) | 1.76 | 1.76 (35,345점) | 같음 | SB/measure/B173nb_b10/ALS__mvsfuse_ALS.json: condition3.new.nmad |  |
 | 7.1 | 결측 영역 완전성 0.2 m · 본 방법 · B0 · LoD2 | 93.6 | 93.550 (씨앗 94.38, 92.72; 12,433점) | 같음 | S1/metrics/B0_b10/prop_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.2; S1/metrics/B0_b10/prop_LoD2_s1__LoD2.json: completeness.missing_agreement.all.le_0.2 |  |
 | 7.1 | 결측 영역 완전성 0.2 m · 본 방법 · B173 주변 · LoD2 | 96.5 | 96.455 (씨앗 96.20, 96.71; 6,314점) | 같음 | S1/metrics/B173nb_b10/prop_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.2; S1/metrics/B173nb_b10/prop_LoD2_s1__LoD2.json: completeness.missing_agreement.all.le_0.2 |  |
@@ -116,5 +116,5 @@
 | 7.5 | B173만 · LoD2 · 세부 정확도 씨앗 0 · 1 (cm) | 9.19 · 4.60 | 9.19 · 4.60 | 같음 | SF/measure/B173_b0/LoD2__prop_LoD2_s0.json: condition3.new.nmad; S2/measure/B173_b0/LoD2__prop_LoD2_s1.json: condition3.new.nmad |  |
 | 7.5 | B173만 · LoD2 · 고친 GeoGS 과거 형상 유입률 | 20.80 | 20.80 | 같음 | SF/metrics/B173_b0/trust_LoD2_fix1__LoD2.json: spread.prior_error.main.spread |  |
 
-- 줄 111개 가운데 같음 102, 어긋남 4(그 가운데 반올림 방식만 다른 것 3), 말 확인 2, 대조하지 않음 1.
+- 줄 111개 가운데 같음 101, 어긋남 5(그 가운데 반올림 방식만 다른 것 3, 저장값의 반올림 경계 1), 말 확인 2, 대조하지 않음 1.
 

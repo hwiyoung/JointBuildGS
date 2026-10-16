@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "7.1 (order 5.3)",
- "made": "2026-10-16 10:09:48 KST",
+ "made": "2026-10-16 10:35:00 KST",
  "script": "scripts/phd/main_numbers_v1/t71.py",
  "f1_definition": {
   "result_mesh": "학습 시점 TSDF 메시(결과 폴더 post/mesh_tsdf.ply). 결합·학습 전 사전 정보도 같은 TSDF 메시",
@@ -737,7 +737,7 @@
       "values": [
        {
         "result": "prop_LoD2_s0",
-        "v": 39.879999999999995,
+        "v": 39.88,
         "n": 481,
         "nkind": "참값 점",
         "src": "S2/measure/B0_b10/LoD2__prop_LoD2_s0.json: condition3.new.nmad",
@@ -754,7 +754,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 50.385,
+      "mean": 50.385000000000005,
       "n": 481,
       "n_result": null
      },
@@ -778,15 +778,18 @@
       "values": [
        {
         "result": "trust_LoD2_fix1",
-        "v": 12.25,
+        "v": 12.248484878540038,
         "n": 514,
         "nkind": "참값 점",
         "src": "SF/measure/B0_b10/LoD2__trust_LoD2_fix1.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 12.25,
+        "rows": 514,
+        "edge": "저장값 12.2500 cm가 반올림 경계라 측정 행(SF/measure/B0_b10/LoD2__trust_LoD2_fix1.npz: new, 514행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 12.25,
+      "mean": 12.248484878540038,
       "n": 514,
       "n_result": null
      },
@@ -810,15 +813,18 @@
       "values": [
        {
         "result": "samepath_LoD2",
-        "v": 1.4500000000000002,
+        "v": 1.4498310470581053,
         "n": 514,
         "nkind": "참값 점",
         "src": "S2/measure/B0_b10/LoD2__samepath_LoD2.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 1.45,
+        "rows": 514,
+        "edge": "저장값 1.4500 cm가 반올림 경계라 측정 행(S2/measure/B0_b10/LoD2__samepath_LoD2.npz: new, 514행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 1.4500000000000002,
+      "mean": 1.4498310470581053,
       "n": 514,
       "n_result": null
      },
@@ -853,7 +859,7 @@
        },
        {
         "result": "prop_LoD2_s1",
-        "v": -17.580000000000002,
+        "v": -17.58,
         "n": 457,
         "nkind": "참값 점",
         "src": "S2/measure/B0_b10/LoD2__prop_LoD2_s1.json: condition3.new.bias",
@@ -861,7 +867,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": -1.9250000000000007,
+      "mean": -1.924999999999999,
       "n": 481,
       "n_result": null
      },
@@ -885,15 +891,18 @@
       "values": [
        {
         "result": "trust_LoD2_fix1",
-        "v": 28.249999999999996,
+        "v": 28.25031280517578,
         "n": 514,
         "nkind": "참값 점",
         "src": "SF/measure/B0_b10/LoD2__trust_LoD2_fix1.json: condition3.new.bias",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 28.25,
+        "rows": 514,
+        "edge": "저장값 28.2500 cm가 반올림 경계라 측정 행(SF/measure/B0_b10/LoD2__trust_LoD2_fix1.npz: new, 514행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 28.249999999999996,
+      "mean": 28.25031280517578,
       "n": 514,
       "n_result": null
      },
@@ -917,7 +926,7 @@
       "values": [
        {
         "result": "samepath_LoD2",
-        "v": 0.8999999999999999,
+        "v": 0.9,
         "n": 514,
         "nkind": "참값 점",
         "src": "S2/measure/B0_b10/LoD2__samepath_LoD2.json: condition3.new.bias",
@@ -925,7 +934,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 0.8999999999999999,
+      "mean": 0.9,
       "n": 514,
       "n_result": null
      },
@@ -2179,15 +2188,18 @@
        },
        {
         "result": "prop_ALS_s1",
-        "v": 4.65,
+        "v": 4.646698608398437,
         "n": 4443,
         "nkind": "참값 점",
         "src": "S2/measure/B0_b10/ALS__prop_ALS_s1.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 4.65,
+        "rows": 4443,
+        "edge": "저장값 4.6500 cm가 반올림 경계라 측정 행(S2/measure/B0_b10/ALS__prop_ALS_s1.npz: new, 4,443행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 4.720000000000001,
+      "mean": 4.718349304199219,
       "n": 4446,
       "n_result": null
      },
@@ -2195,15 +2207,18 @@
       "values": [
        {
         "result": "imgonly_2dgs_s0",
-        "v": 16.25,
+        "v": 16.246478118896484,
         "n": 4167,
         "nkind": "참값 점",
         "src": "SB/measure/B0_b10/ALS__imgonly_2dgs_s0.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 16.25,
+        "rows": 4167,
+        "edge": "저장값 16.2500 cm가 반올림 경계라 측정 행(SB/measure/B0_b10/ALS__imgonly_2dgs_s0.npz: new, 4,167행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 16.25,
+      "mean": 16.246478118896484,
       "n": 4167,
       "n_result": null
      },
@@ -2211,15 +2226,18 @@
       "values": [
        {
         "result": "geogs_ALS_fix1",
-        "v": 14.75,
+        "v": 14.754512329101562,
         "n": 4424,
         "nkind": "참값 점",
         "src": "SB/measure/B0_b10/ALS__geogs_ALS_fix1.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 14.75,
+        "rows": 4424,
+        "edge": "저장값 14.7500 cm가 반올림 경계라 측정 행(SB/measure/B0_b10/ALS__geogs_ALS_fix1.npz: new, 4,424행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 14.75,
+      "mean": 14.754512329101562,
       "n": 4424,
       "n_result": null
      },
@@ -2227,7 +2245,7 @@
       "values": [
        {
         "result": "mvsfuse_ALS",
-        "v": 2.9899999999999998,
+        "v": 2.99,
         "n": 4445,
         "nkind": "참값 점",
         "src": "SB/measure/B0_b10/ALS__mvsfuse_ALS.json: condition3.new.nmad",
@@ -2235,7 +2253,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 2.9899999999999998,
+      "mean": 2.99,
       "n": 4445,
       "n_result": null
      },
@@ -2318,7 +2336,7 @@
       "values": [
        {
         "result": "geogs_ALS_fix1",
-        "v": 6.460000000000001,
+        "v": 6.46,
         "n": 4424,
         "nkind": "참값 점",
         "src": "SB/measure/B0_b10/ALS__geogs_ALS_fix1.json: condition3.new.bias",
@@ -2326,7 +2344,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 6.460000000000001,
+      "mean": 6.46,
       "n": 4424,
       "n_result": null
      },
@@ -3670,7 +3688,7 @@
        },
        {
         "result": "prop_LoD2_s1",
-        "v": 2.1399999999999997,
+        "v": 2.14,
         "n": 32634,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/LoD2__prop_LoD2_s1.json: condition3.new.nmad",
@@ -3678,7 +3696,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 2.1799999999999997,
+      "mean": 2.18,
       "n": 32634,
       "n_result": null
      },
@@ -3702,7 +3720,7 @@
       "values": [
        {
         "result": "trust_LoD2_fix1",
-        "v": 15.010000000000002,
+        "v": 15.01,
         "n": 32500,
         "nkind": "참값 점",
         "src": "SF/measure/B173nb_b10/LoD2__trust_LoD2_fix1.json: condition3.new.nmad",
@@ -3710,7 +3728,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 15.010000000000002,
+      "mean": 15.01,
       "n": 32500,
       "n_result": null
      },
@@ -3718,15 +3736,18 @@
       "values": [
        {
         "result": "mvsfuse_LoD2",
-        "v": 2.9499999999999997,
+        "v": 2.949290599822998,
         "n": 32634,
         "nkind": "참값 점",
         "src": "SB/measure/B173nb_b10/LoD2__mvsfuse_LoD2.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 2.95,
+        "rows": 32634,
+        "edge": "저장값 2.9500 cm가 반올림 경계라 측정 행(SB/measure/B173nb_b10/LoD2__mvsfuse_LoD2.npz: new, 32,634행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 2.9499999999999997,
+      "mean": 2.949290599822998,
       "n": 32634,
       "n_result": null
      },
@@ -3777,16 +3798,19 @@
       "values": [
        {
         "result": "prop_LoD2_s0",
-        "v": 7.049999999999999,
+        "v": 7.045841217041016,
         "n": 32634,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/LoD2__prop_LoD2_s0.json: condition3.new.bias",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 7.05,
+        "rows": 32634,
+        "edge": "저장값 7.0500 cm가 반올림 경계라 측정 행(S2/measure/B173nb_b10/LoD2__prop_LoD2_s0.npz: new, 32,634행)에서 반올림 전 값을 다시 구함"
        },
        {
         "result": "prop_LoD2_s1",
-        "v": 7.140000000000001,
+        "v": 7.14,
         "n": 32634,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/LoD2__prop_LoD2_s1.json: condition3.new.bias",
@@ -3794,7 +3818,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 7.095,
+      "mean": 7.092920608520508,
       "n": 32634,
       "n_result": null
      },
@@ -3818,7 +3842,7 @@
       "values": [
        {
         "result": "trust_LoD2_fix1",
-        "v": 33.019999999999996,
+        "v": 33.02,
         "n": 32500,
         "nkind": "참값 점",
         "src": "SF/measure/B173nb_b10/LoD2__trust_LoD2_fix1.json: condition3.new.bias",
@@ -3826,7 +3850,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 33.019999999999996,
+      "mean": 33.02,
       "n": 32500,
       "n_result": null
      },
@@ -5210,12 +5234,15 @@
       "values": [
        {
         "result": "prop_ALS_s0",
-        "v": 2.35,
+        "v": 2.3536071395874023,
         "n": 35345,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/ALS__prop_ALS_s0.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 2.35,
+        "rows": 35345,
+        "edge": "저장값 2.3500 cm가 반올림 경계라 측정 행(S2/measure/B173nb_b10/ALS__prop_ALS_s0.npz: new, 35,345행)에서 반올림 전 값을 다시 구함"
        },
        {
         "result": "prop_ALS_s1",
@@ -5227,7 +5254,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 2.325,
+      "mean": 2.326803569793701,
       "n": 35345,
       "n_result": null
      },
@@ -5251,7 +5278,7 @@
       "values": [
        {
         "result": "geogs_ALS_fix1",
-        "v": 14.610000000000001,
+        "v": 14.61,
         "n": 35345,
         "nkind": "참값 점",
         "src": "SB/measure/B173nb_b10/ALS__geogs_ALS_fix1.json: condition3.new.nmad",
@@ -5259,7 +5286,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 14.610000000000001,
+      "mean": 14.61,
       "n": 35345,
       "n_result": null
      },
@@ -5283,15 +5310,18 @@
       "values": [
        {
         "result": "samepath_ALS",
-        "v": 1.7500000000000002,
+        "v": 1.7481676483154296,
         "n": 35345,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/ALS__samepath_ALS.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 1.75,
+        "rows": 35345,
+        "edge": "저장값 1.7500 cm가 반올림 경계라 측정 행(S2/measure/B173nb_b10/ALS__samepath_ALS.npz: new, 35,345행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 1.7500000000000002,
+      "mean": 1.7481676483154296,
       "n": 35345,
       "n_result": null
      },
@@ -5299,7 +5329,7 @@
       "values": [
        {
         "result": "imgonly_s0",
-        "v": 2.4699999999999998,
+        "v": 2.47,
         "n": 35345,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/ALS__imgonly_s0.json: condition3.new.nmad",
@@ -5316,7 +5346,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 2.4349999999999996,
+      "mean": 2.435,
       "n": 35345,
       "n_result": null
      }
@@ -5335,15 +5365,18 @@
        },
        {
         "result": "prop_ALS_s1",
-        "v": 6.8500000000000005,
+        "v": 6.851005554199219,
         "n": 35345,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/ALS__prop_ALS_s1.json: condition3.new.bias",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 6.85,
+        "rows": 35345,
+        "edge": "저장값 6.8500 cm가 반올림 경계라 측정 행(S2/measure/B173nb_b10/ALS__prop_ALS_s1.npz: new, 35,345행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 6.83,
+      "mean": 6.830502777099609,
       "n": 35345,
       "n_result": null
      },
@@ -5351,7 +5384,7 @@
       "values": [
        {
         "result": "imgonly_2dgs_s0",
-        "v": 27.889999999999997,
+        "v": 27.89,
         "n": 34946,
         "nkind": "참값 점",
         "src": "SB/measure/B173nb_b10/ALS__imgonly_2dgs_s0.json: condition3.new.bias",
@@ -5359,7 +5392,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 27.889999999999997,
+      "mean": 27.89,
       "n": 34946,
       "n_result": null
      },
@@ -5399,7 +5432,7 @@
       "values": [
        {
         "result": "samepath_ALS",
-        "v": -1.3299999999999998,
+        "v": -1.33,
         "n": 35345,
         "nkind": "참값 점",
         "src": "S2/measure/B173nb_b10/ALS__samepath_ALS.json: condition3.new.bias",
@@ -5407,7 +5440,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": -1.3299999999999998,
+      "mean": -1.33,
       "n": 35345,
       "n_result": null
      },
@@ -6742,7 +6775,7 @@
       "values": [
        {
         "result": "trust_LoD2_fix1",
-        "v": 18.740000000000002,
+        "v": 18.74,
         "n": 74501,
         "nkind": "참값 점",
         "src": "SF/measure/R1rep_b10/LoD2__trust_LoD2_fix1.json: condition3.new.nmad",
@@ -6750,7 +6783,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 18.740000000000002,
+      "mean": 18.74,
       "n": 74501,
       "n_result": null
      },
@@ -6774,15 +6807,18 @@
       "values": [
        {
         "result": "samepath_LoD2",
-        "v": 17.849999999999998,
+        "v": 17.847598342895505,
         "n": 76433,
         "nkind": "참값 점",
         "src": "S2/measure/R1rep_b10/LoD2__samepath_LoD2.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 17.85,
+        "rows": 76433,
+        "edge": "저장값 17.8500 cm가 반올림 경계라 측정 행(S2/measure/R1rep_b10/LoD2__samepath_LoD2.npz: new, 76,433행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 17.849999999999998,
+      "mean": 17.847598342895505,
       "n": 76433,
       "n_result": null
      },
@@ -6790,7 +6826,7 @@
       "values": [
        {
         "result": "imgonly_s0",
-        "v": 4.9399999999999995,
+        "v": 4.94,
         "n": 74553,
         "nkind": "참값 점",
         "src": "S2/measure/R1rep_b10/LoD2__imgonly_s0.json: condition3.new.nmad",
@@ -6798,7 +6834,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 4.9399999999999995,
+      "mean": 4.94,
       "n": 74553,
       "n_result": null
      }
@@ -6849,15 +6885,18 @@
       "values": [
        {
         "result": "trust_LoD2_fix1",
-        "v": 0.05,
+        "v": 0.0453948974609375,
         "n": 74501,
         "nkind": "참값 점",
         "src": "SF/measure/R1rep_b10/LoD2__trust_LoD2_fix1.json: condition3.new.bias",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 0.05,
+        "rows": 74501,
+        "edge": "저장값 0.0500 cm가 반올림 경계라 측정 행(SF/measure/R1rep_b10/LoD2__trust_LoD2_fix1.npz: new, 74,501행)에서 반올림 전 값을 다시 구함"
        }
       ],
-      "mean": 0.05,
+      "mean": 0.0453948974609375,
       "n": 74501,
       "n_result": null
      },
@@ -8134,12 +8173,15 @@
       "values": [
        {
         "result": "prop_ALS_s0",
-        "v": 4.45,
+        "v": 4.445498142242432,
         "n": 79262,
         "nkind": "참값 점",
         "src": "S2/measure/R1rep_b10/ALS__prop_ALS_s0.json: condition3.new.nmad",
-        "how": "옮김",
-        "unit": "cm (파일 값 m × 100)"
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 4.45,
+        "rows": 79262,
+        "edge": "저장값 4.4500 cm가 반올림 경계라 측정 행(S2/measure/R1rep_b10/ALS__prop_ALS_s0.npz: new, 79,262행)에서 반올림 전 값을 다시 구함"
        },
        {
         "result": "prop_ALS_s1",
@@ -8151,7 +8193,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 4.585,
+      "mean": 4.582749071121215,
       "n": 79262,
       "n_result": null
      },
@@ -8159,7 +8201,7 @@
       "values": [
        {
         "result": "imgonly_2dgs_s0",
-        "v": 20.599999999999998,
+        "v": 20.6,
         "n": 77879,
         "nkind": "참값 점",
         "src": "SB/measure/R1rep_b10/ALS__imgonly_2dgs_s0.json: condition3.new.nmad",
@@ -8167,7 +8209,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 20.599999999999998,
+      "mean": 20.6,
       "n": 77879,
       "n_result": null
      },
@@ -8223,7 +8265,7 @@
       "values": [
        {
         "result": "imgonly_s0",
-        "v": 5.220000000000001,
+        "v": 5.22,
         "n": 79230,
         "nkind": "참값 점",
         "src": "S2/measure/R1rep_b10/ALS__imgonly_s0.json: condition3.new.nmad",
@@ -8231,7 +8273,7 @@
         "unit": "cm (파일 값 m × 100)"
        }
       ],
-      "mean": 5.220000000000001,
+      "mean": 5.22,
       "n": 79230,
       "n_result": null
      }
@@ -8250,7 +8292,7 @@
        },
        {
         "result": "prop_ALS_s1",
-        "v": -4.9799999999999995,
+        "v": -4.98,
         "n": 79249,
         "nkind": "참값 점",
         "src": "S2/measure/R1rep_b10/ALS__prop_ALS_s1.json: condition3.new.bias",

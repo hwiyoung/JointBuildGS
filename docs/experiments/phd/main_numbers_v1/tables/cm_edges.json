@@ -1,0 +1,273 @@
+{
+ "task": "PHD-MAIN-NUMBERS-v1",
+ "made": "2026-10-16 10:35:10 KST",
+ "script": "scripts/phd/main_numbers_v1/cm_edges.py",
+ "rows": [
+  {
+   "src": "S2/measure/B0_b10/ALS__prop_ALS_s1.json: condition3.new.nmad",
+   "result": "prop_ALS_s1",
+   "stored_cm": 4.65,
+   "unrounded_cm": 4.646698608398437,
+   "rows": 4443,
+   "one_decimal_stored": "4.7",
+   "one_decimal_unrounded": "4.6",
+   "where": [
+    "t71.json/rows/B0_b10/ALS/cells/nmad_new/method/values[1]",
+    "t73.json/table76/nmad_new/rows/B0_b10/ALS/cells/method/values[1]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "S2/measure/B0_b10/LoD2__samepath_LoD2.json: condition3.new.nmad",
+   "result": "samepath_LoD2",
+   "stored_cm": 1.45,
+   "unrounded_cm": 1.4498310470581053,
+   "rows": 514,
+   "one_decimal_stored": "1.5",
+   "one_decimal_unrounded": "1.4",
+   "where": [
+    "t71.json/rows/B0_b10/LoD2/cells/nmad_new/prior/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "S2/measure/B173_b0/ALS__prop_ALS_s1.json: condition3.new.nmad",
+   "result": "prop_ALS_s1",
+   "stored_cm": 8.95,
+   "unrounded_cm": 8.946421852111817,
+   "rows": 2469,
+   "one_decimal_stored": "9.0",
+   "one_decimal_unrounded": "8.9",
+   "where": [
+    "t75.json/b173/ALS/nmad_new/m1"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "S2/measure/B173nb_b10/ALS__prop_ALS_s0.json: condition3.new.nmad",
+   "result": "prop_ALS_s0",
+   "stored_cm": 2.35,
+   "unrounded_cm": 2.3536071395874023,
+   "rows": 35345,
+   "one_decimal_stored": "2.4",
+   "one_decimal_unrounded": "2.4",
+   "where": [
+    "t71.json/rows/B173nb_b10/ALS/cells/nmad_new/method/values[0]",
+    "t73.json/table76/nmad_new/rows/B173nb_b10/ALS/cells/method/values[0]"
+   ],
+   "one_decimal_differs": false
+  },
+  {
+   "src": "S2/measure/B173nb_b10/ALS__prop_ALS_s1.json: condition3.new.bias",
+   "result": "prop_ALS_s1",
+   "stored_cm": 6.85,
+   "unrounded_cm": 6.851005554199219,
+   "rows": 35345,
+   "one_decimal_stored": "6.9",
+   "one_decimal_unrounded": "6.9",
+   "where": [
+    "t71.json/rows/B173nb_b10/ALS/cells/bias_new/method/values[1]",
+    "t73.json/table76/nmad_new/rows/B173nb_b10/ALS/cells/method/values[1]/bias"
+   ],
+   "one_decimal_differs": false
+  },
+  {
+   "src": "S2/measure/B173nb_b10/ALS__samepath_ALS.json: condition3.new.nmad",
+   "result": "samepath_ALS",
+   "stored_cm": 1.75,
+   "unrounded_cm": 1.7481676483154296,
+   "rows": 35345,
+   "one_decimal_stored": "1.8",
+   "one_decimal_unrounded": "1.7",
+   "where": [
+    "t71.json/rows/B173nb_b10/ALS/cells/nmad_new/prior/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "S2/measure/B173nb_b10/LoD2__prop_LoD2_s0.json: condition3.new.bias",
+   "result": "prop_LoD2_s0",
+   "stored_cm": 7.05,
+   "unrounded_cm": 7.045841217041016,
+   "rows": 32634,
+   "one_decimal_stored": "7.1",
+   "one_decimal_unrounded": "7.0",
+   "where": [
+    "t71.json/rows/B173nb_b10/LoD2/cells/bias_new/method/values[0]",
+    "t73.json/table76/nmad_new/rows/B173nb_b10/LoD2/cells/method/values[0]/bias"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "S2/measure/R1rep_b10/ALS__prop_ALS_s0.json: condition3.new.nmad",
+   "result": "prop_ALS_s0",
+   "stored_cm": 4.45,
+   "unrounded_cm": 4.445498142242432,
+   "rows": 79262,
+   "one_decimal_stored": "4.5",
+   "one_decimal_unrounded": "4.4",
+   "where": [
+    "t71.json/rows/R1rep_b10/ALS/cells/nmad_new/method/values[0]",
+    "t73.json/table76/nmad_new/rows/R1rep_b10/ALS/cells/method/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "S2/measure/R1rep_b10/LoD2__samepath_LoD2.json: condition3.new.nmad",
+   "result": "samepath_LoD2",
+   "stored_cm": 17.85,
+   "unrounded_cm": 17.847598342895505,
+   "rows": 76433,
+   "one_decimal_stored": "17.9",
+   "one_decimal_unrounded": "17.8",
+   "where": [
+    "t71.json/rows/R1rep_b10/LoD2/cells/nmad_new/prior/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SB/measure/B0_b10/ALS__geogs_ALS_fix1.json: condition3.new.nmad",
+   "result": "geogs_ALS_fix1",
+   "stored_cm": 14.75,
+   "unrounded_cm": 14.754512329101562,
+   "rows": 4424,
+   "one_decimal_stored": "14.8",
+   "one_decimal_unrounded": "14.8",
+   "where": [
+    "t71.json/rows/B0_b10/ALS/cells/nmad_new/geogs/values[0]"
+   ],
+   "one_decimal_differs": false
+  },
+  {
+   "src": "SB/measure/B0_b10/ALS__imgonly_2dgs_s0.json: condition3.new.nmad",
+   "result": "imgonly_2dgs_s0",
+   "stored_cm": 16.25,
+   "unrounded_cm": 16.246478118896484,
+   "rows": 4167,
+   "one_decimal_stored": "16.3",
+   "one_decimal_unrounded": "16.2",
+   "where": [
+    "t71.json/rows/B0_b10/ALS/cells/nmad_new/twodgs/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SB/measure/B173_b0/ALS__geogs_ALS_fix1.json: condition3.new.nmad",
+   "result": "geogs_ALS_fix1",
+   "stored_cm": 11.85,
+   "unrounded_cm": 11.850325698852538,
+   "rows": 2469,
+   "one_decimal_stored": "11.9",
+   "one_decimal_unrounded": "11.9",
+   "where": [
+    "t75.json/b173/ALS/nmad_new/geogs"
+   ],
+   "one_decimal_differs": false
+  },
+  {
+   "src": "SB/measure/B173nb_b10/LoD2__judgefuse_LoD2.json: condition3.new.bias",
+   "result": null,
+   "stored_cm": 9.65,
+   "unrounded_cm": 9.648895263671875,
+   "rows": 32634,
+   "one_decimal_stored": "9.7",
+   "one_decimal_unrounded": "9.6",
+   "where": [
+    "t73.json/table76/nmad_new/rows/B173nb_b10/LoD2/cells/judgefuse/values[0]/bias"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SB/measure/B173nb_b10/LoD2__judgefuse_LoD2.json: condition3.new.nmad",
+   "result": "judgefuse_LoD2",
+   "stored_cm": 2.95,
+   "unrounded_cm": 2.9514114761352537,
+   "rows": 32634,
+   "one_decimal_stored": "3.0",
+   "one_decimal_unrounded": "3.0",
+   "where": [
+    "t73.json/table76/nmad_new/rows/B173nb_b10/LoD2/cells/judgefuse/values[0]"
+   ],
+   "one_decimal_differs": false
+  },
+  {
+   "src": "SB/measure/B173nb_b10/LoD2__mvsfuse_LoD2.json: condition3.new.nmad",
+   "result": "mvsfuse_LoD2",
+   "stored_cm": 2.95,
+   "unrounded_cm": 2.949290599822998,
+   "rows": 32634,
+   "one_decimal_stored": "3.0",
+   "one_decimal_unrounded": "2.9",
+   "where": [
+    "t71.json/rows/B173nb_b10/LoD2/cells/nmad_new/mvsfuse/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SB/measure/R1rep_b10/LoD2__judgefuse_LoD2.json: condition3.new.nmad",
+   "result": "judgefuse_LoD2",
+   "stored_cm": 17.65,
+   "unrounded_cm": 17.647670402526856,
+   "rows": 75749,
+   "one_decimal_stored": "17.7",
+   "one_decimal_unrounded": "17.6",
+   "where": [
+    "t73.json/table76/nmad_new/rows/R1rep_b10/LoD2/cells/judgefuse/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SF/measure/B0_b10/LoD2__trust_LoD2_fix1.json: condition3.new.bias",
+   "result": "trust_LoD2_fix1",
+   "stored_cm": 28.25,
+   "unrounded_cm": 28.25031280517578,
+   "rows": 514,
+   "one_decimal_stored": "28.3",
+   "one_decimal_unrounded": "28.3",
+   "where": [
+    "t71.json/rows/B0_b10/LoD2/cells/bias_new/geogs/values[0]"
+   ],
+   "one_decimal_differs": false
+  },
+  {
+   "src": "SF/measure/B0_b10/LoD2__trust_LoD2_fix1.json: condition3.new.nmad",
+   "result": "trust_LoD2_fix1",
+   "stored_cm": 12.25,
+   "unrounded_cm": 12.248484878540038,
+   "rows": 514,
+   "one_decimal_stored": "12.3",
+   "one_decimal_unrounded": "12.2",
+   "where": [
+    "t71.json/rows/B0_b10/LoD2/cells/nmad_new/geogs/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SF/measure/B173_b0/LoD2__prop_LoD2_s0.json: condition3.new.bias",
+   "result": "prop_LoD2_s0",
+   "stored_cm": 5.05,
+   "unrounded_cm": 5.051994323730469,
+   "rows": 781,
+   "one_decimal_stored": "5.1",
+   "one_decimal_unrounded": "5.1",
+   "where": [
+    "t75.json/b173/LoD2/bias_new/m0"
+   ],
+   "one_decimal_differs": false
+  },
+  {
+   "src": "SF/measure/R1rep_b10/LoD2__trust_LoD2_fix1.json: condition3.new.bias",
+   "result": "trust_LoD2_fix1",
+   "stored_cm": 0.05,
+   "unrounded_cm": 0.0453948974609375,
+   "rows": 74501,
+   "one_decimal_stored": "0.1",
+   "one_decimal_unrounded": "0.0",
+   "where": [
+    "t71.json/rows/R1rep_b10/LoD2/cells/bias_new/geogs/values[0]"
+   ],
+   "one_decimal_differs": true
+  }
+ ],
+ "scientific_verdict": null
+}

@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "7.2 (order 5.4)",
- "made": "2026-10-16 10:02:51 KST",
+ "made": "2026-10-16 10:29:32 KST",
  "script": "scripts/phd/main_numbers_v1/t72.py",
  "rows": [
   {
@@ -1419,13 +1419,17 @@
      "all": 0.7448995483569537,
      "roof": 0.926458832933653,
      "area_m2": 401.3125,
-     "roof_area_m2": 234.5625
+     "roof_area_m2": 234.5625,
+     "patches": 6421,
+     "roof_patches": 3753
     },
     "code2": {
      "all": 0.03761214630779848,
      "roof": 0.034879336349924586,
      "area_m2": 3260.25,
-     "roof_area_m2": 1326.0
+     "roof_area_m2": 1326.0,
+     "patches": 52164,
+     "roof_patches": 21216
     }
    },
    "fusion": {
@@ -1433,6 +1437,8 @@
      "area_m2": 401.3125,
      "wall_area_m2": 166.75,
      "roof_area_m2": 234.5625,
+     "patches": 6421,
+     "roof_patches": 3753,
      "as_recorded": 0.01775424388724498,
      "walls_left_out": 0.030375699440447643,
      "walls_not_judged": 0.01775424388724498,
@@ -1443,6 +1449,8 @@
      "area_m2": 3260.25,
      "wall_area_m2": 1934.25,
      "roof_area_m2": 1326.0,
+     "patches": 52164,
+     "roof_patches": 21216,
      "as_recorded": 0.001878690284487386,
      "walls_left_out": 0.002403846153846154,
      "walls_not_judged": 0.000977685760294456,
@@ -1453,6 +1461,8 @@
      "area_m2": 216.1875,
      "wall_area_m2": 107.6875,
      "roof_area_m2": 108.5,
+     "patches": 3459,
+     "roof_patches": 1736,
      "as_recorded": 0.024573576178086153,
      "walls_left_out": 0.02707373271889401,
      "walls_not_judged": 0.013587742122000578,
@@ -1463,6 +1473,8 @@
      "area_m2": 128.25,
      "wall_area_m2": 125.75,
      "roof_area_m2": 2.5,
+     "patches": 2052,
+     "roof_patches": 40,
      "as_recorded": 0.012183235867446393,
      "walls_left_out": 0.025,
      "walls_not_judged": 0.0004873294346978557,
@@ -1473,6 +1485,8 @@
      "representation": {
       "area_m2": 205.0625,
       "roof_area_m2": 205.0625,
+      "patches": 3281,
+      "roof_patches": 3281,
       "fusion_as_recorded": 0.012800975312404754,
       "fusion_roof": 0.012800975312404754,
       "fusion_walls_not_judged": 0.012800975312404754,
@@ -1482,6 +1496,8 @@
      "real_change": {
       "area_m2": 5.0625,
       "roof_area_m2": 5.0625,
+      "patches": 81,
+      "roof_patches": 81,
       "fusion_as_recorded": 0.037037037037037035,
       "fusion_roof": 0.037037037037037035,
       "fusion_walls_not_judged": 0.037037037037037035,
@@ -1491,6 +1507,8 @@
      "undecided": {
       "area_m2": 186.125,
       "roof_area_m2": 23.5,
+      "patches": 2978,
+      "roof_patches": 376,
       "fusion_as_recorded": 0.023169912693082606,
       "fusion_roof": 0.18351063829787234,
       "fusion_walls_not_judged": 0.023169912693082606,
@@ -1650,13 +1668,17 @@
      "all": 0.455448677944903,
      "roof": 0.455448677944903,
      "area_m2": 5.8198389015435374,
-     "roof_area_m2": 5.8198389015435374
+     "roof_area_m2": 5.8198389015435374,
+     "patches": 80,
+     "roof_patches": 80
     },
     "code2": {
      "all": 0.015284177230430828,
      "roof": 0.015284177230430828,
      "area_m2": 1491.943433386537,
-     "roof_area_m2": 1491.943433386537
+     "roof_area_m2": 1491.943433386537,
+     "patches": 21870,
+     "roof_patches": 21870
     }
    },
    "fusion": {
@@ -1664,6 +1686,8 @@
      "area_m2": 5.8198389015435374,
      "wall_area_m2": 0.0,
      "roof_area_m2": 5.8198389015435374,
+     "patches": 80,
+     "roof_patches": 80,
      "as_recorded": 0.016301774109503956,
      "walls_left_out": 0.016301774109503956,
      "walls_not_judged": 0.016301774109503956,
@@ -1674,6 +1698,8 @@
      "area_m2": 1491.943433386537,
      "wall_area_m2": 0.0,
      "roof_area_m2": 1491.943433386537,
+     "patches": 21870,
+     "roof_patches": 21870,
      "as_recorded": 0.000964232340703613,
      "walls_left_out": 0.000964232340703613,
      "walls_not_judged": 0.000964232340703613,
@@ -1684,6 +1710,8 @@
      "area_m2": 62.513293038905104,
      "wall_area_m2": 0.0,
      "roof_area_m2": 62.513293038905104,
+     "patches": 878,
+     "roof_patches": 878,
      "as_recorded": 0.0030018262890654777,
      "walls_left_out": 0.0030018262890654777,
      "walls_not_judged": 0.0030018262890654777,
@@ -1694,6 +1722,8 @@
      "area_m2": 2.0365133439340215,
      "wall_area_m2": 0.0,
      "roof_area_m2": 2.0365133439340215,
+     "patches": 30,
+     "roof_patches": 30,
      "as_recorded": 0.0,
      "walls_left_out": 0.0,
      "walls_not_judged": 0.0,
@@ -1723,13 +1753,17 @@
      "all": 0.8782484706315257,
      "roof": 0.8973952659205705,
      "area_m2": 1358.8125,
-     "roof_area_m2": 1262.125
+     "roof_area_m2": 1262.125,
+     "patches": 21741,
+     "roof_patches": 20194
     },
     "code2": {
      "all": 0.016029631474103585,
      "roof": 0.024545530702856665,
      "area_m2": 2008.0,
-     "roof_area_m2": 746.0625
+     "roof_area_m2": 746.0625,
+     "patches": 32128,
+     "roof_patches": 11937
     }
    },
    "fusion": {
@@ -1737,6 +1771,8 @@
      "area_m2": 1358.8125,
      "wall_area_m2": 96.6875,
      "roof_area_m2": 1262.125,
+     "patches": 21741,
+     "roof_patches": 20194,
      "as_recorded": 0.7788510188123822,
      "walls_left_out": 0.791670793304942,
      "walls_not_judged": 0.7353387608665655,
@@ -1747,6 +1783,8 @@
      "area_m2": 2008.0,
      "wall_area_m2": 1261.9375,
      "roof_area_m2": 746.0625,
+     "patches": 32128,
+     "roof_patches": 11937,
      "as_recorded": 0.34290961155378485,
      "walls_left_out": 8.377314233056883e-05,
      "walls_not_judged": 3.112549800796813e-05,
@@ -1757,6 +1795,8 @@
      "area_m2": 169.5,
      "wall_area_m2": 43.875,
      "roof_area_m2": 125.625,
+     "patches": 2712,
+     "roof_patches": 2010,
      "as_recorded": 0.08997050147492626,
      "walls_left_out": 0.00845771144278607,
      "walls_not_judged": 0.006268436578171091,
@@ -1767,6 +1807,8 @@
      "area_m2": 76.5625,
      "wall_area_m2": 74.875,
      "roof_area_m2": 1.6875,
+     "patches": 1225,
+     "roof_patches": 27,
      "as_recorded": 0.396734693877551,
      "walls_left_out": 0.0,
      "walls_not_judged": 0.0,
@@ -1777,6 +1819,8 @@
      "representation": {
       "area_m2": 134.125,
       "roof_area_m2": 134.125,
+      "patches": 2146,
+      "roof_patches": 2146,
       "fusion_as_recorded": 0.0,
       "fusion_roof": 0.0,
       "fusion_walls_not_judged": 0.0,
@@ -1786,6 +1830,8 @@
      "real_change": {
       "area_m2": 1010.5,
       "roof_area_m2": 1010.5,
+      "patches": 16168,
+      "roof_patches": 16168,
       "fusion_as_recorded": 0.9452003958436418,
       "fusion_roof": 0.9452003958436418,
       "fusion_walls_not_judged": 0.9452003958436418,
@@ -1795,6 +1841,8 @@
      "undecided": {
       "area_m2": 210.9375,
       "roof_area_m2": 117.0625,
+      "patches": 3375,
+      "roof_patches": 1873,
       "fusion_as_recorded": 0.4797037037037037,
       "fusion_roof": 0.37640149492792313,
       "fusion_walls_not_judged": 0.2088888888888889,
@@ -1954,13 +2002,17 @@
      "all": 0.996947485656948,
      "roof": 0.996947485656948,
      "area_m2": 1016.1589948109952,
-     "roof_area_m2": 1016.1589948109952
+     "roof_area_m2": 1016.1589948109952,
+     "patches": 15279,
+     "roof_patches": 15279
     },
     "code2": {
      "all": 0.002086587069793664,
      "roof": 0.002086587069793664,
      "area_m2": 650.0106394436134,
-     "roof_area_m2": 650.0106394436134
+     "roof_area_m2": 650.0106394436134,
+     "patches": 10142,
+     "roof_patches": 10142
     }
    },
    "fusion": {
@@ -1968,6 +2020,8 @@
      "area_m2": 1016.1589948109952,
      "wall_area_m2": 0.0,
      "roof_area_m2": 1016.1589948109952,
+     "patches": 15279,
+     "roof_patches": 15279,
      "as_recorded": 0.9669883388397618,
      "walls_left_out": 0.9669883388397618,
      "walls_not_judged": 0.9669883388397618,
@@ -1978,6 +2032,8 @@
      "area_m2": 650.0106394436134,
      "wall_area_m2": 0.0,
      "roof_area_m2": 650.0106394436134,
+     "patches": 10142,
+     "roof_patches": 10142,
      "as_recorded": 0.0,
      "walls_left_out": 0.0,
      "walls_not_judged": 0.0,
@@ -1988,6 +2044,8 @@
      "area_m2": 152.31216382760073,
      "wall_area_m2": 0.0,
      "roof_area_m2": 152.31216382760073,
+     "patches": 2115,
+     "roof_patches": 2115,
      "as_recorded": 0.0013145845824417805,
      "walls_left_out": 0.0013145845824417805,
      "walls_not_judged": 0.0013145845824417805,
@@ -1998,6 +2056,8 @@
      "area_m2": 1.7362229037270236,
      "wall_area_m2": 0.0,
      "roof_area_m2": 1.7362229037270236,
+     "patches": 17,
+     "roof_patches": 17,
      "as_recorded": 0.0,
      "walls_left_out": 0.0,
      "walls_not_judged": 0.0,
@@ -2027,13 +2087,17 @@
      "all": 0.9311512415349887,
      "roof": 0.9442730428075589,
      "area_m2": 719.875,
-     "roof_area_m2": 648.25
+     "roof_area_m2": 648.25,
+     "patches": 11518,
+     "roof_patches": 10372
     },
     "code2": {
      "all": 0.1061983049116716,
      "roof": 0.09770946353224834,
      "area_m2": 1224.125,
-     "roof_area_m2": 1036.875
+     "roof_area_m2": 1036.875,
+     "patches": 19586,
+     "roof_patches": 16590
     }
    },
    "fusion": {
@@ -2041,6 +2105,8 @@
      "area_m2": 719.875,
      "wall_area_m2": 71.625,
      "roof_area_m2": 648.25,
+     "patches": 11518,
+     "roof_patches": 10372,
      "as_recorded": 0.4043236673033513,
      "walls_left_out": 0.368684920940995,
      "walls_not_judged": 0.33200208369508594,
@@ -2051,6 +2117,8 @@
      "area_m2": 1224.125,
      "wall_area_m2": 187.25,
      "roof_area_m2": 1036.875,
+     "patches": 19586,
+     "roof_patches": 16590,
      "as_recorded": 0.03997753497396099,
      "walls_left_out": 0.024412296564195298,
      "walls_not_judged": 0.020678035331359135,
@@ -2061,6 +2129,8 @@
      "area_m2": 411.0,
      "wall_area_m2": 329.25,
      "roof_area_m2": 81.75,
+     "patches": 6576,
+     "roof_patches": 1308,
      "as_recorded": 0.4277676399026764,
      "walls_left_out": 0.9013761467889908,
      "walls_not_judged": 0.1792883211678832,
@@ -2071,6 +2141,8 @@
      "area_m2": 12.375,
      "wall_area_m2": 10.4375,
      "roof_area_m2": 1.9375,
+     "patches": 198,
+     "roof_patches": 31,
      "as_recorded": 0.8686868686868687,
      "walls_left_out": 0.41935483870967744,
      "walls_not_judged": 0.06565656565656566,
@@ -2081,6 +2153,8 @@
      "representation": {
       "area_m2": 384.625,
       "roof_area_m2": 384.625,
+      "patches": 6154,
+      "roof_patches": 6154,
       "fusion_as_recorded": 0.2557686057848554,
       "fusion_roof": 0.2557686057848554,
       "fusion_walls_not_judged": 0.2557686057848554,
@@ -2090,6 +2164,8 @@
      "real_change": {
       "area_m2": 15.9375,
       "roof_area_m2": 15.9375,
+      "patches": 255,
+      "roof_patches": 255,
       "fusion_as_recorded": 0.5294117647058824,
       "fusion_roof": 0.5294117647058824,
       "fusion_walls_not_judged": 0.5294117647058824,
@@ -2099,6 +2175,8 @@
      "undecided": {
       "area_m2": 260.25,
       "roof_area_m2": 191.6875,
+      "patches": 4164,
+      "roof_patches": 3067,
       "fusion_as_recorded": 0.5605187319884726,
       "fusion_roof": 0.5001630257580698,
       "fusion_walls_not_judged": 0.36839577329490875,
@@ -2258,13 +2336,17 @@
      "all": 0.8003948556703824,
      "roof": 0.8003948556703824,
      "area_m2": 13.895329915687078,
-     "roof_area_m2": 13.895329915687078
+     "roof_area_m2": 13.895329915687078,
+     "patches": 177,
+     "roof_patches": 177
     },
     "code2": {
      "all": 0.19319301286575027,
      "roof": 0.19319301286575027,
      "area_m2": 1173.509423030414,
-     "roof_area_m2": 1173.509423030414
+     "roof_area_m2": 1173.509423030414,
+     "patches": 17807,
+     "roof_patches": 17807
     }
    },
    "fusion": {
@@ -2272,6 +2354,8 @@
      "area_m2": 13.895329915687078,
      "wall_area_m2": 0.0,
      "roof_area_m2": 13.895329915687078,
+     "patches": 177,
+     "roof_patches": 177,
      "as_recorded": 0.12442751287600567,
      "walls_left_out": 0.12442751287600567,
      "walls_not_judged": 0.12442751287600567,
@@ -2282,6 +2366,8 @@
      "area_m2": 1173.509423030414,
      "wall_area_m2": 0.0,
      "roof_area_m2": 1173.509423030414,
+     "patches": 17807,
+     "roof_patches": 17807,
      "as_recorded": 0.00043171798724765887,
      "walls_left_out": 0.00043171798724765887,
      "walls_not_judged": 0.00043171798724765887,
@@ -2292,6 +2378,8 @@
      "area_m2": 305.1233653103478,
      "wall_area_m2": 0.0,
      "roof_area_m2": 305.1233653103478,
+     "patches": 4517,
+     "roof_patches": 4517,
      "as_recorded": 0.195846255542164,
      "walls_left_out": 0.195846255542164,
      "walls_not_judged": 0.195846255542164,
@@ -2302,6 +2390,8 @@
      "area_m2": 4.240239374241598,
      "wall_area_m2": 0.0,
      "roof_area_m2": 4.240239374241598,
+     "patches": 63,
+     "roof_patches": 63,
      "as_recorded": 0.4391663958044162,
      "walls_left_out": 0.4391663958044162,
      "walls_not_judged": 0.4391663958044162,
@@ -2331,13 +2421,17 @@
      "all": 0.9122379792770854,
      "roof": 0.931569483688672,
      "area_m2": 1308.9375,
-     "roof_area_m2": 1216.5625
+     "roof_area_m2": 1216.5625,
+     "patches": 20943,
+     "roof_patches": 19465
     },
     "code2": {
      "all": 0.11544096103135072,
      "roof": 0.09265536723163842,
      "area_m2": 1066.5625,
-     "roof_area_m2": 221.25
+     "roof_area_m2": 221.25,
+     "patches": 17065,
+     "roof_patches": 3540
     }
    },
    "fusion": {
@@ -2345,6 +2439,8 @@
      "area_m2": 1308.9375,
      "wall_area_m2": 92.375,
      "roof_area_m2": 1216.5625,
+     "patches": 20943,
+     "roof_patches": 19465,
      "as_recorded": 0.8084801604354677,
      "walls_left_out": 0.8214230670434113,
      "walls_not_judged": 0.7634531824475959,
@@ -2355,6 +2451,8 @@
      "area_m2": 1066.5625,
      "wall_area_m2": 845.3125,
      "roof_area_m2": 221.25,
+     "patches": 17065,
+     "roof_patches": 3540,
      "as_recorded": 0.5569293876355113,
      "walls_left_out": 0.0,
      "walls_not_judged": 0.0,
@@ -2365,6 +2463,8 @@
      "area_m2": 209.625,
      "wall_area_m2": 101.5625,
      "roof_area_m2": 108.0625,
+     "patches": 3354,
+     "roof_patches": 1729,
      "as_recorded": 0.3530113297555158,
      "walls_left_out": 0.009832272990167727,
      "walls_not_judged": 0.005068574836016696,
@@ -2375,6 +2475,8 @@
      "area_m2": 26.1875,
      "wall_area_m2": 25.0625,
      "roof_area_m2": 1.125,
+     "patches": 419,
+     "roof_patches": 18,
      "as_recorded": 0.7303102625298329,
      "walls_left_out": 0.16666666666666666,
      "walls_not_judged": 0.007159904534606206,
@@ -2385,6 +2487,8 @@
      "representation": {
       "area_m2": 91.625,
       "roof_area_m2": 91.625,
+      "patches": 1466,
+      "roof_patches": 1466,
       "fusion_as_recorded": 0.0,
       "fusion_roof": 0.0,
       "fusion_walls_not_judged": 0.0,
@@ -2394,6 +2498,8 @@
      "real_change": {
       "area_m2": 1012.25,
       "roof_area_m2": 1012.25,
+      "patches": 16196,
+      "roof_patches": 16196,
       "fusion_as_recorded": 0.9449864163991109,
       "fusion_roof": 0.9449864163991109,
       "fusion_walls_not_judged": 0.9449864163991109,
@@ -2403,6 +2509,8 @@
      "undecided": {
       "area_m2": 201.1875,
       "roof_area_m2": 112.3125,
+      "patches": 3219,
+      "roof_patches": 1797,
       "fusion_as_recorded": 0.4942528735632184,
       "fusion_roof": 0.3806343906510851,
       "fusion_walls_not_judged": 0.2124883504193849,
@@ -2562,13 +2670,17 @@
      "all": 0.9974600148984222,
      "roof": 0.9974600148984222,
      "area_m2": 1012.7345116405822,
-     "roof_area_m2": 1012.7345116405822
+     "roof_area_m2": 1012.7345116405822,
+     "patches": 15218,
+     "roof_patches": 15218
     },
     "code2": {
      "all": 0.01773714061054278,
      "roof": 0.01773714061054278,
      "area_m2": 118.04653618101626,
-     "roof_area_m2": 118.04653618101626
+     "roof_area_m2": 118.04653618101626,
+     "patches": 1726,
+     "roof_patches": 1726
     }
    },
    "fusion": {
@@ -2576,6 +2688,8 @@
      "area_m2": 1012.7345116405822,
      "wall_area_m2": 0.0,
      "roof_area_m2": 1012.7345116405822,
+     "patches": 15218,
+     "roof_patches": 15218,
      "as_recorded": 0.967903338314677,
      "walls_left_out": 0.967903338314677,
      "walls_not_judged": 0.967903338314677,
@@ -2586,6 +2700,8 @@
      "area_m2": 118.04653618101626,
      "wall_area_m2": 0.0,
      "roof_area_m2": 118.04653618101626,
+     "patches": 1726,
+     "roof_patches": 1726,
      "as_recorded": 0.0011244072543900826,
      "walls_left_out": 0.0011244072543900826,
      "walls_not_judged": 0.0011244072543900826,
@@ -2596,6 +2712,8 @@
      "area_m2": 128.7438857910498,
      "wall_area_m2": 0.0,
      "roof_area_m2": 128.7438857910498,
+     "patches": 1736,
+     "roof_patches": 1736,
      "as_recorded": 0.011325468942936956,
      "walls_left_out": 0.011325468942936956,
      "walls_not_judged": 0.011325468942936956,
@@ -2606,6 +2724,8 @@
      "area_m2": 0.23219734544595266,
      "wall_area_m2": 0.0,
      "roof_area_m2": 0.23219734544595266,
+     "patches": 2,
+     "roof_patches": 2,
      "as_recorded": 0.0,
      "walls_left_out": 0.0,
      "walls_not_judged": 0.0,
@@ -3118,193 +3238,11 @@
   }
  },
  "b173_self": {
-  "LoD2": {
-   "direct": {
-    "correct_keep": [
-     929.56,
-     14873
-    ],
-    "wrong_keep": [
-     1232.25,
-     19716
-    ],
-    "correct_release": [
-     729.88,
-     11678
-    ],
-    "wrong_release": [
-     156.12,
-     2498
-    ]
-   },
-   "propagated": {
-    "correct_keep": [
-     24.44,
-     391
-    ],
-    "wrong_keep": [
-     4.94,
-     79
-    ],
-    "correct_release": [
-     0.12,
-     2
-    ],
-    "wrong_release": [
-     0.44,
-     7
-    ]
-   },
-   "none": {
-    "correct_keep": [
-     0.0,
-     0
-    ],
-    "wrong_keep": [
-     0.06,
-     1
-    ],
-    "correct_release": [
-     0.0,
-     0
-    ],
-    "wrong_release": [
-     0.0,
-     0
-    ]
-   },
-   "all": {
-    "correct_keep": [
-     954.0,
-     15264
-    ],
-    "wrong_keep": [
-     1237.25,
-     19796
-    ],
-    "correct_release": [
-     730.0,
-     11680
-    ],
-    "wrong_release": [
-     156.56,
-     2505
-    ]
-   },
-   "own_tau": {
-    "roof": 3.647,
-    "wall": 0.637
-   },
-   "own_shift": [
-    0.0,
-    0.0,
-    -4.231
-   ],
-   "truth_tau_fixed": {
-    "roof": 0.176,
-    "wall": 0.228
-   },
-   "state_area": {
-    "direct": 3047.81,
-    "propagated": 29.94,
-    "none": 0.06
-   }
-  },
-  "ALS": {
-   "direct": {
-    "correct_keep": [
-     130.28,
-     1960
-    ],
-    "wrong_keep": [
-     1337.61,
-     19863
-    ],
-    "correct_release": [
-     25.51,
-     334
-    ],
-    "wrong_release": [
-     0.0,
-     0
-    ]
-   },
-   "propagated": {
-    "correct_keep": [
-     0.0,
-     0
-    ],
-    "wrong_keep": [
-     0.13,
-     2
-    ],
-    "correct_release": [
-     0.0,
-     0
-    ],
-    "wrong_release": [
-     0.0,
-     0
-    ]
-   },
-   "none": {
-    "correct_keep": [
-     0.0,
-     0
-    ],
-    "wrong_keep": [
-     0.0,
-     0
-    ],
-    "correct_release": [
-     0.0,
-     0
-    ],
-    "wrong_release": [
-     0.0,
-     0
-    ]
-   },
-   "all": {
-    "correct_keep": [
-     130.28,
-     1960
-    ],
-    "wrong_keep": [
-     1337.74,
-     19865
-    ],
-    "correct_release": [
-     25.51,
-     334
-    ],
-    "wrong_release": [
-     0.0,
-     0
-    ]
-   },
-   "own_tau": {
-    "roof": 2.857,
-    "wall": 2.857
-   },
-   "own_shift": [
-    0.0,
-    0.0,
-    -4.618
-   ],
-   "truth_tau_fixed": {
-    "roof": 0.147,
-    "wall": 0.147
-   },
-   "state_area": {
-    "direct": 1493.41,
-    "propagated": 0.13,
-    "none": 0.0
-   }
-  }
+  "how": "채우기 일 3",
+  "why": "요청 3절 일 3의 'B173만의 장면 안 기준 판정'은 채우기에서 온다. 6장 보조 작업 보충 2(counts.json b173_self)에 값이 있으나 1절 6번에 따라 옮기지 않는다"
  },
  "sources": {
-  "counts": "C6/t5/judge/counts.json (evaluation, selection, b173_self)",
+  "counts": "C6/t5/judge/counts.json (evaluation, selection)",
   "t4": "docs/experiments/phd/ch6_support_v1/tables/t4_cases.json",
   "workload": "S2/prep/workload.json",
   "fusion": "SB/tables/fusion_units/hits_<지역>_<사전 정보>.json, SB/runs/<지역>/mvsfuse_<사전 정보>/detect/patches.npz"

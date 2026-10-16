@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "7.3 (order 5.1)",
- "made": "2026-10-16 09:55:52 KST",
+ "made": "2026-10-16 10:34:59 KST",
  "script": "scripts/phd/main_numbers_v1/t73.py",
  "table75": {
   "metric": "prior_error_inflow",
@@ -1034,7 +1034,7 @@
        "values": [
         {
          "result": "prop_LoD2_s0",
-         "v": 39.879999999999995,
+         "v": 39.88,
          "n": 481,
          "nkind": "참값 점",
          "src": "S2/measure/B0_b10/LoD2__prop_LoD2_s0.json: condition3.new.nmad",
@@ -1065,7 +1065,7 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": -17.580000000000002,
+          "v": -17.58,
           "n": 457,
           "nkind": "참값 점",
           "src": "S2/measure/B0_b10/LoD2__prop_LoD2_s1.json: condition3.new.bias",
@@ -1081,7 +1081,7 @@
          }
         }
        ],
-       "mean": 50.385,
+       "mean": 50.385000000000005,
        "n": 481,
        "same_as_SB_main_table": true
       },
@@ -1093,7 +1093,7 @@
        "values": [
         {
          "result": "nojudge_LoD2_s0",
-         "v": 13.139999999999999,
+         "v": 13.14,
          "n": 512,
          "nkind": "참값 점",
          "src": "S3/measure/B0_b10/LoD2__nojudge_LoD2_s0.json: condition3.new.nmad",
@@ -1116,7 +1116,7 @@
          }
         }
        ],
-       "mean": 13.139999999999999,
+       "mean": 13.14,
        "n": 512,
        "same_as_SB_main_table": true
       },
@@ -1176,7 +1176,7 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": 3.3099999999999996,
+          "v": 3.31,
           "n": 505,
           "nkind": "참값 점",
           "src": "SB/measure/B0_b10/LoD2__judgefuse_LoD2.json: condition3.new.bias",
@@ -1235,12 +1235,15 @@
         },
         {
          "result": "prop_ALS_s1",
-         "v": 4.65,
+         "v": 4.646698608398437,
          "n": 4443,
          "nkind": "참값 점",
          "src": "S2/measure/B0_b10/ALS__prop_ALS_s1.json: condition3.new.nmad",
-         "how": "옮김",
+         "how": "옮김 + 반올림 전 값 [새로 셈]",
          "unit": "cm (파일 값 m × 100)",
+         "stored_cm": 4.65,
+         "rows": 4443,
+         "edge": "저장값 4.6500 cm가 반올림 경계라 측정 행(S2/measure/B0_b10/ALS__prop_ALS_s1.npz: new, 4,443행)에서 반올림 전 값을 다시 구함",
          "bias": {
           "v": -1.15,
           "n": 4443,
@@ -1258,9 +1261,9 @@
          }
         }
        ],
-       "mean": 4.720000000000001,
+       "mean": 4.718349304199219,
        "n": 4446,
-       "same_as_SB_main_table": true
+       "same_as_SB_main_table": false
       },
       "nojudge": {
        "col": "nojudge",
@@ -1340,14 +1343,14 @@
        "values": [
         {
          "result": "trust_ALS",
-         "v": 3.7900000000000005,
+         "v": 3.79,
          "n": 4446,
          "nkind": "참값 점",
          "src": "S2/measure/B0_b10/ALS__trust_ALS.json: condition3.new.nmad",
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": -1.7000000000000002,
+          "v": -1.7,
           "n": 4446,
           "nkind": "참값 점",
           "src": "S2/measure/B0_b10/ALS__trust_ALS.json: condition3.new.bias",
@@ -1363,7 +1366,7 @@
          }
         }
        ],
-       "mean": 3.7900000000000005,
+       "mean": 3.79,
        "n": 4446,
        "same_as_SB_main_table": true
       },
@@ -1375,7 +1378,7 @@
        "values": [
         {
          "result": "judgefuse_ALS",
-         "v": 3.2399999999999998,
+         "v": 3.24,
          "n": 4444,
          "nkind": "참값 점",
          "src": "SB/measure/B0_b10/ALS__judgefuse_ALS.json: condition3.new.nmad",
@@ -1398,7 +1401,7 @@
          }
         }
        ],
-       "mean": 3.2399999999999998,
+       "mean": 3.24,
        "n": 4444,
        "same_as_SB_main_table": true
       }
@@ -1424,12 +1427,15 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": 7.049999999999999,
+          "v": 7.045841217041016,
           "n": 32634,
           "nkind": "참값 점",
           "src": "S2/measure/B173nb_b10/LoD2__prop_LoD2_s0.json: condition3.new.bias",
-          "how": "옮김",
-          "unit": "cm (파일 값 m × 100)"
+          "how": "옮김 + 반올림 전 값 [새로 셈]",
+          "unit": "cm (파일 값 m × 100)",
+          "stored_cm": 7.05,
+          "rows": 32634,
+          "edge": "저장값 7.0500 cm가 반올림 경계라 측정 행(S2/measure/B173nb_b10/LoD2__prop_LoD2_s0.npz: new, 32,634행)에서 반올림 전 값을 다시 구함"
          },
          "floating": {
           "v": 0.0124,
@@ -1441,14 +1447,14 @@
         },
         {
          "result": "prop_LoD2_s1",
-         "v": 2.1399999999999997,
+         "v": 2.14,
          "n": 32634,
          "nkind": "참값 점",
          "src": "S2/measure/B173nb_b10/LoD2__prop_LoD2_s1.json: condition3.new.nmad",
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": 7.140000000000001,
+          "v": 7.14,
           "n": 32634,
           "nkind": "참값 점",
           "src": "S2/measure/B173nb_b10/LoD2__prop_LoD2_s1.json: condition3.new.bias",
@@ -1464,7 +1470,7 @@
          }
         }
        ],
-       "mean": 2.1799999999999997,
+       "mean": 2.18,
        "n": 32634,
        "same_as_SB_main_table": true
       },
@@ -1577,19 +1583,25 @@
        "values": [
         {
          "result": "judgefuse_LoD2",
-         "v": 2.9499999999999997,
+         "v": 2.9514114761352537,
          "n": 32634,
          "nkind": "참값 점",
          "src": "SB/measure/B173nb_b10/LoD2__judgefuse_LoD2.json: condition3.new.nmad",
-         "how": "옮김",
+         "how": "옮김 + 반올림 전 값 [새로 셈]",
          "unit": "cm (파일 값 m × 100)",
+         "stored_cm": 2.95,
+         "rows": 32634,
+         "edge": "저장값 2.9500 cm가 반올림 경계라 측정 행(SB/measure/B173nb_b10/LoD2__judgefuse_LoD2.npz: new, 32,634행)에서 반올림 전 값을 다시 구함",
          "bias": {
-          "v": 9.65,
+          "v": 9.648895263671875,
           "n": 32634,
           "nkind": "참값 점",
           "src": "SB/measure/B173nb_b10/LoD2__judgefuse_LoD2.json: condition3.new.bias",
-          "how": "옮김",
-          "unit": "cm (파일 값 m × 100)"
+          "how": "옮김 + 반올림 전 값 [새로 셈]",
+          "unit": "cm (파일 값 m × 100)",
+          "stored_cm": 9.65,
+          "rows": 32634,
+          "edge": "저장값 9.6500 cm가 반올림 경계라 측정 행(SB/measure/B173nb_b10/LoD2__judgefuse_LoD2.npz: new, 32,634행)에서 반올림 전 값을 다시 구함"
          },
          "floating": {
           "v": 0.0017,
@@ -1600,9 +1612,9 @@
          }
         }
        ],
-       "mean": 2.9499999999999997,
+       "mean": 2.9514114761352537,
        "n": 32634,
-       "same_as_SB_main_table": true
+       "same_as_SB_main_table": false
       }
      },
      "read": true
@@ -1619,12 +1631,15 @@
        "values": [
         {
          "result": "prop_ALS_s0",
-         "v": 2.35,
+         "v": 2.3536071395874023,
          "n": 35345,
          "nkind": "참값 점",
          "src": "S2/measure/B173nb_b10/ALS__prop_ALS_s0.json: condition3.new.nmad",
-         "how": "옮김",
+         "how": "옮김 + 반올림 전 값 [새로 셈]",
          "unit": "cm (파일 값 m × 100)",
+         "stored_cm": 2.35,
+         "rows": 35345,
+         "edge": "저장값 2.3500 cm가 반올림 경계라 측정 행(S2/measure/B173nb_b10/ALS__prop_ALS_s0.npz: new, 35,345행)에서 반올림 전 값을 다시 구함",
          "bias": {
           "v": 6.81,
           "n": 35345,
@@ -1650,12 +1665,15 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": 6.8500000000000005,
+          "v": 6.851005554199219,
           "n": 35345,
           "nkind": "참값 점",
           "src": "S2/measure/B173nb_b10/ALS__prop_ALS_s1.json: condition3.new.bias",
-          "how": "옮김",
-          "unit": "cm (파일 값 m × 100)"
+          "how": "옮김 + 반올림 전 값 [새로 셈]",
+          "unit": "cm (파일 값 m × 100)",
+          "stored_cm": 6.85,
+          "rows": 35345,
+          "edge": "저장값 6.8500 cm가 반올림 경계라 측정 행(S2/measure/B173nb_b10/ALS__prop_ALS_s1.npz: new, 35,345행)에서 반올림 전 값을 다시 구함"
          },
          "floating": {
           "v": 0.0134,
@@ -1666,9 +1684,9 @@
          }
         }
        ],
-       "mean": 2.325,
+       "mean": 2.326803569793701,
        "n": 35345,
-       "same_as_SB_main_table": true
+       "same_as_SB_main_table": false
       },
       "nojudge": {
        "col": "nojudge",
@@ -1678,14 +1696,14 @@
        "values": [
         {
          "result": "nojudge_ALS_s0",
-         "v": 2.3800000000000003,
+         "v": 2.38,
          "n": 35345,
          "nkind": "참값 점",
          "src": "S3/measure/B173nb_b10/ALS__nojudge_ALS_s0.json: condition3.new.nmad",
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": 6.859999999999999,
+          "v": 6.86,
           "n": 35345,
           "nkind": "참값 점",
           "src": "S3/measure/B173nb_b10/ALS__nojudge_ALS_s0.json: condition3.new.bias",
@@ -1701,7 +1719,7 @@
          }
         }
        ],
-       "mean": 2.3800000000000003,
+       "mean": 2.38,
        "n": 35345,
        "same_as_SB_main_table": true
       },
@@ -1714,7 +1732,7 @@
        "values": [
         {
          "result": "imgonly_s0",
-         "v": 2.4699999999999998,
+         "v": 2.47,
          "n": 35345,
          "nkind": "참값 점",
          "src": "S2/measure/B173nb_b10/ALS__imgonly_s0.json: condition3.new.nmad",
@@ -1761,7 +1779,7 @@
          }
         }
        ],
-       "mean": 2.4349999999999996,
+       "mean": 2.435,
        "n": 35345,
        "same_as_SB_main_table": true
       },
@@ -1780,7 +1798,7 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": 2.1999999999999997,
+          "v": 2.2,
           "n": 35345,
           "nkind": "참값 점",
           "src": "S2/measure/B173nb_b10/ALS__trust_ALS.json: condition3.new.bias",
@@ -1815,7 +1833,7 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": -1.3599999999999999,
+          "v": -1.36,
           "n": 35342,
           "nkind": "참값 점",
           "src": "SB/measure/B173nb_b10/ALS__judgefuse_ALS.json: condition3.new.bias",
@@ -1909,7 +1927,7 @@
        "values": [
         {
          "result": "nojudge_LoD2_s0",
-         "v": 5.029999999999999,
+         "v": 5.03,
          "n": 76378,
          "nkind": "참값 점",
          "src": "S3/measure/R1rep_b10/LoD2__nojudge_LoD2_s0.json: condition3.new.nmad",
@@ -1932,7 +1950,7 @@
          }
         }
        ],
-       "mean": 5.029999999999999,
+       "mean": 5.03,
        "n": 76378,
        "same_as_SB_main_table": true
       },
@@ -1944,7 +1962,7 @@
        "values": [
         {
          "result": "imgonly_s0",
-         "v": 4.9399999999999995,
+         "v": 4.94,
          "n": 74553,
          "nkind": "참값 점",
          "src": "S2/measure/R1rep_b10/LoD2__imgonly_s0.json: condition3.new.nmad",
@@ -1967,7 +1985,7 @@
          }
         }
        ],
-       "mean": 4.9399999999999995,
+       "mean": 4.94,
        "n": 74553,
        "same_as_SB_main_table": true
       },
@@ -1985,12 +2003,15 @@
        "values": [
         {
          "result": "judgefuse_LoD2",
-         "v": 17.65,
+         "v": 17.647670402526856,
          "n": 75749,
          "nkind": "참값 점",
          "src": "SB/measure/R1rep_b10/LoD2__judgefuse_LoD2.json: condition3.new.nmad",
-         "how": "옮김",
+         "how": "옮김 + 반올림 전 값 [새로 셈]",
          "unit": "cm (파일 값 m × 100)",
+         "stored_cm": 17.65,
+         "rows": 75749,
+         "edge": "저장값 17.6500 cm가 반올림 경계라 측정 행(SB/measure/R1rep_b10/LoD2__judgefuse_LoD2.npz: new, 75,749행)에서 반올림 전 값을 다시 구함",
          "bias": {
           "v": -9.93,
           "n": 75749,
@@ -2008,9 +2029,9 @@
          }
         }
        ],
-       "mean": 17.65,
+       "mean": 17.647670402526856,
        "n": 75749,
-       "same_as_SB_main_table": true
+       "same_as_SB_main_table": false
       }
      },
      "read": true
@@ -2027,12 +2048,15 @@
        "values": [
         {
          "result": "prop_ALS_s0",
-         "v": 4.45,
+         "v": 4.445498142242432,
          "n": 79262,
          "nkind": "참값 점",
          "src": "S2/measure/R1rep_b10/ALS__prop_ALS_s0.json: condition3.new.nmad",
-         "how": "옮김",
+         "how": "옮김 + 반올림 전 값 [새로 셈]",
          "unit": "cm (파일 값 m × 100)",
+         "stored_cm": 4.45,
+         "rows": 79262,
+         "edge": "저장값 4.4500 cm가 반올림 경계라 측정 행(S2/measure/R1rep_b10/ALS__prop_ALS_s0.npz: new, 79,262행)에서 반올림 전 값을 다시 구함",
          "bias": {
           "v": -4.82,
           "n": 79262,
@@ -2058,7 +2082,7 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": -4.9799999999999995,
+          "v": -4.98,
           "n": 79249,
           "nkind": "참값 점",
           "src": "S2/measure/R1rep_b10/ALS__prop_ALS_s1.json: condition3.new.bias",
@@ -2074,9 +2098,9 @@
          }
         }
        ],
-       "mean": 4.585,
+       "mean": 4.582749071121215,
        "n": 79262,
-       "same_as_SB_main_table": true
+       "same_as_SB_main_table": false
       },
       "nojudge": {
        "col": "nojudge",
@@ -2093,7 +2117,7 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": -4.5600000000000005,
+          "v": -4.56,
           "n": 79346,
           "nkind": "참값 점",
           "src": "S3/measure/R1rep_b10/ALS__nojudge_ALS_s0.json: condition3.new.bias",
@@ -2121,7 +2145,7 @@
        "values": [
         {
          "result": "imgonly_s0",
-         "v": 5.220000000000001,
+         "v": 5.22,
          "n": 79230,
          "nkind": "참값 점",
          "src": "S2/measure/R1rep_b10/ALS__imgonly_s0.json: condition3.new.nmad",
@@ -2144,7 +2168,7 @@
          }
         }
        ],
-       "mean": 5.220000000000001,
+       "mean": 5.22,
        "n": 79230,
        "same_as_SB_main_table": true
       },
@@ -2163,7 +2187,7 @@
          "how": "옮김",
          "unit": "cm (파일 값 m × 100)",
          "bias": {
-          "v": -4.9399999999999995,
+          "v": -4.94,
           "n": 79447,
           "nkind": "참값 점",
           "src": "S2/measure/R1rep_b10/ALS__trust_ALS.json: condition3.new.bias",
@@ -2191,7 +2215,7 @@
        "values": [
         {
          "result": "judgefuse_ALS",
-         "v": 2.4899999999999998,
+         "v": 2.49,
          "n": 79211,
          "nkind": "참값 점",
          "src": "SB/measure/R1rep_b10/ALS__judgefuse_ALS.json: condition3.new.nmad",
@@ -2214,7 +2238,7 @@
          }
         }
        ],
-       "mean": 2.4899999999999998,
+       "mean": 2.49,
        "n": 79211,
        "same_as_SB_main_table": true
       }
@@ -2245,33 +2269,33 @@
      },
      "per_case": {
       "B173nb_b10/LoD2": {
-       "method": 2.1799999999999997,
+       "method": 2.18,
        "comparator": 2.13,
-       "diff_method_minus_comparator": 0.04999999999999982,
+       "diff_method_minus_comparator": 0.050000000000000266,
        "criterion": 0.5162944896084016,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.15839191898578764
+        "unit": 0.15839191898578675
        },
        "n_min": 32634,
        "reading": "같음"
       },
       "B173nb_b10/ALS": {
-       "method": 2.325,
-       "comparator": 2.3800000000000003,
-       "diff_method_minus_comparator": -0.05500000000000016,
+       "method": 2.326803569793701,
+       "comparator": 2.38,
+       "diff_method_minus_comparator": -0.05319643020629883,
        "criterion": 0.5162944896084016,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.09899494936611716
+        "unit": 0.10613672138234512
        },
        "n_min": 35345,
        "reading": "같음"
       },
       "R1rep_b10/LoD2": {
        "method": 5.09,
-       "comparator": 5.029999999999999,
-       "diff_method_minus_comparator": 0.0600000000000005,
+       "comparator": 5.03,
+       "diff_method_minus_comparator": 0.05999999999999961,
        "criterion": 0.7127636354360387,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
@@ -2281,13 +2305,13 @@
        "reading": "같음"
       },
       "R1rep_b10/ALS": {
-       "method": 4.585,
+       "method": 4.582749071121215,
        "comparator": 4.53,
-       "diff_method_minus_comparator": 0.054999999999999716,
-       "criterion": 0.534572726577029,
+       "diff_method_minus_comparator": 0.052749071121215074,
+       "criterion": 0.5434859501923078,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.534572726577029
+        "unit": 0.5434859501923078
        },
        "n_min": 79262,
        "reading": "같음"
@@ -2316,33 +2340,33 @@
      },
      "per_case": {
       "B173nb_b10/LoD2": {
-       "method": 2.1799999999999997,
+       "method": 2.18,
        "comparator": 2.235,
-       "diff_method_minus_comparator": -0.05500000000000016,
+       "diff_method_minus_comparator": -0.054999999999999716,
        "criterion": 0.5162944896084016,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.15839191898578764
+        "unit": 0.15839191898578675
        },
        "n_min": 32634,
        "reading": "같음"
       },
       "B173nb_b10/ALS": {
-       "method": 2.325,
-       "comparator": 2.4349999999999996,
-       "diff_method_minus_comparator": -0.10999999999999943,
+       "method": 2.326803569793701,
+       "comparator": 2.435,
+       "diff_method_minus_comparator": -0.10819643020629899,
        "criterion": 0.5162944896084016,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.09899494936611716
+        "unit": 0.10613672138234512
        },
        "n_min": 35345,
        "reading": "같음"
       },
       "R1rep_b10/LoD2": {
        "method": 5.09,
-       "comparator": 4.9399999999999995,
-       "diff_method_minus_comparator": 0.15000000000000036,
+       "comparator": 4.94,
+       "diff_method_minus_comparator": 0.14999999999999947,
        "criterion": 0.7127636354360387,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
@@ -2352,13 +2376,13 @@
        "reading": "같음"
       },
       "R1rep_b10/ALS": {
-       "method": 4.585,
-       "comparator": 5.220000000000001,
-       "diff_method_minus_comparator": -0.6350000000000007,
-       "criterion": 0.534572726577029,
+       "method": 4.582749071121215,
+       "comparator": 5.22,
+       "diff_method_minus_comparator": -0.6372509288787844,
+       "criterion": 0.5434859501923078,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.534572726577029
+        "unit": 0.5434859501923078
        },
        "n_min": 79230,
        "reading": "나음"
@@ -2390,13 +2414,13 @@
        "reading": "—"
       },
       "B173nb_b10/ALS": {
-       "method": 2.325,
+       "method": 2.326803569793701,
        "comparator": 2.07,
-       "diff_method_minus_comparator": 0.25500000000000034,
+       "diff_method_minus_comparator": 0.2568035697937012,
        "criterion": 0.5162944896084016,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.09899494936611716
+        "unit": 0.10613672138234512
        },
        "n_min": 35345,
        "reading": "같음"
@@ -2405,13 +2429,13 @@
        "reading": "—"
       },
       "R1rep_b10/ALS": {
-       "method": 4.585,
+       "method": 4.582749071121215,
        "comparator": 2.88,
-       "diff_method_minus_comparator": 1.705,
-       "criterion": 0.534572726577029,
+       "diff_method_minus_comparator": 1.7027490711212154,
+       "criterion": 0.5434859501923078,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.534572726577029
+        "unit": 0.5434859501923078
        },
        "n_min": 79262,
        "reading": "못함"
@@ -2440,33 +2464,33 @@
      },
      "per_case": {
       "B173nb_b10/LoD2": {
-       "method": 2.1799999999999997,
-       "comparator": 2.9499999999999997,
-       "diff_method_minus_comparator": -0.77,
+       "method": 2.18,
+       "comparator": 2.9514114761352537,
+       "diff_method_minus_comparator": -0.7714114761352535,
        "criterion": 0.5162944896084016,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.15839191898578764
+        "unit": 0.15839191898578675
        },
        "n_min": 32634,
        "reading": "나음"
       },
       "B173nb_b10/ALS": {
-       "method": 2.325,
+       "method": 2.326803569793701,
        "comparator": 1.77,
-       "diff_method_minus_comparator": 0.5550000000000002,
+       "diff_method_minus_comparator": 0.556803569793701,
        "criterion": 0.5162944896084016,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.09899494936611716
+        "unit": 0.10613672138234512
        },
        "n_min": 35342,
        "reading": "못함"
       },
       "R1rep_b10/LoD2": {
        "method": 5.09,
-       "comparator": 17.65,
-       "diff_method_minus_comparator": -12.559999999999999,
+       "comparator": 17.647670402526856,
+       "diff_method_minus_comparator": -12.557670402526856,
        "criterion": 0.7127636354360387,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
@@ -2476,13 +2500,13 @@
        "reading": "나음"
       },
       "R1rep_b10/ALS": {
-       "method": 4.585,
-       "comparator": 2.4899999999999998,
-       "diff_method_minus_comparator": 2.095,
-       "criterion": 0.534572726577029,
+       "method": 4.582749071121215,
+       "comparator": 2.49,
+       "diff_method_minus_comparator": 2.092749071121215,
+       "criterion": 0.5434859501923078,
        "criterion_parts": {
         "pooled": 0.5162944896084016,
-        "unit": 0.534572726577029
+        "unit": 0.5434859501923078
        },
        "n_min": 79211,
        "reading": "못함"
@@ -5235,7 +5259,7 @@
       },
       "n": 119763,
       "reading": "이 자리에서는 판정 없이도 같았다",
-      "where": "가르지 못함",
+      "where": "정할 수 없음(3단계 기록의 문구를 바꿔 적음)",
       "src": "S3/tables/sup.json: rows.B173nb_b10/LoD2.metrics.prior_error_inflow"
      },
      "missing_agreement_completeness": {

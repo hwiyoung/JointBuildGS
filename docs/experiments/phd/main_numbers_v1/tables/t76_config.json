@@ -1,0 +1,1279 @@
+{
+ "task": "PHD-MAIN-NUMBERS-v1",
+ "section": "공통 (order 5.6)",
+ "made": "2026-10-16 10:29:33 KST",
+ "script": "scripts/phd/main_numbers_v1/common_cfg.py",
+ "columns": [
+  "B0_b10/LoD2",
+  "B0_b10/ALS",
+  "B173nb_b10/LoD2",
+  "B173nb_b10/ALS",
+  "R1rep_b10/LoD2",
+  "R1rep_b10/ALS",
+  "B173_b0/LoD2",
+  "B173_b0/ALS",
+  "conds"
+ ],
+ "table": {
+  "본 방법 (prop, 씨앗 0 · 1)": {
+   "B0_b10/LoD2": {
+    "text": "2회 · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "2회 · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "2회 · 끝남 · 0단계 학습(r12)",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "0단계 학습(r12)"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "2회 · 끝남 · 0단계 학습(r12)",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "0단계 학습(r12)"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "2회 · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "2회 · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "6회(그 가운데 메모리 부족 4) · 끝남 · r12, r14(고침)",
+    "attempts": 6,
+    "states": [
+     "GPU 메모리 부족",
+     "GPU 메모리 부족",
+     "GPU 메모리 부족",
+     "GPU 메모리 부족",
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12",
+     "r14(고침)"
+    ],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "2회 · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "conds": {
+    "text": "9회(그 가운데 메모리 부족 2) · 끝남 · r13(2단계 짝), r15, r15 + cull3 래스터라이저",
+    "attempts": 9,
+    "states": [
+     "끝남",
+     "끝남",
+     "끝남",
+     "GPU 메모리 부족",
+     "GPU 메모리 부족",
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r13(2단계 짝)",
+     "r15",
+     "r15 + cull3 래스터라이저"
+    ],
+    "notes": []
+   }
+  },
+  "영상만 (imgonly; 한 학습을 두 사전 정보 단위에서 셈)": {
+   "B0_b10/LoD2": {
+    "text": "2회(그 가운데 메모리 부족 1) · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "GPU 메모리 부족"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "2회(그 가운데 메모리 부족 1) · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "GPU 메모리 부족"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "2회 · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "2회 · 끝남 · r12",
+    "attempts": 2,
+    "states": [
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "1회 · 끝남 · r12",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "1회 · 끝남 · r12",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "3회(그 가운데 메모리 부족 3) · 결과 없음 · r12, r14(고침)",
+    "attempts": 3,
+    "states": [
+     "GPU 메모리 부족",
+     "GPU 메모리 부족",
+     "GPU 메모리 부족"
+    ],
+    "codes": [
+     "r12",
+     "r14(고침)"
+    ],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "3회(그 가운데 메모리 부족 3) · 결과 없음 · r12, r14(고침)",
+    "attempts": 3,
+    "states": [
+     "GPU 메모리 부족",
+     "GPU 메모리 부족",
+     "GPU 메모리 부족"
+    ],
+    "codes": [
+     "r12",
+     "r14(고침)"
+    ],
+    "notes": []
+   },
+   "conds": {
+    "text": "7회 · 끝남 · r15",
+    "attempts": 7,
+    "states": [
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r15"
+    ],
+    "notes": []
+   }
+  },
+  "사전 정보 신뢰 (trust_ALS)": {
+   "B0_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "1회 · 끝남 · r12(판정·구간 끔)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12(판정·구간 끔)"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "1회 · 끝남 · r12(판정·구간 끔)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12(판정·구간 끔)"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "1회 · 끝남 · r12(판정·구간 끔)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12(판정·구간 끔)"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "1회 · 끝남 · r12(판정·구간 끔)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12(판정·구간 끔)"
+    ],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "항공 LiDAR 1배 (prop_ALS1x_s0)": {
+   "B0_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "1회 · 끝남 · r12",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "1회 · 끝남 · r12",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r12"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "판정만 끈 본 방법 (nojudge)": {
+   "B0_b10/LoD2": {
+    "text": "1회 · 끝남 · r15",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r15"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "1회 · 끝남 · r15",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r15"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "1회 · 끝남 · r15",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r15"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "1회 · 끝남 · r15",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r15"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "1회 · 끝남 · r15",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r15"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "1회 · 끝남 · r15",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r15"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "갈아 끼운 결합 (judgefuse; 학습 없음)": {
+   "B0_b10/LoD2": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "학습 없음 · 끝남 · judgefuse",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "judgefuse"
+    ],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "장치를 끈 학습과 값을 바꾼 학습 (2단계, 고침, 3단계 다시 시도)": {
+   "B0_b10/LoD2": {
+    "text": "1회 · 끝남 · r13(abl_densj_LoD2_s0)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r13(abl_densj_LoD2_s0)"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "8회(그 가운데 메모리 부족 3) · 끝남 · r13(abl_mask_LoD2_s0), r13(abl_prop_LoD2_s0), r13(abl_prot_LoD2_s0), r13(sens_e1000_LoD2_s0), r13(sens_e250_LoD2_s0), r13(sens_enone_LoD2_s0), r14(고침: abl_prop_LoD2_s0), r15(3단계 다시 시도: abl_prop_LoD2_s0)",
+    "attempts": 8,
+    "states": [
+     "끝남",
+     "GPU 메모리 부족",
+     "GPU 메모리 부족",
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남",
+     "GPU 메모리 부족"
+    ],
+    "codes": [
+     "r13(abl_mask_LoD2_s0)",
+     "r13(abl_prop_LoD2_s0)",
+     "r13(abl_prot_LoD2_s0)",
+     "r13(sens_e1000_LoD2_s0)",
+     "r13(sens_e250_LoD2_s0)",
+     "r13(sens_enone_LoD2_s0)",
+     "r14(고침: abl_prop_LoD2_s0)",
+     "r15(3단계 다시 시도: abl_prop_LoD2_s0)"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "1회 · 끝남 · r13(abl_band_ALS_s0)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "r13(abl_band_ALS_s0)"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "6회(그 가운데 메모리 부족 2) · 끝남 · r13(abl_band_LoD2_s0), r13(abl_lossj_LoD2_s0), r13(sens_trunc2_LoD2_s0), r13(sens_trunc8_LoD2_s0), r14(고침: sens_trunc8_LoD2_s0), r15(3단계 다시 시도: sens_trunc8_LoD2_s0)",
+    "attempts": 6,
+    "states": [
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남",
+     "GPU 메모리 부족",
+     "GPU 메모리 부족"
+    ],
+    "codes": [
+     "r13(abl_band_LoD2_s0)",
+     "r13(abl_lossj_LoD2_s0)",
+     "r13(sens_trunc2_LoD2_s0)",
+     "r13(sens_trunc8_LoD2_s0)",
+     "r14(고침: sens_trunc8_LoD2_s0)",
+     "r15(3단계 다시 시도: sens_trunc8_LoD2_s0)"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "3회(그 가운데 메모리 부족 1) · 끝남 · r13(abl_initx_ALS_s0), r13(abl_mask_ALS_s0), r13(abl_prop_ALS_s0)",
+    "attempts": 3,
+    "states": [
+     "GPU 메모리 부족",
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r13(abl_initx_ALS_s0)",
+     "r13(abl_mask_ALS_s0)",
+     "r13(abl_prop_ALS_s0)"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "conds": {
+    "text": "3회 · 끝남 · r13(abl_prop_LoD2_s0), r13(abl_prot_LoD2_s0), r13(sens_dist05_LoD2_s0)",
+    "attempts": 3,
+    "states": [
+     "끝남",
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "r13(abl_prop_LoD2_s0)",
+     "r13(abl_prot_LoD2_s0)",
+     "r13(sens_dist05_LoD2_s0)"
+    ],
+    "notes": []
+   }
+  },
+  "2DGS (imgonly_2dgs_s0; 한 학습을 두 단위에서 셈)": {
+   "B0_b10/LoD2": {
+    "text": "1회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "1회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "1회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "1회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "1회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "1회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "2회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1 · 첫 시도 메모리 부족 뒤 2번째에 끝남",
+    "attempts": 2,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": [
+     "첫 시도 메모리 부족 뒤 2번째에 끝남"
+    ]
+   },
+   "B173_b0/ALS": {
+    "text": "2회 · 끝남 · 2DGS f3e3b9f + 어댑터 v1 · 첫 시도 메모리 부족 뒤 2번째에 끝남",
+    "attempts": 2,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "2DGS f3e3b9f + 어댑터 v1"
+    ],
+    "notes": [
+     "첫 시도 메모리 부족 뒤 2번째에 끝남"
+    ]
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "GeoGS LoD2 1단계 판 (trust_LoD2)": {
+   "B0_b10/LoD2": {
+    "text": "1회 · 끝남 · GeoGS db40c95 + 어댑터 둘",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "GeoGS db40c95 + 어댑터 둘"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "1회 · 끝남 · GeoGS db40c95 + 어댑터 둘",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "GeoGS db40c95 + 어댑터 둘"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "1회 · 끝남 · GeoGS db40c95 + 어댑터 둘",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "GeoGS db40c95 + 어댑터 둘"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "1회 · 끝남 · GeoGS db40c95 + 어댑터 둘",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "GeoGS db40c95 + 어댑터 둘"
+    ],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "GeoGS LoD2 고친 판 (trust_LoD2_fix1)": {
+   "B0_b10/LoD2": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1) · 후처리는 3단계 5.0에서 혼자 다시 함",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": [
+     "후처리는 3단계 5.0에서 혼자 다시 함"
+    ]
+   },
+   "R1rep_b10/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "conds": {
+    "text": "6회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 6,
+    "states": [
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남",
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   }
+  },
+  "GeoGS 항공 LiDAR (geogs_ALS_fix1)": {
+   "B0_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "1회 · 끝남 · 고친 GeoGS(fix1)",
+    "attempts": 1,
+    "states": [
+     "끝남"
+    ],
+    "codes": [
+     "고친 GeoGS(fix1)"
+    ],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "결합 (mvsfuse; 학습 없음)": {
+   "B0_b10/LoD2": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "학습 없음 · 끝남 · Zhou 외 2020 재현",
+    "attempts": 0,
+    "states": [
+     "끝남(학습 없음)"
+    ],
+    "codes": [
+     "Zhou 외 2020 재현"
+    ],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  },
+  "CDGS": {
+   "B0_b10/LoD2": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "B0_b10/ALS": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/LoD2": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "B173nb_b10/ALS": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/LoD2": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "R1rep_b10/ALS": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "B173_b0/LoD2": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "B173_b0/ALS": {
+    "text": "채우기 일 1·9",
+    "attempts": 0,
+    "states": [
+     "채우기"
+    ],
+    "codes": [
+     "채우기(PHD-MAIN-FILL-v1)"
+    ],
+    "notes": []
+   },
+   "conds": {
+    "text": "—",
+    "attempts": 0,
+    "states": [],
+    "codes": [],
+    "notes": []
+   }
+  }
+ },
+ "sources": [
+  "S1/tables/final_extra.json times",
+  "S2/tables/final_runs.json",
+  "SF/tables/fix_runs.json",
+  "SF/tables/fix_r14_status.json",
+  "S3/tables/times.json",
+  "SB/tables/status.json"
+ ],
+ "scientific_verdict": null
+}

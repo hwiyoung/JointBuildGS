@@ -1,6 +1,6 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
- "made": "2026-10-16 09:55:54 KST",
+ "made": "2026-10-16 10:35:09 KST",
  "script": "scripts/phd/main_numbers_v1/check6.py",
  "rows": [
   {
@@ -188,7 +188,7 @@
     "2.2"
    ],
    "bundle_unrounded": [
-    "2.1799999999999997500"
+    "2.1800"
    ],
    "bundle_text": "2.180 (씨앗 2.22, 2.14; 32,634점)",
    "verdict": "같음",
@@ -208,9 +208,9 @@
     "2.3"
    ],
    "bundle_unrounded": [
-    "2.32500"
+    "2.3268035697937011500"
    ],
-   "bundle_text": "2.325 (씨앗 2.35, 2.30; 35,345점)",
+   "bundle_text": "2.327 (씨앗 2.35, 2.30; 35,345점)",
    "verdict": "같음",
    "src": "S2/measure/B173nb_b10/ALS__prop_ALS_s0.json: condition3.new.nmad; S2/measure/B173nb_b10/ALS__prop_ALS_s1.json: condition3.new.nmad",
    "cells": [
@@ -218,7 +218,7 @@
     "t76|B173nb_b10/ALS|method"
    ],
    "unit": "cm",
-   "note": null
+   "note": "저장값 2.35 cm는 반올림 경계라 측정 행에서 반올림 전 값 2.3536 cm를 다시 구해 맞대었다"
   },
   {
    "section": "7.1",
@@ -267,16 +267,16 @@
     "1.8"
    ],
    "bundle_unrounded": [
-    "1.7500"
+    "1.748167648315429600"
    ],
-   "bundle_text": "1.75 (35,345점)",
-   "verdict": "같음",
+   "bundle_text": "1.7482 (저장값 1.75; 35,345점)",
+   "verdict": "어긋남(저장값의 반올림 경계)",
    "src": "S2/measure/B173nb_b10/ALS__samepath_ALS.json: condition3.new.nmad",
    "cells": [
     "t73d|B173nb_b10/ALS|prior"
    ],
    "unit": "cm",
-   "note": null
+   "note": "저장값 1.75 cm는 반올림 경계라 측정 행에서 반올림 전 값 1.7482 cm를 다시 구해 맞대었다"
   },
   {
    "section": "7.1",
@@ -295,7 +295,7 @@
     "t73d|R1rep_b10/LoD2|prior"
    ],
    "unit": "cm",
-   "note": "반올림 전 값으로 한 자리 반올림하면 기록 17.8과 같다. 4자리로 저장한 17.85를 다시 반올림하면 17.9가 된다"
+   "note": "반올림 전 값으로 한 자리 반올림하면 기록 17.8과 같다. 4자리로 저장한 17.85를 다시 반올림하면 17.9가 된다. 저장값 17.85 cm는 반올림 경계라 측정 행에서 반올림 전 값 17.8476 cm를 다시 구해 맞대었다"
   },
   {
    "section": "7.1",
@@ -789,7 +789,7 @@
     "4.9"
    ],
    "bundle_unrounded": [
-    "4.93999999999999900"
+    "4.9400"
    ],
    "bundle_text": "4.94 (74,553점)",
    "verdict": "같음",
@@ -1571,7 +1571,9 @@
    "bundle_text": "3.55 · 9.19 (참 라벨 넓이 4116.1 m²)",
    "verdict": "어긋남(반올림 방식만)",
    "src": "S2/prep/workload.json: units.B173nb_b10/LoD2.mask.judgment_default",
-   "cells": [],
+   "cells": [
+    "t72w|B173nb_b10/LoD2|default"
+   ],
    "unit": "%",
    "note": null
   },
@@ -1590,7 +1592,9 @@
    "bundle_text": "7.11 · 6.77",
    "verdict": "같음",
    "src": "S2/prep/workload.json: units.B173nb_b10/LoD2.mask.judgment_maskoff",
-   "cells": [],
+   "cells": [
+    "t72w|B173nb_b10/LoD2|maskoff"
+   ],
    "unit": "%",
    "note": null
   },
@@ -1609,7 +1613,9 @@
    "bundle_text": "27.88 · 0.45 (참 라벨 넓이 1524.6 m²)",
    "verdict": "같음",
    "src": "S2/prep/workload.json: units.R1rep_b10/ALS.mask.judgment_default",
-   "cells": [],
+   "cells": [
+    "t72w|R1rep_b10/ALS|default"
+   ],
    "unit": "%",
    "note": null
   },
@@ -1628,7 +1634,9 @@
    "bundle_text": "38.84 · 0.24",
    "verdict": "같음",
    "src": "S2/prep/workload.json: units.R1rep_b10/ALS.mask.judgment_maskoff",
-   "cells": [],
+   "cells": [
+    "t72w|R1rep_b10/ALS|maskoff"
+   ],
    "unit": "%",
    "note": null
   },
@@ -2053,6 +2061,8 @@
   }
  ],
  "mismatch_cells": [
+  "t72w|B173nb_b10/LoD2|default",
+  "t73d|B173nb_b10/ALS|prior",
   "t75|B173nb_b10/LoD2|imgonly",
   "t7p|blob|prop_LoD2_s1"
  ],
