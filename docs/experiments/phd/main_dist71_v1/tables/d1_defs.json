@@ -1,0 +1,761 @@
+{
+ "task": "PHD-MAIN-DIST71-v1",
+ "work": "일 1",
+ "made": "2026-10-17 00:45:44 KST",
+ "script": "scripts/phd/main_dist71_v1/d1_defs.py",
+ "meshes": [
+  {
+   "case": "B0 · LoD2",
+   "method": "본 방법",
+   "result": "prop_LoD2_s0",
+   "training": "S1/stage1/B0_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 0.93,
+   "virtual": "S1/stage1/B0_b10/prop_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B0 · LoD2",
+   "method": "본 방법",
+   "result": "prop_LoD2_s1",
+   "training": "S1/stage1/B0_b10/prop_LoD2_s1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 0.93,
+   "virtual": "S1/stage1/B0_b10/prop_LoD2_s1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B0 · LoD2",
+   "method": "2DGS",
+   "result": "imgonly_2dgs_s0",
+   "training": "SB/runs/B0_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.91,
+   "virtual": "SB/runs/B0_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "B0 · LoD2",
+   "method": "GeoGS",
+   "result": "trust_LoD2_fix1",
+   "training": "SF/runs/B0_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.61,
+   "virtual": "SF/runs/B0_b10/trust_LoD2_fix1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SF/runs (고침 묶음)"
+  },
+  {
+   "case": "B0 · LoD2",
+   "method": "결합",
+   "result": "mvsfuse_LoD2",
+   "training": "SB/runs/B0_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 0.73,
+   "virtual": "SL/work/virtual/B0_b10/mvsfuse_LoD2/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "B0 · LoD2",
+   "method": "CDGS",
+   "result": "cdgsnofit_LoD2_s0",
+   "training": "SL/runs/B0_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+   "training_exists": false,
+   "training_gb": null,
+   "virtual": "SL/runs/B0_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SL/runs (빈칸 채우기 일 1·9)"
+  },
+  {
+   "case": "B0 · LoD2",
+   "method": "사전 정보",
+   "result": "samepath_LoD2",
+   "training": "S1/stage1/B0_b10/samepath_LoD2/mesh.ply",
+   "training_exists": true,
+   "training_gb": 0.28,
+   "virtual": "SL/work/virtual/B0_b10/samepath_LoD2/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "method": "본 방법",
+   "result": "prop_ALS_s0",
+   "training": "S1/stage1/B0_b10/prop_ALS_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 0.9,
+   "virtual": "S1/stage1/B0_b10/prop_ALS_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "method": "본 방법",
+   "result": "prop_ALS_s1",
+   "training": "S1/stage1/B0_b10/prop_ALS_s1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 0.9,
+   "virtual": "S1/stage1/B0_b10/prop_ALS_s1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "method": "2DGS",
+   "result": "imgonly_2dgs_s0",
+   "training": "SB/runs/B0_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.91,
+   "virtual": "SB/runs/B0_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "training": "SB/runs/B0_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 2.03,
+   "virtual": "SB/runs/B0_b10/geogs_ALS_fix1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "method": "결합",
+   "result": "mvsfuse_ALS",
+   "training": "SB/runs/B0_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.01,
+   "virtual": "SL/work/virtual/B0_b10/mvsfuse_ALS/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "method": "CDGS",
+   "result": "cdgsnofit_ALS_s0",
+   "training": "SL/runs/B0_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+   "training_exists": false,
+   "training_gb": null,
+   "virtual": "SL/runs/B0_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SL/runs (빈칸 채우기 일 1·9)"
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "method": "사전 정보",
+   "result": "samepath_ALS",
+   "training": "S1/stage1/B0_b10/samepath_ALS/mesh.ply",
+   "training_exists": true,
+   "training_gb": 0.86,
+   "virtual": "SL/work/virtual/B0_b10/samepath_ALS/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "method": "본 방법",
+   "result": "prop_LoD2_s0",
+   "training": "S0/stage0/b1_LoD2/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.02,
+   "virtual": "MF/virtual/option2/b1_LoD2/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "method": "본 방법",
+   "result": "prop_LoD2_s1",
+   "training": "S0/stage0/b2_LoD2/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.02,
+   "virtual": "MF/virtual/option2/b2_LoD2/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "method": "2DGS",
+   "result": "imgonly_2dgs_s0",
+   "training": "SB/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.51,
+   "virtual": "SB/runs/B173nb_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "method": "GeoGS",
+   "result": "trust_LoD2_fix1",
+   "training": "SF/runs/B173nb_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.55,
+   "virtual": "SF/runs/B173nb_b10/trust_LoD2_fix1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "SF/runs (고침 묶음)"
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "method": "결합",
+   "result": "mvsfuse_LoD2",
+   "training": "SB/runs/B173nb_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 0.89,
+   "virtual": "SL/work/virtual/B173nb_b10/mvsfuse_LoD2/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "SB/runs; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "method": "CDGS",
+   "result": "cdgsnofit_LoD2_s0",
+   "training": "SL/runs/B173nb_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+   "training_exists": false,
+   "training_gb": null,
+   "virtual": "SL/runs/B173nb_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SL/runs (빈칸 채우기 일 1·9)"
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "method": "사전 정보",
+   "result": "samepath_LoD2",
+   "training": "MT/gpu/samepath_LoD2/mesh.ply",
+   "training_exists": true,
+   "training_gb": 0.45,
+   "virtual": "SL/work/virtual/B173nb_b10/samepath_LoD2/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "metrics_s1.result_paths; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "본 방법",
+   "result": "prop_ALS_s0",
+   "training": "S0/stage0/b1_ALS/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.0,
+   "virtual": "MF/virtual/option2/b1_ALS/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "본 방법",
+   "result": "prop_ALS_s1",
+   "training": "S0/stage0/b2_ALS/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.01,
+   "virtual": "MF/virtual/option2/b2_ALS/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "2DGS",
+   "result": "imgonly_2dgs_s0",
+   "training": "SB/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.51,
+   "virtual": "SB/runs/B173nb_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "training": "SB/runs/B173nb_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.56,
+   "virtual": "SB/runs/B173nb_b10/geogs_ALS_fix1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "결합",
+   "result": "mvsfuse_ALS",
+   "training": "SB/runs/B173nb_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.09,
+   "virtual": "SL/work/virtual/B173nb_b10/mvsfuse_ALS/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "SB/runs; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "CDGS",
+   "result": "cdgsnofit_ALS_s0",
+   "training": "SL/runs/B173nb_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+   "training_exists": false,
+   "training_gb": null,
+   "virtual": "SL/runs/B173nb_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SL/runs (빈칸 채우기 일 1·9)"
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "사전 정보",
+   "result": "samepath_ALS",
+   "training": "MT/gpu/samepath_ALS/mesh.ply",
+   "training_exists": true,
+   "training_gb": 0.94,
+   "virtual": "SL/work/virtual/B173nb_b10/samepath_ALS/mesh_virtual.ply",
+   "virtual_exists": true,
+   "source": "metrics_s1.result_paths; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "R1 · LoD2",
+   "method": "본 방법",
+   "result": "prop_LoD2_s0",
+   "training": "S1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.08,
+   "virtual": "S1/stage1/R1rep_b10/prop_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "R1 · LoD2",
+   "method": "본 방법",
+   "result": "prop_LoD2_s1",
+   "training": "S1/stage1/R1rep_b10/prop_LoD2_s1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.09,
+   "virtual": "S1/stage1/R1rep_b10/prop_LoD2_s1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "R1 · LoD2",
+   "method": "2DGS",
+   "result": "imgonly_2dgs_s0",
+   "training": "SB/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 2.17,
+   "virtual": "SB/runs/R1rep_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "R1 · LoD2",
+   "method": "GeoGS",
+   "result": "trust_LoD2_fix1",
+   "training": "SF/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 2.07,
+   "virtual": "SF/runs/R1rep_b10/trust_LoD2_fix1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SF/runs (고침 묶음); R1의 post는 3단계 5.0이 혼자 다시 한 후처리(10-13 23:58)"
+  },
+  {
+   "case": "R1 · LoD2",
+   "method": "결합",
+   "result": "mvsfuse_LoD2",
+   "training": "SB/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.09,
+   "virtual": "SL/work/virtual/R1rep_b10/mvsfuse_LoD2/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "R1 · LoD2",
+   "method": "CDGS",
+   "result": "cdgsnofit_LoD2_s0",
+   "training": "SL/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+   "training_exists": false,
+   "training_gb": null,
+   "virtual": "SL/runs/R1rep_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SL/runs (빈칸 채우기 일 1·9)"
+  },
+  {
+   "case": "R1 · LoD2",
+   "method": "사전 정보",
+   "result": "samepath_LoD2",
+   "training": "S1/stage1/R1rep_b10/samepath_LoD2/mesh.ply",
+   "training_exists": true,
+   "training_gb": 0.25,
+   "virtual": "SL/work/virtual/R1rep_b10/samepath_LoD2/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "method": "본 방법",
+   "result": "prop_ALS_s0",
+   "training": "S1/stage1/R1rep_b10/prop_ALS_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.01,
+   "virtual": "S1/stage1/R1rep_b10/prop_ALS_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "method": "본 방법",
+   "result": "prop_ALS_s1",
+   "training": "S1/stage1/R1rep_b10/prop_ALS_s1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.04,
+   "virtual": "S1/stage1/R1rep_b10/prop_ALS_s1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths"
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "method": "2DGS",
+   "result": "imgonly_2dgs_s0",
+   "training": "SB/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 2.17,
+   "virtual": "SB/runs/R1rep_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "training": "SB/runs/R1rep_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.91,
+   "virtual": "SB/runs/R1rep_b10/geogs_ALS_fix1/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs (비교 방법 묶음)"
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "method": "결합",
+   "result": "mvsfuse_ALS",
+   "training": "SB/runs/R1rep_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+   "training_exists": true,
+   "training_gb": 1.07,
+   "virtual": "SL/work/virtual/R1rep_b10/mvsfuse_ALS/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SB/runs; 가상 시점은 채우기 일 6"
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "method": "CDGS",
+   "result": "cdgsnofit_ALS_s0",
+   "training": "SL/runs/R1rep_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+   "training_exists": false,
+   "training_gb": null,
+   "virtual": "SL/runs/R1rep_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "SL/runs (빈칸 채우기 일 1·9)"
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "method": "사전 정보",
+   "result": "samepath_ALS",
+   "training": "S1/stage1/R1rep_b10/samepath_ALS/mesh.ply",
+   "training_exists": true,
+   "training_gb": 0.86,
+   "virtual": "SL/work/virtual/R1rep_b10/samepath_ALS/mesh_virtual.ply",
+   "virtual_exists": false,
+   "source": "metrics_s1.result_paths; 가상 시점은 채우기 일 6"
+  }
+ ],
+ "missing": [
+  "B0 · LoD2 · CDGS 학습 시점 메시 (cdgsnofit_LoD2_s0)",
+  "B0 · 항공 LiDAR · CDGS 학습 시점 메시 (cdgsnofit_ALS_s0)",
+  "B173 주변 · LoD2 · CDGS 학습 시점 메시 (cdgsnofit_LoD2_s0)",
+  "B173 주변 · 항공 LiDAR · CDGS 학습 시점 메시 (cdgsnofit_ALS_s0)",
+  "R1 · LoD2 · CDGS 학습 시점 메시 (cdgsnofit_LoD2_s0)",
+  "R1 · 항공 LiDAR · CDGS 학습 시점 메시 (cdgsnofit_ALS_s0)"
+ ],
+ "gt": {
+  "B0_b10": {
+   "gt_points": {
+    "points": 26994350,
+    "in_eval": 2236666,
+    "excluded_in_eval": 49263,
+    "use": 2187403,
+    "roof": 1580004,
+    "wall": 267226
+   },
+   "gt_primary": {
+    "points": 4709500,
+    "in_eval": 4709500,
+    "excluded_in_eval": 101824,
+    "use": 4607676,
+    "roof": 1629960,
+    "wall": 2680095
+   },
+   "scene_points": 2063378,
+   "b0_label_source": {
+    "LoD2": {
+     "coded_patches": 65105,
+     "from_uls": 13990,
+     "from_primary": 51115
+    },
+    "ALS": {
+     "coded_patches": 23113,
+     "from_uls": 7692,
+     "from_primary": 15421
+    }
+   }
+  },
+  "B173nb_b10": {
+   "gt_points": {
+    "points": 37798404,
+    "in_eval": 5424718,
+    "excluded_in_eval": 706973,
+    "use": 4717745,
+    "roof": 3311093,
+    "wall": 412552
+   },
+   "scene_points": 3881308
+  },
+  "R1rep_b10": {
+   "gt_points": {
+    "points": 36405930,
+    "in_eval": 3740905,
+    "excluded_in_eval": 775324,
+    "use": 2965581,
+    "roof": 2070793,
+    "wall": 481565
+   },
+   "scene_points": 2667737
+  }
+ },
+ "mapping": {
+  "B0_b10/LoD2": {
+   "scene_points": 2063378,
+   "scene_with_patch": 1739696,
+   "scene_share": 0.8431,
+   "scene_two_owners": 1899,
+   "owner_file": "S1/v3/box_gt/B0_b10/gt_owner_uls_LoD2.npz",
+   "gt_points": {
+    "rows": 811943,
+    "roof_wall_points": 1847230,
+    "share": 0.4395,
+    "roof_share": 0.4559,
+    "wall_share": 0.3429
+   },
+   "gt_primary": {
+    "rows": 3774088,
+    "roof_wall_points": 4310055,
+    "share": 0.8756,
+    "roof_share": 0.7649,
+    "wall_share": 0.943
+   }
+  },
+  "B0_b10/ALS": {
+   "scene_points": 2063378,
+   "scene_with_patch": 1378138,
+   "scene_share": 0.6679,
+   "scene_two_owners": 0,
+   "owner_file": "S1/v3/box_gt/B0_b10/gt_owner_uls_ALS.npz",
+   "gt_points": {
+    "rows": 654436,
+    "roof_wall_points": 1847230,
+    "share": 0.3543,
+    "roof_share": 0.4142,
+    "wall_share": 0.0
+   },
+   "gt_primary": {
+    "rows": 1108969,
+    "roof_wall_points": 4310055,
+    "share": 0.2573,
+    "roof_share": 0.6804,
+    "wall_share": 0.0
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "scene_points": 3881308,
+   "scene_with_patch": 3537798,
+   "scene_share": 0.9115,
+   "scene_two_owners": 61322,
+   "owner_file": "S1/v3/box_gt/B173nb_b10/gt_owner_LoD2.npz",
+   "gt_points": {
+    "rows": 3529247,
+    "roof_wall_points": 3723645,
+    "share": 0.9478,
+    "roof_share": 0.9565,
+    "wall_share": 0.8781
+   }
+  },
+  "B173nb_b10/ALS": {
+   "scene_points": 3881308,
+   "scene_with_patch": 2947910,
+   "scene_share": 0.7595,
+   "scene_two_owners": 0,
+   "owner_file": "S1/v3/box_gt/B173nb_b10/gt_owner_ALS.npz",
+   "gt_points": {
+    "rows": 2902426,
+    "roof_wall_points": 3723645,
+    "share": 0.7795,
+    "roof_share": 0.8766,
+    "wall_share": 0.0
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "scene_points": 2667737,
+   "scene_with_patch": 2348309,
+   "scene_share": 0.8803,
+   "scene_two_owners": 106051,
+   "owner_file": "S1/v3/box_gt/R1rep_b10/gt_owner_LoD2.npz",
+   "gt_points": {
+    "rows": 2153823,
+    "roof_wall_points": 2552358,
+    "share": 0.8439,
+    "roof_share": 0.9196,
+    "wall_share": 0.518
+   }
+  },
+  "R1rep_b10/ALS": {
+   "scene_points": 2667737,
+   "scene_with_patch": 1717898,
+   "scene_share": 0.644,
+   "scene_two_owners": 0,
+   "owner_file": "S1/v3/box_gt/R1rep_b10/gt_owner_ALS.npz",
+   "gt_points": {
+    "rows": 1689584,
+    "roof_wall_points": 2552358,
+    "share": 0.662,
+    "roof_share": 0.8159,
+    "wall_share": 0.0
+   }
+  }
+ },
+ "misfit": {
+  "B0_b10/LoD2": {
+   "labelled": 95456,
+   "label_equals_rule": 95456,
+   "code11": 6421,
+   "code11_ratio_ge_1": 6421,
+   "code2_ratio_le_1": 52164,
+   "code2": 52164
+  },
+  "B0_b10/ALS": {
+   "labelled": 44794,
+   "label_equals_rule": 44794,
+   "code11": 80,
+   "code11_ratio_ge_1": 80,
+   "code2_ratio_le_1": 21870,
+   "code2": 21870
+  },
+  "B173nb_b10/LoD2": {
+   "labelled": 136463,
+   "label_equals_rule": 136463,
+   "code11": 21741,
+   "code11_ratio_ge_1": 21741,
+   "code2_ratio_le_1": 32128,
+   "code2": 32128
+  },
+  "B173nb_b10/ALS": {
+   "labelled": 76125,
+   "label_equals_rule": 76125,
+   "code11": 15279,
+   "code11_ratio_ge_1": 15279,
+   "code2_ratio_le_1": 10142,
+   "code2": 10142
+  },
+  "R1rep_b10/LoD2": {
+   "labelled": 86537,
+   "label_equals_rule": 86537,
+   "code11": 11518,
+   "code11_ratio_ge_1": 11518,
+   "code2_ratio_le_1": 19586,
+   "code2": 19586
+  },
+  "R1rep_b10/ALS": {
+   "labelled": 45825,
+   "label_equals_rule": 45825,
+   "code11": 177,
+   "code11_ratio_ge_1": 177,
+   "code2_ratio_le_1": 17807,
+   "code2": 17807
+  }
+ },
+ "normals": {
+  "gt": {
+   "B0_b10": {
+    "ULS": {
+     "points": 2187403,
+     "no_normal": 411,
+     "median_neighbours": 644
+    },
+    "primary": {
+     "points": 4607676,
+     "no_normal": 952,
+     "median_neighbours": 1142
+    }
+   },
+   "B173nb_b10": {
+    "ULS": {
+     "points": 4717745,
+     "no_normal": 1198,
+     "median_neighbours": 885
+    }
+   },
+   "R1rep_b10": {
+    "ULS": {
+     "points": 2965581,
+     "no_normal": 791,
+     "median_neighbours": 763
+    }
+   }
+  },
+  "patch": {
+   "B0_b10/LoD2": {
+    "roof_patches": 27182,
+    "roof_nz_negative": 0,
+    "wall_patches": 37923,
+    "wall_outward": 37923,
+    "wall_inward": 0,
+    "wall_unclear": 0,
+    "wall_no_footprint": 0,
+    "wall_outward_share": 1.0
+   },
+   "B0_b10/ALS": {
+    "roof_patches": 23113,
+    "roof_nz_negative": 0,
+    "wall_patches": 0
+   },
+   "B173nb_b10/LoD2": {
+    "roof_patches": 40232,
+    "roof_nz_negative": 0,
+    "wall_patches": 25626,
+    "wall_outward": 20015,
+    "wall_inward": 3,
+    "wall_unclear": 5608,
+    "wall_no_footprint": 0,
+    "wall_outward_share": 0.781
+   },
+   "B173nb_b10/ALS": {
+    "roof_patches": 30956,
+    "roof_nz_negative": 0,
+    "wall_patches": 0
+   },
+   "R1rep_b10/LoD2": {
+    "roof_patches": 29920,
+    "roof_nz_negative": 0,
+    "wall_patches": 12130,
+    "wall_outward": 8643,
+    "wall_inward": 0,
+    "wall_unclear": 3487,
+    "wall_no_footprint": 0,
+    "wall_outward_share": 0.7125
+   },
+   "R1rep_b10/ALS": {
+    "roof_patches": 22948,
+    "roof_nz_negative": 0,
+    "wall_patches": 0
+   }
+  }
+ },
+ "scientific_verdict": null
+}
