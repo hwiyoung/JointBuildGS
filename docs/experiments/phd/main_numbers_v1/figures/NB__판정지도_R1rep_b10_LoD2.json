@@ -1,0 +1,93 @@
+{
+ "task": "PHD-MAIN-NUMBERS-v1",
+ "figure": "NB__판정지도_R1rep_b10_LoD2",
+ "made": "2026-10-16 10:03:30 KST",
+ "script": "scripts/phd/main_numbers_v1/t72_map.py",
+ "title": "R1 · LoD2: 바뀐 곳을 본 방법의 판정과 결합의 판정은 어디서 잡았는가",
+ "place": "평가 범위 전체",
+ "numbers": {
+  "method_changed": 0.93115054696996,
+  "method_right_flagged": 0.1061983049116716,
+  "fusion_changed_walls_not_judged": 0.33200208369508594,
+  "fusion_right_flagged_walls_not_judged": 0.020678035331359135,
+  "fusion_changed_walls_left_out": 0.368684920940995,
+  "fusion_right_flagged_walls_left_out": 0.024412296564195298,
+  "fusion_changed_as_recorded": 0.4043236673033513,
+  "fusion_right_flagged_as_recorded": 0.03997753497396099,
+  "code11_m2": 719.875,
+  "code2_m2": 1224.125,
+  "src": "NB/tables/t72.json: evaluation.R1rep_b10/LoD2, detection.R1rep_b10/LoD2"
+ },
+ "panels": [
+  {
+   "panel": "참값으로 정한 영역",
+   "areas_m2": {
+    "prior_right": 1647.56,
+    "prior_wrong": 980.56,
+    "other": 2312.75
+   },
+   "wall_cells_by_category": {
+    "prior_right": 133,
+    "prior_wrong": 130,
+    "other": 1413
+   }
+  },
+  {
+   "panel": "본 방법의 학습 전 판정",
+   "areas_m2": {
+    "agree": 1346.56,
+    "conflict": 3485.62,
+    "undet": 108.69
+   },
+   "wall_cells_by_category": {
+    "agree": 87,
+    "conflict": 1571,
+    "undet": 18
+   }
+  },
+  {
+   "panel": "MVS 기반 결합의 변화 판정",
+   "areas_m2": {
+    "nochange": 1543.0,
+    "change": 433.06,
+    "notjudged": 2964.81
+   },
+   "wall_cells_by_category": {
+    "nochange": 0,
+    "change": 0,
+    "notjudged": 1676
+   }
+  }
+ ],
+ "frame": "box frame u, v (s1_common.xy_to_uv), extent = evaluation range ± 1 m",
+ "categories": {
+  "참값으로 정한 영역": [
+   "prior_right",
+   "prior_wrong",
+   "other"
+  ],
+  "본 방법의 학습 전 판정": [
+   "agree",
+   "conflict",
+   "undet"
+  ],
+  "MVS 기반 결합의 변화 판정": [
+   "nochange",
+   "change",
+   "notjudged"
+  ]
+ },
+ "rules": [
+  "세 칸 같은 축척과 범위",
+  "벽 패치는 0.25 m 칸마다 넓이가 가장 큰 범주(같으면 뒤 범주)",
+  "결합 칸의 벽은 모두 판정 없음(결합은 가파른 사전 정보 화소를 판정하지 않음)",
+  "미판정 = 혼재, 근거 부족, 비가시(판정 없음)"
+ ],
+ "sources": {
+  "npz": "NB/work/t72_maps_R1rep_b10_LoD2.npz",
+  "region": "S1/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+  "judgment": "S0/s61/box/R1rep_b10/LoD2/units.npz J_loc",
+  "fusion": "SB/runs/R1rep_b10/mvsfuse_LoD2/detect/patches.npz"
+ },
+ "scientific_verdict": null
+}
