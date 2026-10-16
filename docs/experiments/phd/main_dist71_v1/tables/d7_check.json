@@ -1,0 +1,1975 @@
+{
+ "task": "PHD-MAIN-DIST71-v1",
+ "work": "일 7",
+ "made": "2026-10-17 01:27:27 KST",
+ "script": "scripts/phd/main_dist71_v1/d7_check.py",
+ "table_b": [
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "method",
+   "case": "B0 · LoD2",
+   "method": "본 방법",
+   "results": [
+    "prop_LoD2_s0",
+    "prop_LoD2_s1"
+   ],
+   "record": 63.5,
+   "stored_mean": 63.54,
+   "recount_old": 63.535482815584764,
+   "recount_new": 63.5787962839679,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.04331346838313266,
+   "per_result": [
+    {
+     "result": "prop_LoD2_s0",
+     "f1_old": 0.6367,
+     "stored_f1": 0.6367,
+     "f1_old_equals_stored": true,
+     "precision": 0.477,
+     "stored_precision": 0.477,
+     "precision_equals": true,
+     "recall_old": 0.9571,
+     "stored_recall": 0.9571,
+     "recall_equals": true,
+     "recall_new": 0.9591044394192436,
+     "f1_new": 0.6370913645845906,
+     "n_gt": 2063378,
+     "n_res": 2567130
+    },
+    {
+     "result": "prop_LoD2_s1",
+     "f1_old": 0.6341,
+     "stored_f1": 0.6341,
+     "f1_old_equals_stored": true,
+     "precision": 0.475,
+     "stored_precision": 0.475,
+     "precision_equals": true,
+     "recall_old": 0.9534,
+     "stored_recall": 0.9534,
+     "recall_equals": true,
+     "recall_new": 0.9553140529752667,
+     "f1_new": 0.6344845610947675,
+     "n_gt": 2063378,
+     "n_res": 2563494
+    }
+   ]
+  },
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "twodgs",
+   "case": "B0 · LoD2",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 31.1,
+   "stored_mean": 31.1,
+   "recount_old": 31.095058722352537,
+   "recount_new": 31.192876626715783,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.09781790436324656,
+   "per_result": [
+    {
+     "result": "imgonly_2dgs_s0",
+     "f1_old": 0.311,
+     "stored_f1": 0.311,
+     "f1_old_equals_stored": true,
+     "precision": 0.1959,
+     "stored_precision": 0.1959,
+     "precision_equals": true,
+     "recall_old": 0.7534,
+     "stored_recall": 0.7534,
+     "recall_equals": true,
+     "recall_new": 0.7650522589656379,
+     "f1_new": 0.3119287662671578,
+     "n_gt": 2063378,
+     "n_res": 5351408
+    }
+   ]
+  },
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "geogs",
+   "case": "B0 · LoD2",
+   "method": "GeoGS",
+   "results": [
+    "trust_LoD2_fix1"
+   ],
+   "record": 46.8,
+   "stored_mean": 46.79,
+   "recount_old": 46.79286671544219,
+   "recount_new": 47.25740723646685,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.46454052102465937,
+   "per_result": [
+    {
+     "result": "trust_LoD2_fix1",
+     "f1_old": 0.4679,
+     "stored_f1": 0.4679,
+     "f1_old_equals_stored": true,
+     "precision": 0.3411,
+     "stored_precision": 0.3411,
+     "precision_equals": true,
+     "recall_old": 0.7451,
+     "stored_recall": 0.7451,
+     "recall_equals": true,
+     "recall_new": 0.7692032191871775,
+     "f1_new": 0.4725740723646685,
+     "n_gt": 2063378,
+     "n_res": 3696585
+    }
+   ]
+  },
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "mvsfuse",
+   "case": "B0 · LoD2",
+   "method": "결합",
+   "results": [
+    "mvsfuse_LoD2"
+   ],
+   "record": 58.1,
+   "stored_mean": 58.10999999999999,
+   "recount_old": 58.109854727581656,
+   "recount_new": 58.32073319790616,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.21087847032450213,
+   "per_result": [
+    {
+     "result": "mvsfuse_LoD2",
+     "f1_old": 0.5811,
+     "stored_f1": 0.5811,
+     "f1_old_equals_stored": true,
+     "precision": 0.4645,
+     "stored_precision": 0.4645,
+     "precision_equals": true,
+     "recall_old": 0.776,
+     "stored_recall": 0.776,
+     "recall_equals": true,
+     "recall_new": 0.7835491121840011,
+     "f1_new": 0.5832073319790616,
+     "n_gt": 2063378,
+     "n_res": 2084482
+    }
+   ]
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "method",
+   "case": "B0 · 항공 LiDAR",
+   "method": "본 방법",
+   "results": [
+    "prop_ALS_s0",
+    "prop_ALS_s1"
+   ],
+   "record": 64.0,
+   "stored_mean": 64.03000000000002,
+   "recount_old": 64.03224990851969,
+   "recount_new": 64.07322361153788,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.040973703018195806,
+   "per_result": [
+    {
+     "result": "prop_ALS_s0",
+     "f1_old": 0.646,
+     "stored_f1": 0.646,
+     "f1_old_equals_stored": true,
+     "precision": 0.4868,
+     "stored_precision": 0.4868,
+     "precision_equals": true,
+     "recall_old": 0.96,
+     "stored_recall": 0.96,
+     "recall_equals": true,
+     "recall_new": 0.9618106813196613,
+     "f1_new": 0.6464232733074224,
+     "n_gt": 2063378,
+     "n_res": 2547127
+    },
+    {
+     "result": "prop_ALS_s1",
+     "f1_old": 0.6346,
+     "stored_f1": 0.6346,
+     "f1_old_equals_stored": true,
+     "precision": 0.4742,
+     "stored_precision": 0.4742,
+     "precision_equals": true,
+     "recall_old": 0.959,
+     "stored_recall": 0.959,
+     "recall_equals": true,
+     "recall_new": 0.9607977791757012,
+     "f1_new": 0.6350411989233351,
+     "n_gt": 2063378,
+     "n_res": 2615086
+    }
+   ]
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "twodgs",
+   "case": "B0 · 항공 LiDAR",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 31.1,
+   "stored_mean": 31.1,
+   "recount_old": 31.095058722352537,
+   "recount_new": 31.192876626715783,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.09781790436324656,
+   "per_result": [
+    {
+     "result": "imgonly_2dgs_s0",
+     "f1_old": 0.311,
+     "stored_f1": 0.311,
+     "f1_old_equals_stored": true,
+     "precision": 0.1959,
+     "stored_precision": 0.1959,
+     "precision_equals": true,
+     "recall_old": 0.7534,
+     "stored_recall": 0.7534,
+     "recall_equals": true,
+     "recall_new": 0.7650522589656379,
+     "f1_new": 0.3119287662671578,
+     "n_gt": 2063378,
+     "n_res": 5351408
+    }
+   ]
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "geogs",
+   "case": "B0 · 항공 LiDAR",
+   "method": "GeoGS",
+   "results": [
+    "geogs_ALS_fix1"
+   ],
+   "record": 38.5,
+   "stored_mean": 38.47,
+   "recount_old": 38.465672327609376,
+   "recount_new": 38.73087267887105,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.26520035126167585,
+   "per_result": [
+    {
+     "result": "geogs_ALS_fix1",
+     "f1_old": 0.3847,
+     "stored_f1": 0.3847,
+     "f1_old_equals_stored": true,
+     "precision": 0.2578,
+     "stored_precision": 0.2578,
+     "precision_equals": true,
+     "recall_old": 0.7577,
+     "stored_recall": 0.7577,
+     "recall_equals": true,
+     "recall_new": 0.7786658576373306,
+     "f1_new": 0.38730872678871053,
+     "n_gt": 2063378,
+     "n_res": 4735177
+    }
+   ]
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "mvsfuse",
+   "case": "B0 · 항공 LiDAR",
+   "method": "결합",
+   "results": [
+    "mvsfuse_ALS"
+   ],
+   "record": 46.7,
+   "stored_mean": 46.650000000000006,
+   "recount_old": 46.64736217884071,
+   "recount_new": 46.73616515943208,
+   "record_equals": true,
+   "recount_equals_record": false,
+   "verdict": "어긋남(저장값의 반올림 경계)",
+   "new_minus_old_pp": 0.08880298059137459,
+   "per_result": [
+    {
+     "result": "mvsfuse_ALS",
+     "f1_old": 0.4665,
+     "stored_f1": 0.4665,
+     "f1_old_equals_stored": true,
+     "precision": 0.3184,
+     "stored_precision": 0.3184,
+     "precision_equals": true,
+     "recall_old": 0.8717,
+     "stored_recall": 0.8717,
+     "recall_equals": true,
+     "recall_new": 0.8779593462758641,
+     "f1_new": 0.4673616515943208,
+     "n_gt": 2063378,
+     "n_res": 3476076
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "method",
+   "case": "B173 주변 · LoD2",
+   "method": "본 방법",
+   "results": [
+    "prop_LoD2_s0",
+    "prop_LoD2_s1"
+   ],
+   "record": 78.8,
+   "stored_mean": 78.805,
+   "recount_old": 78.80249708788479,
+   "recount_new": 78.94946285422463,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.14696576633984648,
+   "per_result": [
+    {
+     "result": "prop_LoD2_s0",
+     "f1_old": 0.7893,
+     "stored_f1": 0.7893,
+     "f1_old_equals_stored": true,
+     "precision": 0.7087,
+     "stored_precision": 0.7087,
+     "precision_equals": true,
+     "recall_old": 0.8904,
+     "stored_recall": 0.8904,
+     "recall_equals": true,
+     "recall_new": 0.894180776171332,
+     "f1_new": 0.7907381893959882,
+     "n_gt": 3881308,
+     "n_res": 2756912
+    },
+    {
+     "result": "prop_LoD2_s1",
+     "f1_old": 0.7868,
+     "stored_f1": 0.7868,
+     "f1_old_equals_stored": true,
+     "precision": 0.7055,
+     "stored_precision": 0.7055,
+     "precision_equals": true,
+     "recall_old": 0.8892,
+     "stored_recall": 0.8892,
+     "recall_equals": true,
+     "recall_new": 0.8929682983159285,
+     "f1_new": 0.7882510676885045,
+     "n_gt": 3881308,
+     "n_res": 2780709
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "twodgs",
+   "case": "B173 주변 · LoD2",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 42.7,
+   "stored_mean": 42.69,
+   "recount_old": 42.688974821377606,
+   "recount_new": 43.27554534810884,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.5865705267312364,
+   "per_result": [
+    {
+     "result": "imgonly_2dgs_s0",
+     "f1_old": 0.4269,
+     "stored_f1": 0.4269,
+     "f1_old_equals_stored": true,
+     "precision": 0.3693,
+     "stored_precision": 0.3693,
+     "precision_equals": true,
+     "recall_old": 0.5058,
+     "stored_recall": 0.5058,
+     "recall_equals": true,
+     "recall_new": 0.5225496147175127,
+     "f1_new": 0.4327554534810884,
+     "n_gt": 3881308,
+     "n_res": 3907861
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "geogs",
+   "case": "B173 주변 · LoD2",
+   "method": "GeoGS",
+   "results": [
+    "trust_LoD2_fix1"
+   ],
+   "record": 49.7,
+   "stored_mean": 49.74,
+   "recount_old": 49.74198775295886,
+   "recount_new": 50.4274366097223,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.6854488567634363,
+   "per_result": [
+    {
+     "result": "trust_LoD2_fix1",
+     "f1_old": 0.4974,
+     "stored_f1": 0.4974,
+     "f1_old_equals_stored": true,
+     "precision": 0.4374,
+     "stored_precision": 0.4374,
+     "precision_equals": true,
+     "recall_old": 0.5765,
+     "stored_recall": 0.5765,
+     "recall_equals": true,
+     "recall_new": 0.5952799932393925,
+     "f1_new": 0.504274366097223,
+     "n_gt": 3881308,
+     "n_res": 3895977
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "mvsfuse",
+   "case": "B173 주변 · LoD2",
+   "method": "결합",
+   "results": [
+    "mvsfuse_LoD2"
+   ],
+   "record": 75.0,
+   "stored_mean": 75.01,
+   "recount_old": 75.0113042307873,
+   "recount_new": 75.24551304236932,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.23420881158202178,
+   "per_result": [
+    {
+     "result": "mvsfuse_LoD2",
+     "f1_old": 0.7501,
+     "stored_f1": 0.7501,
+     "f1_old_equals_stored": true,
+     "precision": 0.658,
+     "stored_precision": 0.658,
+     "precision_equals": true,
+     "recall_old": 0.8723,
+     "stored_recall": 0.8723,
+     "recall_equals": true,
+     "recall_new": 0.8786197848766447,
+     "f1_new": 0.7524551304236933,
+     "n_gt": 3881308,
+     "n_res": 2987091
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "method",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "본 방법",
+   "results": [
+    "prop_ALS_s0",
+    "prop_ALS_s1"
+   ],
+   "record": 79.7,
+   "stored_mean": 79.705,
+   "recount_old": 79.70928369546087,
+   "recount_new": 79.83956724905141,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.13028355359054444,
+   "per_result": [
+    {
+     "result": "prop_ALS_s0",
+     "f1_old": 0.7941,
+     "stored_f1": 0.7941,
+     "f1_old_equals_stored": true,
+     "precision": 0.7095,
+     "stored_precision": 0.7095,
+     "precision_equals": true,
+     "recall_old": 0.9018,
+     "stored_recall": 0.9018,
+     "recall_equals": true,
+     "recall_new": 0.9051041556093976,
+     "f1_new": 0.7954345998368093,
+     "n_gt": 3881308,
+     "n_res": 2822614
+    },
+    {
+     "result": "prop_ALS_s1",
+     "f1_old": 0.8,
+     "stored_f1": 0.8,
+     "f1_old_equals_stored": true,
+     "precision": 0.7186,
+     "stored_precision": 0.7186,
+     "precision_equals": true,
+     "recall_old": 0.9023,
+     "stored_recall": 0.9023,
+     "recall_equals": true,
+     "recall_new": 0.9056877217680225,
+     "f1_new": 0.8013567451442191,
+     "n_gt": 3881308,
+     "n_res": 2747311
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "twodgs",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 42.7,
+   "stored_mean": 42.69,
+   "recount_old": 42.688974821377606,
+   "recount_new": 43.27554534810884,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.5865705267312364,
+   "per_result": [
+    {
+     "result": "imgonly_2dgs_s0",
+     "f1_old": 0.4269,
+     "stored_f1": 0.4269,
+     "f1_old_equals_stored": true,
+     "precision": 0.3693,
+     "stored_precision": 0.3693,
+     "precision_equals": true,
+     "recall_old": 0.5058,
+     "stored_recall": 0.5058,
+     "recall_equals": true,
+     "recall_new": 0.5225496147175127,
+     "f1_new": 0.4327554534810884,
+     "n_gt": 3881308,
+     "n_res": 3907861
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "geogs",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "GeoGS",
+   "results": [
+    "geogs_ALS_fix1"
+   ],
+   "record": 51.6,
+   "stored_mean": 51.6,
+   "recount_old": 51.60215434535726,
+   "recount_new": 52.1901844406781,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.588030095320839,
+   "per_result": [
+    {
+     "result": "geogs_ALS_fix1",
+     "f1_old": 0.516,
+     "stored_f1": 0.516,
+     "f1_old_equals_stored": true,
+     "precision": 0.4319,
+     "stored_precision": 0.4319,
+     "precision_equals": true,
+     "recall_old": 0.6407,
+     "stored_recall": 0.6407,
+     "recall_equals": true,
+     "recall_new": 0.659189376364875,
+     "f1_new": 0.521901844406781,
+     "n_gt": 3881308,
+     "n_res": 4189672
+    }
+   ]
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "mvsfuse",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "결합",
+   "results": [
+    "mvsfuse_ALS"
+   ],
+   "record": 62.5,
+   "stored_mean": 62.5,
+   "recount_old": 62.49523348361149,
+   "recount_new": 62.66521588096582,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.16998239735432463,
+   "per_result": [
+    {
+     "result": "mvsfuse_ALS",
+     "f1_old": 0.625,
+     "stored_f1": 0.625,
+     "f1_old_equals_stored": true,
+     "precision": 0.4855,
+     "stored_precision": 0.4855,
+     "precision_equals": true,
+     "recall_old": 0.8768,
+     "stored_recall": 0.8768,
+     "recall_equals": true,
+     "recall_new": 0.8834900502614067,
+     "f1_new": 0.6266521588096582,
+     "n_gt": 3881308,
+     "n_res": 3328327
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "method",
+   "case": "R1 · LoD2",
+   "method": "본 방법",
+   "results": [
+    "prop_LoD2_s0",
+    "prop_LoD2_s1"
+   ],
+   "record": 68.3,
+   "stored_mean": 68.25,
+   "recount_old": 68.25234676334505,
+   "recount_new": 68.46527504551125,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.21292828216620308,
+   "per_result": [
+    {
+     "result": "prop_LoD2_s0",
+     "f1_old": 0.6744,
+     "stored_f1": 0.6744,
+     "f1_old_equals_stored": true,
+     "precision": 0.5524,
+     "stored_precision": 0.5524,
+     "precision_equals": true,
+     "recall_old": 0.8656,
+     "stored_recall": 0.8656,
+     "recall_equals": true,
+     "recall_new": 0.8722572727371551,
+     "f1_new": 0.6764416595266376,
+     "n_gt": 2667737,
+     "n_res": 2879329
+    },
+    {
+     "result": "prop_LoD2_s1",
+     "f1_old": 0.6906,
+     "stored_f1": 0.6906,
+     "f1_old_equals_stored": true,
+     "precision": 0.5776,
+     "stored_precision": 0.5776,
+     "precision_equals": true,
+     "recall_old": 0.8587,
+     "stored_recall": 0.8587,
+     "recall_equals": true,
+     "recall_new": 0.8656786632265474,
+     "f1_new": 0.6928638413835875,
+     "n_gt": 2667737,
+     "n_res": 2621390
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "twodgs",
+   "case": "R1 · LoD2",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 41.2,
+   "stored_mean": 41.18,
+   "recount_old": 41.17658012455381,
+   "recount_new": 41.65270534306442,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.4761252185106102,
+   "per_result": [
+    {
+     "result": "imgonly_2dgs_s0",
+     "f1_old": 0.4118,
+     "stored_f1": 0.4118,
+     "f1_old_equals_stored": true,
+     "precision": 0.3078,
+     "stored_precision": 0.3078,
+     "precision_equals": true,
+     "recall_old": 0.6217,
+     "stored_recall": 0.6217,
+     "recall_equals": true,
+     "recall_new": 0.6439101755532873,
+     "f1_new": 0.41652705343064417,
+     "n_gt": 2667737,
+     "n_res": 4253658
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "geogs",
+   "case": "R1 · LoD2",
+   "method": "GeoGS",
+   "results": [
+    "trust_LoD2_fix1"
+   ],
+   "record": 44.3,
+   "stored_mean": 44.31,
+   "recount_old": 44.31305950557757,
+   "recount_new": 44.83604443156863,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.5229849259910608,
+   "per_result": [
+    {
+     "result": "trust_LoD2_fix1",
+     "f1_old": 0.4431,
+     "stored_f1": 0.4431,
+     "f1_old_equals_stored": true,
+     "precision": 0.3361,
+     "stored_precision": 0.3361,
+     "precision_equals": true,
+     "recall_old": 0.6501,
+     "stored_recall": 0.6501,
+     "recall_equals": true,
+     "recall_new": 0.6730974605067891,
+     "f1_new": 0.44836044431568634,
+     "n_gt": 2667737,
+     "n_res": 4660515
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "mvsfuse",
+   "case": "R1 · LoD2",
+   "method": "결합",
+   "results": [
+    "mvsfuse_LoD2"
+   ],
+   "record": 50.4,
+   "stored_mean": 50.44,
+   "recount_old": 50.44302967793238,
+   "recount_new": 51.24472855895667,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.8016988810242935,
+   "per_result": [
+    {
+     "result": "mvsfuse_LoD2",
+     "f1_old": 0.5044,
+     "stored_f1": 0.5044,
+     "f1_old_equals_stored": true,
+     "precision": 0.4756,
+     "stored_precision": 0.4756,
+     "precision_equals": true,
+     "recall_old": 0.537,
+     "stored_recall": 0.537,
+     "recall_equals": true,
+     "recall_new": 0.555519153499764,
+     "f1_new": 0.5124472855895668,
+     "n_gt": 2667737,
+     "n_res": 2470352
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "method",
+   "case": "R1 · 항공 LiDAR",
+   "method": "본 방법",
+   "results": [
+    "prop_ALS_s0",
+    "prop_ALS_s1"
+   ],
+   "record": 71.3,
+   "stored_mean": 71.315,
+   "recount_old": 71.31778442057201,
+   "recount_new": 71.50312808107799,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.1853436605059784,
+   "per_result": [
+    {
+     "result": "prop_ALS_s0",
+     "f1_old": 0.7111,
+     "stored_f1": 0.7111,
+     "f1_old_equals_stored": true,
+     "precision": 0.597,
+     "stored_precision": 0.597,
+     "precision_equals": true,
+     "recall_old": 0.8791,
+     "stored_recall": 0.8791,
+     "recall_equals": true,
+     "recall_new": 0.8850576349917552,
+     "f1_new": 0.7130696465069685,
+     "n_gt": 2667737,
+     "n_res": 2595686
+    },
+    {
+     "result": "prop_ALS_s1",
+     "f1_old": 0.7152,
+     "stored_f1": 0.7152,
+     "f1_old_equals_stored": true,
+     "precision": 0.6017,
+     "stored_precision": 0.6017,
+     "precision_equals": true,
+     "recall_old": 0.8816,
+     "stored_recall": 0.8816,
+     "recall_equals": true,
+     "recall_new": 0.8870169735622364,
+     "f1_new": 0.7169929151145913,
+     "n_gt": 2667737,
+     "n_res": 2531110
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "twodgs",
+   "case": "R1 · 항공 LiDAR",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 41.2,
+   "stored_mean": 41.18,
+   "recount_old": 41.17658012455381,
+   "recount_new": 41.65270534306442,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.4761252185106102,
+   "per_result": [
+    {
+     "result": "imgonly_2dgs_s0",
+     "f1_old": 0.4118,
+     "stored_f1": 0.4118,
+     "f1_old_equals_stored": true,
+     "precision": 0.3078,
+     "stored_precision": 0.3078,
+     "precision_equals": true,
+     "recall_old": 0.6217,
+     "stored_recall": 0.6217,
+     "recall_equals": true,
+     "recall_new": 0.6439101755532873,
+     "f1_new": 0.41652705343064417,
+     "n_gt": 2667737,
+     "n_res": 4253658
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "geogs",
+   "case": "R1 · 항공 LiDAR",
+   "method": "GeoGS",
+   "results": [
+    "geogs_ALS_fix1"
+   ],
+   "record": 58.0,
+   "stored_mean": 57.96,
+   "recount_old": 57.95852403355964,
+   "recount_new": 58.32289704950947,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.3643730159498304,
+   "per_result": [
+    {
+     "result": "geogs_ALS_fix1",
+     "f1_old": 0.5796,
+     "stored_f1": 0.5796,
+     "f1_old_equals_stored": true,
+     "precision": 0.4651,
+     "stored_precision": 0.4651,
+     "precision_equals": true,
+     "recall_old": 0.7689,
+     "stored_recall": 0.7689,
+     "recall_equals": true,
+     "recall_new": 0.7818150739746834,
+     "f1_new": 0.5832289704950947,
+     "n_gt": 2667737,
+     "n_res": 3506879
+    }
+   ]
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "mvsfuse",
+   "case": "R1 · 항공 LiDAR",
+   "method": "결합",
+   "results": [
+    "mvsfuse_ALS"
+   ],
+   "record": 72.4,
+   "stored_mean": 72.42,
+   "recount_old": 72.41892932794181,
+   "recount_new": 72.67466166629404,
+   "record_equals": true,
+   "recount_equals_record": true,
+   "verdict": "같음",
+   "new_minus_old_pp": 0.25573233835223164,
+   "per_result": [
+    {
+     "result": "mvsfuse_ALS",
+     "f1_old": 0.7242,
+     "stored_f1": 0.7242,
+     "f1_old_equals_stored": true,
+     "precision": 0.6129,
+     "stored_precision": 0.6129,
+     "precision_equals": true,
+     "recall_old": 0.8849,
+     "stored_recall": 0.8849,
+     "recall_equals": true,
+     "recall_new": 0.8925793659569891,
+     "f1_new": 0.7267466166629404,
+     "n_gt": 2667737,
+     "n_res": 2397323
+    }
+   ]
+  }
+ ],
+ "table_c": [
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "method",
+   "case": "B0 · LoD2",
+   "method": "본 방법",
+   "results": [
+    "prop_LoD2_s0",
+    "prop_LoD2_s1"
+   ],
+   "record": 93.6,
+   "stored": [
+    0.9438,
+    0.9272
+   ],
+   "stored_mean": 93.55,
+   "recount": [
+    0.9438,
+    0.9272
+   ],
+   "n": 12433,
+   "recount_equals_stored": true,
+   "recount_mean": 93.54942491755811,
+   "recount_equals_record": false,
+   "verdict": "어긋남(저장값의 반올림 경계)"
+  },
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "twodgs",
+   "case": "B0 · LoD2",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 87.2,
+   "stored": [
+    0.8717
+   ],
+   "stored_mean": 87.17,
+   "recount": [
+    0.8717
+   ],
+   "n": 12433,
+   "recount_equals_stored": true,
+   "recount_mean": 87.1712378347945,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "geogs",
+   "case": "B0 · LoD2",
+   "method": "GeoGS",
+   "results": [
+    "trust_LoD2_fix1"
+   ],
+   "record": 29.3,
+   "stored": [
+    0.2932
+   ],
+   "stored_mean": 29.32,
+   "recount": [
+    0.2932
+   ],
+   "n": 12433,
+   "recount_equals_stored": true,
+   "recount_mean": 29.317139869701602,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "mvsfuse",
+   "case": "B0 · LoD2",
+   "method": "결합",
+   "results": [
+    "mvsfuse_LoD2"
+   ],
+   "record": 26.1,
+   "stored": [
+    0.2614
+   ],
+   "stored_mean": 26.14,
+   "recount": [
+    0.2614
+   ],
+   "n": 12433,
+   "recount_equals_stored": true,
+   "recount_mean": 26.14011099493284,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/LoD2",
+   "col": "prior",
+   "case": "B0 · LoD2",
+   "method": "사전 정보",
+   "results": [
+    "samepath_LoD2"
+   ],
+   "record": 26.1,
+   "stored": [
+    0.2614
+   ],
+   "stored_mean": 26.14,
+   "recount": [
+    0.2614
+   ],
+   "n": 12433,
+   "recount_equals_stored": true,
+   "recount_mean": 26.14011099493284,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "method",
+   "case": "B0 · 항공 LiDAR",
+   "method": "본 방법",
+   "results": [
+    "prop_ALS_s0",
+    "prop_ALS_s1"
+   ],
+   "record": 89.0,
+   "stored": [
+    0.9322,
+    0.8475
+   ],
+   "stored_mean": 88.985,
+   "recount": [
+    0.9322,
+    0.8475
+   ],
+   "n": 177,
+   "recount_equals_stored": true,
+   "recount_mean": 88.98305084745762,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "twodgs",
+   "case": "B0 · 항공 LiDAR",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 79.7,
+   "stored": [
+    0.7966
+   ],
+   "stored_mean": 79.66,
+   "recount": [
+    0.7966
+   ],
+   "n": 177,
+   "recount_equals_stored": true,
+   "recount_mean": 79.66101694915254,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "geogs",
+   "case": "B0 · 항공 LiDAR",
+   "method": "GeoGS",
+   "results": [
+    "geogs_ALS_fix1"
+   ],
+   "record": 89.3,
+   "stored": [
+    0.8927
+   ],
+   "stored_mean": 89.27,
+   "recount": [
+    0.8927
+   ],
+   "n": 177,
+   "recount_equals_stored": true,
+   "recount_mean": 89.26553672316385,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "mvsfuse",
+   "case": "B0 · 항공 LiDAR",
+   "method": "결합",
+   "results": [
+    "mvsfuse_ALS"
+   ],
+   "record": 100.0,
+   "stored": [
+    1.0
+   ],
+   "stored_mean": 100.0,
+   "recount": [
+    1.0
+   ],
+   "n": 177,
+   "recount_equals_stored": true,
+   "recount_mean": 100.0,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B0_b10/ALS",
+   "col": "prior",
+   "case": "B0 · 항공 LiDAR",
+   "method": "사전 정보",
+   "results": [
+    "samepath_ALS"
+   ],
+   "record": 100.0,
+   "stored": [
+    1.0
+   ],
+   "stored_mean": 100.0,
+   "recount": [
+    1.0
+   ],
+   "n": 177,
+   "recount_equals_stored": true,
+   "recount_mean": 100.0,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "method",
+   "case": "B173 주변 · LoD2",
+   "method": "본 방법",
+   "results": [
+    "prop_LoD2_s0",
+    "prop_LoD2_s1"
+   ],
+   "record": 96.5,
+   "stored": [
+    0.962,
+    0.9671
+   ],
+   "stored_mean": 96.455,
+   "recount": [
+    0.962,
+    0.9671
+   ],
+   "n": 6314,
+   "recount_equals_stored": true,
+   "recount_mean": 96.45232815964523,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "twodgs",
+   "case": "B173 주변 · LoD2",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 85.1,
+   "stored": [
+    0.8508
+   ],
+   "stored_mean": 85.08,
+   "recount": [
+    0.8508
+   ],
+   "n": 6314,
+   "recount_equals_stored": true,
+   "recount_mean": 85.08077288565093,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "geogs",
+   "case": "B173 주변 · LoD2",
+   "method": "GeoGS",
+   "results": [
+    "trust_LoD2_fix1"
+   ],
+   "record": 93.8,
+   "stored": [
+    0.9379
+   ],
+   "stored_mean": 93.79,
+   "recount": [
+    0.9379
+   ],
+   "n": 6314,
+   "recount_equals_stored": true,
+   "recount_mean": 93.79157427937915,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "mvsfuse",
+   "case": "B173 주변 · LoD2",
+   "method": "결합",
+   "results": [
+    "mvsfuse_LoD2"
+   ],
+   "record": 96.7,
+   "stored": [
+    0.9672
+   ],
+   "stored_mean": 96.72,
+   "recount": [
+    0.9672
+   ],
+   "n": 6314,
+   "recount_equals_stored": true,
+   "recount_mean": 96.72157111181502,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/LoD2",
+   "col": "prior",
+   "case": "B173 주변 · LoD2",
+   "method": "사전 정보",
+   "results": [
+    "samepath_LoD2"
+   ],
+   "record": 97.8,
+   "stored": [
+    0.9777
+   ],
+   "stored_mean": 97.77,
+   "recount": [
+    0.9777
+   ],
+   "n": 6314,
+   "recount_equals_stored": true,
+   "recount_mean": 97.7668672790624,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "method",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "본 방법",
+   "results": [
+    "prop_ALS_s0",
+    "prop_ALS_s1"
+   ],
+   "record": 0.0,
+   "stored": [
+    0.0,
+    0.0
+   ],
+   "stored_mean": 0.0,
+   "recount": [
+    0.0,
+    0.0
+   ],
+   "n": 111,
+   "recount_equals_stored": true,
+   "recount_mean": 0.0,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "twodgs",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 0.9,
+   "stored": [
+    0.009
+   ],
+   "stored_mean": 0.9,
+   "recount": [
+    0.009
+   ],
+   "n": 111,
+   "recount_equals_stored": true,
+   "recount_mean": 0.9009009009009009,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "geogs",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "GeoGS",
+   "results": [
+    "geogs_ALS_fix1"
+   ],
+   "record": 89.2,
+   "stored": [
+    0.8919
+   ],
+   "stored_mean": 89.19,
+   "recount": [
+    0.8919
+   ],
+   "n": 111,
+   "recount_equals_stored": true,
+   "recount_mean": 89.1891891891892,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "mvsfuse",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "결합",
+   "results": [
+    "mvsfuse_ALS"
+   ],
+   "record": 99.1,
+   "stored": [
+    0.991
+   ],
+   "stored_mean": 99.1,
+   "recount": [
+    0.991
+   ],
+   "n": 111,
+   "recount_equals_stored": true,
+   "recount_mean": 99.09909909909909,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "B173nb_b10/ALS",
+   "col": "prior",
+   "case": "B173 주변 · 항공 LiDAR",
+   "method": "사전 정보",
+   "results": [
+    "samepath_ALS"
+   ],
+   "record": 99.1,
+   "stored": [
+    0.991
+   ],
+   "stored_mean": 99.1,
+   "recount": [
+    0.991
+   ],
+   "n": 111,
+   "recount_equals_stored": true,
+   "recount_mean": 99.09909909909909,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "method",
+   "case": "R1 · LoD2",
+   "method": "본 방법",
+   "results": [
+    "prop_LoD2_s0",
+    "prop_LoD2_s1"
+   ],
+   "record": 50.8,
+   "stored": [
+    0.4888,
+    0.5267
+   ],
+   "stored_mean": 50.775,
+   "recount": [
+    0.4888,
+    0.5267
+   ],
+   "n": 712,
+   "recount_equals_stored": true,
+   "recount_mean": 50.77247191011236,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "twodgs",
+   "case": "R1 · LoD2",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 26.4,
+   "stored": [
+    0.264
+   ],
+   "stored_mean": 26.4,
+   "recount": [
+    0.264
+   ],
+   "n": 712,
+   "recount_equals_stored": true,
+   "recount_mean": 26.40449438202247,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "geogs",
+   "case": "R1 · LoD2",
+   "method": "GeoGS",
+   "results": [
+    "trust_LoD2_fix1"
+   ],
+   "record": 71.9,
+   "stored": [
+    0.7191
+   ],
+   "stored_mean": 71.91,
+   "recount": [
+    0.7191
+   ],
+   "n": 712,
+   "recount_equals_stored": true,
+   "recount_mean": 71.91011235955057,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "mvsfuse",
+   "case": "R1 · LoD2",
+   "method": "결합",
+   "results": [
+    "mvsfuse_LoD2"
+   ],
+   "record": 69.4,
+   "stored": [
+    0.6938
+   ],
+   "stored_mean": 69.38,
+   "recount": [
+    0.6938
+   ],
+   "n": 712,
+   "recount_equals_stored": true,
+   "recount_mean": 69.3820224719101,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/LoD2",
+   "col": "prior",
+   "case": "R1 · LoD2",
+   "method": "사전 정보",
+   "results": [
+    "samepath_LoD2"
+   ],
+   "record": 92.7,
+   "stored": [
+    0.927
+   ],
+   "stored_mean": 92.7,
+   "recount": [
+    0.927
+   ],
+   "n": 712,
+   "recount_equals_stored": true,
+   "recount_mean": 92.69662921348315,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "method",
+   "case": "R1 · 항공 LiDAR",
+   "method": "본 방법",
+   "results": [
+    "prop_ALS_s0",
+    "prop_ALS_s1"
+   ],
+   "record": 31.7,
+   "stored": [
+    0.3211,
+    0.3133
+   ],
+   "stored_mean": 31.72,
+   "recount": [
+    0.3211,
+    0.3133
+   ],
+   "n": 383,
+   "recount_equals_stored": true,
+   "recount_mean": 31.723237597911226,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "twodgs",
+   "case": "R1 · 항공 LiDAR",
+   "method": "2DGS",
+   "results": [
+    "imgonly_2dgs_s0"
+   ],
+   "record": 22.2,
+   "stored": [
+    0.2219
+   ],
+   "stored_mean": 22.19,
+   "recount": [
+    0.2219
+   ],
+   "n": 383,
+   "recount_equals_stored": true,
+   "recount_mean": 22.193211488250654,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "geogs",
+   "case": "R1 · 항공 LiDAR",
+   "method": "GeoGS",
+   "results": [
+    "geogs_ALS_fix1"
+   ],
+   "record": 26.9,
+   "stored": [
+    0.2689
+   ],
+   "stored_mean": 26.89,
+   "recount": [
+    0.2689
+   ],
+   "n": 383,
+   "recount_equals_stored": true,
+   "recount_mean": 26.89295039164491,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "mvsfuse",
+   "case": "R1 · 항공 LiDAR",
+   "method": "결합",
+   "results": [
+    "mvsfuse_ALS"
+   ],
+   "record": 74.2,
+   "stored": [
+    0.7415
+   ],
+   "stored_mean": 74.15,
+   "recount": [
+    0.7415
+   ],
+   "n": 383,
+   "recount_equals_stored": true,
+   "recount_mean": 74.1514360313316,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  },
+  {
+   "unit": "R1rep_b10/ALS",
+   "col": "prior",
+   "case": "R1 · 항공 LiDAR",
+   "method": "사전 정보",
+   "results": [
+    "samepath_ALS"
+   ],
+   "record": 100.0,
+   "stored": [
+    1.0
+   ],
+   "stored_mean": 100.0,
+   "recount": [
+    1.0
+   ],
+   "n": 383,
+   "recount_equals_stored": true,
+   "recount_mean": 100.0,
+   "recount_equals_record": true,
+   "verdict": "같음"
+  }
+ ],
+ "image_error": [
+  {
+   "case": "B0 · LoD2",
+   "result": "prop_LoD2_s0",
+   "rows": 6457,
+   "fill_rows": 6457,
+   "recount": 0.8911259098652625,
+   "fill_kept_0_2": 0.8911,
+   "equal": true
+  },
+  {
+   "case": "B0 · LoD2",
+   "result": "prop_LoD2_s1",
+   "rows": 6457,
+   "fill_rows": 6457,
+   "recount": 0.8615456094161376,
+   "fill_kept_0_2": 0.8615,
+   "equal": true
+  },
+  {
+   "case": "B0 · LoD2",
+   "result": "imgonly_2dgs_s0",
+   "rows": 6457,
+   "fill_rows": 6457,
+   "recount": 0.7853492333901193,
+   "fill_kept_0_2": 0.7853,
+   "equal": true
+  },
+  {
+   "case": "B0 · LoD2",
+   "result": "trust_LoD2_fix1",
+   "rows": 6457,
+   "fill_rows": 6457,
+   "recount": 0.30137834907851946,
+   "fill_kept_0_2": 0.3014,
+   "equal": true
+  },
+  {
+   "case": "B0 · LoD2",
+   "result": "mvsfuse_LoD2",
+   "rows": 6457,
+   "fill_rows": 6457,
+   "recount": 0.26885550565277994,
+   "fill_kept_0_2": 0.2689,
+   "equal": true
+  },
+  {
+   "case": "B0 · LoD2",
+   "result": "samepath_LoD2",
+   "rows": 6457,
+   "fill_rows": 6457,
+   "recount": 0.26854576428682053,
+   "fill_kept_0_2": 0.2685,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "prop_ALS_s0",
+   "rows": 1755,
+   "fill_rows": 1755,
+   "recount": 0.9686609686609686,
+   "fill_kept_0_2": 0.9687,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "prop_ALS_s1",
+   "rows": 1755,
+   "fill_rows": 1755,
+   "recount": 0.9623931623931624,
+   "fill_kept_0_2": 0.9624,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "imgonly_2dgs_s0",
+   "rows": 1755,
+   "fill_rows": 1755,
+   "recount": 0.8364672364672364,
+   "fill_kept_0_2": 0.8365,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "geogs_ALS_fix1",
+   "rows": 1755,
+   "fill_rows": 1755,
+   "recount": 0.8250712250712251,
+   "fill_kept_0_2": 0.8251,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "mvsfuse_ALS",
+   "rows": 1755,
+   "fill_rows": 1755,
+   "recount": 0.9840455840455841,
+   "fill_kept_0_2": 0.984,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "samepath_ALS",
+   "rows": 1755,
+   "fill_rows": 1755,
+   "recount": 0.9840455840455841,
+   "fill_kept_0_2": 0.984,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "result": "prop_LoD2_s0",
+   "rows": 3816,
+   "fill_rows": 3816,
+   "recount": 0.7625786163522013,
+   "fill_kept_0_2": 0.7626,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "result": "prop_LoD2_s1",
+   "rows": 3816,
+   "fill_rows": 3816,
+   "recount": 0.7594339622641509,
+   "fill_kept_0_2": 0.7594,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "result": "imgonly_2dgs_s0",
+   "rows": 3816,
+   "fill_rows": 3816,
+   "recount": 0.5736373165618449,
+   "fill_kept_0_2": 0.5736,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "result": "trust_LoD2_fix1",
+   "rows": 3816,
+   "fill_rows": 3816,
+   "recount": 0.6682389937106918,
+   "fill_kept_0_2": 0.6682,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "result": "mvsfuse_LoD2",
+   "rows": 3816,
+   "fill_rows": 3816,
+   "recount": 0.9234800838574424,
+   "fill_kept_0_2": 0.9235,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "result": "samepath_LoD2",
+   "rows": 3816,
+   "fill_rows": 3816,
+   "recount": 0.9410377358490566,
+   "fill_kept_0_2": 0.941,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "prop_ALS_s0",
+   "rows": 9398,
+   "fill_rows": 9398,
+   "recount": 0.8468823153862524,
+   "fill_kept_0_2": 0.8469,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "prop_ALS_s1",
+   "rows": 9398,
+   "fill_rows": 9398,
+   "recount": 0.8495424558416684,
+   "fill_kept_0_2": 0.8495,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "imgonly_2dgs_s0",
+   "rows": 9398,
+   "fill_rows": 9398,
+   "recount": 0.3545435198978506,
+   "fill_kept_0_2": 0.3545,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "geogs_ALS_fix1",
+   "rows": 9398,
+   "fill_rows": 9398,
+   "recount": 0.5444775484145563,
+   "fill_kept_0_2": 0.5445,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "mvsfuse_ALS",
+   "rows": 9398,
+   "fill_rows": 9398,
+   "recount": 0.9874441370504362,
+   "fill_kept_0_2": 0.9874,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "samepath_ALS",
+   "rows": 9398,
+   "fill_rows": 9398,
+   "recount": 0.9960629921259843,
+   "fill_kept_0_2": 0.9961,
+   "equal": true
+  },
+  {
+   "case": "R1 · LoD2",
+   "result": "prop_LoD2_s0",
+   "rows": 863,
+   "fill_rows": 863,
+   "recount": 0.2572421784472769,
+   "fill_kept_0_2": 0.2572,
+   "equal": true
+  },
+  {
+   "case": "R1 · LoD2",
+   "result": "prop_LoD2_s1",
+   "rows": 863,
+   "fill_rows": 863,
+   "recount": 0.3383545770567787,
+   "fill_kept_0_2": 0.3384,
+   "equal": true
+  },
+  {
+   "case": "R1 · LoD2",
+   "result": "imgonly_2dgs_s0",
+   "rows": 863,
+   "fill_rows": 863,
+   "recount": 0.14600231749710313,
+   "fill_kept_0_2": 0.146,
+   "equal": true
+  },
+  {
+   "case": "R1 · LoD2",
+   "result": "trust_LoD2_fix1",
+   "rows": 863,
+   "fill_rows": 863,
+   "recount": 0.2931633835457706,
+   "fill_kept_0_2": 0.2932,
+   "equal": true
+  },
+  {
+   "case": "R1 · LoD2",
+   "result": "mvsfuse_LoD2",
+   "rows": 863,
+   "fill_rows": 863,
+   "recount": 0.3719582850521437,
+   "fill_kept_0_2": 0.372,
+   "equal": true
+  },
+  {
+   "case": "R1 · LoD2",
+   "result": "samepath_LoD2",
+   "rows": 863,
+   "fill_rows": 863,
+   "recount": 0.39165701042873696,
+   "fill_kept_0_2": 0.3917,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "prop_ALS_s0",
+   "rows": 14112,
+   "fill_rows": 14112,
+   "recount": 0.93140589569161,
+   "fill_kept_0_2": 0.9314,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "prop_ALS_s1",
+   "rows": 14112,
+   "fill_rows": 14112,
+   "recount": 0.9350198412698413,
+   "fill_kept_0_2": 0.935,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "imgonly_2dgs_s0",
+   "rows": 14112,
+   "fill_rows": 14112,
+   "recount": 0.51906179138322,
+   "fill_kept_0_2": 0.5191,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "geogs_ALS_fix1",
+   "rows": 14112,
+   "fill_rows": 14112,
+   "recount": 0.869968820861678,
+   "fill_kept_0_2": 0.87,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "mvsfuse_ALS",
+   "rows": 14112,
+   "fill_rows": 14112,
+   "recount": 0.9912131519274376,
+   "fill_kept_0_2": 0.9912,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "samepath_ALS",
+   "rows": 14112,
+   "fill_rows": 14112,
+   "recount": 0.9951814058956916,
+   "fill_kept_0_2": 0.9952,
+   "equal": true
+  }
+ ],
+ "summary": {
+  "f1_cells": 24,
+  "f1_equal": 23,
+  "f1_stored_equal": 24,
+  "precision_equal": 24,
+  "recall_equal": 24,
+  "missing_cells": 30,
+  "missing_equal": 29,
+  "missing_stored_equal": 30,
+  "new_minus_old_pp": {
+   "min": 0.040973703018195806,
+   "max": 0.8016988810242935
+  },
+  "image_error_rows": 36,
+  "image_error_equal": 36,
+  "f1_edge": 1,
+  "missing_edge": 1
+ },
+ "scientific_verdict": null
+}
