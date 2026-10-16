@@ -1,0 +1,132 @@
+{
+ "task": "PHD-MAIN-DIST71-v1",
+ "figure": "그림 7.1",
+ "made": "2026-10-17 01:28:49 KST",
+ "script": "scripts/phd/main_dist71_v1/d6_map.py",
+ "title": "B173 주변 · LoD2: 결과 점은 참값에서 얼마나 떨어져 있고, 결과가 빠진 참값은 어디인가",
+ "view": "DJI_20241217094933_0013_D.JPG",
+ "tilt": 74.76560571809442,
+ "neighbours_seen": 3,
+ "candidates": [
+  {
+   "view": "DJI_20241217094933_0013_D.JPG",
+   "neighbours": 3,
+   "tilt": 74.76560571809442
+  },
+  {
+   "view": "DJI_20241217094935_0014_D.JPG",
+   "neighbours": 3,
+   "tilt": 74.60290034519868
+  },
+  {
+   "view": "DJI_20241217095009_0031_D.JPG",
+   "neighbours": 3,
+   "tilt": 74.77818702738234
+  },
+  {
+   "view": "DJI_20241217094917_0005_D.JPG",
+   "neighbours": 3,
+   "tilt": 68.94357593209241
+  },
+  {
+   "view": "DJI_20241217095023_0038_D.JPG",
+   "neighbours": 3,
+   "tilt": 74.87771775828443
+  },
+  {
+   "view": "DJI_20241217094953_0023_D.JPG",
+   "neighbours": 3,
+   "tilt": 66.33128587655713
+  },
+  {
+   "view": "DJI_20241217094955_0024_D.JPG",
+   "neighbours": 3,
+   "tilt": 66.28151611211706
+  },
+  {
+   "view": "DJI_20241217093907_0027_D.JPG",
+   "neighbours": 3,
+   "tilt": 66.89297158637956
+  },
+  {
+   "view": "DJI_20241217093909_0028_D.JPG",
+   "neighbours": 3,
+   "tilt": 66.85722009584819
+  },
+  {
+   "view": "DJI_20241217093911_0029_D.JPG",
+   "neighbours": 3,
+   "tilt": 66.8573832806447
+  }
+ ],
+ "rule": "기울기 30~75°인 학습 영상 가운데 B173 바닥 윤곽 중심이 영상 가장자리에서 10 % 안쪽에 들고, 상자의 다른 건물 윤곽 중심이 가장 많이 보이는 영상(같으면 B173이 영상 중심에 가장 가까운 영상). 여섯 칸은 같은 사각형으로 자름",
+ "panels": [
+  {
+   "method": "method",
+   "result": "prop_LoD2_s0",
+   "f1_02": 0.7907381893959882,
+   "f1_tau": null,
+   "dist": 6.759384274482727,
+   "n_res": 2756912,
+   "n_miss": 265643,
+   "mean": {
+    "f1_02": 0.7894946285422464,
+    "f1_tau": null,
+    "dist": 6.763967871665955
+   }
+  },
+  {
+   "method": "twodgs",
+   "result": "imgonly_2dgs_s0",
+   "f1_02": 0.4327554534810884,
+   "f1_tau": null,
+   "dist": 18.94824355840683,
+   "n_res": 3907861,
+   "n_miss": 1787740
+  },
+  {
+   "method": "geogs",
+   "result": "trust_LoD2_fix1",
+   "f1_02": 0.504274366097223,
+   "f1_tau": null,
+   "dist": 15.658295154571533,
+   "n_res": 3895977,
+   "n_miss": 1541330
+  },
+  {
+   "method": "mvsfuse",
+   "result": "mvsfuse_LoD2",
+   "f1_02": 0.7524551304236933,
+   "f1_tau": null,
+   "dist": 7.966011390089989,
+   "n_res": 2987091,
+   "n_miss": 400161
+  },
+  {
+   "method": "cdgs",
+   "result": "cdgsnofit_LoD2_s0",
+   "status": "채우기 대기"
+  },
+  {
+   "method": "prior",
+   "result": "samepath_LoD2",
+   "f1_02": 0.49926652466328575,
+   "f1_tau": null,
+   "dist": 15.602593868970871,
+   "n_res": 2780176,
+   "n_miss": 1606431
+  }
+ ],
+ "colour_range_m": [
+  0,
+  1.0
+ ],
+ "crop_px": [
+  891,
+  317,
+  1225,
+  602
+ ],
+ "grey": "|d_g| > τ인 참값 점(패치가 있는 점만; 패치가 없는 점은 τ가 없어 그리지 않음)",
+ "scientific_verdict": null
+}
