@@ -1,0 +1,407 @@
+{
+ "task": "PHD-MAIN-DIST71-v1",
+ "place": "비가시 영역",
+ "metric": "F1",
+ "keys": [
+  "F1_0.2",
+  "F1_tau",
+  "F1b_0.2",
+  "F1b_tau"
+ ],
+ "made": "2026-10-17 01:28:31 KST",
+ "script": "scripts/phd/main_dist71_v1/d3_metrics.py",
+ "data": {
+  "B0_b10/LoD2": {
+   "method": {
+    "prop_LoD2_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    },
+    "prop_LoD2_s1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    },
+    "mean": {
+     "status": "가상 시점 메시 없음"
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   },
+   "geogs": {
+    "trust_LoD2_fix1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_LoD2": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_LoD2_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_LoD2": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "method": {
+    "prop_ALS_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    },
+    "prop_ALS_s1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    },
+    "mean": {
+     "status": "가상 시점 메시 없음"
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   },
+   "geogs": {
+    "geogs_ALS_fix1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_ALS": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_ALS_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_ALS": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "method": {
+    "prop_LoD2_s0": {
+     "n_gt": 17,
+     "n_res": 504,
+     "n_res_b": 504,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.6387832699619772,
+     "F1b_0.2": 0.6387832699619772,
+     "F1_tau": 0.6718086489297167,
+     "F1b_tau": 0.6718086489297167,
+     "sign_undefined_gt": 0,
+     "n_signed": 17,
+     "status": "있음 (가상 시점 메시)"
+    },
+    "prop_LoD2_s1": {
+     "n_gt": 17,
+     "n_res": 416,
+     "n_res_b": 416,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.38581560283687943,
+     "F1b_0.2": 0.38581560283687943,
+     "F1_tau": 0.4218205935997347,
+     "F1b_tau": 0.4218205935997347,
+     "sign_undefined_gt": 0,
+     "n_signed": 17,
+     "status": "있음 (가상 시점 메시)"
+    },
+    "mean": {
+     "F1_0.2": 0.5122994363994283,
+     "F1b_0.2": 0.5122994363994283,
+     "F1_tau": 0.5468146212647257,
+     "F1b_tau": 0.5468146212647257,
+     "n_gt": 17,
+     "n_res": 416,
+     "n_res_b": 416,
+     "status": "있음 (가상 시점 메시)",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 17,
+     "n_res": 146,
+     "n_res_b": 146,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.6096324461343473,
+     "F1b_0.2": 0.6096324461343473,
+     "F1_tau": 0.7490144546649146,
+     "F1b_tau": 0.7490144546649146,
+     "sign_undefined_gt": 0,
+     "n_signed": 17,
+     "status": "있음 (가상 시점 메시)"
+    }
+   },
+   "geogs": {
+    "trust_LoD2_fix1": {
+     "n_gt": 17,
+     "n_res": 365,
+     "n_res_b": 365,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.5996156310057655,
+     "F1b_0.2": 0.5996156310057655,
+     "F1_tau": 0.6793147062205357,
+     "F1b_tau": 0.6793147062205357,
+     "sign_undefined_gt": 0,
+     "n_signed": 17,
+     "status": "있음 (가상 시점 메시)"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_LoD2": {
+     "n_gt": 17,
+     "n_res": 47,
+     "n_res_b": 47,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.9084652443220922,
+     "F1b_0.2": 0.9084652443220922,
+     "F1_tau": 0.989247311827957,
+     "F1b_tau": 0.989247311827957,
+     "sign_undefined_gt": 0,
+     "n_signed": 17,
+     "status": "있음 (가상 시점 메시)"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_LoD2_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_LoD2": {
+     "n_gt": 17,
+     "n_res": 70,
+     "n_res_b": 70,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.9855072463768115,
+     "F1b_0.2": 0.9855072463768115,
+     "F1_tau": 1.0,
+     "F1b_tau": 1.0,
+     "sign_undefined_gt": 0,
+     "n_signed": 17,
+     "status": "있음 (가상 시점 메시)"
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "method": {
+    "prop_ALS_s0": {
+     "n_gt": 2,
+     "n_res": 4656,
+     "n_res_b": 4656,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.5356188079886774,
+     "F1b_0.2": 0.5356188079886774,
+     "F1_tau": 0.4541832669322709,
+     "F1b_tau": 0.4541832669322709,
+     "sign_undefined_gt": 0,
+     "n_signed": 2,
+     "status": "있음 (가상 시점 메시)"
+    },
+    "prop_ALS_s1": {
+     "n_gt": 2,
+     "n_res": 4620,
+     "n_res_b": 4620,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.5611958891311118,
+     "F1b_0.2": 0.5611958891311118,
+     "F1_tau": 0.4338983050847458,
+     "F1b_tau": 0.4338983050847458,
+     "sign_undefined_gt": 0,
+     "n_signed": 2,
+     "status": "있음 (가상 시점 메시)"
+    },
+    "mean": {
+     "F1_0.2": 0.5484073485598946,
+     "F1b_0.2": 0.5484073485598946,
+     "F1_tau": 0.4440407860085084,
+     "F1b_tau": 0.4440407860085084,
+     "n_gt": 2,
+     "n_res": 4620,
+     "n_res_b": 4620,
+     "status": "있음 (가상 시점 메시)",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 2,
+     "n_res": 2164,
+     "n_res_b": 2164,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.5602129075182968,
+     "F1b_0.2": 0.5602129075182968,
+     "F1_tau": 0.0,
+     "F1b_tau": 0.0,
+     "sign_undefined_gt": 0,
+     "n_signed": 2,
+     "status": "있음 (가상 시점 메시)"
+    }
+   },
+   "geogs": {
+    "geogs_ALS_fix1": {
+     "n_gt": 2,
+     "n_res": 6491,
+     "n_res_b": 6491,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.0,
+     "F1b_0.2": 0.0,
+     "F1_tau": 0.0,
+     "F1b_tau": 0.0,
+     "sign_undefined_gt": 0,
+     "n_signed": 2,
+     "status": "있음 (가상 시점 메시)"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_ALS": {
+     "n_gt": 2,
+     "n_res": 1972,
+     "n_res_b": 1972,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.6530054644808744,
+     "F1b_0.2": 0.6530054644808744,
+     "F1_tau": 0.4599765716516986,
+     "F1b_tau": 0.4599765716516986,
+     "sign_undefined_gt": 0,
+     "n_signed": 2,
+     "status": "있음 (가상 시점 메시)"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_ALS_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_ALS": {
+     "n_gt": 2,
+     "n_res": 430,
+     "n_res_b": 430,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.23487544483985767,
+     "F1b_0.2": 0.23487544483985767,
+     "F1_tau": 0.0,
+     "F1b_tau": 0.0,
+     "sign_undefined_gt": 0,
+     "n_signed": 2,
+     "status": "있음 (가상 시점 메시)"
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "method": {
+    "prop_LoD2_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 3
+    },
+    "prop_LoD2_s1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 3
+    },
+    "mean": {
+     "status": "가상 시점 메시 없음"
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 3
+    }
+   },
+   "geogs": {
+    "trust_LoD2_fix1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 3
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_LoD2": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 3
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_LoD2_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_LoD2": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 3
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "method": {
+    "prop_ALS_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 6
+    },
+    "prop_ALS_s1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 6
+    },
+    "mean": {
+     "status": "가상 시점 메시 없음"
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 6
+    }
+   },
+   "geogs": {
+    "geogs_ALS_fix1": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 6
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_ALS": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 6
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_ALS_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_ALS": {
+     "status": "가상 시점 메시 없음",
+     "n_gt": 6
+    }
+   }
+  }
+ },
+ "sources": "DM/dist/<지역>_<사전 정보>__<결과>.npz",
+ "scientific_verdict": null
+}

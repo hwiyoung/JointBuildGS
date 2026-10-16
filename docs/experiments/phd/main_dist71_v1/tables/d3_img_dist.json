@@ -1,0 +1,530 @@
+{
+ "task": "PHD-MAIN-DIST71-v1",
+ "place": "영상이 틀린 곳",
+ "metric": "거리",
+ "keys": [
+  "dist"
+ ],
+ "made": "2026-10-17 01:28:31 KST",
+ "script": "scripts/phd/main_dist71_v1/d3_metrics.py",
+ "data": {
+  "B0_b10/LoD2": {
+   "method": {
+    "prop_LoD2_s0": {
+     "n_gt": 6457,
+     "n_res": 32421,
+     "n_res_b": 32386,
+     "tau_undefined_gt": 0,
+     "dist": 4.852660372853279,
+     "sign_undefined_gt": 0,
+     "n_signed": 6457,
+     "status": "있음"
+    },
+    "prop_LoD2_s1": {
+     "n_gt": 6457,
+     "n_res": 34027,
+     "n_res_b": 33996,
+     "tau_undefined_gt": 0,
+     "dist": 4.894605278968811,
+     "sign_undefined_gt": 0,
+     "n_signed": 6457,
+     "status": "있음"
+    },
+    "mean": {
+     "dist": 4.873632825911045,
+     "n_gt": 6457,
+     "n_res": 32421,
+     "n_res_b": 32386,
+     "status": "있음",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 6457,
+     "n_res": 31706,
+     "n_res_b": 31677,
+     "tau_undefined_gt": 0,
+     "dist": 10.109036415815353,
+     "sign_undefined_gt": 0,
+     "n_signed": 6457,
+     "status": "있음"
+    }
+   },
+   "geogs": {
+    "trust_LoD2_fix1": {
+     "n_gt": 6457,
+     "n_res": 42129,
+     "n_res_b": 42078,
+     "tau_undefined_gt": 0,
+     "dist": 25.082731246948242,
+     "sign_undefined_gt": 0,
+     "n_signed": 6457,
+     "status": "있음"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_LoD2": {
+     "n_gt": 6457,
+     "n_res": 27564,
+     "n_res_b": 27540,
+     "tau_undefined_gt": 0,
+     "dist": 22.417107224464417,
+     "sign_undefined_gt": 0,
+     "n_signed": 6457,
+     "status": "있음"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_LoD2_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_LoD2": {
+     "n_gt": 6457,
+     "n_res": 26959,
+     "n_res_b": 26929,
+     "tau_undefined_gt": 0,
+     "dist": 22.41808772087097,
+     "sign_undefined_gt": 0,
+     "n_signed": 6457,
+     "status": "있음"
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "method": {
+    "prop_ALS_s0": {
+     "n_gt": 1755,
+     "n_res": 16877,
+     "n_res_b": 16845,
+     "tau_undefined_gt": 0,
+     "dist": 9.260328859090805,
+     "sign_undefined_gt": 0,
+     "n_signed": 1755,
+     "status": "있음"
+    },
+    "prop_ALS_s1": {
+     "n_gt": 1755,
+     "n_res": 17738,
+     "n_res_b": 17682,
+     "tau_undefined_gt": 0,
+     "dist": 9.249384701251984,
+     "sign_undefined_gt": 0,
+     "n_signed": 1755,
+     "status": "있음"
+    },
+    "mean": {
+     "dist": 9.254856780171394,
+     "n_gt": 1755,
+     "n_res": 16877,
+     "n_res_b": 16845,
+     "status": "있음",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 1755,
+     "n_res": 38002,
+     "n_res_b": 37984,
+     "tau_undefined_gt": 0,
+     "dist": 10.602585971355438,
+     "sign_undefined_gt": 0,
+     "n_signed": 1755,
+     "status": "있음"
+    }
+   },
+   "geogs": {
+    "geogs_ALS_fix1": {
+     "n_gt": 1755,
+     "n_res": 26186,
+     "n_res_b": 26070,
+     "tau_undefined_gt": 0,
+     "dist": 9.584911167621613,
+     "sign_undefined_gt": 0,
+     "n_signed": 1755,
+     "status": "있음"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_ALS": {
+     "n_gt": 1755,
+     "n_res": 19339,
+     "n_res_b": 19319,
+     "tau_undefined_gt": 0,
+     "dist": 3.2814379781484604,
+     "sign_undefined_gt": 0,
+     "n_signed": 1755,
+     "status": "있음"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_ALS_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_ALS": {
+     "n_gt": 1755,
+     "n_res": 18292,
+     "n_res_b": 18261,
+     "tau_undefined_gt": 0,
+     "dist": 3.281601145863533,
+     "sign_undefined_gt": 0,
+     "n_signed": 1755,
+     "status": "있음"
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "method": {
+    "prop_LoD2_s0": {
+     "n_gt": 3816,
+     "n_res": 26182,
+     "n_res_b": 26146,
+     "tau_undefined_gt": 0,
+     "dist": 12.193860486149788,
+     "sign_undefined_gt": 0,
+     "n_signed": 3816,
+     "status": "있음"
+    },
+    "prop_LoD2_s1": {
+     "n_gt": 3816,
+     "n_res": 26782,
+     "n_res_b": 26724,
+     "tau_undefined_gt": 0,
+     "dist": 12.051627039909363,
+     "sign_undefined_gt": 0,
+     "n_signed": 3816,
+     "status": "있음"
+    },
+    "mean": {
+     "dist": 12.122743763029575,
+     "n_gt": 3816,
+     "n_res": 26182,
+     "n_res_b": 26146,
+     "status": "있음",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 3816,
+     "n_res": 24332,
+     "n_res_b": 24294,
+     "tau_undefined_gt": 0,
+     "dist": 15.658193081617355,
+     "sign_undefined_gt": 0,
+     "n_signed": 3816,
+     "status": "있음"
+    }
+   },
+   "geogs": {
+    "trust_LoD2_fix1": {
+     "n_gt": 3816,
+     "n_res": 28119,
+     "n_res_b": 28000,
+     "tau_undefined_gt": 0,
+     "dist": 11.075694113969803,
+     "sign_undefined_gt": 0,
+     "n_signed": 3816,
+     "status": "있음"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_LoD2": {
+     "n_gt": 3816,
+     "n_res": 25846,
+     "n_res_b": 25530,
+     "tau_undefined_gt": 0,
+     "dist": 8.236932009458542,
+     "sign_undefined_gt": 0,
+     "n_signed": 3816,
+     "status": "있음"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_LoD2_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_LoD2": {
+     "n_gt": 3816,
+     "n_res": 18451,
+     "n_res_b": 18280,
+     "tau_undefined_gt": 0,
+     "dist": 7.145815342664719,
+     "sign_undefined_gt": 0,
+     "n_signed": 3816,
+     "status": "있음"
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "method": {
+    "prop_ALS_s0": {
+     "n_gt": 9398,
+     "n_res": 166620,
+     "n_res_b": 166620,
+     "tau_undefined_gt": 0,
+     "dist": 13.644934445619583,
+     "sign_undefined_gt": 0,
+     "n_signed": 9398,
+     "status": "있음"
+    },
+    "prop_ALS_s1": {
+     "n_gt": 9398,
+     "n_res": 166934,
+     "n_res_b": 166934,
+     "tau_undefined_gt": 0,
+     "dist": 13.84260356426239,
+     "sign_undefined_gt": 0,
+     "n_signed": 9398,
+     "status": "있음"
+    },
+    "mean": {
+     "dist": 13.743769004940987,
+     "n_gt": 9398,
+     "n_res": 166620,
+     "n_res_b": 166620,
+     "status": "있음",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 9398,
+     "n_res": 158074,
+     "n_res_b": 158074,
+     "tau_undefined_gt": 0,
+     "dist": 27.45325267314911,
+     "sign_undefined_gt": 0,
+     "n_signed": 9398,
+     "status": "있음"
+    }
+   },
+   "geogs": {
+    "geogs_ALS_fix1": {
+     "n_gt": 9398,
+     "n_res": 203015,
+     "n_res_b": 203015,
+     "tau_undefined_gt": 0,
+     "dist": 18.195881694555283,
+     "sign_undefined_gt": 0,
+     "n_signed": 9398,
+     "status": "있음"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_ALS": {
+     "n_gt": 9398,
+     "n_res": 245239,
+     "n_res_b": 245239,
+     "tau_undefined_gt": 0,
+     "dist": 3.049344941973686,
+     "sign_undefined_gt": 0,
+     "n_signed": 9398,
+     "status": "있음"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_ALS_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_ALS": {
+     "n_gt": 9398,
+     "n_res": 204348,
+     "n_res_b": 204348,
+     "tau_undefined_gt": 0,
+     "dist": 2.296543586999178,
+     "sign_undefined_gt": 0,
+     "n_signed": 9398,
+     "status": "있음"
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "method": {
+    "prop_LoD2_s0": {
+     "n_gt": 863,
+     "n_res": 5329,
+     "n_res_b": 4767,
+     "tau_undefined_gt": 0,
+     "dist": 46.733835339546204,
+     "sign_undefined_gt": 0,
+     "n_signed": 863,
+     "status": "있음"
+    },
+    "prop_LoD2_s1": {
+     "n_gt": 863,
+     "n_res": 5340,
+     "n_res_b": 4810,
+     "tau_undefined_gt": 0,
+     "dist": 30.09747862815857,
+     "sign_undefined_gt": 0,
+     "n_signed": 863,
+     "status": "있음"
+    },
+    "mean": {
+     "dist": 38.41565698385239,
+     "n_gt": 863,
+     "n_res": 5329,
+     "n_res_b": 4767,
+     "status": "있음",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 863,
+     "n_res": 7160,
+     "n_res_b": 4729,
+     "tau_undefined_gt": 0,
+     "dist": 59.84988212585449,
+     "sign_undefined_gt": 0,
+     "n_signed": 863,
+     "status": "있음"
+    }
+   },
+   "geogs": {
+    "trust_LoD2_fix1": {
+     "n_gt": 863,
+     "n_res": 8367,
+     "n_res_b": 5072,
+     "tau_undefined_gt": 0,
+     "dist": 57.63515830039978,
+     "sign_undefined_gt": 0,
+     "n_signed": 863,
+     "status": "있음"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_LoD2": {
+     "n_gt": 863,
+     "n_res": 6521,
+     "n_res_b": 6309,
+     "tau_undefined_gt": 0,
+     "dist": 28.641986846923828,
+     "sign_undefined_gt": 0,
+     "n_signed": 863,
+     "status": "있음"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_LoD2_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_LoD2": {
+     "n_gt": 863,
+     "n_res": 5296,
+     "n_res_b": 5269,
+     "tau_undefined_gt": 0,
+     "dist": 39.4486665725708,
+     "sign_undefined_gt": 0,
+     "n_signed": 863,
+     "status": "있음"
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "method": {
+    "prop_ALS_s0": {
+     "n_gt": 14112,
+     "n_res": 206242,
+     "n_res_b": 202920,
+     "tau_undefined_gt": 0,
+     "dist": 8.59275795519352,
+     "sign_undefined_gt": 0,
+     "n_signed": 14112,
+     "status": "있음"
+    },
+    "prop_ALS_s1": {
+     "n_gt": 14112,
+     "n_res": 193364,
+     "n_res_b": 190051,
+     "tau_undefined_gt": 0,
+     "dist": 9.108524024486542,
+     "sign_undefined_gt": 0,
+     "n_signed": 14112,
+     "status": "있음"
+    },
+    "mean": {
+     "dist": 8.85064098984003,
+     "n_gt": 14112,
+     "n_res": 193364,
+     "n_res_b": 190051,
+     "status": "있음",
+     "tau_undefined_gt": 0,
+     "sign_undefined_gt": 0
+    }
+   },
+   "twodgs": {
+    "imgonly_2dgs_s0": {
+     "n_gt": 14112,
+     "n_res": 397323,
+     "n_res_b": 391827,
+     "tau_undefined_gt": 0,
+     "dist": 18.775802105665207,
+     "sign_undefined_gt": 0,
+     "n_signed": 14112,
+     "status": "있음"
+    }
+   },
+   "geogs": {
+    "geogs_ALS_fix1": {
+     "n_gt": 14112,
+     "n_res": 319421,
+     "n_res_b": 313474,
+     "tau_undefined_gt": 0,
+     "dist": 9.25036370754242,
+     "sign_undefined_gt": 0,
+     "n_signed": 14112,
+     "status": "있음"
+    }
+   },
+   "mvsfuse": {
+    "mvsfuse_ALS": {
+     "n_gt": 14112,
+     "n_res": 183873,
+     "n_res_b": 179632,
+     "tau_undefined_gt": 0,
+     "dist": 5.850604735314846,
+     "sign_undefined_gt": 0,
+     "n_signed": 14112,
+     "status": "있음"
+    }
+   },
+   "cdgs": {
+    "cdgsnofit_ALS_s0": {
+     "status": "채우기 대기"
+    }
+   },
+   "prior": {
+    "samepath_ALS": {
+     "n_gt": 14112,
+     "n_res": 182046,
+     "n_res_b": 177832,
+     "tau_undefined_gt": 0,
+     "dist": 5.829137563705444,
+     "sign_undefined_gt": 0,
+     "n_signed": 14112,
+     "status": "있음"
+    }
+   }
+  }
+ },
+ "sources": "DM/dist/<지역>_<사전 정보>__<결과>.npz",
+ "scientific_verdict": null
+}
