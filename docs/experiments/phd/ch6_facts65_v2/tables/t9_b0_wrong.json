@@ -1,0 +1,287 @@
+{
+ "site": "B0_b10",
+ "prior": "LoD2",
+ "code_names": {
+  "-1": "outside",
+  "0": "GT missing",
+  "2": "support agreement",
+  "3": "observation error",
+  "4": "missing agreement",
+  "5": "invisible agreement",
+  "11": "prior error",
+  "12": "double error",
+  "13": "missing prior error",
+  "14": "invisible prior error"
+ },
+ "evaluation_range": {
+  "patches": 82117,
+  "area_m2": 5132.3
+ },
+ "wrong_by_code_kind": [
+  {
+   "code": 11,
+   "name": "prior error",
+   "kind": "지붕",
+   "patches": 3753,
+   "area_m2": 234.6,
+   "gt_points": 313655,
+   "area_outside_m2": 89.0
+  },
+  {
+   "code": 11,
+   "name": "prior error",
+   "kind": "벽",
+   "patches": 2668,
+   "area_m2": 166.8,
+   "gt_points": 186797,
+   "area_outside_m2": 131.0
+  },
+  {
+   "code": 12,
+   "name": "double error",
+   "kind": "지붕",
+   "patches": 416,
+   "area_m2": 26.0,
+   "gt_points": 25383,
+   "area_outside_m2": 12.8
+  },
+  {
+   "code": 12,
+   "name": "double error",
+   "kind": "벽",
+   "patches": 566,
+   "area_m2": 35.4,
+   "gt_points": 24840,
+   "area_outside_m2": 27.8
+  },
+  {
+   "code": 13,
+   "name": "missing prior error",
+   "kind": "지붕",
+   "patches": 21,
+   "area_m2": 1.3,
+   "gt_points": 1939,
+   "area_outside_m2": 0.2
+  },
+  {
+   "code": 13,
+   "name": "missing prior error",
+   "kind": "벽",
+   "patches": 6,
+   "area_m2": 0.4,
+   "gt_points": 63,
+   "area_outside_m2": 0.3
+  },
+  {
+   "code": 14,
+   "name": "invisible prior error",
+   "kind": "지붕",
+   "patches": 0,
+   "area_m2": 0.0,
+   "gt_points": 0,
+   "area_outside_m2": 0.0
+  },
+  {
+   "code": 14,
+   "name": "invisible prior error",
+   "kind": "벽",
+   "patches": 0,
+   "area_m2": 0.0,
+   "gt_points": 0,
+   "area_outside_m2": 0.0
+  }
+ ],
+ "all_codes_in_evaluation_range": {
+  "0": {
+   "name": "GT missing",
+   "roof_m2": 11.8,
+   "wall_m2": 1051.4
+  },
+  "2": {
+   "name": "support agreement",
+   "roof_m2": 1326.0,
+   "wall_m2": 1934.2
+  },
+  "3": {
+   "name": "observation error",
+   "roof_m2": 108.5,
+   "wall_m2": 107.7
+  },
+  "4": {
+   "name": "missing agreement",
+   "roof_m2": 2.5,
+   "wall_m2": 125.8
+  },
+  "11": {
+   "name": "prior error",
+   "roof_m2": 234.6,
+   "wall_m2": 166.8
+  },
+  "12": {
+   "name": "double error",
+   "roof_m2": 26.0,
+   "wall_m2": 35.4
+  },
+  "13": {
+   "name": "missing prior error",
+   "roof_m2": 1.3,
+   "wall_m2": 0.4
+  }
+ },
+ "top_faces": [
+  {
+   "face": 22,
+   "gml": "DEBY_LOD2_4959323_2ee5087f-0a2b-4bc6-9b7e-fa3b29596085_2",
+   "building": "DEBY_LOD2_4959323",
+   "type": "wall",
+   "wrong_area_m2": 128.4,
+   "face_area_in_eval_m2": 1258.8,
+   "codes": {
+    "11": 109.5,
+    "12": 18.8,
+    "13": 0.1
+   },
+   "median_offset_m": -0.713,
+   "q1_m": -0.8462,
+   "q3_m": -0.578,
+   "outside_area_share": 0.826,
+   "side": "바깥",
+   "gt_points": 171985
+  },
+  {
+   "face": 8,
+   "gml": "DEBY_LOD2_4959323_4bf01220-5d01-4002-8b3f-59ff0d3c8563_2",
+   "building": "DEBY_LOD2_4959323",
+   "type": "roof",
+   "wrong_area_m2": 69.1,
+   "face_area_in_eval_m2": 580.9,
+   "codes": {
+    "11": 54.9,
+    "12": 14.0,
+    "13": 0.2
+   },
+   "median_offset_m": 0.229,
+   "q1_m": -0.9626,
+   "q3_m": 0.7477,
+   "outside_area_share": 0.475,
+   "side": "안쪽",
+   "gt_points": 73452
+  },
+  {
+   "face": 1,
+   "gml": "DEBY_LOD2_4959322_a60334a9-5522-4c69-8763-06f44e4db466_2",
+   "building": "DEBY_LOD2_4959322",
+   "type": "roof",
+   "wrong_area_m2": 52.1,
+   "face_area_in_eval_m2": 54.8,
+   "codes": {
+    "11": 45.7,
+    "12": 6.4
+   },
+   "median_offset_m": 0.421,
+   "q1_m": 0.3741,
+   "q3_m": 0.5008,
+   "outside_area_share": 0.028,
+   "side": "안쪽",
+   "gt_points": 84673
+  },
+  {
+   "face": 11,
+   "gml": "DEBY_LOD2_4959323_f17f8b86-bfe6-4630-a837-5cf67f6778f6_2",
+   "building": "DEBY_LOD2_4959323",
+   "type": "roof",
+   "wrong_area_m2": 45.7,
+   "face_area_in_eval_m2": 58.6,
+   "codes": {
+    "11": 44.9,
+    "12": 0.8
+   },
+   "median_offset_m": -0.829,
+   "q1_m": -1.2182,
+   "q3_m": -0.454,
+   "outside_area_share": 1.0,
+   "side": "바깥",
+   "gt_points": 76195
+  },
+  {
+   "face": 6,
+   "gml": "DEBY_LOD2_4959323_5cc55868-0dce-4c6f-9aef-6dab6bc01c2f_2",
+   "building": "DEBY_LOD2_4959323",
+   "type": "roof",
+   "wrong_area_m2": 33.0,
+   "face_area_in_eval_m2": 58.8,
+   "codes": {
+    "11": 32.2,
+    "12": 0.5,
+    "13": 0.2
+   },
+   "median_offset_m": 0.286,
+   "q1_m": 0.2403,
+   "q3_m": 0.3314,
+   "outside_area_share": 0.0,
+   "side": "안쪽",
+   "gt_points": 32376
+  }
+ ],
+ "faces_with_wrong_codes": 26,
+ "front_wall": {
+  "face": 22,
+  "gml": "DEBY_LOD2_4959323_2ee5087f-0a2b-4bc6-9b7e-fa3b29596085_2",
+  "building": "DEBY_LOD2_4959323",
+  "type": "wall",
+  "face_area_total_m2": 1253.8,
+  "patches_in_eval": 20140,
+  "area_in_eval_m2": 1258.8,
+  "labelled_patches": 18819,
+  "labelled_area_m2": 1176.2,
+  "median_m": -0.2032,
+  "q1_m": -0.2402,
+  "q3_m": -0.1609,
+  "p10_m": -0.5196,
+  "p90_m": -0.0657,
+  "wall_tau_m": 0.546984076499939,
+  "share_beyond_tau": 0.1104,
+  "share_outside_beyond_tau": 0.0905,
+  "share_inside_beyond_tau": 0.0199,
+  "share_outside": 0.9443,
+  "code_area_m2": {
+   "0": 123.4,
+   "2": 912.1,
+   "3": 2.0,
+   "4": 92.8,
+   "11": 109.5,
+   "12": 18.8,
+   "13": 0.1
+  }
+ },
+ "label_source_front_wall": {
+  "gt_clean": {
+   "patches": 18819,
+   "area_m2": 1176.2
+  },
+  "uls": {
+   "patches": 0,
+   "area_m2": 0.0
+  },
+  "none": {
+   "patches": 1321,
+   "area_m2": 82.6
+  }
+ },
+ "label_source_wrong_codes": {
+  "gt_clean": {
+   "patches": 5468,
+   "area_m2": 341.8
+  },
+  "uls": {
+   "patches": 1962,
+   "area_m2": 122.6
+  },
+  "none": {
+   "patches": 0,
+   "area_m2": 0.0
+  }
+ },
+ "rule": "PHD-CH6-FACTS65-v2 task 9 [이 발주에서 냄]: where the LoD2 prior of B0 is wrong. Read from the stage-1 region file v3 of the\nB0 box (S1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz; per patch: region code code_ext_v3, kind 1 roof-like / 2 wall-like, area,\ngt_med = median of GT - prior (roof: vertical; wall: along the outward normal), the label tau, gt_points = GT points of the\nlabel source, in_eval) with the face table of the box (DR/s02_box/B0_b10/lod2_surfaces.json) and the B0 labels\n(S1/v3/box_gt/B0_b10: labels_LoD2.npz = gt_clean, labels_uls_LoD2.npz = ULS supplement; the ULS label is used only where\ngt_clean has none). Sign: gt_med < 0 = the prior lies outside the current surface (above a roof, in front of a wall), as the\nprep measure's case 5 (scripts/phd/main_prep_measure_v1/step05_cases.py line 232).\n  1. codes 11, 12, 13, 14 in the evaluation range: patches, area, GT points, roof and wall apart; the five faces with the\n     largest area of these codes, with the median offset, the side and the share of area outside;\n  2. the front wall (face 22, DEBY_LOD2_4959323_2ee5087f..., 'B0의 벽(정면, 면 22)' of the prep measure report v1.1 2.4):\n     gt_med over its labelled patches in the evaluation range (median, quartiles), shares beyond the wall tolerance, code mix;\n  4. the label source of the front-wall patches (gt_clean or ULS) by patches and area.\nNo judgment, no training. (jointbuildgs:dev, CPU)\n  python t9_b0_wrong.py\nWrites /out/t9/b0_wrong.json and b0_wrong.md. scientific_verdict: null.",
+ "scientific_verdict": null
+}

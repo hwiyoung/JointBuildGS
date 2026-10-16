@@ -1,0 +1,161 @@
+{
+ "range": "R3E",
+ "prior": "LoD2",
+ "excluded": [
+  "DEBY_LOD2_4906985",
+  "DEBY_LOD2_4959459"
+ ],
+ "excluded_not_in_mesh": [],
+ "excluded_triangles": 60,
+ "excluded_pixels_pass2": {
+  "DEBY_LOD2_4959459": {
+   "roof": 0,
+   "wall": 0
+  },
+  "DEBY_LOD2_4906985": {
+   "roof": 70683,
+   "wall": 101366
+  }
+ },
+ "views": 311,
+ "dropped_views": [],
+ "registration": {
+  "iterations": [
+   {
+    "it": 0,
+    "step": [
+     0.601973817716354,
+     0.824121484542628
+    ],
+    "gate_nmad_before": 0.07157218717439827,
+    "gate_nmad_after": 0.07016923909368121,
+    "accepted": true
+   },
+   {
+    "it": 1,
+    "step": [
+     0.04760946917692843,
+     0.08759710088286347
+    ],
+    "gate_nmad_before": 0.07016923909368121,
+    "gate_nmad_after": 0.07006632723146274,
+    "accepted": true
+   },
+   {
+    "it": 2,
+    "step": [
+     0.0025806191725423755,
+     0.0046816518267559495
+    ],
+    "gate_nmad_before": 0.07006632723146274,
+    "gate_nmad_after": 0.07014944142240838,
+    "accepted": false
+   }
+  ],
+  "n_fit": 87859,
+  "gate_views": 40,
+  "horizontal_estimable": true,
+  "aspect_quadrant_share": [
+   0.8358050968028318,
+   0.07600814942123174,
+   0.0,
+   0.08818675377593645
+  ],
+  "gate_start": {
+   "median": -0.0420176028565038,
+   "nmad": 0.07157218717439827
+  },
+  "shift_xy": [
+   0.0,
+   0.0
+  ],
+  "vertical_rule": "median of the re-rendered height differences (gate views, roof-like confidence-1 building-face pixels) after the horizontal shift, applied when |median| > NMAD",
+  "median_after_horizontal": -0.04206342808743102,
+  "nmad_after_horizontal": 0.0714049063214718,
+  "shift_z": 0.0,
+  "building_face_nmad_unregistered": 0.09776775579155862,
+  "building_face_nmad_registered": 0.09760307679759271,
+  "final_check": {
+   "rule": "horizontal shift kept only when the all-view building-face NMAD decreases",
+   "nmad_before": 0.09776775579155862,
+   "nmad_after": 0.20704567437565383,
+   "horizontal_proposed": [
+    0.6495832868932825,
+    0.9117185854254914
+   ],
+   "passed": false,
+   "nmad_after_rejection": 0.09760307679759271
+  },
+  "accepted_horizontal": false,
+  "accepted_vertical": false,
+  "accepted": false,
+  "shift_applied": [
+   0.0,
+   0.0,
+   0.0
+  ]
+ },
+ "tolerance": {
+  "roof": {
+   "tau": 0.15860681016781836,
+   "width": 0.15860681016781836,
+   "spec": 1.0,
+   "spec_source": "agency spec (configs prep_v2 = v1)",
+   "side": "data",
+   "exceeds_spec": false,
+   "warning": null
+  },
+  "wall": {
+   "tau": 0.1885226734865017,
+   "width": 0.1885226734865017,
+   "spec": null,
+   "spec_source": "no agency wall spec",
+   "side": "data (no spec)",
+   "exceeds_spec": null,
+   "warning": null
+  }
+ },
+ "stats": {
+  "roof": {
+   "n": 3650762,
+   "median_before": 0.03958389954493669,
+   "nmad_before": 0.07281540890494957,
+   "n_kept": 3280992,
+   "clipped_share": 0.10128570418997462,
+   "median_after": 0.04501524497823084,
+   "nmad_after": 0.06344272406712734,
+   "width": 0.15860681016781836
+  },
+  "wall": {
+   "n": 3386100,
+   "median_before": -0.00458744674440538,
+   "nmad_before": 0.11685405947466637,
+   "n_kept": 2626892,
+   "clipped_share": 0.2242131065237294,
+   "median_after": -0.0005068041752758605,
+   "nmad_after": 0.07540906939460068,
+   "width": 0.1885226734865017
+  }
+ },
+ "timings": {
+  "pass1_s": 28.4,
+  "pass2_s": 60.0
+ },
+ "recorded": {
+  "tolerance": {
+   "roof": 0.1586490253834994,
+   "wall": 0.18810965836450175
+  },
+  "shift_applied": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "views": 311,
+  "building_face_nmad_unregistered": 0.0996539449543552,
+  "building_face_nmad_registered": 0.09967513803191211
+ },
+ "seconds": 106.9,
+ "rule": "PHD-CH6-FACTS65-v2 task 7.5 [이 발주에서 냄]: the LoD2 tolerance of the search regions that hold the two buildings with a\nbuilding-wide offset (DEBY_LOD2_4959459, DEBY_LOD2_4906985; 6장 보조 작업 보고서 5절), recomputed with the residuals of the\ntwo buildings left out. The procedure is the one that made the values used (the discard-rule task's search-region runs,\nscripts/phd/main_prep_discard_rule_v1/s03_stage1.py with module v5; the v6 module gives the same values, 6장 보조 작업 T8):\npass 1 (render the prior at every training view, Nuth-Kaab samples), the gated horizontal shift, the vertical shift, pass 2\n(re-render, residuals per surface kind, at most 20,000 per view and kind), the final all-view check (and its re-run of pass 2\nwhen the horizontal shift is dropped) and the tolerance (2.5 NMAD after one 3-NMAD clip; LoD2 walls with >= 2,000 pixels).\nThe lines of run() (s03_stage1.py 110-299) for these steps are copied here with ONE change: the triangles of the left-out\nbuildings (tri_building of the range mesh, caps included) are not building faces (bface_tri False), so their pixels enter\nneither the registration nor the tolerance. Pass 3 and the judgment are not run; nothing is trained. A run with nothing left\nout must give the recorded values bit for bit (the check in the output). (jointbuildgs:dev, CPU)\n  python t7_tol_wo2.py <range> [--exclude DEBY_LOD2_4959459,DEBY_LOD2_4906985 | --exclude none]\nMounts as the task runner: /dr the discard-rule payload (meshes s02/<range>, MVS mvs/<range>, the recorded s52/s03 summaries),\n/prep, /art, /repo. Writes /out/t7_5/<range>_<tag>.json. scientific_verdict: null.",
+ "scientific_verdict": null
+}
