@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-DIST71-v1",
  "work": "일 7",
- "made": "2026-10-17 01:27:27 KST",
+ "made": "2026-10-19 01:57:53 KST",
  "script": "scripts/phd/main_dist71_v1/d7_check.py",
  "table_b": [
   {
@@ -1953,6 +1953,122 @@
    "equal": true
   }
  ],
+ "cdgs_fill": [
+  {
+   "case": "B0 · LoD2",
+   "result": "cdgsnofit_LoD2_s0",
+   "recount": {
+    "precision": 0.1136,
+    "recall": 0.4072,
+    "f1": 0.1777
+   },
+   "fill": {
+    "precision": 0.1136,
+    "recall": 0.4072,
+    "f1": 0.1777
+   },
+   "n_gt": 2063378,
+   "n_res": 6334428,
+   "fill_n_gt": 2063378,
+   "fill_n_res": 6334428,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "cdgsnofit_ALS_s0",
+   "recount": {
+    "precision": 0.0968,
+    "recall": 0.5526,
+    "f1": 0.1647
+   },
+   "fill": {
+    "precision": 0.0968,
+    "recall": 0.5526,
+    "f1": 0.1647
+   },
+   "n_gt": 2063378,
+   "n_res": 6791101,
+   "fill_n_gt": 2063378,
+   "fill_n_res": 6791101,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · LoD2",
+   "result": "cdgsnofit_LoD2_s0",
+   "recount": {
+    "precision": 0.059,
+    "recall": 0.2023,
+    "f1": 0.0913
+   },
+   "fill": {
+    "precision": 0.059,
+    "recall": 0.2023,
+    "f1": 0.0913
+   },
+   "n_gt": 3881308,
+   "n_res": 9036969,
+   "fill_n_gt": 3881308,
+   "fill_n_res": 9036969,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "cdgsnofit_ALS_s0",
+   "recount": {
+    "precision": 0.0393,
+    "recall": 0.2251,
+    "f1": 0.067
+   },
+   "fill": {
+    "precision": 0.0393,
+    "recall": 0.2251,
+    "f1": 0.067
+   },
+   "n_gt": 3881308,
+   "n_res": 8737270,
+   "fill_n_gt": 3881308,
+   "fill_n_res": 8737270,
+   "equal": true
+  },
+  {
+   "case": "R1 · LoD2",
+   "result": "cdgsnofit_LoD2_s0",
+   "recount": {
+    "precision": 0.1048,
+    "recall": 0.3933,
+    "f1": 0.1655
+   },
+   "fill": {
+    "precision": 0.1048,
+    "recall": 0.3933,
+    "f1": 0.1655
+   },
+   "n_gt": 2667737,
+   "n_res": 6375555,
+   "fill_n_gt": 2667737,
+   "fill_n_res": 6375555,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "cdgsnofit_ALS_s0",
+   "recount": {
+    "precision": 0.0497,
+    "recall": 0.2967,
+    "f1": 0.0851
+   },
+   "fill": {
+    "precision": 0.0497,
+    "recall": 0.2967,
+    "f1": 0.0851
+   },
+   "n_gt": 2667737,
+   "n_res": 6443778,
+   "fill_n_gt": 2667737,
+   "fill_n_res": 6443778,
+   "equal": true
+  }
+ ],
  "summary": {
   "f1_cells": 24,
   "f1_equal": 23,
@@ -1968,6 +2084,8 @@
   },
   "image_error_rows": 36,
   "image_error_equal": 36,
+  "cdgs_rows": 6,
+  "cdgs_equal": 6,
   "f1_edge": 1,
   "missing_edge": 1
  },

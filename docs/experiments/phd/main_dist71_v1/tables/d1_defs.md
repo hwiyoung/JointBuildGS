@@ -1,6 +1,6 @@
 # 일 1. 정의 확인 (PHD-MAIN-DIST71-v1)
 
-- 만든 때 2026-10-17 08:48:03 KST, 스크립트 `scripts/phd/main_dist71_v1/d1_defs.py`. 6.5·6.6 사실 확인(FACTS65, `docs/experiments/phd/ch6_facts65_v2/facts_6_5_6_6.md`, 커밋 f556b072)이 답한 물음은 그 줄 번호와 함께 옮기고, 그 표에 없던 수만 새로 셌다[새로 셈].
+- 만든 때 2026-10-19 01:53:22 KST, 스크립트 `scripts/phd/main_dist71_v1/d1_defs.py`. 6.5·6.6 사실 확인(FACTS65, `docs/experiments/phd/ch6_facts65_v2/facts_6_5_6_6.md`, 커밋 f556b072)이 답한 물음은 그 줄 번호와 함께 옮기고, 그 표에 없던 수만 새로 셌다[새로 셈].
 
 ## 결과 메시
 
@@ -11,45 +11,45 @@
 | B0 · LoD2 | 2DGS | `imgonly_2dgs_s0` | `SB/runs/B0_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply` | 있음 (1.91) | `SB/runs/B0_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · LoD2 | GeoGS | `trust_LoD2_fix1` | `SF/runs/B0_b10/trust_LoD2_fix1/post/mesh_tsdf.ply` | 있음 (1.61) | `SF/runs/B0_b10/trust_LoD2_fix1/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · LoD2 | 결합 | `mvsfuse_LoD2` | `SB/runs/B0_b10/mvsfuse_LoD2/post/mesh_tsdf.ply` | 있음 (0.73) | `SL/work/virtual/B0_b10/mvsfuse_LoD2/mesh_virtual.ply` | 없음 |
-| B0 · LoD2 | CDGS | `cdgsnofit_LoD2_s0` | `SL/runs/B0_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply` | 없음 | `SL/runs/B0_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
+| B0 · LoD2 | CDGS | `cdgsnofit_LoD2_s0` | `SL/runs/B0_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply` | 있음 (3.03) | `SL/runs/B0_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · LoD2 | 사전 정보 | `samepath_LoD2` | `S1/stage1/B0_b10/samepath_LoD2/mesh.ply` | 있음 (0.28) | `SL/work/virtual/B0_b10/samepath_LoD2/mesh_virtual.ply` | 없음 |
 | B0 · 항공 LiDAR | 본 방법 | `prop_ALS_s0` | `S1/stage1/B0_b10/prop_ALS_s0/post/mesh_tsdf.ply` | 있음 (0.9) | `S1/stage1/B0_b10/prop_ALS_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · 항공 LiDAR | 본 방법 | `prop_ALS_s1` | `S1/stage1/B0_b10/prop_ALS_s1/post/mesh_tsdf.ply` | 있음 (0.9) | `S1/stage1/B0_b10/prop_ALS_s1/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · 항공 LiDAR | 2DGS | `imgonly_2dgs_s0` | `SB/runs/B0_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply` | 있음 (1.91) | `SB/runs/B0_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · 항공 LiDAR | GeoGS | `geogs_ALS_fix1` | `SB/runs/B0_b10/geogs_ALS_fix1/post/mesh_tsdf.ply` | 있음 (2.03) | `SB/runs/B0_b10/geogs_ALS_fix1/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · 항공 LiDAR | 결합 | `mvsfuse_ALS` | `SB/runs/B0_b10/mvsfuse_ALS/post/mesh_tsdf.ply` | 있음 (1.01) | `SL/work/virtual/B0_b10/mvsfuse_ALS/mesh_virtual.ply` | 없음 |
-| B0 · 항공 LiDAR | CDGS | `cdgsnofit_ALS_s0` | `SL/runs/B0_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply` | 없음 | `SL/runs/B0_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
+| B0 · 항공 LiDAR | CDGS | `cdgsnofit_ALS_s0` | `SL/runs/B0_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply` | 있음 (2.96) | `SL/runs/B0_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | B0 · 항공 LiDAR | 사전 정보 | `samepath_ALS` | `S1/stage1/B0_b10/samepath_ALS/mesh.ply` | 있음 (0.86) | `SL/work/virtual/B0_b10/samepath_ALS/mesh_virtual.ply` | 없음 |
 | B173 주변 · LoD2 | 본 방법 | `prop_LoD2_s0` | `S0/stage0/b1_LoD2/post/mesh_tsdf.ply` | 있음 (1.02) | `MF/virtual/option2/b1_LoD2/mesh_virtual.ply` | 있음 |
 | B173 주변 · LoD2 | 본 방법 | `prop_LoD2_s1` | `S0/stage0/b2_LoD2/post/mesh_tsdf.ply` | 있음 (1.02) | `MF/virtual/option2/b2_LoD2/mesh_virtual.ply` | 있음 |
 | B173 주변 · LoD2 | 2DGS | `imgonly_2dgs_s0` | `SB/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply` | 있음 (1.51) | `SB/runs/B173nb_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply` | 있음 |
 | B173 주변 · LoD2 | GeoGS | `trust_LoD2_fix1` | `SF/runs/B173nb_b10/trust_LoD2_fix1/post/mesh_tsdf.ply` | 있음 (1.55) | `SF/runs/B173nb_b10/trust_LoD2_fix1/gpu/virtual/mesh_virtual.ply` | 있음 |
 | B173 주변 · LoD2 | 결합 | `mvsfuse_LoD2` | `SB/runs/B173nb_b10/mvsfuse_LoD2/post/mesh_tsdf.ply` | 있음 (0.89) | `SL/work/virtual/B173nb_b10/mvsfuse_LoD2/mesh_virtual.ply` | 있음 |
-| B173 주변 · LoD2 | CDGS | `cdgsnofit_LoD2_s0` | `SL/runs/B173nb_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply` | 없음 | `SL/runs/B173nb_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
+| B173 주변 · LoD2 | CDGS | `cdgsnofit_LoD2_s0` | `SL/runs/B173nb_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply` | 있음 (4.11) | `SL/runs/B173nb_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply` | 있음 |
 | B173 주변 · LoD2 | 사전 정보 | `samepath_LoD2` | `MT/gpu/samepath_LoD2/mesh.ply` | 있음 (0.45) | `SL/work/virtual/B173nb_b10/samepath_LoD2/mesh_virtual.ply` | 있음 |
 | B173 주변 · 항공 LiDAR | 본 방법 | `prop_ALS_s0` | `S0/stage0/b1_ALS/post/mesh_tsdf.ply` | 있음 (1.0) | `MF/virtual/option2/b1_ALS/mesh_virtual.ply` | 있음 |
 | B173 주변 · 항공 LiDAR | 본 방법 | `prop_ALS_s1` | `S0/stage0/b2_ALS/post/mesh_tsdf.ply` | 있음 (1.01) | `MF/virtual/option2/b2_ALS/mesh_virtual.ply` | 있음 |
 | B173 주변 · 항공 LiDAR | 2DGS | `imgonly_2dgs_s0` | `SB/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply` | 있음 (1.51) | `SB/runs/B173nb_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply` | 있음 |
 | B173 주변 · 항공 LiDAR | GeoGS | `geogs_ALS_fix1` | `SB/runs/B173nb_b10/geogs_ALS_fix1/post/mesh_tsdf.ply` | 있음 (1.56) | `SB/runs/B173nb_b10/geogs_ALS_fix1/gpu/virtual/mesh_virtual.ply` | 있음 |
 | B173 주변 · 항공 LiDAR | 결합 | `mvsfuse_ALS` | `SB/runs/B173nb_b10/mvsfuse_ALS/post/mesh_tsdf.ply` | 있음 (1.09) | `SL/work/virtual/B173nb_b10/mvsfuse_ALS/mesh_virtual.ply` | 있음 |
-| B173 주변 · 항공 LiDAR | CDGS | `cdgsnofit_ALS_s0` | `SL/runs/B173nb_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply` | 없음 | `SL/runs/B173nb_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
+| B173 주변 · 항공 LiDAR | CDGS | `cdgsnofit_ALS_s0` | `SL/runs/B173nb_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply` | 있음 (2.91) | `SL/runs/B173nb_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply` | 있음 |
 | B173 주변 · 항공 LiDAR | 사전 정보 | `samepath_ALS` | `MT/gpu/samepath_ALS/mesh.ply` | 있음 (0.94) | `SL/work/virtual/B173nb_b10/samepath_ALS/mesh_virtual.ply` | 있음 |
 | R1 · LoD2 | 본 방법 | `prop_LoD2_s0` | `S1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply` | 있음 (1.08) | `S1/stage1/R1rep_b10/prop_LoD2_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · LoD2 | 본 방법 | `prop_LoD2_s1` | `S1/stage1/R1rep_b10/prop_LoD2_s1/post/mesh_tsdf.ply` | 있음 (1.09) | `S1/stage1/R1rep_b10/prop_LoD2_s1/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · LoD2 | 2DGS | `imgonly_2dgs_s0` | `SB/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply` | 있음 (2.17) | `SB/runs/R1rep_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · LoD2 | GeoGS | `trust_LoD2_fix1` | `SF/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply` | 있음 (2.07) | `SF/runs/R1rep_b10/trust_LoD2_fix1/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · LoD2 | 결합 | `mvsfuse_LoD2` | `SB/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply` | 있음 (1.09) | `SL/work/virtual/R1rep_b10/mvsfuse_LoD2/mesh_virtual.ply` | 없음 |
-| R1 · LoD2 | CDGS | `cdgsnofit_LoD2_s0` | `SL/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply` | 없음 | `SL/runs/R1rep_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
+| R1 · LoD2 | CDGS | `cdgsnofit_LoD2_s0` | `SL/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply` | 있음 (3.52) | `SL/runs/R1rep_b10/cdgsnofit_LoD2_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · LoD2 | 사전 정보 | `samepath_LoD2` | `S1/stage1/R1rep_b10/samepath_LoD2/mesh.ply` | 있음 (0.25) | `SL/work/virtual/R1rep_b10/samepath_LoD2/mesh_virtual.ply` | 없음 |
 | R1 · 항공 LiDAR | 본 방법 | `prop_ALS_s0` | `S1/stage1/R1rep_b10/prop_ALS_s0/post/mesh_tsdf.ply` | 있음 (1.01) | `S1/stage1/R1rep_b10/prop_ALS_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · 항공 LiDAR | 본 방법 | `prop_ALS_s1` | `S1/stage1/R1rep_b10/prop_ALS_s1/post/mesh_tsdf.ply` | 있음 (1.04) | `S1/stage1/R1rep_b10/prop_ALS_s1/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · 항공 LiDAR | 2DGS | `imgonly_2dgs_s0` | `SB/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply` | 있음 (2.17) | `SB/runs/R1rep_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · 항공 LiDAR | GeoGS | `geogs_ALS_fix1` | `SB/runs/R1rep_b10/geogs_ALS_fix1/post/mesh_tsdf.ply` | 있음 (1.91) | `SB/runs/R1rep_b10/geogs_ALS_fix1/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · 항공 LiDAR | 결합 | `mvsfuse_ALS` | `SB/runs/R1rep_b10/mvsfuse_ALS/post/mesh_tsdf.ply` | 있음 (1.07) | `SL/work/virtual/R1rep_b10/mvsfuse_ALS/mesh_virtual.ply` | 없음 |
-| R1 · 항공 LiDAR | CDGS | `cdgsnofit_ALS_s0` | `SL/runs/R1rep_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply` | 없음 | `SL/runs/R1rep_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
+| R1 · 항공 LiDAR | CDGS | `cdgsnofit_ALS_s0` | `SL/runs/R1rep_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply` | 있음 (2.92) | `SL/runs/R1rep_b10/cdgsnofit_ALS_s0/gpu/virtual/mesh_virtual.ply` | 없음 |
 | R1 · 항공 LiDAR | 사전 정보 | `samepath_ALS` | `S1/stage1/R1rep_b10/samepath_ALS/mesh.ply` | 있음 (0.86) | `SL/work/virtual/R1rep_b10/samepath_ALS/mesh_virtual.ply` | 없음 |
 
-- 학습 시점 메시가 없는 것: B0 · LoD2 · CDGS 학습 시점 메시 (cdgsnofit_LoD2_s0); B0 · 항공 LiDAR · CDGS 학습 시점 메시 (cdgsnofit_ALS_s0); B173 주변 · LoD2 · CDGS 학습 시점 메시 (cdgsnofit_LoD2_s0); B173 주변 · 항공 LiDAR · CDGS 학습 시점 메시 (cdgsnofit_ALS_s0); R1 · LoD2 · CDGS 학습 시점 메시 (cdgsnofit_LoD2_s0); R1 · 항공 LiDAR · CDGS 학습 시점 메시 (cdgsnofit_ALS_s0). CDGS는 빈칸 채우기 일 1·9의 변형 결과(`cdgsnofit_<사전 정보>_s0`)이며, B0 · LoD2만 학습이 끝났고 후처리가 호스트 메모리 부족으로 멈춰 메시가 없다(SL/progress.md 10-16 04:06). 표에는 '채우기 대기'로 둔다.
+- 학습 시점 메시가 없는 것: 없음. CDGS는 빈칸 채우기 일 1·9의 변형 결과(`cdgsnofit_<사전 정보>_s0`)다. 메시가 있는 6개는 그 작업이 조각 TSDF(10-18 사용자 결정 (가), SL/progress.md 10-18 13:14)로 만든 것이고, 메시가 아직 없는 것은 표에 '채우기 대기'로 둔다.
 - 가상 시점 메시는 B173 주변에만 있다(1단계 본 방법은 MF/virtual/option2, 2DGS와 항공 LiDAR GeoGS는 SB, 고친 GeoGS LoD2는 SF, 결합과 사전 정보는 채우기 일 6). B0와 R1에는 어느 방법에도 없다(FACTS65 2.3-4).
 - 메시의 자리: 본 방법과 사전 정보는 `scripts/phd/main_stage1_v1/metrics_s1.py:32-50`(result_paths; B173 주변 본 방법은 0단계 학습, 사전 정보는 지표 시험 묶음), 2DGS·항공 LiDAR GeoGS·결합은 SB/runs, 고친 GeoGS LoD2는 SF/runs(R1은 3단계 5.0이 혼자 다시 한 후처리, `docs/experiments/phd/main_stage3_v1/본실험_3단계_보고서_v1.md:451`).
 

@@ -8,7 +8,7 @@
   "F1b_0.2",
   "F1b_tau"
  ],
- "made": "2026-10-17 08:48:51 KST",
+ "made": "2026-10-19 01:54:34 KST",
  "script": "scripts/phd/main_dist71_v1/d3_metrics.py",
  "data": {
   "B0_b10/LoD2": {
@@ -45,7 +45,8 @@
    },
    "cdgs": {
     "cdgsnofit_LoD2_s0": {
-     "status": "채우기 대기"
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
     }
    },
    "prior": {
@@ -89,7 +90,8 @@
    },
    "cdgs": {
     "cdgsnofit_ALS_s0": {
-     "status": "채우기 대기"
+     "status": "가상 시점 메시 없음",
+     "n_gt": 0
     }
    },
    "prior": {
@@ -187,7 +189,17 @@
    },
    "cdgs": {
     "cdgsnofit_LoD2_s0": {
-     "status": "채우기 대기"
+     "n_gt": 17,
+     "n_res": 220,
+     "n_res_b": 220,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.5560882070949185,
+     "F1b_0.2": 0.5560882070949185,
+     "F1_tau": 0.6549380247900839,
+     "F1b_tau": 0.6549380247900839,
+     "sign_undefined_gt": 0,
+     "n_signed": 17,
+     "status": "있음 (가상 시점 메시)"
     }
    },
    "prior": {
@@ -294,7 +306,17 @@
    },
    "cdgs": {
     "cdgsnofit_ALS_s0": {
-     "status": "채우기 대기"
+     "n_gt": 2,
+     "n_res": 4992,
+     "n_res_b": 4992,
+     "tau_undefined_gt": 0,
+     "F1_0.2": 0.40256000000000003,
+     "F1b_0.2": 0.40256000000000003,
+     "F1_tau": 0.3066485753052917,
+     "F1b_tau": 0.3066485753052917,
+     "sign_undefined_gt": 0,
+     "n_signed": 2,
+     "status": "있음 (가상 시점 메시)"
     }
    },
    "prior": {
@@ -347,7 +369,8 @@
    },
    "cdgs": {
     "cdgsnofit_LoD2_s0": {
-     "status": "채우기 대기"
+     "status": "가상 시점 메시 없음",
+     "n_gt": 3
     }
    },
    "prior": {
@@ -391,7 +414,8 @@
    },
    "cdgs": {
     "cdgsnofit_ALS_s0": {
-     "status": "채우기 대기"
+     "status": "가상 시점 메시 없음",
+     "n_gt": 6
     }
    },
    "prior": {
