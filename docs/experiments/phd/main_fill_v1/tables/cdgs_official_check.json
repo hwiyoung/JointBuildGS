@@ -1,6 +1,6 @@
 {
  "task_id": "PHD-MAIN-FILL-v1",
- "written": "2026-10-16 04:09:16 KST",
+ "written": "2026-10-18 14:42:15 KST",
  "site": "B0_b10",
  "unit": "LoD2",
  "official": "cdgs_LoD2_s0",
@@ -10,79 +10,83 @@
    "metric": "prior_error_inflow",
    "ko": "과거 형상 유입률",
    "code": "11",
-   "official": null,
-   "variant": null,
-   "n_official": null,
-   "n_variant": null,
+   "official": 0.1255,
+   "variant": 0.2212,
+   "n_official": 32880,
+   "n_variant": 32880,
    "method_s0": 0.121,
    "method_s1": 0.1186,
    "criterion": 0.01635593103433736,
    "criterion_parts": {
     "pooled": 0.01635593103433736,
-    "unit": 0.004751757569573597
+    "unit": 0.004751757569573597,
+    "three_points": 9.124087591240875e-05
    },
-   "diff_official_minus_variant": null,
-   "reading": "결과 없음"
+   "diff_official_minus_variant": -0.09570000000000001,
+   "reading": "다르다"
   },
   {
    "metric": "obs_inflow",
    "ko": "관측 오류 유입률 (영역 전체)",
    "code": "3",
-   "official": null,
-   "variant": null,
-   "n_official": null,
-   "n_variant": null,
+   "official": 0.1102,
+   "variant": 0.1098,
+   "n_official": 18858,
+   "n_variant": 18858,
    "method_s0": 0.21,
    "method_s1": 0.2132,
    "criterion": 0.015746732994497574,
    "criterion_parts": {
     "pooled": 0.015746732994497574,
-    "unit": 0.006335676759431482
+    "unit": 0.006335676759431482,
+    "three_points": 0.0001590836780146357
    },
-   "diff_official_minus_variant": null,
-   "reading": "결과 없음"
+   "diff_official_minus_variant": 0.00040000000000001146,
+   "reading": "같다"
   },
   {
    "metric": "missing_agreement_completeness",
    "ko": "결측 영역 완전성 (0.2 m)",
    "code": "4",
-   "official": null,
-   "variant": null,
-   "n_official": null,
-   "n_variant": null,
+   "official": 0.0847,
+   "variant": 0.0872,
+   "n_official": 12433,
+   "n_variant": 12433,
    "method_s0": 0.9438,
    "method_s1": 0.9272,
    "criterion": 0.03286632318955062,
    "criterion_parts": {
     "pooled": 0.03286632318955062,
-    "unit": 0.03286632318955062
+    "unit": 0.03286632318955062,
+    "three_points": 0.00024129333226091852
    },
-   "diff_official_minus_variant": null,
-   "reading": "결과 없음"
+   "diff_official_minus_variant": -0.0025000000000000022,
+   "reading": "같다"
   },
   {
    "metric": "overall_completeness",
    "ko": "전체 완전성 (0.2 m)",
    "code": "전체",
-   "official": null,
-   "variant": null,
-   "n_official": null,
-   "n_variant": null,
+   "official": 0.3651,
+   "variant": 0.4072,
+   "n_official": 2063378,
+   "n_variant": 2063378,
    "method_s0": 0.9571,
    "method_s1": 0.9534,
    "criterion": 0.0073256262530924845,
    "criterion_parts": {
-    "unit": 0.0073256262530924845
+    "unit": 0.0073256262530924845,
+    "three_points": 1.4539265224306938e-06
    },
-   "diff_official_minus_variant": null,
-   "reading": "결과 없음"
+   "diff_official_minus_variant": -0.042100000000000026,
+   "reading": "다르다"
   },
   {
    "metric": "floating_count",
    "ko": "부유 가우시안 수 (3~20 m, 개)",
    "code": "전체",
-   "official": null,
-   "variant": null,
+   "official": 662.0,
+   "variant": 922.0,
    "n_official": null,
    "n_variant": null,
    "method_s0": 1037.0,
@@ -91,8 +95,8 @@
    "criterion_parts": {
     "unit": 156.4120199984643
    },
-   "diff_official_minus_variant": null,
-   "reading": "결과 없음"
+   "diff_official_minus_variant": -260.0,
+   "reading": "같은지 말하지 못함"
   }
  ],
  "runs": {
@@ -278,39 +282,62 @@
     }
    ],
    "post": {
-    "status": "FAILED",
-    "wall_seconds": 557.8,
-    "peak_host_gb": null,
-    "tsdf": null,
+    "status": "PASS",
+    "wall_seconds": 1207.4,
+    "peak_host_gb": 24.761,
+    "tsdf": {
+     "voxel_m": 0.05,
+     "sdf_trunc_m": 0.25,
+     "depth_trunc_m": 300.0,
+     "views": 243,
+     "views_with_depth_file": 243,
+     "mean_share_of_pixels_in_box": 0.20855998982497037,
+     "mean_share_of_pixels_with_depth": 1.0,
+     "vertices": 63609188,
+     "triangles": 98136069
+    },
     "steps": [
      [
       "renders",
       0,
-      109.2
+      100.3
      ],
      [
       "fuse",
-      137,
-      448.6
+      0,
+      1107.1
      ]
     ]
    },
-   "metric_steps": [],
+   "metric_steps": [
+    {
+     "time": "14:25:51",
+     "step": "met_B0_b10_cdgs_LoD2_s0_LoD2",
+     "exit_code": 0,
+     "seconds": 735
+    },
+    {
+     "time": "14:40:09",
+     "step": "meas_B0_b10_cdgs_LoD2_s0",
+     "exit_code": 0,
+     "seconds": 87
+    }
+   ],
    "files": {
     "mesh_tsdf": [
      "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgs_LoD2_s0/post/mesh_tsdf.ply",
-     false,
-     null
+     true,
+     2993217246
     ],
     "metrics": [
      "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B0_b10/cdgs_LoD2_s0__LoD2.json",
-     false,
-     null
+     true,
+     11288
     ],
     "measure": [
      "/ph/main_fill_v1/PHD-MAIN-FILL-v1/measure/B0_b10/LoD2__cdgs_LoD2_s0.json",
-     false,
-     null
+     true,
+     2022
     ]
    }
   },
@@ -519,39 +546,62 @@
     }
    ],
    "post": {
-    "status": "FAILED",
-    "wall_seconds": 573.0,
-    "peak_host_gb": null,
-    "tsdf": null,
+    "status": "PASS",
+    "wall_seconds": 1319.5,
+    "peak_host_gb": 19.148,
+    "tsdf": {
+     "voxel_m": 0.05,
+     "sdf_trunc_m": 0.25,
+     "depth_trunc_m": 300.0,
+     "views": 243,
+     "views_with_depth_file": 243,
+     "mean_share_of_pixels_in_box": 0.2108613222065141,
+     "mean_share_of_pixels_with_depth": 1.0,
+     "vertices": 64286794,
+     "triangles": 99493042
+    },
     "steps": [
      [
       "renders",
       0,
-      95.1
+      82.7
      ],
      [
       "fuse",
-      137,
-      477.9
+      0,
+      1236.9
      ]
     ]
    },
-   "metric_steps": [],
+   "metric_steps": [
+    {
+     "time": "14:05:27",
+     "step": "met_B0_b10_cdgsnofit_LoD2_s0_LoD2",
+     "exit_code": 0,
+     "seconds": 533
+    },
+    {
+     "time": "14:41:35",
+     "step": "meas_B0_b10_cdgsnofit_LoD2_s0",
+     "exit_code": 0,
+     "seconds": 86
+    }
+   ],
    "files": {
     "mesh_tsdf": [
      "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
-     false,
-     null
+     true,
+     3029153257
     ],
     "metrics": [
      "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json",
-     false,
-     null
+     true,
+     11282
     ],
     "measure": [
      "/ph/main_fill_v1/PHD-MAIN-FILL-v1/measure/B0_b10/LoD2__cdgsnofit_LoD2_s0.json",
-     false,
-     null
+     true,
+     2027
     ]
    }
   }
