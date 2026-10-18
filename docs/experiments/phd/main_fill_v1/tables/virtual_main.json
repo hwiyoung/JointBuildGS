@@ -2,7 +2,7 @@
  "task_id": "PHD-MAIN-FILL-v1",
  "component": "virtual",
  "work_item": 6,
- "written": "2026-10-15 22:29:41 KST",
+ "written": "2026-10-19 02:56:49 KST",
  "answer": {
   "line": "일 6 (비교-3의 상호 보완, 가상 시점 메시, 벽 있음으로 대신 읽음): 여섯 단위 가운데 하나에서 '본 방법이 더 채웠다 (재현)' [B173 주변 · LoD2 가능, 근거 불완전], 하나에서 'MVS 기반 결합이 더 채웠다 (재현)' [B173 주변 · 항공 LiDAR 가능, 근거 불완전], 넷은 가상 시점 메시가 없어 해당 없음 [B0 · LoD2; B0 · 항공 LiDAR; R1 · LoD2; R1 · 항공 LiDAR].",
   "grade": "가능, 근거 불완전",
@@ -62,8 +62,8 @@
      "result": "cdgsnofit_LoD2_s0",
      "name_ko": "CDGS 변형",
      "role": "comparator",
-     "state": "아직",
-     "mark": null
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
     },
     "imgonly0": {
      "result": "imgonly_s0",
@@ -167,8 +167,8 @@
       "n": 14970
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.198397,
+      "n": 14970
      },
      "imgonly0": {
       "value": 0.213226,
@@ -213,8 +213,8 @@
       "n": 17
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.5882,
+      "n": 17
      },
      "imgonly0": {
       "value": 0.7647,
@@ -259,8 +259,8 @@
       "n": 17
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 1.0,
+      "n": 17
      },
      "imgonly0": {
       "value": 0.8824,
@@ -305,8 +305,8 @@
       "n": 15366
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4418,
+      "n": 15366
      },
      "imgonly0": {
       "value": 0.4246,
@@ -351,8 +351,8 @@
       "n": 2991
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.5734,
+      "n": 2991
      },
      "imgonly0": {
       "value": 0.0211,
@@ -397,8 +397,8 @@
       "n": 73
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4384,
+      "n": 73
      },
      "imgonly0": {
       "value": 0.274,
@@ -443,8 +443,8 @@
       "n": 6314
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.6551,
+      "n": 6314
      },
      "imgonly0": {
       "value": 0.8217,
@@ -489,8 +489,8 @@
       "n": 6314
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.8777,
+      "n": 6314
      },
      "imgonly0": {
       "value": 0.9826,
@@ -535,8 +535,8 @@
       "n": 172508
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4688,
+      "n": 172508
      },
      "imgonly0": {
       "value": 0.9458,
@@ -581,8 +581,8 @@
       "n": 3881308
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.3558570976588305,
+      "n": 3881308
      },
      "imgonly0": {
       "value": 0.8867992439662093,
@@ -808,6 +808,25 @@
      ],
      "all_equal": true
     },
+    "cdgsnofit_LoD2_s0": {
+     "virtual_below": [
+      0.4418,
+      0.4418
+     ],
+     "virtual_above": [
+      0.5734,
+      0.5734
+     ],
+     "wall": [
+      null,
+      0.198397
+     ],
+     "wall_present": [
+      null,
+      2970
+     ],
+     "all_equal": true
+    },
     "imgonly_s0": {
      "virtual_below": [
       0.4246,
@@ -1020,8 +1039,8 @@
      "result": "cdgsnofit_ALS_s0",
      "name_ko": "CDGS 변형",
      "role": "comparator",
-     "state": "아직",
-     "mark": null
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
     },
     "imgonly0": {
      "result": "imgonly_s0",
@@ -1132,8 +1151,8 @@
       "n": 14970
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.224115,
+      "n": 14970
      },
      "imgonly0": {
       "value": 0.213226,
@@ -1182,8 +1201,8 @@
       "n": 2
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 1.0,
+      "n": 2
      },
      "imgonly0": {
       "value": 1.0,
@@ -1232,8 +1251,8 @@
       "n": 2
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 1.0,
+      "n": 2
      },
      "imgonly0": {
       "value": 1.0,
@@ -1282,8 +1301,8 @@
       "n": 15366
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4525,
+      "n": 15366
      },
      "imgonly0": {
       "value": 0.4246,
@@ -1332,8 +1351,8 @@
       "n": 2991
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4514,
+      "n": 2991
      },
      "imgonly0": {
       "value": 0.0211,
@@ -1383,7 +1402,7 @@
      },
      "cdgs": {
       "value": null,
-      "n": null
+      "n": 0
      },
      "imgonly0": {
       "value": null,
@@ -1432,8 +1451,8 @@
       "n": 111
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.7207,
+      "n": 111
      },
      "imgonly0": {
       "value": 0.009,
@@ -1482,8 +1501,8 @@
       "n": 111
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.955,
+      "n": 111
      },
      "imgonly0": {
       "value": 0.3333,
@@ -1532,8 +1551,8 @@
       "n": 64322
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.447,
+      "n": 64322
      },
      "imgonly0": {
       "value": 0.9871,
@@ -1582,8 +1601,8 @@
       "n": 3881308
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.30878379144350304,
+      "n": 3881308
      },
      "imgonly0": {
       "value": 0.8867992439662093,
@@ -1814,6 +1833,25 @@
      "wall_present": [
       3384,
       3384
+     ],
+     "all_equal": true
+    },
+    "cdgsnofit_ALS_s0": {
+     "virtual_below": [
+      0.4525,
+      0.4525
+     ],
+     "virtual_above": [
+      0.4514,
+      0.4514
+     ],
+     "wall": [
+      null,
+      0.224115
+     ],
+     "wall_present": [
+      null,
+      3355
      ],
      "all_equal": true
     },
@@ -2048,8 +2086,8 @@
      "result": "cdgsnofit_LoD2_s0",
      "name_ko": "CDGS 변형",
      "role": "comparator",
-     "state": "아직",
-     "mark": null
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
     },
     "imgonly0": {
      "result": "imgonly_s0",
@@ -2153,8 +2191,8 @@
       "n": 14970
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.228991,
+      "n": 14970
      },
      "imgonly0": {
       "value": null,
@@ -2199,8 +2237,8 @@
       "n": 17
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.6471,
+      "n": 17
      },
      "imgonly0": {
       "value": null,
@@ -2245,8 +2283,8 @@
       "n": 17
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 1.0,
+      "n": 17
      },
      "imgonly0": {
       "value": null,
@@ -2291,8 +2329,8 @@
       "n": 15369
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.5454,
+      "n": 15369
      },
      "imgonly0": {
       "value": null,
@@ -2337,8 +2375,8 @@
       "n": 2984
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4631,
+      "n": 2984
      },
      "imgonly0": {
       "value": null,
@@ -2383,8 +2421,8 @@
       "n": 73
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.3973,
+      "n": 73
      },
      "imgonly0": {
       "value": null,
@@ -2429,8 +2467,8 @@
       "n": 1984
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.437,
+      "n": 1984
      },
      "imgonly0": {
       "value": null,
@@ -2475,8 +2513,8 @@
       "n": 1984
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.8392,
+      "n": 1984
      },
      "imgonly0": {
       "value": null,
@@ -2521,8 +2559,8 @@
       "n": 84677
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.3894,
+      "n": 84677
      },
      "imgonly0": {
       "value": null,
@@ -2567,8 +2605,8 @@
       "n": 2261308
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.2457086783401465,
+      "n": 2261308
      },
      "imgonly0": {
       "value": null,
@@ -2793,6 +2831,25 @@
       2410
      ],
      "all_equal": true
+    },
+    "cdgsnofit_LoD2_s0": {
+     "virtual_below": [
+      0.5454,
+      0.5454
+     ],
+     "virtual_above": [
+      0.4631,
+      0.4631
+     ],
+     "wall": [
+      null,
+      0.228991
+     ],
+     "wall_present": [
+      null,
+      3428
+     ],
+     "all_equal": true
     }
    },
    "new_meshes": {
@@ -2949,8 +3006,8 @@
      "result": "cdgsnofit_ALS_s0",
      "name_ko": "CDGS 변형",
      "role": "comparator",
-     "state": "아직",
-     "mark": null
+     "state": "ok",
+     "mark": "앞 결과의 가상 시점 메시에서 이 발주가 다시 셈"
     },
     "imgonly0": {
      "result": "imgonly_s0",
@@ -3061,8 +3118,8 @@
       "n": 14970
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.246493,
+      "n": 14970
      },
      "imgonly0": {
       "value": null,
@@ -3111,8 +3168,8 @@
       "n": 2
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.0,
+      "n": 2
      },
      "imgonly0": {
       "value": null,
@@ -3161,8 +3218,8 @@
       "n": 2
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 1.0,
+      "n": 2
      },
      "imgonly0": {
       "value": null,
@@ -3211,8 +3268,8 @@
       "n": 15369
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.5395,
+      "n": 15369
      },
      "imgonly0": {
       "value": null,
@@ -3261,8 +3318,8 @@
       "n": 2984
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4182,
+      "n": 2984
      },
      "imgonly0": {
       "value": null,
@@ -3312,7 +3369,7 @@
      },
      "cdgs": {
       "value": null,
-      "n": null
+      "n": 0
      },
      "imgonly0": {
       "value": null,
@@ -3361,8 +3418,8 @@
       "n": 21
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4762,
+      "n": 21
      },
      "imgonly0": {
       "value": null,
@@ -3411,8 +3468,8 @@
       "n": 21
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.8571,
+      "n": 21
      },
      "imgonly0": {
       "value": null,
@@ -3461,8 +3518,8 @@
       "n": 11115
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.4898,
+      "n": 11115
      },
      "imgonly0": {
       "value": null,
@@ -3511,8 +3568,8 @@
       "n": 2261308
      },
      "cdgs": {
-      "value": null,
-      "n": null
+      "value": 0.29345184291569304,
+      "n": 2261308
      },
      "imgonly0": {
       "value": null,
@@ -3743,6 +3800,25 @@
      "wall_present": [
       2833,
       2833
+     ],
+     "all_equal": true
+    },
+    "cdgsnofit_ALS_s0": {
+     "virtual_below": [
+      0.5395,
+      0.5395
+     ],
+     "virtual_above": [
+      0.4182,
+      0.4182
+     ],
+     "wall": [
+      null,
+      0.246493
+     ],
+     "wall_present": [
+      null,
+      3690
      ],
      "all_equal": true
     },

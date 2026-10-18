@@ -1,0 +1,170 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "slightly_wrong_2",
+ "item": "사전 정보가 조금 틀린 곳",
+ "figure": 2,
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "auxiliary": false,
+ "mark": "이 발주에서 냄",
+ "place": {
+  "source": "figpos correction slightly_wrong (3단계 8.4 덩어리, 2,621패치 163.8 m²의 단면 띠)",
+  "centre": [
+   10.50057931475835,
+   25.88932401184229,
+   -29.635385043928395
+  ],
+  "t": [
+   0.3420201433256688,
+   0.9396926207859083
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "z_range": [
+   -32.635385043928395,
+   -25.41618002207018
+  ],
+  "z_range_rule": [
+   -32.635385043928395,
+   -25.41618002207018
+  ],
+  "vertical_exaggeration": 1.0,
+  "band": "|s| ≤ L/2 (보이는 범위 안), |d| ≤ 0.25 m, 솎은 참값 행",
+  "band_codes_rows": {
+   "0": 8,
+   "2": 343,
+   "3": 29,
+   "11": 218,
+   "12": 55
+  },
+  "counted_rows": 190,
+  "counted": "사전 정보 오류(코드 11) 가운데 1~4τ"
+ },
+ "value_name": "조금 틀린 곳의 보정률(1~4τ)",
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "value": {
+    "value": 0.9895,
+    "n": 190,
+    "shares": {
+     "points": 190,
+     "gt_side": 0.9895,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0105,
+     "spread": 0.0
+    }
+   },
+   "unit_wide": {
+    "value": 0.8532,
+    "n": 35256
+   },
+   "segments": 1183
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "value": {
+    "value": 0.0,
+    "n": 190,
+    "shares": {
+     "points": 190,
+     "gt_side": 0.0,
+     "wrong_side": 0.9947,
+     "both": 0.0053,
+     "neither": 0.0,
+     "spread": 1.0
+    }
+   },
+   "unit_wide": {
+    "value": 0.0378,
+    "n": 35256
+   },
+   "segments": 932
+  },
+  "CDGS 변형": {
+   "result": "cdgsnofit_LoD2_s0",
+   "status": "ok",
+   "value": {
+    "value": 0.0158,
+    "n": 190,
+    "shares": {
+     "points": 190,
+     "gt_side": 0.0158,
+     "wrong_side": 0.7105,
+     "both": 0.1368,
+     "neither": 0.1368,
+     "spread": 0.8474
+    }
+   },
+   "unit_wide": {
+    "value": 0.1772,
+    "n": 35256
+   },
+   "segments": 3995
+  }
+ },
+ "references": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "value": {
+    "value": 0.0,
+    "n": 190,
+    "shares": {
+     "points": 190,
+     "gt_side": 0.0,
+     "wrong_side": 0.9947,
+     "both": 0.0053,
+     "neither": 0.0,
+     "spread": 1.0
+    }
+   },
+   "unit_wide": {
+    "value": 0.0006,
+    "n": 35256
+   }
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "value": {
+    "value": 0.9789,
+    "n": 190,
+    "shares": {
+     "points": 190,
+     "gt_side": 0.9789,
+     "wrong_side": 0.0,
+     "both": 0.0105,
+     "neither": 0.0105,
+     "spread": 0.0105
+    }
+   },
+   "unit_wide": {
+    "value": 0.8813,
+    "n": 35256
+   }
+  },
+  "gt_points_in_slab": 6080
+ },
+ "scientific_verdict": null,
+ "title": "LoD2보다 1.2 m 높은 지붕을 본 방법은 참값으로 고쳤고, MVS 기반 결합은 LoD2 면을 그대로 두었으며, CDGS 변형의 면은 LoD2 면 가까이와 그 아래에 흩어졌다(참값 쪽 1.6 %) — R1 LoD2",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "MVS 기반 결합": "ok",
+  "CDGS 변형": "ok"
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 사전 정보 오류(코드 11) 가운데 1~4τ 참값 190점에서 결과 면이 참값 쪽에 선 몫(조금 틀린 곳의 보정률): 본 방법 (씨앗 0) 99.0 %(씨앗 1: 97.9 %), MVS 기반 결합 0.0 %, CDGS 변형 1.6 %; 학습 전 사전 정보 0.0 %. 단위 전체(R1 LoD2): 본 방법 (씨앗 0) 85.3 %, MVS 기반 결합 3.8 %, CDGS 변형 17.7 %, 학습 전 사전 정보 0.1 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면. 보정률 곡선(모든 방법)은 SL/figs/correction/curve_LoD2.png에 있다.",
+ "rule7": {
+  "result": "통과",
+  "note": "결합의 면이 LoD2 선에 겹친다(0.0 %).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

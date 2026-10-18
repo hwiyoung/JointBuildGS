@@ -1,0 +1,246 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "bars_unseen_B173nb_b10_ALS",
+ "item": "영상이 보지 못한 곳",
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "unit": "B173 주변 · 항공 LiDAR",
+ "report_only": false,
+ "numbers": "단위 전체",
+ "panels": [
+  {
+   "metric": "missing_agreement_completeness",
+   "ko": "결측 영역 완전성 (0.2 m)",
+   "region": "코드 4",
+   "unit": "%",
+   "values": {
+    "m0": {
+     "value": 0.0,
+     "n": 111
+    },
+    "m1": {
+     "value": 0.0,
+     "n": 111
+    },
+    "prior": {
+     "value": 0.991,
+     "n": 111
+    },
+    "twodgs": {
+     "value": 0.009,
+     "n": 111
+    },
+    "geogs": {
+     "value": 0.8919,
+     "n": 111
+    },
+    "mvsfuse": {
+     "value": 0.991,
+     "n": 111
+    },
+    "cdgs": {
+     "value": 0.3063,
+     "n": 111
+    }
+   },
+   "method_mean": 0.0,
+   "criterion": 0.03286632318955062,
+   "readings": {
+    "twodgs": {
+     "comparator": "2차원 가우시안 스플래팅",
+     "value": 0.009,
+     "n": 111,
+     "mean": 0.0,
+     "diff": -0.009,
+     "criterion": 0.03286632318955062,
+     "parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "grade": "기준 안",
+     "side": 0,
+     "deterministic": false,
+     "word": "다르지 않았다"
+    },
+    "geogs": {
+     "comparator": "GeoGS",
+     "value": 0.8919,
+     "n": 111,
+     "mean": 0.0,
+     "diff": -0.8919,
+     "criterion": 0.03286632318955062,
+     "parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "grade": "확인",
+     "side": -1,
+     "deterministic": false,
+     "word": "덜 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "MVS 기반 결합",
+     "value": 0.991,
+     "n": 111,
+     "mean": 0.0,
+     "diff": -0.991,
+     "criterion": 0.03286632318955062,
+     "parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "grade": "확인",
+     "side": -1,
+     "deterministic": true,
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "CDGS 변형",
+     "value": 0.3063,
+     "n": 111,
+     "mean": 0.0,
+     "diff": -0.3063,
+     "criterion": 0.03286632318955062,
+     "parts": {
+      "pooled": 0.03286632318955062,
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "grade": "확인",
+     "side": -1,
+     "deterministic": false,
+     "word": "덜 채웠다"
+    }
+   },
+   "row": null
+  },
+  {
+   "metric": "wall_present",
+   "ko": "벽 있음 (가상 시점 메시, 0.25 m)",
+   "region": "B173 긴 벽 면 53",
+   "unit": "%",
+   "values": {
+    "m0": {
+     "value": 0.698731,
+     "n": 14970
+    },
+    "m1": {
+     "value": 0.671009,
+     "n": 14970
+    },
+    "prior": {
+     "value": 0.944021,
+     "n": 14970
+    },
+    "twodgs": {
+     "value": 0.228123,
+     "n": 14970
+    },
+    "geogs": {
+     "value": 0.226052,
+     "n": 14970
+    },
+    "mvsfuse": {
+     "value": 0.919973,
+     "n": 14970
+    },
+    "cdgs": {
+     "value": 0.224115,
+     "n": 14970
+    }
+   },
+   "method_mean": 0.68487,
+   "criterion": 0.054886759726549765,
+   "readings": {
+    "twodgs": {
+     "comparator": "2차원 가우시안 스플래팅",
+     "value": 0.228123,
+     "n": 14970,
+     "mean": 0.68487,
+     "diff": 0.456747,
+     "criterion": 0.054886759726549765,
+     "parts": {
+      "unit": 0.054886759726549765,
+      "three_points": 0.0002004008016032064
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "벽을 더 세웠다"
+    },
+    "geogs": {
+     "comparator": "GeoGS",
+     "value": 0.226052,
+     "n": 14970,
+     "mean": 0.68487,
+     "diff": 0.45881799999999995,
+     "criterion": 0.054886759726549765,
+     "parts": {
+      "unit": 0.054886759726549765,
+      "three_points": 0.0002004008016032064
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "벽을 더 세웠다"
+    },
+    "mvsfuse": {
+     "comparator": "MVS 기반 결합",
+     "value": 0.919973,
+     "n": 14970,
+     "mean": 0.68487,
+     "diff": -0.23510300000000006,
+     "criterion": 0.054886759726549765,
+     "parts": {
+      "unit": 0.054886759726549765,
+      "three_points": 0.0002004008016032064
+     },
+     "grade": "확인",
+     "side": -1,
+     "deterministic": true,
+     "word": "벽을 덜 세웠다"
+    },
+    "cdgs": {
+     "comparator": "CDGS 변형",
+     "value": 0.224115,
+     "n": 14970,
+     "mean": 0.68487,
+     "diff": 0.46075499999999997,
+     "criterion": 0.054886759726549765,
+     "parts": {
+      "unit": 0.054886759726549765,
+      "three_points": 0.0002004008016032064
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "벽을 더 세웠다"
+    }
+   },
+   "row": null
+  }
+ ],
+ "scientific_verdict": null,
+ "title": "본 방법은 결측 영역을 GeoGS, MVS 기반 결합과 CDGS 변형보다 덜 채웠고, 2차원 가우시안 스플래팅과는 다르지 않았고, 영상이 보지 못한 긴 벽을 2차원 가우시안 스플래팅, GeoGS와 CDGS 변형보다 더 세웠고, MVS 기반 결합보다 덜 세웠다 — B173 주변 · 항공 LiDAR",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "m0": "ok",
+  "m1": "ok",
+  "prior": "ok",
+  "twodgs": "ok",
+  "geogs": "ok",
+  "mvsfuse": "ok",
+  "cdgs": "ok"
+ },
+ "note": "띠 = 본 방법 두 씨앗 평균 ± 기준, 점선 = ± 기준의 두 배(씨앗 하나인 비교 방법의 '확인'). 숫자는 단위 전체의 값.",
+ "rule7": {
+  "result": "통과",
+  "note": "막대와 띠, 칸 아래 비교마다의 읽기 줄이 제목 문장과 같다(제목을 가린 판에서 같은 말을 할 수 있다).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "항목마다 여덟 단위를 한 장에 모은 판(제목을 가림)으로 점검"
+ }
+}

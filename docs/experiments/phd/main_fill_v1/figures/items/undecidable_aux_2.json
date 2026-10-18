@@ -1,0 +1,221 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "undecidable_aux_2",
+ "item": "맞는 자료를 판단할 수 없는 곳",
+ "figure": 2,
+ "site": "B173nb_b10",
+ "prior": "LoD2",
+ "auxiliary": true,
+ "mark": "이 발주에서 냄",
+ "place": {
+  "case": "skylight",
+  "name": "B173 유리 채광창",
+  "extent_xy": [
+   122.9,
+   82.5,
+   160.2,
+   149.4
+  ],
+  "orientation": "x 동쪽, y 북쪽, 북쪽이 위",
+  "case_patches": 593,
+  "case_area_m2": 37.06,
+  "band_patches": 7753,
+  "band_area_m2": 484.56,
+  "rows": {
+   "inside": 2841,
+   "band_c2": 6930,
+   "band_c4": 179,
+   "band_c13": 17
+  },
+  "multi_layer_gt": {
+   "rule": "gt_suspect of the region file (configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json: a roof-like patch whose GT height range in the 0.25 m cell exceeds the plane's rise over the cell diagonal by 0.3 m (two layers), or with >= 5 % of its ULS GT points from multi-return pulses); evaluated on roof-like code-2/3 patches with matched ULS points",
+   "evaluated": 593,
+   "multi_layer": 150,
+   "share": 0.253
+  },
+  "source": "SL/prep/figpos/undecidable.json, SL/work/undecidable/regions_<site>_<prior>.npz"
+ },
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "values": {
+    "inside": {
+     "inflow": 0.8958,
+     "n": 2841,
+     "shares": {
+      "points": 2841,
+      "gt_side": 0.0278,
+      "wrong_side": 0.8722,
+      "both": 0.0236,
+      "neither": 0.0764,
+      "spread": 0.8958
+     }
+    },
+    "band_c4": {
+     "n": 179,
+     "le_0_2": 0.22346368715083798,
+     "le_0_5": 0.24581005586592178
+    },
+    "band_c2": {
+     "n": 6930,
+     "le_0_2": 0.9246753246753247,
+     "le_0_5": 0.9884559884559885
+    },
+    "band_c13": {
+     "inflow": 0.0,
+     "n": 17
+    }
+   },
+   "same_as_undecidable_table": true
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "values": {
+    "inside": {
+     "inflow": 0.144,
+     "n": 2841,
+     "shares": {
+      "points": 2841,
+      "gt_side": 0.8127,
+      "wrong_side": 0.0549,
+      "both": 0.0891,
+      "neither": 0.0433,
+      "spread": 0.144
+     }
+    },
+    "band_c4": {
+     "n": 179,
+     "le_0_2": 0.9162011173184358,
+     "le_0_5": 1.0
+    },
+    "band_c2": {
+     "n": 6930,
+     "le_0_2": 0.9787878787878788,
+     "le_0_5": 0.998989898989899
+    },
+    "band_c13": {
+     "inflow": 0.2353,
+     "n": 17
+    }
+   },
+   "same_as_undecidable_table": true
+  },
+  "CDGS 변형": {
+   "result": "cdgsnofit_LoD2_s0",
+   "status": "ok",
+   "values": {
+    "inside": {
+     "inflow": 0.2742,
+     "n": 2841,
+     "shares": {
+      "points": 2841,
+      "gt_side": 0.1038,
+      "wrong_side": 0.2622,
+      "both": 0.012,
+      "neither": 0.622,
+      "spread": 0.2742
+     }
+    },
+    "band_c4": {
+     "n": 179,
+     "le_0_2": 0.441340782122905,
+     "le_0_5": 0.547486033519553
+    },
+    "band_c2": {
+     "n": 6930,
+     "le_0_2": 0.5617604617604618,
+     "le_0_5": 0.9053391053391053
+    },
+    "band_c13": {
+     "inflow": 0.0,
+     "n": 17
+    }
+   },
+   "same_as_undecidable_table": true
+  }
+ },
+ "references": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "values": {
+    "inside": {
+     "inflow": 0.0408,
+     "n": 2841,
+     "shares": {
+      "points": 2841,
+      "gt_side": 0.9159,
+      "wrong_side": 0.0155,
+      "both": 0.0253,
+      "neither": 0.0433,
+      "spread": 0.0408
+     }
+    },
+    "band_c4": {
+     "n": 179,
+     "le_0_2": 0.9776536312849162,
+     "le_0_5": 1.0
+    },
+    "band_c2": {
+     "n": 6930,
+     "le_0_2": 0.9782106782106782,
+     "le_0_5": 0.9976911976911977
+    },
+    "band_c13": {
+     "inflow": 1.0,
+     "n": 17
+    }
+   },
+   "same_as_undecidable_table": true
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "values": {
+    "inside": {
+     "inflow": 0.855,
+     "n": 2841,
+     "shares": {
+      "points": 2841,
+      "gt_side": 0.032,
+      "wrong_side": 0.8113,
+      "both": 0.0436,
+      "neither": 0.113,
+      "spread": 0.855
+     }
+    },
+    "band_c4": {
+     "n": 179,
+     "le_0_2": 0.24581005586592178,
+     "le_0_5": 0.24581005586592178
+    },
+    "band_c2": {
+     "n": 6930,
+     "le_0_2": 0.9271284271284271,
+     "le_0_5": 0.9897546897546897
+    },
+    "band_c13": {
+     "inflow": 0.0,
+     "n": 17
+    }
+   },
+   "same_as_undecidable_table": true
+  }
+ },
+ "scientific_verdict": null,
+ "title": "유리 채광창 안에서 본 방법은 틀린 영상을 따랐고(89.6 %) MVS 기반 결합(14.4 %)과 CDGS 변형(27.4 %)은 덜 따랐으며, 2 m 둘레의 지지 일치에서는 결합(97.9 %), 본 방법(92.5 %), CDGS 변형(56.2 %) 차례로 참값에 섰다 — B173 주변 LoD2 유리 채광창 (보조)",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "MVS 기반 결합": "ok",
+  "CDGS 변형": "ok"
+ },
+ "foot": "B173 유리 채광창의 사례 영역(전제 위배 덩어리 593패치, 37.1 m²)과 그 2 m 둘레(7,753패치, 484.6 m²). 사례 영역 안 관측 오류 유입률(|s_W| ≥ 0.2 m인 2,841점): 본 방법 (씨앗 0) 89.6 %(씨앗 1: 85.5 %), MVS 기반 결합 14.4 %, CDGS 변형 27.4 %; 학습 전 사전 정보 4.1 %. 2 m 둘레 결측 일치 완전성(0.2 m, 179점): 본 방법 (씨앗 0) 22.3 %(씨앗 1: 24.6 %), MVS 기반 결합 91.6 %, CDGS 변형 44.1 %; 학습 전 사전 정보 97.8 %. 2 m 둘레 지지 일치 완전성(0.2 m, 관문 조건 4의 셈, 6,930점): 본 방법 (씨앗 0) 92.5 %(씨앗 1: 92.7 %), MVS 기반 결합 97.9 %, CDGS 변형 56.2 %; 학습 전 사전 정보 97.8 %. 파랑 = 참값에 섬(사례 안: 참값 쪽, 둘레: 0.2 m 안), 주황 = 틀린 영상 쪽(사례 안과 둘레의 코드 13)이거나 참값에서 0.2 m 넘게 멂(둘레의 코드 2, 4), 연회색 점 = 어느 쪽도 아님, 검은 실선 = 사례 영역, 검은 점선 = 2 m 둘레의 바깥 끝, 진한 회색 네모 = 평가에서 뺀 패치, 옅은 회색 네모 = 그 밖의 평가 패치. 점 하나가 솎은 참값 행 하나다. x는 동쪽, y는 북쪽(북쪽이 위). 이 자리는 참값이 여러 층(유리, 그 안쪽, 바닥)으로 나뉘는 곳이다: 사례 패치 593개 가운데 150개(25.3 %)가 두 층 패치다(참값 의심 규칙 gt_suspect; 규칙 5, 피할 수 없는 미리 정한 자리).",
+ "rule7": {
+  "result": "통과",
+  "note": "결합 칸은 채광창 안도 대부분 파랑이다.",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "unseen_als_2",
+ "item": "영상이 보지 못한 곳",
+ "figure": 2,
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "auxiliary": true,
+ "mark": "이 발주에서 냄(값은 virtual 구성 요소의 것)",
+ "place": {
+  "face": 53,
+  "face_patches": 18298,
+  "counted_patches": 14970,
+  "excluded_patches": {
+   "틀림으로 미룸": 2953,
+   "모호": 375
+  },
+  "gt_points_on_wall": 12988,
+  "frame": {
+   "centre": [
+    153.565,
+    111.76,
+    -33.786
+   ],
+   "t": [
+    0.365493,
+    0.930814,
+    0.0
+   ],
+   "normal": [
+    0.930814,
+    -0.365493,
+    0.0
+   ],
+   "s_range": [
+    -39.6,
+    30.15
+   ],
+   "z_range": [
+    -43.51,
+    -24.51
+   ]
+  },
+  "source": "SL/prep/figpos/virtual.json (1단계 비가시 면)"
+ },
+ "panels": {
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "status": "ok",
+   "share": 0.698731,
+   "present": 10460,
+   "patches": 14970,
+   "flags_from": "virtual component",
+   "mesh": "가상 시점 메시"
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_ALS",
+   "status": "ok",
+   "share": 0.919973,
+   "present": 13772,
+   "patches": 14970,
+   "flags_from": "virtual component",
+   "mesh": "가상 시점 메시 (이 발주에서 만듦)"
+  },
+  "CDGS 변형": {
+   "result": "cdgsnofit_ALS_s0",
+   "status": "ok",
+   "share": 0.22411489645958585,
+   "present": 3355,
+   "patches": 14970,
+   "flags_from": "virtual component",
+   "mesh": "가상 시점 메시"
+  }
+ },
+ "scientific_verdict": null,
+ "title": "항공 LiDAR에서는 영상이 보지 못한 긴 벽이 MVS 기반 결합에서 거의 다 섰고, 본 방법에서는 군데군데 비었으며, CDGS 변형에서는 윗부분만 섰다(22.4 %) — B173 주변 항공 LiDAR 긴 벽 (보조)",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "MVS 기반 결합": "ok",
+  "CDGS 변형": "ok"
+ },
+ "foot": "B173 주변 항공 LiDAR. 긴 벽(LoD2 면 53, 학습 영상이 보지 못한 패치 18,298개)을 바깥에서 정면으로 본 것. 파랑 = 결과 메시가 패치 중심 0.25 m 안에 있음(벽 있음), 흰 칸 = 없음, 옅은 회색 칸 = 뺀 칸(지금 지붕보다 위 2,953개와 모호 375개), 회색 윤곽 = 이 자리를 정한 LoD2 면 53의 범위, 검은 점 = 벽면 0.25 m 안의 참값 점 12,988개. 모든 칸이 학습 시점 203장과 가상 시점 16장을 같은 TSDF(0.10 m)로 합친 메시다. 이 자리의 벽 있음(맞음으로 미룬 14,970패치): 본 방법 (씨앗 0) 69.9 %, MVS 기반 결합 92.0 %, CDGS 변형 22.4 %; 본 방법 씨앗 1 67.1 %, 학습 전 사전 정보 94.4 %, 2차원 가우시안 스플래팅 22.8 %, GeoGS 22.6 %, 본 방법의 판정으로 갈아 끼운 변형 94.8 %. 같은 결과를 학습 시점 메시로 센 앞 값: 본 방법 4.7 %, MVS 기반 결합 7.8 %, 학습 전 사전 정보 7.5 %. 값은 virtual 구성 요소(SL/tables/virtual_main.json)의 것이다.",
+ "rule7": {
+  "result": "통과",
+  "note": "결합 칸은 거의 다 차고 본 방법 칸은 군데군데 비었다.",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

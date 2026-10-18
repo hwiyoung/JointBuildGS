@@ -1,0 +1,165 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "bars_undecidable_B173nb_b10_LoD2",
+ "item": "맞는 자료를 판단할 수 없는 곳",
+ "site": "B173nb_b10",
+ "prior": "LoD2",
+ "unit": "B173 주변 · LoD2",
+ "report_only": false,
+ "numbers": "단위 전체",
+ "panels": [
+  {
+   "metric": "band_c4",
+   "ko": "둘레 결측 일치 완전성 (0.2 m)",
+   "region": "전제 위배 2 m 둘레의 코드 4",
+   "unit": "%",
+   "values": {
+    "m0": {
+     "value": 0.9279,
+     "n": 2913
+    },
+    "m1": {
+     "value": 0.9337,
+     "n": 2913
+    },
+    "prior": {
+     "value": 0.989,
+     "n": 2913
+    },
+    "twodgs": {
+     "value": 0.816,
+     "n": 2913
+    },
+    "geogs": {
+     "value": 0.9035,
+     "n": 2913
+    },
+    "mvsfuse": {
+     "value": 0.9619,
+     "n": 2913
+    },
+    "cdgs": {
+     "value": 0.5922,
+     "n": 2913
+    }
+   },
+   "method_mean": 0.9308,
+   "criterion": 0.011483414126469586,
+   "readings": {
+    "twodgs": {
+     "comparator": "2차원 가우시안 스플래팅",
+     "value": 0.816,
+     "n": 2913,
+     "criterion_component": 0.011483414126469586,
+     "criterion_here": 0.011483414126469586,
+     "criterion_same": true,
+     "mean": 0.9308,
+     "diff": 0.11480000000000001,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "deterministic": false,
+     "word": "둘레의 결측 영역을 더 채웠다"
+    },
+    "geogs": {
+     "comparator": "GeoGS",
+     "value": 0.9035,
+     "n": 2913,
+     "criterion_component": 0.011483414126469586,
+     "criterion_here": 0.011483414126469586,
+     "criterion_same": true,
+     "mean": 0.9308,
+     "diff": 0.02729999999999999,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "deterministic": false,
+     "word": "둘레의 결측 영역을 더 채웠다"
+    },
+    "mvsfuse": {
+     "comparator": "MVS 기반 결합",
+     "value": 0.9619,
+     "n": 2913,
+     "criterion_component": 0.011483414126469586,
+     "criterion_here": 0.011483414126469586,
+     "criterion_same": true,
+     "mean": 0.9308,
+     "diff": -0.031100000000000017,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "grade": "가능, 근거 불완전",
+     "side": -1,
+     "deterministic": true,
+     "word": "덜 채웠다"
+    },
+    "cdgs": {
+     "comparator": "CDGS 변형",
+     "value": 0.5922,
+     "n": 2913,
+     "criterion_component": 0.011483414126469586,
+     "criterion_here": 0.011483414126469586,
+     "criterion_same": true,
+     "mean": 0.9308,
+     "diff": 0.3386,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "deterministic": false,
+     "word": "둘레의 결측 영역을 더 채웠다"
+    }
+   },
+   "row": null
+  },
+  {
+   "metric": "judgment_spread",
+   "ko": "판정의 번짐 (본 방법의 학습 전 판정, 2 m 둘레의 결측 패치)",
+   "from_premise": [
+    0.4348,
+    115
+   ],
+   "elsewhere": [
+    0.0038,
+    530
+   ],
+   "diff": 0.431,
+   "criterion": 0.02608695652173913,
+   "grade": "가능, 근거 불완전",
+   "word": "판정의 전파가 결측 영역으로 번졌다"
+  }
+ ],
+ "scientific_verdict": null,
+ "title": "본 방법은 2 m 둘레의 결측 영역을 2차원 가우시안 스플래팅, GeoGS와 CDGS 변형보다 더 채웠고, MVS 기반 결합보다 덜 채웠고, 판정의 전파는 결측 영역으로 번졌다 — B173 주변 · LoD2",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "m0": "ok",
+  "m1": "ok",
+  "prior": "ok",
+  "twodgs": "ok",
+  "geogs": "ok",
+  "mvsfuse": "ok",
+  "cdgs": "ok"
+ },
+ "note": "띠 = 본 방법 두 씨앗 평균 ± 기준, 점선 = ± 기준의 두 배(씨앗 하나인 비교 방법의 '확인'). 숫자는 단위 전체의 값.",
+ "rule7": {
+  "result": "통과",
+  "note": "막대와 띠, 칸 아래 비교마다의 읽기 줄이 제목 문장과 같다(제목을 가린 판에서 같은 말을 할 수 있다).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "항목마다 여덟 단위를 한 장에 모은 판(제목을 가림)으로 점검"
+ }
+}

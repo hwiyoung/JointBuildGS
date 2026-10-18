@@ -1,0 +1,266 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "bars_slightly_wrong_R1rep_b10_LoD2",
+ "item": "사전 정보가 조금 틀린 곳",
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "unit": "R1 · LoD2",
+ "report_only": false,
+ "numbers": "단위 전체",
+ "panels": [
+  {
+   "metric": "corr_1to4",
+   "ko": "조금 틀린 곳의 보정률 (1~4τ)",
+   "region": "코드 11 가운데 1~4τ",
+   "unit": "%",
+   "values": {
+    "m0": {
+     "value": 0.8532,
+     "n": 35256
+    },
+    "m1": {
+     "value": 0.8813,
+     "n": 35256
+    },
+    "prior": {
+     "value": 0.0006,
+     "n": 35256
+    },
+    "twodgs": {
+     "value": 0.623,
+     "n": 35256
+    },
+    "geogs": {
+     "value": 0.4047,
+     "n": 35256
+    },
+    "mvsfuse": {
+     "value": 0.0378,
+     "n": 35256
+    },
+    "cdgs": {
+     "value": 0.1772,
+     "n": 35256
+    }
+   },
+   "method_mean": 0.86725,
+   "criterion": 0.055635161543757576,
+   "readings": {
+    "twodgs": {
+     "comparator": "2차원 가우시안 스플래팅",
+     "value": 0.623,
+     "n": 35256,
+     "criterion_component": 0.055635161543757576,
+     "criterion_here": 0.055635161543757576,
+     "criterion_same": true,
+     "mean": 0.86725,
+     "diff": 0.24424999999999997,
+     "criterion": 0.055635161543757576,
+     "parts": {
+      "unit": 0.055635161543757576,
+      "three_points": 8.509189925119128e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "조금 틀린 사전 정보를 더 고쳤다"
+    },
+    "geogs": {
+     "comparator": "GeoGS",
+     "value": 0.4047,
+     "n": 35256,
+     "criterion_component": 0.055635161543757576,
+     "criterion_here": 0.055635161543757576,
+     "criterion_same": true,
+     "mean": 0.86725,
+     "diff": 0.46254999999999996,
+     "criterion": 0.055635161543757576,
+     "parts": {
+      "unit": 0.055635161543757576,
+      "three_points": 8.509189925119128e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "조금 틀린 사전 정보를 더 고쳤다"
+    },
+    "mvsfuse": {
+     "comparator": "MVS 기반 결합",
+     "value": 0.0378,
+     "n": 35256,
+     "criterion_component": 0.055635161543757576,
+     "criterion_here": 0.055635161543757576,
+     "criterion_same": true,
+     "mean": 0.86725,
+     "diff": 0.82945,
+     "criterion": 0.055635161543757576,
+     "parts": {
+      "unit": 0.055635161543757576,
+      "three_points": 8.509189925119128e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": true,
+     "word": "조금 틀린 사전 정보를 더 고쳤다"
+    },
+    "cdgs": {
+     "comparator": "CDGS 변형",
+     "value": 0.1772,
+     "n": 35256,
+     "criterion_component": 0.055635161543757576,
+     "criterion_here": 0.055635161543757576,
+     "criterion_same": true,
+     "mean": 0.86725,
+     "diff": 0.6900499999999999,
+     "criterion": 0.055635161543757576,
+     "parts": {
+      "unit": 0.055635161543757576,
+      "three_points": 8.509189925119128e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "조금 틀린 사전 정보를 더 고쳤다"
+    }
+   },
+   "row": null
+  },
+  {
+   "metric": "normdiff_changed",
+   "ko": "정상적인 차이를 바꾼 몫",
+   "region": "코드 2 가운데 τ 안",
+   "unit": "%",
+   "values": {
+    "m0": {
+     "value": 0.0174,
+     "n": 113282
+    },
+    "m1": {
+     "value": 0.0199,
+     "n": 113283
+    },
+    "prior": {
+     "value": 0.0,
+     "n": 114312
+    },
+    "twodgs": {
+     "value": 0.0482,
+     "n": 110779
+    },
+    "geogs": {
+     "value": 0.0249,
+     "n": 113477
+    },
+    "mvsfuse": {
+     "value": 0.0012,
+     "n": 113371
+    },
+    "cdgs": {
+     "value": 0.2067,
+     "n": 85332
+    }
+   },
+   "method_mean": 0.01865,
+   "criterion": 0.004949747468305836,
+   "readings": {
+    "twodgs": {
+     "comparator": "2차원 가우시안 스플래팅",
+     "value": 0.0482,
+     "n": 110779,
+     "criterion_component": 0.004949747468305836,
+     "criterion_here": 0.004949747468305836,
+     "criterion_same": true,
+     "mean": 0.01865,
+     "diff": -0.02955,
+     "criterion": 0.004949747468305836,
+     "parts": {
+      "unit": 0.004949747468305836,
+      "three_points": 2.7080944944438928e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "정상적인 차이를 덜 바꿨다"
+    },
+    "geogs": {
+     "comparator": "GeoGS",
+     "value": 0.0249,
+     "n": 113477,
+     "criterion_component": 0.004949747468305836,
+     "criterion_here": 0.004949747468305836,
+     "criterion_same": true,
+     "mean": 0.01865,
+     "diff": -0.006249999999999999,
+     "criterion": 0.004949747468305836,
+     "parts": {
+      "unit": 0.004949747468305836,
+      "three_points": 2.648258328772444e-05
+     },
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "deterministic": false,
+     "word": "정상적인 차이를 덜 바꿨다"
+    },
+    "mvsfuse": {
+     "comparator": "MVS 기반 결합",
+     "value": 0.0012,
+     "n": 113371,
+     "criterion_component": 0.004949747468305836,
+     "criterion_here": 0.004949747468305836,
+     "criterion_same": true,
+     "mean": 0.01865,
+     "diff": 0.01745,
+     "criterion": 0.004949747468305836,
+     "parts": {
+      "unit": 0.004949747468305836,
+      "three_points": 2.648258328772444e-05
+     },
+     "grade": "확인",
+     "side": -1,
+     "deterministic": true,
+     "word": "정상적인 차이를 더 바꿨다"
+    },
+    "cdgs": {
+     "comparator": "CDGS 변형",
+     "value": 0.2067,
+     "n": 85332,
+     "criterion_component": 0.004949747468305836,
+     "criterion_here": 0.004949747468305836,
+     "criterion_same": true,
+     "mean": 0.01865,
+     "diff": -0.18805,
+     "criterion": 0.004949747468305836,
+     "parts": {
+      "unit": 0.004949747468305836,
+      "three_points": 3.515679932498945e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "정상적인 차이를 덜 바꿨다"
+    }
+   },
+   "row": null
+  }
+ ],
+ "scientific_verdict": null,
+ "title": "본 방법은 조금 틀린 사전 정보를 비교 방법 넷보다 더 고쳤고, 정상적인 차이를 2차원 가우시안 스플래팅, GeoGS와 CDGS 변형보다 덜 바꿨고, MVS 기반 결합보다 더 바꿨다 — R1 · LoD2",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "m0": "ok",
+  "m1": "ok",
+  "prior": "ok",
+  "twodgs": "ok",
+  "geogs": "ok",
+  "mvsfuse": "ok",
+  "cdgs": "ok"
+ },
+ "note": "띠 = 본 방법 두 씨앗 평균 ± 기준, 점선 = ± 기준의 두 배(씨앗 하나인 비교 방법의 '확인'). 숫자는 단위 전체의 값.",
+ "rule7": {
+  "result": "통과",
+  "note": "막대와 띠, 칸 아래 비교마다의 읽기 줄이 제목 문장과 같다(제목을 가린 판에서 같은 말을 할 수 있다).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "항목마다 여덟 단위를 한 장에 모은 판(제목을 가림)으로 점검"
+ }
+}

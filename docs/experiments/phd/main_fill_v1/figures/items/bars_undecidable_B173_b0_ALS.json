@@ -1,0 +1,163 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "bars_undecidable_B173_b0_ALS",
+ "item": "맞는 자료를 판단할 수 없는 곳",
+ "site": "B173_b0",
+ "prior": "ALS",
+ "unit": "B173만 · 항공 LiDAR",
+ "report_only": true,
+ "numbers": "단위 전체",
+ "panels": [
+  {
+   "metric": "band_c4",
+   "ko": "둘레 결측 일치 완전성 (0.2 m)",
+   "region": "전제 위배 2 m 둘레의 코드 4",
+   "unit": "%",
+   "values": {
+    "m0": {
+     "value": 0.0,
+     "n": 21
+    },
+    "m1": {
+     "value": 0.0,
+     "n": 21
+    },
+    "prior": {
+     "value": 1.0,
+     "n": 21
+    },
+    "twodgs": {
+     "value": 0.0,
+     "n": 21
+    },
+    "geogs": {
+     "value": 0.1429,
+     "n": 21
+    },
+    "mvsfuse": {
+     "value": 1.0,
+     "n": 21
+    },
+    "cdgs": {
+     "value": 0.381,
+     "n": 21
+    }
+   },
+   "method_mean": 0.0,
+   "criterion": 0.14285714285714285,
+   "readings": {
+    "twodgs": {
+     "comparator": "2차원 가우시안 스플래팅",
+     "value": 0.0,
+     "n": 21,
+     "criterion_component": 0.14285714285714285,
+     "criterion_here": 0.14285714285714285,
+     "criterion_same": true,
+     "mean": 0.0,
+     "diff": 0.0,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "grade": "표본 부족",
+     "side": null,
+     "deterministic": false,
+     "word": null
+    },
+    "geogs": {
+     "comparator": "GeoGS",
+     "value": 0.1429,
+     "n": 21,
+     "criterion_component": 0.14285714285714285,
+     "criterion_here": 0.14285714285714285,
+     "criterion_same": true,
+     "mean": 0.0,
+     "diff": -0.1429,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "grade": "표본 부족",
+     "side": null,
+     "deterministic": false,
+     "word": null
+    },
+    "mvsfuse": {
+     "comparator": "MVS 기반 결합",
+     "value": 1.0,
+     "n": 21,
+     "criterion_component": 0.14285714285714285,
+     "criterion_here": 0.14285714285714285,
+     "criterion_same": true,
+     "mean": 0.0,
+     "diff": -1.0,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "grade": "표본 부족",
+     "side": null,
+     "deterministic": true,
+     "word": null
+    },
+    "cdgs": {
+     "comparator": "CDGS 변형",
+     "value": 0.381,
+     "n": 21,
+     "criterion_component": 0.14285714285714285,
+     "criterion_here": 0.14285714285714285,
+     "criterion_same": true,
+     "mean": 0.0,
+     "diff": -0.381,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "grade": "표본 부족",
+     "side": null,
+     "deterministic": false,
+     "word": null
+    }
+   },
+   "row": null
+  },
+  {
+   "metric": "judgment_spread",
+   "ko": "판정의 번짐 (본 방법의 학습 전 판정, 2 m 둘레의 결측 패치)",
+   "from_premise": [
+    1.0,
+    2
+   ],
+   "elsewhere": [
+    null,
+    0
+   ],
+   "grade": "값 없음",
+   "criterion": null
+  }
+ ],
+ "scientific_verdict": null,
+ "title": "표본이 100 아래라 본 방법과 비교 방법의 차이를 읽지 않는다(표본 부족) — B173만 · 항공 LiDAR (보고만 하는 지역)",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "m0": "ok",
+  "m1": "ok",
+  "prior": "ok",
+  "twodgs": "ok",
+  "geogs": "ok",
+  "mvsfuse": "ok",
+  "cdgs": "ok"
+ },
+ "note": "띠 = 본 방법 두 씨앗 평균 ± 기준, 점선 = ± 기준의 두 배(씨앗 하나인 비교 방법의 '확인'). 숫자는 단위 전체의 값. B173만은 보고만 하는 지역이다.",
+ "rule7": {
+  "result": "통과",
+  "note": "막대와 띠, 칸 아래 비교마다의 읽기 줄이 제목 문장과 같다(제목을 가린 판에서 같은 말을 할 수 있다).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "항목마다 여덟 단위를 한 장에 모은 판(제목을 가림)으로 점검"
+ }
+}

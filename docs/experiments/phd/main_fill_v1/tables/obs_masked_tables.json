@@ -1,6 +1,6 @@
 {
  "rule": "SL/prep/obs_masked/definitions.json",
- "written": "2026-10-15 23:15:33 KST",
+ "written": "2026-10-19 03:15:37 KST",
  "units": {
   "B0_b10/LoD2": {
    "columns": {
@@ -1945,8 +1945,648 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
-    "cdgs_official": null,
+    "cdgs": {
+     "region": {
+      "rows": 6357,
+      "kept_0_2": 0.0691,
+      "kept_0_5": 0.1874,
+      "inflow": 0.0899,
+      "inflow_rows": 4992,
+      "dropped_rows": 1365,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 4992,
+       "gt_side": 0.0272,
+       "wrong_side": 0.0889,
+       "both": 0.001,
+       "neither": 0.8828,
+       "spread": 0.0899
+      }
+     },
+     "code3": {
+      "rows": 19705,
+      "kept_0_2": 0.4739,
+      "kept_0_5": 0.7958,
+      "inflow": 0.1096,
+      "inflow_rows": 18562,
+      "dropped_rows": 1143,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 18562,
+       "gt_side": 0.2231,
+       "wrong_side": 0.0554,
+       "both": 0.0542,
+       "neither": 0.6673,
+       "spread": 0.1096
+      }
+     },
+     "region_code4": {
+      "rows": 5966,
+      "kept_0_2": 0.0515,
+      "kept_0_5": 0.1349,
+      "inflow": 0.0942,
+      "inflow_rows": 4618,
+      "dropped_rows": 1348,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 4618,
+       "gt_side": 0.0219,
+       "wrong_side": 0.0931,
+       "both": 0.0011,
+       "neither": 0.8839,
+       "spread": 0.0942
+      }
+     },
+     "region_not_code4": {
+      "rows": 391,
+      "kept_0_2": 0.3376,
+      "kept_0_5": 0.9872,
+      "inflow": 0.0374,
+      "inflow_rows": 374,
+      "dropped_rows": 17,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 374,
+       "gt_side": 0.0936,
+       "wrong_side": 0.0374,
+       "both": 0.0,
+       "neither": 0.869,
+       "spread": 0.0374
+      }
+     },
+     "region_roof": {
+      "rows": 66,
+      "kept_0_2": 0.2273,
+      "kept_0_5": 0.8939,
+      "inflow": 0.0615,
+      "inflow_rows": 65,
+      "dropped_rows": 1,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 65,
+       "gt_side": 0.0769,
+       "wrong_side": 0.0615,
+       "both": 0.0,
+       "neither": 0.8615,
+       "spread": 0.0615
+      }
+     },
+     "region_wall": {
+      "rows": 6291,
+      "kept_0_2": 0.0674,
+      "kept_0_5": 0.1799,
+      "inflow": 0.0903,
+      "inflow_rows": 4927,
+      "dropped_rows": 1364,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 4927,
+       "gt_side": 0.0266,
+       "wrong_side": 0.0893,
+       "both": 0.001,
+       "neither": 0.8831,
+       "spread": 0.0903
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.1098,
+      "points": 18858,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 5966,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {
+      "main": {
+       "component": {
+        "rows": 316,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.048,
+        "inflow_rows": 271,
+        "dropped_rows": 45,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 271,
+         "gt_side": 0.0,
+         "wrong_side": 0.048,
+         "both": 0.0,
+         "neither": 0.952,
+         "spread": 0.048
+        }
+       },
+       "band_region": {
+        "rows": 80,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.0,
+        "inflow_rows": 48,
+        "dropped_rows": 32,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 48,
+         "gt_side": 0.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 1.0,
+         "spread": 0.0
+        }
+       }
+      },
+      "auxiliary": {
+       "component": {
+        "rows": 121,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.1125,
+        "inflow_rows": 80,
+        "dropped_rows": 41,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 80,
+         "gt_side": 0.0,
+         "wrong_side": 0.1125,
+         "both": 0.0,
+         "neither": 0.8875,
+         "spread": 0.1125
+        }
+       },
+       "band_region": {
+        "rows": 27,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.0,
+        "inflow_rows": 24,
+        "dropped_rows": 3,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 24,
+         "gt_side": 0.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 1.0,
+         "spread": 0.0
+        }
+       }
+      }
+     },
+     "amend1": {
+      "obs": {
+       "rows": 6357,
+       "kept_0_2": 0.0691,
+       "kept_0_5": 0.1874,
+       "inflow": 0.0899,
+       "inflow_rows": 4992,
+       "inflow_rows_photo_surface": 4992,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 4992,
+        "gt_side": 0.0272,
+        "wrong_side": 0.0889,
+        "both": 0.001,
+        "neither": 0.8828,
+        "spread": 0.0899
+       }
+      },
+      "c3w": {
+       "rows": 439,
+       "kept_0_2": 0.4191,
+       "kept_0_5": 0.7859,
+       "inflow": 0.2865,
+       "inflow_rows": 384,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 384,
+       "classes": {
+        "points": 384,
+        "gt_side": 0.0755,
+        "wrong_side": 0.2474,
+        "both": 0.0391,
+        "neither": 0.638,
+        "spread": 0.2865
+       }
+      },
+      "union": {
+       "rows": 6457,
+       "kept_0_2": 0.079,
+       "kept_0_5": 0.1862,
+       "inflow": 0.1085,
+       "inflow_rows": 5043,
+       "inflow_rows_photo_surface": 4659,
+       "inflow_rows_code3_surface": 384,
+       "classes": {
+        "points": 5043,
+        "gt_side": 0.0264,
+        "wrong_side": 0.1045,
+        "both": 0.004,
+        "neither": 0.8652,
+        "spread": 0.1085
+       }
+      },
+      "union_literal": {
+       "rows": 6796,
+       "kept_0_2": 0.0917,
+       "kept_0_5": 0.226,
+       "inflow": 0.104,
+       "inflow_rows": 5376,
+       "inflow_rows_photo_surface": 4992,
+       "inflow_rows_code3_surface": 384,
+       "classes": {
+        "points": 5376,
+        "gt_side": 0.0307,
+        "wrong_side": 0.1003,
+        "both": 0.0037,
+        "neither": 0.8653,
+        "spread": 0.104
+       }
+      },
+      "c3w_photo": {
+       "rows": 439,
+       "kept_0_2": 0.4191,
+       "kept_0_5": 0.7859,
+       "inflow": 0.2886,
+       "inflow_rows": 395,
+       "inflow_rows_photo_surface": 395,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 395,
+        "gt_side": 0.0759,
+        "wrong_side": 0.2405,
+        "both": 0.0481,
+        "neither": 0.6354,
+        "spread": 0.2886
+       }
+      },
+      "c3v_photo": {
+       "rows": 19266,
+       "kept_0_2": 0.4752,
+       "kept_0_5": 0.796,
+       "inflow": 0.1057,
+       "inflow_rows": 18167,
+       "inflow_rows_photo_surface": 18167,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 18167,
+        "gt_side": 0.2263,
+        "wrong_side": 0.0514,
+        "both": 0.0543,
+        "neither": 0.668,
+        "spread": 0.1057
+       }
+      },
+      "c3v": {
+       "rows": 19266,
+       "kept_0_2": 0.4752,
+       "kept_0_5": 0.796,
+       "inflow": 0.1061,
+       "inflow_rows": 18474,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 18474,
+       "classes": {
+        "points": 18474,
+        "gt_side": 0.2207,
+        "wrong_side": 0.0544,
+        "both": 0.0517,
+        "neither": 0.6732,
+        "spread": 0.1061
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.2865,
+        "points": 384
+       },
+       "violation": {
+        "spread": 0.1061,
+        "points": 18474
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
+    "cdgs_official": {
+     "region": {
+      "rows": 6357,
+      "kept_0_2": 0.0826,
+      "kept_0_5": 0.1716,
+      "inflow": 0.118,
+      "inflow_rows": 4992,
+      "dropped_rows": 1365,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 4992,
+       "gt_side": 0.0256,
+       "wrong_side": 0.1168,
+       "both": 0.0012,
+       "neither": 0.8564,
+       "spread": 0.118
+      }
+     },
+     "code3": {
+      "rows": 19705,
+      "kept_0_2": 0.3888,
+      "kept_0_5": 0.7202,
+      "inflow": 0.1174,
+      "inflow_rows": 18562,
+      "dropped_rows": 1143,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 18562,
+       "gt_side": 0.1625,
+       "wrong_side": 0.0708,
+       "both": 0.0466,
+       "neither": 0.72,
+       "spread": 0.1174
+      }
+     },
+     "region_code4": {
+      "rows": 5966,
+      "kept_0_2": 0.0573,
+      "kept_0_5": 0.124,
+      "inflow": 0.1193,
+      "inflow_rows": 4618,
+      "dropped_rows": 1348,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 4618,
+       "gt_side": 0.0182,
+       "wrong_side": 0.1184,
+       "both": 0.0009,
+       "neither": 0.8625,
+       "spread": 0.1193
+      }
+     },
+     "region_not_code4": {
+      "rows": 391,
+      "kept_0_2": 0.468,
+      "kept_0_5": 0.8977,
+      "inflow": 0.1016,
+      "inflow_rows": 374,
+      "dropped_rows": 17,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 374,
+       "gt_side": 0.1176,
+       "wrong_side": 0.0963,
+       "both": 0.0053,
+       "neither": 0.7807,
+       "spread": 0.1016
+      }
+     },
+     "region_roof": {
+      "rows": 66,
+      "kept_0_2": 0.5758,
+      "kept_0_5": 1.0,
+      "inflow": 0.0615,
+      "inflow_rows": 65,
+      "dropped_rows": 1,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 65,
+       "gt_side": 0.1385,
+       "wrong_side": 0.0462,
+       "both": 0.0154,
+       "neither": 0.8,
+       "spread": 0.0615
+      }
+     },
+     "region_wall": {
+      "rows": 6291,
+      "kept_0_2": 0.0774,
+      "kept_0_5": 0.1629,
+      "inflow": 0.1187,
+      "inflow_rows": 4927,
+      "dropped_rows": 1364,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 4927,
+       "gt_side": 0.0242,
+       "wrong_side": 0.1177,
+       "both": 0.001,
+       "neither": 0.8571,
+       "spread": 0.1187
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.1102,
+      "points": 18858,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B0_b10/cdgs_LoD2_s0__LoD2.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 5966,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {
+      "main": {
+       "component": {
+        "rows": 316,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.0554,
+        "inflow_rows": 271,
+        "dropped_rows": 45,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 271,
+         "gt_side": 0.0,
+         "wrong_side": 0.0554,
+         "both": 0.0,
+         "neither": 0.9446,
+         "spread": 0.0554
+        }
+       },
+       "band_region": {
+        "rows": 80,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.1458,
+        "inflow_rows": 48,
+        "dropped_rows": 32,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 48,
+         "gt_side": 0.0,
+         "wrong_side": 0.1458,
+         "both": 0.0,
+         "neither": 0.8542,
+         "spread": 0.1458
+        }
+       }
+      },
+      "auxiliary": {
+       "component": {
+        "rows": 121,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.0,
+        "inflow_rows": 80,
+        "dropped_rows": 41,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 80,
+         "gt_side": 0.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 1.0,
+         "spread": 0.0
+        }
+       },
+       "band_region": {
+        "rows": 27,
+        "kept_0_2": 0.0,
+        "kept_0_5": 0.0,
+        "inflow": 0.0,
+        "inflow_rows": 24,
+        "dropped_rows": 3,
+        "no_sW_rows": 0,
+        "classes": {
+         "points": 24,
+         "gt_side": 0.0,
+         "wrong_side": 0.0,
+         "both": 0.0,
+         "neither": 1.0,
+         "spread": 0.0
+        }
+       }
+      }
+     },
+     "amend1": {
+      "obs": {
+       "rows": 6357,
+       "kept_0_2": 0.0826,
+       "kept_0_5": 0.1716,
+       "inflow": 0.118,
+       "inflow_rows": 4992,
+       "inflow_rows_photo_surface": 4992,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 4992,
+        "gt_side": 0.0256,
+        "wrong_side": 0.1168,
+        "both": 0.0012,
+        "neither": 0.8564,
+        "spread": 0.118
+       }
+      },
+      "c3w": {
+       "rows": 439,
+       "kept_0_2": 0.3918,
+       "kept_0_5": 0.7358,
+       "inflow": 0.2292,
+       "inflow_rows": 384,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 384,
+       "classes": {
+        "points": 384,
+        "gt_side": 0.1536,
+        "wrong_side": 0.1797,
+        "both": 0.0495,
+        "neither": 0.6172,
+        "spread": 0.2292
+       }
+      },
+      "union": {
+       "rows": 6457,
+       "kept_0_2": 0.0804,
+       "kept_0_5": 0.1702,
+       "inflow": 0.1287,
+       "inflow_rows": 5043,
+       "inflow_rows_photo_surface": 4659,
+       "inflow_rows_code3_surface": 384,
+       "classes": {
+        "points": 5043,
+        "gt_side": 0.0309,
+        "wrong_side": 0.1241,
+        "both": 0.0046,
+        "neither": 0.8404,
+        "spread": 0.1287
+       }
+      },
+      "union_literal": {
+       "rows": 6796,
+       "kept_0_2": 0.1026,
+       "kept_0_5": 0.2081,
+       "inflow": 0.1259,
+       "inflow_rows": 5376,
+       "inflow_rows_photo_surface": 4992,
+       "inflow_rows_code3_surface": 384,
+       "classes": {
+        "points": 5376,
+        "gt_side": 0.0348,
+        "wrong_side": 0.1213,
+        "both": 0.0047,
+        "neither": 0.8393,
+        "spread": 0.1259
+       }
+      },
+      "c3w_photo": {
+       "rows": 439,
+       "kept_0_2": 0.3918,
+       "kept_0_5": 0.7358,
+       "inflow": 0.2304,
+       "inflow_rows": 395,
+       "inflow_rows_photo_surface": 395,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 395,
+        "gt_side": 0.1418,
+        "wrong_side": 0.1823,
+        "both": 0.0481,
+        "neither": 0.6278,
+        "spread": 0.2304
+       }
+      },
+      "c3v_photo": {
+       "rows": 19266,
+       "kept_0_2": 0.3888,
+       "kept_0_5": 0.7198,
+       "inflow": 0.115,
+       "inflow_rows": 18167,
+       "inflow_rows_photo_surface": 18167,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 18167,
+        "gt_side": 0.163,
+        "wrong_side": 0.0684,
+        "both": 0.0466,
+        "neither": 0.722,
+        "spread": 0.115
+       }
+      },
+      "c3v": {
+       "rows": 19266,
+       "kept_0_2": 0.3888,
+       "kept_0_5": 0.7198,
+       "inflow": 0.1077,
+       "inflow_rows": 18474,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 18474,
+       "classes": {
+        "points": 18474,
+        "gt_side": 0.1624,
+        "wrong_side": 0.0641,
+        "both": 0.0436,
+        "neither": 0.7299,
+        "spread": 0.1077
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.2292,
+        "points": 384
+       },
+       "violation": {
+        "spread": 0.1077,
+        "points": 18474
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": {
      "region": {
       "rows": 6357,
@@ -2986,14 +3626,20 @@
        0.9009,
        0.8635
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0691,
+      "n": 6357,
+      "criterion": 0.07404822212585523,
+      "parts": {
+       "unit": 0.07404822212585523,
+       "three_points": 0.00047192071731949034
+      },
+      "diff": 0.8131000000000002,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8822000000000001,
+      "twice": 0.14809644425171045,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -3002,14 +3648,20 @@
        0.9009,
        0.8635
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0826,
+      "n": 6357,
+      "criterion": 0.07404822212585523,
+      "parts": {
+       "unit": 0.07404822212585523,
+       "three_points": 0.00047192071731949034
+      },
+      "diff": 0.7996000000000001,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8822000000000001,
+      "twice": 0.14809644425171045,
+      "deterministic": false
      }
     },
     "kept_0_2__code3": {
@@ -3086,14 +3738,20 @@
        0.825,
        0.7922
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.4739,
+      "n": 19705,
+      "criterion": 0.06494068678417239,
+      "parts": {
+       "unit": 0.06494068678417239,
+       "three_points": 0.00015224562293834052
+      },
+      "diff": 0.3347,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8086,
+      "twice": 0.12988137356834478,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -3174,14 +3832,20 @@
        0.9009,
        0.8635
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0691,
+      "n": 6357,
+      "criterion": 0.07404822212585523,
+      "parts": {
+       "unit": 0.07404822212585523,
+       "three_points": 0.00047192071731949034
+      },
+      "diff": 0.8131000000000002,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8822000000000001,
+      "twice": 0.14809644425171045,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -3191,14 +3855,20 @@
        0.9009,
        0.8635
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0826,
+      "n": 6357,
+      "criterion": 0.07404822212585523,
+      "parts": {
+       "unit": 0.07404822212585523,
+       "three_points": 0.00047192071731949034
+      },
+      "diff": 0.7996000000000001,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8822000000000001,
+      "twice": 0.14809644425171045,
+      "deterministic": false
      }
     },
     "a1__c3w__kept_0_2": {
@@ -3279,14 +3949,20 @@
        0.5171,
        0.5513
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.4191,
+      "n": 439,
+      "criterion": 0.0677125453664238,
+      "parts": {
+       "unit": 0.0677125453664238,
+       "three_points": 0.00683371298405467
+      },
+      "diff": 0.11510000000000004,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.5342,
+      "twice": 0.1354250907328476,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -3296,14 +3972,20 @@
        0.5171,
        0.5513
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3918,
+      "n": 439,
+      "criterion": 0.0677125453664238,
+      "parts": {
+       "unit": 0.0677125453664238,
+       "three_points": 0.00683371298405467
+      },
+      "diff": 0.14240000000000003,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.5342,
+      "twice": 0.1354250907328476,
+      "deterministic": false
      }
     },
     "a1__union__kept_0_2": {
@@ -3384,14 +4066,20 @@
        0.8911,
        0.8615
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.079,
+      "n": 6457,
+      "criterion": 0.05860501002474097,
+      "parts": {
+       "unit": 0.05860501002474097,
+       "three_points": 0.00046461204893913583
+      },
+      "diff": 0.7973000000000001,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8763000000000001,
+      "twice": 0.11721002004948194,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -3401,14 +4089,20 @@
        0.8911,
        0.8615
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0804,
+      "n": 6457,
+      "criterion": 0.05860501002474097,
+      "parts": {
+       "unit": 0.05860501002474097,
+       "three_points": 0.00046461204893913583
+      },
+      "diff": 0.7959,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8763000000000001,
+      "twice": 0.11721002004948194,
+      "deterministic": false
      }
     },
     "a1__union_literal__kept_0_2": {
@@ -3489,14 +4183,20 @@
        0.8761,
        0.8433
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0917,
+      "n": 6796,
+      "criterion": 0.06494068678417239,
+      "parts": {
+       "unit": 0.06494068678417239,
+       "three_points": 0.00044143613890523835
+      },
+      "diff": 0.768,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8597,
+      "twice": 0.12988137356834478,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -3506,14 +4206,20 @@
        0.8761,
        0.8433
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1026,
+      "n": 6796,
+      "criterion": 0.06494068678417239,
+      "parts": {
+       "unit": 0.06494068678417239,
+       "three_points": 0.00044143613890523835
+      },
+      "diff": 0.7571,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8597,
+      "twice": 0.12988137356834478,
+      "deterministic": false
      }
     },
     "inflow": {
@@ -3590,14 +4296,20 @@
        0.0329,
        0.0363
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0899,
+      "n": 4992,
+      "criterion": 0.006731656556895932,
+      "parts": {
+       "unit": 0.006731656556895932,
+       "three_points": 0.0006009615384615385
+      },
+      "diff": -0.055299999999999995,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.0346,
+      "twice": 0.013463313113791864,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -3606,14 +4318,20 @@
        0.0329,
        0.0363
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.118,
+      "n": 4992,
+      "criterion": 0.006731656556895932,
+      "parts": {
+       "unit": 0.006731656556895932,
+       "three_points": 0.0006009615384615385
+      },
+      "diff": -0.0834,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.0346,
+      "twice": 0.013463313113791864,
+      "deterministic": false
      }
     },
     "inflow__code3": {
@@ -3690,14 +4408,20 @@
        0.2161,
        0.2123
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1096,
+      "n": 18562,
+      "criterion": 0.00752361615182486,
+      "parts": {
+       "unit": 0.00752361615182486,
+       "three_points": 0.0001616205150307079
+      },
+      "diff": 0.1046,
+      "grade": "확인",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.2142,
+      "twice": 0.01504723230364972,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -3778,14 +4502,20 @@
        0.0329,
        0.0363
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0899,
+      "n": 4992,
+      "criterion": 0.006731656556895932,
+      "parts": {
+       "unit": 0.006731656556895932,
+       "three_points": 0.0006009615384615385
+      },
+      "diff": -0.055299999999999995,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.0346,
+      "twice": 0.013463313113791864,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -3795,14 +4525,20 @@
        0.0329,
        0.0363
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.118,
+      "n": 4992,
+      "criterion": 0.006731656556895932,
+      "parts": {
+       "unit": 0.006731656556895932,
+       "three_points": 0.0006009615384615385
+      },
+      "diff": -0.0834,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.0346,
+      "twice": 0.013463313113791864,
+      "deterministic": false
      }
     },
     "a1__c3w__inflow": {
@@ -3883,14 +4619,20 @@
        0.1484,
        0.1615
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2865,
+      "n": 384,
+      "criterion": 0.02593667673392256,
+      "parts": {
+       "unit": 0.02593667673392256,
+       "three_points": 0.0078125
+      },
+      "diff": -0.13154999999999997,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.15495,
+      "twice": 0.05187335346784512,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -3900,14 +4642,20 @@
        0.1484,
        0.1615
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2292,
+      "n": 384,
+      "criterion": 0.02593667673392256,
+      "parts": {
+       "unit": 0.02593667673392256,
+       "three_points": 0.0078125
+      },
+      "diff": -0.07424999999999998,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.15495,
+      "twice": 0.05187335346784512,
+      "deterministic": false
      }
     },
     "a1__union__inflow": {
@@ -3988,14 +4736,20 @@
        0.0379,
        0.044
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1085,
+      "n": 5043,
+      "criterion": 0.01207738382266622,
+      "parts": {
+       "unit": 0.01207738382266622,
+       "three_points": 0.000594883997620464
+      },
+      "diff": -0.06755,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.04095,
+      "twice": 0.02415476764533244,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -4005,14 +4759,20 @@
        0.0379,
        0.044
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1287,
+      "n": 5043,
+      "criterion": 0.01207738382266622,
+      "parts": {
+       "unit": 0.01207738382266622,
+       "three_points": 0.000594883997620464
+      },
+      "diff": -0.08775000000000001,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.04095,
+      "twice": 0.02415476764533244,
+      "deterministic": false
      }
     },
     "a1__union_literal__inflow": {
@@ -4093,14 +4853,20 @@
        0.0411,
        0.0452
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.104,
+      "n": 5376,
+      "criterion": 0.008117585848021563,
+      "parts": {
+       "unit": 0.008117585848021563,
+       "three_points": 0.0005580357142857143
+      },
+      "diff": -0.06085,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.043149999999999994,
+      "twice": 0.016235171696043126,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -4110,14 +4876,20 @@
        0.0411,
        0.0452
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1259,
+      "n": 5376,
+      "criterion": 0.008117585848021563,
+      "parts": {
+       "unit": 0.008117585848021563,
+       "three_points": 0.0005580357142857143
+      },
+      "diff": -0.08275000000000002,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "틀린 영상 쪽 유입이 적었다",
+      "method_mean": 0.043149999999999994,
+      "twice": 0.016235171696043126,
+      "deterministic": false
      }
     }
    },
@@ -5638,7 +6410,254 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
+    "cdgs": {
+     "region": {
+      "rows": 73,
+      "kept_0_2": 0.6164,
+      "kept_0_5": 0.9178,
+      "inflow": 0.0,
+      "inflow_rows": 64,
+      "dropped_rows": 9,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 64,
+       "gt_side": 0.3281,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.6719,
+       "spread": 0.0
+      }
+     },
+     "code3": {
+      "rows": 5995,
+      "kept_0_2": 0.615,
+      "kept_0_5": 0.8267,
+      "inflow": 0.1514,
+      "inflow_rows": 4557,
+      "dropped_rows": 1438,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 4557,
+       "gt_side": 0.4608,
+       "wrong_side": 0.0867,
+       "both": 0.0647,
+       "neither": 0.3878,
+       "spread": 0.1514
+      }
+     },
+     "region_code4": {
+      "rows": 39,
+      "kept_0_2": 0.3077,
+      "kept_0_5": 0.8462,
+      "inflow": 0.0,
+      "inflow_rows": 36,
+      "dropped_rows": 3,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 36,
+       "gt_side": 0.1667,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.8333,
+       "spread": 0.0
+      }
+     },
+     "region_not_code4": {
+      "rows": 34,
+      "kept_0_2": 0.9706,
+      "kept_0_5": 1.0,
+      "inflow": 0.0,
+      "inflow_rows": 28,
+      "dropped_rows": 6,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 28,
+       "gt_side": 0.5357,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.4643,
+       "spread": 0.0
+      }
+     },
+     "region_roof": {
+      "rows": 73,
+      "kept_0_2": 0.6164,
+      "kept_0_5": 0.9178,
+      "inflow": 0.0,
+      "inflow_rows": 64,
+      "dropped_rows": 9,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 64,
+       "gt_side": 0.3281,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.6719,
+       "spread": 0.0
+      }
+     },
+     "region_wall": {
+      "rows": 0,
+      "kept_0_2": null,
+      "kept_0_5": null,
+      "inflow": null,
+      "inflow_rows": 0,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.1591,
+      "points": 4231,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 39,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {},
+     "amend1": {
+      "obs": {
+       "rows": 73,
+       "kept_0_2": 0.6164,
+       "kept_0_5": 0.9178,
+       "inflow": 0.0,
+       "inflow_rows": 64,
+       "inflow_rows_photo_surface": 64,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 64,
+        "gt_side": 0.3281,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.6719,
+        "spread": 0.0
+       }
+      },
+      "c3w": {
+       "rows": 1707,
+       "kept_0_2": 0.7446,
+       "kept_0_5": 0.9238,
+       "inflow": 0.1636,
+       "inflow_rows": 489,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 489,
+       "classes": {
+        "points": 489,
+        "gt_side": 0.3824,
+        "wrong_side": 0.1227,
+        "both": 0.0409,
+        "neither": 0.454,
+        "spread": 0.1636
+       }
+      },
+      "union": {
+       "rows": 1755,
+       "kept_0_2": 0.7362,
+       "kept_0_5": 0.9225,
+       "inflow": 0.1515,
+       "inflow_rows": 528,
+       "inflow_rows_photo_surface": 39,
+       "inflow_rows_code3_surface": 489,
+       "classes": {
+        "points": 528,
+        "gt_side": 0.3712,
+        "wrong_side": 0.1136,
+        "both": 0.0379,
+        "neither": 0.4773,
+        "spread": 0.1515
+       }
+      },
+      "union_literal": {
+       "rows": 1780,
+       "kept_0_2": 0.7393,
+       "kept_0_5": 0.9236,
+       "inflow": 0.1447,
+       "inflow_rows": 553,
+       "inflow_rows_photo_surface": 64,
+       "inflow_rows_code3_surface": 489,
+       "classes": {
+        "points": 553,
+        "gt_side": 0.3761,
+        "wrong_side": 0.1085,
+        "both": 0.0362,
+        "neither": 0.4792,
+        "spread": 0.1447
+       }
+      },
+      "c3w_photo": {
+       "rows": 1707,
+       "kept_0_2": 0.7446,
+       "kept_0_5": 0.9238,
+       "inflow": 0.1661,
+       "inflow_rows": 542,
+       "inflow_rows_photo_surface": 542,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 542,
+        "gt_side": 0.4391,
+        "wrong_side": 0.1107,
+        "both": 0.0554,
+        "neither": 0.3948,
+        "spread": 0.1661
+       }
+      },
+      "c3v_photo": {
+       "rows": 4288,
+       "kept_0_2": 0.5634,
+       "kept_0_5": 0.788,
+       "inflow": 0.1494,
+       "inflow_rows": 4015,
+       "inflow_rows_photo_surface": 4015,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 4015,
+        "gt_side": 0.4638,
+        "wrong_side": 0.0834,
+        "both": 0.066,
+        "neither": 0.3868,
+        "spread": 0.1494
+       }
+      },
+      "c3v": {
+       "rows": 4288,
+       "kept_0_2": 0.5634,
+       "kept_0_5": 0.788,
+       "inflow": 0.1585,
+       "inflow_rows": 3742,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 3742,
+       "classes": {
+        "points": 3742,
+        "gt_side": 0.4677,
+        "wrong_side": 0.0895,
+        "both": 0.0689,
+        "neither": 0.3739,
+        "spread": 0.1585
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.1636,
+        "points": 489
+       },
+       "violation": {
+        "spread": 0.1585,
+        "points": 3742
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": {
      "region": {
       "rows": 73,
@@ -6707,14 +7726,20 @@
        0.8767,
        0.6575
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.6164,
+      "n": 73,
+      "criterion": 0.43399385802105545,
+      "parts": {
+       "unit": 0.43399385802105545,
+       "three_points": 0.0410958904109589
+      },
+      "diff": 0.15070000000000006,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.7671,
+      "twice": 0.8679877160421109,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -6807,14 +7832,20 @@
        0.9725,
        0.977
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.615,
+      "n": 5995,
+      "criterion": 0.008909545442950395,
+      "parts": {
+       "unit": 0.008909545442950395,
+       "three_points": 0.000500417014178482
+      },
+      "diff": 0.35975,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.97475,
+      "twice": 0.01781909088590079,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -6895,14 +7926,20 @@
        0.8767,
        0.6575
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.6164,
+      "n": 73,
+      "criterion": 0.43399385802105545,
+      "parts": {
+       "unit": 0.43399385802105545,
+       "three_points": 0.0410958904109589
+      },
+      "diff": 0.15070000000000006,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.7671,
+      "twice": 0.8679877160421109,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -7000,14 +8037,20 @@
        0.9731,
        0.976
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.7446,
+      "n": 1707,
+      "criterion": 0.005741707063234793,
+      "parts": {
+       "unit": 0.005741707063234793,
+       "three_points": 0.0017574692442882249
+      },
+      "diff": 0.22995,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.97455,
+      "twice": 0.011483414126469586,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -7105,14 +8148,20 @@
        0.9687,
        0.9624
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.7362,
+      "n": 1755,
+      "criterion": 0.01247336362013064,
+      "parts": {
+       "unit": 0.01247336362013064,
+       "three_points": 0.0017094017094017094
+      },
+      "diff": 0.22935000000000005,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.96555,
+      "twice": 0.02494672724026128,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -7210,14 +8259,20 @@
        0.9691,
        0.9629
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.7393,
+      "n": 1780,
+      "criterion": 0.01227537372139843,
+      "parts": {
+       "unit": 0.01227537372139843,
+       "three_points": 0.0016853932584269663
+      },
+      "diff": 0.2267,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.966,
+      "twice": 0.02455074744279686,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -7311,14 +8366,20 @@
        0.0156,
        0.0156
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.0,
+      "n": 64,
+      "criterion": 0.046875,
+      "parts": {
+       "unit": 0.0,
+       "three_points": 0.046875
+      },
+      "diff": 0.0156,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.0156,
+      "twice": 0.09375,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -7411,14 +8472,20 @@
        0.3015,
        0.3004
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1514,
+      "n": 4557,
+      "criterion": 0.0021778888860545464,
+      "parts": {
+       "unit": 0.0021778888860545464,
+       "three_points": 0.0006583278472679394
+      },
+      "diff": 0.14955,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.30095,
+      "twice": 0.004355777772109093,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -7499,14 +8566,20 @@
        0.0156,
        0.0156
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.0,
+      "n": 64,
+      "criterion": 0.046875,
+      "parts": {
+       "unit": 0.0,
+       "three_points": 0.046875
+      },
+      "diff": 0.0156,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.0156,
+      "twice": 0.09375,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -7604,14 +8677,20 @@
        0.4928,
        0.4969
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1636,
+      "n": 489,
+      "criterion": 0.008117585848021549,
+      "parts": {
+       "unit": 0.008117585848021549,
+       "three_points": 0.006134969325153374
+      },
+      "diff": 0.33125000000000004,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.49485,
+      "twice": 0.016235171696043098,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -7709,14 +8788,20 @@
        0.4583,
        0.4621
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1515,
+      "n": 528,
+      "criterion": 0.007523616151824916,
+      "parts": {
+       "unit": 0.007523616151824916,
+       "three_points": 0.005681818181818182
+      },
+      "diff": 0.3087,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.4602,
+      "twice": 0.015047232303649832,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -7814,14 +8899,20 @@
        0.4376,
        0.4412
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1447,
+      "n": 553,
+      "criterion": 0.007127636354360383,
+      "parts": {
+       "unit": 0.007127636354360383,
+       "three_points": 0.0054249547920434
+      },
+      "diff": 0.2947,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.4394,
+      "twice": 0.014255272708720765,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -9359,7 +10450,254 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
+    "cdgs": {
+     "region": {
+      "rows": 1517,
+      "kept_0_2": 0.5254,
+      "kept_0_5": 0.8332,
+      "inflow": 0.1106,
+      "inflow_rows": 1257,
+      "dropped_rows": 260,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 1257,
+       "gt_side": 0.2705,
+       "wrong_side": 0.0883,
+       "both": 0.0223,
+       "neither": 0.6189,
+       "spread": 0.1106
+      }
+     },
+     "code3": {
+      "rows": 14303,
+      "kept_0_2": 0.4294,
+      "kept_0_5": 0.8485,
+      "inflow": 0.1525,
+      "inflow_rows": 11865,
+      "dropped_rows": 2438,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 11865,
+       "gt_side": 0.1381,
+       "wrong_side": 0.1267,
+       "both": 0.0259,
+       "neither": 0.7094,
+       "spread": 0.1525
+      }
+     },
+     "region_code4": {
+      "rows": 841,
+      "kept_0_2": 0.5743,
+      "kept_0_5": 0.8656,
+      "inflow": 0.1142,
+      "inflow_rows": 727,
+      "dropped_rows": 114,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 727,
+       "gt_side": 0.2999,
+       "wrong_side": 0.0977,
+       "both": 0.0165,
+       "neither": 0.586,
+       "spread": 0.1142
+      }
+     },
+     "region_not_code4": {
+      "rows": 676,
+      "kept_0_2": 0.4645,
+      "kept_0_5": 0.7929,
+      "inflow": 0.1057,
+      "inflow_rows": 530,
+      "dropped_rows": 146,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 530,
+       "gt_side": 0.2302,
+       "wrong_side": 0.0755,
+       "both": 0.0302,
+       "neither": 0.6642,
+       "spread": 0.1057
+      }
+     },
+     "region_roof": {
+      "rows": 235,
+      "kept_0_2": 0.3702,
+      "kept_0_5": 0.5915,
+      "inflow": 0.234,
+      "inflow_rows": 235,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 235,
+       "gt_side": 0.0766,
+       "wrong_side": 0.2298,
+       "both": 0.0043,
+       "neither": 0.6894,
+       "spread": 0.234
+      }
+     },
+     "region_wall": {
+      "rows": 1282,
+      "kept_0_2": 0.5538,
+      "kept_0_5": 0.8775,
+      "inflow": 0.0822,
+      "inflow_rows": 1022,
+      "dropped_rows": 260,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 1022,
+       "gt_side": 0.3151,
+       "wrong_side": 0.0558,
+       "both": 0.0264,
+       "neither": 0.6027,
+       "spread": 0.0822
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.1358,
+      "points": 12410,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 841,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {},
+     "amend1": {
+      "obs": {
+       "rows": 1517,
+       "kept_0_2": 0.5254,
+       "kept_0_5": 0.8332,
+       "inflow": 0.1106,
+       "inflow_rows": 1257,
+       "inflow_rows_photo_surface": 1257,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 1257,
+        "gt_side": 0.2705,
+        "wrong_side": 0.0883,
+        "both": 0.0223,
+        "neither": 0.6189,
+        "spread": 0.1106
+       }
+      },
+      "c3w": {
+       "rows": 2475,
+       "kept_0_2": 0.3552,
+       "kept_0_5": 0.8004,
+       "inflow": 0.079,
+       "inflow_rows": 1594,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 1594,
+       "classes": {
+        "points": 1594,
+        "gt_side": 0.0778,
+        "wrong_side": 0.0609,
+        "both": 0.0182,
+        "neither": 0.8432,
+        "spread": 0.079
+       }
+      },
+      "union": {
+       "rows": 3816,
+       "kept_0_2": 0.4222,
+       "kept_0_5": 0.8202,
+       "inflow": 0.087,
+       "inflow_rows": 2691,
+       "inflow_rows_photo_surface": 1097,
+       "inflow_rows_code3_surface": 1594,
+       "classes": {
+        "points": 2691,
+        "gt_side": 0.1643,
+        "wrong_side": 0.0661,
+        "both": 0.0208,
+        "neither": 0.7488,
+        "spread": 0.087
+       }
+      },
+      "union_literal": {
+       "rows": 3986,
+       "kept_0_2": 0.4205,
+       "kept_0_5": 0.8138,
+       "inflow": 0.0929,
+       "inflow_rows": 2851,
+       "inflow_rows_photo_surface": 1257,
+       "inflow_rows_code3_surface": 1594,
+       "classes": {
+        "points": 2851,
+        "gt_side": 0.1627,
+        "wrong_side": 0.073,
+        "both": 0.02,
+        "neither": 0.7443,
+        "spread": 0.0929
+       }
+      },
+      "c3w_photo": {
+       "rows": 2475,
+       "kept_0_2": 0.3552,
+       "kept_0_5": 0.8004,
+       "inflow": 0.151,
+       "inflow_rows": 1530,
+       "inflow_rows_photo_surface": 1530,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 1530,
+        "gt_side": 0.0974,
+        "wrong_side": 0.1346,
+        "both": 0.0163,
+        "neither": 0.7516,
+        "spread": 0.151
+       }
+      },
+      "c3v_photo": {
+       "rows": 11828,
+       "kept_0_2": 0.4449,
+       "kept_0_5": 0.8586,
+       "inflow": 0.1528,
+       "inflow_rows": 10335,
+       "inflow_rows_photo_surface": 10335,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 10335,
+        "gt_side": 0.1441,
+        "wrong_side": 0.1255,
+        "both": 0.0273,
+        "neither": 0.7031,
+        "spread": 0.1528
+       }
+      },
+      "c3v": {
+       "rows": 11828,
+       "kept_0_2": 0.4449,
+       "kept_0_5": 0.8586,
+       "inflow": 0.1441,
+       "inflow_rows": 10816,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 10816,
+       "classes": {
+        "points": 10816,
+        "gt_side": 0.14,
+        "wrong_side": 0.1199,
+        "both": 0.0242,
+        "neither": 0.7159,
+        "spread": 0.1441
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.079,
+        "points": 1594
+       },
+       "violation": {
+        "spread": 0.1441,
+        "points": 10816
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": {
      "region": {
       "rows": 1517,
@@ -10428,14 +11766,20 @@
        0.7983,
        0.8022
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.5254,
+      "n": 1517,
+      "criterion": 0.007721606050557128,
+      "parts": {
+       "unit": 0.007721606050557128,
+       "three_points": 0.001977587343441002
+      },
+      "diff": 0.27485000000000004,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.80025,
+      "twice": 0.015443212101114255,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -10528,14 +11872,20 @@
        0.5243,
        0.5303
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.4294,
+      "n": 14303,
+      "criterion": 0.011879393923934006,
+      "parts": {
+       "unit": 0.011879393923934006,
+       "three_points": 0.0002097462070894218
+      },
+      "diff": 0.09789999999999999,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.5273,
+      "twice": 0.023758787847868012,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -10616,14 +11966,20 @@
        0.7983,
        0.8022
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.5254,
+      "n": 1517,
+      "criterion": 0.007721606050557128,
+      "parts": {
+       "unit": 0.007721606050557128,
+       "three_points": 0.001977587343441002
+      },
+      "diff": 0.27485000000000004,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.80025,
+      "twice": 0.015443212101114255,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -10721,14 +12077,20 @@
        0.7022,
        0.6954
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3552,
+      "n": 2475,
+      "criterion": 0.01346331311379192,
+      "parts": {
+       "unit": 0.01346331311379192,
+       "three_points": 0.0012121212121212121
+      },
+      "diff": 0.34360000000000007,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.6988000000000001,
+      "twice": 0.02692662622758384,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -10826,14 +12188,20 @@
        0.7626,
        0.7594
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.4222,
+      "n": 3816,
+      "criterion": 0.006335676759431427,
+      "parts": {
+       "unit": 0.006335676759431427,
+       "three_points": 0.0007861635220125787
+      },
+      "diff": 0.3387999999999999,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.7609999999999999,
+      "twice": 0.012671353518862854,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -10931,14 +12299,20 @@
        0.7383,
        0.7356
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.4205,
+      "n": 3986,
+      "criterion": 0.00534572726577015,
+      "parts": {
+       "unit": 0.00534572726577015,
+       "three_points": 0.0007526342197691922
+      },
+      "diff": 0.31645,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.73695,
+      "twice": 0.0106914545315403,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -11032,14 +12406,20 @@
        0.1885,
        0.1352
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1106,
+      "n": 1257,
+      "criterion": 0.10552861602428038,
+      "parts": {
+       "unit": 0.10552861602428038,
+       "three_points": 0.002386634844868735
+      },
+      "diff": 0.05124999999999999,
+      "grade": "기준 안",
+      "side": 0,
+      "reading": "다르지 않았다",
+      "method_mean": 0.16185,
+      "twice": 0.21105723204856075,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -11132,14 +12512,20 @@
        0.6049,
        0.5872
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1525,
+      "n": 11865,
+      "criterion": 0.03504421207560517,
+      "parts": {
+       "unit": 0.03504421207560517,
+       "three_points": 0.00025284450063211124
+      },
+      "diff": 0.44355,
+      "grade": "확인",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.59605,
+      "twice": 0.07008842415121035,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -11220,14 +12606,20 @@
        0.1885,
        0.1352
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1106,
+      "n": 1257,
+      "criterion": 0.10552861602428038,
+      "parts": {
+       "unit": 0.10552861602428038,
+       "three_points": 0.002386634844868735
+      },
+      "diff": 0.05124999999999999,
+      "grade": "기준 안",
+      "side": 0,
+      "reading": "다르지 않았다",
+      "method_mean": 0.16185,
+      "twice": 0.21105723204856075,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -11325,14 +12717,20 @@
        0.6625,
        0.655
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.079,
+      "n": 1594,
+      "criterion": 0.0148492424049174,
+      "parts": {
+       "unit": 0.0148492424049174,
+       "three_points": 0.0018820577164366374
+      },
+      "diff": 0.57975,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.65875,
+      "twice": 0.0296984848098348,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -11430,14 +12828,20 @@
        0.4433,
        0.4281
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.087,
+      "n": 2691,
+      "criterion": 0.03009446460729955,
+      "parts": {
+       "unit": 0.03009446460729955,
+       "three_points": 0.0011148272017837235
+      },
+      "diff": 0.3487,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.4357,
+      "twice": 0.0601889292145991,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -11535,14 +12939,20 @@
        0.4535,
        0.4258
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0929,
+      "n": 2851,
+      "criterion": 0.05484320194882863,
+      "parts": {
+       "unit": 0.05484320194882863,
+       "three_points": 0.001052262364082778
+      },
+      "diff": 0.34675,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.43965,
+      "twice": 0.10968640389765726,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -13080,7 +14490,254 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
+    "cdgs": {
+     "region": {
+      "rows": 148,
+      "kept_0_2": 0.2973,
+      "kept_0_5": 0.7703,
+      "inflow": 0.0135,
+      "inflow_rows": 148,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 148,
+       "gt_side": 0.1351,
+       "wrong_side": 0.0135,
+       "both": 0.0,
+       "neither": 0.8514,
+       "spread": 0.0135
+      }
+     },
+     "code3": {
+      "rows": 14013,
+      "kept_0_2": 0.3176,
+      "kept_0_5": 0.7105,
+      "inflow": 0.0959,
+      "inflow_rows": 9314,
+      "dropped_rows": 4699,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 9314,
+       "gt_side": 0.0661,
+       "wrong_side": 0.0859,
+       "both": 0.01,
+       "neither": 0.838,
+       "spread": 0.0959
+      }
+     },
+     "region_code4": {
+      "rows": 106,
+      "kept_0_2": 0.3208,
+      "kept_0_5": 0.6887,
+      "inflow": 0.0189,
+      "inflow_rows": 106,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 106,
+       "gt_side": 0.1321,
+       "wrong_side": 0.0189,
+       "both": 0.0,
+       "neither": 0.8491,
+       "spread": 0.0189
+      }
+     },
+     "region_not_code4": {
+      "rows": 42,
+      "kept_0_2": 0.2381,
+      "kept_0_5": 0.9762,
+      "inflow": 0.0,
+      "inflow_rows": 42,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 42,
+       "gt_side": 0.1429,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.8571,
+       "spread": 0.0
+      }
+     },
+     "region_roof": {
+      "rows": 148,
+      "kept_0_2": 0.2973,
+      "kept_0_5": 0.7703,
+      "inflow": 0.0135,
+      "inflow_rows": 148,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 148,
+       "gt_side": 0.1351,
+       "wrong_side": 0.0135,
+       "both": 0.0,
+       "neither": 0.8514,
+       "spread": 0.0135
+      }
+     },
+     "region_wall": {
+      "rows": 0,
+      "kept_0_2": null,
+      "kept_0_5": null,
+      "inflow": null,
+      "inflow_rows": 0,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.0897,
+      "points": 7881,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 106,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {},
+     "amend1": {
+      "obs": {
+       "rows": 148,
+       "kept_0_2": 0.2973,
+       "kept_0_5": 0.7703,
+       "inflow": 0.0135,
+       "inflow_rows": 148,
+       "inflow_rows_photo_surface": 148,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 148,
+        "gt_side": 0.1351,
+        "wrong_side": 0.0135,
+        "both": 0.0,
+        "neither": 0.8514,
+        "spread": 0.0135
+       }
+      },
+      "c3w": {
+       "rows": 9292,
+       "kept_0_2": 0.3616,
+       "kept_0_5": 0.7276,
+       "inflow": 0.1006,
+       "inflow_rows": 3388,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 3388,
+       "classes": {
+        "points": 3388,
+        "gt_side": 0.0561,
+        "wrong_side": 0.0885,
+        "both": 0.0121,
+        "neither": 0.8433,
+        "spread": 0.1006
+       }
+      },
+      "union": {
+       "rows": 9398,
+       "kept_0_2": 0.3611,
+       "kept_0_5": 0.7272,
+       "inflow": 0.0982,
+       "inflow_rows": 3494,
+       "inflow_rows_photo_surface": 106,
+       "inflow_rows_code3_surface": 3388,
+       "classes": {
+        "points": 3494,
+        "gt_side": 0.0584,
+        "wrong_side": 0.0864,
+        "both": 0.0117,
+        "neither": 0.8434,
+        "spread": 0.0982
+       }
+      },
+      "union_literal": {
+       "rows": 9440,
+       "kept_0_2": 0.3606,
+       "kept_0_5": 0.7283,
+       "inflow": 0.097,
+       "inflow_rows": 3536,
+       "inflow_rows_photo_surface": 148,
+       "inflow_rows_code3_surface": 3388,
+       "classes": {
+        "points": 3536,
+        "gt_side": 0.0594,
+        "wrong_side": 0.0854,
+        "both": 0.0116,
+        "neither": 0.8436,
+        "spread": 0.097
+       }
+      },
+      "c3w_photo": {
+       "rows": 9292,
+       "kept_0_2": 0.3616,
+       "kept_0_5": 0.7276,
+       "inflow": 0.1122,
+       "inflow_rows": 4831,
+       "inflow_rows_photo_surface": 4831,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 4831,
+        "gt_side": 0.0635,
+        "wrong_side": 0.0994,
+        "both": 0.0128,
+        "neither": 0.8243,
+        "spread": 0.1122
+       }
+      },
+      "c3v_photo": {
+       "rows": 4721,
+       "kept_0_2": 0.2311,
+       "kept_0_5": 0.6768,
+       "inflow": 0.0783,
+       "inflow_rows": 4483,
+       "inflow_rows_photo_surface": 4483,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 4483,
+        "gt_side": 0.0689,
+        "wrong_side": 0.0714,
+        "both": 0.0069,
+        "neither": 0.8528,
+        "spread": 0.0783
+       }
+      },
+      "c3v": {
+       "rows": 4721,
+       "kept_0_2": 0.2311,
+       "kept_0_5": 0.6768,
+       "inflow": 0.0815,
+       "inflow_rows": 4493,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 4493,
+       "classes": {
+        "points": 4493,
+        "gt_side": 0.0594,
+        "wrong_side": 0.0752,
+        "both": 0.0062,
+        "neither": 0.8591,
+        "spread": 0.0815
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.1006,
+        "points": 3388
+       },
+       "violation": {
+        "spread": 0.0815,
+        "points": 4493
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": {
      "region": {
       "rows": 148,
@@ -14397,14 +16054,20 @@
        0.0,
        0.0
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2973,
+      "n": 148,
+      "criterion": 0.02027027027027027,
+      "parts": {
+       "unit": 0.0,
+       "three_points": 0.02027027027027027
+      },
+      "diff": -0.2973,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "덜 지켰다",
+      "method_mean": 0.0,
+      "twice": 0.04054054054054054,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -14497,14 +16160,20 @@
        0.6296,
        0.6345
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3176,
+      "n": 14013,
+      "criterion": 0.00970150503787924,
+      "parts": {
+       "unit": 0.00970150503787924,
+       "three_points": 0.00021408691928923143
+      },
+      "diff": 0.31445,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.63205,
+      "twice": 0.01940301007575848,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -14585,14 +16254,20 @@
        0.0,
        0.0
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2973,
+      "n": 148,
+      "criterion": 0.02027027027027027,
+      "parts": {
+       "unit": 0.0,
+       "three_points": 0.02027027027027027
+      },
+      "diff": -0.2973,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "덜 지켰다",
+      "method_mean": 0.0,
+      "twice": 0.04054054054054054,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -14690,14 +16365,20 @@
        0.8565,
        0.8592
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3616,
+      "n": 9292,
+      "criterion": 0.00534572726577015,
+      "parts": {
+       "unit": 0.00534572726577015,
+       "three_points": 0.0003228583727938011
+      },
+      "diff": 0.49625,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.85785,
+      "twice": 0.0106914545315403,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -14795,14 +16476,20 @@
        0.8469,
        0.8495
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3611,
+      "n": 9398,
+      "criterion": 0.005147737367038158,
+      "parts": {
+       "unit": 0.005147737367038158,
+       "three_points": 0.0003192168546499255
+      },
+      "diff": 0.4871000000000001,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8482000000000001,
+      "twice": 0.010295474734076316,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -14900,14 +16587,20 @@
        0.8431,
        0.8458
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3606,
+      "n": 9440,
+      "criterion": 0.005345727265770369,
+      "parts": {
+       "unit": 0.005345727265770369,
+       "three_points": 0.0003177966101694915
+      },
+      "diff": 0.48384999999999995,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.8444499999999999,
+      "twice": 0.010691454531540738,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -15001,14 +16694,20 @@
        0.3716,
        0.2027
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0135,
+      "n": 148,
+      "criterion": 0.334404938958742,
+      "parts": {
+       "unit": 0.334404938958742,
+       "three_points": 0.02027027027027027
+      },
+      "diff": 0.27365,
+      "grade": "기준 안",
+      "side": 0,
+      "reading": "다르지 않았다",
+      "method_mean": 0.28715,
+      "twice": 0.668809877917484,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -15101,14 +16800,20 @@
        0.6722,
        0.6745
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0959,
+      "n": 9314,
+      "criterion": 0.004553767670841304,
+      "parts": {
+       "unit": 0.004553767670841304,
+       "three_points": 0.00032209576980888986
+      },
+      "diff": 0.57745,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.67335,
+      "twice": 0.009107535341682607,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -15189,14 +16894,20 @@
        0.3716,
        0.2027
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0135,
+      "n": 148,
+      "criterion": 0.334404938958742,
+      "parts": {
+       "unit": 0.334404938958742,
+       "three_points": 0.02027027027027027
+      },
+      "diff": 0.27365,
+      "grade": "기준 안",
+      "side": 0,
+      "reading": "다르지 않았다",
+      "method_mean": 0.28715,
+      "twice": 0.668809877917484,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -15294,14 +17005,20 @@
        0.892,
        0.8884
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1006,
+      "n": 3388,
+      "criterion": 0.007127636354360492,
+      "parts": {
+       "unit": 0.007127636354360492,
+       "three_points": 0.0008854781582054309
+      },
+      "diff": 0.7896,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.8902,
+      "twice": 0.014255272708720984,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -15399,14 +17116,20 @@
        0.8772,
        0.8686
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0982,
+      "n": 3494,
+      "criterion": 0.017027131290971945,
+      "parts": {
+       "unit": 0.017027131290971945,
+       "three_points": 0.0008586147681740126
+      },
+      "diff": 0.7747,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.8729,
+      "twice": 0.03405426258194389,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -15504,14 +17227,20 @@
        0.8702,
        0.8597
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.097,
+      "n": 3536,
+      "criterion": 0.0207889393668844,
+      "parts": {
+       "unit": 0.0207889393668844,
+       "three_points": 0.0008484162895927602
+      },
+      "diff": 0.76795,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.86495,
+      "twice": 0.0415778787337688,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -17049,7 +18778,254 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
+    "cdgs": {
+     "region": {
+      "rows": 700,
+      "kept_0_2": 0.35,
+      "kept_0_5": 0.54,
+      "inflow": 0.2482,
+      "inflow_rows": 677,
+      "dropped_rows": 23,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 677,
+       "gt_side": 0.1093,
+       "wrong_side": 0.2378,
+       "both": 0.0103,
+       "neither": 0.6425,
+       "spread": 0.2482
+      }
+     },
+     "code3": {
+      "rows": 31946,
+      "kept_0_2": 0.2907,
+      "kept_0_5": 0.6483,
+      "inflow": 0.2071,
+      "inflow_rows": 21249,
+      "dropped_rows": 10697,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 21249,
+       "gt_side": 0.1015,
+       "wrong_side": 0.1941,
+       "both": 0.013,
+       "neither": 0.6914,
+       "spread": 0.2071
+      }
+     },
+     "region_code4": {
+      "rows": 227,
+      "kept_0_2": 0.7093,
+      "kept_0_5": 0.8767,
+      "inflow": 0.0639,
+      "inflow_rows": 219,
+      "dropped_rows": 8,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 219,
+       "gt_side": 0.2329,
+       "wrong_side": 0.032,
+       "both": 0.032,
+       "neither": 0.7032,
+       "spread": 0.0639
+      }
+     },
+     "region_not_code4": {
+      "rows": 473,
+      "kept_0_2": 0.1776,
+      "kept_0_5": 0.3784,
+      "inflow": 0.3362,
+      "inflow_rows": 458,
+      "dropped_rows": 15,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 458,
+       "gt_side": 0.0502,
+       "wrong_side": 0.3362,
+       "both": 0.0,
+       "neither": 0.6135,
+       "spread": 0.3362
+      }
+     },
+     "region_roof": {
+      "rows": 306,
+      "kept_0_2": 0.2124,
+      "kept_0_5": 0.3399,
+      "inflow": 0.5164,
+      "inflow_rows": 304,
+      "dropped_rows": 2,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 304,
+       "gt_side": 0.0164,
+       "wrong_side": 0.5132,
+       "both": 0.0033,
+       "neither": 0.4671,
+       "spread": 0.5164
+      }
+     },
+     "region_wall": {
+      "rows": 394,
+      "kept_0_2": 0.4569,
+      "kept_0_5": 0.6954,
+      "inflow": 0.0295,
+      "inflow_rows": 373,
+      "dropped_rows": 21,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 373,
+       "gt_side": 0.185,
+       "wrong_side": 0.0134,
+       "both": 0.0161,
+       "neither": 0.7855,
+       "spread": 0.0295
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.1235,
+      "points": 31764,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 227,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {},
+     "amend1": {
+      "obs": {
+       "rows": 700,
+       "kept_0_2": 0.35,
+       "kept_0_5": 0.54,
+       "inflow": 0.2482,
+       "inflow_rows": 677,
+       "inflow_rows_photo_surface": 677,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 677,
+        "gt_side": 0.1093,
+        "wrong_side": 0.2378,
+        "both": 0.0103,
+        "neither": 0.6425,
+        "spread": 0.2482
+       }
+      },
+      "c3w": {
+       "rows": 625,
+       "kept_0_2": 0.1216,
+       "kept_0_5": 0.184,
+       "inflow": 0.0732,
+       "inflow_rows": 615,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 615,
+       "classes": {
+        "points": 615,
+        "gt_side": 0.0211,
+        "wrong_side": 0.0699,
+        "both": 0.0033,
+        "neither": 0.9057,
+        "spread": 0.0732
+       }
+      },
+      "union": {
+       "rows": 863,
+       "kept_0_2": 0.2804,
+       "kept_0_5": 0.3754,
+       "inflow": 0.0711,
+       "inflow_rows": 844,
+       "inflow_rows_photo_surface": 229,
+       "inflow_rows_code3_surface": 615,
+       "classes": {
+        "points": 844,
+        "gt_side": 0.077,
+        "wrong_side": 0.0604,
+        "both": 0.0107,
+        "neither": 0.8519,
+        "spread": 0.0711
+       }
+      },
+      "union_literal": {
+       "rows": 1311,
+       "kept_0_2": 0.2449,
+       "kept_0_5": 0.376,
+       "inflow": 0.1667,
+       "inflow_rows": 1278,
+       "inflow_rows_photo_surface": 663,
+       "inflow_rows_code3_surface": 615,
+       "classes": {
+        "points": 1278,
+        "gt_side": 0.0681,
+        "wrong_side": 0.1596,
+        "both": 0.007,
+        "neither": 0.7653,
+        "spread": 0.1667
+       }
+      },
+      "c3w_photo": {
+       "rows": 625,
+       "kept_0_2": 0.1216,
+       "kept_0_5": 0.184,
+       "inflow": 0.0386,
+       "inflow_rows": 596,
+       "inflow_rows_photo_surface": 596,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 596,
+        "gt_side": 0.0117,
+        "wrong_side": 0.0369,
+        "both": 0.0017,
+        "neither": 0.9497,
+        "spread": 0.0386
+       }
+      },
+      "c3v_photo": {
+       "rows": 31321,
+       "kept_0_2": 0.2941,
+       "kept_0_5": 0.6575,
+       "inflow": 0.212,
+       "inflow_rows": 20653,
+       "inflow_rows_photo_surface": 20653,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 20653,
+        "gt_side": 0.1041,
+        "wrong_side": 0.1986,
+        "both": 0.0134,
+        "neither": 0.6839,
+        "spread": 0.212
+       }
+      },
+      "c3v": {
+       "rows": 31321,
+       "kept_0_2": 0.2941,
+       "kept_0_5": 0.6575,
+       "inflow": 0.1245,
+       "inflow_rows": 31149,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 31149,
+       "classes": {
+        "points": 31149,
+        "gt_side": 0.1527,
+        "wrong_side": 0.1155,
+        "both": 0.0089,
+        "neither": 0.7228,
+        "spread": 0.1245
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.0732,
+        "points": 615
+       },
+       "violation": {
+        "spread": 0.1245,
+        "points": 31149
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": {
      "region": {
       "rows": 700,
@@ -17870,14 +19846,20 @@
        0.2257,
        0.18
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.35,
+      "n": 700,
+      "criterion": 0.09048138372063065,
+      "parts": {
+       "unit": 0.09048138372063065,
+       "three_points": 0.004285714285714286
+      },
+      "diff": -0.14714999999999998,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "덜 지켰다",
+      "method_mean": 0.20285,
+      "twice": 0.1809627674412613,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -17970,14 +19952,20 @@
        0.523,
        0.5085
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2907,
+      "n": 31946,
+      "criterion": 0.028708535316173962,
+      "parts": {
+       "unit": 0.028708535316173962,
+       "three_points": 9.390847054404307e-05
+      },
+      "diff": 0.22504999999999992,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.5157499999999999,
+      "twice": 0.057417070632347925,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -18058,14 +20046,20 @@
        0.2257,
        0.18
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.35,
+      "n": 700,
+      "criterion": 0.09048138372063065,
+      "parts": {
+       "unit": 0.09048138372063065,
+       "three_points": 0.004285714285714286
+      },
+      "diff": -0.14714999999999998,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "덜 지켰다",
+      "method_mean": 0.20285,
+      "twice": 0.1809627674412613,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -18163,14 +20157,20 @@
        0.2464,
        0.3664
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1216,
+      "n": 625,
+      "criterion": 0.23758787847867993,
+      "parts": {
+       "unit": 0.23758787847867993,
+       "three_points": 0.0048
+      },
+      "diff": 0.18480000000000002,
+      "grade": "기준 안",
+      "side": 0,
+      "reading": "다르지 않았다",
+      "method_mean": 0.3064,
+      "twice": 0.47517575695735986,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -18268,14 +20268,20 @@
        0.2572,
        0.3384
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2804,
+      "n": 863,
+      "criterion": 0.16076779777057343,
+      "parts": {
+       "unit": 0.16076779777057343,
+       "three_points": 0.0034762456546929316
+      },
+      "diff": 0.01739999999999997,
+      "grade": "기준 안",
+      "side": 0,
+      "reading": "다르지 않았다",
+      "method_mean": 0.29779999999999995,
+      "twice": 0.32153559554114686,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -18373,14 +20379,20 @@
        0.238,
        0.2708
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2449,
+      "n": 1311,
+      "criterion": 0.0649406867841725,
+      "parts": {
+       "unit": 0.0649406867841725,
+       "three_points": 0.002288329519450801
+      },
+      "diff": 0.009499999999999953,
+      "grade": "기준 안",
+      "side": 0,
+      "reading": "다르지 않았다",
+      "method_mean": 0.25439999999999996,
+      "twice": 0.129881373568345,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -18474,14 +20486,20 @@
        0.4372,
        0.4357
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2482,
+      "n": 677,
+      "criterion": 0.004431314623338257,
+      "parts": {
+       "unit": 0.0029698484809835015,
+       "three_points": 0.004431314623338257
+      },
+      "diff": 0.18825,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.43645,
+      "twice": 0.008862629246676515,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -18574,14 +20592,20 @@
        0.3714,
        0.3741
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2071,
+      "n": 21249,
+      "criterion": 0.00534572726577026,
+      "parts": {
+       "unit": 0.00534572726577026,
+       "three_points": 0.00014118311449950587
+      },
+      "diff": 0.16565000000000002,
+      "grade": "확인",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.37275,
+      "twice": 0.01069145453154052,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -18662,14 +20686,20 @@
        0.4372,
        0.4357
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2482,
+      "n": 677,
+      "criterion": 0.004431314623338257,
+      "parts": {
+       "unit": 0.0029698484809835015,
+       "three_points": 0.004431314623338257
+      },
+      "diff": 0.18825,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.43645,
+      "twice": 0.008862629246676515,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -18767,14 +20797,20 @@
        0.1073,
        0.1057
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0732,
+      "n": 615,
+      "criterion": 0.004878048780487805,
+      "parts": {
+       "unit": 0.003167838379715741,
+       "three_points": 0.004878048780487805
+      },
+      "diff": 0.03330000000000001,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.10650000000000001,
+      "twice": 0.00975609756097561,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -18872,14 +20908,20 @@
        0.173,
        0.1576
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0711,
+      "n": 844,
+      "criterion": 0.030490444404763922,
+      "parts": {
+       "unit": 0.030490444404763922,
+       "three_points": 0.0035545023696682463
+      },
+      "diff": 0.0942,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.1653,
+      "twice": 0.060980888809527845,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -18977,14 +21019,20 @@
        0.2833,
        0.2817
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1667,
+      "n": 1278,
+      "criterion": 0.0031678383797157134,
+      "parts": {
+       "unit": 0.0031678383797157134,
+       "three_points": 0.002347417840375587
+      },
+      "diff": 0.11579999999999999,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.2825,
+      "twice": 0.006335676759431427,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -20522,7 +22570,254 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
+    "cdgs": {
+     "region": {
+      "rows": 2321,
+      "kept_0_2": 0.458,
+      "kept_0_5": 0.928,
+      "inflow": 0.1044,
+      "inflow_rows": 1896,
+      "dropped_rows": 425,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 1896,
+       "gt_side": 0.1303,
+       "wrong_side": 0.0907,
+       "both": 0.0137,
+       "neither": 0.7653,
+       "spread": 0.1044
+      }
+     },
+     "code3": {
+      "rows": 29535,
+      "kept_0_2": 0.3849,
+      "kept_0_5": 0.8996,
+      "inflow": 0.0966,
+      "inflow_rows": 16167,
+      "dropped_rows": 13368,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 16167,
+       "gt_side": 0.0784,
+       "wrong_side": 0.0801,
+       "both": 0.0165,
+       "neither": 0.8251,
+       "spread": 0.0966
+      }
+     },
+     "region_code4": {
+      "rows": 244,
+      "kept_0_2": 0.2049,
+      "kept_0_5": 0.7172,
+      "inflow": 0.0678,
+      "inflow_rows": 236,
+      "dropped_rows": 8,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 236,
+       "gt_side": 0.0212,
+       "wrong_side": 0.0678,
+       "both": 0.0,
+       "neither": 0.911,
+       "spread": 0.0678
+      }
+     },
+     "region_not_code4": {
+      "rows": 2077,
+      "kept_0_2": 0.4877,
+      "kept_0_5": 0.9528,
+      "inflow": 0.1096,
+      "inflow_rows": 1660,
+      "dropped_rows": 417,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 1660,
+       "gt_side": 0.1458,
+       "wrong_side": 0.094,
+       "both": 0.0157,
+       "neither": 0.7446,
+       "spread": 0.1096
+      }
+     },
+     "region_roof": {
+      "rows": 2321,
+      "kept_0_2": 0.458,
+      "kept_0_5": 0.928,
+      "inflow": 0.1044,
+      "inflow_rows": 1896,
+      "dropped_rows": 425,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 1896,
+       "gt_side": 0.1303,
+       "wrong_side": 0.0907,
+       "both": 0.0137,
+       "neither": 0.7653,
+       "spread": 0.1044
+      }
+     },
+     "region_wall": {
+      "rows": 0,
+      "kept_0_2": null,
+      "kept_0_5": null,
+      "inflow": null,
+      "inflow_rows": 0,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.0911,
+      "points": 15581,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 244,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {},
+     "amend1": {
+      "obs": {
+       "rows": 2321,
+       "kept_0_2": 0.458,
+       "kept_0_5": 0.928,
+       "inflow": 0.1044,
+       "inflow_rows": 1896,
+       "inflow_rows_photo_surface": 1896,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 1896,
+        "gt_side": 0.1303,
+        "wrong_side": 0.0907,
+        "both": 0.0137,
+        "neither": 0.7653,
+        "spread": 0.1044
+       }
+      },
+      "c3w": {
+       "rows": 13579,
+       "kept_0_2": 0.3477,
+       "kept_0_5": 0.9067,
+       "inflow": 0.1062,
+       "inflow_rows": 1506,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 1506,
+       "classes": {
+        "points": 1506,
+        "gt_side": 0.0823,
+        "wrong_side": 0.0896,
+        "both": 0.0166,
+        "neither": 0.8114,
+        "spread": 0.1062
+       }
+      },
+      "union": {
+       "rows": 14112,
+       "kept_0_2": 0.3486,
+       "kept_0_5": 0.9032,
+       "inflow": 0.1147,
+       "inflow_rows": 1927,
+       "inflow_rows_photo_surface": 421,
+       "inflow_rows_code3_surface": 1506,
+       "classes": {
+        "points": 1927,
+        "gt_side": 0.0908,
+        "wrong_side": 0.095,
+        "both": 0.0197,
+        "neither": 0.7945,
+        "spread": 0.1147
+       }
+      },
+      "union_literal": {
+       "rows": 15687,
+       "kept_0_2": 0.3627,
+       "kept_0_5": 0.909,
+       "inflow": 0.1057,
+       "inflow_rows": 3282,
+       "inflow_rows_photo_surface": 1776,
+       "inflow_rows_code3_surface": 1506,
+       "classes": {
+        "points": 3282,
+        "gt_side": 0.1033,
+        "wrong_side": 0.0905,
+        "both": 0.0152,
+        "neither": 0.791,
+        "spread": 0.1057
+       }
+      },
+      "c3w_photo": {
+       "rows": 13579,
+       "kept_0_2": 0.3477,
+       "kept_0_5": 0.9067,
+       "inflow": 0.0973,
+       "inflow_rows": 2364,
+       "inflow_rows_photo_surface": 2364,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 2364,
+        "gt_side": 0.1125,
+        "wrong_side": 0.0656,
+        "both": 0.0317,
+        "neither": 0.7902,
+        "spread": 0.0973
+       }
+      },
+      "c3v_photo": {
+       "rows": 15956,
+       "kept_0_2": 0.4166,
+       "kept_0_5": 0.8936,
+       "inflow": 0.0964,
+       "inflow_rows": 13803,
+       "inflow_rows_photo_surface": 13803,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 13803,
+        "gt_side": 0.0725,
+        "wrong_side": 0.0826,
+        "both": 0.0138,
+        "neither": 0.8311,
+        "spread": 0.0964
+       }
+      },
+      "c3v": {
+       "rows": 15956,
+       "kept_0_2": 0.4166,
+       "kept_0_5": 0.8936,
+       "inflow": 0.0894,
+       "inflow_rows": 14075,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 14075,
+       "classes": {
+        "points": 14075,
+        "gt_side": 0.0687,
+        "wrong_side": 0.0757,
+        "both": 0.0138,
+        "neither": 0.8418,
+        "spread": 0.0894
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.1062,
+        "points": 1506
+       },
+       "violation": {
+        "spread": 0.0894,
+        "points": 14075
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": {
      "region": {
       "rows": 2321,
@@ -21591,14 +23886,20 @@
        0.4059,
        0.4149
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.458,
+      "n": 2321,
+      "criterion": 0.01781909088590101,
+      "parts": {
+       "unit": 0.01781909088590101,
+       "three_points": 0.0012925463162429987
+      },
+      "diff": -0.04760000000000003,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "덜 지켰다",
+      "method_mean": 0.4104,
+      "twice": 0.03563818177180202,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -21691,14 +23992,20 @@
        0.6259,
        0.6308
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3849,
+      "n": 29535,
+      "criterion": 0.009701505037879461,
+      "parts": {
+       "unit": 0.009701505037879461,
+       "three_points": 0.00010157440325038091
+      },
+      "diff": 0.24344999999999994,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.62835,
+      "twice": 0.019403010075758922,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -21779,14 +24086,20 @@
        0.4059,
        0.4149
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.458,
+      "n": 2321,
+      "criterion": 0.01781909088590101,
+      "parts": {
+       "unit": 0.01781909088590101,
+       "three_points": 0.0012925463162429987
+      },
+      "diff": -0.04760000000000003,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "덜 지켰다",
+      "method_mean": 0.4104,
+      "twice": 0.03563818177180202,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -21884,14 +24197,20 @@
        0.9476,
        0.9523
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3477,
+      "n": 13579,
+      "criterion": 0.009305525240415039,
+      "parts": {
+       "unit": 0.009305525240415039,
+       "three_points": 0.00022092937624272775
+      },
+      "diff": 0.6022500000000001,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.9499500000000001,
+      "twice": 0.018611050480830078,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -21989,14 +24308,20 @@
        0.9314,
        0.935
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3486,
+      "n": 14112,
+      "criterion": 0.007127636354360492,
+      "parts": {
+       "unit": 0.007127636354360492,
+       "three_points": 0.00021258503401360543
+      },
+      "diff": 0.5846,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.9332,
+      "twice": 0.014255272708720984,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -22094,14 +24419,20 @@
        0.8717,
        0.8772
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.3627,
+      "n": 15687,
+      "criterion": 0.01088944443027273,
+      "parts": {
+       "unit": 0.01088944443027273,
+       "three_points": 0.00019124115509657678
+      },
+      "diff": 0.5117499999999999,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.87445,
+      "twice": 0.02177888886054546,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -22195,14 +24526,20 @@
        0.288,
        0.2827
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1044,
+      "n": 1896,
+      "criterion": 0.010493464632808307,
+      "parts": {
+       "unit": 0.010493464632808307,
+       "three_points": 0.0015822784810126582
+      },
+      "diff": 0.18095,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.28535,
+      "twice": 0.020986929265616613,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -22295,14 +24632,20 @@
        0.3536,
        0.3498
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0966,
+      "n": 16167,
+      "criterion": 0.007523616151824916,
+      "parts": {
+       "unit": 0.007523616151824916,
+       "three_points": 0.00018556318426424197
+      },
+      "diff": 0.2551,
+      "grade": "확인",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.3517,
+      "twice": 0.015047232303649832,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -22383,14 +24726,20 @@
        0.288,
        0.2827
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1044,
+      "n": 1896,
+      "criterion": 0.010493464632808307,
+      "parts": {
+       "unit": 0.010493464632808307,
+       "three_points": 0.0015822784810126582
+      },
+      "diff": 0.18095,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.28535,
+      "twice": 0.020986929265616613,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -22488,14 +24837,20 @@
        0.427,
        0.4024
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1062,
+      "n": 1506,
+      "criterion": 0.048705515088129404,
+      "parts": {
+       "unit": 0.048705515088129404,
+       "three_points": 0.00199203187250996
+      },
+      "diff": 0.30849999999999994,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.41469999999999996,
+      "twice": 0.09741103017625881,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -22593,14 +24948,20 @@
        0.3845,
        0.3617
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1147,
+      "n": 1927,
+      "criterion": 0.045141696910949165,
+      "parts": {
+       "unit": 0.045141696910949165,
+       "three_points": 0.0015568240788790867
+      },
+      "diff": 0.25839999999999996,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.3731,
+      "twice": 0.09028339382189833,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -22698,14 +25059,20 @@
        0.3544,
        0.3385
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1057,
+      "n": 3282,
+      "criterion": 0.03148039389842503,
+      "parts": {
+       "unit": 0.03148039389842503,
+       "three_points": 0.0009140767824497258
+      },
+      "diff": 0.24075000000000002,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.34645000000000004,
+      "twice": 0.06296078779685006,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -24243,7 +26610,254 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
+    "cdgs": {
+     "region": {
+      "rows": 826,
+      "kept_0_2": 0.1211,
+      "kept_0_5": 0.3172,
+      "inflow": 0.039,
+      "inflow_rows": 308,
+      "dropped_rows": 518,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 308,
+       "gt_side": 0.0584,
+       "wrong_side": 0.0357,
+       "both": 0.0032,
+       "neither": 0.9026,
+       "spread": 0.039
+      }
+     },
+     "code3": {
+      "rows": 16455,
+      "kept_0_2": 0.1959,
+      "kept_0_5": 0.5676,
+      "inflow": 0.0335,
+      "inflow_rows": 9476,
+      "dropped_rows": 6979,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 9476,
+       "gt_side": 0.0348,
+       "wrong_side": 0.0304,
+       "both": 0.0031,
+       "neither": 0.9317,
+       "spread": 0.0335
+      }
+     },
+     "region_code4": {
+      "rows": 260,
+      "kept_0_2": 0.1885,
+      "kept_0_5": 0.4731,
+      "inflow": 0.0197,
+      "inflow_rows": 152,
+      "dropped_rows": 108,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 152,
+       "gt_side": 0.0592,
+       "wrong_side": 0.0197,
+       "both": 0.0,
+       "neither": 0.9211,
+       "spread": 0.0197
+      }
+     },
+     "region_not_code4": {
+      "rows": 566,
+      "kept_0_2": 0.0901,
+      "kept_0_5": 0.2456,
+      "inflow": 0.0577,
+      "inflow_rows": 156,
+      "dropped_rows": 410,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 156,
+       "gt_side": 0.0577,
+       "wrong_side": 0.0513,
+       "both": 0.0064,
+       "neither": 0.8846,
+       "spread": 0.0577
+      }
+     },
+     "region_roof": {
+      "rows": 158,
+      "kept_0_2": 0.3291,
+      "kept_0_5": 0.9177,
+      "inflow": 0.0461,
+      "inflow_rows": 152,
+      "dropped_rows": 6,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 152,
+       "gt_side": 0.0789,
+       "wrong_side": 0.0461,
+       "both": 0.0,
+       "neither": 0.875,
+       "spread": 0.0461
+      }
+     },
+     "region_wall": {
+      "rows": 668,
+      "kept_0_2": 0.0719,
+      "kept_0_5": 0.1751,
+      "inflow": 0.0321,
+      "inflow_rows": 156,
+      "dropped_rows": 512,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 156,
+       "gt_side": 0.0385,
+       "wrong_side": 0.0256,
+       "both": 0.0064,
+       "neither": 0.9295,
+       "spread": 0.0321
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.0327,
+      "points": 15169,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B173_b0/cdgsnofit_LoD2_s0__LoD2.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 260,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {},
+     "amend1": {
+      "obs": {
+       "rows": 826,
+       "kept_0_2": 0.1211,
+       "kept_0_5": 0.3172,
+       "inflow": 0.039,
+       "inflow_rows": 308,
+       "inflow_rows_photo_surface": 308,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 308,
+        "gt_side": 0.0584,
+        "wrong_side": 0.0357,
+        "both": 0.0032,
+        "neither": 0.9026,
+        "spread": 0.039
+       }
+      },
+      "c3w": {
+       "rows": 1609,
+       "kept_0_2": 0.2573,
+       "kept_0_5": 0.6259,
+       "inflow": 0.0213,
+       "inflow_rows": 1080,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 1080,
+       "classes": {
+        "points": 1080,
+        "gt_side": 0.025,
+        "wrong_side": 0.0204,
+        "both": 0.0009,
+        "neither": 0.9537,
+        "spread": 0.0213
+       }
+      },
+      "union": {
+       "rows": 2332,
+       "kept_0_2": 0.2058,
+       "kept_0_5": 0.5069,
+       "inflow": 0.0208,
+       "inflow_rows": 1298,
+       "inflow_rows_photo_surface": 218,
+       "inflow_rows_code3_surface": 1080,
+       "classes": {
+        "points": 1298,
+        "gt_side": 0.0324,
+        "wrong_side": 0.02,
+        "both": 0.0008,
+        "neither": 0.9468,
+        "spread": 0.0208
+       }
+      },
+      "union_literal": {
+       "rows": 2435,
+       "kept_0_2": 0.2111,
+       "kept_0_5": 0.5211,
+       "inflow": 0.0252,
+       "inflow_rows": 1388,
+       "inflow_rows_photo_surface": 308,
+       "inflow_rows_code3_surface": 1080,
+       "classes": {
+        "points": 1388,
+        "gt_side": 0.0324,
+        "wrong_side": 0.0238,
+        "both": 0.0014,
+        "neither": 0.9424,
+        "spread": 0.0252
+       }
+      },
+      "c3w_photo": {
+       "rows": 1609,
+       "kept_0_2": 0.2573,
+       "kept_0_5": 0.6259,
+       "inflow": 0.0284,
+       "inflow_rows": 1058,
+       "inflow_rows_photo_surface": 1058,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 1058,
+        "gt_side": 0.035,
+        "wrong_side": 0.0255,
+        "both": 0.0028,
+        "neither": 0.9367,
+        "spread": 0.0284
+       }
+      },
+      "c3v_photo": {
+       "rows": 14846,
+       "kept_0_2": 0.1892,
+       "kept_0_5": 0.5613,
+       "inflow": 0.0341,
+       "inflow_rows": 8418,
+       "inflow_rows_photo_surface": 8418,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 8418,
+        "gt_side": 0.0348,
+        "wrong_side": 0.031,
+        "both": 0.0031,
+        "neither": 0.9311,
+        "spread": 0.0341
+       }
+      },
+      "c3v": {
+       "rows": 14846,
+       "kept_0_2": 0.1892,
+       "kept_0_5": 0.5613,
+       "inflow": 0.0336,
+       "inflow_rows": 14089,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 14089,
+       "classes": {
+        "points": 14089,
+        "gt_side": 0.0282,
+        "wrong_side": 0.0307,
+        "both": 0.0028,
+        "neither": 0.9382,
+        "spread": 0.0336
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.0213,
+        "points": 1080
+       },
+       "violation": {
+        "spread": 0.0336,
+        "points": 14089
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": null,
     "judgefuse": {
      "region": {
@@ -24569,14 +27183,20 @@
        0.793,
        0.7954
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1211,
+      "n": 826,
+      "criterion": 0.004751757569573516,
+      "parts": {
+       "unit": 0.004751757569573516,
+       "three_points": 0.0036319612590799033
+      },
+      "diff": 0.6731,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.7942,
+      "twice": 0.009503515139147031,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -24669,14 +27289,20 @@
        0.5654,
        0.564
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1959,
+      "n": 16455,
+      "criterion": 0.0027718585822514,
+      "parts": {
+       "unit": 0.0027718585822514,
+       "three_points": 0.00018231540565177758
+      },
+      "diff": 0.3688,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.5647,
+      "twice": 0.0055437171645028,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -24757,14 +27383,20 @@
        0.793,
        0.7954
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.1211,
+      "n": 826,
+      "criterion": 0.004751757569573516,
+      "parts": {
+       "unit": 0.004751757569573516,
+       "three_points": 0.0036319612590799033
+      },
+      "diff": 0.6731,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.7942,
+      "twice": 0.009503515139147031,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -24862,14 +27494,20 @@
        0.5333,
        0.5407
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2573,
+      "n": 1609,
+      "criterion": 0.014651252506185188,
+      "parts": {
+       "unit": 0.014651252506185188,
+       "three_points": 0.0018645121193287756
+      },
+      "diff": 0.27969999999999995,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.5369999999999999,
+      "twice": 0.029302505012370375,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -24967,14 +27605,20 @@
        0.6389,
        0.6445
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2058,
+      "n": 2332,
+      "criterion": 0.011087434329004942,
+      "parts": {
+       "unit": 0.011087434329004942,
+       "three_points": 0.001286449399656947
+      },
+      "diff": 0.43589999999999995,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.6416999999999999,
+      "twice": 0.022174868658009883,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -25072,14 +27716,20 @@
        0.6214,
        0.6271
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2111,
+      "n": 2435,
+      "criterion": 0.011285424227737373,
+      "parts": {
+       "unit": 0.011285424227737373,
+       "three_points": 0.0012320328542094457
+      },
+      "diff": 0.41314999999999996,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.62425,
+      "twice": 0.022570848455474746,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -25173,14 +27823,20 @@
        0.3994,
        0.3247
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.039,
+      "n": 308,
+      "criterion": 0.14789845435297824,
+      "parts": {
+       "unit": 0.14789845435297824,
+       "three_points": 0.00974025974025974
+      },
+      "diff": 0.32305,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.36205,
+      "twice": 0.2957969087059565,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -25273,14 +27929,20 @@
        0.7177,
        0.7102
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0335,
+      "n": 9476,
+      "criterion": 0.0148492424049174,
+      "parts": {
+       "unit": 0.0148492424049174,
+       "three_points": 0.00031658927817644573
+      },
+      "diff": 0.6804500000000001,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.7139500000000001,
+      "twice": 0.0296984848098348,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -25361,14 +28023,20 @@
        0.3994,
        0.3247
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.039,
+      "n": 308,
+      "criterion": 0.14789845435297824,
+      "parts": {
+       "unit": 0.14789845435297824,
+       "three_points": 0.00974025974025974
+      },
+      "diff": 0.32305,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.36205,
+      "twice": 0.2957969087059565,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -25466,14 +28134,20 @@
        0.6731,
        0.6796
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0213,
+      "n": 1080,
+      "criterion": 0.012869343417595065,
+      "parts": {
+       "unit": 0.012869343417595065,
+       "three_points": 0.002777777777777778
+      },
+      "diff": 0.65505,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.67635,
+      "twice": 0.02573868683519013,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -25571,14 +28245,20 @@
        0.6225,
        0.6186
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0208,
+      "n": 1298,
+      "criterion": 0.007721606050557128,
+      "parts": {
+       "unit": 0.007721606050557128,
+       "three_points": 0.0023112480739599386
+      },
+      "diff": 0.59975,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.62055,
+      "twice": 0.015443212101114255,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -25676,14 +28356,20 @@
        0.6124,
        0.6009
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0252,
+      "n": 1388,
+      "criterion": 0.022768838354206955,
+      "parts": {
+       "unit": 0.022768838354206955,
+       "three_points": 0.002161383285302594
+      },
+      "diff": 0.58145,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.60665,
+      "twice": 0.04553767670841391,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -27221,7 +29907,254 @@
       "check_violation_equals_metric_file": true
      }
     },
-    "cdgs": null,
+    "cdgs": {
+     "region": {
+      "rows": 64,
+      "kept_0_2": 0.0625,
+      "kept_0_5": 0.3906,
+      "inflow": 0.0,
+      "inflow_rows": 64,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 64,
+       "gt_side": 0.0156,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.9844,
+       "spread": 0.0
+      }
+     },
+     "code3": {
+      "rows": 11174,
+      "kept_0_2": 0.2074,
+      "kept_0_5": 0.5624,
+      "inflow": 0.0428,
+      "inflow_rows": 9270,
+      "dropped_rows": 1904,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 9270,
+       "gt_side": 0.0236,
+       "wrong_side": 0.0416,
+       "both": 0.0012,
+       "neither": 0.9335,
+       "spread": 0.0428
+      }
+     },
+     "region_code4": {
+      "rows": 13,
+      "kept_0_2": 0.0,
+      "kept_0_5": 0.0,
+      "inflow": 0.0,
+      "inflow_rows": 13,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 13,
+       "gt_side": 0.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 1.0,
+       "spread": 0.0
+      }
+     },
+     "region_not_code4": {
+      "rows": 51,
+      "kept_0_2": 0.0784,
+      "kept_0_5": 0.4902,
+      "inflow": 0.0,
+      "inflow_rows": 51,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 51,
+       "gt_side": 0.0196,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.9804,
+       "spread": 0.0
+      }
+     },
+     "region_roof": {
+      "rows": 64,
+      "kept_0_2": 0.0625,
+      "kept_0_5": 0.3906,
+      "inflow": 0.0,
+      "inflow_rows": 64,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 64,
+       "gt_side": 0.0156,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.9844,
+       "spread": 0.0
+      }
+     },
+     "region_wall": {
+      "rows": 0,
+      "kept_0_2": null,
+      "kept_0_5": null,
+      "inflow": null,
+      "inflow_rows": 0,
+      "dropped_rows": 0,
+      "no_sW_rows": 0,
+      "classes": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "code3_obs_inflow_existing": {
+      "spread": 0.0329,
+      "points": 8141,
+      "source": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/metrics/B173_b0/cdgsnofit_ALS_s0__ALS.json"
+     },
+     "check_code4_dist_vs_metric_rows": {
+      "rows": 13,
+      "max_abs_diff_m": 0.0,
+      "both_inf": 0
+     },
+     "place": {},
+     "amend1": {
+      "obs": {
+       "rows": 64,
+       "kept_0_2": 0.0625,
+       "kept_0_5": 0.3906,
+       "inflow": 0.0,
+       "inflow_rows": 64,
+       "inflow_rows_photo_surface": 64,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 64,
+        "gt_side": 0.0156,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.9844,
+        "spread": 0.0
+       }
+      },
+      "c3w": {
+       "rows": 5070,
+       "kept_0_2": 0.2179,
+       "kept_0_5": 0.5479,
+       "inflow": 0.0332,
+       "inflow_rows": 2319,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 2319,
+       "classes": {
+        "points": 2319,
+        "gt_side": 0.0151,
+        "wrong_side": 0.0323,
+        "both": 0.0009,
+        "neither": 0.9517,
+        "spread": 0.0332
+       }
+      },
+      "union": {
+       "rows": 5083,
+       "kept_0_2": 0.2174,
+       "kept_0_5": 0.5465,
+       "inflow": 0.033,
+       "inflow_rows": 2332,
+       "inflow_rows_photo_surface": 13,
+       "inflow_rows_code3_surface": 2319,
+       "classes": {
+        "points": 2332,
+        "gt_side": 0.015,
+        "wrong_side": 0.0322,
+        "both": 0.0009,
+        "neither": 0.952,
+        "spread": 0.033
+       }
+      },
+      "union_literal": {
+       "rows": 5127,
+       "kept_0_2": 0.2163,
+       "kept_0_5": 0.5467,
+       "inflow": 0.0324,
+       "inflow_rows": 2376,
+       "inflow_rows_photo_surface": 57,
+       "inflow_rows_code3_surface": 2319,
+       "classes": {
+        "points": 2376,
+        "gt_side": 0.0152,
+        "wrong_side": 0.0316,
+        "both": 0.0008,
+        "neither": 0.9524,
+        "spread": 0.0324
+       }
+      },
+      "c3w_photo": {
+       "rows": 5070,
+       "kept_0_2": 0.2179,
+       "kept_0_5": 0.5479,
+       "inflow": 0.0605,
+       "inflow_rows": 3436,
+       "inflow_rows_photo_surface": 3436,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 3436,
+        "gt_side": 0.0291,
+        "wrong_side": 0.0594,
+        "both": 0.0012,
+        "neither": 0.9104,
+        "spread": 0.0605
+       }
+      },
+      "c3v_photo": {
+       "rows": 6104,
+       "kept_0_2": 0.1987,
+       "kept_0_5": 0.5744,
+       "inflow": 0.0324,
+       "inflow_rows": 5834,
+       "inflow_rows_photo_surface": 5834,
+       "inflow_rows_code3_surface": 0,
+       "classes": {
+        "points": 5834,
+        "gt_side": 0.0204,
+        "wrong_side": 0.0312,
+        "both": 0.0012,
+        "neither": 0.9472,
+        "spread": 0.0324
+       }
+      },
+      "c3v": {
+       "rows": 6104,
+       "kept_0_2": 0.1987,
+       "kept_0_5": 0.5744,
+       "inflow": 0.0328,
+       "inflow_rows": 5822,
+       "inflow_rows_photo_surface": 0,
+       "inflow_rows_code3_surface": 5822,
+       "classes": {
+        "points": 5822,
+        "gt_side": 0.0192,
+        "wrong_side": 0.0313,
+        "both": 0.0015,
+        "neither": 0.948,
+        "spread": 0.0328
+       }
+      },
+      "existing": {
+       "within": {
+        "spread": 0.0332,
+        "points": 2319
+       },
+       "violation": {
+        "spread": 0.0328,
+        "points": 5822
+       }
+      },
+      "check_within_equals_metric_file": true,
+      "check_violation_equals_metric_file": true
+     }
+    },
     "imgonly_s0": null,
     "trust_als": {
      "region": {
@@ -27795,14 +30728,20 @@
        0.0,
        0.0156
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.0625,
+      "n": 64,
+      "criterion": 0.046875,
+      "parts": {
+       "unit": 0.030886424202228393,
+       "three_points": 0.046875
+      },
+      "diff": -0.0547,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.0078,
+      "twice": 0.09375,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -27895,14 +30834,20 @@
        0.3804,
        0.3919
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2074,
+      "n": 11174,
+      "criterion": 0.022768838354206847,
+      "parts": {
+       "unit": 0.022768838354206847,
+       "three_points": 0.00026848040093073206
+      },
+      "diff": 0.17875,
+      "grade": "확인",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.38615,
+      "twice": 0.045537676708413695,
+      "deterministic": false
      }
     },
     "a1__obs__kept_0_2": {
@@ -27983,14 +30928,20 @@
        0.0,
        0.0156
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.0625,
+      "n": 64,
+      "criterion": 0.046875,
+      "parts": {
+       "unit": 0.030886424202228393,
+       "three_points": 0.046875
+      },
+      "diff": -0.0547,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.0078,
+      "twice": 0.09375,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -28088,14 +31039,20 @@
        0.6886,
        0.7022
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2179,
+      "n": 5070,
+      "criterion": 0.02692662622758384,
+      "parts": {
+       "unit": 0.02692662622758384,
+       "three_points": 0.000591715976331361
+      },
+      "diff": 0.47750000000000004,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.6954,
+      "twice": 0.05385325245516768,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -28193,14 +31150,20 @@
        0.6868,
        0.7004
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2174,
+      "n": 5083,
+      "criterion": 0.02692662622758384,
+      "parts": {
+       "unit": 0.02692662622758384,
+       "three_points": 0.0005902026362384419
+      },
+      "diff": 0.47619999999999996,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.6936,
+      "twice": 0.05385325245516768,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -28298,14 +31261,20 @@
        0.6809,
        0.6944
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.2163,
+      "n": 5127,
+      "criterion": 0.026728636328851627,
+      "parts": {
+       "unit": 0.026728636328851627,
+       "three_points": 0.0005851375073142189
+      },
+      "diff": 0.47135,
+      "grade": "가능, 근거 불완전",
+      "side": 1,
+      "reading": "영상이 틀린 곳에서 맞는 사전 정보를 더 지켰다",
+      "method_mean": 0.68765,
+      "twice": 0.05345727265770325,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "kept_0_2",
@@ -28399,14 +31368,20 @@
        0.4688,
        0.3906
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.0,
+      "n": 64,
+      "criterion": 0.1548281008086064,
+      "parts": {
+       "unit": 0.1548281008086064,
+       "three_points": 0.046875
+      },
+      "diff": 0.42969999999999997,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.42969999999999997,
+      "twice": 0.3096562016172128,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -28499,14 +31474,20 @@
        0.7411,
        0.7399
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0428,
+      "n": 9270,
+      "criterion": 0.002375878784786758,
+      "parts": {
+       "unit": 0.002375878784786758,
+       "three_points": 0.00032362459546925567
+      },
+      "diff": 0.6977,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.7404999999999999,
+      "twice": 0.004751757569573516,
+      "deterministic": false
      }
     },
     "a1__obs__inflow": {
@@ -28587,14 +31568,20 @@
        0.4688,
        0.3906
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
+      "comparator_value": 0.0,
+      "n": 64,
+      "criterion": 0.1548281008086064,
+      "parts": {
+       "unit": 0.1548281008086064,
+       "three_points": 0.046875
+      },
+      "diff": 0.42969999999999997,
+      "grade": "표본 부족",
       "side": null,
-      "reading": null
+      "reading": null,
+      "method_mean": 0.42969999999999997,
+      "twice": 0.3096562016172128,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -28692,14 +31679,20 @@
        0.8754,
        0.8745
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0332,
+      "n": 2319,
+      "criterion": 0.0017819090885899031,
+      "parts": {
+       "unit": 0.0017819090885899031,
+       "three_points": 0.00129366106080207
+      },
+      "diff": 0.84175,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.87495,
+      "twice": 0.0035638181771798063,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -28797,14 +31790,20 @@
        0.8735,
        0.8718
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.033,
+      "n": 2332,
+      "criterion": 0.003365828278448035,
+      "parts": {
+       "unit": 0.003365828278448035,
+       "three_points": 0.001286449399656947
+      },
+      "diff": 0.83965,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.87265,
+      "twice": 0.00673165655689607,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -28902,14 +31901,20 @@
        0.8645,
        0.8615
       ],
-      "comparator_value": null,
-      "n": null,
-      "criterion": null,
-      "parts": {},
-      "diff": null,
-      "grade": "아직",
-      "side": null,
-      "reading": null
+      "comparator_value": 0.0324,
+      "n": 2376,
+      "criterion": 0.005939696961967003,
+      "parts": {
+       "unit": 0.005939696961967003,
+       "three_points": 0.0012626262626262627
+      },
+      "diff": 0.8306,
+      "grade": "가능, 근거 불완전",
+      "side": -1,
+      "reading": "틀린 영상 쪽 유입이 많았다",
+      "method_mean": 0.863,
+      "twice": 0.011879393923934006,
+      "deterministic": false
      },
      "cdgs_official": {
       "metric": "inflow",
@@ -29098,51 +32103,51 @@
    "cdgs": [
     {
      "unit": "B0_b10/LoD2",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": 1,
+     "grade": "가능, 근거 불완전",
+     "diff": 0.8131000000000002,
+     "criterion": 0.07404822212585523,
+     "n": 6357
     },
     {
      "unit": "B0_b10/ALS",
      "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "grade": "표본 부족",
+     "diff": 0.15070000000000006,
+     "criterion": 0.43399385802105545,
+     "n": 73
     },
     {
      "unit": "B173nb_b10/LoD2",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": 1,
+     "grade": "가능, 근거 불완전",
+     "diff": 0.27485000000000004,
+     "criterion": 0.007721606050557128,
+     "n": 1517
     },
     {
      "unit": "B173nb_b10/ALS",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": -1,
+     "grade": "가능, 근거 불완전",
+     "diff": -0.2973,
+     "criterion": 0.02027027027027027,
+     "n": 148
     },
     {
      "unit": "R1rep_b10/LoD2",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": -1,
+     "grade": "가능, 근거 불완전",
+     "diff": -0.14714999999999998,
+     "criterion": 0.09048138372063065,
+     "n": 700
     },
     {
      "unit": "R1rep_b10/ALS",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": -1,
+     "grade": "가능, 근거 불완전",
+     "diff": -0.04760000000000003,
+     "criterion": 0.01781909088590101,
+     "n": 2321
     }
    ]
   },
@@ -29300,51 +32305,51 @@
    "cdgs": [
     {
      "unit": "B0_b10/LoD2",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": 1,
+     "grade": "가능, 근거 불완전",
+     "diff": -0.055299999999999995,
+     "criterion": 0.006731656556895932,
+     "n": 4992
     },
     {
      "unit": "B0_b10/ALS",
      "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "grade": "표본 부족",
+     "diff": 0.0156,
+     "criterion": 0.046875,
+     "n": 64
     },
     {
      "unit": "B173nb_b10/LoD2",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": 0,
+     "grade": "기준 안",
+     "diff": 0.05124999999999999,
+     "criterion": 0.10552861602428038,
+     "n": 1257
     },
     {
      "unit": "B173nb_b10/ALS",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": 0,
+     "grade": "기준 안",
+     "diff": 0.27365,
+     "criterion": 0.334404938958742,
+     "n": 148
     },
     {
      "unit": "R1rep_b10/LoD2",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": -1,
+     "grade": "가능, 근거 불완전",
+     "diff": 0.18825,
+     "criterion": 0.004431314623338257,
+     "n": 677
     },
     {
      "unit": "R1rep_b10/ALS",
-     "side": null,
-     "grade": "아직",
-     "diff": null,
-     "criterion": null,
-     "n": null
+     "side": -1,
+     "grade": "가능, 근거 불완전",
+     "diff": 0.18095,
+     "criterion": 0.010493464632808307,
+     "n": 1896
     }
    ]
   }
@@ -29506,51 +32511,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.8131000000000002,
+      "criterion": 0.07404822212585523,
+      "n": 6357
      },
      {
       "unit": "B0_b10/ALS",
       "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "grade": "표본 부족",
+      "diff": 0.15070000000000006,
+      "criterion": 0.43399385802105545,
+      "n": 73
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.27485000000000004,
+      "criterion": 0.007721606050557128,
+      "n": 1517
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": -0.2973,
+      "criterion": 0.02027027027027027,
+      "n": 148
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": -0.14714999999999998,
+      "criterion": 0.09048138372063065,
+      "n": 700
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": -0.04760000000000003,
+      "criterion": 0.01781909088590101,
+      "n": 2321
      }
     ]
    },
@@ -29708,51 +32713,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.11510000000000004,
+      "criterion": 0.0677125453664238,
+      "n": 439
      },
      {
       "unit": "B0_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.22995,
+      "criterion": 0.005741707063234793,
+      "n": 1707
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.34360000000000007,
+      "criterion": 0.01346331311379192,
+      "n": 2475
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.49625,
+      "criterion": 0.00534572726577015,
+      "n": 9292
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 0,
+      "grade": "기준 안",
+      "diff": 0.18480000000000002,
+      "criterion": 0.23758787847867993,
+      "n": 625
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "확인",
+      "diff": 0.6022500000000001,
+      "criterion": 0.009305525240415039,
+      "n": 13579
      }
     ]
    },
@@ -29910,51 +32915,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.7973000000000001,
+      "criterion": 0.05860501002474097,
+      "n": 6457
      },
      {
       "unit": "B0_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.22935000000000005,
+      "criterion": 0.01247336362013064,
+      "n": 1755
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.3387999999999999,
+      "criterion": 0.006335676759431427,
+      "n": 3816
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.4871000000000001,
+      "criterion": 0.005147737367038158,
+      "n": 9398
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 0,
+      "grade": "기준 안",
+      "diff": 0.01739999999999997,
+      "criterion": 0.16076779777057343,
+      "n": 863
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "확인",
+      "diff": 0.5846,
+      "criterion": 0.007127636354360492,
+      "n": 14112
      }
     ]
    },
@@ -30112,51 +33117,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.768,
+      "criterion": 0.06494068678417239,
+      "n": 6796
      },
      {
       "unit": "B0_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.2267,
+      "criterion": 0.01227537372139843,
+      "n": 1780
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.31645,
+      "criterion": 0.00534572726577015,
+      "n": 3986
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.48384999999999995,
+      "criterion": 0.005345727265770369,
+      "n": 9440
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 0,
+      "grade": "기준 안",
+      "diff": 0.009499999999999953,
+      "criterion": 0.0649406867841725,
+      "n": 1311
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "확인",
+      "diff": 0.5117499999999999,
+      "criterion": 0.01088944443027273,
+      "n": 15687
      }
     ]
    }
@@ -30316,51 +33321,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": -0.055299999999999995,
+      "criterion": 0.006731656556895932,
+      "n": 4992
      },
      {
       "unit": "B0_b10/ALS",
       "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "grade": "표본 부족",
+      "diff": 0.0156,
+      "criterion": 0.046875,
+      "n": 64
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 0,
+      "grade": "기준 안",
+      "diff": 0.05124999999999999,
+      "criterion": 0.10552861602428038,
+      "n": 1257
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 0,
+      "grade": "기준 안",
+      "diff": 0.27365,
+      "criterion": 0.334404938958742,
+      "n": 148
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.18825,
+      "criterion": 0.004431314623338257,
+      "n": 677
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.18095,
+      "criterion": 0.010493464632808307,
+      "n": 1896
      }
     ]
    },
@@ -30518,51 +33523,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": -0.13154999999999997,
+      "criterion": 0.02593667673392256,
+      "n": 384
      },
      {
       "unit": "B0_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.33125000000000004,
+      "criterion": 0.008117585848021549,
+      "n": 489
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.57975,
+      "criterion": 0.0148492424049174,
+      "n": 1594
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.7896,
+      "criterion": 0.007127636354360492,
+      "n": 3388
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.03330000000000001,
+      "criterion": 0.004878048780487805,
+      "n": 615
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.30849999999999994,
+      "criterion": 0.048705515088129404,
+      "n": 1506
      }
     ]
    },
@@ -30720,51 +33725,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": -0.06755,
+      "criterion": 0.01207738382266622,
+      "n": 5043
      },
      {
       "unit": "B0_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.3087,
+      "criterion": 0.007523616151824916,
+      "n": 528
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.3487,
+      "criterion": 0.03009446460729955,
+      "n": 2691
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.7747,
+      "criterion": 0.017027131290971945,
+      "n": 3494
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.0942,
+      "criterion": 0.030490444404763922,
+      "n": 844
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.25839999999999996,
+      "criterion": 0.045141696910949165,
+      "n": 1927
      }
     ]
    },
@@ -30922,51 +33927,51 @@
     "cdgs": [
      {
       "unit": "B0_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": 1,
+      "grade": "가능, 근거 불완전",
+      "diff": -0.06085,
+      "criterion": 0.008117585848021563,
+      "n": 5376
      },
      {
       "unit": "B0_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.2947,
+      "criterion": 0.007127636354360383,
+      "n": 553
      },
      {
       "unit": "B173nb_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.34675,
+      "criterion": 0.05484320194882863,
+      "n": 2851
      },
      {
       "unit": "B173nb_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.76795,
+      "criterion": 0.0207889393668844,
+      "n": 3536
      },
      {
       "unit": "R1rep_b10/LoD2",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.11579999999999999,
+      "criterion": 0.0031678383797157134,
+      "n": 1278
      },
      {
       "unit": "R1rep_b10/ALS",
-      "side": null,
-      "grade": "아직",
-      "diff": null,
-      "criterion": null,
-      "n": null
+      "side": -1,
+      "grade": "가능, 근거 불완전",
+      "diff": 0.24075000000000002,
+      "criterion": 0.03148039389842503,
+      "n": 3282
      }
     ]
    }

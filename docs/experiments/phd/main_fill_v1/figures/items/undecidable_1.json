@@ -1,0 +1,221 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "undecidable_1",
+ "item": "맞는 자료를 판단할 수 없는 곳",
+ "figure": 1,
+ "site": "R1rep_b10",
+ "prior": "ALS",
+ "auxiliary": false,
+ "mark": "이 발주에서 냄",
+ "place": {
+  "case": "translucent",
+  "name": "R1 반투명 곡면 지붕",
+  "extent_xy": [
+   -10.8,
+   52.0,
+   -3.8,
+   60.5
+  ],
+  "orientation": "x 동쪽, y 북쪽, 북쪽이 위",
+  "case_patches": 27,
+  "case_area_m2": 2.17,
+  "band_patches": 201,
+  "band_area_m2": 15.04,
+  "rows": {
+   "inside": 156,
+   "band_c2": 451,
+   "band_c4": 20,
+   "band_c13": 0
+  },
+  "multi_layer_gt": {
+   "rule": "gt_suspect of the region file (configs/phd/metrics_fix_v1/gt_suspect_rule_v1.json: a roof-like patch whose GT height range in the 0.25 m cell exceeds the plane's rise over the cell diagonal by 0.3 m (two layers), or with >= 5 % of its ULS GT points from multi-return pulses); evaluated on roof-like code-2/3 patches with matched ULS points",
+   "evaluated": 27,
+   "multi_layer": 16,
+   "share": 0.5926
+  },
+  "source": "SL/prep/figpos/undecidable.json, SL/work/undecidable/regions_<site>_<prior>.npz"
+ },
+ "panels": {
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "status": "ok",
+   "values": {
+    "inside": {
+     "inflow": 0.6154,
+     "n": 156,
+     "shares": {
+      "points": 156,
+      "gt_side": 0.3782,
+      "wrong_side": 0.1538,
+      "both": 0.4615,
+      "neither": 0.0064,
+      "spread": 0.6154
+     }
+    },
+    "band_c4": {
+     "n": 20,
+     "le_0_2": 1.0,
+     "le_0_5": 1.0
+    },
+    "band_c2": {
+     "n": 451,
+     "le_0_2": 0.9977827050997783,
+     "le_0_5": 1.0
+    },
+    "band_c13": {
+     "inflow": null,
+     "n": 0
+    }
+   },
+   "same_as_undecidable_table": true
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "values": {
+    "inside": {
+     "inflow": 0.5513,
+     "n": 156,
+     "shares": {
+      "points": 156,
+      "gt_side": 0.2821,
+      "wrong_side": 0.2756,
+      "both": 0.2756,
+      "neither": 0.1667,
+      "spread": 0.5513
+     }
+    },
+    "band_c4": {
+     "n": 20,
+     "le_0_2": 0.85,
+     "le_0_5": 1.0
+    },
+    "band_c2": {
+     "n": 451,
+     "le_0_2": 0.9201773835920177,
+     "le_0_5": 1.0
+    },
+    "band_c13": {
+     "inflow": null,
+     "n": 0
+    }
+   },
+   "same_as_undecidable_table": true
+  },
+  "GeoGS": {
+   "result": "geogs_ALS_fix1",
+   "status": "ok",
+   "values": {
+    "inside": {
+     "inflow": 0.3782,
+     "n": 156,
+     "shares": {
+      "points": 156,
+      "gt_side": 0.6218,
+      "wrong_side": 0.0,
+      "both": 0.3782,
+      "neither": 0.0,
+      "spread": 0.3782
+     }
+    },
+    "band_c4": {
+     "n": 20,
+     "le_0_2": 1.0,
+     "le_0_5": 1.0
+    },
+    "band_c2": {
+     "n": 451,
+     "le_0_2": 1.0,
+     "le_0_5": 1.0
+    },
+    "band_c13": {
+     "inflow": null,
+     "n": 0
+    }
+   },
+   "same_as_undecidable_table": true
+  }
+ },
+ "references": {
+  "학습 전 사전 정보": {
+   "result": "samepath_ALS",
+   "values": {
+    "inside": {
+     "inflow": 0.0,
+     "n": 156,
+     "shares": {
+      "points": 156,
+      "gt_side": 1.0,
+      "wrong_side": 0.0,
+      "both": 0.0,
+      "neither": 0.0,
+      "spread": 0.0
+     }
+    },
+    "band_c4": {
+     "n": 20,
+     "le_0_2": 1.0,
+     "le_0_5": 1.0
+    },
+    "band_c2": {
+     "n": 451,
+     "le_0_2": 1.0,
+     "le_0_5": 1.0
+    },
+    "band_c13": {
+     "inflow": null,
+     "n": 0
+    }
+   },
+   "same_as_undecidable_table": true
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_ALS_s1",
+   "values": {
+    "inside": {
+     "inflow": 0.4487,
+     "n": 156,
+     "shares": {
+      "points": 156,
+      "gt_side": 0.5321,
+      "wrong_side": 0.1731,
+      "both": 0.2756,
+      "neither": 0.0192,
+      "spread": 0.4487
+     }
+    },
+    "band_c4": {
+     "n": 20,
+     "le_0_2": 1.0,
+     "le_0_5": 1.0
+    },
+    "band_c2": {
+     "n": 451,
+     "le_0_2": 1.0,
+     "le_0_5": 1.0
+    },
+    "band_c13": {
+     "inflow": null,
+     "n": 0
+    }
+   },
+   "same_as_undecidable_table": true
+  }
+ },
+ "scientific_verdict": null,
+ "title": "반투명 지붕 안에서는 세 방법 모두 틀린 영상을 따랐지만(유입률 38~62 %), 그 2 m 둘레는 본 방법과 GeoGS에서 참값에 섰고 2차원 가우시안 스플래팅에서만 일부 비었다 — R1 항공 LiDAR 반투명 곡면 지붕",
+ "title_kind": "statement written after viewing (2026-10-15 23:52 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "2차원 가우시안 스플래팅": "ok",
+  "GeoGS": "ok"
+ },
+ "foot": "R1 반투명 곡면 지붕의 사례 영역(전제 위배 덩어리 27패치, 2.2 m²)과 그 2 m 둘레(201패치, 15.0 m²). 사례 영역 안 관측 오류 유입률(|s_W| ≥ 0.2 m인 156점): 본 방법 (씨앗 0) 61.5 %(씨앗 1: 44.9 %), 2차원 가우시안 스플래팅 55.1 %, GeoGS 37.8 %; 학습 전 사전 정보 0.0 %. 2 m 둘레 결측 일치 완전성(0.2 m, 20점): 본 방법 (씨앗 0) 100.0 %(씨앗 1: 100.0 %), 2차원 가우시안 스플래팅 85.0 %, GeoGS 100.0 %; 학습 전 사전 정보 100.0 %. 2 m 둘레 지지 일치 완전성(0.2 m, 관문 조건 4의 셈, 451점): 본 방법 (씨앗 0) 99.8 %(씨앗 1: 100.0 %), 2차원 가우시안 스플래팅 92.0 %, GeoGS 100.0 %; 학습 전 사전 정보 100.0 %. 둘레 결측 일치은 100점 미만이라 표본 부족이다(9.1절). 파랑 = 참값에 섬(사례 안: 참값 쪽, 둘레: 0.2 m 안), 주황 = 틀린 영상 쪽(사례 안과 둘레의 코드 13)이거나 참값에서 0.2 m 넘게 멂(둘레의 코드 2, 4), 연회색 점 = 어느 쪽도 아님, 검은 실선 = 사례 영역, 검은 점선 = 2 m 둘레의 바깥 끝, 진한 회색 네모 = 평가에서 뺀 패치, 옅은 회색 네모 = 그 밖의 평가 패치. 점 하나가 솎은 참값 행 하나다. x는 동쪽, y는 북쪽(북쪽이 위). 이 자리는 참값이 여러 층(반투명 지붕과 그 아래)으로 나뉘는 곳이다: 사례 패치 27개 가운데 16개(59.3 %)가 두 층 패치다(참값 의심 규칙 gt_suspect; 규칙 5, 피할 수 없는 미리 정한 자리). 발주 10절은 이 자리의 사전 정보를 LoD2로 적었으나, R1 LoD2에서 이 지붕은 사전 정보 오류(코드 11, 13: LoD2가 곡면 지붕 위)라 전제 위배 패치가 없다. 사례 영역은 항공 LiDAR에만 있어(27패치) 항공 LiDAR로 그렸다(받아들인 바꿈).",
+ "rule7": {
+  "result": "통과",
+  "note": "사례 영역(실선) 안의 주황이 세 칸 모두에 있고, 둘레(점선 안)는 대부분 파랑이며 2차원 가우시안 스플래팅 칸 아래쪽에만 주황이 섞인다.",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

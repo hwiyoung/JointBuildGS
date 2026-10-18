@@ -1,0 +1,2560 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "mark": "이 발주에서 냄 (발주 7.6, 일 9)",
+ "written": "2026-10-19 03:25:16 KST",
+ "rows": [
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "github.com/hbb1/2d-gaussian-splatting f3e3b9f + 어댑터 v1; 이미지 jointbuildgs:2dgs-official-f3e3b9f-v1",
+   "attempt": 1,
+   "train_minutes": 32.80833333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 4.9794921875,
+   "torch_max_allocated_gib": 4.0337890625,
+   "last_gaussians": 1440563,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-15 10:29",
+    "t1": "10-15 11:02"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 395,
+     "host_min_available_gb": 19.0,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 11:02",
+     "t1": "10-15 11:08",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 208,
+     "host_min_available_gb": 37.2,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 11:08",
+     "t1": "10-15 11:12",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 307,
+     "host_min_available_gb": 48.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:12",
+     "t1": "10-15 11:17",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 293,
+     "host_min_available_gb": 51.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:17",
+     "t1": "10-15 11:22",
+     "log_tail": null
+    },
+    "cpu2": {
+     "status": "PASS",
+     "seconds": 44,
+     "host_min_available_gb": 57.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:22",
+     "t1": "10-15 11:23",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "B0_b10",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "github.com/hbb1/2d-gaussian-splatting f3e3b9f + 어댑터 v1; 이미지 jointbuildgs:2dgs-official-f3e3b9f-v1",
+   "attempt": 1,
+   "train_minutes": 26.425,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 3.384765625,
+   "torch_max_allocated_gib": 2.60380859375,
+   "last_gaussians": 1024176,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-15 11:23",
+    "t1": "10-15 11:49"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 451,
+     "host_min_available_gb": 3.0,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 11:49",
+     "t1": "10-15 11:57",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 41,
+     "host_min_available_gb": 52.0,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 11:57",
+     "t1": "10-15 11:58",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 326,
+     "host_min_available_gb": 47.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:58",
+     "t1": "10-15 12:07",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 310,
+     "host_min_available_gb": 39.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:29",
+     "t1": "10-15 12:35",
+     "log_tail": null
+    },
+    "cpu2": {
+     "status": "PASS",
+     "seconds": 53,
+     "host_min_available_gb": 49.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:35",
+     "t1": "10-15 12:39",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "github.com/hbb1/2d-gaussian-splatting f3e3b9f + 어댑터 v1; 이미지 jointbuildgs:2dgs-official-f3e3b9f-v1",
+   "attempt": 1,
+   "train_minutes": 25.921666666666667,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 3.810546875,
+   "torch_max_allocated_gib": 3.072265625,
+   "last_gaussians": 1053603,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-15 12:25",
+    "t1": "10-15 12:51"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 533,
+     "host_min_available_gb": 34.5,
+     "mem": "96g",
+     "gpu": 0,
+     "t0": "10-15 12:51",
+     "t1": "10-15 13:04",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 32,
+     "host_min_available_gb": 91.7,
+     "mem": "96g",
+     "gpu": 0,
+     "t0": "10-15 13:04",
+     "t1": "10-15 13:10",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 353,
+     "host_min_available_gb": 35.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:14",
+     "t1": "10-15 14:20",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 312,
+     "host_min_available_gb": 35.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:20",
+     "t1": "10-15 14:25",
+     "log_tail": null
+    },
+    "cpu2": {
+     "status": "PASS",
+     "seconds": 72,
+     "host_min_available_gb": 40.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:25",
+     "t1": "10-15 14:26",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "2차원 가우시안 스플래팅",
+   "result": "imgonly_2dgs_s0",
+   "site": "B173_b0",
+   "units": [
+    "LoD2",
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "github.com/hbb1/2d-gaussian-splatting f3e3b9f + 어댑터 v1; 이미지 jointbuildgs:2dgs-official-f3e3b9f-v1",
+   "attempt": 2,
+   "train_minutes": 28.27,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 3.8857421875,
+   "torch_max_allocated_gib": 3.04814453125,
+   "last_gaussians": 1156370,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-15 13:30",
+    "t1": "10-15 13:59"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 146,
+     "host_min_available_gb": 46.7,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 13:59",
+     "t1": "10-15 14:01",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 100,
+     "host_min_available_gb": 55.3,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 14:01",
+     "t1": "10-15 14:09",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 119,
+     "host_min_available_gb": 55.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:02",
+     "t1": "10-15 16:04",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 115,
+     "host_min_available_gb": 55.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:04",
+     "t1": "10-15 16:05",
+     "log_tail": null
+    },
+    "cpu2": {
+     "status": "PASS",
+     "seconds": 20,
+     "host_min_available_gb": 59.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:05",
+     "t1": "10-15 16:06",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 71.07666666666667,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 17.75,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 54.06333333333334,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 9.1572265625,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B0_b10/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 52.55833333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 10.7734375,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS (LoD2, 고침 발주의 결과를 옮김)",
+   "result": "trust_LoD2_fix1",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": null,
+   "status": "끝남 (앞 작업)",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": null,
+   "train_minutes": 195.57000000000002,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 21.2041015625,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": null,
+   "steps": {},
+   "note": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173_b0/trust_LoD2_fix1"
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": 1,
+   "train_minutes": 66.89666666666668,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 13.4306640625,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": 3605015,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-15 11:31",
+    "t1": "10-15 12:38"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 382,
+     "host_min_available_gb": 11.4,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 12:38",
+     "t1": "10-15 12:47",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 186,
+     "host_min_available_gb": 36.5,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 12:47",
+     "t1": "10-15 12:52",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 217,
+     "host_min_available_gb": 58.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 13:04",
+     "t1": "10-15 13:09",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 41,
+     "host_min_available_gb": 57.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 13:15",
+     "t1": "10-15 13:17",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": 1,
+   "train_minutes": 55.68833333333334,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 9.6611328125,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": 3067316,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-15 14:07",
+    "t1": "10-15 15:03"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 469,
+     "host_min_available_gb": 10.2,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 15:03",
+     "t1": "10-15 15:12",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 49,
+     "host_min_available_gb": 65.4,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 15:12",
+     "t1": "10-15 15:22",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 169,
+     "host_min_available_gb": 59.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:25",
+     "t1": "10-15 15:27",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 52,
+     "host_min_available_gb": 58.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:27",
+     "t1": "10-15 15:36",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": 1,
+   "train_minutes": 52.17666666666666,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 11.3017578125,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": 3010740,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-15 14:09",
+    "t1": "10-15 15:01"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 536,
+     "host_min_available_gb": 42.9,
+     "mem": "96g",
+     "gpu": 1,
+     "t0": "10-15 15:01",
+     "t1": "10-15 15:21",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 37,
+     "host_min_available_gb": 91.2,
+     "mem": "96g",
+     "gpu": 1,
+     "t0": "10-15 15:21",
+     "t1": "10-15 15:25",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 184,
+     "host_min_available_gb": 49.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:53",
+     "t1": "10-15 15:57",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 50,
+     "host_min_available_gb": 55.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:57",
+     "t1": "10-15 15:57",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "GeoGS",
+   "result": "geogs_ALS_fix1",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "GeoGS-official-adapters-v1-fix1; 이미지 jointbuildgs:geogs-official-db40c95-compat-v1",
+   "attempt": 1,
+   "train_minutes": 98.01333333333334,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 19.943359375,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": 4720398,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-15 15:48",
+    "t1": "10-15 17:26"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 194,
+     "host_min_available_gb": 42.5,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 17:26",
+     "t1": "10-15 17:29",
+     "log_tail": null
+    },
+    "post1": {
+     "status": "PASS",
+     "seconds": 109,
+     "host_min_available_gb": 52.3,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 17:29",
+     "t1": "10-15 17:31",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 308,
+     "host_min_available_gb": 58.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 17:32",
+     "t1": "10-15 17:37",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 22,
+     "host_min_available_gb": 61.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 17:37",
+     "t1": "10-15 17:37",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_LoD2_s0",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 20.008333333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 9.2529296875,
+   "gpu_peak_mib": 9566.0,
+   "torch_max_allocated_gib": 6.546,
+   "last_gaussians": 1525035,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-18 16:22",
+    "t1": "10-18 16:42"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 1779,
+     "host_min_available_gb": 24.9,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-18 16:42",
+     "t1": "10-18 17:42",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 3741,
+     "host_min_available_gb": 32.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 19:17",
+     "t1": "10-18 21:55",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 135,
+     "host_min_available_gb": 44.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 21:55",
+     "t1": "10-18 22:47",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": false,
+   "debug_launcher": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_fill_v1/cdgs/jbgs_nodebug.py",
+    "sha256": "4b8960511fe9ea5807f8c1ca90d6e16eb922a70ccc0a82c5dcdce58177195c41"
+   },
+   "lost_debug_on": {
+    "what": "stopped on purpose at about 10,200 of 30,000 iterations (debug on, 14:42-15:46) to re-run with debug off (user decision 10-18, amendment 4)",
+    "t0": "10-18 14:42",
+    "t1": "10-18 15:46",
+    "seconds": 3825.1,
+    "stopped_at_iteration": 10240,
+    "old_run": "cdgsnofit_LoD2_s0_old_20261018T162209",
+    "pipeline_debug": true
+   },
+   "post": {
+    "wall_seconds": 1779.1,
+    "renders_seconds": 75.5,
+    "tiled_tsdf_seconds": 1413.3,
+    "virtual_seconds": 290.3,
+    "peak_host_gb": 23.518,
+    "triangles": 133038313,
+    "vertices": 88325967,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [
+    {
+     "what": "stopped on purpose at about 10,200 of 30,000 iterations (debug on, 14:42-15:46) to re-run with debug off (user decision 10-18, amendment 4)",
+     "train": {
+      "status": "FAILED",
+      "attempt": 1,
+      "gpu": 0,
+      "t0": "10-18 14:42",
+      "rc": 1,
+      "t1": "10-18 15:46"
+     },
+     "status": "FAILED",
+     "note": "학습 FAILED (rc 1) — 사용자에게 여쭐 것"
+    }
+   ],
+   "note": "debug 끔; debug 켜고 10-18 14:42에 시작한 앞 학습을 10,240회(30,000회 가운데)에서 일부러 멈추고 debug 끄고 다시 돌림, 63.8분 잃음 (고친 것 4)",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_ALS_s0",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 19.83833333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 9.5556640625,
+   "gpu_peak_mib": 10243.0,
+   "torch_max_allocated_gib": 6.634,
+   "last_gaussians": 1528852,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-18 15:46",
+    "t1": "10-18 16:06"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 1580,
+     "host_min_available_gb": 25.8,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-18 16:06",
+     "t1": "10-18 16:48",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 2692,
+     "host_min_available_gb": 35.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 17:12",
+     "t1": "10-18 19:17",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 84,
+     "host_min_available_gb": 47.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 22:47",
+     "t1": "10-18 23:34",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": false,
+   "debug_launcher": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_fill_v1/cdgs/jbgs_nodebug.py",
+    "sha256": "4b8960511fe9ea5807f8c1ca90d6e16eb922a70ccc0a82c5dcdce58177195c41"
+   },
+   "lost_debug_on": {
+    "what": "stopped on purpose at about 10,110 of 30,000 iterations (debug on, 14:42-15:42) to re-run with debug off (user decision 10-18, amendment 4)",
+    "t0": "10-18 14:42",
+    "t1": "10-18 15:42",
+    "seconds": 3603.8,
+    "stopped_at_iteration": 10110,
+    "old_run": "cdgsnofit_ALS_s0_old_20261018T154612",
+    "pipeline_debug": true
+   },
+   "post": {
+    "wall_seconds": 1580.0,
+    "renders_seconds": 104.8,
+    "tiled_tsdf_seconds": 1200.9,
+    "virtual_seconds": 274.4,
+    "peak_host_gb": 21.824,
+    "triangles": 91245070,
+    "vertices": 63887859,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [
+    {
+     "what": "stopped on purpose at about 10,110 of 30,000 iterations (debug on, 14:42-15:42) to re-run with debug off (user decision 10-18, amendment 4)",
+     "train": {
+      "status": "FAILED",
+      "attempt": 1,
+      "gpu": 1,
+      "t0": "10-18 14:42",
+      "rc": 1,
+      "t1": "10-18 15:42"
+     },
+     "status": "FAILED",
+     "note": "학습 FAILED (rc 1) — 사용자에게 여쭐 것"
+    }
+   ],
+   "note": "debug 끔; debug 켜고 10-18 14:42에 시작한 앞 학습을 10,110회(30,000회 가운데)에서 일부러 멈추고 debug 끄고 다시 돌림, 60.1분 잃음 (고친 것 4)",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_LoD2_s0",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 329.8283333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 10.00390625,
+   "gpu_peak_mib": 10702.0,
+   "torch_max_allocated_gib": 7.134,
+   "last_gaussians": 1513717,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-15 21:57",
+    "t1": "10-16 03:27"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 1320,
+     "host_min_available_gb": 40.9,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-18 13:14",
+     "t1": "10-18 13:36",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 533,
+     "host_min_available_gb": 42.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 13:36",
+     "t1": "10-18 14:05",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 86,
+     "host_min_available_gb": 47.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 14:40",
+     "t1": "10-18 14:41",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": true,
+   "debug_launcher": null,
+   "lost_debug_on": null,
+   "post": {
+    "wall_seconds": 1319.5,
+    "renders_seconds": 82.7,
+    "tiled_tsdf_seconds": 1236.9,
+    "virtual_seconds": null,
+    "peak_host_gb": 19.148,
+    "triangles": 99493042,
+    "vertices": 64286794,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [
+    {
+     "what": "post0 cleared for the tiled TSDF (user decision 10-18, amendment 3)",
+     "post0": {
+      "status": "FAILED",
+      "t0": "10-16 03:27",
+      "gpu": 0,
+      "rc": 1,
+      "info": {
+       "seconds": 574,
+       "host_min_available_gb": 0.4,
+       "mem": "96g",
+       "alone": true
+      },
+      "t1": "10-16 04:06"
+     },
+     "status": "POST_NOT_FINISHED",
+     "note": "post0 두 번 실패"
+    }
+   ],
+   "note": "debug 켬; 첫 후처리(통째 TSDF, 10-16 03:27~10-16 04:06)는 호스트 메모리로 두 번 끝까지 돌지 못함, 타일 TSDF로 다시 함 (고친 것 3)",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_ALS_s0",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 19.83833333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 9.0673828125,
+   "gpu_peak_mib": 9376.0,
+   "torch_max_allocated_gib": 7.391,
+   "last_gaussians": 1505725,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-18 15:42",
+    "t1": "10-18 16:02"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 1180,
+     "host_min_available_gb": 29.6,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-18 16:02",
+     "t1": "10-18 16:22",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 719,
+     "host_min_available_gb": 34.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 16:22",
+     "t1": "10-18 17:12",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 90,
+     "host_min_available_gb": 48.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 23:34",
+     "t1": "10-19 00:19",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": false,
+   "debug_launcher": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_fill_v1/cdgs/jbgs_nodebug.py",
+    "sha256": "4b8960511fe9ea5807f8c1ca90d6e16eb922a70ccc0a82c5dcdce58177195c41"
+   },
+   "lost_debug_on": null,
+   "post": {
+    "wall_seconds": 1180.4,
+    "renders_seconds": 73.7,
+    "tiled_tsdf_seconds": 1106.7,
+    "virtual_seconds": null,
+    "peak_host_gb": 24.991,
+    "triangles": 93824742,
+    "vertices": 64626683,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [],
+   "note": "debug 끔",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_LoD2_s0",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 21.428333333333335,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 11.1220703125,
+   "gpu_peak_mib": 11847.0,
+   "torch_max_allocated_gib": 8.586,
+   "last_gaussians": 1515045,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-18 16:48",
+    "t1": "10-18 17:09"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 1659,
+     "host_min_available_gb": 38.3,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-18 17:09",
+     "t1": "10-18 18:32",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 2794,
+     "host_min_available_gb": 37.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 00:19",
+     "t1": "10-19 01:06",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 107,
+     "host_min_available_gb": 45.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 01:06",
+     "t1": "10-19 01:08",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": false,
+   "debug_launcher": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_fill_v1/cdgs/jbgs_nodebug.py",
+    "sha256": "4b8960511fe9ea5807f8c1ca90d6e16eb922a70ccc0a82c5dcdce58177195c41"
+   },
+   "lost_debug_on": null,
+   "post": {
+    "wall_seconds": 1658.8,
+    "renders_seconds": 97.8,
+    "tiled_tsdf_seconds": 1561.0,
+    "virtual_seconds": null,
+    "peak_host_gb": 20.69,
+    "triangles": 113761924,
+    "vertices": 75738788,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [],
+   "note": "debug 끔",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_ALS_s0",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 22.121666666666666,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 12.1630859375,
+   "gpu_peak_mib": 12546.0,
+   "torch_max_allocated_gib": 9.133,
+   "last_gaussians": 1515630,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-18 17:42",
+    "t1": "10-18 18:04"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 1448,
+     "host_min_available_gb": 36.9,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-18 18:04",
+     "t1": "10-18 20:42",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 2610,
+     "host_min_available_gb": 42.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 01:08",
+     "t1": "10-19 01:51",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 85,
+     "host_min_available_gb": 47.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 01:51",
+     "t1": "10-19 01:53",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": false,
+   "debug_launcher": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_fill_v1/cdgs/jbgs_nodebug.py",
+    "sha256": "4b8960511fe9ea5807f8c1ca90d6e16eb922a70ccc0a82c5dcdce58177195c41"
+   },
+   "lost_debug_on": null,
+   "post": {
+    "wall_seconds": 1448.3,
+    "renders_seconds": 99.9,
+    "tiled_tsdf_seconds": 1348.4,
+    "virtual_seconds": null,
+    "peak_host_gb": 22.167,
+    "triangles": 91492662,
+    "vertices": 63963714,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [],
+   "note": "debug 끔",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_LoD2_s0",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 17.56833333333333,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 6.1728515625,
+   "gpu_peak_mib": 6782.0,
+   "torch_max_allocated_gib": 5.092,
+   "last_gaussians": 1516351,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 0,
+    "t0": "10-18 18:32",
+    "t1": "10-18 18:49"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 638,
+     "host_min_available_gb": 38.0,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-18 18:49",
+     "t1": "10-18 20:52",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 1692,
+     "host_min_available_gb": 48.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 01:53",
+     "t1": "10-19 02:21",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 36,
+     "host_min_available_gb": 55.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 02:21",
+     "t1": "10-19 02:22",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": false,
+   "debug_launcher": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_fill_v1/cdgs/jbgs_nodebug.py",
+    "sha256": "4b8960511fe9ea5807f8c1ca90d6e16eb922a70ccc0a82c5dcdce58177195c41"
+   },
+   "lost_debug_on": null,
+   "post": {
+    "wall_seconds": 637.9,
+    "renders_seconds": 73.5,
+    "tiled_tsdf_seconds": 434.1,
+    "virtual_seconds": 130.3,
+    "peak_host_gb": 16.78,
+    "triangles": 43031277,
+    "vertices": 29105175,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [],
+   "note": "debug 끔",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 변형(크기 맞추기 생략)",
+   "result": "cdgsnofit_ALS_s0",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v3 (변형 스위치: 크기 맞추기 생략); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v3 (the variant switch read from the scene)",
+   "attempt": 1,
+   "train_minutes": 17.566666666666666,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 6.5673828125,
+   "gpu_peak_mib": 6816.0,
+   "torch_max_allocated_gib": 5.229,
+   "last_gaussians": 1546088,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-18 20:42",
+    "t1": "10-18 20:59"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 449,
+     "host_min_available_gb": 36.8,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-18 20:59",
+     "t1": "10-18 22:45",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 1827,
+     "host_min_available_gb": 51.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 02:22",
+     "t1": "10-19 02:52",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 26,
+     "host_min_available_gb": 54.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-19 02:52",
+     "t1": "10-19 02:52",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": false,
+   "debug_launcher": {
+    "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_fill_v1/cdgs/jbgs_nodebug.py",
+    "sha256": "4b8960511fe9ea5807f8c1ca90d6e16eb922a70ccc0a82c5dcdce58177195c41"
+   },
+   "lost_debug_on": null,
+   "post": {
+    "wall_seconds": 449.2,
+    "renders_seconds": 55.7,
+    "tiled_tsdf_seconds": 286.6,
+    "virtual_seconds": 106.8,
+    "peak_host_gb": 21.734,
+    "triangles": 32415442,
+    "vertices": 22438921,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [],
+   "note": "debug 끔",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "CDGS 공식 확인",
+   "result": "cdgs_LoD2_s0",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남 (이 발주에서 냄)",
+   "code": "github.com/zqlin0521/cdgs-release db853c1 + 어댑터 v2 (공식 크기 맞추기); 이미지 jointbuildgs:cdgs-official-db853c1-v1",
+   "adapter": "cdgs-release-adapters-v2 (the official check)",
+   "attempt": 1,
+   "train_minutes": 329.25166666666667,
+   "fusion_minutes": null,
+   "gpu_peak_minus_idle_gib": 9.2529296875,
+   "gpu_peak_mib": 9566.0,
+   "torch_max_allocated_gib": 7.095,
+   "last_gaussians": 1501228,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": "PASS",
+    "gpu": 1,
+    "t0": "10-15 21:57",
+    "t1": "10-16 03:26"
+   },
+   "steps": {
+    "post0": {
+     "status": "PASS",
+     "seconds": 1208,
+     "host_min_available_gb": 35.3,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-18 13:14",
+     "t1": "10-18 13:56",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 736,
+     "host_min_available_gb": 41.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 14:05",
+     "t1": "10-18 14:25",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 87,
+     "host_min_available_gb": 47.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-18 14:25",
+     "t1": "10-18 14:40",
+     "log_tail": null
+    }
+   },
+   "pipeline_debug": true,
+   "debug_launcher": null,
+   "lost_debug_on": null,
+   "post": {
+    "wall_seconds": 1207.4,
+    "renders_seconds": 100.3,
+    "tiled_tsdf_seconds": 1107.1,
+    "virtual_seconds": null,
+    "peak_host_gb": 24.761,
+    "triangles": 98136069,
+    "vertices": 63609188,
+    "mem": "72g",
+    "fuse": "tiled"
+   },
+   "history": [
+    {
+     "what": "post0 cleared for the tiled TSDF (user decision 10-18, amendment 3)",
+     "post0": {
+      "status": "FAILED",
+      "t0": "10-16 03:26",
+      "gpu": 1,
+      "rc": 1,
+      "info": {
+       "seconds": 558,
+       "host_min_available_gb": 5.1,
+       "mem": "96g",
+       "alone": true
+      },
+      "t1": "10-16 03:57"
+     },
+     "status": "POST_NOT_FINISHED",
+     "note": "post0 두 번 실패"
+    }
+   ],
+   "note": "debug 켬; 첫 후처리(통째 TSDF, 10-16 03:26~10-16 03:57)는 호스트 메모리로 두 번 끝까지 돌지 못함, 타일 TSDF로 다시 함 (고친 것 3)",
+   "mark": "이 발주에서 냄 (발주 7.6, 일 9)"
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 10.211666666666666,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 87,
+     "host_min_available_gb": 42.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:35",
+     "t1": "10-15 10:36",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 537,
+     "host_min_available_gb": 21.9,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 10:37",
+     "t1": "10-15 10:50",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 113,
+     "host_min_available_gb": 47.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:50",
+     "t1": "10-15 10:59",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 31,
+     "host_min_available_gb": 51.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:59",
+     "t1": "10-15 10:59",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 7.451666666666667,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 65,
+     "host_min_available_gb": 46.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:36",
+     "t1": "10-15 10:41",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 392,
+     "host_min_available_gb": 22.5,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 10:50",
+     "t1": "10-15 10:57",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 116,
+     "host_min_available_gb": 46.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 10:59",
+     "t1": "10-15 11:01",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 37,
+     "host_min_available_gb": 49.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:01",
+     "t1": "10-15 11:02",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 4.465,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 46,
+     "host_min_available_gb": 52.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:23",
+     "t1": "10-15 11:23",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 230,
+     "host_min_available_gb": 35.1,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 12:11",
+     "t1": "10-15 12:18",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 69,
+     "host_min_available_gb": 50.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:39",
+     "t1": "10-15 12:48",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 23,
+     "host_min_available_gb": 61.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:48",
+     "t1": "10-15 12:52",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.42,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 62,
+     "host_min_available_gb": 47.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:23",
+     "t1": "10-15 11:24",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 271,
+     "host_min_available_gb": 34.5,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 12:18",
+     "t1": "10-15 12:25",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 106,
+     "host_min_available_gb": 48.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:07",
+     "t1": "10-15 14:10",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 29,
+     "host_min_available_gb": 51.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:10",
+     "t1": "10-15 14:11",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.671666666666667,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 31,
+     "host_min_available_gb": 47.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:38",
+     "t1": "10-15 11:38",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 322,
+     "host_min_available_gb": 38.0,
+     "mem": "96g",
+     "gpu": 1,
+     "t0": "10-15 13:04",
+     "t1": "10-15 13:15",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 86,
+     "host_min_available_gb": 40.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:26",
+     "t1": "10-15 14:27",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 32,
+     "host_min_available_gb": 45.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:27",
+     "t1": "10-15 14:28",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 7.079999999999999,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 78,
+     "host_min_available_gb": 47.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:28",
+     "t1": "10-15 11:29",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 356,
+     "host_min_available_gb": 72.7,
+     "mem": "96g",
+     "gpu": 0,
+     "t0": "10-15 13:15",
+     "t1": "10-15 14:07",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 75,
+     "host_min_available_gb": 41.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:28",
+     "t1": "10-15 14:29",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 31,
+     "host_min_available_gb": 45.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:29",
+     "t1": "10-15 14:30",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_LoD2",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 2.256666666666667,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 48,
+     "host_min_available_gb": 52.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:29",
+     "t1": "10-15 11:30",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 93,
+     "host_min_available_gb": 56.0,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 15:48",
+     "t1": "10-15 15:50",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 61,
+     "host_min_available_gb": 56.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:06",
+     "t1": "10-15 16:07",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 13,
+     "host_min_available_gb": 60.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:07",
+     "t1": "10-15 16:07",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "MVS 기반 결합",
+   "result": "mvsfuse_ALS",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/mvsfuse (재현; 학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 2.2583333333333333,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 38,
+     "host_min_available_gb": 51.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:30",
+     "t1": "10-15 11:31",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 104,
+     "host_min_available_gb": 52.4,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 15:50",
+     "t1": "10-15 15:53",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 71,
+     "host_min_available_gb": 56.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:07",
+     "t1": "10-15 16:08",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 14,
+     "host_min_available_gb": 59.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:08",
+     "t1": "10-15 16:08",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "B173nb_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.0233333333333325,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 87,
+     "host_min_available_gb": 55.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:25",
+     "t1": "10-15 11:27",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 222,
+     "host_min_available_gb": 33.7,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 11:58",
+     "t1": "10-15 12:01",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 72,
+     "host_min_available_gb": 51.2,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:07",
+     "t1": "10-15 12:15",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 27,
+     "host_min_available_gb": 55.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:15",
+     "t1": "10-15 12:21",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "B173nb_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.12,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 58,
+     "host_min_available_gb": 54.7,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 11:27",
+     "t1": "10-15 11:28",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 256,
+     "host_min_available_gb": 28.8,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 12:01",
+     "t1": "10-15 12:11",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 121,
+     "host_min_available_gb": 41.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:21",
+     "t1": "10-15 12:28",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 35,
+     "host_min_available_gb": 46.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 12:28",
+     "t1": "10-15 12:29",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "B0_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.278333333333333,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 96,
+     "host_min_available_gb": 53.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:11",
+     "t1": "10-15 14:12",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 227,
+     "host_min_available_gb": 44.0,
+     "mem": "72g",
+     "gpu": 0,
+     "t0": "10-15 15:25",
+     "t1": "10-15 15:31",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 65,
+     "host_min_available_gb": 65.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:41",
+     "t1": "10-15 15:42",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 29,
+     "host_min_available_gb": 69.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:48",
+     "t1": "10-15 15:48",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "B0_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 5.483333333333333,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 76,
+     "host_min_available_gb": 52.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:12",
+     "t1": "10-15 14:14",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 260,
+     "host_min_available_gb": 38.7,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 15:25",
+     "t1": "10-15 15:35",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 78,
+     "host_min_available_gb": 59.4,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:48",
+     "t1": "10-15 15:51",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 31,
+     "host_min_available_gb": 61.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:51",
+     "t1": "10-15 15:53",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "R1rep_b10",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 7.2299999999999995,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 152,
+     "host_min_available_gb": 49.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 14:30",
+     "t1": "10-15 15:04",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 289,
+     "host_min_available_gb": 67.7,
+     "mem": "96g",
+     "gpu": 0,
+     "t0": "10-15 15:31",
+     "t1": "10-15 15:41",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 87,
+     "host_min_available_gb": 52.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:57",
+     "t1": "10-15 15:59",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 33,
+     "host_min_available_gb": 57.6,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:59",
+     "t1": "10-15 15:59",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "R1rep_b10",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 7.165000000000001,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 111,
+     "host_min_available_gb": 71.1,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:21",
+     "t1": "10-15 15:24",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 327,
+     "host_min_available_gb": 65.8,
+     "mem": "96g",
+     "gpu": 1,
+     "t0": "10-15 15:41",
+     "t1": "10-15 15:48",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 95,
+     "host_min_available_gb": 51.5,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 15:59",
+     "t1": "10-15 16:01",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 38,
+     "host_min_available_gb": 57.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:01",
+     "t1": "10-15 16:02",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_LoD2",
+   "site": "B173_b0",
+   "units": [
+    "LoD2"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 1.9916666666666667,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 39,
+     "host_min_available_gb": 59.8,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:08",
+     "t1": "10-15 16:09",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 85,
+     "host_min_available_gb": 48.1,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 16:10",
+     "t1": "10-15 16:11",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 41,
+     "host_min_available_gb": 56.3,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:12",
+     "t1": "10-15 16:14",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 13,
+     "host_min_available_gb": 60.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:14",
+     "t1": "10-15 16:14",
+     "log_tail": null
+    }
+   },
+   "note": null
+  },
+  {
+   "method": "본 방법의 판정으로 갈아 끼운 변형",
+   "result": "judgefuse_ALS",
+   "site": "B173_b0",
+   "units": [
+    "ALS"
+   ],
+   "queue_status": "PASS",
+   "status": "끝남",
+   "code": "scripts/phd/main_baselines_v1/judgefuse (학습 없음)",
+   "attempt": null,
+   "train_minutes": null,
+   "fusion_minutes": 2.075,
+   "gpu_peak_minus_idle_gib": null,
+   "torch_max_allocated_gib": null,
+   "last_gaussians": null,
+   "oom_record": null,
+   "receipt_status": "PASS",
+   "train": {
+    "status": null,
+    "gpu": null,
+    "t0": null,
+    "t1": null
+   },
+   "steps": {
+    "pre0": {
+     "status": "PASS",
+     "seconds": 34,
+     "host_min_available_gb": 59.9,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:09",
+     "t1": "10-15 16:10",
+     "log_tail": null
+    },
+    "post0": {
+     "status": "PASS",
+     "seconds": 96,
+     "host_min_available_gb": 47.1,
+     "mem": "72g",
+     "gpu": 1,
+     "t0": "10-15 16:11",
+     "t1": "10-15 16:13",
+     "log_tail": null
+    },
+    "cpu0": {
+     "status": "PASS",
+     "seconds": 86,
+     "host_min_available_gb": 56.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:14",
+     "t1": "10-15 16:15",
+     "log_tail": null
+    },
+    "cpu1": {
+     "status": "PASS",
+     "seconds": 16,
+     "host_min_available_gb": 60.0,
+     "mem": "72g",
+     "gpu": null,
+     "t0": "10-15 16:15",
+     "t1": "10-15 16:16",
+     "log_tail": null
+    }
+   },
+   "note": null
+  }
+ ],
+ "previous": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/tables/status.json",
+ "scientific_verdict": null
+}

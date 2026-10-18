@@ -167,13 +167,48 @@
    "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgs_LoD2_s0/scene/jbgs_alignment.json",
    "views": 152,
    "max_abs_diff": 0.0
+  },
+  "B0_b10/cdgsnofit_ALS_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_ALS_s0/scene/jbgs_alignment.json",
+   "views": 159,
+   "max_abs_diff": 0.0
+  },
+  "B173nb_b10/cdgsnofit_LoD2_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_LoD2_s0/scene/jbgs_alignment.json",
+   "views": 140,
+   "max_abs_diff": 0.0
+  },
+  "B173nb_b10/cdgsnofit_ALS_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/scene/jbgs_alignment.json",
+   "views": 142,
+   "max_abs_diff": 0.0
+  },
+  "R1rep_b10/cdgsnofit_LoD2_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_LoD2_s0/scene/jbgs_alignment.json",
+   "views": 181,
+   "max_abs_diff": 0.0
+  },
+  "R1rep_b10/cdgsnofit_ALS_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_ALS_s0/scene/jbgs_alignment.json",
+   "views": 225,
+   "max_abs_diff": 0.0
+  },
+  "B173_b0/cdgsnofit_LoD2_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173_b0/cdgsnofit_LoD2_s0/scene/jbgs_alignment.json",
+   "views": 53,
+   "max_abs_diff": 0.0
+  },
+  "B173_b0/cdgsnofit_ALS_s0": {
+   "record": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173_b0/cdgsnofit_ALS_s0/scene/jbgs_alignment.json",
+   "views": 60,
+   "max_abs_diff": 0.0
   }
  },
  "rule": "깊이가 있는 학습 시점만. 가중 = 0.6 × exp(−150 × 정렬 손실). 변형 = 축척 1, 이동 0에서 구한 정렬 손실; 공식 v2 = 앞 발주의 맞춘 축척·이동에서 구한 정렬 손실",
  "scientific_verdict": null,
  "title": "크기 맞추기를 생략한 변형에서 시점 가중은 여덟 단위 모두 공식 판보다 낮고 더 흩어졌다(중앙값 0.35~0.58 대 0.51~0.59)",
  "title_kind": "statement written after viewing (2026-10-15 23:52 KST)",
- "foot": "깊이 가중의 중앙값(깊이가 있는 학습 시점, 변형 대 공식 v2): B0 · LoD2 0.581 대 0.586, B0 · 항공 LiDAR 0.516 대 0.539, B173 주변 · LoD2 0.528 대 0.558, B173 주변 · 항공 LiDAR 0.530 대 0.553, R1 · LoD2 0.351 대 0.514, R1 · 항공 LiDAR 0.486 대 0.559, B173만 · LoD2 0.463 대 0.579, B173만 · 항공 LiDAR 0.457 대 0.565. 상자는 25~75 %, 수염은 5~95 %, 숫자는 중앙값. 깊이가 없는 시점(사전 정보가 닿은 화소에 SfM 점이 없음)은 두 판 모두 깊이 항이 없어 뺐다(발주 5.2절 2번). B0_b10/cdgsnofit_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(152시점); B0_b10/cdgs_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(152시점).",
+ "foot": "깊이 가중의 중앙값(깊이가 있는 학습 시점, 변형 대 공식 v2): B0 · LoD2 0.581 대 0.586, B0 · 항공 LiDAR 0.516 대 0.539, B173 주변 · LoD2 0.528 대 0.558, B173 주변 · 항공 LiDAR 0.530 대 0.553, R1 · LoD2 0.351 대 0.514, R1 · 항공 LiDAR 0.486 대 0.559, B173만 · LoD2 0.463 대 0.579, B173만 · 항공 LiDAR 0.457 대 0.565. 상자는 25~75 %, 수염은 5~95 %, 숫자는 중앙값. 깊이가 없는 시점(사전 정보가 닿은 화소에 SfM 점이 없음)은 두 판 모두 깊이 항이 없어 뺐다(발주 5.2절 2번). B0_b10/cdgsnofit_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(152시점); B0_b10/cdgs_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(152시점); B0_b10/cdgsnofit_ALS_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(159시점); B173nb_b10/cdgsnofit_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(140시점); B173nb_b10/cdgsnofit_ALS_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(142시점); R1rep_b10/cdgsnofit_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(181시점); R1rep_b10/cdgsnofit_ALS_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(225시점); B173_b0/cdgsnofit_LoD2_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(53시점); B173_b0/cdgsnofit_ALS_s0: 학습 기록과 준비 기록의 최대 차 0.0e+00(60시점).",
  "rule7": {
   "result": "통과",
   "note": "주황 상자가 여덟 단위 모두 회색 상자보다 낮고 길다(막대 위 중앙값).",

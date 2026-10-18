@@ -1,0 +1,1376 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "mark": "이 발주에서 냄 (발주 7.6, 일 9)",
+ "written": "2026-10-19 03:25:16 KST",
+ "what": "every non-CDGS cell of item9/main_<site>.json and every comparison-1..3 reading of item9/read.json against SB/tables (exact, after\n    the one label rename); split82 and status non-CDGS rows as well. Differences are listed with their explanation when one is found.",
+ "files": {
+  "previous_tables": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/tables",
+  "item9": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/tables/item9",
+  "previous_tables_mtime": {
+   "check_columns.json": "2026-10-15 17:40:20 KST",
+   "fusion_decomp.json": "2026-10-15 17:40:33 KST",
+   "fusion_hits.json": "2026-10-15 17:40:30 KST",
+   "fusion_records.json": "2026-10-15 17:40:30 KST",
+   "main_B0_b10.json": "2026-10-15 17:40:20 KST",
+   "main_B173_b0.json": "2026-10-15 17:40:22 KST",
+   "main_B173nb_b10.json": "2026-10-15 17:40:21 KST",
+   "main_R1rep_b10.json": "2026-10-15 17:40:21 KST",
+   "read.json": "2026-10-15 17:40:22 KST",
+   "split82.json": "2026-10-15 17:40:19 KST",
+   "status.json": "2026-10-15 17:40:22 KST"
+  },
+  "previous_wall_presence_mtime": "2026-10-15 17:43:30 KST"
+ },
+ "parts": {
+  "main": {
+   "leaves_compared": 19719,
+   "differences": [
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "values",
+      "judgefuse"
+     ],
+     "item9": 0.100067,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "values",
+      "mvsfuse"
+     ],
+     "item9": 0.025184,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "values",
+      "twodgs"
+     ],
+     "item9": 0.231463,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "n",
+      "judgefuse"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "n",
+      "mvsfuse"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "n",
+      "twodgs"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "readings",
+      "twodgs",
+      "grade"
+     ],
+     "item9": "가능, 근거 불완전",
+     "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "readings",
+      "twodgs",
+      "reading"
+     ],
+     "item9": "본 방법이 더 채웠다",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "table_a",
+      "wall_present",
+      "readings",
+      "twodgs",
+      "short"
+     ],
+     "item9": "나음",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_n"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_value"
+     ],
+     "item9": 0.231463,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "diff_method_minus_comparator"
+     ],
+     "item9": 0.672879,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "grade"
+     ],
+     "item9": "가능, 근거 불완전",
+     "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading"
+     ],
+     "item9": "본 방법이 더 채웠다",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading_in_order"
+     ],
+     "item9": true,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "short"
+     ],
+     "item9": "나음",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "LoD2",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "side"
+     ],
+     "item9": 1,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "values",
+      "geogs"
+     ],
+     "item9": 0.189245,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "values",
+      "judgefuse"
+     ],
+     "item9": 0.093988,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "values",
+      "mvsfuse"
+     ],
+     "item9": 0.080428,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "values",
+      "twodgs"
+     ],
+     "item9": 0.231463,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "n",
+      "geogs"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "n",
+      "judgefuse"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "n",
+      "mvsfuse"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "n",
+      "twodgs"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "readings",
+      "twodgs",
+      "grade"
+     ],
+     "item9": "가능, 근거 불완전",
+     "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "readings",
+      "twodgs",
+      "reading"
+     ],
+     "item9": "본 방법이 더 채웠다",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "table_a",
+      "wall_present",
+      "readings",
+      "twodgs",
+      "short"
+     ],
+     "item9": "나음",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_n"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_value"
+     ],
+     "item9": 0.231463,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "diff_method_minus_comparator"
+     ],
+     "item9": 0.3551770000000001,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "grade"
+     ],
+     "item9": "가능, 근거 불완전",
+     "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading"
+     ],
+     "item9": "본 방법이 더 채웠다",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading_in_order"
+     ],
+     "item9": true,
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "short"
+     ],
+     "item9": "나음",
+     "previous": null
+    },
+    {
+     "path": [
+      "main_B173_b0",
+      "ALS",
+      "readings",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "side"
+     ],
+     "item9": 1,
+     "previous": null
+    }
+   ],
+   "rows_only_in_item9": []
+  },
+  "read": {
+   "leaves_compared": 8975,
+   "differences": [
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_n"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_value"
+     ],
+     "item9": 0.231463,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "diff_method_minus_comparator"
+     ],
+     "item9": 0.3551770000000001,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "grade"
+     ],
+     "item9": "가능, 근거 불완전",
+     "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+    },
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading"
+     ],
+     "item9": "본 방법이 더 채웠다",
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading_in_order"
+     ],
+     "item9": true,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "short"
+     ],
+     "item9": "나음",
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/ALS",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "side"
+     ],
+     "item9": 1,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_n"
+     ],
+     "item9": 14970,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "comparator_value"
+     ],
+     "item9": 0.231463,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "diff_method_minus_comparator"
+     ],
+     "item9": 0.672879,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "grade"
+     ],
+     "item9": "가능, 근거 불완전",
+     "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading"
+     ],
+     "item9": "본 방법이 더 채웠다",
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "reading_in_order"
+     ],
+     "item9": true,
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "short"
+     ],
+     "item9": "나음",
+     "previous": null
+    },
+    {
+     "path": [
+      "read:B173_b0/LoD2",
+      "q1",
+      "rows",
+      "('wall_present', 'invisible_completeness')",
+      "side"
+     ],
+     "item9": 1,
+     "previous": null
+    }
+   ]
+  },
+  "split82": {
+   "leaves_compared": 362,
+   "differences": []
+  },
+  "status": {
+   "leaves_compared": 1352,
+   "differences": [],
+   "cdgs_rows_item9": 9,
+   "cdgs_rows_previous": 8
+  }
+ },
+ "scientific_verdict": null,
+ "explained": {
+  "count": 52,
+  "why": "a difference in the B173만 '벽 있음' row: the previous tables (10-15 17:40:2x) were written before SB/figs/wall_presence.json was\n    completed (17:43:30); the previous cell read '값 없음(벽 있음 그림 뒤에 채움)' or '—'.",
+  "items": [
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "values",
+     "judgefuse"
+    ],
+    "item9": 0.100067,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "values",
+     "mvsfuse"
+    ],
+    "item9": 0.025184,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "values",
+     "twodgs"
+    ],
+    "item9": 0.231463,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "n",
+     "judgefuse"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "n",
+     "mvsfuse"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "n",
+     "twodgs"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "readings",
+     "twodgs",
+     "grade"
+    ],
+    "item9": "가능, 근거 불완전",
+    "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "readings",
+     "twodgs",
+     "reading"
+    ],
+    "item9": "본 방법이 더 채웠다",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "table_a",
+     "wall_present",
+     "readings",
+     "twodgs",
+     "short"
+    ],
+    "item9": "나음",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_n"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_value"
+    ],
+    "item9": 0.231463,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "diff_method_minus_comparator"
+    ],
+    "item9": 0.672879,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "grade"
+    ],
+    "item9": "가능, 근거 불완전",
+    "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading"
+    ],
+    "item9": "본 방법이 더 채웠다",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading_in_order"
+    ],
+    "item9": true,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "short"
+    ],
+    "item9": "나음",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "LoD2",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "side"
+    ],
+    "item9": 1,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "values",
+     "geogs"
+    ],
+    "item9": 0.189245,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "values",
+     "judgefuse"
+    ],
+    "item9": 0.093988,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "values",
+     "mvsfuse"
+    ],
+    "item9": 0.080428,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "values",
+     "twodgs"
+    ],
+    "item9": 0.231463,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "n",
+     "geogs"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "n",
+     "judgefuse"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "n",
+     "mvsfuse"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "n",
+     "twodgs"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "readings",
+     "twodgs",
+     "grade"
+    ],
+    "item9": "가능, 근거 불완전",
+    "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "readings",
+     "twodgs",
+     "reading"
+    ],
+    "item9": "본 방법이 더 채웠다",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "table_a",
+     "wall_present",
+     "readings",
+     "twodgs",
+     "short"
+    ],
+    "item9": "나음",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_n"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_value"
+    ],
+    "item9": 0.231463,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "diff_method_minus_comparator"
+    ],
+    "item9": 0.3551770000000001,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "grade"
+    ],
+    "item9": "가능, 근거 불완전",
+    "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading"
+    ],
+    "item9": "본 방법이 더 채웠다",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading_in_order"
+    ],
+    "item9": true,
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "short"
+    ],
+    "item9": "나음",
+    "previous": null
+   },
+   {
+    "part": "main",
+    "path": [
+     "main_B173_b0",
+     "ALS",
+     "readings",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "side"
+    ],
+    "item9": 1,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_n"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_value"
+    ],
+    "item9": 0.231463,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "diff_method_minus_comparator"
+    ],
+    "item9": 0.3551770000000001,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "grade"
+    ],
+    "item9": "가능, 근거 불완전",
+    "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading"
+    ],
+    "item9": "본 방법이 더 채웠다",
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading_in_order"
+    ],
+    "item9": true,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "short"
+    ],
+    "item9": "나음",
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/ALS",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "side"
+    ],
+    "item9": 1,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_n"
+    ],
+    "item9": 14970,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "comparator_value"
+    ],
+    "item9": 0.231463,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "diff_method_minus_comparator"
+    ],
+    "item9": 0.672879,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "grade"
+    ],
+    "item9": "가능, 근거 불완전",
+    "previous": "값 없음(벽 있음 그림 뒤에 채움)"
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading"
+    ],
+    "item9": "본 방법이 더 채웠다",
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "reading_in_order"
+    ],
+    "item9": true,
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "short"
+    ],
+    "item9": "나음",
+    "previous": null
+   },
+   {
+    "part": "read",
+    "path": [
+     "read:B173_b0/LoD2",
+     "q1",
+     "rows",
+     "('wall_present', 'invisible_completeness')",
+     "side"
+    ],
+    "item9": 1,
+    "previous": null
+   }
+  ]
+ },
+ "unexplained": {
+  "count": 0,
+  "items": []
+ },
+ "leaves_compared": 30408,
+ "differences": 52,
+ "all_equal": false,
+ "result": "다른 곳 52개, 모두 B173만 '벽 있음' 줄이고 까닭이 있음",
+ "pass_rule": "every compared leaf equal, or each difference explained by a named cause; here the one cause found: the previous tables were written (10-15 17:40:2x KST) before the previous order's figs/wall_presence.json was completed (17:43:30), so its B173만 '벽 있음' cells read '값 없음(벽 있음 그림 뒤에 채움)'; item9 reads the completed file",
+ "passed": true
+}

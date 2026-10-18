@@ -1,7 +1,7 @@
 {
  "task_id": "PHD-MAIN-FILL-v1",
  "component": "undecidable",
- "written": "2026-10-15 23:10:43 KST",
+ "written": "2026-10-19 03:29:27 KST",
  "mark": "이 발주에서 냄",
  "definitions": {
   "file": "SL/prep/undecidable/definitions.json",
@@ -390,7 +390,63 @@
       "cdgs": {
        "ko": "CDGS 변형",
        "result": "cdgsnofit_LoD2_s0",
-       "status": "아직"
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 116310,
+         "inflow": 0.1796,
+         "gt_side": 0.0426,
+         "wrong_side": 0.1708,
+         "both": 0.0089,
+         "neither": 0.7777
+        },
+        "obs_inflow": {
+         "n": 15169,
+         "inflow": 0.0327,
+         "gt_side": 0.028,
+         "wrong_side": 0.03,
+         "both": 0.0027,
+         "neither": 0.9393
+        },
+        "missing_completeness": {
+         "n": 1984,
+         "le_0.2": 0.1225,
+         "le_0.5": 0.3957
+        },
+        "band_completeness": {
+         "n": 58782,
+         "le_0.2": 0.1707,
+         "le_0.5": 0.4941
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.1823,
+         "gt_side": 0.0425,
+         "wrong_side": 0.1733,
+         "both": 0.009,
+         "neither": 0.7752
+        },
+        "obs_inflow": {
+         "n": 8550,
+         "inflow": 0.0319,
+         "gt_side": 0.0327,
+         "wrong_side": 0.0283,
+         "both": 0.0036,
+         "neither": 0.9353
+        },
+        "missing_completeness": {
+         "n": 1085,
+         "le_0.2": 0.1438,
+         "le_0.5": 0.4728
+        },
+        "band_completeness": {
+         "n": 56752,
+         "le_0.2": 0.1689,
+         "le_0.5": 0.4887
+        }
+       }
       },
       "judgefuse": {
        "ko": "본 방법의 판정으로 갈아 끼운 변형",
@@ -771,7 +827,63 @@
       "cdgs": {
        "ko": "CDGS 변형",
        "result": "cdgsnofit_LoD2_s0",
-       "status": "아직"
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 117419,
+         "inflow": 0.0892,
+         "gt_side": 0.0415,
+         "wrong_side": 0.0835,
+         "both": 0.0057,
+         "neither": 0.8693
+        },
+        "obs_inflow": {
+         "n": 9374,
+         "inflow": 0.1373,
+         "gt_side": 0.0895,
+         "wrong_side": 0.126,
+         "both": 0.0113,
+         "neither": 0.7732
+        },
+        "missing_completeness": {
+         "n": 3097,
+         "le_0.2": 0.4789,
+         "le_0.5": 0.8854
+        },
+        "band_completeness": {
+         "n": 38673,
+         "le_0.2": 0.4518,
+         "le_0.5": 0.8583
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 114001,
+         "inflow": 0.0853,
+         "gt_side": 0.0397,
+         "wrong_side": 0.0796,
+         "both": 0.0057,
+         "neither": 0.875
+        },
+        "obs_inflow": {
+         "n": 8431,
+         "inflow": 0.1459,
+         "gt_side": 0.092,
+         "wrong_side": 0.1338,
+         "both": 0.0121,
+         "neither": 0.7621
+        },
+        "missing_completeness": {
+         "n": 1084,
+         "le_0.2": 0.488,
+         "le_0.5": 0.94
+        },
+        "band_completeness": {
+         "n": 36524,
+         "le_0.2": 0.4516,
+         "le_0.5": 0.8559
+        }
+       }
       },
       "judgefuse": {
        "ko": "본 방법의 판정으로 갈아 끼운 변형",
@@ -1224,7 +1336,63 @@
       "cdgs": {
        "ko": "CDGS 변형",
        "result": "cdgsnofit_ALS_s0",
-       "status": "아직"
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.125,
+         "gt_side": 0.0208,
+         "wrong_side": 0.125,
+         "both": 0.0,
+         "neither": 0.8542
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.125,
+         "gt_side": 0.0208,
+         "wrong_side": 0.125,
+         "both": 0.0,
+         "neither": 0.8542
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
       },
       "judgefuse": {
        "ko": "본 방법의 판정으로 갈아 끼운 변형",
@@ -1605,7 +1773,63 @@
       "cdgs": {
        "ko": "CDGS 변형",
        "result": "cdgsnofit_ALS_s0",
-       "status": "아직"
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 56,
+         "inflow": 0.0357,
+         "gt_side": 0.0357,
+         "wrong_side": 0.0357,
+         "both": 0.0,
+         "neither": 0.9286
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5,
+         "le_0.2": 0.0,
+         "le_0.5": 0.0
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 48,
+         "inflow": 0.0417,
+         "gt_side": 0.0208,
+         "wrong_side": 0.0417,
+         "both": 0.0,
+         "neither": 0.9375
+        },
+        "obs_inflow": {
+         "n": 0,
+         "inflow": null,
+         "gt_side": null,
+         "wrong_side": null,
+         "both": null,
+         "neither": null
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        }
+       }
       },
       "judgefuse": {
        "ko": "본 방법의 판정으로 갈아 끼운 변형",
@@ -2112,7 +2336,63 @@
       "cdgs": {
        "ko": "CDGS 변형",
        "result": "cdgsnofit_ALS_s0",
-       "status": "아직"
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94693,
+         "inflow": 0.1848,
+         "gt_side": 0.0176,
+         "wrong_side": 0.1843,
+         "both": 0.0006,
+         "neither": 0.7976
+        },
+        "obs_inflow": {
+         "n": 7336,
+         "inflow": 0.0327,
+         "gt_side": 0.0183,
+         "wrong_side": 0.0312,
+         "both": 0.0015,
+         "neither": 0.949
+        },
+        "missing_completeness": {
+         "n": 21,
+         "le_0.2": 0.381,
+         "le_0.5": 0.381
+        },
+        "band_completeness": {
+         "n": 8936,
+         "le_0.2": 0.3682,
+         "le_0.5": 0.7474
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91366,
+         "inflow": 0.187,
+         "gt_side": 0.0164,
+         "wrong_side": 0.1865,
+         "both": 0.0005,
+         "neither": 0.7966
+        },
+        "obs_inflow": {
+         "n": 4958,
+         "inflow": 0.0349,
+         "gt_side": 0.0163,
+         "wrong_side": 0.0337,
+         "both": 0.0012,
+         "neither": 0.9488
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 6849,
+         "le_0.2": 0.3764,
+         "le_0.5": 0.7738
+        }
+       }
       },
       "judgefuse": {
        "ko": "본 방법의 판정으로 갈아 끼운 변형",
@@ -2493,7 +2773,63 @@
       "cdgs": {
        "ko": "CDGS 변형",
        "result": "cdgsnofit_ALS_s0",
-       "status": "아직"
+       "status": "ok",
+       "matched": {
+        "past_shape_inflow": {
+         "n": 94832,
+         "inflow": 0.107,
+         "gt_side": 0.031,
+         "wrong_side": 0.1013,
+         "both": 0.0058,
+         "neither": 0.862
+        },
+        "obs_inflow": {
+         "n": 6735,
+         "inflow": 0.0744,
+         "gt_side": 0.0405,
+         "wrong_side": 0.0702,
+         "both": 0.0042,
+         "neither": 0.8851
+        },
+        "missing_completeness": {
+         "n": 105,
+         "le_0.2": 0.3238,
+         "le_0.5": 0.7429
+        },
+        "band_completeness": {
+         "n": 7687,
+         "le_0.2": 0.5181,
+         "le_0.5": 0.8365
+        }
+       },
+       "same_code": {
+        "past_shape_inflow": {
+         "n": 91814,
+         "inflow": 0.1078,
+         "gt_side": 0.0295,
+         "wrong_side": 0.1023,
+         "both": 0.0055,
+         "neither": 0.8626
+        },
+        "obs_inflow": {
+         "n": 5211,
+         "inflow": 0.0677,
+         "gt_side": 0.0426,
+         "wrong_side": 0.0637,
+         "both": 0.004,
+         "neither": 0.8897
+        },
+        "missing_completeness": {
+         "n": 0,
+         "le_0.2": null,
+         "le_0.5": null
+        },
+        "band_completeness": {
+         "n": 5943,
+         "le_0.2": 0.5492,
+         "le_0.5": 0.8573
+        }
+       }
       },
       "judgefuse": {
        "ko": "본 방법의 판정으로 갈아 끼운 변형",
@@ -2661,7 +2997,7 @@
  },
  "scene_only_criterion_5_4": {
   "source": "SL/prep/judge_wide/b173_scene_only.json 'counts_5_4' (SL/tables/judge_wide_b173.md, .json)",
-  "written": "2026-10-15 21:30 KST",
+  "written": "2026-10-15 23:21 KST",
   "note": "같은 패치(B173만 평가 범위, 두 줄 모두 참값 라벨이 있는 패치). 참 라벨: 지금 값의 줄 = 영역 파일 v3, 장면 안 값의 줄 = 그 정합으로 옮긴 사전 정보의 정오(고정 τ, 앞 작업과 같음)",
   "priors": {
    "LoD2": {
@@ -2862,7 +3198,7 @@
  },
  "scene_only_criterion": {
   "source": "SL/prep/judge_wide/b173_scene_only.json",
-  "written": "2026-10-15 21:30 KST",
+  "written": "2026-10-15 23:21 KST",
   "kind": "pointer + this task's 5.4-form recount (SL/tables/judge_wide_b173.json, 이 발주에서 냄)",
   "priors": {
    "LoD2": {

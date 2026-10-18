@@ -1,7 +1,7 @@
 {
  "task_id": "PHD-MAIN-FILL-v1",
  "component": "undecidable",
- "written": "2026-10-15 23:10:43 KST",
+ "written": "2026-10-19 03:29:27 KST",
  "mark": "이 발주에서 냄",
  "definitions": {
   "file": "SL/prep/undecidable/definitions.json",
@@ -9,8 +9,8 @@
  },
  "scientific_verdict": null,
  "gate4_check": {
-  "results_ok": 76,
-  "reproduced": 76,
+  "results_ok": 85,
+  "reproduced": 85,
   "not_reproduced": 0,
   "no_metric": 0
  },
@@ -335,13 +335,105 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_LoD2_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.4096,
+       "le_0.5": 0.7181
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.2484,
+       "le_0.5": 0.6058
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.031,
+       "gt_side": 0.1395,
+       "wrong_side": 0.031,
+       "both": 0.0,
+       "neither": 0.8295
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.3533,
+       "le_0.5": 0.6256
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.0567,
+       "le_0.5": 0.1956
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.2821,
+       "gt_side": 0.359,
+       "wrong_side": 0.1538,
+       "both": 0.1282,
+       "neither": 0.359
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.4096,
+      "le_0.5": 0.7181
+     },
+     "gate4_reproduced": true
     },
     "cdgs_official": {
      "ko": "CDGS 공식 확인",
      "result": "cdgs_LoD2_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 78950,
+       "le_0.2": 0.3275,
+       "le_0.5": 0.595
+      },
+      "c4": {
+       "n": 2907,
+       "le_0.2": 0.2924,
+       "le_0.5": 0.5494
+      },
+      "c13": {
+       "n": 129,
+       "inflow": 0.2713,
+       "gt_side": 0.3178,
+       "wrong_side": 0.0698,
+       "both": 0.2016,
+       "neither": 0.4109
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 150965,
+       "le_0.2": 0.2529,
+       "le_0.5": 0.5266
+      },
+      "c4": {
+       "n": 6063,
+       "le_0.2": 0.0303,
+       "le_0.5": 0.1148
+      },
+      "c13": {
+       "n": 39,
+       "inflow": 0.2308,
+       "gt_side": 0.6667,
+       "wrong_side": 0.2051,
+       "both": 0.0256,
+       "neither": 0.1026
+      }
+     },
+     "gate4_metric": {
+      "n": 78950,
+      "le_0.2": 0.3275,
+      "le_0.5": 0.595
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -837,7 +929,53 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_ALS_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34677,
+       "le_0.2": 0.5701,
+       "le_0.5": 0.803
+      },
+      "c4": {
+       "n": 107,
+       "le_0.2": 0.7383,
+       "le_0.5": 0.9439
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 80588,
+       "le_0.2": 0.615,
+       "le_0.5": 0.9012
+      },
+      "c4": {
+       "n": 37,
+       "le_0.2": 0.8378,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 34677,
+      "le_0.2": 0.5701,
+      "le_0.5": 0.803
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -1385,7 +1523,53 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_LoD2_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 73287,
+       "le_0.2": 0.4193,
+       "le_0.5": 0.7635
+      },
+      "c4": {
+       "n": 2913,
+       "le_0.2": 0.5922,
+       "le_0.5": 0.9331
+      },
+      "c13": {
+       "n": 222,
+       "inflow": 0.1081,
+       "gt_side": 0.1171,
+       "wrong_side": 0.0676,
+       "both": 0.0405,
+       "neither": 0.7748
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 73122,
+       "le_0.2": 0.2611,
+       "le_0.5": 0.5709
+      },
+      "c4": {
+       "n": 3272,
+       "le_0.2": 0.5171,
+       "le_0.5": 0.8918
+      },
+      "c13": {
+       "n": 105,
+       "inflow": 0.1619,
+       "gt_side": 0.1143,
+       "wrong_side": 0.1429,
+       "both": 0.019,
+       "neither": 0.7238
+      }
+     },
+     "gate4_metric": {
+      "n": 73287,
+      "le_0.2": 0.4193,
+      "le_0.5": 0.7635
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -1985,7 +2169,53 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_ALS_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 14136,
+       "le_0.2": 0.5866,
+       "le_0.5": 0.8933
+      },
+      "c4": {
+       "n": 111,
+       "le_0.2": 0.3063,
+       "le_0.5": 0.7027
+      },
+      "c13": {
+       "n": 2,
+       "inflow": 0.0,
+       "gt_side": 0.0,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 1.0
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 31659,
+       "le_0.2": 0.4773,
+       "le_0.5": 0.8482
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 14136,
+      "le_0.2": 0.5866,
+      "le_0.5": 0.8933
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -2585,7 +2815,53 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_LoD2_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 34789,
+       "le_0.2": 0.4577,
+       "le_0.5": 0.8273
+      },
+      "c4": {
+       "n": 712,
+       "le_0.2": 0.5435,
+       "le_0.5": 0.8104
+      },
+      "c13": {
+       "n": 109,
+       "inflow": 0.0,
+       "gt_side": 0.0275,
+       "wrong_side": 0.0,
+       "both": 0.0,
+       "neither": 0.9725
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 50639,
+       "le_0.2": 0.4449,
+       "le_0.5": 0.8243
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 471,
+       "inflow": 0.0276,
+       "gt_side": 0.0042,
+       "wrong_side": 0.0276,
+       "both": 0.0,
+       "neither": 0.9682
+      }
+     },
+     "gate4_metric": {
+      "n": 34789,
+      "le_0.2": 0.4577,
+      "le_0.5": 0.8273
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -3081,7 +3357,53 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_ALS_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 43186,
+       "le_0.2": 0.3597,
+       "le_0.5": 0.8324
+      },
+      "c4": {
+       "n": 371,
+       "le_0.2": 0.3908,
+       "le_0.5": 0.814
+      },
+      "c13": {
+       "n": 30,
+       "inflow": 0.0667,
+       "gt_side": 0.1333,
+       "wrong_side": 0.0667,
+       "both": 0.0,
+       "neither": 0.8
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 47996,
+       "le_0.2": 0.2598,
+       "le_0.5": 0.7798
+      },
+      "c4": {
+       "n": 12,
+       "le_0.2": 1.0,
+       "le_0.5": 1.0
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 43186,
+      "le_0.2": 0.3597,
+      "le_0.5": 0.8324
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -3681,7 +4003,53 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_LoD2_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 58782,
+       "le_0.2": 0.1707,
+       "le_0.5": 0.4941
+      },
+      "c4": {
+       "n": 1208,
+       "le_0.2": 0.1689,
+       "le_0.5": 0.5406
+      },
+      "c13": {
+       "n": 168,
+       "inflow": 0.0595,
+       "gt_side": 0.0476,
+       "wrong_side": 0.0595,
+       "both": 0.0,
+       "neither": 0.8929
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 24490,
+       "le_0.2": 0.1144,
+       "le_0.5": 0.3829
+      },
+      "c4": {
+       "n": 776,
+       "le_0.2": 0.0503,
+       "le_0.5": 0.1701
+      },
+      "c13": {
+       "n": 32,
+       "inflow": 0.1562,
+       "gt_side": 0.0,
+       "wrong_side": 0.0938,
+       "both": 0.0625,
+       "neither": 0.8438
+      }
+     },
+     "gate4_metric": {
+      "n": 58782,
+      "le_0.2": 0.1707,
+      "le_0.5": 0.4941
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -4079,7 +4447,53 @@
      "ko": "CDGS 변형",
      "result": "cdgsnofit_ALS_s0",
      "kind": "single",
-     "status": "아직"
+     "status": "ok",
+     "band2": {
+      "c2": {
+       "n": 9262,
+       "le_0.2": 0.3684,
+       "le_0.5": 0.7435
+      },
+      "c4": {
+       "n": 21,
+       "le_0.2": 0.381,
+       "le_0.5": 0.381
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "far": {
+      "c2": {
+       "n": 1853,
+       "le_0.2": 0.436,
+       "le_0.5": 0.8958
+      },
+      "c4": {
+       "n": 0,
+       "le_0.2": null,
+       "le_0.5": null
+      },
+      "c13": {
+       "n": 0,
+       "inflow": null,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null
+      }
+     },
+     "gate4_metric": {
+      "n": 9262,
+      "le_0.2": 0.3684,
+      "le_0.5": 0.7435
+     },
+     "gate4_reproduced": true
     },
     "imgonly_s0": {
      "ko": "영상만 씨앗 0",
@@ -4275,10 +4689,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.8383,
+      0.8211
+     ],
+     "ours_mean": 0.8297000000000001,
+     "value": 0.2484,
+     "diff": 0.5813000000000001,
+     "n": 2907,
+     "criterion": 0.03405426258194411,
+     "parts": {
+      "unit": 0.03405426258194411,
+      "three_points": 0.0010319917440660474
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -4364,10 +4791,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.9529,
+      0.955
+     ],
+     "ours_mean": 0.95395,
+     "value": 0.4096,
+     "diff": 0.5443499999999999,
+     "n": 78950,
+     "criterion": 0.004157787873376881,
+     "parts": {
+      "unit": 0.004157787873376881,
+      "three_points": 3.799873337555415e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -4476,10 +4916,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.9159,
+      0.7664
+     ],
+     "ours_mean": 0.8411500000000001,
+     "value": 0.7383,
+     "diff": 0.10285000000000011,
+     "n": 107,
+     "criterion": 0.2959948986046889,
+     "parts": {
+      "unit": 0.2959948986046889,
+      "three_points": 0.028037383177570093
+     },
+     "deterministic": false,
+     "grade": "기준 안",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "다르지 않았다"
     },
     "prior": {
      "comparator": "prior",
@@ -4565,10 +5018,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.9981,
+      0.9982
+     ],
+     "ours_mean": 0.99815,
+     "value": 0.5701,
+     "diff": 0.42804999999999993,
+     "n": 34677,
+     "criterion": 0.00019798989873221146,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 8.651267410675664e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -4669,10 +5135,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.9279,
+      0.9337
+     ],
+     "ours_mean": 0.9308,
+     "value": 0.5922,
+     "diff": 0.3386,
+     "n": 2913,
+     "criterion": 0.011483414126469586,
+     "parts": {
+      "unit": 0.011483414126469586,
+      "three_points": 0.0010298661174047373
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -4758,10 +5237,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.9562,
+      0.956
+     ],
+     "ours_mean": 0.9561,
+     "value": 0.4193,
+     "diff": 0.5367999999999999,
+     "n": 73287,
+     "criterion": 0.00039597979746464274,
+     "parts": {
+      "unit": 0.00039597979746464274,
+      "three_points": 4.093495435752589e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -4871,10 +5363,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.3063,
+     "diff": -0.3063,
+     "n": 111,
+     "criterion": 0.02702702702702703,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.02702702702702703
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "덜 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -4960,10 +5465,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.9887,
+      0.9888
+     ],
+     "ours_mean": 0.98875,
+     "value": 0.5866,
+     "diff": 0.40215,
+     "n": 14136,
+     "criterion": 0.00021222410865874363,
+     "parts": {
+      "unit": 0.00019798989873221146,
+      "three_points": 0.00021222410865874363
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -5064,10 +5582,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.4888,
+      0.5267
+     ],
+     "ours_mean": 0.5077499999999999,
+     "value": 0.5435,
+     "diff": -0.03575000000000006,
+     "n": 712,
+     "criterion": 0.07503817161951629,
+     "parts": {
+      "unit": 0.07503817161951629,
+      "three_points": 0.004213483146067416
+     },
+     "deterministic": false,
+     "grade": "기준 안",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "다르지 않았다"
     },
     "prior": {
      "comparator": "prior",
@@ -5153,10 +5684,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.892,
+      0.8898
+     ],
+     "ours_mean": 0.8909,
+     "value": 0.4577,
+     "diff": 0.43320000000000003,
+     "n": 34789,
+     "criterion": 0.004355777772109093,
+     "parts": {
+      "unit": 0.004355777772109093,
+      "three_points": 8.623415447411539e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -5257,10 +5801,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.2992,
+      0.2911
+     ],
+     "ours_mean": 0.29515,
+     "value": 0.3908,
+     "diff": -0.09564999999999996,
+     "n": 371,
+     "criterion": 0.01603718179731089,
+     "parts": {
+      "unit": 0.01603718179731089,
+      "three_points": 0.008086253369272238
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "덜 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -5346,10 +5903,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.979,
+      0.9673
+     ],
+     "ours_mean": 0.97315,
+     "value": 0.3597,
+     "diff": 0.6134499999999999,
+     "n": 43186,
+     "criterion": 0.023164818151671162,
+     "parts": {
+      "unit": 0.023164818151671162,
+      "three_points": 6.946695688417543e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -5451,10 +6021,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.8858,
+      0.8882
+     ],
+     "ours_mean": 0.887,
+     "value": 0.1689,
+     "diff": 0.7181,
+     "n": 1208,
+     "criterion": 0.004751757569573516,
+     "parts": {
+      "unit": 0.004751757569573516,
+      "three_points": 0.0024834437086092716
+     },
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 결측 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -5540,10 +6123,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.954,
+      0.9502
+     ],
+     "ours_mean": 0.9521,
+     "value": 0.1707,
+     "diff": 0.7814,
+     "n": 58782,
+     "criterion": 0.007523616151824696,
+     "parts": {
+      "unit": 0.007523616151824696,
+      "three_points": 5.103603143819537e-05
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",
@@ -5650,8 +6246,21 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.0,
+      0.0
+     ],
+     "ours_mean": 0.0,
+     "value": 0.381,
+     "diff": -0.381,
+     "n": 21,
+     "criterion": 0.14285714285714285,
+     "parts": {
+      "unit": 0.0,
+      "three_points": 0.14285714285714285
+     },
+     "deterministic": false,
+     "grade": "표본 부족",
      "ko": "CDGS 변형",
      "word": null
     },
@@ -5739,10 +6348,23 @@
     },
     "cdgs": {
      "comparator": "cdgs",
-     "status": "아직",
-     "grade": "아직",
+     "ours": [
+      0.9818,
+      0.9852
+     ],
+     "ours_mean": 0.9835,
+     "value": 0.3684,
+     "diff": 0.6151,
+     "n": 9262,
+     "criterion": 0.006731656556895849,
+     "parts": {
+      "unit": 0.006731656556895849,
+      "three_points": 0.0003239041243791838
+     },
+     "deterministic": false,
+     "grade": "확인",
      "ko": "CDGS 변형",
-     "word": null
+     "word": "전제가 어긋난 곳의 둘레에서 지지 일치 영역을 더 채웠다"
     },
     "prior": {
      "comparator": "prior",

@@ -1,7 +1,7 @@
 {
  "task_id": "PHD-MAIN-FILL-v1",
  "component": "correction",
- "written": "2026-10-15 23:00:43 KST",
+ "written": "2026-10-19 03:37:00 KST",
  "definitions": "SL/prep/correction/definitions.json",
  "rule": "  python correction_tables.py      -> SL/tables/correction_main.json, .md",
  "new_here": "모든 값은 이 발주에서 냄(보정률 곡선의 1단계 결과 값은 1단계와 같음을 확인함)",
@@ -577,13 +577,163 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.379,
+     "n": 24231
+    },
+    "boundary_tau": 4.0,
+    "boundary_roof_m": 0.79,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 294834,
+      "with_surface": 193201,
+      "no_surface": 101633,
+      "no_surface_share": 0.3447,
+      "changed": 111584,
+      "changed_share": 0.5776,
+      "farther": 108894,
+      "farther_of_changed": 0.9759,
+      "farther_of_surface": 0.5636,
+      "abs_u_median_cm": 45.53
+     },
+     "roof": {
+      "rows": 120192,
+      "with_surface": 89419,
+      "no_surface": 30773,
+      "no_surface_share": 0.256,
+      "changed": 68185,
+      "changed_share": 0.7625,
+      "farther": 66789,
+      "farther_of_changed": 0.9795,
+      "farther_of_surface": 0.7469,
+      "abs_u_median_cm": 49.15
+     },
+     "wall": {
+      "rows": 174642,
+      "with_surface": 103782,
+      "no_surface": 70860,
+      "no_surface_share": 0.4057,
+      "changed": 43399,
+      "changed_share": 0.4182,
+      "farther": 42105,
+      "farther_of_changed": 0.9702,
+      "farther_of_surface": 0.4057,
+      "abs_u_median_cm": 42.07
+     },
+     "roof_band": {
+      "rows": 52648,
+      "with_surface": 41180,
+      "no_surface": 11468,
+      "no_surface_share": 0.2178,
+      "changed": 32585,
+      "changed_share": 0.7913,
+      "farther": 31878,
+      "farther_of_changed": 0.9783,
+      "farther_of_surface": 0.7741,
+      "abs_u_median_cm": 55.88
+     },
+     "roof_outside_band": {
+      "rows": 67544,
+      "with_surface": 48239,
+      "no_surface": 19305,
+      "no_surface_share": 0.2858,
+      "changed": 35600,
+      "changed_share": 0.738,
+      "farther": 34911,
+      "farther_of_changed": 0.9806,
+      "farther_of_surface": 0.7237,
+      "abs_u_median_cm": 43.85
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.5776,
+     "n": 193201
+    }
    },
    "cdgs_LoD2_s0": {
     "key": "cdgs_official",
     "label": "CDGS 공식 확인",
     "role": "official",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.2408,
+     "n": 24231
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 294834,
+      "with_surface": 205925,
+      "no_surface": 88909,
+      "no_surface_share": 0.3016,
+      "changed": 151256,
+      "changed_share": 0.7345,
+      "farther": 148907,
+      "farther_of_changed": 0.9845,
+      "farther_of_surface": 0.7231,
+      "abs_u_median_cm": 79.93
+     },
+     "roof": {
+      "rows": 120192,
+      "with_surface": 81034,
+      "no_surface": 39158,
+      "no_surface_share": 0.3258,
+      "changed": 64945,
+      "changed_share": 0.8015,
+      "farther": 63265,
+      "farther_of_changed": 0.9741,
+      "farther_of_surface": 0.7807,
+      "abs_u_median_cm": 59.86
+     },
+     "wall": {
+      "rows": 174642,
+      "with_surface": 124891,
+      "no_surface": 49751,
+      "no_surface_share": 0.2849,
+      "changed": 86311,
+      "changed_share": 0.6911,
+      "farther": 85642,
+      "farther_of_changed": 0.9922,
+      "farther_of_surface": 0.6857,
+      "abs_u_median_cm": 90.49
+     },
+     "roof_band": {
+      "rows": 52648,
+      "with_surface": 40799,
+      "no_surface": 11849,
+      "no_surface_share": 0.2251,
+      "changed": 34341,
+      "changed_share": 0.8417,
+      "farther": 33636,
+      "farther_of_changed": 0.9795,
+      "farther_of_surface": 0.8244,
+      "abs_u_median_cm": 78.26
+     },
+     "roof_outside_band": {
+      "rows": 67544,
+      "with_surface": 40235,
+      "no_surface": 27309,
+      "no_surface_share": 0.4043,
+      "changed": 30604,
+      "changed_share": 0.7606,
+      "farther": 29629,
+      "farther_of_changed": 0.9681,
+      "farther_of_surface": 0.7364,
+      "abs_u_median_cm": 44.63
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgs_LoD2_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.7345,
+     "n": 205925
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -1320,7 +1470,82 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.2188,
+     "n": 64
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 136075,
+      "with_surface": 99390,
+      "no_surface": 36685,
+      "no_surface_share": 0.2696,
+      "changed": 70323,
+      "changed_share": 0.7075,
+      "farther": 70110,
+      "farther_of_changed": 0.997,
+      "farther_of_surface": 0.7054,
+      "abs_u_median_cm": 29.03
+     },
+     "roof": {
+      "rows": 136075,
+      "with_surface": 99390,
+      "no_surface": 36685,
+      "no_surface_share": 0.2696,
+      "changed": 70323,
+      "changed_share": 0.7075,
+      "farther": 70110,
+      "farther_of_changed": 0.997,
+      "farther_of_surface": 0.7054,
+      "abs_u_median_cm": 29.03
+     },
+     "wall": {
+      "rows": 0,
+      "with_surface": 0,
+      "no_surface": 0,
+      "no_surface_share": null,
+      "changed": 0,
+      "changed_share": null,
+      "farther": 0,
+      "farther_of_changed": null,
+      "farther_of_surface": null,
+      "abs_u_median_cm": null
+     },
+     "roof_band": {
+      "rows": 57949,
+      "with_surface": 42569,
+      "no_surface": 15380,
+      "no_surface_share": 0.2654,
+      "changed": 31860,
+      "changed_share": 0.7484,
+      "farther": 31738,
+      "farther_of_changed": 0.9962,
+      "farther_of_surface": 0.7456,
+      "abs_u_median_cm": 36.17
+     },
+     "roof_outside_band": {
+      "rows": 78126,
+      "with_surface": 56821,
+      "no_surface": 21305,
+      "no_surface_share": 0.2727,
+      "changed": 38463,
+      "changed_share": 0.6769,
+      "farther": 38372,
+      "farther_of_changed": 0.9976,
+      "farther_of_surface": 0.6753,
+      "abs_u_median_cm": 24.81
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.7075,
+     "n": 99390
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -2138,7 +2363,82 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.1306,
+     "n": 21986
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 169631,
+      "with_surface": 88460,
+      "no_surface": 81171,
+      "no_surface_share": 0.4785,
+      "changed": 64099,
+      "changed_share": 0.7246,
+      "farther": 63208,
+      "farther_of_changed": 0.9861,
+      "farther_of_surface": 0.7145,
+      "abs_u_median_cm": 47.84
+     },
+     "roof": {
+      "rows": 68959,
+      "with_surface": 53499,
+      "no_surface": 15460,
+      "no_surface_share": 0.2242,
+      "changed": 41407,
+      "changed_share": 0.774,
+      "farther": 40762,
+      "farther_of_changed": 0.9844,
+      "farther_of_surface": 0.7619,
+      "abs_u_median_cm": 52.1
+     },
+     "wall": {
+      "rows": 100672,
+      "with_surface": 34961,
+      "no_surface": 65711,
+      "no_surface_share": 0.6527,
+      "changed": 22692,
+      "changed_share": 0.6491,
+      "farther": 22446,
+      "farther_of_changed": 0.9892,
+      "farther_of_surface": 0.642,
+      "abs_u_median_cm": 40.65
+     },
+     "roof_band": {
+      "rows": 31558,
+      "with_surface": 22432,
+      "no_surface": 9126,
+      "no_surface_share": 0.2892,
+      "changed": 17811,
+      "changed_share": 0.794,
+      "farther": 17525,
+      "farther_of_changed": 0.9839,
+      "farther_of_surface": 0.7812,
+      "abs_u_median_cm": 48.75
+     },
+     "roof_outside_band": {
+      "rows": 37401,
+      "with_surface": 31067,
+      "no_surface": 6334,
+      "no_surface_share": 0.1694,
+      "changed": 23596,
+      "changed_share": 0.7595,
+      "farther": 23237,
+      "farther_of_changed": 0.9848,
+      "farther_of_surface": 0.748,
+      "abs_u_median_cm": 55.28
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.7246,
+     "n": 88460
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -3037,7 +3337,82 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.0729,
+     "n": 535
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 64122,
+      "with_surface": 35831,
+      "no_surface": 28291,
+      "no_surface_share": 0.4412,
+      "changed": 27278,
+      "changed_share": 0.7613,
+      "farther": 27260,
+      "farther_of_changed": 0.9993,
+      "farther_of_surface": 0.7608,
+      "abs_u_median_cm": 31.25
+     },
+     "roof": {
+      "rows": 64122,
+      "with_surface": 35831,
+      "no_surface": 28291,
+      "no_surface_share": 0.4412,
+      "changed": 27278,
+      "changed_share": 0.7613,
+      "farther": 27260,
+      "farther_of_changed": 0.9993,
+      "farther_of_surface": 0.7608,
+      "abs_u_median_cm": 31.25
+     },
+     "wall": {
+      "rows": 0,
+      "with_surface": 0,
+      "no_surface": 0,
+      "no_surface_share": null,
+      "changed": 0,
+      "changed_share": null,
+      "farther": 0,
+      "farther_of_changed": null,
+      "farther_of_surface": null,
+      "abs_u_median_cm": null
+     },
+     "roof_band": {
+      "rows": 22860,
+      "with_surface": 15989,
+      "no_surface": 6871,
+      "no_surface_share": 0.3006,
+      "changed": 10576,
+      "changed_share": 0.6615,
+      "farther": 10570,
+      "farther_of_changed": 0.9994,
+      "farther_of_surface": 0.6611,
+      "abs_u_median_cm": 23.79
+     },
+     "roof_outside_band": {
+      "rows": 41262,
+      "with_surface": 19842,
+      "no_surface": 21420,
+      "no_surface_share": 0.5191,
+      "changed": 16702,
+      "changed_share": 0.8417,
+      "farther": 16690,
+      "farther_of_changed": 0.9993,
+      "farther_of_surface": 0.8411,
+      "abs_u_median_cm": 38.28
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.7613,
+     "n": 35831
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -3936,7 +4311,82 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.1772,
+     "n": 35256
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 114467,
+      "with_surface": 85332,
+      "no_surface": 29135,
+      "no_surface_share": 0.2545,
+      "changed": 17638,
+      "changed_share": 0.2067,
+      "farther": 15271,
+      "farther_of_changed": 0.8658,
+      "farther_of_surface": 0.179,
+      "abs_u_median_cm": 39.76
+     },
+     "roof": {
+      "rows": 100771,
+      "with_surface": 79458,
+      "no_surface": 21313,
+      "no_surface_share": 0.2115,
+      "changed": 16677,
+      "changed_share": 0.2099,
+      "farther": 14408,
+      "farther_of_changed": 0.8639,
+      "farther_of_surface": 0.1813,
+      "abs_u_median_cm": 40.3
+     },
+     "wall": {
+      "rows": 13696,
+      "with_surface": 5874,
+      "no_surface": 7822,
+      "no_surface_share": 0.5711,
+      "changed": 961,
+      "changed_share": 0.1636,
+      "farther": 863,
+      "farther_of_changed": 0.898,
+      "farther_of_surface": 0.1469,
+      "abs_u_median_cm": 32.13
+     },
+     "roof_band": {
+      "rows": 24583,
+      "with_surface": 16716,
+      "no_surface": 7867,
+      "no_surface_share": 0.32,
+      "changed": 6504,
+      "changed_share": 0.3891,
+      "farther": 5415,
+      "farther_of_changed": 0.8326,
+      "farther_of_surface": 0.3239,
+      "abs_u_median_cm": 56.1
+     },
+     "roof_outside_band": {
+      "rows": 76188,
+      "with_surface": 62742,
+      "no_surface": 13446,
+      "no_surface_share": 0.1765,
+      "changed": 10173,
+      "changed_share": 0.1621,
+      "farther": 8993,
+      "farther_of_changed": 0.884,
+      "farther_of_surface": 0.1433,
+      "abs_u_median_cm": 36.35
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.2067,
+     "n": 85332
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -4673,7 +5123,82 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.0214,
+     "n": 140
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 110552,
+      "with_surface": 45400,
+      "no_surface": 65152,
+      "no_surface_share": 0.5893,
+      "changed": 41333,
+      "changed_share": 0.9104,
+      "farther": 41093,
+      "farther_of_changed": 0.9942,
+      "farther_of_surface": 0.9051,
+      "abs_u_median_cm": 74.37
+     },
+     "roof": {
+      "rows": 110552,
+      "with_surface": 45400,
+      "no_surface": 65152,
+      "no_surface_share": 0.5893,
+      "changed": 41333,
+      "changed_share": 0.9104,
+      "farther": 41093,
+      "farther_of_changed": 0.9942,
+      "farther_of_surface": 0.9051,
+      "abs_u_median_cm": 74.37
+     },
+     "wall": {
+      "rows": 0,
+      "with_surface": 0,
+      "no_surface": 0,
+      "no_surface_share": null,
+      "changed": 0,
+      "changed_share": null,
+      "farther": 0,
+      "farther_of_changed": null,
+      "farther_of_surface": null,
+      "abs_u_median_cm": null
+     },
+     "roof_band": {
+      "rows": 25274,
+      "with_surface": 9794,
+      "no_surface": 15480,
+      "no_surface_share": 0.6125,
+      "changed": 8141,
+      "changed_share": 0.8312,
+      "farther": 8017,
+      "farther_of_changed": 0.9848,
+      "farther_of_surface": 0.8186,
+      "abs_u_median_cm": 42.49
+     },
+     "roof_outside_band": {
+      "rows": 85278,
+      "with_surface": 35606,
+      "no_surface": 49672,
+      "no_surface_share": 0.5825,
+      "changed": 33192,
+      "changed_share": 0.9322,
+      "farther": 33076,
+      "farther_of_changed": 0.9965,
+      "farther_of_surface": 0.9289,
+      "abs_u_median_cm": 80.92
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.9104,
+     "n": 45400
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -5572,7 +6097,82 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.0263,
+     "n": 18695
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 82770,
+      "with_surface": 14479,
+      "no_surface": 68291,
+      "no_surface_share": 0.8251,
+      "changed": 12252,
+      "changed_share": 0.8462,
+      "farther": 12129,
+      "farther_of_changed": 0.99,
+      "farther_of_surface": 0.8377,
+      "abs_u_median_cm": 100.32
+     },
+     "roof": {
+      "rows": 17135,
+      "with_surface": 5066,
+      "no_surface": 12069,
+      "no_surface_share": 0.7043,
+      "changed": 3615,
+      "changed_share": 0.7136,
+      "farther": 3513,
+      "farther_of_changed": 0.9718,
+      "farther_of_surface": 0.6934,
+      "abs_u_median_cm": 47.39
+     },
+     "wall": {
+      "rows": 65635,
+      "with_surface": 9413,
+      "no_surface": 56222,
+      "no_surface_share": 0.8566,
+      "changed": 8637,
+      "changed_share": 0.9176,
+      "farther": 8616,
+      "farther_of_changed": 0.9976,
+      "farther_of_surface": 0.9153,
+      "abs_u_median_cm": 125.19
+     },
+     "roof_band": {
+      "rows": 11365,
+      "with_surface": 3438,
+      "no_surface": 7927,
+      "no_surface_share": 0.6975,
+      "changed": 2259,
+      "changed_share": 0.6571,
+      "farther": 2225,
+      "farther_of_changed": 0.9849,
+      "farther_of_surface": 0.6472,
+      "abs_u_median_cm": 38.77
+     },
+     "roof_outside_band": {
+      "rows": 5770,
+      "with_surface": 1628,
+      "no_surface": 4142,
+      "no_surface_share": 0.7179,
+      "changed": 1356,
+      "changed_share": 0.8329,
+      "farther": 1288,
+      "farther_of_changed": 0.9499,
+      "farther_of_surface": 0.7912,
+      "abs_u_median_cm": 70.45
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173_b0/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.8462,
+     "n": 14479
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -6153,7 +6753,82 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "corr_1to4": {
+     "value": 0.0124,
+     "n": 404
+    },
+    "boundary_tau": null,
+    "boundary_roof_m": null,
+    "boundary_stage1_groups_tau": null,
+    "normdiff": {
+     "all": {
+      "rows": 10990,
+      "with_surface": 3803,
+      "no_surface": 7187,
+      "no_surface_share": 0.654,
+      "changed": 2466,
+      "changed_share": 0.6484,
+      "farther": 2462,
+      "farther_of_changed": 0.9984,
+      "farther_of_surface": 0.6474,
+      "abs_u_median_cm": 25.1
+     },
+     "roof": {
+      "rows": 10990,
+      "with_surface": 3803,
+      "no_surface": 7187,
+      "no_surface_share": 0.654,
+      "changed": 2466,
+      "changed_share": 0.6484,
+      "farther": 2462,
+      "farther_of_changed": 0.9984,
+      "farther_of_surface": 0.6474,
+      "abs_u_median_cm": 25.1
+     },
+     "wall": {
+      "rows": 0,
+      "with_surface": 0,
+      "no_surface": 0,
+      "no_surface_share": null,
+      "changed": 0,
+      "changed_share": null,
+      "farther": 0,
+      "farther_of_changed": null,
+      "farther_of_surface": null,
+      "abs_u_median_cm": null
+     },
+     "roof_band": {
+      "rows": 4127,
+      "with_surface": 1650,
+      "no_surface": 2477,
+      "no_surface_share": 0.6002,
+      "changed": 1079,
+      "changed_share": 0.6539,
+      "farther": 1078,
+      "farther_of_changed": 0.9991,
+      "farther_of_surface": 0.6533,
+      "abs_u_median_cm": 29.14
+     },
+     "roof_outside_band": {
+      "rows": 6863,
+      "with_surface": 2153,
+      "no_surface": 4710,
+      "no_surface_share": 0.6863,
+      "changed": 1387,
+      "changed_share": 0.6442,
+      "farther": 1384,
+      "farther_of_changed": 0.9978,
+      "farther_of_surface": 0.6428,
+      "abs_u_median_cm": 23.54
+     },
+     "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173_b0/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+     "reader": "numpy"
+    },
+    "normdiff_changed": {
+     "value": 0.6484,
+     "n": 3803
+    }
    },
    "imgonly_s0": {
     "key": "imgonly0",
@@ -6514,9 +7189,21 @@
       24231,
       24231
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.379,
+     "comparator_n": 24231,
+     "method_mean": 0.8351999999999999,
+     "diff": 0.45619999999999994,
+     "n": 24231,
+     "criterion": 0.01742311108843659,
+     "criterion_parts": {
+      "unit": 0.01742311108843659,
+      "three_points": 0.0001238083446824316
+     },
+     "twice": 0.03484622217687318,
+     "deterministic": false,
+     "grade": "확인",
+     "side": 1,
+     "reading": "조금 틀린 사전 정보를 더 고쳤다"
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -6530,9 +7217,21 @@
       294363,
       294072
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.5776,
+     "comparator_n": 193201,
+     "method_mean": 0.016149999999999998,
+     "diff": -0.56145,
+     "n": 193201,
+     "criterion": 0.002969848480983495,
+     "criterion_parts": {
+      "unit": 0.002969848480983495,
+      "three_points": 1.5527869938561396e-05
+     },
+     "twice": 0.00593969696196699,
+     "deterministic": false,
+     "grade": "확인",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   },
@@ -6724,9 +7423,21 @@
       64,
       64
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.2188,
+     "comparator_n": 64,
+     "method_mean": 0.53125,
+     "diff": 0.31245,
+     "n": 64,
+     "criterion": 0.061970838303189224,
+     "criterion_parts": {
+      "unit": 0.061970838303189224,
+      "three_points": 0.046875
+     },
+     "twice": 0.12394167660637845,
+     "deterministic": false,
+     "grade": "표본 부족",
+     "side": null,
+     "reading": null
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -6740,9 +7451,21 @@
       136075,
       136072
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.7075,
+     "comparator_n": 99390,
+     "method_mean": 0.00735,
+     "diff": -0.70015,
+     "n": 99390,
+     "criterion": 0.0017819090885900992,
+     "criterion_parts": {
+      "unit": 0.0017819090885900992,
+      "three_points": 3.0184123151222456e-05
+     },
+     "twice": 0.0035638181771801983,
+     "deterministic": false,
+     "grade": "확인",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   },
@@ -6934,9 +7657,21 @@
       21986,
       21986
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.1306,
+     "comparator_n": 21986,
+     "method_mean": 0.53105,
+     "diff": 0.40045000000000003,
+     "n": 21986,
+     "criterion": 0.04731958579700382,
+     "criterion_parts": {
+      "unit": 0.04731958579700382,
+      "three_points": 0.00013645046847994178
+     },
+     "twice": 0.09463917159400764,
+     "deterministic": false,
+     "grade": "확인",
+     "side": 1,
+     "reading": "조금 틀린 사전 정보를 더 고쳤다"
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -6950,9 +7685,21 @@
       167435,
       167533
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.7246,
+     "comparator_n": 88460,
+     "method_mean": 0.025,
+     "diff": -0.6996,
+     "n": 88460,
+     "criterion": 0.0019798989873223275,
+     "criterion_parts": {
+      "unit": 0.0019798989873223275,
+      "three_points": 3.391363328057879e-05
+     },
+     "twice": 0.003959797974644655,
+     "deterministic": false,
+     "grade": "확인",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   },
@@ -7144,9 +7891,21 @@
       535,
       535
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.0729,
+     "comparator_n": 535,
+     "method_mean": 0.9206,
+     "diff": 0.8477,
+     "n": 535,
+     "criterion": 0.011087434329005162,
+     "criterion_parts": {
+      "unit": 0.011087434329005162,
+      "three_points": 0.005607476635514018
+     },
+     "twice": 0.022174868658010324,
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "reading": "조금 틀린 사전 정보를 더 고쳤다"
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -7160,9 +7919,21 @@
       64122,
       64122
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.7613,
+     "comparator_n": 35831,
+     "method_mean": 0.01245,
+     "diff": -0.74885,
+     "n": 35831,
+     "criterion": 0.0013859292911256348,
+     "criterion_parts": {
+      "unit": 0.0013859292911256348,
+      "three_points": 8.372638218302587e-05
+     },
+     "twice": 0.0027718585822512696,
+     "deterministic": false,
+     "grade": "확인",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   },
@@ -7354,9 +8125,21 @@
       35256,
       35256
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.1772,
+     "comparator_n": 35256,
+     "method_mean": 0.86725,
+     "diff": 0.6900499999999999,
+     "n": 35256,
+     "criterion": 0.055635161543757576,
+     "criterion_parts": {
+      "unit": 0.055635161543757576,
+      "three_points": 8.509189925119128e-05
+     },
+     "twice": 0.11127032308751515,
+     "deterministic": false,
+     "grade": "확인",
+     "side": 1,
+     "reading": "조금 틀린 사전 정보를 더 고쳤다"
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -7370,9 +8153,21 @@
       113282,
       113283
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.2067,
+     "comparator_n": 85332,
+     "method_mean": 0.01865,
+     "diff": -0.18805,
+     "n": 85332,
+     "criterion": 0.004949747468305836,
+     "criterion_parts": {
+      "unit": 0.004949747468305836,
+      "three_points": 3.515679932498945e-05
+     },
+     "twice": 0.009899494936611672,
+     "deterministic": false,
+     "grade": "확인",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   },
@@ -7564,9 +8359,21 @@
       140,
       140
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.0214,
+     "comparator_n": 140,
+     "method_mean": 0.675,
+     "diff": 0.6536000000000001,
+     "n": 140,
+     "criterion": 0.0989949493661165,
+     "criterion_parts": {
+      "unit": 0.0989949493661165,
+      "three_points": 0.02142857142857143
+     },
+     "twice": 0.197989898732233,
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "reading": "조금 틀린 사전 정보를 더 고쳤다"
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -7580,9 +8387,21 @@
       110235,
       110272
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.9104,
+     "comparator_n": 45400,
+     "method_mean": 0.04875,
+     "diff": -0.86165,
+     "n": 45400,
+     "criterion": 0.022768838354206834,
+     "criterion_parts": {
+      "unit": 0.022768838354206834,
+      "three_points": 6.607929515418502e-05
+     },
+     "twice": 0.04553767670841367,
+     "deterministic": false,
+     "grade": "확인",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   },
@@ -7774,9 +8593,21 @@
       18695,
       18695
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.0263,
+     "comparator_n": 18695,
+     "method_mean": 0.5643,
+     "diff": 0.538,
+     "n": 18695,
+     "criterion": 0.05504119184756095,
+     "criterion_parts": {
+      "unit": 0.05504119184756095,
+      "three_points": 0.00016047071409467772
+     },
+     "twice": 0.1100823836951219,
+     "deterministic": false,
+     "grade": "확인",
+     "side": 1,
+     "reading": "조금 틀린 사전 정보를 더 고쳤다"
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -7790,9 +8621,21 @@
       81414,
       81402
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.8462,
+     "comparator_n": 14479,
+     "method_mean": 0.0401,
+     "diff": -0.8060999999999999,
+     "n": 14479,
+     "criterion": 0.012671353518862923,
+     "criterion_parts": {
+      "unit": 0.012671353518862923,
+      "three_points": 0.0002071966296014918
+     },
+     "twice": 0.025342707037725846,
+     "deterministic": false,
+     "grade": "확인",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   },
@@ -7984,9 +8827,21 @@
       404,
       404
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.0124,
+     "comparator_n": 404,
+     "method_mean": 0.86265,
+     "diff": 0.8502500000000001,
+     "n": 404,
+     "criterion": 0.007425742574257425,
+     "criterion_parts": {
+      "unit": 0.004949747468305727,
+      "three_points": 0.007425742574257425
+     },
+     "twice": 0.01485148514851485,
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "reading": "조금 틀린 사전 정보를 더 고쳤다"
     },
     "normdiff_changed": {
      "metric": "normdiff_changed",
@@ -8000,9 +8855,21 @@
       10990,
       10990
      ],
-     "comparator_value": null,
-     "comparator_n": null,
-     "grade": "아직"
+     "comparator_value": 0.6484,
+     "comparator_n": 3803,
+     "method_mean": 0.07450000000000001,
+     "diff": -0.5739,
+     "n": 3803,
+     "criterion": 0.012671353518862935,
+     "criterion_parts": {
+      "unit": 0.012671353518862935,
+      "three_points": 0.0007888509071785432
+     },
+     "twice": 0.02534270703772587,
+     "deterministic": false,
+     "grade": "가능, 근거 불완전",
+     "side": -1,
+     "reading": "덜 바꿨다"
     }
    }
   }
@@ -8034,10 +8901,10 @@
   },
   "cdgs": {
    "comparator_ko": "CDGS 변형",
-   "line": "본 방법과 CDGS 변형: 조금 틀린 곳의 보정률: 여섯 단위 모두 아직 [B0 · LoD2; B0 · 항공 LiDAR; B173 주변 · LoD2; B173 주변 · 항공 LiDAR; R1 · LoD2; R1 · 항공 LiDAR] / 정상적인 차이를 바꾼 몫: 여섯 단위 모두 아직 [B0 · LoD2; B0 · 항공 LiDAR; B173 주변 · LoD2; B173 주변 · 항공 LiDAR; R1 · LoD2; R1 · 항공 LiDAR]",
+   "line": "본 방법과 CDGS 변형: 조금 틀린 곳의 보정률: 여섯 단위 가운데 다섯에서 '조금 틀린 사전 정보를 더 고쳤다' [B0 · LoD2 확인; B173 주변 · LoD2 확인; B173 주변 · 항공 LiDAR 가능·근거 불완전; R1 · LoD2 확인; R1 · 항공 LiDAR 가능·근거 불완전], 하나는 표본 부족 [B0 · 항공 LiDAR] / 정상적인 차이를 바꾼 몫: 여섯 단위 모두 '덜 바꿨다' [B0 · LoD2 확인; B0 · 항공 LiDAR 확인; B173 주변 · LoD2 확인; B173 주변 · 항공 LiDAR 확인; R1 · LoD2 확인; R1 · 항공 LiDAR 확인]",
    "lines": {
-    "corr_1to4": "조금 틀린 곳의 보정률: 여섯 단위 모두 아직 [B0 · LoD2; B0 · 항공 LiDAR; B173 주변 · LoD2; B173 주변 · 항공 LiDAR; R1 · LoD2; R1 · 항공 LiDAR]",
-    "normdiff_changed": "정상적인 차이를 바꾼 몫: 여섯 단위 모두 아직 [B0 · LoD2; B0 · 항공 LiDAR; B173 주변 · LoD2; B173 주변 · 항공 LiDAR; R1 · LoD2; R1 · 항공 LiDAR]"
+    "corr_1to4": "조금 틀린 곳의 보정률: 여섯 단위 가운데 다섯에서 '조금 틀린 사전 정보를 더 고쳤다' [B0 · LoD2 확인; B173 주변 · LoD2 확인; B173 주변 · 항공 LiDAR 가능·근거 불완전; R1 · LoD2 확인; R1 · 항공 LiDAR 가능·근거 불완전], 하나는 표본 부족 [B0 · 항공 LiDAR]",
+    "normdiff_changed": "정상적인 차이를 바꾼 몫: 여섯 단위 모두 '덜 바꿨다' [B0 · LoD2 확인; B0 · 항공 LiDAR 확인; B173 주변 · LoD2 확인; B173 주변 · 항공 LiDAR 확인; R1 · LoD2 확인; R1 · 항공 LiDAR 확인]"
    }
   }
  },
@@ -8111,8 +8978,9 @@
    "comparator_ko": "CDGS 변형",
    "metric": "corr_1to4",
    "metric_ko": "조금 틀린 곳의 보정률",
-   "grade": "아직 모름",
+   "grade": "가능, 근거 불완전",
    "reasons": [
+    "표본 (표본 부족 1단위, 1만 점 미만 2단위)",
     "씨앗 하나",
     "빌린 흔들림 폭",
     "변형(크기 맞추기 생략)"
@@ -8123,7 +8991,7 @@
    "comparator_ko": "CDGS 변형",
    "metric": "normdiff_changed",
    "metric_ko": "정상적인 차이를 바꾼 몫",
-   "grade": "아직 모름",
+   "grade": "확인",
    "reasons": [
     "씨앗 하나",
     "빌린 흔들림 폭",

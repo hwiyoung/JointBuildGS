@@ -113,7 +113,23 @@
   },
   "cdgs": {
    "result": "cdgsnofit_LoD2_s0",
-   "band_region": null
+   "band_region": {
+    "rows": 80,
+    "kept_0_2": 0.0,
+    "kept_0_5": 0.0,
+    "inflow": 0.0,
+    "inflow_rows": 48,
+    "dropped_rows": 32,
+    "no_sW_rows": 0,
+    "classes": {
+     "points": 48,
+     "gt_side": 0.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 1.0,
+     "spread": 0.0
+    }
+   }
   }
  },
  "gt_points_in_band": 10608,

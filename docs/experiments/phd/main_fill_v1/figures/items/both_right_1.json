@@ -1,0 +1,191 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "both_right_1",
+ "item": "두 자료가 모두 맞는 곳",
+ "figure": 1,
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "auxiliary": false,
+ "mark": "이 발주에서 냄",
+ "place": {
+  "source": "sections_v1 R1_low_roof, 지지 일치 완만한 지붕 연속 구간 1.2~6.0 m(figpos correction)",
+  "centre": [
+   22.983430165905766,
+   28.576477565814496,
+   -29.493468147884336
+  ],
+  "t": [
+   0.3420201433256688,
+   0.9396926207859083
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "view_s": [
+   0.9,
+   6.0
+  ],
+  "z_range": [
+   -29.90766805205922,
+   -28.76850814819336
+  ],
+  "z_range_rule": [
+   -29.90766805205922,
+   -28.76850814819336
+  ],
+  "vertical_exaggeration": 3.28,
+  "band": "|s| ≤ L/2 (보이는 범위 안), |d| ≤ 0.25 m, 솎은 참값 행",
+  "band_codes_rows": {
+   "0": 5,
+   "2": 240,
+   "3": 67,
+   "11": 5,
+   "12": 65
+  },
+  "counted_rows": 56,
+  "counted": "지지 일치 완만한 지붕(코드 2)",
+  "full_band_counted_rows": 136
+ },
+ "value_name": "세부 정확도(새 읽기, NMAD)",
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "value": {
+    "value": 1.6500000000000001,
+    "bias_cm": -6.7299999999999995,
+    "n": 56,
+    "rows": 56,
+    "unread": 0,
+    "gentle_rows_in_measure": 56
+   },
+   "value_full_band": {
+    "value": 1.6500000000000001,
+    "bias_cm": -6.7299999999999995,
+    "n": 56,
+    "rows": 136,
+    "unread": 80,
+    "gentle_rows_in_measure": 136
+   },
+   "unit_wide": {
+    "value": 4.91,
+    "n": 74638
+   },
+   "segments": 2132
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "value": {
+    "value": 2.36,
+    "bias_cm": -3.7699999999999996,
+    "n": 56,
+    "rows": 56,
+    "unread": 0,
+    "gentle_rows_in_measure": 56
+   },
+   "value_full_band": {
+    "value": 2.9499999999999997,
+    "bias_cm": -3.38,
+    "n": 65,
+    "rows": 136,
+    "unread": 71,
+    "gentle_rows_in_measure": 136
+   },
+   "unit_wide": {
+    "value": 21.17,
+    "n": 73607
+   },
+   "segments": 2749
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "value": {
+    "value": 5.18,
+    "bias_cm": 3.91,
+    "n": 56,
+    "rows": 56,
+    "unread": 0,
+    "gentle_rows_in_measure": 56
+   },
+   "value_full_band": {
+    "value": 5.18,
+    "bias_cm": 3.91,
+    "n": 56,
+    "rows": 136,
+    "unread": 80,
+    "gentle_rows_in_measure": 136
+   },
+   "unit_wide": {
+    "value": 18.740000000000002,
+    "n": 74501
+   },
+   "segments": 2161
+  }
+ },
+ "references": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "value": {
+    "value": 3.2,
+    "bias_cm": -45.629999999999995,
+    "n": 56,
+    "rows": 56,
+    "unread": 0,
+    "gentle_rows_in_measure": 56
+   },
+   "unit_wide": {
+    "value": 17.849999999999998,
+    "n": 76433
+   },
+   "value_full_band": {
+    "value": 8.75,
+    "bias_cm": -10.38,
+    "n": 136,
+    "rows": 136,
+    "unread": 0,
+    "gentle_rows_in_measure": 136
+   }
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "value": {
+    "value": 1.55,
+    "bias_cm": -8.5,
+    "n": 56,
+    "rows": 56,
+    "unread": 0,
+    "gentle_rows_in_measure": 56
+   },
+   "unit_wide": {
+    "value": 5.27,
+    "n": 74670
+   },
+   "value_full_band": {
+    "value": 1.55,
+    "bias_cm": -8.5,
+    "n": 56,
+    "rows": 136,
+    "unread": 80,
+    "gentle_rows_in_measure": 136
+   }
+  },
+  "gt_points_in_slab": 2872
+ },
+ "scientific_verdict": null,
+ "title": "참값보다 46 cm 낮은 거친 LoD2 지붕을 세 방법 모두 참값 가까이(편향 −7~+4 cm) 올렸고, 흩어짐은 본 방법이 가장 작았다(1.7 cm; 참값 56점, 표본 부족) — R1 LoD2",
+ "title_kind": "statement written after viewing (2026-10-15 23:52 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "2차원 가우시안 스플래팅": "ok",
+  "GeoGS": "ok"
+ },
+ "foot": "이 자리(단면 띠 5.1 m × 0.5 m)의 지지 일치 완만한 지붕(코드 2) 참값 56점에서 결과 면 높이와 참값의 차의 산포(세부 정확도, NMAD): 본 방법 (씨앗 0) 1.7 cm(씨앗 1: 1.6 cm), 2차원 가우시안 스플래팅 2.4 cm, GeoGS 5.2 cm; 학습 전 사전 정보 3.2 cm. 100점 미만이라 표본 부족이다(9.1절). 같은 행의 편향(결과 면 높이 − 참값의 중앙값): 본 방법 (씨앗 0) -6.7 cm, 2차원 가우시안 스플래팅 -3.8 cm, GeoGS +3.9 cm; 학습 전 사전 정보 -45.6 cm. NMAD는 편향을 뺀 흩어짐이라, 고르게 떠 있는 면은 NMAD가 작다. 세부 정확도는 참값 높이 ±1 m 안에서 가장 높은 교차를 읽는다(measure_s2의 새 읽기): 결과 메시의 아래쪽 면(지붕 아래 구조)은 세지 않는다. 단면 띠 12 m 전체(136점, 보이지 않는 부분 포함): 본 방법 (씨앗 0) 1.7 cm, 2차원 가우시안 스플래팅 2.9 cm, GeoGS 5.2 cm; 학습 전 사전 정보 8.8 cm. 단위 전체(R1 LoD2): 본 방법 (씨앗 0) 4.9 cm, 2차원 가우시안 스플래팅 21.2 cm, GeoGS 18.7 cm, 학습 전 사전 정보 17.8 cm. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면. 단면 12 m 가운데 지지 일치 완만한 지붕이 이어지는 쪽 5.1 m(42.5 %)를 키워 보였다(규칙 10). 높이를 3배 늘려 그렸다. 이 단면은 1단계에서 '두 자료 모두 불분명'의 자리로 정한 단면이다(그 뜻은 단면의 다른 쪽, 코드 11과 3인 낮은 지붕). 이 그림은 같은 단면에서 두 자료가 모두 맞는 쪽(코드 2)만 보인다.",
+ "rule7": {
+  "result": "통과(단서)",
+  "note": "세 칸의 맨 위 면이 참값 점에 붙고 LoD2 선은 그 아래에 있다. 결과 메시의 아래쪽 면(지붕 아래 구조)도 보여 헷갈릴 수 있어, 숫자 줄에 '참값 ±1 m 안 가장 높은 교차를 읽는다'를 적었다.",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

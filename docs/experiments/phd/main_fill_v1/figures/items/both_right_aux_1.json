@@ -1,0 +1,146 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "both_right_aux_1",
+ "item": "두 자료가 모두 맞는 곳",
+ "figure": 1,
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "auxiliary": true,
+ "mark": "이 발주에서 냄",
+ "place": {
+  "source": "figpos correction two_data_aux (규칙 1b의 새 단면, 패치 35094)",
+  "centre": [
+   115.15389669442528,
+   134.24689200432096,
+   -28.5592749579583
+  ],
+  "t": [
+   0.3420201433256688,
+   0.9396926207859083
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "z_range": [
+   -28.899908828735352,
+   -28.219908905029296
+  ],
+  "z_range_rule": [
+   -28.899908828735352,
+   -28.219908905029296
+  ],
+  "vertical_exaggeration": 12.94,
+  "band": "|s| ≤ L/2 (보이는 범위 안), |d| ≤ 0.25 m, 솎은 참값 행",
+  "band_codes_rows": {
+   "2": 602
+  },
+  "counted_rows": 228,
+  "counted": "지지 일치 완만한 지붕(코드 2)"
+ },
+ "value_name": "세부 정확도(새 읽기, NMAD)",
+ "panels": {
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "status": "ok",
+   "value": {
+    "value": 1.4000000000000001,
+    "bias_cm": 5.9799999999999995,
+    "n": 228,
+    "rows": 228,
+    "unread": 0,
+    "gentle_rows_in_measure": 228
+   },
+   "unit_wide": {
+    "value": 2.35,
+    "n": 35345
+   },
+   "segments": 535
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "value": {
+    "value": 1.91,
+    "bias_cm": 13.819999999999999,
+    "n": 228,
+    "rows": 228,
+    "unread": 0,
+    "gentle_rows_in_measure": 228
+   },
+   "unit_wide": {
+    "value": 14.17,
+    "n": 34946
+   },
+   "segments": 555
+  },
+  "GeoGS": {
+   "result": "geogs_ALS_fix1",
+   "status": "ok",
+   "value": {
+    "value": 2.79,
+    "bias_cm": 28.410000000000004,
+    "n": 228,
+    "rows": 228,
+    "unread": 0,
+    "gentle_rows_in_measure": 228
+   },
+   "unit_wide": {
+    "value": 14.610000000000001,
+    "n": 35345
+   },
+   "segments": 553
+  }
+ },
+ "references": {
+  "학습 전 사전 정보": {
+   "result": "samepath_ALS",
+   "value": {
+    "value": 1.26,
+    "bias_cm": -0.32,
+    "n": 228,
+    "rows": 228,
+    "unread": 0,
+    "gentle_rows_in_measure": 228
+   },
+   "unit_wide": {
+    "value": 1.7500000000000002,
+    "n": 35345
+   }
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_ALS_s1",
+   "value": {
+    "value": 1.4200000000000002,
+    "bias_cm": 6.09,
+    "n": 228,
+    "rows": 228,
+    "unread": 0,
+    "gentle_rows_in_measure": 228
+   },
+   "unit_wide": {
+    "value": 2.3,
+    "n": 35345
+   }
+  },
+  "gt_points_in_slab": 28251
+ },
+ "scientific_verdict": null,
+ "title": "참값과 맞는 항공 LiDAR 지붕 위에 세 방법의 면은 고르게 섰지만, 참값보다 본 방법은 6 cm, 2차원 가우시안 스플래팅은 14 cm, GeoGS는 28 cm 위에 섰다 — B173 주변 항공 LiDAR (보조)",
+ "title_kind": "statement written after viewing (2026-10-15 23:52 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "2차원 가우시안 스플래팅": "ok",
+  "GeoGS": "ok"
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 지지 일치 완만한 지붕(코드 2) 참값 228점에서 결과 면 높이와 참값의 차의 산포(세부 정확도, NMAD): 본 방법 (씨앗 0) 1.4 cm(씨앗 1: 1.4 cm), 2차원 가우시안 스플래팅 1.9 cm, GeoGS 2.8 cm; 학습 전 사전 정보 1.3 cm. 같은 행의 편향(결과 면 높이 − 참값의 중앙값): 본 방법 (씨앗 0) +6.0 cm, 2차원 가우시안 스플래팅 +13.8 cm, GeoGS +28.4 cm; 학습 전 사전 정보 -0.3 cm. NMAD는 편향을 뺀 흩어짐이라, 고르게 떠 있는 면은 NMAD가 작다. 세부 정확도는 참값 높이 ±1 m 안에서 가장 높은 교차를 읽는다(measure_s2의 새 읽기): 결과 메시의 아래쪽 면(지붕 아래 구조)은 세지 않는다. 단위 전체(B173 주변 항공 LiDAR): 본 방법 (씨앗 0) 2.4 cm, 2차원 가우시안 스플래팅 14.2 cm, GeoGS 14.6 cm, 학습 전 사전 정보 1.8 cm. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면. 높이를 13배 늘려 그렸다. 이 지역 항공 LiDAR에는 지지 일치 완만한 지붕을 지나는 1단계 단면이 없어(가장 긴 것 0 m), 같은 꼴의 새 12 m 단면을 규칙(1b)으로 놓았다(받아들인 바꿈).",
+ "rule7": {
+  "result": "통과",
+  "note": "세 칸의 면이 참값 띠 위로 서로 다른 높이에 고르게 떠 있다(칸 위 편향 +6.0/+13.8/+28.4 cm).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

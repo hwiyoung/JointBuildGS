@@ -1,0 +1,191 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "image_wrong_aux_2",
+ "item": "영상이 틀린 곳",
+ "figure": 2,
+ "site": "B0_b10",
+ "prior": "LoD2",
+ "auxiliary": true,
+ "mark": "이 발주에서 냄",
+ "place": {
+  "source": "figpos obs_masked auxiliary (덩어리 48, 19패치, 북쪽 벽)",
+  "centre": [
+   120.36469561225331,
+   14.115885377161419,
+   -31.753999999999905
+  ],
+  "t": [
+   0.9302475133883368,
+   -0.36693264209499843
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "view_s": [
+   -3.0,
+   6.0
+  ],
+  "z_range": [
+   -34.051631927490234,
+   -29.641843795776367
+  ],
+  "z_range_rule": [
+   -34.051631927490234,
+   -29.641843795776367
+  ],
+  "vertical_exaggeration": 1.0,
+  "band": "|s| ≤ L/2 (보이는 범위 안), |d| ≤ 0.25 m, 솎은 참값 행",
+  "band_codes_rows": {
+   "0": 10,
+   "2": 625,
+   "3": 49,
+   "4": 37,
+   "11": 157,
+   "12": 26
+  },
+  "counted_rows": 27,
+  "counted": "영상이 틀린 곳(거른 영상 오류, 이 띠에는 코드 3 문턱 이내가 없음)",
+  "union_rows_in_view": 27,
+  "obs_rows_in_view": 27,
+  "c3w_rows_in_view": 0,
+  "wrong_marks": 24,
+  "full_band_counted_rows": 27
+ },
+ "value_name": "지킨 몫(0.2 m)",
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "value": {
+    "value": 1.0,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0417,
+    "inflow_rows": 24
+   },
+   "value_full_band": {
+    "value": 1.0,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0417,
+    "inflow_rows": 24
+   },
+   "unit_wide": {
+    "value": 0.8911,
+    "n": 6457,
+    "row": "영상이 틀린 곳의 합친 줄"
+   },
+   "segments": 2183
+  },
+  "MVS 기반 결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "value": {
+    "value": 0.14814814814814814,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   },
+   "value_full_band": {
+    "value": 0.14814814814814814,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   },
+   "unit_wide": {
+    "value": 0.2689,
+    "n": 6457,
+    "row": "영상이 틀린 곳의 합친 줄"
+   },
+   "segments": 1656
+  },
+  "CDGS 변형": {
+   "result": "cdgsnofit_LoD2_s0",
+   "status": "ok",
+   "value": {
+    "value": 0.0,
+    "le_0_5": 0.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   },
+   "value_full_band": {
+    "value": 0.0,
+    "le_0_5": 0.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   },
+   "unit_wide": {
+    "value": 0.079,
+    "n": 6457,
+    "row": "영상이 틀린 곳의 합친 줄"
+   },
+   "segments": 7090
+  }
+ },
+ "references": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "value": {
+    "value": 0.14814814814814814,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   },
+   "unit_wide": {
+    "value": 0.2685,
+    "n": 6457,
+    "row": "영상이 틀린 곳의 합친 줄"
+   },
+   "value_full_band": {
+    "value": 0.14814814814814814,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   }
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "value": {
+    "value": 1.0,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   },
+   "unit_wide": {
+    "value": 0.8615,
+    "n": 6457,
+    "row": "영상이 틀린 곳의 합친 줄"
+   },
+   "value_full_band": {
+    "value": 1.0,
+    "le_0_5": 1.0,
+    "n": 27,
+    "inflow": 0.0,
+    "inflow_rows": 24
+   }
+  },
+  "gt_points_in_slab": 6142
+ },
+ "scientific_verdict": null,
+ "title": "같은 벽의 다른 덩어리에서도 본 방법은 참값 벽에, MVS 기반 결합은 사전 정보 벽에 섰고, CDGS 변형에서는 벽 앞 1.5~3 m에 비스듬한 면만 섰다(참값 27점, 표본 부족) — B0 LoD2 (보조)",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "MVS 기반 결합": "ok",
+  "CDGS 변형": "ok"
+ },
+ "foot": "이 자리(단면 띠 9.0 m × 0.5 m)의 영상이 틀린 곳(거른 영상 오류, 이 띠에는 코드 3 문턱 이내가 없음) 참값 27점에서 결과 면이 0.2 m 안에 있는 몫(지킨 몫): 본 방법 (씨앗 0) 100.0 %(씨앗 1: 100.0 %), MVS 기반 결합 14.8 %, CDGS 변형 0.0 %; 학습 전 사전 정보 14.8 %. 100점 미만이라 표본 부족이다(9.1절). 거른 영상 오류 유입률(|s_W| ≥ 0.2 m인 24점): 본 방법 (씨앗 0) 4.2 %, MVS 기반 결합 0.0 %, CDGS 변형 0.0 %. 단위 전체(B0 LoD2, 영상이 틀린 곳의 합친 줄): 본 방법 (씨앗 0) 89.1 %, MVS 기반 결합 26.9 %, CDGS 변형 7.9 %, 학습 전 사전 정보 26.9 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면, 주황 마름모 = 센 행마다 마스크가 거른 틀린 영상이 놓는 면(광도 깊이, |s_W| ≥ 0.2 m). 단면 12 m 가운데 벽을 가로지르는 9.0 m(75 %)를 보였다(규칙 10); 센 참값 행은 모두 이 안에 있다.",
+ "rule7": {
+  "result": "통과(단서)",
+  "note": "같은 꼴: 결합은 사전 정보 선에 겹친다(14.8 %).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

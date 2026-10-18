@@ -1,7 +1,7 @@
 {
  "task_id": "PHD-MAIN-FILL-v1",
  "component": "correction",
- "written": "2026-10-15 20:48:46 KST",
+ "written": "2026-10-19 03:36:58 KST",
  "definitions": "SL/prep/correction/definitions.json",
  "rule": "  python correction_curve.py      -> SL/tables/correction_curve.json, .md",
  "new_here": "이 발주에서 냄: 비교 방법과 장치 빼기의 곡선, 이 발주의 묶음(4τ를 넘어 묶지 않음)에 쓴 곡선과 경계, 1~4τ 보정률",
@@ -1282,13 +1282,393 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.3148,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.3148,
+        "wrong_side": 0.2066,
+        "both": 0.0344,
+        "neither": 0.4441,
+        "spread": 0.241
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 12557,
+       "correction_rate": 0.4387,
+       "shares": {
+        "points": 12557,
+        "gt_side": 0.4387,
+        "wrong_side": 0.1886,
+        "both": 0.0648,
+        "neither": 0.3079,
+        "spread": 0.2534
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 6387,
+       "correction_rate": 0.5865,
+       "shares": {
+        "points": 6387,
+        "gt_side": 0.5865,
+        "wrong_side": 0.0662,
+        "both": 0.0485,
+        "neither": 0.2987,
+        "spread": 0.1148
+       },
+       "under_10k": true
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.3148,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.3148,
+        "wrong_side": 0.2066,
+        "both": 0.0344,
+        "neither": 0.4441,
+        "spread": 0.241
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        null
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 18944,
+       "correction_rate": 0.4885,
+       "shares": {
+        "points": 18944,
+        "gt_side": 0.4885,
+        "wrong_side": 0.1473,
+        "both": 0.0593,
+        "neither": 0.3048,
+        "spread": 0.2067
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.379,
+      "points": 24231,
+      "shares": {
+       "points": 24231,
+       "gt_side": 0.379,
+       "wrong_side": 0.1973,
+       "both": 0.0502,
+       "neither": 0.3735,
+       "spread": 0.2475
+      },
+      "roof": {
+       "points": 13134,
+       "gt_side": 0.4407,
+       "wrong_side": 0.1575,
+       "both": 0.0617,
+       "neither": 0.3402,
+       "spread": 0.2191
+      },
+      "wall": {
+       "points": 11097,
+       "gt_side": 0.306,
+       "wrong_side": 0.2444,
+       "both": 0.0366,
+       "neither": 0.413,
+       "spread": 0.281
+      }
+     },
+     "below_1tau": {
+      "points": 2262,
+      "shares": {
+       "points": 2262,
+       "gt_side": 0.2962,
+       "wrong_side": 0.1998,
+       "both": 0.0402,
+       "neither": 0.4637,
+       "spread": 0.2401
+      }
+     },
+     "boundary_tau": 4.0,
+     "boundary_roof_m": 0.79,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.19752371311187744
     },
     "cdgs_LoD2_s0": {
      "key": "cdgs_official",
      "label": "CDGS 공식 확인",
      "role": "official",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.1962,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.1962,
+        "wrong_side": 0.1097,
+        "both": 0.0258,
+        "neither": 0.6682,
+        "spread": 0.1355
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 12557,
+       "correction_rate": 0.2822,
+       "shares": {
+        "points": 12557,
+        "gt_side": 0.2822,
+        "wrong_side": 0.1031,
+        "both": 0.0524,
+        "neither": 0.5623,
+        "spread": 0.1555
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 6387,
+       "correction_rate": 0.4763,
+       "shares": {
+        "points": 6387,
+        "gt_side": 0.4763,
+        "wrong_side": 0.039,
+        "both": 0.0221,
+        "neither": 0.4627,
+        "spread": 0.0611
+       },
+       "under_10k": true
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.1962,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.1962,
+        "wrong_side": 0.1097,
+        "both": 0.0258,
+        "neither": 0.6682,
+        "spread": 0.1355
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        null
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 18944,
+       "correction_rate": 0.3476,
+       "shares": {
+        "points": 18944,
+        "gt_side": 0.3476,
+        "wrong_side": 0.0815,
+        "both": 0.0422,
+        "neither": 0.5287,
+        "spread": 0.1237
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.2408,
+      "points": 24231,
+      "shares": {
+       "points": 24231,
+       "gt_side": 0.2408,
+       "wrong_side": 0.1063,
+       "both": 0.0396,
+       "neither": 0.6133,
+       "spread": 0.1459
+      },
+      "roof": {
+       "points": 13134,
+       "gt_side": 0.3807,
+       "wrong_side": 0.0624,
+       "both": 0.0624,
+       "neither": 0.4945,
+       "spread": 0.1248
+      },
+      "wall": {
+       "points": 11097,
+       "gt_side": 0.0752,
+       "wrong_side": 0.1583,
+       "both": 0.0125,
+       "neither": 0.754,
+       "spread": 0.1709
+      }
+     },
+     "below_1tau": {
+      "points": 2262,
+      "shares": {
+       "points": 2262,
+       "gt_side": 0.0508,
+       "wrong_side": 0.0738,
+       "both": 0.0159,
+       "neither": 0.8594,
+       "spread": 0.0897
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.19752371311187744
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -3119,7 +3499,159 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 64,
+       "correction_rate": 0.2188,
+       "shares": {
+        "points": 64,
+        "gt_side": 0.2188,
+        "wrong_side": 0.1719,
+        "both": 0.0938,
+        "neither": 0.5156,
+        "spread": 0.2656
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 198,
+       "correction_rate": 0.3535,
+       "shares": {
+        "points": 198,
+        "gt_side": 0.3535,
+        "wrong_side": 0.0556,
+        "both": 0.0,
+        "neither": 0.5909,
+        "spread": 0.0556
+       },
+       "under_10k": true
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        null
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 262,
+       "correction_rate": 0.3206,
+       "shares": {
+        "points": 262,
+        "gt_side": 0.3206,
+        "wrong_side": 0.084,
+        "both": 0.0229,
+        "neither": 0.5725,
+        "spread": 0.1069
+       },
+       "under_10k": true
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.2188,
+      "points": 64,
+      "shares": {
+       "points": 64,
+       "gt_side": 0.2188,
+       "wrong_side": 0.1719,
+       "both": 0.0938,
+       "neither": 0.5156,
+       "spread": 0.2656
+      },
+      "roof": {
+       "points": 64,
+       "gt_side": 0.2188,
+       "wrong_side": 0.1719,
+       "both": 0.0938,
+       "neither": 0.5156,
+       "spread": 0.2656
+      },
+      "wall": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "below_1tau": {
+      "points": 0,
+      "shares": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.12659545242786407
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -5189,7 +5721,197 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 21986,
+       "correction_rate": 0.1306,
+       "shares": {
+        "points": 21986,
+        "gt_side": 0.1306,
+        "wrong_side": 0.1688,
+        "both": 0.0104,
+        "neither": 0.6902,
+        "spread": 0.1792
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 97613,
+       "correction_rate": 0.0208,
+       "shares": {
+        "points": 97613,
+        "gt_side": 0.0208,
+        "wrong_side": 0.0635,
+        "both": 0.0047,
+        "neither": 0.911,
+        "spread": 0.0682
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 12501,
+       "correction_rate": 0.0738,
+       "shares": {
+        "points": 12501,
+        "gt_side": 0.0738,
+        "wrong_side": 0.118,
+        "both": 0.0074,
+        "neither": 0.8008,
+        "spread": 0.1254
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        8.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ]
+       ],
+       "points": 10100,
+       "correction_rate": 0.1992,
+       "shares": {
+        "points": 10100,
+        "gt_side": 0.1992,
+        "wrong_side": 0.2293,
+        "both": 0.0144,
+        "neither": 0.5571,
+        "spread": 0.2437
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "merged_from": [
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 96998,
+       "correction_rate": 0.0203,
+       "shares": {
+        "points": 96998,
+        "gt_side": 0.0203,
+        "wrong_side": 0.0631,
+        "both": 0.0046,
+        "neither": 0.912,
+        "spread": 0.0677
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.1306,
+      "points": 21986,
+      "shares": {
+       "points": 21986,
+       "gt_side": 0.1306,
+       "wrong_side": 0.1688,
+       "both": 0.0104,
+       "neither": 0.6902,
+       "spread": 0.1792
+      },
+      "roof": {
+       "points": 15777,
+       "gt_side": 0.1706,
+       "wrong_side": 0.196,
+       "both": 0.0132,
+       "neither": 0.6202,
+       "spread": 0.2092
+      },
+      "wall": {
+       "points": 6209,
+       "gt_side": 0.0292,
+       "wrong_side": 0.0995,
+       "both": 0.0034,
+       "neither": 0.8679,
+       "spread": 0.1029
+      }
+     },
+     "below_1tau": {
+      "points": 164,
+      "shares": {
+       "points": 164,
+       "gt_side": 0.061,
+       "wrong_side": 0.0305,
+       "both": 0.0061,
+       "neither": 0.9024,
+       "spread": 0.0366
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.17595741152763367
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -7412,7 +8134,159 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 535,
+       "correction_rate": 0.0729,
+       "shares": {
+        "points": 535,
+        "gt_side": 0.0729,
+        "wrong_side": 0.0168,
+        "both": 0.0206,
+        "neither": 0.8897,
+        "spread": 0.0374
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 95582,
+       "correction_rate": 0.0318,
+       "shares": {
+        "points": 95582,
+        "gt_side": 0.0318,
+        "wrong_side": 0.1022,
+        "both": 0.0057,
+        "neither": 0.8603,
+        "spread": 0.108
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        null
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 96117,
+       "correction_rate": 0.032,
+       "shares": {
+        "points": 96117,
+        "gt_side": 0.032,
+        "wrong_side": 0.1018,
+        "both": 0.0058,
+        "neither": 0.8605,
+        "spread": 0.1076
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.0729,
+      "points": 535,
+      "shares": {
+       "points": 535,
+       "gt_side": 0.0729,
+       "wrong_side": 0.0168,
+       "both": 0.0206,
+       "neither": 0.8897,
+       "spread": 0.0374
+      },
+      "roof": {
+       "points": 535,
+       "gt_side": 0.0729,
+       "wrong_side": 0.0168,
+       "both": 0.0206,
+       "neither": 0.8897,
+       "spread": 0.0374
+      },
+      "wall": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "below_1tau": {
+      "points": 0,
+      "shares": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.14701597392559052
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -9598,7 +10472,216 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 15560,
+       "correction_rate": 0.1967,
+       "shares": {
+        "points": 15560,
+        "gt_side": 0.1967,
+        "wrong_side": 0.1879,
+        "both": 0.0654,
+        "neither": 0.5501,
+        "spread": 0.2532
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 19696,
+       "correction_rate": 0.1618,
+       "shares": {
+        "points": 19696,
+        "gt_side": 0.1618,
+        "wrong_side": 0.1517,
+        "both": 0.0389,
+        "neither": 0.6476,
+        "spread": 0.1906
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 18149,
+       "correction_rate": 0.1878,
+       "shares": {
+        "points": 18149,
+        "gt_side": 0.1878,
+        "wrong_side": 0.0591,
+        "both": 0.0383,
+        "neither": 0.7148,
+        "spread": 0.0974
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 15560,
+       "correction_rate": 0.1967,
+       "shares": {
+        "points": 15560,
+        "gt_side": 0.1967,
+        "wrong_side": 0.1879,
+        "both": 0.0654,
+        "neither": 0.5501,
+        "spread": 0.2532
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ]
+       ],
+       "points": 12726,
+       "correction_rate": 0.1759,
+       "shares": {
+        "points": 12726,
+        "gt_side": 0.1759,
+        "wrong_side": 0.1949,
+        "both": 0.0429,
+        "neither": 0.5864,
+        "spread": 0.2378
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        2.0,
+        null
+       ],
+       "merged_from": [
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 25119,
+       "correction_rate": 0.1734,
+       "shares": {
+        "points": 25119,
+        "gt_side": 0.1734,
+        "wrong_side": 0.0629,
+        "both": 0.0365,
+        "neither": 0.7272,
+        "spread": 0.0994
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.1772,
+      "points": 35256,
+      "shares": {
+       "points": 35256,
+       "gt_side": 0.1772,
+       "wrong_side": 0.1677,
+       "both": 0.0506,
+       "neither": 0.6046,
+       "spread": 0.2183
+      },
+      "roof": {
+       "points": 30365,
+       "gt_side": 0.1804,
+       "wrong_side": 0.1863,
+       "both": 0.0566,
+       "neither": 0.5767,
+       "spread": 0.2429
+      },
+      "wall": {
+       "points": 4891,
+       "gt_side": 0.1572,
+       "wrong_side": 0.0519,
+       "both": 0.0135,
+       "neither": 0.7773,
+       "spread": 0.0654
+      }
+     },
+     "below_1tau": {
+      "points": 940,
+      "shares": {
+       "points": 940,
+       "gt_side": 0.2064,
+       "wrong_side": 0.0628,
+       "both": 0.0436,
+       "neither": 0.6872,
+       "spread": 0.1064
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.6827602982521057
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -11505,7 +12588,159 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 140,
+       "correction_rate": 0.0214,
+       "shares": {
+        "points": 140,
+        "gt_side": 0.0214,
+        "wrong_side": 0.05,
+        "both": 0.0,
+        "neither": 0.9286,
+        "spread": 0.05
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 415,
+       "correction_rate": 0.1639,
+       "shares": {
+        "points": 415,
+        "gt_side": 0.1639,
+        "wrong_side": 0.0651,
+        "both": 0.0145,
+        "neither": 0.7566,
+        "spread": 0.0795
+       },
+       "under_10k": true
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        null
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 555,
+       "correction_rate": 0.1279,
+       "shares": {
+        "points": 555,
+        "gt_side": 0.1279,
+        "wrong_side": 0.0613,
+        "both": 0.0108,
+        "neither": 0.8,
+        "spread": 0.0721
+       },
+       "under_10k": true
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.0214,
+      "points": 140,
+      "shares": {
+       "points": 140,
+       "gt_side": 0.0214,
+       "wrong_side": 0.05,
+       "both": 0.0,
+       "neither": 0.9286,
+       "spread": 0.05
+      },
+      "roof": {
+       "points": 140,
+       "gt_side": 0.0214,
+       "wrong_side": 0.05,
+       "both": 0.0,
+       "neither": 0.9286,
+       "spread": 0.05
+      },
+      "wall": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "below_1tau": {
+      "points": 0,
+      "shares": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.10341712832450867
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -13617,7 +14852,178 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 18695,
+       "correction_rate": 0.0263,
+       "shares": {
+        "points": 18695,
+        "gt_side": 0.0263,
+        "wrong_side": 0.0186,
+        "both": 0.0041,
+        "neither": 0.9511,
+        "spread": 0.0226
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 97539,
+       "correction_rate": 0.0458,
+       "shares": {
+        "points": 97539,
+        "gt_side": 0.0458,
+        "wrong_side": 0.2001,
+        "both": 0.0098,
+        "neither": 0.7444,
+        "spread": 0.2099
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 10098,
+       "correction_rate": 0.0192,
+       "shares": {
+        "points": 10098,
+        "gt_side": 0.0192,
+        "wrong_side": 0.0168,
+        "both": 0.0017,
+        "neither": 0.9623,
+        "spread": 0.0185
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        null
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 106136,
+       "correction_rate": 0.0449,
+       "shares": {
+        "points": 106136,
+        "gt_side": 0.0449,
+        "wrong_side": 0.1855,
+        "both": 0.0096,
+        "neither": 0.76,
+        "spread": 0.1951
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.0263,
+      "points": 18695,
+      "shares": {
+       "points": 18695,
+       "gt_side": 0.0263,
+       "wrong_side": 0.0186,
+       "both": 0.0041,
+       "neither": 0.9511,
+       "spread": 0.0226
+      },
+      "roof": {
+       "points": 12734,
+       "gt_side": 0.0295,
+       "wrong_side": 0.0198,
+       "both": 0.0028,
+       "neither": 0.9479,
+       "spread": 0.0226
+      },
+      "wall": {
+       "points": 5961,
+       "gt_side": 0.0195,
+       "wrong_side": 0.0159,
+       "both": 0.0067,
+       "neither": 0.9579,
+       "spread": 0.0226
+      }
+     },
+     "below_1tau": {
+      "points": 76,
+      "shares": {
+       "points": 76,
+       "gt_side": 0.0132,
+       "wrong_side": 0.0132,
+       "both": 0.0,
+       "neither": 0.9737,
+       "spread": 0.0132
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.17595741152763367
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -15024,7 +16430,159 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직"
+     "status": "ok",
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 404,
+       "correction_rate": 0.0124,
+       "shares": {
+        "points": 404,
+        "gt_side": 0.0124,
+        "wrong_side": 0.0248,
+        "both": 0.0025,
+        "neither": 0.9604,
+        "spread": 0.0272
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 95138,
+       "correction_rate": 0.0185,
+       "shares": {
+        "points": 95138,
+        "gt_side": 0.0185,
+        "wrong_side": 0.1837,
+        "both": 0.0006,
+        "neither": 0.7972,
+        "spread": 0.1843
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        null
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 95542,
+       "correction_rate": 0.0185,
+       "shares": {
+        "points": 95542,
+        "gt_side": 0.0185,
+        "wrong_side": 0.1831,
+        "both": 0.0006,
+        "neither": 0.7979,
+        "spread": 0.1836
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.0124,
+      "points": 404,
+      "shares": {
+       "points": 404,
+       "gt_side": 0.0124,
+       "wrong_side": 0.0248,
+       "both": 0.0025,
+       "neither": 0.9604,
+       "spread": 0.0272
+      },
+      "roof": {
+       "points": 404,
+       "gt_side": 0.0124,
+       "wrong_side": 0.0248,
+       "both": 0.0025,
+       "neither": 0.9604,
+       "spread": 0.0272
+      },
+      "wall": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "below_1tau": {
+      "points": 0,
+      "shares": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.14701597392559052
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -17227,15 +18785,593 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직",
-     "sites": []
+     "status": "ok",
+     "sites": [
+      "B0_b10",
+      "B173nb_b10",
+      "R1rep_b10"
+     ],
+     "all_sites": true,
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 39735,
+       "correction_rate": 0.1927,
+       "shares": {
+        "points": 39735,
+        "gt_side": 0.1927,
+        "wrong_side": 0.1714,
+        "both": 0.0381,
+        "neither": 0.5979,
+        "spread": 0.2094
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ]
+       ],
+       "points": 24605,
+       "correction_rate": 0.1955,
+       "shares": {
+        "points": 24605,
+        "gt_side": 0.1955,
+        "wrong_side": 0.2174,
+        "both": 0.0379,
+        "neither": 0.5492,
+        "spread": 0.2553
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 17133,
+       "correction_rate": 0.3406,
+       "shares": {
+        "points": 17133,
+        "gt_side": 0.3406,
+        "wrong_side": 0.1309,
+        "both": 0.0458,
+        "neither": 0.4827,
+        "spread": 0.1767
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ]
+       ],
+       "points": 19436,
+       "correction_rate": 0.2651,
+       "shares": {
+        "points": 19436,
+        "gt_side": 0.2651,
+        "wrong_side": 0.0666,
+        "both": 0.0438,
+        "neither": 0.6244,
+        "spread": 0.1105
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "merged_from": [
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 102713,
+       "correction_rate": 0.0393,
+       "shares": {
+        "points": 102713,
+        "gt_side": 0.0393,
+        "wrong_side": 0.0623,
+        "both": 0.0059,
+        "neither": 0.8925,
+        "spread": 0.0682
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 39735,
+       "correction_rate": 0.1927,
+       "shares": {
+        "points": 39735,
+        "gt_side": 0.1927,
+        "wrong_side": 0.1714,
+        "both": 0.0381,
+        "neither": 0.5979,
+        "spread": 0.2094
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ]
+       ],
+       "points": 24605,
+       "correction_rate": 0.1955,
+       "shares": {
+        "points": 24605,
+        "gt_side": 0.1955,
+        "wrong_side": 0.2174,
+        "both": 0.0379,
+        "neither": 0.5492,
+        "spread": 0.2553
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        2.0,
+        3.0
+       ],
+       "merged_from": [
+        [
+         2.0,
+         3.0
+        ]
+       ],
+       "points": 12932,
+       "correction_rate": 0.3453,
+       "shares": {
+        "points": 12932,
+        "gt_side": 0.3453,
+        "wrong_side": 0.1064,
+        "both": 0.047,
+        "neither": 0.5013,
+        "spread": 0.1534
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        3.0,
+        8.0
+       ],
+       "merged_from": [
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ]
+       ],
+       "points": 23637,
+       "correction_rate": 0.276,
+       "shares": {
+        "points": 23637,
+        "gt_side": 0.276,
+        "wrong_side": 0.0915,
+        "both": 0.0435,
+        "neither": 0.589,
+        "spread": 0.135
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "merged_from": [
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 102713,
+       "correction_rate": 0.0393,
+       "shares": {
+        "points": 102713,
+        "gt_side": 0.0393,
+        "wrong_side": 0.0623,
+        "both": 0.0059,
+        "neither": 0.8925,
+        "spread": 0.0682
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.2246,
+      "points": 81473,
+      "shares": {
+       "points": 81473,
+       "gt_side": 0.2246,
+       "wrong_side": 0.1768,
+       "both": 0.0396,
+       "neither": 0.559,
+       "spread": 0.2164
+      },
+      "roof": {
+       "points": 59276,
+       "gt_side": 0.2354,
+       "wrong_side": 0.1825,
+       "both": 0.0462,
+       "neither": 0.5359,
+       "spread": 0.2287
+      },
+      "wall": {
+       "points": 22197,
+       "gt_side": 0.1958,
+       "wrong_side": 0.1615,
+       "both": 0.0222,
+       "neither": 0.6205,
+       "spread": 0.1837
+      }
+     },
+     "below_1tau": {
+      "points": 3366,
+      "shares": {
+       "points": 3366,
+       "gt_side": 0.2597,
+       "wrong_side": 0.1533,
+       "both": 0.0395,
+       "neither": 0.5475,
+       "spread": 0.1928
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.17595741152763367
     },
     "cdgs_LoD2_s0": {
      "key": "cdgs_official",
      "label": "CDGS 공식 확인",
      "role": "official",
-     "status": "아직",
-     "sites": []
+     "status": "ok",
+     "sites": [
+      "B0_b10"
+     ],
+     "all_sites": false,
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.1962,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.1962,
+        "wrong_side": 0.1097,
+        "both": 0.0258,
+        "neither": 0.6682,
+        "spread": 0.1355
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ]
+       ],
+       "points": 6101,
+       "correction_rate": 0.1952,
+       "shares": {
+        "points": 6101,
+        "gt_side": 0.1952,
+        "wrong_side": 0.1318,
+        "both": 0.0415,
+        "neither": 0.6315,
+        "spread": 0.1733
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 6456,
+       "correction_rate": 0.3643,
+       "shares": {
+        "points": 6456,
+        "gt_side": 0.3643,
+        "wrong_side": 0.0761,
+        "both": 0.0627,
+        "neither": 0.4969,
+        "spread": 0.1388
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ]
+       ],
+       "points": 4364,
+       "correction_rate": 0.4961,
+       "shares": {
+        "points": 4364,
+        "gt_side": 0.4961,
+        "wrong_side": 0.0261,
+        "both": 0.0117,
+        "neither": 0.4661,
+        "spread": 0.0378
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "merged_from": [
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 2023,
+       "correction_rate": 0.4335,
+       "shares": {
+        "points": 2023,
+        "gt_side": 0.4335,
+        "wrong_side": 0.0667,
+        "both": 0.0445,
+        "neither": 0.4553,
+        "spread": 0.1112
+       },
+       "under_10k": true
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.1962,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.1962,
+        "wrong_side": 0.1097,
+        "both": 0.0258,
+        "neither": 0.6682,
+        "spread": 0.1355
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ]
+       ],
+       "points": 6101,
+       "correction_rate": 0.1952,
+       "shares": {
+        "points": 6101,
+        "gt_side": 0.1952,
+        "wrong_side": 0.1318,
+        "both": 0.0415,
+        "neither": 0.6315,
+        "spread": 0.1733
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        2.0,
+        3.0
+       ],
+       "merged_from": [
+        [
+         2.0,
+         3.0
+        ]
+       ],
+       "points": 4719,
+       "correction_rate": 0.342,
+       "shares": {
+        "points": 4719,
+        "gt_side": 0.342,
+        "wrong_side": 0.0757,
+        "both": 0.0572,
+        "neither": 0.5251,
+        "spread": 0.1329
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        3.0,
+        8.0
+       ],
+       "merged_from": [
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ]
+       ],
+       "points": 6101,
+       "correction_rate": 0.4758,
+       "shares": {
+        "points": 6101,
+        "gt_side": 0.4758,
+        "wrong_side": 0.0406,
+        "both": 0.0305,
+        "neither": 0.453,
+        "spread": 0.0711
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "merged_from": [
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 2023,
+       "correction_rate": 0.4335,
+       "shares": {
+        "points": 2023,
+        "gt_side": 0.4335,
+        "wrong_side": 0.0667,
+        "both": 0.0445,
+        "neither": 0.4553,
+        "spread": 0.1112
+       },
+       "under_10k": true
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.2408,
+      "points": 24231,
+      "shares": {
+       "points": 24231,
+       "gt_side": 0.2408,
+       "wrong_side": 0.1063,
+       "both": 0.0396,
+       "neither": 0.6133,
+       "spread": 0.1459
+      },
+      "roof": {
+       "points": 13134,
+       "gt_side": 0.3807,
+       "wrong_side": 0.0624,
+       "both": 0.0624,
+       "neither": 0.4945,
+       "spread": 0.1248
+      },
+      "wall": {
+       "points": 11097,
+       "gt_side": 0.0752,
+       "wrong_side": 0.1583,
+       "both": 0.0125,
+       "neither": 0.754,
+       "spread": 0.1709
+      }
+     },
+     "below_1tau": {
+      "points": 2262,
+      "shares": {
+       "points": 2262,
+       "gt_side": 0.0508,
+       "wrong_side": 0.0738,
+       "both": 0.0159,
+       "neither": 0.8594,
+       "spread": 0.0897
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.19752371311187744
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -20080,8 +22216,165 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직",
-     "sites": []
+     "status": "ok",
+     "sites": [
+      "B0_b10",
+      "B173nb_b10",
+      "R1rep_b10"
+     ],
+     "all_sites": true,
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 739,
+       "correction_rate": 0.0758,
+       "shares": {
+        "points": 739,
+        "gt_side": 0.0758,
+        "wrong_side": 0.0365,
+        "both": 0.023,
+        "neither": 0.8647,
+        "spread": 0.0595
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 96195,
+       "correction_rate": 0.033,
+       "shares": {
+        "points": 96195,
+        "gt_side": 0.033,
+        "wrong_side": 0.102,
+        "both": 0.0057,
+        "neither": 0.8593,
+        "spread": 0.1077
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        null
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 96934,
+       "correction_rate": 0.0333,
+       "shares": {
+        "points": 96934,
+        "gt_side": 0.0333,
+        "wrong_side": 0.1015,
+        "both": 0.0059,
+        "neither": 0.8593,
+        "spread": 0.1074
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.0758,
+      "points": 739,
+      "shares": {
+       "points": 739,
+       "gt_side": 0.0758,
+       "wrong_side": 0.0365,
+       "both": 0.023,
+       "neither": 0.8647,
+       "spread": 0.0595
+      },
+      "roof": {
+       "points": 739,
+       "gt_side": 0.0758,
+       "wrong_side": 0.0365,
+       "both": 0.023,
+       "neither": 0.8647,
+       "spread": 0.0595
+      },
+      "wall": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "below_1tau": {
+      "points": 0,
+      "shares": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.14701597392559052
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -23105,15 +25398,498 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직",
-     "sites": []
+     "status": "ok",
+     "sites": [
+      "B0_b10",
+      "B173nb_b10",
+      "R1rep_b10"
+     ],
+     "all_sites": true,
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 39735,
+       "correction_rate": 0.1927,
+       "shares": {
+        "points": 39735,
+        "gt_side": 0.1927,
+        "wrong_side": 0.1714,
+        "both": 0.0381,
+        "neither": 0.5979,
+        "spread": 0.2094
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ]
+       ],
+       "points": 24605,
+       "correction_rate": 0.1955,
+       "shares": {
+        "points": 24605,
+        "gt_side": 0.1955,
+        "wrong_side": 0.2174,
+        "both": 0.0379,
+        "neither": 0.5492,
+        "spread": 0.2553
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        2.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 17133,
+       "correction_rate": 0.3406,
+       "shares": {
+        "points": 17133,
+        "gt_side": 0.3406,
+        "wrong_side": 0.1309,
+        "both": 0.0458,
+        "neither": 0.4827,
+        "spread": 0.1767
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        8.0
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ]
+       ],
+       "points": 19436,
+       "correction_rate": 0.2651,
+       "shares": {
+        "points": 19436,
+        "gt_side": 0.2651,
+        "wrong_side": 0.0666,
+        "both": 0.0438,
+        "neither": 0.6244,
+        "spread": 0.1105
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "merged_from": [
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 102713,
+       "correction_rate": 0.0393,
+       "shares": {
+        "points": 102713,
+        "gt_side": 0.0393,
+        "wrong_side": 0.0623,
+        "both": 0.0059,
+        "neither": 0.8925,
+        "spread": 0.0682
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 39735,
+       "correction_rate": 0.1927,
+       "shares": {
+        "points": 39735,
+        "gt_side": 0.1927,
+        "wrong_side": 0.1714,
+        "both": 0.0381,
+        "neither": 0.5979,
+        "spread": 0.2094
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        2.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ]
+       ],
+       "points": 24605,
+       "correction_rate": 0.1955,
+       "shares": {
+        "points": 24605,
+        "gt_side": 0.1955,
+        "wrong_side": 0.2174,
+        "both": 0.0379,
+        "neither": 0.5492,
+        "spread": 0.2553
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        2.0,
+        3.0
+       ],
+       "merged_from": [
+        [
+         2.0,
+         3.0
+        ]
+       ],
+       "points": 12932,
+       "correction_rate": 0.3453,
+       "shares": {
+        "points": 12932,
+        "gt_side": 0.3453,
+        "wrong_side": 0.1064,
+        "both": 0.047,
+        "neither": 0.5013,
+        "spread": 0.1534
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        3.0,
+        8.0
+       ],
+       "merged_from": [
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ]
+       ],
+       "points": 23637,
+       "correction_rate": 0.276,
+       "shares": {
+        "points": 23637,
+        "gt_side": 0.276,
+        "wrong_side": 0.0915,
+        "both": 0.0435,
+        "neither": 0.589,
+        "spread": 0.135
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        8.0,
+        null
+       ],
+       "merged_from": [
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 102713,
+       "correction_rate": 0.0393,
+       "shares": {
+        "points": 102713,
+        "gt_side": 0.0393,
+        "wrong_side": 0.0623,
+        "both": 0.0059,
+        "neither": 0.8925,
+        "spread": 0.0682
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.2246,
+      "points": 81473,
+      "shares": {
+       "points": 81473,
+       "gt_side": 0.2246,
+       "wrong_side": 0.1768,
+       "both": 0.0396,
+       "neither": 0.559,
+       "spread": 0.2164
+      },
+      "roof": {
+       "points": 59276,
+       "gt_side": 0.2354,
+       "wrong_side": 0.1825,
+       "both": 0.0462,
+       "neither": 0.5359,
+       "spread": 0.2287
+      },
+      "wall": {
+       "points": 22197,
+       "gt_side": 0.1958,
+       "wrong_side": 0.1615,
+       "both": 0.0222,
+       "neither": 0.6205,
+       "spread": 0.1837
+      }
+     },
+     "below_1tau": {
+      "points": 3366,
+      "shares": {
+       "points": 3366,
+       "gt_side": 0.2597,
+       "wrong_side": 0.1533,
+       "both": 0.0395,
+       "neither": 0.5475,
+       "spread": 0.1928
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.17595741152763367
     },
     "cdgs_LoD2_s0": {
      "key": "cdgs_official",
      "label": "CDGS 공식 확인",
      "role": "official",
-     "status": "아직",
-     "sites": []
+     "status": "ok",
+     "sites": [
+      "B0_b10"
+     ],
+     "all_sites": false,
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.1962,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.1962,
+        "wrong_side": 0.1097,
+        "both": 0.0258,
+        "neither": 0.6682,
+        "spread": 0.1355
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 12557,
+       "correction_rate": 0.2822,
+       "shares": {
+        "points": 12557,
+        "gt_side": 0.2822,
+        "wrong_side": 0.1031,
+        "both": 0.0524,
+        "neither": 0.5623,
+        "spread": 0.1555
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 6387,
+       "correction_rate": 0.4763,
+       "shares": {
+        "points": 6387,
+        "gt_side": 0.4763,
+        "wrong_side": 0.039,
+        "both": 0.0221,
+        "neither": 0.4627,
+        "spread": 0.0611
+       },
+       "under_10k": true
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        1.5
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ]
+       ],
+       "points": 11674,
+       "correction_rate": 0.1962,
+       "shares": {
+        "points": 11674,
+        "gt_side": 0.1962,
+        "wrong_side": 0.1097,
+        "both": 0.0258,
+        "neither": 0.6682,
+        "spread": 0.1355
+       },
+       "under_10k": false
+      },
+      {
+       "bin": [
+        1.5,
+        null
+       ],
+       "merged_from": [
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 18944,
+       "correction_rate": 0.3476,
+       "shares": {
+        "points": 18944,
+        "gt_side": 0.3476,
+        "wrong_side": 0.0815,
+        "both": 0.0422,
+        "neither": 0.5287,
+        "spread": 0.1237
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.2408,
+      "points": 24231,
+      "shares": {
+       "points": 24231,
+       "gt_side": 0.2408,
+       "wrong_side": 0.1063,
+       "both": 0.0396,
+       "neither": 0.6133,
+       "spread": 0.1459
+      },
+      "roof": {
+       "points": 13134,
+       "gt_side": 0.3807,
+       "wrong_side": 0.0624,
+       "both": 0.0624,
+       "neither": 0.4945,
+       "spread": 0.1248
+      },
+      "wall": {
+       "points": 11097,
+       "gt_side": 0.0752,
+       "wrong_side": 0.1583,
+       "both": 0.0125,
+       "neither": 0.754,
+       "spread": 0.1709
+      }
+     },
+     "below_1tau": {
+      "points": 2262,
+      "shares": {
+       "points": 2262,
+       "gt_side": 0.0508,
+       "wrong_side": 0.0738,
+       "both": 0.0159,
+       "neither": 0.8594,
+       "spread": 0.0897
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.19752371311187744
     },
     "imgonly_s0": {
      "key": "imgonly0",
@@ -25775,8 +28551,166 @@
      "key": "cdgs",
      "label": "CDGS 변형",
      "role": "comp",
-     "status": "아직",
-     "sites": []
+     "status": "ok",
+     "sites": [
+      "B0_b10",
+      "B173nb_b10",
+      "B173_b0",
+      "R1rep_b10"
+     ],
+     "all_sites": true,
+     "curve": [
+      {
+       "bin": [
+        1.0,
+        4.0
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ]
+       ],
+       "points": 1143,
+       "correction_rate": 0.0534,
+       "shares": {
+        "points": 1143,
+        "gt_side": 0.0534,
+        "wrong_side": 0.0324,
+        "both": 0.0157,
+        "neither": 0.8985,
+        "spread": 0.0481
+       },
+       "under_10k": true
+      },
+      {
+       "bin": [
+        4.0,
+        null
+       ],
+       "merged_from": [
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 191333,
+       "correction_rate": 0.0258,
+       "shares": {
+        "points": 191333,
+        "gt_side": 0.0258,
+        "wrong_side": 0.1426,
+        "both": 0.0032,
+        "neither": 0.8284,
+        "spread": 0.1458
+       },
+       "under_10k": false
+      }
+     ],
+     "curve_stage1_groups": [
+      {
+       "bin": [
+        1.0,
+        null
+       ],
+       "merged_from": [
+        [
+         1.0,
+         1.5
+        ],
+        [
+         1.5,
+         2.0
+        ],
+        [
+         2.0,
+         3.0
+        ],
+        [
+         3.0,
+         4.0
+        ],
+        [
+         4.0,
+         8.0
+        ],
+        [
+         8.0,
+         null
+        ]
+       ],
+       "points": 192476,
+       "correction_rate": 0.0259,
+       "shares": {
+        "points": 192476,
+        "gt_side": 0.0259,
+        "wrong_side": 0.142,
+        "both": 0.0032,
+        "neither": 0.8288,
+        "spread": 0.1452
+       },
+       "under_10k": false
+      }
+     ],
+     "corr_1to4": {
+      "rate": 0.0534,
+      "points": 1143,
+      "shares": {
+       "points": 1143,
+       "gt_side": 0.0534,
+       "wrong_side": 0.0324,
+       "both": 0.0157,
+       "neither": 0.8985,
+       "spread": 0.0481
+      },
+      "roof": {
+       "points": 1143,
+       "gt_side": 0.0534,
+       "wrong_side": 0.0324,
+       "both": 0.0157,
+       "neither": 0.8985,
+       "spread": 0.0481
+      },
+      "wall": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "below_1tau": {
+      "points": 0,
+      "shares": {
+       "points": 0,
+       "gt_side": null,
+       "wrong_side": null,
+       "both": null,
+       "neither": null,
+       "spread": null
+      }
+     },
+     "boundary_tau": null,
+     "boundary_roof_m": null,
+     "boundary_stage1_groups_tau": null,
+     "roof_tau": 0.14701597392559052
     },
     "imgonly_s0": {
      "key": "imgonly0",

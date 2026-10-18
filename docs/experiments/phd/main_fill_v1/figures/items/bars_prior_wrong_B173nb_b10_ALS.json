@@ -1,0 +1,141 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "bars_prior_wrong_B173nb_b10_ALS",
+ "item": "사전 정보가 틀린 곳",
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "unit": "B173 주변 · 항공 LiDAR",
+ "report_only": false,
+ "numbers": "단위 전체",
+ "panels": [
+  {
+   "metric": "prior_error_inflow",
+   "ko": "과거 형상 유입률",
+   "region": "코드 11",
+   "unit": "%",
+   "values": {
+    "m0": {
+     "value": 0.0002,
+     "n": 96117
+    },
+    "m1": {
+     "value": 0.0003,
+     "n": 96117
+    },
+    "prior": {
+     "value": 0.9996,
+     "n": 96117
+    },
+    "twodgs": {
+     "value": 0.0227,
+     "n": 96117
+    },
+    "geogs": {
+     "value": 0.0308,
+     "n": 96117
+    },
+    "mvsfuse": {
+     "value": 0.0308,
+     "n": 96117
+    },
+    "cdgs": {
+     "value": 0.1076,
+     "n": 96117
+    }
+   },
+   "method_mean": 0.00025,
+   "criterion": 0.01635593103433736,
+   "readings": {
+    "twodgs": {
+     "comparator": "2차원 가우시안 스플래팅",
+     "value": 0.0227,
+     "n": 96117,
+     "mean": 0.00025,
+     "diff": -0.02245,
+     "criterion": 0.01635593103433736,
+     "parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.0001979898987322332,
+      "three_points": 3.1211960423234184e-05
+     },
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "deterministic": false,
+     "word": "과거 형상을 덜 들였다"
+    },
+    "geogs": {
+     "comparator": "GeoGS",
+     "value": 0.0308,
+     "n": 96117,
+     "mean": 0.00025,
+     "diff": -0.03055,
+     "criterion": 0.01635593103433736,
+     "parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.0001979898987322332,
+      "three_points": 3.1211960423234184e-05
+     },
+     "grade": "가능, 근거 불완전",
+     "side": 1,
+     "deterministic": false,
+     "word": "과거 형상을 덜 들였다"
+    },
+    "mvsfuse": {
+     "comparator": "MVS 기반 결합",
+     "value": 0.0308,
+     "n": 96117,
+     "mean": 0.00025,
+     "diff": -0.03055,
+     "criterion": 0.01635593103433736,
+     "parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.0001979898987322332,
+      "three_points": 3.1211960423234184e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": true,
+     "word": "과거 형상을 덜 들였다"
+    },
+    "cdgs": {
+     "comparator": "CDGS 변형",
+     "value": 0.1076,
+     "n": 96117,
+     "mean": 0.00025,
+     "diff": -0.10735,
+     "criterion": 0.01635593103433736,
+     "parts": {
+      "pooled": 0.01635593103433736,
+      "unit": 0.0001979898987322332,
+      "three_points": 3.1211960423234184e-05
+     },
+     "grade": "확인",
+     "side": 1,
+     "deterministic": false,
+     "word": "과거 형상을 덜 들였다"
+    }
+   },
+   "row": null
+  }
+ ],
+ "scientific_verdict": null,
+ "title": "본 방법은 과거 형상을 비교 방법 넷보다 덜 들였다 — B173 주변 · 항공 LiDAR",
+ "title_kind": "statement written after viewing (2026-10-19 03:42 KST)",
+ "panel_status": {
+  "m0": "ok",
+  "m1": "ok",
+  "prior": "ok",
+  "twodgs": "ok",
+  "geogs": "ok",
+  "mvsfuse": "ok",
+  "cdgs": "ok"
+ },
+ "note": "띠 = 본 방법 두 씨앗 평균 ± 기준, 점선 = ± 기준의 두 배(씨앗 하나인 비교 방법의 '확인'). 숫자는 단위 전체의 값.",
+ "rule7": {
+  "result": "통과",
+  "note": "막대와 띠, 칸 아래 비교마다의 읽기 줄이 제목 문장과 같다(제목을 가린 판에서 같은 말을 할 수 있다).",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "항목마다 여덟 단위를 한 장에 모은 판(제목을 가림)으로 점검"
+ }
+}

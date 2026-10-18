@@ -1,7 +1,7 @@
 {
  "task_id": "PHD-MAIN-FILL-v1",
  "component": "undecidable",
- "written": "2026-10-15 23:10:43 KST",
+ "written": "2026-10-19 03:29:27 KST",
  "mark": "이 발주에서 냄",
  "definitions": {
   "file": "SL/prep/undecidable/definitions.json",
@@ -272,7 +272,43 @@
      "cdgs": {
       "ko": "CDGS 변형",
       "result": "cdgsnofit_LoD2_s0",
-      "status": "아직"
+      "status": "ok",
+      "inside_premise": {
+       "n": 2841,
+       "inflow": 0.2742,
+       "gt_side": 0.1038,
+       "wrong_side": 0.2622,
+       "both": 0.012,
+       "neither": 0.622
+      },
+      "inside_place_all_code3": {
+       "n": 6794,
+       "inflow": 0.1756,
+       "gt_side": 0.1054,
+       "wrong_side": 0.1609,
+       "both": 0.0147,
+       "neither": 0.719
+      },
+      "band": {
+       "c2": {
+        "n": 6930,
+        "le_0.2": 0.5618,
+        "le_0.5": 0.9053
+       },
+       "c4": {
+        "n": 179,
+        "le_0.2": 0.4413,
+        "le_0.5": 0.5475
+       },
+       "c13": {
+        "n": 17,
+        "inflow": 0.0,
+        "gt_side": 0.1176,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 0.8824
+       }
+      }
      },
      "imgonly_s0": {
       "ko": "영상만 씨앗 0",
@@ -854,7 +890,43 @@
      "cdgs": {
       "ko": "CDGS 변형",
       "result": "cdgsnofit_ALS_s0",
-      "status": "아직"
+      "status": "ok",
+      "inside_premise": {
+       "n": 1079,
+       "inflow": 0.0361,
+       "gt_side": 0.0417,
+       "wrong_side": 0.0315,
+       "both": 0.0046,
+       "neither": 0.9222
+      },
+      "inside_place_all_code3": {
+       "n": 6585,
+       "inflow": 0.077,
+       "gt_side": 0.0409,
+       "wrong_side": 0.073,
+       "both": 0.0039,
+       "neither": 0.8822
+      },
+      "band": {
+       "c2": {
+        "n": 960,
+        "le_0.2": 0.574,
+        "le_0.5": 0.926
+       },
+       "c4": {
+        "n": 111,
+        "le_0.2": 0.3063,
+        "le_0.5": 0.7027
+       },
+       "c13": {
+        "n": 2,
+        "inflow": 0.0,
+        "gt_side": 0.0,
+        "wrong_side": 0.0,
+        "both": 0.0,
+        "neither": 1.0
+       }
+      }
      },
      "imgonly_s0": {
       "ko": "영상만 씨앗 0",
@@ -1442,7 +1514,43 @@
      "cdgs": {
       "ko": "CDGS 변형",
       "result": "cdgsnofit_ALS_s0",
-      "status": "아직"
+      "status": "ok",
+      "inside_premise": {
+       "n": 156,
+       "inflow": 0.391,
+       "gt_side": 0.5833,
+       "wrong_side": 0.0,
+       "both": 0.391,
+       "neither": 0.0256
+      },
+      "inside_place_all_code3": {
+       "n": 379,
+       "inflow": 0.4195,
+       "gt_side": 0.3193,
+       "wrong_side": 0.2111,
+       "both": 0.2084,
+       "neither": 0.2612
+      },
+      "band": {
+       "c2": {
+        "n": 451,
+        "le_0.2": 0.4523,
+        "le_0.5": 0.9734
+       },
+       "c4": {
+        "n": 20,
+        "le_0.2": 0.8,
+        "le_0.5": 1.0
+       },
+       "c13": {
+        "n": 0,
+        "inflow": null,
+        "gt_side": null,
+        "wrong_side": null,
+        "both": null,
+        "neither": null
+       }
+      }
      },
      "imgonly_s0": {
       "ko": "영상만 씨앗 0",

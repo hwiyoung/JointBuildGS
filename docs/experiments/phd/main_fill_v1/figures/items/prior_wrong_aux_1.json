@@ -1,0 +1,170 @@
+{
+ "task_id": "PHD-MAIN-FILL-v1",
+ "component": "figures",
+ "key": "prior_wrong_aux_1",
+ "item": "사전 정보가 틀린 곳",
+ "figure": 1,
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "auxiliary": true,
+ "mark": "이 발주에서 냄",
+ "place": {
+  "source": "sections_v1 R1_low_roof (12 m)",
+  "centre": [
+   22.983430165905766,
+   28.576477565814496,
+   -29.493468147884336
+  ],
+  "t": [
+   0.3420201433256688,
+   0.9396926207859083
+  ],
+  "L": 12.0,
+  "half_width_m": 0.25,
+  "view_s": [
+   -6.0,
+   6.0
+  ],
+  "z_range": [
+   -37.19858019244471,
+   -26.493468147884336
+  ],
+  "z_range_rule": [
+   -33.75978825725171,
+   -26.493468147884336
+  ],
+  "vertical_exaggeration": 1.0,
+  "band": "|s| ≤ L/2 (보이는 범위 안), |d| ≤ 0.25 m, 솎은 참값 행",
+  "band_codes_rows": {
+   "0": 31,
+   "2": 344,
+   "3": 237,
+   "11": 84,
+   "12": 83
+  },
+  "counted_rows": 84,
+  "counted": "사전 정보 오류(코드 11)"
+ },
+ "value_name": "과거 형상 유입률",
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "value": {
+    "value": 0.0,
+    "n": 84,
+    "shares": {
+     "points": 84,
+     "gt_side": 0.881,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.119,
+     "spread": 0.0
+    }
+   },
+   "unit_wide": {
+    "value": 0.0851,
+    "n": 54345
+   },
+   "segments": 2132
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "value": {
+    "value": 0.0,
+    "n": 84,
+    "shares": {
+     "points": 84,
+     "gt_side": 1.0,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.0,
+     "spread": 0.0
+    }
+   },
+   "unit_wide": {
+    "value": 0.1444,
+    "n": 54345
+   },
+   "segments": 2749
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "value": {
+    "value": 0.2976,
+    "n": 84,
+    "shares": {
+     "points": 84,
+     "gt_side": 0.2381,
+     "wrong_side": 0.2976,
+     "both": 0.0,
+     "neither": 0.4643,
+     "spread": 0.2976
+    }
+   },
+   "unit_wide": {
+    "value": 0.432,
+    "n": 54345
+   },
+   "segments": 2161
+  }
+ },
+ "references": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "value": {
+    "value": 1.0,
+    "n": 84,
+    "shares": {
+     "points": 84,
+     "gt_side": 0.0,
+     "wrong_side": 0.9881,
+     "both": 0.0119,
+     "neither": 0.0,
+     "spread": 1.0
+    }
+   },
+   "unit_wide": {
+    "value": 0.9939,
+    "n": 54345
+   }
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "value": {
+    "value": 0.0,
+    "n": 84,
+    "shares": {
+     "points": 84,
+     "gt_side": 0.869,
+     "wrong_side": 0.0,
+     "both": 0.0,
+     "neither": 0.131,
+     "spread": 0.0
+    }
+   },
+   "unit_wide": {
+    "value": 0.0676,
+    "n": 54345
+   }
+  },
+  "gt_points_in_slab": 7220
+ },
+ "scientific_verdict": null,
+ "title": "LoD2가 1.27 m 위에 그린 낮은 지붕의 옛 면은 본 방법과 2차원 가우시안 스플래팅에 남지 않았고 GeoGS에는 일부 남았다(참값 84점, 표본 부족) — R1 LoD2 (보조) · 1단계 정의: 두 자료 모두 불분명",
+ "title_kind": "statement written after viewing (2026-10-15 23:52 KST)",
+ "panel_status": {
+  "본 방법": "ok",
+  "2차원 가우시안 스플래팅": "ok",
+  "GeoGS": "ok"
+ },
+ "foot": "이 자리(단면 띠 12 m × 0.5 m)의 사전 정보 오류(코드 11) 참값 84점에서 결과 면이 틀린 쪽에 선 몫(과거 형상 유입률): 본 방법 (씨앗 0) 0.0 %(씨앗 1: 0.0 %), 2차원 가우시안 스플래팅 0.0 %, GeoGS 29.8 %; 학습 전 사전 정보 100.0 %. 100점 미만이라 표본 부족이다(9.1절). 단위 전체(R1 LoD2): 본 방법 (씨앗 0) 8.5 %, 2차원 가우시안 스플래팅 14.4 %, GeoGS 43.2 %, 학습 전 사전 정보 99.4 %. 회색 굵은 선 = 학습 전 사전 정보, 검은 점 = 이 값을 센 참값 점(솎은 것), 연한 회색 점 = 그 밖의 참값(단면에서 0.25 m 안), 파랑 = 결과 메시의 단면. 이 자리의 LoD2는 지금 지붕보다 약 1.27 m 위에 있다(R1 LoD2 지붕 τ 0.68 m의 1.85배). 사전 정보 오류이지만 어긋남이 허용 오차의 한 배에서 네 배 사이라 '사전 정보가 조금 틀린 곳'에도 든다. 이 단면은 1단계에서 '두 자료 모두 불분명'의 자리로 정한 것이다(앞 발주 그림의 이름, 사용자 결정 10-15): 같은 지붕에서 영상은 비스듬한 면을 낸다.",
+ "rule7": {
+  "result": "통과",
+  "note": "GeoGS 칸에서만 결과 면이 LoD2 계단 면을 따라가고(29.8 %), 다른 두 칸은 그 면을 떠났다. 84점 표본 부족은 숫자 줄에 있다.",
+  "checked": "2026-10-15 23:58 KST",
+  "how": "SL/work/figures/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

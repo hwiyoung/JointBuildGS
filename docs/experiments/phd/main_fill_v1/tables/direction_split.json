@@ -1,7 +1,7 @@
 {
  "task_id": "PHD-MAIN-FILL-v1",
  "component": "direction",
- "written": "2026-10-15 21:07:53 KST",
+ "written": "2026-10-19 03:37:05 KST",
  "definitions": "SL/prep/direction/definitions.json",
  "rule": "  python direction_split.py      -> SL/tables/direction_split.json, .md",
  "split81": {
@@ -388,13 +388,127 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.1962
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.2203
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0503
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.2404
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.1252
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.3141
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.0923
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.096
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.0789
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.1429
+     }
+    }
    },
    "cdgs_LoD2_s0": {
     "key": "cdgs_official",
     "label": "CDGS 공식 확인",
     "role": "official",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14303,
+      "inflow": 0.0638
+     },
+     "roof": {
+      "points": 12276,
+      "inflow": 0.0584
+     },
+     "wall": {
+      "points": 2027,
+      "inflow": 0.0962
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18577,
+      "inflow": 0.1731
+     },
+     "roof": {
+      "points": 7245,
+      "inflow": 0.1811
+     },
+     "wall": {
+      "points": 11332,
+      "inflow": 0.168
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 130,
+      "inflow": 0.2615
+     },
+     "roof": {
+      "points": 125,
+      "inflow": 0.272
+     },
+     "wall": {
+      "points": 5,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 38,
+      "inflow": 0.2632
+     },
+     "roof": {
+      "points": 17,
+      "inflow": 0.2941
+     },
+     "wall": {
+      "points": 21,
+      "inflow": 0.2381
+     }
+    }
    },
    "judgefuse_LoD2": {
     "key": "judgefuse",
@@ -843,7 +957,64 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 244,
+      "inflow": 0.0861
+     },
+     "roof": {
+      "points": 244,
+      "inflow": 0.0861
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 18,
+      "inflow": 0.3889
+     },
+     "roof": {
+      "points": 18,
+      "inflow": 0.3889
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
    },
    "judgefuse_ALS": {
     "key": "judgefuse",
@@ -1292,7 +1463,64 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 14191,
+      "inflow": 0.2256
+     },
+     "roof": {
+      "points": 13577,
+      "inflow": 0.2317
+     },
+     "wall": {
+      "points": 614,
+      "inflow": 0.0896
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 105572,
+      "inflow": 0.0701
+     },
+     "roof": {
+      "points": 99797,
+      "inflow": 0.0682
+     },
+     "wall": {
+      "points": 5775,
+      "inflow": 0.1023
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 111,
+      "inflow": 0.0721
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 103,
+      "inflow": 0.0777
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 260,
+      "inflow": 0.1308
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0217
+     },
+     "wall": {
+      "points": 214,
+      "inflow": 0.1542
+     }
+    }
    },
    "judgefuse_LoD2": {
     "key": "judgefuse",
@@ -1741,7 +1969,64 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 938,
+      "inflow": 0.0149
+     },
+     "roof": {
+      "points": 938,
+      "inflow": 0.0149
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 95179,
+      "inflow": 0.1085
+     },
+     "roof": {
+      "points": 95179,
+      "inflow": 0.1085
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 2,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 51,
+      "inflow": 0.1569
+     },
+     "roof": {
+      "points": 51,
+      "inflow": 0.1569
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
    },
    "judgefuse_ALS": {
     "key": "judgefuse",
@@ -2190,7 +2475,64 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 41175,
+      "inflow": 0.1957
+     },
+     "roof": {
+      "points": 37257,
+      "inflow": 0.2133
+     },
+     "wall": {
+      "points": 3918,
+      "inflow": 0.0286
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 13170,
+      "inflow": 0.1141
+     },
+     "roof": {
+      "points": 12100,
+      "inflow": 0.1066
+     },
+     "wall": {
+      "points": 1070,
+      "inflow": 0.1991
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 177,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 175,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 2,
+      "inflow": 0.0
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 675,
+      "inflow": 0.0267
+     },
+     "roof": {
+      "points": 652,
+      "inflow": 0.0276
+     },
+     "wall": {
+      "points": 23,
+      "inflow": 0.0
+     }
+    }
    },
    "judgefuse_LoD2": {
     "key": "judgefuse",
@@ -2639,7 +2981,64 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 486,
+      "inflow": 0.0782
+     },
+     "roof": {
+      "points": 486,
+      "inflow": 0.0782
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 69,
+      "inflow": 0.029
+     },
+     "roof": {
+      "points": 69,
+      "inflow": 0.029
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 26,
+      "inflow": 0.0769
+     },
+     "roof": {
+      "points": 26,
+      "inflow": 0.0769
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "roof": {
+      "points": 4,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
    },
    "judgefuse_ALS": {
     "key": "judgefuse",
@@ -3088,7 +3487,64 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 12473,
+      "inflow": 0.0243
+     },
+     "roof": {
+      "points": 11849,
+      "inflow": 0.0237
+     },
+     "wall": {
+      "points": 624,
+      "inflow": 0.0353
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 103837,
+      "inflow": 0.1983
+     },
+     "roof": {
+      "points": 98407,
+      "inflow": 0.2081
+     },
+     "wall": {
+      "points": 5430,
+      "inflow": 0.0214
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 43,
+      "inflow": 0.0698
+     },
+     "roof": {
+      "points": 8,
+      "inflow": 0.0
+     },
+     "wall": {
+      "points": 35,
+      "inflow": 0.0857
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 167,
+      "inflow": 0.0719
+     },
+     "roof": {
+      "points": 46,
+      "inflow": 0.0435
+     },
+     "wall": {
+      "points": 121,
+      "inflow": 0.0826
+     }
+    }
    },
    "judgefuse_LoD2": {
     "key": "judgefuse",
@@ -3537,7 +3993,64 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_stage3": false,
+    "11_grown": {
+     "all": {
+      "points": 801,
+      "inflow": 0.0237
+     },
+     "roof": {
+      "points": 801,
+      "inflow": 0.0237
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "11_shrunk": {
+     "all": {
+      "points": 94741,
+      "inflow": 0.185
+     },
+     "roof": {
+      "points": 94741,
+      "inflow": 0.185
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_grown": {
+     "all": {
+      "points": 0,
+      "inflow": null
+     },
+     "roof": {
+      "points": 0,
+      "inflow": null
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    },
+    "13_shrunk": {
+     "all": {
+      "points": 14,
+      "inflow": 0.4286
+     },
+     "roof": {
+      "points": 14,
+      "inflow": 0.4286
+     },
+     "wall": {
+      "points": 0,
+      "inflow": null
+     }
+    }
    },
    "judgefuse_ALS": {
     "key": "judgefuse",
@@ -3672,13 +4185,39 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_split82": false,
+    "real_change": {
+     "points": 296,
+     "inflow": 0.152
+    },
+    "representation": {
+     "points": 17223,
+     "inflow": 0.1886
+    },
+    "undecided": {
+     "points": 15361,
+     "inflow": 0.259
+    }
    },
    "cdgs_LoD2_s0": {
     "key": "cdgs_official",
     "label": "CDGS 공식 확인",
     "role": "official",
-    "status": "아직"
+    "status": "ok",
+    "in_split82": false,
+    "real_change": {
+     "points": 296,
+     "inflow": 0.1014
+    },
+    "representation": {
+     "points": 17223,
+     "inflow": 0.0983
+    },
+    "undecided": {
+     "points": 15361,
+     "inflow": 0.1566
+    }
    }
   },
   "B173nb_b10": {
@@ -3743,7 +4282,20 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_split82": false,
+    "real_change": {
+     "points": 95157,
+     "inflow": 0.0692
+    },
+    "representation": {
+     "points": 9760,
+     "inflow": 0.2785
+    },
+    "undecided": {
+     "points": 14846,
+     "inflow": 0.0872
+    }
    }
   },
   "R1rep_b10": {
@@ -3808,7 +4360,20 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_split82": false,
+    "real_change": {
+     "points": 1067,
+     "inflow": 0.1022
+    },
+    "representation": {
+     "points": 35402,
+     "inflow": 0.2111
+    },
+    "undecided": {
+     "points": 17876,
+     "inflow": 0.1108
+    }
    }
   },
   "B173_b0": {
@@ -3873,7 +4438,20 @@
     "key": "cdgs",
     "label": "CDGS 변형",
     "role": "comp",
-    "status": "아직"
+    "status": "ok",
+    "in_split82": false,
+    "real_change": {
+     "points": 95263,
+     "inflow": 0.2093
+    },
+    "representation": {
+     "points": 6867,
+     "inflow": 0.0258
+    },
+    "undecided": {
+     "points": 14180,
+     "inflow": 0.0549
+    }
    }
   }
  },
