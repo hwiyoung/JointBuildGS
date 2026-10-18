@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "공통 (order 5.6)",
- "made": "2026-10-16 10:29:33 KST",
+ "made": "2026-10-19 02:53:20 KST",
  "script": "scripts/phd/main_numbers_v1/common_cfg.py",
  "columns": [
   "B0_b10/LoD2",
@@ -1171,92 +1171,126 @@
   },
   "CDGS": {
    "B0_b10/LoD2": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "1회 · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 켬(공식 기본값); 후처리 조각 TSDF · 공식 확인 1회 · 끝남(어댑터 v2, 크기 맞추기)",
+    "attempts": 1,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 켬(공식 기본값)",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: B0_b10/cdgsnofit_LoD2_s0; SL/runs/B0_b10/cdgsnofit_LoD2_s0/receipt.json"
    },
    "B0_b10/ALS": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "1회 · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 끔; 후처리 조각 TSDF",
+    "attempts": 1,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 끔",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: B0_b10/cdgsnofit_ALS_s0; SL/runs/B0_b10/cdgsnofit_ALS_s0/receipt.json"
    },
    "B173nb_b10/LoD2": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "2회(일부러 멈춤 1) · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 끔; debug 켠 첫 판을 일부러 멈춤 1; 후처리 조각 TSDF",
+    "attempts": 2,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 끔",
+     "debug 켠 첫 판을 일부러 멈춤 1",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: B173nb_b10/cdgsnofit_LoD2_s0; SL/runs/B173nb_b10/cdgsnofit_LoD2_s0/receipt.json"
    },
    "B173nb_b10/ALS": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "2회(일부러 멈춤 1) · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 끔; debug 켠 첫 판을 일부러 멈춤 1; 후처리 조각 TSDF",
+    "attempts": 2,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 끔",
+     "debug 켠 첫 판을 일부러 멈춤 1",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: B173nb_b10/cdgsnofit_ALS_s0; SL/runs/B173nb_b10/cdgsnofit_ALS_s0/receipt.json"
    },
    "R1rep_b10/LoD2": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "1회 · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 끔; 후처리 조각 TSDF",
+    "attempts": 1,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 끔",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: R1rep_b10/cdgsnofit_LoD2_s0; SL/runs/R1rep_b10/cdgsnofit_LoD2_s0/receipt.json"
    },
    "R1rep_b10/ALS": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "1회 · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 끔; 후처리 조각 TSDF",
+    "attempts": 1,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 끔",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: R1rep_b10/cdgsnofit_ALS_s0; SL/runs/R1rep_b10/cdgsnofit_ALS_s0/receipt.json"
    },
    "B173_b0/LoD2": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "1회 · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 끔; 후처리 조각 TSDF",
+    "attempts": 1,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 끔",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: B173_b0/cdgsnofit_LoD2_s0; SL/runs/B173_b0/cdgsnofit_LoD2_s0/receipt.json"
    },
    "B173_b0/ALS": {
-    "text": "채우기 일 1·9",
-    "attempts": 0,
+    "text": "1회 · 끝남 · CDGS db853c1 + 어댑터 v3(크기 맞추기 생략) · debug 끔; 후처리 조각 TSDF",
+    "attempts": 1,
     "states": [
-     "채우기"
+     "PASS"
     ],
     "codes": [
-     "채우기(PHD-MAIN-FILL-v1)"
+     "CDGS db853c1 + 어댑터 v3(크기 맞추기 생략)"
     ],
-    "notes": []
+    "notes": [
+     "debug 끔",
+     "후처리 조각 TSDF"
+    ],
+    "src": "SL/jobs/state.json: B173_b0/cdgsnofit_ALS_s0; SL/runs/B173_b0/cdgsnofit_ALS_s0/receipt.json"
    },
    "conds": {
     "text": "—",

@@ -1,8 +1,8 @@
 # 반올림 경계의 cm 값 (PHD-MAIN-NUMBERS-v1)
 
-- 만든 때 2026-10-16 10:35:10 KST, 스크립트 `scripts/phd/main_numbers_v1/cm_edges.py`.
+- 만든 때 2026-10-19 02:53:21 KST, 스크립트 `scripts/phd/main_numbers_v1/cm_edges.py`.
 - 측정 파일은 NMAD와 치우침을 m 단위 소수 넷째 자리로 저장한다. 그래서 x.x5 cm로 저장된 값은 소수 첫째 자리에서 어느 쪽으로도 반올림될 수 있다. 이런 값은 측정 행(같은 이름의 .npz)에서 같은 식(치우침 = 중앙값, NMAD = 1.4826 × |x − 중앙값|의 중앙값)으로 반올림 전 값을 다시 구했고, 표와 숫자표는 그 값을 쓴다[새로 셈].
-- 값 20개 가운데 소수 첫째 자리가 저장값과 달라지는 것은 13개다.
+- 값 23개 가운데 소수 첫째 자리가 저장값과 달라지는 것은 16개다.
 
 | 출처 (측정 파일: 키) | 저장값 (cm) | 반올림 전 (cm) | 측정 행 | 첫째 자리: 저장값 → 반올림 전 | 쓰인 표 |
 |---|---:|---:|---:|---|---|
@@ -26,3 +26,6 @@
 | SF/measure/B0_b10/LoD2__trust_LoD2_fix1.json: condition3.new.nmad | 12.25 | 12.2485 | 514 | 12.3 → 12.2 (달라짐) | t71 |
 | SF/measure/B173_b0/LoD2__prop_LoD2_s0.json: condition3.new.bias | 5.05 | 5.0520 | 781 | 5.1 → 5.1 | t75 |
 | SF/measure/R1rep_b10/LoD2__trust_LoD2_fix1.json: condition3.new.bias | 0.05 | 0.0454 | 74,501 | 0.1 → 0.0 (달라짐) | t71 |
+| SL/measure/B173_b0/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad | 62.05 | 62.0486 | 4 | 62.1 → 62.0 (달라짐) | t75 |
+| SL/measure/B173nb_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad | 39.65 | 39.6474 | 18,543 | 39.7 → 39.6 (달라짐) | t71 |
+| SL/measure/R1rep_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.nmad | 76.15 | 76.1460 | 18,885 | 76.2 → 76.1 (달라짐) | t71 |

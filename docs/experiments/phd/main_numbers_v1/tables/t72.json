@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "7.2 (order 5.4)",
- "made": "2026-10-16 10:29:32 KST",
+ "made": "2026-10-19 02:53:18 KST",
  "script": "scripts/phd/main_numbers_v1/t72.py",
  "rows": [
   {
@@ -196,6 +196,32 @@
      "wrong_release": 107.0,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 65.687,
+    "patches": 1051,
+    "correct": 0.8686954800797723,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.13130451992022776,
+    "undetermined": 0.030447424909038318,
+    "propagated": 0.9333962580114786,
+    "propagated_correct": 0.9184498956158664,
+    "propagated_area_m2": 61.312,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B0_b10.LoD2.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 5.5,
+    "patches": 88,
+    "correct": 0.7954545454545454,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.20454545454545456,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B0_b10.LoD2.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "B0_b10/ALS": {
@@ -317,6 +343,32 @@
      "wrong_release": 3.276,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 0.786,
+    "patches": 12,
+    "correct": 0.7379134860050891,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.2620865139949109,
+    "undetermined": 0.23918575063613232,
+    "propagated": 0.5597964376590331,
+    "propagated_correct": 1.0,
+    "propagated_area_m2": 0.44,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B0_b10.ALS.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 19.785,
+    "patches": 277,
+    "correct": 0.8764720748041446,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.12352792519585544,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B0_b10.ALS.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "B173nb_b10/LoD2": {
@@ -452,6 +504,32 @@
      "wrong_release": 107.188,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 18.061,
+    "patches": 289,
+    "correct": 0.7578207186755993,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.2421792813244006,
+    "undetermined": 0.08648469077016777,
+    "propagated": 0.5743868002879131,
+    "propagated_correct": 0.8012338538654329,
+    "propagated_area_m2": 10.374,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173nb_b10.LoD2.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 30.063,
+    "patches": 481,
+    "correct": 0.8960516249209992,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.10394837507900077,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173nb_b10.LoD2.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "B173nb_b10/ALS": {
@@ -587,6 +665,32 @@
      "wrong_release": 43.287,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 2.323,
+    "patches": 23,
+    "correct": 0.3521308652604391,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.6478691347395609,
+    "undetermined": 0.25441239776151525,
+    "propagated": 0.702970297029703,
+    "propagated_correct": 0.42865890998162887,
+    "propagated_area_m2": 1.633,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173nb_b10.ALS.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 100.527,
+    "patches": 1419,
+    "correct": 0.9501825380246104,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.04981746197538969,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173nb_b10.ALS.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "R1rep_b10/LoD2": {
@@ -722,6 +826,32 @@
      "wrong_release": 393.875,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 10.624,
+    "patches": 170,
+    "correct": 0.13525978915662654,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.8647402108433735,
+    "undetermined": 0.08236069277108435,
+    "propagated": 0.39994352409638556,
+    "propagated_correct": 0.27935984937632385,
+    "propagated_area_m2": 4.249,
+    "src": "SL/tables/judge_wide_counts.json: tallies.R1rep_b10.LoD2.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 8.313,
+    "patches": 133,
+    "correct": 0.8270179237339107,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.17298207626608925,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.R1rep_b10.LoD2.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "R1rep_b10/ALS": {
@@ -857,6 +987,32 @@
      "wrong_release": 156.318,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 26.729,
+    "patches": 365,
+    "correct": 0.031351715365333536,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.9686482846346666,
+    "undetermined": 0.004863631261925251,
+    "propagated": 0.09585094840809609,
+    "propagated_correct": 0.05074160811865731,
+    "propagated_area_m2": 2.562,
+    "src": "SL/tables/judge_wide_counts.json: tallies.R1rep_b10.ALS.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 141.736,
+    "patches": 2117,
+    "correct": 0.73293305864424,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.26706694135576003,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.R1rep_b10.ALS.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "B173_b0/LoD2": {
@@ -992,6 +1148,32 @@
      "wrong_release": 159.75,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 10.251,
+    "patches": 164,
+    "correct": 0.707345624817091,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.29265437518290893,
+    "undetermined": 0.06096966149643936,
+    "propagated": 0.32318798166032575,
+    "propagated_correct": 0.6226984606097192,
+    "propagated_area_m2": 3.313,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173_b0.LoD2.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 20.75,
+    "patches": 332,
+    "correct": 0.8493975903614458,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.15060240963855423,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173_b0.LoD2.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "B173_b0/ALS": {
@@ -1127,6 +1309,32 @@
      "wrong_release": 60.544,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 0.898,
+    "patches": 9,
+    "correct": 0.0,
+    "wrong_keep": 0.0,
+    "wrong_release": 1.0,
+    "undetermined": 0.0,
+    "propagated": 0.12026726057906459,
+    "propagated_correct": 0.0,
+    "propagated_area_m2": 0.108,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173_b0.ALS.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 57.591,
+    "patches": 792,
+    "correct": 0.8884027018110469,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.11159729818895313,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.B173_b0.ALS.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   }
  },
@@ -1264,6 +1472,32 @@
      "wrong_release": 1262.812,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 873.308,
+    "patches": 13973,
+    "correct": 0.6969167807921146,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.30308321920788545,
+    "undetermined": 0.16202760080063391,
+    "propagated": 0.37357610373430683,
+    "propagated_correct": 0.7342933421610007,
+    "propagated_area_m2": 326.247,
+    "src": "SL/tables/judge_wide_counts.json: tallies.selection.LoD2.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 157.375,
+    "patches": 2518,
+    "correct": 0.9003081810961081,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.09969181890389198,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.selection.LoD2.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   },
   "ALS": {
@@ -1399,6 +1633,32 @@
      "wrong_release": 726.19,
      "undetermined": 0.0
     }
+   },
+   "image_obs": {
+    "area_m2": 798.358,
+    "patches": 11312,
+    "correct": 0.7404334897376866,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.25956651026231337,
+    "undetermined": 0.18677711001831257,
+    "propagated": 0.3131089060296258,
+    "propagated_correct": 0.8363943305877035,
+    "propagated_area_m2": 249.973,
+    "src": "SL/tables/judge_wide_counts.json: tallies.selection.ALS.image_wrong",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
+   },
+   "image_within": {
+    "area_m2": 1379.652,
+    "patches": 20047,
+    "correct": 0.9296279061676423,
+    "wrong_keep": 0.0,
+    "wrong_release": 0.07037209383235772,
+    "undetermined": 0.0,
+    "propagated": 0.0,
+    "propagated_correct": null,
+    "propagated_area_m2": 0.0,
+    "src": "SL/tables/judge_wide_counts.json: tallies.selection.ALS.code3_within",
+    "how": "옮김 (채우기 일 2, 이 표의 셈으로 바꿈: 미판정은 지킴)"
    }
   }
  },
@@ -3238,8 +3498,106 @@
   }
  },
  "b173_self": {
-  "how": "채우기 일 3",
-  "why": "요청 3절 일 3의 'B173만의 장면 안 기준 판정'은 채우기에서 온다. 6장 보조 작업 보충 2(counts.json b173_self)에 값이 있으나 1절 6번에 따라 옮기지 않는다"
+  "how": "옮김 (채우기 일 3·8.4, 덧붙임 10-19)",
+  "values": {
+   "LoD2": {
+    "rows": {
+     "current": {
+      "tau_m": {
+       "roof": 0.17595741568870737,
+       "wall": 0.22782853520583887
+      },
+      "shift_m": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "area_m2": 2443.437,
+      "shares": {
+       "correct_keep": 0.2558637689451375,
+       "wrong_keep": 0.0899094185771927,
+       "correct_release": 0.5805604973649823,
+       "wrong_release": 0.07302705164896825,
+       "undetermined": 0.0006392634637193429,
+       "other": 0.0
+      }
+     },
+     "scene_only": {
+      "tau_m": {
+       "roof": 3.646792199154107,
+       "wall": 0.6367984788107246
+      },
+      "shift_m": [
+       0.0,
+       0.0,
+       -4.2306499613374235
+      ],
+      "area_m2": 2443.437,
+      "shares": {
+       "correct_keep": 0.21258456837643042,
+       "wrong_keep": 0.4407467841405364,
+       "correct_release": 0.2937206893404659,
+       "wrong_release": 0.052896800695086475,
+       "undetermined": 5.115744748074127e-05,
+       "other": 0.0
+      }
+     }
+    },
+    "common_patches": 39095,
+    "common_area_m2": 2443.4,
+    "changed_judgment_m2": 1701.3,
+    "src": "SL/tables/judge_wide_b173.json: priors.LoD2"
+   },
+   "ALS": {
+    "rows": {
+     "current": {
+      "tau_m": {
+       "roof": 0.14701597917790277,
+       "wall": 0.14701597917790277
+      },
+      "shift_m": [
+       -0.05619434746608162,
+       0.06288884357338685,
+       0.0
+      ],
+      "area_m2": 1424.457,
+      "shares": {
+       "correct_keep": 0.10704780839295254,
+       "wrong_keep": 0.005045431346821982,
+       "correct_release": 0.8479252093955802,
+       "wrong_release": 0.03998155086464526,
+       "undetermined": 0.0,
+       "other": 0.0
+      }
+     },
+     "scene_only": {
+      "tau_m": {
+       "roof": 2.856885170963763,
+       "wall": 2.856885170963763
+      },
+      "shift_m": [
+       0.0,
+       0.0,
+       -4.618265218505195
+      ],
+      "area_m2": 1424.455,
+      "shares": {
+       "correct_keep": 0.09132405025079766,
+       "wrong_keep": 0.8953178584090056,
+       "correct_release": 0.013358091340196776,
+       "wrong_release": 0.0,
+       "undetermined": 0.0,
+       "other": 0.0
+      }
+     }
+    },
+    "common_patches": 21178,
+    "common_area_m2": 1424.5,
+    "changed_judgment_m2": 1257.8,
+    "src": "SL/tables/judge_wide_b173.json: priors.ALS"
+   }
+  },
+  "why": "처음 판에서는 요청 3절 일 3에 따라 '채우기 일 3'으로 비웠다. 채우기 표(같은 패치로 맞춘 값, 미판정은 따로)를 그대로 옮긴다"
  },
  "sources": {
   "counts": "C6/t5/judge/counts.json (evaluation, selection)",

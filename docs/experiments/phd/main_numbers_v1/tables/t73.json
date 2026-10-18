@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "7.3 (order 5.1)",
- "made": "2026-10-16 10:34:59 KST",
+ "made": "2026-10-19 02:53:19 KST",
  "script": "scripts/phd/main_numbers_v1/t73.py",
  "table75": {
   "metric": "prior_error_inflow",
@@ -1016,7 +1016,979 @@
     }
    }
   },
-  "pooled": 0.01635593103433736
+  "pooled": 0.01635593103433736,
+  "kept": {
+   "metric": "kept_02",
+   "place": "합친 '영상이 틀린 곳'(채우기 일 2의 답 줄; 거른 영상 오류 ∪ 코드 3 문턱 이내, 코드 3 전제 위배 패치는 뺌)",
+   "rows": {
+    "B0_b10/LoD2": {
+     "case": "B0 · LoD2",
+     "cells": {
+      "method": {
+       "col": "method",
+       "results": [
+        "method_s0",
+        "method_s1"
+       ],
+       "values": [
+        {
+         "v": 0.8911,
+         "n": 6457,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/LoD2.values.method_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s0"
+        },
+        {
+         "v": 0.8615,
+         "n": 6457,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/LoD2.values.method_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s1"
+        }
+       ],
+       "mean": 0.8763000000000001,
+       "n": 6457
+      },
+      "nojudge": {
+       "col": "nojudge",
+       "results": [
+        "nojudge"
+       ],
+       "values": [
+        {
+         "v": 0.8992,
+         "n": 6457,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/LoD2.values.nojudge.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "nojudge"
+        }
+       ],
+       "mean": 0.8992,
+       "n": 6457
+      },
+      "imgonly": {
+       "col": "imgonly",
+       "results": [
+        "imgonly_s0"
+       ],
+       "values": [
+        {
+         "v": 0.8637,
+         "n": 6457,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/LoD2.values.imgonly_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s0"
+        }
+       ],
+       "mean": 0.8637,
+       "n": 6457
+      },
+      "trust": {
+       "col": "trust",
+       "results": [],
+       "values": [],
+       "mean": null,
+       "n": null
+      },
+      "judgefuse": {
+       "col": "judgefuse",
+       "results": [
+        "judgefuse"
+       ],
+       "values": [
+        {
+         "v": 0.2529,
+         "n": 6457,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/LoD2.values.judgefuse.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "judgefuse"
+        }
+       ],
+       "mean": 0.2529,
+       "n": 6457
+      }
+     }
+    },
+    "B0_b10/ALS": {
+     "case": "B0 · 항공 LiDAR",
+     "cells": {
+      "method": {
+       "col": "method",
+       "results": [
+        "method_s0",
+        "method_s1"
+       ],
+       "values": [
+        {
+         "v": 0.9687,
+         "n": 1755,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/ALS.values.method_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s0"
+        },
+        {
+         "v": 0.9624,
+         "n": 1755,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/ALS.values.method_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s1"
+        }
+       ],
+       "mean": 0.96555,
+       "n": 1755
+      },
+      "nojudge": {
+       "col": "nojudge",
+       "results": [
+        "nojudge"
+       ],
+       "values": [
+        {
+         "v": 0.9738,
+         "n": 1755,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/ALS.values.nojudge.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "nojudge"
+        }
+       ],
+       "mean": 0.9738,
+       "n": 1755
+      },
+      "imgonly": {
+       "col": "imgonly",
+       "results": [
+        "imgonly_s0"
+       ],
+       "values": [
+        {
+         "v": 0.9345,
+         "n": 1755,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/ALS.values.imgonly_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s0"
+        }
+       ],
+       "mean": 0.9345,
+       "n": 1755
+      },
+      "trust": {
+       "col": "trust",
+       "results": [
+        "trust_als"
+       ],
+       "values": [
+        {
+         "v": 0.9772,
+         "n": 1755,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/ALS.values.trust_als.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "trust_als"
+        }
+       ],
+       "mean": 0.9772,
+       "n": 1755
+      },
+      "judgefuse": {
+       "col": "judgefuse",
+       "results": [
+        "judgefuse"
+       ],
+       "values": [
+        {
+         "v": 0.9818,
+         "n": 1755,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B0_b10/ALS.values.judgefuse.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "judgefuse"
+        }
+       ],
+       "mean": 0.9818,
+       "n": 1755
+      }
+     }
+    },
+    "B173nb_b10/LoD2": {
+     "case": "B173 주변 · LoD2",
+     "cells": {
+      "method": {
+       "col": "method",
+       "results": [
+        "method_s0",
+        "method_s1"
+       ],
+       "values": [
+        {
+         "v": 0.7626,
+         "n": 3816,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/LoD2.values.method_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s0"
+        },
+        {
+         "v": 0.7594,
+         "n": 3816,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/LoD2.values.method_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s1"
+        }
+       ],
+       "mean": 0.7609999999999999,
+       "n": 3816
+      },
+      "nojudge": {
+       "col": "nojudge",
+       "results": [
+        "nojudge"
+       ],
+       "values": [
+        {
+         "v": 0.7736,
+         "n": 3816,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/LoD2.values.nojudge.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "nojudge"
+        }
+       ],
+       "mean": 0.7736,
+       "n": 3816
+      },
+      "imgonly": {
+       "col": "imgonly",
+       "results": [
+        "imgonly_s0",
+        "imgonly_s1"
+       ],
+       "values": [
+        {
+         "v": 0.7099,
+         "n": 3816,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/LoD2.values.imgonly_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s0"
+        },
+        {
+         "v": 0.7162,
+         "n": 3816,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/LoD2.values.imgonly_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s1"
+        }
+       ],
+       "mean": 0.71305,
+       "n": 3816
+      },
+      "trust": {
+       "col": "trust",
+       "results": [],
+       "values": [],
+       "mean": null,
+       "n": null
+      },
+      "judgefuse": {
+       "col": "judgefuse",
+       "results": [
+        "judgefuse"
+       ],
+       "values": [
+        {
+         "v": 0.9112,
+         "n": 3816,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/LoD2.values.judgefuse.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "judgefuse"
+        }
+       ],
+       "mean": 0.9112,
+       "n": 3816
+      }
+     }
+    },
+    "B173nb_b10/ALS": {
+     "case": "B173 주변 · 항공 LiDAR",
+     "cells": {
+      "method": {
+       "col": "method",
+       "results": [
+        "method_s0",
+        "method_s1"
+       ],
+       "values": [
+        {
+         "v": 0.8469,
+         "n": 9398,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/ALS.values.method_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s0"
+        },
+        {
+         "v": 0.8495,
+         "n": 9398,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/ALS.values.method_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s1"
+        }
+       ],
+       "mean": 0.8482000000000001,
+       "n": 9398
+      },
+      "nojudge": {
+       "col": "nojudge",
+       "results": [
+        "nojudge"
+       ],
+       "values": [
+        {
+         "v": 0.8849,
+         "n": 9398,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/ALS.values.nojudge.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "nojudge"
+        }
+       ],
+       "mean": 0.8849,
+       "n": 9398
+      },
+      "imgonly": {
+       "col": "imgonly",
+       "results": [
+        "imgonly_s0",
+        "imgonly_s1"
+       ],
+       "values": [
+        {
+         "v": 0.7341,
+         "n": 9398,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/ALS.values.imgonly_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s0"
+        },
+        {
+         "v": 0.7311,
+         "n": 9398,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/ALS.values.imgonly_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s1"
+        }
+       ],
+       "mean": 0.7325999999999999,
+       "n": 9398
+      },
+      "trust": {
+       "col": "trust",
+       "results": [
+        "trust_als"
+       ],
+       "values": [
+        {
+         "v": 0.9315,
+         "n": 9398,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/ALS.values.trust_als.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "trust_als"
+        }
+       ],
+       "mean": 0.9315,
+       "n": 9398
+      },
+      "judgefuse": {
+       "col": "judgefuse",
+       "results": [
+        "judgefuse"
+       ],
+       "values": [
+        {
+         "v": 0.971,
+         "n": 9398,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.B173nb_b10/ALS.values.judgefuse.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "judgefuse"
+        }
+       ],
+       "mean": 0.971,
+       "n": 9398
+      }
+     }
+    },
+    "R1rep_b10/LoD2": {
+     "case": "R1 · LoD2",
+     "cells": {
+      "method": {
+       "col": "method",
+       "results": [
+        "method_s0",
+        "method_s1"
+       ],
+       "values": [
+        {
+         "v": 0.2572,
+         "n": 863,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/LoD2.values.method_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s0"
+        },
+        {
+         "v": 0.3384,
+         "n": 863,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/LoD2.values.method_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s1"
+        }
+       ],
+       "mean": 0.29779999999999995,
+       "n": 863
+      },
+      "nojudge": {
+       "col": "nojudge",
+       "results": [
+        "nojudge"
+       ],
+       "values": [
+        {
+         "v": 0.4322,
+         "n": 863,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/LoD2.values.nojudge.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "nojudge"
+        }
+       ],
+       "mean": 0.4322,
+       "n": 863
+      },
+      "imgonly": {
+       "col": "imgonly",
+       "results": [
+        "imgonly_s0"
+       ],
+       "values": [
+        {
+         "v": 0.2677,
+         "n": 863,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/LoD2.values.imgonly_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s0"
+        }
+       ],
+       "mean": 0.2677,
+       "n": 863
+      },
+      "trust": {
+       "col": "trust",
+       "results": [],
+       "values": [],
+       "mean": null,
+       "n": null
+      },
+      "judgefuse": {
+       "col": "judgefuse",
+       "results": [
+        "judgefuse"
+       ],
+       "values": [
+        {
+         "v": 0.5504,
+         "n": 863,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/LoD2.values.judgefuse.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "judgefuse"
+        }
+       ],
+       "mean": 0.5504,
+       "n": 863
+      }
+     }
+    },
+    "R1rep_b10/ALS": {
+     "case": "R1 · 항공 LiDAR",
+     "cells": {
+      "method": {
+       "col": "method",
+       "results": [
+        "method_s0",
+        "method_s1"
+       ],
+       "values": [
+        {
+         "v": 0.9314,
+         "n": 14112,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/ALS.values.method_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s0"
+        },
+        {
+         "v": 0.935,
+         "n": 14112,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/ALS.values.method_s1.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "method_s1"
+        }
+       ],
+       "mean": 0.9332,
+       "n": 14112
+      },
+      "nojudge": {
+       "col": "nojudge",
+       "results": [
+        "nojudge"
+       ],
+       "values": [
+        {
+         "v": 0.9501,
+         "n": 14112,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/ALS.values.nojudge.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "nojudge"
+        }
+       ],
+       "mean": 0.9501,
+       "n": 14112
+      },
+      "imgonly": {
+       "col": "imgonly",
+       "results": [
+        "imgonly_s0"
+       ],
+       "values": [
+        {
+         "v": 0.9204,
+         "n": 14112,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/ALS.values.imgonly_s0.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "imgonly_s0"
+        }
+       ],
+       "mean": 0.9204,
+       "n": 14112
+      },
+      "trust": {
+       "col": "trust",
+       "results": [
+        "trust_als"
+       ],
+       "values": [
+        {
+         "v": 0.9895,
+         "n": 14112,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/ALS.values.trust_als.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "trust_als"
+        }
+       ],
+       "mean": 0.9895,
+       "n": 14112
+      },
+      "judgefuse": {
+       "col": "judgefuse",
+       "results": [
+        "judgefuse"
+       ],
+       "values": [
+        {
+         "v": 0.9365,
+         "n": 14112,
+         "nkind": "솎은 참값 행",
+         "src": "SL/tables/obs_masked_tables.json: units.R1rep_b10/ALS.values.judgefuse.amend1.union.kept_0_2",
+         "how": "옮김 (채우기 일 2)",
+         "key": "judgefuse"
+        }
+       ],
+       "mean": 0.9365,
+       "n": 14112
+      }
+     }
+    }
+   },
+   "counts": {
+    "nojudge": {
+     "better": 0,
+     "worse": 3,
+     "same": 3,
+     "no_value": 0,
+     "small_sample": {
+      "better": 0,
+      "worse": 2,
+      "same": 3
+     },
+     "single_run": {
+      "better": 0,
+      "worse": 3,
+      "same": 3
+     },
+     "deterministic": {
+      "better": 0,
+      "worse": 0,
+      "same": 0
+     },
+     "per_case": {
+      "B0_b10/LoD2": {
+       "method": 0.8763000000000001,
+       "comparator": 0.8992,
+       "diff_method_minus_comparator": -0.02289999999999992,
+       "criterion": 0.05860501002474097,
+       "criterion_parts": {
+        "unit": 0.05860501002474097,
+        "three_points": 0.00046461204893913583
+       },
+       "n_min": 6457,
+       "reading": "같음"
+      },
+      "B0_b10/ALS": {
+       "method": 0.96555,
+       "comparator": 0.9738,
+       "diff_method_minus_comparator": -0.00824999999999998,
+       "criterion": 0.01247336362013064,
+       "criterion_parts": {
+        "unit": 0.01247336362013064,
+        "three_points": 0.0017094017094017094
+       },
+       "n_min": 1755,
+       "reading": "같음"
+      },
+      "B173nb_b10/LoD2": {
+       "method": 0.7609999999999999,
+       "comparator": 0.7736,
+       "diff_method_minus_comparator": -0.012600000000000056,
+       "criterion": 0.006335676759431427,
+       "criterion_parts": {
+        "unit": 0.006335676759431427,
+        "three_points": 0.0007861635220125787
+       },
+       "n_min": 3816,
+       "reading": "못함"
+      },
+      "B173nb_b10/ALS": {
+       "method": 0.8482000000000001,
+       "comparator": 0.8849,
+       "diff_method_minus_comparator": -0.036699999999999955,
+       "criterion": 0.005147737367038158,
+       "criterion_parts": {
+        "unit": 0.005147737367038158,
+        "three_points": 0.0003192168546499255
+       },
+       "n_min": 9398,
+       "reading": "못함"
+      },
+      "R1rep_b10/LoD2": {
+       "method": 0.29779999999999995,
+       "comparator": 0.4322,
+       "diff_method_minus_comparator": -0.13440000000000002,
+       "criterion": 0.16076779777057343,
+       "criterion_parts": {
+        "unit": 0.16076779777057343,
+        "three_points": 0.0034762456546929316
+       },
+       "n_min": 863,
+       "reading": "같음"
+      },
+      "R1rep_b10/ALS": {
+       "method": 0.9332,
+       "comparator": 0.9501,
+       "diff_method_minus_comparator": -0.016899999999999915,
+       "criterion": 0.007127636354360492,
+       "criterion_parts": {
+        "unit": 0.007127636354360492,
+        "three_points": 0.00021258503401360543
+       },
+       "n_min": 14112,
+       "reading": "못함"
+      }
+     }
+    },
+    "imgonly": {
+     "better": 4,
+     "worse": 0,
+     "same": 2,
+     "no_value": 0,
+     "small_sample": {
+      "better": 3,
+      "worse": 0,
+      "same": 2
+     },
+     "single_run": {
+      "better": 2,
+      "worse": 0,
+      "same": 2
+     },
+     "deterministic": {
+      "better": 0,
+      "worse": 0,
+      "same": 0
+     },
+     "per_case": {
+      "B0_b10/LoD2": {
+       "method": 0.8763000000000001,
+       "comparator": 0.8637,
+       "diff_method_minus_comparator": 0.012600000000000056,
+       "criterion": 0.05860501002474097,
+       "criterion_parts": {
+        "unit": 0.05860501002474097,
+        "three_points": 0.00046461204893913583
+       },
+       "n_min": 6457,
+       "reading": "같음"
+      },
+      "B0_b10/ALS": {
+       "method": 0.96555,
+       "comparator": 0.9345,
+       "diff_method_minus_comparator": 0.031050000000000022,
+       "criterion": 0.01247336362013064,
+       "criterion_parts": {
+        "unit": 0.01247336362013064,
+        "three_points": 0.0017094017094017094
+       },
+       "n_min": 1755,
+       "reading": "나음"
+      },
+      "B173nb_b10/LoD2": {
+       "method": 0.7609999999999999,
+       "comparator": 0.71305,
+       "diff_method_minus_comparator": 0.04794999999999994,
+       "criterion": 0.006335676759431427,
+       "criterion_parts": {
+        "unit": 0.006335676759431427,
+        "three_points": 0.0007861635220125787
+       },
+       "n_min": 3816,
+       "reading": "나음"
+      },
+      "B173nb_b10/ALS": {
+       "method": 0.8482000000000001,
+       "comparator": 0.7325999999999999,
+       "diff_method_minus_comparator": 0.11560000000000015,
+       "criterion": 0.005147737367038158,
+       "criterion_parts": {
+        "unit": 0.005147737367038158,
+        "three_points": 0.0003192168546499255
+       },
+       "n_min": 9398,
+       "reading": "나음"
+      },
+      "R1rep_b10/LoD2": {
+       "method": 0.29779999999999995,
+       "comparator": 0.2677,
+       "diff_method_minus_comparator": 0.03009999999999996,
+       "criterion": 0.16076779777057343,
+       "criterion_parts": {
+        "unit": 0.16076779777057343,
+        "three_points": 0.0034762456546929316
+       },
+       "n_min": 863,
+       "reading": "같음"
+      },
+      "R1rep_b10/ALS": {
+       "method": 0.9332,
+       "comparator": 0.9204,
+       "diff_method_minus_comparator": 0.012800000000000034,
+       "criterion": 0.007127636354360492,
+       "criterion_parts": {
+        "unit": 0.007127636354360492,
+        "three_points": 0.00021258503401360543
+       },
+       "n_min": 14112,
+       "reading": "나음"
+      }
+     }
+    },
+    "trust": {
+     "better": 0,
+     "worse": 2,
+     "same": 1,
+     "no_value": 0,
+     "small_sample": {
+      "better": 0,
+      "worse": 1,
+      "same": 1
+     },
+     "single_run": {
+      "better": 0,
+      "worse": 2,
+      "same": 1
+     },
+     "deterministic": {
+      "better": 0,
+      "worse": 0,
+      "same": 0
+     },
+     "per_case": {
+      "B0_b10/LoD2": {
+       "reading": "—"
+      },
+      "B0_b10/ALS": {
+       "method": 0.96555,
+       "comparator": 0.9772,
+       "diff_method_minus_comparator": -0.011649999999999938,
+       "criterion": 0.01247336362013064,
+       "criterion_parts": {
+        "unit": 0.01247336362013064,
+        "three_points": 0.0017094017094017094
+       },
+       "n_min": 1755,
+       "reading": "같음"
+      },
+      "B173nb_b10/LoD2": {
+       "reading": "—"
+      },
+      "B173nb_b10/ALS": {
+       "method": 0.8482000000000001,
+       "comparator": 0.9315,
+       "diff_method_minus_comparator": -0.08329999999999993,
+       "criterion": 0.005147737367038158,
+       "criterion_parts": {
+        "unit": 0.005147737367038158,
+        "three_points": 0.0003192168546499255
+       },
+       "n_min": 9398,
+       "reading": "못함"
+      },
+      "R1rep_b10/LoD2": {
+       "reading": "—"
+      },
+      "R1rep_b10/ALS": {
+       "method": 0.9332,
+       "comparator": 0.9895,
+       "diff_method_minus_comparator": -0.05630000000000002,
+       "criterion": 0.007127636354360492,
+       "criterion_parts": {
+        "unit": 0.007127636354360492,
+        "three_points": 0.00021258503401360543
+       },
+       "n_min": 14112,
+       "reading": "못함"
+      }
+     }
+    },
+    "judgefuse": {
+     "better": 1,
+     "worse": 4,
+     "same": 1,
+     "no_value": 0,
+     "small_sample": {
+      "better": 1,
+      "worse": 4,
+      "same": 0
+     },
+     "single_run": {
+      "better": 0,
+      "worse": 0,
+      "same": 0
+     },
+     "deterministic": {
+      "better": 1,
+      "worse": 4,
+      "same": 1
+     },
+     "per_case": {
+      "B0_b10/LoD2": {
+       "method": 0.8763000000000001,
+       "comparator": 0.2529,
+       "diff_method_minus_comparator": 0.6234000000000001,
+       "criterion": 0.05860501002474097,
+       "criterion_parts": {
+        "unit": 0.05860501002474097,
+        "three_points": 0.00046461204893913583
+       },
+       "n_min": 6457,
+       "reading": "나음"
+      },
+      "B0_b10/ALS": {
+       "method": 0.96555,
+       "comparator": 0.9818,
+       "diff_method_minus_comparator": -0.016249999999999987,
+       "criterion": 0.01247336362013064,
+       "criterion_parts": {
+        "unit": 0.01247336362013064,
+        "three_points": 0.0017094017094017094
+       },
+       "n_min": 1755,
+       "reading": "못함"
+      },
+      "B173nb_b10/LoD2": {
+       "method": 0.7609999999999999,
+       "comparator": 0.9112,
+       "diff_method_minus_comparator": -0.1502000000000001,
+       "criterion": 0.006335676759431427,
+       "criterion_parts": {
+        "unit": 0.006335676759431427,
+        "three_points": 0.0007861635220125787
+       },
+       "n_min": 3816,
+       "reading": "못함"
+      },
+      "B173nb_b10/ALS": {
+       "method": 0.8482000000000001,
+       "comparator": 0.971,
+       "diff_method_minus_comparator": -0.12279999999999991,
+       "criterion": 0.005147737367038158,
+       "criterion_parts": {
+        "unit": 0.005147737367038158,
+        "three_points": 0.0003192168546499255
+       },
+       "n_min": 9398,
+       "reading": "못함"
+      },
+      "R1rep_b10/LoD2": {
+       "method": 0.29779999999999995,
+       "comparator": 0.5504,
+       "diff_method_minus_comparator": -0.25260000000000005,
+       "criterion": 0.16076779777057343,
+       "criterion_parts": {
+        "unit": 0.16076779777057343,
+        "three_points": 0.0034762456546929316
+       },
+       "n_min": 863,
+       "reading": "못함"
+      },
+      "R1rep_b10/ALS": {
+       "method": 0.9332,
+       "comparator": 0.9365,
+       "diff_method_minus_comparator": -0.0032999999999999696,
+       "criterion": 0.007127636354360492,
+       "criterion_parts": {
+        "unit": 0.007127636354360492,
+        "three_points": 0.00021258503401360543
+       },
+       "n_min": 14112,
+       "reading": "같음"
+      }
+     }
+    }
+   },
+   "pooled": null,
+   "src": "SL/tables/obs_masked_tables.json: units.<경우>.values.<칸>.amend1.union.kept_0_2 (표본 = 솎은 참값 행)"
+  }
  },
  "table76": {
   "nmad_new": {

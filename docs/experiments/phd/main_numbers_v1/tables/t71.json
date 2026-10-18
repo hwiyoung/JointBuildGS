@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "7.1 (order 5.3)",
- "made": "2026-10-16 10:35:00 KST",
+ "made": "2026-10-19 02:53:18 KST",
  "script": "scripts/phd/main_numbers_v1/t71.py",
  "f1_definition": {
   "result_mesh": "학습 시점 TSDF 메시(결과 폴더 post/mesh_tsdf.ply). 결합·학습 전 사전 정보도 같은 TSDF 메시",
@@ -123,6 +123,22 @@
       "mean": 0.6265,
       "n": 2063378,
       "n_result": 2608014
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1777,
+        "n": 2063378,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.f1_0.2",
+        "how": "옮김",
+        "n_result": 6334428
+       }
+      ],
+      "mean": 0.1777,
+      "n": 2063378,
+      "n_result": 6334428
      }
     },
     "f1_05": {
@@ -230,6 +246,22 @@
       "mean": 0.7162,
       "n": 2063378,
       "n_result": 2608014
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.3465,
+        "n": 2063378,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.f1_0.5",
+        "how": "옮김",
+        "n_result": 6334428
+       }
+      ],
+      "mean": 0.3465,
+      "n": 2063378,
+      "n_result": 6334428
      }
     },
     "precision_02": {
@@ -329,6 +361,21 @@
       ],
       "mean": 0.4669,
       "n": 2608014,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1136,
+        "n": 6334428,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.precision_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1136,
+      "n": 6334428,
       "n_result": null
      }
     },
@@ -430,6 +477,21 @@
       "mean": 0.565,
       "n": 2608014,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.229,
+        "n": 6334428,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.precision_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.229,
+      "n": 6334428,
+      "n_result": null
      }
     },
     "overall_c02": {
@@ -528,6 +590,21 @@
        }
       ],
       "mean": 0.9521,
+      "n": 2063378,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.4072,
+        "n": 2063378,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.completeness_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.4072,
       "n": 2063378,
       "n_result": null
      }
@@ -630,6 +707,21 @@
       "mean": 0.9779,
       "n": 2063378,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.7117,
+        "n": 2063378,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.completeness_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.7117,
+      "n": 2063378,
+      "n_result": null
      }
     },
     "prior_error_inflow": {
@@ -728,6 +820,21 @@
        }
       ],
       "mean": 0.1329,
+      "n": 32880,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.2212,
+        "n": 32880,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.prior_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.2212,
       "n": 32880,
       "n_result": null
      }
@@ -843,6 +950,22 @@
       "mean": 45.89,
       "n": 510,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 59.22,
+        "n": 103,
+        "nkind": "참값 점",
+        "src": "SL/measure/B0_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 59.22,
+      "n": 103,
+      "n_result": null
      }
     },
     "bias_new": {
@@ -953,6 +1076,22 @@
       "mean": -17.22,
       "n": 510,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 22.02,
+        "n": 103,
+        "nkind": "참값 점",
+        "src": "SL/measure/B0_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.bias",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 22.02,
+      "n": 103,
+      "n_result": null
      }
     },
     "floating": {
@@ -1051,6 +1190,21 @@
        }
       ],
       "mean": 0.4163,
+      "n": 514,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.5409,
+        "n": 514,
+        "nkind": "행",
+        "src": "SL/measure/B0_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.floating_share",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.5409,
       "n": 514,
       "n_result": null
      }
@@ -1153,6 +1307,21 @@
       "mean": 0.9228,
       "n": 12433,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.0872,
+        "n": 12433,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0872,
+      "n": 12433,
+      "n_result": null
      }
     },
     "missing_c05": {
@@ -1251,6 +1420,21 @@
        }
       ],
       "mean": 0.9759,
+      "n": 12433,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.239,
+        "n": 12433,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.239,
       "n": 12433,
       "n_result": null
      }
@@ -1353,6 +1537,21 @@
       "mean": 0.2104,
       "n": 18858,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1098,
+        "n": 18858,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1098,
+      "n": 18858,
+      "n_result": null
      }
     },
     "obs_within_inflow": {
@@ -1451,6 +1650,21 @@
        }
       ],
       "mean": 0.1562,
+      "n": 384,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.2865,
+        "n": 384,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error_within_threshold.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.2865,
       "n": 384,
       "n_result": null
      }
@@ -1565,6 +1779,22 @@
       "mean": 0.6265,
       "n": 2063378,
       "n_result": 2608014
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1647,
+        "n": 2063378,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: summary.f1_0.2",
+        "how": "옮김",
+        "n_result": 6791101
+       }
+      ],
+      "mean": 0.1647,
+      "n": 2063378,
+      "n_result": 6791101
      }
     },
     "f1_05": {
@@ -1672,6 +1902,22 @@
       "mean": 0.7162,
       "n": 2063378,
       "n_result": 2608014
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.2909,
+        "n": 2063378,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: summary.f1_0.5",
+        "how": "옮김",
+        "n_result": 6791101
+       }
+      ],
+      "mean": 0.2909,
+      "n": 2063378,
+      "n_result": 6791101
      }
     },
     "precision_02": {
@@ -1771,6 +2017,21 @@
       ],
       "mean": 0.4669,
       "n": 2608014,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0968,
+        "n": 6791101,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: summary.precision_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0968,
+      "n": 6791101,
       "n_result": null
      }
     },
@@ -1872,6 +2133,21 @@
       "mean": 0.565,
       "n": 2608014,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1765,
+        "n": 6791101,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: summary.precision_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1765,
+      "n": 6791101,
+      "n_result": null
      }
     },
     "overall_c02": {
@@ -1970,6 +2246,21 @@
        }
       ],
       "mean": 0.9521,
+      "n": 2063378,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.5526,
+        "n": 2063378,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: summary.completeness_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.5526,
       "n": 2063378,
       "n_result": null
      }
@@ -2072,6 +2363,21 @@
       "mean": 0.9779,
       "n": 2063378,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.8262,
+        "n": 2063378,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: summary.completeness_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.8262,
+      "n": 2063378,
+      "n_result": null
      }
     },
     "prior_error_inflow": {
@@ -2170,6 +2476,21 @@
        }
       ],
       "mean": 0.2214,
+      "n": 262,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1069,
+        "n": 262,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: spread.prior_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1069,
       "n": 262,
       "n_result": null
      }
@@ -2288,6 +2609,22 @@
       "mean": 5.18,
       "n": 4441,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 30.74,
+        "n": 2739,
+        "nkind": "참값 점",
+        "src": "SL/measure/B0_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.nmad",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 30.74,
+      "n": 2739,
+      "n_result": null
      }
     },
     "bias_new": {
@@ -2395,6 +2732,22 @@
       "mean": -1.92,
       "n": 4441,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": -5.46,
+        "n": 2739,
+        "nkind": "참값 점",
+        "src": "SL/measure/B0_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.bias",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": -5.46,
+      "n": 2739,
+      "n_result": null
      }
     },
     "floating": {
@@ -2493,6 +2846,21 @@
        }
       ],
       "mean": 0.0825,
+      "n": 4446,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.6876,
+        "n": 4446,
+        "nkind": "행",
+        "src": "SL/measure/B0_b10/ALS__cdgsnofit_ALS_s0.json: condition3.floating_share",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.6876,
       "n": 4446,
       "n_result": null
      }
@@ -2595,6 +2963,21 @@
       "mean": 0.7966,
       "n": 177,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.8023,
+        "n": 177,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.8023,
+      "n": 177,
+      "n_result": null
      }
     },
     "missing_c05": {
@@ -2693,6 +3076,21 @@
        }
       ],
       "mean": 0.8362,
+      "n": 177,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.9661,
+        "n": 177,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.9661,
       "n": 177,
       "n_result": null
      }
@@ -2795,6 +3193,21 @@
       "mean": 0.3429,
       "n": 4231,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1591,
+        "n": 4231,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: spread.observation_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1591,
+      "n": 4231,
+      "n_result": null
      }
     },
     "obs_within_inflow": {
@@ -2893,6 +3306,21 @@
        }
       ],
       "mean": 0.5153,
+      "n": 489,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1636,
+        "n": 489,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: spread.observation_error_within_threshold.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1636,
       "n": 489,
       "n_result": null
      }
@@ -3016,6 +3444,22 @@
       "mean": 0.7693000000000001,
       "n": 3881308,
       "n_result": 2906349
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.0913,
+        "n": 3881308,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.f1_0.2",
+        "how": "옮김",
+        "n_result": 9036969
+       }
+      ],
+      "mean": 0.0913,
+      "n": 3881308,
+      "n_result": 9036969
      }
     },
     "f1_05": {
@@ -3132,6 +3576,22 @@
       "mean": 0.91875,
       "n": 3881308,
       "n_result": 2906349
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.2001,
+        "n": 3881308,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.f1_0.5",
+        "how": "옮김",
+        "n_result": 9036969
+       }
+      ],
+      "mean": 0.2001,
+      "n": 3881308,
+      "n_result": 9036969
      }
     },
     "precision_02": {
@@ -3239,6 +3699,21 @@
       ],
       "mean": 0.6793,
       "n": 2906349,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.059,
+        "n": 9036969,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.precision_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.059,
+      "n": 9036969,
       "n_result": null
      }
     },
@@ -3348,6 +3823,21 @@
       "mean": 0.87905,
       "n": 2906349,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1284,
+        "n": 9036969,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.precision_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1284,
+      "n": 9036969,
+      "n_result": null
      }
     },
     "overall_c02": {
@@ -3454,6 +3944,21 @@
        }
       ],
       "mean": 0.8869,
+      "n": 3881308,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.2023,
+        "n": 3881308,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.completeness_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.2023,
       "n": 3881308,
       "n_result": null
      }
@@ -3564,6 +4069,21 @@
       "mean": 0.9622999999999999,
       "n": 3881308,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.453,
+        "n": 3881308,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.completeness_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.453,
+      "n": 3881308,
+      "n_result": null
      }
     },
     "prior_error_inflow": {
@@ -3670,6 +4190,21 @@
        }
       ],
       "mean": 0.07145,
+      "n": 119763,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.0885,
+        "n": 119763,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.prior_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0885,
       "n": 119763,
       "n_result": null
      }
@@ -3791,6 +4326,25 @@
       "mean": 2.235,
       "n": 32634,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 39.64737899780273,
+        "n": 18543,
+        "nkind": "참값 점",
+        "src": "SL/measure/B173nb_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad",
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 39.65,
+        "rows": 18543,
+        "edge": "저장값 39.6500 cm가 반올림 경계라 측정 행(SL/measure/B173nb_b10/LoD2__cdgsnofit_LoD2_s0.npz: new, 18,543행)에서 반올림 전 값을 다시 구함"
+       }
+      ],
+      "mean": 39.64737899780273,
+      "n": 18543,
+      "n_result": null
      }
     },
     "bias_new": {
@@ -3910,6 +4464,22 @@
       "mean": 7.07,
       "n": 32634,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 56.9,
+        "n": 18543,
+        "nkind": "참값 점",
+        "src": "SL/measure/B173nb_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.bias",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 56.9,
+      "n": 18543,
+      "n_result": null
      }
     },
     "floating": {
@@ -4016,6 +4586,21 @@
        }
       ],
       "mean": 0.0166,
+      "n": 32634,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.9372,
+        "n": 32634,
+        "nkind": "행",
+        "src": "SL/measure/B173nb_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.floating_share",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.9372,
       "n": 32634,
       "n_result": null
      }
@@ -4126,6 +4711,21 @@
       "mean": 0.9187000000000001,
       "n": 6314,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.5504,
+        "n": 6314,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.5504,
+      "n": 6314,
+      "n_result": null
      }
     },
     "missing_c05": {
@@ -4232,6 +4832,21 @@
        }
       ],
       "mean": 0.9761500000000001,
+      "n": 6314,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.902,
+        "n": 6314,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.902,
       "n": 6314,
       "n_result": null
      }
@@ -4342,6 +4957,21 @@
       "mean": 0.5887,
       "n": 12410,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1358,
+        "n": 12410,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1358,
+      "n": 12410,
+      "n_result": null
      }
     },
     "obs_within_inflow": {
@@ -4448,6 +5078,21 @@
        }
       ],
       "mean": 0.5871999999999999,
+      "n": 1594,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.079,
+        "n": 1594,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error_within_threshold.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.079,
       "n": 1594,
       "n_result": null
      }
@@ -4571,6 +5216,22 @@
       "mean": 0.7693000000000001,
       "n": 3881308,
       "n_result": 2906349
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.067,
+        "n": 3881308,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: summary.f1_0.2",
+        "how": "옮김",
+        "n_result": 8737270
+       }
+      ],
+      "mean": 0.067,
+      "n": 3881308,
+      "n_result": 8737270
      }
     },
     "f1_05": {
@@ -4687,6 +5348,22 @@
       "mean": 0.91875,
       "n": 3881308,
       "n_result": 2906349
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1507,
+        "n": 3881308,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: summary.f1_0.5",
+        "how": "옮김",
+        "n_result": 8737270
+       }
+      ],
+      "mean": 0.1507,
+      "n": 3881308,
+      "n_result": 8737270
      }
     },
     "precision_02": {
@@ -4794,6 +5471,21 @@
       ],
       "mean": 0.6793,
       "n": 2906349,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0393,
+        "n": 8737270,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: summary.precision_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0393,
+      "n": 8737270,
       "n_result": null
      }
     },
@@ -4903,6 +5595,21 @@
       "mean": 0.87905,
       "n": 2906349,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0887,
+        "n": 8737270,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: summary.precision_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0887,
+      "n": 8737270,
+      "n_result": null
      }
     },
     "overall_c02": {
@@ -5009,6 +5716,21 @@
        }
       ],
       "mean": 0.8869,
+      "n": 3881308,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.2251,
+        "n": 3881308,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: summary.completeness_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.2251,
       "n": 3881308,
       "n_result": null
      }
@@ -5119,6 +5841,21 @@
       "mean": 0.9622999999999999,
       "n": 3881308,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.4995,
+        "n": 3881308,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: summary.completeness_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.4995,
+      "n": 3881308,
+      "n_result": null
      }
     },
     "prior_error_inflow": {
@@ -5225,6 +5962,21 @@
        }
       ],
       "mean": 0.00055,
+      "n": 96117,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1076,
+        "n": 96117,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: spread.prior_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1076,
       "n": 96117,
       "n_result": null
      }
@@ -5349,6 +6101,22 @@
       "mean": 2.435,
       "n": 35345,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 28.94,
+        "n": 12065,
+        "nkind": "참값 점",
+        "src": "SL/measure/B173nb_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.nmad",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 28.94,
+      "n": 12065,
+      "n_result": null
      }
     },
     "bias_new": {
@@ -5468,6 +6236,22 @@
       "mean": 7.0,
       "n": 35345,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 28.61,
+        "n": 12065,
+        "nkind": "참값 점",
+        "src": "SL/measure/B173nb_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.bias",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 28.61,
+      "n": 12065,
+      "n_result": null
      }
     },
     "floating": {
@@ -5574,6 +6358,21 @@
        }
       ],
       "mean": 0.0174,
+      "n": 35345,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.6064,
+        "n": 35345,
+        "nkind": "행",
+        "src": "SL/measure/B173nb_b10/ALS__cdgsnofit_ALS_s0.json: condition3.floating_share",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.6064,
       "n": 35345,
       "n_result": null
      }
@@ -5684,6 +6483,21 @@
       "mean": 0.0,
       "n": 111,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.3063,
+        "n": 111,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.3063,
+      "n": 111,
+      "n_result": null
      }
     },
     "missing_c05": {
@@ -5790,6 +6604,21 @@
        }
       ],
       "mean": 0.0,
+      "n": 111,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.7027,
+        "n": 111,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.7027,
       "n": 111,
       "n_result": null
      }
@@ -5900,6 +6729,21 @@
       "mean": 0.85535,
       "n": 7881,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0897,
+        "n": 7881,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: spread.observation_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0897,
+      "n": 7881,
+      "n_result": null
      }
     },
     "obs_within_inflow": {
@@ -6006,6 +6850,21 @@
        }
       ],
       "mean": 0.8635999999999999,
+      "n": 3388,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1006,
+        "n": 3388,
+        "nkind": "참값 점",
+        "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: spread.observation_error_within_threshold.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1006,
       "n": 3388,
       "n_result": null
      }
@@ -6120,6 +6979,22 @@
       "mean": 0.67,
       "n": 2667737,
       "n_result": 2758935
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1655,
+        "n": 2667737,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.f1_0.2",
+        "how": "옮김",
+        "n_result": 6375555
+       }
+      ],
+      "mean": 0.1655,
+      "n": 2667737,
+      "n_result": 6375555
      }
     },
     "f1_05": {
@@ -6227,6 +7102,22 @@
       "mean": 0.8594,
       "n": 2667737,
       "n_result": 2758935
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.3103,
+        "n": 2667737,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.f1_0.5",
+        "how": "옮김",
+        "n_result": 6375555
+       }
+      ],
+      "mean": 0.3103,
+      "n": 2667737,
+      "n_result": 6375555
      }
     },
     "precision_02": {
@@ -6326,6 +7217,21 @@
       ],
       "mean": 0.5562,
       "n": 2758935,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1048,
+        "n": 6375555,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.precision_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1048,
+      "n": 6375555,
       "n_result": null
      }
     },
@@ -6427,6 +7333,21 @@
       "mean": 0.7945,
       "n": 2758935,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1976,
+        "n": 6375555,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.precision_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1976,
+      "n": 6375555,
+      "n_result": null
      }
     },
     "overall_c02": {
@@ -6525,6 +7446,21 @@
        }
       ],
       "mean": 0.8424,
+      "n": 2667737,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.3933,
+        "n": 2667737,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.completeness_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.3933,
       "n": 2667737,
       "n_result": null
      }
@@ -6627,6 +7563,21 @@
       "mean": 0.9358,
       "n": 2667737,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.7225,
+        "n": 2667737,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: summary.completeness_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.7225,
+      "n": 2667737,
+      "n_result": null
      }
     },
     "prior_error_inflow": {
@@ -6725,6 +7676,21 @@
        }
       ],
       "mean": 0.1388,
+      "n": 54345,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.176,
+        "n": 54345,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.prior_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.176,
       "n": 54345,
       "n_result": null
      }
@@ -6837,6 +7803,22 @@
       "mean": 4.94,
       "n": 74553,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 33.31,
+        "n": 60091,
+        "nkind": "참값 점",
+        "src": "SL/measure/R1rep_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 33.31,
+      "n": 60091,
+      "n_result": null
      }
     },
     "bias_new": {
@@ -6947,6 +7929,22 @@
       "mean": -6.09,
       "n": 74553,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 19.58,
+        "n": 60091,
+        "nkind": "참값 점",
+        "src": "SL/measure/R1rep_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.bias",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 19.58,
+      "n": 60091,
+      "n_result": null
      }
     },
     "floating": {
@@ -7045,6 +8043,21 @@
        }
       ],
       "mean": 0.0682,
+      "n": 76434,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.8418,
+        "n": 76434,
+        "nkind": "행",
+        "src": "SL/measure/R1rep_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.floating_share",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.8418,
       "n": 76434,
       "n_result": null
      }
@@ -7147,6 +8160,21 @@
       "mean": 0.4593,
       "n": 712,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.5435,
+        "n": 712,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.5435,
+      "n": 712,
+      "n_result": null
      }
     },
     "missing_c05": {
@@ -7245,6 +8273,21 @@
        }
       ],
       "mean": 0.816,
+      "n": 712,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.8104,
+        "n": 712,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.8104,
       "n": 712,
       "n_result": null
      }
@@ -7347,6 +8390,21 @@
       "mean": 0.1996,
       "n": 31764,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.1235,
+        "n": 31764,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1235,
+      "n": 31764,
+      "n_result": null
      }
     },
     "obs_within_inflow": {
@@ -7445,6 +8503,21 @@
        }
       ],
       "mean": 0.122,
+      "n": 615,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_LoD2_s0",
+        "v": 0.0732,
+        "n": 615,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error_within_threshold.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0732,
       "n": 615,
       "n_result": null
      }
@@ -7559,6 +8632,22 @@
       "mean": 0.67,
       "n": 2667737,
       "n_result": 2758935
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0851,
+        "n": 2667737,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: summary.f1_0.2",
+        "how": "옮김",
+        "n_result": 6443778
+       }
+      ],
+      "mean": 0.0851,
+      "n": 2667737,
+      "n_result": 6443778
      }
     },
     "f1_05": {
@@ -7666,6 +8755,22 @@
       "mean": 0.8594,
       "n": 2667737,
       "n_result": 2758935
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1761,
+        "n": 2667737,
+        "nkind": "참값 점(결과 표본 점은 따로)",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: summary.f1_0.5",
+        "how": "옮김",
+        "n_result": 6443778
+       }
+      ],
+      "mean": 0.1761,
+      "n": 2667737,
+      "n_result": 6443778
      }
     },
     "precision_02": {
@@ -7765,6 +8870,21 @@
       ],
       "mean": 0.5562,
       "n": 2758935,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0497,
+        "n": 6443778,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: summary.precision_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0497,
+      "n": 6443778,
       "n_result": null
      }
     },
@@ -7866,6 +8986,21 @@
       "mean": 0.7945,
       "n": 2758935,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0989,
+        "n": 6443778,
+        "nkind": "결과 표본 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: summary.precision_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0989,
+      "n": 6443778,
+      "n_result": null
      }
     },
     "overall_c02": {
@@ -7964,6 +9099,21 @@
        }
       ],
       "mean": 0.8424,
+      "n": 2667737,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.2967,
+        "n": 2667737,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: summary.completeness_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.2967,
       "n": 2667737,
       "n_result": null
      }
@@ -8066,6 +9216,21 @@
       "mean": 0.9358,
       "n": 2667737,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.8037,
+        "n": 2667737,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: summary.completeness_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.8037,
+      "n": 2667737,
+      "n_result": null
      }
     },
     "prior_error_inflow": {
@@ -8164,6 +9329,21 @@
        }
       ],
       "mean": 0.2234,
+      "n": 555,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0721,
+        "n": 555,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: spread.prior_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0721,
       "n": 555,
       "n_result": null
      }
@@ -8276,6 +9456,25 @@
       "mean": 5.22,
       "n": 79230,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 76.14596363067626,
+        "n": 18885,
+        "nkind": "참값 점",
+        "src": "SL/measure/R1rep_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.nmad",
+        "how": "옮김 + 반올림 전 값 [새로 셈]",
+        "unit": "cm (파일 값 m × 100)",
+        "stored_cm": 76.15,
+        "rows": 18885,
+        "edge": "저장값 76.1500 cm가 반올림 경계라 측정 행(SL/measure/R1rep_b10/ALS__cdgsnofit_ALS_s0.npz: new, 18,885행)에서 반올림 전 값을 다시 구함"
+       }
+      ],
+      "mean": 76.14596363067626,
+      "n": 18885,
+      "n_result": null
      }
     },
     "bias_new": {
@@ -8383,6 +9582,22 @@
       "mean": -5.37,
       "n": 79230,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 10.52,
+        "n": 18885,
+        "nkind": "참값 점",
+        "src": "SL/measure/R1rep_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.bias",
+        "how": "옮김",
+        "unit": "cm (파일 값 m × 100)"
+       }
+      ],
+      "mean": 10.52,
+      "n": 18885,
+      "n_result": null
      }
     },
     "floating": {
@@ -8481,6 +9696,21 @@
        }
       ],
       "mean": 0.0457,
+      "n": 79447,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.5224,
+        "n": 79447,
+        "nkind": "행",
+        "src": "SL/measure/R1rep_b10/ALS__cdgsnofit_ALS_s0.json: condition3.floating_share",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.5224,
       "n": 79447,
       "n_result": null
      }
@@ -8583,6 +9813,21 @@
       "mean": 0.3107,
       "n": 383,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.4099,
+        "n": 383,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.2",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.4099,
+      "n": 383,
+      "n_result": null
      }
     },
     "missing_c05": {
@@ -8681,6 +9926,21 @@
        }
       ],
       "mean": 0.4021,
+      "n": 383,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.8198,
+        "n": 383,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.5",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.8198,
       "n": 383,
       "n_result": null
      }
@@ -8783,6 +10043,21 @@
       "mean": 0.4527,
       "n": 15581,
       "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.0911,
+        "n": 15581,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: spread.observation_error.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.0911,
+      "n": 15581,
+      "n_result": null
      }
     },
     "obs_within_inflow": {
@@ -8881,6 +10156,21 @@
        }
       ],
       "mean": 0.425,
+      "n": 1506,
+      "n_result": null
+     },
+     "cdgs": {
+      "values": [
+       {
+        "result": "cdgsnofit_ALS_s0",
+        "v": 0.1062,
+        "n": 1506,
+        "nkind": "참값 점",
+        "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: spread.observation_error_within_threshold.main.spread",
+        "how": "옮김"
+       }
+      ],
+      "mean": 0.1062,
       "n": 1506,
       "n_result": null
      }

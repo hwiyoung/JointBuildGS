@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
  "section": "7.5 (order 5.5)",
- "made": "2026-10-16 10:36:46 KST",
+ "made": "2026-10-19 02:53:19 KST",
  "script": "scripts/phd/main_numbers_v1/t75.py",
  "b173": {
   "LoD2": {
@@ -69,6 +69,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__LoD2.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 0.1796,
+     "n": 116310,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_LoD2_s0__LoD2.json: spread.prior_error.main.spread",
+     "how": "옮김"
     }
    },
    "band_c02": {
@@ -90,38 +98,73 @@
     },
     "twodgs": {
      "result": "imgonly_2dgs_s0",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.8023,
+     "n": 58782,
+     "nkind": "참값 점",
+     "src": "SB/metrics/B173_b0/imgonly_2dgs_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.8023,
+      "n": 58782,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/LoD2.results[result=imgonly_2dgs_s0].band2.c2"
+     }
     },
     "geogs": {
      "result": "trust_LoD2_fix1",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.8722,
+     "n": 58782,
+     "nkind": "참값 점",
+     "src": "SF/metrics/B173_b0/trust_LoD2_fix1__LoD2.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.8722,
+      "n": 58782,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/LoD2.results[result=trust_LoD2_fix1].band2.c2"
+     }
     },
     "mvsfuse": {
      "result": "mvsfuse_LoD2",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.9874,
+     "n": 58782,
+     "nkind": "참값 점",
+     "src": "SB/metrics/B173_b0/mvsfuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.9874,
+      "n": 58782,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/LoD2.results[result=mvsfuse_LoD2].band2.c2"
+     }
     },
     "judgefuse": {
      "result": "judgefuse_LoD2",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.989,
+     "n": 58782,
+     "nkind": "참값 점",
+     "src": "SB/metrics/B173_b0/judgefuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.989,
+      "n": 58782,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/LoD2.results[result=judgefuse_LoD2].band2.c2"
+     }
     },
     "prior": {
      "result": "samepath_LoD2",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.9835,
+     "n": 58782,
+     "nkind": "참값 점",
+     "src": "S1/metrics/B173_b0/samepath_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.9835,
+      "n": 58782,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/LoD2.results[result=samepath_LoD2].band2.c2"
+     }
     },
     "imgonly": {
      "result": "imgonly_s0",
@@ -130,6 +173,17 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__LoD2.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 0.1707,
+     "n": 58782,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_LoD2_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "status": "채우기 표에 줄 없음"
+     }
     }
    },
    "obs_within_inflow": {
@@ -196,6 +250,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__LoD2.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 0.0213,
+     "n": 1080,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error_within_threshold.main.spread",
+     "how": "옮김"
     }
    },
    "obs_inflow": {
@@ -262,6 +324,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__LoD2.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 0.0327,
+     "n": 15169,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_LoD2_s0__LoD2.json: spread.observation_error.main.spread",
+     "how": "옮김"
     }
    },
    "missing_c02": {
@@ -328,6 +398,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__LoD2.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 0.1225,
+     "n": 1984,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.2",
+     "how": "옮김"
     }
    },
    "missing_c05": {
@@ -394,6 +472,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__LoD2.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 0.3957,
+     "n": 1984,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_LoD2_s0__LoD2.json: completeness.missing_agreement.all.le_0.5",
+     "how": "옮김"
     }
    },
    "nmad_new": {
@@ -467,6 +553,18 @@
      "src": "SF/measure/B173_b0/LoD2__imgonly_s0.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 62.048640174865724,
+     "n": 4,
+     "nkind": "참값 점",
+     "src": "SL/measure/B173_b0/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad",
+     "how": "옮김 + 반올림 전 값 [새로 셈]",
+     "unit": "cm (파일 값 m × 100)",
+     "stored_cm": 62.05,
+     "rows": 4,
+     "edge": "저장값 62.0500 cm가 반올림 경계라 측정 행(SL/measure/B173_b0/LoD2__cdgsnofit_LoD2_s0.npz: new, 4행)에서 반올림 전 값을 다시 구함"
     }
    },
    "bias_new": {
@@ -543,6 +641,15 @@
      "src": "SF/measure/B173_b0/LoD2__imgonly_s0.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": -32.3,
+     "n": 4,
+     "nkind": "참값 점",
+     "src": "SL/measure/B173_b0/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.bias",
+     "how": "옮김",
+     "unit": "cm (파일 값 m × 100)"
     }
    },
    "floating": {
@@ -609,6 +716,14 @@
      "src": "SF/measure/B173_b0/LoD2__imgonly_s0.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_LoD2_s0",
+     "v": 0.4289,
+     "n": 781,
+     "nkind": "행",
+     "src": "SL/measure/B173_b0/LoD2__cdgsnofit_LoD2_s0.json: condition3.floating_share",
+     "how": "옮김"
     }
    }
   },
@@ -677,6 +792,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__ALS.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 0.1836,
+     "n": 95542,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_ALS_s0__ALS.json: spread.prior_error.main.spread",
+     "how": "옮김"
     }
    },
    "band_c02": {
@@ -698,38 +821,73 @@
     },
     "twodgs": {
      "result": "imgonly_2dgs_s0",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.6273,
+     "n": 9262,
+     "nkind": "참값 점",
+     "src": "SB/metrics/B173_b0/imgonly_2dgs_s0__ALS.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.6273,
+      "n": 9262,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/ALS.results[result=imgonly_2dgs_s0].band2.c2"
+     }
     },
     "geogs": {
      "result": "geogs_ALS_fix1",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.8597,
+     "n": 9262,
+     "nkind": "참값 점",
+     "src": "SB/metrics/B173_b0/geogs_ALS_fix1__ALS.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.8597,
+      "n": 9262,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/ALS.results[result=geogs_ALS_fix1].band2.c2"
+     }
     },
     "mvsfuse": {
      "result": "mvsfuse_ALS",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.9985,
+     "n": 9262,
+     "nkind": "참값 점",
+     "src": "SB/metrics/B173_b0/mvsfuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.9985,
+      "n": 9262,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/ALS.results[result=mvsfuse_ALS].band2.c2"
+     }
     },
     "judgefuse": {
      "result": "judgefuse_ALS",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.9969,
+     "n": 9262,
+     "nkind": "참값 점",
+     "src": "SB/metrics/B173_b0/judgefuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.9969,
+      "n": 9262,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/ALS.results[result=judgefuse_ALS].band2.c2"
+     }
     },
     "prior": {
      "result": "samepath_ALS",
-     "v": null,
-     "n": null,
-     "how": "채우기 일 3",
-     "why": "요청 3절 일 3(전제 위배 2 m 둘레의 값)과 5.5 표 7.14의 규칙: 본 방법이 아닌 칸은 채우기에서 온다"
+     "v": 0.9983,
+     "n": 9262,
+     "nkind": "참값 점",
+     "src": "S1/metrics/B173_b0/samepath_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "value": 0.9983,
+      "n": 9262,
+      "equal": true,
+      "src": "SL/tables/undecidable_band.json: units.B173_b0/ALS.results[result=samepath_ALS].band2.c2"
+     }
     },
     "imgonly": {
      "result": "imgonly_s0",
@@ -738,6 +896,17 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__ALS.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 0.3684,
+     "n": 9262,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_ALS_s0__ALS.json: completeness.premise_band.all.le_0.2",
+     "how": "옮김",
+     "fill_task": {
+      "status": "채우기 표에 줄 없음"
+     }
     }
    },
    "obs_within_inflow": {
@@ -804,6 +973,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__ALS.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 0.0332,
+     "n": 2319,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_ALS_s0__ALS.json: spread.observation_error_within_threshold.main.spread",
+     "how": "옮김"
     }
    },
    "obs_inflow": {
@@ -870,6 +1047,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__ALS.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 0.0329,
+     "n": 8141,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_ALS_s0__ALS.json: spread.observation_error.main.spread",
+     "how": "옮김"
     }
    },
    "missing_c02": {
@@ -936,6 +1121,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__ALS.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 0.381,
+     "n": 21,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.2",
+     "how": "옮김"
     }
    },
    "missing_c05": {
@@ -1002,6 +1195,14 @@
      "src": "SF/metrics/B173_b0/imgonly_s0__ALS.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 0.381,
+     "n": 21,
+     "nkind": "참값 점",
+     "src": "SL/metrics/B173_b0/cdgsnofit_ALS_s0__ALS.json: completeness.missing_agreement.all.le_0.5",
+     "how": "옮김"
     }
    },
    "nmad_new": {
@@ -1081,6 +1282,15 @@
      "src": "SF/measure/B173_b0/ALS__imgonly_s0.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 28.02,
+     "n": 719,
+     "nkind": "참값 점",
+     "src": "SL/measure/B173_b0/ALS__cdgsnofit_ALS_s0.json: condition3.new.nmad",
+     "how": "옮김",
+     "unit": "cm (파일 값 m × 100)"
     }
    },
    "bias_new": {
@@ -1154,6 +1364,15 @@
      "src": "SF/measure/B173_b0/ALS__imgonly_s0.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 5.2,
+     "n": 719,
+     "nkind": "참값 점",
+     "src": "SL/measure/B173_b0/ALS__cdgsnofit_ALS_s0.json: condition3.new.bias",
+     "how": "옮김",
+     "unit": "cm (파일 값 m × 100)"
     }
    },
    "floating": {
@@ -1220,6 +1439,14 @@
      "src": "SF/measure/B173_b0/ALS__imgonly_s0.json",
      "how": "결과 없음",
      "why": "파일 없음"
+    },
+    "cdgs": {
+     "result": "cdgsnofit_ALS_s0",
+     "v": 0.6168,
+     "n": 2469,
+     "nkind": "행",
+     "src": "SL/measure/B173_b0/ALS__cdgsnofit_ALS_s0.json: condition3.floating_share",
+     "how": "옮김"
     }
    }
   }
@@ -1236,6 +1463,89 @@
     "imgonly_s0": 0.9446,
     "imgonly_s1": null,
     "n": 78950,
+    "comps": {
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "v": 0.7534,
+      "n": 78950,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B0_b10/imgonly_2dgs_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7534,
+       "n": 78950,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/LoD2.results[result=imgonly_2dgs_s0].band2.c2"
+      }
+     },
+     "geogs": {
+      "result": "trust_LoD2_fix1",
+      "v": 0.6891,
+      "n": 78950,
+      "nkind": "참값 점",
+      "src": "SF/metrics/B0_b10/trust_LoD2_fix1__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.6891,
+       "n": 78950,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/LoD2.results[result=trust_LoD2_fix1].band2.c2"
+      }
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_LoD2",
+      "v": 0.7549,
+      "n": 78950,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B0_b10/mvsfuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7549,
+       "n": 78950,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/LoD2.results[result=mvsfuse_LoD2].band2.c2"
+      }
+     },
+     "cdgs": {
+      "result": "cdgsnofit_LoD2_s0",
+      "v": 0.4096,
+      "n": 78950,
+      "nkind": "참값 점",
+      "src": "SL/metrics/B0_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "status": "채우기 표에 줄 없음"
+      }
+     },
+     "judgefuse": {
+      "result": "judgefuse_LoD2",
+      "v": 0.8077,
+      "n": 78950,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B0_b10/judgefuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.8077,
+       "n": 78950,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/LoD2.results[result=judgefuse_LoD2].band2.c2"
+      }
+     },
+     "prior": {
+      "result": "samepath_LoD2",
+      "v": 0.7539,
+      "n": 78950,
+      "nkind": "참값 점",
+      "src": "S1/metrics/B0_b10/samepath_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7539,
+       "n": 78950,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/LoD2.results[result=samepath_LoD2].band2.c2"
+      }
+     }
+    },
     "diff": 0.00934999999999997,
     "unit_spread": 0.004157787873376881,
     "three_points": 3.799873337555415e-05,
@@ -1272,6 +1582,89 @@
     "imgonly_s0": 0.9909,
     "imgonly_s1": null,
     "n": 34677,
+    "comps": {
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "v": 0.83,
+      "n": 34677,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B0_b10/imgonly_2dgs_s0__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.83,
+       "n": 34677,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/ALS.results[result=imgonly_2dgs_s0].band2.c2"
+      }
+     },
+     "geogs": {
+      "result": "geogs_ALS_fix1",
+      "v": 0.9012,
+      "n": 34677,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B0_b10/geogs_ALS_fix1__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9012,
+       "n": 34677,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/ALS.results[result=geogs_ALS_fix1].band2.c2"
+      }
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_ALS",
+      "v": 0.9985,
+      "n": 34677,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B0_b10/mvsfuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9985,
+       "n": 34677,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/ALS.results[result=mvsfuse_ALS].band2.c2"
+      }
+     },
+     "cdgs": {
+      "result": "cdgsnofit_ALS_s0",
+      "v": 0.5701,
+      "n": 34677,
+      "nkind": "참값 점",
+      "src": "SL/metrics/B0_b10/cdgsnofit_ALS_s0__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "status": "채우기 표에 줄 없음"
+      }
+     },
+     "judgefuse": {
+      "result": "judgefuse_ALS",
+      "v": 0.9986,
+      "n": 34677,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B0_b10/judgefuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9986,
+       "n": 34677,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/ALS.results[result=judgefuse_ALS].band2.c2"
+      }
+     },
+     "prior": {
+      "result": "samepath_ALS",
+      "v": 0.9985,
+      "n": 34677,
+      "nkind": "참값 점",
+      "src": "S1/metrics/B0_b10/samepath_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9985,
+       "n": 34677,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B0_b10/ALS.results[result=samepath_ALS].band2.c2"
+      }
+     }
+    },
     "diff": 0.007249999999999979,
     "unit_spread": 0.00019798989873221146,
     "three_points": 8.651267410675664e-05,
@@ -1308,6 +1701,89 @@
     "imgonly_s0": 0.9416,
     "imgonly_s1": 0.9451,
     "n": 73287,
+    "comps": {
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "v": 0.7461,
+      "n": 73287,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B173nb_b10/imgonly_2dgs_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7461,
+       "n": 73287,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/LoD2.results[result=imgonly_2dgs_s0].band2.c2"
+      }
+     },
+     "geogs": {
+      "result": "trust_LoD2_fix1",
+      "v": 0.7404,
+      "n": 73287,
+      "nkind": "참값 점",
+      "src": "SF/metrics/B173nb_b10/trust_LoD2_fix1__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7404,
+       "n": 73287,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/LoD2.results[result=trust_LoD2_fix1].band2.c2"
+      }
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_LoD2",
+      "v": 0.9886,
+      "n": 73287,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B173nb_b10/mvsfuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9886,
+       "n": 73287,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/LoD2.results[result=mvsfuse_LoD2].band2.c2"
+      }
+     },
+     "cdgs": {
+      "result": "cdgsnofit_LoD2_s0",
+      "v": 0.4193,
+      "n": 73287,
+      "nkind": "참값 점",
+      "src": "SL/metrics/B173nb_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "status": "채우기 표에 줄 없음"
+      }
+     },
+     "judgefuse": {
+      "result": "judgefuse_LoD2",
+      "v": 0.9929,
+      "n": 73287,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B173nb_b10/judgefuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9929,
+       "n": 73287,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/LoD2.results[result=judgefuse_LoD2].band2.c2"
+      }
+     },
+     "prior": {
+      "result": "samepath_LoD2",
+      "v": 0.9892,
+      "n": 73287,
+      "nkind": "참값 점",
+      "src": "S1/metrics/B173nb_b10/samepath_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9892,
+       "n": 73287,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/LoD2.results[result=samepath_LoD2].band2.c2"
+      }
+     }
+    },
     "diff": 0.014499999999999957,
     "unit_spread": 0.00039597979746464274,
     "three_points": 4.093495435752589e-05,
@@ -1344,6 +1820,89 @@
     "imgonly_s0": 0.9716,
     "imgonly_s1": 0.9788,
     "n": 14136,
+    "comps": {
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "v": 0.6042,
+      "n": 14136,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B173nb_b10/imgonly_2dgs_s0__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.6042,
+       "n": 14136,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/ALS.results[result=imgonly_2dgs_s0].band2.c2"
+      }
+     },
+     "geogs": {
+      "result": "geogs_ALS_fix1",
+      "v": 0.7296,
+      "n": 14136,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B173nb_b10/geogs_ALS_fix1__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7296,
+       "n": 14136,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/ALS.results[result=geogs_ALS_fix1].band2.c2"
+      }
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_ALS",
+      "v": 0.9987,
+      "n": 14136,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B173nb_b10/mvsfuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9987,
+       "n": 14136,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/ALS.results[result=mvsfuse_ALS].band2.c2"
+      }
+     },
+     "cdgs": {
+      "result": "cdgsnofit_ALS_s0",
+      "v": 0.5866,
+      "n": 14136,
+      "nkind": "참값 점",
+      "src": "SL/metrics/B173nb_b10/cdgsnofit_ALS_s0__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "status": "채우기 표에 줄 없음"
+      }
+     },
+     "judgefuse": {
+      "result": "judgefuse_ALS",
+      "v": 0.998,
+      "n": 14136,
+      "nkind": "참값 점",
+      "src": "SB/metrics/B173nb_b10/judgefuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.998,
+       "n": 14136,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/ALS.results[result=judgefuse_ALS].band2.c2"
+      }
+     },
+     "prior": {
+      "result": "samepath_ALS",
+      "v": 0.9988,
+      "n": 14136,
+      "nkind": "참값 점",
+      "src": "S1/metrics/B173nb_b10/samepath_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9988,
+       "n": 14136,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.B173nb_b10/ALS.results[result=samepath_ALS].band2.c2"
+      }
+     }
+    },
     "diff": 0.01715,
     "unit_spread": 0.00019798989873221146,
     "three_points": 0.00021222410865874363,
@@ -1380,6 +1939,89 @@
     "imgonly_s0": 0.8832,
     "imgonly_s1": null,
     "n": 34789,
+    "comps": {
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "v": 0.6927,
+      "n": 34789,
+      "nkind": "참값 점",
+      "src": "SB/metrics/R1rep_b10/imgonly_2dgs_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.6927,
+       "n": 34789,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/LoD2.results[result=imgonly_2dgs_s0].band2.c2"
+      }
+     },
+     "geogs": {
+      "result": "trust_LoD2_fix1",
+      "v": 0.7785,
+      "n": 34789,
+      "nkind": "참값 점",
+      "src": "SF/metrics/R1rep_b10/trust_LoD2_fix1__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7785,
+       "n": 34789,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/LoD2.results[result=trust_LoD2_fix1].band2.c2"
+      }
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_LoD2",
+      "v": 0.5278,
+      "n": 34789,
+      "nkind": "참값 점",
+      "src": "SB/metrics/R1rep_b10/mvsfuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.5278,
+       "n": 34789,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/LoD2.results[result=mvsfuse_LoD2].band2.c2"
+      }
+     },
+     "cdgs": {
+      "result": "cdgsnofit_LoD2_s0",
+      "v": 0.4577,
+      "n": 34789,
+      "nkind": "참값 점",
+      "src": "SL/metrics/R1rep_b10/cdgsnofit_LoD2_s0__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "status": "채우기 표에 줄 없음"
+      }
+     },
+     "judgefuse": {
+      "result": "judgefuse_LoD2",
+      "v": 0.5846,
+      "n": 34789,
+      "nkind": "참값 점",
+      "src": "SB/metrics/R1rep_b10/judgefuse_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.5846,
+       "n": 34789,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/LoD2.results[result=judgefuse_LoD2].band2.c2"
+      }
+     },
+     "prior": {
+      "result": "samepath_LoD2",
+      "v": 0.4924,
+      "n": 34789,
+      "nkind": "참값 점",
+      "src": "S1/metrics/R1rep_b10/samepath_LoD2__LoD2.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.4924,
+       "n": 34789,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/LoD2.results[result=samepath_LoD2].band2.c2"
+      }
+     }
+    },
     "diff": 0.00770000000000004,
     "unit_spread": 0.004355777772109093,
     "three_points": 8.623415447411539e-05,
@@ -1416,6 +2058,89 @@
     "imgonly_s0": 0.9414,
     "imgonly_s1": null,
     "n": 43186,
+    "comps": {
+     "twodgs": {
+      "result": "imgonly_2dgs_s0",
+      "v": 0.7239,
+      "n": 43186,
+      "nkind": "참값 점",
+      "src": "SB/metrics/R1rep_b10/imgonly_2dgs_s0__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.7239,
+       "n": 43186,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/ALS.results[result=imgonly_2dgs_s0].band2.c2"
+      }
+     },
+     "geogs": {
+      "result": "geogs_ALS_fix1",
+      "v": 0.8497,
+      "n": 43186,
+      "nkind": "참값 점",
+      "src": "SB/metrics/R1rep_b10/geogs_ALS_fix1__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.8497,
+       "n": 43186,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/ALS.results[result=geogs_ALS_fix1].band2.c2"
+      }
+     },
+     "mvsfuse": {
+      "result": "mvsfuse_ALS",
+      "v": 0.9965,
+      "n": 43186,
+      "nkind": "참값 점",
+      "src": "SB/metrics/R1rep_b10/mvsfuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9965,
+       "n": 43186,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/ALS.results[result=mvsfuse_ALS].band2.c2"
+      }
+     },
+     "cdgs": {
+      "result": "cdgsnofit_ALS_s0",
+      "v": 0.3597,
+      "n": 43186,
+      "nkind": "참값 점",
+      "src": "SL/metrics/R1rep_b10/cdgsnofit_ALS_s0__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "status": "채우기 표에 줄 없음"
+      }
+     },
+     "judgefuse": {
+      "result": "judgefuse_ALS",
+      "v": 0.97,
+      "n": 43186,
+      "nkind": "참값 점",
+      "src": "SB/metrics/R1rep_b10/judgefuse_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.97,
+       "n": 43186,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/ALS.results[result=judgefuse_ALS].band2.c2"
+      }
+     },
+     "prior": {
+      "result": "samepath_ALS",
+      "v": 0.9965,
+      "n": 43186,
+      "nkind": "참값 점",
+      "src": "S1/metrics/R1rep_b10/samepath_ALS__ALS.json: completeness.premise_band.all.le_0.2",
+      "how": "옮김",
+      "fill_task": {
+       "value": 0.9965,
+       "n": 43186,
+       "equal": true,
+       "src": "SL/tables/undecidable_band.json: units.R1rep_b10/ALS.results[result=samepath_ALS].band2.c2"
+      }
+     }
+    },
     "diff": 0.031749999999999945,
     "unit_spread": 0.023164818151671162,
     "three_points": 6.946695688417543e-05,

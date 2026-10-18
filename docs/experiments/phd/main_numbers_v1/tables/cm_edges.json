@@ -1,6 +1,6 @@
 {
  "task": "PHD-MAIN-NUMBERS-v1",
- "made": "2026-10-16 10:35:10 KST",
+ "made": "2026-10-19 02:53:21 KST",
  "script": "scripts/phd/main_numbers_v1/cm_edges.py",
  "rows": [
   {
@@ -265,6 +265,45 @@
    "one_decimal_unrounded": "0.0",
    "where": [
     "t71.json/rows/R1rep_b10/LoD2/cells/bias_new/geogs/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SL/measure/B173_b0/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad",
+   "result": "cdgsnofit_LoD2_s0",
+   "stored_cm": 62.05,
+   "unrounded_cm": 62.048640174865724,
+   "rows": 4,
+   "one_decimal_stored": "62.1",
+   "one_decimal_unrounded": "62.0",
+   "where": [
+    "t75.json/b173/LoD2/nmad_new/cdgs"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SL/measure/B173nb_b10/LoD2__cdgsnofit_LoD2_s0.json: condition3.new.nmad",
+   "result": "cdgsnofit_LoD2_s0",
+   "stored_cm": 39.65,
+   "unrounded_cm": 39.64737899780273,
+   "rows": 18543,
+   "one_decimal_stored": "39.7",
+   "one_decimal_unrounded": "39.6",
+   "where": [
+    "t71.json/rows/B173nb_b10/LoD2/cells/nmad_new/cdgs/values[0]"
+   ],
+   "one_decimal_differs": true
+  },
+  {
+   "src": "SL/measure/R1rep_b10/ALS__cdgsnofit_ALS_s0.json: condition3.new.nmad",
+   "result": "cdgsnofit_ALS_s0",
+   "stored_cm": 76.15,
+   "unrounded_cm": 76.14596363067626,
+   "rows": 18885,
+   "one_decimal_stored": "76.2",
+   "one_decimal_unrounded": "76.1",
+   "where": [
+    "t71.json/rows/R1rep_b10/ALS/cells/nmad_new/cdgs/values[0]"
    ],
    "one_decimal_differs": true
   }
