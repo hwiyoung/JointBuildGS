@@ -1,7 +1,7 @@
 {
  "task": "PHD-MAIN-DIST71-v1",
  "work": "일 7",
- "made": "2026-10-19 01:57:53 KST",
+ "made": "2026-10-19 11:38:16 KST",
  "script": "scripts/phd/main_dist71_v1/d7_check.py",
  "table_b": [
   {
@@ -1683,6 +1683,15 @@
    "equal": true
   },
   {
+   "case": "B0 · LoD2",
+   "result": "cdgsnofit_LoD2_s0",
+   "rows": 6457,
+   "fill_rows": 6457,
+   "recount": 0.07898404831965308,
+   "fill_kept_0_2": 0.079,
+   "equal": true
+  },
+  {
    "case": "B0 · 항공 LiDAR",
    "result": "prop_ALS_s0",
    "rows": 1755,
@@ -1734,6 +1743,15 @@
    "fill_rows": 1755,
    "recount": 0.9840455840455841,
    "fill_kept_0_2": 0.984,
+   "equal": true
+  },
+  {
+   "case": "B0 · 항공 LiDAR",
+   "result": "cdgsnofit_ALS_s0",
+   "rows": 1755,
+   "fill_rows": 1755,
+   "recount": 0.7361823361823362,
+   "fill_kept_0_2": 0.7362,
    "equal": true
   },
   {
@@ -1791,6 +1809,15 @@
    "equal": true
   },
   {
+   "case": "B173 주변 · LoD2",
+   "result": "cdgsnofit_LoD2_s0",
+   "rows": 3816,
+   "fill_rows": 3816,
+   "recount": 0.4221698113207547,
+   "fill_kept_0_2": 0.4222,
+   "equal": true
+  },
+  {
    "case": "B173 주변 · 항공 LiDAR",
    "result": "prop_ALS_s0",
    "rows": 9398,
@@ -1842,6 +1869,15 @@
    "fill_rows": 9398,
    "recount": 0.9960629921259843,
    "fill_kept_0_2": 0.9961,
+   "equal": true
+  },
+  {
+   "case": "B173 주변 · 항공 LiDAR",
+   "result": "cdgsnofit_ALS_s0",
+   "rows": 9398,
+   "fill_rows": 9398,
+   "recount": 0.3611406682272824,
+   "fill_kept_0_2": 0.3611,
    "equal": true
   },
   {
@@ -1899,6 +1935,15 @@
    "equal": true
   },
   {
+   "case": "R1 · LoD2",
+   "result": "cdgsnofit_LoD2_s0",
+   "rows": 863,
+   "fill_rows": 863,
+   "recount": 0.28041714947856317,
+   "fill_kept_0_2": 0.2804,
+   "equal": true
+  },
+  {
    "case": "R1 · 항공 LiDAR",
    "result": "prop_ALS_s0",
    "rows": 14112,
@@ -1950,6 +1995,15 @@
    "fill_rows": 14112,
    "recount": 0.9951814058956916,
    "fill_kept_0_2": 0.9952,
+   "equal": true
+  },
+  {
+   "case": "R1 · 항공 LiDAR",
+   "result": "cdgsnofit_ALS_s0",
+   "rows": 14112,
+   "fill_rows": 14112,
+   "recount": 0.3486394557823129,
+   "fill_kept_0_2": 0.3486,
    "equal": true
   }
  ],
@@ -2082,8 +2136,8 @@
    "min": 0.040973703018195806,
    "max": 0.8016988810242935
   },
-  "image_error_rows": 36,
-  "image_error_equal": 36,
+  "image_error_rows": 42,
+  "image_error_equal": 42,
   "cdgs_rows": 6,
   "cdgs_equal": 6,
   "f1_edge": 1,
