@@ -637,6 +637,54 @@ def fig4():
     save(fig, "fig4_B173nb_ALS_skylight", title, cap, dict(values=vals, missing_patches=idx.tolist()))
 
 
+# ------------------------------------------------------------------------------------------------ item 2 figure (checks before training)
+def fig_item2():
+    """item 2 (r16 checks, made before training; figure added after the results): fixed-checkpoint probe of every trained switch setting.
+    (가) fix A: agree pixels between w and tau against the pixels fix A newly pulls; (나) fix B: newly pulled pixels in missing patches
+    (released truncation + judgment read as agree) and pixels changed outside missing patches, with the opacity floor on and off (NF)."""
+    d = json.loads((FTP / "checks/compare_probe.json").read_text())["deep"]
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5.6))
+    vals = {"A": {}, "B": {}}
+    ax = axes[0]
+    keys = [("r16A/B0_b10/ALS", "B0 항공 LiDAR L"), ("r16AT/B0_b10/ALS", "B0 항공 LiDAR T"), ("r16AT/B0_b10/LoD2", "B0 LoD2 T"),
+            ("r16A/R1rep_b10/LoD2", "R1 LoD2 L"), ("r16AT/R1rep_b10/LoD2", "R1 LoD2 T"), ("r16A/R1rep_b10/ALS", "R1 항공 LiDAR (L = T)")]
+    for i, (k, lab) in enumerate(keys):
+        px = d[k]["pixels"]
+        a, b = px["wtau"], px["newly_on"]
+        ax.bar(i - 0.18, max(a, 0.8), 0.34, color=GREY)
+        ax.bar(i + 0.18, max(b, 0.8), 0.34, color=BLUE)
+        ax.text(i, max(a, b, 1) * 1.6, f"{a:,}\n{b:,}" + (f"\n밖 {px['newly_on_outside_target']}" if px["newly_on_outside_target"] else ""), ha="center", va="bottom", fontsize=8)
+        vals["A"][lab] = dict(agree_w_tau=a, newly_pulled=b, outside=px["newly_on_outside_target"], newly_released=px["newly_off"])
+    ax.set_yscale("log"); ax.set_ylim(0.5, 3e8)
+    ax.set_xticks(range(len(keys))); ax.set_xticklabels([k[1] for k in keys], fontsize=8.5, rotation=15)
+    ax.set_title("(가) 판 A: 회색 = w~τ 일치 화소, 파랑 = 새로 당긴 화소", loc="left", fontsize=10.5)
+    ax.set_ylabel("화소 수 (로그)")
+    ax = axes[1]
+    keys = [("B0_b10/LoD2", "B0 LoD2"), ("B0_b10/ALS", "B0 항공 LiDAR"), ("B173nb_b10/LoD2", "B173 주변 LoD2"), ("B173nb_b10/ALS", "B173 주변 항공 LiDAR"),
+            ("R1rep_b10/LoD2", "R1 LoD2"), ("R1rep_b10/ALS", "R1 항공 LiDAR")]
+    for i, (k, lab) in enumerate(keys):
+        px = d[f"r16B/{k}"]["pixels"]
+        nf = d.get(f"r16BNF/{k}", {}).get("pixels")
+        ax.bar(i, px["newly_on_miss"], 0.5, color=GREEN)
+        out = px["newly_on_outside_target"] + px["newly_off"]
+        txt = f"{px['newly_on_miss']:,}\n(절단 {px['newly_on_miss_truncation']:,}\n판정 {px['newly_on_miss_judgment']:,})\n밖 {out}" + (f" → 하한 끔 {nf['newly_on_outside_target'] + nf['newly_off']}" if nf else "")
+        ax.text(i, px["newly_on_miss"] * 1.6, txt, ha="center", va="bottom", fontsize=7.8, color=DARK if out == 0 else RED)
+        vals["B"][lab] = dict(newly_pulled_missing=px["newly_on_miss"], truncation=px["newly_on_miss_truncation"], judgment=px["newly_on_miss_judgment"],
+                              outside_changed=out, outside_changed_no_floor=(nf["newly_on_outside_target"] + nf["newly_off"]) if nf else None)
+    ax.set_yscale("log"); ax.set_ylim(1e3, 3e8)
+    ax.set_xticks(range(len(keys))); ax.set_xticklabels([k[1] for k in keys], fontsize=8.5, rotation=15)
+    ax.set_title("(나) 판 B: 결측 패치의 화소에서 새로 당긴 수와 그 밖에서 바뀐 수", loc="left", fontsize=10.5)
+    da = max(abs(v["agree_w_tau"] - v["newly_pulled"]) for v in vals["A"].values())
+    ob = max(v["outside_changed"] for v in vals["B"].values())
+    nf_ = [v["outside_changed_no_floor"] for v in vals["B"].values() if v["outside_changed_no_floor"] is not None]
+    title = (f"판 A가 새로 당긴 화소는 w~τ 일치 화소와 많아야 {da}화소 다르고, 판 B가 바꾼 화소는 결측 패치의 화소다 — 밖의 변화(많아야 {ob}화소)는 "
+             f"불투명도 하한을 끄면 {max(nf_) if nf_ else '—'}이다")
+    cap = ["일 2의 고정 체크포인트 한 반복(1단계 본 방법의 15,000회 상태; 학습 전에 낸 값, 그림은 결과를 본 뒤 더함). 판 A는 학습한 여섯 경우·읽기, 판 B는 여섯 경우. "
+           "'밖' = 대상(판 A: w~τ 일치 화소, 판 B: 결측 패치의 화소) 밖에서 새로 당기거나 놓인 화소. 하한을 끈 탐침은 B173 주변 LoD2와 R1 항공 LiDAR에서만 돌렸다.",
+           "판 A (w~τ 일치 · 새로 당김): " + "; ".join(f"{k} {v['agree_w_tau']:,} · {v['newly_pulled']:,}" for k, v in vals["A"].items())]
+    save(fig, "fig_item2_checks", title, cap, vals)
+
+
 # ------------------------------------------------------------------------------------------------ figure 5 (bars)
 def fig5():
     E = json.loads((FTP / "tables/eval_ft.json").read_text())["cases"]

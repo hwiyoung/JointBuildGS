@@ -1,0 +1,88 @@
+{
+ "title": "판 A가 새로 당긴 화소는 w~τ 일치 화소와 많아야 2화소 다르고, 판 B가 바꾼 화소는 결측 패치의 화소다 — 밖의 변화(많아야 196화소)는 불투명도 하한을 끄면 0이다",
+ "caption": "일 2의 고정 체크포인트 한 반복(1단계 본 방법의 15,000회 상태; 학습 전에 낸 값, 그림은 결과를 본 뒤 더함). 판 A는 학습한 여섯 경우·읽기, 판 B는 여섯 경우. '밖' = 대상(판 A: w~τ 일치 화소, 판 B: 결측 패치의 화소) 밖에서 새로 당기거나 놓인 화소. 하한을 끈 탐침은 B173 주변 LoD2와 R1 항공 LiDAR에서만 돌렸다. 판 A (w~τ 일치 · 새로 당김): B0 항공 LiDAR L 0 · 0; B0 항공 LiDAR T 3,202,750 · 3,202,749; B0 LoD2 T 470,099 · 470,101; R1 LoD2 L 191,632 · 191,632; R1 LoD2 T 35,622 · 35,622; R1 항공 LiDAR (L = T) 0 · 0",
+ "values": {
+  "A": {
+   "B0 항공 LiDAR L": {
+    "agree_w_tau": 0,
+    "newly_pulled": 0,
+    "outside": 0,
+    "newly_released": 0
+   },
+   "B0 항공 LiDAR T": {
+    "agree_w_tau": 3202750,
+    "newly_pulled": 3202749,
+    "outside": 0,
+    "newly_released": 0
+   },
+   "B0 LoD2 T": {
+    "agree_w_tau": 470099,
+    "newly_pulled": 470101,
+    "outside": 2,
+    "newly_released": 0
+   },
+   "R1 LoD2 L": {
+    "agree_w_tau": 191632,
+    "newly_pulled": 191632,
+    "outside": 0,
+    "newly_released": 0
+   },
+   "R1 LoD2 T": {
+    "agree_w_tau": 35622,
+    "newly_pulled": 35622,
+    "outside": 0,
+    "newly_released": 0
+   },
+   "R1 항공 LiDAR (L = T)": {
+    "agree_w_tau": 0,
+    "newly_pulled": 0,
+    "outside": 0,
+    "newly_released": 0
+   }
+  },
+  "B": {
+   "B0 LoD2": {
+    "newly_pulled_missing": 82635,
+    "truncation": 43843,
+    "judgment": 38792,
+    "outside_changed": 0,
+    "outside_changed_no_floor": null
+   },
+   "B0 항공 LiDAR": {
+    "newly_pulled_missing": 5660,
+    "truncation": 1082,
+    "judgment": 4578,
+    "outside_changed": 0,
+    "outside_changed_no_floor": null
+   },
+   "B173 주변 LoD2": {
+    "newly_pulled_missing": 102039,
+    "truncation": 35671,
+    "judgment": 66359,
+    "outside_changed": 196,
+    "outside_changed_no_floor": 0
+   },
+   "B173 주변 항공 LiDAR": {
+    "newly_pulled_missing": 3881,
+    "truncation": 1724,
+    "judgment": 2157,
+    "outside_changed": 21,
+    "outside_changed_no_floor": null
+   },
+   "R1 LoD2": {
+    "newly_pulled_missing": 174367,
+    "truncation": 20940,
+    "judgment": 153421,
+    "outside_changed": 10,
+    "outside_changed_no_floor": null
+   },
+   "R1 항공 LiDAR": {
+    "newly_pulled_missing": 21328,
+    "truncation": 2145,
+    "judgment": 19177,
+    "outside_changed": 17,
+    "outside_changed_no_floor": 0
+   }
+  }
+ }
+}
