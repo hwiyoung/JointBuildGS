@@ -1,0 +1,229 @@
+{
+ "crop": {
+  "view": "DJI_20241217091131_0108_D",
+  "box_px": [
+   412,
+   0,
+   564,
+   727
+  ]
+ },
+ "numbers_line": "지붕 참값 행 32,932 · − 참값 중앙값(NMAD): 사전 정보 -1.4 (1.7) cm, 영상 깊이 +7.6 (2.2), 지금 방법 씨앗 0 +6.8 (2.1), 씨앗 1 +6.9, 허용 구간 없애기 +2.2 cm · 덤프의 |지금 방법 − 사전 정보|: 좁힌 폭 안 8 %, 사이 91 %, 허용 오차 밖 0 % (42,954 화소)",
+ "numbers": {
+  "rows": 32932,
+  "patches": 5696,
+  "minus_gt": {
+   "학습 전 사전 정보": {
+    "n": 32932,
+    "median_m": -0.013865834102034569,
+    "nmad_m": 0.01696381485799793
+   },
+   "지금 방법 씨앗 0": {
+    "n": 32932,
+    "median_m": 0.06843098625540733,
+    "nmad_m": 0.02139668988548219
+   },
+   "지금 방법 씨앗 1": {
+    "n": 32932,
+    "median_m": 0.06894199922680855,
+    "nmad_m": 0.021088370253145694
+   },
+   "허용 구간 없애기": {
+    "n": 32932,
+    "median_m": 0.02218388020992279,
+    "nmad_m": 0.019674079210963098
+   },
+   "영상 깊이": {
+    "n": 32932,
+    "median_m": 0.0763235092163086,
+    "nmad_m": 0.022020351791381836
+   }
+  },
+  "dist_files": {
+   "학습 전 사전 정보": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__samepath_ALS.npz",
+   "지금 방법 씨앗 0": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz",
+   "지금 방법 씨앗 1": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s1.npz",
+   "허용 구간 없애기": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B173nb_b10_ALS__abl_band_ALS_s0.npz"
+  },
+  "image_depth_source": "S1/defs/B173nb_b10/rows_ALS.npz z_mvs - GT z",
+  "dump_vs_prior_on_photo": {
+   "view": "DJI_20241217091131_0108_D",
+   "rule": "render depth (30,000-iteration dump) vs prior render depth on the roof's pixels, both lifted to 3-D; |z_result - z_prior| bins",
+   "runs": {
+    "지금 방법 씨앗 0": {
+     "pixels": 42954,
+     "within_narrowed": 0.08418307957349723,
+     "between": 0.9119523210876752,
+     "beyond_tolerance": 0.003864599338827583,
+     "median_minus_prior_m": 0.08842887706518354
+    },
+    "지금 방법 씨앗 1": {
+     "pixels": 42954,
+     "within_narrowed": 0.07650044233365927,
+     "between": 0.9186804488522605,
+     "beyond_tolerance": 0.004819108814080179,
+     "median_minus_prior_m": 0.09087989763448334
+    },
+    "허용 구간 없애기": {
+     "pixels": 42954,
+     "within_narrowed": 0.7945010941937887,
+     "between": 0.2050798528658565,
+     "beyond_tolerance": 0.00041905294035479815,
+     "median_minus_prior_m": 0.04153080138723553
+    }
+   },
+   "narrowed_m": 0.0561,
+   "tolerance_m": 0.147
+  },
+  "site_map": {
+   "roof_patches": 10141,
+   "roof_median_m": 0.07106971740722656,
+   "roof_nmad_m": 0.025429306983947752,
+   "faces": {
+    "1": {
+     "patches": 8298,
+     "median_m": 0.07569694519042969,
+     "nmad_m": 0.018700473403930662
+    },
+    "4": {
+     "patches": 206,
+     "median_m": -0.01563119888305664,
+     "nmad_m": 0.03469824342727661
+    },
+    "5": {
+     "patches": 221,
+     "median_m": -0.005307197570800781,
+     "nmad_m": 0.032241561698913575
+    },
+    "7": {
+     "patches": 164,
+     "median_m": -0.009648799896240234,
+     "nmad_m": 0.011740464305877685
+    },
+    "12": {
+     "patches": 125,
+     "median_m": -0.008901596069335938,
+     "nmad_m": 0.09844542274475097
+    },
+    "13": {
+     "patches": 23,
+     "median_m": -0.03536224365234375,
+     "nmad_m": 0.10180771865844726
+    },
+    "14": {
+     "patches": 107,
+     "median_m": -0.07286930084228516,
+     "nmad_m": 0.09298063144683838
+    },
+    "16": {
+     "patches": 70,
+     "median_m": -0.07674217224121094,
+     "nmad_m": 0.09349741830825806
+    },
+    "17": {
+     "patches": 69,
+     "median_m": -0.08599567413330078,
+     "nmad_m": 0.05160799026489257
+    },
+    "18": {
+     "patches": 106,
+     "median_m": -0.09847831726074219,
+     "nmad_m": 0.055601600360870355
+    },
+    "19": {
+     "patches": 75,
+     "median_m": -0.12845325469970703,
+     "nmad_m": 0.014126450157165526
+    },
+    "20": {
+     "patches": 52,
+     "median_m": -0.10143756866455078,
+     "nmad_m": 0.057154081821441646
+    },
+    "21": {
+     "patches": 103,
+     "median_m": -0.11512374877929688,
+     "nmad_m": 0.03920510559082031
+    },
+    "22": {
+     "patches": 54,
+     "median_m": -0.08893680572509766,
+     "nmad_m": 0.05712085475921631
+    },
+    "23": {
+     "patches": 39,
+     "median_m": -0.1286945343017578,
+     "nmad_m": 0.021512755393981932
+    },
+    "24": {
+     "patches": 30,
+     "median_m": -0.07581377029418945,
+     "nmad_m": 0.07785454158782959
+    },
+    "25": {
+     "patches": 52,
+     "median_m": -0.09035348892211914,
+     "nmad_m": 0.055557768917083736
+    },
+    "26": {
+     "patches": 43,
+     "median_m": -0.05869865417480469,
+     "nmad_m": 0.08391317825317382
+    },
+    "27": {
+     "patches": 94,
+     "median_m": -0.10028266906738281,
+     "nmad_m": 0.05130329103469848
+    },
+    "28": {
+     "patches": 122,
+     "median_m": -0.09764957427978516,
+     "nmad_m": 0.05600244598388671
+    },
+    "29": {
+     "patches": 49,
+     "median_m": -0.06414413452148438,
+     "nmad_m": 0.07356330184936523
+    }
+   },
+   "ground_cells": 2306,
+   "ground_points": 541230,
+   "ground_median_m": 0.026428699493408203,
+   "ground_nmad_m": 0.037321767425537104,
+   "ground_rule": "s04_gt_v7.py:172-175 bare-ground cells (0.5 m) in the evaluation range"
+  },
+  "section": {
+   "gt_points": 80320,
+   "mvs_pass": 69775,
+   "mvs_fail": 4269,
+   "segments": {
+    "지금 방법 씨앗 0": 4328,
+    "지금 방법 씨앗 1": 4480,
+    "허용 구간 없애기": 4209
+   }
+  },
+  "copied": {
+   "bias_cm": {
+    "지금 방법": 6.2,
+    "학습 전 사전 정보": -1.4,
+    "source": "새 거리 지표(DIST71) 두 자료가 모두 맞는 곳의 치우침"
+   },
+   "stage2_fine_ruler_cm": {
+    "지금 방법": 6.88,
+    "허용 구간 없애기": 2.55,
+    "source": "2단계 보고서(허용 구간 없애기)"
+   },
+   "r2_residual_median_cm": {
+    "value": -6.2,
+    "source": "고친 판 시험 준비 보고 2.3 (사전 정보 − 영상 깊이, 탐색 지역 R2)"
+   }
+  },
+  "seconds": 413.8,
+  "made": "2026-10-20 12:18:56",
+  "scientific_verdict": null
+ },
+ "visible_gt_points": 32932,
+ "caption": "사진 띠는 90° 돌려 보임(왼쪽 = 영상 위쪽). 4-가: 같은 연직 영상 위, 사진에서 보이는 지붕 참값 점마다 (가) 사전 정보, (나) 영상 깊이, (다) 지금 방법 씨앗 0의 참값과의 차(±15 cm). 4-나: 지붕의 긴 축 단면. 4-다: 평가 범위를 위에서 본 지도(두 자료가 모두 맞는 지붕 패치와 맨땅 칸의 영상 깊이 − 참값; 바탕 = 같은 연직 영상을 지표 높이(측량 격자 드론 LiDAR 표면)에 편 것, 영상 밖은 흰색).",
+ "made": "2026-10-20 12:20:53",
+ "scientific_verdict": null
+}

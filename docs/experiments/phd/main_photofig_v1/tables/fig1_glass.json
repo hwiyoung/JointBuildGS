@@ -1,0 +1,155 @@
+{
+ "case_patches": 163,
+ "band_patches": 751,
+ "case_area_m2": 12.643540368687884,
+ "premise_violation_patches": {
+  "case": 163,
+  "band": 0
+ },
+ "missing_patches": {
+  "case": 0,
+  "band": 18,
+  "band_code4": 17,
+  "band_code13": 1
+ },
+ "codes_case": {
+  "3": 163
+ },
+ "pass_share_store": {
+  "pixels": 10408,
+  "passed": 9381,
+  "share": 0.901325903151422
+ },
+ "gt_on_glass": {
+  "points": 9488,
+  "per_m2": 750.422723646086,
+  "multi_return_share": 0.0006323777403035413,
+  "minus_lod2": {
+   "median_m": 0.2589998245239258,
+   "p05": -0.2952146530151367,
+   "p95": 0.4294081687927246
+  },
+  "minus_als": {
+   "median_m": 0.041380882263183594
+  },
+  "layers_vs_lod2": {
+   "groups": [
+    {
+     "n": 9452,
+     "z_min": -0.4362812042236328,
+     "z_max": 0.5542583465576172,
+     "median": 0.2610025405883789
+    }
+   ],
+   "n_layers_ge_5pct": 1
+  }
+ },
+ "als_minus_gt_median_m": -0.04082963243126869,
+ "als_minus_gt_patches": 163,
+ "manual_on_glass": {
+  "points": 0,
+  "per_m2": 0.0,
+  "multi_return_share": null
+ },
+ "nadir_on_glass": {
+  "points": 9488,
+  "per_m2": 750.422723646086,
+  "multi_return_share": 0.0006323777403035413
+ },
+ "manual_minus_nadir_on_glass": {
+  "cells_0_5m": 0,
+  "median_m": null,
+  "nmad_m": null,
+  "frame": "raw (laz - world shift), no height alignment"
+ },
+ "image_depth_on_glass_all_views": {
+  "pixels": 10408,
+  "passed": 9381,
+  "pass_share": 0.901325903151422,
+  "minus_gt_median_m": -0.4167370620926789,
+  "minus_gt_nmad_m": 0.5475882186303969,
+  "n_with_gt": 9381,
+  "share_below_gt_0_2m": 0.7121842021106491,
+  "share_above_gt_0_2m": 0.18750666240272892
+ },
+ "mirror_test": {
+  "points_below_0_2m": 6681,
+  "mirrored": 6680,
+  "mirrored_to_gt_median_m": 0.45531428063795665,
+  "mirrored_within_0_3m_share": 0.2874251497005988,
+  "itself_to_gt_median_m": 0.46117954371147873,
+  "rule": "the points more than 0.2 m below the GT top layer, mirrored through the local GT top plane (0.5 m, PCA); the nearest GT point to the mirrored point (3-D) vs to the point itself"
+ },
+ "photo_vertical": {
+  "view": "DJI_20241217091247_0146_D",
+  "glass_pixels": 870,
+  "passed": 856,
+  "pass_share": 0.9839080459770115,
+  "minus_gt_median_m": -0.5760724636021948,
+  "minus_gt_nmad_m": 0.7071009671204351,
+  "failed_with_photometric_depth": 14,
+  "failed_minus_gt_median_m": 0.549619421967094,
+  "agreeing_views_approx": {
+   "rule": "[근사] views (other than the reference) whose stored image depth agrees with each reference point by the forward-backward reprojection error <= 1 px (COLMAP filter_geom_consistency_max_cost); COLMAP's own source-view selection is not reproduced.",
+   "required_by_colmap": 2,
+   "distribution": {
+    "1": 19,
+    "2": 56,
+    "3": 70,
+    "4": 93,
+    "5": 128,
+    "6": 103,
+    "7": 129,
+    "8": 82,
+    "9": 63,
+    "10": 58,
+    "11": 23,
+    "12": 18,
+    "13": 10,
+    "14": 2,
+    "15": 1,
+    "16": 1
+   },
+   "median": 6.0,
+   "share_ge_2": 0.977803738317757
+  }
+ },
+ "photo_side": {
+  "view": "DJI_20241217091251_0148_D",
+  "glass_pixels": 1030,
+  "passed": 866,
+  "pass_share": 0.8407766990291262,
+  "minus_gt_median_m": -0.5387141185412929,
+  "minus_gt_nmad_m": 0.6143304795069873,
+  "failed_with_photometric_depth": 164,
+  "failed_minus_gt_median_m": -2.326129673600242
+ },
+ "section_all_views": {
+  "pass_points": 1298,
+  "fail_points_photometric": 116
+ },
+ "section": {
+  "gt_points": 5843,
+  "manual_points": 0,
+  "method_segments": 909,
+  "als_segments": 110,
+  "lod2_segments": 10,
+  "mvs_pass": {
+   "vertical": 111,
+   "side": 47
+  },
+  "mvs_fail": {
+   "vertical": 0,
+   "side": 0
+  },
+  "mesh": {
+   "vertices": 19596134,
+   "faces": 36543161,
+   "kept_vertices": 2827565,
+   "kept_faces": 5352768
+  }
+ },
+ "seconds": 13.7,
+ "made": "2026-10-20 11:45:16",
+ "scientific_verdict": null
+}
