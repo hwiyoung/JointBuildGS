@@ -1,0 +1,354 @@
+{
+ "key": "V2",
+ "title": "기존 방법은 모두 보지 못한 벽을 비웠고, 본 방법만 사전 정보로 벽을 세웠다",
+ "site": "B173nb_b10",
+ "prior": "LoD2",
+ "face": 53,
+ "camera": {
+  "kind": "orthographic (parallel rays along -n)",
+  "centre": [
+   153.565,
+   111.76,
+   -33.786
+  ],
+  "right": [
+   0.3654930300353047,
+   0.9308140764919769,
+   -0.0
+  ],
+  "up": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "toward_viewer": [
+   0.930814,
+   -0.365493,
+   0.0
+  ],
+  "s_range": [
+   -39.59999674577088,
+   30.149997522348286
+  ],
+  "h_range": [
+   -9.723999999999997,
+   9.276
+  ],
+  "pixel_m": 0.025,
+  "size": [
+   2790,
+   760
+  ]
+ },
+ "photo": {
+  "view": "DJI_20241217091247_0146_D",
+  "crop_native": [
+   456,
+   0,
+   856,
+   1013
+  ],
+  "camera": {
+   "kind": "pinhole (training camera, COLMAP 1400 x 1013 model)",
+   "view": "DJI_20241217091247_0146_D",
+   "K_native": [
+    922.0550838163813,
+    922.470063461439,
+    702.6193018201524,
+    499.79701601553825
+   ],
+   "R": [
+    [
+     -0.9288420154887198,
+     0.37045665081978335,
+     -0.0037921136905250423
+    ],
+    [
+     0.37046510235508906,
+     0.9286871666537418,
+     -0.017197512310752512
+    ],
+    [
+     -0.002849245494190804,
+     -0.01737861778261393,
+     -0.9998449206972448
+    ]
+   ],
+   "t": [
+    97.85848756700904,
+    -151.96771335960582,
+    35.007952648755676
+   ],
+   "centre": [
+    147.29355556019902,
+    105.48652741285133,
+    32.76014752896622
+   ],
+   "crop_native": [
+    0,
+    0,
+    1400.0,
+    1013.0
+   ],
+   "scale": 1,
+   "size": [
+    1400,
+    1013
+   ]
+  }
+ },
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/samepath_LoD2/mesh_virtual.ply",
+   "mesh_info": {
+    "vertices": 2223636,
+    "faces": 4434002,
+    "kept_vertices": 468731,
+    "kept_faces": 933902,
+    "kept_faces_after_place_cut": 423566
+   },
+   "hit_share_of_image": 1.0,
+   "hit_share_in_outline": 1.0,
+   "wall": {
+    "face": 53,
+    "patches": 14970,
+    "present": 14970,
+    "share": 1.0,
+    "crop_triangles": 429045,
+    "by_label": {
+     "맞음으로 미룸": {
+      "patches": 14970,
+      "present": 14970,
+      "share": 1.0
+     },
+     "틀림으로 미룸": {
+      "patches": 2953,
+      "present": 2953,
+      "share": 1.0
+     },
+     "모호": {
+      "patches": 375,
+      "present": 375,
+      "share": 1.0
+     }
+    }
+   }
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/gpu/virtual/mesh_virtual.ply",
+   "mesh_info": {
+    "vertices": 16643064,
+    "faces": 28768677,
+    "kept_vertices": 2253717,
+    "kept_faces": 3797974,
+    "kept_faces_after_place_cut": 485777
+   },
+   "hit_share_of_image": 0.3311960007545746,
+   "hit_share_in_outline": 0.3393040029162616,
+   "wall": {
+    "face": 53,
+    "patches": 14970,
+    "present": 3415,
+    "share": 0.228123,
+    "crop_triangles": 512495,
+    "by_label": {
+     "맞음으로 미룸": {
+      "patches": 14970,
+      "present": 3415,
+      "share": 0.228123
+     },
+     "틀림으로 미룸": {
+      "patches": 2953,
+      "present": 1197,
+      "share": 0.40535
+     },
+     "모호": {
+      "patches": 375,
+      "present": 143,
+      "share": 0.381333
+     }
+    }
+   }
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/gpu/virtual/mesh_virtual.ply",
+   "mesh_info": {
+    "vertices": 12865153,
+    "faces": 22248413,
+    "kept_vertices": 1770781,
+    "kept_faces": 3022542,
+    "kept_faces_after_place_cut": 416940
+   },
+   "hit_share_of_image": 0.24137709866063006,
+   "hit_share_in_outline": 0.23060382238577976,
+   "wall": {
+    "face": 53,
+    "patches": 14970,
+    "present": 3342,
+    "share": 0.223246,
+    "crop_triangles": 441388,
+    "by_label": {
+     "맞음으로 미룸": {
+      "patches": 14970,
+      "present": 3342,
+      "share": 0.223246
+     },
+     "틀림으로 미룸": {
+      "patches": 2953,
+      "present": 288,
+      "share": 0.097528
+     },
+     "모호": {
+      "patches": 375,
+      "present": 322,
+      "share": 0.858667
+     }
+    }
+   }
+  },
+  "결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/virtual/B173nb_b10/mvsfuse_LoD2/mesh_virtual.ply",
+   "mesh_info": {
+    "vertices": 3972030,
+    "faces": 7584107,
+    "kept_vertices": 558745,
+    "kept_faces": 1033498,
+    "kept_faces_after_place_cut": 92063
+   },
+   "hit_share_of_image": 0.04556121486511979,
+   "hit_share_in_outline": 0.044791955978336344,
+   "wall": {
+    "face": 53,
+    "patches": 14970,
+    "present": 1569,
+    "share": 0.10481,
+    "crop_triangles": 99222,
+    "by_label": {
+     "맞음으로 미룸": {
+      "patches": 14970,
+      "present": 1569,
+      "share": 0.10481
+     },
+     "틀림으로 미룸": {
+      "patches": 2953,
+      "present": 86,
+      "share": 0.029123
+     },
+     "모호": {
+      "patches": 375,
+      "present": 316,
+      "share": 0.842667
+     }
+    }
+   }
+  },
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/metrics_fix_v1/PHD-MAIN-METRICS-FIX-v1/virtual/option2/b1_LoD2/mesh_virtual.ply",
+   "mesh_info": {
+    "vertices": 9118054,
+    "faces": 16013995,
+    "kept_vertices": 1251646,
+    "kept_faces": 2212550,
+    "kept_faces_after_place_cut": 847803
+   },
+   "hit_share_of_image": 0.8097113752122241,
+   "hit_share_in_outline": 0.8166508991806694,
+   "wall": {
+    "face": 53,
+    "patches": 14970,
+    "present": 13771,
+    "share": 0.919906,
+    "crop_triangles": 864938,
+    "by_label": {
+     "맞음으로 미룸": {
+      "patches": 14970,
+      "present": 13771,
+      "share": 0.919906
+     },
+     "틀림으로 미룸": {
+      "patches": 2953,
+      "present": 405,
+      "share": 0.137149
+     },
+     "모호": {
+      "patches": 375,
+      "present": 344,
+      "share": 0.917333
+     }
+    }
+   }
+  }
+ },
+ "extra": {
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "wall": {
+    "face": 53,
+    "patches": 14970,
+    "present": 13871,
+    "share": 0.926587,
+    "crop_triangles": 916834,
+    "by_label": {
+     "맞음으로 미룸": {
+      "patches": 14970,
+      "present": 13871,
+      "share": 0.926587
+     },
+     "틀림으로 미룸": {
+      "patches": 2953,
+      "present": 445,
+      "share": 0.150694
+     },
+     "모호": {
+      "patches": 375,
+      "present": 330,
+      "share": 0.88
+     }
+    }
+   }
+  },
+  "CDGS": {
+   "result": "cdgsnofit_LoD2_s0",
+   "wall": {
+    "face": 53,
+    "patches": 14970,
+    "present": 2970,
+    "share": 0.198397,
+    "crop_triangles": 588656,
+    "by_label": {
+     "맞음으로 미룸": {
+      "patches": 14970,
+      "present": 2970,
+      "share": 0.198397
+     },
+     "틀림으로 미룸": {
+      "patches": 2953,
+      "present": 2074,
+      "share": 0.702337
+     },
+     "모호": {
+      "patches": 375,
+      "present": 125,
+      "share": 0.333333
+     }
+    }
+   }
+  }
+ },
+ "outline_patches": 18298,
+ "counted_patches": 14970,
+ "supersample": 2,
+ "seconds": 8.8,
+ "made": "2026-10-20 16:25:49 KST",
+ "scientific_verdict": null
+}
