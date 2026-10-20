@@ -1,0 +1,116 @@
+{
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "reading": "T",
+ "w_maps": "/ph/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/prep/wmaps_T/R1rep_b10/LoD2",
+ "views": 333,
+ "selection": {
+  "agree": "prior pixels with a rendered depth whose patch judgment (unit_judgment) is agree, r16-default dry init",
+  "g1": "every prior pixel with a rendered depth and g_p > 0 (stage 2's bands selection)",
+  "agree_c2": "agree pixels of region code 2 patches"
+ },
+ "results": {
+  "prop_LoD2_s0": {
+   "dump": "/out/stage1/R1rep_b10/prop_LoD2_s0/model/dump/iteration_30000",
+   "views_missing": 0,
+   "agree": {
+    "n": 11731645,
+    "shares": {
+     "lt_w": 0.9101702276194004,
+     "w_tau": 0.003124455266077349,
+     "tau_2tau": 0.031216935050455412,
+     "2tau_4tau": 0.00957947500116139,
+     "ge_4tau": 0.0459089070629055
+    }
+   },
+   "g1": {
+    "n": 11835117,
+    "shares": {
+     "lt_w": 0.9088950282451792,
+     "w_tau": 0.0031651567111672827,
+     "tau_2tau": 0.03177340790124846,
+     "2tau_4tau": 0.009740334632940257,
+     "ge_4tau": 0.046426072509464844
+    }
+   },
+   "agree_c2": {
+    "n": 2913866,
+    "shares": {
+     "lt_w": 0.9152246534329307,
+     "w_tau": 0.003389654843427941,
+     "tau_2tau": 0.025505634095733982,
+     "2tau_4tau": 0.005576097184976934,
+     "ge_4tau": 0.05030396044293046
+    }
+   }
+  },
+  "prop_LoD2_s1": {
+   "dump": "/out/stage1/R1rep_b10/prop_LoD2_s1/model/dump/iteration_30000",
+   "views_missing": 0,
+   "agree": {
+    "n": 11731645,
+    "shares": {
+     "lt_w": 0.9129519347031043,
+     "w_tau": 0.002766875404088685,
+     "tau_2tau": 0.029038979614538284,
+     "2tau_4tau": 0.009346174385604065,
+     "ge_4tau": 0.045896035892664666
+    }
+   },
+   "g1": {
+    "n": 11835117,
+    "shares": {
+     "lt_w": 0.9116964369680503,
+     "w_tau": 0.002798028950622119,
+     "tau_2tau": 0.029579175262906147,
+     "2tau_4tau": 0.009510003154172452,
+     "ge_4tau": 0.04641635566424903
+    }
+   },
+   "agree_c2": {
+    "n": 2913866,
+    "shares": {
+     "lt_w": 0.9166179913558139,
+     "w_tau": 0.0032365935839190956,
+     "tau_2tau": 0.024594816645652204,
+     "2tau_4tau": 0.005522216876136377,
+     "ge_4tau": 0.05002838153847843
+    }
+   }
+  },
+  "fixAT_LoD2_s0": {
+   "dump": "/ph/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixAT_LoD2_s0/model/dump/iteration_30000",
+   "views_missing": 0,
+   "agree": {
+    "n": 11731645,
+    "shares": {
+     "lt_w": 0.9097655955324253,
+     "w_tau": 0.0027043948227209397,
+     "tau_2tau": 0.028598291202981338,
+     "2tau_4tau": 0.009294263506950645,
+     "ge_4tau": 0.04963745493492174
+    }
+   },
+   "g1": {
+    "n": 11835117,
+    "shares": {
+     "lt_w": 0.9083597568152474,
+     "w_tau": 0.00274336113449491,
+     "tau_2tau": 0.029225059625519544,
+     "2tau_4tau": 0.009513551915033877,
+     "ge_4tau": 0.0501582705097043
+    }
+   },
+   "agree_c2": {
+    "n": 2913866,
+    "shares": {
+     "lt_w": 0.9158344961642024,
+     "w_tau": 0.003120939672586179,
+     "tau_2tau": 0.024976783421063287,
+     "2tau_4tau": 0.005691751096309851,
+     "ge_4tau": 0.05037602964583821
+    }
+   }
+  }
+ }
+}

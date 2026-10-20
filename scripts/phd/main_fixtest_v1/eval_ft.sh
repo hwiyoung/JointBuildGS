@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # PHD-MAIN-FIXTEST-v1 일 5 driver (host; every step in Docker through run_step_ft.sh): the new distance metric of this task's results that have
-# their post steps done (dm_ft d2 per site, d2b for B0), the d3 blocks, the place tables, the mechanisms of fix A (band_w) and fix B (mech_b).
+# their post steps done (dm_ft d2 per site, d2b for B0), the d3 blocks, the place tables, the fix-B mechanism (mech_b), then the tables that
+# read them (curve_ft, scene_ft, area_b, pred_ft). The fix-A bands (band_w) are counted by auto_eval_ft.sh.
 #   bash eval_ft.sh [site ...]        (default: the three sites; a site's d2 counts only results not counted yet)
 # One heavy step at a time (the training queue's CPU slot lock logs/slot0.lock is taken for d2, so the post steps and d2 do not overlap).
 # scientific_verdict: null.
@@ -27,4 +28,6 @@ done
 CPUS=8 MEM=24 bash "$HERE/run_step_ft.sh" "dm_d3_$(date +%H%M)" dm_ft.py d3
 CPUS=4 MEM=16 bash "$HERE/run_step_ft.sh" "tables_$(date +%H%M)" tables_ft.py
 CPUS=8 MEM=24 bash "$HERE/run_step_ft.sh" "mechb_$(date +%H%M)" mech_b.py
+# the tables that read the place values (curves, scene values and records, the areas of fix B, the predictions)
+for st in curve_ft scene_ft area_b pred_ft; do CPUS=4 MEM=16 bash "$HERE/run_step_ft.sh" "${st}_$(date +%H%M)" "$st.py" > /dev/null; done
 echo "eval_ft done $(date '+%m-%d %H:%M:%S')"

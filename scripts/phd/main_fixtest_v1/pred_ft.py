@@ -119,9 +119,13 @@ def fmtc(c):
         return "—"
     if c["status"] != "있음":
         return f"{c['case']} {c['place']} {c['metric']}: {c['status']}"
+    def num(x, spec):
+        return "—" if x is None else format(x, spec)
     v = c["value"]
-    s = f"{c['case']} {c['place']} {c['metric']} {v:.2f} (본 방법 평균 {c['mean']:.2f}, 차 {c['diff']:+.2f}, 기준 {c['criterion']:.2f}, {c['grade']}"
-    return s + (f", {c['side']}" if c["grade"] not in ("같음", "표본 부족") else "") + f"; 표본 {c['n']:,})"
+    s = (f"{c['case']} {c['place']} {c['metric']} {num(v, '.2f')} (본 방법 평균 {num(c['mean'], '.2f')}, 차 {num(c['diff'], '+.2f')}, "
+         f"기준 {num(c['criterion'], '.2f')}, {c['grade']}")
+    return s + (f", {c['side']}" if c["grade"] not in ("같음", "표본 부족", "—", None) and c.get("side") else "") + \
+        (f"; 표본 {c['n']:,})" if c.get("n") is not None else "; 표본 —)")
 
 
 def short(c):

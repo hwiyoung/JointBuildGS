@@ -1,0 +1,180 @@
+{
+ "title": "R1 항공 LiDAR 영상이 틀린 곳의 단면에서 참값 0.2 m 안 몫은 본 방법 100.0 %, 판 A 100.0 %다 — 이 경우 w = τ라 판 A는 손실을 바꾸지 않는다",
+ "caption": "영상이 틀린 곳의 덩어리(516패치, 32.5 m², 참값 한 층, 참값 점 32,879)의 중심을 긴 축으로 지나는 12 m × 0.5 m 단면. 파랑 = 결과 메시, 주황 = 학습 전 사전 정보, 회색 점 = 띠 안의 참값 점 6,099개. 참값 점에서 결과 메시까지 0.2 m 안 몫(R(0.2 m))과 거리 중앙값: 본 방법 씨앗 0 100.0 %, 9.6 cm; 판 A (L, w = τ) 100.0 %, 9.8 cm",
+ "values": {
+  "section": {
+   "centre_xyz": [
+    7.804,
+    44.183,
+    -28.472
+   ],
+   "direction_t_xy": [
+    0.802016,
+    -0.597303
+   ],
+   "across_n_xy": [
+    0.597303,
+    0.802016
+   ],
+   "length_m": 12.0,
+   "half_length_m": 6.0,
+   "width_m": 0.5,
+   "half_width_m": 0.25,
+   "rule": "s = (xy - centre) . t in [-6, 6] m, d = (xy - centre) . n in [-0.25, 0.25] m; t = principal axis (largest eigenvector of the plan covariance) of the cluster's patch centres, sign x >= 0; centre = mean of the cluster's patch centres",
+   "principal_axis_eigenvalues_m2": [
+    11.0055,
+    0.767
+   ],
+   "elongation": 3.79,
+   "z_range_m": [
+    -29.634,
+    -27.32
+   ],
+   "z_rule": "percentile 1 - 0.6 m and percentile 99 + 0.6 m of the inputs in the band: the GT points, the prior (patch centres and the registered prior surface S1/defs/R1rep_b10/prior_ALS.npz cut by the section plane) and the MVS (rows 'z_mvs'); the stage-2 section rule (figs_s2.section_fig) without any result mesh; a result outside is drawn clipped at the frame",
+   "z_inputs_min_max": {
+    "gt": [
+     -28.967,
+     -27.84
+    ],
+    "prior_patch_centres": [
+     -28.991,
+     -27.952
+    ],
+    "mvs_rows": [
+     -29.044,
+     -27.971
+    ]
+   },
+   "gt_points_in_band": 6099,
+   "gt_source": "all stage-1 GT points S1/defs/R1rep_b10/gt_classes.npz 'xyz_gt_points' (figs_s2.gt_points)",
+   "region_rows_in_band": {
+    "all": 6099,
+    "thinned": 600
+   },
+   "patches_in_band": {
+    "count": 97,
+    "codes": {
+     "2": 9,
+     "3": 88
+    },
+    "of_cluster": 88,
+    "image_error": 88,
+    "list": [
+     17893,
+     17894,
+     17895,
+     18000,
+     18001,
+     18002,
+     18108,
+     18109,
+     18212,
+     18213,
+     18316,
+     18317,
+     18318,
+     18419,
+     18420,
+     18421,
+     18523,
+     18524,
+     18623,
+     18624,
+     18723,
+     18724,
+     18725,
+     18824,
+     18825,
+     18826,
+     18926,
+     18927,
+     19026,
+     19027,
+     19125,
+     19126,
+     19127,
+     19224,
+     19225,
+     19226,
+     19323,
+     19324,
+     19418,
+     19419,
+     19513,
+     19514,
+     19515,
+     19609,
+     19610,
+     19611,
+     19706,
+     19707,
+     19800,
+     19801,
+     19894,
+     19895,
+     19896,
+     19987,
+     19988,
+     19989,
+     20082,
+     20083,
+     20172,
+     20173,
+     20261,
+     20262,
+     20263,
+     20352,
+     20353,
+     20354,
+     20442,
+     20443,
+     20531,
+     20532,
+     20619,
+     20620,
+     20621,
+     20707,
+     20708,
+     20709,
+     20794,
+     20795,
+     20877,
+     20878,
+     20961,
+     20962,
+     20963,
+     21044,
+     21045,
+     21046,
+     21126,
+     21127,
+     21207,
+     21208,
+     21285,
+     21286,
+     21287,
+     21362,
+     21363,
+     21364,
+     21442
+    ]
+   },
+   "prior_surface_segments": 120,
+   "file": "FT/prep/figpos_fig2_rows.npz (gt_index into xyz_gt_points, row_index into rows_ALS.npz, patch_index into the region file, s / d / z of each, cluster_patches, prior_segments (s, z))"
+  },
+  "values": {
+   "본 방법 씨앗 0": {
+    "result": "prop_ALS_s0",
+    "gt_points": 6099,
+    "R_0_2": 1.0,
+    "median_abs_cm": 9.578658640384674
+   },
+   "판 A (L, w = τ)": {
+    "result": "fixA_ALS_s0",
+    "gt_points": 6099,
+    "R_0_2": 1.0,
+    "median_abs_cm": 9.785933792591095
+   }
+  }
+ }
+}

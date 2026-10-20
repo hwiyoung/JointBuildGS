@@ -1,0 +1,477 @@
+{
+ "task": "PHD-MAIN-FIXTEST-v1",
+ "rows": [
+  {
+   "site": "B173nb_b10",
+   "result": "fixA_ALS_s0",
+   "case": "B173 주변 항공 LiDAR",
+   "fix": "판 A 읽기 L",
+   "train": false,
+   "why": "관문(읽기 L): 항공 LiDAR: 나",
+   "tries": []
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "fixAT_ALS_s0",
+   "case": "B173 주변 항공 LiDAR",
+   "fix": "판 A 읽기 T",
+   "train": false,
+   "why": "관문(읽기 T): 항공 LiDAR: 가",
+   "tries": []
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "fixA_LoD2_s0",
+   "case": "B173 주변 LoD2",
+   "fix": "판 A 읽기 L",
+   "train": false,
+   "why": "관문(읽기 L): LoD2 벽면: 가",
+   "tries": []
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "fixAT_LoD2_s0",
+   "case": "B173 주변 LoD2",
+   "fix": "판 A 읽기 T",
+   "train": false,
+   "why": "관문(읽기 T): LoD2 벽면: 가",
+   "tries": []
+  },
+  {
+   "site": "B0_b10",
+   "result": "fixA_ALS_s0",
+   "case": "B0 항공 LiDAR",
+   "fix": "판 A 읽기 L",
+   "train": true,
+   "why": "관문 통과(읽기 L)",
+   "tries": [
+    {
+     "dir": "fixA_ALS_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 75.1,
+     "gpu_peak_gib": 11.71,
+     "gpu": 0,
+     "started": "2026-10-20T11:33:48.087169+09:00",
+     "finished": "2026-10-20T12:48:53.354378+09:00",
+     "gaussians": 2480006,
+     "gaussians_prior": 262992,
+     "prior_opacity_median": 0.6875676512718201,
+     "gpu_post_seconds": {
+      "post": 361.1,
+      "run": 52.1
+     },
+     "host_min_available_gb": 20.589580535888672,
+     "psnr": 22.7756,
+     "cpu_post_minutes": 18.8
+    }
+   ]
+  },
+  {
+   "site": "B0_b10",
+   "result": "fixAT_ALS_s0",
+   "case": "B0 항공 LiDAR",
+   "fix": "판 A 읽기 T",
+   "train": true,
+   "why": "관문 통과(읽기 T)",
+   "tries": [
+    {
+     "dir": "fixAT_ALS_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 68.6,
+     "gpu_peak_gib": 11.24,
+     "gpu": 0,
+     "started": "2026-10-20T13:07:23.149724+09:00",
+     "finished": "2026-10-20T14:15:58.164185+09:00",
+     "gaussians": 2365969,
+     "gaussians_prior": 322931,
+     "prior_opacity_median": 0.6585059762001038,
+     "gpu_post_seconds": {
+      "post": 375.7,
+      "run": 39.3
+     },
+     "host_min_available_gb": 23.784008026123047,
+     "psnr": 22.8968,
+     "cpu_post_minutes": 3.6
+    }
+   ]
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "fixA_ALS_s0",
+   "case": "R1 항공 LiDAR",
+   "fix": "판 A 읽기 L",
+   "train": true,
+   "why": "관문 통과(읽기 L)",
+   "tries": [
+    {
+     "dir": "fixA_ALS_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 75.6,
+     "gpu_peak_gib": 14.64,
+     "gpu": 0,
+     "started": "2026-10-20T14:22:53.438755+09:00",
+     "finished": "2026-10-20T15:38:28.620028+09:00",
+     "gaussians": 2851842,
+     "gaussians_prior": 170742,
+     "prior_opacity_median": 0.32097482681274414,
+     "gpu_post_seconds": {
+      "post": 469.4,
+      "run": 56.1
+     },
+     "host_min_available_gb": 11.471786499023438,
+     "psnr": 22.918,
+     "cpu_post_minutes": 5.4
+    }
+   ]
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "fixAT_ALS_s0",
+   "case": "R1 항공 LiDAR",
+   "fix": "판 A 읽기 T",
+   "train": false,
+   "why": "읽기 L과 w가 같아 같은 설정 — 판 A(읽기 L)로 갈음",
+   "tries": []
+  },
+  {
+   "site": "B0_b10",
+   "result": "fixA_LoD2_s0",
+   "case": "B0 LoD2",
+   "fix": "판 A 읽기 L",
+   "train": false,
+   "why": "관문(읽기 L): LoD2 지붕면: 가",
+   "tries": []
+  },
+  {
+   "site": "B0_b10",
+   "result": "fixAT_LoD2_s0",
+   "case": "B0 LoD2",
+   "fix": "판 A 읽기 T",
+   "train": true,
+   "why": "관문 통과(읽기 T)",
+   "tries": [
+    {
+     "dir": "fixAT_LoD2_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 71.1,
+     "gpu_peak_gib": 12.74,
+     "gpu": 0,
+     "started": "2026-10-20T15:47:14.395263+09:00",
+     "finished": "2026-10-20T16:58:19.934450+09:00",
+     "gaussians": 2612126,
+     "gaussians_prior": 2472063,
+     "prior_opacity_median": 0.34534111618995667,
+     "gpu_post_seconds": {
+      "post": 376.1,
+      "run": 43.9
+     },
+     "host_min_available_gb": 14.028610229492188,
+     "psnr": 22.8137,
+     "cpu_post_minutes": 23.4
+    }
+   ]
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "fixA_LoD2_s0",
+   "case": "R1 LoD2",
+   "fix": "판 A 읽기 L",
+   "train": true,
+   "why": "관문 통과(읽기 L)",
+   "tries": [
+    {
+     "dir": "fixA_LoD2_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 72.1,
+     "gpu_peak_gib": 13.62,
+     "gpu": 0,
+     "started": "2026-10-20T17:05:20.324937+09:00",
+     "finished": "2026-10-20T18:17:25.290826+09:00",
+     "gaussians": 2495368,
+     "gaussians_prior": 648583,
+     "prior_opacity_median": 0.389715313911438,
+     "gpu_post_seconds": {
+      "post": 467.9,
+      "run": 37.0
+     },
+     "host_min_available_gb": 21.904579162597656,
+     "psnr": 22.3899,
+     "cpu_post_minutes": 33.2
+    }
+   ]
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "fixAT_LoD2_s0",
+   "case": "R1 LoD2",
+   "fix": "판 A 읽기 T",
+   "train": true,
+   "why": "관문 통과(읽기 T)",
+   "tries": [
+    {
+     "dir": "fixAT_LoD2_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 77.6,
+     "gpu_peak_gib": 15.07,
+     "gpu": 0,
+     "started": "2026-10-20T18:32:28.204312+09:00",
+     "finished": "2026-10-20T19:50:03.420372+09:00",
+     "gaussians": 2557527,
+     "gaussians_prior": 559422,
+     "prior_opacity_median": 0.4050873816013336,
+     "gpu_post_seconds": {
+      "post": 452.2,
+      "run": 40.3
+     },
+     "host_min_available_gb": 21.495487213134766,
+     "psnr": 23.0884,
+     "cpu_post_minutes": 5.1
+    }
+   ]
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "fixB_LoD2_s0",
+   "case": "R1 LoD2",
+   "fix": "판 B",
+   "train": true,
+   "why": "판 B는 관문과 상관없음",
+   "tries": [
+    {
+     "dir": "fixB_LoD2_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 78.1,
+     "gpu_peak_gib": 17.37,
+     "gpu": 1,
+     "started": "2026-10-20T11:34:48.049784+09:00",
+     "finished": "2026-10-20T12:52:53.466404+09:00",
+     "gaussians": 2957246,
+     "gaussians_prior": 1245049,
+     "prior_opacity_median": 0.23409754037857056,
+     "gpu_post_seconds": {
+      "post": 456.4,
+      "run": 49.2
+     },
+     "host_min_available_gb": 13.875957489013672,
+     "psnr": 22.7262,
+     "cpu_post_minutes": 17.4
+    }
+   ]
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "fixB_ALS_s0",
+   "case": "B173 주변 항공 LiDAR",
+   "fix": "판 B",
+   "train": true,
+   "why": "판 B는 관문과 상관없음",
+   "tries": [
+    {
+     "dir": "fixB_ALS_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 82.6,
+     "gpu_peak_gib": 14.01,
+     "gpu": 1,
+     "started": "2026-10-20T13:08:12.326440+09:00",
+     "finished": "2026-10-20T14:30:47.963394+09:00",
+     "gaussians": 3816502,
+     "gaussians_prior": 378523,
+     "prior_opacity_median": 0.7448895573616028,
+     "gpu_post_seconds": {
+      "post": 342.8,
+      "run": 179.1
+     },
+     "host_min_available_gb": 20.53652572631836,
+     "psnr": 23.2635,
+     "cpu_post_minutes": 17.9
+    }
+   ]
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "fixB_ALS_s0",
+   "case": "R1 항공 LiDAR",
+   "fix": "판 B",
+   "train": true,
+   "why": "판 B는 관문과 상관없음",
+   "tries": [
+    {
+     "dir": "fixB_ALS_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 72.1,
+     "gpu_peak_gib": 13.72,
+     "gpu": 1,
+     "started": "2026-10-20T14:39:29.986366+09:00",
+     "finished": "2026-10-20T15:51:34.949479+09:00",
+     "gaussians": 2554141,
+     "gaussians_prior": 165215,
+     "prior_opacity_median": 0.299165815114975,
+     "gpu_post_seconds": {
+      "post": 465.1,
+      "run": 56.6
+     },
+     "host_min_available_gb": 11.445106506347656,
+     "psnr": 22.9402,
+     "cpu_post_minutes": 2.9
+    }
+   ]
+  },
+  {
+   "site": "B0_b10",
+   "result": "fixB_LoD2_s0",
+   "case": "B0 LoD2",
+   "fix": "판 B",
+   "train": true,
+   "why": "판 B는 관문과 상관없음",
+   "tries": [
+    {
+     "dir": "fixB_LoD2_s0_try1_20261020T163014",
+     "status": "OOM",
+     "attempt": 1,
+     "wall_minutes": 27.5,
+     "gpu_peak_gib": 22.99,
+     "gpu": 1,
+     "started": "2026-10-20T16:02:42.255256+09:00",
+     "finished": "2026-10-20T16:30:14.088214+09:00",
+     "oom": {
+      "iteration": 14238,
+      "tried_gib": [
+       "19.88 GiB"
+      ],
+      "n_radius_ge_10000": 193086,
+      "radius_max": 1243293696.0
+     }
+    },
+    {
+     "dir": "fixB_LoD2_s0",
+     "status": "PASS",
+     "attempt": 2,
+     "wall_minutes": 65.1,
+     "gpu_peak_gib": 11.06,
+     "gpu": 1,
+     "started": "2026-10-20T16:30:14.152490+09:00",
+     "finished": "2026-10-20T17:35:18.716520+09:00",
+     "gaussians": 2324600,
+     "gaussians_prior": 2165671,
+     "prior_opacity_median": 0.389107346534729,
+     "gpu_post_seconds": {
+      "post": 361.9,
+      "run": 42.5
+     },
+     "host_min_available_gb": 26.968616485595703,
+     "psnr": 22.6525,
+     "cpu_post_minutes": 30.3
+    }
+   ]
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "fixB_LoD2_s0",
+   "case": "B173 주변 LoD2",
+   "fix": "판 B",
+   "train": true,
+   "why": "판 B는 관문과 상관없음",
+   "tries": [
+    {
+     "dir": "fixB_LoD2_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 75.6,
+     "gpu_peak_gib": 12.15,
+     "gpu": 1,
+     "started": "2026-10-20T18:31:51.174050+09:00",
+     "finished": "2026-10-20T19:47:26.208200+09:00",
+     "gaussians": 3204788,
+     "gaussians_prior": 2587707,
+     "prior_opacity_median": 0.23710253834724426,
+     "gpu_post_seconds": {
+      "post": 315.6,
+      "run": 175.2
+     },
+     "host_min_available_gb": 28.383506774902344,
+     "psnr": 23.0346,
+     "cpu_post_minutes": 23.5
+    }
+   ]
+  },
+  {
+   "site": "B0_b10",
+   "result": "fixB_ALS_s0",
+   "case": "B0 항공 LiDAR",
+   "fix": "판 B",
+   "train": true,
+   "why": "판 B는 관문과 상관없음",
+   "tries": [
+    {
+     "dir": "fixB_ALS_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 75.1,
+     "gpu_peak_gib": 12.64,
+     "gpu": 0,
+     "started": "2026-10-20T20:03:31.690526+09:00",
+     "finished": "2026-10-20T21:18:36.721491+09:00",
+     "gaussians": 2376462,
+     "gaussians_prior": 281897,
+     "prior_opacity_median": 0.6792103052139282,
+     "gpu_post_seconds": {
+      "post": 381.4,
+      "run": 48.9
+     },
+     "host_min_available_gb": 27.223907470703125,
+     "psnr": 23.0602,
+     "cpu_post_minutes": 2.7
+    }
+   ]
+  },
+  {
+   "site": "B173nb_b10",
+   "result": "fixAB_ALS_s0",
+   "case": "B173 주변 항공 LiDAR",
+   "fix": "함께 켠 판",
+   "train": false,
+   "why": "관문(읽기 L): 항공 LiDAR: 나 — 함께 켠 판은 판 A(읽기 L)를 따름",
+   "tries": []
+  },
+  {
+   "site": "R1rep_b10",
+   "result": "fixAB_ALS_s0",
+   "case": "R1 항공 LiDAR",
+   "fix": "함께 켠 판",
+   "train": true,
+   "why": "관문 통과(읽기 L) — 함께 켠 판은 판 A(읽기 L)를 따름",
+   "tries": [
+    {
+     "dir": "fixAB_ALS_s0",
+     "status": "PASS",
+     "attempt": 1,
+     "wall_minutes": 77.6,
+     "gpu_peak_gib": 14.93,
+     "gpu": 1,
+     "started": "2026-10-20T20:06:26.843821+09:00",
+     "finished": "2026-10-20T21:24:02.066986+09:00",
+     "gaussians": 2436024,
+     "gaussians_prior": 164388,
+     "prior_opacity_median": 0.31858178973197937,
+     "gpu_post_seconds": {
+      "post": 449.3,
+      "run": 40.8
+     },
+     "host_min_available_gb": 21.428699493408203,
+     "psnr": 23.0742,
+     "cpu_post_minutes": 4.0
+    }
+   ]
+  }
+ ],
+ "scientific_verdict": null
+}

@@ -1,0 +1,296 @@
+{
+ "task": "PHD-MAIN-FIXTEST-v1",
+ "rule": "PHD-MAIN-FIXTEST-v1 10 (10월 22일 판단을 돕는 읽기, 판 B; jointbuildgs:dev, CPU; run_step_ft.sh): the area fix B gained and the area it\ngave up, per case, against the mean of the method's two seeds:\n  얻은 넓이 (gained)  code-4 patches (missing, the prior right): sum over patches of area x (share of the patch's GT rows within 0.2 m of the\n                      result, fix - method mean). Rows = the dist71 rows of place c4 (dist npz r_place bit c4, r_patch, r_d): the same rows as\n                      결측 R(0.2 m).\n  내준 넓이 (given up) code-13 patches (missing, the prior wrong): sum over patches of area x (past-shape inflow share of the patch's rows,\n                      fix - method mean). Rows = the metrics rows of the case (S1/defs rows file: code 13, thinned, |s_W| >= 0.2 m) with the\n                      result's four-way classes 'cls' (metrics_s2 rows npz): inflow = wrong side + both, as 결측 영역의 과거 형상 유입률.\n  Net, positive part and negative part are written; patches without rows are counted apart. Check: the row-pooled share of each result\n  is compared with the place table (FT/tables/eval_ft.json c4 R_0.2 and infl13).\nResults: fixB_<prior>_s0 and fixAB_<prior>_s0 where they exist; the judgment-only-off method nojudge_<prior>_s0 as a reference.\n  python area_b.py\nWrites FT/tables/area_b.json and area_b.md. scientific_verdict: null.",
+ "cases": {
+  "B0_b10/LoD2": {
+   "case": "B0 LoD2",
+   "code4": {
+    "patches": 2050,
+    "area_m2": 128.125,
+    "patches_without_rows": 2
+   },
+   "code13": {
+    "patches": 27,
+    "area_m2": 1.6875,
+    "rows": 168
+   },
+   "results": {
+    "B": {
+     "result": "fixB_LoD2_s0",
+     "gained_net_m2": 1.1376984126984129,
+     "gained_plus_m2": 3.9369419642857135,
+     "gained_minus_m2": 2.7992435515873018,
+     "given_net_m2": -0.0619047619047619,
+     "given_plus_m2": 0.11666666666666667,
+     "given_minus_m2": 0.17857142857142855,
+     "check": {
+      "r02_rows_pooled": 94.12048580390895,
+      "r02_table": 94.12048580390895,
+      "inflow_rows_pooled": 8.333333333333332,
+      "inflow_table": 8.33
+     }
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "gained_net_m2": 1.383531746031746,
+     "gained_plus_m2": 3.3399181547619046,
+     "gained_minus_m2": 1.9563864087301588,
+     "given_net_m2": 0.15848214285714285,
+     "given_plus_m2": 0.265625,
+     "given_minus_m2": 0.10714285714285714,
+     "check": {
+      "r02_rows_pooled": 94.55481380197861,
+      "r02_table": 94.55481380197861,
+      "inflow_rows_pooled": 22.61904761904762,
+      "inflow_table": 22.62
+     }
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "case": "B0 항공 LiDAR",
+   "code4": {
+    "patches": 30,
+    "area_m2": 2.0365133439340215,
+    "patches_without_rows": 0
+   },
+   "code13": {
+    "patches": 0,
+    "area_m2": 0.0,
+    "rows": 0
+   },
+   "results": {
+    "B": {
+     "result": "fixB_ALS_s0",
+     "gained_net_m2": 0.2182145704419136,
+     "gained_plus_m2": 0.2182145704419136,
+     "gained_minus_m2": 0.0,
+     "given_net_m2": 0.0,
+     "given_plus_m2": 0.0,
+     "given_minus_m2": 0.0,
+     "check": {
+      "r02_rows_pooled": 98.87005649717514,
+      "r02_table": 98.87005649717514,
+      "inflow_rows_pooled": 0.0,
+      "inflow_table": null
+     }
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "gained_net_m2": 0.06117530858720121,
+     "gained_plus_m2": 0.12001196624829373,
+     "gained_minus_m2": 0.05883665766109253,
+     "given_net_m2": 0.0,
+     "given_plus_m2": 0.0,
+     "given_minus_m2": 0.0,
+     "check": {
+      "r02_rows_pooled": 94.91525423728814,
+      "r02_table": 94.91525423728814,
+      "inflow_rows_pooled": 0.0,
+      "inflow_table": null
+     }
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "case": "B173 주변 LoD2",
+   "code4": {
+    "patches": 1215,
+    "area_m2": 75.9375,
+    "patches_without_rows": 10
+   },
+   "code13": {
+    "patches": 91,
+    "area_m2": 5.6875,
+    "rows": 371
+   },
+   "results": {
+    "B": {
+     "result": "fixB_LoD2_s0",
+     "gained_net_m2": -0.1283110119047619,
+     "gained_plus_m2": 0.4161086309523809,
+     "gained_minus_m2": 0.5444196428571427,
+     "given_net_m2": 0.3401041666666667,
+     "given_plus_m2": 0.49270833333333336,
+     "given_minus_m2": 0.15260416666666665,
+     "check": {
+      "r02_rows_pooled": 96.32562559391828,
+      "r02_table": 96.32562559391828,
+      "inflow_rows_pooled": 27.49326145552561,
+      "inflow_table": 27.49
+     }
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "gained_net_m2": -0.21796875000000002,
+     "gained_plus_m2": 0.49445684523809513,
+     "gained_minus_m2": 0.7124255952380951,
+     "given_net_m2": 0.1953125,
+     "given_plus_m2": 0.5088541666666667,
+     "given_minus_m2": 0.3135416666666667,
+     "check": {
+      "r02_rows_pooled": 96.23059866962306,
+      "r02_table": 96.23059866962306,
+      "inflow_rows_pooled": 26.41509433962264,
+      "inflow_table": 26.419999999999998
+     }
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "case": "B173 주변 항공 LiDAR",
+   "code4": {
+    "patches": 17,
+    "area_m2": 1.7362229037270236,
+    "patches_without_rows": 0
+   },
+   "code13": {
+    "patches": 9,
+    "area_m2": 0.6227197845139656,
+    "rows": 53
+   },
+   "results": {
+    "B": {
+     "result": "fixB_ALS_s0",
+     "gained_net_m2": 0.0,
+     "gained_plus_m2": 0.0,
+     "gained_minus_m2": 0.0,
+     "given_net_m2": 0.0,
+     "given_plus_m2": 0.0,
+     "given_minus_m2": 0.0,
+     "check": {
+      "r02_rows_pooled": 0.0,
+      "r02_table": 0.0,
+      "inflow_rows_pooled": 0.0,
+      "inflow_table": 0.0
+     }
+    },
+    "AB": {
+     "result": "fixAB_ALS_s0",
+     "status": "관문"
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "gained_net_m2": 0.0,
+     "gained_plus_m2": 0.0,
+     "gained_minus_m2": 0.0,
+     "given_net_m2": 0.0,
+     "given_plus_m2": 0.0,
+     "given_minus_m2": 0.0,
+     "check": {
+      "r02_rows_pooled": 0.0,
+      "r02_table": 0.0,
+      "inflow_rows_pooled": 0.0,
+      "inflow_table": 0.0
+     }
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "case": "R1 LoD2",
+   "code4": {
+    "patches": 193,
+    "area_m2": 12.0625,
+    "patches_without_rows": 5
+   },
+   "code13": {
+    "patches": 152,
+    "area_m2": 9.5,
+    "rows": 852
+   },
+   "results": {
+    "B": {
+     "result": "fixB_LoD2_s0",
+     "gained_net_m2": 4.8845858134920634,
+     "gained_plus_m2": 5.222247023809524,
+     "gained_minus_m2": 0.3376612103174604,
+     "given_net_m2": 0.5206597222222222,
+     "given_plus_m2": 0.5668402777777777,
+     "given_minus_m2": 0.04618055555555555,
+     "check": {
+      "r02_rows_pooled": 83.98876404494382,
+      "r02_table": 83.98876404494382,
+      "inflow_rows_pooled": 8.098591549295776,
+      "inflow_table": 8.1
+     }
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "gained_net_m2": 3.3510044642857144,
+     "gained_plus_m2": 4.966517857142858,
+     "gained_minus_m2": 1.6155133928571428,
+     "given_net_m2": 3.093675595238095,
+     "given_plus_m2": 3.1027901785714285,
+     "given_minus_m2": 0.009114583333333332,
+     "check": {
+      "r02_rows_pooled": 73.73595505617978,
+      "r02_table": 73.73595505617978,
+      "inflow_rows_pooled": 39.201877934272304,
+      "inflow_table": 39.2
+     }
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "case": "R1 항공 LiDAR",
+   "code4": {
+    "patches": 63,
+    "area_m2": 4.240239374241598,
+    "patches_without_rows": 0
+   },
+   "code13": {
+    "patches": 8,
+    "area_m2": 0.5185263171491574,
+    "rows": 30
+   },
+   "results": {
+    "B": {
+     "result": "fixB_ALS_s0",
+     "gained_net_m2": -0.03236978776942797,
+     "gained_plus_m2": 0.0343165397505723,
+     "gained_minus_m2": 0.06668632752000025,
+     "given_net_m2": -0.01613530641280643,
+     "given_plus_m2": 0.0,
+     "given_minus_m2": 0.01613530641280643,
+     "check": {
+      "r02_rows_pooled": 31.33159268929504,
+      "r02_table": 31.33159268929504,
+      "inflow_rows_pooled": 0.0,
+      "inflow_table": 0.0
+     }
+    },
+    "AB": {
+     "result": "fixAB_ALS_s0",
+     "gained_net_m2": -0.06805390816730117,
+     "gained_plus_m2": 0.040921351477256895,
+     "gained_minus_m2": 0.10897525964455806,
+     "given_net_m2": 0.04840591923841929,
+     "given_plus_m2": 0.04840591923841929,
+     "given_minus_m2": 0.0,
+     "check": {
+      "r02_rows_pooled": 31.33159268929504,
+      "r02_table": 31.33159268929504,
+      "inflow_rows_pooled": 6.666666666666667,
+      "inflow_table": 6.67
+     }
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "gained_net_m2": 0.0388502742914075,
+     "gained_plus_m2": 0.0451851560989689,
+     "gained_minus_m2": 0.006334881807561398,
+     "given_net_m2": -0.01613530641280643,
+     "given_plus_m2": 0.0,
+     "given_minus_m2": 0.01613530641280643,
+     "check": {
+      "r02_rows_pooled": 32.89817232375979,
+      "r02_table": 32.89817232375979,
+      "inflow_rows_pooled": 0.0,
+      "inflow_table": 0.0
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}

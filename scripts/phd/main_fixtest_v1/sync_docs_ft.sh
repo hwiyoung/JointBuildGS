@@ -13,4 +13,5 @@ for k in dry probe; do
 done
 for f in "$FT"/prep/w_decision_*.json "$FT"/prep/figpos.json; do [ -f "$f" ] && cp -p "$f" "$D/tables/"; done
 for f in "$FT"/mech/*.json; do [ -f "$f" ] && cp -p "$f" "$D/tables/mech_$(basename "$f")"; done
+for f in "$FT"/numbers/고친판시험_숫자표_v1*.md; do [ -f "$f" ] && cp -p "$f" "$D/"; done          # the number table next to the reports
 echo "synced $(date '+%m-%d %H:%M:%S')"

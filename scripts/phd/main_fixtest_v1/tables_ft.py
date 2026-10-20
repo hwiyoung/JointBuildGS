@@ -124,6 +124,8 @@ def read(fixv, v0, v1, n, m, place, pooled):
         side = "같음"
     elif m == "bias":
         side = "아래로" if diff < 0 else "위로"
+    elif m == "spread":                     # order 9.2 names no better side for the spread: written as the change only
+        side = "작아짐" if diff < 0 else "커짐"
     else:
         side = "나음" if ((diff < 0) == (m in LOWER)) else "못함"
     return dict(grade=g, side=side, diff=diff, criterion=crit, terms=terms, n=n)

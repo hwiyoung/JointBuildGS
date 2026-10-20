@@ -656,7 +656,9 @@ def fig5():
                 v = row.get(fx, {}).get("v")
                 off = (j - (len(fixes) - 1) / 2) * 0.3
                 if v is None or mean is None or r.get("grade") in ("표본 부족", None) or row.get(fx, {}).get("status") != "있음":
-                    ax.text(i + off, 0, row.get(fx, {}).get("status") or r.get("grade") or "—", ha="center", va="bottom", fontsize=7.5, rotation=90)
+                    st = row.get(fx, {}).get("status")
+                    lab_ = st if st and st != "있음" else ("표본 부족" if r.get("grade") == "표본 부족" else "값 없음")
+                    ax.text(i + off, 0, lab_, ha="center", va="bottom", fontsize=7.5, rotation=90)
                     continue
                 crit = r.get("criterion") or 0.0
                 ax.add_patch(plt.Rectangle((i + off - 0.14, -2 * crit), 0.28, 4 * crit, color="#f2f2f2", zorder=0))
@@ -671,7 +673,18 @@ def fig5():
         ax.set_title(ttl, loc="left", fontsize=10.5)
     cap = ("막대 = 고친 판 − 본 방법 두 씨앗의 평균(파랑 판 A 읽기 L, 주황 판 A 읽기 T, 초록 판 B). 짙은 띠 = ±기준, 옅은 띠 = ±기준의 두 배(발주 9.2). "
            "막대가 없는 경우는 그 판을 학습하지 않았거나(관문) 표본이 100점 미만이다.")
-    save(fig, "fig5_bars", "두 판이 바꾼 크기: 경우마다 고친 판과 본 방법 평균의 차와 기준의 띠", cap, vals)
+    def beyond(ttl):
+        return [(k, x) for k, x in vals.get(ttl, {}).items() if x["grade"] not in ("같음", None)]
+    ta, tb, tc = (beyond(p_[0]) for p_ in panels)
+    na = len(vals.get(panels[0][0], {}))
+    case_of = lambda k: E[k.split("/")[0] + "/" + k.split("/")[1]]["case"] if k.count("/") >= 2 else k  # noqa: E731
+    title = ((f"판 A는 두 자료가 모두 맞는 곳의 거리를 학습한 {na}개 경우·읽기 모두에서 기준 안에 두었고(가), " if not ta else
+              f"판 A는 두 자료가 모두 맞는 곳의 거리를 학습한 {na}개 경우·읽기 가운데 {na - len(ta)}개에서 기준 안에 두었고(가), ")
+             + ("판 B가 결측 R(0.2 m)를 기준 밖으로 바꾼 경우는 " + ", ".join(f"{case_of(k)} {x['diff']:+.1f} %p" for k, x in tb) if tb else "판 B는 결측 R(0.2 m)를 모든 경우에서 기준 안에 두었고")
+             + "(나), "
+             + ("결측 유입률을 기준 밖으로 바꾼 경우는 " + ", ".join(f"{case_of(k)} {x['diff']:+.1f} %p" for k, x in tc) if tc else "결측 유입률은 모든 경우에서 기준 안이다")
+             + "(다)")
+    save(fig, "fig5_bars", title, cap, vals)
 
 
 if __name__ == "__main__":

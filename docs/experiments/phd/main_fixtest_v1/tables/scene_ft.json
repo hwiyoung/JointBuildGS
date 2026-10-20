@@ -1,0 +1,1382 @@
+{
+ "task": "PHD-MAIN-FIXTEST-v1",
+ "work": "9.1-6, 9.1-7",
+ "rule": "PHD-MAIN-FIXTEST-v1 9.1-6 (전체: scene F1 0.2 m / 0.5 m and the scene Chamfer distance) and 9.1-7 (학습 기록: wall time, GPU memory\npeak, Gaussians, PSNR of the evaluation views) (jointbuildgs:dev, CPU; run_step_ft.sh).\n  values      metrics json summary of metrics_s2 / metrics_s1 (f1_0.2, f1_0.5, chamfer_mean, chamfer_result_to_gt, chamfer_gt_to_result,\n              n_gt, n_result, image_quality.psnr): this task FT/metrics, the method S1/metrics (B173 주변 too), the judgment-only-off method\n              S3/metrics, stage 2's band removal S2/metrics\n  records     receipt.json (wall_seconds, gpu_memory_used_mib.peak_minus_idle) and model/monitor/scalars.jsonl (last row: n, n_prior) of each\n              run: FT/runs, S1/stage1, S0/stage0 (B173 주변 seeds)\nReading (order 9.2, one seed): F1 criterion = max(2.8 |s0 - s1| / sqrt 2, 300 / min(n_gt, n_result)) (%p), Chamfer criterion =\n2.8 |s0 - s1| / sqrt 2 (m; no pooled band exists for the scene values). 확인 > 2 x criterion, 가능·근거 불완전 > criterion, else 같음.\n  python scene_ft.py\nWrites FT/tables/scene_ft.json and scene_ft.md. scientific_verdict: null.",
+ "cases": {
+  "B0_b10/LoD2": {
+   "case": "B0 LoD2",
+   "results": {
+    "s0": {
+     "result": "prop_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B0_b10/prop_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6367,
+      "f1_0.5": 0.7176,
+      "chamfer_mean": 1.2332,
+      "chamfer_result_to_gt": 2.3781,
+      "chamfer_gt_to_result": 0.0882,
+      "n_gt": 2063378,
+      "n_result": 2567130,
+      "psnr": 23.0507,
+      "ssim": 0.7471
+     },
+     "record": {
+      "run": "S1/stage1/B0_b10/prop_LoD2_s0",
+      "wall_minutes": 65.6,
+      "gpu_peak_gib": 17.84,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2382701,
+      "gaussians_prior": 2257626
+     }
+    },
+    "s1": {
+     "result": "prop_LoD2_s1",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B0_b10/prop_LoD2_s1__LoD2.json",
+      "f1_0.2": 0.6341,
+      "f1_0.5": 0.7151,
+      "chamfer_mean": 1.2169,
+      "chamfer_result_to_gt": 2.3447,
+      "chamfer_gt_to_result": 0.089,
+      "n_gt": 2063378,
+      "n_result": 2563494,
+      "psnr": 22.2875,
+      "ssim": 0.7338
+     },
+     "record": {
+      "run": "S1/stage1/B0_b10/prop_LoD2_s1",
+      "wall_minutes": 69.1,
+      "gpu_peak_gib": 16.14,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2527511,
+      "gaussians_prior": 2117626
+     }
+    },
+    "A": {
+     "result": "fixA_LoD2_s0",
+     "status": "관문"
+    },
+    "AT": {
+     "result": "fixAT_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B0_b10/fixAT_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6383,
+      "f1_0.5": 0.7253,
+      "chamfer_mean": 1.1619,
+      "chamfer_result_to_gt": 2.2362,
+      "chamfer_gt_to_result": 0.0877,
+      "n_gt": 2063378,
+      "n_result": 2576655,
+      "psnr": 22.8137,
+      "ssim": 0.7448
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/B0_b10/fixAT_LoD2_s0",
+      "wall_minutes": 71.1,
+      "gpu_peak_gib": 12.74,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2612126,
+      "gaussians_prior": 2472063
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.28999999999999915,
+       "criterion": 0.5147737367038167,
+       "terms": {
+        "case": 0.5147737367038167,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 63.54
+      },
+      "f1_0.5": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": 0.8950000000000102,
+       "criterion": 0.4949747468306113,
+       "terms": {
+        "case": 0.4949747468306113,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 71.63499999999999
+      },
+      "chamfer_mean": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": -0.06315000000000004,
+       "criterion": 0.032272353493353986,
+       "terms": {
+        "case": 0.032272353493353986
+       },
+       "mean": 1.22505
+      }
+     }
+    },
+    "B": {
+     "result": "fixB_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B0_b10/fixB_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6273,
+      "f1_0.5": 0.7094,
+      "chamfer_mean": 1.241,
+      "chamfer_result_to_gt": 2.3949,
+      "chamfer_gt_to_result": 0.087,
+      "n_gt": 2063378,
+      "n_result": 2635103,
+      "psnr": 22.6525,
+      "ssim": 0.7424
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/B0_b10/fixB_LoD2_s0",
+      "wall_minutes": 65.1,
+      "gpu_peak_gib": 11.06,
+      "status": "PASS",
+      "attempt": 2,
+      "iteration": 30000,
+      "gaussians": 2324600,
+      "gaussians_prior": 2165671
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "가능·근거 불완전",
+       "side": "못함",
+       "diff": -0.8100000000000023,
+       "criterion": 0.5147737367038167,
+       "terms": {
+        "case": 0.5147737367038167,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 63.54
+      },
+      "f1_0.5": {
+       "grade": "가능·근거 불완전",
+       "side": "못함",
+       "diff": -0.6949999999999932,
+       "criterion": 0.4949747468306113,
+       "terms": {
+        "case": 0.4949747468306113,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 71.63499999999999
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.01595000000000013,
+       "criterion": 0.032272353493353986,
+       "terms": {
+        "case": 0.032272353493353986
+       },
+       "mean": 1.22505
+      }
+     }
+    },
+    "AB": {
+     "result": "fixAB_LoD2_s0",
+     "status": "결과 없음"
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6381,
+      "f1_0.5": 0.7254,
+      "chamfer_mean": 1.2159,
+      "chamfer_result_to_gt": 2.3425,
+      "chamfer_gt_to_result": 0.0893,
+      "n_gt": 2063378,
+      "n_result": 2557979,
+      "psnr": 22.4627,
+      "ssim": 0.7388
+     },
+     "record": {
+      "run": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0",
+      "wall_minutes": 70.1,
+      "gpu_peak_gib": 11.9,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2532261,
+      "gaussians_prior": 2302664
+     }
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "case": "B0 항공 LiDAR",
+   "results": {
+    "s0": {
+     "result": "prop_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B0_b10/prop_ALS_s0__ALS.json",
+      "f1_0.2": 0.646,
+      "f1_0.5": 0.7245,
+      "chamfer_mean": 1.1928,
+      "chamfer_result_to_gt": 2.301,
+      "chamfer_gt_to_result": 0.0846,
+      "n_gt": 2063378,
+      "n_result": 2547127,
+      "psnr": 23.0433,
+      "ssim": 0.7534
+     },
+     "record": {
+      "run": "S1/stage1/B0_b10/prop_ALS_s0",
+      "wall_minutes": 63.6,
+      "gpu_peak_gib": 15.09,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2530420,
+      "gaussians_prior": 292952
+     }
+    },
+    "s1": {
+     "result": "prop_ALS_s1",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B0_b10/prop_ALS_s1__ALS.json",
+      "f1_0.2": 0.6346,
+      "f1_0.5": 0.7121,
+      "chamfer_mean": 1.3276,
+      "chamfer_result_to_gt": 2.5706,
+      "chamfer_gt_to_result": 0.0846,
+      "n_gt": 2063378,
+      "n_result": 2615086,
+      "psnr": 22.5843,
+      "ssim": 0.7448
+     },
+     "record": {
+      "run": "S1/stage1/B0_b10/prop_ALS_s1",
+      "wall_minutes": 72.1,
+      "gpu_peak_gib": 16.09,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2497066,
+      "gaussians_prior": 281254
+     }
+    },
+    "A": {
+     "result": "fixA_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B0_b10/fixA_ALS_s0__ALS.json",
+      "f1_0.2": 0.6385,
+      "f1_0.5": 0.7194,
+      "chamfer_mean": 1.1716,
+      "chamfer_result_to_gt": 2.2596,
+      "chamfer_gt_to_result": 0.0837,
+      "n_gt": 2063378,
+      "n_result": 2580452,
+      "psnr": 22.7756,
+      "ssim": 0.745
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/B0_b10/fixA_ALS_s0",
+      "wall_minutes": 75.1,
+      "gpu_peak_gib": 11.71,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2480006,
+      "gaussians_prior": 262992
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.18000000000000682,
+       "criterion": 2.257084845547461,
+       "terms": {
+        "case": 2.257084845547461,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 64.03
+      },
+      "f1_0.5": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.10999999999999943,
+       "criterion": 2.4550747442797105,
+       "terms": {
+        "case": 2.4550747442797105,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 71.83
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.08860000000000001,
+       "criterion": 0.2668903834910501,
+       "terms": {
+        "case": 0.2668903834910501
+       },
+       "mean": 1.2602
+      }
+     }
+    },
+    "AT": {
+     "result": "fixAT_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B0_b10/fixAT_ALS_s0__ALS.json",
+      "f1_0.2": 0.641,
+      "f1_0.5": 0.7223,
+      "chamfer_mean": 1.1587,
+      "chamfer_result_to_gt": 2.2332,
+      "chamfer_gt_to_result": 0.0842,
+      "n_gt": 2063378,
+      "n_result": 2577004,
+      "psnr": 22.8968,
+      "ssim": 0.7541
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/B0_b10/fixAT_ALS_s0",
+      "wall_minutes": 68.6,
+      "gpu_peak_gib": 11.24,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2365969,
+      "gaussians_prior": 322931
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.06999999999999318,
+       "criterion": 2.257084845547461,
+       "terms": {
+        "case": 2.257084845547461,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 64.03
+      },
+      "f1_0.5": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.4000000000000057,
+       "criterion": 2.4550747442797105,
+       "terms": {
+        "case": 2.4550747442797105,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 71.83
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.10149999999999992,
+       "criterion": 0.2668903834910501,
+       "terms": {
+        "case": 0.2668903834910501
+       },
+       "mean": 1.2602
+      }
+     }
+    },
+    "B": {
+     "result": "fixB_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B0_b10/fixB_ALS_s0__ALS.json",
+      "f1_0.2": 0.6429,
+      "f1_0.5": 0.7208,
+      "chamfer_mean": 1.1786,
+      "chamfer_result_to_gt": 2.2724,
+      "chamfer_gt_to_result": 0.0849,
+      "n_gt": 2063378,
+      "n_result": 2541424,
+      "psnr": 23.0602,
+      "ssim": 0.7535
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/B0_b10/fixB_ALS_s0",
+      "wall_minutes": 75.1,
+      "gpu_peak_gib": 12.64,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2376462,
+      "gaussians_prior": 281897
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.2600000000000051,
+       "criterion": 2.257084845547461,
+       "terms": {
+        "case": 2.257084845547461,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 64.03
+      },
+      "f1_0.5": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.25,
+       "criterion": 2.4550747442797105,
+       "terms": {
+        "case": 2.4550747442797105,
+        "300/n": 0.00014539265224306936
+       },
+       "mean": 71.83
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.0815999999999999,
+       "criterion": 0.2668903834910501,
+       "terms": {
+        "case": 0.2668903834910501
+       },
+       "mean": 1.2602
+      }
+     }
+    },
+    "AB": {
+     "result": "fixAB_ALS_s0",
+     "status": "결과 없음"
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_ALS_s0__ALS.json",
+      "f1_0.2": 0.6358,
+      "f1_0.5": 0.714,
+      "chamfer_mean": 1.2248,
+      "chamfer_result_to_gt": 2.3645,
+      "chamfer_gt_to_result": 0.0851,
+      "n_gt": 2063378,
+      "n_result": 2582072,
+      "psnr": 22.957,
+      "ssim": 0.753
+     },
+     "record": {
+      "run": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0",
+      "wall_minutes": 63.6,
+      "gpu_peak_gib": 11.1,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2303580,
+      "gaussians_prior": 312334
+     }
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "case": "B173 주변 LoD2",
+   "results": {
+    "s0": {
+     "result": "prop_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B173nb_b10/prop_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.7893,
+      "f1_0.5": 0.9214,
+      "chamfer_mean": 0.2161,
+      "chamfer_result_to_gt": 0.2984,
+      "chamfer_gt_to_result": 0.1337,
+      "n_gt": 3881308,
+      "n_result": 2756912,
+      "psnr": 22.7182,
+      "ssim": 0.7617
+     },
+     "record": {
+      "run": "S0/stage0/b1_LoD2",
+      "wall_minutes": 63.6,
+      "gpu_peak_gib": 18.13,
+      "status": "PASS",
+      "attempt": null,
+      "iteration": 30000,
+      "gaussians": 2960030,
+      "gaussians_prior": 2216218
+     }
+    },
+    "s1": {
+     "result": "prop_LoD2_s1",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B173nb_b10/prop_LoD2_s1__LoD2.json",
+      "f1_0.2": 0.7868,
+      "f1_0.5": 0.9202,
+      "chamfer_mean": 0.2033,
+      "chamfer_result_to_gt": 0.2736,
+      "chamfer_gt_to_result": 0.1331,
+      "n_gt": 3881308,
+      "n_result": 2780709,
+      "psnr": 23.5455,
+      "ssim": 0.7776
+     },
+     "record": {
+      "run": "S0/stage0/b2_LoD2",
+      "wall_minutes": 67.7,
+      "gpu_peak_gib": 15.07,
+      "status": "PASS",
+      "attempt": null,
+      "iteration": 30000,
+      "gaussians": 2772105,
+      "gaussians_prior": 1305867
+     }
+    },
+    "A": {
+     "result": "fixA_LoD2_s0",
+     "status": "관문"
+    },
+    "AT": {
+     "result": "fixAT_LoD2_s0",
+     "status": "관문"
+    },
+    "B": {
+     "result": "fixB_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B173nb_b10/fixB_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.7865,
+      "f1_0.5": 0.9145,
+      "chamfer_mean": 0.2228,
+      "chamfer_result_to_gt": 0.314,
+      "chamfer_gt_to_result": 0.1315,
+      "n_gt": 3881308,
+      "n_result": 2790740,
+      "psnr": 23.0346,
+      "ssim": 0.7663
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/B173nb_b10/fixB_LoD2_s0",
+      "wall_minutes": 75.6,
+      "gpu_peak_gib": 12.15,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 3204788,
+      "gaussians_prior": 2587707
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.15500000000001535,
+       "criterion": 0.4949747468305832,
+       "terms": {
+        "case": 0.4949747468305832,
+        "300/n": 0.00010749836960806095
+       },
+       "mean": 78.805
+      },
+      "f1_0.5": {
+       "grade": "확인",
+       "side": "못함",
+       "diff": -0.6299999999999955,
+       "criterion": 0.23758787847868895,
+       "terms": {
+        "case": 0.23758787847868895,
+        "300/n": 0.00010749836960806095
+       },
+       "mean": 92.08
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.0131,
+       "criterion": 0.025342707037725815,
+       "terms": {
+        "case": 0.025342707037725815
+       },
+       "mean": 0.2097
+      }
+     }
+    },
+    "AB": {
+     "result": "fixAB_LoD2_s0",
+     "status": "결과 없음"
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B173nb_b10/nojudge_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.7916,
+      "f1_0.5": 0.9232,
+      "chamfer_mean": 0.2214,
+      "chamfer_result_to_gt": 0.3089,
+      "chamfer_gt_to_result": 0.1338,
+      "n_gt": 3881308,
+      "n_result": 2761570,
+      "psnr": 23.1598,
+      "ssim": 0.7698
+     },
+     "record": {
+      "run": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0",
+      "wall_minutes": 73.1,
+      "gpu_peak_gib": 11.99,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2983470,
+      "gaussians_prior": 2474388
+     }
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "case": "B173 주변 항공 LiDAR",
+   "results": {
+    "s0": {
+     "result": "prop_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B173nb_b10/prop_ALS_s0__ALS.json",
+      "f1_0.2": 0.7941,
+      "f1_0.5": 0.9255,
+      "chamfer_mean": 0.1883,
+      "chamfer_result_to_gt": 0.2482,
+      "chamfer_gt_to_result": 0.1283,
+      "n_gt": 3881308,
+      "n_result": 2822614,
+      "psnr": 23.4703,
+      "ssim": 0.7712
+     },
+     "record": {
+      "run": "S0/stage0/b1_ALS",
+      "wall_minutes": 65.6,
+      "gpu_peak_gib": 14.66,
+      "status": "PASS",
+      "attempt": null,
+      "iteration": 30000,
+      "gaussians": 3054724,
+      "gaussians_prior": 393572
+     }
+    },
+    "s1": {
+     "result": "prop_ALS_s1",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/B173nb_b10/prop_ALS_s1__ALS.json",
+      "f1_0.2": 0.8,
+      "f1_0.5": 0.9248,
+      "chamfer_mean": 0.1901,
+      "chamfer_result_to_gt": 0.2517,
+      "chamfer_gt_to_result": 0.1285,
+      "n_gt": 3881308,
+      "n_result": 2747311,
+      "psnr": 23.0029,
+      "ssim": 0.7701
+     },
+     "record": {
+      "run": "S0/stage0/b2_ALS",
+      "wall_minutes": 68.2,
+      "gpu_peak_gib": 14.8,
+      "status": "PASS",
+      "attempt": null,
+      "iteration": 30000,
+      "gaussians": 3229574,
+      "gaussians_prior": 438449
+     }
+    },
+    "A": {
+     "result": "fixA_ALS_s0",
+     "status": "관문"
+    },
+    "AT": {
+     "result": "fixAT_ALS_s0",
+     "status": "관문"
+    },
+    "B": {
+     "result": "fixB_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B173nb_b10/fixB_ALS_s0__ALS.json",
+      "f1_0.2": 0.7974,
+      "f1_0.5": 0.927,
+      "chamfer_mean": 0.1854,
+      "chamfer_result_to_gt": 0.2419,
+      "chamfer_gt_to_result": 0.1289,
+      "n_gt": 3881308,
+      "n_result": 2746455,
+      "psnr": 23.2635,
+      "ssim": 0.7727
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/B173nb_b10/fixB_ALS_s0",
+      "wall_minutes": 82.6,
+      "gpu_peak_gib": 14.01,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 3816502,
+      "gaussians_prior": 378523
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.03499999999999659,
+       "criterion": 1.1681404025201831,
+       "terms": {
+        "case": 1.1681404025201831,
+        "300/n": 0.00010923171870647798
+       },
+       "mean": 79.705
+      },
+      "f1_0.5": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": 0.18500000000001648,
+       "criterion": 0.13859292911257792,
+       "terms": {
+        "case": 0.13859292911257792,
+        "300/n": 0.00010923171870647798
+       },
+       "mean": 92.51499999999999
+      },
+      "chamfer_mean": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": -0.00379999999999997,
+       "criterion": 0.0035638181771801914,
+       "terms": {
+        "case": 0.0035638181771801914
+       },
+       "mean": 0.18919999999999998
+      }
+     }
+    },
+    "AB": {
+     "result": "fixAB_ALS_s0",
+     "status": "관문"
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B173nb_b10/nojudge_ALS_s0__ALS.json",
+      "f1_0.2": 0.8019,
+      "f1_0.5": 0.9233,
+      "chamfer_mean": 0.2153,
+      "chamfer_result_to_gt": 0.3048,
+      "chamfer_gt_to_result": 0.1257,
+      "n_gt": 3881308,
+      "n_result": 2778361,
+      "psnr": 23.2803,
+      "ssim": 0.7715
+     },
+     "record": {
+      "run": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0",
+      "wall_minutes": 68.6,
+      "gpu_peak_gib": 10.98,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2796061,
+      "gaussians_prior": 395633
+     }
+    },
+    "ablband": {
+     "result": "abl_band_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/metrics/B173nb_b10/abl_band_ALS_s0__ALS.json",
+      "f1_0.2": 0.8011,
+      "f1_0.5": 0.9252,
+      "chamfer_mean": 0.2069,
+      "chamfer_result_to_gt": 0.2983,
+      "chamfer_gt_to_result": 0.1154,
+      "n_gt": 3881308,
+      "n_result": 2722657,
+      "psnr": 23.4707,
+      "ssim": 0.7721
+     },
+     "record": {
+      "run": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/runs/B173nb_b10/abl_band_ALS_s0",
+      "wall_minutes": 81.1,
+      "gpu_peak_gib": 16.54,
+      "status": "PASS",
+      "attempt": null,
+      "iteration": 30000,
+      "gaussians": 2893093,
+      "gaussians_prior": 402003
+     }
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "case": "R1 LoD2",
+   "results": {
+    "s0": {
+     "result": "prop_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/R1rep_b10/prop_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6744,
+      "f1_0.5": 0.8395,
+      "chamfer_mean": 0.4515,
+      "chamfer_result_to_gt": 0.7416,
+      "chamfer_gt_to_result": 0.1613,
+      "n_gt": 2667737,
+      "n_result": 2879329,
+      "psnr": 22.6537,
+      "ssim": 0.7493
+     },
+     "record": {
+      "run": "S1/stage1/R1rep_b10/prop_LoD2_s0",
+      "wall_minutes": 67.6,
+      "gpu_peak_gib": 18.07,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2686463,
+      "gaussians_prior": 1391245
+     }
+    },
+    "s1": {
+     "result": "prop_LoD2_s1",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/R1rep_b10/prop_LoD2_s1__LoD2.json",
+      "f1_0.2": 0.6906,
+      "f1_0.5": 0.8623,
+      "chamfer_mean": 0.3099,
+      "chamfer_result_to_gt": 0.4578,
+      "chamfer_gt_to_result": 0.1619,
+      "n_gt": 2667737,
+      "n_result": 2621390,
+      "psnr": 22.935,
+      "ssim": 0.746
+     },
+     "record": {
+      "run": "S1/stage1/R1rep_b10/prop_LoD2_s1",
+      "wall_minutes": 63.1,
+      "gpu_peak_gib": 17.72,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2318666,
+      "gaussians_prior": 856138
+     }
+    },
+    "A": {
+     "result": "fixA_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixA_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6785,
+      "f1_0.5": 0.8497,
+      "chamfer_mean": 0.3281,
+      "chamfer_result_to_gt": 0.4921,
+      "chamfer_gt_to_result": 0.1641,
+      "n_gt": 2667737,
+      "n_result": 2726283,
+      "psnr": 22.3899,
+      "ssim": 0.738
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixA_LoD2_s0",
+      "wall_minutes": 72.1,
+      "gpu_peak_gib": 13.62,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2495368,
+      "gaussians_prior": 648583
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.4000000000000057,
+       "criterion": 3.207436359462188,
+       "terms": {
+        "case": 3.207436359462188,
+        "300/n": 0.0001124548634291911
+       },
+       "mean": 68.25
+      },
+      "f1_0.5": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.12000000000000455,
+       "criterion": 4.514169691094893,
+       "terms": {
+        "case": 4.514169691094893,
+        "300/n": 0.0001124548634291911
+       },
+       "mean": 85.09
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.052600000000000036,
+       "criterion": 0.28035369660484233,
+       "terms": {
+        "case": 0.28035369660484233
+       },
+       "mean": 0.38070000000000004
+      }
+     }
+    },
+    "AT": {
+     "result": "fixAT_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixAT_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6921,
+      "f1_0.5": 0.8538,
+      "chamfer_mean": 0.3188,
+      "chamfer_result_to_gt": 0.4724,
+      "chamfer_gt_to_result": 0.1652,
+      "n_gt": 2667737,
+      "n_result": 2683517,
+      "psnr": 23.0884,
+      "ssim": 0.7552
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixAT_LoD2_s0",
+      "wall_minutes": 77.6,
+      "gpu_peak_gib": 15.07,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2557527,
+      "gaussians_prior": 559422
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.960000000000008,
+       "criterion": 3.207436359462188,
+       "terms": {
+        "case": 3.207436359462188,
+        "300/n": 0.0001124548634291911
+       },
+       "mean": 68.25
+      },
+      "f1_0.5": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": 0.28999999999999204,
+       "criterion": 4.514169691094893,
+       "terms": {
+        "case": 4.514169691094893,
+        "300/n": 0.0001124548634291911
+       },
+       "mean": 85.09
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.061900000000000066,
+       "criterion": 0.28035369660484233,
+       "terms": {
+        "case": 0.28035369660484233
+       },
+       "mean": 0.38070000000000004
+      }
+     }
+    },
+    "B": {
+     "result": "fixB_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixB_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6802,
+      "f1_0.5": 0.8405,
+      "chamfer_mean": 0.342,
+      "chamfer_result_to_gt": 0.5226,
+      "chamfer_gt_to_result": 0.1614,
+      "n_gt": 2667737,
+      "n_result": 2787881,
+      "psnr": 22.7262,
+      "ssim": 0.7465
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixB_LoD2_s0",
+      "wall_minutes": 78.1,
+      "gpu_peak_gib": 17.37,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2957246,
+      "gaussians_prior": 1245049
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.23000000000000398,
+       "criterion": 3.207436359462188,
+       "terms": {
+        "case": 3.207436359462188,
+        "300/n": 0.0001124548634291911
+       },
+       "mean": 68.25
+      },
+      "f1_0.5": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -1.0400000000000063,
+       "criterion": 4.514169691094893,
+       "terms": {
+        "case": 4.514169691094893,
+        "300/n": 0.0001124548634291911
+       },
+       "mean": 85.09
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.03870000000000001,
+       "criterion": 0.28035369660484233,
+       "terms": {
+        "case": 0.28035369660484233
+       },
+       "mean": 0.38070000000000004
+      }
+     }
+    },
+    "AB": {
+     "result": "fixAB_LoD2_s0",
+     "status": "결과 없음"
+    },
+    "nojudge": {
+     "result": "nojudge_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/R1rep_b10/nojudge_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.5726,
+      "f1_0.5": 0.8056,
+      "chamfer_mean": 0.3325,
+      "chamfer_result_to_gt": 0.5012,
+      "chamfer_gt_to_result": 0.1638,
+      "n_gt": 2667737,
+      "n_result": 3236679,
+      "psnr": 22.476,
+      "ssim": 0.747
+     },
+     "record": {
+      "run": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0",
+      "wall_minutes": 89.6,
+      "gpu_peak_gib": 19.42,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 3607818,
+      "gaussians_prior": 1865165
+     }
+    },
+    "ablband": {
+     "result": "abl_band_LoD2_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/metrics/R1rep_b10/abl_band_LoD2_s0__LoD2.json",
+      "f1_0.2": 0.6649,
+      "f1_0.5": 0.8655,
+      "chamfer_mean": 0.3182,
+      "chamfer_result_to_gt": 0.4511,
+      "chamfer_gt_to_result": 0.1854,
+      "n_gt": 2667737,
+      "n_result": 2597364,
+      "psnr": 22.9917,
+      "ssim": 0.7528
+     },
+     "record": {
+      "run": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/runs/R1rep_b10/abl_band_LoD2_s0",
+      "wall_minutes": 74.1,
+      "gpu_peak_gib": 21.02,
+      "status": "PASS",
+      "attempt": null,
+      "iteration": 30000,
+      "gaussians": 2691184,
+      "gaussians_prior": 1167601
+     }
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "case": "R1 항공 LiDAR",
+   "results": {
+    "s0": {
+     "result": "prop_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/R1rep_b10/prop_ALS_s0__ALS.json",
+      "f1_0.2": 0.7111,
+      "f1_0.5": 0.8582,
+      "chamfer_mean": 0.3129,
+      "chamfer_result_to_gt": 0.4781,
+      "chamfer_gt_to_result": 0.1478,
+      "n_gt": 2667737,
+      "n_result": 2595686,
+      "psnr": 22.9599,
+      "ssim": 0.7541
+     },
+     "record": {
+      "run": "S1/stage1/R1rep_b10/prop_ALS_s0",
+      "wall_minutes": 79.6,
+      "gpu_peak_gib": 22.36,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2813010,
+      "gaussians_prior": 162062
+     }
+    },
+    "s1": {
+     "result": "prop_ALS_s1",
+     "status": "있음",
+     "summary": {
+      "source": "S1/metrics/R1rep_b10/prop_ALS_s1__ALS.json",
+      "f1_0.2": 0.7152,
+      "f1_0.5": 0.857,
+      "chamfer_mean": 0.3114,
+      "chamfer_result_to_gt": 0.4724,
+      "chamfer_gt_to_result": 0.1504,
+      "n_gt": 2667737,
+      "n_result": 2531110,
+      "psnr": 22.8668,
+      "ssim": 0.745
+     },
+     "record": {
+      "run": "S1/stage1/R1rep_b10/prop_ALS_s1",
+      "wall_minutes": 67.1,
+      "gpu_peak_gib": 19.31,
+      "status": "PASS",
+      "attempt": 0,
+      "iteration": 30000,
+      "gaussians": 2278682,
+      "gaussians_prior": 155890
+     }
+    },
+    "A": {
+     "result": "fixA_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixA_ALS_s0__ALS.json",
+      "f1_0.2": 0.7352,
+      "f1_0.5": 0.8626,
+      "chamfer_mean": 0.3048,
+      "chamfer_result_to_gt": 0.4614,
+      "chamfer_gt_to_result": 0.1482,
+      "n_gt": 2667737,
+      "n_result": 2407147,
+      "psnr": 22.918,
+      "ssim": 0.7524
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixA_ALS_s0",
+      "wall_minutes": 75.6,
+      "gpu_peak_gib": 14.64,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2851842,
+      "gaussians_prior": 170742
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "확인",
+       "side": "나음",
+       "diff": 2.2049999999999983,
+       "criterion": 0.8117585848021497,
+       "terms": {
+        "case": 0.8117585848021497,
+        "300/n": 0.0001246288656239108
+       },
+       "mean": 71.315
+      },
+      "f1_0.5": {
+       "grade": "확인",
+       "side": "나음",
+       "diff": 0.5000000000000142,
+       "criterion": 0.2375878784786608,
+       "terms": {
+        "case": 0.2375878784786608,
+        "300/n": 0.0001246288656239108
+       },
+       "mean": 85.75999999999999
+      },
+      "chamfer_mean": {
+       "grade": "확인",
+       "side": "나음",
+       "diff": -0.007350000000000023,
+       "criterion": 0.0029698484809835015,
+       "terms": {
+        "case": 0.0029698484809835015
+       },
+       "mean": 0.31215000000000004
+      }
+     }
+    },
+    "AT": {
+     "result": "fixAT_ALS_s0",
+     "status": "읽기 L과 같음"
+    },
+    "B": {
+     "result": "fixB_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixB_ALS_s0__ALS.json",
+      "f1_0.2": 0.7236,
+      "f1_0.5": 0.8619,
+      "chamfer_mean": 0.3063,
+      "chamfer_result_to_gt": 0.4621,
+      "chamfer_gt_to_result": 0.1504,
+      "n_gt": 2667737,
+      "n_result": 2496322,
+      "psnr": 22.9402,
+      "ssim": 0.754
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixB_ALS_s0",
+      "wall_minutes": 72.1,
+      "gpu_peak_gib": 13.72,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2554141,
+      "gaussians_prior": 165215
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": 1.0450000000000017,
+       "criterion": 0.8117585848021497,
+       "terms": {
+        "case": 0.8117585848021497,
+        "300/n": 0.00012017680411421283
+       },
+       "mean": 71.315
+      },
+      "f1_0.5": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": 0.4300000000000068,
+       "criterion": 0.2375878784786608,
+       "terms": {
+        "case": 0.2375878784786608,
+        "300/n": 0.00012017680411421283
+       },
+       "mean": 85.75999999999999
+      },
+      "chamfer_mean": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": -0.005850000000000022,
+       "criterion": 0.0029698484809835015,
+       "terms": {
+        "case": 0.0029698484809835015
+       },
+       "mean": 0.31215000000000004
+      }
+     }
+    },
+    "AB": {
+     "result": "fixAB_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixAB_ALS_s0__ALS.json",
+      "f1_0.2": 0.73,
+      "f1_0.5": 0.8618,
+      "chamfer_mean": 0.3104,
+      "chamfer_result_to_gt": 0.4708,
+      "chamfer_gt_to_result": 0.1501,
+      "n_gt": 2667737,
+      "n_result": 2470197,
+      "psnr": 23.0742,
+      "ssim": 0.757
+     },
+     "record": {
+      "run": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixAB_ALS_s0",
+      "wall_minutes": 77.6,
+      "gpu_peak_gib": 14.93,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2436024,
+      "gaussians_prior": 164388
+     },
+     "read": {
+      "f1_0.2": {
+       "grade": "확인",
+       "side": "나음",
+       "diff": 1.6850000000000023,
+       "criterion": 0.8117585848021497,
+       "terms": {
+        "case": 0.8117585848021497,
+        "300/n": 0.00012144780355574879
+       },
+       "mean": 71.315
+      },
+      "f1_0.5": {
+       "grade": "가능·근거 불완전",
+       "side": "나음",
+       "diff": 0.4200000000000159,
+       "criterion": 0.2375878784786608,
+       "terms": {
+        "case": 0.2375878784786608,
+        "300/n": 0.00012144780355574879
+       },
+       "mean": 85.75999999999999
+      },
+      "chamfer_mean": {
+       "grade": "같음",
+       "side": "같음",
+       "diff": -0.0017500000000000293,
+       "criterion": 0.0029698484809835015,
+       "terms": {
+        "case": 0.0029698484809835015
+       },
+       "mean": 0.31215000000000004
+      }
+     }
+    },
+    "nojudge": {
+     "result": "nojudge_ALS_s0",
+     "status": "있음",
+     "summary": {
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/R1rep_b10/nojudge_ALS_s0__ALS.json",
+      "f1_0.2": 0.7442,
+      "f1_0.5": 0.8655,
+      "chamfer_mean": 0.2996,
+      "chamfer_result_to_gt": 0.4535,
+      "chamfer_gt_to_result": 0.1456,
+      "n_gt": 2667737,
+      "n_result": 2424485,
+      "psnr": 23.1012,
+      "ssim": 0.7586
+     },
+     "record": {
+      "run": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0",
+      "wall_minutes": 74.1,
+      "gpu_peak_gib": 14.46,
+      "status": "PASS",
+      "attempt": 1,
+      "iteration": 30000,
+      "gaussians": 2593666,
+      "gaussians_prior": 157453
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}
