@@ -1,0 +1,160 @@
+{
+ "key": "V4",
+ "title": "본 방법은 결측 자리에서 벽을 안으로 무너뜨렸고, GeoGS와 결합, 결측 지키기는 곧은 벽을 지켰다",
+ "form": "horizontal section (the request's fallback: the renders did not show the shape)",
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "face": 19,
+ "section": {
+  "kind": "horizontal",
+  "z_m": -34.68399999999857,
+  "band_m": 0.5,
+  "centre_xy": [
+   -11.001382235842264,
+   39.91400287409774
+  ],
+  "axis_xy": [
+   0.364860894472941,
+   0.9310620428759866
+  ],
+  "normal_xy": [
+   0.9310620428759866,
+   -0.364860894472941
+  ],
+  "s_range_m": [
+   -28.18913588268054,
+   21.31086411731948
+  ],
+  "rule": "horizontal band at the median height of the face's missing patches, along the wall, + 2 m",
+  "across_axis": "outward normal (+ = outside)"
+ },
+ "xlim": [
+  12.060864117319474,
+  21.31086411731948
+ ],
+ "gt_points_in_band": 1354,
+ "photo": {
+  "view": "DJI_20241217101317_0011_D",
+  "crop_native": [
+   671,
+   81,
+   765,
+   277
+  ]
+ },
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/samepath_LoD2/mesh.ply",
+   "mesh_info": {
+    "vertices": 4795294,
+    "faces": 9561952,
+    "kept_vertices": 1704687,
+    "kept_faces": 3386073
+   },
+   "segments": 3352
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 43206284,
+    "faces": 77299933,
+    "kept_vertices": 5225537,
+    "kept_faces": 9429803
+   },
+   "segments": 6538
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 41000275,
+    "faces": 74310789,
+    "kept_vertices": 5227371,
+    "kept_faces": 9720561
+   },
+   "segments": 7612
+  },
+  "결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21460171,
+    "faces": 39631524,
+    "kept_vertices": 3094223,
+    "kept_faces": 5691472
+   },
+   "segments": 5246
+  },
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21347005,
+    "faces": 39095778,
+    "kept_vertices": 3129020,
+    "kept_faces": 5794535
+   },
+   "segments": 5085
+  },
+  "결측 지키기": {
+   "result": "fixB_LoD2_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixB_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21482776,
+    "faces": 39333637,
+    "kept_vertices": 3132254,
+    "kept_faces": 5758933
+   },
+   "segments": 5968
+  }
+ },
+ "values": {
+  "학습 전 사전 정보": {
+   "recall": 0.9936974789915967,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__samepath_LoD2.npz"
+  },
+  "2DGS": {
+   "recall": 0.3235294117647059,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__imgonly_2dgs_s0.npz"
+  },
+  "GeoGS": {
+   "recall": 0.9810924369747899,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__trust_LoD2_fix1.npz"
+  },
+  "결합": {
+   "recall": 0.6449579831932774,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__mvsfuse_LoD2.npz"
+  },
+  "본 방법": {
+   "recall": 0.4474789915966387,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz"
+  },
+  "결측 지키기": {
+   "recall": 0.957983193277311,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__fixB_LoD2_s0.npz"
+  },
+  "본 방법 씨앗 1": {
+   "recall": 0.5042016806722689,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s1.npz"
+  }
+ },
+ "render_version": "V4_missing_R1_LoD2_render.png|pdf|json (v4_wall.py)",
+ "seconds": 23.0,
+ "made": "2026-10-20 16:43:16 KST",
+ "scientific_verdict": null
+}

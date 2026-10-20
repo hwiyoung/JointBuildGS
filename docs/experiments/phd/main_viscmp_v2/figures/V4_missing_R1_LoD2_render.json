@@ -1,0 +1,237 @@
+{
+ "key": "V4",
+ "title": "본 방법은 결측 자리에서 벽을 안으로 무너뜨렸고, GeoGS와 결합, 결측 지키기는 곧은 벽을 지켰다",
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "face": 19,
+ "missing": 158,
+ "camera": {
+  "kind": "pinhole (training camera, COLMAP 1400 x 1013 model)",
+  "view": "DJI_20241217101112_0005_D",
+  "K_native": [
+   922.0550838163813,
+   922.470063461439,
+   702.6193018201524,
+   499.79701601553825
+  ],
+  "R": [
+   [
+    -0.9473399401794698,
+    0.32022480300862527,
+    -0.001764448595330828
+   ],
+   [
+    0.21275316336272473,
+    0.6252630129436492,
+    -0.7508543508056564
+   ],
+   [
+    -0.23933894213000978,
+    -0.7116897077959727,
+    -0.6604654651057622
+   ]
+  ],
+  "t": [
+   27.59108167503155,
+   -86.48609997404569,
+   91.24157996923466
+  ],
+  "centre": [
+   66.37598824800165,
+   110.17690414048309,
+   -4.627868853054835
+  ],
+  "crop_native": [
+   1205,
+   0,
+   1400.0,
+   399.0
+  ],
+  "scale": 4,
+  "size": [
+   780,
+   1596
+  ]
+ },
+ "panels": {
+  "사진": {
+   "view": "DJI_20241217101317_0011_D",
+   "crop_native": [
+    671,
+    81,
+    765,
+    277
+   ],
+   "camera": {
+    "kind": "pinhole (training camera, COLMAP 1400 x 1013 model)",
+    "view": "DJI_20241217101317_0011_D",
+    "K_native": [
+     922.0550838163813,
+     922.470063461439,
+     702.6193018201524,
+     499.79701601553825
+    ],
+    "R": [
+     [
+      0.2605212834174525,
+      0.9654564033991013,
+      -0.004753316967668342
+     ],
+     [
+      0.4645266863563846,
+      -0.12966206054848217,
+      -0.876015243998116
+     ],
+     [
+      -0.8463708516656753,
+      0.22601257307944944,
+      -0.48225999031717937
+     ]
+    ],
+    "t": [
+     -49.726270318857296,
+     -79.85484801746232,
+     129.24753944779678
+    ],
+    "centre": [
+     159.44080974020108,
+     8.442833002981214,
+     -7.859511772281486
+    ],
+    "crop_native": [
+     671,
+     81,
+     765.0,
+     277.0
+    ],
+    "scale": 4,
+    "size": [
+     376,
+     784
+    ]
+   }
+  },
+  "참값": {
+   "points_in_view": 776379,
+   "points_in_place": 110843
+  },
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/samepath_LoD2/mesh.ply",
+   "mesh_info": {
+    "vertices": 4795294,
+    "faces": 9561952,
+    "kept_vertices": 1081771,
+    "kept_faces": 2151649
+   },
+   "hit_share": 0.7864735958485959,
+   "hit_in_place": 1.0
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 43206284,
+    "faces": 77299933,
+    "kept_vertices": 3877375,
+    "kept_faces": 7048288
+   },
+   "hit_share": 0.9547396134567188,
+   "hit_in_place": 1.0
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 41000275,
+    "faces": 74310789,
+    "kept_vertices": 3815422,
+    "kept_faces": 6976168
+   },
+   "hit_share": 0.9381747638326585,
+   "hit_in_place": 1.0
+  },
+  "결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21460171,
+    "faces": 39631524,
+    "kept_vertices": 2502106,
+    "kept_faces": 4650230
+   },
+   "hit_share": 0.8490320352162457,
+   "hit_in_place": 1.0
+  },
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21347005,
+    "faces": 39095778,
+    "kept_vertices": 2311192,
+    "kept_faces": 4267046
+   },
+   "hit_share": 0.957211940106677,
+   "hit_in_place": 1.0
+  },
+  "결측 지키기": {
+   "result": "fixB_LoD2_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixB_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21482776,
+    "faces": 39333637,
+    "kept_vertices": 2433908,
+    "kept_faces": 4434907
+   },
+   "hit_share": 0.9391089904247799,
+   "hit_in_place": 1.0
+  }
+ },
+ "values": {
+  "학습 전 사전 정보": {
+   "recall": 0.9936974789915967,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__samepath_LoD2.npz"
+  },
+  "2DGS": {
+   "recall": 0.3235294117647059,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__imgonly_2dgs_s0.npz"
+  },
+  "GeoGS": {
+   "recall": 0.9810924369747899,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__trust_LoD2_fix1.npz"
+  },
+  "결합": {
+   "recall": 0.6449579831932774,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__mvsfuse_LoD2.npz"
+  },
+  "본 방법": {
+   "recall": 0.4474789915966387,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz"
+  },
+  "결측 지키기": {
+   "recall": 0.957983193277311,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__fixB_LoD2_s0.npz"
+  },
+  "본 방법 씨앗 1": {
+   "recall": 0.5042016806722689,
+   "rows": 476,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s1.npz"
+  }
+ },
+ "seconds": 78.9,
+ "made": "2026-10-20 16:41:41 KST",
+ "scientific_verdict": null
+}

@@ -96,3 +96,29 @@ def plan_inside(Q, pad=0.25, res=0.05):
         out[ok] = M[j[ok], i[ok]]
         return out
     return f
+
+
+def wall_inside(Q, n_out, half=1.5, pad=0.25, res=0.05):
+    """inside test for a wall place: within +-half m of the wall plane and inside the face's patch squares (grown by pad) on the wall
+    plane (s along the wall, h = z); returns f(X [N, 3]) -> bool [N]."""
+    n = np.asarray(n_out, np.float64); n[2] = 0; n /= np.linalg.norm(n)
+    r = np.cross(-n, [0.0, 0.0, 1.0]); r /= np.linalg.norm(r)
+    c0 = Q.reshape(-1, 3).mean(0)
+    S_ = np.stack([(Q[..., :2] - c0[:2]) @ r[:2], Q[..., 2] - c0[2]], -1)
+    s0, h0 = S_[..., 0].min() - pad - res, S_[..., 1].min() - pad - res; s1, h1 = S_[..., 0].max() + pad + res, S_[..., 1].max() + pad + res
+    W, H = int(np.ceil((s1 - s0) / res)), int(np.ceil((h1 - h0) / res))
+    m = Image.new("L", (W, H), 0); dr = ImageDraw.Draw(m)
+    for q in S_:
+        c = q.mean(0); qq = c + (q - c) * (1 + 2 * pad / max(np.linalg.norm(q[0] - q[2]) / np.sqrt(2), 1e-6))
+        dr.polygon([((a - s0) / res, (b - h0) / res) for a, b in qq], fill=1)
+    M = np.asarray(m).astype(bool)
+
+    def f(X):
+        d = X - c0
+        s, h, dn = d[:, :2] @ r[:2], d[:, 2], d[:, :2] @ n[:2]
+        i = np.floor((s - s0) / res).astype(int); j = np.floor((h - h0) / res).astype(int)
+        ok = (i >= 0) & (i < W) & (j >= 0) & (j < H) & (np.abs(dn) <= half)
+        out = np.zeros(len(X), bool)
+        out[ok] = M[j[ok], i[ok]]
+        return out
+    return f
