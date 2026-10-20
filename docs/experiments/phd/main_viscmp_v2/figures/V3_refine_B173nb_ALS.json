@@ -1,0 +1,183 @@
+{
+ "key": "V3",
+ "title": "사전 정보가 영상보다 정확한 이 지붕에서 본 방법은 2DGS와 함께 참값 위에 떴고, 결합은 사전 정보를 따라 참값에 붙었다",
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "section": {
+  "kind": "vertical",
+  "centre_xy": [
+   106.59757175582243,
+   121.51369232970977
+  ],
+  "axis_xy": [
+   0.34217013195623075,
+   0.9396380158321904
+  ],
+  "s_range_m": [
+   -37.24391667034143,
+   29.457839047456286
+  ],
+  "band_m": 0.5
+ },
+ "gt_points_in_band": 80320,
+ "gt_median_z": -28.61180877685547,
+ "ylim": [
+  -0.3,
+  0.3
+ ],
+ "height_axis": "z - GT profile (0.25 m-bin median, gaps <= 1 m)",
+ "photo": {
+  "view": "DJI_20241217091131_0108_D",
+  "crop_native": [
+   17,
+   0,
+   1318,
+   1013
+  ],
+  "camera": {
+   "kind": "pinhole (training camera, COLMAP 1400 x 1013 model)",
+   "view": "DJI_20241217091131_0108_D",
+   "K_native": [
+    922.0550838163813,
+    922.470063461439,
+    702.6193018201524,
+    499.79701601553825
+   ],
+   "R": [
+    [
+     0.9266812632831053,
+     -0.37584814796376786,
+     -7.71507210940508e-05
+    ],
+    [
+     -0.3758326653115931,
+     -0.9266411869644937,
+     -0.009269212793878379
+    ],
+    [
+     0.003412325425891493,
+     0.008618601582610626,
+     -0.9999570369480622
+    ]
+   ],
+   "t": [
+    -55.543074391829364,
+    147.68935198892848,
+    31.442850976509316
+   ],
+   "centre": [
+    106.86991590033931,
+    115.7082813814668,
+    32.80617893840401
+   ],
+   "crop_native": [
+    0,
+    0,
+    1400.0,
+    1013.0
+   ],
+   "scale": 1,
+   "size": [
+    1400,
+    1013
+   ]
+  }
+ },
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_ALS",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/metrics_trial_v1/PHD-MAIN-METRICS-TRIAL-v1/gpu/samepath_ALS/mesh.ply",
+   "mesh_info": {
+    "vertices": 17867889,
+    "faces": 34920603,
+    "kept_vertices": 3540486,
+    "kept_faces": 6857967
+   },
+   "segments": 3682
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 29560722,
+    "faces": 54549677,
+    "kept_vertices": 3869918,
+    "kept_faces": 7273252
+   },
+   "segments": 7117
+  },
+  "GeoGS": {
+   "result": "geogs_ALS_fix1",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 30829215,
+    "faces": 56203065,
+    "kept_vertices": 3245993,
+    "kept_faces": 6113234
+   },
+   "segments": 4910
+  },
+  "결합": {
+   "result": "mvsfuse_ALS",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21072408,
+    "faces": 40314532,
+    "kept_vertices": 3602788,
+    "kept_faces": 6932302
+   },
+   "segments": 3679
+  },
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b1_ALS/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 19596134,
+    "faces": 36543161,
+    "kept_vertices": 2838153,
+    "kept_faces": 5384453
+   },
+   "segments": 4328
+  }
+ },
+ "values": {
+  "학습 전 사전 정보": {
+   "median_cm": -1.3865834102034569,
+   "rows": 32932,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__samepath_ALS.npz"
+  },
+  "2DGS": {
+   "median_cm": 18.565311282873154,
+   "rows": 32932,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__imgonly_2dgs_s0.npz"
+  },
+  "GeoGS": {
+   "median_cm": 22.339435666799545,
+   "rows": 32932,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__geogs_ALS_fix1.npz"
+  },
+  "결합": {
+   "median_cm": -1.386508857831359,
+   "rows": 32932,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__mvsfuse_ALS.npz"
+  },
+  "본 방법": {
+   "median_cm": 6.843098625540733,
+   "rows": 32932,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz"
+  },
+  "본 방법 씨앗 1": {
+   "median_cm": 6.894199922680855,
+   "rows": 32932,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s1.npz"
+  }
+ },
+ "seconds": 21.2,
+ "made": "2026-10-20 16:39:02 KST",
+ "scientific_verdict": null
+}
