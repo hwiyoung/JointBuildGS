@@ -1,0 +1,300 @@
+{
+ "task_id": "PHD-MAIN-FIXTEST-v1",
+ "item": "일 7",
+ "key": "unseen_1_v2",
+ "redraw_of": "docs/experiments/phd/main_fill_v1/figures/items/unseen_1.png",
+ "site": "B173nb_b10",
+ "prior": "LoD2",
+ "mark": "그림은 [이 발주에서 냄]; 패널의 값은 빈칸 채우기의 것(출처 value_source)",
+ "place": {
+  "face": 53,
+  "face_cells": 21560,
+  "unseen_set": 18298,
+  "counted_patches": 14970,
+  "excluded_in_set": {
+   "지금 지붕보다 위": 2953,
+   "모호": 375
+  },
+  "outside_set_one_view": 3262,
+  "outside_set_label_by_rule": {
+   "0": 2880,
+   "1": 327,
+   "2": 55
+  },
+  "view": "DJI_20241217101359_0032_D",
+  "triangle": {
+   "cells": 4542,
+   "area_m2": 283.875,
+   "area_share_of_face": 0.21066790352504638,
+   "s_range": [
+    -38.850475754096266,
+    -17.10047754145718
+   ],
+   "z_range": [
+    -43.514999999999986,
+    -24.514999999999986
+   ],
+   "seen_by_a_training_view": 3255,
+   "seen_share": 0.7166446499339498,
+   "unseen_set_patches": 1287,
+   "unseen_set_per_m2": 4.533685601056803,
+   "cells_per_m2": 16.0,
+   "label_inferred": {
+    "0 맞음으로 미룸(셈)": 1182,
+    "1 지금 지붕보다 위": 88,
+    "2 모호": 17
+   },
+   "counted_li0_per_m2": 4.163804491413474,
+   "patch_area_m2": {
+    "min": 0.0625,
+    "max": 0.0625
+   },
+   "in_eval_share": 1.0,
+   "nn_spacing_unseen_set": {
+    "n": 1287,
+    "median_m": 0.35355337606620585,
+    "mean_m": 0.35560865751415677,
+    "share_0_25": 0.016317016317016316,
+    "share_0_35": 0.9627039627039627,
+    "share_0_5_or_more": 0.02097902097902098
+   },
+   "nn_spacing_all_cells": {
+    "n": 4542,
+    "median_m": 0.24999997945561603,
+    "mean_m": 0.25009117575382045,
+    "share_0_25": 0.9991193306913254,
+    "share_0_35": 0.0008806693086745927,
+    "share_0_5_or_more": 0.0
+   },
+   "lod2_triangle": {
+    "219": 184,
+    "220": 4358
+   },
+   "unseen_set_4_neighbours_in_set": {
+    "mean": 0.0782122905027933,
+    "share_0": 0.9569034317637669,
+    "share_4": 0.0,
+    "cells": 1253
+   }
+  },
+  "rest": {
+   "cells": 17018,
+   "area_m2": 1063.625,
+   "area_share_of_face": 0.7893320964749536,
+   "s_range": [
+    -39.600475692463135,
+    30.14951857565532
+   ],
+   "z_range": [
+    -43.514999999999986,
+    -24.514999999999986
+   ],
+   "seen_by_a_training_view": 7,
+   "seen_share": 0.00041132918086731694,
+   "unseen_set_patches": 17011,
+   "unseen_set_per_m2": 15.993418733106123,
+   "cells_per_m2": 16.0,
+   "label_inferred": {
+    "0 맞음으로 미룸(셈)": 13788,
+    "1 지금 지붕보다 위": 2865,
+    "2 모호": 358
+   },
+   "counted_li0_per_m2": 12.96321541896815,
+   "patch_area_m2": {
+    "min": 0.0625,
+    "max": 0.0625
+   },
+   "in_eval_share": 1.0,
+   "nn_spacing_unseen_set": {
+    "n": 17011,
+    "median_m": 0.24999997945561958,
+    "mean_m": 0.25028859675689513,
+    "share_0_25": 0.9997648580330375,
+    "share_0_35": 0.00011757098348127682,
+    "share_0_5_or_more": 0.00011757098348127682
+   },
+   "nn_spacing_all_cells": {
+    "n": 17018,
+    "median_m": 0.24999997945561958,
+    "mean_m": 0.2503006479057709,
+    "share_0_25": 0.9996474321306852,
+    "share_0_35": 0.0002350452462098954,
+    "share_0_5_or_more": 0.0001175226231049477
+   },
+   "lod2_triangle": {
+    "219": 10529,
+    "220": 6489
+   },
+   "unseen_set_4_neighbours_in_set": {
+    "mean": 3.988611449451888,
+    "share_0": 6.090133982947625e-05,
+    "share_4": 0.9926309378806334,
+    "cells": 16420
+   }
+  },
+  "gt_points_on_wall": 12988,
+  "frame": {
+   "centre": [
+    153.565,
+    111.76,
+    -33.786
+   ],
+   "t": [
+    0.365493,
+    0.930814,
+    0.0
+   ],
+   "normal": [
+    0.930814,
+    -0.365493,
+    0.0
+   ],
+   "s_range": [
+    -39.6,
+    30.15
+   ],
+   "z_range": [
+    -43.51,
+    -24.51
+   ]
+  },
+  "source": "S1/defs/fig_views_v1.json unseen_face; cells: S0/s61/box/B173nb_b10/LoD2/units.npz"
+ },
+ "colours": {
+  "blue": "벽 있음",
+  "white": "없음",
+  "light_grey": "뺀 칸(지금 지붕보다 위, 모호)",
+  "sand": "학습 영상 한 장이 본 칸(보지 못한 패치가 아님)"
+ },
+ "changes_from_fill": [
+  "모래색 칸 3,262개를 그림(앞 그림은 투명 = 흰 칸)",
+  "래스터를 칸의 격자에 맞춤(칸 중심 = 래스터 칸 중심)"
+ ],
+ "panels": {
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "share": 0.919906,
+   "present": 13771,
+   "patches": 14970,
+   "value_source": "SL/work/virtual/metrics/B173nb_b10/prop_LoD2_s0__LoD2.json 'wall'",
+   "recomputed_from_flags": {
+    "share": 0.9199064796259185,
+    "present": 13771,
+    "patches": 14970
+   },
+   "same_as_fill": true,
+   "triangle": {
+    "share": 0.8849407783417935,
+    "present": 1046,
+    "patches": 1182
+   },
+   "rest": {
+    "share": 0.9229039744705541,
+    "present": 12725,
+    "patches": 13788
+   },
+   "mesh": "가상 시점 메시"
+  },
+  "2차원 가우시안 스플래팅": {
+   "result": "imgonly_2dgs_s0",
+   "share": 0.228123,
+   "present": 3415,
+   "patches": 14970,
+   "value_source": "SL/work/virtual/metrics/B173nb_b10/imgonly_2dgs_s0__LoD2.json 'wall'",
+   "recomputed_from_flags": {
+    "share": 0.22812291249164995,
+    "present": 3415,
+    "patches": 14970
+   },
+   "same_as_fill": true,
+   "triangle": {
+    "share": 0.1598984771573604,
+    "present": 189,
+    "patches": 1182
+   },
+   "rest": {
+    "share": 0.23397156948070785,
+    "present": 3226,
+    "patches": 13788
+   },
+   "mesh": "가상 시점 메시"
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "share": 0.223246,
+   "present": 3342,
+   "patches": 14970,
+   "value_source": "SL/work/virtual/metrics/B173nb_b10/trust_LoD2_fix1__LoD2.json 'wall'",
+   "recomputed_from_flags": {
+    "share": 0.22324649298597193,
+    "present": 3342,
+    "patches": 14970
+   },
+   "same_as_fill": true,
+   "triangle": {
+    "share": 0.26988155668358715,
+    "present": 319,
+    "patches": 1182
+   },
+   "rest": {
+    "share": 0.21924862199013634,
+    "present": 3023,
+    "patches": 13788
+   },
+   "mesh": "가상 시점 메시"
+  }
+ },
+ "others_from_fill": {
+  "m1": 0.926587,
+  "samepath": 1.0,
+  "mvsfuse": 0.10481,
+  "judgefuse": 1.0
+ },
+ "others_source": "SL/tables/virtual_main.json units.B173nb_b10/LoD2 rows.wall_virtual",
+ "sensitivity_mark": "[이 발주에서 냄]",
+ "sensitivity": {
+  "prop_LoD2_s0": {
+   "now_as_fill": {
+    "share": 0.9199064796259185,
+    "present": 13771,
+    "patches": 14970
+   },
+   "without_T": {
+    "share": 0.9229039744705541,
+    "present": 12725,
+    "patches": 13788
+   },
+   "with_every_cell_of_T": {
+    "share": 0.9166386554621849,
+    "present": 16362,
+    "patches": 17850
+   }
+  },
+  "prop_LoD2_s1": {
+   "now_as_fill": {
+    "share": 0.9265865063460254,
+    "present": 13871,
+    "patches": 14970
+   },
+   "without_T": {
+    "share": 0.9244270380040615,
+    "present": 12746,
+    "patches": 13788
+   },
+   "with_every_cell_of_T": {
+    "share": 0.9311484593837535,
+    "present": 16621,
+    "patches": 17850
+   }
+  }
+ },
+ "title": "영상이 보지 못한 긴 벽은 본 방법에서 섰고 2차원 가우시안 스플래팅과 GeoGS에서는 조각만 섰다 — B173 주변 LoD2 긴 벽, 왼쪽 위 모래색은 학습 영상 한 장이 본 칸이라 셈에서 뺐다",
+ "foot": "B173 주변 LoD2. 긴 벽(LoD2 면 53, 칸 21,560개, 1,347.5 m²)을 바깥에서 정면으로 본 것; 칸 하나는 패치 하나(0.25 m)의 제자리다. 파랑 = 결과 메시가 패치 중심 0.25 m 안에 있음(벽 있음), 흰 칸 = 없음, 옅은 회색 칸 = 뺀 칸(지금 지붕보다 위 2,953개와 모호 375개), 모래색 칸 = 학습 영상 DJI_20241217101359_0032_D 한 장이 화소를 놓아 '학습 영상이 보지 못한 패치'에 들지 않은 칸 3,262개(앞 그림에서는 투명하게 남아 흰 칸 = 없음처럼 보였다), 회색 윤곽 = LoD2 면 53의 범위, 검은 점 = 벽면 0.25 m 안의 참값 점 12,988개. 모래색 칸은 그 영상이 이 면을 보는 왼쪽 위 영역(칸 4,542개, 283.9 m², 면의 21.1 %)의 71.7 %이고, 나머지 1,287칸이 보지 못한 패치로 남아 대각선으로 듬성듬성하다(그 영상은 126 m 밖에서 벽 법선과 75° 기울어 보고, 화소 하나가 벽에서 0.073 m², 칸 1.17개 넓이다). 이 자리의 벽 있음(맞음으로 미룬 14,970패치, 빈칸 채우기 값과 같음): 본 방법 (씨앗 0) 92.0 %, 2차원 가우시안 스플래팅 22.8 %, GeoGS 22.3 %; 본 방법 씨앗 1 92.7 %, 학습 전 사전 정보 100.0 %, MVS 기반 결합 10.5 %, 본 방법의 판정으로 갈아 끼운 변형 100.0 %(SL/tables/virtual_main.json). 셈을 바꾼다면[이 발주에서 냄]: 모래색 영역을 통째로 빼면 본 방법 씨앗 0 92.3 %, 씨앗 1 92.4 %; 모래색 칸도 같은 규칙으로 세면 91.7 %, 93.1 %(17,850패치).",
+ "scientific_verdict": null,
+ "rule7": {
+  "result": "통과",
+  "checked": "2026-10-20 10:10 KST",
+  "note": "제목을 가린 판에서 본 방법 칸은 벽이 거의 파랑으로 차고 다른 두 칸은 조각만 있다. 왼쪽 위 모래색 칸에는 '학습 영상 한 장이 본 칸(이 셈에서 뺌)' 글이 붙어 흰 칸(없음)과 헷갈리지 않는다.",
+  "how": "/item7/rule7/<그림>.png(제목을 가린 판)를 보고 제목 문장을 말할 수 있는지 점검"
+ }
+}

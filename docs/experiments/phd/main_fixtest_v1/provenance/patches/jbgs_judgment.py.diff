@@ -1,0 +1,264 @@
+--- r15/jbgs_judgment.py
++++ r16/jbgs_judgment.py
+@@ -1,4 +1,25 @@
+-"""Judgment-guided stage-2 optimization for GeoGS, revision r14 (JointBuildGS PHD-MAIN-FIX-v1).
++"""Judgment-guided stage-2 optimization for GeoGS, revision r16 (JointBuildGS PHD-MAIN-FIXTEST-v1).
++
++r16 = r15 (= r14 + the out-of-memory record of train.py; this module was r14's byte for byte) + two switches, each 0 by default;
++with both at 0 every decision is r15's (same code path: the switches only add branches; REVISION and the new records differ).
++  (r16-A) --jbgs_sw_prior_share_band 1 (fix A, order 2.2 / 6.2): the tolerance band of the prior depth term ends at w instead of
++          tau, w = the prior's own share of the tolerance (2.5 x sqrt(NMAD^2 - sigma_image^2), at most tau), read per view and
++          pixel from --jbgs_prior_width_dir (the same depth conversion as the tau maps: w_px / max(f, 1e-3)). The pull band is
++          w .. hi tau; the truncation (beyond hi tau), the judgments, the conflict thresholds (marks of the stage-1 product),
++          the protection bound (4 tau of the surface kind) and every other use of tau are unchanged.
++  (r16-B) --jbgs_sw_own_depth_release 1 (fix B, order 2.2 / 6.3): a missing patch (state 2: seen, without enough
++          confidence-1 MVS pixels, its judgment borrowed from support patches) whose borrowed judgment is conflict (0) or
++          mixed (2) is read as agree (1) -- the propagated table J and the patch table J_loc are rewritten once, right after
++          the judgment-level switches, so every path that reads them (initialisation, the depth-term weight g_p, the
++          protection of eq. 7 with its opacity floor and reset exemption, density control through the protection mask, the
++          re-read) treats it like a borrowed agree; insufficient (3) and none (-1) stay. In the prior depth term the pixels of
++          missing patches (any judgment) are not truncated: the pull of the pull band continues beyond hi tau. Support
++          patches, invisible patches and pixels without a patch are unchanged.
++  Records: meta.json / init_report.json 'fixes'; locations.npz adds judgment_before_own_depth and own_depth_changed (fix B);
++  init_report.json adds the per-view pixel counts of the two fixes; scalars.jsonl adds px_prior_w_to_tau (fix A: valid prior
++  pixels with w < |r| <= tau) and px_prior_beyond_kept (fix B: missing-patch pixels beyond hi tau, pulled).
++--- r14 text follows ---
++Judgment-guided stage-2 optimization for GeoGS, revision r14 (JointBuildGS PHD-MAIN-FIX-v1).
+ 
+ r14 = r13 with the per-view maps of this module kept in pinned host memory instead of on the GPU (order 4.1, memory only):
+   (r14-1) the observation confidence A, the MVS depth M, the prior depth P and the tolerance TAU of every view (train and test
+@@ -219,9 +240,13 @@
+     "density_judgment": "split / clone / prune exemption = prior & E < threshold & u <= bound, judgment not read; gradient protection keeps it",
+     "tolerance_band": "rho(r) = min(|r|, hi tau): no tolerance band, truncation beyond hi tau kept",
+ }
++FIXES = {   # r16 (PHD-MAIN-FIXTEST-v1): name -> what 1 changes (0 = r15)
++    "prior_share_band": "the prior depth term's tolerance band ends at w (--jbgs_prior_width_dir) instead of tau; pull band w .. hi tau",
++    "own_depth_release": "missing patches read a borrowed conflict / mixed judgment as agree in every path; their pixels are not truncated",
++}
+ ORIGIN_IMAGE, ORIGIN_PRIOR = 0, 1
+ LABELS = ("preserve", "correct", "undecided", "other")
+-REVISION = "r14"
++REVISION = "r16"
+ 
+ 
+ # ----------------------------------------------------------------------------------------------------------- args
+@@ -297,6 +322,10 @@
+     g.add_argument("--jbgs_memlog_from", type=int, default=0, help="r14-3: first iteration of monitor/memlog.jsonl (0 = off)")
+     g.add_argument("--jbgs_memlog_to", type=int, default=0, help="r14-3: last iteration of monitor/memlog.jsonl")
+     g.add_argument("--jbgs_memlog_every", type=int, default=100, help="r14-3: interval of monitor/memlog.jsonl")
++    for _n, _h in FIXES.items():   # r16: fixes A and B, 0 = r15
++        g.add_argument(f"--jbgs_sw_{_n}", type=int, default=0, choices=[0, 1], help=f"r16 switch {_n}: {_h} (0 = r15)")
++    g.add_argument("--jbgs_prior_width_dir", default="", help="r16-A: per-view maps of the band end w (metres of camera depth, "
++                   "converted like the tau maps); required with --jbgs_sw_prior_share_band 1")
+ 
+ 
+ def apply_seed(args):
+@@ -407,10 +436,23 @@
+     return lock, low, near, conflict
+ 
+ 
+-def truncated_prior_loss(D, P, tau, w, hi=4.0, denom=None, rho=None):
++def rho_band(r, tau, hi, lo=None, notrunc=None):
++    """r16: rho with the band end lo (fix A; None = tau) and without truncation where notrunc (fix B):
++    rho = 0 (|r| <= lo); |r| - lo (lo < |r| <= hi tau); hi tau - lo beyond hi tau, except on notrunc where |r| - lo continues.
++    With lo None the capped value is the r12 expression (hi - 1) tau, so the pixels outside notrunc equal rho_truncated."""
++    b = tau if lo is None else lo
++    a = torch.clamp(torch.abs(r) - b, min=0.0)
++    cap = (hi - 1.0) * tau if lo is None else hi * tau - b
++    capped = torch.minimum(a, cap)
++    return capped if notrunc is None else torch.where(notrunc, a, capped)
++
++
++def truncated_prior_loss(D, P, tau, w, hi=4.0, denom=None, rho=None, lo=None, notrunc=None, extra=None):
+     """sum w rho_tau(D-P) over prior pixels (tau finite) with w > 0, divided by `denom` (r6 (5): the pixel count of the
+     view) or, when denom is None, by sum w (r5). Returns (loss, n_valid, n_hole, n_beyond). r13: rho = rho_noband for the
+-    ablation of the tolerance band (None = rho_truncated, r12)."""
++    ablation of the tolerance band (None = rho_truncated, r12). r16: lo = per-pixel band end map (fix A), notrunc = per-pixel
++    bool map of pixels that are not truncated (fix B); both None = the r15 path (the same expressions). extra (dict) receives
++    the r16 pixel counts when a fix is on."""
+     valid_t = torch.isfinite(P) & (P > 0) & torch.isfinite(tau) & (w > 0)
+     rendered = torch.isfinite(D) & (D > 0)
+     valid = valid_t & rendered
+@@ -423,7 +465,19 @@
+     ww = w[valid]
+     n_beyond = int((torch.abs(r) > hi * t).sum())
+     den = (ww.sum() + 1e-9) if denom is None else denom
+-    return ((rho_truncated if rho is None else rho)(r, t, hi) * ww).sum() / den, n, n_hole, n_beyond
++    if lo is None and notrunc is None:   # r15 path
++        return ((rho_truncated if rho is None else rho)(r, t, hi) * ww).sum() / den, n, n_hole, n_beyond
++    if rho is not None:
++        raise RuntimeError("r16 fixes and the r13 tolerance-band ablation cannot be combined")
++    lv = lo[valid] if lo is not None else None
++    nt = notrunc[valid] if notrunc is not None else None
++    if extra is not None:
++        ar = torch.abs(r)
++        if lv is not None:   # fix A: pixels pulled now that r15 left inside its band (w < |r| <= tau), all weights
++            extra["prior_w_to_tau"] = int(((ar > lv) & (ar <= t) & (ww > 0)).sum())
++        if nt is not None:   # fix B: missing-patch pixels beyond hi tau (r15 released them)
++            extra["prior_beyond_kept"] = int((nt & (ar > hi * t)).sum())
++    return (rho_band(r, t, hi, lv, nt) * ww).sum() / den, n, n_hole, n_beyond
+ 
+ 
+ @torch.no_grad()
+@@ -688,6 +742,8 @@
+         self.sw = {n: bool(int(getattr(args, f"jbgs_sw_{n}", 1))) for n in ("confidence_mask", "judgment", "propagation", "prior_band",
+                                                                           "protection", "init_exclusion", "prior")}
+         self.ab = {n: bool(int(getattr(args, f"jbgs_ablate_{n}", 0))) for n in ABLATIONS}   # r13: all False = r12
++        self.fix = {n: bool(int(getattr(args, f"jbgs_sw_{n}", 0))) for n in FIXES}          # r16: all False = r15
++        self.own_info = None
+         self.rule_name, self.prior_kind, self.rule_source = resolve_rule(args)          # r12-1
+         self.timing = (Path(args.model_path) / "monitor" / "timing.jsonl")
+         if ppsw is not None and tuple(self.sw) != tuple(ppsw.NAMES):
+@@ -702,6 +758,17 @@
+         self.P = HostMaps(_load_set(root / args.jbgs_prior_set, names, self.size, "cpu")) if self.mode in ("P", "P0") else {}
+         tau_root = Path(args.jbgs_tau_dir) if getattr(args, "jbgs_tau_dir", "") else root / args.jbgs_tau_set   # r7
+         self.TAU = HostMaps(_load_set(tau_root, names, self.size, "cpu")) if self.mode == "P" else {}
++        self.W, self.w_info = {}, None                                                  # r16-A: band-end maps
++        if self.fix["prior_share_band"]:
++            if self.mode != "P" or not self.sw["prior_band"] or self.ab["tolerance_band"] or not self.sw["prior"]:
++                raise RuntimeError("r16 fix A needs mode P with the prior term, the prior band switch on and no tolerance-band ablation")
++            if not getattr(args, "jbgs_prior_width_dir", ""):
++                raise RuntimeError("r16 fix A needs --jbgs_prior_width_dir")
++            self.W = HostMaps(_load_set(Path(args.jbgs_prior_width_dir), names, self.size, "cpu"))
++            self.w_info = self._check_width_maps(args)
++        if self.fix["own_depth_release"] and (self.mode != "P" or not getattr(args, "jbgs_prop_store", "")):
++            raise RuntimeError("r16 fix B needs mode P with the stage-1 product store (patch states and judgments)")
++        self.NOTRUNC = HostMaps()                                                       # r16-B: filled by _g_init
+         self.FACE = _load_set(root / "faceid", names, self.size, "cpu", dtype=np.int32)
+         self.FV = _load_set(root / "fvert", names, self.size, "cpu")
+         self.G = _load_set(root / "gt", names, self.size, "cpu")
+@@ -794,6 +861,7 @@
+         self.init_seconds = time.time() - self._t_init0               # r12-4 (to here: maps, product, seats, first E, g_p)
+         self.init_filter["init_seconds"] = round(self.init_seconds, 2)
+         meta = dict(mode=self.mode, revision=REVISION, switches=self.sw, ablations=self.ab, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
++                    fixes=self.fix, prior_width=self.w_info, own_depth=self.own_info,                 # r16 records
+                     seed=int(getattr(args, "jbgs_seed", 0)), init_seconds=round(self.init_seconds, 2),
+                     store_frame_shift=(self.prop["frame_shift"] if self.prop is not None else None),
+                     size=[H, W], views=names, train_views=sorted(self.train_names),
+@@ -837,6 +905,32 @@
+         if int(getattr(args, "jbgs_dry_init", 0)):    # r7-6
+             self.dry_init_report(gaussians)
+             raise SystemExit(0)
++
++    @torch.no_grad()
++    def _check_width_maps(self, args):
++        """r16-A: the band-end maps cover every training view, are finite exactly where the tau maps are and never exceed tau."""
++        missing = [nm for nm in sorted(self.train_names) if nm not in self.W]
++        if missing:
++            raise ValueError(f"r16 w maps missing for {len(missing)} training views, e.g. {missing[:3]}")
++        n_px = n_lt = n_finite_diff = n_excess = 0
++        rmin, rmax = float("inf"), float("-inf")
++        for nm in sorted(self.train_names):
++            Wv, Tv = self.W._h[nm], self.TAU._h[nm]
++            fw, ft = torch.isfinite(Wv), torch.isfinite(Tv)
++            n_finite_diff += int((fw != ft).sum())
++            both = fw & ft
++            wv, tv = Wv[both].double(), Tv[both].double()
++            n_px += int(both.sum()); n_lt += int((wv < tv).sum()); n_excess += int((wv > tv * (1 + 1e-6)).sum())
++            if wv.numel():
++                rr = wv / tv
++                rmin, rmax = min(rmin, float(rr.min())), max(rmax, float(rr.max()))
++        info = dict(dir=str(args.jbgs_prior_width_dir), views=len(self.W), train_views=len(self.train_names), prior_pixels=n_px,
++                    narrowed_pixels=n_lt, finite_mismatch_pixels=n_finite_diff, w_above_tau_pixels=n_excess,
++                    ratio_w_over_tau_min=rmin, ratio_w_over_tau_max=rmax)
++        if n_finite_diff or n_excess:
++            raise RuntimeError(f"r16 w maps do not match the tau maps: {info}")
++        print(f"[jbgs_judgment] r16 fix A band-end maps: {info}")
++        return info
+ 
+     # ------------------------------------------------------------------------------------------- bookkeeping
+     def _wrap_counters(self, gaussians):
+@@ -1081,6 +1175,20 @@
+         else:
+             raise RuntimeError(f"rule {self.rule_name} needs --jbgs_prop_pairs and --jbgs_prop_knn")
+         vote, J, J_loc = ppsw.judgment_level(state, vote, J, self.sw)   # r11-2: judgment / propagation switches (identity when on)
++        own_rec = {}
++        if self.fix["own_depth_release"]:   # r16-B: a borrowed conflict / mixed of a missing patch is read as agree, in every path
++            J_before = np.asarray(J).copy()
++            changed = (np.asarray(state) == ppr.ST_MISSING) & np.isin(J_before, (ppr.J_CONFLICT, ppr.J_MIXED))
++            J = np.where(changed, ppr.J_AGREE, J_before).astype(J_before.dtype)
++            J_loc = ppl.location_judgment(state, vote, J)
++            own_rec = dict(judgment_before_own_depth=J_before, own_depth_changed=changed)
++            self.own_info = dict(rule="missing patch (state 2) with a borrowed conflict (0) or mixed (2) -> agree (1); insufficient (3) and "
++                                 "none (-1) unchanged; support / invisible patches unchanged; missing-patch pixels of the prior depth term not truncated",
++                                 n_missing=int((np.asarray(state) == ppr.ST_MISSING).sum()), n_changed=int(changed.sum()),
++                                 n_changed_from_conflict=int((changed & (J_before == ppr.J_CONFLICT)).sum()),
++                                 n_changed_from_mixed=int((changed & (J_before == ppr.J_MIXED)).sum()),
++                                 area_changed_m2=float(np.asarray(st["loc_area"])[changed].sum()))
++            print(f"[jbgs_judgment] r16 fix B: {self.own_info}")
+         why = ppr.undetermined_why(state, J, kd, mis, k, r)
+         within = kd[:, :k] <= r + 1e-9 if len(mis) else np.zeros((0, k), bool)
+         got = np.full(len(state), -1, np.int16); ncf = np.full(len(state), -1, np.int16)
+@@ -1090,7 +1198,7 @@
+                             why_codes=np.array([ppr.WHY_NAMES[i] for i in sorted(ppr.WHY_NAMES)]), E=E0, n_seeing=ns0,
+                             n_supporting=st[f"n_supporting_{tag}"], evidence_within=got, evidence_conflict=ncf,
+                             surface_ext=st["surf_ext"][st["loc_surface"]], kind=st["loc_kind"], area=st["loc_area"],
+-                            center=st["loc_center"].astype(np.float32))
++                            center=st["loc_center"].astype(np.float32), **own_rec)
+         dev = "cuda"
+         st_num = {kk: vv for kk, vv in st.items() if np.asarray(vv).dtype.kind not in ("U", "S", "O")}   # r12: v6 stores carry text keys (prior_kind)
+         P = dict(store=st, st_t=pps.to_torch(st_num, dev), state=torch.as_tensor(state, device=dev).long(),
+@@ -1156,6 +1264,10 @@
+                     n_conflict_points=int(conflict.sum()), n_dropped_conflict=int(drop.sum()), n_prior_kept=int((prior & ~drop).sum()),
+                     n_image=int((~prior).sum()), n_extra_units_without_normal=int((P["unit_kind"] == 0).sum()),
+                     orientation=orient)
++        if own_rec:   # r16-B record: the propagated judgments before the rewrite
++            jb = own_rec["judgment_before_own_depth"]
++            info["missing_judgments_before_own_depth"] = {ppr.J_NAMES[j]: int((jb[state == ppr.ST_MISSING] == j).sum()) for j in ppr.J_NAMES}
++            info["own_depth"] = self.own_info
+         self.init_filter = info
+         print(f"[jbgs_judgment] r8 init: prior {info['n_prior_before']} (with a unit {info['n_prior_located']}) -> kept {info['n_prior_kept']}; "
+               f"dropped (missing, propagated conflict) {info['n_dropped_conflict']}; categories {info['categories']}; "
+@@ -1254,10 +1366,15 @@
+                 return torch.where(v < 0, torch.full_like(v, ppr.MARK_NONE),
+                                    torch.where(v <= ti, torch.full_like(v, ppr.MARK_AGREE), torch.full_like(v, ppr.MARK_CONFLICT)))
+         Jl_t = self.prop["J_loc"]
++        st_t = self.prop["state"]
+         for name in names:
+             lm = LM[name].long(); mk = mark_of(name).long(); A = self.A[name]; P = self.P.get(name)
+             located = lm >= 0
+             Jl = torch.full_like(lm, ppr.J_NONE); Jl[located] = Jl_t[lm[located]]
++            if self.fix["own_depth_release"]:   # r16-B: pixels of missing patches (any judgment) are not truncated
++                miss = torch.zeros_like(located)
++                miss[located] = st_t[lm[located]] == ppr.ST_MISSING
++                self.NOTRUNC[name] = miss
+             off = ppr.prior_term_off(located, Jl, A, mk)
+             if not self.sw["judgment"]:   # r11 switch judgment off: nothing discarded anywhere
+                 off = torch.zeros_like(off)
+@@ -1276,6 +1393,12 @@
+                 c["prior_px"] = int(pp.sum())
+                 for jn, jv in (("agree", ppr.J_AGREE), ("conflict", ppr.J_CONFLICT), ("mixed", ppr.J_MIXED), ("insufficient", ppr.J_INSUFF)):
+                     c[f"unit_judgment_{jn}"] = int((pp & located & (Jl == jv)).sum())
++                if self.fix["own_depth_release"]:   # r16-B records
++                    c["missing_px"] = int((pp & miss).sum()); c["missing_px_g1"] = int((pp & miss & (g > 0)).sum())
++                if self.fix["prior_share_band"] and name in self.W:   # r16-A records: prior pixels whose band end narrowed
++                    Wv, Tv = self.W[name], self.TAU.get(name)
++                    if Tv is not None:
++                        c["w_lt_tau_px"] = int((pp & torch.isfinite(Wv) & torch.isfinite(Tv) & (Wv < Tv)).sum())
+                 self.g_counts[name] = c
+         del LM, MK
+ 
+@@ -1339,8 +1462,14 @@
+                     gw = getattr(self, "GW", {}).get(cam_name)        # r8-1: g_p (eq. 4); r6 path: 1 - c_p
+                     w = gw if gw is not None else 1.0 - A
+                     if self.sw["prior_band"]:
++                        lo = self.W[cam_name] if self.fix["prior_share_band"] else None                      # r16-A
++                        nt = self.NOTRUNC.get(cam_name) if self.fix["own_depth_release"] else None          # r16-B
++                        ex = {} if (lo is not None or nt is not None) else None
+                         prior, n, hole, beyond = truncated_prior_loss(D, P, self.TAU[cam_name], w, self.args.jbgs_trunc_hi, denom,
+-                                                                      rho=rho_noband if self.ab["tolerance_band"] else None)   # r13-3
++                                                                      rho=rho_noband if self.ab["tolerance_band"] else None,   # r13-3
++                                                                      lo=lo, notrunc=nt, extra=ex)
++                        if ex:
++                            stats.update(ex)
+                     else:   # r11 switch prior_band off: rho = |r|
+                         prior, n, hole, beyond = plain_prior_loss(D, P, self.TAU[cam_name], w, denom)
+                     stats.update(prior_n=n, prior_hole=hole, prior_beyond=beyond)
+@@ -1564,6 +1693,7 @@
+         """r7-6: the values right before the first iteration, without training."""
+         row = self.update_E(1, gaussians)
+         rep = dict(revision=REVISION, switches=self.sw, ablations=self.ab, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
++                   fixes=self.fix, prior_width=self.w_info, own_depth=self.own_info,                 # r16 records
+                    seed=int(getattr(self.args, "jbgs_seed", 0)), init_seconds=round(self.init_seconds, 2), init=self.init_filter, first_E=row)
+         # r11: MVS-term weight check (A at the pixels with an MVS depth) and the prior term's presence
+         wa = dict(pixels_with_mvs_depth=0, of_them_A1=0, A1_without_mvs_depth=0)

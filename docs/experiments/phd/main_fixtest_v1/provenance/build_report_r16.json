@@ -1,0 +1,39 @@
+{
+ "task_id": "PHD-MAIN-FIXTEST-v1",
+ "fork": "r16",
+ "parent": "src/phd/forks/GeoGS-conf-guided-v1-r15",
+ "out": "src/phd/forks/GeoGS-conf-guided-v1-r16",
+ "built_at": "2026-10-20T00:56:22.538848+00:00",
+ "repo_commit": "6f61e407",
+ "n_files": 103,
+ "changed_or_added": {
+  "jbgs_judgment.py": {
+   "r15": "4297b5ffcba81356ad60598e533767d1bdda15b89031e41562c3b4a4bb9ef980",
+   "r16": "f478cf72e72c900db76b04a5837a1831aa85429793703eefc6f9ce5713a32041"
+  }
+ },
+ "removed": [],
+ "equal_to_r15": {
+  "train.py": true,
+  "scene/gaussian_model.py": true,
+  "src/phd/prior_propagation_v6/caps.py": true,
+  "src/phd/prior_propagation_v6/conversion.py": true,
+  "src/phd/prior_propagation_v6/faces.py": true,
+  "src/phd/prior_propagation_v6/locations.py": true,
+  "src/phd/prior_propagation_v6/orientation.py": true,
+  "src/phd/prior_propagation_v6/outlines.py": true,
+  "src/phd/prior_propagation_v6/registration.py": true,
+  "src/phd/prior_propagation_v6/rule.py": true,
+  "src/phd/prior_propagation_v6/rules.py": true,
+  "src/phd/prior_propagation_v6/seat.py": true,
+  "src/phd/prior_propagation_v6/surfaces.py": true,
+  "src/phd/prior_propagation_v6/switches.py": true,
+  "src/phd/prior_propagation_v6/tallies.py": true,
+  "src/phd/prior_propagation_v6/tolerance.py": true
+ },
+ "fork_r16_sources": {
+  "jbgs_judgment.py": "f478cf72e72c900db76b04a5837a1831aa85429793703eefc6f9ce5713a32041"
+ },
+ "only_expected_changes": true,
+ "scientific_verdict": null
+}

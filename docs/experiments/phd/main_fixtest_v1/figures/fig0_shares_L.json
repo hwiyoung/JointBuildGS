@@ -1,0 +1,115 @@
+{
+ "title": "\ucc38\uac12 \uc5c6\uc774 \ub098\ub208 \ub450 \ubaab\uc740 4\uc904\uc5d0\uc11c \ucc38\uac12\uacfc \uc5b4\uae0b\ub098\uc9c0 \uc54a\uc558\uace0, 3\uc904(B0 LoD2 \uc9c0\ubd95\uba74, R2 LoD2 \ubcbd\uba74, R2 \ud56d\uacf5 LiDAR)\uc740 \uad00\ubb38\uc5d0 \uac78\ub838\uc73c\uba70, 2\uc904\uc740 \uc601\uc0c1\uc758 \ubaab\uc774 NMAD\ubcf4\ub2e4 \ucee4\uc11c \ub098\ub204\uc9c0 \ubabb\ud588\ub2e4",
+ "caption": "\uc77d\uae30 L: \ubc1c\uc8fc 4.3\uc758 NMAD(\uc9c0\uc6b0\uae30 \uc5c6\uc74c)\ub85c \u03c3_\uc601\uc0c1\uacfc \ucc38\uac12 \ub450 \ubaab\uc744 \uad6c\ud568 \u2014 \ubc1c\uc8fc\ubb38 \uae00 '\u03c3_\uc601\uc0c1 = NMAD(\ucc28) \u00f7 \u221a2' \uadf8\ub300\ub85c. \ucc38\uac12 \ub9c9\ub300\ub294 \ud3c9\uac00 \uc0c1\uc790 \ubc16 \ud328\uce58(\uc0c1\uc790 \ubc16\uc774 1,000\ud328\uce58 \ubbf8\ub9cc\uc774\uba74 \uc9c0\uc5ed \uc804\uccb4)\uc758 \u03c4 \uc794\ucc28 \ud654\uc18c\uc5d0\uc11c \uad6c\ud568. \ub9c9\ub300 \uc704 \uc22b\uc790\ub294 \uadf8 \uc904\uc758 \u03c4\uc640 w(cm). \uad00\ubb38 \uac78\ub9bc = \uadf8 \uc904\uc774 \uad00\ubb38 \uac00 \ub610\ub294 \ub098\uc5d0 \uac78\ub9bc.",
+ "values": [
+  {
+   "region": "B0",
+   "kind": "LoD2 \uc9c0\ubd95\uba74",
+   "sigma_image": 0.05954896629191408,
+   "sigma_prior": 0.051927060619040746,
+   "gt_image": 0.06963581793919282,
+   "gt_prior": 0.08796829376220702,
+   "gt_zone": "outside",
+   "tau": 0.19752371710393812,
+   "w": 0.12981765154760186,
+   "gate_pass": false
+  },
+  {
+   "region": "B0",
+   "kind": "LoD2 \ubcbd\uba74",
+   "sigma_image": 0.08053727916407287,
+   "sigma_prior": 0.20343156569138796,
+   "gt_image": 0.07705541861363345,
+   "gt_prior": 0.1463234101653099,
+   "gt_zone": "outside",
+   "tau": 0.5469840905753184,
+   "w": 0.5085789142284699,
+   "gate_pass": true
+  },
+  {
+   "region": "B0",
+   "kind": "\ud56d\uacf5 LiDAR",
+   "sigma_image": 0.05138746382028278,
+   "sigma_prior": null,
+   "gt_image": 0.06257017707135686,
+   "gt_prior": 0.010619934654235838,
+   "gt_zone": "outside",
+   "tau": 0.1265954507091962,
+   "w": 0.1265954507091962,
+   "gate_pass": true
+  },
+  {
+   "region": "R2",
+   "kind": "LoD2 \uc9c0\ubd95\uba74",
+   "sigma_image": 0.05075458484659965,
+   "sigma_prior": 0.04876201450704316,
+   "gt_image": 0.0670453182374634,
+   "gt_prior": 0.06845623168945313,
+   "gt_zone": "outside",
+   "tau": 0.17595741568870737,
+   "w": 0.12190503626760789,
+   "gate_pass": true
+  },
+  {
+   "region": "R2",
+   "kind": "LoD2 \ubcbd\uba74",
+   "sigma_image": 0.05416770620554633,
+   "sigma_prior": 0.07328570281491283,
+   "gt_image": 0.07618389519046949,
+   "gt_prior": 0.03677782090305118,
+   "gt_zone": "outside",
+   "tau": 0.22782853520583887,
+   "w": 0.18321425703728206,
+   "gate_pass": false
+  },
+  {
+   "region": "R2",
+   "kind": "\ud56d\uacf5 LiDAR",
+   "sigma_image": 0.054348820630784105,
+   "sigma_prior": 0.022458793320765526,
+   "gt_image": 0.06420464736564144,
+   "gt_prior": 0.018609982681274412,
+   "gt_zone": "outside",
+   "tau": 0.14701597917790277,
+   "w": 0.05614698330191382,
+   "gate_pass": false
+  },
+  {
+   "region": "R1",
+   "kind": "LoD2 \uc9c0\ubd95\uba74",
+   "sigma_image": 0.12759178710436692,
+   "sigma_prior": 0.24146676544173754,
+   "gt_image": 0.08918556584472799,
+   "gt_prior": 0.2698122287750244,
+   "gt_zone": "outside",
+   "tau": 0.6827603118471609,
+   "w": 0.6036669136043439,
+   "gate_pass": true
+  },
+  {
+   "region": "R1",
+   "kind": "LoD2 \ubcbd\uba74",
+   "sigma_image": 0.1844738444610128,
+   "sigma_prior": 0.22354179507014219,
+   "gt_image": 0.13649479667597927,
+   "gt_prior": 0.26274545785635706,
+   "gt_zone": "outside",
+   "tau": 0.7245754508391767,
+   "w": 0.5588544876753555,
+   "gate_pass": true
+  },
+  {
+   "region": "R1",
+   "kind": "\ud56d\uacf5 LiDAR",
+   "sigma_image": 0.0788434091870213,
+   "sigma_prior": null,
+   "gt_image": 0.055327846474980555,
+   "gt_prior": 0.018605740928649903,
+   "gt_zone": "outside",
+   "tau": 0.10341712496901895,
+   "w": 0.10341712496901895,
+   "gate_pass": true
+  }
+ ],
+ "written": "2026-10-20 01:29:38 KST"
+}

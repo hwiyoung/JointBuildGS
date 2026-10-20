@@ -1,0 +1,115 @@
+{
+ "title": "\ucc38\uac12 \uc5c6\uc774 \ub098\ub208 \ub450 \ubaab\uc740 6\uc904\uc5d0\uc11c \ucc38\uac12\uacfc \uc5b4\uae0b\ub098\uc9c0 \uc54a\uc558\uace0, 2\uc904(R2 LoD2 \ubcbd\uba74, R2 \ud56d\uacf5 LiDAR)\uc740 \uad00\ubb38\uc5d0 \uac78\ub838\uc73c\uba70, 1\uc904\uc740 \uc601\uc0c1\uc758 \ubaab\uc774 NMAD\ubcf4\ub2e4 \ucee4\uc11c \ub098\ub204\uc9c0 \ubabb\ud588\ub2e4",
+ "caption": "\uc77d\uae30 T: \u03c4\uc758 \ud1b5\uacc4(3 NMAD \ud55c \ubc88 \uc9c0\uc6b4 \ub4a4 NMAD)\ub85c \u03c3_\uc601\uc0c1\uacfc \ucc38\uac12 \ub450 \ubaab\uc744 \uad6c\ud568 \u2014 \u03c4\uc640 \uac19\uc740 \ud1b5\uacc4. \ucc38\uac12 \ub9c9\ub300\ub294 \ud3c9\uac00 \uc0c1\uc790 \ubc16 \ud328\uce58(\uc0c1\uc790 \ubc16\uc774 1,000\ud328\uce58 \ubbf8\ub9cc\uc774\uba74 \uc9c0\uc5ed \uc804\uccb4)\uc758 \u03c4 \uc794\ucc28 \ud654\uc18c\uc5d0\uc11c \uad6c\ud568. \ub9c9\ub300 \uc704 \uc22b\uc790\ub294 \uadf8 \uc904\uc758 \u03c4\uc640 w(cm). \uad00\ubb38 \uac78\ub9bc = \uadf8 \uc904\uc774 \uad00\ubb38 \uac00 \ub610\ub294 \ub098\uc5d0 \uac78\ub9bc.",
+ "values": [
+  {
+   "region": "B0",
+   "kind": "LoD2 \uc9c0\ubd95\uba74",
+   "sigma_image": 0.0424451643687963,
+   "sigma_prior": 0.06664013079725246,
+   "gt_image": 0.055462753212914565,
+   "gt_prior": 0.05718801584243774,
+   "gt_zone": "outside",
+   "tau": 0.19752371710393812,
+   "w": 0.16660032699313115,
+   "gate_pass": true
+  },
+  {
+   "region": "B0",
+   "kind": "LoD2 \ubcbd\uba74",
+   "sigma_image": 0.048440278359242986,
+   "sigma_prior": 0.2133639957614226,
+   "gt_image": 0.054240560066180526,
+   "gt_prior": 0.1435004464700818,
+   "gt_zone": "outside",
+   "tau": 0.5469840905753184,
+   "w": 0.5334099894035564,
+   "gate_pass": true
+  },
+  {
+   "region": "B0",
+   "kind": "\ud56d\uacf5 LiDAR",
+   "sigma_image": 0.038973581616642286,
+   "sigma_prior": 0.03233087129066036,
+   "gt_image": 0.05445514223170905,
+   "gt_prior": 0.009611811447143554,
+   "gt_zone": "outside",
+   "tau": 0.1265954507091962,
+   "w": 0.0808271782266509,
+   "gate_pass": true
+  },
+  {
+   "region": "R2",
+   "kind": "LoD2 \uc9c0\ubd95\uba74",
+   "sigma_image": 0.029312877640257893,
+   "sigma_prior": 0.06398841415586919,
+   "gt_image": 0.05976932710627266,
+   "gt_prior": 0.05137186603546142,
+   "gt_zone": "outside",
+   "tau": 0.17595741568870737,
+   "w": 0.15997103538967297,
+   "gate_pass": true
+  },
+  {
+   "region": "R2",
+   "kind": "LoD2 \ubcbd\uba74",
+   "sigma_image": 0.039977846215124915,
+   "sigma_prior": 0.08189448360326798,
+   "gt_image": 0.05804214072419053,
+   "gt_prior": 0.028145118443341926,
+   "gt_zone": "outside",
+   "tau": 0.22782853520583887,
+   "w": 0.20473620900816997,
+   "gate_pass": false
+  },
+  {
+   "region": "R2",
+   "kind": "\ud56d\uacf5 LiDAR",
+   "sigma_image": 0.026366243089268993,
+   "sigma_prior": 0.05256436936499458,
+   "gt_image": 0.05960553982223266,
+   "gt_prior": 0.0179171630859375,
+   "gt_zone": "outside",
+   "tau": 0.14701597917790277,
+   "w": 0.13141092341248645,
+   "gate_pass": false
+  },
+  {
+   "region": "R1",
+   "kind": "LoD2 \uc9c0\ubd95\uba74",
+   "sigma_image": 0.06359844319160408,
+   "sigma_prior": 0.2655957472795555,
+   "gt_image": 0.056070430495395215,
+   "gt_prior": 0.2109169075012207,
+   "gt_zone": "outside",
+   "tau": 0.6827603118471609,
+   "w": 0.6639893681988887,
+   "gate_pass": true
+  },
+  {
+   "region": "R1",
+   "kind": "LoD2 \ubcbd\uba74",
+   "sigma_image": 0.090286765334073,
+   "sigma_prior": 0.2754084846894108,
+   "gt_image": 0.09190820589129617,
+   "gt_prior": 0.19058667872920632,
+   "gt_zone": "outside",
+   "tau": 0.7245754508391767,
+   "w": 0.6885212117235271,
+   "gate_pass": true
+  },
+  {
+   "region": "R1",
+   "kind": "\ud56d\uacf5 LiDAR",
+   "sigma_image": 0.046665471225809024,
+   "sigma_prior": null,
+   "gt_image": 0.04624982852067615,
+   "gt_prior": 0.01763155174255371,
+   "gt_zone": "outside",
+   "tau": 0.10341712496901895,
+   "w": 0.10341712496901895,
+   "gate_pass": true
+  }
+ ],
+ "written": "2026-10-20 01:29:38 KST"
+}

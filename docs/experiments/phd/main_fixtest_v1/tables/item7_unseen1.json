@@ -1,0 +1,723 @@
+{
+ "task_id": "PHD-MAIN-FIXTEST-v1",
+ "item": "일 7",
+ "what": "그림 unseen_1의 듬성듬성한 칸: 까닭, 숫자, 다시 그린 그림, 벽 있음 값",
+ "mark": "[이 발주에서 냄] (출처가 적힌 값은 그 출처에서 옮김)",
+ "site": "B173nb_b10",
+ "face": 53,
+ "cause": {
+  "task_id": "PHD-MAIN-FIXTEST-v1",
+  "item": "일 7",
+  "step": "cause",
+  "site": "B173nb_b10",
+  "face": 53,
+  "mark": "[이 발주에서 냄]",
+  "place": {
+   "source": "S1/defs/fig_views_v1.json sites.B173nb_b10.unseen_face",
+   "surf_ext": 53,
+   "patches": 18298,
+   "of_patches": 18747,
+   "centre": [
+    153.565,
+    111.76,
+    -33.786
+   ],
+   "normal": [
+    0.930814,
+    -0.365493,
+    0.0
+   ],
+   "t": [
+    0.365493,
+    0.930814,
+    0.0
+   ],
+   "s_range": [
+    -39.6,
+    30.15
+   ],
+   "z_range": [
+    -43.51,
+    -24.51
+   ]
+  },
+  "scientific_verdict": null,
+  "face_cells": {
+   "all": 21560,
+   "unseen_set": 18298,
+   "not_in_unseen_set": 3262,
+   "state": {
+    "invisible": 18298,
+    "support": 1,
+    "missing": 3261
+   },
+   "n_seeing": {
+    "0": 18298,
+    "1": 3262
+   },
+   "unseen_set_equals_invisible": true,
+   "unseen_file_patches_all_faces": 18747,
+   "source": "S0/s61/box/B173nb_b10/LoD2/units.npz; S1/defs/B173nb_b10/unseen.npz"
+  },
+  "store_grid": {
+   "surfaces_with_ext": 1,
+   "grids": [
+    {
+     "store_surface": 53,
+     "cells": 21560,
+     "o": [
+      164.63000000000466,
+      139.94000000040978,
+      -43.639999999999986
+     ],
+     "e1": [
+      0.36549316068820803,
+      0.930814025189857,
+      -0.0
+     ],
+     "e2": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "cell_m": 0.25,
+     "angle_e1_to_drawing_s_deg": 0.023228123728920688,
+     "angle_e2_to_vertical_deg": 0.0,
+     "centre_offset_in_cell_u": [
+      0.49999999999993605,
+      0.500000000000064
+     ],
+     "centre_offset_in_cell_v": [
+      0.5,
+      0.5
+     ]
+    }
+   ]
+  },
+  "views_on_face": [
+   {
+    "view": "DJI_20241217101359_0032_D.JPG",
+    "pairs_on_face": 3262,
+    "pixels_on_face": 3849,
+    "pixels_on_face_pairs": 3849,
+    "cells_hit": 3262,
+    "pixels_per_hit_cell": {
+     "1": 2675,
+     "2": 587
+    },
+    "cells_whose_centre_it_sees": 4542,
+    "share_of_those_cells_hit": 0.7166446499339498,
+    "camera_centre": [
+     128.02305586613713,
+     -40.758211437572086,
+     -7.9036556082879414
+    ],
+    "distance_m": {
+     "median": 126.2778305716075,
+     "min": 117.53183447183798,
+     "max": 142.30859279210682
+    },
+    "incidence_deg_from_wall_normal": {
+     "median": 75.33486288552902,
+     "min": 74.21617191137682,
+     "max": 77.01768160754438
+    },
+    "pixel_footprint_m2": {
+     "median": 0.07293055110612034,
+     "p10": 0.06367572643349206,
+     "p90": 0.08714952812819489
+    },
+    "cells_per_pixel_median": 1.1668888176979255,
+    "pixel_step_on_wall_m": {
+     "along_image_row": {
+      "ds": 0.46777017386512654,
+      "dz": 0.08305878381297305
+     },
+     "along_image_column": {
+      "ds": 0.11858436454325982,
+      "dz": 0.17752422019223957
+     }
+    },
+    "plane_hit_cell_equals_locmap_cell": 0.9955832683813978,
+    "face_cells_in_image_outside_region": 289,
+    "face_cells_outside_image": 16729,
+    "hidden_cells_s_range": [
+     -39.600475692463135,
+     -19.350477356557782
+    ],
+    "hidden_cells_z_range": [
+     -43.514999999999986,
+     -24.514999999999986
+    ],
+    "what_the_view_shows_there": {
+     "rule": "locmap location's LoD2 surface (ext; -1 = no prior surface) at the cell centre's pixel",
+     "surfaces": {
+      "-1": {
+       "cells": 2,
+       "type": null,
+       "building": null,
+       "normal": null
+      },
+      "38": {
+       "cells": 2,
+       "type": "roof",
+       "building": "DEBY_LOD2_4959326",
+       "normal": [
+        0.278043025474876,
+        -0.10907320487564605,
+        0.9543558623296305
+       ]
+      },
+      "60": {
+       "cells": 140,
+       "type": "wall",
+       "building": "DEBY_LOD2_4959326",
+       "normal": [
+        -0.36587696390668434,
+        -0.9306632297896092,
+        0.0
+       ]
+      },
+      "73": {
+       "cells": 145,
+       "type": "wall",
+       "building": "DEBY_LOD2_4959326",
+       "normal": [
+        0.9363291776437037,
+        -0.3511234413893007,
+        0.0
+       ]
+      }
+     }
+    }
+   }
+  ],
+  "seen_cells_outside_T": 7,
+  "regions": {
+   "T": {
+    "cells": 4542,
+    "area_m2": 283.875,
+    "area_share_of_face": 0.21066790352504638,
+    "s_range": [
+     -38.850475754096266,
+     -17.10047754145718
+    ],
+    "z_range": [
+     -43.514999999999986,
+     -24.514999999999986
+    ],
+    "seen_by_a_training_view": 3255,
+    "seen_share": 0.7166446499339498,
+    "unseen_set_patches": 1287,
+    "unseen_set_per_m2": 4.533685601056803,
+    "cells_per_m2": 16.0,
+    "label_inferred": {
+     "0 맞음으로 미룸(셈)": 1182,
+     "1 지금 지붕보다 위": 88,
+     "2 모호": 17
+    },
+    "counted_li0_per_m2": 4.163804491413474,
+    "patch_area_m2": {
+     "min": 0.0625,
+     "max": 0.0625
+    },
+    "in_eval_share": 1.0,
+    "nn_spacing_unseen_set": {
+     "n": 1287,
+     "median_m": 0.35355337606620585,
+     "mean_m": 0.35560865751415677,
+     "share_0_25": 0.016317016317016316,
+     "share_0_35": 0.9627039627039627,
+     "share_0_5_or_more": 0.02097902097902098
+    },
+    "nn_spacing_all_cells": {
+     "n": 4542,
+     "median_m": 0.24999997945561603,
+     "mean_m": 0.25009117575382045,
+     "share_0_25": 0.9991193306913254,
+     "share_0_35": 0.0008806693086745927,
+     "share_0_5_or_more": 0.0
+    },
+    "lod2_triangle": {
+     "219": 184,
+     "220": 4358
+    },
+    "unseen_set_4_neighbours_in_set": {
+     "mean": 0.0782122905027933,
+     "share_0": 0.9569034317637669,
+     "share_4": 0.0,
+     "cells": 1253
+    }
+   },
+   "rest": {
+    "cells": 17018,
+    "area_m2": 1063.625,
+    "area_share_of_face": 0.7893320964749536,
+    "s_range": [
+     -39.600475692463135,
+     30.14951857565532
+    ],
+    "z_range": [
+     -43.514999999999986,
+     -24.514999999999986
+    ],
+    "seen_by_a_training_view": 7,
+    "seen_share": 0.00041132918086731694,
+    "unseen_set_patches": 17011,
+    "unseen_set_per_m2": 15.993418733106123,
+    "cells_per_m2": 16.0,
+    "label_inferred": {
+     "0 맞음으로 미룸(셈)": 13788,
+     "1 지금 지붕보다 위": 2865,
+     "2 모호": 358
+    },
+    "counted_li0_per_m2": 12.96321541896815,
+    "patch_area_m2": {
+     "min": 0.0625,
+     "max": 0.0625
+    },
+    "in_eval_share": 1.0,
+    "nn_spacing_unseen_set": {
+     "n": 17011,
+     "median_m": 0.24999997945561958,
+     "mean_m": 0.25028859675689513,
+     "share_0_25": 0.9997648580330375,
+     "share_0_35": 0.00011757098348127682,
+     "share_0_5_or_more": 0.00011757098348127682
+    },
+    "nn_spacing_all_cells": {
+     "n": 17018,
+     "median_m": 0.24999997945561958,
+     "mean_m": 0.2503006479057709,
+     "share_0_25": 0.9996474321306852,
+     "share_0_35": 0.0002350452462098954,
+     "share_0_5_or_more": 0.0001175226231049477
+    },
+    "lod2_triangle": {
+     "219": 10529,
+     "220": 6489
+    },
+    "unseen_set_4_neighbours_in_set": {
+     "mean": 3.988611449451888,
+     "share_0": 6.090133982947625e-05,
+     "share_4": 0.9926309378806334,
+     "cells": 16420
+    }
+   },
+   "face": {
+    "cells": 21560,
+    "area_m2": 1347.5,
+    "area_share_of_face": 1.0,
+    "s_range": [
+     -39.600475692463135,
+     30.14951857565532
+    ],
+    "z_range": [
+     -43.514999999999986,
+     -24.514999999999986
+    ],
+    "seen_by_a_training_view": 3262,
+    "seen_share": 0.1512987012987013,
+    "unseen_set_patches": 18298,
+    "unseen_set_per_m2": 13.57922077922078,
+    "cells_per_m2": 16.0,
+    "label_inferred": {
+     "0 맞음으로 미룸(셈)": 14970,
+     "1 지금 지붕보다 위": 2953,
+     "2 모호": 375
+    },
+    "counted_li0_per_m2": 11.109461966604824,
+    "patch_area_m2": {
+     "min": 0.0625,
+     "max": 0.0625
+    },
+    "in_eval_share": 1.0,
+    "nn_spacing_unseen_set": {
+     "n": 18298,
+     "median_m": 0.24999997945561958,
+     "mean_m": 0.2570771307375877,
+     "share_0_25": 0.9327248879658979,
+     "share_0_35": 0.06661930265602799,
+     "share_0_5_or_more": 0.0006558093780741065
+    },
+    "nn_spacing_all_cells": {
+     "n": 21560,
+     "median_m": 0.24999997945561958,
+     "mean_m": 0.24999997945561608,
+     "share_0_25": 1.0,
+     "share_0_35": 0.0,
+     "share_0_5_or_more": 0.0
+    },
+    "lod2_triangle": {
+     "219": 10713,
+     "220": 10847
+    }
+   }
+  },
+  "lod2_triangles_of_face": [
+   {
+    "triangle": 219,
+    "tri_type": 1,
+    "vertices_s_z": [
+     [
+      30.275,
+      -43.64
+     ],
+     [
+      30.275,
+      -24.289
+     ],
+     [
+      -39.686,
+      -24.282
+     ]
+    ],
+    "cells": 10713
+   },
+   {
+    "triangle": 220,
+    "tri_type": 1,
+    "vertices_s_z": [
+     [
+      -39.686,
+      -24.282
+     ],
+     [
+      -39.686,
+      -43.64
+     ],
+     [
+      30.275,
+      -43.64
+     ]
+    ],
+    "cells": 10847
+   }
+  ],
+  "label_rule_for_cells_outside_set": {
+   "source": "scripts/phd/main_stage1_v1/regions_v3.py unseen_split lines 70-105; top = S1/regions_v3 unseen_top_behind of the same column",
+   "tau_w": 0.22782853245735168,
+   "columns": 280,
+   "columns_with_top": 280,
+   "top_constant_in_column": true,
+   "rule_reproduces_set_labels": true,
+   "cells_outside_set": 3262,
+   "outside_set_without_top": 0,
+   "outside_set_labels": {
+    "0": 2880,
+    "1": 327,
+    "2": 55,
+    "-1 no top": 0
+   }
+  },
+  "drawing": {
+   "source": "scripts/phd/main_fill_v1/figs_fl_walls.py draw() lines 84-165 (wall_grid lines 25-31, binning lines 89-92, imshow line 134)",
+   "raster_shape": [
+    83,
+    286
+   ],
+   "extent": [
+    -40.5,
+    31.0,
+    -44.5,
+    -23.75
+   ],
+   "patches_drawn": 18298,
+   "raster_cells_filled": 18298,
+   "raster_cells_with_two_or_more_patches": 0,
+   "face_cells_to_distinct_raster_cells": true,
+   "face_cells_left_transparent": 3262,
+   "transparent_cells_are_the_seen_cells": true,
+   "centre_offset_in_raster_cell_s": [
+    0.5980743026212849,
+    0.5980972301474594
+   ],
+   "centre_offset_in_raster_cell_z": [
+    0.9400000000000546,
+    0.9400000000000546
+   ],
+   "transparent_reads_as": "white = the colour of '없음' (img alpha 0 over the white axes)"
+  },
+  "wall_present": {
+   "flags_source": "SL/work/virtual/metrics/B173nb_b10/wall_flags_LoD2.npz (order = unseen.npz patches of face 53)",
+   "rule": "virtual-view mesh within 0.25 m of the patch centre; share over label_inferred 0",
+   "values": {
+    "prop_LoD2_s0": {
+     "recomputed": {
+      "share": 0.9199064796259185,
+      "present": 13771,
+      "patches": 14970
+     },
+     "fill_json": {
+      "share": 0.919906,
+      "present": 13771,
+      "patches": 14970,
+      "source": "SL/work/virtual/metrics/B173nb_b10/prop_LoD2_s0__LoD2.json 'wall'"
+     },
+     "same": true,
+     "T": {
+      "share": 0.8849407783417935,
+      "present": 1046,
+      "patches": 1182
+     },
+     "rest": {
+      "share": 0.9229039744705541,
+      "present": 12725,
+      "patches": 13788
+     }
+    },
+    "prop_LoD2_s1": {
+     "recomputed": {
+      "share": 0.9265865063460254,
+      "present": 13871,
+      "patches": 14970
+     },
+     "fill_json": {
+      "share": 0.926587,
+      "present": 13871,
+      "patches": 14970,
+      "source": "SL/work/virtual/metrics/B173nb_b10/prop_LoD2_s1__LoD2.json 'wall'"
+     },
+     "same": true,
+     "T": {
+      "share": 0.9517766497461929,
+      "present": 1125,
+      "patches": 1182
+     },
+     "rest": {
+      "share": 0.9244270380040615,
+      "present": 12746,
+      "patches": 13788
+     }
+    },
+    "imgonly_2dgs_s0": {
+     "recomputed": {
+      "share": 0.22812291249164995,
+      "present": 3415,
+      "patches": 14970
+     },
+     "fill_json": {
+      "share": 0.228123,
+      "present": 3415,
+      "patches": 14970,
+      "source": "SL/work/virtual/metrics/B173nb_b10/imgonly_2dgs_s0__LoD2.json 'wall'"
+     },
+     "same": true,
+     "T": {
+      "share": 0.1598984771573604,
+      "present": 189,
+      "patches": 1182
+     },
+     "rest": {
+      "share": 0.23397156948070785,
+      "present": 3226,
+      "patches": 13788
+     }
+    },
+    "trust_LoD2_fix1": {
+     "recomputed": {
+      "share": 0.22324649298597193,
+      "present": 3342,
+      "patches": 14970
+     },
+     "fill_json": {
+      "share": 0.223246,
+      "present": 3342,
+      "patches": 14970,
+      "source": "SL/work/virtual/metrics/B173nb_b10/trust_LoD2_fix1__LoD2.json 'wall'"
+     },
+     "same": true,
+     "T": {
+      "share": 0.26988155668358715,
+      "present": 319,
+      "patches": 1182
+     },
+     "rest": {
+      "share": 0.21924862199013634,
+      "present": 3023,
+      "patches": 13788
+     }
+    }
+   }
+  },
+  "seconds": {
+   "grid and triangles": 0.1,
+   "views": 0.41
+  }
+ },
+ "sensitivity": {
+  "task_id": "PHD-MAIN-FIXTEST-v1",
+  "item": "일 7",
+  "step": "extra_flags (sensitivity)",
+  "mark": "[이 발주에서 냄]",
+  "site": "B173nb_b10",
+  "face": 53,
+  "rule": "virtual-view mesh within 0.25 m of the cell centre (vv_metrics.measure lines 134-152)",
+  "results": {
+   "prop_LoD2_s0": {
+    "mesh": "MF/virtual/option2/b1_LoD2/mesh_virtual.ply",
+    "same_mesh_as_fill": true,
+    "crop_triangles": 864938,
+    "crop_triangles_fill": 864938,
+    "set_flags_equal_fill": true,
+    "set_flags_differ": 0,
+    "now_as_fill": {
+     "share": 0.9199064796259185,
+     "present": 13771,
+     "patches": 14970
+    },
+    "without_T": {
+     "share": 0.9229039744705541,
+     "present": 12725,
+     "patches": 13788
+    },
+    "with_every_cell_of_T": {
+     "share": 0.9166386554621849,
+     "present": 16362,
+     "patches": 17850
+    },
+    "T_set_cells": {
+     "share": 0.8849407783417935,
+     "present": 1046,
+     "patches": 1182
+    },
+    "T_cells_outside_set": {
+     "share": 0.8998609179415855,
+     "present": 2588,
+     "patches": 2876
+    },
+    "outside_set_outside_T": {
+     "share": 0.75,
+     "present": 3,
+     "patches": 4
+    },
+    "T_every_cell": {
+     "share": 0.8955150320354854,
+     "present": 3634,
+     "patches": 4058
+    }
+   },
+   "prop_LoD2_s1": {
+    "mesh": "MF/virtual/option2/b2_LoD2/mesh_virtual.ply",
+    "same_mesh_as_fill": true,
+    "crop_triangles": 916834,
+    "crop_triangles_fill": 916834,
+    "set_flags_equal_fill": true,
+    "set_flags_differ": 0,
+    "now_as_fill": {
+     "share": 0.9265865063460254,
+     "present": 13871,
+     "patches": 14970
+    },
+    "without_T": {
+     "share": 0.9244270380040615,
+     "present": 12746,
+     "patches": 13788
+    },
+    "with_every_cell_of_T": {
+     "share": 0.9311484593837535,
+     "present": 16621,
+     "patches": 17850
+    },
+    "T_set_cells": {
+     "share": 0.9517766497461929,
+     "present": 1125,
+     "patches": 1182
+    },
+    "T_cells_outside_set": {
+     "share": 0.9551460361613352,
+     "present": 2747,
+     "patches": 2876
+    },
+    "outside_set_outside_T": {
+     "share": 0.75,
+     "present": 3,
+     "patches": 4
+    },
+    "T_every_cell": {
+     "share": 0.9541646131099064,
+     "present": 3872,
+     "patches": 4058
+    }
+   }
+  },
+  "scientific_verdict": null,
+  "seconds": {
+   "prop_LoD2_s0": 16.2,
+   "prop_LoD2_s1": 55.26
+  }
+ },
+ "figures": {
+  "unseen_1_v2": {
+   "png": "figures/item7/unseen_1_v2.png",
+   "json": "figures/item7/unseen_1_v2.json"
+  },
+  "unseen_1_cause": {
+   "png": "figures/item7/unseen_1_cause.png",
+   "json": "figures/item7/unseen_1_cause.json"
+  }
+ },
+ "fill_values_copied": {
+  "prop_LoD2_s0": 0.919906,
+  "prop_LoD2_s1": 0.926587,
+  "source": "SL/work/virtual/metrics/B173nb_b10/prop_LoD2_s{0,1}__LoD2.json 'wall'.share"
+ },
+ "runs": [
+  [
+   "09:55:57",
+   "explore",
+   "rc=0",
+   "1s"
+  ],
+  [
+   "10:01:37",
+   "cause",
+   "rc=0",
+   "4s"
+  ],
+  [
+   "10:03:25",
+   "cause",
+   "rc=0",
+   "3s"
+  ],
+  [
+   "10:05:28",
+   "extra_flags",
+   "rc=0",
+   "73s"
+  ],
+  [
+   "10:09:16",
+   "draw",
+   "rc=0",
+   "21s"
+  ],
+  [
+   "10:10:12",
+   "draw",
+   "rc=0",
+   "5s"
+  ],
+  [
+   "10:10:24",
+   "draw",
+   "rc=0",
+   "5s"
+  ],
+  [
+   "10:11:33",
+   "draw",
+   "rc=0",
+   "7s"
+  ],
+  [
+   "10:12:45",
+   "cause",
+   "rc=0",
+   "1s"
+  ]
+ ],
+ "runs_note": "queue.log of run_item7.sh: end time (KST), tag, rc, seconds of the docker run; this draw run itself is the last line only after it ends (see the report)",
+ "scientific_verdict": null
+}
