@@ -1,0 +1,151 @@
+{
+ "key": "fig3_extra",
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "face": 49,
+ "missing_patches": 10,
+ "code4": 2,
+ "code13": 8,
+ "photo": "DJI_20241217084727_0147_D",
+ "crop_px": [
+  549,
+  54,
+  677,
+  320
+ ],
+ "results": {
+  "지금 방법 씨앗 0": {
+   "r02_face": 0.0,
+   "rows_c4_face": 8,
+   "r02_unit": 0.4887640449438202,
+   "rows_c4_unit": 712,
+   "inflow_face": 0.0,
+   "rows_c13_face": 23,
+   "inflow_unit": 0.02112676056338028,
+   "rows_c13_unit": 852,
+   "patches_within_0_2": 0,
+   "patches_old_shape": 0,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz",
+   "rows": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/metrics/R1rep_b10/prop_LoD2_s0__LoD2_rows.npz"
+  },
+  "지금 방법 씨앗 1": {
+   "r02_face": 0.0,
+   "rows_c4_face": 8,
+   "r02_unit": 0.526685393258427,
+   "rows_c4_unit": 712,
+   "inflow_face": 0.0,
+   "rows_c13_face": 23,
+   "inflow_unit": 0.022300469483568074,
+   "rows_c13_unit": 852,
+   "patches_within_0_2": 0,
+   "patches_old_shape": 0,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s1.npz",
+   "rows": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/metrics/R1rep_b10/prop_LoD2_s1__LoD2_rows.npz"
+  },
+  "결측 지키기": {
+   "r02_face": 0.0,
+   "rows_c4_face": 8,
+   "r02_unit": 0.8398876404494382,
+   "rows_c4_unit": 712,
+   "inflow_face": 0.0,
+   "rows_c13_face": 23,
+   "inflow_unit": 0.08098591549295775,
+   "rows_c13_unit": 852,
+   "patches_within_0_2": 0,
+   "patches_old_shape": 0,
+   "dist": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__fixB_LoD2_s0.npz",
+   "rows": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixB_LoD2_s0__LoD2_rows.npz"
+  },
+  "판정만 끈 방법": {
+   "r02_face": 0.0,
+   "rows_c4_face": 8,
+   "r02_unit": 0.7373595505617978,
+   "rows_c4_unit": 712,
+   "inflow_face": 0.0,
+   "rows_c13_face": 23,
+   "inflow_unit": 0.392018779342723,
+   "rows_c13_unit": 852,
+   "patches_within_0_2": 0,
+   "patches_old_shape": 0,
+   "dist": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__nojudge_LoD2_s0.npz",
+   "rows": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/R1rep_b10/nojudge_LoD2_s0__LoD2_rows.npz"
+  }
+ },
+ "missing_results": [],
+ "per_patch": {
+  "지금 방법 씨앗 0": {
+   "r02": {
+    "112350": 0.0,
+    "112405": 0.0
+   },
+   "inflow": {
+    "112686": 0.0,
+    "112765": 0.0,
+    "112838": 0.0,
+    "112846": 0.0,
+    "113048": 0.0,
+    "113057": 0.0,
+    "113127": 0.0
+   }
+  },
+  "지금 방법 씨앗 1": {
+   "r02": {
+    "112350": 0.0,
+    "112405": 0.0
+   },
+   "inflow": {
+    "112686": 0.0,
+    "112765": 0.0,
+    "112838": 0.0,
+    "112846": 0.0,
+    "113048": 0.0,
+    "113057": 0.0,
+    "113127": 0.0
+   }
+  },
+  "결측 지키기": {
+   "r02": {
+    "112350": 0.0,
+    "112405": 0.0
+   },
+   "inflow": {
+    "112686": 0.0,
+    "112765": 0.0,
+    "112838": 0.0,
+    "112846": 0.0,
+    "113048": 0.0,
+    "113057": 0.0,
+    "113127": 0.0
+   }
+  },
+  "판정만 끈 방법": {
+   "r02": {
+    "112350": 0.0,
+    "112405": 0.0
+   },
+   "inflow": {
+    "112686": 0.0,
+    "112765": 0.0,
+    "112838": 0.0,
+    "112846": 0.0,
+    "113048": 0.0,
+    "113057": 0.0,
+    "113127": 0.0
+   }
+  }
+ },
+ "section": {
+  "gt": 14281,
+  "mvs": 0,
+  "segments": {
+   "지금 방법 씨앗 0": 5601,
+   "지금 방법 씨앗 1": 4495,
+   "결측 지키기": 4767,
+   "판정만 끈 방법": 5873
+  }
+ },
+ "numbers_line": "지금 방법 씨앗 0: 이 면의 결측 R(0.2 m) 0.0 % (8행), 유입률 0.0 % (23행); 단위 전체 48.9 % · 2.1 % · 지금 방법 씨앗 1: 이 면의 결측 R(0.2 m) 0.0 % (8행), 유입률 0.0 % (23행); 단위 전체 52.7 % · 2.2 % · 결측 지키기: 이 면의 결측 R(0.2 m) 0.0 % (8행), 유입률 0.0 % (23행); 단위 전체 84.0 % · 8.1 % · 판정만 끈 방법: 이 면의 결측 R(0.2 m) 0.0 % (8행), 유입률 0.0 % (23행); 단위 전체 73.7 % · 39.2 %",
+ "seconds": 16.2,
+ "made": "2026-10-20 12:41:23",
+ "scientific_verdict": null
+}

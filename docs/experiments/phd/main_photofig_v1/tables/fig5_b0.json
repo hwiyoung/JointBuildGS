@@ -1,0 +1,97 @@
+{
+ "cluster_patches": 23,
+ "cluster_area_m2": 1.5986039437549189,
+ "cluster_gt_points": 1744,
+ "fallback": {
+  "rule": "no cluster of area >= 1 m2 has one GT layer; chosen = the >= 1 m2 cluster with the smallest share of gt_suspect patches, then the most GT points",
+  "clusters_ge_1m2": [
+   {
+    "cluster": 4,
+    "area_m2": 1.5986039437549189,
+    "patches": 23,
+    "gt_suspect": 11,
+    "gt_points": 1744
+   },
+   {
+    "cluster": 14,
+    "area_m2": 1.3332109757749244,
+    "patches": 17,
+    "gt_suspect": 13,
+    "gt_points": 1273
+   }
+  ]
+ },
+ "results": {
+  "지금 방법 씨앗 0": {
+   "rows": 156,
+   "dist_median_abs_m": 0.10602648183703423,
+   "signed_median_m": 0.10602648183703423,
+   "nmad_m": 0.03324533821418881,
+   "recall_tau": 0.6474358974358975,
+   "recall_0_2": 1.0
+  },
+  "지금 방법 씨앗 1": {
+   "rows": 156,
+   "dist_median_abs_m": 0.11320557817816734,
+   "signed_median_m": 0.11320557817816734,
+   "nmad_m": 0.03312331602573394,
+   "recall_tau": 0.6474358974358975,
+   "recall_0_2": 1.0
+  },
+  "지금 방법 다시 돌림": {
+   "rows": 156,
+   "dist_median_abs_m": 0.11848247423768044,
+   "signed_median_m": 0.11166931316256523,
+   "nmad_m": 0.040402765548974276,
+   "recall_tau": 0.6282051282051282,
+   "recall_0_2": 1.0
+  },
+  "폭 좁히기(기록 셈)": {
+   "rows": 156,
+   "dist_median_abs_m": 0.11737573891878128,
+   "signed_median_m": 0.11586632207036018,
+   "nmad_m": 0.03741831700578332,
+   "recall_tau": 0.6025641025641025,
+   "recall_0_2": 1.0
+  }
+ },
+ "photo": "DJI_20241217084256_0012_D",
+ "crop_px": [
+  595,
+  574,
+  699,
+  677
+ ],
+ "visible_rows": 156,
+ "section": {
+  "gt": 10117,
+  "mvs": 13584,
+  "segments": {
+   "지금 방법 씨앗 0": 848,
+   "지금 방법 씨앗 1": 841,
+   "지금 방법 다시 돌림": 926,
+   "폭 좁히기(기록 셈)": 1047
+  }
+ },
+ "copied": {
+  "source": "고친 판 시험 중간 보고",
+  "image_error_dist_cm": [
+   9.25,
+   8.16
+  ],
+  "image_error_recall_tau_pct": [
+   74.96,
+   78.58
+  ],
+  "rows": 1755,
+  "both_right_dist_cm": [
+   2.57,
+   2.47
+  ],
+  "both_right_rows": 137426
+ },
+ "numbers_line": "덩어리 1.60 m², 패치 23, 참값 행 156 · 거리 중앙값 / 허용 오차 안: 지금 방법 씨앗 0 10.6 cm / 64.7 % · 지금 방법 씨앗 1 11.3 cm / 64.7 % · 지금 방법 다시 돌림 11.8 cm / 62.8 % · 폭 좁히기(기록 셈) 11.7 cm / 60.3 % · 옮긴 값(영상이 틀린 곳 전체, 1,755점): 거리 9.25 → 8.16 cm, 허용 오차 안 74.96 → 78.58 %",
+ "seconds": 28.1,
+ "made": "2026-10-20 12:55:57",
+ "scientific_verdict": null
+}
