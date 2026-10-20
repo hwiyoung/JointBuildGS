@@ -171,6 +171,13 @@ def main(key):
         else:
             b_, s_ = G.band(X, c, a, sr); AP.append(np.column_stack([s_[b_], X[b_, 2]]))
     AP = np.concatenate(AP) if AP else np.zeros((0, 2))
+    # [정정 10-20] a horizontal section's across axis (a rotated +90 deg, also in pf_geo.cut_horizontal) is the INWARD normal for every
+    # wall place of p0_places.wall_place (axis = outward normal rotated +90 deg); the axis was labelled 'outward'. Turn it to the outward
+    # normal so that + = outside, as the distance metric's sign.
+    ysg = -1.0 if sec["kind"] == "horizontal" else 1.0
+    if ysg < 0:
+        segs = {k: v * np.array([1.0, -1.0]) for k, v in segs.items()}
+        seg_p = seg_p * np.array([1.0, -1.0]); gt_xy = gt_xy * np.array([1.0, -1.0]); AP = AP * np.array([1.0, -1.0])
     # draw
     plt = G.setup_plt()
     fig = plt.figure(figsize=(15, 13))
@@ -236,7 +243,7 @@ def main(key):
     bands = None
     if MORE is not None and key in MORE.get("band_values_m", {}) and sec["kind"] == "horizontal" and len(seg_p):
         bv = MORE["band_values_m"][key]                         # [사용자가 더 요청함] tolerance and narrowed-width bands around the prior wall line
-        yc = float(np.median((U["loc_center"][mp][:, :2] - c) @ nrm))   # [그리는 법만 바꿈] the face's patch centres (the other LoD2 lines in the band pulled the median down)
+        yc = float(ysg * np.median((U["loc_center"][mp][:, :2] - c) @ nrm))   # [그리는 법만 바꿈] the face's patch centres (the other LoD2 lines in the band pulled the median down)
         bands = dict(centre_m=yc, tau_m=bv["tau_wall"], w_T_m=bv["w_wall_T"], w_L_m=bv["w_wall_L"])
         ax.axhspan(yc - bv["tau_wall"], yc + bv["tau_wall"], color="#d9d9d9", alpha=0.55, zorder=0, lw=0)
         ax.axhspan(yc - bv["w_wall_T"], yc + bv["w_wall_T"], color="#c7e9c0", alpha=0.65, zorder=0.5, lw=0)
