@@ -1,0 +1,41 @@
+{
+ "title": "벽 점이 어느 자료에 얼마나 있는가",
+ "face": 22,
+ "facing": "E",
+ "area_space_m2": 1188.29,
+ "cell_m": 0.25,
+ "panels": [
+  {
+   "key": "geogs",
+   "label": "GeoGS 점군",
+   "points": 2144021,
+   "per_m2": 1804.2910400659773,
+   "cells_with_points": 19228,
+   "cells_total_in_face": null
+  },
+  {
+   "key": "all",
+   "label": "원래 드론 LiDAR 모든 반사",
+   "points": 0,
+   "per_m2": 0.0,
+   "cells_with_points": 0,
+   "cells_total_in_face": null
+  },
+  {
+   "key": "study",
+   "label": "이 연구의 벽 점(수직면·단일 반사)",
+   "points": 0,
+   "per_m2": 0.0,
+   "cells_with_points": 0,
+   "cells_total_in_face": null
+  }
+ ],
+ "color_range": [
+  1,
+  912.0
+ ],
+ "caption": "(가) GeoGS 점군, (나) 원래 드론 LiDAR(연직 비행) 모든 반사, (다) 이 연구의 벽 점(원래 드론 LiDAR의 수직면 판정 & 단일 반사). 세 칸 모두 벽면 공간(수평 1.0 m 안, 아래 끝 + 0.5 m ~ 위 끝 − 0.5 m, 평가 범위 안)의 점.",
+ "numbers_line": "GeoGS 점군 2,144,021점 (1,804.3/m²) · 원래 드론 LiDAR 모든 반사 0점 (0.0/m²) · 이 연구의 벽 점(수직면·단일 반사) 0점 (0.0/m²)",
+ "made": "2026-10-20 02:21:57 Asia",
+ "scientific_verdict": null
+}

@@ -1,0 +1,133 @@
+{
+ "title": "거리가 곳마다 어떻게 퍼지는가",
+ "curves": [
+  {
+   "target": "uls_nadir",
+   "target_label": "원래 드론 LiDAR 모든 반사",
+   "place": "지붕",
+   "n": 1247962,
+   "median_m": 0.03786901757121086,
+   "share_le_1mm": 1.9231354800867335e-05,
+   "share_le_1cm": 0.021566361796272644,
+   "share_le_5cm": 0.685609818247671
+  },
+  {
+   "target": "uls_nadir",
+   "target_label": "원래 드론 LiDAR 모든 반사",
+   "place": "낮은 벽 0~3 m",
+   "n": 371317,
+   "median_m": 7.141025066375732,
+   "share_le_1mm": 2.69311666312073e-06,
+   "share_le_1cm": 0.0004632160660567655,
+   "share_le_5cm": 0.02971046302754789
+  },
+  {
+   "target": "uls_nadir",
+   "target_label": "원래 드론 LiDAR 모든 반사",
+   "place": "높은 벽 10 m 위",
+   "n": 1456100,
+   "median_m": 3.7133758068084717,
+   "share_le_1mm": 2.7470640752695557e-06,
+   "share_le_1cm": 0.002118673168051645,
+   "share_le_5cm": 0.05127120390083099
+  },
+  {
+   "target": "uls_manual_v120",
+   "target_label": "수동 비행 판 1.2.0",
+   "place": "지붕",
+   "n": 1247962,
+   "median_m": 1.8211036149295978e-05,
+   "share_le_1mm": 1.0,
+   "share_le_1cm": 1.0,
+   "share_le_5cm": 1.0
+  },
+  {
+   "target": "uls_manual_v120",
+   "target_label": "수동 비행 판 1.2.0",
+   "place": "낮은 벽 0~3 m",
+   "n": 371317,
+   "median_m": 1.825311846914701e-05,
+   "share_le_1mm": 1.0,
+   "share_le_1cm": 1.0,
+   "share_le_5cm": 1.0
+  },
+  {
+   "target": "uls_manual_v120",
+   "target_label": "수동 비행 판 1.2.0",
+   "place": "높은 벽 10 m 위",
+   "n": 1456100,
+   "median_m": 1.830979272199329e-05,
+   "share_le_1mm": 1.0,
+   "share_le_1cm": 1.0,
+   "share_le_5cm": 1.0
+  },
+  {
+   "target": "fill_v120",
+   "target_label": "수동 비행 5 mm 처리본 판 1.2.0",
+   "place": "지붕",
+   "n": 1247962,
+   "median_m": 3.004446506500244,
+   "share_le_1mm": 0.030328647827417822,
+   "share_le_1cm": 0.03033746219836822,
+   "share_le_5cm": 0.030719685375035458
+  },
+  {
+   "target": "fill_v120",
+   "target_label": "수동 비행 5 mm 처리본 판 1.2.0",
+   "place": "낮은 벽 0~3 m",
+   "n": 371317,
+   "median_m": 1.998823972826358e-05,
+   "share_le_1mm": 0.879631150741819,
+   "share_le_1cm": 0.8805925933905531,
+   "share_le_5cm": 0.8823889022048547
+  },
+  {
+   "target": "fill_v120",
+   "target_label": "수동 비행 5 mm 처리본 판 1.2.0",
+   "place": "높은 벽 10 m 위",
+   "n": 1456100,
+   "median_m": 1.971435540326638e-05,
+   "share_le_1mm": 0.9002925623240162,
+   "share_le_1cm": 0.901661973765538,
+   "share_le_5cm": 0.9029551541789712
+  },
+  {
+   "target": "photogrammetry",
+   "target_label": "드론 영상 점군",
+   "place": "지붕",
+   "n": 1247962,
+   "median_m": 0.0511962678283453,
+   "share_le_1mm": 1.8430048350831197e-05,
+   "share_le_1cm": 0.02184120990863504,
+   "share_le_5cm": 0.48566302499595343
+  },
+  {
+   "target": "photogrammetry",
+   "target_label": "드론 영상 점군",
+   "place": "낮은 벽 0~3 m",
+   "n": 371317,
+   "median_m": 0.050088390707969666,
+   "share_le_1mm": 1.885181664184511e-05,
+   "share_le_1cm": 0.01693970381102939,
+   "share_le_5cm": 0.49905067637624995
+  },
+  {
+   "target": "photogrammetry",
+   "target_label": "드론 영상 점군",
+   "place": "높은 벽 10 m 위",
+   "n": 1456100,
+   "median_m": 0.04781676270067692,
+   "share_le_1mm": 2.4723576677426e-05,
+   "share_le_1cm": 0.023668017306503673,
+   "share_le_5cm": 0.5244337614174851
+  }
+ ],
+ "x_range_m": [
+  1e-06,
+  10
+ ],
+ "note": "결과를 본 뒤 고침: 가로축을 0.1 mm~1 m에서 1 µm~10 m로 넓힘(짝이 된 파일까지의 거리가 0.004~0.033 mm)",
+ "numbers_line": "지붕→원래 드론 LiDAR 모든 반사 중앙값 37.869 mm · 낮은 벽 0~3 m→원래 드론 LiDAR 모든 반사 중앙값 7141.025 mm · 높은 벽 10 m 위→원래 드론 LiDAR 모든 반사 중앙값 3713.376 mm · 지붕→수동 비행 판 1.2.0 중앙값 0.018 mm · 낮은 벽 0~3 m→수동 비행 판 1.2.0 중앙값 0.018 mm · 높은 벽 10 m 위→수동 비행 판 1.2.0 중앙값 0.018 mm",
+ "made": "2026-10-20 03:11:27 Asia",
+ "scientific_verdict": null
+}

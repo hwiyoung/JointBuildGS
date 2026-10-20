@@ -1,0 +1,178 @@
+{
+ "rows": {
+  "LoD2": {
+   "all": {
+    "roof": {
+     "primary": 99611,
+     "uls": 55634
+    },
+    "wall": {
+     "primary": 199415,
+     "uls": 27931
+    },
+    "patches_in_place": 143652
+   },
+   "c11": {
+    "roof": {
+     "primary": 12237,
+     "uls": 8176
+    },
+    "wall": {
+     "primary": 11979,
+     "uls": 1468
+    },
+    "patches_in_place": 6421
+   },
+   "img": {
+    "roof": {
+     "primary": 94,
+     "uls": 32
+    },
+    "wall": {
+     "primary": 5858,
+     "uls": 473
+    },
+    "patches_in_place": 1080
+   },
+   "c2": {
+    "roof": {
+     "primary": 78765,
+     "uls": 43670
+    },
+    "wall": {
+     "primary": 157012,
+     "uls": 22293
+    },
+    "patches_in_place": 52164
+   },
+   "c4": {
+    "roof": {
+     "primary": 39,
+     "uls": 207
+    },
+    "wall": {
+     "primary": 11646,
+     "uls": 541
+    },
+    "patches_in_place": 2052
+   },
+   "c5": {
+    "roof": {
+     "primary": 0,
+     "uls": 0
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 0
+   },
+   "c11s": {
+    "roof": {
+     "primary": 7451,
+     "uls": 6604
+    },
+    "wall": {
+     "primary": 11979,
+     "uls": 1468
+    },
+    "patches_in_place": 5232
+   }
+  },
+  "ALS": {
+   "all": {
+    "roof": {
+     "primary": 94263,
+     "uls": 50897
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 44994
+   },
+   "c11": {
+    "roof": {
+     "primary": 190,
+     "uls": 169
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 80
+   },
+   "img": {
+    "roof": {
+     "primary": 949,
+     "uls": 806
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 285
+   },
+   "c2": {
+    "roof": {
+     "primary": 89019,
+     "uls": 48407
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 21870
+   },
+   "c4": {
+    "roof": {
+     "primary": 50,
+     "uls": 127
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 30
+   },
+   "c5": {
+    "roof": {
+     "primary": 0,
+     "uls": 0
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 0
+   },
+   "c11s": {
+    "roof": {
+     "primary": 118,
+     "uls": 59
+    },
+    "wall": {
+     "primary": 0,
+     "uls": 0
+    },
+    "patches_in_place": 38
+   }
+  }
+ },
+ "place_names": {
+  "all": "전체",
+  "c11": "사전 정보가 틀린 곳",
+  "img": "영상이 틀린 곳",
+  "c2": "두 자료가 모두 맞는 곳",
+  "c4": "결측 영역",
+  "c5": "비가시 영역",
+  "c11s": "조금 틀린 곳"
+ },
+ "precision_reference_b0_places": {
+  "uls_scene": 2063378,
+  "primary_in_cells": 4458085
+ },
+ "scene_f1_reference": "ULS building-surface points only (uls_scene)",
+ "rows_rule": "thinned region rows (dm_common.Unit rows_idx = rows_<prior>.npz thin)",
+ "scientific_verdict": null
+}

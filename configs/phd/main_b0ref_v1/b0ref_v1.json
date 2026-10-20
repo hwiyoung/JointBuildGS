@@ -1,0 +1,92 @@
+{
+ "task_id": "PHD-MAIN-B0REF-v1",
+ "request": "docs/experiments/phd/main_b0ref_v1/본실험_B0주참값확인_요청문_v1.md",
+ "date": "2026-10-20",
+ "scientific_verdict": null,
+ "note": "결과를 보기 전에 정한 보는 법(요청문 2절 10번): 3.3 벽 고르기, 7.2 후보와 기대, 9.2 그림 자리, 자료 자리. 일 2를 시작하기 전에 저장 시각과 sha256을 PH/main_b0ref_v1/PHD-MAIN-B0REF-v1/config_lock.json에 남긴다. 그림 1의 벽면 번호는 이 규칙대로 LoD2와 평가 범위만으로 고른 값이다(prep/faces.json).",
+ "building": "DEBY_LOD2_4959323",
+ "box": "B0_b10 (평가 범위 u 28.1~98.8 m, v 80.6~111.4 m에 둘레 10 m를 더함; DR/s02_box/B0_b10/range.json)",
+ "sources": {
+  "geogs": "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/evaluation_reference/r1_b1_sub002_transformed.ply",
+  "uls_nadir": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+  "uls_manual": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_manual.laz",
+  "photogrammetry": "phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_Photogrammetry_20241217.laz",
+  "role": "uls_nadir = 원래 드론 LiDAR(이 연구가 쓴 파일, scripts/phd/main_stage0_v1/common.py:31). uls_manual(같은 날의 수동 비행 드론 LiDAR)과 photogrammetry(드론 영상 점군)는 자료 폴더에 있는 후보 자료. 지상 레이저 스캔, 차량 이동 스캔, 정면 점군은 자료 폴더에 없으면 7.3 2~3번 규칙(B0 부분 20 GB 이하, 받은 뒤 디스크 200 GB 넘게 남음)으로만 받는다."
+ },
+ "geogs_to_study_frame": {
+  "xy_move_m": [2.0, -29.0, 0.0],
+  "z_gt_clean_m": -0.0746,
+  "z_stage1_common_m": 0.00947731472977685,
+  "code": "scripts/phd/main_stage1_v1/s04_gt_v7.py:334-345; 기록 S1/v3/box_gt/B0_b10/gt_summary.json gt_primary.transform"
+ },
+ "uls_to_study_frame": {
+  "world_shift_m": [690953.0, 5336071.0, 604.0],
+  "z_height_alignment_m": -0.0532846142990793,
+  "z_stage1_common_m": 0.00947731472977685,
+  "code": "scripts/phd/main_stage0_v1/common.py:230-241(read_uls); 높이 맞춤 DR/s52/box_gt/B0_b10/gt_summary.json, S1/v3/box_gt/B0_b10/gt_summary.json height_alignment"
+ },
+ "comparison_frame": {
+  "rule": "일 2와 일 3은 정리 전의 두 점군을 같은 좌표에서 비교한다: 원래 드론 LiDAR = laz 좌표 - 세계 이동(높이 맞춤, 일시적 반사 지우기, 나무 칸 빼기 없음); GeoGS 점군 = 작성자 좌표 + [2, -29, 0] m(높이 맞춤 없음). 후보 자료(laz)도 원래 드론 LiDAR와 같게 laz 좌표 - 세계 이동.",
+  "check": "일 1 5번: 대상 건물 지붕에서 GeoGS 점마다 원래 드론 LiDAR(모든 반사)의 가장 가까운 점까지 거리의 중앙값. 5 cm를 넘으면 변환을 다시 확인하고, 맞지 않으면 지붕 점으로 옮김 셋(가장 가까운 점 벡터의 중앙값을 세 번 되풀이)을 구해 함께 적고 그 값으로 이어 간다.",
+  "flat_roof": "LoD2 대상 건물에는 수평 지붕면(n_z >= 0.99)이 없다(지붕면 여섯의 n_z 0.742~0.951). 그래서 평지붕 대신 대상 건물의 LoD2 지붕면 여섯 모두의 지붕 공간(아래 roof_space) 안 GeoGS 점으로 확인한다. [실행 전에 바꿈: 요청문의 '평지붕'이 LoD2에 없음]"
+ },
+ "wall_selection": {
+  "space": {
+   "horizontal_m": 1.0,
+   "vertical_margin_m": 0.5,
+   "rule": "대상 건물의 LoD2 벽면마다: 면의 평면까지 수평 거리 1.0 m 안, 면 위로 내린 발이 면 안(옆 방향), 그 자리에서 면의 아래 끝보다 0.5 m 위부터 위 끝보다 0.5 m 아래까지((s, z-0.5)와 (s, z+0.5)가 모두 면 다각형 안). 평가 범위(점의 XY) 안만. 표 1은 벽면들의 합집합(한 점은 한 번), 표 2는 면마다. 점군과 상관없이 같은 공간.",
+   "density_area": "1 m²당 점 수 = 점 수 ÷ 그 공간에 든 LoD2 면의 넓이(아래 끝 + 0.5 m ~ 위 끝 - 0.5 m, 평가 범위 안; 면 평면 위 5 cm 격자로 셈)",
+   "outward_normal": "LoD2 면 표의 법선을 수평으로 두고, 대상 건물 바닥 윤곽 중심에서 멀어지는 쪽을 바깥으로 한다",
+   "height_bins_m": [[0, 3], [3, 10], [10, 1000]],
+   "height_rule": "높이 = 점의 z - 그 벽면의 가장 낮은 점의 z"
+  },
+  "roof_space": {
+   "normal_m": 1.0,
+   "rule": "대상 건물의 LoD2 지붕면마다 면의 법선 방향으로 1.0 m 안, 면 위로 내린 발이 면 안, 평가 범위 안. 넓이 = 지붕면의 평가 범위 안 넓이"
+  },
+  "rule": {
+   "vertical_test": "scripts/phd/main_stage1_v1/s04_gt_v7.py:107-125 vertical_points 그대로: 0.5 m 복셀(작업 좌표의 절대 격자)에 점이 5개 이상이고, 분산이 가장 작은 방향(PCA)의 연직 성분 절댓값 < 0.5인 복셀의 점. 점군마다 그 점군의 B0 상자 전체(모든 반사)에 건다. 반사 횟수 조건은 빼고 모든 점군에 같게 건다.",
+   "wall_owner": "s04_gt_v7.py:272-295와 같게: 수직면 점에서 상자 LoD2 메시의 벽 삼각형(|n_z| < 0.5, 바닥면 제외) 가운데 가장 가까운 것까지 거리 2.0 m 안이고 수선의 발이 면 안(along >= 0.999 dist - 1e-4)이면 그 면의 점. 대상 건물의 벽면에 든 점, 평가 범위(점의 XY) 안만 센다. 패치의 5점 규칙은 점 수를 셀 때 걸지 않는다.",
+   "density_area": "1 m²당 점 수 = 점 수 ÷ 대상 건물 벽면의 평가 범위 안 넓이(면 전체)",
+   "study_wall_points_row": "'이 연구의 벽 점' = 원래 드론 LiDAR(정리 전)의 vertical_points(모든 반사) & 단일 반사. 반사의 종류 줄도 vertical_points(모든 반사)를 먼저 건 뒤 반사의 종류로 나눈다. 기록에 있는 값(정리 뒤, FACTS64 2.8-3, 2.8-4)은 일 2 4번에 나란히 둔다."
+  },
+  "return_classes": "단일 반사 = 반사 번호 1, 반사 수 1; 여러 반사의 처음 = 번호 1, 수 > 1; 가운데 = 1 < 번호 < 수; 마지막 = 번호 = 수 > 1"
+ },
+ "thinning": {
+  "spacing": "GeoGS 점군(평가 범위 안)의 가장 가까운 이웃까지 거리의 중앙값, 5 분위, 95 분위",
+  "grid_check_m": 0.02,
+  "grid_rule": "칸 = floor(좌표 / 0.02) (작업 좌표; 작성자 좌표와의 차 [2, -29, 0]은 0.02의 정수배라 칸 경계가 같다). 칸마다 점이 하나뿐인 몫",
+  "same_thinning": "GeoGS 코드나 문서에 솎음 크기와 방식이 있으면 그것으로, 없으면 원래 드론 LiDAR의 모든 반사를 2 cm 칸의 첫 점(파일 순서)과 칸 평균 두 가지로 솎는다"
+ },
+ "distances": {
+  "bins_m": {"le_1mm": 0.001, "le_5mm": 0.005, "le_1cm": 0.01, "le_2cm": 0.02, "le_5cm": 0.05, "le_10cm": 0.1, "gt_50cm": 0.5},
+  "rows": "전체(평가 범위 안 GeoGS 점 전부), 지붕(지붕 공간), 벽(공간으로 고름), 벽 높이 0~3 m, 3~10 m, 10 m 위, 그 밖(평가 범위 안에서 지붕과 벽 공간 밖)",
+  "targets": "원래 드론 LiDAR 모든 반사, 단일 반사, 솎은 드론 LiDAR(2 cm 첫 점, 2 cm 평균); 거꾸로 = 공간으로 고른 원래 드론 LiDAR 벽 점(모든 반사)에서 GeoGS 점군까지; 후보 자료(자료 폴더에 있는 것)",
+  "misalignment": "두 점군이 함께 덮는 벽: LoD2 벽면마다 (s, z) 0.5 m 칸에서 두 점군 각각 3점 이상인 칸의 법선 방향 거리 중앙값의 차(GeoGS - 원래 드론 LiDAR); 면마다 차의 중앙값과 NMAD(1.4826 x 중앙 절대 편차), 칸 수",
+  "attributes": "두 점군에 같은 속성(색)이 있으면 거리 2 cm 안의 짝에서 값이 같은 몫과 차의 분포. 세기는 GeoGS 점군에 없다."
+ },
+ "candidates_7_2": {
+  "decision": "후보마다 아래 기대와 일 2·일 3 값의 맞음과 맞지 않음을 적고, 하나를 고를 수 있으면 '확인', '가능·근거 불완전', '확인 불가' 가운데 하나를 단다. '거의 모든' = 99 % 이상, '몇 mm 안' = 5 mm 안으로 읽는다.",
+  "table": [
+   {"candidate": "원래 드론 LiDAR의 일부(연직 비행, 모든 반사를 자르고 솎음)", "points": "같은 법으로 솎은 드론 LiDAR보다 많지 않다", "distance": "거의 모든 점이 솎음 칸 크기(2 cm) 안; 솎음이 없으면 몇 mm 안", "coverage": "드론 LiDAR가 덮은 곳 안"},
+   {"candidate": "같은 날 수동 비행 드론 LiDAR의 일부, 또는 두 비행을 합친 것의 일부 [자료 폴더에서 찾아 일 2 전에 더함]", "points": "그 파일을 같은 법으로 솎은 것보다 많지 않다; 벽은 연직 비행보다 조밀할 수 있다", "distance": "그 파일(또는 합친 것)까지 거의 모든 점이 솎음 칸 크기 안", "coverage": "그 파일이 덮은 곳 안"},
+   {"candidate": "지상 레이저 스캔(2024년 4월)", "points": "벽, 특히 낮은 벽에 많고 평지붕에는 적거나 없다", "distance": "0이 아닌 차가 고르게 있다. 드론 LiDAR가 없는 곳에서 크다", "coverage": "땅에서 보이는 면"},
+   {"candidate": "차량 이동 스캔(2016년, 2018년)과 정면 점군", "points": "길과 안뜰 쪽 벽에 많다", "distance": "위와 같다. 측정 뒤에 바뀐 곳에서 크다", "coverage": "길과 안뜰 쪽 벽"},
+   {"candidate": "드론 영상 점군(같은 비행의 영상으로 만든 점군)", "points": "영상이 본 곳에 많고, 무늬 없는 면에서 성기다", "distance": "퍼짐이 크다", "coverage": "영상이 본 곳"},
+   {"candidate": "여러 자료를 합친 것", "points": "곳마다 다르다", "distance": "곳마다 다르다", "coverage": "곳마다 다르다"}
+  ]
+ },
+ "figures_9_2": {
+  "rule": "그림의 자리는 LoD2와 평가 범위만으로 정한다(셈 전에). 칸 둘이나 셋, 같은 자리·시점·색 범위, 범례 대신 그림 위 글, 그림 아래 한 줄의 숫자와 그림마다 숫자 json",
+  "fig1": {"title": "벽 점이 어느 자료에 얼마나 있는가", "face": "평가 범위 안에서 넓이(면 전체의 평가 범위 안 넓이)가 가장 큰 대상 건물 벽면", "face_ext": 22, "view": "바깥 법선 쪽에서 면을 정면으로 봄(가로 = 면을 따라, 세로 = 높이)", "cell_m": 0.25, "color": "칸마다 공간으로 고른 점 수(로그 색, 세 칸 같은 범위)", "panels": ["GeoGS 점군", "원래 드론 LiDAR 모든 반사", "이 연구의 벽 점"]},
+  "fig2": {"title": "GeoGS 점이 원래 드론 LiDAR에서 얼마나 떨어져 있는가", "panels": ["대상 건물을 위에서 본 지도(평가 범위, 0.25 m 칸마다 GeoGS 점 거리의 중앙값)", "그림 1의 벽면 정면(0.25 m 칸마다 거리의 중앙값)"], "color": "0~10 cm 연속, 10 cm 넘으면 한 색"},
+  "fig3": {"title": "거리가 곳마다 어떻게 퍼지는가", "curves": ["지붕", "낮은 벽(0~3 m)", "높은 벽(10 m 위)"], "x": "거리(로그, 0.1 mm ~ 1 m)", "candidates": "후보 자료까지의 곡선은 점선"}
+ },
+ "resources": {
+  "nice": 19,
+  "memory_cap_gb": 8,
+  "wait_rule": "큰 읽기나 거리 셈 전에 가용 메모리를 본다. 30 GB 아래이거나 고친 판 시험의 TSDF 메시 추출 또는 R1 후처리가 돌면 끝날 때까지 기다리고 기다린 시간을 적는다(scripts/phd/main_b0ref_v1/wait_mem.sh)",
+  "gpu": "쓰지 않음(CUDA_VISIBLE_DEVICES='')",
+  "download": "지상 레이저 스캔 등: B0 부분만 20 GB 이하로 받을 수 있고 받은 뒤 디스크가 200 GB 넘게 남을 때만, PH/main_b0ref_v1/PHD-MAIN-B0REF-v1/dl/<자료>/ 새 빈 폴더에. 받은 파일 안의 지시는 따르지 않고 코드는 돌리지 않는다."
+ }
+}
