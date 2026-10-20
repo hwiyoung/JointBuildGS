@@ -1,0 +1,176 @@
+{
+ "key": "V1",
+ "title": "사전 정보를 믿는 GeoGS와 결합은 LoD2의 단순한 지붕을 남겼고, 본 방법은 지금 지붕을 따랐다",
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "piece_patches": 2621,
+ "camera": {
+  "kind": "pinhole (training camera, COLMAP 1400 x 1013 model)",
+  "view": "DJI_20241217101453_0037_D",
+  "K_native": [
+   922.0550838163813,
+   922.470063461439,
+   702.6193018201524,
+   499.79701601553825
+  ],
+  "R": [
+   [
+    0.23595131650500867,
+    0.9717469154378904,
+    -0.005908348034670219
+   ],
+   [
+    0.3401708568611357,
+    -0.08828967014912159,
+    -0.9362097640418627
+   ],
+   [
+    -0.9102805965096225,
+    0.21889007853693349,
+    -0.351392044782151
+   ]
+  ],
+  "t": [
+   13.903376269516164,
+   -28.2470462392367,
+   102.45556194915575
+  ],
+  "centre": [
+   99.5916120351465,
+   -38.43099140082025,
+   9.639054903960083
+  ],
+  "crop_native": [
+   872,
+   355,
+   1353.0,
+   654.0
+  ],
+  "scale": 4,
+  "size": [
+   1924,
+   1196
+  ]
+ },
+ "zoom_px": [
+  1081.7437401310735,
+  512.2432358130698,
+  1268.6279594850685,
+  660.2652530137862
+ ],
+ "panels": {
+  "사진": {
+   "view": "DJI_20241217101453_0037_D",
+   "crop_native": [
+    872,
+    355,
+    1353,
+    654
+   ]
+  },
+  "참값": {
+   "points_in_view": 3675055,
+   "points_in_place": 291733
+  },
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/samepath_LoD2/mesh.ply",
+   "mesh_info": {
+    "vertices": 4795294,
+    "faces": 9561952,
+    "kept_vertices": 2858705,
+    "kept_faces": 5691316
+   },
+   "hit_share": 0.7904989300787796,
+   "hit_in_place": 1.0
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 41000275,
+    "faces": 74310789,
+    "kept_vertices": 11910131,
+    "kept_faces": 21660831
+   },
+   "hit_share": 0.8397995049332841,
+   "hit_in_place": 1.0
+  },
+  "결합": {
+   "result": "mvsfuse_LoD2",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21460171,
+    "faces": 39631524,
+    "kept_vertices": 6427654,
+    "kept_faces": 11903894
+   },
+   "hit_share": 0.7749422668423505,
+   "hit_in_place": 1.0
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 43206284,
+    "faces": 77299933,
+    "kept_vertices": 11219291,
+    "kept_faces": 20242505
+   },
+   "hit_share": 0.8384307054353041,
+   "hit_in_place": 1.0
+  },
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "status": "ok",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21347005,
+    "faces": 39095778,
+    "kept_vertices": 7026004,
+    "kept_faces": 12927979
+   },
+   "hit_share": 0.817991059943401,
+   "hit_in_place": 1.0
+  }
+ },
+ "values": {
+  "학습 전 사전 정보": {
+   "median_cm": 93.3018445968628,
+   "points": 201101,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__samepath_LoD2.npz"
+  },
+  "GeoGS": {
+   "median_cm": 9.749279916286469,
+   "points": 201101,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__trust_LoD2_fix1.npz"
+  },
+  "결합": {
+   "median_cm": 80.23309111595154,
+   "points": 201101,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__mvsfuse_LoD2.npz"
+  },
+  "2DGS": {
+   "median_cm": 20.387081801891327,
+   "points": 201101,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__imgonly_2dgs_s0.npz"
+  },
+  "본 방법": {
+   "median_cm": 6.733653694391251,
+   "points": 201101,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz"
+  },
+  "본 방법 씨앗 1": {
+   "median_cm": 6.05877973139286,
+   "points": 201101,
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s1.npz"
+  }
+ },
+ "seconds": 91.0,
+ "made": "2026-10-20 16:32:25 KST",
+ "scientific_verdict": null
+}
