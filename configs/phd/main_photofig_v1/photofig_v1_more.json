@@ -1,0 +1,270 @@
+{
+ "task_id": "PHD-MAIN-PHOTOFIG-v1",
+ "asked": "사용자 10-20: 'B173 주변 LoD2 결측 지키기의 유입률 상승과 R1 LoD2 폭 좁히기(기록 셈)의 결측 재현율 상승을 같은 꼴의 사진 그림으로 더 그려 줘'",
+ "scientific_verdict": null,
+ "note": "그림 3과 같은 꼴(사진 두 칸 + 단면 + 숫자 줄, f3_r1.py). 두 경우는 고친 판 시험 최종 보고의 단위 값을 본 뒤 요청되었다. 자리와 사진은 p2_more.py가 영역 파일, 패치 저장소, 카메라 기하만으로 골랐다(PF/prep/places_more.json). 이 파일을 저장하기 전에 두 경우의 결과 파일(메시, 거리, 행 분류)은 열지 않았다.",
+ "results": {
+  "fig7": {
+   "지금 방법 씨앗 0": "S0/stage0/b1_LoD2 (거리·행: prop_LoD2_s0)",
+   "지금 방법 씨앗 1": "S0/stage0/b2_LoD2 (거리·행: prop_LoD2_s1)",
+   "결측 지키기": "FT/runs/B173nb_b10/fixB_LoD2_s0",
+   "판정만 끈 방법": "S3/runs/B173nb_b10/nojudge_LoD2_s0"
+  },
+  "fig8": {
+   "지금 방법 씨앗 0": "S1/stage1/R1rep_b10/prop_LoD2_s0",
+   "지금 방법 씨앗 1": "S1/stage1/R1rep_b10/prop_LoD2_s1",
+   "폭 좁히기(주 셈)": "FT/runs/R1rep_b10/fixA_LoD2_s0",
+   "폭 좁히기(기록 셈)": "FT/runs/R1rep_b10/fixAT_LoD2_s0"
+  }
+ },
+ "panels": {
+  "fig7": [
+   "지금 방법 씨앗 0",
+   "결측 지키기"
+  ],
+  "fig8": [
+   "지금 방법 씨앗 0",
+   "폭 좁히기(기록 셈)"
+  ]
+ },
+ "colours": {
+  "폭 좁히기(기록 셈)": "#2ca02c",
+  "폭 좁히기(주 셈)": "#98df8a 점선",
+  "허용 구간": "사전 정보 둘레 옅은 회색 띠 #d9d9d9",
+  "좁힌 폭(기록 셈)": "옅은 초록 띠 #c7e9c0",
+  "좁힌 폭(주 셈)": "옅은 초록 점선 #98df8a",
+  "나머지": "photofig_v1.json colours와 같음"
+ },
+ "bands": {
+  "fig8": "벽 단면에 사전 정보 벽 둘레로 허용 구간(± 허용 오차), 좁힌 폭(기록 셈)의 띠, 좁힌 폭(주 셈)의 점선. 값 = 고친 판 시험 tables/w_decision_T.json, w_decision_L.json의 R1rep_b10/LoD2 벽 값(tau_wall, w_wall). 띠의 가운데 = 이 단면에서 사전 정보 벽 선의 가운데 값",
+  "fig7": "띠 없음(그림 3과 같음)"
+ },
+ "titles": {
+  "fig7": "결측 지키기가 B173 주변 벽의 결측 패치를 채웠는가, 옛 모양은 어디에 남았나 — 사전 정보가 틀린 결측이 가장 많은 면",
+  "fig8": "폭 좁히기(기록 셈)가 R1 벽의 결측 패치를 채웠는가 — 사전 정보가 맞는 결측이 가장 많은 면"
+ },
+ "files": {
+  "fig7": "photo_fig7_b173nb.png|pdf|json, tables/fig7_b173nb.md|json",
+  "fig8": "photo_fig8_r1.png|pdf|json, tables/fig8_r1.md|json"
+ },
+ "check": "단위 전체 값이 고친 판 시험 최종 보고와 같은지 본다: B173 주변 LoD2 유입률 지금 방법 두 씨앗 평균 20.75 %, 결측 지키기 27.49 %; R1 LoD2 결측 재현율(0.2 m) 지금 방법 평균 50.77 %, 주 셈 55.06 %, 기록 셈 63.62 %",
+ "patch_rule": "photofig_v1.json colour_ranges.fig3_patch와 같음(f3_r1.py 머리글)",
+ "band_values_m": {
+  "fig8": {
+   "tau_wall": 0.7245754508391767,
+   "w_wall_T": 0.6885212117235271,
+   "w_wall_L": 0.5588544876753555,
+   "tau_roof": 0.6827603118471609,
+   "w_roof_T": 0.6639893681988887,
+   "w_roof_L": 0.6036669136043439
+  }
+ },
+ "places": {
+  "fig7": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "ext": 99,
+   "kind": 2,
+   "chosen_code": 13,
+   "chosen_code_patches": 29,
+   "missing": 590,
+   "code4": 561,
+   "code13": 29,
+   "top_faces": [
+    {
+     "ext": 99,
+     "patches": 29,
+     "area_m2": 286.75
+    },
+    {
+     "ext": 69,
+     "patches": 27,
+     "area_m2": 1347.5
+    },
+    {
+     "ext": 72,
+     "patches": 25,
+     "area_m2": 514.1875
+    },
+    {
+     "ext": 74,
+     "patches": 6,
+     "area_m2": 23.5
+    },
+    {
+     "ext": 38,
+     "patches": 4,
+     "area_m2": 566.9375
+    },
+    {
+     "ext": 84,
+     "patches": 4,
+     "area_m2": 23.5
+    },
+    {
+     "ext": 33,
+     "patches": 2,
+     "area_m2": 578.625
+    },
+    {
+     "ext": 36,
+     "patches": 2,
+     "area_m2": 44.0625
+    }
+   ],
+   "photo": {
+    "view": "DJI_20241217101359_0032_D",
+    "tilt_deg": 69.3,
+    "camera_centre": [
+     128.023,
+     -40.758,
+     -7.904
+    ],
+    "score": {
+     "view": "DJI_20241217101359_0032_D",
+     "tilt_deg": 69.3,
+     "inside": 1.0,
+     "visible": 1.0,
+     "hull_px2": 2491.9819661812776,
+     "view_angle_deg": 58.44
+    }
+   },
+   "photo_search": {
+    "n_views": 203,
+    "n_all_inside": 78,
+    "n_qualifying": 12,
+    "branch": "all place points inside, >= 80 % visible",
+    "n_candidates": 12,
+    "best_visible_among_all_inside": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "max_inside": 1.0
+   },
+   "section": {
+    "kind": "horizontal",
+    "z_m": -35.924999999999955,
+    "band_m": 0.5,
+    "centre_xy": [
+     102.77149713632902,
+     96.05735373697961
+    ],
+    "axis_xy": [
+     0.362000309585534,
+     0.9321779743482346
+    ],
+    "normal_xy": [
+     0.9321779743482346,
+     -0.362000309585534
+    ],
+    "s_range_m": [
+     -11.124999999998838,
+     11.12500000000118
+    ],
+    "rule": "horizontal band at the median height of the face's missing patches, along the wall, + 2 m"
+   }
+  },
+  "fig8": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "ext": 19,
+   "kind": 2,
+   "chosen_code": 4,
+   "chosen_code_patches": 158,
+   "missing": 158,
+   "code4": 158,
+   "code13": 0,
+   "top_faces": [
+    {
+     "ext": 19,
+     "patches": 158,
+     "area_m2": 673.375
+    },
+    {
+     "ext": 24,
+     "patches": 30,
+     "area_m2": 119.3125
+    },
+    {
+     "ext": 52,
+     "patches": 5,
+     "area_m2": 603.625
+    },
+    {
+     "ext": 15,
+     "patches": 2,
+     "area_m2": 169.0
+    },
+    {
+     "ext": 49,
+     "patches": 2,
+     "area_m2": 77.25
+    },
+    {
+     "ext": 22,
+     "patches": 1,
+     "area_m2": 123.5
+    }
+   ],
+   "photo": {
+    "view": "DJI_20241217101317_0011_D",
+    "tilt_deg": 61.17,
+    "camera_centre": [
+     159.441,
+     8.443,
+     -7.86
+    ],
+    "score": {
+     "view": "DJI_20241217101317_0011_D",
+     "tilt_deg": 61.17,
+     "inside": 1.0,
+     "visible": 0.8417721518987342,
+     "hull_px2": 635.742287649562,
+     "view_angle_deg": 10.52
+    }
+   },
+   "photo_search": {
+    "n_views": 333,
+    "n_all_inside": 115,
+    "n_qualifying": 14,
+    "branch": "all place points inside, >= 80 % visible",
+    "n_candidates": 14,
+    "best_visible_among_all_inside": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "max_inside": 1.0
+   },
+   "section": {
+    "kind": "horizontal",
+    "z_m": -34.68399999999857,
+    "band_m": 0.5,
+    "centre_xy": [
+     -11.001382235842264,
+     39.91400287409774
+    ],
+    "axis_xy": [
+     0.364860894472941,
+     0.9310620428759866
+    ],
+    "normal_xy": [
+     0.9310620428759866,
+     -0.364860894472941
+    ],
+    "s_range_m": [
+     -28.18913588268054,
+     21.31086411731948
+    ],
+    "rule": "horizontal band at the median height of the face's missing patches, along the wall, + 2 m"
+   }
+  }
+ },
+ "place_rule": "PHD-MAIN-PHOTOFIG-v1 [사용자가 더 요청함, 10-20 22시 뒤] places of figures 7 and 8, chosen from the region file, the patch store and the\ncamera geometry only (as p0_places.py and p1_extra.py); no result file is opened. The two cases were asked for after the fix-test final\nreport showed their unit values (B173 주변 LoD2 결측 지키기 inflow 20.75 -> 27.49 %, R1 LoD2 폭 좁히기 기록 셈 recall 50.77 -> 63.62 %).\n  fig7  B173 주변 LoD2: the face (roofs included) with the most prior-error missing patches (code 13) in the evaluation range.\n  fig8  R1 LoD2: the face (roofs included) with the most prior-right missing patches (code 4) in the evaluation range.\nA tie goes to the face with the larger area in the range. Photo and section: wall -> p0_places.wall_place (all missing patches of the face);\nroof -> the most-pixel vertical training image of the chosen code's patches and a vertical section along their long axis (p1_extra.py).\n  python p2_more.py -> /pf/prep/places_more.json   scientific_verdict: null",
+ "places_added": "사용자가 더 요청함(고친 판 시험 최종 보고의 단위 값을 본 뒤). 자리는 결과 파일을 열지 않고 고름"
+}

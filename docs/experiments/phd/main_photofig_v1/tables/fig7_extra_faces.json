@@ -1,0 +1,162 @@
+{
+ "face_rise_table": [
+  {
+   "ext": 72,
+   "kind": 2,
+   "rows": 110,
+   "inflow_rows_method_s0": 15,
+   "inflow_rows_method_s1": 6,
+   "inflow_rows_fix": 31,
+   "rise_rows": 20.5
+  },
+  {
+   "ext": 69,
+   "kind": 2,
+   "rows": 50,
+   "inflow_rows_method_s0": 9,
+   "inflow_rows_method_s1": 9,
+   "inflow_rows_fix": 14,
+   "rise_rows": 5.0
+  },
+  {
+   "ext": 99,
+   "kind": 2,
+   "rows": 103,
+   "inflow_rows_method_s0": 53,
+   "inflow_rows_method_s1": 53,
+   "inflow_rows_fix": 53,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 74,
+   "kind": 2,
+   "rows": 36,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 38,
+   "kind": 1,
+   "rows": 26,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 33,
+   "kind": 1,
+   "rows": 13,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 36,
+   "kind": 1,
+   "rows": 7,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 52,
+   "kind": 2,
+   "rows": 7,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 34,
+   "kind": 1,
+   "rows": 4,
+   "inflow_rows_method_s0": 4,
+   "inflow_rows_method_s1": 4,
+   "inflow_rows_fix": 4,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 37,
+   "kind": 1,
+   "rows": 3,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 139,
+   "kind": 2,
+   "rows": 2,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 42,
+   "kind": 1,
+   "rows": 1,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 0,
+   "inflow_rows_fix": 0,
+   "rise_rows": 0.0
+  },
+  {
+   "ext": 84,
+   "kind": 2,
+   "rows": 9,
+   "inflow_rows_method_s0": 0,
+   "inflow_rows_method_s1": 1,
+   "inflow_rows_fix": 0,
+   "rise_rows": -0.5
+  }
+ ],
+ "chosen_face": 72,
+ "chosen_face_rows": {
+  "rows": 110,
+  "abs_sW_median_m": 0.28378137946128845,
+  "abs_sW_p10_p90_m": [
+   0.27287262976169585,
+   0.295506888628006
+  ],
+  "window_half_width_median_m": 0.14189068973064423,
+  "classes": {
+   "지금 방법 씨앗 0": {
+    "참값 쪽": 64,
+    "사전 정보 쪽": 13,
+    "둘 다": 2,
+    "둘 다 아님": 31
+   },
+   "지금 방법 씨앗 1": {
+    "참값 쪽": 86,
+    "사전 정보 쪽": 2,
+    "둘 다": 4,
+    "둘 다 아님": 18
+   },
+   "결측 지키기": {
+    "참값 쪽": 54,
+    "사전 정보 쪽": 26,
+    "둘 다": 5,
+    "둘 다 아님": 25
+   },
+   "판정만 끈 방법": {
+    "참값 쪽": 65,
+    "사전 정보 쪽": 35,
+    "둘 다": 2,
+    "둘 다 아님": 8
+   }
+  }
+ },
+ "total_rows": 371,
+ "total_rise_rows": 25.0,
+ "place_rule": "PHD-MAIN-PHOTOFIG-v1 [결과를 본 뒤 더함] an extra place for figure 7: the locked wall 99 showed the same past-shape inflow in every result\n(51.5 %, 103 rows), while the unit inflow of B173 주변 LoD2 rose from 20.75 % (the method's two-seed mean) to 27.49 % (결측 지키기).\nExtra place = the B173 주변 LoD2 face where the past-shape inflow rows rose the most from the two-seed mean to 결측 지키기 (rows = S1/defs\nrows of code 13, thinned, |s_W| >= 0.2 m; inflow = the result's class 'cls' 1 or 2, as f3_r1.py and the fix-test area_b.py); a tie goes to\nthe face with more such rows. Photo and section from the face's code-13 patches as p2_more.py. The per-face table of the rise is kept.\n  python p3_after_more.py -> /pf/prep/places_after_more.json   scientific_verdict: null",
+ "added": "결과를 본 뒤 더함",
+ "scientific_verdict": null
+}
