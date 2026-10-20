@@ -30,7 +30,7 @@ def row_line(case, mko, row, cols, refs):
     for c in cols:
         x, r = row.get(c, {}), row.get(f"read_{c}", {})
         if x.get("status") != "있음" or x.get("v") is None:
-            out += [x.get("status") or "—", "—", r.get("grade", "—")]
+            out += ["—" if x.get("status") == "있음" else (x.get("status") or "—"), "—", r.get("grade", "—")]
         else:
             out += [f"{f1(x['v'])} ({nfmt(x.get('n'))})", f"{r['diff']:+.2f} / {r['criterion']:.2f}" if r.get("diff") is not None else "—",
                     r.get("grade", "—") + (f", {r['side']}" if r.get("side") and r.get("grade") not in ("같음", "표본 부족", "—") else "")]

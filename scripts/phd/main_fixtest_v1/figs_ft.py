@@ -28,6 +28,7 @@ CFG = json.loads(Path("/repo/configs/phd/main_fixtest_v1/fixtest_v1.json").read_
 WD = {rd: json.loads((FTP / f"prep/w_decision_{rd}.json").read_text())["cases"] for rd in ("L", "T")}
 BLUE, ORANGE, GREY, DARK, GREEN, RED = "#1f5fbf", "#d9822b", "#9a9a9a", "#2b2b2b", "#2e8b57", "#c0392b"
 LIGHT, EXCL = "#e6e6e6", "#cfc3a8"
+SHARE_CMAP = None   # light grey -> blue, made after matplotlib is set up
 SITE_KO = {"B0_b10": "B0", "B173nb_b10": "B173 주변", "R1rep_b10": "R1"}
 PRIOR_KO = {"LoD2": "LoD2", "ALS": "항공 LiDAR"}
 _TY = {"float": "<f4", "float32": "<f4", "double": "<f8", "uchar": "u1", "uint8": "u1", "int": "<i4", "int32": "<i4", "uint": "<u4", "uint32": "<u4",
@@ -51,6 +52,8 @@ def setup_fonts():
 
 
 plt = setup_fonts()
+from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
+SHARE_CMAP = LinearSegmentedColormap.from_list("share", [LIGHT, BLUE])
 
 
 def wrap_fit(fig, text, fontsize, weight="normal", frac=0.985):
@@ -73,7 +76,7 @@ def wrap_fit(fig, text, fontsize, weight="normal", frac=0.985):
     return lines
 
 
-def save(fig, name, title, caption, values):
+def save(fig, name, title, caption, values, right=1.0):
     """caption: one string or a list of paragraphs (the last one is the numbers line, rule 6)."""
     FIGS.mkdir(parents=True, exist_ok=True)
     W, H = fig.get_size_inches()
@@ -83,7 +86,7 @@ def save(fig, name, title, caption, values):
     cl = [ln for para in paras for ln in wrap_fit(fig, para, 8.6)]
     top = 1.0 - (0.22 + 0.25 * len(tl)) / H
     bottom = (0.12 + 0.165 * len(cl)) / H
-    fig.tight_layout(rect=(0, bottom, 1, top))
+    fig.tight_layout(rect=(0, bottom, right, top))
     fig.suptitle("\n".join(tl), x=0.01, y=0.995, ha="left", va="top", fontsize=12.5, fontweight="bold")
     fig.text(0.01, 0.006, "\n".join(cl), fontsize=8.6, va="bottom")
     fig.savefig(FIGS / f"{name}.png", dpi=125)
@@ -332,10 +335,15 @@ def fig1b():
             ("판 A (L, w = τ)", "fixA_ALS_s0", BLUE, "-", 2.2), ("판 A (T)", "fixAT_ALS_s0", ORANGE, "-", 2.2),
             ("학습 전 사전 정보", "samepath_ALS", DARK, ":", 1.8)]
     fig, vals, srcs, missing, pm = fig_dist("fig1b", "B0_b10", "ALS", pos, spec, 12.66, "B0 항공 LiDAR", None)
-    m0, m1 = vals["본 방법 씨앗 0"]["mode_cm"], vals["본 방법 씨앗 1"]["mode_cm"]
-    t = vals.get("판 A (T)", {}).get("mode_cm")
-    title = (f"B0 항공 LiDAR 면 0에서 본 방법의 봉우리는 {m0:+.1f}·{m1:+.1f} cm, 사전 정보는 {pm:+.1f} cm"
-             + (f"이고, 폭을 좁힌 판 A(읽기 T)의 봉우리는 {t:+.1f} cm다" if t is not None else "다 (판 A 결과 없음)"))
+    # 3,848 rows in 0.5 cm bins: the peak moves by a bin or more between runs of one setting (the method's seeds -1.8 / -1.2, fix A
+    # reading L = the method's setting -0.2), so the title is written from the medians
+    med = {k: v["median_cm"] for k, v in vals.items()}
+    t, l_ = med.get("판 A (T)"), med.get("판 A (L, w = τ)")
+    runs = [v for k, v in med.items() if "학습 전" not in k and v is not None]
+    together = (max(runs) - min(runs)) < 0.5 if runs else False
+    title = (f"B0 항공 LiDAR 면 0의 높이 차 중앙값은 본 방법 {med['본 방법 씨앗 0']:+.1f}·{med['본 방법 씨앗 1']:+.1f} cm"
+             + (f", 판 A 읽기 T {t:+.1f} cm" if t is not None else "") + (f", 읽기 L(w = τ) {l_:+.1f} cm" if l_ is not None else "")
+             + f", 학습 전 사전 정보 {med.get('학습 전 사전 정보', float('nan')):+.1f} cm다" + (" — 학습한 결과의 곡선이 겹친다" if together and t is not None else ""))
     cap = [f"폭이 좁아진 유일한 경우(B0 항공 LiDAR, 읽기 T)에 그림 1과 같은 꼴로 학습 전에 더한 그림. 지지 일치 완만한 지붕 행 가운데 "
            f"면 0의 {len(pos):,}행. 세로선 = 학습 전 사전 정보의 봉우리에서 ±w(읽기 T; 읽기 L은 w = τ)와 ±τ."
            + (f" 결과 없음: {', '.join(missing)}." if missing else ""),
@@ -366,13 +374,18 @@ def fig_a8(site, prior, rd):
                 vals.setdefault(lab, dict(result=res, status="결과 없음"))
                 continue
             v = 100.0 * r[sel]["shares"][key]
-            ax.bar(i, v, 0.6, color=col)
-            ax.text(i, v, f"{v:.2f} %", ha="center", va="bottom", fontsize=9.5, color=col if col != GREY else DARK)
+            ax.scatter([i], [v], s=110, color=col, zorder=3)
+            ax.text(i + 0.12, v, f"{v:.2f} %", ha="left", va="center", fontsize=10, color=col if col != GREY else DARK)
             vals.setdefault(lab, dict(result=res, n=r[sel]["n"], shares={k: 100.0 * r[sel]["shares"][k] for k, _ in BAND_KO}))
         ax.set_xticks(range(len(order))); ax.set_xticklabels([o[0] for o in order], fontsize=9.5)
-        ax.set_xlim(-0.6, len(order) - 0.4)
+        ax.set_xlim(-0.6, len(order) - 0.2)
         ax.set_title(f"({'가' if key == 'lt_w' else '나'}) {ko}의 몫 (%)", loc="left", fontsize=11)
-        ax.set_ylim(0, (ax.get_ylim()[1]) * 1.12)
+        got = [100.0 * d["results"][o[1]][sel]["shares"][key] for o in order if o[1] in d["results"]]
+        if got:
+            lo_, hi_ = min(got), max(got)
+            pad = max(1.0, 0.3 * (hi_ - lo_))
+            ax.set_ylim(max(0.0, lo_ - pad), min(100.0, hi_ + pad))
+        ax.grid(axis="y", color="#eeeeee", lw=0.8)
     m = [vals[o[0]]["shares"] for o in order[:2] if "shares" in vals.get(o[0], {})]
     fx = vals.get(order[2][0], {}).get("shares")
     case = f"{SITE_KO.get(site, site)} {PRIOR_KO.get(prior, prior)}"
@@ -384,7 +397,8 @@ def fig_a8(site, prior, rd):
         title = f"{case} 일치 화소의 깊이 구간 몫: 판 A(읽기 {rd}) 결과 없음"
     wcase = WD[rd][f"{site}/{prior}"]
     cap = [f"30,000회 덤프의 학습 영상 {d['views']}장에서, 학습 전 판정이 일치인 패치를 보는 사전 정보 화소(렌더 깊이가 있는 것)의 |렌더 깊이 − 사전 정보 깊이|를 "
-           f"화소마다 w, τ로 나눈 몫. w는 읽기 {rd}의 지도(지붕 {100 * wcase['w_roof']:.1f} cm, 벽 {100 * wcase['w_wall']:.1f} cm), τ는 사전 정보의 허용 오차 지도.",
+           f"화소마다 w, τ로 나눈 몫. w는 읽기 {rd}의 지도(지붕 {100 * wcase['w_roof']:.1f} cm, 벽 {100 * wcase['w_wall']:.1f} cm), τ는 사전 정보의 허용 오차 지도. "
+           "세로축은 칸마다 값 둘레만 보인다(0에서 시작하지 않음).",
            "구간 몫(w 안·w~τ·τ~2τ·2τ~4τ·4τ 넘음, %, 화소 수): " + "; ".join(
                f"{k} " + "·".join(f"{v['shares'][b]:.2f}" for b, _ in BAND_KO) + f" ({v['n']:,})" for k, v in vals.items() if "shares" in v)]
     save(fig, f"figA8_{site.split('_')[0]}_{prior}_{rd}", title, cap, dict(source=str(f).replace(str(PH), "PH"), selection=sel, values=vals))
@@ -471,6 +485,10 @@ def plan_panels(name, site, prior, idx, codes, centres, extent, panels, mark, ru
 
 
 def fig3():
+    """R1 LoD2 missing patches (codes 4 and 13) from above; colour = the result mesh within 0.2 m of the patch centre (on the prior surface).
+    Rule 8: wall patches stack in a plan view and codes 4 and 13 hide each other, so the codes go to two rows (가: code 4, 나: code 13);
+    the two columns are the compared pair. In every panel the patches within 0.2 m are drawn over the others (the same rule in both
+    columns); red dots = patches whose reading fix B changed (item 2)."""
     f = FP["fig3"]
     site, prior = "R1rep_b10", "LoD2"
     R = np.load(S1 / "regions_v3" / f"regions_ext_v3_{site}_{prior}.npz")
@@ -481,30 +499,61 @@ def fig3():
     mark = L["own_depth_changed"].astype(bool)[idx]
     ext = f["extent_xy"]
     zl, zh = cen[:, 2].min() - 5, cen[:, 2].max() + 5
-
-    def rule(res):
+    panels = [("본 방법 씨앗 0", "prop_LoD2_s0"), ("판 B", "fixB_LoD2_s0")]
+    oks = {}
+    for lab, res in panels:
         if not done(site, res):
-            return None
+            oks[lab] = None
+            continue
         V, F_ = crop_mesh(mesh_path(site, res), lambda V: (V[:, 0] >= ext[0] - 2) & (V[:, 0] <= ext[2] + 2) & (V[:, 1] >= ext[1] - 2) & (V[:, 1] <= ext[3] + 2)
                           & (V[:, 2] >= zl) & (V[:, 2] <= zh))
-        return dist_to_mesh(V, F_, cen) <= 0.2
-
-    def title(v):
-        a, b = v.get("본 방법 씨앗 0", {}), v.get("판 B", {})
-        if "code4" not in a or "code4" not in b:
-            return "R1 LoD2 결측 패치: 판 B 결과 없음"
-        return (f"R1 LoD2 결측 패치에서 결과 메시가 사전 정보 면 0.2 m 안인 패치는 본 방법에서 판 B로 코드 4 {a['code4']['within_0_2']} → "
-                f"{b['code4']['within_0_2']}개({a['code4']['patches']}개 가운데), 코드 13 {a['code13']['within_0_2']} → {b['code13']['within_0_2']}개"
-                f"({a['code13']['patches']}개 가운데)다")
-
-    def cap(v):
-        return ("평가 범위의 결측 패치(코드 4 198개, 코드 13 158개)를 위에서 본 것. 파랑 = 결과 메시가 패치 중심(사전 정보 면 위) 0.2 m 안(사전 정보 면을 지킴), "
-                "옅은 회색 = 아님, 검은 테두리 = 코드 13(사전 정보가 틀린 결측 패치), 빨간 점 = 일 2에서 읽기가 바뀐 패치(280개). 같은 색이 코드 4에서는 좋은 쪽, "
-                "코드 13에서는 나쁜 쪽이다. 패치 수와 0.2 m 안 몫: " + "; ".join(
-                    f"{k}: 코드 4 {x['code4']['within_0_2']}/{x['code4']['patches']}, 코드 13 {x['code13']['within_0_2']}/{x['code13']['patches']}"
-                    for k, x in v.items() if "code4" in x) + ". 벽 패치(코드 4의 167개)는 위에서 보면 선을 이룬다.")
-    plan_panels("fig3_R1_LoD2_missing_map", site, prior, idx, codes, cen, ext, [("본 방법 씨앗 0", "prop_LoD2_s0"), ("판 B", "fixB_LoD2_s0")],
-                mark, rule, title, cap)
+        oks[lab] = dist_to_mesh(V, F_, cen) <= 0.2
+    fig, axes = plt.subplots(2, 2, figsize=(12.0, 15.5), sharex=True, sharey=True)
+    vals = {}
+    for r_, (cd, rlab) in enumerate(((4, "(가) 코드 4: 사전 정보가 맞는 결측 패치"), (13, "(나) 코드 13: 사전 정보가 틀린 결측 패치"))):
+        m = codes == cd
+        for c_, (lab, res) in enumerate(panels):
+            ax = axes[r_, c_]
+            ok = oks[lab]
+            if ok is None:
+                ax.text(0.5, 0.5, "결과 없음", transform=ax.transAxes, ha="center")
+            else:
+                key = np.round(cen[m, :2] / 0.3).astype(np.int64)
+                u, inv, cnt = np.unique(key, axis=0, return_inverse=True, return_counts=True)
+                inv = inv.ravel()
+                xy = np.stack([np.bincount(inv, weights=cen[m, j]) / cnt for j in (0, 1)], 1)
+                share = np.bincount(inv, weights=ok[m].astype(float)) / cnt
+                chg = np.bincount(inv, weights=mark[m].astype(float)) > 0
+                order = np.argsort(cnt)[::-1]
+                sc = ax.scatter(xy[order, 0], xy[order, 1], s=14 + 9 * np.sqrt(cnt[order]), marker="s", c=share[order], cmap=SHARE_CMAP, vmin=0, vmax=1,
+                                edgecolors=GREY, linewidths=0.5)
+                ax.scatter(xy[chg, 0], xy[chg, 1], s=4, color=RED, zorder=5)
+                vals.setdefault(lab, dict(result=res))[f"code{cd}"] = dict(patches=int(m.sum()), within_0_2=int((ok & m).sum()), share=float(ok[m].mean()) if m.any() else None,
+                                                                         changed=int((m & mark).sum()), changed_within=int((m & mark & ok).sum()))
+                ax.text(0.03, 0.97, f"0.2 m 안 {int((ok & m).sum())}/{int(m.sum())}", transform=ax.transAxes, va="top", fontsize=10.5, color=BLUE)
+            ax.set_xlim(ext[0], ext[2]); ax.set_ylim(ext[1], ext[3]); ax.set_aspect("equal")
+            ax.set_title(f"{rlab}\n{lab}" if c_ == 0 else f"\n{lab}", loc="left", fontsize=10.5)
+            if r_ == 1:
+                ax.set_xlabel("x (m)")
+            if c_ == 0:
+                ax.set_ylabel("y (m)")
+    cax = fig.add_axes([0.92, 0.42, 0.012, 0.16])
+    cb = fig.colorbar(plt.cm.ScalarMappable(cmap=SHARE_CMAP, norm=plt.Normalize(0, 1)), cax=cax)
+    cb.set_label("자리의 패치 가운데 0.2 m 안 몫", fontsize=8.5)
+    cb.ax.tick_params(labelsize=7.5)
+    a_, b_ = vals.get("본 방법 씨앗 0", {}), vals.get("판 B", {})
+    if "code4" in a_ and "code4" in b_:
+        title = (f"R1 LoD2 결측 패치에서 결과 메시가 사전 정보 면 0.2 m 안인 패치는 판 B에서 코드 4가 {a_['code4']['within_0_2']} → {b_['code4']['within_0_2']}개"
+                 f"({a_['code4']['patches']}개 가운데), 코드 13이 {a_['code13']['within_0_2']} → {b_['code13']['within_0_2']}개({a_['code13']['patches']}개 가운데)다")
+    else:
+        title = "R1 LoD2 결측 패치: 판 B 결과 없음"
+    cap = [f"평가 범위의 결측 패치(코드 4 {int((codes == 4).sum())}개, 코드 13 {int((codes == 13).sum())}개)를 위에서 본 것. 높이가 다른 벽 패치가 위에서 겹치므로(코드 4의 198개가 "
+           "51자리에, 한 자리에 많게는 28개) 0.3 m 자리마다 묶어 그렸다: 짙기 = 그 자리 패치 가운데 결과 메시가 패치 중심(사전 정보 면 위) 0.2 m 안인 몫(사전 정보 면을 지킴), "
+           "크기 = 패치 수, 빨간 점 = 일 2에서 읽기가 바뀐 패치가 있는 자리. 같은 파랑이 코드 4(가)에서는 좋은 쪽, 코드 13(나)에서는 나쁜 쪽이다. 두 코드는 겹쳐 줄을 나눴다(규칙 8).",
+           "0.2 m 안 패치 수(읽기가 바뀐 패치 가운데): " + "; ".join(
+               f"{k}: 코드 4 {x['code4']['within_0_2']}/{x['code4']['patches']} ({x['code4']['changed_within']}/{x['code4']['changed']}), "
+               f"코드 13 {x['code13']['within_0_2']}/{x['code13']['patches']} ({x['code13']['changed_within']}/{x['code13']['changed']})" for k, x in vals.items() if "code4" in x)]
+    save(fig, "fig3_R1_LoD2_missing_map", title, cap, dict(values=vals, patches=int(len(idx))), right=0.9)
 
 
 def fig4():

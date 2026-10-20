@@ -1,0 +1,245 @@
+{
+ "task": "PHD-MAIN-FIXTEST-v1",
+ "rule": "PHD-MAIN-FIXTEST-v1 10 (예측의 판정; jointbuildgs:dev, CPU; run_step_ft.sh). Each prediction of order 10 (written into the configuration\nbefore training, predictions_verbatim) is judged from the tables of this task with one fixed rule, for the two readings of fix A apart:\n  - a prediction that names a change in a direction is 맞음 when the value moved that way beyond the criterion (grade 확인 or\n    가능·근거 불완전 of order 9.2), 틀림 when the reading is 같음 or the value moved the other way beyond the criterion, 판단 불가 when the\n    result does not exist (gate, not trained), the samples are under 100 (표본 부족) or the part is about a case that was not trained;\n  - a prediction that says 'within the criterion' is 맞음 when every named value reads 같음, 틀림 when one reads beyond the criterion\n    (the values are listed);\n  - the grade written beside 맞음 / 틀림 is the weakest grade among the values that decided it (samples under 10,000 cap it at\n    가능·근거 불완전, as the tables do).\n  - '폭이 좁아진 경우' (order 7): trained fix-A cases with w / tau < 0.8 (roof for LoD2), per reading, from prep/w_decision_<rd>.json.\n  - R1 항공 LiDAR has w = tau in both readings; its one training (fixA_ALS_s0) stands for both readings.\nInputs: FT/tables/eval_ft.json (tables_ft.py), FT/tables/curve_ft.json (curve_ft.py), FT/mech/bands_<site>_<prior>_<rd>.json (band_w.py),\nFT/mech/mech_b.json (mech_b.py).\n  python pred_ft.py\nWrites FT/tables/predictions_ft.json and predictions_ft.md. scientific_verdict: null.",
+ "predictions": {
+  "L": {
+   "A1": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "cases": [],
+    "evidence": [
+     "읽기 L에서 폭이 좁아진 경우가 없다",
+     "B173 주변 항공 LiDAR 부분(6.7 cm에서 5 cm 아래로)은 판 A가 관문에 걸려 학습하지 않아 판단 불가"
+    ],
+    "key": "읽기 L: 폭이 좁아진 경우 없음; B173 주변 항공 LiDAR 관문"
+   },
+   "A2": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "cases": [],
+    "evidence": [
+     "읽기 L에서 폭이 좁아진 경우가 없다"
+    ],
+    "key": "읽기 L: 폭이 좁아진 경우 없음"
+   },
+   "A3": {
+    "verdict": "틀림",
+    "grade": "가능·근거 불완전",
+    "cases": [
+     "B0 항공 LiDAR",
+     "R1 LoD2",
+     "R1 항공 LiDAR"
+    ],
+    "values_read": 12,
+    "evidence": [
+     "B0 항공 LiDAR 사전 정보가 틀린 곳 거리 9.19 (본 방법 평균 8.65, 차 +0.53, 기준 0.26, 가능·근거 불완전, 못함; 표본 359)",
+     "B0 항공 LiDAR 사전 정보가 틀린 곳 R(τ) 68.52 (본 방법 평균 73.26, 차 -4.74, 기준 4.41, 가능·근거 불완전, 못함; 표본 359)",
+     "B0 항공 LiDAR 영상이 틀린 곳 R(τ) 74.59 (본 방법 평균 74.96, 차 -0.37, 기준 0.34, 가능·근거 불완전, 못함; 표본 1,755)"
+    ],
+    "key": "3/12개 값이 기준 밖: B0 항공 LiDAR 사전 정보가 틀린 곳 거리 8.7→9.2*; B0 항공 LiDAR 사전 정보가 틀린 곳 R(τ) 73.3→68.5*; B0 항공 LiDAR 영상이 틀린 곳 R(τ) 75.0→74.6*"
+   },
+   "A4": {
+    "verdict": "판단 불가",
+    "grade": "결과 없음",
+    "evidence": [
+     "R1 항공 LiDAR 두 자료가 모두 맞는 곳 거리: 결과 없음"
+    ]
+   },
+   "A5": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "evidence": [
+     "읽기 L에서 폭이 좁아진 항공 LiDAR 경우가 없다"
+    ],
+    "key": "읽기 L: 폭이 좁아진 항공 LiDAR 경우 없음"
+   },
+   "A6": {
+    "verdict": "틀림",
+    "grade": "가능·근거 불완전",
+    "cases": [
+     "B0 항공 LiDAR",
+     "R1 LoD2",
+     "R1 항공 LiDAR"
+    ],
+    "evidence": [
+     "B0 항공 LiDAR 사전 정보가 틀린 곳 거리 9.19 (본 방법 평균 8.65, 차 +0.53, 기준 0.26, 가능·근거 불완전, 못함; 표본 359)"
+    ],
+    "key": "1/2개 값이 기준 밖: B0 항공 LiDAR 사전 정보가 틀린 곳 거리 8.7→9.2*"
+   },
+   "A7": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "evidence": [
+     "B173 주변 항공 LiDAR: 관문",
+     "R1 항공 LiDAR 결측 영역 R(0.2 m): 결과 없음 → 판단 불가",
+     "R1 LoD2 결측 영역 R(0.2 m): 결과 없음 → 판단 불가"
+    ],
+    "rule": "'기준 안이거나 조금 오른다' = 같음, 또는 오른 쪽의 가능·근거 불완전. 오른 쪽의 확인(큰 실패를 고침)이나 내려간 쪽은 틀림",
+    "key": "B173 주변 항공 LiDAR 관문; R1 항공 LiDAR 결측 영역 R(0.2 m) 결과 없음; R1 LoD2 결측 영역 R(0.2 m) 결과 없음"
+   },
+   "A8": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "evidence": [
+     "B0 항공 LiDAR: w = τ라 w~τ 구간이 비어 있다",
+     "R1 LoD2: 구간 몫 결과 없음",
+     "R1 항공 LiDAR: w = τ라 w~τ 구간이 비어 있다"
+    ],
+    "key": "—"
+   }
+  },
+  "T": {
+   "A1": {
+    "verdict": "틀림",
+    "grade": "같음",
+    "cases": [
+     "B0 항공 LiDAR"
+    ],
+    "evidence": [
+     "거리: B0 항공 LiDAR 두 자료가 모두 맞는 곳 거리 2.47 (본 방법 평균 2.57, 차 -0.10, 기준 0.58, 같음; 표본 137,426) → 틀림",
+     "치우침: B0 항공 LiDAR 두 자료가 모두 맞는 곳 치우침 -1.00 (본 방법 평균 -1.08, 차 +0.08, 기준 0.50, 같음; 표본 137,426); 학습 전 사전 정보 -1.40 cm → 틀림",
+     "B173 주변 항공 LiDAR 부분(6.7 cm에서 5 cm 아래로)은 판 A가 관문에 걸려 학습하지 않아 판단 불가"
+    ],
+    "key": "B0 항공 LiDAR 두 자료가 모두 맞는 곳 거리 2.6→2.5; B0 항공 LiDAR 두 자료가 모두 맞는 곳 치우침 -1.1→-1.0; B173 주변 항공 LiDAR 관문"
+   },
+   "A2": {
+    "verdict": "맞음",
+    "grade": "가능·근거 불완전",
+    "cases": [
+     "B0 항공 LiDAR"
+    ],
+    "evidence": [
+     "B0 항공 LiDAR 영상이 틀린 곳 거리 8.16 (본 방법 평균 9.25, 차 -1.10, 기준 1.02, 가능·근거 불완전, 나음; 표본 1,755) → 맞음"
+    ],
+    "key": "B0 항공 LiDAR 영상이 틀린 곳 거리 9.3→8.2*"
+   },
+   "A3": {
+    "verdict": "판단 불가",
+    "grade": "결과 없음",
+    "cases": [
+     "B0 LoD2",
+     "R1 LoD2",
+     "R1 항공 LiDAR"
+    ],
+    "values_read": 0,
+    "evidence": [
+     "읽을 값 없음(결과 없음)"
+    ],
+    "key": "읽을 값 없음"
+   },
+   "A4": {
+    "verdict": "판단 불가",
+    "grade": "결과 없음",
+    "evidence": [
+     "R1 항공 LiDAR 두 자료가 모두 맞는 곳 거리: 결과 없음"
+    ]
+   },
+   "A5": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "evidence": [
+     "B0 항공 LiDAR: 판 A(읽기 T) 결과 없음"
+    ],
+    "key": "B0 항공 LiDAR: 판 A(읽기 T) 결과 없음"
+   },
+   "A6": {
+    "verdict": "틀림",
+    "grade": "가능·근거 불완전",
+    "cases": [
+     "B0 LoD2",
+     "B0 항공 LiDAR",
+     "R1 LoD2",
+     "R1 항공 LiDAR"
+    ],
+    "evidence": [
+     "B0 항공 LiDAR 사전 정보가 틀린 곳 거리 9.02 (본 방법 평균 8.65, 차 +0.37, 기준 0.26, 가능·근거 불완전, 못함; 표본 359)"
+    ],
+    "key": "1/2개 값이 기준 밖: B0 항공 LiDAR 사전 정보가 틀린 곳 거리 8.7→9.0*"
+   },
+   "A7": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "evidence": [
+     "B173 주변 항공 LiDAR: 관문",
+     "R1 항공 LiDAR 결측 영역 R(0.2 m): 결과 없음 → 판단 불가",
+     "R1 LoD2 결측 영역 R(0.2 m): 결과 없음 → 판단 불가"
+    ],
+    "rule": "'기준 안이거나 조금 오른다' = 같음, 또는 오른 쪽의 가능·근거 불완전. 오른 쪽의 확인(큰 실패를 고침)이나 내려간 쪽은 틀림",
+    "key": "B173 주변 항공 LiDAR 관문; R1 항공 LiDAR 결측 영역 R(0.2 m) 결과 없음; R1 LoD2 결측 영역 R(0.2 m) 결과 없음"
+   },
+   "A8": {
+    "verdict": "맞음",
+    "grade": "확인",
+    "evidence": [
+     "B0 LoD2: 구간 몫 결과 없음",
+     "B0 항공 LiDAR w~τ 몫: 판 A 6.98 %, 본 방법 9.54·9.13 %, 차 -2.35 %p, 기준 0.81 → 맞음 (확인; 화소 10,239,884)",
+     "B0 항공 LiDAR w 안 몫: 판 A 88.00 %, 본 방법 84.53·85.03 %, 차 +3.22 %p, 기준 1.00 → 맞음 (확인; 화소 10,239,884)",
+     "R1 LoD2: 구간 몫 결과 없음",
+     "R1 항공 LiDAR: w = τ라 w~τ 구간이 비어 있다"
+    ],
+    "key": "B0 항공 LiDAR w~τ 몫: 판 A 6.98 %; B0 항공 LiDAR w 안 몫: 판 A 88.00 %"
+   }
+  },
+  "B": {
+   "B1": {
+    "verdict": "틀림",
+    "grade": "같음",
+    "evidence": [
+     "B173 주변 항공 LiDAR 결측 영역 R(0.2 m) 0.00 (본 방법 평균 0.00, 차 +0.00, 기준 2.70, 같음; 표본 111); 기준의 두 배 5.41 못 넘음; 사전 정보 신뢰 63.1 % 이하 → 틀림",
+     "R1 항공 LiDAR 결측 영역 R(0.2 m): 결과 없음",
+     "B0 항공 LiDAR 결측 영역 R(0.2 m): 결과 없음"
+    ],
+    "key": "B173 주변 항공 LiDAR 결측 영역 R(0.2 m) 0.0→0.0*; R1 항공 LiDAR 결측 영역 R(0.2 m) 결과 없음; B0 항공 LiDAR 결측 영역 R(0.2 m) 결과 없음"
+   },
+   "B2": {
+    "verdict": "맞음",
+    "grade": "가능·근거 불완전",
+    "evidence": [
+     "R1 LoD2 결측 영역 R(0.2 m) 83.99 (본 방법 평균 50.77, 차 +33.22, 기준 7.51, 가능·근거 불완전, 나음; 표본 712); 판정만 끈 본 방법 73.7 → 맞음",
+     "R1 LoD2 결측 영역 결측 유입률(코드 13) 8.10 (본 방법 평균 2.17, 차 +5.93, 기준 0.35, 가능·근거 불완전, 못함; 표본 852); 판정만 끈 본 방법 39.2 → 맞음"
+    ],
+    "key": "R1 LoD2 결측 영역 R(0.2 m) 50.8→84.0*; R1 LoD2 결측 영역 결측 유입률(코드 13) 2.2→8.1*"
+   },
+   "B3": {
+    "verdict": "판단 불가",
+    "grade": null,
+    "evidence": [
+     "B0 LoD2 결측 영역 R(0.2 m): 결과 없음 → 판단 불가",
+     "유입률(값만 적음, '오를 수 있다'): B0 LoD2 결측 영역 결측 유입률(코드 13): 결과 없음; 판정만 끈 본 방법 22.6",
+     "B173 주변 LoD2 결측 영역 R(0.2 m): 결과 없음 → 판단 불가",
+     "유입률(값만 적음, '오를 수 있다'): B173 주변 LoD2 결측 영역 결측 유입률(코드 13): 결과 없음; 판정만 끈 본 방법 26.4"
+    ],
+    "key": "B0 LoD2 결측 영역 R(0.2 m) 결과 없음; B0 LoD2 결측 영역 결측 유입률(코드 13) 결과 없음; B173 주변 LoD2 결측 영역 R(0.2 m) 결과 없음; B173 주변 LoD2 결측 영역 결측 유입률(코드 13) 결과 없음"
+   },
+   "B4": {
+    "verdict": "틀림",
+    "grade": "확인",
+    "evidence": [
+     "B173 주변 항공 LiDAR 두 자료가 모두 맞는 곳 R(τ) 98.73 (본 방법 평균 98.66, 차 +0.06, 기준 0.01, 확인, 나음; 표본 64,322)",
+     "B173 주변 항공 LiDAR 사전 정보가 틀린 곳 R(τ) 98.07 (본 방법 평균 98.23, 차 -0.16, 기준 0.08, 가능·근거 불완전, 못함; 표본 96,269)",
+     "R1 LoD2 사전 정보가 틀린 곳 거리 7.33 (본 방법 평균 6.81, 차 +0.51, 기준 0.44, 가능·근거 불완전, 못함; 표본 55,198)",
+     "R1 LoD2 조금 틀린 곳 R(τ) 98.78 (본 방법 평균 98.60, 차 +0.19, 기준 0.13, 가능·근거 불완전, 나음; 표본 37,084)"
+    ],
+    "key": "4/16개 값이 기준 밖: B173 주변 항공 LiDAR 두 자료가 모두 맞는 곳 R(τ) 98.7→98.7; B173 주변 항공 LiDAR 사전 정보가 틀린 곳 R(τ) 98.2→98.1; R1 LoD2 사전 정보가 틀린 곳 거리 6.8→7.3 외"
+   },
+   "B5": {
+    "verdict": "맞음",
+    "grade": "가능·근거 불완전",
+    "evidence": [
+     "B0 LoD2 잘못 놓았던 패치(코드 4): 결과 없음",
+     "B0 LoD2 맞게 놓았던 패치(코드 13): 결과 없음",
+     "B173 주변 LoD2 잘못 놓았던 패치(코드 4): 결과 없음",
+     "B173 주변 LoD2 맞게 놓았던 패치(코드 13): 결과 없음",
+     "B173 주변 항공 LiDAR 잘못 놓았던 패치(코드 4): 패치 10, 행 66 → 표본 부족",
+     "B173 주변 항공 LiDAR 맞게 놓았던 패치(코드 13): 패치 9, 행 53 → 표본 부족",
+     "R1 LoD2 잘못 놓았던 패치(코드 4) (R(0.2 m)): 판 B 90.1 %, 본 방법 43.9·37.6 %, 차 +49.4 %p, 기준 12.4, 패치 99, 넓이 6.2 m², 행 335 → 맞음 (가능·근거 불완전)",
+     "R1 LoD2 맞게 놓았던 패치(코드 13) (유입률): 판 B 5.8 %, 본 방법 0.3·0.3 %, 차 +5.5 %p, 기준 0.4, 패치 139, 넓이 8.7 m², 행 746 → 맞음 (가능·근거 불완전)",
+     "R1 항공 LiDAR 잘못 놓았던 패치(코드 4): 결과 없음",
+     "R1 항공 LiDAR 맞게 놓았던 패치(코드 13): 결과 없음"
+    ],
+    "key": "R1 LoD2 잘못 놓았던 패치(코드 4) (R(0.2 m)): 판 B 90.1 %, 본 방법 43.9·37.6 %, 차 +49.4 %p, 기준 12.4; R1 LoD2 맞게 놓았던 패치(코드 13) (유입률): 판 B 5.8 %, 본 방법 0.3·0.3 %, 차 +5.5 %p, 기준 0.4"
+   }
+  }
+ },
+ "scientific_verdict": null
+}

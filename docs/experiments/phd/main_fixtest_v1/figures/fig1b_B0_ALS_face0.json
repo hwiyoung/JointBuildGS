@@ -1,0 +1,58 @@
+{
+ "title": "B0 항공 LiDAR 면 0의 높이 차 중앙값은 본 방법 -1.5·-1.7 cm, 판 A 읽기 T -1.5 cm, 읽기 L(w = τ) -1.5 cm, 학습 전 사전 정보 -1.7 cm다 — 학습한 결과의 곡선이 겹친다",
+ "caption": "폭이 좁아진 유일한 경우(B0 항공 LiDAR, 읽기 T)에 그림 1과 같은 꼴로 학습 전에 더한 그림. 지지 일치 완만한 지붕 행 가운데 면 0의 3,848행. 세로선 = 학습 전 사전 정보의 봉우리에서 ±w(읽기 T; 읽기 L은 w = τ)와 ±τ. 봉우리·중앙값(cm, 읽은 행): 본 방법 씨앗 0 -1.8·-1.5 (3,848); 본 방법 씨앗 1 -1.2·-1.7 (3,848); 판 A (L, w = τ) -0.2·-1.5 (3,848); 판 A (T) -0.2·-1.5 (3,848); 학습 전 사전 정보 -1.8·-1.7 (3,848)",
+ "values": {
+  "rows": 3848,
+  "prior_mode_cm": -1.75,
+  "curves": {
+   "본 방법 씨앗 0": {
+    "mode_cm": -1.75,
+    "median_cm": -1.5474319458007812,
+    "n": 3848,
+    "unread": 0,
+    "peak_share": 5.379417879417879,
+    "colour": "#9a9a9a"
+   },
+   "본 방법 씨앗 1": {
+    "mode_cm": -1.25,
+    "median_cm": -1.6791343688964844,
+    "n": 3848,
+    "unread": 0,
+    "peak_share": 5.041580041580041,
+    "colour": "#9a9a9a"
+   },
+   "판 A (L, w = τ)": {
+    "mode_cm": -0.25,
+    "median_cm": -1.5249252319335938,
+    "n": 3848,
+    "unread": 0,
+    "peak_share": 5.11954261954262,
+    "colour": "#1f5fbf"
+   },
+   "판 A (T)": {
+    "mode_cm": -0.25,
+    "median_cm": -1.4966964721679688,
+    "n": 3848,
+    "unread": 0,
+    "peak_share": 5.457380457380458,
+    "colour": "#d9822b"
+   },
+   "학습 전 사전 정보": {
+    "mode_cm": -1.75,
+    "median_cm": -1.7241477966308594,
+    "n": 3848,
+    "unread": 0,
+    "peak_share": 6.470893970893971,
+    "colour": "#2b2b2b"
+   }
+  },
+  "sources": {
+   "본 방법 씨앗 0": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/measure/B0_b10/ALS__prop_ALS_s0.npz",
+   "본 방법 씨앗 1": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/measure/B0_b10/ALS__prop_ALS_s1.npz",
+   "판 A (L, w = τ)": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/measure/B0_b10/ALS__fixA_ALS_s0.npz",
+   "판 A (T)": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/measure/B0_b10/ALS__fixAT_ALS_s0.npz",
+   "학습 전 사전 정보": "PH/main_stage2_v1/PHD-MAIN-STAGE2-v1/measure/B0_b10/ALS__samepath_ALS.npz"
+  },
+  "missing": []
+ }
+}

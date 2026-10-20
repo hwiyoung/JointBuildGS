@@ -1,0 +1,691 @@
+{
+ "task": "PHD-MAIN-FIXTEST-v1",
+ "rule": "PHD-MAIN-FIXTEST-v1 9.1-5 (\ud310 B\uc758 \uae30\uc81c, B5) (jointbuildgs:dev, CPU; run_step_ft.sh). In the evaluation range, the missing patches whose\nreading fix B changed (item 2: own_depth_changed of the fix-B dry init, previous judgment conflict or mixed), split by the previous judgment\nand the region code:\n  wrongly released  previous conflict, code 4 (the prior was right)  -> R(0.2 m) of their GT rows (the new distance metric: rows' unsigned\n                    distance to the result mesh, dist npz r_d / r_patch)\n  rightly released  previous conflict, code 13 (the prior was wrong)  -> past-shape inflow of their GT rows (metrics_s1.spread's rule: thinned\n                    rows with |s_W| >= 0.2 m, inflow = wrong side + both of the four-way classes 'cls' of the result's metrics rows)\n  mixed             previous mixed, code 4 and code 13 apart (the same two values)\nPer group: patches, area (m2), GT rows (all thinned rows / those used). Results: the method's two seeds (prop_<prior>_s0, _s1), fix B, A + B\nwhere trained, and the judgment-only-off method (nojudge_<prior>_s0) as a reference.\n  python mech_b.py\nWrites /ph/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/mech/mech_b.json. scientific_verdict: null.",
+ "cases": {
+  "B0_b10/LoD2": {
+   "wrong_release_c4": {
+    "patches": 108,
+    "area_m2": 6.75,
+    "rows_thinned": 604,
+    "rows_main": 0,
+    "values": {
+     "prop_LoD2_s0": {
+      "R_0_2": 0.7367549668874173,
+      "n": 604,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_LoD2__prop_LoD2_s0.npz"
+     },
+     "prop_LoD2_s1": {
+      "R_0_2": 0.5397350993377483,
+      "n": 604,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_LoD2__prop_LoD2_s1.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "R_0_2": 0.5960264900662252,
+      "n": 604,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B0_b10_LoD2__nojudge_LoD2_s0.npz"
+     }
+    }
+   },
+   "right_release_c13": {
+    "patches": 22,
+    "area_m2": 1.375,
+    "rows_thinned": 143,
+    "rows_main": 142,
+    "values": {
+     "prop_LoD2_s0": {
+      "inflow": 0.11267605633802817,
+      "gt_side": 0.8661971830985915,
+      "neither": 0.02112676056338028,
+      "n": 142,
+      "source": "S1/metrics/B0_b10/prop_LoD2_s0__LoD2_rows.npz"
+     },
+     "prop_LoD2_s1": {
+      "inflow": 0.028169014084507043,
+      "gt_side": 0.9507042253521126,
+      "neither": 0.02112676056338028,
+      "n": 142,
+      "source": "S1/metrics/B0_b10/prop_LoD2_s1__LoD2_rows.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "inflow": 0.2323943661971831,
+      "gt_side": 0.7464788732394366,
+      "neither": 0.02112676056338028,
+      "n": 142,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_LoD2_s0__LoD2_rows.npz"
+     }
+    }
+   },
+   "mixed_c4": {
+    "patches": 43,
+    "area_m2": 2.6875,
+    "rows_thinned": 235,
+    "rows_main": 0,
+    "values": {
+     "prop_LoD2_s0": {
+      "R_0_2": 0.6,
+      "n": 235,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_LoD2__prop_LoD2_s0.npz"
+     },
+     "prop_LoD2_s1": {
+      "R_0_2": 0.7702127659574468,
+      "n": 235,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_LoD2__prop_LoD2_s1.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "R_0_2": 0.6893617021276596,
+      "n": 235,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B0_b10_LoD2__nojudge_LoD2_s0.npz"
+     }
+    }
+   },
+   "mixed_c13": {
+    "patches": 1,
+    "area_m2": 0.0625,
+    "rows_thinned": 5,
+    "rows_main": 5,
+    "values": {
+     "prop_LoD2_s0": {
+      "inflow": 0.0,
+      "gt_side": 0.0,
+      "neither": 1.0,
+      "n": 5,
+      "source": "S1/metrics/B0_b10/prop_LoD2_s0__LoD2_rows.npz"
+     },
+     "prop_LoD2_s1": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 5,
+      "source": "S1/metrics/B0_b10/prop_LoD2_s1__LoD2_rows.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "inflow": 0.0,
+      "gt_side": 0.0,
+      "neither": 1.0,
+      "n": 5,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_LoD2_s0__LoD2_rows.npz"
+     }
+    }
+   }
+  },
+  "B0_b10/ALS": {
+   "wrong_release_c4": {
+    "patches": 0,
+    "area_m2": 0.0,
+    "rows_thinned": 0,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "R_0_2": null,
+      "n": 0,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_ALS__prop_ALS_s0.npz"
+     },
+     "prop_ALS_s1": {
+      "R_0_2": null,
+      "n": 0,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_ALS__prop_ALS_s1.npz"
+     },
+     "nojudge_ALS_s0": {
+      "R_0_2": null,
+      "n": 0,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B0_b10_ALS__nojudge_ALS_s0.npz"
+     }
+    }
+   },
+   "right_release_c13": {
+    "patches": 0,
+    "area_m2": 0.0,
+    "rows_thinned": 0,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/B0_b10/prop_ALS_s0__ALS_rows.npz"
+     },
+     "prop_ALS_s1": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/B0_b10/prop_ALS_s1__ALS_rows.npz"
+     },
+     "nojudge_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_ALS_s0__ALS_rows.npz"
+     }
+    }
+   },
+   "mixed_c4": {
+    "patches": 4,
+    "area_m2": 0.2531258879326994,
+    "rows_thinned": 19,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "R_0_2": 0.631578947368421,
+      "n": 19,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_ALS__prop_ALS_s0.npz"
+     },
+     "prop_ALS_s1": {
+      "R_0_2": 0.3157894736842105,
+      "n": 19,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B0_b10_ALS__prop_ALS_s1.npz"
+     },
+     "nojudge_ALS_s0": {
+      "R_0_2": 0.7894736842105263,
+      "n": 19,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B0_b10_ALS__nojudge_ALS_s0.npz"
+     }
+    }
+   },
+   "mixed_c13": {
+    "patches": 0,
+    "area_m2": 0.0,
+    "rows_thinned": 0,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/B0_b10/prop_ALS_s0__ALS_rows.npz"
+     },
+     "prop_ALS_s1": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/B0_b10/prop_ALS_s1__ALS_rows.npz"
+     },
+     "nojudge_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B0_b10/nojudge_ALS_s0__ALS_rows.npz"
+     }
+    }
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "wrong_release_c4": {
+    "patches": 57,
+    "area_m2": 3.5625,
+    "rows_thinned": 268,
+    "rows_main": 0,
+    "values": {
+     "prop_LoD2_s0": {
+      "R_0_2": 0.4626865671641791,
+      "n": 268,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_LoD2__prop_LoD2_s0.npz"
+     },
+     "prop_LoD2_s1": {
+      "R_0_2": 0.48134328358208955,
+      "n": 268,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_LoD2__prop_LoD2_s1.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "R_0_2": 0.47388059701492535,
+      "n": 268,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B173nb_b10_LoD2__nojudge_LoD2_s0.npz"
+     }
+    }
+   },
+   "right_release_c13": {
+    "patches": 26,
+    "area_m2": 1.625,
+    "rows_thinned": 124,
+    "rows_main": 120,
+    "values": {
+     "prop_LoD2_s0": {
+      "inflow": 0.15,
+      "gt_side": 0.675,
+      "neither": 0.175,
+      "n": 120,
+      "source": "S1/metrics/B173nb_b10/prop_LoD2_s0__LoD2_rows.npz"
+     },
+     "prop_LoD2_s1": {
+      "inflow": 0.03333333333333333,
+      "gt_side": 0.8166666666666667,
+      "neither": 0.15,
+      "n": 120,
+      "source": "S1/metrics/B173nb_b10/prop_LoD2_s1__LoD2_rows.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "inflow": 0.1,
+      "gt_side": 0.8166666666666667,
+      "neither": 0.08333333333333333,
+      "n": 120,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B173nb_b10/nojudge_LoD2_s0__LoD2_rows.npz"
+     }
+    }
+   },
+   "mixed_c4": {
+    "patches": 73,
+    "area_m2": 4.5625,
+    "rows_thinned": 326,
+    "rows_main": 0,
+    "values": {
+     "prop_LoD2_s0": {
+      "R_0_2": 0.9171779141104295,
+      "n": 326,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_LoD2__prop_LoD2_s0.npz"
+     },
+     "prop_LoD2_s1": {
+      "R_0_2": 0.9079754601226994,
+      "n": 326,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_LoD2__prop_LoD2_s1.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "R_0_2": 0.9325153374233128,
+      "n": 326,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B173nb_b10_LoD2__nojudge_LoD2_s0.npz"
+     }
+    }
+   },
+   "mixed_c13": {
+    "patches": 15,
+    "area_m2": 0.9375,
+    "rows_thinned": 61,
+    "rows_main": 57,
+    "values": {
+     "prop_LoD2_s0": {
+      "inflow": 0.19298245614035087,
+      "gt_side": 0.47368421052631576,
+      "neither": 0.3333333333333333,
+      "n": 57,
+      "source": "S1/metrics/B173nb_b10/prop_LoD2_s0__LoD2_rows.npz"
+     },
+     "prop_LoD2_s1": {
+      "inflow": 0.19298245614035087,
+      "gt_side": 0.5087719298245614,
+      "neither": 0.2982456140350877,
+      "n": 57,
+      "source": "S1/metrics/B173nb_b10/prop_LoD2_s1__LoD2_rows.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "inflow": 0.3157894736842105,
+      "gt_side": 0.43859649122807015,
+      "neither": 0.24561403508771928,
+      "n": 57,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B173nb_b10/nojudge_LoD2_s0__LoD2_rows.npz"
+     }
+    }
+   }
+  },
+  "B173nb_b10/ALS": {
+   "wrong_release_c4": {
+    "patches": 10,
+    "area_m2": 1.0356345125188604,
+    "rows_thinned": 66,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "R_0_2": 0.0,
+      "n": 66,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz"
+     },
+     "prop_ALS_s1": {
+      "R_0_2": 0.0,
+      "n": 66,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s1.npz"
+     },
+     "fixB_ALS_s0": {
+      "R_0_2": 0.0,
+      "n": 66,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B173nb_b10_ALS__fixB_ALS_s0.npz"
+     },
+     "nojudge_ALS_s0": {
+      "R_0_2": 0.0,
+      "n": 66,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B173nb_b10_ALS__nojudge_ALS_s0.npz"
+     }
+    }
+   },
+   "right_release_c13": {
+    "patches": 9,
+    "area_m2": 0.6227197845139656,
+    "rows_thinned": 53,
+    "rows_main": 53,
+    "values": {
+     "prop_ALS_s0": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 53,
+      "source": "S1/metrics/B173nb_b10/prop_ALS_s0__ALS_rows.npz"
+     },
+     "prop_ALS_s1": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 53,
+      "source": "S1/metrics/B173nb_b10/prop_ALS_s1__ALS_rows.npz"
+     },
+     "fixB_ALS_s0": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 53,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B173nb_b10/fixB_ALS_s0__ALS_rows.npz"
+     },
+     "nojudge_ALS_s0": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 53,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B173nb_b10/nojudge_ALS_s0__ALS_rows.npz"
+     }
+    }
+   },
+   "mixed_c4": {
+    "patches": 6,
+    "area_m2": 0.5912666480229309,
+    "rows_thinned": 41,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "R_0_2": 0.0,
+      "n": 41,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz"
+     },
+     "prop_ALS_s1": {
+      "R_0_2": 0.0,
+      "n": 41,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s1.npz"
+     },
+     "fixB_ALS_s0": {
+      "R_0_2": 0.0,
+      "n": 41,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B173nb_b10_ALS__fixB_ALS_s0.npz"
+     },
+     "nojudge_ALS_s0": {
+      "R_0_2": 0.0,
+      "n": 41,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/B173nb_b10_ALS__nojudge_ALS_s0.npz"
+     }
+    }
+   },
+   "mixed_c13": {
+    "patches": 0,
+    "area_m2": 0.0,
+    "rows_thinned": 0,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/B173nb_b10/prop_ALS_s0__ALS_rows.npz"
+     },
+     "prop_ALS_s1": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/B173nb_b10/prop_ALS_s1__ALS_rows.npz"
+     },
+     "fixB_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/B173nb_b10/fixB_ALS_s0__ALS_rows.npz"
+     },
+     "nojudge_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/B173nb_b10/nojudge_ALS_s0__ALS_rows.npz"
+     }
+    }
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "wrong_release_c4": {
+    "patches": 99,
+    "area_m2": 6.1875,
+    "rows_thinned": 335,
+    "rows_main": 0,
+    "values": {
+     "prop_LoD2_s0": {
+      "R_0_2": 0.4388059701492537,
+      "n": 335,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz"
+     },
+     "prop_LoD2_s1": {
+      "R_0_2": 0.3761194029850746,
+      "n": 335,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s1.npz"
+     },
+     "fixB_LoD2_s0": {
+      "R_0_2": 0.9014925373134328,
+      "n": 335,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__fixB_LoD2_s0.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "R_0_2": 0.835820895522388,
+      "n": 335,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__nojudge_LoD2_s0.npz"
+     }
+    }
+   },
+   "right_release_c13": {
+    "patches": 139,
+    "area_m2": 8.6875,
+    "rows_thinned": 746,
+    "rows_main": 746,
+    "values": {
+     "prop_LoD2_s0": {
+      "inflow": 0.002680965147453083,
+      "gt_side": 0.8310991957104558,
+      "neither": 0.16621983914209115,
+      "n": 746,
+      "source": "S1/metrics/R1rep_b10/prop_LoD2_s0__LoD2_rows.npz"
+     },
+     "prop_LoD2_s1": {
+      "inflow": 0.002680965147453083,
+      "gt_side": 0.8056300268096515,
+      "neither": 0.19168900804289543,
+      "n": 746,
+      "source": "S1/metrics/R1rep_b10/prop_LoD2_s1__LoD2_rows.npz"
+     },
+     "fixB_LoD2_s0": {
+      "inflow": 0.057640750670241284,
+      "gt_side": 0.7868632707774799,
+      "neither": 0.1554959785522788,
+      "n": 746,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixB_LoD2_s0__LoD2_rows.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "inflow": 0.3284182305630027,
+      "gt_side": 0.403485254691689,
+      "neither": 0.2680965147453083,
+      "n": 746,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/R1rep_b10/nojudge_LoD2_s0__LoD2_rows.npz"
+     }
+    }
+   },
+   "mixed_c4": {
+    "patches": 39,
+    "area_m2": 2.4375,
+    "rows_thinned": 161,
+    "rows_main": 0,
+    "values": {
+     "prop_LoD2_s0": {
+      "R_0_2": 0.36024844720496896,
+      "n": 161,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz"
+     },
+     "prop_LoD2_s1": {
+      "R_0_2": 0.4658385093167702,
+      "n": 161,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s1.npz"
+     },
+     "fixB_LoD2_s0": {
+      "R_0_2": 0.6583850931677019,
+      "n": 161,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__fixB_LoD2_s0.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "R_0_2": 0.7391304347826086,
+      "n": 161,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__nojudge_LoD2_s0.npz"
+     }
+    }
+   },
+   "mixed_c13": {
+    "patches": 3,
+    "area_m2": 0.1875,
+    "rows_thinned": 6,
+    "rows_main": 6,
+    "values": {
+     "prop_LoD2_s0": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 6,
+      "source": "S1/metrics/R1rep_b10/prop_LoD2_s0__LoD2_rows.npz"
+     },
+     "prop_LoD2_s1": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 6,
+      "source": "S1/metrics/R1rep_b10/prop_LoD2_s1__LoD2_rows.npz"
+     },
+     "fixB_LoD2_s0": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 6,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/metrics/R1rep_b10/fixB_LoD2_s0__LoD2_rows.npz"
+     },
+     "nojudge_LoD2_s0": {
+      "inflow": 0.0,
+      "gt_side": 1.0,
+      "neither": 0.0,
+      "n": 6,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/R1rep_b10/nojudge_LoD2_s0__LoD2_rows.npz"
+     }
+    }
+   }
+  },
+  "R1rep_b10/ALS": {
+   "wrong_release_c4": {
+    "patches": 61,
+    "area_m2": 4.11048305706716,
+    "rows_thinned": 371,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "R_0_2": 0.30727762803234504,
+      "n": 371,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_ALS__prop_ALS_s0.npz"
+     },
+     "prop_ALS_s1": {
+      "R_0_2": 0.30997304582210244,
+      "n": 371,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_ALS__prop_ALS_s1.npz"
+     },
+     "nojudge_ALS_s0": {
+      "R_0_2": 0.31266846361185985,
+      "n": 371,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_ALS__nojudge_ALS_s0.npz"
+     }
+    }
+   },
+   "right_release_c13": {
+    "patches": 8,
+    "area_m2": 0.5170539808454838,
+    "rows_thinned": 37,
+    "rows_main": 28,
+    "values": {
+     "prop_ALS_s0": {
+      "inflow": 0.0,
+      "gt_side": 0.6071428571428571,
+      "neither": 0.39285714285714285,
+      "n": 28,
+      "source": "S1/metrics/R1rep_b10/prop_ALS_s0__ALS_rows.npz"
+     },
+     "prop_ALS_s1": {
+      "inflow": 0.0,
+      "gt_side": 0.6071428571428571,
+      "neither": 0.39285714285714285,
+      "n": 28,
+      "source": "S1/metrics/R1rep_b10/prop_ALS_s1__ALS_rows.npz"
+     },
+     "nojudge_ALS_s0": {
+      "inflow": 0.0,
+      "gt_side": 0.5357142857142857,
+      "neither": 0.4642857142857143,
+      "n": 28,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/R1rep_b10/nojudge_ALS_s0__ALS_rows.npz"
+     }
+    }
+   },
+   "mixed_c4": {
+    "patches": 2,
+    "area_m2": 0.12975631717443725,
+    "rows_thinned": 12,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "R_0_2": 0.75,
+      "n": 12,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_ALS__prop_ALS_s0.npz"
+     },
+     "prop_ALS_s1": {
+      "R_0_2": 0.4166666666666667,
+      "n": 12,
+      "source": "PH/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_ALS__prop_ALS_s1.npz"
+     },
+     "nojudge_ALS_s0": {
+      "R_0_2": 0.8333333333333334,
+      "n": 12,
+      "source": "PH/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_ALS__nojudge_ALS_s0.npz"
+     }
+    }
+   },
+   "mixed_c13": {
+    "patches": 0,
+    "area_m2": 0.0,
+    "rows_thinned": 0,
+    "rows_main": 0,
+    "values": {
+     "prop_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/R1rep_b10/prop_ALS_s0__ALS_rows.npz"
+     },
+     "prop_ALS_s1": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "S1/metrics/R1rep_b10/prop_ALS_s1__ALS_rows.npz"
+     },
+     "nojudge_ALS_s0": {
+      "inflow": null,
+      "gt_side": null,
+      "neither": null,
+      "n": 0,
+      "source": "PH/main_stage3_v1/PHD-MAIN-STAGE3-v1/metrics/R1rep_b10/nojudge_ALS_s0__ALS_rows.npz"
+     }
+    }
+   }
+  }
+ },
+ "scientific_verdict": null
+}
