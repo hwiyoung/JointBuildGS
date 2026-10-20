@@ -7,7 +7,8 @@ Stage 2's fine ruler (bands_s2.py) on the training views with the band edges of 
           dry init: patch maps lm_<view> and locations.npz) -- 'agree pixels'; recorded too: every pixel with g_p > 0 (stage 2's selection)
           and the agree pixels of support-agreement patches (region code 2)
   python band_w.py <site> <prior> <reading L|T> <result ...>    (results: prop_<prior>_s0, prop_<prior>_s1, fixA_<prior>_s0, ...)
-Writes /ph/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/mech/bands_<site>_<prior>_<reading>.json. scientific_verdict: null."""
+Writes /ph/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/mech/bands_<site>_<prior>_<reading>.json (results already in the file are kept; the
+results given are counted again). scientific_verdict: null."""
 import json
 import sys
 from pathlib import Path
@@ -49,9 +50,11 @@ def main():
     if len(code) != len(jl):
         raise RuntimeError("region rows != patches")
     views = sorted(k[3:] for k in G.files if k.startswith("lm_"))
+    dst = FTP / "mech" / f"bands_{site}_{prior}_{rd}.json"
+    old = json.loads(dst.read_text()) if dst.exists() else None      # results counted before stay; the ones given are (re)counted
     out = dict(site=site, prior=prior, reading=rd, w_maps=str(Wd), views=len(views), selection=dict(
         agree="prior pixels with a rendered depth whose patch judgment (unit_judgment) is agree, r16-default dry init",
-        g1="every prior pixel with a rendered depth and g_p > 0 (stage 2's bands selection)", agree_c2="agree pixels of region code 2 patches"), results={})
+        g1="every prior pixel with a rendered depth and g_p > 0 (stage 2's bands selection)", agree_c2="agree pixels of region code 2 patches"), results=dict(old["results"]) if old else {})
     for res in results:
         Rd = run_dir(site, res) / "model/dump/iteration_30000"
         acc = {k: np.zeros(5, np.int64) for k in ("agree", "g1", "agree_c2")}
@@ -78,9 +81,8 @@ def main():
         out["results"][res] = dict(dump=str(Rd), views_missing=missing,
                                    **{k: dict(n=int(c.sum()), shares={nm: float(c[i] / max(c.sum(), 1)) for i, nm in enumerate(NAMES)}) for k, c in acc.items()})
         print(res, json.dumps({k: [round(100 * x, 2) for x in v["shares"].values()] for k, v in out["results"][res].items() if isinstance(v, dict) and "shares" in v}), flush=True)
-    d = FTP / "mech"
-    d.mkdir(parents=True, exist_ok=True)
-    (d / f"bands_{site}_{prior}_{rd}.json").write_text(json.dumps(out, indent=1))
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(json.dumps(out, indent=1))
 
 
 if __name__ == "__main__":

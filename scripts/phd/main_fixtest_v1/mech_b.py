@@ -88,8 +88,11 @@ def main():
     d = FTP / "mech"
     d.mkdir(parents=True, exist_ok=True)
     (d / "mech_b.json").write_text(json.dumps(dict(task="PHD-MAIN-FIXTEST-v1", rule=__doc__.split("\n\n")[0], cases=out, scientific_verdict=None), indent=1))
-    print(json.dumps({k: {g: (v["patches"], {r: (round(100 * (x.get("R_0_2") if x.get("R_0_2") is not None else (x.get("inflow") or float("nan"))), 1), x.get("n"))
-                                                 for r, x in v["values"].items()}) for g, v in e.items()} for k, e in out.items()}, ensure_ascii=False))
+    def pct(x):
+        v = x.get("R_0_2") if x.get("R_0_2") is not None else x.get("inflow")
+        return None if v is None else round(100 * v, 1)
+    print(json.dumps({k: {g: (v["patches"], {r: (pct(x), x.get("n")) for r, x in v["values"].items()}) for g, v in e.items()} for k, e in out.items()},
+                     ensure_ascii=False))
 
 
 if __name__ == "__main__":

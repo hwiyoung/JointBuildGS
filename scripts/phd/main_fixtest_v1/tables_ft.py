@@ -63,7 +63,7 @@ def run_status(site, res):
         return "있음"
     run = next((r for r in CFG["runs"] if r["site"] == site and r["result"] == res), None)
     if run is not None and not run["train"]:
-        return "관문" if "관문" in run["why"] else "학습 안 함"
+        return "읽기 L과 같음" if "갈음" in run["why"] else ("관문" if "관문" in run["why"] else "학습 안 함")
     f = FTP / "runs" / site / res / "receipt.json"
     if not f.exists():
         return "결과 없음"

@@ -12,4 +12,5 @@ for k in dry probe; do
   [ -f "$FT/checks/compare_$k.json" ] && cp -p "$FT/checks/compare_$k.json" "$D/tables/checks_compare_$k.json"
 done
 for f in "$FT"/prep/w_decision_*.json "$FT"/prep/figpos.json; do [ -f "$f" ] && cp -p "$f" "$D/tables/"; done
+for f in "$FT"/mech/*.json; do [ -f "$f" ] && cp -p "$f" "$D/tables/mech_$(basename "$f")"; done
 echo "synced $(date '+%m-%d %H:%M:%S')"
