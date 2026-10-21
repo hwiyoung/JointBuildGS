@@ -1,0 +1,2845 @@
+{
+ "task": "PHD-MAIN-VISCMP-v4",
+ "work": "일 마",
+ "made": "2026-10-21 15:45:24 KST",
+ "rule": {
+  "intents": [
+   [
+    "보정",
+    "c11",
+    "영상만"
+   ],
+   [
+    "보존",
+    "img",
+    "학습 전 사전 정보"
+   ],
+   [
+    "다듬기",
+    "c2",
+    "학습 전 사전 정보와 영상만 가운데 완전성이 작은 쪽"
+   ],
+   [
+    "상속(결측)",
+    "c4",
+    "학습 전 사전 정보"
+   ]
+  ],
+  "methods": [
+   "2DGS",
+   "GeoGS",
+   "결합",
+   "CDGS",
+   "본 방법"
+  ],
+  "value": "완전성 (d4_counts.json comps value; the proposed method = its 'mean' of the two seeds; 영상만 = FT/tables/eval_ft.json imgonly)",
+  "allow": "learning methods (2DGS, GeoGS, CDGS, 본 방법): d4 criterion of the place and case (max(pooled, case)); 결합: the place's pooled spread",
+  "judge": "됨: diff <= allow; 안 됨: diff > allow; 판단 못함: a learning method with |diff| <= allow and allow > base / 2 (checked first)",
+  "title": "본 방법은 보정에서 여섯 경우 모두 맞는 자료를 따랐고, 보존에서는 결합이 따랐다",
+  "size_cm": [
+   16,
+   11.5
+  ],
+  "colours": {
+   "됨": "#cdebe6",
+   "안 됨": "#fbd9c2",
+   "판단 못함": "#e2e2e2"
+  }
+ },
+ "cells": [
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 9.077973291277885,
+   "base_cm": 5.155693925917149,
+   "base": "영상만",
+   "diff_cm": 3.922279365360737,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 33860,
+   "prior_cm": 56.646499037742615,
+   "imgonly_cm": 5.155693925917149,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1445116917180162,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 17.38291159272194,
+   "base_cm": 5.155693925917149,
+   "base": "영상만",
+   "diff_cm": 12.22721766680479,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 33860,
+   "prior_cm": 56.646499037742615,
+   "imgonly_cm": 5.155693925917149,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1445116917180162,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/LoD2",
+   "method": "결합",
+   "value_cm": 49.675771594047546,
+   "base_cm": 5.155693925917149,
+   "base": "영상만",
+   "diff_cm": 44.5200776681304,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 33860,
+   "prior_cm": 56.646499037742615,
+   "imgonly_cm": 5.155693925917149,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1445116917180162,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 12.78870776295662,
+   "base_cm": 5.155693925917149,
+   "base": "영상만",
+   "diff_cm": 7.633013837039471,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 33860,
+   "prior_cm": 56.646499037742615,
+   "imgonly_cm": 5.155693925917149,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1445116917180162,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 5.421162117272615,
+   "base_cm": 5.155693925917149,
+   "base": "영상만",
+   "diff_cm": 0.26546819135546684,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 33860,
+   "prior_cm": 56.646499037742615,
+   "imgonly_cm": 5.155693925917149,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1445116917180162,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 22.756710648536682,
+   "base_cm": 4.852592200040817,
+   "base": "영상만",
+   "diff_cm": 17.904118448495865,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 123503,
+   "prior_cm": 165.08944034576416,
+   "imgonly_cm": 4.852592200040817,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1630752184610788,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 11.363422870635986,
+   "base_cm": 4.852592200040817,
+   "base": "영상만",
+   "diff_cm": 6.510830670595169,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 123503,
+   "prior_cm": 165.08944034576416,
+   "imgonly_cm": 4.852592200040817,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1630752184610788,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/LoD2",
+   "method": "결합",
+   "value_cm": 5.381602421402931,
+   "base_cm": 4.852592200040817,
+   "base": "영상만",
+   "diff_cm": 0.529010221362114,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 123503,
+   "prior_cm": 165.08944034576416,
+   "imgonly_cm": 4.852592200040817,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1630752184610788,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 151.12249851226807,
+   "base_cm": 4.852592200040817,
+   "base": "영상만",
+   "diff_cm": 146.26990631222725,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 123503,
+   "prior_cm": 165.08944034576416,
+   "imgonly_cm": 4.852592200040817,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1630752184610788,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 4.93118055164814,
+   "base_cm": 4.852592200040817,
+   "base": "영상만",
+   "diff_cm": 0.07858835160732269,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "됨",
+   "gt_points": 123503,
+   "prior_cm": 165.08944034576416,
+   "imgonly_cm": 4.852592200040817,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1630752184610788,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 16.098503023386,
+   "base_cm": 6.663968041539192,
+   "base": "영상만",
+   "diff_cm": 9.43453498184681,
+   "allow_cm": 0.4384786370665733,
+   "judgement": "안 됨",
+   "gt_points": 55198,
+   "prior_cm": 95.24515867233276,
+   "imgonly_cm": 6.663968041539192,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.4384786370665733,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 16.862880438566208,
+   "base_cm": 6.663968041539192,
+   "base": "영상만",
+   "diff_cm": 10.198912397027016,
+   "allow_cm": 0.4384786370665733,
+   "judgement": "안 됨",
+   "gt_points": 55198,
+   "prior_cm": 95.24515867233276,
+   "imgonly_cm": 6.663968041539192,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.4384786370665733,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/LoD2",
+   "method": "결합",
+   "value_cm": 26.95467472076416,
+   "base_cm": 6.663968041539192,
+   "base": "영상만",
+   "diff_cm": 20.290706679224968,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 55198,
+   "prior_cm": 95.24515867233276,
+   "imgonly_cm": 6.663968041539192,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.4384786370665733,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 32.33265280723572,
+   "base_cm": 6.663968041539192,
+   "base": "영상만",
+   "diff_cm": 25.668684765696526,
+   "allow_cm": 0.4384786370665733,
+   "judgement": "안 됨",
+   "gt_points": 55198,
+   "prior_cm": 95.24515867233276,
+   "imgonly_cm": 6.663968041539192,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.4384786370665733,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 6.8129537627100945,
+   "base_cm": 6.663968041539192,
+   "base": "영상만",
+   "diff_cm": 0.14898572117090225,
+   "allow_cm": 0.4384786370665733,
+   "judgement": "됨",
+   "gt_points": 55198,
+   "prior_cm": 95.24515867233276,
+   "imgonly_cm": 6.663968041539192,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.4384786370665733,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 8.74863937497139,
+   "base_cm": 8.578521758317947,
+   "base": "영상만",
+   "diff_cm": 0.17011761665344238,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "됨",
+   "gt_points": 359,
+   "prior_cm": 25.02482831478119,
+   "imgonly_cm": 8.578521758317947,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.11960432670421507,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 7.745368778705597,
+   "base_cm": 8.578521758317947,
+   "base": "영상만",
+   "diff_cm": -0.8331529796123505,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "됨",
+   "gt_points": 359,
+   "prior_cm": 25.02482831478119,
+   "imgonly_cm": 8.578521758317947,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.11960432670421507,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/ALS",
+   "method": "결합",
+   "value_cm": 23.890584707260132,
+   "base_cm": 8.578521758317947,
+   "base": "영상만",
+   "diff_cm": 15.312062948942184,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 359,
+   "prior_cm": 25.02482831478119,
+   "imgonly_cm": 8.578521758317947,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.11960432670421507,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 16.33981168270111,
+   "base_cm": 8.578521758317947,
+   "base": "영상만",
+   "diff_cm": 7.7612899243831635,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 359,
+   "prior_cm": 25.02482831478119,
+   "imgonly_cm": 8.578521758317947,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.11960432670421507,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 8.654819428920746,
+   "base_cm": 8.578521758317947,
+   "base": "영상만",
+   "diff_cm": 0.07629767060279846,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "됨",
+   "gt_points": 359,
+   "prior_cm": 25.02482831478119,
+   "imgonly_cm": 8.578521758317947,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.11960432670421507,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 23.21065366268158,
+   "base_cm": 4.098796099424362,
+   "base": "영상만",
+   "diff_cm": 19.111857563257217,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 96269,
+   "prior_cm": 243.63980293273926,
+   "imgonly_cm": 4.098796099424362,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1605453538792124,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 9.174959361553192,
+   "base_cm": 4.098796099424362,
+   "base": "영상만",
+   "diff_cm": 5.07616326212883,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 96269,
+   "prior_cm": 243.63980293273926,
+   "imgonly_cm": 4.098796099424362,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1605453538792124,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/ALS",
+   "method": "결합",
+   "value_cm": 4.063916206359863,
+   "base_cm": 4.098796099424362,
+   "base": "영상만",
+   "diff_cm": -0.0348798930644989,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "됨",
+   "gt_points": 96269,
+   "prior_cm": 243.63980293273926,
+   "imgonly_cm": 4.098796099424362,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1605453538792124,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 154.3757200241089,
+   "base_cm": 4.098796099424362,
+   "base": "영상만",
+   "diff_cm": 150.27692392468452,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 96269,
+   "prior_cm": 243.63980293273926,
+   "imgonly_cm": 4.098796099424362,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1605453538792124,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B173nb_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 4.122348129749298,
+   "base_cm": 4.098796099424362,
+   "base": "영상만",
+   "diff_cm": 0.023552030324935913,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "됨",
+   "gt_points": 96269,
+   "prior_cm": 243.63980293273926,
+   "imgonly_cm": 4.098796099424362,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1605453538792124,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 12.675625830888748,
+   "base_cm": 6.672503054141998,
+   "base": "영상만",
+   "diff_cm": 6.00312277674675,
+   "allow_cm": 0.9585951928631419,
+   "judgement": "안 됨",
+   "gt_points": 900,
+   "prior_cm": 17.558808624744415,
+   "imgonly_cm": 6.672503054141998,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.9585951928631419,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 12.166201695799828,
+   "base_cm": 6.672503054141998,
+   "base": "영상만",
+   "diff_cm": 5.493698641657829,
+   "allow_cm": 0.9585951928631419,
+   "judgement": "안 됨",
+   "gt_points": 900,
+   "prior_cm": 17.558808624744415,
+   "imgonly_cm": 6.672503054141998,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.9585951928631419,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/ALS",
+   "method": "결합",
+   "value_cm": 16.856098175048828,
+   "base_cm": 6.672503054141998,
+   "base": "영상만",
+   "diff_cm": 10.18359512090683,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 900,
+   "prior_cm": 17.558808624744415,
+   "imgonly_cm": 6.672503054141998,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.9585951928631419,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 22.13573381304741,
+   "base_cm": 6.672503054141998,
+   "base": "영상만",
+   "diff_cm": 15.46323075890541,
+   "allow_cm": 0.9585951928631419,
+   "judgement": "안 됨",
+   "gt_points": 900,
+   "prior_cm": 17.558808624744415,
+   "imgonly_cm": 6.672503054141998,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.9585951928631419,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "R1rep_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 6.0460040345788,
+   "base_cm": 6.672503054141998,
+   "base": "영상만",
+   "diff_cm": -0.6264990195631981,
+   "allow_cm": 0.9585951928631419,
+   "judgement": "됨",
+   "gt_points": 900,
+   "prior_cm": 17.558808624744415,
+   "imgonly_cm": 6.672503054141998,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.9585951928631419,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 10.109036415815353,
+   "base_cm": 22.41808772087097,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -12.309051305055618,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "됨",
+   "gt_points": 6457,
+   "prior_cm": 22.41808772087097,
+   "imgonly_cm": 4.109795764088631,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.08304667714147197,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 25.082731246948242,
+   "base_cm": 22.41808772087097,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 2.6646435260772705,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 6457,
+   "prior_cm": 22.41808772087097,
+   "imgonly_cm": 4.109795764088631,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.08304667714147197,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/LoD2",
+   "method": "결합",
+   "value_cm": 22.417107224464417,
+   "base_cm": 22.41808772087097,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.0009804964065551758,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "됨",
+   "gt_points": 6457,
+   "prior_cm": 22.41808772087097,
+   "imgonly_cm": 4.109795764088631,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.08304667714147197,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 175.1598358154297,
+   "base_cm": 22.41808772087097,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 152.74174809455872,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 6457,
+   "prior_cm": 22.41808772087097,
+   "imgonly_cm": 4.109795764088631,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.08304667714147197,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 4.873632825911045,
+   "base_cm": 22.41808772087097,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -17.544454894959927,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "됨",
+   "gt_points": 6457,
+   "prior_cm": 22.41808772087097,
+   "imgonly_cm": 4.109795764088631,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.08304667714147197,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 15.658193081617355,
+   "base_cm": 7.145815342664719,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 8.512377738952637,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 3816,
+   "prior_cm": 7.145815342664719,
+   "imgonly_cm": 13.114778697490692,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.2816078561747832,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 11.075694113969803,
+   "base_cm": 7.145815342664719,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 3.9298787713050842,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 3816,
+   "prior_cm": 7.145815342664719,
+   "imgonly_cm": 13.114778697490692,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.2816078561747832,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/LoD2",
+   "method": "결합",
+   "value_cm": 8.236932009458542,
+   "base_cm": 7.145815342664719,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 1.0911166667938232,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 3816,
+   "prior_cm": 7.145815342664719,
+   "imgonly_cm": 13.114778697490692,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.2816078561747832,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 24.907170236110687,
+   "base_cm": 7.145815342664719,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 17.76135489344597,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 3816,
+   "prior_cm": 7.145815342664719,
+   "imgonly_cm": 13.114778697490692,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.2816078561747832,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 12.122743763029575,
+   "base_cm": 7.145815342664719,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 4.976928420364857,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 3816,
+   "prior_cm": 7.145815342664719,
+   "imgonly_cm": 13.114778697490692,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.2816078561747832,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 59.84988212585449,
+   "base_cm": 39.4486665725708,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 20.40121555328369,
+   "allow_cm": 32.938305805609474,
+   "judgement": "판단 못함",
+   "gt_points": 863,
+   "prior_cm": 39.4486665725708,
+   "imgonly_cm": 39.39629793167114,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 32.938305805609474,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 57.63515830039978,
+   "base_cm": 39.4486665725708,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 18.18649172782898,
+   "allow_cm": 32.938305805609474,
+   "judgement": "판단 못함",
+   "gt_points": 863,
+   "prior_cm": 39.4486665725708,
+   "imgonly_cm": 39.39629793167114,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 32.938305805609474,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/LoD2",
+   "method": "결합",
+   "value_cm": 28.641986846923828,
+   "base_cm": 39.4486665725708,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -10.806679725646973,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "됨",
+   "gt_points": 863,
+   "prior_cm": 39.4486665725708,
+   "imgonly_cm": 39.39629793167114,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 32.938305805609474,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 120.8214282989502,
+   "base_cm": 39.4486665725708,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 81.3727617263794,
+   "allow_cm": 32.938305805609474,
+   "judgement": "안 됨",
+   "gt_points": 863,
+   "prior_cm": 39.4486665725708,
+   "imgonly_cm": 39.39629793167114,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 32.938305805609474,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 38.41565698385239,
+   "base_cm": 39.4486665725708,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -1.0330095887184143,
+   "allow_cm": 32.938305805609474,
+   "judgement": "판단 못함",
+   "gt_points": 863,
+   "prior_cm": 39.4486665725708,
+   "imgonly_cm": 39.39629793167114,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 32.938305805609474,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 10.602585971355438,
+   "base_cm": 3.281601145863533,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 7.320984825491905,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 1755,
+   "prior_cm": 3.281601145863533,
+   "imgonly_cm": 9.768610447645187,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.02166832702217828,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 9.584911167621613,
+   "base_cm": 3.281601145863533,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 6.3033100217580795,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 1755,
+   "prior_cm": 3.281601145863533,
+   "imgonly_cm": 9.768610447645187,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.02166832702217828,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/ALS",
+   "method": "결합",
+   "value_cm": 3.2814379781484604,
+   "base_cm": 3.281601145863533,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.00016316771507263184,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "됨",
+   "gt_points": 1755,
+   "prior_cm": 3.281601145863533,
+   "imgonly_cm": 9.768610447645187,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.02166832702217828,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 10.205424576997757,
+   "base_cm": 3.281601145863533,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 6.923823431134224,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 1755,
+   "prior_cm": 3.281601145863533,
+   "imgonly_cm": 9.768610447645187,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.02166832702217828,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B0_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 9.254856780171394,
+   "base_cm": 3.281601145863533,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 5.973255634307861,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 1755,
+   "prior_cm": 3.281601145863533,
+   "imgonly_cm": 9.768610447645187,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.02166832702217828,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 27.45325267314911,
+   "base_cm": 2.296543586999178,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 25.15670908614993,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 9398,
+   "prior_cm": 2.296543586999178,
+   "imgonly_cm": 15.359900891780853,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.39136488782579165,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 18.195881694555283,
+   "base_cm": 2.296543586999178,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 15.899338107556105,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 9398,
+   "prior_cm": 2.296543586999178,
+   "imgonly_cm": 15.359900891780853,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.39136488782579165,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/ALS",
+   "method": "결합",
+   "value_cm": 3.049344941973686,
+   "base_cm": 2.296543586999178,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 0.7528013549745083,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "됨",
+   "gt_points": 9398,
+   "prior_cm": 2.296543586999178,
+   "imgonly_cm": 15.359900891780853,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.39136488782579165,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 29.55283224582672,
+   "base_cm": 2.296543586999178,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 27.256288658827543,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 9398,
+   "prior_cm": 2.296543586999178,
+   "imgonly_cm": 15.359900891780853,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.39136488782579165,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 13.743769004940987,
+   "base_cm": 2.296543586999178,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 11.447225417941809,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 9398,
+   "prior_cm": 2.296543586999178,
+   "imgonly_cm": 15.359900891780853,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.39136488782579165,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 18.775802105665207,
+   "base_cm": 5.829137563705444,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 12.946664541959763,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 14112,
+   "prior_cm": 5.829137563705444,
+   "imgonly_cm": 8.887919411063194,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 1.0211647182884747,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 9.25036370754242,
+   "base_cm": 5.829137563705444,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 3.421226143836975,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 14112,
+   "prior_cm": 5.829137563705444,
+   "imgonly_cm": 8.887919411063194,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 1.0211647182884747,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/ALS",
+   "method": "결합",
+   "value_cm": 5.850604735314846,
+   "base_cm": 5.829137563705444,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 0.021467171609401703,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "됨",
+   "gt_points": 14112,
+   "prior_cm": 5.829137563705444,
+   "imgonly_cm": 8.887919411063194,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 1.0211647182884747,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 26.546290516853333,
+   "base_cm": 5.829137563705444,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 20.717152953147888,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 14112,
+   "prior_cm": 5.829137563705444,
+   "imgonly_cm": 8.887919411063194,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 1.0211647182884747,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "R1rep_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 8.85064098984003,
+   "base_cm": 5.829137563705444,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 3.0215034261345863,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 14112,
+   "prior_cm": 5.829137563705444,
+   "imgonly_cm": 8.887919411063194,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 1.0211647182884747,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 9.390999376773834,
+   "base_cm": 3.776773624122143,
+   "base": "영상만",
+   "diff_cm": 5.614225752651691,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 301740,
+   "prior_cm": 13.66422325372696,
+   "imgonly_cm": 3.776773624122143,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.06382966351224793,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 14.204004406929016,
+   "base_cm": 3.776773624122143,
+   "base": "영상만",
+   "diff_cm": 10.427230782806873,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 301740,
+   "prior_cm": 13.66422325372696,
+   "imgonly_cm": 3.776773624122143,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.06382966351224793,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/LoD2",
+   "method": "결합",
+   "value_cm": 13.640213012695312,
+   "base_cm": 3.776773624122143,
+   "base": "영상만",
+   "diff_cm": 9.86343938857317,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 301740,
+   "prior_cm": 13.66422325372696,
+   "imgonly_cm": 3.776773624122143,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.06382966351224793,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 29.961082339286804,
+   "base_cm": 3.776773624122143,
+   "base": "영상만",
+   "diff_cm": 26.18430871516466,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 301740,
+   "prior_cm": 13.66422325372696,
+   "imgonly_cm": 3.776773624122143,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.06382966351224793,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 3.651936072856188,
+   "base_cm": 3.776773624122143,
+   "base": "영상만",
+   "diff_cm": -0.12483755126595497,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "됨",
+   "gt_points": 301740,
+   "prior_cm": 13.66422325372696,
+   "imgonly_cm": 3.776773624122143,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.06382966351224793,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 10.595988482236862,
+   "base_cm": 4.517551511526108,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 6.078436970710754,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 172508,
+   "prior_cm": 4.517551511526108,
+   "imgonly_cm": 6.032525934278965,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.09190968523126725,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 8.383666723966599,
+   "base_cm": 4.517551511526108,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 3.8661152124404907,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 172508,
+   "prior_cm": 4.517551511526108,
+   "imgonly_cm": 6.032525934278965,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.09190968523126725,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/LoD2",
+   "method": "결합",
+   "value_cm": 5.8640411123633385,
+   "base_cm": 4.517551511526108,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 1.3464896008372307,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 172508,
+   "prior_cm": 4.517551511526108,
+   "imgonly_cm": 6.032525934278965,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.09190968523126725,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 36.339788138866425,
+   "base_cm": 4.517551511526108,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 31.822236627340317,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 172508,
+   "prior_cm": 4.517551511526108,
+   "imgonly_cm": 6.032525934278965,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.09190968523126725,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 5.870436225086451,
+   "base_cm": 4.517551511526108,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 1.3528847135603428,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 172508,
+   "prior_cm": 4.517551511526108,
+   "imgonly_cm": 6.032525934278965,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.09190968523126725,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 12.463244795799255,
+   "base_cm": 5.508423410356045,
+   "base": "영상만",
+   "diff_cm": 6.954821385443211,
+   "allow_cm": 1.3751089998282626,
+   "judgement": "안 됨",
+   "gt_points": 115372,
+   "prior_cm": 14.061789959669113,
+   "imgonly_cm": 5.508423410356045,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 1.3751089998282626,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 8.293775841593742,
+   "base_cm": 5.508423410356045,
+   "base": "영상만",
+   "diff_cm": 2.7853524312376976,
+   "allow_cm": 1.3751089998282626,
+   "judgement": "안 됨",
+   "gt_points": 115372,
+   "prior_cm": 14.061789959669113,
+   "imgonly_cm": 5.508423410356045,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 1.3751089998282626,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/LoD2",
+   "method": "결합",
+   "value_cm": 13.468719273805618,
+   "base_cm": 5.508423410356045,
+   "base": "영상만",
+   "diff_cm": 7.9602958634495735,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 115372,
+   "prior_cm": 14.061789959669113,
+   "imgonly_cm": 5.508423410356045,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 1.3751089998282626,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 18.96902322769165,
+   "base_cm": 5.508423410356045,
+   "base": "영상만",
+   "diff_cm": 13.460599817335606,
+   "allow_cm": 1.3751089998282626,
+   "judgement": "안 됨",
+   "gt_points": 115372,
+   "prior_cm": 14.061789959669113,
+   "imgonly_cm": 5.508423410356045,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 1.3751089998282626,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 5.445622280240059,
+   "base_cm": 5.508423410356045,
+   "base": "영상만",
+   "diff_cm": -0.06280113011598587,
+   "allow_cm": 1.3751089998282626,
+   "judgement": "됨",
+   "gt_points": 115372,
+   "prior_cm": 14.061789959669113,
+   "imgonly_cm": 5.508423410356045,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 1.3751089998282626,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 10.550644993782043,
+   "base_cm": 2.100439742207527,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 8.450205251574516,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 137426,
+   "prior_cm": 2.100439742207527,
+   "imgonly_cm": 2.754165790975094,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.10214272931546976,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 7.481466233730316,
+   "base_cm": 2.100439742207527,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 5.381026491522789,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 137426,
+   "prior_cm": 2.100439742207527,
+   "imgonly_cm": 2.754165790975094,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.10214272931546976,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/ALS",
+   "method": "결합",
+   "value_cm": 2.099770959466696,
+   "base_cm": 2.100439742207527,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.0006687827408313751,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "됨",
+   "gt_points": 137426,
+   "prior_cm": 2.100439742207527,
+   "imgonly_cm": 2.754165790975094,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.10214272931546976,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 14.791207760572433,
+   "base_cm": 2.100439742207527,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 12.690768018364906,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 137426,
+   "prior_cm": 2.100439742207527,
+   "imgonly_cm": 2.754165790975094,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.10214272931546976,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 2.5743018835783005,
+   "base_cm": 2.100439742207527,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 0.4738621413707733,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "됨",
+   "gt_points": 137426,
+   "prior_cm": 2.100439742207527,
+   "imgonly_cm": 2.754165790975094,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.10214272931546976,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 17.918991297483444,
+   "base_cm": 1.6651151701807976,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 16.253876127302647,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 64322,
+   "prior_cm": 1.6651151701807976,
+   "imgonly_cm": 6.869599595665932,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.1094627412812812,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 16.648542135953903,
+   "base_cm": 1.6651151701807976,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 14.983426965773106,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 64322,
+   "prior_cm": 1.6651151701807976,
+   "imgonly_cm": 6.869599595665932,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.1094627412812812,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/ALS",
+   "method": "결합",
+   "value_cm": 1.7326396889984608,
+   "base_cm": 1.6651151701807976,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 0.06752451881766319,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "됨",
+   "gt_points": 64322,
+   "prior_cm": 1.6651151701807976,
+   "imgonly_cm": 6.869599595665932,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.1094627412812812,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 21.407365798950195,
+   "base_cm": 1.6651151701807976,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 19.742250628769398,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 64322,
+   "prior_cm": 1.6651151701807976,
+   "imgonly_cm": 6.869599595665932,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.1094627412812812,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B173nb_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 6.7341819405555725,
+   "base_cm": 1.6651151701807976,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 5.069066770374775,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 64322,
+   "prior_cm": 1.6651151701807976,
+   "imgonly_cm": 6.869599595665932,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.1094627412812812,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 12.868119776248932,
+   "base_cm": 5.100656673312187,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 7.767463102936745,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 113446,
+   "prior_cm": 5.100656673312187,
+   "imgonly_cm": 5.187963508069515,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.3014278331555162,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 6.3752442598342896,
+   "base_cm": 5.100656673312187,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 1.2745875865221024,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 113446,
+   "prior_cm": 5.100656673312187,
+   "imgonly_cm": 5.187963508069515,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.3014278331555162,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/ALS",
+   "method": "결합",
+   "value_cm": 5.1002781838178635,
+   "base_cm": 5.100656673312187,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.00037848949432373047,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "됨",
+   "gt_points": 113446,
+   "prior_cm": 5.100656673312187,
+   "imgonly_cm": 5.187963508069515,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.3014278331555162,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 29.31477427482605,
+   "base_cm": 5.100656673312187,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 24.214117601513863,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "안 됨",
+   "gt_points": 113446,
+   "prior_cm": 5.100656673312187,
+   "imgonly_cm": 5.187963508069515,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.3014278331555162,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "R1rep_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 4.751050658524036,
+   "base_cm": 5.100656673312187,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.3496060147881508,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "됨",
+   "gt_points": 113446,
+   "prior_cm": 5.100656673312187,
+   "imgonly_cm": 5.187963508069515,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.3014278331555162,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 8.217158168554306,
+   "base_cm": 22.313019633293152,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -14.095861464738846,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 12433,
+   "prior_cm": 22.313019633293152,
+   "imgonly_cm": 3.6294691264629364,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.09637087646258474,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 24.87887144088745,
+   "base_cm": 22.313019633293152,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 2.5658518075942993,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "안 됨",
+   "gt_points": 12433,
+   "prior_cm": 22.313019633293152,
+   "imgonly_cm": 3.6294691264629364,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.09637087646258474,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/LoD2",
+   "method": "결합",
+   "value_cm": 22.312669456005096,
+   "base_cm": 22.313019633293152,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.0003501772880554199,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 12433,
+   "prior_cm": 22.313019633293152,
+   "imgonly_cm": 3.6294691264629364,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.09637087646258474,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 156.43839836120605,
+   "base_cm": 22.313019633293152,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 134.1253787279129,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "안 됨",
+   "gt_points": 12433,
+   "prior_cm": 22.313019633293152,
+   "imgonly_cm": 3.6294691264629364,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.09637087646258474,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 3.9889995008707047,
+   "base_cm": 22.313019633293152,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -18.324020132422447,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 12433,
+   "prior_cm": 22.313019633293152,
+   "imgonly_cm": 3.6294691264629364,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.09637087646258474,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 8.824199810624123,
+   "base_cm": 2.338128350675106,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 6.486071459949017,
+   "allow_cm": 0.3093187241844077,
+   "judgement": "안 됨",
+   "gt_points": 6314,
+   "prior_cm": 2.338128350675106,
+   "imgonly_cm": 5.772558785974979,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.3093187241844077,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 5.009052902460098,
+   "base_cm": 2.338128350675106,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 2.670924551784992,
+   "allow_cm": 0.3093187241844077,
+   "judgement": "안 됨",
+   "gt_points": 6314,
+   "prior_cm": 2.338128350675106,
+   "imgonly_cm": 5.772558785974979,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.3093187241844077,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/LoD2",
+   "method": "결합",
+   "value_cm": 3.428477980196476,
+   "base_cm": 2.338128350675106,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 1.09034962952137,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "안 됨",
+   "gt_points": 6314,
+   "prior_cm": 2.338128350675106,
+   "imgonly_cm": 5.772558785974979,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.3093187241844077,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 17.480507493019104,
+   "base_cm": 2.338128350675106,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 15.142379142343998,
+   "allow_cm": 0.3093187241844077,
+   "judgement": "안 됨",
+   "gt_points": 6314,
+   "prior_cm": 2.338128350675106,
+   "imgonly_cm": 5.772558785974979,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.3093187241844077,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 4.902194160968065,
+   "base_cm": 2.338128350675106,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 2.564065810292959,
+   "allow_cm": 0.3093187241844077,
+   "judgement": "안 됨",
+   "gt_points": 6314,
+   "prior_cm": 2.338128350675106,
+   "imgonly_cm": 5.772558785974979,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.3093187241844077,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/LoD2",
+   "method": "2DGS",
+   "value_cm": 39.828190207481384,
+   "base_cm": 9.634431451559067,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 30.193758755922318,
+   "allow_cm": 4.448521256452392,
+   "judgement": "안 됨",
+   "gt_points": 712,
+   "prior_cm": 9.634431451559067,
+   "imgonly_cm": 22.065211087465286,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 4.448521256452392,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/LoD2",
+   "method": "GeoGS",
+   "value_cm": 8.353454992175102,
+   "base_cm": 9.634431451559067,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -1.2809764593839645,
+   "allow_cm": 4.448521256452392,
+   "judgement": "됨",
+   "gt_points": 712,
+   "prior_cm": 9.634431451559067,
+   "imgonly_cm": 22.065211087465286,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 4.448521256452392,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/LoD2",
+   "method": "결합",
+   "value_cm": 14.086813479661942,
+   "base_cm": 9.634431451559067,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 4.452382028102875,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "안 됨",
+   "gt_points": 712,
+   "prior_cm": 9.634431451559067,
+   "imgonly_cm": 22.065211087465286,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 4.448521256452392,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/LoD2",
+   "method": "CDGS",
+   "value_cm": 18.22950690984726,
+   "base_cm": 9.634431451559067,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 8.595075458288193,
+   "allow_cm": 4.448521256452392,
+   "judgement": "안 됨",
+   "gt_points": 712,
+   "prior_cm": 9.634431451559067,
+   "imgonly_cm": 22.065211087465286,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 4.448521256452392,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 19.97879184782505,
+   "base_cm": 9.634431451559067,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 10.344360396265984,
+   "allow_cm": 4.448521256452392,
+   "judgement": "안 됨",
+   "gt_points": 712,
+   "prior_cm": 9.634431451559067,
+   "imgonly_cm": 22.065211087465286,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 4.448521256452392,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 9.931974858045578,
+   "base_cm": 2.849474735558033,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 7.082500122487545,
+   "allow_cm": 2.3817081887398577,
+   "judgement": "안 됨",
+   "gt_points": 177,
+   "prior_cm": 2.849474735558033,
+   "imgonly_cm": 7.540969550609589,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 2.3817081887398577,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 10.378558933734894,
+   "base_cm": 2.849474735558033,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 7.529084198176861,
+   "allow_cm": 2.3817081887398577,
+   "judgement": "안 됨",
+   "gt_points": 177,
+   "prior_cm": 2.849474735558033,
+   "imgonly_cm": 7.540969550609589,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 2.3817081887398577,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/ALS",
+   "method": "결합",
+   "value_cm": 2.8495173901319504,
+   "base_cm": 2.849474735558033,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 4.2654573917388916e-05,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 177,
+   "prior_cm": 2.849474735558033,
+   "imgonly_cm": 7.540969550609589,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 2.3817081887398577,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 10.006261616945267,
+   "base_cm": 2.849474735558033,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 7.156786881387234,
+   "allow_cm": 2.3817081887398577,
+   "judgement": "안 됨",
+   "gt_points": 177,
+   "prior_cm": 2.849474735558033,
+   "imgonly_cm": 7.540969550609589,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 2.3817081887398577,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 6.8130699917674065,
+   "base_cm": 2.849474735558033,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 3.9635952562093735,
+   "allow_cm": 2.3817081887398577,
+   "judgement": "안 됨",
+   "gt_points": 177,
+   "prior_cm": 2.849474735558033,
+   "imgonly_cm": 7.540969550609589,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 2.3817081887398577,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 51.174503564834595,
+   "base_cm": 6.116776913404465,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 45.05772665143013,
+   "allow_cm": 6.9153486936092445,
+   "judgement": "안 됨",
+   "gt_points": 111,
+   "prior_cm": 6.116776913404465,
+   "imgonly_cm": 105.73498010635376,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 6.9153486936092445,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 4.71949465572834,
+   "base_cm": 6.116776913404465,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -1.3972822576761246,
+   "allow_cm": 6.9153486936092445,
+   "judgement": "판단 못함",
+   "gt_points": 111,
+   "prior_cm": 6.116776913404465,
+   "imgonly_cm": 105.73498010635376,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 6.9153486936092445,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/ALS",
+   "method": "결합",
+   "value_cm": 6.116002053022385,
+   "base_cm": 6.116776913404465,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.0007748603820800781,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 111,
+   "prior_cm": 6.116776913404465,
+   "imgonly_cm": 105.73498010635376,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 6.9153486936092445,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 33.779022097587585,
+   "base_cm": 6.116776913404465,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 27.66224518418312,
+   "allow_cm": 6.9153486936092445,
+   "judgement": "안 됨",
+   "gt_points": 111,
+   "prior_cm": 6.116776913404465,
+   "imgonly_cm": 105.73498010635376,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 6.9153486936092445,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 95.98086178302765,
+   "base_cm": 6.116776913404465,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 89.86408486962318,
+   "allow_cm": 6.9153486936092445,
+   "judgement": "안 됨",
+   "gt_points": 111,
+   "prior_cm": 6.116776913404465,
+   "imgonly_cm": 105.73498010635376,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 6.9153486936092445,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 141.3286328315735,
+   "base_cm": 5.4737389087677,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 135.8548939228058,
+   "allow_cm": 45.48318292377276,
+   "judgement": "안 됨",
+   "gt_points": 383,
+   "prior_cm": 5.4737389087677,
+   "imgonly_cm": 99.17066097259521,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 45.48318292377276,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/ALS",
+   "method": "GeoGS",
+   "value_cm": 128.46920490264893,
+   "base_cm": 5.4737389087677,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 122.99546599388123,
+   "allow_cm": 45.48318292377276,
+   "judgement": "안 됨",
+   "gt_points": 383,
+   "prior_cm": 5.4737389087677,
+   "imgonly_cm": 99.17066097259521,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 45.48318292377276,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/ALS",
+   "method": "결합",
+   "value_cm": 7.2234004735946655,
+   "base_cm": 5.4737389087677,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 1.7496615648269653,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "안 됨",
+   "gt_points": 383,
+   "prior_cm": 5.4737389087677,
+   "imgonly_cm": 99.17066097259521,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 45.48318292377276,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/ALS",
+   "method": "CDGS",
+   "value_cm": 24.964003264904022,
+   "base_cm": 5.4737389087677,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 19.490264356136322,
+   "allow_cm": 45.48318292377276,
+   "judgement": "판단 못함",
+   "gt_points": 383,
+   "prior_cm": 5.4737389087677,
+   "imgonly_cm": 99.17066097259521,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 45.48318292377276,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "R1rep_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 68.73636245727539,
+   "base_cm": 5.4737389087677,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 63.26262354850769,
+   "allow_cm": 45.48318292377276,
+   "judgement": "안 됨",
+   "gt_points": 383,
+   "prior_cm": 5.4737389087677,
+   "imgonly_cm": 99.17066097259521,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 45.48318292377276,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  }
+ ],
+ "counts": {
+  "보정": [
+   1,
+   1,
+   1,
+   0,
+   5
+  ],
+  "보존": [
+   1,
+   0,
+   5,
+   0,
+   1
+  ],
+  "다듬기": [
+   0,
+   0,
+   3,
+   0,
+   4
+  ],
+  "상속(결측)": [
+   1,
+   1,
+   3,
+   0,
+   1
+  ]
+ },
+ "unsure": {
+  "보정": [],
+  "보존": [
+   [
+    "R1rep_b10/LoD2",
+    "2DGS"
+   ],
+   [
+    "R1rep_b10/LoD2",
+    "GeoGS"
+   ],
+   [
+    "R1rep_b10/LoD2",
+    "본 방법"
+   ]
+  ],
+  "다듬기": [],
+  "상속(결측)": [
+   [
+    "B173nb_b10/ALS",
+    "GeoGS"
+   ],
+   [
+    "R1rep_b10/ALS",
+    "CDGS"
+   ]
+  ]
+ },
+ "draft": {
+  "counts": {
+   "보정": [
+    1,
+    1,
+    1,
+    0,
+    6
+   ],
+   "보존": [
+    1,
+    0,
+    5,
+    0,
+    1
+   ],
+   "다듬기": [
+    0,
+    0,
+    3,
+    0,
+    4
+   ],
+   "상속(결측)": [
+    1,
+    1,
+    3,
+    0,
+    1
+   ]
+  },
+  "unsure": {
+   "보존": [
+    [
+     "R1rep_b10/LoD2",
+     "2DGS"
+    ],
+    [
+     "R1rep_b10/LoD2",
+     "GeoGS"
+    ],
+    [
+     "R1rep_b10/LoD2",
+     "본 방법"
+    ]
+   ],
+   "상속(결측)": [
+    [
+     "B173nb_b10/ALS",
+     "GeoGS"
+    ],
+    [
+     "R1rep_b10/ALS",
+     "CDGS"
+    ]
+   ]
+  }
+ },
+ "counts_differ": {
+  "보정": true,
+  "보존": false,
+  "다듬기": false,
+  "상속(결측)": false
+ },
+ "near_boundary": [
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/LoD2",
+   "method": "본 방법",
+   "value_cm": 5.421162117272615,
+   "base_cm": 5.155693925917149,
+   "base": "영상만",
+   "diff_cm": 0.26546819135546684,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "안 됨",
+   "gt_points": 33860,
+   "prior_cm": 56.646499037742615,
+   "imgonly_cm": 5.155693925917149,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.1445116917180162,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "보존",
+   "place": "img",
+   "case": "B173nb_b10/LoD2",
+   "method": "결합",
+   "value_cm": 8.236932009458542,
+   "base_cm": 7.145815342664719,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 1.0911166667938232,
+   "allow_cm": 1.0211647182884749,
+   "judgement": "안 됨",
+   "gt_points": 3816,
+   "prior_cm": 7.145815342664719,
+   "imgonly_cm": 13.114778697490692,
+   "criterion_parts": {
+    "pooled": 1.0211647182884749,
+    "case": 0.2816078561747832,
+    "three_points": null
+   },
+   "pooled_cm": 1.0211647182884749
+  },
+  {
+   "intent": "보정",
+   "place": "c11",
+   "case": "B0_b10/ALS",
+   "method": "2DGS",
+   "value_cm": 8.74863937497139,
+   "base_cm": 8.578521758317947,
+   "base": "영상만",
+   "diff_cm": 0.17011761665344238,
+   "allow_cm": 0.2576409719625805,
+   "judgement": "됨",
+   "gt_points": 359,
+   "prior_cm": 25.02482831478119,
+   "imgonly_cm": 8.578521758317947,
+   "criterion_parts": {
+    "pooled": 0.2576409719625805,
+    "case": 0.11960432670421507,
+    "three_points": null
+   },
+   "pooled_cm": 0.2576409719625805
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/ALS",
+   "method": "결합",
+   "value_cm": 2.8495173901319504,
+   "base_cm": 2.849474735558033,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 4.2654573917388916e-05,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 177,
+   "prior_cm": 2.849474735558033,
+   "imgonly_cm": 7.540969550609589,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 2.3817081887398577,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B0_b10/LoD2",
+   "method": "결합",
+   "value_cm": 22.312669456005096,
+   "base_cm": 22.313019633293152,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.0003501772880554199,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 12433,
+   "prior_cm": 22.313019633293152,
+   "imgonly_cm": 3.6294691264629364,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 0.09637087646258474,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "상속(결측)",
+   "place": "c4",
+   "case": "B173nb_b10/ALS",
+   "method": "결합",
+   "value_cm": 6.116002053022385,
+   "base_cm": 6.116776913404465,
+   "base": "학습 전 사전 정보",
+   "diff_cm": -0.0007748603820800781,
+   "allow_cm": 0.09637087646258474,
+   "judgement": "됨",
+   "gt_points": 111,
+   "prior_cm": 6.116776913404465,
+   "imgonly_cm": 105.73498010635376,
+   "criterion_parts": {
+    "pooled": 0.09637087646258474,
+    "case": 6.9153486936092445,
+    "three_points": null
+   },
+   "pooled_cm": 0.09637087646258474
+  },
+  {
+   "intent": "다듬기",
+   "place": "c2",
+   "case": "B0_b10/ALS",
+   "method": "본 방법",
+   "value_cm": 2.5743018835783005,
+   "base_cm": 2.100439742207527,
+   "base": "학습 전 사전 정보",
+   "diff_cm": 0.4738621413707733,
+   "allow_cm": 0.5797586200413839,
+   "judgement": "됨",
+   "gt_points": 137426,
+   "prior_cm": 2.100439742207527,
+   "imgonly_cm": 2.754165790975094,
+   "criterion_parts": {
+    "pooled": 0.5797586200413839,
+    "case": 0.10214272931546976,
+    "three_points": null
+   },
+   "pooled_cm": 0.5797586200413839
+  }
+ ],
+ "title": "본 방법은 보정에서 여섯 경우 모두 맞는 자료를 따랐고, 보존에서는 결합이 따랐다",
+ "title_holds": false,
+ "scientific_verdict": null
+}

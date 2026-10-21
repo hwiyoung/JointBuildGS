@@ -1,0 +1,158 @@
+{
+ "task_id": "PHD-MAIN-VISCMP-v4",
+ "request": "docs/experiments/phd/main_viscmp_v4/본실험_시각비교그림_발주문_v4.md",
+ "scientific_verdict": null,
+ "terms": {
+  "완전성": "median |d_g| (cm)",
+  "정확도": "median d_r (cm)",
+  "재현율": "share |d_g| <= 0.2 m",
+  "정밀도": "share d_r <= 0.2 m"
+ },
+ "work_da": {
+  "slope_bins_deg": [
+   [
+    0,
+    30
+   ],
+   [
+    30,
+    60
+   ],
+   [
+    60,
+    90
+   ]
+  ],
+  "slope_names": [
+   "완만한 면",
+   "가파른 면",
+   "벽 같은 면"
+  ],
+  "relation_bins_m": [
+   0.2,
+   1.0
+  ],
+  "relation_names": [
+   "가까움",
+   "1 m 안에 참값",
+   "1 m 안에 참값 없음"
+  ],
+  "slope": "angle between the normal of the result point's triangle and the vertical (0 = horizontal)",
+  "sample": "the distance task's result sample regenerated (dm_common.result_sample, seed 0) with its triangle index; checked against the stored q_d count",
+  "excluded": "the 0.5 m exclusion cells of the GT (S1/v3/box_gt/<site>/exclusion_cells.npz 'any' = trees | transient | prior_side_trees) on the survey grid (s04_gt_v7.Grid), by the point's plan position"
+ },
+ "work_ra": {
+  "cases": [
+   "B0_b10/ALS",
+   "B173nb_b10/ALS",
+   "B173nb_b10/LoD2"
+  ],
+  "panels": [
+   "학습 전 사전 정보",
+   "결합",
+   "본 방법"
+  ],
+  "views": "two perspective views of the whole evaluation range, 45 deg from vertical, opposite azimuths (look at the range centre; azimuths 225 and 45 deg)",
+  "colours": {
+   "가까움": "#d4d4d4",
+   "1 m 안에 참값": "#f28e2b",
+   "1 m 안에 참값 없음": "#d62728",
+   "참값에서 뺀 칸": "#7ec8e3"
+  }
+ },
+ "work_ma": {
+  "intents": [
+   [
+    "보정",
+    "c11",
+    "영상만"
+   ],
+   [
+    "보존",
+    "img",
+    "학습 전 사전 정보"
+   ],
+   [
+    "다듬기",
+    "c2",
+    "학습 전 사전 정보와 영상만 가운데 완전성이 작은 쪽"
+   ],
+   [
+    "상속(결측)",
+    "c4",
+    "학습 전 사전 정보"
+   ]
+  ],
+  "methods": [
+   "2DGS",
+   "GeoGS",
+   "결합",
+   "CDGS",
+   "본 방법"
+  ],
+  "value": "완전성 (d4_counts.json comps value; the proposed method = its 'mean' of the two seeds; 영상만 = FT/tables/eval_ft.json imgonly)",
+  "allow": "learning methods (2DGS, GeoGS, CDGS, 본 방법): d4 criterion of the place and case (max(pooled, case)); 결합: the place's pooled spread",
+  "judge": "됨: diff <= allow; 안 됨: diff > allow; 판단 못함: a learning method with |diff| <= allow and allow > base / 2 (checked first)",
+  "title": "본 방법은 보정에서 여섯 경우 모두 맞는 자료를 따랐고, 보존에서는 결합이 따랐다",
+  "size_cm": [
+   16,
+   11.5
+  ],
+  "colours": {
+   "됨": "#cdebe6",
+   "안 됨": "#fbd9c2",
+   "판단 못함": "#e2e2e2"
+  }
+ },
+ "work_ga": {
+  "panels_top": [
+   "자리",
+   "참값",
+   "학습 전 사전 정보",
+   "영상 깊이"
+  ],
+  "panels_bottom": [
+   "2DGS",
+   "GeoGS",
+   "결합",
+   "CDGS",
+   "본 방법"
+  ],
+  "photo_rule": "the training image that sees every patch of the place (inside the image, >= 80 % visible against the prior render depth where the place is visible at all) and holds the most of the place's building box (the evaluation-range footprint box of the building owning most place patches, 8 corners at roof and ground height, inside share x projected area); the whole image or the building box + 10 %; a zoom photo when the place is narrower than 15 % of the photo",
+  "camera_rule": "the photo camera when it sees the place obliquely (roof: 20-60 deg from vertical; wall: within 60 deg of the wall normal), the render box narrowed to the place + margin; else a virtual perspective camera looking at the place centre, azimuth of the photo camera, roof 40 deg from vertical, wall 30 deg from the wall normal, at the distance where the place + margin (50 % of its size, >= 2 m) fills 70 % of the panel width",
+  "plate_ga": "the panel's surface coloured per pixel by the signed distance from the visible surface point to the nearest GT point (sign = the vector to that GT point projected on its oriented normal, + = surface above / outside), times a headlight shading; surface in GT-excluded cells = light grey hatching; no surface = the light blue-grey background",
+  "plate_na": "v3: the GT points coloured by d_g to the panel's surface, grey = no surface near (rays along +- the oriented normal within 2 x range), excluded cells hatched",
+  "ranges_m": {
+   "V1": 1.0,
+   "V4": 1.0,
+   "V3": 0.2,
+   "V5": 0.2,
+   "V6": 1.0
+  },
+  "cmap": "bwr",
+  "background": "#dfe6ee",
+  "hatch": "#c8c8c8",
+  "cbar": [
+   "참값보다 위·바깥",
+   "참값과 같음",
+   "참값보다 아래·안"
+  ],
+  "size": {
+   "width_cm": 16,
+   "render_panel_min_cm": 3.5,
+   "height_max_cm": 20,
+   "dpi": 300
+  },
+  "values": "two lines: 완전성 (v3: median |d_g| of the place's region rows), 정확도 (median d_r of the result points whose nearest prior patch is a place patch); V2: 벽이 선 몫",
+  "outline": "the place only, dashed, > 2 px",
+  "titles": {
+   "V2": "기존 방법은 모두 보지 못한 벽을 비웠고, 본 방법만 사전 정보로 벽을 세웠다",
+   "V1": "LoD2가 틀린 이 지붕에서 결합은 LoD2의 매끈한 면을 남겼고, 본 방법은 지금 지붕을 따랐다",
+   "V3": "사전 정보가 더 정확한 이 지붕에서 결합은 참값에 붙었고, 본 방법은 영상 깊이를 따라 7 cm 위에 떴다",
+   "V5": "영상이 틀린 이 자리에서 본 방법은 영상 깊이를 따라 17 cm 아래로 꺼졌고, GeoGS는 참값에 더 가까웠다",
+   "V4": "결측 자리에서 본 방법은 벽 바깥으로 부풀었고, GeoGS와 결측 지키기는 곧은 벽을 지켰다",
+   "V6": null
+  },
+  "cdgs_note": "CDGS는 시점별 크기 맞추기를 생략한 변형이다"
+ }
+}
