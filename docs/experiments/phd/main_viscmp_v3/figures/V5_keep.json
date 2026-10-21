@@ -1,0 +1,240 @@
+{
+ "key": "V5",
+ "title": "영상이 틀린 이 자리에서 본 방법은 영상 깊이를 따라 17 cm 아래로 꺼졌고, GeoGS는 참값에 더 가까웠다",
+ "title_rule": {
+  "closest_baseline": "GeoGS",
+  "closest_cm": 4.376838356256485,
+  "proposed_cm": 16.935959458351135,
+  "seed1_cm": 16.41804128885269,
+  "spread_cm": 1.0254256593058049,
+  "diff_cm": 12.55912110209465,
+  "proposed_signed_cm": -16.935959458351135,
+  "image_signed_cm": -17.751768231391907,
+  "same_side": true,
+  "roof": true
+ },
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "place_patches": 66,
+ "place_rows": 433,
+ "camera": {
+  "kind": "pinhole (training camera, COLMAP 1400 x 1013 model)",
+  "view": "DJI_20241217091257_0151_D",
+  "K_native": [
+   922.0550838163813,
+   922.470063461439,
+   702.6193018201524,
+   499.79701601553825
+  ],
+  "R": [
+   [
+    -0.9231950277838907,
+    0.3843299991129429,
+    -0.0011800241298366128
+   ],
+   [
+    0.3842845634992274,
+    0.9230290438987087,
+    -0.018513734783777738
+   ],
+   [
+    -0.006026187128686062,
+    -0.017545252955746087,
+    -0.9998279097761822
+   ]
+  ],
+  "t": [
+   98.55881928589882,
+   -112.470644620827,
+   34.74194097013501
+  ],
+  "centre": [
+   134.41910592108385,
+   66.54411678480581,
+   32.77001232123265
+  ],
+  "crop_native": [
+   809,
+   805,
+   957.0,
+   896.9244444444445
+  ],
+  "scale": 6.081081081081081,
+  "size": [
+   900,
+   559
+  ]
+ },
+ "left_photo": {
+  "view": "DJI_20241217091257_0151_D",
+  "crop_native": [
+   809,
+   805,
+   957,
+   897
+  ]
+ },
+ "range_m": 0.2,
+ "depth_mesh": {
+  "rule": "pixel-grid mesh, no triangle over a depth jump > max(0.3 m, 1% of depth)",
+  "pixels_with_depth": 565220,
+  "pixels": 758784,
+  "masked_share": 0.25509762989203777,
+  "vertices": 565220,
+  "triangles": 1058009
+ },
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_ALS",
+   "mesh": "/art/phase-payloads/phd/metrics_trial_v1/PHD-MAIN-METRICS-TRIAL-v1/gpu/samepath_ALS/mesh.ply",
+   "mesh_info": {
+    "vertices": 17867889,
+    "faces": 34920603,
+    "kept_vertices": 4056371,
+    "kept_faces": 7868707
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__samepath_ALS.npz",
+   "status": "ok",
+   "value_cm": 2.450644224882126,
+   "signed_cm": -2.4096654728055,
+   "rows": 433,
+   "scene_place_median_cm": 2.49033123254776,
+   "scene_place_points": 3873,
+   "scene_points": 46713,
+   "grey_share": 0.2947359407445465,
+   "grey_share_place": 0.0018073844564936742
+  },
+  "영상 깊이": {
+   "result": "training MVS depth map",
+   "view": "DJI_20241217091257_0151_D",
+   "mesh": {
+    "rule": "pixel-grid mesh, no triangle over a depth jump > max(0.3 m, 1% of depth)",
+    "pixels_with_depth": 565220,
+    "pixels": 758784,
+    "masked_share": 0.25509762989203777,
+    "vertices": 565220,
+    "triangles": 1058009
+   },
+   "mark": "이 발주에서 냄",
+   "status": "ok",
+   "value_cm": 17.751768231391907,
+   "signed_cm": -17.751768231391907,
+   "rows": 433,
+   "scene_place_median_cm": 17.58832186460495,
+   "scene_place_points": 3873,
+   "scene_points": 46713,
+   "grey_share": 0.3725943527497699,
+   "grey_share_place": 0.1187709785695843
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 29560722,
+    "faces": 54549677,
+    "kept_vertices": 6208506,
+    "kept_faces": 11299245
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__imgonly_2dgs_s0.npz",
+   "status": "ok",
+   "value_cm": 29.05902862548828,
+   "signed_cm": -29.05902862548828,
+   "rows": 433,
+   "scene_place_median_cm": 28.565368056297302,
+   "scene_place_points": 3873,
+   "scene_points": 46713,
+   "grey_share": 0.46993342324406484,
+   "grey_share_place": 0.2370255615801704
+  },
+  "GeoGS": {
+   "result": "geogs_ALS_fix1",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 30829215,
+    "faces": 56203065,
+    "kept_vertices": 7323656,
+    "kept_faces": 13279885
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__geogs_ALS_fix1.npz",
+   "status": "ok",
+   "value_cm": 4.376838356256485,
+   "signed_cm": -4.317229613661766,
+   "rows": 433,
+   "scene_place_median_cm": 4.48424220085144,
+   "scene_place_points": 3873,
+   "scene_points": 46713,
+   "grey_share": 0.16768351422516217,
+   "grey_share_place": 0.0
+  },
+  "결합": {
+   "result": "mvsfuse_ALS",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21072408,
+    "faces": 40314532,
+    "kept_vertices": 4688771,
+    "kept_faces": 8860989
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__mvsfuse_ALS.npz",
+   "status": "ok",
+   "value_cm": 5.035644397139549,
+   "signed_cm": -4.985440149903297,
+   "rows": 433,
+   "scene_place_median_cm": 5.088533833622932,
+   "scene_place_points": 3873,
+   "scene_points": 46713,
+   "grey_share": 0.20512491169481728,
+   "grey_share_place": 0.0010327911179963851
+  },
+  "CDGS": {
+   "result": "cdgsnofit_ALS_s0",
+   "mesh": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 63887859,
+    "faces": 91245070,
+    "kept_vertices": 13392327,
+    "kept_faces": 19385657
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__cdgsnofit_ALS_s0.npz",
+   "status": "ok",
+   "value_cm": 46.84862494468689,
+   "signed_cm": -45.33745348453522,
+   "rows": 433,
+   "scene_place_median_cm": 47.028106451034546,
+   "scene_place_points": 3873,
+   "scene_points": 46713,
+   "grey_share": 0.8402800077066341,
+   "grey_share_place": 0.9073069971598244
+  },
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "mesh": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b1_ALS/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 19596134,
+    "faces": 36543161,
+    "kept_vertices": 4364008,
+    "kept_faces": 8039874
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz",
+   "status": "ok",
+   "value_cm": 16.935959458351135,
+   "signed_cm": -16.935959458351135,
+   "rows": 433,
+   "scene_place_median_cm": 16.95103794336319,
+   "scene_place_points": 3873,
+   "scene_points": 46713,
+   "grey_share": 0.21584997752231713,
+   "grey_share_place": 0.0
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_ALS_s1",
+   "value_cm": 16.41804128885269,
+   "signed_cm": -16.41804128885269,
+   "rows": 433
+  }
+ },
+ "zoom_px": null,
+ "seconds": 99.4,
+ "made": "2026-10-21 12:16:19 KST",
+ "scientific_verdict": null
+}
