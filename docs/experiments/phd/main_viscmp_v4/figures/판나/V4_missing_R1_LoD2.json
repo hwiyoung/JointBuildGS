@@ -1,0 +1,336 @@
+{
+ "task": "PHD-MAIN-VISCMP-v4",
+ "work": "일 가",
+ "key": "V4",
+ "title": "결측 자리에서 본 방법은 벽 바깥으로 부풀었고, GeoGS와 결측 지키기는 곧은 벽을 지켰다",
+ "title_rule": null,
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "camera": {
+  "kind": "perspective look-at",
+  "centre": [
+   39.69890957079073,
+   62.481432776421386,
+   -35.19032911392222
+  ],
+  "R": [
+   [
+    -0.14955221797691307,
+    0.9887538288665111,
+    0.0
+   ],
+   [
+    -0.0,
+    0.0,
+    -0.9999999999999999
+   ],
+   [
+    -0.988753828866511,
+    -0.14955221797691304,
+    0.0
+   ]
+  ],
+  "K": [
+   1331.3572738556938,
+   1331.3572738556938,
+   225.72515363919308,
+   192.06662830838928
+  ],
+  "size": [
+   420,
+   504
+  ],
+  "rule": "virtual look-at; fit = the place's patch corners + margin_m in plan (z = the place's own range), 1 / fill - 1 margin; aspect from the fit's projection (0.4-1.3)",
+  "aspect": 1.2002907900104114
+ },
+ "render_box_xy": [
+  -7.87112230559863,
+  51.005539559065596,
+  -1.9556030399147022,
+  59.893615452788396
+ ],
+ "photo": {
+  "view": "DJI_20241217101317_0011_D",
+  "wide_shown": [
+   0.0,
+   0.0,
+   1400.0,
+   1013.0
+  ],
+  "zoom_shown": [
+   676.5833333333334,
+   130.0,
+   757.4166666666667,
+   227.0
+  ],
+  "places": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "ext": 19,
+   "outward_normal": [
+    0.9310620428759866,
+    -0.364860894472941,
+    0.0
+   ],
+   "building_box": {
+    "building": "DEBY_LOD2_4906968",
+    "lo": [
+     -24.412793073306798,
+     9.54898869746868,
+     -21.242063170880563
+    ],
+    "hi": [
+     -4.142223634074877,
+     59.7683328852182,
+     -19.64476631222178
+    ],
+    "patches_in": 2486
+   },
+   "photo": "DJI_20241217101317_0011_D",
+   "crops": {
+    "wide": [
+     0,
+     0,
+     1400,
+     1013
+    ],
+    "zoom": [
+     677,
+     130,
+     757,
+     227
+    ],
+    "place_width_share": 0.08447133028631605,
+    "rule": "request 6.3 V4: the whole image"
+   },
+   "camera": {
+    "kind": "virtual perspective",
+    "eye": [
+     39.69890957079073,
+     62.481432776421386,
+     -35.19032911392222
+    ],
+    "target": [
+     -4.795012728198771,
+     55.75158296746083,
+     -35.19032911392222
+    ],
+    "up": [
+     0,
+     0,
+     1
+    ],
+    "margin_m": 2.0,
+    "fill": 0.7,
+    "reason": "the request: a fixed virtual view; wall 30 deg from the normal",
+    "angle_photo_deg": 10.521863187333507
+   }
+  }
+ },
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/samepath_LoD2/mesh.ply",
+   "mesh_info": {
+    "vertices": 4795294,
+    "faces": 9561952,
+    "kept_vertices": 219012,
+    "kept_faces": 433436,
+    "triangles_in_box": 433436
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__samepath_LoD2.npz",
+   "status": "ok",
+   "completeness_cm": 7.195445150136948,
+   "signed_cm": -7.0954829454422,
+   "rows": 476,
+   "accuracy_cm": 9.002800285816193,
+   "accuracy_points": 3798,
+   "surface_pixels": 512156,
+   "surface_pixel_median_signed_cm": -13.19100506034262,
+   "surface_in_excluded_share": 0.16356735057287233,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.2763668122270742,
+   "recall_0_2": 0.9936974789915967,
+   "recall_rows": 476
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 43206284,
+    "faces": 77299933,
+    "kept_vertices": 641169,
+    "kept_faces": 1202263,
+    "triangles_in_box": 1202263
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__imgonly_2dgs_s0.npz",
+   "status": "ok",
+   "completeness_cm": 30.10105788707733,
+   "signed_cm": -25.955145061016083,
+   "rows": 476,
+   "accuracy_cm": 39.50285613536835,
+   "accuracy_points": 7123,
+   "surface_pixels": 405256,
+   "surface_pixel_median_signed_cm": -20.877914147905692,
+   "surface_in_excluded_share": 0.11785636733324122,
+   "surface_outside_gt_cells_share": 0.009105355627060425,
+   "grey_share_plate_na": 0.09324017467248909,
+   "recall_0_2": 0.3235294117647059,
+   "recall_rows": 476
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "mesh": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 41000275,
+    "faces": 74310789,
+    "kept_vertices": 543585,
+    "kept_faces": 1008084,
+    "triangles_in_box": 1008084
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__trust_LoD2_fix1.npz",
+   "status": "ok",
+   "completeness_cm": 4.63838167488575,
+   "signed_cm": 1.3346688356250525,
+   "rows": 476,
+   "accuracy_cm": 8.918488025665283,
+   "accuracy_points": 5481,
+   "surface_pixels": 436847,
+   "surface_pixel_median_signed_cm": 6.8600132151057025,
+   "surface_in_excluded_share": 0.29096686025084295,
+   "surface_outside_gt_cells_share": 0.024294547061099195,
+   "grey_share_plate_na": 0.08866375545851528,
+   "recall_0_2": 0.9810924369747899,
+   "recall_rows": 476
+  },
+  "결합": {
+   "result": "mvsfuse_LoD2",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21460171,
+    "faces": 39631524,
+    "kept_vertices": 377247,
+    "kept_faces": 659899,
+    "triangles_in_box": 659899
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__mvsfuse_LoD2.npz",
+   "status": "ok",
+   "completeness_cm": 12.973185628652573,
+   "signed_cm": -2.8642534278333187,
+   "rows": 476,
+   "accuracy_cm": 20.659327507019043,
+   "accuracy_points": 4255,
+   "surface_pixels": 287308,
+   "surface_pixel_median_signed_cm": 4.600311130556976,
+   "surface_in_excluded_share": 0.22147660350564552,
+   "surface_outside_gt_cells_share": 0.015398109346067635,
+   "grey_share_plate_na": 0.26386026200873364,
+   "recall_0_2": 0.6449579831932774,
+   "recall_rows": 476
+  },
+  "CDGS": {
+   "result": "cdgsnofit_LoD2_s0",
+   "mesh": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 75738788,
+    "faces": 113761924,
+    "kept_vertices": 485644,
+    "kept_faces": 702447,
+    "triangles_in_box": 702447
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__cdgsnofit_LoD2_s0.npz",
+   "status": "ok",
+   "completeness_cm": 19.31471824645996,
+   "signed_cm": 10.58470606803894,
+   "rows": 476,
+   "accuracy_cm": 26.410585641860962,
+   "accuracy_points": 2853,
+   "surface_pixels": 205006,
+   "surface_pixel_median_signed_cm": 3.0665529517758094,
+   "surface_in_excluded_share": 0.24664643961640148,
+   "surface_outside_gt_cells_share": 0.0571202794064564,
+   "grey_share_plate_na": 0.5666724890829694,
+   "recall_0_2": 0.5273109243697479,
+   "recall_rows": 476
+  },
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21347005,
+    "faces": 39095778,
+    "kept_vertices": 309037,
+    "kept_faces": 570742,
+    "triangles_in_box": 570742
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz",
+   "status": "ok",
+   "completeness_cm": 24.29109737277031,
+   "signed_cm": 23.718106746673584,
+   "rows": 476,
+   "accuracy_cm": 25.174033641815186,
+   "accuracy_points": 3866,
+   "surface_pixels": 394184,
+   "surface_pixel_median_signed_cm": 11.466178181856584,
+   "surface_in_excluded_share": 0.3098121689363343,
+   "surface_outside_gt_cells_share": 0.0075320155054492315,
+   "grey_share_plate_na": 0.08104803493449782,
+   "recall_0_2": 0.4474789915966387,
+   "recall_rows": 476
+  },
+  "결측 지키기": {
+   "result": "fixB_LoD2_s0",
+   "mesh": "/ph/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixB_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21482776,
+    "faces": 39333637,
+    "kept_vertices": 389555,
+    "kept_faces": 698465,
+    "triangles_in_box": 698465
+   },
+   "dist": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__fixB_LoD2_s0.npz",
+   "status": "ok",
+   "completeness_cm": 6.158836372196674,
+   "signed_cm": -2.9710451140999794,
+   "rows": 476,
+   "accuracy_cm": 19.12965029478073,
+   "accuracy_points": 9106,
+   "surface_pixels": 390780,
+   "surface_pixel_median_signed_cm": -1.693048487395793,
+   "surface_in_excluded_share": 0.2700240544551922,
+   "surface_outside_gt_cells_share": 0.013680331644403501,
+   "grey_share_plate_na": 0.09337991266375546,
+   "recall_0_2": 0.957983193277311,
+   "recall_rows": 476
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "completeness_cm": 19.63089257478714,
+   "signed_cm": 19.567818194627762,
+   "rows": 476,
+   "accuracy_cm": 20.7758828997612,
+   "accuracy_points": 4263,
+   "recall_0_2": 0.5042016806722689
+  }
+ },
+ "place_rows": 476,
+ "gt_points_drawn": 28625,
+ "range_m": 1.0,
+ "size": {
+  "width_cm": 16.0,
+  "height_cm": 9.49,
+  "render_panel_cm": 2.27
+ },
+ "drawing": {
+  "plate_ga": "the panel's surface coloured per pixel by the signed distance from the visible surface point to the nearest GT point (sign = the vector to that GT point projected on its oriented normal, + = surface above / outside), times a headlight shading; surface in GT-excluded cells = light grey hatching; no surface = the light blue-grey background",
+  "plate_na": "v3: the GT points coloured by d_g to the panel's surface, grey = no surface near (rays along +- the oriented normal within 2 x range), excluded cells hatched",
+  "light": "판가 colour x (0.6 + 0.4 |n . d|) (headlight)",
+  "hatch": "판가: the panel's own surface in excluded cells or outside the metric's GT cells (SiteGT.in_cells); 판나 and 참값: where the prior's surface lies in excluded cells",
+  "fade": "none (FADE 1.0); the dashed line 3 px outside the place's projected patch squares",
+  "background_plate_ga": "#93a8c2"
+ },
+ "seconds": 1434.0,
+ "made": "2026-10-21 17:03:49 KST",
+ "scientific_verdict": null,
+ "plate": "판나"
+}
