@@ -1,0 +1,357 @@
+{
+ "task": "PHD-MAIN-VISCMP-v4",
+ "work": "일 가",
+ "key": "V5",
+ "title": "영상이 틀린 이 자리에서 본 방법은 영상 깊이를 따라 17 cm 아래로 꺼졌고, GeoGS는 참값에 더 가까웠다",
+ "title_rule": null,
+ "site": "B173nb_b10",
+ "prior": "ALS",
+ "camera": {
+  "kind": "perspective look-at",
+  "centre": [
+   147.87693000785183,
+   105.99656750711509,
+   -4.390353994050731
+  ],
+  "R": [
+   [
+    -0.6582030247022734,
+    0.7528404733227209,
+    0.0
+   ],
+   [
+    0.5767092611439315,
+    0.50421276951728,
+    -0.6427876096865393
+   ],
+   [
+    -0.48391652832239457,
+    -0.4230847489368245,
+    -0.766044443118978
+   ]
+  ],
+  "K": [
+   767.9043583618269,
+   767.9043583618269,
+   215.63031043577973,
+   155.28093799692513
+  ],
+  "size": [
+   420,
+   347
+  ],
+  "rule": "virtual look-at; fit = the place's patch corners + margin_m in plan (z = the place's own range), 1 / fill - 1 margin; aspect from the fit's projection (0.4-1.3)",
+  "aspect": 0.8267483593254566
+ },
+ "render_box_xy": [
+  126.65389669442527,
+  88.74689200432097,
+  137.40389669442527,
+  95.49689200432097
+ ],
+ "photo": {
+  "view": "DJI_20241217091247_0146_D",
+  "wide_shown": [
+   140.44524495677229,
+   0.0,
+   1366.5547550432277,
+   1013.0
+  ],
+  "zoom_shown": [
+   757.0,
+   177.18690476190477,
+   926.0,
+   316.81309523809523
+  ],
+  "places": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "building_box": {
+    "building": "DEBY_LOD2_4959326",
+    "lo": [
+     115.40389669442528,
+     74.99689200432097,
+     -31.596463893337088
+    ],
+    "hi": [
+     164.40389669442527,
+     149.49689200432096,
+     -20.0825284523275
+    ],
+    "patches_in": 24400
+   },
+   "photo": "DJI_20241217091247_0146_D",
+   "photo_candidates": [
+    {
+     "view": "DJI_20241217091247_0146_D",
+     "inside": 0.6666666666666666,
+     "hull_px2": 411599.90326352214,
+     "score": 274399.93550901476,
+     "tilt_deg": 1.01
+    },
+    {
+     "view": "DJI_20241217091249_0147_D",
+     "inside": 0.6875,
+     "hull_px2": 375011.59843669354,
+     "score": 257820.4739252268,
+     "tilt_deg": 0.99
+    },
+    {
+     "view": "DJI_20241217091251_0148_D",
+     "inside": 0.5833333333333334,
+     "hull_px2": 309415.5963969013,
+     "score": 180492.43123152576,
+     "tilt_deg": 1.0
+    },
+    {
+     "view": "DJI_20241217091253_0149_D",
+     "inside": 0.4791666666666667,
+     "hull_px2": 192178.71347066507,
+     "score": 92085.63353802702,
+     "tilt_deg": 1.03
+    },
+    {
+     "view": "DJI_20241217091257_0151_D",
+     "inside": 0.3541666666666667,
+     "hull_px2": 132902.40336715282,
+     "score": 47069.60119253329,
+     "tilt_deg": 1.06
+    }
+   ],
+   "crops": {
+    "wide": [
+     107,
+     0,
+     1400,
+     1013
+    ],
+    "zoom": [
+     757,
+     217,
+     926,
+     277
+    ],
+    "place_width_share": 0.08685417396867712
+   },
+   "camera": {
+    "kind": "virtual perspective",
+    "eye": [
+     147.87693000785183,
+     105.99656750711509,
+     -4.390353994050731
+    ],
+    "target": [
+     131.9076845732128,
+     92.03477079219988,
+     -29.669820616977006
+    ],
+    "up": [
+     0,
+     0,
+     1
+    ],
+    "margin_m": 2.0,
+    "fill": 0.7,
+    "reason": "the photo camera sees the place at 18 deg, not oblique; roof 40 deg from vertical",
+    "angle_photo_deg": 18.126392411889505
+   },
+   "depth_view": {
+    "view": "DJI_20241217091257_0151_D"
+   }
+  }
+ },
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_ALS",
+   "mesh": "/art/phase-payloads/phd/metrics_trial_v1/PHD-MAIN-METRICS-TRIAL-v1/gpu/samepath_ALS/mesh.ply",
+   "mesh_info": {
+    "vertices": 17867889,
+    "faces": 34920603,
+    "kept_vertices": 162996,
+    "kept_faces": 316406,
+    "triangles_in_box": 316406
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__samepath_ALS.npz",
+   "status": "ok",
+   "completeness_cm": 2.450644224882126,
+   "signed_cm": -2.4096654728055,
+   "rows": 433,
+   "accuracy_cm": 3.3135758712887764,
+   "accuracy_points": 2644,
+   "surface_pixels": 157096,
+   "surface_pixel_median_signed_cm": 27.12643708687793,
+   "surface_in_excluded_share": 0.19622396496409839,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.30178529095318857
+  },
+  "영상 깊이": {
+   "result": "training MVS depth map",
+   "view": "DJI_20241217091257_0151_D",
+   "mesh": {
+    "rule": "pixel-grid mesh, no triangle over a depth jump > max(0.3 m, 1% of depth)",
+    "pixels_with_depth": 565220,
+    "pixels": 758784,
+    "masked_share": 0.25509762989203777,
+    "vertices": 565220,
+    "triangles": 1058009,
+    "cut": "place plan box + margin",
+    "triangles_in_box": 14453
+   },
+   "mark": "이 발주에서 냄",
+   "status": "ok",
+   "completeness_cm": 17.751768231391907,
+   "signed_cm": -17.751768231391907,
+   "rows": 433,
+   "accuracy_cm": 15.964824472491305,
+   "accuracy_points": 1586,
+   "surface_pixels": 68513,
+   "surface_pixel_median_signed_cm": -11.591311258203229,
+   "surface_in_excluded_share": 0.13085107935720228,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.4312052081623721
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 29560722,
+    "faces": 54549677,
+    "kept_vertices": 103819,
+    "kept_faces": 191360,
+    "triangles_in_box": 191360
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__imgonly_2dgs_s0.npz",
+   "status": "ok",
+   "completeness_cm": 29.05902862548828,
+   "signed_cm": -29.05902862548828,
+   "rows": 433,
+   "accuracy_cm": 33.15359950065613,
+   "accuracy_points": 2321,
+   "surface_pixels": 139998,
+   "surface_pixel_median_signed_cm": 4.207061546640577,
+   "surface_in_excluded_share": 0.15287361248017828,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.49142002662435946
+  },
+  "GeoGS": {
+   "result": "geogs_ALS_fix1",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 30829215,
+    "faces": 56203065,
+    "kept_vertices": 192576,
+    "kept_faces": 353635,
+    "triangles_in_box": 353635
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__geogs_ALS_fix1.npz",
+   "status": "ok",
+   "completeness_cm": 4.376838356256485,
+   "signed_cm": -4.317229613661766,
+   "rows": 433,
+   "accuracy_cm": 31.903323531150818,
+   "accuracy_points": 5916,
+   "surface_pixels": 140383,
+   "surface_pixel_median_signed_cm": 13.36355387313326,
+   "surface_in_excluded_share": 0.15075899503501136,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.17676021664204825
+  },
+  "결합": {
+   "result": "mvsfuse_ALS",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21072408,
+    "faces": 40314532,
+    "kept_vertices": 199508,
+    "kept_faces": 378199,
+    "triangles_in_box": 378199
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__mvsfuse_ALS.npz",
+   "status": "ok",
+   "completeness_cm": 5.035644397139549,
+   "signed_cm": -4.985440149903297,
+   "rows": 433,
+   "accuracy_cm": 15.892991423606873,
+   "accuracy_points": 3941,
+   "surface_pixels": 146468,
+   "surface_pixel_median_signed_cm": 3.7176684326637557,
+   "surface_in_excluded_share": 0.18264740421115874,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.24560059813629484
+  },
+  "CDGS": {
+   "result": "cdgsnofit_ALS_s0",
+   "mesh": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 63887859,
+    "faces": 91245070,
+    "kept_vertices": 654708,
+    "kept_faces": 944158,
+    "triangles_in_box": 944158
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__cdgsnofit_ALS_s0.npz",
+   "status": "ok",
+   "completeness_cm": 46.84862494468689,
+   "signed_cm": -45.33745348453522,
+   "rows": 433,
+   "accuracy_cm": 56.25895857810974,
+   "accuracy_points": 1835,
+   "surface_pixels": 167046,
+   "surface_pixel_median_signed_cm": 237.75784710726583,
+   "surface_in_excluded_share": 0.12280449696490787,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.8551343071283987
+  },
+  "본 방법": {
+   "result": "prop_ALS_s0",
+   "mesh": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b1_ALS/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 19596134,
+    "faces": 36543161,
+    "kept_vertices": 78001,
+    "kept_faces": 148595,
+    "triangles_in_box": 148595
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz",
+   "status": "ok",
+   "completeness_cm": 16.935959458351135,
+   "signed_cm": -16.935959458351135,
+   "rows": 433,
+   "accuracy_cm": 16.20176061987877,
+   "accuracy_points": 2324,
+   "surface_pixels": 125446,
+   "surface_pixel_median_signed_cm": -4.313484752986076,
+   "surface_in_excluded_share": 0.14645345407585733,
+   "surface_outside_gt_cells_share": 0.0,
+   "grey_share_plate_na": 0.2582562868136477
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_ALS_s1",
+   "completeness_cm": 16.41804128885269,
+   "signed_cm": -16.41804128885269,
+   "rows": 433,
+   "accuracy_cm": 15.197831392288208,
+   "accuracy_points": 1984
+  }
+ },
+ "place_rows": 433,
+ "gt_points_drawn": 54837,
+ "range_m": 0.2,
+ "size": {
+  "width_cm": 16.0,
+  "height_cm": 8.55,
+  "render_panel_cm": 2.73
+ },
+ "drawing": {
+  "plate_ga": "the panel's surface coloured per pixel by the signed distance from the visible surface point to the nearest GT point (sign = the vector to that GT point projected on its oriented normal, + = surface above / outside), times a headlight shading; surface in GT-excluded cells = light grey hatching; no surface = the light blue-grey background",
+  "plate_na": "v3: the GT points coloured by d_g to the panel's surface, grey = no surface near (rays along +- the oriented normal within 2 x range), excluded cells hatched",
+  "light": "판가 colour x (0.6 + 0.4 |n . d|) (headlight)",
+  "hatch": "판가: the panel's own surface in excluded cells or outside the metric's GT cells (SiteGT.in_cells); 판나 and 참값: where the prior's surface lies in excluded cells",
+  "fade": "none (FADE 1.0); the dashed line 3 px outside the place's projected patch squares",
+  "background_plate_ga": "#93a8c2"
+ },
+ "seconds": 1430.4,
+ "made": "2026-10-21 17:03:44 KST",
+ "scientific_verdict": null,
+ "plate": "판가"
+}

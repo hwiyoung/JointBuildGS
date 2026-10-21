@@ -1,0 +1,54 @@
+{
+ "task": "PHD-MAIN-VISCMP-v4",
+ "work": "일 가 V5",
+ "made": "2026-10-21 16:42:00 KST",
+ "box_xy": [
+  126.65389669442527,
+  88.74689200432097,
+  137.40389669442527,
+  95.49689200432097
+ ],
+ "cells_in_box": {
+  "trees": {
+   "name": "나무",
+   "cells": 49,
+   "area_m2": 12.25
+  },
+  "transient": {
+   "name": "일시 물체",
+   "cells": 0,
+   "area_m2": 0.0
+  },
+  "prior_side_trees": {
+   "name": "사전 정보 쪽 나무(항공 LiDAR)",
+   "cells": 160,
+   "area_m2": 40.0
+  },
+  "any": {
+   "name": "모두(참값에서 뺀 칸)",
+   "cells": 49,
+   "area_m2": 12.25
+  }
+ },
+ "excluded_gt_points_in_box": 10682,
+ "points_by_class": {
+  "trees": 10682,
+  "transient": 0,
+  "prior_side_trees": 10219
+ },
+ "point_height_m": {
+  "min": -31.643808364868164,
+  "median": -30.204408645629883,
+  "max": -29.313907623291016
+ },
+ "place_height_m": -29.65367603819847,
+ "photo": "DJI_20241217091247_0146_D",
+ "photo_crop": [
+  665,
+  149,
+  1018,
+  345
+ ],
+ "rule": "cells: exclusion_cells.npz on the 0.5 m survey grid; points: gt_classes.npz excl_gt_points in the box, projected into the photo (green trees, magenta transient, blue prior-side trees)",
+ "scientific_verdict": null
+}
