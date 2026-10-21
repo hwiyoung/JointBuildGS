@@ -1,0 +1,196 @@
+{
+ "made": "2026-10-21 12:17:33 KST",
+ "scientific_verdict": null,
+ "auxiliary": {
+  "case": "B173nb_b10/ALS",
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "piece": 52,
+  "patches": 28,
+  "area_m2": 1.79,
+  "gt_points": 3713,
+  "rows": 177,
+  "multi_layer_patches": 0,
+  "multi_layer_share": 0.0,
+  "cond1": true,
+  "cond2": true,
+  "prior_dist_cm": 2.0,
+  "cond3_5cm": true,
+  "cond3_10cm": true,
+  "camera": {
+   "view": "DJI_20241217091037_0081_D",
+   "visible": 1.0,
+   "hull_px2": 378.4158069234721,
+   "tilt_deg": 0.96
+  },
+  "image_dist_cm": 17.0,
+  "image_signed_cm": 17.0,
+  "depth_mesh": {
+   "rule": "pixel-grid mesh, no triangle over a depth jump > max(0.3 m, 1% of depth)",
+   "pixels_with_depth": 739909,
+   "pixels": 758784,
+   "masked_share": 0.024875326838731393,
+   "vertices": 739909,
+   "triangles": 1445168
+  },
+  "cond4_10cm": true,
+  "cond4_5cm": true,
+  "values": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "patches": 28,
+   "rows": 177,
+   "camera": {
+    "view": "DJI_20241217091037_0081_D",
+    "visible": 1.0,
+    "hull_px2": 378.4158069234721,
+    "tilt_deg": 0.96
+   },
+   "학습 전 사전 정보": {
+    "value_cm": 2.0,
+    "signed_cm": 1.6
+   },
+   "영상 깊이": {
+    "value_cm": 17.0,
+    "signed_cm": 17.0
+   },
+   "2DGS": {
+    "value_cm": 18.2,
+    "signed_cm": 18.2
+   },
+   "GeoGS": {
+    "value_cm": 35.0,
+    "signed_cm": 35.0
+   },
+   "결합": {
+    "value_cm": 2.0,
+    "signed_cm": 1.6
+   },
+   "CDGS": {
+    "value_cm": 11.7,
+    "signed_cm": -6.1
+   },
+   "본 방법": {
+    "value_cm": 15.4,
+    "signed_cm": 15.4
+   },
+   "본 방법 씨앗 1": {
+    "value_cm": 14.7,
+    "signed_cm": 14.6
+   }
+  }
+ },
+ "fill_rule_place": {
+  "unit": "B0_b10/LoD2",
+  "site": "B0_b10",
+  "prior": "LoD2",
+  "patches": 49,
+  "gt_points": 8646,
+  "area_m2": 3.06,
+  "two_layer_share": 0.0,
+  "codes": {
+   "4": 49
+  },
+  "kinds": {
+   "2": 49
+  },
+  "gt_suspect_share_of_evaluated": null,
+  "bbox_xyz": [
+   [
+    117.33750131496959,
+    6.44134339170764,
+    -33.003999999999905
+   ],
+   [
+    118.89696504387332,
+    10.394895323608075,
+    -31.253999999999905
+   ]
+  ],
+  "bbox_uv": [
+   [
+    46.18467187035749,
+    108.05811493709203
+   ],
+   [
+    50.43316345472904,
+    108.17133709713208
+   ]
+  ],
+  "section": {
+   "patch": 72310,
+   "centre": [
+    118.16309975968332,
+    8.5344002968314,
+    -31.753999999999905
+   ],
+   "t": [
+    0.9302475133883368,
+    -0.36693264209499843
+   ],
+   "L": 12.0,
+   "half_width_m": 0.25,
+   "tilt_deg": 90.0,
+   "direction_rule": "벽 같은 패치: 면의 수평 바깥 법선",
+   "ends_xy": [
+    [
+     112.5816146793533,
+     10.735996149401391
+    ],
+    [
+     123.74458484001335,
+     6.332804444261409
+    ]
+   ],
+   "code_v3": 4,
+   "kind": 2,
+   "gt_med": -0.21868330240249634,
+   "tau": 0.546984076499939
+  },
+  "source": "SL/prep/figpos/obs_masked.json 'main'",
+  "values": {
+   "site": "B0_b10",
+   "prior": "LoD2",
+   "patches": 49,
+   "rows": 316,
+   "camera": {
+    "view": "DJI_20241217101337_0021_D",
+    "visible": 1.0,
+    "hull_px2": 1368.4424641049416,
+    "tilt_deg": 36.73
+   },
+   "학습 전 사전 정보": {
+    "value_cm": 21.9,
+    "signed_cm": 21.9
+   },
+   "영상 깊이": {
+    "value_cm": 40.6,
+    "signed_cm": -34.1
+   },
+   "2DGS": {
+    "value_cm": 8.4,
+    "signed_cm": -8.4
+   },
+   "GeoGS": {
+    "value_cm": 26.6,
+    "signed_cm": 26.6
+   },
+   "결합": {
+    "value_cm": 21.9,
+    "signed_cm": 21.9
+   },
+   "CDGS": {
+    "value_cm": 141.1,
+    "signed_cm": 141.1
+   },
+   "본 방법": {
+    "value_cm": 4.3,
+    "signed_cm": -4.3
+   },
+   "본 방법 씨앗 1": {
+    "value_cm": 1.7,
+    "signed_cm": 0.2
+   }
+  }
+ }
+}
