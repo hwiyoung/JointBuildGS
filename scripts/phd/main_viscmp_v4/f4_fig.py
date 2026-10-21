@@ -5,7 +5,7 @@ one perspective camera for every render panel (prep/places.json: V1 = the v3 tra
 config's camera rule), the meshes cut to the place's plan box + the rule's margin. Two plates:
   판가  the panel's surface; per pixel the signed distance from the visible surface point to the nearest GT point (sign = (X - G) . n_G,
         n_G = the GT point's oriented normal, vd_dist.Case.oriented_normals; + = above / outside), bwr +- range, times the v3 headlight
-        (vc_render.shade); surface in GT-excluded cells = light grey hatching; no surface = the blue-grey background
+        (SHADE); surface in GT-excluded cells or outside the metric's GT cells = light grey hatching; no surface = the blue-grey background
   판나  v3: the GT points coloured by d_g to the panel's surface (stored distance files; the image-depth mesh: vd_dist), grey = no surface
         near (rays along +- the oriented normal within 2 x range); hatching where the prior's surface lies in GT-excluded cells
 Values (json, and two lines under each panel): 완전성 = median |d_g| of the place's region rows (the v3 panel value); 정확도 = median d_r
@@ -58,7 +58,37 @@ def cameras(key, P, U, place):
             dict(rule="virtual look-at; fit = the place's patch corners + margin_m in plan (z = the place's own range), 1 / fill - 1 margin; aspect from the fit's projection (0.4-1.3)", aspect=asp))
 
 
-def hatch(img, mask, base=0.84, line=0.6, period=6, width=2):
+SHADE = (0.6, 0.4)     # 판가 colour x (a + b |n . d|) [그리는 법만 바꿈, 첫 그림 뒤 10-21 16:45: v3's 0.12 + 0.78 made near-zero (white) roofs dark grey;
+#                        16:57: 0.45 + 0.55 -> 0.6 + 0.4, first viewers could not tell the shaded white from the background]
+BG_GA = "#93a8c2"      # 판가 'no surface' [결과를 본 뒤 바꿈 10-21 16:57, 첫 보는 이 점검 1·2회: the config's #dfe6ee was read as the white of '참값과 같음']
+
+
+def compose(raw, cmap, norm, bg):
+    """판가 panel from the stored per-pixel record (hi-res): signed distance sd, |n . d| ndl, hit, hatch mask -> the shown rgb."""
+    sd, ndl, hit, hm = raw["sd"], raw["ndl"], raw["hit"], raw["hatch"]
+    rgb = np.tile(bg, sd.shape + (1,)).astype(np.float64)
+    if hit.any():
+        rgb[hit] = cmap(norm(sd[hit]))[:, :3] * (SHADE[0] + SHADE[1] * ndl[hit])[:, None]
+    img = hatch(rgb, hm, period=6 * VF.SS, width=2 * VF.SS)
+    return np.stack([RD.down(img[..., k], VF.SS) for k in range(3)], -1)
+
+
+FADE, FADE_PX, LINE_PX = 1.0, 4, 3    # [그리는 법만 바꿈, 첫 보는 이 점검 1회 뒤 10-21 16:55] the dashed line drawn 3 px outside the place; the fade outside
+#                                       the place (35 % contrast, 16:55) taken out again at 16:57 (FADE = 1: none): first viewers read the faded colours as '참값과 같음'
+
+
+def disk(r):
+    yy, xx = np.mgrid[-r:r + 1, -r:r + 1]
+    return (xx ** 2 + yy ** 2) <= r * r
+
+
+def fade_out(img, inside, base):
+    out = img.copy()
+    out[~inside] = base + FADE * (img[~inside] - base)
+    return out
+
+
+def hatch(img, mask, base=0.94, line=0.5, period=6, width=2):
     out = img.copy()
     yy, xx = np.nonzero(mask)
     out[yy, xx] = base
@@ -141,21 +171,20 @@ def main(key):
         t, n, D = RD.raycast(V, F, cam_hi)
         g, hit = RD.shade(t, n, D)
         X = RD.hit_points(t, cam_hi).reshape(-1, 3); hv = hit.reshape(-1)
-        rgb = np.tile(bg, (len(X), 1)); sd = np.full(len(X), np.nan)
+        sd = np.full(len(X), np.nan)
         if hv.any():
             dd, ii = gtree.query(X[hv], workers=-1)
             Ng = case.oriented_normals(ii)
             s = np.sign(((X[hv] - case.gt.Gb[ii]) * np.nan_to_num(Ng)).sum(1)); s[s == 0] = 1.0
             sd[hv] = dd * s
-            rgb[hv] = cmap(norm(sd[hv]))[:, :3] * g.reshape(-1)[hv][:, None]
         ex = np.zeros(len(X), bool); ex[hv] = exf(X[hv])
         # [그리는 법만 바꿈, 첫 그림(V1) 뒤 10-21 16:22] surfaces outside the distance metric's GT cells (SiteGT.in_cells, the building-surface
         # cells: the metric counts no result point there) were coloured as far from the GT (ground, facades below the cells): hatched as '참값 없음' too
         out_cells = np.zeros(len(X), bool); out_cells[hv] = ~case.gt.in_cells(X[hv])
-        img = hatch(rgb.reshape(cam_hi.H, cam_hi.W, 3), (ex | out_cells).reshape(cam_hi.H, cam_hi.W), period=6 * VF.SS, width=2 * VF.SS)
+        hw = (cam_hi.H, cam_hi.W)
+        ga[m] = dict(sd=sd.reshape(hw).astype(np.float32), ndl=np.abs((n * D).sum(-1)).astype(np.float32), hit=hit, hatch=(ex | out_cells).reshape(hw))
         if m == "학습 전 사전 정보":
-            ex_prior = ex.reshape(cam_hi.H, cam_hi.W)
-        ga[m] = np.stack([RD.down(img[..., k], VF.SS) for k in range(3)], -1)
+            ex_prior = ex.reshape(hw)
         # 판나: the GT points coloured by d_g to this surface (v3)
         nos, has_n = VD.no_surface(V, F, Xs, Ns, 2 * rng)
         nos = np.where(has_n, nos, np.abs(d_scene) > 2 * rng)
@@ -190,9 +219,7 @@ def main(key):
     emask = (RD.down(ex_prior.astype(float), VF.SS) > 0.5) if ex_prior is not None else np.zeros((cam.H, cam.W), bool)
     gt_ga, _ = RD.splat_rgb(cam, Xs, np.tile([0.25, 0.25, 0.25], (len(Xs), 1)), radius=1, bg=tuple(bg))
     gt_na, _ = RD.splat_rgb(cam, Xs, np.tile([0.25, 0.25, 0.25], (len(Xs), 1)), radius=1)
-    ga["참값"] = hatch(gt_ga, emask & (np.abs(gt_ga - bg).sum(-1) < 1e-6))
-    na = {k: hatch(v, emask & (v.sum(-1) > 2.999)) for k, v in na.items()}
-    na["참값"] = hatch(gt_na, emask & (gt_na.sum(-1) > 2.999))
+    na["참값"] = gt_na
     ol = VF.outline(cam, Qp) if not subs else None
     subol = {nm: VF.outline(cam, VF.quads(U, pl)) for nm, pl in subs.items()}
     pv = P["photo"]; pfull = RD.Pinhole(pv, (0, 0, 1400, 1013), 1)
@@ -211,7 +238,7 @@ def main(key):
                  f"둘레 결측의 면은 참값보다 {abs(rs):.0f} cm {'위에 떴다' if rs >= 0 else '아래로 꺼졌다'}")
         tinfo = dict(rule="덧붙임 1 V6", proposed_glass_signed_cm=sg, image_glass_signed_cm=ims, proposed_ring_signed_cm=rs, same_side=same,
                      check_image_glass_cm=-41.7, check_ring_render_depth_m=[0.88, 0.87, 0.90], check_ring_note="photofig fig2: render depth - GT of seed 0, seed 1, 결측 지키기")
-    ctx = dict(ga=ga, na=na, rec=rec, ol=ol, subol=subol, photo_full=photo_full, qo=qo, wide=wide, zoom=zoom, cam_wh=(cam.W, cam.H), title=title, tinfo=tinfo,
+    ctx = dict(ga=ga, na=na, emask=emask, gt_ga=gt_ga, bg=bg, rec=rec, ol=ol, subol=subol, photo_full=photo_full, qo=qo, wide=wide, zoom=zoom, cam_wh=(cam.W, cam.H), title=title, tinfo=tinfo,
                camera=dict(cam.record(), **cinfo), panels=panels, t0=t0, n_rows=int(len(rows_place)), n_pts=int(len(sidx)), site=site, prior=prior, pv=pv,
                box_xy=box_xy, P={k: v for k, v in P.items() if k not in ("place", "glass", "ring_missing")})
     (VC / "work").mkdir(exist_ok=True)
@@ -231,13 +258,26 @@ def draw(key, ctx, blind=False):
     top = ["자리"] + (["확대"] if ctx["zoom"] else []) + ["참값", "학습 전 사전 정보"] + (["영상 깊이"] if "영상 깊이" in ctx["panels"] else [])
     bot = [p for p in ctx["panels"] if p not in ("학습 전 사전 정보", "영상 깊이")]
     ncol = max(len(top), len(bot))
-    IN = 2.54; fw = 16 / IN; lab = 0.13; cbw = 0.62
+    IN = 2.54; fw = 16 / IN; lab = 0.13; cbw = 0.8
     cw = (fw - lab - cbw) / ncol; ch = cw * Hc / Wc
     head = 0.08 if blind else 0.42; valh = 0.0 if blind else 0.2; gap = 0.2 + valh; foot = 0.12 if blind else 0.24
     fh = head + 0.14 + ch + gap + 0.14 + ch + valh + foot + 0.05
     out_size = dict(width_cm=round(fw * IN, 2), height_cm=round(fh * IN, 2), render_panel_cm=round(cw * IN, 2))
+    cmap = cm.get_cmap(W["cmap"]); norm = colors.Normalize(-rng, rng, clip=True); bg0 = ctx["bg"]; bg = np.array(colors.to_rgb(BG_GA)); em = ctx["emask"]
+    GA = {k: compose(v, cmap, norm, bg) for k, v in ctx["ga"].items()}
+    gfree = np.abs(ctx["gt_ga"] - bg0).sum(-1) < 1e-6
+    g2 = ctx["gt_ga"].copy(); g2[gfree] = bg
+    GA["참값"] = hatch(g2, em & gfree)
+    NA = {k: hatch(v, em & (v.sum(-1) > 2.999)) for k, v in ctx["na"].items()}
+    from scipy import ndimage
+    pm = ctx["ol"] if ctx["ol"] is not None else np.any(np.stack(list(ctx["subol"].values())), 0)
+    inside = ndimage.binary_dilation(pm, structure=disk(FADE_PX))
+    GA = {k: fade_out(v, inside, bg) for k, v in GA.items()}
+    NA = {k: fade_out(v, inside, np.ones(3)) for k, v in NA.items()}
+    line_ol = ndimage.binary_dilation(ctx["ol"], structure=disk(LINE_PX)) if ctx["ol"] is not None else None
+    line_sub = {nm: ndimage.binary_dilation(so, structure=disk(LINE_PX)) for nm, so in ctx["subol"].items()}
     for plate in ("판가", "판나"):
-        imgs = ctx["ga"] if plate == "판가" else ctx["na"]
+        imgs = GA if plate == "판가" else NA
         fig = plt.figure(figsize=(fw, fh))
         ys = [fh - head - 0.14 - ch, fh - head - 0.14 - ch - gap - 0.14 - ch]
         for r, row in enumerate((top, bot)):
@@ -258,10 +298,10 @@ def draw(key, ctx, blind=False):
                 if m not in imgs:
                     ax.text(0.5, 0.5, "결과 없음", transform=ax.transAxes, ha="center", va="center"); continue
                 ax.imshow(imgs[m], interpolation="nearest")
-                if ctx["ol"] is not None:
-                    ax.contour(ctx["ol"].astype(float), levels=[0.5], colors=["#000000"], linewidths=0.8, linestyles=[(0, (4, 2))])
-                for nm, so in ctx["subol"].items():
-                    ax.contour(so.astype(float), levels=[0.5], colors=["#000000"], linewidths=0.8, linestyles=[(0, (4, 2)) if nm == "유리" else (0, (1, 1.2))])
+                if line_ol is not None:
+                    ax.contour(line_ol.astype(float), levels=[0.5], colors=["#000000"], linewidths=0.7, linestyles=[(0, (4, 2))])
+                for nm, so in line_sub.items():
+                    ax.contour(so.astype(float), levels=[0.5], colors=["#000000"], linewidths=0.7, linestyles=[(0, (4, 2)) if nm == "유리" else (0, (1, 1.2))])
                     if m == "참값":
                         from scipy import ndimage
                         lb, nlb = ndimage.label(so)
@@ -285,16 +325,18 @@ def draw(key, ctx, blind=False):
         fig.text(0.06 / fw, (ys[0] + ch / 2) / fh, "입력", rotation=90, ha="center", va="center", fontsize=fs + 1)
         fig.text(0.06 / fw, (ys[1] + ch / 2) / fh, "결과", rotation=90, ha="center", va="center", fontsize=fs + 1)
         # colour bar and the legend under it
-        cx0 = (fw - cbw + 0.1) / fw; cb_lo = ys[1] + 0.62; cb_hi = ys[0] + ch - 0.3
+        cx0 = (fw - cbw + 0.3) / fw; cb_lo = ys[1] + 0.72; cb_hi = ys[0] + ch - 0.3
         cax = fig.add_axes([cx0, cb_lo / fh, 0.08 / fw, (cb_hi - cb_lo) / fh])
         cb = fig.colorbar(cm.ScalarMappable(norm=colors.Normalize(-rng, rng), cmap=cm.get_cmap(W["cmap"])), cax=cax, extend="both")
         cb.set_ticks([-rng, 0, rng]); cb.set_ticklabels([f"−{rng:g} m", "0\n" + W["cbar"][1].replace(" ", "\n", 1), f"+{rng:g} m"])
         cb.ax.tick_params(labelsize=fs - 1, length=1.5, pad=1)
-        cax.text(0.5, 1.05, W["cbar"][0].replace("·", "·\n"), transform=cax.transAxes, ha="center", va="bottom", fontsize=fs - 1)
-        cax.text(0.5, -0.05, W["cbar"][2].replace("·", "·\n"), transform=cax.transAxes, ha="center", va="top", fontsize=fs - 1)
-        hl = [Patch(fc="#d6d6d6", ec="#777777", hatch="/////", label="빗금:\n참값 없음")]
-        hl += [Patch(fc=W["background"], ec="#777777", label="청회색 바탕:\n결과 면 없음")] if plate == "판가" else [Patch(fc="#bdbdbd", ec="#777777", label="회색:\n가까이에 면 없음")]
-        fig.legend(handles=hl, loc="lower left", bbox_to_anchor=((fw - cbw + 0.0) / fw, (ys[1] - valh) / fh), fontsize=fs - 1.4, frameon=False, handlelength=1.0,
+        cax.text(0.5, 1.09, W["cbar"][0].replace("·", "·\n"), transform=cax.transAxes, ha="center", va="bottom", fontsize=fs - 1)
+        cax.text(0.5, -0.1, W["cbar"][2].replace("·", "·\n"), transform=cax.transAxes, ha="center", va="top", fontsize=fs - 1)   # [마지막 점검 뒤, 글자 겹침만: -0.05 -> -0.1]
+        hl = ([Line2D([], [], color="#000000", lw=0.7, ls=(0, (4, 2)), label="점선: 볼 곳")] if not ctx["subol"] else
+              [Line2D([], [], color="#000000", lw=0.7, ls=(0, (4, 2)), label="점선: 유리"), Line2D([], [], color="#000000", lw=0.7, ls=(0, (1, 1.2)), label="짧은 점선: 둘레 결측")])
+        hl += [Patch(fc="#f0f0f0", ec="#555555", hatch="/////", label="빗금: 참값 없음")]
+        hl += [Patch(fc=BG_GA, ec="#777777", label="청회색: 결과 면 없음")] if plate == "판가" else [Patch(fc="#bdbdbd", ec="#777777", label="회색: 가까이에 면 없음")]
+        fig.legend(handles=hl, loc="lower left", bbox_to_anchor=((fw - cbw - 0.04) / fw, (ys[1] - valh) / fh), fontsize=fs - 1.7, frameon=False, handlelength=1.0,
                    handleheight=1.0, labelspacing=0.6, borderaxespad=0.1)
         if not blind:
             fig.text(0.5, 1 - 0.07 / fh, ctx["title"], ha="center", va="top", fontsize=fs + 1.3, weight="bold", wrap=True)
@@ -310,8 +352,9 @@ def draw(key, ctx, blind=False):
         out = dict(task="PHD-MAIN-VISCMP-v4", work="일 가", key=key, title=ctx["title"], title_rule=ctx["tinfo"], site=ctx["site"], prior=ctx["prior"],
                    camera=ctx["camera"], render_box_xy=ctx["box_xy"], photo=dict(view=ctx["pv"], wide_shown=ctx["wide"], zoom_shown=ctx["zoom"], places=ctx["P"]),
                    panels=rec, place_rows=ctx["n_rows"], gt_points_drawn=ctx["n_pts"], range_m=rng, size=out_size,
-                   drawing=dict(plate_ga=W["plate_ga"], plate_na=W["plate_na"], light="vc_render.shade: 0.12 + 0.78 |n . d| (v3)",
-                                hatch="판가: the panel's own surface in excluded cells or outside the metric's GT cells (SiteGT.in_cells); 판나 and 참값: where the prior's surface lies in excluded cells"),
+                   drawing=dict(plate_ga=W["plate_ga"], plate_na=W["plate_na"], light=f"판가 colour x ({SHADE[0]} + {SHADE[1]} |n . d|) (headlight)",
+                                hatch="판가: the panel's own surface in excluded cells or outside the metric's GT cells (SiteGT.in_cells); 판나 and 참값: where the prior's surface lies in excluded cells",
+                                fade=f"none (FADE {FADE}); the dashed line {LINE_PX} px outside the place's projected patch squares", background_plate_ga=BG_GA),
                    seconds=round(time.time() - ctx["t0"], 1), made=now(), scientific_verdict=None)
         for plate in ("판가", "판나"):
             jdump(DOCS / "figures" / plate / f"{FILES[key]}.json", dict(out, plate=plate))
