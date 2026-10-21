@@ -129,7 +129,7 @@ def excluded_desc(site):
     X = np.column_stack([(ix.ravel() + 0.5) * 0.5 + 690700.0 - 690953.0, (iy.ravel() + 0.5) * 0.5 + 5335820.0 - 5336071.0, np.zeros(ix.size)])
     inr = DS.in_eval_uv(X, bx)
     d = {}
-    for k, ko in (("trees", "나무"), ("transient", "일시 물체"), ("prior_side_trees", "사전 정보 쪽 나무(항공 LiDAR)"), ("any", "모두(참값에서 뺀 칸)")):
+    for k, ko in (("trees", "나무"), ("transient", "일시 물체"), ("prior_side_trees", "사전 정보 쪽 나무(항공 LiDAR) — 따로 기록된 갈래, 참값에서 빼지 않음"), ("any", "참값에서 뺀 칸 = 나무 ∪ 일시 물체")):
         c = int((e[k].ravel() & inr).sum())
         d[k] = dict(name=ko, cells_in_range=c, area_m2=c * 0.25)
     return d
@@ -141,7 +141,8 @@ def tables():
     order = [("prior", "학습 전 사전 정보"), ("twodgs", "2DGS"), ("geogs", "GeoGS"), ("mvsfuse", "결합"), ("cdgs", "CDGS"), ("method_s0", "본 방법 씨앗 0"), ("method_s1", "본 방법 씨앗 1"), ("method", "본 방법(평균)")]
     S = {s: jl(VC / "work" / f"split_{s}.json") for s in ("B0_b10", "B173nb_b10", "R1rep_b10")}
     data, L = {}, ["# 정밀도를 나누어 셈 — 일 다 [이 발주에서 냄]", "", f"- 만든 때 {now()}. 결과 점 = 새 거리 지표의 결과 표본(1 m²당 400점, 씨앗 0)을 같은 규칙으로 다시 뽑은 것(저장된 표본과 점 수와 d_r이 같음을 확인). 기울기 = 그 점이 놓인 삼각형 법선과 연직축의 각.",
-                   "- 관계: 가까움 d_r ≤ 0.2 m, '1 m 안' 0.2 < d_r ≤ 1.0 m, '1 m 밖' d_r > 1.0 m. 뺀 칸 = 참값에서 뺀 0.5 m 칸(나무, 일시 물체, 사전 정보 쪽 나무)에 든 결과 점의 몫.",
+                   "- 관계: 가까움 d_r ≤ 0.2 m, '1 m 안' 0.2 < d_r ≤ 1.0 m, '1 m 밖' d_r > 1.0 m. 뺀 칸 = 참값에서 뺀 0.5 m 칸('any' = 나무 ∪ 일시 물체; gt_classes.npz의 excl_gt_points와 점마다 같음)에 든 결과 점의 몫. [고침 10-21 16:44: 처음 판은 '사전 정보 쪽 나무'도 든다고 적었으나 'any'에 들지 않는다. 값은 처음부터 'any'로 셈]",
+                   "- 결과 표본은 새 거리 지표의 참값 칸(건물 면 칸, 뺀 칸 밖) 안에서만 뽑히므로, 뺀 칸에 든 몫은 모든 칸에서 0이다.",
                    "- 몫 = 그 곳의 결과 점 가운데 그 기울기 구간의 몫. `*` = 표본 1만 점 미만, '표본 부족' = 100점 미만. 본 방법(평균) = 두 씨앗 값의 평균.", ""]
     for site, prior in cases:
         u = f"{site}/{prior}"; data[u] = {}

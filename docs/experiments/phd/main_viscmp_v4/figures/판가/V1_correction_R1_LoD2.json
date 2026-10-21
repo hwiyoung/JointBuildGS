@@ -293,17 +293,19 @@
  "range_m": 1.0,
  "size": {
   "width_cm": 16.0,
-  "height_cm": 7.54,
-  "render_panel_cm": 2.82
+  "height_cm": 7.43,
+  "render_panel_cm": 2.73
  },
  "drawing": {
   "plate_ga": "the panel's surface coloured per pixel by the signed distance from the visible surface point to the nearest GT point (sign = the vector to that GT point projected on its oriented normal, + = surface above / outside), times a headlight shading; surface in GT-excluded cells = light grey hatching; no surface = the light blue-grey background",
   "plate_na": "v3: the GT points coloured by d_g to the panel's surface, grey = no surface near (rays along +- the oriented normal within 2 x range), excluded cells hatched",
-  "light": "vc_render.shade: 0.12 + 0.78 |n . d| (v3)",
-  "hatch": "판가: the panel's own surface in excluded cells or outside the metric's GT cells (SiteGT.in_cells); 판나 and 참값: where the prior's surface lies in excluded cells"
+  "light": "판가 colour x (0.6 + 0.4 |n . d|) (headlight)",
+  "hatch": "판가: the panel's own surface in excluded cells or outside the metric's GT cells (SiteGT.in_cells); 판나 and 참값: where the prior's surface lies in excluded cells",
+  "fade": "none (FADE 1.0); the dashed line 3 px outside the place's projected patch squares",
+  "background_plate_ga": "#93a8c2"
  },
- "seconds": 844.5,
- "made": "2026-10-21 16:35:45 KST",
+ "seconds": 1424.7,
+ "made": "2026-10-21 17:03:37 KST",
  "scientific_verdict": null,
  "plate": "판가"
 }

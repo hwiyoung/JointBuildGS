@@ -35,7 +35,7 @@ def main():
     t0 = time.time()
     C = jl(CFG); W = C["work_ga"]; P = jl(PLACES)[KEY]
     site, prior = P["site"], P["prior"]; fr = P["frame"]; lc = P["camera"]
-    bg = np.array(colors.to_rgb(W["background"]))
+    bg = np.array(colors.to_rgb("#93a8c2"))   # [결과를 본 뒤 바꿈 10-21 16:57] the 판가 background of f4_fig.BG_GA (first viewers: #dfe6ee read as white)
     c, n = np.asarray(fr["centre"], np.float64), np.asarray(fr["normal"], np.float64)
     r = np.cross(-n, [0.0, 0.0, 1.0]); r /= np.linalg.norm(r)
     sr, hr = lc["frame_s"], lc["frame_h"]; z = np.array([0, 0, 1.0])
