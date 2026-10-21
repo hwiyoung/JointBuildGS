@@ -1,0 +1,223 @@
+{
+ "key": "V4",
+ "title": "결측 자리에서 본 방법은 벽 바깥으로 부풀었고, GeoGS와 결측 지키기는 곧은 벽을 지켰다",
+ "title_rule": null,
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "place_patches": 158,
+ "place_rows": 476,
+ "camera": {
+  "kind": "orthographic (parallel rays along -n)",
+  "centre": [
+   -11.001382235842263,
+   39.914002874097896,
+   -32.08863152030772
+  ],
+  "right": [
+   0.364860894472941,
+   0.9310620428759866,
+   -0.0
+  ],
+  "up": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "toward_viewer": [
+   0.9310620428759866,
+   -0.364860894472941,
+   0.0
+  ],
+  "s_range": [
+   -28.314135882680684,
+   21.435864117319333
+  ],
+  "h_range": [
+   -17.470368479689476,
+   12.529631520307753
+  ],
+  "pixel_m": 0.05,
+  "size": [
+   996,
+   600
+  ]
+ },
+ "left_photo": {
+  "view": "DJI_20241217101317_0011_D",
+  "crop_native": [
+   671,
+   81,
+   765,
+   277
+  ]
+ },
+ "range_m": 1.0,
+ "depth_mesh": null,
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/samepath_LoD2/mesh.ply",
+   "mesh_info": {
+    "vertices": 4795294,
+    "faces": 9561952,
+    "kept_vertices": 4010922,
+    "kept_faces": 7994704
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__samepath_LoD2.npz",
+   "status": "ok",
+   "value_cm": 7.195445150136948,
+   "signed_cm": -7.0954829454422,
+   "rows": 476,
+   "scene_place_median_cm": 7.072393223643303,
+   "scene_place_points": 1482,
+   "scene_points": 448709,
+   "grey_share": 0.22307330586192833,
+   "grey_share_place": 0.0,
+   "recall_0_2": 0.9936974789915967,
+   "recall_rows": 476
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 43206284,
+    "faces": 77299933,
+    "kept_vertices": 18646319,
+    "kept_faces": 33403231
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__imgonly_2dgs_s0.npz",
+   "status": "ok",
+   "value_cm": 30.10105788707733,
+   "signed_cm": -25.955145061016083,
+   "rows": 476,
+   "scene_place_median_cm": 31.71866238117218,
+   "scene_place_points": 1482,
+   "scene_points": 448709,
+   "grey_share": 0.09967930217579768,
+   "grey_share_place": 0.010796221322537112,
+   "recall_0_2": 0.3235294117647059,
+   "recall_rows": 476
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "mesh": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 41000275,
+    "faces": 74310789,
+    "kept_vertices": 19657441,
+    "kept_faces": 35912475
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__trust_LoD2_fix1.npz",
+   "status": "ok",
+   "value_cm": 4.63838167488575,
+   "signed_cm": 1.3346688356250525,
+   "rows": 476,
+   "scene_place_median_cm": 4.4884636998176575,
+   "scene_place_points": 1482,
+   "scene_points": 448709,
+   "grey_share": 0.05650432685771848,
+   "grey_share_place": 0.01282051282051282,
+   "recall_0_2": 0.9810924369747899,
+   "recall_rows": 476
+  },
+  "결합": {
+   "result": "mvsfuse_LoD2",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21460171,
+    "faces": 39631524,
+    "kept_vertices": 10729680,
+    "kept_faces": 19903921
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__mvsfuse_LoD2.npz",
+   "status": "ok",
+   "value_cm": 12.973185628652573,
+   "signed_cm": -2.8642534278333187,
+   "rows": 476,
+   "scene_place_median_cm": 11.828121915459633,
+   "scene_place_points": 1482,
+   "scene_points": 448709,
+   "grey_share": 0.18580193399285505,
+   "grey_share_place": 0.6686909581646424,
+   "recall_0_2": 0.6449579831932774,
+   "recall_rows": 476
+  },
+  "CDGS": {
+   "result": "cdgsnofit_LoD2_s0",
+   "mesh": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 75738788,
+    "faces": 113761924,
+    "kept_vertices": 38102785,
+    "kept_faces": 55701312
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__cdgsnofit_LoD2_s0.npz",
+   "status": "ok",
+   "value_cm": 19.31471824645996,
+   "signed_cm": 10.58470606803894,
+   "rows": 476,
+   "scene_place_median_cm": 19.41070333123207,
+   "scene_place_points": 1482,
+   "scene_points": 448709,
+   "grey_share": 0.6490308863873914,
+   "grey_share_place": 0.5654520917678812,
+   "recall_0_2": 0.5273109243697479,
+   "recall_rows": 476
+  },
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21347005,
+    "faces": 39095778,
+    "kept_vertices": 12031804,
+    "kept_faces": 22221146
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz",
+   "status": "ok",
+   "value_cm": 24.29109737277031,
+   "signed_cm": 23.718106746673584,
+   "rows": 476,
+   "scene_place_median_cm": 23.123347759246826,
+   "scene_place_points": 1482,
+   "scene_points": 448709,
+   "grey_share": 0.04671847455700688,
+   "grey_share_place": 0.005398110661268556,
+   "recall_0_2": 0.4474789915966387,
+   "recall_rows": 476
+  },
+  "결측 지키기": {
+   "result": "fixB_LoD2_s0",
+   "mesh": "/ph/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs/R1rep_b10/fixB_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21482776,
+    "faces": 39333637,
+    "kept_vertices": 11947669,
+    "kept_faces": 22035266
+   },
+   "dist": "/art/phase-payloads/phd/main_fixtest_v1/PHD-MAIN-FIXTEST-v1/dist/R1rep_b10_LoD2__fixB_LoD2_s0.npz",
+   "status": "ok",
+   "value_cm": 6.158836372196674,
+   "signed_cm": -2.9710451140999794,
+   "rows": 476,
+   "scene_place_median_cm": 5.995119549334049,
+   "scene_place_points": 1482,
+   "scene_points": 448709,
+   "grey_share": 0.04683881981417801,
+   "grey_share_place": 0.03913630229419703,
+   "recall_0_2": 0.957983193277311,
+   "recall_rows": 476
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "value_cm": 19.63089257478714,
+   "signed_cm": 19.567818194627762,
+   "rows": 476,
+   "recall_0_2": 0.5042016806722689
+  }
+ },
+ "zoom_px": null,
+ "seconds": 280.0,
+ "made": "2026-10-21 12:13:31 KST",
+ "scientific_verdict": null
+}
