@@ -19,7 +19,7 @@ import pf_geo as G
 import vc_fig as VF
 import vc_render as RD
 import vd_dist as VD
-from vc_common import CFG, DOCS, FT, S0, jdump, jl, log, mesh_path, now, res_name
+from vc_common import CFG, DOCS, FT, S0, VC, jdump, jl, log, mesh_path, now, res_name
 
 
 def setup(key, C):
@@ -32,7 +32,13 @@ def setup(key, C):
     elif key == "V3":
         place = np.asarray(P["patches"], int); view = P["view"]; box = VF.crop_box(view, VF.quads(U, place), 0.05); sc = None
     elif key == "V5":
-        place = np.asarray(P["patches"], int); view = P["view"]; box = VF.crop_box(view, VF.quads(U, place), 1.0); sc = None
+        place = np.asarray(P["patches"], int); view = P["view"]
+        # [그리는 법만 바꿈, V5 첫 그림 뒤] the piece looked small: the box = the piece + 15 %, grown on its short side to 1.6 : 1 (request 3: narrow box, longer focal length)
+        b0 = VF.crop_box(view, VF.quads(U, place), 0.15)
+        w0, h0 = b0[2] - b0[0], b0[3] - b0[1]; cx0, cy0 = 0.5 * (b0[0] + b0[2]), 0.5 * (b0[1] + b0[3])
+        w1, h1 = (max(w0, 1.6 * h0), max(h0, w0 / 1.6))
+        box = [int(max(cx0 - w1 / 2, 0)), int(max(cy0 - h1 / 2, 0)), int(min(cx0 + w1 / 2, 1400)), int(min(cy0 + h1 / 2, 1013))]; sc = None
+        info["crop_rule"] = "piece + 15 %, short side grown to 1.6 : 1"
     else:
         se = R["surf_ext"].astype(int); ev = R["in_eval"].astype(bool); code = R["code_ext_v3"].astype(int)
         place = np.nonzero(ev & (se == P["ext"]) & np.isin(code, [4, 13]))[0]; view = None; box = None; sc = None
@@ -132,10 +138,11 @@ def main(key):
         sg = rec["본 방법"]["signed_cm"]; roof = int(np.bincount(R["kind"][place].astype(int)).argmax()) == 1
         word = ("위에 떴고" if sg >= 0 else "아래로 꺼졌고") if roof else ("바깥으로 나왔고" if sg >= 0 else "안으로 들어갔고")
         same_side = np.sign(sg) == np.sign(rec["영상 깊이"]["signed_cm"])
+        jo = "은" if bm == "결합" else "는"                                  # GeoGS, 2DGS, CDGS end in a vowel sound
         if diff > spread and same_side:
-            title = f"영상이 틀린 이 자리에서 본 방법은 영상 깊이를 따라 {abs(sg):.0f} cm {word}, {bm}은 참값에 더 가까웠다"
+            title = f"영상이 틀린 이 자리에서 본 방법은 영상 깊이를 따라 {abs(sg):.0f} cm {word}, {bm}{jo} 참값에 더 가까웠다"
         elif diff > spread:
-            title = f"영상이 틀린 이 자리에서 본 방법은 {abs(sg):.0f} cm 벗어났고, {bm}은 참값에 더 가까웠다"
+            title = f"영상이 틀린 이 자리에서 본 방법은 {abs(sg):.0f} cm 벗어났고, {bm}{jo} 참값에 더 가까웠다"
         elif abs(diff) <= spread:
             title = f"영상이 틀린 이 자리에서 본 방법은 {bm}만큼 참값에 가까웠다"
         else:
@@ -154,6 +161,22 @@ def main(key):
     else:
         pv, pbox, pcam, photo, pol = view, box, cam, VF.photo(view, box), ol
     plain, _ = RD.splat_rgb(cam, Xs, np.tile([D["gt_plain_grey"]] * 3, (len(Xs), 1)), radius=D["point_radius_px"])
+    ctx = dict(top=top, bot=bot, rec=rec, title=title, tinfo=tinfo, zb=zb, photo=photo, pol=pol, plain=plain, ol=ol, pcam=pcam, cam=cam, panels=panels, rng=rng,
+               n_sidx=int(len(sidx)), n_rows_place=int(len(rows_place)), depth_info=depth_info, n_place=int(len(place)), pv=pv, pbox=pbox, site=site, prior=prior, t0=t0)
+    import pickle
+    (VC / "work").mkdir(exist_ok=True)
+    with open(VC / "work" / f"{key}.pkl", "wb") as fh:
+        pickle.dump(ctx, fh)
+    draw(key, C, ctx)
+
+
+def draw(key, C, ctx):
+    """the figure from the computed panels (python f3_fig.py <key> --replot redraws from /vc/work/<key>.pkl)."""
+    F, D = C["figures"][key], C["draw"]
+    top, bot, rec, title, tinfo, zb = ctx["top"], ctx["bot"], ctx["rec"], ctx["title"], ctx["tinfo"], ctx["zb"]
+    photo, pol, plain, ol, pcam, cam, panels, rng = ctx["photo"], ctx["pol"], ctx["plain"], ctx["ol"], ctx["pcam"], ctx["cam"], ctx["panels"], ctx["rng"]
+    depth_info, pv, pbox, site, prior, t0 = ctx["depth_info"], ctx["pv"], ctx["pbox"], ctx["site"], ctx["prior"], ctx["t0"]
+    norm = colors.Normalize(-rng, rng, clip=True) if rng else None; cmap = cm.get_cmap(D["cmap"])
     # ---- draw
     plt = G.setup_plt()
     from matplotlib.patches import Rectangle
@@ -162,8 +185,11 @@ def main(key):
     pw = D["panel_width_in"]; ph = pw * cam.H / cam.W
     zh = pw * (zb[3] - zb[1]) / max(zb[2] - zb[0], 1) if zb else 0
     hr = [ph if r != "확대" else zh for r in rows]
-    fig = plt.figure(figsize=(nc * pw + 1.6, sum(hr) + 0.55 * nr + 1.3))
-    gs = fig.add_gridspec(nr, nc + 1, width_ratios=[1] * nc + [0.08], height_ratios=hr, wspace=0.04, hspace=0.18, left=0.045, right=0.975, top=0.88, bottom=0.07)
+    # [그리는 법만 바꿈, V3 첫 그림 뒤] margins and gaps in inches (a tall roof made the fractional ones metres of white)
+    FW, FH = nc * pw + 1.6, sum(hr) + 0.62 * (nr - 1) + 2.1
+    fig = plt.figure(figsize=(FW, FH))
+    gs = fig.add_gridspec(nr, nc + 1, width_ratios=[1] * nc + [0.08], height_ratios=hr, wspace=0.04, hspace=0.62 * nr / max(sum(hr), 1e-6), left=0.045, right=0.975,
+                          top=1 - 1.25 / FH, bottom=0.85 / FH)
     for i, rname in enumerate(rows):
         for j, m in enumerate(cols):
             ax = fig.add_subplot(gs[i, j]); ax.set_xticks([]); ax.set_yticks([])
@@ -204,32 +230,37 @@ def main(key):
     # group headers and the separator
     x_in0 = gs[0, 1].get_position(fig).x0; x_in1 = gs[0, len(F["inputs"])].get_position(fig).x1
     x_m0 = gs[0, len(F["inputs"]) + 1].get_position(fig).x0; x_m1 = gs[0, nc - 1].get_position(fig).x1
-    ytop = gs[0, 1].get_position(fig).y1 + 0.045
+    ytop = gs[0, 1].get_position(fig).y1 + 0.32 / FH
     fig.text(0.5 * (x_in0 + x_in1), ytop, "입력", ha="center", fontsize=D["font_size"] + 2)
     fig.text(0.5 * (x_m0 + x_m1), ytop, "결과", ha="center", fontsize=D["font_size"] + 2)
     xs = 0.5 * (x_in1 + x_m0); ybot = gs[nr - 1, 1].get_position(fig).y0
-    fig.add_artist(plt.Line2D([xs, xs], [ybot, ytop + 0.01], color="#666666", lw=0.6, transform=fig.transFigure))
+    fig.add_artist(plt.Line2D([xs, xs], [ybot, ytop + 0.12 / FH], color="#666666", lw=0.6, transform=fig.transFigure))
     if rng is not None:
         cax = fig.add_subplot(gs[nr - 1, nc])
         cb = fig.colorbar(cm.ScalarMappable(norm=norm, cmap=cmap), cax=cax, extend="both")
         cb.set_ticks([-rng, 0, rng]); cb.ax.tick_params(labelsize=D["font_size"])
         cax.text(0.5, 1.08, D["cbar_top"], transform=cax.transAxes, ha="center", va="bottom", fontsize=D["font_size"])
         cax.text(0.5, -0.08, D["cbar_bottom"] + "\n" + D["cbar_note"], transform=cax.transAxes, ha="center", va="top", fontsize=D["font_size"] - 1)
-    fig.suptitle(title, fontsize=D["title_size"], y=0.975)
+    fig.suptitle(title, fontsize=D["title_size"], y=1 - 0.25 / FH)
     nrows = rec[F["methods"][-1]]["rows"] if F["methods"][-1] in rec else 0
-    foot = f"자리 참값 행 {nrows:,} · 칠한 참값 점 {len(sidx):,} · 칸 아래 = 자리 참값 행의 거리(|d_g| 중앙값) · " + D["cdgs_note"]
+    foot = f"자리 참값 행 {nrows:,} · 칠한 참값 점 {ctx['n_sidx']:,} · 칸 아래 = 자리 참값 행의 거리(|d_g| 중앙값) · " + D["cdgs_note"]
     if F.get("foot"):
         foot = F["foot"] + " · " + foot
-    fig.text(0.5, 0.012, foot, ha="center", fontsize=D["font_size"])
+    fig.text(0.5, 0.25 / FH, foot, ha="center", fontsize=D["font_size"])
     for e in ("png", "pdf"):
         fig.savefig(DOCS / "figures" / f"{F['file']}.{e}", dpi=D["dpi"])
     plt.close(fig)
-    out = dict(key=key, title=title, title_rule=tinfo, site=site, prior=prior, place_patches=int(len(place)), place_rows=int(len(rows_place)), camera=cam.record(),
-               left_photo=dict(view=pv, crop_native=pbox), range_m=rng, depth_mesh=depth_info, panels=rec, zoom_px=zb, seconds=round(time.time() - t0, 1), made=now(),
+    out = dict(key=key, title=title, title_rule=tinfo, site=site, prior=prior, place_patches=int(ctx["n_place"]), place_rows=int(ctx["n_rows_place"]), camera=cam.record(),
+               left_photo=dict(view=pv, crop_native=pbox), range_m=rng, depth_mesh=depth_info, panels=rec, zoom_px=zb, seconds=round(time.time() - t0, 1) if t0 else None, made=now(),
                scientific_verdict=None)
     jdump(DOCS / "figures" / f"{F['file']}.json", out)
     log("done", out["seconds"], title)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    if len(sys.argv) > 2 and sys.argv[2] == "--replot":
+        import pickle
+        with open(VC / "work" / f"{sys.argv[1]}.pkl", "rb") as fh:
+            draw(sys.argv[1], jl(CFG), pickle.load(fh))
+    else:
+        main(sys.argv[1])
