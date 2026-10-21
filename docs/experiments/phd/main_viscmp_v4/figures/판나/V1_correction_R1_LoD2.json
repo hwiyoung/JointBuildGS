@@ -1,0 +1,309 @@
+{
+ "task": "PHD-MAIN-VISCMP-v4",
+ "work": "일 가",
+ "key": "V1",
+ "title": "LoD2가 틀린 이 지붕에서 결합은 LoD2의 매끈한 면을 남겼고, 본 방법은 지금 지붕을 따랐다",
+ "title_rule": null,
+ "site": "R1rep_b10",
+ "prior": "LoD2",
+ "camera": {
+  "kind": "pinhole (training camera, COLMAP 1400 x 1013 model)",
+  "view": "DJI_20241217101453_0037_D",
+  "K_native": [
+   922.0550838163813,
+   922.470063461439,
+   702.6193018201524,
+   499.79701601553825
+  ],
+  "R": [
+   [
+    0.23595131650500867,
+    0.9717469154378904,
+    -0.005908348034670219
+   ],
+   [
+    0.3401708568611357,
+    -0.08828967014912159,
+    -0.9362097640418627
+   ],
+   [
+    -0.9102805965096225,
+    0.21889007853693349,
+    -0.351392044782151
+   ]
+  ],
+  "t": [
+   13.903376269516164,
+   -28.2470462392367,
+   102.45556194915575
+  ],
+  "centre": [
+   99.5916120351465,
+   -38.43099140082025,
+   9.639054903960083
+  ],
+  "crop_native": [
+   872,
+   355,
+   1353.0,
+   653.9071428571428
+  ],
+  "scale": 0.8731808731808732,
+  "size": [
+   420,
+   261
+  ],
+  "rule": "v3 camera and crop"
+ },
+ "render_box_xy": [
+  -37.267982032127854,
+  -6.359374635544359,
+  53.975345431690336,
+  70.00686965966548
+ ],
+ "photo": {
+  "view": "DJI_20241217101453_0037_D",
+  "wide_shown": [
+   871.9252873563219,
+   355.0,
+   1353.0747126436781,
+   654.0
+  ],
+  "zoom_shown": null,
+  "places": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "photo": "DJI_20241217101453_0037_D",
+   "crops": {
+    "wide": [
+     872,
+     355,
+     1353,
+     654
+    ],
+    "zoom": null
+   },
+   "camera": {
+    "kind": "v3 camera",
+    "view": "DJI_20241217101453_0037_D",
+    "crop_native": [
+     872,
+     355,
+     1353,
+     654
+    ],
+    "scale": 4
+   },
+   "zoom": {
+    "centre": [
+     18.75,
+     33.75,
+     -26.7257080078125
+    ],
+    "half_m": 1.5,
+    "step_m": 1.6376495361328125,
+    "gt_points_in_cell": 17,
+    "rule": "largest 8-neighbour jump of the 0.5 m cell median GT height, 0.5-5 m"
+   },
+   "depth_view": {
+    "view": "DJI_20241217084545_0096_D",
+    "depth_pixels": 19062,
+    "place_pixels": 19096,
+    "share": 0.9982195224130708
+   },
+   "rule": "v3 photo, camera and crop (request 6.3)"
+  }
+ },
+ "panels": {
+  "학습 전 사전 정보": {
+   "result": "samepath_LoD2",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/samepath_LoD2/mesh.ply",
+   "mesh_info": {
+    "vertices": 4795294,
+    "faces": 9561952,
+    "kept_vertices": 4375183,
+    "kept_faces": 8723505,
+    "triangles_in_box": 8723505
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__samepath_LoD2.npz",
+   "status": "ok",
+   "completeness_cm": 95.03225684165955,
+   "signed_cm": -95.03225684165955,
+   "rows": 16032,
+   "accuracy_cm": 96.59996926784515,
+   "accuracy_points": 66256,
+   "surface_pixels": 354042,
+   "surface_pixel_median_signed_cm": -13.757080743201012,
+   "surface_in_excluded_share": 0.1203021110489716,
+   "surface_outside_gt_cells_share": 0.0332870111455703,
+   "grey_share_plate_na": 0.1589046804125023
+  },
+  "영상 깊이": {
+   "result": "training MVS depth map",
+   "view": "DJI_20241217084545_0096_D",
+   "mesh": {
+    "rule": "pixel-grid mesh, no triangle over a depth jump > max(0.3 m, 1% of depth)",
+    "pixels_with_depth": 672571,
+    "pixels": 758784,
+    "masked_share": 0.1136199498144399,
+    "vertices": 672571,
+    "triangles": 1256033,
+    "cut": "place plan box + margin",
+    "triangles_in_box": 893299
+   },
+   "mark": "이 발주에서 냄",
+   "status": "ok",
+   "completeness_cm": 3.5247351974248886,
+   "signed_cm": -2.780070435255766,
+   "rows": 16032,
+   "accuracy_cm": 3.412058292651912,
+   "accuracy_points": 55652,
+   "surface_pixels": 265243,
+   "surface_pixel_median_signed_cm": 1.2770458318249223,
+   "surface_in_excluded_share": 0.13923081853244007,
+   "surface_outside_gt_cells_share": 0.08347062881961069,
+   "grey_share_plate_na": 0.19391115359412675
+  },
+  "2DGS": {
+   "result": "imgonly_2dgs_s0",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 43206284,
+    "faces": 77299933,
+    "kept_vertices": 29738641,
+    "kept_faces": 53231444,
+    "triangles_in_box": 53231444
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__imgonly_2dgs_s0.npz",
+   "status": "ok",
+   "completeness_cm": 26.396654546260834,
+   "signed_cm": 17.40443781018257,
+   "rows": 16032,
+   "accuracy_cm": 37.841980159282684,
+   "accuracy_points": 121056,
+   "surface_pixels": 407509,
+   "surface_pixel_median_signed_cm": 1197.4409301237404,
+   "surface_in_excluded_share": 0.4072695326974374,
+   "surface_outside_gt_cells_share": 0.3172543428488696,
+   "grey_share_plate_na": 0.06728450826086127
+  },
+  "GeoGS": {
+   "result": "trust_LoD2_fix1",
+   "mesh": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 41000275,
+    "faces": 74310789,
+    "kept_vertices": 29377920,
+    "kept_faces": 53085519,
+    "triangles_in_box": 53085519
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__trust_LoD2_fix1.npz",
+   "status": "ok",
+   "completeness_cm": 9.838842228055,
+   "signed_cm": 0.802946463227272,
+   "rows": 16032,
+   "accuracy_cm": 29.54275906085968,
+   "accuracy_points": 180450,
+   "surface_pixels": 397269,
+   "surface_pixel_median_signed_cm": 429.78345543900724,
+   "surface_in_excluded_share": 0.32906670291414636,
+   "surface_outside_gt_cells_share": 0.23943725787816317,
+   "grey_share_plate_na": 0.06519861693397036
+  },
+  "결합": {
+   "result": "mvsfuse_LoD2",
+   "mesh": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21460171,
+    "faces": 39631524,
+    "kept_vertices": 15718420,
+    "kept_faces": 29002432,
+    "triangles_in_box": 29002432
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__mvsfuse_LoD2.npz",
+   "status": "ok",
+   "completeness_cm": 81.12972676753998,
+   "signed_cm": -78.93336415290833,
+   "rows": 16032,
+   "accuracy_cm": 94.59955096244812,
+   "accuracy_points": 73473,
+   "surface_pixels": 381081,
+   "surface_pixel_median_signed_cm": -3.1320674215373283,
+   "surface_in_excluded_share": 0.2898150262017786,
+   "surface_outside_gt_cells_share": 0.15038535114581938,
+   "grey_share_plate_na": 0.11319002207561694
+  },
+  "CDGS": {
+   "result": "cdgsnofit_LoD2_s0",
+   "mesh": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 75738788,
+    "faces": 113761924,
+    "kept_vertices": 54317759,
+    "kept_faces": 81160157,
+    "triangles_in_box": 81160157
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__cdgsnofit_LoD2_s0.npz",
+   "status": "ok",
+   "completeness_cm": 33.73609185218811,
+   "signed_cm": 5.698028951883316,
+   "rows": 16032,
+   "accuracy_cm": 96.23778462409973,
+   "accuracy_points": 191036,
+   "surface_pixels": 435141,
+   "surface_pixel_median_signed_cm": 2988.2472425451483,
+   "surface_in_excluded_share": 0.4541562390121823,
+   "surface_outside_gt_cells_share": 0.45493299872914755,
+   "grey_share_plate_na": 0.33616091025339245
+  },
+  "본 방법": {
+   "result": "prop_LoD2_s0",
+   "mesh": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+   "mesh_info": {
+    "vertices": 21347005,
+    "faces": 39095778,
+    "kept_vertices": 16071158,
+    "kept_faces": 29286560,
+    "triangles_in_box": 29286560
+   },
+   "dist": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/R1rep_b10_LoD2__prop_LoD2_s0.npz",
+   "status": "ok",
+   "completeness_cm": 6.092852354049683,
+   "signed_cm": -5.480639263987541,
+   "rows": 16032,
+   "accuracy_cm": 21.224164217710495,
+   "accuracy_points": 122882,
+   "surface_pixels": 386634,
+   "surface_pixel_median_signed_cm": -2.2764742111736185,
+   "surface_in_excluded_share": 0.1760450451848518,
+   "surface_outside_gt_cells_share": 0.14837805262858414,
+   "grey_share_plate_na": 0.042175482069127856
+  },
+  "본 방법 씨앗 1": {
+   "result": "prop_LoD2_s1",
+   "completeness_cm": 5.132164992392063,
+   "signed_cm": -3.9769288152456284,
+   "rows": 16032,
+   "accuracy_cm": 11.305305361747742,
+   "accuracy_points": 90619
+  }
+ },
+ "place_rows": 16032,
+ "gt_points_drawn": 2514992,
+ "range_m": 1.0,
+ "size": {
+  "width_cm": 16.0,
+  "height_cm": 7.54,
+  "render_panel_cm": 2.82
+ },
+ "drawing": {
+  "plate_ga": "the panel's surface coloured per pixel by the signed distance from the visible surface point to the nearest GT point (sign = the vector to that GT point projected on its oriented normal, + = surface above / outside), times a headlight shading; surface in GT-excluded cells = light grey hatching; no surface = the light blue-grey background",
+  "plate_na": "v3: the GT points coloured by d_g to the panel's surface, grey = no surface near (rays along +- the oriented normal within 2 x range), excluded cells hatched",
+  "light": "vc_render.shade: 0.12 + 0.78 |n . d| (v3)",
+  "hatch": "판가: the panel's own surface in excluded cells or outside the metric's GT cells (SiteGT.in_cells); 판나 and 참값: where the prior's surface lies in excluded cells"
+ },
+ "seconds": 844.5,
+ "made": "2026-10-21 16:35:45 KST",
+ "scientific_verdict": null,
+ "plate": "판나"
+}
