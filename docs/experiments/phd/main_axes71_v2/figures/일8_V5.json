@@ -1,0 +1,174 @@
+{
+ "task": "PHD-MAIN-AXES71-v2",
+ "work": "일 8 V5",
+ "made": "2026-10-22 23:23:06 KST",
+ "title": "영상이 틀린 이 유리 지붕 조각에서 본 방법의 치우침은 -17 cm, 학습 전 사전 정보 -2 cm, GeoGS -4 cm",
+ "rows": 433,
+ "values": {
+  "prior": {
+   "n": 433,
+   "R_tau": 0.9930715935334873,
+   "mean_cm": 2.8993234843245275,
+   "med_cm": 2.450644224882126,
+   "bias_cm": -2.4096654728055,
+   "peak_cm": -2.599999999999997
+  },
+  "geogs": {
+   "n": 433,
+   "R_tau": 0.976905311778291,
+   "mean_cm": 5.0494743534958655,
+   "med_cm": 4.376838356256485,
+   "bias_cm": -4.317229613661766,
+   "peak_cm": -4.899999999999999
+  },
+  "mvs1": {
+   "n": 433,
+   "R_tau": 0.16628175519630484,
+   "mean_cm": 17.97771912937076,
+   "med_cm": 17.751768231391907,
+   "bias_cm": -17.751768231391907,
+   "peak_cm": -18.2
+  },
+  "twodgs": {
+   "n": 433,
+   "R_tau": 0.15473441108545036,
+   "mean_cm": 28.018503704949282,
+   "med_cm": 29.05902862548828,
+   "bias_cm": -29.05902862548828,
+   "peak_cm": -30.0
+  },
+  "mvsfuse": {
+   "n": 433,
+   "R_tau": 0.9260969976905312,
+   "mean_cm": 6.582793195820123,
+   "med_cm": 5.035644397139549,
+   "bias_cm": -4.985440149903297,
+   "peak_cm": -2.4999999999999964
+  },
+  "cdgs": {
+   "n": 433,
+   "R_tau": 0.14549653579676675,
+   "mean_cm": 45.75235744022525,
+   "med_cm": 46.84862494468689,
+   "bias_cm": -45.33745348453522,
+   "peak_cm": -30.0
+  },
+  "method": {
+   "n": 433,
+   "R_tau": 0.19168591224018475,
+   "mean_cm": 17.14903117774816,
+   "med_cm": 16.935959458351135,
+   "bias_cm": -16.935959458351135,
+   "peak_cm": -16.9
+  }
+ },
+ "method_seed1": {
+  "n": 433,
+  "R_tau": 0.24480369515011546,
+  "mean_cm": 16.818151915527658,
+  "med_cm": 16.41804128885269,
+  "bias_cm": -16.41804128885269
+ },
+ "section": {
+  "centre": [
+   131.9076845732132,
+   92.03477079219985
+  ],
+  "along": [
+   -0.9557398581174066,
+   0.29421305818355464
+  ],
+  "range_m": [
+   -3.920380033427154,
+   3.6663966543242275
+  ],
+  "slab_gt_m": 0.1,
+  "slab_result_m": 0.05,
+  "bin_m": 0.1,
+  "window": {
+   "z_centre": -29.626558303833008,
+   "half_m": 0.6
+  },
+  "outside": {
+   "prior": {
+    "points": 324,
+    "outside_window": 0
+   },
+   "geogs": {
+    "points": 1412,
+    "outside_window": 547
+   },
+   "mvs1": {
+    "points": 288,
+    "outside_window": 0
+   },
+   "twodgs": {
+    "points": 498,
+    "outside_window": 104
+   },
+   "mvsfuse": {
+    "points": 621,
+    "outside_window": 174
+   },
+   "cdgs": {
+    "points": 2687,
+    "outside_window": 2677
+   },
+   "method": {
+    "points": 327,
+    "outside_window": 30
+   },
+   "method_s1": {
+    "points": 353,
+    "outside_window": 42
+   }
+  }
+ },
+ "sources": {
+  "prior": {
+   "result": "samepath_ALS",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__samepath_ALS.npz"
+  },
+  "geogs": {
+   "result": "geogs_ALS_fix1",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__geogs_ALS_fix1.npz"
+  },
+  "mvs1": {
+   "result": "한 장짜리 MVS 깊이 지도 메시 (v4와 같음)",
+   "view": "DJI_20241217091257_0151_D",
+   "mesh": {
+    "rule": "pixel-grid mesh, no triangle over a depth jump > max(0.3 m, 1% of depth)",
+    "pixels_with_depth": 565220,
+    "pixels": 758784,
+    "masked_share": 0.25509762989203777,
+    "vertices": 565220,
+    "triangles": 1058009
+   }
+  },
+  "twodgs": {
+   "result": "imgonly_2dgs_s0",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__imgonly_2dgs_s0.npz"
+  },
+  "mvsfuse": {
+   "result": "mvsfuse_ALS",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__mvsfuse_ALS.npz"
+  },
+  "cdgs": {
+   "result": "cdgsnofit_ALS_s0",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__cdgsnofit_ALS_s0.npz"
+  },
+  "method": {
+   "result": "prop_ALS_s0",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz"
+  },
+  "method_s1": {
+   "result": "prop_ALS_s1",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s1.npz"
+  }
+ },
+ "rule": [
+  "  python a8_figs3.py [V3 V5 V6]   -> /docs/figures/일8_<V>.png|pdf|json, AX/work/figs3_<V>.npz",
+  "Places and region rows: v4's (configs/phd/main_viscmp_v4/places_v4.json; V3 = the fix test's figure-1 rows of face 1, as v4 f4_fig.py).\nResults (config figs3.results): 학습 전 사전 정보, GeoGS, MVS (v4's one-image depth-map mesh: S0/fork_inputs/s61/<site>/maps/mvs/<depth view>.npy,\nvd_dist.depth_mesh, cut to the place box), 2DGS, 결합, CDGS*, 본 방법 (seed 0; seed 1 in json). Signed d_g of the place rows: the stored\nper-point files (vd_dist.Case.stored); the MVS mesh: vd_dist.Case.dg_rows (the distance task's rule). Under each figure: 참값 기준 재현율 R(τ),\n참값 기준 평균 거리, 치우침 (median signed d_g).\nV3, V5: (가) the density of signed d_g, one line per result, x -0.3~+0.3 m, the peak of each line written as a number (cm);\n(나) one vertical section: GT points within +-0.10 m of the section plane and per result the line of the median height of its result points\nwithin +-0.05 m of the plane in 0.10 m bins along the section (results from the result samples, AX/dist/<site>__<res>__xyz.npy; MVS: the\nsample of its mesh). V3: across the face (the minor principal axis of the place's patch centres), V5: across the glass vault (perpendicular to\nthe long axis of v4 V6's glass patches), both through the place centre.\nV6: the band (glass 163 + rim missing 18 patches) seen from above, one small map per result, each patch coloured by the median signed d_g\nof its rows (range +-1 m, diverging), the rim missing patches with a thick outline. Titles: from the place's numbers (v4 title form).\n[이 발주에서 냄] scientific_verdict: null."
+ ],
+ "scientific_verdict": null
+}

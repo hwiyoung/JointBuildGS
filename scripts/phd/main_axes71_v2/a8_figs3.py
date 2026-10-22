@@ -118,15 +118,23 @@ def section_lines(g, c, along):
     og = np.abs((G[:, :2] - c) @ nrm)
     xy = g["centres"][g["place"]][:, :2]
     s_place = (xy - c) @ along
-    lo, hi = s_place.min() - 2.0, s_place.max() + 2.0
+    o_place = np.abs((xy - c) @ nrm)
+    lo, hi = s_place[o_place < 0.3].min() - 0.2, s_place[o_place < 0.3].max() + 0.2      # the place's own extent along the section
     mg = (og < 0.10) & (sg >= lo) & (sg <= hi)
+    zc = float(np.median(G[mg, 2]))                                  # the GT roof height of the section
+    win = 0.6
+    mg &= np.abs(G[:, 2] - zc) <= win
     out["gt"] = np.c_[sg[mg], G[mg, 2]]
+    out["window"] = dict(z_centre=zc, half_m=win)
     bins = np.arange(lo, hi + 0.1, 0.1)
+    out["outside"] = {}
     for k, X in g["smp"].items():
         X = X.astype(np.float64)
         s = (X[:, :2] - c) @ along
         o = np.abs((X[:, :2] - c) @ nrm)
-        m = (o < 0.05) & (s >= lo) & (s <= hi)
+        m0 = (o < 0.05) & (s >= lo) & (s <= hi)
+        m = m0 & (np.abs(X[:, 2] - zc) <= win)
+        out["outside"][k] = dict(points=int(m0.sum()), outside_window=int((m0 & ~m).sum()))
         idx = np.digitize(s[m], bins)
         z = X[m, 2]
         line = [(0.5 * (bins[i - 1] + bins[i]), float(np.median(z[idx == i]))) for i in range(1, len(bins)) if (idx == i).sum() >= 3]
@@ -163,23 +171,23 @@ def fig_dist_section(plt, key, g, title):
             continue
         s = ST["mvs" if k == "mvs1" else k]
         ax.plot(L[k][:, 0], L[k][:, 1], color=s["color"], ls=s["ls"], lw=s["lw"] * 0.7)
-    zz = np.concatenate([L["gt"][:, 1]] + [L[k][:, 1] for k in KEYS if k in L and len(L[k])])
-    zlo, zhi = np.percentile(zz, 1), np.percentile(zz, 99)
-    ax.set_ylim(zlo - 0.5, zhi + 0.5)
+    zc, win = L["window"]["z_centre"], L["window"]["half_m"]
+    ax.set_ylim(zc - win, zc + win)
     ax.set_xlabel("단면을 따라 (m)", fontsize=6); ax.set_ylabel("높이 (m)", fontsize=6)
     ax.tick_params(labelsize=5.5, length=2)
     for sp in ("top", "right"):
         ax.spines[sp].set_visible(False)
-    ax.set_title("(나) 연직 단면: 참값 점과 결과마다 면의 높이", fontsize=6.5)
+    ax.set_title(f"(나) 연직 단면: 참값 지붕 높이 ±{win:g} m 안의 면 높이(0.1 m 칸 중앙값)", fontsize=6.5)
     from matplotlib.lines import Line2D
     hs = [Line2D([0], [0], color=ST["mvs" if k == "mvs1" else k]["color"], ls=ST["mvs" if k == "mvs1" else k]["ls"], lw=1.2, label=ko(k)) for k in KEYS if k in g["d"]]
     hs.append(Line2D([0], [0], marker="o", ls="none", color="k", ms=2, label="참값 점"))
     fig.legend(handles=hs, loc="lower center", ncol=8, fontsize=5.5, frameon=False, bbox_to_anchor=(0.5, 0.0))
-    txt = "   ".join(f"{ko(k)} {100 * v['R_tau']:.1f} · {v['mean_cm']:.1f} · {v['bias_cm']:+.1f}" for k, v in rec.items())
-    fig.text(0.5, 0.075, "R(τ) % · 참값 기준 평균 거리 cm · 치우침 cm — " + txt, ha="center", fontsize=5, wrap=True)
+    items = [f"{ko(k)} {100 * v['R_tau']:.1f} · {v['mean_cm']:.1f} · {v['bias_cm']:+.1f}" for k, v in rec.items()]
+    fig.text(0.5, 0.10, "R(τ) % · 참값 기준 평균 거리 cm · 치우침 cm — " + "   ".join(items[:4]), ha="center", fontsize=5)
+    fig.text(0.5, 0.075, "   ".join(items[4:]), ha="center", fontsize=5)
     fig.suptitle(title, fontsize=7)
     fig.tight_layout(rect=(0, 0.11, 1, 0.94))
-    return fig, rec, dict(centre=c.tolist(), along=along.tolist(), range_m=[lo, hi], slab_gt_m=0.10, slab_result_m=0.05, bin_m=0.10)
+    return fig, rec, dict(centre=c.tolist(), along=along.tolist(), range_m=[lo, hi], slab_gt_m=0.10, slab_result_m=0.05, bin_m=0.10, window=L["window"], outside=L["outside"])
 
 
 def fig_v6(plt, g, title):
@@ -191,31 +199,37 @@ def fig_v6(plt, g, title):
     norm = mcolors.Normalize(-1.0, 1.0, clip=True)
     cmap = plt.get_cmap("RdBu_r")
     ks = [k for k in KEYS if k in g["d"]]
-    fig, axs = plt.subplots(1, len(ks), figsize=(17 / 2.54, 6.2 / 2.54))
-    rec = {}
     U = np.load(MP.S0U.format(site=g["site"], prior=g["prior"]))
+    xy = U["loc_center"][band][:, :2]
+    c0 = xy.mean(0)
+    w, v = np.linalg.eigh(np.cov((xy - c0).T))
+    ax1, ax2 = v[:, 1], v[:, 0]                       # along the band (long axis) and across
+    fig, axs = plt.subplots(len(ks), 1, figsize=(17 / 2.54, 1.75 * len(ks) / 2.54 + 2.2))
+    rec = {}
     for ax, k in zip(axs, ks):
         d = g["d"][k]
-        med = {}
         for p in band:
             m = rp == p
-            med[int(p)] = float(np.median(d[m])) if m.any() else np.nan
-        for p in band:
-            c = U["loc_center"][p]; t1 = U["loc_t1"][p] * 0.125; t2 = U["loc_t2"][p] * 0.125
-            q = np.array([c + t1 + t2, c + t1 - t2, c - t1 - t2, c - t1 + t2])[:, :2]
-            v = med[int(p)]
-            fc = "#dddddd" if not np.isfinite(v) else cmap(norm(v))
-            ax.fill(q[:, 0], q[:, 1], color=fc, lw=1.2 if p in rim else 0.0, ec="k" if p in rim else fc, zorder=3 if p in rim else 2)
-        ax.set_aspect("equal"); ax.set_axis_off()
-        dd = d
-        rec[k] = dict(vals(dd, g["tau"]), glass=vals(d[np.isin(rp, glass)], g["tau"][np.isin(rp, glass)]) if np.isin(rp, glass).any() else None,
-                      rim=vals(d[np.isin(rp, rim)], g["tau"][np.isin(rp, rim)]) if np.isin(rp, rim).any() else None)
-        ax.set_title(ko(k), fontsize=6)
-        ax.text(0.5, -0.04, f"{100 * rec[k]['R_tau']:.1f} · {rec[k]['mean_cm']:.1f} · {rec[k]['bias_cm']:+.1f}", transform=ax.transAxes, ha="center", va="top", fontsize=5)
+            v_ = float(np.median(d[m])) if m.any() else np.nan
+            cc = U["loc_center"][p]; t1 = U["loc_t1"][p] * 0.125; t2 = U["loc_t2"][p] * 0.125
+            q = np.array([cc + t1 + t2, cc + t1 - t2, cc - t1 - t2, cc - t1 + t2])[:, :2] - c0
+            q2 = np.c_[q @ ax1, q @ ax2]
+            fc = "#dddddd" if not np.isfinite(v_) else cmap(norm(v_))
+            ax.fill(q2[:, 0], q2[:, 1], color=fc, lw=0.6 if p in rim else 0.0, ec="k" if p in rim else fc)
+        ax.set_aspect("equal"); ax.set_xticks([]); ax.set_yticks([])
+        for sp in ax.spines.values():
+            sp.set_visible(False)
+        gm, rm = np.isin(rp, glass), np.isin(rp, rim)
+        rec[k] = dict(vals(d, g["tau"]), glass=vals(d[gm], g["tau"][gm]) if gm.any() else None, rim=vals(d[rm], g["tau"][rm]) if rm.any() else None)
+        ax.set_ylabel(ko(k), fontsize=6, rotation=0, ha="right", va="center")
+        r = rec[k]
+        ax.text(1.01, 0.5, f"유리 {r['glass']['bias_cm']:+.0f} · 둘레 {r['rim']['bias_cm']:+.0f} cm\n" if r.get("glass") and r.get("rim") else "", transform=ax.transAxes,
+                fontsize=5, va="center")
     sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
-    cb = fig.colorbar(sm, ax=list(axs), orientation="horizontal", fraction=0.05, pad=0.12, aspect=40)
-    cb.set_label("패치마다 부호 있는 d_g의 중앙값 (m); 굵은 테두리 = 둘레 결측 패치", fontsize=5.5); cb.ax.tick_params(labelsize=5)
-    fig.text(0.5, 0.02, "칸 아래: R(τ) % · 참값 기준 평균 거리 cm · 치우침 cm", ha="center", fontsize=5)
+    fig.subplots_adjust(left=0.13, right=0.86, top=0.90, bottom=0.17, hspace=0.15)
+    cax = fig.add_axes([0.25, 0.07, 0.5, 0.025])
+    cb = fig.colorbar(sm, cax=cax, orientation="horizontal")
+    cb.set_label("패치마다 부호 있는 d_g의 중앙값 (m) · 굵은 테두리 = 둘레 결측 패치 · 오른쪽 = 치우침", fontsize=5.5); cb.ax.tick_params(labelsize=5)
     fig.suptitle(title, fontsize=7)
     return fig, rec
 

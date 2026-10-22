@@ -113,8 +113,8 @@ def main():
             d = D[f"합/{p}"]
             panel(axs[r, 0], d, "axis1_tau", y, labels, f"{PK[p]} · 축 1: 영상 깊이가 맞는 곳")
             panel(axs[r, 1], d, "axis2", y, labels, f"{PK[p]} · 축 2: 사전 정보가 맞는 곳")
-        fig.tight_layout(rect=(0, 0.07, 1, 1))
-        legend(fig)
+        fig.tight_layout(rect=(0, 0.12, 1, 1))
+        legend(fig, ncol=5)
         for e in ("png", "pdf"):
             fig.savefig(DOCS / "figures" / f"{nm}.{e}", dpi=300)
         plt.close(fig)
@@ -126,7 +126,7 @@ def main():
             sk = CFG["site_ko"][s]
             panel(axs[r, 2 * j], d, "axis1_tau", "R_tau", labels, f"{sk} · {PK[p]} · 축 1")
             panel(axs[r, 2 * j + 1], d, "axis2", "R_tau", labels, f"{sk} · {PK[p]} · 축 2")
-    fig.tight_layout(rect=(0, 0.06, 1, 1))
+    fig.tight_layout(rect=(0, 0.075, 1, 1))
     legend(fig, ncol=5)
     for e in ("png", "pdf"):
         fig.savefig(DOCS / "figures" / f"일4_그림B_경우마다.{e}", dpi=300)
@@ -134,7 +134,7 @@ def main():
     fig, axs = plt.subplots(1, 2, figsize=(17 / 2.54, 6.5 / 2.54))
     for j, p in enumerate(("LoD2", "ALS")):
         panel(axs[j], D[f"합/{p}"], "axis1_m", "R_tau", labels, f"{PK[p]} · 축 1 (m, 보정 칸)")
-    fig.tight_layout(rect=(0, 0.14, 1, 1))
+    fig.tight_layout(rect=(0, 0.25, 1, 1))
     legend(fig, ncol=5)
     for e in ("png", "pdf"):
         fig.savefig(DOCS / "figures" / f"일4_그림D_축1_m.{e}", dpi=300)

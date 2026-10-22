@@ -1,0 +1,174 @@
+{
+ "task": "PHD-MAIN-AXES71-v2",
+ "work": "일 8 V3",
+ "made": "2026-10-22 23:22:56 KST",
+ "title": "두 자료가 모두 맞는 이 평평한 지붕에서 거리 분포의 봉우리는 학습 전 사전 정보 -1 cm, 결합 -1 cm, 본 방법 +7 cm, MVS +10 cm",
+ "rows": 32932,
+ "values": {
+  "prior": {
+   "n": 32932,
+   "R_tau": 0.9997570751852302,
+   "mean_cm": 1.8246579258093107,
+   "med_cm": 1.5912240371108055,
+   "bias_cm": -1.3865834102034569,
+   "peak_cm": -1.1999999999999955
+  },
+  "geogs": {
+   "n": 32932,
+   "R_tau": 0.3331410178549739,
+   "mean_cm": 24.62938792810445,
+   "med_cm": 22.61422798037529,
+   "bias_cm": 22.339435666799545,
+   "peak_cm": 30.0
+  },
+  "mvs1": {
+   "n": 32932,
+   "R_tau": 0.9689967205150006,
+   "mean_cm": 9.218616397199185,
+   "med_cm": 9.271983429789543,
+   "bias_cm": 9.271692857146263,
+   "peak_cm": 9.800000000000002
+  },
+  "twodgs": {
+   "n": 32932,
+   "R_tau": 0.37143204178306816,
+   "mean_cm": 22.504102605165734,
+   "med_cm": 19.342349469661713,
+   "bias_cm": 18.565311282873154,
+   "peak_cm": 15.000000000000002
+  },
+  "mvsfuse": {
+   "n": 32932,
+   "R_tau": 0.9997570751852302,
+   "mean_cm": 1.8246675657006155,
+   "med_cm": 1.591237634420395,
+   "bias_cm": -1.386508857831359,
+   "peak_cm": -1.1999999999999955
+  },
+  "cdgs": {
+   "n": 32932,
+   "R_tau": 0.2714684805052836,
+   "mean_cm": 29.809041071633697,
+   "med_cm": 25.722138583660126,
+   "bias_cm": 1.2574327643960714,
+   "peak_cm": 17.700000000000003
+  },
+  "method": {
+   "n": 32932,
+   "R_tau": 0.9973278270375319,
+   "mean_cm": 6.824494194711916,
+   "med_cm": 6.85151107609272,
+   "bias_cm": 6.843098625540733,
+   "peak_cm": 7.000000000000001
+  }
+ },
+ "method_seed1": {
+  "n": 32932,
+  "R_tau": 0.9979655046763027,
+  "mean_cm": 6.901002613298533,
+  "med_cm": 6.901924684643745,
+  "bias_cm": 6.894199922680855
+ },
+ "section": {
+  "centre": [
+   106.57739564105073,
+   121.13409354926065
+  ],
+  "along": [
+   -0.9385032228606056,
+   0.34527047467204114
+  ],
+  "range_m": [
+   -3.800891695328335,
+   3.883498864328866
+  ],
+  "slab_gt_m": 0.1,
+  "slab_result_m": 0.05,
+  "bin_m": 0.1,
+  "window": {
+   "z_centre": -28.584808349609375,
+   "half_m": 0.6
+  },
+  "outside": {
+   "prior": {
+    "points": 326,
+    "outside_window": 0
+   },
+   "geogs": {
+    "points": 356,
+    "outside_window": 31
+   },
+   "mvs1": {
+    "points": 284,
+    "outside_window": 0
+   },
+   "twodgs": {
+    "points": 570,
+    "outside_window": 262
+   },
+   "mvsfuse": {
+    "points": 290,
+    "outside_window": 0
+   },
+   "cdgs": {
+    "points": 2125,
+    "outside_window": 2073
+   },
+   "method": {
+    "points": 302,
+    "outside_window": 0
+   },
+   "method_s1": {
+    "points": 338,
+    "outside_window": 10
+   }
+  }
+ },
+ "sources": {
+  "prior": {
+   "result": "samepath_ALS",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__samepath_ALS.npz"
+  },
+  "geogs": {
+   "result": "geogs_ALS_fix1",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__geogs_ALS_fix1.npz"
+  },
+  "mvs1": {
+   "result": "한 장짜리 MVS 깊이 지도 메시 (v4와 같음)",
+   "view": "DJI_20241217091131_0108_D",
+   "mesh": {
+    "rule": "pixel-grid mesh, no triangle over a depth jump > max(0.3 m, 1% of depth)",
+    "pixels_with_depth": 746012,
+    "pixels": 758784,
+    "masked_share": 0.016832194669365697,
+    "vertices": 746012,
+    "triangles": 1458145
+   }
+  },
+  "twodgs": {
+   "result": "imgonly_2dgs_s0",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__imgonly_2dgs_s0.npz"
+  },
+  "mvsfuse": {
+   "result": "mvsfuse_ALS",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__mvsfuse_ALS.npz"
+  },
+  "cdgs": {
+   "result": "cdgsnofit_ALS_s0",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__cdgsnofit_ALS_s0.npz"
+  },
+  "method": {
+   "result": "prop_ALS_s0",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s0.npz"
+  },
+  "method_s1": {
+   "result": "prop_ALS_s1",
+   "file": "/art/phase-payloads/phd/main_dist71_v1/PHD-MAIN-DIST71-v1/dist/B173nb_b10_ALS__prop_ALS_s1.npz"
+  }
+ },
+ "rule": [
+  "  python a8_figs3.py [V3 V5 V6]   -> /docs/figures/일8_<V>.png|pdf|json, AX/work/figs3_<V>.npz",
+  "Places and region rows: v4's (configs/phd/main_viscmp_v4/places_v4.json; V3 = the fix test's figure-1 rows of face 1, as v4 f4_fig.py).\nResults (config figs3.results): 학습 전 사전 정보, GeoGS, MVS (v4's one-image depth-map mesh: S0/fork_inputs/s61/<site>/maps/mvs/<depth view>.npy,\nvd_dist.depth_mesh, cut to the place box), 2DGS, 결합, CDGS*, 본 방법 (seed 0; seed 1 in json). Signed d_g of the place rows: the stored\nper-point files (vd_dist.Case.stored); the MVS mesh: vd_dist.Case.dg_rows (the distance task's rule). Under each figure: 참값 기준 재현율 R(τ),\n참값 기준 평균 거리, 치우침 (median signed d_g).\nV3, V5: (가) the density of signed d_g, one line per result, x -0.3~+0.3 m, the peak of each line written as a number (cm);\n(나) one vertical section: GT points within +-0.10 m of the section plane and per result the line of the median height of its result points\nwithin +-0.05 m of the plane in 0.10 m bins along the section (results from the result samples, AX/dist/<site>__<res>__xyz.npy; MVS: the\nsample of its mesh). V3: across the face (the minor principal axis of the place's patch centres), V5: across the glass vault (perpendicular to\nthe long axis of v4 V6's glass patches), both through the place centre.\nV6: the band (glass 163 + rim missing 18 patches) seen from above, one small map per result, each patch coloured by the median signed d_g\nof its rows (range +-1 m, diverging), the rim missing patches with a thick outline. Titles: from the place's numbers (v4 title form).\n[이 발주에서 냄] scientific_verdict: null."
+ ],
+ "scientific_verdict": null
+}

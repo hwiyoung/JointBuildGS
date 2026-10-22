@@ -249,9 +249,11 @@ def tables(J, vals, rd, s3, D3):
         if not js:
             continue
         (DOCS / "tables" / sub).mkdir(parents=True, exist_ok=True)
-        L = [f"## {bundle}", ""]
+        L = [f"## {bundle}", ""] + (["- 비교 상대: 지역 경우(B0, B173 주변, R1)는 1단계 본 방법 두 씨앗의 평균, 3단계 조건(B0a…, B0n…)은 그 조건의 본 방법 씨앗 0.", ""]
+                                    if any(j["cond"] for j in js) else [])
         for k in ["all"] + KEYS:
-            L += [f"**{KEY_KO[k]}** — 참값 기준 재현율 R(τ) (%) · 참값 기준 평균 거리 (cm)", "", "| 학습 | 경우 | 이 학습 | 같은 경우 본 방법 (두 씨앗 평균) |", "|---|---|---|---|"]
+            refh = "같은 경우·조건의 본 방법" if any(j["cond"] for j in js) else "같은 경우 본 방법 (두 씨앗 평균)"
+            L += [f"**{KEY_KO[k]}** — 참값 기준 재현율 R(τ) (%) · 참값 기준 평균 거리 (cm)", "", f"| 학습 | 경우 | 이 학습 | {refh} |", "|---|---|---|---|"]
             for j in js:
                 u = f"{j['site']}/{j['prior']}/{j['result']}"
                 b = vals.get(u, {}).get(k, {"status": "—"})

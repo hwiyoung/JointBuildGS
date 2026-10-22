@@ -135,9 +135,9 @@ def pack(sections):
     return names
 
 
-def safe(f, *a):
+def safe(f, *a, **kw):
     try:
-        return f(*a)
+        return f(*a, **kw)
     except (FileNotFoundError, TypeError, KeyError) as e:
         print("skip", getattr(f, "__name__", f), a[:1], type(e).__name__, e)
         return []

@@ -145,7 +145,7 @@ def fig_section(S):
     plt.close(fig)
     jdump(f"{stem}.json", dict(task="PHD-MAIN-AXES71-v2", work="일 8 단면", made=now(), z0=S["z0"], window=[S["lo"].tolist(), S["hi"].tolist()], slab_m=0.05,
                                wall_patches=S["wall_patches"], wall_area_m2=S["wall_area"], gt_points=int(len(S["gt"])), values=vals,
-                               rule=__doc__.split("\n\n")[1].split("(3)")[1], scientific_verdict=None))
+                               rule=__doc__, scientific_verdict=None))
     return vals
 
 

@@ -174,16 +174,38 @@ def map_case(plt, Patch, site, prior, C, p, st, J, mm, right):
     T, _ = MP.top_labels(P_, L_, lo, hi, px)
     top = MP.paint(T, pal, hat)
     fig = plt.figure(figsize=(17.0 / 2.54, 11.0 / 2.54))
-    ax = fig.add_axes([0.01, 0.17, 0.50, 0.76]); ax.imshow(top, interpolation="nearest"); ax.set_axis_off()
+    ax = fig.add_axes([0.01, 0.55, 0.30, 0.38]); ax.imshow(top, interpolation="nearest"); ax.set_axis_off()
     MP.scalebar(ax, px, top.shape[1], top.shape[0], 10.0 if (hi[0] - lo[0]) < 120 else 20.0); MP.north(ax, top.shape[1], top.shape[0])
-    ax.set_title("위에서", fontsize=7)
+    ax.set_title("위에서 · 평가 범위 전체", fontsize=6.5)
     cams = []
-    for i, az in enumerate(CFG["maps"]["oblique"]["azimuth_deg"]):
-        cam = MP.camera(np.percentile(P_, 0.5, 0), np.percentile(P_, 99.5, 0), az, CFG["maps"]["oblique"]["tilt_deg"])
-        O, _ = MP.oblique_labels(cam, P_, L_, ss=1)
-        a2 = fig.add_axes([0.52, 0.565 - 0.385 * i, 0.47, 0.37]); a2.imshow(MP.paint(O, pal, hat), interpolation="nearest"); a2.set_axis_off()
-        a2.set_title(f"비스듬히 · 방위 {az:g}°", fontsize=7)
-        cams.append(dict(azimuth=az, camera=cam.record()))
+    zoom = None
+    if mm.any():
+        cz = cen[mm]
+        zlo, zhi = np.percentile(cz, 5, 0) - 1.5, np.percentile(cz, 95, 0) + 1.5     # the bulk of the missing patches (a far single patch left out)
+        U_ = np.load(MP.S0U.format(site=site, prior=prior))
+        nn = np.cross(U_["loc_t1"][mm], U_["loc_t2"][mm]); nn /= np.maximum(np.linalg.norm(nn, axis=1, keepdims=True), 1e-12)
+        wall = np.abs(nn[:, 2]) < 0.5
+        az = CFG["maps"]["oblique"]["azimuth_deg"][0]
+        if wall.mean() > 0.5:          # mostly walls: look at the wall face (horizontal normal, sign toward the range centre's outside)
+            h = nn[wall][:, :2]
+            out_ = cz[wall][:, :2] - cen[ev][:, :2].mean(0)
+            h = h * np.where((h * out_).sum(1) < 0, -1.0, 1.0)[:, None]
+            hm = h.mean(0)
+            az = float(np.degrees(np.arctan2(hm[0], hm[1])) % 360)
+        ax.add_patch(__import__("matplotlib.patches", fromlist=["Rectangle"]).Rectangle(((zlo[0] - lo[0]) / px, (hi[1] - zhi[1]) / px), (zhi[0] - zlo[0]) / px,
+                     (zhi[1] - zlo[1]) / px, fill=False, ec="k", lw=0.8))
+        inb = np.all((P_[:, :2] >= zlo[:2]) & (P_[:, :2] <= zhi[:2]), 1)
+        pz = max(0.02, float(max(zhi[0] - zlo[0], zhi[1] - zlo[1])) / 900.0)
+        Tz, _ = MP.top_labels(P_[inb], L_[inb], np.r_[zlo[:2], P_[inb, 2].min()], np.r_[zhi[:2], P_[inb, 2].max()], pz)
+        a1 = fig.add_axes([0.32, 0.17, 0.33, 0.76]); a1.imshow(MP.paint(Tz, pal, hat), interpolation="nearest"); a1.set_axis_off()
+        MP.scalebar(a1, pz, Tz.shape[1], Tz.shape[0], 2.0 if (zhi[0] - zlo[0]) < 30 else 5.0)
+        a1.set_title("위에서 · 결측 패치 둘레 확대", fontsize=6.5)
+        cam = MP.camera(P_[inb].min(0), P_[inb].max(0), az, CFG["maps"]["oblique"]["tilt_deg"])
+        O, _ = MP.oblique_labels(cam, P_[inb], L_[inb], ss=1)
+        a2 = fig.add_axes([0.66, 0.17, 0.33, 0.76]); a2.imshow(MP.paint(O, pal, hat), interpolation="nearest"); a2.set_axis_off()
+        a2.set_title(f"비스듬히 · 확대 · 방위 {az:.0f}°", fontsize=6.5)
+        cams.append(dict(azimuth=az, azimuth_rule="결측 패치 대부분이 벽이면 그 벽을 마주 보는 방위(바깥 법선의 수평 평균), 아니면 225°", camera=cam.record(), zoom_box=[zlo.tolist(), zhi.tolist()], zoom_px_m=pz))
+        zoom = [zlo.tolist(), zhi.tolist()]
     hs = [Patch(facecolor=MC[nm], edgecolor="#777777", lw=0.4, label=nm) for nm in PATHS]
     hs += [Patch(facecolor="#ffffff", edgecolor="k", hatch="////", lw=0.4, label="빗금: 사전 정보 틀림(코드 13)"),
            Patch(facecolor=CFG["missing"]["support_colours"]["일치"], edgecolor="#777777", lw=0.4, label="둘레 지지 · 일치"),
@@ -196,7 +218,7 @@ def map_case(plt, Patch, site, prior, C, p, st, J, mm, right):
     plt.close(fig)
     jdump(f"{stem}.json", dict(task="PHD-MAIN-AXES71-v2", work="일 7 결측 지도", case=f"{site}/{prior}", made=now(), missing=int(mm.sum()),
                                paths={nm: dict(right=int((mm & (p == k) & right).sum()), wrong=int((mm & (p == k) & ~right).sum())) for k, nm in enumerate(PATHS)},
-                               support_near=dict(agree=int((lab == 1).sum()), conflict=int((lab == 2).sum())), cameras=cams, scientific_verdict=None))
+                               support_near=dict(agree=int((lab == 1).sum()), conflict=int((lab == 2).sum())), cameras=cams, zoom=zoom, scientific_verdict=None))
 
 
 if __name__ == "__main__":
