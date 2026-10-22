@@ -1,0 +1,613 @@
+{
+ "task_id": "PHD-MAIN-AXES71-v2",
+ "request": "docs/experiments/phd/main_axes71_v2/본실험_두축평가_발주문_v2.md",
+ "scientific_verdict": null,
+ "lock_note": "첫 셈 전에 잠금(발주 2절 7). 결과를 본 뒤 바꾼 것은 amendments에 시각과 까닭을 적는다.",
+ "cases": [
+  [
+   "B0_b10",
+   "LoD2"
+  ],
+  [
+   "B0_b10",
+   "ALS"
+  ],
+  [
+   "B173nb_b10",
+   "LoD2"
+  ],
+  [
+   "B173nb_b10",
+   "ALS"
+  ],
+  [
+   "R1rep_b10",
+   "LoD2"
+  ],
+  [
+   "R1rep_b10",
+   "ALS"
+  ]
+ ],
+ "site_ko": {
+  "B0_b10": "B0",
+  "B173nb_b10": "B173 주변",
+  "R1rep_b10": "R1"
+ },
+ "prior_ko": {
+  "LoD2": "LoD2",
+  "ALS": "항공 LiDAR"
+ },
+ "results": {
+  "order": [
+   "prior",
+   "geogs",
+   "mvs",
+   "twodgs",
+   "mvsfuse",
+   "cdgs",
+   "method"
+  ],
+  "groups": [
+   [
+    "사전 정보 쪽",
+    [
+     "prior",
+     "geogs"
+    ]
+   ],
+   [
+    "영상 쪽",
+    [
+     "mvs",
+     "twodgs"
+    ]
+   ],
+   [
+    "곳마다 정함",
+    [
+     "mvsfuse",
+     "cdgs",
+     "method"
+    ]
+   ]
+  ],
+  "extra_item7": [
+   "fixB"
+  ],
+  "names": {
+   "prior": "samepath_{p}",
+   "geogs": {
+    "LoD2": "trust_LoD2_fix1",
+    "ALS": "geogs_ALS_fix1"
+   },
+   "mvs": "mvs_a",
+   "mvs_b": "mvs_b",
+   "twodgs": "imgonly_2dgs_s0",
+   "mvsfuse": "mvsfuse_{p}",
+   "cdgs": "cdgsnofit_{p}_s0",
+   "method": [
+    "prop_{p}_s0",
+    "prop_{p}_s1"
+   ],
+   "fixB": "fixB_{p}_s0"
+  },
+  "ko": {
+   "prior": "학습 전 사전 정보",
+   "geogs": "GeoGS",
+   "mvs": "MVS",
+   "twodgs": "2DGS",
+   "mvsfuse": "결합",
+   "cdgs": "CDGS*",
+   "method": "본 방법",
+   "fixB": "결측 지키기"
+  },
+  "cdgs_note": "CDGS* = 시점별 크기 맞추기를 생략한 변형 (cdgsnofit)",
+  "inputs": [
+   "prior",
+   "mvs"
+  ],
+  "trains": [
+   "geogs",
+   "twodgs",
+   "cdgs"
+  ],
+  "no_train": [
+   "prior",
+   "mvs",
+   "mvsfuse"
+  ],
+  "style": {
+   "prior": {
+    "color": "#3a3a3a",
+    "ls": "--",
+    "lw": 1.3,
+    "marker": "s"
+   },
+   "geogs": {
+    "color": "#2b6cb0",
+    "ls": "-",
+    "lw": 1.4,
+    "marker": "o"
+   },
+   "mvs": {
+    "color": "#b5b5b5",
+    "ls": "--",
+    "lw": 1.6,
+    "marker": "D"
+   },
+   "twodgs": {
+    "color": "#24a37a",
+    "ls": "-",
+    "lw": 1.4,
+    "marker": "^"
+   },
+   "mvsfuse": {
+    "color": "#c77d1a",
+    "ls": "-",
+    "lw": 1.4,
+    "marker": "v"
+   },
+   "cdgs": {
+    "color": "#9b59b6",
+    "ls": "-",
+    "lw": 1.4,
+    "marker": "P"
+   },
+   "method": {
+    "color": "#c0392b",
+    "ls": "-",
+    "lw": 2.2,
+    "marker": "o"
+   },
+   "fixB": {
+    "color": "#8c564b",
+    "ls": "-.",
+    "lw": 1.4,
+    "marker": "x"
+   }
+  }
+ },
+ "cells": {
+  "order": [
+   "c_refine",
+   "c_corr14",
+   "c_corr4p",
+   "c_keep_mask",
+   "c_keep_in",
+   "c_limit",
+   "c_double",
+   "c_inh_miss",
+   "c_miss_wrong",
+   "c_inh_invis",
+   "c_invis_wrong",
+   "c_nogt"
+  ],
+  "ko": {
+   "c_refine": "다듬기",
+   "c_corr14": "보정 · 1~4τ",
+   "c_corr4p": "보정 · 4τ 넘음",
+   "c_keep_mask": "보존 · 거름",
+   "c_keep_in": "보존 · 문턱 안",
+   "c_limit": "한계",
+   "c_double": "이중 오류",
+   "c_inh_miss": "상속 · 결측",
+   "c_miss_wrong": "결측 · 사전 정보 틀림",
+   "c_inh_invis": "상속 · 비가시",
+   "c_invis_wrong": "비가시 · 사전 정보 틀림",
+   "c_nogt": "참값 없음"
+  },
+  "intent": {
+   "c_refine": "다듬기",
+   "c_corr14": "보정",
+   "c_corr4p": "보정",
+   "c_keep_mask": "보존",
+   "c_keep_in": "보존",
+   "c_limit": null,
+   "c_double": null,
+   "c_inh_miss": "상속",
+   "c_miss_wrong": null,
+   "c_inh_invis": "상속",
+   "c_invis_wrong": null,
+   "c_nogt": null
+  },
+  "sums": {
+   "s_corr": [
+    "보정 합",
+    [
+     "c_corr14",
+     "c_corr4p"
+    ]
+   ],
+   "s_keep": [
+    "보존 합",
+    [
+     "c_keep_mask",
+     "c_keep_in"
+    ]
+   ],
+   "s_inh": [
+    "상속 합",
+    [
+     "c_inh_miss",
+     "c_inh_invis"
+    ]
+   ]
+  },
+  "virtual": [
+   "c_inh_invis",
+   "c_invis_wrong"
+  ],
+  "rule": [
+   "평가 범위(영역 파일 in_eval) 안의 패치만 칸에 든다. 패치 하나는 아래 차례에서 처음 맞는 칸 하나에만 든다.",
+   "1 참값 없음: 영역 파일 코드 0(GT missing) 또는 대응한 참값 행이 하나도 없는 패치(새 거리 지표 has_gt = S1/defs/<지역>/rows_<사전 정보>.npz 모든 행의 patch), 코드와 상관없이",
+   "2 한계: 코드 3 가운데 premise_violation(충돌 문턱 넘음; LoD2 1τ, 항공 LiDAR 2τ) — 거른 영상 오류인 패치도 여기(빈칸 채우기의 '영상이 틀린 곳' 합집합 규칙 (다): obs에서 코드 3 전제 위배를 뺌, scripts/phd/main_fill_v1/obs_masked/om.py:668-669, 938-940)",
+   "3 보존 · 거름: 거른 영상 오류(빈칸 채우기 work/obs_masked/region_<지역>_<사전 정보>.npz의 obs) — 코드 2·3(문턱 안)·4",
+   "4 보존 · 문턱 안: 코드 3 가운데 obs_within_threshold",
+   "5 다듬기: 코드 2",
+   "6 보정 · 1~4τ / 보정 · 4τ 넘음: 코드 11을 |gt_med| ÷ τ로 나눔(1 이상 4 미만 / 4 이상). 1 미만인 코드 11 패치가 있으면 보정 · 1~4τ에 두고 그 수를 적는다",
+   "7 이중 오류: 코드 12, 8 상속 · 결측: 코드 4, 9 결측 · 사전 정보 틀림: 코드 13, 10 상속 · 비가시: 코드 5, 11 비가시 · 사전 정보 틀림: 코드 14"
+  ],
+  "rule_why": "발주 5.1은 거른 영상 오류와 코드 2, 거른 영상 오류와 코드 3 문턱 넘음의 겹침에 차례를 정하지 않았다. 앞 작업의 정의(빈칸 채우기 설정 바꿈 #2: '영상이 틀린 곳' = obs에서 코드 3 전제 위배 겹침을 뺀 것 ∪ 코드 3 문턱 안)를 지키는 차례로 정했다. 그러면 보존 합의 참값 행이 v4의 '영상이 틀린 곳'과 같고, 다듬기는 v4의 '두 자료가 모두 맞는 곳'에서 거른 영상 오류인 코드 2 패치만큼 작다(그 수는 일 2 표에 적는다).",
+  "v4_map": {
+   "사전 정보가 틀린 곳": [
+    "c_corr14",
+    "c_corr4p"
+   ],
+   "조금 틀린 곳": [
+    "c_corr14"
+   ],
+   "영상이 틀린 곳": [
+    "c_keep_mask",
+    "c_keep_in"
+   ],
+   "두 자료가 모두 맞는 곳": [
+    "c_refine"
+   ],
+   "결측 영역": [
+    "c_inh_miss",
+    "c_keep_mask&code4"
+   ],
+   "비가시 영역": [
+    "c_inh_invis"
+   ]
+  },
+  "colours": {
+   "c_refine": "#d5ecc9",
+   "c_corr14": "#f3a29b",
+   "c_corr4p": "#c62f26",
+   "c_keep_mask": "#1f5fa8",
+   "c_keep_in": "#97c1ea",
+   "c_inh_miss": "#6a3d9a",
+   "c_inh_invis": "#c7b0e0",
+   "c_double": "#6e6e6e",
+   "c_miss_wrong": "#b4b4b4",
+   "c_invis_wrong": "#b4b4b4",
+   "c_limit": "#f2d16b",
+   "c_nogt": "#ffffff"
+  },
+  "hatch": {
+   "c_limit": {
+    "bg": "#f2d16b",
+    "line": "#7a5c00"
+   },
+   "c_nogt": {
+    "bg": "#ffffff",
+    "line": "#9a9a9a"
+   }
+  },
+  "small_clump_alpha": 0.35
+ },
+ "metrics": {
+  "gt_side": "d_g: 참값 점(영역 행 = rows_<사전 정보>.npz의 솎은 행; 전체 = 장면 참값 점)에서 결과 메시의 가장 가까운 삼각형까지(새 거리 지표 d2_dist 그대로)",
+  "res_side_default": "셈 마",
+  "counts": {
+   "A": {
+    "ko": "셈 가",
+    "range": "그 칸의 결과 점 모두",
+    "dist": "d_r"
+   },
+   "B": {
+    "ko": "셈 나",
+    "range": "대응 참값 행이 없는 패치의 결과 점을 뺌(q_has_gt)",
+    "dist": "d_r"
+   },
+   "C": {
+    "ko": "셈 다",
+    "range": "가장 가까운 패치의 참값 점 기대 간격 1/√밀도 ≤ τ",
+    "dist": "d_r"
+   },
+   "D": {
+    "ko": "셈 라",
+    "range": "같은 꼴, 기대 간격 ≤ τ/2",
+    "dist": "d_r"
+   },
+   "E": {
+    "ko": "셈 마",
+    "range": "옆 거리 ≤ 0.5 m",
+    "dist": "법선 방향 거리"
+   },
+   "F": {
+    "ko": "셈 바",
+    "range": "옆 거리 ≤ 1.0 m",
+    "dist": "법선 방향 거리"
+   }
+  },
+  "gt_normal": {
+   "radius_m": 0.5,
+   "min_n": 10,
+   "fallback": "이웃이 10개 미만이면 가장 가까운 10개(자기 포함)",
+   "per_source": true,
+   "note": "참값 출처(드론 LiDAR, B0는 주 참값도)마다 'use' 점으로 공분산을 맞춰 가장 작은 고윳값의 방향 = 법선, √가장 작은 고윳값 = 평면 잔차(RMS)"
+  },
+  "ref_gt": {
+   "all": "장면 참값 점(건물 표면 칸의 드론 LiDAR, 새 거리 지표의 d_r과 같음)",
+   "B0_places": "건물 표면 칸의 드론 LiDAR + 주 참값('use', 칸 안) — 새 거리 지표 d2b_b0gt와 같음",
+   "other_places": "장면 참값 점"
+  },
+  "density": "패치마다 대응한 참값 행 수(rows_<사전 정보>.npz 모든 행, 솎기 전) ÷ 패치 넓이(영역 파일 area), 기대 간격 = 1/√밀도",
+  "thresholds": {
+   "share_m": [
+    0.2,
+    0.5
+   ],
+   "outlier_tau_mult": 4.0,
+   "far_m": 1.0,
+   "cap_m": 1.0,
+   "quantiles": [
+    0.5,
+    0.9,
+    0.95
+   ],
+   "far_patch_m": 1.0
+  },
+  "samples": {
+   "low": 100,
+   "star": 10000
+  },
+  "method_value": "두 씨앗의 평균(값마다 두 씨앗 값의 평균)",
+  "criterion": "새 거리 지표 일 4 규칙: max(모은 흔들림 폭, 그 경우의 흔들림 폭, 비율이면 300/표본 %p); 모은 흔들림 폭 = 2.8 × √(1만 점 이상인 경우의 (s0−s1)²/2 평균)"
+ },
+ "axes": {
+  "axis1_tau": {
+   "cells": "다듬기(0~1) + 보정 두 칸",
+   "value": "|gt_med| ÷ τ (패치의 사전 정보 어긋남)",
+   "edges": [
+    0,
+    1,
+    1.5,
+    2,
+    4,
+    8,
+    "inf"
+   ]
+  },
+  "axis1_m": {
+   "cells": "보정 두 칸",
+   "value": "|gt_med| (m)",
+   "edges": [
+    0,
+    0.5,
+    1,
+    2,
+    4,
+    "inf"
+   ]
+  },
+  "axis2": {
+   "cells": "다듬기(0~1) + 보존 · 문턱 안('지킴') + 한계('놓음') + 보존 · 거름(셋째 선, 거르기 전 어긋남)",
+   "value": "|영상 깊이 − 참값| ÷ τ: 코드 3을 정할 때 쓴 값 = np.where(v1_kept, mvs_minus_prior − gt_med, mvs_minus_gt_at_gt)(지붕꼴 연직, LoD2 벽꼴 면 법선; 빈칸 채우기 obs_masked 파일 v_geo와 같음, 일 1 (나)). 값이 없는 패치는 구간에 넣지 않고 그 수를 적는다",
+   "edges": [
+    0,
+    1,
+    1.5,
+    2,
+    4,
+    "inf"
+   ],
+   "prefilter": "보존 · 거름의 셋째 선: |v_photo| ÷ τ (빈칸 채우기 obs_masked 파일, 거르기 전 광도 깊이 − 참값, m; 일 1 (라))"
+  },
+  "plot_low": 100,
+  "plot_star": 10000
+ },
+ "cdf": {
+  "cells": [
+   "s_corr",
+   "c_corr14",
+   "s_keep",
+   "c_refine",
+   "c_inh_miss",
+   "c_inh_invis",
+   "c_limit"
+  ],
+  "x_max_tau": 8,
+  "n_grid": 401
+ },
+ "clumps": {
+  "link_m": 0.36,
+  "link_rule": "같은 칸의 패치를 중심 거리 ≤ link_m로 이음(합집합). 이웃 패치 중심 간격의 중앙값이 0.18 m보다 작거나 0.36 m보다 크면 간격 × 1.5로 이음",
+  "size_thresholds_m2": [
+   1.0,
+   2.5,
+   10.0
+  ],
+  "object_min_m2": 2.5,
+  "object_big_m2": 10.0,
+  "hit_share": 0.5,
+  "size_bins_m2": [
+   0,
+   1.0,
+   2.5,
+   10.0,
+   "inf"
+  ]
+ },
+ "boundary": {
+  "edges_m": [
+   0,
+   0.5,
+   1,
+   2,
+   4,
+   "inf"
+  ],
+  "other": "평가 범위 안 다른 칸 패치의 중심(참값 없음 칸 포함)",
+  "cells_fig": [
+   "c_corr14",
+   "c_corr4p",
+   "s_keep",
+   "c_refine",
+   "c_inh_miss"
+  ]
+ },
+ "maps": {
+  "top": "정사영, 위에서(북쪽 위), 패치를 그 칸의 색으로, 높은 패치가 위",
+  "px_m": 0.1,
+  "oblique": {
+   "tilt_deg": 45.0,
+   "azimuth_deg": [
+    225.0,
+    45.0
+   ],
+   "rule": "v4 일 라와 같음: 평가 범위의 중심을 봄, 연직에서 45°, 방위 225°와 45°(scripts/phd/main_viscmp_v4/d4_diag.camera)"
+  },
+  "patch_fill": "패치 면 위에 5 × 5 점을 고르게 놓아 칠함(정사영은 패치 정사각형)"
+ },
+ "missing": {
+  "paths": [
+   "직접",
+   "빌린 일치",
+   "빌린 충돌",
+   "섞임",
+   "미판정"
+  ],
+  "colours": {
+   "직접": "#4c78a8",
+   "빌린 일치": "#59a14f",
+   "빌린 충돌": "#e15759",
+   "섞임": "#f28e2b",
+   "미판정": "#9d9d9d"
+  },
+  "support_colours": {
+   "일치": "#cfe3c8",
+   "충돌": "#f4c7c3"
+  },
+  "results": [
+   "prior",
+   "geogs",
+   "twodgs",
+   "mvsfuse",
+   "cdgs",
+   "method",
+   "fixB"
+  ],
+  "path_rule": "SL/work/undecidable/borrow_<지역>_<사전 정보>.npz의 state·J: state 1 = 직접, state 2이고 J 1 빌린 일치, 0 빌린 충돌, 2 섞임, 3 미판정(일 1 (마), und_judge.py:41-77). 정오: 코드 4 맞음, 코드 13 틀림. 둘레 지지 패치 = state 1이고 결측 패치에서 2 m 안, J 1 일치·0 충돌로 옅게"
+ },
+ "check_res": {
+  "density_quantiles": 5,
+  "slope_bins_deg": [
+   0,
+   30,
+   60,
+   90
+  ],
+  "section": "B0 · 항공 LiDAR 긴 벽 하나의 수평 단면(자리는 참값 점과 사전 정보만 보고 정함)"
+ },
+ "figs3": {
+  "V3": {
+   "case": "B173nb_b10/ALS",
+   "row_count": 32932,
+   "density_x_m": [
+    -0.3,
+    0.3
+   ]
+  },
+  "V5": {
+   "case": "B173nb_b10/ALS",
+   "patches": 66,
+   "rows": 433,
+   "density_x_m": [
+    -0.3,
+    0.3
+   ]
+  },
+  "V6": {
+   "case": "B173nb_b10/ALS",
+   "glass_patches": 163,
+   "rim_patches": 18,
+   "colour_range_m": [
+    -1.0,
+    1.0
+   ]
+  },
+  "results": [
+   "prior",
+   "geogs",
+   "mvs1",
+   "twodgs",
+   "mvsfuse",
+   "cdgs",
+   "method"
+  ],
+  "mvs1_note": "v4의 한 장짜리 깊이 지도 메시",
+  "source": "PH/main_viscmp_v4/PHD-MAIN-VISCMP-v4 places_v4.json"
+ },
+ "numbers": {
+  "decimals": 1,
+  "max_chars": 20000
+ },
+ "terms_banned": [
+  "견주다",
+  "재다",
+  "언저리",
+  "가르다",
+  "가져온다",
+  "계승",
+  "새로움",
+  "우리",
+  "고정 신뢰",
+  "일률 적용",
+  "늘 믿음",
+  "완전성",
+  "정확도"
+ ],
+ "amendments": [
+  {
+   "time": "2026-10-22 20:19:46 KST",
+   "what": "결과 선 색(results.style.color)과 MVS 선 굵기",
+   "before": {
+    "prior": "#5f5f5f",
+    "geogs": "#2f6db5",
+    "mvs": "#a8a8a8",
+    "twodgs": "#3a9a4a",
+    "mvsfuse": "#e8851a",
+    "cdgs": "#9467bd",
+    "method": "#d62728"
+   },
+   "after": {
+    "prior": "#3a3a3a",
+    "geogs": "#2b6cb0",
+    "mvs": "#b5b5b5",
+    "twodgs": "#24a37a",
+    "mvsfuse": "#c77d1a",
+    "cdgs": "#9b59b6",
+    "method": "#c0392b"
+   },
+   "why": "그림을 그리기 전, 결과 값을 보기 전. 색약 검사기(dataviz validate_palette.js, light)에서 앞 색은 결합↔2DGS 색약 ΔE 4.0, GeoGS↔학습 전 사전 정보 정상 시각 ΔE 13.8로 떨어짐. 새 색은 색 있는 다섯 결과의 이웃 쌍 모두 통과(색약 최소 10.6, 정상 시각 최소 18.2). 입력 둘의 회색은 발주대로 회색 점선(밝기 띠 밖은 일부러 둠, 점선과 표지로 구별)"
+  },
+  {
+   "time": "2026-10-22 20:31:57 KST",
+   "what": "axes.axis2.value, axes.axis2.prefilter, missing.path_rule",
+   "before": [
+    "|mvs_minus_gt_at_gt| ÷ τ (영역 파일: 지붕 종류 행에서 z_MVS − z_GT의 패치 중앙값, scripts/phd/main_stage1_v1/regions_v3.py:160-179). 값이 없는 패치는 구간에 넣지 않고 그 수를 적는다",
+    "보존 · 거름의 셋째 선: 빈칸 채우기 obs_masked 파일의 거르기 전 깊이 어긋남(키와 뜻은 일 1에서 확정해 적음). 없으면 한 점"
+   ],
+   "after": [
+    "|영상 깊이 − 참값| ÷ τ: 코드 3을 정할 때 쓴 값 = np.where(v1_kept, mvs_minus_prior − gt_med, mvs_minus_gt_at_gt)(지붕꼴 연직, LoD2 벽꼴 면 법선; 빈칸 채우기 obs_masked 파일 v_geo와 같음, 일 1 (나)). 값이 없는 패치는 구간에 넣지 않고 그 수를 적는다",
+    "보존 · 거름의 셋째 선: |v_photo| ÷ τ (빈칸 채우기 obs_masked 파일, 거르기 전 광도 깊이 − 참값, m; 일 1 (라))"
+   ],
+   "why": "결과 값을 보기 전, 일 1 정의 확인의 답에 따라. 영역 파일 mvs_minus_gt_at_gt는 v2 갈래(지붕꼴, 값 5개 이상)만의 값이고 v1_kept 갈래는 mvs_minus_prior − gt_med로 코드 3을 정했다(scripts/phd/main_stage1_v1/defs_s1.py:142-146, regions_v3.py:286). 합친 값이 코드 3을 다시 낸다(6/6). 거르기 전 어긋남은 v_photo로 패치마다 있다. 판정 길의 파일과 규칙을 적음"
+  }
+ ],
+ "locked": "2026-10-22 20:05:18 KST"
+}

@@ -1,0 +1,1761 @@
+{
+ "task": "PHD-MAIN-AXES71-v2",
+ "work": "일 2",
+ "made": "2026-10-22 20:33:26 KST",
+ "rule": [
+  "평가 범위(영역 파일 in_eval) 안의 패치만 칸에 든다. 패치 하나는 아래 차례에서 처음 맞는 칸 하나에만 든다.",
+  "1 참값 없음: 영역 파일 코드 0(GT missing) 또는 대응한 참값 행이 하나도 없는 패치(새 거리 지표 has_gt = S1/defs/<지역>/rows_<사전 정보>.npz 모든 행의 patch), 코드와 상관없이",
+  "2 한계: 코드 3 가운데 premise_violation(충돌 문턱 넘음; LoD2 1τ, 항공 LiDAR 2τ) — 거른 영상 오류인 패치도 여기(빈칸 채우기의 '영상이 틀린 곳' 합집합 규칙 (다): obs에서 코드 3 전제 위배를 뺌, scripts/phd/main_fill_v1/obs_masked/om.py:668-669, 938-940)",
+  "3 보존 · 거름: 거른 영상 오류(빈칸 채우기 work/obs_masked/region_<지역>_<사전 정보>.npz의 obs) — 코드 2·3(문턱 안)·4",
+  "4 보존 · 문턱 안: 코드 3 가운데 obs_within_threshold",
+  "5 다듬기: 코드 2",
+  "6 보정 · 1~4τ / 보정 · 4τ 넘음: 코드 11을 |gt_med| ÷ τ로 나눔(1 이상 4 미만 / 4 이상). 1 미만인 코드 11 패치가 있으면 보정 · 1~4τ에 두고 그 수를 적는다",
+  "7 이중 오류: 코드 12, 8 상속 · 결측: 코드 4, 9 결측 · 사전 정보 틀림: 코드 13, 10 상속 · 비가시: 코드 5, 11 비가시 · 사전 정보 틀림: 코드 14"
+ ],
+ "rule_why": "발주 5.1은 거른 영상 오류와 코드 2, 거른 영상 오류와 코드 3 문턱 넘음의 겹침에 차례를 정하지 않았다. 앞 작업의 정의(빈칸 채우기 설정 바꿈 #2: '영상이 틀린 곳' = obs에서 코드 3 전제 위배 겹침을 뺀 것 ∪ 코드 3 문턱 안)를 지키는 차례로 정했다. 그러면 보존 합의 참값 행이 v4의 '영상이 틀린 곳'과 같고, 다듬기는 v4의 '두 자료가 모두 맞는 곳'에서 거른 영상 오류인 코드 2 패치만큼 작다(그 수는 일 2 표에 적는다).",
+ "data": {
+  "B0_b10/LoD2": {
+   "case": "B0_b10/LoD2",
+   "facts": {
+    "unassigned_in_eval": 0,
+    "unassigned_codes": [],
+    "code11_ratio_below1": 0,
+    "obs_and_code2": 11,
+    "obs_and_limit": 59,
+    "obs_and_code4": 981,
+    "code0_with_rows": 3387,
+    "nonzero_code_without_rows": 232,
+    "patches_per_cell": {
+     "c_nogt": 17244,
+     "c_limit": 3368,
+     "c_keep_mask": 992,
+     "c_keep_in": 87,
+     "c_refine": 52107,
+     "c_corr4p": 1187,
+     "c_corr14": 5153,
+     "c_double": 883,
+     "c_inh_miss": 1069,
+     "c_miss_wrong": 27,
+     "c_inh_invis": 0,
+     "c_invis_wrong": 0
+    }
+   },
+   "vgeo_check": {
+    "compared": 55623,
+    "max_abs_diff_m": 1.52587890625e-05,
+    "nan_mismatch": 0,
+    "scope": "코드 2·3, 평가 범위"
+   },
+   "obs_with_vphoto": 1051,
+   "obs_total": 1051,
+   "area_total": 5132.25334436015,
+   "patches_total": 82117,
+   "rows_total_in_range": 382365,
+   "rows_outside_range": 226,
+   "scene_total": 2063378,
+   "scene_no_patch": 323682,
+   "scene_owner_outside": 1934,
+   "cells": {
+    "c_refine": {
+     "patches": 52107,
+     "area": 3256.6875,
+     "rows": 301688,
+     "scene": 1368794
+    },
+    "c_corr14": {
+     "patches": 5153,
+     "area": 322.0625,
+     "rows": 27502,
+     "scene": 171497
+    },
+    "c_corr4p": {
+     "patches": 1187,
+     "area": 74.1875,
+     "rows": 6358,
+     "scene": 52157
+    },
+    "c_keep_mask": {
+     "patches": 992,
+     "area": 62.0,
+     "rows": 6018,
+     "scene": 1335
+    },
+    "c_keep_in": {
+     "patches": 87,
+     "area": 5.4375,
+     "rows": 439,
+     "scene": 1125
+    },
+    "c_limit": {
+     "patches": 3368,
+     "area": 210.5,
+     "rows": 19266,
+     "scene": 74120
+    },
+    "c_double": {
+     "patches": 883,
+     "area": 55.1875,
+     "rows": 3917,
+     "scene": 23841
+    },
+    "c_inh_miss": {
+     "patches": 1069,
+     "area": 66.8125,
+     "rows": 6467,
+     "scene": 10032
+    },
+    "c_miss_wrong": {
+     "patches": 27,
+     "area": 1.6875,
+     "rows": 169,
+     "scene": 1731
+    },
+    "c_inh_invis": {
+     "patches": 0,
+     "area": 0.0,
+     "rows": 0,
+     "scene": 0
+    },
+    "c_invis_wrong": {
+     "patches": 0,
+     "area": 0.0,
+     "rows": 0,
+     "scene": 0
+    },
+    "c_nogt": {
+     "patches": 17244,
+     "area": 1077.69084436015,
+     "rows": 10541,
+     "scene": 33130
+    },
+    "s_corr": {
+     "patches": 6340,
+     "area": 396.25,
+     "rows": 33860,
+     "scene": 223654
+    },
+    "s_keep": {
+     "patches": 1079,
+     "area": 67.4375,
+     "rows": 6457,
+     "scene": 2460
+    },
+    "s_inh": {
+     "patches": 1069,
+     "area": 66.8125,
+     "rows": 6467,
+     "scene": 10032
+    },
+    "c4": {
+     "patches": 2050,
+     "area": 128.125,
+     "rows": 12433,
+     "scene": null
+    }
+   },
+   "density_by_slope": {
+    "0-30": {
+     "patches": 26218,
+     "area": 1638.625,
+     "density_p10": 400.0,
+     "density_p50": 944.0,
+     "density_p90": 2096.0,
+     "spacing_p50_cm": 3.254722774520597,
+     "spacing_p90_cm": 5.0,
+     "share_spacing_le_tau": 0.9982836219391258,
+     "share_spacing_le_half_tau": 0.9823785185750248
+    },
+    "30-60": {
+     "patches": 936,
+     "area": 58.5,
+     "density_p10": 1216.0,
+     "density_p50": 1680.0,
+     "density_p90": 2256.0,
+     "spacing_p50_cm": 2.4397501823713332,
+     "spacing_p90_cm": 2.8676966733820217,
+     "share_spacing_le_tau": 0.9989316239316239,
+     "share_spacing_le_half_tau": 0.9989316239316239
+    },
+    "60-90": {
+     "patches": 41106,
+     "area": 2569.125,
+     "density_p10": 112.0,
+     "density_p50": 640.0,
+     "density_p90": 2480.0,
+     "spacing_p50_cm": 3.952847075210474,
+     "spacing_p90_cm": 9.44911182523068,
+     "share_spacing_le_tau": 1.0,
+     "share_spacing_le_half_tau": 1.0
+    }
+   },
+   "patches_without_rows_in_range": 13857,
+   "patch_size": {
+    "area_p10": 0.0625,
+    "area_p50": 0.0625,
+    "area_p90": 0.0625,
+    "area_max": 0.0625,
+    "nn_centre_m_p50": 0.2499999999999981,
+    "nn_centre_m_p90": 0.25
+   }
+  },
+  "B0_b10/ALS": {
+   "case": "B0_b10/ALS",
+   "facts": {
+    "unassigned_in_eval": 0,
+    "unassigned_codes": [],
+    "code11_ratio_below1": 0,
+    "obs_and_code2": 1,
+    "obs_and_limit": 4,
+    "obs_and_code4": 7,
+    "code0_with_rows": 92,
+    "nonzero_code_without_rows": 123,
+    "patches_per_cell": {
+     "c_nogt": 290,
+     "c_limit": 600,
+     "c_keep_mask": 8,
+     "c_keep_in": 276,
+     "c_refine": 21847,
+     "c_corr4p": 33,
+     "c_corr14": 37,
+     "c_double": 164,
+     "c_inh_miss": 23,
+     "c_miss_wrong": 0,
+     "c_inh_invis": 0,
+     "c_invis_wrong": 2
+    }
+   },
+   "vgeo_check": {
+    "compared": 22748,
+    "max_abs_diff_m": 9.5367431640625e-07,
+    "nan_mismatch": 0,
+    "scope": "코드 2·3, 평가 범위"
+   },
+   "obs_with_vphoto": 12,
+   "obs_total": 12,
+   "area_total": 1592.8931141923629,
+   "patches_total": 23280,
+   "rows_total_in_range": 144952,
+   "rows_outside_range": 208,
+   "scene_total": 2063378,
+   "scene_no_patch": 685240,
+   "scene_owner_outside": 1634,
+   "cells": {
+    "c_refine": {
+     "patches": 21847,
+     "area": 1490.3566878582853,
+     "rows": 137417,
+     "scene": 1306670
+    },
+    "c_corr14": {
+     "patches": 37,
+     "area": 2.8522629118748086,
+     "rows": 177,
+     "scene": 3917
+    },
+    "c_corr4p": {
+     "patches": 33,
+     "area": 2.286531916243703,
+     "rows": 182,
+     "scene": 1193
+    },
+    "c_keep_mask": {
+     "patches": 8,
+     "area": 0.5085008250013282,
+     "rows": 48,
+     "scene": 247
+    },
+    "c_keep_in": {
+     "patches": 276,
+     "area": 19.71884372470948,
+     "rows": 1707,
+     "scene": 19818
+    },
+    "c_limit": {
+     "patches": 600,
+     "area": 42.65587786424968,
+     "rows": 4288,
+     "scene": 23560
+    },
+    "c_double": {
+     "patches": 164,
+     "area": 11.90756671527358,
+     "rows": 585,
+     "scene": 9111
+    },
+    "c_inh_miss": {
+     "patches": 23,
+     "area": 1.5969331816897683,
+     "rows": 138,
+     "scene": 1147
+    },
+    "c_miss_wrong": {
+     "patches": 0,
+     "area": 0.0,
+     "rows": 0,
+     "scene": 0
+    },
+    "c_inh_invis": {
+     "patches": 0,
+     "area": 0.0,
+     "rows": 0,
+     "scene": 0
+    },
+    "c_invis_wrong": {
+     "patches": 2,
+     "area": 0.1297329075013402,
+     "rows": 11,
+     "scene": 46
+    },
+    "c_nogt": {
+     "patches": 290,
+     "area": 20.880176287533978,
+     "rows": 399,
+     "scene": 10795
+    },
+    "s_corr": {
+     "patches": 70,
+     "area": 5.1387948281185105,
+     "rows": 359,
+     "scene": 5110
+    },
+    "s_keep": {
+     "patches": 284,
+     "area": 20.227344549710807,
+     "rows": 1755,
+     "scene": 20065
+    },
+    "s_inh": {
+     "patches": 23,
+     "area": 1.5969331816897683,
+     "rows": 138,
+     "scene": 1147
+    },
+    "c4": {
+     "patches": 30,
+     "area": 2.0365133439340215,
+     "rows": 177,
+     "scene": null
+    }
+   },
+   "density_by_slope": {
+    "0-30": {
+     "patches": 21373,
+     "area": 1447.3608726481689,
+     "density_p10": 400.18712865094625,
+     "density_p50": 925.5426941411065,
+     "density_p90": 2049.6758320000204,
+     "spacing_p50_cm": 3.287015647422504,
+     "spacing_p90_cm": 4.998830888538507,
+     "share_spacing_le_tau": 0.9969119917653114,
+     "share_spacing_le_half_tau": 0.9467084639498433
+    },
+    "30-60": {
+     "patches": 1656,
+     "area": 129.45396219116355,
+     "density_p10": 239.11541414274956,
+     "density_p50": 999.7991841957947,
+     "density_p90": 2166.8339622673634,
+     "spacing_p50_cm": 3.1625964464023117,
+     "spacing_p90_cm": 6.46692023107829,
+     "share_spacing_le_tau": 0.9788647342995169,
+     "share_spacing_le_half_tau": 0.8955314009661836
+    },
+    "60-90": {
+     "patches": 53,
+     "area": 1.8490433707230602,
+     "density_p10": 406.7952473131823,
+     "density_p50": 1220.5193232404627,
+     "density_p90": 2312.5686584719947,
+     "spacing_p50_cm": 2.862382514354227,
+     "spacing_p90_cm": 4.98032743021257,
+     "share_spacing_le_tau": 1.0,
+     "share_spacing_le_half_tau": 0.9245283018867925
+    }
+   },
+   "patches_without_rows_in_range": 198,
+   "patch_size": {
+    "area_p10": 0.06562004537708176,
+    "area_p50": 0.06786228422796027,
+    "area_p90": 0.07121650528112797,
+    "area_max": 0.12363590488374898,
+    "nn_centre_m_p50": 0.2520725747559206,
+    "nn_centre_m_p90": 0.2537894227071729
+   }
+  },
+  "B173nb_b10/LoD2": {
+   "case": "B173nb_b10/LoD2",
+   "facts": {
+    "unassigned_in_eval": 0,
+    "unassigned_codes": [],
+    "code11_ratio_below1": 0,
+    "obs_and_code2": 92,
+    "obs_and_limit": 30,
+    "obs_and_code4": 166,
+    "code0_with_rows": 9691,
+    "nonzero_code_without_rows": 295,
+    "patches_per_cell": {
+     "c_nogt": 75971,
+     "c_limit": 2221,
+     "c_keep_mask": 259,
+     "c_keep_in": 472,
+     "c_refine": 31980,
+     "c_corr4p": 16481,
+     "c_corr14": 5208,
+     "c_double": 7777,
+     "c_inh_miss": 1049,
+     "c_miss_wrong": 91,
+     "c_inh_invis": 4,
+     "c_invis_wrong": 21
+    }
+   },
+   "vgeo_check": {
+    "compared": 34840,
+    "max_abs_diff_m": 3.814697265625e-06,
+    "nan_mismatch": 0,
+    "scope": "코드 2·3, 평가 범위"
+   },
+   "obs_with_vphoto": 289,
+   "obs_total": 289,
+   "area_total": 8845.875,
+   "patches_total": 141534,
+   "rows_total_in_range": 373093,
+   "rows_outside_range": 659,
+   "scene_total": 3881308,
+   "scene_no_patch": 343510,
+   "scene_owner_outside": 5000,
+   "cells": {
+    "c_refine": {
+     "patches": 31980,
+     "area": 1998.75,
+     "rows": 172008,
+     "scene": 1659459
+    },
+    "c_corr14": {
+     "patches": 5208,
+     "area": 325.5,
+     "rows": 26047,
+     "scene": 236924
+    },
+    "c_corr4p": {
+     "patches": 16481,
+     "area": 1030.0625,
+     "rows": 97456,
+     "scene": 1150338
+    },
+    "c_keep_mask": {
+     "patches": 259,
+     "area": 16.1875,
+     "rows": 1347,
+     "scene": 4812
+    },
+    "c_keep_in": {
+     "patches": 472,
+     "area": 29.5,
+     "rows": 2469,
+     "scene": 26838
+    },
+    "c_limit": {
+     "patches": 2221,
+     "area": 138.8125,
+     "rows": 11828,
+     "scene": 93571
+    },
+    "c_double": {
+     "patches": 7777,
+     "area": 486.0625,
+     "rows": 38447,
+     "scene": 302118
+    },
+    "c_inh_miss": {
+     "patches": 1049,
+     "area": 65.5625,
+     "rows": 5473,
+     "scene": 14858
+    },
+    "c_miss_wrong": {
+     "patches": 91,
+     "area": 5.6875,
+     "rows": 399,
+     "scene": 1568
+    },
+    "c_inh_invis": {
+     "patches": 4,
+     "area": 0.25,
+     "rows": 17,
+     "scene": 23
+    },
+    "c_invis_wrong": {
+     "patches": 21,
+     "area": 1.3125,
+     "rows": 73,
+     "scene": 297
+    },
+    "c_nogt": {
+     "patches": 75971,
+     "area": 4748.1875,
+     "rows": 17529,
+     "scene": 41992
+    },
+    "s_corr": {
+     "patches": 21689,
+     "area": 1355.5625,
+     "rows": 123503,
+     "scene": 1387262
+    },
+    "s_keep": {
+     "patches": 731,
+     "area": 45.6875,
+     "rows": 3816,
+     "scene": 31650
+    },
+    "s_inh": {
+     "patches": 1053,
+     "area": 65.8125,
+     "rows": 5490,
+     "scene": 14881
+    },
+    "c4": {
+     "patches": 1215,
+     "area": 75.9375,
+     "rows": 6314,
+     "scene": null
+    }
+   },
+   "density_by_slope": {
+    "0-30": {
+     "patches": 33853,
+     "area": 2115.8125,
+     "density_p10": 432.0,
+     "density_p50": 976.0,
+     "density_p90": 2736.0,
+     "spacing_p50_cm": 3.2009219983223995,
+     "spacing_p90_cm": 4.811252243246882,
+     "share_spacing_le_tau": 0.994269340974212,
+     "share_spacing_le_half_tau": 0.9838123652261247
+    },
+    "30-60": {
+     "patches": 7663,
+     "area": 478.9375,
+     "density_p10": 211.20000000000073,
+     "density_p50": 736.0,
+     "density_p90": 832.0,
+     "spacing_p50_cm": 3.6860489038724285,
+     "spacing_p90_cm": 6.883308171814459,
+     "share_spacing_le_tau": 0.9737700639436252,
+     "share_spacing_le_half_tau": 0.9248336160772543
+    },
+    "60-90": {
+     "patches": 33738,
+     "area": 2108.625,
+     "density_p10": 32.0,
+     "density_p50": 128.0,
+     "density_p90": 352.0,
+     "spacing_p50_cm": 8.838834764831843,
+     "spacing_p90_cm": 17.677669529663685,
+     "share_spacing_le_tau": 0.9298713616693343,
+     "share_spacing_le_half_tau": 0.7767206117730748
+    }
+   },
+   "patches_without_rows_in_range": 66280,
+   "patch_size": {
+    "area_p10": 0.0625,
+    "area_p50": 0.0625,
+    "area_p90": 0.0625,
+    "area_max": 0.0625,
+    "nn_centre_m_p50": 0.24999999999999326,
+    "nn_centre_m_p90": 0.25
+   }
+  },
+  "B173nb_b10/ALS": {
+   "case": "B173nb_b10/ALS",
+   "facts": {
+    "unassigned_in_eval": 0,
+    "unassigned_codes": [],
+    "code11_ratio_below1": 0,
+    "obs_and_code2": 0,
+    "obs_and_limit": 7,
+    "obs_and_code4": 16,
+    "code0_with_rows": 2944,
+    "nonzero_code_without_rows": 18,
+    "patches_per_cell": {
+     "c_nogt": 3335,
+     "c_limit": 696,
+     "c_keep_mask": 16,
+     "c_keep_in": 1419,
+     "c_refine": 10142,
+     "c_corr4p": 15167,
+     "c_corr14": 108,
+     "c_double": 3379,
+     "c_inh_miss": 1,
+     "c_miss_wrong": 9,
+     "c_inh_invis": 1,
+     "c_invis_wrong": 0
+    }
+   },
+   "vgeo_check": {
+    "compared": 12257,
+    "max_abs_diff_m": 0.0,
+    "nan_mismatch": 0,
+    "scope": "코드 2·3, 평가 범위"
+   },
+   "obs_with_vphoto": 23,
+   "obs_total": 23,
+   "area_total": 2285.8673805676904,
+   "patches_total": 34273,
+   "rows_total_in_range": 210321,
+   "rows_outside_range": 479,
+   "scene_total": 3881308,
+   "scene_no_patch": 933398,
+   "scene_owner_outside": 4184,
+   "cells": {
+    "c_refine": {
+     "patches": 10142,
+     "area": 650.0106394436134,
+     "rows": 64322,
+     "scene": 1339188
+    },
+    "c_corr14": {
+     "patches": 108,
+     "area": 8.339544503189279,
+     "rows": 752,
+     "scene": 6292
+    },
+    "c_corr4p": {
+     "patches": 15167,
+     "area": 1007.536804371351,
+     "rows": 95517,
+     "scene": 1117884
+    },
+    "c_keep_mask": {
+     "patches": 16,
+     "area": 1.6337456300163218,
+     "rows": 106,
+     "scene": 959
+    },
+    "c_keep_in": {
+     "patches": 1419,
+     "area": 100.5275369550719,
+     "rows": 9292,
+     "scene": 116099
+    },
+    "c_limit": {
+     "patches": 696,
+     "area": 51.78462687252885,
+     "rows": 4721,
+     "scene": 39959
+    },
+    "c_double": {
+     "patches": 3379,
+     "area": 226.80995481957626,
+     "rows": 20101,
+     "scene": 197434
+    },
+    "c_inh_miss": {
+     "patches": 1,
+     "area": 0.1024772737107018,
+     "rows": 5,
+     "scene": 60
+    },
+    "c_miss_wrong": {
+     "patches": 9,
+     "area": 0.6227197845139656,
+     "rows": 53,
+     "scene": 561
+    },
+    "c_inh_invis": {
+     "patches": 1,
+     "area": 0.022425454880494494,
+     "rows": 2,
+     "scene": 13
+    },
+    "c_invis_wrong": {
+     "patches": 0,
+     "area": 0.0,
+     "rows": 0,
+     "scene": 0
+    },
+    "c_nogt": {
+     "patches": 3335,
+     "area": 238.47690545923825,
+     "rows": 15450,
+     "scene": 125277
+    },
+    "s_corr": {
+     "patches": 15275,
+     "area": 1015.8763488745402,
+     "rows": 96269,
+     "scene": 1124176
+    },
+    "s_keep": {
+     "patches": 1435,
+     "area": 102.16128258508823,
+     "rows": 9398,
+     "scene": 117058
+    },
+    "s_inh": {
+     "patches": 2,
+     "area": 0.12490272859119629,
+     "rows": 7,
+     "scene": 73
+    },
+    "c4": {
+     "patches": 17,
+     "area": 1.7362229037270236,
+     "rows": 111,
+     "scene": null
+    }
+   },
+   "density_by_slope": {
+    "0-30": {
+     "patches": 31194,
+     "area": 2040.3789290662426,
+     "density_p10": 445.6000180762286,
+     "density_p50": 1002.0176153034445,
+     "density_p90": 2723.371661067993,
+     "spacing_p50_cm": 3.1590923497284886,
+     "spacing_p90_cm": 4.737261952680083,
+     "share_spacing_le_tau": 0.9924985574148875,
+     "share_spacing_le_half_tau": 0.9768865807527088
+    },
+    "30-60": {
+     "patches": 2599,
+     "area": 215.03057947351323,
+     "density_p10": 216.85419185468982,
+     "density_p50": 665.8090139436296,
+     "density_p90": 999.5832310648588,
+     "spacing_p50_cm": 3.87547700853371,
+     "spacing_p90_cm": 6.790732369763836,
+     "share_spacing_le_tau": 0.9730665640631012,
+     "share_spacing_le_half_tau": 0.9126587148903424
+    },
+    "60-90": {
+     "patches": 89,
+     "area": 2.929227344923559,
+     "density_p10": 286.3740444756488,
+     "density_p50": 696.1844821746928,
+     "density_p90": 3289.876157501991,
+     "spacing_p50_cm": 3.789987962940502,
+     "spacing_p90_cm": 5.909853863165279,
+     "share_spacing_le_tau": 0.9887640449438202,
+     "share_spacing_le_half_tau": 0.9550561797752809
+    }
+   },
+   "patches_without_rows_in_range": 391,
+   "patch_size": {
+    "area_p10": 0.06257186059473806,
+    "area_p50": 0.06586490660070952,
+    "area_p90": 0.0705055562612754,
+    "area_max": 0.12486174333377842,
+    "nn_centre_m_p50": 0.2504233791290965,
+    "nn_centre_m_p90": 0.25585763104392234
+   }
+  },
+  "R1rep_b10/LoD2": {
+   "case": "R1rep_b10/LoD2",
+   "facts": {
+    "unassigned_in_eval": 0,
+    "unassigned_codes": [],
+    "code11_ratio_below1": 0,
+    "obs_and_code2": 3,
+    "obs_and_limit": 93,
+    "obs_and_code4": 68,
+    "code0_with_rows": 6744,
+    "nonzero_code_without_rows": 1555,
+    "patches_per_cell": {
+     "c_nogt": 38559,
+     "c_limit": 6320,
+     "c_keep_mask": 74,
+     "c_keep_in": 128,
+     "c_refine": 19401,
+     "c_corr4p": 4141,
+     "c_corr14": 6432,
+     "c_double": 3705,
+     "c_inh_miss": 130,
+     "c_miss_wrong": 153,
+     "c_inh_invis": 1,
+     "c_invis_wrong": 10
+    }
+   },
+   "vgeo_check": {
+    "compared": 26162,
+    "max_abs_diff_m": 1.52587890625e-05,
+    "nan_mismatch": 0,
+    "scope": "코드 2·3, 평가 범위"
+   },
+   "obs_with_vphoto": 170,
+   "obs_total": 170,
+   "area_total": 4940.875,
+   "patches_total": 79054,
+   "rows_total_in_range": 239340,
+   "rows_outside_range": 219,
+   "scene_total": 2667737,
+   "scene_no_patch": 319428,
+   "scene_owner_outside": 2790,
+   "cells": {
+    "c_refine": {
+     "patches": 19401,
+     "area": 1212.5625,
+     "rows": 115361,
+     "scene": 1237048
+    },
+    "c_corr14": {
+     "patches": 6432,
+     "area": 402.0,
+     "rows": 37084,
+     "scene": 440512
+    },
+    "c_corr4p": {
+     "patches": 4141,
+     "area": 258.8125,
+     "rows": 18114,
+     "scene": 292007
+    },
+    "c_keep_mask": {
+     "patches": 74,
+     "area": 4.625,
+     "rows": 252,
+     "scene": 901
+    },
+    "c_keep_in": {
+     "patches": 128,
+     "area": 8.0,
+     "rows": 611,
+     "scene": 1906
+    },
+    "c_limit": {
+     "patches": 6320,
+     "area": 395.0,
+     "rows": 31321,
+     "scene": 130112
+    },
+    "c_double": {
+     "patches": 3705,
+     "area": 231.5625,
+     "rows": 19063,
+     "scene": 122587
+    },
+    "c_inh_miss": {
+     "patches": 130,
+     "area": 8.125,
+     "rows": 485,
+     "scene": 1752
+    },
+    "c_miss_wrong": {
+     "patches": 153,
+     "area": 9.5625,
+     "rows": 852,
+     "scene": 15925
+    },
+    "c_inh_invis": {
+     "patches": 1,
+     "area": 0.0625,
+     "rows": 3,
+     "scene": 32
+    },
+    "c_invis_wrong": {
+     "patches": 10,
+     "area": 0.625,
+     "rows": 33,
+     "scene": 438
+    },
+    "c_nogt": {
+     "patches": 38559,
+     "area": 2409.9375,
+     "rows": 16161,
+     "scene": 102299
+    },
+    "s_corr": {
+     "patches": 10573,
+     "area": 660.8125,
+     "rows": 55198,
+     "scene": 732519
+    },
+    "s_keep": {
+     "patches": 202,
+     "area": 12.625,
+     "rows": 863,
+     "scene": 2807
+    },
+    "s_inh": {
+     "patches": 131,
+     "area": 8.1875,
+     "rows": 488,
+     "scene": 1784
+    },
+    "c4": {
+     "patches": 198,
+     "area": 12.375,
+     "rows": 712,
+     "scene": null
+    }
+   },
+   "density_by_slope": {
+    "0-30": {
+     "patches": 28457,
+     "area": 1778.5625,
+     "density_p10": 320.0,
+     "density_p50": 976.0,
+     "density_p90": 1680.0,
+     "spacing_p50_cm": 3.2009219983223995,
+     "spacing_p90_cm": 5.5901699437494745,
+     "share_spacing_le_tau": 1.0,
+     "share_spacing_le_half_tau": 1.0
+    },
+    "30-60": {
+     "patches": 1046,
+     "area": 65.375,
+     "density_p10": 512.0,
+     "density_p50": 720.0,
+     "density_p90": 1040.0,
+     "spacing_p50_cm": 3.72677996249965,
+     "spacing_p90_cm": 4.419417382415921,
+     "share_spacing_le_tau": 1.0,
+     "share_spacing_le_half_tau": 1.0
+    },
+    "60-90": {
+     "patches": 17736,
+     "area": 1108.5,
+     "density_p10": 32.0,
+     "density_p50": 128.0,
+     "density_p90": 528.0,
+     "spacing_p50_cm": 8.838834764831843,
+     "spacing_p90_cm": 17.677669529663685,
+     "share_spacing_le_tau": 1.0,
+     "share_spacing_le_half_tau": 1.0
+    }
+   },
+   "patches_without_rows_in_range": 31815,
+   "patch_size": {
+    "area_p10": 0.0625,
+    "area_p50": 0.0625,
+    "area_p90": 0.0625,
+    "area_max": 0.0625,
+    "nn_centre_m_p50": 0.24999999999999808,
+    "nn_centre_m_p90": 0.25
+   }
+  },
+  "R1rep_b10/ALS": {
+   "case": "R1rep_b10/ALS",
+   "facts": {
+    "unassigned_in_eval": 0,
+    "unassigned_codes": [],
+    "code11_ratio_below1": 0,
+    "obs_and_code2": 46,
+    "obs_and_limit": 245,
+    "obs_and_code4": 40,
+    "code0_with_rows": 773,
+    "nonzero_code_without_rows": 56,
+    "patches_per_cell": {
+     "c_nogt": 1297,
+     "c_limit": 2390,
+     "c_keep_mask": 120,
+     "c_keep_in": 2074,
+     "c_refine": 17747,
+     "c_corr4p": 90,
+     "c_corr14": 80,
+     "c_double": 349,
+     "c_inh_miss": 23,
+     "c_miss_wrong": 9,
+     "c_inh_invis": 1,
+     "c_invis_wrong": 9
+    }
+   },
+   "vgeo_check": {
+    "compared": 22324,
+    "max_abs_diff_m": 4.76837158203125e-06,
+    "nan_mismatch": 0,
+    "scope": "코드 2·3, 평가 범위"
+   },
+   "obs_with_vphoto": 365,
+   "obs_total": 365,
+   "area_total": 1610.529317564144,
+   "patches_total": 24189,
+   "rows_total_in_range": 149185,
+   "rows_outside_range": 261,
+   "scene_total": 2667737,
+   "scene_no_patch": 949839,
+   "scene_owner_outside": 2874,
+   "cells": {
+    "c_refine": {
+     "patches": 17747,
+     "area": 1168.9033125002434,
+     "rows": 113157,
+     "scene": 1389957
+    },
+    "c_corr14": {
+     "patches": 80,
+     "area": 7.18431803281106,
+     "rows": 494,
+     "scene": 4840
+    },
+    "c_corr4p": {
+     "patches": 90,
+     "area": 6.1072555945934575,
+     "rows": 406,
+     "scene": 2830
+    },
+    "c_keep_mask": {
+     "patches": 120,
+     "area": 8.982699856194682,
+     "rows": 746,
+     "scene": 8110
+    },
+    "c_keep_in": {
+     "patches": 2074,
+     "area": 138.3228828951869,
+     "rows": 13366,
+     "scene": 143801
+    },
+    "c_limit": {
+     "patches": 2390,
+     "area": 162.74586996820602,
+     "rows": 15956,
+     "scene": 121489
+    },
+    "c_double": {
+     "patches": 349,
+     "area": 25.11954171575144,
+     "rows": 1678,
+     "scene": 15369
+    },
+    "c_inh_miss": {
+     "patches": 23,
+     "area": 1.678153726070863,
+     "rows": 139,
+     "scene": 2577
+    },
+    "c_miss_wrong": {
+     "patches": 9,
+     "area": 0.5815952064967096,
+     "rows": 39,
+     "scene": 184
+    },
+    "c_inh_invis": {
+     "patches": 1,
+     "area": 0.06260746149805245,
+     "rows": 6,
+     "scene": 14
+    },
+    "c_invis_wrong": {
+     "patches": 9,
+     "area": 0.6056814624781539,
+     "rows": 45,
+     "scene": 325
+    },
+    "c_nogt": {
+     "patches": 1297,
+     "area": 90.2353991446133,
+     "rows": 3153,
+     "scene": 25528
+    },
+    "s_corr": {
+     "patches": 170,
+     "area": 13.291573627404517,
+     "rows": 900,
+     "scene": 7670
+    },
+    "s_keep": {
+     "patches": 2194,
+     "area": 147.30558275138156,
+     "rows": 14112,
+     "scene": 151911
+    },
+    "s_inh": {
+     "patches": 24,
+     "area": 1.7407611875689157,
+     "rows": 145,
+     "scene": 2591
+    },
+    "c4": {
+     "patches": 63,
+     "area": 4.240239374241598,
+     "rows": 383,
+     "scene": null
+    }
+   },
+   "density_by_slope": {
+    "0-30": {
+     "patches": 20591,
+     "area": 1307.267066864918,
+     "density_p10": 524.8678201283012,
+     "density_p50": 989.4629529060745,
+     "density_p90": 1650.583236015841,
+     "spacing_p50_cm": 3.1790710260008246,
+     "spacing_p90_cm": 4.364907318252137,
+     "share_spacing_le_tau": 0.9872759943664707,
+     "share_spacing_le_half_tau": 0.9582341799815454
+    },
+    "30-60": {
+     "patches": 2942,
+     "area": 261.3765130142836,
+     "density_p10": 320.55403145834316,
+     "density_p50": 943.521386385529,
+     "density_p90": 1582.56233381917,
+     "spacing_p50_cm": 3.2555481704720224,
+     "spacing_p90_cm": 5.58536224618282,
+     "share_spacing_le_tau": 0.9660095173351462,
+     "share_spacing_le_half_tau": 0.8786539768864717
+    },
+    "60-90": {
+     "patches": 132,
+     "area": 4.615969128342347,
+     "density_p10": 156.16594359285128,
+     "density_p50": 759.2165746710976,
+     "density_p90": 1371.1530207108706,
+     "spacing_p50_cm": 3.6292557411703203,
+     "spacing_p90_cm": 8.00215544143953,
+     "share_spacing_le_tau": 0.9242424242424242,
+     "share_spacing_le_half_tau": 0.7348484848484849
+    }
+   },
+   "patches_without_rows_in_range": 524,
+   "patch_size": {
+    "area_p10": 0.06261579479955552,
+    "area_p50": 0.06318860272677476,
+    "area_p90": 0.07869718939327804,
+    "area_max": 0.14360249828223182,
+    "nn_centre_m_p50": 0.250108901713672,
+    "nn_centre_m_p90": 0.2573783130118252
+   }
+  },
+  "합/LoD2": {
+   "case": "합/LoD2",
+   "area_total": 18919.00334436015,
+   "patches_total": 302705,
+   "rows_total_in_range": 994798,
+   "scene_total": 8612423,
+   "scene_no_patch": 986620,
+   "scene_owner_outside": 9724,
+   "cells": {
+    "c_refine": {
+     "patches": 103488,
+     "area": 6468.0,
+     "rows": 589057,
+     "scene": 4265301
+    },
+    "c_corr14": {
+     "patches": 16793,
+     "area": 1049.5625,
+     "rows": 90633,
+     "scene": 848933
+    },
+    "c_corr4p": {
+     "patches": 21809,
+     "area": 1363.0625,
+     "rows": 121928,
+     "scene": 1494502
+    },
+    "c_keep_mask": {
+     "patches": 1325,
+     "area": 82.8125,
+     "rows": 7617,
+     "scene": 7048
+    },
+    "c_keep_in": {
+     "patches": 687,
+     "area": 42.9375,
+     "rows": 3519,
+     "scene": 29869
+    },
+    "c_limit": {
+     "patches": 11909,
+     "area": 744.3125,
+     "rows": 62415,
+     "scene": 297803
+    },
+    "c_double": {
+     "patches": 12365,
+     "area": 772.8125,
+     "rows": 61427,
+     "scene": 448546
+    },
+    "c_inh_miss": {
+     "patches": 2248,
+     "area": 140.5,
+     "rows": 12425,
+     "scene": 26642
+    },
+    "c_miss_wrong": {
+     "patches": 271,
+     "area": 16.9375,
+     "rows": 1420,
+     "scene": 19224
+    },
+    "c_inh_invis": {
+     "patches": 5,
+     "area": 0.3125,
+     "rows": 20,
+     "scene": 55
+    },
+    "c_invis_wrong": {
+     "patches": 31,
+     "area": 1.9375,
+     "rows": 106,
+     "scene": 735
+    },
+    "c_nogt": {
+     "patches": 131774,
+     "area": 8235.81584436015,
+     "rows": 44231,
+     "scene": 177421
+    },
+    "s_corr": {
+     "patches": 38602,
+     "area": 2412.625,
+     "rows": 212561,
+     "scene": 2343435
+    },
+    "s_keep": {
+     "patches": 2012,
+     "area": 125.75,
+     "rows": 11136,
+     "scene": 36917
+    },
+    "s_inh": {
+     "patches": 2253,
+     "area": 140.8125,
+     "rows": 12445,
+     "scene": 26697
+    },
+    "c4": {
+     "patches": 3463,
+     "area": 216.4375,
+     "rows": 19459,
+     "scene": null
+    }
+   }
+  },
+  "합/ALS": {
+   "case": "합/ALS",
+   "area_total": 5489.289812324198,
+   "patches_total": 81742,
+   "rows_total_in_range": 504458,
+   "scene_total": 8612423,
+   "scene_no_patch": 2568477,
+   "scene_owner_outside": 8692,
+   "cells": {
+    "c_refine": {
+     "patches": 49736,
+     "area": 3309.270639802142,
+     "rows": 314896,
+     "scene": 4035815
+    },
+    "c_corr14": {
+     "patches": 225,
+     "area": 18.376125447875147,
+     "rows": 1423,
+     "scene": 15049
+    },
+    "c_corr4p": {
+     "patches": 15290,
+     "area": 1015.9305918821881,
+     "rows": 96105,
+     "scene": 1121907
+    },
+    "c_keep_mask": {
+     "patches": 144,
+     "area": 11.124946311212332,
+     "rows": 900,
+     "scene": 9316
+    },
+    "c_keep_in": {
+     "patches": 3769,
+     "area": 258.56926357496826,
+     "rows": 24365,
+     "scene": 279718
+    },
+    "c_limit": {
+     "patches": 3686,
+     "area": 257.1863747049846,
+     "rows": 24965,
+     "scene": 185008
+    },
+    "c_double": {
+     "patches": 3892,
+     "area": 263.8370632506013,
+     "rows": 22364,
+     "scene": 221914
+    },
+    "c_inh_miss": {
+     "patches": 47,
+     "area": 3.377564181471333,
+     "rows": 282,
+     "scene": 3784
+    },
+    "c_miss_wrong": {
+     "patches": 18,
+     "area": 1.2043149910106752,
+     "rows": 92,
+     "scene": 745
+    },
+    "c_inh_invis": {
+     "patches": 2,
+     "area": 0.08503291637854694,
+     "rows": 8,
+     "scene": 27
+    },
+    "c_invis_wrong": {
+     "patches": 11,
+     "area": 0.7354143699794942,
+     "rows": 56,
+     "scene": 371
+    },
+    "c_nogt": {
+     "patches": 4922,
+     "area": 349.59248089138555,
+     "rows": 19002,
+     "scene": 161600
+    },
+    "s_corr": {
+     "patches": 15515,
+     "area": 1034.3067173300633,
+     "rows": 97528,
+     "scene": 1136956
+    },
+    "s_keep": {
+     "patches": 3913,
+     "area": 269.6942098861806,
+     "rows": 25265,
+     "scene": 289034
+    },
+    "s_inh": {
+     "patches": 49,
+     "area": 3.4625970978498803,
+     "rows": 290,
+     "scene": 3811
+    },
+    "c4": {
+     "patches": 110,
+     "area": 8.012975621902642,
+     "rows": 671,
+     "scene": null
+    }
+   }
+  }
+ },
+ "sums": {
+  "B0_b10/LoD2": {
+   "area_sum": 5132.25334436015,
+   "area_total": 5132.25334436015,
+   "area_share_sum": 100.0,
+   "rows_sum": 382365,
+   "rows_total": 382365,
+   "scene_sum": 2063378,
+   "scene_total": 2063378,
+   "patches_sum": 82117,
+   "patches_total": 82117
+  },
+  "B0_b10/ALS": {
+   "area_sum": 1592.8931141923633,
+   "area_total": 1592.8931141923629,
+   "area_share_sum": 100.00000000000003,
+   "rows_sum": 144952,
+   "rows_total": 144952,
+   "scene_sum": 2063378,
+   "scene_total": 2063378,
+   "patches_sum": 23280,
+   "patches_total": 23280
+  },
+  "B173nb_b10/LoD2": {
+   "area_sum": 8845.875,
+   "area_total": 8845.875,
+   "area_share_sum": 100.0,
+   "rows_sum": 373093,
+   "rows_total": 373093,
+   "scene_sum": 3881308,
+   "scene_total": 3881308,
+   "patches_sum": 141534,
+   "patches_total": 141534
+  },
+  "B173nb_b10/ALS": {
+   "area_sum": 2285.8673805676904,
+   "area_total": 2285.8673805676904,
+   "area_share_sum": 100.0,
+   "rows_sum": 210321,
+   "rows_total": 210321,
+   "scene_sum": 3881308,
+   "scene_total": 3881308,
+   "patches_sum": 34273,
+   "patches_total": 34273
+  },
+  "R1rep_b10/LoD2": {
+   "area_sum": 4940.875,
+   "area_total": 4940.875,
+   "area_share_sum": 100.0,
+   "rows_sum": 239340,
+   "rows_total": 239340,
+   "scene_sum": 2667737,
+   "scene_total": 2667737,
+   "patches_sum": 79054,
+   "patches_total": 79054
+  },
+  "R1rep_b10/ALS": {
+   "area_sum": 1610.5293175641439,
+   "area_total": 1610.529317564144,
+   "area_share_sum": 99.99999999999999,
+   "rows_sum": 149185,
+   "rows_total": 149185,
+   "scene_sum": 2667737,
+   "scene_total": 2667737,
+   "patches_sum": 24189,
+   "patches_total": 24189
+  },
+  "합/LoD2": {
+   "area_sum": 18919.00334436015,
+   "area_total": 18919.00334436015,
+   "area_share_sum": 100.0,
+   "rows_sum": 994798,
+   "rows_total": 994798,
+   "scene_sum": 8612423,
+   "scene_total": 8612423,
+   "patches_sum": 302705,
+   "patches_total": 302705
+  },
+  "합/ALS": {
+   "area_sum": 5489.289812324198,
+   "area_total": 5489.289812324198,
+   "area_share_sum": 100.0,
+   "rows_sum": 504458,
+   "rows_total": 504458,
+   "scene_sum": 8612423,
+   "scene_total": 8612423,
+   "patches_sum": 81742,
+   "patches_total": 81742
+  }
+ },
+ "checks_v4": [
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "s_corr",
+   "v4": 33860,
+   "here": 33860,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "s_corr",
+   "v4": 96269,
+   "here": 96269,
+   "same": true
+  },
+  {
+   "case": "B0_b10/ALS",
+   "cell": "s_keep",
+   "v4": 1755,
+   "here": 1755,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/ALS",
+   "cell": "s_keep",
+   "v4": 14112,
+   "here": 14112,
+   "same": true
+  },
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "c_refine",
+   "v4": 301740,
+   "here": 301688,
+   "same": false
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "c4",
+   "v4": 111,
+   "here": 111,
+   "same": true
+  }
+ ],
+ "checks_distance_task": [
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "s_corr",
+   "place": "c11",
+   "distance_task": 33860,
+   "here": 33860,
+   "same": true
+  },
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "s_keep",
+   "place": "img",
+   "distance_task": 6457,
+   "here": 6457,
+   "same": true
+  },
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "c_refine",
+   "place": "c2",
+   "distance_task": 301740,
+   "here": 301688,
+   "same": false
+  },
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "c4",
+   "place": "c4",
+   "distance_task": 12433,
+   "here": 12433,
+   "same": true
+  },
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "c_corr14",
+   "place": "c11s",
+   "distance_task": 27502,
+   "here": 27502,
+   "same": true
+  },
+  {
+   "case": "B0_b10/LoD2",
+   "cell": "c_inh_invis",
+   "place": "c5",
+   "distance_task": 0,
+   "here": 0,
+   "same": true
+  },
+  {
+   "case": "B0_b10/ALS",
+   "cell": "s_corr",
+   "place": "c11",
+   "distance_task": 359,
+   "here": 359,
+   "same": true
+  },
+  {
+   "case": "B0_b10/ALS",
+   "cell": "s_keep",
+   "place": "img",
+   "distance_task": 1755,
+   "here": 1755,
+   "same": true
+  },
+  {
+   "case": "B0_b10/ALS",
+   "cell": "c_refine",
+   "place": "c2",
+   "distance_task": 137426,
+   "here": 137417,
+   "same": false
+  },
+  {
+   "case": "B0_b10/ALS",
+   "cell": "c4",
+   "place": "c4",
+   "distance_task": 177,
+   "here": 177,
+   "same": true
+  },
+  {
+   "case": "B0_b10/ALS",
+   "cell": "c_corr14",
+   "place": "c11s",
+   "distance_task": 177,
+   "here": 177,
+   "same": true
+  },
+  {
+   "case": "B0_b10/ALS",
+   "cell": "c_inh_invis",
+   "place": "c5",
+   "distance_task": 0,
+   "here": 0,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/LoD2",
+   "cell": "s_corr",
+   "place": "c11",
+   "distance_task": 123503,
+   "here": 123503,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/LoD2",
+   "cell": "s_keep",
+   "place": "img",
+   "distance_task": 3816,
+   "here": 3816,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/LoD2",
+   "cell": "c_refine",
+   "place": "c2",
+   "distance_task": 172508,
+   "here": 172008,
+   "same": false
+  },
+  {
+   "case": "B173nb_b10/LoD2",
+   "cell": "c4",
+   "place": "c4",
+   "distance_task": 6314,
+   "here": 6314,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/LoD2",
+   "cell": "c_corr14",
+   "place": "c11s",
+   "distance_task": 26047,
+   "here": 26047,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/LoD2",
+   "cell": "c_inh_invis",
+   "place": "c5",
+   "distance_task": 17,
+   "here": 17,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "s_corr",
+   "place": "c11",
+   "distance_task": 96269,
+   "here": 96269,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "s_keep",
+   "place": "img",
+   "distance_task": 9398,
+   "here": 9398,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "c_refine",
+   "place": "c2",
+   "distance_task": 64322,
+   "here": 64322,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "c4",
+   "place": "c4",
+   "distance_task": 111,
+   "here": 111,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "c_corr14",
+   "place": "c11s",
+   "distance_task": 752,
+   "here": 752,
+   "same": true
+  },
+  {
+   "case": "B173nb_b10/ALS",
+   "cell": "c_inh_invis",
+   "place": "c5",
+   "distance_task": 2,
+   "here": 2,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/LoD2",
+   "cell": "s_corr",
+   "place": "c11",
+   "distance_task": 55198,
+   "here": 55198,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/LoD2",
+   "cell": "s_keep",
+   "place": "img",
+   "distance_task": 863,
+   "here": 863,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/LoD2",
+   "cell": "c_refine",
+   "place": "c2",
+   "distance_task": 115372,
+   "here": 115361,
+   "same": false
+  },
+  {
+   "case": "R1rep_b10/LoD2",
+   "cell": "c4",
+   "place": "c4",
+   "distance_task": 712,
+   "here": 712,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/LoD2",
+   "cell": "c_corr14",
+   "place": "c11s",
+   "distance_task": 37084,
+   "here": 37084,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/LoD2",
+   "cell": "c_inh_invis",
+   "place": "c5",
+   "distance_task": 3,
+   "here": 3,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/ALS",
+   "cell": "s_corr",
+   "place": "c11",
+   "distance_task": 900,
+   "here": 900,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/ALS",
+   "cell": "s_keep",
+   "place": "img",
+   "distance_task": 14112,
+   "here": 14112,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/ALS",
+   "cell": "c_refine",
+   "place": "c2",
+   "distance_task": 113446,
+   "here": 113157,
+   "same": false
+  },
+  {
+   "case": "R1rep_b10/ALS",
+   "cell": "c4",
+   "place": "c4",
+   "distance_task": 383,
+   "here": 383,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/ALS",
+   "cell": "c_corr14",
+   "place": "c11s",
+   "distance_task": 494,
+   "here": 494,
+   "same": true
+  },
+  {
+   "case": "R1rep_b10/ALS",
+   "cell": "c_inh_invis",
+   "place": "c5",
+   "distance_task": 6,
+   "here": 6,
+   "same": true
+  }
+ ],
+ "scientific_verdict": null
+}
