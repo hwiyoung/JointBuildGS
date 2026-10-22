@@ -4,7 +4,7 @@
 
 Places and region rows: v4's (configs/phd/main_viscmp_v4/places_v4.json; V3 = the fix test's figure-1 rows of face 1, as v4 f4_fig.py).
 Results (config figs3.results): 학습 전 사전 정보, GeoGS, MVS (v4's one-image depth-map mesh: S0/fork_inputs/s61/<site>/maps/mvs/<depth view>.npy,
-vd_dist.depth_mesh, cut to the place box), 2DGS, 결합, CDGS*, 본 방법 (seed 0; seed 1 in json). Signed d_g of the place rows: the stored
+vd_dist.depth_mesh, cut to the place box), 2DGS, 결합, CDGS 변형, 본 방법 (seed 0; seed 1 in json). Signed d_g of the place rows: the stored
 per-point files (vd_dist.Case.stored); the MVS mesh: vd_dist.Case.dg_rows (the distance task's rule). Under each figure: 참값 기준 재현율 R(τ),
 참값 기준 평균 거리, 치우침 (median signed d_g).
 V3, V5: (가) the density of signed d_g, one line per result, x -0.3~+0.3 m, the peak of each line written as a number (cm);
@@ -157,6 +157,14 @@ def fig_dist_section(plt, key, g, title):
         if pk is not None:
             ax.annotate(f"{100 * pk:+.0f}", (100 * pk, y.max()), fontsize=5.5, color=s["color"], ha="center", va="bottom")
     ax.axvline(0, color="#888888", lw=0.6, ls=":")
+    same = []
+    for a_ in KEYS:
+        for b_ in KEYS:
+            if a_ < b_ and a_ in rec and b_ in rec and rec[a_]["peak_cm"] is not None and rec[b_]["peak_cm"] is not None \
+                    and abs(rec[a_]["peak_cm"] - rec[b_]["peak_cm"]) < 0.5 and abs(rec[a_]["mean_cm"] - rec[b_]["mean_cm"]) < 0.3:
+                same.append(f"{ko(a_)}과 {ko(b_)}의 선이 겹침")
+    if same:
+        ax.text(0.02, 0.98, "\n".join(same), transform=ax.transAxes, fontsize=5, va="top")
     ax.set_xlim(-30, 30); ax.set_xlabel("부호 있는 d_g (cm)", fontsize=6); ax.set_ylabel("밀도", fontsize=6); ax.set_yticks([])
     ax.tick_params(labelsize=5.5, length=2)
     for sp in ("top", "right"):
@@ -165,12 +173,12 @@ def fig_dist_section(plt, key, g, title):
     c, along = section_axis(key, g)
     L, (lo, hi) = section_lines(g, c, along)
     ax = axs[1]
-    ax.scatter(L["gt"][:, 0], L["gt"][:, 1], s=0.5, c="k", lw=0, label="참값 점", rasterized=True)
+    ax.scatter(L["gt"][:, 0], L["gt"][:, 1], s=0.5, c="#9a9a9a", lw=0, label="참값 점", rasterized=True, zorder=1)
     for k in KEYS:
         if k not in L or not len(L[k]):
             continue
         s = ST["mvs" if k == "mvs1" else k]
-        ax.plot(L[k][:, 0], L[k][:, 1], color=s["color"], ls=s["ls"], lw=s["lw"] * 0.7)
+        ax.plot(L[k][:, 0], L[k][:, 1], color=s["color"], ls=s["ls"], lw=s["lw"] * 0.7, zorder=3 if k == "method" else 2)
     zc, win = L["window"]["z_centre"], L["window"]["half_m"]
     ax.set_ylim(zc - win, zc + win)
     ax.set_xlabel("단면을 따라 (m)", fontsize=6); ax.set_ylabel("높이 (m)", fontsize=6)
@@ -180,7 +188,7 @@ def fig_dist_section(plt, key, g, title):
     ax.set_title(f"(나) 연직 단면: 참값 지붕 높이 ±{win:g} m 안의 면 높이(0.1 m 칸 중앙값)", fontsize=6.5)
     from matplotlib.lines import Line2D
     hs = [Line2D([0], [0], color=ST["mvs" if k == "mvs1" else k]["color"], ls=ST["mvs" if k == "mvs1" else k]["ls"], lw=1.2, label=ko(k)) for k in KEYS if k in g["d"]]
-    hs.append(Line2D([0], [0], marker="o", ls="none", color="k", ms=2, label="참값 점"))
+    hs.append(Line2D([0], [0], marker="o", ls="none", color="#9a9a9a", ms=2, label="참값 점"))
     fig.legend(handles=hs, loc="lower center", ncol=8, fontsize=5.5, frameon=False, bbox_to_anchor=(0.5, 0.0))
     items = [f"{ko(k)} {100 * v['R_tau']:.1f} · {v['mean_cm']:.1f} · {v['bias_cm']:+.1f}" for k, v in rec.items()]
     fig.text(0.5, 0.10, "R(τ) % · 참값 기준 평균 거리 cm · 치우침 cm — " + "   ".join(items[:4]), ha="center", fontsize=5)
@@ -215,7 +223,7 @@ def fig_v6(plt, g, title):
             q = np.array([cc + t1 + t2, cc + t1 - t2, cc - t1 - t2, cc - t1 + t2])[:, :2] - c0
             q2 = np.c_[q @ ax1, q @ ax2]
             fc = "#dddddd" if not np.isfinite(v_) else cmap(norm(v_))
-            ax.fill(q2[:, 0], q2[:, 1], color=fc, lw=0.6 if p in rim else 0.0, ec="k" if p in rim else fc)
+            ax.fill(q2[:, 0], q2[:, 1], facecolor=fc, lw=0.9 if p in rim else 0.0, edgecolor="#e6a700" if p in rim else fc, zorder=3 if p in rim else 2)
         ax.set_aspect("equal"); ax.set_xticks([]); ax.set_yticks([])
         for sp in ax.spines.values():
             sp.set_visible(False)
@@ -229,7 +237,8 @@ def fig_v6(plt, g, title):
     fig.subplots_adjust(left=0.13, right=0.86, top=0.90, bottom=0.17, hspace=0.15)
     cax = fig.add_axes([0.25, 0.07, 0.5, 0.025])
     cb = fig.colorbar(sm, cax=cax, orientation="horizontal")
-    cb.set_label("패치마다 부호 있는 d_g의 중앙값 (m) · 굵은 테두리 = 둘레 결측 패치 · 오른쪽 = 치우침", fontsize=5.5); cb.ax.tick_params(labelsize=5)
+    cb.set_label("패치마다 부호 있는 d_g의 중앙값 (m; 빨강 = 참값보다 바깥·위, 파랑 = 안·아래)", fontsize=5.5); cb.ax.tick_params(labelsize=5)
+    fig.text(0.5, 0.015, "테두리 없는 칸 = 유리 패치 163개, 노란 테두리 칸 = 둘레 결측 패치 18개 · 줄 오른쪽 = 유리와 둘레 결측의 치우침(부호 있는 d_g의 중앙값)", ha="center", fontsize=5)
     fig.suptitle(title, fontsize=7)
     return fig, rec
 
@@ -241,8 +250,8 @@ def title_of(key, rec):
         return (f"두 자료가 모두 맞는 이 평평한 지붕에서 거리 분포의 봉우리는 학습 전 사전 정보 {pk('prior'):+.0f} cm, 결합 {pk('mvsfuse'):+.0f} cm, "
                 f"본 방법 {pk('method'):+.0f} cm, MVS {pk('mvs1'):+.0f} cm")
     if key == "V5":
-        return (f"영상이 틀린 이 유리 지붕 조각에서 본 방법의 치우침은 {rec['method']['bias_cm']:+.0f} cm, 학습 전 사전 정보 {rec['prior']['bias_cm']:+.0f} cm, "
-                f"GeoGS {rec['geogs']['bias_cm']:+.0f} cm")
+        return (f"영상이 틀린 이 유리 지붕 조각에서 거리 분포의 봉우리는 본 방법 {pk('method'):+.0f} cm, MVS {pk('mvs1'):+.0f} cm, "
+                f"학습 전 사전 정보 {pk('prior'):+.0f} cm, GeoGS {pk('geogs'):+.0f} cm")
     r = rec["method"]
     return (f"판단할 수 없는 유리 띠: 본 방법은 유리에서 {r['glass']['bias_cm']:+.0f} cm, 둘레 결측에서 {r['rim']['bias_cm']:+.0f} cm 치우침"
             if r.get("glass") and r.get("rim") else "판단할 수 없는 유리 띠")

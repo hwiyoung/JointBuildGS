@@ -3,7 +3,7 @@
   python a3_tables.py   -> /docs/tables/일3_장면전체.md|json, 일3_<key>.md (one per key: GT table, result table 셈 마, seeds),
                            일3_부록_강건함.md, 일3_부록_셈.md, 일3_부록_1m.md
 Values: shares in %, distances in cm, one decimal. Samples: under 100 '표본 부족', under 10,000 '*'. The method's cell = the mean of its two
-seeds (the seeds in the key tables). CDGS* = the variant without the per-view scale fit. [이 발주에서 냄] scientific_verdict: null."""
+seeds (the seeds in the key tables). CDGS 변형 = the variant without the per-view scale fit. [이 발주에서 냄] scientific_verdict: null."""
 from ax_common import CASES, CELLS, CFG, DOCS, KEY_KO, KEYS, PRIORS, RES_KO, SUMS, TAB, case_ko, jdump, jl, now
 
 ORD = CFG["results"]["order"]
@@ -111,7 +111,7 @@ def scene_table(D, R2):
     H = head()
     L = ["# 일 3 장면 전체 한눈에 (PHD-MAIN-AXES71-v2) [이 발주에서 냄]", "", f"- 만든 때 {now()}. 장면 표면 F1 점수(τ) = 전체의 2PR/(P+R), R = 참값 기준 재현율 R(τ), P = 결과 기준 정밀도 P(τ). "
          "Chamfer 거리 = (참값 기준 평균 거리 + 결과 기준 평균 거리) ÷ 2 (cm). 결과 기준이 든 값은 셈 마(법선 방향 거리, 옆 거리 0.5 m 안)와 셈 가(가장 가까운 참값 점까지) 두 줄. "
-         "4τ 넘는 비율 = |d_g| > 4τ인 참값 점의 비율. CDGS* = 시점별 크기 맞추기를 생략한 변형. 본 방법 = 두 씨앗 평균.", ""]
+         "4τ 넘는 비율 = |d_g| > 4τ인 참값 점의 비율. CDGS 변형 = 시점별 크기 맞추기를 생략한 변형. 본 방법 = 두 씨앗 평균.", ""]
     rows = [("F1 셈 마", lambda b: b["both"]["E"]["F1_tau"], 100), ("F1 셈 가", lambda b: b["both"]["A"]["F1_tau"], 100),
             ("Chamfer 셈 마", lambda b: b["both"]["E"]["chamfer"], 1), ("Chamfer 셈 가", lambda b: b["both"]["A"]["chamfer"], 1),
             ("4τ 넘는 참값 점", lambda b: b["gt"]["out4"], 100)]

@@ -147,7 +147,7 @@ def write_md(out, info, chk):
     lab = {ax: labels(ax) for ax in ("axis1_tau", "axis1_m", "axis2")}
     L = ["# 일 4 두 축 곡선의 구간 표 (PHD-MAIN-AXES71-v2) [이 발주에서 냄]", "", f"- 만든 때 {now()}. 칸 = 참값 기준 재현율 R(τ) (%) · 참값 기준 평균 거리 (cm) · 참값 점 수. 결과 기준(셈 마) 값은 json.",
          "- 축 1: 다듬기(0~1)와 보정 두 칸을 패치의 사전 정보 어긋남 |gt_med|/τ로 나눔. 축 2: 다듬기(0~1)와 보존 · 문턱 안('지킴'), 한계('놓음'), 보존 · 거름을 패치의 영상 깊이 어긋남 |mvs_minus_gt_at_gt|/τ로 나눔.",
-         "- 본 방법 = 두 씨앗 평균. CDGS* = 시점별 크기 맞추기를 생략한 변형. `*` 1만 점 미만, '표본 부족' 100점 미만.", ""]
+         "- 본 방법 = 두 씨앗 평균. CDGS 변형 = 시점별 크기 맞추기를 생략한 변형. `*` 1만 점 미만, '표본 부족' 100점 미만.", ""]
     names = {"axis1_tau": "축 1 (τ의 배)", "axis1_m": "축 1 (m, 보정 칸만)", "axis2_keep": "축 2 · 지킴(보존 · 문턱 안)", "axis2_limit": "축 2 · 놓음(한계)", "axis2_mask": "축 2 · 보존 · 거름"}
     axof = {"axis1_tau": "axis1_tau", "axis1_m": "axis1_m", "axis2_keep": "axis2", "axis2_limit": "axis2", "axis2_mask": "axis2"}
     for u, d in out.items():

@@ -7,7 +7,7 @@ quantiles of the density of the in-range patches with GT (common to every result
 normal distance, lateral <= 0.5 m) and result: share of the counted result points over 1 m, the counted points and the share not counted.
 The GT of the places is used (B0: ULS + primary GT, as the density). (2) The input prior (학습 전 사전 정보): the result-side values by
 the slope of the nearest patch (0~30, 30~60, 60~90 deg) for 셈 가-바: P(τ), mean, median, share not counted. (3) A horizontal section
-through one long wall of B0 · 항공 LiDAR: the wall = the largest clump of in-range prior patches steeper than 60 deg (6.3 deg tolerance on
+through one long wall of B0 · 항공 LiDAR: the wall = the largest group (by area) of prior-mesh triangles steeper than 60 deg in the range box, centroids linked within 0.5 m (6.3 deg tolerance on
 the normal direction, linked within 0.36 m), chosen from the prior patches and the GT only; the section height = the median height of the
 wall patches; slab +-0.05 m. Panels: 학습 전 사전 정보, 결합, 본 방법 (seed 0) x colour by d_r / by 셈 마. [이 발주에서 냄]
 scientific_verdict: null."""
@@ -68,27 +68,31 @@ def part2(A, C):
 
 
 def pick_wall(site, prior, C):
-    """the largest clump of steep in-range prior patches with one facing (from the prior and the GT only)."""
+    """the longest wall of the prior surface: triangles of the prior mesh (defs_s1.prior_mesh) steeper than 60 deg inside the range box,
+    linked when their centroids are within 0.5 m, the largest linked group by area (from the prior only)."""
+    import defs_s1 as DS
+    V, F, _ = DS.prior_mesh(site, prior)
+    T3 = V[F]
+    n = np.cross(T3[:, 1] - T3[:, 0], T3[:, 2] - T3[:, 0])
+    ar = 0.5 * np.linalg.norm(n, axis=1)
+    n = n / np.maximum(2 * ar[:, None], 1e-12)
+    cen = T3.mean(1)
     R = np.load(f"/out/regions_v3/regions_ext_v3_{site}_{prior}.npz")
-    U = np.load(MP.S0U.format(site=site, prior=prior))
-    n = np.cross(U["loc_t1"], U["loc_t2"]); n /= np.linalg.norm(n, axis=1, keepdims=True)
-    cen = R["centre"].astype(np.float64)
-    steep = (C["cell"] >= 0) & (C["slope"] > 60) & C["has_gt"]
+    ev = C["cell"] >= 0
+    lo, hi = R["centre"][ev].min(0), R["centre"][ev].max(0)
+    steep = (np.abs(n[:, 2]) < np.cos(np.radians(60))) & np.all((cen >= lo) & (cen <= hi), 1) & (ar > 1e-6)
     idx = np.nonzero(steep)[0]
-    pr = cKDTree(cen[idx]).query_pairs(0.36, output_type="ndarray")
-    if len(pr):
-        same = np.abs((n[idx[pr[:, 0]]] * n[idx[pr[:, 1]]]).sum(1)) > np.cos(np.radians(6.3))
-        pr = pr[same]
+    pr = cKDTree(cen[idx]).query_pairs(0.5, output_type="ndarray")
     G = coo_matrix((np.ones(len(pr)), (pr[:, 0], pr[:, 1])), shape=(len(idx), len(idx)))
     k, lab = connected_components(G, directed=False)
-    big = np.bincount(lab).argmax()
+    big = np.bincount(lab, weights=ar[idx]).argmax()
     w = idx[lab == big]
-    return w, cen[w], n[w]
+    return w, cen[w], ar[w]
 
 
 def section(site, prior):
     C = cells(site, prior)
-    w, cw, nw = pick_wall(site, prior, C)
+    w, cw, aw = pick_wall(site, prior, C)
     z0 = float(np.median(cw[:, 2]))
     lo, hi = cw[:, :2].min(0) - 3.0, cw[:, :2].max(0) + 3.0
     from ax_common import SiteGT
@@ -105,7 +109,7 @@ def section(site, prior):
         dA, _ = res_vals(s, "A", True)
         dE, okE = res_vals(s, "E", True)
         pan[rk] = dict(xy=X[m, :2], dA=dA[m], dE=dE[m], okE=okE[m], tau=s["tau"][m], res=res)
-    return dict(z0=z0, lo=lo, hi=hi, gt=G[sl, :2], wall_patches=int(len(w)), wall_area=float(C["area"][w].sum()), panels=pan)
+    return dict(z0=z0, lo=lo, hi=hi, gt=G[sl, :2], wall_patches=int(len(w)), wall_area=float(aw.sum()), panels=pan)
 
 
 def fig_section(S):
@@ -144,7 +148,7 @@ def fig_section(S):
         fig.savefig(f"{stem}.{e}", dpi=300)
     plt.close(fig)
     jdump(f"{stem}.json", dict(task="PHD-MAIN-AXES71-v2", work="일 8 단면", made=now(), z0=S["z0"], window=[S["lo"].tolist(), S["hi"].tolist()], slab_m=0.05,
-                               wall_patches=S["wall_patches"], wall_area_m2=S["wall_area"], gt_points=int(len(S["gt"])), values=vals,
+                               wall_triangles=S["wall_patches"], wall_area_m2=S["wall_area"], gt_points=int(len(S["gt"])), values=vals,
                                rule=__doc__, scientific_verdict=None))
     return vals
 

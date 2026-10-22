@@ -98,11 +98,11 @@
    "mvs": "MVS",
    "twodgs": "2DGS",
    "mvsfuse": "결합",
-   "cdgs": "CDGS*",
+   "cdgs": "CDGS 변형",
    "method": "본 방법",
    "fixB": "결측 지키기"
   },
-  "cdgs_note": "CDGS* = 시점별 크기 맞추기를 생략한 변형 (cdgsnofit)",
+  "cdgs_note": "CDGS 변형 = 시점별 크기 맞추기를 생략한 변형 (cdgsnofit)",
   "inputs": [
    "prior",
    "mvs"
@@ -607,6 +607,13 @@
     "보존 · 거름의 셋째 선: |v_photo| ÷ τ (빈칸 채우기 obs_masked 파일, 거르기 전 광도 깊이 − 참값, m; 일 1 (라))"
    ],
    "why": "결과 값을 보기 전, 일 1 정의 확인의 답에 따라. 영역 파일 mvs_minus_gt_at_gt는 v2 갈래(지붕꼴, 값 5개 이상)만의 값이고 v1_kept 갈래는 mvs_minus_prior − gt_med로 코드 3을 정했다(scripts/phd/main_stage1_v1/defs_s1.py:142-146, regions_v3.py:286). 합친 값이 코드 3을 다시 낸다(6/6). 거르기 전 어긋남은 v_photo로 패치마다 있다. 판정 길의 파일과 규칙을 적음"
+  },
+  {
+   "time": "2026-10-22 23:37:41 KST",
+   "what": "results.ko.cdgs (표시 이름만)",
+   "before": "CDGS*",
+   "after": "CDGS 변형",
+   "why": "결과를 본 뒤, 표시만 바꿈(값 같음). 발주 16절 점검: CDGS의 변형 표시를 그림과 표마다 적어야 하는데 CDGS*의 * 뜻이 그림 안에 없었다"
   }
  ],
  "locked": "2026-10-22 20:05:18 KST"

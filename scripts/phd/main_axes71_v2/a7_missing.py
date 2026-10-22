@@ -116,7 +116,7 @@ def main():
     jdump(TAB / "a7_missing.json", dict(task="PHD-MAIN-AXES71-v2", work="일 7 결측", made=now(), rule=__doc__.split("\n\n")[1], data=out, info=info, checks=chk, scientific_verdict=None))
     jdump(DOCS / "tables/일7_결측.json", dict(task="PHD-MAIN-AXES71-v2", work="일 7 결측", made=now(), data=out, info=info, checks=chk, scientific_verdict=None))
     L = ["# 일 7 결측 패치의 판정 길과 정오 (PHD-MAIN-AXES71-v2) [이 발주에서 냄]", "", f"- 만든 때 {now()}. 결측 패치 = 상속 · 결측 + 결측 · 사전 정보 틀림 + 보존 · 거름 가운데 코드 4. 정오: 코드 4 = 사전 정보 맞음, 코드 13 = 틀림.",
-         "- 칸 = 참값 기준 재현율 R(τ) (%) · R(0.2 m) (%) · 참값 기준 평균 거리 (cm). 본 방법 = 두 씨앗 평균. CDGS* = 시점별 크기 맞추기를 생략한 변형.", ""]
+         "- 칸 = 참값 기준 재현율 R(τ) (%) · R(0.2 m) (%) · 참값 기준 평균 거리 (cm). 본 방법 = 두 씨앗 평균. CDGS 변형 = 시점별 크기 맞추기를 생략한 변형.", ""]
     for u, e in out.items():
         nm = (("LoD2" if u.endswith("LoD2") else "항공 LiDAR") + " 합(세 지역)") if u.startswith("합") else case_ko(*u.split("/"))
         L += [f"## {nm}", "", "| 판정 길 | 정오 | 패치 | 넓이 (m²) | 참값 점 | " + " | ".join(RES_KO[k] for k in RESK) + " |", "|---|---|---:|---:|---:|" + "---|" * len(RESK)]

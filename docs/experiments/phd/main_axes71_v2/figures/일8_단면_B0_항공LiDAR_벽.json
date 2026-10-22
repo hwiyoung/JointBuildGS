@@ -1,72 +1,72 @@
 {
  "task": "PHD-MAIN-AXES71-v2",
  "work": "일 8 단면",
- "made": "2026-10-22 23:20:20 KST",
- "z0": -24.489935046189036,
+ "made": "2026-10-22 23:45:07 KST",
+ "z0": -30.78033333333326,
  "window": [
   [
-   112.97743045158772,
-   0.658782844809048
+   83.78113996251136,
+   43.34338447219036
   ],
   [
-   118.97743045158772,
-   6.658782844809048
+   114.53747329583507,
+   59.80671780572237
   ]
  ],
  "slab_m": 0.05,
- "wall_patches": 1,
- "wall_area_m2": 0.1132102906703949,
- "gt_points": 2425,
+ "wall_triangles": 2155,
+ "wall_area_m2": 1790.7799220439138,
+ "gt_points": 213,
  "values": {
   "prior": {
    "dA": {
-    "points": 525,
-    "share_le_tau": 0.8571428571428571,
-    "share_tau_1m": 0.14285714285714285,
-    "share_over_1m": 0.0,
+    "points": 657,
+    "share_le_tau": 0.0106544901065449,
+    "share_tau_1m": 0.1750380517503805,
+    "share_over_1m": 0.8143074581430746,
     "not_counted": 0.0
    },
    "dE": {
-    "points": 525,
-    "share_le_tau": 0.8876190476190476,
-    "share_tau_1m": 0.11238095238095239,
-    "share_over_1m": 0.0,
-    "not_counted": 0.0
+    "points": 657,
+    "share_le_tau": 0.0228310502283105,
+    "share_tau_1m": 0.1628614916286149,
+    "share_over_1m": 0.091324200913242,
+    "not_counted": 0.7229832572298326
    }
   },
   "mvsfuse": {
    "dA": {
-    "points": 545,
-    "share_le_tau": 0.8311926605504587,
-    "share_tau_1m": 0.1688073394495413,
-    "share_over_1m": 0.0,
+    "points": 636,
+    "share_le_tau": 0.01729559748427673,
+    "share_tau_1m": 0.19025157232704404,
+    "share_over_1m": 0.7924528301886793,
     "not_counted": 0.0
    },
    "dE": {
-    "points": 545,
-    "share_le_tau": 0.8678899082568807,
-    "share_tau_1m": 0.13211009174311927,
-    "share_over_1m": 0.0,
-    "not_counted": 0.0
+    "points": 636,
+    "share_le_tau": 0.020440251572327043,
+    "share_tau_1m": 0.1918238993710692,
+    "share_over_1m": 0.08962264150943396,
+    "not_counted": 0.6981132075471698
    }
   },
   "method": {
    "dA": {
-    "points": 365,
-    "share_le_tau": 1.0,
-    "share_tau_1m": 0.0,
-    "share_over_1m": 0.0,
+    "points": 945,
+    "share_le_tau": 0.17989417989417988,
+    "share_tau_1m": 0.09312169312169312,
+    "share_over_1m": 0.726984126984127,
     "not_counted": 0.0
    },
    "dE": {
-    "points": 365,
-    "share_le_tau": 1.0,
-    "share_tau_1m": 0.0,
+    "points": 945,
+    "share_le_tau": 0.22116402116402117,
+    "share_tau_1m": 0.0380952380952381,
     "share_over_1m": 0.0,
-    "not_counted": 0.0
+    "not_counted": 0.7407407407407407
    }
   }
  },
- "rule": "PHD-MAIN-AXES71-v2 일 8 (11.1): the check of the result-side distance (jointbuildgs:dev, CPU).\n\n  python a8_check.py   -> AX/tables/a8_check.json, /docs/tables/일8_결과기준점검.md|json, /docs/figures/일8_단면_B0_항공LiDAR_벽.png|pdf|json\n\n(1) Density: every result point takes the GT density of its nearest prior patch (일 1; the patch's GT rows / area). Bins = the case's five\nquantiles of the density of the in-range patches with GT (common to every result) + '참값 행 없음'. Per bin, count (셈 가: d_r; 셈 마:\nnormal distance, lateral <= 0.5 m) and result: share of the counted result points over 1 m, the counted points and the share not counted.\nThe GT of the places is used (B0: ULS + primary GT, as the density). (2) The input prior (학습 전 사전 정보): the result-side values by\nthe slope of the nearest patch (0~30, 30~60, 60~90 deg) for 셈 가-바: P(τ), mean, median, share not counted. (3) A horizontal section\nthrough one long wall of B0 · 항공 LiDAR: the wall = the largest clump of in-range prior patches steeper than 60 deg (6.3 deg tolerance on\nthe normal direction, linked within 0.36 m), chosen from the prior patches and the GT only; the section height = the median height of the\nwall patches; slab +-0.05 m. Panels: 학습 전 사전 정보, 결합, 본 방법 (seed 0) x colour by d_r / by 셈 마. [이 발주에서 냄]\nscientific_verdict: null.",
+ "rule": "PHD-MAIN-AXES71-v2 일 8 (11.1): the check of the result-side distance (jointbuildgs:dev, CPU).\n\n  python a8_check.py   -> AX/tables/a8_check.json, /docs/tables/일8_결과기준점검.md|json, /docs/figures/일8_단면_B0_항공LiDAR_벽.png|pdf|json\n\n(1) Density: every result point takes the GT density of its nearest prior patch (일 1; the patch's GT rows / area). Bins = the case's five\nquantiles of the density of the in-range patches with GT (common to every result) + '참값 행 없음'. Per bin, count (셈 가: d_r; 셈 마:\nnormal distance, lateral <= 0.5 m) and result: share of the counted result points over 1 m, the counted points and the share not counted.\nThe GT of the places is used (B0: ULS + primary GT, as the density). (2) The input prior (학습 전 사전 정보): the result-side values by\nthe slope of the nearest patch (0~30, 30~60, 60~90 deg) for 셈 가-바: P(τ), mean, median, share not counted. (3) A horizontal section\nthrough one long wall of B0 · 항공 LiDAR: the wall = the largest group (by area) of prior-mesh triangles steeper than 60 deg in the range box, centroids linked within 0.5 m (6.3 deg tolerance on\nthe normal direction, linked within 0.36 m), chosen from the prior patches and the GT only; the section height = the median height of the\nwall patches; slab +-0.05 m. Panels: 학습 전 사전 정보, 결합, 본 방법 (seed 0) x colour by d_r / by 셈 마. [이 발주에서 냄]\nscientific_verdict: null.",
  "scientific_verdict": null
 }
