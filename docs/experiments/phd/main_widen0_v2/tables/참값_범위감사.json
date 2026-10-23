@@ -1,0 +1,25 @@
+{
+  "rows": [
+    {
+      "exclusion_grid_source": "/art/phase-payloads/phd/main_design_realchange_survey_v1/PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1/derived.npz",
+      "shape": [
+        1180,
+        1000
+      ],
+      "bounds_epsg25832": [
+        690700.0,
+        5335820.0,
+        691200.0,
+        5336410.0
+      ],
+      "outside_grid_unique_points": 16,
+      "action": "Excluded because inherited tree/transient classification is unavailable; never assume these points are clean GT.",
+      "manual_uls_used": false
+    }
+  ],
+  "source": "Raw nadir points and inherited exclusion-grid bounds only; no patch outcomes",
+  "generator": "/repo/scripts/phd/main_widen0_v2/gt_coverage_audit.py",
+  "generator_sha256": "584c59a01982586ef76027481b8f9ccfe8b47083a42ffcd7bcf82982740b6cb1",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

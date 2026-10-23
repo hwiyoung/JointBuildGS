@@ -16,6 +16,8 @@ DT=np.dtype([('x','<f4'),('y','<f4'),('z','<f4'),('view','<i2')])
 def main():
     t0=time.monotonic();receipt=json.loads((WS/'colmap_receipt.json').read_text())
     assert receipt['exit_code']==0
+    replay=json.loads((O/'gates/unprojection.json').read_text())
+    assert replay['status']=='PASS' and replay['point_producer_sha256']==sha(Path(__file__)), 'unprojection replay required for the current producer'
     split=json.loads((O/'image_split.json').read_text());names=split['train']
     assert not set(names)&set(split['evaluation'])
     tiles=json.loads((O/'inputs/tiles.json').read_text());cfg=json.loads(Path('/cfg/widen0_v2.json').read_text())
@@ -25,6 +27,9 @@ def main():
         cid,model,iw,ih=struct.unpack('<iiQQ',f.read(24));assert model==1
         fx,fy,cx,cy=struct.unpack('<4d',f.read(32))
     fx,fy,cx,cy=fx*1024/iw,fy*741/ih,cx*1024/iw,cy*741/ih
+    # jbgs_calibration uses integer-centre coordinates: COLMAP's scaled
+    # corner-coordinate principal point is reduced by half a pixel.
+    cx-=.5;cy-=.5
     # Match mvs_surface.cameras: the training projection and NDC-to-pixel
     # arithmetic use float32, even though unprojection itself is float64.
     f32=np.float32

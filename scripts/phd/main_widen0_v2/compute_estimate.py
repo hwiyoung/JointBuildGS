@@ -9,13 +9,15 @@ def main():
     cov=np.load(O/'inputs/coverage.npz');area=float(cov['common'].sum())*float(cov['res'])**2
     tiles=json.loads((O/'inputs/tiles.json').read_text());images=len(json.loads((O/'image_split.json').read_text())['train'])
     boxes=json.loads((PREP/'step06/box_ranges.json').read_text());rows=[];attempts=[]
-    for f in sorted((S1/'stage1').glob('*/*/receipt.json')):
+    FT=PH/'main_fixtest_v1/PHD-MAIN-FIXTEST-v1/runs'
+    receipts=sorted((S1/'stage1').glob('*/*/receipt.json'))+sorted(FT.glob('*/*/receipt.json'))
+    for f in receipts:
         r=json.loads(f.read_text());site=r.get('site');p=f.parent/'post/post.json'
         if site not in boxes:continue
         post=json.loads(p.read_text()) if p.exists() else {};split=S0/'fork_inputs/s61'/site/'split.json'
         ni=len(json.loads(split.read_text())['train']) if split.exists() else None
         sa=boxes[site]['area_m2'];sec=r.get('wall_seconds');mem=r.get('gpu_memory_used_mib',{}).get('peak_minus_idle')
-        entry=dict(site=site,result=f.parent.name,method=r.get('method'),status=r.get('status'),training_seconds=sec,
+        entry=dict(source_task='PHD-MAIN-FIXTEST-v1' if FT in f.parents else 'PHD-MAIN-STAGE1-v1',site=site,result=f.parent.name,method=r.get('method'),status=r.get('status'),training_seconds=sec,
             gpu_peak_minus_idle_GiB=mem/1024 if mem is not None else None,final_gaussians=post.get('gaussians',{}).get('n'),
             post_seconds=post.get('seconds'),post_host_peak_GiB=post.get('peak_host_gb'),training_images=ni,input_area_m2=sa,
             receipt=str(f),receipt_sha256=sha(f),post_source=str(p) if p.exists() else None,post_sha256=sha(p) if p.exists() else None)

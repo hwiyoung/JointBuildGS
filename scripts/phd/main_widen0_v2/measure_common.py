@@ -20,9 +20,18 @@ def patches(site,prior):return np.load(ROOT/'patch_geometry'/f'{site}_{prior}.np
 def log(*a):print(*a,flush=True)
 def now():return dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat()
 def peak_gb():return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024**2
-def env():return dict(image=os.environ.get('WIDEN_IMAGE_ID'),commit=os.environ.get('WIDEN_COMMIT'),
-    config_sha256=hashlib.sha256(Path('/cfg/widen0_v2.json').read_bytes()).hexdigest(),
-    task_script_sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob('*.py')},scientific_verdict=None)
+def _environment():
+    # The worktree's .git points outside the read-only /repo mount. The host
+    # records its HEAD inside the task payload after each task commit; exact
+    # executing script hashes below remain authoritative for dirty-file changes.
+    reference=OUT/'repository_head_at_pipeline_preparation.txt'
+    commit=reference.read_text().strip() if reference.exists() else os.environ.get('WIDEN_COMMIT')
+    return dict(image=os.environ.get('WIDEN_IMAGE_ID'),commit=commit,container_launch_commit=os.environ.get('WIDEN_COMMIT'),
+        commit_reference=str(reference),
+        captured_at=now(),config_sha256=hashlib.sha256(Path('/cfg/widen0_v2.json').read_bytes()).hexdigest(),
+        task_script_sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob('*.py')},scientific_verdict=None)
+ENVIRONMENT=_environment()
+def env():return ENVIRONMENT
 def jdump(p,obj):
     def conv(x):
         if isinstance(x,np.ndarray):return x.tolist()

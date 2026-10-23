@@ -30,7 +30,10 @@ def main():
         quad=c[:,None,:]+.125*(offsets[None,:,0,None]*t1[:,None,:]+offsets[None,:,1,None]*t2[:,None,:])
         # Same 0.25 m display quad as the inherited photo figure; clipped patch
         # area stays in numerical tables and is not inferred from the photo mask.
-        margin=c[:,None,:]+3.125*(offsets[None,:,0,None]*t1[:,None,:]+offsets[None,:,1,None]*t2[:,None,:])
+        e1=t1/np.linalg.norm(t1,axis=1,keepdims=True);e2=np.cross(d['normal'][ids],e1)
+        e2/=np.linalg.norm(e2,axis=1,keepdims=True)
+        border=3.*(offsets[None,:,0,None]*e1[:,None,:]+offsets[None,:,1,None]*e2[:,None,:])
+        margin=(quad[:,:,None,:]+border[:,None,:,:]).reshape(-1,3)
         best=None
         for v in views:
             po=poses[v['name']];uv,z=project(quad.reshape(-1,3),po['q'],po['t'],params);q=uv.reshape(-1,4,2)
@@ -41,7 +44,7 @@ def main():
         rec=dict(component_id=row['component_id'],cell=row['cell'],prior=row['prior'],building_ids=row['building_ids'],area_m2=row['area_m2'])
         if best is None:
             rec.update(status='확인 불가',reason='No nadir training image contains all projected component patches.');records.append(rec);continue
-        a,v,q=best;po=poses[v['name']];uv,z=project(margin.reshape(-1,3),po['q'],po['t'],params)
+        a,v,q=best;po=poses[v['name']];uv,z=project(margin,po['q'],po['t'],params)
         lo=np.floor(uv.min(0)).astype(int);hi=np.ceil(uv.max(0)).astype(int)+1
         box=[max(0,int(lo[0])),max(0,int(lo[1])),min(w,int(hi[0])),min(h,int(hi[1]))];x0,y0,x1,y1=box
         raw=Image.open(io.BytesIO(archive.read(v['original_zip_member']))).convert('RGB');assert raw.size==(w,h)
@@ -49,11 +52,14 @@ def main():
         for p in q:draw.polygon([(float(x-x0),float(y-y0)) for x,y in p],fill=1)
         m=np.asarray(mask,bool);edge=m&~binary_erosion(m,iterations=2);arr=np.array(im);arr[edge]=[255,210,0]
         name=f'{rank+1:02d}_{row["cell"]}_{row["prior"]}';Image.fromarray(arr).save(crops/f'{name}.png',dpi=(300,300))
-        line=f'{KO[CELLS.index(row["cell"])]} · {row["building"]} · {row["area_m2"]:.2f} m² · 차 {row["difference_m"]["median"] if row["difference_m"]["median"] is not None else "없음"} m · {v["name"]}'
+        diff='없음' if row['difference_m']['median'] is None else f"{row['difference_m']['median']:.3f}"
+        line=f'{KO[CELLS.index(row["cell"])]} · {row["building"]} · {row["area_m2"]:.2f} m² · 차 {diff} m · {v["name"]}'
         fig,ax=plt.subplots(figsize=(10,7));ax.imshow(arr);ax.axis('off');fig.text(.5,.02,line,ha='center',fontsize=7)
         rec.update(status='PASS',image=v['name'],original_zip_member=v['original_zip_member'],crop_px=box,projected_patch_area_px2=a,nadir_tilt_deg=v['tilt_deg'],
             crop_clipped_to_image=bool((lo<0).any() or hi[0]>w or hi[1]>h),crop_file=f'figures/crops/{name}.png',panel_file=f'figures/{name}.png',caption=line,
-            outline='0.25 m inherited display patch quads displaced by gt_p along outward normal; union outline',distortion_model='FULL_OPENCV')
+            difference_median_m=row['difference_m']['median'],
+            outline='0.25 m inherited display patch quads displaced by gt_p along outward normal; union outline',
+            margin_rule='3 m along an orthonormal tangent-plane basis around all patch corners, then projected crop bounds',distortion_model='FULL_OPENCV')
         figure(fig,name,rec);plt.close(fig);records.append(rec)
     archive.close();save_table('대표사진_기록',records)
     for cell in ['prior_wrong','image_wrong','both_wrong']:
@@ -64,7 +70,8 @@ def main():
             r=rs[i]
             if r['status']=='PASS':ax.imshow(Image.open(DOC/r['crop_file']))
             else:ax.text(.5,.5,'사진 확인 불가',ha='center',va='center')
-            ax.set_title(f'{i+1}. {r["prior"]} · {r["building_ids"][0]}\n{r["area_m2"]:.2f} m²',fontsize=8)
+            delta='없음' if r.get('difference_median_m') is None else f"{r['difference_median_m']:.3f} m"
+            ax.set_title(f'{i+1}. {r["prior"]} · {r["building_ids"][0]}\n{r["area_m2"]:.2f} m² · 차 {delta}\n{r.get("image","영상 없음")}',fontsize=7)
         fig.suptitle(KO[CELLS.index(cell)]+' · 정하는 곳');fig.tight_layout()
         figure(fig,f'모음사진_{cell}',rs);plt.close(fig)
     print('photo panels complete',len(records),flush=True)

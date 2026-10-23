@@ -56,7 +56,7 @@ def main():
         f"나눔: 정하는 곳 {s['development']['buildings']}개 / 공통 범위 안 바닥 넓이 {s['development']['common_footprint_area_m2']:,.2f} m², 확인용 {s['holdout']['buildings']}개 / {s['holdout']['common_footprint_area_m2']:,.2f} m². [이 발주에서 냄]",
         '확인 불가: 새 영역의 등록된 사전 정보 − 참값과 시험 자리 수는 아직 계산하지 않음. 학습 영상만의 MVS 생성 뒤 CPU로 계산한다.',
         '', '# PHD-MAIN-WIDEN0-v2 중간 보고 v1', '',f'- 작성: {now}', '- 상태: PARTIAL — 입력·범위·나눔 완료, 패치 측정 진행 전.',
-        '- scientific_verdict: null','- 학습 없음. 이 보고를 만들 때까지 GPU 계산 없음.', '',
+        '- scientific_verdict: null','- 학습 없음. 초판(00:35 KST, 커밋 82ca86c1)은 GPU 실행 전에 작성했다. 이후 시간 어림을 정정한 이 판에서는 MVS가 진행 중이다.', '',
         '## 범위와 나눔','', '![범위와 건물 나눔](figures/범위와_건물나눔.png)', '',
         f"연직 비행 원자료 {s['raw_sources']['/art/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz']['points']:,}점을 전부 읽었다. 0.5 m 격자의 자료 도달 범위를 사용했다. 사진은 카메라에 ALS 지형이 투영되는지를 계산했다. MVS 존재 여부로 범위를 제한하지 않았다. 공통 범위 중 기존 MVS가 없는 넓이는 {s['common_without_existing_MVS_m2']:,.2f} m²이다. [이 발주에서 냄]",
         '',f"강제 정하는 곳은 {s['forced_development_buildings']}개다. 나머지 {s['random_pool_buildings']}개를 건물 번호 순서로 놓고 씨앗 20261023으로 floor(30%)={s['holdout']['buildings']}개를 확인용으로 선택했다. 패치 결과는 읽지 않았다. 100 m 구역 {s['tiles']}개, 둘레 겹침 10 m를 사용한다. [이 발주에서 냄]",

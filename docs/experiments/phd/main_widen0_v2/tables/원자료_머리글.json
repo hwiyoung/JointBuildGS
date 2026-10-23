@@ -1,0 +1,154 @@
+{
+  "rows": [
+    {
+      "source": "/art/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "points": 177981904,
+      "bounds_min_epsg25832": [
+        690783.6963,
+        5335829.5007,
+        368.9931
+      ],
+      "bounds_max_epsg25832": [
+        691260.3581,
+        5336389.0657,
+        617.6899000000001
+      ],
+      "header_creation_date": "2024-12-23",
+      "scale": [
+        0.0001,
+        0.0001,
+        0.0001
+      ],
+      "offset": [
+        690973.0,
+        5336107.0,
+        -0.0
+      ],
+      "generating_software": "LASzip DLL 3.4 r3 (191111)",
+      "measurement_date": "2024-12-17",
+      "date_source": "nadir filename and existing data inventory",
+      "source_sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4"
+    },
+    {
+      "source": "/art/phase-payloads/p0-audit/data/raw/als/690_5335.laz",
+      "points": 20697252,
+      "bounds_min_epsg25832": [
+        690000.0,
+        5335000.0,
+        506.874
+      ],
+      "bounds_max_epsg25832": [
+        690999.9990000001,
+        5335999.999,
+        615.818
+      ],
+      "header_creation_date": "2022-06-16",
+      "scale": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offset": [
+        400000.0,
+        5300000.0,
+        -0.0
+      ],
+      "generating_software": "lasvdatum64\u0001",
+      "measurement_date": "2022-02-27",
+      "date_source": "/repo/docs/evidence/p0-audit/w1-input-diagnostics/reports/data_inventory.md:26 (adjusted GPS time)",
+      "source_sha256": "01602b7385aaf7324f89da6183df3dbdeffa237f85bf57dc27208b554b4fc0b3"
+    },
+    {
+      "source": "/art/phase-payloads/p0-audit/data/raw/als/690_5336.laz",
+      "points": 21428108,
+      "bounds_min_epsg25832": [
+        690000.0,
+        5336000.0,
+        505.173
+      ],
+      "bounds_max_epsg25832": [
+        690999.9990000001,
+        5336999.999,
+        584.824
+      ],
+      "header_creation_date": "2022-06-16",
+      "scale": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offset": [
+        400000.0,
+        5300000.0,
+        -0.0
+      ],
+      "generating_software": "lasvdatum64\u0001",
+      "measurement_date": "2022-02-27",
+      "date_source": "/repo/docs/evidence/p0-audit/w1-input-diagnostics/reports/data_inventory.md:26 (adjusted GPS time)",
+      "source_sha256": "98ab7ad7f4c5108ebf41bc62186b336c6cd8a70b82fceec57136a56c0188b566"
+    },
+    {
+      "source": "/art/phase-payloads/p0-audit/data/raw/als/691_5335.laz",
+      "points": 20182679,
+      "bounds_min_epsg25832": [
+        691000.0,
+        5335000.0,
+        506.404
+      ],
+      "bounds_max_epsg25832": [
+        691999.9990000001,
+        5335999.999,
+        618.182
+      ],
+      "header_creation_date": "2022-06-16",
+      "scale": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offset": [
+        400000.0,
+        5300000.0,
+        -0.0
+      ],
+      "generating_software": "lasvdatum64\u0001",
+      "measurement_date": "2022-02-27",
+      "date_source": "/repo/docs/evidence/p0-audit/w1-input-diagnostics/reports/data_inventory.md:26 (adjusted GPS time)",
+      "source_sha256": "9e14119bb0af7d5a300aa3a2a19074219b4d6d290923b4b90277c317e8b33720"
+    },
+    {
+      "source": "/art/phase-payloads/p0-audit/data/raw/als/691_5336.laz",
+      "points": 22797949,
+      "bounds_min_epsg25832": [
+        691000.0,
+        5336000.0,
+        476.314
+      ],
+      "bounds_max_epsg25832": [
+        691999.9990000001,
+        5336999.999,
+        621.006
+      ],
+      "header_creation_date": "2022-06-16",
+      "scale": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offset": [
+        400000.0,
+        5300000.0,
+        -0.0
+      ],
+      "generating_software": "lasvdatum64\u0001",
+      "measurement_date": "2022-02-27",
+      "date_source": "/repo/docs/evidence/p0-audit/w1-input-diagnostics/reports/data_inventory.md:26 (adjusted GPS time)",
+      "source_sha256": "63c64002fc55d8b99a49749b5a2e36d802186186a950c89779463274e3cb950d"
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/input_metadata.py",
+  "generator_sha256": "892fec146bc0010bd839cad59e8144842829d907e087ea9841d29268a1a4c9f9",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

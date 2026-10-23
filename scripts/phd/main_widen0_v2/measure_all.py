@@ -20,4 +20,5 @@ def main():
                 subprocess.run(cmd+['--workers','32'],check=True)
             subprocess.run([sys.executable,'-B','-u',str(S/'export_values.py'),tile,prior],check=True)
     dump(O/'gates/measurements_complete.json',dict(seconds=time.monotonic()-start,scientific_verdict=None))
+    subprocess.run([sys.executable,'-B','-u',str(S/'run_reports.py')],check=True)
 if __name__=='__main__':main()

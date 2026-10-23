@@ -1,0 +1,129 @@
+{
+  "rows": [
+    {
+      "prior": "LoD2",
+      "site": "B0_b10",
+      "old_eval_patches": 82117,
+      "current_core_source_patches": 5075267,
+      "exact_raw_centres_1e_5m": 82117,
+      "near_raw_centres_0_18m": 82117,
+      "nearest_raw_distance_m": {
+        "n": 82117,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0
+      },
+      "old_shift_removed_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scope": "Input geometry comparison before building attachment and common-mask export; no patch outcome read"
+    },
+    {
+      "prior": "LoD2",
+      "site": "B173nb_b10",
+      "old_eval_patches": 141534,
+      "current_core_source_patches": 5075267,
+      "exact_raw_centres_1e_5m": 141534,
+      "near_raw_centres_0_18m": 141534,
+      "nearest_raw_distance_m": {
+        "n": 141534,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0
+      },
+      "old_shift_removed_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scope": "Input geometry comparison before building attachment and common-mask export; no patch outcome read"
+    },
+    {
+      "prior": "LoD2",
+      "site": "R1rep_b10",
+      "old_eval_patches": 79054,
+      "current_core_source_patches": 5075267,
+      "exact_raw_centres_1e_5m": 79054,
+      "near_raw_centres_0_18m": 79054,
+      "nearest_raw_distance_m": {
+        "n": 79054,
+        "q25": 0.0,
+        "median": 0.0,
+        "q75": 0.0
+      },
+      "old_shift_removed_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scope": "Input geometry comparison before building attachment and common-mask export; no patch outcome read"
+    },
+    {
+      "prior": "ALS",
+      "site": "B0_b10",
+      "old_eval_patches": 23280,
+      "current_core_source_patches": 1363052,
+      "exact_raw_centres_1e_5m": 45,
+      "near_raw_centres_0_18m": 23189,
+      "nearest_raw_distance_m": {
+        "n": 23280,
+        "q25": 0.03539611334348021,
+        "median": 0.03779082109491497,
+        "q75": 0.03859784899578245
+      },
+      "old_shift_removed_m": [
+        -0.048193370826016664,
+        0.04305113898865463,
+        0.0
+      ],
+      "scope": "Input geometry comparison before building attachment and common-mask export; no patch outcome read"
+    },
+    {
+      "prior": "ALS",
+      "site": "B173nb_b10",
+      "old_eval_patches": 34273,
+      "current_core_source_patches": 1363052,
+      "exact_raw_centres_1e_5m": 43,
+      "near_raw_centres_0_18m": 33765,
+      "nearest_raw_distance_m": {
+        "n": 34273,
+        "q25": 0.1036714566688056,
+        "median": 0.10484075160491887,
+        "q75": 0.1076753526366529
+      },
+      "old_shift_removed_m": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "scope": "Input geometry comparison before building attachment and common-mask export; no patch outcome read"
+    },
+    {
+      "prior": "ALS",
+      "site": "R1rep_b10",
+      "old_eval_patches": 24189,
+      "current_core_source_patches": 1363052,
+      "exact_raw_centres_1e_5m": 88,
+      "near_raw_centres_0_18m": 23755,
+      "nearest_raw_distance_m": {
+        "n": 24189,
+        "q25": 0.08002372981227808,
+        "median": 0.08020115250049008,
+        "q75": 0.08067823362245535
+      },
+      "old_shift_removed_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scope": "Input geometry comparison before building attachment and common-mask export; no patch outcome read"
+    }
+  ],
+  "source": "S0/s61/box/*/*/units.npz and this task holdout/internal/prior_tiles/*/*_store.npz; input geometry only, no patch outcomes",
+  "generator": "/repo/scripts/phd/main_widen0_v2/raw_grid_check.py",
+  "generator_sha256": "3cd58d3f5323418c31fd4d4cde7b80fb7fbb88d4137babc8efd64a0a4afced76",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

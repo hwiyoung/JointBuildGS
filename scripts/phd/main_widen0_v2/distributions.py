@@ -47,6 +47,7 @@ def main():
             m=(cells==ci)&known;den=float(area[m].sum());h,_=np.histogram(np.abs(p[m]),edges,weights=area[m]);h=h/den if den else h
             ax.stairs(h*100,edges,label=KO[ci],color=col,linewidth=1.7)
             histdata.append(dict(cell=CELLS[ci],edges_m=edges.tolist(),fraction_per_bin=h.tolist(),valid_patches=int(m.sum()),valid_area_m2=den,
+                cell_area_m2=float(area[cells==ci].sum()),missing_difference_area_m2=float(area[(cells==ci)&~known].sum()),
                 under_axis_area_m2=float(area[m&(np.abs(p)<.01)].sum()),over_axis_area_m2=float(area[m&(np.abs(p)>10)].sum())))
         ax.set(xscale='log',xlim=(.01,10),xlabel='|두 자료의 차| (m)',ylabel='넓이 비율 (%)',title=prior+' · 정하는 곳');ax.legend();ax.grid(alpha=.2)
         figure(fig,f'차의크기_{prior}',histdata);plt.close(fig)
@@ -57,7 +58,9 @@ def main():
                 mm=m&(p*sign>0);h,_=np.histogram(np.abs(p[mm]),edges,weights=area[mm]);matrix.append(h/den if den else h)
             z=np.array(matrix);im=ax.pcolormesh(edges,[-1.5,0,1.5],z*100,cmap='viridis',shading='flat')
             ax.set(xscale='log',yticks=[-.75,.75],yticklabels=['안쪽 −','바깥 +'],title=KO[ci]);fig.colorbar(im,ax=ax,label='넓이 비율 (%)')
-            sd.append(dict(cell=CELLS[ci],edges_m=edges.tolist(),sign_order=[-1,1],fraction=z.tolist(),valid_patches=int(m.sum()),valid_area_m2=den,zero_area_m2=float(area[m&(p==0)].sum())))
+            sd.append(dict(cell=CELLS[ci],edges_m=edges.tolist(),sign_order=[-1,1],fraction=z.tolist(),valid_patches=int(m.sum()),valid_area_m2=den,zero_area_m2=float(area[m&(p==0)].sum()),
+                cell_area_m2=float(area[cells==ci].sum()),missing_difference_area_m2=float(area[(cells==ci)&~known].sum()),
+                under_axis_area_m2=float(area[m&(np.abs(p)<.01)].sum()),over_axis_area_m2=float(area[m&(np.abs(p)>10)].sum())))
         axs[-1].set_xlabel('|두 자료의 차| (m)');fig.suptitle(prior+' · 부호와 크기');fig.tight_layout()
         figure(fig,f'차의부호크기_{prior}',sd);plt.close(fig)
     save_table('맞는쪽칸_넓이',cellrows);save_table('차의크기_비율',thresholds,denominator='finite difference area within each cell/shape/scope; missing area reported separately')

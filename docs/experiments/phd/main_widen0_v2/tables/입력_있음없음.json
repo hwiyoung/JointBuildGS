@@ -1,0 +1,243 @@
+{
+  "rows": [
+    {
+      "scope": "B0_b10",
+      "input": "MVS geometric",
+      "files": 243,
+      "source": "/art/phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1/mvs/box_B0_b10/stereo/depth_maps",
+      "pattern": "*.geometric.bin",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B0_b10",
+      "input": "confidence mask",
+      "files": 243,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/maps/conf",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B0_b10",
+      "input": "prior render LoD2",
+      "files": 243,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/maps/prior_LoD2",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B0_b10",
+      "input": "prior render ALS",
+      "files": 243,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/maps/prior_ALS",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B0_b10",
+      "input": "regions",
+      "files": 3,
+      "source": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3",
+      "pattern": "*B0_b10*",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B0_b10",
+      "input": "patch values",
+      "files": 2,
+      "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values",
+      "pattern": "B0_b10__*__R1.5.npz",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173nb_b10",
+      "input": "MVS geometric",
+      "files": 203,
+      "source": "/art/phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1/mvs/box_B173nb_b10/stereo/depth_maps",
+      "pattern": "*.geometric.bin",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173nb_b10",
+      "input": "confidence mask",
+      "files": 203,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/maps/conf",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173nb_b10",
+      "input": "prior render LoD2",
+      "files": 203,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/maps/prior_LoD2",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173nb_b10",
+      "input": "prior render ALS",
+      "files": 203,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/maps/prior_ALS",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173nb_b10",
+      "input": "regions",
+      "files": 3,
+      "source": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3",
+      "pattern": "*B173nb_b10*",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173nb_b10",
+      "input": "patch values",
+      "files": 2,
+      "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values",
+      "pattern": "B173nb_b10__*__R1.5.npz",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173_b0",
+      "input": "MVS geometric",
+      "files": 140,
+      "source": "/art/phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1/mvs/box_B173_b0/stereo/depth_maps",
+      "pattern": "*.geometric.bin",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173_b0",
+      "input": "confidence mask",
+      "files": 140,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173_b0/maps/conf",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173_b0",
+      "input": "prior render LoD2",
+      "files": 140,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173_b0/maps/prior_LoD2",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173_b0",
+      "input": "prior render ALS",
+      "files": 140,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173_b0/maps/prior_ALS",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173_b0",
+      "input": "regions",
+      "files": 3,
+      "source": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3",
+      "pattern": "*B173_b0*",
+      "existed_before_task": true
+    },
+    {
+      "scope": "B173_b0",
+      "input": "patch values",
+      "files": 0,
+      "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values",
+      "pattern": "B173_b0__*__R1.5.npz",
+      "existed_before_task": true
+    },
+    {
+      "scope": "R1rep_b10",
+      "input": "MVS geometric",
+      "files": 333,
+      "source": "/art/phase-payloads/phd/main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1/mvs/box_R1rep_b10/stereo/depth_maps",
+      "pattern": "*.geometric.bin",
+      "existed_before_task": true
+    },
+    {
+      "scope": "R1rep_b10",
+      "input": "confidence mask",
+      "files": 333,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/maps/conf",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "R1rep_b10",
+      "input": "prior render LoD2",
+      "files": 333,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/maps/prior_LoD2",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "R1rep_b10",
+      "input": "prior render ALS",
+      "files": 333,
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/maps/prior_ALS",
+      "pattern": "*.npy",
+      "existed_before_task": true
+    },
+    {
+      "scope": "R1rep_b10",
+      "input": "regions",
+      "files": 3,
+      "source": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3",
+      "pattern": "*R1rep_b10*",
+      "existed_before_task": true
+    },
+    {
+      "scope": "R1rep_b10",
+      "input": "patch values",
+      "files": 2,
+      "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values",
+      "pattern": "R1rep_b10__*__R1.5.npz",
+      "existed_before_task": true
+    },
+    {
+      "scope": "full frozen 819-image training split",
+      "input": "MVS geometric",
+      "files_before_task": 0,
+      "status": "new geometric depths and validity>0 mask generated by this task",
+      "note": "Historical 937-image full MVS includes evaluation views and is inventory only."
+    },
+    {
+      "scope": "full frozen 819-image training split",
+      "input": "confidence mask",
+      "files_before_task": 0,
+      "status": "new geometric depths and validity>0 mask generated by this task",
+      "note": "Historical 937-image full MVS includes evaluation views and is inventory only."
+    },
+    {
+      "scope": "full frozen 819-image training split",
+      "input": "prior render LoD2",
+      "files_before_task": 0,
+      "status": "not generated; registration renders transiently, no method region codes",
+      "note": "Historical 937-image full MVS includes evaluation views and is inventory only."
+    },
+    {
+      "scope": "full frozen 819-image training split",
+      "input": "prior render ALS",
+      "files_before_task": 0,
+      "status": "not generated; registration renders transiently, no method region codes",
+      "note": "Historical 937-image full MVS includes evaluation views and is inventory only."
+    },
+    {
+      "scope": "full frozen 819-image training split",
+      "input": "regions",
+      "files_before_task": 0,
+      "status": "not generated; registration renders transiently, no method region codes",
+      "note": "Historical 937-image full MVS includes evaluation views and is inventory only."
+    },
+    {
+      "scope": "full frozen 819-image training split",
+      "input": "patch values",
+      "files_before_task": 0,
+      "status": "new patch values generated by this task",
+      "note": "Historical 937-image full MVS includes evaluation views and is inventory only."
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/input_metadata.py",
+  "generator_sha256": "892fec146bc0010bd839cad59e8144842829d907e087ea9841d29268a1a4c9f9",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

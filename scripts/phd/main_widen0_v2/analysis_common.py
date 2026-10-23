@@ -1,5 +1,6 @@
 """Shared report helpers. Public analyses default to development files only."""
 import csv
+import inspect
 import json
 from pathlib import Path
 import numpy as np
@@ -26,7 +27,11 @@ def csvwrite(path,rows):
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader()
         for r in rows:w.writerow({k:json.dumps(v,ensure_ascii=False) if isinstance(v,(list,dict)) else v for k,v in r.items()})
 def save_table(name,rows,**meta):
-    dump(DOC/'tables'/f'{name}.json',dict(rows=rows,source='PHD-MAIN-WIDEN0-v2 development patch_values; [이 발주에서 냄]',config_sha256=sha('/cfg/widen0_v2.json'),scientific_verdict=None,**meta))
+    generator=Path(inspect.stack()[1].filename)
+    obj=dict(rows=rows,source='PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]',
+        generator=str(generator),generator_sha256=sha(generator),config_sha256=sha('/cfg/widen0_v2.json'),scientific_verdict=None)
+    obj.update(meta)
+    dump(DOC/'tables'/f'{name}.json',obj)
     csvwrite(DOC/'tables'/f'{name}.csv',rows)
 def font():
     import matplotlib
