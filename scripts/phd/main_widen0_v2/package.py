@@ -1,12 +1,15 @@
 """Explicit allowlist for light/full delivery; no holdout payloads."""
 import json
 import hashlib
+import datetime as dt
+import time
 from pathlib import Path
 import zipfile
 import numpy as np
 from preflight import sha,dump
 O=Path('/out');D=Path('/docs');C=Path('/cfg');S=Path(__file__).parent
 def main():
+    started=dt.datetime.now(dt.timezone.utc);t0=time.monotonic()
     gate=json.loads((O/'gates/final_values.json').read_text());assert gate['status']=='PASS'
     public=json.loads((O/'gates/public_artifacts.json').read_text());assert public['status']=='PASS'
     visual=json.loads((O/'gates/visual_review.json').read_text());assert visual['status']=='PASS'
@@ -44,6 +47,10 @@ def main():
         records.append(dict(file=name,bytes=target.stat().st_size,sha256=sha(target),members=len(selected)+1,holdout_included=False,
             archive_member_SHA256_verified=True,archive_CRC_verified_by_reading_all_members=True))
         print('archive validated',name,flush=True)
-    dump(O/'handover_manifest.json',dict(archives=records,scientific_verdict=None))
+    finished=dt.datetime.now(dt.timezone.utc)
+    first=dt.datetime.fromisoformat(json.loads((C/'widen0_v2.json').read_text())['created_at'])
+    dump(O/'handover_manifest.json',dict(archives=records,packaging_started_at=started.isoformat(),
+        packaging_finished_at=finished.isoformat(),packaging_seconds=time.monotonic()-t0,
+        elapsed_since_first_config_seconds=(finished-first).total_seconds(),scientific_verdict=None))
     (O/'SHA256SUMS').write_text(''.join(f"{r['sha256']}  {r['file']}\n" for r in records))
 if __name__=='__main__':main()

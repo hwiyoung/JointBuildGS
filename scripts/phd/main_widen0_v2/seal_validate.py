@@ -8,8 +8,12 @@ from preflight import sha,dump
 
 def main():
     split=json.loads((O/'building_split.json').read_text());held=set(split['holdout']);dev=set(split['development']);rows=[];hashes=[]
+    tiles=json.loads((O/'inputs/tiles.json').read_text())
+    expected={f'{t["id"]}__{p}__R1.5.npz' for t in tiles for p in ['LoD2','ALS']}
     for sealed in [False,True]:
         root=O/('holdout/patch_values' if sealed else 'patch_values');seen=set()
+        assert {p.name for p in root.glob('*.npz')}==expected,'incomplete tile/prior export'
+        assert {p.stem for p in root.glob('*.json')}=={Path(p).stem for p in expected}
         for prior in ['LoD2','ALS']:
             n=ng=0;area=0.;buildings=set();cells=np.zeros(7,np.int64);areas=np.zeros(7)
             for f in sorted(root.glob(f'*__{prior}__R1.5.npz')):
@@ -49,6 +53,6 @@ def main():
     assert not forbidden,forbidden
     for row in json.loads((DOC/'tables/시험자리_정하는곳.json').read_text())['rows']:assert set(row['building_ids'])<=dev
     for row in json.loads((DOC/'tables/대표자리_선정.json').read_text())['rows']:assert set(row['building_ids'])<=dev
-    dump(O/'gates/final_values.json',dict(status='PASS',checks=['exclusive seven cells','100 percent area','unique patch IDs','building split for every patch','no holdout IDs in public text','development-only candidate/photo rows'],sealed_files=seals,scientific_verdict=None))
+    dump(O/'gates/final_values.json',dict(status='PASS',checks=['all frozen tile/prior exports present in each split','exclusive seven cells','100 percent area','unique patch IDs','building split for every patch','no holdout IDs in public text','development-only candidate/photo rows'],sealed_files=seals,scientific_verdict=None))
     print('value and seal checks PASS',flush=True)
 if __name__=='__main__':main()

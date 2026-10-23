@@ -35,6 +35,8 @@ def main():
         registration=json.loads((O/'gates/registration_runtime.json').read_text()),
         registration_runtime_scope='Successful resume only; initial failed attempt recorded separately below.',
         failed_registration_attempt=json.loads((O/'gates/continuation_register_geometry.py.json').read_text()),
+        failed_registration_attempt_seconds=None,
+        failed_registration_timing_note='The original continuation saved exit code without elapsed time; exact failed-attempt duration is unavailable. Logs and per-tile records are retained.',
         extra_normal_replay=json.loads((O/'gates/extra_normal_replay.json').read_text()),
         measurement_wall=json.loads((O/'gates/measurements_complete.json').read_text()),
         cpu_nice=19,container_total_memory_limit_GiB=32,patch_workers=64,cpu_quota=64,registration_tile_processes=4,training_executed=False,

@@ -110,7 +110,7 @@ def main():
     extra+=['']
     insert_after('대표 사진은 두 사전 정보를',extra)
     execution=json.loads((DOC/'execution_receipt.json').read_text())
-    extra=['',f"최초 설정 저장부터 이 영수증까지 {execution['elapsed_since_first_config_seconds']/3600:.3f}시간이다. 준비·대기·계산·보고 생성 시간을 포함한다. 재개 후 구역 정합 경과 시간 {execution['registration']['seconds']/3600:.3f}시간, 패치 계산·내보내기 경과 시간 {execution['measurement_wall']['seconds']/3600:.3f}시간. 최초 정합 실패 시도의 시간은 영수증에 별도로 보존했다. [이 발주에서 냄]",'',
+    extra=['',f"최초 설정 저장부터 이 영수증까지 {execution['elapsed_since_first_config_seconds']/3600:.3f}시간이다. 준비·대기·계산·보고 생성 시간을 포함한다. 재개 후 구역 정합 경과 시간 {execution['registration']['seconds']/3600:.3f}시간, 패치 계산·내보내기 경과 시간 {execution['measurement_wall']['seconds']/3600:.3f}시간. 최초 정합 실패 시도는 종료 코드·로그를 보존했으나 단계 경과 시간을 저장하지 않아 정확한 소요 시간은 확인 불가다. [이 발주에서 냄]",'',
            '| CPU 패치 계산 | 구역·사전 정보 작업 수 | 경과 시간 합계 h | 부모 프로세스 최대 RSS GiB |','|---|---:|---:|---:|']
     for name,r in execution['cpu_measurement'].items():
         extra.append(f"| {name} | {r['jobs']} | {r['total_seconds']/3600:.3f} | {r['largest_parent_RSS_GiB']:.3f} |")
