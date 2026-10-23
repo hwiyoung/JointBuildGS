@@ -12,10 +12,16 @@ U=PH/'main_uncert_v1/PHD-MAIN-UNCERT-v1';S0=PH/'main_stage0_v1/PHD-MAIN-STAGE0-v
 SITES=['B0_b10','B173nb_b10','R1rep_b10']
 
 def cross(rows,prior,site,kind,a,b,area,anames,bnames):
+    area=np.asarray(area,dtype=np.float64)
+    assert len(a)==len(b)==len(area)
+    assert np.all((a>=0)&(a<len(anames))) and np.all((b>=0)&(b<len(bnames)))
+    start=len(rows)
     for ai in range(len(anames)):
         for bi in range(len(bnames)):
             m=(a==ai)&(b==bi)
             rows.append(dict(prior=prior,site=site,comparison=kind,from_cell=anames[ai],to_cell=bnames[bi],patches=int(m.sum()),area_m2=float(area[m].sum())))
+    assert sum(r['patches'] for r in rows[start:])==len(a)
+    assert np.isclose(sum(r['area_m2'] for r in rows[start:]),np.sum(area),rtol=1e-12)
 
 def main():
     comparisons=[];taurows=[];twelve=[];gtrows=[];depthrows=[]
@@ -28,7 +34,14 @@ def main():
             meta=json.loads((S0/'s61/box'/site/prior/'summary.json').read_text());shift=np.array(meta['store_frame_shift'])
             raw=old['centre']-shift;ev=old['in_eval'].astype(bool);ids=np.flatnonzero(ev)
             dist,idx=tree.query(raw[ids],workers=8);dot=np.sum(old['normal'][ids]*new['normal'][idx],axis=1)
-            match=(dist<=1e-5)&(dot>=1-1e-5);a=ids[match];b=idx[match]
+            match=(dist<=1e-5)&(dot>=1-1e-5)
+            geometry_candidates=int(match.sum());building_mismatch=0
+            if prior=='LoD2':
+                same_building=old['building'][ids]==new['building'][idx]
+                building_mismatch=int((match&~same_building).sum());match&=same_building
+            uu,nn=np.unique(idx[match],return_counts=True)
+            ambiguous=match&np.isin(idx,uu[nn>1]);match&=~ambiguous
+            a=ids[match];b=idx[match];assert len(np.unique(b))==len(b)
             values={}
             for oldkey,newkey in [('gt_p','gt_p'),('mvs_a_p','mvs_p'),('mvs_a_u','u_mvs'),('mvs_a_e','mvs_a_e')]+([('als_u','u_prior'),('als_e','prior_error')] if prior=='ALS' else []):
                 x=old[oldkey][a];y=new[newkey][b];valid=np.isfinite(x)&np.isfinite(y)
@@ -36,10 +49,14 @@ def main():
                     exact_equal=int((x[valid]==y[valid]).sum()))
             comparisons.append(dict(site=site,prior=prior,old_eval_patches=len(ids),exact_raw_geometry_matches=int(match.sum()),
                 unique_new_matches=len(np.unique(b)),unmatched=int((~match).sum()),nearest_raw_distance_m=quantiles(dist),
+                geometry_candidates_before_identity_check=geometry_candidates,building_mismatch_excluded=building_mismatch,
+                duplicate_new_correspondence_excluded=int(ambiguous.sum()),
+                building_identity_checked=(prior=='LoD2'),
                 centre_shift_difference_m=quantiles(np.linalg.norm(new['centre'][b]-old['centre'][a],axis=1)),values=values,
                 historical_source=str(f),historical_sha256=sha(f),old_frame_shift_m=shift.tolist(),
                 context_changes=['new 100 m tiling and 10 m halo','training-only full-area image pool and name-order split','tile-index and patch-index RNG context',
-                    'per-tile registration instead of historical fixed exploration-region shift','nadir only; historical B0 may include manual LiDAR'],scientific_verdict=None))
+                    'per-tile registration instead of historical fixed exploration-region shift','nadir only; historical B0 may include manual LiDAR']+
+                    (['historical ALS patch table lacks assigned building IDs; exact geometry and unique correspondence required'] if prior=='ALS' else []),scientific_verdict=None))
             # Both tau tables use the same values within each table: first old
             # measurements on all old evaluation patches, then new exact matches.
             for label,g,p,e,t,ar in [
