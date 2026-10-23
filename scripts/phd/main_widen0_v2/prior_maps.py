@@ -12,8 +12,9 @@ def main():
             ax.set_aspect('equal');ax.set_title('지붕꼴' if roof else '벽꼴');ax.set_xlabel('동쪽 좌표 (m)');ax.ticklabel_format(useOffset=False,style='plain');ax.tick_params(axis='x',rotation=35)
             data.append(dict(shape='roof' if roof else 'wall',patches=int(shape.sum()),gt_available=int(known.sum()),wrong_patches=int(bad.sum()),wrong_area_m2=float(d['area'][bad].sum()),
                 colour_clip_m=[-4,4],tau_m=CFG['tau_m'][prior],crs='EPSG:25832'))
-        axs[0].set_ylabel('북쪽 좌표 (m)');fig.colorbar(im,ax=axs.tolist(),label='참값의 자리 (m), 바깥 +',shrink=.7)
+        axs[0].set_ylabel('북쪽 좌표 (m)');fig.colorbar(im,ax=axs.tolist(),label='참값의 자리 (m), 바깥 +',shrink=.7,extend='both')
         fig.suptitle(prior+' · 사전 정보가 틀린 곳 · 정하는 곳')
+        fig.text(.5,.015,'회색: 전체 패치 배경(참값 없음 포함) · 색: |참값의 자리| > τ · 색 범위 ±4 m · 북쪽 위',ha='center',fontsize=8)
         figure(fig,f'사전정보_틀린곳_지도_{prior}',data);plt.close(fig)
     print('development prior maps complete',flush=True)
 if __name__=='__main__':main()
