@@ -7,6 +7,9 @@ O=Path('/out');R=O/'holdout/internal';C=json.loads(Path('/cfg/widen0_v2.json').r
 CELLS=C['cells']['order']
 
 def classify(gt_status,gt_p,e,tau):
+    # Scalar and per-patch thresholds must have identical precision semantics,
+    # including historical float32 values immediately around the fixed limit.
+    gt_p=np.asarray(gt_p,dtype=np.float64);e=np.asarray(e,dtype=np.float64);tau=np.asarray(tau,dtype=np.float64)
     gt=(gt_status==0)&np.isfinite(gt_p);m=np.isfinite(e);p=np.abs(gt_p)<=tau
     cell=np.full(len(gt),6,np.int8)
     cell[gt&m&p&(e<=tau)]=0;cell[gt&m&~p&(e<=tau)]=1
