@@ -1,0 +1,127 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.1",
+  "made": "2026-10-23T21:24:25.825341+09:00",
+  "commit": "0c7617ccf64cc72b911d29f4e7b9af8b9a8ca364",
+  "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1"
+  },
+  "implementation_files": [
+    {
+      "path": "scripts/phd/main_uncert_view_v1/analysis_v11.js",
+      "sha256": "712b52271eead0618290ba8c2affbed54a165dd31af6d344488b106bcf7a5afa"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/app.js",
+      "sha256": "acf5e48ab6cbe7ef1baeb10b47674920ad4869f5225f6fde76418bdc2cf103a7"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/audit.py",
+      "sha256": "42ad44798830406a73e38fd353abeab41234cdeede7ea2151ed9f1b8898177bd"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/build_data.py",
+      "sha256": "a7b521cfc190ed83b05485b30132b8d2d5dbece472ac72aece0c7467844ace63"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/build_sections.py",
+      "sha256": "9d245d132394e4501b4ea29e0889ff40b7b43060485f687bb5b1a0566e293354"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/build_v11.py",
+      "sha256": "c397744c30418775586ba59e0ab440df0530a5c469f6580c12e9c09f9cf4641c"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/common.py",
+      "sha256": "9093fd55c2dce2ab74111334d362f198f2eeb5e8018c24ec3bfe570ea2f5e0ec"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/compact_evidence.py",
+      "sha256": "138928b6d1ada4b99e5ef96a4b9f7156281c3e1385522bce26b9d73b5de6c7c4"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/data.js",
+      "sha256": "6a918aac1b104f56bb5d02e5261f618af71bb92e3d7d892ba519f1cd05984599"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/finalize.py",
+      "sha256": "ddd55db627d68646030dcfa1d635c4ee1d2c70a58b7eda1750a403b329123cf0"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/index.html",
+      "sha256": "64d1a640e3214f8c10a48f8e3b70c2fc0eab66c5b1c94f27a51609f703e043f6"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/lock_config.py",
+      "sha256": "c5c5aec048359baa04fa539c1a33aabe20f8558727d6db5015a566994d82999f"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/lock_v11.py",
+      "sha256": "c777abb926124f784d1bf5e7d97143216d9d3a85f4acaedf14a688e9466aac41"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/qa_browser.mjs",
+      "sha256": "5b0147c92adff86f2e1e44a80eec3f7461178d8347966d72ffff2b36825695fa"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/qa_interactions.mjs",
+      "sha256": "fb27a2802cc3d5746e8f1cf414b454b4bb6249fc522cbf6b1af55cccbef413e9"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/qa_v11.mjs",
+      "sha256": "8e32fda60b0f741dd79218e4a6110ba003ab6349232e3f48ecc9a9fe32b3bb07"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/record_delivery_approval.py",
+      "sha256": "37568aeeecdb71e624b24a3a5b14ed555a09fe7c63bdc67aae903ba76beaa3ab"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/report_v11.py",
+      "sha256": "09edf6d9bafa615bd0a0ef2b8ce9ebb3a2cfb14190419ea65eb93427cf6c4533"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/run_cpu.sh",
+      "sha256": "b0a5e5353770021efc266dfaa038400cf7ca0e95c8dc2162abfc58e35928df27"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/serve.sh",
+      "sha256": "e05d2a759cb101d27a22494860078d8fb7bbe3750afc4ab7bbf20add79395b28"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/serve_v11.sh",
+      "sha256": "28fd71bd8e5732085ec7825e88a68b129b0de30cd6b31b4e4b5425dc459e0ca4"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/stats.js",
+      "sha256": "d0878d7b8cb7e5ce75efa9cf8a238a7a8f27d230e4ad32669def302db3e347ea"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/style.css",
+      "sha256": "0f6b9e39f389137ab7de9e4f3ccba08e8cd2420fb9f55b983323ca2fe0f9cea9"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/validate_tables.py",
+      "sha256": "bfff1639fd9ce4199a297432db9e140b9894cf4828c6f5138a93feb018d9ce69"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/verify_v11.py",
+      "sha256": "f3d8ee2164e3b6d66337131c5145e899a89477247848d7206635af511bc74d70"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/view_v11.css",
+      "sha256": "4194b3461841afc27b3ce23005820bea39291883ab35bcc37945f6015df37ad1"
+    },
+    {
+      "path": "scripts/phd/main_uncert_view_v1/view_v11.js",
+      "sha256": "02c7e8df75455e5a3c87550d946470f88efefdce5898b1ba9125b3de2ae27ed0"
+    }
+  ],
+  "config_sha256": "beaead64ff5a5ffee1cfaee5fe7fa17efcfe074a47c136ee872dc622fc93533b",
+  "url": "http://192.168.10.203:8912/",
+  "source_files_unchanged": 390,
+  "browser_checks": 5794,
+  "screens": 37,
+  "scientific_verdict": null
+}

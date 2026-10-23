@@ -1,0 +1,72 @@
+{
+  "started": "2026-10-23T12:22:54.003Z",
+  "url": "http://127.0.0.1:8913/",
+  "mode": "final",
+  "checks": [
+    {
+      "label": "drilldown_exact_patch_membership",
+      "expected": 16984,
+      "actual": 16984,
+      "tolerance": 0,
+      "pass": true
+    },
+    {
+      "label": "drilldown_switches_to_patch_and_clears_legacy_preset",
+      "pass": true
+    },
+    {
+      "label": "pooled_group_changes_site_preserving_sidebar",
+      "pass": true
+    },
+    {
+      "label": "oblique_polygon_click_opens_face_card",
+      "pass": true
+    },
+    {
+      "label": "offline_bundle_v11",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "00_initial",
+      "state": {
+        "case": "B0_b10__LoD2",
+        "r": 1,
+        "v": "a",
+        "scope": "eval",
+        "unit": "face",
+        "pair": "mvs",
+        "pairStats": {
+          "n": 25,
+          "rho": 0.9623076923076923,
+          "median_right_over_left": 1.1966591293868936
+        },
+        "counts": {
+          "mvs": 72728,
+          "prior": 74175
+        },
+        "pool": false,
+        "exclude": false,
+        "place": null,
+        "orbitSide": "left"
+      }
+    }
+  ],
+  "errors": [],
+  "initial": {
+    "title": "불확실도 지도 · v1.1",
+    "faces": 43,
+    "judge": {
+      "mvs": 72728,
+      "prior": 74175
+    },
+    "text": "JG\nJOINTBUILDGS · 연구 자료 탐색\n불확실도 지도 v1.1\n저장된 패치 값을 직접 확인하는 화면\n학습 없음 · 유효 확률 아님 · 과학적 판정 없음\n원본 값 · 143,652 패치\n경우\nB0 · LoD2\nB0 · 항공 LiDAR\nB173 주변 · LoD2\nB173 주변 · 항공 LiDAR\nR1 · LoD2\nR1 · 항공 LiDAR\n고리 크기\n지역마다 고른 크기\n1.0 m\n1.5 m\n3.0 m\nMVS 판\n판 가 · 관측 신뢰도 마스크\n판 나 · 마스크 전\n범위\n평가 범위만\n둘레 10 m 띠까지\n보는 단위\n패치\n면\n전체 보기\n82,117 / 82,117 패치\n01MVS 불확실도가 실제 오차를 따라가나\n02영상이 틀린 곳에서 MVS 불확실도가 커지나\n03항공 LiDAR 불확실도가 실제 오차를 따라가나\n04바뀐 곳에서도 MVS 불확실도가 작나\n05LoD2 20 cm가 맞나\n06R1에서 두 자료가 함께 참값과 어긋나나\n걸러 보기\n초기화\n칸 · 참값 점검용\n모든 칸\n다듬기\n보정 · 1~4τ\n보정 · 4τ 넘음\n보존 · 거름\n보존 · 문턱 안\n한계\n이중 오류\n상속 · 결측\n결측 · 사전 정보 틀림\n상속 · 비가시\n비가시 · 사전 정보 틀림\n참값 없음\n면\n지붕꼴 + 벽꼴\n지붕꼴\n벽꼴\n지붕 형태\n모든 형태\n1000 평지붕\n2100 외쪽지붕\n2200 엇갈린 외쪽지붕\n3100 박공지붕\n3200 모임지붕\n3300 반모임지붕\n3400 망사르드지붕\n3500 피라미드지붕\n3600 원뿔지붕\n3700 돔지붕\n3800 톱니지붕\n3900 둥근지붕\n4000 탑지붕\n5000 섞인 꼴\n9999 그 밖\n값 없음 까닭\n모두\n값 있음\n면 없음\n점 부족\n후보 평면 없음\n표시\n모든 표시\n한쪽 고리\n지지 약함\n솎음\n놓친 패치 · 참값 점검용\n왼쪽 층 값 범위\n0.0\n50.0 cm\n자리 바로 가기\nB0 LoD2 보정 합 1,418\nB0 LoD2 보존 합 117\n\nR1 고르게 낮은 평지붕: 앞 작업에서 확인 불가\n\n북쪽이 위인 COLMAP 모델 좌표.\nEPSG:25832에서 world shift를 뺀 좌표, 축척 1.\n\n값과 표시 안내\n판정 그림\n참값 점검용\n화면에서 다시 셈\n지금 경우\n세 지역 합\n크게 틀린 곳 빼기\n\nB0 · LoD2 · 고리 1.0 m · MVS 판 가 · 평가 범위만 · 왼쪽 걸러 보기 적용 · 항상 패치로 셈\n\n보정 그림 크기\n0.5\n0.5\n1\n1\n2\n2\n5\n5\n10\n10\n20\n20\n50\n50\n100\n100\n불확실도 (cm) · 로그 눈금\n실제 오차 (cm) · 로그 눈금\n벽\n46,901개\n지붕 1000\n410개\n지붕 3100\n26,081개\n지붕 3200\n783개\n● MVS\n● 사전 정보\n\n점: 중앙값 · 막대: 25~75 % · 30 패치 미만은 표에만 표시 · 세모: 축 범위 밖\n\n희소화 곡선 순서\n0\n0.5\n1\n0 %\n30 %\n60 %\n90 %\nMVS · 72,728 패치\n실제 오차 평균 ÷ 처음 평균\n큰 쪽부터 뺀 비율\n화면에서 다시 셈 · 곡선−이상적 넓이 0.1236 · 무작위−이상적 넓이 0.5616\n사전 정보\n\nLoD2 불확실도는 20 c"
+  },
+  "performance": {
+    "lastMapMs": 18.199999809265137,
+    "judgeMs": 977.3999996185303
+  },
+  "finished": "2026-10-23T12:23:09.298Z",
+  "failures": []
+}
