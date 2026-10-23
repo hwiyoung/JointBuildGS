@@ -1,0 +1,54 @@
+{
+  "a": {
+    "roof_patches": {
+      "expected": 210,
+      "actual": 209,
+      "delta": -1,
+      "pass_check": false
+    },
+    "correction_patches": {
+      "expected": 134,
+      "actual": 134,
+      "delta": 0,
+      "pass_check": true
+    },
+    "prior_minus_gt_cm": {
+      "expected": 484.1,
+      "actual": 455.63414286315316,
+      "delta": -28.465857136846864,
+      "pass_check": false
+    },
+    "mvs_minus_gt_cm": {
+      "expected": 0.8,
+      "actual": 0.7995151195332895,
+      "delta": -0.00048488046671057994,
+      "pass_check": true
+    }
+  },
+  "b": {
+    "roof_patches": {
+      "expected": 231,
+      "actual": 231,
+      "delta": 0,
+      "pass_check": true
+    },
+    "correction_patches": {
+      "expected": 63,
+      "actual": 63,
+      "delta": 0,
+      "pass_check": true
+    },
+    "prior_minus_gt_cm": {
+      "expected": -101.6,
+      "actual": -101.60673419616764,
+      "delta": -0.006734196167641926,
+      "pass_check": true
+    },
+    "mvs_minus_gt_cm": {
+      "expected": -1.9,
+      "actual": -1.9491326689674793,
+      "delta": -0.049132668967479365,
+      "pass_check": true
+    }
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "task_id": "PHD-MAIN-REGIONFIG-v1",
+  "scientific_verdict": null,
+  "locked_at": "2026-10-24T00:10:43.291921+09:00",
+  "title": "보정: 사전 정보가 틀리고 영상이 맞는 곳",
+  "frame": {
+    "crs": "EPSG:25832",
+    "subtract_xyz_m": [
+      690953,
+      5336071,
+      604
+    ],
+    "north": "+y"
+  },
+  "layout": {
+    "rows": 2,
+    "columns": [
+      "실제 사진",
+      "위에서 본 칸 지도",
+      "단면"
+    ],
+    "width_ratios": [
+      1,
+      0.9,
+      1.4
+    ],
+    "figure_inches": [
+      19.8,
+      11.8
+    ],
+    "dpi": 300,
+    "font": "Noto Sans CJK JP"
+  },
+  "colours": {
+    "correction": "#d9822b",
+    "refine": "0.72",
+    "no_gt": "0.95",
+    "other": "0.88",
+    "mvs": "#d08a2e",
+    "gt": "#2e8b57",
+    "highlight": "#f6dcbf",
+    "start": "#c0392b"
+  },
+  "map": {
+    "cell_size_m": 0.25,
+    "scale_bar_m": 10,
+    "north": true,
+    "photo_crop_outline": "thin dashed native crop footprint at median section GT height; lens distortion inverted"
+  },
+  "section": {
+    "bin_m": 0.25,
+    "selection": "in_eval & roof_like & 0<=along<=length & abs(across)<=half_width",
+    "height": "centre_z + p*normal_z; MVS status==0 only; finite medians",
+    "zero": "minimum finite GT bin median, independently for each row",
+    "summary": "median per-patch height differences on selected correction patches; never difference of medians",
+    "correction_bin": "any correction patch in bin",
+    "normal_p_applied_to_xy": false
+  },
+  "photo": {
+    "source": "native original of the exact training stem in Images.zip; FULL_OPENCV camera from triangulated, pose must match scene",
+    "crop_margin_m": 4,
+    "minimum_crop_side_px": 600,
+    "crop_min_side_policy": "expand native crop symmetrically only if needed; never upsample",
+    "overlay_alpha": 0.35,
+    "overlay_height": "centre + gt_p*normal; finite gt_p only",
+    "section_height": "interpolate 0.25m GT bin medians; nearest finite endpoint outside bin centres",
+    "nadir_max_deg": 20,
+    "max_nadir_occluded_fraction": 0.2,
+    "ranking": [
+      "entire line inside photo",
+      "nadir first",
+      "minimum occluded horizontal line length",
+      "maximum projected polyline pixel length",
+      "image stem ascending"
+    ],
+    "fallback": "if best nadir occluded fraction>0.2 or no full-line nadir, apply same rank to all training views",
+    "gt_crop_margin_m": 10,
+    "visibility_sample_step_m": 0.05,
+    "zbuffer_cell_px": 4,
+    "zbuffer_min_filter_cells": 3,
+    "depth_tolerance_m": 0.25,
+    "unknown_policy": "record separately; do not call unknown visible or occluded; rank by occluded only",
+    "visibility_scope": "local GT crop only; sampled projected GT nearest camera-Z depth; not watertight ray casting"
+  },
+  "execution": {
+    "cuda_visible_devices": "",
+    "nice": 19,
+    "container_memory_bytes": 7500000000,
+    "cpus": 4,
+    "network": false
+  },
+  "cell_order": [
+    "c_refine",
+    "c_corr14",
+    "c_corr4p",
+    "c_keep_mask",
+    "c_keep_in",
+    "c_limit",
+    "c_double",
+    "c_inh_miss",
+    "c_miss_wrong",
+    "c_inh_invis",
+    "c_invis_wrong",
+    "c_nogt"
+  ],
+  "examples": [
+    {
+      "id": "a",
+      "region": "보정",
+      "title": "가. 실제로 바뀐 곳 · B173 날개 · 항공 LiDAR",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "prior_label": "항공 LiDAR",
+      "seed_patch": 14638,
+      "start_xy": [
+        150.904,
+        105.497
+      ],
+      "end_xy": [
+        139.46,
+        108.933
+      ],
+      "half_width_m": 0.6,
+      "highlight_cells": [
+        "c_corr14",
+        "c_corr4p"
+      ],
+      "highlight_colour": "#d9822b",
+      "expected": {
+        "roof_patches": 210,
+        "correction_patches": 134,
+        "prior_minus_gt_cm": 484.1,
+        "mvs_minus_gt_cm": 0.8
+      }
+    },
+    {
+      "id": "b",
+      "region": "보정",
+      "title": "나. LoD2가 단순하게 그린 곳 · R1 계단 지붕 · LoD2",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "prior_label": "LoD2",
+      "seed_patch": 103265,
+      "start_xy": [
+        7.238,
+        32.078
+      ],
+      "end_xy": [
+        13.027,
+        21.609
+      ],
+      "half_width_m": 0.6,
+      "highlight_cells": [
+        "c_corr14",
+        "c_corr4p"
+      ],
+      "highlight_colour": "#d9822b",
+      "expected": {
+        "roof_patches": 231,
+        "correction_patches": 63,
+        "prior_minus_gt_cm": -101.6,
+        "mvs_minus_gt_cm": -1.9
+      }
+    }
+  ]
+}

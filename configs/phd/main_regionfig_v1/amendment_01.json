@@ -1,0 +1,20 @@
+{
+  "recorded_at": "2026-10-24T00:18:53.731131+09:00",
+  "config_sha256": "c706006dbcff060cf2ae00a6de2c4bd244ceef95f8677864f2a5aebda047314a",
+  "previous_render_sha256": "7c4556e0a17b9a8cff00c5e0b90e6d4c1b74977a16704cad67d4a24668f8b7ed",
+  "reason": "첫 그림의 B173 사진 오른쪽에서 발주 2.3의 주변 4 m 범위가 잘림. 학습 영상과 원본의 시야, 주변 4 m 범위를 모두 만족하는 후보에 같은 사진 순위를 적용한다.",
+  "old": "entire projected line inside original photograph; then corrected to also require training image field",
+  "new": "entire projected line inside the training image AND original; projected 4 m XYZ crop prism fully inside original",
+  "drawing_fix": "가려진 짧은 선 조각들을 이어서 점선 간격이 실제로 보이게 함.",
+  "unchanged": [
+    "section coordinates",
+    "bin width",
+    "patch population rule",
+    "height formula",
+    "visibility tolerance",
+    "photo ranking among feasible candidates",
+    "colours"
+  ],
+  "previous_files": "/payload/revision_01",
+  "scientific_verdict": null
+}
