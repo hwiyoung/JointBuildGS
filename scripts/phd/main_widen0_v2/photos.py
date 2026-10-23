@@ -50,7 +50,9 @@ def main():
                 mu,mz=project(margin,po['q'],po['t'],params)
                 if not np.isfinite(mu).all() or not (mz>0).all():continue
                 best=(a,v,q,mu)
-        rec=dict(component_id=row['component_id'],cell=row['cell'],prior=row['prior'],building_ids=row['building_ids'],area_m2=row['area_m2'],
+        building_label=row['building']+(f' 외 {len(row["building_ids"])-1}동' if len(row['building_ids'])>1 else '')
+        rec=dict(component_id=row['component_id'],cell=row['cell'],prior=row['prior'],building=row['building'],building_label=building_label,
+            building_ids=row['building_ids'],area_m2=row['area_m2'],difference_median_m=row['difference_m']['median'],
             source_extra_display_quads=int(display_extra.sum()),
             source_extra_display_rule='Centroid-only extra patches with a defined normal use a nominal 0.25 m square in a deterministic tangent basis for display only; numerical geometry and area unchanged.')
         if best is None:
@@ -68,11 +70,10 @@ def main():
         m=np.asarray(mask,bool);edge=m&~binary_erosion(m,iterations=2);arr=np.array(im);arr[edge]=[255,210,0]
         name=f'{rank+1:02d}_{row["cell"]}_{row["prior"]}';Image.fromarray(arr).save(crops/f'{name}.png',dpi=(300,300))
         diff='없음' if row['difference_m']['median'] is None else f"{row['difference_m']['median']:.3f}"
-        line=f'{KO[CELLS.index(row["cell"])]} · {row["building"]} · {row["area_m2"]:.2f} m² · 차 {diff} m · {v["name"]}'
+        line=f'{KO[CELLS.index(row["cell"])]} · {building_label} · {row["area_m2"]:.2f} m² · 차 {diff} m · {v["name"]}'
         fig,ax=plt.subplots(figsize=(10,7));ax.imshow(arr);ax.axis('off');fig.text(.5,.02,line,ha='center',fontsize=7)
         rec.update(status='PASS',image=v['name'],original_zip_member=v['original_zip_member'],crop_px=box,projected_patch_area_px2=a,nadir_tilt_deg=v['tilt_deg'],
             crop_clipped_to_image=bool((lo<0).any() or hi[0]>w or hi[1]>h),crop_file=f'figures/crops/{name}.png',panel_file=f'figures/{name}.png',caption=line,
-            difference_median_m=row['difference_m']['median'],
             outline='Nominal 0.25 m display patch quads displaced by gt_p along outward normal; union outline; source area retained in tables',
             margin_rule='3 m along an orthonormal tangent-plane basis around all patch corners, then projected crop bounds',distortion_model='FULL_OPENCV')
         figure(fig,name,rec);plt.close(fig);records.append(rec)
@@ -86,7 +87,7 @@ def main():
             if r['status']=='PASS':ax.imshow(Image.open(DOC/r['crop_file']))
             else:ax.text(.5,.5,'사진 확인 불가',ha='center',va='center')
             delta='없음' if r.get('difference_median_m') is None else f"{r['difference_median_m']:.3f} m"
-            ax.set_title(f'{i+1}. {r["prior"]} · {r["building_ids"][0]}\n{r["area_m2"]:.2f} m² · 차 {delta}\n{r.get("image","영상 없음")}',fontsize=7)
+            ax.set_title(f'{i+1}. {r["prior"]} · {r["building_label"]}\n{r["area_m2"]:.2f} m² · 차 {delta}\n{r.get("image","영상 없음")}',fontsize=7)
         fig.suptitle(KO[CELLS.index(cell)]+' · 정하는 곳');fig.tight_layout()
         figure(fig,f'모음사진_{cell}',rs);plt.close(fig)
     print('photo panels complete',len(records),flush=True)
