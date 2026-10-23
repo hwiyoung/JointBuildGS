@@ -1,0 +1,144 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.1",
+  "made": "2026-10-23T20:59:04.154556+09:00",
+  "scientific_verdict": null,
+  "source_config_sha256": "7017d30a06926d6628aae7d206d2d4efea8ed6cea8872e50674a18609b6b7b7e",
+  "seed": 20261023,
+  "calibration": {
+    "bins_cm": [
+      0,
+      2,
+      5,
+      10,
+      20,
+      40,
+      null
+    ],
+    "interval": "left inclusive, right exclusive",
+    "axes_cm": [
+      0.5,
+      100
+    ],
+    "axes_scale": "log10",
+    "min_patches": 30,
+    "statistics": [
+      "n",
+      "u_median_cm",
+      "e_median_cm",
+      "e_p25_cm",
+      "e_p75_cm",
+      "median_e_over_u"
+    ],
+    "overflow": "triangles at clipped chart boundary with unrounded value in tooltip and table",
+    "lod2": "20 cm; current case: roof type and wall; pooled: site roof/wall, optional site roof type/wall"
+  },
+  "population": {
+    "scope": "eval by default; obey sidebar filters; only finite uncertainty and actual error",
+    "current_radius": "top selector",
+    "pool_radii": {
+      "B0_b10": 1.0,
+      "B173nb_b10": 1.5,
+      "R1rep_b10": 1.5
+    },
+    "exclusion_cell": "c_corr4p",
+    "exclusion_applies": "prior only, charts only; off by default",
+    "exclusion_warning": "참값으로 뺀 것. 불확실도가 4τ에 가까운 구간은 실제 오차가 작게 나올 수 있음."
+  },
+  "sparsification": {
+    "remove_percent": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90
+    ],
+    "remove_count": "floor(n * percent / 100)",
+    "uncertainty_order": "descending uncertainty, ascending patch index, then site order",
+    "ideal_order": "descending actual error, ascending patch index, then site order",
+    "normalized": "remaining error mean / initial error mean; zero baseline unavailable",
+    "integration": "trapezoid over removed fraction 0..0.9",
+    "random": 1,
+    "lod2": "unavailable: constant uncertainty has no ordering"
+  },
+  "faces": {
+    "source": "/ph/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/<site>/lod2_surfaces.json",
+    "triangles": "lod2_mesh.npz V,F,tri_surface; no caps",
+    "lod2": "exact regions_ext_v3 surf_ext, cross-check patch surf and centre",
+    "als_roof": "XY triangle containment including boundary 1e-9; nearest interpolated Z; tie surface ext ascending",
+    "als_wall": "minimum Euclidean point-to-triangle distance <= 1 m; tie surface ext ascending",
+    "fallback": "floor(local x/2), floor(local y/2); 2 m XY grid; Z median for display",
+    "aggregation": "current scope and sidebar/map drill-down filters; continuous finite median; missed area fraction; categories count majority and share",
+    "insufficient": {
+      "min_valid": 10,
+      "min_valid_fraction": 0.3,
+      "denominator": "filtered patches of the face"
+    },
+    "roof_type": "LoD2 building attribute; ALS face view inherits matched LoD2 attribute; patch source unchanged",
+    "verification": "10 LoD2 faces per case; numpy default_rng(seed + case index); independent source patch medians"
+  },
+  "pairs": [
+    {
+      "id": "mvs",
+      "label": "MVS 정밀도",
+      "left": "mvs_u",
+      "right": "mvs_e"
+    },
+    {
+      "id": "prior",
+      "label": "사전 정보 정밀도",
+      "left": "prior_u",
+      "right": "prior_e"
+    },
+    {
+      "id": "sources",
+      "label": "자료끼리",
+      "left": "mvs_u",
+      "right": "prior_u"
+    }
+  ],
+  "pair_range_cm": [
+    0,
+    50
+  ],
+  "pair_statistics": "LoD2 faces only, both medians finite and both sufficiently sampled; Spearman and median(right/left); constant rank unavailable; grids excluded",
+  "signed": {
+    "layers": [
+      "difference",
+      "gt_p"
+    ],
+    "range_cm": [
+      -50,
+      50
+    ],
+    "zero": "#ffffff",
+    "negative": "#3b63a2",
+    "positive": "#ba4432",
+    "label": "+ 바깥, − 안쪽"
+  },
+  "validation": {
+    "length_tolerance_cm": 0.1,
+    "count_tolerance": 0,
+    "record_both_on_difference": true
+  },
+  "output": {
+    "web": "web_v1_1",
+    "tables": "tables_v1_1",
+    "screens": "screens_v1_1",
+    "port": 8912
+  },
+  "amendments": []
+}
