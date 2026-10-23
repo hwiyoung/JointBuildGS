@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-MAIN-WIDEN0-v2",
+  "at": "2026-10-24T04:24:06+09:00",
+  "before_any_component_or_photo_selection": true,
+  "measurements_already_in_progress": true,
+  "reason": "Apply the order's maximum three places per building to the complete three-montage selection as well as to each cell; avoid nine places from one building.",
+  "previous_implementation": "Reset the building counter for each photo cell.",
+  "corrected_implementation": "One shared building counter across all three photo cells, with the already listed cell order.",
+  "cell_order": ["prior_wrong", "image_wrong", "both_wrong"],
+  "per_cell_maximum": 20,
+  "per_building_maximum_across_all_cells": 3,
+  "ranking": "Descending component area within cell, across both priors; ties building ID then component ID; every involved building counts.",
+  "numeric_measurements_and_cells_changed": false,
+  "original_frozen_measurement_config_changed": false,
+  "scientific_verdict": null
+}

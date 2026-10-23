@@ -89,13 +89,13 @@ def main():
         z=json.loads((O/'components'/f'{p}_candidates.json').read_text());rows+=z['rows'];summary+=z['summary']
     rows.sort(key=lambda r:(r['prior'],CELLS.index(r['cell']),-r['area_m2'],r['building'],r['component_id']))
     save_table('시험자리_정하는곳',rows);save_table('시험자리_요약',summary)
-    chosen=[]
+    chosen=[];counts={}
     for cell in ['prior_wrong','image_wrong','both_wrong']:
-        counts={};n=0
+        n=0
         for r in sorted((r for r in rows if r['cell']==cell),key=lambda r:(-r['area_m2'],r['building'],r['component_id'])):
             if any(counts.get(b,0)>=3 for b in r['building_ids']):continue
             chosen.append(r);n+=1
             for b in r['building_ids']:counts[b]=counts.get(b,0)+1
             if n==20:break
-    save_table('대표자리_선정',chosen,rule='Each cell: largest area across both priors, max 3 components involving any one building; ties building then component ID')
+    save_table('대표자리_선정',chosen,rule='Each cell: largest area across both priors; max 3 components involving any one building across all three photo cells; frozen cell order prior_wrong, image_wrong, both_wrong; ties building then component ID')
 if __name__=='__main__':main()

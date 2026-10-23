@@ -28,6 +28,8 @@ def main():
                 assert np.isclose(total,1,atol=1e-10),(p,total)
             assert np.isclose(r['valid_area_m2']+r['missing_difference_area_m2'],r['cell_area_m2'])
     rows=json.loads((DOC/'tables/대표자리_선정.json').read_text())['rows']
+    all_ids=[b for r in rows for b in r['building_ids']]
+    assert all(all_ids.count(b)<=3 for b in set(all_ids))
     for cell in ['prior_wrong','image_wrong','both_wrong']:
         rr=[r for r in rows if r['cell']==cell];assert len(rr)<=20
         ids=[b for r in rr for b in r['building_ids']]
@@ -38,7 +40,7 @@ def main():
     for root in [O/'patch_values',O/'holdout/patch_values']:
         for f in root.glob('*.npz'):
             with np.load(f) as z:
-                assert set(required_keys+['source_extra','normal_defined'])<=set(z.files)
+                assert set(required_keys+['source_extra','normal_defined','signed_difference_over_uncertainty'])<=set(z.files)
                 if '__ALS__' in f.name:assert {'als_u','als_e','als_status'}<=set(z.files)
     result=dict(status='PASS',report_characters=len(text),required_figures=figures,checks=['required files','300 dpi images','histogram mass including overflow','difference availability denominators','representative building caps','all inherited observation fields retained'],visual_review='required separately before delivery',scientific_verdict=None)
     dump(O/'gates/public_artifacts.json',result);dump(DOC/'tables/public_validation.json',result)
