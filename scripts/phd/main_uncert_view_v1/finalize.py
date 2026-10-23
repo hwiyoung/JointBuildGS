@@ -23,6 +23,9 @@ def decode(rec):
 
 def main():
     web=OUT/'web';config=load(CFG/'view_v1.json');audit=load(DOC/'tables/input_audit.json')
+    approval_path=CFG/'delivery_approval_20261023.json'
+    approval=load(approval_path) if approval_path.exists() else None
+    size_approved=bool(approval and approval.get('allow_over_300_mb'))
     changed=[]
     for rec in audit['inputs']:
         if sha(rec['path'])!=rec['sha256']:changed.append(rec['path'])
@@ -65,7 +68,9 @@ def main():
     total=sum(p['bytes'] for p in files)
     size=dict(web_bytes=total,zip_bytes=package.stat().st_size,zip_sha256=sha(package),limit_bytes=300_000_000,
         exceeds_requested_threshold=total>300_000_000,precision_or_sample_reduction=False,size_question_requested=True,
-        decision='Keep all locked samples and original numeric precision. No reduction without the user response.',files=files)
+        decision=('User approved LAN/VPN delivery and exceeding 300 MB while preserving precision and samples.' if size_approved
+                  else 'Keep all locked samples and original numeric precision. No reduction without the user response.'),
+        over_300_mb_approved=size_approved,delivery_approval=approval,files=files)
     dump(DOC/'tables/package.json',size)
     section=load(DOC/'tables/section_replay.json');tables=load(DOC/'tables/table_recount.json');qa=load(DOC/'tables/browser_full.json')
     measured=next(x for x in qa['checks'] if x['test']=='largest_case_layer_switch')['ms']
@@ -82,7 +87,8 @@ def main():
     lines=['# 불확실도 보기 보고 v1','',
         '여섯 경우·세 고리 크기·MVS 두 판을 볼 수 있는 웹 화면과 오프라인 묶음을 만들었다.',
         '여는 주소: **[불확실도 지도](http://192.168.10.203:8912/)** — 연구 서버에 연결되는 같은 네트워크 또는 VPN에서 접속한다. 파일 실행은 필요 없다.',
-        '단면 재현·숫자 맞춰 보기·Linux Chromium 화면 점검은 PASS. Windows Chrome·Edge는 확인 불가이며 전체 웹 크기는 300 MB 초과다. `scientific_verdict: null`.','',
+        ('단면 재현·숫자 맞춰 보기·Linux Chromium 화면 점검은 PASS. Windows Chrome·Edge는 확인 불가다. 연구실 네트워크·VPN 접속과 정밀도·표본을 유지한 300 MB 초과는 사용자 승인 완료다. `scientific_verdict: null`.' if size_approved else
+         '단면 재현·숫자 맞춰 보기·Linux Chromium 화면 점검은 PASS. Windows Chrome·Edge는 확인 불가이며 전체 웹 크기는 300 MB 초과다. `scientific_verdict: null`.'),'',
         '## 1. 자료와 키 이름','',
         f'- 저장소: `{HOST_REPO}`',f'- 패치 값: `{HOST_ART}/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/`',
         f'- MVS 판 가·나, 원래 항공 LiDAR, 참값 점: 같은 작업의 `points/<지역>/mvs_a_xyz.npy`, `mvs_b_xyz.npy`, `als_xyz.npy`, `gt_xyz.npy`. 영상 번호와 솎기 열쇠도 같은 폴더에서 읽었다.',
@@ -121,7 +127,8 @@ def main():
     lines+=['## 5. 변경·확인 불가·추가 기록','',
         '- 웹주소 접속 요청에 따라 독립 정적 서버를 추가했다. 이 작업의 `web/`만 읽기 전용으로 제공하며 자동 재시작한다. 다른 서비스는 변경하지 않았다.',
         '- 숫자는 무손실 저장한다. 부동소수점 원래 정밀도, 표본 패치 수, 잠근 표시 점 상한을 줄이지 않았다.',
-        '- 전체 웹 폴더가 300 MB를 넘어 표본 또는 정밀도를 줄이기 전에 사용자에게 선택을 요청했다. 응답 전에는 원본 유지판을 제공한다. 압축 파일 크기와 풀린 웹 크기를 구별한다.',
+        ('- 사용자 확정: 연구실 네트워크나 VPN에서 접속하며, 정밀도·표본 유지 및 300 MB 초과를 허용했다. 승인 기록: [delivery_approval_20261023.json](tables/delivery_approval_20261023.json).' if size_approved else
+         '- 전체 웹 폴더가 300 MB를 넘어 표본 또는 정밀도를 줄이기 전에 사용자에게 선택을 요청했다. 응답 전에는 원본 유지판을 제공한다. 압축 파일 크기와 풀린 웹 크기를 구별한다.'),
         '- 자리 목록에 원래 대응 패치가 0개인 항목은 없음으로 표시하고 이동을 막는다. R1 고르게 낮은 평지붕은 앞 작업의 확인 불가 기록을 유지한다.',
         '- 앞 보고 6.2의 판 나는 보존 · 거름도 영상 틀림에 포함한다. 화면에서 이를 명시하고 같은 정의로 비교한다. 6.4는 판 가를 사용한다.',
         '- `cell`과 `roof_type`도 참값 유래이므로 참값 점검용으로 표시했다. 확인 물음의 보고 등급은 JSON에서 읽은 기존 문구이며 새 등급을 만들지 않았다.',
