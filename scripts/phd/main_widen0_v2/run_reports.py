@@ -13,5 +13,7 @@ def main():
         r=subprocess.run([sys.executable,'-B','-u',str(S/name)])
         dump(O/'gates'/f'report_{name}.json',dict(script=name,exit_code=r.returncode,seconds=time.monotonic()-start,scientific_verdict=None))
         if r.returncode:raise SystemExit(r.returncode)
+    # Include the newly written public-validation table in all three formats.
+    subprocess.run([sys.executable,'-B','-u',str(S/'markdown_tables.py')],check=True)
     print('reports ready for visual review',flush=True)
 if __name__=='__main__':main()

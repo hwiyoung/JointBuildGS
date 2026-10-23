@@ -1,5 +1,6 @@
 """Explicit allowlist for light/full delivery; no holdout payloads."""
 import json
+import hashlib
 from pathlib import Path
 import zipfile
 import numpy as np
@@ -32,10 +33,16 @@ def main():
                 z.write(p,arc,compress_type=zipfile.ZIP_STORED if p.suffix in ['.npz','.png','.pdf'] else zipfile.ZIP_DEFLATED)
             z.writestr('SHA256SUMS',sums)
         with zipfile.ZipFile(target) as z:
-            assert z.testzip() is None
+            assert z.read('SHA256SUMS').decode()==sums
+            for line in sums.splitlines():
+                expected,arc=line.split('  ',1);h=hashlib.sha256()
+                with z.open(arc) as member:
+                    while block:=member.read(4*1024*1024):h.update(block)
+                assert h.hexdigest()==expected,arc
             names=z.namelist();assert all(not n.startswith('holdout/') for n in names)
             if suffix=='handover_light':assert not any(n.startswith('patch_values/') for n in names)
-        records.append(dict(file=name,bytes=target.stat().st_size,sha256=sha(target),members=len(selected)+1,holdout_included=False))
+        records.append(dict(file=name,bytes=target.stat().st_size,sha256=sha(target),members=len(selected)+1,holdout_included=False,
+            archive_member_SHA256_verified=True,archive_CRC_verified_by_reading_all_members=True))
         print('archive validated',name,flush=True)
     dump(O/'handover_manifest.json',dict(archives=records,scientific_verdict=None))
     (O/'SHA256SUMS').write_text(''.join(f"{r['sha256']}  {r['file']}\n" for r in records))

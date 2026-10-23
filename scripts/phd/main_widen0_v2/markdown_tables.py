@@ -2,12 +2,21 @@
 import csv
 import json
 from pathlib import Path
-from analysis_common import DOC
+from analysis_common import DOC,csvwrite
 def cell(v):
     if v is None:return '확인 불가'
     if isinstance(v,float):return f'{v:,.6g}'
     return str(v).replace('|',' / ').replace('\n',' ')
 def main():
+    # Supplementary input/audit JSONs also receive CSV and Markdown companions.
+    # Nested values remain exact JSON cells; the source JSON is unchanged.
+    for p in sorted((DOC/'tables').glob('*.json')):
+        if p.with_suffix('.csv').exists():continue
+        obj=json.loads(p.read_text())
+        rows=obj.get('rows') if isinstance(obj,dict) else obj
+        if not isinstance(rows,list) or not all(isinstance(r,dict) for r in rows):
+            rows=[dict(field=k,value=v) for k,v in obj.items()] if isinstance(obj,dict) else [dict(value=obj)]
+        csvwrite(p.with_suffix('.csv'),rows)
     sections=[
         ('맞는쪽칸_넓이',['prior','cell_ko','patches','area_m2','fraction','difference_missing_area_m2']),
         ('차의크기_비율',['prior','scope','cell','shape','valid_patches','difference_area_m2','fraction_abs_gt_0.5m','fraction_abs_gt_1m','fraction_abs_gt_2m','fraction_positive']),
