@@ -67,7 +67,7 @@ def main():
         if not r['images']:continue
         lines.append(f"| {r['split']} | {r['flight']} | {r['images']} | {r['nadir']} | {r['oblique']} | {r['utc_first']} ~ {r['utc_last']} | {r['relative_altitude_m']['median']} |")
     lines += ['', '영상의 비행 구분은 기존 사진 보고의 촬영 시각 구간을 사용했다. 상대 고도는 원본 XMP의 값이며 지면에서의 높이로 바꾸지 않았다. 수동 비행 **LiDAR**는 쓰지 않는다. 영상은 본 실험의 전체 카메라 모델을 사용한다.', '',
-        f"기존 실행 네 건: 선택 영상 919장, 총 11,205초, 영상당 {est['seconds_per_image']:.9f}초. 학습 {im['train']}장으로 단일 GPU {est['single_gpu_hours']:.6f}시간, 두 GPU의 이상적 분담 {est['two_gpu_ideal_hours']:.6f}시간이다. 실제 두 GPU 분담을 검증한 값은 아니다. 48시간 중단 기준 안이므로 별도 결정을 기다리지 않고 MVS로 이어 간다. [이 발주에서 냄]",'',
+        f"기존 실행 네 건: 제출 영상 924장, 총 11,205초, 영상당 {est['seconds_per_image']:.9f}초. 학습 {im['train']}장으로 단일 GPU {est['single_gpu_hours']:.6f}시간, 두 GPU의 이상적 분담 {est['two_gpu_ideal_hours']:.6f}시간이다. 최초 어림은 출력 영상 919장으로 나누어 2.773817시간이었고, 실행 로그의 제출 수를 확인하여 924장으로 정정했다. 실제 두 GPU 분담을 검증한 값은 아니다. 48시간 중단 기준 안이므로 별도 결정을 기다리지 않고 MVS로 이어 간다. [이 발주에서 냄]",'',
         '기존 기하 깊이·신뢰도·사전 정보 렌더·영역·패치값은 평가 지역에 있다. 전체 819장 학습 목록으로 만든 깊이는 없다. 기존 전체 937장 MVS에는 평가 영상이 섞여 있으므로 범위 입력 현황에만 사용했다. 상세 출처와 반올림 전 값은 `tables/input_preflight.json`, `tables/image_inventory.json`, `tables/scope_split.json`에 있다.', '',
         '## 사전 정보 패치·참값·시험 자리','',
         '0.25 m 패치는 기존 면 생성·패치 생성 함수를 사용해 구역마다 준비 중이다. 새 영역의 정합은 학습 영상만의 깊이를 필요로 한다. 이에 이 중간 보고의 사전 정보 − 참값 표와 시험 자리 목록은 미완료다. MVS 생성 뒤 같은 정합 함수와 참값 정의로 CPU 계산하고 최종 보고에 채운다. 기존 전체 MVS로 이 값을 대신 구하지 않는다.', '',

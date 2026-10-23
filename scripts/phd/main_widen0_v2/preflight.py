@@ -28,6 +28,7 @@ def sha(p):
     return h.hexdigest()
 
 def dump(p, x):
+    p = Path(p)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(x, ensure_ascii=False, indent=2, allow_nan=False) + '\n')
 

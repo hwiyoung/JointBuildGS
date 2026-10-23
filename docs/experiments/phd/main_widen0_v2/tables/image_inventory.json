@@ -139,12 +139,20 @@
   },
   "mvs_estimate": {
     "selected_training_images": 819,
+    "seconds_per_image": 12.126623376623376,
+    "single_gpu_hours": 2.758806818181818,
+    "two_gpu_ideal_hours": 1.379403409090909,
+    "over_48_hours": false,
+    "source": "four completed COLMAP runs; 924 submitted input images, 11205 seconds; subset.json verified"
+  },
+  "seconds": 72.23675203509629,
+  "scientific_verdict": null,
+  "previous_mvs_estimate": {
+    "selected_training_images": 819,
     "seconds_per_image": 12.19260065288357,
     "single_gpu_hours": 2.7738166485310125,
     "two_gpu_ideal_hours": 1.3869083242655063,
     "over_48_hours": false,
     "source": "input_preflight.json: four completed runs, selected inputs denominator"
-  },
-  "seconds": 72.23675203509629,
-  "scientific_verdict": null
+  }
 }

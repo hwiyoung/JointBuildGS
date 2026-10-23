@@ -14,11 +14,19 @@ test ! -f "$WS/colmap_receipt.json"
 mkdir -p "$WS/cache" "$WS/tmp"
 wait_start=$SECONDS
 while true; do
-  busy=$(nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits)
-  if [ -z "$busy" ]; then break; fi
+  # The desktop encoder on GPU 0 is an active desktop service, not a research job.
+  # Every research compute process on either GPU still causes a wait; the chosen
+  # GPU must also have no compute process of any kind.
+  busy=$(nvidia-smi --query-compute-apps=process_name --format=csv,noheader,nounits | awk '$0 != "/usr/libexec/gnome-remote-desktop-daemon"')
+  target_busy=$(nvidia-smi -i "$GPU" --query-compute-apps=pid --format=csv,noheader,nounits)
+  if [ -z "$busy" ] && [ -z "$target_busy" ]; then break; fi
   sleep 30
 done
 wait_s=$((SECONDS-wait_start))
+if [ -f "$OUT/gpu_wait_initial_seconds.txt" ]; then
+  read -r initial_wait < "$OUT/gpu_wait_initial_seconds.txt"
+  wait_s=$((wait_s+initial_wait))
+fi
 start_utc=$(date -u +%FT%TZ)
 start=$SECONDS
 set +e
@@ -41,6 +49,7 @@ cat > "$WS/colmap_receipt.json" <<EOF
   "image": "$IMG",
   "gpu": $GPU,
   "gpu_wait_seconds": $wait_s,
+  "desktop_service": "GPU 0 gnome-remote-desktop preserved; selected GPU 1 empty before launch",
   "seconds": $elapsed,
   "exit_code": $rc,
   "geometric_depth_maps": $count,

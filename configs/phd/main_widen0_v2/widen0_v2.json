@@ -59,7 +59,7 @@
       0.0,
       0.0
     ],
-    "ownership": "core lower inclusive upper exclusive; overlapping inputs only; do not duplicate patches"
+    "ownership": "Unregistered patch centre in core (lower inclusive, upper exclusive) and common support; registered coordinates used for measurements. Boundary ownership never moves with fitted shifts."
   },
   "tau_m": {
     "ALS": 0.1266,
@@ -189,7 +189,8 @@
     "right_inclusive": true,
     "prior_error": "abs(gt_p)",
     "mvs_error": "actual error e from main_uncert_v1, not abs(mvs_p - gt_p)",
-    "missing_reasons": "Retain original face, point-count and plane-fit failure status; never convert missing values to zero"
+    "missing_reasons": "Retain original face, point-count and plane-fit failure status; never convert missing values to zero",
+    "availability": "Prior comparison requires inherited GT status 0 and finite gt_p. Other GT states enter no_gt with the original reason, including no face, insufficient points and plane failure; they are never reported as all zero-point cases. MVS correctness uses finite actual error e even when the ring fit or uncertainty is unavailable. Nonfinite e enters the appropriate no_mvs cell; a finite e with missing mvs_p remains in its correctness cell but is absent from difference distributions, whose missing area is reported."
   },
   "figures": {
     "dpi": 300,
@@ -217,7 +218,8 @@
     "photos_per_building_max": 3,
     "photo_margin_m": 3.0,
     "image_rule": "largest projected component in a nadir training image; original resolution crop; GT-height outline",
-    "photo_selection": "descending component area; ties building ID then component ID; no cause labels"
+    "photo_selection": "descending component area; ties building ID then component ID; no cause labels",
+    "photo_margin_detail": "Project component patch corners moved by gt_p along normal; dilate their original-image outline by the projection of 3 m in the patch tangent plane for crop bounds. Retain image-edge clipping and missing-photo reasons."
   },
   "execution": {
     "training": false,
@@ -275,6 +277,13 @@
         "cell"
       ],
       "previous_config_sha256": "4747f3e10bb049c87ff21a0647b67b2b10000de881e05a45bf4d57a3103eefe3"
+    },
+    {
+      "id": "availability_detail",
+      "at": "2026-10-24T00:59:15.064154+09:00",
+      "before_patch_outcomes": true,
+      "previous_config_sha256": "bc1ff25204bc242aad5447b716c7f277eac339c79502c1e74069fae0032f0327",
+      "reason": "Clarify exclusive cells when inherited GT or ring fit fails; retain finite actual errors independently of uncertainty availability. Make tile boundary ownership and photo margin explicit. No outcome inspected."
     }
   ],
   "seed_rule": "Inherited numpy default_rng scheme; full-area site index = sorted 100 m tile index. Prior index LoD2=0 ALS=1; data mvs_a=0 als=2 gt=3; ring=1 for 1.5 m and 9 for GT. Record changed context and indices in historical comparison."
