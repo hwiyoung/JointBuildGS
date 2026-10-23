@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-MAIN-WIDEN0-v2",
+  "at": "2026-10-24T04:20:46+09:00",
+  "after_measurements_started": true,
+  "reason": "Use idle CPU capacity for independent later tiles while preserving numerical operations and frozen selection rules.",
+  "before": {"measurement_containers": 1, "workers_per_job": 64, "cpu_quota_per_container": 64},
+  "after": {"maximum_measurement_containers": 2, "workers_per_job": 64, "cpu_quota_per_container": 64},
+  "nice": 19,
+  "memory_limit_GiB_per_container": 32,
+  "host_observation": {"logical_CPUs": 128, "available_memory_GiB_approx": 52},
+  "secondary_scope": "Frozen sorted tile list indices 12 through 23, in reverse order; work files only.",
+  "duplicate_prevention": "Exclusive per-job flock; completed output and receipt checked inside lock.",
+  "export_owner": "Original measure_all.py only",
+  "unchanged": ["widen0_v2.json", "building split", "image split", "tau", "random seed and patch indices", "u_core", "all numerical worker functions"],
+  "validation": "/out/gates/job_lock.json: two simultaneous launchers execute one job once",
+  "scientific_verdict": null
+}

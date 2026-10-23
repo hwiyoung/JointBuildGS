@@ -15,6 +15,7 @@ MVS thinning is exact: the points are stored sorted by their random key, so 'the
 ring are in it. Column search: balls of radius sqrt(0.5^2 + 0.25^2) along the axis every 0.5 m, then the exact filters.
 scientific_verdict: null."""
 import argparse
+import fcntl
 import multiprocessing as mp
 import sys
 import time
@@ -282,6 +283,24 @@ def check_mvs(site, workers):
     U.log(site, {k: {kk: vv for kk, vv in v.items() if kk != "per_view_median_cm"} for k, v in out.items()})
 
 
+def run_locked(site, pset, data, radii, workers, limit=None):
+    """Serialize identical jobs while independent tiles can run concurrently."""
+    tag=f'{site}_{pset}_{data}_{"_".join(map(str,radii))}_{limit}'
+    with (U.WORK/f'lock_{tag}.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        receipt=U.WORK/(f'run_gt_{site}_{pset}.json' if data=='gt' else f'run_{site}_{pset}_{data}_{"_".join(map(str,radii))}.json')
+        paths=[U.WORK/f'gt_{site}_{pset}.npz'] if data=='gt' else [U.WORK/f'val_{site}_{pset}_{data}_R{r}.npz' for r in radii]
+        if limit is None and receipt.exists() and all(p.exists() for p in paths):
+            info=U.json.loads(receipt.read_text())
+            assert info['env']['config_sha256']==U.env()['config_sha256']
+            for path in paths:
+                with np.load(path) as z:
+                    assert len(z['status'])==info['patches'] and np.all(z['status']>=0)
+            U.log('completed job reused under lock',site,pset,data)
+            return
+        run(site,pset,data,radii,workers,limit)
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("site"); ap.add_argument("pset"); ap.add_argument("data"); ap.add_argument("radii", nargs="?", default="")
@@ -291,4 +310,4 @@ if __name__ == "__main__":
         check_mvs(a.site, a.workers)
     else:
         radii = [] if a.data == "gt" else [float(x) for x in a.radii.split(",")]
-        run(a.site, a.pset, a.data, radii, a.workers, a.limit)
+        run_locked(a.site, a.pset, a.data, radii, a.workers, a.limit)
