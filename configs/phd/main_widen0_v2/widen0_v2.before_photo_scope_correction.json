@@ -1,0 +1,236 @@
+{
+  "task_id": "PHD-MAIN-WIDEN0-v2",
+  "scientific_verdict": null,
+  "created_at": "2026-10-24T00:16:05.743021+09:00",
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ],
+    "z_bridge_als_lod2_m": 45.7,
+    "u_axis_angle_degrees_ccw_from_easting": 70.0
+  },
+  "scope": {
+    "rule": "Intersection of observed image-derived MVS XY support, nadir ULS XY support, ALS XY support and raw LoD2 tile coverage. No patch outcome enters selection.",
+    "coverage_grid_m": 0.5,
+    "coverage_origin": "integer multiple of 0.5 m in EPSG:25832",
+    "coverage_source": "Inherited survey 0.5 m occupancy rasters; verify nadir header and current image geometry remain inside raster bounds; extend from raw inputs if needed.",
+    "image_support": "Existing 937-image MVS used for source coverage inventory only. It contains evaluation images and is not the new training-only MVS or error measurement.",
+    "building_membership": "GroundSurface XY intersects common support. Preserve whole building split; patch centre must be inside common XY support.",
+    "evaluation_regions": [
+      "B0_b10",
+      "B173nb_b10",
+      "B173_b0",
+      "R1rep_b10"
+    ],
+    "exploration_regions": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "SW",
+      "R3E"
+    ]
+  },
+  "split": {
+    "unit": "LoD2 building attribute",
+    "forced_development": "any GroundSurface intersection with four evaluation ranges or seven exploration ranges",
+    "other_buildings": "sort exact building IDs ascending, numpy default_rng(20261023).choice without replacement",
+    "holdout_fraction": 0.3,
+    "holdout_count": "floor(0.30 * other_buildings)",
+    "seed": 20261023,
+    "patch_assignment": "LoD2 owning face; ALS faces from view_v1_1.json faces exactly; no face match excluded",
+    "seal": "all holdout patch outcomes and candidate places only in /out/holdout; no cell areas in reports or either archive",
+    "permitted_public_holdout": [
+      "building_count",
+      "patch_count",
+      "area_m2",
+      "fraction_patches_with_GT",
+      "sha256"
+    ]
+  },
+  "grid": {
+    "core_m": 100.0,
+    "overlap_each_side_m": 10.0,
+    "origin_epsg25832_m": [
+      0.0,
+      0.0
+    ],
+    "ownership": "core lower inclusive upper exclusive; overlapping inputs only; do not duplicate patches"
+  },
+  "tau_m": {
+    "ALS": 0.1266,
+    "LoD2": 0.2
+  },
+  "tau_source": {
+    "ALS": "median of B0 12.66, B173nb 14.70, R1 10.34 cm, user order 3.4",
+    "LoD2": "User clarification in this chat on 2026-10-24: use 20 cm; applies to roof-like and wall-like patches.",
+    "role": "Evaluation threshold only; same numeric value as existing LoD2 uncertainty is not a change of its definition",
+    "historical_tau_cm": {
+      "B0_b10": {
+        "roof": 19.75,
+        "wall": 54.7,
+        "als": 12.66
+      },
+      "B173nb_b10": {
+        "roof": 17.6,
+        "wall": 22.78,
+        "als": 14.7
+      },
+      "R1rep_b10": {
+        "roof": 68.28,
+        "wall": 72.46,
+        "als": 10.34
+      }
+    },
+    "preserve_historical": true
+  },
+  "patch": {
+    "cell_m": 0.25,
+    "source": "stage-1 plane/TIN store constructors and outward normals from main_uncert_v1",
+    "roof_like_max_angle_deg": 45.0,
+    "definitions_source": "configs/phd/main_uncert_v1/uncert_v1.json",
+    "faces_source": "configs/phd/main_uncert_view_v1/view_v1_1.json faces"
+  },
+  "definitions": {
+    "inner_radius_m": 0.5,
+    "ring_radii_m": [
+      1.5
+    ],
+    "ring_default_m": 1.5,
+    "roof_like_max_angle_deg": 45.0,
+    "column_half_m": {
+      "roof": 10.0,
+      "wall": 3.0
+    },
+    "layer_thickness_m": 0.3,
+    "layer_step_m": 0.05,
+    "layer_share": 0.2,
+    "slab_half_m": 1.0,
+    "lmeds_triples": 500,
+    "max_normal_angle_deg": 45.0,
+    "inlier_k": 2.5,
+    "s0_rule": "s0 = 1.4826 × (1 + 5 ÷ (고리 점 수 − 3)) × √(제곱 잔차의 중앙값); 중앙값은 numpy median(짝수 개면 가운데 둘의 평균)",
+    "min_inner": 5,
+    "min_ring": 20,
+    "mvs_cap_inner": 2000,
+    "mvs_cap_ring": 8000,
+    "q_level": 0.683,
+    "q_rule": "numpy quantile(|d|, 0.683), 선형 보간",
+    "wrong_m": 0.2,
+    "gt_min_points": 10,
+    "lod2_u_m": 0.2,
+    "one_sided_rule": "고리 점이 c 둘레의 네 사분면 가운데 셋 미만에만 있음. 사분면 = n에 수직인 두 축(e1 = 연직 또는 x축과 n의 외적, e2 = n × e1)의 부호. 점이 하나라도 있으면 그 사분면에 있음",
+    "weak_support_rule": "잔차가 2.5 s0 안인 고리 점이 고리 점의 절반 미만. 잔차 = 고른 평면(최소 중앙 제곱)의 잔차(1.2-1의 문장 그대로). 이 정의는 만들어지는 꼴상 늘 절반 이상이다(제곱 잔차의 절반 이상이 중앙값 이하이고 2.5 s0 ≥ 3.7√중앙값). 그래서 다시 맞춘 최소 제곱 평면의 잔차로 같은 비율을 support_final로 함께 남긴다(표시에는 쓰지 않음, 표 1에 나란히 적음)",
+    "multi_layer_rule": "참값 면 찾기에서 20 % 이상인 층(5 cm씩 옮긴 층)이 끊기지 않고 이어진 묶음을 하나로 세어, 묶음이 둘 이상이면 '여러 층'",
+    "face_rule": "1.1: 옆 거리 0.5 m 안이고 법선 거리가 기둥 범위 안인 점을 모으고(M개), 위 끝 +H부터 5 cm씩 내리며 [위 − 0.3, 위] 층(양 끝 포함)의 점 수가 0.2 M 이상인 첫 층의 가운데가 o. 그런 층이 없거나 M = 0이면 '면 없음'",
+    "slab_rule": "셈에 쓰는 점 = 기둥 안에서 법선 거리 o − 1 m ~ o + 1 m (양 끝 포함). 안쪽 원 = 옆 거리 ≤ 0.5 m, 고리 = 0.5 m < 옆 거리 ≤ R",
+    "count_rule": "점 부족 = 솎기 전 안쪽 원 점 < 5 또는 고리 점 < 20. 참값 부족 = 참값 안쪽 원 점(o_G ± 1 m, 옆 거리 0.5 m 안) < 10",
+    "inner_set_rule": "u, 어긋남, 흩어짐, q, 자료의 자리 p, 실제 오차는 모두 같은 안쪽 원 점(MVS는 솎은 2,000점, 그 밖은 모두)으로 구한다. MVS의 영상 수는 솎기 전 안쪽 원 점에서 센다",
+    "plane_rule": "고리 평면의 '법선과 c에서의 거리' = 다시 맞춘 평면의 법선 m(n 쪽)과 c에서 평면까지의 부호 거리((평면 위 점 − c)·m)",
+    "lmeds_speed_note": "가장 작은 중앙값을 찾는 셈은 u_core.lmeds_argmin(먼저 좋은 후보의 중앙값 m*을 구하고, 제곱 잔차의 절반 이상이 m* 이하인 후보만 정확한 중앙값을 셈)이다. np.argmin(np.median)과 답이 같음을 모의 점 300벌에서 확인했다(u_test.json)."
+  },
+  "ground_truth": {
+    "source": "TUM_Downtown_ULS_20241217_nadir.laz only",
+    "manual_uls": false,
+    "rule": "Stage-1 v3 ground-truth point preparation and exclusions, then main_uncert_v1 column/face/plane definitions",
+    "B0_difference": "Previous uncertainty mixed nadir and manual ULS; retain old values as comparison only, never include manual points in this task"
+  },
+  "mvs": {
+    "training_only": true,
+    "evaluation_rule": "2026-09-15 candidate rule; name order index % 8 == 0 is evaluation on the full scoped candidate list",
+    "variant": "a: geometric depth, finite > 0 and confidence > 0",
+    "image": "colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf",
+    "max_image_size": 1024,
+    "num_iterations": 3,
+    "geom_consistency": true,
+    "filter": true,
+    "cache_size": 32,
+    "source_views": 20,
+    "gpu_stop_hours": 48,
+    "wait_rule": "Wait while any other compute process uses a GPU; record wait duration; GPU for MVS depth only"
+  },
+  "components": {
+    "radius_m": 0.36,
+    "radius_fallback": "if median nearest-neighbour spacing < 0.18 or > 0.36 m, use 1.5 * that median; record it",
+    "groups": [
+      "prior",
+      "building",
+      "roof_like",
+      "cell"
+    ],
+    "minimum_area_m2": 1.0,
+    "neighbour_radius_m": 1.0,
+    "magnitude_bins_m": [
+      0.5,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "signs": [
+      "positive",
+      "negative"
+    ]
+  },
+  "cells": {
+    "order": [
+      "both_right",
+      "prior_wrong",
+      "image_wrong",
+      "both_wrong",
+      "no_mvs_prior_right",
+      "no_mvs_prior_wrong",
+      "no_gt"
+    ],
+    "source": "User order 4.3",
+    "right_inclusive": true,
+    "prior_error": "abs(gt_p)",
+    "mvs_error": "actual error e from main_uncert_v1, not abs(mvs_p - gt_p)",
+    "missing_reasons": "Retain original face, point-count and plane-fit failure status; never convert missing values to zero"
+  },
+  "figures": {
+    "dpi": 300,
+    "formats": [
+      "png",
+      "pdf",
+      "json"
+    ],
+    "north_up": true,
+    "holdout": "grey hatching on scope map only; no holdout outcome plots or photo crops",
+    "difference_axis_m": [
+      0.01,
+      10.0
+    ],
+    "difference_axis": "log",
+    "hist_bins": 60,
+    "signed": "outward +, inward -",
+    "area_weighted": true,
+    "representative_cells": [
+      "prior_wrong",
+      "image_wrong",
+      "both_wrong"
+    ],
+    "photos_per_cell": 20,
+    "photos_per_building_max": 3,
+    "photo_margin_m": 3.0,
+    "image_rule": "largest projected component in a nadir training image; original resolution crop; GT-height outline",
+    "photo_selection": "descending component area; ties building ID then component ID; no cause labels"
+  },
+  "execution": {
+    "training": false,
+    "gpu": "MVS depth only",
+    "cpu_nice": 19,
+    "container_memory_gib": 32,
+    "process_max_gib": 32,
+    "writable": [
+      "configs/phd/main_widen0_v2/",
+      "scripts/phd/main_widen0_v2/",
+      "docs/experiments/phd/main_widen0_v2/",
+      "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/"
+    ]
+  },
+  "amendments": []
+}
