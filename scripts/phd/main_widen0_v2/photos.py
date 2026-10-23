@@ -46,15 +46,22 @@ def main():
             inside=(z.reshape(-1,4)>0).all(1)&(q[:,:,0]>=0).all(1)&(q[:,:,0]<w).all(1)&(q[:,:,1]>=0).all(1)&(q[:,:,1]<h).all(1)
             if not inside.all():continue
             a=float(polygon_area(q).sum())
-            if best is None or a>best[0]:best=(a,v,q)
+            if best is None or a>best[0]:
+                mu,mz=project(margin,po['q'],po['t'],params)
+                if not np.isfinite(mu).all() or not (mz>0).all():continue
+                best=(a,v,q,mu)
         rec=dict(component_id=row['component_id'],cell=row['cell'],prior=row['prior'],building_ids=row['building_ids'],area_m2=row['area_m2'],
             source_extra_display_quads=int(display_extra.sum()),
             source_extra_display_rule='Centroid-only extra patches with a defined normal use a nominal 0.25 m square in a deterministic tangent basis for display only; numerical geometry and area unchanged.')
         if best is None:
-            rec.update(status='확인 불가',reason='No nadir training image contains all projected component patches.');records.append(rec);continue
-        a,v,q=best;po=poses[v['name']];uv,z=project(margin,po['q'],po['t'],params)
-        lo=np.floor(uv.min(0)).astype(int);hi=np.ceil(uv.max(0)).astype(int)+1
+            rec.update(status='확인 불가',reason='No nadir training image contains all projected component patches with a finite, front-facing 3 m margin.');records.append(rec);continue
+        a,v,q,uv=best
+        uv=np.concatenate([uv,q.reshape(-1,2)])
+        # Python integer conversion below avoids fixed-width overflow for a
+        # large distorted margin; clipping still preserves the source pixels.
+        lo=np.floor(uv.min(0));hi=np.ceil(uv.max(0))+1
         box=[max(0,int(lo[0])),max(0,int(lo[1])),min(w,int(hi[0])),min(h,int(hi[1]))];x0,y0,x1,y1=box
+        assert x1>x0 and y1>y0
         raw=Image.open(io.BytesIO(archive.read(v['original_zip_member']))).convert('RGB');assert raw.size==(w,h)
         im=raw.crop(box);mask=Image.new('1',im.size);draw=ImageDraw.Draw(mask)
         for p in q:draw.polygon([(float(x-x0),float(y-y0)) for x,y in p],fill=1)

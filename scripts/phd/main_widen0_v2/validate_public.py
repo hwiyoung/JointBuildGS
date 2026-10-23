@@ -5,12 +5,15 @@ import numpy as np
 from PIL import Image
 from analysis_common import O,DOC,CELLS
 from preflight import dump
+def reject_nonfinite_json(value):
+    raise ValueError('Non-standard nonfinite public JSON value: '+value)
 def main():
     report=DOC/'본실험_넓히기0단계_보고_v2.md';text=report.read_text();assert len(text)<=20000
     held=set(json.loads((O/'building_split.json').read_text())['holdout'])
     for f in DOC.rglob('*'):
         if f.suffix in ['.md','.json','.csv']:
             public=f.read_text(encoding='utf-8-sig');assert not any(b in public for b in held),f
+            if f.suffix=='.json':json.loads(public,parse_constant=reject_nonfinite_json)
     assert text.splitlines()[0].startswith('범위:') and text.splitlines()[1].startswith('나눔:') and text.splitlines()[2].startswith('확인 불가:')
     required=['범위와_건물나눔']+[f'{stem}_{p}' for stem in ['차의크기','차의부호크기','사전정보_틀린곳_지도'] for p in ['LoD2','ALS']]+[f'모음사진_{c}' for c in ['prior_wrong','image_wrong','both_wrong']]
     figures=[]
@@ -42,7 +45,7 @@ def main():
             with np.load(f) as z:
                 assert set(required_keys+['source_extra','normal_defined','signed_difference_over_uncertainty'])<=set(z.files)
                 if '__ALS__' in f.name:assert {'als_u','als_e','als_status'}<=set(z.files)
-    result=dict(status='PASS',report_characters=len(text),required_figures=figures,checks=['required files','300 dpi images','histogram mass including overflow','difference availability denominators','representative building caps','all inherited observation fields retained'],visual_review='required separately before delivery',scientific_verdict=None)
+    result=dict(status='PASS',report_characters=len(text),required_figures=figures,checks=['required files','strict standard JSON with no NaN/Infinity','300 dpi images','histogram mass including overflow','difference availability denominators','representative building caps','all inherited observation fields retained'],visual_review='required separately before delivery',scientific_verdict=None)
     dump(O/'gates/public_artifacts.json',result);dump(DOC/'tables/public_validation.json',result)
     print('public artifact numeric checks PASS')
 if __name__=='__main__':main()
