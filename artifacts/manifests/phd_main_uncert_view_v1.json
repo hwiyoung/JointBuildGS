@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "artifact_id": "PHD-MAIN-UNCERT-VIEW-v1",
+  "created_at": "2026-10-23T17:22:42.196838+09:00",
+  "scientific_verdict": null,
+  "role": "interactive-view-of-frozen-uncertainty-values",
+  "backend": {
+    "repository_relative_uri": "file:../JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1",
+    "canonical_container_uri": "file:/artifacts/JointBuildGS/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1",
+    "durable_backup_claim": false
+  },
+  "web": {
+    "path": "web",
+    "bytes": 392429775,
+    "url": "http://192.168.10.203:8912/",
+    "network_scope": "research server LAN or connected VPN"
+  },
+  "archive": {
+    "path": "PHD-MAIN-UNCERT-VIEW-v1_web.zip",
+    "bytes": 293066857,
+    "sha256": "64d5d3d9d67e68ff4c740495a265e1a14b87eaa0fbd4d5edf62add5db2686008"
+  },
+  "receipt": "receipt_task.json",
+  "config": "configs/phd/main_uncert_view_v1/view_v1.json",
+  "config_sha256": "7017d30a06926d6628aae7d206d2d4efea8ed6cea8872e50674a18609b6b7b7e",
+  "evidence": "docs/experiments/phd/main_uncert_view_v1/불확실도보기_보고_v1.md",
+  "raw_source_immutable": true,
+  "training": false,
+  "gpu": false
+}
