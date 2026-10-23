@@ -54,7 +54,8 @@ def main():
                 building_identity_checked=(prior=='LoD2'),
                 centre_shift_difference_m=quantiles(np.linalg.norm(new['centre'][b]-old['centre'][a],axis=1)),values=values,
                 historical_source=str(f),historical_sha256=sha(f),old_frame_shift_m=shift.tolist(),
-                context_changes=['new 100 m tiling and 10 m halo','training-only full-area image pool and name-order split','tile-index and patch-index RNG context',
+                context_changes=['new 100 m tiling and 10 m halo','frozen photograph/nadir/ALS common XY support and scoped buildings',
+                    'training-only full-area image pool and name-order split','tile-index and patch-index RNG context',
                     'per-tile registration instead of historical fixed exploration-region shift','nadir only; historical B0 may include manual LiDAR']+
                     (['historical ALS patch table lacks assigned building IDs; exact geometry and unique correspondence required'] if prior=='ALS' else []),scientific_verdict=None))
             # Both tau tables use the same values within each table: first old
