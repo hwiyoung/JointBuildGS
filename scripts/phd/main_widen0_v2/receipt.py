@@ -1,5 +1,6 @@
 """Compact execution receipt; no holdout outcome fields."""
 import datetime as dt
+import importlib.metadata
 import json
 import os
 from pathlib import Path
@@ -26,11 +27,17 @@ def main():
         exclusions.append(dict(prior=prior,unattached_patches=n,unattached_area_m2=a,attached_to_buildings_outside_scope_patches=outside,attached_to_buildings_outside_scope_area_m2=oa))
     from analysis_common import save_table
     save_table('건물에_붙지않은_패치',exclusions)
+    packages={}
+    for name in ['numpy','scipy','laspy','lazrs','Pillow','matplotlib','shapely','open3d','pyproj']:
+        try:packages[name]=dict(version=importlib.metadata.version(name))
+        except importlib.metadata.PackageNotFoundError:
+            packages[name]=dict(version=None,reason='Distribution metadata unavailable in the execution image.')
     result=dict(task_id='PHD-MAIN-WIDEN0-v2',made=made.isoformat(),
         first_config_created_at=started.isoformat(),elapsed_since_first_config_seconds=(made-started).total_seconds(),
         process_launch_commit=os.environ.get('WIDEN_COMMIT'),image_id=os.environ.get('WIDEN_IMAGE_ID'),
         preparation_commit=(O/'repository_head_at_pipeline_preparation.txt').read_text().strip(),
         versions=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,laspy=laspy.__version__),
+        package_versions=packages,figure_fonts_sha256={p.name:sha(p) for p in sorted(Path('/fonts').glob('*SansCJK*Regular*.ttc'))},
         mvs=json.loads((O/'mvs/full/colmap_receipt.json').read_text()),cpu_measurement=groups,
         registration=json.loads((O/'gates/registration_runtime.json').read_text()),
         registration_runtime_scope='Successful resume only; initial failed attempt recorded separately below.',
