@@ -1,0 +1,585 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1",
+  "made": "2026-10-23T16:41:58.181627+09:00",
+  "scientific_verdict": null,
+  "source_config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+  "coordinate": {
+    "crs": "EPSG:25832",
+    "frame": "COLMAP model",
+    "world_shift_xyz_m": [
+      690953.0,
+      5336071.0,
+      604.0
+    ],
+    "scale": 1,
+    "north_up": true
+  },
+  "cases": [
+    [
+      "B0_b10",
+      "LoD2"
+    ],
+    [
+      "B0_b10",
+      "ALS"
+    ],
+    [
+      "B173nb_b10",
+      "LoD2"
+    ],
+    [
+      "B173nb_b10",
+      "ALS"
+    ],
+    [
+      "R1rep_b10",
+      "LoD2"
+    ],
+    [
+      "R1rep_b10",
+      "ALS"
+    ]
+  ],
+  "radii": [
+    1.0,
+    1.5,
+    3.0
+  ],
+  "default_radii": {
+    "B0_b10": 1.0,
+    "B173nb_b10": 1.5,
+    "R1rep_b10": 1.5
+  },
+  "layers": [
+    {
+      "id": "difference",
+      "label": "두 자료의 차",
+      "key": "mvs_{v}_p",
+      "unit": "cm",
+      "range": [
+        -50,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "mvs_{v}_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "안쪽 원 MVS 점의 패치 법선 거리 중앙값. 사전 정보 면이 0, 바깥이 +."
+    },
+    {
+      "id": "mvs_u",
+      "label": "MVS 불확실도",
+      "key": "mvs_{v}_u",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "mvs_{v}_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 불확실도"
+    },
+    {
+      "id": "mvs_a",
+      "label": "MVS 어긋남",
+      "key": "mvs_{v}_a",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "mvs_{v}_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 어긋남"
+    },
+    {
+      "id": "mvs_s",
+      "label": "MVS 흩어짐",
+      "key": "mvs_{v}_s",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "mvs_{v}_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 흩어짐"
+    },
+    {
+      "id": "mvs_q",
+      "label": "MVS 68.3 % 값",
+      "key": "mvs_{v}_q",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "mvs_{v}_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 68.3 % 값"
+    },
+    {
+      "id": "prior_u",
+      "label": "사전 정보 불확실도",
+      "key": "u_prior",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": null,
+      "prior": null,
+      "kind": "continuous",
+      "description": "항공 LiDAR 원래 점의 불확실도. LoD2는 앞 작업에서 저장한 20 cm."
+    },
+    {
+      "id": "als_a",
+      "label": "항공 LiDAR 어긋남",
+      "key": "als_a",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "als_status",
+      "prior": "ALS",
+      "kind": "continuous",
+      "description": "항공 LiDAR 어긋남"
+    },
+    {
+      "id": "als_s",
+      "label": "항공 LiDAR 흩어짐",
+      "key": "als_s",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "als_status",
+      "prior": "ALS",
+      "kind": "continuous",
+      "description": "항공 LiDAR 흩어짐"
+    },
+    {
+      "id": "als_q",
+      "label": "항공 LiDAR 68.3 % 값",
+      "key": "als_q",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "방법이 쓰는 값",
+      "status": "als_status",
+      "prior": "ALS",
+      "kind": "continuous",
+      "description": "항공 LiDAR 68.3 % 값"
+    },
+    {
+      "id": "z",
+      "label": "z",
+      "key": "z_{v}",
+      "unit": "",
+      "range": [
+        0,
+        10
+      ],
+      "group": "방법이 쓰는 값",
+      "status": null,
+      "prior": null,
+      "kind": "continuous",
+      "description": "두 자료의 차의 크기를 두 불확실도의 제곱합 제곱근으로 나눈 값."
+    },
+    {
+      "id": "weight",
+      "label": "MVS 무게 비율",
+      "key": "w_{v}",
+      "unit": "",
+      "range": [
+        0,
+        1
+      ],
+      "group": "방법이 쓰는 값",
+      "status": null,
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 무게 비율"
+    },
+    {
+      "id": "n_inner_all",
+      "label": "MVS 안쪽 원 점 수 · 솎기 전",
+      "key": "mvs_{v}_n_inner_all",
+      "unit": "개",
+      "range": null,
+      "group": "점의 사정",
+      "status": null,
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 안쪽 원 점 수 · 솎기 전"
+    },
+    {
+      "id": "n_inner",
+      "label": "MVS 안쪽 원 점 수 · 셈에 사용",
+      "key": "mvs_{v}_n_inner",
+      "unit": "개",
+      "range": null,
+      "group": "점의 사정",
+      "status": null,
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 안쪽 원 점 수 · 셈에 사용"
+    },
+    {
+      "id": "n_ring",
+      "label": "MVS 고리 점 수 · 셈에 사용",
+      "key": "mvs_{v}_n_ring",
+      "unit": "개",
+      "range": null,
+      "group": "점의 사정",
+      "status": null,
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 고리 점 수 · 셈에 사용"
+    },
+    {
+      "id": "views",
+      "label": "MVS 영상 수",
+      "key": "mvs_{v}_views",
+      "unit": "개",
+      "range": null,
+      "group": "점의 사정",
+      "status": null,
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 영상 수"
+    },
+    {
+      "id": "cell",
+      "label": "칸 · 참값 점검용",
+      "key": "cell",
+      "unit": "",
+      "range": null,
+      "group": "참값 점검용",
+      "status": null,
+      "prior": null,
+      "kind": "category",
+      "description": "칸 · 참값 점검용"
+    },
+    {
+      "id": "shape",
+      "label": "지붕꼴·벽꼴",
+      "key": "roof_like",
+      "unit": "",
+      "range": null,
+      "group": "자리",
+      "status": null,
+      "prior": null,
+      "kind": "category",
+      "description": "지붕꼴·벽꼴"
+    },
+    {
+      "id": "roof_type",
+      "label": "지붕 형태 · 참값 점검용",
+      "key": "roof_type",
+      "unit": "",
+      "range": null,
+      "group": "참값 점검용",
+      "status": null,
+      "prior": "LoD2",
+      "kind": "category",
+      "description": "지붕 형태 · 참값 점검용"
+    },
+    {
+      "id": "status",
+      "label": "값 없음 까닭",
+      "key": "mvs_{v}_status",
+      "unit": "",
+      "range": null,
+      "group": "점의 사정",
+      "status": null,
+      "prior": null,
+      "kind": "category",
+      "description": "값 없음 까닭"
+    },
+    {
+      "id": "gt_p",
+      "label": "참값의 자리",
+      "key": "gt_p",
+      "unit": "cm",
+      "range": [
+        -50,
+        50
+      ],
+      "group": "참값 점검용",
+      "status": "gt_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "참값의 자리"
+    },
+    {
+      "id": "mvs_e",
+      "label": "MVS 실제 오차",
+      "key": "mvs_{v}_e",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "참값 점검용",
+      "status": "gt_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 실제 오차"
+    },
+    {
+      "id": "mvs_qe",
+      "label": "MVS 실제 68.3 % 값",
+      "key": "mvs_{v}_qe",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "참값 점검용",
+      "status": "gt_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "MVS 실제 68.3 % 값"
+    },
+    {
+      "id": "mvs_f",
+      "label": "틀린 점의 비율",
+      "key": "mvs_{v}_f",
+      "unit": "%",
+      "range": [
+        0,
+        100
+      ],
+      "group": "참값 점검용",
+      "status": "gt_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "틀린 점의 비율"
+    },
+    {
+      "id": "prior_e",
+      "label": "사전 정보 실제 오차",
+      "key": {
+        "ALS": "als_e",
+        "LoD2": "eL"
+      },
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "참값 점검용",
+      "status": "gt_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "사전 정보 실제 오차"
+    },
+    {
+      "id": "missed",
+      "label": "놓친 패치",
+      "key": "@missed",
+      "unit": "",
+      "range": null,
+      "group": "참값 점검용",
+      "status": null,
+      "prior": null,
+      "kind": "category",
+      "description": "놓친 패치"
+    },
+    {
+      "id": "weighted_e",
+      "label": "무게 평균 자리의 오차",
+      "key": "errW_{v}",
+      "unit": "cm",
+      "range": [
+        0,
+        50
+      ],
+      "group": "참값 점검용",
+      "status": "gt_status",
+      "prior": null,
+      "kind": "continuous",
+      "description": "무게 평균 자리의 오차"
+    }
+  ],
+  "seed": 20261023,
+  "samples": {
+    "base": "chosen radius, MVS a",
+    "cell_count": 20,
+    "place_count": 10,
+    "missed_top": 30,
+    "z_top": 20,
+    "roof_type_count": 10,
+    "rule": "Cell: in_eval and MVS status 0. Place: exact preceding places.npz membership. Missed: in_eval, status 0, finite e, e > .2 and e > 2u; order e/u descending (u=0 -> infinity). z: in_eval finite z descending. Roof type: LoD2 in_eval roof_like and status 0. Stable ties by ascending patch index. Random default_rng([seed,site ID,prior ID]); iterate cell order, sorted place names, sorted roof types. Unique union; preserve every selected patch.",
+    "radius_replay": "u2_run.one_patch and its column/ring_points, same seed and order, before display thinning",
+    "display": {
+      "inner": 400,
+      "ring": 1600,
+      "gt": 400,
+      "als": 400,
+      "strip_width_m": 0.5,
+      "precision": "float64 projected coordinates; lossless binary encoding",
+      "rule": "Per version: shared inner set; union of all three exact ring sets, deduplicate global point indices, membership bits per radius; slice +/- .25m before seeded display-only cap. ALS cap over its inner/ring union."
+    }
+  },
+  "encoding": {
+    "method": "per-array exact-byte deduplication across radii; byte-shuffle; zlib; base64 classic scripts",
+    "lossy": false,
+    "limit_bytes": 300000000
+  },
+  "questions": [
+    {
+      "id": 1,
+      "layers": [
+        "mvs_u",
+        "mvs_e"
+      ],
+      "scope": "three sites per prior",
+      "chart": "uncertainty bins and rank",
+      "report": "t61_u_vs_error"
+    },
+    {
+      "id": 2,
+      "layers": [
+        "mvs_u",
+        "cell"
+      ],
+      "scope": "three sites per prior",
+      "chart": "wrong/right histograms, AUC and missed count/area",
+      "report": [
+        "t62_roc",
+        "t65_missed_edge"
+      ]
+    },
+    {
+      "id": 3,
+      "layers": [
+        "prior_u",
+        "prior_e"
+      ],
+      "scope": "three ALS sites, optional exclude both correction cells",
+      "chart": "uncertainty bins and rank",
+      "report": "t61_u_vs_error"
+    },
+    {
+      "id": 4,
+      "layers": [
+        "mvs_u",
+        "cell"
+      ],
+      "scope": "current case, correction cells and refine",
+      "chart": "three box plots",
+      "report": "t63_changed"
+    },
+    {
+      "id": 5,
+      "layers": [
+        "roof_type",
+        "prior_e"
+      ],
+      "scope": "current LoD2 case, roof types; MVS a <=5 and <=10cm; GT all and excluding corr4p",
+      "chart": "empirical CDF",
+      "report": "t64_lod2"
+    },
+    {
+      "id": 6,
+      "layers": [
+        "difference",
+        "gt_p"
+      ],
+      "scope": "R1 ALS refine cell",
+      "chart": "two signed histograms",
+      "report": "t72_weighted_preview"
+    }
+  ],
+  "source_tables": {
+    "min_patches": 30,
+    "u_bins_cm": [
+      0,
+      2,
+      5,
+      10,
+      20,
+      40,
+      null
+    ],
+    "edge_bins_m": [
+      0,
+      0.5,
+      1.0,
+      2.0,
+      null
+    ],
+    "half_wrong_f": [
+      0.3,
+      0.5
+    ],
+    "half_wrong_rule": "틀린 점의 비율 f가 0.3 이상 0.5 이하",
+    "roc_positive_cells": [
+      "c_keep_in",
+      "c_limit",
+      "c_double"
+    ],
+    "roc_positive_cells_b_extra": [
+      "c_keep_mask"
+    ],
+    "roc_negative_cells": [
+      "c_refine",
+      "c_corr14",
+      "c_corr4p"
+    ],
+    "roc_f_rule": "f > 0.3 양성, f < 0.1 음성, 그 사이 뺌. 판 가와 판 나 모두, 6.2의 칸 판과 같은 패치(평가 범위, 참값 평면 있음, 칸이 결측·비가시·참값 없음이 아님)",
+    "auc_rule": "곡선 아래 넓이 = 맨-휘트니(같은 점수는 절반), 값이 없는 패치는 뺌(뺀 수를 적음). '양성의 절반을 잡는 문턱' = 양성 점수의 중앙값, 그 문턱 이상인 음성의 비율",
+    "missed_rule": "놓친 패치 = e > 0.2 m 그리고 e > 2u",
+    "trusted_mvs_cm": [
+      5,
+      10
+    ],
+    "lod2_abs_quantiles": [
+      0.68,
+      0.95
+    ],
+    "lod2_within_cm": [
+      20,
+      30
+    ],
+    "z_over": 2.5,
+    "spearman": "scipy.stats.spearmanr(같은 값은 평균 순위)",
+    "pool_rule": "사전 정보마다 세 지역을 합한 값도 냄(패치를 모아서). LoD2와 항공 LiDAR는 합하지 않음",
+    "range": "6~7절의 모든 값은 평가 범위(in_eval) 안의 패치. 고리 크기 고르기는 띠(평가 범위 밖)"
+  },
+  "status": {
+    "0": "값 있음",
+    "1": "면 없음",
+    "2": "점 부족",
+    "3": "후보 평면 없음",
+    "-1": "확인 불가"
+  },
+  "validation": {
+    "length_tolerance_cm": 0.1,
+    "ratio_rank_tolerance": 0.01,
+    "section_tolerance_m": 0.001
+  },
+  "service": {
+    "port": 8912,
+    "bind": "0.0.0.0",
+    "container": "jbgs-main-uncert-view-8912"
+  },
+  "amendments": []
+}
