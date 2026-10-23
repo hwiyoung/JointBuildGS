@@ -6,7 +6,7 @@ def main():
     for prior in ['LoD2','ALS']:
         d=load(prior);fig,axs=plt.subplots(1,2,figsize=(12,7),sharex=True,sharey=True);data=[]
         for ax,roof in zip(axs,[True,False]):
-            shape=d['roof_like']==roof;known=shape&(d['gt_status']==0);bad=known&(np.abs(d['gt_p'])>CFG['tau_m'][prior]);xy=d['centre'][:,:2]+[690953.,5336071.]
+            shape=d['roof_like']==roof;known=shape&(d['gt_status']==0);bad=known&(np.abs(d['gt_p'])>d['tau']);xy=d['centre'][:,:2]+[690953.,5336071.]
             ax.scatter(xy[shape,0],xy[shape,1],s=.12,c='#dddddd',rasterized=True)
             im=ax.scatter(xy[bad,0],xy[bad,1],s=.25,c=d['gt_p'][bad],cmap='coolwarm',vmin=-4,vmax=4,rasterized=True)
             ax.set_aspect('equal');ax.set_title('지붕꼴' if roof else '벽꼴');ax.set_xlabel('동쪽 좌표 (m)');ax.ticklabel_format(useOffset=False,style='plain');ax.tick_params(axis='x',rotation=35)
