@@ -83,6 +83,35 @@ def main():
           '- 정하는 곳의 GT/값 없음은 원래 실패 사유와 함께 보존했다. 확인용은 허용된 합계·해시만 확인했다. 모든 기록의 scientific_verdict는 null이다.', '',
           f"- 기존 제외 격자 밖 연직 원자료 {read('참값_범위감사')['rows'][0]['outside_grid_unique_points']}점은 같은 제외 규칙을 적용할 수 없어 참값에 넣지 않았다. 수와 범위는 tables/참값_범위감사.json에 있다.", '',
           '최종 수치 점검·실행 시간·버전·파일 해시는 execution_receipt.json과 전달 묶음의 SHA256SUMS에 있다.']
+    def insert_after(prefix,extra):
+        i=next(i for i,line in enumerate(L) if line.startswith(prefix));L[i+1:i+1]=extra
+    extra=['','| 범위 | 사전 정보 | 칸 | 면 | 유효 패치 | >0.5 m % | >1 m % | >2 m % | 바깥 + % |',
+           '|---|---|---|---|---:|---:|---:|---:|---:|']
+    for r in read('차의크기_비율')['rows']:
+        if r['scope'] not in ['development_all','three_regions_union']:continue
+        vals=[r[f'fraction_abs_gt_{t}m'] for t in ['0.5','1','2']]+[r['fraction_positive']]
+        extra.append('| '+('전체' if r['scope']=='development_all' else '평가 세 영역 합집합')+
+            f" | {r['prior']} | {KO[CELLS.index(r['cell'])]} | {r['shape']} | {r['valid_patches']:,} | "+
+            ' | '.join(fmt(None if v is None else 100*v,4) for v in vals)+' |')
+    extra+=['','[이 발주에서 냄] 분모는 해당 칸·면·범위에서 차가 있는 넓이. 각 평가 영역의 개별 값과 차 없음 넓이는 같은 CSV/JSON에 있다.','']
+    insert_after('위 분포는 차가 있는 넓이를',extra)
+    extra=['','| 사전 정보 | 참값 면 | 유효 패치 | 점 밀도 중앙값 / 25% / 75% (점/m²) |','|---|---|---:|---|']
+    for r in read('참값_점밀도')['rows']:
+        q=r['density_points_m2'];extra.append(f"| {r['prior']} | {r['shape']} | {r['patches']:,} | "+' / '.join(fmt(q[k]) for k in ['median','q25','q75'])+' |')
+    extra+=['','[이 발주에서 냄] `tables/참값_점밀도.json`의 표면 지지 밀도. 동일 원자료 점이 여러 패치에서 사용될 수 있다.','']
+    insert_after('참값은 연직 원자료',extra)
+    extra=['','| 사진 칸 | 선정 | 원본 사진 있음 | 확인 불가 |','|---|---:|---:|---:|']
+    for c in ['prior_wrong','image_wrong','both_wrong']:
+        rr=[r for r in photos if r['cell']==c];n=sum(r['status']=='PASS' for r in rr)
+        extra.append(f'| {KO[CELLS.index(c)]} | {len(rr)} | {n} | {len(rr)-n} |')
+    extra+=['']
+    insert_after('대표 사진은 두 사전 정보를',extra)
+    execution=json.loads((DOC/'execution_receipt.json').read_text())
+    extra=['','| CPU 패치 계산 | 구역·사전 정보 작업 수 | 경과 시간 합계 h | 부모 프로세스 최대 RSS GiB |','|---|---:|---:|---:|']
+    for name,r in execution['cpu_measurement'].items():
+        extra.append(f"| {name} | {r['jobs']} | {r['total_seconds']/3600:.3f} | {r['largest_parent_RSS_GiB']:.3f} |")
+    extra+=['','시간은 구역별 작업 경과 시간의 합이다. RSS는 부모 프로세스만의 값이며 컨테이너 전체 메모리 최대값으로 해석하지 않는다.','']
+    insert_after('- GPU 대기 ',extra)
     text='\n'.join(L)+'\n';assert len(text)<=20000,len(text)
     (DOC/'본실험_넓히기0단계_보고_v2.md').write_text(text)
     dump(O/'gates/report_length.json',dict(characters=len(text),limit=20000,scientific_verdict=None))

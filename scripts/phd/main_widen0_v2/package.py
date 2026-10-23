@@ -7,6 +7,10 @@ from preflight import sha,dump
 O=Path('/out');D=Path('/docs');C=Path('/cfg');S=Path(__file__).parent
 def main():
     gate=json.loads((O/'gates/final_values.json').read_text());assert gate['status']=='PASS'
+    public=json.loads((O/'gates/public_artifacts.json').read_text());assert public['status']=='PASS'
+    visual=json.loads((O/'gates/visual_review.json').read_text());assert visual['status']=='PASS'
+    for item in visual['files']:
+        assert sha(D/item['file'])==item['sha256'],item['file']
     files=[]
     for root,prefix in [(D,'docs'),(C,'configs'),(S,'scripts')]:
         for p in sorted(root.rglob('*')):

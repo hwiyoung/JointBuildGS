@@ -17,7 +17,7 @@ def main():
                 if f.exists() and receipt.exists():continue
                 cmd=[sys.executable,'-B','-u',str(S/'u_worker.py'),tile,prior,data]
                 if data!='gt':cmd+=['1.5']
-                subprocess.run(cmd+['--workers','32'],check=True)
+                subprocess.run(cmd+['--workers','64'],check=True)
             subprocess.run([sys.executable,'-B','-u',str(S/'export_values.py'),tile,prior],check=True)
     dump(O/'gates/measurements_complete.json',dict(seconds=time.monotonic()-start,scientific_verdict=None))
     subprocess.run([sys.executable,'-B','-u',str(S/'run_reports.py')],check=True)

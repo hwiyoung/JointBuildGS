@@ -25,9 +25,10 @@ def main():
     save_table('건물에_붙지않은_패치',exclusions)
     result=dict(task_id='PHD-MAIN-WIDEN0-v2',made=dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(),
         process_launch_commit=os.environ.get('WIDEN_COMMIT'),image_id=os.environ.get('WIDEN_IMAGE_ID'),
+        preparation_commit=(O/'repository_head_at_pipeline_preparation.txt').read_text().strip(),
         versions=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,laspy=laspy.__version__),
         mvs=json.loads((O/'mvs/full/colmap_receipt.json').read_text()),cpu_measurement=groups,
-        cpu_nice=19,container_total_memory_limit_GiB=32,patch_workers=32,cpu_quota=32,training_executed=False,
+        cpu_nice=19,container_total_memory_limit_GiB=32,patch_workers=64,cpu_quota=64,registration_tile_processes=4,training_executed=False,
         config_sha256=sha('/cfg/widen0_v2.json'),building_split_sha256=sha(O/'building_split.json'),image_split_sha256=sha(O/'image_split.json'),
         scripts_sha256={p.name:sha(p) for p in sorted(R.glob('*')) if p.is_file()},
         required_path_exception='An accidental empty repo-root interim.tmp was immediately removed; existing files unchanged. See issues.md.',

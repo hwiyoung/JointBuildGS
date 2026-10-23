@@ -25,8 +25,10 @@ def clean(x):
     if isinstance(x,float) and not np.isfinite(x):return None
     return x
 
-def main():
+def main(tile_id=None):
     cfg=json.loads(Path('/cfg/widen0_v2.json').read_text());tiles=json.loads((O/'inputs/tiles.json').read_text())
+    if tile_id is not None:
+        tiles=[t for t in tiles if t['id']==tile_id];assert len(tiles)==1,tile_id
     split=json.loads((O/'building_split.json').read_text());selected=set(split['development']+split['holdout']);held=set(split['holdout'])
     blds={b['id']:b for b in json.loads((O/'inputs/lod2_context_buildings.json').read_text())}
     ranks={b:i for i,b in enumerate(sorted(blds))}
@@ -111,4 +113,18 @@ def main():
             print('registered geometry ready',tid,prior,flush=True)
             del st,st0
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    import concurrent.futures
+    import subprocess
+    import sys
+    if len(sys.argv)==3 and sys.argv[1]=='--tile':
+        main(sys.argv[2])
+    else:
+        assert len(sys.argv)==1
+        # Each independent tile owns separate output paths and resets the same
+        # inherited RNG before each prior. Four CPU processes share the existing
+        # container's hard 32 GiB limit and inherit nice 19; no GPU is exposed.
+        def run_tile(tile):
+            subprocess.run([sys.executable,'-B','-u',__file__,'--tile',tile['id']],check=True)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+            list(pool.map(run_tile,json.loads((O/'inputs/tiles.json').read_text())))

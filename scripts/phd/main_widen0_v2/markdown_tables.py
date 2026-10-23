@@ -1,4 +1,5 @@
 """Readable Markdown companions; complete precision stays in JSON/CSV."""
+import csv
 import json
 from pathlib import Path
 from analysis_common import DOC
@@ -20,6 +21,16 @@ def main():
         for r in j['rows']:L.append('| '+' | '.join(cell(r.get(k)) for k in keys)+' |')
         L += ['']
     (DOC/'tables/핵심표.md').write_text('\n'.join(L)+'\n')
+    # Every CSV table also has a complete Markdown companion. Read the CSV
+    # strings directly so this full version preserves its unrounded values.
+    for p in sorted((DOC/'tables').glob('*.csv')):
+        with p.open(encoding='utf-8-sig',newline='') as f:
+            reader=csv.DictReader(f);keys=reader.fieldnames or [];rows=list(reader)
+        lines=[f'# {p.stem} [이 발주에서 냄]','',
+            f'출처·정의·생성 스크립트: [{p.stem}.json]({p.stem}.json). scientific_verdict: null.','',
+            '| '+' | '.join(keys)+' |','| '+' | '.join(['---']*len(keys))+' |']
+        for row in rows:lines.append('| '+' | '.join(cell(row.get(k,'')) for k in keys)+' |')
+        p.with_suffix('.md').write_text('\n'.join(lines)+'\n')
     entries=[]
     for p in sorted((DOC/'tables').glob('*.json')):
         j=json.loads(p.read_text());n=len(j['rows']) if isinstance(j,dict) and isinstance(j.get('rows'),list) else None
