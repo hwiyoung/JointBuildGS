@@ -20,7 +20,7 @@ t0=$SECONDS
 nice -n 19 docker run --rm --name "jbgs-uc-${tag,,}" --network none --user "$(id -u):$(id -g)" --cpus "$CPUS" --memory "${MEM}g" \
   --memory-swap "${MEM}g" --shm-size 4g -e PYTHONUNBUFFERED=1 -e PYTHONDONTWRITEBYTECODE=1 -e HOME=/tmp -e MPLCONFIGDIR=/tmp/mpl \
   -e OMP_NUM_THREADS=1 -e OPENBLAS_NUM_THREADS=1 -e MKL_NUM_THREADS=1 -e TZ=Asia/Seoul -e CUDA_VISIBLE_DEVICES="" -e UC_CPUS="$CPUS" \
-  -e UC_MEM="${MEM}g" -e UC_IMAGE="$IMG" -e UC_IMAGE_ID="$(docker image inspect -f '{{.Id}}' "$IMG")" \
+  -e UC_MEM="${MEM}g" -e UC_R="${UC_R:-}" -e UC_IMAGE="$IMG" -e UC_IMAGE_ID="$(docker image inspect -f '{{.Id}}' "$IMG")" \
   -v "$PH:/ph:ro" -v "$OUT:/out" -v "$S0:/s0:ro" -v "$S1:/s1:ro" -v "$S2:/s2:ro" -v "$DR:/dr:ro" -v "$ART:/art:ro" \
   -v "$REPO/src/phd/forks/GeoGS-conf-guided-v1-r12:/source:ro" -v "$REPO:/repo:ro" -v "$DOCS:/docs" \
   -v /usr/share/fonts/opentype/noto:/fonts:ro \

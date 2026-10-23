@@ -1,0 +1,52 @@
+{
+ "site": "B173nb_b10",
+ "R": {
+  "B0_b10": 1.0,
+  "B173nb_b10": 1.5,
+  "R1rep_b10": 1.5
+ },
+ "view": "top",
+ "panels": [
+  {
+   "label": "항공 LiDAR (항공 LiDAR 패치), 고리 1.0 m",
+   "prior": "ALS",
+   "data": "R1.0",
+   "patches": 34273,
+   "area_m2": 2285.8673805676904,
+   "with_value": 31013,
+   "u_med_cm": 1.8884383141994476,
+   "over_50cm_share": 0.0005159126817786089
+  },
+  {
+   "label": "항공 LiDAR (항공 LiDAR 패치), 고리 1.5 m",
+   "prior": "ALS",
+   "data": "R1.5",
+   "patches": 34273,
+   "area_m2": 2285.8673805676904,
+   "with_value": 33490,
+   "u_med_cm": 2.9368489049375057,
+   "over_50cm_share": 0.0017617199163929532
+  },
+  {
+   "label": "항공 LiDAR (항공 LiDAR 패치), 고리 3.0 m",
+   "prior": "ALS",
+   "data": "R3.0",
+   "patches": 34273,
+   "area_m2": 2285.8673805676904,
+   "with_value": 33566,
+   "u_med_cm": 3.7520581856369972,
+   "over_50cm_share": 0.02505511529523923
+  }
+ ],
+ "crop_px": [
+  0,
+  0,
+  766,
+  792
+ ],
+ "title": "고리 크기에 따라 불확실도 지도가 어떻게 바뀌는가 — B173 주변, 항공 LiDAR (항공 LiDAR 패치)",
+ "footer": "지역 전체(평가 범위): (가) u 중앙값 1.9 cm, 값 있음 90.5 %, 50 cm 넘음 0.1 %; (나) u 중앙값 2.9 cm, 값 있음 97.7 %, 50 cm 넘음 0.2 %; (다) u 중앙값 3.8 cm, 값 있음 97.9 %, 50 cm 넘음 2.5 %",
+ "made": "2026-10-23 10:38:19 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "scientific_verdict": null
+}

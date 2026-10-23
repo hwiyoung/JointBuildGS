@@ -1,0 +1,42 @@
+{
+ "site": "R1rep_b10",
+ "R": {
+  "B0_b10": 1.0,
+  "B173nb_b10": 1.5,
+  "R1rep_b10": 1.5
+ },
+ "view": "top",
+ "panels": [
+  {
+   "label": "어긋남 (MVS, LoD2 패치)",
+   "prior": "LoD2",
+   "data": "mvs_a",
+   "patches": 79054,
+   "area_m2": 4940.875,
+   "with_value": 65013,
+   "u_med_cm": 2.1330418065190315,
+   "over_50cm_share": 0.03750019226923846
+  },
+  {
+   "label": "흩어짐 (MVS, LoD2 패치)",
+   "prior": "LoD2",
+   "data": "mvs_a",
+   "patches": 79054,
+   "area_m2": 4940.875,
+   "with_value": 65013,
+   "u_med_cm": 6.714247912168503,
+   "over_50cm_share": 0.004599080183963208
+  }
+ ],
+ "crop_px": [
+  0,
+  0,
+  640,
+  568
+ ],
+ "title": "MVS의 불확실도는 어긋남에서 오는가, 흩어짐에서 오는가 — R1",
+ "footer": "지역 전체(평가 범위): (가) 중앙값 2.1 cm, 값 있음 82.2 %, 50 cm 넘음 3.8 %; (나) 중앙값 6.7 cm, 값 있음 82.2 %, 50 cm 넘음 0.5 %",
+ "made": "2026-10-23 10:37:39 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "scientific_verdict": null
+}

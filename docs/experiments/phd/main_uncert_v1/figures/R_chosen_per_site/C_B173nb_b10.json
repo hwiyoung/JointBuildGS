@@ -1,0 +1,42 @@
+{
+ "site": "B173nb_b10",
+ "R": {
+  "B0_b10": 1.0,
+  "B173nb_b10": 1.5,
+  "R1rep_b10": 1.5
+ },
+ "view": "top",
+ "panels": [
+  {
+   "label": "어긋남 (MVS, LoD2 패치)",
+   "prior": "LoD2",
+   "data": "mvs_a",
+   "patches": 141534,
+   "area_m2": 8845.875,
+   "with_value": 93971,
+   "u_med_cm": 1.9507316872477531,
+   "over_50cm_share": 0.01776079854423173
+  },
+  {
+   "label": "흩어짐 (MVS, LoD2 패치)",
+   "prior": "LoD2",
+   "data": "mvs_a",
+   "patches": 141534,
+   "area_m2": 8845.875,
+   "with_value": 93971,
+   "u_med_cm": 4.528949037194252,
+   "over_50cm_share": 0.0011599323195453917
+  }
+ ],
+ "crop_px": [
+  0,
+  0,
+  766,
+  794
+ ],
+ "title": "MVS의 불확실도는 어긋남에서 오는가, 흩어짐에서 오는가 — B173 주변",
+ "footer": "지역 전체(평가 범위): (가) 중앙값 2.0 cm, 값 있음 66.4 %, 50 cm 넘음 1.8 %; (나) 중앙값 4.5 cm, 값 있음 66.4 %, 50 cm 넘음 0.1 %",
+ "made": "2026-10-23 10:37:34 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "scientific_verdict": null
+}

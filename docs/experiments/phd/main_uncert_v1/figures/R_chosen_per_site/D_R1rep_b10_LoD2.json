@@ -1,0 +1,52 @@
+{
+ "site": "R1rep_b10",
+ "R": {
+  "B0_b10": 1.0,
+  "B173nb_b10": 1.5,
+  "R1rep_b10": 1.5
+ },
+ "view": "top",
+ "panels": [
+  {
+   "label": "MVS (LoD2 패치), 고리 1.0 m",
+   "prior": "LoD2",
+   "data": "R1.0",
+   "patches": 79054,
+   "area_m2": 4940.875,
+   "with_value": 64921,
+   "u_med_cm": 7.003272324800491,
+   "over_50cm_share": 0.029805455861739653
+  },
+  {
+   "label": "MVS (LoD2 패치), 고리 1.5 m",
+   "prior": "LoD2",
+   "data": "R1.5",
+   "patches": 79054,
+   "area_m2": 4940.875,
+   "with_value": 65013,
+   "u_med_cm": 7.768280059099197,
+   "over_50cm_share": 0.04946702967098888
+  },
+  {
+   "label": "MVS (LoD2 패치), 고리 3.0 m",
+   "prior": "LoD2",
+   "data": "R3.0",
+   "patches": 79054,
+   "area_m2": 4940.875,
+   "with_value": 65045,
+   "u_med_cm": 9.017892926931381,
+   "over_50cm_share": 0.09919286647705435
+  }
+ ],
+ "crop_px": [
+  0,
+  0,
+  640,
+  568
+ ],
+ "title": "고리 크기에 따라 불확실도 지도가 어떻게 바뀌는가 — R1, MVS (LoD2 패치)",
+ "footer": "지역 전체(평가 범위): (가) u 중앙값 7.0 cm, 값 있음 82.1 %, 50 cm 넘음 3.0 %; (나) u 중앙값 7.8 cm, 값 있음 82.2 %, 50 cm 넘음 4.9 %; (다) u 중앙값 9.0 cm, 값 있음 82.3 %, 50 cm 넘음 9.9 %",
+ "made": "2026-10-23 10:38:28 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "scientific_verdict": null
+}

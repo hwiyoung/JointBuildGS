@@ -62,7 +62,7 @@ def t1(S, out):
             "'지지 약함'은 발주 1.2-5 글 그대로(고른 평면의 잔차)라 만들어지는 꼴상 늘 0이다(설정 defs.weak_support_rule). "
             "옆 열은 다시 맞춘 최소 제곱 평면의 잔차로 같은 비율을 센 값이다. 솎음 = 안쪽 원 2,000점 또는 고리 8,000점을 넘어 솎은 패치.")
     body = md_table(head, rows) + "\n\n## 칸마다\n\n" + md_table(["경우", "자료", "칸", "패치", "넓이 m²", "값 있음", "면 없음", "점 부족"], rows_c)
-    L.write(out, "t1_value_share", f"표 1. 값이 있는 비율 (고리 {S.R} m)", body, js, note)
+    L.write(out, "t1_value_share", f"표 1. 값이 있는 비율 (고리 {L.rlabel(S)})", body, js, note)
 
 
 def t2(S, out):
@@ -92,7 +92,7 @@ def t2(S, out):
                               + [fmt(da["p50"], "v", n), fmt(ds["p50"], "v", n)])
     body = md_table(head, rows) + "\n\n## 칸마다\n\n" + md_table(["경우", "자료", "칸", "패치", "넓이 m²", "u 중앙값", "u 25 %", "u 75 %", "u 90 %", "어긋남 중앙값",
                                                                     "흩어짐 중앙값"], rows_c)
-    L.write(out, "t2_u_distribution", f"표 2. 불확실도의 분포 (cm, 고리 {S.R} m)", body, js, "평가 범위 안, 값이 있는 패치.")
+    L.write(out, "t2_u_distribution", f"표 2. 불확실도의 분포 (cm, 고리 {L.rlabel(S)})", body, js, "평가 범위 안, 값이 있는 패치.")
 
 
 # ------------------------------------------------------------------------------------------------ 6.1
@@ -159,7 +159,7 @@ def t61(S, out):
             + "\n\n## 68.3 % 값 q의 구간별 실제 오차의 68.3 % 값\n\n" + md_table(head[:2] + ["q 구간 (cm)"] + head[3:5] + ["실제 68.3 % 중앙값", "25 %", "75 %", "90 %"], rows_q)
             + "\n\n## u와 q, 세 실제 오차의 순위 상관\n\n" + md_table(["단위", "자료", "패치", "u–e", "u–실제 68.3 %", "u–틀린 점 비율", "q–e", "q–실제 68.3 %", "q–틀린 점 비율"], rows_rel)
             + "\n\n## 반쯤 틀린 패치(틀린 점 비율 30~50 %)의 u와 q\n\n" + md_table(["단위", "자료", "칸", "패치", "넓이 m²", "u 중앙값", "u 75 %", "q 중앙값", "q 75 %"], rows_half))
-    L.write(out, "t61_u_vs_error", f"6.1 불확실도가 실제 오차를 따라가는가 (cm, 고리 {S.R} m)", body, js,
+    L.write(out, "t61_u_vs_error", f"6.1 불확실도가 실제 오차를 따라가는가 (cm, 고리 {L.rlabel(S)})", body, js,
             "평가 범위 안, 그 자료의 값과 참값 평면이 있는 패치. e = 실제 오차(1.5). 반쯤 틀린 패치의 칸 줄은 패치가 있는 칸만 적었다.")
 
 
@@ -205,7 +205,7 @@ def t62(S, out):
     head = ["단위", "자료", "양성", "양성 패치", "음성 패치", "AUC u", "AUC 어긋남", "AUC 흩어짐", "AUC q", "양성 절반 문턱의 잘못 잡음(u)", "그 문턱 u (cm)"]
     body = (md_table(head, rows) + "\n\n## 틀린 점의 비율로 정한 양성(30 % 넘음)과 음성(10 % 미만)\n\n"
             + md_table(["단위", "자료", "양성 패치", "음성 패치", "AUC u", "AUC 어긋남", "AUC 흩어짐", "AUC q", "양성 절반 문턱의 잘못 잡음(u)"], rows_f))
-    L.write(out, "t62_roc", f"6.2 MVS 불확실도가 영상이 틀린 패치를 잡는가 (고리 {S.R} m)", body, js,
+    L.write(out, "t62_roc", f"6.2 MVS 불확실도가 영상이 틀린 패치를 잡는가 (고리 {L.rlabel(S)})", body, js,
             "양성 = 보존 · 문턱 안, 한계, 이중 오류(판 나는 보존 · 거름도), 음성 = 다듬기, 보정 두 칸. 평가 범위 안, 참값 평면이 있는 패치. "
             "값이 없는 패치는 뺐다(json에 뺀 수). AUC = 맨-휘트니.")
 
@@ -236,7 +236,7 @@ def t63(S, out):
                 rows.append([r["case"], DK[d], nm, fmt(r["patches"], "int"), fmt(r["area_m2"]), fmt(du["n"], "int"), fmt(du["p50"], "v", du["n"]),
                              fmt(du["p75"], "v", du["n"]), fmt(du["p90"], "v", du["n"]), fmt(share, "pct", int(wm.sum()))])
     head = ["경우", "자료", "칸", "패치", "넓이 m²", "u 있는 패치", "u_M 중앙값", "u_M 75 %", "u_M 90 %", "MVS 무게 비율 0.5 넘는 넓이 비율"]
-    L.write(out, "t63_changed", f"6.3 바뀐 곳에서 MVS는 어떤가 (cm, 고리 {S.R} m)", md_table(head, rows), js,
+    L.write(out, "t63_changed", f"6.3 바뀐 곳에서 MVS는 어떤가 (cm, 고리 {L.rlabel(S)})", md_table(head, rows), js,
             "평가 범위 안. 무게 비율의 넓이 비율 = 무게 비율이 정해진 패치(한 자료만 값이 있으면 0 또는 1) 넓이 가운데 0.5 넘는 넓이.")
 
 
@@ -274,7 +274,7 @@ def t64(S, out):
                 js.append(dict(site=U.SITE_KO[s], group=gname, basis=bname, tau_over_2_5_cm=t25, **st))
                 rows.append([U.SITE_KO[s], gname, bname, fmt(n, "int"), fmt(st.get("area_m2"))] + [fmt(st.get(k), "v", n) for k in ("med_cm", "nmad_cm", "q68_cm", "q95_cm")]
                             + [fmt(st.get("within20"), "pct", n), fmt(st.get("within30"), "pct", n), f"{t25:.1f}"])
-    L.write(out, "t64_lod2", f"6.4 LoD2 20 cm는 자료와 맞는가 (cm, 고리 {S.R} m)", md_table(head, rows), js,
+    L.write(out, "t64_lod2", f"6.4 LoD2 20 cm는 자료와 맞는가 (cm, 고리 {L.rlabel(S)})", md_table(head, rows), js,
             "평가 범위 안 LoD2 패치. MVS 줄 = p_M(MVS 판 가 안쪽 원 점의 법선 거리 중앙값, LoD2 면이 0), 참값 줄 = p_G. 지붕 형태 줄은 지붕꼴 패치.")
 
 
@@ -310,7 +310,7 @@ def t65(S, out):
                                    fmt((du["p50"] - de["p50"]) if du["n"] else None, "v", du["n"])])
     body = (md_table(["경우", "자료", "칸", "값·참값 있는 패치", "놓친 패치", "놓친 넓이 m²", "패치 비율", "넓이 비율"], rows)
             + "\n\n## 가장자리 거리 구간별 u와 e\n\n" + md_table(["경우", "자료", "패치", "가장자리 거리 (m)", "패치 수", "u 중앙값", "e 중앙값", "u − e"], rows_e))
-    L.write(out, "t65_missed_edge", f"6.5 놓친 곳과 가장자리 (cm, 고리 {S.R} m)", body, js,
+    L.write(out, "t65_missed_edge", f"6.5 놓친 곳과 가장자리 (cm, 고리 {L.rlabel(S)})", body, js,
             "놓친 패치 = e > 20 cm 그리고 e > 2u. 가장자리 거리 = 다른 면 번호의 패치 중심까지(2 m까지). 칸 줄은 패치가 있는 칸만.")
 
 
@@ -337,7 +337,7 @@ def t71(S, out):
                 rows.append([r["case"], r["data"], cko, fmt(n, "int"), fmt(r["area_m2"]), fmt(r["w_med"], "rank", n), fmt(r["mvs_leads"], "pct", n),
                              fmt(r["prior_only"], "pct", n), fmt(r["mvs_only"], "pct", n), fmt(r["none"], "pct", n)])
     head = ["경우", "자료", "칸", "패치", "넓이 m²", "MVS 무게 비율 중앙값", "MVS가 이끎(0.5 넘음)", "사전 정보만 값", "MVS만 값", "둘 다 없음"]
-    L.write(out, "t71_who_leads", f"7.1 누가 이끄는가 (고리 {S.R} m)", md_table(head, rows), js, "평가 범위 안. 비율은 넓이 비율. 칸 줄은 패치가 있는 칸만.")
+    L.write(out, "t71_who_leads", f"7.1 누가 이끄는가 (고리 {L.rlabel(S)})", md_table(head, rows), js, "평가 범위 안. 비율은 넓이 비율. 칸 줄은 패치가 있는 칸만.")
 
 
 def t72(S, out):
@@ -365,7 +365,7 @@ def t72(S, out):
                             + [fmt(r["z"]["med"], "rank", r["z"]["n"]), fmt(r["z"]["over"], "pct", r["z"]["n"])])
     head = ["경우", "자료", "칸", "패치", "넓이 m²", "MVS만 중앙값", "MVS만 20 cm 안", "사전 정보만 중앙값", "사전 정보만 20 cm 안", "무게 평균 중앙값", "무게 평균 20 cm 안",
             "z 중앙값", "z > 2.5"]
-    L.write(out, "t72_weighted_preview", f"7.2 무게 평균 미리 보기 — 학습 없음, 미리 보기 (cm, 고리 {S.R} m)", md_table(head, rows), js,
+    L.write(out, "t72_weighted_preview", f"7.2 무게 평균 미리 보기 — 학습 없음, 미리 보기 (cm, 고리 {L.rlabel(S)})", md_table(head, rows), js,
             "평가 범위 안, 참값 평면이 있는 패치. 자리의 오차 = |p − p_G|(사전 정보의 자리 0). 칸 줄은 패치가 있는 칸만.")
 
 
@@ -423,16 +423,16 @@ def places(S, out):
                          fmt(r["e_prior_cm"], "v", n), fmt(a["w_med"], "rank", n), fmt(a["p_cm"], "v", n), fmt(r["p_G_cm"], "v", n), fmt(a["pW_cm"], "v", n),
                          fmt(r["gt_multi_layer_share"], "pct", n)])
     head = ["자리", "사전 정보", "패치", "넓이 m²", "u_M", "u_사전", "e_M", "e_사전", "MVS 무게 비율", "p_M", "p_G", "p_W", "참값 여러 층"]
-    L.write(out, "places", f"자리마다의 값 (중앙값, cm, MVS 판 가, 고리 {S.R} m)", md_table(head, rows), js,
+    L.write(out, "places", f"자리마다의 값 (중앙값, cm, MVS 판 가, 고리 {L.rlabel(S)})", md_table(head, rows), js,
             "자리 패치 모두(평가 범위 밖 띠 패치가 있으면 그것도). 판 나 값과 맞춰 볼 값은 json. R1 고르게 낮은 평지붕은 확인 불가(설정 places).")
 
 
 SECTIONS = dict(t1=t1, t2=t2, t61=t61, t62=t62, t63=t63, t64=t64, t65=t65, t71=t71, t72=t72, places=places)
 
 if __name__ == "__main__":
-    R = float(sys.argv[1])
+    R, folder = L.parse_R(sys.argv[1])
     S = L.Store(R)
-    out = U.DOCS / "tables" / f"R{R}"
+    out = U.DOCS / "tables" / folder
     for sec in (sys.argv[2:] or list(SECTIONS)):
         t = U.Timer()
         SECTIONS[sec](S, out)

@@ -14,14 +14,19 @@ DATAS = {"LoD2": ("mvs_a", "mvs_b"), "ALS": ("mvs_a", "mvs_b", "als")}
 
 
 class Store:
+    """patch values of a ring radius R (a number, or {site: R} for the radius chosen per site by 1.7)."""
+
     def __init__(self, R):
         self.R = R
         self._c = {}
 
+    def r_of(self, site):
+        return self.R[site] if isinstance(self.R, dict) else self.R
+
     def get(self, site, pset):
         k = (site, pset)
         if k not in self._c:
-            with np.load(U.PV / f"{site}__{pset}__R{self.R}.npz", allow_pickle=False) as z:
+            with np.load(U.PV / f"{site}__{pset}__R{self.r_of(site)}.npz", allow_pickle=False) as z:
                 self._c[k] = {kk: z[kk] for kk in z.files}
         return self._c[k]
 
@@ -129,8 +134,8 @@ def fmt(v, kind="v", n=None):
     return f"{v:.1f}"
 
 
-def md_table(head, rows):
-    out = ["| " + " | ".join(head) + " |", "|" + "|".join(["---"] + ["---:"] * (len(head) - 1)) + "|"]
+def md_table(head, rows, left=False):
+    out = ["| " + " | ".join(head) + " |", "|" + "|".join(["---"] + (["---"] if left else ["---:"]) * (len(head) - 1)) + "|"]
     out += ["| " + " | ".join(str(x) for x in r) + " |" for r in rows]
     return "\n".join(out)
 
@@ -151,3 +156,23 @@ def face_masks(z):
 
 def cell_keys():
     return [("all", "전체")] + [(c, U.CELL_KO[c]) for c in U.CELLS] + [(k, v[0]) for k, v in U.SUMS.items()]
+
+
+def rlabel(S):
+    R = S.R
+    if isinstance(R, dict):
+        return "지역마다 고른 크기: " + ", ".join(f"{U.SITE_KO[k]} {v:g} m" for k, v in R.items())
+    return f"{R:g} m"
+
+
+def parse_R(arg):
+    """a number, or 'chosen' = the 1.7 choice (work/ring_choice.json): one number if every site picked the same, else {site: R};
+    returns (R, folder name)."""
+    if arg != "chosen":
+        return float(arg), f"R{float(arg)}"
+    rc = U.jl(U.WORK / "ring_choice.json")["per_site"]
+    picks = {s: float(v["pick"]) for s, v in rc.items()}
+    if len(set(picks.values())) == 1:
+        r = next(iter(picks.values()))
+        return r, f"R{r}"
+    return picks, "R_chosen_per_site"

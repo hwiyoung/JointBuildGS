@@ -1,0 +1,35 @@
+{
+ "site": "B0_b10",
+ "R": {
+  "B0_b10": 1.0,
+  "B173nb_b10": 1.5,
+  "R1rep_b10": 1.5
+ },
+ "panels": [
+  {
+   "label": "MVS와 항공 LiDAR (항공 LiDAR 패치)",
+   "patches": 23280,
+   "w_med": 0.23348673910528167,
+   "mvs_leads_area_share": 0.17877504706210592,
+   "none_share": 0.003049828178694158
+  },
+  {
+   "label": "MVS와 LoD2 (LoD2 패치)",
+   "patches": 82117,
+   "w_med": 0.939291614658446,
+   "mvs_leads_area_share": 0.8670533587142675,
+   "none_share": 0.0
+  }
+ ],
+ "crop_px": [
+  0,
+  0,
+  513,
+  736
+ ],
+ "title": "어디서 MVS가 이끌고 어디서 사전 정보가 이끄는가 — B0",
+ "footer": "지역 전체(평가 범위): (가) 무게 비율 중앙값 0.23, MVS가 이끄는 넓이 17.9 %, 둘 다 값 없음 0.3 %; (나) 무게 비율 중앙값 0.94, MVS가 이끄는 넓이 86.7 %, 둘 다 값 없음 0.0 %",
+ "made": "2026-10-23 10:37:01 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "scientific_verdict": null
+}

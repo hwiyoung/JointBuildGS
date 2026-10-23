@@ -88,8 +88,8 @@ def top(site, prior, idx, lo, hi, px=0.1):
 
 
 def oblique(site, prior, idx, cam):
-    P, lab = AM.patch_points(site, prior, idx)
-    loc = np.repeat(np.arange(len(idx)), 25)
+    P, lab = AM.patch_points(site, prior, idx, k=9)
+    loc = np.repeat(np.arange(len(idx)), 81)
     img, _ = AM.oblique_labels(cam, P, loc)
     return img
 
@@ -120,7 +120,17 @@ def eval_box(site):
 
 
 def figure(panels, title, footer, kind, path, js, stack=None, cbar_label=None):
-    """panels: [(img, label)] of equal size; one colour bar; the title; one footer line."""
+    """panels: [(img, label)] of equal size; one colour bar; the title; one footer line. All panels are cropped to the same box around
+    the drawn pixels (the union over the panels, 12 pixels margin), so the panels stay comparable."""
+    occ = np.zeros(panels[0][0].shape[:2], bool)
+    for img, _, _ in panels:
+        occ |= (img < 0.995).any(-1)
+    if occ.any():
+        yy, xx = np.nonzero(occ)
+        y0, y1 = max(int(yy.min()) - 12, 0), min(int(yy.max()) + 13, occ.shape[0])
+        x0, x1 = max(int(xx.min()) - 12, 0), min(int(xx.max()) + 13, occ.shape[1])
+        panels = [(img[y0:y1, x0:x1], lab_, [(x - x0, y - y0, t) for (x, y, t) in (texts or [])]) for img, lab_, texts in panels]
+        js = dict(js, crop_px=[x0, y0, x1, y1])
     H, W = panels[0][0].shape[:2]
     vertical = (W > 1.3 * H) if stack is None else stack == "v"
     n = len(panels)
@@ -151,6 +161,7 @@ def figure(panels, title, footer, kind, path, js, stack=None, cbar_label=None):
             s.set_linewidth(0.4)
         ax.set_title(lab_, fontsize=7, loc="left", pad=2)
         for (x, y, t) in texts or []:
+            x = min(max(x, 0.06 * W), 0.94 * W); y = min(max(y, 0.04 * H), 0.96 * H)
             ax.text(x, y, t, fontsize=5.5, ha="center", va="bottom", color="k",
                     bbox=dict(boxstyle="round,pad=0.1", fc="white", ec="none", alpha=0.8))
     fig.suptitle(title, fontsize=8.5, y=1 - 0.08 / fh, va="top")
@@ -160,7 +171,8 @@ def figure(panels, title, footer, kind, path, js, stack=None, cbar_label=None):
         sm = plt.cm.ScalarMappable(cmap=VIR if kind == "u" else WCM, norm=Normalize(0, 50 if kind == "u" else 1))
         cb = fig.colorbar(sm, cax=cax, orientation="vertical" if vertical else "horizontal")
         cb.ax.tick_params(labelsize=6)
-        cb.set_label(cbar_label or ("불확실도 (cm), 50 넘음 = 점 무늬" if kind == "u" else "MVS 무게 비율 (0 사전 정보 쪽, 1 MVS 쪽)"), fontsize=6)
+        cb.set_label(cbar_label or ("불확실도 (cm). 50 넘음 = 검은 점 무늬, 빗금 = 값 없음, 흰색 = 패치 없음, 검은 테두리 = 자리" if kind == "u"
+                                    else "MVS 무게 비율 (0 사전 정보 쪽, 1 MVS 쪽). 회색 = 둘 다 값 없음, 흰색 = 패치 없음, 검은 테두리 = 자리"), fontsize=6)
     fig.text(0.01, 0.04 / fh, footer, fontsize=5.5, ha="left", va="bottom", wrap=True)
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path.with_suffix(".png"), dpi=FC["dpi"])
@@ -219,14 +231,13 @@ def fig_A(S, site, out, oblique_views=False):
     for view, panels, js, foot in maps_site(S, site, which, out, views):
         name = f"A_{site}" if view == "top" else f"A_oblique_{site}_az{view}"
         t = TITLES["A"] if view == "top" else TITLES["A_oblique"]
-        figure(panels, f"{t} — {U.SITE_KO[site]}" + ("" if view == "top" else f", 비스듬히(방위 {view}°)"), foot, "u", out / name, js,
-               stack="v" if view != "top" else None)
+        figure(panels, f"{t} — {U.SITE_KO[site]}" + ("" if view == "top" else f", 비스듬히(방위 {view}°)"), foot, "u", out / name, js)
 
 
 def fig_C(S, site, out):
     which = [("LoD2", "mvs_a", "a", "어긋남 (MVS, LoD2 패치)"), ("LoD2", "mvs_a", "s", "흩어짐 (MVS, LoD2 패치)")]
     for view, panels, js, foot in maps_site(S, site, which, out):
-        figure(panels, f"{TITLES['C']} — {U.SITE_KO[site]}", foot.replace("u 중앙값", "중앙값"), "u", out / f"C_{site}", js, cbar_label="cm, 50 넘음 = 점 무늬")
+        figure(panels, f"{TITLES['C']} — {U.SITE_KO[site]}", foot.replace("u 중앙값", "중앙값"), "u", out / f"C_{site}", js, cbar_label="cm. 50 넘음 = 검은 점 무늬, 빗금 = 값 없음, 흰색 = 패치 없음, 검은 테두리 = 자리")
 
 
 def fig_D(S, site, out):
@@ -332,13 +343,17 @@ def section_panel(ax, S, site, prior, var, c0, t, s_rng, place_mask, zz):
         a, b = C3[i] - 0.125 * dirv, C3[i] + 0.125 * dirv
         ax.plot([(a - c0) @ t, (b - c0) @ t], [a[2], b[2]], color="#e66101", lw=1.0, zorder=4, solid_capstyle="butt")
     # sample patches on the line: one per 1 m, centre within 0.125 m of the line
-    on = np.nonzero((np.abs(po) <= 0.125) & (ps >= s_rng[0] + 0.5) & (ps <= s_rng[1] - 0.5) & (z[f"{d}_status"] == 0))[0]
+    cond = (np.abs(po) <= 0.125) & (ps >= s_rng[0] + 0.5) & (ps <= s_rng[1] - 0.5) & (z[f"{d}_status"] == 0)
+    if place_mask is not None and (cond & place_mask).sum() >= 3:
+        cond &= place_mask                                     # the sample patches are the place's own patches where it crosses the line
+    on = np.nonzero(cond)[0]
     pick = []
     for k in np.unique(np.floor(ps[on])):
         cand = on[np.floor(ps[on]) == k]
         pick.append(int(cand[np.argmin(np.abs(ps[cand] - (k + 0.5)))]))
     from scipy.spatial import cKDTree
     tree = cKDTree(X)
+    inner_z = []
     for i in pick:
         c, n = C3[i], N3[i]
         o = float(z[f"{d}_o"][i])
@@ -349,6 +364,7 @@ def section_panel(ax, S, site, prior, var, c0, t, s_rng, place_mask, zz):
         inn = cand[mm]
         inn = inn[np.argsort(gidx[inn])][:U.D["mvs_cap_inner"]]
         Q = X[inn]
+        inner_z.extend(np.percentile(Q[:, 2], [5, 95]).tolist() if len(Q) else [])
         ax.scatter((Q - c0) @ t, Q[:, 2], s=0.5, c="#00b5b5", lw=0, rasterized=True, zorder=3.5)
         m3 = np.array([z[f"{d}_nx"][i], z[f"{d}_ny"][i], z[f"{d}_nz"][i]], np.float64)
         h = float(z[f"{d}_h"][i])
@@ -363,9 +379,14 @@ def section_panel(ax, S, site, prior, var, c0, t, s_rng, place_mask, zz):
             P = c + pw * n
             ax.plot([(P - c0) @ t - 0.2, (P - c0) @ t + 0.2], [P[2], P[2]], color="#7b3294", lw=1.6, zorder=6, solid_capstyle="butt")
     ax.set_xlim(*s_rng)
-    if zz is None:
-        ref = GX[gb][:, 2] if gb.sum() >= 20 else C3[pb][:, 2]
-        zz = (float(np.percentile(ref, 2)) - 0.6, float(np.percentile(ref, 98)) + 0.6) if len(ref) else (c0[2] - 1.5, c0[2] + 1.5)
+    if zz is None:                                             # frame = the place's stretch: its GT, its prior patches, its sample patches' inner points
+        ps_in = (place_mask[pb] if place_mask is not None else np.ones(len(pb), bool))
+        pr_z = C3[pb][ps_in][:, 2] if ps_in.any() else C3[pb][:, 2]
+        pr_s = ps[pb][ps_in] if ps_in.any() else ps[pb]
+        sl, sh = (float(pr_s.min()), float(pr_s.max())) if len(pr_s) else s_rng
+        gsel = gb & (gs >= sl) & (gs <= sh)
+        ref = np.concatenate([GX[gsel][:, 2], pr_z] + ([np.asarray(inner_z)] if inner_z else []))
+        zz = (float(np.percentile(ref, 1)) - 0.3, float(np.percentile(ref, 99)) + 0.3) if len(ref) else (c0[2] - 1.0, c0[2] + 1.0)
     ax.set_ylim(*zz)
     bb = ax.get_window_extent().transformed(ax.figure.dpi_scale_trans.inverted())
     ex = ((s_rng[1] - s_rng[0]) / bb.width) / ((zz[1] - zz[0]) / bb.height)
@@ -410,10 +431,7 @@ def fig_E(S, place, out):
         img = paint(lab, rgb, ok, over=(ok & (v > UMAX)) if kind == "u" else None, kind=kind)
         outline(img, lab, sel, "")
         ax.imshow(img, interpolation="nearest"); ax.set_xticks([]); ax.set_yticks([])
-        ax.set_title(f"{PANEL[k]} {nm}", fontsize=6.5, loc="left", pad=2)
-        if kind == "w":
-            ax.text(0.02, 0.02, "주황 = 사전 정보가 이끎\n파랑 = MVS가 이끎\n회색 = 둘 다 값 없음", transform=ax.transAxes, fontsize=5, va="bottom",
-                    bbox=dict(fc="white", ec="none", alpha=0.85, pad=1))
+        ax.set_title(f"{PANEL[k]} {nm}" + (": 주황 사전 정보, 파랑 MVS가 이끎" if kind == "w" else ""), fontsize=6.5, loc="left", pad=2)
     cax = fig.add_axes([0.03, 1 - (0.78 + th) / Ht, 0.6, 0.1 / Ht])
     cb = fig.colorbar(plt.cm.ScalarMappable(cmap=VIR, norm=Normalize(0, 50)), cax=cax, orientation="horizontal")
     cb.ax.tick_params(labelsize=5.5); cb.set_label("(가)(나) 불확실도 (cm), 50 넘음 = 점 무늬, 빗금 = 값 없음", fontsize=5.5)
@@ -425,11 +443,13 @@ def fig_E(S, place, out):
     gz = []
     for r, var in enumerate(["a"] + (["b"] if glass else [])):
         ax = fig.add_axes([0.08, 1 - (1.25 + th + sec_h * (r + 1) - 0.45) / Ht, 0.9, (sec_h - 0.55) / Ht])
-        info_s = section_panel(ax, S, site, prior, var, c0, t, s_rng, None, gz[0] if gz else None)
+        pmask = np.zeros(len(z["centre"]), bool)
+        pmask[idx] = True
+        info_s = section_panel(ax, S, site, prior, var, c0, t, s_rng, pmask, gz[0] if gz else None)
         secs.append(info_s)
         gz.append(info_s["z_limits"])
         ax.set_title(f"{PANEL[3] if r == 0 else '(마)'} 단면, MVS {'판 가' if var == 'a' else '판 나(마스크 전)'}: 회색 MVS 점, 청록 안쪽 원 점, 점선 고리 평면, "
-                     f"검정 참값, 주황 사전 정보 면(단면선 0.125 m 안 패치), 보라 막대 무게 평균의 자리", fontsize=5.5, loc="left", pad=2)
+                     f"검정 참값, 주황 사전 정보 면(단면선 0.125 m 안 패치), 보라 막대 무게 평균의 자리(청록·점선·보라 = 자리 패치)", fontsize=5.5, loc="left", pad=2)
     m = np.zeros(len(z["centre"]), bool)
     m[idx] = True
     pv = __import__("u3_tables").place_values(S, place, site, prior, idx)
@@ -454,11 +474,237 @@ def fig_E(S, place, out):
                                          zoom=dict(lo=lo, hi=hi, px=px), footer=foot, made=U.now(), scientific_verdict=None))
 
 
+# ------------------------------------------------------------------------------------------------ F (6.1-6.5)
+def simple_fig(n, title, w=7.4, h=2.6):
+    fig, axs = plt.subplots(1, n, figsize=(w, h), squeeze=False)
+    fig.suptitle(title, fontsize=8.5, y=0.99, va="top")
+    fig.subplots_adjust(bottom=0.25, top=0.82, wspace=0.32, left=0.08, right=0.98)
+    return fig, axs[0]
+
+
+def save(fig, path, js, footer):
+    fig.text(0.01, 0.01, footer, fontsize=5.5, ha="left", va="bottom", wrap=True)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path.with_suffix(".png"), dpi=FC["dpi"]); fig.savefig(path.with_suffix(".pdf")); plt.close(fig)
+    U.jdump(path.with_suffix(".json"), dict(js, footer=footer, made=U.now(), config_sha256=U.sha256(U.CFGP), scientific_verdict=None))
+
+
+def styl(ax):
+    ax.tick_params(labelsize=6)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+
+
+def fig_F_ga(S, out):
+    edges = U.CFG["tables"]["u_bins_cm"]
+    labs = [f"{a}~{b}" if b is not None else f"{a}~" for a, b in zip(edges[:-1], edges[1:])]
+    fig, axs = simple_fig(3, TITLES["F_ga"], h=2.9)
+    js = dict(R=str(S.R), panels=[])
+    foot = []
+    for k, (d, sets, nm) in enumerate((("mvs_a", ("LoD2", "ALS"), "MVS 판 가"), ("mvs_b", ("LoD2", "ALS"), "MVS 판 나"), ("als", ("ALS",), "항공 LiDAR"))):
+        ax = axs[k]
+        for i, (a, b) in enumerate(zip(edges[:-1], edges[1:])):
+            ax.add_patch(plt.Rectangle((i - 0.45, a), 0.9, (b if b is not None else 100) - a, color="#ececec", lw=0, zorder=0))
+        for j, pset in enumerate(sets):
+            z = S.pooled(pset)
+            m = L.ev(z) & L.has(z, d) & np.isfinite(z[f"{d}_e"])
+            u, e = 100 * z[f"{d}_u"][m].astype(np.float64), 100 * z[f"{d}_e"][m].astype(np.float64)
+            stats = []
+            for i, (a, b) in enumerate(zip(edges[:-1], edges[1:])):
+                kk = (u >= a) & ((u < b) if b is not None else True)
+                v = e[kk]
+                if len(v) >= U.CFG["tables"]["min_patches"]:
+                    stats.append(dict(med=np.median(v), q1=np.quantile(v, .25), q3=np.quantile(v, .75), whislo=np.quantile(v, .1), whishi=np.quantile(v, .9),
+                                      fliers=[], label=labs[i], n=int(len(v))))
+                else:
+                    stats.append(None)
+            off = (j - (len(sets) - 1) / 2) * 0.32
+            st = [x for x in stats if x is not None]
+            pos = [i + off for i, x in enumerate(stats) if x is not None]
+            col = "#2b5c8a" if pset == "LoD2" else "#9ecae1"
+            bp = ax.bxp(st, positions=pos, widths=0.28, showfliers=False, patch_artist=True, manage_ticks=False)
+            for b_ in bp["boxes"]:
+                b_.set_facecolor(col); b_.set_edgecolor("k"); b_.set_linewidth(0.5)
+            for key in ("medians", "whiskers", "caps"):
+                for l_ in bp[key]:
+                    l_.set_color("k"); l_.set_linewidth(0.6)
+            js["panels"].append(dict(data=nm, set=pset, bins=[None if x is None else {kk: (float(v) if kk != "label" else v) for kk, v in x.items() if kk != "fliers"}
+                                                              for x in stats]))
+            if len(sets) > 1:
+                ax.text(len(edges) - 1.6 + off, 1.0 if j == 0 else 0.62, f"{U.PRIOR_KO[pset]} 패치", fontsize=5.5, color=col if pset == "ALS" else "#2b5c8a",
+                        ha="center")
+        ax.set_yscale("log"); ax.set_ylim(0.5, 2000)
+        ax.set_xticks(range(len(labs))); ax.set_xticklabels(labs, fontsize=5.5)
+        ax.set_xlabel("u 구간 (cm)", fontsize=6)
+        if k == 0:
+            ax.set_ylabel("실제 오차 e (cm, 로그)", fontsize=6)
+        ax.set_title(f"{PANEL[k]} {nm}", fontsize=7, loc="left")
+        styl(ax)
+    foot = ("세 지역 합, 평가 범위, 값과 참값 평면이 있는 패치. 상자 = 25~75 %, 가로선 = 중앙값, 수염 = 10~90 %, 옅은 회색 띠 = e가 그 u 구간 안(e = u; 40~ 구간은 100 cm까지만 칠함). "
+            "구간 30패치 미만은 그리지 않음. 항공 LiDAR 값은 항공 LiDAR 패치에서만 구함.")
+    save(fig, out / "F_ga_u_vs_e", js, foot)
+
+
+def fig_F_na(S, out):
+    fig, axs = simple_fig(2, TITLES["F_na"], h=3.0, w=6.4)
+    js = dict(R=str(S.R), panels=[])
+    cols = {"u": "#1b6fa8", "어긋남": "#e66101", "흩어짐": "#5e3c99", "q": "#1a9850"}
+    for k, pset in enumerate(U.PRIORS):
+        z = S.pooled(pset)
+        e = L.ev(z)
+        c = z["cell"]
+        gt = z["gt_status"] == 0
+        pos = np.isin(c, [U.CID[x] for x in U.CFG["tables"]["roc_positive_cells"]]) & gt & e
+        neg = np.isin(c, [U.CID[x] for x in U.CFG["tables"]["roc_negative_cells"]]) & gt & e
+        ax = axs[k]
+        txt = []
+        rec = {}
+        for nm, f in (("u", "u"), ("어긋남", "a"), ("흩어짐", "s"), ("q", "q")):
+            sc = L.val(z, "mvs_a", f)
+            cv = L.roc_curve(sc, pos, neg, 201)
+            a = L.auc(sc, pos, neg)
+            rec[nm] = dict(auc=a, curve=cv)
+            ax.plot(cv["fpr"], cv["tpr"], color=cols[nm], lw=1.0 if nm != "u" else 1.6)
+            txt.append((nm, a["auc"]))
+        ax.plot([0, 1], [0, 1], color="#bbbbbb", lw=0.6, ls="--")
+        for i, (nm, a) in enumerate(txt):
+            ax.text(0.97, 0.05 + 0.08 * i, f"{nm} {a:.2f}", color=cols[nm], fontsize=6.5, ha="right", transform=ax.transAxes)
+        ax.set_xlabel("음성을 잘못 잡은 비율", fontsize=6); ax.set_ylabel("양성을 잡은 비율", fontsize=6)
+        ax.set_title(f"{PANEL[k]} {U.PRIOR_KO[pset]} 패치", fontsize=7, loc="left")
+        js.setdefault("counts", []).append(f"{PANEL[k]} 양성 {rec['u']['auc']['n_pos']:,}, 음성 {rec['u']['auc']['n_neg']:,}")
+        ax.set_aspect("equal"); styl(ax)
+        js["panels"].append(dict(set=pset, scores={k_: dict(auc=v["auc"], curve=v["curve"]) for k_, v in rec.items()}))
+    save(fig, out / "F_na_roc", js, "MVS 판 가, 세 지역 합, 평가 범위, 참값 평면이 있는 패치(" + "; ".join(js["counts"]) + "). 양성 = 보존 · 문턱 안, 한계, 이중 오류; 음성 = 다듬기, 보정 두 칸. "
+         "오른쪽 아래 숫자 = 곡선 아래 넓이(u = 지금 식, q = 68.3 % 값). u, 흩어짐, q 곡선은 거의 겹친다.")
+
+
+def fig_F_da(S, out):
+    fig, axs = simple_fig(3, TITLES["F_da"], h=2.7)
+    js = dict(R=str(S.R), panels=[])
+    foot = []
+    for k, s in enumerate(U.SITES):
+        z = S.get(s, "LoD2")
+        e = L.ev(z) & z["roof_like"].astype(bool)
+        uM = L.val(z, "mvs_a", "u")
+        pM = np.abs(L.val(z, "mvs_a", "p"))
+        pG = np.abs(np.where(z["gt_status"] == 0, z["gt_p"], np.nan))
+        ax = axs[k]
+        rec = {}
+        for nm, v, col, ls in (("MVS (u_M ≤ 5 cm)", pM[e & (uM <= 0.05)], "#1b6fa8", "-"), ("MVS (u_M ≤ 10 cm)", pM[e & (uM <= 0.10)], "#9ecae1", "--"),
+                               ("참값 (보정 · 4τ 넘음 뺌)", pG[e & (z["cell"] != U.CID["c_corr4p"])], "k", "-")):
+            v = np.sort(100 * v[np.isfinite(v)])
+            if len(v):
+                ax.plot(v, np.arange(1, len(v) + 1) / len(v), color=col, ls=ls, lw=1.1)
+            rec[nm] = dict(n=int(len(v)), within20=float(np.mean(v <= 20)) if len(v) else None, within30=float(np.mean(v <= 30)) if len(v) else None,
+                           q68=float(np.quantile(v, .68)) if len(v) else None)
+        for x in (20, 30):
+            ax.axvline(x, color="#888888", ls=":", lw=0.8)
+        ax.set_xlim(0, 100); ax.set_ylim(0, 1)
+        ax.set_xlabel("LoD2 지붕면에서의 차 크기 (cm)", fontsize=6)
+        if k == 0:
+            ax.set_ylabel("누적 비율", fontsize=6)
+        ax.set_title(f"{PANEL[k]} {U.SITE_KO[s]}", fontsize=7, loc="left")
+        y = 0.08
+        for nm, col in (("MVS (u_M ≤ 5 cm)", "#1b6fa8"), ("MVS (u_M ≤ 10 cm)", "#5a9bd0"), ("참값 (보정 · 4τ 넘음 뺌)", "k")):
+            r = rec[nm]
+            if r["n"]:
+                ax.text(98, y, f"{nm}: 20 cm 안 {100 * r['within20']:.0f} %", fontsize=5.3, color=col, ha="right")
+            y += 0.08
+        styl(ax)
+        js["panels"].append(dict(site=s, lines=rec))
+    save(fig, out / "F_da_lod2", js, "평가 범위의 LoD2 지붕꼴 패치. 파랑 = 믿을 만한 MVS의 |p_M|(실선 u_M ≤ 5 cm, 점선 ≤ 10 cm), 검정 = 참값의 |p_G|(보정 · 4τ 넘음 = LoD2가 참값에서 4τ 넘게 벗어난 칸을 뺌). "
+         "점선 = 20, 30 cm. 곡선이 1에 닿지 않는 만큼은 100 cm 넘는 패치.")
+
+
+def bool_map(S, site, cases, title, name, out, key):
+    lo, hi = eval_box(site)
+    panels, js, foot = [], dict(site=site, R=str(S.R), panels=[]), []
+    for k, (prior, d, label) in enumerate(cases):
+        z = S.get(site, prior)
+        idx = np.nonzero(L.ev(z))[0]
+        lab = top(site, prior, idx, lo[:2], hi[:2])
+        has = L.has(z, d)[idx]
+        ee = z[f"{d}_e"][idx].astype(np.float64)
+        excl = ~np.isfinite(ee) & has
+        if key == "missed":
+            u = L.val(z, d, "u")[idx]
+            flag = has & np.isfinite(ee) & (ee > 0.2) & (ee > 2 * u)
+            rgb = np.where(flag[:, None], AM.rgb("#c62f26"), AM.rgb("#d9d9d9"))
+            img = paint(lab, rgb, has, excl=excl)
+            n_ok = int((has & np.isfinite(ee)).sum())
+            js["panels"].append(dict(label=label, missed=int(flag.sum()), with_value_and_gt=n_ok, area_m2=float(z["area"][idx][flag].sum())))
+            foot.append(f"{PANEL[k]} 놓친 패치 {int(flag.sum()):,} / {n_ok:,} ({100 * flag.sum() / max(n_ok, 1):.1f} %)")
+            panels.append((img, f"{PANEL[k]} {label}", []))
+    figure(panels, f"{title} — {U.SITE_KO[site]}", "지역 전체(평가 범위): " + "; ".join(foot) + ". 빨강 = 놓친 패치(실제 오차 e > 20 cm 그리고 e > 2u), 회색 = 그 밖의 값 있는 패치, 빗금 = 값 없음, 황갈 = 참값 평면 없음",
+           "none", out / name, js)
+
+
+def fig_F_ra(S, site, out):
+    cases = [("LoD2", "mvs_a", "MVS 판 가 (LoD2 패치)"), ("ALS", "mvs_a", "MVS 판 가 (항공 LiDAR 패치)"), ("ALS", "als", "항공 LiDAR (항공 LiDAR 패치)")]
+    bool_map(S, site, cases, TITLES["F_ra"], f"F_ra_missed_{site}", out, "missed")
+
+
+def fig_F_ma(S, out):
+    eb = U.CFG["tables"]["edge_bins_m"]
+    labs = [f"{a}~{b}" if b is not None else f"{a}~" for a, b in zip(eb[:-1], eb[1:])]
+    fig, axs = simple_fig(3, TITLES["F_ma"], h=2.6)
+    js = dict(R=str(S.R), panels=[])
+    ymax = 0.0
+    for k, (pset, d, nm) in enumerate((("LoD2", "mvs_a", "MVS 판 가 (LoD2 패치)"), ("ALS", "mvs_a", "MVS 판 가 (항공 LiDAR 패치)"), ("ALS", "als", "항공 LiDAR"))):
+        z = S.pooled(pset)
+        m = L.ev(z) & L.has(z, d) & np.isfinite(z[f"{d}_e"])
+        ux, ex, ns = [], [], []
+        for a, b in zip(eb[:-1], eb[1:]):
+            kk = m & (z["edge"] >= a) & ((z["edge"] < b) if b is not None else True)
+            ns.append(int(kk.sum()))
+            ux.append(100 * float(np.median(z[f"{d}_u"][kk])) if kk.sum() >= 30 else np.nan)
+            ex.append(100 * float(np.median(z[f"{d}_e"][kk])) if kk.sum() >= 30 else np.nan)
+        ax = axs[k]
+        ax.plot(range(len(labs)), ux, "-o", color="#1b6fa8", ms=3, lw=1.2)
+        ax.plot(range(len(labs)), ex, "-s", color="k", ms=3, lw=1.2)
+        ax.text(len(labs) - 1, ux[-1], " u", color="#1b6fa8", fontsize=6.5, va="center")
+        ax.text(len(labs) - 1, ex[-1], " e", color="k", fontsize=6.5, va="center")
+        ax.set_xticks(range(len(labs))); ax.set_xticklabels(labs, fontsize=6)
+        ax.set_xlabel("다른 면까지 거리 (m)", fontsize=6)
+        if k == 0:
+            ax.set_ylabel("중앙값 (cm)", fontsize=6)
+        ymax = max(ymax, np.nanmax(ux + ex))
+        ax.set_title(f"{PANEL[k]} {nm}", fontsize=6.5, loc="left")
+        styl(ax)
+        js["panels"].append(dict(set=pset, data=d, bins=labs, u_med_cm=ux, e_med_cm=ex, patches=ns))
+    for ax in axs:
+        ax.set_ylim(0, 1.1 * ymax)
+    save(fig, out / "F_ma_edge", js, "세 지역 합, 평가 범위, 값과 참값 평면이 있는 패치. 가로 = 면 번호가 다른 가장 가까운 패치까지 거리. 파랑 = u의 중앙값, 검정 = 실제 오차 e의 중앙값. 세 칸의 세로축 같음.")
+
+
+def fig_F_ba(S, site, out):
+    lo, hi = eval_box(site)
+    z = S.get(site, "LoD2")
+    idx = np.nonzero(L.ev(z))[0]
+    lab = top(site, "LoD2", idx, lo[:2], hi[:2])
+    has = L.has(z, "mvs_a")[idx]
+    ff = z["mvs_a_f"][idx].astype(np.float64)
+    half = has & (ff >= 0.3) & (ff <= 0.5)
+    excl = has & ~np.isfinite(ff)
+    panels, js, foot = [], dict(site=site, R=str(S.R), panels=[]), []
+    for k, (f, nm) in enumerate((("u", "지금 식 u"), ("q", "68.3 % 값 q"))):
+        v = L.val(z, "mvs_a", f)[idx]
+        rgb, ok = colours(v, "u")
+        rgb[~half] = AM.rgb("#e3e3e3")
+        img = paint(lab, rgb, has, over=half & (v > UMAX), excl=excl)
+        panels.append((img, f"{PANEL[k]} 반쯤 틀린 패치를 {nm}로 칠함", []))
+        vv = v[half]
+        js["panels"].append(dict(score=f, half_patches=int(half.sum()), med_cm=100 * float(np.median(vv)) if len(vv) else None))
+        foot.append(f"{PANEL[k]} {nm} 중앙값 {cm(np.median(vv) if len(vv) else None)}")
+    figure(panels, f"{TITLES['F_ba']} — {U.SITE_KO[site]}", f"지역 전체(평가 범위, LoD2 패치, MVS 판 가): 반쯤 틀린 패치(틀린 점 30~50 %) {int(half.sum()):,}개; "
+           + "; ".join(foot) + ". 회색 = 그 밖의 값 있는 패치, 황갈 = 참값 평면 없음", "u", out / f"F_ba_half_{site}", js)
+
+
 if __name__ == "__main__":
-    R = float(sys.argv[1])
+    R, folder = L.parse_R(sys.argv[1])
     what = sys.argv[2]
     S = L.Store(R)
-    out = U.DOCS / "figures" / f"R{R}"
+    out = U.DOCS / "figures" / folder
     args = sys.argv[3:]
     T = U.Timer()
     if what in ("A", "Aob", "B", "C", "D"):
@@ -470,3 +716,10 @@ if __name__ == "__main__":
         for p in args:
             fig_E(S, p, out)
             U.log("E", p, T.mark(p))
+    elif what in ("F_ga", "F_na", "F_da", "F_ma"):
+        {"F_ga": fig_F_ga, "F_na": fig_F_na, "F_da": fig_F_da, "F_ma": fig_F_ma}[what](S, out)
+        U.log(what, T.mark(what))
+    elif what in ("F_ra", "F_ba"):
+        for s in args or U.SITES:
+            {"F_ra": fig_F_ra, "F_ba": fig_F_ba}[what](S, s, out)
+            U.log(what, s, T.mark(s))

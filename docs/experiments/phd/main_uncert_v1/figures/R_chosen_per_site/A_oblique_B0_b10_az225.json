@@ -1,0 +1,52 @@
+{
+ "site": "B0_b10",
+ "R": {
+  "B0_b10": 1.0,
+  "B173nb_b10": 1.5,
+  "R1rep_b10": 1.5
+ },
+ "view": "225",
+ "panels": [
+  {
+   "label": "MVS (LoD2 패치)",
+   "prior": "LoD2",
+   "data": "mvs_a",
+   "patches": 82117,
+   "area_m2": 5132.25334436015,
+   "with_value": 76978,
+   "u_med_cm": 4.556775838136673,
+   "over_50cm_share": 0.004559744342539427
+  },
+  {
+   "label": "항공 LiDAR (항공 LiDAR 패치)",
+   "prior": "ALS",
+   "data": "als",
+   "patches": 23280,
+   "area_m2": 1592.8931141923629,
+   "with_value": 22941,
+   "u_med_cm": 1.0901198722422123,
+   "over_50cm_share": 0.00021795039449021403
+  },
+  {
+   "label": "LoD2 (20 cm로 둠)",
+   "prior": "LoD2",
+   "data": "lod2",
+   "patches": 82117,
+   "area_m2": 5132.25334436015,
+   "with_value": 82117,
+   "u_med_cm": 20.0,
+   "over_50cm_share": 0.0
+  }
+ ],
+ "crop_px": [
+  186,
+  84,
+  720,
+  713
+ ],
+ "title": "벽에서는 세 자료의 불확실도가 어떤가 — B0, 비스듬히(방위 225°)",
+ "footer": "지역 전체(평가 범위): (가) u 중앙값 4.6 cm, 값 있음 93.7 %, 50 cm 넘음 0.5 %; (나) u 중앙값 1.1 cm, 값 있음 98.5 %, 50 cm 넘음 0.0 %; (다) u 중앙값 20.0 cm, 값 있음 100.0 %, 50 cm 넘음 0.0 %",
+ "made": "2026-10-23 10:35:00 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "scientific_verdict": null
+}
