@@ -29,7 +29,7 @@ def main():
         p=DOC/'tables'/f'{name}.json';j=json.loads(p.read_text());L += [f'## {name}','',f'[JSON]({name}.json) · [CSV]({name}.csv)','', '| '+' | '.join(keys)+' |','| '+' | '.join(['---']*len(keys))+' |']
         for r in j['rows']:L.append('| '+' | '.join(cell(r.get(k)) for k in keys)+' |')
         L += ['']
-    (DOC/'tables/핵심표.md').write_text('\n'.join(L)+'\n')
+    (DOC/'tables/핵심표.md').write_text('\n'.join(L).rstrip()+'\n')
     # Every CSV table also has a complete Markdown companion. Read the CSV
     # strings directly so this full version preserves its unrounded values.
     for p in sorted((DOC/'tables').glob('*.csv')):
