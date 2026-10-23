@@ -56,6 +56,20 @@ def main():
                 under_axis_area_m2=float(area[m&(np.abs(p)<.01)].sum()),over_axis_area_m2=float(area[m&(np.abs(p)>10)].sum())))
         ax.set(xscale='log',xlim=(.01,10),xlabel='|두 자료의 차| (m)',ylabel='넓이 비율 (%)',title=prior+' · 정하는 곳');ax.legend();ax.grid(alpha=.2)
         figure(fig,f'차의크기_{prior}',histdata);plt.close(fig)
+        # Order 4.5 also requests each cell, beyond the two-cell overlay.
+        fig,axs=plt.subplots(4,2,figsize=(10,12),sharex=True);allhist=[]
+        for ci,ax in enumerate(axs.flat):
+            if ci>=len(CELLS):
+                ax.axis('off');ax.text(.05,.8,'분모: 차가 있는 넓이\n차 없음은 별도 기록\n1 cm 미만·10 m 초과는 JSON',va='top');continue
+            m=(cells==ci)&known;den=float(area[m].sum());h,_=np.histogram(np.abs(p[m]),edges,weights=area[m]);h=h/den if den else h
+            ax.stairs(h*100,edges,color={1:'#0072b2',2:'#d55e00'}.get(ci,'#555555'))
+            ax.set(xscale='log',xlim=(.01,10),title=KO[ci],xlabel='|두 자료의 차| (m)',ylabel='넓이 비율 (%)');ax.grid(alpha=.2)
+            if not den:ax.text(.5,.5,'차가 있는 패치 없음',transform=ax.transAxes,ha='center')
+            allhist.append(dict(cell=CELLS[ci],edges_m=edges.tolist(),fraction_per_bin=h.tolist(),valid_patches=int(m.sum()),valid_area_m2=den,
+                cell_area_m2=float(area[cells==ci].sum()),missing_difference_area_m2=float(area[(cells==ci)&~known].sum()),
+                under_axis_area_m2=float(area[m&(np.abs(p)<.01)].sum()),over_axis_area_m2=float(area[m&(np.abs(p)>10)].sum())))
+        fig.suptitle(prior+' · 모든 칸 · 정하는 곳');fig.tight_layout()
+        figure(fig,f'차의크기_모든칸_{prior}',allhist);plt.close(fig)
         fig,axs=plt.subplots(2,1,figsize=(8,5.8),sharex=True);sd=[]
         for ax,ci in zip(axs,[1,2]):
             m=(cells==ci)&known;den=float(area[m].sum());matrix=[]
