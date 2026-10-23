@@ -44,6 +44,7 @@ def main():
         maximum_concurrent_measurement_containers=2,maximum_concurrent_patch_workers=128,
         cpu_nice=19,container_total_memory_limit_GiB=32,patch_workers_per_job=64,cpu_quota_per_container=64,registration_tile_processes=4,training_executed=False,
         config_sha256=sha('/cfg/widen0_v2.json'),building_split_sha256=sha(O/'building_split.json'),image_split_sha256=sha(O/'image_split.json'),
+        config_files_sha256={p.name:sha(p) for p in sorted(Path('/cfg').glob('*.json'))},
         scripts_sha256={p.name:sha(p) for p in sorted(R.glob('*')) if p.is_file()},
         required_path_exception='An accidental empty repo-root interim.tmp was immediately removed; existing files unchanged. See issues.md.',
         scientific_verdict=None)

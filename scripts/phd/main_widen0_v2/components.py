@@ -25,6 +25,8 @@ def describe(d,ids,prior,cell,cid,tree=None):
         building=primary,building_ids=bids.tolist(),building_area_m2={str(b):float(a) for b,a in zip(bids,ba)},
         shape='지붕꼴' if d['roof_like'][ids].all() else ('벽꼴' if not d['roof_like'][ids].any() else '지붕꼴·벽꼴'),
         roof_types=sorted(set(d['roof_type'][ids].tolist())),area_m2=float(area.sum()),patches=len(ids),
+        roof_type_missing_patches=int((d['roof_type'][ids]=='').sum()),
+        roof_type_missing_reason='Empty roof_type means the source LoD2 attribute is unavailable; no type is inferred.',
         roof_area_m2=float(area[d['roof_like'][ids]].sum()),wall_area_m2=float(area[~d['roof_like'][ids]].sum()),
         gt_p_m=quantiles(d['gt_p'][ids]),gt_density_points_m2=quantiles(d['gt_n_inner'][ids]/(np.pi*.5**2)),
         difference_m=quantiles(d['mvs_p'][ids]),mvs_actual_error_m=quantiles(d['mvs_a_e'][ids]),
