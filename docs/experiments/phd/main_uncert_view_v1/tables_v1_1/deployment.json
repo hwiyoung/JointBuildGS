@@ -1,0 +1,74 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.1",
+  "made": "2026-10-23T21:27:25.098243+09:00",
+  "implementation_commit": "7d21a76db0da148b220d4918616db1aabd5206f6",
+  "url": "http://192.168.10.203:8912/",
+  "current": {
+    "id": "c3042a91a7ea324d2ec2e65da906168b74b8d1f679c709ebd86a8d6cd9a38178",
+    "name": "/jbgs-main-uncert-view-8912",
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "running": true,
+    "started": "2026-10-23T12:25:55.998491405Z",
+    "mounts": [
+      {
+        "Type": "bind",
+        "Source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/web_v1_1",
+        "Destination": "/web",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ],
+    "ports": {
+      "8080/tcp": [
+        {
+          "HostIp": "0.0.0.0",
+          "HostPort": "8912"
+        }
+      ]
+    },
+    "restart": {
+      "Name": "unless-stopped",
+      "MaximumRetryCount": 0
+    },
+    "cpus": 2.0,
+    "memory": 536870912,
+    "gpu_requests": null
+  },
+  "previous": {
+    "id": "713893b4733df1adef168bc5683ada56cd365320e592bfbfaaa63c93553a1554",
+    "name": "/jbgs-main-uncert-view-8912-v1",
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "running": false,
+    "started": "2026-10-23T08:00:04.319867719Z",
+    "mounts": [
+      {
+        "Type": "bind",
+        "Source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/web",
+        "Destination": "/web",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+      }
+    ],
+    "ports": {},
+    "restart": {
+      "Name": "unless-stopped",
+      "MaximumRetryCount": 0
+    },
+    "cpus": 2.0,
+    "memory": 536870912,
+    "gpu_requests": null
+  },
+  "served_view_sha256": "02c7e8df75455e5a3c87550d946470f88efefdce5898b1ba9125b3de2ae27ed0",
+  "live_browser": {
+    "title": "불확실도 지도 · v1.1",
+    "faces": 43,
+    "counts": {
+      "mvs": 72728,
+      "prior": 74175
+    },
+    "errors": []
+  },
+  "scientific_verdict": null
+}
