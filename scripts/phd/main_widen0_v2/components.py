@@ -29,7 +29,9 @@ def describe(d,ids,prior,cell,cid,tree=None):
         gt_p_m=quantiles(d['gt_p'][ids]),gt_density_points_m2=quantiles(d['gt_n_inner'][ids]/(np.pi*.5**2)),
         difference_m=quantiles(d['mvs_p'][ids]),mvs_actual_error_m=quantiles(d['mvs_a_e'][ids]),
         prior_actual_error_m=quantiles(d['prior_error'][ids]),mvs_uncertainty_m=quantiles(d['u_mvs'][ids]),prior_uncertainty_m=quantiles(d['u_prior'][ids]),
-        difference_over_uncertainty=quantiles(d['difference_over_uncertainty'][ids]),views=quantiles(d['mvs_a_views'][ids]),
+        difference_over_uncertainty=quantiles(d['difference_over_uncertainty'][ids]),
+        signed_difference_over_uncertainty=quantiles(d['signed_difference_over_uncertainty'][ids]),
+        normalized_difference_rule='signed mvs_p / sqrt(u_mvs^2 + u_prior^2); difference_over_uncertainty retains the absolute-value version',views=quantiles(d['mvs_a_views'][ids]),
         support=quantiles(d['mvs_a_support_lmeds'][ids]),support_final=quantiles(d['mvs_a_support_final'][ids]))
     if tree is not None:
         other=set();own=CELLS.index(cell)

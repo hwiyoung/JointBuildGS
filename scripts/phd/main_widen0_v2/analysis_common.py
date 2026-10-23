@@ -7,7 +7,7 @@ import numpy as np
 from preflight import dump,sha
 O=Path('/out');DOC=Path('/docs');CFG=json.loads(Path('/cfg/widen0_v2.json').read_text())
 CELLS=CFG['cells']['order'];KO=['둘 다 맞음','사전 정보만 틀림','영상만 틀림','둘 다 틀림','MVS 없음 · 사전 정보 맞음','MVS 없음 · 사전 정보 틀림','참값 없음']
-KEYS=['centre','raw_centre','normal','area','building','roof_type','roof_like','source_extra','normal_defined','patch_id','cell','tau','gt_status','gt_p','gt_n_inner','gt_n_col','mvs_p','mvs_a_e','mvs_a_views','mvs_a_support_lmeds','mvs_a_support_final','u_mvs','u_prior','prior_error','difference_over_uncertainty']
+KEYS=['centre','raw_centre','normal','area','building','roof_type','roof_like','source_extra','normal_defined','patch_id','cell','tau','gt_status','gt_p','gt_n_inner','gt_n_col','mvs_p','mvs_a_e','mvs_a_views','mvs_a_support_lmeds','mvs_a_support_final','u_mvs','u_prior','prior_error','difference_over_uncertainty','signed_difference_over_uncertainty']
 def load(prior,holdout=False,keys=None):
     root=O/('holdout/patch_values' if holdout else 'patch_values');parts=[]
     for f in sorted(root.glob(f'*__{prior}__R1.5.npz')):

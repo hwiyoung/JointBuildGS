@@ -34,6 +34,7 @@ def export(tile,prior):
     d['prior_position_error']=np.where(d['gt_status']==0,np.abs(d['gt_p']),np.nan)
     den=np.sqrt(d['u_mvs']**2+d['u_prior']**2)
     d['difference_over_uncertainty']=np.divide(np.abs(d['mvs_p']),den,out=np.full(n,np.nan),where=den>0)
+    d['signed_difference_over_uncertainty']=np.divide(d['mvs_p'],den,out=np.full(n,np.nan),where=den>0)
     d['cell']=classify(d['gt_status'],d['gt_p'],d['mvs_a_e'],d['tau'])
     split=json.loads((O/'building_split.json').read_text());held=set(split['holdout']);dev=set(split['development'])
     assert np.array_equal(d['holdout'],np.array([b in held for b in d['building']]))
