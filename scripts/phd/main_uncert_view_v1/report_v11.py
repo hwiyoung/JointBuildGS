@@ -48,7 +48,7 @@ def main():
         for r in check.get('result',{}).get('comparisons',[]):oldrows.append(dict(question=check['test'],**r))
     dump(TD/'v1_browser_comparison.json',dict(rows=oldrows,scientific_verdict=None))
     md(TD/'v1_browser_comparison.md',['물음','항목','앞 보고','v1 화면','단위'],[[r.get(k) for k in ['question','label','report','now','unit']] for r in oldrows])
-    web=OUT/'web_v1_1';files=[dict(path=str(p.relative_to(web)),bytes=p.stat().st_size,sha256=sha(p)) for p in sorted(web.rglob('*')) if p.is_file()]
+    web=OUT/'web_v1_1';files=[dict(path=str(p.relative_to(web)),bytes=p.stat().st_size,sha256=sha(p)) for p in sorted(web.rglob('*')) if p.is_file() and 'downloads' not in p.relative_to(web).parts]
     archive=OUT/'PHD-MAIN-UNCERT-VIEW-v1.1_web.zip'
     with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
         for r in files:z.write(web/r['path'],'web/'+r['path'])
