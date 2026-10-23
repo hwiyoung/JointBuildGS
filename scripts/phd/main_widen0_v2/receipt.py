@@ -38,6 +38,7 @@ def main():
         preparation_commit=(O/'repository_head_at_pipeline_preparation.txt').read_text().strip(),
         versions=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,laspy=laspy.__version__),
         package_versions=packages,figure_fonts_sha256={p.name:sha(p) for p in sorted(Path('/fonts').glob('*SansCJK*Regular*.ttc'))},
+        native_photo_crops=json.loads((O/'gates/photo_crops.json').read_text()) if (O/'gates/photo_crops.json').exists() else None,
         mvs=json.loads((O/'mvs/full/colmap_receipt.json').read_text()),cpu_measurement=groups,
         registration=json.loads((O/'gates/registration_runtime.json').read_text()),
         registration_runtime_scope='Successful resume only; initial failed attempt recorded separately below.',

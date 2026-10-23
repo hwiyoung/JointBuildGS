@@ -1,0 +1,40 @@
+{
+  "rows": [
+    {
+      "split": "holdout",
+      "prior": "LoD2",
+      "buildings_with_assigned_patches": 19,
+      "patches": 173119,
+      "area_m2": 10819.87137487095,
+      "fraction_patches_with_GT": 0.5135658131112125
+    },
+    {
+      "split": "holdout",
+      "prior": "ALS",
+      "buildings_with_assigned_patches": 19,
+      "patches": 35135,
+      "area_m2": 2402.4957777600525,
+      "fraction_patches_with_GT": 0.9225273943361321
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/seal_validate.py",
+  "generator_sha256": "7097fac6d213bb1f260ee9d944f992962dd8b5de784a2a4941298a9d84229266",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null,
+  "building_count": 19,
+  "sealed_files": [
+    {
+      "file": "holdout/LoD2_sealed.zip",
+      "sha256": "106e18461778e1374a3654262da8d8bb1b0db871b9b788035ff772af8e47fc96",
+      "files": 51,
+      "manifest_sha256": "98dc8cdf99d6230a7f167724c9fb8c980a37fb69325e646507b8eac2c7c8d3b3"
+    },
+    {
+      "file": "holdout/ALS_sealed.zip",
+      "sha256": "1e50ba9bda1054a4ef1faf13268fc6d43804c22cd48e97af9c0b0f799b3b3b7f",
+      "files": 51,
+      "manifest_sha256": "26cb403d4ca2cf737264ac57cefa0248b00cfbb4bb80a1e0080581722838f349"
+    }
+  ]
+}

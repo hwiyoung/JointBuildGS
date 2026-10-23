@@ -1,0 +1,275 @@
+{
+  "rows": [
+    {
+      "prior": "LoD2",
+      "cell": "both_right",
+      "cell_ko": "둘 다 맞음",
+      "patches": 969851,
+      "area_m2": 60615.6875,
+      "components": 5226,
+      "components_under_1m2": 3759,
+      "area_under_1m2": 864.5,
+      "size_counts": {
+        "1~2.5": 518,
+        "2.5~10": 465,
+        "10~100": 359,
+        "100~inf": 125
+      },
+      "median_spacing_m": 0.24999999999999653,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "LoD2",
+      "cell": "prior_wrong",
+      "cell_ko": "사전 정보만 틀림",
+      "patches": 447384,
+      "area_m2": 27961.437502237397,
+      "components": 10530,
+      "components_under_1m2": 8558,
+      "area_under_1m2": 1858.5625,
+      "size_counts": {
+        "1~2.5": 954,
+        "2.5~10": 706,
+        "10~100": 263,
+        "100~inf": 49
+      },
+      "median_spacing_m": 0.24999999999999653,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "LoD2",
+      "cell": "image_wrong",
+      "cell_ko": "영상만 틀림",
+      "patches": 180725,
+      "area_m2": 11295.3125,
+      "components": 14711,
+      "components_under_1m2": 12673,
+      "area_under_1m2": 2707.6875,
+      "size_counts": {
+        "1~2.5": 1250,
+        "2.5~10": 651,
+        "10~100": 132,
+        "100~inf": 5
+      },
+      "median_spacing_m": 0.24999999999999653,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "LoD2",
+      "cell": "both_wrong",
+      "cell_ko": "둘 다 틀림",
+      "patches": 186429,
+      "area_m2": 11651.8125,
+      "components": 15627,
+      "components_under_1m2": 13238,
+      "area_under_1m2": 2988.6875,
+      "size_counts": {
+        "1~2.5": 1497,
+        "2.5~10": 753,
+        "10~100": 138,
+        "100~inf": 1
+      },
+      "median_spacing_m": 0.24999999999999653,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "LoD2",
+      "cell": "no_mvs_prior_right",
+      "cell_ko": "MVS 없음 · 사전 정보 맞음",
+      "patches": 38655,
+      "area_m2": 2415.9375,
+      "components": 3233,
+      "components_under_1m2": 2809,
+      "area_under_1m2": 599.75,
+      "size_counts": {
+        "1~2.5": 264,
+        "2.5~10": 126,
+        "10~100": 34,
+        "100~inf": 0
+      },
+      "median_spacing_m": 0.24999999999999653,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "LoD2",
+      "cell": "no_mvs_prior_wrong",
+      "cell_ko": "MVS 없음 · 사전 정보 틀림",
+      "patches": 71526,
+      "area_m2": 4470.313468895418,
+      "components": 6702,
+      "components_under_1m2": 5776,
+      "area_under_1m2": 1339.2509688954178,
+      "size_counts": {
+        "1~2.5": 594,
+        "2.5~10": 289,
+        "10~100": 43,
+        "100~inf": 0
+      },
+      "median_spacing_m": 0.24999999999999653,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "LoD2",
+      "cell": "no_gt",
+      "cell_ko": "참값 없음",
+      "patches": 1111720,
+      "area_m2": 69481.44022295863,
+      "components": 5768,
+      "components_under_1m2": 4186,
+      "area_under_1m2": 1089.68497357134,
+      "size_counts": {
+        "1~2.5": 731,
+        "2.5~10": 493,
+        "10~100": 267,
+        "100~inf": 91
+      },
+      "median_spacing_m": 0.24999999999999653,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "ALS",
+      "cell": "both_right",
+      "cell_ko": "둘 다 맞음",
+      "patches": 582450,
+      "area_m2": 38750.70820418934,
+      "components": 4159,
+      "components_under_1m2": 3600,
+      "area_under_1m2": 625.5527548110213,
+      "size_counts": {
+        "1~2.5": 205,
+        "2.5~10": 158,
+        "10~100": 123,
+        "100~inf": 73
+      },
+      "median_spacing_m": 0.2501282500176086,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "ALS",
+      "cell": "prior_wrong",
+      "cell_ko": "사전 정보만 틀림",
+      "patches": 24213,
+      "area_m2": 1668.3826898944894,
+      "components": 4713,
+      "components_under_1m2": 4616,
+      "area_under_1m2": 614.2379637412839,
+      "size_counts": {
+        "1~2.5": 66,
+        "2.5~10": 21,
+        "10~100": 7,
+        "100~inf": 3
+      },
+      "median_spacing_m": 0.2501282500176086,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "ALS",
+      "cell": "image_wrong",
+      "cell_ko": "영상만 틀림",
+      "patches": 94071,
+      "area_m2": 6326.482630589547,
+      "components": 10031,
+      "components_under_1m2": 9130,
+      "area_under_1m2": 1677.864880746492,
+      "size_counts": {
+        "1~2.5": 561,
+        "2.5~10": 276,
+        "10~100": 59,
+        "100~inf": 5
+      },
+      "median_spacing_m": 0.2501282500176086,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "ALS",
+      "cell": "both_wrong",
+      "cell_ko": "둘 다 틀림",
+      "patches": 22641,
+      "area_m2": 1577.481304911671,
+      "components": 6445,
+      "components_under_1m2": 6289,
+      "area_under_1m2": 894.2388878163733,
+      "size_counts": {
+        "1~2.5": 104,
+        "2.5~10": 38,
+        "10~100": 14,
+        "100~inf": 0
+      },
+      "median_spacing_m": 0.2501282500176086,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "ALS",
+      "cell": "no_mvs_prior_right",
+      "cell_ko": "MVS 없음 · 사전 정보 맞음",
+      "patches": 10076,
+      "area_m2": 674.7215681453399,
+      "components": 2504,
+      "components_under_1m2": 2443,
+      "area_under_1m2": 318.50795398566345,
+      "size_counts": {
+        "1~2.5": 36,
+        "2.5~10": 16,
+        "10~100": 9,
+        "100~inf": 0
+      },
+      "median_spacing_m": 0.2501282500176086,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "ALS",
+      "cell": "no_mvs_prior_wrong",
+      "cell_ko": "MVS 없음 · 사전 정보 틀림",
+      "patches": 3243,
+      "area_m2": 233.55945147052046,
+      "components": 1745,
+      "components_under_1m2": 1735,
+      "area_under_1m2": 188.28112221756447,
+      "size_counts": {
+        "1~2.5": 7,
+        "2.5~10": 2,
+        "10~100": 1,
+        "100~inf": 0
+      },
+      "median_spacing_m": 0.2501282500176086,
+      "radius_m": 0.36,
+      "fallback": false
+    },
+    {
+      "prior": "ALS",
+      "cell": "no_gt",
+      "cell_ko": "참값 없음",
+      "patches": 17599,
+      "area_m2": 1163.514554623065,
+      "components": 3866,
+      "components_under_1m2": 3754,
+      "area_under_1m2": 415.0743395686988,
+      "size_counts": {
+        "1~2.5": 61,
+        "2.5~10": 34,
+        "10~100": 16,
+        "100~inf": 1
+      },
+      "median_spacing_m": 0.2501282500176086,
+      "radius_m": 0.36,
+      "fallback": false
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/components.py",
+  "generator_sha256": "185480ae99b9233fe73fcae090e27e3b6e264efedb58e277218a45564f8ef6f8",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

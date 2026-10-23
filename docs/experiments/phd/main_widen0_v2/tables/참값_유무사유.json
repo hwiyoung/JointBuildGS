@@ -1,0 +1,73 @@
+{
+  "rows": [
+    {
+      "prior": "LoD2",
+      "gt_status": 0,
+      "reason": "plane available",
+      "patches": 1894570,
+      "area_m2": 118410.5009711328,
+      "zero_column_patches": 0
+    },
+    {
+      "prior": "LoD2",
+      "gt_status": 1,
+      "reason": "no accepted face",
+      "patches": 960891,
+      "area_m2": 60054.736270428475,
+      "zero_column_patches": 828616
+    },
+    {
+      "prior": "LoD2",
+      "gt_status": 2,
+      "reason": "fewer than 10 inner points",
+      "patches": 148630,
+      "area_m2": 9289.266452530166,
+      "zero_column_patches": 0
+    },
+    {
+      "prior": "LoD2",
+      "gt_status": 3,
+      "reason": "plane fit unavailable",
+      "patches": 2199,
+      "area_m2": 137.4375,
+      "zero_column_patches": 0
+    },
+    {
+      "prior": "ALS",
+      "gt_status": 0,
+      "reason": "plane available",
+      "patches": 736694,
+      "area_m2": 49231.33584920091,
+      "zero_column_patches": 0
+    },
+    {
+      "prior": "ALS",
+      "gt_status": 1,
+      "reason": "no accepted face",
+      "patches": 14207,
+      "area_m2": 980.6402589959152,
+      "zero_column_patches": 12736
+    },
+    {
+      "prior": "ALS",
+      "gt_status": 2,
+      "reason": "fewer than 10 inner points",
+      "patches": 2010,
+      "area_m2": 138.8901793392685,
+      "zero_column_patches": 0
+    },
+    {
+      "prior": "ALS",
+      "gt_status": 3,
+      "reason": "plane fit unavailable",
+      "patches": 1382,
+      "area_m2": 43.98411628788112,
+      "zero_column_patches": 0
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/distributions.py",
+  "generator_sha256": "989ba46a1de8760d25d0d9f6b67d65fa3d5d4608672e85f626cfa130467aadfa",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

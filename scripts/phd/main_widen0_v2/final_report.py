@@ -113,8 +113,16 @@ def main():
         rr=[r for r in photos if r['cell']==c];n=sum(r['status']=='PASS' for r in rr)
         extra.append(f'| {KO[CELLS.index(c)]} | {len(rr)} | {n} | {len(rr)-n} |')
     extra+=['']
+    if missing_photo:
+        extra+=['사진 확인 불가는 모든 표시 패치를 영상 안에 담고 3 m 여백을 유한하게 투영할 수 있는 연직 학습 영상이 없는 경우다. 해당 덩어리를 다른 자리로 바꾸지 않았으며, 각 사유는 `tables/대표사진_기록.json`에 있다.','']
+    if any(sum(r['cell']==c for r in photos)<20 for c in ['prior_wrong','image_wrong','both_wrong']):
+        extra+=['선정이 20곳보다 적은 칸은 1 m² 이상·같은 칸·전체 사진에서 건물당 최대 3곳 조건을 함께 만족하는 후보가 부족한 경우다. 부족한 수를 다른 칸으로 채우지 않았다.','']
     insert_after('대표 사진은 두 사전 정보를',extra)
     execution=json.loads((DOC/'execution_receipt.json').read_text())
+    if execution.get('native_photo_crops'):
+        q=execution['native_photo_crops']
+        insert_after('대표 사진은 두 사전 정보를',[
+            f"원본 해상도 사진 {q['verified_crops']}장의 크기와 원본 JPEG 화소를 검사했다. 노란 테두리를 제외한 모든 화소가 원본 잘라내기와 일치했다. `tables/사진_원본해상도_검사.json`에 기록했다. [이 발주에서 냄]"])
     if execution.get('parallel_remaining_tiles'):
         q=execution['parallel_remaining_tiles']
         insert_after('- 계산 중 CPU 여유를 확인하여',[

@@ -1,0 +1,13 @@
+# extra_normal_replay [이 발주에서 냄]
+
+출처·정의·생성 스크립트: [extra_normal_replay.json](extra_normal_replay.json). scientific_verdict: null.
+
+| field | value |
+| --- | --- |
+| status | PASS |
+| synthetic_GT_status | 3 |
+| synthetic_MVS_status | 3 |
+| warnings | ["invalid value encountered in divide"] |
+| historical_checks | [{"site": "B0_b10", "prior": "LoD2", "historical_zero_normals": 0, "historical_area_m2": 0.0, "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__LoD2__R1.5.npz"}, {"site": "B0_b10", "prior": "ALS", "historical_zero_normals": 55, "historical_area_m2": 1.8817521939553261, "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__ALS__R1.5.npz"}, {"site": "B173nb_b10", "prior": "LoD2", "historical_zero_normals": 0, "historical_area_m2": 0.0, "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__LoD2__R1.5.npz"}, {"site": "B173nb_b10", "prior": "ALS", "historical_zero_normals": 91, "historical_area_m2": 3.0310167818131433, "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__ALS__R1.5.npz"}, {"site": "R1rep_b10", "prior": "LoD2", "historical_zero_normals": 0, "historical_area_m2": 0.0, "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__LoD2__R1.5.npz"}, {"site": "R1rep_b10", "prior": "ALS", "historical_zero_normals": 153, "historical_area_m2": 5.240551022988866, "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__ALS__R1.5.npz"}] |
+| rule | Preserve inherited centroid fallback and zero normal; no imputed direction and no fabricated GT plane. |
+| scientific_verdict |  |

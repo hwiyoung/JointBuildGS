@@ -1,0 +1,36 @@
+{
+  "data": {
+    "component_id": "ALS:17067",
+    "cell": "image_wrong",
+    "prior": "ALS",
+    "building": "DEBY_LOD2_4959461",
+    "building_label": "DEBY_LOD2_4959461",
+    "building_ids": [
+      "DEBY_LOD2_4959461"
+    ],
+    "area_m2": 75.81870697542028,
+    "difference_median_m": -0.3564775586128235,
+    "source_extra_display_quads": 0,
+    "source_extra_display_rule": "Centroid-only extra patches with a defined normal use a nominal 0.25 m square in a deterministic tangent basis for display only; numerical geometry and area unchanged.",
+    "status": "PASS",
+    "image": "DJI_20241217091023_0074_D.JPG",
+    "original_zip_member": "Images/DJI_20241217091023_0074_D.JPG",
+    "crop_px": [
+      1703,
+      1140,
+      4006,
+      2132
+    ],
+    "projected_patch_area_px2": 337742.32359619346,
+    "nadir_tilt_deg": 0.9162547091599649,
+    "crop_clipped_to_image": false,
+    "crop_file": "figures/crops/35_image_wrong_ALS.png",
+    "panel_file": "figures/35_image_wrong_ALS.png",
+    "caption": "영상만 틀림 · DEBY_LOD2_4959461 · 75.82 m² · 차 -0.356 m · DJI_20241217091023_0074_D.JPG",
+    "outline": "Nominal 0.25 m display patch quads displaced by gt_p along outward normal; union outline; source area retained in tables",
+    "margin_rule": "3 m along an orthonormal tangent-plane basis around all patch corners, then projected crop bounds",
+    "distortion_model": "FULL_OPENCV"
+  },
+  "source": "development only; [이 발주에서 냄]",
+  "scientific_verdict": null
+}

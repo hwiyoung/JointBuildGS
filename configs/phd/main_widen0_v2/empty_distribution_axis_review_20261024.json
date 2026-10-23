@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-24T06:39:55.157352+09:00",
+  "reason": "Direct visual review found automatic negative area-percentage ticks in empty-cell panels.",
+  "before": "Matplotlib automatic symmetric y range around zero",
+  "after": "Empty panels explicitly use 0 to 1 percent y range and retain the no-data label",
+  "numeric_values_changed": false,
+  "scientific_verdict": null
+}

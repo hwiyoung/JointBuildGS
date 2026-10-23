@@ -1,0 +1,13 @@
+# input_validation [이 발주에서 냄]
+
+출처·정의·생성 스크립트: [input_validation.json](input_validation.json). scientific_verdict: null.
+
+| field | value |
+| --- | --- |
+| status | PASS |
+| made | 2026-10-24T01:07:44.846082+09:00 |
+| checks | ["script_syntax", "config_lock", "building_split_lock", "deterministic_building_split", "disjoint_buildings", "forced_development", "image_split_lock", "audit_image_split", "evaluation_excluded_from_mvs_model", "exact_pose_and_camera_lineage", "tau_user_decision", "single_gpu_under_48_hours", "intermediate_exists", "no_training_no_manual_uls"] |
+| config_sha256 | 1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f |
+| image_split_sha256 | b3d4e8a05345c386ee05f0a1bcdada8938521615c9cdb87efc68369369b64240 |
+| building_split_sha256 | c8b0faf28820d8fb0cc6eda1ba9ac08da52830f7a506c66eefa66ad83d66f7f8 |
+| scientific_verdict |  |

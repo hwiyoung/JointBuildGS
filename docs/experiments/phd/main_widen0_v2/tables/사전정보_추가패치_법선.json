@@ -1,0 +1,25 @@
+{
+  "rows": [
+    {
+      "prior": "LoD2",
+      "source_extra_patches": 63,
+      "source_extra_area_m2": 2.753694091451586,
+      "undefined_normal_patches": 0,
+      "undefined_normal_area_m2": 0.0,
+      "rule": "Inherited loc_extra centroid fallback retained; LoD2 wall face normal retained when available; zero normal is not imputed."
+    },
+    {
+      "prior": "ALS",
+      "source_extra_patches": 1588,
+      "source_extra_area_m2": 50.58518833306238,
+      "undefined_normal_patches": 1588,
+      "undefined_normal_area_m2": 50.58518833306238,
+      "rule": "Inherited loc_extra centroid fallback retained; LoD2 wall face normal retained when available; zero normal is not imputed."
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/distributions.py",
+  "generator_sha256": "989ba46a1de8760d25d0d9f6b67d65fa3d5d4608672e85f626cfa130467aadfa",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

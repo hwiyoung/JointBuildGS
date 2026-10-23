@@ -1,0 +1,60 @@
+{
+  "rows": [
+    {
+      "site": "B0_b10",
+      "old_eval_points": 6795079,
+      "sampled_points": 10000,
+      "nearest_new_GT_distance_m": {
+        "n": 10000,
+        "q25": 3.3701969845026815e-06,
+        "median": 0.05119314339295793,
+        "q75": 5.715883873323316
+      },
+      "within_1mm": 3219,
+      "outside_new_support": 0,
+      "old_source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B0_b10/gt_xyz.npy",
+      "point_precision": "old float32 versus new raw-derived float64",
+      "nadir_only_new": true,
+      "manual_mix_difference": true
+    },
+    {
+      "site": "B173nb_b10",
+      "old_eval_points": 4717745,
+      "sampled_points": 10000,
+      "nearest_new_GT_distance_m": {
+        "n": 10000,
+        "q25": 2.8370416729616823e-06,
+        "median": 3.884152233531938e-06,
+        "q75": 5.384498637762812e-06
+      },
+      "within_1mm": 10000,
+      "outside_new_support": 0,
+      "old_source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/gt_xyz.npy",
+      "point_precision": "old float32 versus new raw-derived float64",
+      "nadir_only_new": true,
+      "manual_mix_difference": false
+    },
+    {
+      "site": "R1rep_b10",
+      "old_eval_points": 2965581,
+      "sampled_points": 10000,
+      "nearest_new_GT_distance_m": {
+        "n": 10000,
+        "q25": 7.343714174575043e-07,
+        "median": 1.033610888120852e-06,
+        "q75": 1.4465059652561391e-06
+      },
+      "within_1mm": 10000,
+      "outside_new_support": 0,
+      "old_source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/R1rep_b10/gt_xyz.npy",
+      "point_precision": "old float32 versus new raw-derived float64",
+      "nadir_only_new": true,
+      "manual_mix_difference": false
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/historical_compare.py",
+  "generator_sha256": "9187022360ddaaa37ea06eedbc39c5f3e5a2d61c23400f75ae29ad14863a69fc",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

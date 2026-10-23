@@ -1,0 +1,16 @@
+# image_inventory [이 발주에서 냄]
+
+출처·정의·생성 스크립트: [image_inventory.json](image_inventory.json). scientific_verdict: null.
+
+| field | value |
+| --- | --- |
+| groups | [{"split": "train", "flight": "nadir", "images": 292, "nadir": 292, "oblique": 0, "utc_first": "2024-12-17T07:42:55.308572", "utc_last": "2024-12-17T08:12:59.686563", "relative_altitude_m": {"n": 292, "min": 74.863, "median": 75.01, "max": 75.093}, "absolute_altitude_m": {"n": 292, "min": 636.665, "median": 636.842, "max": 636.963}}, {"split": "train", "flight": "manual", "images": 521, "nadir": 42, "oblique": 479, "utc_first": "2024-12-17T08:37:45.392928", "utc_last": "2024-12-17T09:36:55.014586", "relative_altitude_m": {"n": 521, "min": 13.87, "median": 39.382, "max": 57.422}, "absolute_altitude_m": {"n": 521, "min": 575.273, "median": 599.673, "max": 618.845}}, {"split": "train", "flight": "unknown", "images": 6, "nadir": 6, "oblique": 0, "utc_first": "2024-12-17T08:13:01.693020", "utc_last": "2024-12-17T08:13:14.332377", "relative_altitude_m": {"n": 6, "min": 74.944, "median": 75.01150000000001, "max": 75.029}, "absolute_altitude_m": {"n": 6, "min": 636.752, "median": 636.7829999999999, "max": 636.864}}, {"split": "evaluation", "flight": "nadir", "images": 42, "nadir": 42, "oblique": 0, "utc_first": "2024-12-17T07:42:53.333643", "utc_last": "2024-12-17T08:12:49.676540", "relative_altitude_m": {"n": 42, "min": 74.88, "median": 75.01050000000001, "max": 75.059}, "absolute_altitude_m": {"n": 42, "min": 636.67, "median": 636.8275, "max": 636.935}}, {"split": "evaluation", "flight": "manual", "images": 74, "nadir": 9, "oblique": 65, "utc_first": "2024-12-17T08:39:19.524800", "utc_last": "2024-12-17T09:36:40.971451", "relative_altitude_m": {"n": 74, "min": 13.909, "median": 39.405, "max": 57.29}, "absolute_altitude_m": {"n": 74, "min": 575.336, "median": 599.8605, "max": 617.351}}, {"split": "evaluation", "flight": "unknown", "images": 2, "nadir": 1, "oblique": 1, "utc_first": "2024-12-17T08:13:05.686018", "utc_last": "2024-12-17T09:37:04.980974", "relative_altitude_m": {"n": 2, "min": 47.84, "median": 61.408500000000004, "max": 74.977}, "absolute_altitude_m": {"n": 2, "min": 607.843, "median": 622.3019999999999, "max": 636.761}}] |
+| model_images | 937 |
+| candidates | 937 |
+| train | 819 |
+| evaluation | 118 |
+| image_split_lock | {"made": "2026-10-24T00:28:22.852981+09:00", "image_split_sha256": "b3d4e8a05345c386ee05f0a1bcdada8938521615c9cdb87efc68369369b64240", "config_sha256": "4747f3e10bb049c87ff21a0647b67b2b10000de881e05a45bf4d57a3103eefe3", "scientific_verdict": null} |
+| mvs_estimate | {"selected_training_images": 819, "seconds_per_image": 12.126623376623376, "single_gpu_hours": 2.758806818181818, "two_gpu_ideal_hours": 1.379403409090909, "over_48_hours": false, "source": "four completed COLMAP runs; 924 submitted input images, 11205 seconds; subset.json verified"} |
+| seconds | 72.23675203509629 |
+| scientific_verdict |  |
+| previous_mvs_estimate | {"selected_training_images": 819, "seconds_per_image": 12.19260065288357, "single_gpu_hours": 2.7738166485310125, "two_gpu_ideal_hours": 1.3869083242655063, "over_48_hours": false, "source": "input_preflight.json: four completed runs, selected inputs denominator"} |

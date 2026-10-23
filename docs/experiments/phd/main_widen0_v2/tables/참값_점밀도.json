@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "prior": "LoD2",
+      "shape": "지붕꼴",
+      "patches": 879751,
+      "area_m2": 54984.4375,
+      "density_points_m2": {
+        "n": 879751,
+        "q25": 494.0169372558594,
+        "median": 920.5521850585938,
+        "q75": 1457.8592529296875
+      },
+      "rule": "Nadir-only cleaned GT inner-column points / pi*(0.5 m)^2; surface-oriented support density, not planimetric source density"
+    },
+    {
+      "prior": "LoD2",
+      "shape": "벽꼴",
+      "patches": 1014819,
+      "area_m2": 63426.06347113281,
+      "density_points_m2": {
+        "n": 1014819,
+        "q25": 59.84225845336914,
+        "median": 138.78311157226562,
+        "q75": 294.1183166503906
+      },
+      "rule": "Nadir-only cleaned GT inner-column points / pi*(0.5 m)^2; surface-oriented support density, not planimetric source density"
+    },
+    {
+      "prior": "ALS",
+      "shape": "지붕꼴",
+      "patches": 727963,
+      "area_m2": 48351.352307881934,
+      "density_points_m2": {
+        "n": 727963,
+        "q25": 509.2958068847656,
+        "median": 965.1155395507812,
+        "q75": 1496.056396484375
+      },
+      "rule": "Nadir-only cleaned GT inner-column points / pi*(0.5 m)^2; surface-oriented support density, not planimetric source density"
+    },
+    {
+      "prior": "ALS",
+      "shape": "벽꼴",
+      "patches": 8731,
+      "area_m2": 879.9835413189699,
+      "density_points_m2": {
+        "n": 8731,
+        "q25": 432.2648162841797,
+        "median": 808.507080078125,
+        "q75": 1112.811279296875
+      },
+      "rule": "Nadir-only cleaned GT inner-column points / pi*(0.5 m)^2; surface-oriented support density, not planimetric source density"
+    }
+  ],
+  "source": "PHD-MAIN-WIDEN0-v2 generated table; sources in rows and generator; [이 발주에서 냄]",
+  "generator": "/repo/scripts/phd/main_widen0_v2/distributions.py",
+  "generator_sha256": "989ba46a1de8760d25d0d9f6b67d65fa3d5d4608672e85f626cfa130467aadfa",
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "scientific_verdict": null
+}

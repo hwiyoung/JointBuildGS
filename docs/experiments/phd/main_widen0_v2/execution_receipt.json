@@ -1,0 +1,265 @@
+{
+  "task_id": "PHD-MAIN-WIDEN0-v2",
+  "made": "2026-10-24T06:47:05.397976+09:00",
+  "first_config_created_at": "2026-10-24T00:16:05.743021+09:00",
+  "elapsed_since_first_config_seconds": 23459.654955,
+  "process_launch_commit": "9f7d126c0a2ce66352f0a17fa896fb779865ee7e",
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "preparation_commit": "9f7d126c0a2ce66352f0a17fa896fb779865ee7e",
+  "versions": {
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "laspy": "2.6.1"
+  },
+  "package_versions": {
+    "numpy": {
+      "version": "1.26.4"
+    },
+    "scipy": {
+      "version": "1.13.1"
+    },
+    "laspy": {
+      "version": "2.6.1"
+    },
+    "lazrs": {
+      "version": "0.7.0"
+    },
+    "Pillow": {
+      "version": "10.4.0"
+    },
+    "matplotlib": {
+      "version": "3.9.2"
+    },
+    "shapely": {
+      "version": "2.0.6"
+    },
+    "open3d": {
+      "version": "0.18.0"
+    },
+    "pyproj": {
+      "version": null,
+      "reason": "Distribution metadata unavailable in the execution image."
+    }
+  },
+  "figure_fonts_sha256": {
+    "NotoSansCJK-Regular.ttc": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a"
+  },
+  "native_photo_crops": {
+    "status": "PASS",
+    "verified_crops": 54,
+    "unavailable_photos": 6,
+    "scientific_verdict": null
+  },
+  "mvs": {
+    "task_id": "PHD-MAIN-WIDEN0-v2",
+    "started_at_utc": "2026-10-23T15:43:18Z",
+    "image": "colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf",
+    "gpu": 1,
+    "gpu_wait_seconds": 272,
+    "desktop_service": "GPU 0 gnome-remote-desktop preserved; selected GPU 1 empty before launch",
+    "seconds": 10246,
+    "exit_code": 0,
+    "geometric_depth_maps": 819,
+    "training": false,
+    "scientific_verdict": null
+  },
+  "cpu_measurement": {
+    "als": {
+      "jobs": 24,
+      "total_seconds": 61.46871360298246,
+      "largest_parent_RSS_GiB": 0.08108139038085938
+    },
+    "mvs_a": {
+      "jobs": 48,
+      "total_seconds": 14713.76607357245,
+      "largest_parent_RSS_GiB": 5.009712219238281
+    },
+    "gt": {
+      "jobs": 48,
+      "total_seconds": 1384.4257604889572,
+      "largest_parent_RSS_GiB": 1.3478126525878906
+    }
+  },
+  "registration": {
+    "seconds": 360.5058000627905,
+    "tile_processes": 4,
+    "scientific_verdict": null
+  },
+  "registration_runtime_scope": "Successful resume only; initial failed attempt recorded separately below.",
+  "failed_registration_attempt": {
+    "script": "register_geometry.py",
+    "exit_code": 1,
+    "scientific_verdict": null
+  },
+  "failed_registration_attempt_seconds": null,
+  "failed_registration_timing_note": "The original continuation saved exit code without elapsed time; exact failed-attempt duration is unavailable. Logs and per-tile records are retained.",
+  "extra_normal_replay": {
+    "status": "PASS",
+    "synthetic_GT_status": 3,
+    "synthetic_MVS_status": 3,
+    "warnings": [
+      "invalid value encountered in divide"
+    ],
+    "historical_checks": [
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "historical_zero_normals": 0,
+        "historical_area_m2": 0.0,
+        "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__LoD2__R1.5.npz"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "historical_zero_normals": 55,
+        "historical_area_m2": 1.8817521939553261,
+        "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__ALS__R1.5.npz"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "historical_zero_normals": 0,
+        "historical_area_m2": 0.0,
+        "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__LoD2__R1.5.npz"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "historical_zero_normals": 91,
+        "historical_area_m2": 3.0310167818131433,
+        "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__ALS__R1.5.npz"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "historical_zero_normals": 0,
+        "historical_area_m2": 0.0,
+        "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__LoD2__R1.5.npz"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "historical_zero_normals": 153,
+        "historical_area_m2": 5.240551022988866,
+        "source": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__ALS__R1.5.npz"
+      }
+    ],
+    "rule": "Preserve inherited centroid fallback and zero normal; no imputed direction and no fabricated GT plane.",
+    "scientific_verdict": null
+  },
+  "measurement_wall": {
+    "seconds": 8882.124008148909,
+    "scientific_verdict": null
+  },
+  "parallel_future_tiles": {
+    "status": "PASS",
+    "tiles": 12,
+    "workers_per_job": 64,
+    "seconds": 6147.435566792265,
+    "export_owner": "primary measure_all.py",
+    "scientific_verdict": null
+  },
+  "parallel_remaining_tiles": {
+    "status": "PASS",
+    "jobs_requested_under_lock": 7,
+    "already_complete_skipped": 53,
+    "seconds": 1546.4808781044558,
+    "scope": "first twelve frozen tiles in reverse; missing jobs only",
+    "export_owner": "primary measure_all.py",
+    "scientific_verdict": null
+  },
+  "cpu_parallelism_source": "/cfg/execution_parallelism_20261024.json",
+  "maximum_concurrent_measurement_containers": 2,
+  "maximum_concurrent_patch_workers": 128,
+  "cpu_nice": 19,
+  "container_total_memory_limit_GiB": 32,
+  "patch_workers_per_job": 64,
+  "cpu_quota_per_container": 64,
+  "registration_tile_processes": 4,
+  "training_executed": false,
+  "config_sha256": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+  "building_split_sha256": "c8b0faf28820d8fb0cc6eda1ba9ac08da52830f7a506c66eefa66ad83d66f7f8",
+  "image_split_sha256": "b3d4e8a05345c386ee05f0a1bcdada8938521615c9cdb87efc68369369b64240",
+  "config_files_sha256": {
+    "all_cell_figure_20261024.json": "ffbe74a1824036399aef0a96959271be389f4cf9493148c8f62103e6b5514f09",
+    "empty_distribution_axis_review_20261024.json": "adc96b7277103313496e55b4958088fdbd8c35c4e05820b83cd6a8f1d918ca2a",
+    "execution_parallelism_20261024.json": "e7cf47627817fb9b734bc8b993a9ec023baf0aa778a9328afb2a1d2358d43f2f",
+    "execution_parallelism_extension_20261024.json": "6667efa3db4a3800622d990f6f5307554e5e848122e0af137e9d81d22d442d07",
+    "photo_selection_cap_20261024.json": "ce5355b3dd6d6ff07c415cf8cdb83f57e2f2b7665b2747e49d6673b9e53b6390",
+    "widen0_v2.before_photo_scope_correction.json": "49dd5867429b0e1d22f75abd545ef621d5dbf4319a08435d346f7864d0104860",
+    "widen0_v2.before_photo_scope_correction.lock.json": "49698c677c240cd1fc35c8ac8536c20686aa81085138f45db1a05c4e668c7cca",
+    "widen0_v2.json": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+    "widen0_v2.lock.json": "890cc047b3f10887fad106e1ea9bffcb47d528a660d20b9da2dd7e36c4c5d9de",
+    "widen0_v2.snapshot_4747f3e10bb0.json": "4747f3e10bb049c87ff21a0647b67b2b10000de881e05a45bf4d57a3103eefe3",
+    "widen0_v2.snapshot_bc1ff25204bc.json": "bc1ff25204bc242aad5447b716c7f277eac339c79502c1e74069fae0032f0327"
+  },
+  "scripts_sha256": {
+    "after_mvs.py": "58f6607732211c19faa7b9b1a591e36650a0350d11f57ba95e31430f438f86bb",
+    "amend_availability.py": "bd4cce5fd2261863ed524e449e9114bea70ebdaacf97a00a5908782795e923ce",
+    "amend_execution.py": "6000b40d5685e403b5657addd638b41ae0e442ba19bb5ce88b5075f43b5de1f5",
+    "amend_photo_scope.py": "9cc26c7c13fc425e5a361bf6cbcee2811173518302ae7c992ba9e790fb80505a",
+    "analysis_common.py": "1c2d1e45da90458b2039d679d2eb33e91db091e0804292346e5351aebedf6044",
+    "buffer_support_check.py": "f770e73fb199553308cda8e552d1c6bf79766738c439600c6bdec808fb8a6db2",
+    "check_extra_normals.py": "6e24e39222179b0c14b62da81a5745bed379a0342a05390d12d6c2cfa55db6ed",
+    "check_historical_cells.py": "4a7c16bb2b77cabaa53c50ba4ebd8faedfbf08a1d288426e57ce674cf7e1a089",
+    "check_job_lock.py": "d3adbdb2b113b8b2aa5cedddd031e5dd9493d4dd82379ade73d76fdb4d6de6a0",
+    "check_registration.py": "28619994da94bd46c9a0796936cea7f1b2fd591055cbb392d1b707553e11dc36",
+    "check_unprojection.py": "c5617172e3d5fc7ce455f6720c9a13e23a004f31c8e46251ffffaeb1eeef4d5d",
+    "colmap_subset.py": "5f2cc5998b2e5ef46996da11ddbb48e8adf9b88b7bcae9a47a40fc51a3071ad9",
+    "common.py": "bdbfefe4c17fc499f553f9da737b3052b088f5f523b84e3c63bda43e44ce6111",
+    "complete_interim.py": "780db98c6518d4471ac9f2d9e033dfb061659d055614061a86ceff31e56b5cf0",
+    "components.py": "185480ae99b9233fe73fcae090e27e3b6e264efedb58e277218a45564f8ef6f8",
+    "compute_estimate.py": "6822206d30b0740e6970109b5ecb7f5800c32b75ffc80a44191b6aaef32010ae",
+    "diagnose_normals.py": "1ce649bbce07fc8354441b8e709b52ffe343d470968d5cd26cedff13aa8c29b4",
+    "distributions.py": "989ba46a1de8760d25d0d9f6b67d65fa3d5d4608672e85f626cfa130467aadfa",
+    "export_values.py": "18882a55c50409ecd779e85845fe97779c3af38268cf3e168fca98f8fb8f9f32",
+    "face_assignment.py": "32c5fc0d88da9f0e7f324e0ce7509c1e33ec51d76c48db82f7ce3c49a142a47f",
+    "final_report.py": "b362cfc7c77c8eb40140fa7a1089cacfc162a5738b3e421d53df46cb53803430",
+    "finish_reports.py": "1c7415db89483f6304e8c6c5e2558ce2884b0117226db1311c065711ccc9531e",
+    "gt_coverage_audit.py": "584c59a01982586ef76027481b8f9ccfe8b47083a42ffcd7bcf82982740b6cb1",
+    "gt_points.py": "8764aa405570bf14a9d30d9d77bf5b8aa373e4ffec6126b2ff1237c0f346a8ad",
+    "historical_compare.py": "9187022360ddaaa37ea06eedbc39c5f3e5a2d61c23400f75ae29ad14863a69fc",
+    "image_inventory.py": "37e515535ad6e486bed50bd866c962b4626686f0d881b77a0f0e352a84e354d6",
+    "input_metadata.py": "892fec146bc0010bd839cad59e8144842829d907e087ea9841d29268a1a4c9f9",
+    "inspect_inputs.py": "48263a6a7ba58404a802d7ffea949d71be5f04a96003785852a8d222f48b82b5",
+    "interim.py": "331fc41d87337df4632f001a0fc4e1fc20d1bb80dca1087daa46ccf93e502ee0",
+    "lock_config.py": "ef6335cded03b5ba21b0f2650bc01408d583a7852fb7a38bea29a2ac61c11d82",
+    "markdown_tables.py": "ae96b2368e9e3dcf15170853a4ec3c799c3feb1b519acacf3005ce308e4074f7",
+    "measure_all.py": "dc6a961619337d74e0f6a61e21e46b9f1376cf4fa059567e0b82dd0aad7f3ac6",
+    "measure_common.py": "e7dd773e5a3c409f062d4d68c83fa47df54291ad4053bff442298344e3aaf1e4",
+    "measure_future_tiles.py": "d46b76ffcee2d658005ce7d2d362ea7a778bfae09b8dbd8284670f924f19e9ba",
+    "measure_remaining_tiles.py": "1b5333be2a3794e5a208fc7c20efaba8bbe5f31b759deb5e46da6bb736512289",
+    "mvs_outputs.py": "df05bfc1ee8bb0fa74e4ee4adb13f9ec64e5e220e18886930b067973cca863f2",
+    "mvs_points.py": "9a07f238ea79fedaeff84a7d1b0ec45bf71bde8c40cc4d8ab3c618dd310bb7e4",
+    "package.py": "ca72b268d6c73f8fed22ab5c3af7a8dda133804b103bbc59a0b3d817ad8abf26",
+    "photo_geometry.py": "4fff888e699cb83d178e0215c19665360f4b75398bbd89af30afccfad70f7e75",
+    "photos.py": "327d5026d422179f3a292f1cdc3e572f77fe62ebe5f4eab8a52d8398f4d3ddd5",
+    "pre_measure_checks.py": "57c9f8f00b602dcf31fd470d050fb6335b05faf060b7080b169b8fc8be1900d8",
+    "preflight.py": "349b30c2ce22f47f3e98660f7faefd5bd0e3796b1828cf347f5a1c5886f522b4",
+    "prior_maps.py": "caa233cc3cfdb37cb60b2f5f20b732af7a59499f6a22f00f554ca0415412f2ea",
+    "prior_mesh.py": "3f2f4430b557a2622231684b8c952f5723170cba8bb7db5d6bdce39522ccb781",
+    "prior_registration.py": "bbe4d6ecc24fe26244d351b0d2cd76b9995d44c13e702d5eab0bcd99bfd5946f",
+    "prior_tiles.py": "09314719905796e894127f57f468176f05109f29adf8ee97631b309af2f128bd",
+    "raw_grid_check.py": "3cd58d3f5323418c31fd4d4cde7b80fb7fbb88d4137babc8efd64a0a4afced76",
+    "receipt.py": "310b852cca6ba0416ccf8a8c2c2a91b50f5c271ff125d80c5b11926345d0dd55",
+    "register_geometry.py": "766f20c424437e1a877a71a7e54fce899a65188a0e6cb813cf3d6471986eb283",
+    "resume_measurements.py": "c8c27522ab9d3e66d20fe00786bc128b24159b560e30ae7f637a372ca1bee43b",
+    "revise_estimate.py": "1aabd9c61b8868c09809c467f25258c4238c14ab614e77f87fc25e7359f6a538",
+    "run_cpu.sh": "066500ef6ad033297862ccf2ba76946ed86286b3411f45b71b0bbb90a6aa1753",
+    "run_mvs.sh": "99ae26be5800c285f204b3fc717a20fe6db938436d1962af6fc1023c2e69a9a0",
+    "run_reports.py": "cc19083e2fc4dc4837134ee60389a81f3cf4e3067c4f4fcdbe256ec6fe6eebb5",
+    "scope_split.py": "e304ceaef0b7e81de8a997b847a504c4205cb31043dc0a35ea4a9f28c1ecaeb5",
+    "seal_validate.py": "7097fac6d213bb1f260ee9d944f992962dd8b5de784a2a4941298a9d84229266",
+    "tile_points.py": "a914d8f8436f96b194b995af6ca1a903eb9349b752e24c43ffd289dfae543ff1",
+    "tile_views.py": "bbb95e896f2a822bb2d9a3413d3f45f19d29fd0582c09681f3db25aba4f66c1e",
+    "u_core.py": "734fad934b5dc3b6134649cf2320a1fdb34eccb1df56de4b98269598b64130b9",
+    "u_worker.py": "54b9a06f359e2ab0ae9c5f45451a7c2ef9ea8e8bd9103537e89f24f33685ab7c",
+    "validate_inputs.py": "14e59d50880492d693ad1e349cd77e1e890856e23c64fe844cfaaacd1e04df39",
+    "validate_photo_crops.py": "731e062c56291c3cd817ba850d71d1edbad2917918bfceec04b981675a40408f",
+    "validate_public.py": "3347ac43a474c1588bddff093c7026e1615ef5ffcdf8628e9790de0010cf0882",
+    "verify_measurement.py": "3e1742a91f736fbeeb176dcfd1d6e45db032d2441c1eab2a1462e34eede98196"
+  },
+  "required_path_exception": "An accidental empty repo-root interim.tmp was immediately removed; existing files unchanged. See issues.md.",
+  "scientific_verdict": null
+}

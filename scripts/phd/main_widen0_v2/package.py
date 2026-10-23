@@ -12,6 +12,8 @@ def main():
     started=dt.datetime.now(dt.timezone.utc);t0=time.monotonic()
     gate=json.loads((O/'gates/final_values.json').read_text());assert gate['status']=='PASS'
     public=json.loads((O/'gates/public_artifacts.json').read_text());assert public['status']=='PASS'
+    assert json.loads((O/'gates/photo_crops.json').read_text())['status']=='PASS'
+    assert json.loads((O/'gates/empty_axis_numeric_identity.json').read_text())['status']=='PASS'
     visual=json.loads((O/'gates/visual_review.json').read_text());assert visual['status']=='PASS'
     for item in visual['files']:
         assert sha(D/item['file'])==item['sha256'],item['file']
