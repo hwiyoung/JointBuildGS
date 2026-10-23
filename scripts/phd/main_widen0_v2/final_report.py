@@ -76,6 +76,7 @@ def main():
           '## 7. 변경·확인 불가·시간', '',
           f"설정 SHA-256 `{sha('/cfg/widen0_v2.json')}`. 건물 나눔 `{sha(O/'building_split.json')}`, 영상 나눔 `{sha(O/'image_split.json')}`. 수정 전 설정과 시각은 설정 폴더에 보존했다.",
           '- LoD2 τ 20 cm는 사용자 답변을 반영했다. 기존 τ·불확실도 정의·앞 작업 파일은 수정하지 않았다.',
+          '- 기존 패치 생성기가 작은 면에 넣는 중심점 추가 패치 중 법선이 없는 경우를 새 단위 법선 검사가 거부해 정합 단계가 중단됐다. 원본 추가 패치와 0 법선을 보존하도록 검사만 수정했고, 기존 계산의 면 없음 상태 재현을 확인한 뒤 재개했다. 정하는 곳의 수·넓이는 tables/사전정보_추가패치_법선.json에 있다. 사진에서 접선이 없는 추가 패치는 정의된 법선의 접평면에 0.25 m 표시용 사각형을 사용하며 측정값은 바꾸지 않았다.',
           '- MVS 점의 유무로 정한 잠정 범위는 결과를 보기 전에 폐기하고 사진 투영 범위로 다시 잠갔다.',
           '- 새 영역 정합에 학습 영상 전용 깊이가 필요해, 중간 보고의 사전 정보 오차·시험 자리 표는 PARTIAL로 먼저 남겼다. MVS 뒤 CPU로 완료하고 최초 기록을 보존한 보완 표·지도를 중간 보고 끝에 추가했다.',
           '- 허용 경로 밖 루트에 편집 실수로 0바이트 interim.tmp가 잠시 생성됐다. 바로 제거했고 기존 파일은 바뀌지 않았다. 따라서 경로 준수 항목은 예외 1건이다.',
@@ -108,7 +109,7 @@ def main():
     extra+=['']
     insert_after('대표 사진은 두 사전 정보를',extra)
     execution=json.loads((DOC/'execution_receipt.json').read_text())
-    extra=['',f"최초 설정 저장부터 이 영수증까지 {execution['elapsed_since_first_config_seconds']/3600:.3f}시간이다. 준비·대기·계산·보고 생성 시간을 포함한다. 구역 정합 경과 시간 {execution['registration']['seconds']/3600:.3f}시간, 패치 계산·내보내기 경과 시간 {execution['measurement_wall']['seconds']/3600:.3f}시간. [이 발주에서 냄]",'',
+    extra=['',f"최초 설정 저장부터 이 영수증까지 {execution['elapsed_since_first_config_seconds']/3600:.3f}시간이다. 준비·대기·계산·보고 생성 시간을 포함한다. 재개 후 구역 정합 경과 시간 {execution['registration']['seconds']/3600:.3f}시간, 패치 계산·내보내기 경과 시간 {execution['measurement_wall']['seconds']/3600:.3f}시간. 최초 정합 실패 시도의 시간은 영수증에 별도로 보존했다. [이 발주에서 냄]",'',
            '| CPU 패치 계산 | 구역·사전 정보 작업 수 | 경과 시간 합계 h | 부모 프로세스 최대 RSS GiB |','|---|---:|---:|---:|']
     for name,r in execution['cpu_measurement'].items():
         extra.append(f"| {name} | {r['jobs']} | {r['total_seconds']/3600:.3f} | {r['largest_parent_RSS_GiB']:.3f} |")

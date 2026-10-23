@@ -9,6 +9,7 @@ from scipy.ndimage import binary_erosion
 from analysis_common import O,DOC,CELLS,KO,KEYS,load,font,figure,save_table,dump
 from photo_geometry import calibration,project,verify
 from preflight import images,DENSE
+from u_core import in_plane_basis
 
 def polygon_area(q):
     return .5*np.abs(np.sum(q[:,:,0]*np.roll(q[:,:,1],-1,axis=1)-q[:,:,1]*np.roll(q[:,:,0],-1,axis=1),axis=1))
@@ -25,11 +26,16 @@ def main():
     for rank,row in enumerate(chosen):
         d,lab=cache[row['prior']];ids=np.flatnonzero(lab==int(row['component_id'].split(':')[-1]));assert len(ids)==row['patches']
         c=d['centre'][ids]+d['normal'][ids]*d['gt_p'][ids,None]
-        t1=d['tangent1'][ids];t2=d['tangent2'][ids]
+        t1=d['tangent1'][ids].copy();t2=d['tangent2'][ids].copy()
+        display_extra=(np.linalg.norm(t1,axis=1)==0)|(np.linalg.norm(t2,axis=1)==0)
+        assert np.all(d['source_extra'][ids][display_extra])
+        assert np.all(d['normal_defined'][ids])
+        for j in np.flatnonzero(display_extra):
+            t1[j],t2[j]=in_plane_basis(d['normal'][ids[j]])
         offsets=np.array([[-1,-1],[1,-1],[1,1],[-1,1]])
         quad=c[:,None,:]+.125*(offsets[None,:,0,None]*t1[:,None,:]+offsets[None,:,1,None]*t2[:,None,:])
-        # Same 0.25 m display quad as the inherited photo figure; clipped patch
-        # area stays in numerical tables and is not inferred from the photo mask.
+        # Nominal 0.25 m display quad; numerical area remains the source area.
+        # Centroid-only extras use a normal-derived basis for display only.
         e1=t1/np.linalg.norm(t1,axis=1,keepdims=True);e2=np.cross(d['normal'][ids],e1)
         e2/=np.linalg.norm(e2,axis=1,keepdims=True)
         border=3.*(offsets[None,:,0,None]*e1[:,None,:]+offsets[None,:,1,None]*e2[:,None,:])
@@ -41,7 +47,9 @@ def main():
             if not inside.all():continue
             a=float(polygon_area(q).sum())
             if best is None or a>best[0]:best=(a,v,q)
-        rec=dict(component_id=row['component_id'],cell=row['cell'],prior=row['prior'],building_ids=row['building_ids'],area_m2=row['area_m2'])
+        rec=dict(component_id=row['component_id'],cell=row['cell'],prior=row['prior'],building_ids=row['building_ids'],area_m2=row['area_m2'],
+            source_extra_display_quads=int(display_extra.sum()),
+            source_extra_display_rule='Centroid-only extra patches with a defined normal use a nominal 0.25 m square in a deterministic tangent basis for display only; numerical geometry and area unchanged.')
         if best is None:
             rec.update(status='확인 불가',reason='No nadir training image contains all projected component patches.');records.append(rec);continue
         a,v,q=best;po=poses[v['name']];uv,z=project(margin,po['q'],po['t'],params)
@@ -58,7 +66,7 @@ def main():
         rec.update(status='PASS',image=v['name'],original_zip_member=v['original_zip_member'],crop_px=box,projected_patch_area_px2=a,nadir_tilt_deg=v['tilt_deg'],
             crop_clipped_to_image=bool((lo<0).any() or hi[0]>w or hi[1]>h),crop_file=f'figures/crops/{name}.png',panel_file=f'figures/{name}.png',caption=line,
             difference_median_m=row['difference_m']['median'],
-            outline='0.25 m inherited display patch quads displaced by gt_p along outward normal; union outline',
+            outline='Nominal 0.25 m display patch quads displaced by gt_p along outward normal; union outline; source area retained in tables',
             margin_rule='3 m along an orthonormal tangent-plane basis around all patch corners, then projected crop bounds',distortion_model='FULL_OPENCV')
         figure(fig,name,rec);plt.close(fig);records.append(rec)
     archive.close();save_table('대표사진_기록',records)

@@ -38,7 +38,7 @@ def main():
     for root in [O/'patch_values',O/'holdout/patch_values']:
         for f in root.glob('*.npz'):
             with np.load(f) as z:
-                assert set(required_keys)<=set(z.files)
+                assert set(required_keys+['source_extra','normal_defined'])<=set(z.files)
                 if '__ALS__' in f.name:assert {'als_u','als_e','als_status'}<=set(z.files)
     result=dict(status='PASS',report_characters=len(text),required_figures=figures,checks=['required files','300 dpi images','histogram mass including overflow','difference availability denominators','representative building caps','all inherited observation fields retained'],visual_review='required separately before delivery',scientific_verdict=None)
     dump(O/'gates/public_artifacts.json',result);dump(DOC/'tables/public_validation.json',result)

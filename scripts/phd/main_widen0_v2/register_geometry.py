@@ -45,7 +45,9 @@ def main(tile_id=None):
         assert set(views)<=train
         for prior in ['LoD2','ALS']:
             dest=geo/f'{tid}_{prior}.npz'
-            if dest.exists() and (prior=='LoD2' or (ROOT/'points'/tid/'als_xyz.npy').exists()):continue
+            if dest.exists() and (prior=='LoD2' or (ROOT/'points'/tid/'als_xyz.npy').exists()):
+                with np.load(dest) as previous:
+                    if {'source_extra','normal_defined'}<=set(previous.files):continue
             t0=time.monotonic();rd=ROOT/'registration'/tid/prior;rd.mkdir(parents=True,exist_ok=True)
             if (rd/'summary.json').exists():
                 info=json.loads((rd/'summary.json').read_text());shift=np.array(info['registration']['shift_applied'])
@@ -86,7 +88,13 @@ def main(tile_id=None):
                     if int((ino&~ini).sum())>int((~ino&ini).sum()):normal[ixw]*=-1.;flipped.append(int(e))
             roof=np.abs(normal[:,2])>=np.cos(np.deg2rad(45.))
             assert np.isfinite(c).all() and np.isfinite(normal).all()
-            assert np.allclose(np.linalg.norm(normal,axis=1),1.,atol=1e-6)
+            extra=st['loc_extra'][choose]
+            length=np.linalg.norm(normal,axis=1);normal_defined=np.isclose(length,1.,atol=1e-6)
+            # The inherited store intentionally puts zero tangents on centroid
+            # fallback locations (loc_extra). Preserve that original geometry;
+            # the unchanged uncertainty core leaves their plane unavailable.
+            # LoD2 wall normals may already be supplied by the owning face.
+            assert np.all(normal_defined | (extra & (length==0.)))
             assert np.isfinite(area).all() and np.all(area>=0)
             if prior=='ALS':
                 face_index,ordered=attach(c,roof,faces,lm)
@@ -99,7 +107,8 @@ def main(tile_id=None):
                 surf=ext[included],face_ext=face_ext[included],kind=kind[included],area=area[included],
                 building=assigned[included],roof_type=np.array([blds[b].get('roofType') or '' for b in assigned[included]],dtype='<U40'),
                 holdout=np.array([b in held for b in assigned[included]],dtype=bool),raw_centre=raw[choose][included],
-                source_patch=choose[included],tau=np.full(int(included.sum()),cfg['tau_m'][prior]),
+                source_patch=choose[included],source_extra=extra[included],normal_defined=normal_defined[included],
+                tau=np.full(int(included.sum()),cfg['tau_m'][prior]),
                 patch_id=np.array([f'{prior}:{tid}:{int(i)}' for i in choose[included]],dtype='<U80'),frame_shift=shift)
             dump(dest.with_suffix('.json'),dict(tile=tid,prior=prior,unmatched_count=int(unmatched.sum()),unmatched_area_m2=float(area[unmatched].sum()),
                 matched_outside_scope_buildings_count=int((~included&~unmatched).sum()),matched_outside_scope_buildings_area_m2=float(area[~included&~unmatched].sum()),

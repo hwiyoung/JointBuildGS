@@ -16,9 +16,14 @@ def site_masks(c):
     return out
 
 def main():
-    plt=font();cellrows=[];thresholds=[];density=[];missing=[]
+    plt=font();cellrows=[];thresholds=[];density=[];missing=[];extras=[]
     for prior in ['LoD2','ALS']:
         d=load(prior);area=d['area'];cells=d['cell'];p=d['mvs_p'];known=np.isfinite(p);total=float(area.sum())
+        assert not ((~d['normal_defined'])&(d['gt_status']==0)).any()
+        extras.append(dict(prior=prior,source_extra_patches=int(d['source_extra'].sum()),
+            source_extra_area_m2=float(area[d['source_extra']].sum()),undefined_normal_patches=int((~d['normal_defined']).sum()),
+            undefined_normal_area_m2=float(area[~d['normal_defined']].sum()),
+            rule='Inherited loc_extra centroid fallback retained; LoD2 wall face normal retained when available; zero normal is not imputed.'))
         assert np.all((cells>=0)&(cells<7))
         for ci,name in enumerate(CELLS):
             m=cells==ci;aa=float(area[m].sum())
@@ -64,6 +69,6 @@ def main():
         axs[-1].set_xlabel('|두 자료의 차| (m)');fig.suptitle(prior+' · 부호와 크기');fig.tight_layout()
         figure(fig,f'차의부호크기_{prior}',sd);plt.close(fig)
     save_table('맞는쪽칸_넓이',cellrows);save_table('차의크기_비율',thresholds,denominator='finite difference area within each cell/shape/scope; missing area reported separately')
-    save_table('참값_점밀도',density);save_table('참값_유무사유',missing)
+    save_table('참값_점밀도',density);save_table('참값_유무사유',missing);save_table('사전정보_추가패치_법선',extras)
     print('development distributions complete',flush=True)
 if __name__=='__main__':main()
