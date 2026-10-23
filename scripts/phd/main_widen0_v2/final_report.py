@@ -107,7 +107,8 @@ def main():
     extra+=['']
     insert_after('대표 사진은 두 사전 정보를',extra)
     execution=json.loads((DOC/'execution_receipt.json').read_text())
-    extra=['','| CPU 패치 계산 | 구역·사전 정보 작업 수 | 경과 시간 합계 h | 부모 프로세스 최대 RSS GiB |','|---|---:|---:|---:|']
+    extra=['',f"최초 설정 저장부터 이 영수증까지 {execution['elapsed_since_first_config_seconds']/3600:.3f}시간이다. 준비·대기·계산·보고 생성 시간을 포함한다. 구역 정합 경과 시간 {execution['registration']['seconds']/3600:.3f}시간, 패치 계산·내보내기 경과 시간 {execution['measurement_wall']['seconds']/3600:.3f}시간. [이 발주에서 냄]",'',
+           '| CPU 패치 계산 | 구역·사전 정보 작업 수 | 경과 시간 합계 h | 부모 프로세스 최대 RSS GiB |','|---|---:|---:|---:|']
     for name,r in execution['cpu_measurement'].items():
         extra.append(f"| {name} | {r['jobs']} | {r['total_seconds']/3600:.3f} | {r['largest_parent_RSS_GiB']:.3f} |")
     extra+=['','시간은 구역별 작업 경과 시간의 합이다. RSS는 부모 프로세스만의 값이며 컨테이너 전체 메모리 최대값으로 해석하지 않는다.','']

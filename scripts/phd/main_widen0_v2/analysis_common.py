@@ -45,5 +45,5 @@ def font():
     return plt
 def figure(fig,name,data):
     dest=DOC/'figures';dest.mkdir(exist_ok=True)
-    fig.savefig(dest/f'{name}.png',dpi=300,bbox_inches='tight');fig.savefig(dest/f'{name}.pdf',bbox_inches='tight')
+    fig.savefig(dest/f'{name}.png',dpi=300,bbox_inches='tight');fig.savefig(dest/f'{name}.pdf',dpi=300,bbox_inches='tight')
     dump(dest/f'{name}.json',dict(data=data,source='development only; [이 발주에서 냄]',scientific_verdict=None))

@@ -10,6 +10,9 @@ import laspy
 from preflight import sha,dump
 O=Path('/out');DOC=Path('/docs');R=Path(__file__).parent
 def main():
+    made=dt.datetime.now(dt.timezone(dt.timedelta(hours=9)))
+    config=json.loads(Path('/cfg/widen0_v2.json').read_text())
+    started=dt.datetime.fromisoformat(config['created_at'])
     groups={}
     for f in (O/'holdout/internal/work').glob('run_*.json'):
         if 'limit' in f.name:continue
@@ -23,11 +26,14 @@ def main():
         exclusions.append(dict(prior=prior,unattached_patches=n,unattached_area_m2=a,attached_to_buildings_outside_scope_patches=outside,attached_to_buildings_outside_scope_area_m2=oa))
     from analysis_common import save_table
     save_table('건물에_붙지않은_패치',exclusions)
-    result=dict(task_id='PHD-MAIN-WIDEN0-v2',made=dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(),
+    result=dict(task_id='PHD-MAIN-WIDEN0-v2',made=made.isoformat(),
+        first_config_created_at=started.isoformat(),elapsed_since_first_config_seconds=(made-started).total_seconds(),
         process_launch_commit=os.environ.get('WIDEN_COMMIT'),image_id=os.environ.get('WIDEN_IMAGE_ID'),
         preparation_commit=(O/'repository_head_at_pipeline_preparation.txt').read_text().strip(),
         versions=dict(python=sys.version,numpy=np.__version__,scipy=scipy.__version__,laspy=laspy.__version__),
         mvs=json.loads((O/'mvs/full/colmap_receipt.json').read_text()),cpu_measurement=groups,
+        registration=json.loads((O/'gates/registration_runtime.json').read_text()),
+        measurement_wall=json.loads((O/'gates/measurements_complete.json').read_text()),
         cpu_nice=19,container_total_memory_limit_GiB=32,patch_workers=64,cpu_quota=64,registration_tile_processes=4,training_executed=False,
         config_sha256=sha('/cfg/widen0_v2.json'),building_split_sha256=sha(O/'building_split.json'),image_split_sha256=sha(O/'image_split.json'),
         scripts_sha256={p.name:sha(p) for p in sorted(R.glob('*')) if p.is_file()},

@@ -121,6 +121,7 @@ if __name__=='__main__':
         main(sys.argv[2])
     else:
         assert len(sys.argv)==1
+        started=time.monotonic()
         # Each independent tile owns separate output paths and resets the same
         # inherited RNG before each prior. Four CPU processes share the existing
         # container's hard 32 GiB limit and inherit nice 19; no GPU is exposed.
@@ -128,3 +129,5 @@ if __name__=='__main__':
             subprocess.run([sys.executable,'-B','-u',__file__,'--tile',tile['id']],check=True)
         with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
             list(pool.map(run_tile,json.loads((O/'inputs/tiles.json').read_text())))
+        dump(O/'gates/registration_runtime.json',dict(seconds=time.monotonic()-started,
+            tile_processes=4,scientific_verdict=None))
