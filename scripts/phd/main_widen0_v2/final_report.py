@@ -24,6 +24,7 @@ def main():
        f"연직 LiDAR 원자료 {s['raw_sources']['/art/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz']['points']:,}점, 관측 XY 넓이 {s['coverage_area_inside_nadir_bbox_m2']['uls']:,.2f} m². 같은 원자료 바깥상자 안 사진 {s['photographic_coverage_area_inside_nadir_bbox_m2']:,.2f} m², 항공 LiDAR {s['coverage_area_inside_nadir_bbox_m2']['als']:,.2f} m². 공통 범위 중 기존 MVS 없는 곳 {s['common_without_existing_MVS_m2']:,.2f} m². [이 발주에서 냄]",
        '항공 LiDAR 측량일은 기존 GPS 시각 감사의 2022-02-27이다. 원본의 생성일과 측량일을 따로 적었다. 원자료 범위·점 수·해시는 `tables/원자료_머리글.json`, LoD2 원본 건물 수와 범위는 `tables/scope_split.json`에 있다.',
        f"평가 네 영역과 탐색 일곱 영역에 걸친 {s['forced_development_buildings']}동은 정하는 곳이다. 그 밖 {s['random_pool_buildings']}동을 건물 번호 순서로 놓고 씨앗 20261023으로 floor(30%)를 확인용으로 선택했다. 건물별 결과를 읽기 전에 나눴다. 계산은 100×100 m 구역 {s['tiles']}개, 둘레 10 m 겹침이다. 원본 패치 중심이 속한 구역만 그 패치를 소유한다.",
+       '정합 후 모든 패치의 기둥·층·1.5 m 고리 범위가 입력 구역의 10 m 겹침 안에 들어오는지 확인했다. 구역 자르기 때문에 필요한 점이 빠지는지에 대한 검사이며, 원자료 자체의 결측을 없다는 뜻으로 바꾸지 않는다. `tables/구역_겹침_검사.json`에 통과 기록이 있다.',
        '', '![범위와 나눔](figures/범위와_건물나눔.png)', '',
        '## 2. 단계 가: 입력과 사전 정보', '',
        f"전체 {im['model_images']}장 중 학습 {im['train']}장, 평가 {im['evaluation']}장이다. 이름 차례의 매 여덟 번째 영상을 평가로 두었다. MVS 입력 모델·관측 연결에는 학습 영상만 남겼다. 기존 전체 937장 MVS는 입력 현황과 기존 후보 선정 규칙에만 사용했다.",
