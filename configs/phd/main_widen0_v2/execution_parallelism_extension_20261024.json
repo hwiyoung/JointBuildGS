@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-MAIN-WIDEN0-v2",
+  "planned_at_UTC": "2026-10-23 20:43:46 UTC",
+  "activation": "Only after parallel_future_tiles.json PASS and the original secondary container has stopped.",
+  "previous_scope": "Last twelve frozen tiles in reverse.",
+  "extension_scope": "Use the released secondary worker for missing jobs in the first twelve frozen tiles, in reverse.",
+  "reason": "Avoid leaving one CPU worker idle while the primary still has independent pending jobs.",
+  "maximum_simultaneous_measurement_containers": 2,
+  "workers_per_job": 64,
+  "nice": 19,
+  "memory_limit_GiB_per_container": 32,
+  "duplicate_prevention": "Existing exclusive per-job locks and completion checks.",
+  "export_owner": "Primary measure_all.py only",
+  "numerical_settings_changed": false,
+  "scientific_verdict": null
+}

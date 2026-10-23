@@ -47,6 +47,7 @@ def main():
         extra_normal_replay=json.loads((O/'gates/extra_normal_replay.json').read_text()),
         measurement_wall=json.loads((O/'gates/measurements_complete.json').read_text()),
         parallel_future_tiles=json.loads((O/'gates/parallel_future_tiles.json').read_text()),
+        parallel_remaining_tiles=json.loads((O/'gates/parallel_remaining_tiles.json').read_text()) if (O/'gates/parallel_remaining_tiles.json').exists() else None,
         cpu_parallelism_source='/cfg/execution_parallelism_20261024.json',
         maximum_concurrent_measurement_containers=2,maximum_concurrent_patch_workers=128,
         cpu_nice=19,container_total_memory_limit_GiB=32,patch_workers_per_job=64,cpu_quota_per_container=64,registration_tile_processes=4,training_executed=False,
