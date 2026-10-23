@@ -1,0 +1,3435 @@
+{
+ "title": "일 1. 찾은 것",
+ "note": "MVS 깊이 지도·카메라·깊이의 뜻은 u1_checks와 보고서 2절. 경로는 json(depth_dir, conf_dir, cameras).",
+ "made": "2026-10-23 09:44:10 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "values": {
+  "B0_b10": {
+   "mvs_a": {
+    "n_points": 23393919,
+    "views": 243,
+    "views_with_depth": 243,
+    "depth_dir": "/s0/s61/export/B0_b10/LoD2/mvs",
+    "conf_dir": "/s0/s61/export/B0_b10/LoD2/conf",
+    "depth_checks": {
+     "depth_maps_found": 243,
+     "A_equals_validity_views": 243,
+     "px_A_pos": 135571341,
+     "px_M_valid": 135571341,
+     "px_A_pos_M_invalid": 0,
+     "px_M_valid_A_zero": 0,
+     "ALS_export_mvs_equal_views": 243,
+     "maskoff_vs_geometric": null
+    },
+    "level_prefix_counts": {
+     "0": 23393919,
+     "1": 5850920,
+     "2": 1462988,
+     "3": 366267,
+     "4": 91536,
+     "5": 22985,
+     "6": 5626
+    },
+    "seconds": 40.2
+   },
+   "mvs_b": {
+    "n_points": 26438128,
+    "views": 243,
+    "views_with_depth": 243,
+    "depth_dir": "/s2/s61/export_maskoff/B0_b10/LoD2/mvs",
+    "conf_dir": "/s2/s61/export_maskoff/B0_b10/LoD2/conf",
+    "depth_checks": {
+     "depth_maps_found": 243,
+     "A_equals_validity_views": 243,
+     "px_A_pos": 183265681,
+     "px_M_valid": 183265681,
+     "px_A_pos_M_invalid": 0,
+     "px_M_valid_A_zero": 0,
+     "ALS_export_mvs_equal_views": 0,
+     "maskoff_vs_geometric": {
+      "px_geo_valid": 135571341,
+      "px_photo_valid": 183265681,
+      "px_both": 135566134,
+      "px_equal": 3541827,
+      "px_photo_only": 47699547,
+      "absdiff_hist_edges_m": [
+       0,
+       0.01,
+       0.05,
+       0.1,
+       0.25,
+       0.5,
+       1,
+       5,
+       1e+30
+      ],
+      "absdiff_hist": [
+       45153186,
+       42050483,
+       16255969,
+       13780410,
+       5906982,
+       3517377,
+       4149561,
+       4752166
+      ]
+     }
+    },
+    "seconds": 46.1
+   },
+   "cameras": {
+    "scene": "/s0/fork_inputs/s61/B0_b10/scene_LoD2",
+    "scene_ALS_identical": {
+     "sparse/0/images.bin": true,
+     "sparse/0/cameras.bin": true,
+     "jbgs_calibration.json": true
+    },
+    "train_in_split": 243,
+    "test_in_split": 35,
+    "split": "/s0/fork_inputs/s61/B0_b10/split.json"
+   },
+   "als": {
+    "n_points": 90938,
+    "by_class": {
+     "2": 45663,
+     "6": 45275
+    },
+    "multi_return": 6367,
+    "shift_applied": [
+     -0.048193370826016664,
+     0.04305113898865463,
+     0.0
+    ],
+    "shift_equal": true,
+    "tiles": [
+     {
+      "tile": "690_5335",
+      "points": 20697252,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "690_5336",
+      "points": 21428108,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "691_5335",
+      "points": 20182679,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "691_5336",
+      "points": 22797949,
+      "in_crop_all_classes": 106019,
+      "in_crop_by_class": {
+       "2": 45663,
+       "6": 45275,
+       "20": 14924,
+       "22": 157
+      }
+     }
+    ]
+   },
+   "gt": {
+    "n_points": 9661639,
+    "sources": {
+     "xyz_gt_points": {
+      "points": 26994350,
+      "excluded": 6202832,
+      "kept_in_crop": 5053963
+     },
+     "xyz_gt_primary": {
+      "points": 4709500,
+      "excluded": 101824,
+      "kept_in_crop": 4607676
+     }
+    }
+   },
+   "patches": {
+    "LoD2": {
+     "lod2_wall_outward": {
+      "faces": 73,
+      "flipped_faces": [],
+      "totals": {
+       "patches": 100965,
+       "out": 95021,
+       "inward": 0,
+       "neither": 5944
+      },
+      "per_face": {
+       "2": {
+        "building": "DEBY_LOD2_4959322",
+        "patches": 7462,
+        "out": 7462,
+        "inward": 0,
+        "neither": 0
+       },
+       "3": {
+        "building": "DEBY_LOD2_4959322",
+        "patches": 7992,
+        "out": 7992,
+        "inward": 0,
+        "neither": 0
+       },
+       "4": {
+        "building": "DEBY_LOD2_4959322",
+        "patches": 220,
+        "out": 220,
+        "inward": 0,
+        "neither": 0
+       },
+       "5": {
+        "building": "DEBY_LOD2_4959322",
+        "patches": 4487,
+        "out": 4487,
+        "inward": 0,
+        "neither": 0
+       },
+       "12": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "13": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 784,
+        "out": 784,
+        "inward": 0,
+        "neither": 0
+       },
+       "14": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 5852,
+        "out": 5852,
+        "inward": 0,
+        "neither": 0
+       },
+       "15": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 1127,
+        "out": 1127,
+        "inward": 0,
+        "neither": 0
+       },
+       "16": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "17": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 80,
+        "out": 80,
+        "inward": 0,
+        "neither": 0
+       },
+       "18": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 152,
+        "out": 152,
+        "inward": 0,
+        "neither": 0
+       },
+       "19": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 152,
+        "out": 152,
+        "inward": 0,
+        "neither": 0
+       },
+       "20": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 5928,
+        "out": 5928,
+        "inward": 0,
+        "neither": 0
+       },
+       "21": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 1748,
+        "out": 1748,
+        "inward": 0,
+        "neither": 0
+       },
+       "22": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 20140,
+        "out": 20140,
+        "inward": 0,
+        "neither": 0
+       },
+       "23": {
+        "building": "DEBY_LOD2_4959323",
+        "patches": 10032,
+        "out": 10032,
+        "inward": 0,
+        "neither": 0
+       },
+       "26": {
+        "building": "DEBY_LOD2_4959324",
+        "patches": 1350,
+        "out": 1350,
+        "inward": 0,
+        "neither": 0
+       },
+       "27": {
+        "building": "DEBY_LOD2_4959324",
+        "patches": 64,
+        "out": 64,
+        "inward": 0,
+        "neither": 0
+       },
+       "29": {
+        "building": "DEBY_LOD2_4959324",
+        "patches": 92,
+        "out": 92,
+        "inward": 0,
+        "neither": 0
+       },
+       "34": {
+        "building": "DEBY_LOD2_4959793",
+        "patches": 368,
+        "out": 368,
+        "inward": 0,
+        "neither": 0
+       },
+       "35": {
+        "building": "DEBY_LOD2_4959793",
+        "patches": 536,
+        "out": 536,
+        "inward": 0,
+        "neither": 0
+       },
+       "36": {
+        "building": "DEBY_LOD2_4959793",
+        "patches": 536,
+        "out": 536,
+        "inward": 0,
+        "neither": 0
+       },
+       "37": {
+        "building": "DEBY_LOD2_4959793",
+        "patches": 368,
+        "out": 368,
+        "inward": 0,
+        "neither": 0
+       },
+       "52": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "53": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 513,
+        "out": 0,
+        "inward": 0,
+        "neither": 513
+       },
+       "54": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "55": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "56": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 164,
+        "out": 164,
+        "inward": 0,
+        "neither": 0
+       },
+       "57": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "58": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 893,
+        "out": 0,
+        "inward": 0,
+        "neither": 893
+       },
+       "59": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "60": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 13799,
+        "out": 13799,
+        "inward": 0,
+        "neither": 0
+       },
+       "61": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 231,
+        "out": 231,
+        "inward": 0,
+        "neither": 0
+       },
+       "62": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "63": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "64": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "65": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "66": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1090,
+        "out": 1090,
+        "inward": 0,
+        "neither": 0
+       },
+       "67": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "68": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 513,
+        "out": 0,
+        "inward": 0,
+        "neither": 513
+       },
+       "69": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "70": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "71": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 135,
+        "out": 135,
+        "inward": 0,
+        "neither": 0
+       },
+       "72": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "73": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "74": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "75": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "76": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 2280,
+        "out": 0,
+        "inward": 0,
+        "neither": 2280
+       },
+       "77": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "78": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "79": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "80": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "81": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "82": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "83": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "84": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 513,
+        "out": 0,
+        "inward": 0,
+        "neither": 513
+       },
+       "85": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1218,
+        "out": 0,
+        "inward": 0,
+        "neither": 1218
+       },
+       "86": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "87": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 902,
+        "out": 902,
+        "inward": 0,
+        "neither": 0
+       },
+       "88": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 22,
+        "out": 22,
+        "inward": 0,
+        "neither": 0
+       },
+       "89": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "90": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "91": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "92": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "93": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "94": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 9184,
+        "out": 9184,
+        "inward": 0,
+        "neither": 0
+       },
+       "95": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "96": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "97": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "98": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "99": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "100": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "101": {
+        "building": "DEBY_LOD2_108580336",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       }
+      }
+     },
+     "patches": 143652,
+     "in_eval": 82117,
+     "band": 61535,
+     "roof_like": 42681,
+     "wall_like": 100971,
+     "roof_like_in_eval": 27370,
+     "wall_like_in_eval": 54747,
+     "kind_counts": {
+      "1": 42687,
+      "2": 100965
+     },
+     "roof_like_vs_kind": {
+      "kind1_wall_like": 6,
+      "kind2_roof_like": 0
+     },
+     "area_m2": {
+      "in_eval": 5132.25334436015,
+      "band": 3845.9375
+     },
+     "region_keys": [
+      "code",
+      "code_names",
+      "centre",
+      "kind",
+      "area",
+      "label",
+      "gt_med",
+      "gt_n",
+      "mvs_minus_prior",
+      "tau",
+      "state",
+      "frame_shift",
+      "surf_ext",
+      "in_eval",
+      "code_ext",
+      "code_ext_values",
+      "code_ext_names",
+      "gt_points",
+      "mvs_minus_gt_at_gt",
+      "n_mvs_at_gt",
+      "v1_kept",
+      "code_ext_v3",
+      "code_ext_v2_prev",
+      "premise_value",
+      "gt_suspect",
+      "gt_suspect_evaluated",
+      "premise_violation",
+      "obs_within_threshold",
+      "premise_band"
+     ],
+     "cells": {
+      "unassigned_in_eval": 0,
+      "unassigned_codes": [],
+      "code11_ratio_below1": 0,
+      "patches_per_cell": {
+       "c_nogt": 17244,
+       "c_limit": 3368,
+       "c_keep_mask": 992,
+       "c_keep_in": 87,
+       "c_refine": 52107,
+       "c_corr4p": 1187,
+       "c_corr14": 5153,
+       "c_double": 883,
+       "c_inh_miss": 1069,
+       "c_miss_wrong": 27,
+       "c_inh_invis": 0,
+       "c_invis_wrong": 0
+      },
+      "axes71_compare": {
+       "file": "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/work/cells_B0_b10_LoD2.npz",
+       "same_cell_order": true,
+       "patches_equal": 143652,
+       "patches": 143652,
+       "differ": 0
+      }
+     },
+     "cell_counts": {
+      "c_refine": {
+       "patches": 52107,
+       "area_m2": 3256.6875
+      },
+      "c_corr14": {
+       "patches": 5153,
+       "area_m2": 322.0625
+      },
+      "c_corr4p": {
+       "patches": 1187,
+       "area_m2": 74.1875
+      },
+      "c_keep_mask": {
+       "patches": 992,
+       "area_m2": 62.0
+      },
+      "c_keep_in": {
+       "patches": 87,
+       "area_m2": 5.4375
+      },
+      "c_limit": {
+       "patches": 3368,
+       "area_m2": 210.5
+      },
+      "c_double": {
+       "patches": 883,
+       "area_m2": 55.1875
+      },
+      "c_inh_miss": {
+       "patches": 1069,
+       "area_m2": 66.8125
+      },
+      "c_miss_wrong": {
+       "patches": 27,
+       "area_m2": 1.6875
+      },
+      "c_inh_invis": {
+       "patches": 0,
+       "area_m2": 0.0
+      },
+      "c_invis_wrong": {
+       "patches": 0,
+       "area_m2": 0.0
+      },
+      "c_nogt": {
+       "patches": 17244,
+       "area_m2": 1077.69084436015
+      }
+     },
+     "tau_values_cm": [
+      19.75,
+      54.7
+     ],
+     "edge_bins": {
+      "0-0.5": 15760,
+      "0.5-1": 15498,
+      "1-2": 26394,
+      ">2": 86000
+     },
+     "surfaces": 100,
+     "surf_minus1": 0,
+     "roof_type": {
+      "1000": {
+       "buildings": [
+        "DEBY_LOD2_4959324"
+       ],
+       "roof_like_area_in_eval_m2": 30.1875
+      },
+      "3100": {
+       "buildings": [
+        "DEBY_LOD2_4959322",
+        "DEBY_LOD2_4959323"
+       ],
+       "roof_like_area_in_eval_m2": 1631.5
+      },
+      "3200": {
+       "buildings": [
+        "DEBY_LOD2_108580336",
+        "DEBY_LOD2_4959793"
+       ],
+       "roof_like_area_in_eval_m2": 48.9375
+      }
+     },
+     "roof_type_by_building": {
+      "DEBY_LOD2_4959322": {
+       "code": "3100",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_4959323": {
+       "code": "3100",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_4959324": {
+       "code": "1000",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_4959793": {
+       "code": "3200",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_108580336": {
+       "code": "3200",
+       "parts": [],
+       "file": "690_5336.gml"
+      }
+     }
+    },
+    "ALS": {
+     "patches": 44994,
+     "in_eval": 23280,
+     "band": 21714,
+     "roof_like": 44198,
+     "wall_like": 796,
+     "roof_like_in_eval": 23039,
+     "wall_like_in_eval": 241,
+     "kind_counts": {
+      "1": 44994
+     },
+     "roof_like_vs_kind": {
+      "kind1_wall_like": 796,
+      "kind2_roof_like": 0
+     },
+     "area_m2": {
+      "in_eval": 1592.8931141923629,
+      "band": 1455.70998647062
+     },
+     "region_keys": [
+      "code",
+      "code_names",
+      "centre",
+      "kind",
+      "area",
+      "label",
+      "gt_med",
+      "gt_n",
+      "mvs_minus_prior",
+      "tau",
+      "state",
+      "frame_shift",
+      "surf_ext",
+      "in_eval",
+      "code_ext",
+      "code_ext_values",
+      "code_ext_names",
+      "gt_points",
+      "mvs_minus_gt_at_gt",
+      "n_mvs_at_gt",
+      "v1_kept",
+      "code_ext_v3",
+      "code_ext_v2_prev",
+      "premise_value",
+      "gt_suspect",
+      "gt_suspect_evaluated",
+      "premise_violation",
+      "obs_within_threshold",
+      "premise_band"
+     ],
+     "cells": {
+      "unassigned_in_eval": 0,
+      "unassigned_codes": [],
+      "code11_ratio_below1": 0,
+      "patches_per_cell": {
+       "c_nogt": 290,
+       "c_limit": 600,
+       "c_keep_mask": 8,
+       "c_keep_in": 276,
+       "c_refine": 21847,
+       "c_corr4p": 33,
+       "c_corr14": 37,
+       "c_double": 164,
+       "c_inh_miss": 23,
+       "c_miss_wrong": 0,
+       "c_inh_invis": 0,
+       "c_invis_wrong": 2
+      },
+      "axes71_compare": {
+       "file": "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/work/cells_B0_b10_ALS.npz",
+       "same_cell_order": true,
+       "patches_equal": 44994,
+       "patches": 44994,
+       "differ": 0
+      }
+     },
+     "cell_counts": {
+      "c_refine": {
+       "patches": 21847,
+       "area_m2": 1490.3566878582853
+      },
+      "c_corr14": {
+       "patches": 37,
+       "area_m2": 2.8522629118748086
+      },
+      "c_corr4p": {
+       "patches": 33,
+       "area_m2": 2.286531916243703
+      },
+      "c_keep_mask": {
+       "patches": 8,
+       "area_m2": 0.5085008250013282
+      },
+      "c_keep_in": {
+       "patches": 276,
+       "area_m2": 19.71884372470948
+      },
+      "c_limit": {
+       "patches": 600,
+       "area_m2": 42.65587786424968
+      },
+      "c_double": {
+       "patches": 164,
+       "area_m2": 11.90756671527358
+      },
+      "c_inh_miss": {
+       "patches": 23,
+       "area_m2": 1.5969331816897683
+      },
+      "c_miss_wrong": {
+       "patches": 0,
+       "area_m2": 0.0
+      },
+      "c_inh_invis": {
+       "patches": 0,
+       "area_m2": 0.0
+      },
+      "c_invis_wrong": {
+       "patches": 2,
+       "area_m2": 0.1297329075013402
+      },
+      "c_nogt": {
+       "patches": 290,
+       "area_m2": 20.880176287533978
+      }
+     },
+     "tau_values_cm": [
+      12.66
+     ],
+     "edge_bins": {
+      "0-0.5": 751,
+      "0.5-1": 2859,
+      "1-2": 8619,
+      ">2": 32765
+     },
+     "surfaces": 399,
+     "surf_minus1": 0
+    }
+   },
+   "lod2_wall_outward_totals": {
+    "patches": 100965,
+    "out": 95021,
+    "inward": 0,
+    "neither": 5944
+   }
+  },
+  "B173nb_b10": {
+   "mvs_a": {
+    "n_points": 18985897,
+    "views": 203,
+    "views_with_depth": 203,
+    "depth_dir": "/s0/s61/export/B173nb_b10/LoD2/mvs",
+    "conf_dir": "/s0/s61/export/B173nb_b10/LoD2/conf",
+    "depth_checks": {
+     "depth_maps_found": 203,
+     "A_equals_validity_views": 203,
+     "px_A_pos": 113931925,
+     "px_M_valid": 113931925,
+     "px_A_pos_M_invalid": 0,
+     "px_M_valid_A_zero": 0,
+     "ALS_export_mvs_equal_views": 203,
+     "maskoff_vs_geometric": null
+    },
+    "level_prefix_counts": {
+     "0": 18985897,
+     "1": 4747234,
+     "2": 1187456,
+     "3": 296475,
+     "4": 74284,
+     "5": 18347,
+     "6": 4536
+    },
+    "seconds": 36.6
+   },
+   "mvs_b": {
+    "n_points": 21781936,
+    "views": 203,
+    "views_with_depth": 203,
+    "depth_dir": "/s0/s61/export_maskoff/B173nb_b10/LoD2/mvs",
+    "conf_dir": "/s0/s61/export_maskoff/B173nb_b10/LoD2/conf",
+    "depth_checks": {
+     "depth_maps_found": 203,
+     "A_equals_validity_views": 203,
+     "px_A_pos": 153319997,
+     "px_M_valid": 153319997,
+     "px_A_pos_M_invalid": 0,
+     "px_M_valid_A_zero": 0,
+     "ALS_export_mvs_equal_views": 0,
+     "maskoff_vs_geometric": {
+      "px_geo_valid": 113931925,
+      "px_photo_valid": 153319997,
+      "px_both": 113928006,
+      "px_equal": 2807548,
+      "px_photo_only": 39391991,
+      "absdiff_hist_edges_m": [
+       0,
+       0.01,
+       0.05,
+       0.1,
+       0.25,
+       0.5,
+       1,
+       5,
+       1e+30
+      ],
+      "absdiff_hist": [
+       37137637,
+       36260220,
+       13931109,
+       11875421,
+       5029692,
+       2923152,
+       3211708,
+       3559067
+      ]
+     }
+    },
+    "seconds": 36.2
+   },
+   "cameras": {
+    "scene": "/s0/fork_inputs/s61/B173nb_b10/scene_LoD2",
+    "scene_ALS_identical": {
+     "sparse/0/images.bin": true,
+     "sparse/0/cameras.bin": true,
+     "jbgs_calibration.json": true
+    },
+    "train_in_split": 203,
+    "test_in_split": 29,
+    "split": "/s0/fork_inputs/s61/B173nb_b10/split.json"
+   },
+   "als": {
+    "n_points": 114972,
+    "by_class": {
+     "2": 55813,
+     "6": 59159
+    },
+    "multi_return": 13091,
+    "shift_applied": [
+     -0.05619434746608162,
+     0.06288884357338685,
+     0.0
+    ],
+    "shift_equal": true,
+    "tiles": [
+     {
+      "tile": "690_5335",
+      "points": 20697252,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "690_5336",
+      "points": 21428108,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "691_5335",
+      "points": 20182679,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "691_5336",
+      "points": 22797949,
+      "in_crop_all_classes": 149950,
+      "in_crop_by_class": {
+       "2": 55813,
+       "6": 59159,
+       "20": 32689,
+       "22": 2289
+      }
+     }
+    ]
+   },
+   "gt": {
+    "n_points": 9786075,
+    "sources": {
+     "xyz_gt_points": {
+      "points": 37798404,
+      "excluded": 8932745,
+      "kept_in_crop": 9786075
+     }
+    }
+   },
+   "patches": {
+    "LoD2": {
+     "lod2_wall_outward": {
+      "faces": 113,
+      "flipped_faces": [
+       132
+      ],
+      "totals": {
+       "patches": 174331,
+       "out": 137823,
+       "inward": 13,
+       "neither": 36495
+      },
+      "per_face": {
+       "11": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 2256,
+        "out": 2256,
+        "inward": 0,
+        "neither": 0
+       },
+       "12": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "13": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 462,
+        "out": 0,
+        "inward": 0,
+        "neither": 462
+       },
+       "14": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "15": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 33,
+        "out": 0,
+        "inward": 0,
+        "neither": 33
+       },
+       "16": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "17": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 264,
+        "out": 0,
+        "inward": 0,
+        "neither": 264
+       },
+       "18": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "19": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 1066,
+        "out": 0,
+        "inward": 0,
+        "neither": 1066
+       },
+       "20": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 140,
+        "out": 0,
+        "inward": 0,
+        "neither": 140
+       },
+       "21": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 209,
+        "out": 0,
+        "inward": 0,
+        "neither": 209
+       },
+       "22": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 6392,
+        "out": 6392,
+        "inward": 0,
+        "neither": 0
+       },
+       "23": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 10716,
+        "out": 10716,
+        "inward": 0,
+        "neither": 0
+       },
+       "24": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "25": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 40,
+        "out": 0,
+        "inward": 0,
+        "neither": 40
+       },
+       "26": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 611,
+        "out": 0,
+        "inward": 0,
+        "neither": 611
+       },
+       "27": {
+        "building": "DEBY_LOD2_4959325",
+        "patches": 195,
+        "out": 0,
+        "inward": 0,
+        "neither": 195
+       },
+       "47": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "48": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "49": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 483,
+        "out": 483,
+        "inward": 0,
+        "neither": 0
+       },
+       "50": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 483,
+        "out": 483,
+        "inward": 0,
+        "neither": 0
+       },
+       "51": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 470,
+        "out": 0,
+        "inward": 0,
+        "neither": 470
+       },
+       "52": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 1852,
+        "out": 0,
+        "inward": 0,
+        "neither": 1852
+       },
+       "53": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 21560,
+        "out": 21560,
+        "inward": 0,
+        "neither": 0
+       },
+       "54": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 77,
+        "out": 0,
+        "inward": 0,
+        "neither": 77
+       },
+       "55": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 4,
+        "out": 4,
+        "inward": 0,
+        "neither": 0
+       },
+       "56": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 470,
+        "out": 0,
+        "inward": 0,
+        "neither": 470
+       },
+       "57": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "58": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 77,
+        "out": 77,
+        "inward": 0,
+        "neither": 0
+       },
+       "59": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "60": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 2282,
+        "out": 2282,
+        "inward": 0,
+        "neither": 0
+       },
+       "61": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "62": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "63": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 4491,
+        "out": 4491,
+        "inward": 0,
+        "neither": 0
+       },
+       "64": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "65": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 152,
+        "out": 152,
+        "inward": 0,
+        "neither": 0
+       },
+       "66": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "67": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 77,
+        "out": 77,
+        "inward": 0,
+        "neither": 0
+       },
+       "69": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 21560,
+        "out": 21560,
+        "inward": 0,
+        "neither": 0
+       },
+       "70": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 423,
+        "out": 0,
+        "inward": 0,
+        "neither": 423
+       },
+       "71": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 376,
+        "out": 0,
+        "inward": 0,
+        "neither": 376
+       },
+       "72": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 8227,
+        "out": 22,
+        "inward": 0,
+        "neither": 8205
+       },
+       "73": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 154,
+        "out": 154,
+        "inward": 0,
+        "neither": 0
+       },
+       "74": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 376,
+        "out": 0,
+        "inward": 0,
+        "neither": 376
+       },
+       "75": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 77,
+        "out": 77,
+        "inward": 0,
+        "neither": 0
+       },
+       "76": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 154,
+        "out": 154,
+        "inward": 0,
+        "neither": 0
+       },
+       "77": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 376,
+        "out": 0,
+        "inward": 0,
+        "neither": 376
+       },
+       "78": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 86,
+        "out": 86,
+        "inward": 0,
+        "neither": 0
+       },
+       "79": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 77,
+        "out": 77,
+        "inward": 0,
+        "neither": 0
+       },
+       "80": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 376,
+        "out": 0,
+        "inward": 0,
+        "neither": 376
+       },
+       "81": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 77,
+        "out": 77,
+        "inward": 0,
+        "neither": 0
+       },
+       "82": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 152,
+        "out": 152,
+        "inward": 0,
+        "neither": 0
+       },
+       "83": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 2194,
+        "out": 2194,
+        "inward": 0,
+        "neither": 0
+       },
+       "84": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 376,
+        "out": 0,
+        "inward": 0,
+        "neither": 376
+       },
+       "85": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 8148,
+        "out": 29,
+        "inward": 0,
+        "neither": 8119
+       },
+       "86": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 184,
+        "out": 184,
+        "inward": 0,
+        "neither": 0
+       },
+       "87": {
+        "building": "DEBY_LOD2_4959326",
+        "patches": 86,
+        "out": 86,
+        "inward": 0,
+        "neither": 0
+       },
+       "91": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 10912,
+        "out": 10912,
+        "inward": 0,
+        "neither": 0
+       },
+       "92": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "93": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 4354,
+        "out": 4354,
+        "inward": 0,
+        "neither": 0
+       },
+       "94": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 124,
+        "out": 124,
+        "inward": 0,
+        "neither": 0
+       },
+       "95": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 11656,
+        "out": 11656,
+        "inward": 0,
+        "neither": 0
+       },
+       "96": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1397,
+        "out": 0,
+        "inward": 0,
+        "neither": 1397
+       },
+       "97": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 9362,
+        "out": 9362,
+        "inward": 0,
+        "neither": 0
+       },
+       "98": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "99": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 4588,
+        "out": 4588,
+        "inward": 0,
+        "neither": 0
+       },
+       "100": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 946,
+        "out": 0,
+        "inward": 0,
+        "neither": 946
+       },
+       "101": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "102": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "103": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1410,
+        "out": 0,
+        "inward": 0,
+        "neither": 1410
+       },
+       "104": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "105": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "106": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 868,
+        "out": 868,
+        "inward": 0,
+        "neither": 0
+       },
+       "107": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "108": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "109": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1860,
+        "out": 1860,
+        "inward": 0,
+        "neither": 0
+       },
+       "110": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 200,
+        "out": 0,
+        "inward": 0,
+        "neither": 200
+       },
+       "111": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "112": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 4650,
+        "out": 4650,
+        "inward": 0,
+        "neither": 0
+       },
+       "113": {
+        "building": "DEBY_LOD2_4959460",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "123": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 63,
+        "out": 63,
+        "inward": 0,
+        "neither": 0
+       },
+       "124": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 63,
+        "out": 0,
+        "inward": 0,
+        "neither": 63
+       },
+       "125": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 60,
+        "out": 0,
+        "inward": 0,
+        "neither": 60
+       },
+       "126": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "127": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "128": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 442,
+        "out": 0,
+        "inward": 0,
+        "neither": 442
+       },
+       "129": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "130": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 7938,
+        "out": 7938,
+        "inward": 0,
+        "neither": 0
+       },
+       "131": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "132": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1036,
+        "out": 0,
+        "inward": 13,
+        "neither": 1023
+       },
+       "133": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 58,
+        "out": 0,
+        "inward": 0,
+        "neither": 58
+       },
+       "134": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 63,
+        "out": 63,
+        "inward": 0,
+        "neither": 0
+       },
+       "135": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 935,
+        "out": 0,
+        "inward": 0,
+        "neither": 935
+       },
+       "136": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 126,
+        "out": 126,
+        "inward": 0,
+        "neither": 0
+       },
+       "137": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 276,
+        "out": 0,
+        "inward": 0,
+        "neither": 276
+       },
+       "138": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 5355,
+        "out": 5355,
+        "inward": 0,
+        "neither": 0
+       },
+       "139": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 934,
+        "out": 934,
+        "inward": 0,
+        "neither": 0
+       },
+       "142": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 0,
+        "inward": 0,
+        "neither": 1
+       },
+       "143": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 276,
+        "out": 0,
+        "inward": 0,
+        "neither": 276
+       },
+       "144": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1027,
+        "out": 0,
+        "inward": 0,
+        "neither": 1027
+       },
+       "145": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 88,
+        "out": 0,
+        "inward": 0,
+        "neither": 88
+       },
+       "146": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 126,
+        "out": 126,
+        "inward": 0,
+        "neither": 0
+       },
+       "147": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "148": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 63,
+        "out": 63,
+        "inward": 0,
+        "neither": 0
+       },
+       "149": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "150": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 54,
+        "out": 0,
+        "inward": 0,
+        "neither": 54
+       },
+       "151": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 88,
+        "out": 0,
+        "inward": 0,
+        "neither": 88
+       },
+       "152": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "153": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 936,
+        "out": 936,
+        "inward": 0,
+        "neither": 0
+       },
+       "154": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "156": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "157": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 246,
+        "out": 0,
+        "inward": 0,
+        "neither": 246
+       },
+       "158": {
+        "building": "DEBY_LOD2_108580335",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       }
+      }
+     },
+     "patches": 258097,
+     "in_eval": 141534,
+     "band": 116563,
+     "roof_like": 83764,
+     "wall_like": 174333,
+     "roof_like_in_eval": 42344,
+     "wall_like_in_eval": 99190,
+     "kind_counts": {
+      "1": 83766,
+      "2": 174331
+     },
+     "roof_like_vs_kind": {
+      "kind1_wall_like": 2,
+      "kind2_roof_like": 0
+     },
+     "area_m2": {
+      "in_eval": 8845.875,
+      "band": 7285.1875
+     },
+     "region_keys": [
+      "code",
+      "code_names",
+      "centre",
+      "kind",
+      "area",
+      "label",
+      "gt_med",
+      "gt_n",
+      "mvs_minus_prior",
+      "tau",
+      "state",
+      "frame_shift",
+      "surf_ext",
+      "in_eval",
+      "code_ext",
+      "code_ext_values",
+      "code_ext_names",
+      "gt_points",
+      "unseen_label_inferred",
+      "unseen_top_behind",
+      "mvs_minus_gt_at_gt",
+      "n_mvs_at_gt",
+      "v1_kept",
+      "code_ext_v3",
+      "code_ext_v2_prev",
+      "premise_value",
+      "gt_suspect",
+      "gt_suspect_evaluated",
+      "premise_violation",
+      "obs_within_threshold",
+      "premise_band"
+     ],
+     "cells": {
+      "unassigned_in_eval": 0,
+      "unassigned_codes": [],
+      "code11_ratio_below1": 0,
+      "patches_per_cell": {
+       "c_nogt": 75971,
+       "c_limit": 2221,
+       "c_keep_mask": 259,
+       "c_keep_in": 472,
+       "c_refine": 31980,
+       "c_corr4p": 16481,
+       "c_corr14": 5208,
+       "c_double": 7777,
+       "c_inh_miss": 1049,
+       "c_miss_wrong": 91,
+       "c_inh_invis": 4,
+       "c_invis_wrong": 21
+      },
+      "axes71_compare": {
+       "file": "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/work/cells_B173nb_b10_LoD2.npz",
+       "same_cell_order": true,
+       "patches_equal": 258097,
+       "patches": 258097,
+       "differ": 0
+      }
+     },
+     "cell_counts": {
+      "c_refine": {
+       "patches": 31980,
+       "area_m2": 1998.75
+      },
+      "c_corr14": {
+       "patches": 5208,
+       "area_m2": 325.5
+      },
+      "c_corr4p": {
+       "patches": 16481,
+       "area_m2": 1030.0625
+      },
+      "c_keep_mask": {
+       "patches": 259,
+       "area_m2": 16.1875
+      },
+      "c_keep_in": {
+       "patches": 472,
+       "area_m2": 29.5
+      },
+      "c_limit": {
+       "patches": 2221,
+       "area_m2": 138.8125
+      },
+      "c_double": {
+       "patches": 7777,
+       "area_m2": 486.0625
+      },
+      "c_inh_miss": {
+       "patches": 1049,
+       "area_m2": 65.5625
+      },
+      "c_miss_wrong": {
+       "patches": 91,
+       "area_m2": 5.6875
+      },
+      "c_inh_invis": {
+       "patches": 4,
+       "area_m2": 0.25
+      },
+      "c_invis_wrong": {
+       "patches": 21,
+       "area_m2": 1.3125
+      },
+      "c_nogt": {
+       "patches": 75971,
+       "area_m2": 4748.1875
+      }
+     },
+     "tau_values_cm": [
+      17.6,
+      22.78
+     ],
+     "edge_bins": {
+      "0-0.5": 36586,
+      "0.5-1": 32885,
+      "1-2": 45380,
+      ">2": 143246
+     },
+     "surfaces": 155,
+     "surf_minus1": 0,
+     "roof_type": {
+      "1000": {
+       "buildings": [
+        "DEBY_LOD2_108580335",
+        "DEBY_LOD2_4959325"
+       ],
+       "roof_like_area_in_eval_m2": 67.5625
+      },
+      "3100": {
+       "buildings": [
+        "DEBY_LOD2_4959326"
+       ],
+       "roof_like_area_in_eval_m2": 1997.5
+      },
+      "9999": {
+       "buildings": [
+        "DEBY_LOD2_4959460"
+       ],
+       "roof_like_area_in_eval_m2": 581.4375
+      }
+     },
+     "roof_type_by_building": {
+      "DEBY_LOD2_4959325": {
+       "code": "1000",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_4959326": {
+       "code": "3100",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_4959460": {
+       "code": "9999",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_108580335": {
+       "code": "1000",
+       "parts": [],
+       "file": "690_5336.gml"
+      }
+     }
+    },
+    "ALS": {
+     "patches": 76657,
+     "in_eval": 34273,
+     "band": 42384,
+     "roof_like": 75201,
+     "wall_like": 1456,
+     "roof_like_in_eval": 33601,
+     "wall_like_in_eval": 672,
+     "kind_counts": {
+      "1": 76657
+     },
+     "roof_like_vs_kind": {
+      "kind1_wall_like": 1456,
+      "kind2_roof_like": 0
+     },
+     "area_m2": {
+      "in_eval": 2285.8673805676904,
+      "band": 2753.8061433812463
+     },
+     "region_keys": [
+      "code",
+      "code_names",
+      "centre",
+      "kind",
+      "area",
+      "label",
+      "gt_med",
+      "gt_n",
+      "mvs_minus_prior",
+      "tau",
+      "state",
+      "frame_shift",
+      "surf_ext",
+      "in_eval",
+      "code_ext",
+      "code_ext_values",
+      "code_ext_names",
+      "gt_points",
+      "mvs_minus_gt_at_gt",
+      "n_mvs_at_gt",
+      "v1_kept",
+      "code_ext_v3",
+      "code_ext_v2_prev",
+      "premise_value",
+      "gt_suspect",
+      "gt_suspect_evaluated",
+      "premise_violation",
+      "obs_within_threshold",
+      "premise_band"
+     ],
+     "cells": {
+      "unassigned_in_eval": 0,
+      "unassigned_codes": [],
+      "code11_ratio_below1": 0,
+      "patches_per_cell": {
+       "c_nogt": 3335,
+       "c_limit": 696,
+       "c_keep_mask": 16,
+       "c_keep_in": 1419,
+       "c_refine": 10142,
+       "c_corr4p": 15167,
+       "c_corr14": 108,
+       "c_double": 3379,
+       "c_inh_miss": 1,
+       "c_miss_wrong": 9,
+       "c_inh_invis": 1,
+       "c_invis_wrong": 0
+      },
+      "axes71_compare": {
+       "file": "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/work/cells_B173nb_b10_ALS.npz",
+       "same_cell_order": true,
+       "patches_equal": 76657,
+       "patches": 76657,
+       "differ": 0
+      }
+     },
+     "cell_counts": {
+      "c_refine": {
+       "patches": 10142,
+       "area_m2": 650.0106394436134
+      },
+      "c_corr14": {
+       "patches": 108,
+       "area_m2": 8.339544503189279
+      },
+      "c_corr4p": {
+       "patches": 15167,
+       "area_m2": 1007.536804371351
+      },
+      "c_keep_mask": {
+       "patches": 16,
+       "area_m2": 1.6337456300163218
+      },
+      "c_keep_in": {
+       "patches": 1419,
+       "area_m2": 100.5275369550719
+      },
+      "c_limit": {
+       "patches": 696,
+       "area_m2": 51.78462687252885
+      },
+      "c_double": {
+       "patches": 3379,
+       "area_m2": 226.80995481957626
+      },
+      "c_inh_miss": {
+       "patches": 1,
+       "area_m2": 0.1024772737107018
+      },
+      "c_miss_wrong": {
+       "patches": 9,
+       "area_m2": 0.6227197845139656
+      },
+      "c_inh_invis": {
+       "patches": 1,
+       "area_m2": 0.022425454880494494
+      },
+      "c_invis_wrong": {
+       "patches": 0,
+       "area_m2": 0.0
+      },
+      "c_nogt": {
+       "patches": 3335,
+       "area_m2": 238.47690545923825
+      }
+     },
+     "tau_values_cm": [
+      14.7
+     ],
+     "edge_bins": {
+      "0-0.5": 862,
+      "0.5-1": 3191,
+      "1-2": 16162,
+      ">2": 56442
+     },
+     "surfaces": 551,
+     "surf_minus1": 0
+    }
+   },
+   "lod2_wall_outward_totals": {
+    "patches": 174331,
+    "out": 137823,
+    "inward": 13,
+    "neither": 36495
+   }
+  },
+  "R1rep_b10": {
+   "mvs_a": {
+    "n_points": 21658682,
+    "views": 333,
+    "views_with_depth": 333,
+    "depth_dir": "/s0/s61/export/R1rep_b10/LoD2/mvs",
+    "conf_dir": "/s0/s61/export/R1rep_b10/LoD2/conf",
+    "depth_checks": {
+     "depth_maps_found": 333,
+     "A_equals_validity_views": 333,
+     "px_A_pos": 198024768,
+     "px_M_valid": 198024768,
+     "px_A_pos_M_invalid": 0,
+     "px_M_valid_A_zero": 0,
+     "ALS_export_mvs_equal_views": 333,
+     "maskoff_vs_geometric": null
+    },
+    "level_prefix_counts": {
+     "0": 21658682,
+     "1": 5416419,
+     "2": 1352878,
+     "3": 338180,
+     "4": 84477,
+     "5": 21044,
+     "6": 5273
+    },
+    "seconds": 52.2
+   },
+   "mvs_b": {
+    "n_points": 26629217,
+    "views": 333,
+    "views_with_depth": 333,
+    "depth_dir": "/s2/s61/export_maskoff/R1rep_b10/LoD2/mvs",
+    "conf_dir": "/s2/s61/export_maskoff/R1rep_b10/LoD2/conf",
+    "depth_checks": {
+     "depth_maps_found": 333,
+     "A_equals_validity_views": 333,
+     "px_A_pos": 251419057,
+     "px_M_valid": 251419057,
+     "px_A_pos_M_invalid": 0,
+     "px_M_valid_A_zero": 0,
+     "ALS_export_mvs_equal_views": 0,
+     "maskoff_vs_geometric": {
+      "px_geo_valid": 198024768,
+      "px_photo_valid": 251419057,
+      "px_both": 198019984,
+      "px_equal": 4986132,
+      "px_photo_only": 53399073,
+      "absdiff_hist_edges_m": [
+       0,
+       0.01,
+       0.05,
+       0.1,
+       0.25,
+       0.5,
+       1,
+       5,
+       1e+30
+      ],
+      "absdiff_hist": [
+       65466798,
+       62429688,
+       24297757,
+       20725533,
+       8703977,
+       5110649,
+       5586593,
+       5698989
+      ]
+     }
+    },
+    "seconds": 88.7
+   },
+   "cameras": {
+    "scene": "/s0/fork_inputs/s61/R1rep_b10/scene_LoD2",
+    "scene_ALS_identical": {
+     "sparse/0/images.bin": true,
+     "sparse/0/cameras.bin": true,
+     "jbgs_calibration.json": true
+    },
+    "train_in_split": 333,
+    "test_in_split": 49,
+    "split": "/s0/fork_inputs/s61/R1rep_b10/split.json"
+   },
+   "als": {
+    "n_points": 94905,
+    "by_class": {
+     "2": 42380,
+     "6": 52525
+    },
+    "multi_return": 12777,
+    "shift_applied": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "shift_equal": true,
+    "tiles": [
+     {
+      "tile": "690_5335",
+      "points": 20697252,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "690_5336",
+      "points": 21428108,
+      "in_crop_all_classes": 130508,
+      "in_crop_by_class": {
+       "2": 40080,
+       "6": 52429,
+       "20": 36514,
+       "22": 1485
+      }
+     },
+     {
+      "tile": "691_5335",
+      "points": 20182679,
+      "in_crop_all_classes": 0,
+      "in_crop_by_class": {}
+     },
+     {
+      "tile": "691_5336",
+      "points": 22797949,
+      "in_crop_all_classes": 3153,
+      "in_crop_by_class": {
+       "2": 2300,
+       "6": 96,
+       "20": 757
+      }
+     }
+    ]
+   },
+   "gt": {
+    "n_points": 6533709,
+    "sources": {
+     "xyz_gt_points": {
+      "points": 36405930,
+      "excluded": 7767720,
+      "kept_in_crop": 6533709
+     }
+    }
+   },
+   "patches": {
+    "LoD2": {
+     "lod2_wall_outward": {
+      "faces": 97,
+      "flipped_faces": [],
+      "totals": {
+       "patches": 90466,
+       "out": 73549,
+       "inward": 0,
+       "neither": 16917
+      },
+      "per_face": {
+       "8": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "9": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 5856,
+        "out": 0,
+        "inward": 0,
+        "neither": 5856
+       },
+       "10": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 11455,
+        "out": 11455,
+        "inward": 0,
+        "neither": 0
+       },
+       "11": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 5088,
+        "out": 4897,
+        "inward": 0,
+        "neither": 191
+       },
+       "12": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 336,
+        "out": 112,
+        "inward": 0,
+        "neither": 224
+       },
+       "13": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 1645,
+        "out": 1645,
+        "inward": 0,
+        "neither": 0
+       },
+       "14": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "15": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 15704,
+        "out": 15704,
+        "inward": 0,
+        "neither": 0
+       },
+       "16": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "17": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "18": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 1,
+        "out": 1,
+        "inward": 0,
+        "neither": 0
+       },
+       "19": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 10774,
+        "out": 10774,
+        "inward": 0,
+        "neither": 0
+       },
+       "20": {
+        "building": "DEBY_LOD2_4906968",
+        "patches": 7110,
+        "out": 7031,
+        "inward": 0,
+        "neither": 79
+       },
+       "27": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 400,
+        "out": 0,
+        "inward": 0,
+        "neither": 400
+       },
+       "28": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 310,
+        "out": 0,
+        "inward": 0,
+        "neither": 310
+       },
+       "29": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 396,
+        "out": 396,
+        "inward": 0,
+        "neither": 0
+       },
+       "30": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 180,
+        "out": 180,
+        "inward": 0,
+        "neither": 0
+       },
+       "31": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 175,
+        "out": 0,
+        "inward": 0,
+        "neither": 175
+       },
+       "32": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "33": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 592,
+        "out": 0,
+        "inward": 0,
+        "neither": 592
+       },
+       "34": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 157,
+        "out": 157,
+        "inward": 0,
+        "neither": 0
+       },
+       "35": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "36": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 174,
+        "out": 174,
+        "inward": 0,
+        "neither": 0
+       },
+       "37": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 148,
+        "out": 148,
+        "inward": 0,
+        "neither": 0
+       },
+       "38": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "39": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 150,
+        "out": 150,
+        "inward": 0,
+        "neither": 0
+       },
+       "40": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 162,
+        "out": 162,
+        "inward": 0,
+        "neither": 0
+       },
+       "41": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 156,
+        "out": 156,
+        "inward": 0,
+        "neither": 0
+       },
+       "42": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 450,
+        "out": 0,
+        "inward": 0,
+        "neither": 450
+       },
+       "43": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 640,
+        "out": 0,
+        "inward": 0,
+        "neither": 640
+       },
+       "44": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 321,
+        "out": 0,
+        "inward": 0,
+        "neither": 321
+       },
+       "45": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "46": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "47": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 294,
+        "out": 0,
+        "inward": 0,
+        "neither": 294
+       },
+       "48": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 120,
+        "out": 120,
+        "inward": 0,
+        "neither": 0
+       },
+       "49": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 1236,
+        "out": 0,
+        "inward": 0,
+        "neither": 1236
+       },
+       "50": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "51": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 624,
+        "out": 0,
+        "inward": 0,
+        "neither": 624
+       },
+       "52": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 9658,
+        "out": 9658,
+        "inward": 0,
+        "neither": 0
+       },
+       "53": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 120,
+        "out": 120,
+        "inward": 0,
+        "neither": 0
+       },
+       "54": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 120,
+        "out": 120,
+        "inward": 0,
+        "neither": 0
+       },
+       "55": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 586,
+        "out": 0,
+        "inward": 0,
+        "neither": 586
+       },
+       "56": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 168,
+        "out": 168,
+        "inward": 0,
+        "neither": 0
+       },
+       "57": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 56,
+        "out": 0,
+        "inward": 0,
+        "neither": 56
+       },
+       "58": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 174,
+        "out": 174,
+        "inward": 0,
+        "neither": 0
+       },
+       "59": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 688,
+        "out": 0,
+        "inward": 0,
+        "neither": 688
+       },
+       "60": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 325,
+        "out": 0,
+        "inward": 0,
+        "neither": 325
+       },
+       "61": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 153,
+        "out": 153,
+        "inward": 0,
+        "neither": 0
+       },
+       "62": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 156,
+        "out": 156,
+        "inward": 0,
+        "neither": 0
+       },
+       "63": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 290,
+        "out": 0,
+        "inward": 0,
+        "neither": 290
+       },
+       "64": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 162,
+        "out": 162,
+        "inward": 0,
+        "neither": 0
+       },
+       "65": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 120,
+        "out": 120,
+        "inward": 0,
+        "neither": 0
+       },
+       "66": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "67": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 219,
+        "out": 219,
+        "inward": 0,
+        "neither": 0
+       },
+       "68": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 420,
+        "out": 0,
+        "inward": 0,
+        "neither": 420
+       },
+       "69": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "70": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 150,
+        "out": 150,
+        "inward": 0,
+        "neither": 0
+       },
+       "71": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 240,
+        "out": 240,
+        "inward": 0,
+        "neither": 0
+       },
+       "72": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 165,
+        "out": 165,
+        "inward": 0,
+        "neither": 0
+       },
+       "73": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 410,
+        "out": 0,
+        "inward": 0,
+        "neither": 410
+       },
+       "74": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 165,
+        "out": 165,
+        "inward": 0,
+        "neither": 0
+       },
+       "75": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 180,
+        "out": 180,
+        "inward": 0,
+        "neither": 0
+       },
+       "76": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "78": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 312,
+        "out": 0,
+        "inward": 0,
+        "neither": 312
+       },
+       "79": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 168,
+        "out": 168,
+        "inward": 0,
+        "neither": 0
+       },
+       "80": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "81": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 440,
+        "out": 0,
+        "inward": 0,
+        "neither": 440
+       },
+       "82": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 150,
+        "out": 150,
+        "inward": 0,
+        "neither": 0
+       },
+       "83": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "84": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 374,
+        "out": 9,
+        "inward": 0,
+        "neither": 365
+       },
+       "85": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 120,
+        "out": 120,
+        "inward": 0,
+        "neither": 0
+       },
+       "86": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "87": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 178,
+        "out": 178,
+        "inward": 0,
+        "neither": 0
+       },
+       "88": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 655,
+        "out": 0,
+        "inward": 0,
+        "neither": 655
+       },
+       "89": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "90": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 546,
+        "out": 546,
+        "inward": 0,
+        "neither": 0
+       },
+       "91": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 186,
+        "out": 186,
+        "inward": 0,
+        "neither": 0
+       },
+       "92": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 162,
+        "out": 162,
+        "inward": 0,
+        "neither": 0
+       },
+       "93": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 144,
+        "out": 144,
+        "inward": 0,
+        "neither": 0
+       },
+       "94": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 330,
+        "out": 330,
+        "inward": 0,
+        "neither": 0
+       },
+       "95": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 270,
+        "out": 270,
+        "inward": 0,
+        "neither": 0
+       },
+       "96": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 186,
+        "out": 186,
+        "inward": 0,
+        "neither": 0
+       },
+       "97": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 400,
+        "out": 0,
+        "inward": 0,
+        "neither": 400
+       },
+       "98": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 182,
+        "out": 182,
+        "inward": 0,
+        "neither": 0
+       },
+       "99": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 182,
+        "out": 182,
+        "inward": 0,
+        "neither": 0
+       },
+       "100": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 132,
+        "out": 132,
+        "inward": 0,
+        "neither": 0
+       },
+       "101": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 1398,
+        "out": 1398,
+        "inward": 0,
+        "neither": 0
+       },
+       "102": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 156,
+        "out": 156,
+        "inward": 0,
+        "neither": 0
+       },
+       "103": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "104": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 198,
+        "out": 198,
+        "inward": 0,
+        "neither": 0
+       },
+       "105": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 150,
+        "out": 150,
+        "inward": 0,
+        "neither": 0
+       },
+       "106": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 168,
+        "out": 168,
+        "inward": 0,
+        "neither": 0
+       },
+       "107": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 120,
+        "out": 120,
+        "inward": 0,
+        "neither": 0
+       },
+       "108": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 273,
+        "out": 0,
+        "inward": 0,
+        "neither": 273
+       },
+       "109": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 252,
+        "out": 252,
+        "inward": 0,
+        "neither": 0
+       },
+       "110": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 305,
+        "out": 0,
+        "inward": 0,
+        "neither": 305
+       },
+       "111": {
+        "building": "DEBY_LOD2_4906975",
+        "patches": 174,
+        "out": 174,
+        "inward": 0,
+        "neither": 0
+       }
+      }
+     },
+     "patches": 138579,
+     "in_eval": 79054,
+     "band": 59525,
+     "roof_like": 45199,
+     "wall_like": 93380,
+     "roof_like_in_eval": 30614,
+     "wall_like_in_eval": 48440,
+     "kind_counts": {
+      "1": 48113,
+      "2": 90466
+     },
+     "roof_like_vs_kind": {
+      "kind1_wall_like": 2914,
+      "kind2_roof_like": 0
+     },
+     "area_m2": {
+      "in_eval": 4940.875,
+      "band": 3720.3125
+     },
+     "region_keys": [
+      "code",
+      "code_names",
+      "centre",
+      "kind",
+      "area",
+      "label",
+      "gt_med",
+      "gt_n",
+      "mvs_minus_prior",
+      "tau",
+      "state",
+      "frame_shift",
+      "surf_ext",
+      "in_eval",
+      "code_ext",
+      "code_ext_values",
+      "code_ext_names",
+      "gt_points",
+      "mvs_minus_gt_at_gt",
+      "n_mvs_at_gt",
+      "v1_kept",
+      "code_ext_v3",
+      "code_ext_v2_prev",
+      "premise_value",
+      "gt_suspect",
+      "gt_suspect_evaluated",
+      "premise_violation",
+      "obs_within_threshold",
+      "premise_band"
+     ],
+     "cells": {
+      "unassigned_in_eval": 0,
+      "unassigned_codes": [],
+      "code11_ratio_below1": 0,
+      "patches_per_cell": {
+       "c_nogt": 38559,
+       "c_limit": 6320,
+       "c_keep_mask": 74,
+       "c_keep_in": 128,
+       "c_refine": 19401,
+       "c_corr4p": 4141,
+       "c_corr14": 6432,
+       "c_double": 3705,
+       "c_inh_miss": 130,
+       "c_miss_wrong": 153,
+       "c_inh_invis": 1,
+       "c_invis_wrong": 10
+      },
+      "axes71_compare": {
+       "file": "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/work/cells_R1rep_b10_LoD2.npz",
+       "same_cell_order": true,
+       "patches_equal": 138579,
+       "patches": 138579,
+       "differ": 0
+      }
+     },
+     "cell_counts": {
+      "c_refine": {
+       "patches": 19401,
+       "area_m2": 1212.5625
+      },
+      "c_corr14": {
+       "patches": 6432,
+       "area_m2": 402.0
+      },
+      "c_corr4p": {
+       "patches": 4141,
+       "area_m2": 258.8125
+      },
+      "c_keep_mask": {
+       "patches": 74,
+       "area_m2": 4.625
+      },
+      "c_keep_in": {
+       "patches": 128,
+       "area_m2": 8.0
+      },
+      "c_limit": {
+       "patches": 6320,
+       "area_m2": 395.0
+      },
+      "c_double": {
+       "patches": 3705,
+       "area_m2": 231.5625
+      },
+      "c_inh_miss": {
+       "patches": 130,
+       "area_m2": 8.125
+      },
+      "c_miss_wrong": {
+       "patches": 153,
+       "area_m2": 9.5625
+      },
+      "c_inh_invis": {
+       "patches": 1,
+       "area_m2": 0.0625
+      },
+      "c_invis_wrong": {
+       "patches": 10,
+       "area_m2": 0.625
+      },
+      "c_nogt": {
+       "patches": 38559,
+       "area_m2": 2409.9375
+      }
+     },
+     "tau_values_cm": [
+      68.28,
+      72.46
+     ],
+     "edge_bins": {
+      "0-0.5": 26985,
+      "0.5-1": 26113,
+      "1-2": 25786,
+      ">2": 59695
+     },
+     "surfaces": 111,
+     "surf_minus1": 0,
+     "roof_type": {
+      "1000": {
+       "buildings": [
+        "DEBY_LOD2_4906975"
+       ],
+       "roof_like_area_in_eval_m2": 1809.75
+      },
+      "3900": {
+       "buildings": [
+        "DEBY_LOD2_4906968"
+       ],
+       "roof_like_area_in_eval_m2": 103.625
+      }
+     },
+     "roof_type_by_building": {
+      "DEBY_LOD2_4906968": {
+       "code": "3900",
+       "parts": [],
+       "file": "690_5336.gml"
+      },
+      "DEBY_LOD2_4906975": {
+       "code": "1000",
+       "parts": [],
+       "file": "690_5336.gml"
+      }
+     }
+    },
+    "ALS": {
+     "patches": 46215,
+     "in_eval": 24189,
+     "band": 22026,
+     "roof_like": 43835,
+     "wall_like": 2380,
+     "roof_like_in_eval": 22723,
+     "wall_like_in_eval": 1466,
+     "kind_counts": {
+      "1": 46215
+     },
+     "roof_like_vs_kind": {
+      "kind1_wall_like": 2380,
+      "kind2_roof_like": 0
+     },
+     "area_m2": {
+      "in_eval": 1610.529317564144,
+      "band": 1493.5893434528336
+     },
+     "region_keys": [
+      "code",
+      "code_names",
+      "centre",
+      "kind",
+      "area",
+      "label",
+      "gt_med",
+      "gt_n",
+      "mvs_minus_prior",
+      "tau",
+      "state",
+      "frame_shift",
+      "surf_ext",
+      "in_eval",
+      "code_ext",
+      "code_ext_values",
+      "code_ext_names",
+      "gt_points",
+      "mvs_minus_gt_at_gt",
+      "n_mvs_at_gt",
+      "v1_kept",
+      "code_ext_v3",
+      "code_ext_v2_prev",
+      "premise_value",
+      "gt_suspect",
+      "gt_suspect_evaluated",
+      "premise_violation",
+      "obs_within_threshold",
+      "premise_band"
+     ],
+     "cells": {
+      "unassigned_in_eval": 0,
+      "unassigned_codes": [],
+      "code11_ratio_below1": 0,
+      "patches_per_cell": {
+       "c_nogt": 1297,
+       "c_limit": 2390,
+       "c_keep_mask": 120,
+       "c_keep_in": 2074,
+       "c_refine": 17747,
+       "c_corr4p": 90,
+       "c_corr14": 80,
+       "c_double": 349,
+       "c_inh_miss": 23,
+       "c_miss_wrong": 9,
+       "c_inh_invis": 1,
+       "c_invis_wrong": 9
+      },
+      "axes71_compare": {
+       "file": "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/work/cells_R1rep_b10_ALS.npz",
+       "same_cell_order": true,
+       "patches_equal": 46215,
+       "patches": 46215,
+       "differ": 0
+      }
+     },
+     "cell_counts": {
+      "c_refine": {
+       "patches": 17747,
+       "area_m2": 1168.9033125002434
+      },
+      "c_corr14": {
+       "patches": 80,
+       "area_m2": 7.18431803281106
+      },
+      "c_corr4p": {
+       "patches": 90,
+       "area_m2": 6.1072555945934575
+      },
+      "c_keep_mask": {
+       "patches": 120,
+       "area_m2": 8.982699856194682
+      },
+      "c_keep_in": {
+       "patches": 2074,
+       "area_m2": 138.3228828951869
+      },
+      "c_limit": {
+       "patches": 2390,
+       "area_m2": 162.74586996820602
+      },
+      "c_double": {
+       "patches": 349,
+       "area_m2": 25.11954171575144
+      },
+      "c_inh_miss": {
+       "patches": 23,
+       "area_m2": 1.678153726070863
+      },
+      "c_miss_wrong": {
+       "patches": 9,
+       "area_m2": 0.5815952064967096
+      },
+      "c_inh_invis": {
+       "patches": 1,
+       "area_m2": 0.06260746149805245
+      },
+      "c_invis_wrong": {
+       "patches": 9,
+       "area_m2": 0.6056814624781539
+      },
+      "c_nogt": {
+       "patches": 1297,
+       "area_m2": 90.2353991446133
+      }
+     },
+     "tau_values_cm": [
+      10.34
+     ],
+     "edge_bins": {
+      "0-0.5": 997,
+      "0.5-1": 3392,
+      "1-2": 10806,
+      ">2": 31020
+     },
+     "surfaces": 752,
+     "surf_minus1": 0
+    }
+   },
+   "lod2_wall_outward_totals": {
+    "patches": 90466,
+    "out": 73549,
+    "inward": 0,
+    "neither": 16917
+   }
+  }
+ },
+ "scientific_verdict": null
+}

@@ -1,0 +1,387 @@
+{
+ "rule": "PHD-MAIN-UNCERT-v1 일 1: the places of 5.2 resolved into patch lists (jointbuildgs:dev, CPU), from the region files, the GT planes\n(gt_<site>_<set>.npz: has a plane, one layer) and the earlier tasks' place files only -- before any uncertainty value is computed.\n\n  python u1_places.py   -> /out/work/places.json, /out/work/places.npz (patch lists per place and prior)\n\nRules: config places.list. The other prior's patches = its patches with a centre within 0.25 m (3-D) of a place patch centre.\nscientific_verdict: null.",
+ "made": "2026-10-23 01:53:58 KST",
+ "env": {
+  "image": "jointbuildgs:dev",
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "cpus": "8",
+  "mem": "24g",
+  "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7"
+ },
+ "places": {
+  "glass_strip": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "patches": 181,
+   "area_m2": 14.469131233431785,
+   "in_eval": 181,
+   "roof_like": 140,
+   "gt_plane": 176,
+   "gt_multi_layer": 37,
+   "other": {
+    "prior": "LoD2",
+    "patches": 161,
+    "area_m2": 10.0625
+   },
+   "ko": "유리 띠",
+   "glass": 163,
+   "ring_missing": 18,
+   "source": "V4/prep/places.json V6 'glass'(163) + 'ring_missing'(18)"
+  },
+  "glass_dome": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "patches": 66,
+   "area_m2": 4.4959497994445226,
+   "in_eval": 66,
+   "roof_like": 65,
+   "gt_plane": 66,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "LoD2",
+    "patches": 80,
+    "area_m2": 5.0
+   },
+   "ko": "유리 둥근 지붕",
+   "source": "V4/prep/places.json V5 'place'(66)"
+  },
+  "flat_roof": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "patches": 5696,
+   "area_m2": 357.5808755825635,
+   "in_eval": 5696,
+   "roof_like": 5696,
+   "gt_plane": 5696,
+   "gt_multi_layer": 1,
+   "other": {
+    "prior": "LoD2",
+    "patches": 6200,
+    "area_m2": 387.5
+   },
+   "ko": "평평한 지붕",
+   "source": "FT/prep/figpos_fig1_rows.npz의 행 32,932개가 든 패치(실제 사진 그림 4의 자리 = PF/prep/places.json fig4). V4 V3 자리와 겹침을 적음",
+   "rows": 32932,
+   "rows_point_xyz_equal": true,
+   "v4_V3_patches": 5696,
+   "overlap_with_V3": 5696
+  },
+  "b173_wing__LoD2": {
+   "ko": "B173 날개",
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "patches": 16336,
+   "area_m2": 1021.0,
+   "gt_plane": 16335,
+   "gt_multi_layer": 1068,
+   "roof_like": 16336,
+   "source": "configs/phd/main_stage1_vis_v3/vis_v3.json wing_region 정의(measure_v3.wing_regions): LoD2 = 날개 두 면(sites_v1.json B173_wings)의 코드 11 평가 범위 패치, 항공 LiDAR = 그 LoD2 날개 단위 중심을 0.25 m 칸으로 찍고 한 칸 넓힌 평면 발자국 안의 코드 11 평가 범위 패치(3단계 보고서 8.4와 같은 덩어리)",
+   "wing_faces": [
+    33,
+    38
+   ],
+   "lod2_wing_units": 18329
+  },
+  "b173_wing__ALS": {
+   "ko": "B173 날개",
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "patches": 14515,
+   "area_m2": 964.2846843572643,
+   "gt_plane": 14470,
+   "gt_multi_layer": 1056,
+   "roof_like": 14500,
+   "source": "configs/phd/main_stage1_vis_v3/vis_v3.json wing_region 정의(measure_v3.wing_regions): LoD2 = 날개 두 면(sites_v1.json B173_wings)의 코드 11 평가 범위 패치, 항공 LiDAR = 그 LoD2 날개 단위 중심을 0.25 m 칸으로 찍고 한 칸 넓힌 평면 발자국 안의 코드 11 평가 범위 패치(3단계 보고서 8.4와 같은 덩어리)",
+   "wing_faces": [
+    33,
+    38
+   ],
+   "lod2_wing_units": 18329
+  },
+  "r1_step_roof": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "patches": 2621,
+   "area_m2": 163.8125,
+   "in_eval": 2621,
+   "roof_like": 2621,
+   "gt_plane": 2620,
+   "gt_multi_layer": 72,
+   "other": {
+    "prior": "ALS",
+    "patches": 0,
+    "area_m2": 0.0
+   },
+   "ko": "R1 계단 지붕",
+   "source": "V4/prep/places.json V1 'place'"
+  },
+  "r1_low_flat": {
+   "ko": "R1 고르게 낮은 평지붕",
+   "status": "확인 불가",
+   "why": "확인 불가: 앞 작업에 R1 상자의 그런 자리가 없다. 기록된 '넓은 평지붕을 영상이 20~30 cm 낮게'는 탐색 지역 R4·R3E(평가 상자 밖)이고(ch6_facts64_v1 facts_6_4.md 2.4-23~26), 빈칸 채우기 준비 보고(main_fill_v1 본실험_채우기_준비보고_v1.md 92~95행, SL/prep/undecidable/r1_flat_roof.md)는 R1 상자에 그런 평지붕이 없다고 적었다"
+  },
+  "chosen_B0_b10_LoD2_s_corr": {
+   "site": "B0_b10",
+   "prior": "LoD2",
+   "patches": 1418,
+   "area_m2": 88.625,
+   "in_eval": 1418,
+   "roof_like": 1418,
+   "gt_plane": 1418,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "ALS",
+    "patches": 53,
+    "area_m2": 3.6024537881904415
+   },
+   "ko": "B0 LoD2 보정 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 5421,
+   "clumps": 370,
+   "clumps_ge_2_5m2": 13,
+   "chosen_area_m2": 88.625,
+   "chosen_patches": 1418,
+   "second_area_m2": 70.75
+  },
+  "chosen_B0_b10_LoD2_s_keep": {
+   "site": "B0_b10",
+   "prior": "LoD2",
+   "patches": 117,
+   "area_m2": 7.3125,
+   "in_eval": 117,
+   "roof_like": 0,
+   "gt_plane": 117,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "ALS",
+    "patches": 0,
+    "area_m2": 0.0
+   },
+   "ko": "B0 LoD2 보존 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 979,
+   "clumps": 111,
+   "clumps_ge_2_5m2": 8,
+   "chosen_area_m2": 7.3125,
+   "chosen_patches": 117,
+   "second_area_m2": 5.0625
+  },
+  "chosen_B0_b10_ALS_s_corr": {
+   "ko": "B0 항공 LiDAR 보정 합",
+   "status": "없음",
+   "candidates": 62,
+   "clumps": 37,
+   "clumps_ge_2_5m2": 0,
+   "chosen": null
+  },
+  "chosen_B0_b10_ALS_s_keep": {
+   "ko": "B0 항공 LiDAR 보존 합",
+   "status": "없음",
+   "candidates": 270,
+   "clumps": 126,
+   "clumps_ge_2_5m2": 0,
+   "chosen": null
+  },
+  "chosen_B173nb_b10_LoD2_s_corr": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "patches": 7640,
+   "area_m2": 477.5,
+   "in_eval": 7640,
+   "roof_like": 7640,
+   "gt_plane": 7640,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "ALS",
+    "patches": 7459,
+    "area_m2": 495.59312276559336
+   },
+   "ko": "B173 주변 LoD2 보정 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 18844,
+   "clumps": 281,
+   "clumps_ge_2_5m2": 23,
+   "chosen_area_m2": 477.5,
+   "chosen_patches": 7640,
+   "second_area_m2": 447.3125
+  },
+  "chosen_B173nb_b10_LoD2_s_keep": {
+   "site": "B173nb_b10",
+   "prior": "LoD2",
+   "patches": 48,
+   "area_m2": 3.0,
+   "in_eval": 48,
+   "roof_like": 48,
+   "gt_plane": 48,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "ALS",
+    "patches": 52,
+    "area_m2": 3.931133074673481
+   },
+   "ko": "B173 주변 LoD2 보존 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 469,
+   "clumps": 221,
+   "clumps_ge_2_5m2": 2,
+   "chosen_area_m2": 3.0,
+   "chosen_patches": 48,
+   "second_area_m2": 2.5
+  },
+  "chosen_B173nb_b10_ALS_s_corr": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "patches": 13084,
+   "area_m2": 869.0365502795489,
+   "in_eval": 13084,
+   "roof_like": 13084,
+   "gt_plane": 13084,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "LoD2",
+    "patches": 15665,
+    "area_m2": 979.0625
+   },
+   "ko": "B173 주변 항공 LiDAR 보정 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 13981,
+   "clumps": 230,
+   "clumps_ge_2_5m2": 2,
+   "chosen_area_m2": 869.0365502795431,
+   "chosen_patches": 13084,
+   "second_area_m2": 12.584549844796056
+  },
+  "chosen_B173nb_b10_ALS_s_keep": {
+   "site": "B173nb_b10",
+   "prior": "ALS",
+   "patches": 82,
+   "area_m2": 5.255271863699141,
+   "in_eval": 82,
+   "roof_like": 82,
+   "gt_plane": 82,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "LoD2",
+    "patches": 80,
+    "area_m2": 5.0
+   },
+   "ko": "B173 주변 항공 LiDAR 보존 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 1344,
+   "clumps": 297,
+   "clumps_ge_2_5m2": 5,
+   "chosen_area_m2": 5.255271863699139,
+   "chosen_patches": 82,
+   "second_area_m2": 4.495949799444522
+  },
+  "chosen_R1rep_b10_LoD2_s_corr": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "patches": 2751,
+   "area_m2": 171.9375,
+   "in_eval": 2751,
+   "roof_like": 2751,
+   "gt_plane": 2751,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "ALS",
+    "patches": 6,
+    "area_m2": 0.3917243070856545
+   },
+   "ko": "R1 LoD2 보정 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 7532,
+   "clumps": 238,
+   "clumps_ge_2_5m2": 23,
+   "chosen_area_m2": 171.9375,
+   "chosen_patches": 2751,
+   "second_area_m2": 43.875
+  },
+  "chosen_R1rep_b10_LoD2_s_keep": {
+   "site": "R1rep_b10",
+   "prior": "LoD2",
+   "patches": 62,
+   "area_m2": 3.875,
+   "in_eval": 62,
+   "roof_like": 0,
+   "gt_plane": 62,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "ALS",
+    "patches": 0,
+    "area_m2": 0.0
+   },
+   "ko": "R1 LoD2 보존 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 164,
+   "clumps": 33,
+   "clumps_ge_2_5m2": 1,
+   "chosen_area_m2": 3.875,
+   "chosen_patches": 62,
+   "second_area_m2": null
+  },
+  "chosen_R1rep_b10_ALS_s_corr": {
+   "ko": "R1 항공 LiDAR 보정 합",
+   "status": "없음",
+   "candidates": 111,
+   "clumps": 89,
+   "clumps_ge_2_5m2": 0,
+   "chosen": null
+  },
+  "chosen_R1rep_b10_ALS_s_keep": {
+   "site": "R1rep_b10",
+   "prior": "ALS",
+   "patches": 516,
+   "area_m2": 32.54309961572645,
+   "in_eval": 516,
+   "roof_like": 516,
+   "gt_plane": 516,
+   "gt_multi_layer": 0,
+   "other": {
+    "prior": "LoD2",
+    "patches": 583,
+    "area_m2": 36.4375
+   },
+   "ko": "R1 항공 LiDAR 보존 합",
+   "rule": "보정 합(s_corr)과 보존 합(s_keep) 칸마다: 그 칸의 평가 범위 패치 가운데 참값 평면이 있고 참값이 한 층(여러 층 아님)인 패치를 중심 0.36 m 안(3차원)으로 이은 덩어리, 넓이(영역 파일 area 합) 2.5 m² 이상인 것 가운데 가장 넓은 것. 없으면 '없음'",
+   "candidates": 2109,
+   "clumps": 432,
+   "clumps_ge_2_5m2": 4,
+   "chosen_area_m2": 32.54309961572646,
+   "chosen_patches": 516,
+   "second_area_m2": 16.329024675915694
+  }
+ },
+ "arrays": [
+  "b173_wing__ALS",
+  "b173_wing__LoD2",
+  "chosen_B0_b10_LoD2_s_corr__ALS",
+  "chosen_B0_b10_LoD2_s_corr__LoD2",
+  "chosen_B0_b10_LoD2_s_keep__ALS",
+  "chosen_B0_b10_LoD2_s_keep__LoD2",
+  "chosen_B173nb_b10_ALS_s_corr__ALS",
+  "chosen_B173nb_b10_ALS_s_corr__LoD2",
+  "chosen_B173nb_b10_ALS_s_keep__ALS",
+  "chosen_B173nb_b10_ALS_s_keep__LoD2",
+  "chosen_B173nb_b10_LoD2_s_corr__ALS",
+  "chosen_B173nb_b10_LoD2_s_corr__LoD2",
+  "chosen_B173nb_b10_LoD2_s_keep__ALS",
+  "chosen_B173nb_b10_LoD2_s_keep__LoD2",
+  "chosen_R1rep_b10_ALS_s_keep__ALS",
+  "chosen_R1rep_b10_ALS_s_keep__LoD2",
+  "chosen_R1rep_b10_LoD2_s_corr__ALS",
+  "chosen_R1rep_b10_LoD2_s_corr__LoD2",
+  "chosen_R1rep_b10_LoD2_s_keep__ALS",
+  "chosen_R1rep_b10_LoD2_s_keep__LoD2",
+  "flat_roof__ALS",
+  "flat_roof__LoD2",
+  "glass_dome__ALS",
+  "glass_dome__LoD2",
+  "glass_strip__ALS",
+  "glass_strip__LoD2",
+  "r1_step_roof__ALS",
+  "r1_step_roof__LoD2"
+ ],
+ "seconds": 2.6,
+ "scientific_verdict": null
+}

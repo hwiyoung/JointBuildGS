@@ -1,0 +1,42 @@
+{
+ "site": "B0_b10",
+ "R": 1.5,
+ "view": "top",
+ "panels": [
+  {
+   "label": "MVS (LoD2 패치)",
+   "prior": "LoD2",
+   "data": "mvs_a",
+   "patches": 82117,
+   "area_m2": 5132.25334436015,
+   "with_value": 77015,
+   "u_med_cm": 5.1103319972753525,
+   "over_50cm_share": 0.013153281828215282
+  },
+  {
+   "label": "항공 LiDAR (항공 LiDAR 패치)",
+   "prior": "ALS",
+   "data": "als",
+   "patches": 23280,
+   "area_m2": 1592.8931141923629,
+   "with_value": 23113,
+   "u_med_cm": 1.130183320492506,
+   "over_50cm_share": 0.0007787825033530913
+  },
+  {
+   "label": "LoD2 (20 cm로 둠)",
+   "prior": "LoD2",
+   "data": "lod2",
+   "patches": 82117,
+   "area_m2": 5132.25334436015,
+   "with_value": 82117,
+   "u_med_cm": 20.0,
+   "over_50cm_share": 0.0
+  }
+ ],
+ "title": "같은 영역에서 세 자료의 불확실도는 어디서 크고 어디서 작은가 — B0",
+ "footer": "지역 전체(평가 범위): (가) u 중앙값 5.1 cm, 값 있음 93.8 %, 50 cm 넘음 1.3 %; (나) u 중앙값 1.1 cm, 값 있음 99.3 %, 50 cm 넘음 0.1 %; (다) u 중앙값 20.0 cm, 값 있음 100.0 %, 50 cm 넘음 0.0 %",
+ "made": "2026-10-23 09:43:14 KST",
+ "config_sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7",
+ "scientific_verdict": null
+}
