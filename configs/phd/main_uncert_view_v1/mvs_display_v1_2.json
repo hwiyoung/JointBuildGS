@@ -1,0 +1,25 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.2",
+  "purpose": "Display existing MVS uncertainty and reference-check values on actual MVS points",
+  "authorization": "2026-10-23 user explicitly selected MVS actual point cloud coloring",
+  "max_points_per_site_version": 1200000,
+  "sampling": "First indices of the existing deterministic random-key-sorted source; display only",
+  "coordinates": "Exact float32 XYZ bytes from the uncertainty computation's mvs_a/b_xyz.npy; no translation or surface fabrication",
+  "mapping": {
+    "candidate_count": 16,
+    "candidate_centres": "prior patch centre + stored MVS face offset o * original patch normal",
+    "accept": "lateral distance <= 0.5 m and absolute normal distance from stored MVS o <= 1 m",
+    "choose": "minimum distance to candidate centre; ties resolved by ascending patch index",
+    "unmatched": "not painted; never assign a value through an unmatched point",
+    "reference_geometry_used": false,
+    "new_per_point_uncertainty_computed": false
+  },
+  "color": "Original patch value for the selected MVS version and radius; point display count never enters chart statistics",
+  "default_geometry": "source",
+  "prior_geometry": "LoD2 face or original prior patch; explicitly labeled",
+  "legacy_geometry": "Existing common LoD2 face/patch display remains selectable",
+  "calibration_bins_changed": false,
+  "sparsification_definition_changed": false,
+  "coordinate_reference": "EPSG:25832 lineage; existing COLMAP local coordinates and recorded world shift preserved",
+  "scientific_verdict": null
+}

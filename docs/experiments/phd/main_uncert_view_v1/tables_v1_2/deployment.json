@@ -1,0 +1,230 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.2",
+  "made": "2026-10-23T22:46:08.727926+09:00",
+  "source_base_commit": "78dec6a5d69e626dc60b29cbe55dd513f33bb958",
+  "source_state": "task changes pending commit; exact asset hashes below",
+  "url": "http://192.168.10.203:8912/",
+  "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "containers": [
+    {
+      "name": "/jbgs-main-uncert-view-8912",
+      "id": "45314bb0a4c848780713dbd4c922760a8dfaa8b54dbd20a7874b64256f9692f4",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "running": true,
+      "mounts": [
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/web_mvs_v1_2",
+          "destination": "/web",
+          "writable": false
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/delivery_server_v1/download_server.py",
+          "destination": "/server/download_server.py",
+          "writable": false
+        }
+      ],
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8912"
+          }
+        ]
+      },
+      "readonly_root": true
+    },
+    {
+      "name": "/jbgs-main-uncert-view-8912-v11-downloads",
+      "id": "97a684c0949880b9bba04d0ae64cf4d2129dd73ee99a1de414f91beacaa2547c",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "running": false,
+      "mounts": [
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/delivery_server_v1/download_server.py",
+          "destination": "/server/download_server.py",
+          "writable": false
+        },
+        {
+          "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/web_v1_1",
+          "destination": "/web",
+          "writable": false
+        }
+      ],
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8912"
+          }
+        ]
+      },
+      "readonly_root": true
+    }
+  ],
+  "assets": [
+    {
+      "path": "analysis_v11.js",
+      "sha256": "e6833390c97123d7bd8fdc59c102faf7fbb516f85a2475d05db64a17f1801d9b"
+    },
+    {
+      "path": "app.js",
+      "sha256": "1f2b5fe49e6acd783d7a6c1fbe5c03ba5a7438b761c26165b600aa919676ae93"
+    },
+    {
+      "path": "data.js",
+      "sha256": "0359f460d5e0983d83e0546ca4030d3bdc3476dac9450e9e0b7d143f2b47d513"
+    },
+    {
+      "path": "geometry_mvs.css",
+      "sha256": "ec006bb424ef8e3d36cf0c0259c2a6174808e2076058d66b5e80f18b6a0666cf"
+    },
+    {
+      "path": "geometry_mvs.js",
+      "sha256": "e98ef4a61718935166e0283932067e053ebe475ba8868e4bf9aa2460b0b7ac79"
+    },
+    {
+      "path": "index.html",
+      "sha256": "ca5625dcb71492abfdd51b7c7fc9561560be15d586812b0e05430d84a67337cb"
+    },
+    {
+      "path": "stats.js",
+      "sha256": "d0878d7b8cb7e5ce75efa9cf8a238a7a8f27d230e4ad32669def302db3e347ea"
+    },
+    {
+      "path": "style.css",
+      "sha256": "0f6b9e39f389137ab7de9e4f3ccba08e8cd2420fb9f55b983323ca2fe0f9cea9"
+    },
+    {
+      "path": "view_v11.css",
+      "sha256": "4194b3461841afc27b3ce23005820bea39291883ab35bcc37945f6015df37ad1"
+    },
+    {
+      "path": "view_v11.js",
+      "sha256": "9b49a762d46e7d59b62b68c620279acf41d5393f9a32ce30890a30682cce8762"
+    }
+  ],
+  "browser": {
+    "preview": {
+      "checks": 360,
+      "pass_": true,
+      "receipt": "browser_preview.json"
+    },
+    "live": {
+      "checks": 65,
+      "pass_": true,
+      "receipt": "browser_live.json"
+    },
+    "offline": {
+      "checks": 65,
+      "pass_": true,
+      "receipt": "browser_offline.json"
+    }
+  },
+  "downloads": {
+    "task_id": "PHD-MAIN-UNCERT-VIEW-v1.2",
+    "made": "2026-10-23T22:39:11.335796+09:00",
+    "commit": "78dec6a5d69e626dc60b29cbe55dd513f33bb958",
+    "full": {
+      "archive": "PHD-MAIN-UNCERT-VIEW-v1.2_results.zip",
+      "url": "http://192.168.10.203:8912/downloads/PHD-MAIN-UNCERT-VIEW-v1.2_results.zip",
+      "bytes": 395317778,
+      "sha256": "173f5a7c2b6cd1e41333f27fbe5fc850d63e74428874cbce674acd9194b869c8",
+      "screenshots": 52,
+      "files": 136,
+      "crc_and_sha256_verified": true
+    },
+    "report": {
+      "archive": "PHD-MAIN-UNCERT-VIEW-v1.2_report_and_screens.zip",
+      "url": "http://192.168.10.203:8912/downloads/PHD-MAIN-UNCERT-VIEW-v1.2_report_and_screens.zip",
+      "bytes": 7980640,
+      "sha256": "9cf6a942a4c31806823399d02130fc73a741b5ec24385fdd503120881344927b",
+      "screenshots": 52,
+      "files": 100,
+      "crc_and_sha256_verified": true
+    },
+    "scientific_verdict": null
+  },
+  "preserved_archives": {
+    "PHD-MAIN-UNCERT-VIEW-v1.1_results.zip": "9612a4d12fdcab4a186f7b248a43607984d364e110865282a77aa6eae4886148",
+    "PHD-MAIN-UNCERT-VIEW-v1.1_web.zip": "74d1a37280cd48e1a076bcf8d62c6d5f027ae15ebcb9d8e3ea3a4da5004ef249"
+  },
+  "preserved_config_sha256": "beaead64ff5a5ffee1cfaee5fe7fa17efcfe074a47c136ee872dc622fc93533b",
+  "unchanged_data": [
+    {
+      "path": "data/B0_b10__ALS.js",
+      "sha256": "cd78c226b941093d0cd164ecc3fe385984812f7079e330854a4359903170ed51"
+    },
+    {
+      "path": "data/B0_b10__LoD2.js",
+      "sha256": "36afd9703a939d478be36f72594a6c99074ba4b934fd07a20f5ac91f23768339"
+    },
+    {
+      "path": "data/B173nb_b10__ALS.js",
+      "sha256": "ec5dd28a813f58ce660e55a6f4264c491b1cac91a35406d002110a145405f424"
+    },
+    {
+      "path": "data/B173nb_b10__LoD2.js",
+      "sha256": "f2cbeab5ce273d0e8124525e70a5e11e7baa3bb60def71a67298a9d2c1a19174"
+    },
+    {
+      "path": "data/R1rep_b10__ALS.js",
+      "sha256": "3cbe0639591fdaa64961c05ecab52a87b149793a3f1a05be0ac4edc13818a76c"
+    },
+    {
+      "path": "data/R1rep_b10__LoD2.js",
+      "sha256": "82b491e5790601bb54bb65bff568b46932fb1ec547a406a6781a51541d99a113"
+    },
+    {
+      "path": "faces/B0_b10__ALS.js",
+      "sha256": "38d4465b2c822c2764240a6a053572543ff391ae992f92dbc3361460a3b2dd2f"
+    },
+    {
+      "path": "faces/B0_b10__LoD2.js",
+      "sha256": "0878522910c58f2348e399a80faeba9026c58ca2476802c3a2b82ce4a1dd12ed"
+    },
+    {
+      "path": "faces/B173nb_b10__ALS.js",
+      "sha256": "dfebb9ae6c8bc7960f2805e2cde901171611ed518c0232ed648bf80aa0ccc4d9"
+    },
+    {
+      "path": "faces/B173nb_b10__LoD2.js",
+      "sha256": "2bdeb48de801b75c079a1f413af3f649cc9e6d18a42fe2bf5eefebbefd54ae97"
+    },
+    {
+      "path": "faces/R1rep_b10__ALS.js",
+      "sha256": "8eabebadc2be4a8a15d15c8f8965087e0a25a9b162f0894bb332dcf6e70935f1"
+    },
+    {
+      "path": "faces/R1rep_b10__LoD2.js",
+      "sha256": "41ee0eb94778f6fd9301aeb931a6a17c734fa3e23ac8df7107f0178decf93e01"
+    },
+    {
+      "path": "sections/B0_b10__ALS.js",
+      "sha256": "ab4f1fa98e5db3488239a3cb4302b491818db6a573b36eb6a4040e55d7dab825"
+    },
+    {
+      "path": "sections/B0_b10__LoD2.js",
+      "sha256": "0778e312f13915bfce7461d3c9354f816395760732dccc81266f0e98649f2ecb"
+    },
+    {
+      "path": "sections/B173nb_b10__ALS.js",
+      "sha256": "b840a0a26d0b80b610243d9d3312f2c20ecc2fcab8d15da63bc1f8348a615ca2"
+    },
+    {
+      "path": "sections/B173nb_b10__LoD2.js",
+      "sha256": "fb274ee2341d5f20643e625d4dff9d76fd55c9cb3a04ba7b526eae5aa8be3d2f"
+    },
+    {
+      "path": "sections/R1rep_b10__ALS.js",
+      "sha256": "064d5de34fc543b66ddbb697889b28bbade2d0616cde0c7cf32a4379b12124ce"
+    },
+    {
+      "path": "sections/R1rep_b10__LoD2.js",
+      "sha256": "1498aadb9d5ac7b5bfc71d7b2a81692c6a28c77e529bdd7ca44d9d83409e83f0"
+    }
+  ],
+  "unchanged_data_files": 18,
+  "codex_app_save_status": "User previously reported hanging; native app saving remains unverified. Linux Chromium completed both new ZIP downloads.",
+  "pass_": true,
+  "scientific_verdict": null
+}

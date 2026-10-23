@@ -37,7 +37,7 @@ function row(points,label,select,source){
     median_e_over_u:US.q(points.map(p=>p.u>0?p.e/p.u:NaN),.5),draw:points.length>=C.calibration.min_patches};
 }
 function calibration(points,source,lod2,pooled,detail){
-  if(!lod2){const edges=C.calibration.bins_cm;return edges.slice(0,-1).map((lo,j)=>{const hi=edges[j+1];return row(points.filter(p=>p.u>=lo&&(hi===null||p.u<hi)),hi===null?'40 초과':lo+'~'+hi,{kind:'bin',lo,hi,source},source)})}
+  if(!lod2){const edges=C.calibration.bins_cm;return edges.slice(0,-1).map((lo,j)=>{const hi=edges[j+1];return row(points.filter(p=>p.u>=lo&&(hi===null||p.u<hi)),hi===null?'40 이상':lo+'~'+hi,{kind:'bin',lo,hi,source},source)})}
   const groups=new Map();for(const p of points){const group=(!p.roof?'벽':(!pooled||detail)?'지붕 '+(p.rt||'형태 없음'):'지붕'),key=(pooled?p.site+' · ':'')+group;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(p)}
   return [...groups].sort(([a],[b])=>a.localeCompare(b)).map(([label,ps])=>row(ps,label,{kind:'group',source,site:pooled?ps[0].site:null,roof:ps[0].roof,rt:ps[0].roof&&(!pooled||detail)?ps[0].rt:null},source));
 }

@@ -1,0 +1,31 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.2",
+  "artifact_root": "JBGS_ARTIFACT_ROOT",
+  "payload": "phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1",
+  "web": "web_mvs_v1_2",
+  "url": "http://192.168.10.203:8912/",
+  "config": "configs/phd/main_uncert_view_v1/mvs_display_v1_2.json",
+  "config_sha256": "cbb3a44ecab95436db5bce314c1beed5f7f81b6f1959f9ddd0d42cc9770db372",
+  "report": "docs/experiments/phd/main_uncert_view_v1/MVS점군_표시_v1_2.md",
+  "deployment_report": "docs/experiments/phd/main_uncert_view_v1/MVS점군_배포_v1_2.md",
+  "verification": "docs/experiments/phd/main_uncert_view_v1/tables_v1_2",
+  "deployment_script": "scripts/phd/main_uncert_view_v1/serve_mvs_v12.sh",
+  "previous_web_preserved": "web_v1_1",
+  "previous_manifest": "artifacts/manifests/phd_main_uncert_view_v1_1.json",
+  "results_download": {
+    "archive": "PHD-MAIN-UNCERT-VIEW-v1.2_results.zip",
+    "url": "http://192.168.10.203:8912/downloads/PHD-MAIN-UNCERT-VIEW-v1.2_results.zip",
+    "bytes": 395317778,
+    "sha256": "173f5a7c2b6cd1e41333f27fbe5fc850d63e74428874cbce674acd9194b869c8",
+    "screenshots": 52
+  },
+  "report_download": {
+    "archive": "PHD-MAIN-UNCERT-VIEW-v1.2_report_and_screens.zip",
+    "url": "http://192.168.10.203:8912/downloads/PHD-MAIN-UNCERT-VIEW-v1.2_report_and_screens.zip",
+    "bytes": 7980640,
+    "sha256": "9cf6a942a4c31806823399d02130fc73a741b5ec24385fdd503120881344927b",
+    "screenshots": 52
+  },
+  "display_values": "Original patch statistics mapped to original MVS XYZ; not newly measured pointwise errors",
+  "scientific_verdict": null
+}

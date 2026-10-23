@@ -1,0 +1,180 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.2",
+  "made": "2026-10-23T22:27:55.524771+09:00",
+  "commit": "78dec6a5d69e626dc60b29cbe55dd513f33bb958",
+  "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "config_sha256": "cbb3a44ecab95436db5bce314c1beed5f7f81b6f1959f9ddd0d42cc9770db372",
+  "rows": [
+    {
+      "site": "B0_b10",
+      "version": "a",
+      "source": "points/B0_b10/mvs_a_xyz.npy",
+      "source_points": 23393919,
+      "displayed_points": 1200000,
+      "source_sha256": "f48bf5b249f938d91354a109baebdb7fdfdd15e5f528fe4571ab2b0491f2c4a9",
+      "xyz_sha256": "030fd13c6a93b55fd6cfb24a9360f60d4182cd4ff6c83f07ed1271778cc6f444",
+      "file": "mvs_geometry/B0_b10_a.js",
+      "bytes": 20764541,
+      "file_sha256": "52816f5b4a0ab9b50ff9033933bad87910dc756f261ec1f2c2cf7d3577a0ccf4",
+      "stats": {
+        "LoD2": {
+          "mapped_points": 840638,
+          "covered_patches": 105085,
+          "total_patches": 143652,
+          "max_lateral_m": 0.4999910496004831,
+          "max_slab_distance_m": 0.9999522276277752
+        },
+        "ALS": {
+          "mapped_points": 389104,
+          "covered_patches": 32454,
+          "total_patches": 44994,
+          "max_lateral_m": 0.4999916983969393,
+          "max_slab_distance_m": 0.9999026751116391
+        }
+      }
+    },
+    {
+      "site": "B0_b10",
+      "version": "b",
+      "source": "points/B0_b10/mvs_b_xyz.npy",
+      "source_points": 26438128,
+      "displayed_points": 1200000,
+      "source_sha256": "265528d91b2516d99dc6c5bd51b61aba8ff9ce89252d93ebaa824f680771b3c3",
+      "xyz_sha256": "30f0a95cb79fc8e873a3a938c8cd3b404bb1b2a6e57197d9fa12063f87ae5221",
+      "file": "mvs_geometry/B0_b10_b.js",
+      "bytes": 20625064,
+      "file_sha256": "00efb5e71eabe57c583320c3f3baa973d1c01b4d02018b9c174cfad3e4647caa",
+      "stats": {
+        "LoD2": {
+          "mapped_points": 767964,
+          "covered_patches": 106367,
+          "total_patches": 143652,
+          "max_lateral_m": 0.4999905645742599,
+          "max_slab_distance_m": 0.999979736030464
+        },
+        "ALS": {
+          "mapped_points": 361308,
+          "covered_patches": 32547,
+          "total_patches": 44994,
+          "max_lateral_m": 0.4999905820967314,
+          "max_slab_distance_m": 0.9999974816608997
+        }
+      }
+    },
+    {
+      "site": "B173nb_b10",
+      "version": "a",
+      "source": "points/B173nb_b10/mvs_a_xyz.npy",
+      "source_points": 18985897,
+      "displayed_points": 1200000,
+      "source_sha256": "f7dfb7aff98891a4aba4d257300f0ae873c051f6a9fb40cbf603e58be986f297",
+      "xyz_sha256": "fe525b320541f2d16e5e30dd587d1590708f8243d2d62457e8e9db908313a2c4",
+      "file": "mvs_geometry/B173nb_b10_a.js",
+      "bytes": 20712965,
+      "file_sha256": "9898bbb646cc554c8d722b2e34a58b8c0340e4d9339d2a848922b60d909a39d9",
+      "stats": {
+        "LoD2": {
+          "mapped_points": 783836,
+          "covered_patches": 118063,
+          "total_patches": 258097,
+          "max_lateral_m": 0.4999988471256005,
+          "max_slab_distance_m": 0.9999974822997061
+        },
+        "ALS": {
+          "mapped_points": 579724,
+          "covered_patches": 50521,
+          "total_patches": 76657,
+          "max_lateral_m": 0.49999862721988253,
+          "max_slab_distance_m": 0.999944471022669
+        }
+      }
+    },
+    {
+      "site": "B173nb_b10",
+      "version": "b",
+      "source": "points/B173nb_b10/mvs_b_xyz.npy",
+      "source_points": 21781936,
+      "displayed_points": 1200000,
+      "source_sha256": "0963545eeccab6a40a7c82201ca95a022893587e8e5b95ccac42f7ff0b5f3c70",
+      "xyz_sha256": "e26e0b81e20d33a7724b1060b4ada1bae249eb5cf398a9a261408a81595b59ab",
+      "file": "mvs_geometry/B173nb_b10_b.js",
+      "bytes": 20539237,
+      "file_sha256": "02d333290fae8673e710ab5fe5b5b75bf1a49c61698d7aadc69d684186ac30ac",
+      "stats": {
+        "LoD2": {
+          "mapped_points": 718452,
+          "covered_patches": 122523,
+          "total_patches": 258097,
+          "max_lateral_m": 0.4999908655202468,
+          "max_slab_distance_m": 0.9999955687003697
+        },
+        "ALS": {
+          "mapped_points": 517548,
+          "covered_patches": 50288,
+          "total_patches": 76657,
+          "max_lateral_m": 0.4999951427132818,
+          "max_slab_distance_m": 0.9999353855395473
+        }
+      }
+    },
+    {
+      "site": "R1rep_b10",
+      "version": "a",
+      "source": "points/R1rep_b10/mvs_a_xyz.npy",
+      "source_points": 21658682,
+      "displayed_points": 1200000,
+      "source_sha256": "0e535e4c054d600caa8ebaabc36c3f9dd0582f30d9703fac86b5c17613b7a5db",
+      "xyz_sha256": "4c57bcabf977c986154e20858c15029b656c2024d9ead5546d3b4de8338e047b",
+      "file": "mvs_geometry/R1rep_b10_a.js",
+      "bytes": 20985443,
+      "file_sha256": "f579591201bf65441bd7c3c1d883febc34c4611b652c2e4a430374ae91143d77",
+      "stats": {
+        "LoD2": {
+          "mapped_points": 700334,
+          "covered_patches": 85890,
+          "total_patches": 138579,
+          "max_lateral_m": 0.4999962313399048,
+          "max_slab_distance_m": 0.9999866195321374
+        },
+        "ALS": {
+          "mapped_points": 442936,
+          "covered_patches": 35178,
+          "total_patches": 46215,
+          "max_lateral_m": 0.4999998273605818,
+          "max_slab_distance_m": 0.9999624066311112
+        }
+      }
+    },
+    {
+      "site": "R1rep_b10",
+      "version": "b",
+      "source": "points/R1rep_b10/mvs_b_xyz.npy",
+      "source_points": 26629217,
+      "displayed_points": 1200000,
+      "source_sha256": "9d0330a1b6262fb0955c3adcbd4ddcaf803ff66ed7098a165a8f60bce2ddc4f0",
+      "xyz_sha256": "32b8cafaa05657303505d9e473edb5bc81a5c692ab61dea0c08ea7cc1c5e44dc",
+      "file": "mvs_geometry/R1rep_b10_b.js",
+      "bytes": 20641491,
+      "file_sha256": "7f2e697c95b73f33421e23bdab5e9946be6f1d6f7f02eca63d8ce69b614429e7",
+      "stats": {
+        "LoD2": {
+          "mapped_points": 603721,
+          "covered_patches": 87888,
+          "total_patches": 138579,
+          "max_lateral_m": 0.4999961532610652,
+          "max_slab_distance_m": 0.9999944884639165
+        },
+        "ALS": {
+          "mapped_points": 376415,
+          "covered_patches": 34607,
+          "total_patches": 46215,
+          "max_lateral_m": 0.49997357791440894,
+          "max_slab_distance_m": 0.999995949107686
+        }
+      }
+    }
+  ],
+  "added_bytes": 124268741,
+  "scientific_values_changed": false,
+  "scientific_verdict": null
+}

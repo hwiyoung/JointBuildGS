@@ -3,7 +3,7 @@ import {spawn} from 'node:child_process';
 import {createReadStream, mkdirSync, readFileSync, statSync, writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 const url=process.env.VIEW_URL||'http://127.0.0.1:8913/';
-const label=process.env.QA_LABEL||'preview';
+const label=process.env.QA_LABEL||'preview',release=process.env.RECEIPT_VERSION||'v11',tableDir='/docs/tables_'+(release==='v12'?'v1_2':'v1_1');
 const port=9241, dir='/tmp/download-qa';
 mkdirSync(dir,{recursive:true});
 const browser=spawn('/usr/bin/chromium',['--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage',`--remote-debugging-port=${port}`,'--user-data-dir=/tmp/download-qa-profile','about:blank'],{stdio:'ignore'});
@@ -32,7 +32,7 @@ try{
   for(let n=0;n<300;n++){if(await ev('!!window.UNCERT_APP?.ready && !!window.UNCERT_APP?.judgement'))break;if(n===299)throw Error('Viewer not ready');await pause(100)}
   result.viewer_ready=await ev('({title:document.title,faces:UNCERT_APP.faceRows.length,mvs:UNCERT_APP.judgement.counts.mvs})');
   for(const [selector,receipt] of [['#reportDownload','report_download.json'],['#resultsDownload','results_download.json']]){
-    const expected=JSON.parse(readFileSync('/docs/tables_v1_1/'+receipt,'utf8'));
+    const expected=release==='v12'?JSON.parse(readFileSync(tableDir+'/downloads.json','utf8'))[selector==='#reportDownload'?'report':'full']:JSON.parse(readFileSync(tableDir+'/'+receipt,'utf8'));
     await ev(`document.querySelector(${JSON.stringify(selector)}).click()`);
     let download;for(let n=0;n<2400;n++){
       download=[...downloads.values()].find(d=>d.suggestedFilename===expected.archive);
@@ -48,4 +48,4 @@ try{
   }
   result.finished=new Date().toISOString();result.pass=true;
 }catch(e){result.pass=false;result.error=e.stack;console.error(e.stack);process.exitCode=1}
-finally{writeFileSync('/docs/tables_v1_1/download_browser_'+label+'.json',JSON.stringify(result,null,2)+'\n');ws?.close();browser.kill('SIGTERM')}
+finally{writeFileSync(tableDir+'/download_browser_'+label+'.json',JSON.stringify(result,null,2)+'\n');ws?.close();browser.kill('SIGTERM')}
