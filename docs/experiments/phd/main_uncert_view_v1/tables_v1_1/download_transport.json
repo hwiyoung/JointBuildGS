@@ -1,0 +1,162 @@
+{
+  "task_id": "PHD-MAIN-UNCERT-VIEW-v1.1",
+  "made": "2026-10-23T21:55:10.247379+09:00",
+  "commit": "629806e9512e20486a4d57e32f367cc0bc459fbf",
+  "unit_tests": {
+    "command": "python -m unittest tests.phd.test_uncert_view_download -v",
+    "tests": 8,
+    "failures": 0
+  },
+  "findings_before": [
+    "Range request returned 200 and the entire file",
+    "No attachment or Accept-Ranges headers",
+    "One client BrokenPipeError observed; client finalization cause unconfirmed"
+  ],
+  "browser_client": "User reports Codex in-app browser",
+  "codex_client_completion": "User confirms small bundle still stalls at completion after transport fix",
+  "client_transfer_observation": {
+    "time_utc": "2026-10-23T12:52:12Z",
+    "file": "PHD-MAIN-UNCERT-VIEW-v1.1_report_and_screens.zip",
+    "expected_bytes": 5444856,
+    "sent_bytes": 5444856,
+    "server_outcome": "complete",
+    "client_outcome": "not completed, per user"
+  },
+  "linux_chromium_downloads": "both completed and saved SHA-256 matched",
+  "resumed_full_zip_sha256": "9612a4d12fdcab4a186f7b248a43607984d364e110865282a77aa6eae4886148",
+  "preserved": [
+    {
+      "path": "PHD-MAIN-UNCERT-VIEW-v1.1_results.zip",
+      "sha256": "9612a4d12fdcab4a186f7b248a43607984d364e110865282a77aa6eae4886148",
+      "matches_frozen": true
+    },
+    {
+      "path": "PHD-MAIN-UNCERT-VIEW-v1.1_web.zip",
+      "sha256": "74d1a37280cd48e1a076bcf8d62c6d5f027ae15ebcb9d8e3ea3a4da5004ef249",
+      "matches_frozen": true
+    }
+  ],
+  "containers": [
+    {
+      "name": "/jbgs-main-uncert-view-8912",
+      "id": "97a684c0949880b9bba04d0ae64cf4d2129dd73ee99a1de414f91beacaa2547c",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "status": "running",
+      "started": "2026-10-23T12:51:10.485361695Z",
+      "command": [
+        "/server/download_server.py",
+        "--directory",
+        "/web"
+      ],
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/web_v1_1",
+          "Destination": "/web",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        },
+        {
+          "Type": "bind",
+          "Source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/delivery_server_v1/download_server.py",
+          "Destination": "/server/download_server.py",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8912"
+          }
+        ]
+      },
+      "readonly_root": true,
+      "cpus": 2.0,
+      "memory_bytes": 536870912,
+      "device_requests": null
+    },
+    {
+      "name": "/jbgs-main-uncert-view-8912-v11-simplehttp",
+      "id": "c3042a91a7ea324d2ec2e65da906168b74b8d1f679c709ebd86a8d6cd9a38178",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "status": "exited",
+      "started": "2026-10-23T12:25:55.998491405Z",
+      "command": [
+        "-m",
+        "http.server",
+        "8080",
+        "--bind",
+        "0.0.0.0",
+        "--directory",
+        "/web"
+      ],
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/web_v1_1",
+          "Destination": "/web",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8912"
+          }
+        ]
+      },
+      "readonly_root": true,
+      "cpus": 2.0,
+      "memory_bytes": 536870912,
+      "device_requests": null
+    },
+    {
+      "name": "/jbgs-main-uncert-view-8912-v1",
+      "id": "713893b4733df1adef168bc5683ada56cd365320e592bfbfaaa63c93553a1554",
+      "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+      "status": "exited",
+      "started": "2026-10-23T08:00:04.319867719Z",
+      "command": [
+        "-m",
+        "http.server",
+        "8080",
+        "--bind",
+        "0.0.0.0",
+        "--directory",
+        "/web"
+      ],
+      "mounts": [
+        {
+          "Type": "bind",
+          "Source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_uncert_view_v1/PHD-MAIN-UNCERT-VIEW-v1/web",
+          "Destination": "/web",
+          "Mode": "ro",
+          "RW": false,
+          "Propagation": "rprivate"
+        }
+      ],
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8912"
+          }
+        ]
+      },
+      "readonly_root": true,
+      "cpus": 2.0,
+      "memory_bytes": 536870912,
+      "device_requests": null
+    }
+  ],
+  "server_sha256": "2b892f4ad4768e0b09915dc4378d889d5b034c8e4709529cf4c5019df0d8f177",
+  "index_sha256": "6beebb05e3a9ff3b94b7e943a98b3bbe219eabc770ddc92eb69587882b6868c6",
+  "scientific_verdict": null
+}
