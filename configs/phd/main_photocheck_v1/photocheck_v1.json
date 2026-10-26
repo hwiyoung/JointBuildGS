@@ -1,0 +1,513 @@
+{
+  "task_id": "PHD-MAIN-PHOTOCHECK-v1",
+  "created_at": "2026-10-26T16:09:12.474002+09:00",
+  "scientific_verdict": null,
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz_m": [
+      690953,
+      5336071,
+      604
+    ],
+    "height_sign": "outward normal positive; identical to inherited mvs_p and gt_p"
+  },
+  "sources": {
+    "widen": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2",
+    "patch_glob": "*__<prior>__R1.5.npz",
+    "train_split": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/image_split.json",
+    "images": "/art/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+    "camera": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_input_db_ids/cameras.txt",
+    "poses": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+    "prior_mesh": "holdout/internal/prior_tiles/<tile>/<prior>_mesh.npz plus exact registration/<tile>/<prior>/summary.json shift"
+  },
+  "points": {
+    "spacing_m": 0.5,
+    "patch_spacing_m": 0.25,
+    "group": "same tile, surface, building and kind; never cross split",
+    "grid": "LoD2: normalized source tangents; ALS: XY; origin min regular coordinate per surface; floor((coord-min)/0.5 + 1e-7)",
+    "grid_check": "distance to nearest 0.25 m integer offset <=1e-5 m; non-grid faces use tangent plane; extras attach closest point within 0.5 m in same surface/building/kind or singleton",
+    "centre": "area weighted",
+    "normal": "unweighted unit mean",
+    "tangent1": "first source tangent projected orthogonal to mean normal then normalized",
+    "undefined": "keep patch ownership; missing source normal/tangent remains unavailable and yields no eligible photos; never infer from GT",
+    "sigma": "median patch sigma; missing retained",
+    "mvs_p": "median finite patch mvs_p",
+    "u_mvs_gate": "median finite inherited raw u_mvs"
+  },
+  "uncertainty": {
+    "unit": "metre",
+    "floor_m": 0.0275,
+    "MVS": "sqrt(u_mvs^2+floor^2)",
+    "ALS": "sqrt(u_prior^2+floor^2)",
+    "LoD2_roof": {
+      "1000": 0.166,
+      "2100": 0.098,
+      "3100": 0.223,
+      "3200": 0.114,
+      "3900": 0.238,
+      "other": 0.11
+    },
+    "LoD2_wall": 0.144
+  },
+  "heights": {
+    "base_m": [
+      -5.0,
+      -4.9,
+      -4.8,
+      -4.7,
+      -4.6,
+      -4.5,
+      -4.4,
+      -4.3,
+      -4.2,
+      -4.1,
+      -4.0,
+      -3.9,
+      -3.8,
+      -3.7,
+      -3.6,
+      -3.5,
+      -3.4,
+      -3.3,
+      -3.2,
+      -3.1,
+      -3.0,
+      -2.9,
+      -2.8,
+      -2.7,
+      -2.6,
+      -2.5,
+      -2.4,
+      -2.3,
+      -2.2,
+      -2.1,
+      -2.0,
+      -1.9,
+      -1.8,
+      -1.7,
+      -1.6,
+      -1.5,
+      -1.4,
+      -1.3,
+      -1.2,
+      -1.1,
+      -1.0,
+      -0.9,
+      -0.8,
+      -0.7,
+      -0.6,
+      -0.5,
+      -0.48,
+      -0.46,
+      -0.44,
+      -0.42,
+      -0.4,
+      -0.38,
+      -0.36,
+      -0.34,
+      -0.32,
+      -0.3,
+      -0.28,
+      -0.26,
+      -0.24,
+      -0.22,
+      -0.2,
+      -0.18,
+      -0.16,
+      -0.14,
+      -0.12,
+      -0.1,
+      -0.08,
+      -0.06,
+      -0.04,
+      -0.02,
+      0.0,
+      0.02,
+      0.04,
+      0.06,
+      0.08,
+      0.1,
+      0.12,
+      0.14,
+      0.16,
+      0.18,
+      0.2,
+      0.22,
+      0.24,
+      0.26,
+      0.28,
+      0.3,
+      0.32,
+      0.34,
+      0.36,
+      0.38,
+      0.4,
+      0.42,
+      0.44,
+      0.46,
+      0.48,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0,
+      1.1,
+      1.2,
+      1.3,
+      1.4,
+      1.5,
+      1.6,
+      1.7,
+      1.8,
+      1.9,
+      2.0,
+      2.1,
+      2.2,
+      2.3,
+      2.4,
+      2.5,
+      2.6,
+      2.7,
+      2.8,
+      2.9,
+      3.0,
+      3.1,
+      3.2,
+      3.3,
+      3.4,
+      3.5,
+      3.6,
+      3.7,
+      3.8,
+      3.9,
+      4.0,
+      4.1,
+      4.2,
+      4.3,
+      4.4,
+      4.5,
+      4.6,
+      4.7,
+      4.8,
+      4.9,
+      5.0
+    ],
+    "extra_offsets_m": [
+      -0.3,
+      -0.2,
+      -0.1,
+      0,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "extra_if_abs_mvs_gt_m": 5.0
+  },
+  "photos": {
+    "train_images": 819,
+    "max_images": 10,
+    "min_images": 3,
+    "margin_px": 20,
+    "angle_max_deg": 60,
+    "occlusion_tolerance_m": 0.3,
+    "visibility": "CPU exact ray depth at continuous projected centre through identical registered prior tile mesh; ray depth expressed in metres; no hit = no represented blocker; same fixed photo set at every h",
+    "selection": "least incidence first; maximize minimum angular separation iteratively; ties sorted image name",
+    "projection": "FULL_OPENCV; world to camera; pinhole within image +/-200 px and distortion change vector norm <400 px",
+    "candidate_extent": "all 819 train cameras tested; all four 0.5m square corners plus centre satisfy projection guards",
+    "mesh_context": "exact inherited tile mesh including 10m buffered prior context; no unregistered substitution",
+    "parallax": "max pair norm of (d-dot(d,n)n)/abs(dot(d,n))"
+  },
+  "score": {
+    "square_m": 0.5,
+    "samples_per_side": 25,
+    "sample_step_m": 0.02,
+    "sample_offsets_m": [
+      -0.24,
+      -0.22,
+      -0.2,
+      -0.18,
+      -0.16,
+      -0.14,
+      -0.12,
+      -0.1,
+      -0.08,
+      -0.06,
+      -0.04,
+      -0.02,
+      0.0,
+      0.02,
+      0.04,
+      0.06,
+      0.08,
+      0.1,
+      0.12,
+      0.14,
+      0.16,
+      0.18,
+      0.2,
+      0.22,
+      0.24
+    ],
+    "grayscale": [
+      0.299,
+      0.587,
+      0.114
+    ],
+    "pyramid": "repeated 2x area reduction; choose level closest to 0.02 m per pixel when distance/sqrt(fx*fy)<0.02; centre-aligned resize mapping (u+0.5)/scale-0.5",
+    "interpolation": "bilinear",
+    "NCC": "population standardization; mean over all selected valid image pairs; zero-variance vectors have NCC undefined, not fabricated",
+    "score": "equivalent normalized-vector identity (norm(sum vectors)^2 - sum squared norms)/(m*(m-1)); height missing if fewer than 3 images",
+    "dtype_compute": "float32 (verify against float64 pairwise reference)",
+    "dtype_store": "float16 curve plus float32 extracted values",
+    "texture": "median population standard deviation at h=0",
+    "at_height": "fixed selected cameras; exclude out-of-image or invalid projection at this h only; no new visibility test"
+  },
+  "features": {
+    "inside": "abs(h)<=3*sigma",
+    "peak": "maximum within +/-0.1m; global endpoints excluded; plateau center tie",
+    "competitor": "outside peak OR abs(h)>3*sigma+0.3m",
+    "ties": "first ascending h",
+    "s_mvs": "nearest finite sampled h to mvs_p",
+    "missing": "nonfinite required features => ambiguous; missing sigma => ambiguous"
+  },
+  "judgments": {
+    "order": [
+      "지지",
+      "반박",
+      "모름(애매)",
+      "모름(무늬 없음)",
+      "모름(사진 부족)"
+    ],
+    "candidates": [
+      {
+        "delta": 0.05,
+        "s_min": 0
+      },
+      {
+        "delta": 0.05,
+        "s_min": 0.3
+      },
+      {
+        "delta": 0.05,
+        "s_min": 0.5
+      },
+      {
+        "delta": 0.1,
+        "s_min": 0
+      },
+      {
+        "delta": 0.1,
+        "s_min": 0.3
+      },
+      {
+        "delta": 0.1,
+        "s_min": 0.5
+      },
+      {
+        "delta": 0.15,
+        "s_min": 0
+      },
+      {
+        "delta": 0.15,
+        "s_min": 0.3
+      },
+      {
+        "delta": 0.15,
+        "s_min": 0.5
+      },
+      {
+        "delta": 0.2,
+        "s_min": 0
+      },
+      {
+        "delta": 0.2,
+        "s_min": 0.3
+      },
+      {
+        "delta": 0.2,
+        "s_min": 0.5
+      },
+      {
+        "delta": 0.3,
+        "s_min": 0
+      },
+      {
+        "delta": 0.3,
+        "s_min": 0.3
+      },
+      {
+        "delta": 0.3,
+        "s_min": 0.5
+      }
+    ],
+    "texture_min": 5,
+    "display": {
+      "delta": 0.1,
+      "s_min": 0.3,
+      "index": 4
+    }
+  },
+  "examples": [
+    "DEBY_LOD2_4959326",
+    "DEBY_LOD2_4906975",
+    "DEBY_LOD2_60042",
+    "DEBY_LOD2_4907519",
+    "DEBY_LOD2_4906993",
+    "DEBY_LOD2_4906968"
+  ],
+  "sections": [
+    {
+      "name": "B173 날개",
+      "prior": "ALS",
+      "building": "DEBY_LOD2_4959326",
+      "a": [
+        146.68,
+        96.32
+      ],
+      "b": [
+        136.63,
+        99.34
+      ],
+      "half_width": 0.6
+    },
+    {
+      "name": "R1 계단 지붕",
+      "prior": "LoD2",
+      "building": "DEBY_LOD2_4906975",
+      "a": [
+        7.24,
+        32.08
+      ],
+      "b": [
+        14.98,
+        18.08
+      ],
+      "half_width": 0.6
+    },
+    {
+      "name": "60042 높은 단",
+      "prior": "ALS",
+      "building": "DEBY_LOD2_60042",
+      "a": [
+        -64.03,
+        40.64
+      ],
+      "b": [
+        -56.57,
+        37.76
+      ],
+      "half_width": 0.5
+    },
+    {
+      "name": "4907519",
+      "prior": "LoD2",
+      "building": "DEBY_LOD2_4907519",
+      "a": [
+        -53.2264163056597,
+        -191.6217394443404
+      ],
+      "b": [
+        -50.88814763569752,
+        -201.3445219486996
+      ],
+      "half_width": 0.6,
+      "source": "section only: largest image_wrong component"
+    },
+    {
+      "name": "4906993",
+      "prior": "LoD2",
+      "building": "DEBY_LOD2_4906993",
+      "a": [
+        57.2129557603929,
+        298.44046817875056
+      ],
+      "b": [
+        65.98234515620453,
+        293.6344501154651
+      ],
+      "half_width": 0.6,
+      "source": "section only: largest image_wrong component"
+    },
+    {
+      "name": "4906968",
+      "prior": "LoD2",
+      "building": "DEBY_LOD2_4906968",
+      "a": [
+        -40.83531316590628,
+        10.121951689023343
+      ],
+      "b": [
+        -23.384799962026655,
+        3.1646444554674584
+      ],
+      "half_width": 0.6,
+      "source": "section only: roof major-axis perpendicular including slopes"
+    },
+    {
+      "name": "4906968",
+      "prior": "ALS",
+      "building": "DEBY_LOD2_4906968",
+      "a": [
+        -41.220264471040984,
+        11.96849385123024
+      ],
+      "b": [
+        -20.662399510635282,
+        3.8643999237812636
+      ],
+      "half_width": 0.6,
+      "source": "section only: roof major-axis perpendicular including slopes"
+    }
+  ],
+  "seed": 20261026,
+  "projection_gate": {
+    "agree_abs_mvs_lt": 0.05,
+    "raw_u_mvs_lt": 0.03,
+    "texture_min": 5,
+    "min_images": 3,
+    "min_points": 100,
+    "pass_abs_h_max_le": 0.1,
+    "pass_fraction_gt": 0.5,
+    "fallback_n": 1000
+  },
+  "figures": {
+    "dpi": 300,
+    "colors": [
+      "#238b45",
+      "#d73027",
+      "#929292"
+    ],
+    "scope": "development only; holdout grey hatching only",
+    "curve_example_points": 2,
+    "random_points_per_judgment": 3,
+    "montage_max_per_building": 3,
+    "montage_n": 20,
+    "photo_margin_m": 3.0,
+    "no_cause_labels": true
+  },
+  "evaluation": {
+    "gt": "gt_status==0 and finite gt_p; abs(gt_p)<=3*patch_sigma",
+    "unexplained": "abs(mvs_p)/sqrt(patch_sigma^2+sigma_mvs^2)>3",
+    "components_radius_m": 0.36,
+    "component_min_area_m2": 1.0
+  },
+  "execution": {
+    "training": false,
+    "cpu_nice": 19,
+    "process_memory_limit_gib": 32,
+    "gpu": "curve sampling/NCC only; device selected only while no compute process uses it",
+    "gpu_wait_seconds": 0.0,
+    "gpu_stop_hours": 48,
+    "cpu_stop_hours": 72,
+    "archive_max_bytes": 399000000,
+    "allowed": [
+      "configs/phd/main_photocheck_v1/",
+      "scripts/phd/main_photocheck_v1/",
+      "docs/experiments/phd/main_photocheck_v1/",
+      "PH/main_photocheck_v1/PHD-MAIN-PHOTOCHECK-v1/"
+    ]
+  },
+  "source_tag": "[이 발주에서 냄]",
+  "amendments": []
+}
