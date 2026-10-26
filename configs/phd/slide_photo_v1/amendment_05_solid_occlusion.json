@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-27T01:19:28.614720+09:00",
+  "task_id": "PHD-SLIDE-PHOTO-v1",
+  "scientific_verdict": null,
+  "reason": "Global exact-point z-buffer removes only 37555/65018 old samples from views with >50m median discrepancy. Sparse nadir point visibility does not model continuous foreground walls.",
+  "correction": "Add a conservative occlusion veto by raycasting all public development LoD2 input patch squares. Reject a GT sample if an input surface is at least 0.5m nearer on the same camera ray. No holdout meshes, no MVS/result-based visibility decision; retain raw GT nearest-pixel test and all candidate thresholds.",
+  "limitation": "This is conservative prior-supported visibility, not proof that the sampled MVS point belongs to the same physical surface. Old solid geometry may reject some currently visible samples. 0.5m tolerance is an occluder separation guard, not the MVS error threshold.",
+  "previous_attempt": "mvs_v3 retained as point-only visibility evidence; use mvs_v4 for final selection. No v3 material review occurred."
+}

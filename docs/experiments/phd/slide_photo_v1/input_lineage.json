@@ -1,0 +1,443 @@
+{
+  "at": "2026-10-27T01:15:33.010123+09:00",
+  "scientific_verdict": null,
+  "base_commit": "016fc77ee0ddbcd58ddc5b37b05a40f90eaf8609",
+  "docker_image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "python": "3.11.15",
+  "versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "matplotlib": "3.9.2",
+    "Pillow": "10.4.0",
+    "plyfile": "1.1"
+  },
+  "inputs": [
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/tiles.json",
+      "bytes": 5283,
+      "sha256": "93a97811fdc1facecca971ff01513c059f575dc7f1b16f87687f2145065f51a0"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/sparse/images.bin",
+      "bytes": 100156658,
+      "sha256": "54203353363a6e72edb1fc8af5eb610ab4b50d7d76408f85f3d54bdc6f57ea0c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/sparse/cameras.bin",
+      "bytes": 64,
+      "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/depth_manifest.json",
+      "bytes": 233482,
+      "sha256": "5ea1da5f06193ef98269c579bbe5dd784cf49dfb3684dc20dab9e902007c996f"
+    },
+    {
+      "path": "/art/phase-payloads/p0-audit/data/work/mvs/triangulated/images.bin",
+      "bytes": 114415526,
+      "sha256": "97e7b93ceaff34ef627361e9a0df060cbdc2b78923adb2c897eea7a7bdecdf0c"
+    },
+    {
+      "path": "/art/phase-payloads/p0-audit/data/work/mvs/triangulated/cameras.bin",
+      "bytes": 128,
+      "sha256": "049e35a21bcd7a4e12d88cad37c0cc9c9358d3db02d9afe0423da7e02c5fc9c7"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/align/common_shift.json",
+      "bytes": 4731,
+      "sha256": "c9c0c06ed5459c0fc48426342224852491815300d30f532c97fdc559c520446c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6907_53359/uls.bin",
+      "bytes": 14682408,
+      "sha256": "c369eb575ae9d0afd2ff31144b807ef71b9deac9cf47c09ce35edf4b0dc7dd9e"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53359__ALS__R1.5.npz",
+      "bytes": 38362,
+      "sha256": "fb4b8dc820928573fb6234960eeabb011c480e0ab2f521b61f87db1d9cf08dfc"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53359__LoD2__R1.5.npz",
+      "bytes": 304716,
+      "sha256": "98d1c7ca495bde903e379044e18e3fa9faf54754d4156330d3feaa8c87c2533a"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6907_53360/uls.bin",
+      "bytes": 6573268,
+      "sha256": "ea23e4c1e93d420575a08b1cb8f86a62cc47cf10fcd97084e51df4d060ddd6c7"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53360__ALS__R1.5.npz",
+      "bytes": 53987,
+      "sha256": "fa5ed0e2b338d5742fa8fb355ef49dd484d19a7dd56dde504e940f18a771043e"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53360__LoD2__R1.5.npz",
+      "bytes": 47912,
+      "sha256": "71116ab051a29f21b6dd00bf37ece28fd27856c6856cdc1ba19d1ff2af2eefc8"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6908_53358/uls.bin",
+      "bytes": 89309220,
+      "sha256": "65158c063afc7b63ac80c756502c3f66cff0e3eaaa536559f632a78709d717b7"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53358__ALS__R1.5.npz",
+      "bytes": 2084937,
+      "sha256": "ec1be39e57386e55c851a3e9506a9d6d3b599963446517c2027b3e278b66f401"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53358__LoD2__R1.5.npz",
+      "bytes": 2234693,
+      "sha256": "e9e42399acd1348463c33fd9e0f6c978d876aad86ff182096e514323dd1be6b9"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6908_53359/uls.bin",
+      "bytes": 374313810,
+      "sha256": "a68096e747b0a02b54403f8f61059220af9b0fa2e1c91130c5a95895465c72bc"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53359__ALS__R1.5.npz",
+      "bytes": 13693080,
+      "sha256": "cd3001ad58e988c5e8f66168a01e78ab349f1b18354b189a340bb39d31a6e5eb"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53359__LoD2__R1.5.npz",
+      "bytes": 33870988,
+      "sha256": "862ba8d2688d6ebed4afc23f7fdc5991fc9151c8de5e5707c5139cba3b277c65"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6908_53360/uls.bin",
+      "bytes": 259747046,
+      "sha256": "d435ff917fada0a7091b3a19ed6b813d721af9f29c9701a0285171ebc0e8b97e"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53360__ALS__R1.5.npz",
+      "bytes": 12174210,
+      "sha256": "5541154a2d4c28e41fea796bf87d2b662e5e308a9467a79c53fc512763db643f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53360__LoD2__R1.5.npz",
+      "bytes": 30357334,
+      "sha256": "e6b26266b3e42ce94782fa09855b80845e605205f0afaddd4ac6ff32e77e3722"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6908_53361/uls.bin",
+      "bytes": 153722400,
+      "sha256": "089380b1805ba598c9292cda363fb3264ae6c4782518e2a88886beb53276196d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53361__ALS__R1.5.npz",
+      "bytes": 7865137,
+      "sha256": "0cf4f25c728d70139d211ac2fdfbf42c4eaf48b283235673deeb1862f36bb71d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53361__LoD2__R1.5.npz",
+      "bytes": 16110964,
+      "sha256": "108a58b099972db6ac146d8c9e68dcf214b48373ae20543ae0f1cd4b156fc507"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6908_53362/uls.bin",
+      "bytes": 74012900,
+      "sha256": "1404dada8066b6f12e26dfa4debb49e715167488352ce0fbaaf110536dd78f08"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53362__ALS__R1.5.npz",
+      "bytes": 1452603,
+      "sha256": "c8d44041f5e3d5ee2d1c364b7dbee12aebb5f261d4cebc3559f9453d5166d836"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53362__LoD2__R1.5.npz",
+      "bytes": 2636267,
+      "sha256": "bd72a29dcb8692890571db978389d57277a834bba94aff396eed1adadef84b84"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6909_53358/uls.bin",
+      "bytes": 173025294,
+      "sha256": "3d7dd0ffaadb7a6ba29caba4b9a835b30ab94b174f6f77d3d24f6fbe037b0a1d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53358__ALS__R1.5.npz",
+      "bytes": 14085930,
+      "sha256": "63c54596fd6aeffe8a079d21ad9b2e9524c15132ba349f7eb04bda6d954765d4"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53358__LoD2__R1.5.npz",
+      "bytes": 15307804,
+      "sha256": "cd25c3d1c4bd64b53107569487d4cfc438e4ed32e070b07392f4c7c0af0a2a17"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6909_53359/uls.bin",
+      "bytes": 567026382,
+      "sha256": "20bdf30167a1969fbb4a0aa5732bec87ce6a931b936287ab3e160d3d9fca4b55"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53359__ALS__R1.5.npz",
+      "bytes": 19752579,
+      "sha256": "8c7d6402e01b0a841492d7e17282f44a554386123486140cdef1b65f1fecad95"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53359__LoD2__R1.5.npz",
+      "bytes": 41757733,
+      "sha256": "e23bce1458cf08db32256b2cbbd24d1ff0c48cb6b05813a0e1a950848d6fcbcb"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6909_53360/uls.bin",
+      "bytes": 489497086,
+      "sha256": "f25359c6f8ef63188a4c589463597cfb45883c0c0293d01c4c650f458f27e66b"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53360__ALS__R1.5.npz",
+      "bytes": 15255734,
+      "sha256": "f5ac8ce7ab16c3ce000354917d4a905c39af69802b19a7ce1ab8022c21c81115"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53360__LoD2__R1.5.npz",
+      "bytes": 29960587,
+      "sha256": "0bf175fbaacb044f4f85c5c12b643a8d433f09ca72a7dc4f5419ed368a092b6e"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6909_53361/uls.bin",
+      "bytes": 901729348,
+      "sha256": "2746756fbb58eb5ca4fab0bea8872095edf29d0daa64f374e9f0266b2fdc1988"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53361__ALS__R1.5.npz",
+      "bytes": 18669568,
+      "sha256": "3f8b8c86bb39b475b3ecf95dbdb6e14259fd1bd140d5a1d63af91e7cb548f010"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53361__LoD2__R1.5.npz",
+      "bytes": 40801074,
+      "sha256": "51b9a8dad7206a7eebb02a2e69265985f749188daf5c266a084495635665d50c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6909_53362/uls.bin",
+      "bytes": 580250528,
+      "sha256": "90d09ad9d7b21e9786f3774a0247c5c7121a2e2b4f805d4a1732e4c7d19e8121"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53362__ALS__R1.5.npz",
+      "bytes": 17939145,
+      "sha256": "d0599948fdd3247a50c73914fae3a67815eccce0273410cb8ca947543eafd180"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53362__LoD2__R1.5.npz",
+      "bytes": 30596717,
+      "sha256": "afaaee567b785a833cd0c4a0f049e80ccc27db353f561aa6a91d03ebd974e5db"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6909_53363/uls.bin",
+      "bytes": 141029122,
+      "sha256": "1c41d2b052f84d906b51de2af09414d5b12ed78050ddb5e0d5f04611e6ee6f9a"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53363__ALS__R1.5.npz",
+      "bytes": 2788459,
+      "sha256": "546e4a47f79cf4175ad4f965c25c7fb7f4df6c073774198523b15a7358ac436a"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53363__LoD2__R1.5.npz",
+      "bytes": 6971085,
+      "sha256": "6e4c1bd525b2be728a8c59c2727e7192a4c312db6cc5aa84aed6cebdb150a3db"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6910_53358/uls.bin",
+      "bytes": 54028546,
+      "sha256": "8a98b840ab8b7ec2ca20af425c238ab2b27e591ebb4dd7a9c91d70caca31efba"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53358__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53358__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6910_53359/uls.bin",
+      "bytes": 171523560,
+      "sha256": "8a7210347df431d6dd570661dbbe88589550c0aefac971cedbf70ab5a7cedf55"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53359__ALS__R1.5.npz",
+      "bytes": 4687524,
+      "sha256": "af5ef1fcc9881b9e6c30be178e704615181cf0cb63319e9b9417c918e10f733c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53359__LoD2__R1.5.npz",
+      "bytes": 8943364,
+      "sha256": "09e06eec24c1793b9a99969b80f636ef36333e6ad17966ee2f559a99a1d2e516"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6910_53360/uls.bin",
+      "bytes": 314363322,
+      "sha256": "66f9fbe3f702791e7d7a99ec6a190a530c769ea7eb0f5a9a88324a3256cc117a"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53360__ALS__R1.5.npz",
+      "bytes": 12470963,
+      "sha256": "048c65a39f3dbfa38b29bc5afadab101d7c0dea1a4c991aa11fb63317c516b11"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53360__LoD2__R1.5.npz",
+      "bytes": 23208667,
+      "sha256": "15a12179a5eeef7b7c0e64d3e1347ef44ae64075666f398dde0c39875ccfb4a2"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6910_53361/uls.bin",
+      "bytes": 791195730,
+      "sha256": "9a4166d9bde94c666e39f218b09c1188a6cba9fa9847ddece594b389a05a1c77"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53361__ALS__R1.5.npz",
+      "bytes": 18191336,
+      "sha256": "b9ca52a429ac0d344d318f7f2e9fa81f9a4f8ef7c3324a851525451dfbb17e57"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53361__LoD2__R1.5.npz",
+      "bytes": 33548602,
+      "sha256": "16795b0a15a891d922deb148d4816c7dc7417cf5b4ebad1ee76ffbce9d314f1b"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6910_53362/uls.bin",
+      "bytes": 662209522,
+      "sha256": "e24f565c68018b731b6e201e43664fffe77ab574e184fb8e51f902075a99ef4e"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53362__ALS__R1.5.npz",
+      "bytes": 20032137,
+      "sha256": "844aa339b512666d0ca0b91ad02a0aab46346c99296ca13453a9347542ae9479"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53362__LoD2__R1.5.npz",
+      "bytes": 35006737,
+      "sha256": "21881b90e15b54f8552eb36ddf14405469d4f9090254445fc42142cab5c4f93f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6910_53363/uls.bin",
+      "bytes": 330211856,
+      "sha256": "a6c8067adba16ab547d3315023800b59f41b6656f714356219ae34c2f3228659"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53363__ALS__R1.5.npz",
+      "bytes": 13385751,
+      "sha256": "df1dd3360d9c85fd1ab532935ed474be5f00d0264d684167c3486a0622af65de"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53363__LoD2__R1.5.npz",
+      "bytes": 20985589,
+      "sha256": "a46a6d04c7cf34283c436f0407b7a441bef79f21c5e04ccb2576e4cd671a214d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6911_53360/uls.bin",
+      "bytes": 29132922,
+      "sha256": "89884a860ef3fcf1fbea12b210865d743ca89466d25634de9950d3d7fd27793c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53360__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53360__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6911_53361/uls.bin",
+      "bytes": 143718458,
+      "sha256": "b522389a5cc94c7b44ff2b33fe8a8b7462c6ba303e4cba0c6140290d1a7d1b6c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__ALS__R1.5.npz",
+      "bytes": 969258,
+      "sha256": "1111fab53c7f5c1783e1a4f26b220652a421f28676f6442b3b88d5b62a50e85d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__LoD2__R1.5.npz",
+      "bytes": 1411358,
+      "sha256": "888c296cdc830c3a2cf3071ccd09a99ed4d16afbc6e5241dfcdd1dfbb8261980"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6911_53362/uls.bin",
+      "bytes": 308722518,
+      "sha256": "fc9b28de6700c817b914fb3594fefbcd5c3be9695ae2e058ff91126eea3bbce4"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53362__ALS__R1.5.npz",
+      "bytes": 9041465,
+      "sha256": "6712566ed9b54f5d79f0df981b9a9ebb628c915df68c0457afed1bbe136b0d64"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53362__LoD2__R1.5.npz",
+      "bytes": 14786946,
+      "sha256": "afbeee9b60146c165373d19a5d82b34bcfb78bf4844c5eb6c67895f83761696f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6911_53363/uls.bin",
+      "bytes": 84845566,
+      "sha256": "84e13be7ee588a9c26be96136a6464e01d0cc3927eb5dc5966352232ad85c297"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53363__ALS__R1.5.npz",
+      "bytes": 5522260,
+      "sha256": "ff51a70a7d0a201a01d14d7ca5902ff64a1f7f929947774f4f5fa4cad56b229f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53363__LoD2__R1.5.npz",
+      "bytes": 10007232,
+      "sha256": "6525dff8ae641943d5056e5b2c08d862fc2b6fc32e2be0b1adf291966d671be6"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/points/6912_53362/uls.bin",
+      "bytes": 416,
+      "sha256": "1c22172ba3632b9bfa3444e993a3bdb2f35263dbf48e08582f2c84b37a177126"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6912_53362__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6912_53362__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "path": "/repo/scripts/phd/main_regionfig_v1/common.py",
+      "bytes": 4425,
+      "sha256": "4f92f113815bf2d1bf838e6b0060ecd0b941e1d4395d1b8ea9f9109e974e2bda"
+    },
+    {
+      "path": "/repo/scripts/phd/main_photofig_v1/pf_geo.py",
+      "bytes": 10563,
+      "sha256": "c3e1b6d15e88495330fac47267f9ae383c814b26f83efc105cddeb28495ef09f"
+    },
+    {
+      "path": "/repo/scripts/phd/main_uncert_v1/u_core.py",
+      "bytes": 6487,
+      "sha256": "734fad934b5dc3b6134649cf2320a1fdb34eccb1df56de4b98269598b64130b9"
+    }
+  ],
+  "depth_source": "Input-only depth_manifest.json pins each geometric depth; raw photo member hashes are in figure JSON",
+  "geometry_allowlist": [
+    "centre",
+    "normal",
+    "roof_like",
+    "tangent1",
+    "tangent2",
+    "area",
+    "building",
+    "face_ext",
+    "surf",
+    "raw_centre",
+    "source_patch",
+    "patch_id",
+    "normal_defined"
+  ],
+  "no_holdout_paths": true
+}

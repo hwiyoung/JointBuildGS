@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-27T01:04:44.217749+09:00",
+  "task_id": "PHD-SLIDE-PHOTO-v1",
+  "scientific_verdict": null,
+  "reason": "Selected-component numeric audit found some same-pixel MVS depths about 100m nearer than GT. Tile-local z-buffer omitted foreground occluders outside its 10m context. Initial candidate tables and material classification are invalid for selection.",
+  "evidence": "qa/task0_numeric_audit.json before recalculation; large residual views versus near-zero residual views",
+  "correction": "Accumulate nearest camera-Z from all 24 public input GT tiles into each training camera. Exact pixel minimum; no neighbour filling. Retain front-face test, density, error, connectivity, material and ranking rules.",
+  "stage": "after first material review and before task0 completion; rerun all candidates and independent material review"
+}

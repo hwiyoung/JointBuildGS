@@ -1,0 +1,144 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1",
+  "order_version": 5,
+  "scientific_verdict": null,
+  "locked_at": "2026-10-27T00:14:00.216081+09:00",
+  "frame": {
+    "crs": "EPSG:25832",
+    "subtract_xyz_m": [
+      690953,
+      5336071,
+      604
+    ]
+  },
+  "scope": {
+    "source": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2",
+    "holdout": "Never open holdout/; only development geometry keys from public exports, raw input points and training images/depth.",
+    "geometry_allowlist": [
+      "centre",
+      "normal",
+      "roof_like",
+      "tangent1",
+      "tangent2",
+      "area",
+      "building",
+      "face_ext",
+      "surf",
+      "raw_centre",
+      "source_patch",
+      "patch_id",
+      "normal_defined"
+    ],
+    "prohibited": [
+      "WIDEN outcome arrays, classifications, components, result metrics",
+      "PHOTOCHECK",
+      "LOSSTRAIN"
+    ],
+    "training": false
+  },
+  "task0": {
+    "prior_order": [
+      "ALS",
+      "LoD2 only where ALS patch support is absent"
+    ],
+    "tau_m": {
+      "ALS": 0.1266,
+      "LoD2": 0.2
+    },
+    "tau_source": "WIDEN0-v2 frozen full-area input thresholds",
+    "thresholds": {
+      "mvs_abs_median_gt": "> max(tau, 0.20 m)",
+      "prior_abs_median_gt": "<= tau",
+      "gt_density_roof_m2": 100,
+      "gt_density_wall_m2": 30,
+      "min_passed_views": 2
+    },
+    "gt_support": {
+      "patch_cell_m": 0.25,
+      "column_half_roof_m": 10,
+      "column_half_wall_m": 3,
+      "layer_m": 0.3,
+      "layer_step_m": 0.05,
+      "layer_min_fraction": 0.2,
+      "rule": "Per owning face tangent plane, assign raw nadir GT to closest patch within half-cell in both tangents. Select outermost >=20% layer. Use points within selected layer +/-0.15 m. Count / actual patch area. Exclude multiple qualifying layer runs as ambiguous correspondence.",
+      "alignment": "frozen stage1 v3 common_shift; no new fitting"
+    },
+    "mvs": {
+      "source": "full-area training geometric depth; finite positive values are COLMAP geometric-consistency survivors",
+      "correspondence": "Project a real selected-layer GT point nearest its patch median, require same-pixel GT z-buffer visibility (0.25 m tolerance); sample exact 1024x741 geometric depth pixel; signed error = (unprojected MVS - GT) dot patch normal.",
+      "median": "median of absolute per-view normal residuals; per-component median of patch medians",
+      "pass_share": "passed geometric depth samples / visible projected GT samples",
+      "visibility": "local input tile including 10 m context; no neighbour pixel filling"
+    },
+    "components": {
+      "same": [
+        "building",
+        "face_ext",
+        "roof_like",
+        "prior"
+      ],
+      "radius_m": 0.36,
+      "normal_angle_deg": 15,
+      "area": "sum of distinct input patch areas",
+      "cross_tile": "join by stable building and spatial overlap"
+    },
+    "colour_scatter": "per GT point median RGB Euclidean deviation from its across-visible-training-view median RGB; component median; RGB in [0,1]",
+    "material": "top ten by area, original-resolution best and most-oblique visible training crops, independent agent choice glass/metal/other/unknown",
+    "selection": "keep only glass/metal; building total eligible component area descending, choose largest component; within 10% choose larger MVS error; stable IDs break exact ties",
+    "if_empty": "Report no qualifying material; do not substitute B173 or relax thresholds"
+  },
+  "selection": {
+    "c_change": "REGIONFIG-v1 example a unchanged; virtual view perpendicular to long axis at 35 degrees if no oblique training view >30 deg",
+    "c_repr": "B0 LoD2 evaluation roof faces: median signed vertical prior-GT +0.10..+0.30 m AND median abs MVS-GT <0.05 m, largest patch count. If absent, negative range; no result reads.",
+    "a_roof": "flat roof normal tilt <=10 deg in B0/B173 neighbourhood/R1 evaluation range; nadir training tilt <=20 deg; largest missing-depth fraction, then face ID then image stem",
+    "a_wall": "R1 wall 19, DJI_20241217101317_0011_D, PHOTOFIG-v1 exact patch column",
+    "a_specular": "task0 selected component and c_specular photo unchanged",
+    "d": "old stage1 B0 LoD2 seed0; evaluation ROI >50% image; largest geometric-mask pass share; no result-based selection",
+    "e": "task0; REGIONFIG a correction; c_repr; VISCMP-v4 V2 face53",
+    "b": "REGIONFIG-v1 exact a/b sections, photo crops and 0.25m input bins; DIST71 TSDF and point-distance files; no vertical clipping"
+  },
+  "colours": {
+    "prior": "#C08A2B",
+    "mvs": "#2C6AA0",
+    "gt": "#3A4A5E",
+    "result": "#B94A2E",
+    "roi": "#FFD60A",
+    "missing": "#D32AA8",
+    "wrong": "#D93636"
+  },
+  "output": {
+    "c": [
+      1500,
+      1260
+    ],
+    "a": [
+      2700,
+      1200
+    ],
+    "d": [
+      3200,
+      800
+    ],
+    "e": [
+      1080,
+      600
+    ],
+    "b": [
+      3200,
+      1077
+    ],
+    "font_min_px": {
+      "c": 76,
+      "a": 76,
+      "d": 50,
+      "b": 48
+    }
+  },
+  "execution": {
+    "container": "jointbuildgs:dev",
+    "cpu": 16,
+    "memory_gib": 24,
+    "gpu": "figure d rendering only, skip if occupied"
+  },
+  "novice_check": "Each figure independently to context-free agent; one sentence, one layout-only revision allowed; keep both replies verbatim"
+}

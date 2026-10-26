@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-27T00:46:54.223605+09:00",
+  "task_id": "PHD-SLIDE-PHOTO-v1",
+  "before_material_review": true,
+  "before_any_candidate_photo_was_viewed_by_the_agent": true,
+  "reason": "Numerical audit found wall errors of 14-74m dominated by views from behind the surface. A sparse same-pixel GT z-buffer alone does not establish that the camera observes the front face. This is a visibility implementation defect.",
+  "correction": "Require dot(outward_patch_normal, camera_centre - GT_point) > 0 before visible/accepted counts. Keep all original error, density, area and material rules unchanged.",
+  "previous_attempt": "task0/mvs and first contact crops are invalidated, not used for selection. Recompute all 24 tiles under task0/mvs_v2.",
+  "scientific_verdict": null
+}
