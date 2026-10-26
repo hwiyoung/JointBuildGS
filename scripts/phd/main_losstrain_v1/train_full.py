@@ -30,7 +30,12 @@ def gates(batch):
     cfg=json.loads((REPO/'configs/phd/main_losstrain_v1/losstrain_v1.json').read_text())
     assert cfg['lambda_selection']['selected_lambda']==selection['selected_lambda']
     assert (OUT/'checks/preparation_commit.json').is_file(),'preparation report must be committed first'
-    assert not (OUT/'checks/full_STOP.json').exists()
+    approval=json.loads((OUT/'checks/opacity_grace_v1/approval.json').read_text())
+    oldstop=OUT/'checks/full_STOP.json'
+    assert oldstop.exists() and sha(oldstop)==approval['superseded_stop_sha256']
+    assert json.loads((OUT/'checks/opacity_grace_v1/validation.json').read_text())['status']=='PASS'
+    assert (OUT/'checks/opacity_grace_v1/commit.json').exists()
+    assert not (OUT/'checks/full_grace_STOP.json').exists()
     if batch in ['remaining','optional']:
         assert json.loads((OUT/'checks/interim.json').read_text())['status']=='PASS'
         assert all((root_of(r)/'post_PASS.json').exists() for r in runs_for('first'))
@@ -39,7 +44,9 @@ def gates(batch):
     return selection['selected_lambda']
 
 def mark_stop(run,attempt,reason):
-    STOP.set();save(OUT/'checks/full_STOP.json',dict(run=run,attempt=attempt,reason=reason,at=now(),scientific_verdict=None))
+    STOP.set();row=dict(run=run,attempt=attempt,reason=reason,at=now(),scientific_verdict=None)
+    save(root_of(run)/f'STOP_attempt_{attempt}.json',row)
+    save(OUT/'checks/full_grace_STOP.json',row)
 
 def post(r,gpu,unit):
     # Both normal and virtual TSDF extraction use the same process-wide lock.
@@ -69,13 +76,22 @@ def post(r,gpu,unit):
 
 def run(r,gpu,lam):
     if STOP.is_set():return
-    unit=root_of(r);unit.mkdir(parents=True,exist_ok=False)
-    for attempt in [0,1]:
+    unit=root_of(r);first_attempt=0
+    if unit.exists():
+        approval=json.loads((OUT/'checks/opacity_grace_v1/approval.json').read_text())
+        assert r['site']+'/'+unit.name in approval['restart_runs']
+        assert (unit/'attempt_0/receipt.json').exists() and not (unit/'PASS.json').exists()
+        assert not (unit/'attempt_1').exists()
+        first_attempt=1
+    else:unit.mkdir(parents=True)
+    for attempt in [first_attempt,first_attempt+1]:
         sub=unit/f'attempt_{attempt}';sub.mkdir()
         mode,vprior=MODES[r['variant']]
         args=P.train_args(r['site'],r['prior'],P.to_container(sub/'model'),sw_off=['judgment'])
         args+=['--jbgs_sw_depth_loss',mode,'--jbgs_vfile_dir',f"/o/direct_stage1_v2/{r['site']}__{r['prior']}",
-            '--jbgs_vfile_vprior',vprior,'--jbgs_depth_lambda',str(lam),'--jbgs_lt_monitor','1',*P.RECORDS]
+            '--jbgs_vfile_vprior',vprior,'--jbgs_depth_lambda',str(lam),'--jbgs_lt_monitor','1',
+            '--jbgs_lt_opacity_reset_grace','100','--jbgs_lt_nojudge_opacity',
+            f"/o/checks/opacity_grace_v1/nojudge/{r['site']}__{r['prior']}.json",*P.RECORDS]
         command=P.docker('jbgs-lt-full-'+str(gpu),gpu,'r17',r['site'],['train.py',*args]);command[2:2]=['--memory','48g']
         save(sub/'command.json',command);start=time.monotonic();stamp=now();peak=0.
         with (sub/'run.log').open('w') as log:
@@ -92,7 +108,7 @@ def run(r,gpu,lam):
         print(unit.name,'training exit',rc,flush=True)
         if rc:
             oom=(sub/'model/monitor/oom_record.json').exists() or 'out of memory' in (sub/'run.log').read_text().lower()
-            if oom and attempt==0:continue
+            if oom and attempt==first_attempt:continue
             mark_stop(r,attempt,'OOM twice: NO RESULT' if oom else 'execution or health error');return
         assert (sub/'model/point_cloud/iteration_30000/point_cloud.ply').is_file()
         save(unit/'PASS.json',dict(attempt=attempt,model=str(sub/'model'),at=now(),scientific_verdict=None))
@@ -104,7 +120,7 @@ def lane(gpu,runs,lam):
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('batch',choices=['first','remaining','optional']);a=ap.parse_args()
     lam=gates(a.batch);runs=runs_for(a.batch)
-    start=OUT/f'checks/batch_{a.batch}_start.json';assert not start.exists()
+    start=OUT/f'checks/batch_{a.batch}_grace_v1_start.json';assert not start.exists()
     save(start,dict(at=now(),runs=runs,lambda_depth=lam,scientific_verdict=None))
     with concurrent.futures.ThreadPoolExecutor(2) as pool:
         for f in [pool.submit(lane,g,runs[g::2],lam) for g in [0,1]]:f.result()

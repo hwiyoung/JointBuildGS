@@ -1,0 +1,226 @@
+{
+  "status": "PROPOSED_NOT_APPLIED",
+  "at": "2026-10-26T18:42:56.292972+09:00",
+  "reason": "both lt_fixgt and lt_dyngt stopped at 3001 immediately after inherited reset clamps non-exempt opacity to 0.01",
+  "proposal": "Keep original initialization/protection/density/reset unchanged. Record every actual opacity reset. Suspend only opacity<0.05 stop for offsets 1..99 after that reset; apply it again from offset 100. Nonfinite loss and other errors always stop. Preserve failed attempts and rerun from seed 0 after user approval.",
+  "baseline_evidence": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "reset_iteration": 3000,
+      "first_recorded_recovery_iteration": 3100,
+      "first_recorded_recovery_median": 0.07536103576421738,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "reset_iteration": 6000,
+      "first_recorded_recovery_iteration": 6100,
+      "first_recorded_recovery_median": 0.10451188683509827,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "reset_iteration": 9000,
+      "first_recorded_recovery_iteration": 9100,
+      "first_recorded_recovery_median": 0.12379095703363419,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "reset_iteration": 12000,
+      "first_recorded_recovery_iteration": 12100,
+      "first_recorded_recovery_median": 0.08116638660430908,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "reset_iteration": 3000,
+      "first_recorded_recovery_iteration": 3100,
+      "first_recorded_recovery_median": 0.15136270225048065,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "reset_iteration": 6000,
+      "first_recorded_recovery_iteration": 6100,
+      "first_recorded_recovery_median": 0.17233532667160034,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "reset_iteration": 9000,
+      "first_recorded_recovery_iteration": 9100,
+      "first_recorded_recovery_median": 0.20412497222423553,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "reset_iteration": 12000,
+      "first_recorded_recovery_iteration": 12100,
+      "first_recorded_recovery_median": 0.16913555562496185,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "reset_iteration": 3000,
+      "first_recorded_recovery_iteration": 3100,
+      "first_recorded_recovery_median": 0.08709418773651123,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "reset_iteration": 6000,
+      "first_recorded_recovery_iteration": 6100,
+      "first_recorded_recovery_median": 0.10595756769180298,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "reset_iteration": 9000,
+      "first_recorded_recovery_iteration": 9100,
+      "first_recorded_recovery_median": 0.09799720346927643,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "reset_iteration": 12000,
+      "first_recorded_recovery_iteration": 12100,
+      "first_recorded_recovery_median": 0.09487617760896683,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "reset_iteration": 3000,
+      "first_recorded_recovery_iteration": 3100,
+      "first_recorded_recovery_median": 0.15625111758708954,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "reset_iteration": 6000,
+      "first_recorded_recovery_iteration": 6100,
+      "first_recorded_recovery_median": 0.12308697402477264,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "reset_iteration": 9000,
+      "first_recorded_recovery_iteration": 9100,
+      "first_recorded_recovery_median": 0.23826287686824799,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "reset_iteration": 12000,
+      "first_recorded_recovery_iteration": 12100,
+      "first_recorded_recovery_median": 0.20679312944412231,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "reset_iteration": 3000,
+      "first_recorded_recovery_iteration": 3100,
+      "first_recorded_recovery_median": 0.0895775854587555,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "reset_iteration": 6000,
+      "first_recorded_recovery_iteration": 6100,
+      "first_recorded_recovery_median": 0.1067771464586258,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "reset_iteration": 9000,
+      "first_recorded_recovery_iteration": 9100,
+      "first_recorded_recovery_median": 0.11897029727697372,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "reset_iteration": 12000,
+      "first_recorded_recovery_iteration": 12100,
+      "first_recorded_recovery_median": 0.06851276010274887,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "reset_iteration": 3000,
+      "first_recorded_recovery_iteration": 3100,
+      "first_recorded_recovery_median": 0.11248810589313507,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "reset_iteration": 6000,
+      "first_recorded_recovery_iteration": 6100,
+      "first_recorded_recovery_median": 0.13077908754348755,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "reset_iteration": 9000,
+      "first_recorded_recovery_iteration": 9100,
+      "first_recorded_recovery_median": 0.1876533031463623,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "reset_iteration": 12000,
+      "first_recorded_recovery_iteration": 12100,
+      "first_recorded_recovery_median": 0.1384049952030182,
+      "sampling_interval": 100,
+      "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+    }
+  ],
+  "new_training_results_used_to_set_grace": false,
+  "scientific_verdict": null
+}

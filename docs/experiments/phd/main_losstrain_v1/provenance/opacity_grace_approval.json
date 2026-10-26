@@ -1,0 +1,22 @@
+{
+  "status": "AUTHORIZED",
+  "authority": "user reply 2026-10-26 in this chat",
+  "rule": "After an actual periodic opacity reset skip opacity stop only for offsets 1..99. At offset 100 and thereafter stop if prior-origin opacity median < 0.05. Record every reset +100 median beside nojudge at the same iteration. Restart both stopped arms from seed 0. NaN and other errors still stop immediately.",
+  "restart_runs": [
+    "B173nb_b10/lt_fixgt_ALS_s0",
+    "B173nb_b10/lt_dyngt_ALS_s0"
+  ],
+  "superseded_stop_sha256": "6b0358adefdacb89017e92985aead4da2a498842b783d1841272c6b476f82d36",
+  "before_sha256": {
+    "src/phd/forks/GeoGS-conf-guided-v1-r17/jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8",
+    "src/phd/forks/GeoGS-conf-guided-v1-r17/train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a",
+    "scripts/phd/main_losstrain_v1/r17_monitor.py": "cc6a93ee7db6255351cedd9e3344685c9ee567825f3506872abf67b1c941faba",
+    "scripts/phd/main_losstrain_v1/amend_r17_monitor.py": "8881ab8ff723cb53d5896ddcb93b4ee4f191bf547b6fffe02d177fc30298e8a5",
+    "scripts/phd/main_losstrain_v1/check_monitor.py": "bdf79271641d014476f526257b41f59aa2247a437e5525c3b6bda470111a40cb",
+    "scripts/phd/main_losstrain_v1/train_full.py": "f41fe586f81ee4935edcd02b58a987e361b5b87279838da58870515033bb3690",
+    "configs/phd/main_losstrain_v1/losstrain_v1.json": "0e90bfbc6133c4de1859796fd764e2878f37422e4e98be075c295ff7c2190335",
+    "configs/phd/main_losstrain_v1/losstrain_v1.lock.json": "fb9df6b5237adb13a8c39f040a1601f747df355df3d84b2bc037fe686fbc16a5"
+  },
+  "at": "2026-10-26T18:55:30.433913+09:00",
+  "scientific_verdict": null
+}

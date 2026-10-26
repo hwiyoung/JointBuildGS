@@ -1,0 +1,341 @@
+{
+  "status": "STOPPED_AWAITING_USER_RULE",
+  "at": "2026-10-26T18:45:38.998823+09:00",
+  "runs": [
+    {
+      "variant": "lt_fixgt",
+      "before_reset": {
+        "iteration": 3000,
+        "camera": "DJI_20241217084535_0091_D",
+        "gaussians": 454300,
+        "prior_gaussians": 233715,
+        "prior_opacity_median": 0.5600865483283997,
+        "loss_total": 0.24052417278289795,
+        "stop": null,
+        "scientific_verdict": null
+      },
+      "stop": {
+        "iteration": 3001,
+        "camera": "DJI_20241217084447_0067_D",
+        "gaussians": 494560,
+        "prior_gaussians": 242780,
+        "prior_opacity_median": 0.009999998845160007,
+        "loss_total": 1.2527406215667725,
+        "stop": "prior opacity median < 0.05",
+        "scientific_verdict": null
+      },
+      "receipt": {
+        "run": {
+          "site": "B173nb_b10",
+          "prior": "ALS",
+          "variant": "lt_fixgt"
+        },
+        "gpu": 0,
+        "attempt": 0,
+        "exit_code": 1,
+        "started_at": "2026-10-26T18:35:25.534606+09:00",
+        "finished_at": "2026-10-26T18:39:32.174907+09:00",
+        "seconds": 246.6403980376199,
+        "lambda_depth": 0.0025,
+        "gpu_peak_total_MiB": 6126.0,
+        "config_sha256": "0e90bfbc6133c4de1859796fd764e2878f37422e4e98be075c295ff7c2190335",
+        "source_sha256": {
+          "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a",
+          "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8"
+        },
+        "scientific_verdict": null
+      },
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_0/model/monitor/losstrain_health.jsonl",
+      "source_sha256": "bebf467fa55ec0a33d22cdb94e4b9acb61c14d310649c96c7345674ee046d928",
+      "log": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_0/run.log",
+      "log_sha256": "def1ad3b4b5a1125f33b30640cfda15cf0020a84e1e67a927e15ec5c170874c8",
+      "completed_30000": false
+    },
+    {
+      "variant": "lt_dyngt",
+      "before_reset": {
+        "iteration": 3000,
+        "camera": "DJI_20241217084535_0091_D",
+        "gaussians": 237576,
+        "prior_gaussians": 101872,
+        "prior_opacity_median": 0.5301378965377808,
+        "loss_total": 0.2248498946428299,
+        "stop": null,
+        "scientific_verdict": null
+      },
+      "stop": {
+        "iteration": 3001,
+        "camera": "DJI_20241217084447_0067_D",
+        "gaussians": 249326,
+        "prior_gaussians": 103578,
+        "prior_opacity_median": 0.009999998845160007,
+        "loss_total": 0.5077416300773621,
+        "stop": "prior opacity median < 0.05",
+        "scientific_verdict": null
+      },
+      "receipt": {
+        "run": {
+          "site": "B173nb_b10",
+          "prior": "ALS",
+          "variant": "lt_dyngt"
+        },
+        "gpu": 1,
+        "attempt": 0,
+        "exit_code": 1,
+        "started_at": "2026-10-26T18:35:25.534524+09:00",
+        "finished_at": "2026-10-26T18:39:57.341548+09:00",
+        "seconds": 271.80705015175045,
+        "lambda_depth": 0.0025,
+        "gpu_peak_total_MiB": 12612.0,
+        "config_sha256": "0e90bfbc6133c4de1859796fd764e2878f37422e4e98be075c295ff7c2190335",
+        "source_sha256": {
+          "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a",
+          "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8"
+        },
+        "scientific_verdict": null
+      },
+      "source": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_0/model/monitor/losstrain_health.jsonl",
+      "source_sha256": "17b7d93b29642b2ef9efd804914acaf4b3793daa5a134ae13da804d8e98a12cc",
+      "log": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_0/run.log",
+      "log_sha256": "2b7c933dc729dc946f9e6ed184af340db7469e4cf260c2c2610f4dc34d354104",
+      "completed_30000": false
+    }
+  ],
+  "calibration_completed": 4,
+  "full_completed": 0,
+  "full_stopped": 2,
+  "full_not_started": 22,
+  "optional_not_started": 6,
+  "selected_lambda": 0.0025,
+  "cause": "unchanged r16 periodic reset at 3000 clamps non-exempt opacity to min(current,0.01); all-prior median then crosses the explicit 0.05 stop condition at 3001",
+  "reset_source": "src/phd/forks/GeoGS-conf-guided-v1-r16/train.py:1148; scene/gaussian_model.py:243",
+  "source_comparison": "r16 and r17 GaussianModel reset bytes identical; final r17 rebuild verified",
+  "proposal": {
+    "status": "PROPOSED_NOT_APPLIED",
+    "at": "2026-10-26T18:42:56.292972+09:00",
+    "reason": "both lt_fixgt and lt_dyngt stopped at 3001 immediately after inherited reset clamps non-exempt opacity to 0.01",
+    "proposal": "Keep original initialization/protection/density/reset unchanged. Record every actual opacity reset. Suspend only opacity<0.05 stop for offsets 1..99 after that reset; apply it again from offset 100. Nonfinite loss and other errors always stop. Preserve failed attempts and rerun from seed 0 after user approval.",
+    "baseline_evidence": [
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "reset_iteration": 3000,
+        "first_recorded_recovery_iteration": 3100,
+        "first_recorded_recovery_median": 0.07536103576421738,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "reset_iteration": 6000,
+        "first_recorded_recovery_iteration": 6100,
+        "first_recorded_recovery_median": 0.10451188683509827,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "reset_iteration": 9000,
+        "first_recorded_recovery_iteration": 9100,
+        "first_recorded_recovery_median": 0.12379095703363419,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "reset_iteration": 12000,
+        "first_recorded_recovery_iteration": 12100,
+        "first_recorded_recovery_median": 0.08116638660430908,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "reset_iteration": 3000,
+        "first_recorded_recovery_iteration": 3100,
+        "first_recorded_recovery_median": 0.15136270225048065,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "reset_iteration": 6000,
+        "first_recorded_recovery_iteration": 6100,
+        "first_recorded_recovery_median": 0.17233532667160034,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "reset_iteration": 9000,
+        "first_recorded_recovery_iteration": 9100,
+        "first_recorded_recovery_median": 0.20412497222423553,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "reset_iteration": 12000,
+        "first_recorded_recovery_iteration": 12100,
+        "first_recorded_recovery_median": 0.16913555562496185,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "reset_iteration": 3000,
+        "first_recorded_recovery_iteration": 3100,
+        "first_recorded_recovery_median": 0.08709418773651123,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "reset_iteration": 6000,
+        "first_recorded_recovery_iteration": 6100,
+        "first_recorded_recovery_median": 0.10595756769180298,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "reset_iteration": 9000,
+        "first_recorded_recovery_iteration": 9100,
+        "first_recorded_recovery_median": 0.09799720346927643,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "reset_iteration": 12000,
+        "first_recorded_recovery_iteration": 12100,
+        "first_recorded_recovery_median": 0.09487617760896683,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "reset_iteration": 3000,
+        "first_recorded_recovery_iteration": 3100,
+        "first_recorded_recovery_median": 0.15625111758708954,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "reset_iteration": 6000,
+        "first_recorded_recovery_iteration": 6100,
+        "first_recorded_recovery_median": 0.12308697402477264,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "reset_iteration": 9000,
+        "first_recorded_recovery_iteration": 9100,
+        "first_recorded_recovery_median": 0.23826287686824799,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "reset_iteration": 12000,
+        "first_recorded_recovery_iteration": 12100,
+        "first_recorded_recovery_median": 0.20679312944412231,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "reset_iteration": 3000,
+        "first_recorded_recovery_iteration": 3100,
+        "first_recorded_recovery_median": 0.0895775854587555,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "reset_iteration": 6000,
+        "first_recorded_recovery_iteration": 6100,
+        "first_recorded_recovery_median": 0.1067771464586258,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "reset_iteration": 9000,
+        "first_recorded_recovery_iteration": 9100,
+        "first_recorded_recovery_median": 0.11897029727697372,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "reset_iteration": 12000,
+        "first_recorded_recovery_iteration": 12100,
+        "first_recorded_recovery_median": 0.06851276010274887,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "reset_iteration": 3000,
+        "first_recorded_recovery_iteration": 3100,
+        "first_recorded_recovery_median": 0.11248810589313507,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "reset_iteration": 6000,
+        "first_recorded_recovery_iteration": 6100,
+        "first_recorded_recovery_median": 0.13077908754348755,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "reset_iteration": 9000,
+        "first_recorded_recovery_iteration": 9100,
+        "first_recorded_recovery_median": 0.1876533031463623,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "reset_iteration": 12000,
+        "first_recorded_recovery_iteration": 12100,
+        "first_recorded_recovery_median": 0.1384049952030182,
+        "sampling_interval": 100,
+        "source": "../JointBuildGS-artifacts/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl"
+      }
+    ],
+    "new_training_results_used_to_set_grace": false,
+    "scientific_verdict": null
+  },
+  "approved": false,
+  "scientific_verdict": null
+}

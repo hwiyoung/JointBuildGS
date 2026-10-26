@@ -11,14 +11,29 @@ def main():
     assert s.count(marker)==1
     s=s.replace(marker,marker+'\n    g.add_argument("--jbgs_lt_monitor", type=int, choices=[0, 1], default=0)\n'
         '    g.add_argument("--jbgs_lt_gradient_from", type=int, default=0)\n'
-        '    g.add_argument("--jbgs_lt_gradient_to", type=int, default=0)')
+        '    g.add_argument("--jbgs_lt_gradient_to", type=int, default=0)\n'
+        '    g.add_argument("--jbgs_lt_opacity_reset_grace", type=int, choices=[0, 100], default=0)\n'
+        '    g.add_argument("--jbgs_lt_nojudge_opacity", default="")')
     s+='\n\n'+(src/'r17_monitor.py').read_text();j.write_text(s)
     s=t.read_text();marker='        total_loss.backward()';assert s.count(marker)==1
     hook='''        if judgment is not None and args.jbgs_lt_monitor:
             jbgs_judgment.lt_observe(judgment, iteration, gaussians, total_loss, rgb_loss,
                 judgment.lambda_mvs * mvs_term + judgment.lambda_prior * prior_term, render_pkg, cam_name)
 '''
-    s=s.replace(marker,hook+marker);t.write_text(s)
+    s=s.replace(marker,hook+marker)
+    marker='        iter_end.record()';assert s.count(marker)==1
+    s=s.replace(marker,'''        if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_opacity_reset_grace:
+            jbgs_judgment.lt_opacity_health(judgment, iteration, gaussians, cam_name,
+                'after optimizer and opacity floors, before density/reset')
+
+'''+marker)
+    marker='                    gaussians.reset_opacity(exempt_mask=judgment.exempt_mask(gaussians) if judgment is not None else None)  # [jbgs_judgment]'
+    assert s.count(marker)==1
+    s=s.replace(marker,marker+'''
+                    if judgment is not None and args.jbgs_lt_monitor:
+                        jbgs_judgment.lt_reset_observed(judgment, iteration, iteration % opt.opacity_reset_interval == 0)
+''')
+    t.write_text(s)
     base=Path('/repo/src/phd/forks/GeoGS-conf-guided-v1-r16');diff=''
     for p in [j,t]:
         diff+=''.join(difflib.unified_diff((base/p.name).read_text().splitlines(True),p.read_text().splitlines(True),

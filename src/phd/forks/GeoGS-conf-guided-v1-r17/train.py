@@ -1045,6 +1045,10 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
                         min=opacity_floor_logit
                     )
 
+        if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_opacity_reset_grace:
+            jbgs_judgment.lt_opacity_health(judgment, iteration, gaussians, cam_name,
+                'after optimizer and opacity floors, before density/reset')
+
         iter_end.record()
 
         with torch.no_grad():
@@ -1150,6 +1154,9 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
 
                 if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
                     gaussians.reset_opacity(exempt_mask=judgment.exempt_mask(gaussians) if judgment is not None else None)  # [jbgs_judgment]
+                    if judgment is not None and args.jbgs_lt_monitor:
+                        jbgs_judgment.lt_reset_observed(judgment, iteration, iteration % opt.opacity_reset_interval == 0)
+
 
             if iteration in checkpoint_iterations:
                 print(f"\n[ITER {iteration}] Saving Checkpoint")

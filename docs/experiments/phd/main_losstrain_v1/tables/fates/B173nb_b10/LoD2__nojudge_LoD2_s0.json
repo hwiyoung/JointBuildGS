@@ -1,0 +1,69 @@
+{
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "result": "nojudge_LoD2_s0",
+  "status": "PASS",
+  "regions": {
+    "prior_wrong_1_3": {
+      "patches": 35252,
+      "area_m2": 2203.25,
+      "seeds_seated": 35252,
+      "seeds_planted": 35252,
+      "not_planted": 0,
+      "counts": {
+        "removed": 31745,
+        "old_place": 1738,
+        "current_surface": 266,
+        "neither": 1503
+      },
+      "shares": {
+        "removed": 0.9005162827640985,
+        "old_place": 0.04930216725292182,
+        "current_surface": 0.007545671167593328,
+        "neither": 0.04263587881538636
+      },
+      "descendants": 10307,
+      "opaque_descendants": 6531,
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 600.0,
+        "max": 14900.0
+      }
+    },
+    "prior_correct_0_2": {
+      "patches": 43285,
+      "area_m2": 2705.3125,
+      "seeds_seated": 43285,
+      "seeds_planted": 43285,
+      "not_planted": 0,
+      "counts": {
+        "removed": 34555,
+        "old_place": 5184,
+        "current_surface": 297,
+        "neither": 3249
+      },
+      "shares": {
+        "removed": 0.7983135035231604,
+        "old_place": 0.11976435254707174,
+        "current_surface": 0.006861499364675985,
+        "neither": 0.07506064456509183
+      },
+      "descendants": 49295,
+      "opaque_descendants": 29405,
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 3100.0,
+        "max": 14900.0
+      }
+    }
+  },
+  "sources": {
+    "initial": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+    "initial_sha256": "2af213eaeb99e0973dd2b0004d0dc82362467e4ca43be0f9fa8143197f602d0c",
+    "dump": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/dump/iteration_30000/gaussians.npz",
+    "dump_sha256": "88b9c37f6a4f28dec964687f4106536410f4f912fc06b62f45df8e2358a98d8d",
+    "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/gt_classes.npz"
+  },
+  "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+  "scientific_verdict": null
+}

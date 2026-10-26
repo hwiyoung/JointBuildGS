@@ -57,6 +57,7 @@ def summarize(site,prior,r):
                 successful_patches=int((m&success).sum()),successful_area_m2=S,within_tau_percent=100*S/A if A>0 else None,
                 no_surface_patches=int((m&~np.isfinite(r[key])).sum()),no_surface_area_m2=float(area[m&~np.isfinite(r[key])].sum()),
                 no_surface_percent=100*float(area[m&~np.isfinite(r[key])].sum())/A if A>0 else None,
+                error_patch_median_m=float(np.median(err[m&np.isfinite(err)])) if (m&np.isfinite(err)).any() else None,
                 error_area_weighted_median_m=median(err[m&np.isfinite(err)],area[m&np.isfinite(err)]),minimum_sample='PASS' if K>=100 else 'INSUFFICIENT',
                 result_type='analytic_not_trained',origin='[이 발주에서 냄]'))
     return out

@@ -1,5 +1,3 @@
 # PHD-MAIN-LOSSTRAIN-v1
 
-2026-10-26T18:33:51.091361+09:00: REOPENED. Direct stage-1 area coverage and LoD2 agreement PASS.
-
-Current equivalence 6/6; actual fixed/dynamic masks 6/6. Calibration 4/4; full training 0/24; optional 0/6. Selected lambda: 0.0025. scientific_verdict: null.
+사용자가 실제 초기화 뒤 1~99회 불투명도 판정 유예를 승인했다. +100회부터 기존 0.05 기준을 적용하며 같은 반복의 nojudge 값을 함께 기록한다. NaN 및 다른 오류는 즉시 중단한다. 이전 3,001회 중단 두 실행은 보존하고 씨앗 0부터 재실행한다. 준비·짧은 학습 4/4 및 λ=0.0025는 재사용한다. 본 학습 완료 0/24. scientific_verdict: null.

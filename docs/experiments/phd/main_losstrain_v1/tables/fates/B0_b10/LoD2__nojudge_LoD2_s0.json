@@ -1,0 +1,69 @@
+{
+  "site": "B0_b10",
+  "prior": "LoD2",
+  "result": "nojudge_LoD2_s0",
+  "status": "PASS",
+  "regions": {
+    "prior_wrong_1_3": {
+      "patches": 29085,
+      "area_m2": 1817.8125,
+      "seeds_seated": 29085,
+      "seeds_planted": 29085,
+      "not_planted": 0,
+      "counts": {
+        "removed": 22660,
+        "old_place": 2674,
+        "current_surface": 1333,
+        "neither": 2418
+      },
+      "shares": {
+        "removed": 0.7790957538249957,
+        "old_place": 0.09193742478941035,
+        "current_surface": 0.045831184459343303,
+        "neither": 0.08313563692625064
+      },
+      "descendants": 21119,
+      "opaque_descendants": 15706,
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 3100.0,
+        "max": 14900.0
+      }
+    },
+    "prior_correct_0_2": {
+      "patches": 43660,
+      "area_m2": 2728.75,
+      "seeds_seated": 43660,
+      "seeds_planted": 43660,
+      "not_planted": 0,
+      "counts": {
+        "removed": 31061,
+        "old_place": 6136,
+        "current_surface": 474,
+        "neither": 5989
+      },
+      "shares": {
+        "removed": 0.7114292258360055,
+        "old_place": 0.14054054054054055,
+        "current_surface": 0.010856619331195602,
+        "neither": 0.13717361429225836
+      },
+      "descendants": 39114,
+      "opaque_descendants": 24768,
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 3100.0,
+        "max": 14900.0
+      }
+    }
+  },
+  "sources": {
+    "initial": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+    "initial_sha256": "3d6ce3893a7ee68751096c7da0c251688b057894db22e9a9654d9d8c5df19b49",
+    "dump": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/dump/iteration_30000/gaussians.npz",
+    "dump_sha256": "11a060d79e83ad908569b017de7745a8abb3873d9a81967fef6eb8f65f49226c",
+    "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz"
+  },
+  "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+  "scientific_verdict": null
+}

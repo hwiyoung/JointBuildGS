@@ -1,0 +1,201 @@
+{
+  "status": "PASS",
+  "boundary_cases": [
+    {
+      "reset": null,
+      "iteration": 3001,
+      "value": 0.01,
+      "stopped": true
+    },
+    {
+      "reset": null,
+      "iteration": 3001,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3001,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3001,
+      "value": "NaN",
+      "stopped": true
+    },
+    {
+      "reset": null,
+      "iteration": 3099,
+      "value": 0.01,
+      "stopped": true
+    },
+    {
+      "reset": null,
+      "iteration": 3099,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3099,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3099,
+      "value": "NaN",
+      "stopped": true
+    },
+    {
+      "reset": null,
+      "iteration": 3100,
+      "value": 0.01,
+      "stopped": true
+    },
+    {
+      "reset": null,
+      "iteration": 3100,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3100,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3100,
+      "value": "NaN",
+      "stopped": true
+    },
+    {
+      "reset": null,
+      "iteration": 3101,
+      "value": 0.01,
+      "stopped": true
+    },
+    {
+      "reset": null,
+      "iteration": 3101,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3101,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": null,
+      "iteration": 3101,
+      "value": "NaN",
+      "stopped": true
+    },
+    {
+      "reset": 3000,
+      "iteration": 3001,
+      "value": 0.01,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3001,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3001,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3001,
+      "value": "NaN",
+      "stopped": true
+    },
+    {
+      "reset": 3000,
+      "iteration": 3099,
+      "value": 0.01,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3099,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3099,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3099,
+      "value": "NaN",
+      "stopped": true
+    },
+    {
+      "reset": 3000,
+      "iteration": 3100,
+      "value": 0.01,
+      "stopped": true
+    },
+    {
+      "reset": 3000,
+      "iteration": 3100,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3100,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3100,
+      "value": "NaN",
+      "stopped": true
+    },
+    {
+      "reset": 3000,
+      "iteration": 3101,
+      "value": 0.01,
+      "stopped": true
+    },
+    {
+      "reset": 3000,
+      "iteration": 3101,
+      "value": 0.05,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3101,
+      "value": 0.1,
+      "stopped": false
+    },
+    {
+      "reset": 3000,
+      "iteration": 3101,
+      "value": "NaN",
+      "stopped": true
+    }
+  ],
+  "nonfinite_loss_during_grace_stops": true,
+  "parameter_and_retained_gradients_equal": true,
+  "observer_optimizer_steps": 0,
+  "scientific_verdict": null
+}

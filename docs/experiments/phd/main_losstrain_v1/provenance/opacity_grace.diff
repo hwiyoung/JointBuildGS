@@ -1,0 +1,114 @@
+--- before/jbgs_judgment.py
++++ after/jbgs_judgment.py
+@@ -335,6 +335,8 @@
+     g.add_argument("--jbgs_lt_monitor", type=int, choices=[0, 1], default=0)
+     g.add_argument("--jbgs_lt_gradient_from", type=int, default=0)
+     g.add_argument("--jbgs_lt_gradient_to", type=int, default=0)
++    g.add_argument("--jbgs_lt_opacity_reset_grace", type=int, choices=[0, 100], default=0)
++    g.add_argument("--jbgs_lt_nojudge_opacity", default="")
+ 
+ 
+ def apply_seed(args):
+@@ -2248,24 +2250,61 @@
+ 
+ """Opt-in LOSSTRAIN observations; no optimizer, protection or density decisions."""
+ 
++def lt_write(j, name, row):
++    with (j.mon / name).open('a') as f:
++        f.write(json.dumps(row, allow_nan=False) + '\n')
++
++
++def lt_reset_observed(j, iteration, periodic):
++    """Called only after the original reset executes; never changes its inputs."""
++    if periodic:
++        j.lt_last_periodic_reset = iteration
++    lt_write(j, 'losstrain_resets.jsonl', dict(iteration=iteration, periodic=bool(periodic),
++        observation_phase='after original reset', scientific_verdict=None))
++
++
++def lt_opacity_health(j, iteration, gaussians, camera, phase):
++    prior = gaussians.origin == ORIGIN_PRIOR
++    opacity = gaussians.get_opacity.detach().reshape(-1).float()
++    finite = bool(torch.isfinite(opacity).all())
++    med = float(torch.quantile(opacity[prior], .5)) if finite and bool(prior.any()) else None
++    reset = getattr(j, 'lt_last_periodic_reset', None)
++    offset = None if reset is None else iteration - reset
++    grace = j.args.jbgs_lt_opacity_reset_grace
++    skip = grace > 0 and offset is not None and 0 < offset < grace
++    stop = 'nonfinite opacity' if not finite else ('prior opacity median < 0.05' if not skip and med is not None and med < .05 else None)
++    row = dict(iteration=iteration, camera=camera, gaussians=len(opacity), prior_gaussians=int(prior.sum()),
++        prior_opacity_median=med, observation_phase=phase, last_periodic_reset=reset,
++        iterations_after_reset=offset, opacity_stop_deferred=skip, stop=stop, scientific_verdict=None)
++    if iteration == 1 or iteration % 100 == 0 or offset == 1 or stop:
++        lt_write(j, 'losstrain_health.jsonl', row)
++    if grace and offset == grace:
++        if not hasattr(j, 'lt_nojudge_opacity'):
++            with open(j.args.jbgs_lt_nojudge_opacity) as f:
++                j.lt_nojudge_opacity = json.load(f)
++        baseline = j.lt_nojudge_opacity
++        assert baseline['observation_phase'] == phase
++        reference = baseline['medians'][str(iteration)]
++        lt_write(j, 'losstrain_reset_comparison.jsonl', dict(**row, nojudge_prior_opacity_median=reference,
++            difference_from_nojudge=None if med is None else med-reference,
++            nojudge_source=baseline['source'], nojudge_source_sha256=baseline['source_sha256']))
++    if stop:
++        raise RuntimeError('LOSSTRAIN_STOP: ' + stop)
++
++
+ def lt_observe(j, iteration, gaussians, total, rgb, depth, package, camera):
+     """Called before backward; record-only autograd calls preserve retained grads."""
+     if not j.args.jbgs_lt_monitor:
+         return
+-    def write(name, row):
+-        with (j.mon / name).open('a') as f:
+-            f.write(json.dumps(row, allow_nan=False) + '\n')
+-    prior = gaussians.origin == ORIGIN_PRIOR
+     opacity = gaussians.get_opacity.detach().reshape(-1)
+-    med = float(torch.quantile(opacity[prior], .5)) if bool(prior.any()) else None
+     finite = bool(torch.isfinite(total))
+-    stop = 'nonfinite loss' if not finite else ('prior opacity median < 0.05' if med is not None and med < .05 else None)
+-    if iteration == 1 or iteration % 100 == 0 or stop:
+-        write('losstrain_health.jsonl', dict(iteration=iteration, camera=camera, gaussians=len(opacity),
+-            prior_gaussians=int(prior.sum()), prior_opacity_median=med,
+-            loss_total=float(total.detach()) if finite else None, stop=stop, scientific_verdict=None))
++    stop = 'nonfinite loss' if not finite else ('nonfinite opacity' if not bool(torch.isfinite(opacity).all()) else None)
+     if stop:
++        lt_write(j, 'losstrain_health.jsonl', dict(iteration=iteration, camera=camera,
++            observation_phase='before backward', stop=stop, scientific_verdict=None))
+         raise RuntimeError('LOSSTRAIN_STOP: ' + stop)
++    if not j.args.jbgs_lt_opacity_reset_grace:
++        lt_opacity_health(j, iteration, gaussians, camera, 'before backward')
+     lo, hi = j.args.jbgs_lt_gradient_from, j.args.jbgs_lt_gradient_to
+     if not (lo > 0 and lo <= iteration <= hi):
+         return
+@@ -2284,6 +2323,6 @@
+                 visible_gaussians=int(visible.sum()), positive_gaussians=int((norm > 0).sum()))
+     finally:
+         vsp.grad = retained
+-    write('losstrain_gradients.jsonl', dict(iteration=iteration, camera=camera, values=values,
++    lt_write(j, 'losstrain_gradients.jsonl', dict(iteration=iteration, camera=camera, values=values,
+         definition='Euclidean norm per Gaussian centre, including zeros; each iteration median; depth includes lambda; visible median supplementary',
+         scientific_verdict=None))
+--- before/train.py
++++ after/train.py
+@@ -1045,6 +1045,10 @@
+                         min=opacity_floor_logit
+                     )
+ 
++        if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_opacity_reset_grace:
++            jbgs_judgment.lt_opacity_health(judgment, iteration, gaussians, cam_name,
++                'after optimizer and opacity floors, before density/reset')
++
+         iter_end.record()
+ 
+         with torch.no_grad():
+@@ -1150,6 +1154,9 @@
+ 
+                 if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
+                     gaussians.reset_opacity(exempt_mask=judgment.exempt_mask(gaussians) if judgment is not None else None)  # [jbgs_judgment]
++                    if judgment is not None and args.jbgs_lt_monitor:
++                        jbgs_judgment.lt_reset_observed(judgment, iteration, iteration % opt.opacity_reset_interval == 0)
++
+ 
+             if iteration in checkpoint_iterations:
+                 print(f"\n[ITER {iteration}] Saving Checkpoint")
