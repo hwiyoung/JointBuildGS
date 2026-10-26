@@ -1,6 +1,6 @@
 {
   "status": "RUNNING",
-  "at": "2026-10-26T21:30:47.078887+09:00",
+  "at": "2026-10-26T21:34:39.254669+09:00",
   "counts": {
     "calibration_complete": 4,
     "required_complete": 2,
@@ -437,20 +437,33 @@
           "attempt": "attempt_0",
           "receipt": null,
           "last_health": {
-            "iteration": 2800,
+            "iteration": 6800,
             "camera": "DJI_20241217091045_0085_D",
             "observation_phase": "after optimizer and opacity floors, before density/reset",
-            "last_periodic_reset": null,
-            "iterations_after_reset": null,
-            "gaussians": 210979,
-            "whole_opacity_median": 0.7099835872650146,
+            "last_periodic_reset": 6000,
+            "iterations_after_reset": 800,
+            "gaussians": 501351,
+            "whole_opacity_median": 0.4145452678203583,
             "prior_opacity_is_record_only": true,
             "stop": null,
             "scientific_verdict": null
           },
           "stops": [],
           "monitor_policy": "v2",
-          "resets": []
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
         }
       ],
       "post_attempts": []
@@ -467,20 +480,33 @@
           "attempt": "attempt_0",
           "receipt": null,
           "last_health": {
-            "iteration": 2800,
-            "camera": "DJI_20241217091045_0085_D",
+            "iteration": 6900,
+            "camera": "DJI_20241217084535_0091_D",
             "observation_phase": "after optimizer and opacity floors, before density/reset",
-            "last_periodic_reset": null,
-            "iterations_after_reset": null,
-            "gaussians": 203185,
-            "whole_opacity_median": 0.6929851174354553,
+            "last_periodic_reset": 6000,
+            "iterations_after_reset": 900,
+            "gaussians": 537665,
+            "whole_opacity_median": 0.394093781709671,
             "prior_opacity_is_record_only": true,
             "stop": null,
             "scientific_verdict": null
           },
           "stops": [],
           "monitor_policy": "v2",
-          "resets": []
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
         }
       ],
       "post_attempts": []

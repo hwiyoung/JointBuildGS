@@ -383,6 +383,231 @@
 | B173nb_b10 lt_dyngt_ALS_s0 | 30000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 105483 | 0.680908 | 163396 | 0.655912 |
 | B173nb_b10 lt_dyngt_ALS_s0 | 30000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 14643 | 0.720209 | 8029 | 0.635453 |
 | B173nb_b10 lt_dyngt_ALS_s0 | 30000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 102992 | 0.908241 | 224208 | 0.656257 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 전체 | 94206 | 0.360973 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 초기 사전 | 75750 | 0.342509 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 11103 | 0.499133 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 7353 | 0.416121 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 77589 | 0.343875 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 16617 | 0.473716 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 27198 | 0.412817 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 4929 | 0.143062 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 45462 | 0.312992 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 전체 | 129627 | 0.500003 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 초기 사전 | 69737 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 10301 | 0.564613 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 49589 | 0.681696 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 82681 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 46946 | 0.681376 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 29986 | 0.463171 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 4271 | 0.306710 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 48424 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 전체 | 240900 | 0.782346 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 초기 사전 | 66852 | 0.502441 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 9750 | 0.606468 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 164298 | 0.990753 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 100842 | 0.515575 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 140058 | 0.997465 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 36726 | 0.506179 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 8314 | 0.843124 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 55802 | 0.510886 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 전체 | 251541 | 0.831312 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 초기 사전 | 66699 | 0.502679 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 초기 영상(MVS 계열) | 9705 | 0.609959 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 밀도 제어 생성 | 175137 | 0.995537 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보 전체 | 102423 | 0.525330 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 영상 계보 전체 | 149118 | 0.999078 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보·참값 맞음 | 37115 | 0.522143 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보·참값 틀림 | 8900 | 0.926899 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보·참값 없음 | 56408 | 0.514960 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 전체 | 251541 | 0.174434 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 초기 사전 | 66699 | 0.388625 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 9705 | 0.118608 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 175137 | 0.139504 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 102423 | 0.248358 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 149118 | 0.146152 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 37115 | 0.212511 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 8900 | 0.037649 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 56408 | 0.432292 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 전체 | 206945 | 0.502293 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 초기 사전 | 48573 | 0.662677 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5465 | 0.628278 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 152907 | 0.430932 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 76534 | 0.585270 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 130411 | 0.438961 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 28941 | 0.543586 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 3849 | 0.283604 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 43744 | 0.636577 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 전체 | 268915 | 0.521363 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 초기 사전 | 47905 | 0.692161 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5311 | 0.678095 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 215699 | 0.465804 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 86334 | 0.590501 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 182581 | 0.477164 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 33297 | 0.536780 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 4484 | 0.325160 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 48553 | 0.648739 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 전체 | 411337 | 0.544147 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 초기 사전 | 47063 | 0.728463 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5111 | 0.722456 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 359163 | 0.503312 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 108828 | 0.586683 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 302509 | 0.520881 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 43424 | 0.524418 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 5926 | 0.375549 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 59478 | 0.654400 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 전체 | 572974 | 0.557975 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 초기 사전 | 46364 | 0.763452 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 4967 | 0.746901 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 521643 | 0.526868 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 134719 | 0.583715 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 438255 | 0.546310 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 55695 | 0.509761 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 7592 | 0.448934 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 71432 | 0.659212 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 전체 | 590914 | 0.595991 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 초기 사전 | 46308 | 0.763930 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 초기 영상(MVS 계열) | 4959 | 0.747363 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 밀도 제어 생성 | 539647 | 0.570599 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보 전체 | 137855 | 0.608480 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 영상 계보 전체 | 453059 | 0.590643 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보·참값 맞음 | 57313 | 0.542283 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보·참값 틀림 | 7792 | 0.493502 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보·참값 없음 | 72750 | 0.677611 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 전체 | 590914 | 0.160114 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 초기 사전 | 46308 | 0.517285 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 4959 | 0.201319 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 539647 | 0.147999 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 137855 | 0.203924 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 453059 | 0.153715 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 57313 | 0.090561 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 7792 | 0.069956 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 72750 | 0.407712 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 전체 | 445528 | 0.410606 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 초기 사전 | 35304 | 0.837699 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 3151 | 0.681468 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 407073 | 0.373858 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 97889 | 0.601980 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 347639 | 0.363929 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 36244 | 0.488017 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 4604 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 57041 | 0.699240 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 전체 | 94935 | 0.349072 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 초기 사전 | 75834 | 0.330329 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 11043 | 0.487531 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 8058 | 0.382323 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 77888 | 0.332078 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 17047 | 0.447232 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 27335 | 0.416159 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 4937 | 0.138059 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 45616 | 0.292283 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 전체 | 126239 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 초기 사전 | 69340 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 10230 | 0.555365 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 46669 | 0.611764 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 82561 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 43678 | 0.612288 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 30520 | 0.469210 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 4333 | 0.307599 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 47708 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 전체 | 235540 | 0.780668 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 초기 사전 | 66528 | 0.501709 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 9652 | 0.592015 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 159360 | 0.991290 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 102674 | 0.524486 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 132866 | 0.997143 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 37383 | 0.506446 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 11001 | 1.000000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 54290 | 0.508511 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 전체 | 247779 | 0.834695 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 초기 사전 | 66361 | 0.501922 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 초기 영상(MVS 계열) | 9623 | 0.594057 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 밀도 제어 생성 | 171795 | 0.996613 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보 전체 | 104318 | 0.536517 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 영상 계보 전체 | 143461 | 0.999296 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보·참값 맞음 | 37845 | 0.521695 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보·참값 틀림 | 11640 | 1.000000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 사전 계보·참값 없음 | 54833 | 0.512478 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 전체 | 247779 | 0.174764 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 초기 사전 | 66361 | 0.349786 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 9623 | 0.140503 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 171795 | 0.141030 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 104318 | 0.228807 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 143461 | 0.150858 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 37845 | 0.195876 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 11640 | 0.042408 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 54833 | 0.375733 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 전체 | 205413 | 0.497077 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 초기 사전 | 47877 | 0.655421 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5600 | 0.623467 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 151936 | 0.401747 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 76613 | 0.578046 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 128800 | 0.402576 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 28401 | 0.553416 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 5201 | 0.424797 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 43011 | 0.610458 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 전체 | 267889 | 0.500000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 초기 사전 | 47187 | 0.683091 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5441 | 0.689676 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 215261 | 0.429872 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 86305 | 0.585136 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 181584 | 0.430316 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 32533 | 0.549707 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 6053 | 0.491756 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 47719 | 0.619499 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 전체 | 421661 | 0.508319 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 초기 사전 | 46300 | 0.730563 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5234 | 0.728359 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 370127 | 0.469495 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 111716 | 0.614812 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 309945 | 0.457064 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 42180 | 0.540797 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 12073 | 0.865953 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 57463 | 0.639601 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 전체 | 608441 | 0.535940 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 초기 사전 | 45720 | 0.769063 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5102 | 0.743687 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 557619 | 0.505804 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 145755 | 0.672911 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 462686 | 0.485344 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 53480 | 0.520672 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 24396 | 1.000000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 67879 | 0.652538 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 전체 | 629930 | 0.574418 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 초기 사전 | 45651 | 0.770059 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 초기 영상(MVS 계열) | 5090 | 0.745122 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 밀도 제어 생성 | 579189 | 0.549488 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보 전체 | 149742 | 0.702796 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 영상 계보 전체 | 480188 | 0.528825 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보·참값 맞음 | 54926 | 0.552390 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보·참값 틀림 | 25850 | 1.000000 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 사전 계보·참값 없음 | 68966 | 0.669287 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 전체 | 629930 | 0.140637 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 초기 사전 | 45651 | 0.529589 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 5090 | 0.213406 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 579189 | 0.128145 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 149742 | 0.176736 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 480188 | 0.135300 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 54926 | 0.104304 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 25850 | 0.030963 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 68966 | 0.462388 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 전체 | 461448 | 0.382492 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 초기 사전 | 35128 | 0.838954 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 3262 | 0.650167 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 423058 | 0.347192 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 100048 | 0.611436 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 361400 | 0.332497 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 35384 | 0.486606 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 9956 | 0.549198 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 54708 | 0.711834 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 전체 | 571415 | 0.390279 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 초기 사전 | 34851 | 0.863650 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 초기 영상(MVS 계열) | 3190 | 0.709424 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 밀도 제어 생성 | 533374 | 0.358988 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 사전 계보 전체 | 116266 | 0.589034 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 영상 계보 전체 | 455149 | 0.345674 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 맞음 | 43538 | 0.476614 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 틀림 | 11264 | 0.524569 | 기록 없음 | 기록 없음 |
+| B173nb_b10 lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 사전 계보·참값 없음 | 61464 | 0.685612 | 기록 없음 | 기록 없음 |
 
 ## 다섯 영상 PSNR
 
@@ -430,6 +655,31 @@
 | lt_dyngt_ALS_s0 | 28000 after optimizer and opacity floors, before density/reset | 25.223413 | 기록 없음 | 없음 |
 | lt_dyngt_ALS_s0 | 29000 after optimizer and opacity floors, before density/reset | 25.613044 | 기록 없음 | 없음 |
 | lt_dyngt_ALS_s0 | 30000 after optimizer and opacity floors, before density/reset | 25.706836 | 25.919701 | 없음 |
+| lt_dynnow_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 14.054082 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 16.128063 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 17.149842 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 3000 immediately before actual periodic reset, after density | 16.869701 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 17.236114 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 17.908500 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 18.389050 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 19.406474 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 20.373093 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 6000 immediately before actual periodic reset, after density | 20.130320 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 19.253602 | 기록 없음 | 없음 |
+| lt_dynnow_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 20.258908 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 1000 after optimizer and opacity floors, before density/reset | 14.218595 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 2000 after optimizer and opacity floors, before density/reset | 16.196446 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 3000 after optimizer and opacity floors, before density/reset | 17.928976 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 3000 immediately before actual periodic reset, after density | 17.687618 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 3100 after optimizer and opacity floors, before density/reset | 18.163221 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 3500 after optimizer and opacity floors, before density/reset | 18.614739 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 4000 after optimizer and opacity floors, before density/reset | 19.080431 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 5000 after optimizer and opacity floors, before density/reset | 19.866906 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 6000 after optimizer and opacity floors, before density/reset | 20.689761 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 6000 immediately before actual periodic reset, after density | 20.409689 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 6100 after optimizer and opacity floors, before density/reset | 19.526749 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 6500 after optimizer and opacity floors, before density/reset | 20.355098 | 기록 없음 | 없음 |
+| lt_dynsoft_ALS_s0 | 7000 after optimizer and opacity floors, before density/reset | 20.973975 | 20.828419 | 없음 |
 
 ## 저장 모델의 통계
 
