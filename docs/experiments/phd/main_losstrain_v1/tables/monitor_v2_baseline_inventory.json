@@ -1,0 +1,287 @@
+{
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model",
+      "train_psnr_legacy5": [
+        {
+          "iteration": 7000,
+          "psnr_db": 20.085838317871094
+        },
+        {
+          "iteration": 15000,
+          "psnr_db": 22.202314376831055
+        },
+        {
+          "iteration": 30000,
+          "psnr_db": 24.250185012817383
+        }
+      ],
+      "legacy5_camera_names": [
+        "DJI_20241217091125_0105_D",
+        "DJI_20241217091255_0150_D",
+        "DJI_20241217095455_0030_D",
+        "DJI_20241217101303_0004_D",
+        "DJI_20241217103619_0079_D"
+      ],
+      "legacy_psnr_definition": "train.py training_report: five fixed training cameras; utils.image_utils.psnr(image_CHW,target_CHW).mean(), then mean of five",
+      "point_cloud_iterations": [
+        15000,
+        30000
+      ],
+      "dump_iterations": [
+        30000
+      ],
+      "source_events": [
+        {
+          "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/events.out.tfevents.1791989449.e66466f74b41.1.0",
+          "sha256": "4a7f84b7c7f32479656685a2ba5cd0759fd131338f1804f0451519031d2a3ac1"
+        }
+      ],
+      "unavailable": [
+        "whole opacity medians at reset+100 from original per-Gaussian states",
+        "density-born versus surviving initial disks: no independent birth tag stored",
+        "GT-cell split opacity at unsaved iterations",
+        "all-training-view PSNR at unsaved iterations"
+      ],
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model",
+      "train_psnr_legacy5": [
+        {
+          "iteration": 7000,
+          "psnr_db": 20.07001495361328
+        },
+        {
+          "iteration": 15000,
+          "psnr_db": 22.363134384155273
+        },
+        {
+          "iteration": 30000,
+          "psnr_db": 24.444658279418945
+        }
+      ],
+      "legacy5_camera_names": [
+        "DJI_20241217091125_0105_D",
+        "DJI_20241217091255_0150_D",
+        "DJI_20241217095455_0030_D",
+        "DJI_20241217101303_0004_D",
+        "DJI_20241217103619_0079_D"
+      ],
+      "legacy_psnr_definition": "train.py training_report: five fixed training cameras; utils.image_utils.psnr(image_CHW,target_CHW).mean(), then mean of five",
+      "point_cloud_iterations": [
+        15000,
+        30000
+      ],
+      "dump_iterations": [
+        30000
+      ],
+      "source_events": [
+        {
+          "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/events.out.tfevents.1791990933.c1ea8309f975.1.0",
+          "sha256": "62f09af13b71a7a378e27734da2604148eea5a900fea072677e6dda0a6e6147b"
+        }
+      ],
+      "unavailable": [
+        "whole opacity medians at reset+100 from original per-Gaussian states",
+        "density-born versus surviving initial disks: no independent birth tag stored",
+        "GT-cell split opacity at unsaved iterations",
+        "all-training-view PSNR at unsaved iterations"
+      ],
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model",
+      "train_psnr_legacy5": [
+        {
+          "iteration": 7000,
+          "psnr_db": 20.76993751525879
+        },
+        {
+          "iteration": 15000,
+          "psnr_db": 23.44545555114746
+        },
+        {
+          "iteration": 30000,
+          "psnr_db": 25.884735107421875
+        }
+      ],
+      "legacy5_camera_names": [
+        "DJI_20241217091101_0093_D",
+        "DJI_20241217091149_0117_D",
+        "DJI_20241217095541_0053_D",
+        "DJI_20241217100339_0024_D",
+        "DJI_20241217101317_0011_D"
+      ],
+      "legacy_psnr_definition": "train.py training_report: five fixed training cameras; utils.image_utils.psnr(image_CHW,target_CHW).mean(), then mean of five",
+      "point_cloud_iterations": [
+        15000,
+        30000
+      ],
+      "dump_iterations": [
+        30000
+      ],
+      "source_events": [
+        {
+          "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/events.out.tfevents.1791994100.956b7d258928.1.0",
+          "sha256": "b18e42be0af350ce7a2bdd5ca276958aedaa073bd6b66e7fb09e8a84474e0d05"
+        }
+      ],
+      "unavailable": [
+        "whole opacity medians at reset+100 from original per-Gaussian states",
+        "density-born versus surviving initial disks: no independent birth tag stored",
+        "GT-cell split opacity at unsaved iterations",
+        "all-training-view PSNR at unsaved iterations"
+      ],
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model",
+      "train_psnr_legacy5": [
+        {
+          "iteration": 7000,
+          "psnr_db": 20.828418731689453
+        },
+        {
+          "iteration": 15000,
+          "psnr_db": 23.523298263549805
+        },
+        {
+          "iteration": 30000,
+          "psnr_db": 25.919700622558594
+        }
+      ],
+      "legacy5_camera_names": [
+        "DJI_20241217091101_0093_D",
+        "DJI_20241217091149_0117_D",
+        "DJI_20241217095541_0053_D",
+        "DJI_20241217100339_0024_D",
+        "DJI_20241217101317_0011_D"
+      ],
+      "legacy_psnr_definition": "train.py training_report: five fixed training cameras; utils.image_utils.psnr(image_CHW,target_CHW).mean(), then mean of five",
+      "point_cloud_iterations": [
+        15000,
+        30000
+      ],
+      "dump_iterations": [
+        30000
+      ],
+      "source_events": [
+        {
+          "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/events.out.tfevents.1791995261.b57676fd94fd.1.0",
+          "sha256": "33e0b6b8e2393bfbc43f3b6aa8b2f847d599c3922071b4eb41c09ee9e6dacb68"
+        }
+      ],
+      "unavailable": [
+        "whole opacity medians at reset+100 from original per-Gaussian states",
+        "density-born versus surviving initial disks: no independent birth tag stored",
+        "GT-cell split opacity at unsaved iterations",
+        "all-training-view PSNR at unsaved iterations"
+      ],
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model",
+      "train_psnr_legacy5": [
+        {
+          "iteration": 7000,
+          "psnr_db": 18.286882400512695
+        },
+        {
+          "iteration": 15000,
+          "psnr_db": 20.191843032836914
+        },
+        {
+          "iteration": 30000,
+          "psnr_db": 22.661949157714844
+        }
+      ],
+      "legacy5_camera_names": [
+        "DJI_20241217095131_0072_D",
+        "DJI_20241217095813_0011_D",
+        "DJI_20241217100102_0037_D",
+        "DJI_20241217101108_0003_D",
+        "DJI_20241217101311_0008_D"
+      ],
+      "legacy_psnr_definition": "train.py training_report: five fixed training cameras; utils.image_utils.psnr(image_CHW,target_CHW).mean(), then mean of five",
+      "point_cloud_iterations": [
+        15000,
+        30000
+      ],
+      "dump_iterations": [
+        30000
+      ],
+      "source_events": [
+        {
+          "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/events.out.tfevents.1791998970.4233a1ea4805.1.0",
+          "sha256": "161da3933d760fac361fb850245ef9a4619f5f1f1277749fdfe1ff578eaf865b"
+        }
+      ],
+      "unavailable": [
+        "whole opacity medians at reset+100 from original per-Gaussian states",
+        "density-born versus surviving initial disks: no independent birth tag stored",
+        "GT-cell split opacity at unsaved iterations",
+        "all-training-view PSNR at unsaved iterations"
+      ],
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model",
+      "train_psnr_legacy5": [
+        {
+          "iteration": 7000,
+          "psnr_db": 17.400272369384766
+        },
+        {
+          "iteration": 15000,
+          "psnr_db": 19.89345359802246
+        },
+        {
+          "iteration": 30000,
+          "psnr_db": 22.62041473388672
+        }
+      ],
+      "legacy5_camera_names": [
+        "DJI_20241217095131_0072_D",
+        "DJI_20241217095813_0011_D",
+        "DJI_20241217100102_0037_D",
+        "DJI_20241217101108_0003_D",
+        "DJI_20241217101311_0008_D"
+      ],
+      "legacy_psnr_definition": "train.py training_report: five fixed training cameras; utils.image_utils.psnr(image_CHW,target_CHW).mean(), then mean of five",
+      "point_cloud_iterations": [
+        15000,
+        30000
+      ],
+      "dump_iterations": [
+        30000
+      ],
+      "source_events": [
+        {
+          "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/events.out.tfevents.1791999878.2e2ff968bea2.1.0",
+          "sha256": "cec270a1b5b953758035e43f62bb1da4114757a30b7ab8dfd3bd34f988a7a64a"
+        }
+      ],
+      "unavailable": [
+        "whole opacity medians at reset+100 from original per-Gaussian states",
+        "density-born versus surviving initial disks: no independent birth tag stored",
+        "GT-cell split opacity at unsaved iterations",
+        "all-training-view PSNR at unsaved iterations"
+      ],
+      "scientific_verdict": null
+    }
+  ],
+  "scientific_verdict": null
+}

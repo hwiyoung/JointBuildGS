@@ -337,6 +337,9 @@ def register_args(parser):
     g.add_argument("--jbgs_lt_gradient_to", type=int, default=0)
     g.add_argument("--jbgs_lt_opacity_reset_grace", type=int, choices=[0, 100], default=0)
     g.add_argument("--jbgs_lt_nojudge_opacity", default="")
+    g.add_argument("--jbgs_lt_monitor_v2", type=int, choices=[0, 1], default=0)
+    g.add_argument("--jbgs_lt_nojudge_inventory", default="")
+    g.add_argument("--jbgs_lt_diagnostic_cells", default="")
 
 
 def apply_seed(args):
@@ -2303,7 +2306,7 @@ def lt_observe(j, iteration, gaussians, total, rgb, depth, package, camera):
         lt_write(j, 'losstrain_health.jsonl', dict(iteration=iteration, camera=camera,
             observation_phase='before backward', stop=stop, scientific_verdict=None))
         raise RuntimeError('LOSSTRAIN_STOP: ' + stop)
-    if not j.args.jbgs_lt_opacity_reset_grace:
+    if not getattr(j.args, 'jbgs_lt_monitor_v2', 0) and not j.args.jbgs_lt_opacity_reset_grace:
         lt_opacity_health(j, iteration, gaussians, camera, 'before backward')
     lo, hi = j.args.jbgs_lt_gradient_from, j.args.jbgs_lt_gradient_to
     if not (lo > 0 and lo <= iteration <= hi):
@@ -2326,3 +2329,139 @@ def lt_observe(j, iteration, gaussians, total, rgb, depth, package, camera):
     lt_write(j, 'losstrain_gradients.jsonl', dict(iteration=iteration, camera=camera, values=values,
         definition='Euclidean norm per Gaussian centre, including zeros; each iteration median; depth includes lambda; visible median supplementary',
         scientific_verdict=None))
+
+
+def lt_track_birth(j, gaussians):
+    """Sidecar only: wrappers delegate unchanged density operations and arguments."""
+    j.lt_initial_survivor = np.ones(len(gaussians.get_xyz), dtype=bool)
+    original_postfix, original_prune = gaussians.densification_postfix, gaussians.prune_points
+
+    def postfix(*args, **kwargs):
+        before = len(gaussians.get_xyz)
+        result = original_postfix(*args, **kwargs)
+        added = len(gaussians.get_xyz) - before
+        j.lt_initial_survivor = np.concatenate((j.lt_initial_survivor, np.zeros(added, dtype=bool)))
+        assert len(j.lt_initial_survivor) == len(gaussians.get_xyz)
+        return result
+
+    def prune(*args, **kwargs):
+        mask = args[0] if args else kwargs['mask']
+        keep = ~mask.detach().cpu().numpy().astype(bool)
+        result = original_prune(*args, **kwargs)
+        j.lt_initial_survivor = j.lt_initial_survivor[keep]
+        assert len(j.lt_initial_survivor) == len(gaussians.get_xyz)
+        return result
+
+    gaussians.densification_postfix, gaussians.prune_points = postfix, prune
+
+
+def lt_monitor_initialize(j, gaussians, scene):
+    lt_track_birth(j, gaussians)
+    with np.load(j.mon / 'init_points.npz') as z:
+        planted = z['planted'].astype(bool)
+        assert np.array_equal(z['xyz'][planted], j.init_xyz.detach().cpu().numpy())
+        loc = z['location'][planted].astype(np.int64)
+    # Evaluation geometry is read only into this CPU diagnostic sidecar. No value
+    # from it enters a loss, protection, density decision, opacity or PSNR halt.
+    with np.load(j.args.jbgs_lt_diagnostic_cells) as z:
+        cell = z['cell']
+    j.lt_initial_cell = np.full(len(loc), 6, dtype=np.int8)
+    valid = (loc >= 0) & (loc < len(cell))
+    j.lt_initial_cell[valid] = cell[loc[valid]]
+    with open(j.args.jbgs_lt_nojudge_inventory) as f:
+        j.lt_baseline = json.load(f)
+    cams = scene.getTrainCameras()
+    j.lt_cameras = [cams[i % len(cams)] for i in range(5, 30, 5)]
+    assert sorted(c.image_name for c in j.lt_cameras) == j.lt_baseline['legacy5_camera_names']
+    j.lt_reference_psnr = {x['iteration']: x['psnr_db'] for x in j.lt_baseline['train_psnr_legacy5']}
+    assert set(j.lt_reference_psnr) == {7000, 15000, 30000}
+
+
+def lt_whole_stop(finite, median, offset):
+    if not finite:
+        return 'nonfinite opacity'
+    if offset is not None and offset >= 100 and median is not None and median < .05:
+        return 'whole-population opacity median < 0.05 after reset+100'
+    return None
+
+
+def lt_psnr_stop(iteration, value, references):
+    if not math.isfinite(value):
+        return 'nonfinite training PSNR'
+    if iteration in references and references[iteration] - value > 3.:
+        return 'training PSNR more than 3 dB below same-iteration nojudge'
+    return None
+
+
+def lt_population_summary(opacity, origin, ids, initial_cell, initial_survivor=None):
+    def summary(mask):
+        return dict(count=int(mask.sum()), opacity_median=float(np.median(opacity[mask])) if mask.any() else None)
+    prior = origin == 1
+    cell = np.full(len(ids), 6, dtype=np.int8)
+    valid = (ids >= 0) & (ids < len(initial_cell))
+    cell[valid] = initial_cell[ids[valid]]
+    groups = dict(all=summary(np.ones(len(ids), bool)), prior_lineage=summary(prior),
+        image_lineage=summary(origin == 0),
+        prior_gt_correct=summary(prior & np.isin(cell, [0, 2, 4])),
+        prior_gt_incorrect=summary(prior & np.isin(cell, [1, 3, 5])),
+        prior_gt_unknown=summary(prior & (cell == 6)))
+    if initial_survivor is not None:
+        assert len(initial_survivor) == len(opacity)
+        groups.update(initial_prior=summary(initial_survivor & prior),
+            initial_image=summary(initial_survivor & (origin == 0)), density_born=summary(~initial_survivor))
+        assert sum(groups[k]['count'] for k in ['initial_prior', 'initial_image', 'density_born']) == len(opacity)
+    return groups
+
+
+def lt_five_psnr(j, gaussians, render, pipe, background):
+    """Exactly the historical five-view calculation; observation preserves RNG."""
+    import random
+    from utils.image_utils import psnr
+    state = (random.getstate(), np.random.get_state(), torch.get_rng_state(), torch.cuda.get_rng_state_all())
+    values = []
+    try:
+        with torch.no_grad():
+            for cam in j.lt_cameras:
+                pkg = render(cam, gaussians, pipe, background)
+                image = pkg['render'].clamp(0., 1.)
+                gt = cam.original_image[0:3].cuda().clamp(0., 1.)
+                values.append(dict(camera=cam.image_name, psnr_db=float(psnr(image, gt).mean().double())))
+                del pkg, image, gt
+    finally:
+        random.setstate(state[0]); np.random.set_state(state[1])
+        torch.set_rng_state(state[2]); torch.cuda.set_rng_state_all(state[3])
+    return float(np.mean([x['psnr_db'] for x in values])), values
+
+
+def lt_monitor_step(j, iteration, gaussians, camera, render, pipe, background, pre_reset=False):
+    opacity = gaussians.get_opacity.detach().reshape(-1).float()
+    finite = bool(torch.isfinite(opacity).all())
+    median = float(torch.quantile(opacity, .5)) if finite and len(opacity) else None
+    reset = getattr(j, 'lt_last_periodic_reset', None)
+    offset = None if reset is None else iteration - reset
+    stop = lt_whole_stop(finite, median, offset)
+    phase = 'immediately before actual periodic reset, after density' if pre_reset else 'after optimizer and opacity floors, before density/reset'
+    row = dict(iteration=iteration, camera=camera, observation_phase=phase, last_periodic_reset=reset,
+        iterations_after_reset=offset, gaussians=len(opacity), whole_opacity_median=median,
+        prior_opacity_is_record_only=True, stop=stop, scientific_verdict=None)
+    if iteration == 1 or iteration % 100 == 0 or stop:
+        lt_write(j, 'losstrain_health_v2.jsonl', row)
+    if stop:
+        raise RuntimeError('LOSSTRAIN_STOP: ' + stop)
+    due = pre_reset or iteration % 1000 == 0 or offset in [100, 500]
+    if not due:
+        return
+    groups = lt_population_summary(opacity.cpu().numpy(), gaussians.origin.detach().cpu().numpy(),
+        gaussians.init_id.detach().cpu().numpy().astype(np.int64), j.lt_initial_cell, j.lt_initial_survivor)
+    value, per_view = lt_five_psnr(j, gaussians, render, pipe, background)
+    stop = lt_psnr_stop(iteration, value, j.lt_reference_psnr)
+    reference = j.lt_reference_psnr.get(iteration)
+    row.update(groups=groups, train_psnr_legacy5=value, psnr_per_view=per_view,
+        nojudge_train_psnr_legacy5=reference, nojudge_unsaved_statistics='기록 없음',
+        nojudge_psnr_status='same iteration available' if reference is not None else '기록 없음',
+        psnr_drop_db=None if reference is None else reference-value, stop=stop)
+    lt_write(j, 'losstrain_observations_v2.jsonl', row)
+    if iteration in [15000, 30000] and not pre_reset:
+        np.savez_compressed(j.mon / f'losstrain_birth_{iteration}.npz', initial_survivor=j.lt_initial_survivor)
+    if stop:
+        raise RuntimeError('LOSSTRAIN_STOP: ' + stop)

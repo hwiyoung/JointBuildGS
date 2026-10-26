@@ -700,6 +700,9 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
     background = torch.tensor(bg_color, dtype=torch.float32, device="cuda")
     # [jbgs_judgment] judgment-guided optimization (ORDER section 4); None keeps the native path
     judgment = jbgs_judgment.Judgment(args, opt, scene, gaussians, tb_writer, render_fn=render, pipe=pipe, background=background) if args.jbgs_judgment != "off" else None  # [jbgs_judgment r6] E renders the training views (fix 1)
+    if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_monitor_v2:
+        jbgs_judgment.lt_monitor_initialize(judgment, gaussians, scene)
+
 
     iter_start = torch.cuda.Event(enable_timing=True)
     iter_end = torch.cuda.Event(enable_timing=True)
@@ -1045,9 +1048,12 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
                         min=opacity_floor_logit
                     )
 
-        if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_opacity_reset_grace:
-            jbgs_judgment.lt_opacity_health(judgment, iteration, gaussians, cam_name,
-                'after optimizer and opacity floors, before density/reset')
+        if judgment is not None and args.jbgs_lt_monitor:
+            if args.jbgs_lt_monitor_v2:
+                jbgs_judgment.lt_monitor_step(judgment, iteration, gaussians, cam_name, render, pipe, background)
+            elif args.jbgs_lt_opacity_reset_grace:
+                jbgs_judgment.lt_opacity_health(judgment, iteration, gaussians, cam_name,
+                    'after optimizer and opacity floors, before density/reset')
 
         iter_end.record()
 
@@ -1153,6 +1159,8 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
                                 )
 
                 if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
+                    if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_monitor_v2 and iteration % opt.opacity_reset_interval == 0:
+                        jbgs_judgment.lt_monitor_step(judgment, iteration, gaussians, cam_name, render, pipe, background, pre_reset=True)
                     gaussians.reset_opacity(exempt_mask=judgment.exempt_mask(gaussians) if judgment is not None else None)  # [jbgs_judgment]
                     if judgment is not None and args.jbgs_lt_monitor:
                         jbgs_judgment.lt_reset_observed(judgment, iteration, iteration % opt.opacity_reset_interval == 0)

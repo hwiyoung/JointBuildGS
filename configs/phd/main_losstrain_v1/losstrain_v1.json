@@ -308,5 +308,22 @@
     "source_approval_sha256": "df3c5b6bf34a3193cd49ca65066c95b5bdb0d75de0b94a2c53ec07b1ed7183cc",
     "calibration_reused": true,
     "lambda_unchanged": 0.0025
+  },
+  "monitor_v2_amendment": {
+    "source_approval_sha256": "d0156f748ab5df22ae8ebc359c85ac2067301ad6b4210b406c7e9bdfa138ae5d",
+    "prior_opacity": "record only",
+    "whole_opacity_threshold": 0.05,
+    "whole_opacity_check": "each iteration at or after actual periodic reset +100",
+    "psnr_drop_stop_strictly_above_db": 3.0,
+    "psnr_gate_iterations": [
+      7000,
+      15000,
+      30000
+    ],
+    "diagnostic_psnr": "legacy fixed five training views, identical historical calculation",
+    "nojudge_retrained": false,
+    "diagnostic_GT": "CPU sidecar only; never used by loss or stop",
+    "lambda_unchanged": 0.0025,
+    "calibration_reused": true
   }
 }

@@ -1,0 +1,50 @@
+{
+  "status": "AUTHORIZED",
+  "at": "2026-10-26T19:24:33.678904+09:00",
+  "authority": "user reply replacing prior opacity stop after the 9100 dynamic-gt event",
+  "prior_opacity": "record only for every arm, never a stop condition",
+  "stops": [
+    "NaN or other errors",
+    "whole-population opacity median below 0.05 after reset+100",
+    "same-iteration training PSNR more than 3 dB below nojudge"
+  ],
+  "additional_records": [
+    "immediately before actual periodic reset",
+    "reset+100",
+    "reset+500",
+    "every 1000 iterations"
+  ],
+  "fields": [
+    "mutually exclusive surviving initial prior / initial image / density-born counts and opacity medians",
+    "prior-origin lineage split by initial patch GT correctness, diagnostics only",
+    "training PSNR"
+  ],
+  "resume": "dynamic-gt seed 0 fresh; preserve attempt_1 stop; fixed-gt continues; then soft and current-validity dynamic arms",
+  "interim": [
+    "new diagnostic records",
+    "B173 wing section",
+    "8.1 by cell, especially preservation and no-surface area"
+  ],
+  "scientific_verdict": null,
+  "clarified_at": "2026-10-26T19:32:35.262558+09:00",
+  "psnr_gate_iterations": [
+    7000,
+    15000,
+    30000
+  ],
+  "psnr_views": "same historical five cameras and CHW calculation",
+  "nojudge_retraining": false,
+  "nojudge_saved_model_comparisons": [
+    15000,
+    30000
+  ],
+  "nojudge_other_iterations": "기록 없음",
+  "fixed_inflight": "continue; recover available logs and saved models; mark missing",
+  "recording_choice": "same historical five training cameras at every new diagnostic observation; all-training-view final readout remains separate",
+  "missing_birth_tags": "historical models and inflight fixed have lineage tags only; three-way birth statistics unavailable, retain exact lineage and GT-group summaries",
+  "user_no_further_format_questions": true,
+  "superseded_stops": {
+    "checks/full_STOP.json": "6b0358adefdacb89017e92985aead4da2a498842b783d1841272c6b476f82d36",
+    "checks/full_grace_STOP.json": "b1b734230d30e04f44b3a8f7de054a6f997e18433ad1d195d3ea646f4af8f990"
+  }
+}

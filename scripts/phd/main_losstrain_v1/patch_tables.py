@@ -47,6 +47,7 @@ def main():
         with Path(f'/docs/tables/patch_scores_{tag}.csv').open('w') as f:
             w=csv.DictWriter(f,list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
     lines=['# 1단계 패치 채점','', '[이 발주에서 냄]. 같은 평가 패치·넓이·허용 오차로 계산했다. 면 없음은 τ 밖으로 센다. 100패치 미만은 표본 부족이다.','',
+        '거리 중앙값은 면을 만난 패치에서 구하며 그 표본 수는 error_observed_patches에 적었다. τ 안 비율에서는 면 없음도 실패로 센다.','',
         '| 단위 | 사전 | 결과 | 범위 | N | 넓이(m²) | 학습 없는 시험(%) | 결과 τ 안(%) | 면 없음(%) |',
         '|---|---|---|---|---:|---:|---:|---:|---:|']
     for r in rows:

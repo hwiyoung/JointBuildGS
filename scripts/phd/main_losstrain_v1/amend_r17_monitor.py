@@ -13,23 +13,36 @@ def main():
         '    g.add_argument("--jbgs_lt_gradient_from", type=int, default=0)\n'
         '    g.add_argument("--jbgs_lt_gradient_to", type=int, default=0)\n'
         '    g.add_argument("--jbgs_lt_opacity_reset_grace", type=int, choices=[0, 100], default=0)\n'
-        '    g.add_argument("--jbgs_lt_nojudge_opacity", default="")')
+        '    g.add_argument("--jbgs_lt_nojudge_opacity", default="")\n'
+        '    g.add_argument("--jbgs_lt_monitor_v2", type=int, choices=[0, 1], default=0)\n'
+        '    g.add_argument("--jbgs_lt_nojudge_inventory", default="")\n'
+        '    g.add_argument("--jbgs_lt_diagnostic_cells", default="")')
     s+='\n\n'+(src/'r17_monitor.py').read_text();j.write_text(s)
     s=t.read_text();marker='        total_loss.backward()';assert s.count(marker)==1
+    initialization=next(x for x in s.splitlines() if x.startswith('    judgment = jbgs_judgment.Judgment('))
+    s=s.replace(initialization,initialization+'''
+    if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_monitor_v2:
+        jbgs_judgment.lt_monitor_initialize(judgment, gaussians, scene)
+''')
     hook='''        if judgment is not None and args.jbgs_lt_monitor:
             jbgs_judgment.lt_observe(judgment, iteration, gaussians, total_loss, rgb_loss,
                 judgment.lambda_mvs * mvs_term + judgment.lambda_prior * prior_term, render_pkg, cam_name)
 '''
     s=s.replace(marker,hook+marker)
     marker='        iter_end.record()';assert s.count(marker)==1
-    s=s.replace(marker,'''        if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_opacity_reset_grace:
-            jbgs_judgment.lt_opacity_health(judgment, iteration, gaussians, cam_name,
-                'after optimizer and opacity floors, before density/reset')
+    s=s.replace(marker,'''        if judgment is not None and args.jbgs_lt_monitor:
+            if args.jbgs_lt_monitor_v2:
+                jbgs_judgment.lt_monitor_step(judgment, iteration, gaussians, cam_name, render, pipe, background)
+            elif args.jbgs_lt_opacity_reset_grace:
+                jbgs_judgment.lt_opacity_health(judgment, iteration, gaussians, cam_name,
+                    'after optimizer and opacity floors, before density/reset')
 
 '''+marker)
     marker='                    gaussians.reset_opacity(exempt_mask=judgment.exempt_mask(gaussians) if judgment is not None else None)  # [jbgs_judgment]'
     assert s.count(marker)==1
-    s=s.replace(marker,marker+'''
+    s=s.replace(marker,'''                    if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_monitor_v2 and iteration % opt.opacity_reset_interval == 0:
+                        jbgs_judgment.lt_monitor_step(judgment, iteration, gaussians, cam_name, render, pipe, background, pre_reset=True)
+'''+marker+'''
                     if judgment is not None and args.jbgs_lt_monitor:
                         jbgs_judgment.lt_reset_observed(judgment, iteration, iteration % opt.opacity_reset_interval == 0)
 ''')

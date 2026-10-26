@@ -1,0 +1,554 @@
+{
+  "status": "STOPPED_PARTIAL",
+  "at": "2026-10-26T19:13:08.197095+09:00",
+  "counts": {
+    "calibration_complete": 4,
+    "required_complete": 0,
+    "optional_complete": 0,
+    "post_complete": 0,
+    "measurements_complete": 0,
+    "historical_before_grace_stops": 2,
+    "new_stopped_attempts": 1
+  },
+  "runs": [
+    {
+      "site": "B173nb_b10",
+      "result": "lt_cal_current_ALS_s0",
+      "calibration": true,
+      "training_complete": true,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "name": "lt_cal_current",
+              "mode": "current",
+              "mult": 1.0,
+              "gpu": 1
+            },
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-26T18:13:09.354494+09:00",
+            "finished_at": "2026-10-26T18:19:11.698961+09:00",
+            "seconds": 362.3444940308109,
+            "gpu_peak_total_MiB": 8216.0,
+            "config_sha256": "d8b5dba9f44ec7f53cb8f21c82a60d5ed0ad015e57f32dd2e7d4c046c24b2323",
+            "source_sha256": {
+              "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8",
+              "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a"
+            },
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 3000,
+            "camera": "DJI_20241217084535_0091_D",
+            "gaussians": 571064,
+            "prior_gaussians": 151157,
+            "prior_opacity_median": 0.6611397862434387,
+            "loss_total": 0.22288499772548676,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "resets": []
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_cal_dyn_x1_ALS_s0",
+      "calibration": true,
+      "training_complete": true,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "name": "lt_cal_dyn_x1",
+              "mode": "dynamic",
+              "mult": 1.0,
+              "gpu": 0
+            },
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-26T18:13:09.354413+09:00",
+            "finished_at": "2026-10-26T18:18:51.445811+09:00",
+            "seconds": 342.0914287408814,
+            "gpu_peak_total_MiB": 6146.0,
+            "config_sha256": "d8b5dba9f44ec7f53cb8f21c82a60d5ed0ad015e57f32dd2e7d4c046c24b2323",
+            "source_sha256": {
+              "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8",
+              "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a"
+            },
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 3000,
+            "camera": "DJI_20241217084535_0091_D",
+            "gaussians": 229349,
+            "prior_gaussians": 102324,
+            "prior_opacity_median": 0.5169452428817749,
+            "loss_total": 0.2172030508518219,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "resets": []
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_cal_dyn_x3_ALS_s0",
+      "calibration": true,
+      "training_complete": true,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "name": "lt_cal_dyn_x3",
+              "mode": "dynamic",
+              "mult": 3.0,
+              "gpu": 1
+            },
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-26T18:20:56.967395+09:00",
+            "finished_at": "2026-10-26T18:27:14.288919+09:00",
+            "seconds": 377.3215566193685,
+            "gpu_peak_total_MiB": 9958.0,
+            "config_sha256": "d8b5dba9f44ec7f53cb8f21c82a60d5ed0ad015e57f32dd2e7d4c046c24b2323",
+            "source_sha256": {
+              "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8",
+              "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a"
+            },
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 3000,
+            "camera": "DJI_20241217084535_0091_D",
+            "gaussians": 242518,
+            "prior_gaussians": 110806,
+            "prior_opacity_median": 0.5386471152305603,
+            "loss_total": 0.20704394578933716,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "resets": []
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_cal_dyn_xthird_ALS_s0",
+      "calibration": true,
+      "training_complete": true,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "name": "lt_cal_dyn_xthird",
+              "mode": "dynamic",
+              "mult": 0.3333333333333333,
+              "gpu": 0
+            },
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-26T18:20:55.222062+09:00",
+            "finished_at": "2026-10-26T18:27:18.162016+09:00",
+            "seconds": 382.9399842703715,
+            "gpu_peak_total_MiB": 6146.0,
+            "config_sha256": "d8b5dba9f44ec7f53cb8f21c82a60d5ed0ad015e57f32dd2e7d4c046c24b2323",
+            "source_sha256": {
+              "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8",
+              "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a"
+            },
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 3000,
+            "camera": "DJI_20241217084535_0091_D",
+            "gaussians": 227785,
+            "prior_gaussians": 100316,
+            "prior_opacity_median": 0.5001059770584106,
+            "loss_total": 0.21167294681072235,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "resets": []
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "calibration": false,
+      "training_complete": false,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "B173nb_b10",
+              "prior": "ALS",
+              "variant": "lt_dyngt"
+            },
+            "gpu": 1,
+            "attempt": 0,
+            "exit_code": 1,
+            "started_at": "2026-10-26T18:35:25.534524+09:00",
+            "finished_at": "2026-10-26T18:39:57.341548+09:00",
+            "seconds": 271.80705015175045,
+            "lambda_depth": 0.0025,
+            "gpu_peak_total_MiB": 12612.0,
+            "config_sha256": "0e90bfbc6133c4de1859796fd764e2878f37422e4e98be075c295ff7c2190335",
+            "source_sha256": {
+              "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a",
+              "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8"
+            },
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 3001,
+            "camera": "DJI_20241217084447_0067_D",
+            "gaussians": 249326,
+            "prior_gaussians": 103578,
+            "prior_opacity_median": 0.009999998845160007,
+            "loss_total": 0.5077416300773621,
+            "stop": "prior opacity median < 0.05",
+            "scientific_verdict": null
+          },
+          "stops": [
+            {
+              "iteration": 3001,
+              "camera": "DJI_20241217084447_0067_D",
+              "gaussians": 249326,
+              "prior_gaussians": 103578,
+              "prior_opacity_median": 0.009999998845160007,
+              "loss_total": 0.5077416300773621,
+              "stop": "prior opacity median < 0.05",
+              "scientific_verdict": null
+            }
+          ],
+          "resets": []
+        },
+        {
+          "attempt": "attempt_1",
+          "receipt": {
+            "run": {
+              "site": "B173nb_b10",
+              "prior": "ALS",
+              "variant": "lt_dyngt"
+            },
+            "gpu": 1,
+            "attempt": 1,
+            "exit_code": 1,
+            "started_at": "2026-10-26T18:57:32.181822+09:00",
+            "finished_at": "2026-10-26T19:12:28.290103+09:00",
+            "seconds": 896.1083142198622,
+            "lambda_depth": 0.0025,
+            "gpu_peak_total_MiB": 22814.0,
+            "config_sha256": "b6ff542aed7181c4e77b1c892aeea23124fef8207ca4c5a901c8895af9c04668",
+            "source_sha256": {
+              "train.py": "5650caf9e5d894480e9bd6b94cd8afe1c869c70b19df15f56b3720d24b3d17e5",
+              "jbgs_judgment.py": "20c5adc8416ff06209ca9dbe98db0a1a8ead20a26032c2d4be8a0f5e431158d9"
+            },
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 9100,
+            "camera": "DJI_20241217091131_0108_D",
+            "gaussians": 1661045,
+            "prior_gaussians": 1059359,
+            "prior_opacity_median": 0.00798154715448618,
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 9000,
+            "iterations_after_reset": 100,
+            "opacity_stop_deferred": false,
+            "stop": "prior opacity median < 0.05",
+            "scientific_verdict": null
+          },
+          "stops": [
+            {
+              "iteration": 9100,
+              "camera": "DJI_20241217091131_0108_D",
+              "gaussians": 1661045,
+              "prior_gaussians": 1059359,
+              "prior_opacity_median": 0.00798154715448618,
+              "observation_phase": "after optimizer and opacity floors, before density/reset",
+              "last_periodic_reset": 9000,
+              "iterations_after_reset": 100,
+              "opacity_stop_deferred": false,
+              "stop": "prior opacity median < 0.05",
+              "scientific_verdict": null
+            }
+          ],
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_fixgt_ALS_s0",
+      "calibration": false,
+      "training_complete": false,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "B173nb_b10",
+              "prior": "ALS",
+              "variant": "lt_fixgt"
+            },
+            "gpu": 0,
+            "attempt": 0,
+            "exit_code": 1,
+            "started_at": "2026-10-26T18:35:25.534606+09:00",
+            "finished_at": "2026-10-26T18:39:32.174907+09:00",
+            "seconds": 246.6403980376199,
+            "lambda_depth": 0.0025,
+            "gpu_peak_total_MiB": 6126.0,
+            "config_sha256": "0e90bfbc6133c4de1859796fd764e2878f37422e4e98be075c295ff7c2190335",
+            "source_sha256": {
+              "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a",
+              "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8"
+            },
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 3001,
+            "camera": "DJI_20241217084447_0067_D",
+            "gaussians": 494560,
+            "prior_gaussians": 242780,
+            "prior_opacity_median": 0.009999998845160007,
+            "loss_total": 1.2527406215667725,
+            "stop": "prior opacity median < 0.05",
+            "scientific_verdict": null
+          },
+          "stops": [
+            {
+              "iteration": 3001,
+              "camera": "DJI_20241217084447_0067_D",
+              "gaussians": 494560,
+              "prior_gaussians": 242780,
+              "prior_opacity_median": 0.009999998845160007,
+              "loss_total": 1.2527406215667725,
+              "stop": "prior opacity median < 0.05",
+              "scientific_verdict": null
+            }
+          ],
+          "resets": []
+        },
+        {
+          "attempt": "attempt_1",
+          "receipt": null,
+          "last_health": {
+            "iteration": 10300,
+            "camera": "DJI_20241217095147_0080_D",
+            "gaussians": 968275,
+            "prior_gaussians": 219406,
+            "prior_opacity_median": 0.38314658403396606,
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 9000,
+            "iterations_after_reset": 1300,
+            "opacity_stop_deferred": false,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "reset_comparisons": [
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_1",
+      "iteration": 3100,
+      "camera": "DJI_20241217091147_0116_D",
+      "gaussians": 241505,
+      "prior_gaussians": 107769,
+      "prior_opacity_median": 0.2326991707086563,
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 3000,
+      "iterations_after_reset": 100,
+      "opacity_stop_deferred": false,
+      "stop": null,
+      "scientific_verdict": null,
+      "nojudge_prior_opacity_median": 0.15625111758708954,
+      "difference_from_nojudge": 0.07644805312156677,
+      "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+      "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_1",
+      "iteration": 6100,
+      "camera": "DJI_20241217095541_0053_D",
+      "gaussians": 575626,
+      "prior_gaussians": 200191,
+      "prior_opacity_median": 0.07879344373941422,
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 6000,
+      "iterations_after_reset": 100,
+      "opacity_stop_deferred": false,
+      "stop": null,
+      "scientific_verdict": null,
+      "nojudge_prior_opacity_median": 0.12308697402477264,
+      "difference_from_nojudge": -0.04429353028535843,
+      "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+      "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_1",
+      "iteration": 9100,
+      "camera": "DJI_20241217091131_0108_D",
+      "gaussians": 1661045,
+      "prior_gaussians": 1059359,
+      "prior_opacity_median": 0.00798154715448618,
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 9000,
+      "iterations_after_reset": 100,
+      "opacity_stop_deferred": false,
+      "stop": "prior opacity median < 0.05",
+      "scientific_verdict": null,
+      "nojudge_prior_opacity_median": 0.23826287686824799,
+      "difference_from_nojudge": -0.2302813297137618,
+      "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+      "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_fixgt_ALS_s0",
+      "attempt": "attempt_1",
+      "iteration": 3100,
+      "camera": "DJI_20241217091147_0116_D",
+      "gaussians": 423419,
+      "prior_gaussians": 206351,
+      "prior_opacity_median": 0.07024438679218292,
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 3000,
+      "iterations_after_reset": 100,
+      "opacity_stop_deferred": false,
+      "stop": null,
+      "scientific_verdict": null,
+      "nojudge_prior_opacity_median": 0.15625111758708954,
+      "difference_from_nojudge": -0.08600673079490662,
+      "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+      "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_fixgt_ALS_s0",
+      "attempt": "attempt_1",
+      "iteration": 6100,
+      "camera": "DJI_20241217095541_0053_D",
+      "gaussians": 759242,
+      "prior_gaussians": 240401,
+      "prior_opacity_median": 0.05987796559929848,
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 6000,
+      "iterations_after_reset": 100,
+      "opacity_stop_deferred": false,
+      "stop": null,
+      "scientific_verdict": null,
+      "nojudge_prior_opacity_median": 0.12308697402477264,
+      "difference_from_nojudge": -0.06320900842547417,
+      "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+      "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_fixgt_ALS_s0",
+      "attempt": "attempt_1",
+      "iteration": 9100,
+      "camera": "DJI_20241217091131_0108_D",
+      "gaussians": 1211290,
+      "prior_gaussians": 282874,
+      "prior_opacity_median": 0.07035757601261139,
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 9000,
+      "iterations_after_reset": 100,
+      "opacity_stop_deferred": false,
+      "stop": null,
+      "scientific_verdict": null,
+      "nojudge_prior_opacity_median": 0.23826287686824799,
+      "difference_from_nojudge": -0.1679053008556366,
+      "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+      "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+    }
+  ],
+  "stop": {
+    "run": {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_dyngt"
+    },
+    "attempt": 1,
+    "reason": "execution or health error",
+    "at": "2026-10-26T19:12:28.354334+09:00",
+    "scientific_verdict": null
+  },
+  "selected_lambda": 0.0025,
+  "scientific_verdict": null
+}

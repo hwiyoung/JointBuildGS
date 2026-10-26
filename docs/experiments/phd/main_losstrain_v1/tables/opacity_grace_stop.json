@@ -1,0 +1,440 @@
+{
+  "status": "STOPPED_UNDER_APPROVED_100_STEP_RULE",
+  "stop": {
+    "run": {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_dyngt"
+    },
+    "attempt": 1,
+    "reason": "execution or health error",
+    "at": "2026-10-26T19:12:28.354334+09:00",
+    "scientific_verdict": null
+  },
+  "event": {
+    "iteration": 9100,
+    "camera": "DJI_20241217091131_0108_D",
+    "gaussians": 1661045,
+    "prior_gaussians": 1059359,
+    "prior_opacity_median": 0.00798154715448618,
+    "observation_phase": "after optimizer and opacity floors, before density/reset",
+    "last_periodic_reset": 9000,
+    "iterations_after_reset": 100,
+    "opacity_stop_deferred": false,
+    "stop": "prior opacity median < 0.05",
+    "scientific_verdict": null
+  },
+  "comparison": {
+    "iteration": 9100,
+    "camera": "DJI_20241217091131_0108_D",
+    "gaussians": 1661045,
+    "prior_gaussians": 1059359,
+    "prior_opacity_median": 0.00798154715448618,
+    "observation_phase": "after optimizer and opacity floors, before density/reset",
+    "last_periodic_reset": 9000,
+    "iterations_after_reset": 100,
+    "opacity_stop_deferred": false,
+    "stop": "prior opacity median < 0.05",
+    "scientific_verdict": null,
+    "nojudge_prior_opacity_median": 0.23826287686824799,
+    "difference_from_nojudge": -0.2302813297137618,
+    "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+    "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+  },
+  "trajectory": {
+    "dynamic_gt": [
+      {
+        "iteration": 6000,
+        "n": 554156,
+        "n_prior": 189728,
+        "n_image": 364428,
+        "n_locked": 29833,
+        "added": 28651,
+        "removed": 9042,
+        "opacity_q_prior": [
+          0.1344737708568573,
+          0.8736864328384399,
+          1.0
+        ],
+        "opacity_q_locked": [
+          0.5000860095024109,
+          0.9397523403167725,
+          1.0
+        ],
+        "opacity_share_ge05_prior": 0.7142698764801025,
+        "total": 0.16524773836135864,
+        "rgb": 0.16535332798957825,
+        "mvs": -0.013598695397377014,
+        "prior": -0.02864122949540615
+      },
+      {
+        "iteration": 6100,
+        "n": 575626,
+        "n_prior": 200191,
+        "n_image": 375435,
+        "n_locked": 29833,
+        "added": 29856,
+        "removed": 8386,
+        "opacity_q_prior": [
+          0.0015775919891893864,
+          0.07879344373941422,
+          0.917885422706604
+        ],
+        "opacity_q_locked": [
+          0.5039469003677368,
+          0.9724912047386169,
+          1.0
+        ],
+        "opacity_share_ge05_prior": 0.261195570230484,
+        "total": 0.17120683193206787,
+        "rgb": 0.17120519280433655,
+        "mvs": 0.0,
+        "prior": 0.0006576013984158635
+      },
+      {
+        "iteration": 7000,
+        "n": 491045,
+        "n_prior": 133587,
+        "n_image": 357458,
+        "n_locked": 31665,
+        "added": 40586,
+        "removed": 10157,
+        "opacity_q_prior": [
+          0.0948960930109024,
+          0.6224468946456909,
+          1.0
+        ],
+        "opacity_q_locked": [
+          0.5004339814186096,
+          0.9784519672393799,
+          1.0
+        ],
+        "opacity_share_ge05_prior": 0.6000284552574158,
+        "total": 0.11099275201559067,
+        "rgb": 0.11121366918087006,
+        "mvs": -0.01670379750430584,
+        "prior": -0.071663498878479
+      },
+      {
+        "iteration": 8000,
+        "n": 713813,
+        "n_prior": 241219,
+        "n_image": 472594,
+        "n_locked": 48506,
+        "added": 52604,
+        "removed": 10849,
+        "opacity_q_prior": [
+          0.14944300055503845,
+          0.9716395139694214,
+          1.0
+        ],
+        "opacity_q_locked": [
+          0.5137009620666504,
+          0.99933260679245,
+          1.0
+        ],
+        "opacity_share_ge05_prior": 0.7602635025978088,
+        "total": 0.183595210313797,
+        "rgb": 0.15878663957118988,
+        "mvs": 0.0024823874700814486,
+        "prior": 0.01063223835080862
+      },
+      {
+        "iteration": 8500,
+        "n": 982882,
+        "n_prior": 448574,
+        "n_image": 534308,
+        "n_locked": 62291,
+        "added": 72044,
+        "removed": 12513,
+        "opacity_q_prior": [
+          0.2835974097251892,
+          1.0,
+          1.0
+        ],
+        "opacity_q_locked": [
+          0.5257360339164734,
+          1.0,
+          1.0
+        ],
+        "opacity_share_ge05_prior": 0.8583020567893982,
+        "total": 0.14515791833400726,
+        "rgb": 0.13234394788742065,
+        "mvs": -0.003970079589635134,
+        "prior": 0.01217151340097189
+      },
+      {
+        "iteration": 8900,
+        "n": 1374672,
+        "n_prior": 793573,
+        "n_image": 581099,
+        "n_locked": 62291,
+        "added": 111941,
+        "removed": 14273,
+        "opacity_q_prior": [
+          0.5431835055351257,
+          1.0,
+          1.0
+        ],
+        "opacity_q_locked": [
+          0.5382893085479736,
+          1.0,
+          1.0
+        ],
+        "opacity_share_ge05_prior": 0.9125449061393738,
+        "total": 0.10771936178207397,
+        "rgb": 0.09790368378162384,
+        "mvs": -0.01213009562343359,
+        "prior": -0.13080377876758575
+      },
+      {
+        "iteration": 9000,
+        "n": 1493964,
+        "n_prior": 902421,
+        "n_image": 591543,
+        "n_locked": 77332,
+        "added": 134771,
+        "removed": 15479,
+        "opacity_q_prior": [
+          0.6435716152191162,
+          1.0,
+          1.0
+        ],
+        "opacity_q_locked": [
+          0.5247891545295715,
+          1.0,
+          1.0
+        ],
+        "opacity_share_ge05_prior": 0.9242072701454163,
+        "total": 0.15465839207172394,
+        "rgb": 0.13847766816616058,
+        "mvs": -0.019013401120901108,
+        "prior": 0.023449352011084557
+      }
+    ],
+    "nojudge": [
+      {
+        "iteration": 6000,
+        "n": 1120948,
+        "n_prior": 208199,
+        "n_image": 912749,
+        "n_locked": 15044,
+        "added": 61367,
+        "removed": 28013,
+        "opacity_q_prior": [
+          0.09042571485042572,
+          0.48104119300842285,
+          0.9695518612861633
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.6874487400054932,
+          0.9943235516548157
+        ],
+        "opacity_share_ge05_prior": 0.48802828788757324,
+        "total": 0.1752757877111435,
+        "rgb": 0.1507570445537567,
+        "mvs": 0.4695068597793579,
+        "prior": 0.020867910236120224
+      },
+      {
+        "iteration": 6100,
+        "n": 1155819,
+        "n_prior": 213208,
+        "n_image": 942611,
+        "n_locked": 15044,
+        "added": 61270,
+        "removed": 26399,
+        "opacity_q_prior": [
+          0.001054195105098188,
+          0.12308697402477264,
+          0.7168218493461609
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.8950410485267639,
+          0.9981337189674377
+        ],
+        "opacity_share_ge05_prior": 0.21030168235301971,
+        "total": 0.20434148609638214,
+        "rgb": 0.1781146228313446,
+        "mvs": 0.5192848443984985,
+        "prior": 0.0052522760815918446
+      },
+      {
+        "iteration": 7000,
+        "n": 943413,
+        "n_prior": 166484,
+        "n_image": 776929,
+        "n_locked": 14472,
+        "added": 69968,
+        "removed": 26144,
+        "opacity_q_prior": [
+          0.08512765914201736,
+          0.42101097106933594,
+          0.9465652704238892
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.8238735198974609,
+          0.9986076354980469
+        ],
+        "opacity_share_ge05_prior": 0.449802964925766,
+        "total": 0.1208428367972374,
+        "rgb": 0.10414682328701019,
+        "mvs": 0.2744326591491699,
+        "prior": 0.059487711638212204
+      },
+      {
+        "iteration": 8000,
+        "n": 1279066,
+        "n_prior": 211836,
+        "n_image": 1067230,
+        "n_locked": 16586,
+        "added": 69515,
+        "removed": 29994,
+        "opacity_q_prior": [
+          0.08577779680490494,
+          0.4645434617996216,
+          0.9682098031044006
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.7809268236160278,
+          0.9985085725784302
+        ],
+        "opacity_share_ge05_prior": 0.47922924160957336,
+        "total": 0.16217415034770966,
+        "rgb": 0.1264006644487381,
+        "mvs": 0.4085620045661926,
+        "prior": 0.015441416762769222
+      },
+      {
+        "iteration": 8500,
+        "n": 1462438,
+        "n_prior": 236989,
+        "n_image": 1225449,
+        "n_locked": 17425,
+        "added": 72495,
+        "removed": 34730,
+        "opacity_q_prior": [
+          0.08697948604822159,
+          0.47547653317451477,
+          0.9732955098152161
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.772983729839325,
+          0.9985673427581787
+        ],
+        "opacity_share_ge05_prior": 0.4865711033344269,
+        "total": 0.17087189853191376,
+        "rgb": 0.1281103789806366,
+        "mvs": 0.5702269077301025,
+        "prior": 0.06924305111169815
+      },
+      {
+        "iteration": 8900,
+        "n": 1608342,
+        "n_prior": 256835,
+        "n_image": 1351507,
+        "n_locked": 17425,
+        "added": 69681,
+        "removed": 35872,
+        "opacity_q_prior": [
+          0.08644594997167587,
+          0.4735202491283417,
+          0.9766228199005127
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.7819947600364685,
+          0.9987061023712158
+        ],
+        "opacity_share_ge05_prior": 0.4856736958026886,
+        "total": 0.11092468351125717,
+        "rgb": 0.08590849488973618,
+        "mvs": 0.32550689578056335,
+        "prior": 0.031997453421354294
+      },
+      {
+        "iteration": 9000,
+        "n": 1643769,
+        "n_prior": 260673,
+        "n_image": 1383096,
+        "n_locked": 18367,
+        "added": 70124,
+        "removed": 34697,
+        "opacity_q_prior": [
+          0.08670787513256073,
+          0.4796205759048462,
+          0.9772189259529114
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.760074257850647,
+          0.9985717535018921
+        ],
+        "opacity_share_ge05_prior": 0.48913392424583435,
+        "total": 0.16725675761699677,
+        "rgb": 0.12855494022369385,
+        "mvs": 0.4388100504875183,
+        "prior": 0.061904143542051315
+      },
+      {
+        "iteration": 9100,
+        "n": 1675995,
+        "n_prior": 263963,
+        "n_image": 1412032,
+        "n_locked": 18367,
+        "added": 67372,
+        "removed": 35146,
+        "opacity_q_prior": [
+          0.0033462035935372114,
+          0.23826287686824799,
+          0.7494616508483887
+        ],
+        "opacity_q_locked": [
+          0.5,
+          0.9213127493858337,
+          0.9996243715286255
+        ],
+        "opacity_share_ge05_prior": 0.25309985876083374,
+        "total": 0.12995828688144684,
+        "rgb": 0.10054884850978851,
+        "mvs": 0.22057461738586426,
+        "prior": 0.21712742745876312
+      }
+    ]
+  },
+  "source": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_1",
+  "health_sha256": "6a6792f4735a44056a662afeb70e7cf3f865a2457510214b1e381556a0986777",
+  "scalars_sha256": "23c1bdbd2f693e594787b849f2ad955afb6b1938022779e2266f706210f9f7d6",
+  "baseline_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+  "baseline_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf",
+  "receipt": {
+    "run": {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_dyngt"
+    },
+    "gpu": 1,
+    "attempt": 1,
+    "exit_code": 1,
+    "started_at": "2026-10-26T18:57:32.181822+09:00",
+    "finished_at": "2026-10-26T19:12:28.290103+09:00",
+    "seconds": 896.1083142198622,
+    "lambda_depth": 0.0025,
+    "gpu_peak_total_MiB": 22814.0,
+    "config_sha256": "b6ff542aed7181c4e77b1c892aeea23124fef8207ca4c5a901c8895af9c04668",
+    "source_sha256": {
+      "train.py": "5650caf9e5d894480e9bd6b94cd8afe1c869c70b19df15f56b3720d24b3d17e5",
+      "jbgs_judgment.py": "20c5adc8416ff06209ca9dbe98db0a1a8ead20a26032c2d4be8a0f5e431158d9"
+    },
+    "scientific_verdict": null
+  },
+  "cause_confirmed": "prior-origin opacity median remains below 0.05 at actual reset+100; threshold enforced exactly",
+  "cause_unresolved": "why this arm fails to recover; increasing prior-origin descendant count and opacity saturation are observations, not a proven cause",
+  "no_new_training": true,
+  "scientific_verdict": null
+}
