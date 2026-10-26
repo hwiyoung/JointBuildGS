@@ -1,14 +1,15 @@
 {
   "status": "RUNNING",
-  "at": "2026-10-26T19:53:36.067498+09:00",
+  "at": "2026-10-26T20:23:38.520717+09:00",
   "counts": {
     "calibration_complete": 4,
-    "required_complete": 0,
+    "required_complete": 1,
     "optional_complete": 0,
     "post_complete": 0,
     "measurements_complete": 0,
     "historical_before_grace_stops": 2,
     "historical_grace_stops": 1,
+    "post_stopped_attempts": 1,
     "new_stopped_attempts": 1
   },
   "runs": [
@@ -56,7 +57,8 @@
           "monitor_policy": "historical prior-opacity",
           "resets": []
         }
-      ]
+      ],
+      "post_attempts": []
     },
     {
       "site": "B173nb_b10",
@@ -102,7 +104,8 @@
           "monitor_policy": "historical prior-opacity",
           "resets": []
         }
-      ]
+      ],
+      "post_attempts": []
     },
     {
       "site": "B173nb_b10",
@@ -148,7 +151,8 @@
           "monitor_policy": "historical prior-opacity",
           "resets": []
         }
-      ]
+      ],
+      "post_attempts": []
     },
     {
       "site": "B173nb_b10",
@@ -194,7 +198,8 @@
           "monitor_policy": "historical prior-opacity",
           "resets": []
         }
-      ]
+      ],
+      "post_attempts": []
     },
     {
       "site": "B173nb_b10",
@@ -356,18 +361,55 @@
         {
           "attempt": "attempt_3",
           "receipt": null,
-          "last_health": null,
+          "last_health": {
+            "iteration": 17100,
+            "camera": "DJI_20241217101152_0025_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 5100,
+            "gaussians": 1379799,
+            "whole_opacity_median": 0.48788127303123474,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
           "stops": [],
           "monitor_policy": "v2",
-          "resets": []
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
         }
-      ]
+      ],
+      "post_attempts": []
     },
     {
       "site": "B173nb_b10",
       "result": "lt_fixgt_ALS_s0",
       "calibration": false,
-      "training_complete": false,
+      "training_complete": true,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -421,16 +463,47 @@
         },
         {
           "attempt": "attempt_1",
-          "receipt": null,
+          "receipt": {
+            "run": {
+              "site": "B173nb_b10",
+              "prior": "ALS",
+              "variant": "lt_fixgt"
+            },
+            "gpu": 0,
+            "attempt": 1,
+            "exit_code": 0,
+            "started_at": "2026-10-26T18:57:32.181730+09:00",
+            "finished_at": "2026-10-26T20:12:21.474797+09:00",
+            "seconds": 4489.29310021922,
+            "lambda_depth": 0.0025,
+            "gpu_peak_total_MiB": 14122.0,
+            "config_sha256": "b6ff542aed7181c4e77b1c892aeea23124fef8207ca4c5a901c8895af9c04668",
+            "source_sha256": {
+              "train.py": "5650caf9e5d894480e9bd6b94cd8afe1c869c70b19df15f56b3720d24b3d17e5",
+              "jbgs_judgment.py": "20c5adc8416ff06209ca9dbe98db0a1a8ead20a26032c2d4be8a0f5e431158d9"
+            },
+            "scientific_verdict": null,
+            "source_files_observed_at_completion": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_file_observed_at_completion": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "source_binding_corrected": true,
+            "source_binding_receipt": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/monitor_v2/inflight_fixed_source_binding.json",
+            "source_binding_sha256": "8b40b559142af4a4e43fde4d684c82d5bb3212d2569edc2be33c0065df4ffadc",
+            "original_completion_receipt_sha256": "12c5139df3dea570201b3644afdf19fcc07ec735f4f5728c52495dc24b8944f3",
+            "correction_at": "2026-10-26T20:12:24.975746+09:00",
+            "correction_reason": "original host runner hashed files at completion; running fixed process had loaded the previously frozen 77d97761 source before monitor v2 edits"
+          },
           "last_health": {
-            "iteration": 25600,
-            "camera": "DJI_20241217094104_0057_D",
+            "iteration": 30000,
+            "camera": "DJI_20241217091033_0079_D",
             "gaussians": 2066519,
             "prior_gaussians": 375941,
-            "prior_opacity_median": 0.7649161219596863,
+            "prior_opacity_median": 0.8408088088035583,
             "observation_phase": "after optimizer and opacity floors, before density/reset",
             "last_periodic_reset": 12000,
-            "iterations_after_reset": 13600,
+            "iterations_after_reset": 18000,
             "opacity_stop_deferred": false,
             "stop": null,
             "scientific_verdict": null
@@ -463,6 +536,17 @@
               "scientific_verdict": null
             }
           ]
+        }
+      ],
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 137,
+          "seconds": 396.57320459280163,
+          "tsdf_queue_seconds": 8.158385753631592e-06,
+          "at": "2026-10-26T20:18:58.069050+09:00",
+          "scientific_verdict": null
         }
       ]
     }
@@ -611,5 +695,35 @@
   ],
   "stop": null,
   "selected_lambda": 0.0025,
-  "scientific_verdict": null
+  "scientific_verdict": null,
+  "fixed_post_host_oom_recovery": {
+    "status": "WAITING_OR_RETRYING",
+    "preparation": {
+      "at": "2026-10-26T20:23:16.472936+09:00",
+      "status": "WAITING_FOR_MEMORY",
+      "error": "confirmed host global OOM, not CUDA OOM",
+      "training_iteration": 30000,
+      "docker_event_ring_status": "earlier read observed OOM/die; ring no longer retains it; persistent kernel evidence used",
+      "training_restarted": false,
+      "post_retry_limit": 1,
+      "required_available_GiB": 56,
+      "restored_historical_stop_sha256": "b1b734230d30e04f44b3a8f7de054a6f997e18433ad1d195d3ea646f4af8f990",
+      "command_sha256": "43f8e9dcc7195d4dca9445796bf8f9350dc45d53f0999ae3508824d4e7041d24",
+      "original_receipt": {
+        "exit_code": 137,
+        "seconds": 396.57320459280163,
+        "tsdf_queue_seconds": 8.158385753631592e-06,
+        "at": "2026-10-26T20:18:58.069050+09:00",
+        "scientific_verdict": null
+      },
+      "scientific_verdict": null
+    },
+    "latest_memory_wait": {
+      "at": "2026-10-26T20:23:36.475265+09:00",
+      "available_GiB": 47.454681396484375,
+      "required_GiB": 56,
+      "seconds": 20.001781997270882,
+      "scientific_verdict": null
+    }
+  }
 }

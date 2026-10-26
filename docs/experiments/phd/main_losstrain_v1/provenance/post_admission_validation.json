@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "scope": "execution resource admission only",
+  "cpu_check": "47 GiB waits, 56 GiB admits; context releases both photo locks",
+  "source_sha256": {
+    "scripts/phd/main_losstrain_v1/post_admission.py": "dba04feb61c4113f14cd1110e5b1875ac41a113cb885d00c2d34c5c44b0d07a6",
+    "scripts/phd/main_losstrain_v1/gpu_post.py": "e34392b3155185d5dd7426b1258ef9f0e5c8ace73b08f2372a8bb036b0981351",
+    "scripts/phd/main_losstrain_v1/recover_fixed_post.py": "22f22df40058f617f1e9ff701002653efd36efcb8cdc02f54aeb30693e1df5f0",
+    "scripts/phd/main_stage1_v1/gpu_s1.py": "40b1ba4f9911feb694f1241dc57434c7c0c02d54f4a639d10bbfa947140f31eb"
+  },
+  "unchanged_post_function_source": "scripts/phd/main_stage1_v1/gpu_s1.py",
+  "training_restarted": false,
+  "post_parameters_changed": false,
+  "scientific_verdict": null
+}

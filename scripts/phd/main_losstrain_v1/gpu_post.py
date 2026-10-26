@@ -46,7 +46,11 @@ def main():
     else:G.run_steps(site,result)
 
 if __name__=='__main__':
-    try:main()
+    try:
+        from post_admission import admit
+        mode,site,result,_=sys.argv[1:]
+        with admit(Path('/out/stage1')/site/result/(mode+'_resource_admission.json')):
+            main()
     except torch.cuda.OutOfMemoryError:
         import subprocess
         _,site,result,_=sys.argv[1:]

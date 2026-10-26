@@ -27,7 +27,9 @@ def main():
                 resets=records(p/'model/monitor/losstrain_resets.jsonl')))
         runs.append(dict(site=root.parent.name,result=root.name,calibration=root.name.startswith('lt_cal_'),
             training_complete=(root/'PASS.json').exists(),post_complete=(root/'post_PASS.json').exists(),
-            measurement_complete=(root/'measure_PASS.json').exists(),attempts=attempts))
+            measurement_complete=(root/'measure_PASS.json').exists(),attempts=attempts,
+            post_attempts=[dict(stage=p.name.split('_attempt_')[0],path=str(p),**json.loads(p.read_text()))
+                for p in sorted(root.glob('*_attempt_*_receipt.json'))]))
     completed=[r for r in runs if r['training_complete'] and not r['calibration']]
     stop=OUT/'checks/full_monitor_v2_STOP.json'
     revision=OUT/'checks/monitor_v2/camera_fix/restart_approval.json'
@@ -39,9 +41,16 @@ def main():
         required_complete=sum(not r['result'].startswith('lt_fixnow') for r in completed),optional_complete=sum(r['result'].startswith('lt_fixnow') for r in completed),
         post_complete=sum(r['post_complete'] for r in runs),measurements_complete=sum(r['measurement_complete'] for r in runs),
         historical_before_grace_stops=2,historical_grace_stops=1,
+        post_stopped_attempts=sum(bool(a['exit_code']) for r in runs for a in r['post_attempts']),
         new_stopped_attempts=sum(bool(a['stops']) or bool(a['receipt'] and a['receipt']['exit_code']) for r in runs if not r['calibration'] for a in r['attempts'] if a['monitor_policy']=='v2'))
     data=dict(status=state,at=stamp,counts=counts,runs=runs,reset_comparisons=comparisons,
         stop=json.loads(stop.read_text()) if stop.exists() else None,selected_lambda=.0025,scientific_verdict=None)
+    recovery=OUT/'checks/fixed_post_host_oom'
+    if (recovery/'preparation.json').exists():
+        data['fixed_post_host_oom_recovery']=dict(
+            status='PASS' if (recovery/'PASS.json').exists() else 'STOPPED' if (recovery/'STOP.json').exists() else 'WAITING_OR_RETRYING',
+            preparation=json.loads((recovery/'preparation.json').read_text()),
+            latest_memory_wait=json.loads((recovery/'memory_wait.json').read_text()) if (recovery/'memory_wait.json').exists() else None)
     save('/docs/tables/runtime.json',data);save(OUT/'checks/runtime.json',data)
     save('/docs/tables/reset_comparisons.json',dict(rows=comparisons,scientific_verdict=None))
     if comparisons:

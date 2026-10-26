@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-26T20:23:16.472936+09:00",
+  "status": "WAITING_FOR_MEMORY",
+  "error": "confirmed host global OOM, not CUDA OOM",
+  "training_iteration": 30000,
+  "docker_event_ring_status": "earlier read observed OOM/die; ring no longer retains it; persistent kernel evidence used",
+  "training_restarted": false,
+  "post_retry_limit": 1,
+  "required_available_GiB": 56,
+  "restored_historical_stop_sha256": "b1b734230d30e04f44b3a8f7de054a6f997e18433ad1d195d3ea646f4af8f990",
+  "command_sha256": "43f8e9dcc7195d4dca9445796bf8f9350dc45d53f0999ae3508824d4e7041d24",
+  "original_receipt": {
+    "exit_code": 137,
+    "seconds": 396.57320459280163,
+    "tsdf_queue_seconds": 8.158385753631592e-06,
+    "at": "2026-10-26T20:18:58.069050+09:00",
+    "scientific_verdict": null
+  },
+  "scientific_verdict": null
+}

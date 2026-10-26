@@ -1,0 +1,42 @@
+{
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "result": "lt_fixgt_ALS_s0",
+  "iteration": 30000,
+  "groups": {
+    "all": {
+      "count": 2066519,
+      "opacity_median": 0.5779454056014305
+    },
+    "prior_lineage": {
+      "count": 375941,
+      "opacity_median": 0.8408087615858753
+    },
+    "image_lineage": {
+      "count": 1690578,
+      "opacity_median": 0.5013638688766923
+    },
+    "prior_gt_correct": {
+      "count": 181992,
+      "opacity_median": 0.5175070039259941
+    },
+    "prior_gt_incorrect": {
+      "count": 23674,
+      "opacity_median": 0.4493891429204304
+    },
+    "prior_gt_unknown": {
+      "count": 170275,
+      "opacity_median": 0.9882403694768834
+    }
+  },
+  "mutually_exclusive_birth_status": "기록 없음",
+  "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+  "sources": {
+    "model": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/point_cloud/iteration_30000/point_cloud.ply",
+    "model_sha256": "c179b13fa3c43dcdabbe5f345ab3eb4cb89f68cbb1fc1b3599e4e03ae031d609",
+    "init": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/init_points.npz",
+    "init_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6"
+  },
+  "optimizer_steps": 0,
+  "scientific_verdict": null
+}
