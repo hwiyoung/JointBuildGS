@@ -47,7 +47,9 @@ def gates(batch):
     for p,h in validation['source_sha256'].items():assert sha(P.SRC['r17']/p)==h
     assert not stopped()
     if batch!='first':assert json.loads((OUT/'checks/interim.json').read_text())['status']=='PASS'
-    if batch=='optional':assert all((F.root_of(r)/'post_PASS.json').exists() for r in F.runs_for('remaining'))
+    if batch=='optional':
+        assert all((F.root_of(r)/'post_PASS.json').exists() for r in F.runs_for('remaining'))
+        assert not (OUT/'checks/monitor_v2/camera_fix/failure.json').exists(),'optional arm condition not met: an execution stop occurred'
     return json.loads((OUT/'checks/lambda_selection.json').read_text())['selected_lambda']
 
 def run(r,gpu,lam):

@@ -7,9 +7,14 @@ from pathlib import Path
 import train_calibration as C
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('site');ap.add_argument('prior');ap.add_argument('result');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('site');ap.add_argument('prior');ap.add_argument('result');ap.add_argument('--wait-post',action='store_true');a=ap.parse_args()
     assert a.result.startswith('lt_') and not a.result.startswith('lt_cal_')
-    unit=C.OUT/'runs'/a.site/a.result;assert (unit/'post_PASS.json').exists()
+    unit=C.OUT/'runs'/a.site/a.result
+    while not (unit/'post_PASS.json').exists():
+        if not a.wait_post:raise RuntimeError('postprocessing not complete')
+        failed=[p for p in unit.glob('*attempt_1_receipt.json') if json.loads(p.read_text()).get('exit_code')]
+        if failed:raise RuntimeError('postprocessing stopped; no measurement: '+str(failed))
+        time.sleep(5)
     tag=(a.site+'-'+a.prior+'-'+a.result).lower().replace('_','-')
     calls=[('mesh',C.REPO/'scripts/phd/main_losstrain_v1/run_cpu.sh',
             ['mesh_score.py','--site',a.site,'--prior',a.prior,'--result',a.result],C.OUT/'patch_z'/f'{a.site}__{a.prior}__{a.result}.json'),

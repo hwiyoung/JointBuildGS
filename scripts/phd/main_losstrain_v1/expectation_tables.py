@@ -56,6 +56,12 @@ def main():
     save(tab/'expectations.json',dict(rows=rows,wing=wing,section=ex,interpretation='values only; no expectation verdict',scientific_verdict=None))
     with (tab/'expectations.csv').open('w') as f:
         w=csv.DictWriter(f,list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
+    lines=['# 기대와 측정값을 나란히','','기대의 판정은 하지 않는다. 미완료 판은 확인 불가이며 원래 기준은 그대로 둔다.','',
+        '| 기대 | 단위 | 사전 | 판 | 값의 정의 | N | 값 | 기준 |','|---|---|---|---|---|---:|---:|---:|']
+    fmt=lambda x:'확인 불가' if x is None else f'{x:.6f}'
+    for r in rows:
+        lines.append(f"| {r['expectation']} | {r['site']} | {r['prior']} | {r['variant']} | {r['metric']} | {r['N'] if r['N'] is not None else '확인 불가'} | {fmt(r['value'])} | {fmt(r['criterion'])} |")
+    (tab/'expectations.md').write_text('\n'.join(lines)+'\n')
     print('expectation values',len(rows),flush=True)
 
 if __name__=='__main__':main()

@@ -16,8 +16,16 @@ def main():
     post=list((OUT/'runs').glob('*/*/post_PASS.json'));cal=list((OUT/'runs').glob('*/lt_cal_*/PASS.json'))
     required=[p for p in full if not p.parent.name.startswith('lt_fixnow')];optional=[p for p in full if p.parent.name.startswith('lt_fixnow')]
     stopped=list((OUT/'runs').glob('*/*/STOP_attempt_*.json'))
-    if a.status=='COMPLETE':assert len(required)==24 and len(post)==len(full)
-    else:assert (OUT/'checks/full_grace_STOP.json').exists()
+    if a.status=='COMPLETE':
+        assert len(required)==24 and len(post)==len(full)
+        assert all((p.parent/'measure_PASS.json').exists() for p in full)
+        expected=['section_B173nb_b10_ALS_0','section_B173nb_b10_LoD2_0','section_R1rep_b10_LoD2_1','section_R1rep_b10_ALS_2',
+            'render_B173nb_b10_ALS','render_B173nb_b10_LoD2']
+        expected += [prefix+'_'+site+'_'+prior for prefix in ['map','side_map','fates'] for site in ['B0_b10','B173nb_b10','R1rep_b10'] for prior in ['LoD2','ALS']]
+        for key in expected:
+            meta=Path('/docs/figures')/(key+'.json')
+            assert meta.exists() and json.loads(meta.read_text())['visual_review']=='PASS',key
+    else:assert any((OUT/'checks').glob('*STOP.json'))
     status=dict(task_id='PHD-MAIN-LOSSTRAIN-v1',status=a.status,calibration_complete=len(cal),required_training_complete=len(required),
         optional_training_complete=len(optional),postprocessing_complete=len(post),new_stop_receipts=len(stopped),
         historical_pre_amendment_opacity_stops=2,at=datetime.now(timezone(timedelta(hours=9))).isoformat(),scientific_verdict=None)
@@ -36,7 +44,10 @@ def main():
     for p in sorted((OUT/'runs').glob('*/*/attempt_*/model/monitor/losstrain_*.jsonl')):
         members.append((p,'run_receipts/'+p.relative_to(OUT/'runs').as_posix()))
     for p in sorted((OUT/'checks/opacity_grace_v1').glob('*.json')):members.append((p,'checks/opacity_grace_v1/'+p.name))
-    for name in ['full_STOP.json','full_grace_STOP.json','lambda_selection.json','preparation_commit.json']:
+    for p in sorted((OUT/'checks/monitor_v2').rglob('*.json')):
+        if any(x in p.parts for x in ['rebuilt_fork','rebuild_docs','before','model','synthetic']):continue
+        members.append((p,'checks/monitor_v2/'+p.relative_to(OUT/'checks/monitor_v2').as_posix()))
+    for name in ['full_STOP.json','full_grace_STOP.json','full_monitor_v2_STOP.json','full_monitor_v2_camera_fix_STOP.json','lambda_selection.json','preparation_commit.json']:
         p=OUT/'checks'/name
         if p.exists():members.append((p,'checks/'+name))
     report=Path('/docs/손실학습시험_보고_v1.md');assert len(report.read_text())<=20000
@@ -45,11 +56,13 @@ def main():
         selected=list(members)
         if not light:selected += [(p,'patch_z/'+p.name) for p in sorted((OUT/'patch_z').glob('*.npz'))]
         assert len(selected)==len({n for _,n in selected})
-        hashes={name:sha(p) for p,name in selected}
+        # Freeze each member once; an independently running arm may append logs.
+        payloads={name:p.read_bytes() for p,name in selected}
+        hashes={name:hashlib.sha256(data).hexdigest() for name,data in payloads.items()}
         checksum=''.join(hashes[n]+'  '+n+'\n' for n in sorted(hashes)).encode()
         dest=root/('PHD-MAIN-LOSSTRAIN-v1_handover'+('_light' if light else '')+'.zip')
         with zipfile.ZipFile(dest,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:
-            for p,n in selected:z.write(p,n)
+            for p,n in selected:z.writestr(n,payloads[n])
             z.writestr('SHA256SUMS',checksum)
         assert dest.stat().st_size<400_000_000,'split required; do not ship oversized archive'
         with zipfile.ZipFile(dest) as z:

@@ -1,6 +1,6 @@
 {
-  "status": "STOPPED_PARTIAL",
-  "at": "2026-10-26T19:41:23.694217+09:00",
+  "status": "RUNNING",
+  "at": "2026-10-26T19:53:36.067498+09:00",
   "counts": {
     "calibration_complete": 4,
     "required_complete": 0,
@@ -9,7 +9,7 @@
     "measurements_complete": 0,
     "historical_before_grace_stops": 2,
     "historical_grace_stops": 1,
-    "new_stopped_attempts": 0
+    "new_stopped_attempts": 1
   },
   "runs": [
     {
@@ -350,7 +350,15 @@
           },
           "last_health": null,
           "stops": [],
-          "monitor_policy": "historical prior-opacity",
+          "monitor_policy": "v2",
+          "resets": []
+        },
+        {
+          "attempt": "attempt_3",
+          "receipt": null,
+          "last_health": null,
+          "stops": [],
+          "monitor_policy": "v2",
           "resets": []
         }
       ]
@@ -415,14 +423,14 @@
           "attempt": "attempt_1",
           "receipt": null,
           "last_health": {
-            "iteration": 20900,
-            "camera": "DJI_20241217095125_0069_D",
+            "iteration": 25600,
+            "camera": "DJI_20241217094104_0057_D",
             "gaussians": 2066519,
             "prior_gaussians": 375941,
-            "prior_opacity_median": 0.6724677085876465,
+            "prior_opacity_median": 0.7649161219596863,
             "observation_phase": "after optimizer and opacity floors, before density/reset",
             "last_periodic_reset": 12000,
-            "iterations_after_reset": 8900,
+            "iterations_after_reset": 13600,
             "opacity_stop_deferred": false,
             "stop": null,
             "scientific_verdict": null
@@ -601,17 +609,7 @@
       "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
     }
   ],
-  "stop": {
-    "run": {
-      "site": "B173nb_b10",
-      "prior": "ALS",
-      "variant": "lt_dyngt"
-    },
-    "attempt": 2,
-    "reason": "execution or monitor-v2 health error",
-    "at": "2026-10-26T19:39:25.470939+09:00",
-    "scientific_verdict": null
-  },
+  "stop": null,
   "selected_lambda": 0.0025,
   "scientific_verdict": null
 }

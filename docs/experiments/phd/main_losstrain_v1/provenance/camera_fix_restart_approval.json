@@ -1,0 +1,18 @@
+{
+  "status": "AUTHORIZED",
+  "at": "2026-10-26T19:52:54.152882+09:00",
+  "authority": "user reply: restart corrected plate 2; future verified record-code fixes may restart without asking if loss, scoring, variants and training settings stay unchanged",
+  "superseded_stop_sha256": "807f2e1537bb4cd57499d48270cb8b3c2d092bd2bc493840046c6a3c60bbfa7a",
+  "validation_sha256": "21570c03610695e8236b8fc22a89a34538321e7078172affbe37251a28ad1620",
+  "probe_sha256": "5d3b2ae29485e1298d12834ca9f41a44f5bf9811eee7d9b56485e485d8a3fce4",
+  "restart_run": "B173nb_b10/lt_dyngt_ALS_s0",
+  "next_attempt": 3,
+  "seed": 0,
+  "iterations": 30000,
+  "future_questions_only": [
+    "loss formula, scoring rules or experimental variants must change",
+    "same arm stops more than twice"
+  ],
+  "historical_stops_preserved": true,
+  "scientific_verdict": null
+}

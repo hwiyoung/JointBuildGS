@@ -13,6 +13,7 @@ from matplotlib.collections import LineCollection
 from inputs import OUT,PH,S1,save,sha
 from mesh_score import source_mesh
 from side_tables import VARS
+from result_figures import LABELS
 
 font_manager.fontManager.addfont('/fonts/NotoSansCJK-Regular.ttc')
 plt.rcParams.update({'font.family':'Noto Sans CJK JP','font.size':9,'axes.unicode_minus':False})
@@ -72,7 +73,7 @@ def draw(ex,prior):
         ax.scatter(mpoints[:,0],mpoints[:,1],s=.8,c=COL['mvs'],alpha=.45,rasterized=True)
         ax.scatter(gpoints[:,0],gpoints[:,1],s=.8,c=COL['gt'],alpha=.45,rasterized=True)
         ax.plot((edges[:-1]+edges[1:])/2,yy,'--',color=COL['analytic'],linewidth=1.5)
-        ax.set(xlim=(-length/2,length/2),ylim=(lo,hi),title=var)
+        ax.set(xlim=(-length/2,length/2),ylim=(lo,hi),title=LABELS[var])
         if j==0:ax.set_ylabel('높이 (m)')
         band=axes[1,j];band.scatter(s[ids],np.zeros(len(ids)),c=e['cell'][ids],cmap='tab10',vmin=0,vmax=9,s=12,marker='s')
         band.set(yticks=[],xlabel='단면 위치 (m)',ylim=(-.5,.5))

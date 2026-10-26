@@ -26,6 +26,7 @@ def main():
                 sources.append(dict(path=str(p),sha256=sha(p),analytic=str(q),analytic_sha256=sha(q)))
                 for name,m in [('unexplained',valid),('unexplained_cell_1',valid&(cell==1)),('unexplained_cell_2',valid&(cell==2))]:
                     A=float(area[m].sum());N=int(m.sum());same=float(area[m&(actual==expected)].sum())
+                    assert np.isin(expected[m],[0,1,2]).all() and np.isin(actual[m],[0,1,2,3]).all()
                     for i,ename in enumerate(['prior','mvs','other']):
                         for j,aname in enumerate(['prior','mvs','other','no_surface']):
                             x=m&(expected==i)&(actual==j)
@@ -38,6 +39,15 @@ def main():
     if rows:
         with Path(f'/docs/tables/sides_{tag}.csv').open('w') as f:
             w=csv.DictWriter(f,list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
+    lines=['# 도착점과 결과 면의 쪽: 넓이 교차표','','[이 발주에서 냄]. 같은 1단계 패치에서 두 쪽을 비교했다. 표본 100개 미만은 표본 부족이다.','',
+        '| 단위 | 사전 | 판 | 범위 | 도착점 쪽 | 결과 쪽 | N | 넓이(m²) | 전체 N | 같은 쪽(%) |',
+        '|---|---|---|---|---|---|---:|---:|---:|---:|']
+    names=dict(prior='사전',mvs='MVS',other='그 밖',no_surface='면 없음')
+    for r in rows:
+        share='확인 불가' if r['same_side_percent'] is None else f"{r['same_side_percent']:.6f}"
+        subset=r['subset']+(' · 표본 부족' if r['minimum_sample']=='INSUFFICIENT' else '')
+        lines.append(f"| {r['site']} | {r['prior']} | {r['variant']} | {subset} | {names[r['analytic_side']]} | {names[r['trained_side']]} | {r['patches']} | {r['area_m2']:.6f} | {r['denominator_patches']} | {share} |")
+    Path(f'/docs/tables/sides_{tag}.md').write_text('\n'.join(lines)+'\n')
     print('side table rows',len(rows),flush=True)
 
 if __name__=='__main__':main()

@@ -16,23 +16,30 @@ def main():
         attempts=[]
         for p in sorted(root.glob('attempt_*')):
             rec=json.loads((p/'receipt.json').read_text()) if (p/'receipt.json').exists() else None
+            command=json.loads((p/'command.json').read_text()) if (p/'command.json').exists() else []
+            is_v2='--jbgs_lt_monitor_v2' in command
             v2=records(p/'model/monitor/losstrain_health_v2.jsonl')
             health=v2 or records(p/'model/monitor/losstrain_health.jsonl');last=health[-1] if health else None
             events=records(p/'model/monitor/losstrain_reset_comparison.jsonl')
             comparisons += [dict(site=root.parent.name,result=root.name,attempt=p.name,**x) for x in events]
             stops=[x for x in health if x.get('stop')]
-            attempts.append(dict(attempt=p.name,receipt=rec,last_health=last,stops=stops,monitor_policy='v2' if v2 else 'historical prior-opacity',
+            attempts.append(dict(attempt=p.name,receipt=rec,last_health=last,stops=stops,monitor_policy='v2' if is_v2 else 'historical prior-opacity',
                 resets=records(p/'model/monitor/losstrain_resets.jsonl')))
         runs.append(dict(site=root.parent.name,result=root.name,calibration=root.name.startswith('lt_cal_'),
             training_complete=(root/'PASS.json').exists(),post_complete=(root/'post_PASS.json').exists(),
             measurement_complete=(root/'measure_PASS.json').exists(),attempts=attempts))
     completed=[r for r in runs if r['training_complete'] and not r['calibration']]
-    stop=OUT/'checks/full_monitor_v2_STOP.json';state='STOPPED_PARTIAL' if stop.exists() else 'RUNNING'
+    stop=OUT/'checks/full_monitor_v2_STOP.json'
+    revision=OUT/'checks/monitor_v2/camera_fix/restart_approval.json'
+    if revision.exists() and json.loads(revision.read_text())['status']=='AUTHORIZED':stop=OUT/'checks/full_monitor_v2_camera_fix_STOP.json'
+    fixed_stop=OUT/'runs/B173nb_b10/lt_fixgt_ALS_s0/STOP_monitor_v2.json'
+    if fixed_stop.exists():stop=fixed_stop
+    state='STOPPED_PARTIAL' if stop.exists() else 'RUNNING'
     counts=dict(calibration_complete=sum(r['training_complete'] for r in runs if r['calibration']),
         required_complete=sum(not r['result'].startswith('lt_fixnow') for r in completed),optional_complete=sum(r['result'].startswith('lt_fixnow') for r in completed),
         post_complete=sum(r['post_complete'] for r in runs),measurements_complete=sum(r['measurement_complete'] for r in runs),
         historical_before_grace_stops=2,historical_grace_stops=1,
-        new_stopped_attempts=sum(bool(a['stops']) for r in runs if not r['calibration'] for a in r['attempts'] if a['monitor_policy']=='v2'))
+        new_stopped_attempts=sum(bool(a['stops']) or bool(a['receipt'] and a['receipt']['exit_code']) for r in runs if not r['calibration'] for a in r['attempts'] if a['monitor_policy']=='v2'))
     data=dict(status=state,at=stamp,counts=counts,runs=runs,reset_comparisons=comparisons,
         stop=json.loads(stop.read_text()) if stop.exists() else None,selected_lambda=.0025,scientific_verdict=None)
     save('/docs/tables/runtime.json',data);save(OUT/'checks/runtime.json',data)

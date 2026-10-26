@@ -99,6 +99,18 @@ def main():
         lines.append('| '+' | '.join(str(r[k]) if k in ['site','prior','variant','gt_N','result_E_N'] else fmt(r[k]) for k in ['site','prior','variant','gt_N','R_tau_percent','gt_mean_cm','result_E_N','P_tau_E_percent','result_E_mean_cm','F1_tau_E_percent','Chamfer_E_cm'])+' |')
     lines+=['','수치 차이의 기준은 모은 흔들림(같은 지표가 있을 때), 두 씨앗의 2.8×절대차/√2, 비율에서 300/N 중 최댓값이다. 새 1단계 패치 지표의 기존 모은 흔들림은 없어 다른 지표의 값을 대신 넣지 않았다. 기준의 두 배를 넘는 차이만 수치 차이 확인으로 적는다. 과학적 판정은 하지 않는다.']
     (DOC/'axes_metrics.md').write_text('\n'.join(lines)+'\n')
+    lines=['# 지표별 수치 차이 기준','','단위: 새 패치 거리 중앙값 m, 두 축 거리 평균 cm, 비율 %p. 정의가 같은 기존 흔들림 값만 사용한다.','',
+        '| 지표 묶음 | 단위 | 사전 | 범위 | 지표 | N | 모은 폭 | 해당 단위 폭 | 300/N | 기준 |',
+        '|---|---|---|---|---|---:|---:|---:|---:|---:|']
+    for r in noise:
+        lines.append('| '+' | '.join(str(r[k]) if k in ['kind','site','prior','subset','metric','N'] else fmt(r[k]) for k in ['kind','site','prior','subset','metric','N','pooled','case_spread','three_points','threshold'])+' |')
+    (DOC/'noise_thresholds.md').write_text('\n'.join(lines)+'\n')
+    lines=['# 수치 차이의 구간','','기준 두 배 초과, 기준 초과~두 배 이하, 기준 안을 구분한다. 과학적 판정이 아니다.','',
+        '| 단위 | 사전 | 범위 | 지표 | 판 | 비교 기준 | N | 차 | 문턱 | 수치 구간 |',
+        '|---|---|---|---|---|---|---:|---:|---:|---|']
+    for r in comparisons:
+        lines.append(f"| {r['site']} | {r['prior']} | {r['subset']} | {r['metric']} | {r['variant']} | {r['reference']} | {r['N']} | {fmt(r['difference'])} | {fmt(r['threshold'])} | {r['numerical_change']} |")
+    (DOC/'numerical_changes.md').write_text('\n'.join(lines)+'\n')
     print('axes rows',len(flat),'thresholds',len(noise),'new comparisons',len(comparisons),flush=True)
 
 if __name__=='__main__':main()

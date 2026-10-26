@@ -48,12 +48,14 @@ def main():
             w=csv.DictWriter(f,list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
     lines=['# 1단계 패치 채점','', '[이 발주에서 냄]. 같은 평가 패치·넓이·허용 오차로 계산했다. 면 없음은 τ 밖으로 센다. 100패치 미만은 표본 부족이다.','',
         '거리 중앙값은 면을 만난 패치에서 구하며 그 표본 수는 error_observed_patches에 적었다. τ 안 비율에서는 면 없음도 실패로 센다.','',
-        '| 단위 | 사전 | 결과 | 범위 | N | 넓이(m²) | 학습 없는 시험(%) | 결과 τ 안(%) | 면 없음(%) |',
-        '|---|---|---|---|---:|---:|---:|---:|---:|']
+        '| 단위 | 사전 | 결과 | 범위 | N | 넓이(m²) | 학습 없는 시험(%) | 결과 τ 안(%) | 면 없음(m²) | 면 없음(%) |',
+        '|---|---|---|---|---:|---:|---:|---:|---:|---:|']
     for r in rows:
-        if r['result_type']=='analytic' or r['subset'] not in ['all_0_3','unexplained','cell_0','cell_4','cell_5']:continue
+        if r['result_type']=='analytic':continue
         fmt=lambda x:'확인 불가' if x is None else f'{x:.4f}'
-        lines.append(f"| {r['site']} | {r['prior']} | {r['variant']} | {r['subset']} | {r['patches']} | {r['area_m2']:.3f} | {fmt(r['analytic_within_tau_percent'])} | {fmt(r['within_tau_percent'])} | {fmt(r['no_surface_percent'])} |")
+        subset=r['subset']+(' (보존)' if r['subset'] in ['cell_2','unexplained_cell_2'] else '')
+        subset+=(' · 표본 부족' if r['minimum_sample']=='INSUFFICIENT' else '')
+        lines.append(f"| {r['site']} | {r['prior']} | {r['variant']} | {subset} | {r['patches']} | {r['area_m2']:.3f} | {fmt(r['analytic_within_tau_percent'])} | {fmt(r['within_tau_percent'])} | {fmt(r['no_surface_area_m2'])} | {fmt(r['no_surface_percent'])} |")
     Path(f'/docs/tables/patch_scores_{tag}.md').write_text('\n'.join(lines)+'\n')
     print('patch score rows',len(rows),flush=True)
 
