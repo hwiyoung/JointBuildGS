@@ -1,0 +1,47 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1",
+  "scientific_verdict": null,
+  "selection": {
+    "view": "DJI_20241217084247_0007_D",
+    "crop_box_grid_px": [
+      234,
+      0,
+      714,
+      741
+    ],
+    "eval_crop_share": 0.5970282276203329,
+    "projected_eval_patch_fraction": 0.9645262247768428,
+    "roi_pixels": 212351,
+    "pass_share": 0.9882552943004742
+  },
+  "gaussian_file": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/prop_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+  "saved_rgb": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/prop_LoD2_s0/model/dump/iteration_30000/DJI_20241217084247_0007_D_rgb.png",
+  "saved_depth": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/prop_LoD2_s0/model/dump/iteration_30000/DJI_20241217084247_0007_D_depth.npy",
+  "actual_image": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/images/DJI_20241217084247_0007_D.jpg",
+  "depth_colour_range_m": [
+    46.53933334350586,
+    114.45537567138672
+  ],
+  "display_rotation_deg": 90,
+  "gaussian_display": {
+    "centre_xyz": [
+      97.25415364894931,
+      12.275553577646551,
+      -23.322858377932096
+    ],
+    "xy_half_m": 1.5,
+    "display_scale": 0.25,
+    "stride": 1,
+    "shown": 175,
+    "orientation": "exact PLY quaternion; fixed oblique display",
+    "opacity_min_logit": -4
+  },
+  "render": {
+    "source": "saved iteration_30000 render; no new GPU rendering",
+    "training": false
+  },
+  "amendments": [
+    "amendment_01_d_crop.json",
+    "amendment_02_d_full_roi.json"
+  ]
+}
