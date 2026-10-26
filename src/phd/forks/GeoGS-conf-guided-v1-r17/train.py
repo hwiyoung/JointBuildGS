@@ -1020,6 +1020,9 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
             visual_weight=current_da_weight, geometry_loss=normal_loss,
             rgb_loss=rgb_loss)
         gaussians.optimizer.zero_grad(set_to_none=True)
+        if judgment is not None and args.jbgs_lt_monitor:
+            jbgs_judgment.lt_observe(judgment, iteration, gaussians, total_loss, rgb_loss,
+                judgment.lambda_mvs * mvs_term + judgment.lambda_prior * prior_term, render_pkg, cam_name)
         total_loss.backward()
         mvs_pgsr_control.after_backward(iteration, gaussians)
         if judgment is not None:  # [jbgs_judgment] remember locked rows before the Adam step

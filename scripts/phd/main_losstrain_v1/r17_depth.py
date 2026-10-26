@@ -28,8 +28,8 @@ def lt_initialize(j):
         raise ValueError("LOSSTRAIN must retain the nojudge ablation/fix defaults")
     root = Path(a.jbgs_vfile_dir)
     manifest = json.loads((root / "manifest.json").read_text())
-    if manifest.get("patch_join_gate") != "PASS" or manifest.get("pixel_join_gate") != "PASS":
-        raise RuntimeError("LOSSTRAIN_STOP: patch/pixel connection below the frozen gate")
+    if manifest.get("revision") != "direct_stage1_v2" or manifest.get("coverage_gate") != "PASS" or manifest.get("all_units_rules_gate") != "PASS":
+        raise RuntimeError("LOSSTRAIN_STOP: direct patch rules or LoD2 check did not pass")
     values = root / "values.npz"
     digest = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
     if digest(values) != manifest["values_sha256"] or digest(a.jbgs_prop_store) != manifest["store_sha256"]:
@@ -37,9 +37,12 @@ def lt_initialize(j):
     with np.load(values, allow_pickle=False) as z, np.load(a.jbgs_prop_store, allow_pickle=False) as st:
         if not np.array_equal(z["centre"], st["loc_center"]):
             raise RuntimeError("LOSSTRAIN_STOP: stage-1 patch order changed")
-        fallback = ~z["joined"].astype(bool)
+        fallback = z["fallback"].astype(bool)
         vp = z["v_prior_" + a.jbgs_vfile_vprior].copy()
-        vp[fallback] = z["v_prior_now"][fallback]
+        # Missing ALS uncertainty uses median sigma/now; its oracle V is still
+        # determined by available GT. Only outside-UNCERT rows force now.
+        outside = z["outside_uncert"].astype(bool)
+        vp[outside] = z["v_prior_now"][outside]
         arrays = {k: z[k] for k in ("sigma_prior", "sigma_mvs", "v_mvs", "normal")}
         arrays["v_prior"] = vp
         arrays["fallback"] = fallback

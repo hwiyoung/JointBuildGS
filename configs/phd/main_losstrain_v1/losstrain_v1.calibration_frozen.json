@@ -1,0 +1,288 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "saved_at": "2026-10-26T18:04:05.731432+09:00",
+  "repo_commit": "54931008afa8d1cdc034ab5ff0123aa3e9d45bd6",
+  "branch": "exp/main-experiment",
+  "status": "DIRECT_RULES_PASS_AWAITING_REMAINING_GPU_CHECKS_AND_CALIBRATION",
+  "scientific_verdict": null,
+  "units": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "seed": 0
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "seed": 0
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "seed": 0
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "seed": 0
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "seed": 0
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "seed": 0
+    }
+  ],
+  "variants": {
+    "lt_fixgt": {
+      "loss": "fixed",
+      "vprior": "gt",
+      "destination": "z_fixed_gt"
+    },
+    "lt_dyngt": {
+      "loss": "dynamic",
+      "vprior": "gt",
+      "destination": "z_dyn_gt"
+    },
+    "lt_dynsoft": {
+      "loss": "dynamic",
+      "vprior": "soft",
+      "destination": "z_dyn_soft"
+    },
+    "lt_dynnow": {
+      "loss": "dynamic",
+      "vprior": "now",
+      "destination": "z_dyn_now"
+    },
+    "lt_fixnow": {
+      "loss": "fixed",
+      "vprior": "now",
+      "destination": "z_fixed_now",
+      "optional": true
+    }
+  },
+  "common": {
+    "iterations": 30000,
+    "width": 1024,
+    "height": 741,
+    "judgment": 0,
+    "seed": 0,
+    "initial_normal": "cell",
+    "cuda_alloc_conf": "expandable_segments:True",
+    "depth_norm": "all image pixels",
+    "unchanged": [
+      "initialization",
+      "RGB loss and weight",
+      "observation confidence mask",
+      "protection",
+      "density control",
+      "reread"
+    ],
+    "docker_image": "jointbuildgs:geogs-conf-guided-v1",
+    "fork": "src/phd/forks/GeoGS-conf-guided-v1-r17"
+  },
+  "loss": {
+    "fixed": "0.5*V*(Dhat-Dsource)^2/sigma_ray^2",
+    "dynamic": "-logaddexp(log(V)-log(sigma_ray)-0.5*log(2*pi)-0.5*((Dhat-Dsource)/sigma_ray)^2,log1p(-V)+log(c))",
+    "c_per_m": 0.1,
+    "sigma_ray": "sigma_normal / max(abs(dot(unit_ray,unit_patch_normal)),0.25)",
+    "support": "prior-patch pixels only; MVS additionally requires finite positive depth, observation mask, finite v_mvs",
+    "missing_mvs": "prior term only",
+    "no_prior_patch": "no depth term",
+    "rendered_depth": "surf_depth"
+  },
+  "lambda_selection": {
+    "default": 0.0025,
+    "multipliers": [
+      0.3333333333333333,
+      1,
+      3
+    ],
+    "site": "B173nb_b10",
+    "prior": "ALS",
+    "iterations": 3000,
+    "variant": "lt_dyngt",
+    "control": "current nojudge",
+    "default_depth_to_RGB_gradient_below": 0.1,
+    "low_gradient_choice": "x3",
+    "PSNR_drop_above_dB": 1.0,
+    "PSNR_drop_choice": "x1/3",
+    "both_trigger": "STOP and ask",
+    "gradient_window": [
+      2901,
+      3000
+    ],
+    "GT_evaluation_used": false,
+    "selected_lambda": null,
+    "gradient_statistic": "median of 100 iteration-wise medians of per-Gaussian xyz L2 norm, all Gaussians including zeros; visible median supplementary only; depth includes lambda",
+    "undefined_rgb_median": "report ratio unavailable if RGB median is zero; compare depth_median < 0.1 * RGB_median directly",
+    "psnr_definition": "per-image PSNR from RGB MSE with explicit batch axis, then arithmetic mean of every training camera; same as stage-1 postprocessing",
+    "compatible_depth_definition": "|Dp-Dm| <= 3*sqrt(sp_ray^2+sm_ray^2); target=(Dp/sp_ray^2+Dm/sm_ray^2)/(1/sp_ray^2+1/sm_ray^2); absolute deviation normalized by sqrt(1/(1/sp_ray^2+1/sm_ray^2)); pooled median of compatible pixels; diagnostic only"
+  },
+  "scoring": {
+    "tau_m": {
+      "LoD2": 0.2,
+      "ALS": 0.1266
+    },
+    "min_cell_patches": 100,
+    "scored": "stage-1 in_eval; finite p_G; no missing-ALS or outside-UNCERT median fallback; MVS available for cells 0..3; cells 4/5 separate",
+    "unexplained": "abs(mvs_p)/sqrt(sigma_prior^2+sigma_mvs^2)>3",
+    "ray_start": "max(6,mvs_p+0.5,gt_p+0.5)",
+    "ray_end": "min(-6,mvs_p-0.5,gt_p-0.5)",
+    "surface": "first outer-to-inner mesh intersection along outward patch normal",
+    "missing_surface": "separate area, fails tolerance",
+    "sides": {
+      "prior": "abs(z)<=3*sigma_prior",
+      "mvs": "abs(z-mvs_p)<=3*sigma_mvs",
+      "both": "smaller standardized distance",
+      "neither": "other",
+      "absent": "no surface"
+    },
+    "change_threshold": "max(pooled existing variation,2.8*abs(stage1_seed0-stage1_seed1)/sqrt(2),300/N)",
+    "axes": "unchanged PHD-MAIN-AXES71-v2 methods",
+    "interpretation": "none",
+    "patch_source": "direct_stage1_v2/<unit>/evaluation.npz"
+  },
+  "figures": {
+    "sections": [
+      {
+        "name": "B173 날개",
+        "site": "B173nb_b10",
+        "priors": [
+          "LoD2",
+          "ALS"
+        ],
+        "start": [
+          146.68,
+          96.32
+        ],
+        "end": [
+          136.63,
+          99.34
+        ],
+        "half_width": 0.6
+      },
+      {
+        "name": "R1 계단 지붕과 틈",
+        "site": "R1rep_b10",
+        "priors": [
+          "LoD2"
+        ],
+        "start": [
+          7.24,
+          32.08
+        ],
+        "end": [
+          14.98,
+          18.08
+        ],
+        "half_width": 0.6
+      },
+      {
+        "name": "60042 높은 단 가장자리",
+        "site": "R1rep_b10",
+        "priors": [
+          "ALS"
+        ],
+        "start": [
+          -64.03,
+          40.64
+        ],
+        "end": [
+          -56.57,
+          37.76
+        ],
+        "half_width": 0.5
+      }
+    ],
+    "maps": "frozen per-unit evaluation XY bounds; same view and colors for all variants",
+    "render_camera": {
+      "file": "figure_camera_v1.json",
+      "sha256": "0f24e17db532e7829d61eb3d34a815178974cc98efdf9a48dfe11017c6334fca",
+      "image_name": "DJI_20241217091251_0148_D"
+    },
+    "dpi": 300,
+    "per_figure_json": true
+  },
+  "schedule": {
+    "first": [
+      "B173nb_b10/ALS/lt_fixgt",
+      "B173nb_b10/ALS/lt_dyngt",
+      "B173nb_b10/ALS/lt_dynsoft",
+      "B173nb_b10/ALS/lt_dynnow"
+    ],
+    "interim_before_remaining": true,
+    "remaining": 20,
+    "optional": 6,
+    "optional_requires_no_stop_in_first_24": true,
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "one_run_per_GPU": true,
+    "TSDF_serial": true
+  },
+  "postprocess": {
+    "voxel_m": 0.05,
+    "truncation_m": 0.25,
+    "depth_limit_m": 300,
+    "mesh_cleanup": false
+  },
+  "execution": {
+    "training_started": false,
+    "short_runs_completed": 0,
+    "full_runs_completed": 0
+  },
+  "correspondence_history": {
+    "current": {
+      "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+      "revision": "join_v2",
+      "saved_at": "2026-10-26T07:16:46.741897+00:00",
+      "reason": "explicit user reply replacing 5cm rule",
+      "nearest": "registered Euclidean 3D nearest, same prior",
+      "centre_max_m": 0.18,
+      "normal_height_max_m": 0.1,
+      "same_plane": "abs(delta dot unit_stage1_normal)<=0.10 AND abs(delta dot unit_vfile_normal)<=0.10",
+      "unknown_normal": "unmatched; never infer a normal",
+      "minimum_joined_fraction": 0.95,
+      "patch_denominator": "all stage-1 patches; evaluation-only denominator also reported",
+      "pixel_denominator": "all positive finite prior-depth pixels inside the frozen evaluation XY box",
+      "GT_used": false,
+      "scientific_verdict": null
+    },
+    "history": [
+      {
+        "rule": "same prior, nearest registered centre <=0.05m",
+        "state": "superseded by user reply",
+        "evidence": "checks/join_patches.json"
+      }
+    ],
+    "fallback": "nearest same-prior file values; v_prior_now even in oracle variants; excluded from scoring"
+  },
+  "direct_stage1": {
+    "revision": "direct_stage1_v2",
+    "rules_sha256": "836033b6ec5f7fe1c58ff905ffd0d6531cd5b9d438145c2baa88dbb4d2df0a59",
+    "gates_sha256": "a065ebd60affb42522d08bd69c98f79b26a06df81bfce47f5b2e449c64924f83",
+    "training_values_root": "/o/direct_stage1_v2",
+    "values": "UNCERT R1.5 mvs_a on exact stage-1 rows; no WIDEN association in training or scoring"
+  },
+  "amendments": [
+    {
+      "at": "2026-10-26T17:39:55.232805+09:00",
+      "source": "user 2026-10-26 17:00 rule reply",
+      "previous_config": "losstrain_v1.pre_direct.json",
+      "previous_sha256": "51061823dc32b841e40a75a8221bea4ce15719abcab0c44911aab2ccdadc6778",
+      "reason": "direct stage-1 values and scoring replace WIDEN nearest-patch transfer; new 95% area and 90% LoD2 gates"
+    },
+    {
+      "at": "2026-10-26T18:04:05.731432+09:00",
+      "previous_config": "losstrain_v1.pre_calibration.json",
+      "previous_sha256": "0919254183f0f836e5c4de9b9b437fc21b1e9405f1cfdd1996b0a95572921900",
+      "reason": "before first training: make all-view PSNR and record-only compatible-depth statistic explicit; no change to loss, thresholds or variants"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "status": "PASS",
+  "selected_lambda": 0.0025,
+  "low_gradient": false,
+  "psnr_drop_db": 0.7300108735784505,
+  "psnr_drop_above_1_db": false,
+  "rows": [
+    {
+      "run": "lt_cal_dyn_xthird",
+      "multiplier": 0.3333333333333333,
+      "training_psnr_db": 17.09966320357299,
+      "train_views": 203,
+      "rgb_gradient_median": 0.0,
+      "depth_gradient_median": 0.0,
+      "depth_to_rgb_ratio": null,
+      "gradient_iterations": 100,
+      "compatible_depth_median_sigma": 3.139418125152588,
+      "compatible_pixels": 5726665,
+      "gpu_peak_total_MiB": 6146.0,
+      "training_command_seconds": 382.9399842703715,
+      "iteration_mean_ms": 43.3276458123525,
+      "iteration_median_ms": 37.756351470947266,
+      "iteration_time_samples": 3000,
+      "attempt": 0,
+      "source": "/out/runs/B173nb_b10/lt_cal_dyn_xthird_ALS_s0/attempt_0",
+      "origin": "[이 발주에서 냄]"
+    },
+    {
+      "run": "lt_cal_dyn_x1",
+      "multiplier": 1.0,
+      "training_psnr_db": 17.014743062662962,
+      "train_views": 203,
+      "rgb_gradient_median": 0.0,
+      "depth_gradient_median": 0.0,
+      "depth_to_rgb_ratio": null,
+      "gradient_iterations": 100,
+      "compatible_depth_median_sigma": 2.0968990325927734,
+      "compatible_pixels": 5726665,
+      "gpu_peak_total_MiB": 6146.0,
+      "training_command_seconds": 342.0914287408814,
+      "iteration_mean_ms": 37.30806079419454,
+      "iteration_median_ms": 32.9157600402832,
+      "iteration_time_samples": 3000,
+      "attempt": 0,
+      "source": "/out/runs/B173nb_b10/lt_cal_dyn_x1_ALS_s0/attempt_0",
+      "origin": "[이 발주에서 냄]"
+    },
+    {
+      "run": "lt_cal_dyn_x3",
+      "multiplier": 3.0,
+      "training_psnr_db": 16.995498882725908,
+      "train_views": 203,
+      "rgb_gradient_median": 0.0,
+      "depth_gradient_median": 0.0,
+      "depth_to_rgb_ratio": null,
+      "gradient_iterations": 100,
+      "compatible_depth_median_sigma": 1.7652385234832764,
+      "compatible_pixels": 5726665,
+      "gpu_peak_total_MiB": 9958.0,
+      "training_command_seconds": 377.3215566193685,
+      "iteration_mean_ms": 44.50481846682231,
+      "iteration_median_ms": 38.72542381286621,
+      "iteration_time_samples": 3000,
+      "attempt": 0,
+      "source": "/out/runs/B173nb_b10/lt_cal_dyn_x3_ALS_s0/attempt_0",
+      "origin": "[이 발주에서 냄]"
+    },
+    {
+      "run": "lt_cal_current",
+      "multiplier": 1.0,
+      "training_psnr_db": 17.744753936241413,
+      "train_views": 203,
+      "rgb_gradient_median": 0.0,
+      "depth_gradient_median": 0.0,
+      "depth_to_rgb_ratio": null,
+      "gradient_iterations": 100,
+      "compatible_depth_median_sigma": 2.827171802520752,
+      "compatible_pixels": 5726665,
+      "gpu_peak_total_MiB": 8216.0,
+      "training_command_seconds": 362.3444940308109,
+      "iteration_mean_ms": 33.91225956439972,
+      "iteration_median_ms": 27.305472373962402,
+      "iteration_time_samples": 3000,
+      "attempt": 0,
+      "source": "/out/runs/B173nb_b10/lt_cal_current_ALS_s0/attempt_0",
+      "origin": "[이 발주에서 냄]"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/out/runs/B173nb_b10/lt_cal_dyn_xthird_ALS_s0/attempt_0",
+      "metrics_sha256": "b852ef2b7355ce78fa2196d7d36b90303aa2efc1e17797975cef18b9a7d35672",
+      "gradients_sha256": "8b2a8d6464e3a132b5680dee5fd6400f3d4b5987cecc02053e915ec7e3160a91",
+      "receipt_sha256": "40a41a7d7c2fb96c3f011a1d8bff77e70fdf8eba1eb383cf66fb0b035b7fcfc9"
+    },
+    {
+      "path": "/out/runs/B173nb_b10/lt_cal_dyn_x1_ALS_s0/attempt_0",
+      "metrics_sha256": "c74bbb5c8743ff6a28c4ffeaaf22d5309567c2bc4f6c40d5874b18b2f022d849",
+      "gradients_sha256": "13fcc2b5d61c2558f143907f4bc639c35c2849b31cc58555c8e571b49b5ecb40",
+      "receipt_sha256": "9460ebcbe37d6685def81dad9ff123cb311a338191e72319825f8ed916bc7259"
+    },
+    {
+      "path": "/out/runs/B173nb_b10/lt_cal_dyn_x3_ALS_s0/attempt_0",
+      "metrics_sha256": "ce52a8b3d78687115052b400177c65bbaeac13ec0d74f98e8720f4adf0f79941",
+      "gradients_sha256": "50c87d783958f624fed4e87e7fd85fb5d95046831ce31eafbd046aa5e767db7d",
+      "receipt_sha256": "f118bd22bd953f7bcb0a039f46cde08b02e47b312b494fa5cacb040a306c2a5d"
+    },
+    {
+      "path": "/out/runs/B173nb_b10/lt_cal_current_ALS_s0/attempt_0",
+      "metrics_sha256": "a1f6a7168455d4420b59f66a2646e01091b8a9b2da9858fc29a407d878c0a9c9",
+      "gradients_sha256": "226d9226fa24643a44d6eeba39a71f19bc74fbde61435e3ce49b80714974e6ca",
+      "receipt_sha256": "0bc98b59d8d86276cc6b84f12d9258ee71afb130ba2c6356deaa864859eff2ad"
+    }
+  ],
+  "GT_geometry_used": false,
+  "evaluation_metrics_used": false,
+  "scientific_verdict": null
+}

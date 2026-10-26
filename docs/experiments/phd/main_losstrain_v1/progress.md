@@ -1,5 +1,5 @@
 # PHD-MAIN-LOSSTRAIN-v1
 
-2026-10-26T07:22:53.129920+00:00: STOPPED. 18 cm / 10 cm 연결 조건에서도 세 단위 미달. 학습 0회. scientific_verdict: null.
+2026-10-26T18:33:51.091361+09:00: REOPENED. Direct stage-1 area coverage and LoD2 agreement PASS.
 
-기록: 준비보고_v1.md, tables/patch_join_v2.json, tables/nearest_distance_v2.json, provenance/build_r17.json.
+Current equivalence 6/6; actual fixed/dynamic masks 6/6. Calibration 4/4; full training 0/24; optional 0/6. Selected lambda: 0.0025. scientific_verdict: null.

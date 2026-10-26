@@ -1,9 +1,9 @@
 {
   "task_id": "PHD-MAIN-LOSSTRAIN-v1",
-  "saved_at": "2026-10-26T07:18:20.832266+00:00",
-  "repo_commit": "254fbd634933d2cb4ffbccc21965706af17399d5",
+  "saved_at": "2026-10-26T18:29:42.900947+09:00",
+  "repo_commit": "54931008afa8d1cdc034ab5ff0123aa3e9d45bd6",
   "branch": "exp/main-experiment",
-  "status": "PREPARATION_BLOCKED_ON_PATCH_JOIN",
+  "status": "PREPARATION_PASS",
   "scientific_verdict": null,
   "units": [
     {
@@ -117,33 +117,11 @@
       3000
     ],
     "GT_evaluation_used": false,
-    "selected_lambda": null
-  },
-  "join": {
-    "current": {
-      "task_id": "PHD-MAIN-LOSSTRAIN-v1",
-      "revision": "join_v2",
-      "saved_at": "2026-10-26T07:16:46.741897+00:00",
-      "reason": "explicit user reply replacing 5cm rule",
-      "nearest": "registered Euclidean 3D nearest, same prior",
-      "centre_max_m": 0.18,
-      "normal_height_max_m": 0.1,
-      "same_plane": "abs(delta dot unit_stage1_normal)<=0.10 AND abs(delta dot unit_vfile_normal)<=0.10",
-      "unknown_normal": "unmatched; never infer a normal",
-      "minimum_joined_fraction": 0.95,
-      "patch_denominator": "all stage-1 patches; evaluation-only denominator also reported",
-      "pixel_denominator": "all positive finite prior-depth pixels inside the frozen evaluation XY box",
-      "GT_used": false,
-      "scientific_verdict": null
-    },
-    "history": [
-      {
-        "rule": "same prior, nearest registered centre <=0.05m",
-        "state": "superseded by user reply",
-        "evidence": "checks/join_patches.json"
-      }
-    ],
-    "fallback": "nearest same-prior file values; v_prior_now even in oracle variants; excluded from scoring"
+    "selected_lambda": 0.0025,
+    "gradient_statistic": "median of 100 iteration-wise medians of per-Gaussian xyz L2 norm, all Gaussians including zeros; visible median supplementary only; depth includes lambda",
+    "undefined_rgb_median": "report ratio unavailable if RGB median is zero; compare depth_median < 0.1 * RGB_median directly",
+    "psnr_definition": "per-image PSNR from RGB MSE with explicit batch axis, then arithmetic mean of every training camera; same as stage-1 postprocessing",
+    "compatible_depth_definition": "|Dp-Dm| <= 3*sqrt(sp_ray^2+sm_ray^2); target=(Dp/sp_ray^2+Dm/sm_ray^2)/(1/sp_ray^2+1/sm_ray^2); absolute deviation normalized by sqrt(1/(1/sp_ray^2+1/sm_ray^2)); pooled median of compatible pixels; diagnostic only"
   },
   "scoring": {
     "tau_m": {
@@ -151,7 +129,7 @@
       "ALS": 0.1266
     },
     "min_cell_patches": 100,
-    "scored": "finite MVS, both positive finite sigmas, finite gt_p, cell 0..3; joined patches in frozen evaluation range",
+    "scored": "stage-1 in_eval; finite p_G; no missing-ALS or outside-UNCERT median fallback; MVS available for cells 0..3; cells 4/5 separate",
     "unexplained": "abs(mvs_p)/sqrt(sigma_prior^2+sigma_mvs^2)>3",
     "ray_start": "max(6,mvs_p+0.5,gt_p+0.5)",
     "ray_end": "min(-6,mvs_p-0.5,gt_p-0.5)",
@@ -166,7 +144,8 @@
     },
     "change_threshold": "max(pooled existing variation,2.8*abs(stage1_seed0-stage1_seed1)/sqrt(2),300/N)",
     "axes": "unchanged PHD-MAIN-AXES71-v2 methods",
-    "interpretation": "none"
+    "interpretation": "none",
+    "patch_source": "direct_stage1_v2/<unit>/evaluation.npz"
   },
   "figures": {
     "sections": [
@@ -221,7 +200,11 @@
       }
     ],
     "maps": "frozen per-unit evaluation XY bounds; same view and colors for all variants",
-    "render_camera": "PENDING exact camera freeze before training",
+    "render_camera": {
+      "file": "figure_camera_v1.json",
+      "sha256": "0f24e17db532e7829d61eb3d34a815178974cc98efdf9a48dfe11017c6334fca",
+      "image_name": "DJI_20241217091251_0148_D"
+    },
     "dpi": 300,
     "per_figure_json": true
   },
@@ -250,8 +233,63 @@
     "mesh_cleanup": false
   },
   "execution": {
-    "training_started": false,
-    "short_runs_completed": 0,
+    "training_started": true,
+    "short_runs_completed": 4,
     "full_runs_completed": 0
-  }
+  },
+  "correspondence_history": {
+    "current": {
+      "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+      "revision": "join_v2",
+      "saved_at": "2026-10-26T07:16:46.741897+00:00",
+      "reason": "explicit user reply replacing 5cm rule",
+      "nearest": "registered Euclidean 3D nearest, same prior",
+      "centre_max_m": 0.18,
+      "normal_height_max_m": 0.1,
+      "same_plane": "abs(delta dot unit_stage1_normal)<=0.10 AND abs(delta dot unit_vfile_normal)<=0.10",
+      "unknown_normal": "unmatched; never infer a normal",
+      "minimum_joined_fraction": 0.95,
+      "patch_denominator": "all stage-1 patches; evaluation-only denominator also reported",
+      "pixel_denominator": "all positive finite prior-depth pixels inside the frozen evaluation XY box",
+      "GT_used": false,
+      "scientific_verdict": null
+    },
+    "history": [
+      {
+        "rule": "same prior, nearest registered centre <=0.05m",
+        "state": "superseded by user reply",
+        "evidence": "checks/join_patches.json"
+      }
+    ],
+    "fallback": "nearest same-prior file values; v_prior_now even in oracle variants; excluded from scoring"
+  },
+  "direct_stage1": {
+    "revision": "direct_stage1_v2",
+    "rules_sha256": "836033b6ec5f7fe1c58ff905ffd0d6531cd5b9d438145c2baa88dbb4d2df0a59",
+    "gates_sha256": "a065ebd60affb42522d08bd69c98f79b26a06df81bfce47f5b2e449c64924f83",
+    "training_values_root": "/o/direct_stage1_v2",
+    "values": "UNCERT R1.5 mvs_a on exact stage-1 rows; no WIDEN association in training or scoring"
+  },
+  "amendments": [
+    {
+      "at": "2026-10-26T17:39:55.232805+09:00",
+      "source": "user 2026-10-26 17:00 rule reply",
+      "previous_config": "losstrain_v1.pre_direct.json",
+      "previous_sha256": "51061823dc32b841e40a75a8221bea4ce15719abcab0c44911aab2ccdadc6778",
+      "reason": "direct stage-1 values and scoring replace WIDEN nearest-patch transfer; new 95% area and 90% LoD2 gates"
+    },
+    {
+      "at": "2026-10-26T18:04:05.731432+09:00",
+      "previous_config": "losstrain_v1.pre_calibration.json",
+      "previous_sha256": "0919254183f0f836e5c4de9b9b437fc21b1e9405f1cfdd1996b0a95572921900",
+      "reason": "before first training: make all-view PSNR and record-only compatible-depth statistic explicit; no change to loss, thresholds or variants"
+    },
+    {
+      "at": "2026-10-26T18:29:42.900947+09:00",
+      "previous_config": "losstrain_v1.calibration_frozen.json",
+      "previous_sha256": "d8b5dba9f44ec7f53cb8f21c82a60d5ed0ad015e57f32dd2e7d4c046c24b2323",
+      "reason": "select shared lambda by the frozen rule after four short trainings",
+      "selection_sha256": "03a7edffe8b16ce462f2efda827b05cc6159d516ae0204a25f5a9b99a9a6e689"
+    }
+  ]
 }

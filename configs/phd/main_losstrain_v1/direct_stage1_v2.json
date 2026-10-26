@@ -1,0 +1,130 @@
+{
+  "revision": "direct_stage1_v2",
+  "authority": "user supplied 2026-10-26 17:00 amendment, sections 5, 6.4, C.5",
+  "normal_source": "retain UNCERT normals; zero-tangent loc_extra patches read the exact owning prior surface normal from the stage-1 source table; no GT or nearest-surface substitution",
+  "source": "PHD-MAIN-UNCERT-v1/patch_values; R1.5; mvs_a",
+  "coordinate": "EPSG:25832 minus [690953, 5336071, 604] m; registered stage-1 patch centres",
+  "floor_m": 0.0275,
+  "sigma_lod2_m": {
+    "1000": 0.166113,
+    "2100": 0.098442,
+    "3100": 0.222725,
+    "3200": 0.113508,
+    "3900": 0.238359,
+    "other": 0.110188,
+    "wall": 0.143818
+  },
+  "mvs_u_edges_cm": [
+    3,
+    5,
+    10,
+    20,
+    40
+  ],
+  "v_mvs": {
+    "LoD2": [
+      0.98,
+      0.921922,
+      0.889803,
+      0.900378,
+      0.956689,
+      0.974928
+    ],
+    "ALS": [
+      0.98,
+      0.974468,
+      0.952001,
+      0.908804,
+      0.878294,
+      0.866188
+    ]
+  },
+  "v_prior_now": {
+    "LoD2": [
+      0.84978,
+      0.918237,
+      0.852455,
+      0.955338,
+      0.918365,
+      0.979117,
+      0.915068
+    ],
+    "ALS": [
+      0.98,
+      0.975461,
+      0.72689,
+      0.98,
+      0.98,
+      0.564979,
+      0.98,
+      0.978882,
+      0.599285
+    ]
+  },
+  "edge": {
+    "cell_m": 0.5,
+    "origin_xy_m": [
+      -170,
+      -237
+    ],
+    "height_jump_m": 1.0,
+    "neighbourhood": 3,
+    "closing_iterations": 1,
+    "subtract_m": 0.25,
+    "roof_max_angle_degrees": 45,
+    "empty_grid_padding_cells": 3,
+    "negative_distance": "retain -0.25 m at edge cells, as specified"
+  },
+  "edge_bins_m": [
+    0.5,
+    1.5
+  ],
+  "als_u_bins_m": [
+    0.01,
+    0.03
+  ],
+  "prior_tau_m": {
+    "LoD2": 0.2,
+    "ALS": 0.1266
+  },
+  "oracle": {
+    "right_cells": [
+      0,
+      2,
+      4
+    ],
+    "wrong_cells": [
+      1,
+      3,
+      5
+    ],
+    "gt": [
+      0.999,
+      0.001
+    ],
+    "soft": [
+      0.98,
+      0.85
+    ],
+    "cell6": "use now; excluded from scoring"
+  },
+  "missing": {
+    "mvs": "no MVS term when p_M or u_M missing, or u_M <= 0",
+    "als_prior": "independent medians of sigma_prior and v_prior_now from known u_prior in same unit; exclude scoring",
+    "outside_uncert": "LoD2 prior from geometry, MVS sigma/V unit medians; ALS all four unit medians; oracle uses now; exclude scoring",
+    "no_pixel_patch": "no depth term"
+  },
+  "gates": {
+    "coverage_min_area_fraction": 0.95,
+    "coverage_denominator": "stage-1 in_eval area",
+    "coverage_numerator": "prior sigma and stratum from rule without missing-ALS/outside-UNCERT median fallback",
+    "lod2_max_nearest_m": 0.01,
+    "lod2_sigma_tolerance_m": 0.0001,
+    "lod2_validity_tolerance": 0.0001,
+    "lod2_min_pair_agreement": 0.9,
+    "lod2_denominator": "whole-scene nearest pairs within 1 cm; each of three units",
+    "mvs": "distribution only; not a stop gate"
+  },
+  "legacy_connections": "5 cm and 18 cm records remain historical; unused for training or scoring",
+  "scientific_verdict": null
+}

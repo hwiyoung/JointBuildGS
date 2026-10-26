@@ -1,0 +1,82 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "order_section": "6.8",
+  "training_gate": false,
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "tile": "6911_53361",
+  "region": "LoD2 prior wing faces 33/38, XY 0.25 m grid dilated by one cell, intersect named tile raw core; no GT/outcome labels",
+  "tile_core_local_xy": [
+    147.0,
+    29.0,
+    247.0,
+    129.0
+  ],
+  "stage1_shift_m": [
+    -0.05619434746608162,
+    0.06288884357338685,
+    0.0
+  ],
+  "widen_shift_m": [
+    0.0,
+    0.0,
+    -3.7582159107849065
+  ],
+  "shift_difference_m": [
+    0.05619434746608162,
+    -0.06288884357338685,
+    -3.7582159107849065
+  ],
+  "stage1_section_patches": 2818,
+  "raw_nearest_distance_m": {
+    "n": 2818,
+    "min": 0.0,
+    "median": 0.10534540087464403,
+    "p95": 0.10963582440068911,
+    "max": 0.22178312531870215
+  },
+  "registered_nearest_distance_m": {
+    "n": 2818,
+    "min": 3.454977604928626,
+    "median": 3.5277695351343663,
+    "p95": 3.6481358469835548,
+    "max": 3.7584032888085552
+  },
+  "raw_nearest_within_18cm": 2814,
+  "paired_height_difference_m": {
+    "n": 2814,
+    "min": -3.797588657939915,
+    "median": -3.738851709378599,
+    "p95": -3.7223030754700552,
+    "max": -3.706378391623236
+  },
+  "height_difference_after_removing_recorded_shift_m": {
+    "n": 2814,
+    "min": -0.039372747155008714,
+    "median": 0.01936420140630757,
+    "p95": 0.035912835314851406,
+    "max": 0.05183751916167045
+  },
+  "source": [
+    {
+      "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/store_ALS.npz",
+      "sha256": "b7a89bfe60c66c144dc24972760a07bbb54b6e534c1da9782c65e0c5597c96af"
+    },
+    {
+      "path": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__ALS__R1.5.npz",
+      "sha256": "1111fab53c7f5c1783e1a4f26b220652a421f28676f6442b3b88d5b62a50e85d"
+    },
+    {
+      "path": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__ALS__R1.5.json",
+      "sha256": "009278b2eb8d6d667a7eefbf637c1e0c97083e5335e466f837924617297a8e46"
+    },
+    {
+      "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/store_LoD2.npz",
+      "sha256": "dbb9f80a15f16865c53fec18c61dabcc3d2c43e25781f77ace35e3e6e8c8028d"
+    }
+  ],
+  "GT_used": false,
+  "conclusion": "The public tile records a -3.7582159107849065 m vertical registration while this stage-1 scene records zero vertical shift. Raw-centre and shifted-centre distances quantify this existing frame difference; neither surface is judged correct here.",
+  "limitation": "Raw nearest centres are geometry diagnostics, not new training correspondence or validation of physical truth.",
+  "scientific_verdict": null
+}

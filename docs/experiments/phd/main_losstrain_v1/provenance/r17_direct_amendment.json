@@ -1,0 +1,17 @@
+{
+  "before": {
+    "jbgs_judgment.py": "a8992d12f9949509307a3cb43fbf28ec2c95ce4678c9463f666ecec1518f5bc4",
+    "train.py": "bc8903ae1d94f2c102436f332558fb60cdd44cd0ac63c7669d9e7421db9c9795"
+  },
+  "after": {
+    "jbgs_judgment.py": "51bb1498739f5f6f953fff98bc1b8470a30690ad2d43a38aaf9a12f1d11a9ff8",
+    "train.py": "c4f704e083769aace0cc12b764774b315b8f791d5bb6b9f85ab36acfacc8238a"
+  },
+  "changed": [
+    "jbgs_judgment.py",
+    "train.py"
+  ],
+  "monitor_default": 0,
+  "runtime_change": "new loss uses direct-stage1 values; opt-in monitoring only reads health/gradients and stops on authorized failure conditions",
+  "scientific_verdict": null
+}

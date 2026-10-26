@@ -332,6 +332,9 @@ def register_args(parser):
     g.add_argument("--jbgs_vfile_dir", default="")
     g.add_argument("--jbgs_vfile_vprior", choices=["now", "gt", "soft"], default="now")
     g.add_argument("--jbgs_depth_lambda", type=float, default=0.0025)
+    g.add_argument("--jbgs_lt_monitor", type=int, choices=[0, 1], default=0)
+    g.add_argument("--jbgs_lt_gradient_from", type=int, default=0)
+    g.add_argument("--jbgs_lt_gradient_to", type=int, default=0)
 
 
 def apply_seed(args):
@@ -2164,8 +2167,8 @@ def lt_initialize(j):
         raise ValueError("LOSSTRAIN must retain the nojudge ablation/fix defaults")
     root = Path(a.jbgs_vfile_dir)
     manifest = json.loads((root / "manifest.json").read_text())
-    if manifest.get("patch_join_gate") != "PASS" or manifest.get("pixel_join_gate") != "PASS":
-        raise RuntimeError("LOSSTRAIN_STOP: patch/pixel connection below the frozen gate")
+    if manifest.get("revision") != "direct_stage1_v2" or manifest.get("coverage_gate") != "PASS" or manifest.get("all_units_rules_gate") != "PASS":
+        raise RuntimeError("LOSSTRAIN_STOP: direct patch rules or LoD2 check did not pass")
     values = root / "values.npz"
     digest = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
     if digest(values) != manifest["values_sha256"] or digest(a.jbgs_prop_store) != manifest["store_sha256"]:
@@ -2173,9 +2176,12 @@ def lt_initialize(j):
     with np.load(values, allow_pickle=False) as z, np.load(a.jbgs_prop_store, allow_pickle=False) as st:
         if not np.array_equal(z["centre"], st["loc_center"]):
             raise RuntimeError("LOSSTRAIN_STOP: stage-1 patch order changed")
-        fallback = ~z["joined"].astype(bool)
+        fallback = z["fallback"].astype(bool)
         vp = z["v_prior_" + a.jbgs_vfile_vprior].copy()
-        vp[fallback] = z["v_prior_now"][fallback]
+        # Missing ALS uncertainty uses median sigma/now; its oracle V is still
+        # determined by available GT. Only outside-UNCERT rows force now.
+        outside = z["outside_uncert"].astype(bool)
+        vp[outside] = z["v_prior_now"][outside]
         arrays = {k: z[k] for k in ("sigma_prior", "sigma_mvs", "v_mvs", "normal")}
         arrays["v_prior"] = vp
         arrays["fallback"] = fallback
@@ -2238,3 +2244,46 @@ def lt_losses(j, cam_name, render_pkg):
                  prior_beyond=0, fallback_n=int(table["fallback"][ids].sum()))
     j.last_stats = stats
     return mvs, prior, stats
+
+
+"""Opt-in LOSSTRAIN observations; no optimizer, protection or density decisions."""
+
+def lt_observe(j, iteration, gaussians, total, rgb, depth, package, camera):
+    """Called before backward; record-only autograd calls preserve retained grads."""
+    if not j.args.jbgs_lt_monitor:
+        return
+    def write(name, row):
+        with (j.mon / name).open('a') as f:
+            f.write(json.dumps(row, allow_nan=False) + '\n')
+    prior = gaussians.origin == ORIGIN_PRIOR
+    opacity = gaussians.get_opacity.detach().reshape(-1)
+    med = float(torch.quantile(opacity[prior], .5)) if bool(prior.any()) else None
+    finite = bool(torch.isfinite(total))
+    stop = 'nonfinite loss' if not finite else ('prior opacity median < 0.05' if med is not None and med < .05 else None)
+    if iteration == 1 or iteration % 100 == 0 or stop:
+        write('losstrain_health.jsonl', dict(iteration=iteration, camera=camera, gaussians=len(opacity),
+            prior_gaussians=int(prior.sum()), prior_opacity_median=med,
+            loss_total=float(total.detach()) if finite else None, stop=stop, scientific_verdict=None))
+    if stop:
+        raise RuntimeError('LOSSTRAIN_STOP: ' + stop)
+    lo, hi = j.args.jbgs_lt_gradient_from, j.args.jbgs_lt_gradient_to
+    if not (lo > 0 and lo <= iteration <= hi):
+        return
+    vsp = package['viewspace_points']
+    retained = vsp.grad.clone() if vsp.grad is not None else None
+    values = {}
+    try:
+        for name, loss in [('rgb', rgb), ('depth', depth)]:
+            g, = torch.autograd.grad(loss, gaussians._xyz, retain_graph=True, allow_unused=True)
+            norm = torch.zeros(len(opacity), device=opacity.device) if g is None else g.detach().norm(dim=1)
+            if not bool(torch.isfinite(norm).all()):
+                raise RuntimeError('LOSSTRAIN_STOP: nonfinite diagnostic centre gradient')
+            visible = package['visibility_filter'].bool()
+            values[name] = dict(all_median=float(torch.quantile(norm, .5)), gaussians=len(norm),
+                visible_median=float(torch.quantile(norm[visible], .5)) if bool(visible.any()) else None,
+                visible_gaussians=int(visible.sum()), positive_gaussians=int((norm > 0).sum()))
+    finally:
+        vsp.grad = retained
+    write('losstrain_gradients.jsonl', dict(iteration=iteration, camera=camera, values=values,
+        definition='Euclidean norm per Gaussian centre, including zeros; each iteration median; depth includes lambda; visible median supplementary',
+        scientific_verdict=None))

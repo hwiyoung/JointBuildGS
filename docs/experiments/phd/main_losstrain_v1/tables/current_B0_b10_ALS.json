@@ -1,0 +1,6127 @@
+{
+  "site": "B0_b10",
+  "prior": "ALS",
+  "status": "PASS",
+  "initial_maps_equal": true,
+  "arrays": [
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "xyz",
+      "shape": [
+        90956,
+        3
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "origin",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "seat",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "surface",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "location",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "state",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "judgment",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "unit_judgment",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "E_first",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "n_seeing_first",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "E_centre_prior_depth",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "n_seeing_centre",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "category",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "category_codes",
+      "shape": [
+        5
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "planted",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "reason",
+      "shape": [
+        90956
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "face_normal",
+      "shape": [
+        90956,
+        3
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "normal_after_orientation",
+      "shape": [
+        90956,
+        3
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "face_normal_file",
+      "shape": [
+        90956,
+        3
+      ],
+      "equal": true
+    },
+    {
+      "file": "model/monitor/init_points.npz",
+      "key": "face_normal_cell",
+      "shape": [
+        90956,
+        3
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "lock",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "dens",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "reset_ex",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "prune_cand",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "prior",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "conflict",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "init_id",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "E",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "g_state",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "g_loc",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "g_Jl",
+      "shape": [
+        2303580
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "views",
+      "shape": [
+        243
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "grad_abs_sum",
+      "shape": [
+        243
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "mvs_loss",
+      "shape": [
+        243
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "prior_loss",
+      "shape": [
+        243
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084243_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084243_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084243_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091129_0107_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091129_0107_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091129_0107_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101329_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101329_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101329_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094953_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094953_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094953_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091121_0103_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091121_0103_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091121_0103_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103619_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103619_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103619_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103115_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103115_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103115_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103113_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103113_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103113_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091055_0090_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091055_0090_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091055_0090_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101144_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101144_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101144_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091255_0150_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091255_0150_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091255_0150_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094927_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094927_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094927_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095139_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095139_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095139_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103101_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103101_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103101_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095125_0069_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095125_0069_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095125_0069_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091125_0105_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091125_0105_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091125_0105_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094108_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094108_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094108_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091107_0096_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091107_0096_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091107_0096_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101357_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101357_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101357_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101311_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101311_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101311_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101303_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101303_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101303_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091113_0099_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091113_0099_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091113_0099_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095513_0039_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095513_0039_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095513_0039_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103107_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103107_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103107_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095051_0052_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095051_0052_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095051_0052_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095455_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095455_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095455_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095141_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095141_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095141_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091057_0091_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091057_0091_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091057_0091_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095419_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095419_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095419_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095903_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095903_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095903_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101351_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101351_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101351_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103121_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103121_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103121_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095457_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095457_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095457_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094104_0057_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094104_0057_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094104_0057_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095613_0069_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095613_0069_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095613_0069_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101309_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101309_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101309_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100040_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100040_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100040_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095549_0057_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095549_0057_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095549_0057_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091257_0151_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091257_0151_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091257_0151_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094012_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094012_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094012_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084433_0060_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084433_0060_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084433_0060_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095553_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095553_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095553_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101453_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101453_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101453_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084541_0094_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084541_0094_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084541_0094_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103041_0046_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103041_0046_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103041_0046_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101337_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101337_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101337_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103059_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103059_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103059_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217102957_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217102957_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217102957_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091109_0097_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091109_0097_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091109_0097_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084253_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084253_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084253_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100114_0043_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100114_0043_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100114_0043_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101138_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101138_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101138_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084539_0093_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084539_0093_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084539_0093_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091039_0082_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091039_0082_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091039_0082_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101148_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101148_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101148_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101339_0022_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101339_0022_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101339_0022_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101554_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101554_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101554_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100329_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100329_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100329_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084447_0067_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084447_0067_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084447_0067_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101323_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101323_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101323_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101321_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101321_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101321_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101136_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101136_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101136_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101331_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101331_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101331_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103651_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103651_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103651_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095143_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095143_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095143_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101128_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101128_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101128_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095541_0053_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095541_0053_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095541_0053_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095145_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095145_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095145_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084503_0075_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084503_0075_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084503_0075_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101122_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101122_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101122_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103029_0040_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103029_0040_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103029_0040_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103637_0088_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103637_0088_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103637_0088_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095635_0080_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095635_0080_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095635_0080_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095905_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095905_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095905_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084249_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084249_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084249_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095451_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095451_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095451_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103001_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103001_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103001_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084304_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084304_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084304_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091123_0104_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091123_0104_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091123_0104_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103625_0082_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103625_0082_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103625_0082_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103127_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103127_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103127_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095055_0054_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095055_0054_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095055_0054_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095511_0038_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095511_0038_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095511_0038_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103623_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103623_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103623_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101538_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101538_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101538_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101534_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101534_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101534_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100112_0042_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100112_0042_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100112_0042_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095053_0053_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095053_0053_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095053_0053_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101305_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101305_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101305_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094106_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094106_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094106_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101126_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101126_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101126_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101134_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101134_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101134_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084251_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084251_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084251_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103023_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103023_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103023_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101546_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101546_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101546_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103021_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103021_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103021_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084431_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084431_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084431_0059_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084256_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084256_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084256_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091131_0108_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091131_0108_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091131_0108_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217102535_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217102535_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217102535_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084453_0070_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084453_0070_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084453_0070_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101110_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101110_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101110_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084509_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084509_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084509_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217102537_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217102537_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217102537_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095547_0056_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095547_0056_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095547_0056_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091043_0084_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091043_0084_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091043_0084_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095127_0070_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095127_0070_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095127_0070_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084245_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084245_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084245_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101152_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101152_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101152_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103105_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103105_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103105_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095509_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095509_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095509_0037_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091105_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091105_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091105_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103621_0080_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103621_0080_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103621_0080_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094947_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094947_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094947_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101341_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101341_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101341_0023_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084437_0062_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084437_0062_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084437_0062_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094959_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094959_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094959_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091059_0092_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091059_0092_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091059_0092_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103631_0085_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103631_0085_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103631_0085_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091111_0098_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091111_0098_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091111_0098_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095427_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095427_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095427_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095551_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095551_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095551_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095057_0055_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095057_0055_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095057_0055_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095015_0034_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095015_0034_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095015_0034_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103003_0027_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103003_0027_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103003_0027_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217093911_0029_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217093911_0029_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217093911_0029_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091253_0149_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091253_0149_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091253_0149_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100038_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100038_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100038_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103635_0087_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103635_0087_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103635_0087_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103123_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103123_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103123_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091300_0152_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091300_0152_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091300_0152_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094925_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094925_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094925_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095421_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095421_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095421_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101315_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101315_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101315_0010_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084300_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084300_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084300_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091053_0089_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091053_0089_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091053_0089_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091041_0083_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091041_0083_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091041_0083_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084455_0071_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084455_0071_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084455_0071_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084443_0065_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084443_0065_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084443_0065_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095631_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095631_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095631_0078_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101540_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101540_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101540_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084258_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084258_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084258_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101118_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101118_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101118_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103039_0045_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103039_0045_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103039_0045_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091115_0100_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091115_0100_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091115_0100_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101353_0029_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101353_0029_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101353_0029_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101327_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101327_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101327_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101313_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101313_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101313_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103641_0090_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103641_0090_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103641_0090_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101319_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101319_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101319_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103639_0089_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103639_0089_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103639_0089_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094935_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094935_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094935_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101132_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101132_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101132_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103103_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103103_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103103_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103035_0043_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103035_0043_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103035_0043_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101552_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101552_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101552_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100331_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100331_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100331_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101343_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101343_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101343_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101536_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101536_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101536_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084543_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084543_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084543_0095_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094945_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094945_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094945_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101550_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101550_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101550_0012_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103615_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103615_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103615_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084505_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084505_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084505_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095827_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095827_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095827_0018_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103627_0083_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103627_0083_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103627_0083_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095013_0033_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095013_0033_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095013_0033_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084449_0068_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084449_0068_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084449_0068_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101530_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101530_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101530_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095545_0055_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095545_0055_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095545_0055_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100333_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100333_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100333_0021_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091049_0087_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091049_0087_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091049_0087_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217093905_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217093905_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217093905_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091251_0148_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091251_0148_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091251_0148_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101120_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101120_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101120_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091117_0101_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091117_0101_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091117_0101_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084441_0064_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084441_0064_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084441_0064_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095017_0035_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095017_0035_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095017_0035_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217093907_0027_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217093907_0027_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217093907_0027_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095039_0046_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095039_0046_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095039_0046_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095901_0035_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095901_0035_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095901_0035_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101556_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101556_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101556_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084241_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084241_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084241_0004_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101259_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101259_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101259_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101325_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101325_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101325_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101347_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101347_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101347_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095429_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095429_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095429_0017_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101355_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101355_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101355_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084457_0072_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084457_0072_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084457_0072_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084247_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084247_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084247_0007_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100339_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100339_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100339_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084439_0063_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084439_0063_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084439_0063_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103629_0084_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103629_0084_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103629_0084_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100056_0034_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100056_0034_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100056_0034_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095543_0054_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095543_0054_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095543_0054_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103613_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103613_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103613_0076_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101108_0003_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101108_0003_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101108_0003_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091127_0106_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091127_0106_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091127_0106_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101307_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101307_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101307_0006_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101146_0022_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101146_0022_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101146_0022_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095011_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095011_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095011_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095523_0044_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095523_0044_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095523_0044_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095103_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095103_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095103_0058_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103027_0039_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103027_0039_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103027_0039_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101112_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101112_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101112_0005_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095629_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095629_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095629_0077_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095029_0041_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095029_0041_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095029_0041_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101335_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101335_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101335_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084445_0066_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084445_0066_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084445_0066_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101359_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101359_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101359_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084501_0074_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084501_0074_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084501_0074_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095009_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095009_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095009_0031_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091051_0088_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091051_0088_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091051_0088_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101142_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101142_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101142_0020_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103005_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103005_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103005_0028_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101345_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101345_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101345_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100319_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100319_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100319_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094010_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094010_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094010_0030_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217102959_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217102959_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217102959_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101150_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101150_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101150_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084459_0073_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084459_0073_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084459_0073_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101542_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101542_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101542_0008_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103119_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103119_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103119_0016_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094933_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094933_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094933_0013_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091047_0086_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091047_0086_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091047_0086_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095907_0038_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095907_0038_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095907_0038_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217091247_0146_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217091247_0146_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217091247_0146_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101130_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101130_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101130_0014_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095123_0068_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095123_0068_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095123_0068_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095633_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095633_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095633_0079_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094957_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094957_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094957_0025_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103033_0042_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103033_0042_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103033_0042_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217102533_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217102533_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217102533_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095447_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095447_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095447_0026_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095637_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095637_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095637_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217100036_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217100036_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217100036_0024_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217094014_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217094014_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217094014_0032_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217084302_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217084302_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217084302_0015_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095507_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095507_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095507_0036_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103125_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103125_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103125_0019_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217101544_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217101544_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217101544_0009_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217095149_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217095149_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217095149_0081_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gw_DJI_20241217103051_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "gthi_DJI_20241217103051_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    },
+    {
+      "file": "probe/probe.npz",
+      "key": "on_DJI_20241217103051_0002_D",
+      "shape": [
+        94848
+      ],
+      "equal": true
+    }
+  ],
+  "optimizer_steps": 0,
+  "scientific_verdict": null
+}

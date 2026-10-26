@@ -16,6 +16,7 @@ docker run --rm --name "jbgs-lt-${tag,,}" --network none --user "$(id -u):$(id -
   -v "$PH:/ph:ro" -v "$OUT:/out" -v "$REPO:/repo:ro" \
   -v "$REPO/configs/phd/main_losstrain_v1:/config" \
   -v "$REPO/docs/experiments/phd/main_losstrain_v1:/docs" \
+  -v /usr/share/fonts/opentype/noto:/fonts:ro \
   -v /home/innopam/.codex/attachments/67413ea0-c89a-42c4-bed6-4c9006b802e5:/attachments:ro \
   -w /repo/scripts/phd/main_losstrain_v1 --entrypoint python jointbuildgs:dev "$@" > "$log" 2>&1
 rc=$?
