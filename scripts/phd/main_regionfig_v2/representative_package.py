@@ -1,7 +1,12 @@
 """One new ZIP: byte-preserve the prior handover and add this presentation revision."""
 from rfcore import *
-from package import digest_stream
 import zipfile,hashlib,shutil,os
+
+def digest_stream(stream):
+    digest=hashlib.sha256()
+    for chunk in iter(lambda:stream.read(1<<20),b''):
+        digest.update(chunk)
+    return digest.hexdigest()
 
 def main():
     rev='representative_v1';assert load(DOC/rev/'verification.json')['status']=='PASS'

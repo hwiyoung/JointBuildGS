@@ -1,0 +1,158 @@
+{
+  "task_id": "PHD-MAIN-REGIONFIG-v2",
+  "tag": "rep-finish",
+  "started_at": "2026-10-27T01:09:56.530201+09:00",
+  "scientific_verdict": null,
+  "source_base_head": "fca86a59ac7271ceb7b6d260d89c2832d27e5bba",
+  "name": "jbgs-regionfig-v2-20261027t010956-bea9251d",
+  "command": [
+    "python",
+    "representative_finish.py"
+  ],
+  "admission_samples": [
+    {
+      "at": "2026-10-27T01:09:56.555367+09:00",
+      "available_GiB": 44.93820571899414,
+      "busy": null
+    }
+  ],
+  "docker_command": [
+    "docker",
+    "run",
+    "--name",
+    "jbgs-regionfig-v2-20261027t010956-bea9251d",
+    "--label",
+    "jbgs.task=PHD-MAIN-REGIONFIG-v2",
+    "--runtime",
+    "runc",
+    "--network",
+    "none",
+    "--read-only",
+    "--user",
+    "1000:1000",
+    "--cpus",
+    "2",
+    "--memory",
+    "4g",
+    "--memory-swap",
+    "4g",
+    "--pids-limit",
+    "128",
+    "-e",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "-e",
+    "PYTHONUNBUFFERED=1",
+    "-e",
+    "CUDA_VISIBLE_DEVICES=",
+    "-e",
+    "JBGS_SOURCE_HEAD=fca86a59ac7271ceb7b6d260d89c2832d27e5bba",
+    "-e",
+    "NVIDIA_VISIBLE_DEVICES=void",
+    "-e",
+    "OMP_NUM_THREADS=1",
+    "-e",
+    "OPENBLAS_NUM_THREADS=1",
+    "-e",
+    "MPLCONFIGDIR=/payload/cache/mpl",
+    "-e",
+    "XDG_CACHE_HOME=/payload/cache",
+    "-e",
+    "TMPDIR=/payload/tmp",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp:/repo:ro",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts:/art:ro",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_regionfig_v2/PHD-MAIN-REGIONFIG-v2:/payload",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/configs/phd/main_regionfig_v2:/cfg",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/docs/experiments/phd/main_regionfig_v2:/docs",
+    "-v",
+    "/usr/share/fonts/opentype/noto:/fonts:ro",
+    "-w",
+    "/repo/scripts/phd/main_regionfig_v2",
+    "--entrypoint",
+    "nice",
+    "jointbuildgs:dev",
+    "-n",
+    "19",
+    "ionice",
+    "-c",
+    "3",
+    "python",
+    "representative_finish.py"
+  ],
+  "status": "PASS",
+  "monitor": [
+    {
+      "at": "2026-10-27T01:10:01.581747+09:00",
+      "available_GiB": 44.707122802734375,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:06.720747+09:00",
+      "available_GiB": 44.84746170043945,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:11.749461+09:00",
+      "available_GiB": 44.87715148925781,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:16.820971+09:00",
+      "available_GiB": 45.212337493896484,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:21.850922+09:00",
+      "available_GiB": 45.00284957885742,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:26.886322+09:00",
+      "available_GiB": 43.93754196166992,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:31.917225+09:00",
+      "available_GiB": 44.32992172241211,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:36.968199+09:00",
+      "available_GiB": 44.44790267944336,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:10:42.010294+09:00",
+      "available_GiB": 44.5672607421875,
+      "busy": null
+    }
+  ],
+  "docker_state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-10-26T16:09:56.664211304Z",
+    "FinishedAt": "2026-10-26T16:10:42.127400648Z"
+  },
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "host_config": {
+    "Memory": 4294967296,
+    "MemorySwap": 4294967296,
+    "NanoCpus": 2000000000,
+    "DeviceRequests": null,
+    "Runtime": "runc"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-27T01:10:47.082998+09:00",
+  "interrupted": null
+}
