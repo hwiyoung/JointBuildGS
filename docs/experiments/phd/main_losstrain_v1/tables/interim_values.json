@@ -1161,8 +1161,841 @@
       "trained": null
     }
   ],
+  "threshold_rows": [
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "all_0_3",
+      "metric": "within_tau_percent",
+      "seed_0": 74.5575923056191,
+      "seed_1": 74.13841572589386,
+      "N": 33020,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.8299272857072251,
+      "three_points": 0.009085402786190187,
+      "threshold": 0.8299272857072251,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 33020
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 33020
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "all_0_3",
+      "metric": "no_surface_percent",
+      "seed_0": 1.691663694269911,
+      "seed_1": 1.728492705848814,
+      "N": 33020,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.07291772272915241,
+      "three_points": 0.009085402786190187,
+      "threshold": 0.07291772272915241,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 33020
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 33020
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "within_tau_percent",
+      "seed_0": 96.25010434551646,
+      "seed_1": 96.31960241548667,
+      "N": 10945,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.1375991583548726,
+      "three_points": 0.027409776153494745,
+      "threshold": 0.1375991583548726,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 10945
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 10945
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "no_surface_percent",
+      "seed_0": 0.11179000194321244,
+      "seed_1": 0.11179000194321244,
+      "N": 10945,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 0.027409776153494745,
+      "threshold": 0.027409776153494745,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 10945
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 10945
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "error_patch_median_m",
+      "seed_0": 0.07058795681223273,
+      "seed_1": 0.07058150391094387,
+      "N": 10938,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 1.2776092727118745e-05,
+      "three_points": null,
+      "threshold": 1.2776092727118745e-05,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 10938
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 10938
+        }
+      ],
+      "value_unit": "m",
+      "threshold_unit": "m",
+      "three_points_status": "not applicable to distance",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_1",
+      "metric": "within_tau_percent",
+      "seed_0": 88.99805254647362,
+      "seed_1": 89.02872006869579,
+      "N": 14497,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.06071859619136778,
+      "three_points": 0.02069393667655377,
+      "threshold": 0.06071859619136778,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14497
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14497
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_1",
+      "metric": "no_surface_percent",
+      "seed_0": 2.1573097447751715,
+      "seed_1": 2.2002513396068033,
+      "N": 14497,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.08502002012115381,
+      "three_points": 0.02069393667655377,
+      "threshold": 0.08502002012115381,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14497
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14497
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_2",
+      "metric": "within_tau_percent",
+      "seed_0": 22.081834156804444,
+      "seed_1": 17.927799498264342,
+      "N": 2598,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 8.22456901374542,
+      "three_points": 0.11547344110854503,
+      "threshold": 8.22456901374542,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 2598
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 2598
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_2",
+      "metric": "no_surface_percent",
+      "seed_0": 0.12076005183947326,
+      "seed_1": 0.12076005183947326,
+      "N": 2598,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 0.11547344110854503,
+      "threshold": 0.11547344110854503,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 2598
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 2598
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_3",
+      "metric": "within_tau_percent",
+      "seed_0": 16.665066467442127,
+      "seed_1": 16.002263536790075,
+      "N": 4980,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 1.3122828511922728,
+      "three_points": 0.060240963855421686,
+      "threshold": 1.3122828511922728,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 4980
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 4980
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_3",
+      "metric": "no_surface_percent",
+      "seed_0": 4.5289857019030535,
+      "seed_1": 4.645757769255576,
+      "N": 4980,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.23119689789879505,
+      "three_points": 0.060240963855421686,
+      "threshold": 0.23119689789879505,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 4980
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 4980
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained",
+      "metric": "within_tau_percent",
+      "seed_0": 70.75338534395968,
+      "seed_1": 70.59666590500558,
+      "N": 19197,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.31028865847894416,
+      "three_points": 0.01562744178777934,
+      "threshold": 0.31028865847894416,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 19197
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 19197
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained",
+      "metric": "no_surface_percent",
+      "seed_0": 2.804837027742822,
+      "seed_1": 2.8583296731477206,
+      "N": 19197,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.10591003446635164,
+      "three_points": 0.01562744178777934,
+      "threshold": 0.10591003446635164,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 19197
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 19197
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_1",
+      "metric": "within_tau_percent",
+      "seed_0": 89.15607867398091,
+      "seed_1": 89.188136146168,
+      "N": 14387,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.06347055671933573,
+      "three_points": 0.020852158198373532,
+      "threshold": 0.06347055671933573,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14387
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14387
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_1",
+      "metric": "no_surface_percent",
+      "seed_0": 2.1641345709903943,
+      "seed_1": 2.2074472118232866,
+      "N": 14387,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.08575465372329943,
+      "three_points": 0.020852158198373532,
+      "threshold": 0.08575465372329943,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14387
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14387
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_2",
+      "metric": "within_tau_percent",
+      "seed_0": 11.539538239136126,
+      "seed_1": 9.673705228064383,
+      "N": 104,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 3.694160889133523,
+      "three_points": 2.8846153846153846,
+      "threshold": 3.694160889133523,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 104
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 104
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_2",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 104,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 2.8846153846153846,
+      "threshold": 2.8846153846153846,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 104
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 104
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_4",
+      "metric": "within_tau_percent",
+      "seed_0": 5.563999514414402,
+      "seed_1": 0.0,
+      "N": 17,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 11.016157004051024,
+      "three_points": 17.647058823529413,
+      "threshold": 17.647058823529413,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 17
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 17
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "표본 부족"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_4",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 17,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 17.647058823529413,
+      "threshold": 17.647058823529413,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 17
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 17
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "표본 부족"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_5",
+      "metric": "within_tau_percent",
+      "seed_0": 12.065460217912705,
+      "seed_1": 13.119170663519407,
+      "N": 175,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 2.086240244187674,
+      "three_points": 1.7142857142857142,
+      "threshold": 2.086240244187674,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 175
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 175
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_5",
+      "metric": "no_surface_percent",
+      "seed_0": 42.910654416865334,
+      "seed_1": 40.2996097114343,
+      "N": 175,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 5.169604768136243,
+      "three_points": 1.7142857142857142,
+      "threshold": 5.169604768136243,
+      "seed_sources": [
+        {
+          "result": "prop_ALS_s0",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 175
+        },
+        {
+          "result": "prop_ALS_s1",
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 175
+        }
+      ],
+      "value_unit": "%",
+      "threshold_unit": "%p",
+      "three_points_status": "available",
+      "sample_status": "PASS"
+    }
+  ],
   "side_rows": [],
   "fates": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 19477,
+          "area_m2": 1303.982455188378,
+          "seeds_seated": 21389,
+          "seeds_planted": 21389,
+          "not_planted": 0,
+          "counts": {
+            "removed": 21120,
+            "old_place": 118,
+            "current_surface": 35,
+            "neither": 116
+          },
+          "shares": {
+            "removed": 0.9874234419561457,
+            "old_place": 0.00551685445789892,
+            "current_surface": 0.0016363551358174763,
+            "neither": 0.0054233484501379214
+          },
+          "descendants": 2218,
+          "opaque_descendants": 1393,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 600.0,
+            "max": 14800.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 13543,
+          "area_m2": 889.1602439892032,
+          "seeds_seated": 14026,
+          "seeds_planted": 14026,
+          "not_planted": 0,
+          "counts": {
+            "removed": 11144,
+            "old_place": 2136,
+            "current_surface": 48,
+            "neither": 698
+          },
+          "shares": {
+            "removed": 0.7945244545843434,
+            "old_place": 0.15228860687295023,
+            "current_surface": 0.0034222158847853987,
+            "neither": 0.04976472265792101
+          },
+          "descendants": 30116,
+          "opaque_descendants": 16834,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 3100.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/monitor/init_points.npz",
+        "initial_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6",
+        "dump": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "7ad73f6344c11ffdd7dcd8e3ed140b8317fc183f74c703232b80a4c72b2d5e53",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 19477,
+          "area_m2": 1303.982455188378,
+          "seeds_seated": 21389,
+          "seeds_planted": 21389,
+          "not_planted": 0,
+          "counts": {
+            "removed": 20770,
+            "old_place": 169,
+            "current_surface": 151,
+            "neither": 299
+          },
+          "shares": {
+            "removed": 0.9710598905979709,
+            "old_place": 0.007901257655804385,
+            "current_surface": 0.0070597035859553976,
+            "neither": 0.013979148160269298
+          },
+          "descendants": 19808,
+          "opaque_descendants": 9898,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 900.0,
+            "max": 14900.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 13543,
+          "area_m2": 889.1602439892032,
+          "seeds_seated": 14026,
+          "seeds_planted": 14026,
+          "not_planted": 0,
+          "counts": {
+            "removed": 10565,
+            "old_place": 1059,
+            "current_surface": 43,
+            "neither": 2359
+          },
+          "shares": {
+            "removed": 0.7532439754741195,
+            "old_place": 0.07550263795807785,
+            "current_surface": 0.003065735063453586,
+            "neither": 0.16818765150434906
+          },
+          "descendants": 38898,
+          "opaque_descendants": 17575,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 6100.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/init_points.npz",
+        "initial_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6",
+        "dump": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "4cc75e0c1f1c827115f801f10527c40d04712afcff2e8c80802b73e4b3471a18",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
     {
       "site": "B173nb_b10",
       "prior": "ALS",

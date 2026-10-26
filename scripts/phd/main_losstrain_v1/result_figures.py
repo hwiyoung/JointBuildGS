@@ -74,7 +74,7 @@ def fates(site,prior):
         names=['판정 끔' if r['result'].startswith('nojudge') else LABELS[r['result'].rsplit('_',2)[0]] for r in rows]
         ax.set(yticks=np.arange(len(rows)),yticklabels=names,xlim=(0,120),xticks=[0,25,50,75,100],xlabel='심긴 점 묶음의 비율 (%)',title=title)
     axes[0].invert_yaxis();fig.suptitle(f'{site} · {prior}: 사전 정보에서 심은 점의 남음·이동·지워짐',x=.04,ha='left',fontsize=13)
-    for x,col,lab in zip([.08,.29,.51,.73],colours,['지워짐','옛 자리','지금 면','둘 다 아님']):fig.text(x,.02,lab,color=col,fontsize=10)
+    for x,col,lab in zip([.08,.29,.51,.73],colours,['지워짐','옛 자리','지금 면','둘 다 아님']):fig.text(x,.02,lab,color='#595959' if col=='#bdbdbd' else col,fontsize=10)
     fig.tight_layout(rect=[0,.07,1,.92]);key=f'fates_{site}_{prior}';fig.savefig(FIG/(key+'.png'),dpi=300);plt.close(fig)
     save(FIG/(key+'.json'),dict(rows=rows,categories=cats,colours=colours,visual_review='PENDING',scientific_verdict=None))
     print(site,prior,'fate figure written',flush=True)

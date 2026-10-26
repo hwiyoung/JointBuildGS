@@ -1,15 +1,19 @@
 {
   "status": "PASS",
   "scope": "execution resource admission only",
-  "cpu_check": "47 GiB waits, 56 GiB admits; context releases both photo locks",
+  "cpu_check": "47 GiB waits, 52 GiB admits; context releases both photo locks; initial 56 GiB test retained in earlier commit",
   "source_sha256": {
-    "scripts/phd/main_losstrain_v1/post_admission.py": "dba04feb61c4113f14cd1110e5b1875ac41a113cb885d00c2d34c5c44b0d07a6",
+    "scripts/phd/main_losstrain_v1/post_admission.py": "841b2ccef8c94213d8ff6d507cb126d3c5fcfc6657707600c088366885f05db5",
     "scripts/phd/main_losstrain_v1/gpu_post.py": "e34392b3155185d5dd7426b1258ef9f0e5c8ace73b08f2372a8bb036b0981351",
-    "scripts/phd/main_losstrain_v1/recover_fixed_post.py": "22f22df40058f617f1e9ff701002653efd36efcb8cdc02f54aeb30693e1df5f0",
-    "scripts/phd/main_stage1_v1/gpu_s1.py": "40b1ba4f9911feb694f1241dc57434c7c0c02d54f4a639d10bbfa947140f31eb"
+    "scripts/phd/main_losstrain_v1/recover_fixed_post.py": "8bb076986792e55c248f837e8addeaf14e2dd6743d6fff0c307c3a16cce85cae",
+    "scripts/phd/main_stage1_v1/gpu_s1.py": "40b1ba4f9911feb694f1241dc57434c7c0c02d54f4a639d10bbfa947140f31eb",
+    "scripts/phd/main_losstrain_v1/run_cpu.sh": "f8e37b4caf006152b8c149e987ccdd3c08c792e51611d04a9df53a58823d4b18",
+    "scripts/phd/main_losstrain_v1/run_axes.sh": "f4b3e15f71ccc0b8cd30a15d48b5339148983c8f313f26556c555584801b218a"
   },
   "unchanged_post_function_source": "scripts/phd/main_stage1_v1/gpu_s1.py",
   "training_restarted": false,
   "post_parameters_changed": false,
-  "scientific_verdict": null
+  "scientific_verdict": null,
+  "cpu_mesh_queue_check": "bash -n PASS for both wrappers; wrappers edited after all their prior processes exited",
+  "cpu_mesh_uses_tsdf_lock": true
 }

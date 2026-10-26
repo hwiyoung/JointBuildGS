@@ -7,6 +7,10 @@ PH="$ART/phase-payloads/phd"
 LT="$PH/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1"
 tag=$1; shift
 log="$LT/logs/axes_${tag}_$(date +%Y%m%dT%H%M%S).log"
+queue_started=$SECONDS
+exec 9>"$LT/checks/tsdf.lock"
+flock -x 9
+printf '%s\n' "$((SECONDS - queue_started))" > "${log%.log}.queue_seconds.txt"
 set +e
 docker run --rm --name "jbgs-lt-axes-${tag,,}" --network none --user "$(id -u):$(id -g)" \
   --cpus 8 --memory 24g --shm-size 4g \

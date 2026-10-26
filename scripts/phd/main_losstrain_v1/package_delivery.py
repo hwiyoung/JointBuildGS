@@ -48,7 +48,7 @@ def main():
             elif key.startswith('render_'):assert len(m['panels'])==len(variants)+1,key
     else:assert any((OUT/'checks').glob('*STOP.json'))
     status=dict(task_id='PHD-MAIN-LOSSTRAIN-v1',status=a.status,calibration_complete=len(cal),required_training_complete=len(required),
-        optional_training_complete=len(optional),postprocessing_complete=len(post),new_stop_receipts=len(stopped),
+        optional_training_complete=len(optional),postprocessing_complete=len(post),preserved_attempt_stop_files=len(stopped),
         historical_pre_amendment_opacity_stops=2,at=datetime.now(timezone(timedelta(hours=9))).isoformat(),scientific_verdict=None)
     save(root/'STATUS.json',status)
     members=[]
@@ -73,6 +73,8 @@ def main():
         members.append((p,'checks/monitor_v2/'+p.relative_to(OUT/'checks/monitor_v2').as_posix()))
     for p in sorted((OUT/'checks/fixed_post_host_oom').glob('*')):
         if p.is_file():members.append((p,'checks/fixed_post_host_oom/'+p.name))
+    for p in sorted((OUT/'logs').glob('*.queue_seconds.txt')):
+        members.append((p,'cpu_queue_receipts/'+p.name))
     for name in ['full_STOP.json','full_grace_STOP.json','full_monitor_v2_STOP.json','full_monitor_v2_camera_fix_STOP.json','lambda_selection.json','preparation_commit.json']:
         p=OUT/'checks'/name
         if p.exists():members.append((p,'checks/'+name))

@@ -8,6 +8,15 @@ OUT="$PH/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1"
 mkdir -p "$OUT/logs" "$REPO/configs/phd/main_losstrain_v1" "$REPO/docs/experiments/phd/main_losstrain_v1"
 tag=$1; shift
 log="$OUT/logs/${tag}_$(date +%Y%m%dT%H%M%S).log"
+case "${1##*/}" in
+  mesh_score.py|sections.py|fates.py|baseline_fates.py|saved_opacity.py)
+    # Large mesh/point arrays share host RAM with TSDF. Serialize these readouts.
+    queue_started=$SECONDS
+    exec 9>"$OUT/checks/tsdf.lock"
+    flock -x 9
+    printf '%s\n' "$((SECONDS - queue_started))" > "${log%.log}.queue_seconds.txt"
+    ;;
+esac
 set +e
 docker run --rm --name "jbgs-lt-${tag,,}" --network none --user "$(id -u):$(id -g)" \
   --cpus 8 --memory 24g --shm-size 2g \

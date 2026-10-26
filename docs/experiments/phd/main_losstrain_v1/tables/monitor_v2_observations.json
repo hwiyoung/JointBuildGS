@@ -2239,6 +2239,1126 @@
       "nojudge_unsaved_statistics": "기록 없음",
       "nojudge_psnr_status": "기록 없음",
       "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "camera": "DJI_20241217101142_0020_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 5000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.4875679314136505,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.4875679314136505
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.5324183702468872
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.46752282977104187
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.4330974817276001
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.4861657917499542
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.657346248626709
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.96176677942276
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.7613472938537598
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.47123652696609497
+        }
+      },
+      "train_psnr_legacy5": 24.197214889526368,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 27.70284080505371
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 26.588645935058594
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 22.25033187866211
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 20.575000762939453
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 23.86925506591797
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "camera": "DJI_20241217101134_0016_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 6000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.5013477802276611,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.5013477802276611
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.5513504147529602
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.48655661940574646
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.4568350911140442
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.675655722618103
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9680915474891663
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.7636469602584839
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.49065905809402466
+        }
+      },
+      "train_psnr_legacy5": 24.582121276855467,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 27.401962280273438
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 26.603954315185547
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 22.627700805664062
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 21.978979110717773
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 24.298009872436523
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "camera": "DJI_20241217095013_0033_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 7000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.5220241546630859,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.5220241546630859
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.5699247121810913
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.5088486671447754
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.47377070784568787
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.6974794268608093
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9736803770065308
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.7847553491592407
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.5083638429641724
+        }
+      },
+      "train_psnr_legacy5": 24.579693603515626,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 27.853330612182617
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 26.772069931030273
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 22.685956954956055
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 21.67962646484375
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 23.90748405456543
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "camera": "DJI_20241217091233_0139_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 8000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.5450217127799988,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.5450217127799988
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.5887402296066284
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.5329378247261047
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.4938044548034668
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5002539157867432
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.7204945087432861
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9774035215377808
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.7937455177307129
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.5303457975387573
+        }
+      },
+      "train_psnr_legacy5": 24.827095794677735,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 27.734769821166992
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 27.48158836364746
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 22.776090621948242
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 22.092626571655273
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 24.050403594970703
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "camera": "DJI_20241217101259_0002_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 9000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.5697605013847351,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.5697605013847351
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.6118990778923035
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.5586032271385193
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.513250470161438
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5179486870765686
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.743547797203064
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.981131911277771
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8057081699371338
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.5550618767738342
+        }
+      },
+      "train_psnr_legacy5": 24.831233978271484,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 28.346778869628906
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 27.649242401123047
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.14613914489746
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 20.676427841186523
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 24.337581634521484
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "camera": "DJI_20241217091233_0139_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 10000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.5961728096008301,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.5961728096008301
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.6314963698387146
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.5870456099510193
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.5312122106552124
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5238769054412842
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.7651510834693909
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9849853515625
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8070980310440063
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.5813241004943848
+        }
+      },
+      "train_psnr_legacy5": 25.24760208129883,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 27.994169235229492
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 27.81389617919922
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.179054260253906
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 21.92897605895996
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 25.321914672851562
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "camera": "DJI_20241217091253_0149_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 11000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.6220014095306396,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.6220014095306396
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.6506562232971191
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.6144607663154602
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.5514933466911316
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5454777479171753
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.7843095660209656
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9873888492584229
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8150643110275269
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.6072564125061035
+        }
+      },
+      "train_psnr_legacy5": 24.506787490844726,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 27.639570236206055
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 26.684385299682617
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 22.80624008178711
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 20.71711540222168
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 24.686626434326172
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "camera": "DJI_20241217091231_0138_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 12000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.6516938805580139,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.6516938805580139
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.6724793314933777
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.6462984681129456
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.5723777413368225
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5696389079093933
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.8062617778778076
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.989933431148529
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.824640691280365
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.6372243165969849
+        }
+      },
+      "train_psnr_legacy5": 24.895784759521483,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 27.57770347595215
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 27.73806381225586
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 22.867290496826172
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 21.18752098083496
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 25.10834503173828
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "camera": "DJI_20241217084503_0075_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 13000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.677608072757721,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.677608072757721
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.6932021379470825
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.6734732389450073
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.5910797119140625
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.5793246030807495
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.8274238109588623
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9916696548461914
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8344700336456299
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.6630628108978271
+        }
+      },
+      "train_psnr_legacy5": 25.07819938659668,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 28.111722946166992
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 28.060470581054688
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.24764633178711
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 21.003314971923828
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 24.96784210205078
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "camera": "DJI_20241217100042_0027_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 14000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.7038920521736145,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.7038920521736145
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.7129936218261719
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.701592743396759
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.605781078338623
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.6062673330307007
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.845474123954773
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9932732582092285
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8462657928466797
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.6898419857025146
+        }
+      },
+      "train_psnr_legacy5": 24.977407455444336,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 28.706832885742188
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 27.413555145263672
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.150341033935547
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 20.58698081970215
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 25.029327392578125
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "camera": "DJI_20241217095029_0041_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 15000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.7287521362304688,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.7287521362304688
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.7329076528549194
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.7277523279190063
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.6286770105361938
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.6332969069480896
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.8624650239944458
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9945005178451538
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8599530458450317
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.715041995048523
+        }
+      },
+      "train_psnr_legacy5": 25.337837982177735,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 28.93366050720215
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 27.663700103759766
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.01338768005371
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 21.8798885345459
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 25.19855308532715
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "camera": "DJI_20241217091037_0081_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 16000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.7553569674491882,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.7553569674491882
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.7579511404037476
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.7547242641448975
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.6515860557556152
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.6715962886810303
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.8806953430175781
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9957167506217957
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8606585264205933
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.742379903793335
+        }
+      },
+      "train_psnr_legacy5": 25.223412704467773,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 28.595321655273438
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 28.031326293945312
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.074453353881836
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 20.816497802734375
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 25.599464416503906
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "camera": "DJI_20241217094014_0032_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 17000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.7772082090377808,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.7772082090377808
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.7725868225097656
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.7783001065254211
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.6627503037452698
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.6831339001655579
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.8936171531677246
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9965750575065613
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8577775955200195
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.7647125720977783
+        }
+      },
+      "train_psnr_legacy5": 25.613043975830077,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 28.864286422729492
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 28.375411987304688
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.042753219604492
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 22.366573333740234
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 25.416194915771484
+        }
+      ],
+      "nojudge_train_psnr_legacy5": null,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "기록 없음",
+      "psnr_drop_db": null
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "camera": "DJI_20241217091033_0079_D",
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 18000,
+      "gaussians": 1379799,
+      "whole_opacity_median": 0.7977421879768372,
+      "prior_opacity_is_record_only": true,
+      "stop": null,
+      "scientific_verdict": null,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.7977421879768372
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.7897493243217468
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.7997411489486694
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.6809076070785522
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.7202094793319702
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.9082406163215637
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9972249269485474
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8635546565055847
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.7859591245651245
+        }
+      },
+      "train_psnr_legacy5": 25.7068359375,
+      "psnr_per_view": [
+        {
+          "camera": "DJI_20241217091101_0093_D",
+          "psnr_db": 28.70699119567871
+        },
+        {
+          "camera": "DJI_20241217100339_0024_D",
+          "psnr_db": 28.994831085205078
+        },
+        {
+          "camera": "DJI_20241217101317_0011_D",
+          "psnr_db": 23.267215728759766
+        },
+        {
+          "camera": "DJI_20241217095541_0053_D",
+          "psnr_db": 21.934803009033203
+        },
+        {
+          "camera": "DJI_20241217091149_0117_D",
+          "psnr_db": 25.630338668823242
+        }
+      ],
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "nojudge_unsaved_statistics": "기록 없음",
+      "nojudge_psnr_status": "same iteration available",
+      "psnr_drop_db": 0.21286468505859446
     }
   ],
   "rows": [
@@ -6525,6 +7645,2148 @@
       "train_psnr_legacy5": 23.792749404907227,
       "nojudge_train_psnr_legacy5": null,
       "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.4875679314136505,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.96176677942276,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.7613472938537598,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.47123652696609497,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.5324183702468872,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.46752282977104187,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.4330974817276001,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.4861657917499542,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 17000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.657346248626709,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.197214889526368,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.5013477802276611,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9680915474891663,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.7636469602584839,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.49065905809402466,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.5513504147529602,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.48655661940574646,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.4568350911140442,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 18000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.675655722618103,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.582121276855467,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.5220241546630859,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9736803770065308,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.7847553491592407,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.5083638429641724,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.5699247121810913,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.5088486671447754,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.47377070784568787,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 19000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.6974794268608093,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.579693603515626,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.5450217127799988,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9774035215377808,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.7937455177307129,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.5303457975387573,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.5887402296066284,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.5329378247261047,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.4938044548034668,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5002539157867432,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 20000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.7204945087432861,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.827095794677735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.5697605013847351,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.981131911277771,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8057081699371338,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.5550618767738342,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.6118990778923035,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.5586032271385193,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.513250470161438,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5179486870765686,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 21000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.743547797203064,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.831233978271484,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.5961728096008301,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9849853515625,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8070980310440063,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.5813241004943848,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.6314963698387146,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.5870456099510193,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.5312122106552124,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5238769054412842,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 22000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.7651510834693909,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.24760208129883,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.6220014095306396,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9873888492584229,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8150643110275269,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.6072564125061035,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.6506562232971191,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.6144607663154602,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.5514933466911316,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5454777479171753,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 23000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.7843095660209656,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.506787490844726,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.6516938805580139,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.989933431148529,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.824640691280365,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.6372243165969849,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.6724793314933777,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.6462984681129456,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.5723777413368225,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5696389079093933,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 24000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.8062617778778076,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.895784759521483,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.677608072757721,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9916696548461914,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8344700336456299,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.6630628108978271,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.6932021379470825,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.6734732389450073,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.5910797119140625,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.5793246030807495,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 25000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.8274238109588623,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.07819938659668,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.7038920521736145,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9932732582092285,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8462657928466797,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.6898419857025146,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.7129936218261719,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.701592743396759,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.605781078338623,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.6062673330307007,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 26000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.845474123954773,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 24.977407455444336,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.7287521362304688,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9945005178451538,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8599530458450317,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.715041995048523,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.7329076528549194,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.7277523279190063,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.6286770105361938,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.6332969069480896,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 27000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.8624650239944458,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.337837982177735,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.7553569674491882,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9957167506217957,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8606585264205933,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.742379903793335,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.7579511404037476,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.7547242641448975,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.6515860557556152,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.6715962886810303,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 28000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.8806953430175781,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.223412704467773,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.7772082090377808,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9965750575065613,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8577775955200195,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.7647125720977783,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.7725868225097656,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.7783001065254211,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.6627503037452698,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.6831339001655579,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 29000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.8936171531677246,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.613043975830077,
+      "nojudge_train_psnr_legacy5": null,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "all",
+      "count": 1379799,
+      "opacity_median": 0.7977421879768372,
+      "nojudge_count": 2796061,
+      "nojudge_opacity_median": 0.3544462968235548,
+      "nojudge_status": "저장 모델",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_prior",
+      "count": 27165,
+      "opacity_median": 0.9972249269485474,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "initial_image",
+      "count": 1750,
+      "opacity_median": 0.8635546565055847,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "density_born",
+      "count": 1350884,
+      "opacity_median": 0.7859591245651245,
+      "nojudge_count": null,
+      "nojudge_opacity_median": null,
+      "nojudge_status": "기록 없음",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_lineage",
+      "count": 223118,
+      "opacity_median": 0.7897493243217468,
+      "nojudge_count": 395633,
+      "nojudge_opacity_median": 0.6555328046702474,
+      "nojudge_status": "저장 모델",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "image_lineage",
+      "count": 1156681,
+      "opacity_median": 0.7997411489486694,
+      "nojudge_count": 2400428,
+      "nojudge_opacity_median": 0.28753372044360404,
+      "nojudge_status": "저장 모델",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_correct",
+      "count": 105483,
+      "opacity_median": 0.6809076070785522,
+      "nojudge_count": 163396,
+      "nojudge_opacity_median": 0.6559122172231238,
+      "nojudge_status": "저장 모델",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_incorrect",
+      "count": 14643,
+      "opacity_median": 0.7202094793319702,
+      "nojudge_count": 8029,
+      "nojudge_opacity_median": 0.6354526308241041,
+      "nojudge_status": "저장 모델",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": "attempt_3",
+      "iteration": 30000,
+      "phase": "after optimizer and opacity floors, before density/reset",
+      "kind": "prior_gt_unknown",
+      "count": 102992,
+      "opacity_median": 0.9082406163215637,
+      "nojudge_count": 224208,
+      "nojudge_opacity_median": 0.6562569768443074,
+      "nojudge_status": "저장 모델",
+      "train_psnr_legacy5": 25.7068359375,
+      "nojudge_train_psnr_legacy5": 25.919700622558594,
+      "stop": null
     }
   ],
   "saved_models": [
@@ -6692,6 +9954,114 @@
         "model_sha256": "b0c166d4e9dc801366050785c9ea157e4e296dc155b8f25f427355e9ad3e479b",
         "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
         "init_sha256": "3d6ce3893a7ee68751096c7da0c251688b057894db22e9a9654d9d8c5df19b49"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.46926581781618865
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.5156640581467584
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.45303558877354
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.41278703141121753
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.474040725555156
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.6340249013684023
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.948574266503036
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.7625784212417162
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.455857278665335
+        }
+      },
+      "mutually_exclusive_birth_status": "available",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "ad1687f7f71fa9f54cf5ccf9ad1a15e922eebcc603ec5ab41edf9ea557fbd5b5",
+        "init": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/monitor/init_points.npz",
+        "init_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "iteration": 30000,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.7977422328569104
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.7897493390124651
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.7997411241549991
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.6809075993668513
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.7202094632451614
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.908240634527016
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9972248636123625
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8635546678388284
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.7859590769508491
+        }
+      },
+      "mutually_exclusive_birth_status": "available",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/point_cloud/iteration_30000/point_cloud.ply",
+        "model_sha256": "44fd717d126a20779627c855842399efe6e9748da81e08233ac044ba9bdc991a",
+        "init": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/monitor/init_points.npz",
+        "init_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6"
       },
       "optimizer_steps": 0,
       "scientific_verdict": null

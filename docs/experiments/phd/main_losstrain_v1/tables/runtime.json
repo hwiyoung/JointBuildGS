@@ -1,15 +1,15 @@
 {
-  "status": "RUNNING",
-  "at": "2026-10-26T20:23:38.520717+09:00",
+  "status": "STOPPED_PARTIAL",
+  "at": "2026-10-26T20:57:15.866197+09:00",
   "counts": {
     "calibration_complete": 4,
-    "required_complete": 1,
+    "required_complete": 2,
     "optional_complete": 0,
     "post_complete": 0,
     "measurements_complete": 0,
     "historical_before_grace_stops": 2,
     "historical_grace_stops": 1,
-    "post_stopped_attempts": 1,
+    "post_stopped_attempts": 2,
     "new_stopped_attempts": 1
   },
   "runs": [
@@ -205,7 +205,7 @@
       "site": "B173nb_b10",
       "result": "lt_dyngt_ALS_s0",
       "calibration": false,
-      "training_complete": false,
+      "training_complete": true,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -360,15 +360,35 @@
         },
         {
           "attempt": "attempt_3",
-          "receipt": null,
+          "receipt": {
+            "run": {
+              "site": "B173nb_b10",
+              "prior": "ALS",
+              "variant": "lt_dyngt"
+            },
+            "gpu": 1,
+            "attempt": 3,
+            "exit_code": 0,
+            "started_at": "2026-10-26T19:52:54.651613+09:00",
+            "finished_at": "2026-10-26T20:45:11.194359+09:00",
+            "seconds": 3136.542793869041,
+            "gpu_peak_total_MiB": 8424.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
           "last_health": {
-            "iteration": 17100,
-            "camera": "DJI_20241217101152_0025_D",
+            "iteration": 30000,
+            "camera": "DJI_20241217091033_0079_D",
             "observation_phase": "after optimizer and opacity floors, before density/reset",
             "last_periodic_reset": 12000,
-            "iterations_after_reset": 5100,
+            "iterations_after_reset": 18000,
             "gaussians": 1379799,
-            "whole_opacity_median": 0.48788127303123474,
+            "whole_opacity_median": 0.7977421879768372,
             "prior_opacity_is_record_only": true,
             "stop": null,
             "scientific_verdict": null
@@ -547,6 +567,16 @@
           "tsdf_queue_seconds": 8.158385753631592e-06,
           "at": "2026-10-26T20:18:58.069050+09:00",
           "scientific_verdict": null
+        },
+        {
+          "stage": "post",
+          "path": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/post_attempt_1_receipt.json",
+          "exit_code": 137,
+          "seconds": 349.1027674265206,
+          "tsdf_queue_seconds": 7.996801286935806e-05,
+          "at": "2026-10-26T20:53:00.199831+09:00",
+          "host_oom_recovery": true,
+          "scientific_verdict": null
         }
       ]
     }
@@ -693,11 +723,23 @@
       "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
     }
   ],
-  "stop": null,
+  "stop": {
+    "run": {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_fixgt"
+    },
+    "attempt": 1,
+    "reason": "postprocessing post failed after confirmed host-OOM retry",
+    "at": "2026-10-26T20:53:00.210387+09:00",
+    "known_same_arm_stops": 3,
+    "requires_user": true,
+    "scientific_verdict": null
+  },
   "selected_lambda": 0.0025,
   "scientific_verdict": null,
   "fixed_post_host_oom_recovery": {
-    "status": "WAITING_OR_RETRYING",
+    "status": "STOPPED",
     "preparation": {
       "at": "2026-10-26T20:23:16.472936+09:00",
       "status": "WAITING_FOR_MEMORY",
@@ -719,10 +761,10 @@
       "scientific_verdict": null
     },
     "latest_memory_wait": {
-      "at": "2026-10-26T20:23:36.475265+09:00",
-      "available_GiB": 47.454681396484375,
+      "at": "2026-10-26T20:46:27.405016+09:00",
+      "available_GiB": 53.974483489990234,
       "required_GiB": 56,
-      "seconds": 20.001781997270882,
+      "seconds": 1390.931520164013,
       "scientific_verdict": null
     }
   }

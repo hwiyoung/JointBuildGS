@@ -1,0 +1,228 @@
+{
+  "rows": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 19477,
+          "area_m2": 1303.982455188378,
+          "seeds_seated": 21389,
+          "seeds_planted": 21389,
+          "not_planted": 0,
+          "counts": {
+            "removed": 20845,
+            "old_place": 237,
+            "current_surface": 97,
+            "neither": 210
+          },
+          "shares": {
+            "removed": 0.9745663658890084,
+            "old_place": 0.011080461919678338,
+            "current_surface": 0.004535041376408434,
+            "neither": 0.009818130814904858
+          },
+          "descendants": 3949,
+          "opaque_descendants": 2253,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 600.0,
+            "max": 14400.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 13543,
+          "area_m2": 889.1602439892032,
+          "seeds_seated": 14026,
+          "seeds_planted": 14026,
+          "not_planted": 0,
+          "counts": {
+            "removed": 9219,
+            "old_place": 3478,
+            "current_surface": 83,
+            "neither": 1246
+          },
+          "shares": {
+            "removed": 0.6572793383715956,
+            "old_place": 0.24796805931840868,
+            "current_surface": 0.005917581634108085,
+            "neither": 0.08883502067588764
+          },
+          "descendants": 34854,
+          "opaque_descendants": 20620,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 5800.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "initial_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6",
+        "dump": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "2c8ac41fec2742060c603761ab9013ade6bbdf87916e5c9eb224b45032e210a0",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 19477,
+          "area_m2": 1303.982455188378,
+          "seeds_seated": 21389,
+          "seeds_planted": 21389,
+          "not_planted": 0,
+          "counts": {
+            "removed": 20770,
+            "old_place": 169,
+            "current_surface": 151,
+            "neither": 299
+          },
+          "shares": {
+            "removed": 0.9710598905979709,
+            "old_place": 0.007901257655804385,
+            "current_surface": 0.0070597035859553976,
+            "neither": 0.013979148160269298
+          },
+          "descendants": 19808,
+          "opaque_descendants": 9898,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 900.0,
+            "max": 14900.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 13543,
+          "area_m2": 889.1602439892032,
+          "seeds_seated": 14026,
+          "seeds_planted": 14026,
+          "not_planted": 0,
+          "counts": {
+            "removed": 10565,
+            "old_place": 1059,
+            "current_surface": 43,
+            "neither": 2359
+          },
+          "shares": {
+            "removed": 0.7532439754741195,
+            "old_place": 0.07550263795807785,
+            "current_surface": 0.003065735063453586,
+            "neither": 0.16818765150434906
+          },
+          "descendants": 38898,
+          "opaque_descendants": 17575,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 6100.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/init_points.npz",
+        "initial_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6",
+        "dump": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "4cc75e0c1f1c827115f801f10527c40d04712afcff2e8c80802b73e4b3471a18",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 19477,
+          "area_m2": 1303.982455188378,
+          "seeds_seated": 21389,
+          "seeds_planted": 21389,
+          "not_planted": 0,
+          "counts": {
+            "removed": 21120,
+            "old_place": 118,
+            "current_surface": 35,
+            "neither": 116
+          },
+          "shares": {
+            "removed": 0.9874234419561457,
+            "old_place": 0.00551685445789892,
+            "current_surface": 0.0016363551358174763,
+            "neither": 0.0054233484501379214
+          },
+          "descendants": 2218,
+          "opaque_descendants": 1393,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 600.0,
+            "max": 14800.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 13543,
+          "area_m2": 889.1602439892032,
+          "seeds_seated": 14026,
+          "seeds_planted": 14026,
+          "not_planted": 0,
+          "counts": {
+            "removed": 11144,
+            "old_place": 2136,
+            "current_surface": 48,
+            "neither": 698
+          },
+          "shares": {
+            "removed": 0.7945244545843434,
+            "old_place": 0.15228860687295023,
+            "current_surface": 0.0034222158847853987,
+            "neither": 0.04976472265792101
+          },
+          "descendants": 30116,
+          "opaque_descendants": 16834,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 3100.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/monitor/init_points.npz",
+        "initial_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6",
+        "dump": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "7ad73f6344c11ffdd7dcd8e3ed140b8317fc183f74c703232b80a4c72b2d5e53",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    }
+  ],
+  "categories": [
+    "removed",
+    "old_place",
+    "current_surface",
+    "neither"
+  ],
+  "colours": [
+    "#bdbdbd",
+    "#ae3434",
+    "#238b45",
+    "#756bb1"
+  ],
+  "visual_review": "PASS",
+  "scientific_verdict": null,
+  "visual_review_notes": "Reviewed PNG with title disregarded: wrong/correct prior groups and the three available models are distinguishable; shared percentage axis, category colours, N and labels are readable; gray label contrast corrected.",
+  "visual_review_png_sha256": "5e9b80d0f9e860f60978f5669115d8ca48d736c68b5e2bf42afce20806010d71",
+  "artifact_scope": "PARTIAL: nojudge plus completed fixed-GT and dynamic-GT model fates; other two arms not yet trained"
+}

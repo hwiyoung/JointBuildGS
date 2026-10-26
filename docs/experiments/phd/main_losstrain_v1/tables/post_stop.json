@@ -1,0 +1,234 @@
+{
+  "status": "STOPPED_PARTIAL",
+  "stop": {
+    "run": {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_fixgt"
+    },
+    "attempt": 1,
+    "reason": "postprocessing post failed after confirmed host-OOM retry",
+    "at": "2026-10-26T20:53:00.210387+09:00",
+    "known_same_arm_stops": 3,
+    "requires_user": true,
+    "scientific_verdict": null
+  },
+  "post_attempts": [
+    {
+      "attempt": 0,
+      "receipt": {
+        "exit_code": 137,
+        "seconds": 396.57320459280163,
+        "tsdf_queue_seconds": 8.158385753631592e-06,
+        "at": "2026-10-26T20:18:58.069050+09:00",
+        "scientific_verdict": null
+      },
+      "details": {
+        "status": "CONFIRMED_HOST_OOM",
+        "iteration": 30000,
+        "gaussians": 2066519,
+        "model_sha256": "c179b13fa3c43dcdabbe5f345ab3eb4cb89f68cbb1fc1b3599e4e03ae031d609",
+        "failed_view": null,
+        "radii_p99": null,
+        "radii_max": null,
+        "pytorch_allocated_bytes": null,
+        "pytorch_reserved_bytes": null,
+        "unavailable_reason": "Kernel killed the TSDF integration process; no Python exception handler or verified current-view allocation/radii record survived. Do not substitute a different view or later nvidia-smi reading.",
+        "last_logged_completed_tsdf_views": 79,
+        "total_tsdf_views": 203,
+        "host_killed_process_anon_rss_kB": 38908340,
+        "source_saved_opacity_sha256": "de59f0fb4763f0afd1413f1a5f39b18f14e6077388ea690c1b18ef9993ced6ba",
+        "scientific_verdict": null
+      },
+      "receipt_sha256": "fc98a4d71ebaf4fa5a92930554db5226572904bb3726cdaf5a839e262bc42a60",
+      "detail_sha256": "66bd16e65c474b9779e18080256d0a22a159d545a0e4129fbadf43f571a15968"
+    },
+    {
+      "attempt": 1,
+      "receipt": {
+        "exit_code": 137,
+        "seconds": 349.1027674265206,
+        "tsdf_queue_seconds": 7.996801286935806e-05,
+        "at": "2026-10-26T20:53:00.199831+09:00",
+        "host_oom_recovery": true,
+        "scientific_verdict": null
+      },
+      "details": {
+        "status": "CONFIRMED_HOST_GLOBAL_OOM",
+        "iteration": 30000,
+        "exit_code": 137,
+        "gaussians": 2066519,
+        "host_killed_process_anon_rss_kB": 45746032,
+        "process_pid": 448934,
+        "last_logged_completed_tsdf_views": 141,
+        "total_tsdf_views": 203,
+        "failed_view": null,
+        "radii_p99": null,
+        "radii_max": null,
+        "pytorch_allocated_bytes": null,
+        "unavailable_reason": "kernel SIGKILL during CPU TSDF; exact failing-view/radii/PyTorch snapshot unavailable",
+        "kernel_excerpt_sha256": "cb7a04a8239e8c2502ca72dfd071f129ffda78f670a1af0bda92f875ff897e3f",
+        "queried_kernel_stream_sha256": "72df0ef3ffa54d751c9ffc3c2595d30cacaf3ed743fb16139f61f2e512c24906",
+        "same_arm_stop_count": 3,
+        "training_completed": true,
+        "additional_retry_authorized": false,
+        "scientific_verdict": null
+      },
+      "receipt_sha256": "0ba015782b95358c8f37dd742f9418f6a573c16997cf3d5d510fbd87156cbbd7",
+      "detail_sha256": "67f16ab76e12b632a4b0e426e867e73c3937d61a33e241dbe320eaef3184329c"
+    }
+  ],
+  "completed_models": [
+    {
+      "result": "lt_fixgt_ALS_s0",
+      "attempt": 1,
+      "groups": {
+        "all": {
+          "count": 2066519,
+          "opacity_median": 0.5779454056014305
+        },
+        "prior_lineage": {
+          "count": 375941,
+          "opacity_median": 0.8408087615858753
+        },
+        "image_lineage": {
+          "count": 1690578,
+          "opacity_median": 0.5013638688766923
+        },
+        "prior_gt_correct": {
+          "count": 181992,
+          "opacity_median": 0.5175070039259941
+        },
+        "prior_gt_incorrect": {
+          "count": 23674,
+          "opacity_median": 0.4493891429204304
+        },
+        "prior_gt_unknown": {
+          "count": 170275,
+          "opacity_median": 0.9882403694768834
+        }
+      },
+      "model_sha256": "c179b13fa3c43dcdabbe5f345ab3eb4cb89f68cbb1fc1b3599e4e03ae031d609",
+      "training_receipt": {
+        "run": {
+          "site": "B173nb_b10",
+          "prior": "ALS",
+          "variant": "lt_fixgt"
+        },
+        "gpu": 0,
+        "attempt": 1,
+        "exit_code": 0,
+        "started_at": "2026-10-26T18:57:32.181730+09:00",
+        "finished_at": "2026-10-26T20:12:21.474797+09:00",
+        "seconds": 4489.29310021922,
+        "lambda_depth": 0.0025,
+        "gpu_peak_total_MiB": 14122.0,
+        "config_sha256": "b6ff542aed7181c4e77b1c892aeea23124fef8207ca4c5a901c8895af9c04668",
+        "source_sha256": {
+          "train.py": "5650caf9e5d894480e9bd6b94cd8afe1c869c70b19df15f56b3720d24b3d17e5",
+          "jbgs_judgment.py": "20c5adc8416ff06209ca9dbe98db0a1a8ead20a26032c2d4be8a0f5e431158d9"
+        },
+        "scientific_verdict": null,
+        "source_files_observed_at_completion": {
+          "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+          "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+        },
+        "config_file_observed_at_completion": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+        "source_binding_corrected": true,
+        "source_binding_receipt": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/monitor_v2/inflight_fixed_source_binding.json",
+        "source_binding_sha256": "8b40b559142af4a4e43fde4d684c82d5bb3212d2569edc2be33c0065df4ffadc",
+        "original_completion_receipt_sha256": "12c5139df3dea570201b3644afdf19fcc07ec735f4f5728c52495dc24b8944f3",
+        "correction_at": "2026-10-26T20:12:24.975746+09:00",
+        "correction_reason": "original host runner hashed files at completion; running fixed process had loaded the previously frozen 77d97761 source before monitor v2 edits"
+      }
+    },
+    {
+      "result": "lt_dyngt_ALS_s0",
+      "attempt": 3,
+      "groups": {
+        "all": {
+          "count": 1379799,
+          "opacity_median": 0.7977422328569104
+        },
+        "prior_lineage": {
+          "count": 223118,
+          "opacity_median": 0.7897493390124651
+        },
+        "image_lineage": {
+          "count": 1156681,
+          "opacity_median": 0.7997411241549991
+        },
+        "prior_gt_correct": {
+          "count": 105483,
+          "opacity_median": 0.6809075993668513
+        },
+        "prior_gt_incorrect": {
+          "count": 14643,
+          "opacity_median": 0.7202094632451614
+        },
+        "prior_gt_unknown": {
+          "count": 102992,
+          "opacity_median": 0.908240634527016
+        },
+        "initial_prior": {
+          "count": 27165,
+          "opacity_median": 0.9972248636123625
+        },
+        "initial_image": {
+          "count": 1750,
+          "opacity_median": 0.8635546678388284
+        },
+        "density_born": {
+          "count": 1350884,
+          "opacity_median": 0.7859590769508491
+        }
+      },
+      "model_sha256": "44fd717d126a20779627c855842399efe6e9748da81e08233ac044ba9bdc991a",
+      "training_receipt": {
+        "run": {
+          "site": "B173nb_b10",
+          "prior": "ALS",
+          "variant": "lt_dyngt"
+        },
+        "gpu": 1,
+        "attempt": 3,
+        "exit_code": 0,
+        "started_at": "2026-10-26T19:52:54.651613+09:00",
+        "finished_at": "2026-10-26T20:45:11.194359+09:00",
+        "seconds": 3136.542793869041,
+        "gpu_peak_total_MiB": 8424.0,
+        "lambda_depth": 0.0025,
+        "source_sha256": {
+          "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+          "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+        },
+        "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+        "scientific_verdict": null
+      }
+    }
+  ],
+  "next_action": {
+    "status": "PROPOSED_NOT_AUTHORIZED",
+    "training_restarts": 0,
+    "additional_fixed_post_attempts": 1,
+    "unchanged": [
+      "trained model",
+      "loss",
+      "scoring",
+      "variants",
+      "TSDF voxel 0.05 m",
+      "truncation 0.25 m",
+      "depth limit 300 m",
+      "no mesh cleanup",
+      "48 GiB container limit"
+    ],
+    "proposed_admission": {
+      "minimum_host_available_GiB": 64,
+      "stable_seconds": 60,
+      "large_cpu_and_tsdf_serial": true
+    },
+    "reason_for_user_input": "same fixed arm: initial 3001 stop plus two TSDF post OOM stops = three",
+    "scientific_verdict": null
+  },
+  "scientific_verdict": null
+}

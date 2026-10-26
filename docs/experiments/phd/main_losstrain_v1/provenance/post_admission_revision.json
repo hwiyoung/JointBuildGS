@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-26T20:47:11.096404+09:00",
+  "old_available_GiB": 56,
+  "new_available_GiB": 52,
+  "container_limit_GiB": 48,
+  "reason": "CPU mesh/AXES/sections and TSDF now share a lock; training finished with about 54 GiB host available; retain 4 GiB headroom",
+  "computation_or_training_settings_changed": false,
+  "scientific_verdict": null
+}

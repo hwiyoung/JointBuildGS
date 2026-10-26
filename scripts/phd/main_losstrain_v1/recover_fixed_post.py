@@ -1,8 +1,10 @@
 """Preserve the confirmed host-OOM event and retry only fixed's post, once.
 
 No training/model or postprocessing argument changes. The completed model is read.
-Admission waits for 48 GiB container limit plus 8 GiB host headroom.
+Admission waits for 48 GiB container limit plus 4 GiB host headroom after
+serializing CPU mesh readouts. The initial 56 GiB waiting rule is preserved.
 """
+import argparse
 import fcntl
 import json
 import subprocess
@@ -16,10 +18,7 @@ def available_gib():
     return int(values['MemAvailable'].split()[0])/1024**2
 
 
-def main():
-    unit=C.OUT/'runs/B173nb_b10/lt_fixgt_ALS_s0'
-    record=C.OUT/'checks/fixed_post_host_oom'
-    record.mkdir(exist_ok=True)
+def prepare(unit,record):
     assert not (record/'preparation.json').exists() and not (unit/'post_attempt_1.log').exists()
     receipt=json.loads((unit/'post_attempt_0_receipt.json').read_text())
     assert receipt['exit_code']==137 and (unit/'PASS.json').exists()
@@ -58,11 +57,32 @@ def main():
         original_receipt=receipt,scientific_verdict=None))
     C.save(C.REPO/'docs/experiments/phd/main_losstrain_v1/provenance/fixed_post_host_oom.json',
         json.loads((record/'preparation.json').read_text()))
+    return command
+
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--resume-wait',action='store_true');a=ap.parse_args()
+    unit=C.OUT/'runs/B173nb_b10/lt_fixgt_ALS_s0';record=C.OUT/'checks/fixed_post_host_oom'
+    record.mkdir(exist_ok=True)
+    assert not (unit/'post_attempt_1.log').exists()
+    if a.resume_wait:
+        prior=json.loads((record/'preparation.json').read_text())
+        assert prior['post_retry_limit']==1 and (unit/'post').exists()
+        assert C.sha(unit/'post_command.json')==prior['command_sha256']
+        assert C.sha(C.OUT/'checks/full_grace_STOP.json')==prior['restored_historical_stop_sha256']
+        command=json.loads((unit/'post_command.json').read_text())
+        (record/'memory_wait_initial_56GiB.json').write_bytes((record/'memory_wait.json').read_bytes())
+        change=dict(at=C.now(),old_available_GiB=56,new_available_GiB=52,container_limit_GiB=48,
+            reason='CPU mesh/AXES/sections and TSDF now share a lock; training finished with about 54 GiB host available; retain 4 GiB headroom',
+            computation_or_training_settings_changed=False,scientific_verdict=None)
+        C.save(record/'admission_revision.json',change)
+        C.save(C.REPO/'docs/experiments/phd/main_losstrain_v1/provenance/post_admission_revision.json',change)
+    else:command=prepare(unit,record)
     with (C.OUT/'checks/tsdf.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         start=time.monotonic()
-        while available_gib()<56:
-            C.save(record/'memory_wait.json',dict(at=C.now(),available_GiB=available_gib(),required_GiB=56,seconds=time.monotonic()-start,scientific_verdict=None))
+        while available_gib()<52:
+            C.save(record/'memory_wait.json',dict(at=C.now(),available_GiB=available_gib(),required_GiB=52,seconds=time.monotonic()-start,scientific_verdict=None))
             time.sleep(10)
         wait=time.monotonic()-start
         (unit/'post').rename(unit/'post_attempt_0_host_oom')

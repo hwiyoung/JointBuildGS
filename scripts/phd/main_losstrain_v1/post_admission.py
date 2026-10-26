@@ -12,7 +12,7 @@ def memory_available_gib():
 
 
 @contextmanager
-def admit(record,root=Path('/o'),minimum_gib=56,read_memory=memory_available_gib,sleep=time.sleep):
+def admit(record,root=Path('/o'),minimum_gib=52,read_memory=memory_available_gib,sleep=time.sleep):
     start=time.monotonic()
     with ExitStack() as stack:
         for gpu in [0,1]:
