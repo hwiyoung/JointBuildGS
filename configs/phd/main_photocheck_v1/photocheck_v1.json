@@ -23,16 +23,17 @@
   "points": {
     "spacing_m": 0.5,
     "patch_spacing_m": 0.25,
-    "group": "same tile, surface, building and kind; never cross split",
-    "grid": "LoD2: normalized source tangents; ALS: XY; origin min regular coordinate per surface; floor((coord-min)/0.5 + 1e-7)",
-    "grid_check": "distance to nearest 0.25 m integer offset <=1e-5 m; non-grid faces use tangent plane; extras attach closest point within 0.5 m in same surface/building/kind or singleton",
+    "group": "same tile, surface and kind, within each sealed split; ALS origin shared across all buildings and both splits of that surface",
+    "grid": "LoD2 normalized source tangents and face minimum; ALS XY minimum of all regular inherited patches on that tile/surface/kind; floor((coord-origin)/0.5+1e-7)",
+    "grid_check": "distance to nearest 0.25 m integer offset <=1e-5 m; non-grid faces use tangent plane; extras attach closest point within 0.5 m in same surface/kind/split or singleton",
     "centre": "area weighted",
     "normal": "unweighted unit mean",
     "tangent1": "first source tangent projected orthogonal to mean normal then normalized",
     "undefined": "keep patch ownership; missing source normal/tangent remains unavailable and yields no eligible photos; never infer from GT",
     "sigma": "median patch sigma; missing retained",
     "mvs_p": "median finite patch mvs_p",
-    "u_mvs_gate": "median finite inherited raw u_mvs"
+    "u_mvs_gate": "median finite inherited raw u_mvs",
+    "building": "largest contributing area as primary building; ALS building_ids records every contributor; patch-level tables retain each original building; shared-cell split at development/holdout boundary only"
   },
   "uncertainty": {
     "unit": "metre",
@@ -258,7 +259,7 @@
     "interpolation": "bilinear",
     "NCC": "population standardization; mean over all selected valid image pairs; zero-variance vectors have NCC undefined, not fabricated",
     "score": "equivalent normalized-vector identity (norm(sum vectors)^2 - sum squared norms)/(m*(m-1)); height missing if fewer than 3 images",
-    "dtype_compute": "float32 (verify against float64 pairwise reference)",
+    "dtype_compute": "float64 geometry and projection; float32 image interpolation and NCC; float16 stored curve",
     "dtype_store": "float16 curve plus float32 extracted values",
     "texture": "median population standard deviation at h=0",
     "at_height": "fixed selected cameras; exclude out-of-image or invalid projection at this h only; no new visibility test"
@@ -509,5 +510,33 @@
     ]
   },
   "source_tag": "[이 발주에서 냄]",
-  "amendments": []
+  "amendments": [
+    {
+      "id": "projection_float64",
+      "at": "2026-10-26T16:30:39.442986+09:00",
+      "previous_sha256": "eb7ce1a5707ec5da82542ebf4847523e0e6b06579a255e76f069c54791196850",
+      "reason": "On 256 identical benchmark points CPU/GPU float32 projection led to max stored curve difference 0.003143310546875, with all 3840 candidate decisions equal. Raise world-to-image arithmetic to float64 before native float32 interpolation. No GT, threshold or selection change. First full pilot curves not started.",
+      "previous": "float32 (verify against float64 pairwise reference)"
+    },
+    {
+      "id": "als_surface_origin",
+      "at": "2026-10-26T16:59:32.743958+09:00",
+      "previous_sha256": "1b46aecc6e7d6ab5e6c5864db4e6b92e3bfeec85e80e34904ec168aaa2934074",
+      "reason": "Code audit found 105 development ALS faces spanning buildings. Correct grouping to the requested same-surface grid instead of restarting its origin per building. No GT or curve outcome was used to choose this correction. Existing ALS group outputs invalidated. LoD2 faces each belong to one building, so its computed geometry and curves are unchanged.",
+      "previous_points": {
+        "spacing_m": 0.5,
+        "patch_spacing_m": 0.25,
+        "group": "same tile, surface, building and kind; never cross split",
+        "grid": "LoD2: normalized source tangents; ALS: XY; origin min regular coordinate per surface; floor((coord-min)/0.5 + 1e-7)",
+        "grid_check": "distance to nearest 0.25 m integer offset <=1e-5 m; non-grid faces use tangent plane; extras attach closest point within 0.5 m in same surface/building/kind or singleton",
+        "centre": "area weighted",
+        "normal": "unweighted unit mean",
+        "tangent1": "first source tangent projected orthogonal to mean normal then normalized",
+        "undefined": "keep patch ownership; missing source normal/tangent remains unavailable and yields no eligible photos; never infer from GT",
+        "sigma": "median patch sigma; missing retained",
+        "mvs_p": "median finite patch mvs_p",
+        "u_mvs_gate": "median finite inherited raw u_mvs"
+      }
+    }
+  ]
 }

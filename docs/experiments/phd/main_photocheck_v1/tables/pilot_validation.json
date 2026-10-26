@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "at": "2026-10-26T17:30:42.731219+09:00",
+  "rows": [
+    {
+      "prior": "LoD2",
+      "roof_points": 55367,
+      "roof_patches": 208160,
+      "roof_area_m2": 13010.0,
+      "candidate_decisions_verified": 1191120
+    },
+    {
+      "prior": "ALS",
+      "roof_points": 48647,
+      "roof_patches": 172973,
+      "roof_area_m2": 11360.751912316413,
+      "candidate_decisions_verified": 729705
+    }
+  ],
+  "pilot_figures": 46,
+  "projection_figures": 24,
+  "checks": [
+    "all six-building inherited roof patch IDs exactly once",
+    "all persisted point decisions replayed",
+    "all 60 summary rows per prior",
+    "wall excluded from roof summaries",
+    "public holdout ID scan",
+    "source syntax",
+    "pilot file hashes"
+  ],
+  "scientific_verdict": null
+}

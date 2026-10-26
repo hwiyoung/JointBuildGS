@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import resource
+import uuid
 from pathlib import Path
 import numpy as np
 
@@ -34,7 +35,19 @@ def dump(p,x):
 def load(p): return json.loads(Path(p).read_text())
 def npz(p):
     with np.load(p,allow_pickle=False) as z: return {k:z[k] for k in z.files}
-def env(): return dict(at=now(),commit=os.environ.get('PHOTOCHECK_COMMIT'),image=os.environ.get('PHOTOCHECK_IMAGE'),scripts_sha256={p.name:sha(p) for p in S.glob('*.py')},peak_rss_gib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024**2,scientific_verdict=None)
+_SOURCE_AT=now()
+_SOURCE_BYTES={p.name:p.read_bytes() for p in S.glob('*.py')}
+_SOURCE_HASHES={k:hashlib.sha256(v).hexdigest() for k,v in _SOURCE_BYTES.items()}
+_SOURCE_ID=hashlib.sha256(json.dumps(_SOURCE_HASHES,sort_keys=True).encode()).hexdigest()
+def env():
+    folder=O/'source_snapshots'/_SOURCE_ID
+    folder.mkdir(parents=True,exist_ok=True)
+    for name,content in _SOURCE_BYTES.items():
+        p=folder/name
+        if not p.exists():
+            tmp=folder/f'.{name}.{uuid.uuid4().hex}';tmp.write_bytes(content);tmp.replace(p)
+        assert sha(p)==_SOURCE_HASHES[name]
+    return dict(at=now(),source_captured_at=_SOURCE_AT,source_snapshot=str(folder),commit=os.environ.get('PHOTOCHECK_COMMIT'),image=os.environ.get('PHOTOCHECK_IMAGE'),scripts_sha256=_SOURCE_HASHES,peak_rss_gib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024**2,scientific_verdict=None)
 def paths(sealed=False):
     base=O/'holdout' if sealed else O
     for sub in ['geometry','points','patches','work']: (base/sub).mkdir(parents=True,exist_ok=True)

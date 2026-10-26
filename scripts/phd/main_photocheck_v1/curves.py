@@ -21,13 +21,13 @@ def project_torch(X,R,t,p,w,h):
     guard=(z>0)&torch.isfinite(u)&torch.isfinite(v)&(px>=-200)&(px<=w+200)&(py>=-200)&(py<=h+200)&((u-px)**2+(v-py)**2<400**2)
     return u,v,guard
 
-def compute(g,selection,device='cuda',chunk_points=2048,subbatch=48,progress=None):
+def compute(g,selection,device='cuda',chunk_points=8192,subbatch=48,progress=None):
     torch.set_num_threads(8)
     cam=Cameras();n=len(g['centre']);heights=height_array(g)
     scores=np.full((n,148),np.nan,np.float32);texture=np.full(n,np.nan,np.float32);valid_count=np.zeros((n,148),np.uint8)
     texture_by_view=np.full((n,10),np.nan,np.float32);zero_count=np.zeros((n,148),np.uint8)
     levels=np.full((n,10),-1,np.int8);timing=[]
-    dev=torch.device(device);to=lambda a:torch.as_tensor(np.asarray(a),device=dev,dtype=torch.float32)
+    dev=torch.device(device);to=lambda a:torch.as_tensor(np.asarray(a),device=dev,dtype=torch.float64)
     p=to(cam.p);R=to(cam.R);t=to(cam.t)
     uv=np.stack(np.meshgrid(np.arange(25)*.02-.24,np.arange(25)*.02-.24,indexing='xy'),-1).reshape(625,2)
     offsets=to(uv);corners=to([[-.25,-.25],[.25,-.25],[.25,.25],[-.25,.25]])
@@ -46,7 +46,7 @@ def compute(g,selection,device='cuda',chunk_points=2048,subbatch=48,progress=Non
                 inds=np.flatnonzero(lev==level);local2=local[inds];slots2=slots[inds]
                 image=cam.gray(int(j),int(level));ih,iw=image.shape
                 # Explicit owned copy avoids non-writable NumPy mappings and releases after one camera.
-                im=to(np.array(image,copy=True))[None,None];del image
+                im=torch.as_tensor(np.array(image,copy=True),device=dev,dtype=torch.float32)[None,None];del image
                 for pos in range(0,len(local2),subbatch):
                     ii=local2[pos:pos+subbatch];ss=slots2[pos:pos+subbatch];ix=torch.as_tensor(ii,device=dev)
                     centres=c[ix,None,:]+hh[ix,:,None]*normal[ix,None,:]
@@ -60,7 +60,7 @@ def compute(g,selection,device='cuda',chunk_points=2048,subbatch=48,progress=Non
                     u=(u+.5)*(iw/cam.w)-.5;v=(v+.5)*(ih/cam.h)-.5
                     good&=(u>=0).all(-1)&(u<=iw-1).all(-1)&(v>=0).all(-1)&(v<=ih-1).all(-1)
                     grid=torch.stack([2*u/(iw-1)-1,2*v/(ih-1)-1],-1).reshape(1,len(ii)*148,625,2)
-                    grid=torch.nan_to_num(grid,nan=-3.,posinf=3.,neginf=-3.)
+                    grid=torch.nan_to_num(grid,nan=-3.,posinf=3.,neginf=-3.).float()
                     samples=F.grid_sample(im,grid,mode='bilinear',padding_mode='zeros',align_corners=True).reshape(len(ii),148,625)
                     centered=samples-samples.mean(-1,keepdim=True);std=(centered.square().mean(-1)).sqrt()
                     texture_by_view[ids0[ii],ss]=torch.where(good[:,70],std[:,70],torch.nan).cpu().numpy()

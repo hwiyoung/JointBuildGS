@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-26T17:22:21.676376+09:00",
+  "original_measurement_config_sha256": "e19814d872fd5b5626fc182468758eb0cf37cdefa378e311f338d0c6be9b5e21",
+  "reason": "Specify the separately requested R1 gap illustration before first curve figures. Located from prior-only surface map and original photograph, without GT or scores. Numerical processing and existing locked sections unchanged.",
+  "source_photo": "DJI_20241217084543_0095_D.JPG",
+  "inspection_source": "/out/inspection/r1_prior_surfaces.png",
+  "inspection_sha256": "64a63d0358bde9065da6acc711388b535843dcb3d93fe5dcbf50f6957e18ee93",
+  "sites": [
+    {
+      "id": "R1_gap",
+      "building": "DEBY_LOD2_4906975",
+      "prior": "LoD2",
+      "tile": "6909_53361",
+      "surface": 323,
+      "targets_xy_m": [
+        [
+          -10.42,
+          35.06
+        ],
+        [
+          -10.42,
+          41.06
+        ]
+      ],
+      "selection_reason": "R1 narrow gap between the requested building and adjacent barrel roof, identified on photo 74 and prior surface 323; nearest point to fixed XY targets; no GT or curve filter"
+    }
+  ],
+  "example_rule": "Use same building locked section for both priors when only one prior section was supplied; two nearest roof points at section 40% and 60%.",
+  "scientific_verdict": null
+}

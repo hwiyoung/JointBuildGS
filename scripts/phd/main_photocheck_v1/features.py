@@ -11,7 +11,9 @@ def derive(h,score,sigma,mvs,texture,count):
             j=np.argmax(ss);out['s_max'][i]=ss[j];out['h_max'][i]=hh[j];out['s_med'][i]=np.median(ss)
             zero=np.flatnonzero(np.abs(hh)<1e-7)
             if len(zero):out['s0'][i]=ss[zero[0]]
-            if np.isfinite(mvs[i]):out['s_mvs'][i]=ss[np.argmin(abs(hh-mvs[i]))]
+            if np.isfinite(mvs[i]):
+                sampled=np.flatnonzero(np.isfinite(h[i]));nearest=sampled[np.argmin(abs(h[i,sampled]-mvs[i]))]
+                out['s_mvs'][i]=score[i,nearest]
             peaks=np.zeros(len(hh),bool)
             for k in range(1,len(hh)-1):
                 nearby=abs(hh-hh[k])<=.100001

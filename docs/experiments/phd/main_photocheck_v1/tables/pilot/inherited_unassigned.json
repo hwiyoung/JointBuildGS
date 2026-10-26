@@ -1,0 +1,28 @@
+{
+  "rows": [
+    {
+      "prior": "LoD2",
+      "source": "W/holdout/internal/patch_geometry/*.json: aggregate unassigned input support only",
+      "patches": 0,
+      "area_m2": 0.0,
+      "kind_scope": "all inherited kinds; roof-only excluded split unavailable",
+      "included_in_current_points": false
+    },
+    {
+      "prior": "ALS",
+      "source": "W/holdout/internal/patch_geometry/*.json: aggregate unassigned input support only",
+      "patches": 24749,
+      "area_m2": 2312.2382888459642,
+      "kind_scope": "all inherited kinds; roof-only excluded split unavailable",
+      "included_in_current_points": false
+    }
+  ],
+  "source": "[이 발주에서 냄]",
+  "population": "development pilot; roof only",
+  "generator": "/repo/scripts/phd/main_photocheck_v1/evaluate.py",
+  "generator_sha256": "37ec9bece2d2d02204cefef38a0c5a5cf1ce40ccd27aea8d7437954b5ca42081",
+  "config_sha256": "e19814d872fd5b5626fc182468758eb0cf37cdefa378e311f338d0c6be9b5e21",
+  "point_source": "/out/work/pilot",
+  "patch_source": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values",
+  "scientific_verdict": null
+}

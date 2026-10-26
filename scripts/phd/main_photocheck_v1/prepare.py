@@ -77,7 +77,15 @@ def freeze():
 def group(d,prior,tile):
     sp,sm=sigmas(d,prior);n=len(d['centre']);owner=np.full(n,-1,np.int32);rows=[];audit=[]
     if not n:return {},owner,audit
-    groupkeys=np.array([f'{s}:{b}:{k}' for s,b,k in zip(d['surf'],d['building'],d['kind'])])
+    groupkeys=np.array([f'{s}:{k}' for s,k in zip(d['surf'],d['kind'])])
+    # Use the same surface origin on both sides of the sealed split.
+    global_origins={}
+    if prior=='ALS':
+        with np.load(W/'holdout/internal/patch_geometry'/f'{tile}_{prior}.npz') as source:
+            regular_all=~source['source_extra'];surfaces=source['surf'];kinds=source['kind'];centres=source['centre']
+            for key in np.unique(groupkeys):
+                face,kind=map(int,key.split(':'));m=regular_all&(surfaces==face)&(kinds==kind)
+                if m.any():global_origins[key]=centres[m,:2].min(0)
     for key in np.unique(groupkeys):
         ids=np.flatnonzero(groupkeys==key);regular=ids[~d['source_extra'][ids]];extras=ids[d['source_extra'][ids]]
         t=d['tangent1'][regular[0]] if len(regular) else d['tangent1'][ids[0]]
@@ -85,7 +93,7 @@ def group(d,prior,tile):
         xy=d['centre'][regular,:2] if prior=='ALS' else np.c_[d['centre'][regular]@t,d['centre'][regular]@t2]
         fallback=False;groups=[]
         if len(regular):
-            delta=xy-xy.min(0);residual=np.max(np.abs(delta/.25-np.rint(delta/.25)))*.25
+            delta=xy-global_origins.get(key,xy.min(0));residual=np.max(np.abs(delta/.25-np.rint(delta/.25)))*.25
             if residual>1e-5:
                 fallback=True;xy=np.c_[d['centre'][regular]@t,d['centre'][regular]@t2];delta=xy-xy.min(0)
             uv=np.floor(delta/.5+1e-7).astype(np.int64);_,inv=np.unique(uv,axis=0,return_inverse=True)
@@ -103,7 +111,10 @@ def group(d,prior,tile):
             ok=norm>1e-8 and ln>1e-8
             def med(v):return float(np.nanmedian(v)) if np.isfinite(v).any() else np.nan
             idx=len(rows);owner[g]=idx
-            rows.append(dict(point_id=f'{prior}:{tile}:point:{idx}',tile=tile,prior=prior,building=d['building'][g[0]],holdout=d['holdout'][g[0]],kind=d['kind'][g[0]],surf=d['surf'][g[0]],centre=centre,normal=normal,tangent1=e,tangent2=e2,geometry_valid=ok,sigma=med(sp[g]),mvs_p=med(d['mvs_p'][g]),raw_u_mvs=med(d['u_mvs'][g]),sigma_mvs=med(sm[g]),area=weights.sum(),patch_count=len(g)))
+            bn,bi=np.unique(d['building'][g],return_inverse=True);ba=np.bincount(bi,weights=weights);building=bn[np.argmax(ba)]
+            row=dict(point_id=f'{prior}:{tile}:point:{idx}',tile=tile,prior=prior,building=building,holdout=d['holdout'][g[0]],kind=d['kind'][g[0]],surf=d['surf'][g[0]],centre=centre,normal=normal,tangent1=e,tangent2=e2,geometry_valid=ok,sigma=med(sp[g]),mvs_p=med(d['mvs_p'][g]),raw_u_mvs=med(d['u_mvs'][g]),sigma_mvs=med(sm[g]),area=weights.sum(),patch_count=len(g))
+            if prior=='ALS':row['building_ids']=';'.join(bn)
+            rows.append(row)
     assert (owner>=0).all();return {k:np.array([r[k] for r in rows]) for k in rows[0]},owner,audit
 
 def main():
