@@ -1,0 +1,16 @@
+{
+  "status": "PARTIAL_AFTER_ONE_REVISION",
+  "question": "이 그림이 보여 주는 것을 한 문장으로",
+  "round1": {
+    "agent": "blind_b",
+    "answer": "두 건물의 실제 사진과 높이 단면을 통해 입력 형상, 다섯 방법의 복원 결과, 그리고 τ 범위 안에 든 비율을 비교한 그림이다.",
+    "assessment": "Recognizes comparison but not intended prior-preservation versus correction direction."
+  },
+  "revision": "Add colour legend, keep common axes enclosing all input and GT heights without extending to remote result outliers, use exact original 0.25m GT heights in input panel, keep all unfiltered mesh segments in JSON and count segments outside the displayed axes.",
+  "scientific_verdict": null,
+  "round2": {
+    "agent": "blind_b_second",
+    "answer": "이 그림은 두 건물의 지붕 단면에서 사전 정보와 MVS를 활용한 여러 복원 방법을 참값과 비교하며, 본 방법의 참값 허용오차 τ 이내 비율이 각각 85%와 100%임을 보여 줍니다.",
+    "assessment": "방법 비교와 수치는 읽히지만 요청한 두 지붕 모두의 사전 정보 잔류는 읽히지 않음. B173 실제 단면은 그 주장을 지원하지 않으므로 PARTIAL."
+  }
+}

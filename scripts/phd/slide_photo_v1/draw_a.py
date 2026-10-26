@@ -28,18 +28,18 @@ def legacy_panel(site,face,view,patches=None):
     gt=np.load(U/'points'/site/'gt_xyz.npy',mmap_mode='r');poses,cams=models();_,cam=cameras_depth();Z=zbuffer(gt,poses[view],cam)
     tau={'B0_b10':.1975,'B173nb_b10':.176,'R1rep_b10':.7246}[site]
     valid=np.isfinite(D)&(D>0)&(cf>0);missing=roi&~valid;known=np.isfinite(Z);wrong=roi&valid&known&(abs(D-Z)>tau)
-    lab=np.zeros_like(D,np.uint8);lab[missing]=1;lab[wrong]=2
+    lab=np.zeros_like(D,np.uint8);lab[missing&known]=1;lab[wrong]=2
     marked=native_mask(im,photo,lab,cam)
-    n=int(roi.sum());rec=dict(site=site,face=face,patch_indices=idx,photo=photo,tau_m=tau,pixels=n,missing_share=float(missing.sum()/n) if n else None,wrong_share=float(wrong.sum()/n) if n else None,unknown_gt_share=float((roi&~known).sum()/n) if n else None,gt_visible_pixels=int((roi&known).sum()),source_depth=str(ex/'mvs'/f'{view}.npy'),confidence=str(ex/'conf'/f'{view}.npy'),gt_source=str(U/'points'/site/'gt_xyz.npy'),denominator='all projected ROI pixels; wrong counted only at occupied exact GT z-buffer pixels; no interpolation')
+    n=int(roi.sum());rec=dict(site=site,face=face,patch_indices=idx,photo=photo,tau_m=tau,pixels=n,missing_share=float(missing.sum()/n) if n else None,wrong_share=float(wrong.sum()/n) if n else None,unknown_gt_share=float((roi&~known).sum()/n) if n else None,gt_visible_pixels=int((roi&known).sum()),missing_painted_pixels=int((missing&known).sum()),unknown_gt_display='uncoloured for both missing and wrong; missing count itself uses all ROI pixels',source_depth=str(ex/'mvs'/f'{view}.npy'),confidence=str(ex/'conf'/f'{view}.npy'),gt_source=str(U/'points'/site/'gt_xyz.npy'),denominator='all projected ROI pixels; wrong counted only at occupied exact GT z-buffer pixels; no interpolation')
     return im,marked,rec
 def specular_panel(row):
     photo=row['photos'][0];X=np.asarray(row['gt_representative']);view=photo['view'];im,photo=crop_native(view,X,aspect=1/1.9 if not row['roof'] else 1.9,pad=.12);poses,cam=cameras_depth();pose=poses[view]
     Q=np.asarray(row['centre']);uv,z=G.project(Q,pose,cam);hull=ConvexHull(uv);roi=np.zeros((741,1024),np.uint8);cv2.fillPoly(roi,[np.round(uv[hull.vertices]).astype(np.int32)],1);roi=roi.astype(bool)
     meta=load(PAY/'task0/global_visibility/complete.json');Z=np.load(PAY/'task0/global_visibility/zbuffer.npy',mmap_mode='r')[meta['names'].index(view)].reshape(741,1024)
     dp=W/'mvs/full/stereo/depth_maps'/f'{pose["name"]}.geometric.bin';D=depth(dp);valid=np.isfinite(D)&(D>0);known=np.isfinite(Z);missing=roi&~valid;wrong=roi&valid&known&(abs(D-Z)>row['tau_m'])
-    lab=np.zeros_like(D,np.uint8);lab[missing]=1;lab[wrong]=2;marked=native_mask(im,photo,lab,cam);n=int(roi.sum())
+    lab=np.zeros_like(D,np.uint8);lab[missing&known]=1;lab[wrong]=2;marked=native_mask(im,photo,lab,cam);n=int(roi.sum())
     if not row['roof']:im=im.transpose(Image.Transpose.ROTATE_90);marked=marked.transpose(Image.Transpose.ROTATE_90);photo['display_rotation_deg']=90
-    return im,marked,dict(component_id=row['component_id'],photo=photo,tau_m=row['tau_m'],pixels=n,missing_share=float(missing.sum()/n),wrong_share=float(wrong.sum()/n),unknown_gt_share=float((roi&~known).sum()/n),gt_visible_pixels=int((roi&known).sum()),source_depth=str(dp),confidence='COLMAP geometric depth finite and >0',denominator='component projected hull, all pixels; unknown GT is not called wrong',mask_support='convex hull of component patch centres')
+    return im,marked,dict(component_id=row['component_id'],photo=photo,tau_m=row['tau_m'],pixels=n,missing_share=float(missing.sum()/n),wrong_share=float(wrong.sum()/n),unknown_gt_share=float((roi&~known).sum()/n),gt_visible_pixels=int((roi&known).sum()),missing_painted_pixels=int((missing&known).sum()),unknown_gt_display='uncoloured for both missing and wrong; missing count itself uses all ROI pixels',source_depth=str(dp),confidence='COLMAP geometric depth finite and >0',denominator='component projected hull, all pixels; unknown GT is not called wrong',mask_support='convex hull of component patch centres')
 def main():
     c=config();roof=load(PAY/'selection_a_roof.json')['selected'];selected=load(DOC/'figures/task0_specular_candidates.json')['selected'];assert selected
     # Exact missing columns of PHOTOFIG fig3, only used for this fixed place.

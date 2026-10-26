@@ -73,7 +73,7 @@ def draw_repr():
     ax=fig.add_axes([.12,.18,.84,.25]);ax.scatter(lines[:,0],lines[:,2],s=95,c=c['colours']['gt'],label='참값');ax.plot(lines[:,0],lines[:,1],color=c['colours']['prior'],ls='--',lw=5,label='LoD2');ax.plot(lines[:,0],lines[:,3],color=c['colours']['mvs'],lw=4,label='MVS')
     ax.set_xlim(-2.5,2.5);ax.set_xticks([-2,0,2]);ax.set_xlabel('거리 (m)',fontsize=55);ax.set_yticks([]);ax.spines['left'].set_visible(False)
     for xpos,label,key in [(.02,'참값','gt'),(.35,'LoD2','prior'),(.72,'MVS','mvs')]:ax.text(xpos,1.05,label,color=c['colours'][key],transform=ax.transAxes,fontsize=55)
-    k=np.nanargmin(abs(lines[:,0]-1));v=lines[k];ax.annotate('',(v[0],v[1]),(v[0],v[2]),arrowprops=dict(arrowstyle='<->',lw=3,color='black'));ax.text(.98,.90,f'{abs(sel["prior_signed_median_m"])*100:.1f} cm',ha='right',va='top',transform=ax.transAxes,fontsize=55)
+    k=np.nanargmin(abs(lines[:,0]-1));v=lines[k];ax.annotate('',(v[0],v[1]),(v[0],v[2]),arrowprops=dict(arrowstyle='<->',mutation_scale=12,lw=3,color='black'));ax.text(.98,.90,f'{abs(sel["prior_signed_median_m"])*100:.1f} cm',ha='right',va='top',transform=ax.transAxes,fontsize=55)
     p=DOC/'figures/figS_c_repr.png';fig.savefig(p,dpi=100,facecolor='white');plt.close(fig)
     dump(p.with_suffix('.json'),dict(task_id=c['task_id'],scientific_verdict=None,selection={k:v for k,v in sel.items() if k!='all_faces'},photo=photo,photo_selection=best,section=dict(mid_xy=mid,axis_xy=axis,length_m=5,half_width_m=.6,bin_m=.25,heights=lines,zero_m=zero,vertical_exaggeration=True),reference_tau_cm=19.75,source='Existing UNCERT input measurements; aggregation [이 발주에서 냄]'))
     im.save(PAY/'c_repr_native.png');dump(PAY/'c_repr_photo.json',photo);print('DRAW c_repr',best,flush=True)

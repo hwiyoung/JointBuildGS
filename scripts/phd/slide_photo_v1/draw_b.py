@@ -28,7 +28,7 @@ def main():
             else:
                 V,F,minfo=geom.read_ply_mesh_box(mesh,[min(start[0],end[0]),min(start[1],end[1]),max(start[0],end[0]),max(start[1],end[1])],margin=3)
                 seg=geom.cut_vertical(V,F,start,axis,[0,length])
-            if len(seg):ylo=min(ylo,float(seg[:,:,1].min()));yhi=max(yhi,float(seg[:,:,1].max()))
+            # No height filter on intersections; common displayed limits cover all input/reference points.
             with np.load(dp) as d:
                 idx=d['r_idx'];src=rows['src'][idx];pid=rows['point'][idx];P=np.zeros((len(idx),3))
                 for kind,X in points.items():P[src==kind]=X[pid[src==kind]]
@@ -40,13 +40,14 @@ def main():
         bottom=.57 if row==0 else .075;height=.32
         ax=fig.add_axes([.005,bottom,.17,height]);photo=REPO/f'docs/experiments/phd/main_regionfig_v1/figures/crops/{ex["id"]}_표시.png';ax.imshow(Image.open(photo));ax.axis('off');ax.set_title('실제 사진',fontsize=35,pad=8)
         for col in range(6):
-            ax=fig.add_axes([.19+col*.132,bottom,.117,height]);ax.scatter(gtline[:,0],gtline[:,1],c=c['colours']['gt'],s=.7,alpha=.65,rasterized=True)
+            ax=fig.add_axes([.19+col*.132,bottom,.117,height]);ref=np.c_[ss,H[:,2]] if col==0 else gtline;ax.scatter(ref[:,0],ref[:,1],c=c['colours']['gt'],s=22 if col==0 else .7,alpha=.9 if col==0 else .65,rasterized=True)
             ax.plot(ss,H[:,0],ls='--',color=c['colours']['prior'],lw=3,alpha=1 if col==0 else .32)
             if col==0:ax.plot(ss,H[:,1],color=c['colours']['mvs'],lw=3);name='입력'
             else:
                 o=outputs[col-1];ax.add_collection(LineCollection(o['section_segments'],colors=c['colours']['result'],linewidths=3.2));name=o['name']
                 txt=f'τ 안 {o["within_tau_share"]*100:.0f} %' if o['within_tau_share'] is not None else 'τ 안 확인 불가';ax.text(.5,-.22,txt,transform=ax.transAxes,ha='center',fontsize=35)
             ax.set(xlim=(0,length),ylim=(ylo-.15,yhi+.15));ax.set_xticks([0,round(length)]);ax.tick_params(labelsize=35);ax.set_title(name,fontsize=35,pad=8)
+            ax.get_xticklabels()[0].set_ha('left');ax.get_xticklabels()[-1].set_ha('right')
             if col:ax.set_yticks([])
             else:
                 ticks=np.linspace(ylo,yhi,3);ax.set_yticks(ticks);ax.set_yticklabels([f'{v-zero:.0f}' for v in ticks]);ax.set_ylabel('높이 (m)',fontsize=35)
@@ -59,7 +60,10 @@ def main():
             for cen,t1,t2 in zip(C,T1,T2):
                 poly=np.array([cen+u*t1+v*t2 for u,v in [(-.125,-.125),(.125,-.125),(.125,.125),(-.125,.125)]])[:,:2];inside|=MplPath(poly).contains_points(line,radius=1e-10)
             overlap=dict(source='configs/phd/main_viscmp_v4/places_v4.json V1 place',intersects=bool(inside.any()),sample_step_m=float(length/(len(line)-1)),sample_fraction=float(inside.mean()),inside_s_range_m=[float(ssample[inside].min()),float(ssample[inside].max())] if inside.any() else None,method='0.01m centreline sampling against exact XY footprints of V1 outlined 0.25m patches; no section relocation')
+        for o in outputs:
+            seg=np.asarray(o['section_segments']);o['segments_wholly_outside_display']=int(((seg[:,:,1].max(1)<ylo-.15)|(seg[:,:,1].min(1)>yhi+.15)).sum()) if len(seg) else 0
         allrec.append(dict(example=ex,photo=str(photo),height_range_m=[ylo-.15,yhi+.15],height_zero_m=zero,outputs=outputs,viscmp_v1_overlap=overlap))
+    for xpos,label,key in [(.25,'참값','gt'),(.42,'사전 정보','prior'),(.65,'MVS','mvs'),(.80,'결과','result')]:fig.text(xpos,.99,label,color=c['colours'][key],fontsize=35,ha='center',va='top')
     p=DOC/'figures/figS_b_correction_sections.png';fig.savefig(p,dpi=100,facecolor='white');plt.close(fig)
     dump(p.with_suffix('.json'),dict(task_id=c['task_id'],scientific_verdict=None,source_numbers=str(REPO/'docs/experiments/phd/main_regionfig_v1/tables/영역예시_보정_숫자.json'),examples=allrec,measurement='[이 발주에서 냄]; exact DIST71 r_d rows within unchanged section band; no height window'))
     print('DRAW b',[(r['example']['id'],[(o['name'],o['within_tau_share'],o['point_count']) for o in r['outputs']]) for r in allrec])

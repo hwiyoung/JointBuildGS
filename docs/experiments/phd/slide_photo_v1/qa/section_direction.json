@@ -1,0 +1,2527 @@
+{
+  "status": "MEASURED",
+  "scientific_verdict": null,
+  "scope": "[이 발주에서 냄]; post-render diagnostic, no location/threshold selection or figure modification",
+  "method": "At unchanged REGIONFIG bin centres where |prior-GT|>0.5m, intersect every unfiltered TSDF section segment with vertical bin line. Count whether any intersection is within 0.25m vertically of each input height. All multiple intersections retained; nearest does not establish same-surface correspondence. The 0.25m tolerance is an audit aid, not DIST71 tau or a scientific pass criterion.",
+  "examples": [
+    {
+      "id": "a",
+      "selected_diagnostic_bins": 35,
+      "methods": [
+        {
+          "result": "imgonly_2dgs_s0",
+          "name": "2DGS",
+          "bins": [
+            {
+              "bin_index": 0,
+              "s_m": 0.125,
+              "prior_m": -24.274223867273072,
+              "gt_m": -27.742376712279793,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 2.431959973495033,
+              "nearest_gt_abs_vertical_m": 1.0361928715116875
+            },
+            {
+              "bin_index": 1,
+              "s_m": 0.375,
+              "prior_m": -24.20953936541365,
+              "gt_m": -27.750397444429264,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 2.704433888615963,
+              "nearest_gt_abs_vertical_m": 0.8364241903996508
+            },
+            {
+              "bin_index": 2,
+              "s_m": 0.625,
+              "prior_m": -24.140346374507615,
+              "gt_m": -27.828152919502504,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 1.4746713326772678,
+              "nearest_gt_abs_vertical_m": 0.7563736538144816
+            },
+            {
+              "bin_index": 3,
+              "s_m": 0.875,
+              "prior_m": -24.07156544517345,
+              "gt_m": -27.806254614035346,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 3.030332435037561,
+              "nearest_gt_abs_vertical_m": 0.7043567338243335
+            },
+            {
+              "bin_index": 4,
+              "s_m": 1.125,
+              "prior_m": -24.01448661859766,
+              "gt_m": -27.769741165548897,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 3.0463623137194524,
+              "nearest_gt_abs_vertical_m": 0.7088922332317829
+            },
+            {
+              "bin_index": 5,
+              "s_m": 1.375,
+              "prior_m": -23.89679888156597,
+              "gt_m": -27.718563238220362,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 2.9577699619265907,
+              "nearest_gt_abs_vertical_m": 0.8639943947278006
+            },
+            {
+              "bin_index": 6,
+              "s_m": 1.625,
+              "prior_m": -23.82408398169584,
+              "gt_m": -27.71203418681195,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 2.9776490687032577,
+              "nearest_gt_abs_vertical_m": 0.9103011364128548
+            },
+            {
+              "bin_index": 7,
+              "s_m": 1.875,
+              "prior_m": -23.738896219853373,
+              "gt_m": -27.719101189262588,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.002275764985452,
+              "nearest_gt_abs_vertical_m": 0.9779292044237629
+            },
+            {
+              "bin_index": 8,
+              "s_m": 2.125,
+              "prior_m": -23.645771313274835,
+              "gt_m": -27.719218030838555,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.0348246715994414,
+              "nearest_gt_abs_vertical_m": 1.0386220459642779
+            },
+            {
+              "bin_index": 9,
+              "s_m": 2.375,
+              "prior_m": -23.581572694861364,
+              "gt_m": -27.719453259860618,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 0.5316723201166553,
+              "nearest_gt_abs_vertical_m": 1.1850333488349492
+            },
+            {
+              "bin_index": 10,
+              "s_m": 2.625,
+              "prior_m": -23.513982034129878,
+              "gt_m": -27.720894821741314,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 2.9745168815951324,
+              "nearest_gt_abs_vertical_m": 1.232395906016304
+            },
+            {
+              "bin_index": 11,
+              "s_m": 2.875,
+              "prior_m": -23.377448367899177,
+              "gt_m": -27.719129316296495,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 1.9563192024112723,
+              "nearest_gt_abs_vertical_m": 1.2387261242962317
+            },
+            {
+              "bin_index": 12,
+              "s_m": 3.125,
+              "prior_m": -23.342031954964966,
+              "gt_m": -27.693905099480663,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.026608887230065,
+              "nearest_gt_abs_vertical_m": 1.3252642572856317
+            },
+            {
+              "bin_index": 13,
+              "s_m": 3.375,
+              "prior_m": -23.252103051896974,
+              "gt_m": -27.699431154373677,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 2.9335592576538083,
+              "nearest_gt_abs_vertical_m": 1.513768844822895
+            },
+            {
+              "bin_index": 14,
+              "s_m": 3.625,
+              "prior_m": -23.166205558819332,
+              "gt_m": -27.68348664959383,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 1.1061001633810932,
+              "nearest_gt_abs_vertical_m": 3.4076423400139895
+            },
+            {
+              "bin_index": 15,
+              "s_m": 3.875,
+              "prior_m": -23.070669521739013,
+              "gt_m": -27.676187026694443,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 0.5369997482015272,
+              "nearest_gt_abs_vertical_m": 2.0166355019950686
+            },
+            {
+              "bin_index": 16,
+              "s_m": 4.125,
+              "prior_m": -22.98352787712673,
+              "gt_m": -27.650632753282743,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 2.3797646944532715,
+              "nearest_gt_abs_vertical_m": 2.287340181702742
+            },
+            {
+              "bin_index": 17,
+              "s_m": 4.375,
+              "prior_m": -22.93111489045856,
+              "gt_m": -27.659007318002775,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 18,
+              "s_m": 4.625,
+              "prior_m": -22.844231089465428,
+              "gt_m": -27.616443130031943,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 19,
+              "s_m": 4.875,
+              "prior_m": -22.74908169895042,
+              "gt_m": -27.5358860825552,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.35373109937502534,
+              "nearest_gt_abs_vertical_m": 3.0944567573335284
+            },
+            {
+              "bin_index": 20,
+              "s_m": 5.125,
+              "prior_m": -22.676258406363015,
+              "gt_m": -27.414265028870005,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 1.5058043580186542,
+              "nearest_gt_abs_vertical_m": 2.9607087140095096
+            },
+            {
+              "bin_index": 21,
+              "s_m": 5.375,
+              "prior_m": -22.596126367178965,
+              "gt_m": -27.402412261013808,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 2.14910176623248,
+              "nearest_gt_abs_vertical_m": 2.6571841276023633
+            },
+            {
+              "bin_index": 22,
+              "s_m": 5.625,
+              "prior_m": -22.4952489631687,
+              "gt_m": -29.43056059801568,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.301680580716237,
+              "nearest_gt_abs_vertical_m": 3.6336310541307455
+            },
+            {
+              "bin_index": 23,
+              "s_m": 5.875,
+              "prior_m": -22.399429212330396,
+              "gt_m": -29.661342646712264,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 1.8753073869014116,
+              "nearest_gt_abs_vertical_m": 3.5308230396840408
+            },
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -22.31050358598072,
+              "gt_m": -29.41923768782196,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.14130826346716,
+              "nearest_gt_abs_vertical_m": 2.96742583837408
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -22.236827214711774,
+              "gt_m": -29.945644447978765,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 2.472648643555903,
+              "nearest_gt_abs_vertical_m": 3.1762516541231705
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -22.148325672996606,
+              "gt_m": -29.58997542283635,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.933604434817475,
+              "nearest_gt_abs_vertical_m": 2.508045315022269
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -22.06308296665349,
+              "gt_m": -29.517421147850904,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.283097197967962,
+              "nearest_gt_abs_vertical_m": 0.17124098322945258
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -22.00858621776692,
+              "gt_m": -29.857507459090243,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 7.747683107490687,
+              "nearest_gt_abs_vertical_m": 0.1012381338326378
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -22.01729833128715,
+              "gt_m": -27.683176648699273,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.752346468707529,
+              "nearest_gt_abs_vertical_m": 2.0864681512954064
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -22.126031802037357,
+              "gt_m": -27.716150580007074,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.639255537953762,
+              "nearest_gt_abs_vertical_m": 2.0491367599840444
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -23.36946963572602,
+              "gt_m": -27.53361192481944,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.389701511267134,
+              "nearest_gt_abs_vertical_m": 2.2255592221737146
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -23.37745055554978,
+              "gt_m": -27.53412244977048,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.364157105419643,
+              "nearest_gt_abs_vertical_m": 2.207485211198943
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -23.428072361587997,
+              "gt_m": -30.41710215186355,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.314099931382593,
+              "nearest_gt_abs_vertical_m": 0.6749298588929591
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -23.413631340595966,
+              "gt_m": -29.454113717045878,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.339068344056205,
+              "nearest_gt_abs_vertical_m": 0.29858596760629297
+            }
+          ],
+          "present_bins": 33,
+          "bins_with_surface_within_25cm_prior": 0,
+          "bins_with_surface_within_25cm_gt": 2,
+          "median_nearest_prior_vertical_m": 2.9776490687032577,
+          "median_nearest_gt_vertical_m": 1.3252642572856317
+        },
+        {
+          "result": "geogs_ALS_fix1",
+          "name": "GeoGS",
+          "bins": [
+            {
+              "bin_index": 0,
+              "s_m": 0.125,
+              "prior_m": -24.274223867273072,
+              "gt_m": -27.742376712279793,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.2308597567521566,
+              "nearest_gt_abs_vertical_m": 0.23729308825456386
+            },
+            {
+              "bin_index": 1,
+              "s_m": 0.375,
+              "prior_m": -24.20953936541365,
+              "gt_m": -27.750397444429264,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.3395572464453167,
+              "nearest_gt_abs_vertical_m": 0.20130083257029696
+            },
+            {
+              "bin_index": 2,
+              "s_m": 0.625,
+              "prior_m": -24.140346374507615,
+              "gt_m": -27.828152919502504,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 3.446721692303882,
+              "nearest_gt_abs_vertical_m": 0.12949872959836028
+            },
+            {
+              "bin_index": 3,
+              "s_m": 0.875,
+              "prior_m": -24.07156544517345,
+              "gt_m": -27.806254614035346,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 3.496210120871293,
+              "nearest_gt_abs_vertical_m": 0.12708696021208965
+            },
+            {
+              "bin_index": 4,
+              "s_m": 1.125,
+              "prior_m": -24.01448661859766,
+              "gt_m": -27.769741165548897,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.6603511427903825,
+              "nearest_gt_abs_vertical_m": 0.09490340416085274
+            },
+            {
+              "bin_index": 5,
+              "s_m": 1.375,
+              "prior_m": -23.89679888156597,
+              "gt_m": -27.718563238220362,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.792324518651835,
+              "nearest_gt_abs_vertical_m": 0.02943983800255623
+            },
+            {
+              "bin_index": 6,
+              "s_m": 1.625,
+              "prior_m": -23.82408398169584,
+              "gt_m": -27.71203418681195,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.847201160052432,
+              "nearest_gt_abs_vertical_m": 0.04074904506368071
+            },
+            {
+              "bin_index": 7,
+              "s_m": 1.875,
+              "prior_m": -23.738896219853373,
+              "gt_m": -27.719101189262588,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 3.7837835864675213,
+              "nearest_gt_abs_vertical_m": 0.07331876823168315
+            },
+            {
+              "bin_index": 8,
+              "s_m": 2.125,
+              "prior_m": -23.645771313274835,
+              "gt_m": -27.719218030838555,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 3.8279718893940853,
+              "nearest_gt_abs_vertical_m": 0.108956217514379
+            },
+            {
+              "bin_index": 9,
+              "s_m": 2.375,
+              "prior_m": -23.581572694861364,
+              "gt_m": -27.719453259860618,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.052697052595434,
+              "nearest_gt_abs_vertical_m": 0.0851835124038196
+            },
+            {
+              "bin_index": 10,
+              "s_m": 2.625,
+              "prior_m": -23.513982034129878,
+              "gt_m": -27.720894821741314,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 4.122488280793963,
+              "nearest_gt_abs_vertical_m": 0.0844245068174736
+            },
+            {
+              "bin_index": 11,
+              "s_m": 2.875,
+              "prior_m": -23.377448367899177,
+              "gt_m": -27.719129316296495,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 4.088071041050469,
+              "nearest_gt_abs_vertical_m": 0.1183356060807661
+            },
+            {
+              "bin_index": 12,
+              "s_m": 3.125,
+              "prior_m": -23.342031954964966,
+              "gt_m": -27.693905099480663,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.261407521174373,
+              "nearest_gt_abs_vertical_m": 0.09046562334132346
+            },
+            {
+              "bin_index": 13,
+              "s_m": 3.375,
+              "prior_m": -23.252103051896974,
+              "gt_m": -27.699431154373677,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.364856120980669,
+              "nearest_gt_abs_vertical_m": 0.08247198149603463
+            },
+            {
+              "bin_index": 14,
+              "s_m": 3.625,
+              "prior_m": -23.166205558819332,
+              "gt_m": -27.68348664959383,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 2.724982861329913,
+              "nearest_gt_abs_vertical_m": 0.03938726013402416
+            },
+            {
+              "bin_index": 15,
+              "s_m": 3.875,
+              "prior_m": -23.070669521739013,
+              "gt_m": -27.676187026694443,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 4.074210278420004,
+              "nearest_gt_abs_vertical_m": 0.029001631802991312
+            },
+            {
+              "bin_index": 16,
+              "s_m": 4.125,
+              "prior_m": -22.98352787712673,
+              "gt_m": -27.650632753282743,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 4.083284359348873,
+              "nearest_gt_abs_vertical_m": 0.007035333058180271
+            },
+            {
+              "bin_index": 17,
+              "s_m": 4.375,
+              "prior_m": -22.93111489045856,
+              "gt_m": -27.659007318002775,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 4.218792147269145,
+              "nearest_gt_abs_vertical_m": 0.005053673729616293
+            },
+            {
+              "bin_index": 18,
+              "s_m": 4.625,
+              "prior_m": -22.844231089465428,
+              "gt_m": -27.616443130031943,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 4.263417057684869,
+              "nearest_gt_abs_vertical_m": 0.0638340841327576
+            },
+            {
+              "bin_index": 19,
+              "s_m": 4.875,
+              "prior_m": -22.74908169895042,
+              "gt_m": -27.5358860825552,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 4.370045008053854,
+              "nearest_gt_abs_vertical_m": 0.1368690339535341
+            },
+            {
+              "bin_index": 20,
+              "s_m": 5.125,
+              "prior_m": -22.676258406363015,
+              "gt_m": -27.414265028870005,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 4.483224499318954,
+              "nearest_gt_abs_vertical_m": 0.23209790093098093
+            },
+            {
+              "bin_index": 21,
+              "s_m": 5.375,
+              "prior_m": -22.596126367178965,
+              "gt_m": -27.402412261013808,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.089034269380306,
+              "nearest_gt_abs_vertical_m": 0.28274837554546295
+            },
+            {
+              "bin_index": 22,
+              "s_m": 5.625,
+              "prior_m": -22.4952489631687,
+              "gt_m": -29.43056059801568,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.21494730263759,
+              "nearest_gt_abs_vertical_m": 1.7203643322093924
+            },
+            {
+              "bin_index": 23,
+              "s_m": 5.875,
+              "prior_m": -22.399429212330396,
+              "gt_m": -29.661342646712264,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.172689937450507,
+              "nearest_gt_abs_vertical_m": 2.0892234969313606
+            },
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -22.31050358598072,
+              "gt_m": -29.41923768782196,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.114053754715165,
+              "nearest_gt_abs_vertical_m": 1.9946803471260743
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -22.236827214711774,
+              "gt_m": -29.945644447978765,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.785483778134719,
+              "nearest_gt_abs_vertical_m": 2.9233334551322727
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -22.148325672996606,
+              "gt_m": -29.58997542283635,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.98110275296089,
+              "nearest_gt_abs_vertical_m": 2.460546996878854
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -22.06308296665349,
+              "gt_m": -29.517421147850904,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.2544377325820477,
+              "nearest_gt_abs_vertical_m": 0.27664218908538984
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -22.00858621776692,
+              "gt_m": -29.857507459090243,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.278081080995335,
+              "nearest_gt_abs_vertical_m": 0.5708401603279896
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -22.01729833128715,
+              "gt_m": -27.683176648699273,
+              "intersection_count": 7,
+              "nearest_prior_abs_vertical_m": 5.536607294066826,
+              "nearest_gt_abs_vertical_m": 0.000964348553438299
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -22.126031802037357,
+              "gt_m": -27.716150580007074,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 1.0428714473447194,
+              "nearest_gt_abs_vertical_m": 1.7425215772888265
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -23.36946963572602,
+              "gt_m": -27.53361192481944,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.16518152793835128,
+              "nearest_gt_abs_vertical_m": 1.074033924631248
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -23.37745055554978,
+              "gt_m": -27.53412244977048,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 5.131894224527652,
+              "nearest_gt_abs_vertical_m": 0.975222330306952
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -23.428072361587997,
+              "gt_m": -30.41710215186355,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 5.141564544854631,
+              "nearest_gt_abs_vertical_m": 0.8777407716799175
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -23.413631340595966,
+              "gt_m": -29.454113717045878,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 5.232305419053546,
+              "nearest_gt_abs_vertical_m": 0.08218127586326318
+            }
+          ],
+          "present_bins": 35,
+          "bins_with_surface_within_25cm_prior": 1,
+          "bins_with_surface_within_25cm_gt": 23,
+          "median_nearest_prior_vertical_m": 4.122488280793963,
+          "median_nearest_gt_vertical_m": 0.12708696021208965
+        },
+        {
+          "result": "mvsfuse_ALS",
+          "name": "결합",
+          "bins": [
+            {
+              "bin_index": 0,
+              "s_m": 0.125,
+              "prior_m": -24.274223867273072,
+              "gt_m": -27.742376712279793,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.352110099056219,
+              "nearest_gt_abs_vertical_m": 0.11604274595050157
+            },
+            {
+              "bin_index": 1,
+              "s_m": 0.375,
+              "prior_m": -24.20953936541365,
+              "gt_m": -27.750397444429264,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.444150586539294,
+              "nearest_gt_abs_vertical_m": 0.0967074924763196
+            },
+            {
+              "bin_index": 2,
+              "s_m": 0.625,
+              "prior_m": -24.140346374507615,
+              "gt_m": -27.828152919502504,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.5418734696180323,
+              "nearest_gt_abs_vertical_m": 0.14593307537685618
+            },
+            {
+              "bin_index": 3,
+              "s_m": 0.875,
+              "prior_m": -24.07156544517345,
+              "gt_m": -27.806254614035346,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.6142238266970708,
+              "nearest_gt_abs_vertical_m": 0.12046534216482385
+            },
+            {
+              "bin_index": 4,
+              "s_m": 1.125,
+              "prior_m": -24.01448661859766,
+              "gt_m": -27.769741165548897,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.6625413706287233,
+              "nearest_gt_abs_vertical_m": 0.09271317632251197
+            },
+            {
+              "bin_index": 5,
+              "s_m": 1.375,
+              "prior_m": -23.89679888156597,
+              "gt_m": -27.718563238220362,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.7895661202779536,
+              "nearest_gt_abs_vertical_m": 0.032198236376437706
+            },
+            {
+              "bin_index": 6,
+              "s_m": 1.625,
+              "prior_m": -23.82408398169584,
+              "gt_m": -27.71203418681195,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.8706196989537354,
+              "nearest_gt_abs_vertical_m": 0.01733050616237719
+            },
+            {
+              "bin_index": 7,
+              "s_m": 1.875,
+              "prior_m": -23.738896219853373,
+              "gt_m": -27.719101189262588,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.9881767772262506,
+              "nearest_gt_abs_vertical_m": 0.00797180781703588
+            },
+            {
+              "bin_index": 8,
+              "s_m": 2.125,
+              "prior_m": -23.645771313274835,
+              "gt_m": -27.719218030838555,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.1101579318853645,
+              "nearest_gt_abs_vertical_m": 0.03671121432164526
+            },
+            {
+              "bin_index": 9,
+              "s_m": 2.375,
+              "prior_m": -23.581572694861364,
+              "gt_m": -27.719453259860618,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.158326278442878,
+              "nearest_gt_abs_vertical_m": 0.02044571344362467
+            },
+            {
+              "bin_index": 10,
+              "s_m": 2.625,
+              "prior_m": -23.513982034129878,
+              "gt_m": -27.720894821741314,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.166710361921574,
+              "nearest_gt_abs_vertical_m": 0.040202425689862764
+            },
+            {
+              "bin_index": 11,
+              "s_m": 2.875,
+              "prior_m": -23.377448367899177,
+              "gt_m": -27.719129316296495,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.24305829217413,
+              "nearest_gt_abs_vertical_m": 0.09862265622318844
+            },
+            {
+              "bin_index": 12,
+              "s_m": 3.125,
+              "prior_m": -23.342031954964966,
+              "gt_m": -27.693905099480663,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.2107451729590295,
+              "nearest_gt_abs_vertical_m": 0.14112797155666712
+            },
+            {
+              "bin_index": 13,
+              "s_m": 3.375,
+              "prior_m": -23.252103051896974,
+              "gt_m": -27.699431154373677,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.382529451195136,
+              "nearest_gt_abs_vertical_m": 0.06479865128156703
+            },
+            {
+              "bin_index": 14,
+              "s_m": 3.625,
+              "prior_m": -23.166205558819332,
+              "gt_m": -27.68348664959383,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.5425307071108065,
+              "nearest_gt_abs_vertical_m": 0.025249616336306957
+            },
+            {
+              "bin_index": 15,
+              "s_m": 3.875,
+              "prior_m": -23.070669521739013,
+              "gt_m": -27.676187026694443,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.643490854802252,
+              "nearest_gt_abs_vertical_m": 0.03797334984682266
+            },
+            {
+              "bin_index": 16,
+              "s_m": 4.125,
+              "prior_m": -22.98352787712673,
+              "gt_m": -27.650632753282743,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.731099510076742,
+              "nearest_gt_abs_vertical_m": 0.06399463392072846
+            },
+            {
+              "bin_index": 17,
+              "s_m": 4.375,
+              "prior_m": -22.93111489045856,
+              "gt_m": -27.659007318002775,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.777775773758812,
+              "nearest_gt_abs_vertical_m": 0.049883346214596
+            },
+            {
+              "bin_index": 18,
+              "s_m": 4.625,
+              "prior_m": -22.844231089465428,
+              "gt_m": -27.616443130031943,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.851149281899229,
+              "nearest_gt_abs_vertical_m": 0.07893724133271363
+            },
+            {
+              "bin_index": 19,
+              "s_m": 4.875,
+              "prior_m": -22.74908169895042,
+              "gt_m": -27.5358860825552,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.932373013577767,
+              "nearest_gt_abs_vertical_m": 0.1455686299729848
+            },
+            {
+              "bin_index": 20,
+              "s_m": 5.125,
+              "prior_m": -22.676258406363015,
+              "gt_m": -27.414265028870005,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.003043323448189,
+              "nearest_gt_abs_vertical_m": 0.2650367009411987
+            },
+            {
+              "bin_index": 21,
+              "s_m": 5.375,
+              "prior_m": -22.596126367178965,
+              "gt_m": -27.402412261013808,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.091460082038754,
+              "nearest_gt_abs_vertical_m": 0.2851741882039107
+            },
+            {
+              "bin_index": 22,
+              "s_m": 5.625,
+              "prior_m": -22.4952489631687,
+              "gt_m": -29.43056059801568,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.209351738108001,
+              "nearest_gt_abs_vertical_m": 1.7259598967389813
+            },
+            {
+              "bin_index": 23,
+              "s_m": 5.875,
+              "prior_m": -22.399429212330396,
+              "gt_m": -29.661342646712264,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.2439243887678835,
+              "nearest_gt_abs_vertical_m": 2.0179890456139837
+            },
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -22.31050358598072,
+              "gt_m": -29.41923768782196,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.248472898035963,
+              "nearest_gt_abs_vertical_m": 1.8602612038052762
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -22.236827214711774,
+              "gt_m": -29.945644447978765,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.284846760864831,
+              "nearest_gt_abs_vertical_m": 2.4239704724021607
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -22.148325672996606,
+              "gt_m": -29.58997542283635,
+              "intersection_count": 15,
+              "nearest_prior_abs_vertical_m": 5.336761849410568,
+              "nearest_gt_abs_vertical_m": 0.10624082436335769
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -22.06308296665349,
+              "gt_m": -29.517421147850904,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.362084724924401,
+              "nearest_gt_abs_vertical_m": 0.09225345627301351
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -22.00858621776692,
+              "gt_m": -29.857507459090243,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.485891967952135,
+              "nearest_gt_abs_vertical_m": 0.36302927337118973
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -22.01729833128715,
+              "gt_m": -27.683176648699273,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.474002606885225,
+              "nearest_gt_abs_vertical_m": 1.8081242894731027
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -22.126031802037357,
+              "gt_m": -27.716150580007074,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.385076342200382,
+              "nearest_gt_abs_vertical_m": 1.794957564230664
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -23.36946963572602,
+              "gt_m": -27.53361192481944,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.237387111115318,
+              "nearest_gt_abs_vertical_m": 2.0732448220218984
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -23.37745055554978,
+              "gt_m": -27.53412244977048,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.216683157438364,
+              "nearest_gt_abs_vertical_m": 2.060011263217664
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -23.428072361587997,
+              "gt_m": -30.41710215186355,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 2.2965235652295277,
+              "nearest_gt_abs_vertical_m": 0.7775243155273017
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -23.413631340595966,
+              "gt_m": -29.454113717045878,
+              "intersection_count": 12,
+              "nearest_prior_abs_vertical_m": 2.701753619310434,
+              "nearest_gt_abs_vertical_m": 0.13769791669877307
+            }
+          ],
+          "present_bins": 35,
+          "bins_with_surface_within_25cm_prior": 0,
+          "bins_with_surface_within_25cm_gt": 23,
+          "median_nearest_prior_vertical_m": 4.643490854802252,
+          "median_nearest_gt_vertical_m": 0.11604274595050157
+        },
+        {
+          "result": "cdgsnofit_ALS_s0",
+          "name": "CDGS 변형",
+          "bins": [
+            {
+              "bin_index": 0,
+              "s_m": 0.125,
+              "prior_m": -24.274223867273072,
+              "gt_m": -27.742376712279793,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 1.3329454368175,
+              "nearest_gt_abs_vertical_m": 4.8010982818242205
+            },
+            {
+              "bin_index": 1,
+              "s_m": 0.375,
+              "prior_m": -24.20953936541365,
+              "gt_m": -27.750397444429264,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 2,
+              "s_m": 0.625,
+              "prior_m": -24.140346374507615,
+              "gt_m": -27.828152919502504,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 3,
+              "s_m": 0.875,
+              "prior_m": -24.07156544517345,
+              "gt_m": -27.806254614035346,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 4,
+              "s_m": 1.125,
+              "prior_m": -24.01448661859766,
+              "gt_m": -27.769741165548897,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 5.164474366166882,
+              "nearest_gt_abs_vertical_m": 8.919728913118117
+            },
+            {
+              "bin_index": 5,
+              "s_m": 1.375,
+              "prior_m": -23.89679888156597,
+              "gt_m": -27.718563238220362,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 6.344820754029541,
+              "nearest_gt_abs_vertical_m": 10.166585110683933
+            },
+            {
+              "bin_index": 6,
+              "s_m": 1.625,
+              "prior_m": -23.82408398169584,
+              "gt_m": -27.71203418681195,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.508479383100681,
+              "nearest_gt_abs_vertical_m": 10.396429588216794
+            },
+            {
+              "bin_index": 7,
+              "s_m": 1.875,
+              "prior_m": -23.738896219853373,
+              "gt_m": -27.719101189262588,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 7.107001715291332,
+              "nearest_gt_abs_vertical_m": 11.087206684700547
+            },
+            {
+              "bin_index": 8,
+              "s_m": 2.125,
+              "prior_m": -23.645771313274835,
+              "gt_m": -27.719218030838555,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 6.836742321065994,
+              "nearest_gt_abs_vertical_m": 10.910189038629714
+            },
+            {
+              "bin_index": 9,
+              "s_m": 2.375,
+              "prior_m": -23.581572694861364,
+              "gt_m": -27.719453259860618,
+              "intersection_count": 14,
+              "nearest_prior_abs_vertical_m": 8.201884500844969,
+              "nearest_gt_abs_vertical_m": 11.485948435024145
+            },
+            {
+              "bin_index": 10,
+              "s_m": 2.625,
+              "prior_m": -23.513982034129878,
+              "gt_m": -27.720894821741314,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 9.239485038025485,
+              "nearest_gt_abs_vertical_m": 13.446397825636922
+            },
+            {
+              "bin_index": 11,
+              "s_m": 2.875,
+              "prior_m": -23.377448367899177,
+              "gt_m": -27.719129316296495,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 9.416700556338347,
+              "nearest_gt_abs_vertical_m": 13.758381504735665
+            },
+            {
+              "bin_index": 12,
+              "s_m": 3.125,
+              "prior_m": -23.342031954964966,
+              "gt_m": -27.693905099480663,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 9.376724900160667,
+              "nearest_gt_abs_vertical_m": 10.013676064474314
+            },
+            {
+              "bin_index": 13,
+              "s_m": 3.375,
+              "prior_m": -23.252103051896974,
+              "gt_m": -27.699431154373677,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 10.035287781924575,
+              "nearest_gt_abs_vertical_m": 10.704218186378043
+            },
+            {
+              "bin_index": 14,
+              "s_m": 3.625,
+              "prior_m": -23.166205558819332,
+              "gt_m": -27.68348664959383,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 12.513554824777938,
+              "nearest_gt_abs_vertical_m": 17.030835915552437
+            },
+            {
+              "bin_index": 15,
+              "s_m": 3.875,
+              "prior_m": -23.070669521739013,
+              "gt_m": -27.676187026694443,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 13.625512049179536,
+              "nearest_gt_abs_vertical_m": 18.231029554134963
+            },
+            {
+              "bin_index": 16,
+              "s_m": 4.125,
+              "prior_m": -22.98352787712673,
+              "gt_m": -27.650632753282743,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 11.469866774120298,
+              "nearest_gt_abs_vertical_m": 8.667861660010423
+            },
+            {
+              "bin_index": 17,
+              "s_m": 4.375,
+              "prior_m": -22.93111489045856,
+              "gt_m": -27.659007318002775,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 9.832122636589485,
+              "nearest_gt_abs_vertical_m": 14.560015064133701
+            },
+            {
+              "bin_index": 18,
+              "s_m": 4.625,
+              "prior_m": -22.844231089465428,
+              "gt_m": -27.616443130031943,
+              "intersection_count": 8,
+              "nearest_prior_abs_vertical_m": 7.569589979118131,
+              "nearest_gt_abs_vertical_m": 8.024428295786787
+            },
+            {
+              "bin_index": 19,
+              "s_m": 4.875,
+              "prior_m": -22.74908169895042,
+              "gt_m": -27.5358860825552,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 9.37553122426724,
+              "nearest_gt_abs_vertical_m": 14.050754110677595
+            },
+            {
+              "bin_index": 20,
+              "s_m": 5.125,
+              "prior_m": -22.676258406363015,
+              "gt_m": -27.414265028870005,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 17.283827670749705,
+              "nearest_gt_abs_vertical_m": 12.545821048242715
+            },
+            {
+              "bin_index": 21,
+              "s_m": 5.375,
+              "prior_m": -22.596126367178965,
+              "gt_m": -27.402412261013808,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 6.94755618523782,
+              "nearest_gt_abs_vertical_m": 11.753842079072664
+            },
+            {
+              "bin_index": 22,
+              "s_m": 5.625,
+              "prior_m": -22.4952489631687,
+              "gt_m": -29.43056059801568,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 23,
+              "s_m": 5.875,
+              "prior_m": -22.399429212330396,
+              "gt_m": -29.661342646712264,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 19.795395801679433,
+              "nearest_gt_abs_vertical_m": 12.533482367297566
+            },
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -22.31050358598072,
+              "gt_m": -29.41923768782196,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 3.057330888949437,
+              "nearest_gt_abs_vertical_m": 10.166064990790677
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -22.236827214711774,
+              "gt_m": -29.945644447978765,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 2.1902338131393186,
+              "nearest_gt_abs_vertical_m": 9.89905104640631
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -22.148325672996606,
+              "gt_m": -29.58997542283635,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -22.06308296665349,
+              "gt_m": -29.517421147850904,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -22.00858621776692,
+              "gt_m": -29.857507459090243,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -22.01729833128715,
+              "gt_m": -27.683176648699273,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 6.090092398019513,
+              "nearest_gt_abs_vertical_m": 3.3086300689444137
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -22.126031802037357,
+              "gt_m": -27.716150580007074,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 4.57451512751577,
+              "nearest_gt_abs_vertical_m": 0.977625732845425
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -23.36946963572602,
+              "gt_m": -27.53361192481944,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 7.426118832496705,
+              "nearest_gt_abs_vertical_m": 3.2619765434032857
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -23.37745055554978,
+              "gt_m": -27.53412244977048,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 3.4965140914760404,
+              "nearest_gt_abs_vertical_m": 0.25491253145885295
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -23.428072361587997,
+              "gt_m": -30.41710215186355,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 4.861908555696466,
+              "nearest_gt_abs_vertical_m": 0.9817441170364063
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -23.413631340595966,
+              "gt_m": -29.454113717045878,
+              "intersection_count": 0,
+              "nearest_prior_abs_vertical_m": null,
+              "nearest_gt_abs_vertical_m": null
+            }
+          ],
+          "present_bins": 27,
+          "bins_with_surface_within_25cm_prior": 0,
+          "bins_with_surface_within_25cm_gt": 0,
+          "median_nearest_prior_vertical_m": 7.426118832496705,
+          "median_nearest_gt_vertical_m": 10.396429588216794
+        },
+        {
+          "result": "prop_ALS_s0",
+          "name": "본 방법",
+          "bins": [
+            {
+              "bin_index": 0,
+              "s_m": 0.125,
+              "prior_m": -24.274223867273072,
+              "gt_m": -27.742376712279793,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.331463857873235,
+              "nearest_gt_abs_vertical_m": 0.13668898713348554
+            },
+            {
+              "bin_index": 1,
+              "s_m": 0.375,
+              "prior_m": -24.20953936541365,
+              "gt_m": -27.750397444429264,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.4587773300853684,
+              "nearest_gt_abs_vertical_m": 0.0820807489302453
+            },
+            {
+              "bin_index": 2,
+              "s_m": 0.625,
+              "prior_m": -24.140346374507615,
+              "gt_m": -27.828152919502504,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.5284382568825094,
+              "nearest_gt_abs_vertical_m": 0.15936828811237902
+            },
+            {
+              "bin_index": 3,
+              "s_m": 0.875,
+              "prior_m": -24.07156544517345,
+              "gt_m": -27.806254614035346,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.5678784331822833,
+              "nearest_gt_abs_vertical_m": 0.16681073567961135
+            },
+            {
+              "bin_index": 4,
+              "s_m": 1.125,
+              "prior_m": -24.01448661859766,
+              "gt_m": -27.769741165548897,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.609933369735387,
+              "nearest_gt_abs_vertical_m": 0.14532117721584825
+            },
+            {
+              "bin_index": 5,
+              "s_m": 1.375,
+              "prior_m": -23.89679888156597,
+              "gt_m": -27.718563238220362,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.7627465095266075,
+              "nearest_gt_abs_vertical_m": 0.059017847127783796
+            },
+            {
+              "bin_index": 6,
+              "s_m": 1.625,
+              "prior_m": -23.82408398169584,
+              "gt_m": -27.71203418681195,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.8240769745321366,
+              "nearest_gt_abs_vertical_m": 0.06387323058397598
+            },
+            {
+              "bin_index": 7,
+              "s_m": 1.875,
+              "prior_m": -23.738896219853373,
+              "gt_m": -27.719101189262588,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.9630625632765195,
+              "nearest_gt_abs_vertical_m": 0.017142406132695243
+            },
+            {
+              "bin_index": 8,
+              "s_m": 2.125,
+              "prior_m": -23.645771313274835,
+              "gt_m": -27.719218030838555,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.064926321023943,
+              "nearest_gt_abs_vertical_m": 0.008520396539775987
+            },
+            {
+              "bin_index": 9,
+              "s_m": 2.375,
+              "prior_m": -23.581572694861364,
+              "gt_m": -27.719453259860618,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.071688870940683,
+              "nearest_gt_abs_vertical_m": 0.0661916940585705
+            },
+            {
+              "bin_index": 10,
+              "s_m": 2.625,
+              "prior_m": -23.513982034129878,
+              "gt_m": -27.720894821741314,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 3.2383426559933213,
+              "nearest_gt_abs_vertical_m": 0.1108474317643271
+            },
+            {
+              "bin_index": 11,
+              "s_m": 2.875,
+              "prior_m": -23.377448367899177,
+              "gt_m": -27.719129316296495,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 3.4401545310534054,
+              "nearest_gt_abs_vertical_m": 0.13936029268239736
+            },
+            {
+              "bin_index": 12,
+              "s_m": 3.125,
+              "prior_m": -23.342031954964966,
+              "gt_m": -27.693905099480663,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.2241053380992675,
+              "nearest_gt_abs_vertical_m": 0.12776780641642915
+            },
+            {
+              "bin_index": 13,
+              "s_m": 3.375,
+              "prior_m": -23.252103051896974,
+              "gt_m": -27.699431154373677,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 3.8929952600147395,
+              "nearest_gt_abs_vertical_m": 0.09898687164657716
+            },
+            {
+              "bin_index": 14,
+              "s_m": 3.625,
+              "prior_m": -23.166205558819332,
+              "gt_m": -27.68348664959383,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.480060367183182,
+              "nearest_gt_abs_vertical_m": 0.037220723591318006
+            },
+            {
+              "bin_index": 15,
+              "s_m": 3.875,
+              "prior_m": -23.070669521739013,
+              "gt_m": -27.676187026694443,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.62979578515921,
+              "nearest_gt_abs_vertical_m": 0.024278280203780866
+            },
+            {
+              "bin_index": 16,
+              "s_m": 4.125,
+              "prior_m": -22.98352787712673,
+              "gt_m": -27.650632753282743,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.731125570734928,
+              "nearest_gt_abs_vertical_m": 0.06402069457891457
+            },
+            {
+              "bin_index": 17,
+              "s_m": 4.375,
+              "prior_m": -22.93111489045856,
+              "gt_m": -27.659007318002775,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.772867914950783,
+              "nearest_gt_abs_vertical_m": 0.04497548740656754
+            },
+            {
+              "bin_index": 18,
+              "s_m": 4.625,
+              "prior_m": -22.844231089465428,
+              "gt_m": -27.616443130031943,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.847715951744274,
+              "nearest_gt_abs_vertical_m": 0.07550391117775845
+            },
+            {
+              "bin_index": 19,
+              "s_m": 4.875,
+              "prior_m": -22.74908169895042,
+              "gt_m": -27.5358860825552,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 4.933616397315479,
+              "nearest_gt_abs_vertical_m": 0.1468120137106972
+            },
+            {
+              "bin_index": 20,
+              "s_m": 5.125,
+              "prior_m": -22.676258406363015,
+              "gt_m": -27.414265028870005,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.003316395936331,
+              "nearest_gt_abs_vertical_m": 0.26530977342934037
+            },
+            {
+              "bin_index": 21,
+              "s_m": 5.375,
+              "prior_m": -22.596126367178965,
+              "gt_m": -27.402412261013808,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.088600401896592,
+              "nearest_gt_abs_vertical_m": 0.2823145080617486
+            },
+            {
+              "bin_index": 22,
+              "s_m": 5.625,
+              "prior_m": -22.4952489631687,
+              "gt_m": -29.43056059801568,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.172010517049458,
+              "nearest_gt_abs_vertical_m": 1.7633011177975249
+            },
+            {
+              "bin_index": 23,
+              "s_m": 5.875,
+              "prior_m": -22.399429212330396,
+              "gt_m": -29.661342646712264,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.246659167810229,
+              "nearest_gt_abs_vertical_m": 2.015254266571638
+            },
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -22.31050358598072,
+              "gt_m": -29.41923768782196,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.252715225153754,
+              "nearest_gt_abs_vertical_m": 1.8560188766874859
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -22.236827214711774,
+              "gt_m": -29.945644447978765,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 5.263507414378495,
+              "nearest_gt_abs_vertical_m": 2.4453098188884965
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -22.148325672996606,
+              "gt_m": -29.58997542283635,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 5.352544757917659,
+              "nearest_gt_abs_vertical_m": 0.3226550106233468
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -22.06308296665349,
+              "gt_m": -29.517421147850904,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.505273039934295,
+              "nearest_gt_abs_vertical_m": 0.05093485873688053
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -22.00858621776692,
+              "gt_m": -29.857507459090243,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.491377751343464,
+              "nearest_gt_abs_vertical_m": 0.35754348997986085
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -22.01729833128715,
+              "gt_m": -27.683176648699273,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.48987913194356,
+              "nearest_gt_abs_vertical_m": 1.8240008145314377
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -22.126031802037357,
+              "gt_m": -27.716150580007074,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 7.403681704034064,
+              "nearest_gt_abs_vertical_m": 1.8135629260643462
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -23.36946963572602,
+              "gt_m": -27.53361192481944,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.213977479738254,
+              "nearest_gt_abs_vertical_m": 2.049835190644835
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -23.37745055554978,
+              "gt_m": -27.53412244977048,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.23401554814798,
+              "nearest_gt_abs_vertical_m": 2.0773436539272794
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -23.428072361587997,
+              "gt_m": -30.41710215186355,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.190628280975261,
+              "nearest_gt_abs_vertical_m": 0.798401509300291
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -23.413631340595966,
+              "gt_m": -29.454113717045878,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 6.201573825157254,
+              "nearest_gt_abs_vertical_m": 0.16109144870734227
+            }
+          ],
+          "present_bins": 35,
+          "bins_with_surface_within_25cm_prior": 0,
+          "bins_with_surface_within_25cm_gt": 22,
+          "median_nearest_prior_vertical_m": 4.772867914950783,
+          "median_nearest_gt_vertical_m": 0.14532117721584825
+        }
+      ],
+      "viscmp_v1_overlap": null
+    },
+    {
+      "id": "b",
+      "selected_diagnostic_bins": 18,
+      "methods": [
+        {
+          "result": "imgonly_2dgs_s0",
+          "name": "2DGS",
+          "bins": [
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -29.656672578335,
+              "gt_m": -26.934496836112057,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 2.920088570842072,
+              "nearest_gt_abs_vertical_m": 0.19791282861912762
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -29.6495767335328,
+              "gt_m": -26.86689221354104,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 2.9130174781580003,
+              "nearest_gt_abs_vertical_m": 0.1303329581662389
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -29.642480888730596,
+              "gt_m": -28.14385548102564,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 1.864380835673792,
+              "nearest_gt_abs_vertical_m": 0.36575542796883553
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -29.635385043928395,
+              "gt_m": -28.38458181395896,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 1.1353912510001045,
+              "nearest_gt_abs_vertical_m": 0.11541197896933042
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -29.62828919912619,
+              "gt_m": -28.42180704704716,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 1.003300847238922,
+              "nearest_gt_abs_vertical_m": 0.20318130484010766
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -29.62119335432399,
+              "gt_m": -28.516661466441636,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.3498269071995921,
+              "nearest_gt_abs_vertical_m": 0.2625313472937272
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -29.614097509521784,
+              "gt_m": -28.548821601379732,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.3533839960093168,
+              "nearest_gt_abs_vertical_m": 0.41418437563460486
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -29.607001664719583,
+              "gt_m": -28.582967469150642,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.408365296165087,
+              "nearest_gt_abs_vertical_m": 0.5255572472328183
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -29.599905819917378,
+              "gt_m": -28.618741407228246,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.5336029205535553,
+              "nearest_gt_abs_vertical_m": 0.44756149213557705
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -29.592809975115177,
+              "gt_m": -28.662894556893413,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.611200370095851,
+              "nearest_gt_abs_vertical_m": 0.3187150481259131
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -29.585714130312972,
+              "gt_m": -28.704356628211585,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.5441546778428652,
+              "nearest_gt_abs_vertical_m": 0.3372028242585223
+            },
+            {
+              "bin_index": 35,
+              "s_m": 8.875,
+              "prior_m": -29.57861828551077,
+              "gt_m": -28.752165764537992,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.47527419341182764,
+              "nearest_gt_abs_vertical_m": 0.3511783275609517
+            },
+            {
+              "bin_index": 36,
+              "s_m": 9.125,
+              "prior_m": -29.575070363109667,
+              "gt_m": -28.7942683724305,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.4123472378272872,
+              "nearest_gt_abs_vertical_m": 0.36845475285187845
+            },
+            {
+              "bin_index": 37,
+              "s_m": 9.375,
+              "prior_m": -29.567974518307466,
+              "gt_m": -28.83546209258798,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 0.01523776228138729,
+              "nearest_gt_abs_vertical_m": 0.36416776978114385
+            },
+            {
+              "bin_index": 38,
+              "s_m": 9.625,
+              "prior_m": -29.560878673505265,
+              "gt_m": -28.873282536176912,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.03182187096218314,
+              "nearest_gt_abs_vertical_m": 0.3824632414053539
+            },
+            {
+              "bin_index": 39,
+              "s_m": 9.875,
+              "prior_m": -29.55733075110416,
+              "gt_m": -28.918744419189757,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.10179166818794627,
+              "nearest_gt_abs_vertical_m": 0.3587695478450037
+            },
+            {
+              "bin_index": 40,
+              "s_m": 10.125,
+              "prior_m": -29.55023490630196,
+              "gt_m": -28.96088130073128,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.02927046912284581,
+              "nearest_gt_abs_vertical_m": 0.34744824968351296
+            },
+            {
+              "bin_index": 41,
+              "s_m": 10.375,
+              "prior_m": -29.539591139098654,
+              "gt_m": -29.00459693482123,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.00865539543515581,
+              "nearest_gt_abs_vertical_m": 0.30351257577008894
+            }
+          ],
+          "present_bins": 18,
+          "bins_with_surface_within_25cm_prior": 5,
+          "bins_with_surface_within_25cm_gt": 4,
+          "median_nearest_prior_vertical_m": 0.4438107156195574,
+          "median_nearest_gt_vertical_m": 0.3493132886222323
+        },
+        {
+          "result": "trust_LoD2_fix1",
+          "name": "GeoGS",
+          "bins": [
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -29.656672578335,
+              "gt_m": -26.934496836112057,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.8294339498402046,
+              "nearest_gt_abs_vertical_m": 0.13295016273363913
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -29.6495767335328,
+              "gt_m": -26.86689221354104,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.6299381026188406,
+              "nearest_gt_abs_vertical_m": 2.1527464173729207
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -29.642480888730596,
+              "gt_m": -28.14385548102564,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.494509545730363,
+              "nearest_gt_abs_vertical_m": 0.36156270436339
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -29.635385043928395,
+              "gt_m": -28.38458181395896,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.3916552461979599,
+              "nearest_gt_abs_vertical_m": 0.859147983771475
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -29.62828919912619,
+              "gt_m": -28.42180704704716,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.3716411677977369,
+              "nearest_gt_abs_vertical_m": 0.8348409842812927
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -29.62119335432399,
+              "gt_m": -28.516661466441636,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.298397737904736,
+              "nearest_gt_abs_vertical_m": 0.8061341499776162
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -29.614097509521784,
+              "gt_m": -28.548821601379732,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 0.2785949791781377,
+              "nearest_gt_abs_vertical_m": 0.4420562068702871
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -29.607001664719583,
+              "gt_m": -28.582967469150642,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.2978869590988502,
+              "nearest_gt_abs_vertical_m": 0.7261472364700907
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -29.599905819917378,
+              "gt_m": -28.618741407228246,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.263566649206016,
+              "nearest_gt_abs_vertical_m": 0.7175977634831163
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -29.592809975115177,
+              "gt_m": -28.662894556893413,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.48600386755277114,
+              "nearest_gt_abs_vertical_m": 0.443911550668993
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -29.585714130312972,
+              "gt_m": -28.704356628211585,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.47414788457798807,
+              "nearest_gt_abs_vertical_m": 0.40720961752339946
+            },
+            {
+              "bin_index": 35,
+              "s_m": 8.875,
+              "prior_m": -29.57861828551077,
+              "gt_m": -28.752165764537992,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.4479092277146641,
+              "nearest_gt_abs_vertical_m": 0.3785432932581152
+            },
+            {
+              "bin_index": 36,
+              "s_m": 9.125,
+              "prior_m": -29.575070363109667,
+              "gt_m": -28.7942683724305,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.4389536190331995,
+              "nearest_gt_abs_vertical_m": 0.34184837164596615
+            },
+            {
+              "bin_index": 37,
+              "s_m": 9.375,
+              "prior_m": -29.567974518307466,
+              "gt_m": -28.83546209258798,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.061029418830436555,
+              "nearest_gt_abs_vertical_m": 0.3434332951824288
+            },
+            {
+              "bin_index": 38,
+              "s_m": 9.625,
+              "prior_m": -29.560878673505265,
+              "gt_m": -28.873282536176912,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.0049408320978727716,
+              "nearest_gt_abs_vertical_m": 0.31794433921123044
+            },
+            {
+              "bin_index": 39,
+              "s_m": 9.875,
+              "prior_m": -29.55733075110416,
+              "gt_m": -28.918744419189757,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.0051264230627801055,
+              "nearest_gt_abs_vertical_m": 0.28641381789667264
+            },
+            {
+              "bin_index": 40,
+              "s_m": 10.125,
+              "prior_m": -29.55023490630196,
+              "gt_m": -28.96088130073128,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.007612889027658554,
+              "nearest_gt_abs_vertical_m": 0.2693108421214454
+            },
+            {
+              "bin_index": 41,
+              "s_m": 10.375,
+              "prior_m": -29.539591139098654,
+              "gt_m": -29.00459693482123,
+              "intersection_count": 7,
+              "nearest_prior_abs_vertical_m": 0.023522525579313225,
+              "nearest_gt_abs_vertical_m": 0.2456557702538369
+            }
+          ],
+          "present_bins": 18,
+          "bins_with_surface_within_25cm_prior": 5,
+          "bins_with_surface_within_25cm_gt": 2,
+          "median_nearest_prior_vertical_m": 0.33501945285123647,
+          "median_nearest_gt_vertical_m": 0.39287645539075733
+        },
+        {
+          "result": "mvsfuse_LoD2",
+          "name": "결합",
+          "bins": [
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -29.656672578335,
+              "gt_m": -26.934496836112057,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.045880165801953865,
+              "nearest_gt_abs_vertical_m": 2.7680559080248983
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -29.6495767335328,
+              "gt_m": -26.86689221354104,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.053412783167864575,
+              "nearest_gt_abs_vertical_m": 2.836097303159626
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -29.642480888730596,
+              "gt_m": -28.14385548102564,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.034056303854796965,
+              "nearest_gt_abs_vertical_m": 1.3436766409671748
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -29.635385043928395,
+              "gt_m": -28.38458181395896,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.014515982229752922,
+              "nearest_gt_abs_vertical_m": 1.2653192121991879
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -29.62828919912619,
+              "gt_m": -28.42180704704716,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.023069571061128613,
+              "nearest_gt_abs_vertical_m": 1.2295517231401583
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -29.62119335432399,
+              "gt_m": -28.516661466441636,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.002172835172736143,
+              "nearest_gt_abs_vertical_m": 1.1067047230550884
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -29.614097509521784,
+              "gt_m": -28.548821601379732,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.0007856385237694496,
+              "nearest_gt_abs_vertical_m": 1.0660615466658214
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -29.607001664719583,
+              "gt_m": -28.582967469150642,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.020204081148833097,
+              "nearest_gt_abs_vertical_m": 1.044238276717774
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -29.599905819917378,
+              "gt_m": -28.618741407228246,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.015484452238460733,
+              "nearest_gt_abs_vertical_m": 0.9966488649275931
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -29.592809975115177,
+              "gt_m": -28.662894556893413,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.023964810185219676,
+              "nearest_gt_abs_vertical_m": 0.9538802284069838
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -29.585714130312972,
+              "gt_m": -28.704356628211585,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.020629205881949275,
+              "nearest_gt_abs_vertical_m": 0.9019867079833368
+            },
+            {
+              "bin_index": 35,
+              "s_m": 8.875,
+              "prior_m": -29.57861828551077,
+              "gt_m": -28.752165764537992,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.0029981175280973105,
+              "nearest_gt_abs_vertical_m": 0.8294506385008766
+            },
+            {
+              "bin_index": 36,
+              "s_m": 9.125,
+              "prior_m": -29.575070363109667,
+              "gt_m": -28.7942683724305,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.00592867377375228,
+              "nearest_gt_abs_vertical_m": 0.786730664452918
+            },
+            {
+              "bin_index": 37,
+              "s_m": 9.375,
+              "prior_m": -29.567974518307466,
+              "gt_m": -28.83546209258798,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.016398567951718235,
+              "nearest_gt_abs_vertical_m": 0.7489109936712026
+            },
+            {
+              "bin_index": 38,
+              "s_m": 9.625,
+              "prior_m": -29.560878673505265,
+              "gt_m": -28.873282536176912,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.01412130754927432,
+              "nearest_gt_abs_vertical_m": 0.7017174448776267
+            },
+            {
+              "bin_index": 39,
+              "s_m": 9.875,
+              "prior_m": -29.55733075110416,
+              "gt_m": -28.918744419189757,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.02173642898254613,
+              "nearest_gt_abs_vertical_m": 0.6603227608969497
+            },
+            {
+              "bin_index": 40,
+              "s_m": 10.125,
+              "prior_m": -29.55023490630196,
+              "gt_m": -28.96088130073128,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.014257643963276223,
+              "nearest_gt_abs_vertical_m": 0.6036112495339552
+            },
+            {
+              "bin_index": 41,
+              "s_m": 10.375,
+              "prior_m": -29.539591139098654,
+              "gt_m": -29.00459693482123,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.014416615139364097,
+              "nearest_gt_abs_vertical_m": 0.5494108194167886
+            }
+          ],
+          "present_bins": 18,
+          "bins_with_surface_within_25cm_prior": 18,
+          "bins_with_surface_within_25cm_gt": 0,
+          "median_nearest_prior_vertical_m": 0.015941510095089484,
+          "median_nearest_gt_vertical_m": 0.9752645466672885
+        },
+        {
+          "result": "cdgsnofit_LoD2_s0",
+          "name": "CDGS 변형",
+          "bins": [
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -29.656672578335,
+              "gt_m": -26.934496836112057,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.34132090891047184,
+              "nearest_gt_abs_vertical_m": 2.3808548333124726
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -29.6495767335328,
+              "gt_m": -26.86689221354104,
+              "intersection_count": 6,
+              "nearest_prior_abs_vertical_m": 0.7170583546958653,
+              "nearest_gt_abs_vertical_m": 0.353569391709847
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -29.642480888730596,
+              "gt_m": -28.14385548102564,
+              "intersection_count": 9,
+              "nearest_prior_abs_vertical_m": 0.4470420432983424,
+              "nearest_gt_abs_vertical_m": 0.04763954996143127
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -29.635385043928395,
+              "gt_m": -28.38458181395896,
+              "intersection_count": 8,
+              "nearest_prior_abs_vertical_m": 1.885750773158552,
+              "nearest_gt_abs_vertical_m": 0.6349475431891172
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -29.62828919912619,
+              "gt_m": -28.42180704704716,
+              "intersection_count": 7,
+              "nearest_prior_abs_vertical_m": 0.2906032884955785,
+              "nearest_gt_abs_vertical_m": 1.2519438701938164
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -29.62119335432399,
+              "gt_m": -28.516661466441636,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.563753706247887,
+              "nearest_gt_abs_vertical_m": 1.6682855941302392
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -29.614097509521784,
+              "gt_m": -28.548821601379732,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.36524736208037467,
+              "nearest_gt_abs_vertical_m": 1.4305232702224266
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -29.607001664719583,
+              "gt_m": -28.582967469150642,
+              "intersection_count": 6,
+              "nearest_prior_abs_vertical_m": 0.015676117179275195,
+              "nearest_gt_abs_vertical_m": 0.07609113761667174
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -29.599905819917378,
+              "gt_m": -28.618741407228246,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.02325908142188382,
+              "nearest_gt_abs_vertical_m": 0.9537300522042038
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -29.592809975115177,
+              "gt_m": -28.662894556893413,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.01353923149745384,
+              "nearest_gt_abs_vertical_m": 0.9163761867243103
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -29.585714130312972,
+              "gt_m": -28.704356628211585,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.00262990679543762,
+              "nearest_gt_abs_vertical_m": 0.8787275953059499
+            },
+            {
+              "bin_index": 35,
+              "s_m": 8.875,
+              "prior_m": -29.57861828551077,
+              "gt_m": -28.752165764537992,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.017105971980768686,
+              "nearest_gt_abs_vertical_m": 0.5172307421843243
+            },
+            {
+              "bin_index": 36,
+              "s_m": 9.125,
+              "prior_m": -29.575070363109667,
+              "gt_m": -28.7942683724305,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.02012042981051465,
+              "nearest_gt_abs_vertical_m": 0.760681560868651
+            },
+            {
+              "bin_index": 37,
+              "s_m": 9.375,
+              "prior_m": -29.567974518307466,
+              "gt_m": -28.83546209258798,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.1084900443443999,
+              "nearest_gt_abs_vertical_m": 0.2887930225764421
+            },
+            {
+              "bin_index": 38,
+              "s_m": 9.625,
+              "prior_m": -29.560878673505265,
+              "gt_m": -28.873282536176912,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.1156071974600188,
+              "nearest_gt_abs_vertical_m": 0.23052356238880023
+            },
+            {
+              "bin_index": 39,
+              "s_m": 9.875,
+              "prior_m": -29.55733075110416,
+              "gt_m": -28.918744419189757,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 0.15153049461540746,
+              "nearest_gt_abs_vertical_m": 0.12819664767804895
+            },
+            {
+              "bin_index": 40,
+              "s_m": 10.125,
+              "prior_m": -29.55023490630196,
+              "gt_m": -28.96088130073128,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.22568345641935394,
+              "nearest_gt_abs_vertical_m": 0.047114699779200464
+            },
+            {
+              "bin_index": 41,
+              "s_m": 10.375,
+              "prior_m": -29.539591139098654,
+              "gt_m": -29.00459693482123,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 0.2440460481731499,
+              "nearest_gt_abs_vertical_m": 0.01697087122362717
+            }
+          ],
+          "present_bins": 18,
+          "bins_with_surface_within_25cm_prior": 11,
+          "bins_with_surface_within_25cm_gt": 6,
+          "median_nearest_prior_vertical_m": 0.1886069755173807,
+          "median_nearest_gt_vertical_m": 0.5760891426867207
+        },
+        {
+          "result": "prop_LoD2_s0",
+          "name": "본 방법",
+          "bins": [
+            {
+              "bin_index": 24,
+              "s_m": 6.125,
+              "prior_m": -29.656672578335,
+              "gt_m": -26.934496836112057,
+              "intersection_count": 4,
+              "nearest_prior_abs_vertical_m": 0.7768476618548732,
+              "nearest_gt_abs_vertical_m": 0.010716385446244203
+            },
+            {
+              "bin_index": 25,
+              "s_m": 6.375,
+              "prior_m": -29.6495767335328,
+              "gt_m": -26.86689221354104,
+              "intersection_count": 6,
+              "nearest_prior_abs_vertical_m": 1.0887419770546778,
+              "nearest_gt_abs_vertical_m": 0.1296867480724373
+            },
+            {
+              "bin_index": 26,
+              "s_m": 6.625,
+              "prior_m": -29.642480888730596,
+              "gt_m": -28.14385548102564,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 3.2118695730280677,
+              "nearest_gt_abs_vertical_m": 1.7132441653231112
+            },
+            {
+              "bin_index": 27,
+              "s_m": 6.875,
+              "prior_m": -29.635385043928395,
+              "gt_m": -28.38458181395896,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 1.1555202197284942,
+              "nearest_gt_abs_vertical_m": 0.09528301024094077
+            },
+            {
+              "bin_index": 28,
+              "s_m": 7.125,
+              "prior_m": -29.62828919912619,
+              "gt_m": -28.42180704704716,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 1.079485403788489,
+              "nearest_gt_abs_vertical_m": 0.12699674829054075
+            },
+            {
+              "bin_index": 29,
+              "s_m": 7.375,
+              "prior_m": -29.62119335432399,
+              "gt_m": -28.516661466441636,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 1.0428747803960547,
+              "nearest_gt_abs_vertical_m": 0.06165710748629749
+            },
+            {
+              "bin_index": 30,
+              "s_m": 7.625,
+              "prior_m": -29.614097509521784,
+              "gt_m": -28.548821601379732,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.9928090482696845,
+              "nearest_gt_abs_vertical_m": 0.07246685987236745
+            },
+            {
+              "bin_index": 31,
+              "s_m": 7.875,
+              "prior_m": -29.607001664719583,
+              "gt_m": -28.582967469150642,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.9607359487109797,
+              "nearest_gt_abs_vertical_m": 0.06329824685796126
+            },
+            {
+              "bin_index": 32,
+              "s_m": 8.125,
+              "prior_m": -29.599905819917378,
+              "gt_m": -28.618741407228246,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.8924773822539755,
+              "nearest_gt_abs_vertical_m": 0.0886870304351568
+            },
+            {
+              "bin_index": 33,
+              "s_m": 8.375,
+              "prior_m": -29.592809975115177,
+              "gt_m": -28.662894556893413,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.8033426008565385,
+              "nearest_gt_abs_vertical_m": 0.12657281736522563
+            },
+            {
+              "bin_index": 34,
+              "s_m": 8.625,
+              "prior_m": -29.585714130312972,
+              "gt_m": -28.704356628211585,
+              "intersection_count": 2,
+              "nearest_prior_abs_vertical_m": 0.4657173438723454,
+              "nearest_gt_abs_vertical_m": 0.14015247525613006
+            },
+            {
+              "bin_index": 35,
+              "s_m": 8.875,
+              "prior_m": -29.57861828551077,
+              "gt_m": -28.752165764537992,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.6644365772413963,
+              "nearest_gt_abs_vertical_m": 0.16201594373138306
+            },
+            {
+              "bin_index": 36,
+              "s_m": 9.125,
+              "prior_m": -29.575070363109667,
+              "gt_m": -28.7942683724305,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.6115014086098256,
+              "nearest_gt_abs_vertical_m": 0.16930058206934007
+            },
+            {
+              "bin_index": 37,
+              "s_m": 9.375,
+              "prior_m": -29.567974518307466,
+              "gt_m": -28.83546209258798,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.13566501782849727,
+              "nearest_gt_abs_vertical_m": 0.11510394785101496
+            },
+            {
+              "bin_index": 38,
+              "s_m": 9.625,
+              "prior_m": -29.560878673505265,
+              "gt_m": -28.873282536176912,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.17736063607560482,
+              "nearest_gt_abs_vertical_m": 0.09122860728284721
+            },
+            {
+              "bin_index": 39,
+              "s_m": 9.875,
+              "prior_m": -29.55733075110416,
+              "gt_m": -28.918744419189757,
+              "intersection_count": 3,
+              "nearest_prior_abs_vertical_m": 0.16885736430437603,
+              "nearest_gt_abs_vertical_m": 0.06412615102390262
+            },
+            {
+              "bin_index": 40,
+              "s_m": 10.125,
+              "prior_m": -29.55023490630196,
+              "gt_m": -28.96088130073128,
+              "intersection_count": 5,
+              "nearest_prior_abs_vertical_m": 0.19360234959928846,
+              "nearest_gt_abs_vertical_m": 0.07047706529641573
+            },
+            {
+              "bin_index": 41,
+              "s_m": 10.375,
+              "prior_m": -29.539591139098654,
+              "gt_m": -29.00459693482123,
+              "intersection_count": 1,
+              "nearest_prior_abs_vertical_m": 0.47214541711971947,
+              "nearest_gt_abs_vertical_m": 0.06284878715770503
+            }
+          ],
+          "present_bins": 18,
+          "bins_with_surface_within_25cm_prior": 4,
+          "bins_with_surface_within_25cm_gt": 17,
+          "median_nearest_prior_vertical_m": 0.7900951313557059,
+          "median_nearest_gt_vertical_m": 0.09325580876189399
+        }
+      ],
+      "viscmp_v1_overlap": {
+        "source": "configs/phd/main_viscmp_v4/places_v4.json V1 place",
+        "intersects": true,
+        "sample_step_m": 0.009994121075440196,
+        "sample_fraction": 0.21035058430717862,
+        "inside_s_range_m": [
+          7.105820084637979,
+          9.614344474573468
+        ],
+        "method": "0.01m centreline sampling against exact XY footprints of V1 outlined 0.25m patches; no section relocation"
+      }
+    }
+  ]
+}

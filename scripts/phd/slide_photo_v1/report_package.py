@@ -4,7 +4,7 @@ from common import *
 HOST='/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp'
 ART=HOST.rsplit('/',1)[0]+'/JointBuildGS-artifacts/phase-payloads/phd/slide_photo_v1/PHD-SLIDE-PHOTO-v1'
 def report(stage):
-    cfg=config();rows=['# 설명 자료용 실사 그림 — 보고 v1','',f'- 작업: `{cfg["task_id"]}` / 발주문 v5 / 갱신: {now()}', '- `scientific_verdict: null` · 학습 없음 · CPU만 사용',f'- 설정 잠금: `{sha(CFG/"slide_photo_v1.json")}`',f'- 기준 커밋: `{(PAY/"base_commit.txt").read_text().strip()}`','', '## 1. 범위와 기존 자료','',
+    cfg=config();elapsed=(datetime.datetime.fromisoformat(now())-datetime.datetime.fromisoformat(cfg['locked_at'])).total_seconds();rows=['# 설명 자료용 실사 그림 — 보고 v1','',f'- 작업: `{cfg["task_id"]}` / 발주문 v5 / 갱신: {now()}', '- `scientific_verdict: null` · 학습 없음 · CPU만 사용',f'- 설정 잠금: `{sha(CFG/"slide_photo_v1.json")}`',f'- 기준 커밋: `{(PAY/"base_commit.txt").read_text().strip()}`',f'- 설정 잠금부터 보고서까지: **{elapsed/60:.1f}분** (입력 재계산, 점검, 대기 포함 경과 시간)','', '## 1. 범위와 기존 자료','',
       '일 0은 WIDEN0-v2 공개 개발용 NPZ에서 좌표·법선·패치 면적·건물 ID 등 허용된 입력 기하 키만 읽었다. 기존 판정, 칸, 오차 값과 학습 결과는 읽지 않았다. 원본 입력 타일, 학습 영상과 기하 일관성 검사 후 깊이로 다시 계산했다. `holdout/` 경로는 열지 않았다.',
       '새 수치는 **[이 발주에서 냄]**으로 표시한다. 드론 LiDAR는 기존 정합 좌표의 평가 참조다. MVS와의 일치가 독립적인 실제 표면 검증을 뜻하지 않으며, 재질의 원인 효과도 확정하지 않는다. 사진 재질 답은 외관 판단이다.','',
       '기존 그림은 다음 위치에서 확인했다. 이전 판은 설명 글자와 여러 도표를 포함하고 이번 슬라이드 배치·글자 크기·색에 맞지 않아 입력과 스크립트 일부를 재사용했다.',
@@ -30,6 +30,9 @@ def report(stage):
         p=DOC/'figures'/f'{name}.png';qa=DOC/'qa'/f'{name}.json';state='그림 생성 · 독립 점검 대기' if p.exists() else '미완료'
         if qa.exists():state=load(qa).get('status','점검 기록 있음')
         rows.append(f'|{label}|[{name}.png](figures/{name}.png)|{state}|')
+    if stage=='final':
+        from report_details import details
+        rows+=['']+details()
     rows+=['','B173 보정 참조값은 최종 REGIONFIG JSON의 **+455.634 cm**, MVS **+0.800 cm**이다. 옛 설정의 +484.1 cm 예상값은 쓰지 않았다. R1은 LoD2 **−101.607 cm**, MVS **−1.9 cm**의 방향을 확인한다.',
       'B0 표현 오차는 발주문의 양의 방향 조건을 만족하는 면이 없어 허용된 반대 부호 규칙을 적용했다. 면 7의 945개 입력 패치에서 LoD2−참조 중앙값 **−14.610 cm**, |MVS−참조| 중앙값 **2.111 cm**다. τ는 **19.75 cm**이며 20 cm에 맞추지 않았다.',
       '그림 라는 원본 화면 점유 조건을 충족하는 시점이 없어, 사용자가 승인한 동일 부분 자르기를 적용했다. 자른 사진과 렌더·깊이의 픽셀 범위를 같게 유지한다. 중간 학습 장면은 넣지 않았다.','',

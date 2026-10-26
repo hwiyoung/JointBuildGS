@@ -1,10 +1,16 @@
 {
-  "status": "PASS",
+  "status": "PASS_AFTER_ONE_REVISION",
   "question": "이 그림이 보여 주는 것을 한 문장으로",
   "round1": {
     "agent": "blind_a",
     "answer": "이 그림은 무늬 없는 지붕에서는 깊이가 누락되고, 그늘진 벽에서는 누락과 오류가 함께 나타나며, 금속 표면에서는 깊이가 있어도 틀릴 수 있음을 보여 준다.",
     "assessment": "세 사례의 결측과 오류 구분이 읽힘. 첫 지붕은 20화소로 표본이 작음."
   },
-  "scientific_verdict": null
+  "scientific_verdict": null,
+  "revision": "참값이 없는 화소는 결측도 칠하지 않는다는 발주문을 엄격히 적용. 비율과 선택 위치는 유지.",
+  "round2": {
+    "agent": "blind_a_second",
+    "answer": "이 그림은 영상 기반 깊이 추정에서 무늬 없는 지붕은 깊이가 전부 누락되고, 그늘진 벽은 누락과 오류가 함께 발생하며, 금속 표면은 깊이가 대부분 생성되지만 오류가 많음을 보여 줍니다.",
+    "assessment": "자료 사이 차이와 방향이 읽힘. 표시된 비율/중앙값의 공간 범위는 보고서의 정의를 따라야 함."
+  }
 }

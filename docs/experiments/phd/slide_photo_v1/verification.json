@@ -1,0 +1,161 @@
+{
+  "status": "PASS",
+  "scope": "file, dimension, metadata, completed blind-review record and newly authored text size checks; not a claim that all intended messages passed",
+  "rendered_count": 10,
+  "expected_count": 10,
+  "figures": [
+    {
+      "file": "figS_a_image_limits.png",
+      "size_px": [
+        2700,
+        1200
+      ],
+      "sha256": "8bd3a1368013bc72330c68655f010d1eb9c0064bf2ff1287f2496df4b9565387",
+      "metadata_sha256": "68bf1eba8653ec7afd775fcd716240824997df5bb72b439a7a5ef881ae4bdfe7",
+      "blind_review": "PASS_AFTER_ONE_REVISION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_b_correction_sections.png",
+      "size_px": [
+        3200,
+        1077
+      ],
+      "sha256": "d48ba56198e42b32920fb320cd209f659925b6323c8f8c36db953f6ca6d31c69",
+      "metadata_sha256": "cb7f9dbe04ce3dd6ec54196e85827215f3ccb7185f6b6e69babb2146241ddbee",
+      "blind_review": "PARTIAL_AFTER_ONE_REVISION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_c_change.png",
+      "size_px": [
+        1500,
+        1260
+      ],
+      "sha256": "2b2b84ac8161cd630c5acd6069b3cf88afdeb086ab14e0fadac9ce7f6a95a9f2",
+      "metadata_sha256": "caf0338a99dd0c65ed7d9bb989cc77826d09d51bafc08b226ac5f260dd91c042",
+      "blind_review": "PASS_AFTER_ONE_REVISION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_c_repr.png",
+      "size_px": [
+        1500,
+        1260
+      ],
+      "sha256": "6cab922c59882e1b963458ab29f4e85f8e9cbdc9ad75b685c6072f55ecf3893e",
+      "metadata_sha256": "702cae128dcd0b1ac2a99147594a2fece82577fa3b35e35b624a087313a864a4",
+      "blind_review": "PASS_AFTER_ONE_REVISION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_c_specular.png",
+      "size_px": [
+        1500,
+        1260
+      ],
+      "sha256": "74103f3c386d12cc9e44e1c4118765269277775a25a7d63596aa9b0e0a200c4f",
+      "metadata_sha256": "00c912e58a3a813792c283e38692861d0904da64059d4b496ca70d9beedd4092",
+      "blind_review": "PASS_AFTER_ONE_REVISION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_d_gs_real.png",
+      "size_px": [
+        3200,
+        800
+      ],
+      "sha256": "27ad5cacb6f55e0430401083c09e0c0f97c2bb202f7ef985a12c1222646fcd4c",
+      "metadata_sha256": "60882419eeb19aacb606ff0654b18baa5096d81a26e49bc5ad4cd4be18b9766c",
+      "blind_review": "PASS",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_e_aim_correct.png",
+      "size_px": [
+        1080,
+        600
+      ],
+      "sha256": "202c5974804fdfb9a524af2967f79fe6e3c0776a8905fa16142c8b5a83d52c95",
+      "metadata_sha256": "b97cc03518887e4a795fb8dc30853c1a3276278b1732d0df063d4f42030f2411",
+      "blind_review": "PASS_LOCATION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_e_aim_inherit.png",
+      "size_px": [
+        1080,
+        600
+      ],
+      "sha256": "66dd9e7bd2c1ec8ba6481ed17ca937954d4bf65685a6e8e50e60763baf419895",
+      "metadata_sha256": "2be13d637c69e8c2e1295ed023bd3a8701f3deab9dddeffb4bc2c5c64efe7b00",
+      "blind_review": "PARTIAL_AFTER_ONE_REVISION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_e_aim_keep.png",
+      "size_px": [
+        1080,
+        600
+      ],
+      "sha256": "957c233f36ab17d13c317b5890f91ee2960bef74daf29d57731124014013ff50",
+      "metadata_sha256": "9002d0e86b21999dcf2ff8b8f34f8fb3fdd00a1809d91702cc8952c92d0f500d",
+      "blind_review": "PARTIAL_AFTER_ONE_REVISION",
+      "status": "PASS"
+    },
+    {
+      "file": "figS_e_aim_refine.png",
+      "size_px": [
+        1080,
+        600
+      ],
+      "sha256": "4e2eadd7fb700dab8a5fca83e01aec8bdef10d594df10f4cf6ebe6e7f49ebafa",
+      "metadata_sha256": "fcb27af1d1cafd92ad1da7d8b9bff037a365047879c45d4852898b0c0dfb4ea4",
+      "blind_review": "PASS_LOCATION",
+      "status": "PASS"
+    }
+  ],
+  "configured_minimum_slide_font_px": {
+    "a": 25.333333333333332,
+    "b": 24.96,
+    "c": 25.333333333333332,
+    "d": 25.0
+  },
+  "actual_script_font_sizes": {
+    "draw_c_specular.py": {
+      "min_points": 55.0,
+      "dpi": 100,
+      "min_slide_px": 25.462962962962962
+    },
+    "draw_d.py": {
+      "min_points": 36.0,
+      "dpi": 100,
+      "min_slide_px": 25.0
+    },
+    "draw_a.py": {
+      "min_points": 55.0,
+      "dpi": 100,
+      "min_slide_px": 25.462962962962962
+    },
+    "draw_b.py": {
+      "min_points": 35.0,
+      "dpi": 100,
+      "min_slide_px": 25.27777777777778
+    },
+    "draw_c_legacy.py": {
+      "min_points": 55.0,
+      "dpi": 100,
+      "min_slide_px": 25.462962962962962
+    }
+  },
+  "font_exception": "B reuses mandated original REGIONFIG marked photographs byte-for-byte; their embedded small original labels are not newly authored 24px text.",
+  "config_sha256": "e9f9ed5016b12ee504f85194ddde268de8b8d856eaee11d2ab9b3363d12b3f61",
+  "amendment_sha256": {
+    "amendment_02_d_full_roi.json": "68901786311aa02d291a492024f12932134b6775996844252541fb6b3b30fd00",
+    "amendment_05_solid_occlusion.json": "0cb780be7561c9c3aff7a7edda1ccf01506c5e9a99fcc70177380ff82685e3c3",
+    "amendment_03_front_visibility.json": "6e2b0bc7087c20b579d5cf0d4bc4f7c30a3ef874b8ee37a3b82203bd222b2940",
+    "amendment_01_d_crop.json": "27e9310e1ed48a89a4e112b05e353f02ba81a7befe10c9a60b6e905fded19fe1",
+    "amendment_04_global_visibility.json": "2b5ee321cc29cc2bb51afdfc12340c4c437387df7898c18b3e138032a3ac1697"
+  },
+  "scientific_verdict": null
+}

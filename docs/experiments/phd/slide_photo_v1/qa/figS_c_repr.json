@@ -1,1 +1,16 @@
-{"status":"PASS","question":"이 그림이 보여 주는 것을 한 문장으로","round1":{"agent":"blind_c_repr","answer":"이 그림은 지붕 단면에서 MVS가 참값을 가깝게 따라가는 반면 LoD2는 더 낮게 나타나며, 그 차이가 14.6 cm로 표시된 모습을 보여 준다.","assessment":"Matches geometric representation gap and direction; causal simplification remains an interpretation."},"scientific_verdict":null}
+{
+  "status": "PASS_AFTER_ONE_REVISION",
+  "question": "이 그림이 보여 주는 것을 한 문장으로",
+  "round1": {
+    "agent": "blind_c_repr",
+    "answer": "이 그림은 지붕 단면에서 MVS가 참값을 가깝게 따라가는 반면 LoD2는 더 낮게 나타나며, 그 차이가 14.6 cm로 표시된 모습을 보여 준다.",
+    "assessment": "Matches geometric representation gap and direction; causal simplification remains an interpretation."
+  },
+  "scientific_verdict": null,
+  "revision": "간격 화살표의 머리만 줄여 서로 겹치지 않게 함. 자리와 수치 및 모든 선 유지.",
+  "round2": {
+    "agent": "blind_c_repr_second",
+    "answer": "표시된 지붕 구간에서 MVS 단면은 참값 점들에 가깝지만 LoD2 단면은 아래로 치우쳐 있으며, 표시 지점의 참값–LoD2 차이가 14.6 cm임을 보여 줍니다.",
+    "assessment": "자료 사이 차이와 방향이 읽힘. 표시된 비율/중앙값의 공간 범위는 보고서의 정의를 따라야 함."
+  }
+}
