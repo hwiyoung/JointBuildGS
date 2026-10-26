@@ -1,0 +1,75 @@
+{
+  "at": "2026-10-27T01:10:42.048180+09:00",
+  "base_commit": "016fc77ee0ddbcd58ddc5b37b05a40f90eaf8609",
+  "render_source_head": "fca86a59ac7271ceb7b6d260d89c2832d27e5bba",
+  "config_sha256": "d7e763601cc84709ceed37d70653ac9342e138cde8e38adea9dc75a33dec8981",
+  "scripts_sha256": {
+    "/repo/scripts/phd/main_regionfig_v2/amend_legends.py": "cd3d55083ae9c5611ea4cb27bf2b49c079d6c058381ee556bbeaa9d98ee0e647",
+    "/repo/scripts/phd/main_regionfig_v2/amend_projection.py": "f411e153acd648e17bbe891e183d5d106c86c97fee9535d60934d30a59e03cde",
+    "/repo/scripts/phd/main_regionfig_v2/check_projection.py": "fea0302fdcc783855aab9846e0cc80dc8269aa3a5fe7a3c5817f6ca595ae7ff2",
+    "/repo/scripts/phd/main_regionfig_v2/draw_figures.py": "03d66758845bfd3e85c2d6aa20cd1b71d14db7dff9c881818894ab1357108622",
+    "/repo/scripts/phd/main_regionfig_v2/inspect_inputs.py": "e4f962406255d4c49fb7c5e5ce7445558cfccbd7256b058124093aacd12ea47f",
+    "/repo/scripts/phd/main_regionfig_v2/join_inputs.py": "b69e0e76230e5c2a9fdafcd675309d7e89b3d1b7525be88cf8d79023ab05e69f",
+    "/repo/scripts/phd/main_regionfig_v2/package.py": "983eba2b6c1180a60571140874bc3054e6ba0597b72e7ab59185324627dd3eb1",
+    "/repo/scripts/phd/main_regionfig_v2/prepare_figures.py": "52f5214ee8abb01a44ed4d033f8705fdf56c1c6db115b8c93f7364e0dfe77375",
+    "/repo/scripts/phd/main_regionfig_v2/provenance.py": "cb14472501253c7b706e2cdb983128fff5b612c628adf26ab837bae803b78007",
+    "/repo/scripts/phd/main_regionfig_v2/report.py": "4d1d65f0319727340ae8cfaae6f8b6a000ead4450bba158a257c88ecd8622d30",
+    "/repo/scripts/phd/main_regionfig_v2/representative_draw.py": "3796d67b8008fcb7c62991dec743907b7d958b81101c9e903c851025db94b3e0",
+    "/repo/scripts/phd/main_regionfig_v2/representative_finish.py": "9cde986e3212c7f47f5a2d204aaf59217c5991e2f823f961ad5f901170840192",
+    "/repo/scripts/phd/main_regionfig_v2/representative_package.py": "dd91d7bb7d106d1071a90635c0ce3df448ce15d908ebedc0589b89084c6a72a0",
+    "/repo/scripts/phd/main_regionfig_v2/representative_prepare.py": "74a8a10115456c9536bfdff0ce8750d8fbe086aef45e95f943e56aed3b7991a1",
+    "/repo/scripts/phd/main_regionfig_v2/representative_trace.py": "54b6c7e81d62f1d842572ae943199ac279354b94ca9b00bd3df2930cc22b817c",
+    "/repo/scripts/phd/main_regionfig_v2/representative_verify.py": "c406b4db5cfdd2d89929baca7948fc4f3afb54eb2657a710a51c3a22304d2cd4",
+    "/repo/scripts/phd/main_regionfig_v2/rfcore.py": "1b6907493db3919d7c811d6536ac33581b05d62efce3706fc94ed4894f542983",
+    "/repo/scripts/phd/main_regionfig_v2/run_cpu.py": "cd4a91dd5e2a5852b3ab4b25fb06797575a4f33f1d2d2802c05a5bb4bce15559",
+    "/repo/scripts/phd/main_regionfig_v2/verify.py": "1943419e03077f3e710237519295a8e404f415c91de2f8ee392e3fa0b0b01c73"
+  },
+  "base_artifacts_preserved": true,
+  "figures": [
+    {
+      "id": "1",
+      "sha256": "21912733fb83e1814a4960f43bedc6f1ffbedf53221be9e07ed0302accf2fea5"
+    },
+    {
+      "id": "2",
+      "sha256": "02f399cc71389c70e4a74f5664113d0736949632791bf668e69a10b9b0a5317e"
+    },
+    {
+      "id": "3",
+      "sha256": "4a72ff57b332c29636085cc3c0ae5ad77e25704196bce04cbb95b4690335c83b"
+    },
+    {
+      "id": "4",
+      "sha256": "eab3e12535a9b9734a9cca16c0469cce2cbfb77093729e633b4db739058cfd18"
+    },
+    {
+      "id": "5",
+      "sha256": "d193fbafd606f9195735842dbd8c633eb23a359fbdd915886517ebe916ce0a28"
+    },
+    {
+      "id": "6",
+      "sha256": "5d513d79f6e74f2914612aee4af8c4bd498f60fee92e4cb8480fab5801529621"
+    },
+    {
+      "id": "7",
+      "sha256": "cd4f4a4b35842083147f6f12f144d8cc2ddd7fa675a4694feb72a3d984f1a7ec"
+    },
+    {
+      "id": "8",
+      "sha256": "69851646046b19cbb00234bab63733e7a50b58526ed6a668337e38cb134c0b9c"
+    }
+  ],
+  "report_characters": 4201,
+  "environment": {
+    "at": "2026-10-27T01:10:42.050650+09:00",
+    "max_rss_KiB": 89312,
+    "cgroup": {
+      "memory.max": "4294967296",
+      "memory.current": "63873024",
+      "memory.peak": "63873024"
+    },
+    "numpy": "1.26.4",
+    "scientific_verdict": null
+  },
+  "scientific_verdict": null
+}

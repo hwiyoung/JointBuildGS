@@ -1,0 +1,140 @@
+{
+  "task_id": "PHD-MAIN-REGIONFIG-v2",
+  "tag": "rep-type-final",
+  "started_at": "2026-10-27T01:09:00.096717+09:00",
+  "scientific_verdict": null,
+  "source_base_head": "fca86a59ac7271ceb7b6d260d89c2832d27e5bba",
+  "name": "jbgs-regionfig-v2-20261027t010900-fd1f8075",
+  "command": [
+    "python",
+    "-c",
+    "import subprocess; [subprocess.run([\"python\", \"representative_draw.py\", str(i)], check=True) for i in range(1,9)]; subprocess.run([\"python\", \"representative_verify.py\"], check=True)"
+  ],
+  "admission_samples": [
+    {
+      "at": "2026-10-27T01:09:00.122146+09:00",
+      "available_GiB": 46.50392150878906,
+      "busy": null
+    }
+  ],
+  "docker_command": [
+    "docker",
+    "run",
+    "--name",
+    "jbgs-regionfig-v2-20261027t010900-fd1f8075",
+    "--label",
+    "jbgs.task=PHD-MAIN-REGIONFIG-v2",
+    "--runtime",
+    "runc",
+    "--network",
+    "none",
+    "--read-only",
+    "--user",
+    "1000:1000",
+    "--cpus",
+    "2",
+    "--memory",
+    "4g",
+    "--memory-swap",
+    "4g",
+    "--pids-limit",
+    "128",
+    "-e",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "-e",
+    "PYTHONUNBUFFERED=1",
+    "-e",
+    "CUDA_VISIBLE_DEVICES=",
+    "-e",
+    "JBGS_SOURCE_HEAD=fca86a59ac7271ceb7b6d260d89c2832d27e5bba",
+    "-e",
+    "NVIDIA_VISIBLE_DEVICES=void",
+    "-e",
+    "OMP_NUM_THREADS=1",
+    "-e",
+    "OPENBLAS_NUM_THREADS=1",
+    "-e",
+    "MPLCONFIGDIR=/payload/cache/mpl",
+    "-e",
+    "XDG_CACHE_HOME=/payload/cache",
+    "-e",
+    "TMPDIR=/payload/tmp",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp:/repo:ro",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts:/art:ro",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_regionfig_v2/PHD-MAIN-REGIONFIG-v2:/payload",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/configs/phd/main_regionfig_v2:/cfg",
+    "-v",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/docs/experiments/phd/main_regionfig_v2:/docs",
+    "-v",
+    "/usr/share/fonts/opentype/noto:/fonts:ro",
+    "-w",
+    "/repo/scripts/phd/main_regionfig_v2",
+    "--entrypoint",
+    "nice",
+    "jointbuildgs:dev",
+    "-n",
+    "19",
+    "ionice",
+    "-c",
+    "3",
+    "python",
+    "-c",
+    "import subprocess; [subprocess.run([\"python\", \"representative_draw.py\", str(i)], check=True) for i in range(1,9)]; subprocess.run([\"python\", \"representative_verify.py\"], check=True)"
+  ],
+  "status": "PASS",
+  "monitor": [
+    {
+      "at": "2026-10-27T01:09:05.264421+09:00",
+      "available_GiB": 46.117393493652344,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:09:10.865608+09:00",
+      "available_GiB": 46.13261032104492,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:09:15.893728+09:00",
+      "available_GiB": 46.102901458740234,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:09:20.994700+09:00",
+      "available_GiB": 45.954139709472656,
+      "busy": null
+    },
+    {
+      "at": "2026-10-27T01:09:26.023679+09:00",
+      "available_GiB": 45.7097282409668,
+      "busy": null
+    }
+  ],
+  "docker_state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-10-26T16:09:00.351299326Z",
+    "FinishedAt": "2026-10-26T16:09:30.878987454Z"
+  },
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "host_config": {
+    "Memory": 4294967296,
+    "MemorySwap": 4294967296,
+    "NanoCpus": 2000000000,
+    "DeviceRequests": null,
+    "Runtime": "runc"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-27T01:09:31.079981+09:00",
+  "interrupted": null
+}
