@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import subprocess
 import time
+import uuid
 import train_full as F
 from post_admission import memory_available_gib
 
@@ -19,7 +20,7 @@ RUNS=F.runs_for('first')+F.runs_for('remaining')
 
 def save(p,d):
     p=Path(p);p.parent.mkdir(parents=True,exist_ok=True)
-    temp=p.with_name(p.name+f'.{os.getpid()}.tmp')
+    temp=p.with_name(p.name+f'.{os.getpid()}.{uuid.uuid4().hex}.tmp')
     temp.write_text(json.dumps(d,ensure_ascii=False,indent=2,allow_nan=False)+'\n');temp.replace(p)
 
 def read(p,default=None):return json.loads(p.read_text()) if p.exists() else default
@@ -37,9 +38,9 @@ def binding():
     return dict(source_sha256={p:F.sha(P.SRC['r17']/p) for p in ['train.py','jbgs_judgment.py']},
         config_sha256=F.sha(REPO/'configs/phd/main_losstrain_v1/losstrain_v1.json'))
 
-def train(r,gpu,lam):
-    unit=F.root_of(r);assert not unit.exists(),f'refuse repeat training {unit}'
-    sub=unit/'attempt_0';sub.mkdir(parents=True)
+def train_attempt(r,gpu,lam,attempt):
+    unit=F.root_of(r);assert not (unit/'PASS.json').exists()
+    sub=unit/f'attempt_{attempt}';sub.mkdir(parents=True)
     command=P.docker('jbgs-lt-resume-train-'+str(gpu),gpu,'r17',r['site'],['train.py',*training_args(r,P.to_container(sub/'model'),lam)])
     command[2:2]=['--memory','48g'];bound=binding()
     save(sub/'start_binding.json',dict(**bound,at=F.now(),scientific_verdict=None));save(sub/'command.json',command)
@@ -52,14 +53,47 @@ def train(r,gpu,lam):
             except ValueError:pass
             time.sleep(5)
     rc=process.returncode
-    save(sub/'receipt.json',dict(run=r,gpu=gpu,attempt=0,exit_code=rc,started_at=stamp,finished_at=F.now(),
+    save(sub/'receipt.json',dict(run=r,gpu=gpu,attempt=attempt,exit_code=rc,started_at=stamp,finished_at=F.now(),
         seconds=time.monotonic()-start,gpu_peak_total_MiB=peak,lambda_depth=lam,**bound,scientific_verdict=None))
-    if rc:
-        save(ROOT/'training_STOP.json',dict(at=F.now(),run=r,exit_code=rc,attempt=0,reason='training execution/health error',scientific_verdict=None))
-        return False
+    if rc:return False
     assert (sub/'model/point_cloud/iteration_30000/point_cloud.ply').is_file()
-    save(unit/'PASS.json',dict(attempt=0,model=str(sub/'model'),at=F.now(),monitor_policy='v2',scientific_verdict=None))
+    save(unit/'PASS.json',dict(attempt=attempt,model=str(sub/'model'),at=F.now(),monitor_policy='v2',scientific_verdict=None))
     print('TRAIN PASS',r,flush=True);return True
+
+def cuda_oom_attempt(sub):
+    receipt=read(sub/'receipt.json',{})
+    if not receipt.get('exit_code'):return False
+    record=read(sub/'model/monitor/oom_record.json',{})
+    text=(sub/'run.log').read_text(errors='replace') if (sub/'run.log').exists() else ''
+    return 'CUDA out of memory' in record.get('error','') or 'torch.cuda.OutOfMemoryError' in text
+
+def next_training_attempt(unit):
+    if not unit.exists():return 0
+    assert not (unit/'PASS.json').exists(), 'completed training cannot restart'
+    assert (unit/'attempt_0/receipt.json').exists() and cuda_oom_attempt(unit/'attempt_0'), 'only documented CUDA OOM is automatically retried'
+    assert not (unit/'attempt_1').exists(), 'one identical-setting GPU OOM retry already used'
+    return 1
+
+def train(r,gpu,lam):
+    unit=F.root_of(r);first=next_training_attempt(unit)
+    for attempt in range(first,2):
+        if attempt:
+            old=read(unit/'attempt_0/command.json');i=old.index('train.py');old_args=old[i+1:]
+            model=old_args[old_args.index('--model_path')+1] if '--model_path' in old_args else old_args[old_args.index('-m')+1]
+            assert old_args==training_args(r,model,lam), 'retry training settings differ'
+            assert read(unit/'attempt_0/start_binding.json')['source_sha256']==binding()['source_sha256']
+        if train_attempt(r,gpu,lam,attempt):return True
+        sub=unit/f'attempt_{attempt}';oom=cuda_oom_attempt(sub)
+        event=dict(at=F.now(),run=r,attempt=attempt,reason='CUDA OOM' if oom else 'training execution/health error',
+            same_arm_training_stops=attempt+1,scientific_verdict=None)
+        save(unit/f'training_STOP_attempt_{attempt}.json',event)
+        if oom and attempt==0:
+            print('CUDA OOM: authorized one identical-setting retry',r,flush=True);continue
+        if oom:
+            save(unit/'training_NO_RESULT.json',dict(**event,status='NO_RESULT',authority='work order section 1.10 GPU OOM twice'))
+            print('NO RESULT after two CUDA OOM attempts',r,flush=True)
+        else:save(ROOT/'training_STOP.json',event)
+        return False
 
 def next_post_mode(unit):
     if (unit/'post_PASS.json').exists():return None
@@ -155,7 +189,7 @@ def measure(r):
             time.sleep(10)
     return False
 
-def validate():
+def validate(epoch=0):
     F.C.gates();a=read(ROOT/'approval.json');assert a['status']=='AUTHORIZED'
     assert len(RUNS)==24 and len({str(F.root_of(r)) for r in RUNS})==24
     old=read(OUT/'runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/command.json')
@@ -167,21 +201,23 @@ def validate():
     assert all(F.sha(P.SRC['r17']/p)==h for p,h in ref['source_sha256'].items())
     for r in RUNS:
         unit=F.root_of(r)
-        assert not unit.exists() or (unit/'PASS.json').exists(),str(unit)
+        if unit.exists() and not (unit/'PASS.json').exists():assert next_training_attempt(unit)==1
     result=dict(status='PASS',at=F.now(),training_arguments_identical=True,r17_source_unchanged=True,
         required_runs=24,completed_training_reused=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
         post_minimum_available_GiB=64,post_stable_seconds=60,resource_retries=2,scientific_verdict=None)
-    save(ROOT/'validation.json',result);print(json.dumps(result),flush=True)
+    save(ROOT/('validation.json' if epoch==0 else f'validation_epoch_{epoch}.json'),result);print(json.dumps(result),flush=True)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--validate-only',action='store_true');a=ap.parse_args()
-    if a.validate_only:validate();return
+    ap=argparse.ArgumentParser();ap.add_argument('--validate-only',action='store_true');ap.add_argument('--resume-epoch',type=int,default=0);a=ap.parse_args()
+    if a.validate_only:validate(a.resume_epoch);return
     assert read(ROOT/'validation.json')['status']=='PASS' and (ROOT/'commit.json').exists()
     with (ROOT/'orchestrator.lock').open('a') as guard:
         fcntl.flock(guard,fcntl.LOCK_EX|fcntl.LOCK_NB)
-        assert not (ROOT/'start.json').exists(),'do not double launch'
-        save(ROOT/'start.json',dict(at=F.now(),pid=os.getpid(),runs=RUNS,scientific_verdict=None))
-        pending=[r for r in RUNS if not (F.root_of(r)/'PASS.json').exists()]
+        start_file=ROOT/('start.json' if a.resume_epoch==0 else f'start_epoch_{a.resume_epoch}.json')
+        if a.resume_epoch:assert read(ROOT/f'resume_epoch_{a.resume_epoch}.json')['status']=='AUTHORIZED_EXISTING_ORDER'
+        assert not start_file.exists(),'do not double launch'
+        save(start_file,dict(at=F.now(),pid=os.getpid(),runs=RUNS,scientific_verdict=None))
+        pending=[r for r in RUNS if not (F.root_of(r)/'PASS.json').exists() and not (F.root_of(r)/'training_NO_RESULT.json').exists()]
         futures={};cpu=None;stable_since=None
         with concurrent.futures.ThreadPoolExecutor(3) as pool:
             while True:
@@ -211,7 +247,7 @@ def main():
                 measurable=[r for r in RUNS if (F.root_of(r)/'post_PASS.json').exists() and not (F.root_of(r)/'measure_PASS.json').exists()]
                 if cpu is None and measurable and not post_active and not (ROOT/'measure_STOP.json').exists():
                     r=measurable[0];cpu=(pool.submit(measure,r),r)
-                counts=dict(training_complete=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
+                counts=dict(training_no_result=sum((F.root_of(r)/'training_NO_RESULT.json').exists() for r in RUNS),training_complete=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
                     post_complete=sum((F.root_of(r)/'post_PASS.json').exists() for r in RUNS),
                     measurement_complete=sum((F.root_of(r)/'measure_PASS.json').exists() for r in RUNS))
                 stops=[p.name for p in ROOT.glob('*_STOP.json')]
@@ -220,8 +256,8 @@ def main():
                     available_GiB=mem,required_post_GiB=64,stable_seconds=stable,stops=stops,pending_trainings=len(pending),scientific_verdict=None))
                 if all((F.root_of(r)/'measure_PASS.json').exists() for r in RUNS[:4]) and not (ROOT/'interim_ready.json').exists():
                     save(ROOT/'interim_ready.json',dict(at=F.now(),status='READY_FOR_REPORT',scientific_verdict=None))
-                if counts['measurement_complete']==24:
-                    save(ROOT/'PASS.json',dict(at=F.now(),**counts,scientific_verdict=None));break
+                if counts['measurement_complete']+counts['training_no_result']==24:
+                    save(ROOT/('PASS.json' if counts['training_no_result']==0 else 'PARTIAL_NO_RESULT.json'),dict(at=F.now(),**counts,scientific_verdict=None));break
                 if stops and not futures and cpu is None and (not pending or (ROOT/'training_STOP.json').exists()):break
                 time.sleep(5)
 

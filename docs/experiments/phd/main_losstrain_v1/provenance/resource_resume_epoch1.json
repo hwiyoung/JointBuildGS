@@ -1,0 +1,20 @@
+{
+  "status": "AUTHORIZED_EXISTING_ORDER",
+  "at": "2026-10-26T22:37:22.311598+09:00",
+  "authority": "Original work order section 1.10: one same-setting retry for GPU OOM; user continued all remaining 20 trainings",
+  "retry": {
+    "site": "B173nb_b10",
+    "prior": "ALS",
+    "variant": "lt_dynsoft",
+    "from_attempt": 0,
+    "to_attempt": 1,
+    "seed": 0,
+    "gpu": 0
+  },
+  "source_and_training_settings_unchanged": true,
+  "completed_training_reused": 3,
+  "initial_stop_sha256": "1d3c011e84023debfeae670a8fa31b5cc5391c1fc99feac29c84662caf8c4912",
+  "preserved_stop": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/resource_resume_v1/history/epoch_0/training_STOP.json",
+  "orchestration_fix": "restore omitted one-time CUDA OOM retry; keep post-resource retries separate",
+  "scientific_verdict": null
+}

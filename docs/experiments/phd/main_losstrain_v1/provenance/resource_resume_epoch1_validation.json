@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "at": "2026-10-26T22:36:15.953785+09:00",
+  "training_arguments_identical": true,
+  "r17_source_unchanged": true,
+  "required_runs": 24,
+  "completed_training_reused": 3,
+  "post_minimum_available_GiB": 64,
+  "post_stable_seconds": 60,
+  "resource_retries": 2,
+  "scientific_verdict": null,
+  "retry_state_tests": "PASS in Docker: fresh / single CUDA retry / exhausted retry / non-CUDA rejection",
+  "source_sha256": {
+    "continue_resource_v1.py": "372bc07cb7dbb67dc00523ed727e780b1e98c66b4e896d54bd28c11951f6359b",
+    "watch_resource_reports.py": "7830599c938f2d0e30a31c687618eab7fbdee217e442db2a77abf3f942c2e386",
+    "runtime_report.py": "659de9c1a86c6b9de6e544ae36b5b8efc8f779d0e62b8aba7ef4ce6669a75199"
+  }
+}
