@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-MAIN-REGIONFIG-v2",
+  "status": "AUTHORIZED",
+  "authority": "User response: 응 그래보자, approving the preceding 24 GiB admission / 4 GiB limit proposal in this chat.",
+  "supersedes": "Work order section 1.5 minimum host availability only",
+  "minimum_host_available_GiB": 24,
+  "interrupt_below_available_GiB": 16,
+  "container_limit_GiB": 4,
+  "cpus": 2,
+  "gpu": false,
+  "concurrent_figures": 1,
+  "postprocess_priority": "Yield only this task when TSDF or large scoring starts",
+  "scientific_verdict": null
+}

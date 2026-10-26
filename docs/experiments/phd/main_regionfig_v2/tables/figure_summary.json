@@ -1,0 +1,674 @@
+{
+  "figures": [
+    {
+      "id": "1",
+      "building": "60042",
+      "prior": "ALS",
+      "photo": "DJI_20241217084843_0185_D",
+      "crop": [
+        1724,
+        1752,
+        2988,
+        2931
+      ],
+      "tilt_deg": 0.7888282082071999,
+      "rotation_degrees": 146.31405414940374,
+      "unmatched": 0,
+      "patches": 3931,
+      "roof_patches": 3927,
+      "area_m2": 247.10793606517836,
+      "unpainted_no_reference_area_m2": 0.5381691860966384,
+      "result_patches": 3919,
+      "result_area_m2": 246.47750057280064,
+      "region_area_m2": {
+        "다듬기": 221.60952270030975,
+        "보정": 1.3866552263498306,
+        "보존": 15.48440595716238,
+        "둘 다 틀림": 7.76407315582037,
+        "상속 · 결측": 0.3251098394393921,
+        "상속 · 비가시": 0.0
+      },
+      "judgment_area_m2": {
+        "지지": 159.84516805410385,
+        "반박": 4.223221153020859,
+        "유보": 82.50137767195702,
+        "사진 부족": 0.0,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 221.60952270030975,
+          "patches": 3525,
+          "ok_category_pct": 100.0,
+          "ok_check_pct": 100.0
+        },
+        {
+          "region": "보정",
+          "area_m2": 1.3866552263498306,
+          "patches": 22,
+          "ok_category_pct": 0.0,
+          "ok_check_pct": 18.247640257181693
+        },
+        {
+          "region": "보존",
+          "area_m2": 15.48440595716238,
+          "patches": 245,
+          "ok_category_pct": 99.59525151725732,
+          "ok_check_pct": 99.59626384388847
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 7.67180684953928,
+          "patches": 122,
+          "ok_category_pct": 0.8185161223158777,
+          "ok_check_pct": 2.449802865172897
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 0.3251098394393921,
+          "patches": 5,
+          "ok_category_pct": 39.39485607866475,
+          "ok_check_pct": 39.39485607866475
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 0.0,
+          "patches": 0,
+          "ok_category_pct": null,
+          "ok_check_pct": null
+        }
+      ],
+      "ok_category_pct": 96.244941926662,
+      "ok_check_pct": 96.3984398229291
+    },
+    {
+      "id": "2",
+      "building": "4959326",
+      "prior": "ALS",
+      "photo": "DJI_20241217091243_0144_D",
+      "crop": [
+        2060,
+        335,
+        3415,
+        1422
+      ],
+      "tilt_deg": 0.9963297967665636,
+      "rotation_degrees": 157.6202344253206,
+      "unmatched": 0,
+      "patches": 4518,
+      "roof_patches": 4419,
+      "area_m2": 308.3290569726378,
+      "unpainted_no_reference_area_m2": 7.274248043075204,
+      "result_patches": 4374,
+      "result_area_m2": 295.2424961999059,
+      "region_area_m2": {
+        "다듬기": 34.39103904366493,
+        "보정": 116.23732145130634,
+        "보존": 62.58477237075567,
+        "둘 다 틀림": 86.14506045728922,
+        "상속 · 결측": 1.6014377772808075,
+        "상속 · 비가시": 0.09517782926559448
+      },
+      "judgment_area_m2": {
+        "지지": 44.36000980436802,
+        "반박": 200.0972838178277,
+        "유보": 54.03976410627365,
+        "사진 부족": 2.557751201093197,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 34.28412772715092,
+          "patches": 523,
+          "ok_category_pct": 100.0,
+          "ok_check_pct": 99.59638696692812
+        },
+        {
+          "region": "보정",
+          "area_m2": 114.1333089619875,
+          "patches": 1706,
+          "ok_category_pct": 56.98094299318525,
+          "ok_check_pct": 86.86671733387212
+        },
+        {
+          "region": "보존",
+          "area_m2": 62.104079015553,
+          "patches": 873,
+          "ok_category_pct": 92.15139478931633,
+          "ok_check_pct": 93.80930456255338
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 83.90491407364607,
+          "patches": 1260,
+          "ok_category_pct": 14.57942599148967,
+          "ok_check_pct": 20.60066527736809
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 0.8160664215683937,
+          "patches": 12,
+          "ok_category_pct": 8.411732062299569,
+          "ok_check_pct": 8.411732062299569
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 0.0,
+          "patches": 0,
+          "ok_category_pct": null,
+          "ok_check_pct": null
+        }
+      ],
+      "ok_category_pct": 57.19015413485892,
+      "ok_check_pct": 70.75628831819812
+    },
+    {
+      "id": "3",
+      "building": "4906975",
+      "prior": "LoD2",
+      "photo": "DJI_20241217084729_0148_D",
+      "crop": [
+        3882,
+        450,
+        5149,
+        1804
+      ],
+      "tilt_deg": 0.7809496901819128,
+      "rotation_degrees": -33.234691750274955,
+      "unmatched": 0,
+      "patches": 10892,
+      "roof_patches": 10892,
+      "area_m2": 680.75,
+      "unpainted_no_reference_area_m2": 57.5,
+      "result_patches": 9972,
+      "result_area_m2": 623.25,
+      "region_area_m2": {
+        "다듬기": 220.0625,
+        "보정": 294.5625,
+        "보존": 32.0,
+        "둘 다 틀림": 61.1875,
+        "상속 · 결측": 15.4375,
+        "상속 · 비가시": 0.0
+      },
+      "judgment_area_m2": {
+        "지지": 243.5,
+        "반박": 264.6875,
+        "유보": 115.0625,
+        "사진 부족": 0.0,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 220.0625,
+          "patches": 3521,
+          "ok_category_pct": 100.0,
+          "ok_check_pct": 100.0
+        },
+        {
+          "region": "보정",
+          "area_m2": 294.5625,
+          "patches": 4713,
+          "ok_category_pct": 75.17504774029281,
+          "ok_check_pct": 97.07192870782941
+        },
+        {
+          "region": "보존",
+          "area_m2": 32.0,
+          "patches": 512,
+          "ok_category_pct": 49.0234375,
+          "ok_check_pct": 34.9609375
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 61.1875,
+          "patches": 979,
+          "ok_category_pct": 20.93973442288049,
+          "ok_check_pct": 41.16445352400409
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 15.4375,
+          "patches": 247,
+          "ok_category_pct": 11.336032388663968,
+          "ok_check_pct": 11.336032388663968
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 0.0,
+          "patches": 0,
+          "ok_category_pct": null,
+          "ok_check_pct": null
+        }
+      ],
+      "ok_category_pct": 75.69193742478942,
+      "ok_check_pct": 87.30445246690734
+    },
+    {
+      "id": "4",
+      "building": "4907519",
+      "prior": "LoD2",
+      "photo": "DJI_20241217084350_0039_D",
+      "crop": [
+        97,
+        305,
+        1115,
+        1255
+      ],
+      "tilt_deg": 0.8000546620230046,
+      "rotation_degrees": 58.833114592998086,
+      "unmatched": 0,
+      "patches": 5804,
+      "roof_patches": 5804,
+      "area_m2": 362.75,
+      "unpainted_no_reference_area_m2": 5.375,
+      "result_patches": 5718,
+      "result_area_m2": 357.375,
+      "region_area_m2": {
+        "다듬기": 106.875,
+        "보정": 0.625,
+        "보존": 239.75,
+        "둘 다 틀림": 6.8125,
+        "상속 · 결측": 3.3125,
+        "상속 · 비가시": 0.0
+      },
+      "judgment_area_m2": {
+        "지지": 304.125,
+        "반박": 21.9375,
+        "유보": 31.3125,
+        "사진 부족": 0.0,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 106.875,
+          "patches": 1710,
+          "ok_category_pct": 100.0,
+          "ok_check_pct": 100.0
+        },
+        {
+          "region": "보정",
+          "area_m2": 0.625,
+          "patches": 10,
+          "ok_category_pct": 80.0,
+          "ok_check_pct": 80.0
+        },
+        {
+          "region": "보존",
+          "area_m2": 239.75,
+          "patches": 3836,
+          "ok_category_pct": 79.22314911366006,
+          "ok_check_pct": 78.70177267987486
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 6.8125,
+          "patches": 109,
+          "ok_category_pct": 27.522935779816514,
+          "ok_check_pct": 27.522935779816514
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 3.3125,
+          "patches": 53,
+          "ok_category_pct": 45.283018867924525,
+          "ok_check_pct": 45.283018867924525
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 0.0,
+          "patches": 0,
+          "ok_category_pct": null,
+          "ok_check_pct": null
+        }
+      ],
+      "ok_category_pct": 84.1378104232249,
+      "ok_check_pct": 83.78803777544596
+    },
+    {
+      "id": "5",
+      "building": "4907519",
+      "prior": "ALS",
+      "photo": "DJI_20241217084629_0118_D",
+      "crop": [
+        292,
+        27,
+        1242,
+        1138
+      ],
+      "tilt_deg": 0.8970863108079955,
+      "rotation_degrees": 148.81514358419244,
+      "unmatched": 0,
+      "patches": 4215,
+      "roof_patches": 4171,
+      "area_m2": 270.0377219747752,
+      "unpainted_no_reference_area_m2": 6.332387564703822,
+      "result_patches": 4081,
+      "result_area_m2": 259.9288926422596,
+      "region_area_m2": {
+        "다듬기": 77.08461041748524,
+        "보정": 6.707840442657471,
+        "보존": 151.93088348954916,
+        "둘 다 틀림": 17.41501821577549,
+        "상속 · 결측": 6.340019673109055,
+        "상속 · 비가시": 4.226962171494961
+      },
+      "judgment_area_m2": {
+        "지지": 146.93550044298172,
+        "반박": 56.210446268320084,
+        "유보": 45.5872914865613,
+        "사진 부족": 14.972096212208271,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 76.89227322489023,
+          "patches": 1217,
+          "ok_category_pct": 99.91161846546268,
+          "ok_check_pct": 99.91161846546268
+        },
+        {
+          "region": "보정",
+          "area_m2": 5.891363337635994,
+          "patches": 90,
+          "ok_category_pct": 53.40618183403193,
+          "ok_check_pct": 59.6907730302055
+        },
+        {
+          "region": "보존",
+          "area_m2": 151.21979977935553,
+          "patches": 2378,
+          "ok_category_pct": 96.97895607108092,
+          "ok_check_pct": 93.4206194131745
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 15.80183906108141,
+          "patches": 238,
+          "ok_category_pct": 11.3114307422414,
+          "ok_check_pct": 13.017110774915391
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 5.986008241772652,
+          "patches": 93,
+          "ok_category_pct": 80.58580553633536,
+          "ok_check_pct": 80.58580553633536
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 4.137608997523785,
+          "patches": 65,
+          "ok_category_pct": 95.36922663258625,
+          "ok_check_pct": 95.36922663258625
+        }
+      ],
+      "ok_category_pct": 91.24777949953413,
+      "ok_check_pct": 89.42376809162386
+    },
+    {
+      "id": "6",
+      "building": "4906993",
+      "prior": "LoD2",
+      "photo": "DJI_20241217090957_0061_D",
+      "crop": [
+        582,
+        2741,
+        1667,
+        3847
+      ],
+      "tilt_deg": 0.43075999622025646,
+      "rotation_degrees": 248.4519214296044,
+      "unmatched": 0,
+      "patches": 3052,
+      "roof_patches": 3052,
+      "area_m2": 190.75,
+      "unpainted_no_reference_area_m2": 1.875,
+      "result_patches": 3022,
+      "result_area_m2": 188.875,
+      "region_area_m2": {
+        "다듬기": 6.75,
+        "보정": 9.625,
+        "보존": 157.375,
+        "둘 다 틀림": 11.1875,
+        "상속 · 결측": 1.0625,
+        "상속 · 비가시": 2.875
+      },
+      "judgment_area_m2": {
+        "지지": 136.3125,
+        "반박": 13.8125,
+        "유보": 30.9375,
+        "사진 부족": 7.8125,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 6.75,
+          "patches": 108,
+          "ok_category_pct": 99.07407407407408,
+          "ok_check_pct": 99.07407407407408
+        },
+        {
+          "region": "보정",
+          "area_m2": 9.625,
+          "patches": 154,
+          "ok_category_pct": 46.103896103896105,
+          "ok_check_pct": 59.09090909090909
+        },
+        {
+          "region": "보존",
+          "area_m2": 157.375,
+          "patches": 2518,
+          "ok_category_pct": 24.741858617950754,
+          "ok_check_pct": 26.131850675139
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 11.1875,
+          "patches": 179,
+          "ok_category_pct": 8.379888268156424,
+          "ok_check_pct": 15.64245810055866
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 1.0625,
+          "patches": 17,
+          "ok_category_pct": 47.05882352941177,
+          "ok_check_pct": 47.05882352941177
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 2.875,
+          "patches": 46,
+          "ok_category_pct": 97.82608695652173,
+          "ok_check_pct": 97.82608695652173
+        }
+      ],
+      "ok_category_pct": 28.755790866975513,
+      "ok_check_pct": 31.00595632031767
+    },
+    {
+      "id": "7",
+      "building": "4907519",
+      "prior": "LoD2",
+      "photo": "DJI_20241217101755_0015_D",
+      "crop": [
+        741,
+        1818,
+        1341,
+        2418
+      ],
+      "tilt_deg": 70.02169413520994,
+      "rotation_degrees": 190.54435062050396,
+      "unmatched": 0,
+      "patches": 3388,
+      "roof_patches": 3388,
+      "area_m2": 211.75,
+      "unpainted_no_reference_area_m2": 0.0,
+      "result_patches": 3388,
+      "result_area_m2": 211.75,
+      "region_area_m2": {
+        "다듬기": 135.6875,
+        "보정": 3.9375,
+        "보존": 11.1875,
+        "둘 다 틀림": 1.625,
+        "상속 · 결측": 1.125,
+        "상속 · 비가시": 58.1875
+      },
+      "judgment_area_m2": {
+        "지지": 84.125,
+        "반박": 0.0625,
+        "유보": 1.0,
+        "사진 부족": 126.5625,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 135.6875,
+          "patches": 2171,
+          "ok_category_pct": 99.95393827729157,
+          "ok_check_pct": 99.95393827729157
+        },
+        {
+          "region": "보정",
+          "area_m2": 3.9375,
+          "patches": 63,
+          "ok_category_pct": 77.77777777777777,
+          "ok_check_pct": 92.06349206349206
+        },
+        {
+          "region": "보존",
+          "area_m2": 11.1875,
+          "patches": 179,
+          "ok_category_pct": 75.41899441340782,
+          "ok_check_pct": 73.18435754189944
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 1.625,
+          "patches": 26,
+          "ok_category_pct": 11.538461538461538,
+          "ok_check_pct": 15.384615384615385
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 1.125,
+          "patches": 18,
+          "ok_category_pct": 100.0,
+          "ok_check_pct": 100.0
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 58.1875,
+          "patches": 931,
+          "ok_category_pct": 90.44038668098818,
+          "ok_check_pct": 90.44038668098818
+        }
+      ],
+      "ok_category_pct": 94.95277449822905,
+      "ok_check_pct": 95.12987012987013
+    },
+    {
+      "id": "8",
+      "building": "4906965",
+      "prior": "LoD2",
+      "photo": "DJI_20241217084705_0136_D",
+      "crop": [
+        3372,
+        2134,
+        4775,
+        3451
+      ],
+      "tilt_deg": 0.676964824993846,
+      "rotation_degrees": -32.581841179880655,
+      "unmatched": 0,
+      "patches": 2870,
+      "roof_patches": 2870,
+      "area_m2": 179.375,
+      "unpainted_no_reference_area_m2": 17.9375,
+      "result_patches": 2583,
+      "result_area_m2": 161.4375,
+      "region_area_m2": {
+        "다듬기": 27.375,
+        "보정": 88.8125,
+        "보존": 1.6875,
+        "둘 다 틀림": 17.9375,
+        "상속 · 결측": 25.625,
+        "상속 · 비가시": 0.0
+      },
+      "judgment_area_m2": {
+        "지지": 107.375,
+        "반박": 42.0,
+        "유보": 12.0625,
+        "사진 부족": 0.0,
+        "판단 없음": 0.0
+      },
+      "result_denominator": "roof_like & finite gt_p & centre projects inside the native crop",
+      "per_region": [
+        {
+          "region": "다듬기",
+          "area_m2": 27.375,
+          "patches": 438,
+          "ok_category_pct": 100.0,
+          "ok_check_pct": 100.0
+        },
+        {
+          "region": "보정",
+          "area_m2": 88.8125,
+          "patches": 1421,
+          "ok_category_pct": 94.93314567206193,
+          "ok_check_pct": 95.07389162561576
+        },
+        {
+          "region": "보존",
+          "area_m2": 1.6875,
+          "patches": 27,
+          "ok_category_pct": 92.5925925925926,
+          "ok_check_pct": 92.5925925925926
+        },
+        {
+          "region": "둘 다 틀림",
+          "area_m2": 17.9375,
+          "patches": 287,
+          "ok_category_pct": 16.027874564459932,
+          "ok_check_pct": 17.421602787456447
+        },
+        {
+          "region": "상속 · 결측",
+          "area_m2": 25.625,
+          "patches": 410,
+          "ok_category_pct": 0.0,
+          "ok_check_pct": 0.0
+        },
+        {
+          "region": "상속 · 비가시",
+          "area_m2": 0.0,
+          "patches": 0,
+          "ok_category_pct": null,
+          "ok_check_pct": null
+        }
+      ],
+      "ok_category_pct": 71.93186217576462,
+      "ok_check_pct": 72.1641502129307
+    }
+  ],
+  "report_characters": 9540,
+  "execution_start": "2026-10-26T22:55:46.712368+09:00",
+  "report_at": "2026-10-26T23:28:42.864454+09:00",
+  "elapsed_minutes": 32.9358681,
+  "peak_final_render_GiB": 0.36902618408203125,
+  "scientific_verdict": null
+}

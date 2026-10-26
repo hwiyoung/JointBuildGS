@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-26T23:06:05.688071+09:00",
+  "original_config_sha256": "aa0e7971144d322e776c5d05fb0cd8baf30f9135f83b5121e953963c0bf6d4bf",
+  "scientific_verdict": null,
+  "reason": "Native FULL_OPENCV rational projection folds outside the calibrated field. Figure 1 diagnostic found 2636 crop-assigned centres outside the actual training-camera field, causing long false polygons.",
+  "change": "For overlay and every crop statistic, require both the native crop and positive-depth calibrated PINHOLE image field. Reuse W/full exact pose and camera. Set bar x-axis bounds to include low-area categories.",
+  "changes_input_values": false,
+  "changes_section": false,
+  "changes_photo_selection": false,
+  "changes_native_crop": false,
+  "changes_rotation": false,
+  "previous_render_directory": "/payload/revision_01",
+  "before_revised_render": true
+}

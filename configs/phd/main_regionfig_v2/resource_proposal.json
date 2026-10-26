@@ -1,0 +1,45 @@
+{
+  "task_id": "PHD-MAIN-REGIONFIG-v2",
+  "scientific_verdict": null,
+  "status": "PROPOSED_NOT_ACTIVE",
+  "recorded_at": "2026-10-26T22:41:00+09:00",
+  "authority_required": "User confirmation to replace work-order section 1.5 host admission threshold; all other work-order constraints remain in force.",
+  "active_minimum_host_available_GiB": 64,
+  "proposed_execution": {
+    "minimum_host_available_GiB_before_each_stage": 24,
+    "minimum_host_available_GiB_during_stage": 16,
+    "container_memory_GiB": 4,
+    "container_memory_plus_swap_GiB": 4,
+    "cpus": 2,
+    "nice": 19,
+    "io_priority": "idle",
+    "gpu_devices": [],
+    "network": "none",
+    "concurrent_figures": 1,
+    "native_photos_in_memory": 1,
+    "geometry": "Read only matching tile centre/normal/patch_id fields; retain only supplied building patches; release each tile before the next.",
+    "visibility": "Reuse v1 projection helpers; read required point data in bounded chunks and retain only the section crop.",
+    "rendering": "Render and close one figure per subprocess; first figure is also the measured memory pilot.",
+    "monitor_interval_seconds": 5,
+    "postprocess_detection": "Read current LOSSTRAIN TSDF lock occupancy and active postprocess containers before and during each stage. Do not hold the shared lock or alter the training task.",
+    "yield_behavior": "If host availability falls below 16 GiB, or TSDF/large scoring begins, stop only this task's active figure container, retain its logs, mark incomplete output invalid, and wait. Never stop or pause training or postprocessing.",
+    "container_oom_behavior": "Stop and report; do not automatically increase the 4 GiB limit.",
+    "resume_behavior": "Recheck admission and postprocess state; restart the incomplete figure from preserved inputs.",
+    "measurement_values": "Use supplied values without new optimization or photo-check evaluation."
+  },
+  "evidence": {
+    "v1_prepare_max_rss_KiB": 214088,
+    "v1_render_max_rss_KiB": 707556,
+    "v1_prepare_receipt": "../JointBuildGS-artifacts/phase-payloads/phd/main_regionfig_v1/PHD-MAIN-REGIONFIG-v1/prepared.json",
+    "v1_render_receipt": "../JointBuildGS-artifacts/phase-payloads/phd/main_regionfig_v1/PHD-MAIN-REGIONFIG-v1/render_receipt.json",
+    "live_training_containers": ["jbgs-lt-resume-train-0", "jbgs-lt-resume-train-1"],
+    "observed_training_container_memory_GiB": [9.725, 10.39],
+    "host_available_GiB_observed_range_this_check": [31.17, 34.32],
+    "v2_peak_memory": null
+  },
+  "limitations": [
+    "V1 process RSS is not a V2 peak-memory guarantee and does not include every charged container page.",
+    "Host availability can change between samples; limits reduce interference but do not guarantee immunity from host-wide memory exhaustion.",
+    "This file is a resource proposal, not the locked figure configuration and not an execution receipt."
+  ]
+}
