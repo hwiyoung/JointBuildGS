@@ -1,0 +1,15 @@
+{
+  "status": "AUTHORIZED_EXISTING_ORDER",
+  "at": "2026-10-27T00:56:00.395634+09:00",
+  "authority": "User authorized remaining 20 trainings independently of postprocessing and asks only for changes to loss/scoring/arms or repeated same-arm stops; keep the one health-stopped arm in the manifest, continue other arms and completed-model readouts",
+  "preserved_stop": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/resource_resume_v1/history/epoch_1/training_STOP.json",
+  "preserved_stop_sha256": "cf99a89d2ea424ff123d65626e35a73789b1988306f31581aec08b4a2cf23de4",
+  "health_stopped_arm": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_fixgt_LoD2_s0",
+  "retry_health_stopped_arm": false,
+  "remove_or_add_arm": false,
+  "remaining_trainings": 18,
+  "completed_models": 5,
+  "admit_post_before_new_training": true,
+  "loss_scoring_training_settings_and_stop_thresholds_unchanged": true,
+  "scientific_verdict": null
+}

@@ -1,23 +1,177 @@
 {
   "status": "STOPPED_PARTIAL",
-  "at": "2026-10-26T22:16:11.167593+09:00",
+  "at": "2026-10-27T00:07:06.715435+09:00",
   "counts": {
+    "training_no_result": 0,
     "calibration_complete": 4,
-    "required_complete": 3,
+    "required_complete": 5,
     "optional_complete": 0,
     "post_complete": 0,
     "measurements_complete": 0,
     "historical_before_grace_stops": 2,
     "historical_grace_stops": 1,
     "post_stopped_attempts": 2,
-    "new_stopped_attempts": 2
+    "new_stopped_attempts": 3
   },
   "runs": [
+    {
+      "site": "B0_b10",
+      "result": "lt_dyngt_LoD2_s0",
+      "calibration": false,
+      "training_complete": true,
+      "training_no_result": null,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "B0_b10",
+              "prior": "LoD2",
+              "variant": "lt_dyngt"
+            },
+            "gpu": 0,
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-26T23:26:11.846683+09:00",
+            "finished_at": "2026-10-27T00:06:33.576132+09:00",
+            "seconds": 2421.7294747559354,
+            "gpu_peak_total_MiB": 9396.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 30000,
+            "camera": "DJI_20241217095145_0079_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 18000,
+            "gaussians": 1052577,
+            "whole_opacity_median": 0.8353163599967957,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ],
+      "post_attempts": []
+    },
+    {
+      "site": "B0_b10",
+      "result": "lt_fixgt_LoD2_s0",
+      "calibration": false,
+      "training_complete": false,
+      "training_no_result": null,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "B0_b10",
+              "prior": "LoD2",
+              "variant": "lt_fixgt"
+            },
+            "gpu": 1,
+            "attempt": 0,
+            "exit_code": 1,
+            "started_at": "2026-10-26T22:37:53.520332+09:00",
+            "finished_at": "2026-10-26T23:29:23.232536+09:00",
+            "seconds": 3089.712228502147,
+            "gpu_peak_total_MiB": 15816.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 30000,
+            "camera": "DJI_20241217095145_0079_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 18000,
+            "gaussians": 1677211,
+            "whole_opacity_median": 0.391705185174942,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ],
+      "post_attempts": []
+    },
     {
       "site": "B173nb_b10",
       "result": "lt_cal_current_ALS_s0",
       "calibration": true,
       "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -65,6 +219,7 @@
       "result": "lt_cal_dyn_x1_ALS_s0",
       "calibration": true,
       "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -112,6 +267,7 @@
       "result": "lt_cal_dyn_x3_ALS_s0",
       "calibration": true,
       "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -159,6 +315,7 @@
       "result": "lt_cal_dyn_xthird_ALS_s0",
       "calibration": true,
       "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -206,6 +363,7 @@
       "result": "lt_dyngt_ALS_s0",
       "calibration": false,
       "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -430,6 +588,7 @@
       "result": "lt_dynnow_ALS_s0",
       "calibration": false,
       "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -504,7 +663,8 @@
       "site": "B173nb_b10",
       "result": "lt_dynsoft_ALS_s0",
       "calibration": false,
-      "training_complete": false,
+      "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -571,6 +731,70 @@
               "scientific_verdict": null
             }
           ]
+        },
+        {
+          "attempt": "attempt_1",
+          "receipt": {
+            "run": {
+              "site": "B173nb_b10",
+              "prior": "ALS",
+              "variant": "lt_dynsoft"
+            },
+            "gpu": 0,
+            "attempt": 1,
+            "exit_code": 0,
+            "started_at": "2026-10-26T22:37:53.519281+09:00",
+            "finished_at": "2026-10-26T23:26:07.014594+09:00",
+            "seconds": 2893.49533678405,
+            "gpu_peak_total_MiB": 9459.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 30000,
+            "camera": "DJI_20241217091033_0079_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 18000,
+            "gaussians": 1386593,
+            "whole_opacity_median": 0.8013108968734741,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
         }
       ],
       "post_attempts": []
@@ -580,6 +804,7 @@
       "result": "lt_fixgt_ALS_s0",
       "calibration": false,
       "training_complete": true,
+      "training_no_result": null,
       "post_complete": false,
       "measurement_complete": false,
       "attempts": [
@@ -874,15 +1099,15 @@
     }
   ],
   "stop": {
-    "at": "2026-10-26T21:48:05.032564+09:00",
+    "at": "2026-10-26T23:29:23.286297+09:00",
     "run": {
-      "site": "B173nb_b10",
-      "prior": "ALS",
-      "variant": "lt_dynsoft"
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "variant": "lt_fixgt"
     },
-    "exit_code": 1,
     "attempt": 0,
     "reason": "training execution/health error",
+    "same_arm_training_stops": 1,
     "scientific_verdict": null
   },
   "selected_lambda": 0.0025,

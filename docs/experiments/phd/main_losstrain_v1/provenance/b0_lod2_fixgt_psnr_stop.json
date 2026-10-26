@@ -1,0 +1,93 @@
+{
+  "status": "STOPPED_BY_FROZEN_CRITERION",
+  "run": {
+    "site": "B0_b10",
+    "prior": "LoD2",
+    "variant": "lt_fixgt"
+  },
+  "attempt": 0,
+  "criterion_record": {
+    "iteration": 30000,
+    "camera": "DJI_20241217095145_0079_D",
+    "observation_phase": "after optimizer and opacity floors, before density/reset",
+    "last_periodic_reset": 12000,
+    "iterations_after_reset": 18000,
+    "gaussians": 1677211,
+    "whole_opacity_median": 0.391705185174942,
+    "prior_opacity_is_record_only": true,
+    "stop": "training PSNR more than 3 dB below same-iteration nojudge",
+    "scientific_verdict": null,
+    "groups": {
+      "all": {
+        "count": 1677211,
+        "opacity_median": 0.391705185174942
+      },
+      "prior_lineage": {
+        "count": 1303693,
+        "opacity_median": 0.3697986900806427
+      },
+      "image_lineage": {
+        "count": 373518,
+        "opacity_median": 0.4535187780857086
+      },
+      "prior_gt_correct": {
+        "count": 102996,
+        "opacity_median": 0.3611300587654114
+      },
+      "prior_gt_incorrect": {
+        "count": 65424,
+        "opacity_median": 0.2850095331668854
+      },
+      "prior_gt_unknown": {
+        "count": 1135273,
+        "opacity_median": 0.37715059518814087
+      },
+      "initial_prior": {
+        "count": 23720,
+        "opacity_median": 0.7577677965164185
+      },
+      "initial_image": {
+        "count": 947,
+        "opacity_median": 0.44793564081192017
+      },
+      "density_born": {
+        "count": 1652544,
+        "opacity_median": 0.37970617413520813
+      }
+    },
+    "train_psnr_legacy5": 20.67778205871582,
+    "psnr_per_view": [
+      {
+        "camera": "DJI_20241217103619_0079_D",
+        "psnr_db": 20.48202133178711
+      },
+      {
+        "camera": "DJI_20241217091255_0150_D",
+        "psnr_db": 22.75862693786621
+      },
+      {
+        "camera": "DJI_20241217091125_0105_D",
+        "psnr_db": 24.768301010131836
+      },
+      {
+        "camera": "DJI_20241217101303_0004_D",
+        "psnr_db": 15.864477157592773
+      },
+      {
+        "camera": "DJI_20241217095455_0030_D",
+        "psnr_db": 19.515483856201172
+      }
+    ],
+    "nojudge_train_psnr_legacy5": 24.250185012817383,
+    "nojudge_unsaved_statistics": "기록 없음",
+    "nojudge_psnr_status": "same iteration available",
+    "psnr_drop_db": 3.5724029541015625
+  },
+  "source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_fixgt_LoD2_s0/attempt_0/model/monitor/losstrain_observations_v2.jsonl",
+  "source_sha256": "509c4ab8180b2ff0477b7ed3ffaf7e49441c90198b42de30058f5b01450501d6",
+  "saved_15000_model": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_fixgt_LoD2_s0/attempt_0/model/point_cloud/iteration_15000/point_cloud.ply",
+  "final_30000_model_exists": false,
+  "remaining_independent_arms_continue": true,
+  "same_arm_training_stops": 1,
+  "scientific_verdict": null
+}

@@ -42,7 +42,7 @@ def main():
                 save(ROOT/'interim_report_generated.json',dict(at=F.now(),status='READY_FOR_VISUAL_REVIEW',
                     report=str(DOC/'중간보고_v1.md'),report_sha256=F.sha(DOC/'중간보고_v1.md'),
                     first_four_scored=True,cell_0_and_cell_2_separate=True,visual_review='PENDING',scientific_verdict=None))
-            signature=[state.get(k) for k in ['training_complete','training_no_result','post_complete','measurement_complete','stops']]
+            signature=[state.get(k) for k in ['training_complete','training_no_result','training_health_stopped','post_complete','measurement_complete','stops']]
             if signature!=previous:refresh();previous=signature
             save(ROOT/'reporter_state.json',dict(at=F.now(),observed=signature,first_four_scored=first_ready,
                 interim_generated=(ROOT/'interim_report_generated.json').exists(),scientific_verdict=None))

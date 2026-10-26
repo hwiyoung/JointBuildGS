@@ -92,7 +92,18 @@ def train(r,gpu,lam):
         if oom:
             save(unit/'training_NO_RESULT.json',dict(**event,status='NO_RESULT',authority='work order section 1.10 GPU OOM twice'))
             print('NO RESULT after two CUDA OOM attempts',r,flush=True)
-        else:save(ROOT/'training_STOP.json',event)
+        else:
+            observations=sub/'model/monitor/losstrain_observations_v2.jsonl'
+            health=sub/'model/monitor/losstrain_health_v2.jsonl'
+            observed=[]
+            for path in [observations,health]:
+                if path.exists():observed.extend(json.loads(line) for line in path.read_text().splitlines() if line.strip())
+            stops=[x for x in observed if x.get('stop')]
+            isolated=stops and (stops[-1]['stop']=='training PSNR more than 3 dB below same-iteration nojudge' or 'whole population opacity median' in stops[-1]['stop'])
+            if isolated:
+                save(unit/'training_health_STOP.json',dict(**event,criterion_record=stops[-1],status='STOPPED_BY_FROZEN_CRITERION',remaining_independent_arms_continue=True))
+                print('ARM HEALTH STOP; preserve this arm and continue independent arms',r,flush=True)
+            else:save(ROOT/'training_STOP.json',event)
         return False
 
 def next_post_mode(unit):
@@ -201,7 +212,7 @@ def validate(epoch=0):
     assert all(F.sha(P.SRC['r17']/p)==h for p,h in ref['source_sha256'].items())
     for r in RUNS:
         unit=F.root_of(r)
-        if unit.exists() and not (unit/'PASS.json').exists():assert next_training_attempt(unit)==1
+        if unit.exists() and not (unit/'PASS.json').exists() and not (unit/'training_health_STOP.json').exists():assert next_training_attempt(unit)==1
     result=dict(status='PASS',at=F.now(),training_arguments_identical=True,r17_source_unchanged=True,
         required_runs=24,completed_training_reused=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
         post_minimum_available_GiB=64,post_stable_seconds=60,resource_retries=2,scientific_verdict=None)
@@ -217,7 +228,8 @@ def main():
         if a.resume_epoch:assert read(ROOT/f'resume_epoch_{a.resume_epoch}.json')['status']=='AUTHORIZED_EXISTING_ORDER'
         assert not start_file.exists(),'do not double launch'
         save(start_file,dict(at=F.now(),pid=os.getpid(),runs=RUNS,scientific_verdict=None))
-        pending=[r for r in RUNS if not (F.root_of(r)/'PASS.json').exists() and not (F.root_of(r)/'training_NO_RESULT.json').exists()]
+        prioritize_post=bool(a.resume_epoch and read(ROOT/f'resume_epoch_{a.resume_epoch}.json').get('admit_post_before_new_training'))
+        pending=[r for r in RUNS if not (F.root_of(r)/'PASS.json').exists() and not (F.root_of(r)/'training_NO_RESULT.json').exists() and not (F.root_of(r)/'training_health_STOP.json').exists()]
         futures={};cpu=None;stable_since=None
         with concurrent.futures.ThreadPoolExecutor(3) as pool:
             while True:
@@ -242,12 +254,18 @@ def main():
                     if gpu in futures:continue
                     if post_pending and not post_active and cpu is None and stable>=60 and not (ROOT/'post_STOP.json').exists():
                         r=post_pending[0];futures[gpu]=(pool.submit(post_one,r,gpu),'post',r);post_active=True;stable_since=None
-                    elif pending and not (ROOT/'training_STOP.json').exists():
+                    elif pending and not (ROOT/'training_STOP.json').exists() and not prioritize_post:
                         r=pending.pop(0);futures[gpu]=(pool.submit(train,r,gpu,.0025),'training',r)
+                if prioritize_post and post_active:
+                    active_posts=[x[2] for x in futures.values() if x[1]=='post']
+                    for active in active_posts:
+                        admission=read(F.root_of(active)/'post_resource_admission.json',{})
+                        if admission.get('status')=='ADMITTED' and admission.get('required_GiB')==64 and admission.get('required_stable_seconds')==60:prioritize_post=False
+                    if (ROOT/'post_STOP.json').exists():prioritize_post=False
                 measurable=[r for r in RUNS if (F.root_of(r)/'post_PASS.json').exists() and not (F.root_of(r)/'measure_PASS.json').exists()]
                 if cpu is None and measurable and not post_active and not (ROOT/'measure_STOP.json').exists():
                     r=measurable[0];cpu=(pool.submit(measure,r),r)
-                counts=dict(training_no_result=sum((F.root_of(r)/'training_NO_RESULT.json').exists() for r in RUNS),training_complete=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
+                counts=dict(training_health_stopped=sum((F.root_of(r)/'training_health_STOP.json').exists() for r in RUNS),training_no_result=sum((F.root_of(r)/'training_NO_RESULT.json').exists() for r in RUNS),training_complete=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
                     post_complete=sum((F.root_of(r)/'post_PASS.json').exists() for r in RUNS),
                     measurement_complete=sum((F.root_of(r)/'measure_PASS.json').exists() for r in RUNS))
                 stops=[p.name for p in ROOT.glob('*_STOP.json')]
@@ -256,8 +274,8 @@ def main():
                     available_GiB=mem,required_post_GiB=64,stable_seconds=stable,stops=stops,pending_trainings=len(pending),scientific_verdict=None))
                 if all((F.root_of(r)/'measure_PASS.json').exists() for r in RUNS[:4]) and not (ROOT/'interim_ready.json').exists():
                     save(ROOT/'interim_ready.json',dict(at=F.now(),status='READY_FOR_REPORT',scientific_verdict=None))
-                if counts['measurement_complete']+counts['training_no_result']==24:
-                    save(ROOT/('PASS.json' if counts['training_no_result']==0 else 'PARTIAL_NO_RESULT.json'),dict(at=F.now(),**counts,scientific_verdict=None));break
+                if counts['measurement_complete']+counts['training_no_result']+counts['training_health_stopped']==24:
+                    save(ROOT/('PASS.json' if counts['training_no_result']+counts['training_health_stopped']==0 else 'PARTIAL_NO_RESULT.json'),dict(at=F.now(),**counts,scientific_verdict=None));break
                 if stops and not futures and cpu is None and (not pending or (ROOT/'training_STOP.json').exists()):break
                 time.sleep(5)
 

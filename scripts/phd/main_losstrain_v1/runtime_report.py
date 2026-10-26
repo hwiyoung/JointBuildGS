@@ -26,7 +26,7 @@ def main():
             attempts.append(dict(attempt=p.name,receipt=rec,last_health=last,stops=stops,monitor_policy='v2' if is_v2 else 'historical prior-opacity',
                 resets=records(p/'model/monitor/losstrain_resets.jsonl')))
         runs.append(dict(site=root.parent.name,result=root.name,calibration=root.name.startswith('lt_cal_'),
-            training_complete=(root/'PASS.json').exists(),training_no_result=json.loads((root/'training_NO_RESULT.json').read_text()) if (root/'training_NO_RESULT.json').exists() else None,post_complete=(root/'post_PASS.json').exists(),
+            training_complete=(root/'PASS.json').exists(),training_health_stopped=json.loads((root/'training_health_STOP.json').read_text()) if (root/'training_health_STOP.json').exists() else None,training_no_result=json.loads((root/'training_NO_RESULT.json').read_text()) if (root/'training_NO_RESULT.json').exists() else None,post_complete=(root/'post_PASS.json').exists(),
             measurement_complete=(root/'measure_PASS.json').exists(),attempts=attempts,
             post_attempts=[dict(stage=p.name.split('_attempt_')[0],path=str(p),**json.loads(p.read_text()))
                 for p in sorted(root.glob('*_attempt_*_receipt.json'))]))
@@ -42,8 +42,8 @@ def main():
         state_record=json.loads((resumed/'state.json').read_text()) if (resumed/'state.json').exists() else {}
         current_stops=sorted(resumed.glob('*_STOP.json'))
         stop=current_stops[0] if current_stops else resumed/'NO_CURRENT_STOP'
-        state='STOPPED_PARTIAL' if current_stops else 'COMPLETE' if (resumed/'PASS.json').exists() else state_record.get('status','RUNNING')
-    counts=dict(training_no_result=sum(r['training_no_result'] is not None for r in runs),calibration_complete=sum(r['training_complete'] for r in runs if r['calibration']),
+        state='STOPPED_PARTIAL' if current_stops else 'COMPLETE' if (resumed/'PASS.json').exists() else 'PARTIAL_NO_RESULT' if (resumed/'PARTIAL_NO_RESULT.json').exists() else state_record.get('status','RUNNING')
+    counts=dict(training_health_stopped=sum(r['training_health_stopped'] is not None for r in runs),training_no_result=sum(r['training_no_result'] is not None for r in runs),calibration_complete=sum(r['training_complete'] for r in runs if r['calibration']),
         required_complete=sum(not r['result'].startswith('lt_fixnow') for r in completed),optional_complete=sum(r['result'].startswith('lt_fixnow') for r in completed),
         post_complete=sum(r['post_complete'] for r in runs),measurements_complete=sum(r['measurement_complete'] for r in runs),
         historical_before_grace_stops=2,historical_grace_stops=1,
