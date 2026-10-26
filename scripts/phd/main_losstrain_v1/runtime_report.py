@@ -37,6 +37,12 @@ def main():
     fixed_stop=OUT/'runs/B173nb_b10/lt_fixgt_ALS_s0/STOP_monitor_v2.json'
     if fixed_stop.exists():stop=fixed_stop
     state='STOPPED_PARTIAL' if stop.exists() else 'RUNNING'
+    resumed=OUT/'checks/resource_resume_v1'
+    if (resumed/'approval.json').exists():
+        state_record=json.loads((resumed/'state.json').read_text()) if (resumed/'state.json').exists() else {}
+        current_stops=sorted(resumed.glob('*_STOP.json'))
+        stop=current_stops[0] if current_stops else resumed/'NO_CURRENT_STOP'
+        state='STOPPED_PARTIAL' if current_stops else 'COMPLETE' if (resumed/'PASS.json').exists() else state_record.get('status','RUNNING')
     counts=dict(calibration_complete=sum(r['training_complete'] for r in runs if r['calibration']),
         required_complete=sum(not r['result'].startswith('lt_fixnow') for r in completed),optional_complete=sum(r['result'].startswith('lt_fixnow') for r in completed),
         post_complete=sum(r['post_complete'] for r in runs),measurements_complete=sum(r['measurement_complete'] for r in runs),

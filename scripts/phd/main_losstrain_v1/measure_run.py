@@ -20,6 +20,8 @@ def main():
             ['mesh_score.py','--site',a.site,'--prior',a.prior,'--result',a.result],C.OUT/'patch_z'/f'{a.site}__{a.prior}__{a.result}.json'),
         ('fates',C.REPO/'scripts/phd/main_losstrain_v1/run_cpu.sh',
             ['fates.py',a.site,a.prior,a.result],C.OUT/'fates'/a.site/f'{a.prior}__{a.result}.json'),
+        ('fate-cells',C.REPO/'scripts/phd/main_losstrain_v1/run_cpu.sh',
+            ['split_fate_cells.py',a.site,a.prior,a.result],C.OUT/'fate_cell_split'/a.site/f'{a.prior}__{a.result}.json'),
         ('axes',C.REPO/'scripts/phd/main_losstrain_v1/run_axes.sh',
             ['axes_measure.py',a.site,a.prior,a.result],C.REPO/'docs/experiments/phd/main_losstrain_v1/tables/axes'/f'{a.site}__{a.prior}__{a.result}.json')]
     receipts=[]

@@ -6,7 +6,7 @@ from inputs import save,sha
 
 def main():
     rows=[]
-    for p in sorted(Path('/docs/tables/fates').glob('*/*.json')):
+    for p in sorted(list(Path('/docs/tables/fates').glob('*/*.json'))+list(Path('/docs/tables/fate_cell_split').glob('*/*.json'))):
         r=json.loads(p.read_text())
         if r['status']!='PASS':continue
         for group,x in r['regions'].items():
@@ -24,7 +24,7 @@ def main():
     names=dict(removed='지워짐',old_place='옛 자리',current_surface='지금 면',neither='둘 다 아님')
     for r in rows:
         pct='확인 불가' if r['percent'] is None else f"{r['percent']:.5f}"
-        lines.append(f"| {r['site']} | {r['prior']} | {r['result']} | {'1·3' if r['group']=='prior_wrong_1_3' else '0·2'} | {names[r['category']]} | {r['count']} | {r['denominator']} | {pct} |")
+        lines.append(f"| {r['site']} | {r['prior']} | {r['result']} | {dict(prior_wrong_1_3='1·3',prior_correct_0_2='0·2',cell_0='0',cell_2='2')[r['group']]} | {names[r['category']]} | {r['count']} | {r['denominator']} | {pct} |")
     Path('/docs/tables/fates_all.md').write_text('\n'.join(lines)+'\n');print('fate rows',len(rows),flush=True)
 
 if __name__=='__main__':main()

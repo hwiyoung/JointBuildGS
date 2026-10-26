@@ -4,6 +4,30 @@
 
 | 단위 | 사전 | 결과 | 칸 | 구분 | 수 | 처음 점 N | 비율 % |
 |---|---|---|---|---|---:|---:|---:|
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 지워짐 | 8737 | 11339 | 77.05265 |
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 옛 자리 | 1994 | 11339 | 17.58532 |
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 지금 면 | 23 | 11339 | 0.20284 |
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 둘 다 아님 | 585 | 11339 | 5.15919 |
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 지워짐 | 2407 | 2687 | 89.57946 |
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 옛 자리 | 142 | 2687 | 5.28470 |
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 지금 면 | 25 | 2687 | 0.93041 |
+| B173nb_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 둘 다 아님 | 113 | 2687 | 4.20543 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 0 | 지워짐 | 8318 | 11339 | 73.35744 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 0 | 옛 자리 | 884 | 11339 | 7.79610 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 0 | 지금 면 | 24 | 11339 | 0.21166 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 0 | 둘 다 아님 | 2113 | 11339 | 18.63480 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 2 | 지워짐 | 2247 | 2687 | 83.62486 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 2 | 옛 자리 | 175 | 2687 | 6.51284 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 2 | 지금 면 | 19 | 2687 | 0.70711 |
+| B173nb_b10 | ALS | lt_fixgt_ALS_s0 | 2 | 둘 다 아님 | 246 | 2687 | 9.15519 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 0 | 지워짐 | 6999 | 11339 | 61.72502 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 0 | 옛 자리 | 3216 | 11339 | 28.36229 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 0 | 지금 면 | 31 | 11339 | 0.27339 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 0 | 둘 다 아님 | 1093 | 11339 | 9.63930 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 2 | 지워짐 | 2220 | 2687 | 82.62002 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 2 | 옛 자리 | 262 | 2687 | 9.75065 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 2 | 지금 면 | 52 | 2687 | 1.93524 |
+| B173nb_b10 | ALS | nojudge_ALS_s0 | 2 | 둘 다 아님 | 153 | 2687 | 5.69408 |
 | B0_b10 | ALS | nojudge_ALS_s0 | 1·3 | 지워짐 | 131 | 217 | 60.36866 |
 | B0_b10 | ALS | nojudge_ALS_s0 | 1·3 | 옛 자리 | 45 | 217 | 20.73733 |
 | B0_b10 | ALS | nojudge_ALS_s0 | 1·3 | 지금 면 | 3 | 217 | 1.38249 |

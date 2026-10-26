@@ -9,7 +9,7 @@ mkdir -p "$OUT/logs" "$REPO/configs/phd/main_losstrain_v1" "$REPO/docs/experimen
 tag=$1; shift
 log="$OUT/logs/${tag}_$(date +%Y%m%dT%H%M%S).log"
 case "${1##*/}" in
-  mesh_score.py|sections.py|fates.py|baseline_fates.py|saved_opacity.py)
+  mesh_score.py|sections.py|fates.py|split_fate_cells.py|baseline_fates.py|saved_opacity.py)
     # Large mesh/point arrays share host RAM with TSDF. Serialize these readouts.
     queue_started=$SECONDS
     exec 9>"$OUT/checks/tsdf.lock"

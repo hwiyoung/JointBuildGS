@@ -1,6 +1,6 @@
 {
-  "status": "STOPPED_PARTIAL",
-  "at": "2026-10-26T20:57:15.866197+09:00",
+  "status": "RUNNING",
+  "at": "2026-10-26T21:30:47.078887+09:00",
   "counts": {
     "calibration_complete": 4,
     "required_complete": 2,
@@ -427,6 +427,66 @@
     },
     {
       "site": "B173nb_b10",
+      "result": "lt_dynnow_ALS_s0",
+      "calibration": false,
+      "training_complete": false,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": null,
+          "last_health": {
+            "iteration": 2800,
+            "camera": "DJI_20241217091045_0085_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": null,
+            "iterations_after_reset": null,
+            "gaussians": 210979,
+            "whole_opacity_median": 0.7099835872650146,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": []
+        }
+      ],
+      "post_attempts": []
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dynsoft_ALS_s0",
+      "calibration": false,
+      "training_complete": false,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": null,
+          "last_health": {
+            "iteration": 2800,
+            "camera": "DJI_20241217091045_0085_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": null,
+            "iterations_after_reset": null,
+            "gaussians": 203185,
+            "whole_opacity_median": 0.6929851174354553,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": []
+        }
+      ],
+      "post_attempts": []
+    },
+    {
+      "site": "B173nb_b10",
       "result": "lt_fixgt_ALS_s0",
       "calibration": false,
       "training_complete": true,
@@ -723,19 +783,7 @@
       "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
     }
   ],
-  "stop": {
-    "run": {
-      "site": "B173nb_b10",
-      "prior": "ALS",
-      "variant": "lt_fixgt"
-    },
-    "attempt": 1,
-    "reason": "postprocessing post failed after confirmed host-OOM retry",
-    "at": "2026-10-26T20:53:00.210387+09:00",
-    "known_same_arm_stops": 3,
-    "requires_user": true,
-    "scientific_verdict": null
-  },
+  "stop": null,
   "selected_lambda": 0.0025,
   "scientific_verdict": null,
   "fixed_post_host_oom_recovery": {
