@@ -47,7 +47,12 @@ def env():
         if not p.exists():
             tmp=folder/f'.{name}.{uuid.uuid4().hex}';tmp.write_bytes(content);tmp.replace(p)
         assert sha(p)==_SOURCE_HASHES[name]
-    return dict(at=now(),source_captured_at=_SOURCE_AT,source_snapshot=str(folder),commit=os.environ.get('PHOTOCHECK_COMMIT'),image=os.environ.get('PHOTOCHECK_IMAGE'),scripts_sha256=_SOURCE_HASHES,peak_rss_gib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024**2,scientific_verdict=None)
+    memory={}
+    for name in ['memory.max','memory.current','memory.peak']:
+        path=Path('/sys/fs/cgroup')/name
+        if path.exists():
+            value=path.read_text().strip();memory[name]=int(value) if value.isdigit() else value
+    return dict(at=now(),source_captured_at=_SOURCE_AT,source_snapshot=str(folder),commit=os.environ.get('PHOTOCHECK_COMMIT'),image=os.environ.get('PHOTOCHECK_IMAGE'),scripts_sha256=_SOURCE_HASHES,peak_rss_gib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024**2,cgroup_memory=memory,ram_cache_budget_bytes=int(os.environ.get('PHOTOCHECK_RAM_CACHE_BYTES','0')),scientific_verdict=None)
 def paths(sealed=False):
     base=O/'holdout' if sealed else O
     for sub in ['geometry','points','patches','work']: (base/sub).mkdir(parents=True,exist_ok=True)

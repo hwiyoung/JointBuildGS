@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "at": "2026-10-26T18:20:30.275010+09:00",
+  "scope": [
+    {
+      "prior": "LoD2",
+      "holdout": false,
+      "points": 248099,
+      "patches": 939465,
+      "area_m2": 58716.5625
+    },
+    {
+      "prior": "ALS",
+      "holdout": false,
+      "points": 212662,
+      "patches": 754293,
+      "area_m2": 50394.85040382398
+    },
+    {
+      "prior": "LoD2",
+      "holdout": true,
+      "points": 12517,
+      "patches": 47288,
+      "area_m2": 2955.5
+    },
+    {
+      "prior": "ALS",
+      "holdout": true,
+      "points": 10426,
+      "patches": 35135,
+      "area_m2": 2402.4957777600525
+    }
+  ],
+  "checks": [
+    "all patch IDs preserved",
+    "all point member counts",
+    "area weighted centers",
+    "unweighted unit mean normals",
+    "orthonormal tangent bases"
+  ],
+  "scientific_verdict": null
+}

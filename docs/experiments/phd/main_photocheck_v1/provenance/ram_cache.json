@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "at": "2026-10-26T18:12:14.952509+09:00",
+  "byte_identical_files": 8,
+  "cache_budget_bytes": 21474836480,
+  "container_memory_limit_gib": 32,
+  "policy": "20 GiB LRU in ephemeral tmpfs /out/tmp/image_cache_ram. A cache miss decodes the compact original JPEG with identical grayscale and pyramid arithmetic; resulting NPY bytes match existing persistent cache bytes. One image opened at a time; persistent image cache preserved.",
+  "rows": [
+    {
+      "image_index": 680,
+      "pyramid_level": 2,
+      "bytes": 5222048,
+      "sha256": "e4c56bb61f2cfd6ef0cdaf5300fa9f1aada995d530bb0823b8418b40f487aabe",
+      "first_copy_seconds": 9.684052917174995,
+      "repeated_open_seconds": 0.00021834392100572586
+    },
+    {
+      "image_index": 740,
+      "pyramid_level": 0,
+      "bytes": 83550848,
+      "sha256": "8d41c8bac751370e75db9cac351a420fc67d80addab8dbf62df77a351190f2c0",
+      "first_copy_seconds": 11.182268844917417,
+      "repeated_open_seconds": 0.0008581038564443588
+    },
+    {
+      "image_index": 389,
+      "pyramid_level": 0,
+      "bytes": 83550848,
+      "sha256": "b0b73f07e38295bd5d5853f16749fa5ed5fdda5d2cc981608003447e56b64557",
+      "first_copy_seconds": 12.28974456526339,
+      "repeated_open_seconds": 0.005377568304538727
+    },
+    {
+      "image_index": 465,
+      "pyramid_level": 1,
+      "bytes": 20887808,
+      "sha256": "e8b3a7b65788563cc0ea57e297f60b2d8b5a0ff3df42435634ec474e4cce3e59",
+      "first_copy_seconds": 0.3533209776505828,
+      "repeated_open_seconds": 0.006944829598069191
+    },
+    {
+      "image_index": 398,
+      "pyramid_level": 0,
+      "bytes": 83550848,
+      "sha256": "dd38289a583f96fc37ff5de3c87f9b5a22fc93325410114765da79dc3fb321db",
+      "first_copy_seconds": 0.3332046642899513,
+      "repeated_open_seconds": 0.0016594696789979935
+    },
+    {
+      "image_index": 106,
+      "pyramid_level": 1,
+      "bytes": 20887808,
+      "sha256": "40ee0628e101b4f7ab0edc3e7f093ab7ce003cb48eaf8e97eb8ac702b5ef1f72",
+      "first_copy_seconds": 0.6347423447296023,
+      "repeated_open_seconds": 0.006911011412739754
+    },
+    {
+      "image_index": 588,
+      "pyramid_level": 0,
+      "bytes": 83550848,
+      "sha256": "3cd5242e2cffa110c39b9b3340f6666c2cc3ef547d8b170750cbd187ce2b13dd",
+      "first_copy_seconds": 0.4592526415362954,
+      "repeated_open_seconds": 0.0015200348570942879
+    },
+    {
+      "image_index": 610,
+      "pyramid_level": 0,
+      "bytes": 83550848,
+      "sha256": "d04e46646e3353372bf9cc97fb94a8461b7320fc3f60bf14765af13d46ca2d84",
+      "first_copy_seconds": 0.7627679314464331,
+      "repeated_open_seconds": 0.004593880847096443
+    }
+  ],
+  "scientific_verdict": null
+}

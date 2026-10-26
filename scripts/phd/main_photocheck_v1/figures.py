@@ -33,7 +33,7 @@ def curve_plot(ax,p,i,gt=np.nan,compact=False):
     h=p['heights'][i];s=p['curve'][i].astype(float);m=np.isfinite(h);order=np.argsort(h[m]);x=h[m][order];y=s[m][order]
     cuts=np.flatnonzero(np.diff(x)>.10001)+1
     for xx,yy in zip(np.split(x,cuts),np.split(y,cuts)):ax.plot(xx,yy,color='#225ea8',lw=.9)
-    if len(x):ax.set_xlim(x.min()-.15,x.max()+.15)
+    if len(x):ax.set_xlim(min(x.min(),gt) -.15 if np.isfinite(gt) else x.min()-.15,max(x.max(),gt)+.15 if np.isfinite(gt) else x.max()+.15)
     sigma=p['sigma'][i]
     if np.isfinite(sigma):ax.axvspan(-3*sigma,3*sigma,color='#a1d99b',alpha=.3)
     marks=[(0,'사전','#333333'),(p['mvs_p'][i],'MVS','#ff7f00'),(p['h_in'][i],'안','#238b45'),(p['h_out'][i],'밖','#d73027')]
@@ -59,7 +59,7 @@ def curve_figure(plt,cam,d,p,i,path,reason):
     value=lambda x:f'{x:.3f}' if np.isfinite(x) else '없음'
     title=f'{p["building"][i]} · {p["prior"][i]} · {LABELS[int(p["judgment"][i,4])]} · 안 {value(p["s_in"][i])} · 밖 {value(p["s_out"][i])} · 시차 {p["parallax"][i]:.2f}'
     fig.suptitle(title,fontsize=9);fig.tight_layout(rect=[0,0,1,.95])
-    save(fig,path,dict(point_id=p['point_id'][i],selected_images=p['selected_images'][i],image_names=[cam.names[j] for j in p['selected_images'][i] if j>=0],heights=p['heights'][i],curve=p['curve'][i].astype(float),sigma=p['sigma'][i],mvs_p=p['mvs_p'][i],gt_p_display_median=gt,reason=reason,judgment=int(p['judgment'][i,4]),s_in=p['s_in'][i],s_out=p['s_out'][i],parallax=p['parallax'][i]));plt.close(fig)
+    save(fig,path,dict(point_id=p['point_id'][i],selected_images=p['selected_images'][i],image_names=[cam.names[j] for j in p['selected_images'][i] if j>=0],heights=p['heights'][i],curve=p['curve'][i].astype(float),sigma=p['sigma'][i],mvs_p=p['mvs_p'][i],gt_p_display_median=gt,reason=reason,judgment=int(p['judgment'][i,4]),s_in=p['s_in'][i],s_out=p['s_out'][i],h_in=p['h_in'][i],h_out=p['h_out'][i],parallax=p['parallax'][i]));plt.close(fig)
 
 def examples(plt,d,p,prior,stage):
     folder=D/'figures'/stage
@@ -129,11 +129,16 @@ def main():
                 choices=ids[np.argsort(np.linalg.norm(p['centre'][ids,:2]-target,axis=1))];i=next(int(k) for k in choices if k not in used);used.add(i)
                 curve_figure(plt,cam,d,p,i,D/'figures'/a.stage/f'curve_{site["id"]}_{prior}_{j+1}',site['selection_reason'])
         if a.stage=='full':
-            # Point eligibility from inherited uncertainty/difference, no GT.
-            unexplained=(abs(p['mvs_p'])>3*np.sqrt(p['sigma']**2+p['sigma_mvs']**2))&(p['kind']==1)
+            # A point enters the requested patch-defined scope if at least one
+            # original roof patch satisfies the frozen difference rule. No GT filter.
+            scoped_ids=np.unique(d['point_id'][(d['kind']==1)&d['unexplained']])
+            unexplained=np.isin(p['point_id'],scoped_ids)&(p['kind']==1)
             rng=np.random.default_rng(cfg['seed'])
+            selections=[]
             for label in range(5):
                 ids=np.flatnonzero(unexplained&(p['judgment'][:,4]==label));chosen=rng.choice(ids,size=min(3,len(ids)),replace=False)
-                for j,i in enumerate(chosen):curve_figure(plt,cam,d,p,int(i),D/'figures'/a.stage/f'curve_random_{prior}_{label}_{j+1}','seed 20261026; unexplained point; display judgment group')
+                selections.append(dict(judgment=label,eligible_points=len(ids),selected_points=len(chosen),point_ids=p['point_id'][chosen]))
+                for j,i in enumerate(chosen):curve_figure(plt,cam,d,p,int(i),D/'figures'/a.stage/f'curve_random_{prior}_{label}_{j+1}','seed 20261026; uniform points with at least one unexplained source roof patch; display judgment group; no GT filter')
+            dump(D/'figures'/a.stage/f'random_selection_{prior}.json',dict(seed=cfg['seed'],rows=selections,scope='points with an unexplained source roof patch; no GT filter',source='[이 발주에서 냄]',scientific_verdict=None))
         print('figures complete',a.stage,prior,flush=True)
 if __name__=='__main__':main()

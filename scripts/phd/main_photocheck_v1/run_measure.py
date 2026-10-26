@@ -1,5 +1,5 @@
 """Pilot/full driver, resumable per tile. Holdout never enters public point stores."""
-import argparse,time
+import argparse,time,shutil
 from common import *
 from cameras import Cameras,select_photos
 from curves import compute
@@ -36,6 +36,12 @@ def main():
                 old=npz(pilot);keep=old['kind']==1;reused={k:v[keep] for k,v in old.items()}
                 remaining=~np.isin(idx,reused['geometry_index']);g={k:v[remaining] for k,v in g.items()};idx=idx[remaining]
         selectionfile=folder/f'{name}_selection.npz';st=time.monotonic()
+        prepared=base/'work/full_preselection'/selectionfile.name
+        if a.stage=='full' and not selectionfile.exists() and prepared.exists():
+            prep=load(prepared.with_suffix('.json'));assert prep['config_sha256']==sha(C/'photocheck_v1.json')
+            assert prep['geometry_sha256']==sha(base/'geometry'/f'{name}.npz')
+            assert prep['geometry_index_sha256']==hashlib.sha256(idx.tobytes()).hexdigest()
+            shutil.copyfile(prepared.with_suffix('.json'),selectionfile.with_suffix('.json'));shutil.copyfile(prepared,selectionfile)
         if selectionfile.exists():selection=npz(selectionfile)
         else:
             selection=select_photos(g,cam,tile,prior) if len(idx) else dict(selected_images=np.empty((0,10),np.int32),eligible_images=np.empty(0,np.int32),selected_count=np.empty(0,np.int8),max_direction_angle_deg=np.empty(0,np.float32),parallax=np.empty(0,np.float32))

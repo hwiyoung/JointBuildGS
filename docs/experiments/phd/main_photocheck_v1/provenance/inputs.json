@@ -1,0 +1,1012 @@
+{
+  "at": "2026-10-26T17:53:58.714278+09:00",
+  "task_id": "PHD-MAIN-PHOTOCHECK-v1",
+  "train_images": 819,
+  "max_pose_difference": 0.0,
+  "image_size": [
+    5280,
+    3956
+  ],
+  "camera_model": "FULL_OPENCV",
+  "versions": {
+    "torch": "2.4.1+cu121",
+    "cv2": "4.10.0",
+    "open3d": "0.18.0",
+    "numpy": "1.26.4"
+  },
+  "docker_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "inputs": [
+    {
+      "file": "/art/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+      "bytes": 5906891973,
+      "sha256": "078056d16c8ed7e75d5f22206fdb635327a1ed80e5a4e5890930ba17a43fb34d"
+    },
+    {
+      "file": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+      "bytes": 114415526,
+      "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951"
+    },
+    {
+      "file": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_input_db_ids/cameras.txt",
+      "bytes": 432,
+      "sha256": "d67c0fff80d2563fea5f3ec108c7e93d9a846851a0fdee1053c8b668a5f770ce"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/building_split.json",
+      "bytes": 40938,
+      "sha256": "c8b0faf28820d8fb0cc6eda1ba9ac08da52830f7a506c66eefa66ad83d66f7f8"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6907_53359/als_mesh.npz",
+      "bytes": 19238247,
+      "sha256": "6af5fe38e9c60d902e890f339edc98c7dbffb5afe53dc9bc12e2888ca0c7f7d0"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6907_53359/lod2_mesh.npz",
+      "bytes": 17143,
+      "sha256": "5d0b0a89075395ad9383f37137086eafba8d31fb717cbc5231018d8634584b29"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6907_53360/als_mesh.npz",
+      "bytes": 19133056,
+      "sha256": "fb121fa8f1e88edc415137ab0b7332accaee6e5a0c7a1e58b140eadd781059e1"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6907_53360/lod2_mesh.npz",
+      "bytes": 54216,
+      "sha256": "b73e0801e890bb76952026813f65bbc6ed796c865d10407cb0acc6df1539aedd"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53358/als_mesh.npz",
+      "bytes": 17312201,
+      "sha256": "06be24c555f5244eb85c809d5b64b817dc424793f8ed628418bd6747f953a58e"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53358/lod2_mesh.npz",
+      "bytes": 13982,
+      "sha256": "57f96e8ccc632b97eab3142d0d0b997887148452eb27d21ff635ef27be8e2e88"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53359/als_mesh.npz",
+      "bytes": 19263324,
+      "sha256": "79768abbe3e2f4e1b8f4d302f9ed187d33223ae631dac7c0b7d7e5404b3e32bd"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53359/lod2_mesh.npz",
+      "bytes": 50917,
+      "sha256": "84d1b9f5aeee2e7d4b37f413bdca479c5335e12a6d479a095d1c1c90166fb282"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53360/als_mesh.npz",
+      "bytes": 19226699,
+      "sha256": "dcb09bd8db90c9e8ad1a64f387c2d4edad0f620112a00eec5da87b79d6e20509"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53360/lod2_mesh.npz",
+      "bytes": 85872,
+      "sha256": "cde3eda293d1b9ab73da8c81036ba64ff38ddaa00cb57acff0257190fac8b179"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53361/als_mesh.npz",
+      "bytes": 18597673,
+      "sha256": "16267b9ca4900b4a5650f1cb8fcb5613ca5d72410eecf5f4793c2046c0f29b26"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53361/lod2_mesh.npz",
+      "bytes": 110871,
+      "sha256": "aa696b58d0e43d293dd0e28088ac2e8e8feb8a3101146aa94ce863c32dcc320d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53362/als_mesh.npz",
+      "bytes": 12512183,
+      "sha256": "cc90353ca68034b044d5e368a977bf627f0f7f19e34271ed9ed4ebe7f589c22b"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6908_53362/lod2_mesh.npz",
+      "bytes": 53922,
+      "sha256": "e4003cf46476e3f0583bc62258d1a27caed59086e8f6c2d1862bb67da0cd2b89"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53358/als_mesh.npz",
+      "bytes": 18118595,
+      "sha256": "558aa7328127355916aa336a4bc1feb95c8972bd1bfad1e41a45375c3d7a0f8d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53358/lod2_mesh.npz",
+      "bytes": 13736,
+      "sha256": "ac39ead4a5481270b7040530bd4c713619673f26e4080b04b32054ce802ca5be"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53359/als_mesh.npz",
+      "bytes": 18986526,
+      "sha256": "48ec4409f9d050cbea67cf4f0f7a4315b8f1f1524ef6769fbe664ae2010bf06c"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53359/lod2_mesh.npz",
+      "bytes": 55718,
+      "sha256": "17946466583898e41ad62d51457718ef347c4b68e2510c7bdf1027cddb70670b"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53360/als_mesh.npz",
+      "bytes": 17324001,
+      "sha256": "109bdfdcfb7d8973fada960725bdbf3ca367fa6c4bd3ede27e9349910eb1bfdf"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53360/lod2_mesh.npz",
+      "bytes": 40949,
+      "sha256": "9f8cf0d1676eb11cc0f65222e6f14d23f8a3abba6036cd3d819b9593a4c86a35"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53361/als_mesh.npz",
+      "bytes": 18302603,
+      "sha256": "bf5fa98bc3e8443dce617dac92215749769a3d863bf3ca20ce6be335d5921639"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53361/lod2_mesh.npz",
+      "bytes": 40592,
+      "sha256": "b2f9ebeaef19f00360a416bb1b1a6083aa2b45a40203227d8adff70f3ddfacae"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53362/als_mesh.npz",
+      "bytes": 12893445,
+      "sha256": "92dffae4db568f045a5a2d31356e44619cdef70b2b2303feb4dd2b568528873e"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53362/lod2_mesh.npz",
+      "bytes": 39199,
+      "sha256": "4fb577aae8a2eebeeb7f5b711f690e3bf1c4e489497ee60c3a683734a601fa2f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53363/als_mesh.npz",
+      "bytes": 17269684,
+      "sha256": "7aaddbaff57d17c7b95b48114818a595adc1054c08e00a3ff90426177f281919"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53363/lod2_mesh.npz",
+      "bytes": 63934,
+      "sha256": "f875655c5197cecb6129974fdab55185612c01d344f8a3fada1f19cadf0ec302"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53358/als_mesh.npz",
+      "bytes": 17957194,
+      "sha256": "21c24f514f07bacc126b680e5337dc2b8e06e42cbaeaec30864fdaba496d03a7"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53358/lod2_mesh.npz",
+      "bytes": 5588,
+      "sha256": "786da29dbfbef9df2c8b712348015ae1786dfc5dd64fd2f09043562d84a07099"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53359/als_mesh.npz",
+      "bytes": 19358852,
+      "sha256": "8215ae344c5f756ea88132640a9d97d60c23e5713ad1716499731f3f43dcde29"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53359/lod2_mesh.npz",
+      "bytes": 21467,
+      "sha256": "648a45b5586c02fcb6155049c3c7dcee15b066efa65b9887966c225c61df860c"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53360/als_mesh.npz",
+      "bytes": 19193962,
+      "sha256": "ec86664cfaf5f64ab07a7d606141ac120ba1dc4474b763dbe9fa20dbf0e486e3"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53360/lod2_mesh.npz",
+      "bytes": 19580,
+      "sha256": "a5f00d37890726a25696955d3e21b12994dcd4f5532d13668d23ce8b4561f779"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53361/als_mesh.npz",
+      "bytes": 18513090,
+      "sha256": "e9929e29d204dfd06aab4b4e2cd18934438d42cbdbee9258b9bdc5c01067fa70"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53361/lod2_mesh.npz",
+      "bytes": 37573,
+      "sha256": "86dc5495b6682705908fb6b568d4fb08232164afa1302e94d3e05f72f3dc4fb9"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53362/als_mesh.npz",
+      "bytes": 13152382,
+      "sha256": "bf5813fc8d333e9b6996490df60d1258c1fe7e12a508d6d3a5be3104d30d4d0f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53362/lod2_mesh.npz",
+      "bytes": 25631,
+      "sha256": "d30ef190688e63aeb8e6f6b3e09e85edfa25dfe77a23029d2f41af53e37a493b"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53363/als_mesh.npz",
+      "bytes": 17296727,
+      "sha256": "cbc8ee2948003390d064d21b5845cf6961a55ea822199de73ddd9241d8fa54f0"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6910_53363/lod2_mesh.npz",
+      "bytes": 65261,
+      "sha256": "7bb6b1e45289d1b46d2db5e2acdd75dee9a9e1b92535398088cb5e2e2823f94d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53360/als_mesh.npz",
+      "bytes": 19626164,
+      "sha256": "33c743676be45023ec1250dae6cf9b7fb361520e54ce7575753fb0f8170396db"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53360/lod2_mesh.npz",
+      "bytes": 6526,
+      "sha256": "2db8f28f6cfa761454c5cfa65e314d257e4a71fe7815e3f461ddb74e529f220a"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53361/als_mesh.npz",
+      "bytes": 18723752,
+      "sha256": "de5afe561cb21fcc4d7fc0b4f6e2817eb42fd605ffe9993cedf67d1352049c2d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53361/lod2_mesh.npz",
+      "bytes": 56492,
+      "sha256": "184d4a509c78d2937ed983b897b95da1742117c6425ba40247b44228960b5185"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53362/als_mesh.npz",
+      "bytes": 12677572,
+      "sha256": "c74d541e2679a45cdc618cc3e1a4b284797a14e06535d6e0c60866e9843358dd"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53362/lod2_mesh.npz",
+      "bytes": 91186,
+      "sha256": "e8f65443d8cc2fa8fcd0972ceddaa34cb168258d5290dc55dbcc591635a88b15"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53363/als_mesh.npz",
+      "bytes": 17597321,
+      "sha256": "9fc51508062d7a85343c3c21c4a8a2f424afb8096204bbed09ab2009a23fb87f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6911_53363/lod2_mesh.npz",
+      "bytes": 72830,
+      "sha256": "bec2a209aa4f971894555e965a3eb5a54751036c679bba67cb6ead1dc1c18d74"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6912_53362/als_mesh.npz",
+      "bytes": 12560631,
+      "sha256": "75917f2b987957b5e67c094d1e27253d9400e8fbf117ae3ad34b03cabd2287e3"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6912_53362/lod2_mesh.npz",
+      "bytes": 108328,
+      "sha256": "4987cef6b4cb9ad5b4652ddfca3a383854e92c27b6db51d16d2356b9c49a3501"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6907_53359/ALS/summary.json",
+      "bytes": 7551,
+      "sha256": "03d9e15ae6463a2a67b998c8cd493b911f057a31fdad6d85e60af60aa4d32c73"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6907_53359/LoD2/summary.json",
+      "bytes": 8378,
+      "sha256": "7eabd303908fad71301a3b54bf864bbee4ca1abf784905ee35fe89fa3028aec5"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6907_53360/ALS/summary.json",
+      "bytes": 6959,
+      "sha256": "fbfd4402804b08c45754d63834cb940382cd7853ba16814702ddf4b3a646d057"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6907_53360/LoD2/summary.json",
+      "bytes": 6951,
+      "sha256": "d942a122c218beb696b0079aa6755674fe4e3fcb30c69c029a5f1df528d12176"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53358/ALS/summary.json",
+      "bytes": 6487,
+      "sha256": "e43d5c3da0d6e96b5a4923e63388fa50c701f0a963542c874f0f0518a9b2004f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53358/LoD2/summary.json",
+      "bytes": 6812,
+      "sha256": "dd0b1fdf869adf3bf9a553a0dc35a119d3228f617fefe4e5ee8c57075bbb83e9"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53359/ALS/summary.json",
+      "bytes": 14229,
+      "sha256": "ae9e6e2580fa7d94814060b24fa0a208a748a49465d714c71207d927a4626ca4"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53359/LoD2/summary.json",
+      "bytes": 14214,
+      "sha256": "5848b0d9e39c3f92a9c613d5c9069af84842d8f1631779be16557d6583304476"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53360/ALS/summary.json",
+      "bytes": 15785,
+      "sha256": "2b739d3000d2787e9c373618e000e61934335024e872df577ba0ee0115561cab"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53360/LoD2/summary.json",
+      "bytes": 16102,
+      "sha256": "5e1d73850af6d9b86b910bac8291b5144bfd9f334b3466e3a93452039401e261"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53361/ALS/summary.json",
+      "bytes": 13102,
+      "sha256": "f8b3fbda264c50b44a84d6dfa4ba2a43645c66a026d42eb23b7efb202451da23"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53361/LoD2/summary.json",
+      "bytes": 13067,
+      "sha256": "d1dea9803ae2f99498a584d7e39f9a9d303aa522ae18a912e30f76d082e9378b"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53362/ALS/summary.json",
+      "bytes": 7648,
+      "sha256": "288e26d3d784d2bdb2e343da0f29ddeb6baf7c37d559aba6aaa2f67a49de0a2c"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6908_53362/LoD2/summary.json",
+      "bytes": 7291,
+      "sha256": "1192225296c3a03ab0c8066e87d47f59c7713c6ebb666be1e08c241754bc43e2"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53358/ALS/summary.json",
+      "bytes": 9050,
+      "sha256": "1da476d8a0b5f0fa036800f86cde9d7b9423b08aab665c39953d699578288f6a"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53358/LoD2/summary.json",
+      "bytes": 9047,
+      "sha256": "8848217ccf6b5445f5b666ee24e350fedda5d9370005885e95ebe1e776cfb145"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53359/ALS/summary.json",
+      "bytes": 16557,
+      "sha256": "f2e7737093e84a438d5cd2ac1686410d5a9f6041d4a4635a73f11495c350ec62"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53359/LoD2/summary.json",
+      "bytes": 16548,
+      "sha256": "7f9e8d824422a0e30d25003e370c58264c6ed5b5d99c524f21b1a2c9835c29e7"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53360/ALS/summary.json",
+      "bytes": 18591,
+      "sha256": "5f541ada470608cc9ae990c5da4de13c3d525265cbfff804c53c3195dd780d67"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53360/LoD2/summary.json",
+      "bytes": 18916,
+      "sha256": "9cd28d1d7931671b3c095249bc4e4769d933749c5b7c80d96c19a3b140dee6c0"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53361/ALS/summary.json",
+      "bytes": 18796,
+      "sha256": "5a4897c5b0d3720f6c11ba09e1ded4470d34dfbfe0dd486403c433478b38beb5"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53361/LoD2/summary.json",
+      "bytes": 18399,
+      "sha256": "503ae59c20d619b3e462ed7897f3e9c9a8fd488244191423898b0c3294ad78cc"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53362/ALS/summary.json",
+      "bytes": 11804,
+      "sha256": "22817de04ae51ea28532ffc644ba947e7cfff9fec3dcffc496124cbcc784bfe6"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53362/LoD2/summary.json",
+      "bytes": 12110,
+      "sha256": "e4e1d0bc98be1337ef048bad15b58b8188be224cf75ec595e91ce526e16945bd"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53363/ALS/summary.json",
+      "bytes": 5448,
+      "sha256": "45c674cb622165f60813768ee8e94b9453c1dddbc0272f0539a04d843a728769"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53363/LoD2/summary.json",
+      "bytes": 5733,
+      "sha256": "977b1da7b02067c0e2833da80d93a4b1220058ea8febdc4305a601dac73a6b73"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53358/ALS/summary.json",
+      "bytes": 7014,
+      "sha256": "bfa558a1ec81f15e970526afc1bd6c93da1b09025f80baa2c6b8b4155b3f4a49"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53358/LoD2/summary.json",
+      "bytes": 6967,
+      "sha256": "d7642f01185cc27d704459d9025da2040f5db547940a425a012b1204587d070f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53359/ALS/summary.json",
+      "bytes": 10494,
+      "sha256": "38e0a7762c88514c136b5602a1da84ebb8ddab722689f7dd8c7f02508de7c3b1"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53359/LoD2/summary.json",
+      "bytes": 11067,
+      "sha256": "4fb71d37d4ad41fc2fef94fec5dad3474dc6dbe2224ff7d00319254e2ac4ef41"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53360/ALS/summary.json",
+      "bytes": 13723,
+      "sha256": "c1b0edadb0e9a4941f3f8c85b92a27739c728fd6dbe18a07285b5428a33bf40e"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53360/LoD2/summary.json",
+      "bytes": 13956,
+      "sha256": "26155b326627d65870dedf10e03526819f7ea7750c62ebe0c7a3eda2fbdc4dd6"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53361/ALS/summary.json",
+      "bytes": 15717,
+      "sha256": "df7754f585eaed815cd5c5f9e7f1dd0458746f4837fc5e9d1942f67a60930820"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53361/LoD2/summary.json",
+      "bytes": 15072,
+      "sha256": "fe67cdc512c30dd4360d5e16f45f587a85bbf19a12eff853294993384eef4241"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53362/ALS/summary.json",
+      "bytes": 11279,
+      "sha256": "3f0ea08a9a8aae0e4b1a7ef210e502b6838628bb4d929bb8e8dbf1a20a55fec2"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53362/LoD2/summary.json",
+      "bytes": 10927,
+      "sha256": "dac0552ed24ee632fb10c901fc907c847d5eb9cf53c1d34e6e604a2294d6936d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53363/ALS/summary.json",
+      "bytes": 6098,
+      "sha256": "8aceb5eac44e8a7d2c6dc70812146cb6e0a7be71412b782b2adfab3555b17c2e"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6910_53363/LoD2/summary.json",
+      "bytes": 5744,
+      "sha256": "6a5abaeb8efe9ccab52a66f6eb77d652d6f633971559dee93b0f1b4bef9c2522"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53360/ALS/summary.json",
+      "bytes": 7773,
+      "sha256": "51f410e3a5cbd1de8cea837d1f4d08d6063408a813a6a39bc3313d4e5fbc47e7"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53360/LoD2/summary.json",
+      "bytes": 7773,
+      "sha256": "506c38717ddd4c71bb3cca17d7e36f0d7d1a68ddad7b81a797a038f0df5a35d2"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53361/ALS/summary.json",
+      "bytes": 8383,
+      "sha256": "3d0935cd068a554f3c30c894306c4977cd5ee81d9893154f597d4682b293eb67"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53361/LoD2/summary.json",
+      "bytes": 8345,
+      "sha256": "919447f9d24d1141e3a2aaaa10d8e9122dd77bc23cef2da5aa403e5e20e5da02"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53362/ALS/summary.json",
+      "bytes": 6096,
+      "sha256": "b06671904b43e07a98e937c4542cdd65302ad4c98e4e6f1e635b1b393ee5ff18"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53362/LoD2/summary.json",
+      "bytes": 6323,
+      "sha256": "5eab77258359a6ef76661f9d89861d7f60875231dcc68d0c3b50ccec2b57e258"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53363/ALS/summary.json",
+      "bytes": 5177,
+      "sha256": "7717fc7f3eec5746c6becc914ed92757048872f61ee0a3220a48d7c4eafe8695"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6911_53363/LoD2/summary.json",
+      "bytes": 5408,
+      "sha256": "db801199ff104132467e8469a1ca65a18ecb786152a4a61667398ecde02cccbe"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6912_53362/ALS/summary.json",
+      "bytes": 3370,
+      "sha256": "586664a395e24f6b6df1cdc9665c351eab35a378076bc926de13038aa9ad2a21"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6912_53362/LoD2/summary.json",
+      "bytes": 3344,
+      "sha256": "8ba6695973669b7101ed45d314497c820042f0b0150f60ff7f122ce4e31c5879"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6907_53359__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6907_53359__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6907_53360__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6907_53360__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53358__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53358__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53359__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53359__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53360__ALS__R1.5.npz",
+      "bytes": 1107815,
+      "sha256": "404e3854dd32a33d50625ab9c8e03fcd5c626f58453f1c611816db07d4ee3f83"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53360__LoD2__R1.5.npz",
+      "bytes": 3346544,
+      "sha256": "0d8f4a8cbf9af3b662b6d2b63968b5612f41fe3846f9b091d931a85cb25806b3"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53361__ALS__R1.5.npz",
+      "bytes": 963561,
+      "sha256": "917f629ec4fd37d2c6e14abda39e15e88d649e74254b1d68d90974ca096fff3f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53361__LoD2__R1.5.npz",
+      "bytes": 1914377,
+      "sha256": "69558a6d676637fa3247b54feb4e853337f2cc6c46f3267c2e9274bdedb5907b"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53362__ALS__R1.5.npz",
+      "bytes": 82857,
+      "sha256": "32d3bd9102ffc2f41862021b8d6d27829037f4a24cc8857a55572411a52f6b5f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6908_53362__LoD2__R1.5.npz",
+      "bytes": 471769,
+      "sha256": "90413e282adfaa5db7402a6aba7cf9d2c79f3eb6a179730719a5148c08ec7a55"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53358__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53358__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53359__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53359__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53360__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53360__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53361__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53361__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53362__ALS__R1.5.npz",
+      "bytes": 1124453,
+      "sha256": "f81a264753a63b39d4fb3bf9f493113b847298cf41e402afc1e3779541192cbe"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53362__LoD2__R1.5.npz",
+      "bytes": 2057922,
+      "sha256": "7a4499ab4122e8e8934d7d2bf2a70614ef927148acd025ffb9fcb644e30f9bc9"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53363__ALS__R1.5.npz",
+      "bytes": 897966,
+      "sha256": "d8f6fbd839c671ee6fce2e70a9a94e455011ed1280af44719eb957554fbb7052"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6909_53363__LoD2__R1.5.npz",
+      "bytes": 1902335,
+      "sha256": "09c4c7d382984b56019e68e4e77803cfbc4fb6064315fd5fd26fb36b820030a9"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53358__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53358__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53359__ALS__R1.5.npz",
+      "bytes": 182743,
+      "sha256": "3a06a087e5b2eee9391e7f1398ecca8295cf29bc41401b4d5caec74fcdd626af"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53359__LoD2__R1.5.npz",
+      "bytes": 802838,
+      "sha256": "26805e1c87b6775bb54aeb0e5ead1f5a2f039e90df01ca16c532ae68b7e9bd26"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53360__ALS__R1.5.npz",
+      "bytes": 4628403,
+      "sha256": "bf8fc4f21f0cd9f52929b2d3bb1a819974aa21b1be81f57877f47938216f0fe7"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53360__LoD2__R1.5.npz",
+      "bytes": 7536508,
+      "sha256": "bb4d363fde25b1b9485b9ff0a5c64019178683d38e0b59e8c2aa7350deba5ee1"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53361__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53361__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53362__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53362__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53363__ALS__R1.5.npz",
+      "bytes": 22332,
+      "sha256": "a0cb0592e37dcacfe8ac94bd738f7ad088b9989801ae77ca5104d5ecd7e18e55"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6910_53363__LoD2__R1.5.npz",
+      "bytes": 19084,
+      "sha256": "e25996da824801637f94c78f85ce472b8c9ef058e9a015ae20446552b47bf590"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53360__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53360__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53361__ALS__R1.5.npz",
+      "bytes": 658094,
+      "sha256": "3ce17e9a01dac90871625ef2d76787536eb59388053c06893ad370e60fc55d28"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53361__LoD2__R1.5.npz",
+      "bytes": 1186392,
+      "sha256": "3532d2066300ad715ad39926f22a5f10e178a040b437aa5e1fd9303da63c0e3c"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53362__ALS__R1.5.npz",
+      "bytes": 294379,
+      "sha256": "7b1fc434ff4952427ff2216eea3190d6064c463897acd2d4dc5cff5341d49ff1"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53362__LoD2__R1.5.npz",
+      "bytes": 2103855,
+      "sha256": "92d0ffc5af533014fd5e224e7651cd5a9f0cbd352ce12ba85a730e4113cecfa3"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53363__ALS__R1.5.npz",
+      "bytes": 22027,
+      "sha256": "1135118d3b146256917048483fa0fddf424dfa5b3109e82bdc3e1b87671619c9"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6911_53363__LoD2__R1.5.npz",
+      "bytes": 51333,
+      "sha256": "c8678f253e842734a069ceecd841fc49d20e3c4920b46c08ba8f61e57f7dc18d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6912_53362__ALS__R1.5.npz",
+      "bytes": 28139,
+      "sha256": "71d3c238eca8d897ce5af9bcbef9bd695b6517fd0ded88d9d316b0cec8a15cf4"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/patch_values/6912_53362__LoD2__R1.5.npz",
+      "bytes": 19332,
+      "sha256": "6ca6a41536b5ad43f1252fec6c5fb415cc68838258d3703268d42e7fc442edc6"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/image_split.json",
+      "bytes": 69692,
+      "sha256": "b3d4e8a05345c386ee05f0a1bcdada8938521615c9cdb87efc68369369b64240"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/sparse/images.bin",
+      "bytes": 100156658,
+      "sha256": "54203353363a6e72edb1fc8af5eb610ab4b50d7d76408f85f3d54bdc6f57ea0c"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53359__ALS__R1.5.npz",
+      "bytes": 38362,
+      "sha256": "fb4b8dc820928573fb6234960eeabb011c480e0ab2f521b61f87db1d9cf08dfc"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53359__LoD2__R1.5.npz",
+      "bytes": 304716,
+      "sha256": "98d1c7ca495bde903e379044e18e3fa9faf54754d4156330d3feaa8c87c2533a"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53360__ALS__R1.5.npz",
+      "bytes": 53987,
+      "sha256": "fa5ed0e2b338d5742fa8fb355ef49dd484d19a7dd56dde504e940f18a771043e"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53360__LoD2__R1.5.npz",
+      "bytes": 47912,
+      "sha256": "71116ab051a29f21b6dd00bf37ece28fd27856c6856cdc1ba19d1ff2af2eefc8"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53358__ALS__R1.5.npz",
+      "bytes": 2084937,
+      "sha256": "ec1be39e57386e55c851a3e9506a9d6d3b599963446517c2027b3e278b66f401"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53358__LoD2__R1.5.npz",
+      "bytes": 2234693,
+      "sha256": "e9e42399acd1348463c33fd9e0f6c978d876aad86ff182096e514323dd1be6b9"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53359__ALS__R1.5.npz",
+      "bytes": 13693080,
+      "sha256": "cd3001ad58e988c5e8f66168a01e78ab349f1b18354b189a340bb39d31a6e5eb"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53359__LoD2__R1.5.npz",
+      "bytes": 33870988,
+      "sha256": "862ba8d2688d6ebed4afc23f7fdc5991fc9151c8de5e5707c5139cba3b277c65"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53360__ALS__R1.5.npz",
+      "bytes": 12174210,
+      "sha256": "5541154a2d4c28e41fea796bf87d2b662e5e308a9467a79c53fc512763db643f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53360__LoD2__R1.5.npz",
+      "bytes": 30357334,
+      "sha256": "e6b26266b3e42ce94782fa09855b80845e605205f0afaddd4ac6ff32e77e3722"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53361__ALS__R1.5.npz",
+      "bytes": 7865137,
+      "sha256": "0cf4f25c728d70139d211ac2fdfbf42c4eaf48b283235673deeb1862f36bb71d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53361__LoD2__R1.5.npz",
+      "bytes": 16110964,
+      "sha256": "108a58b099972db6ac146d8c9e68dcf214b48373ae20543ae0f1cd4b156fc507"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53362__ALS__R1.5.npz",
+      "bytes": 1452603,
+      "sha256": "c8d44041f5e3d5ee2d1c364b7dbee12aebb5f261d4cebc3559f9453d5166d836"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53362__LoD2__R1.5.npz",
+      "bytes": 2636267,
+      "sha256": "bd72a29dcb8692890571db978389d57277a834bba94aff396eed1adadef84b84"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53358__ALS__R1.5.npz",
+      "bytes": 14085930,
+      "sha256": "63c54596fd6aeffe8a079d21ad9b2e9524c15132ba349f7eb04bda6d954765d4"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53358__LoD2__R1.5.npz",
+      "bytes": 15307804,
+      "sha256": "cd25c3d1c4bd64b53107569487d4cfc438e4ed32e070b07392f4c7c0af0a2a17"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53359__ALS__R1.5.npz",
+      "bytes": 19752579,
+      "sha256": "8c7d6402e01b0a841492d7e17282f44a554386123486140cdef1b65f1fecad95"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53359__LoD2__R1.5.npz",
+      "bytes": 41757733,
+      "sha256": "e23bce1458cf08db32256b2cbbd24d1ff0c48cb6b05813a0e1a950848d6fcbcb"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53360__ALS__R1.5.npz",
+      "bytes": 15255734,
+      "sha256": "f5ac8ce7ab16c3ce000354917d4a905c39af69802b19a7ce1ab8022c21c81115"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53360__LoD2__R1.5.npz",
+      "bytes": 29960587,
+      "sha256": "0bf175fbaacb044f4f85c5c12b643a8d433f09ca72a7dc4f5419ed368a092b6e"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53361__ALS__R1.5.npz",
+      "bytes": 18669568,
+      "sha256": "3f8b8c86bb39b475b3ecf95dbdb6e14259fd1bd140d5a1d63af91e7cb548f010"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53361__LoD2__R1.5.npz",
+      "bytes": 40801074,
+      "sha256": "51b9a8dad7206a7eebb02a2e69265985f749188daf5c266a084495635665d50c"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53362__ALS__R1.5.npz",
+      "bytes": 17939145,
+      "sha256": "d0599948fdd3247a50c73914fae3a67815eccce0273410cb8ca947543eafd180"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53362__LoD2__R1.5.npz",
+      "bytes": 30596717,
+      "sha256": "afaaee567b785a833cd0c4a0f049e80ccc27db353f561aa6a91d03ebd974e5db"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53363__ALS__R1.5.npz",
+      "bytes": 2788459,
+      "sha256": "546e4a47f79cf4175ad4f965c25c7fb7f4df6c073774198523b15a7358ac436a"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53363__LoD2__R1.5.npz",
+      "bytes": 6971085,
+      "sha256": "6e4c1bd525b2be728a8c59c2727e7192a4c312db6cc5aa84aed6cebdb150a3db"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53358__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53358__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53359__ALS__R1.5.npz",
+      "bytes": 4687524,
+      "sha256": "af5ef1fcc9881b9e6c30be178e704615181cf0cb63319e9b9417c918e10f733c"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53359__LoD2__R1.5.npz",
+      "bytes": 8943364,
+      "sha256": "09e06eec24c1793b9a99969b80f636ef36333e6ad17966ee2f559a99a1d2e516"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53360__ALS__R1.5.npz",
+      "bytes": 12470963,
+      "sha256": "048c65a39f3dbfa38b29bc5afadab101d7c0dea1a4c991aa11fb63317c516b11"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53360__LoD2__R1.5.npz",
+      "bytes": 23208667,
+      "sha256": "15a12179a5eeef7b7c0e64d3e1347ef44ae64075666f398dde0c39875ccfb4a2"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53361__ALS__R1.5.npz",
+      "bytes": 18191336,
+      "sha256": "b9ca52a429ac0d344d318f7f2e9fa81f9a4f8ef7c3324a851525451dfbb17e57"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53361__LoD2__R1.5.npz",
+      "bytes": 33548602,
+      "sha256": "16795b0a15a891d922deb148d4816c7dc7417cf5b4ebad1ee76ffbce9d314f1b"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53362__ALS__R1.5.npz",
+      "bytes": 20032137,
+      "sha256": "844aa339b512666d0ca0b91ad02a0aab46346c99296ca13453a9347542ae9479"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53362__LoD2__R1.5.npz",
+      "bytes": 35006737,
+      "sha256": "21881b90e15b54f8552eb36ddf14405469d4f9090254445fc42142cab5c4f93f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53363__ALS__R1.5.npz",
+      "bytes": 13385751,
+      "sha256": "df1dd3360d9c85fd1ab532935ed474be5f00d0264d684167c3486a0622af65de"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53363__LoD2__R1.5.npz",
+      "bytes": 20985589,
+      "sha256": "a46a6d04c7cf34283c436f0407b7a441bef79f21c5e04ccb2576e4cd671a214d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53360__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53360__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__ALS__R1.5.npz",
+      "bytes": 969258,
+      "sha256": "1111fab53c7f5c1783e1a4f26b220652a421f28676f6442b3b88d5b62a50e85d"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__LoD2__R1.5.npz",
+      "bytes": 1411358,
+      "sha256": "888c296cdc830c3a2cf3071ccd09a99ed4d16afbc6e5241dfcdd1dfbb8261980"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53362__ALS__R1.5.npz",
+      "bytes": 9041465,
+      "sha256": "6712566ed9b54f5d79f0df981b9a9ebb628c915df68c0457afed1bbe136b0d64"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53362__LoD2__R1.5.npz",
+      "bytes": 14786946,
+      "sha256": "afbeee9b60146c165373d19a5d82b34bcfb78bf4844c5eb6c67895f83761696f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53363__ALS__R1.5.npz",
+      "bytes": 5522260,
+      "sha256": "ff51a70a7d0a201a01d14d7ca5902ff64a1f7f929947774f4f5fa4cad56b229f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53363__LoD2__R1.5.npz",
+      "bytes": 10007232,
+      "sha256": "6525dff8ae641943d5056e5b2c08d862fc2b6fc32e2be0b1adf291966d671be6"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6912_53362__ALS__R1.5.npz",
+      "bytes": 20713,
+      "sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "file": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6912_53362__LoD2__R1.5.npz",
+      "bytes": 14235,
+      "sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    }
+  ],
+  "source_policy": "Inputs were mounted read-only for every project process. Hashes identify the bytes used and preserved at handover; no sealed point values or judgments are included.",
+  "scientific_verdict": null
+}

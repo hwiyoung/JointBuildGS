@@ -61,13 +61,16 @@ def montages(plt,cam,d,p,prior,stage):
                 if k>=len(subset):left.axis('off');right.axis('off');continue
                 r=subset[k];ids=np.flatnonzero(lab[group]==r['component_id']);pids=np.unique(d['point_id'][ids]);pi=np.array([pid_to_i[x] for x in pids]);centre=np.average(d['centre'][ids],weights=d['area'][ids],axis=0);i=pi[np.argmin(np.linalg.norm(p['centre'][pi]-centre,axis=1))]
                 rgb,meta=crop_component(cam,d,ids,p,pi)
-                if rgb is not None:left.imshow(rgb)
+                if rgb is not None:
+                    left.imshow(rgb)
+                    if meta['crop_clipped']:left.text(.02,.02,'사진 경계에서 잘림',transform=left.transAxes,fontsize=7,bbox=dict(facecolor='white',alpha=.8))
                 else:left.text(.5,.5,'사진 확인 불가',ha='center',va='center')
                 left.axis('off');curve_plot(right,p,i,compact=True)
                 line=f'{r["building"]} · {r["area_m2"]:.2f} m² · {LABELS[int(p["judgment"][i,4])]}\n안 {p["s_in"][i]:.3f} · 밖 {p["s_out"][i]:.3f}'
                 left.set_title(line,fontsize=8)
                 records.append(dict(**r,photo=meta,patch_ids=d['patch_id'][ids],point_ids=pids,centre_point=p['point_id'][i],s_in=p['s_in'][i],s_out=p['s_out'][i],judgment=p['judgment'][i,4]))
             title={'false_refute':'거짓 반박','missed_refute':'놓친 반박','support_mvs_diff':'지지 · MVS 다름'}[group]
+            if not subset:axs[0,0].text(.5,.5,'해당 덩어리 없음',ha='center',va='center',transform=axs[0,0].transAxes)
             fig.suptitle(f'{prior} · {title} · {page+1}',fontsize=11);fig.tight_layout(rect=[0,0,1,.98]);save(fig,D/'figures'/stage/f'montage_{prior}_{group}_{page+1}',dict(rows=records,available_components=len(choices),selected_components=len(selected),max_per_building=3));plt.close(fig);out.extend(records)
     dump(D/'tables'/stage/f'{prior}_montage_selection.json',dict(rows=out,scientific_verdict=None))
 

@@ -24,6 +24,8 @@ nice -n 19 docker run --rm --read-only --network none "${gpu[@]}" \
   -e OMP_NUM_THREADS=8 -e OPENBLAS_NUM_THREADS=1 -e MKL_NUM_THREADS=1 \
   -e TMPDIR=/out/tmp -e MPLCONFIGDIR=/out/tmp/mpl -e XDG_CACHE_HOME=/out/tmp/cache \
   -e NUMBA_CACHE_DIR=/out/tmp/numba -e TZ=Asia/Seoul \
+  -e PHOTOCHECK_RAM_CACHE_BYTES=21474836480 \
+  --tmpfs /out/tmp/image_cache_ram:rw,size=22g,mode=1777 \
   -e PHOTOCHECK_COMMIT="$(git -C "$REPO" rev-parse HEAD)" \
   -e PHOTOCHECK_IMAGE="$(docker image inspect -f '{{.Id}}' jointbuildgs:dev)" \
   -v "$REPO:/repo:ro" -v "$ART:/art:ro" -v "$OUT:/out:rw" \

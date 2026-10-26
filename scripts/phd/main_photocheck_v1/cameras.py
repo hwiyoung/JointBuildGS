@@ -1,5 +1,5 @@
 """Fixed training cameras and CPU visibility. No GT or evaluation camera inputs."""
-import sys,io,zipfile,uuid
+import sys,io,zipfile,uuid,shutil
 import cv2
 from common import *
 sys.path.insert(0,'/repo/scripts/phd/main_widen0_v2')
@@ -29,6 +29,21 @@ class Cameras:
         return cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
     def gray(self,j,level):
         folder=O/'image_cache';folder.mkdir(exist_ok=True);path=folder/f'{j:04d}_L{level}.npy'
+        ram=O/'tmp/image_cache_ram';budget=int(os.environ.get('PHOTOCHECK_RAM_CACHE_BYTES','0'))
+        if budget and ram.is_dir():
+            target=ram/path.name
+            if not target.exists():
+                entries=list(ram.glob('*.npy'));used=sum(f.stat().st_size for f in entries)
+                need=(self.w//2**level)*(self.h//2**level)*4+128
+                for old in sorted(entries,key=lambda f:f.stat().st_mtime_ns):
+                    if used+need<=budget:break
+                    used-=old.stat().st_size;old.unlink()
+                # Decode the compact original JPEG instead of rereading a much
+                # larger float32 NPY from disk. Same pinned decoder and arithmetic.
+                im=self.rgb(j);gray=cv2.transform(im.astype(np.float32),np.array([[.299,.587,.114]],np.float32));del im
+                for _ in range(level):gray=cv2.resize(gray,(gray.shape[1]//2,gray.shape[0]//2),interpolation=cv2.INTER_AREA)
+                temporary=ram/f'.{target.stem}_{uuid.uuid4().hex}.npy';np.save(temporary,gray);temporary.replace(target)
+            os.utime(target,None);return np.load(target,mmap_mode='r')
         if not path.exists():
             # Image-at-a-time processing; original RGB is released before next image.
             im=self.rgb(j);gray=cv2.transform(im.astype(np.float32),np.array([[.299,.587,.114]],np.float32));del im
