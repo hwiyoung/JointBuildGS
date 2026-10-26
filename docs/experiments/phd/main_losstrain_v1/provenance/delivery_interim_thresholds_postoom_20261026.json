@@ -1,0 +1,42 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "STOPPED_PARTIAL",
+  "calibration_complete": 4,
+  "required_training_complete": 2,
+  "optional_training_complete": 0,
+  "postprocessing_complete": 0,
+  "preserved_attempt_stop_files": 3,
+  "historical_pre_amendment_opacity_stops": 2,
+  "at": "2026-10-26T21:08:23.704049+09:00",
+  "scientific_verdict": null,
+  "archives": [
+    {
+      "path": "/out/deliveries/interim_thresholds_postoom_20261026/PHD-MAIN-LOSSTRAIN-v1_handover_light.zip",
+      "bytes": 2350457,
+      "sha256": "14937d2806264d8c3cdcde75887f2fb7e01d40e3261b2d4c20c6e4a4f9e3116e",
+      "CRC": "PASS",
+      "member_hashes": "PASS",
+      "members": 461
+    },
+    {
+      "path": "/out/deliveries/interim_thresholds_postoom_20261026/PHD-MAIN-LOSSTRAIN-v1_handover.zip",
+      "bytes": 29742766,
+      "sha256": "a37b033af48471156d0f51a56b200f46eda6881856fe8e48e4a9aa0fb6cfd3f1",
+      "CRC": "PASS",
+      "member_hashes": "PASS",
+      "members": 521
+    }
+  ],
+  "source_commit": "7fe161d2cdd7117f697fc57da6bf24db535804eb",
+  "scope_clean_when_packaged": true,
+  "source_scope": [
+    "configs/phd/main_losstrain_v1",
+    "scripts/phd/main_losstrain_v1",
+    "docs/experiments/phd/main_losstrain_v1",
+    "src/phd/forks/GeoGS-conf-guided-v1-r17"
+  ],
+  "archive_host_paths": {
+    "/out/deliveries/interim_thresholds_postoom_20261026/PHD-MAIN-LOSSTRAIN-v1_handover_light.zip": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/deliveries/interim_thresholds_postoom_20261026/PHD-MAIN-LOSSTRAIN-v1_handover_light.zip",
+    "/out/deliveries/interim_thresholds_postoom_20261026/PHD-MAIN-LOSSTRAIN-v1_handover.zip": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/deliveries/interim_thresholds_postoom_20261026/PHD-MAIN-LOSSTRAIN-v1_handover.zip"
+  }
+}
