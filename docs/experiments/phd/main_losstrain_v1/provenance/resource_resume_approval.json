@@ -1,0 +1,24 @@
+{
+  "status": "AUTHORIZED",
+  "at": "2026-10-26T21:26:18.598009+09:00",
+  "authority": "User reply to call_294cfc1fb25b478197bf2881ba0ef7e9",
+  "minimum_available_GiB": 64,
+  "stable_seconds": 60,
+  "post_container_limit_GiB": 48,
+  "max_autonomous_resource_retries": 2,
+  "post_resource_failures_count_as_training_stops": false,
+  "training_sequence": "first batch arms 3 and 4, then remaining 20; independent of postprocessing",
+  "postprocessing_serial": true,
+  "photocheck_cleanup": "Inspect and release residual task processes and ephemeral RAM cache only; preserve all results",
+  "interim_after_first_four_scored": true,
+  "fates_extra_groups": [
+    "cell_0",
+    "cell_2"
+  ],
+  "nojudge_retraining": false,
+  "loss_changed": false,
+  "scoring_changed": false,
+  "arms_changed": false,
+  "training_settings_changed": false,
+  "scientific_verdict": null
+}

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "at": "2026-10-26T21:26:19.086272+09:00",
+  "training_arguments_identical": true,
+  "r17_source_unchanged": true,
+  "required_runs": 24,
+  "completed_training_reused": 2,
+  "post_minimum_available_GiB": 64,
+  "post_stable_seconds": 60,
+  "resource_retries": 2,
+  "scientific_verdict": null,
+  "admission_boundary_test": "PASS: dip at 20 seconds reset; 64 GiB sustained from 30 to 90 seconds admits only at 90",
+  "python_ast": "PASS",
+  "orchestration_source_sha256": {
+    "scripts/phd/main_losstrain_v1/continue_resource_v1.py": "510ebab2a1643f029e21e1f054e2f5d1167669dad8de77f7d2d29cc75eab0728",
+    "scripts/phd/main_losstrain_v1/post_admission.py": "7edd517a69c635739906e17fd2051a4b0c50127db811978c6d7f7f96afd36473"
+  }
+}

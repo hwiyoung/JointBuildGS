@@ -47,3 +47,9 @@ LT-015 ADMISSION REVISION: after dynamic GT finished, host available RAM was abo
 LT-015 THIRD SAME-ARM STOP: fixed GT post attempt_1 also exited 137 at 20:53 KST. Kernel global_oom identifies the exact retry process (anonymous RSS 45,746,032 kB); this does not prove a CUDA OOM or the container limit being exceeded. Fixed training at 30k remains complete. Including the initial 3001 stop, the fixed arm has three known stops, so further retries require the user. Dynamic GT also completed 30k; both saved-model statistics and fates were read independently. No new training or TSDF is active.
 
 LT-016 INTERIM THRESHOLDS: user requested B173 ALS 8.1 thresholds alongside the interim results. Added 21 metric/subset rows with prop_ALS_s0/s1, N, matching pooled spread availability, case spread, 300/N applicability and maximum. Independent recomputation from the two saved patch arrays matched every value exactly. No scoring rule changed.
+
+## LT-017 사용자 승인: 자원 중단 분리와 전체 학습 대기열 재개
+
+2026-10-26: 후처리 자원 부족은 학습 중단 횟수에서 제외한다. 이전 기록은 보존한다. TSDF는 호스트 MemAvailable 64 GiB 이상이 60초 유지된 뒤, 기존 48 GiB 컨테이너 한도로 실행한다. 동일 조건에서 최초 실패 뒤 최대 두 번 재시도하고 그 뒤에는 보고한다. 판 1·2의 완료 모델은 재학습하지 않는다. 판 3·4를 먼저 배정한 뒤 나머지 20회 학습을 두 GPU에 이어 배정하며 채점 완료를 기다리느라 학습을 막지 않는다. 후처리와 큰 CPU 채점은 직렬 실행한다. 앞 네 판 채점 완료 시 중간 보고를 갱신하고 심긴 점의 운명에서 칸 0과 칸 2를 따로 낸다. 손실 식·채점·판·학습 설정은 그대로다.
+
+사진 확인 잔여 조사: 일치하는 프로세스·컨테이너·마운트·RAM 임시 캐시 없음. 결과 파일 삭제 0개. 관련 없는 서비스는 변경하지 않았다. 근거: provenance/photocheck_cleanup.json.
