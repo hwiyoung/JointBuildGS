@@ -1,5 +1,5 @@
 """Docker CPU: boundary stops and density bookkeeping without optimizer changes."""
-import json,math
+import argparse,json,math
 from pathlib import Path
 from types import SimpleNamespace as NS
 import numpy as np
@@ -7,6 +7,9 @@ import torch
 from inputs import OUT,save
 
 def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--revision');a=ap.parse_args()
+    root=OUT/'checks/monitor_v2';root=root/a.revision if a.revision else root
+    root.mkdir(parents=True,exist_ok=True)
     ns=dict(json=json,math=math,np=np,torch=torch,ORIGIN_PRIOR=1)
     exec(Path('/repo/scripts/phd/main_losstrain_v1/r17_monitor.py').read_text(),ns)
     checks=[]
@@ -37,7 +40,28 @@ def main():
     assert summary['prior_lineage']['opacity_median']==.001 and summary['all']['opacity_median']==.8
     assert ns['lt_whole_stop'](True,summary['all']['opacity_median'],100) is None
     assert summary['prior_gt_incorrect']['count']==1 and summary['density_born']['count']==1
-    mon=OUT/'checks/monitor_v2/synthetic';mon.mkdir(parents=True,exist_ok=True)
+    mon=root/'synthetic';mon.mkdir(parents=True,exist_ok=True)
+    init_xyz=np.array([[0.,0.,0.],[1.,0.,0.]],dtype=np.float32)
+    np.savez_compressed(mon/'init_points.npz',planted=np.ones(2,bool),xyz=init_xyz,location=np.array([0,1]))
+    np.savez_compressed(mon/'evaluation.npz',cell=np.array([0,1]))
+    cams=[NS(image_name='view_'+str(i)) for i in range(30)]
+    save(mon/'baseline.json',dict(legacy5_camera_names=sorted(cams[i].image_name for i in range(5,30,5)),
+        train_psnr_legacy5=[dict(iteration=i,psnr_db=20.) for i in [7000,15000,30000]]))
+    j=NS(mon=mon,init_xyz=torch.from_numpy(init_xyz),lt_cameras={'existing_loss_camera':'do not replace'},
+        args=NS(jbgs_lt_diagnostic_cells=str(mon/'evaluation.npz'),jbgs_lt_nojudge_inventory=str(mon/'baseline.json')))
+    existing=j.__dict__.copy();g=G();g.get_xyz=torch.from_numpy(init_xyz)
+    ns['lt_monitor_initialize'](j,g,NS(getTrainCameras=lambda:cams))
+    assert all(j.__dict__[key] is value for key,value in existing.items())
+    j.lt_last_periodic_reset=3000
+    g.origin=torch.tensor([1,0]);g.init_id=torch.tensor([0,1]);g.get_opacity=torch.tensor([.01,.01])
+    original_psnr=ns['lt_five_psnr'];ns['lt_five_psnr']=lambda *args:(19.,[])
+    stopped=False
+    try:ns['lt_monitor_step'](j,3100,g,'synthetic',None,None,None)
+    except RuntimeError:stopped=True
+    assert stopped
+    row=json.loads((mon/'losstrain_observations_v2.jsonl').read_text().splitlines()[-1])
+    assert row['groups']['all']['count']==2 and row['stop'].startswith('whole-population')
+    ns['lt_five_psnr']=original_psnr
     grads=[]
     for observe in [False,True]:
         xyz=torch.tensor([[.1,.2,.3],[.4,.5,.6]],requires_grad=True)
@@ -51,7 +75,8 @@ def main():
             assert xyz.grad is None and torch.equal(vsp.grad,torch.full_like(vsp,7.))
         (rgb+depth).backward();grads.append((xyz.grad,vsp.grad))
     assert all(torch.equal(x,y) for x,y in zip(*grads))
-    save(OUT/'checks/monitor_v2/monitor_check.json',dict(status='PASS',opacity_boundary_cases=checks,
+    save(root/'monitor_check.json',dict(status='PASS',opacity_boundary_cases=checks,
+        preexisting_judgment_attributes_unchanged=True,collapse_observation_written_before_stop=True,
         psnr_strict_boundary_and_exact_iteration=True,birth_wrapper_delegation_identical=True,
         clone_split_prune_birth_alignment=True,prior_low_whole_high_does_not_stop=True,
         parameter_and_retained_gradients_equal=True,optimizer_steps=0,scientific_verdict=None))

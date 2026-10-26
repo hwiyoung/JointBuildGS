@@ -293,8 +293,8 @@
 +    with open(j.args.jbgs_lt_nojudge_inventory) as f:
 +        j.lt_baseline = json.load(f)
 +    cams = scene.getTrainCameras()
-+    j.lt_cameras = [cams[i % len(cams)] for i in range(5, 30, 5)]
-+    assert sorted(c.image_name for c in j.lt_cameras) == j.lt_baseline['legacy5_camera_names']
++    j.lt_diagnostic_cameras = [cams[i % len(cams)] for i in range(5, 30, 5)]
++    assert sorted(c.image_name for c in j.lt_diagnostic_cameras) == j.lt_baseline['legacy5_camera_names']
 +    j.lt_reference_psnr = {x['iteration']: x['psnr_db'] for x in j.lt_baseline['train_psnr_legacy5']}
 +    assert set(j.lt_reference_psnr) == {7000, 15000, 30000}
 +
@@ -343,7 +343,7 @@
 +    values = []
 +    try:
 +        with torch.no_grad():
-+            for cam in j.lt_cameras:
++            for cam in j.lt_diagnostic_cameras:
 +                pkg = render(cam, gaussians, pipe, background)
 +                image = pkg['render'].clamp(0., 1.)
 +                gt = cam.original_image[0:3].cuda().clamp(0., 1.)
@@ -368,15 +368,15 @@
 +        prior_opacity_is_record_only=True, stop=stop, scientific_verdict=None)
 +    if iteration == 1 or iteration % 100 == 0 or stop:
 +        lt_write(j, 'losstrain_health_v2.jsonl', row)
-+    if stop:
++    if stop and not finite:
 +        raise RuntimeError('LOSSTRAIN_STOP: ' + stop)
-+    due = pre_reset or iteration % 1000 == 0 or offset in [100, 500]
++    due = pre_reset or iteration % 1000 == 0 or offset in [100, 500] or bool(stop)
 +    if not due:
 +        return
 +    groups = lt_population_summary(opacity.cpu().numpy(), gaussians.origin.detach().cpu().numpy(),
 +        gaussians.init_id.detach().cpu().numpy().astype(np.int64), j.lt_initial_cell, j.lt_initial_survivor)
 +    value, per_view = lt_five_psnr(j, gaussians, render, pipe, background)
-+    stop = lt_psnr_stop(iteration, value, j.lt_reference_psnr)
++    stop = stop or lt_psnr_stop(iteration, value, j.lt_reference_psnr)
 +    reference = j.lt_reference_psnr.get(iteration)
 +    row.update(groups=groups, train_psnr_legacy5=value, psnr_per_view=per_view,
 +        nojudge_train_psnr_legacy5=reference, nojudge_unsaved_statistics='기록 없음',

@@ -1,5 +1,7 @@
-# PHD-MAIN-LOSSTRAIN-v1 진행
+# PHD-MAIN-LOSSTRAIN-v1
 
-PARTIAL. 새 중단 기준 monitor v2 승인·검증 완료. 판 1 계속, 판 2 새 실행 준비. 이후 판 3·4. 9,100회 중단 기록 보존. 상세한 바꾼 것은 손실학습시험_보고_v1.md.
+2026-10-26T19:41:23.694217+09:00: STOPPED_PARTIAL.
 
-scientific_verdict: null
+짧은 학습 4/4. 본 학습 0/24. 선택 0/6. 후처리 0. 채점 0. λ=0.0025. 이전 3,001회 두 건과 9,100회 한 건은 기록 보존. 새 전체 불투명도·PSNR 기준 뒤 중단 시도 0건. scientific_verdict: null.
+
+이전 초기화 비교: tables/reset_comparisons.md. 새 관측: tables/monitor_v2_observations.md. 상세 실행 상태: tables/runtime.json.

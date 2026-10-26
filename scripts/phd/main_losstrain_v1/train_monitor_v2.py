@@ -2,13 +2,21 @@
 import argparse,concurrent.futures,fcntl,json,subprocess,time
 import train_full as F
 P,OUT,REPO,save,sha,now=F.P,F.OUT,F.REPO,F.save,F.sha,F.now
+REVISION=None
 
-def stopped():return F.STOP.is_set() or (OUT/'checks/full_monitor_v2_STOP.json').exists()
+def policy_root():
+    root=OUT/'checks/monitor_v2'
+    return root/REVISION if REVISION else root
+
+def stop_path():return OUT/'checks'/('full_monitor_v2_'+REVISION+'_STOP.json' if REVISION else 'full_monitor_v2_STOP.json')
+
+def stopped():
+    return F.STOP.is_set() or stop_path().exists() or (OUT/'runs/B173nb_b10/lt_fixgt_ALS_s0/STOP_monitor_v2.json').exists()
 
 def mark_stop(run,attempt,reason):
     F.STOP.set();row=dict(run=run,attempt=attempt,reason=reason,at=now(),scientific_verdict=None)
     save(F.root_of(run)/f'STOP_attempt_{attempt}.json',row)
-    save(OUT/'checks/full_monitor_v2_STOP.json',row)
+    save(stop_path(),row)
 
 F.mark_stop=mark_stop
 
@@ -25,12 +33,18 @@ def wait_fixed():
 
 def gates(batch):
     F.C.gates()
-    root=OUT/'checks/monitor_v2';approval=json.loads((root/'approval.json').read_text())
+    base=OUT/'checks/monitor_v2';root=policy_root();approval=json.loads((base/'approval.json').read_text())
     assert approval['status']=='AUTHORIZED' and not approval['nojudge_retraining']
     for p,h in approval['superseded_stops'].items():assert sha(OUT/p)==h
     assert json.loads((root/'validation.json').read_text())['status']=='PASS'
     assert json.loads((root/'gpu_probe/model/monitor/monitor_v2_probe.json').read_text())['status']=='PASS'
     assert (root/'commit.json').exists()
+    if REVISION:
+        restart=json.loads((root/'restart_approval.json').read_text())
+        assert restart['status']=='AUTHORIZED'
+        assert sha(OUT/'checks/full_monitor_v2_STOP.json')==restart['superseded_stop_sha256']
+    validation=json.loads((root/'validation.json').read_text())
+    for p,h in validation['source_sha256'].items():assert sha(P.SRC['r17']/p)==h
     assert not stopped()
     if batch!='first':assert json.loads((OUT/'checks/interim.json').read_text())['status']=='PASS'
     if batch=='optional':assert all((F.root_of(r)/'post_PASS.json').exists() for r in F.runs_for('remaining'))
@@ -43,8 +57,12 @@ def run(r,gpu,lam):
     first=0
     if unit.exists():
         assert r==dict(site='B173nb_b10',prior='ALS',variant='lt_dyngt')
-        assert (unit/'STOP_attempt_1.json').exists() and not (unit/'attempt_2').exists()
-        first=2
+        if REVISION=='camera_fix':
+            assert (unit/'STOP_attempt_2.json').exists() and not (unit/'attempt_3').exists()
+            first=3
+        else:
+            assert (unit/'STOP_attempt_1.json').exists() and not (unit/'attempt_2').exists()
+            first=2
     else:unit.mkdir(parents=True)
     for attempt in [first,first+1]:
         if stopped():return
@@ -91,8 +109,10 @@ def lane(gpu,runs,lam):
         run(r,gpu,lam)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('batch',choices=['first','remaining','optional']);a=ap.parse_args()
-    lam=gates(a.batch);root=OUT/'checks/monitor_v2';start=root/f'batch_{a.batch}_start.json'
+    global REVISION
+    ap=argparse.ArgumentParser();ap.add_argument('batch',choices=['first','remaining','optional'])
+    ap.add_argument('--monitor-revision',choices=['camera_fix']);a=ap.parse_args();REVISION=a.monitor_revision
+    lam=gates(a.batch);root=policy_root();start=root/f'batch_{a.batch}_start.json'
     assert not start.exists();runs=F.runs_for(a.batch)
     save(start,dict(at=now(),runs=runs,lambda_depth=lam,scientific_verdict=None))
     if a.batch=='first':

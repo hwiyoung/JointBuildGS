@@ -1,9 +1,11 @@
 """Host launcher for one no-optimizer B173 ALS monitoring integration check."""
-import subprocess
+import argparse,subprocess
 from train_calibration import OUT,P,save,now
 
 def main():
-    root=OUT/'checks/monitor_v2/gpu_probe';root.mkdir(exist_ok=False)
+    ap=argparse.ArgumentParser();ap.add_argument('--revision');a=ap.parse_args()
+    base=OUT/'checks/monitor_v2';base=base/a.revision if a.revision else base
+    root=base/'gpu_probe';root.mkdir(exist_ok=False)
     args=P.train_args('B173nb_b10','ALS',P.to_container(root/'model'),sw_off=['judgment'])
     args+=['--jbgs_sw_depth_loss','dynamic','--jbgs_vfile_dir','/o/direct_stage1_v2/B173nb_b10__ALS',
         '--jbgs_vfile_vprior','gt','--jbgs_depth_lambda','0.0025','--jbgs_lt_monitor','1','--jbgs_lt_monitor_v2','1',

@@ -1,6 +1,6 @@
 {
   "status": "STOPPED_PARTIAL",
-  "at": "2026-10-26T19:13:08.197095+09:00",
+  "at": "2026-10-26T19:41:23.694217+09:00",
   "counts": {
     "calibration_complete": 4,
     "required_complete": 0,
@@ -8,7 +8,8 @@
     "post_complete": 0,
     "measurements_complete": 0,
     "historical_before_grace_stops": 2,
-    "new_stopped_attempts": 1
+    "historical_grace_stops": 1,
+    "new_stopped_attempts": 0
   },
   "runs": [
     {
@@ -52,6 +53,7 @@
             "scientific_verdict": null
           },
           "stops": [],
+          "monitor_policy": "historical prior-opacity",
           "resets": []
         }
       ]
@@ -97,6 +99,7 @@
             "scientific_verdict": null
           },
           "stops": [],
+          "monitor_policy": "historical prior-opacity",
           "resets": []
         }
       ]
@@ -142,6 +145,7 @@
             "scientific_verdict": null
           },
           "stops": [],
+          "monitor_policy": "historical prior-opacity",
           "resets": []
         }
       ]
@@ -187,6 +191,7 @@
             "scientific_verdict": null
           },
           "stops": [],
+          "monitor_policy": "historical prior-opacity",
           "resets": []
         }
       ]
@@ -244,6 +249,7 @@
               "scientific_verdict": null
             }
           ],
+          "monitor_policy": "historical prior-opacity",
           "resets": []
         },
         {
@@ -297,6 +303,7 @@
               "scientific_verdict": null
             }
           ],
+          "monitor_policy": "historical prior-opacity",
           "resets": [
             {
               "iteration": 3000,
@@ -317,6 +324,34 @@
               "scientific_verdict": null
             }
           ]
+        },
+        {
+          "attempt": "attempt_2",
+          "receipt": {
+            "run": {
+              "site": "B173nb_b10",
+              "prior": "ALS",
+              "variant": "lt_dyngt"
+            },
+            "gpu": 1,
+            "attempt": 2,
+            "exit_code": 1,
+            "started_at": "2026-10-26T19:37:14.459265+09:00",
+            "finished_at": "2026-10-26T19:39:25.431271+09:00",
+            "seconds": 130.97202519513667,
+            "gpu_peak_total_MiB": 8808.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "951ec85f91ccec9f10e62b800f1b7e95c39171be5b018fbed5853a39d57b0949"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": null,
+          "stops": [],
+          "monitor_policy": "historical prior-opacity",
+          "resets": []
         }
       ]
     },
@@ -373,25 +408,27 @@
               "scientific_verdict": null
             }
           ],
+          "monitor_policy": "historical prior-opacity",
           "resets": []
         },
         {
           "attempt": "attempt_1",
           "receipt": null,
           "last_health": {
-            "iteration": 10300,
-            "camera": "DJI_20241217095147_0080_D",
-            "gaussians": 968275,
-            "prior_gaussians": 219406,
-            "prior_opacity_median": 0.38314658403396606,
+            "iteration": 20900,
+            "camera": "DJI_20241217095125_0069_D",
+            "gaussians": 2066519,
+            "prior_gaussians": 375941,
+            "prior_opacity_median": 0.6724677085876465,
             "observation_phase": "after optimizer and opacity floors, before density/reset",
-            "last_periodic_reset": 9000,
-            "iterations_after_reset": 1300,
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 8900,
             "opacity_stop_deferred": false,
             "stop": null,
             "scientific_verdict": null
           },
           "stops": [],
+          "monitor_policy": "historical prior-opacity",
           "resets": [
             {
               "iteration": 3000,
@@ -407,6 +444,12 @@
             },
             {
               "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
               "periodic": true,
               "observation_phase": "after original reset",
               "scientific_verdict": null
@@ -536,6 +579,26 @@
       "difference_from_nojudge": -0.1679053008556366,
       "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
       "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_fixgt_ALS_s0",
+      "attempt": "attempt_1",
+      "iteration": 12100,
+      "camera": "DJI_20241217091043_0084_D",
+      "gaussians": 1615755,
+      "prior_gaussians": 327517,
+      "prior_opacity_median": 0.07623686641454697,
+      "observation_phase": "after optimizer and opacity floors, before density/reset",
+      "last_periodic_reset": 12000,
+      "iterations_after_reset": 100,
+      "opacity_stop_deferred": false,
+      "stop": null,
+      "scientific_verdict": null,
+      "nojudge_prior_opacity_median": 0.20679312944412231,
+      "difference_from_nojudge": -0.13055626302957535,
+      "nojudge_source": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/scalars.jsonl",
+      "nojudge_source_sha256": "761cfb8fe40e8dc484da67125ff0c858e4d6580e95593390b1b2049a457b59bf"
     }
   ],
   "stop": {
@@ -544,9 +607,9 @@
       "prior": "ALS",
       "variant": "lt_dyngt"
     },
-    "attempt": 1,
-    "reason": "execution or health error",
-    "at": "2026-10-26T19:12:28.354334+09:00",
+    "attempt": 2,
+    "reason": "execution or monitor-v2 health error",
+    "at": "2026-10-26T19:39:25.470939+09:00",
     "scientific_verdict": null
   },
   "selected_lambda": 0.0025,

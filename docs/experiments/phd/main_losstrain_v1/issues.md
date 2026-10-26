@@ -29,3 +29,5 @@ LT-011 RESOLVED: approval preparation verification used a nested patch_z path in
 LT-012 OPEN: dynamic-gt B173 ALS attempt_1 stopped at 9100, actual periodic reset+100, prior opacity median 0.00798154715448618 < 0.05. Same-iteration nojudge median 0.23826287686824799. No NaN/OOM exception; cause of recovery failure unconfirmed. New trainings blocked; in-flight fixed-gt continues.
 
 LT-012 SUPERSEDED BY USER MONITOR V2: prior opacity is record-only; preserve attempt_1 and restart dynamic GT seed 0. Whole-population opacity after actual reset+100 and legacy-five-view PSNR at 7000/15000/30000 govern new stops. Nojudge is not retrained. Inflight fixed continues, missing birth/time records explicitly unavailable. CPU/GPU observer checks PASS; loss and density source unchanged.
+
+LT-013 OPEN: dynamic GT attempt_2 failed at first loss evaluation, before any backward/optimizer step. New diagnostic lt_cameras list collided with the existing depth-loss camera dictionary. Fix separates lt_diagnostic_cameras; no loss formula or scoring change. All new training paused pending validation and user instruction under the explicitly retained error-stop rule. Fixed arm continues.

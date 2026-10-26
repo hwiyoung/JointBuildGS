@@ -1,0 +1,764 @@
+{
+  "observations": [],
+  "rows": [],
+  "saved_models": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 2303580,
+          "opacity_median": 0.3907495089201475
+        },
+        "prior_lineage": {
+          "count": 312334,
+          "opacity_median": 0.37741181717965555
+        },
+        "image_lineage": {
+          "count": 1991246,
+          "opacity_median": 0.3931272304773592
+        },
+        "prior_gt_correct": {
+          "count": 94957,
+          "opacity_median": 0.3260758610931089
+        },
+        "prior_gt_incorrect": {
+          "count": 1306,
+          "opacity_median": 0.5001212413895239
+        },
+        "prior_gt_unknown": {
+          "count": 216071,
+          "opacity_median": 0.40234753735443285
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "a74108a152a9cd3d88d3351d668fe78f3130e253f5a99d0ccb98b1190c6dc369",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "init_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "iteration": 30000,
+      "groups": {
+        "all": {
+          "count": 2303580,
+          "opacity_median": 0.40970387226733934
+        },
+        "prior_lineage": {
+          "count": 312334,
+          "opacity_median": 0.6829666330382305
+        },
+        "image_lineage": {
+          "count": 1991246,
+          "opacity_median": 0.3440513415406363
+        },
+        "prior_gt_correct": {
+          "count": 94957,
+          "opacity_median": 0.5908416562023184
+        },
+        "prior_gt_incorrect": {
+          "count": 1306,
+          "opacity_median": 0.9306173278263894
+        },
+        "prior_gt_unknown": {
+          "count": 216071,
+          "opacity_median": 0.7251594200714291
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "model_sha256": "01c273e8dcbc1bd31d5da1c9ddc5423f9b340a5d392edf3284cb730249aea32b",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "init_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "nojudge_LoD2_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 2532261,
+          "opacity_median": 0.4303305935582929
+        },
+        "prior_lineage": {
+          "count": 2302664,
+          "opacity_median": 0.43493576607969575
+        },
+        "image_lineage": {
+          "count": 229597,
+          "opacity_median": 0.38987978487954456
+        },
+        "prior_gt_correct": {
+          "count": 74792,
+          "opacity_median": 0.38282941896570444
+        },
+        "prior_gt_incorrect": {
+          "count": 29436,
+          "opacity_median": 0.534945994322084
+        },
+        "prior_gt_unknown": {
+          "count": 2198436,
+          "opacity_median": 0.435365153777869
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "cd4fce9ddf9ac9b6f9e8893e0f057820dd9ab9eab3f1aa29b598d46b703a00a0",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+        "init_sha256": "3d6ce3893a7ee68751096c7da0c251688b057894db22e9a9654d9d8c5df19b49"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "nojudge_LoD2_s0",
+      "iteration": 30000,
+      "groups": {
+        "all": {
+          "count": 2532261,
+          "opacity_median": 0.403009394327168
+        },
+        "prior_lineage": {
+          "count": 2302664,
+          "opacity_median": 0.37863830147522853
+        },
+        "image_lineage": {
+          "count": 229597,
+          "opacity_median": 0.6631522443041782
+        },
+        "prior_gt_correct": {
+          "count": 74792,
+          "opacity_median": 0.7606609925371134
+        },
+        "prior_gt_incorrect": {
+          "count": 29436,
+          "opacity_median": 0.968983731977337
+        },
+        "prior_gt_unknown": {
+          "count": 2198436,
+          "opacity_median": 0.3486166567188116
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "model_sha256": "b0c166d4e9dc801366050785c9ea157e4e296dc155b8f25f427355e9ad3e479b",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+        "init_sha256": "3d6ce3893a7ee68751096c7da0c251688b057894db22e9a9654d9d8c5df19b49"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 2066519,
+          "opacity_median": 0.5127730754559064
+        },
+        "prior_lineage": {
+          "count": 375941,
+          "opacity_median": 0.5696433533191975
+        },
+        "image_lineage": {
+          "count": 1690578,
+          "opacity_median": 0.5005540697953954
+        },
+        "prior_gt_correct": {
+          "count": 181992,
+          "opacity_median": 0.3725232591792858
+        },
+        "prior_gt_incorrect": {
+          "count": 23674,
+          "opacity_median": 0.2964748225872067
+        },
+        "prior_gt_unknown": {
+          "count": 170275,
+          "opacity_median": 0.8460288276714742
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "adebf19eed1ea81d860a764eee379c54585351b41961365b21f2d0dba5b2031f",
+        "init": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/init_points.npz",
+        "init_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 2796061,
+          "opacity_median": 0.3608198025142415
+        },
+        "prior_lineage": {
+          "count": 395633,
+          "opacity_median": 0.41088197487717404
+        },
+        "image_lineage": {
+          "count": 2400428,
+          "opacity_median": 0.3528431521837549
+        },
+        "prior_gt_correct": {
+          "count": 163396,
+          "opacity_median": 0.3698949331906339
+        },
+        "prior_gt_incorrect": {
+          "count": 8029,
+          "opacity_median": 0.42380429056645647
+        },
+        "prior_gt_unknown": {
+          "count": 224208,
+          "opacity_median": 0.44931344548208135
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "e3e669db9fb890882acdf3907d3b2f0efadcfc9746dd88b8e0bccd52723681ba",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "init_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "iteration": 30000,
+      "groups": {
+        "all": {
+          "count": 2796061,
+          "opacity_median": 0.3544462968235548
+        },
+        "prior_lineage": {
+          "count": 395633,
+          "opacity_median": 0.6555328046702474
+        },
+        "image_lineage": {
+          "count": 2400428,
+          "opacity_median": 0.28753372044360404
+        },
+        "prior_gt_correct": {
+          "count": 163396,
+          "opacity_median": 0.6559122172231238
+        },
+        "prior_gt_incorrect": {
+          "count": 8029,
+          "opacity_median": 0.6354526308241041
+        },
+        "prior_gt_unknown": {
+          "count": 224208,
+          "opacity_median": 0.6562569768443074
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "model_sha256": "19bdbb324b9dc917e2717e06a882a7d290e832282192e6eea208711ec1583174",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "init_sha256": "c42a0ba7a34a8d394f2a8d17d30973a609a05966d3b974d640f2982aff61e1c6"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "nojudge_LoD2_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 2983470,
+          "opacity_median": 0.37625231149500243
+        },
+        "prior_lineage": {
+          "count": 2474388,
+          "opacity_median": 0.3884716436268849
+        },
+        "image_lineage": {
+          "count": 509082,
+          "opacity_median": 0.323400688224622
+        },
+        "prior_gt_correct": {
+          "count": 102579,
+          "opacity_median": 0.41882845157938486
+        },
+        "prior_gt_incorrect": {
+          "count": 26788,
+          "opacity_median": 0.5
+        },
+        "prior_gt_unknown": {
+          "count": 2345021,
+          "opacity_median": 0.3856652990444233
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "532e8a91ff32bd81f10fdfc4d28891f58107dbabbee244127442eebf8d1050e5",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+        "init_sha256": "2af213eaeb99e0973dd2b0004d0dc82362467e4ca43be0f9fa8143197f602d0c"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "nojudge_LoD2_s0",
+      "iteration": 30000,
+      "groups": {
+        "all": {
+          "count": 2983470,
+          "opacity_median": 0.3480668419338901
+        },
+        "prior_lineage": {
+          "count": 2474388,
+          "opacity_median": 0.37388930147894894
+        },
+        "image_lineage": {
+          "count": 509082,
+          "opacity_median": 0.2474487100945838
+        },
+        "prior_gt_correct": {
+          "count": 102579,
+          "opacity_median": 0.7414193578916423
+        },
+        "prior_gt_incorrect": {
+          "count": 26788,
+          "opacity_median": 0.8229499513323688
+        },
+        "prior_gt_unknown": {
+          "count": 2345021,
+          "opacity_median": 0.34218759135118504
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "model_sha256": "e42ac8ed1f70331d871901af6bbc7ca2720dc529893933a0ea715d1c3df9cf9e",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+        "init_sha256": "2af213eaeb99e0973dd2b0004d0dc82362467e4ca43be0f9fa8143197f602d0c"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 2593666,
+          "opacity_median": 0.394554455405265
+        },
+        "prior_lineage": {
+          "count": 157453,
+          "opacity_median": 0.29342807236065305
+        },
+        "image_lineage": {
+          "count": 2436213,
+          "opacity_median": 0.4023152030474775
+        },
+        "prior_gt_correct": {
+          "count": 116431,
+          "opacity_median": 0.24639404446213087
+        },
+        "prior_gt_incorrect": {
+          "count": 2736,
+          "opacity_median": 0.39281592970050294
+        },
+        "prior_gt_unknown": {
+          "count": 38286,
+          "opacity_median": 0.5083408561572067
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "b16eb3efd5c45a9d8a16cbddc20617584fd3dc1343e1f04a7cc502c9422896f3",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "init_sha256": "9ba107d15b326d244016b9fbf730b98ee8d8f28b17d326b81264dfaef2031447"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "iteration": 30000,
+      "groups": {
+        "all": {
+          "count": 2593666,
+          "opacity_median": 0.35195856580404
+        },
+        "prior_lineage": {
+          "count": 157453,
+          "opacity_median": 0.3583176833350081
+        },
+        "image_lineage": {
+          "count": 2436213,
+          "opacity_median": 0.3515539467210942
+        },
+        "prior_gt_correct": {
+          "count": 116431,
+          "opacity_median": 0.2544174887763517
+        },
+        "prior_gt_incorrect": {
+          "count": 2736,
+          "opacity_median": 0.6139802336910407
+        },
+        "prior_gt_unknown": {
+          "count": 38286,
+          "opacity_median": 0.6696751366625836
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "model_sha256": "7e5667254f087254b7b9d91277cd9daa29f49657c08f3f4764263b0046f3f92e",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "init_sha256": "9ba107d15b326d244016b9fbf730b98ee8d8f28b17d326b81264dfaef2031447"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "nojudge_LoD2_s0",
+      "iteration": 15000,
+      "groups": {
+        "all": {
+          "count": 3607818,
+          "opacity_median": 0.4596365080034761
+        },
+        "prior_lineage": {
+          "count": 1865165,
+          "opacity_median": 0.507802638984928
+        },
+        "image_lineage": {
+          "count": 1742653,
+          "opacity_median": 0.4061869478184142
+        },
+        "prior_gt_correct": {
+          "count": 70458,
+          "opacity_median": 0.2942684748473581
+        },
+        "prior_gt_incorrect": {
+          "count": 70222,
+          "opacity_median": 0.5798021538698508
+        },
+        "prior_gt_unknown": {
+          "count": 1724485,
+          "opacity_median": 0.5151769038429557
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/point_cloud/iteration_15000/point_cloud.ply",
+        "model_sha256": "b91cf6c152cc0dd6b19cce84ce33779e3bb3edea554b9e0a7a6da9dba2193633",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+        "init_sha256": "382c69a9ce601a0672678efcdcedcf3ebfab8681528bfd31b688ccac3363a008"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "nojudge_LoD2_s0",
+      "iteration": 30000,
+      "groups": {
+        "all": {
+          "count": 3607818,
+          "opacity_median": 0.25802832725041314
+        },
+        "prior_lineage": {
+          "count": 1865165,
+          "opacity_median": 0.19045689353245493
+        },
+        "image_lineage": {
+          "count": 1742653,
+          "opacity_median": 0.35127902170752895
+        },
+        "prior_gt_correct": {
+          "count": 70458,
+          "opacity_median": 0.29487433223652604
+        },
+        "prior_gt_incorrect": {
+          "count": 70222,
+          "opacity_median": 0.8731302183472711
+        },
+        "prior_gt_unknown": {
+          "count": 1724485,
+          "opacity_median": 0.16859242668372224
+        }
+      },
+      "mutually_exclusive_birth_status": "기록 없음",
+      "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+      "sources": {
+        "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "model_sha256": "7d30afeab7ddde58c1c67a9a73895d5f9cfd3f025ceeb68c49f95cdc05210c86",
+        "init": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/monitor/init_points.npz",
+        "init_sha256": "382c69a9ce601a0672678efcdcedcf3ebfab8681528bfd31b688ccac3363a008"
+      },
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    }
+  ],
+  "fixed_legacy_observations": [
+    {
+      "iteration": 1000,
+      "prior_count": 123183,
+      "prior_opacity_median": 0.24984896183013916,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 2000,
+      "prior_count": 152395,
+      "prior_opacity_median": 0.3882891535758972,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 3000,
+      "prior_count": 202421,
+      "prior_opacity_median": 0.5,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 3100,
+      "prior_count": 206351,
+      "prior_opacity_median": 0.07024438679218292,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 3500,
+      "prior_count": 135798,
+      "prior_opacity_median": 0.19977043569087982,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 4000,
+      "prior_count": 150890,
+      "prior_opacity_median": 0.23998010158538818,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 5000,
+      "prior_count": 186909,
+      "prior_opacity_median": 0.3538059890270233,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 6000,
+      "prior_count": 234786,
+      "prior_opacity_median": 0.44109007716178894,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 6100,
+      "prior_count": 240401,
+      "prior_opacity_median": 0.05987796559929848,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 6500,
+      "prior_count": 143200,
+      "prior_opacity_median": 0.30786123871803284,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 7000,
+      "prior_count": 168821,
+      "prior_opacity_median": 0.3543592691421509,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 8000,
+      "prior_count": 217799,
+      "prior_opacity_median": 0.48450762033462524,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 9000,
+      "prior_count": 278036,
+      "prior_opacity_median": 0.519662618637085,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 9100,
+      "prior_count": 282874,
+      "prior_opacity_median": 0.07035757601261139,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 9500,
+      "prior_count": 180330,
+      "prior_opacity_median": 0.2862464487552643,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 10000,
+      "prior_count": 202993,
+      "prior_opacity_median": 0.34385618567466736,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 11000,
+      "prior_count": 258869,
+      "prior_opacity_median": 0.45921096205711365,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 12000,
+      "prior_count": 320461,
+      "prior_opacity_median": 0.5081228017807007,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 12100,
+      "prior_count": 327517,
+      "prior_opacity_median": 0.07623686641454697,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 12500,
+      "prior_count": 206464,
+      "prior_opacity_median": 0.2902047336101532,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 13000,
+      "prior_count": 230238,
+      "prior_opacity_median": 0.35924842953681946,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 14000,
+      "prior_count": 297026,
+      "prior_opacity_median": 0.4835212826728821,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 15000,
+      "prior_count": 375941,
+      "prior_opacity_median": 0.5696433782577515,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 16000,
+      "prior_count": 375941,
+      "prior_opacity_median": 0.5814855694770813,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 17000,
+      "prior_count": 375941,
+      "prior_opacity_median": 0.598029375076294,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 18000,
+      "prior_count": 375941,
+      "prior_opacity_median": 0.6178874969482422,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 19000,
+      "prior_count": 375941,
+      "prior_opacity_median": 0.6363158822059631,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    },
+    {
+      "iteration": 20000,
+      "prior_count": 375941,
+      "prior_opacity_median": 0.6556312441825867,
+      "note": "기존 로그에서 복구; 초기화 직전 밀도 제어 후 값·생성 표식·추가 영상 기록은 없음",
+      "source": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/attempt_1/model/monitor/scalars.jsonl"
+    }
+  ],
+  "group_definitions": {
+    "all": "전체",
+    "initial_prior": "초기 사전",
+    "initial_image": "초기 영상",
+    "density_born": "밀도 제어 생성",
+    "prior_lineage": "사전 계보 전체",
+    "image_lineage": "영상 계보 전체",
+    "prior_gt_correct": "사전 계보·참값 맞음",
+    "prior_gt_incorrect": "사전 계보·참값 틀림",
+    "prior_gt_unknown": "사전 계보·참값 없음"
+  },
+  "prior_gt_definition": "initial stage1 cell 0/2/4 correct, 1/3/5 incorrect, 6/unlocated unknown; all lineage descendants",
+  "nojudge_retrained": false,
+  "scientific_verdict": null
+}

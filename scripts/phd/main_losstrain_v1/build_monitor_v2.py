@@ -1,9 +1,11 @@
 """Host stdlib: build in Docker, prove only two fork files differ, then promote."""
-import json,subprocess,shutil
+import argparse,json,subprocess,shutil
 from train_calibration import OUT,REPO,P,save,sha,now
 
 def main():
-    root=OUT/'checks/monitor_v2';fresh=root/'rebuilt_fork';doc=root/'rebuild_docs'
+    ap=argparse.ArgumentParser();ap.add_argument('--revision');a=ap.parse_args()
+    base_root=OUT/'checks/monitor_v2';root=base_root/a.revision if a.revision else base_root
+    root.mkdir(parents=True,exist_ok=True);fresh=root/'rebuilt_fork';doc=root/'rebuild_docs'
     fresh.mkdir(exist_ok=False);(doc/'provenance').mkdir(parents=True)
     for script in ['build_r17.py','amend_r17_monitor.py']:
         command=['docker','run','--rm','--network','none','--user',str(__import__('os').getuid())+':'+str(__import__('os').getgid()),
@@ -14,9 +16,9 @@ def main():
     base=P.SRC['r16'];live=P.SRC['r17'];assert files(base)==files(fresh)==files(live)
     changed=[str(p) for p in files(base) if sha(base/p)!=sha(fresh/p)]
     assert changed==['jbgs_judgment.py','train.py'],changed
-    before=(root/'before/src/phd/forks/GeoGS-conf-guided-v1-r17/jbgs_judgment.py')
+    before=(base_root/'before/src/phd/forks/GeoGS-conf-guided-v1-r17/jbgs_judgment.py')
     if not before.exists():
-        before=next((root/'before').rglob('jbgs_judgment.py'))
+        before=next((base_root/'before').rglob('jbgs_judgment.py'))
     marker='# ---------------- PHD-MAIN-LOSSTRAIN-v1 r17 opt-in depth terms ----------------'
     old=before.read_text().split(marker)[1].split('"""Opt-in LOSSTRAIN observations;')[0]
     new=(fresh/'jbgs_judgment.py').read_text().split(marker)[1].split('"""Opt-in LOSSTRAIN observations;')[0]
