@@ -1,0 +1,90 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1",
+  "scientific_verdict": null,
+  "inputs": [
+    "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/als_xyz.npy",
+    "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/gt_xyz.npy"
+  ],
+  "source_numbers": "/repo/docs/experiments/phd/main_regionfig_v1/tables/영역예시_보정_숫자.json",
+  "view": {
+    "virtual": false,
+    "training_view": "DJI_20241217100056_0034_D",
+    "pose": {
+      "id": 555,
+      "R": [
+        [
+          -0.6909037293548688,
+          -0.7229463424260525,
+          -0.0007891364442358384
+        ],
+        [
+          -0.28713804047634417,
+          0.2754128738142444,
+          -0.9174418208523005
+        ],
+        [
+          0.6634785471098068,
+          -0.6336373844007093,
+          -0.39786917776436037
+        ]
+      ],
+      "t": [
+        99.06782191988339,
+        -38.649147312726065,
+        82.33218001226273
+      ],
+      "cam": 1,
+      "name": "DJI_20241217100056_0034_D.JPG"
+    },
+    "camera": {
+      "model": 6,
+      "w": 5280,
+      "h": 3956,
+      "p": [
+        3717.199209328326,
+        3717.199209328326,
+        2649.8785097217174,
+        1951.823292554264,
+        -0.1049826415750395,
+        -0.003823249957903659,
+        -0.00021362365060863573,
+        -0.00019476144102977563,
+        -0.014886189391970492,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "selection": {
+      "view": "DJI_20241217100056_0034_D",
+      "projected_area_px": 238800.7289267389,
+      "angle_deg": 66.55496209830895,
+      "tilt_deg": 66.55496209830895
+    }
+  },
+  "bounds_xy": [
+    [
+      133.46,
+      99.497
+    ],
+    [
+      156.904,
+      114.933
+    ]
+  ],
+  "height_colour_range_m": [
+    -31.60100746154785,
+    -21.886999999999944
+  ],
+  "display_z_window_m": [
+    -31.602259246784556,
+    -21.00858621776692
+  ],
+  "point_counts": [
+    4659,
+    289669
+  ],
+  "reference_prior_minus_gt_cm": 455.63414286315316,
+  "reference_source": "REGIONFIG-v1 final number JSON; not recomputed",
+  "revision": "First blind reader noticed point density, not changed roof; one layout-only revision focuses both panels on the same roof height range and labels the roof. Site and measured values unchanged."
+}

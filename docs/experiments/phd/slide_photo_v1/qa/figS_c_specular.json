@@ -1,0 +1,16 @@
+{
+  "status": "PASS_AFTER_ONE_REVISION",
+  "question": "이 그림이 보여 주는 것을 한 문장으로",
+  "round1": {
+    "agent": "blind_c_specular",
+    "answer": "노란색으로 표시한 금속 지붕에서 사전 정보의 점들은 참값에 비교적 가깝게 분포하고, MVS 점들은 그 주변으로 더 넓게 흩어져 있다.",
+    "assessment": "자료 사이 관계는 읽히나, 입력 기하의 벽을 지붕으로 읽음. 짧은 재질·면 이름과 점/화살표 가독성만 수정."
+  },
+  "scientific_verdict": null,
+  "revision": "금속 벽이라는 짧은 면 이름, MVS 점의 색·크기, 화살표 끝 크기만 수정. 같은 자리·시점·수치 유지.",
+  "round2": {
+    "agent": "blind_c_specular_second",
+    "answer": "금속 벽에서 참값과 사전 정보는 비슷한 형태로 분포하지만 MVS 점들은 주변으로 넓게 흩어져 있으며, 오른쪽에는 34 cm의 간격이 표시되어 있습니다.",
+    "assessment": "금속 벽과 자료 사이의 차이가 읽힘. 반사 원인 및 동일 표면 대응의 독립 검증은 아님."
+  }
+}
