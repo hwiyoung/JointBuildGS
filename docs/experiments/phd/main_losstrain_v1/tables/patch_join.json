@@ -1,0 +1,589 @@
+{
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "patches": 143652,
+      "joined_patches": 136214,
+      "joined_fraction": 0.9482220922785621,
+      "eval_patches": 82117,
+      "eval_joined_patches": 79491,
+      "eval_joined_fraction": 0.9680212379896976,
+      "distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 0.24999999999998784,
+        "max": 7.12548599615407
+      },
+      "eval_distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 0.0,
+        "max": 2.1975538319181522
+      },
+      "raw_geometry_diagnostic_joined_fraction": 0.9482220922785621,
+      "raw_geometry_diagnostic_eval_fraction": 0.9680212379896976,
+      "raw_geometry_diagnostic_distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 0.24999999999998784,
+        "max": 7.12548599615407
+      },
+      "stage1_frame_shift_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rule": "registered centre 3D nearest, same prior, <=0.05m; denominator all stage-1 patches",
+      "gate": "STOP",
+      "store": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/store_LoD2.npz",
+      "store_sha256": "00d367e0c03a274588aa25efaaa508c76319cb9a6bb1cc725b696e01a7f8fb7b",
+      "eval_range_file": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+      "eval_range_sha256": "bb62ec5a7846a9fb0ead2b3c2a631945e57461675e0a80bab2eef75eed6935cd",
+      "scientific_verdict": null,
+      "mapping_sha256": "b89ea51d32cefa17f5febed8645b9dc14d4b73411a4602829b484b38353371d5"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "patches": 258097,
+      "joined_patches": 255082,
+      "joined_fraction": 0.9883183454282692,
+      "eval_patches": 141534,
+      "eval_joined_patches": 141479,
+      "eval_joined_fraction": 0.9996114007941554,
+      "distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 0.0,
+        "max": 5.404686362586613
+      },
+      "eval_distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 0.0,
+        "max": 0.33016915916175965
+      },
+      "raw_geometry_diagnostic_joined_fraction": 0.9883183454282692,
+      "raw_geometry_diagnostic_eval_fraction": 0.9996114007941554,
+      "raw_geometry_diagnostic_distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 0.0,
+        "max": 5.404686362586613
+      },
+      "stage1_frame_shift_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rule": "registered centre 3D nearest, same prior, <=0.05m; denominator all stage-1 patches",
+      "gate": "PASS",
+      "store": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/store_LoD2.npz",
+      "store_sha256": "dbb9f80a15f16865c53fec18c61dabcc3d2c43e25781f77ace35e3e6e8c8028d",
+      "eval_range_file": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_LoD2.npz",
+      "eval_range_sha256": "b3aa211fe9bb9251ad822e4d7f95e45259ab826c40a8aff56c776398937cc08f",
+      "scientific_verdict": null,
+      "mapping_sha256": "88c554f999c6d9f2a0f41d8b1b88fc49d4d2158ce16394c6d96c78ad92cb2a15"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "patches": 138579,
+      "joined_patches": 129321,
+      "joined_fraction": 0.9331933409823999,
+      "eval_patches": 79054,
+      "eval_joined_patches": 78880,
+      "eval_joined_fraction": 0.9977989728539985,
+      "distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 1.4706160804457271,
+        "max": 1.5300785253763158
+      },
+      "eval_distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 0.0,
+        "max": 0.7499999999999991
+      },
+      "raw_geometry_diagnostic_joined_fraction": 0.9331933409823999,
+      "raw_geometry_diagnostic_eval_fraction": 0.9977989728539985,
+      "raw_geometry_diagnostic_distance_m": {
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 0.0,
+        "p95": 1.4706160804457271,
+        "max": 1.5300785253763158
+      },
+      "stage1_frame_shift_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rule": "registered centre 3D nearest, same prior, <=0.05m; denominator all stage-1 patches",
+      "gate": "STOP",
+      "store": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/store_LoD2.npz",
+      "store_sha256": "d851568c2a45f4ccb84e5310f1198794d51218014338cb2e733d911a7aaa996f",
+      "eval_range_file": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+      "eval_range_sha256": "e54b2646d4e380283c18aab3db25435127dd0b699c5ac14216b0d8db511ef405",
+      "scientific_verdict": null,
+      "mapping_sha256": "406acd259ef97332fa283479854b01e74cccb676b3a8bc37b7316e550ad88a99"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "patches": 44994,
+      "joined_patches": 18403,
+      "joined_fraction": 0.40901009023425344,
+      "eval_patches": 23280,
+      "eval_joined_patches": 12378,
+      "eval_joined_fraction": 0.531701030927835,
+      "distance_m": {
+        "min": 0.014097390016489556,
+        "p25": 0.026391059268333766,
+        "median": 0.12486650543533849,
+        "p75": 0.13011505586928074,
+        "p95": 0.13802922986113916,
+        "max": 10.022034248188202
+      },
+      "eval_distance_m": {
+        "min": 0.014097390016489556,
+        "p25": 0.026524052989199926,
+        "median": 0.029440383891652766,
+        "p75": 0.12961199047994612,
+        "p95": 0.13841011426836305,
+        "max": 8.505980464444857
+      },
+      "raw_geometry_diagnostic_joined_fraction": 0.9679735075787883,
+      "raw_geometry_diagnostic_eval_fraction": 0.9732817869415807,
+      "raw_geometry_diagnostic_distance_m": {
+        "min": 0.0,
+        "p25": 0.03529816286192994,
+        "median": 0.035608978352242915,
+        "p75": 0.03808356249233233,
+        "p95": 0.04087577243817728,
+        "max": 9.943846383269511
+      },
+      "stage1_frame_shift_m": [
+        -0.048193370826016664,
+        0.04305113898865463,
+        0.0
+      ],
+      "rule": "registered centre 3D nearest, same prior, <=0.05m; denominator all stage-1 patches",
+      "gate": "STOP",
+      "store": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/store_ALS.npz",
+      "store_sha256": "6ae16ce83ae2043bd405262ecc7bc8746fd97171aeb6f8c2e12f905d4189f87d",
+      "eval_range_file": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_ALS.npz",
+      "eval_range_sha256": "3688914603342ff8f71771cfb4be298db9a95dcdfd34c9686251071ad3b66b90",
+      "scientific_verdict": null,
+      "mapping_sha256": "5e498a8e3656ae3fc9acb0ed5c0e607bc60378493977c50628e5337ab5e0a00c"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "patches": 76657,
+      "joined_patches": 20888,
+      "joined_fraction": 0.27248653091041913,
+      "eval_patches": 34273,
+      "eval_joined_patches": 4865,
+      "eval_joined_fraction": 0.14194847255857382,
+      "distance_m": {
+        "min": 0.036119574030475526,
+        "p25": 0.04438331670026781,
+        "median": 0.15255065663527506,
+        "p75": 0.1656438970338768,
+        "p95": 0.22863840803202254,
+        "max": 10.014616655646465
+      },
+      "eval_distance_m": {
+        "min": 0.036119574030475526,
+        "p25": 0.0993763221923659,
+        "median": 0.16290166893863486,
+        "p75": 0.18050888927322045,
+        "p95": 3.2030509975723436,
+        "max": 7.758840876146969
+      },
+      "raw_geometry_diagnostic_joined_fraction": 0.001030564723378165,
+      "raw_geometry_diagnostic_eval_fraction": 0.0012838094126571937,
+      "raw_geometry_diagnostic_distance_m": {
+        "min": 0.0,
+        "p25": 0.10357790227030345,
+        "median": 0.10379818172015642,
+        "p75": 0.10690553646684037,
+        "p95": 0.12066924407496143,
+        "max": 9.943846383269511
+      },
+      "stage1_frame_shift_m": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "rule": "registered centre 3D nearest, same prior, <=0.05m; denominator all stage-1 patches",
+      "gate": "STOP",
+      "store": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/store_ALS.npz",
+      "store_sha256": "b7a89bfe60c66c144dc24972760a07bbb54b6e534c1da9782c65e0c5597c96af",
+      "eval_range_file": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_ALS.npz",
+      "eval_range_sha256": "6d2e35cca0df49470a2e8978a0b2e4a9e5b171ba5288ac7b67d4b18e08aed026",
+      "scientific_verdict": null,
+      "mapping_sha256": "06fcca02f6a88dd550ebbd9a8656bef121e701d8f0bc0f63e694ab327ec7eeaa"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "patches": 46215,
+      "joined_patches": 43,
+      "joined_fraction": 0.0009304338418262469,
+      "eval_patches": 24189,
+      "eval_joined_patches": 33,
+      "eval_joined_fraction": 0.001364256480218281,
+      "distance_m": {
+        "min": 0.0,
+        "p25": 0.08012113109547805,
+        "median": 0.11814187738793427,
+        "p75": 0.13213428128997995,
+        "p95": 0.149899961532149,
+        "max": 14.79380523928055
+      },
+      "eval_distance_m": {
+        "min": 0.0,
+        "p25": 0.08053895623300103,
+        "median": 0.12349208277101326,
+        "p75": 0.1294193116644379,
+        "p95": 0.1508716009227554,
+        "max": 4.137969661653201
+      },
+      "raw_geometry_diagnostic_joined_fraction": 0.002250351617440225,
+      "raw_geometry_diagnostic_eval_fraction": 0.002728512960436562,
+      "raw_geometry_diagnostic_distance_m": {
+        "min": 0.0,
+        "p25": 0.08000236723600859,
+        "median": 0.08012036342908122,
+        "p75": 0.08058242042327161,
+        "p95": 0.0899273787233657,
+        "max": 14.79380523928055
+      },
+      "stage1_frame_shift_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rule": "registered centre 3D nearest, same prior, <=0.05m; denominator all stage-1 patches",
+      "gate": "STOP",
+      "store": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/store_ALS.npz",
+      "store_sha256": "80cb95cb2b297ec3f150f9d4012d824f03d7b85884c1c39473d7f7d468b710a5",
+      "eval_range_file": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_ALS.npz",
+      "eval_range_sha256": "0ea60fbf9e779a40a4e80fa185a6192fe8932598bbc3cdae43cc103df83af575",
+      "scientific_verdict": null,
+      "mapping_sha256": "935d39efab03621d9c092b89d560422478048315fc88552aa9f6f6a084e22fd8"
+    }
+  ],
+  "sources": [
+    {
+      "vfile": "/out/vfile_v1/6907_53359__LoD2__vfile.npz",
+      "vfile_sha256": "7cb68bd2eda18ea776aa4c81090a92a4b626721d81bc4e70c53daaf278c62570",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53359__LoD2__R1.5.npz",
+      "geometry_sha256": "98d1c7ca495bde903e379044e18e3fa9faf54754d4156330d3feaa8c87c2533a"
+    },
+    {
+      "vfile": "/out/vfile_v1/6907_53360__LoD2__vfile.npz",
+      "vfile_sha256": "e325036c355784524c648b34f053c598a09739b50d2eed21670eae52986fba1c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53360__LoD2__R1.5.npz",
+      "geometry_sha256": "71116ab051a29f21b6dd00bf37ece28fd27856c6856cdc1ba19d1ff2af2eefc8"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53358__LoD2__vfile.npz",
+      "vfile_sha256": "5db148da853a06d4fbd786f9031e1fb855bb3e38a41e9c6ec37360e2c52c9bb9",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53358__LoD2__R1.5.npz",
+      "geometry_sha256": "e9e42399acd1348463c33fd9e0f6c978d876aad86ff182096e514323dd1be6b9"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53359__LoD2__vfile.npz",
+      "vfile_sha256": "e66b89120d2897c9edde8bf2dce25e94c46d00457e734e23e2b6d096f2adcd3f",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53359__LoD2__R1.5.npz",
+      "geometry_sha256": "862ba8d2688d6ebed4afc23f7fdc5991fc9151c8de5e5707c5139cba3b277c65"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53360__LoD2__vfile.npz",
+      "vfile_sha256": "bfd3483fb3ccf17a63c022f27d210a464fe2c652668ad1a77bc0c1c1a57520f4",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53360__LoD2__R1.5.npz",
+      "geometry_sha256": "e6b26266b3e42ce94782fa09855b80845e605205f0afaddd4ac6ff32e77e3722"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53361__LoD2__vfile.npz",
+      "vfile_sha256": "5b5d3653bf02e269ec40a8defd361593d479885c181adab94cd9b5506f1a9b87",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53361__LoD2__R1.5.npz",
+      "geometry_sha256": "108a58b099972db6ac146d8c9e68dcf214b48373ae20543ae0f1cd4b156fc507"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53362__LoD2__vfile.npz",
+      "vfile_sha256": "a3cc9fa834398ec9e6f2d1d708b63559f262643f3402996b7278b4ea20594a3a",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53362__LoD2__R1.5.npz",
+      "geometry_sha256": "bd72a29dcb8692890571db978389d57277a834bba94aff396eed1adadef84b84"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53358__LoD2__vfile.npz",
+      "vfile_sha256": "638c120710f3751680a7edb2d924a0eed805bd04924c80509d1a7c0297aad837",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53358__LoD2__R1.5.npz",
+      "geometry_sha256": "cd25c3d1c4bd64b53107569487d4cfc438e4ed32e070b07392f4c7c0af0a2a17"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53359__LoD2__vfile.npz",
+      "vfile_sha256": "12c42e1d91abfcd2f7561e6a8a61d746110a7067ca890db214602eed8880fceb",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53359__LoD2__R1.5.npz",
+      "geometry_sha256": "e23bce1458cf08db32256b2cbbd24d1ff0c48cb6b05813a0e1a950848d6fcbcb"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53360__LoD2__vfile.npz",
+      "vfile_sha256": "2e501f63dd2059fa5623cff2d6319a4293b66a0d24228243231a9b87d35831ad",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53360__LoD2__R1.5.npz",
+      "geometry_sha256": "0bf175fbaacb044f4f85c5c12b643a8d433f09ca72a7dc4f5419ed368a092b6e"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53361__LoD2__vfile.npz",
+      "vfile_sha256": "c2c1fe899e6a91bda5093f1b2a8adc0f8ea1252112fdcbab1cb22a944a4c5808",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53361__LoD2__R1.5.npz",
+      "geometry_sha256": "51b9a8dad7206a7eebb02a2e69265985f749188daf5c266a084495635665d50c"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53362__LoD2__vfile.npz",
+      "vfile_sha256": "80b6770f5a8b446473ea8045071432b75af25d85f256d05b573c0eda337fc2ba",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53362__LoD2__R1.5.npz",
+      "geometry_sha256": "afaaee567b785a833cd0c4a0f049e80ccc27db353f561aa6a91d03ebd974e5db"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53363__LoD2__vfile.npz",
+      "vfile_sha256": "db1bb30e5208b87ddf4351c639236b490e870ea1e65270de2cb3f9b99170b64e",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53363__LoD2__R1.5.npz",
+      "geometry_sha256": "6e4c1bd525b2be728a8c59c2727e7192a4c312db6cc5aa84aed6cebdb150a3db"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53358__LoD2__vfile.npz",
+      "vfile_sha256": "0426e5259e22664622968e86726fa45b8e95c7143ed2a38d4e6052f7b662285c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53358__LoD2__R1.5.npz",
+      "geometry_sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53359__LoD2__vfile.npz",
+      "vfile_sha256": "08340d2e701d8341f61d0ff3bed6eea4c833334c4eb4a65900d2f20ffeb96574",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53359__LoD2__R1.5.npz",
+      "geometry_sha256": "09e06eec24c1793b9a99969b80f636ef36333e6ad17966ee2f559a99a1d2e516"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53360__LoD2__vfile.npz",
+      "vfile_sha256": "550f7bfb8be7712dc6dc9fcd4d81744374b49b68648a6dd782004195833eebef",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53360__LoD2__R1.5.npz",
+      "geometry_sha256": "15a12179a5eeef7b7c0e64d3e1347ef44ae64075666f398dde0c39875ccfb4a2"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53361__LoD2__vfile.npz",
+      "vfile_sha256": "5840c6a5ee40e98d48d1e6c1220b5e29ac4515d9f9996350553b1191c89175a7",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53361__LoD2__R1.5.npz",
+      "geometry_sha256": "16795b0a15a891d922deb148d4816c7dc7417cf5b4ebad1ee76ffbce9d314f1b"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53362__LoD2__vfile.npz",
+      "vfile_sha256": "31c522f549b96b1f272684c1bfb800ca1762a9f0e96907adc25a86a50e8de037",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53362__LoD2__R1.5.npz",
+      "geometry_sha256": "21881b90e15b54f8552eb36ddf14405469d4f9090254445fc42142cab5c4f93f"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53363__LoD2__vfile.npz",
+      "vfile_sha256": "7e877aa6d657202f2b9cddec0a00db4472353a2885fdd04a7a8cd0506ce09ccb",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53363__LoD2__R1.5.npz",
+      "geometry_sha256": "a46a6d04c7cf34283c436f0407b7a441bef79f21c5e04ccb2576e4cd671a214d"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53360__LoD2__vfile.npz",
+      "vfile_sha256": "0426e5259e22664622968e86726fa45b8e95c7143ed2a38d4e6052f7b662285c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53360__LoD2__R1.5.npz",
+      "geometry_sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53361__LoD2__vfile.npz",
+      "vfile_sha256": "72279f34d5e57a7f7288e262c48d946937cc5faa468d819fec4fac159649ea61",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__LoD2__R1.5.npz",
+      "geometry_sha256": "888c296cdc830c3a2cf3071ccd09a99ed4d16afbc6e5241dfcdd1dfbb8261980"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53362__LoD2__vfile.npz",
+      "vfile_sha256": "ed1025efa48df55e3b53684f54baf39d588c8cd1d517ee42b6fd178ebe411b25",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53362__LoD2__R1.5.npz",
+      "geometry_sha256": "afbeee9b60146c165373d19a5d82b34bcfb78bf4844c5eb6c67895f83761696f"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53363__LoD2__vfile.npz",
+      "vfile_sha256": "dc969df8641dc4a967b3526a3579c911b83941f277828beeaad0301a40a5f51a",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53363__LoD2__R1.5.npz",
+      "geometry_sha256": "6525dff8ae641943d5056e5b2c08d862fc2b6fc32e2be0b1adf291966d671be6"
+    },
+    {
+      "vfile": "/out/vfile_v1/6912_53362__LoD2__vfile.npz",
+      "vfile_sha256": "0426e5259e22664622968e86726fa45b8e95c7143ed2a38d4e6052f7b662285c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6912_53362__LoD2__R1.5.npz",
+      "geometry_sha256": "db146dde6320eacd4cbec8f22a72abdb258e2f7109dcb7c1e4908baf6c74b824"
+    },
+    {
+      "vfile": "/out/vfile_v1/6907_53359__ALS__vfile.npz",
+      "vfile_sha256": "ad4c0f4988436c42b2e337875e7141de08fac2cd1f5387c5875701dec6779803",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53359__ALS__R1.5.npz",
+      "geometry_sha256": "fb4b8dc820928573fb6234960eeabb011c480e0ab2f521b61f87db1d9cf08dfc"
+    },
+    {
+      "vfile": "/out/vfile_v1/6907_53360__ALS__vfile.npz",
+      "vfile_sha256": "4022d48db4c91539bd9146fcd9154b9230b35b5f62a856e1910713d5d36e7613",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53360__ALS__R1.5.npz",
+      "geometry_sha256": "fa5ed0e2b338d5742fa8fb355ef49dd484d19a7dd56dde504e940f18a771043e"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53358__ALS__vfile.npz",
+      "vfile_sha256": "de7fb614bc9cfaa1757e4796daf4f6a132263c9fe570d4a6d0fca040817de67c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53358__ALS__R1.5.npz",
+      "geometry_sha256": "ec1be39e57386e55c851a3e9506a9d6d3b599963446517c2027b3e278b66f401"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53359__ALS__vfile.npz",
+      "vfile_sha256": "f3a9e8329a8d7b5ff0b1d591ac3c6e495ff5e927aaec16025f1b6215d4782b7b",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53359__ALS__R1.5.npz",
+      "geometry_sha256": "cd3001ad58e988c5e8f66168a01e78ab349f1b18354b189a340bb39d31a6e5eb"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53360__ALS__vfile.npz",
+      "vfile_sha256": "37a1b31d70052cc29ca7cd361215cc0747fe26c431685abe717223369cf7233b",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53360__ALS__R1.5.npz",
+      "geometry_sha256": "5541154a2d4c28e41fea796bf87d2b662e5e308a9467a79c53fc512763db643f"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53361__ALS__vfile.npz",
+      "vfile_sha256": "71b2ee8c68248bdcdb044755da7a2484c54422cc7ac71fef09dc84f10e932915",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53361__ALS__R1.5.npz",
+      "geometry_sha256": "0cf4f25c728d70139d211ac2fdfbf42c4eaf48b283235673deeb1862f36bb71d"
+    },
+    {
+      "vfile": "/out/vfile_v1/6908_53362__ALS__vfile.npz",
+      "vfile_sha256": "e5fb910e7e38a1662e5ddf06afdc4b74af50c57c6c2ce41ba8f3a9cd7bb2681b",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53362__ALS__R1.5.npz",
+      "geometry_sha256": "c8d44041f5e3d5ee2d1c364b7dbee12aebb5f261d4cebc3559f9453d5166d836"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53358__ALS__vfile.npz",
+      "vfile_sha256": "741cf2ab733adde203f0fab72ae1790a28a4dfd207de169006001fe38e3824e4",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53358__ALS__R1.5.npz",
+      "geometry_sha256": "63c54596fd6aeffe8a079d21ad9b2e9524c15132ba349f7eb04bda6d954765d4"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53359__ALS__vfile.npz",
+      "vfile_sha256": "f6e150a8e065b9a0a5b6a6ed95db73c12671d1b4cc9a1174169e4ac410e75a5c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53359__ALS__R1.5.npz",
+      "geometry_sha256": "8c7d6402e01b0a841492d7e17282f44a554386123486140cdef1b65f1fecad95"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53360__ALS__vfile.npz",
+      "vfile_sha256": "405ca2131a22a42063f90dd4328c4abb39a9b8ec2a526a23112fb173fe3f5fcd",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53360__ALS__R1.5.npz",
+      "geometry_sha256": "f5ac8ce7ab16c3ce000354917d4a905c39af69802b19a7ce1ab8022c21c81115"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53361__ALS__vfile.npz",
+      "vfile_sha256": "d16a87eace554e6e5a0450f09a7b8396f5464b69f341a89cdbf172c8758aec9e",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53361__ALS__R1.5.npz",
+      "geometry_sha256": "3f8b8c86bb39b475b3ecf95dbdb6e14259fd1bd140d5a1d63af91e7cb548f010"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53362__ALS__vfile.npz",
+      "vfile_sha256": "7590814dca3a79a5f98d170eea72239f45a80306262354638d1a6e6cf5b989c3",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53362__ALS__R1.5.npz",
+      "geometry_sha256": "d0599948fdd3247a50c73914fae3a67815eccce0273410cb8ca947543eafd180"
+    },
+    {
+      "vfile": "/out/vfile_v1/6909_53363__ALS__vfile.npz",
+      "vfile_sha256": "115370c798f7fc3f936737d97c9f55262ef5fccb2a96ffce6d0b46330da8237b",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53363__ALS__R1.5.npz",
+      "geometry_sha256": "546e4a47f79cf4175ad4f965c25c7fb7f4df6c073774198523b15a7358ac436a"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53358__ALS__vfile.npz",
+      "vfile_sha256": "0426e5259e22664622968e86726fa45b8e95c7143ed2a38d4e6052f7b662285c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53358__ALS__R1.5.npz",
+      "geometry_sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53359__ALS__vfile.npz",
+      "vfile_sha256": "afb2d40b7fb272ff770735d5e244ffb02ceb625cc2fa66e27fad7fce7bc38804",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53359__ALS__R1.5.npz",
+      "geometry_sha256": "af5ef1fcc9881b9e6c30be178e704615181cf0cb63319e9b9417c918e10f733c"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53360__ALS__vfile.npz",
+      "vfile_sha256": "4db1245f5db37e6df70146f38fad70cdf7f62bd254b52244ac0ec491cee269c9",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53360__ALS__R1.5.npz",
+      "geometry_sha256": "048c65a39f3dbfa38b29bc5afadab101d7c0dea1a4c991aa11fb63317c516b11"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53361__ALS__vfile.npz",
+      "vfile_sha256": "44366fe174e054296cedcde69beb0d9da3a1083e4554a5fd5f0a2868231ae3e8",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53361__ALS__R1.5.npz",
+      "geometry_sha256": "b9ca52a429ac0d344d318f7f2e9fa81f9a4f8ef7c3324a851525451dfbb17e57"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53362__ALS__vfile.npz",
+      "vfile_sha256": "424c16203fd19796971c7d9de105dcb6713cb8f8fc2c99abad52242be2287384",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53362__ALS__R1.5.npz",
+      "geometry_sha256": "844aa339b512666d0ca0b91ad02a0aab46346c99296ca13453a9347542ae9479"
+    },
+    {
+      "vfile": "/out/vfile_v1/6910_53363__ALS__vfile.npz",
+      "vfile_sha256": "616701a51e2146e77b57f1d843d59ba68fc09ebc141793a414e8497e906f6080",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53363__ALS__R1.5.npz",
+      "geometry_sha256": "df1dd3360d9c85fd1ab532935ed474be5f00d0264d684167c3486a0622af65de"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53360__ALS__vfile.npz",
+      "vfile_sha256": "0426e5259e22664622968e86726fa45b8e95c7143ed2a38d4e6052f7b662285c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53360__ALS__R1.5.npz",
+      "geometry_sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53361__ALS__vfile.npz",
+      "vfile_sha256": "88be6a4bcc3a6fbb0a752e89e42c633c8d3730d2715bd162555d4703d00cc4ca",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__ALS__R1.5.npz",
+      "geometry_sha256": "1111fab53c7f5c1783e1a4f26b220652a421f28676f6442b3b88d5b62a50e85d"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53362__ALS__vfile.npz",
+      "vfile_sha256": "6a10667fed663cbda7fd1cf4d62b769a56211ab3f8faba19245d16ea5f83894f",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53362__ALS__R1.5.npz",
+      "geometry_sha256": "6712566ed9b54f5d79f0df981b9a9ebb628c915df68c0457afed1bbe136b0d64"
+    },
+    {
+      "vfile": "/out/vfile_v1/6911_53363__ALS__vfile.npz",
+      "vfile_sha256": "69281fef77afad25646e480ed5f31bde55b4fd65226cfb8bc75b69b7a969e101",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53363__ALS__R1.5.npz",
+      "geometry_sha256": "ff51a70a7d0a201a01d14d7ca5902ff64a1f7f929947774f4f5fa4cad56b229f"
+    },
+    {
+      "vfile": "/out/vfile_v1/6912_53362__ALS__vfile.npz",
+      "vfile_sha256": "0426e5259e22664622968e86726fa45b8e95c7143ed2a38d4e6052f7b662285c",
+      "geometry": "/ph/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6912_53362__ALS__R1.5.npz",
+      "geometry_sha256": "076bfce5408186c633971c55ba8b2a621d335bf02ab804f98b4307a6f435649f"
+    }
+  ],
+  "scientific_verdict": null
+}

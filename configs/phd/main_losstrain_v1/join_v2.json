@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "revision": "join_v2",
+  "saved_at": "2026-10-26T07:16:46.741897+00:00",
+  "reason": "explicit user reply replacing 5cm rule",
+  "nearest": "registered Euclidean 3D nearest, same prior",
+  "centre_max_m": 0.18,
+  "normal_height_max_m": 0.1,
+  "same_plane": "abs(delta dot unit_stage1_normal)<=0.10 AND abs(delta dot unit_vfile_normal)<=0.10",
+  "unknown_normal": "unmatched; never infer a normal",
+  "minimum_joined_fraction": 0.95,
+  "patch_denominator": "all stage-1 patches; evaluation-only denominator also reported",
+  "pixel_denominator": "all positive finite prior-depth pixels inside the frozen evaluation XY box",
+  "GT_used": false,
+  "scientific_verdict": null
+}

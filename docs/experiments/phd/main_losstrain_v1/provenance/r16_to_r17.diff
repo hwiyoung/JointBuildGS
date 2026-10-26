@@ -1,0 +1,162 @@
+--- r16/jbgs_judgment.py
++++ r17/jbgs_judgment.py
+@@ -246,7 +246,7 @@
+ }
+ ORIGIN_IMAGE, ORIGIN_PRIOR = 0, 1
+ LABELS = ("preserve", "correct", "undecided", "other")
+-REVISION = "r16"
++REVISION = "r17"
+ 
+ 
+ # ----------------------------------------------------------------------------------------------------------- args
+@@ -326,6 +326,12 @@
+         g.add_argument(f"--jbgs_sw_{_n}", type=int, default=0, choices=[0, 1], help=f"r16 switch {_n}: {_h} (0 = r15)")
+     g.add_argument("--jbgs_prior_width_dir", default="", help="r16-A: per-view maps of the band end w (metres of camera depth, "
+                    "converted like the tau maps); required with --jbgs_sw_prior_share_band 1")
++
++    # r17: opt-in depth-only experiment. The default executes the r16 path.
++    g.add_argument("--jbgs_sw_depth_loss", choices=["current", "fixed", "dynamic"], default="current")
++    g.add_argument("--jbgs_vfile_dir", default="")
++    g.add_argument("--jbgs_vfile_vprior", choices=["now", "gt", "soft"], default="now")
++    g.add_argument("--jbgs_depth_lambda", type=float, default=0.0025)
+ 
+ 
+ def apply_seed(args):
+@@ -860,6 +866,8 @@
+             torch.cuda.synchronize()
+         self.init_seconds = time.time() - self._t_init0               # r12-4 (to here: maps, product, seats, first E, g_p)
+         self.init_filter["init_seconds"] = round(self.init_seconds, 2)
++        if getattr(args, "jbgs_sw_depth_loss", "current") != "current":
++            lt_initialize(self)
+         meta = dict(mode=self.mode, revision=REVISION, switches=self.sw, ablations=self.ab, rule=self.rule_name, rule_source=self.rule_source, prior_kind=self.prior_kind,
+                     fixes=self.fix, prior_width=self.w_info, own_depth=self.own_info,                 # r16 records
+                     seed=int(getattr(args, "jbgs_seed", 0)), init_seconds=round(self.init_seconds, 2),
+@@ -1351,6 +1359,8 @@
+             raise ValueError("r8 needs --jbgs_locmap_dir and --jbgs_markmap_dir")
+         names = sorted(self.train_names)
+         LM = HostMaps(_load_set(Path(args.jbgs_locmap_dir), names, self.size, "cpu", dtype=np.int32))   # r14-2: one view at a time
++        if getattr(args, "jbgs_sw_depth_loss", "current") != "current":
++            self.lt_locations = LM  # r17: retain the existing host maps; patch values alone live on GPU
+         sfx = "" if self.sw["confidence_mask"] else "_maskoff"
+         t_rule = pprules.RULES[self.rule_name]["t"] if pprules is not None else 1.0
+         if t_rule == 1.0:
+@@ -1443,6 +1453,8 @@
+     def losses(self, cam_name, render_pkg):
+         """Returns (mvs_term, prior_term, stats). Both terms are unweighted; multiply by lambdas in train.py.
+         r6 (5): with jbgs_depth_norm = pixels both terms divide by the pixel count of the view."""
++        if getattr(self.args, "jbgs_sw_depth_loss", "current") != "current":
++            return lt_losses(self, cam_name, render_pkg)
+         D = render_pkg["surf_depth"].squeeze(0)
+         zero = torch.zeros((), device=D.device)
+         denom = float(D.numel()) if self.args.jbgs_depth_norm == "pixels" else None
+@@ -2119,3 +2131,110 @@
+ 
+     def after_backward(self, iteration, gaussians):
+         return None
++
++
++# ---------------- PHD-MAIN-LOSSTRAIN-v1 r17 opt-in depth terms ----------------
++"""Source appended to r16 jbgs_judgment.py by build_r17.py; not imported at runtime.
++
++Inputs are a reviewed, stage-1-indexed values.npz plus manifest.json. The
++manifest must explicitly pass both coverage gates. GT surfaces/labels and
++precomputed optimum z are never loaded by these training functions.
++"""
++
++def lt_term(depth, target, sigma, validity, mode):
++    """Unweighted one-source pixel loss; autograd follows depth only."""
++    target, sigma, validity = target.detach(), sigma.detach(), validity.detach()
++    residual = (depth - target) / sigma
++    if mode == "fixed":
++        return 0.5 * validity * residual.square()
++    if mode != "dynamic":
++        raise ValueError(mode)
++    log_in = torch.log(validity) - torch.log(sigma) - 0.5 * math.log(2 * math.pi) - 0.5 * residual.square()
++    log_out = torch.log1p(-validity) + math.log(0.1)
++    return -torch.logaddexp(log_in, log_out)
++
++
++def lt_initialize(j):
++    """Load one array per patch; retain the existing host pixel-to-patch maps."""
++    import hashlib
++    a = j.args
++    if j.mode != "P" or j.sw["judgment"] or not j.sw["prior"] or a.jbgs_depth_norm != "pixels":
++        raise ValueError("LOSSTRAIN needs mode P, judgment=0, prior=1 and pixels normalization")
++    if any(j.ab.values()) or any(j.fix.values()):
++        raise ValueError("LOSSTRAIN must retain the nojudge ablation/fix defaults")
++    root = Path(a.jbgs_vfile_dir)
++    manifest = json.loads((root / "manifest.json").read_text())
++    if manifest.get("patch_join_gate") != "PASS" or manifest.get("pixel_join_gate") != "PASS":
++        raise RuntimeError("LOSSTRAIN_STOP: patch/pixel connection below the frozen gate")
++    values = root / "values.npz"
++    digest = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
++    if digest(values) != manifest["values_sha256"] or digest(a.jbgs_prop_store) != manifest["store_sha256"]:
++        raise RuntimeError("LOSSTRAIN_STOP: linked values or stage-1 store hash changed")
++    with np.load(values, allow_pickle=False) as z, np.load(a.jbgs_prop_store, allow_pickle=False) as st:
++        if not np.array_equal(z["centre"], st["loc_center"]):
++            raise RuntimeError("LOSSTRAIN_STOP: stage-1 patch order changed")
++        fallback = ~z["joined"].astype(bool)
++        vp = z["v_prior_" + a.jbgs_vfile_vprior].copy()
++        vp[fallback] = z["v_prior_now"][fallback]
++        arrays = {k: z[k] for k in ("sigma_prior", "sigma_mvs", "v_mvs", "normal")}
++        arrays["v_prior"] = vp
++        arrays["fallback"] = fallback
++    n = len(vp)
++    if any(len(x) != n for x in arrays.values()):
++        raise ValueError("LOSSTRAIN values length mismatch")
++    j.lt_values = {k: torch.as_tensor(x, device="cuda") for k, x in arrays.items()}
++    j.lt_cameras = {c.image_name: c for c in j.all_cams}
++    j.lambda_mvs = j.lambda_prior = float(a.jbgs_depth_lambda)
++    if not math.isfinite(j.lambda_prior) or j.lambda_prior <= 0:
++        raise ValueError("LOSSTRAIN lambda must be finite and positive")
++    (j.mon / "losstrain_inputs.json").write_text(json.dumps(dict(
++        mode=a.jbgs_sw_depth_loss, vprior=a.jbgs_vfile_vprior, depth_lambda=j.lambda_prior,
++        manifest=manifest, fallback_patches=int(fallback.sum()), scientific_verdict=None), indent=2))
++
++
++def lt_losses(j, cam_name, render_pkg):
++    D = render_pkg["surf_depth"].squeeze(0)
++    P, M, A = j.P[cam_name], j.M[cam_name], j.A[cam_name]
++    loc = j.lt_locations[cam_name].long()
++    table = j.lt_values
++    has = (loc >= 0) & (loc < len(table["v_prior"]))
++    eligible = has & torch.isfinite(P) & (P > 0)
++    if bool((eligible & ~torch.isfinite(D)).any()):
++        raise RuntimeError("LOSSTRAIN_STOP: nonfinite rendered prior-patch depth")
++    yy, xx = torch.where(eligible)
++    ids = loc[eligible]
++    zero = D.reshape(-1)[:0].sum()  # differentiable zero, including an empty view
++    if not len(ids):
++        stats = dict(n_px=D.numel(), prior_n=0, mvs_n=0, prior_hole=0, mvs_hole=0, prior_beyond=0)
++        j.last_stats = stats
++        return zero, zero, stats
++    cam = j.lt_cameras[cam_name]
++    proj = cam.projection_matrix.T
++    H, W = D.shape
++    fx, fy = proj[0, 0] * W / 2, proj[1, 1] * H / 2
++    cx, cy = proj[0, 2] * W / 2 + (W - 1) / 2, proj[1, 2] * H / 2 + (H - 1) / 2
++    ray_cam = torch.stack(((xx - cx) / fx, (yy - cy) / fy, torch.ones_like(xx, dtype=D.dtype)), 1)
++    ray_world = ray_cam @ cam.world_view_transform.inverse()[:3, :3]
++    ray_world = torch.nn.functional.normalize(ray_world, dim=1)
++    normal = table["normal"][ids].to(D.dtype)
++    good_normal = torch.isfinite(normal).all(1) & (torch.abs(normal.norm(dim=1) - 1) < 1e-4)
++    if not bool(good_normal.all()):
++        raise RuntimeError("LOSSTRAIN_STOP: missing/nonunit patch normal; no imputation")
++    cos = (ray_world * normal).sum(1).abs().clamp_min(0.25)
++    sp = table["sigma_prior"][ids].to(D.dtype) / cos
++    vp = table["v_prior"][ids].to(D.dtype)
++    if not bool((torch.isfinite(sp) & (sp > 0) & torch.isfinite(vp) & (vp > 0) & (vp < 1)).all()):
++        raise RuntimeError("LOSSTRAIN_STOP: invalid prior sigma or validity")
++    mode = j.args.jbgs_sw_depth_loss
++    prior = lt_term(D[eligible], P[eligible], sp, vp, mode).sum() / D.numel()
++    vm = table["v_mvs"][ids].to(D.dtype)
++    sm = table["sigma_mvs"][ids].to(D.dtype) / cos
++    obs = torch.isfinite(M[eligible]) & (M[eligible] > 0) & (A[eligible] > 0) & torch.isfinite(vm)
++    if bool(obs.any()) and not bool((torch.isfinite(sm[obs]) & (sm[obs] > 0) & (vm[obs] > 0) & (vm[obs] < 1)).all()):
++        raise RuntimeError("LOSSTRAIN_STOP: invalid available MVS sigma or validity")
++    mvs = lt_term(D[eligible][obs], M[eligible][obs], sm[obs], vm[obs], mode).sum() / D.numel() if bool(obs.any()) else zero
++    stats = dict(n_px=int(D.numel()), prior_n=int(eligible.sum()), mvs_n=int(obs.sum()),
++                 prior_hole=int((D[eligible] <= 0).sum()), mvs_hole=int((D[eligible][obs] <= 0).sum()),
++                 prior_beyond=0, fallback_n=int(table["fallback"][ids].sum()))
++    j.last_stats = stats
++    return mvs, prior, stats
