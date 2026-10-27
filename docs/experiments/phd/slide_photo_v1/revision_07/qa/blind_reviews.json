@@ -1,0 +1,15 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R7",
+  "scientific_verdict": null,
+  "protocol": "Each changed image was shown separately to a fresh context-free agent with only the request: 이 그림이 보여 주는 것을 한 문장으로.",
+  "initial_reviews_before_normal_axis_and_tolerance_band": [
+    {"figure":"figS_e_aim_keep","reviewer":"r7_blind_keep","answer":"영상에서 얻은 깊이가 참값과 어긋나는 구간에서는 참값에 더 가까운 사전 정보를 보존한다는 취지를 보여 줍니다."},
+    {"figure":"figS_e_purpose_overview","reviewer":"r7_blind_overview","answer":"이 그림은 기존 3D 사전 정보와 현재 영상을 결합할 때 맞는 구조는 보존하고, 달라진 지붕은 보정하며, 지붕 세부는 다듬고, 영상에 가려진 벽은 사전 정보에서 상속하는 네 가지 역할을 보여 준다."}
+  ],
+  "final_reviews": [
+    {"figure":"figS_e_aim_keep","reviewer":"r7_band_keep","answer":"이 그림은 A–A′ 단면에서 영상 기반 형상이 참값과 어긋나더라도 참값의 허용 범위인 ±20cm 안에 있는 사전 정보는 보존한다는 원칙을 보여 줍니다."},
+    {"figure":"figS_e_purpose_overview","reviewer":"r7_band_overview","answer":"이 그림은 기존 3D 사전 정보를 허용 범위에서는 보존하고, 달라진 지붕은 현재 영상에 맞춰 보정하며, 지붕 세부를 다듬고, 영상에 가려진 벽은 사전 정보로 채우는 네 가지 활용 방식을 보여 줍니다."}
+  ],
+  "unchanged_figures": "R6 reviews are retained in history/revision_06/qa/blind_reviews.json; unchanged figure bytes are verified against the R6 archive.",
+  "interpretation": "Intent readings do not establish scientific validity or user acceptance. The new graph is a binned section of input coordinates and does not demonstrate a trained preservation result."
+}
