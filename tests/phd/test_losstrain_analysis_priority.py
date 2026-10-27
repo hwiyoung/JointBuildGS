@@ -56,8 +56,17 @@ class Priority(unittest.TestCase):
                 unit(r).mkdir();(unit(r)/'PASS.json').touch()
             state=schedule(runs+[unrelated],[])
             self.assertTrue(state['active']);self.assertEqual(state['post'],runs)
+            self.assertTrue(state['core_only'])
+            (unit(runs[0])/'post_stage_PASS.json').touch()
             state=schedule(runs[1:]+[unrelated],runs[:1])
             self.assertFalse(state['post_may_start']);self.assertEqual(state['measure'],runs[:1])
+            self.assertTrue(state['core_only'])
+            for r in runs:
+                (unit(r)/'post_stage_PASS.json').touch()
+                (unit(r)/'core_measure_PASS.json').touch()
+            state=schedule(runs+[unrelated],[])
+            self.assertTrue(state['active']);self.assertEqual(state['post'],runs)
+            self.assertFalse(state.get('core_only',False))
             for r in runs:(unit(r)/'measure_PASS.json').touch()
             state=schedule([unrelated],[])
             self.assertFalse(state['active']);self.assertEqual(state['post'],[unrelated])
@@ -97,6 +106,29 @@ class Priority(unittest.TestCase):
                 load('priority_analysis_delivery.py','run',scope)()
             self.assertTrue(all((queue/name).exists() for name in markers))
             self.assertFalse((queue/'history').exists())
+
+    def test_resume_reuses_priority_state_before_readout(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);queue=root/'queue';queue.mkdir()
+            (queue/'history/epoch_4_analysis_handoff').mkdir(parents=True)
+            expected={'status':'OPERATIONAL_ANALYSIS_DELIVERY_HANDOFF'}
+            (root/'request.json').write_text(json.dumps(expected))
+            state=dict(gpu_jobs={},cpu_measurement=None,stops=[],training_complete=16,
+                       status='PRIORITY_ANALYSIS_DELIVERY',priority_driver=str(root/'state.json'))
+            (queue/'state.json').write_text(json.dumps(state))
+            cfg=root/'cfg.json';cfg.write_text(json.dumps(dict(new_readout_site='B0_b10',prior='ALS')))
+            observed=[]
+            def cpu(*args,**kwargs):raise StopIteration('reached readout without restarting training')
+            def save(path,data):path.write_text(json.dumps(data));observed.append(data)
+            scope=dict(ROOT=root,CONFIG=cfg,MARKERS=['training_STOP.json','post_STOP.json'],STATUS=expected['status'],
+                       Q=SimpleNamespace(ROOT=queue,OUT=root,read=lambda p:json.loads(p.read_text()),validate=lambda epoch:None,
+                                         save=save,F=SimpleNamespace(now=lambda:'test')),
+                       fcntl=SimpleNamespace(flock=lambda *a:None,LOCK_EX=1,LOCK_NB=2),record=lambda *a,**k:None,cpu=cpu)
+            with self.assertRaisesRegex(StopIteration,'reached readout'):
+                load('priority_analysis_delivery.py','run',scope)(resume_readout=True)
+            self.assertEqual(observed[0]['priority_driver'],state['priority_driver'])
+            self.assertEqual(observed[0]['training_complete'],16)
+            self.assertEqual(observed[0]['gpu_jobs'],{})
 
 
 if __name__ == '__main__':

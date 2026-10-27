@@ -55,6 +55,9 @@ def main():
         assert float(d['area'][m&missing].sum())==r['no_surface_area_m2']
         assert r['within_tau_percent']==(100*r['successful_area_m2']/A if A else None)
         assert r['no_surface_percent']==(100*r['no_surface_area_m2']/A if A else None)
+        errors=np.abs(z-d['p_gt']);observed=m&np.isfinite(errors)
+        assert r['error_observed_patches']==int(observed.sum())
+        assert r['error_patch_median_m']==(float(np.median(errors[observed])) if observed.any() else None)
     for row in data['side_rows']:
         site=row['site'];mask=masks[site][row['subset']];d=domains[site]
         result=row['variant']+'_ALS_s0';actual=arrays[(site,result)]

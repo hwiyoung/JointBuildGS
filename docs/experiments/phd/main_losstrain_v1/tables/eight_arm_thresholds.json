@@ -1,0 +1,1139 @@
+{
+  "rows": [
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "all_0_3",
+      "metric": "within_tau_percent",
+      "seed_0": 74.5575923056191,
+      "seed_1": 74.13841572589386,
+      "N": 33020,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.8299272857072251,
+      "three_points": 0.009085402786190187,
+      "threshold": 0.8299272857072251,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 33020
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 33020
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "all_0_3",
+      "metric": "no_surface_percent",
+      "seed_0": 1.691663694269911,
+      "seed_1": 1.728492705848814,
+      "N": 33020,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.07291772272915241,
+      "three_points": 0.009085402786190187,
+      "threshold": 0.07291772272915241,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 33020
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 33020
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "within_tau_percent",
+      "seed_0": 96.25010434551646,
+      "seed_1": 96.31960241548667,
+      "N": 10945,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.1375991583548726,
+      "three_points": 0.027409776153494745,
+      "threshold": 0.1375991583548726,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 10945
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 10945
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "no_surface_percent",
+      "seed_0": 0.11179000194321244,
+      "seed_1": 0.11179000194321244,
+      "N": 10945,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 0.027409776153494745,
+      "threshold": 0.027409776153494745,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 10945
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 10945
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "error_patch_median_m",
+      "seed_0": 0.07058795681223273,
+      "seed_1": 0.07058150391094387,
+      "N": 10938,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 1.2776092727118745e-05,
+      "three_points": null,
+      "threshold": 1.2776092727118745e-05,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 10938
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 10938
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_1",
+      "metric": "within_tau_percent",
+      "seed_0": 88.99805254647362,
+      "seed_1": 89.02872006869579,
+      "N": 14497,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.06071859619136778,
+      "three_points": 0.02069393667655377,
+      "threshold": 0.06071859619136778,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14497
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14497
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_1",
+      "metric": "no_surface_percent",
+      "seed_0": 2.1573097447751715,
+      "seed_1": 2.2002513396068033,
+      "N": 14497,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.08502002012115381,
+      "three_points": 0.02069393667655377,
+      "threshold": 0.08502002012115381,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14497
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14497
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_2",
+      "metric": "within_tau_percent",
+      "seed_0": 22.081834156804444,
+      "seed_1": 17.927799498264342,
+      "N": 2598,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 8.22456901374542,
+      "three_points": 0.11547344110854503,
+      "threshold": 8.22456901374542,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 2598
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 2598
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_2",
+      "metric": "no_surface_percent",
+      "seed_0": 0.12076005183947326,
+      "seed_1": 0.12076005183947326,
+      "N": 2598,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 0.11547344110854503,
+      "threshold": 0.11547344110854503,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 2598
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 2598
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_3",
+      "metric": "within_tau_percent",
+      "seed_0": 16.665066467442127,
+      "seed_1": 16.002263536790075,
+      "N": 4980,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 1.3122828511922728,
+      "three_points": 0.060240963855421686,
+      "threshold": 1.3122828511922728,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 4980
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 4980
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_3",
+      "metric": "no_surface_percent",
+      "seed_0": 4.5289857019030535,
+      "seed_1": 4.645757769255576,
+      "N": 4980,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.23119689789879505,
+      "three_points": 0.060240963855421686,
+      "threshold": 0.23119689789879505,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 4980
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 4980
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained",
+      "metric": "within_tau_percent",
+      "seed_0": 70.75338534395968,
+      "seed_1": 70.59666590500558,
+      "N": 19197,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.31028865847894416,
+      "three_points": 0.01562744178777934,
+      "threshold": 0.31028865847894416,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 19197
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 19197
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained",
+      "metric": "no_surface_percent",
+      "seed_0": 2.804837027742822,
+      "seed_1": 2.8583296731477206,
+      "N": 19197,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.10591003446635164,
+      "three_points": 0.01562744178777934,
+      "threshold": 0.10591003446635164,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 19197
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 19197
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_1",
+      "metric": "within_tau_percent",
+      "seed_0": 89.15607867398091,
+      "seed_1": 89.188136146168,
+      "N": 14387,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.06347055671933573,
+      "three_points": 0.020852158198373532,
+      "threshold": 0.06347055671933573,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14387
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14387
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_1",
+      "metric": "no_surface_percent",
+      "seed_0": 2.1641345709903943,
+      "seed_1": 2.2074472118232866,
+      "N": 14387,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.08575465372329943,
+      "three_points": 0.020852158198373532,
+      "threshold": 0.08575465372329943,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 14387
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 14387
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_2",
+      "metric": "within_tau_percent",
+      "seed_0": 11.539538239136126,
+      "seed_1": 9.673705228064383,
+      "N": 104,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 3.694160889133523,
+      "three_points": 2.8846153846153846,
+      "threshold": 3.694160889133523,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 104
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 104
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_2",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 104,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 2.8846153846153846,
+      "threshold": 2.8846153846153846,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 104
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 104
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_4",
+      "metric": "within_tau_percent",
+      "seed_0": 5.563999514414402,
+      "seed_1": 0.0,
+      "N": 17,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 11.016157004051024,
+      "three_points": 17.647058823529413,
+      "threshold": 17.647058823529413,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 17
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 17
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_4",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 17,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 17.647058823529413,
+      "threshold": 17.647058823529413,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 17
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 17
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_5",
+      "metric": "within_tau_percent",
+      "seed_0": 12.065460217912705,
+      "seed_1": 13.119170663519407,
+      "N": 175,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 2.086240244187674,
+      "three_points": 1.7142857142857142,
+      "threshold": 2.086240244187674,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 175
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 175
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "subset": "cell_5",
+      "metric": "no_surface_percent",
+      "seed_0": 42.910654416865334,
+      "seed_1": 40.2996097114343,
+      "N": 175,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 5.169604768136243,
+      "three_points": 1.7142857142857142,
+      "threshold": 5.169604768136243,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "c5d11fa1da1505a66eb7a31eba8dc97ad4a243399f29aba4a4eb11795f4ca8f7",
+          "N": 175
+        },
+        {
+          "source": "/out/patch_z/B173nb_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "b5657abc7a6f7b6cc94949a7fd3383050cda262dbd4ef30ce0207c59a04dc0cc",
+          "N": 175
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "all_0_3",
+      "metric": "within_tau_percent",
+      "seed_0": 97.16805297792585,
+      "seed_1": 96.92047150033154,
+      "N": 23084,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.4901863167687397,
+      "three_points": 0.012996014555536303,
+      "threshold": 0.4901863167687397,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 23084
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 23084
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "all_0_3",
+      "metric": "no_surface_percent",
+      "seed_0": 0.02715872538685314,
+      "seed_1": 0.023199030389719953,
+      "N": 23084,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.007839796114929307,
+      "three_points": 0.012996014555536303,
+      "threshold": 0.012996014555536303,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 23084
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 23084
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "within_tau_percent",
+      "seed_0": 97.76448973323282,
+      "seed_1": 97.54606238571021,
+      "N": 22726,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.4324640841635116,
+      "three_points": 0.013200739241397518,
+      "threshold": 0.4324640841635116,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 22726
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 22726
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 22726,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 0.013200739241397518,
+      "threshold": 0.013200739241397518,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 22726
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 22726
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_0",
+      "metric": "error_patch_median_m",
+      "seed_0": 0.021458256524056196,
+      "seed_1": 0.022525487351231277,
+      "N": 22726,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.002113009233963118,
+      "three_points": null,
+      "threshold": 0.002113009233963118,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 22726
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 22726
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_1",
+      "metric": "within_tau_percent",
+      "seed_0": 62.03148156219235,
+      "seed_1": 59.45357014162572,
+      "N": 115,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 5.104004210986545,
+      "three_points": 2.608695652173913,
+      "threshold": 5.104004210986545,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 115
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 115
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_1",
+      "metric": "no_surface_percent",
+      "seed_0": 2.268425523924692,
+      "seed_1": 2.268425523924692,
+      "N": 115,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 2.608695652173913,
+      "threshold": 2.608695652173913,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 115
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 115
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_2",
+      "metric": "within_tau_percent",
+      "seed_0": 68.8210174743276,
+      "seed_1": 67.75176517956656,
+      "N": 201,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 2.1170115355894694,
+      "three_points": 1.492537313432836,
+      "threshold": 2.1170115355894694,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 201
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 201
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_2",
+      "metric": "no_surface_percent",
+      "seed_0": 1.6494875726061309,
+      "seed_1": 1.2093388051805825,
+      "N": 201,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.8714500988970163,
+      "three_points": 1.492537313432836,
+      "threshold": 1.492537313432836,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 201
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 201
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_3",
+      "metric": "within_tau_percent",
+      "seed_0": 27.34164321949291,
+      "seed_1": 22.815368004752774,
+      "N": 42,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 8.961567714006168,
+      "three_points": 7.142857142857143,
+      "threshold": 8.961567714006168,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 42
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 42
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_3",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 42,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 7.142857142857143,
+      "threshold": 7.142857142857143,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 42
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 42
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "unexplained",
+      "metric": "within_tau_percent",
+      "seed_0": 58.874858437260094,
+      "seed_1": 59.18461404748882,
+      "N": 100,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.613284819009268,
+      "three_points": 3.0,
+      "threshold": 3.0,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 100
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 100
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "unexplained",
+      "metric": "no_surface_percent",
+      "seed_0": 1.718845834296721,
+      "seed_1": 0.8591073377404205,
+      "N": 100,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 1.7021953786938442,
+      "three_points": 3.0,
+      "threshold": 3.0,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 100
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 100
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_1",
+      "metric": "within_tau_percent",
+      "seed_0": 74.96627857926188,
+      "seed_1": 77.56501386258032,
+      "N": 45,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 5.145233355760982,
+      "three_points": 6.666666666666667,
+      "threshold": 6.666666666666667,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 45
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 45
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_1",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 45,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 6.666666666666667,
+      "threshold": 6.666666666666667,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 45
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 45
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_2",
+      "metric": "within_tau_percent",
+      "seed_0": 54.971923501079964,
+      "seed_1": 54.99398254908177,
+      "N": 39,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.04367468680007334,
+      "three_points": 7.6923076923076925,
+      "threshold": 7.6923076923076925,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 39
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 39
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "unexplained_cell_2",
+      "metric": "no_surface_percent",
+      "seed_0": 4.702750618655494,
+      "seed_1": 2.3505118861944374,
+      "N": 39,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 4.657195084340014,
+      "three_points": 7.6923076923076925,
+      "threshold": 7.6923076923076925,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 39
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 39
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_4",
+      "metric": "within_tau_percent",
+      "seed_0": 31.585603941820946,
+      "seed_1": 31.585603941820946,
+      "N": 5,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 60.0,
+      "threshold": 60.0,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 5
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 5
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_4",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 5,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 60.0,
+      "threshold": 60.0,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 5
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 5
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_5",
+      "metric": "within_tau_percent",
+      "seed_0": 36.524953250073835,
+      "seed_1": 68.26247662503692,
+      "N": 3,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 62.83709039020829,
+      "three_points": 100.0,
+      "threshold": 100.0,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 3
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 3
+        }
+      ]
+    },
+    {
+      "kind": "stage1_patch",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "subset": "cell_5",
+      "metric": "no_surface_percent",
+      "seed_0": 0.0,
+      "seed_1": 0.0,
+      "N": 3,
+      "pooled": null,
+      "pooled_unavailable": "no existing pooled spread for this new stage-1 first-hit patch metric",
+      "case_spread": 0.0,
+      "three_points": 100.0,
+      "threshold": 100.0,
+      "seed_sources": [
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s0.npz",
+          "sha256": "8af70f5f38ae12970a7ec3a4bc00376436414598df39194737fa3eb72b6b28f2",
+          "N": 3
+        },
+        {
+          "source": "/out/patch_z/B0_b10__ALS__prop_ALS_s1.npz",
+          "sha256": "25e900e991bfb165573bc0a7606649d373e5582f5f376e3137119bb1f01f63e8",
+          "N": 3
+        }
+      ]
+    }
+  ],
+  "scientific_verdict": null
+}

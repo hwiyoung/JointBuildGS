@@ -12,7 +12,7 @@ def main():
     rt=load(TAB/'runtime.json');c=rt['counts'];scores=load(TAB/'patch_scores_all.json')['rows']
     gates=load(TAB/'direct_stage1_gates.json');selection=load(OUT/'checks/lambda_selection.json')
     lines=['# 손실 학습 시험 v1','',
-        f"완료 학습: 짧은 학습 {c['calibration_complete']}/4, 본 학습 {c['required_complete']}/24, 선택 {c['optional_complete']}/6. 후처리 {c['post_complete']}, 채점 {c['measurements_complete']}. 기준 중단 {c.get('training_health_stopped',0)}판. 상태 {rt['status']}.",
+        f"완료 학습: 짧은 학습 {c['calibration_complete']}/4, 본 학습 {c['required_complete']}/24, 선택 {c['optional_complete']}/6. 핵심 패치 채점 {c.get('core_patch_scored',0)}판, 추가 후처리까지 완료 {c['post_complete']}판, 추가 지표까지 채점 완료 {c['measurements_complete']}판. 기준 중단 {c.get('training_health_stopped',0)}판. 상태 {rt['status']}.",
         f"고른 λ: {selection['selected_lambda']}. 최초 규칙으로 골랐고 이후 바꾸지 않았다.",
         '확인 불가: 미완료 판의 결과 면·채점·최종 학습 비교. 오류나 중단을 완료 결과로 세지 않는다. scientific_verdict: null.','',
         f"기록 시각: {rt['at']}. 새로 계산한 표·그림은 [이 발주에서 냄]. 이 문서는 사실과 측정값만 적는다.",'',
@@ -64,6 +64,12 @@ def main():
         '중간 보고에는 B173 항공 LiDAR의 8.1 지표 21행에 대해 모은 폭·단위 폭·300/N·최댓값과 기존 두 씨앗 값·N·출처를 추가했다. 같은 패치별 결과 배열에서 다시 계산한 값 차이는 0이다. 모은 폭이 없는 지표와 거리에 적용하지 않는 300/N을 구분해 표시했다.','',
         '실행·후처리 소요 시간과 TSDF 대기는 각 영수증 및 tables/runtime.json에 있다. 기록되지 않은 과거 GPU 대기는 확인 불가다. GPU 메모리는 해당 GPU 전체 관측값이므로 다른 프로세스 사용량도 포함할 수 있다. TSDF는 한 번에 하나씩 실행한다.','',
         '필수 24판 완료 전이며 선택 판의 실행 조건도 충족되지 않았다. 중단 후 없는 결과·누락 영상·없는 생성 표식을 추정으로 채우지 않았다.']
+    if (OUT/'checks/post_memory_56_40_v1/authorization.json').exists():
+        lines += ['', '2026-10-27 16:57 사용자 지시로 위의 과거 64/48 GiB 자원 조건을 56/40 GiB로 변경했다. '
+                  '60초 확인과 직렬 후처리, 손실·채점·판·기하 설정은 유지한다. B173+B0 항공 LiDAR 8판 전달을 먼저 완료한 뒤 R1 항공 LiDAR를 더한 12판 비교를 우선한다. '
+                  '[변경 승인과 재개 기록](후처리_입장조건_변경승인_v1.md).']
+    if (DOC/'중간보고_항공LiDAR_8판_v1.md').exists():
+        lines += ['', '[항공 LiDAR 두 지역 8판 중간 보고](중간보고_항공LiDAR_8판_v1.md)에 보존 면적·면 없음·날개 단면·칸별 값·42행 문턱·칸 0과 2의 점 운명을 모았다.']
     report='\n'.join(lines)+'\n';assert len(report)<=20000,len(report)
     (DOC/'손실학습시험_보고_v1.md').write_text(report)
     save(TAB/'report_status.json',dict(status=rt['status'],counts=c,characters=len(report),figures=figures,scientific_verdict=None))

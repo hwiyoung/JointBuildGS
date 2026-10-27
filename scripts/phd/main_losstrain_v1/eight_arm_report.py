@@ -60,15 +60,22 @@ def main():
                 fates.append(data);sources.append(dict(path=str(path),sha256=sha(path)))
     for site in SITES:
         lines += ['',f'## {LABELS[site]}: 8.1 학습 없는 시험과 학습 후 결과','',
-                  '| 판 | 범위 | N | 전체 m² | 학습 없음 τ 안 % | 학습 τ 안 % | τ 안 m² | 면 없음 m² |',
-                  '|---|---|---:|---:|---:|---:|---:|---:|']
+                  '| 판 | 범위 | N | 전체 m² | 학습 없음 τ 안 % | 학습 τ 안 % | τ 안 m² | 학습 없음 면 없음 % | 학습 면 없음 % | 학습 면 없음 m² |',
+                  '|---|---|---:|---:|---:|---:|---:|---:|---:|---:|']
         for variant,(label,analytic) in VARS.items():
             for subset,name in SUBSETS.items():
                 trained=score[(site,variant+'_ALS_s0',subset)];expected=score[(site,'analytic_'+analytic,subset)]
                 assert trained['patches']==expected['patches'] and trained['area_m2']==expected['area_m2']
                 paired.append(dict(site=site,variant=variant,subset=subset,analytic=expected,trained=trained))
                 insufficient=' · 표본 부족' if trained['patches']<100 else ''
-                lines.append(f"| {label} | {name+insufficient} | {trained['patches']} | {fmt(trained['area_m2'])} | {fmt(expected['within_tau_percent'])} | {fmt(trained['within_tau_percent'])} | {fmt(trained['successful_area_m2'])} | {fmt(trained['no_surface_area_m2'])} |")
+                lines.append(f"| {label} | {name+insufficient} | {trained['patches']} | {fmt(trained['area_m2'])} | {fmt(expected['within_tau_percent'])} | {fmt(trained['within_tau_percent'])} | {fmt(trained['successful_area_m2'])} | {fmt(expected['no_surface_percent'])} | {fmt(trained['no_surface_percent'])} | {fmt(trained['no_surface_area_m2'])} |")
+        lines += ['', '다듬기 칸(칸 0)의 참값까지 거리 중앙값은 면을 만난 패치에서 계산한다. '
+                  '면 없음은 위 표에 별도로 남기며 τ 안 비율에서는 실패로 센다.', '',
+                  '| 판 | 학습 없음 관측 N | 학습 없음 거리 중앙값 m | 학습 관측 N | 학습 거리 중앙값 m |',
+                  '|---|---:|---:|---:|---:|']
+        for variant,(label,analytic) in VARS.items():
+            trained=score[(site,variant+'_ALS_s0','cell_0')];expected=score[(site,'analytic_'+analytic,'cell_0')]
+            lines.append(f"| {label} | {expected['error_observed_patches']} | {fmt(expected['error_patch_median_m'])} | {trained['error_observed_patches']} | {fmt(trained['error_patch_median_m'])} |")
     lines += ['', '## 8.4 같은 규칙으로 계산한 지표별 문턱', '',
               '단위 폭은 2.8 × |prop_ALS_s0 − prop_ALS_s1| / √2다. 비율의 문턱 단위는 %p, '
               '거리 중앙값의 문턱은 m다. 모은 폭이 없는 지표는 자료 없음이며, 거리에 300/N을 적용하지 않는다. '

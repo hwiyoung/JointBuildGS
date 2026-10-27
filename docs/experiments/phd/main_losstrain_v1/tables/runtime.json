@@ -1,6 +1,6 @@
 {
   "status": "PRIORITY_ANALYSIS_DELIVERY",
-  "at": "2026-10-27T15:49:18.644022+09:00",
+  "at": "2026-10-27T18:01:04.503738+09:00",
   "counts": {
     "training_health_stopped": 3,
     "training_no_result": 0,
@@ -13,7 +13,7 @@
     "historical_grace_stops": 1,
     "post_stopped_attempts": 4,
     "new_stopped_attempts": 6,
-    "core_patch_scored": 4
+    "core_patch_scored": 8
   },
   "runs": [
     {
@@ -91,7 +91,84 @@
           ]
         }
       ],
-      "post_attempts": []
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/B0_b10/lt_dyngt_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 725.9080399377272,
+          "at": "2026-10-27T17:32:25.003840+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "9c3fe6f7aff1ed3b3b8f9ae487cee564fd96c6c7ca2fe8a73b9bdd965f6d2530",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "9c3fe6f7aff1ed3b3b8f9ae487cee564fd96c6c7ca2fe8a73b9bdd965f6d2530",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "9c3fe6f7aff1ed3b3b8f9ae487cee564fd96c6c7ca2fe8a73b9bdd965f6d2530",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "725",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793089944,
+              "timeNano": 1793089944877206388
+            },
+            {
+              "status": "destroy",
+              "id": "9c3fe6f7aff1ed3b3b8f9ae487cee564fd96c6c7ca2fe8a73b9bdd965f6d2530",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "9c3fe6f7aff1ed3b3b8f9ae487cee564fd96c6c7ca2fe8a73b9bdd965f6d2530",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793089944,
+              "timeNano": 1793089944895717997
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        }
+      ]
     },
     {
       "site": "B0_b10",
@@ -309,7 +386,84 @@
           ]
         }
       ],
-      "post_attempts": []
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/B0_b10/lt_dynnow_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 735.8679893231019,
+          "at": "2026-10-27T18:00:04.003874+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "7c2ae45b8024ae2dedf72570cd263b39534877a32f11e549caca1769ba2cd00d",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "7c2ae45b8024ae2dedf72570cd263b39534877a32f11e549caca1769ba2cd00d",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "7c2ae45b8024ae2dedf72570cd263b39534877a32f11e549caca1769ba2cd00d",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "735",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793091603,
+              "timeNano": 1793091603910148004
+            },
+            {
+              "status": "destroy",
+              "id": "7c2ae45b8024ae2dedf72570cd263b39534877a32f11e549caca1769ba2cd00d",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "7c2ae45b8024ae2dedf72570cd263b39534877a32f11e549caca1769ba2cd00d",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793091603,
+              "timeNano": 1793091603923904462
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        }
+      ]
     },
     {
       "site": "B0_b10",
@@ -463,7 +617,84 @@
           ]
         }
       ],
-      "post_attempts": []
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/B0_b10/lt_dynsoft_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 644.0795654235408,
+          "at": "2026-10-27T17:45:43.004756+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "601fd9440b47691ab31cd74eb86c848e1733759eb9e7535f9f185fe902ce0c73",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "601fd9440b47691ab31cd74eb86c848e1733759eb9e7535f9f185fe902ce0c73",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "601fd9440b47691ab31cd74eb86c848e1733759eb9e7535f9f185fe902ce0c73",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "642",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793090742,
+              "timeNano": 1793090742305538250
+            },
+            {
+              "status": "destroy",
+              "id": "601fd9440b47691ab31cd74eb86c848e1733759eb9e7535f9f185fe902ce0c73",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "601fd9440b47691ab31cd74eb86c848e1733759eb9e7535f9f185fe902ce0c73",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793090742,
+              "timeNano": 1793090742326064465
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        }
+      ]
     },
     {
       "site": "B0_b10",
@@ -617,7 +848,84 @@
           ]
         }
       ],
-      "post_attempts": []
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/B0_b10/lt_fixgt_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 1014.2163133258,
+          "at": "2026-10-27T17:17:27.003315+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "08522f44e2c6e51d951742093c421cd80e5b1b68b4eaf754faa60325933cc0cb",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "08522f44e2c6e51d951742093c421cd80e5b1b68b4eaf754faa60325933cc0cb",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "08522f44e2c6e51d951742093c421cd80e5b1b68b4eaf754faa60325933cc0cb",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "1012",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793089046,
+              "timeNano": 1793089046162343039
+            },
+            {
+              "status": "destroy",
+              "id": "08522f44e2c6e51d951742093c421cd80e5b1b68b4eaf754faa60325933cc0cb",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "08522f44e2c6e51d951742093c421cd80e5b1b68b4eaf754faa60325933cc0cb",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793089046,
+              "timeNano": 1793089046229351631
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        }
+      ]
     },
     {
       "site": "B0_b10",
@@ -3114,11 +3422,13 @@
   "stop": null,
   "selected_lambda": 0.0025,
   "analysis_delivery_priority": {
-    "at": "2026-10-27T15:49:16.277127+09:00",
-    "status": "WAITING_FOR_POST_MEMORY",
-    "available_GiB": 56.347373962402344,
-    "required_GiB": 64,
-    "stable_seconds": 0,
+    "at": "2026-10-27T18:00:04.004595+09:00",
+    "status": "CORE_SCORING",
+    "run": {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "variant": "lt_dynnow"
+    },
     "scientific_verdict": null
   },
   "scientific_verdict": null,

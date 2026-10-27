@@ -4,6 +4,186 @@
 
 | 단위 | 사전 | 범위 | 지표 | 판 | 비교 기준 | N | 차 | 문턱 | 수치 구간 |
 |---|---|---|---|---|---|---:|---:|---:|---|
+| B0_b10 | ALS | all_0_3 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 23080 | -0.0013 | 0.0021 | 기준 안 |
+| B0_b10 | ALS | all_0_3 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 22910 | -0.0371 | 0.0021 | 확인 |
+| B0_b10 | ALS | all_0_3 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 23078 | -0.0034 | 0.0021 | 가능, 근거 불완전 |
+| B0_b10 | ALS | all_0_3 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 23078 | -0.0010 | 0.0021 | 기준 안 |
+| B0_b10 | ALS | all_0_3 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 22910 | 0.0358 | 0.0021 | 확인 |
+| B0_b10 | ALS | all_0_3 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 23084 | -0.0112 | 0.0130 | 기준 안 |
+| B0_b10 | ALS | all_0_3 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 23084 | -0.7360 | 0.0130 | 확인 |
+| B0_b10 | ALS | all_0_3 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 23084 | 0.0101 | 0.0130 | 기준 안 |
+| B0_b10 | ALS | all_0_3 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 23084 | 0.0103 | 0.0130 | 기준 안 |
+| B0_b10 | ALS | all_0_3 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 23084 | 0.7248 | 0.0130 | 확인 |
+| B0_b10 | ALS | all_0_3 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 23084 | -5.1000 | 0.4902 | 확인 |
+| B0_b10 | ALS | all_0_3 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 23084 | 23.8673 | 0.4902 | 확인 |
+| B0_b10 | ALS | all_0_3 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 23084 | -7.0812 | 0.4902 | 확인 |
+| B0_b10 | ALS | all_0_3 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 23084 | -9.7515 | 0.4902 | 확인 |
+| B0_b10 | ALS | all_0_3 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 23084 | -28.9673 | 0.4902 | 확인 |
+| B0_b10 | ALS | cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 22725 | -0.0012 | 0.0021 | 기준 안 |
+| B0_b10 | ALS | cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 22572 | -0.0366 | 0.0021 | 확인 |
+| B0_b10 | ALS | cell_0 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 22725 | -0.0033 | 0.0021 | 가능, 근거 불완전 |
+| B0_b10 | ALS | cell_0 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 22723 | -0.0010 | 0.0021 | 기준 안 |
+| B0_b10 | ALS | cell_0 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 22572 | 0.0354 | 0.0021 | 확인 |
+| B0_b10 | ALS | cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 22726 | 0.0040 | 0.0132 | 기준 안 |
+| B0_b10 | ALS | cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 22726 | -0.6622 | 0.0132 | 확인 |
+| B0_b10 | ALS | cell_0 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 22726 | 0.0042 | 0.0132 | 기준 안 |
+| B0_b10 | ALS | cell_0 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 22726 | 0.0127 | 0.0132 | 기준 안 |
+| B0_b10 | ALS | cell_0 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 22726 | 0.6662 | 0.0132 | 확인 |
+| B0_b10 | ALS | cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 22726 | -5.2239 | 0.4325 | 확인 |
+| B0_b10 | ALS | cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 22726 | 23.6970 | 0.4325 | 확인 |
+| B0_b10 | ALS | cell_0 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 22726 | -7.1864 | 0.4325 | 확인 |
+| B0_b10 | ALS | cell_0 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 22726 | -9.9105 | 0.4325 | 확인 |
+| B0_b10 | ALS | cell_0 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 22726 | -28.9209 | 0.4325 | 확인 |
+| B0_b10 | ALS | cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 112 | 0.0375 | 0.0108 | 확인 |
+| B0_b10 | ALS | cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 111 | -0.2025 | 0.0108 | 확인 |
+| B0_b10 | ALS | cell_1 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 112 | 0.0041 | 0.0108 | 기준 안 |
+| B0_b10 | ALS | cell_1 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 112 | 0.0222 | 0.0108 | 확인 |
+| B0_b10 | ALS | cell_1 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 111 | 0.2400 | 0.0108 | 확인 |
+| B0_b10 | ALS | cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 115 | -1.5123 | 2.6087 | 기준 안 |
+| B0_b10 | ALS | cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 115 | -2.4028 | 2.6087 | 기준 안 |
+| B0_b10 | ALS | cell_1 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 115 | 0.0000 | 2.6087 | 기준 안 |
+| B0_b10 | ALS | cell_1 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 115 | -1.5123 | 2.6087 | 기준 안 |
+| B0_b10 | ALS | cell_1 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 115 | 0.8905 | 2.6087 | 기준 안 |
+| B0_b10 | ALS | cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 115 | -9.6448 | 5.1040 | 가능, 근거 불완전 |
+| B0_b10 | ALS | cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 115 | 16.0490 | 5.1040 | 확인 |
+| B0_b10 | ALS | cell_1 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 115 | -1.7071 | 5.1040 | 기준 안 |
+| B0_b10 | ALS | cell_1 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 115 | -6.9436 | 5.1040 | 가능, 근거 불완전 |
+| B0_b10 | ALS | cell_1 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 115 | -25.6938 | 5.1040 | 확인 |
+| B0_b10 | ALS | cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 200 | -0.0551 | 0.0038 | 확인 |
+| B0_b10 | ALS | cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 187 | -0.3379 | 0.0038 | 확인 |
+| B0_b10 | ALS | cell_2 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 199 | -0.0553 | 0.0038 | 확인 |
+| B0_b10 | ALS | cell_2 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 199 | -0.0518 | 0.0038 | 확인 |
+| B0_b10 | ALS | cell_2 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 187 | 0.2828 | 0.0038 | 확인 |
+| B0_b10 | ALS | cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 201 | -0.7695 | 1.4925 | 기준 안 |
+| B0_b10 | ALS | cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 201 | -7.0510 | 1.4925 | 확인 |
+| B0_b10 | ALS | cell_2 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 201 | 0.6673 | 1.4925 | 기준 안 |
+| B0_b10 | ALS | cell_2 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 201 | 0.6673 | 1.4925 | 기준 안 |
+| B0_b10 | ALS | cell_2 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 201 | 6.2815 | 1.4925 | 확인 |
+| B0_b10 | ALS | cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 201 | 12.4489 | 2.1170 | 확인 |
+| B0_b10 | ALS | cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 201 | 52.9824 | 2.1170 | 확인 |
+| B0_b10 | ALS | cell_2 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 201 | 1.5722 | 2.1170 | 기준 안 |
+| B0_b10 | ALS | cell_2 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 201 | 4.8219 | 2.1170 | 확인 |
+| B0_b10 | ALS | cell_2 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 201 | -40.5334 | 2.1170 | 확인 |
+| B0_b10 | ALS | cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 42 | 0.0698 | 0.0491 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 40 | -0.2884 | 0.0491 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 42 | 0.1554 | 0.0491 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 42 | 0.1515 | 0.0491 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 40 | 0.3581 | 0.0491 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 42 | 0.0000 | 7.1429 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 42 | -4.0672 | 7.1429 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 42 | 0.0000 | 7.1429 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 42 | 0.0000 | 7.1429 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 42 | 4.0672 | 7.1429 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 42 | -10.7572 | 8.9616 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 42 | -1.9305 | 8.9616 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 42 | -8.8644 | 8.9616 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 42 | -4.7549 | 8.9616 | 표본 부족 |
+| B0_b10 | ALS | cell_3 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 42 | -8.8268 | 8.9616 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 5 | -0.2472 | 0.0066 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 5 | 0.5666 | 0.0066 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 5 | -0.0354 | 0.0066 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 5 | -0.2138 | 0.0066 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 5 | -0.8138 | 0.0066 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 5 | -22.7653 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 5 | 0.0000 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_4 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 5 | 22.7653 | 60.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 3 | 0.1271 | 1.9549 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 3 | -0.6785 | 1.9549 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 3 | 0.9397 | 1.9549 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 3 | 0.7798 | 1.9549 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 3 | 0.8056 | 1.9549 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 3 | 0.0000 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 3 | 0.0000 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 3 | 0.0000 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 3 | 0.0000 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 3 | 0.0000 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 3 | -36.5250 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 3 | 31.7375 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 3 | -31.7375 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 3 | -31.7375 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | cell_5 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 3 | -68.2625 | 100.0000 | 표본 부족 |
+| B0_b10 | ALS | unexplained | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 100 | 0.0235 | 0.0335 | 기준 안 |
+| B0_b10 | ALS | unexplained | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 93 | -0.1907 | 0.0335 | 표본 부족 |
+| B0_b10 | ALS | unexplained | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 100 | -0.0034 | 0.0335 | 기준 안 |
+| B0_b10 | ALS | unexplained | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 100 | 0.0124 | 0.0335 | 기준 안 |
+| B0_b10 | ALS | unexplained | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 93 | 0.2142 | 0.0335 | 표본 부족 |
+| B0_b10 | ALS | unexplained | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 100 | 0.0000 | 3.0000 | 기준 안 |
+| B0_b10 | ALS | unexplained | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 100 | -6.2617 | 3.0000 | 확인 |
+| B0_b10 | ALS | unexplained | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 100 | 0.0000 | 3.0000 | 기준 안 |
+| B0_b10 | ALS | unexplained | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 100 | 0.0000 | 3.0000 | 기준 안 |
+| B0_b10 | ALS | unexplained | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 100 | 6.2617 | 3.0000 | 확인 |
+| B0_b10 | ALS | unexplained | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 100 | -1.4152 | 3.0000 | 기준 안 |
+| B0_b10 | ALS | unexplained | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 100 | 15.1331 | 3.0000 | 확인 |
+| B0_b10 | ALS | unexplained | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 100 | 1.1614 | 3.0000 | 기준 안 |
+| B0_b10 | ALS | unexplained | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 100 | 0.1681 | 3.0000 | 기준 안 |
+| B0_b10 | ALS | unexplained | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 100 | -16.5484 | 3.0000 | 확인 |
+| B0_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| B0_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 45 | -0.0001 | 0.0082 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 43 | -0.1225 | 0.0082 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 45 | -0.0169 | 0.0082 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 45 | 0.0079 | 0.0082 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 43 | 0.1225 | 0.0082 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 45 | 0.0000 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 45 | -4.2452 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 45 | 0.0000 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 45 | 0.0000 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 45 | 4.2452 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 45 | -9.0152 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 45 | 17.0165 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 45 | 4.8457 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 45 | -3.6408 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 45 | -26.0316 | 6.6667 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 39 | -0.0644 | 0.0399 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 36 | -0.1527 | 0.0399 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 39 | -0.0634 | 0.0399 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 39 | -0.0801 | 0.0399 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 36 | 0.0884 | 0.0399 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 39 | 0.0000 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 39 | -7.0585 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 39 | 0.0000 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 39 | 0.0000 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 39 | 7.0585 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 39 | 8.9586 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 39 | 16.6018 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 39 | 1.9770 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 39 | 4.7366 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 39 | -7.6431 | 7.6923 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 16 | 0.0084 | 0.1065 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 14 | -0.3006 | 0.1065 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 16 | 0.2028 | 0.1065 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 16 | 0.1818 | 0.1065 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 14 | 0.3090 | 0.1065 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 16 | 0.0000 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 16 | -9.5408 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 16 | 0.0000 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 16 | 0.0000 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 16 | 9.5408 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 16 | -3.4932 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 16 | 7.7371 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 16 | -9.2780 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 16 | 0.3619 | 18.7500 | 표본 부족 |
+| B0_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 16 | -11.2303 | 18.7500 | 표본 부족 |
 | B173nb_b10 | ALS | all_0_3 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 32441 | -0.0187 | 0.0001 | 확인 |
 | B173nb_b10 | ALS | all_0_3 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 31740 | -0.0341 | 0.0001 | 확인 |
 | B173nb_b10 | ALS | all_0_3 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 32441 | -0.0205 | 0.0001 | 확인 |

@@ -10,9 +10,11 @@
   "running_training": "finish normally; no restart or interruption",
   "new_training": "defer until eight-arm core readout and handover are verified",
   "post_mode": "main mesh first; auxiliary virtual-view and axes remain pending",
-  "host_available_GiB": 64,
+  "host_available_GiB": 56,
   "stable_seconds": 60,
-  "post_container_GiB": 48,
+  "post_container_GiB": 40,
+  "original_post_memory_policy": {"host_available_GiB": 64, "post_container_GiB": 48},
+  "resource_policy_authority": "2026-10-27 user: 기준 바꿔서라도 해야지; checks/post_memory_56_40_v1/authorization.json",
   "cpu_container_GiB": 24,
   "loss_scoring_arms_training_settings_unchanged": true,
   "scientific_verdict": null

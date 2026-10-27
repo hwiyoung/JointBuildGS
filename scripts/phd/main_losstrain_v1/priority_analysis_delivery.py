@@ -97,7 +97,9 @@ def run(resume_readout=False):
             assert not list(Q.ROOT.glob('*_STOP.json')), 'preserve any new error'
             assert not state['stops']
             old=Q.ROOT/'validation_epoch_5.json'
-            if old.exists():shutil.copy2(old,ROOT/'validation_before_memory_policy.json')
+            if old.exists():
+                archived=ROOT/('validation_before_resume_'+Q.F.sha(old)[:12]+'.json')
+                if not archived.exists():shutil.copy2(old,archived)
             Q.validate(5)
         else:
             assert set(state['stops']) == set(MARKERS)
@@ -112,7 +114,7 @@ def run(resume_readout=False):
                 assert (Q.ROOT / name).read_bytes() == (history / name).read_bytes()
                 (Q.ROOT / name).unlink()
         record('PROCESSING_PRIORITY_READOUT', completed_training_reused=state['training_complete'])
-        Q.save(Q.ROOT / 'state.json', dict(**{k:v for k,v in state.items() if k not in ['at','status','stops']},
+        Q.save(Q.ROOT / 'state.json', dict(**{k:v for k,v in state.items() if k not in ['at','status','stops','priority_driver']},
                at=Q.F.now(), status='PRIORITY_ANALYSIS_DELIVERY', stops=[], priority_driver=str(ROOT/'state.json')))
         site, prior = cfg['new_readout_site'], cfg['prior']
         cpu('nojudge-cells', 'split_fate_cells.py', site, prior, 'nojudge_ALS_s0',

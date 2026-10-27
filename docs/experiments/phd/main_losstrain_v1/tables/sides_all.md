@@ -4,6 +4,150 @@
 
 | 단위 | 사전 | 판 | 범위 | 도착점 쪽 | 결과 쪽 | N | 넓이(m²) | 전체 N | 같은 쪽(%) |
 |---|---|---|---|---|---|---:|---:|---:|---:|
+| B0_b10 | ALS | lt_fixgt | unexplained | 사전 | 사전 | 11 | 0.751594 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | 사전 | MVS | 1 | 0.090984 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | 사전 | 그 밖 | 17 | 1.141258 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | 사전 | 면 없음 | 3 | 0.187796 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | MVS | 사전 | 6 | 0.416697 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | MVS | MVS | 28 | 2.196102 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | MVS | 그 밖 | 23 | 1.737913 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | MVS | 면 없음 | 4 | 0.268014 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | 그 밖 | 사전 | 3 | 0.204220 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | 그 밖 | MVS | 0 | 0.000000 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | 그 밖 | 그 밖 | 4 | 0.284715 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained | 그 밖 | 면 없음 | 0 | 0.000000 | 100 | 44.405556 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 사전 | 사전 | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 사전 | MVS | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 사전 | 그 밖 | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 사전 | 면 없음 | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | MVS | 사전 | 6 | 0.416697 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | MVS | MVS | 23 | 1.730891 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | MVS | 그 밖 | 14 | 0.974242 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | MVS | 면 없음 | 2 | 0.138403 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 그 밖 | 사전 | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 그 밖 | 그 밖 | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_1 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 45 | 53.091021 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 사전 | 사전 | 11 | 0.751594 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 사전 | MVS | 1 | 0.090984 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 사전 | 그 밖 | 17 | 1.141258 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 사전 | 면 없음 | 3 | 0.187796 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | MVS | 사전 | 0 | 0.000000 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | MVS | MVS | 0 | 0.000000 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | MVS | 그 밖 | 0 | 0.000000 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | MVS | 면 없음 | 0 | 0.000000 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 그 밖 | 사전 | 3 | 0.204220 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 그 밖 | 그 밖 | 4 | 0.284715 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_fixgt | unexplained_cell_2 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 39 | 38.950685 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 사전 | 사전 | 20 | 1.359086 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 사전 | MVS | 8 | 0.582197 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 사전 | 그 밖 | 11 | 0.719283 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 사전 | 면 없음 | 0 | 0.000000 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | MVS | 사전 | 7 | 0.483925 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | MVS | MVS | 51 | 3.909881 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | MVS | 그 밖 | 3 | 0.224920 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | MVS | 면 없음 | 0 | 0.000000 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 그 밖 | 사전 | 0 | 0.000000 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 그 밖 | MVS | 0 | 0.000000 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 그 밖 | 그 밖 | 0 | 0.000000 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained | 그 밖 | 면 없음 | 0 | 0.000000 | 100 | 72.382948 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 사전 | 사전 | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 사전 | MVS | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 사전 | 그 밖 | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 사전 | 면 없음 | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | MVS | 사전 | 7 | 0.483925 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | MVS | MVS | 35 | 2.551388 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | MVS | 그 밖 | 3 | 0.224920 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | MVS | 면 없음 | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 그 밖 | 사전 | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 그 밖 | 그 밖 | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_1 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 45 | 78.257829 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 사전 | 사전 | 20 | 1.359086 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 사전 | MVS | 8 | 0.582197 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 사전 | 그 밖 | 11 | 0.719283 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 사전 | 면 없음 | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | MVS | 사전 | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | MVS | MVS | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | MVS | 그 밖 | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | MVS | 면 없음 | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 그 밖 | 사전 | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 그 밖 | 그 밖 | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dyngt | unexplained_cell_2 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 39 | 51.082581 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 사전 | 사전 | 25 | 1.695168 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 사전 | MVS | 37 | 2.724359 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 사전 | 그 밖 | 12 | 0.828522 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 사전 | 면 없음 | 0 | 0.000000 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | MVS | 사전 | 1 | 0.067228 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | MVS | MVS | 22 | 1.678246 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | MVS | 그 밖 | 3 | 0.285771 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | MVS | 면 없음 | 0 | 0.000000 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | 사전 | 0 | 0.000000 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | MVS | 0 | 0.000000 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | 그 밖 | 0 | 0.000000 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | 면 없음 | 0 | 0.000000 | 100 | 46.342596 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 사전 | 사전 | 4 | 0.274917 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 사전 | MVS | 15 | 1.016874 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 사전 | 그 밖 | 2 | 0.141780 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 사전 | 면 없음 | 0 | 0.000000 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | MVS | 사전 | 1 | 0.067228 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | MVS | MVS | 21 | 1.566061 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | MVS | 그 밖 | 2 | 0.193374 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | MVS | 면 없음 | 0 | 0.000000 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 그 밖 | 사전 | 0 | 0.000000 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 그 밖 | 그 밖 | 0 | 0.000000 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_1 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 45 | 56.467674 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 사전 | 사전 | 21 | 1.420251 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 사전 | MVS | 8 | 0.579723 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 사전 | 그 밖 | 9 | 0.568195 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 사전 | 면 없음 | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | MVS | 사전 | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | MVS | MVS | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | MVS | 그 밖 | 1 | 0.092398 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | MVS | 면 없음 | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 그 밖 | 사전 | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 그 밖 | 그 밖 | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynsoft | unexplained_cell_2 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 39 | 53.381514 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 사전 | 사전 | 21 | 1.423004 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 사전 | MVS | 55 | 4.028731 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 사전 | 그 밖 | 11 | 0.764662 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 사전 | 면 없음 | 0 | 0.000000 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | MVS | 사전 | 5 | 0.340280 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | MVS | MVS | 6 | 0.567204 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | MVS | 그 밖 | 2 | 0.155413 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | MVS | 면 없음 | 0 | 0.000000 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 그 밖 | 사전 | 0 | 0.000000 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 그 밖 | MVS | 0 | 0.000000 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 그 밖 | 그 밖 | 0 | 0.000000 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained | 그 밖 | 면 없음 | 0 | 0.000000 | 100 | 27.340680 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 사전 | 사전 | 4 | 0.276242 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 사전 | MVS | 34 | 2.412273 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 사전 | 그 밖 | 1 | 0.067471 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 사전 | 면 없음 | 0 | 0.000000 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | MVS | 사전 | 2 | 0.140212 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | MVS | MVS | 4 | 0.364036 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | MVS | 그 밖 | 0 | 0.000000 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | MVS | 면 없음 | 0 | 0.000000 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 그 밖 | 사전 | 0 | 0.000000 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 그 밖 | 그 밖 | 0 | 0.000000 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_1 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 45 | 19.638998 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 사전 | 사전 | 17 | 1.146763 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 사전 | MVS | 8 | 0.551460 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 사전 | 그 밖 | 8 | 0.515880 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 사전 | 면 없음 | 0 | 0.000000 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | MVS | 사전 | 3 | 0.200067 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | MVS | MVS | 1 | 0.090984 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | MVS | 그 밖 | 2 | 0.155413 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | MVS | 면 없음 | 0 | 0.000000 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 그 밖 | 사전 | 0 | 0.000000 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 그 밖 | MVS | 0 | 0.000000 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 그 밖 | 그 밖 | 0 | 0.000000 | 39 | 46.521908 |
+| B0_b10 | ALS | lt_dynnow | unexplained_cell_2 · 표본 부족 | 그 밖 | 면 없음 | 0 | 0.000000 | 39 | 46.521908 |
 | B173nb_b10 | ALS | lt_fixgt | unexplained | 사전 | 사전 | 17 | 1.215624 | 19197 | 61.422021 |
 | B173nb_b10 | ALS | lt_fixgt | unexplained | 사전 | MVS | 20 | 1.392203 | 19197 | 61.422021 |
 | B173nb_b10 | ALS | lt_fixgt | unexplained | 사전 | 그 밖 | 20 | 1.345817 | 19197 | 61.422021 |

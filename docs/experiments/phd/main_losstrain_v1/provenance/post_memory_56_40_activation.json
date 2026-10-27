@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-27T17:09:05.667503+09:00",
+  "status": "ACTIVE_POSTPROCESSING",
+  "authorization": "checks/post_memory_56_40_v1/authorization.json",
+  "first_admission": {
+    "status": "ADMITTED",
+    "attempt": 0,
+    "available_GiB": 56.794151306152344,
+    "required_GiB": 56,
+    "wait_seconds": 60.05218385159969,
+    "stable_seconds": 60.05199328716844,
+    "required_stable_seconds": 60,
+    "effect": "execution scheduling only; no postprocessing parameter change",
+    "scientific_verdict": null
+  },
+  "container_limit_bytes": 42949672960,
+  "container_limit_GiB": 40,
+  "unit": "B0_b10/lt_fixgt_ALS_s0",
+  "training_settings_and_scoring_unchanged": true,
+  "scientific_verdict": null
+}

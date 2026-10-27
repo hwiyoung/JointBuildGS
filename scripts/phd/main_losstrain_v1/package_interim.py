@@ -142,13 +142,16 @@ def main():
     writer.writerows(rows)
     generated('run_inventory.csv', table.getvalue())
     now = datetime.now(timezone(timedelta(hours=9))).isoformat()
+    policy_name='checks/post_memory_56_40_v1/authorization.json'
+    policy=json.loads(payloads[policy_name])['policy'] if policy_name in payloads else dict(
+        id='resource_resume_v1',host_available_GiB=64,container_limit_GiB=48,stable_seconds=60)
     status = dict(task_id=cfg['task_id'], status=cfg['status'], snapshot_at=now,
                   live_state_at=state['at'], training_counts={k:counts[k] for k in ['COMPLETE','HEALTH_STOPPED','NO_RESULT','RUNNING','PENDING']}, required_runs=24,
                   requested_interim_verified=expected_scored,
                   full_measurement_complete=sum(r['full_measurement_complete'] for r in rows),
                   source_head=args.source_head,
                   source_policy='Current task files frozen with per-file hashes; source_head alone does not identify uncommitted generated data.',
-                  frozen_report=report_name, scientific_verdict=None)
+                  frozen_report=report_name, post_memory_policy=policy, scientific_verdict=None)
     generated('STATUS.json', json_data(status))
     generated('먼저_읽어주세요.md', f'''# PHD-MAIN-LOSSTRAIN-v1 중간 전달
 
@@ -184,7 +187,8 @@ scientific_verdict: null. 이 자료는 측정 결과이며 전체 방법론의 
 ## 이번에 바꾼 것
 
 진행 중 중간 전달 상태, 24판의 완료 단계 목록, 동일 파일을 한 번 고정해 두 ZIP에 넣는 포장 절차를 추가했다.
-손실 식·학습·채점·판·후처리 설정은 바꾸지 않았다. 기존 결과와 이전 전달 ZIP은 보존했다.
+후처리 실행 자원은 호스트 여유 {policy['host_available_GiB']} GiB 이상 {policy['stable_seconds']}초, 컨테이너 {policy['container_limit_GiB']} GiB다. 자원 변경 승인과 과거 조건은 checks/와 docs/에 보존했다.
+손실 식·학습·채점·판·후처리 기하 설정은 바꾸지 않았다. 기존 결과와 이전 전달 ZIP은 보존했다.
 ''')
     light_names = set(payloads)
     for p in sorted((OUT / 'patch_z').glob('*')):

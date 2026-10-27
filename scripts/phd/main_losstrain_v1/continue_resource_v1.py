@@ -47,6 +47,12 @@ def readout_schedule(post_pending, measurable):
         if scope and not all(ended(r) for r in scope):
             if not all(trained(r) for r in scope):
                 return dict(active=False,post=[],measure=[],post_may_start=False,training_scope=scope)
+            core_pending=[r for r in scope if not ended(r) and not (F.root_of(r)/'core_measure_PASS.json').exists()]
+            if core_pending:
+                measure=[r for r in core_pending if (F.root_of(r)/'post_stage_PASS.json').exists()]
+                post=[r for r in post_pending if r in core_pending and not (F.root_of(r)/'post_stage_PASS.json').exists()]
+                return dict(active=True,post=post,measure=measure,post_may_start=not measure,
+                            training_scope=scope,core_only=True)
             measure=[r for r in measurable if r in scope]
             return dict(active=True,post=[r for r in post_pending if r in scope],measure=measure,
                         post_may_start=not measure,training_scope=scope)
@@ -213,16 +219,18 @@ def post_one(r,gpu):
     if mode=='run':save(unit/'post_PASS.json',dict(at=F.now(),policy=policy['id'],scientific_verdict=None))
     print('POST PASS',r,mode,attempt,flush=True);return True
 
-def measure(r):
+def measure(r,core_only=False):
     unit=F.root_of(r)
     command=['python3',str(REPO/'scripts/phd/main_losstrain_v1/measure_run.py'),r['site'],r['prior'],unit.name]
+    if core_only:command.append('--core-only')
+    prefix='core_measure' if core_only else 'measure'
     tag=(r['site']+'-'+r['prior']+'-'+unit.name).lower().replace('_','-')
     for attempt in range(3):
-        start=time.time();log=unit/f'measure_resource_resume_{attempt}.log'
+        start=time.time();log=unit/f'{prefix}_resource_resume_{attempt}.log'
         assert not log.exists()
         if attempt:
-            history=unit/f'measure_before_resource_retry_{attempt}';history.mkdir()
-            for p in [*unit.glob('measure_*.log'),unit/'measure_progress.json']:
+            history=unit/f'{prefix}_before_resource_retry_{attempt}';history.mkdir()
+            for p in [*unit.glob(prefix+'_*.log'),unit/(prefix+'_progress.json')]:
                 if p.exists() and p!=log:p.rename(history/p.name)
         with log.open('w') as f:rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT).returncode
         if rc==0:return True
@@ -231,11 +239,11 @@ def measure(r):
             text=subprocess.run(['docker','events','--since',str(int(start)-1),'--until',str(int(time.time())+1),
                 '--filter','container='+name,'--format','{{json .}}'],capture_output=True,text=True).stdout
             events.extend(json.loads(x) for x in text.splitlines() if x.strip())
-        logs=log.read_text(errors='replace')+'\n'+'\n'.join(p.read_text(errors='replace') for p in unit.glob('measure_*.log'))
+        logs=log.read_text(errors='replace')+'\n'+'\n'.join(p.read_text(errors='replace') for p in unit.glob(prefix+'_*.log'))
         resource=any(x.get('Action')=='oom' for x in events) or any(x in logs.lower() for x in ['out of memory','cannot allocate memory','no space left on device'])
         event=dict(at=F.now(),run=r,attempt=attempt,exit_code=rc,resource_failure=resource,docker_events=events,
             training_stop_increment=0,scientific_verdict=None)
-        save(unit/f'measure_resource_failure_{attempt}.json',event)
+        save(unit/f'{prefix}_resource_failure_{attempt}.json',event)
         if not resource or attempt==2:
             save(ROOT/'measure_STOP.json',event);return False
         # Repeat only under the approved resource condition; no score/settings change.
@@ -314,7 +322,7 @@ def main():
                         if post_admitted(active):prioritize_post=False
                 if (ROOT/'post_STOP.json').exists():prioritize_post=False
                 if cpu is None and measurable and not post_active and not (ROOT/'measure_STOP.json').exists():
-                    r=measurable[0];cpu=(pool.submit(measure,r),r)
+                    r=measurable[0];cpu=(pool.submit(measure,r,core_only=schedule.get('core_only',False)),r)
                 counts=dict(training_health_stopped=sum((F.root_of(r)/'training_health_STOP.json').exists() for r in RUNS),training_no_result=sum((F.root_of(r)/'training_NO_RESULT.json').exists() for r in RUNS),training_complete=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
                     post_complete=sum((F.root_of(r)/'post_PASS.json').exists() for r in RUNS),
                     measurement_complete=sum((F.root_of(r)/'measure_PASS.json').exists() for r in RUNS))
