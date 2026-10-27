@@ -1,0 +1,36 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R8-SLIDE5-DRAFT",
+  "scientific_verdict": null,
+  "verified_at": "2026-10-27T14:19:56.301754+09:00",
+  "base_commit": "e8fc470c33d231c014997b3129449c722bca6733",
+  "script_sha256": "d8319247d1e57ebae4fe61ed013e095717af66972c37a769beeab85eeb890cee",
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pillow": "10.4.0",
+    "matplotlib": "3.9.2"
+  },
+  "checks": {
+    "source_hashes_match": true,
+    "full_frozen_sections": true,
+    "roof_origin_replay": true,
+    "roof_R6_exact_values": true,
+    "photo_projection_replay": true,
+    "reference_identical_per_pair": true,
+    "axes_identical_per_pair": true,
+    "complete_axis_coverage": true,
+    "text_inside_canvas": true,
+    "no_data_smoothing": true,
+    "no_training": true
+  },
+  "files": {
+    "figures/slide5_prior_image_pairs.png": {
+      "sha256": "4a5abc0b829c903b34d3949d2223e0588b717f1b9d1d0c8afa60b182eebe7818",
+      "bytes": 2100713
+    },
+    "previews/slide5_prior_image_pairs.png": {
+      "sha256": "2429cfb086932a01b9e4f7b9ea2a8d37ded1aea8a82fe40d1dd935f072e48808",
+      "bytes": 723268
+    }
+  }
+}

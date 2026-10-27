@@ -1,0 +1,23 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R8-SLIDE5-DRAFT",
+  "scientific_verdict": null,
+  "authorization": "2026-10-27 user approved a page-5 draft with two rows of matched prior/image sections",
+  "sources": {
+    "roof": {"path": "/repo/docs/experiments/phd/main_regionfig_v1/tables/영역예시_보정_숫자.json", "sha256": "7c4d216bf04b9958af25795bd20bd47d916b12755f8ef0574fd6fe820099d8a5"},
+    "roof_photo": {"path": "/docs/revision_06/figures/figS_e_aim_correct.json", "sha256": "d09284f6d9fdd84406ac51b333ada2813bd3fd4c8cfa819ca2e154b8a3639a5b"},
+    "wall": {"path": "/docs/revision_07/keep_section.json", "sha256": "55ef75fa1285ccbbac1e1d22522fc80f91d3a49c54aaeb18fbe08c5cb5fa0429"},
+    "wall_photo": {"path": "/docs/revision_07/figures/figS_e_aim_keep.json", "sha256": "30d02b4c2c28c73dc842b55622fb9e41d1a2b572c82470699569a013ec70b404"}
+  },
+  "selection": "Reuse the full frozen B173 example-a section and the full R7 candidate_0001 section. No new site, section, bin or result selection.",
+  "photo": "Reuse the same original image bytes, camera, rotation and native crop. Draw the exact section centre line only; no surface mask.",
+  "comparison": "Two rows; each repeats the identical reference in a prior panel and an MVS panel. Same axes and reference within each row; separate scales across rows.",
+  "roof_transform": "Reuse the exact existing reference_zero_model_m for all three height series; no fit or smoothing.",
+  "wall_transform": "Reuse exact R7 normal-coordinate bin medians; convert metres to centimetres and translate the along-section origin by +3 m only.",
+  "reference": "Current UAS LiDAR used only as evaluation reference; agreement is not independent truth validation.",
+  "wall_band": "Existing normal-direction tolerance of +/-20 cm around the reference bin medians, not a confidence interval.",
+  "display_px": [1920, 1080],
+  "export_scale": 2,
+  "palette": {"prior": "#C08A2B", "mvs": "#2C6AA0", "reference": "#3A4A5E"},
+  "new_training": false,
+  "new_method_results": false
+}
