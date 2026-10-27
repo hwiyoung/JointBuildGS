@@ -1,0 +1,50 @@
+{
+  "scientific_verdict": null,
+  "reviews": [
+    {
+      "round": "round1",
+      "case": "roof",
+      "agent": "/root/r12_roof_blind",
+      "image": "qa/round1/slide5_roof_surfaces_blind.png",
+      "image_sha256": "c0f1d174bde423527022408bbe0a81876db5633f52ed8af2529eb859f86060b3",
+      "prompt": "이 그림이 보여 주는 것을 한 문장으로",
+      "answer": "현재 사진에서 지정한 지붕의 같은 구역을 항공 LiDAR 사전 정보와 영상 기반 MVS 표면에서 표시하고, 같은 시점·축척·표면 표현으로 형상을 비교한 그림입니다.",
+      "assessment": "PARTIAL: recognized shape comparison, not height difference",
+      "context": "New agent, no conversation fork, one image only. Main claim title and summary metrics masked; source labels and visual guides retained."
+    },
+    {
+      "round": "round1",
+      "case": "wall",
+      "agent": "/root/r12_wall_blind",
+      "image": "qa/round1/slide5_wall_distances_blind.png",
+      "image_sha256": "dd0592aa8d132495cd1053d15de0711cd6113c951142567e626d0f1c37d5d1bd",
+      "prompt": "이 그림이 보여 주는 것을 한 문장으로",
+      "answer": "같은 건물 벽면에서 LoD2 사전 정보는 현재 드론 LiDAR 참조에 대체로 가깝지만, MVS 영상 깊이는 더 큰 거리 차이를 보인다.",
+      "assessment": "PASS: recognized larger MVS distance",
+      "context": "New agent, no conversation fork, one image only. Main claim title and summary metrics masked; source labels and visual guides retained."
+    },
+    {
+      "round": "round2",
+      "case": "roof",
+      "agent": "/root/r12_roof_final_blind",
+      "image": "qa/round2/slide5_roof_surfaces_blind.png",
+      "image_sha256": "6e0bb67b2e05e29ecdbf898008cb95c0ac7dfde3fbddd2b71f55e63bc2f0a43d",
+      "prompt": "이 그림이 보여 주는 것을 한 문장으로",
+      "answer": "같은 지붕 구역에서 사전 항공 LiDAR의 지붕은 현재 드론 LiDAR 참조 높이보다 높게 나타나고, 영상으로 복원한 MVS 지붕은 참조 높이에 가깝게 나타납니다.",
+      "assessment": "PASS: recognized prior height excess and MVS/reference proximity",
+      "context": "New agent, no conversation fork, one image only. Main claim title and summary metrics masked; source labels and visual guides retained."
+    },
+    {
+      "round": "round2",
+      "case": "wall",
+      "agent": "/root/r12_wall_final_blind",
+      "image": "qa/round2/slide5_wall_distances_blind.png",
+      "image_sha256": "4c10018c90098578f06ec3ebff3f9f754622ba4b14458a8391102ba1e6b8d2d7",
+      "prompt": "이 그림이 보여 주는 것을 한 문장으로",
+      "answer": "표시된 벽면 구간에서 사전 LoD2는 현재 드론 LiDAR 참조와 대체로 가깝고, 영상 기반 MVS 깊이는 더 큰 거리 차이를 보인다.",
+      "assessment": "PASS: recognized larger MVS distance",
+      "context": "New agent, no conversation fork, one image only. Main claim title and summary metrics masked; source labels and visual guides retained."
+    }
+  ],
+  "limitation": "A reader check supports readability only; it does not establish temporal cause, material cause, or independent geometric truth."
+}

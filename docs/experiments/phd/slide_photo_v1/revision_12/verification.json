@@ -1,0 +1,96 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R12-SLIDE5-SURFACES",
+  "scientific_verdict": null,
+  "status": "PASS",
+  "verified_at": "2026-10-27T18:34:11.382751+09:00",
+  "checks": {
+    "frozen_sources_config_display_and_render_script": true,
+    "all_crop_members_and_original_source_coordinates_replayed": true,
+    "same_rigid_camera_equal_metric_scale_and_raster_depth": true,
+    "near_surface_occludes_far_surface_and_empty_space_stays_empty": true,
+    "height_guide_fixed_midpoint_not_confused_with_region_median": true,
+    "identical_wall_patches_original_values_visibility_and_calibrated_support": true,
+    "original_photo_bytes_and_aspect_preserved": true,
+    "delivered_previews_match_final_reviewed_figures": true,
+    "original_and_revised_blind_answers_retained": true
+  },
+  "details": {
+    "prior_exact_replayed_triangles": 59889,
+    "mvs_exact_replayed_triangles": 6798967,
+    "prior_raster_depth_replay_error_m": 0.0,
+    "mvs_raster_depth_replay_error_m": 0.0,
+    "roof_local_arrow_m": 7.261913434381867,
+    "roof_separate_region_median_cm": 455.63414286315316,
+    "wall_shown_patches": 2585,
+    "wall_median_cm": {
+      "prior": 11.822217376520735,
+      "mvs": 34.3393669128418
+    },
+    "wall_projection_max_error_px": 0.0
+  },
+  "files": {
+    "figures/roof_pair_for_slide.png": {
+      "sha256": "ecbb104f4cb9784ca970299c14faa9e6b69c8ff4cdb3126fd55440ad3ac817a4",
+      "bytes": 1636539
+    },
+    "figures/slide5_roof_surfaces.png": {
+      "sha256": "d4837535e3078da82e45d37d4c9ed4d0e134e2b3ac94f83443ad7c921a90e7e7",
+      "bytes": 4305583
+    },
+    "figures/slide5_wall_distances.png": {
+      "sha256": "6ed3ddc58578fdfc0e0af845cd77316225abce8e68fd991144677090d4d285f2",
+      "bytes": 4210938
+    },
+    "figures/wall_pair_for_slide.png": {
+      "sha256": "819c3a41b5e19ad3ea8e9dee8916c40e07cb9f1644d46e04088baceff79945bd",
+      "bytes": 4149308
+    },
+    "previews/slide5_roof_surfaces.png": {
+      "sha256": "45dcfe82340d40e384e563f6385aeb7f07b8cc6975d7ab27e444f4b068171e5d",
+      "bytes": 1231450
+    },
+    "previews/slide5_wall_distances.png": {
+      "sha256": "c26dff4092d43b9e21da4a3a671a7db7d08e61fb376b9aa64c2e95b3a26b2a02",
+      "bytes": 1290446
+    },
+    "qa/round1/slide5_roof_surfaces_blind.png": {
+      "sha256": "c0f1d174bde423527022408bbe0a81876db5633f52ed8af2529eb859f86060b3",
+      "bytes": 1186560
+    },
+    "qa/round1/slide5_roof_surfaces_full.png": {
+      "sha256": "f0b1c12d92d21460c4332c815b86b70f9e0a579172caefc3d3e9aad1313220be",
+      "bytes": 1227766
+    },
+    "qa/round1/slide5_wall_distances_blind.png": {
+      "sha256": "dd0592aa8d132495cd1053d15de0711cd6113c951142567e626d0f1c37d5d1bd",
+      "bytes": 944680
+    },
+    "qa/round1/slide5_wall_distances_full.png": {
+      "sha256": "99de01c0c484e56a2032941c8303e163f538ceece500798425abe2499e08eb4e",
+      "bytes": 1005687
+    },
+    "qa/round2/slide5_roof_surfaces_blind.png": {
+      "sha256": "6e0bb67b2e05e29ecdbf898008cb95c0ac7dfde3fbddd2b71f55e63bc2f0a43d",
+      "bytes": 1182868
+    },
+    "qa/round2/slide5_roof_surfaces_full.png": {
+      "sha256": "45dcfe82340d40e384e563f6385aeb7f07b8cc6975d7ab27e444f4b068171e5d",
+      "bytes": 1231450
+    },
+    "qa/round2/slide5_wall_distances_blind.png": {
+      "sha256": "4c10018c90098578f06ec3ebff3f9f754622ba4b14458a8391102ba1e6b8d2d7",
+      "bytes": 1229645
+    },
+    "qa/round2/slide5_wall_distances_full.png": {
+      "sha256": "c26dff4092d43b9e21da4a3a671a7db7d08e61fb376b9aa64c2e95b3a26b2a02",
+      "bytes": 1290446
+    }
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pillow": "10.4.0",
+    "compiler": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
+  },
+  "scope": "Technical provenance, geometry, photo support and delivery. No scientific verdict or material-cause conclusion."
+}

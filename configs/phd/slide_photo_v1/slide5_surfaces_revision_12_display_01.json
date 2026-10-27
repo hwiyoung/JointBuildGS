@@ -1,0 +1,11 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R12-SLIDE5-SURFACES",
+  "scientific_verdict": null,
+  "reason": "First blind roof reader recognized a shape comparison but not height change; wall reader recognized greater MVS distance. Keep the two complete surfaces and add a shared reference-height guide at the already fixed section midpoint.",
+  "roof_height_guide": "Use exact original binned prior, MVS and UAS-reference heights at the already fixed section midpoint. Project the reference point with the unchanged rigid camera. Draw a short horizontal dashed screen-space reference-height guide in each panel and a vertical dimension arrow from prior height to reference height in the prior panel. This is a diagrammatic height marker for one XY location, not a measured roof contour or a whole-building constant plane. Do not label that local arrow with the regional 4.56 m median.",
+  "roof_leaders": "Short local labels identify prior roof, image roof and the photo comparison area. The footer explicitly identifies 4.56 m as the original correction-area median, not the arrow length.",
+  "wall_photo": "Preserve the same selected photo, patches and values. After clipping the requested contextual crop width to the native photograph, restore the target 1.45 aspect by setting crop height to width/1.45, bounded by the image. Retain every shown patch; this removes excess empty ground and side margins.",
+  "selection_changed": false,
+  "coordinates_changed": false,
+  "metrics_changed": false
+}
