@@ -1,0 +1,826 @@
+{
+  "at": "2026-10-27T11:55:45.402669+09:00",
+  "task_id": "PHD-MAIN-REGIONFIG-v2-SIX3",
+  "config_sha256": "5419c0cd59cb7df5728b9318d2d0d1f720afabb9764ffec0860d520309605fca",
+  "inputs": [
+    {
+      "path": "/cfg/regionfig_v2.json",
+      "sha256": "aa0e7971144d322e776c5d05fb0cd8baf30f9135f83b5121e953963c0bf6d4bf"
+    },
+    {
+      "path": "/cfg/regionfig_v2.lock.json",
+      "sha256": "f0e918372285fd47e64e269242a6a8f751fd569e159541b97c5d02e41a026cd1"
+    },
+    {
+      "path": "/payload/joined_ALS.npz",
+      "sha256": "6148cd5c1d8234976522d84f3f75d3db1f421c3951a4826d33b4c6117f913e6c"
+    },
+    {
+      "path": "/payload/joined_LoD2.npz",
+      "sha256": "ed429b85420e96fe6907889fea6ad9dd3983b1cdde08de59d93c5ee2f1981759"
+    },
+    {
+      "path": "/payload/input/ALS_sites.npz",
+      "sha256": "2209c54db01127107cafea91570ba607c6eb0803725c98945e7382ce84c2c575"
+    },
+    {
+      "path": "/payload/input/LoD2_sites.npz",
+      "sha256": "d769ece96663c34e2098caaeb175af4bc561a95a9894129ef2a59feab1b570c9"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/sparse/cameras.bin",
+      "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/sparse/images.bin",
+      "sha256": "54203353363a6e72edb1fc8af5eb610ab4b50d7d76408f85f3d54bdc6f57ea0c"
+    }
+  ],
+  "protected": [
+    {
+      "path": "/docs/figures/crops/1_검사기반.png",
+      "sha256": "e6f07ca4889d3612e70c9b53fc483b704560a87a6ec38a657bcb0e19cfec366d"
+    },
+    {
+      "path": "/docs/figures/crops/1_범주별.png",
+      "sha256": "22250d5b1628b4bf863c4afc511a84c2fa3ca8c102eb84f72f5d5c74660f6534"
+    },
+    {
+      "path": "/docs/figures/crops/1_북쪽원본.png",
+      "sha256": "9d0b14c45d5ea3f9cea85dd77025de1a78245b29ebc3b55e2735ae01856396c3"
+    },
+    {
+      "path": "/docs/figures/crops/1_사진검사.png",
+      "sha256": "8a25e28bbd61d2e90140e87fd509fb4d4a6efa4165f67e593ba163fe0682c8b7"
+    },
+    {
+      "path": "/docs/figures/crops/1_영역.png",
+      "sha256": "a98307250a4a9b1d0df2f6da2213d7d65f3e8b3e717bee68dee25debbf185f26"
+    },
+    {
+      "path": "/docs/figures/crops/1_원본.png",
+      "sha256": "54e4e7dd6bb786c789ed7dc3fd2eab4dd0a5b353eb7496a4adaae1bfdca72dbe"
+    },
+    {
+      "path": "/docs/figures/crops/2_검사기반.png",
+      "sha256": "d40585bf1ed0a19ac2c12356834d5f3c3821123134a625fb625e1473f7b7d768"
+    },
+    {
+      "path": "/docs/figures/crops/2_범주별.png",
+      "sha256": "6659728cdba8e861bf44be066c9a7215672e661addcc79f6214580d726866ac7"
+    },
+    {
+      "path": "/docs/figures/crops/2_북쪽원본.png",
+      "sha256": "9185b7d33b5b8cd3b877401dbf3925e8757dc022b59c0c5ef3b221886114e49c"
+    },
+    {
+      "path": "/docs/figures/crops/2_사진검사.png",
+      "sha256": "502798834506182402f68940ff594eb4839cacdaa2608e055c1e26eabf6c4461"
+    },
+    {
+      "path": "/docs/figures/crops/2_영역.png",
+      "sha256": "d34f6a651a6dcc8b5f3856335b622abd4af72c41d8afa3478732a9a087179250"
+    },
+    {
+      "path": "/docs/figures/crops/2_원본.png",
+      "sha256": "32703a69ea83535f0ba717ab503428a1b0bba45e8f8eb91a572f3053e3594307"
+    },
+    {
+      "path": "/docs/figures/crops/3_검사기반.png",
+      "sha256": "0c096a218715f13508b883b1e4c7187bfda46b1e415b6007c34ddfceb16e7f32"
+    },
+    {
+      "path": "/docs/figures/crops/3_범주별.png",
+      "sha256": "9741e942ceefbb696e7f6f47e0c4132470ed36517e06ebecdea043c42acca5ca"
+    },
+    {
+      "path": "/docs/figures/crops/3_북쪽원본.png",
+      "sha256": "04bbb66aed9adea838a5dceedc9fe27944d8978b92228ccf8021fa9b34f0fc51"
+    },
+    {
+      "path": "/docs/figures/crops/3_사진검사.png",
+      "sha256": "af0ec2285726c55fad6a6366e4734f7f35f60f9569f297ae3fd9a8fd22da91e8"
+    },
+    {
+      "path": "/docs/figures/crops/3_영역.png",
+      "sha256": "1b0adc3f349abbc21d4e50aa07ee1aee50d2dab57753eff380954776c1d4941f"
+    },
+    {
+      "path": "/docs/figures/crops/3_원본.png",
+      "sha256": "9ce52dfb120c82929a06a034a52da2ab3002c3801b0b53dad5639b68a72bb75b"
+    },
+    {
+      "path": "/docs/figures/crops/4_검사기반.png",
+      "sha256": "7f2d51fcec5e5e992cc4f0da6b80619b4dc8652d40f79a2f548e3bb13d65dbef"
+    },
+    {
+      "path": "/docs/figures/crops/4_범주별.png",
+      "sha256": "86b3364872838c6ceef87d8d16ddc3f281d47e478f5d2394d607a63a6f94f98e"
+    },
+    {
+      "path": "/docs/figures/crops/4_북쪽원본.png",
+      "sha256": "f926481828c2626d6a3b39ec48756a7d325ab5f2f1adcbe2b34e84b781e0b085"
+    },
+    {
+      "path": "/docs/figures/crops/4_사진검사.png",
+      "sha256": "bd0f5f4984cde09948ab0ccb60c0f9f651d6f0f970b8ff16bbe30b2c571c4a9d"
+    },
+    {
+      "path": "/docs/figures/crops/4_영역.png",
+      "sha256": "98bea9ee8a04cbd1992ab09b377284acea086f06b6cf433762bf6a8aadfd4bec"
+    },
+    {
+      "path": "/docs/figures/crops/4_원본.png",
+      "sha256": "71bd24ef32acbd8b49d1e463381a218fa303dfc80091478ad11986791788edee"
+    },
+    {
+      "path": "/docs/figures/crops/5_검사기반.png",
+      "sha256": "5b243d9c19a6ac807bcf3a15c28af9b70f0f59ea31ef0db7375de96e2ddaa9fb"
+    },
+    {
+      "path": "/docs/figures/crops/5_범주별.png",
+      "sha256": "8fb13375ef5d41dd85ad5cca0368c1af446b9639f1e58d49d4cfe48f9ebbc3f1"
+    },
+    {
+      "path": "/docs/figures/crops/5_북쪽원본.png",
+      "sha256": "88df5db88d432a2a92700ea192c279cc304c89f97cb54426b045fb8881b6721a"
+    },
+    {
+      "path": "/docs/figures/crops/5_사진검사.png",
+      "sha256": "6e7f548943479a46b0fb5c172e217442d6630c1789518d96d74df28350797d91"
+    },
+    {
+      "path": "/docs/figures/crops/5_영역.png",
+      "sha256": "fc81df510507bd62c65b5a2729bdbe01de80cbcbd61bf6d214001f3fe6ba1a6d"
+    },
+    {
+      "path": "/docs/figures/crops/5_원본.png",
+      "sha256": "71a0bb78a0ed0c1086d4586b58f810fe4830454a66a36557aacce1a71f1f2088"
+    },
+    {
+      "path": "/docs/figures/crops/6_검사기반.png",
+      "sha256": "1e14f0c00248352cf6f86bf2265ec22620cfc1ae0f864741eccea8e9884e925e"
+    },
+    {
+      "path": "/docs/figures/crops/6_범주별.png",
+      "sha256": "60f7b913ee5924ea2216f1699e2c6ab2aa850b8efb897aa8eeffb55c659154ba"
+    },
+    {
+      "path": "/docs/figures/crops/6_북쪽원본.png",
+      "sha256": "462f9e948f7ff6368d4f67e471fab9301c205e0fac87776631e7a031074d3349"
+    },
+    {
+      "path": "/docs/figures/crops/6_사진검사.png",
+      "sha256": "356e31aaa7d6be70e5c5b669308ca28cd36ce526f533c6e6d6a6da615ac50f84"
+    },
+    {
+      "path": "/docs/figures/crops/6_영역.png",
+      "sha256": "cfa1bac535eb2df7ad7df39419ac4bee62931051f2eeba291711f6db26720cac"
+    },
+    {
+      "path": "/docs/figures/crops/6_원본.png",
+      "sha256": "76a0c5c91880e75b00d6c698d44c44b3832c95c15168b3c96fdcf54f52b53f4f"
+    },
+    {
+      "path": "/docs/figures/crops/7_검사기반.png",
+      "sha256": "80ba5421a3147a402579a9707a7b19750734d1981399dd1b8e49ca382af37be8"
+    },
+    {
+      "path": "/docs/figures/crops/7_범주별.png",
+      "sha256": "06cdaf6a26656768b2580a03895b9fb4c35f55c58e3194972afb313bf4a506a3"
+    },
+    {
+      "path": "/docs/figures/crops/7_북쪽원본.png",
+      "sha256": "b65cfa3207d114e49a1ae9b2b18370e7a04e5fa6a4bc26cec06b92038fbe3e49"
+    },
+    {
+      "path": "/docs/figures/crops/7_사진검사.png",
+      "sha256": "8fe7720aa654d1432fba4a167cb9a558472768b2d6441eb6e791d0b19eb81e69"
+    },
+    {
+      "path": "/docs/figures/crops/7_영역.png",
+      "sha256": "73a42d4ccb51f02a3c375f40b31d65ba966340922b4be7807a365ce2002b2148"
+    },
+    {
+      "path": "/docs/figures/crops/7_원본.png",
+      "sha256": "f6907e015fa78153aa23be9c202aa62ef41b46467ace4a7f733683ad81ac3eca"
+    },
+    {
+      "path": "/docs/figures/crops/8_검사기반.png",
+      "sha256": "a1d5a5f1f090e9d2bcec575cf92d6c326e2b710ee5f5a1f7331572868964afa7"
+    },
+    {
+      "path": "/docs/figures/crops/8_범주별.png",
+      "sha256": "019ec59e2d40887fda5651cc2c5b188f96f5c8f5a320138058ccaa5602d7b25b"
+    },
+    {
+      "path": "/docs/figures/crops/8_북쪽원본.png",
+      "sha256": "170489a5a6fd4efef373a193672828289c73de24812379976a1bb8d359aff82b"
+    },
+    {
+      "path": "/docs/figures/crops/8_사진검사.png",
+      "sha256": "c8abc35b7ed38ce869c2bff37b8fb57355e608def69d8797bd73bc0738d1515a"
+    },
+    {
+      "path": "/docs/figures/crops/8_영역.png",
+      "sha256": "1c00a740470f3488a38c866310e964287004d13223d2cf125d49b1410c392133"
+    },
+    {
+      "path": "/docs/figures/crops/8_원본.png",
+      "sha256": "d44319be034f9d42e055d7bcb5f49b6a3b8005577fbc68d11a9b770e9498b358"
+    },
+    {
+      "path": "/docs/figures/검토용_5_제목숨김.png",
+      "sha256": "92e86b75d490fdbd806734ecec52194af99d9db00ddd1f62f9274d115585e2c6"
+    },
+    {
+      "path": "/docs/figures/검토용_6_제목숨김.png",
+      "sha256": "f1bb935dc8c532fdd432f1d53601551e5395f96118687b1168612f17c212c63d"
+    },
+    {
+      "path": "/docs/figures/영역표본_1_다듬기.json",
+      "sha256": "ba328d966b1b22cd3c5c2e0e3ac2ffc3787de8350ff4e16a62790a2d9fafc6a8"
+    },
+    {
+      "path": "/docs/figures/영역표본_1_다듬기.png",
+      "sha256": "cd27fc0273eed9a57c31c74e1a3bbb3d663b5c873690c9b5acce51bb1dfdc7ea"
+    },
+    {
+      "path": "/docs/figures/영역표본_2_보정_실제변화.json",
+      "sha256": "f0264cc1bbd8707a19acf1b791956c0260c2b6388ba6b072f480b331b807cbd4"
+    },
+    {
+      "path": "/docs/figures/영역표본_2_보정_실제변화.png",
+      "sha256": "8c205f5dcc2b9864ffcaea23a23f4d39eed6de0017ac6251918f6dbc7820b99f"
+    },
+    {
+      "path": "/docs/figures/영역표본_3_보정_단순화.json",
+      "sha256": "9dc0eb3e8bbe52174f42b6feefcd01886d7587b93f55b25904537df7c5f265f7"
+    },
+    {
+      "path": "/docs/figures/영역표본_3_보정_단순화.png",
+      "sha256": "d269e09c712ced079be6743c9d2d26fc369531cb53c85653e2240a8102e1244b"
+    },
+    {
+      "path": "/docs/figures/영역표본_4_보존.json",
+      "sha256": "39f08ccd2889f48dc271373a6d27d29aca2b4b5ecf224a7ccecf904b02fde744"
+    },
+    {
+      "path": "/docs/figures/영역표본_4_보존.png",
+      "sha256": "e4c849426cdf21f1de176502a3750d2e5b7dedac976de247b172c7fc1b57d425"
+    },
+    {
+      "path": "/docs/figures/영역표본_5_보존_사진반박.json",
+      "sha256": "735dfeb8e42dec182142da3c63778cd4a716bced689c417ebe146772174cc202"
+    },
+    {
+      "path": "/docs/figures/영역표본_5_보존_사진반박.png",
+      "sha256": "cecc7c4c97e1bee4a23cb8d248309f0a17cd55a3f16ade08fca524e603bc9566"
+    },
+    {
+      "path": "/docs/figures/영역표본_6_보존_사진지지.json",
+      "sha256": "57265c75aa5490427e028e895bcb6d419d0e1888a8d79fe157c1d5b0e073b318"
+    },
+    {
+      "path": "/docs/figures/영역표본_6_보존_사진지지.png",
+      "sha256": "6d47bb6ef2a8fc040311e5b97b958df1436c544739536c929213d493773414ea"
+    },
+    {
+      "path": "/docs/figures/영역표본_7_상속_비가시.json",
+      "sha256": "3dfcdec495d3f9fd4c941b0a11c07f7811ebb859753dfd8367c4198b70c8a8cd"
+    },
+    {
+      "path": "/docs/figures/영역표본_7_상속_비가시.png",
+      "sha256": "e84e9b830a2214dbe88a3c44b75429c7c284b3aa589740a34ecada929ea206c6"
+    },
+    {
+      "path": "/docs/figures/영역표본_8_상속_결측.json",
+      "sha256": "f97bce45807b33d01b34d808180a794ac74e6b825180587c37a5bfac7c0aa5df"
+    },
+    {
+      "path": "/docs/figures/영역표본_8_상속_결측.png",
+      "sha256": "23f8e8e93b1886e07c21f8d1f76728d29aa1460bc6b47e4d4b03fe51504eedaa"
+    },
+    {
+      "path": "/docs/representative_v1/index.html",
+      "sha256": "6ee3d9a965f333d7b186f2ce4125900aaf037f076c039a8db2c32e658363755c"
+    },
+    {
+      "path": "/docs/representative_v1/issues.md",
+      "sha256": "487879626288e5875878fda38c4d32504604413190c22f187de72b1cd34b42a7"
+    },
+    {
+      "path": "/docs/representative_v1/photo_shortage_trace.json",
+      "sha256": "2b55f619032eb7369ce054cfdd5df913c1272b8e762a8438cd249c635361e52d"
+    },
+    {
+      "path": "/docs/representative_v1/provenance.json",
+      "sha256": "bb328caddac1029ad796d02ecd0594f5ff4779c2029c7202207c96238dc6f755"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/final_review.md",
+      "sha256": "60f8a6f13a15e50acf30f6ee69b6488d126702229cb033e69f688e328bde761f"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/pilot/images.json",
+      "sha256": "faefcd41538cd35d1e8ab65ca5618227230efccddd3c4e52fc9b079ab4ac85a3"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/pilot/검토용_2.png",
+      "sha256": "72da4f579e371839bba0d86bcd386f0940278f7a174d75c7863e09a51c66db0f"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/pilot/검토용_5.png",
+      "sha256": "32e45831b44f2a0832231f125fa9bd91ba583923d07a6a0e4ac9d5fe5ae7d751"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/pilot/검토용_7.png",
+      "sha256": "7dbf4a89f231d975951f86cabc07fa407e088864313966f6b8b645ff54d1e908"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/pilot_review.md",
+      "sha256": "5b2ed068cd410685a5581606bdcaf6db92d1575790d2818ff5b1afce3a7ce02b"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/revision1/images.json",
+      "sha256": "2342a87bdf5f815207e008ece60194363e50728db34bdd2c21464dcccf2f0581"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/revision1/검토용_2.png",
+      "sha256": "327bb5a540e2c1f87933d5a6742e174a69f64d624000d6688513f4fb4592b32d"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/revision1/검토용_5.png",
+      "sha256": "1845bd5cfacfbd5df699299277def8ecfdf9b173081ee7494c23485388113f6a"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/revision1/검토용_6.png",
+      "sha256": "2318db782e1e7117dbee604f17f950ecc89e0eac20db3dbe1d89eedce4874b14"
+    },
+    {
+      "path": "/docs/representative_v1/reviews/revision1/검토용_7.png",
+      "sha256": "7f9af8e5f293d57a028c802112fbba5a415936eae26b0242674152ad376a668c"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T004958-94d58088-rep-prepare.json",
+      "sha256": "def268bf0746a5906c178618a342f1755743a39872562c090c80be067890f13f"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T004958-94d58088-rep-prepare.log",
+      "sha256": "f032b6577cf20753ee4b9dad443f6382109046d5605a3b1b43fb99e20b0c49f4"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005243-fea8a832-rep-pilot2.json",
+      "sha256": "aaebd837ddebe1e6ff0ec36905f8bf54e548ccb18e114e48b5b0f72ce820c2ba"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005243-fea8a832-rep-pilot2.log",
+      "sha256": "f194a57e38133f1333cf5a4e451091092c31dde467913fa517989bd1fc778fca"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005307-867796d8-rep-pilot5.json",
+      "sha256": "7f67c9f2864d92f280b9fa6fefa16627f05f0009e9e5fe57d73a4cb6472399a6"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005307-867796d8-rep-pilot5.log",
+      "sha256": "67e5124a27c29f3b29b92a9a1fb80941e8f5a4ff1f1ba4e88df7ce77941ce909"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005327-12e088d8-rep-pilot7.json",
+      "sha256": "c3047c5bfda72326968edd8fe8e73a7c34d900836a661265095513cfdbf12441"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005327-12e088d8-rep-pilot7.log",
+      "sha256": "bcf1b8f1ff527918ce8698d19d5ef49aabc89486bc218adb87470bbf9c472168"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005427-859a162a-rep-pilots-final.json",
+      "sha256": "a64c13289770d9a6c839005ed581bf7044f0d41b05845ca7de786a02f457a0ba"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005427-859a162a-rep-pilots-final.log",
+      "sha256": "931417262418d886a5e3b74142a1691f359ec1faed090436d60eb50529ef22c4"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005506-85c317b8-rep-trace.json",
+      "sha256": "0cae567216e79734643eebb1589de80f158485a6ab1c11e143e0d862c214fd06"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005506-85c317b8-rep-trace.log",
+      "sha256": "d5ef17213763edebf9ed620957542b71dd667396aaa6361fd2907501661f4b93"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005659-f7cb0f98-rep-expand.json",
+      "sha256": "95f50a454037a2f903891f973e418f493a9cd82cb0436df3c9193c02dcd44dfe"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T005659-f7cb0f98-rep-expand.log",
+      "sha256": "a85d494207461ebd367bcdc56e3c36effbc6aba574a196b3ba7467cf15f2b3f9"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010009-84038390-rep-revision1.json",
+      "sha256": "9597d0613fa7132e7799d47712550d75c609db0369408379ba3ca3c449e36399"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010436-b33a781a-rep-final-render.json",
+      "sha256": "95c2a5205e136a7204abc1407c45572cb70bea442b1e1bd30573489084c05308"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010436-b33a781a-rep-final-render.log",
+      "sha256": "31d582d844b5bf3c939ddf43baff24f6e4fe7458a5967c6cdc05b3d7f1ee8574"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010542-dcf2df88-rep-verify.json",
+      "sha256": "17e51dfb1b371e7fbd25678e308e49bde3dece797fbe5d3d04cca464a83034ce"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010542-dcf2df88-rep-verify.log",
+      "sha256": "9b363aa442f9bf9ee614d0ffd3a80d91a71fedc3c7ce2244996d34d1f2287e1f"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010900-fd1f8075-rep-type-final.json",
+      "sha256": "2d5f67d55a568d9e8650eae41ee2ff9400e45780750a5cc6d233b6acf7bddaa0"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010900-fd1f8075-rep-type-final.log",
+      "sha256": "41c20e12409652607c55f02ac65af4ed3f299383c63ee110b5861e6d6f0d669c"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010956-bea9251d-rep-finish.json",
+      "sha256": "520a221c95125fc4299b89fbe065cc340d9ff422afe7bf0aa9115547a566498b"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T010956-bea9251d-rep-finish.log",
+      "sha256": "e3d6b57e965c82ceeb923c924a1357e89c9f587dc08d7715c6da1abd5997d9ad"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T011047-3a345634-rep-linkcheck.json",
+      "sha256": "d93d6ecfca171d4e5fbe1d22ed8355d2d9ba1042359d1701758190fb8afecd6a"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T011047-3a345634-rep-linkcheck.log",
+      "sha256": "502a45a0d4e7041693f117840a29405f9750159cc1b90e9ced79a9874d9e44f5"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T011200-3a8bf9a1-rep-package.json",
+      "sha256": "b441d332adfa1c09ff9fd4b686634b6b1934246ab44655c57d008244d66e6857"
+    },
+    {
+      "path": "/docs/representative_v1/run_receipts/20261027T011200-3a8bf9a1-rep-package.log",
+      "sha256": "b298b414ef1f37e3008dac24367c8858154c6ffdce2eccdfa47c59addc819f13"
+    },
+    {
+      "path": "/docs/representative_v1/runtime_receipts.json",
+      "sha256": "00410d3b95c92e1a82422c9bc3a1ac744d397784f6ddcf9510ff307c332688a8"
+    },
+    {
+      "path": "/docs/representative_v1/verification.json",
+      "sha256": "c2ca3ee1e5e7e0eddd5a8253a6c7b569348edf89b503bf30ed3e66cf1522ed1b"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_1.png",
+      "sha256": "dc9e4f4217fe15ecc228ef67e80345d26ab28e1ecdf94d3509ccac0ed5b3ed89"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_2.png",
+      "sha256": "6ea06156c7061f08e51fce1e49d75a4cff3206aee294152bd9625f4f364f714f"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_3.png",
+      "sha256": "5bc65fc574b90423881d4eb5d47f93317565eb71d3de7aea3eb401c469036bc2"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_4.png",
+      "sha256": "59e45302639dab347723fc16ee0763f20e18324a69c685ca4cf3b0154a1eecd6"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_5.png",
+      "sha256": "fe22a38b9db75fec02e75dd148d614fb36ac5fa32a4917b8ab0a70ea77c2a7ff"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_6.png",
+      "sha256": "a77c62b8230803513faca6ec1fcc1918a03c95642bf08e731fc2de6a783693d2"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_7.png",
+      "sha256": "1bd289cf89a09b4981d0519d78f81e0245394613a823ab41d4129e0fa485b9bc"
+    },
+    {
+      "path": "/docs/representative_v1/검토용_8.png",
+      "sha256": "ba05945c61b4b9033cfa61f33b32526c7fd4674fec5ad1bb7fda51d3276ecd6a"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_1.json",
+      "sha256": "85e5c5d8dd76404fb5dd452116091c6bbff24a041bb0972c76a8021fc5b95ee3"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_1.png",
+      "sha256": "21912733fb83e1814a4960f43bedc6f1ffbedf53221be9e07ed0302accf2fea5"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_2.json",
+      "sha256": "91ab0f9596949b0dbb6ecca82f9c712d8414076740d9ef84fb4074a070503e7b"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_2.png",
+      "sha256": "02f399cc71389c70e4a74f5664113d0736949632791bf668e69a10b9b0a5317e"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_3.json",
+      "sha256": "539412ac4af712ed0b1b600e7e50fcc4abd7c08aadc028238f32ccec4962f9a3"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_3.png",
+      "sha256": "4a72ff57b332c29636085cc3c0ae5ad77e25704196bce04cbb95b4690335c83b"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_4.json",
+      "sha256": "f60a7ecc3bd4660c8203a6310f7dc279d847611548d23566b62dc35a0b33c6dc"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_4.png",
+      "sha256": "eab3e12535a9b9734a9cca16c0469cce2cbfb77093729e633b4db739058cfd18"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_5.json",
+      "sha256": "5811a1ada42ce550539ac3909a78564bea992d9e04d30a50fd94a1e855caf80f"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_5.png",
+      "sha256": "d193fbafd606f9195735842dbd8c633eb23a359fbdd915886517ebe916ce0a28"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_6.json",
+      "sha256": "e6a9b42f87180128cec0afd3fc06bd8793e13ee435e48c7d48c01eaaf96ef73c"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_6.png",
+      "sha256": "5d513d79f6e74f2914612aee4af8c4bd498f60fee92e4cb8480fab5801529621"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_7.json",
+      "sha256": "0c8d43518b7b453767b5123f1798e704faa60836e08f9698cb8a592d20ce3de9"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_7.png",
+      "sha256": "cd4f4a4b35842083147f6f12f144d8cc2ddd7fa675a4694feb72a3d984f1a7ec"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_8.json",
+      "sha256": "1d0b7201ee54f1c67a3c5edc8ac1955bb5c8f5ef8a59652df64268599f007da4"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_8.png",
+      "sha256": "69851646046b19cbb00234bab63733e7a50b58526ed6a668337e38cb134c0b9c"
+    },
+    {
+      "path": "/docs/representative_v1/대표그림_보고.md",
+      "sha256": "0bb0b173f505533bcf50bc44148558b66207936b62995f90e10f78debcbd15bc"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_1.png",
+      "sha256": "e53aa54377324ff62a95cc46e9e5bb9b4b234db734bfc9c181004f4682ca2a73"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_2.png",
+      "sha256": "662f185993fdd6dd1dae75d957439501a7156273541a294f467df0702dc76a68"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_3.png",
+      "sha256": "6632c6b2ec2822f92c1b06c859fcd54a86dd587aa823b502c22b20b975838409"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_4.png",
+      "sha256": "1ac3c7a4055be11c19d546387188eeb877282280794fbc539111d56fc8af7e89"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_5.png",
+      "sha256": "f9237ee7284b5f813adbc3e281d9c7f0e37b3de290cbe1feadbd4938d3e6db04"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_6.png",
+      "sha256": "49a82800abbdfa89e4962aae32051d49a7540226a87a0ee66983d4745c9eebb5"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_7.png",
+      "sha256": "ca983f3cbdf983ad34892fdc5ecd7bd301212ab1fc61966bdb8bc135957de917"
+    },
+    {
+      "path": "/docs/representative_v1/미리보기_8.png",
+      "sha256": "53c46a8eec6e98beddb8ada550a98106d72ed9f8cae82c74b6d601de23d28ac2"
+    },
+    {
+      "path": "/docs/representative_v2/delivery_status.json",
+      "sha256": "ace8338441926a79ed98f27dabbd615a67c642405c39ba0998f82a05528008e3"
+    },
+    {
+      "path": "/docs/representative_v2/index.html",
+      "sha256": "bf19089b95e9fdc32ab786863f2d28be69bbfbfb7593abfb8b8fc1e7eed748d5"
+    },
+    {
+      "path": "/docs/representative_v2/issues.md",
+      "sha256": "c57a82d8b47fc8817460e05f47d28fff99a33b8b6ab24485cfb55f848700aa64"
+    },
+    {
+      "path": "/docs/representative_v2/provenance.json",
+      "sha256": "409333db0ae86acb78cf2284b8c5c0065b25ca78e85ce0933a7b2d0d18b37737"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T103632-d53602e5-rep2-alignment.json",
+      "sha256": "fa0ad753134f0d0ffefdd428299083b40dcb905d6a2646fd47902c4ae8533590"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104102-5da7bfc2-rep2-prepare.json",
+      "sha256": "a8bb567603bc5573f9c910d9308ab4e4f5078017ab07a0f6c2521449b94c80b9"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104117-85367d5f-rep2-draw2.json",
+      "sha256": "cb88c67a9d086ba68c361bcb8e8875867c92c9f037c5dbd1f2456f69e211eba7"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104135-530e7bd6-rep2-draw6.json",
+      "sha256": "add2f9ff70a1f1760f49d912605749e423a042e7caa38256e01974a8b9b2764b"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104244-81e354c9-rep2-final1.json",
+      "sha256": "0bba854a3f1546fd511438265fe3b2b1c4e7469cfdefc2fd6e851416ef445da2"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104249-434b3977-rep2-final2.json",
+      "sha256": "21f1a51f19d954c7b2caef295c69e9591094994059ff34eb5d39fffbb5638ef1"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104254-7709e07d-rep2-final3.json",
+      "sha256": "e4b90da773138edd1a9c512bc06a99f1f08eadf136cda32bf4b1a0c4c813eadb"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104259-bf0ce1dd-rep2-final4.json",
+      "sha256": "d316328b456b4d2aae612bb15975378d639371f835e64a0f11ac92c4bf49eef9"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104304-162e7e0f-rep2-final5.json",
+      "sha256": "7c4c5476e0cca587e0fdf368c975af1ed5b7ec8def7f301e3b136ec023969ba1"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104309-ec587783-rep2-final6.json",
+      "sha256": "9ec4c9c392c693b15eb8bb3767a7481eeeab838fdcf8f953b5885a9af9adb860"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104314-dde1b08b-rep2-final7.json",
+      "sha256": "4184fc9905403cca75e2e90fdef672142530bd13d9a12d22be77dc4ea96f279d"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104320-65595c1d-rep2-final8.json",
+      "sha256": "ce85569cd2663b41695ce2f8f44c7f4757c7703729b1f8dc7be03a0fd8f43f8d"
+    },
+    {
+      "path": "/docs/representative_v2/run_receipts/20261027T104336-57a082bf-rep2-verify.json",
+      "sha256": "8f8f5645b905839d0b15f2c0e898653f9936398923aa12ae87ab932a02e34850"
+    },
+    {
+      "path": "/docs/representative_v2/verification.json",
+      "sha256": "4bb6143e4edcf6991df8164da134f6fede1512db0f4ef103fd974d7c2a41a6e4"
+    },
+    {
+      "path": "/docs/representative_v2/verification_before_geometry_review.json",
+      "sha256": "83adc84dc8574400cae78c935f6343d6ed489b132226c3b0ed72cfdc1fd2c770"
+    },
+    {
+      "path": "/docs/representative_v2/visual_review.json",
+      "sha256": "e4dc770d2a71f006b5ebd72e3bf22036c979cd17cdaecc7bb11c3564cf2f3b23"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_1.json",
+      "sha256": "06fc350487321a92ff00c67af3aef9b0d00d21ddddd13d567d12d9e0363a2216"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_1.png",
+      "sha256": "4590556a5ce35ac4512bffdd9123bdb3a7283dee8601628fc89a8ad584cdb209"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_2.json",
+      "sha256": "14a27db7251ed1fb5864e3bb830e3fc41ec7642b95f153fcc1e823b8993f7f31"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_2.png",
+      "sha256": "ee407053610ecc603764fde88c6398465787126257409c35d4704a57d8c2a1c5"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_3.json",
+      "sha256": "975eed6f7c5c2aa518e37068de22d4a1c92678574607348ae9c65166b886ba52"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_3.png",
+      "sha256": "457963a59d2bae86946defb93bdf8c4b4a18f856075632465f2e1ad9b43c9970"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_4.json",
+      "sha256": "6b51ac5b5b4e7326af3c872a05da208d0fa300c40e2e052986eac4f35b0ade53"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_4.png",
+      "sha256": "bd396f9ef2f506a191a95b004278ff46dc351c644b1e35ac1a58e22b265f2062"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_5.json",
+      "sha256": "9a3e36bde6698e4f58d4233149fb785e33dcd7ba186670176ee9cc16985d957b"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_5.png",
+      "sha256": "42523756cb31d43d0aeb2cf3796b571c98c6d159238519b88f13598c164c922e"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_6.json",
+      "sha256": "0d83fe2db1d6fa4813fe94b2378df5203ae09360f863ca7309088bf788b0d2bc"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_6.png",
+      "sha256": "1cfe2ac203c297a1dde907aded7fb51e6e0843404dd7343096c3f3594d4c528c"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_7.json",
+      "sha256": "0bfbdbe65d4e1cfc7058ba52d82265b66772478cfaad05a2a85d84ef51ff18e4"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_7.png",
+      "sha256": "ca8b6a32991cb6f2252e6831e8a7c9f0723fa1606b33e985e48f0937f960d88b"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_8.json",
+      "sha256": "35af8253227dcfe290a713b823459a11abfc13ccd1a4e395c178a86b84758fc9"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_8.png",
+      "sha256": "938744f8fd3bc6d54d919f79b4ff845350bb45e88d0bdf836cca3748b7827042"
+    },
+    {
+      "path": "/docs/representative_v2/대표그림_보고.md",
+      "sha256": "788ed4e2df8839d6bd89944d789d032101eb2f87e5ee0898563ab311ac704bd3"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_1.png",
+      "sha256": "bbfedaefe2048d0333d316a625c7d58b7b1a508ec0175d87f47eef17903dc04c"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_2.png",
+      "sha256": "0cabef0d2b6b2384573a079d0fd386653d63b36c0179d5edb60ed6b5196509db"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_3.png",
+      "sha256": "edbe3e61d3db498c4543d029825231cf7567a1b2a115f722bdd7d395321d3c36"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_4.png",
+      "sha256": "d3848ea05664729a5f06e106908ade121817027fffa5c5d35ad1822e48844805"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_5.png",
+      "sha256": "e9593b671338daefa09c869a5b6c7ffb753a7a3107db7766038b0ca5808e7e43"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_6.png",
+      "sha256": "b38218f78c854fd9a774a7208d21601aa57a5b2e503f4fefd7e13374e99be0f1"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_7.png",
+      "sha256": "612af011ccf07f3d715931d0f6da5661d82e5d5686f0c2510716a1eabe9c760d"
+    },
+    {
+      "path": "/docs/representative_v2/미리보기_8.png",
+      "sha256": "639c6ae77856b234614f0ea5ac62c65d7774db6dffa30b4f6659c035bbd1232b"
+    },
+    {
+      "path": "/cfg/representative_v1/design.json",
+      "sha256": "d7e763601cc84709ceed37d70653ac9342e138cde8e38adea9dc75a33dec8981"
+    },
+    {
+      "path": "/cfg/representative_v1/design.lock.json",
+      "sha256": "81299917aea18643ec8d82fa1d779f117ab6fae7c3dd517b4e58b32bd0968a54"
+    },
+    {
+      "path": "/cfg/representative_v1/presentation_amendment_01.json",
+      "sha256": "691d9e128666114e480b7db412261c3c937aefa62fe044e5e9a4cf7e77b0fed3"
+    },
+    {
+      "path": "/cfg/representative_v1/presentation_amendment_02.json",
+      "sha256": "26b2c91615c09a3ef70246a12a6a8bf72ef03cf2b9f0eb55d307d113c19b30ef"
+    },
+    {
+      "path": "/cfg/representative_v2/presentation.json",
+      "sha256": "1063a7d284206a455c42397fe019e6975d9e75077b8ff8b41a5ca04428d80dc9"
+    },
+    {
+      "path": "/cfg/representative_v2/presentation.lock.json",
+      "sha256": "d7625d465f3b52344ad9384780111f75c3f4f2db566b8c55799b5b2d2b182ebe"
+    },
+    {
+      "path": "/cfg/representative_v2/spatial_section_2.json",
+      "sha256": "6d9329d71192a6a0a9a823c4785bb3f4616c0cb06921e050406fa42222d5542a"
+    }
+  ],
+  "source_head": "098748f95d149cfc57e00f22a3625c224bcaf837",
+  "scientific_verdict": null,
+  "previous_config_sha256": "8af6afb100b5d7ba46f2ee55cd9c154f8f5fb40a9e0fdb37cae0adb6c365728b",
+  "amended_at": "2026-10-27T02:59:12.047912+00:00",
+  "amendment_reason": "01: remove visually dense outlines after inspecting pilots 2 and 6; preserve numerical populations and selected source bytes."
+}

@@ -1,0 +1,31 @@
+{
+  "task_id": "PHD-MAIN-REGIONFIG-v2-SIX3",
+  "authority": "User: 진행해보자, after approving restoration of the original two-row, three-column comparison.",
+  "revision": "six_panel_v3",
+  "purpose": "Locate region types in real photographs, compare photo-check judgments and two supplied analytic loss minima, and inspect where preservation fails.",
+  "scope": "Use unchanged supplied values and original photos/crops. No training, new loss optimization, photo-check rerun, or holdout access. No A/S markers or single-patch verdict panel.",
+  "layout": {"inches": [20, 14], "dpi": 300, "preview_dpi": 95, "overlay_alpha": 0.32},
+  "panels": ["실제 사진과 영역", "사진 검사의 판단", "입력과 계산값의 공간 단면", "학습 전 계산 · 범주별 신뢰도", "학습 전 계산 · 사진 검사 신뢰도", "영역별 허용 범위 안의 넓이"],
+  "section": {
+    "xy": "Retain the original start/end XY and width for all eight cases. Do not choose a new line through the former A patch.",
+    "positions": "For each of the five layers independently, use centre + displacement * normal, including the horizontal displacement, before selecting the common spatial band.",
+    "bin_width_m": 0.25,
+    "aggregation": "Median vertical height in each actual-XY spatial bin; empty bins remain missing.",
+    "photo_guide": "Project the same section centreline using the available reference-bin heights. Break at missing bins. This is a position guide, not a verified visible roof edge.",
+    "prior_indexed_profile": "Preserved in previous deliverables; not reused as a spatially coincident section."
+  },
+  "photo_population": "All four overlays use exactly the same original-crop, calibrated, matched, roof-like, reference-known patch IDs. Values do not determine crop selection.",
+  "interest_outlines": "White outlines identify all patches of the case's region, additionally judgment=1 for case 5, judgment=0 for case 6, and judgment=1 plus cell=5 for case 8. No analytic outcome is used for this outline selection. Photo-panel rates use the outlined subset; the bar chart retains all original per-region rates and explicitly says whole photo.",
+  "evaluation": "Correctness is defined only by supplied reference and tau. Photo-check judgment is separate. Failure means supplied depth-loss-analysis failure, not trained-model failure.",
+  "scientific_verdict": null,
+  "cases": {
+    "1": {"title": "다듬기 · 두 자료가 허용 범위 안인 지붕", "scene": "밝은 지붕과 낮은 지붕이 맞닿는 경계. 기존 항공 LiDAR와 사진 기반 복원이 모두 허용 범위 안인 영역을 본다.", "question": "작은 차이를 조정한 두 계산값도 허용 범위 안에 남는가?", "note": "허용 범위 유지와 정밀도 향상은 다른 주장이다. 이 그림은 지붕 전체의 정밀도 향상을 입증하지 않는다.", "target_region": 0},
+    "2": {"title": "보정 · 기존 자료와 현재 면의 큰 높이 차이", "scene": "반복된 둥근 지붕의 경계. 기존 항공 LiDAR가 현재 참조면보다 높은 영역에서 두 신뢰도 설정을 비교한다.", "question": "사진 검사의 반박을 반영한 계산이 현재 참조면에 더 가까워지는가?", "note": "현재 사진만으로 철거·증축 등 변화 이력을 확정하지 않는다. 공간 단면은 각 자료의 실제 수평 이동까지 반영했다.", "target_region": 1},
+    "3": {"title": "보정 · 단순한 모델이 놓친 지붕 단차", "scene": "어두운 지붕과 밝은 띠 모양 지붕이 만나는 부분. 기존 지붕 모형과 현재 자료의 국소적인 높이 차이를 본다.", "question": "기존 모형이 낮게 둔 면을 두 계산이 얼마나 보완하는가?", "note": "자료의 일치는 독립적인 참값 검증을 뜻하지 않는다. 제공 참조값과 허용 오차 안에서 비교한다.", "target_region": 1},
+    "4": {"title": "보존 · 갈색 조각과 이음선이 있는 평지붕", "scene": "작은 갈색 조각과 이음선이 보이는 평지붕. 기존 면을 지켜야 하는 영역과 보존되지 않은 부분을 함께 본다.", "question": "사진 검사가 기존 면을 지지한 곳에서 계산도 기존 형상을 지키는가?", "note": "보존 영역 전체가 성공한 사례는 아니다. 허용 범위 안에 남아도 기존 면보다 오차가 커질 수 있다.", "target_region": 2},
+    "5": {"title": "보존의 실패 · 사진 검사가 기존 면을 반박함", "scene": "밝은 벽 옆, 어두운 띠에 가까운 지붕. 기존 면을 유지해야 하는데 검사가 반박한 영역의 계산을 확인한다.", "question": "검사의 반박을 반영하면서 보존해야 할 곳이 허용 범위를 벗어나는가?", "note": "실패는 학습 전 깊이 손실 계산의 실패다. 사진에 보이는 어두운 띠나 그림자를 실패 원인으로 단정하지 않는다.", "target_region": 2},
+    "6": {"title": "보존의 실패 · 사진 검사가 지지해도 지키지 못함", "scene": "흰 돌출물 옆의 평지붕. 보존 대상은 돌출물 옆 지붕면이며, 돌출물을 새로 복원하는 사례가 아니다.", "question": "기존 면을 지지하는 검사 판단이 계산에서도 보존으로 이어지는가?", "note": "실패는 학습 전 깊이 손실 계산에 한정한다. 사진의 돌출물에 평지붕의 오차나 판정을 옮겨 붙이지 않는다.", "target_region": 2, "scene_callout": {"display_xy": [65.0, 0.0], "label": "흰 돌출물"}},
+    "7": {"title": "상속 · 검사 사진과 복원 자료가 부족한 곳", "scene": "격자 모양 이음선이 있는 지붕 가장자리. 사진에 지붕이 보이더라도 검사 조건을 충족하는 사진은 부족할 수 있다.", "question": "사진 기반 복원이 없는 곳에서 두 계산은 기존 면을 그대로 사용하는가?", "note": "앞선 설명용 패치는 적격 사진 2장으로 최소 3장 규칙에 미달했다. 사진 부족을 물리적 비가시로 해석하지 않는다.", "target_region": 5},
+    "8": {"title": "상속 · 반박은 있지만 대체할 복원 자료가 없음", "scene": "격자형 유리면처럼 보이는 부분 사이의 어두운 띠. 검사는 기존 면을 반박하지만 사진 기반 복원이 없는 곳을 본다.", "question": "기존 면이 틀렸다는 판단만으로 새로운 면을 정할 수 있는가?", "note": "제공된 계산은 복원 자료가 없으면 기존 위치를 유지한다. 기존 값을 사용했다고 현재 형상이 확인된 것은 아니다.", "target_region": 4}
+  }
+}

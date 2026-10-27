@@ -1,0 +1,52 @@
+{
+  "task_id": "PHD-MAIN-REGIONFIG-v2",
+  "tag": "six3-prepare",
+  "started_at": "2026-10-27T11:50:11.699933+09:00",
+  "scientific_verdict": null,
+  "source_base_head": "098748f95d149cfc57e00f22a3625c224bcaf837",
+  "name": "jbgs-regionfig-v2-20261027t115011-831308bf",
+  "command": [
+    "python",
+    "six_panel_revision03.py",
+    "prepare"
+  ],
+  "admission_samples": [
+    {
+      "at": "2026-10-27T11:50:11.700231+09:00",
+      "available_GiB": 65.4482536315918,
+      "busy": "postprocess or large scoring holds lock"
+    },
+    {
+      "at": "2026-10-27T11:50:21.700857+09:00",
+      "available_GiB": 64.69721984863281,
+      "busy": "postprocess or large scoring holds lock"
+    },
+    {
+      "at": "2026-10-27T11:50:31.701538+09:00",
+      "available_GiB": 63.468204498291016,
+      "busy": "postprocess or large scoring holds lock"
+    },
+    {
+      "at": "2026-10-27T11:50:41.702249+09:00",
+      "available_GiB": 62.12745666503906,
+      "busy": "postprocess or large scoring holds lock"
+    },
+    {
+      "at": "2026-10-27T11:50:51.702956+09:00",
+      "available_GiB": 61.05565643310547,
+      "busy": "postprocess or large scoring holds lock"
+    },
+    {
+      "at": "2026-10-27T11:51:01.703770+09:00",
+      "available_GiB": 60.692604064941406,
+      "busy": "postprocess or large scoring holds lock"
+    },
+    {
+      "at": "2026-10-27T11:51:11.704456+09:00",
+      "available_GiB": 62.16917419433594,
+      "busy": "postprocess or large scoring holds lock"
+    }
+  ],
+  "status": "WAITING_FOR_RESOURCES",
+  "finished_at": "2026-10-27T11:51:11.704779+09:00"
+}
