@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "tsdf_execution": "spatial_tiles_same_geometry",
+  "validation": "/o/checks/tiled_post_v1/validation.json",
+  "voxel_m": 0.05,
+  "sdf_trunc_m": 0.25,
+  "depth_trunc_m": 300.0,
+  "tile_voxel_budget_GiB": 16,
+  "container_limit_GiB": 48,
+  "host_available_GiB": 64,
+  "stable_seconds": 60,
+  "preserve": ["all training views", "camera order", "box mask", "triangle coordinates and order", "RGB colours", "scoring rules"],
+  "scientific_verdict": null
+}

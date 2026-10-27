@@ -117,6 +117,14 @@ def next_attempt(unit,mode):
     paths=list(unit.glob(mode+'_attempt_*_receipt.json'))
     return 1+max((int(p.name.split('_attempt_')[1].split('_')[0]) for p in paths),default=-1)
 
+def post_admitted(r):
+    unit=F.root_of(r);mode=next_post_mode(unit)
+    if mode is None:return False
+    record=read(unit/(mode+'_resource_admission.json'),{})
+    return (record.get('status')=='ADMITTED' and record.get('required_GiB')==64
+            and record.get('required_stable_seconds')==60
+            and record.get('attempt')==next_attempt(unit,mode))
+
 def resource_evidence(command,rc,log,cidfile,start_epoch):
     cid=cidfile.read_text().strip() if cidfile.exists() else None
     ev=''
@@ -145,7 +153,7 @@ def post_one(r,gpu):
     command=P.docker('jbgs-lt-resume-post-'+str(gpu),gpu,'r17',r['site'],entry);idx=command.index(P.IMG)
     command[idx:idx]=['-v',f'{P.S0}:/s0:ro','-v',f'{P.DR}:/dr:ro','-v',f'{OUT}/runs:/out/stage1','-v',f'{P.S1}/defs:/out/defs:ro']
     cidfile=unit/f'{mode}_attempt_{attempt}.cid';assert not cidfile.exists()
-    command[2:2]=['--memory','48g','--cidfile',str(cidfile)]
+    command[2:2]=['--memory','48g','--cidfile',str(cidfile),'-e','JBGS_LT_POST_ATTEMPT='+str(attempt)]
     save(unit/f'{mode}_attempt_{attempt}_command.json',command)
     with (OUT/'checks/tsdf.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
@@ -156,7 +164,8 @@ def post_one(r,gpu):
         memory_limit_GiB=48,admission_available_GiB=64,admission_stable_seconds=60,**evidence,scientific_verdict=None)
     save(unit/f'{mode}_attempt_{attempt}_receipt.json',receipt)
     if rc:
-        records=[read(p) for p in unit.glob(mode+'_attempt_*_receipt.json')]
+        records=[read(p) for p in unit.glob(mode+'_attempt_*_receipt.json')
+                 if not p.with_name(p.name.replace('_receipt.json','_CANCELLED.json')).exists()]
         failures=sum(x.get('policy')=='resource_resume_v1' and x['exit_code']!=0 for x in records)
         final=not evidence['resource_failure'] or failures>=3
         event=dict(at=F.now(),run=r,stage=mode,attempt=attempt,failures_under_same_memory_policy=failures,
@@ -262,9 +271,8 @@ def main():
                 if prioritize_post and post_active:
                     active_posts=[x[2] for x in futures.values() if x[1]=='post']
                     for active in active_posts:
-                        admission=read(F.root_of(active)/'post_resource_admission.json',{})
-                        if admission.get('status')=='ADMITTED' and admission.get('required_GiB')==64 and admission.get('required_stable_seconds')==60:prioritize_post=False
-                    if (ROOT/'post_STOP.json').exists():prioritize_post=False
+                        if post_admitted(active):prioritize_post=False
+                if (ROOT/'post_STOP.json').exists():prioritize_post=False
                 measurable=[r for r in RUNS if (F.root_of(r)/'post_PASS.json').exists() and not (F.root_of(r)/'measure_PASS.json').exists()]
                 if cpu is None and measurable and not post_active and not (ROOT/'measure_STOP.json').exists():
                     r=measurable[0];cpu=(pool.submit(measure,r),r)

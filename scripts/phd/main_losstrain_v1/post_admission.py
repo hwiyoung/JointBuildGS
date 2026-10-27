@@ -2,6 +2,7 @@
 from contextlib import ExitStack, contextmanager
 import fcntl
 import json
+import os
 from pathlib import Path
 import time
 
@@ -25,6 +26,7 @@ def admit(record,root=Path('/o'),minimum_gib=64,stable_seconds=60,read_memory=me
             stable=0 if stable_since is None else clock()-stable_since
             admitted=available>=minimum_gib and stable>=stable_seconds
             state=dict(status='ADMITTED' if admitted else 'WAITING_FOR_MEMORY',
+                attempt=int(os.environ['JBGS_LT_POST_ATTEMPT']) if 'JBGS_LT_POST_ATTEMPT' in os.environ else None,
                 available_GiB=available,required_GiB=minimum_gib,wait_seconds=clock()-start,
                 stable_seconds=stable,required_stable_seconds=stable_seconds,
                 effect='execution scheduling only; no postprocessing parameter change',scientific_verdict=None)

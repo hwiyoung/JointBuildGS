@@ -1,0 +1,81 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "EQUIVALENCE_PASS_FULL_POST_PENDING",
+  "regions": [
+    {
+      "region": "center16",
+      "triangles": 2075204,
+      "vertices": 1158803,
+      "same_triangle_order": true,
+      "same_triangle_colours": true,
+      "same_file": true,
+      "same_vertex_order": true,
+      "legacy_peak_host_gib": 6.889,
+      "tiled_peak_host_gib": 2.346,
+      "score": {
+        "status": "PASS",
+        "exact_arrays": {
+          "patch_id": true,
+          "z": true,
+          "no_surface": true,
+          "side": true,
+          "in_eval": true,
+          "scoring_allowed": true
+        },
+        "evaluation_patches": 33212,
+        "unchanged_scorer_sha256": "cfd7ff8f758130d1d53b59c0e68557393ede304494a223d9fe6cb1cdfb7e3ad8",
+        "scientific_verdict": null
+      }
+    },
+    {
+      "region": "offset16",
+      "triangles": 1117869,
+      "vertices": 608920,
+      "same_triangle_order": true,
+      "same_triangle_colours": true,
+      "same_file": false,
+      "same_vertex_order": false,
+      "legacy_peak_host_gib": 6.424,
+      "tiled_peak_host_gib": 2.059,
+      "score": {
+        "status": "PASS",
+        "exact_arrays": {
+          "patch_id": true,
+          "z": true,
+          "no_surface": true,
+          "side": true,
+          "in_eval": true,
+          "scoring_allowed": true
+        },
+        "evaluation_patches": 33212,
+        "unchanged_scorer_sha256": "cfd7ff8f758130d1d53b59c0e68557393ede304494a223d9fe6cb1cdfb7e3ad8",
+        "scientific_verdict": null
+      }
+    }
+  ],
+  "full_volume_estimate": {
+    "onepiece_gib": 44.24,
+    "tiles": [
+      13.19,
+      10.43,
+      10.85,
+      9.84,
+      8.47,
+      6.8
+    ],
+    "interpretation": "voxel storage only; full-process peak not yet measured"
+  },
+  "source_promotion": {
+    "source": "scripts/phd/main_fill_v1/cdgs/tsdf_tiled.py",
+    "source_sha256": "14d74b7cdeb6d72dcad471e3e581834b4570b1746ef44349bc9cd2caefe937a1",
+    "promoted_to": "src/phd/streamed_tsdf.py",
+    "changes": [
+      "optional RGB inputs and exact colour propagation",
+      "stop if tile seam coordinates or colours differ",
+      "remove fill-task-specific GPU entry points"
+    ],
+    "scientific_verdict": null
+  },
+  "validation_sha256": "7becac4218e896193db239f7622e1a5aed4735e08900ecba4be215a04d6df352",
+  "scientific_verdict": null
+}

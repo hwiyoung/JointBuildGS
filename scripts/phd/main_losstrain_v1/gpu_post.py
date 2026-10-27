@@ -21,7 +21,17 @@ def main():
     assert result.startswith('lt_') and mode in ['post','run']
     G.model_dir=model_dir;G.scene_prior=lambda s,r:prior
     if mode=='post':
-        G.post(site,result)
+        execution=Path('/repo/configs/phd/main_losstrain_v1/post_execution_v1.json')
+        if execution.exists() and json.loads(execution.read_text())['tsdf_execution']=='spatial_tiles_same_geometry':
+            import tiled_post
+            original=G.GaussianExtractor.extract_mesh_bounded
+            def bounded(ext, **kwargs):
+                return tiled_post.extract(ext,G.box_of(site),Path('/out/stage1')/site/result/'post/tiled_tsdf',
+                                          site,result,prior,**kwargs)
+            G.GaussianExtractor.extract_mesh_bounded=bounded
+            try:G.post(site,result)
+            finally:G.GaussianExtractor.extract_mesh_bounded=original
+        else:G.post(site,result)
         torch.cuda.empty_cache()
         from utils.image_utils import psnr
         _,pipe,g,scene=G.load(site,prior,model_dir(site,result))
