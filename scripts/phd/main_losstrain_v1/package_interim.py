@@ -40,10 +40,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--revision', required=True)
     ap.add_argument('--source-head', required=True)
+    ap.add_argument('--config', default='interim_delivery_v1.json')
     args = ap.parse_args()
     assert args.revision.replace('_', '').isalnum()
     assert len(args.source_head) == 40 and all(c in '0123456789abcdef' for c in args.source_head)
-    cfg = json.loads(Path('/config/interim_delivery_v1.json').read_text())
+    assert Path(args.config).name == args.config
+    cfg = json.loads((Path('/config')/args.config).read_text())
+    verified_units=cfg.get('verified_units') or [cfg['verified_unit']]
+    expected_scored=cfg.get('expected_scored_arms',4)
+    verification_table=cfg.get('verification_table','tables/requested_interim_verification.json')
+    title=cfg.get('title','B173 항공 LiDAR 4판 중간 보고')
     locked = Path('/config/losstrain_v1.json')
     assert sha(locked) == json.loads(locked.with_suffix('.lock.json').read_text())['sha256']
     root = OUT / 'deliveries' / args.revision
@@ -76,6 +82,9 @@ def main():
                 add(p, prefix + '/' + p.relative_to(folder).as_posix())
     for name in ['streamed_tsdf.py', 'umap_order.cpp']:
         add(Path('/repo/src/phd') / name, 'src/phd/' + name)
+    for name in ['test_losstrain_analysis_priority.py', 'test_losstrain_post_memory_policy.py']:
+        test=Path('/repo/tests/phd')/name
+        if test.exists():add(test,'tests/phd/'+test.name)
     for p in sorted((OUT / 'runs').glob('*/*/*.json')):
         add(p, 'run_receipts/' + p.relative_to(OUT / 'runs').as_posix())
     for p in sorted((OUT / 'runs').glob('*/*/attempt_*/*.json')):
@@ -86,17 +95,17 @@ def main():
         add(p, 'run_receipts/' + p.relative_to(OUT / 'runs').as_posix())
     for p in sorted((OUT / 'checks').glob('*.json')):
         add(p, 'checks/' + p.name)
-    for folder in ['resource_resume_v1', 'requested_interim_readout_v1', 'tiled_post_v1', 'opacity_grace_v1']:
+    for folder in ['resource_resume_v1', 'requested_interim_readout_v1', 'tiled_post_v1', 'opacity_grace_v1', 'analysis_delivery_priority_v1', 'post_memory_56_40_v1']:
         for p in sorted((OUT / 'checks' / folder).glob('*.json')):
             add(p, 'checks/' + folder + '/' + p.name)
 
-    verification = json.loads(payloads['docs/tables/requested_interim_verification.json'])
-    assert verification['status'] == 'PASS_REQUESTED_INTERIM'
+    verification = json.loads(payloads['docs/'+verification_table])
+    assert verification['status'] == cfg.get('verification_status','PASS_REQUESTED_INTERIM')
     for item in verification['files']:
         name = item['path'].lstrip('/')
         assert hashlib.sha256(payloads[name]).hexdigest() == item['sha256'], name
     report_name = 'docs/' + cfg['frozen_report']
-    assert payloads[report_name] == payloads['docs/중간보고_v1.md']
+    assert report_name in {item['path'].lstrip('/') for item in verification['files']} or payloads[report_name] == payloads['docs/중간보고_v1.md']
     state = json.loads(payloads['checks/resource_resume_v1/state.json'])
     active = {(v['run']['site'], v['run']['prior'], v['run']['variant'])
               for v in state['gpu_jobs'].values() if v['kind'] == 'training'}
@@ -116,13 +125,14 @@ def main():
                                  full_post_complete=prefix + 'post_PASS.json' in payloads,
                                  full_measurement_complete=prefix + 'measure_PASS.json' in payloads,
                                  patch_score_available=score in payloads,
-                                 requested_interim_verified=(site == cfg['verified_unit']['site'] and prior == cfg['verified_unit']['prior'])))
+                                 requested_interim_verified=any(site == u['site'] and prior == u['prior'] for u in verified_units)))
     counts = Counter(r['training'] for r in rows)
     assert len(rows) == 24
     assert counts['COMPLETE'] == state['training_complete']
     assert counts['HEALTH_STOPPED'] == state['training_health_stopped']
     assert counts['PENDING'] == state['pending_trainings']
-    assert sum(r['patch_score_available'] for r in rows) == 4
+    assert sum(r['patch_score_available'] for r in rows) >= expected_scored
+    assert sum(r['requested_interim_verified'] for r in rows) == expected_scored
     assert all(r['patch_score_available'] and r['main_mesh_complete'] and r['training'] == 'COMPLETE'
                for r in rows if r['requested_interim_verified'])
     generated('run_inventory.json', json_data(rows))
@@ -133,8 +143,8 @@ def main():
     generated('run_inventory.csv', table.getvalue())
     now = datetime.now(timezone(timedelta(hours=9))).isoformat()
     status = dict(task_id=cfg['task_id'], status=cfg['status'], snapshot_at=now,
-                  live_state_at=state['at'], training_counts=dict(counts), required_runs=24,
-                  requested_interim_verified=4,
+                  live_state_at=state['at'], training_counts={k:counts[k] for k in ['COMPLETE','HEALTH_STOPPED','NO_RESULT','RUNNING','PENDING']}, required_runs=24,
+                  requested_interim_verified=expected_scored,
                   full_measurement_complete=sum(r['full_measurement_complete'] for r in rows),
                   source_head=args.source_head,
                   source_policy='Current task files frozen with per-file hashes; source_head alone does not identify uncommitted generated data.',
@@ -148,11 +158,11 @@ def main():
 총 24회 = 세 지역 × 두 사전 정보 × 네 판, 씨앗 0. 별도 보정 시험과 선택 판은 이 수에 포함하지 않았다.
 학습 완료가 모두 채점까지 끝났다는 뜻은 아니다. 정확한 각 판의 상태는 [목록](run_inventory.csv)과 [JSON](run_inventory.json)에 있다.
 
-먼저 [B173 항공 LiDAR 4판 중간 보고]({report_name})를 읽는다.
+먼저 [{title}]({report_name})를 읽는다.
 보존 면적·면 없음 넓이 등 8.1, 8.2, 지표별 문턱 8.4, 칸 0·2를 나눈 심긴 점 운명 8.5,
 [B173 날개 단면](docs/figures/section_B173nb_b10_ALS_0.png)이 준비되어 있다.
-추가 지표까지 포함한 전체 채점은 {status['full_measurement_complete']}판 완료다. 판 4의 가상 시점·부유점 등 추가 후처리와 다른 단위 채점은 미완료다.
-없는 결과는 0이나 완료로 해석하지 않는다. 현재 두 학습은 계속 실행 중이며 ZIP은 생성 시점의 고정 사본이다.
+핵심 패치 채점·비교 자료는 {expected_scored}판이다. 추가 지표까지 포함한 전체 채점은 {status['full_measurement_complete']}판 완료다. 미완료 가상 시점·부유점 등 추가 후처리와 다른 단위 채점은 목록에 구분했다.
+없는 결과는 0이나 완료로 해석하지 않는다. ZIP은 생성 시점의 고정 사본이며 이후 실행 상태는 바뀔 수 있다.
 
 ## 포함 범위
 
@@ -165,7 +175,7 @@ def main():
 
 ## 검증과 해석
 
-네 판 중간 결과 검증은 [검증 기록](docs/tables/requested_interim_verification.json)에 있다.
+{expected_scored}판 중간 결과 검증은 [검증 기록](docs/{verification_table})에 있다.
 단면과 채점 메시의 해시가 같고, 날개 단면의 시각 확인은 PASS다. 다른 그림의 검토 상태는 각 JSON에 적힌 상태를 유지한다.
 8.4의 기존 모은 변동 폭이 없는 지표는 자료 없음으로 보존했다. 단위 폭은 prop_ALS_s0·s1을 같은 규칙으로 다시 셌다.
 모든 파일의 SHA-256은 SHA256SUMS에 있다. SOURCE_MANIFEST.json에는 원 경로·크기·해시를 적었다.
@@ -183,6 +193,9 @@ scientific_verdict: null. 이 자료는 측정 결과이며 전체 방법론의 
     for p in sorted((OUT / 'fates').rglob('*')):
         if p.is_file() and p.suffix in ['.npz', '.json']:
             add(p, 'fates/' + p.relative_to(OUT / 'fates').as_posix())
+    for p in sorted((OUT / 'fate_cell_split').rglob('*')):
+        if p.is_file() and p.suffix in ['.npz', '.json']:
+            add(p, 'fate_cell_split/' + p.relative_to(OUT / 'fate_cell_split').as_posix())
     hashes = {n: hashlib.sha256(data).hexdigest() for n, data in payloads.items()}
     receipts = []
     for light in [True, False]:

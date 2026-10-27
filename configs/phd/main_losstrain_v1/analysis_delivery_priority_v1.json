@@ -1,0 +1,19 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "AUTHORIZED_EXISTING_ORDER",
+  "authority": "User: 그럼 그 필요한거 먼저 해서 전달자료로 만들어야지",
+  "delivery_sites": ["B173nb_b10", "B0_b10"],
+  "prior": "ALS",
+  "variants": ["lt_fixgt", "lt_dyngt", "lt_dynsoft", "lt_dynnow"],
+  "new_readout_site": "B0_b10",
+  "next_training_priority": {"site": "R1rep_b10", "prior": "ALS"},
+  "running_training": "finish normally; no restart or interruption",
+  "new_training": "defer until eight-arm core readout and handover are verified",
+  "post_mode": "main mesh first; auxiliary virtual-view and axes remain pending",
+  "host_available_GiB": 64,
+  "stable_seconds": 60,
+  "post_container_GiB": 48,
+  "cpu_container_GiB": 24,
+  "loss_scoring_arms_training_settings_unchanged": true,
+  "scientific_verdict": null
+}

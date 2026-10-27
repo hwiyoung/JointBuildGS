@@ -1,0 +1,69 @@
+{
+  "site": "B0_b10",
+  "prior": "ALS",
+  "result": "lt_dyngt_ALS_s0",
+  "status": "PASS",
+  "regions": {
+    "prior_wrong_1_3": {
+      "patches": 157,
+      "area_m2": 11.770196991585747,
+      "seeds_seated": 217,
+      "seeds_planted": 217,
+      "not_planted": 0,
+      "counts": {
+        "removed": 185,
+        "old_place": 20,
+        "current_surface": 1,
+        "neither": 11
+      },
+      "shares": {
+        "removed": 0.8525345622119815,
+        "old_place": 0.09216589861751152,
+        "current_surface": 0.004608294930875576,
+        "neither": 0.05069124423963134
+      },
+      "descendants": 127,
+      "opaque_descendants": 101,
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 1500.0,
+        "max": 12700.0
+      }
+    },
+    "prior_correct_0_2": {
+      "patches": 22927,
+      "area_m2": 1568.7275232068107,
+      "seeds_seated": 26726,
+      "seeds_planted": 26726,
+      "not_planted": 0,
+      "counts": {
+        "removed": 24179,
+        "old_place": 1860,
+        "current_surface": 36,
+        "neither": 651
+      },
+      "shares": {
+        "removed": 0.9046995435156776,
+        "old_place": 0.06959515078949338,
+        "current_surface": 0.0013470029185063234,
+        "neither": 0.02435830277632268
+      },
+      "descendants": 15871,
+      "opaque_descendants": 9942,
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 600.0,
+        "max": 14900.0
+      }
+    }
+  },
+  "sources": {
+    "initial": "/out/runs/B0_b10/lt_dyngt_ALS_s0/attempt_0/model/monitor/init_points.npz",
+    "initial_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab",
+    "dump": "/out/runs/B0_b10/lt_dyngt_ALS_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+    "dump_sha256": "1a910ba1432b028108a65aeff48097edb3941115508fcaf1006f586117b58b3b",
+    "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz"
+  },
+  "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+  "scientific_verdict": null
+}

@@ -58,8 +58,9 @@ def main():
 if __name__=='__main__':
     try:
         from post_admission import admit
+        from post_memory_policy import policy_for
         mode,site,result,_=sys.argv[1:]
-        with admit(Path('/out/stage1')/site/result/(mode+'_resource_admission.json')):
+        with admit(Path('/out/stage1')/site/result/(mode+'_resource_admission.json'),minimum_gib=policy_for(Path('/o'))['host_available_GiB']):
             main()
     except torch.cuda.OutOfMemoryError:
         import subprocess

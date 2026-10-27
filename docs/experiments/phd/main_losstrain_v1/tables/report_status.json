@@ -1,21 +1,43 @@
 {
-  "status": "STOPPED_PARTIAL",
+  "status": "PRIORITY_ANALYSIS_DELIVERY",
   "counts": {
+    "training_health_stopped": 3,
     "training_no_result": 0,
     "calibration_complete": 4,
-    "required_complete": 5,
+    "required_complete": 16,
     "optional_complete": 0,
-    "post_complete": 0,
-    "measurements_complete": 0,
+    "post_complete": 3,
+    "measurements_complete": 3,
     "historical_before_grace_stops": 2,
     "historical_grace_stops": 1,
-    "post_stopped_attempts": 2,
-    "new_stopped_attempts": 3
+    "post_stopped_attempts": 4,
+    "new_stopped_attempts": 6,
+    "core_patch_scored": 4
   },
-  "characters": 5825,
+  "characters": 7547,
   "figures": [
     {
+      "file": "fates_B0_b10_ALS.png",
+      "visual_review": "PASS"
+    },
+    {
       "file": "fates_B173nb_b10_ALS.png",
+      "visual_review": "PASS"
+    },
+    {
+      "file": "map_B173nb_b10_ALS.png",
+      "visual_review": "PASS"
+    },
+    {
+      "file": "render_B173nb_b10_ALS.png",
+      "visual_review": "PENDING"
+    },
+    {
+      "file": "section_B173nb_b10_ALS_0.png",
+      "visual_review": "PASS"
+    },
+    {
+      "file": "side_map_B173nb_b10_ALS.png",
       "visual_review": "PASS"
     }
   ],

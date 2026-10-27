@@ -1,0 +1,366 @@
+{
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 157,
+          "area_m2": 11.770196991585747,
+          "seeds_seated": 217,
+          "seeds_planted": 217,
+          "not_planted": 0,
+          "counts": {
+            "removed": 131,
+            "old_place": 45,
+            "current_surface": 3,
+            "neither": 38
+          },
+          "shares": {
+            "removed": 0.6036866359447005,
+            "old_place": 0.2073732718894009,
+            "current_surface": 0.013824884792626729,
+            "neither": 0.17511520737327188
+          },
+          "descendants": 471,
+          "opaque_descendants": 347,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 3400.0,
+            "max": 13000.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 22927,
+          "area_m2": 1568.7275232068107,
+          "seeds_seated": 26726,
+          "seeds_planted": 26726,
+          "not_planted": 0,
+          "counts": {
+            "removed": 14845,
+            "old_place": 6278,
+            "current_surface": 121,
+            "neither": 5482
+          },
+          "shares": {
+            "removed": 0.555451620145177,
+            "old_place": 0.23490234228840828,
+            "current_surface": 0.004527426476090698,
+            "neither": 0.20511861109032403
+          },
+          "descendants": 38594,
+          "opaque_descendants": 23594,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 5600.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/monitor/init_points.npz",
+        "initial_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab",
+        "dump": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "20bb8152f4411ab0697624dac4eaed740bbf28c61e57090d06fede9f043580ff",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 157,
+          "area_m2": 11.770196991585747,
+          "seeds_seated": 217,
+          "seeds_planted": 217,
+          "not_planted": 0,
+          "counts": {
+            "removed": 85,
+            "old_place": 55,
+            "current_surface": 4,
+            "neither": 73
+          },
+          "shares": {
+            "removed": 0.391705069124424,
+            "old_place": 0.2534562211981567,
+            "current_surface": 0.018433179723502304,
+            "neither": 0.33640552995391704
+          },
+          "descendants": 4632,
+          "opaque_descendants": 2414,
+          "last_alive_of_removed": {
+            "min": 1000.0,
+            "median": 4100.0,
+            "max": 13800.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 22927,
+          "area_m2": 1568.7275232068107,
+          "seeds_seated": 26726,
+          "seeds_planted": 26726,
+          "not_planted": 0,
+          "counts": {
+            "removed": 14299,
+            "old_place": 4799,
+            "current_surface": 33,
+            "neither": 7595
+          },
+          "shares": {
+            "removed": 0.5350220758811645,
+            "old_place": 0.17956297238644017,
+            "current_surface": 0.0012347526752974631,
+            "neither": 0.28418019905709796
+          },
+          "descendants": 81932,
+          "opaque_descendants": 37404,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 6100.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B0_b10/lt_fixgt_ALS_s0/attempt_0/model/monitor/init_points.npz",
+        "initial_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab",
+        "dump": "/out/runs/B0_b10/lt_fixgt_ALS_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "043ec33474b6606a6765cb3485df59fb9e9c4a43ab99377556e482cb488581ac",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 157,
+          "area_m2": 11.770196991585747,
+          "seeds_seated": 217,
+          "seeds_planted": 217,
+          "not_planted": 0,
+          "counts": {
+            "removed": 185,
+            "old_place": 20,
+            "current_surface": 1,
+            "neither": 11
+          },
+          "shares": {
+            "removed": 0.8525345622119815,
+            "old_place": 0.09216589861751152,
+            "current_surface": 0.004608294930875576,
+            "neither": 0.05069124423963134
+          },
+          "descendants": 127,
+          "opaque_descendants": 101,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 1500.0,
+            "max": 12700.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 22927,
+          "area_m2": 1568.7275232068107,
+          "seeds_seated": 26726,
+          "seeds_planted": 26726,
+          "not_planted": 0,
+          "counts": {
+            "removed": 24179,
+            "old_place": 1860,
+            "current_surface": 36,
+            "neither": 651
+          },
+          "shares": {
+            "removed": 0.9046995435156776,
+            "old_place": 0.06959515078949338,
+            "current_surface": 0.0013470029185063234,
+            "neither": 0.02435830277632268
+          },
+          "descendants": 15871,
+          "opaque_descendants": 9942,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 600.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B0_b10/lt_dyngt_ALS_s0/attempt_0/model/monitor/init_points.npz",
+        "initial_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab",
+        "dump": "/out/runs/B0_b10/lt_dyngt_ALS_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "1a910ba1432b028108a65aeff48097edb3941115508fcaf1006f586117b58b3b",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 157,
+          "area_m2": 11.770196991585747,
+          "seeds_seated": 217,
+          "seeds_planted": 217,
+          "not_planted": 0,
+          "counts": {
+            "removed": 195,
+            "old_place": 16,
+            "current_surface": 0,
+            "neither": 6
+          },
+          "shares": {
+            "removed": 0.8986175115207373,
+            "old_place": 0.07373271889400922,
+            "current_surface": 0.0,
+            "neither": 0.027649769585253458
+          },
+          "descendants": 225,
+          "opaque_descendants": 172,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 1400.0,
+            "max": 12100.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 22927,
+          "area_m2": 1568.7275232068107,
+          "seeds_seated": 26726,
+          "seeds_planted": 26726,
+          "not_planted": 0,
+          "counts": {
+            "removed": 24367,
+            "old_place": 1737,
+            "current_surface": 28,
+            "neither": 594
+          },
+          "shares": {
+            "removed": 0.9117338920900995,
+            "old_place": 0.06499289081793011,
+            "current_surface": 0.0010476689366160294,
+            "neither": 0.022225548155354338
+          },
+          "descendants": 14834,
+          "opaque_descendants": 8935,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 600.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B0_b10/lt_dynsoft_ALS_s0/attempt_0/model/monitor/init_points.npz",
+        "initial_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab",
+        "dump": "/out/runs/B0_b10/lt_dynsoft_ALS_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "4e8e6b9ace67c3c2819cd8489c78cde32bf749a06ee4a6c71d8f842f971ea223",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "status": "PASS",
+      "regions": {
+        "prior_wrong_1_3": {
+          "patches": 157,
+          "area_m2": 11.770196991585747,
+          "seeds_seated": 217,
+          "seeds_planted": 217,
+          "not_planted": 0,
+          "counts": {
+            "removed": 189,
+            "old_place": 15,
+            "current_surface": 2,
+            "neither": 11
+          },
+          "shares": {
+            "removed": 0.8709677419354839,
+            "old_place": 0.06912442396313365,
+            "current_surface": 0.009216589861751152,
+            "neither": 0.05069124423963134
+          },
+          "descendants": 230,
+          "opaque_descendants": 157,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 1200.0,
+            "max": 12100.0
+          }
+        },
+        "prior_correct_0_2": {
+          "patches": 22927,
+          "area_m2": 1568.7275232068107,
+          "seeds_seated": 26726,
+          "seeds_planted": 26726,
+          "not_planted": 0,
+          "counts": {
+            "removed": 24308,
+            "old_place": 1753,
+            "current_surface": 37,
+            "neither": 628
+          },
+          "shares": {
+            "removed": 0.9095263039736586,
+            "old_place": 0.06559155878171069,
+            "current_surface": 0.0013844196662426101,
+            "neither": 0.023497717578388085
+          },
+          "descendants": 14880,
+          "opaque_descendants": 9205,
+          "last_alive_of_removed": {
+            "min": 600.0,
+            "median": 600.0,
+            "max": 14900.0
+          }
+        }
+      },
+      "sources": {
+        "initial": "/out/runs/B0_b10/lt_dynnow_ALS_s0/attempt_1/model/monitor/init_points.npz",
+        "initial_sha256": "9bdd9b7d556edc2ebf1d68cf55ae1bc2285ae94441f5b02b82b8f8efbf2d65ab",
+        "dump": "/out/runs/B0_b10/lt_dynnow_ALS_s0/attempt_1/model/dump/iteration_30000/gaussians.npz",
+        "dump_sha256": "82150001ed3e5e33cbfe36ab7119d02d5c692e87d158a6ddbbdd2f8bb4884736",
+        "gt": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz"
+      },
+      "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+      "scientific_verdict": null
+    }
+  ],
+  "categories": [
+    "removed",
+    "old_place",
+    "current_surface",
+    "neither"
+  ],
+  "colours": [
+    "#bdbdbd",
+    "#ae3434",
+    "#238b45",
+    "#756bb1"
+  ],
+  "visual_review": "PASS",
+  "scientific_verdict": null,
+  "visual_review_at": "2026-10-27T15:47:26.564038+09:00",
+  "visual_review_note": "Actual PNG inspected: five variants, two GT groups, shared percent axis, sample counts and legend legible; this is seed fate, not surface area.",
+  "reviewed_image_sha256": "d69c3dd7fd3dc2661b462acd53c91690f614d2fc5235292f2da37b792b258a92"
+}

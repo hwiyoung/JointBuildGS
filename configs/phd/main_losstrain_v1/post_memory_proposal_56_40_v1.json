@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "PROPOSED_NOT_ACTIVE",
+  "scope": "serial tiled postprocessing only; training resource limits unchanged",
+  "original": {"host_available_GiB": 64, "container_limit_GiB": 48, "stable_seconds": 60},
+  "proposed": {"host_available_GiB": 56, "container_limit_GiB": 40, "stable_seconds": 60},
+  "minimum_reserved_headroom_GiB": 16,
+  "measured_B173_tiled_container_peak_GiB": [22.791, 22.347, 21.756, 21.006],
+  "B0_full_scene_peak": "not yet measured; the 40 GiB container limit remains enforced",
+  "scientific_changes": [],
+  "unchanged": ["voxel size", "TSDF truncation", "views", "tile voxel budget", "geometry algorithm", "scoring", "loss", "training", "arms", "serial postprocessing"],
+  "activation_requires": "explicit user approval replacing the previously authorized 64/48 GiB condition",
+  "scientific_verdict": null
+}

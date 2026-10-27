@@ -24,7 +24,7 @@ class Recovery(unittest.TestCase):
             runs=[dict(run=i) for i in range(24)]
             policy={'enabled':True}
             schedule=function('continue_resource_v1.py','readout_schedule',
-                              dict(ROOT=root,RUNS=runs,read=lambda *a: policy))
+                              dict(ROOT=root,RUNS=runs,read=lambda p,*a: policy if p.name=='first_batch_priority.json' else {}))
             # A mesh-ready first arm must be scored before the next TSDF.
             state=schedule(runs[1:],runs[:1])
             self.assertTrue(state['active'])
@@ -75,6 +75,7 @@ class Recovery(unittest.TestCase):
         record = dict(status='ADMITTED', required_GiB=64, required_stable_seconds=60, attempt=2)
         scope = dict(F=SimpleNamespace(root_of=lambda r: Path('/unit')),
                      next_post_mode=lambda u: 'post', next_attempt=lambda u,m: 4,
+                     OUT=Path('/out'),policy_for=lambda root:dict(host_available_GiB=64),
                      read=lambda *args: record)
         admitted = function('continue_resource_v1.py', 'post_admitted', scope)
         self.assertFalse(admitted({}))

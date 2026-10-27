@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "RUNNING_PARTIAL",
+  "sites": ["B0_b10", "B173nb_b10", "R1rep_b10"],
+  "priors": ["LoD2", "ALS"],
+  "variants": ["lt_fixgt", "lt_dyngt", "lt_dynsoft", "lt_dynnow"],
+  "seed": 0,
+  "frozen_report": "중간보고_항공LiDAR_8판_v1.md",
+  "verified_units": [{"site": "B173nb_b10", "prior": "ALS"}, {"site": "B0_b10", "prior": "ALS"}],
+  "expected_scored_arms": 8,
+  "verification_table": "tables/eight_arm_verification.json",
+  "verification_status": "PASS_EIGHT_ARM_INTERIM",
+  "title": "B173 주변·B0 항공 LiDAR 8판 중간 보고",
+  "maximum_archive_bytes": 400000000,
+  "scientific_verdict": null
+}

@@ -40,17 +40,26 @@ def main():
     resumed=OUT/'checks/resource_resume_v1'
     if (resumed/'approval.json').exists():
         state_record=json.loads((resumed/'state.json').read_text()) if (resumed/'state.json').exists() else {}
-        current_stops=sorted(resumed.glob('*_STOP.json'))
+        all_stops=sorted(resumed.glob('*_STOP.json'))
+        operational=[p for p in all_stops if json.loads(p.read_text()).get('status')=='OPERATIONAL_ANALYSIS_DELIVERY_HANDOFF']
+        current_stops=[p for p in all_stops if p not in operational]
         stop=current_stops[0] if current_stops else resumed/'NO_CURRENT_STOP'
-        state='STOPPED_PARTIAL' if current_stops else 'COMPLETE' if (resumed/'PASS.json').exists() else 'PARTIAL_NO_RESULT' if (resumed/'PARTIAL_NO_RESULT.json').exists() else state_record.get('status','RUNNING')
+        state='STOPPED_PARTIAL' if current_stops else 'WAITING_FOR_INFLIGHT_TRAINING' if operational else 'COMPLETE' if (resumed/'PASS.json').exists() else 'PARTIAL_NO_RESULT' if (resumed/'PARTIAL_NO_RESULT.json').exists() else state_record.get('status','RUNNING')
     counts=dict(training_health_stopped=sum(r['training_health_stopped'] is not None for r in runs),training_no_result=sum(r['training_no_result'] is not None for r in runs),calibration_complete=sum(r['training_complete'] for r in runs if r['calibration']),
         required_complete=sum(not r['result'].startswith('lt_fixnow') for r in completed),optional_complete=sum(r['result'].startswith('lt_fixnow') for r in completed),
         post_complete=sum(r['post_complete'] for r in runs),measurements_complete=sum(r['measurement_complete'] for r in runs),
         historical_before_grace_stops=2,historical_grace_stops=1,
         post_stopped_attempts=sum(bool(a['exit_code']) for r in runs for a in r['post_attempts']),
         new_stopped_attempts=sum(bool(a['stops']) or bool(a['receipt'] and a['receipt']['exit_code']) for r in runs if not r['calibration'] for a in r['attempts'] if a['monitor_policy']=='v2'))
+    counts['core_patch_scored']=sum(
+        r['training_complete'] and not r['calibration'] and not r['result'].startswith('lt_fixnow')
+        and (OUT/'patch_z'/f"{r['site']}__{r['result'].rsplit('_',2)[1]}__{r['result']}.json").exists()
+        for r in runs)
+    priority_path=OUT/'checks/analysis_delivery_priority_v1/state.json'
+    priority=json.loads(priority_path.read_text()) if priority_path.exists() else None
     data=dict(status=state,at=stamp,counts=counts,runs=runs,reset_comparisons=comparisons,
-        stop=json.loads(stop.read_text()) if stop.exists() else None,selected_lambda=.0025,scientific_verdict=None)
+        stop=json.loads(stop.read_text()) if stop.exists() else None,selected_lambda=.0025,
+        analysis_delivery_priority=priority,scientific_verdict=None)
     recovery=OUT/'checks/fixed_post_host_oom'
     if (recovery/'preparation.json').exists():
         data['fixed_post_host_oom_recovery']=dict(
@@ -70,6 +79,12 @@ def main():
         lines.append(f"| {r['site']} | {r['result']} | {r['iteration']} | {r['prior_gaussians']} | {fmt(med)} | {fmt(r['nojudge_prior_opacity_median'])} | {fmt(r['difference_from_nojudge'])} | {'중단' if r['stop'] else '통과'} |")
     Path('/docs/tables/reset_comparisons.md').write_text('\n'.join(lines)+'\n')
     progress=f"# PHD-MAIN-LOSSTRAIN-v1\n\n{stamp}: {state}.\n\n짧은 학습 {counts['calibration_complete']}/4. 본 학습 {counts['required_complete']}/24. 선택 {counts['optional_complete']}/6. 후처리 {counts['post_complete']}. 채점 {counts['measurements_complete']}. λ=0.0025. 이전 3,001회 두 건과 9,100회 한 건은 기록 보존. 새 전체 불투명도·PSNR 기준 뒤 중단 시도 {counts['new_stopped_attempts']}건. scientific_verdict: null.\n\n이전 초기화 비교: tables/reset_comparisons.md. 새 관측: tables/monitor_v2_observations.md. 상세 실행 상태: tables/runtime.json.\n"
+    progress+=f"\n핵심 패치 채점 완료 {counts['core_patch_scored']}판. 위 채점 수는 추가 지표까지 마친 수이며 서로 구분한다.\n"
+    if priority:
+        progress+=f"\n8판 우선 전달 상태({priority['at']}): {priority['status']}."
+        if priority['status']=='WAITING_FOR_POST_MEMORY':
+            progress+=f" 호스트 여유 {priority['available_GiB']:.2f} GiB / 시작 조건 {priority['required_GiB']} GiB."
+        progress+='\n'
     Path('/docs/progress.md').write_text(progress);print(state,counts,flush=True)
 
 if __name__=='__main__':main()

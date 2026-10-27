@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-27T15:51:33.095397+09:00",
+  "status": "PREPARED_WAITING_FOR_POST_MEMORY",
+  "target_core_scored_arms": 8,
+  "current_core_scored_arms": 4,
+  "B0_fates_complete": 4,
+  "B0_meshes_complete": 0,
+  "training_complete": 16,
+  "training_health_stopped": 3,
+  "training_pending": 5,
+  "tests_passed": 17,
+  "tests": [
+    {
+      "test_count": 5,
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/logs/analysis-priority-final-check_20261027T154748.log",
+      "sha256": "0a7487dd447ed39892a423a22370611e100bf0b90f72781bde8e794e93941693"
+    },
+    {
+      "test_count": 4,
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/logs/analysis-memory-final-check_20261027T154750.log",
+      "sha256": "6f2f4ed7447de96be8d4978c72e5aff47361835a427d50b21b8ea362e9269d59"
+    },
+    {
+      "test_count": 8,
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/logs/analysis-queue-final-check_20261027T155000.log",
+      "sha256": "d1f001bed45818e9fc9f29b0944a3575139d8eefc37fe4ce6c241fd7f68acece"
+    }
+  ],
+  "proposed_memory_profile_authorized": false,
+  "priority_state": {
+    "at": "2026-10-27T15:51:31.306587+09:00",
+    "status": "WAITING_FOR_POST_MEMORY",
+    "available_GiB": 56.00616455078125,
+    "required_GiB": 64,
+    "stable_seconds": 0,
+    "scientific_verdict": null
+  },
+  "scientific_verdict": null
+}

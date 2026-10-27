@@ -13,6 +13,7 @@ import time
 import uuid
 import train_full as F
 from post_admission import memory_available_gib
+from post_memory_policy import policy_for
 
 P,OUT,REPO=F.P,F.OUT,F.REPO
 ROOT=OUT/'checks/resource_resume_v1'
@@ -25,12 +26,30 @@ def save(p,d):
 
 def read(p,default=None):return json.loads(p.read_text()) if p.exists() else default
 
+def prioritize_training(pending, priority):
+    """Stable ordering only: preserve all authorized arms and their settings."""
+    if not priority:return pending
+    return sorted(pending,key=lambda r:not (r['site']==priority['site'] and r['prior']==priority['prior']))
+
 def readout_schedule(post_pending, measurable):
     """Keep the completed first batch moving through post, score, then figures.
 
     Holding new training admissions is temporary; running jobs are untouched.
     No resource threshold, scientific setting, or arm membership changes here.
     """
+    next_policy=read(ROOT/'next_analysis_priority.json',{})
+    if next_policy.get('enabled',False):
+        scope=[r for r in RUNS if r['site']==next_policy['site'] and r['prior']==next_policy['prior']]
+        def ended(r):
+            unit=F.root_of(r)
+            return any((unit/n).exists() for n in ['training_health_STOP.json','training_NO_RESULT.json','measure_PASS.json'])
+        def trained(r):return (F.root_of(r)/'PASS.json').exists() or ended(r)
+        if scope and not all(ended(r) for r in scope):
+            if not all(trained(r) for r in scope):
+                return dict(active=False,post=[],measure=[],post_may_start=False,training_scope=scope)
+            measure=[r for r in measurable if r in scope]
+            return dict(active=True,post=[r for r in post_pending if r in scope],measure=measure,
+                        post_may_start=not measure,training_scope=scope)
     policy=read(ROOT/'first_batch_priority.json',{})
     active=policy.get('enabled',False) and not (ROOT/'interim_report_generated.json').exists()
     if not active:return dict(active=False,post=post_pending,measure=measurable,post_may_start=True)
@@ -136,7 +155,7 @@ def post_admitted(r):
     unit=F.root_of(r);mode=next_post_mode(unit)
     if mode is None:return False
     record=read(unit/(mode+'_resource_admission.json'),{})
-    return (record.get('status')=='ADMITTED' and record.get('required_GiB')==64
+    return (record.get('status')=='ADMITTED' and record.get('required_GiB')==policy_for(OUT)['host_available_GiB']
             and record.get('required_stable_seconds')==60
             and record.get('attempt')==next_attempt(unit,mode))
 
@@ -155,6 +174,7 @@ def resource_evidence(command,rc,log,cidfile,start_epoch):
         kernel_container_lines=lines,classification='RESOURCE' if resource else 'EXECUTION' if rc else 'PASS')
 
 def post_one(r,gpu):
+    policy=policy_for(OUT)
     unit=F.root_of(r);mode=next_post_mode(unit);attempt=next_attempt(unit,mode)
     log=unit/f'{mode}_attempt_{attempt}.log';assert not log.exists()
     folder=unit/('post' if mode=='post' else 'gpu')
@@ -168,20 +188,20 @@ def post_one(r,gpu):
     command=P.docker('jbgs-lt-resume-post-'+str(gpu),gpu,'r17',r['site'],entry);idx=command.index(P.IMG)
     command[idx:idx]=['-v',f'{P.S0}:/s0:ro','-v',f'{P.DR}:/dr:ro','-v',f'{OUT}/runs:/out/stage1','-v',f'{P.S1}/defs:/out/defs:ro']
     cidfile=unit/f'{mode}_attempt_{attempt}.cid';assert not cidfile.exists()
-    command[2:2]=['--memory','48g','--cidfile',str(cidfile),'-e','JBGS_LT_POST_ATTEMPT='+str(attempt)]
+    command[2:2]=['--memory',str(policy['container_limit_GiB'])+'g','--cidfile',str(cidfile),'-e','JBGS_LT_POST_ATTEMPT='+str(attempt)]
     save(unit/f'{mode}_attempt_{attempt}_command.json',command)
     with (OUT/'checks/tsdf.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         start=time.monotonic();epoch=time.time()
         with log.open('w') as f:rc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT).returncode
     evidence=resource_evidence(command,rc,log,cidfile,epoch)
-    receipt=dict(exit_code=rc,seconds=time.monotonic()-start,at=F.now(),policy='resource_resume_v1',
-        memory_limit_GiB=48,admission_available_GiB=64,admission_stable_seconds=60,**evidence,scientific_verdict=None)
+    receipt=dict(exit_code=rc,seconds=time.monotonic()-start,at=F.now(),policy=policy['id'],
+        memory_limit_GiB=policy['container_limit_GiB'],admission_available_GiB=policy['host_available_GiB'],admission_stable_seconds=60,**evidence,scientific_verdict=None)
     save(unit/f'{mode}_attempt_{attempt}_receipt.json',receipt)
     if rc:
         records=[read(p) for p in unit.glob(mode+'_attempt_*_receipt.json')
                  if not p.with_name(p.name.replace('_receipt.json','_CANCELLED.json')).exists()]
-        failures=sum(x.get('policy')=='resource_resume_v1' and x['exit_code']!=0 for x in records)
+        failures=sum(x.get('policy')==policy['id'] and x['exit_code']!=0 for x in records)
         final=not evidence['resource_failure'] or failures>=3
         event=dict(at=F.now(),run=r,stage=mode,attempt=attempt,failures_under_same_memory_policy=failures,
             autonomous_retries_used=max(0,failures-1),training_stop_increment=0,final=final,receipt=receipt,scientific_verdict=None)
@@ -189,8 +209,8 @@ def post_one(r,gpu):
         if final:save(ROOT/'post_STOP.json',event)
         print('POST FAIL',r,mode,attempt,evidence['classification'],flush=True)
         return not final
-    save(unit/(mode+'_stage_PASS.json'),dict(at=F.now(),attempt=attempt,policy='resource_resume_v1',scientific_verdict=None))
-    if mode=='run':save(unit/'post_PASS.json',dict(at=F.now(),policy='resource_resume_v1',scientific_verdict=None))
+    save(unit/(mode+'_stage_PASS.json'),dict(at=F.now(),attempt=attempt,policy=policy['id'],scientific_verdict=None))
+    if mode=='run':save(unit/'post_PASS.json',dict(at=F.now(),policy=policy['id'],scientific_verdict=None))
     print('POST PASS',r,mode,attempt,flush=True);return True
 
 def measure(r):
@@ -221,7 +241,7 @@ def measure(r):
         # Repeat only under the approved resource condition; no score/settings change.
         stable=None
         while True:
-            if memory_available_gib()<64:stable=None
+            if memory_available_gib()<policy_for(OUT)['host_available_GiB']:stable=None
             elif stable is None:stable=time.monotonic()
             if stable is not None and time.monotonic()-stable>=60:break
             time.sleep(10)
@@ -242,7 +262,7 @@ def validate(epoch=0):
         if unit.exists() and not any((unit/name).exists() for name in ['PASS.json','training_health_STOP.json','training_NO_RESULT.json']):assert next_training_attempt(unit)==1
     result=dict(status='PASS',at=F.now(),training_arguments_identical=True,r17_source_unchanged=True,
         required_runs=24,completed_training_reused=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
-        post_minimum_available_GiB=64,post_stable_seconds=60,resource_retries=2,scientific_verdict=None)
+        post_minimum_available_GiB=policy_for(OUT)['host_available_GiB'],post_stable_seconds=60,resource_retries=2,scientific_verdict=None)
     save(ROOT/('validation.json' if epoch==0 else f'validation_epoch_{epoch}.json'),result);print(json.dumps(result),flush=True)
 
 def main():
@@ -257,6 +277,7 @@ def main():
         save(start_file,dict(at=F.now(),pid=os.getpid(),runs=RUNS,scientific_verdict=None))
         prioritize_post=bool(a.resume_epoch and read(ROOT/f'resume_epoch_{a.resume_epoch}.json').get('admit_post_before_new_training'))
         pending=[r for r in RUNS if not (F.root_of(r)/'PASS.json').exists() and not (F.root_of(r)/'training_NO_RESULT.json').exists() and not (F.root_of(r)/'training_health_STOP.json').exists()]
+        pending=prioritize_training(pending,read(ROOT/f'resume_epoch_{a.resume_epoch}.json',{}).get('priority_training'))
         futures={};cpu=None;stable_since=None
         with concurrent.futures.ThreadPoolExecutor(3) as pool:
             while True:
@@ -272,7 +293,8 @@ def main():
                     except Exception as e:save(ROOT/'measure_STOP.json',dict(at=F.now(),error=repr(e),scientific_verdict=None))
                     cpu=None
                 mem=memory_available_gib()
-                if mem<64:stable_since=None
+                minimum=policy_for(OUT)['host_available_GiB']
+                if mem<minimum:stable_since=None
                 elif stable_since is None:stable_since=time.monotonic()
                 stable=0 if stable_since is None else time.monotonic()-stable_since
                 post_active=any(x[1]=='post' for x in futures.values())
@@ -284,7 +306,7 @@ def main():
                     if gpu in futures:continue
                     if post_pending and schedule['post_may_start'] and not post_active and cpu is None and stable>=60 and not (ROOT/'post_STOP.json').exists():
                         r=post_pending[0];futures[gpu]=(pool.submit(post_one,r,gpu),'post',r);post_active=True;stable_since=None
-                    elif pending and not (ROOT/'training_STOP.json').exists() and not prioritize_post and not schedule['active']:
+                    elif pending and not (ROOT/'training_STOP.json').exists() and not prioritize_post and not schedule['active'] and (not schedule.get('training_scope') or pending[0] in schedule['training_scope']):
                         r=pending.pop(0);futures[gpu]=(pool.submit(train,r,gpu,.0025),'training',r)
                 if prioritize_post and post_active:
                     active_posts=[x[2] for x in futures.values() if x[1]=='post']
@@ -300,7 +322,7 @@ def main():
                 save(ROOT/'state.json',dict(at=F.now(),status='NEEDS_ATTENTION' if stops else 'RUNNING',**counts,
                     gpu_jobs={str(g):dict(kind=x[1],run=x[2]) for g,x in futures.items()},cpu_measurement=cpu[1] if cpu else None,
                     first_batch_readout_priority=schedule['active'],
-                    available_GiB=mem,required_post_GiB=64,stable_seconds=stable,stops=stops,pending_trainings=len(pending),scientific_verdict=None))
+                    available_GiB=mem,required_post_GiB=minimum,stable_seconds=stable,stops=stops,pending_trainings=len(pending),scientific_verdict=None))
                 if all((F.root_of(r)/'measure_PASS.json').exists() for r in RUNS[:4]) and not (ROOT/'interim_ready.json').exists():
                     save(ROOT/'interim_ready.json',dict(at=F.now(),status='READY_FOR_REPORT',scientific_verdict=None))
                 if counts['measurement_complete']+counts['training_no_result']+counts['training_health_stopped']==24:
