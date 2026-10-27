@@ -1,0 +1,19 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R11-SLIDE5-OVERLAY",
+  "scientific_verdict": null,
+  "authorization": "User found paired R10 change unreadable and proposed superimposing both sources during the authorized page-5 revision.",
+  "source_config": "/cfg/slide5_3d_revision_09.json",
+  "geometry": "Use exact R10 cached source points and exact R9 clipped ALS triangles, transformed back by the recorded rigid frame. Preserve R9 comparison bounds; all R7 wall points retained.",
+  "roof_camera": {"azimuth_deg": -90, "elevation_deg": 18},
+  "roof_render": "Render MVS actual points in opaque blue with real-depth z-buffer. Draw the original prior TIN projected silhouette in orange over the MVS, with 8 percent face tint; deliberate X-ray comparison, not an occlusion simulation. No new surface fitting. Current reference is omitted from the main roof overlay to keep two sources distinct.",
+  "roof_outline": "Outer projected silhouette and true depth jumps above 0.75 m across a 3-export-pixel neighborhood of the original prior TIN. Cut-volume boundaries remain boundaries, not inferred building edges.",
+  "wall_render": "True top view, all exact frozen wall points, orange prior line, blue MVS points, small dark current-reference points. Equal metric scale on both axes.",
+  "annotation": "Use the existing bin nearest each fixed section midpoint, lower-index tie; annotate source-to-source offset, not whole-building error or maximum residual.",
+  "photo_crop_expansion": 1.25,
+  "canvas_px": [1920,1080],
+  "export_scale": 2,
+  "new_training": false,
+  "new_registration": false,
+  "new_surface_fitting": false,
+  "crs": "EPSG:25832 source, unchanged existing local coordinates"
+}

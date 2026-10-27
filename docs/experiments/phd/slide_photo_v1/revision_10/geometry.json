@@ -1,0 +1,101 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R10-SLIDE5-CONTEXT",
+  "scientific_verdict": null,
+  "config_sha256": "5611511e6a1436e75ad1639b28e00a2ce3d4a2aab29f6ac93cf19010c6d8ee59",
+  "geometry_sha256": "3001f816c02e6cf87468cf89e3450a9e80399f775396f6185626acb11057407e",
+  "context_min_xyz": [
+    121.46000000000001,
+    87.497,
+    -41.602259246784556
+  ],
+  "context_max_xyz": [
+    168.904,
+    126.933,
+    -11.008586217766918
+  ],
+  "highlight_min_xyz": [
+    133.46,
+    99.497,
+    -31.602259246784556
+  ],
+  "highlight_max_xyz": [
+    156.904,
+    114.933,
+    -21.00858621776692
+  ],
+  "roof_counts": {
+    "prior": {
+      "source": 162260,
+      "in_context": 17998,
+      "shown": 16642,
+      "highlighted": 4334
+    },
+    "mvs": {
+      "source": 18985897,
+      "in_context": 2023215,
+      "shown": 196645,
+      "highlighted": 42463
+    },
+    "gt": {
+      "source": 9786075,
+      "in_context": 1107011,
+      "shown": 112679,
+      "highlighted": 24302
+    }
+  },
+  "roof_registration_shift": [
+    -0.05619434746608162,
+    0.06288884357338685,
+    0.0
+  ],
+  "roof_basis": [
+    [
+      -0.9577617651454459,
+      0.2875628648234675,
+      0.0
+    ],
+    [
+      -0.2875628648234675,
+      -0.9577617651454459,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "roof_origin": [
+    145.18200000000002,
+    107.215,
+    -26.305422732275737
+  ],
+  "wall_basis": [
+    [
+      0.3613967273408562,
+      0.9229255492855074,
+      -0.1326681421568973
+    ],
+    [
+      0.9311564942948837,
+      -0.36461977885526486,
+      0.0
+    ],
+    [
+      -0.04837342865438673,
+      -0.12353480215543175,
+      -0.9911605137699124
+    ]
+  ],
+  "wall_origin": [
+    -29.99875000002794,
+    -8.851699999999255,
+    -36.06940729956924
+  ],
+  "wall_counts": {
+    "prior": 42,
+    "mvs": 670,
+    "gt": 43
+  },
+  "reference_section": "Unchanged source binned reference medians at their original XY; a section guide, not a fitted surface"
+}

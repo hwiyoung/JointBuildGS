@@ -1,0 +1,91 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R10-SLIDE5-CONTEXT",
+  "scientific_verdict": null,
+  "verified_at": "2026-10-27T17:40:06.874824+09:00",
+  "status": "PASS",
+  "checks": {
+    "roof_original_points_and_fixed_voxel_rule": true,
+    "wall_all_original_fixed_points_retained": true,
+    "orthonormal_camera_equal_metric_scale_and_matched_views": true,
+    "wall_midpoint_annotation_replayed": true,
+    "source_profiles_and_midpoint_annotation_replayed": true,
+    "photo_source_bytes_exact_projection_and_shared_markers": true,
+    "explanation_mask_preserves_actual_figure_panels": true,
+    "blind_review_image_hashes_match": true,
+    "source_and_config_hashes_unchanged": true
+  },
+  "coordinate_replay": {
+    "roof_prior": {
+      "coordinate_max_error_m": 0.0,
+      "context_count": 17998,
+      "sampled_points": 16642,
+      "highlighted_points": 4334
+    },
+    "roof_mvs": {
+      "coordinate_max_error_m": 0.0,
+      "context_count": 2023215,
+      "sampled_points": 196645,
+      "highlighted_points": 42463
+    },
+    "roof_gt": {
+      "coordinate_max_error_m": 0.0,
+      "context_count": 1107011,
+      "sampled_points": 112679,
+      "highlighted_points": 24302
+    },
+    "wall_prior": {
+      "coordinate_max_error_m": 1.7763568394002505e-15,
+      "points": 42,
+      "all_frozen_points_retained": true
+    },
+    "wall_mvs": {
+      "coordinate_max_error_m": 1.7763568394002505e-15,
+      "points": 670,
+      "all_frozen_points_retained": true
+    },
+    "wall_gt": {
+      "coordinate_max_error_m": 1.7763568394002505e-15,
+      "points": 43,
+      "all_frozen_points_retained": true
+    }
+  },
+  "photo_replay": {
+    "roof": {
+      "projection_max_error_px": 0.0,
+      "source_jpeg_hash_matches": true,
+      "relative_xy_scale_error": 0.0004892527479696263
+    },
+    "wall": {
+      "projection_max_error_px": 0.0,
+      "source_jpeg_hash_matches": true,
+      "relative_xy_scale_error": 0.0005186360308219173
+    }
+  },
+  "files": {
+    "figures/slide5_context_pairs.png": {
+      "sha256": "77319bb3f5ee15da3c4d31c2ba180807a531d8480336b74f703ab80b78b775d9",
+      "bytes": 2817790
+    },
+    "previews/slide5_context_pairs.png": {
+      "sha256": "192e09374c06a4ccd28d1183a8f63ad5ec6b3ffda28f45ee6484f60c6a545562",
+      "bytes": 928044
+    },
+    "qa/round1_without_explanations.png": {
+      "sha256": "1fa0606ecf23d62804f9e62f28247b3302e0b1a4e85ac4fdb01afa148fa19a64",
+      "bytes": 841079
+    },
+    "qa/slide5_without_explanations.png": {
+      "sha256": "c63e447cc34ab7f3872e3a86de058a991d3b5c168f4c99ba31bce98c2a05d7dc",
+      "bytes": 782619
+    }
+  },
+  "audit_script_sha256": "bd79fb8f849f0e9ee0efd635a731bdab47afd27c0714b4784a6f33708709cc00",
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pillow": "10.4.0",
+    "matplotlib": "3.9.2",
+    "scipy": "1.13.1"
+  },
+  "scientific_scope": "Two illustrative input cases only; no training or method result; reader judgement stored separately"
+}

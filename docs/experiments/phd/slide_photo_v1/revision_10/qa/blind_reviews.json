@@ -1,0 +1,25 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R10-SLIDE5-CONTEXT",
+  "scientific_verdict": null,
+  "prompt": "이 그림이 보여 주는 것을 한 문장으로.",
+  "method": "Fresh agents receive only one PNG and the question, without conversation or repository context. Finding headings and conclusions are hidden; neutral source labels remain.",
+  "status": "PARTIAL",
+  "reviews": [
+    {
+      "round": 1,
+      "agent": "/root/r10_blind_shapes",
+      "image_path": "qa/round1_without_explanations.png",
+      "image_sha256": "1fa0606ecf23d62804f9e62f28247b3302e0b1a4e85ac4fdb01afa148fa19a64",
+      "answer": "사진과 현재 드론 LiDAR 참조를 함께 놓고, 같은 위치에서 사전 정보의 단순하고 정돈된 형상과 영상 MVS의 세부 형상·누락·점 산포를 비교한 그림이다.",
+      "assessment": "Roof height mismatch not identified; revise display only."
+    },
+    {
+      "round": 2,
+      "agent": "/root/r10_final_blind",
+      "image_path": "qa/slide5_without_explanations.png",
+      "image_sha256": "c63e447cc34ab7f3872e3a86de058a991d3b5c168f4c99ba31bce98c2a05d7dc",
+      "answer": "지붕에서는 영상 MVS가 사전 정보에 없는 세부 형태를 포착하고, 벽면에서는 사전 정보가 영상 MVS보다 현재 드론 LiDAR 참조에 가까운 정돈된 형태를 보인다.",
+      "assessment": "Wall reference proximity identified, but roof change still read as fine detail. User also says change is hard to read and requests overlapping comparison. Preserve R10 as a partial alternative; develop a separate overlay."
+    }
+  ]
+}

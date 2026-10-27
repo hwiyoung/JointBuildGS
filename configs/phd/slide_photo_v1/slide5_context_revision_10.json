@@ -1,0 +1,20 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R10-SLIDE5-CONTEXT",
+  "scientific_verdict": null,
+  "authorization": "User approved a building-context paired view and wall side inset on 2026-10-27",
+  "frozen_sources_config": "/cfg/slide5_3d_revision_09.json",
+  "roof_context_padding_xyz_m": [12,12,10],
+  "roof_context_rule": "Expand the exact R9 fixed comparison volume by a fixed 12 m in XY and 10 m in Z. Context only; retain the original highlighted comparison volume and original section. Same volume and display selection rule for all sources.",
+  "roof_display_voxel_m": 0.16,
+  "roof_point_rule": "Use original ALS TIN vertices with the existing registration, and original MVS/reference points. First actual point per world-anchored voxel for all three; no fitted surfaces or meshes, no new registration.",
+  "wall_rule": "Keep all exact R7 raw point indices used in R9. The side inset uses their actual section and wall-normal coordinates with equal metric scale and no normal-axis exaggeration.",
+  "photo_rule": "Reuse the original R6 roof and R7 wall photographs and native camera. Expand each old native crop by 1.25 about its centre, clipped to the native image; preserve aspect without geometric stretching. Retain exact measured line and source projection.",
+  "photo_crop_expansion": 1.25,
+  "roof_camera_default": {"azimuth_deg": -65, "elevation_deg": 28},
+  "render_rule": "Point rendering with one depth buffer and equal point style for roof source pairs. Unhighlighted surrounding geometry uses neutral tones. Shared current-reference section points are a visible evaluation guide. Wall photo anchors the normal-distance side inset.",
+  "display_changes_allowed": "Cameras, labels, layout and opacity only; source data, context expansion and highlighted comparison scope remain fixed.",
+  "canvas_px": [1920,1080],
+  "export_scale": 2,
+  "new_training": false,
+  "crs": "EPSG:25832 sources; existing source-local coordinates retained"
+}

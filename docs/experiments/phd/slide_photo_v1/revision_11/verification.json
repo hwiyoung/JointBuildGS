@@ -1,0 +1,72 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R11-SLIDE5-OVERLAY",
+  "scientific_verdict": null,
+  "verified_at": "2026-10-27T17:50:45.076946+09:00",
+  "status": "PASS",
+  "checks": {
+    "source_locks_and_r10_coordinate_audit_unchanged": true,
+    "prior_original_planes_and_mvs_original_coordinates": true,
+    "camera_is_rigid_and_scale_is_equal_on_all_axes": true,
+    "roof_arrow_uses_fixed_midpoint_source_values": true,
+    "wall_all_fixed_points_retained_with_equal_top_view_axes": true,
+    "original_photo_bytes_and_calibrated_ab_projection": true,
+    "export_sizes_and_explanation_mask_preserves_figure_panels": true,
+    "blind_review_image_hash_matches": true,
+    "standalone_panels_match_rendered_components": true
+  },
+  "details": {
+    "prior_original_triangle_plane_max_error_m": 1.5432100042289676e-14,
+    "wall_prior_max_coordinate_error_m": 1.7763568394002505e-15,
+    "wall_mvs_max_coordinate_error_m": 1.7763568394002505e-15,
+    "wall_gt_max_coordinate_error_m": 1.7763568394002505e-15,
+    "roof_photo_projection_max_error_px": 0.0,
+    "wall_photo_projection_max_error_px": 0.0
+  },
+  "files": {
+    "figures/roof_overlay.png": {
+      "sha256": "81370d4736e8b04faba85b77af382499dab53bda901889148905b07b81cc602a",
+      "bytes": 106553
+    },
+    "figures/slide5_mvs.png": {
+      "sha256": "d497f4186a46abf9530b5a80900ab20e0b4835add4c82eb4a5674890b1fbe7bb",
+      "bytes": 2678414
+    },
+    "figures/slide5_overlay.png": {
+      "sha256": "5d6e5e4ea0d0fd1585eda80ab1a6a32a8ad5eb2ab052635e4d25f6563d982cb9",
+      "bytes": 2694730
+    },
+    "figures/slide5_prior.png": {
+      "sha256": "36b3fcc9f0268a4419a443c485fc472560f54a9c5d6c24b6d987293a67709f33",
+      "bytes": 2588881
+    },
+    "figures/wall_overlay.png": {
+      "sha256": "8d443528b2e9f454988b7b9e30afcca119bdc0564962beae96d3b7c372878cec",
+      "bytes": 83688
+    },
+    "previews/slide5_mvs.png": {
+      "sha256": "f9ecd0bdbf3a15fa087d29810518fa07905f74e99665789b7623425c5fb00ad8",
+      "bytes": 943173
+    },
+    "previews/slide5_overlay.png": {
+      "sha256": "41d5f47997117c8e0885352066a8c7cdde9985e9f77a3adb096e7a6e27ca4f3a",
+      "bytes": 968881
+    },
+    "previews/slide5_prior.png": {
+      "sha256": "f50281c75b35b0fc9da38aed9633b5b7e0087923bfa02ad6bda1444070d60a89",
+      "bytes": 798428
+    },
+    "qa/without_explanations.png": {
+      "sha256": "41d35a82b859f249fb270839ed5c6d279e3a37326d67a7141959e984f3f46595",
+      "bytes": 889382
+    }
+  },
+  "audit_script_sha256": "cc5006cb0a366fcc367a0c504c84b40c4210f8a53fe68603dd50c77a84dca4e5",
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pillow": "10.4.0",
+    "scipy": "1.13.1",
+    "matplotlib": "3.9.2"
+  },
+  "scope": "Technical provenance and geometry only; reader judgement is separate. Two illustrative cases, no performance or causal-material verdict."
+}

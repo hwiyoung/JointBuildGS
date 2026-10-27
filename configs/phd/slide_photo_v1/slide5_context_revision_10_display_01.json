@@ -1,0 +1,10 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R10-SLIDE5-CONTEXT",
+  "scientific_verdict": null,
+  "reason": "The first point-only prior view did not retain a recognizable roof surface because the original ALS sampling is sparse. Use the already available original prior TIN as an opaque surface, with wire edges off. MVS remains original points; do not fit a new surface.",
+  "prior_render": "Original registered ALS TIN clipped to the already locked context volume, depth-buffered and shaded, without internal edge lines. No simplification, vertex movement or new surface fit.",
+  "reference_guide": "Use the exact previously calibrated roof photo section_line_xyz for both photograph and 3D A/B markers, including original endpoint positions. This is the existing interpolated reference section guide, not a new roof outline.",
+  "wall_layout": "Two aligned top-view panels: prior+reference and MVS+reference. Keep the same axes, metric scale and all fixed raw section points.",
+  "unchanged": "Input sources, context volume, highlighted original comparison volume, wall point indices, coordinate values and registration remain fixed.",
+  "display_only": true
+}

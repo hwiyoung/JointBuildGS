@@ -1,0 +1,18 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R11-SLIDE5-OVERLAY",
+  "scientific_verdict": null,
+  "prompt": "이 그림이 보여 주는 것을 한 문장으로.",
+  "method": "A fresh agent receives only the image and the question. Finding title and concluding captions are hidden; source identities, A-B markers and viewing-direction labels remain.",
+  "status": "PASS_FOR_HEIGHT_DIFFERENCE_AND_WALL_SCATTER",
+  "reviews": [
+    {
+      "round": 1,
+      "agent": "/root/r11_overlay_blind",
+      "image_path": "qa/without_explanations.png",
+      "image_sha256": "41d35a82b859f249fb270839ed5c6d279e3a37326d67a7141959e984f3f46595",
+      "answer": "현재 사진과 대응 위치의 3차원 자료를 비교해, 사전 정보와 영상 MVS 사이의 지붕 높이 차이와 벽면 주변 MVS 점들의 흩어짐을 보여 준다.",
+      "assessment": "Reader identifies roof height difference and wall point spread. This is a limited readability check; it does not establish temporal change, causal material effect, source correctness, or user acceptance."
+    }
+  ],
+  "preceding_alternative": "../revision_10/qa/blind_reviews.json: both readers interpreted roof detail rather than height change; status PARTIAL."
+}

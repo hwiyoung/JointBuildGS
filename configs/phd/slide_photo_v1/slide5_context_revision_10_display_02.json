@@ -1,0 +1,10 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R10-SLIDE5-CONTEXT",
+  "scientific_verdict": null,
+  "supersedes_display": "slide5_context_revision_10_display_01.json prior opaque TIN presentation",
+  "reason": "A reader without the finding text noticed clean prior versus scattered MVS, but did not read the roof height mismatch. Give both roof panels the identical current reference building context, and render both compared sources as actual points with an identical footprint and scale.",
+  "render": "Shared gray current UAS reference points in both roof panels. Overlay only the original fixed highlighted comparison region's prior or MVS points; same depth buffer, point footprint and camera. Draw the existing binned source section and exact photo reference section as source-labelled guides.",
+  "annotation": "Arrow endpoints at the existing bin nearest the geometric midpoint of the fixed roof section, without selecting a maximum difference. The points and labels denote source section values, not an estimated new surface.",
+  "unchanged": "All source bytes, context and comparison volumes, wall point lists, registration and coordinate values",
+  "new_surface_fitting": false
+}
