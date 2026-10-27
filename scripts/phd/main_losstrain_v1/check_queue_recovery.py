@@ -18,6 +18,38 @@ def function(filename, name, scope):
 
 
 class Recovery(unittest.TestCase):
+    def test_first_batch_reaches_scores_and_figures_before_new_training(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            runs=[dict(run=i) for i in range(24)]
+            policy={'enabled':True}
+            schedule=function('continue_resource_v1.py','readout_schedule',
+                              dict(ROOT=root,RUNS=runs,read=lambda *a: policy))
+            # A mesh-ready first arm must be scored before the next TSDF.
+            state=schedule(runs[1:],runs[:1])
+            self.assertTrue(state['active'])
+            self.assertFalse(state['post_may_start'])
+            self.assertEqual(state['post'],runs[1:4])
+            self.assertEqual(state['measure'],runs[:1])
+            # First-batch figures still need RAM after all four scores complete.
+            state=schedule(runs[4:],[])
+            self.assertTrue(state['active'])
+            self.assertEqual(state['post'],[])
+            # A generated interim releases all remaining authorized work.
+            (root/'interim_report_generated.json').write_text('{}')
+            state=schedule(runs[4:],[])
+            self.assertFalse(state['active'])
+            self.assertEqual(state['post'],runs[4:])
+
+    def test_no_priority_policy_preserves_original_queue(self):
+        with tempfile.TemporaryDirectory() as directory:
+            runs=[dict(run=i) for i in range(24)]
+            state=function('continue_resource_v1.py','readout_schedule',
+                           dict(ROOT=Path(directory),RUNS=runs,read=lambda *a:{}))(runs,runs[:1])
+            self.assertFalse(state['active'])
+            self.assertEqual(state['post'],runs)
+            self.assertTrue(state['post_may_start'])
+
     def test_handoff_preserves_new_error_during_wait(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

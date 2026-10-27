@@ -25,6 +25,21 @@ def save(p,d):
 
 def read(p,default=None):return json.loads(p.read_text()) if p.exists() else default
 
+def readout_schedule(post_pending, measurable):
+    """Keep the completed first batch moving through post, score, then figures.
+
+    Holding new training admissions is temporary; running jobs are untouched.
+    No resource threshold, scientific setting, or arm membership changes here.
+    """
+    policy=read(ROOT/'first_batch_priority.json',{})
+    active=policy.get('enabled',False) and not (ROOT/'interim_report_generated.json').exists()
+    if not active:return dict(active=False,post=post_pending,measure=measurable,post_may_start=True)
+    first=RUNS[:4]
+    post=[r for r in post_pending if r in first]
+    measure=[r for r in measurable if r in first]
+    # Finish an available score before taking the TSDF lock for another mesh.
+    return dict(active=True,post=post,measure=measure,post_may_start=not measure)
+
 def training_args(r,model,lam):
     mode,validity=F.MODES[r['variant']];key=r['site']+'__'+r['prior']
     return P.train_args(r['site'],r['prior'],model,sw_off=['judgment'])+[
@@ -262,18 +277,20 @@ def main():
                 stable=0 if stable_since is None else time.monotonic()-stable_since
                 post_active=any(x[1]=='post' for x in futures.values())
                 post_pending=[r for r in RUNS if (F.root_of(r)/'PASS.json').exists() and not (F.root_of(r)/'post_PASS.json').exists()]
+                measurable=[r for r in RUNS if (F.root_of(r)/'post_PASS.json').exists() and not (F.root_of(r)/'measure_PASS.json').exists()]
+                schedule=readout_schedule(post_pending,measurable)
+                post_pending,measurable=schedule['post'],schedule['measure']
                 for gpu in [0,1]:
                     if gpu in futures:continue
-                    if post_pending and not post_active and cpu is None and stable>=60 and not (ROOT/'post_STOP.json').exists():
+                    if post_pending and schedule['post_may_start'] and not post_active and cpu is None and stable>=60 and not (ROOT/'post_STOP.json').exists():
                         r=post_pending[0];futures[gpu]=(pool.submit(post_one,r,gpu),'post',r);post_active=True;stable_since=None
-                    elif pending and not (ROOT/'training_STOP.json').exists() and not prioritize_post:
+                    elif pending and not (ROOT/'training_STOP.json').exists() and not prioritize_post and not schedule['active']:
                         r=pending.pop(0);futures[gpu]=(pool.submit(train,r,gpu,.0025),'training',r)
                 if prioritize_post and post_active:
                     active_posts=[x[2] for x in futures.values() if x[1]=='post']
                     for active in active_posts:
                         if post_admitted(active):prioritize_post=False
                 if (ROOT/'post_STOP.json').exists():prioritize_post=False
-                measurable=[r for r in RUNS if (F.root_of(r)/'post_PASS.json').exists() and not (F.root_of(r)/'measure_PASS.json').exists()]
                 if cpu is None and measurable and not post_active and not (ROOT/'measure_STOP.json').exists():
                     r=measurable[0];cpu=(pool.submit(measure,r),r)
                 counts=dict(training_health_stopped=sum((F.root_of(r)/'training_health_STOP.json').exists() for r in RUNS),training_no_result=sum((F.root_of(r)/'training_NO_RESULT.json').exists() for r in RUNS),training_complete=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
@@ -282,6 +299,7 @@ def main():
                 stops=[p.name for p in ROOT.glob('*_STOP.json')]
                 save(ROOT/'state.json',dict(at=F.now(),status='NEEDS_ATTENTION' if stops else 'RUNNING',**counts,
                     gpu_jobs={str(g):dict(kind=x[1],run=x[2]) for g,x in futures.items()},cpu_measurement=cpu[1] if cpu else None,
+                    first_batch_readout_priority=schedule['active'],
                     available_GiB=mem,required_post_GiB=64,stable_seconds=stable,stops=stops,pending_trainings=len(pending),scientific_verdict=None))
                 if all((F.root_of(r)/'measure_PASS.json').exists() for r in RUNS[:4]) and not (ROOT/'interim_ready.json').exists():
                     save(ROOT/'interim_ready.json',dict(at=F.now(),status='READY_FOR_REPORT',scientific_verdict=None))
