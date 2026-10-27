@@ -1,0 +1,40 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "RUNNING_PARTIAL",
+  "snapshot_at": "2026-10-27T13:54:37.921907+09:00",
+  "live_state_at": "2026-10-27T13:54:35.080085+09:00",
+  "training_counts": {
+    "HEALTH_STOPPED": 2,
+    "COMPLETE": 12,
+    "RUNNING": 2,
+    "PENDING": 8
+  },
+  "required_runs": 24,
+  "requested_interim_verified": 4,
+  "full_measurement_complete": 3,
+  "source_head": "a43ff00bf5af414eae808c4040031dbb67a6e02a",
+  "source_policy": "Current task files frozen with per-file hashes; source_head alone does not identify uncommitted generated data.",
+  "frozen_report": "docs/중간보고_20261027_1342.md",
+  "scientific_verdict": null,
+  "archives": [
+    {
+      "path": "/out/deliveries/interim_fourarms_20261027_1357_r2/PHD-MAIN-LOSSTRAIN-v1_handover_light.zip",
+      "bytes": 7861577,
+      "sha256": "69d8428db7eb792676c40bb8e45a826daa975bf39c2cdd069cb557c536e201e7",
+      "CRC": "PASS",
+      "member_hashes": "PASS",
+      "members": 804
+    },
+    {
+      "path": "/out/deliveries/interim_fourarms_20261027_1357_r2/PHD-MAIN-LOSSTRAIN-v1_handover.zip",
+      "bytes": 36927481,
+      "sha256": "9d8fce3be59c8e9b3e0aee1ebbb2f304231db06ca0c454d8d5f5d955781449e8",
+      "CRC": "PASS",
+      "member_hashes": "PASS",
+      "members": 932
+    }
+  ],
+  "identical_shared_members": "PASS",
+  "shared_members": 802,
+  "verified_interim_hashes": "PASS"
+}
