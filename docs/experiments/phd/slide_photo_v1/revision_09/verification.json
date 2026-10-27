@@ -1,0 +1,39 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R9-SLIDE5-3D",
+  "scientific_verdict": null,
+  "verified_at": "2026-10-27T15:08:19.373872+09:00",
+  "base_commit": "80ee1c035639a9933fd74cf9ec5012a863887483",
+  "script_sha256": "05b0a71e154034508ac2a5e4be37693ce26e344e9b42595691226f83dc27139f",
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pillow": "10.4.0",
+    "matplotlib": "3.9.2",
+    "scipy": "1.13.1"
+  },
+  "checks": {
+    "roof_original_triangle_planes_preserved": true,
+    "roof_all_source_layers_same_crop": true,
+    "wall_all_frozen_points_retained": true,
+    "wall_r7_coordinate_replay": true,
+    "rigid_frame_transforms": true,
+    "frozen_source_hashes": true,
+    "no_training": true,
+    "no_gpu": true,
+    "orthonormal_projection": true,
+    "no_axis_exaggeration": true,
+    "unchanged_coordinates_across_frames": true,
+    "photo_projection_replay": true,
+    "text_inside_canvas": true
+  },
+  "files": {
+    "figures/slide5_3d_overlay.png": {
+      "sha256": "59bbb904418c353eb1b79c0fd7e9babc0a9a57b38bd12a0e3c041195df5d8574",
+      "bytes": 2640630
+    },
+    "figures/slide5_3d_steps.gif": {
+      "sha256": "3f2003b3b0c32e892a733f8182ae5ece37385550d8285d01cd1828d5bd30fa8b",
+      "bytes": 1013436
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R9-SLIDE5-3D",
+  "scientific_verdict": null,
+  "verified_at": "2026-10-27T15:11:01.656148+09:00",
+  "status": "PASS",
+  "artifact_root_relative_path": "phase-payloads/phd/slide_photo_v1/PHD-SLIDE-PHOTO-v1/revision_09/PHD-SLIDE-PHOTO-v1_part_R9_slide5_3d.zip",
+  "archive_sha256": "f423a646a4320026bc005f929dafeee237555988aa85f88c5cb6e875f8f6b80a",
+  "archive_bytes": 8949621,
+  "member_count": 23,
+  "crc_verified": true,
+  "all_member_hashes_verified": true,
+  "contents": {
+    "configs/phd/slide_photo_v1/slide5_3d_revision_09.json": {
+      "sha256": "b04f31f9d5b2cfc28fe84fabbfac09139436f48d3fbd0166c0b49e479417b734",
+      "bytes": 3180
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/README.md": {
+      "sha256": "c2be56aaf0ce945a8f9b378916151ad0d5c7d971efda21b4a01c1fcd37bc8e8a",
+      "bytes": 6749
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/docker_image_id.txt": {
+      "sha256": "e00cbd58e2115075a09c076971e35f0f26fc34732961ff7742f6719c314d300d",
+      "bytes": 72
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/figures/slide5_3d_overlay.png": {
+      "sha256": "59bbb904418c353eb1b79c0fd7e9babc0a9a57b38bd12a0e3c041195df5d8574",
+      "bytes": 2640630
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/figures/slide5_3d_steps.gif": {
+      "sha256": "3f2003b3b0c32e892a733f8182ae5ece37385550d8285d01cd1828d5bd30fa8b",
+      "bytes": 1013436
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/geometry.json": {
+      "sha256": "1a82d68548abc865216a8aa0dec383e9f59837827ceb93cb61c45fd2049ea4e2",
+      "bytes": 2586
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/input_lock.json": {
+      "sha256": "0e76455cbc06c9853559cf15b32bd26d8584b6d14eeb141191eca0b9842b33c5",
+      "bytes": 2414
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/issues.md": {
+      "sha256": "ed57b6faf9375602861c0cf4f657f163a2d5d89ebbdde477659945de3c01cb20",
+      "bytes": 1213
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/previews/slide5_3d_all.png": {
+      "sha256": "3acefc849b31d40a3a3a18f6776dcee45c707309fb8da9a9c34f2f4edd5f1eca",
+      "bytes": 878486
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/previews/slide5_3d_mvs.png": {
+      "sha256": "42f14f704b1ef6efecd0307ba1804e7f2611d532df89e7a9c47c916e1a5723b3",
+      "bytes": 804392
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/previews/slide5_3d_prior.png": {
+      "sha256": "b3899db224ef022948b80790d09f184258f2622258d29d1bd0dc4437fd24947e",
+      "bytes": 797204
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/qa/blind_reviews.json": {
+      "sha256": "f974f6aabfd9282d300267f0925d96db4c86e8fb512084ecb11ae878c93a97c6",
+      "bytes": 1485
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/render.json": {
+      "sha256": "c0b2103670c880d7793f6d17f175eb3c9c9cc8041b6d4feacc8a70f6048a45aa",
+      "bytes": 20862
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/source_replay.json": {
+      "sha256": "f3b28cf549016657efc1f2c9dc7dd829f9d577177bf275703e25a825c49e2486",
+      "bytes": 1632
+    },
+    "docs/experiments/phd/slide_photo_v1/revision_09/verification.json": {
+      "sha256": "7e213aaed770338a41273e710dfdcdf05601154777eb4b69a5a1333cd7ced895",
+      "bytes": 1249
+    },
+    "payload/revision_09/geometry.npz": {
+      "sha256": "a0cb65c2b1ce0a7c71eef9a26950af26538b4c69b001d3e3985472583aa022cb",
+      "bytes": 2877252
+    },
+    "scripts/phd/main_regionfig_v1/common.py": {
+      "sha256": "4f92f113815bf2d1bf838e6b0060ecd0b941e1d4395d1b8ea9f9109e974e2bda",
+      "bytes": 4425
+    },
+    "scripts/phd/slide_photo_v1/common.py": {
+      "sha256": "6dea5286386b974122bdb02cd9b52b64a9155b229acb43a9d1c19fa8fdcc5c64",
+      "bytes": 1750
+    },
+    "scripts/phd/slide_photo_v1/run_slide5_3d_09.sh": {
+      "sha256": "7bb9aede5debfc9b010397be448d63a16872f2f9f74394d29199c5838b89ba52",
+      "bytes": 1399
+    },
+    "scripts/phd/slide_photo_v1/slide5_3d_revision_09.py": {
+      "sha256": "05b0a71e154034508ac2a5e4be37693ce26e344e9b42595691226f83dc27139f",
+      "bytes": 16652
+    },
+    "scripts/phd/slide_photo_v1/slide5_draft_revision_08.py": {
+      "sha256": "d8319247d1e57ebae4fe61ed013e095717af66972c37a769beeab85eeb890cee",
+      "bytes": 12217
+    },
+    "scripts/phd/slide_photo_v1/verify_slide5_3d_09.py": {
+      "sha256": "2ee39acf519a9b28a006daf623a8c73a400022b46fa0ad62ffbd65b8231db7c0",
+      "bytes": 7688
+    }
+  }
+}

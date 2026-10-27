@@ -1,0 +1,36 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R9-SLIDE5-3D",
+  "scientific_verdict": null,
+  "authorization": "User approved the page-5 real-photo plus actual-coordinate 3D overlay revision on 2026-10-27",
+  "selection": {
+    "roof": "Reuse the exact B173 example-a context bounds and height window stored in figures/figS_c_change.json. Same bounds for all three sources. No outcome-based point selection.",
+    "wall": "Reuse all raw point_indices in each source's R7 keep_section.json series. This is the already frozen 6 m by 1.2 m section band, not a median curve. Retain every selected point including normal-direction outliers."
+  },
+  "sources": {
+    "roof_scope": "/docs/figures/figS_c_change.json",
+    "roof_photo": "/docs/revision_06/figures/figS_e_aim_correct.json",
+    "roof_prior_mesh": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173nb_b10/als_mesh.npz",
+    "roof_registration": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173nb_b10/ALS/summary.json",
+    "roof_mvs": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/mvs_a_xyz.npy",
+    "roof_reference": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/gt_xyz.npy",
+    "roof_mvs_lineage": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/mvs_a.json",
+    "roof_example": "/repo/docs/experiments/phd/main_regionfig_v1/tables/영역예시_보정_숫자.json",
+    "wall_cloud": "/payload/task0/selected_clouds.npz",
+    "wall_section": "/docs/revision_07/keep_section.json",
+    "wall_photo": "/docs/revision_07/figures/figS_e_aim_keep.json"
+  },
+  "roof_display_voxel_m": 0.12,
+  "voxel_rule": "Deterministic first actual input point in each world-anchored voxel; display only; no averaging or surface fitting. Same voxel size for MVS and reference.",
+  "roof_mesh": "Use original ALS TIN plus exact existing registration. Clip intersecting triangles to the fixed six crop planes, preserving their original planar geometry.",
+  "wall_surface": "Triangulate the frozen planar prior points in their tangent plane, inside their convex hull only; this displays the original LoD2 plane, not a new estimate. Reference and MVS remain raw points.",
+  "projection": "One orthonormal camera per case, common to every layer and animation step. Equal metric scale on all three spatial axes; no source translations or depth exaggeration.",
+  "default_camera_degrees": {"roof": {"azimuth": -58, "elevation": 24}, "wall": {"azimuth": -68, "elevation": 28}},
+  "display_only_adjustments": "Camera, crop within the canvas, opacity, labels and layout may be revised after visual checks. Source selection, input coordinates and crop volumes remain locked.",
+  "render": "Transparent prior surface with original mesh structure; blue MVS points; neutral reference points. Transparent overlay intentionally allows seeing both sources.",
+  "animation_steps": ["prior_and_reference", "mvs_and_reference", "all_three"],
+  "canvas_px": [1920, 1080],
+  "export_scale": 2,
+  "new_training": false,
+  "new_method_results": false,
+  "crs": "EPSG:25832 source; source-local coordinates retained"
+}

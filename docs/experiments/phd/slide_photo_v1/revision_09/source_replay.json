@@ -1,0 +1,58 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R9-SLIDE5-3D",
+  "scientific_verdict": null,
+  "verified_at": "2026-10-27T15:11:01.349347+09:00",
+  "status": "PASS",
+  "source_replays": {
+    "roof_mvs": {
+      "raw_coordinate_max_error_m": 0.0,
+      "crop_points": 430519,
+      "display_points": 74710,
+      "first_original_point_per_voxel": true
+    },
+    "roof_gt": {
+      "raw_coordinate_max_error_m": 0.0,
+      "crop_points": 289669,
+      "display_points": 42153,
+      "first_original_point_per_voxel": true
+    },
+    "roof_mesh": {
+      "original_plane_max_error_m": 1.5443875139774652e-14,
+      "clipped_triangles": 10190,
+      "degenerate_parent_count": 0
+    },
+    "wall_prior": {
+      "raw_coordinate_max_error_m": 1.7763568394002505e-15,
+      "all_frozen_points_retained": true,
+      "display_points": 42
+    },
+    "wall_gt": {
+      "raw_coordinate_max_error_m": 1.7763568394002505e-15,
+      "all_frozen_points_retained": true,
+      "display_points": 43
+    },
+    "wall_mvs": {
+      "raw_coordinate_max_error_m": 1.7763568394002505e-15,
+      "all_frozen_points_retained": true,
+      "display_points": 670
+    }
+  },
+  "same_camera_and_metric_scale_across_steps": true,
+  "animation": {
+    "frames": 3,
+    "duration_ms": [
+      1800,
+      1800,
+      3200
+    ],
+    "mean_absolute_palette_error_rgb_255": [
+      0.3867546021938324,
+      0.339732825756073,
+      0.43252378702163696
+    ]
+  },
+  "audit_script_sha256": "2ee39acf519a9b28a006daf623a8c73a400022b46fa0ad62ffbd65b8231db7c0",
+  "all_source_hashes_unchanged": true,
+  "output_hashes_verified": true,
+  "final_blind_review_hash_matches": true
+}

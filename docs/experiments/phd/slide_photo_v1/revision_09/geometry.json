@@ -1,0 +1,114 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R9-SLIDE5-3D",
+  "scientific_verdict": null,
+  "config_sha256": "b04f31f9d5b2cfc28fe84fabbfac09139436f48d3fbd0166c0b49e479417b734",
+  "geometry_sha256": "a0cb65c2b1ce0a7c71eef9a26950af26538b4c69b001d3e3985472583aa022cb",
+  "roof": {
+    "bounds_source": "figS_c_change.json",
+    "crop_min_xyz": [
+      133.46,
+      99.497,
+      -31.602259246784556
+    ],
+    "crop_max_xyz": [
+      156.904,
+      114.933,
+      -21.00858621776692
+    ],
+    "origin": [
+      145.18200000000002,
+      107.215,
+      -26.305422732275737
+    ],
+    "basis": [
+      [
+        -0.9577617651454459,
+        0.2875628648234675,
+        0.0
+      ],
+      [
+        -0.2875628648234675,
+        -0.9577617651454459,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "registration_shift": [
+      -0.05619434746608162,
+      0.06288884357338685,
+      0.0
+    ],
+    "triangle_count": 10190,
+    "clip_plane_max_error_m": 1.5432100042289676e-14,
+    "point_counts": {
+      "mvs": {
+        "total": 18985897,
+        "in_fixed_volume": 430519,
+        "displayed": 74710
+      },
+      "gt": {
+        "total": 9786075,
+        "in_fixed_volume": 289669,
+        "displayed": 42153
+      }
+    },
+    "thinning": "First original point in each 0.12 m voxel; identical MVS/reference rule, display only"
+  },
+  "wall": {
+    "source": "R7 exact raw point indices, no new filtering",
+    "origin": [
+      -29.99875000002794,
+      -8.851699999999255,
+      -36.06940729956924
+    ],
+    "basis": [
+      [
+        0.3613967273408562,
+        0.9229255492855074,
+        -0.1326681421568973
+      ],
+      [
+        0.9311564942948837,
+        -0.36461977885526486,
+        0.0
+      ],
+      [
+        -0.04837342865438673,
+        -0.12353480215543175,
+        -0.9911605137699124
+      ]
+    ],
+    "counts": {
+      "prior": 42,
+      "gt": 43,
+      "mvs": 670
+    },
+    "triangles": 71,
+    "normal_min_max_m": {
+      "prior": [
+        -0.09823478561216276,
+        -0.09823478561215783
+      ],
+      "gt": [
+        -0.08958408522374861,
+        0.046598150956937714
+      ],
+      "mvs": [
+        -1.3470539195967624,
+        1.4650937255788692
+      ]
+    },
+    "prior_triangulation": "Display tessellation strictly within the convex hull of frozen coplanar LoD2 prior points"
+  },
+  "checks": {
+    "roof_original_triangle_planes_preserved": true,
+    "roof_all_source_layers_same_crop": true,
+    "wall_all_frozen_points_retained": true,
+    "wall_r7_coordinate_replay": true,
+    "rigid_frame_transforms": true
+  }
+}

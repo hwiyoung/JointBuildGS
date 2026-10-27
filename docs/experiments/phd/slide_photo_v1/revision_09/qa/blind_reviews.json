@@ -1,0 +1,25 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R9-SLIDE5-3D",
+  "scientific_verdict": null,
+  "question": "이 그림이 보여 주는 것을 한 문장으로",
+  "protocol": "A separate agent with fork_turns=none receives only one image path and the question; no workstream context or other files.",
+  "reviews": [
+    {
+      "stage": "initial_display",
+      "agent": "/root/r9_slide5_blind",
+      "image_path_at_review": "previews/slide5_3d_all.png",
+      "image_sha256": null,
+      "limitation": "The initial image hash was not preserved before display-only revision. This review is historical and is not a verification of the final image.",
+      "answer": "바뀐 지붕에서는 옛 사전 정보가 영상·드론 LiDAR보다 위에 남고, 벽에서는 사전 면이 참조 가까이에 있는 반면 영상 MVS 점들이 앞뒤로 흩어지는 모습을 3차원으로 비교한 그림이다.",
+      "intended_message_read": true
+    },
+    {
+      "stage": "final_display",
+      "agent": "/root/r9_final_blind",
+      "image_path": "previews/slide5_3d_all.png",
+      "image_sha256": "3acefc849b31d40a3a3a18f6776dcee45c707309fb8da9a9c34f2f4edd5f1eca",
+      "answer": "이 그림은 바뀐 지붕에서는 과거 항공 LiDAR가 영상 MVS·드론 LiDAR 참조보다 위에 남고, 벽에서는 LoD2 사전 면이 참조 가까이에 있는 반면 영상 MVS 점들이 앞뒤로 흩어지는 차이를 3차원으로 보여 준다.",
+      "intended_message_read": true
+    }
+  ]
+}
