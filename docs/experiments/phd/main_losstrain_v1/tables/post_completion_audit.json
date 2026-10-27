@@ -1,0 +1,613 @@
+{
+  "at": "2026-10-27T21:39:51.445749+09:00",
+  "counts": {
+    "training_complete": 19,
+    "model_30000_exists": 19,
+    "health_stopped": 4,
+    "mesh_complete": 11,
+    "core_scored": 11,
+    "full_post_complete": 6,
+    "full_measure_complete": 5
+  },
+  "queue_snapshot": {
+    "at": "2026-10-27T21:39:47.721918+09:00",
+    "status": "RUNNING",
+    "training_health_stopped": 4,
+    "training_no_result": 0,
+    "training_complete": 19,
+    "post_complete": 6,
+    "measurement_complete": 5,
+    "gpu_jobs": {
+      "0": {
+        "kind": "training",
+        "run": {
+          "site": "R1rep_b10",
+          "prior": "LoD2",
+          "variant": "lt_dynnow"
+        }
+      }
+    },
+    "cpu_measurement": {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "variant": "lt_dynnow"
+    },
+    "first_batch_readout_priority": false,
+    "available_GiB": 51.30093765258789,
+    "required_post_GiB": 56,
+    "stable_seconds": 0,
+    "stops": [],
+    "pending_trainings": 0,
+    "scientific_verdict": null
+  },
+  "units": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "lt_fixgt_LoD2_s0",
+      "training_complete": false,
+      "model_30000_exists": false,
+      "health_stopped": true,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "lt_dyngt_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "lt_dynsoft_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "lt_dynnow_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": true,
+      "full_measure_complete": true
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": true,
+      "full_measure_complete": true
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": true,
+      "full_measure_complete": true
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "lt_fixgt_LoD2_s0",
+      "training_complete": false,
+      "model_30000_exists": false,
+      "health_stopped": true,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "lt_dyngt_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "lt_dynsoft_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "lt_dynnow_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "training_complete": false,
+      "model_30000_exists": false,
+      "health_stopped": true,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": true,
+      "full_measure_complete": true
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": true,
+      "full_measure_complete": true
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": true,
+      "core_scored": true,
+      "full_post_complete": true,
+      "full_measure_complete": false
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "lt_fixgt_LoD2_s0",
+      "training_complete": false,
+      "model_30000_exists": false,
+      "health_stopped": true,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "lt_dyngt_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "lt_dynsoft_LoD2_s0",
+      "training_complete": true,
+      "model_30000_exists": true,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "lt_dynnow_LoD2_s0",
+      "training_complete": false,
+      "model_30000_exists": false,
+      "health_stopped": false,
+      "mesh_complete": false,
+      "core_scored": false,
+      "full_post_complete": false,
+      "full_measure_complete": false
+    }
+  ],
+  "timings": {
+    "post": [
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "result": "lt_fixgt_ALS_s0",
+        "seconds": 1014.2163133258,
+        "receipt": "/out/runs/B0_b10/lt_fixgt_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "result": "lt_dyngt_ALS_s0",
+        "seconds": 725.9080399377272,
+        "receipt": "/out/runs/B0_b10/lt_dyngt_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "result": "lt_dynsoft_ALS_s0",
+        "seconds": 644.0795654235408,
+        "receipt": "/out/runs/B0_b10/lt_dynsoft_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "result": "lt_dynnow_ALS_s0",
+        "seconds": 735.8679893231019,
+        "receipt": "/out/runs/B0_b10/lt_dynnow_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_fixgt_ALS_s0",
+        "seconds": 730.3679701481014,
+        "receipt": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/post_attempt_4_receipt.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_dyngt_ALS_s0",
+        "seconds": 457.7574982531369,
+        "receipt": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_dynsoft_ALS_s0",
+        "seconds": 486.49947406258434,
+        "receipt": "/out/runs/B173nb_b10/lt_dynsoft_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_dynnow_ALS_s0",
+        "seconds": 4269.743637763895,
+        "receipt": "/out/runs/B173nb_b10/lt_dynnow_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dyngt_ALS_s0",
+        "seconds": 769.368246098049,
+        "receipt": "/out/runs/R1rep_b10/lt_dyngt_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dynsoft_ALS_s0",
+        "seconds": 763.0233992785215,
+        "receipt": "/out/runs/R1rep_b10/lt_dynsoft_ALS_s0/post_attempt_0_receipt.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dynnow_ALS_s0",
+        "seconds": 763.7639319915324,
+        "receipt": "/out/runs/R1rep_b10/lt_dynnow_ALS_s0/post_attempt_0_receipt.json"
+      }
+    ],
+    "run": [
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_fixgt_ALS_s0",
+        "seconds": 151.9295687843114,
+        "receipt": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/run_attempt_0_receipt.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_dyngt_ALS_s0",
+        "seconds": 133.63677904754877,
+        "receipt": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/run_attempt_0_receipt.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_dynsoft_ALS_s0",
+        "seconds": 134.60271301399916,
+        "receipt": "/out/runs/B173nb_b10/lt_dynsoft_ALS_s0/run_attempt_0_receipt.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dyngt_ALS_s0",
+        "seconds": 83.7479292806238,
+        "receipt": "/out/runs/R1rep_b10/lt_dyngt_ALS_s0/run_attempt_0_receipt.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dynsoft_ALS_s0",
+        "seconds": 83.8895009169355,
+        "receipt": "/out/runs/R1rep_b10/lt_dynsoft_ALS_s0/run_attempt_0_receipt.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dynnow_ALS_s0",
+        "seconds": 83.39189725648612,
+        "receipt": "/out/runs/R1rep_b10/lt_dynnow_ALS_s0/run_attempt_0_receipt.json"
+      }
+    ],
+    "axes": [
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_fixgt_ALS_s0",
+        "seconds": 761.9119511079043,
+        "receipt": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/measure_PASS.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_dyngt_ALS_s0",
+        "seconds": 526.3546081455424,
+        "receipt": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/measure_PASS.json"
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "result": "lt_dynsoft_ALS_s0",
+        "seconds": 527.3736367877573,
+        "receipt": "/out/runs/B173nb_b10/lt_dynsoft_ALS_s0/measure_PASS.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dyngt_ALS_s0",
+        "seconds": 1979.1176978349686,
+        "receipt": "/out/runs/R1rep_b10/lt_dyngt_ALS_s0/measure_PASS.json"
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "result": "lt_dynsoft_ALS_s0",
+        "seconds": 669.3500930806622,
+        "receipt": "/out/runs/R1rep_b10/lt_dynsoft_ALS_s0/measure_PASS.json"
+      }
+    ]
+  },
+  "timing_summary": {
+    "post": {
+      "n": 11,
+      "minimum_minutes": 7.6292916375522815,
+      "median_minutes": 12.264466488718366,
+      "maximum_minutes": 71.16239396273158
+    },
+    "run": {
+      "n": 6,
+      "minimum_minutes": 1.3898649542747685,
+      "median_minutes": 1.8127189997040356,
+      "maximum_minutes": 2.5321594797385236
+    },
+    "axes": {
+      "n": 5,
+      "minimum_minutes": 8.772576802425707,
+      "median_minutes": 11.155834884677704,
+      "maximum_minutes": 32.98529496391614
+    }
+  },
+  "successful_mesh_cgroup_peaks": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "cgroup_peak_gib": 27.426,
+      "receipt": "/out/runs/B0_b10/lt_fixgt_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "70aecfb589d33238a29659f1cdf24f90d75512ab1749da783ce3a95a9f064878"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "cgroup_peak_gib": 26.473,
+      "receipt": "/out/runs/B0_b10/lt_dyngt_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "ab563ceec67dbd80992b148524d965767c114bc41c446617364c7b2ac1821ae9"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "cgroup_peak_gib": 23.433,
+      "receipt": "/out/runs/B0_b10/lt_dynsoft_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "d9ca884369630b1a091f97de5437335b1eb0fe2f9f1675320fb185ad3123a4ae"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "cgroup_peak_gib": 22.882,
+      "receipt": "/out/runs/B0_b10/lt_dynnow_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "fbf0c77e5e14917ea693365385f457217a4a79c79acb1aed8367e14b2b7f38b1"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "cgroup_peak_gib": 22.791,
+      "receipt": "/out/runs/B173nb_b10/lt_fixgt_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "e1ea92f437652888290deefed2f45e01304a9016f77252359b77ec7c9342d020"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "cgroup_peak_gib": 22.347,
+      "receipt": "/out/runs/B173nb_b10/lt_dyngt_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "034726681b3cafb60f9dd68aceb8932c659fbba81dc8da0bd6802ac01f4ee449"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "cgroup_peak_gib": 21.756,
+      "receipt": "/out/runs/B173nb_b10/lt_dynsoft_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "70d26c3f6efa3442dd2b5f2c4bdf4421647a8ed5fe1290fd812e3785ca0d9f4e"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "cgroup_peak_gib": 21.006,
+      "receipt": "/out/runs/B173nb_b10/lt_dynnow_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "0626d1966d518dc58b9cb8b9e50a7e760683360aab18e845e600db9a33194de3"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "cgroup_peak_gib": 28.068,
+      "receipt": "/out/runs/R1rep_b10/lt_dyngt_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "019b0ef05b9c1aae8f1ff0fe08c50d0d8643118e1a9f5ea475e568501d47771a"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "cgroup_peak_gib": 29.141,
+      "receipt": "/out/runs/R1rep_b10/lt_dynsoft_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "455a9790ede021d3711eb063f39f544f3e008f783813a02e91c339988065a804"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "cgroup_peak_gib": 27.648,
+      "receipt": "/out/runs/R1rep_b10/lt_dynnow_ALS_s0/post/tiled_tsdf/merged.json",
+      "sha256": "e054bb5aacb8298b235cc267c703b20d7fb651fccb307ef7c4be80189bc65b22"
+    }
+  ],
+  "limitations": [
+    "Completed TSDF samples are ALS; LoD2 peak RAM and duration remain unmeasured.",
+    "Observed TSDF equivalence covers two 16 m real-input regions, not a full-scene legacy comparison.",
+    "Estimates exclude new failures and additional host-memory contention."
+  ],
+  "queue_changed": false,
+  "training_restarted": false,
+  "scientific_verdict": null
+}

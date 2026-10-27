@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-27T21:26:48.374175+09:00",
+  "at": "2026-10-27T21:39:51.537741+09:00",
   "stopped_arms": [
     {
       "site": "B0_b10",
@@ -11,9 +11,12 @@
       "psnr_drop_db": 3.5724029541015625,
       "source": "/out/runs/B0_b10/lt_fixgt_LoD2_s0/training_health_STOP.json",
       "models": [
+        "jbgs_complete/iteration_8000/point_cloud.ply",
         "point_cloud/iteration_15000/point_cloud.ply"
       ],
-      "checkpoints": []
+      "checkpoints": [
+        "jbgs_complete/iteration_8000/checkpoint.pth"
+      ]
     },
     {
       "site": "B173nb_b10",

@@ -14,8 +14,9 @@ def main():
         rows.append(dict(site=d['run']['site'],prior=d['run']['prior'],variant=d['run']['variant'],
             iteration=c['iteration'],stop=c['stop'],whole_opacity_median=c['whole_opacity_median'],
             psnr_drop_db=c.get('psnr_drop_db'),source=str(path),
-            models=[str(p.relative_to(model)) for p in model.glob('point_cloud/*/point_cloud.ply')],
-            checkpoints=[str(p.relative_to(model)) for p in model.glob('chkpnt*.pth')]))
+            models=sorted(str(p.relative_to(model)) for p in model.rglob('point_cloud.ply')),
+            checkpoints=sorted(str(p.relative_to(model)) for p in model.rglob('*')
+                               if p.is_file() and p.suffix in {'.pth','.pt','.ckpt'})))
     state=json.loads((OUT/'checks/resource_resume_v1/state.json').read_text())
     active=sum(j['kind']=='training' for j in state['gpu_jobs'].values())
     record=dict(at=datetime.now(ZoneInfo('Asia/Seoul')).isoformat(),stopped_arms=rows,
@@ -32,13 +33,19 @@ def main():
               '3,100회 기록만으로 이후 회복 여부를 관측할 수는 없다. B0 LoD2는 30,000회 계산에 도달했으나 '
               '모니터가 최종 저장보다 먼저 중단시켜 30,000회 모델이 없다.', '',
               '같은 씨앗·손실·학습 설정·중단 기준으로 처음부터 재실행할 수 있지만, 동일 기준에 다시 걸릴 가능성이 있다. '
-              '정확한 재개를 위한 옵티마이저 체크포인트 유무는 JSON에 적었다. 점군 모델만으로 같은 학습 상태를 복구했다고 주장하지 않는다.', '',
+              '저장 모델과 체크포인트의 재귀 검색 목록은 JSON에 적었다. 파일 존재만으로 정확한 학습 재개가 검증됐다고 주장하지 않는다. '
+              'B0 LoD2에는 8,000회 jbgs_complete 체크포인트와 15,000회 점군 모델이 있다. '
+              '15,000회 모델의 진단 후처리는 가능하지만 30,000회 결과를 대신하지 않는다. '
+              '8,000회 체크포인트는 LOSSTRAIN 기록 상태까지 복구하는지 별도 검증이 필요하다.', '',
               '끝까지 진행하는 방안은 불투명도·PSNR 수치를 기록하되 이 두 수치에 의한 중단만 유예하고, '
               'NaN·실행 오류 중단을 유지하는 것이다. 이는 사용자가 정한 중단 정책 변경이므로 이번 작업에서 임의 적용하지 않았다. '
               '손실 식·채점·판을 바꾸는 제안은 아니다.', '',
               f"현재 학습 완료 {record['training_complete']}판·중단 {len(rows)}판·진행 {active}판·대기 {record['training_pending']}판이다. "
               '핵심 분석 범위인 항공 LiDAR 12조건은 11판 채점과 R1 고정·참값 1판 중단 기록으로 구분한다.', '',
               '## 바꾼 것', '',
+              '2026-10-27 재점검: 체크포인트 검색을 모델 루트의 chkpnt*.pth에서 모든 하위 폴더의 .pth/.pt/.ckpt로 고쳤다. '
+              '이전 목록에서 빠진 B0 LoD2의 jbgs_complete/iteration_8000/checkpoint.pth를 추가했다. '
+              '이미 전달한 ZIP은 보존한다.', '',
               '12조건 중 11판 결과와 1판 중단을 모두 보이는 전달 보고서·목록을 추가했다. '
               'R1 핵심 채점이 끝난 뒤 추가 지표 때문에 마지막 학습이 대기하지 않도록 우선 처리 범위를 해제했다. '
               '저장된 점별 분류를 칸 0·2로 나누는 작업은 입력 압축 해제 크기 약 17.5 MiB임을 확인하고 '
