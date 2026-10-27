@@ -99,7 +99,10 @@ def train(r,gpu,lam):
             for path in [observations,health]:
                 if path.exists():observed.extend(json.loads(line) for line in path.read_text().splitlines() if line.strip())
             stops=[x for x in observed if x.get('stop')]
-            isolated=stops and (stops[-1]['stop']=='training PSNR more than 3 dB below same-iteration nojudge' or 'whole population opacity median' in stops[-1]['stop'])
+            isolated=stops and stops[-1]['stop'] in {
+                'training PSNR more than 3 dB below same-iteration nojudge',
+                'whole-population opacity median < 0.05 after reset+100',
+            }
             if isolated:
                 save(unit/'training_health_STOP.json',dict(**event,criterion_record=stops[-1],status='STOPPED_BY_FROZEN_CRITERION',remaining_independent_arms_continue=True))
                 print('ARM HEALTH STOP; preserve this arm and continue independent arms',r,flush=True)

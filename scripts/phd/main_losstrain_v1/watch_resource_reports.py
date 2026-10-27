@@ -28,6 +28,8 @@ def main():
         previous=None
         while True:
             state=read(ROOT/'state.json',{});done=[r for r in RUNS if (F.root_of(r)/'PASS.json').exists()]
+            signature=[state.get(k) for k in ['training_complete','training_no_result','training_health_stopped','post_complete','measurement_complete','stops']]
+            if signature!=previous:refresh();previous=signature
             if memory_available_gib()>=16:
                 for r in done:
                     unit=F.root_of(r);site=r['site'];prior=r['prior'];result=unit.name
@@ -42,12 +44,11 @@ def main():
                 save(ROOT/'interim_report_generated.json',dict(at=F.now(),status='READY_FOR_VISUAL_REVIEW',
                     report=str(DOC/'중간보고_v1.md'),report_sha256=F.sha(DOC/'중간보고_v1.md'),
                     first_four_scored=True,cell_0_and_cell_2_separate=True,visual_review='PENDING',scientific_verdict=None))
-            signature=[state.get(k) for k in ['training_complete','training_no_result','training_health_stopped','post_complete','measurement_complete','stops']]
-            if signature!=previous:refresh();previous=signature
             save(ROOT/'reporter_state.json',dict(at=F.now(),observed=signature,first_four_scored=first_ready,
                 interim_generated=(ROOT/'interim_report_generated.json').exists(),scientific_verdict=None))
             if (ROOT/'PASS.json').exists() or (ROOT/'PARTIAL_NO_RESULT.json').exists():return
-            if state.get('stops') and not state.get('gpu_jobs') and state.get('cpu_measurement') is None:return
+            # A STOP snapshot can belong to the preceding resume epoch. Keep
+            # observing until an explicit terminal receipt, including idle stops.
             time.sleep(30)
 
 if __name__=='__main__':
