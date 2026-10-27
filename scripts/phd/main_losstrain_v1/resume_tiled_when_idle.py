@@ -27,6 +27,8 @@ def main():
                 time.sleep(10)
         state = Q.read(root / 'state.json')
         assert not state['gpu_jobs'] and state['cpu_measurement'] is None
+        # A new execution failure must not be mistaken for our temporary pause.
+        assert Q.read(root / 'training_STOP.json').get('status') == 'OPERATIONAL_QUEUE_HANDOFF'
         stop = Q.read(root / 'post_STOP.json')
         assert stop['stage'] == 'post' and stop['attempt'] == 3
         unit = Q.F.root_of(stop['run'])
@@ -35,6 +37,7 @@ def main():
         assert (unit / 'post_attempt_3.log').stat().st_size == 0
         assert not stop['receipt']['resource_failure']
         assert set(state['stops']) == {'training_STOP.json', 'post_STOP.json'}
+        Q.validate(4)
         history = root / 'history/epoch_3'
         history.mkdir(exist_ok=False)
         for name in ['training_STOP.json', 'post_STOP.json', 'state.json', 'reporter_state.json']:
@@ -52,7 +55,6 @@ def main():
             health_stopped_arms=health, admit_post_before_new_training=True, remove_or_add_arm=False,
             loss_scoring_training_settings_and_stop_thresholds_unchanged=True,
             operational_cancellation=str(unit / 'post_attempt_3_CANCELLED.json'), scientific_verdict=None))
-        Q.validate(4)
     command = [sys.executable, '-u', str(Path(Q.__file__).resolve()), '--resume-epoch', '4']
     with (root / 'orchestrator_epoch_4.log').open('x') as log:
         process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)

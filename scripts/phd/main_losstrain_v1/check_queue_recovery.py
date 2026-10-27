@@ -18,6 +18,27 @@ def function(filename, name, scope):
 
 
 class Recovery(unittest.TestCase):
+    def test_handoff_preserves_new_error_during_wait(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            stop = root / 'training_STOP.json'
+            stop.write_text('{"status":"OPERATIONAL_QUEUE_HANDOFF"}')
+            reads = []
+            def read(path):
+                if path.name == 'validation.json': return {'status': 'PASS'}
+                if path.name == 'state.json': return {'gpu_jobs': {}, 'cpu_measurement': None}
+                if path.name == 'training_STOP.json':
+                    reads.append(path)
+                    if len(reads) == 2: path.write_text('{"reason":"new nonfinite failure"}')
+                    return json.loads(path.read_text())
+                raise AssertionError(path)
+            scope = dict(Q=SimpleNamespace(ROOT=root, OUT=root, read=read),
+                         fcntl=SimpleNamespace(flock=lambda *a: None, LOCK_EX=1, LOCK_NB=2))
+            with self.assertRaises(AssertionError):
+                function('resume_tiled_when_idle.py', 'main', scope)()
+            self.assertEqual(json.loads(stop.read_text()), {'reason': 'new nonfinite failure'})
+            self.assertFalse((root / 'history').exists())
+
     def test_old_post_admission_does_not_release_new_training(self):
         record = dict(status='ADMITTED', required_GiB=64, required_stable_seconds=60, attempt=2)
         scope = dict(F=SimpleNamespace(root_of=lambda r: Path('/unit')),

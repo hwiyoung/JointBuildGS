@@ -224,7 +224,7 @@ def validate(epoch=0):
     assert all(F.sha(P.SRC['r17']/p)==h for p,h in ref['source_sha256'].items())
     for r in RUNS:
         unit=F.root_of(r)
-        if unit.exists() and not (unit/'PASS.json').exists() and not (unit/'training_health_STOP.json').exists():assert next_training_attempt(unit)==1
+        if unit.exists() and not any((unit/name).exists() for name in ['PASS.json','training_health_STOP.json','training_NO_RESULT.json']):assert next_training_attempt(unit)==1
     result=dict(status='PASS',at=F.now(),training_arguments_identical=True,r17_source_unchanged=True,
         required_runs=24,completed_training_reused=sum((F.root_of(r)/'PASS.json').exists() for r in RUNS),
         post_minimum_available_GiB=64,post_stable_seconds=60,resource_retries=2,scientific_verdict=None)
