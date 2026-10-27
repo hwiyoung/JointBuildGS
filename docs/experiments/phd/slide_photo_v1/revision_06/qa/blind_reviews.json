@@ -1,0 +1,23 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R6",
+  "scientific_verdict": null,
+  "protocol": "Each changed image was shown to a fresh context-free agent, one image per agent, with only: 이 그림이 보여 주는 것을 한 문장으로. Unchanged D and B PNGs retain the previous review, subject to byte identity verification.",
+  "first_reviews": [
+    {"figure":"figS_a_image_limits","reviewer":"r6_blind_a","answer":"이 그림은 지붕·그늘진 벽·금속 면에서 영상 기반 깊이값이 누락되거나 참값과 불일치하는 양상이 서로 다름을 확대 영상과 비율로 보여 준다."},
+    {"figure":"figS_e_aim_keep","reviewer":"r6_blind_keep","answer":"금속으로 보이는 면에서 참값과의 차이가 사전 정보는 12cm로 허용 범위 20cm 안에 들고 영상 깊이는 34cm로 벗어나므로, 영상이 틀린 곳에서는 맞는 사전 정보를 보존해야 한다는 메시지를 보여 줍니다."},
+    {"figure":"figS_e_purpose_overview","reviewer":"r6_blind_overview","answer":"이 그림은 사전 3D 정보를 현재 영상과 결합할 때, 맞는 형상은 보존하고 변화한 부분은 보정하며 지붕 세부는 다듬고 가려진 벽은 사전 정보에서 상속하는 네 가지 역할을 보여 준다."}
+  ],
+  "reason_for_second_read": "After these readings the user identified ambiguity between missing depth and an existing but inaccurate depth estimate in the shared metal/keep case. The metal title and keep caption were corrected and the three affected figures were independently read again.",
+  "final_reviews": [
+    {"figure":"figS_a_image_limits","reviewer":"r6_second_a","answer":"이 그림은 지붕과 그늘진 벽에서는 깊이값이 많이 누락되고(각 59%, 50%), 금속 면에서는 깊이값이 있어도 참조값과 크게 불일치하는(80%) 사례를 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_keep","reviewer":"r6_second_keep","answer":"금속으로 보이는 면에서 참값과의 차이가 사전 정보는 12cm로 허용치 20cm 이내이고 영상 깊이는 34cm로 초과하므로, 부정확한 영상 깊이 대신 맞는 사전 정보를 보존하려는 목적을 보여 준다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_correct","reviewer":"r6_blind_correct","answer":"항공사진의 A–A′ 단면에서 과거 지붕 사전 정보가 현재 지붕과 다른 구간을 현재 영상에 따라 보정하는 모습을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_refine","reviewer":"r6_blind_refine","answer":"단순화된 사전 정보의 지붕 형상을 영상의 세부 관측으로 보완해 참값에 가깝게 다듬으려는 개념을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_inherit","reviewer":"r6_blind_inherit","answer":"항공영상에서 지붕에 가려 보이지 않는 벽의 위치를 기존 사전 정보로 보완하는 ‘상속’ 개념을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_purpose_overview","reviewer":"r6_second_overview","answer":"이 그림은 기존 사전 정보와 현재 영상을 결합해 정확한 면은 보존하고, 달라진 지붕은 보정하며, 지붕 세부는 다듬고, 영상에 가려진 벽은 사전 정보로 채우는 네 가지 역할을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_d_gs_real","reviewer":"r3_blind_d","retained_identical_image":true,"answer":"같은 지붕을 작은 타원들의 집합으로 표현하고 미분 가능 렌더링하여, 생성된 영상의 색과 깊이를 실제 영상·MVS 깊이·사전 정보 깊이와 비교하는 과정을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_b_correction_sections","reviewer":"r3_blind_b_focus","retained_identical_image":true,"answer":"이 그림은 B173과 R1의 단면에서 제안 방법이 사전 정보의 높이·형상 차이를 보정하여 참값에 가까워지고, 허용오차 τ 이내 비율이 각각 85%와 100%임을 보여 줍니다.","status":"FOCUS_READ"},
+    {"figure":"figS_b_all_methods","reviewer":"r3_blind_b_all","retained_identical_image":true,"answer":"두 지붕 사례의 높이 단면을 참값과 비교한 그림으로, 방법별 허용오차 τ 이내 비율은 사례에 따라 달라지며 제안 방법은 각각 85%와 100%를 보입니다.","status":"COMPARISON_READ"}
+  ],
+  "interpretation": "These are intent readings, not scientific validation or user acceptance. The correct/refine/inherit figures show input evidence and intended roles, not newly verified successful method outputs."
+}

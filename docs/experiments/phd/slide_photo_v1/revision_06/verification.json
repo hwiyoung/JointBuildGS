@@ -1,0 +1,654 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R6",
+  "at": "2026-10-27T11:23:07.348854+09:00",
+  "scientific_verdict": null,
+  "status": "PASS_TECHNICAL",
+  "presentation_intent": "Independent readings recorded; these are intent checks, not user acceptance or scientific validation",
+  "source_commit_at_verification": "0268190eb7c0a11845398d06c4a63b512ca90794",
+  "checks": [
+    {
+      "name": "original_metadata:figS_a_image_limits.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_b_correction_sections.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_c_change.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_c_repr.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_c_specular.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_d_gs_real.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_e_aim_correct.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_e_aim_inherit.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_e_aim_keep.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "original_metadata:figS_e_aim_refine.json",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "semantic_config_pin",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "context_config_pin",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "R6_selection_pin",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "R6_display_pin",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_other_two_sources_unchanged",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_old_roof_withdrawn",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_audit_config_matches",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_input_only_ranking",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_audit_scope",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_new_roof_source",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_support:projected_pixels",
+      "status": "PASS",
+      "detail": {
+        "actual": 68197,
+        "minimum": 1000
+      }
+    },
+    {
+      "name": "A_support:missing_share",
+      "status": "PASS",
+      "detail": {
+        "actual": 0.5851283780811473,
+        "minimum": 0.5
+      }
+    },
+    {
+      "name": "A_support:visible_unique_patch_fraction",
+      "status": "PASS",
+      "detail": {
+        "actual": 0.7348245468152337,
+        "minimum": 0.5
+      }
+    },
+    {
+      "name": "A_support:connected_missing_pixels",
+      "status": "PASS",
+      "detail": {
+        "actual": 37978,
+        "minimum": 250
+      }
+    },
+    {
+      "name": "A_global_visibility_24_tiles",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_R1_roof_threshold",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_pixel_replay",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_unknown_and_wrong_replay",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_native_projection_fraction_disclosed",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_no_texture_cause_title",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_original_JPEG_sha256",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "D_frozen_source",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "D_gaussians_175",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "D_shared_depth_colour",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "D_no_anisotropic_resize",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_frozen_source:keep",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_photos_no_fill:keep",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_frozen_source:correct",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_photos_no_fill:correct",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_frozen_source:refine",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_photos_no_fill:refine",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_frozen_source:inherit",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_photos_no_fill:inherit",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_refine_exact_section",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_correct_exact_section",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_correct_no_patch_hull",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_correct_exact_locator",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_correct_locator_projection_replay",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_correct_locator_visibility",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_values_unchanged:keep",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_raster_unchanged:keep",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_values_unchanged:correct",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_raster_unchanged:correct",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_values_unchanged:refine",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_raster_unchanged:refine",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_values_unchanged:inherit",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_comparison_raster_unchanged:inherit",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_keep_frozen_residual_medians",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "E_keep_frozen_tau",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_E_same_metal_original_photo",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A_E_missing_distinct_from_error",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "retained_R3:figS_d_gs_real",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "retained_R3:figS_b_correction_sections",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "retained_R3:figS_b_all_methods",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "B_all_segments_bounds_metrics:figS_b_correction_sections",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "B_all_segments_bounds_metrics:figS_b_all_methods",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "dimensions:figS_a_image_limits",
+      "status": "PASS",
+      "detail": [
+        2700,
+        1200
+      ]
+    },
+    {
+      "name": "font_over_24:figS_a_image_limits",
+      "status": "PASS",
+      "detail": 24.666666666666668
+    },
+    {
+      "name": "dimensions:figS_d_gs_real",
+      "status": "PASS",
+      "detail": [
+        3200,
+        800
+      ]
+    },
+    {
+      "name": "font_over_24:figS_d_gs_real",
+      "status": "PASS",
+      "detail": 26.0
+    },
+    {
+      "name": "dimensions:figS_b_correction_sections",
+      "status": "PASS",
+      "detail": [
+        3200,
+        1077
+      ]
+    },
+    {
+      "name": "font_over_24:figS_b_correction_sections",
+      "status": "PASS",
+      "detail": 25.27777777777778
+    },
+    {
+      "name": "dimensions:figS_b_all_methods",
+      "status": "PASS",
+      "detail": [
+        3200,
+        1077
+      ]
+    },
+    {
+      "name": "font_over_24:figS_b_all_methods",
+      "status": "PASS",
+      "detail": 25.27777777777778
+    },
+    {
+      "name": "dimensions:figS_e_purpose_overview",
+      "status": "PASS",
+      "detail": [
+        4320,
+        1620
+      ]
+    },
+    {
+      "name": "font_over_24:figS_e_purpose_overview",
+      "status": "PASS",
+      "detail": 25.185185185185187
+    },
+    {
+      "name": "dimensions:figS_e_aim_keep",
+      "status": "PASS",
+      "detail": [
+        1080,
+        1620
+      ]
+    },
+    {
+      "name": "font_over_24:figS_e_aim_keep",
+      "status": "PASS",
+      "detail": 25.185185185185187
+    },
+    {
+      "name": "dimensions:figS_e_aim_correct",
+      "status": "PASS",
+      "detail": [
+        1080,
+        1620
+      ]
+    },
+    {
+      "name": "font_over_24:figS_e_aim_correct",
+      "status": "PASS",
+      "detail": 25.185185185185187
+    },
+    {
+      "name": "dimensions:figS_e_aim_refine",
+      "status": "PASS",
+      "detail": [
+        1080,
+        1620
+      ]
+    },
+    {
+      "name": "font_over_24:figS_e_aim_refine",
+      "status": "PASS",
+      "detail": 25.185185185185187
+    },
+    {
+      "name": "dimensions:figS_e_aim_inherit",
+      "status": "PASS",
+      "detail": [
+        1080,
+        1620
+      ]
+    },
+    {
+      "name": "font_over_24:figS_e_aim_inherit",
+      "status": "PASS",
+      "detail": 25.185185185185187
+    },
+    {
+      "name": "all_new_figures_blind_read",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "python_syntax:representative_audit_06.py",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "python_syntax:presentation_revision_06.py",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "python_syntax:verify_package_revision_06.py",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "previous_handover_preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "R4_handover_preserved",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "figures": [
+    {
+      "name": "figS_a_image_limits",
+      "pixels": [
+        2700,
+        1200
+      ],
+      "slide_pixels": [
+        900,
+        400
+      ],
+      "min_slide_font_px": 24.666666666666668,
+      "sha256": "6d6e0866ea2b140fe3518629b84bddabfe32812596e6ca422bdfdd976873f443"
+    },
+    {
+      "name": "figS_d_gs_real",
+      "pixels": [
+        3200,
+        800
+      ],
+      "slide_pixels": [
+        1600,
+        400
+      ],
+      "min_slide_font_px": 26.0,
+      "sha256": "98072eaadc2df6713d2487a82aebdff4ca775a33e0791dd0e1bdfaa18f753ec5"
+    },
+    {
+      "name": "figS_b_correction_sections",
+      "pixels": [
+        3200,
+        1077
+      ],
+      "slide_pixels": [
+        1664,
+        560
+      ],
+      "min_slide_font_px": 25.27777777777778,
+      "sha256": "d6eb29bae1215cb9a023e9d9d5de2b42c73fe0c3c69afe9b648b39b095400c4c"
+    },
+    {
+      "name": "figS_b_all_methods",
+      "pixels": [
+        3200,
+        1077
+      ],
+      "slide_pixels": [
+        1664,
+        560
+      ],
+      "min_slide_font_px": 25.27777777777778,
+      "sha256": "609c73c78e7e0dc36d3ea0af9fcb55e54080826c57d6408e80f881fafec7eb8f"
+    },
+    {
+      "name": "figS_e_purpose_overview",
+      "pixels": [
+        4320,
+        1620
+      ],
+      "slide_pixels": [
+        1600,
+        600
+      ],
+      "min_slide_font_px": 25.185185185185187,
+      "sha256": "8a385b83286a53fa423034af7218307be3d29eac7b3864ed77391c0719f9ad20"
+    },
+    {
+      "name": "figS_e_aim_keep",
+      "pixels": [
+        1080,
+        1620
+      ],
+      "slide_pixels": [
+        400,
+        600
+      ],
+      "min_slide_font_px": 25.185185185185187,
+      "sha256": "68d6d6a89cb3ba1e1fb1659ffd0f903f757fe549f6e0dfa8c1033eaba66135ec"
+    },
+    {
+      "name": "figS_e_aim_correct",
+      "pixels": [
+        1080,
+        1620
+      ],
+      "slide_pixels": [
+        400,
+        600
+      ],
+      "min_slide_font_px": 25.185185185185187,
+      "sha256": "d2bfa1d54dfbd4726ec2a8ff9cb56212ddc46a2a2fbb19727ce471fcdb755ffa"
+    },
+    {
+      "name": "figS_e_aim_refine",
+      "pixels": [
+        1080,
+        1620
+      ],
+      "slide_pixels": [
+        400,
+        600
+      ],
+      "min_slide_font_px": 25.185185185185187,
+      "sha256": "dd802165ceaf12b9698a2729175f43e77a972caf29dd1adf07d5235acdd55e4e"
+    },
+    {
+      "name": "figS_e_aim_inherit",
+      "pixels": [
+        1080,
+        1620
+      ],
+      "slide_pixels": [
+        400,
+        600
+      ],
+      "min_slide_font_px": 25.185185185185187,
+      "sha256": "94833d6be7b46c583e95cf21b73967f15edd998374b3bd2fa8a50f139c501814"
+    }
+  ],
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pillow": "10.4.0",
+    "matplotlib": "3.9.2"
+  },
+  "docker_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "config_sha256": {
+    "slide_photo_v1.json": "e9f9ed5016b12ee504f85194ddde268de8b8d856eaee11d2ab9b3363d12b3f61",
+    "layout_revision_02.json": "6ff6b199bcbb97e9995d259bdb7db5c37faa4c2f6ce50f4dcc3706988d8c5633",
+    "semantic_revision_03.json": "203613113bdd7566a8e0c76a76e459047b6544aaf147302a13618eda8be18d28",
+    "context_revision_04.json": "a80ae4fd915ef8cc388535fe16db867a1841b70aba5f1eb4a5e5ec5e356af540",
+    "representative_audit_06.json": "8b2aa5921f855f5e3b35bfb991b0a6398c820bda81936539c22ec5f23aba722f",
+    "presentation_revision_06.json": "fae3b7adebea6301b6ed5e029d0fc16b3977bab6af8e287792199188c93762fa"
+  },
+  "script_sha256": {
+    "representative_audit_06.py": "8ef9c6b569e3e54eedd6b6593b7d899b626219399cb2d97b27d062c084bad65f",
+    "presentation_revision_06.py": "7433acd4b52da6dd89df15e064b4c3fb6293901526b7e3824190999f6fac6c52",
+    "verify_package_revision_06.py": "9780f17c62c3fea640473947b92792b9022b5f5c84f660c2fd9dbb161da4990d"
+  },
+  "derived_inputs": {
+    "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/R1rep_b10/LoD2/mvs/DJI_20241217090901_0033_D.npy": "fcebaf45a8a59ed2113a202d72bdb2ddc80c5b576720ecb114b2a49d6d487741",
+    "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/R1rep_b10/LoD2/conf/DJI_20241217090901_0033_D.npy": "72e0fe0b753d8076476e6ac95b8f112376a73c9aab8071e75bc9f30f0264bc5b",
+    "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/R1rep_b10/LoD2/locmap/DJI_20241217090901_0033_D.npy": "88e71af28a4fab8714134e757a59ae1d9e6643c6d7beb188ccdd84f6a81440c7",
+    "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__LoD2__R1.5.npz": "ddf02e972a2b5ac2fe61856d3fdedb1d2f36da1ab0ab161e5e507ec51b7391b2",
+    "/payload/task0/global_visibility/complete.json": "968398700db10bc9326a35f07278460e68b786348f62dd51e951465b40b14774",
+    "/payload/task0/selected_clouds.npz": "217333debf7ff9ba7b7b6018a78231d83462b0f9fc7929a76dde487a6e93fe3b",
+    "/payload/revision_02/b_raw_reference_bands.npz": "378d2090af213f1b6f48f6b476eb1c1fe2a6f20b1ae8b8d6f5f40a5ace90611c"
+  },
+  "missing_depth_breakdown": {
+    "raw_depth_absent": 39904,
+    "confidence_only_filtered": 0
+  },
+  "execution": "Docker CPU only; no training or GPU",
+  "crs": "EPSG:25832; local shifted model coordinates retain frozen source registration",
+  "scientific_limitations": "See 보고_R6.md; no texture/material causality, whole-roof rate, independent truth, current hidden-wall or universal method superiority claim"
+}

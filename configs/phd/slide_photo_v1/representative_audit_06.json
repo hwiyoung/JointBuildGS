@@ -1,0 +1,19 @@
+{
+  "task_id":"PHD-SLIDE-PHOTO-v1-R6",
+  "scientific_verdict":null,
+  "reason":"User rejected the 20-pixel roof as a broad representative example and the correction-patch convex hull as a building outline.",
+  "scope":["B0_b10","B173nb_b10","R1rep_b10"],
+  "inputs_only":true,
+  "flat_roof_normal_degrees":10,
+  "nadir_tilt_degrees":20,
+  "minimum_projected_pixels":1000,
+  "minimum_missing_share":0.5,
+  "minimum_visible_unique_patch_fraction":0.5,
+  "minimum_connected_missing_pixels":250,
+  "ranking":["missing_pixels_desc","projected_pixels_desc","site_asc","face_asc","view_asc"],
+  "selection_uses_gt":false,
+  "selection_uses_training_results":false,
+  "if_no_candidate":"Do not lower thresholds after inspecting photos. Withdraw the roof representative claim and keep the two supported cases.",
+  "roof_wording":"Missing depth on a flat roof; do not attribute it to texture without separate evidence.",
+  "correction_photo":"Replace patch convex hull with the exact existing section line projected onto the current photograph. This identifies the graph location and does not claim a physical building outline."
+}
