@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-27T18:08:46.906478+09:00",
+  "run": {
+    "site": "R1rep_b10",
+    "prior": "ALS",
+    "variant": "lt_fixgt"
+  },
+  "attempt": 0,
+  "reason": "training execution/health error",
+  "same_arm_training_stops": 1,
+  "scientific_verdict": null,
+  "criterion_record": {
+    "iteration": 3100,
+    "camera": "DJI_20241217100106_0039_D",
+    "observation_phase": "after optimizer and opacity floors, before density/reset",
+    "last_periodic_reset": 3000,
+    "iterations_after_reset": 100,
+    "gaussians": 555122,
+    "whole_opacity_median": 0.0481739267706871,
+    "prior_opacity_is_record_only": true,
+    "stop": "whole-population opacity median < 0.05 after reset+100",
+    "scientific_verdict": null
+  },
+  "status": "STOPPED_BY_FROZEN_CRITERION",
+  "remaining_independent_arms_continue": true
+}

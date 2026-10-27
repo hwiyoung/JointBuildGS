@@ -13,13 +13,37 @@ from eight_arm_report import SITES, REPORT, VARS, DOC
 def read(path):return json.loads(Path(path).read_text())
 
 
-def main():
-    data=read(DOC/'tables/eight_arm_values.json')
-    thresholds=read(DOC/'tables/eight_arm_thresholds.json')['rows']
-    assert len(data['paired_patch_rows'])==80 and len(data['side_rows'])==24 and len(thresholds)==42
-    assert len(data['overview'])==18
+def main(sites=None, report_name=REPORT, prefix='eight_arm', expected_scored=8, expected_stopped=0):
+    sites=list(SITES if sites is None else sites)
+    data=read(DOC/f'tables/{prefix}_values.json')
+    thresholds=read(DOC/f'tables/{prefix}_thresholds.json')['rows']
+    assert data['core_scored_arms']==expected_scored
+    assert len(data['paired_patch_rows'])==expected_scored*10 and len(data['side_rows'])==expected_scored*3
+    assert len(thresholds)==len(sites)*21 and len(data['overview'])==len(sites)*9
+    available={site:list(VARS) for site in sites}
+    stopped=data.get('stopped',[])
+    assert len(stopped)==expected_stopped
+    stop_files=[]
+    if expected_stopped:
+        scope=data['scope']
+        assert {(r['site'],r['variant']) for r in scope}=={(s,v) for s in sites for v in VARS}
+        assert len(scope)==len(sites)*4 and len(scope)==expected_scored+expected_stopped
+        available={s:[r['variant'] for r in scope if r['site']==s and r['status']=='CORE_SCORED'] for s in sites}
+        assert sum(map(len,available.values()))==expected_scored
+        for row in stopped:
+            source=Path(row['source']);receipt=read(source)
+            assert sha(source)==row['sha256'] and receipt==row['receipt']
+            assert receipt['status']=='STOPPED_BY_FROZEN_CRITERION'
+            assert not (source.parent/'PASS.json').exists()
+            assert not (OUT/'patch_z'/f"{row['site']}__ALS__{row['variant']}_ALS_s0.npz").exists()
+            archived=DOC/row['report_source'];assert read(archived)==receipt;stop_files.append(archived)
+            c=receipt['criterion_record']
+            assert c['iterations_after_reset']==100 and c['whole_opacity_median']<.05
+            assert c['stop']=='whole-population opacity median < 0.05 after reset+100'
+        assert len(data['unscored_analytic_rows'])==expected_stopped*10
+        assert all(r['trained'] is None and r['status']=='HEALTH_STOPPED' for r in data['unscored_analytic_rows'])
     arrays={};domains={};masks={}
-    for site in SITES:
+    for site in sites:
         root=OUT/'direct_stage1_v2'/f'{site}__ALS'
         with np.load(root/'evaluation.npz') as e:
             domain={k:e[k] for k in ['area','cell','in_eval','scoring_allowed','has_mvs','p_mvs','p_gt','tau']}
@@ -30,7 +54,7 @@ def main():
         masks[site].update({f'cell_{i}':ok&(domain['cell']==i) for i in range(6)})
         masks[site].update({f'unexplained_cell_{i}':both&unexplained&(domain['cell']==i) for i in [1,2]})
         domains[site]=domain
-        for result in [v+'_ALS_s0' for v in VARS]+['prop_ALS_s0','prop_ALS_s1']:
+        for result in [v+'_ALS_s0' for v in available[site]]+['prop_ALS_s0','prop_ALS_s1']:
             path=OUT/'patch_z'/f'{site}__ALS__{result}.npz'
             with np.load(path) as z:arrays[(site,result)]={k:z[k] for k in ['z','side','patch_id']}
             assert len(arrays[(site,result)]['z'])==len(domain['area'])
@@ -89,13 +113,13 @@ def main():
         parts=[x for x in [row['pooled'],case,three] if x is not None]
         assert row['threshold']==(max(parts) if parts else None)
     figure_files=[]
-    for site in SITES:
-        for prefix in ['map','side_map','fates']:
-            path=DOC/'figures'/f'{prefix}_{site}_ALS.json';meta=read(path)
+    for site in sites:
+        for figure_prefix in ['map','side_map','fates']:
+            path=DOC/'figures'/f'{figure_prefix}_{site}_ALS.json';meta=read(path)
             assert meta['visual_review']=='PASS',path
             assert meta['reviewed_image_sha256']==sha(path.with_suffix('.png')),path
-            if prefix=='map':
-                assert {r['variant'] for r in meta['panels']}==set(VARS)|{'analytic'}
+            if figure_prefix=='map':
+                assert {r['variant'] for r in meta['panels']}==set(available[site])|{'analytic'}
                 for p in meta['panels']:assert sha(Path(p['source']))==p['sha256']
             figure_files.extend([path,path.with_suffix('.png')])
     section=DOC/'figures/section_B173nb_b10_ALS_0.json';meta=read(section)
@@ -103,18 +127,20 @@ def main():
     for variant,panel in meta['panels'].items():
         assert panel['mesh_sha256']==read(OUT/'patch_z'/f'B173nb_b10__ALS__{variant}_ALS_s0.json')['mesh_sha256']
     figure_files.extend([section,section.with_suffix('.png')])
-    report=DOC/REPORT
+    report=DOC/report_name
     links=re.findall(r'\]\(([^)]+)\)',report.read_text())
     assert all((report.parent/link).is_file() for link in links if '://' not in link)
-    files=[report,DOC/'tables/eight_arm_values.json',DOC/'tables/eight_arm_thresholds.json',
-           DOC/'tables/eight_arm_patch_scores.csv',*figure_files]
-    record=dict(status='PASS_EIGHT_ARM_INTERIM',at=datetime.now(timezone(timedelta(hours=9))).isoformat(),
-         core_scored_arms=8,paired_patch_rows=80,threshold_rows=42,side_rows=24,
+    files=[report,DOC/f'tables/{prefix}_values.json',DOC/f'tables/{prefix}_thresholds.json',
+           DOC/f'tables/{prefix}_patch_scores.csv',*figure_files,*stop_files]
+    record=dict(status='PASS_TWELVE_CONDITION_INTERIM' if expected_stopped else 'PASS_EIGHT_ARM_INTERIM',at=datetime.now(timezone(timedelta(hours=9))).isoformat(),
+         intended_arms=len(sites)*4,core_scored_arms=expected_scored,health_stopped_arms=expected_stopped,
+         paired_patch_rows=len(data['paired_patch_rows']),threshold_rows=len(thresholds),side_rows=len(data['side_rows']),
          direct_patch_recomputation=True,mesh_hashes_verified=True,cell_0_and_cell_2_separate=True,
-         figures_visually_reviewed=7,report_local_links=len(links),scientific_verdict=None,
+         figures_visually_reviewed=len(sites)*3+1,report_local_links=len(links),scientific_verdict=None,
          files=[dict(path=str(p),sha256=sha(p)) for p in files])
-    save(DOC/'tables/eight_arm_verification.json',record)
-    save(OUT/'checks/analysis_delivery_priority_v1/verification.json',record)
+    save(DOC/f'tables/{prefix}_verification.json',record)
+    check_root='twelve_condition_delivery_v1' if expected_stopped else 'analysis_delivery_priority_v1'
+    save(OUT/'checks'/check_root/'verification.json',record)
     print(json.dumps(record,ensure_ascii=False),flush=True)
 
 

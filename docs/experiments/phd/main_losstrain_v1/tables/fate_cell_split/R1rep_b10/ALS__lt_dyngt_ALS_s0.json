@@ -1,0 +1,66 @@
+{
+  "site": "R1rep_b10",
+  "prior": "ALS",
+  "result": "lt_dyngt_ALS_s0",
+  "status": "PASS",
+  "regions": {
+    "cell_0": {
+      "patches": 19870,
+      "area_m2": 1318.4109154946177,
+      "seeds_seated": 24057,
+      "seeds_planted": 24057,
+      "not_planted": 0,
+      "counts": {
+        "removed": 22238,
+        "old_place": 1108,
+        "current_surface": 15,
+        "neither": 696
+      },
+      "shares": {
+        "removed": 0.924387912042233,
+        "old_place": 0.04605728062518186,
+        "current_surface": 0.0006235191420376606,
+        "neither": 0.02893128819054745
+      },
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 1500.0,
+        "max": 14900.0
+      }
+    },
+    "cell_2": {
+      "patches": 2274,
+      "area_m2": 150.83900275973673,
+      "seeds_seated": 2822,
+      "seeds_planted": 2822,
+      "not_planted": 0,
+      "counts": {
+        "removed": 2311,
+        "old_place": 325,
+        "current_surface": 20,
+        "neither": 166
+      },
+      "shares": {
+        "removed": 0.8189227498228207,
+        "old_place": 0.1151665485471297,
+        "current_surface": 0.007087172218284904,
+        "neither": 0.058823529411764705
+      },
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 3100.0,
+        "max": 14700.0
+      }
+    }
+  },
+  "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+  "source_parent": "/out/fates/R1rep_b10/ALS__lt_dyngt_ALS_s0.json",
+  "source_parent_sha256": "874d1fb2fc563a95fd44323c922acf18d1545ed41ad66491a2b2cac2d9ef27f3",
+  "source_per_seed": "/out/fates/R1rep_b10/ALS__lt_dyngt_ALS_s0__prior_correct_0_2.npz",
+  "source_per_seed_sha256": "76145a66c55ad8d53b0475660f5e392d36a68b2654ef705bc171cb00540be269",
+  "initial_sha256": "9ba107d15b326d244016b9fbf730b98ee8d8f28b17d326b81264dfaef2031447",
+  "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+  "partition_counts_equal_combined": true,
+  "categories_reused_without_recomputation": true,
+  "scientific_verdict": null
+}

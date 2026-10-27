@@ -47,6 +47,7 @@ def main():
     assert Path(args.config).name == args.config
     cfg = json.loads((Path('/config')/args.config).read_text())
     verified_units=cfg.get('verified_units') or [cfg['verified_unit']]
+    verified_runs=cfg.get('verified_runs')
     expected_scored=cfg.get('expected_scored_arms',4)
     verification_table=cfg.get('verification_table','tables/requested_interim_verification.json')
     title=cfg.get('title','B173 항공 LiDAR 4판 중간 보고')
@@ -95,7 +96,7 @@ def main():
         add(p, 'run_receipts/' + p.relative_to(OUT / 'runs').as_posix())
     for p in sorted((OUT / 'checks').glob('*.json')):
         add(p, 'checks/' + p.name)
-    for folder in ['resource_resume_v1', 'requested_interim_readout_v1', 'tiled_post_v1', 'opacity_grace_v1', 'analysis_delivery_priority_v1', 'post_memory_56_40_v1']:
+    for folder in ['resource_resume_v1', 'requested_interim_readout_v1', 'tiled_post_v1', 'opacity_grace_v1', 'analysis_delivery_priority_v1', 'post_memory_56_40_v1', 'twelve_condition_delivery_v1']:
         for p in sorted((OUT / 'checks' / folder).glob('*.json')):
             add(p, 'checks/' + folder + '/' + p.name)
 
@@ -125,7 +126,7 @@ def main():
                                  full_post_complete=prefix + 'post_PASS.json' in payloads,
                                  full_measurement_complete=prefix + 'measure_PASS.json' in payloads,
                                  patch_score_available=score in payloads,
-                                 requested_interim_verified=any(site == u['site'] and prior == u['prior'] for u in verified_units)))
+                                 requested_interim_verified=any(site == u['site'] and prior == u['prior'] and variant == u['variant'] for u in verified_runs) if verified_runs is not None else any(site == u['site'] and prior == u['prior'] for u in verified_units)))
     counts = Counter(r['training'] for r in rows)
     assert len(rows) == 24
     assert counts['COMPLETE'] == state['training_complete']
@@ -135,6 +136,10 @@ def main():
     assert sum(r['requested_interim_verified'] for r in rows) == expected_scored
     assert all(r['patch_score_available'] and r['main_mesh_complete'] and r['training'] == 'COMPLETE'
                for r in rows if r['requested_interim_verified'])
+    scoped=[r for r in rows if any(r['site']==u['site'] and r['prior']==u['prior'] for u in verified_units)]
+    if 'expected_scope_stops' in cfg:
+        assert sum(r['training']=='HEALTH_STOPPED' for r in scoped)==cfg['expected_scope_stops']
+        assert len(scoped)==cfg['intended_arms']
     generated('run_inventory.json', json_data(rows))
     table = io.StringIO()
     writer = csv.DictWriter(table, fieldnames=list(rows[0]))
@@ -148,6 +153,8 @@ def main():
     status = dict(task_id=cfg['task_id'], status=cfg['status'], snapshot_at=now,
                   live_state_at=state['at'], training_counts={k:counts[k] for k in ['COMPLETE','HEALTH_STOPPED','NO_RESULT','RUNNING','PENDING']}, required_runs=24,
                   requested_interim_verified=expected_scored,
+                  intended_interim_arms=cfg.get('intended_arms',expected_scored),
+                  interim_health_stopped=sum(r['training']=='HEALTH_STOPPED' for r in scoped),
                   full_measurement_complete=sum(r['full_measurement_complete'] for r in rows),
                   source_head=args.source_head,
                   source_policy='Current task files frozen with per-file hashes; source_head alone does not identify uncommitted generated data.',
@@ -162,6 +169,7 @@ def main():
 학습 완료가 모두 채점까지 끝났다는 뜻은 아니다. 정확한 각 판의 상태는 [목록](run_inventory.csv)과 [JSON](run_inventory.json)에 있다.
 
 먼저 [{title}]({report_name})를 읽는다.
+{cfg.get('scope_note','')}
 보존 면적·면 없음 넓이 등 8.1, 8.2, 지표별 문턱 8.4, 칸 0·2를 나눈 심긴 점 운명 8.5,
 [B173 날개 단면](docs/figures/section_B173nb_b10_ALS_0.png)이 준비되어 있다.
 핵심 패치 채점·비교 자료는 {expected_scored}판이다. 추가 지표까지 포함한 전체 채점은 {status['full_measurement_complete']}판 완료다. 미완료 가상 시점·부유점 등 추가 후처리와 다른 단위 채점은 목록에 구분했다.

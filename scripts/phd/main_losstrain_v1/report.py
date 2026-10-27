@@ -70,6 +70,11 @@ def main():
                   '[변경 승인과 재개 기록](후처리_입장조건_변경승인_v1.md).']
     if (DOC/'중간보고_항공LiDAR_8판_v1.md').exists():
         lines += ['', '[항공 LiDAR 두 지역 8판 중간 보고](중간보고_항공LiDAR_8판_v1.md)에 보존 면적·면 없음·날개 단면·칸별 값·42행 문턱·칸 0과 2의 점 운명을 모았다.']
+    if (DOC/'중간보고_항공LiDAR_12조건_v1.md').exists():
+        lines += ['', '[항공 LiDAR 12조건 중간 보고](중간보고_항공LiDAR_12조건_v1.md)는 11판 핵심 결과와 R1 고정·참값 1판 중단을 구분한다. '
+                  '세 지역의 문턱 63행·칸별 결과·10개 그림을 포함하며 12판 정상 완료로 표시하지 않는다. '
+                  '전체 네 판의 중단 사유, 재실행 한계, 마지막 학습 대기 해제와 작은 표 분할의 자원 변경은 '
+                  '[중단·재실행 검토](중단4판_재실행검토_v1.md)의 바꾼 것에 적었다.']
     report='\n'.join(lines)+'\n';assert len(report)<=20000,len(report)
     (DOC/'손실학습시험_보고_v1.md').write_text(report)
     save(TAB/'report_status.json',dict(status=rt['status'],counts=c,characters=len(report),figures=figures,scientific_verdict=None))

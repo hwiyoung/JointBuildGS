@@ -84,6 +84,30 @@
 | B173nb_b10 | ALS | nojudge_ALS_s0 | 2 | 옛 자리 | 262 | 2687 | 9.75065 |
 | B173nb_b10 | ALS | nojudge_ALS_s0 | 2 | 지금 면 | 52 | 2687 | 1.93524 |
 | B173nb_b10 | ALS | nojudge_ALS_s0 | 2 | 둘 다 아님 | 153 | 2687 | 5.69408 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 지워짐 | 22238 | 24057 | 92.43879 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 옛 자리 | 1108 | 24057 | 4.60573 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 지금 면 | 15 | 24057 | 0.06235 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0 | 둘 다 아님 | 696 | 24057 | 2.89313 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 지워짐 | 2311 | 2822 | 81.89227 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 옛 자리 | 325 | 2822 | 11.51665 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 지금 면 | 20 | 2822 | 0.70872 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 2 | 둘 다 아님 | 166 | 2822 | 5.88235 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0 | 지워짐 | 22387 | 24057 | 93.05815 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0 | 옛 자리 | 1026 | 24057 | 4.26487 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0 | 지금 면 | 6 | 24057 | 0.02494 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0 | 둘 다 아님 | 638 | 24057 | 2.65203 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 2 | 지워짐 | 2309 | 2822 | 81.82140 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 2 | 옛 자리 | 333 | 2822 | 11.80014 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 2 | 지금 면 | 12 | 2822 | 0.42523 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 2 | 둘 다 아님 | 168 | 2822 | 5.95322 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0 | 지워짐 | 22491 | 24057 | 93.49046 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0 | 옛 자리 | 950 | 24057 | 3.94895 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0 | 지금 면 | 15 | 24057 | 0.06235 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0 | 둘 다 아님 | 601 | 24057 | 2.49823 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 2 | 지워짐 | 2338 | 2822 | 82.84904 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 2 | 옛 자리 | 307 | 2822 | 10.87881 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 2 | 지금 면 | 16 | 2822 | 0.56697 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 2 | 둘 다 아님 | 161 | 2822 | 5.70517 |
 | B0_b10 | ALS | lt_dyngt_ALS_s0 | 1·3 | 지워짐 | 185 | 217 | 85.25346 |
 | B0_b10 | ALS | lt_dyngt_ALS_s0 | 1·3 | 옛 자리 | 20 | 217 | 9.21659 |
 | B0_b10 | ALS | lt_dyngt_ALS_s0 | 1·3 | 지금 면 | 1 | 217 | 0.46083 |
@@ -180,6 +204,30 @@
 | B173nb_b10 | LoD2 | nojudge_LoD2_s0 | 0·2 | 옛 자리 | 5184 | 43285 | 11.97644 |
 | B173nb_b10 | LoD2 | nojudge_LoD2_s0 | 0·2 | 지금 면 | 297 | 43285 | 0.68615 |
 | B173nb_b10 | LoD2 | nojudge_LoD2_s0 | 0·2 | 둘 다 아님 | 3249 | 43285 | 7.50606 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 1·3 | 지워짐 | 977 | 1250 | 78.16000 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 1·3 | 옛 자리 | 167 | 1250 | 13.36000 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 1·3 | 지금 면 | 16 | 1250 | 1.28000 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 1·3 | 둘 다 아님 | 90 | 1250 | 7.20000 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0·2 | 지워짐 | 24549 | 26879 | 91.33152 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0·2 | 옛 자리 | 1433 | 26879 | 5.33130 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0·2 | 지금 면 | 35 | 26879 | 0.13021 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | 0·2 | 둘 다 아님 | 862 | 26879 | 3.20696 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 1·3 | 지워짐 | 985 | 1250 | 78.80000 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 1·3 | 옛 자리 | 159 | 1250 | 12.72000 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 1·3 | 지금 면 | 8 | 1250 | 0.64000 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 1·3 | 둘 다 아님 | 98 | 1250 | 7.84000 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0·2 | 지워짐 | 24696 | 26879 | 91.87842 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0·2 | 옛 자리 | 1359 | 26879 | 5.05599 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0·2 | 지금 면 | 18 | 26879 | 0.06697 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | 0·2 | 둘 다 아님 | 806 | 26879 | 2.99862 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 1·3 | 지워짐 | 1020 | 1250 | 81.60000 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 1·3 | 옛 자리 | 125 | 1250 | 10.00000 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 1·3 | 지금 면 | 16 | 1250 | 1.28000 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 1·3 | 둘 다 아님 | 89 | 1250 | 7.12000 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0·2 | 지워짐 | 24829 | 26879 | 92.37323 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0·2 | 옛 자리 | 1257 | 26879 | 4.67651 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0·2 | 지금 면 | 31 | 26879 | 0.11533 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | 0·2 | 둘 다 아님 | 762 | 26879 | 2.83493 |
 | R1rep_b10 | ALS | nojudge_ALS_s0 | 1·3 | 지워짐 | 818 | 1250 | 65.44000 |
 | R1rep_b10 | ALS | nojudge_ALS_s0 | 1·3 | 옛 자리 | 274 | 1250 | 21.92000 |
 | R1rep_b10 | ALS | nojudge_ALS_s0 | 1·3 | 지금 면 | 19 | 1250 | 1.52000 |

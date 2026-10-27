@@ -1,0 +1,52 @@
+"""Inventory preserved health stops and available restart artifacts, without training."""
+import json
+from datetime import datetime
+from pathlib import Path
+from zoneinfo import ZoneInfo
+from inputs import OUT, save
+
+
+def main():
+    rows=[]
+    for path in sorted((OUT/'runs').glob('*/*/training_health_STOP.json')):
+        d=json.loads(path.read_text());c=d['criterion_record']
+        model=path.parent/f"attempt_{d['attempt']}"/'model'
+        rows.append(dict(site=d['run']['site'],prior=d['run']['prior'],variant=d['run']['variant'],
+            iteration=c['iteration'],stop=c['stop'],whole_opacity_median=c['whole_opacity_median'],
+            psnr_drop_db=c.get('psnr_drop_db'),source=str(path),
+            models=[str(p.relative_to(model)) for p in model.glob('point_cloud/*/point_cloud.ply')],
+            checkpoints=[str(p.relative_to(model)) for p in model.glob('chkpnt*.pth')]))
+    state=json.loads((OUT/'checks/resource_resume_v1/state.json').read_text())
+    active=sum(j['kind']=='training' for j in state['gpu_jobs'].values())
+    record=dict(at=datetime.now(ZoneInfo('Asia/Seoul')).isoformat(),stopped_arms=rows,
+                training_complete=state['training_complete'],training_active=active,
+                training_pending=state['pending_trainings'],scientific_verdict=None)
+    doc=Path('/docs');save(doc/'tables/four_training_stops.json',record)
+    lines=['# 중단 4판의 재실행 검토','',f"확인: {record['at']}. 재실행이나 중단 기준 변경은 아직 하지 않았다.",'',
+           '| 지역 | 사전 정보 | 판 | 중단 반복 | 직접 중단 사유 |','|---|---|---|---:|---|']
+    for r in rows:
+        reason=(f"전체 불투명도 중앙값 {r['whole_opacity_median']:.9f} < 0.05 (초기화 +100회)"
+                if r['psnr_drop_db'] is None else f"같은 5개 영상 PSNR이 nojudge보다 {r['psnr_drop_db']:.6f} dB 낮음 (>3 dB)")
+        lines.append(f"| {r['site']} | {r['prior']} | 고정·참값 | {r['iteration']:,} | {reason} |")
+    lines += ['', '모두 NaN이나 메모리 부족이 아닌 사용자가 지정한 품질 중단 기준에 해당한다. '
+              '3,100회 기록만으로 이후 회복 여부를 관측할 수는 없다. B0 LoD2는 30,000회 계산에 도달했으나 '
+              '모니터가 최종 저장보다 먼저 중단시켜 30,000회 모델이 없다.', '',
+              '같은 씨앗·손실·학습 설정·중단 기준으로 처음부터 재실행할 수 있지만, 동일 기준에 다시 걸릴 가능성이 있다. '
+              '정확한 재개를 위한 옵티마이저 체크포인트 유무는 JSON에 적었다. 점군 모델만으로 같은 학습 상태를 복구했다고 주장하지 않는다.', '',
+              '끝까지 진행하는 방안은 불투명도·PSNR 수치를 기록하되 이 두 수치에 의한 중단만 유예하고, '
+              'NaN·실행 오류 중단을 유지하는 것이다. 이는 사용자가 정한 중단 정책 변경이므로 이번 작업에서 임의 적용하지 않았다. '
+              '손실 식·채점·판을 바꾸는 제안은 아니다.', '',
+              f"현재 학습 완료 {record['training_complete']}판·중단 {len(rows)}판·진행 {active}판·대기 {record['training_pending']}판이다. "
+              '핵심 분석 범위인 항공 LiDAR 12조건은 11판 채점과 R1 고정·참값 1판 중단 기록으로 구분한다.', '',
+              '## 바꾼 것', '',
+              '12조건 중 11판 결과와 1판 중단을 모두 보이는 전달 보고서·목록을 추가했다. '
+              'R1 핵심 채점이 끝난 뒤 추가 지표 때문에 마지막 학습이 대기하지 않도록 우선 처리 범위를 해제했다. '
+              '저장된 점별 분류를 칸 0·2로 나누는 작업은 입력 압축 해제 크기 약 17.5 MiB임을 확인하고 '
+              '2 CPU·2 GiB 한도로 실행해 PASS했다. 메시 계산과 범주 판정은 다시 하지 않는다. '
+              '큰 메시·TSDF 작업의 직렬 실행과 56/40 GiB 조건은 유지한다. 손실·채점·판·학습 설정은 그대로다.', '',
+              '[기계 판독 기록](tables/four_training_stops.json). scientific_verdict: null.']
+    (doc/'중단4판_재실행검토_v1.md').write_text('\n'.join(lines)+'\n')
+    print(f'{len(rows)} preserved stops; {active} active training',flush=True)
+
+
+if __name__=='__main__':main()

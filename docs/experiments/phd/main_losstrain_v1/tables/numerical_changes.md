@@ -364,6 +364,150 @@
 | B173nb_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 4702 | 10.4005 | 1.4089 | 확인 |
 | B173nb_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 4702 | 8.8153 | 1.4089 | 확인 |
 | B173nb_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 4702 | 2.0194 | 1.4089 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | all_0_3 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 22974 | 0.0222 | 0.0060 | 확인 |
+| R1rep_b10 | ALS | all_0_3 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0060 | 확인 불가 |
+| R1rep_b10 | ALS | all_0_3 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 22974 | 0.0093 | 0.0060 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | all_0_3 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 22974 | 0.0126 | 0.0060 | 확인 |
+| R1rep_b10 | ALS | all_0_3 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 23032 | -0.0907 | 0.1129 | 기준 안 |
+| R1rep_b10 | ALS | all_0_3 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.1129 | 확인 불가 |
+| R1rep_b10 | ALS | all_0_3 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 23032 | -0.0160 | 0.1129 | 기준 안 |
+| R1rep_b10 | ALS | all_0_3 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 23032 | -0.0156 | 0.1129 | 기준 안 |
+| R1rep_b10 | ALS | all_0_3 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 23032 | -26.3434 | 3.0173 | 확인 |
+| R1rep_b10 | ALS | all_0_3 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.0173 | 확인 불가 |
+| R1rep_b10 | ALS | all_0_3 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 23032 | -18.6592 | 3.0173 | 확인 |
+| R1rep_b10 | ALS | all_0_3 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 23032 | -19.6138 | 3.0173 | 확인 |
+| R1rep_b10 | ALS | cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 19858 | 0.0231 | 0.0043 | 확인 |
+| R1rep_b10 | ALS | cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0043 | 확인 불가 |
+| R1rep_b10 | ALS | cell_0 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 19849 | 0.0108 | 0.0043 | 확인 |
+| R1rep_b10 | ALS | cell_0 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 19847 | 0.0136 | 0.0043 | 확인 |
+| R1rep_b10 | ALS | cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 19870 | 0.0430 | 0.0752 | 기준 안 |
+| R1rep_b10 | ALS | cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0752 | 확인 불가 |
+| R1rep_b10 | ALS | cell_0 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 19870 | 0.0902 | 0.0752 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | cell_0 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 19870 | 0.0997 | 0.0752 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 19870 | -29.5351 | 3.3613 | 확인 |
+| R1rep_b10 | ALS | cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.3613 | 확인 불가 |
+| R1rep_b10 | ALS | cell_0 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 19870 | -21.0414 | 3.3613 | 확인 |
+| R1rep_b10 | ALS | cell_0 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 19870 | -21.7819 | 3.3613 | 확인 |
+| R1rep_b10 | ALS | cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 455 | 0.0987 | 0.0155 | 확인 |
+| R1rep_b10 | ALS | cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0155 | 확인 불가 |
+| R1rep_b10 | ALS | cell_1 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 455 | 0.0656 | 0.0155 | 확인 |
+| R1rep_b10 | ALS | cell_1 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 455 | 0.1247 | 0.0155 | 확인 |
+| R1rep_b10 | ALS | cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 458 | -0.5636 | 0.7469 | 기준 안 |
+| R1rep_b10 | ALS | cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.7469 | 확인 불가 |
+| R1rep_b10 | ALS | cell_1 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 458 | -0.3481 | 0.7469 | 기준 안 |
+| R1rep_b10 | ALS | cell_1 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 458 | -0.5636 | 0.7469 | 기준 안 |
+| R1rep_b10 | ALS | cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 458 | -12.2458 | 3.5358 | 확인 |
+| R1rep_b10 | ALS | cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.5358 | 확인 불가 |
+| R1rep_b10 | ALS | cell_1 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 458 | -15.0520 | 3.5358 | 확인 |
+| R1rep_b10 | ALS | cell_1 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 458 | -14.0935 | 3.5358 | 확인 |
+| R1rep_b10 | ALS | cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 2232 | 1.2117 | 0.1261 | 확인 |
+| R1rep_b10 | ALS | cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.1261 | 확인 불가 |
+| R1rep_b10 | ALS | cell_2 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 2232 | 1.0308 | 0.1261 | 확인 |
+| R1rep_b10 | ALS | cell_2 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 2232 | 1.1222 | 0.1261 | 확인 |
+| R1rep_b10 | ALS | cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 2274 | -1.1043 | 0.2217 | 확인 |
+| R1rep_b10 | ALS | cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.2217 | 확인 불가 |
+| R1rep_b10 | ALS | cell_2 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 2274 | -1.1730 | 0.2217 | 확인 |
+| R1rep_b10 | ALS | cell_2 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 2274 | -1.0593 | 0.2217 | 확인 |
+| R1rep_b10 | ALS | cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 2274 | -5.4319 | 1.0797 | 확인 |
+| R1rep_b10 | ALS | cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.0797 | 확인 불가 |
+| R1rep_b10 | ALS | cell_2 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 2274 | -2.0183 | 1.0797 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | cell_2 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 2274 | -5.3148 | 1.0797 | 확인 |
+| R1rep_b10 | ALS | cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 421 | 0.2673 | 0.1187 | 확인 |
+| R1rep_b10 | ALS | cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.1187 | 확인 불가 |
+| R1rep_b10 | ALS | cell_3 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 418 | -0.0350 | 0.1187 | 기준 안 |
+| R1rep_b10 | ALS | cell_3 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 421 | -0.0928 | 0.1187 | 기준 안 |
+| R1rep_b10 | ALS | cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 430 | -0.3354 | 0.6977 | 기준 안 |
+| R1rep_b10 | ALS | cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.5070 | 확인 불가 |
+| R1rep_b10 | ALS | cell_3 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 430 | 1.4969 | 0.6977 | 확인 |
+| R1rep_b10 | ALS | cell_3 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 430 | 0.7722 | 0.6977 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 430 | -7.1251 | 2.9130 | 확인 |
+| R1rep_b10 | ALS | cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 2.9130 | 확인 불가 |
+| R1rep_b10 | ALS | cell_3 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 430 | -1.7754 | 2.9130 | 기준 안 |
+| R1rep_b10 | ALS | cell_3 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 430 | -2.5091 | 2.9130 | 기준 안 |
+| R1rep_b10 | ALS | cell_4 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 285 | 0.5097 | 0.1446 | 확인 |
+| R1rep_b10 | ALS | cell_4 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.1446 | 확인 불가 |
+| R1rep_b10 | ALS | cell_4 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 285 | 1.1858 | 0.1446 | 확인 |
+| R1rep_b10 | ALS | cell_4 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 281 | 0.7495 | 0.1446 | 확인 |
+| R1rep_b10 | ALS | cell_4 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 286 | 0.1403 | 1.0490 | 기준 안 |
+| R1rep_b10 | ALS | cell_4 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.7303 | 확인 불가 |
+| R1rep_b10 | ALS | cell_4 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 286 | 0.1403 | 1.0490 | 기준 안 |
+| R1rep_b10 | ALS | cell_4 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 286 | 1.5504 | 1.0490 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | cell_4 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 286 | 0.6613 | 1.1975 | 기준 안 |
+| R1rep_b10 | ALS | cell_4 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.1975 | 확인 불가 |
+| R1rep_b10 | ALS | cell_4 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 286 | -8.2998 | 1.1975 | 확인 |
+| R1rep_b10 | ALS | cell_4 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 286 | -1.2950 | 1.1975 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | cell_5 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 92 | 0.0416 | 0.0549 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0549 | 확인 불가 |
+| R1rep_b10 | ALS | cell_5 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 91 | -0.2984 | 0.0549 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 94 | -0.0064 | 0.0549 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 95 | 3.5121 | 3.1579 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.0171 | 확인 불가 |
+| R1rep_b10 | ALS | cell_5 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 95 | 3.9634 | 3.1579 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 95 | 0.5766 | 3.1579 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 95 | -11.7004 | 7.0899 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 7.0899 | 확인 불가 |
+| R1rep_b10 | ALS | cell_5 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 95 | -8.2535 | 7.0899 | 표본 부족 |
+| R1rep_b10 | ALS | cell_5 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 95 | -8.2029 | 7.0899 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1786 | 0.3901 | 0.0383 | 확인 |
+| R1rep_b10 | ALS | unexplained | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0383 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1786 | 0.4141 | 0.0383 | 확인 |
+| R1rep_b10 | ALS | unexplained | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1786 | 0.3499 | 0.0383 | 확인 |
+| R1rep_b10 | ALS | unexplained | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1836 | -1.9378 | 0.2171 | 확인 |
+| R1rep_b10 | ALS | unexplained | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.2171 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1836 | -1.9738 | 0.2171 | 확인 |
+| R1rep_b10 | ALS | unexplained | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1836 | -2.2166 | 0.2171 | 확인 |
+| R1rep_b10 | ALS | unexplained | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1836 | -1.6570 | 0.8044 | 확인 |
+| R1rep_b10 | ALS | unexplained | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.8044 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1836 | -2.0393 | 0.8044 | 확인 |
+| R1rep_b10 | ALS | unexplained | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1836 | -1.2325 | 0.8044 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1 | 0.1044 | 0.1325 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.1325 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1 | 2.8755 | 0.1325 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1 | 0.0045 | 0.1325 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1 | 0.0000 | 300.0000 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0000 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1 | 0.0000 | 300.0000 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1 | 0.0000 | 300.0000 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1 | -100.0000 | 300.0000 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0000 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1 | -100.0000 | 300.0000 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_0 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1 | 0.0000 | 300.0000 | 표본 부족 |
+| R1rep_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 308 | -0.0771 | 0.1676 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.1676 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 308 | -0.2349 | 0.1676 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | unexplained_cell_1 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 308 | -0.3524 | 0.1676 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 311 | -0.9197 | 1.2188 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.2188 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 311 | -0.9197 | 1.2188 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_1 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 311 | -0.9197 | 1.2188 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 311 | -5.7427 | 3.2333 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.2333 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 311 | -4.0390 | 3.2333 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | unexplained_cell_1 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 311 | 1.8527 | 3.2333 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1181 | 0.6549 | 0.0065 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0065 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1181 | 0.5745 | 0.0065 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_2 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1181 | 0.5495 | 0.0065 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1222 | -2.3971 | 0.2455 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.1547 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1222 | -2.7937 | 0.2455 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_2 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1222 | -2.8777 | 0.2455 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1222 | 0.4945 | 0.6058 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.6058 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 1222 | -1.4801 | 0.6058 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_2 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1222 | -1.7026 | 0.6058 | 확인 |
+| R1rep_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 296 | 0.0749 | 0.3431 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.3431 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 296 | -0.2177 | 0.3431 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_3 | error_patch_median_m | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 296 | -0.2828 | 0.3431 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 302 | -1.1718 | 0.9934 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.6621 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 302 | 0.1926 | 0.9934 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_3 | no_surface_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 302 | -0.9362 | 0.9934 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 302 | -5.4972 | 5.7875 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 5.7875 | 확인 불가 |
+| R1rep_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dynnow_ALS_s0 | nojudge_ALS_s0 | 302 | -1.6954 | 5.7875 | 기준 안 |
+| R1rep_b10 | ALS | unexplained_cell_3 | within_tau_percent | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 302 | -2.5634 | 5.7875 | 기준 안 |
 | B173nb_b10 | ALS | all | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 3881308 | -2.1234 | 0.5796 | 확인 |
 | B173nb_b10 | ALS | all | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 3881308 | 10.2211 | 0.5796 | 확인 |
 | B173nb_b10 | ALS | all | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 3881308 | -5.0817 | 0.5796 | 확인 |
@@ -620,3 +764,195 @@
 | B173nb_b10 | ALS | s_keep | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 177330 | -19.5263 | 2.5031 | 확인 |
 | B173nb_b10 | ALS | s_keep | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 166419 | 5.0352 | 2.5031 | 확인 |
 | B173nb_b10 | ALS | s_keep | res:mean | lt_fixgt_ALS_s0 | nojudge_ALS_s0 | 166419 | 21.0331 | 2.5031 | 확인 |
+| R1rep_b10 | ALS | all | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 2667737 | -3.7738 | 1.2492 | 확인 |
+| R1rep_b10 | ALS | all | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.2492 | 확인 불가 |
+| R1rep_b10 | ALS | all | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 2667737 | -3.3142 | 1.2492 | 확인 |
+| R1rep_b10 | ALS | all | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 2667737 | 2.6056 | 0.4605 | 확인 |
+| R1rep_b10 | ALS | all | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.4605 | 확인 불가 |
+| R1rep_b10 | ALS | all | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 2667737 | 2.7614 | 0.4605 | 확인 |
+| R1rep_b10 | ALS | all | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 2196750 | -28.7667 | 2.2925 | 확인 |
+| R1rep_b10 | ALS | all | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 2.2925 | 확인 불가 |
+| R1rep_b10 | ALS | all | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 2196750 | -27.8706 | 2.2925 | 확인 |
+| R1rep_b10 | ALS | all | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 2196750 | 69.0226 | 15.0571 | 확인 |
+| R1rep_b10 | ALS | all | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 15.0571 | 확인 불가 |
+| R1rep_b10 | ALS | all | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 2196750 | 32.7158 | 15.0571 | 확인 |
+| R1rep_b10 | ALS | c_corr14 | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 494 | 1.6194 | 8.4166 | 기준 안 |
+| R1rep_b10 | ALS | c_corr14 | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 8.4166 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr14 | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 494 | 3.8462 | 8.4166 | 기준 안 |
+| R1rep_b10 | ALS | c_corr14 | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 494 | 0.3508 | 0.2639 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_corr14 | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.2639 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr14 | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 494 | 1.3052 | 0.2639 | 확인 |
+| R1rep_b10 | ALS | c_corr14 | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 19835 | -29.4526 | 4.2691 | 확인 |
+| R1rep_b10 | ALS | c_corr14 | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 4.2691 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr14 | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 19835 | -25.0492 | 4.2691 | 확인 |
+| R1rep_b10 | ALS | c_corr14 | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 19835 | 92.5080 | 6.6246 | 확인 |
+| R1rep_b10 | ALS | c_corr14 | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 6.6246 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr14 | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 19835 | 86.7807 | 6.6246 | 확인 |
+| R1rep_b10 | ALS | c_corr4p | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 406 | -22.9064 | 10.7285 | 확인 |
+| R1rep_b10 | ALS | c_corr4p | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 10.7285 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr4p | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 406 | -5.6650 | 10.7285 | 기준 안 |
+| R1rep_b10 | ALS | c_corr4p | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 406 | 5.6522 | 1.4794 | 확인 |
+| R1rep_b10 | ALS | c_corr4p | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.4794 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr4p | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 406 | 1.2655 | 1.4794 | 기준 안 |
+| R1rep_b10 | ALS | c_corr4p | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 65180 | -24.5176 | 6.6517 | 확인 |
+| R1rep_b10 | ALS | c_corr4p | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 6.6517 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr4p | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 65180 | -27.6050 | 6.6517 | 확인 |
+| R1rep_b10 | ALS | c_corr4p | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 65180 | 19.9253 | 29.8138 | 기준 안 |
+| R1rep_b10 | ALS | c_corr4p | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 29.8138 | 확인 불가 |
+| R1rep_b10 | ALS | c_corr4p | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 65180 | 18.9184 | 29.8138 | 기준 안 |
+| R1rep_b10 | ALS | c_double | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1678 | -3.3969 | 2.8318 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_double | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 2.8318 | 확인 불가 |
+| R1rep_b10 | ALS | c_double | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1678 | -2.7414 | 2.8318 | 기준 안 |
+| R1rep_b10 | ALS | c_double | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 1678 | -1.2690 | 6.2390 | 기준 안 |
+| R1rep_b10 | ALS | c_double | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 6.2390 | 확인 불가 |
+| R1rep_b10 | ALS | c_double | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 1678 | 3.3237 | 6.2390 | 기준 안 |
+| R1rep_b10 | ALS | c_double | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 147478 | -28.5264 | 3.5877 | 확인 |
+| R1rep_b10 | ALS | c_double | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.5877 | 확인 불가 |
+| R1rep_b10 | ALS | c_double | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 147478 | -22.1947 | 3.5877 | 확인 |
+| R1rep_b10 | ALS | c_double | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 147478 | 34.3869 | 3.4484 | 확인 |
+| R1rep_b10 | ALS | c_double | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.4484 | 확인 불가 |
+| R1rep_b10 | ALS | c_double | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 147478 | 19.4650 | 3.4484 | 확인 |
+| R1rep_b10 | ALS | c_inh_invis | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_invis | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_miss | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 139 | 0.0000 | 2.1583 | 기준 안 |
+| R1rep_b10 | ALS | c_inh_miss | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0000 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_miss | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 139 | 0.0000 | 2.1583 | 기준 안 |
+| R1rep_b10 | ALS | c_inh_miss | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 139 | -20.4709 | 8.4389 | 확인 |
+| R1rep_b10 | ALS | c_inh_miss | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 8.4389 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_miss | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 139 | -5.1861 | 8.4389 | 기준 안 |
+| R1rep_b10 | ALS | c_inh_miss | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 593 | -75.4566 | 9.7505 | 확인 |
+| R1rep_b10 | ALS | c_inh_miss | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 9.7505 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_miss | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 593 | -53.0915 | 9.7505 | 확인 |
+| R1rep_b10 | ALS | c_inh_miss | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 593 | 122.2193 | 18.1725 | 확인 |
+| R1rep_b10 | ALS | c_inh_miss | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 18.1725 | 확인 불가 |
+| R1rep_b10 | ALS | c_inh_miss | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 593 | 152.0185 | 18.1725 | 확인 |
+| R1rep_b10 | ALS | c_invis_wrong | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_invis_wrong | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 0 | 확인 불가 | 확인 불가 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_in | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 13366 | 14.8960 | 9.0507 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_keep_in | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 9.0507 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_in | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 13366 | 18.0608 | 9.0507 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_keep_in | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 13366 | -1.4685 | 0.3824 | 확인 |
+| R1rep_b10 | ALS | c_keep_in | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.3824 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_in | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 13366 | -1.2881 | 0.3824 | 확인 |
+| R1rep_b10 | ALS | c_keep_in | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 168867 | -33.5654 | 7.5586 | 확인 |
+| R1rep_b10 | ALS | c_keep_in | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 7.5586 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_in | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 168867 | -28.8827 | 7.5586 | 확인 |
+| R1rep_b10 | ALS | c_keep_in | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 168867 | 71.0539 | 5.4245 | 확인 |
+| R1rep_b10 | ALS | c_keep_in | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 5.4245 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_in | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 168867 | 26.1333 | 5.4245 | 확인 |
+| R1rep_b10 | ALS | c_keep_mask | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 746 | 11.7962 | 6.6351 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_keep_mask | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 6.6351 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_mask | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 746 | 4.6917 | 6.6351 | 기준 안 |
+| R1rep_b10 | ALS | c_keep_mask | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 746 | -8.9492 | 8.7066 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_keep_mask | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 8.7066 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_mask | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 746 | 5.2676 | 8.7066 | 기준 안 |
+| R1rep_b10 | ALS | c_keep_mask | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 4712 | -5.5237 | 4.8457 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_keep_mask | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 4.8457 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_mask | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 4712 | -23.1246 | 4.8457 | 확인 |
+| R1rep_b10 | ALS | c_keep_mask | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 4712 | 33.8134 | 22.3155 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_keep_mask | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 22.3155 | 확인 불가 |
+| R1rep_b10 | ALS | c_keep_mask | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 4712 | 14.4442 | 22.3155 | 기준 안 |
+| R1rep_b10 | ALS | c_limit | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 15956 | 9.6766 | 2.2839 | 확인 |
+| R1rep_b10 | ALS | c_limit | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 2.2839 | 확인 불가 |
+| R1rep_b10 | ALS | c_limit | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 15956 | 3.1085 | 2.2839 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_limit | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 15956 | -12.5738 | 3.1944 | 확인 |
+| R1rep_b10 | ALS | c_limit | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.1944 | 확인 불가 |
+| R1rep_b10 | ALS | c_limit | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 15956 | 6.3950 | 3.1944 | 확인 |
+| R1rep_b10 | ALS | c_limit | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 334810 | -25.7874 | 4.9146 | 확인 |
+| R1rep_b10 | ALS | c_limit | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 4.9146 | 확인 불가 |
+| R1rep_b10 | ALS | c_limit | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 334810 | -30.9741 | 4.9146 | 확인 |
+| R1rep_b10 | ALS | c_limit | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 334810 | 43.3564 | 5.8755 | 확인 |
+| R1rep_b10 | ALS | c_limit | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 5.8755 | 확인 불가 |
+| R1rep_b10 | ALS | c_limit | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 334810 | 22.7439 | 5.8755 | 확인 |
+| R1rep_b10 | ALS | c_miss_wrong | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 39 | -25.6410 | 7.6923 | 표본 부족 |
+| R1rep_b10 | ALS | c_miss_wrong | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0000 | 확인 불가 |
+| R1rep_b10 | ALS | c_miss_wrong | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 39 | 2.5641 | 7.6923 | 표본 부족 |
+| R1rep_b10 | ALS | c_miss_wrong | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 39 | 16.1152 | 8.8985 | 표본 부족 |
+| R1rep_b10 | ALS | c_miss_wrong | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 8.8985 | 확인 불가 |
+| R1rep_b10 | ALS | c_miss_wrong | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 39 | -0.1473 | 8.8985 | 표본 부족 |
+| R1rep_b10 | ALS | c_miss_wrong | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 30654 | -32.4765 | 8.4041 | 확인 |
+| R1rep_b10 | ALS | c_miss_wrong | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 8.4041 | 확인 불가 |
+| R1rep_b10 | ALS | c_miss_wrong | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 30654 | -25.4846 | 8.4041 | 확인 |
+| R1rep_b10 | ALS | c_miss_wrong | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 30654 | 30.9184 | 8.6247 | 확인 |
+| R1rep_b10 | ALS | c_miss_wrong | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 8.6247 | 확인 불가 |
+| R1rep_b10 | ALS | c_miss_wrong | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 30654 | 23.9625 | 8.6247 | 확인 |
+| R1rep_b10 | ALS | c_nogt | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 3153 | -0.5709 | 6.3422 | 기준 안 |
+| R1rep_b10 | ALS | c_nogt | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 6.3422 | 확인 불가 |
+| R1rep_b10 | ALS | c_nogt | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 3153 | 1.7761 | 6.3422 | 기준 안 |
+| R1rep_b10 | ALS | c_nogt | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 3153 | -1.6384 | 1.0913 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | c_nogt | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.0913 | 확인 불가 |
+| R1rep_b10 | ALS | c_nogt | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 3153 | 5.2849 | 1.0913 | 확인 |
+| R1rep_b10 | ALS | c_nogt | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 477192 | -26.9467 | 3.2057 | 확인 |
+| R1rep_b10 | ALS | c_nogt | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 3.2057 | 확인 불가 |
+| R1rep_b10 | ALS | c_nogt | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 477192 | -26.3924 | 3.2057 | 확인 |
+| R1rep_b10 | ALS | c_nogt | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 477192 | 35.2405 | 1.2902 | 확인 |
+| R1rep_b10 | ALS | c_nogt | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 1.2902 | 확인 불가 |
+| R1rep_b10 | ALS | c_nogt | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 477192 | 30.3469 | 1.2902 | 확인 |
+| R1rep_b10 | ALS | c_refine | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 113157 | 1.6322 | 4.8047 | 기준 안 |
+| R1rep_b10 | ALS | c_refine | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 4.8047 | 확인 불가 |
+| R1rep_b10 | ALS | c_refine | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 113157 | 2.3065 | 4.8047 | 기준 안 |
+| R1rep_b10 | ALS | c_refine | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 113157 | 0.1102 | 0.6324 | 기준 안 |
+| R1rep_b10 | ALS | c_refine | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.6324 | 확인 불가 |
+| R1rep_b10 | ALS | c_refine | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 113157 | -0.0368 | 0.6324 | 기준 안 |
+| R1rep_b10 | ALS | c_refine | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 874954 | -32.3880 | 5.8539 | 확인 |
+| R1rep_b10 | ALS | c_refine | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 5.8539 | 확인 불가 |
+| R1rep_b10 | ALS | c_refine | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 874954 | -29.7405 | 5.8539 | 확인 |
+| R1rep_b10 | ALS | c_refine | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 874954 | 105.7265 | 33.5588 | 확인 |
+| R1rep_b10 | ALS | c_refine | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 33.5588 | 확인 불가 |
+| R1rep_b10 | ALS | c_refine | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 874954 | 40.6557 | 33.5588 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | s_corr | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 900 | -9.4444 | 9.4595 | 기준 안 |
+| R1rep_b10 | ALS | s_corr | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 9.4595 | 확인 불가 |
+| R1rep_b10 | ALS | s_corr | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 900 | -0.4444 | 9.4595 | 기준 안 |
+| R1rep_b10 | ALS | s_corr | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 900 | 2.7423 | 0.8122 | 확인 |
+| R1rep_b10 | ALS | s_corr | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.8122 | 확인 불가 |
+| R1rep_b10 | ALS | s_corr | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 900 | 1.2873 | 0.8122 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | s_corr | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 85015 | -25.6166 | 5.7006 | 확인 |
+| R1rep_b10 | ALS | s_corr | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 5.7006 | 확인 불가 |
+| R1rep_b10 | ALS | s_corr | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 85015 | -26.7051 | 5.7006 | 확인 |
+| R1rep_b10 | ALS | s_corr | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 85015 | 40.6731 | 13.5099 | 확인 |
+| R1rep_b10 | ALS | s_corr | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 13.5099 | 확인 불가 |
+| R1rep_b10 | ALS | s_corr | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 85015 | 37.2365 | 13.5099 | 확인 |
+| R1rep_b10 | ALS | s_inh | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 145 | 0.0000 | 2.0690 | 기준 안 |
+| R1rep_b10 | ALS | s_inh | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.0000 | 확인 불가 |
+| R1rep_b10 | ALS | s_inh | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 145 | 0.0000 | 2.0690 | 기준 안 |
+| R1rep_b10 | ALS | s_inh | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 145 | -18.6195 | 9.8665 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | s_inh | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 9.8665 | 확인 불가 |
+| R1rep_b10 | ALS | s_inh | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 145 | -4.6835 | 9.8665 | 기준 안 |
+| R1rep_b10 | ALS | s_inh | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 593 | -75.4566 | 9.7505 | 확인 |
+| R1rep_b10 | ALS | s_inh | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 9.7505 | 확인 불가 |
+| R1rep_b10 | ALS | s_inh | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 593 | -53.0915 | 9.7505 | 확인 |
+| R1rep_b10 | ALS | s_inh | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 593 | 122.2193 | 18.1725 | 확인 |
+| R1rep_b10 | ALS | s_inh | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 18.1725 | 확인 불가 |
+| R1rep_b10 | ALS | s_inh | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 593 | 152.0185 | 18.1725 | 확인 |
+| R1rep_b10 | ALS | s_keep | gt:R_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 14112 | 14.7321 | 8.9230 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | s_keep | gt:R_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 8.9230 | 확인 불가 |
+| R1rep_b10 | ALS | s_keep | gt:R_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 14112 | 17.3540 | 8.9230 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | s_keep | gt:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 14112 | -1.8640 | 0.8225 | 확인 |
+| R1rep_b10 | ALS | s_keep | gt:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 0.8225 | 확인 불가 |
+| R1rep_b10 | ALS | s_keep | gt:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 14112 | -0.9416 | 0.8225 | 가능, 근거 불완전 |
+| R1rep_b10 | ALS | s_keep | res:P_tau | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 173579 | -32.9278 | 7.2042 | 확인 |
+| R1rep_b10 | ALS | s_keep | res:P_tau | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 7.2042 | 확인 불가 |
+| R1rep_b10 | ALS | s_keep | res:P_tau | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 173579 | -28.7371 | 7.2042 | 확인 |
+| R1rep_b10 | ALS | s_keep | res:mean | lt_dyngt_ALS_s0 | nojudge_ALS_s0 | 173579 | 70.2579 | 4.5176 | 확인 |
+| R1rep_b10 | ALS | s_keep | res:mean | lt_dyngt_ALS_s0 | lt_fixgt_ALS_s0 | 0 | 확인 불가 | 4.5176 | 확인 불가 |
+| R1rep_b10 | ALS | s_keep | res:mean | lt_dynsoft_ALS_s0 | nojudge_ALS_s0 | 173579 | 25.8165 | 4.5176 | 확인 |

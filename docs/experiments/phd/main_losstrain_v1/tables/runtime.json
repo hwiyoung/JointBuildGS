@@ -1,19 +1,19 @@
 {
-  "status": "PRIORITY_ANALYSIS_DELIVERY",
-  "at": "2026-10-27T18:01:04.503738+09:00",
+  "status": "RUNNING",
+  "at": "2026-10-27T21:15:06.614112+09:00",
   "counts": {
-    "training_health_stopped": 3,
+    "training_health_stopped": 4,
     "training_no_result": 0,
     "calibration_complete": 4,
-    "required_complete": 16,
+    "required_complete": 19,
     "optional_complete": 0,
-    "post_complete": 3,
-    "measurements_complete": 3,
+    "post_complete": 6,
+    "measurements_complete": 5,
     "historical_before_grace_stops": 2,
     "historical_grace_stops": 1,
     "post_stopped_attempts": 4,
-    "new_stopped_attempts": 6,
-    "core_patch_scored": 8
+    "new_stopped_attempts": 7,
+    "core_patch_scored": 11
   },
   "runs": [
     {
@@ -3027,6 +3027,236 @@
     },
     {
       "site": "R1rep_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "calibration": false,
+      "training_complete": true,
+      "training_health_stopped": null,
+      "training_no_result": null,
+      "post_complete": true,
+      "measurement_complete": true,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "R1rep_b10",
+              "prior": "ALS",
+              "variant": "lt_dyngt"
+            },
+            "gpu": 1,
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-27T18:04:53.356311+09:00",
+            "finished_at": "2026-10-27T18:59:39.251685+09:00",
+            "seconds": 3285.8954007867724,
+            "gpu_peak_total_MiB": 11664.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 30000,
+            "camera": "DJI_20241217095805_0007_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 18000,
+            "gaussians": 1198436,
+            "whole_opacity_median": 0.7312742471694946,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ],
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/R1rep_b10/lt_dyngt_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 769.368246098049,
+          "at": "2026-10-27T19:57:02.003874+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "685e6ef301e0ecc29d9dd148ab02001295613c411ffb327880e7d224d3c7c3b5",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "685e6ef301e0ecc29d9dd148ab02001295613c411ffb327880e7d224d3c7c3b5",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "685e6ef301e0ecc29d9dd148ab02001295613c411ffb327880e7d224d3c7c3b5",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "768",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793098621,
+              "timeNano": 1793098621073931736
+            },
+            {
+              "status": "destroy",
+              "id": "685e6ef301e0ecc29d9dd148ab02001295613c411ffb327880e7d224d3c7c3b5",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "685e6ef301e0ecc29d9dd148ab02001295613c411ffb327880e7d224d3c7c3b5",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793098621,
+              "timeNano": 1793098621087483669
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        },
+        {
+          "stage": "run",
+          "path": "/out/runs/R1rep_b10/lt_dyngt_ALS_s0/run_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 83.7479292806238,
+          "at": "2026-10-27T20:27:58.004563+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "3b8404f4ec1399b9034d4902f0ab71859d25c7342919dba19d8d66cc8ff1ed5d",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "3b8404f4ec1399b9034d4902f0ab71859d25c7342919dba19d8d66cc8ff1ed5d",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "3b8404f4ec1399b9034d4902f0ab71859d25c7342919dba19d8d66cc8ff1ed5d",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "83",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793100477,
+              "timeNano": 1793100477473849805
+            },
+            {
+              "status": "destroy",
+              "id": "3b8404f4ec1399b9034d4902f0ab71859d25c7342919dba19d8d66cc8ff1ed5d",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "3b8404f4ec1399b9034d4902f0ab71859d25c7342919dba19d8d66cc8ff1ed5d",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793100477,
+              "timeNano": 1793100477487361744
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        }
+      ]
+    },
+    {
+      "site": "R1rep_b10",
       "result": "lt_dyngt_LoD2_s0",
       "calibration": false,
       "training_complete": true,
@@ -3104,6 +3334,466 @@
     },
     {
       "site": "R1rep_b10",
+      "result": "lt_dynnow_ALS_s0",
+      "calibration": false,
+      "training_complete": true,
+      "training_health_stopped": null,
+      "training_no_result": null,
+      "post_complete": true,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "R1rep_b10",
+              "prior": "ALS",
+              "variant": "lt_dynnow"
+            },
+            "gpu": 1,
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-27T18:59:41.182605+09:00",
+            "finished_at": "2026-10-27T19:44:12.209482+09:00",
+            "seconds": 2671.026902240701,
+            "gpu_peak_total_MiB": 11030.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 30000,
+            "camera": "DJI_20241217095805_0007_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 18000,
+            "gaussians": 1114202,
+            "whole_opacity_median": 0.7518616914749146,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ],
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/R1rep_b10/lt_dynnow_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 763.7639319915324,
+          "at": "2026-10-27T20:25:16.003749+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "3dfded5fb6877528f426d5c1ca100bbdb784194af06300f88d9bb3f466acdebc",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "3dfded5fb6877528f426d5c1ca100bbdb784194af06300f88d9bb3f466acdebc",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "3dfded5fb6877528f426d5c1ca100bbdb784194af06300f88d9bb3f466acdebc",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "762",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793100315,
+              "timeNano": 1793100315279812407
+            },
+            {
+              "status": "destroy",
+              "id": "3dfded5fb6877528f426d5c1ca100bbdb784194af06300f88d9bb3f466acdebc",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "3dfded5fb6877528f426d5c1ca100bbdb784194af06300f88d9bb3f466acdebc",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793100315,
+              "timeNano": 1793100315293477630
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        },
+        {
+          "stage": "run",
+          "path": "/out/runs/R1rep_b10/lt_dynnow_ALS_s0/run_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 83.39189725648612,
+          "at": "2026-10-27T21:15:03.003714+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "3bde9883872eb714d90e88ea812803810e044f7237d7986ee573ff848acc31ee",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "3bde9883872eb714d90e88ea812803810e044f7237d7986ee573ff848acc31ee",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "3bde9883872eb714d90e88ea812803810e044f7237d7986ee573ff848acc31ee",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "82",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793103302,
+              "timeNano": 1793103302583336101
+            },
+            {
+              "status": "destroy",
+              "id": "3bde9883872eb714d90e88ea812803810e044f7237d7986ee573ff848acc31ee",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "3bde9883872eb714d90e88ea812803810e044f7237d7986ee573ff848acc31ee",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793103302,
+              "timeNano": 1793103302603401432
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        }
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "result": "lt_dynsoft_ALS_s0",
+      "calibration": false,
+      "training_complete": true,
+      "training_health_stopped": null,
+      "training_no_result": null,
+      "post_complete": true,
+      "measurement_complete": true,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "R1rep_b10",
+              "prior": "ALS",
+              "variant": "lt_dynsoft"
+            },
+            "gpu": 0,
+            "attempt": 0,
+            "exit_code": 0,
+            "started_at": "2026-10-27T18:08:49.193215+09:00",
+            "finished_at": "2026-10-27T19:03:34.221312+09:00",
+            "seconds": 3285.0281247869134,
+            "gpu_peak_total_MiB": 11615.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 30000,
+            "camera": "DJI_20241217095805_0007_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 12000,
+            "iterations_after_reset": 18000,
+            "gaussians": 1160471,
+            "whole_opacity_median": 0.7310231924057007,
+            "prior_opacity_is_record_only": true,
+            "stop": null,
+            "scientific_verdict": null
+          },
+          "stops": [],
+          "monitor_policy": "v2",
+          "resets": [
+            {
+              "iteration": 3000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 6000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 9000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            },
+            {
+              "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ],
+      "post_attempts": [
+        {
+          "stage": "post",
+          "path": "/out/runs/R1rep_b10/lt_dynsoft_ALS_s0/post_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 763.0233992785215,
+          "at": "2026-10-27T20:11:08.003328+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "7ea545bf178f3b3843007873f5d3417fd0c8f57fa7c4ce3b91b0211cbc109ea4",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "7ea545bf178f3b3843007873f5d3417fd0c8f57fa7c4ce3b91b0211cbc109ea4",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "7ea545bf178f3b3843007873f5d3417fd0c8f57fa7c4ce3b91b0211cbc109ea4",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "762",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793099467,
+              "timeNano": 1793099467801756107
+            },
+            {
+              "status": "destroy",
+              "id": "7ea545bf178f3b3843007873f5d3417fd0c8f57fa7c4ce3b91b0211cbc109ea4",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "7ea545bf178f3b3843007873f5d3417fd0c8f57fa7c4ce3b91b0211cbc109ea4",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793099467,
+              "timeNano": 1793099467823906678
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        },
+        {
+          "stage": "run",
+          "path": "/out/runs/R1rep_b10/lt_dynsoft_ALS_s0/run_attempt_0_receipt.json",
+          "exit_code": 0,
+          "seconds": 83.8895009169355,
+          "at": "2026-10-27T21:02:27.004133+09:00",
+          "policy": "resource_resume_56_40_v1",
+          "memory_limit_GiB": 40,
+          "admission_available_GiB": 56,
+          "admission_stable_seconds": 60,
+          "resource_failure": false,
+          "container_id": "7a059e1ba5fdbe744aca958699f50376a8ce77a257130e8d79e61350ccca81ba",
+          "docker_events": [
+            {
+              "status": "die",
+              "id": "7a059e1ba5fdbe744aca958699f50376a8ce77a257130e8d79e61350ccca81ba",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "die",
+              "Actor": {
+                "ID": "7a059e1ba5fdbe744aca958699f50376a8ce77a257130e8d79e61350ccca81ba",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "execDuration": "83",
+                  "exitCode": "0",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793102546,
+              "timeNano": 1793102546684497355
+            },
+            {
+              "status": "destroy",
+              "id": "7a059e1ba5fdbe744aca958699f50376a8ce77a257130e8d79e61350ccca81ba",
+              "from": "jointbuildgs:geogs-conf-guided-v1",
+              "Type": "container",
+              "Action": "destroy",
+              "Actor": {
+                "ID": "7a059e1ba5fdbe744aca958699f50376a8ce77a257130e8d79e61350ccca81ba",
+                "Attributes": {
+                  "com.docker.compose.project": "jointbuildgs-operator",
+                  "com.docker.compose.service": "dev",
+                  "com.docker.compose.version": "2.35.1",
+                  "com.nvidia.cudnn.version": "8.9.0.131",
+                  "image": "jointbuildgs:geogs-conf-guided-v1",
+                  "jbgs.runtime.deviation": "CUDA compiler12.1.105; Matplotlib3.9.2 replaces incompatible official3.10.9; conda libstdc++ loader precedence",
+                  "jbgs.task_id": "PHD-GEOGS-P1P2P3-v1",
+                  "maintainer": "NVIDIA CORPORATION <cudatools@nvidia.com>",
+                  "name": "jbgs-lt-resume-post-0",
+                  "org.opencontainers.image.ref.name": "ubuntu",
+                  "org.opencontainers.image.revision": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+                  "org.opencontainers.image.title": "JointBuildGS isolated official GeoGS diagnostic runtime",
+                  "org.opencontainers.image.version": "22.04"
+                }
+              },
+              "scope": "local",
+              "time": 1793102546,
+              "timeNano": 1793102546703971336
+            }
+          ],
+          "kernel_container_lines": [],
+          "classification": "PASS",
+          "scientific_verdict": null
+        }
+      ]
+    },
+    {
+      "site": "R1rep_b10",
       "result": "lt_dynsoft_LoD2_s0",
       "calibration": false,
       "training_complete": true,
@@ -3170,6 +3860,103 @@
             },
             {
               "iteration": 12000,
+              "periodic": true,
+              "observation_phase": "after original reset",
+              "scientific_verdict": null
+            }
+          ]
+        }
+      ],
+      "post_attempts": []
+    },
+    {
+      "site": "R1rep_b10",
+      "result": "lt_fixgt_ALS_s0",
+      "calibration": false,
+      "training_complete": false,
+      "training_health_stopped": {
+        "at": "2026-10-27T18:08:46.906478+09:00",
+        "run": {
+          "site": "R1rep_b10",
+          "prior": "ALS",
+          "variant": "lt_fixgt"
+        },
+        "attempt": 0,
+        "reason": "training execution/health error",
+        "same_arm_training_stops": 1,
+        "scientific_verdict": null,
+        "criterion_record": {
+          "iteration": 3100,
+          "camera": "DJI_20241217100106_0039_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": 3000,
+          "iterations_after_reset": 100,
+          "gaussians": 555122,
+          "whole_opacity_median": 0.0481739267706871,
+          "prior_opacity_is_record_only": true,
+          "stop": "whole-population opacity median < 0.05 after reset+100",
+          "scientific_verdict": null
+        },
+        "status": "STOPPED_BY_FROZEN_CRITERION",
+        "remaining_independent_arms_continue": true
+      },
+      "training_no_result": null,
+      "post_complete": false,
+      "measurement_complete": false,
+      "attempts": [
+        {
+          "attempt": "attempt_0",
+          "receipt": {
+            "run": {
+              "site": "R1rep_b10",
+              "prior": "ALS",
+              "variant": "lt_fixgt"
+            },
+            "gpu": 0,
+            "attempt": 0,
+            "exit_code": 1,
+            "started_at": "2026-10-27T18:04:53.355272+09:00",
+            "finished_at": "2026-10-27T18:08:46.904625+09:00",
+            "seconds": 233.5494306962937,
+            "gpu_peak_total_MiB": 9787.0,
+            "lambda_depth": 0.0025,
+            "source_sha256": {
+              "train.py": "d6c146ab841ee53437fc2ec6f0f2778bcbf2008f66f9d227e18b76e3a6803373",
+              "jbgs_judgment.py": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc"
+            },
+            "config_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+            "scientific_verdict": null
+          },
+          "last_health": {
+            "iteration": 3100,
+            "camera": "DJI_20241217100106_0039_D",
+            "observation_phase": "after optimizer and opacity floors, before density/reset",
+            "last_periodic_reset": 3000,
+            "iterations_after_reset": 100,
+            "gaussians": 555122,
+            "whole_opacity_median": 0.0481739267706871,
+            "prior_opacity_is_record_only": true,
+            "stop": "whole-population opacity median < 0.05 after reset+100",
+            "scientific_verdict": null
+          },
+          "stops": [
+            {
+              "iteration": 3100,
+              "camera": "DJI_20241217100106_0039_D",
+              "observation_phase": "after optimizer and opacity floors, before density/reset",
+              "last_periodic_reset": 3000,
+              "iterations_after_reset": 100,
+              "gaussians": 555122,
+              "whole_opacity_median": 0.0481739267706871,
+              "prior_opacity_is_record_only": true,
+              "stop": "whole-population opacity median < 0.05 after reset+100",
+              "scientific_verdict": null
+            }
+          ],
+          "monitor_policy": "v2",
+          "resets": [
+            {
+              "iteration": 3000,
               "periodic": true,
               "observation_phase": "after original reset",
               "scientific_verdict": null
@@ -3422,12 +4209,19 @@
   "stop": null,
   "selected_lambda": 0.0025,
   "analysis_delivery_priority": {
-    "at": "2026-10-27T18:00:04.004595+09:00",
-    "status": "CORE_SCORING",
-    "run": {
-      "site": "B0_b10",
-      "prior": "ALS",
-      "variant": "lt_dynnow"
+    "at": "2026-10-27T18:04:53.252629+09:00",
+    "status": "DELIVERED_AND_RESUMED",
+    "pid": 3551014,
+    "release": {
+      "status": "VERIFIED_HANDOVER_READY",
+      "at": "2026-10-27T18:04:45.609163+09:00",
+      "scored_arms": 8,
+      "archive": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/deliveries/interim_eightarms_20261027_1803_r1/PHD-MAIN-LOSSTRAIN-v1_handover.zip",
+      "archive_sha256": "b83d5fd9c0e3eaafa5a6e19cca8a4f337a81b245ce58d73b8c4282793fd29172",
+      "verification": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/analysis_delivery_priority_v1/verification.json",
+      "verification_sha256": "0ffebbe00e36c76c538ca419ba764367ab7bc4e63c1a428387828dc17127172a",
+      "commit": "44d3c31ee5ba1f7aa00dd9939986ff8a383b4775",
+      "scientific_verdict": null
     },
     "scientific_verdict": null
   },

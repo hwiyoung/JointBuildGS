@@ -1,0 +1,38 @@
+{
+  "enabled": false,
+  "site": "R1rep_b10",
+  "prior": "ALS",
+  "authority": "User: 그럼 그 필요한거 먼저 해서 전달자료로 만들어야지",
+  "sequence": "finish four R1 ALS trainings, then their post and scoring before unrelated new work",
+  "training_settings_and_arm_membership_unchanged": true,
+  "scientific_verdict": null,
+  "core_scope_resolved": true,
+  "at": "2026-10-27T21:22:37.509790+09:00",
+  "reason": "R1 ALS has three core-scored results and one frozen-criterion stop; resume remaining authorized training while auxiliary metrics continue",
+  "outcomes": [
+    {
+      "variant": "lt_fixgt",
+      "status": "HEALTH_STOPPED",
+      "receipt": "../JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_fixgt_ALS_s0/training_health_STOP.json",
+      "sha256": "ef14b88d964bcd1d1230327e4a0658af17f88e3386e1f5ebed2e9c55e85e0a2e"
+    },
+    {
+      "variant": "lt_dyngt",
+      "status": "CORE_SCORED",
+      "receipt": "../JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dyngt_ALS_s0/core_measure_PASS.json",
+      "sha256": "28b5a4ba6115bc5c707d18131644cf971851e210a216717158024ecf2569b6e8"
+    },
+    {
+      "variant": "lt_dynsoft",
+      "status": "CORE_SCORED",
+      "receipt": "../JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynsoft_ALS_s0/core_measure_PASS.json",
+      "sha256": "662f72b779ba48b2b301d3108de44ebaa8cddb60608227603b88e99ec518b586"
+    },
+    {
+      "variant": "lt_dynnow",
+      "status": "CORE_SCORED",
+      "receipt": "../JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_ALS_s0/core_measure_PASS.json",
+      "sha256": "ec775dabb7d8c9edff9f9c0450d5ab2afe11a8adeb38fdc05678bc64ddf604bc"
+    }
+  ]
+}

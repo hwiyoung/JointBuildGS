@@ -1,20 +1,20 @@
 {
-  "status": "PRIORITY_ANALYSIS_DELIVERY",
+  "status": "RUNNING",
   "counts": {
-    "training_health_stopped": 3,
+    "training_health_stopped": 4,
     "training_no_result": 0,
     "calibration_complete": 4,
-    "required_complete": 16,
+    "required_complete": 19,
     "optional_complete": 0,
-    "post_complete": 3,
-    "measurements_complete": 3,
+    "post_complete": 6,
+    "measurements_complete": 5,
     "historical_before_grace_stops": 2,
     "historical_grace_stops": 1,
     "post_stopped_attempts": 4,
-    "new_stopped_attempts": 6,
-    "core_patch_scored": 8
+    "new_stopped_attempts": 7,
+    "core_patch_scored": 11
   },
-  "characters": 9082,
+  "characters": 11270,
   "figures": [
     {
       "file": "fates_B0_b10_ALS.png",
@@ -25,11 +25,19 @@
       "visual_review": "PASS"
     },
     {
+      "file": "fates_R1rep_b10_ALS.png",
+      "visual_review": "PASS"
+    },
+    {
       "file": "map_B0_b10_ALS.png",
       "visual_review": "PASS"
     },
     {
       "file": "map_B173nb_b10_ALS.png",
+      "visual_review": "PASS"
+    },
+    {
+      "file": "map_R1rep_b10_ALS.png",
       "visual_review": "PASS"
     },
     {
@@ -46,6 +54,10 @@
     },
     {
       "file": "side_map_B173nb_b10_ALS.png",
+      "visual_review": "PASS"
+    },
+    {
+      "file": "side_map_R1rep_b10_ALS.png",
       "visual_review": "PASS"
     }
   ],

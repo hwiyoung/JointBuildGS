@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-27T21:26:48.374175+09:00",
+  "stopped_arms": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "variant": "lt_fixgt",
+      "iteration": 30000,
+      "stop": "training PSNR more than 3 dB below same-iteration nojudge",
+      "whole_opacity_median": 0.391705185174942,
+      "psnr_drop_db": 3.5724029541015625,
+      "source": "/out/runs/B0_b10/lt_fixgt_LoD2_s0/training_health_STOP.json",
+      "models": [
+        "point_cloud/iteration_15000/point_cloud.ply"
+      ],
+      "checkpoints": []
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "variant": "lt_fixgt",
+      "iteration": 3100,
+      "stop": "whole-population opacity median < 0.05 after reset+100",
+      "whole_opacity_median": 0.04947258532047272,
+      "psnr_drop_db": null,
+      "source": "/out/runs/B173nb_b10/lt_fixgt_LoD2_s0/training_health_STOP.json",
+      "models": [],
+      "checkpoints": []
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "variant": "lt_fixgt",
+      "iteration": 3100,
+      "stop": "whole-population opacity median < 0.05 after reset+100",
+      "whole_opacity_median": 0.0481739267706871,
+      "psnr_drop_db": null,
+      "source": "/out/runs/R1rep_b10/lt_fixgt_ALS_s0/training_health_STOP.json",
+      "models": [],
+      "checkpoints": []
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "variant": "lt_fixgt",
+      "iteration": 3100,
+      "stop": "whole-population opacity median < 0.05 after reset+100",
+      "whole_opacity_median": 0.040125567466020584,
+      "psnr_drop_db": null,
+      "source": "/out/runs/R1rep_b10/lt_fixgt_LoD2_s0/training_health_STOP.json",
+      "models": [],
+      "checkpoints": []
+    }
+  ],
+  "training_complete": 19,
+  "training_active": 1,
+  "training_pending": 0,
+  "scientific_verdict": null
+}

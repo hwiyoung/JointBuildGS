@@ -402,6 +402,42 @@
 | R1rep_b10 | LoD2 | prop_LoD2_s1 | unexplained_cell_1 | 19839 | 1239.938 | 확인 불가 | 68.6426 | 30.5625 | 2.4648 |
 | R1rep_b10 | LoD2 | prop_LoD2_s1 | unexplained_cell_2 (보존) | 2645 | 165.312 | 확인 불가 | 7.2212 | 19.6250 | 11.8715 |
 | R1rep_b10 | LoD2 | prop_LoD2_s1 | unexplained_cell_3 | 5631 | 351.938 | 확인 불가 | 22.3051 | 48.9375 | 13.9052 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | all_0_3 | 23032 | 1533.040 | 97.5246 | 59.7000 | 2.3743 | 0.1549 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | unexplained | 1836 | 119.840 | 83.4166 | 12.5893 | 0.8398 | 0.7008 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | cell_0 | 19870 | 1318.411 | 100.0000 | 64.8074 | 0.8679 | 0.0658 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | cell_1 | 458 | 33.632 | 99.7097 | 29.9813 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | cell_2 (보존) | 2274 | 150.839 | 94.8996 | 31.6207 | 1.0016 | 0.6640 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | cell_3 | 430 | 30.159 | 0.0000 | 10.0029 | 0.5047 | 1.6735 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | cell_4 | 286 | 19.148 | 100.0000 | 37.3685 | 0.0898 | 0.4687 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | cell_5 · 표본 부족 | 95 | 7.330 | 0.0000 | 15.7216 | 0.3245 | 4.4270 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | unexplained_cell_0 · 표본 부족 | 1 | 0.102 | 100.0000 | 0.0000 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | unexplained_cell_1 | 311 | 20.610 | 100.0000 | 22.1380 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | unexplained_cell_2 (보존) | 1222 | 79.255 | 100.0000 | 10.4706 | 0.6923 | 0.8735 |
+| R1rep_b10 | ALS | lt_dyngt_ALS_s0 | unexplained_cell_3 | 302 | 19.874 | 0.0000 | 11.2005 | 0.1475 | 0.7423 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | all_0_3 | 23032 | 1533.040 | 95.1569 | 67.3841 | 3.5188 | 0.2295 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | unexplained | 1836 | 119.840 | 55.4241 | 12.2069 | 0.7966 | 0.6648 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | cell_0 | 19870 | 1318.411 | 100.0000 | 73.3012 | 1.4910 | 0.1131 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | cell_1 | 458 | 33.632 | 48.2913 | 27.1751 | 0.0725 | 0.2155 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | cell_2 (보존) | 2274 | 150.839 | 81.5151 | 35.0342 | 0.8980 | 0.5954 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | cell_3 | 430 | 30.159 | 3.9273 | 15.3526 | 1.0573 | 3.5057 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | cell_4 | 286 | 19.148 | 100.0000 | 28.4074 | 0.0898 | 0.4687 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | cell_5 · 표본 부족 | 95 | 7.330 | 0.0000 | 19.1685 | 0.3576 | 4.8783 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | unexplained_cell_0 · 표본 부족 | 1 | 0.102 | 100.0000 | 0.0000 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | unexplained_cell_1 | 311 | 20.610 | 35.1905 | 23.8417 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | unexplained_cell_2 (보존) | 1222 | 79.255 | 74.5265 | 8.4960 | 0.3780 | 0.4769 |
+| R1rep_b10 | ALS | lt_dynnow_ALS_s0 | unexplained_cell_3 | 302 | 19.874 | 0.0000 | 15.0023 | 0.4187 | 2.1067 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | all_0_3 | 23032 | 1533.040 | 96.3960 | 66.4295 | 3.5246 | 0.2299 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | unexplained | 1836 | 119.840 | 71.2218 | 13.0138 | 0.5057 | 0.4220 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | cell_0 | 19870 | 1318.411 | 100.0000 | 72.5607 | 1.6164 | 0.1226 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | cell_1 | 458 | 33.632 | 48.0998 | 28.1337 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | cell_2 (보존) | 2274 | 150.839 | 94.1089 | 31.7378 | 1.0695 | 0.7090 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | cell_3 | 430 | 30.159 | 4.1399 | 14.6189 | 0.8387 | 2.7810 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | cell_4 | 286 | 19.148 | 100.0000 | 35.4122 | 0.3598 | 1.8788 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | cell_5 · 표본 부족 | 95 | 7.330 | 0.0000 | 19.2191 | 0.1093 | 1.4914 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_0 · 표본 부족 | 1 | 0.102 | 100.0000 | 100.0000 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_1 | 311 | 20.610 | 34.8780 | 29.7334 | 0.0000 | 0.0000 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_2 (보존) | 1222 | 79.255 | 98.4952 | 8.2734 | 0.3113 | 0.3928 |
+| R1rep_b10 | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_3 | 302 | 19.874 | 0.0000 | 14.1343 | 0.1944 | 0.9779 |
 | R1rep_b10 | ALS | mvs_a | all_0_3 | 23032 | 1533.040 | 확인 불가 | 74.7538 | 65.5787 | 4.2777 |
 | R1rep_b10 | ALS | mvs_a | unexplained | 1836 | 119.840 | 확인 불가 | 11.1551 | 23.6983 | 19.7749 |
 | R1rep_b10 | ALS | mvs_a | cell_0 | 19870 | 1318.411 | 확인 불가 | 83.1664 | 35.5129 | 2.6936 |
@@ -522,6 +558,42 @@
 | three_units_pooled | LoD2 | prop_LoD2_s1 | unexplained_cell_1 | 42551 | 2659.438 | 확인 불가 | 77.8642 | 76.3750 | 2.8718 |
 | three_units_pooled | LoD2 | prop_LoD2_s1 | unexplained_cell_2 (보존) | 4041 | 252.562 | 확인 불가 | 20.2673 | 28.1875 | 11.1606 |
 | three_units_pooled | LoD2 | prop_LoD2_s1 | unexplained_cell_3 | 10001 | 625.062 | 확인 불가 | 19.4681 | 84.5625 | 13.5286 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | all_0_3 | 79136 | 5306.681 | 92.6806 | 74.7758 | 41.3807 | 0.7798 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | unexplained | 21133 | 1409.776 | 76.0720 | 54.9507 | 38.2774 | 2.7151 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | cell_0 | 53541 | 3575.416 | 100.0000 | 83.0956 | 1.8217 | 0.0509 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | cell_1 | 15070 | 1010.616 | 99.9764 | 67.9990 | 24.2070 | 2.3953 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | cell_2 (보존) | 5073 | 351.722 | 94.4923 | 60.7574 | 1.2271 | 0.3489 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | cell_3 | 5452 | 368.927 | 0.0332 | 26.0743 | 14.1251 | 3.8287 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | cell_4 | 308 | 21.068 | 100.0000 | 36.3264 | 0.0898 | 0.4260 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | cell_5 | 273 | 20.177 | 0.0000 | 18.9514 | 4.0293 | 19.9702 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | unexplained_cell_0 · 표본 부족 | 5 | 0.377 | 100.0000 | 73.1003 | 0.0000 | 0.0000 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | unexplained_cell_1 | 14743 | 983.975 | 100.0000 | 68.4680 | 24.0286 | 2.4420 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | unexplained_cell_2 (보존) | 1365 | 89.479 | 98.4505 | 13.5869 | 0.6923 | 0.7737 |
+| three_units_pooled | ALS | lt_dyngt_ALS_s0 | unexplained_cell_3 | 5020 | 335.945 | 0.0000 | 26.3555 | 13.5565 | 4.0353 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | all_0_3 | 79136 | 5306.681 | 86.0215 | 77.3533 | 42.7102 | 0.8048 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | unexplained | 21133 | 1409.776 | 51.3005 | 58.0439 | 38.6319 | 2.7403 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | cell_0 | 53541 | 3575.416 | 100.0000 | 85.5918 | 2.0160 | 0.0564 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | cell_1 | 15070 | 1010.616 | 66.7980 | 72.1565 | 25.7590 | 2.5488 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | cell_2 (보존) | 5073 | 351.722 | 87.6163 | 61.3518 | 1.2096 | 0.3439 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | cell_3 | 5452 | 368.927 | 1.6896 | 27.0020 | 13.7255 | 3.7204 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | cell_4 | 308 | 21.068 | 100.0000 | 28.5669 | 0.0898 | 0.4260 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | cell_5 | 273 | 20.177 | 0.0000 | 19.9794 | 4.0064 | 19.8565 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | unexplained_cell_0 · 표본 부족 | 5 | 0.377 | 100.0000 | 56.3945 | 0.0000 | 0.0000 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | unexplained_cell_1 | 14743 | 983.975 | 66.9166 | 72.8643 | 25.3783 | 2.5792 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | unexplained_cell_2 (보존) | 1365 | 89.479 | 71.6764 | 11.6405 | 0.3780 | 0.4224 |
+| three_units_pooled | ALS | lt_dynnow_ALS_s0 | unexplained_cell_3 | 5020 | 335.945 | 0.0793 | 26.9968 | 12.8756 | 3.8326 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | all_0_3 | 79136 | 5306.681 | 90.6603 | 74.1409 | 42.5639 | 0.8021 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | unexplained | 21133 | 1409.776 | 68.7373 | 53.0149 | 37.7421 | 2.6772 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | cell_0 | 53541 | 3575.416 | 100.0000 | 83.0927 | 2.5999 | 0.0727 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | cell_1 | 15070 | 1010.616 | 88.8857 | 65.5147 | 24.1454 | 2.3892 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | cell_2 (보존) | 5073 | 351.722 | 93.9580 | 58.7287 | 1.4992 | 0.4263 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | cell_3 | 5452 | 368.927 | 1.8630 | 25.7087 | 14.3194 | 3.8814 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | cell_4 | 308 | 21.068 | 100.0000 | 34.9333 | 0.3598 | 1.7075 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | cell_5 | 273 | 20.177 | 0.0000 | 19.0598 | 3.6902 | 18.2895 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_0 · 표본 부족 | 5 | 0.377 | 100.0000 | 100.0000 | 0.0000 | 0.0000 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_1 | 14743 | 983.975 | 89.6166 | 66.2034 | 23.9670 | 2.4357 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_2 (보존) | 1365 | 89.479 | 96.3505 | 11.0921 | 0.3113 | 0.3479 |
+| three_units_pooled | ALS | lt_dynsoft_ALS_s0 | unexplained_cell_3 | 5020 | 335.945 | 0.1926 | 25.4994 | 13.4637 | 4.0077 |
 | three_units_pooled | ALS | mvs_a | all_0_3 | 79136 | 5306.681 | 확인 불가 | 80.4173 | 138.1154 | 2.6027 |
 | three_units_pooled | ALS | mvs_a | unexplained | 21133 | 1409.776 | 확인 불가 | 64.1321 | 83.5913 | 5.9294 |
 | three_units_pooled | ALS | mvs_a | cell_0 | 53541 | 3575.416 | 확인 불가 | 92.1168 | 39.4484 | 1.1033 |

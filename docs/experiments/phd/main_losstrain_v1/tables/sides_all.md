@@ -292,3 +292,111 @@
 | B173nb_b10 | ALS | lt_dynnow | unexplained_cell_2 | 그 밖 | MVS | 0 | 0.000000 | 104 | 45.550307 |
 | B173nb_b10 | ALS | lt_dynnow | unexplained_cell_2 | 그 밖 | 그 밖 | 0 | 0.000000 | 104 | 45.550307 |
 | B173nb_b10 | ALS | lt_dynnow | unexplained_cell_2 | 그 밖 | 면 없음 | 0 | 0.000000 | 104 | 45.550307 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 사전 | 사전 | 102 | 7.207698 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 사전 | MVS | 592 | 37.907898 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 사전 | 그 밖 | 519 | 33.548698 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 사전 | 면 없음 | 10 | 0.692287 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | MVS | 사전 | 16 | 1.068345 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | MVS | MVS | 292 | 19.266132 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | MVS | 그 밖 | 303 | 20.001616 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | MVS | 면 없음 | 2 | 0.147520 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 그 밖 | 사전 | 0 | 0.000000 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 그 밖 | MVS | 0 | 0.000000 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 그 밖 | 그 밖 | 0 | 0.000000 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained | 그 밖 | 면 없음 | 0 | 0.000000 | 1836 | 22.090943 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 사전 | 사전 | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 사전 | MVS | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 사전 | 그 밖 | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 사전 | 면 없음 | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | MVS | 사전 | 11 | 0.723886 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | MVS | MVS | 155 | 10.308935 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | MVS | 그 밖 | 145 | 9.577175 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | MVS | 면 없음 | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 그 밖 | 사전 | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 그 밖 | MVS | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 그 밖 | 그 밖 | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_1 | 그 밖 | 면 없음 | 0 | 0.000000 | 311 | 50.019101 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 사전 | 사전 | 102 | 7.207698 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 사전 | MVS | 592 | 37.907898 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 사전 | 그 밖 | 518 | 33.447163 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 사전 | 면 없음 | 10 | 0.692287 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | MVS | 사전 | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | MVS | MVS | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | MVS | 그 밖 | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | MVS | 면 없음 | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 그 밖 | 사전 | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 그 밖 | MVS | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 그 밖 | 그 밖 | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dyngt | unexplained_cell_2 | 그 밖 | 면 없음 | 0 | 0.000000 | 1222 | 9.094308 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 사전 | 사전 | 75 | 5.599880 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 사전 | MVS | 781 | 50.215109 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 사전 | 그 밖 | 790 | 50.630058 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 사전 | 면 없음 | 5 | 0.420944 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | MVS | 사전 | 18 | 1.418542 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | MVS | MVS | 96 | 6.581621 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | MVS | 그 밖 | 70 | 4.889291 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | MVS | 면 없음 | 1 | 0.084749 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | 사전 | 0 | 0.000000 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | MVS | 0 | 0.000000 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | 그 밖 | 0 | 0.000000 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained | 그 밖 | 면 없음 | 0 | 0.000000 | 1836 | 10.164788 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 사전 | 사전 | 9 | 0.568032 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 사전 | MVS | 120 | 7.793461 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 사전 | 그 밖 | 81 | 5.239945 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 사전 | 면 없음 | 0 | 0.000000 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | MVS | 사전 | 4 | 0.270396 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | MVS | MVS | 68 | 4.653377 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | MVS | 그 밖 | 29 | 2.084785 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | MVS | 면 없음 | 0 | 0.000000 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 그 밖 | 사전 | 0 | 0.000000 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 그 밖 | MVS | 0 | 0.000000 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 그 밖 | 그 밖 | 0 | 0.000000 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_1 | 그 밖 | 면 없음 | 0 | 0.000000 | 311 | 25.334353 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 사전 | 사전 | 62 | 4.688982 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 사전 | MVS | 516 | 33.050803 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 사전 | 그 밖 | 626 | 40.011291 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 사전 | 면 없음 | 4 | 0.311340 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | MVS | 사전 | 12 | 1.020735 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | MVS | MVS | 0 | 0.000000 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | MVS | 그 밖 | 2 | 0.171896 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | MVS | 면 없음 | 0 | 0.000000 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 그 밖 | 사전 | 0 | 0.000000 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 그 밖 | MVS | 0 | 0.000000 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 그 밖 | 그 밖 | 0 | 0.000000 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynsoft | unexplained_cell_2 | 그 밖 | 면 없음 | 0 | 0.000000 | 1222 | 5.916320 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 사전 | 사전 | 61 | 4.219302 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 사전 | MVS | 606 | 38.988165 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 사전 | 그 밖 | 645 | 41.234200 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 사전 | 면 없음 | 6 | 0.427328 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | MVS | 사전 | 35 | 2.960802 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | MVS | MVS | 246 | 16.177399 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | MVS | 그 밖 | 233 | 15.463686 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | MVS | 면 없음 | 4 | 0.369313 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 그 밖 | 사전 | 0 | 0.000000 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 그 밖 | MVS | 0 | 0.000000 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 그 밖 | 그 밖 | 0 | 0.000000 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained | 그 밖 | 면 없음 | 0 | 0.000000 | 1836 | 17.019917 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 사전 | 사전 | 11 | 0.694314 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 사전 | MVS | 105 | 6.873444 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 사전 | 그 밖 | 91 | 5.866051 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 사전 | 면 없음 | 0 | 0.000000 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | MVS | 사전 | 2 | 0.147386 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | MVS | MVS | 70 | 4.713281 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | MVS | 그 밖 | 32 | 2.315520 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | MVS | 면 없음 | 0 | 0.000000 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 그 밖 | 사전 | 0 | 0.000000 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 그 밖 | MVS | 0 | 0.000000 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 그 밖 | 그 밖 | 0 | 0.000000 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_1 | 그 밖 | 면 없음 | 0 | 0.000000 | 311 | 26.237730 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 사전 | 사전 | 48 | 3.390844 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 사전 | MVS | 401 | 25.655256 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 사전 | 그 밖 | 468 | 29.765088 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 사전 | 면 없음 | 4 | 0.254834 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | MVS | 사전 | 32 | 2.750846 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | MVS | MVS | 121 | 7.752687 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | MVS | 그 밖 | 147 | 9.562368 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | MVS | 면 없음 | 1 | 0.123123 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 그 밖 | 사전 | 0 | 0.000000 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 그 밖 | MVS | 0 | 0.000000 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 그 밖 | 그 밖 | 0 | 0.000000 | 1222 | 14.060343 |
+| R1rep_b10 | ALS | lt_dynnow | unexplained_cell_2 | 그 밖 | 면 없음 | 0 | 0.000000 | 1222 | 14.060343 |

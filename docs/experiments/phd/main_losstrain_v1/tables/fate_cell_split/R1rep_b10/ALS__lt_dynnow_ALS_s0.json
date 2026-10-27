@@ -1,0 +1,66 @@
+{
+  "site": "R1rep_b10",
+  "prior": "ALS",
+  "result": "lt_dynnow_ALS_s0",
+  "status": "PASS",
+  "regions": {
+    "cell_0": {
+      "patches": 19870,
+      "area_m2": 1318.4109154946177,
+      "seeds_seated": 24057,
+      "seeds_planted": 24057,
+      "not_planted": 0,
+      "counts": {
+        "removed": 22387,
+        "old_place": 1026,
+        "current_surface": 6,
+        "neither": 638
+      },
+      "shares": {
+        "removed": 0.9305815355198072,
+        "old_place": 0.04264870931537598,
+        "current_surface": 0.00024940765681506424,
+        "neither": 0.026520347508001828
+      },
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 1400.0,
+        "max": 14900.0
+      }
+    },
+    "cell_2": {
+      "patches": 2274,
+      "area_m2": 150.83900275973673,
+      "seeds_seated": 2822,
+      "seeds_planted": 2822,
+      "not_planted": 0,
+      "counts": {
+        "removed": 2309,
+        "old_place": 333,
+        "current_surface": 12,
+        "neither": 168
+      },
+      "shares": {
+        "removed": 0.8182140326009922,
+        "old_place": 0.11800141743444366,
+        "current_surface": 0.004252303330970942,
+        "neither": 0.059532246633593196
+      },
+      "last_alive_of_removed": {
+        "min": 600.0,
+        "median": 2700.0,
+        "max": 13200.0
+      }
+    }
+  },
+  "definition": "stage2: seed+descendants by init_id; removed, opaque>=0.5 within prior mesh 0.25m, else opaque within GT points 0.2m, else neither; same priority for both cell groups",
+  "source_parent": "/out/fates/R1rep_b10/ALS__lt_dynnow_ALS_s0.json",
+  "source_parent_sha256": "3044f10863f2eeb0d184c98416b73c602a5bf8e3b5cb702f78e0ce89ccf859d4",
+  "source_per_seed": "/out/fates/R1rep_b10/ALS__lt_dynnow_ALS_s0__prior_correct_0_2.npz",
+  "source_per_seed_sha256": "57928072dadf435ca5e24a798c7098889b0d175d596e37239c0e78aad75feec3",
+  "initial_sha256": "9ba107d15b326d244016b9fbf730b98ee8d8f28b17d326b81264dfaef2031447",
+  "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+  "partition_counts_equal_combined": true,
+  "categories_reused_without_recomputation": true,
+  "scientific_verdict": null
+}

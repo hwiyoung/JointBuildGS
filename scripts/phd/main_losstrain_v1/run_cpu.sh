@@ -8,8 +8,16 @@ OUT="$PH/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1"
 mkdir -p "$OUT/logs" "$REPO/configs/phd/main_losstrain_v1" "$REPO/docs/experiments/phd/main_losstrain_v1"
 tag=$1; shift
 log="$OUT/logs/${tag}_$(date +%Y%m%dT%H%M%S).log"
+cpu_limit=8
+memory_limit=24g
 case "${1##*/}" in
-  mesh_score.py|sections.py|fates.py|split_fate_cells.py|baseline_fates.py|saved_opacity.py)
+  split_fate_cells.py)
+    # Partition saved small label arrays only; no mesh or final Gaussian load.
+    # Keep this reporting step bounded without waiting behind TSDF/axis jobs.
+    cpu_limit=2
+    memory_limit=2g
+    ;;
+  mesh_score.py|sections.py|fates.py|baseline_fates.py|saved_opacity.py)
     # Large mesh/point arrays share host RAM with TSDF. Serialize these readouts.
     queue_started=$SECONDS
     exec 9>"$OUT/checks/tsdf.lock"
@@ -19,7 +27,7 @@ case "${1##*/}" in
 esac
 set +e
 docker run --rm --name "jbgs-lt-${tag,,}" --network none --user "$(id -u):$(id -g)" \
-  --cpus 8 --memory 24g --shm-size 2g \
+  --cpus "$cpu_limit" --memory "$memory_limit" --shm-size 2g \
   -e PYTHONUNBUFFERED=1 -e PYTHONDONTWRITEBYTECODE=1 -e HOME=/tmp -e MPLCONFIGDIR=/tmp/mpl \
   -e OMP_NUM_THREADS=8 -e TZ=Asia/Seoul \
   -v "$PH:/ph:ro" -v "$OUT:/out" -v "$REPO:/repo:ro" \

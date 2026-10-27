@@ -1,0 +1,54 @@
+{
+  "site": "R1rep_b10",
+  "prior": "ALS",
+  "result": "lt_dynnow_ALS_s0",
+  "iteration": 15000,
+  "groups": {
+    "all": {
+      "count": 1114202,
+      "opacity_median": 0.45147623124478886
+    },
+    "prior_lineage": {
+      "count": 98154,
+      "opacity_median": 0.5149965397038234
+    },
+    "image_lineage": {
+      "count": 1016048,
+      "opacity_median": 0.44425975770839476
+    },
+    "prior_gt_correct": {
+      "count": 51425,
+      "opacity_median": 0.35425277834864555
+    },
+    "prior_gt_incorrect": {
+      "count": 1684,
+      "opacity_median": 0.5444322080948336
+    },
+    "prior_gt_unknown": {
+      "count": 45045,
+      "opacity_median": 0.7128728272457003
+    },
+    "initial_prior": {
+      "count": 19728,
+      "opacity_median": 0.9545477181411419
+    },
+    "initial_image": {
+      "count": 941,
+      "opacity_median": 0.7246169599381378
+    },
+    "density_born": {
+      "count": 1093533,
+      "opacity_median": 0.43935794334095357
+    }
+  },
+  "mutually_exclusive_birth_status": "available",
+  "definition": "saved PLY float64 sigmoid(logit opacity); origin and initial GT patch lineage; GT diagnostic only",
+  "sources": {
+    "model": "/out/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/model/point_cloud/iteration_15000/point_cloud.ply",
+    "model_sha256": "37546331be5214d135046312e00ed6c70006f6b37e1ab58f9002f3398c24ea7e",
+    "init": "/out/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/model/monitor/init_points.npz",
+    "init_sha256": "9ba107d15b326d244016b9fbf730b98ee8d8f28b17d326b81264dfaef2031447"
+  },
+  "optimizer_steps": 0,
+  "scientific_verdict": null
+}
