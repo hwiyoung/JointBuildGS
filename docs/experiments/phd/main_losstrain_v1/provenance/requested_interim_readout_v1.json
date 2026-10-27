@@ -1,0 +1,256 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "started_at": "2026-10-27T13:35:30.708806+09:00",
+  "config_sha256": "b9f847d43bcd1a87f0e2bdd473b1b33d675dfadedd0032901ac880916e2c97b6",
+  "inputs": [
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_fixgt_ALS_s0/PASS.json",
+      "sha256": "c337ecef5fe99dabb8f9eeece7a48de6554d9447f345cb8fe8b1d235b2e1e934"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_fixgt_ALS_s0/post_stage_PASS.json",
+      "sha256": "3c97609c37d79506da1b7201f1d67af33a29f46b667b4c6cfe1d43d3293874c2"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dyngt_ALS_s0/PASS.json",
+      "sha256": "174dcfaa2df0db633b6be3447c4ee5c856dd697850abbbe79691d04809d6cb8a"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dyngt_ALS_s0/post_stage_PASS.json",
+      "sha256": "93dbc5c97cb3082c5d82238191d4e8e601c0d26b692ee7bef395fb0eb69c5eb9"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynsoft_ALS_s0/PASS.json",
+      "sha256": "d569c483a51b5b1292bd9e7429662ee0209f46c98ca1cd0000bfa0ea7b0b6ffe"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynsoft_ALS_s0/post_stage_PASS.json",
+      "sha256": "1a1ebb06c559d1ab76dfa4663c20f3e04b5b41a1345239742bf3c8ffe8ebff07"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/PASS.json",
+      "sha256": "0edc58195a152352e1a3b00dde77986cc0f31668607476f09967f0eb44a35b8a"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/post_stage_PASS.json",
+      "sha256": "6e0d2be842ef364be9cd6572436b0a6f5dee52f687aabdfd0cd945dea6a50ecc"
+    }
+  ],
+  "steps": [
+    {
+      "step": "lt_fixgt-mesh",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_fixgt_ALS_s0.json",
+      "sha256": "d04d9f7471364f4787b903cad8397f142ac858b0e9dff7fc3b831f2ca758b550"
+    },
+    {
+      "step": "lt_fixgt-fates",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/fates/B173nb_b10/ALS__lt_fixgt_ALS_s0.json",
+      "sha256": "6b8aa6bc02e82acb0c583bcdf4ef5761d7e4580ae962846186a9b7e493ab8eb9"
+    },
+    {
+      "step": "lt_fixgt-cells",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/fate_cell_split/B173nb_b10/ALS__lt_fixgt_ALS_s0.json",
+      "sha256": "348c37b864bbf61fc30df6b98e40e0228223d61d8b592c882443057e82993bd4"
+    },
+    {
+      "step": "lt_dyngt-mesh",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dyngt_ALS_s0.json",
+      "sha256": "d839e90bcb14c48e16f1eaa2390d070e116d838624c35258099d8a3077bc8b30"
+    },
+    {
+      "step": "lt_dyngt-fates",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/fates/B173nb_b10/ALS__lt_dyngt_ALS_s0.json",
+      "sha256": "93dce150642c2163f07ed854c5f69d09603efa5573fe0e7f35bf1c6c1cb9d569"
+    },
+    {
+      "step": "lt_dyngt-cells",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/fate_cell_split/B173nb_b10/ALS__lt_dyngt_ALS_s0.json",
+      "sha256": "94636494e60f474d49c0c93b9779ac6a7eb3dd4caf53b1b64f7b10fbc8343801"
+    },
+    {
+      "step": "lt_dynsoft-mesh",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dynsoft_ALS_s0.json",
+      "sha256": "c354b713b517b79c4b6e25af6ea256b12731507c6f40b86436d4c1f4bf5d7102"
+    },
+    {
+      "step": "lt_dynsoft-fates",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/fates/B173nb_b10/ALS__lt_dynsoft_ALS_s0.json",
+      "sha256": "c542cf1d5b48d180835a6c114da31dc9cea9e860dd5d0be0386c9c9767c97e8e"
+    },
+    {
+      "step": "lt_dynsoft-cells",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/fate_cell_split/B173nb_b10/ALS__lt_dynsoft_ALS_s0.json",
+      "sha256": "a7a34dc62d25315ef76f6d42007f46c4462b8491605d213520b4e25b6f0be75c"
+    },
+    {
+      "step": "lt_dynnow-mesh",
+      "reused": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dynnow_ALS_s0.json",
+      "sha256": "a9b74c9152a2b025c72cd400846b7eb85b1f2f4c2aac952aa04e8023821bd128"
+    },
+    {
+      "step": "lt_dynnow-fates",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-lt_dynnow-fates",
+        "fates.py",
+        "B173nb_b10",
+        "ALS",
+        "lt_dynnow_ALS_s0"
+      ],
+      "exit_code": 0,
+      "seconds": 11.497019522823393,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/lt_dynnow-fates.log"
+    },
+    {
+      "step": "lt_dynnow-cells",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-lt_dynnow-cells",
+        "split_fate_cells.py",
+        "B173nb_b10",
+        "ALS",
+        "lt_dynnow_ALS_s0"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7095315707847476,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/lt_dynnow-cells.log"
+    },
+    {
+      "step": "runtime_report",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-runtime_report",
+        "runtime_report.py"
+      ],
+      "exit_code": 0,
+      "seconds": 3.7631904100999236,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/runtime_report.log"
+    },
+    {
+      "step": "patch_tables",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-patch_tables",
+        "patch_tables.py"
+      ],
+      "exit_code": 0,
+      "seconds": 6.68684053234756,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/patch_tables.log"
+    },
+    {
+      "step": "side_tables",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-side_tables",
+        "side_tables.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7564487485215068,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/side_tables.log"
+    },
+    {
+      "step": "comparison_tables",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-comparison_tables",
+        "comparison_tables.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6675291024148464,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/comparison_tables.log"
+    },
+    {
+      "step": "fate_tables",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-fate_tables",
+        "fate_tables.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5702397590503097,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/fate_tables.log"
+    },
+    {
+      "step": "photo_tables",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-photo_tables",
+        "photo_tables.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.3334952192381024,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/photo_tables.log"
+    },
+    {
+      "step": "maps",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-maps",
+        "result_figures.py",
+        "--site",
+        "B173nb_b10",
+        "--prior",
+        "ALS"
+      ],
+      "exit_code": 0,
+      "seconds": 2.790443705394864,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/maps.log"
+    },
+    {
+      "step": "section",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-section",
+        "sections.py",
+        "--site",
+        "B173nb_b10",
+        "--prior",
+        "ALS"
+      ],
+      "exit_code": 0,
+      "seconds": 289.90358508750796,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/section.log"
+    },
+    {
+      "step": "render",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-render",
+        "render_figure.py",
+        "--prior",
+        "ALS"
+      ],
+      "exit_code": 0,
+      "seconds": 3.015706676058471,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/render.log"
+    },
+    {
+      "step": "interim",
+      "command": [
+        "bash",
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_losstrain_v1/run_cpu.sh",
+        "requested-interim",
+        "interim_report.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.49072057381272316,
+      "log": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/requested_interim_readout_v1/interim.log"
+    }
+  ],
+  "commit": "149c75bb070974cfab7df13c6945090b2ac9122a",
+  "driver_sha256": "8092e7b8b5583faa69cd647f04393cb65ca2a5f4f27b67e492e6abba34434ecf",
+  "scientific_verdict": null,
+  "status": "READY_FOR_VISUAL_REVIEW",
+  "at": "2026-10-27T13:40:53.041942+09:00"
+}

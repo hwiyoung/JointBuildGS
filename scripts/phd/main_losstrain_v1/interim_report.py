@@ -19,8 +19,10 @@ def main():
     scores=load('patch_scores_all.json')['rows'];lookup={(r['variant'],r['subset']):r for r in scores if r['site']==SITE and r['prior']==PRIOR}
     runtime=load('runtime.json');complete=[v for v in VARS if (OUT/'runs'/SITE/(v+'_ALS_s0')/'measure_PASS.json').exists()]
     training_complete=[v for v in VARS if (OUT/'runs'/SITE/(v+'_ALS_s0')/'PASS.json').exists()]
+    patch_complete=[v for v in VARS if (v+'_ALS_s0','all_0_3') in lookup]
     lines=['# 손실 학습 시험 — B173 항공 LiDAR 중간 보고','',
-        f"앞 묶음 30,000회 학습 완료 {len(training_complete)}/4, 채점 완료 {len(complete)}/4. 상태 {runtime['status']}. λ=0.0025. scientific_verdict: null.",'',
+        f"앞 묶음 30,000회 학습 완료 {len(training_complete)}/4, 8.1 패치 채점 완료 {len(patch_complete)}/4, 추가 지표를 포함한 전체 채점 완료 {len(complete)}/4. 상태 {runtime['status']}. λ=0.0025. scientific_verdict: null.",'',
+        '8.1·8.2·8.5와 날개 단면은 완료된 학습 모델과 실제 시점 메시로 계산한다. 가상 시점 메시·부유점·8.3 추가 지표의 완료를 기다릴 필요는 없다. 두 완료 수를 구분해서 표시한다.','',
         '후처리 메시·채점이 없는 값은 확인 불가로 둔다. 학습 완료와 채점 완료를 구분한다. 1단계 패치로 센다. 면 없음도 τ 밖이며, 100패치 미만은 표본 부족이다.','',
         '## 8.1 패치 값: 보존과 면 없음 포함','',
         '| 판 | 범위 | N | 넓이 m² | 학습 없음 τ 안 % | 학습 τ 안 % | 면 없음 m² | 면 없음 % |',
@@ -107,6 +109,7 @@ def main():
         'B0·LoD2 고정·참값 판은 30,000회에 같은 다섯 영상 PSNR 20.677782 dB, nojudge 24.250185 dB로 3.572403 dB 낮아 원래 중단 문턱에 걸렸다. 이 판은 정상 완료로 세지 않고 중단 기록·15,000회 모델을 보존한다. 손실·채점·판·중단 기준을 바꾸지 않은 채 이미 승인된 다른 독립 학습과 완료 모델 후처리를 이어간다. [PSNR 중단 기록](중단기록_B0_LoD2_PSNR_v1.md).','',
         '판 3의 첫 시도는 14,717회 사진 SSIM 계산의 CUDA 메모리 부족으로 중단됐다. 새 대기열 실행기에 빠진 원 발주의 동일 설정 1회 재시도를 복원하고 검증했다. 앞 중단은 그대로 보존하고 판 3을 같은 GPU·씨앗·학습 설정으로 처음부터 한 번 재시도한다. 완료한 판 1·2·4는 재학습하지 않는다. [GPU 중단 기록](중단기록_GPU메모리_v1.md).','',
         '요청에 따라 8.1 지표 21행의 문턱 세 항과 최댓값, 두 씨앗 값·N·출처를 8.4에 추가했다. 두 패치별 결과 배열에서 직접 재계산한 검증의 최대 차이는 0이다. 거리에는 300/N을 적용하지 않고, 없는 기존 모은 변동 폭은 다른 지표에서 대신 가져오지 않았다.','',
+        '2026-10-27: 네 판의 실제 시점 메시가 모두 완료되어, 메모리를 기다리는 추가 후처리와 별도로 기존 CPU 채점·그림 코드를 실행했다. 손실·학습·채점·단면 설정은 바꾸지 않았다. 완료한 채점 파일은 나중의 전체 실행에서 그대로 재사용한다. 실행 기록은 checks/requested_interim_readout_v1/state.json에 보존한다.','',
         '이 문서는 측정값만 나란히 둔다. 과학적 판정은 하지 않는다.']
     dest=DOC/'중간보고_v1.md';dest.write_text('\n'.join(lines)+'\n')
     (DOC/'tables/interim_thresholds.md').write_text('\n'.join(lines[lines.index('## 8.4 지표별 달라짐 문턱'):lines.index('## 8.2 도착점과 같은 쪽')])+'\n')

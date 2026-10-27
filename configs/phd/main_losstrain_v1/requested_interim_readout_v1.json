@@ -1,0 +1,13 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "variants": ["lt_fixgt", "lt_dyngt", "lt_dynsoft", "lt_dynnow"],
+  "required_input": "completed post-stage mesh and successful 30000-iteration model",
+  "outputs": ["section 8.1 stage1 patch scores", "section 8.2 sides", "section 8.5 cells 0 and 2", "B173 wing section", "interim report"],
+  "independent_pending_work": ["virtual-view mesh", "floater statistics", "section 8.3 axes for unfinished arms"],
+  "cpu_container_GiB": 24,
+  "share_tsdf_lock": true,
+  "scoring_loss_training_settings_unchanged": true,
+  "scientific_verdict": null
+}
