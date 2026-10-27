@@ -1,0 +1,18 @@
+{
+  "task_id":"PHD-SLIDE-PHOTO-v1-R4",
+  "scientific_verdict":null,
+  "protocol":"Each new image was read by a fresh context-free agent receiving one file and one request: 이 그림이 보여 주는 것을 한 문장으로. Three unchanged files retain their R3 review, verified by identical PNG SHA-256.",
+  "previous_reviews":"../revision_03/qa/blind_reviews.json preserves R2 and R3 answers verbatim. R3 passed intent reading but the user still found photographs and text difficult; R4 therefore restores context and annotates the photos directly.",
+  "final_reviews":[
+    {"figure":"figS_a_image_limits","reviewer":"r4_blind_a","answer":"이 그림은 무늬 없는 지붕과 그늘진 벽에서는 깊이가 누락되고 금속으로 보이는 면에서는 참값과 다른 깊이가 많이 나타나는 세 사례를 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_keep","reviewer":"r4_blind_e_keep","answer":"금속으로 보이는 면에서 참값과의 차이 중앙값이 사전 정보는 12cm로 허용치 20cm 이내지만 영상 깊이는 34cm로 이를 넘어, 영상이 틀린 곳에서는 맞는 사전 정보를 보존해야 한다는 그림입니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_correct","reviewer":"r4_blind_e_correct","answer":"옛 지붕의 사전 정보가 현재 지붕과 다른 구간에서는 현재 영상에 맞춰 지붕 형상을 보정한다는 것을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_refine","reviewer":"r4_blind_e_refine","answer":"이 그림은 사전 정보에서 단순하게 표현된 지붕을 영상의 세부 관측으로 다듬어 참값에 가까워지게 한다는 개념을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_inherit","reviewer":"r4_blind_e_inherit","answer":"항공영상에서 지붕에 가려 보이지 않는 벽의 위치와 구조를 기존 사전 정보로 보완하는 ‘상속’ 개념을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_purpose_overview","reviewer":"r4_blind_e_overview","answer":"이 그림은 영상 깊이가 부정확한 곳의 사전 정보를 보존하고, 달라진 지붕은 현재 영상에 맞춰 보정하며, 지붕의 세부 형상을 다듬고, 영상에 가려진 벽은 사전 정보로 채우는 네 가지 역할을 보여 준다.","status":"INTENT_READ"},
+    {"figure":"figS_d_gs_real","reviewer":"r3_blind_d","retained_identical_image":true,"answer":"같은 지붕을 작은 타원들의 집합으로 표현하고 미분 가능 렌더링하여, 생성된 영상의 색과 깊이를 실제 영상·MVS 깊이·사전 정보 깊이와 비교하는 과정을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_b_correction_sections","reviewer":"r3_blind_b_focus","retained_identical_image":true,"answer":"이 그림은 B173과 R1의 단면에서 제안 방법이 사전 정보의 높이·형상 차이를 보정하여 참값에 가까워지고, 허용오차 τ 이내 비율이 각각 85%와 100%임을 보여 줍니다.","status":"FOCUS_READ"},
+    {"figure":"figS_b_all_methods","reviewer":"r3_blind_b_all","retained_identical_image":true,"answer":"두 지붕 사례의 높이 단면을 참값과 비교한 그림으로, 방법별 허용오차 τ 이내 비율은 사례에 따라 달라지며 제안 방법은 각각 85%와 100%를 보입니다.","status":"COMPARISON_READ"}
+  ],
+  "interpretation":"Intent checks do not establish user acceptance or scientific validation. Statements about refining and inheriting describe intended roles, not newly demonstrated successful outputs."
+}

@@ -1,0 +1,22 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R3",
+  "scientific_verdict": null,
+  "protocol": "Each reviewer is a fresh agent with fork_turns=none, receives exactly one image path and the prompt 이 그림이 보여 주는 것을 한 문장으로. No intended message is supplied.",
+  "round_02_superseded": [
+    {"figure":"figS_e_aim_keep","reviewer":"r2_blind_keep","answer":"항공사진 속 길고 좁은 금속 지붕의 양쪽 긴 가장자리를 노란 선으로 표시한 그림입니다.","status":"INTENT_NOT_READ"},
+    {"figure":"figS_e_aim_correct","reviewer":"r2_blind_correct","answer":"반복된 금속 지붕과 녹화 지붕이 보이는 항공사진 위에 노란 다각형으로 특정 영역을 표시한 그림입니다.","status":"LOCATION_ONLY"},
+    {"figure":"figS_d_gs_real","reviewer":"r2_blind_d","answer":"가우시안 집합으로 표현한 같은 지붕의 실제 영상과 렌더링 영상을 비교하고, MVS·렌더링·사전 정보의 깊이를 나란히 보여 준다.","status":"READ"}
+  ],
+  "round_03": [
+    {"figure":"figS_a_image_limits","reviewer":"r3_blind_a","answer":"이 그림은 실제 사진과 깊이 검사 결과를 비교해 무늬 없는 지붕과 그늘진 벽에서는 깊이가 누락되고, 금속 면에서는 추정 깊이가 참값과 크게 불일치하는 사례를 보여 준다.","status":"INTENT_READ"},
+    {"figure":"figS_d_gs_real","reviewer":"r3_blind_d","answer":"같은 지붕을 작은 타원들의 집합으로 표현하고 미분 가능 렌더링하여, 생성된 영상의 색과 깊이를 실제 영상·MVS 깊이·사전 정보 깊이와 비교하는 과정을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_keep","reviewer":"r3_blind_e_keep","answer":"이 그림은 지붕의 같은 면에서 영상 기반 점들이 참값을 벗어나더라도 참값과 잘 맞는 사전 정보는 보존해야 한다는 뜻을 보여 줍니다.","status":"INTENT_READ_MATERIAL_FACE_TYPE_PARTIAL"},
+    {"figure":"figS_e_aim_correct","reviewer":"r3_blind_e_correct","answer":"옛 지붕의 사전 정보가 현재 지붕 형상과 다를 때, 현재 영상에서 얻은 형상으로 보정하는 개념을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_refine","reviewer":"r3_blind_e_refine","answer":"이 그림은 같은 지붕의 확대 단면에서 사전 정보와 참값의 차이를 비교하고, 영상 관측을 활용해 지붕의 작은 형상 차이를 다듬는 개념을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_aim_inherit","reviewer":"r3_blind_e_inherit","answer":"이 그림은 항공사진에서 지붕에 가려 보이지 않는 벽을 표현하려면 기존 사전 정보를 상속해야 함을 보여 줍니다.","status":"INTENT_READ"},
+    {"figure":"figS_e_purpose_overview","reviewer":"r3_blind_e_overview","answer":"이 그림은 건물 지붕과 벽 사례를 통해 맞는 사전 정보의 보존, 현재 영상에 따른 보정, 작은 형상 차이의 다듬기, 사진에 보이지 않는 벽의 사전 정보 상속이라는 네 가지 활용 목적을 보여 준다.","status":"INTENT_READ"},
+    {"figure":"figS_b_correction_sections","reviewer":"r3_blind_b_focus","answer":"이 그림은 B173과 R1의 단면에서 제안 방법이 사전 정보의 높이·형상 차이를 보정하여 참값에 가까워지고, 허용오차 τ 이내 비율이 각각 85%와 100%임을 보여 줍니다.","status":"FOCUS_READ"},
+    {"figure":"figS_b_all_methods","reviewer":"r3_blind_b_all","answer":"두 지붕 사례의 높이 단면을 참값과 비교한 그림으로, 방법별 허용오차 τ 이내 비율은 사례에 따라 달라지며 제안 방법은 각각 85%와 100%를 보입니다.","status":"COMPARISON_READ"}
+  ],
+  "interpretation": "These are independent readings of presentation intent, not scientific validation. The keep photograph is still read as a roof rather than the source geometry's wall label. Same-building occlusion and unavailable current wall evidence remain unchanged."
+}

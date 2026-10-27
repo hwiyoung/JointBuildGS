@@ -1,0 +1,16 @@
+{
+  "task_id": "PHD-SLIDE-PHOTO-v1-R3",
+  "source_layout_config": "layout_revision_02.json",
+  "scientific_verdict": null,
+  "selection_changes": false,
+  "measurement_changes": false,
+  "user_amendment": "사진의 확대와 영역 마스크만으로 의도가 읽히지 않음. 6쪽은 사진 + 비교 그림 + 짧은 설명을 사용하도록 명시적으로 선택함.",
+  "a": "Name the photo and depth-check rows; explain both colours at the exact observed pixels. Retain sparse roof support and unknown-GT policy.",
+  "d": "Connect actual Gaussian primitives to image/depth comparison using an explicit rendering arrow and comparison labels. Five panels retain one shared crop and depth scale.",
+  "e": "Four photo-plus-evidence cards and one full-page composition. Retain original image-only locator assets separately. Each comparison uses frozen measured inputs. Inherit uses actual wall and roof geometry and camera viewing direction; no invented visible wall or successful output.",
+  "b": "Reference and proposal emphasized; frozen sections, heights, all methods and metrics retained.",
+  "slide_sizes": {"a":[900,400],"d":[1600,400],"e_combined":[1600,600],"b":[1664,560]},
+  "minimum_slide_font_px": 24,
+  "new_training": false,
+  "new_gpu_rendering": false
+}
