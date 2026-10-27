@@ -1,0 +1,107 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "RUNNING_PARTIAL",
+  "sites": [
+    "B0_b10",
+    "B173nb_b10",
+    "R1rep_b10"
+  ],
+  "priors": [
+    "LoD2",
+    "ALS"
+  ],
+  "variants": [
+    "lt_fixgt",
+    "lt_dyngt",
+    "lt_dynsoft",
+    "lt_dynnow"
+  ],
+  "seed": 0,
+  "frozen_report": "중간보고_항공LiDAR_12조건_v1.md",
+  "verified_units": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS"
+    }
+  ],
+  "expected_scored_arms": 11,
+  "verification_table": "tables/twelve_arm_verification.json",
+  "verification_status": "PASS_TWELVE_CONDITION_INTERIM",
+  "title": "항공 LiDAR 12조건: 11판 결과와 1판 중단",
+  "maximum_archive_bytes": 400000000,
+  "scientific_verdict": null,
+  "verified_runs": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_fixgt"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_dyngt"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_dynsoft"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "variant": "lt_dynnow"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "variant": "lt_fixgt"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "variant": "lt_dyngt"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "variant": "lt_dynsoft"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "variant": "lt_dynnow"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "variant": "lt_dyngt"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "variant": "lt_dynsoft"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "variant": "lt_dynnow"
+    }
+  ],
+  "intended_arms": 12,
+  "expected_scope_stops": 1,
+  "scope_note": "**대상 12조건 중 11판의 핵심 결과와 R1 고정·참값 1판의 중단 근거를 담았다. 12판 정상 완료 자료가 아니다.** 중단 판의 결과를 0이나 면 없음 100%로 넣지 않았다. B173 주변과 B0는 네 판의 핵심 결과를 모두 비교하며, R1은 다이내믹 세 판만 비교한다.",
+  "analysis_brief": "분석의뢰서_11판_v1.md",
+  "include_stage1_units": [
+    "B173nb_b10__ALS",
+    "B0_b10__ALS",
+    "R1rep_b10__ALS"
+  ]
+}

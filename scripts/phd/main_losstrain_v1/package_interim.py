@@ -51,6 +51,7 @@ def main():
     expected_scored=cfg.get('expected_scored_arms',4)
     verification_table=cfg.get('verification_table','tables/requested_interim_verification.json')
     title=cfg.get('title','B173 항공 LiDAR 4판 중간 보고')
+    analysis_brief=cfg.get('analysis_brief')
     locked = Path('/config/losstrain_v1.json')
     assert sha(locked) == json.loads(locked.with_suffix('.lock.json').read_text())['sha256']
     root = OUT / 'deliveries' / args.revision
@@ -107,6 +108,8 @@ def main():
         assert hashlib.sha256(payloads[name]).hexdigest() == item['sha256'], name
     report_name = 'docs/' + cfg['frozen_report']
     assert report_name in {item['path'].lstrip('/') for item in verification['files']} or payloads[report_name] == payloads['docs/중간보고_v1.md']
+    if analysis_brief:
+        assert 'docs/'+analysis_brief in payloads
     state = json.loads(payloads['checks/resource_resume_v1/state.json'])
     active = {(v['run']['site'], v['run']['prior'], v['run']['variant'])
               for v in state['gpu_jobs'].values() if v['kind'] == 'training'}
@@ -158,7 +161,9 @@ def main():
                   full_measurement_complete=sum(r['full_measurement_complete'] for r in rows),
                   source_head=args.source_head,
                   source_policy='Current task files frozen with per-file hashes; source_head alone does not identify uncommitted generated data.',
-                  frozen_report=report_name, post_memory_policy=policy, scientific_verdict=None)
+                  frozen_report=report_name, analysis_brief='docs/'+analysis_brief if analysis_brief else None,
+                  included_stage1_units=cfg.get('include_stage1_units',[]),
+                  post_memory_policy=policy, scientific_verdict=None)
     generated('STATUS.json', json_data(status))
     generated('먼저_읽어주세요.md', f'''# PHD-MAIN-LOSSTRAIN-v1 중간 전달
 
@@ -169,6 +174,7 @@ def main():
 학습 완료가 모두 채점까지 끝났다는 뜻은 아니다. 정확한 각 판의 상태는 [목록](run_inventory.csv)과 [JSON](run_inventory.json)에 있다.
 
 먼저 [{title}]({report_name})를 읽는다.
+{('[분석 의뢰서·네 판의 뜻·사전 기대](docs/'+analysis_brief+')를 함께 전달한다. B173과 B0는 네 판 비교, R1은 다이내믹 세 판 비교다.') if analysis_brief else ''}
 {cfg.get('scope_note','')}
 보존 면적·면 없음 넓이 등 8.1, 8.2, 지표별 문턱 8.4, 칸 0·2를 나눈 심긴 점 운명 8.5,
 [B173 날개 단면](docs/figures/section_B173nb_b10_ALS_0.png)이 준비되어 있다.
@@ -179,6 +185,7 @@ def main():
 
 - 가벼운 ZIP: 보고서, 표(CSV·JSON), 그림, 설정, 코드, 출처·검증·실행·중단 기록.
 - 전체 ZIP: 가벼운 ZIP의 동일 바이트에 패치별 결과 NPZ·출처 JSON과 심긴 점별 분류를 추가.
+{('- 이번 분석용 전체 ZIP에는 direct_stage1_v2/의 ALS 세 단위 evaluation.npz·values.npz와 원 영수증도 포함한다. 넓이·칸·참값·불확실도로 핵심 표를 다시 계산할 수 있다.') if cfg.get('include_stage1_units') else ''}
 - 두 ZIP 중 전체 ZIP 하나만 받아도 된다. 대형 가우시안 모델·원시 영상·전체 메시 자체는 포함하지 않았다.
 - 이전 중단 보고와 과거 시각의 현황 문서는 이력이다. 현재 묶음 상태는 루트 STATUS.json·run_inventory를 우선한다.
 - 표와 로그는 파일별로 고정한 사본이다. 실행 중인 로그는 최종 기록이 아니며 전체가 단일 시각의 원자적 스냅샷은 아니다.
@@ -199,6 +206,10 @@ scientific_verdict: null. 이 자료는 측정 결과이며 전체 방법론의 
 손실 식·학습·채점·판·후처리 기하 설정은 바꾸지 않았다. 기존 결과와 이전 전달 ZIP은 보존했다.
 ''')
     light_names = set(payloads)
+    for unit in cfg.get('include_stage1_units',[]):
+        assert unit in {u['site']+'__'+u['prior'] for u in verified_units}
+        for name in ['evaluation.npz','values.npz','manifest.json','receipt.json']:
+            add(OUT/'direct_stage1_v2'/unit/name, 'direct_stage1_v2/'+unit+'/'+name)
     for p in sorted((OUT / 'patch_z').glob('*')):
         if p.is_file() and p.suffix in ['.npz', '.json']:
             add(p, 'patch_z/' + p.name)

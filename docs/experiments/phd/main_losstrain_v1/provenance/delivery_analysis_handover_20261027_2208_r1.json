@@ -1,0 +1,55 @@
+{
+  "task_id": "PHD-MAIN-LOSSTRAIN-v1",
+  "status": "RUNNING_PARTIAL",
+  "snapshot_at": "2026-10-27T22:07:43.843350+09:00",
+  "live_state_at": "2026-10-27T22:07:42.285699+09:00",
+  "training_counts": {
+    "COMPLETE": 19,
+    "HEALTH_STOPPED": 4,
+    "NO_RESULT": 0,
+    "RUNNING": 1,
+    "PENDING": 0
+  },
+  "required_runs": 24,
+  "requested_interim_verified": 11,
+  "intended_interim_arms": 12,
+  "interim_health_stopped": 1,
+  "full_measurement_complete": 7,
+  "source_head": "7dfba55e95207f1a78bc2b5c881d6a18f9c3e678",
+  "source_policy": "Current task files frozen with per-file hashes; source_head alone does not identify uncommitted generated data.",
+  "frozen_report": "docs/중간보고_항공LiDAR_12조건_v1.md",
+  "analysis_brief": "docs/분석의뢰서_11판_v1.md",
+  "included_stage1_units": [
+    "B173nb_b10__ALS",
+    "B0_b10__ALS",
+    "R1rep_b10__ALS"
+  ],
+  "post_memory_policy": {
+    "id": "resource_resume_56_40_v1",
+    "host_available_GiB": 56,
+    "container_limit_GiB": 40,
+    "stable_seconds": 60
+  },
+  "scientific_verdict": null,
+  "archives": [
+    {
+      "path": "/out/deliveries/analysis_handover_20261027_2208_r1/PHD-MAIN-LOSSTRAIN-v1_handover_light.zip",
+      "bytes": 9533400,
+      "sha256": "ac3e83a7b2d2c24af4a6b3611f4664770500816633b666fc2fed0825f5f144f1",
+      "CRC": "PASS",
+      "member_hashes": "PASS",
+      "members": 1194
+    },
+    {
+      "path": "/out/deliveries/analysis_handover_20261027_2208_r1/PHD-MAIN-LOSSTRAIN-v1_handover.zip",
+      "bytes": 59258411,
+      "sha256": "226e566af2cdfeaeaf269266fbeed81da36ce3119384a118a4dd8c6850d7e5e4",
+      "CRC": "PASS",
+      "member_hashes": "PASS",
+      "members": 1411
+    }
+  ],
+  "identical_shared_members": "PASS",
+  "shared_members": 1192,
+  "verified_interim_hashes": "PASS"
+}
