@@ -1,0 +1,212 @@
+{
+  "at": "2026-10-28T14:02:51.028515+09:00",
+  "python_syntax": [
+    "amend_camera.py",
+    "assemble_viewer.py",
+    "build_visuals.py",
+    "common.py",
+    "diagnose_gpu.py",
+    "gaussians.py",
+    "geometry.py",
+    "launch.py",
+    "prepare.py",
+    "recount.py",
+    "reference_geometry.py",
+    "render_gpu.py",
+    "select_photos.py",
+    "verify_code.py"
+  ],
+  "glbs": [
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 57591,
+      "bytes": 2276588,
+      "sha256": "d46200b15974a490f7fff1d79679699182384ddafb117d2e7565381e2edfdb72"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__lt_dyngt_ALS_s0__float.glb",
+      "faces": 57591,
+      "bytes": 3456380,
+      "sha256": "b11ec0ca31c4db2e965d180bbf639f8f70eba502f7cb37133d07fec603261f73"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__nojudge_ALS_s0__colour.glb",
+      "faces": 20000,
+      "bytes": 974704,
+      "sha256": "0e378495eccede90befd485a61cf11f56b359b47b0ea9d7990d3b9bc4bea10bf"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__nojudge_ALS_s0__float.glb",
+      "faces": 20000,
+      "bytes": 1200916,
+      "sha256": "b2a5aa0e9068c365142a25b05a3805769b7a8870b179d7c4f808a1315c257c2d"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 48503,
+      "bytes": 1766248,
+      "sha256": "9d788b97fbed9a9c71c593e8e3e8e979ea49923ab876da8f20e44a1cc08b08c1"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__lt_dyngt_ALS_s0__float.glb",
+      "faces": 48503,
+      "bytes": 2911100,
+      "sha256": "478845c144bcdc0c0cb3139633eb45eb03624b4245385a1cd61e5230aba4333d"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__nojudge_ALS_s0__colour.glb",
+      "faces": 19999,
+      "bytes": 764740,
+      "sha256": "642414fcc68a29d4eabcb7e07422692b6ed539a0c0c06e349198181d05b0834d"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__nojudge_ALS_s0__float.glb",
+      "faces": 19999,
+      "bytes": 1200852,
+      "sha256": "3255bfca77c4ccf8d116994eb8cdf523abafd959b948cb46d205765a296cfbd4"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__nojudge_ALS_s0__colour.glb",
+      "faces": 37562,
+      "bytes": 1812172,
+      "sha256": "61e8d5624626cbefbe3f0a886e8a13727b2cbfd3edad2fa42b27ce8894e940ee"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__nojudge_ALS_s0__float.glb",
+      "faces": 37562,
+      "bytes": 2254640,
+      "sha256": "67c1ccae477a4ecd5a9f0748802809e0785979753779f95612be5c70171ad50b"
+    }
+  ],
+  "camera_checks": [
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS",
+  "scope": "currently existing files only; not a completion claim",
+  "scientific_verdict": null
+}
