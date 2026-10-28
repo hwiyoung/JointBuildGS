@@ -1,0 +1,101 @@
+--- scripts/phd/main_photocheck_v1/common.py
++++ scripts/phd/main_wallphoto_v1/common.py
+@@ -5,6 +5,7 @@
+ import os
+ import resource
+ import uuid
++import contextlib,fcntl,functools
+ from pathlib import Path
+ import numpy as np
+ 
+@@ -13,8 +14,26 @@
+ RAW=Path('/art/phase-payloads/p0-audit/data')
+ DENSE=RAW/'work/mvs/colmap_dense'
+ CAL=RAW/'work/mvs/colmap_input_db_ids'
+-EXAMPLES=['DEBY_LOD2_'+x for x in ['4959326','4906975','60042','4907519','4906993','4906968']]
++EXAMPLES=['DEBY_LOD2_4906967', 'DEBY_LOD2_4906982', 'DEBY_LOD2_108580336', 'DEBY_LOD2_4959459', 'DEBY_LOD2_4906968', 'DEBY_LOD2_108580335', 'DEBY_LOD2_4906976']
+ LABELS=['지지','반박','모름(애매)','모름(무늬 없음)','모름(사진 부족)']
++_PUBLIC_LOCK_DEPTH=0
++@contextlib.contextmanager
++def public_lock():
++    global _PUBLIC_LOCK_DEPTH
++    if _PUBLIC_LOCK_DEPTH:
++        _PUBLIC_LOCK_DEPTH+=1
++        try:yield
++        finally:_PUBLIC_LOCK_DEPTH-=1
++    else:
++        with (O/'public_snapshot.lock').open('a') as f:
++            fcntl.flock(f,fcntl.LOCK_EX);_PUBLIC_LOCK_DEPTH=1
++            try:yield
++            finally:_PUBLIC_LOCK_DEPTH=0;fcntl.flock(f,fcntl.LOCK_UN)
++def locked_public(fn):
++    @functools.wraps(fn)
++    def wrapped(*args,**kwargs):
++        with public_lock():return fn(*args,**kwargs)
++    return wrapped
+ def now(): return dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat()
+ def sha(p):
+     h=hashlib.sha256()
+@@ -31,7 +50,8 @@
+     return x
+ def dump(p,x):
+     p=Path(p);p.parent.mkdir(parents=True,exist_ok=True)
+-    p.write_text(json.dumps(clean(x),ensure_ascii=False,indent=2,allow_nan=False)+'\n')
++    tmp=p.with_name('.'+p.name+'.'+uuid.uuid4().hex+'.pending')
++    tmp.write_text(json.dumps(clean(x),ensure_ascii=False,indent=2,allow_nan=False)+'\n');tmp.replace(p)
+ def load(p): return json.loads(Path(p).read_text())
+ def npz(p):
+     with np.load(p,allow_pickle=False) as z: return {k:z[k] for k in z.files}
+--- scripts/phd/main_photocheck_v1/prepare.py
++++ scripts/phd/main_wallphoto_v1/prepare.py
+@@ -20,8 +20,8 @@
+             if mask.any():rows.append({k:z[k][mask] for k in keys})
+     return {k:np.concatenate([d[k] for d in rows]) for k in keys}
+ def freeze():
+-    if (C/'photocheck_v1.lock.json').exists():
+-        assert sha(C/'photocheck_v1.json')==load(C/'photocheck_v1.lock.json')['sha256'];return
++    if (C/'wallphoto_v1.lock.json').exists():
++        assert sha(C/'wallphoto_v1.json')==load(C/'wallphoto_v1.lock.json')['sha256'];return
+     assert load(O/'input_preflight.json')['status']=='PASS'
+     sections=[dict(name='B173 날개',prior='ALS',building=EXAMPLES[0],a=[146.68,96.32],b=[136.63,99.34],half_width=.6),
+       dict(name='R1 계단 지붕',prior='LoD2',building=EXAMPLES[1],a=[7.24,32.08],b=[14.98,18.08],half_width=.6),
+@@ -72,7 +72,7 @@
+         allowed=['configs/phd/main_photocheck_v1/','scripts/phd/main_photocheck_v1/','docs/experiments/phd/main_photocheck_v1/','PH/main_photocheck_v1/PHD-MAIN-PHOTOCHECK-v1/']),
+       source_tag='[이 발주에서 냄]',amendments=[])
+     assert len(config['heights']['base_m'])==141
+-    dump(C/'photocheck_v1.json',config);dump(C/'photocheck_v1.lock.json',dict(at=now(),sha256=sha(C/'photocheck_v1.json'),before_first_curve=True,source_order_sha256=sha(D/'발주문_v1.txt'),environment=env()))
++    dump(C/'wallphoto_v1.json',config);dump(C/'wallphoto_v1.lock.json',dict(at=now(),sha256=sha(C/'wallphoto_v1.json'),before_first_curve=True,source_order_sha256=sha(D/'발주문_v1.txt'),environment=env()))
+ 
+ def group(d,prior,tile):
+     sp,sm=sigmas(d,prior);n=len(d['centre']);owner=np.full(n,-1,np.int32);rows=[];audit=[]
+@@ -129,7 +129,7 @@
+             if not points:points={k:np.empty((0,3)) if k in ['centre','normal','tangent1','tangent2'] else np.empty(0) for k in ['point_id','tile','prior','building','holdout','kind','surf','centre','normal','tangent1','tangent2','geometry_valid','sigma','mvs_p','raw_u_mvs','sigma_mvs','area','patch_count']}
+             np.savez_compressed(dest,**points)
+             np.savez_compressed(base/'geometry'/f'{tile}__{prior}__mapping.npz',patch_id=d['patch_id'],point_index=owner,source_index=np.flatnonzero(take),kind=d['kind'])
+-            rec=dict(tile=tile,prior=prior,holdout=seal,points=len(points['point_id']),patches=len(owner),area_m2=float(d['area'].sum()),roof_points=int((points['kind']==1).sum()),roof_patches=int((d['kind']==1).sum()),roof_area_m2=float(d['area'][d['kind']==1].sum()),point_patch_count_distribution=dict(zip(*np.unique(points['patch_count'],return_counts=True))),source_sha256=sha(f),config_sha256=sha(C/'photocheck_v1.json'),surface_audit=audit,scientific_verdict=None)
++            rec=dict(tile=tile,prior=prior,holdout=seal,points=len(points['point_id']),patches=len(owner),area_m2=float(d['area'].sum()),roof_points=int((points['kind']==1).sum()),roof_patches=int((d['kind']==1).sum()),roof_area_m2=float(d['area'][d['kind']==1].sum()),point_patch_count_distribution=dict(zip(*np.unique(points['patch_count'],return_counts=True))),source_sha256=sha(f),config_sha256=sha(C/'wallphoto_v1.json'),surface_audit=audit,scientific_verdict=None)
+             dump(dest.with_suffix('.json'),rec);print('geometry',seal,tile,prior,len(owner),len(points['point_id']),flush=True)
+     # Allowed public holdout totals only. No point values or judgment areas.
+     for seal in [False,True]:
+--- scripts/phd/main_photocheck_v1/curves.py
++++ scripts/phd/main_wallphoto_v1/curves.py
+@@ -6,7 +6,7 @@
+ from cameras import Cameras
+ 
+ def height_array(g):
+-    base=np.array(load(C/'photocheck_v1.json')['heights']['base_m'],np.float32)
++    base=np.array(load(C/'wallphoto_v1.json')['heights']['base_m'],np.float32)
+     h=np.full((len(g['centre']),148),np.nan,np.float32);h[:,:141]=base
+     extra=np.isfinite(g['mvs_p'])&(abs(g['mvs_p'])>5)
+     h[extra,141:]=g['mvs_p'][extra,None]+np.arange(-3,4,dtype=np.float32)[None,:]*.1
+--- scripts/phd/main_photocheck_v1/features.py
++++ scripts/phd/main_wallphoto_v1/features.py
+@@ -3,7 +3,7 @@
+ def derive(h,score,sigma,mvs,texture,count):
+     n=len(score);keys=['s0','s_in','h_in','s_out','h_out','s_mvs','s_max','h_max','s_med','difference']
+     out={k:np.full(n,np.nan,np.float32) for k in keys};peakmask=np.zeros(score.shape,bool)
+-    cfg=load(C/'photocheck_v1.json');judgments=np.full((n,15),2,np.int8)
++    cfg=load(C/'wallphoto_v1.json');judgments=np.full((n,15),2,np.int8)
+     for i in range(n):
+         valid=np.isfinite(h[i])&np.isfinite(score[i]);hh=h[i,valid];ss=score[i,valid]
+         if len(hh):

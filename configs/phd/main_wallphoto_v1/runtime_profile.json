@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-28T20:05:34.201617+09:00",
+  "config_sha256": "e624b2ea163c7bf1eb173be5b0ed35a78b912dcfc6a8564c06706e45a896e00d",
+  "reason": "Operational limits below the frozen maximum, to reserve MESHPATCH task 3 admission memory; no image selection/scoring setting changed",
+  "cpu_limit": 8,
+  "memory_cap_gib": 12,
+  "ram_cache_gib": 2,
+  "chunk_points": 4096,
+  "subbatch": 48,
+  "minimum_available_gib_before_start": 68,
+  "reserved_for_meshpatch_admission_gib": 56,
+  "atomic_json_writes": "task serialization only; avoids partial scheduled reads",
+  "scientific_verdict": null,
+  "after_meshpatch_task3_both_table_complete": {
+    "minimum_available_gib": 28,
+    "reserve_gib": 16,
+    "evidence": "both peer status/patch_LoD2.json and patch_ALS.json stage=table_complete; no dependency on scientific PASS"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "at": "2026-10-28T20:20:39.370987+09:00",
+  "unchanged_config_sections": [
+    "frame",
+    "sources",
+    "points",
+    "uncertainty",
+    "heights",
+    "photos",
+    "score",
+    "judgments",
+    "projection_gate",
+    "evaluation"
+  ],
+  "numerical_functions": [
+    {
+      "file": "prepare.py",
+      "functions": [
+        "group"
+      ],
+      "status": "IDENTICAL_AST_AFTER_CONFIG_FILENAME_ONLY",
+      "reference_sha256": "9feaef583235b63841f6fd544ee505622cd3d310a1fbaecd71e78e607f0adda8",
+      "current_sha256": "1a94b35b3a5de7bddfa1102bed67fd7192ebb54c9286bc74975534089c5e723f"
+    },
+    {
+      "file": "cameras.py",
+      "functions": [
+        "Cameras",
+        "mesh_scene",
+        "select_photos"
+      ],
+      "status": "IDENTICAL_AST_AFTER_CONFIG_FILENAME_ONLY",
+      "reference_sha256": "103da705f10b7ea5a672891e6baca5022e7f5e467fdc6da1512aa3e970b5d434",
+      "current_sha256": "103da705f10b7ea5a672891e6baca5022e7f5e467fdc6da1512aa3e970b5d434"
+    },
+    {
+      "file": "curves.py",
+      "functions": [
+        "project_torch",
+        "compute",
+        "height_array"
+      ],
+      "status": "IDENTICAL_AST_AFTER_CONFIG_FILENAME_ONLY",
+      "reference_sha256": "541cf3877fcde8a840b02678e330ca299871bcbd392726d07dfad413f0da5531",
+      "current_sha256": "549bddb212c900059cfd52710b25529b4906f408557e31a449906409c72394c6"
+    },
+    {
+      "file": "features.py",
+      "functions": [
+        "derive"
+      ],
+      "status": "IDENTICAL_AST_AFTER_CONFIG_FILENAME_ONLY",
+      "reference_sha256": "c4232fe8e0470066df4f23ed4616a859cc967c92f15298b71bb1abf17aad3046",
+      "current_sha256": "888be7a19002b0efc2fcdfb3379658ff25f1ca03bc05f3b402993031931aef9d"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/image_split.json",
+      "sha256": "b3d4e8a05345c386ee05f0a1bcdada8938521615c9cdb87efc68369369b64240",
+      "bytes": 69692
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/building_split.json",
+      "sha256": "c8b0faf28820d8fb0cc6eda1ba9ac08da52830f7a506c66eefa66ad83d66f7f8",
+      "bytes": 40938
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/image_inventory.json",
+      "sha256": "9529f91d5920978f654af264e02012a06d66f06a4527ae90c535cc0ce0ab5184",
+      "bytes": 618293
+    },
+    {
+      "path": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_input_db_ids/cameras.txt",
+      "sha256": "d67c0fff80d2563fea5f3ec108c7e93d9a846851a0fdee1053c8b668a5f770ce",
+      "bytes": 432
+    },
+    {
+      "path": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/images.bin",
+      "sha256": "dfc779496ee3b13f8df5dd28fae465746ce0adf4aca7922d38cbed275a2fd951",
+      "bytes": 114415526
+    }
+  ],
+  "scientific_verdict": null,
+  "environment": {
+    "at": "2026-10-28T20:20:39.373738+09:00",
+    "source_captured_at": "2026-10-28T20:20:39.115628+09:00",
+    "source_snapshot": "/out/source_snapshots/d23515649fec94ee4b37ac37b3be85a47264db82bf08ccfd66240eac40e5f9f9",
+    "commit": "84d0dbe9e93cd65159d77d97d5772f064a0c9af8",
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "scripts_sha256": {
+      "verify_core.py": "029fcb1db4b695e7cb489ed41a476a0c3cfdadf620a805933be9e7b11fb5047a",
+      "wall_figures.py": "fbb74a9c18518f33eaa4303e874f34a574d8aa2358887722eae41128f00a1160",
+      "wall_holdout.py": "5e544952a7e50477a857b822de5dd9d5ad627af8cf5e0d3671af1c1f1047d80c",
+      "wall_replay.py": "4f1e8658c7a177cb22a81e16e31a531a3ce3a56cd9565d2b1d6ff5effabcd0cc",
+      "wall_pipeline.py": "62a508ecfd36697dc9c9d580bd69e443343ae11e866223eab4a4d39f5b9d2169",
+      "common.py": "bd2288da98928efc570b0649521baefe6354c57a4566f58420be3097a7bf0128",
+      "wall_prepare.py": "86b1c6f2630f50293ab59d5d95212f2e795447456db71e476f6fe4cd841fccc6",
+      "prepare.py": "1a94b35b3a5de7bddfa1102bed67fd7192ebb54c9286bc74975534089c5e723f",
+      "wall_measure.py": "fb4784ac22c23c64391e9b415750b388738e7ab98c5db011af1ea433c41ff5b0",
+      "package.py": "3526d0e7b05f575a10c678d1d0df4ca25a87f1f9dda19d5396e2b841b5c85b3a",
+      "test_report_controls.py": "00ff2e8766fa2c53f3989b0160ee512f4405f427f1fd5fa683a8ba3531a4fe94",
+      "curves.py": "549bddb212c900059cfd52710b25529b4906f408557e31a449906409c72394c6",
+      "admit_worker.py": "1d67370fe2d51b69187cbb9d224ce8ffb9a79544d36d68b5cee1ecc9895cb317",
+      "verify_image_score.py": "bb7ad728e48653df0644340c744a7e84f460c4543bd9a144e08b58d45aec0a6e",
+      "wall_validate.py": "705e27df323048e43f7e19cea07d6a5d221395ffc3586d825afdafb587ff9f4c",
+      "features.py": "888be7a19002b0efc2fcdfb3379658ff25f1ca03bc05f3b402993031931aef9d",
+      "wall_full.py": "c738fbe2a9197828c845eb6e471a3162d25a5f5a00e8af1966ad2979fe531757",
+      "verify_contract.py": "b313b1ee84e4863438595fb1271b25a0165bcd9976405ba2556661de1ef050f0",
+      "cameras.py": "103da705f10b7ea5a672891e6baca5022e7f5e467fdc6da1512aa3e970b5d434",
+      "wall_report.py": "9247aaf958eae3b90ce77cfcba14900d39d5e5efe66ce0c40757139447843b48"
+    },
+    "peak_rss_gib": 0.0419921875,
+    "cgroup_memory": {
+      "memory.max": 2147483648,
+      "memory.current": 33443840,
+      "memory.peak": 41455616
+    },
+    "ram_cache_budget_bytes": 0,
+    "scientific_verdict": null
+  }
+}
