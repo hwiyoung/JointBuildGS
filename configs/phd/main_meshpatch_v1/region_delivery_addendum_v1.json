@@ -1,0 +1,49 @@
+{
+  "task_id": "PHD-MAIN-MESHPATCH-v1",
+  "recorded_at": "2026-10-28T20:07:13.851986+09:00",
+  "user_decision": "Only proven existing region-code joins. No new visibility or region calculations. Add per-patch unavailable reason, mvs_absent from nonfinite mvs_p, prior correctness using gt_status == 0 and finite gt_p and abs(gt_p) <= tau; report unmatched counts and area by prior/site.",
+  "prior_correctness_precision": "float64 comparison matching original export_values.classify",
+  "region_identity": {
+    "raw_centre_distance_m": 1e-06,
+    "area_rtol": 1e-08,
+    "area_atol": 1e-09,
+    "abs_normal_dot_min": 0.999999,
+    "same_building": true,
+    "same_kind": true
+  },
+  "sources": [
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B0_b10/LoD2/units.npz",
+      "sha256": "3eab5ebb0b86a03a673d123ec5d56f93d4621bde83b9965febc469c7d1e7f511"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B0_b10/lod2_surfaces.json",
+      "sha256": "caea0dd49f33947491c9c31656549774d096fe0a4f75613ba6f66adb3b3fbc2c"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173nb_b10/LoD2/units.npz",
+      "sha256": "f5d2f8cacc7a6727806af66f3cd5636ee634f5e2fc4d130d5134d3bec835eefc"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173nb_b10/lod2_surfaces.json",
+      "sha256": "8b1c3196077d7795da89def9e50be01b883c4239e15b3c424524350fc0faa6df"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173_b0/LoD2/units.npz",
+      "sha256": "8dc5505ddf1e28171f14a28e4c81fbf645de417d15ded548d45ec18fe8b7c9fa"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173_b0/lod2_surfaces.json",
+      "sha256": "9ba86d396f47a8294217a12931354152e4e6244d47d4284cf6a746ab18525b87"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/R1rep_b10/LoD2/units.npz",
+      "sha256": "3daf3ca833a607e896bf6d39cee2487974935767ea76fbd7dd94fad2493e123b"
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/R1rep_b10/lod2_surfaces.json",
+      "sha256": "3509861ae64ecf99da11555af9676ccbe1cc17d33e3328df28b61ce8ae6272df"
+    }
+  ],
+  "scientific_verdict": null
+}

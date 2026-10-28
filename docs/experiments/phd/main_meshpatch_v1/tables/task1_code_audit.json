@@ -1,0 +1,164 @@
+{
+  "task_id": "PHD-MAIN-MESHPATCH-v1",
+  "status": "PASS_CODE_PARTIAL_PAPER",
+  "upstream_commit": "db40c95c657ec03ff21c83cb99cf39f4e90247a6",
+  "post_process_identical": true,
+  "original_function": {
+    "path": "/out/received/geogs_original/utils/mesh_utils.py",
+    "sha256": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c",
+    "start": 23,
+    "end": 44,
+    "source": "def post_process_mesh(mesh, cluster_to_keep=1000):\n    \"\"\"\n    Post-process a mesh to filter out floaters and disconnected parts\n    \"\"\"\n    import copy\n    print(\"post processing the mesh to have {} clusterscluster_to_kep\".format(cluster_to_keep))\n    mesh_0 = copy.deepcopy(mesh)\n    with o3d.utility.VerbosityContextManager(o3d.utility.VerbosityLevel.Debug) as cm:\n            triangle_clusters, cluster_n_triangles, cluster_area = (mesh_0.cluster_connected_triangles())\n\n    triangle_clusters = np.asarray(triangle_clusters)\n    cluster_n_triangles = np.asarray(cluster_n_triangles)\n    cluster_area = np.asarray(cluster_area)\n    n_cluster = np.sort(cluster_n_triangles.copy())[-cluster_to_keep]\n    n_cluster = max(n_cluster, 50) # filter meshes smaller than 50\n    triangles_to_remove = cluster_n_triangles[triangle_clusters] < n_cluster\n    mesh_0.remove_triangles_by_mask(triangles_to_remove)\n    mesh_0.remove_unreferenced_vertices()\n    mesh_0.remove_degenerate_triangles()\n    print(\"num vertices raw {}\".format(len(mesh.vertices)))\n    print(\"num vertices post {}\".format(len(mesh_0.vertices)))\n    return mesh_0"
+  },
+  "fork_function": {
+    "path": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/utils/mesh_utils.py",
+    "sha256": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c",
+    "start": 23,
+    "end": 44,
+    "source": "def post_process_mesh(mesh, cluster_to_keep=1000):\n    \"\"\"\n    Post-process a mesh to filter out floaters and disconnected parts\n    \"\"\"\n    import copy\n    print(\"post processing the mesh to have {} clusterscluster_to_kep\".format(cluster_to_keep))\n    mesh_0 = copy.deepcopy(mesh)\n    with o3d.utility.VerbosityContextManager(o3d.utility.VerbosityLevel.Debug) as cm:\n            triangle_clusters, cluster_n_triangles, cluster_area = (mesh_0.cluster_connected_triangles())\n\n    triangle_clusters = np.asarray(triangle_clusters)\n    cluster_n_triangles = np.asarray(cluster_n_triangles)\n    cluster_area = np.asarray(cluster_area)\n    n_cluster = np.sort(cluster_n_triangles.copy())[-cluster_to_keep]\n    n_cluster = max(n_cluster, 50) # filter meshes smaller than 50\n    triangles_to_remove = cluster_n_triangles[triangle_clusters] < n_cluster\n    mesh_0.remove_triangles_by_mask(triangles_to_remove)\n    mesh_0.remove_unreferenced_vertices()\n    mesh_0.remove_degenerate_triangles()\n    print(\"num vertices raw {}\".format(len(mesh.vertices)))\n    print(\"num vertices post {}\".format(len(mesh_0.vertices)))\n    return mesh_0"
+  },
+  "num_cluster_cli_default": 50,
+  "function_default": 1000,
+  "minimum_triangle_threshold": 50,
+  "tie_rule": "Keep all components at or above the 50th-largest triangle count, so ties can retain more than 50 components.",
+  "fewer_than_50_components": "Original function indexes [-50] and raises IndexError; no silent alteration is authorized.",
+  "virtual_cameras_upstream": true,
+  "scoring_mesh": "Training-view bounded TSDF; no GeoGS component filtering; virtual-view mesh is a separate output.",
+  "tiled_tsdf": "LOSSTRAIN uses gpu_s1.post with extract_mesh_bounded replaced by tiled_post.extract. No post_process_mesh call in this wrapper.",
+  "source_records": [
+    {
+      "path": "scripts/phd/main_stage1_v1/gpu_s1.py",
+      "sha256": "40b1ba4f9911feb694f1241dc57434c7c0c02d54f4a639d10bbfa947140f31eb",
+      "matches": [
+        {
+          "line": 9,
+          "text": "python gpu_s1.py run <site> <result>        = the trial's run steps: (a) evaluation-view points, (b) floater pixels, (c) the virtual-view"
+        },
+        {
+          "line": 33,
+          "text": "from utils.render_utils import create_virtual_cameras_for_completion  # noqa: E402"
+        },
+        {
+          "line": 219,
+          "text": "ext.reconstruction(list(train))"
+        },
+        {
+          "line": 229,
+          "text": "o3d.io.write_triangle_mesh(str(O / \"mesh_tsdf.ply\"), mesh)"
+        },
+        {
+          "line": 313,
+          "text": "virtual = create_virtual_cameras_for_completion(gaussians=fake, reference_cameras=train, n_virtual_cams=8, distance_scale=1.5)"
+        },
+        {
+          "line": 319,
+          "text": "ext.reconstruction(train + virtual)"
+        },
+        {
+          "line": 341,
+          "text": "times[\"virtual_renders\"] = round(time.time() - t0, 1)"
+        },
+        {
+          "line": 345,
+          "text": "(O / \"virtual\").mkdir(exist_ok=True)"
+        },
+        {
+          "line": 346,
+          "text": "o3d.io.write_triangle_mesh(str(O / \"virtual/mesh_virtual.ply\"), mesh)"
+        },
+        {
+          "line": 347,
+          "text": "times[\"virtual_tsdf\"] = round(time.time() - t0, 1)"
+        },
+        {
+          "line": 348,
+          "text": "(O / \"virtual/virtual.json\").write_text(json.dumps(dict(option=\"option2\", voxel_m=0.10, views_train=len(train), views_virtual=len(virtual), gaussians_rendered=int(inside.sum()),"
+        },
+        {
+          "line": 349,
+          "text": "virtual=seen, vertices=len(mesh.vertices), triangles=len(mesh.triangles), seconds=times,"
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_losstrain_v1/gpu_post.py",
+      "sha256": "d6a5fa89540f101ee7e9229a007ba832039a030ffcc73fa91004b511ae5f0de0",
+      "matches": [
+        {
+          "line": 1,
+          "text": "\"\"\"Reuse unchanged stage-1 post/render/floater/virtual-mesh functions on lt_* outputs."
+        },
+        {
+          "line": 26,
+          "text": "import tiled_post"
+        },
+        {
+          "line": 29,
+          "text": "return tiled_post.extract(ext,G.box_of(site),Path('/out/stage1')/site/result/'post/tiled_tsdf',"
+        },
+        {
+          "line": 32,
+          "text": "try:G.post(site,result)"
+        },
+        {
+          "line": 34,
+          "text": "else:G.post(site,result)"
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_losstrain_v1/tiled_post.py",
+      "sha256": "0e93113e8c21cb691f29f71935fa679f51c4073afc3ec99bd20c17e5538664bb",
+      "matches": [
+        {
+          "line": 22,
+          "text": "CHECK = Path('/o/checks/tiled_post_v1')"
+        },
+        {
+          "line": 128,
+          "text": "ext.reconstruction(list(scene.getTrainCameras()))"
+        }
+      ]
+    },
+    {
+      "path": "src/phd/streamed_tsdf.py",
+      "sha256": "3822ed8919d024c4a175fb635dea38c50b11c1cf1ca28edda376e8dda5dc5c48",
+      "matches": []
+    },
+    {
+      "path": "scripts/phd/main_stage3_v1/gpu_s3.py",
+      "sha256": "948a6539e7b3a257054feb23b073109793ad794d4c8384de98a586210326c65d",
+      "matches": [
+        {
+          "line": 2,
+          "text": "quality, TSDF of the training views 0.05 m in the box, Gaussians by origin; evaluation-view points, floaters, the option-2 virtual-view"
+        },
+        {
+          "line": 44,
+          "text": "G.post(site, res)"
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_baselines_v1/gpu_bl.py",
+      "sha256": "e37c002d89907299b287d3e8343d690b6d02ebc4eebbf8637c80b7502e10dba3",
+      "matches": [
+        {
+          "line": 6,
+          "text": "run <site> <result>                   gpu_s1.run_steps: evaluation-view points, floaters, the option-2 virtual-view mesh where the site has"
+        },
+        {
+          "line": 78,
+          "text": "o3d.io.write_triangle_mesh(str(O / \"mesh_tsdf.ply\"), mesh)"
+        },
+        {
+          "line": 96,
+          "text": "G.post(site, res)"
+        }
+      ]
+    }
+  ],
+  "paper_access": "Publisher full text returned HTTP 403. Exact crop and post rules are confirmed in the original code and README; paper full-text phrasing is unavailable.",
+  "scientific_verdict": null,
+  "provenance": "[이 발주에서 냄]"
+}

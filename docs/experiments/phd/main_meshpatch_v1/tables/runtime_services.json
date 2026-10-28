@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-10-28T20:59:27.974889+09:00",
+  "services": [
+    {
+      "name": "jbgs-meshpatch-delivery-v2",
+      "id": "52f7e1d7f8e2cbf3e9adda33c1fbb4c6d2ce8ddba06ca387e27a5f5b8914a565",
+      "status": "running",
+      "image": "jointbuildgs:dev",
+      "memory_limit_bytes": 268435456,
+      "command": [
+        "deliver.py",
+        "--schedule"
+      ]
+    },
+    {
+      "name": "jbgs-meshpatch-queue",
+      "id": "a213dae7faa915e65629b8eb51f62c27dbfc4e6bd38c7355b67355b81b304955",
+      "status": "running",
+      "image": "jointbuildgs:dev",
+      "memory_limit_bytes": 536870912,
+      "command": [
+        "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_meshpatch_v1/PHD-MAIN-MESHPATCH-v1/queue_snapshots/run_mesh_queue_20261028T205757_202118.sh"
+      ]
+    }
+  ],
+  "final_git_service": "jbgs-meshpatch-finalize.service",
+  "scientific_verdict": null
+}

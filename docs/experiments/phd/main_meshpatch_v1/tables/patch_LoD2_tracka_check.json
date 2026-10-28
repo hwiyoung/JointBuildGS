@@ -1,0 +1,196 @@
+{
+  "prior": "LoD2",
+  "status": "STOP",
+  "rows": 3006290,
+  "area_tracka_float32_m2": 187891.94119409495,
+  "checks": {
+    "roofer_def": {
+      "status": "FAIL",
+      "groups": 28952,
+      "expected_groups": 28950,
+      "observed": {
+        "faces_per100": 15.408856716261283,
+        "mix_face": 0.2123191208778391,
+        "split_face": 0.22701481921511424,
+        "roofwall_join": 0.025083566490653297,
+        "area_in_faces_ge1m2": 0.9734161872983363,
+        "cases": {
+          "B173 날개": [
+            43,
+            93,
+            131
+          ],
+          "R1 계단 지붕": [
+            47,
+            51,
+            20
+          ],
+          "R1 좁은 띠": [
+            20,
+            100,
+            80
+          ],
+          "유리 띠": [
+            61,
+            27,
+            5
+          ],
+          "평평한 지붕": [
+            82,
+            16,
+            11
+          ]
+        }
+      },
+      "expected": {
+        "faces_per100": 15.407792274653364,
+        "mix_face": 0.21195808870882216,
+        "split_face": 0.22728453769225998,
+        "mix_quad": 0.1865010981946542,
+        "split_quad": 0.25053838745573054,
+        "roofwall_join": 0.0250862275946731,
+        "area_in_faces_ge1m2": 0.9734092019002846,
+        "cases": {
+          "B173 날개": [
+            43,
+            93,
+            131
+          ],
+          "R1 계단 지붕": [
+            47,
+            51,
+            20
+          ],
+          "R1 좁은 띠": [
+            20,
+            100,
+            80
+          ],
+          "유리 띠": [
+            61,
+            27,
+            5
+          ],
+          "평평한 지붕": [
+            82,
+            16,
+            11
+          ]
+        }
+      },
+      "difference_pp": {
+        "mix_face": 0.036103216901695045,
+        "split_face": -0.02697184771457417,
+        "roofwall_join": -0.00026611040198042113,
+        "area_in_faces_ge1m2": 0.0006985398051773117
+      },
+      "density_difference": 0.0010644416079195196,
+      "area_quantiles_m2": [
+        2.237395619886229e-06,
+        0.125,
+        0.5,
+        1.5625,
+        5.1875,
+        14.8125,
+        127.58437499999809,
+        2723.75
+      ],
+      "area_distribution_reference": "Only area_in_faces_ge1m2 is supplied; full quantile equality cannot be checked."
+    },
+    "mvsshape_10": {
+      "status": "PASS",
+      "groups": 43446,
+      "expected_groups": 43446,
+      "observed": {
+        "faces_per100": 23.12286504886321,
+        "mix_face": 0.2589445253370767,
+        "split_face": 0.1354166297720666,
+        "roofwall_join": 0.04882859765934621,
+        "area_in_faces_ge1m2": 0.9661230990940666,
+        "cases": {
+          "B173 날개": [
+            44,
+            93,
+            115
+          ],
+          "R1 계단 지붕": [
+            91,
+            51,
+            11
+          ],
+          "R1 좁은 띠": [
+            35,
+            97,
+            112
+          ],
+          "유리 띠": [
+            61,
+            27,
+            4
+          ],
+          "평평한 지붕": [
+            100,
+            17,
+            1
+          ]
+        }
+      },
+      "expected": {
+        "faces_per100": 23.122865048863215,
+        "mix_face": 0.2589445253370767,
+        "split_face": 0.1354166297720666,
+        "mix_quad": 0.2272787316004713,
+        "split_quad": 0.18521215003118163,
+        "roofwall_join": 0.04882859765934622,
+        "area_in_faces_ge1m2": 0.9661230990940668,
+        "cases": {
+          "B173 날개": [
+            44,
+            93,
+            115
+          ],
+          "R1 계단 지붕": [
+            91,
+            51,
+            11
+          ],
+          "R1 좁은 띠": [
+            35,
+            97,
+            112
+          ],
+          "유리 띠": [
+            61,
+            27,
+            4
+          ],
+          "평평한 지붕": [
+            100,
+            17,
+            1
+          ]
+        }
+      },
+      "difference_pp": {
+        "mix_face": 0.0,
+        "split_face": 0.0,
+        "roofwall_join": -6.938893903907228e-16,
+        "area_in_faces_ge1m2": -2.220446049250313e-14
+      },
+      "density_difference": 3.552713678800501e-15,
+      "area_quantiles_m2": [
+        2.237395619886229e-06,
+        0.0625,
+        0.125,
+        0.375,
+        1.8125,
+        5.375,
+        76.47812500000055,
+        2723.75
+      ],
+      "area_distribution_reference": "Only area_in_faces_ge1m2 is supplied; full quantile equality cannot be checked."
+    }
+  },
+  "scientific_verdict": null,
+  "provenance": "[이 발주에서 냄]"
+}

@@ -1,0 +1,921 @@
+{
+  "rows": [
+    {
+      "key": "B173nb_b10__ALS__nojudge_ALS_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__nojudge_ALS_s0.json",
+      "expected_sha256": "b89ce5a08ef2a1145249103f10251abcca138ed5942b3ec1557c7be53ca54703",
+      "status": "READY",
+      "bytes": 1016668615,
+      "sha256": "b89ce5a08ef2a1145249103f10251abcca138ed5942b3ec1557c7be53ca54703",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__prop_ALS_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "prop_ALS_s0",
+      "groups": [
+        "losstrain",
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b1_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__prop_ALS_s0.json",
+      "expected_sha256": "9d30f626aebe53bdd7dfe4f29d3c58e1b48c0f81a5f01915fed943e82c6b13b6",
+      "status": "READY",
+      "bytes": 1004156984,
+      "sha256": "9d30f626aebe53bdd7dfe4f29d3c58e1b48c0f81a5f01915fed943e82c6b13b6",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__lt_fixgt_ALS_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_fixgt_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_fixgt_ALS_s0.json",
+      "expected_sha256": "519876670ba8e2573f1a2264ad165ab07b7229db6a31c5719b6ed191a702f77f",
+      "status": "READY",
+      "bytes": 2123588698,
+      "sha256": "519876670ba8e2573f1a2264ad165ab07b7229db6a31c5719b6ed191a702f77f",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__lt_dyngt_ALS_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dyngt_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dyngt_ALS_s0.json",
+      "expected_sha256": "0ad2ac0c404367bbc1f1e6b1ce0c821e6724b7744cf02f1966b37a930cc8e5bb",
+      "status": "READY",
+      "bytes": 1302062097,
+      "sha256": "0ad2ac0c404367bbc1f1e6b1ce0c821e6724b7744cf02f1966b37a930cc8e5bb",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__lt_dynsoft_ALS_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynsoft_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dynsoft_ALS_s0.json",
+      "expected_sha256": "ea90546b4aa149bf1155de476f487c2e17afb490745a0462852c85d17be27cbe",
+      "status": "READY",
+      "bytes": 1323840741,
+      "sha256": "ea90546b4aa149bf1155de476f487c2e17afb490745a0462852c85d17be27cbe",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__lt_dynnow_ALS_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dynnow_ALS_s0.json",
+      "expected_sha256": "3a9980c5c341b54ef1d8dae2a4771982945fa542cc686f2f1a8f6e983e60bfdd",
+      "status": "READY",
+      "bytes": 1202556437,
+      "sha256": "3a9980c5c341b54ef1d8dae2a4771982945fa542cc686f2f1a8f6e983e60bfdd",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__prop_ALS_s1",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "prop_ALS_s1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b2_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__prop_ALS_s1.json",
+      "expected_sha256": "6ed06c0adb5f24d0006d7d4abf1bc7c239169120ee57ea63a4289e96a2fd0396",
+      "status": "READY",
+      "bytes": 1013383368,
+      "sha256": "6ed06c0adb5f24d0006d7d4abf1bc7c239169120ee57ea63a4289e96a2fd0396",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__imgonly_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "imgonly_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B173nb_b10/imgonly_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 1020552259,
+      "sha256": "d6a8f8dcf5716bcbc438981ae86c98d7fd4fb0fe38c6def7be63d46be35d67d9",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__imgonly_2dgs_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "imgonly_2dgs_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 1507285568,
+      "sha256": "177e468a2526c46a0527abf8db601b56d23b062ccf6d34eebf3559ed3610fd5d",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__geogs_ALS_fix1",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "geogs_ALS_fix1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 1563028923,
+      "sha256": "111eaab4bc1372457b820a792a6c7246e003c24989188f4ad537d777b3649b36",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__trust_ALS",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "trust_ALS",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B173nb_b10/trust_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 1132594247,
+      "sha256": "b7c3996756b1f11901236b1525b0a1f30e22e687f24b170897c35c21a9232123",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__LoD2__prop_LoD2_s0",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "prop_LoD2_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b1_LoD2/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__LoD2__prop_LoD2_s0.json",
+      "expected_sha256": "1ae9fef5e219ee04bb88793046cb97daee82f937acaa1c5bf067708eda545b69",
+      "status": "READY",
+      "bytes": 1015160835,
+      "sha256": "1ae9fef5e219ee04bb88793046cb97daee82f937acaa1c5bf067708eda545b69",
+      "evaluation_sha256": "1c24e0d041e981c7167ddc4d09a5ea17653a986e76b46113d0224d066975c017",
+      "values_sha256": "31847f645a36992cf2ec5c4b2b1429032f306330d2f8710bfa6f36af5226d533"
+    },
+    {
+      "key": "B173nb_b10__LoD2__prop_LoD2_s1",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "prop_LoD2_s1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b2_LoD2/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__LoD2__prop_LoD2_s1.json",
+      "expected_sha256": "3bf4c00dc537b1e70cad03c886bd1624559d95ef4b6e6455a131129c198fba36",
+      "status": "READY",
+      "bytes": 1016983789,
+      "sha256": "3bf4c00dc537b1e70cad03c886bd1624559d95ef4b6e6455a131129c198fba36",
+      "evaluation_sha256": "1c24e0d041e981c7167ddc4d09a5ea17653a986e76b46113d0224d066975c017",
+      "values_sha256": "31847f645a36992cf2ec5c4b2b1429032f306330d2f8710bfa6f36af5226d533"
+    },
+    {
+      "key": "B173nb_b10__LoD2__imgonly_s0",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "imgonly_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B173nb_b10/imgonly_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 1020552259,
+      "sha256": "d6a8f8dcf5716bcbc438981ae86c98d7fd4fb0fe38c6def7be63d46be35d67d9",
+      "evaluation_sha256": "1c24e0d041e981c7167ddc4d09a5ea17653a986e76b46113d0224d066975c017",
+      "values_sha256": "31847f645a36992cf2ec5c4b2b1429032f306330d2f8710bfa6f36af5226d533"
+    },
+    {
+      "key": "B173nb_b10__LoD2__imgonly_2dgs_s0",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "imgonly_2dgs_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 1507285568,
+      "sha256": "177e468a2526c46a0527abf8db601b56d23b062ccf6d34eebf3559ed3610fd5d",
+      "evaluation_sha256": "1c24e0d041e981c7167ddc4d09a5ea17653a986e76b46113d0224d066975c017",
+      "values_sha256": "31847f645a36992cf2ec5c4b2b1429032f306330d2f8710bfa6f36af5226d533"
+    },
+    {
+      "key": "B173nb_b10__LoD2__trust_LoD2_fix1",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "trust_LoD2_fix1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 1548819639,
+      "sha256": "cc42f291d9bafa94a5000de9bbf348abb9561ce061e36f860334b42776ed7e48",
+      "evaluation_sha256": "1c24e0d041e981c7167ddc4d09a5ea17653a986e76b46113d0224d066975c017",
+      "values_sha256": "31847f645a36992cf2ec5c4b2b1429032f306330d2f8710bfa6f36af5226d533"
+    },
+    {
+      "key": "B0_b10__ALS__nojudge_ALS_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__nojudge_ALS_s0.json",
+      "expected_sha256": "059eeb1a349df8d8350e269fab1fe456763dff38be95cc6180de48b902af50a3",
+      "status": "READY",
+      "bytes": 896219632,
+      "sha256": "059eeb1a349df8d8350e269fab1fe456763dff38be95cc6180de48b902af50a3",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__prop_ALS_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "prop_ALS_s0",
+      "groups": [
+        "losstrain",
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/prop_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__prop_ALS_s0.json",
+      "expected_sha256": "1c37b67b1c55d397826d82457e5252cb85cf64f6568adf0e25a0530a681c0927",
+      "status": "READY",
+      "bytes": 902485141,
+      "sha256": "1c37b67b1c55d397826d82457e5252cb85cf64f6568adf0e25a0530a681c0927",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__lt_fixgt_ALS_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_fixgt_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__lt_fixgt_ALS_s0.json",
+      "expected_sha256": "a7594fe15ff499ab7a5649f7d7d985c1e6da2b0beced65753e470c474da9c64a",
+      "status": "READY",
+      "bytes": 2402506253,
+      "sha256": "a7594fe15ff499ab7a5649f7d7d985c1e6da2b0beced65753e470c474da9c64a",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__lt_dyngt_ALS_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dyngt_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__lt_dyngt_ALS_s0.json",
+      "expected_sha256": "c7dc2874b9c790dfeb938025716bb3aaa4637b5815892fb94c855182b2fa1ca0",
+      "status": "READY",
+      "bytes": 1629473880,
+      "sha256": "c7dc2874b9c790dfeb938025716bb3aaa4637b5815892fb94c855182b2fa1ca0",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__lt_dynsoft_ALS_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynsoft_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__lt_dynsoft_ALS_s0.json",
+      "expected_sha256": "7cdeff177fb214f356b6950e26359520af3a5dc0c0d406f6786e5c14ddfbbd32",
+      "status": "READY",
+      "bytes": 1543003074,
+      "sha256": "7cdeff177fb214f356b6950e26359520af3a5dc0c0d406f6786e5c14ddfbbd32",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__lt_dynnow_ALS_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__lt_dynnow_ALS_s0.json",
+      "expected_sha256": "951c11ad3dfdb5d7f0f82109ede91b8061152c2ef5272eecc7e89a8f3d7b2bff",
+      "status": "READY",
+      "bytes": 1627074111,
+      "sha256": "951c11ad3dfdb5d7f0f82109ede91b8061152c2ef5272eecc7e89a8f3d7b2bff",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__prop_ALS_s1",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "prop_ALS_s1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/prop_ALS_s1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__prop_ALS_s1.json",
+      "expected_sha256": "bf19aa019108f9368a464278b5fa7580140ad88299d666be088c908bef48a5de",
+      "status": "READY",
+      "bytes": 902531725,
+      "sha256": "bf19aa019108f9368a464278b5fa7580140ad88299d666be088c908bef48a5de",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__imgonly_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "imgonly_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/imgonly_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 946062848,
+      "sha256": "0cb51a8fdf04d5a6894621fdcbc0f33a056fbad84b981836e33f8ace8f556d7c",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__imgonly_2dgs_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "imgonly_2dgs_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 1906321369,
+      "sha256": "fa5cc2a5b5312849410b7ac0b61bea54de27f447d6757e50b13edcb4f2dfea08",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__geogs_ALS_fix1",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "geogs_ALS_fix1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 2026553086,
+      "sha256": "6a786f3018b6e5ea48cc567a86e785281b0a7673f4b48d248ebadbe4574c5322",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__trust_ALS",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "trust_ALS",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/trust_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 953931904,
+      "sha256": "ff6b688a6d9da3a28871192358a98a5486358579c0fb8dde6e942b1e22ef1e23",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__LoD2__prop_LoD2_s0",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "prop_LoD2_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__LoD2__prop_LoD2_s0.json",
+      "expected_sha256": "61a8159e9620212520a2dfd9f464f50693e1ff2f682d13dc9b6fe713cbb94760",
+      "status": "READY",
+      "bytes": 929792462,
+      "sha256": "61a8159e9620212520a2dfd9f464f50693e1ff2f682d13dc9b6fe713cbb94760",
+      "evaluation_sha256": "fdf0f8eec9d563b85504f85b41e4c6de9a0f54e644cd4667bc00f0c666b1f5ea",
+      "values_sha256": "45dfd280811195672263c4832ff5dea07cddedc126a68db79b529206ace5c550"
+    },
+    {
+      "key": "B0_b10__LoD2__prop_LoD2_s1",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "prop_LoD2_s1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/prop_LoD2_s1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__LoD2__prop_LoD2_s1.json",
+      "expected_sha256": "5495261e7a0ddee413df583da54615b4eef3bad40255524528e51c12fdf9bf34",
+      "status": "READY",
+      "bytes": 930769936,
+      "sha256": "5495261e7a0ddee413df583da54615b4eef3bad40255524528e51c12fdf9bf34",
+      "evaluation_sha256": "fdf0f8eec9d563b85504f85b41e4c6de9a0f54e644cd4667bc00f0c666b1f5ea",
+      "values_sha256": "45dfd280811195672263c4832ff5dea07cddedc126a68db79b529206ace5c550"
+    },
+    {
+      "key": "B0_b10__LoD2__imgonly_s0",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "imgonly_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/B0_b10/imgonly_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 946062848,
+      "sha256": "0cb51a8fdf04d5a6894621fdcbc0f33a056fbad84b981836e33f8ace8f556d7c",
+      "evaluation_sha256": "fdf0f8eec9d563b85504f85b41e4c6de9a0f54e644cd4667bc00f0c666b1f5ea",
+      "values_sha256": "45dfd280811195672263c4832ff5dea07cddedc126a68db79b529206ace5c550"
+    },
+    {
+      "key": "B0_b10__LoD2__imgonly_2dgs_s0",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "imgonly_2dgs_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 1906321369,
+      "sha256": "fa5cc2a5b5312849410b7ac0b61bea54de27f447d6757e50b13edcb4f2dfea08",
+      "evaluation_sha256": "fdf0f8eec9d563b85504f85b41e4c6de9a0f54e644cd4667bc00f0c666b1f5ea",
+      "values_sha256": "45dfd280811195672263c4832ff5dea07cddedc126a68db79b529206ace5c550"
+    },
+    {
+      "key": "B0_b10__LoD2__trust_LoD2_fix1",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "trust_LoD2_fix1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B0_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 1611801928,
+      "sha256": "02ab94ad7300fc6edd28389a943932df218e546382a2815124daff857d43cc51",
+      "evaluation_sha256": "fdf0f8eec9d563b85504f85b41e4c6de9a0f54e644cd4667bc00f0c666b1f5ea",
+      "values_sha256": "45dfd280811195672263c4832ff5dea07cddedc126a68db79b529206ace5c550"
+    },
+    {
+      "key": "R1rep_b10__ALS__nojudge_ALS_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "nojudge_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__nojudge_ALS_s0.json",
+      "expected_sha256": "d937b2f1e2354aef34771812baaef1dbab9961298db358fddfe35b96a4bb0812",
+      "status": "READY",
+      "bytes": 975960316,
+      "sha256": "d937b2f1e2354aef34771812baaef1dbab9961298db358fddfe35b96a4bb0812",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__prop_ALS_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "prop_ALS_s0",
+      "groups": [
+        "losstrain",
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__prop_ALS_s0.json",
+      "expected_sha256": "766b1a3e982f8a79acec935a110d78e1872b422dae6566c1d43845b88c57833b",
+      "status": "READY",
+      "bytes": 1007668213,
+      "sha256": "766b1a3e982f8a79acec935a110d78e1872b422dae6566c1d43845b88c57833b",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__lt_fixgt_ALS_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_fixgt_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_fixgt_ALS_s0/post/mesh_tsdf.ply",
+      "exists": false,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "status": "UNAVAILABLE_FROZEN_STOP",
+      "reason": "Previously stopped arm; preserve frozen health status even if partial files exist."
+    },
+    {
+      "key": "R1rep_b10__ALS__lt_dyngt_ALS_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dyngt_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dyngt_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__lt_dyngt_ALS_s0.json",
+      "expected_sha256": "7a6a64e5728c3ac5267afd3bf02400910818b1f096a48c47c52348dca87f752c",
+      "status": "READY",
+      "bytes": 1821871843,
+      "sha256": "7a6a64e5728c3ac5267afd3bf02400910818b1f096a48c47c52348dca87f752c",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__lt_dynsoft_ALS_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dynsoft_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynsoft_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__lt_dynsoft_ALS_s0.json",
+      "expected_sha256": "f5f50f2c4e619c31d9a90c394598b50ac6705e3e36d44a509d47b4b568807679",
+      "status": "READY",
+      "bytes": 2065060780,
+      "sha256": "f5f50f2c4e619c31d9a90c394598b50ac6705e3e36d44a509d47b4b568807679",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__lt_dynnow_ALS_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "lt_dynnow_ALS_s0",
+      "groups": [
+        "losstrain"
+      ],
+      "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__lt_dynnow_ALS_s0.json",
+      "expected_sha256": "3192660a80e0169ab735cab5912530a2d70f36fc42c7b29997c1d7d7f5f01140",
+      "status": "READY",
+      "bytes": 1837321753,
+      "sha256": "3192660a80e0169ab735cab5912530a2d70f36fc42c7b29997c1d7d7f5f01140",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__prop_ALS_s1",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "prop_ALS_s1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_ALS_s1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__prop_ALS_s1.json",
+      "expected_sha256": "57cc9d3e2a3066cff6452c3a7343e25e280010e20981ee90400aae3036880f97",
+      "status": "READY",
+      "bytes": 1038546352,
+      "sha256": "57cc9d3e2a3066cff6452c3a7343e25e280010e20981ee90400aae3036880f97",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__imgonly_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "imgonly_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/imgonly_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 1053465168,
+      "sha256": "c1ec4c98178267d2308bd2eade77494a255ac88ff3f9a8af0c9ddaa3af495a3d",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__imgonly_2dgs_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "imgonly_2dgs_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 2171469070,
+      "sha256": "0635f9516313139f3788e2f96097b1db12ed2baa526fc600d58b1c40e1417936",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__geogs_ALS_fix1",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "geogs_ALS_fix1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/geogs_ALS_fix1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 1905160927,
+      "sha256": "ec6e6bee7f90226952d4e1aa7c1d3c50f6bfaeb29fb40e69c00056bb4690158c",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__trust_ALS",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "trust_ALS",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/trust_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "status": "READY",
+      "bytes": 943700652,
+      "sha256": "9f11acb1c645f183096886a3bb0938c941964f0ba74c1cb49d2d082f082397c0",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__LoD2__prop_LoD2_s0",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "prop_LoD2_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__LoD2__prop_LoD2_s0.json",
+      "expected_sha256": "19acc1daaa59c64a68b77bb492aa92d2235f78fc904d916c2ce22fd1e97d9ea7",
+      "status": "READY",
+      "bytes": 1084614522,
+      "sha256": "19acc1daaa59c64a68b77bb492aa92d2235f78fc904d916c2ce22fd1e97d9ea7",
+      "evaluation_sha256": "2ea01aa2a1d833ff57bc6f0da45da234411b811de82d2450ee290c7acb247564",
+      "values_sha256": "fd199266e029cc23b1e9ee70ea0f3f6338a0816f7b7b19c0ad8976c35955ae27"
+    },
+    {
+      "key": "R1rep_b10__LoD2__prop_LoD2_s1",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "prop_LoD2_s1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/prop_LoD2_s1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+      "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__LoD2__prop_LoD2_s1.json",
+      "expected_sha256": "706034f453eafd4a2b7eda01c46386594587741adae330321be9310e27eeec18",
+      "status": "READY",
+      "bytes": 1087277453,
+      "sha256": "706034f453eafd4a2b7eda01c46386594587741adae330321be9310e27eeec18",
+      "evaluation_sha256": "2ea01aa2a1d833ff57bc6f0da45da234411b811de82d2450ee290c7acb247564",
+      "values_sha256": "fd199266e029cc23b1e9ee70ea0f3f6338a0816f7b7b19c0ad8976c35955ae27"
+    },
+    {
+      "key": "R1rep_b10__LoD2__imgonly_s0",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "imgonly_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/stage1/R1rep_b10/imgonly_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 1053465168,
+      "sha256": "c1ec4c98178267d2308bd2eade77494a255ac88ff3f9a8af0c9ddaa3af495a3d",
+      "evaluation_sha256": "2ea01aa2a1d833ff57bc6f0da45da234411b811de82d2450ee290c7acb247564",
+      "values_sha256": "fd199266e029cc23b1e9ee70ea0f3f6338a0816f7b7b19c0ad8976c35955ae27"
+    },
+    {
+      "key": "R1rep_b10__LoD2__imgonly_2dgs_s0",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "imgonly_2dgs_s0",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 2171469070,
+      "sha256": "0635f9516313139f3788e2f96097b1db12ed2baa526fc600d58b1c40e1417936",
+      "evaluation_sha256": "2ea01aa2a1d833ff57bc6f0da45da234411b811de82d2450ee290c7acb247564",
+      "values_sha256": "fd199266e029cc23b1e9ee70ea0f3f6338a0816f7b7b19c0ad8976c35955ae27"
+    },
+    {
+      "key": "R1rep_b10__LoD2__trust_LoD2_fix1",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "trust_LoD2_fix1",
+      "groups": [
+        "stage1"
+      ],
+      "mesh": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+      "status": "READY",
+      "bytes": 2073047955,
+      "sha256": "dedc4c23903a1811169e10d8549a9c6a900c1e1584a70f25f37666d21a10d166",
+      "evaluation_sha256": "2ea01aa2a1d833ff57bc6f0da45da234411b811de82d2450ee290c7acb247564",
+      "values_sha256": "fd199266e029cc23b1e9ee70ea0f3f6338a0816f7b7b19c0ad8976c35955ae27"
+    }
+  ],
+  "scientific_verdict": null
+}
