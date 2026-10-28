@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-28T14:12:51.178495+09:00",
+  "status": "PASS",
+  "rows": [
+    {
+      "mode": "dynamic",
+      "term": "mvs",
+      "loss": 0.0061475524446442985,
+      "bit_identical_loss_and_gradient": true
+    },
+    {
+      "mode": "dynamic",
+      "term": "prior",
+      "loss": 0.0058824229743815876,
+      "bit_identical_loss_and_gradient": true
+    },
+    {
+      "mode": "current",
+      "term": "mvs",
+      "loss": 0.05156250000000001,
+      "bit_identical_loss_and_gradient": true
+    },
+    {
+      "mode": "current",
+      "term": "prior",
+      "loss": 0.015625000000000007,
+      "bit_identical_loss_and_gradient": true
+    }
+  ],
+  "peak_check": "32-step root solve agrees with 200001-point dense maximum within relative 1e-8",
+  "implementation_sha256": "8deb682df0ddc6af2eecf74bcca3206978765af106106c0df3d632105353d001",
+  "source_sha256": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc",
+  "optimizer_steps": 0,
+  "scientific_verdict": null
+}

@@ -86,7 +86,7 @@ def main():
                     gradient_status='미계산',sample_status='표본 부족' if len(np.unique(owners[['floating','roof'].index(kind)][ids]))<100 else 'PASS',
                     source=str(payload/'membership.npz'),origin_label='[이 발주에서 냄]')
                 for k,key in enumerate(['densified','initial_prior','initial_image','unrecorded']):
-                    r[key+'_opacity_fraction']=float(w[lin==k].sum()/total) if total else None
+                    r[key+'_opacity_fraction']=float(w[lin==k].sum()/total) if total and (k==3 or birth.exists()) else None
                 rows.append(r)
         print(a.site,result,'Gaussian groups',[(k,int(m.sum())) for k,m in zip(['floating','roof'],masks)],flush=True)
         del d,xyz,opacity,scale,colour,origin,lineage,masks,owners;gc.collect()

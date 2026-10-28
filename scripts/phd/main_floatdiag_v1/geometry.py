@@ -23,9 +23,13 @@ def glb(path, vertices, faces, face_colours=None, vertex_colours=None):
     # Duplicate face corners only for categorical face colours: no interpolation
     # across a GT/missing-data boundary. The source PLY remains unreduced.
     if face_colours is not None:
-        v=vertices[faces].reshape(-1,3).astype('<f4')
-        f=np.arange(len(v),dtype='<u4').reshape(-1,3)
-        c=np.repeat(face_colours,3,axis=0)
+        corner=faces.reshape(-1)
+        colours=np.repeat(face_colours,3,axis=0).astype(np.int64)
+        packed=colours[:,0]*65536+colours[:,1]*256+colours[:,2]
+        key=corner.astype(np.int64)*16777216+packed
+        _,first,inverse=np.unique(key,return_index=True,return_inverse=True)
+        v=vertices[corner[first]].astype('<f4');f=inverse.astype('<u4').reshape(-1,3)
+        c=colours[first].astype(np.uint8)
     else:
         v=np.asarray(vertices,dtype='<f4');f=np.asarray(faces,dtype='<u4');c=np.asarray(vertex_colours,np.uint8)
     c=np.c_[c,np.full(len(c),255,np.uint8)].astype(np.uint8)
@@ -72,7 +76,7 @@ def face_colours(mesh,grid,origin,tree,tau):
     v=np.asarray(mesh.vertices);f=np.asarray(mesh.triangles);centres=v[f].mean(1)
     gz=grid_values(centres[:,:2],grid,origin)
     distance,idx=tree.query(centres[:,:2],workers=2)
-    # Tau comes from the nearest existing patch in this same horizontal cell.
+    # Tau comes from the nearest existing patch within sqrt(2)*0.25m.
     ptau=tau[idx];known=np.isfinite(gz)&(distance<=np.sqrt(2)*.25)
     delta=centres[:,2]-gz;cfg=config()['colours']['mesh']
     colours=np.tile(rgb(cfg['no_gt']),(len(f),1))
@@ -167,17 +171,19 @@ def main():
             col,colour_stats=face_colours(mesh,grid,origin,tree,tau)
             local=o3d.geometry.TriangleMesh(mesh);local.translate(-np.array(case['translation']))
             assert o3d.io.write_triangle_mesh(str(dest/(result+'.ply')),local)
-            small=mesh.simplify_quadric_decimation(20000) if len(mesh.triangles)>20000 else o3d.geometry.TriangleMesh(mesh)
-            # Disconnected TSDF fragments can prevent quadric decimation from
-            # reaching its target. Cluster only this web derivative, retaining
-            # the full crop and using the full mesh for every static capture.
-            web_voxel=None
-            for voxel in [.025,.05,.1,.2,.4]:
-                if len(small.triangles)<=22000:break
+            small=o3d.geometry.TriangleMesh(mesh);web_voxel=None
+            # A disconnected/nonmanifold crop need not reach a quadric target.
+            # Bounded vertex clustering with explicit duplicate/degenerate
+            # cleanup is used only for this web derivative. All captures below
+            # continue to raycast the unreduced source crop.
+            for voxel in [.025,.05,.1,.2,.4,.8,1.6,3.2]:
+                if len(small.triangles)<=60000:break
                 small=mesh.simplify_vertex_clustering(voxel)
-                small=small.simplify_quadric_decimation(20000)
+                small.remove_duplicated_vertices();small.remove_degenerate_triangles()
+                small.remove_duplicated_triangles();small.remove_unreferenced_vertices()
                 web_voxel=voxel
-            assert len(small.triangles)<=22000,'web simplification budget unmet'
+                print(tag,result,'web voxel',voxel,'faces',len(small.triangles),flush=True)
+            assert len(small.triangles)<=60000,'web simplification budget unmet'
             sc,scstats=face_colours(small,grid,origin,tree,tau)
             verts=np.asarray(small.vertices)-case['translation'];faces=np.asarray(small.triangles)
             assert small.has_vertex_colors(),'source TSDF colour missing'
@@ -199,7 +205,7 @@ def main():
                 patch_z_receipt=receipt['patch_z_sha256'],crop_vertices=len(mesh.vertices),crop_faces=len(mesh.triangles),
                 glb_vertices=len(small.vertices),glb_faces=len(small.triangles),web_clustering_voxel_m=web_voxel,colour_stats=colour_stats,glb_colour_stats=scstats,
                 camera_config=str(CFG/f'geometry_{a.site}_{a.prior}.json'),camera_config_sha256=sha(CFG/f'geometry_{a.site}_{a.prior}.json'),
-                reference_height_rule='highest raw GT point in each 0.25m XY cell; missing stays light grey; tau from nearest same-cell patch',
+                reference_height_rule='highest raw GT point in each 0.25m XY cell; missing stays light grey; tau from nearest patch within sqrt(2)*0.25m',
                 scientific_verdict=None))
             print(tag,result,'crop and captures PASS',len(mesh.triangles),flush=True)
             del mesh,local,small,context;gc.collect()

@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-28T15:31:56.049355+09:00",
+  "status": "PASS",
+  "runtime_version": "0.19.0",
+  "settings": {
+    "voxel_m": 0.05,
+    "trunc_m": 0.25,
+    "depth_trunc_m": 300.0,
+    "unit_resolution": 16,
+    "stride": 4
+  },
+  "tests": [
+    {
+      "test": "near 2m then far 4m, scalable",
+      "near_voxel_samples": 6588,
+      "near_TSDF_samples_exactly_unchanged": true,
+      "far_voxel_samples": 26024
+    },
+    {
+      "test": "near 2m then 2.1m, overlapping touched blocks",
+      "changed": true
+    },
+    {
+      "test": "far 4m then near 2m",
+      "far_TSDF_samples_exactly_unchanged": true
+    },
+    {
+      "test": "zero depth frame",
+      "unchanged": true
+    },
+    {
+      "test": "dense allocated-block control 2m then 4m",
+      "existing_weight_samples": 3328,
+      "every_weight_incremented_by_one": true,
+      "TSDF_changed": true
+    }
+  ],
+  "conclusion": "ScalableTSDFVolume updates only blocks touched by the current frame sampled depth points +/- truncation cube. It does not traverse all previously allocated blocks. A previously allocated but currently untouched block receives no update. Within a touched block, projected voxels in front can receive +1 TSDF; sdf<=-trunc receives no update.",
+  "observation_limit": "Scalable public API exposes near-zero TSDF samples through voxel point-cloud colors, not all raw weights. Dense control exposes full TSDF and weight arrays; source confirms touched-block traversal.",
+  "source_urls": [
+    {
+      "url": "https://raw.githubusercontent.com/isl-org/Open3D/v0.19.0/cpp/open3d/pipelines/integration/ScalableTSDFVolume.cpp",
+      "sha256": "6fbc551a42a74c5f547829d80fc0fb896a9d6dc1cc1c3482418beeffdc49b252",
+      "file": "ScalableTSDFVolume.cpp"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/isl-org/Open3D/v0.19.0/cpp/open3d/pipelines/integration/UniformTSDFVolume.cpp",
+      "sha256": "cb897c3b775858fdfe4375243958311f82b3a396b68fbb81fe528dbf36db93e4",
+      "file": "UniformTSDFVolume.cpp"
+    }
+  ],
+  "project_code": [
+    {
+      "file": "/repo/scripts/phd/main_losstrain_v1/tiled_post.py",
+      "sha256": "0e93113e8c21cb691f29f71935fa679f51c4073afc3ec99bd20c17e5538664bb"
+    },
+    {
+      "file": "/repo/src/phd/streamed_tsdf.py",
+      "sha256": "3822ed8919d024c4a175fb635dea38c50b11c1cf1ca28edda376e8dda5dc5c48"
+    }
+  ],
+  "tiling": "Project tiled wrapper changes per-tile depth via bounded proxies; original validation proves full source mesh equivalence. It does not replace ScalableTSDFVolume with globally traversed dense integration.",
+  "arrays": "/out/provenance/tsdf_update/observations.npz",
+  "arrays_sha256": "f53ee88554ad99dc96595914b18c5111548f98c672f7e93537647f2b40c24d1c",
+  "optimizer_steps": 0,
+  "scientific_verdict": null
+}

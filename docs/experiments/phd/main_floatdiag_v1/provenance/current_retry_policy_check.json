@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-28T15:40:01.561786+09:00",
+  "status": "PASS",
+  "events": [
+    {
+      "iteration": 3100,
+      "finite": true,
+      "whole_opacity_median": 0.03778748959302902,
+      "iterations_after_reset": 100,
+      "original_stop": "whole-population opacity median < 0.05 after reset+100",
+      "opacity_stop_record_only": true,
+      "effective_stop": null,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 3100,
+      "finite": false,
+      "whole_opacity_median": null,
+      "iterations_after_reset": 100,
+      "original_stop": "nonfinite opacity",
+      "opacity_stop_record_only": false,
+      "effective_stop": "nonfinite opacity",
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 3100,
+      "finite": true,
+      "whole_opacity_median": 0.01,
+      "iterations_after_reset": 99,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 3100,
+      "finite": true,
+      "whole_opacity_median": 0.1,
+      "iterations_after_reset": 100,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    }
+  ],
+  "wrapper_sha256": "304e8e7c0bbd2d74ffc0790ad41a80580455d6898030b025935b58c7ac13c4e1",
+  "source_sha256": "dc34c37d01e98af1053ec5d49e2f32ccfb0914bb57bfb6d9ec2a582647aa5dfc",
+  "scientific_verdict": null
+}

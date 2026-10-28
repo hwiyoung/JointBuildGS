@@ -1,0 +1,187 @@
+{
+  "case": "R1-뜬면-2",
+  "phase": "A1",
+  "values": [
+    {
+      "result": "nojudge_ALS_s0",
+      "case": "R1-뜬면-2",
+      "patches": 4367,
+      "area_m2": 311.34367716214626,
+      "within_tau_pct": 90.37053684945452,
+      "floating_area_m2": 12.572972736035542,
+      "floating_pct": 4.038293904227128,
+      "floating_height_median_m": 1.5985678346817058,
+      "no_surface_pct": 1.020916957019296,
+      "source": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__nojudge_ALS_s0.npz",
+      "source_sha256": "bb73750b8425ab08edc63cc7f55106a0d6ac0b8dfb658628daac9eb2850a4f66",
+      "domain": "0..3 scoring patches inside component bbox + 3m",
+      "origin": "[이 발주에서 냄]"
+    },
+    {
+      "result": "lt_dyngt_ALS_s0",
+      "case": "R1-뜬면-2",
+      "patches": 4367,
+      "area_m2": 311.34367716214626,
+      "within_tau_pct": 29.354883868713415,
+      "floating_area_m2": 207.89514583289548,
+      "floating_pct": 66.77352426997408,
+      "floating_height_median_m": 3.6881483632287555,
+      "no_surface_pct": 0.24506455319799364,
+      "source": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__lt_dyngt_ALS_s0.npz",
+      "source_sha256": "9590599eef9706cca26c5ef803a9d44a3aef125fda1d6ed9fd11d08c8fa7f2ef",
+      "domain": "0..3 scoring patches inside component bbox + 3m",
+      "origin": "[이 발주에서 냄]"
+    },
+    {
+      "result": "lt_dynnow_ALS_s0",
+      "case": "R1-뜬면-2",
+      "patches": 4367,
+      "area_m2": 311.34367716214626,
+      "within_tau_pct": 68.39116525647955,
+      "floating_area_m2": 84.22579892307695,
+      "floating_pct": 27.0523556767824,
+      "floating_height_median_m": 4.184794243790194,
+      "no_surface_pct": 0.2089611566047117,
+      "source": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__lt_dynnow_ALS_s0.npz",
+      "source_sha256": "291e7e92f3081d6e3fe40c34c2c90ed2b65f12d6a5f603f3374d976f605b4e95",
+      "domain": "0..3 scoring patches inside component bbox + 3m",
+      "origin": "[이 발주에서 냄]"
+    }
+  ],
+  "photo": {
+    "view": "DJI_20241217084733_0150_D",
+    "crop_xyxy": [
+      549,
+      177,
+      839,
+      636
+    ],
+    "camera": {
+      "view": "DJI_20241217084733_0150_D",
+      "psnr_db": 27.078529357910156,
+      "ssim": 0.8148101568222046,
+      "width": 1024,
+      "height": 741,
+      "world_to_camera": [
+        [
+          0.8341301083564758,
+          -0.5515671372413635,
+          -0.0008222854230552912,
+          42.9782829284668
+        ],
+        [
+          -0.5515299439430237,
+          -0.8340545296669006,
+          -0.012952293269336224,
+          33.06990051269531
+        ],
+        [
+          0.006458228453993797,
+          0.0112574128434062,
+          -0.9999157786369324,
+          32.36520767211914
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "intrinsic": [
+        [
+          674.4174194335938,
+          0.0,
+          513.4158321619034
+        ],
+        [
+          0.0,
+          674.7781900763512,
+          365.09683001739904
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_center": [
+        -17.819459915161133,
+        50.92315673828125,
+        32.826148986816406
+      ]
+    },
+    "patches": 4391,
+    "source": "/out/photos/R1rep_b10/DJI_20241217084733_0150_D.png"
+  },
+  "oblique": {
+    "view": "DJI_20241217101108_0003_D",
+    "crop_xyxy": [
+      745,
+      454,
+      1024,
+      619
+    ],
+    "camera": {
+      "view": "DJI_20241217101108_0003_D",
+      "psnr_db": 19.099754333496094,
+      "ssim": 0.8245633244514465,
+      "width": 1024,
+      "height": 741,
+      "world_to_camera": [
+        [
+          -0.9477362036705017,
+          0.3189947307109833,
+          -0.006201883312314749,
+          27.70028305053711
+        ],
+        [
+          0.004441471770405769,
+          -0.006245738826692104,
+          -0.9999706149101257,
+          -4.251776218414307
+        ],
+        [
+          -0.31902408599853516,
+          -0.9477359056472778,
+          0.004502506460994482,
+          125.62345886230469
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "intrinsic": [
+        [
+          674.4174194335938,
+          0.0,
+          513.4158321619034
+        ],
+        [
+          0.0,
+          674.7781900763512,
+          365.09683001739904
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_center": [
+        66.34835815429688,
+        110.1950912475586,
+        -4.645478248596191
+      ]
+    },
+    "patches": 4391,
+    "source": "/out/photos/R1rep_b10/DJI_20241217101108_0003_D.png"
+  },
+  "unavailable": null,
+  "visual_review": "PENDING",
+  "web_image": "img/R1-뜬면-2_plate_A1.jpg",
+  "scientific_verdict": null
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-28T14:40:56.093463+09:00",
+  "status": "PASS",
+  "source_sha256": "b7be3a8cf7cbc017a52184398bd5083ee17c721ac565cb0299b1c9e1ec9e770f",
+  "calls": [
+    [
+      "step",
+      500
+    ],
+    [
+      "post",
+      2
+    ],
+    [
+      "step",
+      600
+    ],
+    [
+      "prune",
+      [
+        false,
+        true,
+        false,
+        false
+      ]
+    ],
+    [
+      "save",
+      "/out/checks/replay_observer/point_cloud.ply"
+    ]
+  ],
+  "unchanged_returns": true,
+  "unchanged_RNG": true,
+  "exact_saved_population": true,
+  "scientific_verdict": null
+}

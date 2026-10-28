@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-28T15:40:01.026985+09:00",
+  "authority": "direct user instruction in this chat",
+  "run": "fd_current_ALS_s0_record_only",
+  "allowed_retries": 1,
+  "stop_policy_change": "finite whole-population opacity <0.05 after reset+100: record only",
+  "preserved_stops": [
+    "NaN/nonfinite",
+    "execution errors",
+    "all other original checks including PSNR"
+  ],
+  "reason": "생기는 과정 비교 구간 3,000~7,000회 확보; 같은 손실의 원래 학습은 30,000회 정상 완료",
+  "original": "fd_current_ALS_s0 stopped at 3100; preserve all records and checkpoints",
+  "diagnostic_only": true,
+  "score_mesh": false,
+  "record_iteration_3100": true,
+  "scientific_verdict": null
+}

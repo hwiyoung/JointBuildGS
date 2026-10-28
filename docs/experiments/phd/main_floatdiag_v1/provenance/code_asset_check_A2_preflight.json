@@ -1,0 +1,604 @@
+{
+  "at": "2026-10-28T15:46:04.988101+09:00",
+  "python_syntax": [
+    "amend_camera.py",
+    "assemble_viewer.py",
+    "batch_formation_cpu.py",
+    "build_a2.py",
+    "build_visuals.py",
+    "check_current_retry.py",
+    "check_diagnostic_loss.py",
+    "check_replay_observer.py",
+    "check_tsdf_update.py",
+    "common.py",
+    "complete_viewer.py",
+    "depth_provenance.py",
+    "diagnose_gpu.py",
+    "final_tables_report.py",
+    "formation_cpu.py",
+    "formation_figures.py",
+    "formation_gpu.py",
+    "formation_residuals.py",
+    "four_depth_cpu.py",
+    "four_depth_gpu.py",
+    "gaussians.py",
+    "geometry.py",
+    "gradient_figures_v2.py",
+    "launch.py",
+    "map_links.py",
+    "multiview_cpu.py",
+    "multiview_figures.py",
+    "package_delivery.py",
+    "package_payload.py",
+    "photo_metrics.py",
+    "prepare.py",
+    "prepare_replays.py",
+    "recount.py",
+    "reduce_diagnostics.py",
+    "reference_geometry.py",
+    "render_gpu.py",
+    "repair_missing_lineage.py",
+    "replay_current_record_only.py",
+    "replay_observer.py",
+    "run_replay.py",
+    "section_data.py",
+    "select_photos.py",
+    "unit_figures.py",
+    "verify_code.py",
+    "verify_gate_measure.py",
+    "verify_tsdf_saved_depth.py"
+  ],
+  "glbs": [
+    {
+      "path": "/docs/보기/3d/B0-뜬면-1__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 25325,
+      "bytes": 535852,
+      "sha256": "72524f5abf4268e6eb7abc06d82f136f8948aa0661104dbe486b40a92d55a7c1"
+    },
+    {
+      "path": "/docs/보기/3d/B0-뜬면-1__lt_dyngt_ALS_s0__float.glb",
+      "faces": 25325,
+      "bytes": 443036,
+      "sha256": "cd8f0317af8f40cce0c07d5cc973be00b9504c9bdcddd9f64b09e75d1332ae72"
+    },
+    {
+      "path": "/docs/보기/3d/B0-뜬면-1__lt_dynnow_ALS_s0__colour.glb",
+      "faces": 26946,
+      "bytes": 608824,
+      "sha256": "bf88527be3133c889da45cd86dfe4c3a198c13a97bfdd5860989894f957d0430"
+    },
+    {
+      "path": "/docs/보기/3d/B0-뜬면-1__lt_dynnow_ALS_s0__float.glb",
+      "faces": 26946,
+      "bytes": 470964,
+      "sha256": "1839b0b336310d67149aa18a3ec6f3a5e060ff96935e96a1c585c2cbc2c1c644"
+    },
+    {
+      "path": "/docs/보기/3d/B0-뜬면-1__nojudge_ALS_s0__colour.glb",
+      "faces": 19999,
+      "bytes": 679300,
+      "sha256": "efe930eb10f31c911b50443d7e304de4574fd5ca80b2f71e0b2906844df9f0a7"
+    },
+    {
+      "path": "/docs/보기/3d/B0-뜬면-1__nojudge_ALS_s0__float.glb",
+      "faces": 19999,
+      "bytes": 434192,
+      "sha256": "8c623b30ed75877652b865275eb94695d305aaa030352bdaadb06266175a2203"
+    },
+    {
+      "path": "/docs/보기/3d/B173-날개__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 19999,
+      "bytes": 492080,
+      "sha256": "0e77f07be72154996d20af2b1f6c3143ee58c7e64827c77e1fd0902e83587895"
+    },
+    {
+      "path": "/docs/보기/3d/B173-날개__lt_dyngt_ALS_s0__float.glb",
+      "faces": 19999,
+      "bytes": 444404,
+      "sha256": "c3b7b48747e5b0ac23526f81b5e9a6c7c9477ec6e3f60562bf91ad6a45283299"
+    },
+    {
+      "path": "/docs/보기/3d/B173-날개__lt_dynnow_ALS_s0__colour.glb",
+      "faces": 19999,
+      "bytes": 450036,
+      "sha256": "682bfbee0937554a56b58f690a00a895a4fdfbffde050d9197564e8018ef068e"
+    },
+    {
+      "path": "/docs/보기/3d/B173-날개__lt_dynnow_ALS_s0__float.glb",
+      "faces": 19999,
+      "bytes": 446048,
+      "sha256": "74af2f791bbad7be2005630fadb3db4ab5252a36e678924b110bed2151f880d1"
+    },
+    {
+      "path": "/docs/보기/3d/B173-날개__nojudge_ALS_s0__colour.glb",
+      "faces": 20000,
+      "bytes": 442876,
+      "sha256": "22becfcb5da64cba2b80e7fc0401a25dfb6f4149a949904c66b8f2a5e3807eb1"
+    },
+    {
+      "path": "/docs/보기/3d/B173-날개__nojudge_ALS_s0__float.glb",
+      "faces": 20000,
+      "bytes": 449008,
+      "sha256": "dfd9991857b17a13d3a29c6a1c1ae77c431140490866362405465874ba140685"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-1__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 45103,
+      "bytes": 1337512,
+      "sha256": "7377563087c2658bb8243aef3ec67f9c050ce0989ad5ff1f17c0a2a9f1ed3158"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-1__lt_dyngt_ALS_s0__float.glb",
+      "faces": 45103,
+      "bytes": 829556,
+      "sha256": "12f4178e7ee26dc5d5a7907bdc2ed9c5b37d8ce65378324e4f9e22f2e597e66b"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-1__lt_dynnow_ALS_s0__colour.glb",
+      "faces": 41519,
+      "bytes": 1189144,
+      "sha256": "31f9e9dd39649202b700afdf2f17e1c38ffe2fd680a9cfcdfcedb3791d0d5751"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-1__lt_dynnow_ALS_s0__float.glb",
+      "faces": 41519,
+      "bytes": 758804,
+      "sha256": "33cc2a4e11a64e8fb31e79cd8d75efdb9313eff296502c16fb591f9db92102c4"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-1__nojudge_ALS_s0__colour.glb",
+      "faces": 19999,
+      "bytes": 621428,
+      "sha256": "040ca77139d390c9268ef9313c1aa7707215cfb775c0f7f8923ad9bfee56cf71"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-1__nojudge_ALS_s0__float.glb",
+      "faces": 19999,
+      "bytes": 393248,
+      "sha256": "a08b7d131cd50e5d7a987cd6554865c2071f198448689442e5233bb41a2b2891"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-2__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 36861,
+      "bytes": 1267056,
+      "sha256": "db69478305613013464699ab8ad29fae6e27c8cd1a2ccd15514eb6202bcca4f6"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-2__lt_dyngt_ALS_s0__float.glb",
+      "faces": 36861,
+      "bytes": 681804,
+      "sha256": "1c32cc4b2caa9c715246a045fe1010270790ded3c4cd7a231781c892dbf2516d"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-2__lt_dynnow_ALS_s0__colour.glb",
+      "faces": 19999,
+      "bytes": 810872,
+      "sha256": "025990e65e7eda51e7fb4f8d86ec85e230b6d679e05860180fea36a9f2575693"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-2__lt_dynnow_ALS_s0__float.glb",
+      "faces": 19999,
+      "bytes": 388096,
+      "sha256": "1963e68e25f93df017569ee761b31f6775b19f1cd55eb18303085e6e9e55e4dd"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-2__nojudge_ALS_s0__colour.glb",
+      "faces": 20000,
+      "bytes": 944896,
+      "sha256": "a768a1a17e7509426933dbca901a8069e00c05eacedc45849b03c81fea41facd"
+    },
+    {
+      "path": "/docs/보기/3d/B173-뜬면-2__nojudge_ALS_s0__float.glb",
+      "faces": 20000,
+      "bytes": 420560,
+      "sha256": "48943567a59d9ec10b2315ab56fd880cf31d7e78005da315a5d179cea9cd3c87"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 57591,
+      "bytes": 2276588,
+      "sha256": "d46200b15974a490f7fff1d79679699182384ddafb117d2e7565381e2edfdb72"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__lt_dyngt_ALS_s0__float.glb",
+      "faces": 57591,
+      "bytes": 3456380,
+      "sha256": "b11ec0ca31c4db2e965d180bbf639f8f70eba502f7cb37133d07fec603261f73"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__lt_dynnow_ALS_s0__colour.glb",
+      "faces": 17446,
+      "bytes": 362808,
+      "sha256": "6d858f4ec4dabfbed533412bdc960eb59ef1ddf441d69265ce645e6b674cc345"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__lt_dynnow_ALS_s0__float.glb",
+      "faces": 17446,
+      "bytes": 399880,
+      "sha256": "a14b67f6c27de14bc1232b9996f1b45db5f02e1106b22d5623808841945570c1"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__nojudge_ALS_s0__colour.glb",
+      "faces": 20000,
+      "bytes": 974704,
+      "sha256": "0e378495eccede90befd485a61cf11f56b359b47b0ea9d7990d3b9bc4bea10bf"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-1__nojudge_ALS_s0__float.glb",
+      "faces": 20000,
+      "bytes": 1200916,
+      "sha256": "b2a5aa0e9068c365142a25b05a3805769b7a8870b179d7c4f808a1315c257c2d"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 48503,
+      "bytes": 1766248,
+      "sha256": "9d788b97fbed9a9c71c593e8e3e8e979ea49923ab876da8f20e44a1cc08b08c1"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__lt_dyngt_ALS_s0__float.glb",
+      "faces": 48503,
+      "bytes": 2911100,
+      "sha256": "478845c144bcdc0c0cb3139633eb45eb03624b4245385a1cd61e5230aba4333d"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__lt_dynnow_ALS_s0__colour.glb",
+      "faces": 42947,
+      "bytes": 865204,
+      "sha256": "1312bb094fffbc291ea9b1dce7efede74188950f6116eefc25649526a403e46c"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__lt_dynnow_ALS_s0__float.glb",
+      "faces": 42947,
+      "bytes": 916468,
+      "sha256": "d58e5d1070eeae1b686f0fbf000c06564d0a1a0041f12ee3745e056853ac8a3a"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__nojudge_ALS_s0__colour.glb",
+      "faces": 19999,
+      "bytes": 764740,
+      "sha256": "642414fcc68a29d4eabcb7e07422692b6ed539a0c0c06e349198181d05b0834d"
+    },
+    {
+      "path": "/docs/보기/3d/R1-뜬면-2__nojudge_ALS_s0__float.glb",
+      "faces": 19999,
+      "bytes": 1200852,
+      "sha256": "3255bfca77c4ccf8d116994eb8cdf523abafd959b948cb46d205765a296cfbd4"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__lt_dyngt_ALS_s0__colour.glb",
+      "faces": 33104,
+      "bytes": 660912,
+      "sha256": "f8970ebef4078ec78653295824230b3392ca100fb59261ecb7bb135f86c10fee"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__lt_dyngt_ALS_s0__float.glb",
+      "faces": 33104,
+      "bytes": 732224,
+      "sha256": "06927ca480f299b5067c219504ffbbd5f65a1411bfc2a3f4d3e54c07361325ab"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__lt_dynnow_ALS_s0__colour.glb",
+      "faces": 29424,
+      "bytes": 595952,
+      "sha256": "1b1ec4c091b444961617028e002aabd0d15409c7f47df2ac4a0c31132ddbef75"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__lt_dynnow_ALS_s0__float.glb",
+      "faces": 29424,
+      "bytes": 663248,
+      "sha256": "70c7cc44e85120f3de6f0223e3976f6aaa4dcb517edf5fdcc620efb5a5f2393e"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__nojudge_ALS_s0__colour.glb",
+      "faces": 37562,
+      "bytes": 1812172,
+      "sha256": "61e8d5624626cbefbe3f0a886e8a13727b2cbfd3edad2fa42b27ce8894e940ee"
+    },
+    {
+      "path": "/docs/보기/3d/R1-보존띠-1__nojudge_ALS_s0__float.glb",
+      "faces": 37562,
+      "bytes": 2254640,
+      "sha256": "67c1ccae477a4ecd5a9f0748802809e0785979753779f95612be5c70171ad50b"
+    }
+  ],
+  "camera_checks": [
+    {
+      "case": "B0-뜬면-1",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B0-뜬면-1",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B0-뜬면-1",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B0-뜬면-1",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B0-뜬면-1",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B0-뜬면-1",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B0-뜬면-1",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-1",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-1",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-1",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-1",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-1",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-1",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-1",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-날개",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-날개",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-날개",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-날개",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-날개",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-날개",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "B173-날개",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 0,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 90,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 180,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 270,
+      "elevation": 30,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 45,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 225,
+      "elevation": 10,
+      "status": "PASS"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "azimuth": 0,
+      "elevation": 90,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS",
+  "scope": "currently existing files only; not a completion claim",
+  "scientific_verdict": null
+}

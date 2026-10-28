@@ -1,0 +1,14 @@
+# 앞 반복 가우시안 · 주 시점 패치별 렌더 높이 중앙값
+
+[이 발주에서 냄]. 반올림 전 값과 출처는 같은 이름의 JSON/CSV에 있다.
+
+| site | result | iteration | case | kind | patches | count | opacity_median | max_axis_median_m | birth_iteration_q25_q50_q75_q90 | birth_iteration_status | sample_status | source | main_view | densified_opacity_fraction | initial_prior_opacity_fraction | initial_image_opacity_fraction | unrecorded_opacity_fraction |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| R1rep_b10 | nojudge_ALS_s0 | 15000 | R1-뜬면-1 | floating | 837 | 82 | 0.2974583 | 1.092153 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_15000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |
+| R1rep_b10 | nojudge_ALS_s0 | 15000 | R1-뜬면-1 | roof | 11061 | 3791 | 0.4300867 | 0.7585639 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_15000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |
+| R1rep_b10 | nojudge_ALS_s0 | 15000 | R1-뜬면-2 | floating | 300 | 24 | 0.5172877 | 1.257911 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_15000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |
+| R1rep_b10 | nojudge_ALS_s0 | 15000 | R1-뜬면-2 | roof | 3819 | 1183 | 0.4845792 | 0.8372966 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_15000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |
+| R1rep_b10 | nojudge_ALS_s0 | 30000 | R1-뜬면-1 | floating | 672 | 67 | 0.4764754 | 0.9797066 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |
+| R1rep_b10 | nojudge_ALS_s0 | 30000 | R1-뜬면-1 | roof | 11972 | 4604 | 0.5768225 | 0.7008219 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |
+| R1rep_b10 | nojudge_ALS_s0 | 30000 | R1-뜬면-2 | floating | 219 | 24 | 0.9945592 | 1.18074 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |
+| R1rep_b10 | nojudge_ALS_s0 | 30000 | R1-뜬면-2 | roof | 3889 | 1351 | 0.8052843 | 0.7505289 | 확인 불가 | 기록 없음 | PASS | /ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply | DJI_20241217084733_0150_D | 확인 불가 | 확인 불가 | 확인 불가 | 1 |

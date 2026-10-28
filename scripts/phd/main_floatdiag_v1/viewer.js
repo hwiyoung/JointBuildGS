@@ -43,6 +43,7 @@
       gl.uniform3fv(locations.eye,dir.map(x=>x*distance));gl.uniform3fv(locations.right,right);gl.uniform3fv(locations.up,up);gl.uniform3fv(locations.forward,dir.map(x=>-x));
       gl.uniform1f(locations.aspect,canvas.width/canvas.height);gl.drawElements(gl.TRIANGLES,count,gl.UNSIGNED_INT,0);
       canvas.dataset.rendered=String(count>0);
+      canvas.dataset.camera=JSON.stringify([az,el,distance]);canvas.dataset.glError=String(gl.getError());
     }
     function load(){
       const key=caseInfo.id+'__'+select.value+'__'+palette.value+'.glb';
@@ -54,6 +55,7 @@
       }
       const b=gl.createBuffer();buffers.push(b);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,b);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,m.indices,gl.STATIC_DRAW);count=m.indices.length;
       status.textContent='면 '+(count/3).toLocaleString()+'개 · 결과를 바꿔도 각도 유지 · 드래그 회전 / 휠 확대';draw();
+      canvas.dataset.model=key;canvas.dataset.faces=String(count/3);
     }
     let last=null;canvas.addEventListener('pointerdown',e=>{last=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);});
     canvas.addEventListener('pointerup',()=>last=null);canvas.addEventListener('pointermove',e=>{if(!last)return;az-=(e.clientX-last[0])*.008;el=Math.max(-1.4,Math.min(1.55,el+(e.clientY-last[1])*.008));last=[e.clientX,e.clientY];draw();});

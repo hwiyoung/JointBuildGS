@@ -25,6 +25,8 @@ for p in sorted(CFG.glob('geometry_*.json')):
             assert np.isclose(np.linalg.det(matrix),1)
             c=matrix@(target-eye);assert np.allclose(c[:2],0,atol=1e-6) and c[2]>0
             camera_checks.append(dict(case=case['id'],azimuth=cam['azimuth_deg'],elevation=cam['elevation_deg'],status='PASS'))
-save(DOC/'provenance/code_asset_check_01.json',dict(at=now(),python_syntax=checked,glbs=glbs,camera_checks=camera_checks,
+import argparse
+ap=argparse.ArgumentParser();ap.add_argument('--tag',default='02');args=ap.parse_args()
+save(DOC/'provenance'/('code_asset_check_'+args.tag+'.json'),dict(at=now(),python_syntax=checked,glbs=glbs,camera_checks=camera_checks,
     status='PASS',scope='currently existing files only; not a completion claim',scientific_verdict=None))
 print('syntax',len(checked),'GLBs',len(glbs),'camera checks',len(camera_checks),'PASS')

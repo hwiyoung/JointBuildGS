@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-28T16:10:53.968271+09:00",
+  "reviewer": "Codex self-check, not independent human review",
+  "method": "Actually displayed all seven final title-masked browser screenshots in groups of two or three.",
+  "rows": [
+    {
+      "case": "B173-뜬면-1",
+      "screenshot": "/out/qa/A2/blind_0.png",
+      "screenshot_sha256": "882cfb9792fe903f66a0412cd262df8094002c288500883270906247b454ff38",
+      "plate_sha256": "d205aba52201587a46c918bdded61622fecb5352d16bcbe7f72205fb1fe387f8",
+      "observation": "지붕 끝 위 붉은 조각, 학습 깊이와 메시 첫 교차의 차이, 잠근 높이 범위의 단면이 구분됨.",
+      "status": "PASS_READABILITY"
+    },
+    {
+      "case": "B173-뜬면-2",
+      "screenshot": "/out/qa/A2/blind_1.png",
+      "screenshot_sha256": "dbdc5fe657ce1441ef02ba42ff0acac9dc8d38f80d70ba03c72a9cdb709ddcf6",
+      "plate_sha256": "bfd14d10562f14a4fd260d72d773a75a2c5319f53e933290564a353b4be1623a",
+      "observation": "지붕 가장자리 붉은 조각과 단면의 높은 점, 네 깊이와 힘 지도가 구분됨.",
+      "status": "PASS_READABILITY"
+    },
+    {
+      "case": "B173-날개",
+      "screenshot": "/out/qa/A2/blind_2.png",
+      "screenshot_sha256": "fc1ba88a2faf5e3dbc3214ce54fb8fea3b7767ad39faae645f1972e9ff7ef86b",
+      "plate_sha256": "7f50aab24ecb0ee8eb5ba45ecbd054c56d1479eb4d378a29f2e6b8f5b3e3ba98",
+      "observation": "낮은 돌출 지붕 위 붉은 조각과 자료·결과 단면이 구분됨. 빗각 실사의 낮은 해상도를 유지함.",
+      "status": "PASS_READABILITY"
+    },
+    {
+      "case": "B0-뜬면-1",
+      "screenshot": "/out/qa/A2/blind_3.png",
+      "screenshot_sha256": "5116b5d5914650be558a6c7df35c34264f2aca1915a7d18aafb86834f71cb0b4",
+      "plate_sha256": "ac70b8fb67fc0957e981c71739fbd55284242d7c276325711a71bdaa3b3b68ed",
+      "observation": "박공지붕 위 수직 조각과 메시 첫 교차의 세부 차이가 보임. 표본 부족 표지가 있음.",
+      "status": "PASS_READABILITY"
+    },
+    {
+      "case": "R1-뜬면-1",
+      "screenshot": "/out/qa/A2/blind_4.png",
+      "screenshot_sha256": "bd1c474d812d1f43627e67fd20ed4c8ad0ed515cfc9864586d23a58996ba2c02",
+      "plate_sha256": "e14d6eb4c6c6342fcb842b96b111e1b52950c7cd57402d91d581e5a9b900f004",
+      "observation": "곡면 지붕 위 넓은 붉은 조각과 학습 깊이·메시 첫 교차 차이가 보임.",
+      "status": "PASS_READABILITY"
+    },
+    {
+      "case": "R1-뜬면-2",
+      "screenshot": "/out/qa/A2/blind_5.png",
+      "screenshot_sha256": "9bcee4c2b152f284fa25dac4ad21f9d9ec1fb146bfafaed126ebde4190b00e02",
+      "plate_sha256": "c4e962ee3ba1c21715454071988dcafda798645dec2339b58462a551fef24bd1",
+      "observation": "긴 지붕 끝의 붉은 조각, 깊이 차이와 높은 단면 점이 구분됨.",
+      "status": "PASS_READABILITY"
+    },
+    {
+      "case": "R1-보존띠-1",
+      "screenshot": "/out/qa/A2/blind_6.png",
+      "screenshot_sha256": "c1af0d880522abb9795c9ad03aaf9bfa3ecbd0ac7ecb0ac86fee41c96c047d75",
+      "plate_sha256": "0eb12b918bbccc02d98121349333f71d1dd70b8a6005d568a6f24938735d4d13",
+      "observation": "주 시점·빗각 실사는 확인 불가로 명시됨. 3차원·단면·숫자만 비교 가능하며 사진 종류를 추정하지 않음.",
+      "status": "PARTIAL_PHOTO_UNAVAILABLE"
+    }
+  ],
+  "additional_actual_checks": [
+    "R1-뜬면-2_formation_A2.jpg",
+    "R1-보존띠-1_multiview_map_A2.jpg",
+    "B0-뜬면-1_multiview_examples_A2.jpg"
+  ],
+  "scientific_verdict": null
+}

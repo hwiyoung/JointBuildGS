@@ -1,0 +1,217 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>뜬 면 진단 · 실제 3차원 결과</title><style>
+body{margin:0;background:#f7f7f4;color:#23282c;font:16px/1.65 system-ui,sans-serif}main{max-width:1400px;margin:auto;padding:32px}h1{font-size:34px;line-height:1.25}h2{margin-top:56px;border-top:1px solid #ccc;padding-top:22px}h3{font-size:23px}a{color:#155b8c}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}th,td{padding:10px;border-bottom:1px solid #d8d8d4;text-align:right}th:first-child,td:first-child{text-align:left}th{background:#ecece8}img,video,canvas{max-width:100%;height:auto}canvas{display:block;width:100%;background:#fafafa;touch-action:none;border:1px solid #ddd}.viewer-controls{display:flex;gap:12px;flex-wrap:wrap}select,button{font:inherit;padding:8px 12px;border:1px solid #aaa;border-radius:4px;background:white}figure{margin:24px 0}figcaption,.viewer-status{font-size:14px;color:#4a5054}.note{background:#efeee7;padding:16px}.scroll{overflow:auto}.case-links{display:flex;gap:16px;flex-wrap:wrap}nav a{margin-right:20px}.number{white-space:nowrap}@media(max-width:700px){main{padding:16px}h1{font-size:27px}th,td{padding:6px;font-size:13px}}</style>
+<main><p>PHD-MAIN-FLOATDIAG-v1 · 단계 가 완료</p><h1>지붕 위에 뜬 면을 실제 결과에서 본다</h1>
+<p>같은 사례, 같은 카메라로 판정 끔·판 2·판 4를 비교한다. 아래 숫자는 저장된 채점 패치에서 다시 계산했다.</p>
+<nav><a href="#stage">지금 어디</a><a href="#summary">요약 표</a><a href="#cases">3차원과 사례</a><a href="#maps">지도</a><a href="#gate">관문</a></nav>
+<h2 id="stage">지금 어디</h2><table><tr><th>큰 단계</th><th>발주 시점 상태</th></tr><tr><td>방법 1단계: 불확실도·MVS 유효 확률</td><td>정함</td></tr><tr><td>사전 정보 유효 확률</td><td>사용자 결정 대기</td></tr><tr><td>다이내믹 손실 학습 없는 시험</td><td>통과</td></tr><tr><td>LOSSTRAIN 학습 시험</td><td>항공 LiDAR 채점 완료</td></tr><tr><td>뜬 면 진단</td><td>이 발주</td></tr><tr><td>1단계 값을 넣은 확인용 19동</td><td>별도 발주</td></tr></table><table><tr><th>이 발주</th><th>상태</th></tr><tr><td>가-1 실제 3차원 보기</td><td>묶음 ① 전달</td></tr><tr><td>가-2 원인 셈</td><td>묶음 ②</td></tr><tr><td>단계 나 학습 4회</td><td>관문 미달·이번 발주에서 실행하지 않음</td></tr></table>
+<p class="note">R1 보존 띠: 잠근 보이는 넓이 기준을 충족하는 사진이 없으면 실사 칸은 확인 불가로 남긴다. 메시 색은 수직 높이, 채점 표는 바깥 법선을 따라 처음 만난 면을 사용한다. 두 구분은 동일한 값이 아니다.</p>
+<h2 id="summary">요약 표</h2><p>비율의 분모는 각 단위의 채점 허용 패치 넓이이다. 숫자를 누르면 해당 단위의 지도와 사례로 이동한다.</p>
+<div class="scroll"><table><thead><tr><th>단위 · 결과</th><th>τ 안 %</th><th>뜬 면 %</th><th>다듬기 τ 안 %</th><th>보존 τ 안 %</th><th>면 없음 %</th><th>평가 PSNR dB</th></tr></thead><tbody>
+<tr><td>B173nb_b10 · 판정 끔</td><td><a class="number" href="#map-B173nb_b10">75.27</a></td><td><a class="number" href="#map-B173nb_b10">2.95</a></td><td><a class="number" href="#map-B173nb_b10">96.83</a></td><td><a class="number" href="#map-B173nb_b10">23.58</a></td><td><a class="number" href="#map-B173nb_b10">1.74</a></td><td><a class="number" href="#map-B173nb_b10">23.28</a></td></tr>
+<tr><td>B173nb_b10 · 판 2</td><td><a class="number" href="#map-B173nb_b10">72.91</a></td><td><a class="number" href="#map-B173nb_b10">14.46</a></td><td><a class="number" href="#map-B173nb_b10">96.66</a></td><td><a class="number" href="#map-B173nb_b10">82.64</a></td><td><a class="number" href="#map-B173nb_b10">1.77</a></td><td><a class="number" href="#map-B173nb_b10">22.13</a></td></tr>
+<tr><td>B173nb_b10 · 판 4</td><td><a class="number" href="#map-B173nb_b10">75.20</a></td><td><a class="number" href="#map-B173nb_b10">10.05</a></td><td><a class="number" href="#map-B173nb_b10">97.77</a></td><td><a class="number" href="#map-B173nb_b10">81.83</a></td><td><a class="number" href="#map-B173nb_b10">1.77</a></td><td><a class="number" href="#map-B173nb_b10">22.08</a></td></tr>
+<tr><td>B0_b10 · 판정 끔</td><td><a class="number" href="#map-B0_b10">97.09</a></td><td><a class="number" href="#map-B0_b10">1.87</a></td><td><a class="number" href="#map-B0_b10">97.70</a></td><td><a class="number" href="#map-B0_b10">70.11</a></td><td><a class="number" href="#map-B0_b10">0.02</a></td><td><a class="number" href="#map-B0_b10">22.96</a></td></tr>
+<tr><td>B0_b10 · 판 2</td><td><a class="number" href="#map-B0_b10">91.99</a></td><td><a class="number" href="#map-B0_b10">7.45</a></td><td><a class="number" href="#map-B0_b10">92.47</a></td><td><a class="number" href="#map-B0_b10">82.56</a></td><td><a class="number" href="#map-B0_b10">0.01</a></td><td><a class="number" href="#map-B0_b10">21.26</a></td></tr>
+<tr><td>B0_b10 · 판 4</td><td><a class="number" href="#map-B0_b10">90.01</a></td><td><a class="number" href="#map-B0_b10">9.23</a></td><td><a class="number" href="#map-B0_b10">90.51</a></td><td><a class="number" href="#map-B0_b10">71.69</a></td><td><a class="number" href="#map-B0_b10">0.03</a></td><td><a class="number" href="#map-B0_b10">21.39</a></td></tr>
+<tr><td>R1rep_b10 · 판정 끔</td><td><a class="number" href="#map-R1rep_b10">86.04</a></td><td><a class="number" href="#map-R1rep_b10">6.89</a></td><td><a class="number" href="#map-R1rep_b10">94.34</a></td><td><a class="number" href="#map-R1rep_b10">37.05</a></td><td><a class="number" href="#map-R1rep_b10">0.25</a></td><td><a class="number" href="#map-R1rep_b10">23.10</a></td></tr>
+<tr><td>R1rep_b10 · 판 2</td><td><a class="number" href="#map-R1rep_b10">59.70</a></td><td><a class="number" href="#map-R1rep_b10">34.10</a></td><td><a class="number" href="#map-R1rep_b10">64.81</a></td><td><a class="number" href="#map-R1rep_b10">31.62</a></td><td><a class="number" href="#map-R1rep_b10">0.15</a></td><td><a class="number" href="#map-R1rep_b10">20.86</a></td></tr>
+<tr><td>R1rep_b10 · 판 4</td><td><a class="number" href="#map-R1rep_b10">67.38</a></td><td><a class="number" href="#map-R1rep_b10">25.88</a></td><td><a class="number" href="#map-R1rep_b10">73.30</a></td><td><a class="number" href="#map-R1rep_b10">35.03</a></td><td><a class="number" href="#map-R1rep_b10">0.23</a></td><td><a class="number" href="#map-R1rep_b10">21.19</a></td></tr>
+</tbody></table></div><h2 id="cases">3차원과 사례</h2><div class="case-links">
+<a href="#case-B173-뜬면-1">B173-뜬면-1</a>
+<a href="#case-B173-뜬면-2">B173-뜬면-2</a>
+<a href="#case-B173-날개">B173-날개</a>
+<a href="#case-B0-뜬면-1">B0-뜬면-1</a>
+<a href="#case-R1-뜬면-1">R1-뜬면-1</a>
+<a href="#case-R1-뜬면-2">R1-뜬면-2</a>
+<a href="#case-R1-보존띠-1">R1-보존띠-1</a>
+</div>
+<section id="case-B173-뜬면-1"><h3>B173-뜬면-1</h3><div data-viewer="B173-뜬면-1"></div>
+<p>빨강: 참값보다 τ 넘게 위 · 회색: τ 안 · 연파랑: 그 밖 · 연회색: 참값 또는 τ 없음. 가벼운 보기용 메시이며 원래 자른 PLY는 전체 전달 묶음에 들어간다.</p>
+<figure><img loading="lazy" src="img/B173-뜬면-1_plate_A2.jpg" alt="B173-뜬면-1 사진·실제 메시·숫자"><figcaption>사례 범위와 단위 전체의 숫자를 나란히 표시했다. 사례 범위는 서로 겹칠 수 있어 넓이를 더하지 않는다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-뜬면-1_mesh.jpg" alt="B173-뜬면-1 메시 일곱 각도"><figcaption>모든 결과에 같은 카메라와 조명을 사용했다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-뜬면-1_gaussian.jpg" alt="B173-뜬면-1 가우시안 일곱 각도"><figcaption>가우시안 색 렌더. 학습 사진이 없는 각도에서는 흐려 보일 수 있다.</figcaption></figure>
+<video controls loop preload="none" poster="img/B173-뜬면-1_mesh.jpg" src="video/B173-뜬면-1.mp4"></video><p><a href="video/B173-뜬면-1.gif">돌려 보기 GIF</a></p></section>
+<section id="case-B173-뜬면-2"><h3>B173-뜬면-2</h3><div data-viewer="B173-뜬면-2"></div>
+<p>빨강: 참값보다 τ 넘게 위 · 회색: τ 안 · 연파랑: 그 밖 · 연회색: 참값 또는 τ 없음. 가벼운 보기용 메시이며 원래 자른 PLY는 전체 전달 묶음에 들어간다.</p>
+<figure><img loading="lazy" src="img/B173-뜬면-2_plate_A2.jpg" alt="B173-뜬면-2 사진·실제 메시·숫자"><figcaption>사례 범위와 단위 전체의 숫자를 나란히 표시했다. 사례 범위는 서로 겹칠 수 있어 넓이를 더하지 않는다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-뜬면-2_mesh.jpg" alt="B173-뜬면-2 메시 일곱 각도"><figcaption>모든 결과에 같은 카메라와 조명을 사용했다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-뜬면-2_gaussian.jpg" alt="B173-뜬면-2 가우시안 일곱 각도"><figcaption>가우시안 색 렌더. 학습 사진이 없는 각도에서는 흐려 보일 수 있다.</figcaption></figure>
+<video controls loop preload="none" poster="img/B173-뜬면-2_mesh.jpg" src="video/B173-뜬면-2.mp4"></video><p><a href="video/B173-뜬면-2.gif">돌려 보기 GIF</a></p></section>
+<section id="case-B173-날개"><h3>B173-날개</h3><div data-viewer="B173-날개"></div>
+<p>빨강: 참값보다 τ 넘게 위 · 회색: τ 안 · 연파랑: 그 밖 · 연회색: 참값 또는 τ 없음. 가벼운 보기용 메시이며 원래 자른 PLY는 전체 전달 묶음에 들어간다.</p>
+<figure><img loading="lazy" src="img/B173-날개_plate_A2.jpg" alt="B173-날개 사진·실제 메시·숫자"><figcaption>사례 범위와 단위 전체의 숫자를 나란히 표시했다. 사례 범위는 서로 겹칠 수 있어 넓이를 더하지 않는다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-날개_mesh.jpg" alt="B173-날개 메시 일곱 각도"><figcaption>모든 결과에 같은 카메라와 조명을 사용했다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-날개_gaussian.jpg" alt="B173-날개 가우시안 일곱 각도"><figcaption>가우시안 색 렌더. 학습 사진이 없는 각도에서는 흐려 보일 수 있다.</figcaption></figure>
+<video controls loop preload="none" poster="img/B173-날개_mesh.jpg" src="video/B173-날개.mp4"></video><p><a href="video/B173-날개.gif">돌려 보기 GIF</a></p></section>
+<section id="case-B0-뜬면-1"><h3>B0-뜬면-1</h3><div data-viewer="B0-뜬면-1"></div>
+<p>빨강: 참값보다 τ 넘게 위 · 회색: τ 안 · 연파랑: 그 밖 · 연회색: 참값 또는 τ 없음. 가벼운 보기용 메시이며 원래 자른 PLY는 전체 전달 묶음에 들어간다.</p>
+<figure><img loading="lazy" src="img/B0-뜬면-1_plate_A2.jpg" alt="B0-뜬면-1 사진·실제 메시·숫자"><figcaption>사례 범위와 단위 전체의 숫자를 나란히 표시했다. 사례 범위는 서로 겹칠 수 있어 넓이를 더하지 않는다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B0-뜬면-1_mesh.jpg" alt="B0-뜬면-1 메시 일곱 각도"><figcaption>모든 결과에 같은 카메라와 조명을 사용했다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B0-뜬면-1_gaussian.jpg" alt="B0-뜬면-1 가우시안 일곱 각도"><figcaption>가우시안 색 렌더. 학습 사진이 없는 각도에서는 흐려 보일 수 있다.</figcaption></figure>
+<video controls loop preload="none" poster="img/B0-뜬면-1_mesh.jpg" src="video/B0-뜬면-1.mp4"></video><p><a href="video/B0-뜬면-1.gif">돌려 보기 GIF</a></p></section>
+<section id="case-R1-뜬면-1"><h3>R1-뜬면-1</h3><div data-viewer="R1-뜬면-1"></div>
+<p>빨강: 참값보다 τ 넘게 위 · 회색: τ 안 · 연파랑: 그 밖 · 연회색: 참값 또는 τ 없음. 가벼운 보기용 메시이며 원래 자른 PLY는 전체 전달 묶음에 들어간다.</p>
+<figure><img loading="lazy" src="img/R1-뜬면-1_plate_A2.jpg" alt="R1-뜬면-1 사진·실제 메시·숫자"><figcaption>사례 범위와 단위 전체의 숫자를 나란히 표시했다. 사례 범위는 서로 겹칠 수 있어 넓이를 더하지 않는다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-1_mesh.jpg" alt="R1-뜬면-1 메시 일곱 각도"><figcaption>모든 결과에 같은 카메라와 조명을 사용했다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-1_gaussian.jpg" alt="R1-뜬면-1 가우시안 일곱 각도"><figcaption>가우시안 색 렌더. 학습 사진이 없는 각도에서는 흐려 보일 수 있다.</figcaption></figure>
+<video controls loop preload="none" poster="img/R1-뜬면-1_mesh.jpg" src="video/R1-뜬면-1.mp4"></video><p><a href="video/R1-뜬면-1.gif">돌려 보기 GIF</a></p></section>
+<section id="case-R1-뜬면-2"><h3>R1-뜬면-2</h3><div data-viewer="R1-뜬면-2"></div>
+<p>빨강: 참값보다 τ 넘게 위 · 회색: τ 안 · 연파랑: 그 밖 · 연회색: 참값 또는 τ 없음. 가벼운 보기용 메시이며 원래 자른 PLY는 전체 전달 묶음에 들어간다.</p>
+<figure><img loading="lazy" src="img/R1-뜬면-2_plate_A2.jpg" alt="R1-뜬면-2 사진·실제 메시·숫자"><figcaption>사례 범위와 단위 전체의 숫자를 나란히 표시했다. 사례 범위는 서로 겹칠 수 있어 넓이를 더하지 않는다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-2_mesh.jpg" alt="R1-뜬면-2 메시 일곱 각도"><figcaption>모든 결과에 같은 카메라와 조명을 사용했다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-2_gaussian.jpg" alt="R1-뜬면-2 가우시안 일곱 각도"><figcaption>가우시안 색 렌더. 학습 사진이 없는 각도에서는 흐려 보일 수 있다.</figcaption></figure>
+<video controls loop preload="none" poster="img/R1-뜬면-2_mesh.jpg" src="video/R1-뜬면-2.mp4"></video><p><a href="video/R1-뜬면-2.gif">돌려 보기 GIF</a></p></section>
+<section id="case-R1-보존띠-1"><h3>R1-보존띠-1</h3><div data-viewer="R1-보존띠-1"></div>
+<p>빨강: 참값보다 τ 넘게 위 · 회색: τ 안 · 연파랑: 그 밖 · 연회색: 참값 또는 τ 없음. 가벼운 보기용 메시이며 원래 자른 PLY는 전체 전달 묶음에 들어간다.</p>
+<figure><img loading="lazy" src="img/R1-보존띠-1_plate_A2.jpg" alt="R1-보존띠-1 사진·실제 메시·숫자"><figcaption>사례 범위와 단위 전체의 숫자를 나란히 표시했다. 사례 범위는 서로 겹칠 수 있어 넓이를 더하지 않는다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-보존띠-1_mesh.jpg" alt="R1-보존띠-1 메시 일곱 각도"><figcaption>모든 결과에 같은 카메라와 조명을 사용했다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-보존띠-1_gaussian.jpg" alt="R1-보존띠-1 가우시안 일곱 각도"><figcaption>가우시안 색 렌더. 학습 사진이 없는 각도에서는 흐려 보일 수 있다.</figcaption></figure>
+<video controls loop preload="none" poster="img/R1-보존띠-1_mesh.jpg" src="video/R1-보존띠-1.mp4"></video><p><a href="video/R1-보존띠-1.gif">돌려 보기 GIF</a></p></section>
+<h2 id="maps">지도</h2>
+<section id="map-B173nb_b10"><h3>B173nb_b10</h3><div style="position:relative"><img loading="lazy" style="display:block;width:100%" src="img/B173nb_b10_map_A1.jpg" alt="B173nb_b10 뜬 면 지도">
+<a href="#case-B173-뜬면-1" aria-label="B173-뜬면-1 지도 상자" style="position:absolute;left:25.88612%;top:26.94074%;width:5.52269%;height:24.57131%;outline:1px solid transparent"></a>
+<a href="#case-B173-뜬면-2" aria-label="B173-뜬면-2 지도 상자" style="position:absolute;left:20.36343%;top:48.06345%;width:7.10060%;height:29.74422%;outline:1px solid transparent"></a>
+<a href="#case-B173-날개" aria-label="B173-날개 지도 상자" style="position:absolute;left:21.40699%;top:64.79513%;width:3.52400%;height:2.60370%;outline:1px solid transparent"></a>
+<a href="#case-B173-뜬면-1" aria-label="B173-뜬면-1 지도 상자" style="position:absolute;left:59.10760%;top:26.94074%;width:5.52269%;height:24.57131%;outline:1px solid transparent"></a>
+<a href="#case-B173-뜬면-2" aria-label="B173-뜬면-2 지도 상자" style="position:absolute;left:53.58491%;top:48.06345%;width:7.10060%;height:29.74422%;outline:1px solid transparent"></a>
+<a href="#case-B173-날개" aria-label="B173-날개 지도 상자" style="position:absolute;left:54.62847%;top:64.79513%;width:3.52400%;height:2.60370%;outline:1px solid transparent"></a>
+<a href="#case-B173-뜬면-1" aria-label="B173-뜬면-1 지도 상자" style="position:absolute;left:92.32907%;top:26.94074%;width:5.52269%;height:24.57131%;outline:1px solid transparent"></a>
+<a href="#case-B173-뜬면-2" aria-label="B173-뜬면-2 지도 상자" style="position:absolute;left:86.80639%;top:48.06345%;width:7.10060%;height:29.74422%;outline:1px solid transparent"></a>
+<a href="#case-B173-날개" aria-label="B173-날개 지도 상자" style="position:absolute;left:87.84995%;top:64.79513%;width:3.52400%;height:2.60370%;outline:1px solid transparent"></a>
+</div><div class="case-links">
+<a href="#case-B173-뜬면-1">1. B173-뜬면-1</a>
+<a href="#case-B173-뜬면-2">2. B173-뜬면-2</a>
+<a href="#case-B173-날개">3. B173-날개</a>
+</div></section>
+<section id="map-B0_b10"><h3>B0_b10</h3><div style="position:relative"><img loading="lazy" style="display:block;width:100%" src="img/B0_b10_map_A1.jpg" alt="B0_b10 뜬 면 지도">
+<a href="#case-B0-뜬면-1" aria-label="B0-뜬면-1 지도 상자" style="position:absolute;left:16.54988%;top:55.87755%;width:5.10393%;height:24.23562%;outline:1px solid transparent"></a>
+<a href="#case-B0-뜬면-1" aria-label="B0-뜬면-1 지도 상자" style="position:absolute;left:52.45625%;top:55.87755%;width:5.10393%;height:24.23562%;outline:1px solid transparent"></a>
+<a href="#case-B0-뜬면-1" aria-label="B0-뜬면-1 지도 상자" style="position:absolute;left:88.36263%;top:55.87755%;width:5.10393%;height:24.23562%;outline:1px solid transparent"></a>
+</div><div class="case-links">
+<a href="#case-B0-뜬면-1">1. B0-뜬면-1</a>
+</div></section>
+<section id="map-R1rep_b10"><h3>R1rep_b10</h3><div style="position:relative"><img loading="lazy" style="display:block;width:100%" src="img/R1rep_b10_map_A1.jpg" alt="R1rep_b10 뜬 면 지도">
+<a href="#case-R1-뜬면-1" aria-label="R1-뜬면-1 지도 상자" style="position:absolute;left:8.73083%;top:32.85022%;width:11.90172%;height:32.45566%;outline:1px solid transparent"></a>
+<a href="#case-R1-뜬면-2" aria-label="R1-뜬면-2 지도 상자" style="position:absolute;left:8.51443%;top:24.86932%;width:5.30167%;height:31.39154%;outline:1px solid transparent"></a>
+<a href="#case-R1-보존띠-1" aria-label="R1-보존띠-1 지도 상자" style="position:absolute;left:10.02920%;top:42.69333%;width:19.69193%;height:30.32742%;outline:1px solid transparent"></a>
+<a href="#case-R1-뜬면-1" aria-label="R1-뜬면-1 지도 상자" style="position:absolute;left:41.95230%;top:32.85022%;width:11.90172%;height:32.45566%;outline:1px solid transparent"></a>
+<a href="#case-R1-뜬면-2" aria-label="R1-뜬면-2 지도 상자" style="position:absolute;left:41.73591%;top:24.86932%;width:5.30167%;height:31.39154%;outline:1px solid transparent"></a>
+<a href="#case-R1-보존띠-1" aria-label="R1-보존띠-1 지도 상자" style="position:absolute;left:43.25067%;top:42.69333%;width:19.69193%;height:30.32742%;outline:1px solid transparent"></a>
+<a href="#case-R1-뜬면-1" aria-label="R1-뜬면-1 지도 상자" style="position:absolute;left:75.17378%;top:32.85022%;width:11.90172%;height:32.45566%;outline:1px solid transparent"></a>
+<a href="#case-R1-뜬면-2" aria-label="R1-뜬면-2 지도 상자" style="position:absolute;left:74.95739%;top:24.86932%;width:5.30167%;height:31.39154%;outline:1px solid transparent"></a>
+<a href="#case-R1-보존띠-1" aria-label="R1-보존띠-1 지도 상자" style="position:absolute;left:76.47215%;top:42.69333%;width:19.69193%;height:30.32742%;outline:1px solid transparent"></a>
+</div><div class="case-links">
+<a href="#case-R1-뜬면-1">1. R1-뜬면-1</a>
+<a href="#case-R1-뜬면-2">2. R1-뜬면-2</a>
+<a href="#case-R1-보존띠-1">3. R1-보존띠-1</a>
+</div></section>
+<h2 id="gate">관문</h2><p><strong>B173nb_b10: 판 4 지붕 깊이÷사진 기울기 2.34% · 10% 아래</strong></p><p><strong>R1rep_b10: 판 4 지붕 깊이÷사진 기울기 6.73% · 10% 아래</strong></p><p>관문 1 미달: <a href="#map-R1rep_b10">R1 11.64% (109,965 / 945,076 화소)</a>, <a href="#map-B173nb_b10">B173 주변 30.59% (89,532 / 292,704 화소)</a>. 각각 70% 이상이라는 정의를 유지한다. 사용자 지시에 따라 이번 발주에서는 단계 나를 실행하지 않는다.</p>
+<h2 id="diagnostics">단위별 힘·기울기·다섯 구분</h2>
+<section id="diagnostic-B173nb_b10"><h3>B173nb_b10</h3>
+<figure><img loading="lazy" src="img/B173nb_b10_classes_A2.jpg" alt="B173nb_b10 다섯 구분"><figcaption>다섯 구분 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173nb_b10_forces_A2.jpg" alt="B173nb_b10 r/σ와 깊이 항의 힘"><figcaption>r/σ와 깊이 항의 힘 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B173nb_b10_gradients_A2_v2.jpg" alt="B173nb_b10 중심 기울기"><figcaption>중심 기울기 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+</section>
+<section id="diagnostic-B0_b10"><h3>B0_b10</h3>
+<figure><img loading="lazy" src="img/B0_b10_classes_A2.jpg" alt="B0_b10 다섯 구분"><figcaption>다섯 구분 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B0_b10_forces_A2.jpg" alt="B0_b10 r/σ와 깊이 항의 힘"><figcaption>r/σ와 깊이 항의 힘 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+<figure><img loading="lazy" src="img/B0_b10_gradients_A2_v2.jpg" alt="B0_b10 중심 기울기"><figcaption>중심 기울기 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+</section>
+<section id="diagnostic-R1rep_b10"><h3>R1rep_b10</h3>
+<figure><img loading="lazy" src="img/R1rep_b10_classes_A2.jpg" alt="R1rep_b10 다섯 구분"><figcaption>다섯 구분 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1rep_b10_forces_A2.jpg" alt="R1rep_b10 r/σ와 깊이 항의 힘"><figcaption>r/σ와 깊이 항의 힘 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+<figure><img loading="lazy" src="img/R1rep_b10_gradients_A2_v2.jpg" alt="R1rep_b10 중심 기울기"><figcaption>중심 기울기 · 반올림 전 수치와 표본 수는 data.json과 전달 표에 있다.</figcaption></figure>
+</section>
+<h2 id="four-depths">같은 화소 광선의 네 깊이</h2>
+<p>메시에 넣은 깊이는 ① 학습 surf_depth이며, 이 실행에서는 ④ 불투명도 가중 평균과 정확히 같다. ②는 원래 메시 전체의 첫 교차, ③은 렌더러 누적 불투명도 0.5다. 미교차·0.5 미도달은 확인 불가로 남긴다. 사례 판에는 판정 끔과 판 4의 같은 색 범위 깊이 줄, 판 4의 네 깊이 줄, ①−② 분포가 있다.</p>
+<h2 id="expectations">진단 전 기대와 측정값</h2><p>기대의 성립 여부와 과학 판정은 적지 않았다. 고친 판은 이번 발주에서 실행하지 않았다.</p><div class="scroll"><table><tr><th>기대</th><th>단위·결과·사례</th><th>기준</th><th>값</th><th>N</th></tr>
+<tr><td>가</td><td>B173nb_b10 · lt_dyngt_ALS_s0 · 전체</td><td>밀도 제어 생성 비율 &gt; 0.8</td><td><a href="img/B173-뜬면-1_plate_A2.jpg">0.97999</a></td><td>1160</td></tr>
+<tr><td>나</td><td>B173nb_b10 · lt_dyngt_ALS_s0 · 전체</td><td>자기 깊이 항 모두 힘 없음 &gt; 0.9</td><td><a href="img/B173nb_b10_forces_A2.jpg">0.21488</a></td><td>437720</td></tr>
+<tr><td>다</td><td>B173nb_b10 · lt_dyngt_ALS_s0 · 전체</td><td>마스크 유효 MVS 힘 0.05</td><td><a href="img/B173nb_b10_forces_A2.jpg">0.05</a></td><td>405841</td></tr>
+<tr><td>라</td><td>B173nb_b10 · lt_dyngt_ALS_s0 · 전체</td><td>지붕 깊이/사진 기울기 &gt; 0.1</td><td><a href="img/B173nb_b10_gradients_A2_v2.jpg">0.024149</a></td><td>26794</td></tr>
+<tr><td>가</td><td>B173nb_b10 · lt_dynnow_ALS_s0 · 전체</td><td>밀도 제어 생성 비율 &gt; 0.8</td><td><a href="img/B173-뜬면-1_plate_A2.jpg">0.97105</a></td><td>892</td></tr>
+<tr><td>나</td><td>B173nb_b10 · lt_dynnow_ALS_s0 · 전체</td><td>자기 깊이 항 모두 힘 없음 &gt; 0.9</td><td><a href="img/B173nb_b10_forces_A2.jpg">0.30588</a></td><td>292704</td></tr>
+<tr><td>다</td><td>B173nb_b10 · lt_dynnow_ALS_s0 · 전체</td><td>마스크 유효 MVS 힘 0.05</td><td><a href="img/B173nb_b10_forces_A2.jpg">0.05</a></td><td>272566</td></tr>
+<tr><td>라</td><td>B173nb_b10 · lt_dynnow_ALS_s0 · 전체</td><td>지붕 깊이/사진 기울기 &gt; 0.1</td><td><a href="img/B173nb_b10_gradients_A2_v2.jpg">0.02342</a></td><td>26780</td></tr>
+<tr><td>가</td><td>B0_b10 · lt_dyngt_ALS_s0 · 전체</td><td>밀도 제어 생성 비율 &gt; 0.8</td><td><a href="img/B0-뜬면-1_plate_A2.jpg">0.96516</a></td><td>195</td></tr>
+<tr><td>나</td><td>B0_b10 · lt_dyngt_ALS_s0 · 전체</td><td>자기 깊이 항 모두 힘 없음 &gt; 0.9</td><td><a href="img/B0_b10_forces_A2.jpg">0.25467</a></td><td>415637</td></tr>
+<tr><td>다</td><td>B0_b10 · lt_dyngt_ALS_s0 · 전체</td><td>마스크 유효 MVS 힘 0.05</td><td><a href="img/B0_b10_forces_A2.jpg">0.05</a></td><td>383915</td></tr>
+<tr><td>라</td><td>B0_b10 · lt_dyngt_ALS_s0 · 전체</td><td>지붕 깊이/사진 기울기 &gt; 0.1</td><td><a href="img/B0_b10_gradients_A2_v2.jpg">0.053702</a></td><td>9695</td></tr>
+<tr><td>가</td><td>B0_b10 · lt_dynnow_ALS_s0 · 전체</td><td>밀도 제어 생성 비율 &gt; 0.8</td><td><a href="img/B0-뜬면-1_plate_A2.jpg">0.96531</a></td><td>304</td></tr>
+<tr><td>나</td><td>B0_b10 · lt_dynnow_ALS_s0 · 전체</td><td>자기 깊이 항 모두 힘 없음 &gt; 0.9</td><td><a href="img/B0_b10_forces_A2.jpg">0.47206</a></td><td>494259</td></tr>
+<tr><td>다</td><td>B0_b10 · lt_dynnow_ALS_s0 · 전체</td><td>마스크 유효 MVS 힘 0.05</td><td><a href="img/B0_b10_forces_A2.jpg">0.05</a></td><td>462213</td></tr>
+<tr><td>라</td><td>B0_b10 · lt_dynnow_ALS_s0 · 전체</td><td>지붕 깊이/사진 기울기 &gt; 0.1</td><td><a href="img/B0_b10_gradients_A2_v2.jpg">0.051304</a></td><td>9339</td></tr>
+<tr><td>가</td><td>R1rep_b10 · lt_dyngt_ALS_s0 · 전체</td><td>밀도 제어 생성 비율 &gt; 0.8</td><td><a href="img/R1-뜬면-1_plate_A2.jpg">0.6699</a></td><td>266</td></tr>
+<tr><td>나</td><td>R1rep_b10 · lt_dyngt_ALS_s0 · 전체</td><td>자기 깊이 항 모두 힘 없음 &gt; 0.9</td><td><a href="img/R1rep_b10_forces_A2.jpg">0.10781</a></td><td>1263439</td></tr>
+<tr><td>다</td><td>R1rep_b10 · lt_dyngt_ALS_s0 · 전체</td><td>마스크 유효 MVS 힘 0.05</td><td><a href="img/R1rep_b10_forces_A2.jpg">0.05</a></td><td>1003863</td></tr>
+<tr><td>라</td><td>R1rep_b10 · lt_dyngt_ALS_s0 · 전체</td><td>지붕 깊이/사진 기울기 &gt; 0.1</td><td><a href="img/R1rep_b10_gradients_A2_v2.jpg">0.068283</a></td><td>3464</td></tr>
+<tr><td>가</td><td>R1rep_b10 · lt_dynnow_ALS_s0 · 전체</td><td>밀도 제어 생성 비율 &gt; 0.8</td><td><a href="img/R1-뜬면-1_plate_A2.jpg">0.6651</a></td><td>252</td></tr>
+<tr><td>나</td><td>R1rep_b10 · lt_dynnow_ALS_s0 · 전체</td><td>자기 깊이 항 모두 힘 없음 &gt; 0.9</td><td><a href="img/R1rep_b10_forces_A2.jpg">0.11636</a></td><td>945076</td></tr>
+<tr><td>다</td><td>R1rep_b10 · lt_dynnow_ALS_s0 · 전체</td><td>마스크 유효 MVS 힘 0.05</td><td><a href="img/R1rep_b10_forces_A2.jpg">0.05</a></td><td>771574</td></tr>
+<tr><td>라</td><td>R1rep_b10 · lt_dynnow_ALS_s0 · 전체</td><td>지붕 깊이/사진 기울기 &gt; 0.1</td><td><a href="img/R1rep_b10_gradients_A2_v2.jpg">0.067345</a></td><td>3787</td></tr>
+<tr><td>마</td><td>B173nb_b10 · nojudge_ALS_s0 · B173-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-뜬면-1_plate_A2.jpg">1.216</a></td><td>7393</td></tr>
+<tr><td>마</td><td>B173nb_b10 · nojudge_ALS_s0 · B173-뜬면-2</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-뜬면-2_plate_A2.jpg">0.90943</a></td><td>33390</td></tr>
+<tr><td>마</td><td>B173nb_b10 · nojudge_ALS_s0 · B173-날개</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-날개_plate_A2.jpg">1.0097</a></td><td>837</td></tr>
+<tr><td>마</td><td>B173nb_b10 · lt_dyngt_ALS_s0 · B173-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-뜬면-1_plate_A2.jpg">1.5605</a></td><td>125979</td></tr>
+<tr><td>마</td><td>B173nb_b10 · lt_dyngt_ALS_s0 · B173-뜬면-2</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-뜬면-2_plate_A2.jpg">1.0923</a></td><td>161851</td></tr>
+<tr><td>마</td><td>B173nb_b10 · lt_dyngt_ALS_s0 · B173-날개</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-날개_plate_A2.jpg">1.3021</a></td><td>14862</td></tr>
+<tr><td>마</td><td>B173nb_b10 · lt_dynnow_ALS_s0 · B173-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-뜬면-1_plate_A2.jpg">1.572</a></td><td>93067</td></tr>
+<tr><td>마</td><td>B173nb_b10 · lt_dynnow_ALS_s0 · B173-뜬면-2</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-뜬면-2_plate_A2.jpg">1.0561</a></td><td>93362</td></tr>
+<tr><td>마</td><td>B173nb_b10 · lt_dynnow_ALS_s0 · B173-날개</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B173-날개_plate_A2.jpg">1.1801</a></td><td>4588</td></tr>
+<tr><td>마</td><td>B0_b10 · nojudge_ALS_s0 · B0-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B0-뜬면-1_plate_A2.jpg">1.0492</a></td><td>3115</td></tr>
+<tr><td>마</td><td>B0_b10 · lt_dyngt_ALS_s0 · B0-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B0-뜬면-1_plate_A2.jpg">1.2724</a></td><td>214659</td></tr>
+<tr><td>마</td><td>B0_b10 · lt_dynnow_ALS_s0 · B0-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/B0-뜬면-1_plate_A2.jpg">1.2938</a></td><td>224778</td></tr>
+<tr><td>마</td><td>R1rep_b10 · nojudge_ALS_s0 · R1-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-뜬면-1_plate_A2.jpg">0.8286</a></td><td>71224</td></tr>
+<tr><td>마</td><td>R1rep_b10 · nojudge_ALS_s0 · R1-뜬면-2</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-뜬면-2_plate_A2.jpg">1.2533</a></td><td>16558</td></tr>
+<tr><td>마</td><td>R1rep_b10 · nojudge_ALS_s0 · R1-보존띠-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-보존띠-1_plate_A2.jpg">0.94874</a></td><td>158414</td></tr>
+<tr><td>마</td><td>R1rep_b10 · lt_dyngt_ALS_s0 · R1-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-뜬면-1_plate_A2.jpg">0.92384</a></td><td>677703</td></tr>
+<tr><td>마</td><td>R1rep_b10 · lt_dyngt_ALS_s0 · R1-뜬면-2</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-뜬면-2_plate_A2.jpg">1.0124</a></td><td>327120</td></tr>
+<tr><td>마</td><td>R1rep_b10 · lt_dyngt_ALS_s0 · R1-보존띠-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-보존띠-1_plate_A2.jpg">1.0082</a></td><td>712610</td></tr>
+<tr><td>마</td><td>R1rep_b10 · lt_dynnow_ALS_s0 · R1-뜬면-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-뜬면-1_plate_A2.jpg">0.87435</a></td><td>462215</td></tr>
+<tr><td>마</td><td>R1rep_b10 · lt_dynnow_ALS_s0 · R1-뜬면-2</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-뜬면-2_plate_A2.jpg">1.2077</a></td><td>85969</td></tr>
+<tr><td>마</td><td>R1rep_b10 · lt_dynnow_ALS_s0 · R1-보존띠-1</td><td>뜬 면 / 둘레 색 오차 0.8~1.2</td><td><a href="img/R1-보존띠-1_plate_A2.jpg">0.89926</a></td><td>574751</td></tr>
+<tr><td>바</td><td>R1rep_b10 · fd_current_ALS_s0 · R1-뜬면-1</td><td>3,000회 초기화 뒤 7,000회 안 발생; 당시 자료와 0.2 m 초과</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">500</a></td><td>3000</td></tr>
+<tr><td>바·prior</td><td>R1rep_b10 · fd_current_ALS_s0 · R1-뜬면-1</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">0.4396</a></td><td>41444</td></tr>
+<tr><td>바·mvs</td><td>R1rep_b10 · fd_current_ALS_s0 · R1-뜬면-1</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">0.42519</a></td><td>37307</td></tr>
+<tr><td>바</td><td>R1rep_b10 · fd_dynnow_ALS_s0 · R1-뜬면-1</td><td>3,000회 초기화 뒤 7,000회 안 발생; 당시 자료와 0.2 m 초과</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">500</a></td><td>7000</td></tr>
+<tr><td>바·prior</td><td>R1rep_b10 · fd_dynnow_ALS_s0 · R1-뜬면-1</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">0.72255</a></td><td>11584</td></tr>
+<tr><td>바·mvs</td><td>R1rep_b10 · fd_dynnow_ALS_s0 · R1-뜬면-1</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">0.70939</a></td><td>9502</td></tr>
+<tr><td>바</td><td>R1rep_b10 · fd_current_ALS_s0_record_only · R1-뜬면-1</td><td>3,000회 초기화 뒤 7,000회 안 발생; 당시 자료와 0.2 m 초과</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">500</a></td><td>7000</td></tr>
+<tr><td>바·prior</td><td>R1rep_b10 · fd_current_ALS_s0_record_only · R1-뜬면-1</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">0.43979</a></td><td>41553</td></tr>
+<tr><td>바·mvs</td><td>R1rep_b10 · fd_current_ALS_s0_record_only · R1-뜬면-1</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-1_formation_A2.jpg">0.42372</a></td><td>37458</td></tr>
+<tr><td>바</td><td>R1rep_b10 · fd_current_ALS_s0 · R1-뜬면-2</td><td>3,000회 초기화 뒤 7,000회 안 발생; 당시 자료와 0.2 m 초과</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">500</a></td><td>3000</td></tr>
+<tr><td>바·prior</td><td>R1rep_b10 · fd_current_ALS_s0 · R1-뜬면-2</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">0.41298</a></td><td>18240</td></tr>
+<tr><td>바·mvs</td><td>R1rep_b10 · fd_current_ALS_s0 · R1-뜬면-2</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">0.38854</a></td><td>14804</td></tr>
+<tr><td>바</td><td>R1rep_b10 · fd_dynnow_ALS_s0 · R1-뜬면-2</td><td>3,000회 초기화 뒤 7,000회 안 발생; 당시 자료와 0.2 m 초과</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">500</a></td><td>7000</td></tr>
+<tr><td>바·prior</td><td>R1rep_b10 · fd_dynnow_ALS_s0 · R1-뜬면-2</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">0.45335</a></td><td>2530</td></tr>
+<tr><td>바·mvs</td><td>R1rep_b10 · fd_dynnow_ALS_s0 · R1-뜬면-2</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">0.49591</a></td><td>1051</td></tr>
+<tr><td>바</td><td>R1rep_b10 · fd_current_ALS_s0_record_only · R1-뜬면-2</td><td>3,000회 초기화 뒤 7,000회 안 발생; 당시 자료와 0.2 m 초과</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">500</a></td><td>7000</td></tr>
+<tr><td>바·prior</td><td>R1rep_b10 · fd_current_ALS_s0_record_only · R1-뜬면-2</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">0.40613</a></td><td>17925</td></tr>
+<tr><td>바·mvs</td><td>R1rep_b10 · fd_current_ALS_s0_record_only · R1-뜬면-2</td><td>처음 저장된 뜬 면 화소의 자료 법선 거리 중앙값 &gt; 0.2 m</td><td><a href="img/R1-뜬면-2_formation_A2.jpg">0.37299</a></td><td>14567</td></tr>
+</table></div><h2 id="multiview">사진마다 보는 추가 확인</h2>
+<p>사진 수는 각 결과 자신의 뜬 면 패치 첫 만남 점을 투영한 대표 화소에서 센다. 힘 비율은 기존 관문의 전체 패치 화소 중 실제 렌더가 참값+τ 위인 화소에서 센다. 두 분모는 다르다. 기존 관문 정의·값은 그대로다. 사진 수는 가림으로 사진을 제외하지 않으며 동일 물리적 표면의 사진 관찰을 증명하지 않는다.</p>
+<figure><img loading="lazy" src="img/B173-뜬면-1_multiview_map_A2.jpg" alt="B173-뜬면-1 뜬 면을 본 사진 수 지도"><figcaption>뜬 면을 본 사진 수 지도</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-뜬면-1_multiview_examples_A2.jpg" alt="B173-뜬면-1 뜬 면과 지붕을 본 사진의 색·깊이"><figcaption>뜬 면과 지붕을 본 사진의 색·깊이</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-뜬면-2_multiview_map_A2.jpg" alt="B173-뜬면-2 뜬 면을 본 사진 수 지도"><figcaption>뜬 면을 본 사진 수 지도</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-뜬면-2_multiview_examples_A2.jpg" alt="B173-뜬면-2 뜬 면과 지붕을 본 사진의 색·깊이"><figcaption>뜬 면과 지붕을 본 사진의 색·깊이</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-날개_multiview_map_A2.jpg" alt="B173-날개 뜬 면을 본 사진 수 지도"><figcaption>뜬 면을 본 사진 수 지도</figcaption></figure>
+<figure><img loading="lazy" src="img/B173-날개_multiview_examples_A2.jpg" alt="B173-날개 뜬 면과 지붕을 본 사진의 색·깊이"><figcaption>뜬 면과 지붕을 본 사진의 색·깊이</figcaption></figure>
+<figure><img loading="lazy" src="img/B0-뜬면-1_multiview_map_A2.jpg" alt="B0-뜬면-1 뜬 면을 본 사진 수 지도"><figcaption>뜬 면을 본 사진 수 지도</figcaption></figure>
+<figure><img loading="lazy" src="img/B0-뜬면-1_multiview_examples_A2.jpg" alt="B0-뜬면-1 뜬 면과 지붕을 본 사진의 색·깊이"><figcaption>뜬 면과 지붕을 본 사진의 색·깊이</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-1_multiview_map_A2.jpg" alt="R1-뜬면-1 뜬 면을 본 사진 수 지도"><figcaption>뜬 면을 본 사진 수 지도</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-1_multiview_examples_A2.jpg" alt="R1-뜬면-1 뜬 면과 지붕을 본 사진의 색·깊이"><figcaption>뜬 면과 지붕을 본 사진의 색·깊이</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-2_multiview_map_A2.jpg" alt="R1-뜬면-2 뜬 면을 본 사진 수 지도"><figcaption>뜬 면을 본 사진 수 지도</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-2_multiview_examples_A2.jpg" alt="R1-뜬면-2 뜬 면과 지붕을 본 사진의 색·깊이"><figcaption>뜬 면과 지붕을 본 사진의 색·깊이</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-보존띠-1_multiview_map_A2.jpg" alt="R1-보존띠-1 뜬 면을 본 사진 수 지도"><figcaption>뜬 면을 본 사진 수 지도</figcaption></figure>
+<figure><img loading="lazy" src="img/R1-보존띠-1_multiview_examples_A2.jpg" alt="R1-보존띠-1 뜬 면과 지붕을 본 사진의 색·깊이"><figcaption>뜬 면과 지붕을 본 사진의 색·깊이</figcaption></figure>
+<p>TSDF 확인: Open3D 0.19.0은 현재 사진의 깊이 점 주변에서 지정한 블록만 갱신한다. 이전에 열렸어도 현재 지정되지 않은 블록은 그대로다. 같은 런타임의 2 m→4 m 시험에서 앞쪽 TSDF 표본 6,588개가 정확히 같았고, 2 m→2.1 m 겹침 시험에서는 바뀌었다. 사례별 원인 판정은 하지 않았다.</p>
+<h2 id="formation">생기는 과정</h2>
+<p>저장본 15,000·30,000회와 조건부 재실행 500회 간격을 구분한다. 기존 손실의 첫 실행은 3,100회 불투명도 건강 기준으로 중단됐다. 사용자가 승인한 한 번의 재시도만 그 기준을 기록 전용으로 두었다. NaN·실행 오류와 다른 원래 검사는 유지했다. 선은 저장된 시점을 연결한 것이며, 그 사이 발생 시각은 확인할 수 없다. 주 시점 렌더 화소 비율은 메시의 넓이 점수가 아니다.</p>
+<figure><img loading="lazy" src="img/R1-뜬면-1_formation_A2.jpg" alt="R1-뜬면-1 생기는 과정"></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-1_formation_depth_A2.jpg" alt="R1-뜬면-1 생기는 과정"></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-1_formation_population_A2.jpg" alt="R1-뜬면-1 생기는 과정"></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-2_formation_A2.jpg" alt="R1-뜬면-2 생기는 과정"></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-2_formation_depth_A2.jpg" alt="R1-뜬면-2 생기는 과정"></figure>
+<figure><img loading="lazy" src="img/R1-뜬면-2_formation_population_A2.jpg" alt="R1-뜬면-2 생기는 과정"></figure>
+<p>scientific_verdict: null. R1 보존 띠의 기준 통과 실사와 기존 모델의 생성 반복은 확인 불가다.</p><p><a href="data.json">반올림 전 값과 출처</a></p></main><script src="data.js"></script><script src="models.js"></script><script src="viewer.js"></script></html>

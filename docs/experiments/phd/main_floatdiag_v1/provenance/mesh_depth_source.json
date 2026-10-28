@@ -1,0 +1,288 @@
+{
+  "at": "2026-10-28T14:46:10.033488+09:00",
+  "status": "PASS",
+  "files": [
+    {
+      "revision": "r14",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r14/arguments/__init__.py",
+      "sha256": "059113ea23d1905b750b9849f95aafb1f7ea3f644f8a261a656535454ec0c71c"
+    },
+    {
+      "revision": "r14",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r14/gaussian_renderer/__init__.py",
+      "sha256": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492"
+    },
+    {
+      "revision": "r14",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r14/utils/mesh_utils.py",
+      "sha256": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c"
+    },
+    {
+      "revision": "r15",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r15/arguments/__init__.py",
+      "sha256": "059113ea23d1905b750b9849f95aafb1f7ea3f644f8a261a656535454ec0c71c"
+    },
+    {
+      "revision": "r15",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r15/gaussian_renderer/__init__.py",
+      "sha256": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492"
+    },
+    {
+      "revision": "r15",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r15/utils/mesh_utils.py",
+      "sha256": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c"
+    },
+    {
+      "revision": "r17",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/arguments/__init__.py",
+      "sha256": "059113ea23d1905b750b9849f95aafb1f7ea3f644f8a261a656535454ec0c71c"
+    },
+    {
+      "revision": "r17",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/gaussian_renderer/__init__.py",
+      "sha256": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492"
+    },
+    {
+      "revision": "r17",
+      "file": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/utils/mesh_utils.py",
+      "sha256": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c"
+    },
+    {
+      "file": "/repo/scripts/phd/main_stage1_v1/gpu_s1.py",
+      "sha256": "40b1ba4f9911feb694f1241dc57434c7c0c02d54f4a639d10bbfa947140f31eb"
+    },
+    {
+      "file": "/repo/scripts/phd/main_stage3_v1/gpu_s3.py",
+      "sha256": "948a6539e7b3a257054feb23b073109793ad794d4c8384de98a586210326c65d"
+    },
+    {
+      "file": "/repo/scripts/phd/main_losstrain_v1/gpu_post.py",
+      "sha256": "d6a5fa89540f101ee7e9229a007ba832039a030ffcc73fa91004b511ae5f0de0"
+    },
+    {
+      "file": "/repo/scripts/phd/main_losstrain_v1/tiled_post.py",
+      "sha256": "0e93113e8c21cb691f29f71935fa679f51c4073afc3ec99bd20c17e5538664bb"
+    }
+  ],
+  "commands": [
+    {
+      "site": "B173nb_b10",
+      "result": "nojudge_ALS_s0",
+      "receipt": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/receipt.json",
+      "sha256": "7e5cf3f1b4f4ddc042d05b9dd52a2c63c01bf6bea66b896b9d563941fe766030",
+      "training_source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/src/phd/forks/GeoGS-conf-guided-v1-r15",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dyngt_ALS_s0/attempt_3/command.json",
+      "sha256": "89da7ee26f1f9422f1e62fee12af38c91fabf488808729ac914a3339ab10d6ca",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "B173nb_b10",
+      "result": "lt_dynnow_ALS_s0",
+      "receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/attempt_0/command.json",
+      "sha256": "bfd97da53d96978678a684159dae684f5ac583e7021839b9a44739c69c5ffbdf",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "B0_b10",
+      "result": "nojudge_ALS_s0",
+      "receipt": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/receipt.json",
+      "sha256": "ef88a8b26a678e2f6d632ed37738f9cff62781b7c9490ac5cf3021d7fa9454ee",
+      "training_source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/src/phd/forks/GeoGS-conf-guided-v1-r15",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "B0_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dyngt_ALS_s0/attempt_0/command.json",
+      "sha256": "22c7f5ea222af39bb2dba00dc6dd8b4969b8d37eef157b39bbc7a241e27716b9",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "B0_b10",
+      "result": "lt_dynnow_ALS_s0",
+      "receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_ALS_s0/attempt_1/command.json",
+      "sha256": "eb04dcbf19877a242667f417c390321fdf3e92f10f1c8a028f7391c053cb8c99",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "R1rep_b10",
+      "result": "nojudge_ALS_s0",
+      "receipt": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/receipt.json",
+      "sha256": "7d838f25d14cc5e25ad44e0a27e0bdd1bdf4639d2795132f8b57c156ec451485",
+      "training_source": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/src/phd/forks/GeoGS-conf-guided-v1-r15",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "R1rep_b10",
+      "result": "lt_dyngt_ALS_s0",
+      "receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dyngt_ALS_s0/attempt_0/command.json",
+      "sha256": "dd10573086e8385409f6acad183d18552c1db739868f30a78cf72dd00990025a",
+      "depth_ratio_override": false
+    },
+    {
+      "site": "R1rep_b10",
+      "result": "lt_dynnow_ALS_s0",
+      "receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/command.json",
+      "sha256": "96d5d375f28ff1331e52dcdbe769e24f6a04c9af9acb5695893ef0d7e596a0bc",
+      "depth_ratio_override": false
+    }
+  ],
+  "runtime": [
+    {
+      "at": "2026-10-28T14:34:24.058556+09:00",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "rows": [
+        {
+          "result": "nojudge_ALS_s0",
+          "view": "DJI_20241217091125_0105_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 758729,
+          "pixels": 758784,
+          "model_sha256": "19bdbb324b9dc917e2717e06a882a7d290e832282192e6eea208711ec1583174"
+        },
+        {
+          "result": "nojudge_ALS_s0",
+          "view": "DJI_20241217091241_0143_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 757795,
+          "pixels": 758784,
+          "model_sha256": "19bdbb324b9dc917e2717e06a882a7d290e832282192e6eea208711ec1583174"
+        },
+        {
+          "result": "nojudge_ALS_s0",
+          "view": "DJI_20241217091249_0147_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 756788,
+          "pixels": 758784,
+          "model_sha256": "19bdbb324b9dc917e2717e06a882a7d290e832282192e6eea208711ec1583174"
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "view": "DJI_20241217091125_0105_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 758783,
+          "pixels": 758784,
+          "model_sha256": "699dead664534effad8050e68233077ea6a4bc05288adba2844d3cbc9e19cc19"
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "view": "DJI_20241217091241_0143_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 758355,
+          "pixels": 758784,
+          "model_sha256": "699dead664534effad8050e68233077ea6a4bc05288adba2844d3cbc9e19cc19"
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "view": "DJI_20241217091249_0147_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 758641,
+          "pixels": 758784,
+          "model_sha256": "699dead664534effad8050e68233077ea6a4bc05288adba2844d3cbc9e19cc19"
+        }
+      ],
+      "kernel_path": "/opt/geogs-source/submodules/diff-surfel-rasterization/cuda_rasterizer/forward.cu",
+      "kernel_sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53",
+      "extension_sha256": "5ed584496a1f4f8d7bb8c2fb5d0e849a7d5e76924d89043eeb101dc83c9dd0a8",
+      "renderer_sha256": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492",
+      "opacity_05_definition": "First accepted contribution where accumulated opacity reaches 0.5 in the unchanged rasterizer integration order; alpha below 0.5 is unavailable. No interpolation between discrete surfels.",
+      "depth_units": "camera Z metres; unnormalized camera ray has z=1",
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "at": "2026-10-28T14:34:42.812392+09:00",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "rows": [
+        {
+          "result": "nojudge_ALS_s0",
+          "view": "DJI_20241217084247_0007_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 757843,
+          "pixels": 758784,
+          "model_sha256": "01c273e8dcbc1bd31d5da1c9ddc5423f9b340a5d392edf3284cb730249aea32b"
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "view": "DJI_20241217084247_0007_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 758784,
+          "pixels": 758784,
+          "model_sha256": "38409ce7c57a9304b33b40c1e51a71107e05d85f7eb3a0e5c27721f529f50465"
+        }
+      ],
+      "kernel_path": "/opt/geogs-source/submodules/diff-surfel-rasterization/cuda_rasterizer/forward.cu",
+      "kernel_sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53",
+      "extension_sha256": "5ed584496a1f4f8d7bb8c2fb5d0e849a7d5e76924d89043eeb101dc83c9dd0a8",
+      "renderer_sha256": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492",
+      "opacity_05_definition": "First accepted contribution where accumulated opacity reaches 0.5 in the unchanged rasterizer integration order; alpha below 0.5 is unavailable. No interpolation between discrete surfels.",
+      "depth_units": "camera Z metres; unnormalized camera ray has z=1",
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    },
+    {
+      "at": "2026-10-28T14:34:19.252597+09:00",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "rows": [
+        {
+          "result": "nojudge_ALS_s0",
+          "view": "DJI_20241217084733_0150_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 757719,
+          "pixels": 758784,
+          "model_sha256": "7e5667254f087254b7b9d91277cd9daa29f49657c08f3f4764263b0046f3f92e"
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "view": "DJI_20241217084733_0150_D",
+          "depth_ratio": 0.0,
+          "exact_cached_surf_depth": true,
+          "exact_surf_equals_mean": true,
+          "opacity_05_reached": 758784,
+          "pixels": 758784,
+          "model_sha256": "cb28e952eab2163a74c7a7237b935aa0e4a7f288884184babf9efad108ac8b4d"
+        }
+      ],
+      "kernel_path": "/opt/geogs-source/submodules/diff-surfel-rasterization/cuda_rasterizer/forward.cu",
+      "kernel_sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53",
+      "extension_sha256": "5ed584496a1f4f8d7bb8c2fb5d0e849a7d5e76924d89043eeb101dc83c9dd0a8",
+      "renderer_sha256": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492",
+      "opacity_05_definition": "First accepted contribution where accumulated opacity reaches 0.5 in the unchanged rasterizer integration order; alpha below 0.5 is unavailable. No interpolation between discrete surfels.",
+      "depth_units": "camera Z metres; unnormalized camera ray has z=1",
+      "optimizer_steps": 0,
+      "scientific_verdict": null
+    }
+  ],
+  "conclusion": "TSDF input is (1) surf_depth, which equals (4) opacity-weighted mean at depth_ratio=0.0. It is not (3) cumulative opacity 0.5 depth or (2) already-extracted mesh first hit.",
+  "training": "PipelineParams depth_ratio=0.0; exact commands have no override; surf_depth=(1-depth_ratio)*expected+depth_ratio*median",
+  "post": "gpu_s1.load and gpu_s3.load create default PipelineParams. GaussianExtractor.reconstruction reads render_pkg[surf_depth]. LT tiled_post replaces only extract_mesh_bounded; saved depths and integration are unchanged.",
+  "median": "CUDA forward.cu stores current depth while pre-contribution transmittance T>0.5; valid only if final accumulated alpha>=0.5. Uses renderer contribution order, no between-surfel interpolation.",
+  "limitation": "TSDF integration, voxel extraction and visibility can make extracted-mesh first-hit depth differ from its input mean depth; difference is measured, not assumed zero.",
+  "scientific_verdict": null
+}

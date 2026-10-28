@@ -1,0 +1,702 @@
+{
+  "at": "2026-10-28T14:19:55.229634+09:00",
+  "authorization": "user-selected work order 4.7",
+  "condition": [
+    {
+      "result": "lt_dyngt_ALS_s0",
+      "saved_iterations": [
+        15000,
+        30000
+      ]
+    },
+    {
+      "result": "lt_dynnow_ALS_s0",
+      "saved_iterations": [
+        15000,
+        30000
+      ]
+    }
+  ],
+  "original_command": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/command.json",
+  "original_sha256": "96d5d375f28ff1331e52dcdbe769e24f6a04c9af9acb5695893ef0d7e596a0bc",
+  "runs": [
+    {
+      "site": "R1rep_b10",
+      "name": "fd_dynnow_ALS_s0",
+      "mode": "dynamic",
+      "arguments": [
+        "-s",
+        "/p/fork_inputs/s61/R1rep_b10/scene_ALS",
+        "-m",
+        "/o/runs/R1rep_b10/fd_dynnow_ALS_s0/model",
+        "--eval",
+        "-r",
+        "1",
+        "--lod_depth_path",
+        "/p/fork_none",
+        "--da_depth_path",
+        "/p/fork_none",
+        "--stage_switch_iter",
+        "0",
+        "--lambda_lod_init",
+        "0.0",
+        "--lambda_lod_anchor",
+        "0.0",
+        "--lambda_da_depth",
+        "0.0",
+        "--jbgs_judgment",
+        "P",
+        "--jbgs_maps_root",
+        "/p/fork_inputs/s61/R1rep_b10/maps",
+        "--jbgs_scene",
+        "N",
+        "--jbgs_origin_path",
+        "/p/fork_inputs/s61/R1rep_b10/scene_ALS/sparse/0/origin.npy",
+        "--jbgs_lambda_mvs",
+        "0.05",
+        "--jbgs_lambda_prior",
+        "0.05",
+        "--iterations",
+        "7000",
+        "--test_iterations",
+        "7000",
+        "--save_iterations",
+        "500",
+        "1000",
+        "1500",
+        "2000",
+        "2500",
+        "3000",
+        "3500",
+        "4000",
+        "4500",
+        "5000",
+        "5500",
+        "6000",
+        "6500",
+        "7000",
+        "--jbgs_log_interval",
+        "100",
+        "--jbgs_readout_interval",
+        "7000",
+        "--jbgs_snapshot_iterations",
+        "500",
+        "1000",
+        "1500",
+        "2000",
+        "2500",
+        "3000",
+        "3500",
+        "4000",
+        "4500",
+        "5000",
+        "5500",
+        "6000",
+        "6500",
+        "7000",
+        "--jbgs_dump_iterations",
+        "7000",
+        "--jbgs_prior_set",
+        "prior_ALS",
+        "--jbgs_tau_set",
+        "tau_ALS",
+        "--jbgs_tau_v",
+        "0.10341712496901895",
+        "--jbgs_prop_store",
+        "/p/fork_inputs/s61/R1rep_b10/store_ALS.npz",
+        "--jbgs_prop_tag",
+        "data",
+        "--jbgs_prop_majority",
+        "0.6666666666666666",
+        "--jbgs_prop_min_evidence",
+        "5",
+        "--jbgs_prop_max_distance",
+        "1.0",
+        "--jbgs_seat_path",
+        "/p/fork_inputs/s61/R1rep_b10/seat_ALS.npy",
+        "--jbgs_locmap_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/locmap_ALS",
+        "--jbgs_markmap_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/markmap_ALS",
+        "--jbgs_markcode_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/markcode_ALS",
+        "--jbgs_prop_pairs",
+        "/p/fork_inputs/s61/R1rep_b10/pairs_ALS.npz",
+        "--jbgs_prop_knn",
+        "/p/fork_inputs/s61/R1rep_b10/knn_ALS.npz",
+        "--jbgs_tau_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/tau_ALS",
+        "--jbgs_tau_roof",
+        "0.10341712496901895",
+        "--jbgs_tau_wall",
+        "0.10341712496901895",
+        "--jbgs_prior_normal_path",
+        "/p/fork_inputs/s61/R1rep_b10/prior_normal_ALS.npy",
+        "--jbgs_prior_normal_mode",
+        "cell",
+        "--jbgs_e_interval",
+        "500",
+        "--jbgs_e_threshold",
+        "0.5",
+        "--jbgs_e_depth_tol",
+        "0.5",
+        "--jbgs_e_alpha_min",
+        "0.05",
+        "--jbgs_reread_samples",
+        "3",
+        "--jbgs_depth_norm",
+        "pixels",
+        "--jbgs_lock_lr_scale",
+        "0.01",
+        "--jbgs_lock_opacity_floor",
+        "0.5",
+        "--jbgs_lock_drift_tau_mult",
+        "4.0",
+        "--jbgs_trunc_hi",
+        "4.0",
+        "--jbgs_monitor_views",
+        "DJI_20241217084243_0005_D",
+        "DJI_20241217084245_0006_D",
+        "--jbgs_stop_on_red",
+        "0",
+        "--jbgs_rule",
+        "auto",
+        "--jbgs_prior_kind",
+        "ALS",
+        "--jbgs_prior_shift",
+        "0.0",
+        "0.0",
+        "0.0",
+        "--jbgs_seed",
+        "0",
+        "--jbgs_sw_confidence_mask",
+        "1",
+        "--jbgs_sw_judgment",
+        "0",
+        "--jbgs_sw_propagation",
+        "1",
+        "--jbgs_sw_prior_band",
+        "1",
+        "--jbgs_sw_protection",
+        "1",
+        "--jbgs_sw_init_exclusion",
+        "1",
+        "--jbgs_sw_prior",
+        "1",
+        "--jbgs_sw_depth_loss",
+        "dynamic",
+        "--jbgs_vfile_dir",
+        "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS",
+        "--jbgs_vfile_vprior",
+        "now",
+        "--jbgs_depth_lambda",
+        "0.0025",
+        "--jbgs_lt_monitor",
+        "1",
+        "--jbgs_lt_monitor_v2",
+        "1",
+        "--jbgs_lt_nojudge_inventory",
+        "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/monitor_v2/nojudge/R1rep_b10__ALS.json",
+        "--jbgs_lt_diagnostic_cells",
+        "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+        "--data_device",
+        "cpu",
+        "--jbgs_memlog_from",
+        "500",
+        "--jbgs_memlog_to",
+        "7000",
+        "--jbgs_memlog_every",
+        "500",
+        "--jbgs_oom_record",
+        "1"
+      ],
+      "changes": [
+        {
+          "option": "-m",
+          "before": [
+            "/o/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/model"
+          ],
+          "after": [
+            "/o/runs/R1rep_b10/fd_dynnow_ALS_s0/model"
+          ]
+        },
+        {
+          "option": "--iterations",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--test_iterations",
+          "before": [
+            "7000",
+            "15000",
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--save_iterations",
+          "before": [
+            "15000",
+            "30000"
+          ],
+          "after": [
+            "500",
+            "1000",
+            "1500",
+            "2000",
+            "2500",
+            "3000",
+            "3500",
+            "4000",
+            "4500",
+            "5000",
+            "5500",
+            "6000",
+            "6500",
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_readout_interval",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_snapshot_iterations",
+          "before": [
+            "2000",
+            "5000",
+            "10000",
+            "15000",
+            "20000",
+            "30000"
+          ],
+          "after": [
+            "500",
+            "1000",
+            "1500",
+            "2000",
+            "2500",
+            "3000",
+            "3500",
+            "4000",
+            "4500",
+            "5000",
+            "5500",
+            "6000",
+            "6500",
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_dump_iterations",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_vfile_dir",
+          "before": [
+            "/o/direct_stage1_v2/R1rep_b10__ALS"
+          ],
+          "after": [
+            "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS"
+          ]
+        },
+        {
+          "option": "--jbgs_lt_nojudge_inventory",
+          "before": [
+            "/o/checks/monitor_v2/nojudge/R1rep_b10__ALS.json"
+          ],
+          "after": [
+            "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/monitor_v2/nojudge/R1rep_b10__ALS.json"
+          ]
+        },
+        {
+          "option": "--jbgs_lt_diagnostic_cells",
+          "before": [
+            "/o/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz"
+          ],
+          "after": [
+            "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz"
+          ]
+        },
+        {
+          "option": "--jbgs_memlog_to",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        }
+      ],
+      "source_revision": "r17",
+      "model_destination": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_floatdiag_v1/PHD-MAIN-FLOATDIAG-v1/runs/R1rep_b10/fd_dynnow_ALS_s0/model",
+      "optimizer_steps_requested": 7000,
+      "seed": 0,
+      "depth_lambda": 0.0025,
+      "health": "unchanged r17 monitor_v2",
+      "purpose": "time-of-formation only; not used to score the 30000-step result",
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "name": "fd_current_ALS_s0",
+      "mode": "current",
+      "arguments": [
+        "-s",
+        "/p/fork_inputs/s61/R1rep_b10/scene_ALS",
+        "-m",
+        "/o/runs/R1rep_b10/fd_current_ALS_s0/model",
+        "--eval",
+        "-r",
+        "1",
+        "--lod_depth_path",
+        "/p/fork_none",
+        "--da_depth_path",
+        "/p/fork_none",
+        "--stage_switch_iter",
+        "0",
+        "--lambda_lod_init",
+        "0.0",
+        "--lambda_lod_anchor",
+        "0.0",
+        "--lambda_da_depth",
+        "0.0",
+        "--jbgs_judgment",
+        "P",
+        "--jbgs_maps_root",
+        "/p/fork_inputs/s61/R1rep_b10/maps",
+        "--jbgs_scene",
+        "N",
+        "--jbgs_origin_path",
+        "/p/fork_inputs/s61/R1rep_b10/scene_ALS/sparse/0/origin.npy",
+        "--jbgs_lambda_mvs",
+        "0.05",
+        "--jbgs_lambda_prior",
+        "0.05",
+        "--iterations",
+        "7000",
+        "--test_iterations",
+        "7000",
+        "--save_iterations",
+        "500",
+        "1000",
+        "1500",
+        "2000",
+        "2500",
+        "3000",
+        "3500",
+        "4000",
+        "4500",
+        "5000",
+        "5500",
+        "6000",
+        "6500",
+        "7000",
+        "--jbgs_log_interval",
+        "100",
+        "--jbgs_readout_interval",
+        "7000",
+        "--jbgs_snapshot_iterations",
+        "500",
+        "1000",
+        "1500",
+        "2000",
+        "2500",
+        "3000",
+        "3500",
+        "4000",
+        "4500",
+        "5000",
+        "5500",
+        "6000",
+        "6500",
+        "7000",
+        "--jbgs_dump_iterations",
+        "7000",
+        "--jbgs_prior_set",
+        "prior_ALS",
+        "--jbgs_tau_set",
+        "tau_ALS",
+        "--jbgs_tau_v",
+        "0.10341712496901895",
+        "--jbgs_prop_store",
+        "/p/fork_inputs/s61/R1rep_b10/store_ALS.npz",
+        "--jbgs_prop_tag",
+        "data",
+        "--jbgs_prop_majority",
+        "0.6666666666666666",
+        "--jbgs_prop_min_evidence",
+        "5",
+        "--jbgs_prop_max_distance",
+        "1.0",
+        "--jbgs_seat_path",
+        "/p/fork_inputs/s61/R1rep_b10/seat_ALS.npy",
+        "--jbgs_locmap_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/locmap_ALS",
+        "--jbgs_markmap_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/markmap_ALS",
+        "--jbgs_markcode_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/markcode_ALS",
+        "--jbgs_prop_pairs",
+        "/p/fork_inputs/s61/R1rep_b10/pairs_ALS.npz",
+        "--jbgs_prop_knn",
+        "/p/fork_inputs/s61/R1rep_b10/knn_ALS.npz",
+        "--jbgs_tau_dir",
+        "/p/fork_inputs/s61/R1rep_b10/maps/tau_ALS",
+        "--jbgs_tau_roof",
+        "0.10341712496901895",
+        "--jbgs_tau_wall",
+        "0.10341712496901895",
+        "--jbgs_prior_normal_path",
+        "/p/fork_inputs/s61/R1rep_b10/prior_normal_ALS.npy",
+        "--jbgs_prior_normal_mode",
+        "cell",
+        "--jbgs_e_interval",
+        "500",
+        "--jbgs_e_threshold",
+        "0.5",
+        "--jbgs_e_depth_tol",
+        "0.5",
+        "--jbgs_e_alpha_min",
+        "0.05",
+        "--jbgs_reread_samples",
+        "3",
+        "--jbgs_depth_norm",
+        "pixels",
+        "--jbgs_lock_lr_scale",
+        "0.01",
+        "--jbgs_lock_opacity_floor",
+        "0.5",
+        "--jbgs_lock_drift_tau_mult",
+        "4.0",
+        "--jbgs_trunc_hi",
+        "4.0",
+        "--jbgs_monitor_views",
+        "DJI_20241217084243_0005_D",
+        "DJI_20241217084245_0006_D",
+        "--jbgs_stop_on_red",
+        "0",
+        "--jbgs_rule",
+        "auto",
+        "--jbgs_prior_kind",
+        "ALS",
+        "--jbgs_prior_shift",
+        "0.0",
+        "0.0",
+        "0.0",
+        "--jbgs_seed",
+        "0",
+        "--jbgs_sw_confidence_mask",
+        "1",
+        "--jbgs_sw_judgment",
+        "0",
+        "--jbgs_sw_propagation",
+        "1",
+        "--jbgs_sw_prior_band",
+        "1",
+        "--jbgs_sw_protection",
+        "1",
+        "--jbgs_sw_init_exclusion",
+        "1",
+        "--jbgs_sw_prior",
+        "1",
+        "--jbgs_sw_depth_loss",
+        "current",
+        "--jbgs_vfile_dir",
+        "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS",
+        "--jbgs_vfile_vprior",
+        "now",
+        "--jbgs_depth_lambda",
+        "0.0025",
+        "--jbgs_lt_monitor",
+        "1",
+        "--jbgs_lt_monitor_v2",
+        "1",
+        "--jbgs_lt_nojudge_inventory",
+        "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/monitor_v2/nojudge/R1rep_b10__ALS.json",
+        "--jbgs_lt_diagnostic_cells",
+        "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+        "--data_device",
+        "cpu",
+        "--jbgs_memlog_from",
+        "500",
+        "--jbgs_memlog_to",
+        "7000",
+        "--jbgs_memlog_every",
+        "500",
+        "--jbgs_oom_record",
+        "1"
+      ],
+      "changes": [
+        {
+          "option": "-m",
+          "before": [
+            "/o/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/model"
+          ],
+          "after": [
+            "/o/runs/R1rep_b10/fd_current_ALS_s0/model"
+          ]
+        },
+        {
+          "option": "--iterations",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--test_iterations",
+          "before": [
+            "7000",
+            "15000",
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--save_iterations",
+          "before": [
+            "15000",
+            "30000"
+          ],
+          "after": [
+            "500",
+            "1000",
+            "1500",
+            "2000",
+            "2500",
+            "3000",
+            "3500",
+            "4000",
+            "4500",
+            "5000",
+            "5500",
+            "6000",
+            "6500",
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_readout_interval",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_snapshot_iterations",
+          "before": [
+            "2000",
+            "5000",
+            "10000",
+            "15000",
+            "20000",
+            "30000"
+          ],
+          "after": [
+            "500",
+            "1000",
+            "1500",
+            "2000",
+            "2500",
+            "3000",
+            "3500",
+            "4000",
+            "4500",
+            "5000",
+            "5500",
+            "6000",
+            "6500",
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_dump_iterations",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        },
+        {
+          "option": "--jbgs_sw_depth_loss",
+          "before": [
+            "dynamic"
+          ],
+          "after": [
+            "current"
+          ]
+        },
+        {
+          "option": "--jbgs_vfile_dir",
+          "before": [
+            "/o/direct_stage1_v2/R1rep_b10__ALS"
+          ],
+          "after": [
+            "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS"
+          ]
+        },
+        {
+          "option": "--jbgs_lt_nojudge_inventory",
+          "before": [
+            "/o/checks/monitor_v2/nojudge/R1rep_b10__ALS.json"
+          ],
+          "after": [
+            "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/monitor_v2/nojudge/R1rep_b10__ALS.json"
+          ]
+        },
+        {
+          "option": "--jbgs_lt_diagnostic_cells",
+          "before": [
+            "/o/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz"
+          ],
+          "after": [
+            "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz"
+          ]
+        },
+        {
+          "option": "--jbgs_memlog_to",
+          "before": [
+            "30000"
+          ],
+          "after": [
+            "7000"
+          ]
+        }
+      ],
+      "source_revision": "r17",
+      "model_destination": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_floatdiag_v1/PHD-MAIN-FLOATDIAG-v1/runs/R1rep_b10/fd_current_ALS_s0/model",
+      "optimizer_steps_requested": 7000,
+      "seed": 0,
+      "depth_lambda": 0.05,
+      "health": "unchanged r17 monitor_v2",
+      "purpose": "time-of-formation only; not used to score the 30000-step result",
+      "scientific_verdict": null
+    }
+  ],
+  "scientific_verdict": null
+}

@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-28T14:23:49.159848+09:00",
+  "status": "PASS",
+  "rows": [
+    {
+      "site": "R1rep_b10",
+      "pixels": 945076,
+      "all_terms_dead": 109965,
+      "fraction": 0.11635572165624775,
+      "formula_vs_autograd_dead_disagreements": 0,
+      "max_abs_force_difference": 6.983601699706021e-08,
+      "mapped_float_pixels_without_prior": 0,
+      "source": "/out/diagnostics/R1rep_b10/lt_dynnow_ALS_s0/receipt.json",
+      "source_sha256": "0e9071f98e71c55994a677451835b38693e32dcfdf0269b456138ebb7255dff4"
+    },
+    {
+      "site": "B173nb_b10",
+      "pixels": 292704,
+      "all_terms_dead": 89532,
+      "fraction": 0.30587897671367664,
+      "formula_vs_autograd_dead_disagreements": 0,
+      "max_abs_force_difference": 6.845193106785885e-08,
+      "mapped_float_pixels_without_prior": 0,
+      "source": "/out/diagnostics/B173nb_b10/lt_dynnow_ALS_s0/receipt.json",
+      "source_sha256": "4baae763761434db00fd322ac431d585ee223ff3e9957023fee40012b367cd16"
+    }
+  ],
+  "method": "float64 analytic derivative, 64-step peak solve, original-map denominator audit; no optimization",
+  "scientific_verdict": null
+}

@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-28T14:26:54.529803+09:00",
+  "reason": "GLB byte budget exceeded by disconnected TSDF fragments; original quadric target unmet",
+  "previous": {
+    "target_faces": 20000,
+    "internal_upper_faces": 22000
+  },
+  "current": {
+    "target_faces": 20000,
+    "internal_upper_faces": 60000,
+    "precluster_above_faces": 500000,
+    "voxel_schedule_m": [
+      0.025,
+      0.05,
+      0.1,
+      0.2,
+      0.4
+    ],
+    "share_identical_vertex_colour_pairs": true
+  },
+  "full_ply_and_static_mesh_renders": "unreduced",
+  "exact_per_case_method": "external 3d/case/result.json",
+  "scientific_verdict": null
+}

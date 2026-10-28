@@ -1,6 +1,7 @@
 """PHD-MAIN-FLOATDIAG-v1: paths and append-only evidence helpers."""
 import hashlib
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -12,8 +13,12 @@ S0 = PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1'
 S1 = PH/'main_stage1_v1/PHD-MAIN-STAGE1-v1'
 S3 = PH/'main_stage3_v1/PHD-MAIN-STAGE3-v1'
 OUT, DOC, CFG = Path('/out'), Path('/docs'), Path('/config')
+PRIOR = sys.argv[sys.argv.index('--prior')+1] if '--prior' in sys.argv else 'ALS'
+assert PRIOR in ['ALS','LoD2']
+if PRIOR != 'ALS':
+    OUT, DOC = OUT/PRIOR, DOC/PRIOR
 SITES = ['B173nb_b10', 'B0_b10', 'R1rep_b10']
-RESULTS = ['nojudge_ALS_s0', 'lt_dyngt_ALS_s0', 'lt_dynnow_ALS_s0']
+RESULTS = [f'{p}_{PRIOR}_s0' for p in ['nojudge','lt_dyngt','lt_dynnow']]
 
 def now():
     return datetime.now(ZoneInfo('Asia/Seoul')).isoformat()

@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-28T15:34:04.446922+09:00",
+  "authority": "User explicitly chose option 1: representative-pixel photo counts + full-pixel force fraction",
+  "representative": "Project saved normal-ray mesh first-hit point to nearest pixel; all training photos in frame; no visibility/alpha rejection",
+  "classification": "Signed normal-plane displacement against the same evaluated GT patch, same normal-distance tau as patch score",
+  "gate_subset": "Exact cached original gate pixels, own floating patches, retain only pixels whose surf_depth is above GT+tau; own loss dead flags reused exactly",
+  "photo_selection": "Up to 3 per result/class/case, rank by classified representative patch count then filename; display is descriptive selection, all-photo statistics use every view",
+  "stage_B": false,
+  "gate_unchanged": true,
+  "optimizer_steps": 0,
+  "scientific_verdict": null
+}

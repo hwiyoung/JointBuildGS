@@ -13,10 +13,11 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 from matplotlib.colors import ListedColormap
+from matplotlib.collections import PolyCollection
 from common import *
 from recount import load_eval,classes
 
-NAMES={'nojudge_ALS_s0':'판정 끔','lt_dyngt_ALS_s0':'판 2','lt_dynnow_ALS_s0':'판 4'}
+NAMES=dict(zip(RESULTS,['판정 끔','판 2','판 4']))
 font_manager.fontManager.addfont('/fonts/NotoSansCJK-Regular.ttc')
 plt.rcParams.update({'font.family':'Noto Sans CJK JP','axes.unicode_minus':False,'font.size':10})
 WEB=DOC/'보기';IMG=WEB/'img';IMG.mkdir(parents=True,exist_ok=True)
@@ -63,7 +64,11 @@ def orbit(case):
         frames[0].save(gif,save_all=True,append_images=frames[1:],duration=100,loop=0,optimize=True)
     assert gif.stat().st_size<8000000
     mp4=dest/(case['id']+'.mp4')
-    ffmpeg=shutil.which('ffmpeg');assert ffmpeg,'ffmpeg unavailable'
+    ffmpeg=shutil.which('ffmpeg')
+    if not ffmpeg:
+        binaries=sorted((OUT/'tools/ffmpeg_runtime/imageio_ffmpeg/binaries').glob('ffmpeg-linux*'))
+        assert len(binaries)==1,'pinned imageio-ffmpeg 0.6.0 runtime unavailable'
+        ffmpeg=str(binaries[0])
     p=subprocess.Popen([ffmpeg,'-y','-loglevel','error','-f','rawvideo','-pixel_format','rgb24','-video_size','1080x330',
         '-framerate','10','-i','-','-an','-c:v','libx264','-crf','25','-pix_fmt','yuv420p',str(mp4)],stdin=subprocess.PIPE)
     for i in range(36):
@@ -73,10 +78,15 @@ def orbit(case):
             draw.text((j*360+12,5),NAMES[res],font=font,fill='#222222')
         p.stdin.write(canvas.tobytes())
     p.stdin.close();assert p.wait()==0
+    for media in [gif,mp4]:shutil.copyfile(media,DOC/'3d'/case['id']/media.name)
+    save(DOC/'3d'/case['id']/'orbit.json',dict(case=case['id'],results=RESULTS,frames=36,
+        azimuth_deg=list(range(0,360,10)),elevation_deg=20,frame_rate=10,
+        renderer='full unreduced source mesh Open3D raycasting',encoder=ffmpeg,
+        encoder_sha256=sha(ffmpeg),files=[dict(path=str(p),sha256=sha(p),bytes=p.stat().st_size) for p in [mp4,gif]],scientific_verdict=None))
     return dict(mp4=str(mp4.relative_to(WEB)),gif=str(gif.relative_to(WEB)))
 
 def case_values(case,e,result):
-    p=LT/'patch_z'/f"{case['site']}__ALS__{result}.npz"
+    p=LT/'patch_z'/f"{case['site']}__{PRIOR}__{result}.npz"
     with np.load(p) as f:z={k:f[k] for k in f.files}
     c=classes(e,z);xy=e['centre'][:,:2];b=case['bbox']
     # Case's diagnostic domain is its closed component plus the specified 3m
@@ -94,7 +104,7 @@ def photo_panel(ax,case,e,choice,types):
     if choice is None:
         ax.text(.5,.5,'확인 불가\n보이는 넓이 기준을 넘는 학습 사진 없음',ha='center',va='center',transform=ax.transAxes)
         ax.axis('off');return None
-    root=OUT/'renders'/case['site']/'nojudge_ALS_s0/iteration_30000'
+    root=OUT/'renders'/case['site']/f'nojudge_{PRIOR}_s0/iteration_30000'
     record=json.loads((root/'quality.json').read_text());cam=next(x for x in record['train'] if x['view']==choice['view'])
     ext=np.array(cam['world_to_camera']);K=np.array(cam['intrinsic']);xyz=e['centre'];b=np.array(case['bbox'])
     mask=e['in_eval']&e['scoring_allowed']&((xyz[:,:2]>=b[:2]-3)&(xyz[:,:2]<=b[2:]+3)).all(1)
@@ -105,9 +115,13 @@ def photo_panel(ax,case,e,choice,types):
     lo=np.maximum(np.floor(uv.min(0)-20),[0,0]).astype(int);hi=np.minimum(np.ceil(uv.max(0)+20),[cam['width'],cam['height']]).astype(int)
     image=np.array(Image.open(OUT/'photos'/case['site']/(choice['view']+'.png')))
     ax.imshow(image[lo[1]:hi[1],lo[0]:hi[0]])
+    corners=xyz[ids,None,:]+np.array([[-.125,-.125,0],[.125,-.125,0],[.125,.125,0],[-.125,.125,0]])
+    pcorners=corners@ext[:3,:3].T+ext[:3,3];qcorners=pcorners@K.T
+    polygons=qcorners[:,:,:2]/qcorners[:,:,2,None]-lo
     for typ,col,label in [(0,'#2e8b57','τ 안'),(1,'#d9534f','뜬 면')]:
         keep=types[ids]==typ
-        ax.scatter(uv[keep,0]-lo[0],uv[keep,1]-lo[1],s=8,marker='s',facecolors='none',edgecolors=col,linewidths=.5,alpha=.65,label=label)
+        ax.add_collection(PolyCollection(polygons[keep],facecolors='none' if typ==0 else col,
+            edgecolors=col,linewidths=.35,alpha=.7 if typ==0 else .28,label=label))
     ax.set(xticks=[],yticks=[]);ax.set_title(f"(가) 실사 · 보이는 넓이 {choice['coverage']*100:.1f}%")
     return dict(view=choice['view'],crop_xyxy=[*lo.tolist(),*hi.tolist()],camera=cam,patches=len(ids),source=str(OUT/'photos'/case['site']/(choice['view']+'.png')))
 
@@ -115,8 +129,8 @@ def plate(case,e,unit_rows):
     vals=[];types=None
     for res in RESULTS:
         row,c=case_values(case,e,res);vals.append(row)
-        if res=='lt_dynnow_ALS_s0':types=c
-    photos=json.loads((CFG/f"photos_{case['site']}_ALS.json").read_text());choice=next(x for x in photos['cases'] if x['case']==case['id'])
+        if res==f'lt_dynnow_{PRIOR}_s0':types=c
+    photos=json.loads((CFG/f"photos_{case['site']}_{PRIOR}.json").read_text());choice=next(x for x in photos['cases'] if x['case']==case['id'])
     fig=plt.figure(figsize=(15,11));gs=fig.add_gridspec(4,4,height_ratios=[2.3,2.3,1.8,1.8],width_ratios=[1.35,1,1,1])
     photo=photo_panel(fig.add_subplot(gs[:2,0]),case,e,choice['main'],types)
     oblique=photo_panel(fig.add_subplot(gs[2:,0]),case,e,choice['oblique'],types)
@@ -142,7 +156,7 @@ def map_site(site,e,cases):
     fig,axs=plt.subplots(1,3,figsize=(15,6));cmap=ListedColormap(config()['colours']['classes'])
     mask=e['in_eval']&e['scoring_allowed']&(e['cell']>=0)&(e['cell']<=3);xy=e['centre'][:,:2]
     for ax,res in zip(axs,RESULTS):
-        with np.load(LT/'patch_z'/f'{site}__ALS__{res}.npz') as f:c=classes(e,{k:f[k] for k in f.files})
+        with np.load(LT/'patch_z'/f'{site}__{PRIOR}__{res}.npz') as f:c=classes(e,{k:f[k] for k in f.files})
         ax.scatter(xy[mask,0],xy[mask,1],c=c[mask],cmap=cmap,vmin=0,vmax=4,s=2,marker='s',linewidths=0)
         ax.set(aspect='equal',xlabel='x (m)',title=NAMES[res]);ax.set_ylabel('y (m)')
         for i,case in enumerate(cases):
@@ -154,9 +168,9 @@ def map_site(site,e,cases):
     return save_figure(fig,site+'_map_A1',dict(site=site,results=RESULTS,cases=[dict(number=i+1,id=c['id'],bbox=c['bbox']) for i,c in enumerate(cases)]))
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--site',choices=SITES,required=True);a=ap.parse_args()
-    cases=json.loads((CFG/f'geometry_{a.site}_ALS.json').read_text())['cases'];e,_=load_eval(a.site,'ALS')
-    rows=[x for x in json.loads((DOC/'tables/recount_ALS.json').read_text())['rows'] if x['site']==a.site]
+    ap=argparse.ArgumentParser();ap.add_argument('--site',choices=SITES,required=True);ap.add_argument('--prior',default='ALS',choices=['ALS','LoD2']);a=ap.parse_args()
+    cases=json.loads((CFG/f'geometry_{a.site}_{PRIOR}.json').read_text())['cases'];e,_=load_eval(a.site,PRIOR)
+    rows=[x for x in json.loads((DOC/f'tables/recount_{PRIOR}.json').read_text())['rows'] if x['site']==a.site]
     output=[]
     for case in cases:
         captures={kind:board(case,kind) for kind in ['mesh','gaussian']};videos=orbit(case);image,vals=plate(case,e,rows)

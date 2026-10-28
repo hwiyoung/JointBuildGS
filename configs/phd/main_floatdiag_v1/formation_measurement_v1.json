@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-28T14:35:50.114911+09:00",
+  "authority": "work order 4.6-4.7 and direct user reaffirmation",
+  "early_pixel_definition": "training patch map, cells 0..3; render world Z above local GT tangent plane at rendered XY by more than tau; render depth positive; camera ray has z=1",
+  "early_gaussian_definition": "same 0.25m patch XY square and opacity>=0.1; GT world height+tau to median rendered world height per patch+0.25; roof GT height +/- tau",
+  "case_domain": "locked bbox+3m and selected main view only",
+  "absent_main_view": "unavailable; no replacement view",
+  "lineage": "existing sidecars where present; exact save-state CPU birth observer for conditional replays",
+  "scientific_verdict": null,
+  "early_gaussian_patch_class": "median vertical delta over valid main-view pixels of each patch; float if median>tau, roof if absolute median<=tau; no surface score inferred"
+}

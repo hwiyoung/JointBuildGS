@@ -1,0 +1,522 @@
+{
+  "at": "2026-10-28T15:59:03.971828+09:00",
+  "status": "PASS_RECEIPTS",
+  "rows": [
+    {
+      "result": "fd_dynnow_ALS_s0",
+      "receipt": {
+        "at": "2026-10-28T15:40:33.994699+09:00",
+        "seconds": 614.9371184976771,
+        "exit_code": 0,
+        "status": "PASS",
+        "health_reason": null,
+        "scientific_verdict": null
+      },
+      "saved_iterations": [
+        500,
+        1000,
+        1500,
+        2000,
+        2500,
+        3000,
+        3500,
+        4000,
+        4500,
+        5000,
+        5500,
+        6000,
+        6500,
+        7000
+      ],
+      "lambda_depth": 0.0025,
+      "health_around_3100": [
+        {
+          "iteration": 3000,
+          "camera": "DJI_20241217101453_0037_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": null,
+          "iterations_after_reset": null,
+          "gaussians": 163928,
+          "whole_opacity_median": 0.647376537322998,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3000,
+          "camera": "DJI_20241217101453_0037_D",
+          "observation_phase": "immediately before actual periodic reset, after density",
+          "last_periodic_reset": null,
+          "iterations_after_reset": null,
+          "gaussians": 173235,
+          "whole_opacity_median": 0.7086339592933655,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3100,
+          "camera": "DJI_20241217100106_0039_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": 3000,
+          "iterations_after_reset": 100,
+          "gaussians": 173235,
+          "whole_opacity_median": 0.17740941047668457,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3200,
+          "camera": "DJI_20241217103107_0010_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": 3000,
+          "iterations_after_reset": 200,
+          "gaussians": 127421,
+          "whole_opacity_median": 0.3666141927242279,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        }
+      ],
+      "birth_records": [
+        {
+          "iteration": 500,
+          "count": 90870,
+          "sha256": "0255ac57619f3b5843c7ff870025f16953a014f21cf799d377c7f319913ffaab"
+        },
+        {
+          "iteration": 1000,
+          "count": 75799,
+          "sha256": "a774e38b404af822baeabbf9366b93031af97b0a5906a1bfd4dcf4552d6ece9f"
+        },
+        {
+          "iteration": 1500,
+          "count": 80199,
+          "sha256": "2575fb61d2c63ad0f709c1d5cb16b965a0d5798e35b2d09ead02dd6b86bec5ce"
+        },
+        {
+          "iteration": 2000,
+          "count": 99534,
+          "sha256": "dd0ebe2b3fde758d7d0a1f124883bd51c4c912b830e47e4812621136399f4c7d"
+        },
+        {
+          "iteration": 2500,
+          "count": 128517,
+          "sha256": "731d3673a25e8509181daf420045243824785310a46d5407467b466aa986ff9a"
+        },
+        {
+          "iteration": 3000,
+          "count": 163928,
+          "sha256": "aa0f683d684ccbab417b460143ee05a001e95d08b8d89982cd76b2f1bee74669"
+        },
+        {
+          "iteration": 3500,
+          "count": 141382,
+          "sha256": "84be46da2b7362d380802631b96d1996b1b3df1b9d1570a760f1c4bcf48a9db6"
+        },
+        {
+          "iteration": 4000,
+          "count": 183307,
+          "sha256": "f5be7db5319deeba2742b64931ce7063af832a1983d614d12c87aea2c583d28b"
+        },
+        {
+          "iteration": 4500,
+          "count": 226069,
+          "sha256": "4f109dc911eb9f36d29ecd605f5e319aaa432fb29f3bde6a8f60813f695c7c56"
+        },
+        {
+          "iteration": 5000,
+          "count": 286389,
+          "sha256": "52d22801ffa46aba5147989aa9f5c1750a033afa985d9a81561098a25310e89f"
+        },
+        {
+          "iteration": 5500,
+          "count": 346690,
+          "sha256": "8afda5cde9b60c4b6fdad875f55402a5aac584c5f75ab4b76eb9a11a55c83056"
+        },
+        {
+          "iteration": 6000,
+          "count": 416635,
+          "sha256": "7e2c9126e6dd0a5aa9ddb122b32b71d075f1a255b0507880748f9de67173956f"
+        },
+        {
+          "iteration": 6500,
+          "count": 323635,
+          "sha256": "07b529a19a1a91ef7ef4d02fcb455eef09afa2a34c309842a72a4d7ba23c6cb4"
+        },
+        {
+          "iteration": 7000,
+          "count": 400863,
+          "sha256": "3307f7530e150ba6de9f81012d9fa04afc427631c6dde92a572ace26e981bb75"
+        }
+      ]
+    },
+    {
+      "result": "fd_current_ALS_s0",
+      "receipt": {
+        "at": "2026-10-28T15:34:56.680872+09:00",
+        "seconds": 276.40505207143724,
+        "exit_code": 1,
+        "status": "STOP",
+        "health_reason": "RuntimeError: LOSSTRAIN_STOP: whole-population opacity median < 0.05 after reset+100",
+        "scientific_verdict": null
+      },
+      "saved_iterations": [
+        500,
+        1000,
+        1500,
+        2000,
+        2500,
+        3000
+      ],
+      "lambda_depth": 0.05,
+      "health_around_3100": [
+        {
+          "iteration": 3000,
+          "camera": "DJI_20241217101453_0037_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": null,
+          "iterations_after_reset": null,
+          "gaussians": 559999,
+          "whole_opacity_median": 1.0,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3000,
+          "camera": "DJI_20241217101453_0037_D",
+          "observation_phase": "immediately before actual periodic reset, after density",
+          "last_periodic_reset": null,
+          "iterations_after_reset": null,
+          "gaussians": 628114,
+          "whole_opacity_median": 1.0,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3100,
+          "camera": "DJI_20241217100106_0039_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": 3000,
+          "iterations_after_reset": 100,
+          "gaussians": 628114,
+          "whole_opacity_median": 0.03778748959302902,
+          "prior_opacity_is_record_only": true,
+          "stop": "whole-population opacity median < 0.05 after reset+100",
+          "scientific_verdict": null
+        }
+      ],
+      "birth_records": [
+        {
+          "iteration": 500,
+          "count": 90870,
+          "sha256": "0255ac57619f3b5843c7ff870025f16953a014f21cf799d377c7f319913ffaab"
+        },
+        {
+          "iteration": 1000,
+          "count": 93385,
+          "sha256": "bab792e387f668e0ff9219c4713c3253c5fb4b3e327644c2dab16c405b2bcfc1"
+        },
+        {
+          "iteration": 1500,
+          "count": 107789,
+          "sha256": "12ea25d36ce61b170442268690bffdd8e4c7e0a8b8573d430183944c615d1c43"
+        },
+        {
+          "iteration": 2000,
+          "count": 164518,
+          "sha256": "7290551db70dd9049a60f24dde47cb359ca8a9dffb87a65085981ede24b7bda5"
+        },
+        {
+          "iteration": 2500,
+          "count": 302679,
+          "sha256": "b1d4753ec3e67c7b1b6261cd842f65f30dea802b9fa5dc6b2143cde26d4fb72b"
+        },
+        {
+          "iteration": 3000,
+          "count": 559999,
+          "sha256": "c04e55c70f953c6e7616691962c780d69dfcceb6d9ce635662dead2dc2e7a596"
+        }
+      ]
+    },
+    {
+      "result": "fd_current_ALS_s0_record_only",
+      "receipt": {
+        "at": "2026-10-28T15:57:23.718498+09:00",
+        "seconds": 855.8712092265487,
+        "exit_code": 0,
+        "status": "PASS",
+        "health_reason": null,
+        "scientific_verdict": null
+      },
+      "saved_iterations": [
+        500,
+        1000,
+        1500,
+        2000,
+        2500,
+        3000,
+        3500,
+        4000,
+        4500,
+        5000,
+        5500,
+        6000,
+        6500,
+        7000
+      ],
+      "lambda_depth": 0.05,
+      "health_around_3100": [
+        {
+          "iteration": 3000,
+          "camera": "DJI_20241217101453_0037_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": null,
+          "iterations_after_reset": null,
+          "gaussians": 457614,
+          "whole_opacity_median": 1.0,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3000,
+          "camera": "DJI_20241217101453_0037_D",
+          "observation_phase": "immediately before actual periodic reset, after density",
+          "last_periodic_reset": null,
+          "iterations_after_reset": null,
+          "gaussians": 506375,
+          "whole_opacity_median": 1.0,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3100,
+          "camera": "DJI_20241217100106_0039_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": 3000,
+          "iterations_after_reset": 100,
+          "gaussians": 506375,
+          "whole_opacity_median": 0.06214669719338417,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        },
+        {
+          "iteration": 3200,
+          "camera": "DJI_20241217103107_0010_D",
+          "observation_phase": "after optimizer and opacity floors, before density/reset",
+          "last_periodic_reset": 3000,
+          "iterations_after_reset": 200,
+          "gaussians": 286702,
+          "whole_opacity_median": 0.2557513117790222,
+          "prior_opacity_is_record_only": true,
+          "stop": null,
+          "scientific_verdict": null
+        }
+      ],
+      "birth_records": [
+        {
+          "iteration": 500,
+          "count": 90870,
+          "sha256": "0255ac57619f3b5843c7ff870025f16953a014f21cf799d377c7f319913ffaab"
+        },
+        {
+          "iteration": 1000,
+          "count": 93335,
+          "sha256": "0e708304f212397d7fe6c94911e87e12a32410210d57f9d0f97a7cbdf43607aa"
+        },
+        {
+          "iteration": 1500,
+          "count": 107488,
+          "sha256": "0a64ccca93a3b32627c88386e6bd93e0317ff0952d890789dbcd6e5f9919a220"
+        },
+        {
+          "iteration": 2000,
+          "count": 158539,
+          "sha256": "1ea2d390f7b84ac6183b53dc510df48c43bf0633cea11df31ebdce256dc6c685"
+        },
+        {
+          "iteration": 2500,
+          "count": 272323,
+          "sha256": "5d0c1e7ade9f36cd4c7060bdccad77bab378efefa309d014ad26ac6e7975ba69"
+        },
+        {
+          "iteration": 3000,
+          "count": 457614,
+          "sha256": "b7ebc5f759892b2d45a787e6987e90354802382240bb03f3a8ced301e5ae4fb8"
+        },
+        {
+          "iteration": 3500,
+          "count": 339102,
+          "sha256": "78bf55a4d6ae5743671c61dcfafa0448f51dbb4b62fb3e71703a8f3c3014ddba"
+        },
+        {
+          "iteration": 4000,
+          "count": 478783,
+          "sha256": "88af23c9b51a03131f610d698c3fc33808bfbc442927aa8c01b6809895cbf7bc"
+        },
+        {
+          "iteration": 4500,
+          "count": 630141,
+          "sha256": "09d5657e4a50bec78ee69cce1e366843ce6970eebcbdc69a21e0ef44ebd8faf7"
+        },
+        {
+          "iteration": 5000,
+          "count": 797447,
+          "sha256": "1a4f223846ac12b1c67873d1745e5a712b827f06531767ce7adf0932c2878663"
+        },
+        {
+          "iteration": 5500,
+          "count": 963367,
+          "sha256": "b73fac8693060f6f4322e867283cc216b631ea87177e504a60f520a0c94f3d29"
+        },
+        {
+          "iteration": 6000,
+          "count": 1142286,
+          "sha256": "02723d36926fa78c0cd80d6cdb27329a4fa078b77dea69c80202f8718766bea1"
+        },
+        {
+          "iteration": 6500,
+          "count": 739170,
+          "sha256": "76e8e930539fe7c1ad01a7bff8300c0f5f34af3edea4bfcf48c1fe6d4c9d699a"
+        },
+        {
+          "iteration": 7000,
+          "count": 905198,
+          "sha256": "165b0202c7a5a4daf43de1e9abc3bd69a6b58be15dfa01539a3fb929efdf2080"
+        }
+      ]
+    }
+  ],
+  "early_checkpoint_comparison": [
+    {
+      "iteration": 500,
+      "original_sha256": "897602385dc94cd9681e89757c569b8795338b56f951299686849f170560ebe6",
+      "retry_sha256": "e8dd997fa00978b0ddbcef06f13df9c7a8e734eef788ee838b61a508bf6f2704",
+      "byte_identical": false
+    },
+    {
+      "iteration": 1000,
+      "original_sha256": "49a89f785d89f271d2232dd9e67a1affc93cd60693db20a4191adcd1d43a277e",
+      "retry_sha256": "34ddb7a47f501144358f3bf8df80c9045a7e1211dbb3dcc8b6d7c868a1db4c14",
+      "byte_identical": false
+    },
+    {
+      "iteration": 1500,
+      "original_sha256": "8173ec13d433eddd1547ecf62576bf7532ee79ea24e25aa9481fa17b7284f7d9",
+      "retry_sha256": "35d269ac854aecd4b51a625e7e2ea5ea7c9cc80a6aa10766cc574a662516e8c6",
+      "byte_identical": false
+    },
+    {
+      "iteration": 2000,
+      "original_sha256": "b94df672cff6be53f372f47da54637904825f285c3ca56bc3271245ba829a206",
+      "retry_sha256": "aa0edef1e35786d2437d5a503bfe119d300ce46ae54ffa3389b23395925cf9ae",
+      "byte_identical": false
+    },
+    {
+      "iteration": 2500,
+      "original_sha256": "f70c9a2bf48c33f7d62f2193282440476b93de97a0b9c9263c59362d8993d581",
+      "retry_sha256": "fb22c40ec23311c820aee252332710b6af65c3652e4e6fa7882d2315bbf03729",
+      "byte_identical": false
+    },
+    {
+      "iteration": 3000,
+      "original_sha256": "f983f15f3cf695fadc425fd33fd6db5bab81f0480ef128facf9b76ee94ef7a87",
+      "retry_sha256": "1a5af631b7b07eabc1f51740969f38754d4befeb61da9d9ec490936ec90c74c2",
+      "byte_identical": false
+    }
+  ],
+  "initial_arrays_identical": {
+    "xyz": true,
+    "origin": true,
+    "seat": true,
+    "surface": true,
+    "location": true,
+    "state": true,
+    "judgment": true,
+    "unit_judgment": true,
+    "E_first": true,
+    "n_seeing_first": true,
+    "E_centre_prior_depth": true,
+    "n_seeing_centre": true,
+    "category": true,
+    "category_codes": true,
+    "planted": true,
+    "reason": true,
+    "face_normal": true,
+    "normal_after_orientation": true,
+    "face_normal_file": true,
+    "face_normal_cell": true
+  },
+  "retry_opacity_events_around_reset": [
+    {
+      "iteration": 3000,
+      "finite": true,
+      "whole_opacity_median": 1.0,
+      "iterations_after_reset": null,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 3000,
+      "finite": true,
+      "whole_opacity_median": 1.0,
+      "iterations_after_reset": null,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 3100,
+      "finite": true,
+      "whole_opacity_median": 0.06214669719338417,
+      "iterations_after_reset": 100,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 3200,
+      "finite": true,
+      "whole_opacity_median": 0.2557513117790222,
+      "iterations_after_reset": 200,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 6100,
+      "finite": true,
+      "whole_opacity_median": 0.07035773247480392,
+      "iterations_after_reset": 100,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 6200,
+      "finite": true,
+      "whole_opacity_median": 0.21562469005584717,
+      "iterations_after_reset": 200,
+      "original_stop": null,
+      "opacity_stop_record_only": false,
+      "effective_stop": null,
+      "scientific_verdict": null
+    }
+  ],
+  "record_only_trigger_calls": 0,
+  "caution": "Same configured seed is not a bitwise trajectory guarantee. Early checkpoints differ before the changed opacity policy can take effect. Cause of numerical divergence is not established. Do not attribute surviving iteration 3100 to threshold suppression when its actual median exceeds 0.05.",
+  "no_mesh_score": true,
+  "scientific_verdict": null
+}

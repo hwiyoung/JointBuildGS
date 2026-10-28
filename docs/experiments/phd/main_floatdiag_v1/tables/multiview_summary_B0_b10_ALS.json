@@ -1,0 +1,110 @@
+{
+  "rows": [
+    {
+      "site": "B0_b10",
+      "result": "nojudge_ALS_s0",
+      "case": "전체",
+      "patches": 440,
+      "area_m2": 29.623049698643797,
+      "at_least_one_float_photo_patches": 440,
+      "at_least_one_float_photo_area_m2": 29.623049698643797,
+      "at_least_one_float_photo_area_fraction": 1.0,
+      "float_photo_count_q25_q50_q75_q90": [
+        52.0,
+        76.0,
+        95.0,
+        161.0
+      ],
+      "no_in_frame_photo_patches": 0,
+      "full_gate_original_pixels": 73622,
+      "float_observed_pixels": 6987,
+      "all_own_dead": 1661,
+      "invalid_depth_pixels": 0,
+      "roof_observed_pixels": 65929,
+      "other_observed_pixels": 706,
+      "own_all_dead_fraction": 0.23772720767138972,
+      "sample_status": "PASS",
+      "source": "/out/multiview/B0_b10/nojudge_ALS_s0/patch_views.npz"
+    },
+    {
+      "site": "B0_b10",
+      "result": "nojudge_ALS_s0",
+      "case": "B0-뜬면-1",
+      "patches": 44,
+      "area_m2": 2.999199277335557,
+      "at_least_one_float_photo_patches": 44,
+      "at_least_one_float_photo_area_m2": 2.999199277335557,
+      "at_least_one_float_photo_area_fraction": 1.0,
+      "float_photo_count_q25_q50_q75_q90": [
+        53.5,
+        68.0,
+        73.0,
+        78.10000000000001
+      ],
+      "no_in_frame_photo_patches": 0,
+      "full_gate_original_pixels": 8906,
+      "float_observed_pixels": 634,
+      "all_own_dead": 162,
+      "invalid_depth_pixels": 0,
+      "roof_observed_pixels": 8252,
+      "other_observed_pixels": 20,
+      "own_all_dead_fraction": 0.2555205047318612,
+      "sample_status": "표본 부족",
+      "source": "/out/multiview/B0_b10/nojudge_ALS_s0/patch_views.npz"
+    },
+    {
+      "site": "B0_b10",
+      "result": "lt_dynnow_ALS_s0",
+      "case": "전체",
+      "patches": 2120,
+      "area_m2": 145.9414479658846,
+      "at_least_one_float_photo_patches": 2120,
+      "at_least_one_float_photo_area_m2": 145.9414479658846,
+      "at_least_one_float_photo_area_fraction": 1.0,
+      "float_photo_count_q25_q50_q75_q90": [
+        31.0,
+        45.0,
+        77.0,
+        93.10000000000014
+      ],
+      "no_in_frame_photo_patches": 0,
+      "full_gate_original_pixels": 494259,
+      "float_observed_pixels": 238509,
+      "all_own_dead": 230978,
+      "invalid_depth_pixels": 0,
+      "roof_observed_pixels": 251914,
+      "other_observed_pixels": 3836,
+      "own_all_dead_fraction": 0.9684246716056837,
+      "sample_status": "PASS",
+      "source": "/out/multiview/B0_b10/lt_dynnow_ALS_s0/patch_views.npz"
+    },
+    {
+      "site": "B0_b10",
+      "result": "lt_dynnow_ALS_s0",
+      "case": "B0-뜬면-1",
+      "patches": 923,
+      "area_m2": 64.05038142720528,
+      "at_least_one_float_photo_patches": 923,
+      "at_least_one_float_photo_area_m2": 64.05038142720528,
+      "at_least_one_float_photo_area_fraction": 1.0,
+      "float_photo_count_q25_q50_q75_q90": [
+        31.0,
+        37.0,
+        49.0,
+        70.0
+      ],
+      "no_in_frame_photo_patches": 0,
+      "full_gate_original_pixels": 269183,
+      "float_observed_pixels": 171486,
+      "all_own_dead": 167314,
+      "invalid_depth_pixels": 0,
+      "roof_observed_pixels": 96718,
+      "other_observed_pixels": 979,
+      "own_all_dead_fraction": 0.9756714833863989,
+      "sample_status": "PASS",
+      "source": "/out/multiview/B0_b10/lt_dynnow_ALS_s0/patch_views.npz"
+    }
+  ],
+  "caption": "사진별 확인 · 대표 화소 사진 수와 전체 화소 힘 비율",
+  "scientific_verdict": null
+}

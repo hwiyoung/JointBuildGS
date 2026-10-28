@@ -17,9 +17,11 @@ from recount import load_eval,classes
 def read_map(site,prior,name,key,shape):
     root=S0/'fork_inputs/s61'/site/'maps'/key
     if (root/'raw_depth').exists():root=root/'raw_depth'
-    p=root/(name+'.npy');arr=np.load(p)
-    if arr.shape!=shape:arr=cv2.resize(arr.astype(np.float32),(shape[1],shape[0]),interpolation=cv2.INTER_NEAREST)
-    return torch.as_tensor(np.ascontiguousarray(arr),device='cuda'),p
+    p=root/(name+'.npy')
+    dtype=np.int32 if key.startswith('locmap_') else np.float32
+    loaded=JJ._load_set(root,[name],shape,'cuda',dtype=dtype)
+    assert name in loaded,p
+    return loaded[name],p
 
 def dynamic_peak(s,v,lam=.0025):
     loga=torch.log(v)-torch.log1p(-v)-torch.log(s)-math.log(.1*math.sqrt(2*math.pi))
@@ -45,9 +47,14 @@ def main():
     q=json.loads(quality.read_text());assert all(x['status']=='PASS' for x in q['checks']),'PSNR gate required'
     pipe,g,scene,model=load(a.site,a.prior,a.result,30000)
     meta=json.loads((model/'monitor/meta.json').read_text())
-    assert meta['switches']['judgment'] is False and meta['depth_norm']=='pixels'
+    assert meta['switches']['judgment'] is False and meta['r6']['depth_norm']=='pixels'
+    expected_lambda=.05 if a.result.startswith('nojudge') else .0025
+    assert meta['lambda_mvs']==meta['lambda_prior']==expected_lambda and meta['trunc_hi']==4.
     assert meta['switches']['prior_band'] and meta['switches']['confidence_mask']
-    assert not any(meta['ablations'].values()) and not any(meta['fixes'].values())
+    assert not any(meta['ablations'].values())
+    if a.result.startswith('nojudge'):
+        assert meta['revision']=='r14' and 'fixes' not in meta
+    else:assert not any(meta['fixes'].values())
     e,root=load_eval(a.site,a.prior)
     with np.load(root/'values.npz') as f:v={k:f[k] for k in f.files}
     with np.load(LT/'patch_z'/f'{a.site}__{a.prior}__{a.result}.npz') as f:pred={k:f[k] for k in f.files}
