@@ -1,0 +1,32 @@
+{
+  "status": "PARTIAL",
+  "completed": 2,
+  "required": 6,
+  "rows": [
+    {
+      "key": "B0_b10__ALS__nojudge_ALS_s0",
+      "status": "PASS",
+      "checked_cell_records": 18,
+      "before_z_exact_match": true,
+      "patch_z_sha256": {
+        "before": "bd256ef0313e94a28705506e4d745242451b09283f2333606f4b05e5c59ff718",
+        "after": "1998d1c2cf6d46600227bf9589d53e5ad51de31e5c60cc2491751eb1552af7a8"
+      },
+      "mesh_receipt_sha256": "4bdda09adad1978a8e88a4a1fa2f00cdea417ff06fe4b2e41a7720041f9790a6"
+    },
+    {
+      "key": "B0_b10__ALS__lt_dynnow_ALS_s0",
+      "status": "PASS",
+      "checked_cell_records": 18,
+      "before_z_exact_match": true,
+      "patch_z_sha256": {
+        "before": "cd9cb7b6b530f21c3ea33f8b7b7d9cdd1e2b3f032b9d3da22d28471c0485015a",
+        "after": "286420a4421a39e4c68818b734a8ea8a7f9538a256b8188fda9ed1491c1215db"
+      },
+      "mesh_receipt_sha256": "c08e00ed2922b863e23111fb5d0fe2b40f251d727e52fe8600f4713e9ae2369c"
+    }
+  ],
+  "checked_at": "2026-10-28T21:43:25.158600+09:00",
+  "scope": "Recompute every saved before/after cell; report exact baseline z agreement and preserve the frozen 0.5 percentage point gate; side labels; removed triangle accounting. No new ray cast or visibility calculation.",
+  "scientific_verdict": null
+}

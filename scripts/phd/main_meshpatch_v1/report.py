@@ -1,12 +1,16 @@
 """Compact Korean report from completed receipts, with explicit pending states."""
 from mesh_common import *
 import csv
+from priority_delivery import snapshot, update as update_priority
 
 def read(p):return json.loads(p.read_text()) if p.exists() else None
 def num(x,d=3):return '확인 불가' if x is None else f'{x:.{d}f}'
 def main():
+    from verify_priority import verify
+    verify()
     files=sorted((D/'tables/meshes').glob('*.json'));meshes=[read(p) for p in files];passed=[r for r in meshes if r['status']=='PASS']
     target=read(C/'mesh_targets_v1.json');n=len(target['targets']) if target else 48
+    priority=snapshot(D,O,C)
     patches={p:read(D/'tables'/f'patch_{p}_table.json') for p in ['ALS','LoD2']}
     validations={p:read(D/'tables'/f'patch_{p}_validation.json') for p in patches}
     rows=[];rm=[];s1=[]
@@ -25,7 +29,7 @@ def main():
     dump(D/'tables/mesh_comparison.json',dict(rows=rows,removed=rm,stage1=s1,completed=len(passed),requested=n,scientific_verdict=None))
     if rows:
         with (D/'tables/mesh_comparison.csv').open('w') as f:
-            w=csv.DictWriter(f,list(rows[0]));w.writeheader();w.writerows(rows)
+            w=csv.DictWriter(f,list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
     md=['# 메시 정리 전·후','', '[이 발주에서 냄]', '', '| 평가 지역 | 사전 정보 | 방법 | 칸 | τ 안 전 % | 후 % | 뜬 면 전 % | 후 % | 면 없음 전 % | 후 % |','|---|---|---|---|---:|---:|---:|---:|---:|---:|']
     md +=[f"| {r['site']} | {r['prior']} | {r['result']} | {r['cell']} | {num(r['within_tau_pct_before'])} | {num(r['within_tau_pct_after'])} | {num(r['floating_pct_before'])} | {num(r['floating_pct_after'])} | {num(r['no_surface_pct_before'])} | {num(r['no_surface_pct_after'])} |" for r in rows]
     md+=['','| 평가 지역 | 사전 정보 | 방법 | 남은 덩어리 | 최소 삼각형 수 | 지운 넓이 m² |','|---|---|---|---:|---:|---:|']
@@ -40,6 +44,7 @@ def main():
         '원본 README 133–136행은 `fuse_post.ply`를 건물 범위로 자른 다음 `mesh2pcd`로 평가하는 절차를 제시한다. 출판사 논문 전문은 HTTP 403으로 접근할 수 없어 전문의 평가 절차 문장은 확인 불가이다.',
         '[GeoGS 원본 코드](https://github.com/zqlin0521/GeoGS/tree/db40c95c657ec03ff21c83cb99cf39f4e90247a6) · 자세한 파일·줄·해시: `tables/task1_code_audit.json`.',
         '', '# 일 2. 메시 정리와 다시 채점', '', f'요청 대상 {n}개 중 완료 {len(passed)}개, 기존 중단 {sum(r["status"]=="UNAVAILABLE_FROZEN_STOP" for r in meshes)}개. 아직 완료 기록이 없는 대상은 수치나 그림을 채우지 않는다.',
+        f"설명용 필수 대상은 R1·B173·B0 항공 LiDAR의 판정 끔·판 4 여섯 개다. 이들을 실행 큐 맨 앞에서 처리하며 현재 {priority['completed']}/6개, 사례 그림 {priority['completed_cases']}/7개 완료다. 10/30 09:30 묶음에 포함할 목록과 점검은 `tables/priority_six.json`에 기록한다.",
         '전체 단위 메시를 먼저 정리하고 사례 범위는 그 뒤 자른다. 처음 만난 면, τ, 오차의 표준화, 칸·평가 마스크는 기존 LOSSTRAIN 셈을 유지한다. 정리 전 기존 기록과의 차이가 0.5 %p를 넘으면 해당 대상을 멈춘다.',
         '삼각형 넓이는 실제 3차원 넓이다. 지운 삼각형 중심에서 XY 거리 √2×0.25 m 안의 기존 지붕 패치에 연결하여 정리 전 다섯 구분을 붙인다. 연결되지 않는 넓이는 별도 확인 불가로 기록한다. 이 연결은 새로운 가시성·영역 판정이나 독립 참값이 아니다.',
         '칸별 전체 값·지운 넓이 다섯 구분·남은 성분 수는 `tables/mesh_comparison.json`, 대상별 원본 기록은 `tables/meshes/`에 있다. 1단계 메시 지표는 기존 spread·completeness와 F1 표본 규칙(400/m², seed 0, 같은 bsurf)을 유지한다.',
@@ -73,5 +78,6 @@ def main():
     (D/'메시정리와패치표_보고_v1.md').write_text(report)
     (D/'progress.md').write_text(f'# 진행\n\n갱신: {now()}\n\n일 1 코드 확인 완료(논문 전문 확인 불가). 일 3 표 {sum(x is not None for x in patches.values())}/2개, 검증 {sum(x is not None for x in validations.values())}/2개. 일 2 메시 {len(passed)}/{n}개 완료.\n\n영역 연결은 사용자 승인 범위만 적용. 새 가시성 계산 없음. 면 번호 대조의 불일치는 보고서 참조.\n\nscientific_verdict: null\n')
     print(json.dumps(dict(report_characters=len(report),completed_meshes=len(passed),targets=n)))
+    update_priority()
 
 if __name__=='__main__':main()

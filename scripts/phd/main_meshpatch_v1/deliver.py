@@ -2,6 +2,7 @@
 import argparse,hashlib,json,time,zipfile
 from datetime import datetime,timezone,timedelta
 from pathlib import Path
+from priority_delivery import snapshot
 KST=timezone(timedelta(hours=9));O=Path('/out');D=Path('/docs');C=Path('/config')
 def read(p,default=None):
     return json.loads(p.read_text()) if p.exists() else default
@@ -13,10 +14,15 @@ def sha(p):
 def progress(now):
     a=read(O/'status/task1.json',{});patch=[read(O/'status'/f'patch_{p}.json',{}) for p in ['ALS','LoD2']]
     mesh=list((D/'tables/meshes').glob('*.json'))
+    priority=snapshot(D,O,C)
+    times=[x.get('seconds',0) for p in mesh if (x:=read(p,{})).get('status')=='PASS']
+    estimate=(6-priority['completed'])*sum(times)/max(1,len(times))/60
     lines=[f'# 진행 · {now:%Y-%m-%d %H:%M} 한국 시각','',
         '1. 일별 상태',f"- 일 1: {'끝남(논문 전문 접근 제한)' if a else '진행 중, 10/28 23:00 목표'}.",
-        '- 일 3: '+', '.join(f"{p} {x.get('stage','시작 전')}" for p,x in zip(['ALS','LoD2'],patch))+'. 패치 표 10/29 18:00 목표.',
+        '- 일 3: '+', '.join(f"{p} {x.get('stage','시작 전')}" for p,x in zip(['ALS','LoD2'],patch))+'. 패치 ZIP 10/28 21:01 생성·전달.',
         f'- 일 2: 대상별 기록 {len(mesh)}건. '+('진행 중' if mesh else '시작 전')+'. 10/30 09:30까지 끝난 대상을 설명용으로 제공, 전체 12:00 목표.',
+        f"- 설명용 필수 R1·B173·B0 판정 끔·판 4: {priority['completed']}/6개, 사례 그림 {priority['completed_cases']}/7개 완료. 여섯 개 우선 처리. 상세 상태: tables/priority_six.md.",
+        f"- 완료 예상: 공유 잠금·메모리 입장 뒤 남은 여섯 개 대상의 메시 약 {estimate:.0f}분과 그림 제작 시간. 입장 대기 종료 시각은 확인 불가. 완료하면 즉시 중간 ZIP 생성.",
         '', '2. 나온 숫자 [이 발주에서 냄]','| 일 | 대상 | 패치 수 | 넓이 m² | 상태 |','|---|---|---:|---:|---|']
     for prior in ['ALS','LoD2']:
         s=read(D/'tables'/f'patch_{prior}_table.json')
@@ -44,6 +50,8 @@ def package(at=None):
         if (D/name).exists():members.append((D/name,name))
     with zipfile.ZipFile(temp,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
         z.writestr('진행.md',progress(now))
+        priority=snapshot(D,O,C)
+        z.writestr('priority_status.json',json.dumps(priority,ensure_ascii=False,indent=2))
         manifest=[]
         for f,name in members:
             data=f.read_bytes();z.writestr(name,data);manifest.append(dict(name=name,sha256=hashlib.sha256(data).hexdigest(),bytes=len(data)))
