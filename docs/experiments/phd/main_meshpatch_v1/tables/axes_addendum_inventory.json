@@ -1,0 +1,289 @@
+{
+  "extra_targets": [
+    {
+      "key": "B0_b10__LoD2__mvsfuse_LoD2",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "mvsfuse_LoD2",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+      "method": "mvsfuse",
+      "status": "READY",
+      "bytes": 726617681,
+      "sha256": "0cc80d5b5e32a2306d117a8df1eeb7af29565b876be8fbe53ea65411d7aa892e",
+      "evaluation_sha256": "fdf0f8eec9d563b85504f85b41e4c6de9a0f54e644cd4667bc00f0c666b1f5ea",
+      "values_sha256": "45dfd280811195672263c4832ff5dea07cddedc126a68db79b529206ace5c550"
+    },
+    {
+      "key": "B0_b10__LoD2__cdgsnofit_LoD2_s0",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "result": "cdgsnofit_LoD2_s0",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+      "method": "cdgs",
+      "status": "READY",
+      "bytes": 3029153257,
+      "sha256": "119f8b2a9eea9ca416694c1727bb7510f996a73c8db6e865d6702dd9e4b70f74",
+      "evaluation_sha256": "fdf0f8eec9d563b85504f85b41e4c6de9a0f54e644cd4667bc00f0c666b1f5ea",
+      "values_sha256": "45dfd280811195672263c4832ff5dea07cddedc126a68db79b529206ace5c550"
+    },
+    {
+      "key": "B0_b10__ALS__mvsfuse_ALS",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "mvsfuse_ALS",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "method": "mvsfuse",
+      "status": "READY",
+      "bytes": 1008790167,
+      "sha256": "d18e4b443ec1efdff81d3108fc538771f3e29fee9b88c4211a02d9ccb45b546b",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B0_b10__ALS__cdgsnofit_ALS_s0",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "result": "cdgsnofit_ALS_s0",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+      "method": "cdgs",
+      "status": "READY",
+      "bytes": 2964642360,
+      "sha256": "0fec980a0df1dcd73ade2c87eb5eb5f321e92fce56a433860874652ea4c2a36a",
+      "evaluation_sha256": "a3ffde5d9a4770ceefc07c878fc3b180b5ce35974e13b122e2bbb79954edea2c",
+      "values_sha256": "f8fb0050faafe231d0ceee011a3e901059634396610fbe5a5a3cf029d5d9330a"
+    },
+    {
+      "key": "B173nb_b10__LoD2__mvsfuse_LoD2",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "mvsfuse_LoD2",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+      "method": "mvsfuse",
+      "status": "READY",
+      "bytes": 891243213,
+      "sha256": "7f67ac1d50137ba560fb26e7759bd2627d5fba682b9fcc41996a4d63dae9d08a",
+      "evaluation_sha256": "1c24e0d041e981c7167ddc4d09a5ea17653a986e76b46113d0224d066975c017",
+      "values_sha256": "31847f645a36992cf2ec5c4b2b1429032f306330d2f8710bfa6f36af5226d533"
+    },
+    {
+      "key": "B173nb_b10__LoD2__cdgsnofit_LoD2_s0",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "result": "cdgsnofit_LoD2_s0",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+      "method": "cdgs",
+      "status": "READY",
+      "bytes": 4114299452,
+      "sha256": "9b91ac0fc941c5eb0b7d9d914f36a410f89f2ae4e33a80b4ec0ba78537349243",
+      "evaluation_sha256": "1c24e0d041e981c7167ddc4d09a5ea17653a986e76b46113d0224d066975c017",
+      "values_sha256": "31847f645a36992cf2ec5c4b2b1429032f306330d2f8710bfa6f36af5226d533"
+    },
+    {
+      "key": "B173nb_b10__ALS__mvsfuse_ALS",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "mvsfuse_ALS",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "method": "mvsfuse",
+      "status": "READY",
+      "bytes": 1093044205,
+      "sha256": "120068bd296e8f5931c18a6060f5fbdf4c92b136e384e30c3f6c0b9f3030c6b5",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "B173nb_b10__ALS__cdgsnofit_ALS_s0",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "result": "cdgsnofit_ALS_s0",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+      "method": "cdgs",
+      "status": "READY",
+      "bytes": 2911158376,
+      "sha256": "c8bfcb34c2287a99b0e56f82b156eb79a931aae6ee4518889138ba8b4348ed28",
+      "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+      "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+    },
+    {
+      "key": "R1rep_b10__LoD2__mvsfuse_LoD2",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "mvsfuse_LoD2",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+      "method": "mvsfuse",
+      "status": "READY",
+      "bytes": 1094634702,
+      "sha256": "33101a24b0b8d2bff3d2c4105b1e0249ad012a70e6f233d5b3fc0f065d7c6261",
+      "evaluation_sha256": "2ea01aa2a1d833ff57bc6f0da45da234411b811de82d2450ee290c7acb247564",
+      "values_sha256": "fd199266e029cc23b1e9ee70ea0f3f6338a0816f7b7b19c0ad8976c35955ae27"
+    },
+    {
+      "key": "R1rep_b10__LoD2__cdgsnofit_LoD2_s0",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "result": "cdgsnofit_LoD2_s0",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_LoD2_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+      "method": "cdgs",
+      "status": "READY",
+      "bytes": 3523852562,
+      "sha256": "358306bcaf27ccbea21b8489b629aa824caa67805cd298c1e716747e8d311523",
+      "evaluation_sha256": "2ea01aa2a1d833ff57bc6f0da45da234411b811de82d2450ee290c7acb247564",
+      "values_sha256": "fd199266e029cc23b1e9ee70ea0f3f6338a0816f7b7b19c0ad8976c35955ae27"
+    },
+    {
+      "key": "R1rep_b10__ALS__mvsfuse_ALS",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "mvsfuse_ALS",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_ALS/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "method": "mvsfuse",
+      "status": "READY",
+      "bytes": 1072935003,
+      "sha256": "d65f9e6c9553230bf9cb3082ec13d1fd1565cfe25987a689084215969a85f1ab",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    },
+    {
+      "key": "R1rep_b10__ALS__cdgsnofit_ALS_s0",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "result": "cdgsnofit_ALS_s0",
+      "groups": [
+        "stage1",
+        "axes_addendum"
+      ],
+      "mesh": "/ph/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_ALS_s0/post/mesh_tsdf.ply",
+      "exists": true,
+      "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+      "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+      "method": "cdgs",
+      "status": "READY",
+      "bytes": 2916425157,
+      "sha256": "daa8dbd7a5f4eeccfa898d8645ba2af8e8d68f44208fba584a7a4bd9d46e1ac1",
+      "evaluation_sha256": "347b79508ac5c1c6e385a218d4da822090028ccbb6c47dba3f318c00140ea86b",
+      "values_sha256": "9e7ed9b9459104f3e20eba9260c91b33bc2415e507504879afd3f1fe84c30002"
+    }
+  ],
+  "stage1_first_keys": [
+    "B0_b10__LoD2__imgonly_2dgs_s0",
+    "B0_b10__LoD2__trust_LoD2_fix1",
+    "B0_b10__LoD2__mvsfuse_LoD2",
+    "B0_b10__LoD2__cdgsnofit_LoD2_s0",
+    "B0_b10__LoD2__prop_LoD2_s0",
+    "B0_b10__LoD2__prop_LoD2_s1",
+    "B0_b10__ALS__imgonly_2dgs_s0",
+    "B0_b10__ALS__geogs_ALS_fix1",
+    "B0_b10__ALS__mvsfuse_ALS",
+    "B0_b10__ALS__cdgsnofit_ALS_s0",
+    "B0_b10__ALS__prop_ALS_s0",
+    "B0_b10__ALS__prop_ALS_s1",
+    "B173nb_b10__LoD2__imgonly_2dgs_s0",
+    "B173nb_b10__LoD2__trust_LoD2_fix1",
+    "B173nb_b10__LoD2__mvsfuse_LoD2",
+    "B173nb_b10__LoD2__cdgsnofit_LoD2_s0",
+    "B173nb_b10__LoD2__prop_LoD2_s0",
+    "B173nb_b10__LoD2__prop_LoD2_s1",
+    "B173nb_b10__ALS__imgonly_2dgs_s0",
+    "B173nb_b10__ALS__geogs_ALS_fix1",
+    "B173nb_b10__ALS__mvsfuse_ALS",
+    "B173nb_b10__ALS__cdgsnofit_ALS_s0",
+    "B173nb_b10__ALS__prop_ALS_s0",
+    "B173nb_b10__ALS__prop_ALS_s1",
+    "R1rep_b10__LoD2__imgonly_2dgs_s0",
+    "R1rep_b10__LoD2__trust_LoD2_fix1",
+    "R1rep_b10__LoD2__mvsfuse_LoD2",
+    "R1rep_b10__LoD2__cdgsnofit_LoD2_s0",
+    "R1rep_b10__LoD2__prop_LoD2_s0",
+    "R1rep_b10__LoD2__prop_LoD2_s1",
+    "R1rep_b10__ALS__imgonly_2dgs_s0",
+    "R1rep_b10__ALS__geogs_ALS_fix1",
+    "R1rep_b10__ALS__mvsfuse_ALS",
+    "R1rep_b10__ALS__cdgsnofit_ALS_s0",
+    "R1rep_b10__ALS__prop_ALS_s0",
+    "R1rep_b10__ALS__prop_ALS_s1"
+  ],
+  "metric_targets": 60,
+  "baseline": {
+    "key": "B0_b10__LoD2__mvsfuse_LoD2",
+    "method": "mvsfuse",
+    "bytes": 726617681
+  },
+  "scientific_verdict": null
+}

@@ -321,33 +321,1917 @@
     },
     {
       "case": "B173-뜬면-1",
-      "status": "PENDING",
-      "reason": "before/after pair not yet complete"
+      "status": "PASS",
+      "views": 7,
+      "cameras": [
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            213.03266721441955,
+            128.99689200432096,
+            2.3473971899669266
+          ],
+          "target": [
+            157.27889669442527,
+            128.99689200432096,
+            -29.84205722808838
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -0.49999999999999994,
+            -0.0,
+            0.8660254037844387
+          ],
+          "direction": [
+            0.8660254037844387,
+            0.0,
+            0.49999999999999994
+          ],
+          "extent": 56.65343977577735,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 90,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            157.27889669442527,
+            184.75066252431523,
+            2.3473971899669266
+          ],
+          "target": [
+            157.27889669442527,
+            128.99689200432096,
+            -29.84205722808838
+          ],
+          "right": [
+            -1.0,
+            6.123233995736766e-17,
+            0.0
+          ],
+          "up": [
+            -3.0616169978683824e-17,
+            -0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            5.3028761936245346e-17,
+            0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 56.65343977577735,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 180,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            101.525126174431,
+            128.99689200432096,
+            2.3473971899669266
+          ],
+          "target": [
+            157.27889669442527,
+            128.99689200432096,
+            -29.84205722808838
+          ],
+          "right": [
+            -1.2246467991473532e-16,
+            -1.0,
+            0.0
+          ],
+          "up": [
+            0.49999999999999994,
+            -6.123233995736765e-17,
+            0.8660254037844387
+          ],
+          "direction": [
+            -0.8660254037844387,
+            1.0605752387249069e-16,
+            0.49999999999999994
+          ],
+          "extent": 56.65343977577735,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 270,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            157.27889669442527,
+            73.24312148432668,
+            2.3473971899669266
+          ],
+          "target": [
+            157.27889669442527,
+            128.99689200432096,
+            -29.84205722808838
+          ],
+          "right": [
+            1.0,
+            -1.8369701987210297e-16,
+            0.0
+          ],
+          "up": [
+            9.184850993605147e-17,
+            0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            -1.5908628580873602e-16,
+            -0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 56.65343977577735,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 45,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            202.1100666387152,
+            173.82806194861087,
+            -18.66277702851233
+          ],
+          "target": [
+            157.27889669442527,
+            128.99689200432096,
+            -29.84205722808838
+          ],
+          "right": [
+            -0.7071067811865475,
+            0.7071067811865476,
+            0.0
+          ],
+          "up": [
+            -0.12278780396897285,
+            -0.12278780396897282,
+            0.984807753012208
+          ],
+          "direction": [
+            0.696364240320019,
+            0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 56.65343977577735,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 225,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            112.44772675013533,
+            84.16572206003103,
+            -18.66277702851233
+          ],
+          "target": [
+            157.27889669442527,
+            128.99689200432096,
+            -29.84205722808838
+          ],
+          "right": [
+            0.7071067811865475,
+            -0.7071067811865477,
+            0.0
+          ],
+          "up": [
+            0.12278780396897286,
+            0.12278780396897282,
+            0.9848077530122081
+          ],
+          "direction": [
+            -0.6963642403200191,
+            -0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 56.65343977577735,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 90,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            157.27889669442527,
+            128.99689200432096,
+            34.536851608022246
+          ],
+          "target": [
+            157.27889669442527,
+            128.99689200432096,
+            -29.84205722808838
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -1.0,
+            -0.0,
+            6.123233995736766e-17
+          ],
+          "direction": [
+            6.123233995736766e-17,
+            0.0,
+            1.0
+          ],
+          "extent": 56.65343977577735,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        }
+      ],
+      "translation": [
+        157.27889669442527,
+        128.99689200432096,
+        -29.84205722808838
+      ],
+      "rows": [
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "39a2ba98ffdb6b0059e46e22b804e3c0012828228cff9c93a6d33107afaf88ba",
+          "faces": 1741910,
+          "gt_known_faces": 1143932,
+          "red_faces": 94234,
+          "web_triangles": 6439,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-1__nojudge_ALS_s0__before.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "d6e7d2c5e865ad5e98090c6b9f6cec7b0cd6db4761b80ceb8a064922d04cd63c",
+          "faces": 1521188,
+          "gt_known_faces": 1077332,
+          "red_faces": 51018,
+          "web_triangles": 5162,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-1__nojudge_ALS_s0__after.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "6c403dbe567b1cd47b0b62fe7b8f7c0a9299c7973afab4c7e3a24fcaf2436e3e",
+          "faces": 220728,
+          "gt_known_faces": 66604,
+          "red_faces": 43220,
+          "web_triangles": 9669,
+          "web_voxel": 0.2,
+          "glb": "/docs/figures/web/B173-뜬면-1__nojudge_ALS_s0__removed.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "122fd1e7b736e916d389b0a5d9d37bc9bb007ad6a3bff7a5a176a808be0b2025",
+          "faces": 2619784,
+          "gt_known_faces": 1615922,
+          "red_faces": 665892,
+          "web_triangles": 8884,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-1__lt_dynnow_ALS_s0__before.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "ea0961e97f60f9beea8d41fc6ddd986e9be8a8a74af071c1e50c67e0d0c9f191",
+          "faces": 2259880,
+          "gt_known_faces": 1479739,
+          "red_faces": 548671,
+          "web_triangles": 7966,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-1__lt_dynnow_ALS_s0__after.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "95d7831497ec7045da0ec32fa1f9a2ff344a2502305c318c5eb11c7a9af10b64",
+          "faces": 359918,
+          "gt_known_faces": 136193,
+          "red_faces": 117231,
+          "web_triangles": 16015,
+          "web_voxel": 0.2,
+          "glb": "/docs/figures/web/B173-뜬면-1__lt_dynnow_ALS_s0__removed.glb"
+        }
+      ],
+      "note": "Colours reproduce the original FLOATDIAG display rule, which differs from the quantitative five-category first-hit rule. Removed faces are displayed separately, with the same colours."
     },
     {
       "case": "B173-뜬면-2",
-      "status": "PENDING",
-      "reason": "before/after pair not yet complete"
+      "status": "PASS",
+      "views": 7,
+      "cameras": [
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            206.26595486855572,
+            101.49689200432097,
+            6.128861729345083
+          ],
+          "target": [
+            143.77889669442527,
+            101.49689200432097,
+            -29.948058128356934
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -0.49999999999999994,
+            -0.0,
+            0.8660254037844387
+          ],
+          "direction": [
+            0.8660254037844387,
+            0.0,
+            0.49999999999999994
+          ],
+          "extent": 63.495378949555565,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 90,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            143.77889669442527,
+            163.98395017845144,
+            6.128861729345083
+          ],
+          "target": [
+            143.77889669442527,
+            101.49689200432097,
+            -29.948058128356934
+          ],
+          "right": [
+            -1.0,
+            6.123233995736766e-17,
+            0.0
+          ],
+          "up": [
+            -3.0616169978683824e-17,
+            -0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            5.3028761936245346e-17,
+            0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 63.495378949555565,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 180,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            81.29183852029482,
+            101.49689200432098,
+            6.128861729345083
+          ],
+          "target": [
+            143.77889669442527,
+            101.49689200432097,
+            -29.948058128356934
+          ],
+          "right": [
+            -1.2246467991473532e-16,
+            -1.0,
+            0.0
+          ],
+          "up": [
+            0.49999999999999994,
+            -6.123233995736765e-17,
+            0.8660254037844387
+          ],
+          "direction": [
+            -0.8660254037844387,
+            1.0605752387249069e-16,
+            0.49999999999999994
+          ],
+          "extent": 63.495378949555565,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 270,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            143.77889669442527,
+            39.00983383019051,
+            6.128861729345083
+          ],
+          "target": [
+            143.77889669442527,
+            101.49689200432097,
+            -29.948058128356934
+          ],
+          "right": [
+            1.0,
+            -1.8369701987210297e-16,
+            0.0
+          ],
+          "up": [
+            9.184850993605147e-17,
+            0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            -1.5908628580873602e-16,
+            -0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 63.495378949555565,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 45,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            194.02425047401502,
+            151.74224578391073,
+            -17.41867535010524
+          ],
+          "target": [
+            143.77889669442527,
+            101.49689200432097,
+            -29.948058128356934
+          ],
+          "right": [
+            -0.7071067811865475,
+            0.7071067811865476,
+            0.0
+          ],
+          "up": [
+            -0.12278780396897285,
+            -0.12278780396897282,
+            0.984807753012208
+          ],
+          "direction": [
+            0.696364240320019,
+            0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 63.495378949555565,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 225,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            93.53354291483551,
+            51.25153822473122,
+            -17.41867535010524
+          ],
+          "target": [
+            143.77889669442527,
+            101.49689200432097,
+            -29.948058128356934
+          ],
+          "right": [
+            0.7071067811865475,
+            -0.7071067811865477,
+            0.0
+          ],
+          "up": [
+            0.12278780396897286,
+            0.12278780396897282,
+            0.9848077530122081
+          ],
+          "direction": [
+            -0.6963642403200191,
+            -0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 63.495378949555565,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 90,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            143.77889669442527,
+            101.49689200432097,
+            42.20578158704711
+          ],
+          "target": [
+            143.77889669442527,
+            101.49689200432097,
+            -29.948058128356934
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -1.0,
+            -0.0,
+            6.123233995736766e-17
+          ],
+          "direction": [
+            6.123233995736766e-17,
+            0.0,
+            1.0
+          ],
+          "extent": 63.495378949555565,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        }
+      ],
+      "translation": [
+        143.77889669442527,
+        101.49689200432097,
+        -29.948058128356934
+      ],
+      "rows": [
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "3732ff040d80a0bfec32effb83939c17a2c3356b1e1ce635190cd3ead6a4a563",
+          "faces": 2555727,
+          "gt_known_faces": 1558804,
+          "red_faces": 227133,
+          "web_triangles": 8647,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-2__nojudge_ALS_s0__before.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "613d776b353b48664e74a41434dcd528e316de2b9e3ec7ef5d5bfbdf5d97452d",
+          "faces": 2091315,
+          "gt_known_faces": 1428029,
+          "red_faces": 129980,
+          "web_triangles": 7787,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-2__nojudge_ALS_s0__after.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "541b61866db39d22eba75f80eff3c6d4ba8709cf26fa93a93fba10ecea5382fd",
+          "faces": 464434,
+          "gt_known_faces": 130791,
+          "red_faces": 97167,
+          "web_triangles": 6114,
+          "web_voxel": 0.4,
+          "glb": "/docs/figures/web/B173-뜬면-2__nojudge_ALS_s0__removed.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "4eed7171af4d7ee0a7f4697d3ab3484abd9b1fb6b8e390c19b67ff44f3d84b59",
+          "faces": 2970390,
+          "gt_known_faces": 1699205,
+          "red_faces": 389373,
+          "web_triangles": 10631,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-2__lt_dynnow_ALS_s0__before.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "67730f18a4611f51a677256c9a14f4d8e310da8123c19f6fd965a01f99567dfc",
+          "faces": 2399671,
+          "gt_known_faces": 1473380,
+          "red_faces": 193246,
+          "web_triangles": 8737,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/B173-뜬면-2__lt_dynnow_ALS_s0__after.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "5d8ea0c934f66e6383135cb5f94f1588e7bce08032d3462daaa15db3d176be55",
+          "faces": 570756,
+          "gt_known_faces": 225844,
+          "red_faces": 196146,
+          "web_triangles": 6630,
+          "web_voxel": 0.4,
+          "glb": "/docs/figures/web/B173-뜬면-2__lt_dynnow_ALS_s0__removed.glb"
+        }
+      ],
+      "note": "Colours reproduce the original FLOATDIAG display rule, which differs from the quantitative five-category first-hit rule. Removed faces are displayed separately, with the same colours."
     },
     {
       "case": "B173-날개",
-      "status": "PENDING",
-      "reason": "before/after pair not yet complete"
+      "status": "PASS",
+      "views": 7,
+      "cameras": [
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            176.22272749934456,
+            97.83,
+            -12.40552008638312
+          ],
+          "target": [
+            141.655,
+            97.83,
+            -32.36320686340332
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -0.49999999999999994,
+            -0.0,
+            0.8660254037844387
+          ],
+          "direction": [
+            0.8660254037844387,
+            0.0,
+            0.49999999999999994
+          ],
+          "extent": 35.12552872755556,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 90,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            141.655,
+            132.39772749934454,
+            -12.40552008638312
+          ],
+          "target": [
+            141.655,
+            97.83,
+            -32.36320686340332
+          ],
+          "right": [
+            -1.0,
+            6.123233995736766e-17,
+            0.0
+          ],
+          "up": [
+            -3.0616169978683824e-17,
+            -0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            5.3028761936245346e-17,
+            0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 35.12552872755556,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 180,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            107.08727250065544,
+            97.83,
+            -12.40552008638312
+          ],
+          "target": [
+            141.655,
+            97.83,
+            -32.36320686340332
+          ],
+          "right": [
+            -1.2246467991473532e-16,
+            -1.0,
+            0.0
+          ],
+          "up": [
+            0.49999999999999994,
+            -6.123233995736765e-17,
+            0.8660254037844387
+          ],
+          "direction": [
+            -0.8660254037844387,
+            1.0605752387249069e-16,
+            0.49999999999999994
+          ],
+          "extent": 35.12552872755556,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 270,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            141.655,
+            63.26227250065545,
+            -12.40552008638312
+          ],
+          "target": [
+            141.655,
+            97.83,
+            -32.36320686340332
+          ],
+          "right": [
+            1.0,
+            -1.8369701987210297e-16,
+            0.0
+          ],
+          "up": [
+            9.184850993605147e-17,
+            0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            -1.5908628580873602e-16,
+            -0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 35.12552872755556,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 45,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            169.4506387820491,
+            125.62563878204912,
+            -25.43197498484942
+          ],
+          "target": [
+            141.655,
+            97.83,
+            -32.36320686340332
+          ],
+          "right": [
+            -0.7071067811865475,
+            0.7071067811865476,
+            0.0
+          ],
+          "up": [
+            -0.12278780396897285,
+            -0.12278780396897282,
+            0.984807753012208
+          ],
+          "direction": [
+            0.696364240320019,
+            0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 35.12552872755556,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 225,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            113.85936121795088,
+            70.03436121795087,
+            -25.43197498484942
+          ],
+          "target": [
+            141.655,
+            97.83,
+            -32.36320686340332
+          ],
+          "right": [
+            0.7071067811865475,
+            -0.7071067811865477,
+            0.0
+          ],
+          "up": [
+            0.12278780396897286,
+            0.12278780396897282,
+            0.9848077530122081
+          ],
+          "direction": [
+            -0.6963642403200191,
+            -0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 35.12552872755556,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 90,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            141.655,
+            97.83,
+            7.552166690637087
+          ],
+          "target": [
+            141.655,
+            97.83,
+            -32.36320686340332
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -1.0,
+            -0.0,
+            6.123233995736766e-17
+          ],
+          "direction": [
+            6.123233995736766e-17,
+            0.0,
+            1.0
+          ],
+          "extent": 35.12552872755556,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        }
+      ],
+      "translation": [
+        141.655,
+        97.83,
+        -32.36320686340332
+      ],
+      "rows": [
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "723228617acf6457668215c0565a5df9e083decb86ff12f2333a60bbd1ec6af0",
+          "faces": 316905,
+          "gt_known_faces": 276831,
+          "red_faces": 39123,
+          "web_triangles": 17567,
+          "web_voxel": 0.2,
+          "glb": "/docs/figures/web/B173-날개__nojudge_ALS_s0__before.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "8352e5f0343cdd490e5f3361b406b4bde170bb37aec3cbc47b3b89c5462026d2",
+          "faces": 287745,
+          "gt_known_faces": 256351,
+          "red_faces": 23115,
+          "web_triangles": 16019,
+          "web_voxel": 0.2,
+          "glb": "/docs/figures/web/B173-날개__nojudge_ALS_s0__after.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "79cdea563a3c667e9b2959acb46d07739b6e1ddc6ef55dcac96b5b26a8dddb2f",
+          "faces": 29164,
+          "gt_known_faces": 20484,
+          "red_faces": 16012,
+          "web_triangles": 17294,
+          "web_voxel": 0.05,
+          "glb": "/docs/figures/web/B173-날개__nojudge_ALS_s0__removed.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "160b737d9785d32970564a05ea09b60e6addf3412d7f7f0c742a883ac19f5c09",
+          "faces": 425458,
+          "gt_known_faces": 288533,
+          "red_faces": 53286,
+          "web_triangles": 6302,
+          "web_voxel": 0.4,
+          "glb": "/docs/figures/web/B173-날개__lt_dynnow_ALS_s0__before.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "4a2ea684bc9303410ed68556ca37e699b86e4ab595341534404172100da4907e",
+          "faces": 360380,
+          "gt_known_faces": 252124,
+          "red_faces": 21599,
+          "web_triangles": 5146,
+          "web_voxel": 0.4,
+          "glb": "/docs/figures/web/B173-날개__lt_dynnow_ALS_s0__after.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "c544158cc2cccfbd2e65da39207ac78ae93cab9c9b9107e54bde3c7f6198acda",
+          "faces": 65086,
+          "gt_known_faces": 36413,
+          "red_faces": 31691,
+          "web_triangles": 13774,
+          "web_voxel": 0.1,
+          "glb": "/docs/figures/web/B173-날개__lt_dynnow_ALS_s0__removed.glb"
+        }
+      ],
+      "note": "Colours reproduce the original FLOATDIAG display rule, which differs from the quantitative five-category first-hit rule. Removed faces are displayed separately, with the same colours."
     },
     {
       "case": "R1-뜬면-1",
-      "status": "PENDING",
-      "reason": "before/after pair not yet complete"
+      "status": "PASS",
+      "views": 7,
+      "cameras": [
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            63.52379466675074,
+            36.69950571184489,
+            7.6426579217096915
+          ],
+          "target": [
+            -2.0959312106952623,
+            36.69950571184489,
+            -30.242908477783203
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -0.49999999999999994,
+            -0.0,
+            0.8660254037844387
+          ],
+          "direction": [
+            0.8660254037844387,
+            0.0,
+            0.49999999999999994
+          ],
+          "extent": 66.6785968631075,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 90,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -2.0959312106952583,
+            102.3192315892909,
+            7.6426579217096915
+          ],
+          "target": [
+            -2.0959312106952623,
+            36.69950571184489,
+            -30.242908477783203
+          ],
+          "right": [
+            -1.0,
+            6.123233995736766e-17,
+            0.0
+          ],
+          "up": [
+            -3.0616169978683824e-17,
+            -0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            5.3028761936245346e-17,
+            0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 66.6785968631075,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 180,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -67.71565708814126,
+            36.6995057118449,
+            7.6426579217096915
+          ],
+          "target": [
+            -2.0959312106952623,
+            36.69950571184489,
+            -30.242908477783203
+          ],
+          "right": [
+            -1.2246467991473532e-16,
+            -1.0,
+            0.0
+          ],
+          "up": [
+            0.49999999999999994,
+            -6.123233995736765e-17,
+            0.8660254037844387
+          ],
+          "direction": [
+            -0.8660254037844387,
+            1.0605752387249069e-16,
+            0.49999999999999994
+          ],
+          "extent": 66.6785968631075,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 270,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -2.0959312106952743,
+            -28.92022016560111,
+            7.6426579217096915
+          ],
+          "target": [
+            -2.0959312106952623,
+            36.69950571184489,
+            -30.242908477783203
+          ],
+          "right": [
+            1.0,
+            -1.8369701987210297e-16,
+            0.0
+          ],
+          "up": [
+            9.184850993605147e-17,
+            0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            -1.5908628580873602e-16,
+            -0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 66.6785968631075,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 45,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            50.66837611905776,
+            89.46381304159792,
+            -17.085389347480344
+          ],
+          "target": [
+            -2.0959312106952623,
+            36.69950571184489,
+            -30.242908477783203
+          ],
+          "right": [
+            -0.7071067811865475,
+            0.7071067811865476,
+            0.0
+          ],
+          "up": [
+            -0.12278780396897285,
+            -0.12278780396897282,
+            0.984807753012208
+          ],
+          "direction": [
+            0.696364240320019,
+            0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 66.6785968631075,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 225,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -54.86023854044829,
+            -16.064801617908124,
+            -17.085389347480344
+          ],
+          "target": [
+            -2.0959312106952623,
+            36.69950571184489,
+            -30.242908477783203
+          ],
+          "right": [
+            0.7071067811865475,
+            -0.7071067811865477,
+            0.0
+          ],
+          "up": [
+            0.12278780396897286,
+            0.12278780396897282,
+            0.9848077530122081
+          ],
+          "direction": [
+            -0.6963642403200191,
+            -0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 66.6785968631075,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 90,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -2.095931210695258,
+            36.69950571184489,
+            45.5282243212026
+          ],
+          "target": [
+            -2.0959312106952623,
+            36.69950571184489,
+            -30.242908477783203
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -1.0,
+            -0.0,
+            6.123233995736766e-17
+          ],
+          "direction": [
+            6.123233995736766e-17,
+            0.0,
+            1.0
+          ],
+          "extent": 66.6785968631075,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        }
+      ],
+      "translation": [
+        -2.0959312106952623,
+        36.69950571184489,
+        -30.242908477783203
+      ],
+      "rows": [
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "97289091297c652637d958db436f1eee58d962e75838afa575d38ddb362ac20b",
+          "faces": 3102336,
+          "gt_known_faces": 2324990,
+          "red_faces": 163695,
+          "web_triangles": 10988,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-1__nojudge_ALS_s0__before.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "697768d570b4d1a92a2edc7c0d8a4a40f11caa45d7205e7f79068cb650f6555a",
+          "faces": 2716936,
+          "gt_known_faces": 2049496,
+          "red_faces": 44278,
+          "web_triangles": 9782,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-1__nojudge_ALS_s0__after.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "7d0efc852a252e2ee65fb7a86ef1f08170091231e58be1b6343ea8fd51872898",
+          "faces": 385419,
+          "gt_known_faces": 275506,
+          "red_faces": 119417,
+          "web_triangles": 17750,
+          "web_voxel": 0.2,
+          "glb": "/docs/figures/web/R1-뜬면-1__nojudge_ALS_s0__removed.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "c94ae46f556593e742806ea89a651665ba6cbc97599c912312a5b790c222d5b6",
+          "faces": 5130975,
+          "gt_known_faces": 3994084,
+          "red_faces": 1427655,
+          "web_triangles": 17446,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-1__lt_dynnow_ALS_s0__before.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "d7bae5253b1f8fee0e54e595dec3397e25378d9e6598f520b6e29ac9b47231cc",
+          "faces": 3764657,
+          "gt_known_faces": 2953772,
+          "red_faces": 542053,
+          "web_triangles": 12856,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-1__lt_dynnow_ALS_s0__after.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "74253a469a01dcd12049a57cf19454c60345aebde23619f22ae7d1444ab38a8c",
+          "faces": 1366471,
+          "gt_known_faces": 1040427,
+          "red_faces": 885709,
+          "web_triangles": 17926,
+          "web_voxel": 0.4,
+          "glb": "/docs/figures/web/R1-뜬면-1__lt_dynnow_ALS_s0__removed.glb"
+        }
+      ],
+      "note": "Colours reproduce the original FLOATDIAG display rule, which differs from the quantitative five-category first-hit rule. Removed faces are displayed separately, with the same colours."
     },
     {
       "case": "R1-뜬면-2",
-      "status": "PENDING",
-      "reason": "before/after pair not yet complete"
+      "status": "PASS",
+      "views": 7,
+      "cameras": [
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            46.05873271584004,
+            44.69950571184489,
+            3.1626223841832015
+          ],
+          "target": [
+            -10.220931210695262,
+            44.69950571184489,
+            -29.330456733703613
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -0.49999999999999994,
+            -0.0,
+            0.8660254037844387
+          ],
+          "direction": [
+            0.8660254037844387,
+            0.0,
+            0.49999999999999994
+          ],
+          "extent": 57.18781924748081,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 90,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -10.220931210695259,
+            100.9791696383802,
+            3.1626223841832015
+          ],
+          "target": [
+            -10.220931210695262,
+            44.69950571184489,
+            -29.330456733703613
+          ],
+          "right": [
+            -1.0,
+            6.123233995736766e-17,
+            0.0
+          ],
+          "up": [
+            -3.0616169978683824e-17,
+            -0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            5.3028761936245346e-17,
+            0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 57.18781924748081,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 180,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -66.50059513723056,
+            44.6995057118449,
+            3.1626223841832015
+          ],
+          "target": [
+            -10.220931210695262,
+            44.69950571184489,
+            -29.330456733703613
+          ],
+          "right": [
+            -1.2246467991473532e-16,
+            -1.0,
+            0.0
+          ],
+          "up": [
+            0.49999999999999994,
+            -6.123233995736765e-17,
+            0.8660254037844387
+          ],
+          "direction": [
+            -0.8660254037844387,
+            1.0605752387249069e-16,
+            0.49999999999999994
+          ],
+          "extent": 57.18781924748081,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 270,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -10.220931210695273,
+            -11.580158214690407,
+            3.1626223841832015
+          ],
+          "target": [
+            -10.220931210695262,
+            44.69950571184489,
+            -29.330456733703613
+          ],
+          "right": [
+            1.0,
+            -1.8369701987210297e-16,
+            0.0
+          ],
+          "up": [
+            9.184850993605147e-17,
+            0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            -1.5908628580873602e-16,
+            -0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 57.18781924748081,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 45,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            35.0331055004758,
+            89.95354242301595,
+            -18.045728782486744
+          ],
+          "target": [
+            -10.220931210695262,
+            44.69950571184489,
+            -29.330456733703613
+          ],
+          "right": [
+            -0.7071067811865475,
+            0.7071067811865476,
+            0.0
+          ],
+          "up": [
+            -0.12278780396897285,
+            -0.12278780396897282,
+            0.984807753012208
+          ],
+          "direction": [
+            0.696364240320019,
+            0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 57.18781924748081,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 225,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -55.47496792186633,
+            -0.5545309993261611,
+            -18.045728782486744
+          ],
+          "target": [
+            -10.220931210695262,
+            44.69950571184489,
+            -29.330456733703613
+          ],
+          "right": [
+            0.7071067811865475,
+            -0.7071067811865477,
+            0.0
+          ],
+          "up": [
+            0.12278780396897286,
+            0.12278780396897282,
+            0.9848077530122081
+          ],
+          "direction": [
+            -0.6963642403200191,
+            -0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 57.18781924748081,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 90,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -10.220931210695259,
+            44.69950571184489,
+            35.65570150207003
+          ],
+          "target": [
+            -10.220931210695262,
+            44.69950571184489,
+            -29.330456733703613
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -1.0,
+            -0.0,
+            6.123233995736766e-17
+          ],
+          "direction": [
+            6.123233995736766e-17,
+            0.0,
+            1.0
+          ],
+          "extent": 57.18781924748081,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        }
+      ],
+      "translation": [
+        -10.220931210695262,
+        44.69950571184489,
+        -29.330456733703613
+      ],
+      "rows": [
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "cf8933f702020dcd8f87f4f73812f6fd08c39545a0463f175ea228d689e2869a",
+          "faces": 2089933,
+          "gt_known_faces": 909075,
+          "red_faces": 59021,
+          "web_triangles": 7349,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-2__nojudge_ALS_s0__before.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "b83368205af42940089fe911208aff1c11c5a7cd5e1a0c97888c62db22d1397a",
+          "faces": 1887456,
+          "gt_known_faces": 809035,
+          "red_faces": 17302,
+          "web_triangles": 6699,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-2__nojudge_ALS_s0__after.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "ca148973b29b04e0cc5fcdf3eeeaadbf98f8bdb435bc35f0f2807221753aa206",
+          "faces": 202493,
+          "gt_known_faces": 100049,
+          "red_faces": 41719,
+          "web_triangles": 8720,
+          "web_voxel": 0.2,
+          "glb": "/docs/figures/web/R1-뜬면-2__nojudge_ALS_s0__removed.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "70dccfa3ad232c4a341176437ac9af6cfeceb187224739fcadc218ad9428ffa5",
+          "faces": 3074848,
+          "gt_known_faces": 1622553,
+          "red_faces": 478171,
+          "web_triangles": 10382,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-2__lt_dynnow_ALS_s0__before.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "f53d22de08ba14501d6e77f490b9ec927a739feedfcf2d0c8d5b10418a9af3d4",
+          "faces": 2489431,
+          "gt_known_faces": 1317116,
+          "red_faces": 255067,
+          "web_triangles": 8381,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-뜬면-2__lt_dynnow_ALS_s0__after.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "855241dab37efbb8d8cf7383d384be134d29bdd0f117ec906b77aefee09b9104",
+          "faces": 585462,
+          "gt_known_faces": 305460,
+          "red_faces": 223127,
+          "web_triangles": 8054,
+          "web_voxel": 0.4,
+          "glb": "/docs/figures/web/R1-뜬면-2__lt_dynnow_ALS_s0__removed.glb"
+        }
+      ],
+      "note": "Colours reproduce the original FLOATDIAG display rule, which differs from the quantitative five-category first-hit rule. Removed faces are displayed separately, with the same colours."
     },
     {
       "case": "R1-보존띠-1",
-      "status": "PENDING",
-      "reason": "before/after pair not yet complete"
+      "status": "PASS",
+      "views": 7,
+      "cameras": [
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            86.78280214240067,
+            28.449505711844893,
+            14.077300703862505
+          ],
+          "target": [
+            9.904068789304738,
+            28.449505711844893,
+            -30.308656692504883
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -0.49999999999999994,
+            -0.0,
+            0.8660254037844387
+          ],
+          "direction": [
+            0.8660254037844387,
+            0.0,
+            0.49999999999999994
+          ],
+          "extent": 78.11928501760663,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 90,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            9.904068789304743,
+            105.32823906494083,
+            14.077300703862505
+          ],
+          "target": [
+            9.904068789304738,
+            28.449505711844893,
+            -30.308656692504883
+          ],
+          "right": [
+            -1.0,
+            6.123233995736766e-17,
+            0.0
+          ],
+          "up": [
+            -3.0616169978683824e-17,
+            -0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            5.3028761936245346e-17,
+            0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 78.11928501760663,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 180,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -66.97466456379121,
+            28.449505711844903,
+            14.077300703862505
+          ],
+          "target": [
+            9.904068789304738,
+            28.449505711844893,
+            -30.308656692504883
+          ],
+          "right": [
+            -1.2246467991473532e-16,
+            -1.0,
+            0.0
+          ],
+          "up": [
+            0.49999999999999994,
+            -6.123233995736765e-17,
+            0.8660254037844387
+          ],
+          "direction": [
+            -0.8660254037844387,
+            1.0605752387249069e-16,
+            0.49999999999999994
+          ],
+          "extent": 78.11928501760663,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 270,
+          "elevation_deg": 30,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            9.904068789304723,
+            -48.429227641251046,
+            14.077300703862505
+          ],
+          "target": [
+            9.904068789304738,
+            28.449505711844893,
+            -30.308656692504883
+          ],
+          "right": [
+            1.0,
+            -1.8369701987210297e-16,
+            0.0
+          ],
+          "up": [
+            9.184850993605147e-17,
+            0.49999999999999994,
+            0.8660254037844387
+          ],
+          "direction": [
+            -1.5908628580873602e-16,
+            -0.8660254037844387,
+            0.49999999999999994
+          ],
+          "extent": 78.11928501760663,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 45,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            71.72165579570095,
+            90.2670927182411,
+            -14.89357546074247
+          ],
+          "target": [
+            9.904068789304738,
+            28.449505711844893,
+            -30.308656692504883
+          ],
+          "right": [
+            -0.7071067811865475,
+            0.7071067811865476,
+            0.0
+          ],
+          "up": [
+            -0.12278780396897285,
+            -0.12278780396897282,
+            0.984807753012208
+          ],
+          "direction": [
+            0.696364240320019,
+            0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 78.11928501760663,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 225,
+          "elevation_deg": 10,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            -51.91351821709149,
+            -33.36808129455132,
+            -14.89357546074247
+          ],
+          "target": [
+            9.904068789304738,
+            28.449505711844893,
+            -30.308656692504883
+          ],
+          "right": [
+            0.7071067811865475,
+            -0.7071067811865477,
+            0.0
+          ],
+          "up": [
+            0.12278780396897286,
+            0.12278780396897282,
+            0.9848077530122081
+          ],
+          "direction": [
+            -0.6963642403200191,
+            -0.6963642403200189,
+            0.17364817766693033
+          ],
+          "extent": 78.11928501760663,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        },
+        {
+          "azimuth_deg": 0,
+          "elevation_deg": 90,
+          "width": 720,
+          "height": 600,
+          "eye": [
+            9.904068789304743,
+            28.449505711844893,
+            58.46325810022991
+          ],
+          "target": [
+            9.904068789304738,
+            28.449505711844893,
+            -30.308656692504883
+          ],
+          "right": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "up": [
+            -1.0,
+            -0.0,
+            6.123233995736766e-17
+          ],
+          "direction": [
+            6.123233995736766e-17,
+            0.0,
+            1.0
+          ],
+          "extent": 78.11928501760663,
+          "projection": "perspective",
+          "fov_x_deg": 45.0
+        }
+      ],
+      "translation": [
+        9.904068789304738,
+        28.449505711844893,
+        -30.308656692504883
+      ],
+      "rows": [
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "8886c1fc393d705fe302f9e4d9835c0961651d1b562cde5d01fde97d5a215468",
+          "faces": 5519308,
+          "gt_known_faces": 3344349,
+          "red_faces": 481493,
+          "web_triangles": 18466,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-보존띠-1__nojudge_ALS_s0__before.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "23995545e0a714b37e8c2eaad0d4d6784841a9eaa9e521ad58135ba5ab53c3b2",
+          "faces": 4740525,
+          "gt_known_faces": 2943077,
+          "red_faces": 255645,
+          "web_triangles": 16758,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-보존띠-1__nojudge_ALS_s0__after.glb"
+        },
+        {
+          "run": "nojudge_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "2c95f60ff6d5982602a41a74aff8469861aa10395f19ec44b0bd893096d13220",
+          "faces": 778808,
+          "gt_known_faces": 401287,
+          "red_faces": 225857,
+          "web_triangles": 8952,
+          "web_voxel": 0.4,
+          "glb": "/docs/figures/web/R1-보존띠-1__nojudge_ALS_s0__removed.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "before",
+          "source_crop_sha256": "67f906d79f2870053a3e6e2045bebee39da5cb1e3269a95f46ba3906c80f915f",
+          "faces": 8584996,
+          "gt_known_faces": 5348427,
+          "red_faces": 2192153,
+          "web_triangles": 6580,
+          "web_voxel": 1.6,
+          "glb": "/docs/figures/web/R1-보존띠-1__lt_dynnow_ALS_s0__before.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "after",
+          "source_crop_sha256": "80a59de75235cc5e1081733fdeca3774884073072ff419af5dcf7f4c83800587",
+          "faces": 5951380,
+          "gt_known_faces": 3668816,
+          "red_faces": 700896,
+          "web_triangles": 4967,
+          "web_voxel": 1.6,
+          "glb": "/docs/figures/web/R1-보존띠-1__lt_dynnow_ALS_s0__after.glb"
+        },
+        {
+          "run": "lt_dynnow_ALS_s0",
+          "stage": "removed",
+          "source_crop_sha256": "b76f510f24bd0692c9505fa1c0273af73f074e7f2e5e55bd4be996d8dd33222f",
+          "faces": 2633789,
+          "gt_known_faces": 1679758,
+          "red_faces": 1491388,
+          "web_triangles": 9304,
+          "web_voxel": 0.8,
+          "glb": "/docs/figures/web/R1-보존띠-1__lt_dynnow_ALS_s0__removed.glb"
+        }
+      ],
+      "note": "Colours reproduce the original FLOATDIAG display rule, which differs from the quantitative five-category first-hit rule. Removed faces are displayed separately, with the same colours."
     }
   ],
   "source_sha256": "2a91fe9ca3d85882923947ae0b1b6be6ab2c54204a315aa326363083a17c7cbd",

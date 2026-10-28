@@ -13,19 +13,27 @@ def package(kind):
         suffix='패치표'
     else:
         # Full handover includes all newly cleaned meshes, but no source models or imagery.
-        targets=json.loads((C/'mesh_targets_v1.json').read_text())['targets']
+        targets=mesh_config()['targets']
         states=[]
         for r in targets:
             p=D/'tables/meshes'/f"{r['key']}.json"
             states.append(json.loads(p.read_text()) if p.exists() else dict(status='PENDING',target=r))
         assert all(r['status'] in ['PASS','UNAVAILABLE_FROZEN_STOP','UNAVAILABLE'] for r in states),'full handover requires all requested targets accounted for'
+        if (C/'axes_addendum_v1.json').exists():
+            assert json.loads((D/'tables/axes_baseline_replay.json').read_text())['status']=='PASS'
+            for r in targets:
+                p=D/'tables/axes'/f"{r['key']}.json"
+                assert p.exists() and json.loads(p.read_text())['status'] in ['PASS','UNAVAILABLE_FROZEN_STOP','UNAVAILABLE'],r['key']
         figs=json.loads((D/'tables/case_figures.json').read_text());assert len(figs['cases'])==7 and all(x['status']=='PASS' for x in figs['cases'])
-        for folder in ['mesh_post','patch_z','patch_table','case_meshes']:
+        for folder in ['mesh_post','patch_z','patch_table','case_meshes','axes_dist']:
             files +=[(p,folder+'/'+str(p.relative_to(O/folder))) for p in sorted((O/folder).rglob('*')) if p.is_file()]
         files +=[(p,'docs/'+str(p.relative_to(D))) for p in sorted(D.rglob('*')) if p.is_file()]
         suffix='handover'
     for dirname,root in [('configs',C),('scripts',R/'scripts/phd/main_meshpatch_v1')]:
         files +=[(p,dirname+'/'+str(p.relative_to(root))) for p in sorted(root.rglob('*')) if p.is_file() and '__pycache__' not in p.parts]
+    if kind=='handover' and (C/'axes_addendum_v1.json').exists():
+        for folder in ['scripts/phd/main_axes71_v2','scripts/phd/main_dist71_v1','src/phd/metrics_v3']:
+            files +=[(p,'reference_code/'+str(p.relative_to(R))) for p in sorted((R/folder).glob('*.py'))]
     for folder in ['track_a_v3/scripts','geogs_original']:
         files +=[(p,'received/'+str(p.relative_to(O/'received'))) for p in sorted((O/'received'/folder).rglob('*')) if p.is_file() and '__pycache__' not in p.parts]
     for name in ['LoD2_evalseg.json','ALS_evalseg.json','cases.json']:

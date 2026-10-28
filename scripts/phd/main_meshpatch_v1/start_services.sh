@@ -18,7 +18,7 @@ if [[ "$mode" == queue ]]; then
     -v "$task_repo/docs/experiments/phd/main_meshpatch_v1:$task_repo/docs/experiments/phd/main_meshpatch_v1" \
     -w "$task_repo" --entrypoint bash jointbuildgs:dev "$task_queue_snapshot"
 elif [[ "$mode" == delivery ]]; then
-  docker run -d --name jbgs-meshpatch-delivery-v3 --network none --memory 256m --memory-swap 256m --cpus 1 \
+  docker run -d --name jbgs-meshpatch-delivery-v4 --network none --memory 256m --memory-swap 256m --cpus 1 \
     --user "$(id -u):$(id -g)" -e TZ=Asia/Seoul -e PYTHONUNBUFFERED=1 -e PYTHONDONTWRITEBYTECODE=1 \
     -v "$task_out:/out" -v "$task_repo:/repo:ro" \
     -v "$task_repo/configs/phd/main_meshpatch_v1:/config:ro" \

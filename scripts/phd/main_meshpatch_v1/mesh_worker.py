@@ -83,7 +83,7 @@ def case_crops(mesh,row,stage,removed=None):
     return outputs
 
 def process(key):
-    cfg=json.loads((C/'mesh_targets_v1.json').read_text());assert sha(C/'mesh_targets_v1.json')==json.loads((C/'mesh_targets_v1.lock.json').read_text())['sha256']
+    cfg=mesh_config()
     row=next(x for x in cfg['targets'] if x['key']==key);dest=D/'tables/meshes'/f'{key}.json'
     if dest.exists():return json.loads(dest.read_text())
     t=time.monotonic();status(key,'starting')

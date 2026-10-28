@@ -25,6 +25,15 @@ def dump(p,x):
     p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);t=p.with_suffix(p.suffix+'.tmp');t.write_text(json.dumps(safe(x),ensure_ascii=False,indent=2,allow_nan=False)+'\n');t.replace(p)
 def status(key,stage,**kw):
     x=dict(key=key,stage=stage,at=now(),scientific_verdict=None,**kw);dump(O/'status'/f'mesh_{key}.json',x);print(json.dumps(safe(x),ensure_ascii=False),flush=True)
+def mesh_config():
+    p=C/'mesh_targets_v1.json'
+    assert sha(p)==json.loads((C/'mesh_targets_v1.lock.json').read_text())['sha256']
+    cfg=json.loads(p.read_text())
+    addon=C/'axes_addendum_v1.json'
+    if addon.exists():
+        assert sha(addon)==json.loads((C/'axes_addendum_v1.lock.json').read_text())['sha256']
+        cfg['targets']+=json.loads(addon.read_text())['extra_targets']
+    return cfg
 def resolve(site,prior,result):
     rec=LT/'patch_z'/f'{site}__{prior}__{result}.json'
     if rec.exists():

@@ -1,0 +1,2508 @@
+{
+  "status": "PASS",
+  "key": "B0_b10__LoD2__mvsfuse_LoD2",
+  "full_geometry_recomputed": false,
+  "source_mesh_sha256": "0cc80d5b5e32a2306d117a8df1eeb7af29565b876be8fbe53ea65411d7aa892e",
+  "checks": [
+    {
+      "field": "all/gt/R_tau",
+      "actual": 0.8599951148068846,
+      "expected": 0.8599951148068846,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "all/gt/mean",
+      "actual": 17.35666987462268,
+      "expected": 17.35666987462268,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "all/gt/med",
+      "actual": 8.783387765288353,
+      "expected": 8.783387765288353,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "all/gt/out4",
+      "actual": 0.01854337886708107,
+      "expected": 0.01854337886708107,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "all/gt/far1",
+      "actual": 0.02050327181931764,
+      "expected": 0.02050327181931764,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "all/gt/n_gt",
+      "actual": 2063378,
+      "expected": 2063378,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "all/res/E/P_tau",
+      "actual": 0.7853178548433575,
+      "expected": 0.7853178548433575,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "all/res/E/mean",
+      "actual": 86.15015230642385,
+      "expected": 86.15015230642385,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "all/res/E/n",
+      "actual": 1495667,
+      "expected": 1495667,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "all/res/E/excluded",
+      "actual": 588815,
+      "expected": 588815,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/gt/R_tau",
+      "actual": 0.9804301132295616,
+      "expected": 0.9804301132295616,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/gt/mean",
+      "actual": 15.706767412828778,
+      "expected": 15.706767412828778,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/gt/med",
+      "actual": 13.63767683506012,
+      "expected": 13.63767683506012,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/gt/out4",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/gt/far1",
+      "actual": 0.0017567818408421945,
+      "expected": 0.0017567818408421945,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/gt/n_gt",
+      "actual": 301688,
+      "expected": 301688,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/res/E/P_tau",
+      "actual": 0.9952179148190602,
+      "expected": 0.9952179148190602,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/res/E/mean",
+      "actual": 10.07777920872868,
+      "expected": 10.07777920872868,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/res/E/n",
+      "actual": 1313862,
+      "expected": 1313862,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_refine/res/E/excluded",
+      "actual": 6622,
+      "expected": 6622,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/gt/R_tau",
+      "actual": 0.20343974983637553,
+      "expected": 0.20343974983637553,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/gt/mean",
+      "actual": 48.53858463089084,
+      "expected": 48.53858463089084,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/gt/med",
+      "actual": 43.569061160087585,
+      "expected": 43.569061160087585,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/gt/out4",
+      "actual": 0.0007272198385571959,
+      "expected": 0.0007272198385571959,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/gt/far1",
+      "actual": 0.03257944876736237,
+      "expected": 0.03257944876736237,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/gt/n_gt",
+      "actual": 27502,
+      "expected": 27502,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/res/E/P_tau",
+      "actual": 0.6344342257139666,
+      "expected": 0.6344342257139666,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/res/E/mean",
+      "actual": 29.44476010892515,
+      "expected": 29.44476010892515,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/res/E/n",
+      "actual": 134285,
+      "expected": 134285,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr14/res/E/excluded",
+      "actual": 619,
+      "expected": 619,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/gt/R_tau",
+      "actual": 0.0627555835168292,
+      "expected": 0.0627555835168292,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/gt/mean",
+      "actual": 87.50264340583719,
+      "expected": 87.50264340583719,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/gt/med",
+      "actual": 88.63637745380402,
+      "expected": 88.63637745380402,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/gt/out4",
+      "actual": 0.6104120792702108,
+      "expected": 0.6104120792702108,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/gt/far1",
+      "actual": 0.37496067945894934,
+      "expected": 0.37496067945894934,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/gt/n_gt",
+      "actual": 6358,
+      "expected": 6358,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/res/E/P_tau",
+      "actual": 0.1904315196998124,
+      "expected": 0.1904315196998124,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/res/E/mean",
+      "actual": 81.17864720093738,
+      "expected": 81.17864720093738,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/res/E/n",
+      "actual": 26650,
+      "expected": 26650,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_corr4p/res/E/excluded",
+      "actual": 2380,
+      "expected": 2380,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/gt/R_tau",
+      "actual": 0.9975074775672981,
+      "expected": 0.9975074775672981,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/gt/mean",
+      "actual": 21.509944113607734,
+      "expected": 21.509944113607734,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/gt/med",
+      "actual": 22.428803145885468,
+      "expected": 22.428803145885468,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/gt/out4",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/gt/far1",
+      "actual": 0.00016616816218012627,
+      "expected": 0.00016616816218012627,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/gt/n_gt",
+      "actual": 6018,
+      "expected": 6018,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/res/E/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/res/E/mean",
+      "actual": 11.798501824167412,
+      "expected": 11.798501824167412,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/res/E/n",
+      "actual": 24361,
+      "expected": 24361,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_mask/res/E/excluded",
+      "actual": 53,
+      "expected": 53,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/gt/R_tau",
+      "actual": 0.8861047835990888,
+      "expected": 0.8861047835990888,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/gt/mean",
+      "actual": 27.405959866375607,
+      "expected": 27.405959866375607,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/gt/med",
+      "actual": 21.03680968284607,
+      "expected": 21.03680968284607,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/gt/out4",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/gt/far1",
+      "actual": 0.002277904328018223,
+      "expected": 0.002277904328018223,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/gt/n_gt",
+      "actual": 439,
+      "expected": 439,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/res/E/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/res/E/mean",
+      "actual": 9.07336251284991,
+      "expected": 9.07336251284991,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/res/E/n",
+      "actual": 3126,
+      "expected": 3126,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_keep_in/res/E/excluded",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/gt/R_tau",
+      "actual": 0.9598255995017129,
+      "expected": 0.9598255995017129,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/gt/mean",
+      "actual": 13.344507133287916,
+      "expected": 13.344507133287916,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/gt/med",
+      "actual": 11.995133385062218,
+      "expected": 11.995133385062218,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/gt/out4",
+      "actual": 0.00010380982040901069,
+      "expected": 0.00010380982040901069,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/gt/far1",
+      "actual": 0.0007785736530675802,
+      "expected": 0.0007785736530675802,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/gt/n_gt",
+      "actual": 19266,
+      "expected": 19266,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/res/E/P_tau",
+      "actual": 0.9737957168283861,
+      "expected": 0.9737957168283861,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/res/E/mean",
+      "actual": 9.118209189951418,
+      "expected": 9.118209189951418,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/res/E/n",
+      "actual": 87085,
+      "expected": 87085,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_limit/res/E/excluded",
+      "actual": 503,
+      "expected": 503,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/gt/R_tau",
+      "actual": 0.2925708450344652,
+      "expected": 0.2925708450344652,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/gt/mean",
+      "actual": 75.36284737718748,
+      "expected": 75.36284737718748,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/gt/med",
+      "actual": 55.314791202545166,
+      "expected": 55.314791202545166,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/gt/out4",
+      "actual": 0.04442175134031146,
+      "expected": 0.04442175134031146,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/gt/far1",
+      "actual": 0.20525912688281847,
+      "expected": 0.20525912688281847,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/gt/n_gt",
+      "actual": 3917,
+      "expected": 3917,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/res/E/P_tau",
+      "actual": 0.9125678277612462,
+      "expected": 0.9125678277612462,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/res/E/mean",
+      "actual": 10.540058594312422,
+      "expected": 10.540058594312422,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/res/E/n",
+      "actual": 34278,
+      "expected": 34278,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_double/res/E/excluded",
+      "actual": 1366,
+      "expected": 1366,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/gt/R_tau",
+      "actual": 0.9978351631359208,
+      "expected": 0.9978351631359208,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/gt/mean",
+      "actual": 21.49004175373118,
+      "expected": 21.49004175373118,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/gt/med",
+      "actual": 22.15805947780609,
+      "expected": 22.15805947780609,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/gt/out4",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/gt/far1",
+      "actual": 0.0006185248183083346,
+      "expected": 0.0006185248183083346,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/gt/n_gt",
+      "actual": 6467,
+      "expected": 6467,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/res/E/P_tau",
+      "actual": 0.9992687979851322,
+      "expected": 0.9992687979851322,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/res/E/mean",
+      "actual": 13.357374410604741,
+      "expected": 13.357374410604741,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/res/E/n",
+      "actual": 24617,
+      "expected": 24617,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_inh_miss/res/E/excluded",
+      "actual": 299,
+      "expected": 299,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/gt/R_tau",
+      "actual": 0.4260355029585799,
+      "expected": 0.4260355029585799,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/gt/mean",
+      "actual": 27.341508861636665,
+      "expected": 27.341508861636665,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/gt/med",
+      "actual": 27.226242423057556,
+      "expected": 27.226242423057556,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/gt/out4",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/gt/far1",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/gt/n_gt",
+      "actual": 169,
+      "expected": 169,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/res/E/P_tau",
+      "actual": 0.5227272727272727,
+      "expected": 0.5227272727272727,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/res/E/mean",
+      "actual": 24.101053455307568,
+      "expected": 24.101053455307568,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/res/E/n",
+      "actual": 396,
+      "expected": 396,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_miss_wrong/res/E/excluded",
+      "actual": 33,
+      "expected": 33,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/gt/R_tau",
+      "actual": 0.8555165544066028,
+      "expected": 0.8555165544066028,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/gt/mean",
+      "actual": 31.134820580000877,
+      "expected": 31.134820580000877,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/gt/med",
+      "actual": 23.930668830871582,
+      "expected": 23.930668830871582,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/gt/out4",
+      "actual": 0.0006640736173038611,
+      "expected": 0.0006640736173038611,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/gt/far1",
+      "actual": 0.009581633621098568,
+      "expected": 0.009581633621098568,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/gt/n_gt",
+      "actual": 10541,
+      "expected": 10541,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/res/E/P_tau",
+      "actual": 0.9248289152712836,
+      "expected": 0.9248289152712836,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/res/E/mean",
+      "actual": 21.75623937196776,
+      "expected": 21.75623937196776,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/res/E/n",
+      "actual": 320163,
+      "expected": 320163,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "c_nogt/res/E/excluded",
+      "actual": 88372,
+      "expected": 88372,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/gt/R_tau",
+      "actual": 0.1770230360307147,
+      "expected": 0.1770230360307147,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/gt/mean",
+      "actual": 55.85498999684207,
+      "expected": 55.85498999684207,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/gt/med",
+      "actual": 49.675771594047546,
+      "expected": 49.675771594047546,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/gt/out4",
+      "actual": 0.11520968694624927,
+      "expected": 0.11520968694624927,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/gt/far1",
+      "actual": 0.09686946249261666,
+      "expected": 0.09686946249261666,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/gt/n_gt",
+      "actual": 33860,
+      "expected": 33860,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/res/E/P_tau",
+      "actual": 0.5609096840339267,
+      "expected": 0.5609096840339267,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/res/E/mean",
+      "actual": 38.01162307224652,
+      "expected": 38.01162307224652,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/res/E/n",
+      "actual": 160935,
+      "expected": 160935,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_corr/res/E/excluded",
+      "actual": 2999,
+      "expected": 2999,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/gt/R_tau",
+      "actual": 0.9899334056063187,
+      "expected": 0.9899334056063187,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/gt/mean",
+      "actual": 21.910803787676976,
+      "expected": 21.910803787676976,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/gt/med",
+      "actual": 22.417107224464417,
+      "expected": 22.417107224464417,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/gt/out4",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/gt/far1",
+      "actual": 0.0003097413659594239,
+      "expected": 0.0003097413659594239,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/gt/n_gt",
+      "actual": 6457,
+      "expected": 6457,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/res/E/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/res/E/mean",
+      "actual": 11.488581298566999,
+      "expected": 11.488581298566999,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/res/E/n",
+      "actual": 27487,
+      "expected": 27487,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_keep/res/E/excluded",
+      "actual": 53,
+      "expected": 53,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/gt/R_tau",
+      "actual": 0.9978351631359208,
+      "expected": 0.9978351631359208,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/gt/mean",
+      "actual": 21.49004175373118,
+      "expected": 21.49004175373118,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/gt/med",
+      "actual": 22.15805947780609,
+      "expected": 22.15805947780609,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/gt/out4",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/gt/far1",
+      "actual": 0.0006185248183083346,
+      "expected": 0.0006185248183083346,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/gt/n_gt",
+      "actual": 6467,
+      "expected": 6467,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/res/E/P_tau",
+      "actual": 0.9992687979851322,
+      "expected": 0.9992687979851322,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/res/E/mean",
+      "actual": 13.357374410604741,
+      "expected": 13.357374410604741,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/res/E/n",
+      "actual": 24617,
+      "expected": 24617,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "s_inh/res/E/excluded",
+      "actual": 299,
+      "expected": 299,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/R_tau",
+      "actual": 0.9804301132295616,
+      "expected": 0.9804301132295616,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/P_tau",
+      "actual": 0.9952179148190602,
+      "expected": 0.9952179148190602,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/mean",
+      "actual": 15.706767412828778,
+      "expected": 15.706767412828778,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/res_mean",
+      "actual": 10.07777920872868,
+      "expected": 10.07777920872868,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/med",
+      "actual": 13.63767683506012,
+      "expected": 13.63767683506012,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/n_gt",
+      "actual": 301688,
+      "expected": 301688,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/n_res",
+      "actual": 1313862,
+      "expected": 1313862,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/0/excluded_share",
+      "actual": 0.005014827896437973,
+      "expected": 0.005014827896437973,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/R_tau",
+      "actual": 0.3176911641135027,
+      "expected": 0.3176911641135027,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/P_tau",
+      "actual": 0.8900826874724591,
+      "expected": 0.8900826874724591,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/mean",
+      "actual": 48.13943787783065,
+      "expected": 48.13943787783065,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/res_mean",
+      "actual": 24.856228326410438,
+      "expected": 24.856228326410438,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/med",
+      "actual": 49.49978291988373,
+      "expected": 49.49978291988373,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/n_gt",
+      "actual": 15471,
+      "expected": 15471,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/n_res",
+      "actual": 77158,
+      "expected": 77158,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/1/excluded_share",
+      "actual": 0.005683062926068635,
+      "expected": 0.005683062926068635,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/R_tau",
+      "actual": 0.09412550066755675,
+      "expected": 0.09412550066755675,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/P_tau",
+      "actual": 0.4811086745515332,
+      "expected": 0.4811086745515332,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/mean",
+      "actual": 51.256888877196005,
+      "expected": 51.256888877196005,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/res_mean",
+      "actual": 30.403575602028383,
+      "expected": 30.403575602028383,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/med",
+      "actual": 34.418775141239166,
+      "expected": 34.418775141239166,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/n_gt",
+      "actual": 5992,
+      "expected": 5992,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/n_res",
+      "actual": 27817,
+      "expected": 27817,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/2/excluded_share",
+      "actual": 0.004402290622763064,
+      "expected": 0.004402290622763064,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/R_tau",
+      "actual": 0.019208478224871667,
+      "expected": 0.019208478224871667,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/P_tau",
+      "actual": 0.10696008188331628,
+      "expected": 0.10696008188331628,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/mean",
+      "actual": 46.863989560967575,
+      "expected": 46.863989560967575,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/res_mean",
+      "actual": 40.61400489581075,
+      "expected": 40.61400489581075,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/med",
+      "actual": 44.12640333175659,
+      "expected": 44.12640333175659,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/n_gt",
+      "actual": 6039,
+      "expected": 6039,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/n_res",
+      "actual": 29310,
+      "expected": 29310,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/3/excluded_share",
+      "actual": 0.0018729780350757704,
+      "expected": 0.0018729780350757704,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/R_tau",
+      "actual": 0.017980636237897647,
+      "expected": 0.017980636237897647,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/P_tau",
+      "actual": 0.11112237655885633,
+      "expected": 0.11112237655885633,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/mean",
+      "actual": 89.9973420535097,
+      "expected": 89.9973420535097,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/res_mean",
+      "actual": 80.09433662430925,
+      "expected": 80.09433662430925,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/med",
+      "actual": 90.14058113098145,
+      "expected": 90.14058113098145,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/n_gt",
+      "actual": 4338,
+      "expected": 4338,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/n_res",
+      "actual": 19726,
+      "expected": 19726,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/4/excluded_share",
+      "actual": 0.05436241610738255,
+      "expected": 0.05436241610738255,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/R_tau",
+      "actual": 0.1589108910891089,
+      "expected": 0.1589108910891089,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/P_tau",
+      "actual": 0.41637781629116116,
+      "expected": 0.41637781629116116,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/mean",
+      "actual": 82.14521630999396,
+      "expected": 82.14521630999396,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/res_mean",
+      "actual": 84.26777349131378,
+      "expected": 84.26777349131378,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/med",
+      "actual": 68.92624199390411,
+      "expected": 68.92624199390411,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/n_gt",
+      "actual": 2020,
+      "expected": 2020,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/n_res",
+      "actual": 6924,
+      "expected": 6924,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_tau/5/excluded_share",
+      "actual": 0.1525091799265606,
+      "expected": 0.1525091799265606,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/R_tau",
+      "actual": 0.11824668705402651,
+      "expected": 0.11824668705402651,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/P_tau",
+      "actual": 0.35896415927443415,
+      "expected": 0.35896415927443415,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/mean",
+      "actual": 28.874017404615763,
+      "expected": 28.874017404615763,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/res_mean",
+      "actual": 26.23434164044391,
+      "expected": 26.23434164044391,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/med",
+      "actual": 28.35671305656433,
+      "expected": 28.35671305656433,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/n_gt",
+      "actual": 10791,
+      "expected": 10791,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/n_res",
+      "actual": 50278,
+      "expected": 50278,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/0/excluded_share",
+      "actual": 0.0029547662958335813,
+      "expected": 0.0029547662958335813,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/R_tau",
+      "actual": 0.23884779197489353,
+      "expected": 0.23884779197489353,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/P_tau",
+      "actual": 0.7438773456196461,
+      "expected": 0.7438773456196461,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/mean",
+      "actual": 61.33770066515427,
+      "expected": 61.33770066515427,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/res_mean",
+      "actual": 33.687810871152664,
+      "expected": 33.687810871152664,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/med",
+      "actual": 61.25378906726837,
+      "expected": 61.25378906726837,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/n_gt",
+      "actual": 17844,
+      "expected": 17844,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/n_res",
+      "actual": 89422,
+      "expected": 89422,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/1/excluded_share",
+      "actual": 0.006510532397120256,
+      "expected": 0.006510532397120256,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/R_tau",
+      "actual": 0.03587991213082743,
+      "expected": 0.03587991213082743,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/P_tau",
+      "actual": 0.1776769204908388,
+      "expected": 0.1776769204908388,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/mean",
+      "actual": 106.12873035352467,
+      "expected": 106.12873035352467,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/res_mean",
+      "actual": 94.23085288688125,
+      "expected": 94.23085288688125,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/med",
+      "actual": 107.40742683410645,
+      "expected": 107.40742683410645,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/n_gt",
+      "actual": 4097,
+      "expected": 4097,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/n_res",
+      "actual": 17847,
+      "expected": 17847,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/2/excluded_share",
+      "actual": 0.09290978398983482,
+      "expected": 0.09290978398983482,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/R_tau",
+      "actual": 0.04048582995951417,
+      "expected": 0.04048582995951417,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/P_tau",
+      "actual": 0.35714285714285715,
+      "expected": 0.35714285714285715,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/mean",
+      "actual": 95.95192773984029,
+      "expected": 95.95192773984029,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/res_mean",
+      "actual": 96.76450086644722,
+      "expected": 96.76450086644722,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/med",
+      "actual": 81.14799857139587,
+      "expected": 81.14799857139587,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/n_gt",
+      "actual": 247,
+      "expected": 247,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/n_res",
+      "actual": 882,
+      "expected": 882,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/3/excluded_share",
+      "actual": 0.2909967845659164,
+      "expected": 0.2909967845659164,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/R_tau",
+      "actual": 0.33938706015891035,
+      "expected": 0.33938706015891035,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/P_tau",
+      "actual": 0.8846767757382282,
+      "expected": 0.8846767757382282,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/mean",
+      "actual": 30.250822248263177,
+      "expected": 30.250822248263177,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/res_mean",
+      "actual": 7.531757852021712,
+      "expected": 7.531757852021712,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/med",
+      "actual": 27.230188250541687,
+      "expected": 27.230188250541687,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/n_gt",
+      "actual": 881,
+      "expected": 881,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/n_res",
+      "actual": 2506,
+      "expected": 2506,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis1_m/4/excluded_share",
+      "actual": 0.02868217054263566,
+      "expected": 0.02868217054263566,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/R_tau",
+      "actual": 0.9804301132295616,
+      "expected": 0.9804301132295616,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/P_tau",
+      "actual": 0.9952179148190602,
+      "expected": 0.9952179148190602,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/mean",
+      "actual": 15.706767412828778,
+      "expected": 15.706767412828778,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/res_mean",
+      "actual": 10.07777920872868,
+      "expected": 10.07777920872868,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/med",
+      "actual": 13.63767683506012,
+      "expected": 13.63767683506012,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/n_gt",
+      "actual": 301688,
+      "expected": 301688,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/n_res",
+      "actual": 1313862,
+      "expected": 1313862,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/0/excluded_share",
+      "actual": 0.005014827896437973,
+      "expected": 0.005014827896437973,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/R_tau",
+      "actual": 0.9031413612565445,
+      "expected": 0.9031413612565445,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/mean",
+      "actual": 23.963787073741244,
+      "expected": 23.963787073741244,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/res_mean",
+      "actual": 7.130722500262444,
+      "expected": 7.130722500262444,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/med",
+      "actual": 18.23650225996971,
+      "expected": 18.23650225996971,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/n_gt",
+      "actual": 382,
+      "expected": 382,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/n_res",
+      "actual": 2750,
+      "expected": 2750,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/1/excluded_share",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/R_tau",
+      "actual": 0.7719298245614035,
+      "expected": 0.7719298245614035,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/mean",
+      "actual": 50.47455647666204,
+      "expected": 50.47455647666204,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/res_mean",
+      "actual": 23.28150090278483,
+      "expected": 23.28150090278483,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/med",
+      "actual": 52.38361358642578,
+      "expected": 52.38361358642578,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/n_gt",
+      "actual": 57,
+      "expected": 57,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/n_res",
+      "actual": 376,
+      "expected": 376,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/2/excluded_share",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/R_tau",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/P_tau",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/mean",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/res_mean",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/med",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/n_gt",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/n_res",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/3/excluded_share",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/R_tau",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/P_tau",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/mean",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/res_mean",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/med",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/n_gt",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/n_res",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_keep/4/excluded_share",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/R_tau",
+      "actual": 0.9804301132295616,
+      "expected": 0.9804301132295616,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/P_tau",
+      "actual": 0.9952179148190602,
+      "expected": 0.9952179148190602,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/mean",
+      "actual": 15.706767412828778,
+      "expected": 15.706767412828778,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/res_mean",
+      "actual": 10.07777920872868,
+      "expected": 10.07777920872868,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/med",
+      "actual": 13.63767683506012,
+      "expected": 13.63767683506012,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/n_gt",
+      "actual": 301688,
+      "expected": 301688,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/n_res",
+      "actual": 1313862,
+      "expected": 1313862,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/0/excluded_share",
+      "actual": 0.005014827896437973,
+      "expected": 0.005014827896437973,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/R_tau",
+      "actual": 0.9253472222222222,
+      "expected": 0.9253472222222222,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/P_tau",
+      "actual": 0.9487704918032787,
+      "expected": 0.9487704918032787,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/mean",
+      "actual": 16.43695400473209,
+      "expected": 16.43695400473209,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/res_mean",
+      "actual": 9.494323741534716,
+      "expected": 9.494323741534716,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/med",
+      "actual": 10.46302542090416,
+      "expected": 10.46302542090416,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/n_gt",
+      "actual": 576,
+      "expected": 576,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/n_res",
+      "actual": 2928,
+      "expected": 2928,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/1/excluded_share",
+      "actual": 0.08385481852315395,
+      "expected": 0.08385481852315395,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/R_tau",
+      "actual": 0.9416909620991254,
+      "expected": 0.9416909620991254,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/P_tau",
+      "actual": 0.966212676794133,
+      "expected": 0.966212676794133,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/mean",
+      "actual": 13.553080207372284,
+      "expected": 13.553080207372284,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/res_mean",
+      "actual": 6.943316631191281,
+      "expected": 6.943316631191281,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/med",
+      "actual": 11.118840426206589,
+      "expected": 11.118840426206589,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/n_gt",
+      "actual": 686,
+      "expected": 686,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/n_res",
+      "actual": 3818,
+      "expected": 3818,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/2/excluded_share",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/R_tau",
+      "actual": 0.932998324958124,
+      "expected": 0.932998324958124,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/P_tau",
+      "actual": 0.8980870712401056,
+      "expected": 0.8980870712401056,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/mean",
+      "actual": 13.612784200985162,
+      "expected": 13.612784200985162,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/res_mean",
+      "actual": 12.143723443208328,
+      "expected": 12.143723443208328,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/med",
+      "actual": 9.5577672123909,
+      "expected": 9.5577672123909,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/n_gt",
+      "actual": 597,
+      "expected": 597,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/n_res",
+      "actual": 3032,
+      "expected": 3032,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/3/excluded_share",
+      "actual": 0.0003297065611605671,
+      "expected": 0.0003297065611605671,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/R_tau",
+      "actual": 0.9626012523697363,
+      "expected": 0.9626012523697363,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/P_tau",
+      "actual": 0.978087365956511,
+      "expected": 0.978087365956511,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/mean",
+      "actual": 13.22475692152317,
+      "expected": 13.22475692152317,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/res_mean",
+      "actual": 9.092714954842505,
+      "expected": 9.092714954842505,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/med",
+      "actual": 12.1819406747818,
+      "expected": 12.1819406747818,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/n_gt",
+      "actual": 17407,
+      "expected": 17407,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/n_res",
+      "actual": 77307,
+      "expected": 77307,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_limit/4/excluded_share",
+      "actual": 0.0030177583471969666,
+      "expected": 0.0030177583471969666,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/R_tau",
+      "actual": 0.9804301132295616,
+      "expected": 0.9804301132295616,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/P_tau",
+      "actual": 0.9952179148190602,
+      "expected": 0.9952179148190602,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/mean",
+      "actual": 15.706767412828778,
+      "expected": 15.706767412828778,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/res_mean",
+      "actual": 10.07777920872868,
+      "expected": 10.07777920872868,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/med",
+      "actual": 13.63767683506012,
+      "expected": 13.63767683506012,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/n_gt",
+      "actual": 301688,
+      "expected": 301688,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/n_res",
+      "actual": 1313862,
+      "expected": 1313862,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/0/excluded_share",
+      "actual": 0.005014827896437973,
+      "expected": 0.005014827896437973,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/R_tau",
+      "actual": 0.9911504424778761,
+      "expected": 0.9911504424778761,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/mean",
+      "actual": 21.168009343400467,
+      "expected": 21.168009343400467,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/res_mean",
+      "actual": 12.076939304299742,
+      "expected": 12.076939304299742,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/med",
+      "actual": 21.461758017539978,
+      "expected": 21.461758017539978,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/n_gt",
+      "actual": 226,
+      "expected": 226,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/n_res",
+      "actual": 923,
+      "expected": 923,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/1/excluded_share",
+      "actual": 0.05430327868852459,
+      "expected": 0.05430327868852459,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/R_tau",
+      "actual": 0.9828571428571429,
+      "expected": 0.9828571428571429,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/mean",
+      "actual": 21.69669101227607,
+      "expected": 21.69669101227607,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/res_mean",
+      "actual": 12.677393965476863,
+      "expected": 12.677393965476863,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/med",
+      "actual": 22.320039570331573,
+      "expected": 22.320039570331573,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/n_gt",
+      "actual": 175,
+      "expected": 175,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/n_res",
+      "actual": 693,
+      "expected": 693,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/2/excluded_share",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/R_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/mean",
+      "actual": 20.70081565145728,
+      "expected": 20.70081565145728,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/res_mean",
+      "actual": 12.80889352329714,
+      "expected": 12.80889352329714,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/med",
+      "actual": 22.232893854379654,
+      "expected": 22.232893854379654,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/n_gt",
+      "actual": 648,
+      "expected": 648,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/n_res",
+      "actual": 2762,
+      "expected": 2762,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/3/excluded_share",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/R_tau",
+      "actual": 0.9979875226403703,
+      "expected": 0.9979875226403703,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/P_tau",
+      "actual": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/mean",
+      "actual": 21.624436324167885,
+      "expected": 21.624436324167885,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/res_mean",
+      "actual": 11.6155076830932,
+      "expected": 11.6155076830932,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/med",
+      "actual": 22.499088943004608,
+      "expected": 22.499088943004608,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/n_gt",
+      "actual": 4969,
+      "expected": 4969,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/n_res",
+      "actual": 19983,
+      "expected": 19983,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/4/excluded_share",
+      "actual": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/R_tau",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/P_tau",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/mean",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/res_mean",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/med",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/n_gt",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/n_res",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-05,
+      "pass_check": true
+    },
+    {
+      "field": "axis2_mask/99/excluded_share",
+      "actual": null,
+      "expected": null,
+      "tolerance": 1e-10,
+      "pass_check": true
+    }
+  ],
+  "comparisons": 356,
+  "failed": 0,
+  "source_reports": [
+    "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/tables/a3_metrics.json",
+    "/ph/main_axes71_v2/PHD-MAIN-AXES71-v2/tables/a4_axes.json"
+  ],
+  "finished_at": "2026-10-29T01:13:06.640733+09:00",
+  "scientific_verdict": null
+}

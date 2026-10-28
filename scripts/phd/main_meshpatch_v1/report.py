@@ -9,7 +9,7 @@ def main():
     from verify_priority import verify
     verify()
     files=sorted((D/'tables/meshes').glob('*.json'));meshes=[read(p) for p in files];passed=[r for r in meshes if r['status']=='PASS']
-    target=read(C/'mesh_targets_v1.json');n=len(target['targets']) if target else 48
+    target=mesh_config();n=len(target['targets'])
     priority=snapshot(D,O,C)
     patches={p:read(D/'tables'/f'patch_{p}_table.json') for p in ['ALS','LoD2']}
     validations={p:read(D/'tables'/f'patch_{p}_validation.json') for p in patches}
@@ -79,5 +79,8 @@ def main():
     (D/'progress.md').write_text(f'# 진행\n\n갱신: {now()}\n\n일 1 코드 확인 완료(논문 전문 확인 불가). 일 3 표 {sum(x is not None for x in patches.values())}/2개, 검증 {sum(x is not None for x in validations.values())}/2개. 일 2 메시 {len(passed)}/{n}개 완료.\n\n영역 연결은 사용자 승인 범위만 적용. 새 가시성 계산 없음. 면 번호 대조의 불일치는 보고서 참조.\n\nscientific_verdict: null\n')
     print(json.dumps(dict(report_characters=len(report),completed_meshes=len(passed),targets=n)))
     update_priority()
+    if (C/'axes_addendum_v1.json').exists():
+        from axes_report import main as axes_report
+        axes_report()
 
 if __name__=='__main__':main()

@@ -1,8 +1,52 @@
 {
-  "status": "PARTIAL",
-  "completed": 2,
+  "status": "PASS",
+  "completed": 6,
   "required": 6,
   "rows": [
+    {
+      "key": "R1rep_b10__ALS__nojudge_ALS_s0",
+      "status": "PASS",
+      "checked_cell_records": 18,
+      "before_z_exact_match": true,
+      "patch_z_sha256": {
+        "before": "6f5ae8ab790961b557acaf1d6cf61910582baeb7526fd1d038c831a0b1ad54c7",
+        "after": "4ec91d602b2814d0e2395b51af5eecc573bc27e107d5a42082ec491ff1864020"
+      },
+      "mesh_receipt_sha256": "62a39e388456d003ea648d2357fe018f212049e1cd9bc4b10e6f14aed0822600"
+    },
+    {
+      "key": "R1rep_b10__ALS__lt_dynnow_ALS_s0",
+      "status": "PASS",
+      "checked_cell_records": 18,
+      "before_z_exact_match": true,
+      "patch_z_sha256": {
+        "before": "e256f64d8d16a0f23bdf0da7b27748fdab926814237a4e70c48380098e66281c",
+        "after": "9f8692199f85ad7e329f917ff5de761fdf3be2e95939de0356dff720ad7b8b4c"
+      },
+      "mesh_receipt_sha256": "9d10d850cdeffc79cd396240ab6e255301576d18c4173343783f066b633a2e63"
+    },
+    {
+      "key": "B173nb_b10__ALS__nojudge_ALS_s0",
+      "status": "PASS",
+      "checked_cell_records": 18,
+      "before_z_exact_match": true,
+      "patch_z_sha256": {
+        "before": "3c3c8aeede479dbb1627894f549e90fe1d6c0356b6ac5517856afbd262ff4b69",
+        "after": "39e9754b197a501ac41cd55067a5c3fb02107b6b6ae3776a986fe3793b0707fa"
+      },
+      "mesh_receipt_sha256": "914772f1b40f925fcdbe3280bad4fd1e1d13f8ec6aee0ae07dc9c81cecc1a738"
+    },
+    {
+      "key": "B173nb_b10__ALS__lt_dynnow_ALS_s0",
+      "status": "PASS",
+      "checked_cell_records": 18,
+      "before_z_exact_match": true,
+      "patch_z_sha256": {
+        "before": "70833089a91959124b80c24455db79ef8a3a814913716ca86c29f5012111eb10",
+        "after": "68b8d4699e584145951a3fe03d2015771ee3c3fbe462783e88f5c65855aeb061"
+      },
+      "mesh_receipt_sha256": "c8054840e9709620c001ed53244b5f97b0ec47612af835742dd59bf1999d27e4"
+    },
     {
       "key": "B0_b10__ALS__nojudge_ALS_s0",
       "status": "PASS",
@@ -26,7 +70,7 @@
       "mesh_receipt_sha256": "c08e00ed2922b863e23111fb5d0fe2b40f251d727e52fe8600f4713e9ae2369c"
     }
   ],
-  "checked_at": "2026-10-28T21:43:25.158600+09:00",
+  "checked_at": "2026-10-29T01:18:24.674726+09:00",
   "scope": "Recompute every saved before/after cell; report exact baseline z agreement and preserve the frozen 0.5 percentage point gate; side labels; removed triangle accounting. No new ray cast or visibility calculation.",
   "scientific_verdict": null
 }

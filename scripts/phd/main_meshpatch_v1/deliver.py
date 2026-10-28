@@ -3,6 +3,7 @@ import argparse,hashlib,json,time,zipfile
 from datetime import datetime,timezone,timedelta
 from pathlib import Path
 from priority_delivery import snapshot
+from axes_report import status as axes_status
 KST=timezone(timedelta(hours=9));O=Path('/out');D=Path('/docs');C=Path('/config')
 def read(p,default=None):
     return json.loads(p.read_text()) if p.exists() else default
@@ -15,6 +16,7 @@ def progress(now):
     a=read(O/'status/task1.json',{});patch=[read(O/'status'/f'patch_{p}.json',{}) for p in ['ALS','LoD2']]
     mesh=list((D/'tables/meshes').glob('*.json'))
     priority=snapshot(D,O,C)
+    axes=axes_status(D,O,C)
     times=[x.get('seconds',0) for p in mesh if (x:=read(p,{})).get('status')=='PASS']
     estimate=(6-priority['completed'])*sum(times)/max(1,len(times))/60
     lines=[f'# 진행 · {now:%Y-%m-%d %H:%M} 한국 시각','',
@@ -35,6 +37,12 @@ def progress(now):
         '', '4. 다음 중간 묶음',
         '- 패치 표 대조 및 정리 전·후 메시 표의 새 완료분. 메모리 입장이 늦으면 완료 예상 시각을 다시 기록.',
         '', 'scientific_verdict: null']
+    if axes:
+        eta=list(axes['estimate_kst_excluding_resource_wait'].values())
+        end=eta[-1] if eta and eta[-1] else '첫 전·후 완료 뒤 재산정(현재 확인 불가)'
+        lines[lines.index('2. 나온 숫자 [이 발주에서 냄]'):lines.index('2. 나온 숫자 [이 발주에서 냄]')]=[
+            f"- 덧붙임 네 값: {axes['completed']}/{axes['required']}개 완료, 우선 1단계 비교 방법 {axes['stage1_completed']}/{axes['stage1_required']}개. 옛 값 대조 {axes['baseline_status']}.",
+            f"- 추가 지표의 남은 {len(axes['pending'])}개 예상: {end}. 남은 정리 포함, 자원 대기는 별도. 대상별 예상은 tables/axes_progress.json. 10/30 09:30에는 완료한 전·후만 포함.",'']
     s='\n'.join(lines)+'\n';assert len(s)<=2000
     return s
 def package(at=None):
