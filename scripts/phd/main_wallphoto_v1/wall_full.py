@@ -6,6 +6,7 @@ from wall_report import point_sets,report
 
 def main():
     assert load(O/'gates/full_decision.json')['decision']=='START_FULL'
+    if not (O/'full_started.json').exists():dump(O/'full_started.json',dict(at=now(),decision=load(O/'gates/full_decision.json'),scientific_verdict=None))
     order=[r['tile'] for r in load(D/'tables/development_tiles.json')['rows']]
     hold_summary=dict(points=0,patches=0,area_m2=0.,files=[])
     for sealed in [False,True]:

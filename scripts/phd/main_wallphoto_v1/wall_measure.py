@@ -48,9 +48,12 @@ def pilot():
         chosen=[candidates[i] for i in chosen];receipts=[]
         dump(O/'sampling'/f'{b}.json',dict(building=b,total_points=n,measured_points=len(chosen),fraction=len(chosen)/n,seed=cfg['seed'],selection='uniform point sample without replacement, before scores; first building complete',scientific_verdict=None))
         for tile in sorted(set(t for t,_ in chosen)):
+            existing=O/'work/pilot'/f'{tile}__{b}.json'
+            reuse=existing.exists() and existing.with_suffix('.npz').exists()
+            if reuse:assert sha(existing.with_suffix('.npz'))==load(existing)['file_sha256']
             ids=np.array([i for t,i in chosen if t==tile],np.int64);receipts.append(measure(tile,ids,'pilot',b))
             from wall_report import report
-            report('pilot')
+            if not reuse:report('pilot')
         if bi==0:
             seconds=sum(r['total_seconds'] for r in receipts);spp=seconds/n
             pilot_n=sum(r['points'] for r in inv['pilot']);full_n=inv['development']['points']+inv['holdout']['points']

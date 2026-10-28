@@ -1,5 +1,6 @@
 """Resumable authorized stages; numeric projection failure stops immediately."""
 import traceback
+import shutil
 from common import *
 from wall_measure import pilot,fallback
 from wall_report import report,truth_quality,projection_gate
@@ -13,12 +14,28 @@ def main():
     sealed_geometry()
     pilot();truth_quality();report('pilot')
     if load(O/'gates/projection.json')['status']=='FALLBACK_REQUIRED':fallback();report('pilot')
+    dump(O/'status.json',dict(at=now(),state='VERIFYING_PILOT',scientific_verdict=None))
     from wall_replay import main as replay
     replay()
+    report('pilot')
+    dump(O/'status.json',dict(at=now(),state='PILOT_FIGURES',scientific_verdict=None))
     from wall_figures import figures
     figures('pilot')
     from wall_validate import main as validate
     validate()
+    # Preserve the complete seven-building files for the timed pilot delivery.
+    with public_lock():
+        snapshot=O/'pilot_delivery';snapshot.mkdir(exist_ok=True)
+        if not (snapshot/'manifest.json').exists():
+            files=[]
+            for sub in ['points','patches']:
+                (snapshot/sub).mkdir(exist_ok=True)
+                for source in sorted((O/sub).glob('*.npz')):
+                    target=snapshot/sub/source.name;shutil.copy2(source,target)
+                    assert sha(source)==sha(target)
+                    files.append(dict(path=str(target.relative_to(snapshot)),sha256=sha(target)))
+            shutil.copy2(D/'벽사진확인_보고_v1.md',snapshot/'벽사진확인_보고_v1.md')
+            dump(snapshot/'manifest.json',dict(at=now(),files=files,scope='completed seven-building pilot before full exports',scientific_verdict=None))
     if load(O/'gates/projection.json')['status']!='PASS':
         dump(O/'status.json',dict(at=now(),state='STOP_PROJECTION_REQUIRES_USER',reason='wall order 1.9 and 2.2',scientific_verdict=None));return
     if load(O/'gates/full_decision.json')['decision']!='START_FULL':

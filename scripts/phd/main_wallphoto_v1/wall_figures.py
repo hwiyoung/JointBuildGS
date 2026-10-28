@@ -17,7 +17,7 @@ def plotting():
 @locked_public
 def save(plt,fig,path,meta):
     path.parent.mkdir(parents=True,exist_ok=True);fig.savefig(path.with_suffix('.png'),dpi=300,bbox_inches='tight');plt.close(fig)
-    dump(path.with_suffix('.json'),dict(**meta,source='[이 발주에서 냄]',scientific_verdict=None,config_sha256=sha(C/'wallphoto_v1.json')))
+    dump(path.with_suffix('.json'),{**meta,'provenance':'[이 발주에서 냄]','scientific_verdict':None,'config_sha256':sha(C/'wallphoto_v1.json')})
 def curve(ax,p,i):
     h=p['heights'][i];s=p['curve'][i].astype(float);m=np.isfinite(h)&np.isfinite(s);order=np.argsort(h[m]);ax.plot(h[m][order],s[m][order],color='#243b53',lw=1)
     if not m.any():ax.text(.5,.5,'유효 점수 없음',ha='center',transform=ax.transAxes)

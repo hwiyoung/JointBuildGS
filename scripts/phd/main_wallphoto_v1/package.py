@@ -8,12 +8,15 @@ def progress(due):
     summary=next((load(O/x) for x in ['full_summary.json','pilot_summary.json'] if (O/x).exists()),{})
     timing=load(O/'timing_first_building.json') if (O/'timing_first_building.json').exists() else {}
     gate=load(O/'gates/projection.json') if (O/'gates/projection.json').exists() else dict(status='미실행')
+    replay=load(O/'gates/independent_replay.json') if (O/'gates/independent_replay.json').exists() else {}
+    stage='전체' if (O/'full_summary.json').exists() else '시험'
+    expected=timing.get('full_cpu_hours','확인 불가')
     first=inv.get('pilot',[]);patches=sum(x['patches'] for x in first);area=sum(x['area_m2'] for x in first)
     txt=f'''# 진행
 
 기준 시각: {due} / 작성: {now()}
 
-1. 끝난 것: 설정 잠금, 원본 수식·설정 동일성 검증, 벽 패치 목록. 현재 {st.get('state','확인 불가')}. 끝날 예상 시각은 첫 건물 시간 기록 뒤 갱신. 시작 전 항목은 투영·그림·전체 확대 가운데 완료 기록이 없는 항목.
+1. 끝난 것: 설정 잠금, 원본 수식·설정 동일성 검증, 벽 패치 목록. 현재 {st.get('state','확인 불가')}. 아래 완료 숫자는 {stage} 기준. 전체 시간 어림 {expected}시간이며 자원 대기·그림 시간은 별도다. 전체 시작은 full_started.json, 끝남은 full_complete.json으로 확인한다.
 
 2. 지금까지 나온 숫자 [이 발주에서 냄]
 
@@ -28,7 +31,7 @@ def progress(due):
 | 사진 3장 이상 넓이 비율 | {summary.get('three_or_more_fraction','확인 불가')} |
 | 전체 CPU 시간 어림 | {timing.get('full_cpu_hours','확인 불가')} |
 
-3. 멈춤 조건: 투영 상태 {gate.get('status')}. 메모리 입장 조건과 MESHPATCH 우선순위 때문에 대기할 수 있으며 대기 기록을 보존한다. 계산 전에는 사진 수와 판단 넓이를 채우지 않는다. 미계산 패치는 -1이다. GPU 시간은 확인 불가. 패치 수는 발주와 모두 같았다. 실행 셸 종료 오류와 자원 프로필은 issues.md에 적었다. 이전 묶음과의 값 변화는 각 묶음 시각의 표를 비교한다.
+3. 멈춤 조건: 투영 상태 {gate.get('status')}. 점수 재현 {replay.get('status','미실행')}. 고정밀 유효 여부 {replay.get('float64_finite_check','미실행')}. 원본 float32가 균일한 사진 조각의 반올림 오차를 무늬로 보는 사례를 기록했다. 계산식·문턱은 보존했다. 예외는 issues.md와 independent_replay.json 참조. MESHPATCH 우선 대기 기록을 보존한다. 미계산 패치는 -1, GPU 시간은 확인 불가. 이전 묶음과의 값 변화는 각 시각의 표를 비교한다. 시험.zip의 points/patches는 동결한 7동 시험 값이다.
 
 4. 다음 묶음: 완료된 점·타일의 사진 분포, 판단 넓이, 투영 점검과 단계 나 조건. 투영 실패 시 계산을 멈추고 사용자 지시를 기다린다.
 
@@ -50,8 +53,11 @@ def package(label,due=None):
     for p in sorted(D.rglob('*')):
         if not p.is_file() or 'received' in p.parts or 'validation' in p.parts or p.suffix=='.zip' or p.name in ['진행.md','progress.md']:continue
         entries.append((p,'docs/'+str(p.relative_to(D))))
+    data_root=O/'pilot_delivery' if label=='시험' and (O/'pilot_delivery/manifest.json').exists() else O
     for sub in ['points','patches']:
-        for p in sorted((O/sub).glob('*.npz')):entries.append((p,sub+'/'+p.name))
+        for p in sorted((data_root/sub).glob('*.npz')):entries.append((p,sub+'/'+p.name))
+    if data_root!=O:
+        for name in ['manifest.json','벽사진확인_보고_v1.md']:entries.append((data_root/name,'pilot/'+name))
     # Store exact captured bytes, not a later mutable file; each part starts with progress.
     parts=[];buf=[];size=0
     for p,name in entries:

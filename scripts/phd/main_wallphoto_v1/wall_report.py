@@ -130,6 +130,7 @@ def report(stage='pilot'):
     decision=dict(at=now(),projection=checks[0],photo_coverage=checks[1],cpu_time=checks[2],coverage_fraction=coverage,cpu_hours=hours,uses_gt=False,decision='START_FULL' if complete and all(checks) else ('STOP_AFTER_PILOT' if complete and gate['status'] not in ['PENDING','FALLBACK_REQUIRED'] else 'PENDING'),scientific_verdict=None)
     dump(O/'gates/full_decision.json',decision);dump(D/'tables/full_decision.json',decision)
     total=sum(r['area_m2'] for r in inv['pilot']);count=sum(r['patches'] for r in inv['pilot'])
+    replay=load(O/'gates/independent_replay.json') if (O/'gates/independent_replay.json').exists() else {}
     text=f'''범위: 시험 7동 {count:,}패치, {total:,.3f} m². 완료 점 {summary.get('points',0):,}개, 완료 패치 {summary.get('patches',0):,}개. 줄인 비율은 sampling 기록과 표에 적음.
 확인 불가: 아직 계산하지 않은 점, GPU 시간 어림. GPU를 사용하지 않음.
 시간: 첫 건물 CPU {timing.get('seconds','확인 불가')}초. 자원 대기는 logs/resource_wait.log에 기록.
@@ -142,6 +143,8 @@ def report(stage='pilot'):
 ## 투영과 시간
 투영 상태 {gate['status']}. 조건을 채운 점 {gate['eligible_points']}개 가운데 10 cm 안 {gate['within_10cm']}개. 비율 {gate['fraction']}.
 첫 건물 기준 시험 CPU {timing.get('pilot_cpu_hours','확인 불가')}시간, 전체 {hours if hours is not None else '확인 불가'}시간. GPU는 확인 불가.
+
+독립 재계산: {replay.get('status','미실행')}. 고정밀 유효 여부 점검: {replay.get('float64_finite_check','미실행')}. 원본 float32 보간·분산 계산은 색이 일정한 조각의 반올림 오차를 1e-6보다 큰 분산으로 볼 수 있다. 표본에서 발견한 해당 높이와 원본 코드 재현 결과는 tables/independent_replay.json에 공개한다. 발주대로 원본 계산과 설정을 보존하며, 이 표본으로 전체 발생 빈도를 추정하지 않는다.
 
 ## 표
 tables/{stage}_photo_coverage: 사진 수·방위별 넓이와 연직/비스듬한 사진 수.

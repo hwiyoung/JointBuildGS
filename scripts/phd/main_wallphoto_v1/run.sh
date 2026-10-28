@@ -13,6 +13,19 @@ if [[ "$mode" == bounded ]]; then memory=12g; cpus=8; cache=2147483648; minimum=
 if [[ "$mode" == audit ]]; then memory=2g; cpus=1; cache=0; minimum=18; fi
 start=$(date +%s)
 while true; do
+  # Match the durable worker: after MESHPATCH task 3 finishes, reserve 16 GiB.
+  # Before completion, keep the original higher admission threshold.
+  if python3 - "$ART" <<'PY'
+import json, sys
+from pathlib import Path
+root=Path(sys.argv[1])/'phase-payloads/phd/main_meshpatch_v1/PHD-MAIN-MESHPATCH-v1/status'
+try:
+    ready=all(json.loads((root/f'patch_{p}.json').read_text()).get('stage')=='table_complete' for p in ['LoD2','ALS'])
+except (OSError, ValueError):
+    ready=False
+sys.exit(0 if ready else 1)
+PY
+  then minimum=$(( ${memory%g} + 16 )); fi
   available=$(awk '/MemAvailable/{printf "%d", $2/1024/1024}' /proc/meminfo)
   if (( available >= minimum )); then break; fi
   printf '%s wait: MemAvailable=%s GiB required=%s GiB; MESHPATCH priority\n' "$(date -Iseconds)" "$available" "$minimum" | tee -a "$OUT/logs/resource_wait.log"
