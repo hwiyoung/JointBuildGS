@@ -23,7 +23,7 @@ def progress(now):
         '1. 일별 상태',f"- 일 1: {'끝남(논문 전문 접근 제한)' if a else '진행 중, 10/28 23:00 목표'}.",
         '- 일 3: '+', '.join(f"{p} {x.get('stage','시작 전')}" for p,x in zip(['ALS','LoD2'],patch))+'. 패치 ZIP 10/28 21:01 생성·전달.',
         f'- 일 2: 메시 정리 PASS {len(times)}개. '+('진행 중' if mesh else '시작 전')+'. 10/30 09:30에 완료분을 설명용으로 제공. 전체 12:00은 원래 목표이며 완료 보장이 아님.',
-        f"- 필수 R1·B173·B0 판정 끔·판 4: 정리 {priority['completed']}/6개, 사례 그림 {priority['completed_cases']}/7개 완료. 추가 지표는 1단계 비교 방법 36개 다음 차례. 상세: tables/priority_six.md.",
+        f"- 필수 R1·B173·B0 판정 끔·판 4: 정리 {priority['completed']}/6개, 사례 그림 {priority['completed_cases']}/7개 완료. "+('덧붙임 2에 따라 필수 여섯 개 추가 지표 → 새 그림 → 비교 채점 → 집계 순서. 면담 묶음 10/30 09:00.' if (C/'interview_addendum_v2.json').exists() else '추가 지표는 1단계 비교 방법 36개 다음 차례.')+' 상세: tables/priority_six.md.',
         '', '2. 나온 숫자 [이 발주에서 냄]','| 일 | 대상 | 패치 수 | 넓이 m² | 상태 |','|---|---|---:|---:|---|']
     for prior in ['ALS','LoD2']:
         s=read(D/'tables'/f'patch_{prior}_table.json')

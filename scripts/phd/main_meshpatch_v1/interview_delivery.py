@@ -31,7 +31,12 @@ def progress():
     estimates=axes.get('estimate_kst_excluding_resource_wait',{})
     six_times=[datetime.fromisoformat(estimates[k]) for k,complete in six if not complete and estimates.get(k)]
     eta=max([now(),*six_times]);fmt=lambda t:t.strftime('%m/%d %H:%M')
-    expected=f"필수 여섯 개 {fmt(eta) if n_six<6 else '완료'}, 그림 {fmt(eta+timedelta(hours=2))}, 집계 {fmt(eta+timedelta(hours=3))}"
+    terminal=['PASS','PARTIAL','UNAVAILABLE','WAIT_RESOURCE_REVIEW','FAILED']
+    phase_done=lambda tags:bool(tags) and all(read(I/'status'/(t+'.json'),{}).get('status') in terminal for t in tags)
+    figures_done=phase_done([j['tag'] for j in jobs if j['tag'].startswith('fig-')])
+    counts_done=phase_done(['counts']+[f'gaussians-{s}-{p}' for s in ['b0','b173','r1'] for p in ['nojudge','lt_dynnow']])
+    figure_eta=eta if figures_done else eta+timedelta(hours=2)
+    expected=f"필수 여섯 개 {fmt(eta) if n_six<6 else '완료'}, 그림 {'시도 종료' if figures_done else fmt(figure_eta)}, 집계 {'시도 종료' if counts_done else fmt(figure_eta+timedelta(hours=1))}"
     pending_text=f'{len(left)}개' if jobs else '그림·비교·집계·가상 메시 대기'
     lines=[f'# 진행 · {now():%m/%d %H:%M} KST',
         f"- 완료: 메시 정리·기존 평가 {mesh_done}/60, 추가 네 값 {axes.get('completed',0)}/60; 필수 여섯 개 추가 지표 {n_six}/6. 새 작업 {sum(r.get('status')=='PASS' for _,r in done)}개 완료, {sum(r.get('status')!='PASS' for _,r in done)}개 부분·확인 불가.",
