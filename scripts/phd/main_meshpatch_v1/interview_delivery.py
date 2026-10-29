@@ -1,5 +1,5 @@
 """Standalone immutable interview ZIPs and the 09:00 KST deadline, stdlib only."""
-import argparse,hashlib,json,time,zipfile
+import argparse,hashlib,json,time,zipfile,subprocess,sys
 from datetime import datetime,timezone,timedelta
 from pathlib import Path
 O=Path('/out');D=Path('/docs');C=Path('/config');I=D/'interview_v2'
@@ -11,6 +11,19 @@ def digest(p):
     with p.open('rb') as f:
         for b in iter(lambda:f.read(4<<20),b''):h.update(b)
     return h.hexdigest()
+
+def completed_artifact(path):
+    rel=path.relative_to(I);tag=None
+    if rel.parts[0]=='figures':
+        tag='fig-'+rel.parts[1] if len(rel.parts)>2 else 'counts'
+    elif rel.parts[0]=='tables':
+        stem=path.stem
+        if stem.startswith('figure_'):tag='fig-'+stem[len('figure_'):]
+        elif stem in ['axis_curves','missing_invisible','boundary_spread','lod2_four_way']:tag='counts'
+        elif stem.startswith('comparison_'):tag='comparison'
+        elif stem.startswith('gaussians-'):tag=stem.removesuffix('_patches')
+        elif stem.startswith('virtual-'):tag=stem.removesuffix('_walls').removesuffix('_missing_reclassified')
+    return tag is None or read(I/'status'/(tag+'.json'),{}).get('status') in ['PASS','PARTIAL']
 
 def progress():
     cfg=read(C/'interview_addendum_v2.json');axes=read(D/'tables/axes_progress.json',{})
@@ -28,9 +41,21 @@ def progress():
     frozen=[r['key'] for r in read(C/'mesh_targets_v1.json')['targets'] if r['status']=='UNAVAILABLE_FROZEN_STOP']
     target=set(cfg['comparison_targets']);n_six=sum(x[1] for x in six)
     mesh_done=sum(read(p,{}).get('status')=='PASS' for p in (D/'tables/meshes').glob('*.json'))
-    estimates=axes.get('estimate_kst_excluding_resource_wait',{})
-    six_times=[datetime.fromisoformat(estimates[k]) for k,complete in six if not complete and estimates.get(k)]
-    eta=max([now(),*six_times]);fmt=lambda t:t.strftime('%m/%d %H:%M')
+    rates={}
+    for ap in (D/'tables/axes').glob('*.json'):
+        ar=read(ap,{});mr=read(D/'tables/meshes'/ap.name,{})
+        if ar.get('status')!='PASS' or 'cleanup' not in mr:continue
+        triangles=mr['cleanup']['before_triangles']+mr['cleanup']['after_triangles']
+        seconds=ar['before']['seconds']+ar['after']['seconds']
+        site=ap.stem.split('__')[0]
+        if triangles:rates[site]=max(rates.get(site,0),seconds/triangles)
+    remaining=0
+    for key,complete in six:
+        if complete:continue
+        mr=read(D/'tables/meshes'/(key+'.json'),{});cl=mr.get('cleanup',{})
+        triangles=cl.get('before_triangles',0)+cl.get('after_triangles',0)
+        remaining+=60+triangles*rates.get(key.split('__')[0],max(rates.values(),default=0))
+    eta=now()+timedelta(seconds=remaining);fmt=lambda t:t.strftime('%m/%d %H:%M')
     terminal=['PASS','PARTIAL','UNAVAILABLE','WAIT_RESOURCE_REVIEW','FAILED']
     phase_done=lambda tags:bool(tags) and all(read(I/'status'/(t+'.json'),{}).get('status') in terminal for t in tags)
     figures_done=phase_done([j['tag'] for j in jobs if j['tag'].startswith('fig-')])
@@ -41,7 +66,7 @@ def progress():
     lines=[f'# 진행 · {now():%m/%d %H:%M} KST',
         f"- 완료: 메시 정리·기존 평가 {mesh_done}/60, 추가 네 값 {axes.get('completed',0)}/60; 필수 여섯 개 추가 지표 {n_six}/6. 새 작업 {sum(r.get('status')=='PASS' for _,r in done)}개 완료, {sum(r.get('status')!='PASS' for _,r in done)}개 부분·확인 불가.",
         f"- 남음: {pending_text}. 09:00에 완료분 납품. 전체 종료 시각은 메모리 보류 때문에 확인 불가.",
-        f'- 예상 KST: {expected}(계획치; 공유 잠금·메모리 대기 제외). GPU 항목은 학습 종료·자원 입장 뒤로 시각 미정.',
+        f'- 예상 KST: {expected}(지역별 관측 최대 초/삼각형으로 보수 추정; 실행 중도 한 개분 포함, 잠금·메모리 대기 제외). GPU 시각 미정.',
         '- 차례: 현재 R1 둘째 씨앗 → 필수 여섯 개 → 그림 → 비교 채점 → 집계 → 나머지.',
         f'- 메모리 보류 {len(held)}개. *는 이번 비교 채점 대상:']
     lines += [('  * ' if k in target else '  - ')+k for k in held]
@@ -62,6 +87,7 @@ def package():
     for base,arc in [(I,'interview_v2'),(D/'tables','tables')]:
         for f in sorted(base.rglob('*')):
             if f.is_file() and f.suffix in ['.json','.md','.csv','.png','.glb'] and '.tmp' not in f.name:
+                if base==I and not completed_artifact(f):continue
                 files.append((f,arc+'/'+str(f.relative_to(base))))
     for name in ['덧붙임2_적용.md','메모리_실행개선_v1.md','issues.md']:
         if (D/name).exists():files.append((D/name,name))
@@ -89,9 +115,11 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--package',action='store_true');ap.add_argument('--schedule',action='store_true');a=ap.parse_args()
     if a.schedule:
         cfg=read(C/'interview_addendum_v2.json');deadline=datetime.fromisoformat(cfg['deadline_kst'])
-        (O/'status/interview_delivery_schedule.json').write_text(json.dumps(dict(status='RUNNING',deadline=cfg['deadline_kst'],scientific_verdict=None),indent=2)+'\n')
-        while now()<deadline:time.sleep(min(30,max(.1,(deadline-now()).total_seconds())))
-        package()
+        trigger=deadline-timedelta(seconds=60)
+        (O/'status/interview_delivery_schedule.json').write_text(json.dumps(dict(status='RUNNING',deadline=cfg['deadline_kst'],packaging_trigger=trigger.isoformat(),scientific_verdict=None),indent=2)+'\n')
+        while now()<trigger:time.sleep(min(30,max(.1,(trigger-now()).total_seconds())))
+        # Read the current reporting implementation; computation definitions stay frozen separately.
+        subprocess.run([sys.executable,__file__,'--package'],check=True)
         (O/'status/interview_delivery_schedule.json').write_text(json.dumps(dict(status='COMPLETE',at=now().isoformat(),scientific_verdict=None),indent=2)+'\n')
     elif a.package:package()
     else:print(progress())

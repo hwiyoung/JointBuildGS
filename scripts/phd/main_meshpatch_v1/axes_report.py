@@ -58,12 +58,14 @@ def status(d=Path('/docs'), o=Path('/out'), c=Path('/config')):
         if k not in unavailable and mean is not None:
             cumulative+=mean+(cleanup_mean or 0 if k not in completed_cleanup else 0)
         estimates[k]=(clock+timedelta(seconds=cumulative)).isoformat() if mean else None
+    interview_pending=(c/'interview_addendum_v2.json').exists() and not (o/'interview_v2/cpu_queue_finished.json').exists()
+    if interview_pending:estimates={k:None for k in estimates}
     return dict(completed=len(done),required=len(cfg['metric_keys']),stage1_completed=sum(k in done for k in first),
                 stage1_required=len(first),unavailable=sum(r['status'].startswith('UNAVAILABLE') for r in rows),
                 baseline_status=read(d/'tables/axes_baseline_replay.json',{}).get('status','진행 중'),
                 pending=missing,estimate_kst_excluding_resource_wait=estimates,
                 blocked=list(blocked.values()),overall_estimate_kst=None if blocked else next((v for v in reversed(list(estimates.values())) if v),None),
-                estimate_note='완료한 전·후 및 메시 정리 시간 평균으로 추정. 미완료 정리는 한 작업분 전부를 포함하고 공유 잠금·메모리 대기는 별도. 실패 후 재개되지 않은 대상과 원본 결과가 없는 대상은 예상 시각 null. 재시도 시간은 다른 대상 예상에 포함하지 않으며, 실패가 남으면 전체 완료 예상은 확인 불가.',
+                estimate_note=('덧붙임 2의 우선 작업이 삽입되어 기존 전체 평균 기반 개별 시각은 보류. 현재 예상은 interview_v2/진행.md를 따른다. ' if interview_pending else '')+'완료한 전·후 및 메시 정리 시간 평균으로 추정. 미완료 정리는 한 작업분 전부를 포함하고 공유 잠금·메모리 대기는 별도. 실패 후 재개되지 않은 대상과 원본 결과가 없는 대상은 예상 시각 null. 재시도 시간은 다른 대상 예상에 포함하지 않으며, 실패가 남으면 전체 완료 예상은 확인 불가.',
                 scientific_verdict=None)
 
 
