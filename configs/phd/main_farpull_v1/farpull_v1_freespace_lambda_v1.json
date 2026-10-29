@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-30T02:16:00.443529+09:00",
+  "calibration": {
+    "a": 6.30998960558239e-10,
+    "b": 2.1281038031616988e-13,
+    "lambda1": 2965.076043850733,
+    "lambda4": 11860.304175402933,
+    "pooled_photo_gaussian_median": 0.0,
+    "pooled_free_gaussian_median": 0.0,
+    "rule": "For each floating Gaussian, mean absolute dL/dopacity_logit over all 203 training views, then median over the 13934 Gaussians. Record pooled view-Gaussian medians separately. Zero b is UNAVAILABLE and forbids training.",
+    "status": "PASS"
+  },
+  "rank": {
+    "roof": {
+      "strict": 0.25849583617220473,
+      "midrank": 0.4590001257985535,
+      "tie_fraction": 0.40100857925269745,
+      "n_a": 13934,
+      "n_b": 33020
+    },
+    "wall": {
+      "strict": 0.27453996093047645,
+      "midrank": 0.6046019309205163,
+      "tie_fraction": 0.6601239399800798,
+      "n_a": 13934,
+      "n_b": 5857
+    },
+    "roof_or_wall": {
+      "strict": 0.2610422092008732,
+      "midrank": 0.4809882747112214,
+      "tie_fraction": 0.4398921310206964,
+      "n_a": 13934,
+      "n_b": 38656
+    }
+  },
+  "unit_status": "FAIL_NUMERICAL_TOLERANCE",
+  "training_allowed": false,
+  "source_preflight_sha256": "5071d53fbd4faf52ea292d403341c847333033dafcf03237edd925ca51f8b34d",
+  "scientific_verdict": null
+}

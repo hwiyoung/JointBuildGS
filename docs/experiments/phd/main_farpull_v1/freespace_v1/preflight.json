@@ -1,0 +1,85 @@
+{
+  "status": "STOP_PREFLIGHT_GATE",
+  "rank_pass": false,
+  "off_check_status": "FAIL_NUMERICAL_TOLERANCE",
+  "off_check_maximum_relative_difference": 8.62651958616777e-06,
+  "ranks": {
+    "roof": {
+      "strict": 0.25849583617220473,
+      "midrank": 0.4590001257985535,
+      "tie_fraction": 0.40100857925269745,
+      "n_a": 13934,
+      "n_b": 33020
+    },
+    "wall": {
+      "strict": 0.27453996093047645,
+      "midrank": 0.6046019309205163,
+      "tie_fraction": 0.6601239399800798,
+      "n_a": 13934,
+      "n_b": 5857
+    },
+    "roof_or_wall": {
+      "strict": 0.2610422092008732,
+      "midrank": 0.4809882747112214,
+      "tie_fraction": 0.4398921310206964,
+      "n_a": 13934,
+      "n_b": 38656
+    }
+  },
+  "calibration": {
+    "a": 6.30998960558239e-10,
+    "b": 2.1281038031616988e-13,
+    "lambda1": 2965.076043850733,
+    "lambda4": 11860.304175402933,
+    "pooled_photo_gaussian_median": 0.0,
+    "pooled_free_gaussian_median": 0.0,
+    "rule": "For each floating Gaussian, mean absolute dL/dopacity_logit over all 203 training views, then median over the 13934 Gaussians. Record pooled view-Gaussian medians separately. Zero b is UNAVAILABLE and forbids training.",
+    "status": "PASS"
+  },
+  "groups": [
+    {
+      "group": "roof",
+      "count": 33020,
+      "p50": 0.0,
+      "p90": 0.13051536940038208,
+      "p99": 4.2861474710703416,
+      "positive_fraction": 0.4403391883706844
+    },
+    {
+      "group": "wall",
+      "count": 5857,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p99": 5.535592764615885,
+      "positive_fraction": 0.07870923681065392
+    },
+    {
+      "group": "floating",
+      "count": 13934,
+      "p50": 0.0,
+      "p90": 2.421515588462353,
+      "p99": 105.41284737110138,
+      "positive_fraction": 0.2834792593655806
+    },
+    {
+      "group": "other",
+      "count": 1344496,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p99": 0.4179599875056784,
+      "positive_fraction": 0.04384542609275149
+    }
+  ],
+  "views": 203,
+  "gaussians": 1397086,
+  "floating_count": 13934,
+  "max_psnr_replay_difference_db": 3.814697265625e-06,
+  "optimizer_steps": 0,
+  "seconds": 34.989844942465425,
+  "source_checkpoint_sha256": "c5164c0638d264b7beb310701094aec71679ac9e9677c763d2f75a1e70f8da00",
+  "diagnostic_labels_sha256": "b4c3108592831c4e1657dec8e258012adfa6ddb524c748f7919e8f01c71ecd51",
+  "all_photos_exact_membership": true,
+  "scope_reused_exact": true,
+  "depth": "native median",
+  "scientific_verdict": null
+}
