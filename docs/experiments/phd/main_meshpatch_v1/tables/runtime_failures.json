@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-10-29T10:18:14.560682+09:00",
+  "failures": [
+    {
+      "key": "B0_b10__LoD2__cdgsnofit_LoD2_s0",
+      "status": "FAILED_OOM",
+      "stage": "component_cleanup",
+      "failed_at": "2026-10-29T05:12:30+09:00",
+      "source_triangles": 99493042,
+      "memory_limit_gib": 40,
+      "container_id": "56ff520c2b5df03d7eb44f87ed862b9e8d9dc40eef7d26a7db6d0168fb8bfa73",
+      "killed_pid": 1390371,
+      "evidence": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_meshpatch_v1/PHD-MAIN-MESHPATCH-v1/logs/oom_evidence_20261029.txt",
+      "kernel_lines": [
+        "Oct 29 05:12:30 innopam-AI kernel: oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=docker-56ff520c2b5df03d7eb44f87ed862b9e8d9dc40eef7d26a7db6d0168fb8bfa73.scope,mems_allowed=0,oom_memcg=/system.slice/docker-56ff520c2b5df03d7eb44f87ed862b9e8d9dc40eef7d26a7db6d0168fb8bfa73.scope,task_memcg=/system.slice/docker-56ff520c2b5df03d7eb44f87ed862b9e8d9dc40eef7d26a7db6d0168fb8bfa73.scope,task=python,pid=1390371,uid=1000",
+        "Oct 29 05:12:30 innopam-AI kernel: Memory cgroup out of memory: Killed process 1390371 (python) total-vm:60035932kB, anon-rss:41781028kB, file-rss:103424kB, shmem-rss:0kB, UID:1000 pgtables:83720kB oom_score_adj:0"
+      ],
+      "retry_started": false,
+      "recovery_estimate_kst": null,
+      "scientific_verdict": null
+    },
+    {
+      "key": "B0_b10__ALS__cdgsnofit_ALS_s0",
+      "status": "FAILED_OOM",
+      "stage": "component_cleanup",
+      "failed_at": "2026-10-29T09:06:26+09:00",
+      "source_triangles": 93824742,
+      "memory_limit_gib": 40,
+      "container_id": "e28703f7644fb8b4360e9e61f51eb1b79f3c5981c393f21504c1d96d39538d61",
+      "killed_pid": 1991283,
+      "evidence": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_meshpatch_v1/PHD-MAIN-MESHPATCH-v1/logs/oom_evidence_20261029.txt",
+      "kernel_lines": [
+        "Oct 29 09:06:26 innopam-AI kernel: oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=docker-e28703f7644fb8b4360e9e61f51eb1b79f3c5981c393f21504c1d96d39538d61.scope,mems_allowed=0,oom_memcg=/system.slice/docker-e28703f7644fb8b4360e9e61f51eb1b79f3c5981c393f21504c1d96d39538d61.scope,task_memcg=/system.slice/docker-e28703f7644fb8b4360e9e61f51eb1b79f3c5981c393f21504c1d96d39538d61.scope,task=python,pid=1991283,uid=1000",
+        "Oct 29 09:06:26 innopam-AI kernel: Memory cgroup out of memory: Killed process 1991283 (python) total-vm:60024236kB, anon-rss:41788764kB, file-rss:102400kB, shmem-rss:0kB, UID:1000 pgtables:83760kB oom_score_adj:0"
+      ],
+      "retry_started": false,
+      "recovery_estimate_kst": null,
+      "scientific_verdict": null
+    }
+  ],
+  "scientific_verdict": null
+}

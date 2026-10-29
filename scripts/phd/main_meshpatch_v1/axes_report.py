@@ -24,6 +24,17 @@ def status(d=Path('/docs'), o=Path('/out'), c=Path('/config')):
     mean=sum(elapsed)/len(elapsed) if elapsed else (2*baseline['seconds'] if baseline else None)
     cleanup=[read(p) for p in sorted((d/'tables/meshes').glob('*.json'))]
     completed_cleanup={r['target']['key'] for r in cleanup if r['status']=='PASS'}
+    failures=read(d/'tables/runtime_failures.json',{}).get('failures',[])
+    known={r['key'] for r in failures}
+    queue_log=o/'logs/queue_failures.tsv'
+    if queue_log.exists():
+        for line in queue_log.read_text().splitlines():
+            fields=line.split('\t')
+            if len(fields)>=3 and fields[2]=='cleanup_failed' and fields[1] not in known:
+                failures.append(dict(key=fields[1],status='FAILED_CLEANUP',failed_at=fields[0],
+                    reason='작업 종료 실패. 상세 원인은 아직 확인 불가.',evidence=str(queue_log)))
+                known.add(fields[1])
+    blocked={r['key']:r for r in failures if r['key'] not in completed_cleanup and r['key'] in missing}
     cleanup_times=[r['seconds'] for r in cleanup if r['status']=='PASS']
     cleanup_mean=sum(cleanup_times)/len(cleanup_times) if cleanup_times else None
     target_rows=read(c/'mesh_targets_v1.json')['targets']+cfg['extra_targets']
@@ -34,6 +45,9 @@ def status(d=Path('/docs'), o=Path('/out'), c=Path('/config')):
     clock=datetime.now(timezone(timedelta(hours=9)))
     cumulative=0.
     for k in remaining:
+        if k in blocked or k in unavailable:
+            estimates[k]=None
+            continue
         if k not in unavailable and mean is not None:
             cumulative+=mean+(cleanup_mean or 0 if k not in completed_cleanup else 0)
         estimates[k]=(clock+timedelta(seconds=cumulative)).isoformat() if mean else None
@@ -41,7 +55,8 @@ def status(d=Path('/docs'), o=Path('/out'), c=Path('/config')):
                 stage1_required=len(first),unavailable=sum(r['status'].startswith('UNAVAILABLE') for r in rows),
                 baseline_status=read(d/'tables/axes_baseline_replay.json',{}).get('status','진행 중'),
                 pending=missing,estimate_kst_excluding_resource_wait=estimates,
-                estimate_note='완료한 전·후 처리 시간 평균(첫 쌍 완료 전에는 옛 메시 재계산 시간의 2배)과 완료한 메시 정리 시간 평균으로 추정. 아직 끝나지 않은 정리는 한 작업분 전부를 포함한다. 공유 잠금·메모리 대기는 별도. 옛 메시 재계산 전 예상 시각은 확인 불가.',
+                blocked=list(blocked.values()),overall_estimate_kst=None if blocked else next((v for v in reversed(list(estimates.values())) if v),None),
+                estimate_note='완료한 전·후 및 메시 정리 시간 평균으로 추정. 미완료 정리는 한 작업분 전부를 포함하고 공유 잠금·메모리 대기는 별도. 실패 후 재개되지 않은 대상과 원본 결과가 없는 대상은 예상 시각 null. 재시도 시간은 다른 대상 예상에 포함하지 않으며, 실패가 남으면 전체 완료 예상은 확인 불가.',
                 scientific_verdict=None)
 
 
@@ -111,6 +126,8 @@ def main():
             lines.append('| '+' | '.join([row['key'],row['family'],label,name]+[fmt(x.get(k)) for k in ['R_tau','P_tau','gt_mean_cm','res_mean_cm','gt_median_cm','gt_over4tau','gt_over1m']])+' |')
     (d/'tables/axes_comparison.md').write_text('\n'.join(lines)+'\n')
     text=f"\n추가 지표: AXES71-v2 네 값과 부록은 {s['completed']}/{s['required']}개 완료. 우선 비교 방법 {s['stage1_completed']}/{s['stage1_required']}개. 옛 정리 전 결과 대조 {s['baseline_status']}. `tables/axes_comparison.md`에 전·후를 나란히 기록한다.\n"
+    if s['blocked']:
+        text+=f"\n메시 정리 실패 {len(s['blocked'])}개는 미완료다. `tables/runtime_failures.json`에 원인과 근거를 기록했다. 재개 시각과 전체 완료 예상은 확인 불가이며, 다른 대상은 계속 처리한다.\n"
     for name in ['progress.md','메시정리와패치표_보고_v1.md']:
         p=d/name
         if p.exists():p.write_text(p.read_text()+text)

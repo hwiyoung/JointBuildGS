@@ -22,9 +22,8 @@ def progress(now):
     lines=[f'# 진행 · {now:%Y-%m-%d %H:%M} 한국 시각','',
         '1. 일별 상태',f"- 일 1: {'끝남(논문 전문 접근 제한)' if a else '진행 중, 10/28 23:00 목표'}.",
         '- 일 3: '+', '.join(f"{p} {x.get('stage','시작 전')}" for p,x in zip(['ALS','LoD2'],patch))+'. 패치 ZIP 10/28 21:01 생성·전달.',
-        f'- 일 2: 대상별 기록 {len(mesh)}건. '+('진행 중' if mesh else '시작 전')+'. 10/30 09:30까지 끝난 대상을 설명용으로 제공, 전체 12:00 목표.',
-        f"- 설명용 필수 R1·B173·B0 판정 끔·판 4: {priority['completed']}/6개, 사례 그림 {priority['completed_cases']}/7개 완료. 여섯 개 우선 처리. 상세 상태: tables/priority_six.md.",
-        f"- 완료 예상: 공유 잠금·메모리 입장 뒤 남은 여섯 개 대상의 메시 약 {estimate:.0f}분과 그림 제작 시간. 입장 대기 종료 시각은 확인 불가. 완료하면 즉시 중간 ZIP 생성.",
+        f'- 일 2: 메시 정리 PASS {len(times)}개. '+('진행 중' if mesh else '시작 전')+'. 10/30 09:30에 완료분을 설명용으로 제공. 전체 12:00은 원래 목표이며 완료 보장이 아님.',
+        f"- 필수 R1·B173·B0 판정 끔·판 4: 정리 {priority['completed']}/6개, 사례 그림 {priority['completed_cases']}/7개 완료. 추가 지표는 1단계 비교 방법 36개 다음 차례. 상세: tables/priority_six.md.",
         '', '2. 나온 숫자 [이 발주에서 냄]','| 일 | 대상 | 패치 수 | 넓이 m² | 상태 |','|---|---|---:|---:|---|']
     for prior in ['ALS','LoD2']:
         s=read(D/'tables'/f'patch_{prior}_table.json')
@@ -38,11 +37,14 @@ def progress(now):
         '- 패치 표 대조 및 정리 전·후 메시 표의 새 완료분. 메모리 입장이 늦으면 완료 예상 시각을 다시 기록.',
         '', 'scientific_verdict: null']
     if axes:
-        eta=list(axes['estimate_kst_excluding_resource_wait'].values())
-        end=eta[-1] if eta and eta[-1] else '첫 전·후 완료 뒤 재산정(현재 확인 불가)'
+        eta=[v for v in axes['estimate_kst_excluding_resource_wait'].values() if v]
+        end='확인 불가(미해결 실패 있음)' if axes.get('blocked') else eta[-1] if eta else '확인 불가'
         lines[lines.index('2. 나온 숫자 [이 발주에서 냄]'):lines.index('2. 나온 숫자 [이 발주에서 냄]')]=[
             f"- 덧붙임 네 값: {axes['completed']}/{axes['required']}개 완료, 우선 1단계 비교 방법 {axes['stage1_completed']}/{axes['stage1_required']}개. 옛 값 대조 {axes['baseline_status']}.",
             f"- 추가 지표의 남은 {len(axes['pending'])}개 예상: {end}. 남은 정리 포함, 자원 대기는 별도. 대상별 예상은 tables/axes_progress.json. 10/30 09:30에는 완료한 전·후만 포함.",'']
+        if axes.get('blocked'):
+            oom=sum(r.get('status')=='FAILED_OOM' for r in axes['blocked'])
+            lines.insert(lines.index('4. 다음 중간 묶음')-1,f"- 미해결 정리 실패 {len(axes['blocked'])}개(메모리 한도 OOM 확인 {oom}개). 완료 표에 넣지 않음. 대상·근거·중단 시각은 tables/axes_progress.json과 runtime_failures.json. 다른 대상은 계속 처리.")
     s='\n'.join(lines)+'\n';assert len(s)<=2000
     return s
 def package(at=None):
