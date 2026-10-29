@@ -1,0 +1,115 @@
+{
+  "at": "2026-10-29T07:44:07.687587+09:00",
+  "status": "PASS_REFERENCE_REPRODUCTION_WITH_PRECISION_LIMITATION",
+  "float64_finite_check": "FAIL_FINITE_STATUS",
+  "limitation": "Inherited float32 interpolation and variance reduction can treat a constant image patch as nonzero variance. Preserved per same-code order; no scoring/config/threshold change. This sample does not bound whole-area frequency.",
+  "sampled_points": 4,
+  "pairwise_replay": [
+    {
+      "tile": "6908_53359",
+      "point_id": "development:LoD2:6908_53359:point:12923",
+      "heights": 141,
+      "finite_disagreement": 0,
+      "max_difference": 5.905523635901799e-05,
+      "float64_status": "PASS",
+      "sampler_precision_status": "PASS",
+      "sampler_precision_max_difference": 6.060969161583718e-05,
+      "production_replay_float16_equal": true,
+      "constant_source_variance_boundaries": []
+    },
+    {
+      "tile": "6908_53360",
+      "point_id": "development:LoD2:6908_53360:point:2224",
+      "heights": 140,
+      "finite_disagreement": 1,
+      "max_difference": 0.0002418779113464442,
+      "float64_status": "FAIL_FINITE_STATUS",
+      "sampler_precision_status": "PASS",
+      "sampler_precision_max_difference": 0.00024290061278153807,
+      "production_replay_float16_equal": true,
+      "constant_source_variance_boundaries": [
+        {
+          "height": -3.799999952316284,
+          "images": [
+            673
+          ],
+          "float64_std": [
+            1.4735498321915337e-14
+          ],
+          "float32_std": [
+            4.6486999053740874e-05
+          ],
+          "source_pixel_range": [
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "tile": "6909_53359",
+      "point_id": "development:LoD2:6909_53359:point:38009",
+      "heights": 141,
+      "finite_disagreement": 0,
+      "max_difference": 0.00012191156364577127,
+      "float64_status": "PASS",
+      "sampler_precision_status": "PASS",
+      "sampler_precision_max_difference": 0.00012196530722646814,
+      "production_replay_float16_equal": true,
+      "constant_source_variance_boundaries": []
+    },
+    {
+      "tile": "6909_53360",
+      "point_id": "development:LoD2:6909_53360:point:5004",
+      "heights": 141,
+      "finite_disagreement": 0,
+      "max_difference": 0.00019157943520786702,
+      "float64_status": "PASS",
+      "sampler_precision_status": "PASS",
+      "sampler_precision_max_difference": 0.00019124846074047852,
+      "production_replay_float16_equal": true,
+      "constant_source_variance_boundaries": []
+    }
+  ],
+  "earlier_4906968_walls": [
+    {
+      "tile": "6908_53360",
+      "new_wall_points": 3231,
+      "old_wall_points": 3231,
+      "matched": 3231,
+      "geometry_equal": true,
+      "selected_photos_equal": true,
+      "judgments_equal": 48465,
+      "judgments_total": 48465,
+      "max_curve_difference": 0.00048828125,
+      "old_file_sha256": "11d5fca0859119cac2030e2a462477c39d6cf7834eedb177dba334ce2b3a009e",
+      "old_device": "cuda"
+    },
+    {
+      "tile": "6909_53360",
+      "new_wall_points": 14108,
+      "old_wall_points": 14108,
+      "matched": 14108,
+      "geometry_equal": true,
+      "selected_photos_equal": true,
+      "judgments_equal": 211620,
+      "judgments_total": 211620,
+      "max_curve_difference": 0.0284423828125,
+      "old_file_sha256": "cef32cb8e6386c0ba1c88f44f235279d8ad44382230a6770de4bd5d86c3074a9",
+      "old_device": "cuda"
+    },
+    {
+      "tile": "6909_53361",
+      "new_wall_points": 6702,
+      "old_wall_points": 6702,
+      "matched": 6702,
+      "geometry_equal": true,
+      "selected_photos_equal": true,
+      "judgments_equal": 100529,
+      "judgments_total": 100530,
+      "max_curve_difference": 0.016143798828125,
+      "old_file_sha256": "601e3bb9b37804bd221567f079d7ca0f6b3563c53321e6af65c3344aa49fb4e4",
+      "old_device": "cuda"
+    }
+  ],
+  "scientific_verdict": null
+}

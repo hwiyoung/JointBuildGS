@@ -46,3 +46,57 @@ AssertionError
 
 2026-10-28T23:52:28.388835+09:00
 기존 4906968 벽 대조: 24,041점의 좌표·법선·접선 및 선택 사진이 일치했다. 15개 조합의 360,615개 판단 중 360,614개가 같고 1개가 달랐다. 원본은 CUDA, 이번 발주는 CPU이며, 곡선 최대 차이는 타일별 0.0004883/0.0284424/0.0161438이다. 수치 정밀도 차이와의 인과를 단정하지 않으며 불일치를 그대로 공개한다(tables/independent_replay.json).
+
+2026-10-29T07:06:06.887801+09:00
+```
+Traceback (most recent call last):
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 50, in <module>
+    try:main()
+        ^^^^^^
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 46, in main
+    from package import package
+ImportError: cannot import name 'package' from 'package' (/repo/scripts/phd/main_widen0_v2/package.py)
+
+```
+
+2026-10-29T07:24:22.177408+09:00
+```
+Traceback (most recent call last):
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 50, in <module>
+    try:main()
+        ^^^^^^
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 46, in main
+    from package import package
+ImportError: cannot import name 'package' from 'package' (/repo/scripts/phd/main_widen0_v2/package.py)
+
+```
+
+2026-10-29T07:42:36.364402+09:00
+```
+Traceback (most recent call last):
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 50, in <module>
+    try:main()
+        ^^^^^^
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 46, in main
+    from package import package
+ImportError: cannot import name 'package' from 'package' (/repo/scripts/phd/main_widen0_v2/package.py)
+
+```
+
+2026-10-29T08:00:53.877588+09:00
+```
+Traceback (most recent call last):
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 50, in <module>
+    try:main()
+        ^^^^^^
+  File "/repo/scripts/phd/main_wallphoto_v1/wall_pipeline.py", line 46, in main
+    from package import package
+ImportError: cannot import name 'package' from 'package' (/repo/scripts/phd/main_widen0_v2/package.py)
+
+```
+
+2026-10-29T10:15:15.004470+09:00
+전체 계산과 2,066,825패치 납품 검증은 끝났으나 최종 압축 호출이 main_widen0_v2/package.py를 불러와 ImportError로 실패했다. cameras.py가 참고 코드 경로를 sys.path 앞에 넣은 뒤 package 이름이 충돌한 것이 원인이다. 실패 로그와 직전 잠금을 validation/pre_package_fix_20261029에 보존했다. 이 작업의 package.py를 절대 경로로 불러오도록 고치고, 이미 끝난 계산은 다시 실행하지 않고 최종 검증·묶음만 재개한다. 23:00/09:00 ZIP은 당시 상태 그대로 보존한다.
+
+2026-10-29T10:18:08.675063+09:00
+최종 압축 오류 해결: 이 작업의 package.py 절대 경로 로더를 사용했다. 계산 재실행 없이 2,066,825 공개 패치 연결·15판단 규칙·그림 형식과 원본 측정 파일 SHA, 동결한 시험 파일 22개, 봉인 결과의 공개 수/넓이/해시를 검증했다. 최종 4부를 생성했고 기존 시험 3부 및 23시 1부까지 총 8파일의 CRC·SHA256·내부 SHA256SUMS·100MB 상한·진행.md 첫 항목을 재확인했다. 상태는 COMPLETE이다. 후속 시각표 3회는 그대로 예약돼 있다.

@@ -10,6 +10,9 @@ def main():
     for name,digest in implementation['scripts_sha256'].items():assert sha(S/name)==digest,name
     assert load(O/'gates/reference_contract.json')['status']=='PASS'
     assert load(O/'gates/core.json')['status']=='PASS'
+    if (O/'full_complete.json').exists():
+        from wall_finalize import finalize
+        finalize();return
     from wall_holdout import main as sealed_geometry
     sealed_geometry()
     pilot();truth_quality();report('pilot')
@@ -43,9 +46,8 @@ def main():
     from wall_full import main as full
     full();report('full');figures('full')
     validate()
-    from package import package
-    package('handover')
-    dump(O/'status.json',dict(at=now(),state='COMPLETE',scientific_verdict=None))
+    from wall_finalize import finalize
+    finalize()
 if __name__=='__main__':
     try:main()
     except Exception:

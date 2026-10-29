@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "at": "2026-10-28T20:20:39.370987+09:00",
+  "at": "2026-10-28T23:51:11.790598+09:00",
   "unchanged_config_sections": [
     "frame",
     "sources",
@@ -84,38 +84,41 @@
   ],
   "scientific_verdict": null,
   "environment": {
-    "at": "2026-10-28T20:20:39.373738+09:00",
-    "source_captured_at": "2026-10-28T20:20:39.115628+09:00",
-    "source_snapshot": "/out/source_snapshots/d23515649fec94ee4b37ac37b3be85a47264db82bf08ccfd66240eac40e5f9f9",
-    "commit": "84d0dbe9e93cd65159d77d97d5772f064a0c9af8",
+    "at": "2026-10-28T23:51:11.814949+09:00",
+    "source_captured_at": "2026-10-28T23:51:11.205097+09:00",
+    "source_snapshot": "/out/source_snapshots/43fb6922b044154b95b912394e2d62bbf29ef752fe8ed080c1cc8b6b62728d0d",
+    "commit": "33af6bded1f7485c72ade9c4983e168f9bb8de41",
     "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
     "scripts_sha256": {
       "verify_core.py": "029fcb1db4b695e7cb489ed41a476a0c3cfdadf620a805933be9e7b11fb5047a",
-      "wall_figures.py": "fbb74a9c18518f33eaa4303e874f34a574d8aa2358887722eae41128f00a1160",
+      "wall_figures.py": "a224cceece6be6ad91a44d085103fe98808e9b2b398c3db613f1642b09dd3115",
       "wall_holdout.py": "5e544952a7e50477a857b822de5dd9d5ad627af8cf5e0d3671af1c1f1047d80c",
-      "wall_replay.py": "4f1e8658c7a177cb22a81e16e31a531a3ce3a56cd9565d2b1d6ff5effabcd0cc",
-      "wall_pipeline.py": "62a508ecfd36697dc9c9d580bd69e443343ae11e866223eab4a4d39f5b9d2169",
+      "wall_replay.py": "e868c9247059db1a6efd29ae755808fe28dcaf28d9e03070408656fe9e22910a",
+      "wall_pipeline.py": "0e7895d8372f7912ce0d8f55009ecb22d060133fe9b77494ab9c296c4bf69c46",
       "common.py": "bd2288da98928efc570b0649521baefe6354c57a4566f58420be3097a7bf0128",
-      "wall_prepare.py": "86b1c6f2630f50293ab59d5d95212f2e795447456db71e476f6fe4cd841fccc6",
+      "wall_prepare.py": "ab42fec58f35981acf4410a377a266317e212de11a33725161f5c757499cf663",
       "prepare.py": "1a94b35b3a5de7bddfa1102bed67fd7192ebb54c9286bc74975534089c5e723f",
-      "wall_measure.py": "fb4784ac22c23c64391e9b415750b388738e7ab98c5db011af1ea433c41ff5b0",
-      "package.py": "3526d0e7b05f575a10c678d1d0df4ca25a87f1f9dda19d5396e2b841b5c85b3a",
+      "wall_measure.py": "369c60692ba206446c1d30aa18fef34703c639da45910ec8b741971a28b6bbcd",
+      "package.py": "b67033533d3b526d2e9fa94b2e4e418ca8018021ccf300c763ea10baa2bf8051",
       "test_report_controls.py": "00ff2e8766fa2c53f3989b0160ee512f4405f427f1fd5fa683a8ba3531a4fe94",
       "curves.py": "549bddb212c900059cfd52710b25529b4906f408557e31a449906409c72394c6",
+      "diagnose_replay.py": "559700652cd9ef93ca58cf26d27594f3f3c0170a67b10ea2e2ff6835ed90a163",
       "admit_worker.py": "1d67370fe2d51b69187cbb9d224ce8ffb9a79544d36d68b5cee1ecc9895cb317",
       "verify_image_score.py": "bb7ad728e48653df0644340c744a7e84f460c4543bd9a144e08b58d45aec0a6e",
+      "replay_precision.py": "3ec3e53071938264965f4ed9753725bc70a311235faf9c7658e81d3cc7b4e6f2",
+      "diagnose_variance.py": "2917cd51f001b8b94a98b7980c79302161dd822a75710c7f1a73867b885c297e",
       "wall_validate.py": "705e27df323048e43f7e19cea07d6a5d221395ffc3586d825afdafb587ff9f4c",
       "features.py": "888be7a19002b0efc2fcdfb3379658ff25f1ca03bc05f3b402993031931aef9d",
-      "wall_full.py": "c738fbe2a9197828c845eb6e471a3162d25a5f5a00e8af1966ad2979fe531757",
+      "wall_full.py": "a7efa2a2d2407814fefe10ade78b33d9f3a7a4916bdbbb730bdc2a1e2c6c615d",
       "verify_contract.py": "b313b1ee84e4863438595fb1271b25a0165bcd9976405ba2556661de1ef050f0",
       "cameras.py": "103da705f10b7ea5a672891e6baca5022e7f5e467fdc6da1512aa3e970b5d434",
-      "wall_report.py": "9247aaf958eae3b90ce77cfcba14900d39d5e5efe66ce0c40757139447843b48"
+      "wall_report.py": "1c96d1b0ba089ac646564ff31f1f53b422df1f88af22d9bee4722f34e7e5054e"
     },
     "peak_rss_gib": 0.0419921875,
     "cgroup_memory": {
       "memory.max": 2147483648,
-      "memory.current": 33443840,
-      "memory.peak": 41455616
+      "memory.current": 127795200,
+      "memory.peak": 135806976
     },
     "ram_cache_budget_bytes": 0,
     "scientific_verdict": null

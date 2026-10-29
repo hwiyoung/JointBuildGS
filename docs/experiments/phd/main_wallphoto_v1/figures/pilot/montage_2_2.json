@@ -1,0 +1,85 @@
+{
+  "rows": [
+    {
+      "point_id": "development:LoD2:6909_53360:point:201",
+      "building": "DEBY_LOD2_4906967",
+      "area_m2": 0.25,
+      "s_in": 0.617678165435791,
+      "s_out": 0.6915462017059326,
+      "photo": {
+        "status": "PASS",
+        "image": "DJI_20241217103057_0005_D.JPG",
+        "image_index": 756,
+        "crop_px": [
+          4522,
+          623,
+          4792,
+          1121
+        ],
+        "source": "registered original LoD2 triangles; face_ext membership; no GT shift",
+        "triangle_count": 4
+      }
+    },
+    {
+      "point_id": "development:LoD2:6909_53360:point:8001",
+      "building": "DEBY_LOD2_4906968",
+      "area_m2": 0.25,
+      "s_in": 0.4870869815349579,
+      "s_out": 0.4628969430923462,
+      "photo": {
+        "status": "확인 불가",
+        "reason": "no source wall triangles inside fixed camera guards"
+      }
+    },
+    {
+      "point_id": "development:LoD2:6909_53361:point:38974",
+      "building": "DEBY_LOD2_4906982",
+      "area_m2": 0.25,
+      "s_in": 0.5264780521392822,
+      "s_out": 0.4754391312599182,
+      "photo": {
+        "status": "확인 불가",
+        "reason": "no source wall triangles inside fixed camera guards"
+      }
+    },
+    {
+      "point_id": "development:LoD2:6909_53359:point:5339",
+      "building": "DEBY_LOD2_4906967",
+      "area_m2": 0.25,
+      "s_in": 0.8573339581489563,
+      "s_out": 0.8732247352600098,
+      "photo": {
+        "status": "확인 불가",
+        "reason": "no source wall triangles inside fixed camera guards"
+      }
+    },
+    {
+      "point_id": "development:LoD2:6910_53361:point:28763",
+      "building": "DEBY_LOD2_4959459",
+      "area_m2": 0.25,
+      "s_in": 0.08718843758106232,
+      "s_out": 0.11270653456449509,
+      "photo": {
+        "status": "PASS",
+        "image": "DJI_20241217103631_0085_D.JPG",
+        "image_index": 813,
+        "crop_px": [
+          1206,
+          1988,
+          1719,
+          2266
+        ],
+        "source": "registered original LoD2 triangles; face_ext membership; no GT shift",
+        "triangle_count": 2
+      }
+    }
+  ],
+  "available_points": 25160,
+  "selected_points": 10,
+  "max_per_building": 3,
+  "margin_m": 3,
+  "seed": 20261028,
+  "provenance": "[이 발주에서 냄]",
+  "scientific_verdict": null,
+  "config_sha256": "e624b2ea163c7bf1eb173be5b0ed35a78b912dcfc6a8564c06706e45a896e00d"
+}
