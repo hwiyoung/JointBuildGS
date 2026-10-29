@@ -3,9 +3,20 @@ set -euo pipefail
 REPO=${JBGS_MESHPATCH_REPO:-$(cd "$(dirname "$0")/../../.." && pwd)}
 OUT=$(realpath "$REPO/../JointBuildGS-artifacts/phase-payloads/phd/main_meshpatch_v1/PHD-MAIN-MESHPATCH-v1")
 cd "$REPO"
+if [[ -f configs/phd/main_meshpatch_v1/memory_execution_v1.json && ! -f "$OUT/status/memory_bootstrap_done.json" ]]; then
+  # One bounded probe of a previously OOM-killed source. Subsequent runs reuse
+  # its stage receipt; mesh_staged refuses an identical failed retry.
+  if ! bash scripts/phd/main_meshpatch_v1/run_cpu.sh memory-probe-b0 --large mesh_staged.py B0_b10__ALS__cdgsnofit_ALS_s0 --probe-cleanup; then
+    printf '%s\tB0_b10__ALS__cdgsnofit_ALS_s0\tcleanup_failed\n' "$(date -Is)" >> "$OUT/logs/queue_failures.tsv"
+  fi
+  bash scripts/phd/main_meshpatch_v1/run_cpu.sh memory-bootstrap mesh_memory_plan.py --finish-probe
+  bash scripts/phd/main_meshpatch_v1/run_cpu.sh memory-bootstrap-report report.py
+fi
 axes_ok=0
 if [[ -f configs/phd/main_meshpatch_v1/axes_addendum_v1.lock.json ]]; then
-  if bash scripts/phd/main_meshpatch_v1/run_axes.sh axes-baseline --large axes_worker.py baseline; then
+  baseline_args=(--large)
+  if [[ -f docs/experiments/phd/main_meshpatch_v1/tables/axes_baseline_replay.json ]]; then baseline_args=(); fi
+  if bash scripts/phd/main_meshpatch_v1/run_axes.sh axes-baseline "${baseline_args[@]}" axes_worker.py baseline; then
     axes_ok=1
   else
     printf '%s\taxes_baseline\tFAILED\n' "$(date -Is)" >> "$OUT/logs/queue_failures.tsv"
@@ -31,7 +42,11 @@ for item in "${keys[@]}"; do
   if [[ ! -f "docs/experiments/phd/main_meshpatch_v1/tables/meshes/$key.json" ]]; then
     args=()
     if [[ "$state" == READY ]]; then args=(--large); fi
-    if ! bash scripts/phd/main_meshpatch_v1/run_cpu.sh "mesh-$key" "${args[@]}" mesh_worker.py "$key"; then
+    if [[ "$state" == READY ]] && ! bash scripts/phd/main_meshpatch_v1/run_cpu.sh "memory-plan-$key" mesh_memory_plan.py --key "$key"; then
+      printf '%s\t%s\tresource_deferred\n' "$(date -Is)" "$key" >> "$OUT/logs/queue_failures.tsv"
+      continue
+    fi
+    if ! bash scripts/phd/main_meshpatch_v1/run_cpu.sh "mesh-$key" "${args[@]}" mesh_staged.py "$key"; then
       printf '%s\t%s\tcleanup_failed\n' "$(date -Is)" "$key" >> "$OUT/logs/queue_failures.tsv"
       continue
     fi

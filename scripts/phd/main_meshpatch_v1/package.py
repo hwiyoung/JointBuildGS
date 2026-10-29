@@ -27,6 +27,7 @@ def package(kind):
         figs=json.loads((D/'tables/case_figures.json').read_text());assert len(figs['cases'])==7 and all(x['status']=='PASS' for x in figs['cases'])
         for folder in ['mesh_post','patch_z','patch_table','case_meshes','axes_dist']:
             files +=[(p,folder+'/'+str(p.relative_to(O/folder))) for p in sorted((O/folder).rglob('*')) if p.is_file()]
+        files +=[(p,'mesh_stages_v1/'+str(p.relative_to(O/'mesh_stages_v1'))) for p in sorted((O/'mesh_stages_v1').glob('*/*.json'))]
         files +=[(p,'docs/'+str(p.relative_to(D))) for p in sorted(D.rglob('*')) if p.is_file()]
         suffix='handover'
     for dirname,root in [('configs',C),('scripts',R/'scripts/phd/main_meshpatch_v1')]:

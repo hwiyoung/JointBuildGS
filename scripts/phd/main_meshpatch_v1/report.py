@@ -79,6 +79,9 @@ def main():
     (D/'progress.md').write_text(f'# 진행\n\n갱신: {now()}\n\n일 1 코드 확인 완료(논문 전문 확인 불가). 일 3 표 {sum(x is not None for x in patches.values())}/2개, 검증 {sum(x is not None for x in validations.values())}/2개. 일 2 메시 {len(passed)}/{n}개 완료.\n\n영역 연결은 사용자 승인 범위만 적용. 새 가시성 계산 없음. 면 번호 대조의 불일치는 보고서 참조.\n\nscientific_verdict: null\n')
     print(json.dumps(dict(report_characters=len(report),completed_meshes=len(passed),targets=n)))
     update_priority()
+    if (C/'memory_execution_v1.json').exists():
+        from mesh_memory_plan import plan
+        plan()
     if (C/'axes_addendum_v1.json').exists():
         from axes_report import main as axes_report
         axes_report()

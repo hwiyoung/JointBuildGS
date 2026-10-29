@@ -22,6 +22,10 @@ fi
 log="$task_out/logs/${tag}_$(date +%Y%m%dT%H%M%S).log"
 tar -czf "${log%.log}.source_snapshot.tar.gz" -C "$task_repo" scripts/phd/main_meshpatch_v1 configs/phd/main_meshpatch_v1 scripts/phd/main_axes71_v2 scripts/phd/main_dist71_v1 src/phd/metrics_v3
 git -C "$task_repo" rev-parse HEAD > "${log%.log}.commit.txt"
+worker_args=("$@")
+if [[ "$memory_limit" == 40g && -f "$task_repo/configs/phd/main_meshpatch_v1/memory_execution_v1.json" ]]; then
+  worker_args=(guarded_axes.py "$@")
+fi
 set +e
 docker run --rm --name "jbgs-meshpatch-$tag" --network none --user "$(id -u):$(id -g)" \
   --cpus "$cpu_limit" --memory "$memory_limit" --memory-swap "$memory_limit" --shm-size 1g \
@@ -37,5 +41,5 @@ docker run --rm --name "jbgs-meshpatch-$tag" --network none --user "$(id -u):$(i
   -v "$task_ph/main_stage1_diag_v1/PHD-MAIN-STAGE1-DIAG-v1:/diag:ro" \
   -v "$task_repo/configs/phd/main_meshpatch_v1:/config" \
   -v "$task_repo/docs/experiments/phd/main_meshpatch_v1:/docs" \
-  -w /repo/scripts/phd/main_meshpatch_v1 --entrypoint python jointbuildgs:dev "$@" 2>&1 | tee "$log"
+  -w /repo/scripts/phd/main_meshpatch_v1 --entrypoint python jointbuildgs:dev "${worker_args[@]}" 2>&1 | tee "$log"
 exit "${PIPESTATUS[0]}"

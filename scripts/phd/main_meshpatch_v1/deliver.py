@@ -43,8 +43,8 @@ def progress(now):
             f"- 덧붙임 네 값: {axes['completed']}/{axes['required']}개 완료, 우선 1단계 비교 방법 {axes['stage1_completed']}/{axes['stage1_required']}개. 옛 값 대조 {axes['baseline_status']}.",
             f"- 추가 지표의 남은 {len(axes['pending'])}개 예상: {end}. 남은 정리 포함, 자원 대기는 별도. 대상별 예상은 tables/axes_progress.json. 10/30 09:30에는 완료한 전·후만 포함.",'']
         if axes.get('blocked'):
-            oom=sum(r.get('status')=='FAILED_OOM' for r in axes['blocked'])
-            lines.insert(lines.index('4. 다음 중간 묶음')-1,f"- 미해결 정리 실패 {len(axes['blocked'])}개(메모리 한도 OOM 확인 {oom}개). 완료 표에 넣지 않음. 대상·근거·중단 시각은 tables/axes_progress.json과 runtime_failures.json. 다른 대상은 계속 처리.")
+            oom=sum(r.get('status')=='FAILED_OOM' or (r.get('previous_failure') or {}).get('status')=='FAILED_OOM' for r in axes['blocked'])
+            lines.insert(lines.index('4. 다음 중간 묶음')-1,f"- 정리 실패·자원 보류 {len(axes['blocked'])}개(앞 실행 OOM 확인 {oom}개). 완료 표에 넣지 않음. 대상·근거는 tables/axes_progress.json과 mesh_memory_plan.json. 단계별 프로세스 분리·38 GiB 선제 중지를 적용. 처리 가능한 대상은 계속 진행.")
     s='\n'.join(lines)+'\n';assert len(s)<=2000
     return s
 def package(at=None):
@@ -56,7 +56,7 @@ def package(at=None):
         if f.is_file() and f.suffix in ['.md','.json']:members.append((f,'tables/'+str(f.relative_to(D/'tables'))))
     for f in sorted((D/'figures').rglob('*')) if (D/'figures').exists() else []:
         if f.is_file() and f.suffix in ['.png','.jpg','.glb']:members.append((f,'figures/'+str(f.relative_to(D/'figures'))))
-    for name in ['issues.md','메시정리와패치표_보고_v1.md']:
+    for name in ['issues.md','메시정리와패치표_보고_v1.md','메모리_실행개선_v1.md']:
         if (D/name).exists():members.append((D/name,name))
     with zipfile.ZipFile(temp,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
         z.writestr('진행.md',progress(now))

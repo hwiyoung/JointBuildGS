@@ -35,6 +35,13 @@ def status(d=Path('/docs'), o=Path('/out'), c=Path('/config')):
                     reason='작업 종료 실패. 상세 원인은 아직 확인 불가.',evidence=str(queue_log)))
                 known.add(fields[1])
     blocked={r['key']:r for r in failures if r['key'] not in completed_cleanup and r['key'] in missing}
+    memory_plan=read(d/'tables/mesh_memory_plan.json',{})
+    for r in memory_plan.get('rows',[]):
+        if r['disposition']=='WAIT_RESOURCE_REVIEW' and r['key'] not in completed_cleanup and r['key'] in missing:
+            blocked[r['key']]=dict(key=r['key'],status='WAIT_RESOURCE_REVIEW',
+                estimated_cleanup_peak_gib=r['estimated_cleanup_peak_gib'],
+                reason='메시 크기와 관측 최대 사용량에 따른 사전 보류. 같은 조건의 자동 재시도 없음.',
+                evidence=str(d/'tables/mesh_memory_plan.json'),previous_failure=blocked.get(r['key']))
     cleanup_times=[r['seconds'] for r in cleanup if r['status']=='PASS']
     cleanup_mean=sum(cleanup_times)/len(cleanup_times) if cleanup_times else None
     target_rows=read(c/'mesh_targets_v1.json')['targets']+cfg['extra_targets']
@@ -127,7 +134,7 @@ def main():
     (d/'tables/axes_comparison.md').write_text('\n'.join(lines)+'\n')
     text=f"\n추가 지표: AXES71-v2 네 값과 부록은 {s['completed']}/{s['required']}개 완료. 우선 비교 방법 {s['stage1_completed']}/{s['stage1_required']}개. 옛 정리 전 결과 대조 {s['baseline_status']}. `tables/axes_comparison.md`에 전·후를 나란히 기록한다.\n"
     if s['blocked']:
-        text+=f"\n메시 정리 실패 {len(s['blocked'])}개는 미완료다. `tables/runtime_failures.json`에 원인과 근거를 기록했다. 재개 시각과 전체 완료 예상은 확인 불가이며, 다른 대상은 계속 처리한다.\n"
+        text+=f"\n메시 정리 실패·자원 보류 {len(s['blocked'])}개는 미완료다. `tables/axes_progress.json`과 `tables/mesh_memory_plan.json`에 대상·원인·근거를 기록했다. 재개 시각과 전체 완료 예상은 확인 불가이며, 처리 가능한 대상은 계속 진행한다.\n"
     for name in ['progress.md','메시정리와패치표_보고_v1.md']:
         p=d/name
         if p.exists():p.write_text(p.read_text()+text)
