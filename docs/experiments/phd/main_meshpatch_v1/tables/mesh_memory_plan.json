@@ -1,425 +1,496 @@
 {
-  "created_at": "2026-10-29T10:46:26.377976+09:00",
+  "created_at": "2026-10-29T21:15:52.128790+09:00",
   "host_available_gib": 56,
   "stable_seconds": 60,
   "container_limit_gib": 40,
   "proactive_stop_gib": 38,
   "estimated_admission_ceiling_gib": 36,
   "baseline_bytes": 2147483648,
-  "bytes_per_triangle": 480.0,
-  "observations": [],
+  "bytes_per_triangle": 614.8837061181628,
+  "observations": [
+    {
+      "key": "B173nb_b10__ALS__geogs_ALS_fix1",
+      "triangles": 56203065,
+      "peak_bytes": 32198221824
+    },
+    {
+      "key": "B173nb_b10__ALS__imgonly_2dgs_s0",
+      "triangles": 54549677,
+      "peak_bytes": 31206998016
+    },
+    {
+      "key": "B173nb_b10__ALS__mvsfuse_ALS",
+      "triangles": 40314532,
+      "peak_bytes": 23027585024
+    },
+    {
+      "key": "B173nb_b10__ALS__prop_ALS_s0",
+      "triangles": 36543161,
+      "peak_bytes": 21213876224
+    },
+    {
+      "key": "B173nb_b10__ALS__prop_ALS_s1",
+      "triangles": 36739428,
+      "peak_bytes": 21345374208
+    },
+    {
+      "key": "B173nb_b10__LoD2__mvsfuse_LoD2",
+      "triangles": 32749608,
+      "peak_bytes": 18652385280
+    },
+    {
+      "key": "B173nb_b10__LoD2__prop_LoD2_s0",
+      "triangles": 36862461,
+      "peak_bytes": 21402992640
+    },
+    {
+      "key": "B173nb_b10__LoD2__prop_LoD2_s1",
+      "triangles": 36841411,
+      "peak_bytes": 21406384128
+    },
+    {
+      "key": "R1rep_b10__ALS__mvsfuse_ALS",
+      "triangles": 39634794,
+      "peak_bytes": 21774061568
+    },
+    {
+      "key": "R1rep_b10__ALS__prop_ALS_s0",
+      "triangles": 36332236,
+      "peak_bytes": 21185208320
+    },
+    {
+      "key": "R1rep_b10__ALS__prop_ALS_s1",
+      "triangles": 37504318,
+      "peak_bytes": 21796036608
+    },
+    {
+      "key": "R1rep_b10__LoD2__mvsfuse_LoD2",
+      "triangles": 39631524,
+      "peak_bytes": 21872336896
+    },
+    {
+      "key": "R1rep_b10__LoD2__prop_LoD2_s0",
+      "triangles": 39095778,
+      "peak_bytes": 22685200384
+    },
+    {
+      "key": "R1rep_b10__LoD2__prop_LoD2_s1",
+      "triangles": 39309722,
+      "peak_bytes": 22785175552
+    }
+  ],
   "rows": [
     {
       "key": "B173nb_b10__ALS__nojudge_ALS_s0",
       "vertices": 19889338,
       "triangles": 36896632,
-      "estimated_cleanup_peak_gib": 18.49407982826233,
+      "estimated_cleanup_peak_gib": 23.129043611697853,
       "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__ALS__prop_ALS_s0",
       "vertices": 19596134,
       "triangles": 36543161,
-      "estimated_cleanup_peak_gib": 18.336065977811813,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 22.92662664875388,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__ALS__lt_fixgt_ALS_s0",
       "vertices": 42419374,
       "triangles": 75251179,
-      "estimated_cleanup_peak_gib": 35.63989844918251,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 45.09296964947134,
+      "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "B173nb_b10__ALS__lt_dyngt_ALS_s0",
       "vertices": 25557088,
       "triangles": 47078496,
-      "estimated_cleanup_peak_gib": 23.045727729797363,
+      "estimated_cleanup_peak_gib": 28.95973971672356,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "B173nb_b10__ALS__lt_dynsoft_ALS_s0",
       "vertices": 25992644,
       "triangles": 47849160,
-      "estimated_cleanup_peak_gib": 23.390241384506226,
+      "estimated_cleanup_peak_gib": 29.401064368896186,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "B173nb_b10__ALS__lt_dynnow_ALS_s0",
       "vertices": 23516913,
       "triangles": 43661501,
-      "estimated_cleanup_peak_gib": 21.51821193099022,
+      "estimated_cleanup_peak_gib": 27.00298018474132,
       "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__ALS__prop_ALS_s1",
       "vertices": 19843353,
       "triangles": 36739428,
-      "estimated_cleanup_peak_gib": 18.4238041639328,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 23.039019943214953,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__ALS__imgonly_s0",
       "vertices": 19912333,
       "triangles": 37147615,
-      "estimated_cleanup_peak_gib": 18.606277972459793,
+      "estimated_cleanup_peak_gib": 23.272770300507545,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "B173nb_b10__ALS__imgonly_2dgs_s0",
       "vertices": 29560722,
       "triangles": 54549677,
-      "estimated_cleanup_peak_gib": 26.38560590147972,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 33.23814944270998,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__ALS__geogs_ALS_fix1",
       "vertices": 30829215,
       "triangles": 56203065,
-      "estimated_cleanup_peak_gib": 27.124727934598923,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 34.184970473870635,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__ALS__trust_ALS",
       "vertices": 22145687,
       "triangles": 41127725,
-      "estimated_cleanup_peak_gib": 20.385525792837143,
+      "estimated_cleanup_peak_gib": 25.552000496536493,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "B173nb_b10__LoD2__prop_LoD2_s0",
       "vertices": 19849947,
       "triangles": 36862461,
-      "estimated_cleanup_peak_gib": 18.47880420088768,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 23.109475415199995,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__LoD2__prop_LoD2_s1",
       "vertices": 19927599,
       "triangles": 36841411,
-      "estimated_cleanup_peak_gib": 18.469394117593765,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 23.09742102585733,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__LoD2__imgonly_s0",
       "vertices": 19912333,
       "triangles": 37147615,
-      "estimated_cleanup_peak_gib": 18.606277972459793,
+      "estimated_cleanup_peak_gib": 23.272770300507545,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "B173nb_b10__LoD2__imgonly_2dgs_s0",
       "vertices": 29560722,
       "triangles": 54549677,
-      "estimated_cleanup_peak_gib": 26.38560590147972,
+      "estimated_cleanup_peak_gib": 33.23814944270998,
       "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__LoD2__trust_LoD2_fix1",
       "vertices": 30703000,
       "triangles": 55372182,
-      "estimated_cleanup_peak_gib": 26.75329428911209,
+      "estimated_cleanup_peak_gib": 33.70916110649705,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__nojudge_ALS_s0",
       "vertices": 17784412,
       "triangles": 32003095,
-      "estimated_cleanup_peak_gib": 16.3064983189106,
+      "estimated_cleanup_peak_gib": 20.32673480734229,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__prop_ALS_s0",
       "vertices": 17894304,
       "triangles": 32256820,
-      "estimated_cleanup_peak_gib": 16.41992223262787,
+      "estimated_cleanup_peak_gib": 20.472031717188656,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__lt_fixgt_ALS_s0",
       "vertices": 48603936,
       "triangles": 83861516,
-      "estimated_cleanup_peak_gib": 39.48901903629303,
+      "estimated_cleanup_peak_gib": 50.023722840473056,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "B0_b10__ALS__lt_dyngt_ALS_s0",
       "vertices": 32392134,
       "triangles": 58068153,
-      "estimated_cleanup_peak_gib": 27.95848724246025,
+      "estimated_cleanup_peak_gib": 35.25302258506417,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__lt_dynsoft_ALS_s0",
       "vertices": 30649712,
       "triangles": 55035429,
-      "estimated_cleanup_peak_gib": 26.602753967046738,
+      "estimated_cleanup_peak_gib": 33.51631779130548,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__lt_dynnow_ALS_s0",
       "vertices": 32478069,
       "triangles": 57705075,
-      "estimated_cleanup_peak_gib": 27.796178728342056,
+      "estimated_cleanup_peak_gib": 35.045104124583304,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__prop_ALS_s1",
       "vertices": 17946777,
       "triangles": 32151421,
-      "estimated_cleanup_peak_gib": 16.372805207967758,
+      "estimated_cleanup_peak_gib": 20.411674444563687,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__imgonly_s0",
       "vertices": 18773706,
       "triangles": 33782501,
-      "estimated_cleanup_peak_gib": 17.10195478796959,
+      "estimated_cleanup_peak_gib": 21.345720686018467,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__imgonly_2dgs_s0",
       "vertices": 37853911,
       "triangles": 68020423,
-      "estimated_cleanup_peak_gib": 32.40749862790108,
+      "estimated_cleanup_peak_gib": 40.95224052015692,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__geogs_ALS_fix1",
       "vertices": 40193828,
       "triangles": 72409189,
-      "estimated_cleanup_peak_gib": 34.36942991614342,
+      "estimated_cleanup_peak_gib": 43.46548964921385,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__trust_ALS",
       "vertices": 18943798,
       "triangles": 34034545,
-      "estimated_cleanup_peak_gib": 17.214627236127853,
+      "estimated_cleanup_peak_gib": 21.49005496222526,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "B0_b10__LoD2__prop_LoD2_s0",
       "vertices": 18426526,
       "triangles": 33251999,
-      "estimated_cleanup_peak_gib": 16.864801913499832,
+      "estimated_cleanup_peak_gib": 21.04192602261901,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__LoD2__prop_LoD2_s1",
       "vertices": 18503243,
       "triangles": 33167854,
-      "estimated_cleanup_peak_gib": 16.827186167240143,
+      "estimated_cleanup_peak_gib": 20.993739961646497,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__LoD2__imgonly_s0",
       "vertices": 18773706,
       "triangles": 33782501,
-      "estimated_cleanup_peak_gib": 17.10195478796959,
+      "estimated_cleanup_peak_gib": 21.345720686018467,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "B0_b10__LoD2__imgonly_2dgs_s0",
       "vertices": 37853911,
       "triangles": 68020423,
-      "estimated_cleanup_peak_gib": 32.40749862790108,
+      "estimated_cleanup_peak_gib": 40.95224052015692,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__LoD2__trust_LoD2_fix1",
       "vertices": 31909627,
       "triangles": 57710902,
-      "estimated_cleanup_peak_gib": 27.798783600330353,
+      "estimated_cleanup_peak_gib": 35.048440986312926,
       "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__ALS__nojudge_ALS_s0",
       "vertices": 19198913,
       "triangles": 35199184,
-      "estimated_cleanup_peak_gib": 17.7352614402771,
+      "estimated_cleanup_peak_gib": 22.156991397961974,
       "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__ALS__prop_ALS_s0",
       "vertices": 19827736,
       "triangles": 36332236,
-      "estimated_cleanup_peak_gib": 18.241775155067444,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 22.805839377455413,
+      "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__ALS__lt_dyngt_ALS_s0",
       "vertices": 36254685,
       "triangles": 64845775,
-      "estimated_cleanup_peak_gib": 30.988320380449295,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 39.134262228384614,
+      "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "R1rep_b10__ALS__lt_dynsoft_ALS_s0",
       "vertices": 40871353,
       "triangles": 73964152,
-      "estimated_cleanup_peak_gib": 35.064552545547485,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 44.35594710428268,
+      "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "R1rep_b10__ALS__lt_dynnow_ALS_s0",
       "vertices": 36548636,
       "triangles": 65423716,
-      "estimated_cleanup_peak_gib": 31.2466801404953,
+      "estimated_cleanup_peak_gib": 39.465223075821996,
       "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__ALS__prop_ALS_s1",
       "vertices": 20407035,
       "triangles": 37504318,
-      "estimated_cleanup_peak_gib": 18.765736639499664,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 23.47703808452934,
+      "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__ALS__imgonly_s0",
       "vertices": 20705167,
       "triangles": 38032722,
-      "estimated_cleanup_peak_gib": 19.00195163488388,
+      "estimated_cleanup_peak_gib": 23.779631317593157,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "R1rep_b10__ALS__imgonly_2dgs_s0",
       "vertices": 43206284,
       "triangles": 77299933,
-      "estimated_cleanup_peak_gib": 36.555762857198715,
+      "estimated_cleanup_peak_gib": 46.26619902718812,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "R1rep_b10__ALS__geogs_ALS_fix1",
       "vertices": 37697628,
       "triangles": 68255746,
-      "estimated_cleanup_peak_gib": 32.51269620656967,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 41.08699943125248,
+      "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "R1rep_b10__ALS__trust_ALS",
       "vertices": 18594509,
       "triangles": 33972972,
-      "estimated_cleanup_peak_gib": 17.18710196018219,
+      "estimated_cleanup_peak_gib": 21.454794871620834,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "R1rep_b10__LoD2__prop_LoD2_s0",
       "vertices": 21347005,
       "triangles": 39095778,
-      "estimated_cleanup_peak_gib": 19.477174699306488,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 24.38839573226869,
+      "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__LoD2__prop_LoD2_s1",
       "vertices": 21342622,
       "triangles": 39309722,
-      "estimated_cleanup_peak_gib": 19.572815120220184,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 24.510911849327385,
+      "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__LoD2__imgonly_s0",
       "vertices": 20705167,
       "triangles": 38032722,
-      "estimated_cleanup_peak_gib": 19.00195163488388,
+      "estimated_cleanup_peak_gib": 23.779631317593157,
       "disposition": "ADMIT_STAGED"
     },
     {
       "key": "R1rep_b10__LoD2__imgonly_2dgs_s0",
       "vertices": 43206284,
       "triangles": 77299933,
-      "estimated_cleanup_peak_gib": 36.555762857198715,
+      "estimated_cleanup_peak_gib": 46.26619902718812,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "R1rep_b10__LoD2__trust_LoD2_fix1",
       "vertices": 41000275,
       "triangles": 74310789,
-      "estimated_cleanup_peak_gib": 35.21951135993004,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 44.554450541734695,
+      "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "B0_b10__LoD2__mvsfuse_LoD2",
       "vertices": 14087434,
       "triangles": 26635130,
-      "estimated_cleanup_peak_gib": 13.906830966472626,
+      "estimated_cleanup_peak_gib": 17.252742401324213,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__LoD2__cdgsnofit_LoD2_s0",
       "vertices": 64286794,
       "triangles": 99493042,
-      "estimated_cleanup_peak_gib": 46.47685569524765,
+      "estimated_cleanup_peak_gib": 58.975195554085076,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "B0_b10__ALS__mvsfuse_ALS",
       "vertices": 19446838,
       "triangles": 37209636,
-      "estimated_cleanup_peak_gib": 18.634003520011902,
+      "estimated_cleanup_peak_gib": 23.308286940678954,
       "disposition": "COMPLETE"
     },
     {
       "key": "B0_b10__ALS__cdgsnofit_ALS_s0",
       "vertices": 64626683,
       "triangles": 93824742,
-      "estimated_cleanup_peak_gib": 43.94292813539505,
+      "estimated_cleanup_peak_gib": 55.72921478562057,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "B173nb_b10__LoD2__mvsfuse_LoD2",
       "vertices": 17240668,
       "triangles": 32749608,
-      "estimated_cleanup_peak_gib": 16.640215635299683,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 20.75422926619649,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__LoD2__cdgsnofit_LoD2_s0",
       "vertices": 88325967,
       "triangles": 133038313,
-      "estimated_cleanup_peak_gib": 61.472760409116745,
+      "estimated_cleanup_peak_gib": 78.18506527785212,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "B173nb_b10__ALS__mvsfuse_ALS",
       "vertices": 21072408,
       "triangles": 40314532,
-      "estimated_cleanup_peak_gib": 20.022000193595886,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 25.086321396753192,
+      "disposition": "COMPLETE"
     },
     {
       "key": "B173nb_b10__ALS__cdgsnofit_ALS_s0",
       "vertices": 63887859,
       "triangles": 91245070,
-      "estimated_cleanup_peak_gib": 42.78972488641739,
+      "estimated_cleanup_peak_gib": 54.25195251964033,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "R1rep_b10__LoD2__mvsfuse_LoD2",
       "vertices": 21460171,
       "triangles": 39631524,
-      "estimated_cleanup_peak_gib": 19.71667182445526,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 24.695193398743868,
+      "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__LoD2__cdgsnofit_LoD2_s0",
       "vertices": 75738788,
       "triangles": 113761924,
-      "estimated_cleanup_peak_gib": 52.85554301738739,
+      "estimated_cleanup_peak_gib": 67.14634326472878,
       "disposition": "WAIT_RESOURCE_REVIEW"
     },
     {
       "key": "R1rep_b10__ALS__mvsfuse_ALS",
       "vertices": 20654904,
       "triangles": 39634794,
-      "estimated_cleanup_peak_gib": 19.718133628368378,
-      "disposition": "ADMIT_STAGED"
+      "estimated_cleanup_peak_gib": 24.697065980173647,
+      "disposition": "COMPLETE"
     },
     {
       "key": "R1rep_b10__ALS__cdgsnofit_ALS_s0",
       "vertices": 63963714,
       "triangles": 91492662,
-      "estimated_cleanup_peak_gib": 42.9004071354866,
+      "estimated_cleanup_peak_gib": 54.393737335689366,
       "disposition": "WAIT_RESOURCE_REVIEW"
     }
   ],

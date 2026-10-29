@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "checks": [
+    "curve closed upper endpoint 8 and missing bins",
+    "normal patch column excludes transverse and axial outsiders; opacity threshold tests individual centres",
+    "exact first hit gives positive outside, negative inside, missing NaN; red / blue / grey rendering verified",
+    "B0_b10 ALS: exact evaluation / region / patch-value identity",
+    "B0_b10 LoD2: exact evaluation / region / patch-value identity",
+    "B173nb_b10 ALS: exact evaluation / region / patch-value identity",
+    "B173nb_b10 LoD2: exact evaluation / region / patch-value identity",
+    "R1rep_b10 ALS: exact evaluation / region / patch-value identity",
+    "R1rep_b10 LoD2: exact evaluation / region / patch-value identity",
+    "streamed exact PLY crop equals Open3D crop on existing B173 wing source crop"
+  ],
+  "created_at": "2026-10-29T21:23:38.757901+09:00",
+  "scientific_verdict": null
+}

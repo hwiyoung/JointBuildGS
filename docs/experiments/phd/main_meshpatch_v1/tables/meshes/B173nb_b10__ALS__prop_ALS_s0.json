@@ -1,0 +1,1302 @@
+{
+  "target": {
+    "key": "B173nb_b10__ALS__prop_ALS_s0",
+    "site": "B173nb_b10",
+    "prior": "ALS",
+    "result": "prop_ALS_s0",
+    "groups": [
+      "losstrain",
+      "stage1"
+    ],
+    "mesh": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/stage0/b1_ALS/post/mesh_tsdf.ply",
+    "exists": true,
+    "evaluation": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+    "values": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+    "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__prop_ALS_s0.json",
+    "expected_sha256": "9d30f626aebe53bdd7dfe4f29d3c58e1b48c0f81a5f01915fed943e82c6b13b6",
+    "status": "READY",
+    "bytes": 1004156984,
+    "sha256": "9d30f626aebe53bdd7dfe4f29d3c58e1b48c0f81a5f01915fed943e82c6b13b6",
+    "evaluation_sha256": "904f20ec0c1702862969995f14070a03ce8bdf8edacc55a77f8ff728a41dce9b",
+    "values_sha256": "b26bae1f7cd3562ea979b458a828f24a6935b5a2c7f5487aff2eb48ca686cc40"
+  },
+  "status": "PASS",
+  "scientific_verdict": null,
+  "provenance": "[이 발주에서 냄]",
+  "execution": "separate_processes_v1",
+  "case_crops": [],
+  "before": [
+    {
+      "cell": "0",
+      "patches": 10945,
+      "area_m2": 702.495997452804,
+      "within_tau_patches": 10562,
+      "within_tau_area_m2": 676.1531305714005,
+      "within_tau_pct": 96.25010434551646,
+      "floating_patches": 206,
+      "floating_area_m2": 13.609374014594772,
+      "floating_pct": 1.9372884776484576,
+      "mvs_patches": 145,
+      "mvs_area_m2": 10.071460853254685,
+      "mvs_pct": 1.4336680763695482,
+      "prior_patches": 25,
+      "prior_area_m2": 1.8767117243505664,
+      "prior_pct": 0.26714909852232294,
+      "other_missing_patches": 7,
+      "other_missing_area_m2": 0.7853202892034792,
+      "other_missing_pct": 0.11179000194321244,
+      "no_surface_area_m2": 0.7853202892034792,
+      "no_surface_pct": 0.11179000194321244
+    },
+    {
+      "cell": "1",
+      "patches": 14497,
+      "area_m2": 968.4002659110276,
+      "within_tau_patches": 12913,
+      "within_tau_area_m2": 861.8573775156867,
+      "within_tau_pct": 88.99805254647362,
+      "floating_patches": 417,
+      "floating_area_m2": 28.018581842197804,
+      "floating_pct": 2.8932852280703556,
+      "mvs_patches": 699,
+      "mvs_area_m2": 46.6358789972447,
+      "mvs_pct": 4.815764786410065,
+      "prior_patches": 42,
+      "prior_area_m2": 3.288170136943042,
+      "prior_pct": 0.3395465958334572,
+      "other_missing_patches": 426,
+      "other_missing_area_m2": 28.600257418955362,
+      "other_missing_pct": 2.953350843212493,
+      "no_surface_area_m2": 20.891393304927274,
+      "no_surface_pct": 2.1573097447751715
+    },
+    {
+      "cell": "2",
+      "patches": 2598,
+      "area_m2": 186.66424653639925,
+      "within_tau_patches": 583,
+      "within_tau_area_m2": 41.21888935021627,
+      "within_tau_pct": 22.081834156804444,
+      "floating_patches": 129,
+      "floating_area_m2": 9.451062143846862,
+      "floating_pct": 5.063134649089813,
+      "mvs_patches": 1856,
+      "mvs_area_m2": 133.78034045607598,
+      "mvs_pct": 71.66896871704299,
+      "prior_patches": 27,
+      "prior_area_m2": 1.915329540776588,
+      "prior_pct": 1.0260826999899533,
+      "other_missing_patches": 3,
+      "other_missing_area_m2": 0.29862504548356616,
+      "other_missing_pct": 0.1599797770728069,
+      "no_surface_area_m2": 0.2254158408831179,
+      "no_surface_pct": 0.12076005183947326
+    },
+    {
+      "cell": "3",
+      "patches": 4980,
+      "area_m2": 335.5821892773505,
+      "within_tau_patches": 827,
+      "within_tau_area_m2": 55.9249948959679,
+      "within_tau_pct": 16.665066467442127,
+      "floating_patches": 311,
+      "floating_area_m2": 21.12315170645627,
+      "floating_pct": 6.294479379833385,
+      "mvs_patches": 3552,
+      "mvs_area_m2": 238.95449704704288,
+      "mvs_pct": 71.20595331999364,
+      "prior_patches": 29,
+      "prior_area_m2": 2.3309593358328162,
+      "prior_pct": 0.6946016237787683,
+      "other_missing_patches": 261,
+      "other_missing_area_m2": 17.248586292050657,
+      "other_missing_pct": 5.139899208952094,
+      "no_surface_area_m2": 15.198469370504448,
+      "no_surface_pct": 4.5289857019030535
+    },
+    {
+      "cell": "4",
+      "patches": 17,
+      "area_m2": 1.457564909733581,
+      "within_tau_patches": 1,
+      "within_tau_area_m2": 0.08109890449985116,
+      "within_tau_pct": 5.563999514414402,
+      "floating_patches": 7,
+      "floating_area_m2": 0.6045849405071838,
+      "floating_pct": 41.47910919574018,
+      "mvs_patches": 0,
+      "mvs_area_m2": 0.0,
+      "mvs_pct": 0.0,
+      "prior_patches": 4,
+      "prior_area_m2": 0.4200259389945557,
+      "prior_pct": 28.816962880324112,
+      "other_missing_patches": 5,
+      "other_missing_area_m2": 0.3518551257319903,
+      "other_missing_pct": 24.139928409521303,
+      "no_surface_area_m2": 0.0,
+      "no_surface_pct": 0.0
+    },
+    {
+      "cell": "5",
+      "patches": 175,
+      "area_m2": 12.521963253450426,
+      "within_tau_patches": 19,
+      "within_tau_area_m2": 1.5108324948467087,
+      "within_tau_pct": 12.065460217912705,
+      "floating_patches": 37,
+      "floating_area_m2": 2.7438678211408387,
+      "floating_pct": 21.912441089337698,
+      "mvs_patches": 0,
+      "mvs_area_m2": 0.0,
+      "mvs_pct": 0.0,
+      "prior_patches": 10,
+      "prior_area_m2": 1.0051352264236004,
+      "prior_pct": 8.026977927336079,
+      "other_missing_patches": 109,
+      "other_missing_area_m2": 7.262127711039277,
+      "other_missing_pct": 57.99512076541351,
+      "no_surface_area_m2": 5.373256377894979,
+      "no_surface_pct": 42.910654416865334
+    },
+    {
+      "cell": "6",
+      "patches": 0,
+      "area_m2": 0.0,
+      "within_tau_patches": 0,
+      "within_tau_area_m2": 0.0,
+      "within_tau_pct": null,
+      "floating_patches": 0,
+      "floating_area_m2": 0.0,
+      "floating_pct": null,
+      "mvs_patches": 0,
+      "mvs_area_m2": 0.0,
+      "mvs_pct": null,
+      "prior_patches": 0,
+      "prior_area_m2": 0.0,
+      "prior_pct": null,
+      "other_missing_patches": 0,
+      "other_missing_area_m2": 0.0,
+      "other_missing_pct": null,
+      "no_surface_area_m2": 0.0,
+      "no_surface_pct": null
+    },
+    {
+      "cell": "0~3",
+      "patches": 33020,
+      "area_m2": 2193.1426991775816,
+      "within_tau_patches": 24885,
+      "within_tau_area_m2": 1635.1543923332715,
+      "within_tau_pct": 74.5575923056191,
+      "floating_patches": 1063,
+      "floating_area_m2": 72.2021697070957,
+      "floating_pct": 3.292178376453625,
+      "mvs_patches": 6252,
+      "mvs_area_m2": 429.4421773536182,
+      "mvs_pct": 19.581132477820848,
+      "prior_patches": 123,
+      "prior_area_m2": 9.411170737903015,
+      "prior_pct": 0.4291180296399391,
+      "other_missing_patches": 697,
+      "other_missing_area_m2": 46.93278904569306,
+      "other_missing_pct": 2.139978810466489,
+      "no_surface_area_m2": 37.10059880551832,
+      "no_surface_pct": 1.691663694269911
+    },
+    {
+      "cell": "전체",
+      "patches": 33212,
+      "area_m2": 2207.122227340765,
+      "within_tau_patches": 24905,
+      "within_tau_area_m2": 1636.7463237326178,
+      "within_tau_pct": 74.15748450436475,
+      "floating_patches": 1107,
+      "floating_area_m2": 75.55062246874374,
+      "floating_pct": 3.4230375433158655,
+      "mvs_patches": 6252,
+      "mvs_area_m2": 429.4421773536182,
+      "mvs_pct": 19.457108991694962,
+      "prior_patches": 137,
+      "prior_area_m2": 10.836331903321168,
+      "prior_pct": 0.49097108302775067,
+      "other_missing_patches": 811,
+      "other_missing_area_m2": 54.54677188246433,
+      "other_missing_pct": 2.471397877596684,
+      "no_surface_area_m2": 42.47385518341329,
+      "no_surface_pct": 1.9243997752941664
+    }
+  ],
+  "before_reference_check": {
+    "reference": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__prop_ALS_s0.npz",
+    "max_area_difference_pp": 0.0,
+    "status": "PASS"
+  },
+  "stage1_before": {
+    "spread": {
+      "prior_error": {
+        "points": 96269,
+        "patches": 15274,
+        "main": {
+          "points": 96117,
+          "gt_side": 0.9976,
+          "wrong_side": 0.0001,
+          "both": 0.0001,
+          "neither": 0.0021,
+          "spread": 0.0002
+        },
+        "indeterminable_share": 0.0016,
+        "roof": {
+          "points": 96117,
+          "gt_side": 0.9976,
+          "wrong_side": 0.0001,
+          "both": 0.0001,
+          "neither": 0.0021,
+          "spread": 0.0002
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "observation_error_within_threshold": {
+        "points": 9292,
+        "patches": 1419,
+        "main": {
+          "points": 3388,
+          "gt_side": 0.0956,
+          "wrong_side": 0.8772,
+          "both": 0.0148,
+          "neither": 0.0124,
+          "spread": 0.892
+        },
+        "indeterminable_share": 0.6354,
+        "roof": {
+          "points": 3388,
+          "gt_side": 0.0956,
+          "wrong_side": 0.8772,
+          "both": 0.0148,
+          "neither": 0.0124,
+          "spread": 0.892
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        },
+        "main_without_suspect": {
+          "points": 2982,
+          "gt_side": 0.059,
+          "wrong_side": 0.9182,
+          "both": 0.0131,
+          "neither": 0.0097,
+          "spread": 0.9313
+        }
+      },
+      "observation_error": {
+        "points": 14013,
+        "patches": 2115,
+        "main": {
+          "points": 7881,
+          "gt_side": 0.1153,
+          "wrong_side": 0.8265,
+          "both": 0.0165,
+          "neither": 0.0416,
+          "spread": 0.843
+        },
+        "indeterminable_share": 0.4376,
+        "roof": {
+          "points": 7881,
+          "gt_side": 0.1153,
+          "wrong_side": 0.8265,
+          "both": 0.0165,
+          "neither": 0.0416,
+          "spread": 0.843
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        },
+        "main_without_suspect": {
+          "points": 6066,
+          "gt_side": 0.0978,
+          "wrong_side": 0.8518,
+          "both": 0.0106,
+          "neither": 0.0399,
+          "spread": 0.8623
+        }
+      },
+      "premise_violation_interior": {
+        "points": 4721,
+        "patches": 696,
+        "main": {
+          "points": 4493,
+          "gt_side": 0.1302,
+          "wrong_side": 0.7883,
+          "both": 0.0178,
+          "neither": 0.0637,
+          "spread": 0.8061
+        },
+        "indeterminable_share": 0.0483,
+        "roof": {
+          "points": 4493,
+          "gt_side": 0.1302,
+          "wrong_side": 0.7883,
+          "both": 0.0178,
+          "neither": 0.0637,
+          "spread": 0.8061
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "double_error_record": {
+        "points": 20101,
+        "patches": 3360,
+        "main": {
+          "points": 19791,
+          "gt_side": 0.7854,
+          "wrong_side": 0.0052,
+          "both": 0.0005,
+          "neither": 0.209,
+          "spread": 0.0056
+        },
+        "indeterminable_share": 0.0154,
+        "roof": {
+          "points": 19791,
+          "gt_side": 0.7854,
+          "wrong_side": 0.0052,
+          "both": 0.0005,
+          "neither": 0.209,
+          "spread": 0.0056
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "missing_prior_error_record": {
+        "points": 53,
+        "patches": 9,
+        "main": {
+          "points": 53,
+          "gt_side": 1.0,
+          "wrong_side": 0.0,
+          "both": 0.0,
+          "neither": 0.0,
+          "spread": 0.0
+        },
+        "indeterminable_share": 0.0,
+        "roof": {
+          "points": 53,
+          "gt_side": 1.0,
+          "wrong_side": 0.0,
+          "both": 0.0,
+          "neither": 0.0,
+          "spread": 0.0
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "unthinned": {
+        "prior_error": {
+          "points": 1114299,
+          "gt_side": 0.9985,
+          "wrong_side": 0.0001,
+          "both": 0.0,
+          "neither": 0.0014,
+          "spread": 0.0001
+        },
+        "observation_error_within_threshold": {
+          "points": 35470,
+          "gt_side": 0.0842,
+          "wrong_side": 0.8785,
+          "both": 0.0285,
+          "neither": 0.0088,
+          "spread": 0.9069
+        },
+        "observation_error": {
+          "points": 72068,
+          "gt_side": 0.1129,
+          "wrong_side": 0.8231,
+          "both": 0.0273,
+          "neither": 0.0367,
+          "spread": 0.8504
+        },
+        "premise_violation_interior": {
+          "points": 36598,
+          "gt_side": 0.1407,
+          "wrong_side": 0.7694,
+          "both": 0.0262,
+          "neither": 0.0637,
+          "spread": 0.7956
+        },
+        "double_error_record": {
+          "points": 167105,
+          "gt_side": 0.8608,
+          "wrong_side": 0.0042,
+          "both": 0.0003,
+          "neither": 0.1347,
+          "spread": 0.0045
+        },
+        "missing_prior_error_record": {
+          "points": 561,
+          "gt_side": 1.0,
+          "wrong_side": 0.0,
+          "both": 0.0,
+          "neither": 0.0,
+          "spread": 0.0
+        }
+      },
+      "size_curve": {
+        "bins": [
+          {
+            "bin": [
+              0.0,
+              1.0
+            ],
+            "merged_from": null,
+            "points": 0,
+            "shares": {
+              "points": 0,
+              "gt_side": null,
+              "wrong_side": null,
+              "both": null,
+              "neither": null,
+              "spread": null
+            },
+            "correction_rate": null,
+            "separate": true
+          },
+          {
+            "bin": [
+              1.0,
+              null
+            ],
+            "merged_from": [
+              [
+                1.0,
+                1.5
+              ],
+              [
+                1.5,
+                2.0
+              ],
+              [
+                2.0,
+                3.0
+              ],
+              [
+                3.0,
+                4.0
+              ],
+              [
+                4.0,
+                8.0
+              ],
+              [
+                8.0,
+                null
+              ]
+            ],
+            "points": 96117,
+            "patches": 15274,
+            "shares": {
+              "points": 96117,
+              "gt_side": 0.9976,
+              "wrong_side": 0.0001,
+              "both": 0.0001,
+              "neither": 0.0021,
+              "spread": 0.0002
+            },
+            "correction_rate": 0.9976
+          }
+        ],
+        "raw_counts": [
+          24,
+          64,
+          213,
+          234,
+          424,
+          95158
+        ],
+        "groups": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        ],
+        "boundary_tau": 1.0,
+        "boundary_roof_m": 0.147,
+        "tau_roof": 0.14701597392559052,
+        "note": "within the unit; pooled over the sites in the tables"
+      }
+    },
+    "completeness": {
+      "missing_agreement": {
+        "all": {
+          "n": 111,
+          "le_0.2": 0.0,
+          "le_0.5": 0.009
+        },
+        "roof": {
+          "n": 111,
+          "le_0.2": 0.0,
+          "le_0.5": 0.009
+        },
+        "wall": {
+          "n": 0,
+          "le_0.2": null,
+          "le_0.5": null
+        },
+        "patches": 17
+      },
+      "invisible_agreement": {
+        "all": {
+          "n": 2,
+          "le_0.2": 1.0,
+          "le_0.5": 1.0
+        },
+        "roof": {
+          "n": 2,
+          "le_0.2": 1.0,
+          "le_0.5": 1.0
+        },
+        "wall": {
+          "n": 0,
+          "le_0.2": null,
+          "le_0.5": null
+        },
+        "patches": 1
+      },
+      "premise_band": {
+        "all": {
+          "n": 14136,
+          "le_0.2": 0.9887,
+          "le_0.5": 1.0
+        },
+        "roof": {
+          "n": 14136,
+          "le_0.2": 0.9887,
+          "le_0.5": 1.0
+        },
+        "wall": {
+          "n": 0,
+          "le_0.2": null,
+          "le_0.5": null
+        },
+        "patches": 2142
+      },
+      "condition_4_completeness_0_2": 0.9887,
+      "condition_4_points": 14136
+    },
+    "summary": {
+      "result_points": 2822614,
+      "gt_points": 3881308,
+      "n_result": 2822614,
+      "n_gt": 3881308,
+      "chamfer_result_to_gt": 0.2482,
+      "chamfer_gt_to_result": 0.1283,
+      "chamfer_mean": 0.1883,
+      "precision_0.2": 0.7095,
+      "completeness_0.2": 0.9018,
+      "f1_0.2": 0.7941,
+      "precision_0.5": 0.8888,
+      "completeness_0.5": 0.9653,
+      "f1_0.5": 0.9255
+    }
+  },
+  "removed": {
+    "categories": [
+      {
+        "category": "within_tau",
+        "triangles": 314131,
+        "area_m2": 239.6406574983602
+      },
+      {
+        "category": "floating",
+        "triangles": 23030,
+        "area_m2": 18.632592077285143
+      },
+      {
+        "category": "mvs",
+        "triangles": 81931,
+        "area_m2": 65.77950483386122
+      },
+      {
+        "category": "prior",
+        "triangles": 2194,
+        "area_m2": 1.6242471749430714
+      },
+      {
+        "category": "other_missing",
+        "triangles": 10575,
+        "area_m2": 7.548790486993648
+      },
+      {
+        "category": "unavailable_spatial_join",
+        "triangles": 4079670,
+        "area_m2": 3050.272283930115
+      }
+    ],
+    "triangles": 4511531,
+    "area_m2": 3383.4980760015583,
+    "note": "3D triangle area. Existing before-cleanup patch class is assigned by the frozen XY rule; not a new visibility or region calculation."
+  },
+  "cleanup": {
+    "before_triangles": 36543161,
+    "after_triangles": 32031630,
+    "before_components": 152699,
+    "after_components": 50,
+    "min_remaining_component_triangles": 3600,
+    "count_threshold": 3600,
+    "cluster_to_keep": 50,
+    "ties_retained": true,
+    "removed_degenerate_triangles": 0,
+    "output": "/out/mesh_post/B173nb_b10__ALS__prop_ALS_s0/fuse_post.ply",
+    "output_sha256": "b5fab0bf8f2c138f3aae755d06a0cf86408d273de9f9d9853367d4b5915959cd",
+    "source_sha256": "9d30f626aebe53bdd7dfe4f29d3c58e1b48c0f81a5f01915fed943e82c6b13b6",
+    "original_function_sha256": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c",
+    "component_accounting": "Original function captured components; whole components retained. If surviving degenerates exist, recount after cleanup."
+  },
+  "after": [
+    {
+      "cell": "0",
+      "patches": 10945,
+      "area_m2": 702.495997452804,
+      "within_tau_patches": 10755,
+      "within_tau_area_m2": 688.6457552873833,
+      "within_tau_pct": 98.02842404573967,
+      "floating_patches": 6,
+      "floating_area_m2": 0.6147599821591396,
+      "floating_pct": 0.08751081634460718,
+      "mvs_patches": 153,
+      "mvs_area_m2": 10.636264025257805,
+      "mvs_pct": 1.514067562494886,
+      "prior_patches": 24,
+      "prior_area_m2": 1.8138978688000829,
+      "prior_pct": 0.2582075734775907,
+      "other_missing_patches": 7,
+      "other_missing_area_m2": 0.7853202892034792,
+      "other_missing_pct": 0.11179000194321244,
+      "no_surface_area_m2": 0.7853202892034792,
+      "no_surface_pct": 0.11179000194321244
+    },
+    {
+      "cell": "1",
+      "patches": 14497,
+      "area_m2": 968.4002659110276,
+      "within_tau_patches": 13271,
+      "within_tau_area_m2": 885.8633658223602,
+      "within_tau_pct": 91.47698498295843,
+      "floating_patches": 19,
+      "floating_area_m2": 1.3658364787422759,
+      "floating_pct": 0.14104048984924203,
+      "mvs_patches": 723,
+      "mvs_area_m2": 48.22212869789777,
+      "mvs_pct": 4.979565825762403,
+      "prior_patches": 42,
+      "prior_area_m2": 3.288170136943042,
+      "prior_pct": 0.3395465958334572,
+      "other_missing_patches": 442,
+      "other_missing_area_m2": 29.66076477508438,
+      "other_missing_pct": 3.062862105596477,
+      "no_surface_area_m2": 21.889106119313166,
+      "no_surface_pct": 2.2603366489909904
+    },
+    {
+      "cell": "2",
+      "patches": 2598,
+      "area_m2": 186.66424653639925,
+      "within_tau_patches": 597,
+      "within_tau_area_m2": 42.29073993765516,
+      "within_tau_pct": 22.656047273310335,
+      "floating_patches": 13,
+      "floating_area_m2": 0.954074491648581,
+      "floating_pct": 0.5111179614477152,
+      "mvs_patches": 1958,
+      "mvs_area_m2": 141.20547752083533,
+      "mvs_pct": 75.64677228817918,
+      "prior_patches": 27,
+      "prior_area_m2": 1.915329540776588,
+      "prior_pct": 1.0260826999899533,
+      "other_missing_patches": 3,
+      "other_missing_area_m2": 0.29862504548356616,
+      "other_missing_pct": 0.1599797770728069,
+      "no_surface_area_m2": 0.2254158408831179,
+      "no_surface_pct": 0.12076005183947326
+    },
+    {
+      "cell": "3",
+      "patches": 4980,
+      "area_m2": 335.5821892773505,
+      "within_tau_patches": 853,
+      "within_tau_area_m2": 57.79471224798084,
+      "within_tau_pct": 17.222222780189004,
+      "floating_patches": 105,
+      "floating_area_m2": 7.226722223574305,
+      "floating_pct": 2.1534880141095916,
+      "mvs_patches": 3740,
+      "mvs_area_m2": 251.51257440717114,
+      "mvs_pct": 74.94812968137059,
+      "prior_patches": 28,
+      "prior_area_m2": 2.2604494212602937,
+      "prior_pct": 0.673590403033007,
+      "other_missing_patches": 254,
+      "other_missing_area_m2": 16.787730977363946,
+      "other_missing_pct": 5.002569121297822,
+      "no_surface_area_m2": 15.399544616592724,
+      "no_surface_pct": 4.588904032646791
+    },
+    {
+      "cell": "4",
+      "patches": 17,
+      "area_m2": 1.457564909733581,
+      "within_tau_patches": 1,
+      "within_tau_area_m2": 0.08109890449985116,
+      "within_tau_pct": 5.563999514414402,
+      "floating_patches": 7,
+      "floating_area_m2": 0.6045849405071838,
+      "floating_pct": 41.47910919574018,
+      "mvs_patches": 0,
+      "mvs_area_m2": 0.0,
+      "mvs_pct": 0.0,
+      "prior_patches": 4,
+      "prior_area_m2": 0.4200259389945557,
+      "prior_pct": 28.816962880324112,
+      "other_missing_patches": 5,
+      "other_missing_area_m2": 0.3518551257319903,
+      "other_missing_pct": 24.139928409521303,
+      "no_surface_area_m2": 0.0,
+      "no_surface_pct": 0.0
+    },
+    {
+      "cell": "5",
+      "patches": 175,
+      "area_m2": 12.521963253450426,
+      "within_tau_patches": 19,
+      "within_tau_area_m2": 1.5108324948467087,
+      "within_tau_pct": 12.065460217912705,
+      "floating_patches": 35,
+      "floating_area_m2": 2.5965889677083784,
+      "floating_pct": 20.736276853335184,
+      "mvs_patches": 0,
+      "mvs_area_m2": 0.0,
+      "mvs_pct": 0.0,
+      "prior_patches": 10,
+      "prior_area_m2": 1.0051352264236004,
+      "prior_pct": 8.026977927336079,
+      "other_missing_patches": 111,
+      "other_missing_area_m2": 7.409406564471737,
+      "other_missing_pct": 59.17128500141601,
+      "no_surface_area_m2": 5.52053523132744,
+      "no_surface_pct": 44.08681865286785
+    },
+    {
+      "cell": "6",
+      "patches": 0,
+      "area_m2": 0.0,
+      "within_tau_patches": 0,
+      "within_tau_area_m2": 0.0,
+      "within_tau_pct": null,
+      "floating_patches": 0,
+      "floating_area_m2": 0.0,
+      "floating_pct": null,
+      "mvs_patches": 0,
+      "mvs_area_m2": 0.0,
+      "mvs_pct": null,
+      "prior_patches": 0,
+      "prior_area_m2": 0.0,
+      "prior_pct": null,
+      "other_missing_patches": 0,
+      "other_missing_area_m2": 0.0,
+      "other_missing_pct": null,
+      "no_surface_area_m2": 0.0,
+      "no_surface_pct": null
+    },
+    {
+      "cell": "0~3",
+      "patches": 33020,
+      "area_m2": 2193.1426991775816,
+      "within_tau_patches": 25476,
+      "within_tau_area_m2": 1674.5945732953796,
+      "within_tau_pct": 76.35593315124204,
+      "floating_patches": 143,
+      "floating_area_m2": 10.161393176124303,
+      "floating_pct": 0.4633256732420913,
+      "mvs_patches": 6574,
+      "mvs_area_m2": 451.5764446511621,
+      "mvs_pct": 20.590381319943347,
+      "prior_patches": 121,
+      "prior_area_m2": 9.277846967780006,
+      "prior_pct": 0.4230389099286223,
+      "other_missing_patches": 706,
+      "other_missing_area_m2": 47.53244108713537,
+      "other_missing_pct": 2.1673209456438842,
+      "no_surface_area_m2": 38.29938686599249,
+      "no_surface_pct": 1.7463244357220613
+    },
+    {
+      "cell": "전체",
+      "patches": 33212,
+      "area_m2": 2207.122227340765,
+      "within_tau_patches": 25496,
+      "within_tau_area_m2": 1676.1865046947262,
+      "within_tau_pct": 75.94443497197105,
+      "floating_patches": 185,
+      "floating_area_m2": 13.362567084339865,
+      "floating_pct": 0.6054294102433853,
+      "mvs_patches": 6574,
+      "mvs_area_m2": 451.5764446511621,
+      "mvs_pct": 20.45996542725414,
+      "prior_patches": 135,
+      "prior_area_m2": 10.703008133198164,
+      "prior_pct": 0.48493046740295864,
+      "other_missing_patches": 822,
+      "other_missing_area_m2": 55.29370277733911,
+      "other_missing_pct": 2.505239723128488,
+      "no_surface_area_m2": 43.819922097319925,
+      "no_surface_pct": 1.9853871958018396
+    }
+  ],
+  "stage1_after": {
+    "spread": {
+      "prior_error": {
+        "points": 96269,
+        "patches": 15274,
+        "main": {
+          "points": 96117,
+          "gt_side": 0.9976,
+          "wrong_side": 0.0001,
+          "both": 0.0001,
+          "neither": 0.0022,
+          "spread": 0.0002
+        },
+        "indeterminable_share": 0.0016,
+        "roof": {
+          "points": 96117,
+          "gt_side": 0.9976,
+          "wrong_side": 0.0001,
+          "both": 0.0001,
+          "neither": 0.0022,
+          "spread": 0.0002
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "observation_error_within_threshold": {
+        "points": 9292,
+        "patches": 1419,
+        "main": {
+          "points": 3388,
+          "gt_side": 0.0974,
+          "wrong_side": 0.8808,
+          "both": 0.0091,
+          "neither": 0.0127,
+          "spread": 0.8899
+        },
+        "indeterminable_share": 0.6354,
+        "roof": {
+          "points": 3388,
+          "gt_side": 0.0974,
+          "wrong_side": 0.8808,
+          "both": 0.0091,
+          "neither": 0.0127,
+          "spread": 0.8899
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        },
+        "main_without_suspect": {
+          "points": 2982,
+          "gt_side": 0.0587,
+          "wrong_side": 0.9222,
+          "both": 0.0091,
+          "neither": 0.0101,
+          "spread": 0.9313
+        }
+      },
+      "observation_error": {
+        "points": 14013,
+        "patches": 2115,
+        "main": {
+          "points": 7881,
+          "gt_side": 0.1164,
+          "wrong_side": 0.83,
+          "both": 0.0119,
+          "neither": 0.0417,
+          "spread": 0.8419
+        },
+        "indeterminable_share": 0.4376,
+        "roof": {
+          "points": 7881,
+          "gt_side": 0.1164,
+          "wrong_side": 0.83,
+          "both": 0.0119,
+          "neither": 0.0417,
+          "spread": 0.8419
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        },
+        "main_without_suspect": {
+          "points": 6066,
+          "gt_side": 0.0976,
+          "wrong_side": 0.8546,
+          "both": 0.0077,
+          "neither": 0.0401,
+          "spread": 0.8623
+        }
+      },
+      "premise_violation_interior": {
+        "points": 4721,
+        "patches": 696,
+        "main": {
+          "points": 4493,
+          "gt_side": 0.1306,
+          "wrong_side": 0.7917,
+          "both": 0.014,
+          "neither": 0.0637,
+          "spread": 0.8057
+        },
+        "indeterminable_share": 0.0483,
+        "roof": {
+          "points": 4493,
+          "gt_side": 0.1306,
+          "wrong_side": 0.7917,
+          "both": 0.014,
+          "neither": 0.0637,
+          "spread": 0.8057
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "double_error_record": {
+        "points": 20101,
+        "patches": 3360,
+        "main": {
+          "points": 19791,
+          "gt_side": 0.7845,
+          "wrong_side": 0.0052,
+          "both": 0.0004,
+          "neither": 0.2099,
+          "spread": 0.0056
+        },
+        "indeterminable_share": 0.0154,
+        "roof": {
+          "points": 19791,
+          "gt_side": 0.7845,
+          "wrong_side": 0.0052,
+          "both": 0.0004,
+          "neither": 0.2099,
+          "spread": 0.0056
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "missing_prior_error_record": {
+        "points": 53,
+        "patches": 9,
+        "main": {
+          "points": 53,
+          "gt_side": 1.0,
+          "wrong_side": 0.0,
+          "both": 0.0,
+          "neither": 0.0,
+          "spread": 0.0
+        },
+        "indeterminable_share": 0.0,
+        "roof": {
+          "points": 53,
+          "gt_side": 1.0,
+          "wrong_side": 0.0,
+          "both": 0.0,
+          "neither": 0.0,
+          "spread": 0.0
+        },
+        "wall": {
+          "points": 0,
+          "gt_side": null,
+          "wrong_side": null,
+          "both": null,
+          "neither": null,
+          "spread": null
+        }
+      },
+      "unthinned": {
+        "prior_error": {
+          "points": 1114299,
+          "gt_side": 0.9985,
+          "wrong_side": 0.0001,
+          "both": 0.0,
+          "neither": 0.0014,
+          "spread": 0.0001
+        },
+        "observation_error_within_threshold": {
+          "points": 35470,
+          "gt_side": 0.0882,
+          "wrong_side": 0.8861,
+          "both": 0.0167,
+          "neither": 0.0089,
+          "spread": 0.9029
+        },
+        "observation_error": {
+          "points": 72068,
+          "gt_side": 0.1153,
+          "wrong_side": 0.8277,
+          "both": 0.0203,
+          "neither": 0.0367,
+          "spread": 0.8479
+        },
+        "premise_violation_interior": {
+          "points": 36598,
+          "gt_side": 0.1416,
+          "wrong_side": 0.7711,
+          "both": 0.0237,
+          "neither": 0.0637,
+          "spread": 0.7947
+        },
+        "double_error_record": {
+          "points": 167105,
+          "gt_side": 0.8602,
+          "wrong_side": 0.0042,
+          "both": 0.0002,
+          "neither": 0.1354,
+          "spread": 0.0044
+        },
+        "missing_prior_error_record": {
+          "points": 561,
+          "gt_side": 1.0,
+          "wrong_side": 0.0,
+          "both": 0.0,
+          "neither": 0.0,
+          "spread": 0.0
+        }
+      },
+      "size_curve": {
+        "bins": [
+          {
+            "bin": [
+              0.0,
+              1.0
+            ],
+            "merged_from": null,
+            "points": 0,
+            "shares": {
+              "points": 0,
+              "gt_side": null,
+              "wrong_side": null,
+              "both": null,
+              "neither": null,
+              "spread": null
+            },
+            "correction_rate": null,
+            "separate": true
+          },
+          {
+            "bin": [
+              1.0,
+              null
+            ],
+            "merged_from": [
+              [
+                1.0,
+                1.5
+              ],
+              [
+                1.5,
+                2.0
+              ],
+              [
+                2.0,
+                3.0
+              ],
+              [
+                3.0,
+                4.0
+              ],
+              [
+                4.0,
+                8.0
+              ],
+              [
+                8.0,
+                null
+              ]
+            ],
+            "points": 96117,
+            "patches": 15274,
+            "shares": {
+              "points": 96117,
+              "gt_side": 0.9976,
+              "wrong_side": 0.0001,
+              "both": 0.0001,
+              "neither": 0.0022,
+              "spread": 0.0002
+            },
+            "correction_rate": 0.9976
+          }
+        ],
+        "raw_counts": [
+          24,
+          64,
+          213,
+          234,
+          424,
+          95158
+        ],
+        "groups": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        ],
+        "boundary_tau": 1.0,
+        "boundary_roof_m": 0.147,
+        "tau_roof": 0.14701597392559052,
+        "note": "within the unit; pooled over the sites in the tables"
+      }
+    },
+    "completeness": {
+      "missing_agreement": {
+        "all": {
+          "n": 111,
+          "le_0.2": 0.0,
+          "le_0.5": 0.0
+        },
+        "roof": {
+          "n": 111,
+          "le_0.2": 0.0,
+          "le_0.5": 0.0
+        },
+        "wall": {
+          "n": 0,
+          "le_0.2": null,
+          "le_0.5": null
+        },
+        "patches": 17
+      },
+      "invisible_agreement": {
+        "all": {
+          "n": 2,
+          "le_0.2": 1.0,
+          "le_0.5": 1.0
+        },
+        "roof": {
+          "n": 2,
+          "le_0.2": 1.0,
+          "le_0.5": 1.0
+        },
+        "wall": {
+          "n": 0,
+          "le_0.2": null,
+          "le_0.5": null
+        },
+        "patches": 1
+      },
+      "premise_band": {
+        "all": {
+          "n": 14136,
+          "le_0.2": 0.988,
+          "le_0.5": 1.0
+        },
+        "roof": {
+          "n": 14136,
+          "le_0.2": 0.988,
+          "le_0.5": 1.0
+        },
+        "wall": {
+          "n": 0,
+          "le_0.2": null,
+          "le_0.5": null
+        },
+        "patches": 2142
+      },
+      "condition_4_completeness_0_2": 0.988,
+      "condition_4_points": 14136
+    },
+    "summary": {
+      "result_points": 2656413,
+      "gt_points": 3881308,
+      "n_result": 2656413,
+      "n_gt": 3881308,
+      "chamfer_result_to_gt": 0.1938,
+      "chamfer_gt_to_result": 0.1306,
+      "chamfer_mean": 0.1622,
+      "precision_0.2": 0.7384,
+      "completeness_0.2": 0.8994,
+      "f1_0.2": 0.811,
+      "precision_0.5": 0.9165,
+      "completeness_0.5": 0.9645,
+      "f1_0.5": 0.9399
+    }
+  },
+  "seconds": 309.9951242348179,
+  "finished_at": "2026-10-29T14:26:41.628926+09:00",
+  "memory_stage_receipts": {
+    "cleanup": "/out/mesh_stages_v1/B173nb_b10__ALS__prop_ALS_s0/cleanup_execution.json",
+    "before": "/out/mesh_stages_v1/B173nb_b10__ALS__prop_ALS_s0/before_execution.json",
+    "account": "/out/mesh_stages_v1/B173nb_b10__ALS__prop_ALS_s0/account_execution.json",
+    "after": "/out/mesh_stages_v1/B173nb_b10__ALS__prop_ALS_s0/after_execution.json"
+  }
+}

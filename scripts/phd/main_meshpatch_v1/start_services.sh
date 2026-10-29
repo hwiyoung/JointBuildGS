@@ -17,6 +17,13 @@ if [[ "$mode" == queue ]]; then
     -v "$task_repo/configs/phd/main_meshpatch_v1:$task_repo/configs/phd/main_meshpatch_v1" \
     -v "$task_repo/docs/experiments/phd/main_meshpatch_v1:$task_repo/docs/experiments/phd/main_meshpatch_v1" \
     -w "$task_repo" --entrypoint bash jointbuildgs:dev "$task_queue_snapshot"
+elif [[ "$mode" == interview-delivery ]]; then
+  docker run -d --name jbgs-meshpatch-interview-delivery --network none --memory 512m --memory-swap 512m --cpus 1 \
+    --user "$(id -u):$(id -g)" -e TZ=Asia/Seoul -e PYTHONUNBUFFERED=1 -e PYTHONDONTWRITEBYTECODE=1 \
+    -v "$task_out:/out" -v "$task_repo:/repo:ro" \
+    -v "$task_repo/configs/phd/main_meshpatch_v1:/config:ro" \
+    -v "$task_repo/docs/experiments/phd/main_meshpatch_v1:/docs" \
+    -w /repo/scripts/phd/main_meshpatch_v1 --entrypoint python jointbuildgs:dev interview_delivery.py --schedule
 elif [[ "$mode" == delivery ]]; then
   docker run -d --name jbgs-meshpatch-delivery-v4 --network none --memory 256m --memory-swap 256m --cpus 1 \
     --user "$(id -u):$(id -g)" -e TZ=Asia/Seoul -e PYTHONUNBUFFERED=1 -e PYTHONDONTWRITEBYTECODE=1 \

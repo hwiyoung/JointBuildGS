@@ -1,0 +1,173 @@
+{
+  "task_id": "PHD-MAIN-MESHPATCH-v1",
+  "created_at": "2026-10-29T21:18:41.633873+09:00",
+  "scientific_verdict": null,
+  "no_training": true,
+  "source_files": {
+    "/repo/scripts/phd/main_stage1_v1/gpu_s1.py": "40b1ba4f9911feb694f1241dc57434c7c0c02d54f4a639d10bbfa947140f31eb",
+    "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/render.py": "1b1f4c45bd4c3c68e9b2a557d9ea5d8cd843a8e09b5a0b62f20323b399de8734",
+    "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/utils/render_utils.py": "2c75c00d93d4d9bd80f05a663e67612db1f8a6d7dbd15a8dab01387c0c52c075",
+    "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/utils/mesh_utils.py": "bc36607b2cec4e435c9448d1f504fe6fde0df9cd5d2b190765d044f85139c99c",
+    "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/gaussian_renderer/__init__.py": "6a7710f9a52aaf419705fbb983d6cdaeb8c6986e33a07446267ce2d407448492",
+    "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/scene/__init__.py": "86ef830ea778ac821a1283b1437b378608d07d203e6d9bf8a1c688cc21d514e1",
+    "/repo/src/phd/forks/GeoGS-conf-guided-v1-r17/scene/gaussian_model.py": "3503252cf971a1d8294af982e18ae8beb849834d3b131e815790e849a7194b2e"
+  },
+  "targets": [
+    {
+      "site": "B0_b10",
+      "prefix": "nojudge",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model",
+      "model_input": {
+        "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "sha256": "b0c166d4e9dc801366050785c9ea157e4e296dc155b8f25f427355e9ad3e479b",
+        "bytes": 678647587
+      },
+      "existing_mesh": null,
+      "targets": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+        "sha256": "bb62ec5a7846a9fb0ead2b3c2a631945e57461675e0a80bab2eef75eed6935cd",
+        "bytes": 2679408
+      },
+      "target_rule": "existing regions_v3 in_eval & kind=2 & code_ext_v3 in [5,14]",
+      "split": {
+        "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/split.json",
+        "sha256": "e8e4fa6d28798d3cca6ab642eb2c66f911e186d7e94d9dcf6c0ef364214e6ced",
+        "bytes": 8649
+      }
+    },
+    {
+      "site": "B0_b10",
+      "prefix": "lt_dynnow",
+      "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_LoD2_s0/attempt_0/model",
+      "model_input": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_LoD2_s0/attempt_0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "sha256": "cd252a1fa39b0dca609327b7f24a4c9faaa4a222413f174c631449b8328eeb98",
+        "bytes": 339579883
+      },
+      "existing_mesh": null,
+      "targets": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+        "sha256": "bb62ec5a7846a9fb0ead2b3c2a631945e57461675e0a80bab2eef75eed6935cd",
+        "bytes": 2679408
+      },
+      "target_rule": "existing regions_v3 in_eval & kind=2 & code_ext_v3 in [5,14]",
+      "split": {
+        "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/split.json",
+        "sha256": "e8e4fa6d28798d3cca6ab642eb2c66f911e186d7e94d9dcf6c0ef364214e6ced",
+        "bytes": 8649
+      }
+    },
+    {
+      "site": "B173nb_b10",
+      "prefix": "nojudge",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model",
+      "model_input": {
+        "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "sha256": "e42ac8ed1f70331d871901af6bbc7ca2720dc529893933a0ea715d1c3df9cf9e",
+        "bytes": 799571599
+      },
+      "existing_mesh": {
+        "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+        "sha256": "80e1175d20a17f521491c4b95117d16b21447406e60302a5cac165c03630edd0",
+        "bytes": 453981181
+      },
+      "targets": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/unseen.npz",
+        "sha256": "951d54c81af439b8b4b4d734ab8adfd74069fcd7e40f75a6354e15527e41c218",
+        "bytes": 77529
+      },
+      "target_rule": "original unseen.centre",
+      "split": {
+        "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/split.json",
+        "sha256": "d583fab11cdca2463b782e576c864cea5088563440a59a520a9386f98402e447",
+        "bytes": 7223
+      }
+    },
+    {
+      "site": "B173nb_b10",
+      "prefix": "lt_dynnow",
+      "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_LoD2_s0/attempt_0/model",
+      "model_input": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_LoD2_s0/attempt_0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "sha256": "fd42fe4c902b10025a467618f9a94fbd686b63e05aa140b6c781eaafe96dc919",
+        "bytes": 388956471
+      },
+      "existing_mesh": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+        "sha256": "fd95e3b0c4d313df47a960be6caa5d277af6c062be3f2f7da63a0758beb1b1d9",
+        "bytes": 591867134
+      },
+      "targets": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/unseen.npz",
+        "sha256": "951d54c81af439b8b4b4d734ab8adfd74069fcd7e40f75a6354e15527e41c218",
+        "bytes": 77529
+      },
+      "target_rule": "original unseen.centre",
+      "split": {
+        "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/split.json",
+        "sha256": "d583fab11cdca2463b782e576c864cea5088563440a59a520a9386f98402e447",
+        "bytes": 7223
+      }
+    },
+    {
+      "site": "R1rep_b10",
+      "prefix": "nojudge",
+      "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model",
+      "model_input": {
+        "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "sha256": "7d30afeab7ddde58c1c67a9a73895d5f9cfd3f025ceeb68c49f95cdc05210c86",
+        "bytes": 966896863
+      },
+      "existing_mesh": null,
+      "targets": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+        "sha256": "e54b2646d4e380283c18aab3db25435127dd0b699c5ac14216b0d8db511ef405",
+        "bytes": 2849843
+      },
+      "target_rule": "existing regions_v3 in_eval & kind=2 & code_ext_v3 in [5,14]",
+      "split": {
+        "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/split.json",
+        "sha256": "86e3071efeae00f8b8ded9e6efb4a712bba63f986f265c075c7c7329b4efbdb1",
+        "bytes": 11873
+      }
+    },
+    {
+      "site": "R1rep_b10",
+      "prefix": "lt_dynnow",
+      "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_LoD2_s0/attempt_0/model",
+      "model_input": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_LoD2_s0/attempt_0/model/point_cloud/iteration_30000/point_cloud.ply",
+        "sha256": "f13c548534e3680902b7fb0eef548171b6c453a811cafc1132a789926e0c4393",
+        "bytes": 308512787
+      },
+      "existing_mesh": null,
+      "targets": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+        "sha256": "e54b2646d4e380283c18aab3db25435127dd0b699c5ac14216b0d8db511ef405",
+        "bytes": 2849843
+      },
+      "target_rule": "existing regions_v3 in_eval & kind=2 & code_ext_v3 in [5,14]",
+      "split": {
+        "path": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/split.json",
+        "sha256": "86e3071efeae00f8b8ded9e6efb4a712bba63f986f265c075c7c7329b4efbdb1",
+        "bytes": 11873
+      }
+    }
+  ],
+  "algorithm": "unchanged gpu_s1.load, box_of, subset, box_mask; original GeoGS render, create_virtual_cameras_for_completion, GaussianExtractor reconstruction/extract_mesh_bounded",
+  "n_virtual_cams": 8,
+  "elevation_angles": [
+    0.2,
+    0.5
+  ],
+  "distance_scale": 1.5,
+  "voxel_size": 0.1,
+  "sdf_trunc": 0.5,
+  "depth_trunc": 300.0,
+  "active_sh_degree": 0,
+  "virtual_target_note": "Use original unseen.centre where present. Otherwise aim the same camera generator at existing invisible LoD2 wall centres. No new visibility/region calculation; these are rendering targets, not training inputs.",
+  "training_terminal_sources": [
+    "B173nb_b10/fp_prune_dynnow_ALS_s0",
+    "B173nb_b10/fp_k5Lprune_dynnow_ALS_s0"
+  ]
+}

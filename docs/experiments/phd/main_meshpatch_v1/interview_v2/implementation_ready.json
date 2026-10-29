@@ -1,0 +1,40 @@
+{
+  "status": "READY",
+  "at": "2026-10-29T21:26:07.136308+09:00",
+  "preflight": {
+    "status": "PASS",
+    "checks": [
+      "curve closed upper endpoint 8 and missing bins",
+      "normal patch column excludes transverse and axial outsiders; opacity threshold tests individual centres",
+      "exact first hit gives positive outside, negative inside, missing NaN; red / blue / grey rendering verified",
+      "B0_b10 ALS: exact evaluation / region / patch-value identity",
+      "B0_b10 LoD2: exact evaluation / region / patch-value identity",
+      "B173nb_b10 ALS: exact evaluation / region / patch-value identity",
+      "B173nb_b10 LoD2: exact evaluation / region / patch-value identity",
+      "R1rep_b10 ALS: exact evaluation / region / patch-value identity",
+      "R1rep_b10 LoD2: exact evaluation / region / patch-value identity",
+      "streamed exact PLY crop equals Open3D crop on existing B173 wing source crop"
+    ],
+    "created_at": "2026-10-29T21:23:38.757901+09:00",
+    "scientific_verdict": null
+  },
+  "sources": {
+    "scripts/phd/main_meshpatch_v1/interview_guard.py": "878c0b01035673fe02dcd3d834b0f696ea0ab001bb216fbb51bdf28ef117afd9",
+    "scripts/phd/main_meshpatch_v1/interview_counts.py": "f9c22c93dc2d3a207dcb419297db428b310c198a181c87015a2d3c0d84df5e7c",
+    "scripts/phd/main_meshpatch_v1/interview_meshio.py": "5a69f0e1857fdc85af05e0a793b0880a64db5a0533092ee610a4c7b1b4bb20dc",
+    "scripts/phd/main_meshpatch_v1/interview_figures.py": "f7fb6213ca547856fd047a2d1f043519d88e50e9f91c5b89763d5b876127ba66",
+    "scripts/phd/main_meshpatch_v1/interview_prepare.py": "aa312611f98ec534c0eba74f402dfc300e5e68ee4fae8b47afdca56612a25d60",
+    "scripts/phd/main_meshpatch_v1/interview_comparison.py": "5a755d6b48925e94846d2c47b1ca20726ed63bdd7421d36485bf5ab278b56cda",
+    "scripts/phd/main_meshpatch_v1/interview_gpu_watch.py": "4295c30559b511c1e4336b7101746ccb6a17047696cf501c0082c64cf60ea588",
+    "scripts/phd/main_meshpatch_v1/interview_gaussians.py": "fe719139576b01446419a1cfff2d79d3df48659fa0e3fb01074d7209da30123c",
+    "scripts/phd/main_meshpatch_v1/interview_gpu.py": "c0102ba2b454984c5211d65a709d3d60e93806bd467dd5ae8286da6f79449a40",
+    "scripts/phd/main_meshpatch_v1/interview_probe.py": "c280c510673f47ab3d0d90128282a94669056d8114470293ce7d5b1bf42c4c67",
+    "scripts/phd/main_meshpatch_v1/interview_common.py": "e57b6d21c4f7fd7e2ebd81b879da5429d1c85c5393408b862f766b1a3e697ebc",
+    "scripts/phd/main_meshpatch_v1/interview_delivery.py": "657bc2b64492898927c0f9323da1ba3d78cdcbbd4b9fd71bfe6cab386bd62501",
+    "scripts/phd/main_meshpatch_v1/interview_validate.py": "1a1040c4bb6e721251f808434523b15b46361b922f780fa679942c3ab643dc27",
+    "scripts/phd/main_meshpatch_v1/interview_virtual.py": "37c4828708f3276cd2d11a815408f78c6bd57c5c0ab91e789cdcc40c9a564217",
+    "scripts/phd/main_meshpatch_v1/run_interview_queue.sh": "985b63e7190dc3c6ae80b9704778f35fec7d9c20b5bc663ea6f6a8fcd9edd69f",
+    "scripts/phd/main_meshpatch_v1/run_interview_gpu.sh": "915d494e174d71aef47eaf11ee578c5ed73c8abada7730e18d5ea7876d58a099"
+  },
+  "scientific_verdict": null
+}

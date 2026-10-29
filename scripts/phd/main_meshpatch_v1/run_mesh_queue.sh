@@ -28,17 +28,28 @@ from pathlib import Path
 c=Path('configs/phd/main_meshpatch_v1')
 x=json.loads((c/'mesh_targets_v1.json').read_text())
 a=json.loads((c/'axes_addendum_v1.json').read_text()) if (c/'axes_addendum_v1.json').exists() else {}
+i=json.loads((c/'interview_addendum_v2.json').read_text()) if (c/'interview_addendum_v2.json').exists() else None
 rs=x['targets']+a.get('extra_targets',[])
 first=a.get('stage1_first_keys',[])
 def order(r):
+    if i:
+        if r['key']==i['current_first_key']:return (-3,r['key'])
+        if r['result'] in ['nojudge_ALS_s0','lt_dynnow_ALS_s0']:return (-2,r['key'])
     if r['key'] in first:return (0,first.index(r['key']))
     if r['result'] in ['nojudge_ALS_s0','lt_dynnow_ALS_s0']:return (1,r['key'])
     return (2,r['key'])
 for r in sorted(rs,key=order):print(r['key'],r['status'])
 PY
 )
+interview_ran=0
 for item in "${keys[@]}"; do
   read -r key state <<< "$item"
+  if [[ -f configs/phd/main_meshpatch_v1/interview_addendum_v2.json ]] && (( ! interview_ran )); then
+    if [[ "$key" != R1rep_b10__ALS__prop_ALS_s1 && "$key" != *__ALS__nojudge_ALS_s0 && "$key" != *__ALS__lt_dynnow_ALS_s0 ]]; then
+      bash scripts/phd/main_meshpatch_v1/run_interview_queue.sh
+      interview_ran=1
+    fi
+  fi
   if [[ ! -f "docs/experiments/phd/main_meshpatch_v1/tables/meshes/$key.json" ]]; then
     args=()
     if [[ "$state" == READY ]]; then args=(--large); fi

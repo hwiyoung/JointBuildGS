@@ -1,0 +1,5756 @@
+{
+  "created_at": "2026-10-29T20:50:14.084175+09:00",
+  "units": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "evaluation": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/evaluation.npz",
+        "bytes": 3510935,
+        "arrays": {
+          "centre": {
+            "shape": [
+              44994,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              44994,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "area": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "in_eval": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "edge": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "roof": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "roof_type": {
+            "shape": [
+              44994
+            ],
+            "dtype": "<U1"
+          },
+          "stratum": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "edge_bin": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "u_prior": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "u_mvs": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "p_mvs": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "p_gt": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "cell": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "tau": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "scoring_allowed": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "z_fixed_gt": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_gt": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_soft": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_now": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "z_fixed_now": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          }
+        }
+      },
+      "values": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__ALS/values.npz",
+        "bytes": 1658933,
+        "arrays": {
+          "centre": {
+            "shape": [
+              44994,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              44994,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "sigma_prior": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "sigma_mvs": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "v_mvs": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_now": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_gt": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_soft": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "fallback": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "missing_als_prior": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "outside_uncert": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "direct_prior": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "region": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_ALS.npz",
+        "bytes": 1549700,
+        "arrays": {
+          "code": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "code_names": {
+            "shape": [
+              7
+            ],
+            "dtype": "<U32"
+          },
+          "centre": {
+            "shape": [
+              44994,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "kind": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "area": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float64"
+          },
+          "label": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "gt_med": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "gt_n": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_prior": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "tau": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "state": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "frame_shift": {
+            "shape": [
+              3
+            ],
+            "dtype": "float64"
+          },
+          "surf_ext": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int64"
+          },
+          "in_eval": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "code_ext": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_values": {
+            "shape": [
+              10
+            ],
+            "dtype": "int64"
+          },
+          "code_ext_names": {
+            "shape": [
+              10
+            ],
+            "dtype": "<U21"
+          },
+          "gt_points": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_gt_at_gt": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "n_mvs_at_gt": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int32"
+          },
+          "v1_kept": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "code_ext_v3": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_v2_prev": {
+            "shape": [
+              44994
+            ],
+            "dtype": "int8"
+          },
+          "premise_value": {
+            "shape": [
+              44994
+            ],
+            "dtype": "float32"
+          },
+          "gt_suspect": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "gt_suspect_evaluated": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "premise_violation": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "obs_within_threshold": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          },
+          "premise_band": {
+            "shape": [
+              44994
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "results": [
+        {
+          "result": "nojudge_ALS_s0",
+          "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model",
+          "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__nojudge_ALS_s0.json",
+            "expected_sha256": "059eeb1a349df8d8350e269fab1fe456763dff38be95cc6180de48b902af50a3"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__nojudge_ALS_s0.npz",
+            "bytes": 216092,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "<U23"
+              },
+              "z": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_ALS_s0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 345395954,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  2303580,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  2303580,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  2303580,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  90956,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  2303580,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  2303580,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  2303580,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  2303580
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_ALS_s0/attempt_1/model",
+          "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_ALS_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__lt_dynnow_ALS_s0.json",
+            "expected_sha256": "951c11ad3dfdb5d7f0f82109ede91b8061152c2ef5272eecc7e89a8f3d7b2bff"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__ALS__lt_dynnow_ALS_s0.npz",
+            "bytes": 219550,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "<U23"
+              },
+              "z": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  44994
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_ALS_s0/attempt_1/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 188121830,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  1240917,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  1240917,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  1240917,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  90956,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  1240917,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  1240917,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  1240917,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  1240917
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  90956
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        }
+      ]
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "evaluation": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/evaluation.npz",
+        "bytes": 6668425,
+        "arrays": {
+          "centre": {
+            "shape": [
+              143652,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              143652,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "area": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "in_eval": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "edge": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "roof": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "roof_type": {
+            "shape": [
+              143652
+            ],
+            "dtype": "<U4"
+          },
+          "stratum": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "edge_bin": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "u_prior": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "u_mvs": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "p_mvs": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "p_gt": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "cell": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "tau": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "scoring_allowed": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "z_fixed_gt": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_gt": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_soft": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_now": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "z_fixed_now": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          }
+        }
+      },
+      "values": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B0_b10__LoD2/values.npz",
+        "bytes": 1490275,
+        "arrays": {
+          "centre": {
+            "shape": [
+              143652,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              143652,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "sigma_prior": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "sigma_mvs": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "v_mvs": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_now": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_gt": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_soft": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "fallback": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "missing_als_prior": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "outside_uncert": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "direct_prior": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "region": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+        "bytes": 2679408,
+        "arrays": {
+          "code": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "code_names": {
+            "shape": [
+              7
+            ],
+            "dtype": "<U32"
+          },
+          "centre": {
+            "shape": [
+              143652,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "kind": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "area": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float64"
+          },
+          "label": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "gt_med": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "gt_n": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_prior": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "tau": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "state": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "frame_shift": {
+            "shape": [
+              3
+            ],
+            "dtype": "float64"
+          },
+          "surf_ext": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int64"
+          },
+          "in_eval": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "code_ext": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_values": {
+            "shape": [
+              10
+            ],
+            "dtype": "int64"
+          },
+          "code_ext_names": {
+            "shape": [
+              10
+            ],
+            "dtype": "<U21"
+          },
+          "gt_points": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_gt_at_gt": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "n_mvs_at_gt": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int32"
+          },
+          "v1_kept": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "code_ext_v3": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_v2_prev": {
+            "shape": [
+              143652
+            ],
+            "dtype": "int8"
+          },
+          "premise_value": {
+            "shape": [
+              143652
+            ],
+            "dtype": "float32"
+          },
+          "gt_suspect": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "gt_suspect_evaluated": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "premise_violation": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "obs_within_threshold": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          },
+          "premise_band": {
+            "shape": [
+              143652
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "results": [
+        {
+          "result": "nojudge_LoD2_s0",
+          "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model",
+          "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__LoD2__nojudge_LoD2_s0.json",
+            "expected_sha256": "b1f82625662b36383418248d882f20b6991f1a25682bc5e4c120dec261010211"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__LoD2__nojudge_LoD2_s0.npz",
+            "bytes": 693680,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "<U25"
+              },
+              "z": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B0_b10/nojudge_LoD2_s0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 382533493,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  2532261,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  2532261,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  2532261,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  158155,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  2532261,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  2532261,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  2532261,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  2532261
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        },
+        {
+          "result": "lt_dynnow_LoD2_s0",
+          "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_LoD2_s0/attempt_0/model",
+          "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_LoD2_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__LoD2__lt_dynnow_LoD2_s0.json",
+            "expected_sha256": "2b25f6ca186e750a1e741ed51923793371e762ee7d615e71fcc4050bac7a20d6"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B0_b10__LoD2__lt_dynnow_LoD2_s0.npz",
+            "bytes": 700199,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "<U25"
+              },
+              "z": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  143652
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B0_b10/lt_dynnow_LoD2_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 195287149,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  1267083,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  1267083,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  1267083,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  158155,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  1267083,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  1267083,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  1267083,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  1267083
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  158155
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "evaluation": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/evaluation.npz",
+        "bytes": 5625756,
+        "arrays": {
+          "centre": {
+            "shape": [
+              76657,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              76657,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "area": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "in_eval": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "edge": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "roof": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "roof_type": {
+            "shape": [
+              76657
+            ],
+            "dtype": "<U1"
+          },
+          "stratum": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "edge_bin": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "u_prior": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "u_mvs": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "p_mvs": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "p_gt": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "cell": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "tau": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "scoring_allowed": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "z_fixed_gt": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_gt": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_soft": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_now": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "z_fixed_now": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          }
+        }
+      },
+      "values": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__ALS/values.npz",
+        "bytes": 2803242,
+        "arrays": {
+          "centre": {
+            "shape": [
+              76657,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              76657,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "sigma_prior": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "sigma_mvs": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "v_mvs": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_now": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_gt": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_soft": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "fallback": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "missing_als_prior": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "outside_uncert": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "direct_prior": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "region": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_ALS.npz",
+        "bytes": 2571609,
+        "arrays": {
+          "code": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "code_names": {
+            "shape": [
+              7
+            ],
+            "dtype": "<U32"
+          },
+          "centre": {
+            "shape": [
+              76657,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "kind": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "area": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float64"
+          },
+          "label": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "gt_med": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "gt_n": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_prior": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "tau": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "state": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "frame_shift": {
+            "shape": [
+              3
+            ],
+            "dtype": "float64"
+          },
+          "surf_ext": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int64"
+          },
+          "in_eval": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "code_ext": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_values": {
+            "shape": [
+              10
+            ],
+            "dtype": "int64"
+          },
+          "code_ext_names": {
+            "shape": [
+              10
+            ],
+            "dtype": "<U21"
+          },
+          "gt_points": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_gt_at_gt": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "n_mvs_at_gt": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int32"
+          },
+          "v1_kept": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "code_ext_v3": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_v2_prev": {
+            "shape": [
+              76657
+            ],
+            "dtype": "int8"
+          },
+          "premise_value": {
+            "shape": [
+              76657
+            ],
+            "dtype": "float32"
+          },
+          "gt_suspect": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "gt_suspect_evaluated": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "premise_violation": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "obs_within_threshold": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          },
+          "premise_band": {
+            "shape": [
+              76657
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "results": [
+        {
+          "result": "nojudge_ALS_s0",
+          "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model",
+          "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__nojudge_ALS_s0.json",
+            "expected_sha256": "b89ce5a08ef2a1145249103f10251abcca138ed5942b3ec1557c7be53ca54703"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__nojudge_ALS_s0.npz",
+            "bytes": 360097,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "<U27"
+              },
+              "z": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 419341591,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  2796061,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  2796061,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  2796061,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  112557,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  2796061,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  2796061,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  2796061,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  2796061
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": [
+            {
+              "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/gpu/virtual/mesh_virtual.ply",
+              "bytes": 475322214
+            }
+          ]
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/attempt_0/model",
+          "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dynnow_ALS_s0.json",
+            "expected_sha256": "3a9980c5c341b54ef1d8dae2a4771982945fa542cc686f2f1a8f6e983e60bfdd"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__ALS__lt_dynnow_ALS_s0.npz",
+            "bytes": 363836,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "<U27"
+              },
+              "z": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  76657
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 212293291,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  1397086,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  1397086,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  1397086,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  112557,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  1397086,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  1397086,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  1397086,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  1397086
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  112557
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": [
+            {
+              "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_ALS_s0/gpu/virtual/mesh_virtual.ply",
+              "bytes": 628782351
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "evaluation": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/evaluation.npz",
+        "bytes": 8805781,
+        "arrays": {
+          "centre": {
+            "shape": [
+              258097,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              258097,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "area": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "in_eval": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "edge": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "roof": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "roof_type": {
+            "shape": [
+              258097
+            ],
+            "dtype": "<U4"
+          },
+          "stratum": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "edge_bin": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "u_prior": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "u_mvs": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "p_mvs": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "p_gt": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "cell": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "tau": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "scoring_allowed": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "z_fixed_gt": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_gt": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_soft": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_now": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "z_fixed_now": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          }
+        }
+      },
+      "values": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/B173nb_b10__LoD2/values.npz",
+        "bytes": 2067289,
+        "arrays": {
+          "centre": {
+            "shape": [
+              258097,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              258097,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "sigma_prior": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "sigma_mvs": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "v_mvs": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_now": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_gt": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_soft": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "fallback": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "missing_als_prior": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "outside_uncert": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "direct_prior": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "region": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_LoD2.npz",
+        "bytes": 3962175,
+        "arrays": {
+          "code": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "code_names": {
+            "shape": [
+              7
+            ],
+            "dtype": "<U32"
+          },
+          "centre": {
+            "shape": [
+              258097,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "kind": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "area": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float64"
+          },
+          "label": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "gt_med": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "gt_n": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_prior": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "tau": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "state": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "frame_shift": {
+            "shape": [
+              3
+            ],
+            "dtype": "float64"
+          },
+          "surf_ext": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int64"
+          },
+          "in_eval": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "code_ext": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_values": {
+            "shape": [
+              10
+            ],
+            "dtype": "int64"
+          },
+          "code_ext_names": {
+            "shape": [
+              10
+            ],
+            "dtype": "<U21"
+          },
+          "gt_points": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int32"
+          },
+          "unseen_label_inferred": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "unseen_top_behind": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "mvs_minus_gt_at_gt": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "n_mvs_at_gt": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int32"
+          },
+          "v1_kept": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "code_ext_v3": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_v2_prev": {
+            "shape": [
+              258097
+            ],
+            "dtype": "int8"
+          },
+          "premise_value": {
+            "shape": [
+              258097
+            ],
+            "dtype": "float32"
+          },
+          "gt_suspect": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "gt_suspect_evaluated": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "premise_violation": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "obs_within_threshold": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          },
+          "premise_band": {
+            "shape": [
+              258097
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "results": [
+        {
+          "result": "nojudge_LoD2_s0",
+          "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model",
+          "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__LoD2__nojudge_LoD2_s0.json",
+            "expected_sha256": "d49a065268acc08db1b80d854542bc1c4a93c355a3d7f8b42e268da407501b84"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__LoD2__nojudge_LoD2_s0.npz",
+            "bytes": 1103678,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "<U29"
+              },
+              "z": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 454796113,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  2983470,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  2983470,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  2983470,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  270067,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  2983470,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  2983470,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  2983470,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  2983470
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": [
+            {
+              "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+              "bytes": 453981181
+            }
+          ]
+        },
+        {
+          "result": "lt_dynnow_LoD2_s0",
+          "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_LoD2_s0/attempt_0/model",
+          "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_LoD2_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__LoD2__lt_dynnow_LoD2_s0.json",
+            "expected_sha256": "d1eff7b8d35a841772a5ffd178f3eea47143fb52140372688a30b17fbd528295"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__LoD2__lt_dynnow_LoD2_s0.npz",
+            "bytes": 1107612,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "<U29"
+              },
+              "z": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  258097
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_LoD2_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 228038505,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  1451324,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  1451324,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  1451324,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  270067,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  1451324,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  1451324,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  1451324,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  1451324
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  270067
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": [
+            {
+              "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/B173nb_b10/lt_dynnow_LoD2_s0/gpu/virtual/mesh_virtual.ply",
+              "bytes": 591867134
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "evaluation": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/evaluation.npz",
+        "bytes": 3746144,
+        "arrays": {
+          "centre": {
+            "shape": [
+              46215,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              46215,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "area": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "in_eval": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "edge": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "roof": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "roof_type": {
+            "shape": [
+              46215
+            ],
+            "dtype": "<U1"
+          },
+          "stratum": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "edge_bin": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "u_prior": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "u_mvs": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "p_mvs": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "p_gt": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "cell": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "tau": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "scoring_allowed": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "z_fixed_gt": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_gt": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_soft": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_now": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "z_fixed_now": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          }
+        }
+      },
+      "values": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__ALS/values.npz",
+        "bytes": 1733822,
+        "arrays": {
+          "centre": {
+            "shape": [
+              46215,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              46215,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "sigma_prior": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "sigma_mvs": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "v_mvs": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_now": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_gt": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_soft": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "fallback": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "missing_als_prior": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "outside_uncert": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "direct_prior": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "region": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_ALS.npz",
+        "bytes": 1563451,
+        "arrays": {
+          "code": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "code_names": {
+            "shape": [
+              7
+            ],
+            "dtype": "<U32"
+          },
+          "centre": {
+            "shape": [
+              46215,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "kind": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "area": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float64"
+          },
+          "label": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "gt_med": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "gt_n": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_prior": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "tau": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "state": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "frame_shift": {
+            "shape": [
+              3
+            ],
+            "dtype": "float64"
+          },
+          "surf_ext": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int64"
+          },
+          "in_eval": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "code_ext": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_values": {
+            "shape": [
+              10
+            ],
+            "dtype": "int64"
+          },
+          "code_ext_names": {
+            "shape": [
+              10
+            ],
+            "dtype": "<U21"
+          },
+          "gt_points": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_gt_at_gt": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "n_mvs_at_gt": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int32"
+          },
+          "v1_kept": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "code_ext_v3": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_v2_prev": {
+            "shape": [
+              46215
+            ],
+            "dtype": "int8"
+          },
+          "premise_value": {
+            "shape": [
+              46215
+            ],
+            "dtype": "float32"
+          },
+          "gt_suspect": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "gt_suspect_evaluated": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "premise_violation": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "obs_within_threshold": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          },
+          "premise_band": {
+            "shape": [
+              46215
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "results": [
+        {
+          "result": "nojudge_ALS_s0",
+          "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model",
+          "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__nojudge_ALS_s0.json",
+            "expected_sha256": "d937b2f1e2354aef34771812baaef1dbab9961298db358fddfe35b96a4bb0812"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__nojudge_ALS_s0.npz",
+            "bytes": 233256,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "<U26"
+              },
+              "z": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 388324468,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  2593666,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  2593666,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  2593666,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  90870,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  2593666,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  2593666,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  2593666,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  2593666
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        },
+        {
+          "result": "lt_dynnow_ALS_s0",
+          "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/model",
+          "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_ALS_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__lt_dynnow_ALS_s0.json",
+            "expected_sha256": "3192660a80e0169ab735cab5912530a2d70f36fc42c7b29997c1d7d7f5f01140"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__ALS__lt_dynnow_ALS_s0.npz",
+            "bytes": 239737,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "<U26"
+              },
+              "z": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  46215
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_ALS_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 169363796,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  1114202,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  1114202,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  1114202,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  90870,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  1114202,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  1114202,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  1114202,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  1114202
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  90870
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        }
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "evaluation": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/evaluation.npz",
+        "bytes": 6432439,
+        "arrays": {
+          "centre": {
+            "shape": [
+              138579,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              138579,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "area": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "in_eval": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "edge": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "roof": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "roof_type": {
+            "shape": [
+              138579
+            ],
+            "dtype": "<U4"
+          },
+          "stratum": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "edge_bin": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "u_prior": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "u_mvs": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "p_mvs": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "p_gt": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "cell": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "tau": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "scoring_allowed": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "z_fixed_gt": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_gt": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_soft": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "z_dyn_now": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "z_fixed_now": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          }
+        }
+      },
+      "values": {
+        "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/direct_stage1_v2/R1rep_b10__LoD2/values.npz",
+        "bytes": 1749043,
+        "arrays": {
+          "centre": {
+            "shape": [
+              138579,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "normal": {
+            "shape": [
+              138579,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "sigma_prior": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "sigma_mvs": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "v_mvs": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_now": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_gt": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "v_prior_soft": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "fallback": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "missing_als_prior": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "outside_uncert": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "has_mvs": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "direct_prior": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "region": {
+        "path": "/ph/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+        "bytes": 2849843,
+        "arrays": {
+          "code": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "code_names": {
+            "shape": [
+              7
+            ],
+            "dtype": "<U32"
+          },
+          "centre": {
+            "shape": [
+              138579,
+              3
+            ],
+            "dtype": "float64"
+          },
+          "kind": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "area": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float64"
+          },
+          "label": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "gt_med": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "gt_n": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_prior": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "tau": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "state": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "frame_shift": {
+            "shape": [
+              3
+            ],
+            "dtype": "float64"
+          },
+          "surf_ext": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int64"
+          },
+          "in_eval": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "code_ext": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_values": {
+            "shape": [
+              10
+            ],
+            "dtype": "int64"
+          },
+          "code_ext_names": {
+            "shape": [
+              10
+            ],
+            "dtype": "<U21"
+          },
+          "gt_points": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int32"
+          },
+          "mvs_minus_gt_at_gt": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "n_mvs_at_gt": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int32"
+          },
+          "v1_kept": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "code_ext_v3": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "code_ext_v2_prev": {
+            "shape": [
+              138579
+            ],
+            "dtype": "int8"
+          },
+          "premise_value": {
+            "shape": [
+              138579
+            ],
+            "dtype": "float32"
+          },
+          "gt_suspect": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "gt_suspect_evaluated": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "premise_violation": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "obs_within_threshold": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          },
+          "premise_band": {
+            "shape": [
+              138579
+            ],
+            "dtype": "bool"
+          }
+        }
+      },
+      "results": [
+        {
+          "result": "nojudge_LoD2_s0",
+          "model": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model",
+          "mesh": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__LoD2__nojudge_LoD2_s0.json",
+            "expected_sha256": "bfb1e405fcdd974f5b61a5d819f00cff0a5f1df4b5c51b86103b9e6433706550"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__LoD2__nojudge_LoD2_s0.npz",
+            "bytes": 661967,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "<U28"
+              },
+              "z": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_LoD2_s0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 541121363,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  3607818,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  3607818,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  3607818,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  146021,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  3607818,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  3607818,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  3607818,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  3607818
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        },
+        {
+          "result": "lt_dynnow_LoD2_s0",
+          "model": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_LoD2_s0/attempt_0/model",
+          "mesh": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_LoD2_s0/post/mesh_tsdf.ply",
+          "mesh_exists": true,
+          "source_receipt": {
+            "patch_z_receipt": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__LoD2__lt_dynnow_LoD2_s0.json",
+            "expected_sha256": "46258bd30caba9b31f799f91d95843dc6271c2a8dcdc17f1bda16644dbdf647f"
+          },
+          "patch_z": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/R1rep_b10__LoD2__lt_dynnow_LoD2_s0.npz",
+            "bytes": 670513,
+            "arrays": {
+              "patch_id": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "<U28"
+              },
+              "z": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "float64"
+              },
+              "no_surface": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "bool"
+              },
+              "side": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "int8"
+              },
+              "in_eval": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "bool"
+              },
+              "scoring_allowed": {
+                "shape": [
+                  138579
+                ],
+                "dtype": "bool"
+              }
+            }
+          },
+          "dump": {
+            "path": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/runs/R1rep_b10/lt_dynnow_LoD2_s0/attempt_0/model/dump/iteration_30000/gaussians.npz",
+            "bytes": 177536127,
+            "arrays": {
+              "iteration": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "xyz": {
+                "shape": [
+                  1151161,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "origin": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int8"
+              },
+              "init_id": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int32"
+              },
+              "displacement": {
+                "shape": [
+                  1151161,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "E": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "float32"
+              },
+              "E_cnt": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "float32"
+              },
+              "opacity": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "float32"
+              },
+              "locked": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "bool"
+              },
+              "scale": {
+                "shape": [
+                  1151161,
+                  2
+                ],
+                "dtype": "float32"
+              },
+              "init_xyz": {
+                "shape": [
+                  146021,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_origin": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int8"
+              },
+              "init_last_seen": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int32"
+              },
+              "log_interval": {
+                "shape": [],
+                "dtype": "int64"
+              },
+              "revision": {
+                "shape": [],
+                "dtype": "<U3"
+              },
+              "init_surface": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int64"
+              },
+              "init_surface_ext": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int64"
+              },
+              "location": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int64"
+              },
+              "judgment": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int64"
+              },
+              "located": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "bool"
+              },
+              "normal": {
+                "shape": [
+                  1151161,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "init_face_normal": {
+                "shape": [
+                  1151161,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_state": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int64"
+              },
+              "init_position": {
+                "shape": [
+                  1151161,
+                  3
+                ],
+                "dtype": "float32"
+              },
+              "unit_judgment": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int64"
+              },
+              "no_unit": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "bool"
+              },
+              "u": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "float32"
+              },
+              "drift_3d": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "float32"
+              },
+              "u_bound": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "float32"
+              },
+              "init_kind_row": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int64"
+              },
+              "init_category": {
+                "shape": [
+                  1151161
+                ],
+                "dtype": "int64"
+              },
+              "init_category_codes": {
+                "shape": [
+                  5
+                ],
+                "dtype": "<U20"
+              },
+              "init_category_of_initial": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int64"
+              },
+              "init_removed_at": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "int32"
+              },
+              "init_removed_opacity": {
+                "shape": [
+                  146021
+                ],
+                "dtype": "float32"
+              }
+            }
+          },
+          "virtual": []
+        }
+      ]
+    }
+  ],
+  "scientific_verdict": null
+}

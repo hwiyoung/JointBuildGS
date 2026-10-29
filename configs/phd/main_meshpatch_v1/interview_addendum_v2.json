@@ -1,0 +1,22 @@
+{
+  "task_id": "PHD-MAIN-MESHPATCH-v1",
+  "authority": "User message: 2026-10-29 20:40 KST, 메시 정리와 패치 표 발주 덧붙임 2",
+  "deadline_kst": "2026-10-30T09:00:00+09:00",
+  "no_training": true,
+  "scientific_verdict": null,
+  "current_first_key": "R1rep_b10__ALS__prop_ALS_s1",
+  "order": ["current_first_key", "priority_six_axes", "qualitative_figures", "comparison_scores", "counts", "remaining_addendum1"],
+  "resources": {"gpu_training_first": true, "host_available_gib": 56, "stable_seconds": 60, "container_gib": 40, "cpus": 8, "proactive_stop_gib": 38, "tsdf_lock": "/ph/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/checks/tsdf.lock"},
+  "comparison_targets": [
+    "R1rep_b10__ALS__geogs_ALS_fix1", "R1rep_b10__ALS__imgonly_2dgs_s0", "R1rep_b10__ALS__mvsfuse_ALS",
+    "R1rep_b10__LoD2__trust_LoD2_fix1", "R1rep_b10__LoD2__imgonly_2dgs_s0", "R1rep_b10__LoD2__mvsfuse_LoD2",
+    "B173nb_b10__ALS__cdgsnofit_ALS_s0", "B173nb_b10__LoD2__cdgsnofit_LoD2_s0",
+    "R1rep_b10__ALS__cdgsnofit_ALS_s0", "R1rep_b10__LoD2__cdgsnofit_LoD2_s0",
+    "B0_b10__ALS__cdgsnofit_ALS_s0", "B0_b10__LoD2__cdgsnofit_LoD2_s0"
+  ],
+  "curve": {"step_tau": 0.5, "overflow_above_tau": 8, "correction_cell": 1, "preservation_cell": 2, "ratio1": "abs(region_v3.gt_med)/region_v3.tau", "ratio2": "abs(region_v3.mvs_minus_gt_at_gt)/region_v3.tau", "missing_bin": "확인 불가; keep its area in reconciliation", "bin_override": "The user requests 0.5 tau intervals, superseding the older unequal AXES71 bin edges; the measured displacement and region definitions are unchanged."},
+  "figures": {"component_rule": "unchanged FLOATDIAG recount.components; 0.25 m XY raster, scipy default cross closing iterations=2, connectivity=1", "inheritance_selection_result": "lt_dynnow_<prior>_s0", "inheritance_selection_note": "Select once on the requested categorical-mixture arm, then show both arms on that identical component.", "crop_margin_m": 3, "distance_range_m": [-0.5, 0.5], "distance_definition": "Reference points projected along the nearest eligible patch outward normal onto the whole scored mesh, using the original first-hit ray interval; positive means result is outside GT, absent hit is grey.", "camera_source": "scripts/phd/main_floatdiag_v1/geometry.py camera and render", "human_structure_review": "모름 until the human reviewer supplies a one-line assessment; AI does not impersonate a human reviewer"},
+  "four_way": {"analytic": "evaluation.z_dyn_now", "normal": "analytic within tau and mesh within tau", "application_failure": "analytic within tau and mesh outside tau or missing", "stage2_reversal": "analytic outside tau and mesh within tau", "stage1_cause": "analytic outside tau and mesh outside tau or missing", "nonfinite_analytic": "unavailable, separately counted"},
+  "gaussians": {"iteration": 30000, "cells": [2, 4], "column_side_m": 0.25, "normal_half_width": "patch tau", "opaque_min": 0.5, "prior_origin": 1, "visibility": "reuse only existing camera/depth visibility evidence; unavailable if absent, no new visibility or region computation"},
+  "virtual": {"reuse_existing": true, "new_render_only_after_farpull_training": true, "thresholds_m": [0.25, 0.5], "baseline_site": "B173nb_b10", "baseline_prior": "LoD2", "baseline_face": 53, "baseline_report_pct": 92.3, "baseline_note": "Inspect seed-wise original values before comparison; the cited baseline table reports a two-seed mean."}
+}
