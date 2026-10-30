@@ -1,0 +1,59 @@
+{
+  "locked_at": "2026-10-31T01:55:31.539632+09:00",
+  "before_first_calculation": false,
+  "config_sha256": "01395d6dccfea07f6eca9fd81d17acdc622e1f894a857ada217013ac8fe9bc50",
+  "sources": {
+    "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/building_split.json": "c8b0faf28820d8fb0cc6eda1ba9ac08da52830f7a506c66eefa66ad83d66f7f8",
+    "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/scope_split.json": "e09dff051ce16186a737ee4281a93c809b9b800cd45d2429c61d1afd39c56385",
+    "/repo/configs/phd/main_widen0_v2/widen0_v2.json": "1597f0cf2f885277fadf7cf9581d0004b81240b89b43c323e58e67b26e17651f",
+    "/repo/configs/phd/main_photocheck_v1/photocheck_v1.json": "e19814d872fd5b5626fc182468758eb0cf37cdefa378e311f338d0c6be9b5e21",
+    "/repo/configs/phd/main_wallphoto_v1/wallphoto_v1.json": "e624b2ea163c7bf1eb173be5b0ed35a78b912dcfc6a8564c06706e45a896e00d",
+    "/repo/scripts/phd/main_widen0_v2/u_core.py": "734fad934b5dc3b6134649cf2320a1fdb34eccb1df56de4b98269598b64130b9",
+    "/repo/scripts/phd/main_widen0_v2/scope_split.py": "e304ceaef0b7e81de8a997b847a504c4205cb31043dc0a35ea4a9f28c1ecaeb5"
+  },
+  "commit": "13b8ab241e9f75a948624d6db17255ef5bbe0e9d",
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "scientific_verdict": null,
+  "before_first_cylinder_calculation": false,
+  "previous_lock": "judgenum_v1.r0.lock.json",
+  "implementation": {
+    "cylinder_runtime.py": "d5c391dee344ffa8c8a0d553aafeb9de3caf8605ed0a3417d32ac8eded51e412",
+    "cylinders.cpp": "ec60b7e2154ca81a30f707768a21603158a52d7014774a1223d270ba668a1dbf",
+    "inspect_inputs.py": "97c1f5d691dd0c7c05c08388d568781b06942f283812fefa78f2e69184dba576",
+    "lock_config.py": "9827acea129c715a4dc60e54ec845abc8592cad55bcc3a662c7f8690f068d3c7",
+    "lock_sections.py": "a2aacbdb07b626d5d930a3b3f9f750c2027be2fe1c5730e111f1a2cd47cea643",
+    "prepare_inputs.py": "be1a082a5309de0db98f46ec5ba57d8f243ccd0da68f031af3756cfcd623e901",
+    "probe_calculation.py": "4d4b94467263ab714cd68ac5184256771c50353f27f4f57281827a1b84df170f",
+    "run_cpu.sh": "255dd1961448b2a823e77e5838f795745be5a5fbb00ce095edd458b34e9c74d1",
+    "sample_gate.py": "f69460e28b453e2ff4f7207ea1c458aa0dea7a3e11646d9bb069e66936f187ca",
+    "selected_npz.py": "2d030958037f41dc364f36dc0938d594f2a43cce15eeb6b66db57204cb9e7354"
+  },
+  "before_first_calibration": true,
+  "history": [
+    {
+      "file": "judgenum_v1.r0.json",
+      "sha256": "a8c89a36cbd8fa02c141d9f04433fe4aa1879ff15570e7195bc0f3c4c3a30546",
+      "sealed": true
+    },
+    {
+      "file": "judgenum_v1.r0.lock.json",
+      "sha256": "bc8758b13d82de3ddac597dcf6148cd019cbdbce31c39b017412b1366337cba6",
+      "sealed": true
+    },
+    {
+      "file": "judgenum_v1.r1.json",
+      "sha256": "ce643e374296b6eb0948c0e463748f17a1d7b8afdc3191d81bf63beef84d4f9e",
+      "sealed": true
+    },
+    {
+      "file": "judgenum_v1.r1.lock.json",
+      "sha256": "b6083c5476fe2e4b63af779a7043095d4167eaa728ce04a4377d9762ecc555bb",
+      "sealed": true
+    },
+    {
+      "file": "scope_geometry.r1.json",
+      "sha256": "19a084250e135619da1a98a9bba5599b97c3c979195f9709442a112f373a373d",
+      "sealed": true
+    }
+  ]
+}

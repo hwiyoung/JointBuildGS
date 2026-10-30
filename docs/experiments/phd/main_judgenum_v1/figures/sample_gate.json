@@ -1,0 +1,55 @@
+{
+  "rows": [
+    {
+      "prior": "LoD2",
+      "kind": 1,
+      "building_count": 125,
+      "patch_count": 644427,
+      "area_m2": 40276.6875,
+      "cell1_area_m2": 10248.125,
+      "cell1_buildings_gt1m2": 79,
+      "cell1_top3_fraction": 0.3405135085686406,
+      "cell1_top3_buildings": [
+        "DEBY_LOD2_4906965",
+        "DEBY_LOD2_60042",
+        "DEBY_LOD2_4906966"
+      ],
+      "cell2_area_m2": 2673.375,
+      "cell2_buildings_gt1m2": 81,
+      "cell2_top3_fraction": 0.34366671342404265,
+      "cell2_top3_buildings": [
+        "DEBY_LOD2_4907519",
+        "DEBY_LOD2_8573848",
+        "DEBY_LOD2_4906993"
+      ]
+    },
+    {
+      "prior": "ALS",
+      "kind": 1,
+      "building_count": 122,
+      "patch_count": 501913,
+      "area_m2": 33878.18737715231,
+      "cell1_area_m2": 558.6954521867034,
+      "cell1_buildings_gt1m2": 55,
+      "cell1_top3_fraction": 0.32736075425747885,
+      "cell1_top3_buildings": [
+        "DEBY_LOD2_4906967",
+        "DEBY_LOD2_4907207",
+        "DEBY_LOD2_60042"
+      ],
+      "cell2_area_m2": 4843.27772279316,
+      "cell2_buildings_gt1m2": 92,
+      "cell2_top3_fraction": 0.3154586278110142,
+      "cell2_top3_buildings": [
+        "DEBY_LOD2_4907519",
+        "DEBY_LOD2_8573848",
+        "DEBY_LOD2_60042"
+      ]
+    }
+  ],
+  "source": "tables/sample_counts.json",
+  "photos": [],
+  "selection": "kind == 1; inherited cell area strictly greater than 1 m2 per building",
+  "source_sha256": "1e82b23db3b497bdea78d1e3f7a9423b963f0ff8b01ae1e02ecbfbc112a3bdb2",
+  "scientific_verdict": null
+}
