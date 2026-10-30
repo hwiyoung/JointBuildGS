@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+import csv
 from pathlib import Path
 import numpy as np
 from result_io import save
@@ -24,6 +25,12 @@ def validate(read):
     curves = js(DOCREL + 'results/opacity_curves.json')['rows']
     rep_rows = js(DOCREL + 'results/representative_outcomes.json')['rows']
     reps = {r['id']: r for r in js(DOCREL + 'representatives_v1.json')['rows']}
+    for name in ['outcomes', 'criteria', 'photo_error', 'opacity_curves', 'representative_outcomes']:
+        records = js(DOCREL + 'results/' + name + '.json')['rows']
+        csv_rows = list(csv.DictReader(io.StringIO(read(DOCREL + 'results/' + name + '.csv').decode())))
+        assert len(csv_rows) == len(records), name
+        for actual, expected in zip(csv_rows, records):
+            assert actual == {k: '' if v is None else str(v) for k, v in expected.items()}, name
     checked, point_checks, logs_checked = 0, 0, 0
     for arm in status['completed_arms']:
         root = 'payload/runs/' + arm + '/'
@@ -33,6 +40,8 @@ def validate(read):
         assert not receipt['truth_used_in_loss'] and not receipt['depth_loss_used']
         d = nz('payload/places/' + unit + '.npz'); o = nz('payload/occlusion/' + unit + '/points.npz')
         initial = nz(root + 'candidate_0.npz'); final = nz(root + 'candidate_3000.npz')
+        assert int(initial['iteration']) == 0 and int(final['iteration']) == 3000
+        assert int(nz(root + 'candidate_500.npz')['iteration']) == 500
         assert hashlib.sha256(read(root + 'candidate_3000.npz')).hexdigest() == receipt['final_candidate_sha256']
         a = final['opacity'].reshape(-1, 2, 4); a0 = initial['opacity'].reshape(-1, 2, 4)
         dc0 = initial['color_dc'].reshape(-1, 2, 4, 1, 3)
@@ -97,12 +106,18 @@ def validate(read):
                     if ids.any(): assert abs(float(differences[ids].mean()) - row['mean_right_minus_wrong']) < 1e-7
                 logs_checked += 1
         photo = next(r for r in photos if r['arm'] == arm)
+        mask_index = js('payload/render_masks/' + unit + '/index.json')
         for step, suffix in [(0, 'start'), (3000, 'end')]:
             error = js(root + f'photo_error_{step}.json')
+            assert {x['view'] for x in error['views']} == set(cfg['units'][unit]['camera_sequence'])
             count = sum(r['candidate_pixels'] for r in error['views'])
             numerator = sum(r['candidate_pixels'] * r['candidate_l1'] for r in error['views'] if r['candidate_pixels'])
             assert count == photo['candidate_pixel_observations']
             assert abs(numerator / count - photo['candidate_l1_' + suffix]) < 1e-10
+            square = sum(r['candidate_pixels'] * r['candidate_mse'] for r in error['views'] if r['candidate_pixels'])
+            assert abs(square / count - photo['candidate_mse_' + suffix]) < 1e-10
+            psnr = [r['full_psnr_db'] for r in error['views'] if r['view'] in mask_index['psnr_monitor_views']]
+            assert len(psnr) == 5 and abs(sum(psnr) / 5 - photo['first_five_psnr_' + suffix]) < 1e-10
     criteria = js(DOCREL + 'results/criteria.json')['rows']
     for r in criteria:
         linked = {x['start']: x for x in rows if x['unit'] == r['unit'] and x['sh_degree'] == r['sh_degree']

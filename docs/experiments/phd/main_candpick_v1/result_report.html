@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>후보 고르기 시험 결과 — PHD-MAIN-CANDPICK-v1</title>
+<style>
+body{margin:0;background:#f3f4f5;color:#17212b;font:16px/1.7 system-ui,sans-serif}
+main{max-width:1200px;margin:auto;padding:36px;background:white}
+h1{font-size:30px;line-height:1.35}h2{margin-top:60px;padding-top:14px;border-top:2px solid #ccd4dc}
+h3{margin-top:32px}a{color:#175c91}img{display:block;max-width:100%;height:auto;margin:24px auto}
+table{display:block;overflow-x:auto;border-collapse:collapse;width:max-content;max-width:100%;font-size:14px}
+th,td{padding:8px 12px;border:1px solid #dce1e5;white-space:nowrap}th{background:#eef2f5}
+code{font-size:13px;overflow-wrap:anywhere}nav{font-size:14px;color:#59636d}
+@media(max-width:700px){main{padding:18px}h1{font-size:24px}}
+@media print{body,main{background:white}main{padding:0;max-width:none}h2,h3{break-after:avoid}img,table{break-inside:avoid}}
+</style><main><nav>로컬 결과 보고서 · <a href="result_report.md">Markdown 원문</a> · <a href="results/outcomes.csv">결과 CSV</a> · <a href="results/criteria.csv">기준 CSV</a></nav>
+<h1 id="_1">두 후보를 함께 두면 사진이 맞는 쪽을 남기는가</h1>
+<p><strong>학습 24/24판 완료.</strong> 묶음 가·SH3의 앞뒤 전체에서 같은 출발의 맞게 남음 ≥70%는 채점된 4경우 중 1경우, 틀린 출발의 하락 ≤10%p는 비교 가능한 4경우 중 4경우가 충족했다.</p>
+<p>같은 범위에서 둘 다 남음+둘 다 사라짐 ≤20%는 채점된 SH3 12판 중 0판이 충족했다. 앞뒤를 나눈 결과는 아래에서 별도로 대조한다.</p>
+<p>앞뒤 전체·앞·뒤 각각에서 세 기준을 모두 충족한 경우는 SH3 비교가 끝난 4경우 중 <strong>0경우</strong>다. 전체 평균의 한 기준 통과와 모든 조건의 통과를 구분한다.</p>
+<p>보조 비교인 SH0의 같은 출발에서는 앞뒤 전체의 맞게 남음 ≥70%를 채점된 4경우 중 0경우가 충족했다. SH0에서도 방향과 무관한 색 값은 학습하며, 바탕은 같은 SH3 장면이다.</p>
+<p>이는 발주에서 미리 정한 수치 기준과의 대조다. 방법 채택·기각과 연구적 판정은 사람이 한다. <code>scientific_verdict: null</code>.</p>
+<p>자료 기준: 2026-10-31T02:15:11.799243+09:00. 설정 SHA-256: <code>34ef024389b58d8aa943ccaac585b15b56f3ddeb7f1d7d2be1eaf945adc10601</code>.</p>
+<h2 id="_2">핵심 비교: 사진 정보가 있는 자리</h2>
+<p>모든 비율의 분모는 해당 경우·묶음 가·앞뒤 범위에 속하는 원본 지붕 패치 넓이의 합이다. 표의 출발은 맞는 후보/틀린 후보의 초기 불투명도를 뜻한다(맞음 0.9/0.1, 틀림 0.1/0.9, 같음 0.5/0.5).</p>
+<h3 id="sh3">후보 색 SH3</h3>
+<table>
+<thead>
+<tr>
+<th>경우</th>
+<th style="text-align: right;">같은 출발: 맞게 남음</th>
+<th style="text-align: right;">맞는 출발: 맞게 남음</th>
+<th style="text-align: right;">틀린 출발: 맞게 남음</th>
+<th style="text-align: right;">틀림−맞음</th>
+<th style="text-align: right;">같은 출발: 둘 다 남음+사라짐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B173_ALS</td>
+<td style="text-align: right;">53.58%</td>
+<td style="text-align: right;">55.69%</td>
+<td style="text-align: right;">52.05%</td>
+<td style="text-align: right;">-3.65%p</td>
+<td style="text-align: right;">43.90%</td>
+</tr>
+<tr>
+<td>R1_LoD2</td>
+<td style="text-align: right;">19.03%</td>
+<td style="text-align: right;">23.72%</td>
+<td style="text-align: right;">17.94%</td>
+<td style="text-align: right;">-5.78%p</td>
+<td style="text-align: right;">59.92%</td>
+</tr>
+<tr>
+<td>B173_LoD2</td>
+<td style="text-align: right;">72.75%</td>
+<td style="text-align: right;">74.71%</td>
+<td style="text-align: right;">70.97%</td>
+<td style="text-align: right;">-3.74%p</td>
+<td style="text-align: right;">24.68%</td>
+</tr>
+<tr>
+<td>R1_ALS</td>
+<td style="text-align: right;">13.85%</td>
+<td style="text-align: right;">18.67%</td>
+<td style="text-align: right;">11.13%</td>
+<td style="text-align: right;">-7.54%p</td>
+<td style="text-align: right;">61.41%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sh0">후보 색 SH0</h3>
+<table>
+<thead>
+<tr>
+<th>경우</th>
+<th style="text-align: right;">같은 출발: 맞게 남음</th>
+<th style="text-align: right;">맞는 출발: 맞게 남음</th>
+<th style="text-align: right;">틀린 출발: 맞게 남음</th>
+<th style="text-align: right;">틀림−맞음</th>
+<th style="text-align: right;">같은 출발: 둘 다 남음+사라짐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B173_ALS</td>
+<td style="text-align: right;">50.20%</td>
+<td style="text-align: right;">51.55%</td>
+<td style="text-align: right;">48.31%</td>
+<td style="text-align: right;">-3.24%p</td>
+<td style="text-align: right;">47.59%</td>
+</tr>
+<tr>
+<td>R1_LoD2</td>
+<td style="text-align: right;">17.52%</td>
+<td style="text-align: right;">22.59%</td>
+<td style="text-align: right;">14.79%</td>
+<td style="text-align: right;">-7.80%p</td>
+<td style="text-align: right;">61.47%</td>
+</tr>
+<tr>
+<td>B173_LoD2</td>
+<td style="text-align: right;">67.77%</td>
+<td style="text-align: right;">71.77%</td>
+<td style="text-align: right;">64.77%</td>
+<td style="text-align: right;">-7.00%p</td>
+<td style="text-align: right;">29.62%</td>
+</tr>
+<tr>
+<td>R1_ALS</td>
+<td style="text-align: right;">13.78%</td>
+<td style="text-align: right;">17.77%</td>
+<td style="text-align: right;">9.25%</td>
+<td style="text-align: right;">-8.52%p</td>
+<td style="text-align: right;">60.62%</td>
+</tr>
+</tbody>
+</table>
+<p>SH0에서도 방향과 무관한 DC 색은 학습한다. 바탕 장면은 두 색 조건 모두 원래 SH3를 유지한다. 기준 3(둘 다 남음+둘 다 사라짐 ≤20%)은 같은·맞는·틀린 출발 각각 대조하며, 모든 값은 <a href="results/criteria.csv">기준 원표</a>에 있다. ‘둘 다 사라짐’은 후보별 평균 불투명도가 모두 0.5 미만이라는 분류다. 가우시안이 겹쳐 그려지므로 렌더 기여가 완전히 0이라는 뜻은 아니다.</p>
+<h3 id="_3">맞는 후보가 앞인지 뒤인지</h3>
+<table>
+<thead>
+<tr>
+<th>경우</th>
+<th>후보 색</th>
+<th>맞는 후보 위치</th>
+<th style="text-align: right;">같은 출발: 맞게 남음</th>
+<th style="text-align: right;">틀림−맞음</th>
+<th>기준 1</th>
+<th>기준 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B173_ALS</td>
+<td>SH3</td>
+<td>앞</td>
+<td style="text-align: right;">5.25%</td>
+<td style="text-align: right;">-1.42%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>B173_ALS</td>
+<td>SH3</td>
+<td>뒤</td>
+<td style="text-align: right;">56.50%</td>
+<td style="text-align: right;">-3.78%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>B173_ALS</td>
+<td>SH0</td>
+<td>앞</td>
+<td style="text-align: right;">4.61%</td>
+<td style="text-align: right;">-1.76%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>B173_ALS</td>
+<td>SH0</td>
+<td>뒤</td>
+<td style="text-align: right;">52.96%</td>
+<td style="text-align: right;">-3.33%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>R1_LoD2</td>
+<td>SH3</td>
+<td>앞</td>
+<td style="text-align: right;">12.94%</td>
+<td style="text-align: right;">-6.17%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>R1_LoD2</td>
+<td>SH3</td>
+<td>뒤</td>
+<td style="text-align: right;">48.48%</td>
+<td style="text-align: right;">-3.88%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>R1_LoD2</td>
+<td>SH0</td>
+<td>앞</td>
+<td style="text-align: right;">12.85%</td>
+<td style="text-align: right;">-8.28%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>R1_LoD2</td>
+<td>SH0</td>
+<td>뒤</td>
+<td style="text-align: right;">40.13%</td>
+<td style="text-align: right;">-5.48%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>B173_LoD2</td>
+<td>SH3</td>
+<td>앞</td>
+<td style="text-align: right;">21.38%</td>
+<td style="text-align: right;">+2.44%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>B173_LoD2</td>
+<td>SH3</td>
+<td>뒤</td>
+<td style="text-align: right;">75.17%</td>
+<td style="text-align: right;">-4.03%p</td>
+<td>충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>B173_LoD2</td>
+<td>SH0</td>
+<td>앞</td>
+<td style="text-align: right;">20.84%</td>
+<td style="text-align: right;">-3.25%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>B173_LoD2</td>
+<td>SH0</td>
+<td>뒤</td>
+<td style="text-align: right;">69.98%</td>
+<td style="text-align: right;">-7.18%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>R1_ALS</td>
+<td>SH3</td>
+<td>앞</td>
+<td style="text-align: right;">0.00%</td>
+<td style="text-align: right;">+0.00%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>R1_ALS</td>
+<td>SH3</td>
+<td>뒤</td>
+<td style="text-align: right;">25.05%</td>
+<td style="text-align: right;">-13.64%p</td>
+<td>미충족</td>
+<td>미충족</td>
+</tr>
+<tr>
+<td>R1_ALS</td>
+<td>SH0</td>
+<td>앞</td>
+<td style="text-align: right;">0.00%</td>
+<td style="text-align: right;">+0.00%p</td>
+<td>미충족</td>
+<td>충족</td>
+</tr>
+<tr>
+<td>R1_ALS</td>
+<td>SH0</td>
+<td>뒤</td>
+<td style="text-align: right;">24.91%</td>
+<td style="text-align: right;">-15.41%p</td>
+<td>미충족</td>
+<td>미충족</td>
+</tr>
+</tbody>
+</table>
+<h3 id="30">가림 30% 초과 점만 본 비교</h3>
+<table>
+<thead>
+<tr>
+<th>경우</th>
+<th style="text-align: right;">묶음 가의 점 / 넓이</th>
+<th style="text-align: right;">같은 출발 SH3</th>
+<th style="text-align: right;">맞는 출발 SH3</th>
+<th style="text-align: right;">틀린 출발 SH3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B173_ALS</td>
+<td style="text-align: right;">2,205 / 525.74 m²</td>
+<td style="text-align: right;">47.57%</td>
+<td style="text-align: right;">50.39%</td>
+<td style="text-align: right;">46.28%</td>
+</tr>
+<tr>
+<td>R1_LoD2</td>
+<td style="text-align: right;">1,853 / 430.88 m²</td>
+<td style="text-align: right;">18.81%</td>
+<td style="text-align: right;">23.53%</td>
+<td style="text-align: right;">17.73%</td>
+</tr>
+<tr>
+<td>B173_LoD2</td>
+<td style="text-align: right;">3,015 / 711.50 m²</td>
+<td style="text-align: right;">71.53%</td>
+<td style="text-align: right;">73.53%</td>
+<td style="text-align: right;">70.00%</td>
+</tr>
+<tr>
+<td>R1_ALS</td>
+<td style="text-align: right;">143 / 23.42 m²</td>
+<td style="text-align: right;">13.85%</td>
+<td style="text-align: right;">18.67%</td>
+<td style="text-align: right;">11.13%</td>
+</tr>
+</tbody>
+</table>
+<p>가림은 두 후보 면을 보는 모든 학습 사진의 화소 관측을 합친 비율이다. 바탕 투과율 &lt;0.5인 관측이 30%를 넘는 점을 표시했다. 이 점들을 학습에서 빼지 않았다. 후보 앞뒤 각각의 분자·분모도 보존했다.</p>
+<h2 id="_4">전체 정량 결과와 사진 오차</h2>
+<p><a href="results/outcomes.csv">결과 표 1·3</a>은 네 경우 × 가/나/다 × 앞/뒤/전체 × 6판을 모두 담는다. 네 결과의 넓이 비율과 건물별 넓이 비율의 중앙값, 건물 수를 함께 제공한다. 한 건물이 여러 층에 걸리면 각 층에서 따로 계산하므로 건물 수를 단순 합산하지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th>판</th>
+<th style="text-align: right;">고정 후보 화소 L1: 시작</th>
+<th style="text-align: right;">끝</th>
+<th style="text-align: right;">변화</th>
+<th style="text-align: right;">앞 5장 PSNR: 시작→끝 (dB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cp_equal_sh3_B173_ALS</td>
+<td style="text-align: right;">0.10471</td>
+<td style="text-align: right;">0.04200</td>
+<td style="text-align: right;">-0.06271</td>
+<td style="text-align: right;">22.943 → 23.075</td>
+</tr>
+<tr>
+<td>cp_wrong_sh3_B173_ALS</td>
+<td style="text-align: right;">0.11771</td>
+<td style="text-align: right;">0.04193</td>
+<td style="text-align: right;">-0.07578</td>
+<td style="text-align: right;">22.892 → 23.075</td>
+</tr>
+<tr>
+<td>cp_right_sh3_B173_ALS</td>
+<td style="text-align: right;">0.08703</td>
+<td style="text-align: right;">0.04216</td>
+<td style="text-align: right;">-0.04487</td>
+<td style="text-align: right;">22.975 → 23.074</td>
+</tr>
+<tr>
+<td>cp_wrong_sh0_B173_ALS</td>
+<td style="text-align: right;">0.11771</td>
+<td style="text-align: right;">0.04446</td>
+<td style="text-align: right;">-0.07324</td>
+<td style="text-align: right;">22.892 → 23.068</td>
+</tr>
+<tr>
+<td>cp_equal_sh0_B173_ALS</td>
+<td style="text-align: right;">0.10471</td>
+<td style="text-align: right;">0.04451</td>
+<td style="text-align: right;">-0.06020</td>
+<td style="text-align: right;">22.943 → 23.069</td>
+</tr>
+<tr>
+<td>cp_right_sh0_B173_ALS</td>
+<td style="text-align: right;">0.08703</td>
+<td style="text-align: right;">0.04466</td>
+<td style="text-align: right;">-0.04237</td>
+<td style="text-align: right;">22.975 → 23.068</td>
+</tr>
+<tr>
+<td>cp_equal_sh3_R1_LoD2</td>
+<td style="text-align: right;">0.09307</td>
+<td style="text-align: right;">0.05944</td>
+<td style="text-align: right;">-0.03363</td>
+<td style="text-align: right;">24.655 → 24.655</td>
+</tr>
+<tr>
+<td>cp_wrong_sh3_R1_LoD2</td>
+<td style="text-align: right;">0.09618</td>
+<td style="text-align: right;">0.05930</td>
+<td style="text-align: right;">-0.03688</td>
+<td style="text-align: right;">24.655 → 24.655</td>
+</tr>
+<tr>
+<td>cp_right_sh3_R1_LoD2</td>
+<td style="text-align: right;">0.08918</td>
+<td style="text-align: right;">0.05946</td>
+<td style="text-align: right;">-0.02972</td>
+<td style="text-align: right;">24.655 → 24.655</td>
+</tr>
+<tr>
+<td>cp_wrong_sh0_R1_LoD2</td>
+<td style="text-align: right;">0.09618</td>
+<td style="text-align: right;">0.06279</td>
+<td style="text-align: right;">-0.03340</td>
+<td style="text-align: right;">24.655 → 24.655</td>
+</tr>
+<tr>
+<td>cp_equal_sh0_R1_LoD2</td>
+<td style="text-align: right;">0.09307</td>
+<td style="text-align: right;">0.06277</td>
+<td style="text-align: right;">-0.03030</td>
+<td style="text-align: right;">24.655 → 24.655</td>
+</tr>
+<tr>
+<td>cp_right_sh0_R1_LoD2</td>
+<td style="text-align: right;">0.08918</td>
+<td style="text-align: right;">0.06277</td>
+<td style="text-align: right;">-0.02642</td>
+<td style="text-align: right;">24.655 → 24.655</td>
+</tr>
+<tr>
+<td>cp_equal_sh3_B173_LoD2</td>
+<td style="text-align: right;">0.15589</td>
+<td style="text-align: right;">0.07519</td>
+<td style="text-align: right;">-0.08069</td>
+<td style="text-align: right;">23.790 → 24.063</td>
+</tr>
+<tr>
+<td>cp_wrong_sh3_B173_LoD2</td>
+<td style="text-align: right;">0.16199</td>
+<td style="text-align: right;">0.07414</td>
+<td style="text-align: right;">-0.08786</td>
+<td style="text-align: right;">23.718 → 24.063</td>
+</tr>
+<tr>
+<td>cp_right_sh3_B173_LoD2</td>
+<td style="text-align: right;">0.14466</td>
+<td style="text-align: right;">0.07598</td>
+<td style="text-align: right;">-0.06868</td>
+<td style="text-align: right;">23.839 → 24.062</td>
+</tr>
+<tr>
+<td>cp_wrong_sh0_B173_LoD2</td>
+<td style="text-align: right;">0.16199</td>
+<td style="text-align: right;">0.08459</td>
+<td style="text-align: right;">-0.07740</td>
+<td style="text-align: right;">23.718 → 24.053</td>
+</tr>
+<tr>
+<td>cp_equal_sh0_B173_LoD2</td>
+<td style="text-align: right;">0.15589</td>
+<td style="text-align: right;">0.08546</td>
+<td style="text-align: right;">-0.07043</td>
+<td style="text-align: right;">23.790 → 24.052</td>
+</tr>
+<tr>
+<td>cp_right_sh0_B173_LoD2</td>
+<td style="text-align: right;">0.14466</td>
+<td style="text-align: right;">0.08621</td>
+<td style="text-align: right;">-0.05845</td>
+<td style="text-align: right;">23.839 → 24.053</td>
+</tr>
+<tr>
+<td>cp_equal_sh3_R1_ALS</td>
+<td style="text-align: right;">0.06735</td>
+<td style="text-align: right;">0.05483</td>
+<td style="text-align: right;">-0.01252</td>
+<td style="text-align: right;">23.342 → 23.342</td>
+</tr>
+<tr>
+<td>cp_wrong_sh3_R1_ALS</td>
+<td style="text-align: right;">0.07013</td>
+<td style="text-align: right;">0.05480</td>
+<td style="text-align: right;">-0.01533</td>
+<td style="text-align: right;">23.342 → 23.342</td>
+</tr>
+<tr>
+<td>cp_right_sh3_R1_ALS</td>
+<td style="text-align: right;">0.06266</td>
+<td style="text-align: right;">0.05477</td>
+<td style="text-align: right;">-0.00789</td>
+<td style="text-align: right;">23.342 → 23.342</td>
+</tr>
+<tr>
+<td>cp_wrong_sh0_R1_ALS</td>
+<td style="text-align: right;">0.07013</td>
+<td style="text-align: right;">0.05515</td>
+<td style="text-align: right;">-0.01499</td>
+<td style="text-align: right;">23.342 → 23.342</td>
+</tr>
+<tr>
+<td>cp_equal_sh0_R1_ALS</td>
+<td style="text-align: right;">0.06735</td>
+<td style="text-align: right;">0.05518</td>
+<td style="text-align: right;">-0.01216</td>
+<td style="text-align: right;">23.342 → 23.342</td>
+</tr>
+<tr>
+<td>cp_right_sh0_R1_ALS</td>
+<td style="text-align: right;">0.06266</td>
+<td style="text-align: right;">0.05515</td>
+<td style="text-align: right;">-0.00751</td>
+<td style="text-align: right;">23.342 → 23.342</td>
+</tr>
+</tbody>
+</table>
+<p>시작·끝 L1은 모든 학습 사진의 동일한 후보 영향영역 화소에서 계산했다. 100회 간격 곡선의 사진 오차는 미리 고정한 후보 영역이 큰 5개 사진을 쓴다. 학습 PSNR은 발주대로 정렬된 앞 5장이므로 후보가 보이지 않는 사진이면 값이 변하지 않을 수 있다. 사진 오차 감소를 맞는 후보 선택으로 대신 판정하지 않는다.</p>
+<h3 id="_5">불투명도 곡선</h3>
+<p><img alt="B173_ALS 불투명도 곡선" src="figures/B173_ALS_opacity_curves.png" /></p>
+<p><a href="figures/B173_ALS_outcomes_all.png">B173_ALS 넓이 구성 그림</a> · <a href="figures/B173_ALS_outcomes_occlusion_over_30pct.png">가림 30% 초과 그림</a></p>
+<p><img alt="R1_LoD2 불투명도 곡선" src="figures/R1_LoD2_opacity_curves.png" /></p>
+<p><a href="figures/R1_LoD2_outcomes_all.png">R1_LoD2 넓이 구성 그림</a> · <a href="figures/R1_LoD2_outcomes_occlusion_over_30pct.png">가림 30% 초과 그림</a></p>
+<p><img alt="B173_LoD2 불투명도 곡선" src="figures/B173_LoD2_opacity_curves.png" /></p>
+<p><a href="figures/B173_LoD2_outcomes_all.png">B173_LoD2 넓이 구성 그림</a> · <a href="figures/B173_LoD2_outcomes_occlusion_over_30pct.png">가림 30% 초과 그림</a></p>
+<p><img alt="R1_ALS 불투명도 곡선" src="figures/R1_ALS_opacity_curves.png" /></p>
+<p><a href="figures/R1_ALS_outcomes_all.png">R1_ALS 넓이 구성 그림</a> · <a href="figures/R1_ALS_outcomes_occlusion_over_30pct.png">가림 30% 초과 그림</a></p>
+<h2 id="_6">고정 대표 자리</h2>
+<p>대표 자리는 학습 전 고정했다. 요청 낙엽 지붕의 적격 덩어리는 없어 같은 조건의 대체 자리를 사용했다. B173 유리 채광창 예시는 적격 1–3m² 덩어리가 없어 확인 불가로 남겼다.</p>
+<h3 id="b173">B173 날개</h3>
+<p>출발 틀림의 고정 대표 자리 전체 점을 센 결과다. 아래 단면은 중앙 띠만 표시하므로 이 표와 점 수가 다를 수 있다.</p>
+<table>
+<thead>
+<tr>
+<th>후보 색</th>
+<th style="text-align: right;">대표 점</th>
+<th style="text-align: right;">맞게 남음</th>
+<th style="text-align: right;">틀리게 남음</th>
+<th style="text-align: right;">둘 다 남음</th>
+<th style="text-align: right;">둘 다 사라짐</th>
+<th style="text-align: right;">맞게 남은 넓이</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SH3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">33.28%</td>
+</tr>
+<tr>
+<td>SH0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">33.28%</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="실제 사진과 고정 시험 자리" src="figures/representatives/B173_wing_photo_overlay_1.png" /></p>
+<p><img alt="출발 틀림의 단면: 0·500·3,000회" src="figures/representatives/B173_wing_sections.png" /></p>
+<p><img alt="실제 사진·시작·끝 렌더" src="figures/representatives/B173_wing_render_comparison_1.png" /></p>
+<p><img alt="SH3 후보 불투명도의 세 시점" src="figures/representatives/B173_wing_3d_sh3.png" /></p>
+<p><a href="figures/representatives/B173_wing_3d_sh0.png">SH0 세 시점</a> · <a href="figures/representatives/B173_wing_render_comparison_2.png">관측 사진 2</a> · <a href="figures/representatives/B173_wing_render_comparison_3.png">관측 사진 3</a></p>
+<h3 id="r1">R1 계단 지붕</h3>
+<p>출발 틀림의 고정 대표 자리 전체 점을 센 결과다. 아래 단면은 중앙 띠만 표시하므로 이 표와 점 수가 다를 수 있다.</p>
+<table>
+<thead>
+<tr>
+<th>후보 색</th>
+<th style="text-align: right;">대표 점</th>
+<th style="text-align: right;">맞게 남음</th>
+<th style="text-align: right;">틀리게 남음</th>
+<th style="text-align: right;">둘 다 남음</th>
+<th style="text-align: right;">둘 다 사라짐</th>
+<th style="text-align: right;">맞게 남은 넓이</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SH3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+<tr>
+<td>SH0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.00%</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="실제 사진과 고정 시험 자리" src="figures/representatives/R1_stairs_photo_overlay_1.png" /></p>
+<p><img alt="출발 틀림의 단면: 0·500·3,000회" src="figures/representatives/R1_stairs_sections.png" /></p>
+<p><img alt="실제 사진·시작·끝 렌더" src="figures/representatives/R1_stairs_render_comparison_1.png" /></p>
+<p><img alt="SH3 후보 불투명도의 세 시점" src="figures/representatives/R1_stairs_3d_sh3.png" /></p>
+<p><a href="figures/representatives/R1_stairs_3d_sh0.png">SH0 세 시점</a> · <a href="figures/representatives/R1_stairs_render_comparison_2.png">관측 사진 2</a> · <a href="figures/representatives/R1_stairs_render_comparison_3.png">관측 사진 3</a></p>
+<h3 id="_7">낙엽 지붕 요청의 대체 자리</h3>
+<p>출발 틀림의 고정 대표 자리 전체 점을 센 결과다. 아래 단면은 중앙 띠만 표시하므로 이 표와 점 수가 다를 수 있다.</p>
+<table>
+<thead>
+<tr>
+<th>후보 색</th>
+<th style="text-align: right;">대표 점</th>
+<th style="text-align: right;">맞게 남음</th>
+<th style="text-align: right;">틀리게 남음</th>
+<th style="text-align: right;">둘 다 남음</th>
+<th style="text-align: right;">둘 다 사라짐</th>
+<th style="text-align: right;">맞게 남은 넓이</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SH3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">55.56%</td>
+</tr>
+<tr>
+<td>SH0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">55.56%</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="실제 사진과 고정 시험 자리" src="figures/representatives/leaf_flat_roof_photo_overlay_1.png" /></p>
+<p><img alt="출발 틀림의 단면: 0·500·3,000회" src="figures/representatives/leaf_flat_roof_sections.png" /></p>
+<p><img alt="실제 사진·시작·끝 렌더" src="figures/representatives/leaf_flat_roof_render_comparison_1.png" /></p>
+<p><img alt="SH3 후보 불투명도의 세 시점" src="figures/representatives/leaf_flat_roof_3d_sh3.png" /></p>
+<p><a href="figures/representatives/leaf_flat_roof_3d_sh0.png">SH0 세 시점</a> · <a href="figures/representatives/leaf_flat_roof_render_comparison_2.png">관측 사진 2</a> · <a href="figures/representatives/leaf_flat_roof_render_comparison_3.png">관측 사진 3</a></p>
+<h2 id="_8">통제·검증과 해석 범위</h2>
+<ul>
+<li>자리: PHOTOCHECK-v1 최종 점·패치. 학습·채점은 0부터 4번 열(δ=0.10, 최소 점수 0.3). 1단계 값은 자리 표에만 사용했다.</li>
+<li>좌표계는 EPSG:25832이며 상속한 로컬 원점 이동값은 [690953, 5336071, 604] m다. 대표 단면·3D의 u·v·h는 고정 대표 점의 접선·법선 좌표이며 지도 XYZ 축과 구분한다.</li>
+<li>후보의 위치·방향·크기와 정리 뒤 바탕 전체는 고정했다. 완료 판은 메모리 텐서의 전후 SHA-256 일치를 확인했다.</li>
+<li>손실은 전체 학습 사진의 0.8 L1 + 0.2(1−SSIM). 참값은 자리·묶음·초기 불투명도·채점에만 사용했다. 깊이 손실·밀도 제어·불투명도 재설정·정리를 사용하지 않았다.</li>
+<li>렌더는 gsplat 1.4.0이며 상속 GeoGS 렌더러와의 픽셀 동등성을 주장하지 않는다. 모든 판은 같은 gsplat 구현을 썼다.</li>
+<li>최초 50cm 칸 밖 동일 검사는 정상적인 가우시안 꼬리 때문에 실패했다. <a href="render_scope_resolution.md">후속 해석</a>에 따라 실제 렌더 영향영역 밖 불변을 확인하고 학습했다. 이전 실패와 첫 ZIP은 보존했다.</li>
+<li>실험은 고정한 개발 지역·적격 지붕 점·seed 0의 진단이다. 다른 지역·벽·다른 난수 씨앗의 결과나 통계적 일반화를 계산하지 않았다.</li>
+</ul>
+<p><a href="results/validation.json">독립 재계산 검증</a> · <a href="training_lock.json">학습 설정 잠금</a> · <a href="issues.md">실행 이슈</a> · <a href="tables/places.csv">첫 자리 표</a></p>
+<p>원본 사진과 큰 바탕 모델은 외부 입력 저장소에 보존한다. 결과 묶음은 점별 후보 상태와 집계 재계산에 필요한 자료를 포함하며, 전체 학습 재실행에는 기록된 외부 입력과 실행 환경이 필요하다.</p>
+<p>scientific_verdict: null</p>
+</main></html>

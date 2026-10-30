@@ -1,5 +1,6 @@
 """Evidence-led Korean report; numeric criteria are not a scientific verdict."""
 import json
+import markdown
 from pathlib import Path
 from input_audit import sha
 from result_io import save
@@ -27,9 +28,20 @@ def main():
     tested2 = [r for r in full if r['criterion2_wrong_drop_le10pp'] is not None]
     passed2 = sum(bool(r['criterion2_wrong_drop_le10pp']) for r in tested2)
     tested3 = [r['criterion3_' + s + '_le20pct'] for r in full for s in ['equal', 'right', 'wrong'] if r['criterion3_' + s + '_le20pct'] is not None]
+    criterion_keys = ['criterion1_equal_ge70pct', 'criterion2_wrong_drop_le10pp'] + ['criterion3_' + s + '_le20pct' for s in ['equal', 'right', 'wrong']]
+    complete_case_flags = []
+    sh0_equal = [r['criterion1_equal_ge70pct'] for r in criteria if r['sh_degree'] == 0 and r['subset'] == 'all'
+                 and r['side'] == 'all' and r['criterion1_equal_ge70pct'] is not None]
+    for unit in config['units']:
+        primary_rows = [r for r in criteria if r['unit'] == unit and r['sh_degree'] == 3 and r['subset'] == 'all']
+        flags = [r[k] for r in primary_rows for k in criterion_keys]
+        if len(primary_rows) == 3 and all(v is not None for v in flags):
+            complete_case_flags.append(all(flags))
     lines = ['# 두 후보를 함께 두면 사진이 맞는 쪽을 남기는가', '',
         f'**학습 {n}/24판 완료.** 묶음 가·SH3의 앞뒤 전체에서 같은 출발의 맞게 남음 ≥70%는 채점된 {len(tested1)}경우 중 {passed1}경우, 틀린 출발의 하락 ≤10%p는 비교 가능한 {len(tested2)}경우 중 {passed2}경우가 충족했다.', '',
         f'같은 범위에서 둘 다 남음+둘 다 사라짐 ≤20%는 채점된 SH3 {len(tested3)}판 중 {sum(bool(v) for v in tested3)}판이 충족했다. 앞뒤를 나눈 결과는 아래에서 별도로 대조한다.', '',
+        f'앞뒤 전체·앞·뒤 각각에서 세 기준을 모두 충족한 경우는 SH3 비교가 끝난 {len(complete_case_flags)}경우 중 **{sum(complete_case_flags)}경우**다. 전체 평균의 한 기준 통과와 모든 조건의 통과를 구분한다.', '',
+        f'보조 비교인 SH0의 같은 출발에서는 앞뒤 전체의 맞게 남음 ≥70%를 채점된 {len(sh0_equal)}경우 중 {sum(sh0_equal)}경우가 충족했다. SH0에서도 방향과 무관한 색 값은 학습하며, 바탕은 같은 SH3 장면이다.', '',
         '이는 발주에서 미리 정한 수치 기준과의 대조다. 방법 채택·기각과 연구적 판정은 사람이 한다. `scientific_verdict: null`.', '',
         f"자료 기준: {status['at']}. 설정 SHA-256: `{status['config_sha256']}`.", '',
         '## 핵심 비교: 사진 정보가 있는 자리', '',
@@ -93,6 +105,7 @@ def main():
         if extras: lines += [' · '.join(extras), '']
     lines += ['## 통제·검증과 해석 범위', '',
         '- 자리: PHOTOCHECK-v1 최종 점·패치. 학습·채점은 0부터 4번 열(δ=0.10, 최소 점수 0.3). 1단계 값은 자리 표에만 사용했다.',
+        '- 좌표계는 EPSG:25832이며 상속한 로컬 원점 이동값은 [690953, 5336071, 604] m다. 대표 단면·3D의 u·v·h는 고정 대표 점의 접선·법선 좌표이며 지도 XYZ 축과 구분한다.',
         '- 후보의 위치·방향·크기와 정리 뒤 바탕 전체는 고정했다. 완료 판은 메모리 텐서의 전후 SHA-256 일치를 확인했다.',
         '- 손실은 전체 학습 사진의 0.8 L1 + 0.2(1−SSIM). 참값은 자리·묶음·초기 불투명도·채점에만 사용했다. 깊이 손실·밀도 제어·불투명도 재설정·정리를 사용하지 않았다.',
         '- 렌더는 gsplat 1.4.0이며 상속 GeoGS 렌더러와의 픽셀 동등성을 주장하지 않는다. 모든 판은 같은 gsplat 구현을 썼다.',
@@ -102,9 +115,27 @@ def main():
         '원본 사진과 큰 바탕 모델은 외부 입력 저장소에 보존한다. 결과 묶음은 점별 후보 상태와 집계 재계산에 필요한 자료를 포함하며, 전체 학습 재실행에는 기록된 외부 입력과 실행 환경이 필요하다.', '',
         'scientific_verdict: null', '']
     (DOC / 'result_report.md').write_text('\n'.join(lines))
+    body = markdown.markdown('\n'.join(lines), extensions=['tables', 'fenced_code', 'toc'])
+    html = '''<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>후보 고르기 시험 결과 — PHD-MAIN-CANDPICK-v1</title>
+<style>
+body{margin:0;background:#f3f4f5;color:#17212b;font:16px/1.7 system-ui,sans-serif}
+main{max-width:1200px;margin:auto;padding:36px;background:white}
+h1{font-size:30px;line-height:1.35}h2{margin-top:60px;padding-top:14px;border-top:2px solid #ccd4dc}
+h3{margin-top:32px}a{color:#175c91}img{display:block;max-width:100%;height:auto;margin:24px auto}
+table{display:block;overflow-x:auto;border-collapse:collapse;width:max-content;max-width:100%;font-size:14px}
+th,td{padding:8px 12px;border:1px solid #dce1e5;white-space:nowrap}th{background:#eef2f5}
+code{font-size:13px;overflow-wrap:anywhere}nav{font-size:14px;color:#59636d}
+@media(max-width:700px){main{padding:18px}h1{font-size:24px}}
+@media print{body,main{background:white}main{padding:0;max-width:none}h2,h3{break-after:avoid}img,table{break-inside:avoid}}
+</style><main><nav>로컬 결과 보고서 · <a href="result_report.md">Markdown 원문</a> · <a href="results/outcomes.csv">결과 CSV</a> · <a href="results/criteria.csv">기준 CSV</a></nav>
+''' + body + '\n</main></html>\n'
+    (DOC / 'result_report.html').write_text(html)
     save(root / 'report_sources.json', dict(source_cutoff=status['at'],
         hashes={p.name: sha(p) for p in [root / 'status.json', root / 'outcomes.json', root / 'criteria.json', root / 'photo_error.json', root / 'representative_outcomes.json']},
-        report_sha256=sha(DOC / 'result_report.md'), script_sha256=sha(__file__), scientific_verdict=None))
+        report_sha256=sha(DOC / 'result_report.md'), html_sha256=sha(DOC / 'result_report.html'),
+        markdown_version=markdown.__version__, script_sha256=sha(__file__), scientific_verdict=None))
     print('Report updated for', n, 'complete arms')
 
 

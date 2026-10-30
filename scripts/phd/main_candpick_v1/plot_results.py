@@ -26,9 +26,11 @@ def setup():
     font_manager.fontManager.addfont(str(FONT))
 
 
-def write(fig, path):
-    fig.savefig(path.with_suffix('.png'), dpi=180, bbox_inches='tight')
-    fig.savefig(path.with_suffix('.pdf'), bbox_inches='tight')
+def write(fig, path, tight=True):
+    # Matplotlib's 3D tight bounding box can omit a rotated z-axis label.
+    bbox = 'tight' if tight else None
+    fig.savefig(path.with_suffix('.png'), dpi=180, bbox_inches=bbox)
+    fig.savefig(path.with_suffix('.pdf'), bbox_inches=bbox)
     plt.close(fig)
 
 

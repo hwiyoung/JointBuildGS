@@ -1,6 +1,10 @@
-# 후보 고르기 시험 v1 — 자리 잠금 기록
+# 후보 고르기 시험 v1 — 실행과 결과 기록
 
-네 경우의 적격 자리 13,849점과 24판 학습 설정을 잠갔고, **B173-ALS와 R1-LoD2부터 실제 학습을 진행 중**이다. 현재 진행과 완료 수는 [실행 상태](progress.md)를 따른다. `scientific_verdict: null`.
+**24판 × 3,000회 학습·채점 완료.** 2026-10-31 02:14:41 KST에 마지막 학습이 끝났다. 목표는 틀린 후보를 강하게 시작해도 사진 손실만으로 맞는 후보가 남는지, SH3와 SH0에서 결과가 달라지는지 확인하는 것이다. [HTML 결과 보고서](result_report.html) 또는 [Markdown 보고서](result_report.md)를 먼저 읽는다. `scientific_verdict: null`.
+
+묶음 가·SH3의 앞뒤 전체에서 같은 출발의 맞게 남음 ≥70%는 4경우 중 1경우, 틀린 출발의 하락 ≤10%p는 4경우 모두 충족했다. 둘 다 남음+둘 다 사라짐 ≤20%는 SH3 12판 모두 미충족이다. 앞뒤 전체·앞·뒤에서 세 기준을 모두 만족한 경우는 없다. SH0의 같은 출발 ≥70%도 4경우 모두 미충족이다. 이는 사전 수치 기준과의 대조이며 방법 채택·기각은 사람이 판단한다.
+
+점·판 판정 83,094개, 결과 표 432행, 곡선 4,464행의 독립 재계산과 584개 입력·구현 파일 해시 대조를 통과했다. [실행 상태](progress.md), [검산](results/validation.json), [그림 검토](visual_review.json)에 범위를 기록했다. 학습 단계의 실패는 0건이며, 앞선 사전 점검 중단과 환경 문제는 [이슈 기록](issues.md)에 보존했다.
 
 최초 50cm 칸 밖 동일 검사는 당시 중단 기록으로 보존했다. 이후 [렌더 범위 해석](render_scope_resolution.md)에 따라 시험 화소에 정상적인 가우시안 번짐을 포함했다. 실제 후보 렌더 영향영역 밖의 불변과 24개 기울기 점검은 통과했다. [사전 점검 보고서](stage1_report.md)와 첫 자리표 ZIP은 이 해석 이전의 역사적 기록이다.
 
@@ -59,14 +63,18 @@
 - 네 판정 끔 30,000회 바탕 체크포인트: 존재·SHA-256·수치 유한성 검사 PASS.
 - 네 바탕 장면: 근거 공간 밖 제거와 시험 칸 기둥 제거 완료. 원본은 읽기 전용 보존.
 - 가림 기록: 네 경우의 전체 학습 뷰 계산 완료. 30% 초과 점을 표시하고 후보별 분자·분모를 보존했다.
-- 3.3 기울기: 24개 초기 설정 모두 PASS. 최적화는 0회다.
+- 3.3 기울기: 24개 초기 설정 모두 PASS. 사전 점검 당시 최적화는 0회였다.
 - 3.3 렌더: 실제 후보 렌더 영향영역 밖 변화 0. 50cm 칸 밖 변화는 정상적인 꼬리로 구분해 기록했다.
 - `candpick_v1.json` 잠금: 첫 optimizer.step 이전 완료. SHA-256 `34ef024389b58d8aa943ccaac585b15b56f3ddeb7f1d7d2be1eaf945adc10601`.
-- 24판 학습: 진행 중. 학습 완료·채점 완료·기준 충족은 따로 기록한다.
+- 24판 학습: 모두 완료. 후보 기하와 바탕 전체의 전후 메모리 해시가 일치한다. 학습 완료·채점 완료와 사전 기준 충족을 구분한다.
 
 ## 재현
 
-`scripts/phd/main_candpick_v1/run_cpu.sh`로 Docker에서 `input_audit.py`, `check_baselines.py`, `prepare_places.py`, `verify_places.py`를 실행했다. 새 작업의 출력 외에는 읽기 전용으로 연결한다. 기존 잠금이나 결과가 있으면 덮어쓰지 않는다. 큰 파일은 `../JointBuildGS-artifacts/phase-payloads/phd/main_candpick_v1/PHD-MAIN-CANDPICK-v1`에 있다.
+`scripts/phd/main_candpick_v1/run_cpu.sh`로 Docker에서 `input_audit.py`, `check_baselines.py`, `prepare_places.py`, `verify_places.py`를 실행했다. 새 작업의 출력 외에는 읽기 전용으로 연결한다. 입력·잠금·완료 학습 상태는 보존하며, 진행표와 파생 집계·그림은 원본 상태로부터 재생성할 수 있다. 큰 파일은 `../JointBuildGS-artifacts/phase-payloads/phd/main_candpick_v1/PHD-MAIN-CANDPICK-v1`에 있다.
+
+학습은 `run_gpu.sh 0 train-b173 .../train_queue.py B173_ALS B173_LoD2`와 `run_gpu.sh 1 train-r1 .../train_queue.py R1_LoD2 R1_ALS`로 실행했다. `...`는 `scripts/phd/main_candpick_v1`이다. 각 판은 고정한 3,000회 카메라 순서와 설정 해시를 확인하며, 완료 판은 건너뛴다. 자원 문제로 재개할 때는 원래 optimizer·난수 상태의 `resume.pt`를 사용한다.
+
+`score_candidates.py`는 완료 판만 채점하고 `validate_results.py`가 점별 결과·면적·건물 중앙값·CSV/JSON 일치·사진 오차·기준 표를 별도로 검산한다. `report_results.py`는 같은 자료로 [HTML 보고서](result_report.html)와 [Markdown 보고서](result_report.md)를 만든다. `verify_results_bundle.py`는 최종 ZIP을 풀지 않고도 파일 무결성과 결과 표를 다시 확인한다.
 
 원본 사진과 바탕 모델을 전달 ZIP에 중복하지 않는다. 해시는 바이트 동일성을 확인하며 연구적 성공을 뜻하지 않는다.
 

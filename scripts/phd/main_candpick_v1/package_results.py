@@ -24,6 +24,8 @@ def main():
         assert len(index['files']) == count
     visual = json.loads((doc / 'visual_review.json').read_text()); assert visual['status'] == 'PASS'
     inputs = json.loads((doc / 'final_input_verification.json').read_text()); assert inputs['status'] == 'PASS'
+    report_checks = json.loads((doc / 'report_checks.json').read_text())
+    assert report_checks['status'] == 'PASS_STRUCTURE_AND_SOURCES' and report_checks['completed_arms'] == 24
     cfg = json.loads(Path('/config/candpick_v1.json').read_text())
     now = datetime.now(ZoneInfo('Asia/Seoul'))
     dest = out / 'delivery' / ('PHD-MAIN-CANDPICK-v1_결과_' + now.strftime('%m%d-%H%M') + '.zip')
@@ -48,7 +50,7 @@ def main():
                 files['payload/' + str(p.relative_to(out))] = p
     note = '''# PHD-MAIN-CANDPICK-v1 결과 묶음
 
-24판 × 3,000회 학습과 채점이 끝난 진단 자료다. 먼저 docs/experiments/phd/main_candpick_v1/result_report.md를 읽는다. scientific_verdict: null.
+24판 × 3,000회 학습과 채점이 끝난 진단 자료다. 먼저 docs/experiments/phd/main_candpick_v1/result_report.html을 브라우저에서 열거나 같은 경로의 result_report.md를 읽는다. scientific_verdict: null.
 
 ## 구성
 

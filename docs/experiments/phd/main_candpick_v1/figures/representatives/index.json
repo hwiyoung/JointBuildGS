@@ -1,0 +1,83 @@
+{
+  "representatives": [
+    {
+      "id": "B173_wing",
+      "status": "COMPLETE",
+      "unit": "B173_ALS",
+      "files": [
+        "B173_wing_sections.png",
+        "B173_wing_3d_sh3.png",
+        "B173_wing_3d_sh0.png"
+      ],
+      "section_point_ids": [
+        "development:ALS:6910_53361:point:9159",
+        "development:ALS:6910_53361:point:9199",
+        "development:ALS:6910_53361:point:9239"
+      ],
+      "section_rule": "abs(v)<=0.251m relative to locked seed tangent frame",
+      "snapshots": {
+        "sh3_0": "e61ec4c6d5f09886098c9797de1b20bb70c7338765c4713b779165ec12ebee2d",
+        "sh3_500": "f40b3a06acb2d92c6c740dd4e7477028f622827a8b67ca008da6c1ef40141235",
+        "sh3_3000": "d994e75b5583b1bad8e0755819b1a42bfae786d4c630f228ba0fb3495d9962fd",
+        "sh0_0": "e61ec4c6d5f09886098c9797de1b20bb70c7338765c4713b779165ec12ebee2d",
+        "sh0_500": "9e2acf2b6e325c93c045e6d4dfaa27bd9722ef75c5bb57bc1e63de1a0610d470",
+        "sh0_3000": "fa05918212a810cac50a98cce6bdaadeb7fc1af7968b952db9d84f8d395d6035"
+      }
+    },
+    {
+      "id": "R1_stairs",
+      "status": "COMPLETE",
+      "unit": "R1_LoD2",
+      "files": [
+        "R1_stairs_sections.png",
+        "R1_stairs_3d_sh3.png",
+        "R1_stairs_3d_sh0.png"
+      ],
+      "section_point_ids": [
+        "development:LoD2:6909_53360:point:23791",
+        "development:LoD2:6909_53360:point:23807",
+        "development:LoD2:6909_53360:point:23824"
+      ],
+      "section_rule": "abs(v)<=0.251m relative to locked seed tangent frame",
+      "snapshots": {
+        "sh3_0": "886851e70a4b9e385898494eea036526ad97b315a17b3dec1a931e71b1d1c786",
+        "sh3_500": "9ab3d3266327f37f4c4d1cec8007f5803a9792a541204ab894483b68e904c537",
+        "sh3_3000": "49f829ce198b34f31b2b5dadae41a5040d93fc769bfde40242465f95ba052f13",
+        "sh0_0": "886851e70a4b9e385898494eea036526ad97b315a17b3dec1a931e71b1d1c786",
+        "sh0_500": "37c1228a7429b3b8b2cc288e91510698789a39f850a6ca0632fdd5bc99827a61",
+        "sh0_3000": "34a3de65f4320cd0fd0b89bf3adecff3698563d3d928bf98cc06f078c18a1649"
+      }
+    },
+    {
+      "id": "leaf_flat_roof",
+      "status": "COMPLETE",
+      "unit": "R1_LoD2",
+      "files": [
+        "leaf_flat_roof_sections.png",
+        "leaf_flat_roof_3d_sh3.png",
+        "leaf_flat_roof_3d_sh0.png"
+      ],
+      "section_point_ids": [
+        "development:LoD2:6909_53360:point:23163",
+        "development:LoD2:6909_53360:point:23167",
+        "development:LoD2:6909_53360:point:23171"
+      ],
+      "section_rule": "abs(v)<=0.251m relative to locked seed tangent frame",
+      "snapshots": {
+        "sh3_0": "886851e70a4b9e385898494eea036526ad97b315a17b3dec1a931e71b1d1c786",
+        "sh3_500": "9ab3d3266327f37f4c4d1cec8007f5803a9792a541204ab894483b68e904c537",
+        "sh3_3000": "49f829ce198b34f31b2b5dadae41a5040d93fc769bfde40242465f95ba052f13",
+        "sh0_0": "886851e70a4b9e385898494eea036526ad97b315a17b3dec1a931e71b1d1c786",
+        "sh0_500": "37c1228a7429b3b8b2cc288e91510698789a39f850a6ca0632fdd5bc99827a61",
+        "sh0_3000": "34a3de65f4320cd0fd0b89bf3adecff3698563d3d928bf98cc06f078c18a1649"
+      }
+    },
+    {
+      "id": "B173_deceptive_photo",
+      "status": "UNAVAILABLE_NO_1_TO_3M2_COMPONENT",
+      "files": []
+    }
+  ],
+  "script_sha256": "afddce3b80d81589d29565552a39dbdd704290dc6bfdaba464760c1c93cc93c8",
+  "scientific_verdict": null
+}

@@ -114,7 +114,7 @@ def draw_3d(rep, d, ids, origin, frame, local, mv, gt, snapshots, dest):
         fig.suptitle(NAMES[rep['id']] + f'\n출발 틀림 · SH{degree} · 후보 불투명도 3D', fontsize=17, y=.99)
         fig.text(.5, .015, '황색=사전 정보 후보 · 청색=영상 후보 · 검정 마름모=참값 중앙값. 면 진하기=가우시안별 불투명도.\n타원은 2σ 범위 표시이며 실제 렌더의 절단 경계가 아님. 고정 대표 자리 전체를 같은 축 범위로 표시.', ha='center', fontsize=11)
         fig.subplots_adjust(top=.91, bottom=.09, wspace=.12, hspace=.55)
-        path = dest / f"{rep['id']}_3d_sh{degree}"; write(fig, path); files.append(path.name + '.png')
+        path = dest / f"{rep['id']}_3d_sh{degree}"; write(fig, path, tight=False); files.append(path.name + '.png')
     return files
 
 

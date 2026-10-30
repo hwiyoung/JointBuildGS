@@ -41,6 +41,7 @@ def main():
             run('validate_results.py')
             run('verify_frozen_inputs.py')
             run('check_visual_files.py')
+            run('check_report.py')
             print('24 arms complete; scoring, independent validation, input hashes and figure file checks complete. Visual review and packaging remain.', flush=True)
             return
         time.sleep(30)
