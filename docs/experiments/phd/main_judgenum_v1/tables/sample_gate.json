@@ -1,10 +1,4 @@
 {
-  "task_id": "PHD-MAIN-JUDGENUM-v1",
-  "status": "PASS_SAMPLE_GATE",
-  "scientific_verdict": null,
-  "started_at": "2026-10-31T01:25:32.406904+09:00",
-  "finished_at": "2026-10-31T01:26:22.752042+09:00",
-  "config_sha256": "a8c89a36cbd8fa02c141d9f04433fe4aa1879ff15570e7195bc0f3c4c3a30546",
   "rows": [
     {
       "prior": "LoD2",
@@ -91,6 +85,13 @@
       "cell2_top3_buildings": []
     }
   ],
+  "source": "PHD-MAIN-WIDEN0-v2 frozen patch_values; [이 발주에서 냄]",
+  "config_sha256": "a8c89a36cbd8fa02c141d9f04433fe4aa1879ff15570e7195bc0f3c4c3a30546",
+  "scientific_verdict": null,
+  "task_id": "PHD-MAIN-JUDGENUM-v1",
+  "status": "PASS_SAMPLE_GATE",
+  "started_at": "2026-10-31T01:25:32.406904+09:00",
+  "finished_at": "2026-10-31T01:26:22.752042+09:00",
   "failures": [],
   "excluded_buildings": [
     {
@@ -549,6 +550,5 @@
   "maxrss_kib": 3718860,
   "seconds": 50.34578716754913,
   "commit": "13b8ab241e9f75a948624d6db17255ef5bbe0e9d",
-  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
-  "source": "PHD-MAIN-WIDEN0-v2 frozen patch_values; [이 발주에서 냄]"
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774"
 }

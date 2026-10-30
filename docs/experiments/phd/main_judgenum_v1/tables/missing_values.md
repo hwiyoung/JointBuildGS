@@ -1,0 +1,23 @@
+| prior | kind | value | patch_count | area_m2 |
+|---|---|---|---|---|
+| LoD2 | 1 | normal | 0 | 0.0 |
+| LoD2 | 1 | sigma_p | 0 | 0.0 |
+| LoD2 | 1 | a | 28366 | 1772.875 |
+| LoD2 | 1 | photo | 0 | 0.0 |
+| LoD2 | 1 | judgment_before | 0 | 0.0 |
+| LoD2 | 1 | judgment_after | 4273 | 267.0625 |
+| LoD2 | 1 | mixed_cutoff | 4273 | 267.0625 |
+| LoD2 | 2 | normal | 0 | 0.0 |
+| LoD2 | 2 | sigma_p | 0 | 0.0 |
+| LoD2 | 2 | a | 408118 | 25506.421394963734 |
+| LoD2 | 2 | photo | 0 | 0.0 |
+| LoD2 | 2 | judgment_before | 0 | 0.0 |
+| LoD2 | 2 | judgment_after | 5161 | 322.5625 |
+| LoD2 | 2 | mixed_cutoff | 5161 | 322.5625 |
+| ALS | 1 | normal | 1091 | 34.21395957192565 |
+| ALS | 1 | sigma_p | 9192 | 623.205738263713 |
+| ALS | 1 | a | 14678 | 970.1585387692692 |
+| ALS | 1 | photo | 0 | 0.0 |
+| ALS | 1 | judgment_before | 7812 | 521.2676413239246 |
+| ALS | 1 | judgment_after | 7812 | 521.2676413239246 |
+| ALS | 1 | mixed_cutoff | 0 | 0.0 |

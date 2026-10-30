@@ -72,7 +72,9 @@ def spaced(d,where,prior,cfg):
             with zipfile.ZipFile(f) as z:
                 with z.open('patch_id.npy') as src:pid=np.lib.format.read_array(src,allow_pickle=False)
                 mask=np.isin(pid,ids[k==kind]);gid=selected(z,'point_id',mask)
-                for p,g in zip(pid[mask],gid):out[look[p]]=str(g)
+                # Roof/wall tasks independently number point IDs. Their names
+                # are unique only inside that source task, never across tasks.
+                for p,g in zip(pid[mask],gid):out[look[p]]=f'{kind}:{g}'
         assert np.all(out!=''),'Missing inherited 50cm grouping'
         groups.append(out)
     group=np.concatenate(groups);_,inverse=np.unique(group,return_inverse=True)
@@ -135,6 +137,8 @@ def main():
     calibration={};diag=[];bias=[];bounds=[];null_roofs=[];size_A=[];normal_checks=[]
     for prior in ['LoD2','ALS']:
         data,where=load(prior);base_choices={};baseline_saved=None
+        if len(SCENARIOS)==1 and SCENARIOS[0][0]!='base':
+            base_choices=json.loads((O/'calibration.json').read_text())['values'][prior]['base']['photo_choices']
         for kind in [1,2]:
             for rt in sorted(set(data['roof_type'][data['kind']==kind])):
                 m=(data['kind']==kind)&(data['roof_type']==rt)

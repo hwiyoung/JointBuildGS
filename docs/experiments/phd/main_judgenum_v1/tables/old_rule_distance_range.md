@@ -1,0 +1,5 @@
+| prior | kind | changed_cores | changed_area_m2 | min_changed_abs_d_cm | max_changed_abs_d_cm |
+|---|---|---|---|---|---|
+| LoD2 | 1 | 0 | 0.0 | None | None |
+| LoD2 | 2 | 0 | 0.0 | None | None |
+| ALS | 1 | 19036 | 1238.9079753417204 | 7.679370034630008 | 12.659973031831893 |

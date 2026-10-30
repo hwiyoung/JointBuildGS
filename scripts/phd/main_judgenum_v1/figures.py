@@ -1,6 +1,7 @@
 """300-dpi scientific figures, using development cores only."""
 import argparse
 import json
+import inspect
 from pathlib import Path
 import numpy as np
 import matplotlib
@@ -26,7 +27,8 @@ def data(prior,stage_a=False):
 def export(fig,name,values):
     F.mkdir(exist_ok=True);fig.savefig(F/f'{name}.png',dpi=300,bbox_inches='tight');plt.close(fig)
     dump(F/f'{name}.json',clean({'data':values,'dpi':300,'scientific_verdict':None,
-      'generator_sha256':sha(Path(__file__)),'source':'[이 발주에서 냄]'}))
+      'generator_sha256':sha(Path(inspect.stack()[1].filename)),
+      'figure_common_sha256':sha(Path(__file__)),'source':'[이 발주에서 냄]'}))
 
 def outlines(ax,cfg):
     for ft in json.loads((C/'scope_geometry.json').read_text())['features']:
