@@ -1,0 +1,41 @@
+{
+  "unit": "R1_ALS",
+  "at": "2026-10-31T00:03:35.722691+09:00",
+  "original": {
+    "path": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+    "bytes": 695104127,
+    "sha256": "7e5667254f087254b7b9d91277cd9daa29f49657c08f3f4764263b0046f3f92e"
+  },
+  "places_sha256": "6aa76616a3015acfb28303f47c4186debe2aa2261a21c94cce43a72c4320fe98",
+  "support": {
+    "path": "/art/phase-payloads/phd/main_farpull_v1/PHD-MAIN-FARPULL-v1/evidence_prune_v1/R1rep_b10/support.json",
+    "bytes": 97908,
+    "sha256": "564d5a8b3166997e066249100d2c2d0c6e2becc82a168833425b28942831ec21"
+  },
+  "protected_mask_source": {
+    "path": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/R1rep_b10/nojudge_ALS_s0/model/jbgs_complete/iteration_30000/checkpoint.pth",
+    "bytes": 1851934306,
+    "sha256": "567530f52ea239fcd0cc8f3357d2a7e711842e4ef0cfea3d8937721bde8096e9"
+  },
+  "original_count": 2593666,
+  "deleted_evidence": 25181,
+  "deleted_columns_after_evidence": 2094,
+  "deleted_column_union": 2104,
+  "remaining": 2566391,
+  "candidates": 5080,
+  "background": {
+    "path": "/out/scenes/R1_ALS/background.ply",
+    "bytes": 687794427,
+    "sha256": "a7ee79eef2e79e986bdde76fd573b03e3ec79846ff0af180fe9c500bf3e3ffd1"
+  },
+  "geometry": {
+    "path": "/out/scenes/R1_ALS/candidate_geometry.npz",
+    "bytes": 65300,
+    "sha256": "107b08128d45a54340aaff0bf8d59d0756f4e64c887ee8d5e71fcf7cc15736fc"
+  },
+  "candidate_inplane_sigma_m": 0.125,
+  "sigma_rule": "Half 25cm lattice spacing; identical on both heights. Gaussian tails are retained.",
+  "GT_used_in_cleanup_or_geometry": false,
+  "optimizer_steps": 0,
+  "scientific_verdict": null
+}

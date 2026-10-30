@@ -1,0 +1,177 @@
+{
+  "task_id": "PHD-MAIN-CANDPICK-v1",
+  "unit": "B173_LoD2",
+  "at": "2026-10-31T00:22:56.508660+09:00",
+  "camera": "DJI_20241217084241_0004_D",
+  "status": "PASS",
+  "checks": [
+    {
+      "start": "right",
+      "sh_degree": 3,
+      "status": "PASS",
+      "frozen_gradient_zero": true,
+      "trainable": {
+        "opacity": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 6878
+        },
+        "color_dc": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 20634
+        },
+        "color_sh": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 309510
+        }
+      },
+      "loss": 0.08690522611141205
+    },
+    {
+      "start": "wrong",
+      "sh_degree": 3,
+      "status": "PASS",
+      "frozen_gradient_zero": true,
+      "trainable": {
+        "opacity": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 6899
+        },
+        "color_dc": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 20697
+        },
+        "color_sh": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 310455
+        }
+      },
+      "loss": 0.08876211941242218
+    },
+    {
+      "start": "equal",
+      "sh_degree": 3,
+      "status": "PASS",
+      "frozen_gradient_zero": true,
+      "trainable": {
+        "opacity": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 6905
+        },
+        "color_dc": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 20715
+        },
+        "color_sh": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 310725
+        }
+      },
+      "loss": 0.08784666657447815
+    },
+    {
+      "start": "right",
+      "sh_degree": 0,
+      "status": "PASS",
+      "frozen_gradient_zero": true,
+      "trainable": {
+        "opacity": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 6878
+        },
+        "color_dc": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 20634
+        },
+        "color_sh": {
+          "requires_grad": false,
+          "grad_exists": false,
+          "grad_finite": null,
+          "nonzero": 0
+        }
+      },
+      "loss": 0.08690522611141205
+    },
+    {
+      "start": "wrong",
+      "sh_degree": 0,
+      "status": "PASS",
+      "frozen_gradient_zero": true,
+      "trainable": {
+        "opacity": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 6899
+        },
+        "color_dc": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 20697
+        },
+        "color_sh": {
+          "requires_grad": false,
+          "grad_exists": false,
+          "grad_finite": null,
+          "nonzero": 0
+        }
+      },
+      "loss": 0.08876211941242218
+    },
+    {
+      "start": "equal",
+      "sh_degree": 0,
+      "status": "PASS",
+      "frozen_gradient_zero": true,
+      "trainable": {
+        "opacity": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 6905
+        },
+        "color_dc": {
+          "requires_grad": true,
+          "grad_exists": true,
+          "grad_finite": true,
+          "nonzero": 20715
+        },
+        "color_sh": {
+          "requires_grad": false,
+          "grad_exists": false,
+          "grad_finite": null,
+          "nonzero": 0
+        }
+      },
+      "loss": 0.08784666657447815
+    }
+  ],
+  "optimizer_steps": 0,
+  "scientific_verdict": null,
+  "code_sha256": {
+    "preflight_variants.py": "5e488cd0a2fd722183ab24000a71af84032773f3e813afca15792e1168e5cf60",
+    "gs_engine.py": "56226140daeb8c3fe56d3f4579f34beb1ce9b9d42507452ca1e4d68acfbd9801"
+  }
+}

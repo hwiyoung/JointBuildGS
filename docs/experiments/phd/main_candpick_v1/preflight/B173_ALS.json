@@ -1,0 +1,153 @@
+{
+  "task_id": "PHD-MAIN-CANDPICK-v1",
+  "unit": "B173_ALS",
+  "at": "2026-10-31T00:14:34.725298+09:00",
+  "renderer": "gsplat 1.4.0 rasterization_2dgs; unchanged background SH3 in both candidate color arms",
+  "status": "STOP_PREFLIGHT",
+  "outside_scope": "union of projected prior and MVS 50cm cells, boundary-touched pixels included; actual Gaussian support reported separately",
+  "tested_views": 5,
+  "total_train_views": 203,
+  "outside": [
+    {
+      "view": "DJI_20241217084241_0004_D",
+      "outside_pixels": 733738,
+      "changed_outside_pixels": 3523,
+      "max_abs_outside_rgb": 0.26951712369918823,
+      "outside_identity_psnr_db": 55.211315589630445,
+      "outside_photo_psnr_before_db": 22.858318384666788,
+      "outside_photo_psnr_after_db": 22.857953454466838,
+      "outside_photo_psnr_delta_db": -0.0003649301999502086,
+      "changed_beyond_actual_splat_support": 0,
+      "splat_support_outside_cell_pixels": 3628,
+      "status": "FAIL_OUTSIDE_CELL_CHANGED"
+    },
+    {
+      "view": "DJI_20241217084243_0005_D",
+      "outside_pixels": 755952,
+      "changed_outside_pixels": 1213,
+      "max_abs_outside_rgb": 0.26987147331237793,
+      "outside_identity_psnr_db": 60.99670177388425,
+      "outside_photo_psnr_before_db": 23.831044556829795,
+      "outside_photo_psnr_after_db": 23.830498648755682,
+      "outside_photo_psnr_delta_db": -0.0005459080741125888,
+      "changed_beyond_actual_splat_support": 0,
+      "splat_support_outside_cell_pixels": 1240,
+      "status": "FAIL_OUTSIDE_CELL_CHANGED"
+    },
+    {
+      "view": "DJI_20241217084245_0006_D",
+      "outside_pixels": 758784,
+      "changed_outside_pixels": 0,
+      "max_abs_outside_rgb": 0.0,
+      "outside_identity_psnr_db": null,
+      "outside_photo_psnr_before_db": 23.728406898531567,
+      "outside_photo_psnr_after_db": 23.728406898531567,
+      "outside_photo_psnr_delta_db": 0.0,
+      "changed_beyond_actual_splat_support": 0,
+      "splat_support_outside_cell_pixels": 0,
+      "status": "PASS"
+    },
+    {
+      "view": "DJI_20241217084247_0007_D",
+      "outside_pixels": 758784,
+      "changed_outside_pixels": 0,
+      "max_abs_outside_rgb": 0.0,
+      "outside_identity_psnr_db": null,
+      "outside_photo_psnr_before_db": 22.11653825993003,
+      "outside_photo_psnr_after_db": 22.11653825993003,
+      "outside_photo_psnr_delta_db": 0.0,
+      "changed_beyond_actual_splat_support": 0,
+      "splat_support_outside_cell_pixels": 0,
+      "status": "PASS"
+    },
+    {
+      "view": "DJI_20241217084447_0067_D",
+      "outside_pixels": 758784,
+      "changed_outside_pixels": 0,
+      "max_abs_outside_rgb": 0.0,
+      "outside_identity_psnr_db": null,
+      "outside_photo_psnr_before_db": 22.91080922497873,
+      "outside_photo_psnr_after_db": 22.91080922497873,
+      "outside_photo_psnr_delta_db": 0.0,
+      "changed_beyond_actual_splat_support": 0,
+      "splat_support_outside_cell_pixels": 0,
+      "status": "PASS"
+    }
+  ],
+  "gradients": {
+    "status": "PASS",
+    "frozen": {
+      "base.means": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      },
+      "base.quats": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      },
+      "base.scales": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      },
+      "base.opacity": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      },
+      "base.sh": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      },
+      "candidate.means": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      },
+      "candidate.quats": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      },
+      "candidate.scales": {
+        "requires_grad": false,
+        "grad_is_none": true,
+        "gradient_max_abs": 0.0
+      }
+    },
+    "trainable": {
+      "opacity": {
+        "grad_exists": true,
+        "grad_finite": true,
+        "nonzero": 5173
+      },
+      "color_dc": {
+        "grad_exists": true,
+        "grad_finite": true,
+        "nonzero": 15519
+      },
+      "color_sh": {
+        "grad_exists": true,
+        "grad_finite": true,
+        "nonzero": 232785
+      }
+    }
+  },
+  "optimizer_steps": 0,
+  "scientific_verdict": null,
+  "source_sha256": {
+    "gs_engine.py": "ae6a58bc0d1c146174425ec21ff1b275c40f502094174b4380e81f5625c317f9",
+    "rules.py": "26275a371f4da7f51a2a0fc5db6f0c490328042a7d65bb09c3fd373f3b9fc60f",
+    "input_audit.py": "20ceec4e0b779ef81b233f796e3ad1d28fade3ae60db4aa6c2e766a5bfb15444",
+    "occlusion.py": "da081eea13ba4f3cedbd091a0a0fa0dbe8e1f2f5a5409cc35fbfdafe70d71029",
+    "preflight_gpu.py": "80525bd3cdf903e368332b9053532cef89bc981a789f52337ddd7912dfba911f",
+    "verify_places.py": "49d062fb3b732a7b4cc9de5a6b03fdc98d78428e264070fcbd82b3889d2935f9",
+    "repair_support_metadata.py": "d689360b43619288d89716b9235774f6c2711d7520d5ffc3b09401c0a4c3c852",
+    "prepare_places.py": "c2f4a23f445ce1f06f120f67e95d40380df85f960b1bbbecbbf2d0279c45a2d6",
+    "check_baselines.py": "0555239db3123a3769ff50c853b65b3f8d601d446093f74ba8e227193c9f3332",
+    "prepare_scene.py": "7b9fde613651b167ac50d1f57330a0734e73ddc21d5325547c376933ee65b34f"
+  }
+}

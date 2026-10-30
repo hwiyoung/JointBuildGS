@@ -1,0 +1,54 @@
+{
+  "unit": "B173_LoD2",
+  "at": "2026-10-31T00:02:53.949277+09:00",
+  "original": {
+    "path": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+    "bytes": 799571599,
+    "sha256": "e42ac8ed1f70331d871901af6bbc7ca2720dc529893933a0ea715d1c3df9cf9e"
+  },
+  "places_sha256": "6aa76616a3015acfb28303f47c4186debe2aa2261a21c94cce43a72c4320fe98",
+  "support": {
+    "path": "/out/scenes/B173_LoD2/support/support.json",
+    "bytes": 62094,
+    "sha256": "0189bfffffeed4572481a09fe1cd2189d286e4ddc1c7d5b53aaf446f27069bca"
+  },
+  "protected_mask_source": {
+    "path": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/jbgs_complete/iteration_30000/checkpoint.pth",
+    "bytes": 2130247266,
+    "sha256": "244bad496ca3e304e62f3d147193ce6ea7aeee63e5612db0e24cbc0a71fed1d1"
+  },
+  "original_count": 2983470,
+  "deleted_evidence": 36681,
+  "deleted_columns_after_evidence": 27151,
+  "deleted_column_union": 27197,
+  "remaining": 2919638,
+  "candidates": 43192,
+  "background": {
+    "path": "/out/scenes/B173_LoD2/background.ply",
+    "bytes": 782464623,
+    "sha256": "ad88d62196753ae8239f1341b1d7873a1bf9ee0a778bb593f123bb6a6da78098"
+  },
+  "geometry": {
+    "path": "/out/scenes/B173_LoD2/candidate_geometry.npz",
+    "bytes": 366360,
+    "sha256": "a9b241664e172a7a847f576fa103242cca9844492397224710ad8ce4638f0731"
+  },
+  "candidate_inplane_sigma_m": 0.125,
+  "sigma_rule": "Half 25cm lattice spacing; identical on both heights. Gaussian tails are retained.",
+  "GT_used_in_cleanup_or_geometry": false,
+  "optimizer_steps": 0,
+  "scientific_verdict": null,
+  "support_metadata_correction": {
+    "unit": "B173_LoD2",
+    "original_metadata_sha256": "45d005c8cfe0d4730963e04d69a6536922019274b703d9e8cf7a84520225b7ed",
+    "corrected_metadata_sha256": "0189bfffffeed4572481a09fe1cd2189d286e4ddc1c7d5b53aaf446f27069bca",
+    "actual_payload_sha256": {
+      "prior.npz": "6ad6a551613db60fa84db3896d62834a5d42adaa2a897639d9325d004339fcd8",
+      "patch_sigma.npz": "7c1afff47e5d030f2817bbc1aee6aad07002cc1535b51fbe01db448765d29dfe",
+      "mvs_points.npy": "6a8b5c61fb733cecfe1889c051219aa72381c9df0be186e7b4914fc215c22271"
+    },
+    "payload_changed": false,
+    "optimizer_steps": 0,
+    "scientific_verdict": null
+  }
+}
