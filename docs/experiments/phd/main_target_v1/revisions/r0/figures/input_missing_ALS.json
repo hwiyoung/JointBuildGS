@@ -1,0 +1,113 @@
+{
+  "title": "항공 LiDAR 세 지역에서 셀 수 없는 넓이가 10%를 넘는다",
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "patches": 44994,
+      "area_m2": 3048.603100662983,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "matched_patches": 44994,
+      "unmatched_patches": 0,
+      "missing_normal_count": 151,
+      "missing_normal_area_m2": 4.978916413311958,
+      "missing_sigma_count": 12041,
+      "missing_sigma_area_m2": 808.8181603184172,
+      "unavailable_count": 12041,
+      "unavailable_area_m2": 808.8181603184172,
+      "unavailable_fraction": 0.2653077929831281,
+      "eval_unavailable_fraction": 0.0062865039092132174,
+      "band_unavailable_fraction": 0.5487387178443389,
+      "missing_sigma_by_als_status": {
+        "1": {
+          "patches": 11558,
+          "area_m2": 779.340363415232
+        },
+        "2": {
+          "patches": 375,
+          "area_m2": 25.72415029311389
+        },
+        "3": {
+          "patches": 108,
+          "area_m2": 3.7536466100712853
+        }
+      }
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "patches": 76657,
+      "area_m2": 5039.673523948936,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "matched_patches": 76657,
+      "unmatched_patches": 0,
+      "missing_normal_count": 154,
+      "missing_normal_area_m2": 4.925438204580689,
+      "missing_sigma_count": 23897,
+      "missing_sigma_area_m2": 1564.4425393626818,
+      "unavailable_count": 23897,
+      "unavailable_area_m2": 1564.4425393626818,
+      "unavailable_fraction": 0.31042537416924415,
+      "eval_unavailable_fraction": 0.024388354493001047,
+      "band_unavailable_fraction": 0.547857734643938,
+      "missing_sigma_by_als_status": {
+        "1": {
+          "patches": 22241,
+          "area_m2": 1452.1450422808011
+        },
+        "2": {
+          "patches": 1544,
+          "area_m2": 108.66900677816086
+        },
+        "3": {
+          "patches": 112,
+          "area_m2": 3.628490303719751
+        }
+      }
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "patches": 46215,
+      "area_m2": 3104.1186610169775,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "matched_patches": 46215,
+      "unmatched_patches": 0,
+      "missing_normal_count": 229,
+      "missing_normal_area_m2": 7.5642026377529525,
+      "missing_sigma_count": 9881,
+      "missing_sigma_area_m2": 656.6843826481041,
+      "unavailable_count": 9881,
+      "unavailable_area_m2": 656.6843826481041,
+      "unavailable_fraction": 0.2115526029642694,
+      "eval_unavailable_fraction": 0.024907876216420474,
+      "band_unavailable_fraction": 0.4128106031728466,
+      "missing_sigma_by_als_status": {
+        "1": {
+          "patches": 8859,
+          "area_m2": 591.6028675759709
+        },
+        "2": {
+          "patches": 888,
+          "area_m2": 60.51804516579397
+        },
+        "3": {
+          "patches": 134,
+          "area_m2": 4.563469906339183
+        }
+      }
+    }
+  ],
+  "source": "tables/stop_verification.json",
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz_m": [
+      690953,
+      5336071,
+      604
+    ],
+    "height_sign": "outward normal positive; identical to inherited mvs_p and gt_p"
+  },
+  "plot": "all patches; no statistical thinning",
+  "scientific_verdict": null
+}

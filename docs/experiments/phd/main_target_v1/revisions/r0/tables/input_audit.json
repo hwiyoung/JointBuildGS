@@ -1,0 +1,405 @@
+{
+  "task_id": "PHD-MAIN-TARGET-v1",
+  "status": "STOP_STAGE0",
+  "started_at": "2026-10-31T23:33:18.209234+09:00",
+  "finished_at": "2026-10-31T23:33:20.837630+09:00",
+  "seconds": 2.6284028002992272,
+  "config_sha256": "447e888fc46317b88f337ba337593b4db7eb891f62e39b989c54270ae4afa406",
+  "source_commit": "09508e8ef08efbd9a8eeb445de5455cbb748a619",
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "patches": 44994,
+      "total_area_m2": 3048.6031006629823,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_ALS.npz",
+      "region_sha256": "3688914603342ff8f71771cfb4be298db9a95dcdfd34c9686251071ad3b66b90",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__ALS__R1.5.npz",
+      "direct_source_exists": true,
+      "source_site": "B0_b10",
+      "frame_shift": [
+        -0.048193370826016664,
+        0.04305113898865463,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "26cc2a09fb8bebc2e8f2015a1942e88977b69143bace54dc2bbe474f833b3eca",
+      "source_patches": 44994,
+      "source_frame_shift": [
+        -0.048193370826016664,
+        0.04305113898865463,
+        0.0
+      ],
+      "same_order": true,
+      "matched_patches": 44994,
+      "unmatched_patches": 0,
+      "matched_area_m2": 3048.6031006629823,
+      "unmatched_area_m2": 0.0,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unavailable_patches": 12041,
+      "unavailable_area_m2": 808.8181603184172,
+      "unavailable_area_fraction": 0.2653077929831282,
+      "missing_mvs_u_area_m2": 810.489277684091,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "reason": "Missing normal or prior sigma covers more than 10 percent of unit area"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "patches": 143652,
+      "total_area_m2": 8978.19084436015,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+      "region_sha256": "bb62ec5a7846a9fb0ead2b3c2a631945e57461675e0a80bab2eef75eed6935cd",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__LoD2__R1.5.npz",
+      "direct_source_exists": true,
+      "source_site": "B0_b10",
+      "frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "119714835775aae0f5b962b491edcf8ae929ec19d9275441e93ef55106f4b6e9",
+      "source_patches": 143652,
+      "source_frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "same_order": true,
+      "matched_patches": 143652,
+      "unmatched_patches": 0,
+      "matched_area_m2": 8978.19084436015,
+      "unmatched_area_m2": 0.0,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unavailable_patches": 6,
+      "unavailable_area_m2": 0.375,
+      "unavailable_area_fraction": 4.176788024455557e-05,
+      "missing_mvs_u_area_m2": 1785.62834436015,
+      "status": "PASS_INPUT_JOIN"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "patches": 76657,
+      "total_area_m2": 5039.673523948937,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_ALS.npz",
+      "region_sha256": "6d2e35cca0df49470a2e8978a0b2e4a9e5b171ba5288ac7b67d4b18e08aed026",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__ALS__R1.5.npz",
+      "direct_source_exists": true,
+      "source_site": "B173nb_b10",
+      "frame_shift": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "5043f432dff0515083ab47dfb9fe4f6b7e1ae1f37882e9cc807620e339b23e8d",
+      "source_patches": 76657,
+      "source_frame_shift": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "same_order": true,
+      "matched_patches": 76657,
+      "unmatched_patches": 0,
+      "matched_area_m2": 5039.673523948937,
+      "unmatched_area_m2": 0.0,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unavailable_patches": 23897,
+      "unavailable_area_m2": 1564.4425393626816,
+      "unavailable_area_fraction": 0.31042537416924404,
+      "missing_mvs_u_area_m2": 1480.5964706487705,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "reason": "Missing normal or prior sigma covers more than 10 percent of unit area"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "patches": 258097,
+      "total_area_m2": 16131.0625,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_LoD2.npz",
+      "region_sha256": "b3aa211fe9bb9251ad822e4d7f95e45259ab826c40a8aff56c776398937cc08f",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__LoD2__R1.5.npz",
+      "direct_source_exists": true,
+      "source_site": "B173nb_b10",
+      "frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "9947d3ce4a336607f4efa77efc820d5d5e673c2bd23ca70e1e7a7d8a12c29258",
+      "source_patches": 258097,
+      "source_frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "same_order": true,
+      "matched_patches": 258097,
+      "unmatched_patches": 0,
+      "matched_area_m2": 16131.0625,
+      "unmatched_area_m2": 0.0,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unavailable_patches": 2,
+      "unavailable_area_m2": 0.125,
+      "unavailable_area_fraction": 7.749024591529542e-06,
+      "missing_mvs_u_area_m2": 6489.6875,
+      "status": "PASS_INPUT_JOIN"
+    },
+    {
+      "site": "B173_b0",
+      "prior": "ALS",
+      "patches": 29955,
+      "total_area_m2": 2021.2965265916293,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173_b0_ALS.npz",
+      "region_sha256": "a2d905ae5231d8a9a81bfeb191aa037419a3a6718f22047ab3c36296c3dcc2ab",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__ALS__R1.5.npz",
+      "direct_source_exists": false,
+      "source_site": "B173nb_b10",
+      "frame_shift": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "5043f432dff0515083ab47dfb9fe4f6b7e1ae1f37882e9cc807620e339b23e8d",
+      "source_patches": 76657,
+      "source_frame_shift": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "same_order": false,
+      "matched_patches": 36,
+      "unmatched_patches": 29919,
+      "matched_area_m2": 0.7819364629923801,
+      "unmatched_area_m2": 2020.514590128637,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.10949783936721343,
+        0.14112729366414647,
+        0.6555613831326798
+      ],
+      "mvs_split_files": [
+        {
+          "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173_b0/split.json",
+          "sha256": "6f42ff655f374364b606a7e47414801d5d8dff7eaaa0e1c92d0c65208c807769"
+        },
+        {
+          "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/split.json",
+          "sha256": "d583fab11cdca2463b782e576c864cea5088563440a59a520a9386f98402e447"
+        }
+      ],
+      "mvs_train_membership_equal": false,
+      "mvs_source_identity": "not established for separate experimental unit",
+      "unregistered_nearest_distance_m_quantiles": [
+        0.0,
+        0.10949783936721343,
+        0.14112729366414647,
+        0.6555613831326798
+      ],
+      "unregistered_exact_centres": 36,
+      "status": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "reason": "No exact full patch mapping to inherited ring uncertainty with the same MVS source"
+    },
+    {
+      "site": "B173_b0",
+      "prior": "LoD2",
+      "patches": 119384,
+      "total_area_m2": 7461.5,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173_b0_LoD2.npz",
+      "region_sha256": "76e44627294556006cc4a7a9a0ccd7c04f7f349c3861b6487de218c6c65e3132",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__LoD2__R1.5.npz",
+      "direct_source_exists": false,
+      "source_site": "B173nb_b10",
+      "frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "9947d3ce4a336607f4efa77efc820d5d5e673c2bd23ca70e1e7a7d8a12c29258",
+      "source_patches": 258097,
+      "source_frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "same_order": false,
+      "matched_patches": 119373,
+      "unmatched_patches": 11,
+      "matched_area_m2": 7460.8125,
+      "unmatched_area_m2": 0.6875,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        2.2873215326901577
+      ],
+      "mvs_split_files": [
+        {
+          "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173_b0/split.json",
+          "sha256": "6f42ff655f374364b606a7e47414801d5d8dff7eaaa0e1c92d0c65208c807769"
+        },
+        {
+          "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/split.json",
+          "sha256": "d583fab11cdca2463b782e576c864cea5088563440a59a520a9386f98402e447"
+        }
+      ],
+      "mvs_train_membership_equal": false,
+      "mvs_source_identity": "not established for separate experimental unit",
+      "unregistered_nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        2.2873215326901577
+      ],
+      "unregistered_exact_centres": 119373,
+      "status": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "reason": "No exact full patch mapping to inherited ring uncertainty with the same MVS source"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "patches": 46215,
+      "total_area_m2": 3104.118661016978,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_ALS.npz",
+      "region_sha256": "0ea60fbf9e779a40a4e80fa185a6192fe8932598bbc3cdae43cc103df83af575",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__ALS__R1.5.npz",
+      "direct_source_exists": true,
+      "source_site": "R1rep_b10",
+      "frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "30c96038a4273887caecf38e099a120be2da1b6d226c6a256a1d5c09602211b3",
+      "source_patches": 46215,
+      "source_frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "same_order": true,
+      "matched_patches": 46215,
+      "unmatched_patches": 0,
+      "matched_area_m2": 3104.118661016978,
+      "unmatched_area_m2": 0.0,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unavailable_patches": 9881,
+      "unavailable_area_m2": 656.684382648104,
+      "unavailable_area_fraction": 0.2115526029642693,
+      "missing_mvs_u_area_m2": 656.4688369314108,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "reason": "Missing normal or prior sigma covers more than 10 percent of unit area"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "patches": 138579,
+      "total_area_m2": 8661.1875,
+      "region_path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+      "region_sha256": "e54b2646d4e380283c18aab3db25435127dd0b699c5ac14216b0d8db511ef405",
+      "uncertainty_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__LoD2__R1.5.npz",
+      "direct_source_exists": true,
+      "source_site": "R1rep_b10",
+      "frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_tag": "[이 발주에서 냄]",
+      "uncertainty_sha256": "ddf02e972a2b5ac2fe61856d3fdedb1d2f36da1ab0ab161e5e507ec51b7391b2",
+      "source_patches": 138579,
+      "source_frame_shift": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "same_order": true,
+      "matched_patches": 138579,
+      "unmatched_patches": 0,
+      "matched_area_m2": 8661.1875,
+      "unmatched_area_m2": 0.0,
+      "nearest_distance_m_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unavailable_patches": 0,
+      "unavailable_area_m2": 0.0,
+      "unavailable_area_fraction": 0.0,
+      "missing_mvs_u_area_m2": 1946.5,
+      "status": "PASS_INPUT_JOIN"
+    }
+  ],
+  "failures": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "gate": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "reason": "Missing normal or prior sigma covers more than 10 percent of unit area"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "gate": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "reason": "Missing normal or prior sigma covers more than 10 percent of unit area"
+    },
+    {
+      "site": "B173_b0",
+      "prior": "ALS",
+      "gate": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "reason": "No exact full patch mapping to inherited ring uncertainty with the same MVS source"
+    },
+    {
+      "site": "B173_b0",
+      "prior": "LoD2",
+      "gate": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "reason": "No exact full patch mapping to inherited ring uncertainty with the same MVS source"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "gate": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "reason": "Missing normal or prior sigma covers more than 10 percent of unit area"
+    }
+  ],
+  "holdout_accuracy_opened": false,
+  "T2_computed": false,
+  "targets_generated": false,
+  "training_started": false,
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

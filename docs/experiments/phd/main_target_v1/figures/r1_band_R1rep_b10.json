@@ -1,0 +1,57 @@
+{
+  "title": "R1: 띠 패치가 저장 점군 범위를 벗어난다",
+  "values": {
+    "site": "R1rep_b10",
+    "range": "band",
+    "state1_patches": 8764,
+    "state1_area_m2": 583.4912650865623,
+    "empty_column_patches": 8752,
+    "nonempty_without_20pct_layer": 12,
+    "empty_outside_crop_by_gt_05m": 8679,
+    "empty_inside_crop_or_near_edge": 73,
+    "crop_uv": [
+      [
+        -12.0,
+        -39.6
+      ],
+      [
+        68.3,
+        35.8
+      ]
+    ],
+    "patch_uv_range": [
+      [
+        -31.14451596060897,
+        -54.40056400929683
+      ],
+      [
+        87.26363382698717,
+        56.40022590938223
+      ]
+    ],
+    "nearest_XY_gt_05m": 8750,
+    "nearest_XY_gt_15m": 8141,
+    "nearest_XY_le_05m_but_abs_dz_gt_10m": 0,
+    "empty_nearest_XY_quantile_m": [
+      0.43106867706135976,
+      8.56253983913364,
+      17.163484374303923,
+      20.61247854704976
+    ],
+    "empty_nearest_XY_dz_quantile_m": [
+      -25.143705736656354,
+      -0.09998637641975883,
+      11.47539459102005,
+      22.135157023302042
+    ],
+    "empty_patch_Z_quantile_m": [
+      -47.53848417020053,
+      -24.415763050993775,
+      -19.26157455226847,
+      -12.68119788342323
+    ]
+  },
+  "note": "빈 원통 8,752개 중 8,679개가 잘라낸 범위에서 0.5 m 이상 벗어남",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

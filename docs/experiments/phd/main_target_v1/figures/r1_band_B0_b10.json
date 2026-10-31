@@ -1,0 +1,57 @@
+{
+  "title": "B0: 띠 패치가 저장 점군 범위를 벗어난다",
+  "values": {
+    "site": "B0_b10",
+    "range": "band",
+    "state1_patches": 11548,
+    "state1_area_m2": 778.5126440235816,
+    "empty_column_patches": 11547,
+    "nonempty_without_20pct_layer": 1,
+    "empty_outside_crop_by_gt_05m": 11483,
+    "empty_inside_crop_or_near_edge": 64,
+    "crop_uv": [
+      [
+        15.100000000000001,
+        67.6
+      ],
+      [
+        111.8,
+        124.4
+      ]
+    ],
+    "patch_uv_range": [
+      [
+        1.957380543502647,
+        42.07704750043833
+      ],
+      [
+        120.95630062168158,
+        109.14500867980061
+      ]
+    ],
+    "nearest_XY_gt_05m": 11541,
+    "nearest_XY_gt_15m": 10990,
+    "nearest_XY_le_05m_but_abs_dz_gt_10m": 0,
+    "empty_nearest_XY_quantile_m": [
+      0.4393656157839517,
+      9.00009539348499,
+      20.629659752763533,
+      25.551185723098357
+    ],
+    "empty_nearest_XY_dz_quantile_m": [
+      -21.935952018699773,
+      -0.48132623637408756,
+      0.37600183645665053,
+      16.955429077089804
+    ],
+    "empty_patch_Z_quantile_m": [
+      -43.91399999999995,
+      -26.018382509221123,
+      -12.59618874600171,
+      -10.889299794801673
+    ]
+  },
+  "note": "빈 원통 11,547개 중 11,483개가 잘라낸 범위에서 0.5 m 이상 벗어남",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

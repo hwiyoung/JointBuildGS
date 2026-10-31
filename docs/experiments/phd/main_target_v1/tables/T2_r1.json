@@ -1,0 +1,2852 @@
+{
+  "task_id": "PHD-MAIN-TARGET-v1",
+  "at": "2026-10-31T23:57:01.485865+09:00",
+  "status": "PASS_T2_MIXTURE",
+  "fits": {
+    "main_u": {
+      "T2_m": 0.5302531550822607,
+      "means_log10": [
+        -0.7366934343136569,
+        0.23826450911188576
+      ],
+      "centres_m": [
+        0.18336082979729135,
+        1.7308702329653556
+      ],
+      "sd_log10": [
+        0.22940334433384,
+        0.29130637439320706
+      ],
+      "area_weights": [
+        0.5563786528184025,
+        0.4436213471815983
+      ],
+      "iterations": 500,
+      "history": [
+        {
+          "iteration": 1,
+          "log_likelihood": -0.9521157549690729
+        },
+        {
+          "iteration": 10,
+          "log_likelihood": -0.6468561555039402
+        },
+        {
+          "iteration": 50,
+          "log_likelihood": -0.6468313725683557
+        },
+        {
+          "iteration": 100,
+          "log_likelihood": -0.6468312606666962
+        },
+        {
+          "iteration": 200,
+          "log_likelihood": -0.6468312605244938
+        },
+        {
+          "iteration": 500,
+          "log_likelihood": -0.6468312605244952
+        }
+      ],
+      "status": "PASS_T2_MIXTURE",
+      "eligible_patches": 44184,
+      "eligible_area_m2": 2951.6116256824353
+    },
+    "sensitivity_a": {
+      "T2_m": 0.2941340956945589,
+      "means_log10": [
+        -0.8540244476338777,
+        -0.014416545409866297
+      ],
+      "centres_m": [
+        0.1399508538160629,
+        0.9673495959422564
+      ],
+      "sd_log10": [
+        0.16400773624340922,
+        0.4332847638339219
+      ],
+      "area_weights": [
+        0.5623442739014173,
+        0.43765572609856723
+      ],
+      "iterations": 500,
+      "history": [
+        {
+          "iteration": 1,
+          "log_likelihood": -0.9077074833480407
+        },
+        {
+          "iteration": 10,
+          "log_likelihood": -0.5270251910440497
+        },
+        {
+          "iteration": 50,
+          "log_likelihood": -0.5255976869466781
+        },
+        {
+          "iteration": 100,
+          "log_likelihood": -0.5255643727709652
+        },
+        {
+          "iteration": 200,
+          "log_likelihood": -0.5255642228129925
+        },
+        {
+          "iteration": 500,
+          "log_likelihood": -0.5255642228104485
+        }
+      ],
+      "status": "PASS_T2_MIXTURE",
+      "eligible_patches": 69494,
+      "eligible_area_m2": 4637.675591161265
+    }
+  },
+  "config_sha256": "8fe56883d6f29303b1f31c3de739b0dae303f75d3b6a9f26c32a51d15a714a97",
+  "reference_a_only_T2_m": 0.855,
+  "inputs": [
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6907_53359__ALS.npz",
+      "sha256": "c435280fe36eaad029310c006daa499cc07fd38cf45a798374ecb43e9a2fc5d0"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53359__ALS__R1.5.npz",
+      "sha256": "fb4b8dc820928573fb6234960eeabb011c480e0ab2f521b61f87db1d9cf08dfc"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6907_53360__ALS.npz",
+      "sha256": "8ddc75148733a290f3869a75f52ce101f929afb4c8833a4d1b4d482798e16366"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6907_53360__ALS__R1.5.npz",
+      "sha256": "fa5ed0e2b338d5742fa8fb355ef49dd484d19a7dd56dde504e940f18a771043e"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6908_53358__ALS.npz",
+      "sha256": "8257d159b7309c1a051af86a611b52ffc998655af6ae5d5d2f3be5db6f8f4c90"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53358__ALS__R1.5.npz",
+      "sha256": "ec1be39e57386e55c851a3e9506a9d6d3b599963446517c2027b3e278b66f401"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6908_53359__ALS.npz",
+      "sha256": "6a01881654eeb54ea36a3f1ae8a536d0fed968e6cc982483608760836e2e0570"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53359__ALS__R1.5.npz",
+      "sha256": "cd3001ad58e988c5e8f66168a01e78ab349f1b18354b189a340bb39d31a6e5eb"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6908_53360__ALS.npz",
+      "sha256": "9fb2bf90b37b34dee428c3c8ddc2eb656955b4533d9c63a30c4a461f321da102"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53360__ALS__R1.5.npz",
+      "sha256": "5541154a2d4c28e41fea796bf87d2b662e5e308a9467a79c53fc512763db643f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6908_53361__ALS.npz",
+      "sha256": "02188dcfede195e0ff6ee3f0d9983e6223166891391ec3b6d5c685d914dd767a"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53361__ALS__R1.5.npz",
+      "sha256": "0cf4f25c728d70139d211ac2fdfbf42c4eaf48b283235673deeb1862f36bb71d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6908_53362__ALS.npz",
+      "sha256": "061aa61330c88c3b8a496b40ed72efb553940a7cec04b48c0382c57710111db7"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6908_53362__ALS__R1.5.npz",
+      "sha256": "c8d44041f5e3d5ee2d1c364b7dbee12aebb5f261d4cebc3559f9453d5166d836"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6909_53358__ALS.npz",
+      "sha256": "22ad1ff01af8410096bcc9869a24d371f8cfbf40ecaf93cd3f431358e03311b0"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53358__ALS__R1.5.npz",
+      "sha256": "63c54596fd6aeffe8a079d21ad9b2e9524c15132ba349f7eb04bda6d954765d4"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6909_53359__ALS.npz",
+      "sha256": "9e8e4f69e2f5a764f4a2b708bbe74fe651349479498d6c8dc8a6e090f01ca2ca"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53359__ALS__R1.5.npz",
+      "sha256": "8c7d6402e01b0a841492d7e17282f44a554386123486140cdef1b65f1fecad95"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6909_53360__ALS.npz",
+      "sha256": "dafc53469a097d744ef8373e4ef510c7625526a008aba028304347bbf50586e5"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53360__ALS__R1.5.npz",
+      "sha256": "f5ac8ce7ab16c3ce000354917d4a905c39af69802b19a7ce1ab8022c21c81115"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6909_53361__ALS.npz",
+      "sha256": "ffdb719de5f88545678be37f03ea63d369f081495f1bc981938381f94b46211c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53361__ALS__R1.5.npz",
+      "sha256": "3f8b8c86bb39b475b3ecf95dbdb6e14259fd1bd140d5a1d63af91e7cb548f010"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6909_53362__ALS.npz",
+      "sha256": "0841dbf59570f82363eae4c196490942f2f485dce4aa274395a0b75aa5592072"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53362__ALS__R1.5.npz",
+      "sha256": "d0599948fdd3247a50c73914fae3a67815eccce0273410cb8ca947543eafd180"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6909_53363__ALS.npz",
+      "sha256": "8a95f32398603e2835354536cf0655dabb5e5a2b6d50bc6f843d195b849bd648"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6909_53363__ALS__R1.5.npz",
+      "sha256": "546e4a47f79cf4175ad4f965c25c7fb7f4df6c073774198523b15a7358ac436a"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6910_53359__ALS.npz",
+      "sha256": "3c17b0dce887ad296d1e1a43fc0eadef732be867a78310ddb63cefbb65eed419"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53359__ALS__R1.5.npz",
+      "sha256": "af5ef1fcc9881b9e6c30be178e704615181cf0cb63319e9b9417c918e10f733c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6910_53360__ALS.npz",
+      "sha256": "e224ff9c8c4cced8b68b0fe42e0303ea3893bba96aff2bc5d56b1223edbec002"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53360__ALS__R1.5.npz",
+      "sha256": "048c65a39f3dbfa38b29bc5afadab101d7c0dea1a4c991aa11fb63317c516b11"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6910_53361__ALS.npz",
+      "sha256": "13a282fa9a681dcf2ab5a74136975366fc9d0925730bcdd9a9aaa55672bb91b7"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53361__ALS__R1.5.npz",
+      "sha256": "b9ca52a429ac0d344d318f7f2e9fa81f9a4f8ef7c3324a851525451dfbb17e57"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6910_53362__ALS.npz",
+      "sha256": "7d22a9118f6d8860eeca3b20c2be389a76aa3b7adec7ab2ead7682bb93a32104"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53362__ALS__R1.5.npz",
+      "sha256": "844aa339b512666d0ca0b91ad02a0aab46346c99296ca13453a9347542ae9479"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6910_53363__ALS.npz",
+      "sha256": "78e8abc234092a43bd19c0c937a14d5d050bc6b544f37ede14b43a99d3e0a6d9"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6910_53363__ALS__R1.5.npz",
+      "sha256": "df1dd3360d9c85fd1ab532935ed474be5f00d0264d684167c3486a0622af65de"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6911_53361__ALS.npz",
+      "sha256": "2bea9a75443d9bc2a47fe378be8555cbdf7c052e3648a3c12b807c5c62789952"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53361__ALS__R1.5.npz",
+      "sha256": "1111fab53c7f5c1783e1a4f26b220652a421f28676f6442b3b88d5b62a50e85d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6911_53362__ALS.npz",
+      "sha256": "707eb2c98ed156e659f30c77a4f4ec44e68eff2067f5b6ee40d7a0fe4b7e55d5"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53362__ALS__R1.5.npz",
+      "sha256": "6712566ed9b54f5d79f0df981b9a9ebb628c915df68c0457afed1bbe136b0d64"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/core_points/6911_53363__ALS.npz",
+      "sha256": "4e49076b079365150dd7675bb10cd7827c129299899b0afb15c323060ba1ba6f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/patch_values/6911_53363__ALS__R1.5.npz",
+      "sha256": "ff51a70a7d0a201a01d14d7ca5902ff64a1f7f929947774f4f5fa4cad56b229f"
+    }
+  ],
+  "no_gt_fields_loaded": true,
+  "no_gt_selected_parameters_loaded": true,
+  "replacement_scope": "development building and kind; before selecting significant differences",
+  "medians": {
+    "u": [
+      {
+        "group": "DEBY_LOD2_104583447:1",
+        "donors": 55,
+        "missing": 3,
+        "median": 0.04406469687819481,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_104586480:1",
+        "donors": 184,
+        "missing": 0,
+        "median": 0.024202583357691765,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_108246888:1",
+        "donors": 126,
+        "missing": 27,
+        "median": 0.13919658958911896,
+        "replaced": 27
+      },
+      {
+        "group": "DEBY_LOD2_108250120:1",
+        "donors": 254,
+        "missing": 134,
+        "median": 0.16667772829532623,
+        "replaced": 134
+      },
+      {
+        "group": "DEBY_LOD2_42364609:1",
+        "donors": 200,
+        "missing": 9,
+        "median": 0.02963403519243002,
+        "replaced": 9
+      },
+      {
+        "group": "DEBY_LOD2_42364657:1",
+        "donors": 1323,
+        "missing": 15,
+        "median": 0.014794674701988697,
+        "replaced": 15
+      },
+      {
+        "group": "DEBY_LOD2_42364659:1",
+        "donors": 855,
+        "missing": 2,
+        "median": 0.06063799932599068,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_42364661:1",
+        "donors": 681,
+        "missing": 57,
+        "median": 0.11110660433769226,
+        "replaced": 57
+      },
+      {
+        "group": "DEBY_LOD2_42364663:1",
+        "donors": 24,
+        "missing": 287,
+        "median": 0.40638045966625214,
+        "replaced": 287
+      },
+      {
+        "group": "DEBY_LOD2_42364665:1",
+        "donors": 85,
+        "missing": 71,
+        "median": 0.06448378413915634,
+        "replaced": 71
+      },
+      {
+        "group": "DEBY_LOD2_42364667:1",
+        "donors": 74,
+        "missing": 84,
+        "median": 0.052490148693323135,
+        "replaced": 84
+      },
+      {
+        "group": "DEBY_LOD2_4906965:1",
+        "donors": 29703,
+        "missing": 504,
+        "median": 0.029367759823799133,
+        "replaced": 504
+      },
+      {
+        "group": "DEBY_LOD2_4906966:1",
+        "donors": 20112,
+        "missing": 98,
+        "median": 0.021216622553765774,
+        "replaced": 98
+      },
+      {
+        "group": "DEBY_LOD2_4906967:1",
+        "donors": 31041,
+        "missing": 1261,
+        "median": 0.042015425860881805,
+        "replaced": 1261
+      },
+      {
+        "group": "DEBY_LOD2_4906969:1",
+        "donors": 1667,
+        "missing": 247,
+        "median": 0.06593943387269974,
+        "replaced": 247
+      },
+      {
+        "group": "DEBY_LOD2_4906970:1",
+        "donors": 1446,
+        "missing": 10,
+        "median": 0.048164281994104385,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_4906972:1",
+        "donors": 5035,
+        "missing": 18,
+        "median": 0.039178356528282166,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4906973:1",
+        "donors": 686,
+        "missing": 22,
+        "median": 0.044695597141981125,
+        "replaced": 22
+      },
+      {
+        "group": "DEBY_LOD2_4906974:1",
+        "donors": 4650,
+        "missing": 12,
+        "median": 0.03623945452272892,
+        "replaced": 12
+      },
+      {
+        "group": "DEBY_LOD2_4906976:1",
+        "donors": 3607,
+        "missing": 48,
+        "median": 0.026777446269989014,
+        "replaced": 48
+      },
+      {
+        "group": "DEBY_LOD2_4906977:1",
+        "donors": 7750,
+        "missing": 82,
+        "median": 0.02754340972751379,
+        "replaced": 82
+      },
+      {
+        "group": "DEBY_LOD2_4906980:1",
+        "donors": 249,
+        "missing": 32,
+        "median": 0.12119898200035095,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4906981:1",
+        "donors": 21106,
+        "missing": 91,
+        "median": 0.024766373448073864,
+        "replaced": 91
+      },
+      {
+        "group": "DEBY_LOD2_4906982:1",
+        "donors": 20067,
+        "missing": 18,
+        "median": 0.023938817903399467,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4906983:1",
+        "donors": 14069,
+        "missing": 32,
+        "median": 0.02195856161415577,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4906984:1",
+        "donors": 3363,
+        "missing": 17,
+        "median": 0.026850420981645584,
+        "replaced": 17
+      },
+      {
+        "group": "DEBY_LOD2_4906985:1",
+        "donors": 11894,
+        "missing": 58,
+        "median": 0.039877843111753464,
+        "replaced": 58
+      },
+      {
+        "group": "DEBY_LOD2_4906986:1",
+        "donors": 3391,
+        "missing": 14,
+        "median": 0.04646490141749382,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4906987:1",
+        "donors": 3441,
+        "missing": 7,
+        "median": 0.03526615723967552,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4906988:1",
+        "donors": 1807,
+        "missing": 5,
+        "median": 0.034344956278800964,
+        "replaced": 5
+      },
+      {
+        "group": "DEBY_LOD2_4906989:1",
+        "donors": 1577,
+        "missing": 121,
+        "median": 0.015861619263887405,
+        "replaced": 121
+      },
+      {
+        "group": "DEBY_LOD2_4906990:1",
+        "donors": 1382,
+        "missing": 28,
+        "median": 0.020051294937729836,
+        "replaced": 28
+      },
+      {
+        "group": "DEBY_LOD2_4906991:1",
+        "donors": 2399,
+        "missing": 52,
+        "median": 0.025392653420567513,
+        "replaced": 52
+      },
+      {
+        "group": "DEBY_LOD2_4906992:1",
+        "donors": 1,
+        "missing": 292,
+        "median": 0.04539414122700691,
+        "replaced": 292
+      },
+      {
+        "group": "DEBY_LOD2_4906993:1",
+        "donors": 2756,
+        "missing": 46,
+        "median": 0.07448098808526993,
+        "replaced": 46
+      },
+      {
+        "group": "DEBY_LOD2_4906994:1",
+        "donors": 0,
+        "missing": 57,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907017:1",
+        "donors": 3,
+        "missing": 14,
+        "median": 0.1169767677783966,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4907020:1",
+        "donors": 4872,
+        "missing": 46,
+        "median": 0.010422421153634787,
+        "replaced": 46
+      },
+      {
+        "group": "DEBY_LOD2_4907023:1",
+        "donors": 2673,
+        "missing": 29,
+        "median": 0.017639650031924248,
+        "replaced": 29
+      },
+      {
+        "group": "DEBY_LOD2_4907025:1",
+        "donors": 6371,
+        "missing": 111,
+        "median": 0.0634523555636406,
+        "replaced": 111
+      },
+      {
+        "group": "DEBY_LOD2_4907028:1",
+        "donors": 3,
+        "missing": 1,
+        "median": 0.15881884098052979,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4907173:1",
+        "donors": 4885,
+        "missing": 29,
+        "median": 0.040842559188604355,
+        "replaced": 29
+      },
+      {
+        "group": "DEBY_LOD2_4907175:1",
+        "donors": 166,
+        "missing": 192,
+        "median": 0.2616313546895981,
+        "replaced": 192
+      },
+      {
+        "group": "DEBY_LOD2_4907176:1",
+        "donors": 1336,
+        "missing": 351,
+        "median": 0.034262727946043015,
+        "replaced": 351
+      },
+      {
+        "group": "DEBY_LOD2_4907179:1",
+        "donors": 1301,
+        "missing": 70,
+        "median": 0.07536794990301132,
+        "replaced": 70
+      },
+      {
+        "group": "DEBY_LOD2_4907180:1",
+        "donors": 2611,
+        "missing": 94,
+        "median": 0.029666848480701447,
+        "replaced": 94
+      },
+      {
+        "group": "DEBY_LOD2_4907181:1",
+        "donors": 393,
+        "missing": 10,
+        "median": 0.02149442583322525,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_4907183:1",
+        "donors": 4609,
+        "missing": 105,
+        "median": 0.020243937149643898,
+        "replaced": 105
+      },
+      {
+        "group": "DEBY_LOD2_4907184:1",
+        "donors": 4032,
+        "missing": 31,
+        "median": 0.014819884207099676,
+        "replaced": 31
+      },
+      {
+        "group": "DEBY_LOD2_4907185:1",
+        "donors": 85,
+        "missing": 3,
+        "median": 0.15097680687904358,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_4907198:1",
+        "donors": 7,
+        "missing": 12,
+        "median": 0.11893995851278305,
+        "replaced": 12
+      },
+      {
+        "group": "DEBY_LOD2_4907201:1",
+        "donors": 2322,
+        "missing": 2,
+        "median": 0.023767011240124702,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4907204:1",
+        "donors": 2567,
+        "missing": 31,
+        "median": 0.1062067300081253,
+        "replaced": 31
+      },
+      {
+        "group": "DEBY_LOD2_4907205:1",
+        "donors": 289,
+        "missing": 0,
+        "median": 0.040175020694732666,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907206:1",
+        "donors": 2929,
+        "missing": 7,
+        "median": 0.011939233168959618,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4907207:1",
+        "donors": 1934,
+        "missing": 107,
+        "median": 0.05549802631139755,
+        "replaced": 107
+      },
+      {
+        "group": "DEBY_LOD2_4907208:1",
+        "donors": 0,
+        "missing": 6,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907505:1",
+        "donors": 607,
+        "missing": 11,
+        "median": 0.06670332700014114,
+        "replaced": 11
+      },
+      {
+        "group": "DEBY_LOD2_4907506:1",
+        "donors": 1441,
+        "missing": 32,
+        "median": 0.05455106869339943,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4907507:1",
+        "donors": 1988,
+        "missing": 55,
+        "median": 0.06208321452140808,
+        "replaced": 55
+      },
+      {
+        "group": "DEBY_LOD2_4907508:1",
+        "donors": 1164,
+        "missing": 497,
+        "median": 0.11323394998908043,
+        "replaced": 497
+      },
+      {
+        "group": "DEBY_LOD2_4907509:1",
+        "donors": 4653,
+        "missing": 147,
+        "median": 0.08473251014947891,
+        "replaced": 147
+      },
+      {
+        "group": "DEBY_LOD2_4907510:1",
+        "donors": 1386,
+        "missing": 56,
+        "median": 0.07127007842063904,
+        "replaced": 56
+      },
+      {
+        "group": "DEBY_LOD2_4907514:1",
+        "donors": 3783,
+        "missing": 76,
+        "median": 0.06128580495715141,
+        "replaced": 76
+      },
+      {
+        "group": "DEBY_LOD2_4907515:1",
+        "donors": 4506,
+        "missing": 18,
+        "median": 0.04754295200109482,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4907516:1",
+        "donors": 2333,
+        "missing": 13,
+        "median": 0.05125078558921814,
+        "replaced": 13
+      },
+      {
+        "group": "DEBY_LOD2_4907517:1",
+        "donors": 2541,
+        "missing": 14,
+        "median": 0.05948558449745178,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4907518:1",
+        "donors": 3606,
+        "missing": 2,
+        "median": 0.04158206842839718,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4907519:1",
+        "donors": 45375,
+        "missing": 2164,
+        "median": 0.050033725798130035,
+        "replaced": 2164
+      },
+      {
+        "group": "DEBY_LOD2_4907520:1",
+        "donors": 3640,
+        "missing": 0,
+        "median": 0.0190054876729846,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907521:1",
+        "donors": 3655,
+        "missing": 747,
+        "median": 0.04979034513235092,
+        "replaced": 747
+      },
+      {
+        "group": "DEBY_LOD2_4908023:1",
+        "donors": 292,
+        "missing": 1,
+        "median": 0.022852796129882336,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908024:1",
+        "donors": 296,
+        "missing": 2,
+        "median": 0.01785922609269619,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908025:1",
+        "donors": 296,
+        "missing": 1,
+        "median": 0.020625590346753597,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908026:1",
+        "donors": 301,
+        "missing": 1,
+        "median": 0.01929040625691414,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908027:1",
+        "donors": 302,
+        "missing": 2,
+        "median": 0.022196023724973202,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908028:1",
+        "donors": 293,
+        "missing": 3,
+        "median": 0.023470846936106682,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_4908032:1",
+        "donors": 484,
+        "missing": 14,
+        "median": 0.033446187153458595,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4908033:1",
+        "donors": 815,
+        "missing": 60,
+        "median": 0.06433596462011337,
+        "replaced": 60
+      },
+      {
+        "group": "DEBY_LOD2_4908034:1",
+        "donors": 51,
+        "missing": 596,
+        "median": 0.11514919996261597,
+        "replaced": 596
+      },
+      {
+        "group": "DEBY_LOD2_4908046:1",
+        "donors": 192,
+        "missing": 18,
+        "median": 0.06213032267987728,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4908048:1",
+        "donors": 19,
+        "missing": 732,
+        "median": 0.08707103133201599,
+        "replaced": 732
+      },
+      {
+        "group": "DEBY_LOD2_4908050:1",
+        "donors": 1550,
+        "missing": 215,
+        "median": 0.019127868115901947,
+        "replaced": 215
+      },
+      {
+        "group": "DEBY_LOD2_4908168:1",
+        "donors": 111,
+        "missing": 23,
+        "median": 0.02429771050810814,
+        "replaced": 23
+      },
+      {
+        "group": "DEBY_LOD2_4908169:1",
+        "donors": 7,
+        "missing": 6,
+        "median": 0.1750521957874298,
+        "replaced": 6
+      },
+      {
+        "group": "DEBY_LOD2_4908176:1",
+        "donors": 43,
+        "missing": 0,
+        "median": 0.21188509464263916,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4908351:1",
+        "donors": 343,
+        "missing": 419,
+        "median": 0.12631291151046753,
+        "replaced": 419
+      },
+      {
+        "group": "DEBY_LOD2_4908352:1",
+        "donors": 435,
+        "missing": 0,
+        "median": 0.24726463854312897,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4908353:1",
+        "donors": 1977,
+        "missing": 14,
+        "median": 0.12011627107858658,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4908354:1",
+        "donors": 200,
+        "missing": 28,
+        "median": 0.23237545788288116,
+        "replaced": 28
+      },
+      {
+        "group": "DEBY_LOD2_4959294:1",
+        "donors": 43,
+        "missing": 48,
+        "median": 0.31594187021255493,
+        "replaced": 48
+      },
+      {
+        "group": "DEBY_LOD2_4959299:1",
+        "donors": 0,
+        "missing": 2,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959316:1",
+        "donors": 427,
+        "missing": 204,
+        "median": 0.1399535983800888,
+        "replaced": 204
+      },
+      {
+        "group": "DEBY_LOD2_4959320:1",
+        "donors": 55,
+        "missing": 46,
+        "median": 0.10314786434173584,
+        "replaced": 46
+      },
+      {
+        "group": "DEBY_LOD2_4959325:1",
+        "donors": 10625,
+        "missing": 292,
+        "median": 0.04591751471161842,
+        "replaced": 292
+      },
+      {
+        "group": "DEBY_LOD2_4959327:1",
+        "donors": 7354,
+        "missing": 19,
+        "median": 0.05196520686149597,
+        "replaced": 19
+      },
+      {
+        "group": "DEBY_LOD2_4959336:1",
+        "donors": 6146,
+        "missing": 191,
+        "median": 0.029894291423261166,
+        "replaced": 191
+      },
+      {
+        "group": "DEBY_LOD2_4959340:1",
+        "donors": 6001,
+        "missing": 0,
+        "median": 0.02380261942744255,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959458:1",
+        "donors": 8498,
+        "missing": 33,
+        "median": 0.05500408448278904,
+        "replaced": 33
+      },
+      {
+        "group": "DEBY_LOD2_4959459:1",
+        "donors": 5177,
+        "missing": 91,
+        "median": 0.057490698993206024,
+        "replaced": 91
+      },
+      {
+        "group": "DEBY_LOD2_4959461:1",
+        "donors": 13078,
+        "missing": 48,
+        "median": 0.025325280614197254,
+        "replaced": 48
+      },
+      {
+        "group": "DEBY_LOD2_4959463:1",
+        "donors": 828,
+        "missing": 0,
+        "median": 0.029518366791307926,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959464:1",
+        "donors": 3166,
+        "missing": 12,
+        "median": 0.02163447067141533,
+        "replaced": 12
+      },
+      {
+        "group": "DEBY_LOD2_4959465:1",
+        "donors": 2752,
+        "missing": 53,
+        "median": 0.04648066125810146,
+        "replaced": 53
+      },
+      {
+        "group": "DEBY_LOD2_4959466:1",
+        "donors": 2056,
+        "missing": 159,
+        "median": 0.03511618636548519,
+        "replaced": 159
+      },
+      {
+        "group": "DEBY_LOD2_4959753:1",
+        "donors": 565,
+        "missing": 32,
+        "median": 0.12103625386953354,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4959754:1",
+        "donors": 265,
+        "missing": 35,
+        "median": 0.11837255954742432,
+        "replaced": 35
+      },
+      {
+        "group": "DEBY_LOD2_4959758:1",
+        "donors": 18,
+        "missing": 7,
+        "median": 0.050049908459186554,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4959759:1",
+        "donors": 26,
+        "missing": 7,
+        "median": 0.09688771516084671,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4959760:1",
+        "donors": 36,
+        "missing": 15,
+        "median": 0.062114816159009933,
+        "replaced": 15
+      },
+      {
+        "group": "DEBY_LOD2_4959762:1",
+        "donors": 0,
+        "missing": 4,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959794:1",
+        "donors": 726,
+        "missing": 55,
+        "median": 0.035748304799199104,
+        "replaced": 55
+      },
+      {
+        "group": "DEBY_LOD2_60042:1",
+        "donors": 51006,
+        "missing": 620,
+        "median": 0.035871777683496475,
+        "replaced": 620
+      },
+      {
+        "group": "DEBY_LOD2_60043:1",
+        "donors": 0,
+        "missing": 75,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_60097:1",
+        "donors": 12,
+        "missing": 3,
+        "median": 0.15010711550712585,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_8568362:1",
+        "donors": 7,
+        "missing": 49,
+        "median": 0.23412741720676422,
+        "replaced": 49
+      },
+      {
+        "group": "DEBY_LOD2_8568363:1",
+        "donors": 256,
+        "missing": 11,
+        "median": 0.12458020821213722,
+        "replaced": 11
+      },
+      {
+        "group": "DEBY_LOD2_8568403:1",
+        "donors": 81,
+        "missing": 10,
+        "median": 0.337189257144928,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_8573846:1",
+        "donors": 1575,
+        "missing": 406,
+        "median": 0.14192959666252136,
+        "replaced": 406
+      },
+      {
+        "group": "DEBY_LOD2_8573847:1",
+        "donors": 6034,
+        "missing": 196,
+        "median": 0.08303489163517952,
+        "replaced": 196
+      },
+      {
+        "group": "DEBY_LOD2_8573848:1",
+        "donors": 19454,
+        "missing": 726,
+        "median": 0.039827484637498856,
+        "replaced": 726
+      },
+      {
+        "group": "DEBY_LOD2_8573849:1",
+        "donors": 11835,
+        "missing": 150,
+        "median": 0.043466612696647644,
+        "replaced": 150
+      }
+    ],
+    "sigma_p": [
+      {
+        "group": "DEBY_LOD2_104583447:1",
+        "donors": 54,
+        "missing": 4,
+        "median": 0.030260417908087117,
+        "replaced": 4
+      },
+      {
+        "group": "DEBY_LOD2_104586480:1",
+        "donors": 158,
+        "missing": 26,
+        "median": 0.02970371823471962,
+        "replaced": 26
+      },
+      {
+        "group": "DEBY_LOD2_108246888:1",
+        "donors": 145,
+        "missing": 8,
+        "median": 0.07419596190309369,
+        "replaced": 8
+      },
+      {
+        "group": "DEBY_LOD2_108250120:1",
+        "donors": 374,
+        "missing": 14,
+        "median": 0.03020407613596473,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_42364609:1",
+        "donors": 208,
+        "missing": 1,
+        "median": 0.030833843649018068,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_42364657:1",
+        "donors": 1320,
+        "missing": 18,
+        "median": 0.029941120503227593,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_42364659:1",
+        "donors": 841,
+        "missing": 16,
+        "median": 0.031590182943276215,
+        "replaced": 16
+      },
+      {
+        "group": "DEBY_LOD2_42364661:1",
+        "donors": 727,
+        "missing": 11,
+        "median": 0.1050895596890707,
+        "replaced": 11
+      },
+      {
+        "group": "DEBY_LOD2_42364663:1",
+        "donors": 243,
+        "missing": 68,
+        "median": 0.0289777387624703,
+        "replaced": 68
+      },
+      {
+        "group": "DEBY_LOD2_42364665:1",
+        "donors": 88,
+        "missing": 68,
+        "median": 0.030940446552296406,
+        "replaced": 68
+      },
+      {
+        "group": "DEBY_LOD2_42364667:1",
+        "donors": 78,
+        "missing": 80,
+        "median": 0.031188692605751446,
+        "replaced": 80
+      },
+      {
+        "group": "DEBY_LOD2_4906965:1",
+        "donors": 29818,
+        "missing": 389,
+        "median": 0.03052131047192521,
+        "replaced": 389
+      },
+      {
+        "group": "DEBY_LOD2_4906966:1",
+        "donors": 20090,
+        "missing": 120,
+        "median": 0.028918278913522236,
+        "replaced": 120
+      },
+      {
+        "group": "DEBY_LOD2_4906967:1",
+        "donors": 29951,
+        "missing": 2351,
+        "median": 0.030268759703371267,
+        "replaced": 2351
+      },
+      {
+        "group": "DEBY_LOD2_4906969:1",
+        "donors": 1822,
+        "missing": 92,
+        "median": 0.031008373985184037,
+        "replaced": 92
+      },
+      {
+        "group": "DEBY_LOD2_4906970:1",
+        "donors": 1329,
+        "missing": 127,
+        "median": 0.031991152920698346,
+        "replaced": 127
+      },
+      {
+        "group": "DEBY_LOD2_4906972:1",
+        "donors": 5036,
+        "missing": 17,
+        "median": 0.031803711229301763,
+        "replaced": 17
+      },
+      {
+        "group": "DEBY_LOD2_4906973:1",
+        "donors": 685,
+        "missing": 23,
+        "median": 0.02977284010032965,
+        "replaced": 23
+      },
+      {
+        "group": "DEBY_LOD2_4906974:1",
+        "donors": 4630,
+        "missing": 32,
+        "median": 0.02929907116956689,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4906976:1",
+        "donors": 3641,
+        "missing": 14,
+        "median": 0.031095165806054825,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4906977:1",
+        "donors": 7740,
+        "missing": 92,
+        "median": 0.02894619628145821,
+        "replaced": 92
+      },
+      {
+        "group": "DEBY_LOD2_4906980:1",
+        "donors": 257,
+        "missing": 24,
+        "median": 0.03089873798647879,
+        "replaced": 24
+      },
+      {
+        "group": "DEBY_LOD2_4906981:1",
+        "donors": 21093,
+        "missing": 104,
+        "median": 0.029036790728696808,
+        "replaced": 104
+      },
+      {
+        "group": "DEBY_LOD2_4906982:1",
+        "donors": 19847,
+        "missing": 238,
+        "median": 0.029906566864092467,
+        "replaced": 238
+      },
+      {
+        "group": "DEBY_LOD2_4906983:1",
+        "donors": 14075,
+        "missing": 26,
+        "median": 0.029924039186740366,
+        "replaced": 26
+      },
+      {
+        "group": "DEBY_LOD2_4906984:1",
+        "donors": 3326,
+        "missing": 54,
+        "median": 0.029483096014083738,
+        "replaced": 54
+      },
+      {
+        "group": "DEBY_LOD2_4906985:1",
+        "donors": 11691,
+        "missing": 261,
+        "median": 0.03128791385152518,
+        "replaced": 261
+      },
+      {
+        "group": "DEBY_LOD2_4906986:1",
+        "donors": 3377,
+        "missing": 28,
+        "median": 0.03108192170496607,
+        "replaced": 28
+      },
+      {
+        "group": "DEBY_LOD2_4906987:1",
+        "donors": 3413,
+        "missing": 35,
+        "median": 0.030672803632313023,
+        "replaced": 35
+      },
+      {
+        "group": "DEBY_LOD2_4906988:1",
+        "donors": 1806,
+        "missing": 6,
+        "median": 0.029902671911973724,
+        "replaced": 6
+      },
+      {
+        "group": "DEBY_LOD2_4906989:1",
+        "donors": 1678,
+        "missing": 20,
+        "median": 0.030078540549513262,
+        "replaced": 20
+      },
+      {
+        "group": "DEBY_LOD2_4906990:1",
+        "donors": 1410,
+        "missing": 0,
+        "median": 0.029360271817746125,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4906991:1",
+        "donors": 2430,
+        "missing": 21,
+        "median": 0.029354851714570886,
+        "replaced": 21
+      },
+      {
+        "group": "DEBY_LOD2_4906992:1",
+        "donors": 289,
+        "missing": 4,
+        "median": 0.03224608787787526,
+        "replaced": 4
+      },
+      {
+        "group": "DEBY_LOD2_4906993:1",
+        "donors": 2775,
+        "missing": 27,
+        "median": 0.0295938341920048,
+        "replaced": 27
+      },
+      {
+        "group": "DEBY_LOD2_4906994:1",
+        "donors": 57,
+        "missing": 0,
+        "median": 0.03354997634100875,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907017:1",
+        "donors": 17,
+        "missing": 0,
+        "median": 0.03680823932376522,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907020:1",
+        "donors": 4892,
+        "missing": 26,
+        "median": 0.02968683619991049,
+        "replaced": 26
+      },
+      {
+        "group": "DEBY_LOD2_4907023:1",
+        "donors": 2692,
+        "missing": 10,
+        "median": 0.02904724716508851,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_4907025:1",
+        "donors": 6299,
+        "missing": 183,
+        "median": 0.030331066067327578,
+        "replaced": 183
+      },
+      {
+        "group": "DEBY_LOD2_4907028:1",
+        "donors": 4,
+        "missing": 0,
+        "median": 0.036704095844614586,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907173:1",
+        "donors": 4848,
+        "missing": 66,
+        "median": 0.031291781131936966,
+        "replaced": 66
+      },
+      {
+        "group": "DEBY_LOD2_4907175:1",
+        "donors": 354,
+        "missing": 4,
+        "median": 0.03495643498463272,
+        "replaced": 4
+      },
+      {
+        "group": "DEBY_LOD2_4907176:1",
+        "donors": 1678,
+        "missing": 9,
+        "median": 0.03295354633072178,
+        "replaced": 9
+      },
+      {
+        "group": "DEBY_LOD2_4907179:1",
+        "donors": 1320,
+        "missing": 51,
+        "median": 0.035183543505341565,
+        "replaced": 51
+      },
+      {
+        "group": "DEBY_LOD2_4907180:1",
+        "donors": 2643,
+        "missing": 62,
+        "median": 0.031200389404968262,
+        "replaced": 62
+      },
+      {
+        "group": "DEBY_LOD2_4907181:1",
+        "donors": 401,
+        "missing": 2,
+        "median": 0.0292098352881316,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4907183:1",
+        "donors": 4656,
+        "missing": 58,
+        "median": 0.03084711341158497,
+        "replaced": 58
+      },
+      {
+        "group": "DEBY_LOD2_4907184:1",
+        "donors": 4007,
+        "missing": 56,
+        "median": 0.031201534177891656,
+        "replaced": 56
+      },
+      {
+        "group": "DEBY_LOD2_4907185:1",
+        "donors": 85,
+        "missing": 3,
+        "median": 0.041771294240798104,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_4907198:1",
+        "donors": 19,
+        "missing": 0,
+        "median": 0.0307801801916737,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907201:1",
+        "donors": 2318,
+        "missing": 6,
+        "median": 0.030881827425774326,
+        "replaced": 6
+      },
+      {
+        "group": "DEBY_LOD2_4907204:1",
+        "donors": 2526,
+        "missing": 72,
+        "median": 0.03760913765479272,
+        "replaced": 72
+      },
+      {
+        "group": "DEBY_LOD2_4907205:1",
+        "donors": 288,
+        "missing": 1,
+        "median": 0.02940771804917315,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4907206:1",
+        "donors": 2922,
+        "missing": 14,
+        "median": 0.029167918419066196,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4907207:1",
+        "donors": 2006,
+        "missing": 35,
+        "median": 0.02988552468726921,
+        "replaced": 35
+      },
+      {
+        "group": "DEBY_LOD2_4907208:1",
+        "donors": 6,
+        "missing": 0,
+        "median": 0.03164326620645448,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907505:1",
+        "donors": 598,
+        "missing": 20,
+        "median": 0.031134401791739867,
+        "replaced": 20
+      },
+      {
+        "group": "DEBY_LOD2_4907506:1",
+        "donors": 1438,
+        "missing": 35,
+        "median": 0.03118830210729315,
+        "replaced": 35
+      },
+      {
+        "group": "DEBY_LOD2_4907507:1",
+        "donors": 1986,
+        "missing": 57,
+        "median": 0.03047443267577224,
+        "replaced": 57
+      },
+      {
+        "group": "DEBY_LOD2_4907508:1",
+        "donors": 1646,
+        "missing": 15,
+        "median": 0.030237727354434037,
+        "replaced": 15
+      },
+      {
+        "group": "DEBY_LOD2_4907509:1",
+        "donors": 4787,
+        "missing": 13,
+        "median": 0.030629961504129832,
+        "replaced": 13
+      },
+      {
+        "group": "DEBY_LOD2_4907510:1",
+        "donors": 1384,
+        "missing": 58,
+        "median": 0.0314061028313458,
+        "replaced": 58
+      },
+      {
+        "group": "DEBY_LOD2_4907514:1",
+        "donors": 3817,
+        "missing": 42,
+        "median": 0.03326618185503352,
+        "replaced": 42
+      },
+      {
+        "group": "DEBY_LOD2_4907515:1",
+        "donors": 4501,
+        "missing": 23,
+        "median": 0.03240090007857818,
+        "replaced": 23
+      },
+      {
+        "group": "DEBY_LOD2_4907516:1",
+        "donors": 2322,
+        "missing": 24,
+        "median": 0.03117723663653592,
+        "replaced": 24
+      },
+      {
+        "group": "DEBY_LOD2_4907517:1",
+        "donors": 2530,
+        "missing": 25,
+        "median": 0.030371650224614657,
+        "replaced": 25
+      },
+      {
+        "group": "DEBY_LOD2_4907518:1",
+        "donors": 3601,
+        "missing": 7,
+        "median": 0.030712206747705664,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4907519:1",
+        "donors": 47168,
+        "missing": 371,
+        "median": 0.030131363808310815,
+        "replaced": 371
+      },
+      {
+        "group": "DEBY_LOD2_4907520:1",
+        "donors": 3640,
+        "missing": 0,
+        "median": 0.02979100323754838,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907521:1",
+        "donors": 4387,
+        "missing": 15,
+        "median": 0.030623447805618733,
+        "replaced": 15
+      },
+      {
+        "group": "DEBY_LOD2_4908023:1",
+        "donors": 290,
+        "missing": 3,
+        "median": 0.040940524416333876,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_4908024:1",
+        "donors": 297,
+        "missing": 1,
+        "median": 0.02951835639309012,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908025:1",
+        "donors": 296,
+        "missing": 1,
+        "median": 0.029544399125491748,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908026:1",
+        "donors": 302,
+        "missing": 0,
+        "median": 0.02984238849244116,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4908027:1",
+        "donors": 302,
+        "missing": 2,
+        "median": 0.03239068477066674,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908028:1",
+        "donors": 294,
+        "missing": 2,
+        "median": 0.045955773155191074,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908032:1",
+        "donors": 496,
+        "missing": 2,
+        "median": 0.03041692858115127,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908033:1",
+        "donors": 861,
+        "missing": 14,
+        "median": 0.034056528400872865,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4908034:1",
+        "donors": 637,
+        "missing": 10,
+        "median": 0.029665312698550043,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_4908046:1",
+        "donors": 208,
+        "missing": 2,
+        "median": 0.031382924752305495,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908048:1",
+        "donors": 740,
+        "missing": 11,
+        "median": 0.028022799925215662,
+        "replaced": 11
+      },
+      {
+        "group": "DEBY_LOD2_4908050:1",
+        "donors": 1760,
+        "missing": 5,
+        "median": 0.02823694361654713,
+        "replaced": 5
+      },
+      {
+        "group": "DEBY_LOD2_4908168:1",
+        "donors": 133,
+        "missing": 1,
+        "median": 0.029869900765190697,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908169:1",
+        "donors": 13,
+        "missing": 0,
+        "median": 0.03933679521760423,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4908176:1",
+        "donors": 14,
+        "missing": 29,
+        "median": 0.029489072689270857,
+        "replaced": 29
+      },
+      {
+        "group": "DEBY_LOD2_4908351:1",
+        "donors": 757,
+        "missing": 5,
+        "median": 0.03521532273548075,
+        "replaced": 5
+      },
+      {
+        "group": "DEBY_LOD2_4908352:1",
+        "donors": 435,
+        "missing": 0,
+        "median": 0.032342667777137,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4908353:1",
+        "donors": 1978,
+        "missing": 13,
+        "median": 0.031661357902568264,
+        "replaced": 13
+      },
+      {
+        "group": "DEBY_LOD2_4908354:1",
+        "donors": 220,
+        "missing": 8,
+        "median": 0.035975965086463224,
+        "replaced": 8
+      },
+      {
+        "group": "DEBY_LOD2_4959294:1",
+        "donors": 89,
+        "missing": 2,
+        "median": 0.03051679794703964,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4959299:1",
+        "donors": 0,
+        "missing": 2,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959316:1",
+        "donors": 596,
+        "missing": 35,
+        "median": 0.04229271811085031,
+        "replaced": 35
+      },
+      {
+        "group": "DEBY_LOD2_4959320:1",
+        "donors": 64,
+        "missing": 37,
+        "median": 0.032917675594984985,
+        "replaced": 37
+      },
+      {
+        "group": "DEBY_LOD2_4959325:1",
+        "donors": 10526,
+        "missing": 391,
+        "median": 0.02929850554648293,
+        "replaced": 391
+      },
+      {
+        "group": "DEBY_LOD2_4959327:1",
+        "donors": 7278,
+        "missing": 95,
+        "median": 0.03048207784377268,
+        "replaced": 95
+      },
+      {
+        "group": "DEBY_LOD2_4959336:1",
+        "donors": 6183,
+        "missing": 154,
+        "median": 0.03011828913043821,
+        "replaced": 154
+      },
+      {
+        "group": "DEBY_LOD2_4959340:1",
+        "donors": 5984,
+        "missing": 17,
+        "median": 0.029234317600844176,
+        "replaced": 17
+      },
+      {
+        "group": "DEBY_LOD2_4959458:1",
+        "donors": 8475,
+        "missing": 56,
+        "median": 0.02941845031883691,
+        "replaced": 56
+      },
+      {
+        "group": "DEBY_LOD2_4959459:1",
+        "donors": 5126,
+        "missing": 142,
+        "median": 0.02865536135091949,
+        "replaced": 142
+      },
+      {
+        "group": "DEBY_LOD2_4959461:1",
+        "donors": 13021,
+        "missing": 105,
+        "median": 0.028427080225077814,
+        "replaced": 105
+      },
+      {
+        "group": "DEBY_LOD2_4959463:1",
+        "donors": 823,
+        "missing": 5,
+        "median": 0.029172508080163223,
+        "replaced": 5
+      },
+      {
+        "group": "DEBY_LOD2_4959464:1",
+        "donors": 3135,
+        "missing": 43,
+        "median": 0.029008227331168417,
+        "replaced": 43
+      },
+      {
+        "group": "DEBY_LOD2_4959465:1",
+        "donors": 2779,
+        "missing": 26,
+        "median": 0.030070083774079784,
+        "replaced": 26
+      },
+      {
+        "group": "DEBY_LOD2_4959466:1",
+        "donors": 2189,
+        "missing": 26,
+        "median": 0.03056771330858985,
+        "replaced": 26
+      },
+      {
+        "group": "DEBY_LOD2_4959753:1",
+        "donors": 573,
+        "missing": 24,
+        "median": 0.029495696088492875,
+        "replaced": 24
+      },
+      {
+        "group": "DEBY_LOD2_4959754:1",
+        "donors": 300,
+        "missing": 0,
+        "median": 0.030066954106969034,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959758:1",
+        "donors": 23,
+        "missing": 2,
+        "median": 0.029378537113604296,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4959759:1",
+        "donors": 33,
+        "missing": 0,
+        "median": 0.10797755729861508,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959760:1",
+        "donors": 49,
+        "missing": 2,
+        "median": 0.030324111327026802,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4959762:1",
+        "donors": 2,
+        "missing": 2,
+        "median": 0.1698516476759817,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4959794:1",
+        "donors": 774,
+        "missing": 7,
+        "median": 0.03192864506345727,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_60042:1",
+        "donors": 50357,
+        "missing": 1269,
+        "median": 0.02915237820322989,
+        "replaced": 1269
+      },
+      {
+        "group": "DEBY_LOD2_60043:1",
+        "donors": 75,
+        "missing": 0,
+        "median": 0.029678407467016863,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_60097:1",
+        "donors": 10,
+        "missing": 5,
+        "median": 0.029769153791406332,
+        "replaced": 5
+      },
+      {
+        "group": "DEBY_LOD2_8568362:1",
+        "donors": 51,
+        "missing": 5,
+        "median": 0.0339346708737281,
+        "replaced": 5
+      },
+      {
+        "group": "DEBY_LOD2_8568363:1",
+        "donors": 264,
+        "missing": 3,
+        "median": 0.09413237851369544,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_8568403:1",
+        "donors": 89,
+        "missing": 2,
+        "median": 0.032887469920546905,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_8573846:1",
+        "donors": 1654,
+        "missing": 327,
+        "median": 0.03316095175366316,
+        "replaced": 327
+      },
+      {
+        "group": "DEBY_LOD2_8573847:1",
+        "donors": 6108,
+        "missing": 122,
+        "median": 0.031044690290649084,
+        "replaced": 122
+      },
+      {
+        "group": "DEBY_LOD2_8573848:1",
+        "donors": 19952,
+        "missing": 228,
+        "median": 0.029587705775951073,
+        "replaced": 228
+      },
+      {
+        "group": "DEBY_LOD2_8573849:1",
+        "donors": 11818,
+        "missing": 167,
+        "median": 0.02938447848721648,
+        "replaced": 167
+      }
+    ],
+    "a_sensitivity": [
+      {
+        "group": "DEBY_LOD2_104583447:1",
+        "donors": 55,
+        "missing": 3,
+        "median": 0.02059924043715,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_104586480:1",
+        "donors": 184,
+        "missing": 0,
+        "median": 0.004984995815902948,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_108246888:1",
+        "donors": 126,
+        "missing": 27,
+        "median": 0.07131199166178703,
+        "replaced": 27
+      },
+      {
+        "group": "DEBY_LOD2_108250120:1",
+        "donors": 254,
+        "missing": 134,
+        "median": 0.0969671830534935,
+        "replaced": 134
+      },
+      {
+        "group": "DEBY_LOD2_42364609:1",
+        "donors": 200,
+        "missing": 9,
+        "median": 0.013881729450076818,
+        "replaced": 9
+      },
+      {
+        "group": "DEBY_LOD2_42364657:1",
+        "donors": 1323,
+        "missing": 15,
+        "median": 0.007262038998305798,
+        "replaced": 15
+      },
+      {
+        "group": "DEBY_LOD2_42364659:1",
+        "donors": 855,
+        "missing": 2,
+        "median": 0.022842155769467354,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_42364661:1",
+        "donors": 681,
+        "missing": 57,
+        "median": 0.06005840003490448,
+        "replaced": 57
+      },
+      {
+        "group": "DEBY_LOD2_42364663:1",
+        "donors": 24,
+        "missing": 287,
+        "median": 0.13198018074035645,
+        "replaced": 287
+      },
+      {
+        "group": "DEBY_LOD2_42364665:1",
+        "donors": 85,
+        "missing": 71,
+        "median": 0.028179138898849487,
+        "replaced": 71
+      },
+      {
+        "group": "DEBY_LOD2_42364667:1",
+        "donors": 74,
+        "missing": 84,
+        "median": 0.026197881437838078,
+        "replaced": 84
+      },
+      {
+        "group": "DEBY_LOD2_4906965:1",
+        "donors": 29703,
+        "missing": 504,
+        "median": 0.009308021515607834,
+        "replaced": 504
+      },
+      {
+        "group": "DEBY_LOD2_4906966:1",
+        "donors": 20112,
+        "missing": 98,
+        "median": 0.005788539536297321,
+        "replaced": 98
+      },
+      {
+        "group": "DEBY_LOD2_4906967:1",
+        "donors": 31041,
+        "missing": 1261,
+        "median": 0.010019122622907162,
+        "replaced": 1261
+      },
+      {
+        "group": "DEBY_LOD2_4906969:1",
+        "donors": 1667,
+        "missing": 247,
+        "median": 0.028206201270222664,
+        "replaced": 247
+      },
+      {
+        "group": "DEBY_LOD2_4906970:1",
+        "donors": 1446,
+        "missing": 10,
+        "median": 0.014025075361132622,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_4906972:1",
+        "donors": 5035,
+        "missing": 18,
+        "median": 0.011180681176483631,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4906973:1",
+        "donors": 686,
+        "missing": 22,
+        "median": 0.017183680087327957,
+        "replaced": 22
+      },
+      {
+        "group": "DEBY_LOD2_4906974:1",
+        "donors": 4650,
+        "missing": 12,
+        "median": 0.010269802529364824,
+        "replaced": 12
+      },
+      {
+        "group": "DEBY_LOD2_4906976:1",
+        "donors": 3607,
+        "missing": 48,
+        "median": 0.0078118108212947845,
+        "replaced": 48
+      },
+      {
+        "group": "DEBY_LOD2_4906977:1",
+        "donors": 7750,
+        "missing": 82,
+        "median": 0.006765005178749561,
+        "replaced": 82
+      },
+      {
+        "group": "DEBY_LOD2_4906980:1",
+        "donors": 249,
+        "missing": 32,
+        "median": 0.05102293938398361,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4906981:1",
+        "donors": 21106,
+        "missing": 91,
+        "median": 0.005988829070702195,
+        "replaced": 91
+      },
+      {
+        "group": "DEBY_LOD2_4906982:1",
+        "donors": 20067,
+        "missing": 18,
+        "median": 0.008010555990040302,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4906983:1",
+        "donors": 14069,
+        "missing": 32,
+        "median": 0.007543925195932388,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4906984:1",
+        "donors": 3363,
+        "missing": 17,
+        "median": 0.007994481362402439,
+        "replaced": 17
+      },
+      {
+        "group": "DEBY_LOD2_4906985:1",
+        "donors": 11894,
+        "missing": 58,
+        "median": 0.018588727340102196,
+        "replaced": 58
+      },
+      {
+        "group": "DEBY_LOD2_4906986:1",
+        "donors": 3391,
+        "missing": 14,
+        "median": 0.01607402041554451,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4906987:1",
+        "donors": 3441,
+        "missing": 7,
+        "median": 0.013459229841828346,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4906988:1",
+        "donors": 1807,
+        "missing": 5,
+        "median": 0.015392008237540722,
+        "replaced": 5
+      },
+      {
+        "group": "DEBY_LOD2_4906989:1",
+        "donors": 1577,
+        "missing": 121,
+        "median": 0.0056402841582894325,
+        "replaced": 121
+      },
+      {
+        "group": "DEBY_LOD2_4906990:1",
+        "donors": 1382,
+        "missing": 28,
+        "median": 0.008951319381594658,
+        "replaced": 28
+      },
+      {
+        "group": "DEBY_LOD2_4906991:1",
+        "donors": 2399,
+        "missing": 52,
+        "median": 0.009506065398454666,
+        "replaced": 52
+      },
+      {
+        "group": "DEBY_LOD2_4906992:1",
+        "donors": 1,
+        "missing": 292,
+        "median": 0.03845636546611786,
+        "replaced": 292
+      },
+      {
+        "group": "DEBY_LOD2_4906993:1",
+        "donors": 2756,
+        "missing": 46,
+        "median": 0.031958743929862976,
+        "replaced": 46
+      },
+      {
+        "group": "DEBY_LOD2_4906994:1",
+        "donors": 0,
+        "missing": 57,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907017:1",
+        "donors": 3,
+        "missing": 14,
+        "median": 0.027512259781360626,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4907020:1",
+        "donors": 4872,
+        "missing": 46,
+        "median": 0.004543066723272204,
+        "replaced": 46
+      },
+      {
+        "group": "DEBY_LOD2_4907023:1",
+        "donors": 2673,
+        "missing": 29,
+        "median": 0.006279123947024345,
+        "replaced": 29
+      },
+      {
+        "group": "DEBY_LOD2_4907025:1",
+        "donors": 6371,
+        "missing": 111,
+        "median": 0.024784564971923828,
+        "replaced": 111
+      },
+      {
+        "group": "DEBY_LOD2_4907028:1",
+        "donors": 3,
+        "missing": 1,
+        "median": 0.01279844157397747,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4907173:1",
+        "donors": 4885,
+        "missing": 29,
+        "median": 0.01703510992228985,
+        "replaced": 29
+      },
+      {
+        "group": "DEBY_LOD2_4907175:1",
+        "donors": 166,
+        "missing": 192,
+        "median": 0.13719294965267181,
+        "replaced": 192
+      },
+      {
+        "group": "DEBY_LOD2_4907176:1",
+        "donors": 1336,
+        "missing": 351,
+        "median": 0.0199391171336174,
+        "replaced": 351
+      },
+      {
+        "group": "DEBY_LOD2_4907179:1",
+        "donors": 1301,
+        "missing": 70,
+        "median": 0.02997683361172676,
+        "replaced": 70
+      },
+      {
+        "group": "DEBY_LOD2_4907180:1",
+        "donors": 2611,
+        "missing": 94,
+        "median": 0.008415612392127514,
+        "replaced": 94
+      },
+      {
+        "group": "DEBY_LOD2_4907181:1",
+        "donors": 393,
+        "missing": 10,
+        "median": 0.009405894204974174,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_4907183:1",
+        "donors": 4609,
+        "missing": 105,
+        "median": 0.00932712759822607,
+        "replaced": 105
+      },
+      {
+        "group": "DEBY_LOD2_4907184:1",
+        "donors": 4032,
+        "missing": 31,
+        "median": 0.006424641236662865,
+        "replaced": 31
+      },
+      {
+        "group": "DEBY_LOD2_4907185:1",
+        "donors": 85,
+        "missing": 3,
+        "median": 0.09190427511930466,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_4907198:1",
+        "donors": 7,
+        "missing": 12,
+        "median": 0.04176149144768715,
+        "replaced": 12
+      },
+      {
+        "group": "DEBY_LOD2_4907201:1",
+        "donors": 2322,
+        "missing": 2,
+        "median": 0.010080946143716574,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4907204:1",
+        "donors": 2567,
+        "missing": 31,
+        "median": 0.04294910654425621,
+        "replaced": 31
+      },
+      {
+        "group": "DEBY_LOD2_4907205:1",
+        "donors": 289,
+        "missing": 0,
+        "median": 0.011930788867175579,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907206:1",
+        "donors": 2929,
+        "missing": 7,
+        "median": 0.004672226961702108,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4907207:1",
+        "donors": 1934,
+        "missing": 107,
+        "median": 0.017939328216016293,
+        "replaced": 107
+      },
+      {
+        "group": "DEBY_LOD2_4907208:1",
+        "donors": 0,
+        "missing": 6,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907505:1",
+        "donors": 607,
+        "missing": 11,
+        "median": 0.02316099777817726,
+        "replaced": 11
+      },
+      {
+        "group": "DEBY_LOD2_4907506:1",
+        "donors": 1441,
+        "missing": 32,
+        "median": 0.019724057987332344,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4907507:1",
+        "donors": 1988,
+        "missing": 55,
+        "median": 0.015298844780772924,
+        "replaced": 55
+      },
+      {
+        "group": "DEBY_LOD2_4907508:1",
+        "donors": 1164,
+        "missing": 497,
+        "median": 0.04438033141195774,
+        "replaced": 497
+      },
+      {
+        "group": "DEBY_LOD2_4907509:1",
+        "donors": 4653,
+        "missing": 147,
+        "median": 0.030538324266672134,
+        "replaced": 147
+      },
+      {
+        "group": "DEBY_LOD2_4907510:1",
+        "donors": 1386,
+        "missing": 56,
+        "median": 0.026140389032661915,
+        "replaced": 56
+      },
+      {
+        "group": "DEBY_LOD2_4907514:1",
+        "donors": 3783,
+        "missing": 76,
+        "median": 0.02323104254901409,
+        "replaced": 76
+      },
+      {
+        "group": "DEBY_LOD2_4907515:1",
+        "donors": 4506,
+        "missing": 18,
+        "median": 0.012485159561038017,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4907516:1",
+        "donors": 2333,
+        "missing": 13,
+        "median": 0.017057210206985474,
+        "replaced": 13
+      },
+      {
+        "group": "DEBY_LOD2_4907517:1",
+        "donors": 2541,
+        "missing": 14,
+        "median": 0.019184142351150513,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4907518:1",
+        "donors": 3606,
+        "missing": 2,
+        "median": 0.010307517368346453,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4907519:1",
+        "donors": 45375,
+        "missing": 2164,
+        "median": 0.01587224006652832,
+        "replaced": 2164
+      },
+      {
+        "group": "DEBY_LOD2_4907520:1",
+        "donors": 3640,
+        "missing": 0,
+        "median": 0.005081874318420887,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4907521:1",
+        "donors": 3655,
+        "missing": 747,
+        "median": 0.02005762979388237,
+        "replaced": 747
+      },
+      {
+        "group": "DEBY_LOD2_4908023:1",
+        "donors": 292,
+        "missing": 1,
+        "median": 0.006510785082355142,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908024:1",
+        "donors": 296,
+        "missing": 2,
+        "median": 0.005788643378764391,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908025:1",
+        "donors": 296,
+        "missing": 1,
+        "median": 0.0064954450353980064,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908026:1",
+        "donors": 301,
+        "missing": 1,
+        "median": 0.00614858977496624,
+        "replaced": 1
+      },
+      {
+        "group": "DEBY_LOD2_4908027:1",
+        "donors": 302,
+        "missing": 2,
+        "median": 0.006415370153263211,
+        "replaced": 2
+      },
+      {
+        "group": "DEBY_LOD2_4908028:1",
+        "donors": 293,
+        "missing": 3,
+        "median": 0.007595921400934458,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_4908032:1",
+        "donors": 484,
+        "missing": 14,
+        "median": 0.014681123662739992,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4908033:1",
+        "donors": 815,
+        "missing": 60,
+        "median": 0.02791399508714676,
+        "replaced": 60
+      },
+      {
+        "group": "DEBY_LOD2_4908034:1",
+        "donors": 51,
+        "missing": 596,
+        "median": 0.026527518406510353,
+        "replaced": 596
+      },
+      {
+        "group": "DEBY_LOD2_4908046:1",
+        "donors": 192,
+        "missing": 18,
+        "median": 0.028507286682724953,
+        "replaced": 18
+      },
+      {
+        "group": "DEBY_LOD2_4908048:1",
+        "donors": 19,
+        "missing": 732,
+        "median": 0.019881106913089752,
+        "replaced": 732
+      },
+      {
+        "group": "DEBY_LOD2_4908050:1",
+        "donors": 1550,
+        "missing": 215,
+        "median": 0.0071807983331382275,
+        "replaced": 215
+      },
+      {
+        "group": "DEBY_LOD2_4908168:1",
+        "donors": 111,
+        "missing": 23,
+        "median": 0.013887436129152775,
+        "replaced": 23
+      },
+      {
+        "group": "DEBY_LOD2_4908169:1",
+        "donors": 7,
+        "missing": 6,
+        "median": 0.013911254703998566,
+        "replaced": 6
+      },
+      {
+        "group": "DEBY_LOD2_4908176:1",
+        "donors": 43,
+        "missing": 0,
+        "median": 0.07432655245065689,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4908351:1",
+        "donors": 343,
+        "missing": 419,
+        "median": 0.04792670160531998,
+        "replaced": 419
+      },
+      {
+        "group": "DEBY_LOD2_4908352:1",
+        "donors": 435,
+        "missing": 0,
+        "median": 0.07169251143932343,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4908353:1",
+        "donors": 1977,
+        "missing": 14,
+        "median": 0.04402359202504158,
+        "replaced": 14
+      },
+      {
+        "group": "DEBY_LOD2_4908354:1",
+        "donors": 200,
+        "missing": 28,
+        "median": 0.1313350647687912,
+        "replaced": 28
+      },
+      {
+        "group": "DEBY_LOD2_4959294:1",
+        "donors": 43,
+        "missing": 48,
+        "median": 0.1169976070523262,
+        "replaced": 48
+      },
+      {
+        "group": "DEBY_LOD2_4959299:1",
+        "donors": 0,
+        "missing": 2,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959316:1",
+        "donors": 427,
+        "missing": 204,
+        "median": 0.06200405955314636,
+        "replaced": 204
+      },
+      {
+        "group": "DEBY_LOD2_4959320:1",
+        "donors": 55,
+        "missing": 46,
+        "median": 0.02800459787249565,
+        "replaced": 46
+      },
+      {
+        "group": "DEBY_LOD2_4959325:1",
+        "donors": 10625,
+        "missing": 292,
+        "median": 0.0178688932210207,
+        "replaced": 292
+      },
+      {
+        "group": "DEBY_LOD2_4959327:1",
+        "donors": 7354,
+        "missing": 19,
+        "median": 0.011613596696406603,
+        "replaced": 19
+      },
+      {
+        "group": "DEBY_LOD2_4959336:1",
+        "donors": 6146,
+        "missing": 191,
+        "median": 0.011537990067154169,
+        "replaced": 191
+      },
+      {
+        "group": "DEBY_LOD2_4959340:1",
+        "donors": 6001,
+        "missing": 0,
+        "median": 0.008975321426987648,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959458:1",
+        "donors": 8498,
+        "missing": 33,
+        "median": 0.010283944196999073,
+        "replaced": 33
+      },
+      {
+        "group": "DEBY_LOD2_4959459:1",
+        "donors": 5177,
+        "missing": 91,
+        "median": 0.011831124313175678,
+        "replaced": 91
+      },
+      {
+        "group": "DEBY_LOD2_4959461:1",
+        "donors": 13078,
+        "missing": 48,
+        "median": 0.008424363099038601,
+        "replaced": 48
+      },
+      {
+        "group": "DEBY_LOD2_4959463:1",
+        "donors": 828,
+        "missing": 0,
+        "median": 0.011425651609897614,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959464:1",
+        "donors": 3166,
+        "missing": 12,
+        "median": 0.010355784092098475,
+        "replaced": 12
+      },
+      {
+        "group": "DEBY_LOD2_4959465:1",
+        "donors": 2752,
+        "missing": 53,
+        "median": 0.01688960660248995,
+        "replaced": 53
+      },
+      {
+        "group": "DEBY_LOD2_4959466:1",
+        "donors": 2056,
+        "missing": 159,
+        "median": 0.016386423259973526,
+        "replaced": 159
+      },
+      {
+        "group": "DEBY_LOD2_4959753:1",
+        "donors": 565,
+        "missing": 32,
+        "median": 0.06054052710533142,
+        "replaced": 32
+      },
+      {
+        "group": "DEBY_LOD2_4959754:1",
+        "donors": 265,
+        "missing": 35,
+        "median": 0.05844578519463539,
+        "replaced": 35
+      },
+      {
+        "group": "DEBY_LOD2_4959758:1",
+        "donors": 18,
+        "missing": 7,
+        "median": 0.014693000819534063,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4959759:1",
+        "donors": 26,
+        "missing": 7,
+        "median": 0.026849474757909775,
+        "replaced": 7
+      },
+      {
+        "group": "DEBY_LOD2_4959760:1",
+        "donors": 36,
+        "missing": 15,
+        "median": 0.0285993879660964,
+        "replaced": 15
+      },
+      {
+        "group": "DEBY_LOD2_4959762:1",
+        "donors": 0,
+        "missing": 4,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_4959794:1",
+        "donors": 726,
+        "missing": 55,
+        "median": 0.022632521577179432,
+        "replaced": 55
+      },
+      {
+        "group": "DEBY_LOD2_60042:1",
+        "donors": 51006,
+        "missing": 620,
+        "median": 0.008445128798484802,
+        "replaced": 620
+      },
+      {
+        "group": "DEBY_LOD2_60043:1",
+        "donors": 0,
+        "missing": 75,
+        "median": null,
+        "replaced": 0
+      },
+      {
+        "group": "DEBY_LOD2_60097:1",
+        "donors": 12,
+        "missing": 3,
+        "median": 0.055567000061273575,
+        "replaced": 3
+      },
+      {
+        "group": "DEBY_LOD2_8568362:1",
+        "donors": 7,
+        "missing": 49,
+        "median": 0.18107938766479492,
+        "replaced": 49
+      },
+      {
+        "group": "DEBY_LOD2_8568363:1",
+        "donors": 256,
+        "missing": 11,
+        "median": 0.06158389896154404,
+        "replaced": 11
+      },
+      {
+        "group": "DEBY_LOD2_8568403:1",
+        "donors": 81,
+        "missing": 10,
+        "median": 0.22849945724010468,
+        "replaced": 10
+      },
+      {
+        "group": "DEBY_LOD2_8573846:1",
+        "donors": 1575,
+        "missing": 406,
+        "median": 0.04552771896123886,
+        "replaced": 406
+      },
+      {
+        "group": "DEBY_LOD2_8573847:1",
+        "donors": 6034,
+        "missing": 196,
+        "median": 0.037107596173882484,
+        "replaced": 196
+      },
+      {
+        "group": "DEBY_LOD2_8573848:1",
+        "donors": 19454,
+        "missing": 726,
+        "median": 0.01330406405031681,
+        "replaced": 726
+      },
+      {
+        "group": "DEBY_LOD2_8573849:1",
+        "donors": 11835,
+        "missing": 150,
+        "median": 0.013644877821207047,
+        "replaced": 150
+      }
+    ]
+  },
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

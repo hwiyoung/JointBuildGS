@@ -1,0 +1,41 @@
+{
+  "title": "B173만의 패치 전체를 B173 주변의 고리 불확실도에 연결할 수 없다",
+  "rows": [
+    {
+      "site": "B173_b0",
+      "prior": "ALS",
+      "patches": 29955,
+      "area_m2": 2021.2965265916296,
+      "status": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "matched_patches": 36,
+      "unmatched_patches": 29919,
+      "exact_coordinate_count": 36,
+      "missing_coordinate_count": 29919,
+      "missing_coordinate_area_m2": 2020.514590128637
+    },
+    {
+      "site": "B173_b0",
+      "prior": "LoD2",
+      "patches": 119384,
+      "area_m2": 7461.5,
+      "status": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "matched_patches": 119373,
+      "unmatched_patches": 11,
+      "exact_coordinate_count": 119373,
+      "missing_coordinate_count": 11,
+      "missing_coordinate_area_m2": 0.6875
+    }
+  ],
+  "source": "tables/stop_verification.json",
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz_m": [
+      690953,
+      5336071,
+      604
+    ],
+    "height_sign": "outward normal positive; identical to inherited mvs_p and gt_p"
+  },
+  "meaning": "coordinate equality only, not accepted uncertainty transfer",
+  "scientific_verdict": null
+}

@@ -8,7 +8,6 @@
   "sites": [
     "B0_b10",
     "B173nb_b10",
-    "B173_b0",
     "R1rep_b10"
   ],
   "priors": [
@@ -30,13 +29,26 @@
     "ring_m": 1.5,
     "data": "mvs_a",
     "u": "sqrt(a*a+s_ring*s_ring)",
-    "missing_value_fallback": "a if finite else 0, with explicit status and area",
+    "missing_value_fallback": "median of finite raw u in the same unit and kind; never zero or a-only",
     "missing_patch_join": "STOP_STAGE0_UNCERTAINTY_JOIN; never use a-only in its place",
     "join": "Direct region identity; otherwise identical centre, kind, area, normal and MVS lineage",
     "coordinate_tolerance_m": 1e-08,
-    "parent_candidate": {
-      "B173_b0": "B173nb_b10"
-    }
+    "parent_candidate": {},
+    "missing_prior_sigma": "median finite sigma_P in the same unit and kind",
+    "median_donor_scope": "same unit and same prior; kind 1 roof / kind 2 wall; evaluation and stored band combined; raw finite values only, unweighted median",
+    "jn_unit": "one stable building ID across tiles, separately within development or holdout; no cross-building or cross-split donors",
+    "empty_donor_group": "remain unavailable, never invent a median",
+    "replacement_flags": [
+      "u_replaced",
+      "sigma_p_replaced",
+      "any_replaced"
+    ],
+    "report_strata": [
+      "original",
+      "replaced",
+      "all"
+    ],
+    "sensitivity_missing_a": "same unit/kind raw finite a median; no zero substitution"
   },
   "cylinder": {
     "radii_m": [
@@ -241,7 +253,10 @@
       "conditional_gradient_guard",
       "borrowed_judgment",
       "old_judgment_weighted_depth"
-    ]
+    ],
+    "initial_arm_count": 6,
+    "deferred_arm_count": 2,
+    "deferred_release": "own uncertainty complete, stage0 gates and existing 7000-step pilot pass"
   },
   "stops": {
     "stage0": [
@@ -262,8 +277,50 @@
       "opacity_below_0.05",
       "oom"
     ],
-    "automatic_retry": false
+    "automatic_retry": false,
+    "stage0_unavailable_denominator": "in_eval area only; band reported separately",
+    "stage0_unavailable_definition": "missing/zero normal or values still unavailable after same-unit same-kind median filling"
   },
-  "stage_status": "INPUT_PREFLIGHT_ONLY",
-  "amendments": []
+  "stage_status": "REOPENED_STAGE0",
+  "amendments": [
+    {
+      "at": "2026-10-31T23:55:02.771185+09:00",
+      "reason": "Direct user decision 1-6 after stage0 stop",
+      "decision_sha256": "fd4997c7b2aebf3cb34f7ac2c2d878e4c821ff9c7ed5e552c0525ddc9f776ad0",
+      "previous_config_sha256": "447e888fc46317b88f337ba337593b4db7eb891f62e39b989c54270ae4afa406",
+      "previous_config": "revisions/r0/target_v1.json",
+      "prior_results_seen": "input missingness and geometric join only; no T2, judgment accuracy, target or training"
+    }
+  ],
+  "revision": "r1_user_decision_20261031",
+  "deferred_sites": [
+    "B173_b0"
+  ],
+  "b173_uncertainty": {
+    "site": "B173_b0",
+    "seed_site_id": 3,
+    "seed": 20261023,
+    "definition": "exact UNCERT-v1 1.5m ring, mvs_a and raw ALS; own cameras, training split, depth and confidence",
+    "sets": [
+      "ALS",
+      "LoD2"
+    ],
+    "data": {
+      "ALS": [
+        "mvs_a",
+        "als"
+      ],
+      "LoD2": [
+        "mvs_a"
+      ]
+    },
+    "use_gt": false,
+    "copy_neighbour_values": false,
+    "workers": 4
+  },
+  "lod2_sigma_provenance": {
+    "authority": "User decision 2026-10-31 item 4",
+    "statement": "2026-10-26 방법 재정리 세션이 참값 없이 구한 값이다. 정밀한 MVS(u 5 cm 이하)와 LoD2의 차 분포를 두 무리로 맞추고, 좁은 무리의 폭에서 MVS 흔들림을 뺐다. 참값으로 한 같은 셈(평지붕 17.1 cm)은 점검에만 썼다.",
+    "verification_boundary": "source statement supplied by user; original fitting session not independently replayed"
+  }
 }

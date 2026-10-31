@@ -1,0 +1,103 @@
+{
+  "status": "PASS_STAGE0_INDEPENDENT_CHECKS",
+  "at": "2026-11-01T00:12:20.677101+09:00",
+  "checks": [
+    {
+      "check": "mixture_boundary_and_monotonic_likelihood",
+      "variant": "main_u",
+      "status": "PASS"
+    },
+    {
+      "check": "mixture_boundary_and_monotonic_likelihood",
+      "variant": "sensitivity_a",
+      "status": "PASS"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 44994,
+      "unavailable_eval_fraction": 0.001181342412236757,
+      "target_sha256": "bd404909a941c57fb1e9bdbc3fc8020bf8ad88a81a800594477c76a76a093917"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 143652,
+      "unavailable_eval_fraction": 0.0,
+      "target_sha256": "b2851a69b6ba00bccc5707fd5c5e27bc562b4d18be178ee63d96c851fb1f7dd0"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 76657,
+      "unavailable_eval_fraction": 0.0013259810291620666,
+      "target_sha256": "df8d0bacaeee504150549cf95121afa6601b21323906d8f38d532c3d4435d55c"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 258097,
+      "unavailable_eval_fraction": 0.0,
+      "target_sha256": "0635d3249c02885ac2f6fcd0b858d732b662613b315f0391dcff133e4d760a1b"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 46215,
+      "unavailable_eval_fraction": 0.0032539308448696685,
+      "target_sha256": "0e5bd9679e6b31affdd1108c72bae7a7093a03f501fcf11c268c00d54c50a8a6"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 138579,
+      "unavailable_eval_fraction": 0.0,
+      "target_sha256": "315818d37aed25934c1c0f6e65f433675d3f21b149e1ffffb4de5284d7f2533f"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "B173_b0",
+      "prior": "ALS",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 29955,
+      "unavailable_eval_fraction": 0.001471883832798638,
+      "target_sha256": "836516fe494350c4a025a86642102b6fcd1067d1b2dc4eb17dcc9aa7cbe22236"
+    },
+    {
+      "check": "independent_scalar_target",
+      "site": "B173_b0",
+      "prior": "LoD2",
+      "sampled": 512,
+      "status": "PASS",
+      "patches": 119384,
+      "unavailable_eval_fraction": 0.0,
+      "target_sha256": "ddec8500b48240914aa173ebbb2fe387698a5b065b0142b8989fa2e678b3edca"
+    },
+    {
+      "check": "experimental_area_conservation",
+      "status": "PASS"
+    }
+  ],
+  "scientific_verdict": null,
+  "public_holdout_boundary": "aggregate counts, areas, fractions only; per-patch files exclusively under /out/holdout",
+  "config_sha256": "8fe56883d6f29303b1f31c3de739b0dae303f75d3b6a9f26c32a51d15a714a97"
+}

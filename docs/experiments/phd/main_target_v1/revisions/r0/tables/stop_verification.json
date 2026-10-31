@@ -1,0 +1,250 @@
+{
+  "status": "PASS_STOP_EVIDENCE",
+  "at": "2026-10-31T23:36:09.428826+09:00",
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "patches": 44994,
+      "area_m2": 3048.603100662983,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "matched_patches": 44994,
+      "unmatched_patches": 0,
+      "missing_normal_count": 151,
+      "missing_normal_area_m2": 4.978916413311958,
+      "missing_sigma_count": 12041,
+      "missing_sigma_area_m2": 808.8181603184172,
+      "unavailable_count": 12041,
+      "unavailable_area_m2": 808.8181603184172,
+      "unavailable_fraction": 0.2653077929831281,
+      "eval_unavailable_fraction": 0.0062865039092132174,
+      "band_unavailable_fraction": 0.5487387178443389,
+      "missing_sigma_by_als_status": {
+        "1": {
+          "patches": 11558,
+          "area_m2": 779.340363415232
+        },
+        "2": {
+          "patches": 375,
+          "area_m2": 25.72415029311389
+        },
+        "3": {
+          "patches": 108,
+          "area_m2": 3.7536466100712853
+        }
+      }
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "patches": 143652,
+      "area_m2": 8978.19084436015,
+      "status": "PASS_INPUT_JOIN",
+      "matched_patches": 143652,
+      "unmatched_patches": 0,
+      "missing_normal_count": 6,
+      "missing_normal_area_m2": 0.375,
+      "missing_sigma_count": 0,
+      "missing_sigma_area_m2": 0.0,
+      "unavailable_count": 6,
+      "unavailable_area_m2": 0.375,
+      "unavailable_fraction": 4.176788024455557e-05,
+      "eval_unavailable_fraction": 0.0,
+      "band_unavailable_fraction": 9.750548468351345e-05
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "patches": 76657,
+      "area_m2": 5039.673523948936,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "matched_patches": 76657,
+      "unmatched_patches": 0,
+      "missing_normal_count": 154,
+      "missing_normal_area_m2": 4.925438204580689,
+      "missing_sigma_count": 23897,
+      "missing_sigma_area_m2": 1564.4425393626818,
+      "unavailable_count": 23897,
+      "unavailable_area_m2": 1564.4425393626818,
+      "unavailable_fraction": 0.31042537416924415,
+      "eval_unavailable_fraction": 0.024388354493001047,
+      "band_unavailable_fraction": 0.547857734643938,
+      "missing_sigma_by_als_status": {
+        "1": {
+          "patches": 22241,
+          "area_m2": 1452.1450422808011
+        },
+        "2": {
+          "patches": 1544,
+          "area_m2": 108.66900677816086
+        },
+        "3": {
+          "patches": 112,
+          "area_m2": 3.628490303719751
+        }
+      }
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "patches": 258097,
+      "area_m2": 16131.0625,
+      "status": "PASS_INPUT_JOIN",
+      "matched_patches": 258097,
+      "unmatched_patches": 0,
+      "missing_normal_count": 2,
+      "missing_normal_area_m2": 0.125,
+      "missing_sigma_count": 0,
+      "missing_sigma_area_m2": 0.0,
+      "unavailable_count": 2,
+      "unavailable_area_m2": 0.125,
+      "unavailable_fraction": 7.749024591529542e-06,
+      "eval_unavailable_fraction": 0.0,
+      "band_unavailable_fraction": 1.7158103343256435e-05
+    },
+    {
+      "site": "B173_b0",
+      "prior": "ALS",
+      "patches": 29955,
+      "area_m2": 2021.2965265916296,
+      "status": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "matched_patches": 36,
+      "unmatched_patches": 29919,
+      "exact_coordinate_count": 36,
+      "missing_coordinate_count": 29919,
+      "missing_coordinate_area_m2": 2020.514590128637
+    },
+    {
+      "site": "B173_b0",
+      "prior": "LoD2",
+      "patches": 119384,
+      "area_m2": 7461.5,
+      "status": "STOP_STAGE0_UNCERTAINTY_JOIN",
+      "matched_patches": 119373,
+      "unmatched_patches": 11,
+      "exact_coordinate_count": 119373,
+      "missing_coordinate_count": 11,
+      "missing_coordinate_area_m2": 0.6875
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "patches": 46215,
+      "area_m2": 3104.1186610169775,
+      "status": "STOP_STAGE0_UNAVAILABLE_AREA",
+      "matched_patches": 46215,
+      "unmatched_patches": 0,
+      "missing_normal_count": 229,
+      "missing_normal_area_m2": 7.5642026377529525,
+      "missing_sigma_count": 9881,
+      "missing_sigma_area_m2": 656.6843826481041,
+      "unavailable_count": 9881,
+      "unavailable_area_m2": 656.6843826481041,
+      "unavailable_fraction": 0.2115526029642694,
+      "eval_unavailable_fraction": 0.024907876216420474,
+      "band_unavailable_fraction": 0.4128106031728466,
+      "missing_sigma_by_als_status": {
+        "1": {
+          "patches": 8859,
+          "area_m2": 591.6028675759709
+        },
+        "2": {
+          "patches": 888,
+          "area_m2": 60.51804516579397
+        },
+        "3": {
+          "patches": 134,
+          "area_m2": 4.563469906339183
+        }
+      }
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "patches": 138579,
+      "area_m2": 8661.1875,
+      "status": "PASS_INPUT_JOIN",
+      "matched_patches": 138579,
+      "unmatched_patches": 0,
+      "missing_normal_count": 0,
+      "missing_normal_area_m2": 0.0,
+      "missing_sigma_count": 0,
+      "missing_sigma_area_m2": 0.0,
+      "unavailable_count": 0,
+      "unavailable_area_m2": 0.0,
+      "unavailable_fraction": 0.0,
+      "eval_unavailable_fraction": 0.0,
+      "band_unavailable_fraction": 0.0
+    }
+  ],
+  "input_hashes": [
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_ALS.npz",
+      "sha256": "3688914603342ff8f71771cfb4be298db9a95dcdfd34c9686251071ad3b66b90"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__ALS__R1.5.npz",
+      "sha256": "26cc2a09fb8bebc2e8f2015a1942e88977b69143bace54dc2bbe474f833b3eca"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B0_b10_LoD2.npz",
+      "sha256": "bb62ec5a7846a9fb0ead2b3c2a631945e57461675e0a80bab2eef75eed6935cd"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B0_b10__LoD2__R1.5.npz",
+      "sha256": "119714835775aae0f5b962b491edcf8ae929ec19d9275441e93ef55106f4b6e9"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_ALS.npz",
+      "sha256": "6d2e35cca0df49470a2e8978a0b2e4a9e5b171ba5288ac7b67d4b18e08aed026"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__ALS__R1.5.npz",
+      "sha256": "5043f432dff0515083ab47dfb9fe4f6b7e1ae1f37882e9cc807620e339b23e8d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173nb_b10_LoD2.npz",
+      "sha256": "b3aa211fe9bb9251ad822e4d7f95e45259ab826c40a8aff56c776398937cc08f"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__LoD2__R1.5.npz",
+      "sha256": "9947d3ce4a336607f4efa77efc820d5d5e673c2bd23ca70e1e7a7d8a12c29258"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173_b0_ALS.npz",
+      "sha256": "a2d905ae5231d8a9a81bfeb191aa037419a3a6718f22047ab3c36296c3dcc2ab"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__ALS__R1.5.npz",
+      "sha256": "5043f432dff0515083ab47dfb9fe4f6b7e1ae1f37882e9cc807620e339b23e8d"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_B173_b0_LoD2.npz",
+      "sha256": "76e44627294556006cc4a7a9a0ccd7c04f7f349c3861b6487de218c6c65e3132"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/B173nb_b10__LoD2__R1.5.npz",
+      "sha256": "9947d3ce4a336607f4efa77efc820d5d5e673c2bd23ca70e1e7a7d8a12c29258"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_ALS.npz",
+      "sha256": "0ea60fbf9e779a40a4e80fa185a6192fe8932598bbc3cdae43cc103df83af575"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__ALS__R1.5.npz",
+      "sha256": "30c96038a4273887caecf38e099a120be2da1b6d226c6a256a1d5c09602211b3"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/regions_v3/regions_ext_v3_R1rep_b10_LoD2.npz",
+      "sha256": "e54b2646d4e380283c18aab3db25435127dd0b699c5ac14216b0d8db511ef405"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/patch_values/R1rep_b10__LoD2__R1.5.npz",
+      "sha256": "ddf02e972a2b5ac2fe61856d3fdedb1d2f36da1ab0ab161e5e507ec51b7391b2"
+    }
+  ],
+  "config_sha256": "447e888fc46317b88f337ba337593b4db7eb891f62e39b989c54270ae4afa406",
+  "validation": "Independent fsum areas, direct missing source fields, exact grid coordinate lookup and nearest-distance cross-check",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

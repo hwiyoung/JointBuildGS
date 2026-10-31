@@ -1,0 +1,71 @@
+{
+  "title": "LoD2 세 지역은 입력 연결과 10% 기준을 통과했다",
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "patches": 143652,
+      "area_m2": 8978.19084436015,
+      "status": "PASS_INPUT_JOIN",
+      "matched_patches": 143652,
+      "unmatched_patches": 0,
+      "missing_normal_count": 6,
+      "missing_normal_area_m2": 0.375,
+      "missing_sigma_count": 0,
+      "missing_sigma_area_m2": 0.0,
+      "unavailable_count": 6,
+      "unavailable_area_m2": 0.375,
+      "unavailable_fraction": 4.176788024455557e-05,
+      "eval_unavailable_fraction": 0.0,
+      "band_unavailable_fraction": 9.750548468351345e-05
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "patches": 258097,
+      "area_m2": 16131.0625,
+      "status": "PASS_INPUT_JOIN",
+      "matched_patches": 258097,
+      "unmatched_patches": 0,
+      "missing_normal_count": 2,
+      "missing_normal_area_m2": 0.125,
+      "missing_sigma_count": 0,
+      "missing_sigma_area_m2": 0.0,
+      "unavailable_count": 2,
+      "unavailable_area_m2": 0.125,
+      "unavailable_fraction": 7.749024591529542e-06,
+      "eval_unavailable_fraction": 0.0,
+      "band_unavailable_fraction": 1.7158103343256435e-05
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "patches": 138579,
+      "area_m2": 8661.1875,
+      "status": "PASS_INPUT_JOIN",
+      "matched_patches": 138579,
+      "unmatched_patches": 0,
+      "missing_normal_count": 0,
+      "missing_normal_area_m2": 0.0,
+      "missing_sigma_count": 0,
+      "missing_sigma_area_m2": 0.0,
+      "unavailable_count": 0,
+      "unavailable_area_m2": 0.0,
+      "unavailable_fraction": 0.0,
+      "eval_unavailable_fraction": 0.0,
+      "band_unavailable_fraction": 0.0
+    }
+  ],
+  "source": "tables/stop_verification.json",
+  "frame": {
+    "crs": "EPSG:25832",
+    "world_shift_xyz_m": [
+      690953,
+      5336071,
+      604
+    ],
+    "height_sign": "outward normal positive; identical to inherited mvs_p and gt_p"
+  },
+  "plot": "all patches; no statistical thinning",
+  "scientific_verdict": null
+}
