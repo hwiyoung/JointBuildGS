@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-31T23:33:07.918406+09:00",
+  "stage": 0,
+  "config_sha256": "447e888fc46317b88f337ba337593b4db7eb891f62e39b989c54270ae4afa406",
+  "order_sha256": "ce285417a896f2e00cf84ca77fab2f2e5b4dbc05d52078349742f12027d1f886",
+  "source_commit": "09508e8ef08efbd9a8eeb445de5455cbb748a619",
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "inputs": [
+    {
+      "path": "/repo/configs/phd/main_uncert_v1/uncert_v1.json",
+      "sha256": "4044e9b82ab5aad66f1e34821fa3b9739182ef321e0d546f50c381bd8eba7df7"
+    },
+    {
+      "path": "/repo/configs/phd/main_judgenum_v1/judgenum_v1.json",
+      "sha256": "01395d6dccfea07f6eca9fd81d17acdc622e1f894a857ada217013ac8fe9bc50"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1/stage_a_complete.json",
+      "sha256": "956bd390a9ed08281227e5464518b3e9c83ea9ce62d1094f409712ca7fd0c9a4"
+    }
+  ],
+  "script_hashes": {
+    "audit_inputs.py": "15bd93c6eaf3bbf337cb3fd7ec09ff830e878452046340568b8d72611775ede6",
+    "common.py": "013f4e8d2d2920c21e886c28e36a965153d739cb4a4d2bd1e822721c08674919",
+    "lock_config.py": "bf8301e46dba5d13527b8f27fd247dbb77d87f7027ed3e967d9d396c73f75d73",
+    "run_cpu.sh": "e997d84cd37d0df867e490aa6ea5d090e7d8191be512deafaa296fc45ea95dec"
+  },
+  "pre_computation": true,
+  "scientific_verdict": null
+}
