@@ -37,7 +37,7 @@ def main():
     save(fig,'stage1_initial_depth_gate','초기 렌더 깊이는 5 cm 기준을 통과하지 못했다',summaries,'학습 0회 · 점선: 발주문 3.5의 0.05 m · 깊이 없음은 별도 기록')
     fig,ax=plt.subplots(1,2,figsize=(11,4));names=[SITES[r['site']]+' '+r['prior'] for r in maprows]
     ax[0].bar(np.arange(8),[r['max_view_height_error_median_m']*1000 for r in maprows],color='#54ad80')
-    ax[0].set(xticks=np.arange(8),xticklabels=names,ylabel='영상별 높이 오차 중앙값의 최댓값 (mm)',title='목표 지도: 8판 모두 10 mm 이내');ax[0].tick_params(axis='x',rotation=40)
+    ax[0].set(xticks=np.arange(8),xticklabels=names,ylabel='영상별 표본 오차 중앙값의 최댓값 (mm)',title='목표 지도: 8판 모두 10 mm 이내');ax[0].tick_params(axis='x',rotation=40)
     ax[1].bar(np.arange(8),[r['prior_kept'] for r in seedrows],color='#e6ab42',label='사전 목표 씨앗')
     ax[1].bar(np.arange(8),[r['background_kept'] for r in seedrows],bottom=[r['prior_kept'] for r in seedrows],color='#478ac3',label='기존 영상 씨앗')
     ax[1].set(xticks=np.arange(8),xticklabels=names,ylabel='가우시안 수',title='패치별 기존 씨앗 수 유지');ax[1].tick_params(axis='x',rotation=40);ax[1].legend(fontsize=8)
@@ -68,10 +68,11 @@ def main():
             fig.legend(handles=[Patch(color=c,label=t) for c,t in zip(colors,['관측 없음','일치','보존','보정','배경 MVS'])],ncol=5,loc='lower center',bbox_to_anchor=(.5,.085),fontsize=8)
             fig.subplots_adjust(top=.79,bottom=.24,wspace=.08)
             idx=read(OUT/'stage1'/f'{site}_{prior}'/'maps/index.json')['views'][name]
-            val=dict(representative=rep['id'],site=site,prior=prior,camera=name,view=view,map_height_error_median_m=idx['height_error_median_m'])
+            full=next(q for q in read(DOC/'tables/stage1_representative_pixels.json')['rows'] if q['representative']==rep['id'] and q['prior']==prior)
+            val=dict(representative=rep['id'],site=site,prior=prior,camera=name,view=view,map_height_error_median_m=full['absolute_h_error_median_m'],map_height_pixels=full['pixels'],map_height_all_disc_pixels=True)
             repstats.append(val)
             save(fig,key+'_target',f'{rep["name"]} · {prior}: 목표 높이와 영역을 학습 전에 고정했다',val,
-                f'목표 지도 h 복원 오차 중앙값 {idx["height_error_median_m"]*1000:.4f} mm · h 색 범위 ±5 m, 범위 밖은 끝 색')
+                f'원반 화소 전체 h 복원 오차 중앙값 {full["absolute_h_error_median_m"]*1000:.4f} mm · h 색 범위 ±5 m, 범위 밖은 끝 색')
             fig,ax=plt.subplots(1,3,figsize=(12,4.5));good=np.isfinite(r['target_depth'])&(r['target_depth']>0)
             T=np.where(good,r['target_depth'],np.nan);D=np.where(good&(r['render_depth']>0),r['render_depth'],np.nan)
             for a,data,title in zip(ax[:2],[T,D],['목표 깊이','초기 렌더 깊이']):
@@ -120,7 +121,7 @@ def main():
 
 ![지도와 씨앗](figures/stage1_maps_seeds.png)
 
-목표 지도는 8판 전부 완료했다. 모든 학습 영상에서 지도 깊이를 세계 좌표로 되돌린 h의 중앙값 오차가 1 cm 이내다. 대표 자리 넷의 정확한 단면과 학습 영상은 렌더 전에 representatives_v1.json으로 잠갔다. 판단이 틀린 보존 자리는 LoD2 지붕 칸 1의 최대 연결 넓이로 정했으며 표시 전용이다.
+목표 지도는 8판 전부 완료했다. 모든 학습 영상에서 고정 간격으로 뽑은 약 2,000개 화소의 h 복원 오차 중앙값이 1 cm 이내다. 대표 자리 넷의 5개 보기·사전 정보 조합은 원반 화소 전체를 별도 역행렬 계산으로 검사했고 모두 1 cm 기준을 통과했다. [전체 화소 검산](tables/stage1_representative_pixels.json)에 화소 수와 오차를 기록했다. 대표 자리의 정확한 단면과 학습 영상은 렌더 전에 representatives_v1.json으로 잠갔다. 판단이 틀린 보존 자리는 LoD2 지붕 칸 1의 최대 연결 넓이로 정했으며 표시 전용이다.
 
 바탕은 r18의 현재 실제 파일 109개다. 마지막 추적 커밋은 f614090ab5444090182890c6c43505a3a4e5af8f이며, 추적하지 않은 상속 파일도 fork_r19_base.json의 개별 해시로 고정했다. 새 판 r19에서 train.py에 목표 초기화·깊이 손실·갱신 뒤 묶기·기록 연결을 넣고 jbgs_target.py를 추가했다. 원 r18은 변경하지 않았다. 렌더러도 기존 기준선의 diff_surfel_rasterization을 유지했다.
 
