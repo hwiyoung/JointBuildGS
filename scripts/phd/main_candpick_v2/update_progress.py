@@ -7,7 +7,8 @@ def main():
         for u in UNITS:
             for s in ['equal','right']:
                 arm=f'cp2_{v}_{s}_{u}';root=OUT/'runs'/arm
-                status='NOT_STARTED';step=0
+                gate=OUT/'preflight'/(arm+'.json')
+                status='STOP_UNIT_CHECK' if gate.exists() and json.loads(gate.read_text())['status']!='PASS' else 'NOT_STARTED';step=0
                 for file in ['progress.json','stopped.json','complete.json']:
                     if (root/file).exists():
                         r=json.loads((root/file).read_text());status=r['status'];step=r.get('iterations',r.get('iteration',step))

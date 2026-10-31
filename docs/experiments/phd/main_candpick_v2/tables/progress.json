@@ -1,25 +1,25 @@
 {
-  "at": "2026-10-31T15:58:37.165784+09:00",
+  "at": "2026-10-31T16:09:47.720114+09:00",
   "rows": [
     {
       "arm": "cp2_a_equal_B173_ALS",
-      "status": "RUNNING",
-      "iteration": 500
+      "status": "COMPLETE",
+      "iteration": 3000
     },
     {
       "arm": "cp2_a_right_B173_ALS",
-      "status": "RUNNING",
-      "iteration": 500
+      "status": "COMPLETE",
+      "iteration": 3000
     },
     {
       "arm": "cp2_a_equal_B173_LoD2",
-      "status": "NOT_STARTED",
-      "iteration": 0
+      "status": "RUNNING",
+      "iteration": 2700
     },
     {
       "arm": "cp2_a_right_B173_LoD2",
-      "status": "NOT_STARTED",
-      "iteration": 0
+      "status": "RUNNING",
+      "iteration": 2800
     },
     {
       "arm": "cp2_a_equal_R1_LoD2",
@@ -63,12 +63,12 @@
     },
     {
       "arm": "cp2_c_equal_B173_ALS",
-      "status": "NOT_STARTED",
+      "status": "STOP_UNIT_CHECK",
       "iteration": 0
     },
     {
       "arm": "cp2_c_right_B173_ALS",
-      "status": "NOT_STARTED",
+      "status": "STOP_UNIT_CHECK",
       "iteration": 0
     },
     {
@@ -123,8 +123,10 @@
     }
   ],
   "counts": {
-    "NOT_STARTED": 22,
-    "RUNNING": 2
+    "COMPLETE": 2,
+    "NOT_STARTED": 18,
+    "RUNNING": 2,
+    "STOP_UNIT_CHECK": 2
   },
   "depth_complete": 0,
   "scientific_verdict": null
