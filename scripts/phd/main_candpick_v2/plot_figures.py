@@ -22,6 +22,7 @@ def setup():
 
 def finish(fig,name,metadata):
     path=DOC/'figures'/name;path.parent.mkdir(parents=True,exist_ok=True)
+    fig.text(.995,.003,SOURCE,ha='right',va='bottom',fontsize=8,color='#666666')
     fig.savefig(path.with_suffix('.png'),dpi=240,bbox_inches='tight');plt.close(fig)
     save(path.with_suffix('.json'),dict(source=SOURCE,scientific_verdict=None,**metadata),replace=True)
 
@@ -34,6 +35,7 @@ def curves():
                 for v in ['v1','a','b','c','d']:
                     data=[r for r in rows if r['unit']==unit and r['start']==start and r['variant']==v and r['group']=='a' and r['side']==side]
                     if data:ax.plot([r['iteration'] for r in data],[r['mean_right_minus_wrong'] for r in data],label=LABELS[v],color=COLORS[v],lw=2.2)
+                    else:ax.plot([],[],marker='x',ls='',color=COLORS[v],label=LABELS[v]+' · 확인 불가')
                 ax.axhline(0,color='#888888',lw=.7);ax.axhline(.2,color='#bbbbbb',ls=':',lw=1)
                 ax.set_ylim(-1,1);ax.set_xlabel('학습 반복');ax.grid(alpha=.15)
                 ax.set_title('맞는 후보가 '+('앞' if side=='front' else '뒤'))

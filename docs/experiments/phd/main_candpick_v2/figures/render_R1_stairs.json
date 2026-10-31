@@ -1,0 +1,54 @@
+{
+  "source": "[이 발주에서 냄]",
+  "scientific_verdict": null,
+  "representative": {
+    "id": "R1_stairs",
+    "unit": "R1_LoD2",
+    "requested_building": "DEBY_LOD2_4906975",
+    "replacement": false,
+    "selection": {
+      "seed_point_id": "development:LoD2:6909_53360:point:23807",
+      "point_ids": [
+        "development:LoD2:6909_53360:point:23790",
+        "development:LoD2:6909_53360:point:23791",
+        "development:LoD2:6909_53360:point:23792",
+        "development:LoD2:6909_53360:point:23806",
+        "development:LoD2:6909_53360:point:23807",
+        "development:LoD2:6909_53360:point:23808",
+        "development:LoD2:6909_53360:point:23823",
+        "development:LoD2:6909_53360:point:23824",
+        "development:LoD2:6909_53360:point:23825"
+      ],
+      "points": 9,
+      "area_m2": 2.25,
+      "centre": [
+        -6.455153372944421,
+        27.80078713617362,
+        -28.018176844379184
+      ],
+      "building": "DEBY_LOD2_4906975",
+      "right": [
+        "image"
+      ],
+      "side": [
+        "front"
+      ]
+    },
+    "status": "AVAILABLE",
+    "qualification": null,
+    "render_view": {
+      "name": "DJI_20241217102953_0022_D",
+      "view_index": 283,
+      "crop": [
+        3,
+        320,
+        120,
+        426
+      ],
+      "selected_point_pixels": 4571,
+      "rule": "Among point-selected top-three views, largest sum of selected representative point-pixel support; lexical view tie."
+    }
+  },
+  "shared_height_limit_m": 8.950301170349121,
+  "height_map": "Per pixel median of the signed normal heights of all selected representative point supports; transparent pixels unavailable."
+}

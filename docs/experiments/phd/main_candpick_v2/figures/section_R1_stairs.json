@@ -1,0 +1,204 @@
+{
+  "source": "[이 발주에서 냄]",
+  "scientific_verdict": null,
+  "representative": {
+    "id": "R1_stairs",
+    "unit": "R1_LoD2",
+    "requested_building": "DEBY_LOD2_4906975",
+    "replacement": false,
+    "selection": {
+      "seed_point_id": "development:LoD2:6909_53360:point:23807",
+      "point_ids": [
+        "development:LoD2:6909_53360:point:23790",
+        "development:LoD2:6909_53360:point:23791",
+        "development:LoD2:6909_53360:point:23792",
+        "development:LoD2:6909_53360:point:23806",
+        "development:LoD2:6909_53360:point:23807",
+        "development:LoD2:6909_53360:point:23808",
+        "development:LoD2:6909_53360:point:23823",
+        "development:LoD2:6909_53360:point:23824",
+        "development:LoD2:6909_53360:point:23825"
+      ],
+      "points": 9,
+      "area_m2": 2.25,
+      "centre": [
+        -6.455153372944421,
+        27.80078713617362,
+        -28.018176844379184
+      ],
+      "building": "DEBY_LOD2_4906975",
+      "right": [
+        "image"
+      ],
+      "side": [
+        "front"
+      ]
+    },
+    "status": "AVAILABLE",
+    "qualification": null,
+    "render_view": {
+      "name": "DJI_20241217102953_0022_D",
+      "view_index": 283,
+      "crop": [
+        3,
+        320,
+        120,
+        426
+      ],
+      "selected_point_pixels": 4571,
+      "rule": "Among point-selected top-three views, largest sum of selected representative point-pixel support; lexical view tie."
+    }
+  },
+  "section_point_ids": [
+    "development:LoD2:6909_53360:point:23791",
+    "development:LoD2:6909_53360:point:23807",
+    "development:LoD2:6909_53360:point:23824"
+  ],
+  "snapshots": [
+    {
+      "arm": "cp2_a_right_R1_LoD2",
+      "iteration": 0,
+      "file": {
+        "path": "/out/runs/cp2_a_right_R1_LoD2/candidate_0.npz",
+        "bytes": 178975,
+        "sha256": "1b15e9fdc3b85d78ed13706c850904c8b1e6a75c4b89076fba3c904fc6e4b2f5"
+      }
+    },
+    {
+      "arm": "cp2_a_right_R1_LoD2",
+      "iteration": 500,
+      "file": {
+        "path": "/out/runs/cp2_a_right_R1_LoD2/candidate_500.npz",
+        "bytes": 2652718,
+        "sha256": "e00d3c44ab21011850ef1d53deb51713d777699ed83dec6fa9d8834fd610675c"
+      }
+    },
+    {
+      "arm": "cp2_a_right_R1_LoD2",
+      "iteration": 1000,
+      "file": {
+        "path": "/out/runs/cp2_a_right_R1_LoD2/candidate_1000.npz",
+        "bytes": 2655581,
+        "sha256": "084ede8f4302fe5ce4decf6ea10526bb8dd8ed0297af475aca94748b0661ed52"
+      }
+    },
+    {
+      "arm": "cp2_a_right_R1_LoD2",
+      "iteration": 3000,
+      "file": {
+        "path": "/out/runs/cp2_a_right_R1_LoD2/candidate_3000.npz",
+        "bytes": 2664388,
+        "sha256": "6915b1c577383ad99b0324f6ce691d35370c5cbcf85652febce54592f354c5e9"
+      }
+    },
+    {
+      "arm": "cp2_b_right_R1_LoD2",
+      "iteration": 0,
+      "file": {
+        "path": "/out/runs/cp2_b_right_R1_LoD2/candidate_0.npz",
+        "bytes": 306677,
+        "sha256": "f6df1179c23c3ea6244da8cb6de4fecdafa77f7c8000bfb66a7df8aba63bddcd"
+      }
+    },
+    {
+      "arm": "cp2_b_right_R1_LoD2",
+      "iteration": 500,
+      "file": {
+        "path": "/out/runs/cp2_b_right_R1_LoD2/candidate_500.npz",
+        "bytes": 5090022,
+        "sha256": "fb86ebbbd32ce4a586b5ce34d22f9db5bf6e5fb5f95f35139aeed495e62ef19d"
+      }
+    },
+    {
+      "arm": "cp2_b_right_R1_LoD2",
+      "iteration": 1000,
+      "file": {
+        "path": "/out/runs/cp2_b_right_R1_LoD2/candidate_1000.npz",
+        "bytes": 5080233,
+        "sha256": "2e3c138ef460361e094ab4f356ebb3f0db966ea5abbc5143ea04094191ada955"
+      }
+    },
+    {
+      "arm": "cp2_b_right_R1_LoD2",
+      "iteration": 4000,
+      "file": {
+        "path": "/out/runs/cp2_b_right_R1_LoD2/candidate_4000.npz",
+        "bytes": 5293592,
+        "sha256": "03461a384eebc139920c8850d3a1de113495afa13635ad4c07625a0a6a0599cf"
+      }
+    },
+    {
+      "arm": "cp2_c_right_R1_LoD2",
+      "iteration": 0,
+      "file": {
+        "path": "/out/runs/cp2_c_right_R1_LoD2/candidate_0.npz",
+        "bytes": 523088,
+        "sha256": "d9052b689a0ef865482902acd68b1ed9db1f4c320f9e6e67759c65bb48e31aad"
+      }
+    },
+    {
+      "arm": "cp2_c_right_R1_LoD2",
+      "iteration": 500,
+      "file": {
+        "path": "/out/runs/cp2_c_right_R1_LoD2/candidate_500.npz",
+        "bytes": 6822879,
+        "sha256": "b1a730f00840bc26f612a5978114f599cc8ef5ff63a432fe306b2a5a465c9cce"
+      }
+    },
+    {
+      "arm": "cp2_c_right_R1_LoD2",
+      "iteration": 1000,
+      "file": {
+        "path": "/out/runs/cp2_c_right_R1_LoD2/candidate_1000.npz",
+        "bytes": 6844271,
+        "sha256": "c15910385afcb8917c20930e34171de0f04ee5745483f857f0cf319c7fef6bed"
+      }
+    },
+    {
+      "arm": "cp2_c_right_R1_LoD2",
+      "iteration": 3000,
+      "file": {
+        "path": "/out/runs/cp2_c_right_R1_LoD2/candidate_3000.npz",
+        "bytes": 6868713,
+        "sha256": "0dc8461c06d0e99cd6b169f4a8c9c7649464e2bd3cc13899e492f3f30b121a0a"
+      }
+    },
+    {
+      "arm": "cp2_d_right_R1_LoD2",
+      "iteration": 0,
+      "file": {
+        "path": "/out/runs/cp2_d_right_R1_LoD2/candidate_0.npz",
+        "bytes": 8418101,
+        "sha256": "8cc767bcffc06e3ca3bfa2b81d46776fafa2145e76c28975da9d7894596f0fe0"
+      }
+    },
+    {
+      "arm": "cp2_d_right_R1_LoD2",
+      "iteration": 500,
+      "file": {
+        "path": "/out/runs/cp2_d_right_R1_LoD2/candidate_500.npz",
+        "bytes": 13401279,
+        "sha256": "040d8080d92a65334f066db7f1cfc9872f18619c476df6d18e64e579d08fec5b"
+      }
+    },
+    {
+      "arm": "cp2_d_right_R1_LoD2",
+      "iteration": 1000,
+      "file": {
+        "path": "/out/runs/cp2_d_right_R1_LoD2/candidate_1000.npz",
+        "bytes": 13413823,
+        "sha256": "f6c80672f10373b71cacba959c1f688d56c779c100a3cea00d897ac8d95688df"
+      }
+    },
+    {
+      "arm": "cp2_d_right_R1_LoD2",
+      "iteration": 3000,
+      "file": {
+        "path": "/out/runs/cp2_d_right_R1_LoD2/candidate_3000.npz",
+        "bytes": 13432606,
+        "sha256": "b05ff5b4f432026333bf3462fdf6b44f1a6e913dba717f04dc1a30e2823d23e1"
+      }
+    }
+  ],
+  "rendering": "Line opacity is saved candidate opacity. Arm c draws each of the four moved Gaussian centers; other arms show their mean, as in v1."
+}

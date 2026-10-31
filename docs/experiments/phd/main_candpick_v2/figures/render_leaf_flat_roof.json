@@ -1,0 +1,54 @@
+{
+  "source": "[이 발주에서 냄]",
+  "scientific_verdict": null,
+  "representative": {
+    "id": "leaf_flat_roof",
+    "unit": "R1_LoD2",
+    "requested_building": "DEBY_LOD2_4907519",
+    "replacement": true,
+    "selection": {
+      "seed_point_id": "development:LoD2:6909_53360:point:23167",
+      "point_ids": [
+        "development:LoD2:6909_53360:point:23162",
+        "development:LoD2:6909_53360:point:23163",
+        "development:LoD2:6909_53360:point:23164",
+        "development:LoD2:6909_53360:point:23166",
+        "development:LoD2:6909_53360:point:23167",
+        "development:LoD2:6909_53360:point:23168",
+        "development:LoD2:6909_53360:point:23170",
+        "development:LoD2:6909_53360:point:23171",
+        "development:LoD2:6909_53360:point:23172"
+      ],
+      "points": 9,
+      "area_m2": 2.25,
+      "centre": [
+        -4.008999999961816,
+        15.243999999947846,
+        -33.569999999999936
+      ],
+      "building": "DEBY_LOD2_4906975",
+      "right": [
+        "prior"
+      ],
+      "side": [
+        "back"
+      ]
+    },
+    "status": "AVAILABLE",
+    "qualification": null,
+    "render_view": {
+      "name": "DJI_20241217103609_0074_D",
+      "view_index": 321,
+      "crop": [
+        0,
+        267,
+        122,
+        384
+      ],
+      "selected_point_pixels": 2573,
+      "rule": "Among point-selected top-three views, largest sum of selected representative point-pixel support; lexical view tie."
+    }
+  },
+  "shared_height_limit_m": 3.967608690261841,
+  "height_map": "Per pixel median of the signed normal heights of all selected representative point supports; transparent pixels unavailable."
+}

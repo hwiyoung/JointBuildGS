@@ -1,0 +1,168 @@
+{
+  "source": "[이 발주에서 냄]",
+  "scientific_verdict": null,
+  "representative": {
+    "id": "B173_wing",
+    "unit": "B173_ALS",
+    "requested_building": "DEBY_LOD2_4959326",
+    "replacement": false,
+    "selection": {
+      "seed_point_id": "development:ALS:6910_53361:point:9199",
+      "point_ids": [
+        "development:ALS:6910_53361:point:9158",
+        "development:ALS:6910_53361:point:9159",
+        "development:ALS:6910_53361:point:9160",
+        "development:ALS:6910_53361:point:9198",
+        "development:ALS:6910_53361:point:9199",
+        "development:ALS:6910_53361:point:9200",
+        "development:ALS:6910_53361:point:9238",
+        "development:ALS:6910_53361:point:9239",
+        "development:ALS:6910_53361:point:9240"
+      ],
+      "points": 9,
+      "area_m2": 2.418170360143757,
+      "centre": [
+        143.3781145166863,
+        97.98612790446028,
+        -22.824245839765616
+      ],
+      "building": "DEBY_LOD2_4959326",
+      "right": [
+        "image"
+      ],
+      "side": [
+        "back"
+      ]
+    },
+    "status": "AVAILABLE",
+    "qualification": null,
+    "render_view": {
+      "name": "DJI_20241217091249_0147_D",
+      "view_index": 78,
+      "crop": [
+        487,
+        349,
+        597,
+        442
+      ],
+      "selected_point_pixels": 2086,
+      "rule": "Among point-selected top-three views, largest sum of selected representative point-pixel support; lexical view tie."
+    }
+  },
+  "section_point_ids": [
+    "development:ALS:6910_53361:point:9159",
+    "development:ALS:6910_53361:point:9199",
+    "development:ALS:6910_53361:point:9239"
+  ],
+  "snapshots": [
+    {
+      "arm": "cp2_a_right_B173_ALS",
+      "iteration": 0,
+      "file": {
+        "path": "/out/runs/cp2_a_right_B173_ALS/candidate_0.npz",
+        "bytes": 321253,
+        "sha256": "0abc904040c61ac8884786d71743ecc5c168aa1001e1a405c5a0103d5236ddec"
+      }
+    },
+    {
+      "arm": "cp2_a_right_B173_ALS",
+      "iteration": 500,
+      "file": {
+        "path": "/out/runs/cp2_a_right_B173_ALS/candidate_500.npz",
+        "bytes": 3534266,
+        "sha256": "58285a89e32a243d771144833d9f7b7bf9611512aeb8347bc09920b3b3b1d183"
+      }
+    },
+    {
+      "arm": "cp2_a_right_B173_ALS",
+      "iteration": 1000,
+      "file": {
+        "path": "/out/runs/cp2_a_right_B173_ALS/candidate_1000.npz",
+        "bytes": 3542415,
+        "sha256": "d346b3eeba6b6fbae61e81b746299dd0748bdd57d000e2657434bb4702af8858"
+      }
+    },
+    {
+      "arm": "cp2_a_right_B173_ALS",
+      "iteration": 3000,
+      "file": {
+        "path": "/out/runs/cp2_a_right_B173_ALS/candidate_3000.npz",
+        "bytes": 3560476,
+        "sha256": "651cfe46cc812510c4f883372b601e9a9b082775df6709f8f968a13883489ec2"
+      }
+    },
+    {
+      "arm": "cp2_b_right_B173_ALS",
+      "iteration": 0,
+      "file": {
+        "path": "/out/runs/cp2_b_right_B173_ALS/candidate_0.npz",
+        "bytes": 528369,
+        "sha256": "20e7f5b30a4e177121f73b7d9dd666a130ff37a8fbc4a42aac747b06341eacfc"
+      }
+    },
+    {
+      "arm": "cp2_b_right_B173_ALS",
+      "iteration": 500,
+      "file": {
+        "path": "/out/runs/cp2_b_right_B173_ALS/candidate_500.npz",
+        "bytes": 6753925,
+        "sha256": "0eade01021b9d5b054daab4e6dad8076afa8e974294b2431b7aa0720aa22b807"
+      }
+    },
+    {
+      "arm": "cp2_b_right_B173_ALS",
+      "iteration": 1000,
+      "file": {
+        "path": "/out/runs/cp2_b_right_B173_ALS/candidate_1000.npz",
+        "bytes": 6731674,
+        "sha256": "1d5d7cbf214c5599c6864a8fe716c1e930e2cdb67c2e20b1cfa2dd72a23c6e5c"
+      }
+    },
+    {
+      "arm": "cp2_b_right_B173_ALS",
+      "iteration": 4000,
+      "file": {
+        "path": "/out/runs/cp2_b_right_B173_ALS/candidate_4000.npz",
+        "bytes": 7019764,
+        "sha256": "98eeeebba4cdd7adf3ff9036b2feaa76013ba5b095fec9ea6b5f7aac6703be84"
+      }
+    },
+    {
+      "arm": "cp2_d_right_B173_ALS",
+      "iteration": 0,
+      "file": {
+        "path": "/out/runs/cp2_d_right_B173_ALS/candidate_0.npz",
+        "bytes": 9362261,
+        "sha256": "aea8f410b6dc3d4ce6f5bb91c9015124f1d3a7a17c1521ec44c3926d1d5b8db4"
+      }
+    },
+    {
+      "arm": "cp2_d_right_B173_ALS",
+      "iteration": 500,
+      "file": {
+        "path": "/out/runs/cp2_d_right_B173_ALS/candidate_500.npz",
+        "bytes": 15838341,
+        "sha256": "4a530f716067438129eeed78728582f3381df27b21f3b1360340b3788f75d989"
+      }
+    },
+    {
+      "arm": "cp2_d_right_B173_ALS",
+      "iteration": 1000,
+      "file": {
+        "path": "/out/runs/cp2_d_right_B173_ALS/candidate_1000.npz",
+        "bytes": 15855446,
+        "sha256": "02a65b4b17db8bf0c7482a863b8f1d62a37646d4ecdef40a465bc3f51f8d0dbf"
+      }
+    },
+    {
+      "arm": "cp2_d_right_B173_ALS",
+      "iteration": 3000,
+      "file": {
+        "path": "/out/runs/cp2_d_right_B173_ALS/candidate_3000.npz",
+        "bytes": 15886159,
+        "sha256": "c40287049a170a3ab3bccaf578e3eb1c1a1723a1ed1a2c96db9763b5d28c5042"
+      }
+    }
+  ],
+  "rendering": "Line opacity is saved candidate opacity. Arm c draws each of the four moved Gaussian centers; other arms show their mean, as in v1."
+}
