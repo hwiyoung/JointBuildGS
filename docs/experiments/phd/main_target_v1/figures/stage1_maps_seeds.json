@@ -1,0 +1,156 @@
+{
+  "title": "목표 지도 계산과 초기 씨앗 준비는 8판에서 끝났다",
+  "values": {
+    "maps": [
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "views": 243,
+        "max_view_height_error_median_m": 5.640573396535013e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "views": 243,
+        "max_view_height_error_median_m": 6.912246658302701e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "views": 203,
+        "max_view_height_error_median_m": 5.606283879050489e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "views": 203,
+        "max_view_height_error_median_m": 6.964735312262396e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "views": 333,
+        "max_view_height_error_median_m": 4.34294142695967e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "views": 333,
+        "max_view_height_error_median_m": 4.466482870668642e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173_b0",
+        "prior": "ALS",
+        "views": 140,
+        "max_view_height_error_median_m": 6.43931775302746e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173_b0",
+        "prior": "LoD2",
+        "views": 140,
+        "max_view_height_error_median_m": 1.1227632160772452e-05,
+        "status": "PASS",
+        "background_u_replaced": true
+      }
+    ],
+    "seeds": [
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "original": 90956,
+        "kept": 44885,
+        "prior_kept": 36329,
+        "background_kept": 8556,
+        "background_u_replaced": 4309,
+        "target_patches_without_baseline_seed": 19112
+      },
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "original": 158155,
+        "kept": 146784,
+        "prior_kept": 143646,
+        "background_kept": 3138,
+        "background_u_replaced": 346,
+        "target_patches_without_baseline_seed": 0
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "original": 112557,
+        "kept": 56232,
+        "prior_kept": 50518,
+        "background_kept": 5714,
+        "background_u_replaced": 922,
+        "target_patches_without_baseline_seed": 37687
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "original": 270067,
+        "kept": 261597,
+        "prior_kept": 258095,
+        "background_kept": 3502,
+        "background_u_replaced": 164,
+        "target_patches_without_baseline_seed": 0
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "original": 90870,
+        "kept": 46896,
+        "prior_kept": 41227,
+        "background_kept": 5669,
+        "background_u_replaced": 704,
+        "target_patches_without_baseline_seed": 17607
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "original": 146021,
+        "kept": 142942,
+        "prior_kept": 138579,
+        "background_kept": 4363,
+        "background_u_replaced": 357,
+        "target_patches_without_baseline_seed": 0
+      },
+      {
+        "site": "B173_b0",
+        "prior": "ALS",
+        "original": 38468,
+        "kept": 28719,
+        "prior_kept": 27599,
+        "background_kept": 1120,
+        "background_u_replaced": 340,
+        "target_patches_without_baseline_seed": 9582
+      },
+      {
+        "site": "B173_b0",
+        "prior": "LoD2",
+        "original": 122801,
+        "kept": 119598,
+        "prior_kept": 119382,
+        "background_kept": 216,
+        "background_u_replaced": 48,
+        "target_patches_without_baseline_seed": 0
+      }
+    ]
+  },
+  "note": "항공 LiDAR에는 기존 씨앗 수가 0인 패치가 있음 · 배경 불확실도 대체 수는 표에 별도 기록",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

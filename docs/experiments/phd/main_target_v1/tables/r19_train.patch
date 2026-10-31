@@ -1,0 +1,76 @@
+--- r18/train.py
++++ r19/train.py
+@@ -683,6 +683,7 @@
+ import jbgs_mv_consistency
+ import jbgs_mvs_pgsr
+ import jbgs_judgment  # [jbgs_judgment]
++import jbgs_target
+ import jbgs_oom_record  # [jbgs r15] read-only record of a CUDA out-of-memory stop (default off)
+ 
+ 
+@@ -693,6 +694,7 @@
+     gaussians = GaussianModel(dataset.sh_degree)
+     scene = Scene(dataset, gaussians)
+ 
++    target_control = jbgs_target.create(args, scene, gaussians, render, pipe)
+     gaussians.training_setup(opt)
+     if checkpoint:
+         (model_params, first_iter) = torch.load(checkpoint)
+@@ -885,7 +887,13 @@
+         normal_loss = lambda_normal_default * (normal_error).mean()
+         dist_loss = lambda_dist * (rend_dist).mean()
+ 
+-        if judgment is not None:  # [jbgs_judgment] weighted MVS term + truncated prior term
++        if target_control is not None:
++            da_depth_loss = target_control.loss(cam_name, render_pkg["surf_depth"])
++            lod_depth_loss = torch.zeros((), device="cuda")
++            total_loss = rgb_loss + dist_loss + normal_loss + target_control.depth_lambda * da_depth_loss
++            current_lod_weight, current_da_weight = 0.0, target_control.depth_lambda
++            just_switched, stage2_active = False, True
++        elif judgment is not None:  # [jbgs_judgment] weighted MVS term + truncated prior term
+             mvs_term, prior_term, _jstats = judgment.losses(cam_name, render_pkg)
+             total_loss = rgb_loss + dist_loss + normal_loss + judgment.lambda_mvs * mvs_term + judgment.lambda_prior * prior_term
+             if mv_consistency is not None:
+@@ -1044,11 +1052,15 @@
+         if judgment is not None and args.jbgs_lt_monitor:
+             jbgs_judgment.lt_observe(judgment, iteration, gaussians, total_loss, rgb_loss,
+                 judgment.lambda_mvs * mvs_term + judgment.lambda_prior * prior_term, render_pkg, cam_name)
++        if target_control is not None:
++            target_control.check_loss(iteration, total_loss)
+         total_loss.backward()
+         mvs_pgsr_control.after_backward(iteration, gaussians)
+         if judgment is not None:  # [jbgs_judgment] remember locked rows before the Adam step
+             judgment.before_step(gaussians)
+         gaussians.optimizer.step()
++        if target_control is not None:
++            target_control.project_bounds(gaussians)
+         if appearance is not None:
+             appearance.optimizer.step()
+         if judgment is not None:  # [jbgs_judgment] locked disks keep lock_lr_scale of the step; opacity floor
+@@ -1145,6 +1157,8 @@
+             if iteration in saving_iterations:
+                 print(f"\n[ITER {iteration}] Saving Gaussians")
+                 scene.save(iteration)
++                if target_control is not None:
++                    target_control.snapshot(iteration, gaussians)
+             if appearance is not None and (iteration in saving_iterations or iteration == 1000):
+                 appearance.save(os.path.join(scene.model_path, 'appearance', f'iteration_{iteration}.pt'), iteration)
+ 
+@@ -1289,6 +1303,9 @@
+                 else:
+                     print("[Warning] Building freeze skipped (no LoD2 PCD or mask empty).")
+ 
++        if target_control is not None:
++            target_control.project_bounds(gaussians)
++            target_control.observe(iteration, gaussians, total_loss, rgb_loss, da_depth_loss, cam_name)
+         if jbgs_state.after_step(locals()):
+             break
+ 
+@@ -1432,6 +1449,7 @@
+     parser.add_argument("--sparse_dir_name", type=str, default="",
+                         help="Override sparse directory name (overrides --lod_init default)")
+ 
++    jbgs_target.register_args(parser)
+     jbgs_state.register_args(parser)
+     jbgs_judgment.register_args(parser)  # [jbgs_judgment]
+     jbgs_appearance.register_args(parser)

@@ -1,0 +1,52 @@
+{
+  "title": "배경을 제외하면 오차는 줄지만 깊이가 사라지는 화소도 있다",
+  "values": [
+    {
+      "prior": "ALS",
+      "full_error_median_m": 4.855857849121094,
+      "prior_only_error_median_m": 0.039947509765625,
+      "full_pixels": 127593,
+      "prior_only_pixels": 98472,
+      "prior_only_depth_coverage": 0.7717664762173474,
+      "largest_disk": {
+        "seed_index": 3566,
+        "origin": 0,
+        "xyz": [
+          135.32754516601562,
+          72.26268768310547,
+          21.42282485961914
+        ],
+        "scale": [
+          42.538944244384766,
+          42.538944244384766
+        ]
+      },
+      "control_error_median_m": 1.1444091796875e-05
+    },
+    {
+      "prior": "LoD2",
+      "full_error_median_m": 4.808998107910156,
+      "prior_only_error_median_m": 0.05669403076171875,
+      "full_pixels": 192145,
+      "prior_only_pixels": 192145,
+      "prior_only_depth_coverage": 1.0,
+      "largest_disk": {
+        "seed_index": 1953,
+        "origin": 0,
+        "xyz": [
+          135.32754516601562,
+          72.26268768310547,
+          21.42282485961914
+        ],
+        "scale": [
+          42.63370895385742,
+          42.63370895385742
+        ]
+      },
+      "control_error_median_m": 1.1444091796875e-05
+    }
+  ],
+  "note": "고정 B173 영상 한 장 · 진단용 분해 렌더 · 학습 초기화/5 cm 통과로 사용하지 않음",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

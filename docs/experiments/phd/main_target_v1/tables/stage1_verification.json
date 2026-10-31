@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-01T00:44:20.246894+09:00",
+  "status": "PASS_STOPPED_PREFLIGHT_EVIDENCE",
+  "checks": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "seed_position_max_roundoff_m": 7.628442375562372e-06,
+      "maps": 243,
+      "status": "PASS"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "seed_position_max_roundoff_m": 7.629067283687618e-06,
+      "maps": 243,
+      "status": "PASS"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "seed_position_max_roundoff_m": 7.6293581798836385e-06,
+      "maps": 203,
+      "status": "PASS"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "seed_position_max_roundoff_m": 7.6293243012059975e-06,
+      "maps": 203,
+      "status": "PASS"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "seed_position_max_roundoff_m": 3.7430370412039338e-06,
+      "maps": 333,
+      "status": "PASS"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "seed_position_max_roundoff_m": 3.8141007649983294e-06,
+      "maps": 333,
+      "status": "PASS"
+    },
+    {
+      "site": "B173_b0",
+      "prior": "ALS",
+      "seed_position_max_roundoff_m": 7.628397924008823e-06,
+      "maps": 140,
+      "status": "PASS"
+    },
+    {
+      "site": "B173_b0",
+      "prior": "LoD2",
+      "seed_position_max_roundoff_m": 7.62930221753777e-06,
+      "maps": 140,
+      "status": "PASS"
+    }
+  ],
+  "maps_sha256_checked": 1838,
+  "python_files_syntax_checked": 125,
+  "base_files_unchanged": 108,
+  "initial_render_gate": "FAIL",
+  "training_steps": 0,
+  "scientific_verdict": null,
+  "verification_environment": {
+    "python": "3.11.15",
+    "numpy": "1.26.4"
+  }
+}

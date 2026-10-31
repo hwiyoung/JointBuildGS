@@ -32,7 +32,15 @@ def dump(path, value):
 
 
 def locked():
-    c = json.loads((CFG / 'target_v1.json').read_text())
     lock = json.loads((CFG / 'target_v1.stage0.lock.json').read_text())
-    assert sha(CFG / 'target_v1.json') == lock['config_sha256']
+    p=CFG/'target_v1.json'
+    if (CFG/'target_v1.stage1.lock.json').exists():p=CFG/'revisions/r1/target_v1.json'
+    assert sha(p) == lock['config_sha256']
+    c=json.loads(p.read_text())
     return c, lock
+
+
+def training_locked():
+    c=json.loads((CFG/'target_v1.json').read_text());lock=json.loads((CFG/'target_v1.stage1.lock.json').read_text())
+    assert sha(CFG/'target_v1.json')==lock['config_sha256']
+    return c,lock

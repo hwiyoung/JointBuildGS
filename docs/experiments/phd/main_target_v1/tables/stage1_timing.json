@@ -1,0 +1,81 @@
+{
+  "started_at": "2026-10-31T23:55:02.771185+09:00",
+  "as_of": "2026-11-01T00:44:36.870344+09:00",
+  "elapsed_minutes": 49.56831931666667,
+  "gpu_invocation_receipts": [
+    {
+      "path": "preflight_commands/B0_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 64.40444111824036,
+      "gpu": "1",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "preflight_commands/B173nb_b10_ALS/receipt.json",
+      "exit_code": 0,
+      "seconds": 33.990856647491455,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "preflight_commands/B173nb_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 34.89854335784912,
+      "gpu": "1",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "preflight_commands/R1rep_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 58.032198429107666,
+      "gpu": "1",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "diagnose_commands/B173nb_b10_ALS/receipt.json",
+      "exit_code": 0,
+      "seconds": 43.12028646469116,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "diagnose_commands/B173nb_b10_ALS_launch_error/receipt.json",
+      "exit_code": 2,
+      "seconds": 0.5210094451904297,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "diagnose_commands/B173nb_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 26.36004066467285,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "decompose_commands/B173nb_b10_ALS/receipt.json",
+      "exit_code": 0,
+      "seconds": 29.9796199798584,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    }
+  ],
+  "training_iterations": 0,
+  "scientific_verdict": null
+}
