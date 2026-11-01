@@ -1,0 +1,631 @@
+{
+  "scope": "R1rep_b10",
+  "prior": "LoD2",
+  "building": "DEBY_LOD2_4906975",
+  "revision": "r7",
+  "title": "R1 · 4906975: 벽을 펼치면 판단이 바뀌는 높이가 보인다",
+  "caption": "높이는 작업 좌표의 Z · 면 사이 점선은 실제 모서리가 이어지지 않는 곳",
+  "faces": [
+    {
+      "face_id": "DEBY_LOD2_4906975_61b1bcaf-3acc-4beb-9b90-03e5fa54b589_2",
+      "face_name": "벽 남 1",
+      "start_m": 0.0,
+      "end_m": 6.479027701590002,
+      "previous_corner_gap_m": null
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_153445c4-cb7b-4540-b6a3-5990e608419a_2",
+      "face_name": "벽 남 2",
+      "start_m": 6.479027701590002,
+      "end_m": 9.501956744740362,
+      "previous_corner_gap_m": 1.1717592442652782
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_babd4d87-f0d0-468f-a5d0-86db4e04c64d_2",
+      "face_name": "벽 남 3",
+      "start_m": 9.501956744740362,
+      "end_m": 12.09845438587501,
+      "previous_corner_gap_m": 3.972054645195637e-15
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_86f36ec1-e228-41a2-b1f9-beeea71c3c03_2",
+      "face_name": "벽 남 9",
+      "start_m": 12.09845438587501,
+      "end_m": 17.789455176588536,
+      "previous_corner_gap_m": 0.39424357952348277
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_f3a0ac92-f2a2-402a-a51f-276116d18ffb_2",
+      "face_name": "벽 남 18",
+      "start_m": 17.789455176588536,
+      "end_m": 28.85904279309651,
+      "previous_corner_gap_m": 5.773159728050814e-15
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_7ed59390-5fd6-47b0-b654-3bc4a015b666_2",
+      "face_name": "벽 남 29",
+      "start_m": 28.859042793096513,
+      "end_m": 40.09076518997688,
+      "previous_corner_gap_m": 1.7763568394002505e-15
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_11e32593-b5a0-4333-aa53-90c0bebc2551_2",
+      "face_name": "벽 남 41",
+      "start_m": 40.09076518997688,
+      "end_m": 51.528734939665405,
+      "previous_corner_gap_m": 2.07157025572446e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_97eea9bd-3847-4a10-a4bf-99a9e548a565_2",
+      "face_name": "벽 남 42",
+      "start_m": 51.5287349396654,
+      "end_m": 53.08597608971077,
+      "previous_corner_gap_m": 9.991776618785927
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_fdbdbab6-ae85-4f2f-94dd-733c1c4b909f_2",
+      "face_name": "벽 남 40",
+      "start_m": 53.08597608971077,
+      "end_m": 54.6275661776378,
+      "previous_corner_gap_m": 3.09782181494111
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_5e3dfa6d-8409-4e69-b277-2391efa5b57e_2",
+      "face_name": "벽 남 39",
+      "start_m": 54.6275661776378,
+      "end_m": 56.17756617801033,
+      "previous_corner_gap_m": 3.0907927786925726
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_93d3790e-3cc4-4e83-b712-908344bcafd0_2",
+      "face_name": "벽 남 37",
+      "start_m": 56.17756617801033,
+      "end_m": 57.72837241976026,
+      "previous_corner_gap_m": 3.100403199767986
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_9a0527ee-ad1b-467e-8e14-27de50ca2eeb_2",
+      "face_name": "벽 남 35",
+      "start_m": 57.728372419760255,
+      "end_m": 59.292980996885674,
+      "previous_corner_gap_m": 3.1146428363707335
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_65a146d0-0063-4e3a-af30-12f7b2d4a675_2",
+      "face_name": "벽 남 34",
+      "start_m": 59.292980996885674,
+      "end_m": 60.852115372218336,
+      "previous_corner_gap_m": 3.123027377395892
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_25f38afa-5433-48da-ad4d-7fecd54a26c4_2",
+      "face_name": "벽 남 33",
+      "start_m": 60.85211537221833,
+      "end_m": 62.41752266735379,
+      "previous_corner_gap_m": 3.1237157360984353
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_cb5e92ab-8157-471e-b3c5-a9d3b8405f05_2",
+      "face_name": "벽 남 31",
+      "start_m": 62.41752266735379,
+      "end_m": 63.99248298442315,
+      "previous_corner_gap_m": 3.1395541084777028
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_e640b1f6-11f8-42d8-aa26-884c86eb91e9_2",
+      "face_name": "벽 남 30",
+      "start_m": 63.99248298442315,
+      "end_m": 65.5617184668852,
+      "previous_corner_gap_m": 3.1435648552978153
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_2861c924-9326-4da3-9beb-776eaf156ad3_2",
+      "face_name": "벽 남 28",
+      "start_m": 65.56171846688521,
+      "end_m": 67.13715491434512,
+      "previous_corner_gap_m": 3.1439624677870333
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_fd282b1f-8be9-413f-9a34-09ac01b9f24a_2",
+      "face_name": "벽 남 25",
+      "start_m": 67.13715491434512,
+      "end_m": 68.69952490912951,
+      "previous_corner_gap_m": 3.1370368186018807
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_c3473d79-0ffe-49f5-aa4f-9a3d2c1650be_2",
+      "face_name": "벽 남 24",
+      "start_m": 68.69952490912951,
+      "end_m": 70.2712755253564,
+      "previous_corner_gap_m": 3.133209217439927
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_d3acc748-b8ab-48cf-b158-4739ac8321b8_2",
+      "face_name": "벽 남 22",
+      "start_m": 70.27127552535639,
+      "end_m": 71.83859808309113,
+      "previous_corner_gap_m": 3.1384868964576724
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_f27f15cd-d162-4728-9317-9017880dbf04_2",
+      "face_name": "벽 남 21",
+      "start_m": 71.83859808309113,
+      "end_m": 73.42011634114014,
+      "previous_corner_gap_m": 3.1477134560166933
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_b51f51a8-4bfd-4c44-9acd-01742a5cbe2c_2",
+      "face_name": "벽 남 20",
+      "start_m": 73.42011634114014,
+      "end_m": 74.9829663017843,
+      "previous_corner_gap_m": 3.1438352373937843
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_f7f103a0-3d8b-4801-9a9c-9858600ce178_2",
+      "face_name": "벽 남 19",
+      "start_m": 74.9829663017843,
+      "end_m": 76.54837359715106,
+      "previous_corner_gap_m": 3.1274590324994325
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_650f361d-00a8-4229-84af-ec9d606d6f70_2",
+      "face_name": "벽 남 14",
+      "start_m": 76.54837359715104,
+      "end_m": 78.10994332012932,
+      "previous_corner_gap_m": 3.1264036847543295
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_07040bfe-8db0-472a-b64a-994eb64f5867_2",
+      "face_name": "벽 남 13",
+      "start_m": 78.10994332012932,
+      "end_m": 79.67994332019451,
+      "previous_corner_gap_m": 3.1307826497443876
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_a4fa5136-84d9-4c32-b3ac-ecbc5074db05_2",
+      "face_name": "벽 남 12",
+      "start_m": 79.67994332019451,
+      "end_m": 81.24151304317279,
+      "previous_corner_gap_m": 3.1307826497443876
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_bc5579ce-87b3-463c-a21c-a4552051f897_2",
+      "face_name": "벽 남 11",
+      "start_m": 81.24151304317279,
+      "end_m": 82.79782278108208,
+      "previous_corner_gap_m": 3.11708196874857
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_561f3198-7392-48da-b814-3f8066b34010_2",
+      "face_name": "벽 남 10",
+      "start_m": 82.79782278108206,
+      "end_m": 84.35207501278082,
+      "previous_corner_gap_m": 3.1097588331235118
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_52933125-6740-4879-9699-6ab2cb5971e3_2",
+      "face_name": "벽 남 8",
+      "start_m": 84.3520750127808,
+      "end_m": 85.97639025325724,
+      "previous_corner_gap_m": 3.1780025173537516
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_01b1d4cf-48b0-4b0a-81c9-5e7f3ea1387e_2",
+      "face_name": "벽 남 6",
+      "start_m": 85.97639025325725,
+      "end_m": 87.60445659086011,
+      "previous_corner_gap_m": 3.251614983396006
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_83a2a218-3a5e-4f7c-be56-61fbd6c2a947_2",
+      "face_name": "벽 남 17",
+      "start_m": 87.60445659086011,
+      "end_m": 97.87417951788605,
+      "previous_corner_gap_m": 9.100920667371618
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_8691e6ee-62d6-4c27-9669-20a1c70d0814_2",
+      "face_name": "벽 남 27",
+      "start_m": 97.87417951788605,
+      "end_m": 108.2636658384564,
+      "previous_corner_gap_m": 2.90394956512895e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_bfc565bb-195e-4b5e-8da8-f2dcc59757d5_2",
+      "face_name": "벽 남 38",
+      "start_m": 108.2636658384564,
+      "end_m": 118.1719042794029,
+      "previous_corner_gap_m": 6.4047456679787536e-15
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_401439b9-c378-4ca3-bfd2-91633e36c863_2",
+      "face_name": "벽 남 36",
+      "start_m": 118.1719042794029,
+      "end_m": 127.36193039456131,
+      "previous_corner_gap_m": 9.837609872420067
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_dae20939-1919-429d-8c15-162e90da44bc_2",
+      "face_name": "벽 남 32",
+      "start_m": 127.36193039456131,
+      "end_m": 135.23298572405636,
+      "previous_corner_gap_m": 10.90411064695959
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_f6272e10-36e5-4276-bf9d-a7690fef65e1_2",
+      "face_name": "벽 남 23",
+      "start_m": 135.2329857240564,
+      "end_m": 142.54086948064057,
+      "previous_corner_gap_m": 15.119515898319563
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_b48e5f99-fbff-42dc-b72d-8f84b51fee19_2",
+      "face_name": "벽 남 26",
+      "start_m": 142.54086948064057,
+      "end_m": 152.2480241619357,
+      "previous_corner_gap_m": 11.163481760275024
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_9e95a593-8cfc-4fe0-8910-30dd141cc93e_2",
+      "face_name": "벽 남 15",
+      "start_m": 152.2480241619357,
+      "end_m": 160.83582248277685,
+      "previous_corner_gap_m": 18.46645239351069
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3233270a-466b-42d3-ae45-11e7c4caf757_2",
+      "face_name": "벽 남 16",
+      "start_m": 160.83582248277685,
+      "end_m": 170.82807968521303,
+      "previous_corner_gap_m": 11.821179975280746
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_aa57590e-2604-45ca-a13b-e2afbca5feb6_2",
+      "face_name": "벽 남 7",
+      "start_m": 170.82807968521303,
+      "end_m": 180.1604341576048,
+      "previous_corner_gap_m": 19.878430622159225
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3011d61a-f3d6-4108-a695-f91954f66c0c_2",
+      "face_name": "벽 남 5",
+      "start_m": 180.1604341576048,
+      "end_m": 191.0058583079673,
+      "previous_corner_gap_m": 12.32944447254132
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_645931a8-772e-4813-961b-9175e0eae463_2",
+      "face_name": "벽 남 4",
+      "start_m": 191.0058583079673,
+      "end_m": 202.34922998493442,
+      "previous_corner_gap_m": 11.314530701632084
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_04f441ab-b494-405e-a953-3c9904a5520e_2",
+      "face_name": "벽 동 1",
+      "start_m": 202.34922998493442,
+      "end_m": 207.41890146706407,
+      "previous_corner_gap_m": 11.869593167870907
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_ead94bb3-b454-4d28-acb1-6eab21016bc4_2",
+      "face_name": "벽 동 2",
+      "start_m": 207.41890146706407,
+      "end_m": 215.58914509838664,
+      "previous_corner_gap_m": 34.92894066410693
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_bd06a65d-3b80-4efc-b3aa-b2b2f9cabe89_2",
+      "face_name": "벽 동 3",
+      "start_m": 215.58914509838664,
+      "end_m": 223.5358049000232,
+      "previous_corner_gap_m": 1.0658141036401503e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_8e89d372-6377-4899-89a2-5af87c58052a_2",
+      "face_name": "벽 동 15",
+      "start_m": 223.5358049000232,
+      "end_m": 232.87280982679295,
+      "previous_corner_gap_m": 10.804942665519407
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_ca0f4e0d-721c-4706-abb0-bf0368ca7d20_2",
+      "face_name": "벽 동 28",
+      "start_m": 232.87280982679295,
+      "end_m": 234.37177613746965,
+      "previous_corner_gap_m": 6.20971126545338
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_23fe1da6-1143-430d-b625-587edd977901_2",
+      "face_name": "벽 동 27",
+      "start_m": 234.37177613746962,
+      "end_m": 235.87749855496605,
+      "previous_corner_gap_m": 3.0040805578694156
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_df489cc7-f67b-4f6a-ab21-c9d453371a10_2",
+      "face_name": "벽 동 26",
+      "start_m": 235.87749855496605,
+      "end_m": 237.29425541556787,
+      "previous_corner_gap_m": 2.9220540723080113
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_a725c180-914d-467d-bdcb-0cc689e0283b_2",
+      "face_name": "벽 동 25",
+      "start_m": 237.29425541556787,
+      "end_m": 238.7022681990038,
+      "previous_corner_gap_m": 2.824553062115178
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_8c96c3b8-55a7-486d-91c4-03425d7417a6_2",
+      "face_name": "벽 동 24",
+      "start_m": 238.70226819900378,
+      "end_m": 240.1061556587189,
+      "previous_corner_gap_m": 2.811547615770273
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_574eaf44-2fb8-47c1-bea2-b1125211dd9b_2",
+      "face_name": "벽 동 23",
+      "start_m": 240.10615565871888,
+      "end_m": 241.52164144176288,
+      "previous_corner_gap_m": 2.819237486110107
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_b2b473b6-6fcd-4783-a9ec-4bbc61570356_2",
+      "face_name": "벽 동 22",
+      "start_m": 241.52164144176288,
+      "end_m": 242.93036426738993,
+      "previous_corner_gap_m": 2.823065709971046
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_9ceab0f1-dec7-44af-a101-18a2b0eb7a35_2",
+      "face_name": "벽 동 21",
+      "start_m": 242.9303642673899,
+      "end_m": 244.34390591866492,
+      "previous_corner_gap_m": 2.822091422805736
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_40c70bca-5442-4f24-833d-cf451b1a606e_2",
+      "face_name": "벽 동 20",
+      "start_m": 244.34390591866494,
+      "end_m": 245.7605216038425,
+      "previous_corner_gap_m": 2.8293638858804724
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_92617de9-2b02-4fd9-8a4f-44b3191fe417_2",
+      "face_name": "벽 동 19",
+      "start_m": 245.7605216038425,
+      "end_m": 247.1725060233077,
+      "previous_corner_gap_m": 2.828161947389697
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_6366de0a-b482-4586-bf9c-2a497b263c9d_2",
+      "face_name": "벽 동 17",
+      "start_m": 247.1725060233077,
+      "end_m": 248.58151276542264,
+      "previous_corner_gap_m": 2.820957284373337
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_625ecf42-34a3-412c-97e2-f050549ad09a_2",
+      "face_name": "벽 동 16",
+      "start_m": 248.58151276542264,
+      "end_m": 249.98813993740083,
+      "previous_corner_gap_m": 2.815190935013582
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_c115ab0a-8a97-4d67-850c-3e4049e9a005_2",
+      "face_name": "벽 동 14",
+      "start_m": 249.98813993740083,
+      "end_m": 251.402141351724,
+      "previous_corner_gap_m": 2.8202836739053994
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3019fdec-5a48-4be3-ae90-7214d542fc23_2",
+      "face_name": "벽 동 13",
+      "start_m": 251.40214135172397,
+      "end_m": 252.80933714467534,
+      "previous_corner_gap_m": 2.8206382254393745
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_282cc377-2a28-49b7-aa15-5626fdd147b8_2",
+      "face_name": "벽 동 11",
+      "start_m": 252.80933714467534,
+      "end_m": 254.31827716990745,
+      "previous_corner_gap_m": 2.915561695264741
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_8d545ec0-7dfb-4f3c-be69-c586e14a5829_2",
+      "face_name": "벽 동 9",
+      "start_m": 254.31827716990745,
+      "end_m": 255.81109330036819,
+      "previous_corner_gap_m": 3.0014658841536965
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3df3451c-38d0-4fd5-b000-a914f3b7453d_2",
+      "face_name": "벽 동 12",
+      "start_m": 255.81109330036819,
+      "end_m": 257.43158705180383,
+      "previous_corner_gap_m": 4.066517980787568
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_9d98225c-0fe9-418a-b6ab-5caee2b1f29d_2",
+      "face_name": "벽 동 10",
+      "start_m": 257.43158705180383,
+      "end_m": 259.04803377261777,
+      "previous_corner_gap_m": 3.236000617963945
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_b86620ac-455f-4c86-96bb-cd807d9fc199_2",
+      "face_name": "벽 동 7",
+      "start_m": 259.04803377261777,
+      "end_m": 260.5871568995396,
+      "previous_corner_gap_m": 3.154932646190681
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_9548c090-878f-471f-b736-f634ad3c2858_2",
+      "face_name": "벽 동 6",
+      "start_m": 260.5871568995396,
+      "end_m": 262.12968728808977,
+      "previous_corner_gap_m": 3.0809901004152547
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_369265dc-8c96-45ce-a595-431e0b00637d_2",
+      "face_name": "벽 동 4",
+      "start_m": 262.12968728808977,
+      "end_m": 263.6853222071611,
+      "previous_corner_gap_m": 3.097644266550613
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_6cda350f-d26e-4b5d-a3ab-03ee788eab4a_2",
+      "face_name": "벽 동 8",
+      "start_m": 263.68532220716116,
+      "end_m": 274.7264978688543,
+      "previous_corner_gap_m": 9.062155648903039
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3bd40621-639e-4eac-ab27-2c83d0c5d12a_2",
+      "face_name": "벽 동 18",
+      "start_m": 274.7264978688543,
+      "end_m": 284.77394938658244,
+      "previous_corner_gap_m": 1.0048591735576161e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_ce060bb9-7274-4239-a7a3-0786e6ccf7f0_2",
+      "face_name": "벽 동 5",
+      "start_m": 284.7739493865824,
+      "end_m": 295.4703092345228,
+      "previous_corner_gap_m": 20.636546658909594
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_5bc495c6-447e-43ab-9b25-084765106e8b_2",
+      "face_name": "벽 북 6",
+      "start_m": 295.4703092345228,
+      "end_m": 335.9422377776527,
+      "previous_corner_gap_m": 11.179173486286976
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_4cf5a8d3-8547-4184-a96d-2ef3ffdb41e2_2",
+      "face_name": "벽 북 5",
+      "start_m": 335.9422377776526,
+      "end_m": 336.4404345256918,
+      "previous_corner_gap_m": 1.0016932762267823
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_e85f02be-7ce9-4687-bc8f-1c85d350987e_2",
+      "face_name": "벽 북 4",
+      "start_m": 336.44043452569184,
+      "end_m": 336.9461024008333,
+      "previous_corner_gap_m": 1.1724291566434251e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_2265ab79-c5c9-4001-9981-1d73c49d9678_2",
+      "face_name": "벽 북 3",
+      "start_m": 336.9461024008333,
+      "end_m": 337.4596196839622,
+      "previous_corner_gap_m": 1.464821375527116e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_990319b8-a1bd-4206-82d5-5e49599292a1_2",
+      "face_name": "벽 북 2",
+      "start_m": 337.4596196839622,
+      "end_m": 337.95459443082575,
+      "previous_corner_gap_m": 1.4458497151625688e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3d5cf8aa-a3b4-4f84-8f52-34953438a374_2",
+      "face_name": "벽 북 1",
+      "start_m": 337.95459443082575,
+      "end_m": 339.32254910846166,
+      "previous_corner_gap_m": 0.9211439632994594
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3134ceb5-0704-48f8-adeb-483e8e7623ae_2",
+      "face_name": "벽 북 8",
+      "start_m": 339.32254910846166,
+      "end_m": 340.30239603540485,
+      "previous_corner_gap_m": 44.90295463384669
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_dec3896c-4958-4352-a038-82b5fdf6e88c_2",
+      "face_name": "벽 북 7",
+      "start_m": 340.30239603540485,
+      "end_m": 343.0444026002209,
+      "previous_corner_gap_m": 23.09765789033103
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_a671084b-21d9-4127-8e42-6d1a2d3c904a_2",
+      "face_name": "벽 서 4",
+      "start_m": 343.04440260022096,
+      "end_m": 347.1977747240441,
+      "previous_corner_gap_m": 37.9646621938764
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_ae565012-10b3-4745-bf92-677e62f9a3c0_2",
+      "face_name": "벽 서 1",
+      "start_m": 347.1977747240441,
+      "end_m": 348.3693121751081,
+      "previous_corner_gap_m": 7.926231765396307
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_3ab11c98-74f6-4529-9072-e39218161aea_2",
+      "face_name": "벽 서 3",
+      "start_m": 348.3693121751082,
+      "end_m": 382.0069436165832,
+      "previous_corner_gap_m": 40.04742235320055
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_92dddb44-915d-4808-bd7b-4267fb5ba877_2",
+      "face_name": "벽 서 5",
+      "start_m": 382.0069436165832,
+      "end_m": 382.92808421422603,
+      "previous_corner_gap_m": 34.56627691786997
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_a0a9f9ec-aaba-4b19-a6fa-a2e15b73c216_2",
+      "face_name": "벽 서 6",
+      "start_m": 382.9280842142261,
+      "end_m": 383.4273837234863,
+      "previous_corner_gap_m": 3.0342379604236003
+    },
+    {
+      "face_id": "DEBY_LOD2_4906975_6472d061-6915-43aa-9b38-016bebfb35b5_2",
+      "face_name": "벽 서 7",
+      "start_m": 383.4273837234863,
+      "end_m": 383.9365988061418,
+      "previous_corner_gap_m": 1.001798383219593
+    }
+  ],
+  "direction_order": [
+    "남",
+    "동",
+    "북",
+    "서"
+  ],
+  "distance": "sum of face horizontal widths; separated faces retain their own metric distance",
+  "discontinuous_corner_count": 72,
+  "eval_area_m2": 2030.8125,
+  "band_included": false,
+  "mismatch_cells": 3844,
+  "mismatch_components": 563,
+  "raster": {
+    "origin": [
+      0.0,
+      -44.5
+    ],
+    "step": 0.25,
+    "extent": [
+      0.0,
+      384.0,
+      -44.5,
+      -27.25
+    ],
+    "overlapping_cells": 228,
+    "region_tie_cells": 71,
+    "truth_tie_cells": 9,
+    "face_tie_cells": 228,
+    "occupied_cells": 32265,
+    "patch_count": 32493
+  },
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

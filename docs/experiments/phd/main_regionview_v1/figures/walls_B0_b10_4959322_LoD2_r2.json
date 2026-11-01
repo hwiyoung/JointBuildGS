@@ -1,0 +1,64 @@
+{
+  "scope": "B0_b10",
+  "prior": "LoD2",
+  "building": "DEBY_LOD2_4959322",
+  "revision": "r2",
+  "title": "B0 · 4959322: 벽을 펼치면 판단이 바뀌는 높이가 보인다",
+  "caption": "높이는 작업 좌표의 Z · 면 사이 점선은 실제 모서리가 이어지지 않는 곳",
+  "faces": [
+    {
+      "face_id": "DEBY_LOD2_4959322_1baee801-9baa-49e6-9219-248aaacfaedd_2",
+      "face_name": "벽 남",
+      "start_m": 0.0,
+      "end_m": 26.963362178847916,
+      "previous_corner_gap_m": null
+    },
+    {
+      "face_id": "DEBY_LOD2_4959322_bbc64a06-4d90-4e50-b834-f41b1bae4025_2",
+      "face_name": "벽 동",
+      "start_m": 26.963362178847916,
+      "end_m": 41.640981195705365,
+      "previous_corner_gap_m": 1.2370981057044346e-05
+    },
+    {
+      "face_id": "DEBY_LOD2_4959322_d21b383d-3ae0-48aa-9b90-db3622a8807b_2",
+      "face_name": "벽 북",
+      "start_m": 41.640981195705365,
+      "end_m": 68.58956186308271,
+      "previous_corner_gap_m": 1.4752065721219425e-05
+    }
+  ],
+  "direction_order": [
+    "남",
+    "동",
+    "북",
+    "서"
+  ],
+  "distance": "sum of face horizontal widths; separated faces retain their own metric distance",
+  "discontinuous_corner_count": 0,
+  "eval_area_m2": 344.125,
+  "band_included": false,
+  "mismatch_cells": 129,
+  "mismatch_components": 40,
+  "raster": {
+    "origin": [
+      18.0,
+      -43.75
+    ],
+    "step": 0.25,
+    "extent": [
+      18.0,
+      51.25,
+      -43.75,
+      -22.25
+    ],
+    "overlapping_cells": 1,
+    "region_tie_cells": 0,
+    "truth_tie_cells": 0,
+    "face_tie_cells": 1,
+    "occupied_cells": 5505,
+    "patch_count": 5506
+  },
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

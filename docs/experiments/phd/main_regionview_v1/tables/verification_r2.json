@@ -1,0 +1,125 @@
+{
+  "status": "PASS_TECHNICAL_VERIFICATION",
+  "at": "2026-11-01T19:57:09.947455+09:00",
+  "revision": "r2",
+  "units": [
+    {
+      "scope": "B0_b10",
+      "prior": "ALS",
+      "face_count": 15,
+      "patch_count": 23255,
+      "eval_area_m2": 1592.8931141923629,
+      "attached_area_m2": 1591.1109960831209,
+      "status": "PASS"
+    },
+    {
+      "scope": "B0_b10",
+      "prior": "LoD2",
+      "face_count": 43,
+      "patch_count": 82117,
+      "eval_area_m2": 5132.25334436015,
+      "attached_area_m2": 5132.25334436015,
+      "status": "PASS"
+    },
+    {
+      "scope": "B173nb_b10",
+      "prior": "ALS",
+      "face_count": 26,
+      "patch_count": 34271,
+      "eval_area_m2": 2285.8673805676904,
+      "attached_area_m2": 2285.68279082833,
+      "status": "PASS"
+    },
+    {
+      "scope": "B173nb_b10",
+      "prior": "LoD2",
+      "face_count": 79,
+      "patch_count": 141534,
+      "eval_area_m2": 8845.875,
+      "attached_area_m2": 8845.875,
+      "status": "PASS"
+    },
+    {
+      "scope": "B173_b0",
+      "prior": "ALS",
+      "face_count": 25,
+      "patch_count": 25480,
+      "eval_area_m2": 1729.5833237743834,
+      "attached_area_m2": 1729.446517194753,
+      "status": "PASS"
+    },
+    {
+      "scope": "B173_b0",
+      "prior": "LoD2",
+      "face_count": 74,
+      "patch_count": 114065,
+      "eval_area_m2": 7129.0625,
+      "attached_area_m2": 7129.0625,
+      "status": "PASS"
+    },
+    {
+      "scope": "R1rep_b10",
+      "prior": "ALS",
+      "face_count": 9,
+      "patch_count": 24158,
+      "eval_area_m2": 1610.529317564144,
+      "attached_area_m2": 1607.8101783517977,
+      "status": "PASS"
+    },
+    {
+      "scope": "R1rep_b10",
+      "prior": "LoD2",
+      "face_count": 96,
+      "patch_count": 79054,
+      "eval_area_m2": 4940.875,
+      "attached_area_m2": 4940.875,
+      "status": "PASS"
+    },
+    {
+      "scope": "development",
+      "prior": "ALS",
+      "face_count": 387,
+      "patch_count": 501913,
+      "eval_area_m2": 33878.1873771523,
+      "attached_area_m2": 33878.1873771523,
+      "status": "PASS"
+    },
+    {
+      "scope": "development",
+      "prior": "LoD2",
+      "face_count": 2043,
+      "patch_count": 2129735,
+      "eval_area_m2": 133107.3128497313,
+      "attached_area_m2": 133107.3128497313,
+      "status": "PASS"
+    },
+    {
+      "scope": "holdout",
+      "prior": "ALS",
+      "face_count": 39,
+      "patch_count": 35135,
+      "eval_area_m2": 2402.4957777600525,
+      "attached_area_m2": 2402.4957777600525,
+      "status": "PASS"
+    },
+    {
+      "scope": "holdout",
+      "prior": "LoD2",
+      "face_count": 134,
+      "patch_count": 173119,
+      "eval_area_m2": 10819.87137487095,
+      "attached_area_m2": 10819.87137487095,
+      "status": "PASS"
+    }
+  ],
+  "faces_verified": 2970,
+  "patches_verified": 3363896,
+  "figures_verified": 48,
+  "selected_training_photos": 32,
+  "unchanged_input_files": 239,
+  "holdout_leaks": 0,
+  "validation": "independent face-by-class-by-cell indexed reduction, area conservation, exact source label/geometry checks, holdout public text scan, PNG decoding, photo training membership, before/after SHA256",
+  "visual_review": "separate image inspection required",
+  "scientific_verdict": null,
+  "seconds": 19.226884179748595
+}

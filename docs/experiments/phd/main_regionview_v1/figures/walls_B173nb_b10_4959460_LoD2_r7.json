@@ -1,0 +1,71 @@
+{
+  "scope": "B173nb_b10",
+  "prior": "LoD2",
+  "building": "DEBY_LOD2_4959460",
+  "revision": "r7",
+  "title": "B173 주변 · 4959460: 벽을 펼치면 판단이 바뀌는 높이가 보인다",
+  "caption": "높이는 작업 좌표의 Z · 면 사이 점선은 실제 모서리가 이어지지 않는 곳",
+  "faces": [
+    {
+      "face_id": "DEBY_LOD2_4959460_6cecf053-e274-45e9-83c0-710ad4edf111_2",
+      "face_name": "벽 동 5",
+      "start_m": 0.0,
+      "end_m": 18.837422859861775,
+      "previous_corner_gap_m": null
+    },
+    {
+      "face_id": "DEBY_LOD2_4959460_f19d0afc-15d2-4295-9509-df505861a560_2",
+      "face_name": "벽 동 6",
+      "start_m": 18.837422859861775,
+      "end_m": 37.23519718126454,
+      "previous_corner_gap_m": 2.842170943040401e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4959460_f79bbfbb-ee0d-46b1-98d3-b963aa1f6d76_2",
+      "face_name": "벽 동 8",
+      "start_m": 37.23519718126455,
+      "end_m": 81.13934846556728,
+      "previous_corner_gap_m": 2.0097183471152322e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4959460_ca451582-b45d-48ea-bfe1-1ec7977dc834_2",
+      "face_name": "벽 북 2",
+      "start_m": 81.13934846556727,
+      "end_m": 169.04965389112883,
+      "previous_corner_gap_m": 0.0
+    }
+  ],
+  "direction_order": [
+    "남",
+    "동",
+    "북",
+    "서"
+  ],
+  "distance": "sum of face horizontal widths; separated faces retain their own metric distance",
+  "discontinuous_corner_count": 0,
+  "eval_area_m2": 1135.375,
+  "band_included": false,
+  "mismatch_cells": 621,
+  "mismatch_components": 187,
+  "raster": {
+    "origin": [
+      18.0,
+      -44.0
+    ],
+    "step": 0.25,
+    "extent": [
+      18.0,
+      91.0,
+      -44.0,
+      -28.5
+    ],
+    "overlapping_cells": 62,
+    "region_tie_cells": 38,
+    "truth_tie_cells": 0,
+    "face_tie_cells": 62,
+    "occupied_cells": 18104,
+    "patch_count": 18166
+  },
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

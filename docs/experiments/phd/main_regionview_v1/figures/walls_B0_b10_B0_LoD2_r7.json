@@ -1,0 +1,127 @@
+{
+  "scope": "B0_b10",
+  "prior": "LoD2",
+  "building": "DEBY_LOD2_4959323",
+  "revision": "r7",
+  "title": "B0 · B0: 벽을 펼치면 판단이 바뀌는 높이가 보인다",
+  "caption": "높이는 작업 좌표의 Z · 면 사이 점선은 실제 모서리가 이어지지 않는 곳",
+  "faces": [
+    {
+      "face_id": "DEBY_LOD2_4959323_cd8fdf27-2d60-46b2-84f5-7449654a22a5_2",
+      "face_name": "벽 남 1",
+      "start_m": 0.0,
+      "end_m": 5.804903099838796,
+      "previous_corner_gap_m": null
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_2b4a324e-1c0a-4549-92b9-90bd13ffc2fc_2",
+      "face_name": "벽 남 2",
+      "start_m": 5.804903099838796,
+      "end_m": 25.156311317280526,
+      "previous_corner_gap_m": 4.412124778695002
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_2ee5087f-0a2b-4bc6-9b7e-fa3b29596085_2",
+      "face_name": "벽 동",
+      "start_m": 25.156311317280526,
+      "end_m": 91.35374706830478,
+      "previous_corner_gap_m": 7.839032346790189e-05
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_f997b957-317f-4536-af68-8ff676cb8d75_2",
+      "face_name": "벽 북 2",
+      "start_m": 91.3537470683048,
+      "end_m": 110.74430404825945,
+      "previous_corner_gap_m": 0.0
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_4f91c542-2852-438d-be87-b58b9965119e_2",
+      "face_name": "벽 북 1",
+      "start_m": 110.74430404825945,
+      "end_m": 116.53826642289451,
+      "previous_corner_gap_m": 48.2945867402091
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_5f7f0f6b-3669-4e95-af00-64078d6d26ef_2",
+      "face_name": "벽 서 2",
+      "start_m": 116.53826642289451,
+      "end_m": 123.23074727804965,
+      "previous_corner_gap_m": 0.00011408267838618736
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_7f2de667-f7ea-4da0-87c0-487a5e77a5e4_2",
+      "face_name": "벽 서 1",
+      "start_m": 123.23074727804965,
+      "end_m": 129.9640971136111,
+      "previous_corner_gap_m": 8.731498442881236e-05
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_8c5c4176-2ae6-407a-b89c-d6338325fcad_2",
+      "face_name": "벽 서 4",
+      "start_m": 129.9640971136111,
+      "end_m": 133.8507023155239,
+      "previous_corner_gap_m": 5.804789063636724
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_c40c97b4-a79a-41ec-bce8-f050c7b0b1d2_2",
+      "face_name": "벽 서 3",
+      "start_m": 133.8507023155239,
+      "end_m": 134.37624964949302,
+      "previous_corner_gap_m": 1.452356741593167e-14
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_03d18a3d-a5bf-4cfc-906b-c606d004e417_2",
+      "face_name": "벽 서 5",
+      "start_m": 134.37624964949302,
+      "end_m": 167.4232464871065,
+      "previous_corner_gap_m": 50.91279308790478
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_e5a1f2f6-9160-4081-bcc8-1c6e778c6be6_2",
+      "face_name": "벽 서 6",
+      "start_m": 167.42324648710652,
+      "end_m": 182.10086550396414,
+      "previous_corner_gap_m": 47.72461524194569
+    },
+    {
+      "face_id": "DEBY_LOD2_4959323_e1d30b82-db65-4406-9e2c-e7a78adba2d6_2",
+      "face_name": "벽 서 7",
+      "start_m": 182.10086550396414,
+      "end_m": 182.67095321587658,
+      "previous_corner_gap_m": 15.24770474480443
+    }
+  ],
+  "direction_order": [
+    "남",
+    "동",
+    "북",
+    "서"
+  ],
+  "distance": "sum of face horizontal widths; separated faces retain their own metric distance",
+  "discontinuous_corner_count": 6,
+  "eval_area_m2": 2874.75334436015,
+  "band_included": false,
+  "mismatch_cells": 5510,
+  "mismatch_components": 929,
+  "raster": {
+    "origin": [
+      0.0,
+      -43.75
+    ],
+    "step": 0.25,
+    "extent": [
+      0.0,
+      182.75,
+      -43.75,
+      -24.5
+    ],
+    "overlapping_cells": 8,
+    "region_tie_cells": 3,
+    "truth_tie_cells": 7,
+    "face_tie_cells": 8,
+    "occupied_cells": 45989,
+    "patch_count": 45997
+  },
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-01T19:51:08.773939+09:00",
+  "config_sha256": "b79a12ad76ae60dc149a2f54f1a2bcf41350dd78c2c7359eed35cbb05ea9f2b6",
+  "order_sha256": "5bc4782484f6b11ad46bd4e57e4c10a31391682fcdc51ce8581618a14048537d",
+  "implementation_sha256": {
+    "scripts/phd/main_regionview_v1/common.py": "67f2fa3305586bd96b716b012e46f40026935b69dca30f67e6f1681e679c0d31",
+    "scripts/phd/main_regionview_v1/geometry.py": "3bb3a7427b563eecf3b3c45c9a1b49783875b14b7c65bd06e7a3ce11ea60ca00",
+    "scripts/phd/main_regionview_v1/inspect_catalog.py": "63410277eae618251f022c9b42928a601a740498d2b4510813b1d9cd8cabf157",
+    "scripts/phd/main_regionview_v1/inspect_inputs.py": "6e87155d90a8143a9f1ae77eee00c6c5b0d421f4481e1d7e132c87872494e54d",
+    "scripts/phd/main_regionview_v1/measure.py": "077242b13ffe3980e2525c2d5aa0733c6c6d16f37bc5f6efc00a3b06956f42f1",
+    "scripts/phd/main_regionview_v1/package.py": "64657dd165aed354c7167a2be7406d7460c6dba0edcf86fcb629c33dd6150b1c",
+    "scripts/phd/main_regionview_v1/preflight.py": "5997ea9f504785f938738d8502b572543688635317125c19660d158636f1d247",
+    "scripts/phd/main_regionview_v1/render.py": "370e2b113369e8ab12282c48c89638611a3054e873c4c24df84e0afa6b85d0e9",
+    "scripts/phd/main_regionview_v1/report.py": "9a8294fbb5eb7ad7dd663e6c639d2aafecbbc806c1b6f5454d582837d14db701",
+    "scripts/phd/main_regionview_v1/run_cpu.sh": "48865d4e90b1f08c8211d02cb324dda1c98558f6ace49313c64a28712db22e9c",
+    "scripts/phd/main_regionview_v1/verify.py": "80dc405846fba761f6c0abc94060c1689b096d809348d589d8d9d7a78938c7ef"
+  },
+  "before_face_statistics": false,
+  "source_commit": "8c057c0825c4e4864a44270bebd70273b2b6f78d",
+  "image_id": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "versions": {
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "shapely": "2.0.6",
+    "matplotlib": "3.9.2",
+    "platform": "Linux-6.8.0-111-generic-x86_64-with-glibc2.35"
+  },
+  "scientific_verdict": null,
+  "previous_lock_sha256": "6088c108d2130b7b0885e31474bd64cd015fb581a8165df5bebb6ae1a1199607"
+}
