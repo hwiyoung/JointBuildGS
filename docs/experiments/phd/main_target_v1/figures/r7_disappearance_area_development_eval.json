@@ -1,0 +1,59 @@
+{
+  "title": "개발용 · 평가 범위: 사라짐 넓이와 u 대체 비율",
+  "values": [
+    {
+      "split": "development",
+      "site": "aggregate",
+      "prior": "ALS",
+      "range": "eval",
+      "kind": 1,
+      "replacement": "all",
+      "old_unobserved_count": 25130,
+      "old_unobserved_area_m2": 1717.599350401727,
+      "disappeared_count": 635,
+      "disappeared_area_m2": 42.50347285773928,
+      "remaining_unobserved_area_m2": 1675.0958775439879,
+      "reference_disappeared_area_m2": 41.968068260060726,
+      "valid_samples": 3790407,
+      "fallback_samples": 2920442,
+      "fallback_fraction": 0.7704824310423657
+    },
+    {
+      "split": "development",
+      "site": "aggregate",
+      "prior": "LoD2",
+      "range": "eval",
+      "kind": 1,
+      "replacement": "all",
+      "old_unobserved_count": 35789,
+      "old_unobserved_area_m2": 2236.8125,
+      "disappeared_count": 1197,
+      "disappeared_area_m2": 74.8125,
+      "remaining_unobserved_area_m2": 2162.0,
+      "reference_disappeared_area_m2": 71.25,
+      "valid_samples": 6538602,
+      "fallback_samples": 4802834,
+      "fallback_fraction": 0.7345353028063185
+    },
+    {
+      "split": "development",
+      "site": "aggregate",
+      "prior": "LoD2",
+      "range": "eval",
+      "kind": 2,
+      "replacement": "all",
+      "old_unobserved_count": 414946,
+      "old_unobserved_area_m2": 25933.76581581564,
+      "disappeared_count": 4774,
+      "disappeared_area_m2": 298.375,
+      "remaining_unobserved_area_m2": 25635.39081581564,
+      "reference_disappeared_area_m2": 281.0,
+      "valid_samples": 166015578,
+      "fallback_samples": 111874396,
+      "fallback_fraction": 0.6738789055084939
+    }
+  ],
+  "note": "분모: 관측 없음 패치를 검사한 유효 3×3 화소 표본 · 같은 화소가 여러 검사 창에 들면 각각 셈",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-01T20:33:49.510554+09:00",
+  "status": "PASS_R7_COMPLETE_STATE_AUDIT",
+  "prior": "ALS",
+  "rows": [
+    {
+      "iteration": 7000,
+      "status": "PASS_COMPLETE_STATE",
+      "gaussians": 1055539,
+      "adam_parameter_groups": 6,
+      "adam_steps": {
+        "xyz": 7000.0,
+        "f_dc": 7000.0,
+        "f_rest": 7000.0,
+        "opacity": 7000.0,
+        "scaling": 7000.0,
+        "rotation": 7000.0
+      },
+      "checkpoint_sha256": "5349618c8692c0620b0af463e4951cf2d88260c4543fd268a5d1b84cb1a80936",
+      "tags": {
+        "0": 1013307,
+        "1": 39158,
+        "2": 3074
+      }
+    },
+    {
+      "iteration": 15000,
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    },
+    {
+      "iteration": 30000,
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    }
+  ],
+  "scientific_verdict": null
+}

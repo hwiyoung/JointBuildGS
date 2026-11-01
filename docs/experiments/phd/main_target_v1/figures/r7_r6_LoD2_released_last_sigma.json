@@ -1,0 +1,749 @@
+{
+  "title": "r6 LoD2: 풀림 가우시안의 마지막 목표 폭을 확인했다",
+  "values": {
+    "at": "2026-11-01T19:43:21.628184+09:00",
+    "source_revision": "r6",
+    "prior": "LoD2",
+    "iteration": 7000,
+    "phase": "pre_density_control",
+    "released_descendants": 201499,
+    "prior_descendants": 308302,
+    "hist_bins_m": [
+      0.0,
+      0.05,
+      0.1,
+      0.2,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      "inf"
+    ],
+    "hist_counts": [
+      640,
+      7178,
+      192112,
+      1353,
+      196,
+      20,
+      0,
+      0,
+      0
+    ],
+    "quantiles_m": {
+      "min": 0.02811654470860958,
+      "median": 0.14399999380111694,
+      "p95": 0.14399999380111694,
+      "max": 1.5663694143295288
+    },
+    "by_release_iteration": [
+      {
+        "iteration": 100,
+        "surviving_descendants": 165283,
+        "sigma_quantiles_m": {
+          "min": 0.03207438811659813,
+          "median": 0.14399999380111694,
+          "p95": 0.14399999380111694,
+          "max": 0.9489410519599915
+        }
+      },
+      {
+        "iteration": 200,
+        "surviving_descendants": 17049,
+        "sigma_quantiles_m": {
+          "min": 0.032114822417497635,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 0.7725857496261597
+        }
+      },
+      {
+        "iteration": 300,
+        "surviving_descendants": 1668,
+        "sigma_quantiles_m": {
+          "min": 0.029267771169543266,
+          "median": 0.14399999380111694,
+          "p95": 0.1737196177244184,
+          "max": 1.5447195768356323
+        }
+      },
+      {
+        "iteration": 400,
+        "surviving_descendants": 890,
+        "sigma_quantiles_m": {
+          "min": 0.03409828618168831,
+          "median": 0.14399999380111694,
+          "p95": 0.3080242946743964,
+          "max": 1.0150372982025146
+        }
+      },
+      {
+        "iteration": 500,
+        "surviving_descendants": 623,
+        "sigma_quantiles_m": {
+          "min": 0.03199059143662453,
+          "median": 0.14399999380111694,
+          "p95": 0.2854357361793518,
+          "max": 1.5447195768356323
+        }
+      },
+      {
+        "iteration": 600,
+        "surviving_descendants": 582,
+        "sigma_quantiles_m": {
+          "min": 0.03563909977674484,
+          "median": 0.10999999940395355,
+          "p95": 0.25508019700646345,
+          "max": 1.1766350269317627
+        }
+      },
+      {
+        "iteration": 700,
+        "surviving_descendants": 779,
+        "sigma_quantiles_m": {
+          "min": 0.03309500217437744,
+          "median": 0.14399999380111694,
+          "p95": 0.24486479908227915,
+          "max": 0.7007213830947876
+        }
+      },
+      {
+        "iteration": 800,
+        "surviving_descendants": 479,
+        "sigma_quantiles_m": {
+          "min": 0.030780762434005737,
+          "median": 0.10999999940395355,
+          "p95": 0.24197829514741895,
+          "max": 0.7900277972221375
+        }
+      },
+      {
+        "iteration": 900,
+        "surviving_descendants": 383,
+        "sigma_quantiles_m": {
+          "min": 0.031840670853853226,
+          "median": 0.10999999940395355,
+          "p95": 0.35633325576782227,
+          "max": 0.7908204197883606
+        }
+      },
+      {
+        "iteration": 1000,
+        "surviving_descendants": 484,
+        "sigma_quantiles_m": {
+          "min": 0.04017827659845352,
+          "median": 0.07304001599550247,
+          "p95": 0.36672098040580736,
+          "max": 0.7908204197883606
+        }
+      },
+      {
+        "iteration": 1100,
+        "surviving_descendants": 785,
+        "sigma_quantiles_m": {
+          "min": 0.03813254460692406,
+          "median": 0.14399999380111694,
+          "p95": 0.22793793678283691,
+          "max": 1.5663694143295288
+        }
+      },
+      {
+        "iteration": 1200,
+        "surviving_descendants": 387,
+        "sigma_quantiles_m": {
+          "min": 0.031967759132385254,
+          "median": 0.10999999940395355,
+          "p95": 0.26240968704223633,
+          "max": 0.9011231660842896
+        }
+      },
+      {
+        "iteration": 1300,
+        "surviving_descendants": 543,
+        "sigma_quantiles_m": {
+          "min": 0.03136982023715973,
+          "median": 0.14399999380111694,
+          "p95": 0.27539581060409546,
+          "max": 0.6136860847473145
+        }
+      },
+      {
+        "iteration": 1400,
+        "surviving_descendants": 355,
+        "sigma_quantiles_m": {
+          "min": 0.03173184394836426,
+          "median": 0.10999999940395355,
+          "p95": 0.3394571661949158,
+          "max": 0.7356605529785156
+        }
+      },
+      {
+        "iteration": 1500,
+        "surviving_descendants": 477,
+        "sigma_quantiles_m": {
+          "min": 0.03539881855249405,
+          "median": 0.14399999380111694,
+          "p95": 0.23765957355499268,
+          "max": 0.8540531992912292
+        }
+      },
+      {
+        "iteration": 1600,
+        "surviving_descendants": 372,
+        "sigma_quantiles_m": {
+          "min": 0.03131965175271034,
+          "median": 0.14399999380111694,
+          "p95": 0.19957328736782068,
+          "max": 0.7725857496261597
+        }
+      },
+      {
+        "iteration": 1700,
+        "surviving_descendants": 289,
+        "sigma_quantiles_m": {
+          "min": 0.031967759132385254,
+          "median": 0.13466092944145203,
+          "p95": 0.22739286124706265,
+          "max": 0.660944938659668
+        }
+      },
+      {
+        "iteration": 1800,
+        "surviving_descendants": 507,
+        "sigma_quantiles_m": {
+          "min": 0.029455630108714104,
+          "median": 0.14399999380111694,
+          "p95": 0.18742281198501587,
+          "max": 0.4445078372955322
+        }
+      },
+      {
+        "iteration": 1900,
+        "surviving_descendants": 431,
+        "sigma_quantiles_m": {
+          "min": 0.029645519331097603,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 0.4435065984725952
+        }
+      },
+      {
+        "iteration": 2000,
+        "surviving_descendants": 409,
+        "sigma_quantiles_m": {
+          "min": 0.03531990572810173,
+          "median": 0.14399999380111694,
+          "p95": 0.24518944323062897,
+          "max": 0.7725857496261597
+        }
+      },
+      {
+        "iteration": 2100,
+        "surviving_descendants": 275,
+        "sigma_quantiles_m": {
+          "min": 0.031967759132385254,
+          "median": 0.14399999380111694,
+          "p95": 0.16722331792116168,
+          "max": 1.5663694143295288
+        }
+      },
+      {
+        "iteration": 2200,
+        "surviving_descendants": 414,
+        "sigma_quantiles_m": {
+          "min": 0.030780762434005737,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 0.4720747470855713
+        }
+      },
+      {
+        "iteration": 2300,
+        "surviving_descendants": 222,
+        "sigma_quantiles_m": {
+          "min": 0.03106667660176754,
+          "median": 0.07304001599550247,
+          "p95": 0.16599999368190765,
+          "max": 0.956536054611206
+        }
+      },
+      {
+        "iteration": 2400,
+        "surviving_descendants": 212,
+        "sigma_quantiles_m": {
+          "min": 0.03480881080031395,
+          "median": 0.11932546645402908,
+          "p95": 0.17713294923305511,
+          "max": 1.174394130706787
+        }
+      },
+      {
+        "iteration": 2500,
+        "surviving_descendants": 241,
+        "sigma_quantiles_m": {
+          "min": 0.03199059143662453,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 0.45999017357826233
+        }
+      },
+      {
+        "iteration": 2600,
+        "surviving_descendants": 206,
+        "sigma_quantiles_m": {
+          "min": 0.033118776977062225,
+          "median": 0.14399999380111694,
+          "p95": 0.16704950854182243,
+          "max": 0.5232476592063904
+        }
+      },
+      {
+        "iteration": 2700,
+        "surviving_descendants": 209,
+        "sigma_quantiles_m": {
+          "min": 0.030696123838424683,
+          "median": 0.14399999380111694,
+          "p95": 0.22524689137935638,
+          "max": 0.7893314957618713
+        }
+      },
+      {
+        "iteration": 2800,
+        "surviving_descendants": 259,
+        "sigma_quantiles_m": {
+          "min": 0.028717759996652603,
+          "median": 0.14399999380111694,
+          "p95": 0.17006662487983704,
+          "max": 0.675280749797821
+        }
+      },
+      {
+        "iteration": 2900,
+        "surviving_descendants": 129,
+        "sigma_quantiles_m": {
+          "min": 0.03437675163149834,
+          "median": 0.14399999380111694,
+          "p95": 0.18830891549587245,
+          "max": 1.1526660919189453
+        }
+      },
+      {
+        "iteration": 3000,
+        "surviving_descendants": 160,
+        "sigma_quantiles_m": {
+          "min": 0.03308911249041557,
+          "median": 0.08094344288110733,
+          "p95": 0.27994862794875963,
+          "max": 0.826022744178772
+        }
+      },
+      {
+        "iteration": 3100,
+        "surviving_descendants": 334,
+        "sigma_quantiles_m": {
+          "min": 0.03205111622810364,
+          "median": 0.11963906139135361,
+          "p95": 0.16599999368190765,
+          "max": 0.7958976030349731
+        }
+      },
+      {
+        "iteration": 3200,
+        "surviving_descendants": 334,
+        "sigma_quantiles_m": {
+          "min": 0.035618558526039124,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 1.1985418796539307
+        }
+      },
+      {
+        "iteration": 3300,
+        "surviving_descendants": 189,
+        "sigma_quantiles_m": {
+          "min": 0.03589475154876709,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 1.5663694143295288
+        }
+      },
+      {
+        "iteration": 3400,
+        "surviving_descendants": 199,
+        "sigma_quantiles_m": {
+          "min": 0.03436586633324623,
+          "median": 0.10999999940395355,
+          "p95": 0.20000049769878384,
+          "max": 1.5663694143295288
+        }
+      },
+      {
+        "iteration": 3500,
+        "surviving_descendants": 220,
+        "sigma_quantiles_m": {
+          "min": 0.030002562329173088,
+          "median": 0.1303931325674057,
+          "p95": 0.22903854027390383,
+          "max": 1.3586026430130005
+        }
+      },
+      {
+        "iteration": 3600,
+        "surviving_descendants": 179,
+        "sigma_quantiles_m": {
+          "min": 0.033004019409418106,
+          "median": 0.10999999940395355,
+          "p95": 0.16599999368190765,
+          "max": 0.46638715267181396
+        }
+      },
+      {
+        "iteration": 3700,
+        "surviving_descendants": 198,
+        "sigma_quantiles_m": {
+          "min": 0.03100365214049816,
+          "median": 0.11301743239164352,
+          "p95": 0.167221799492836,
+          "max": 0.39717426896095276
+        }
+      },
+      {
+        "iteration": 3800,
+        "surviving_descendants": 205,
+        "sigma_quantiles_m": {
+          "min": 0.035341016948223114,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 0.5384829640388489
+        }
+      },
+      {
+        "iteration": 3900,
+        "surviving_descendants": 152,
+        "sigma_quantiles_m": {
+          "min": 0.029459014534950256,
+          "median": 0.09031808376312256,
+          "p95": 0.16599999368190765,
+          "max": 0.35158056020736694
+        }
+      },
+      {
+        "iteration": 4000,
+        "surviving_descendants": 147,
+        "sigma_quantiles_m": {
+          "min": 0.031376492232084274,
+          "median": 0.10999999940395355,
+          "p95": 0.19757213443517657,
+          "max": 0.7074189186096191
+        }
+      },
+      {
+        "iteration": 4100,
+        "surviving_descendants": 149,
+        "sigma_quantiles_m": {
+          "min": 0.031967759132385254,
+          "median": 0.10999999940395355,
+          "p95": 0.23403112590312958,
+          "max": 0.6438900232315063
+        }
+      },
+      {
+        "iteration": 4200,
+        "surviving_descendants": 239,
+        "sigma_quantiles_m": {
+          "min": 0.03524760901927948,
+          "median": 0.14399999380111694,
+          "p95": 0.16599999368190765,
+          "max": 1.1175456047058105
+        }
+      },
+      {
+        "iteration": 4300,
+        "surviving_descendants": 95,
+        "sigma_quantiles_m": {
+          "min": 0.0439719520509243,
+          "median": 0.10999999940395355,
+          "p95": 0.1981205075979232,
+          "max": 0.3411882519721985
+        }
+      },
+      {
+        "iteration": 4400,
+        "surviving_descendants": 195,
+        "sigma_quantiles_m": {
+          "min": 0.02811654470860958,
+          "median": 0.12546466290950775,
+          "p95": 0.16599999368190765,
+          "max": 0.4683258831501007
+        }
+      },
+      {
+        "iteration": 4500,
+        "surviving_descendants": 175,
+        "sigma_quantiles_m": {
+          "min": 0.03262517601251602,
+          "median": 0.10999999940395355,
+          "p95": 0.8639975786209106,
+          "max": 0.8639975786209106
+        }
+      },
+      {
+        "iteration": 4600,
+        "surviving_descendants": 196,
+        "sigma_quantiles_m": {
+          "min": 0.03199059143662453,
+          "median": 0.10999999940395355,
+          "p95": 0.16599999368190765,
+          "max": 0.27663877606391907
+        }
+      },
+      {
+        "iteration": 4700,
+        "surviving_descendants": 155,
+        "sigma_quantiles_m": {
+          "min": 0.03325270488858223,
+          "median": 0.10999999940395355,
+          "p95": 0.19135993719100952,
+          "max": 0.24506697058677673
+        }
+      },
+      {
+        "iteration": 4800,
+        "surviving_descendants": 105,
+        "sigma_quantiles_m": {
+          "min": 0.03264683485031128,
+          "median": 0.10999999940395355,
+          "p95": 0.16599999368190765,
+          "max": 0.6085698008537292
+        }
+      },
+      {
+        "iteration": 4900,
+        "surviving_descendants": 148,
+        "sigma_quantiles_m": {
+          "min": 0.02875559590756893,
+          "median": 0.12495739758014679,
+          "p95": 0.16599999368190765,
+          "max": 0.36599549651145935
+        }
+      },
+      {
+        "iteration": 5000,
+        "surviving_descendants": 99,
+        "sigma_quantiles_m": {
+          "min": 0.030627379193902016,
+          "median": 0.07304001599550247,
+          "p95": 0.20886099487543097,
+          "max": 0.6284729242324829
+        }
+      },
+      {
+        "iteration": 5100,
+        "surviving_descendants": 110,
+        "sigma_quantiles_m": {
+          "min": 0.03347675874829292,
+          "median": 0.10999999940395355,
+          "p95": 0.2584175407886505,
+          "max": 0.4090864658355713
+        }
+      },
+      {
+        "iteration": 5200,
+        "surviving_descendants": 152,
+        "sigma_quantiles_m": {
+          "min": 0.028402511030435562,
+          "median": 0.07304001599550247,
+          "p95": 0.17287771552801126,
+          "max": 0.9064505696296692
+        }
+      },
+      {
+        "iteration": 5300,
+        "surviving_descendants": 86,
+        "sigma_quantiles_m": {
+          "min": 0.030127890408039093,
+          "median": 0.07304001599550247,
+          "p95": 0.16599999368190765,
+          "max": 0.4348989427089691
+        }
+      },
+      {
+        "iteration": 5400,
+        "surviving_descendants": 101,
+        "sigma_quantiles_m": {
+          "min": 0.03130802884697914,
+          "median": 0.1321353167295456,
+          "p95": 0.24605724215507507,
+          "max": 0.7848877906799316
+        }
+      },
+      {
+        "iteration": 5500,
+        "surviving_descendants": 98,
+        "sigma_quantiles_m": {
+          "min": 0.030639776960015297,
+          "median": 0.08389972895383835,
+          "p95": 0.17144345939159375,
+          "max": 0.7224665284156799
+        }
+      },
+      {
+        "iteration": 5600,
+        "surviving_descendants": 91,
+        "sigma_quantiles_m": {
+          "min": 0.03367047384381294,
+          "median": 0.08502951264381409,
+          "p95": 0.17794650793075562,
+          "max": 0.2900034785270691
+        }
+      },
+      {
+        "iteration": 5700,
+        "surviving_descendants": 101,
+        "sigma_quantiles_m": {
+          "min": 0.03850544989109039,
+          "median": 0.10999999940395355,
+          "p95": 0.14399999380111694,
+          "max": 0.2648838758468628
+        }
+      },
+      {
+        "iteration": 5800,
+        "surviving_descendants": 104,
+        "sigma_quantiles_m": {
+          "min": 0.034208059310913086,
+          "median": 0.09618337079882622,
+          "p95": 0.19937082901597,
+          "max": 0.9064505696296692
+        }
+      },
+      {
+        "iteration": 5900,
+        "surviving_descendants": 116,
+        "sigma_quantiles_m": {
+          "min": 0.028402511030435562,
+          "median": 0.10999999940395355,
+          "p95": 0.22807420417666435,
+          "max": 0.368118017911911
+        }
+      },
+      {
+        "iteration": 6000,
+        "surviving_descendants": 98,
+        "sigma_quantiles_m": {
+          "min": 0.03445780277252197,
+          "median": 0.10999999940395355,
+          "p95": 0.20866820216178894,
+          "max": 0.21060191094875336
+        }
+      },
+      {
+        "iteration": 6100,
+        "surviving_descendants": 190,
+        "sigma_quantiles_m": {
+          "min": 0.03360375389456749,
+          "median": 0.14399999380111694,
+          "p95": 0.18239254131913177,
+          "max": 0.9064505696296692
+        }
+      },
+      {
+        "iteration": 6200,
+        "surviving_descendants": 172,
+        "sigma_quantiles_m": {
+          "min": 0.030182763934135437,
+          "median": 0.08316093683242798,
+          "p95": 0.16599999368190765,
+          "max": 0.46986278891563416
+        }
+      },
+      {
+        "iteration": 6300,
+        "surviving_descendants": 164,
+        "sigma_quantiles_m": {
+          "min": 0.03307255357503891,
+          "median": 0.09702552109956741,
+          "p95": 0.19884442389011375,
+          "max": 1.0046637058258057
+        }
+      },
+      {
+        "iteration": 6400,
+        "surviving_descendants": 150,
+        "sigma_quantiles_m": {
+          "min": 0.037879578769207,
+          "median": 0.12982063740491867,
+          "p95": 0.2747576683759685,
+          "max": 0.8608673810958862
+        }
+      },
+      {
+        "iteration": 6500,
+        "surviving_descendants": 125,
+        "sigma_quantiles_m": {
+          "min": 0.03106667660176754,
+          "median": 0.10999999940395355,
+          "p95": 0.336250901222229,
+          "max": 0.9064505696296692
+        }
+      },
+      {
+        "iteration": 6600,
+        "surviving_descendants": 165,
+        "sigma_quantiles_m": {
+          "min": 0.03356112539768219,
+          "median": 0.07730516046285629,
+          "p95": 0.16599999368190765,
+          "max": 0.414264440536499
+        }
+      },
+      {
+        "iteration": 6700,
+        "surviving_descendants": 135,
+        "sigma_quantiles_m": {
+          "min": 0.03357311338186264,
+          "median": 0.10999999940395355,
+          "p95": 0.16599999368190765,
+          "max": 0.9064505696296692
+        }
+      },
+      {
+        "iteration": 6800,
+        "surviving_descendants": 141,
+        "sigma_quantiles_m": {
+          "min": 0.03423323854804039,
+          "median": 0.10999999940395355,
+          "p95": 0.17494343221187592,
+          "max": 0.9064505696296692
+        }
+      },
+      {
+        "iteration": 6900,
+        "surviving_descendants": 145,
+        "sigma_quantiles_m": {
+          "min": 0.033329930156469345,
+          "median": 0.12792332470417023,
+          "p95": 0.27795431613922067,
+          "max": 0.8639975786209106
+        }
+      },
+      {
+        "iteration": 7000,
+        "surviving_descendants": 240,
+        "sigma_quantiles_m": {
+          "min": 0.03307255357503891,
+          "median": 0.07967427000403404,
+          "p95": 0.23873379305005055,
+          "max": 0.9064505696296692
+        }
+      }
+    ],
+    "definition": "target_index is retained on permanent release; patch_sigma[target_index] is the last attached target sigma",
+    "snapshot_sha256": "6d9e27efac7d07bd92429d72b3183925aa64cc1c754cdbda63545fd7e071fffd",
+    "scientific_verdict": null
+  },
+  "note": "밀도 제어 직전 7,000회 저장 · 같은 부모의 자손도 각각 셈 · 마지막 구간 10 m 이상",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

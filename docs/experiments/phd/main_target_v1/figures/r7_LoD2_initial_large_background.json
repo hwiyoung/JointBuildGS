@@ -1,0 +1,160 @@
+{
+  "title": "LoD2: 처음 큰 배경 씨앗 열 개",
+  "values": {
+    "prior": "LoD2",
+    "status": "PASS_R7_INITIALIZATION",
+    "seeds": 650382,
+    "prior_seeds": 242139,
+    "background_seeds": 408243,
+    "prior_opacity": 0.10000000149011612,
+    "background_opacity": 0.10000000149011612,
+    "opacity_identical_to_r6_and_baseline_rule": true,
+    "background_positions_identical": true,
+    "initial_large": {
+      "threshold_m": 1.0,
+      "size": "maximum activated tangent scale",
+      "background_count": 408243,
+      "count_gt_1m": 2176,
+      "top10": [
+        {
+          "init_id": 610297,
+          "xyz_local_m": [
+            131.7265625,
+            132.02352905273438,
+            -151.22532653808594
+          ],
+          "scale_axes_m": [
+            50.92743682861328,
+            50.92743682861328
+          ],
+          "max_scale_m": 50.92743682861328
+        },
+        {
+          "init_id": 301661,
+          "xyz_local_m": [
+            123.89129638671875,
+            158.09124755859375,
+            -95.3442611694336
+          ],
+          "scale_axes_m": [
+            33.08442687988281,
+            33.08442687988281
+          ],
+          "max_scale_m": 33.08442687988281
+        },
+        {
+          "init_id": 619734,
+          "xyz_local_m": [
+            123.87506866455078,
+            157.84808349609375,
+            -95.38480377197266
+          ],
+          "scale_axes_m": [
+            32.98763656616211,
+            32.98763656616211
+          ],
+          "max_scale_m": 32.98763656616211
+        },
+        {
+          "init_id": 528436,
+          "xyz_local_m": [
+            113.9710464477539,
+            101.1480712890625,
+            77.28813171386719
+          ],
+          "scale_axes_m": [
+            28.580825805664062,
+            28.580825805664062
+          ],
+          "max_scale_m": 28.580825805664062
+        },
+        {
+          "init_id": 541432,
+          "xyz_local_m": [
+            143.4513397216797,
+            108.42994689941406,
+            -110.54806518554688
+          ],
+          "scale_axes_m": [
+            28.279033660888672,
+            28.279033660888672
+          ],
+          "max_scale_m": 28.279033660888672
+        },
+        {
+          "init_id": 622846,
+          "xyz_local_m": [
+            142.07583618164062,
+            59.331642150878906,
+            -84.3701171875
+          ],
+          "scale_axes_m": [
+            24.21902084350586,
+            24.21902084350586
+          ],
+          "max_scale_m": 24.21902084350586
+        },
+        {
+          "init_id": 589853,
+          "xyz_local_m": [
+            91.95184326171875,
+            114.3799819946289,
+            54.76893997192383
+          ],
+          "scale_axes_m": [
+            22.96082305908203,
+            22.96082305908203
+          ],
+          "max_scale_m": 22.96082305908203
+        },
+        {
+          "init_id": 604610,
+          "xyz_local_m": [
+            107.71446228027344,
+            97.84883880615234,
+            62.064876556396484
+          ],
+          "scale_axes_m": [
+            20.842552185058594,
+            20.842552185058594
+          ],
+          "max_scale_m": 20.842552185058594
+        },
+        {
+          "init_id": 611691,
+          "xyz_local_m": [
+            112.70667266845703,
+            112.63996124267578,
+            47.824462890625
+          ],
+          "scale_axes_m": [
+            19.713077545166016,
+            19.713077545166016
+          ],
+          "max_scale_m": 19.713077545166016
+        },
+        {
+          "init_id": 414114,
+          "xyz_local_m": [
+            112.86734771728516,
+            98.31722259521484,
+            -117.44024658203125
+          ],
+          "scale_axes_m": [
+            19.14143180847168,
+            19.14143180847168
+          ],
+          "max_scale_m": 19.14143180847168
+        }
+      ],
+      "coordinates": "inherited local training frame; EPSG:25832 translation in site source metadata",
+      "scale_rule": "unchanged baseline distCUDA2, no cap, no isolated point removal",
+      "stop_criterion": false,
+      "scientific_verdict": null
+    },
+    "snapshot_sha256": "3eedf3adac197ea489079e2b49fc186b5b388f9236ae1207ed7b47c2bc43f033"
+  },
+  "note": "같은 이웃 거리 크기 규칙 · 상한 없음 · 위치는 지역 좌표, EPSG:25832 변환은 입력 메타데이터",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

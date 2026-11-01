@@ -1,0 +1,51 @@
+{
+  "at": "2026-11-01T19:50:52.455082+09:00",
+  "status": "PASS_CORE_VOTES_UNIT_MEDIANS_AND_PUBLIC_AGGREGATES",
+  "rows": [
+    {
+      "split": "development",
+      "prior": "ALS",
+      "patch_count": 501913,
+      "disappeared_count": 635,
+      "disappeared_area_m2": 42.503472857739276,
+      "valid_samples": 3790407,
+      "fallback_samples": 2920442,
+      "fallback_fraction": 0.7704824310423657,
+      "unit_medians_and_inputs_verified": true
+    },
+    {
+      "split": "development",
+      "prior": "LoD2",
+      "patch_count": 2129735,
+      "disappeared_count": 5971,
+      "disappeared_area_m2": 373.1875,
+      "valid_samples": 172554180,
+      "fallback_samples": 116677230,
+      "fallback_fraction": 0.6761773606411621,
+      "unit_medians_and_inputs_verified": true
+    },
+    {
+      "split": "holdout",
+      "prior": "ALS",
+      "patch_count": 35135,
+      "disappeared_count": 20,
+      "disappeared_area_m2": 1.5145635124682268,
+      "valid_samples": 336712,
+      "fallback_samples": 285189,
+      "fallback_fraction": 0.8469819905438476,
+      "unit_medians_and_inputs_verified": true
+    },
+    {
+      "split": "holdout",
+      "prior": "LoD2",
+      "patch_count": 173119,
+      "disappeared_count": 613,
+      "disappeared_area_m2": 38.3125,
+      "valid_samples": 18582642,
+      "fallback_samples": 14566550,
+      "fallback_fraction": 0.783879385934465,
+      "unit_medians_and_inputs_verified": true
+    }
+  ],
+  "scientific_verdict": null
+}

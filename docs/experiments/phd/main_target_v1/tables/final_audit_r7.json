@@ -1,0 +1,46 @@
+{
+  "at": "2026-11-01T20:37:01.729533+09:00",
+  "status": "PASS_R7_DELIVERY_AUDIT",
+  "experiment_status": "STOP_R7_7000",
+  "rows": [
+    {
+      "prior": "ALS",
+      "status": "FAIL",
+      "gates": {
+        "health": true,
+        "floating": false,
+        "agreement": true,
+        "no_surface": true
+      },
+      "thresholds": {
+        "floating_max": 0.13641583812699495,
+        "agreement_min": 0.7122027820133912,
+        "no_surface_max": 0.039309420668597925
+      },
+      "saved_complete_states": [
+        7000
+      ]
+    },
+    {
+      "prior": "LoD2",
+      "status": "PASS",
+      "gates": {
+        "health": true,
+        "floating": true,
+        "agreement": true,
+        "no_surface": true
+      },
+      "thresholds": {
+        "floating_max": 0.1778653805141329,
+        "agreement_min": 0.6107680104701659,
+        "no_surface_max": 0.034623915218924814
+      },
+      "saved_complete_states": [
+        7000
+      ]
+    }
+  ],
+  "locked_files_checked": 329,
+  "figure_pairs": 66,
+  "scientific_verdict": null
+}

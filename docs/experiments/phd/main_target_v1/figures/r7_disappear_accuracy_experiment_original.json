@@ -1,0 +1,152 @@
+{
+  "title": "실험 지역 · 원값: 사라짐 판단과 두 비교 규칙의 넓이를 셌다",
+  "values": [
+    {
+      "unobserved_area_m2": 42.5464319707698,
+      "correctly_preserved_area_m2": 26.112410179382007,
+      "wrongly_preserved_area_m2": 15.730180509519375,
+      "correctly_deleted_area_m2": 0.0,
+      "wrongly_deleted_area_m2": 0.0,
+      "deleted_truth_unavailable_area_m2": 0.0,
+      "preserved_truth_unavailable_area_m2": 0.7038412818684197,
+      "prior": "ALS",
+      "kind": 1,
+      "policy": "keep_all"
+    },
+    {
+      "unobserved_area_m2": 42.5464319707698,
+      "correctly_preserved_area_m2": 0.0,
+      "wrongly_preserved_area_m2": 0.0,
+      "correctly_deleted_area_m2": 15.730180509519375,
+      "wrongly_deleted_area_m2": 26.112410179382007,
+      "deleted_truth_unavailable_area_m2": 0.7038412818684197,
+      "preserved_truth_unavailable_area_m2": 0.0,
+      "prior": "ALS",
+      "kind": 1,
+      "policy": "delete_all"
+    },
+    {
+      "unobserved_area_m2": 42.5464319707698,
+      "correctly_preserved_area_m2": 24.61433556667042,
+      "wrongly_preserved_area_m2": 5.436568068432401,
+      "correctly_deleted_area_m2": 10.293612441086974,
+      "wrongly_deleted_area_m2": 1.4980746127115872,
+      "deleted_truth_unavailable_area_m2": 0.12704574460206713,
+      "preserved_truth_unavailable_area_m2": 0.5767955372663526,
+      "prior": "ALS",
+      "kind": 1,
+      "policy": "reference_tested_patch_u"
+    },
+    {
+      "unobserved_area_m2": 42.5464319707698,
+      "correctly_preserved_area_m2": 25.343458730999128,
+      "wrongly_preserved_area_m2": 5.436568068432401,
+      "correctly_deleted_area_m2": 10.293612441086974,
+      "wrongly_deleted_area_m2": 0.7689514483828798,
+      "deleted_truth_unavailable_area_m2": 0.12704574460206713,
+      "preserved_truth_unavailable_area_m2": 0.5767955372663526,
+      "prior": "ALS",
+      "kind": 1,
+      "policy": "r7"
+    },
+    {
+      "unobserved_area_m2": 61.875,
+      "correctly_preserved_area_m2": 22.9375,
+      "wrongly_preserved_area_m2": 36.6875,
+      "correctly_deleted_area_m2": 0.0,
+      "wrongly_deleted_area_m2": 0.0,
+      "deleted_truth_unavailable_area_m2": 0.0,
+      "preserved_truth_unavailable_area_m2": 2.25,
+      "prior": "LoD2",
+      "kind": 1,
+      "policy": "keep_all"
+    },
+    {
+      "unobserved_area_m2": 61.875,
+      "correctly_preserved_area_m2": 0.0,
+      "wrongly_preserved_area_m2": 0.0,
+      "correctly_deleted_area_m2": 36.6875,
+      "wrongly_deleted_area_m2": 22.9375,
+      "deleted_truth_unavailable_area_m2": 2.25,
+      "preserved_truth_unavailable_area_m2": 0.0,
+      "prior": "LoD2",
+      "kind": 1,
+      "policy": "delete_all"
+    },
+    {
+      "unobserved_area_m2": 61.875,
+      "correctly_preserved_area_m2": 22.875,
+      "wrongly_preserved_area_m2": 18.25,
+      "correctly_deleted_area_m2": 18.4375,
+      "wrongly_deleted_area_m2": 0.0625,
+      "deleted_truth_unavailable_area_m2": 0.0,
+      "preserved_truth_unavailable_area_m2": 2.25,
+      "prior": "LoD2",
+      "kind": 1,
+      "policy": "reference_tested_patch_u"
+    },
+    {
+      "unobserved_area_m2": 61.875,
+      "correctly_preserved_area_m2": 22.75,
+      "wrongly_preserved_area_m2": 19.625,
+      "correctly_deleted_area_m2": 17.0625,
+      "wrongly_deleted_area_m2": 0.1875,
+      "deleted_truth_unavailable_area_m2": 0.0,
+      "preserved_truth_unavailable_area_m2": 2.25,
+      "prior": "LoD2",
+      "kind": 1,
+      "policy": "r7"
+    },
+    {
+      "unobserved_area_m2": 1188.6875,
+      "correctly_preserved_area_m2": 239.375,
+      "wrongly_preserved_area_m2": 46.625,
+      "correctly_deleted_area_m2": 0.0,
+      "wrongly_deleted_area_m2": 0.0,
+      "deleted_truth_unavailable_area_m2": 0.0,
+      "preserved_truth_unavailable_area_m2": 902.6875,
+      "prior": "LoD2",
+      "kind": 2,
+      "policy": "keep_all"
+    },
+    {
+      "unobserved_area_m2": 1188.6875,
+      "correctly_preserved_area_m2": 0.0,
+      "wrongly_preserved_area_m2": 0.0,
+      "correctly_deleted_area_m2": 46.625,
+      "wrongly_deleted_area_m2": 239.375,
+      "deleted_truth_unavailable_area_m2": 902.6875,
+      "preserved_truth_unavailable_area_m2": 0.0,
+      "prior": "LoD2",
+      "kind": 2,
+      "policy": "delete_all"
+    },
+    {
+      "unobserved_area_m2": 1188.6875,
+      "correctly_preserved_area_m2": 238.75,
+      "wrongly_preserved_area_m2": 38.0625,
+      "correctly_deleted_area_m2": 8.5625,
+      "wrongly_deleted_area_m2": 0.625,
+      "deleted_truth_unavailable_area_m2": 177.0625,
+      "preserved_truth_unavailable_area_m2": 725.625,
+      "prior": "LoD2",
+      "kind": 2,
+      "policy": "reference_tested_patch_u"
+    },
+    {
+      "unobserved_area_m2": 1188.6875,
+      "correctly_preserved_area_m2": 238.8125,
+      "wrongly_preserved_area_m2": 34.75,
+      "correctly_deleted_area_m2": 11.875,
+      "wrongly_deleted_area_m2": 0.5625,
+      "deleted_truth_unavailable_area_m2": 223.9375,
+      "preserved_truth_unavailable_area_m2": 678.75,
+      "prior": "LoD2",
+      "kind": 2,
+      "policy": "r7"
+    }
+  ],
+  "note": "참값 없는 부분은 회색 · 패치 u 방식은 참고만 · 분모가 없으면 막대를 그리지 않음",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}
