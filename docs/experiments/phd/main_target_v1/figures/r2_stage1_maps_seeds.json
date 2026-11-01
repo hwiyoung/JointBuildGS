@@ -1,0 +1,112 @@
+{
+  "title": "목표 지도 8판, 초기 씨앗 4판을 준비했다",
+  "values": {
+    "maps": [
+      {
+        "site": "B0_b10",
+        "prior": "ALS",
+        "views": 243,
+        "max_view_height_error_median_m": 5.644687315134456e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "views": 243,
+        "max_view_height_error_median_m": 6.905469022822075e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "views": 203,
+        "max_view_height_error_median_m": 5.606283879050489e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "views": 203,
+        "max_view_height_error_median_m": 7.090861995969603e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "ALS",
+        "views": 333,
+        "max_view_height_error_median_m": 4.34294142695967e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "views": 333,
+        "max_view_height_error_median_m": 4.5304761773223845e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173_b0",
+        "prior": "ALS",
+        "views": 140,
+        "max_view_height_error_median_m": 6.363246822597632e-06,
+        "status": "PASS",
+        "background_u_replaced": true
+      },
+      {
+        "site": "B173_b0",
+        "prior": "LoD2",
+        "views": 140,
+        "max_view_height_error_median_m": 1.1419105448471495e-05,
+        "status": "PASS",
+        "background_u_replaced": true
+      }
+    ],
+    "seeds": [
+      {
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "prior_kept": 143646,
+        "background_kept": 407441,
+        "target_patches_without_baseline_seed": 0,
+        "background_u_replaced": 56852,
+        "background_normal_missing": 66527
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "prior_kept": 50518,
+        "background_kept": 555259,
+        "target_patches_without_baseline_seed": 37687,
+        "background_u_replaced": 72481,
+        "background_normal_missing": 92772
+      },
+      {
+        "site": "B173nb_b10",
+        "prior": "LoD2",
+        "prior_kept": 258095,
+        "background_kept": 408243,
+        "target_patches_without_baseline_seed": 0,
+        "background_u_replaced": 48324,
+        "background_normal_missing": 60243
+      },
+      {
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "prior_kept": 138579,
+        "background_kept": 657342,
+        "target_patches_without_baseline_seed": 0,
+        "background_u_replaced": 114154,
+        "background_normal_missing": 155025
+      }
+    ]
+  },
+  "note": "항공 LiDAR에는 기존 씨앗 수가 0인 패치가 있음 · 배경 불확실도 대체 수는 표에 별도 기록",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

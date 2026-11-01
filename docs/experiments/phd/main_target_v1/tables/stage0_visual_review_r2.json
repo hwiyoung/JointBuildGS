@@ -1,10 +1,12 @@
 {
-  "at": "2026-11-01T15:04:05.834411+09:00",
+  "at": "2026-11-01T15:22:51.579786+09:00",
   "status": "AGENT_REVIEWED",
   "user_acceptance": false,
   "figures": [
-    "r2_B173_wing_ALS.png"
+    "r2_B173_wing_ALS.png",
+    "r2_B173_wing_LoD2.png",
+    "r2_T2_comparison.png"
   ],
-  "observation": "same section and vertical range; prior, MVS, reference and target differences retained, including targets below the reference",
+  "observation": "B173 ALS and LoD2 show identical section positions and vertical scales between r1/r2; targets below GT remain visible. T2 distributions use shared x/y scales with per-log10 density labels.",
   "scientific_verdict": null
 }

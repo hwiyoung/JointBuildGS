@@ -1,0 +1,54 @@
+{
+  "rows": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "views": 203,
+      "target_pixels": 11876159,
+      "valid_render_pixels": 6717357,
+      "missing_fraction": 0.4343830357946538,
+      "median_m": 0.013952255249023438,
+      "status": "PASS",
+      "full_all_target_median_m": 45.7165641784668,
+      "full_prior_target_median_m": 13.470203399658203
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "views": 203,
+      "target_pixels": 17415076,
+      "valid_render_pixels": 17414939,
+      "missing_fraction": 7.866747179283054e-06,
+      "median_m": 0.1360931396484375,
+      "status": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "full_all_target_median_m": 30.190414428710938,
+      "full_prior_target_median_m": 7.5148468017578125
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "views": 333,
+      "target_pixels": 24364416,
+      "valid_render_pixels": 24364410,
+      "missing_fraction": 2.46260776371574e-07,
+      "median_m": 0.9333877563476562,
+      "status": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "full_all_target_median_m": 45.29638671875,
+      "full_prior_target_median_m": 4.542018890380859
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "views": 243,
+      "target_pixels": 23700025,
+      "valid_render_pixels": 23699974,
+      "missing_fraction": 2.151896464244236e-06,
+      "median_m": 3.054241180419922,
+      "status": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "full_all_target_median_m": 23.093154907226562,
+      "full_prior_target_median_m": 4.5211181640625
+    }
+  ],
+  "note": "full and prior-only valid-pixel denominators differ; fixed-view common-pixel decomposition in r2 diagnosis",
+  "scientific_verdict": null
+}

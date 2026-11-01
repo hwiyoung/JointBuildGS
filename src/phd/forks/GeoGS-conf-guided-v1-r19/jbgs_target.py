@@ -24,9 +24,13 @@ def write(path,data):
 @torch.no_grad()
 def normal_projection(x,anchor,normal,sigma):
     # CANDPICK-v2 engine.project_bounds normal component, without tangent bounds.
-    delta=x-anchor;h=(delta*normal).sum(1);limit=1.96*sigma
+    # Large tangential coordinates cause cancellation in float32 dot products.
+    # Keep model tensors and the original 1.96*sigma limit in float32; evaluate
+    # the projection in double and account for unit-normal storage roundoff.
+    xd=x.double();a=anchor.double();n=normal.double()
+    h=((xd-a)*n).sum(1);limit=(1.96*sigma).double()
     bounded=torch.maximum(torch.minimum(h,limit),-limit)
-    return x+(bounded-h)[:,None]*normal
+    return (xd+((bounded-h)/(n*n).sum(1))[:,None]*n).to(x.dtype)
 
 
 class Target:
@@ -67,6 +71,18 @@ class Target:
         self.normal=torch.as_tensor(s['normal'],device='cuda',dtype=torch.float32)
         self.sigma=torch.as_tensor(s['sigma'],device='cuda',dtype=torch.float32)
         self.region=torch.as_tensor(s['region'],device='cuda',dtype=torch.int8)
+        self.initial_scale=g.get_scaling.detach().clone()
+        self.initial_large_background=(g.origin==0)&(self.initial_scale.max(1).values>1.)
+        large_ids=torch.where(self.initial_large_background)[0].cpu().numpy()
+        scale=self.initial_scale.cpu().numpy();positions=self.anchor.cpu().numpy()
+        ranked=large_ids[np.lexsort((large_ids,-scale[large_ids].max(1)))][:10]
+        write(self.mon/'initial_large_background.json',dict(threshold_m=1.,size='maximum activated tangent scale',
+            background_count=int((g.origin==0).sum()),count_gt_1m=len(large_ids),
+            top10=[dict(init_id=int(i),xyz_local_m=positions[i].tolist(),scale_axes_m=scale[i].tolist(),
+                        max_scale_m=float(scale[i].max())) for i in ranked],
+            coordinates='inherited local training frame; EPSG:25832 translation in site source metadata',
+            scale_rule='unchanged baseline distCUDA2, no cap, no isolated point removal',
+            stop_criterion=False,scientific_verdict=None))
         self.maps={};self.index=json.loads((self.root/'maps/index.json').read_text())
         assert set(self.index['views'])=={v.image_name for v in scene.getTrainCameras()}
         for name,meta in self.index['views'].items():
@@ -100,13 +116,44 @@ class Target:
     def snapshot(self,iteration,g):
         np.savez_compressed(self.mon/f'snapshot_{iteration}.npz',xyz=g._xyz.detach().cpu().numpy(),
             init_id=g.init_id.cpu().numpy(),origin=g.origin.cpu().numpy(),opacity=g.get_opacity[:,0].cpu().numpy(),
+            scale=g.get_scaling.cpu().numpy(),rotation=g.get_rotation.cpu().numpy(),
+            initial_scale=self.initial_scale.cpu().numpy(),initial_large_background=self.initial_large_background.cpu().numpy(),
             anchor=self.anchor.cpu().numpy(),normal=self.normal.cpu().numpy(),sigma=self.sigma.cpu().numpy(),region=self.region.cpu().numpy())
+
+    @torch.no_grad()
+    def large_background_evidence(self,iteration,g,root):
+        ids=g.init_id.long();select=self.initial_large_background[ids]
+        parent=ids[select].cpu().numpy();xyz=g._xyz[select].cpu().numpy()
+        delta=g._xyz[select]-self.anchor[ids[select]]
+        normal=(delta*self.normal[ids[select]]).sum(1)
+        tangent=torch.linalg.vector_norm(delta-normal[:,None]*self.normal[ids[select]],dim=1)
+        scales=g.get_scaling[select].cpu().numpy();opacity=g.get_opacity[select,0].cpu().numpy()
+        np.savez_compressed(root/'large_background_descendants.npz',init_id=parent,xyz=xyz,scale=scales,opacity=opacity,
+            normal_displacement=normal.cpu().numpy(),tangent_displacement=tangent.cpu().numpy())
+        ancestors,counts=np.unique(parent,return_counts=True)
+        def stats(values):
+            values=np.asarray(values)
+            return dict(min=float(values.min()),median=float(np.median(values)),p95=float(np.quantile(values,.95)),max=float(values.max())) if values.size else None
+        write(root/'large_background_descendants.json',dict(iteration=iteration,
+            checkpoint_state='saved model before scheduled iteration-7000 densification',
+            initial_large_background_count=int(self.initial_large_background.sum()),surviving_gaussians=len(parent),
+            surviving_original_ancestors=len(ancestors),counts_by_ancestor=dict(zip(map(str,ancestors.tolist()),counts.tolist())),
+            size_max_axis_m=stats(scales.max(1) if len(scales) else []),opacity=stats(opacity),
+            normal_displacement_abs_m=stats(normal.abs().cpu().numpy()),tangent_displacement_m=stats(tangent.cpu().numpy()),
+            parent_or_child='combined surviving descendants; immutable init_id retains original ancestor across clone/split/prune',
+            floating_conclusion='requires evaluation mesh first hits; tangential spread alone is not a floating surface',
+            stop_criterion=False,scientific_verdict=None))
 
     @torch.no_grad()
     def checkpoint_evidence(self,iteration,g,renderer,pipe,background):
         if iteration!=7000:return
         root=self.mon.parent/'check7000';root.mkdir(exist_ok=False)
+        self.large_background_evidence(iteration,g,root)
         depthroot=root/'renders';depthroot.mkdir()
+        labels=torch.zeros((len(g._xyz),3),device=g._xyz.device)
+        labels[:,0]=(g.origin==0).float()
+        labels[:,1]=self.initial_large_background[g.init_id.long()].float()
+        labels[:,2]=(g.origin==1).float()
         views=[];inside=0;denominator=0
         for cam in sorted(self.scene.getTrainCameras(),key=lambda c:c.image_name):
             pkg=renderer(cam,g,pipe,background)
@@ -116,12 +163,18 @@ class Target:
             ok=good&np.isfinite(depth)&(depth>0)&(abs(depth-target)<=1.96*sigma)
             count=int(ok.sum());total=int(good.sum());inside+=count;denominator+=total
             dest=depthroot/(cam.image_name+'.npz')
-            np.savez_compressed(dest,depth=depth,rgb=(pkg['render'].permute(1,2,0).clamp(0,1).cpu().numpy()*255).astype(np.uint8))
+            attribution=renderer(cam,g,pipe,torch.zeros_like(background),override_color=labels)
+            alpha=attribution['rend_alpha'].clamp_min(1e-8)
+            fraction=(attribution['render']/alpha).clamp(0,1).permute(1,2,0).cpu().numpy()
+            np.savez_compressed(dest,depth=depth,rgb=(pkg['render'].permute(1,2,0).clamp(0,1).cpu().numpy()*255).astype(np.uint8),
+                origin_fraction=fraction.astype(np.float32),alpha=attribution['rend_alpha'].squeeze().cpu().numpy())
             views.append(dict(camera=cam.image_name,inside=count,target_pixels=total,
                 K=self.index['views'][cam.image_name]['K'],W2C=self.index['views'][cam.image_name]['W2C']))
         coverage=inside/denominator if denominator else None
         record=dict(iteration=iteration,inside=inside,target_pixels=denominator,fraction=coverage,criterion=.8,
-            status='PASS' if coverage is not None and coverage>=.8 else 'FAIL',views=views,scientific_verdict=None)
+            status='PASS' if coverage is not None and coverage>=.8 else 'FAIL',views=views,
+            origin_fraction_channels=['background','initial_background_over_1m_ancestry','prior'],
+            attribution='alpha-normalized rendered contributions with fixed membership colours; diagnostics only',scientific_verdict=None)
         write(root/'coverage.json',record)
         if record['status']!='PASS':
             write(self.mon/'STOP.json',dict(iteration=iteration,reason='target_coverage_below_0.8',fraction=coverage,scientific_verdict=None))
@@ -133,9 +186,12 @@ class Target:
         ids=g.init_id.long();prior=g.origin==1
         opacity=float(g.get_opacity.median()) if len(ids) else None
         prior_opacity=float(g.get_opacity[prior].median()) if prior.any() else None
-        excess=float((((g._xyz-self.anchor[ids])*self.normal[ids]).sum(1).abs()-1.96*self.sigma[ids]).max())
+        excess_float32=float((((g._xyz-self.anchor[ids])*self.normal[ids]).sum(1).abs()-1.96*self.sigma[ids]).max())
+        excess=float((((g._xyz.double()-self.anchor[ids].double())*self.normal[ids].double()).sum(1).abs()-(1.96*self.sigma[ids]).double()).max())
         row=dict(iteration=iteration,gaussians=len(ids),target_opacity_median=opacity,max_normal_excess_m=excess,
             loss=float(loss),rgb_loss=float(rgb),target_depth_loss=float(depth),camera=name,
+            max_normal_excess_float32_reference_m=excess_float32,
+            bound_check_arithmetic='float64 dot product of stored float32 coordinates; unchanged 3e-5 m tolerance',
             opacity_population='all target-bound descendants including MVS background',prior_opacity_median=prior_opacity,scientific_verdict=None)
         with (self.mon/'curve.jsonl').open('a') as f:f.write(json.dumps(row)+'\n')
         if iteration==6000:self.n6000=len(ids)
@@ -145,6 +201,7 @@ class Target:
         elif iteration>=7000 and (opacity is None or opacity<.05):reason='target_opacity_median_below_0.05'
         elif iteration==7000 and self.n6000 is not None and len(ids)>3*self.n6000:reason='count_gt_3x_6000'
         if reason:
+            self.snapshot(iteration,g)
             write(self.mon/'STOP.json',dict(row,reason=reason))
             raise RuntimeError('TARGET_STOP_'+reason)
         if iteration in [6000,7000,30000]:

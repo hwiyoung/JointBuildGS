@@ -16,11 +16,14 @@ def main():
     cfg,lock=locked_r2();reps=read(CFG/'representatives_v1.json')['rows'];summaries=[];maprows=[];seedrows=[]
     for site in cfg['sites']+cfg['deferred_sites']:
         for prior in cfg['priors']:
-            root=OUT/'r2/stage1'/f'{site}_{prior}';index=read(root/'maps/index.json');seed=read(root/'seed_receipt.json')
+            root=OUT/'r2/stage1'/f'{site}_{prior}';index=read(root/'maps/index.json')
             vals=[r['height_error_median_m'] for r in index['views'].values() if r['height_error_median_m'] is not None]
             maprows.append(dict(site=site,prior=prior,views=len(index['views']),max_view_height_error_median_m=max(vals),
                 status='PASS' if max(vals)<=.01 else 'FAIL',background_u_replaced=True))
-            seedrows.append({k:seed[k] for k in ['site','prior','prior_kept','background_kept','target_patches_without_baseline_seed']})
+            if (root/'seed_receipt.json').exists():
+                seed=read(root/'seed_receipt.json');background=read(OUT/'r2/background'/site/prior/'receipt.json')
+                seedrows.append(dict({k:seed[k] for k in ['site','prior','prior_kept','background_kept','target_patches_without_baseline_seed']},
+                    background_u_replaced=background['u_replaced'],background_normal_missing=background['normal_missing']))
             p=OUT/'r2/preflight'/f'{site}_{prior}'/'initial_render.json'
             if p.exists():
                 r=read(p);summaries.append({k:r[k] for k in ['site','prior','status','pooled_pixels','pooled_median_m','prior_pooled_pixels','prior_pooled_median_m','criterion_m','optimization_steps']})
@@ -32,17 +35,19 @@ def main():
         values=[r[key] for r in summaries];a.bar(np.arange(len(values)),values,color='#478ac3');a.axhline(.05,color='#c34b35',ls='--')
         a.set(xticks=np.arange(len(values)),xticklabels=names,ylabel='깊이 절대 오차 중앙값 (m)',title=title)
         a.tick_params(axis='x',rotation=22)
-        for i,v in enumerate(values):a.text(i,v+.3,f'{v:.2f}',ha='center',fontsize=9)
+        ymax=max(.05,max(values))*1.22;a.set_ylim(0,ymax)
+        for i,v in enumerate(values):a.text(i,v+ymax*.025,f'{v:.4f}',ha='center',fontsize=9)
     fig.subplots_adjust(top=.8,bottom=.25,wspace=.25)
     save(fig,'r2_stage1_initial_depth_gate','초기 렌더 깊이와 5 cm 기준',summaries,'학습 0회 · 점선: 발주문 3.5의 0.05 m · 깊이 없음은 별도 기록')
     fig,ax=plt.subplots(1,2,figsize=(11,4));names=[SITES[r['site']]+' '+r['prior'] for r in maprows]
     ax[0].bar(np.arange(len(maprows)),[r['max_view_height_error_median_m']*1000 for r in maprows],color='#54ad80')
     ax[0].set(xticks=np.arange(len(maprows)),xticklabels=names,ylabel='영상별 표본 오차 중앙값의 최댓값 (mm)',title='목표 지도: 8판 모두 10 mm 이내');ax[0].tick_params(axis='x',rotation=40)
-    ax[1].bar(np.arange(len(maprows)),[r['prior_kept'] for r in seedrows],color='#e6ab42',label='사전 목표 씨앗')
-    ax[1].bar(np.arange(len(maprows)),[r['background_kept'] for r in seedrows],bottom=[r['prior_kept'] for r in seedrows],color='#478ac3',label='신뢰도 통과 MVS 씨앗')
-    ax[1].set(xticks=np.arange(len(maprows)),xticklabels=names,ylabel='가우시안 수',title='패치별 기존 씨앗 수 유지');ax[1].tick_params(axis='x',rotation=40);ax[1].legend(fontsize=8)
+    seednames=[SITES[r['site']]+' '+r['prior'] for r in seedrows]
+    ax[1].bar(np.arange(len(seedrows)),[r['prior_kept'] for r in seedrows],color='#e6ab42',label='사전 목표 씨앗')
+    ax[1].bar(np.arange(len(seedrows)),[r['background_kept'] for r in seedrows],bottom=[r['prior_kept'] for r in seedrows],color='#478ac3',label='신뢰도 통과 MVS 씨앗')
+    ax[1].set(xticks=np.arange(len(seedrows)),xticklabels=seednames,ylabel='가우시안 수',title='준비된 판의 씨앗 수');ax[1].tick_params(axis='x',rotation=40);ax[1].legend(fontsize=8)
     fig.subplots_adjust(top=.79,bottom=.32,wspace=.3)
-    save(fig,'r2_stage1_maps_seeds','목표 지도 계산과 초기 씨앗 준비는 8판에서 끝났다',dict(maps=maprows,seeds=seedrows),'항공 LiDAR에는 기존 씨앗 수가 0인 패치가 있음 · 배경 불확실도 대체 수는 표에 별도 기록')
+    save(fig,'r2_stage1_maps_seeds',f'목표 지도 8판, 초기 씨앗 {len(seedrows)}판을 준비했다',dict(maps=maprows,seeds=seedrows),'항공 LiDAR에는 기존 씨앗 수가 0인 패치가 있음 · 배경 불확실도 대체 수는 표에 별도 기록')
     colors=['#a78bc2','#54ad80','#e6ab42','#478ac3','#c8c2b4'];cm=ListedColormap(colors);norm=BoundaryNorm(np.arange(-.5,5.5),5)
     repstats=[]
     for rep in reps:
@@ -113,7 +118,7 @@ def main():
     text=(DOC/'영역별목표학습_보고_r2.md').read_text()
     section=['## 6. 배경 씨앗과 3.5 점검','',
         '초기 렌더 깊이 5 cm 기준 미충족으로 학습 전에 중단했다. 7,000회 점검 실패가 아니며, 최적화는 0회다.' if failed else '3.5 점검을 통과했다. B173 주변 두 판의 7,000회 점검을 이어간다.',
-        '', '| 판 | r1 전체 화소 오차 (m) | r2 전체 화소 오차 (m) | r2 사전 화소만 (m) | 판정 |','|---|---:|---:|---:|---|']
+        '', '| 판 | r1 전체 화소 오차 (m) | r2 전체 화소 오차 (m) | r2 사전 화소만 (m) | 점검 |','|---|---:|---:|---:|---|']
     for r in rows:section.append(f"| {SITES[r['site']]} {r['prior']} | {r['r1_median_m']:.6f} | {r['r2_median_m']:.6f} | {r['r2_prior_median_m']:.6f} | {r['status']} |")
     section.extend(['','모든 학습 영상의 양의 유효 렌더 깊이가 있는 목표 화소를 합쳐 중앙값을 센다. 렌더 깊이가 없는 화소는 영상별 표에 별도로 기록했으며 성공으로 세지 않았다. 기준은 0.05 m 그대로다.','',
         '| 항목 | 기준선 / r1 | r2 |','|---|---|---|','| 배경 점 | SfM 희소점 | 신뢰도 통과 MVS A 점 |','| 배경 솎기 | 기존 희소점 | 원통 제외 후 0.25 m 복셀 |','| 배경 크기 | 기준선 최근접 거리 규칙 | 동일 규칙을 새 점군에 적용 |','| 사전 씨앗 | 기존 패치별 수·크기 | 동일 수·크기, r2 목표 위치 |','',

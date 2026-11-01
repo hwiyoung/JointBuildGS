@@ -1,0 +1,76 @@
+{
+  "task_id": "PHD-MAIN-TARGET-v1",
+  "revision": "r5_diagnostics",
+  "decision": "configs/phd/main_target_v1/decision_20261101_r5.txt",
+  "created_at": "2026-11-01T16:41:48.424078+09:00",
+  "training_gate": 0.8,
+  "main_training": "STOP_BOTH_7000",
+  "other_six": "NOT_STARTED_USER_DECISION",
+  "record_training": "ONLY_IF_EXACT_OPTIMIZER_STATE_AVAILABLE",
+  "models": [
+    {
+      "key": "depth_ALS",
+      "model": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model",
+      "scene_prior": "ALS",
+      "iteration": 30000,
+      "compare_priors": [
+        "ALS"
+      ],
+      "available_iterations": [
+        15000,
+        30000
+      ]
+    },
+    {
+      "key": "depth_LoD2",
+      "model": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model",
+      "scene_prior": "LoD2",
+      "iteration": 30000,
+      "compare_priors": [
+        "LoD2"
+      ],
+      "available_iterations": [
+        15000,
+        30000
+      ]
+    },
+    {
+      "key": "image_2dgs",
+      "model": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/model",
+      "scene_prior": "ALS",
+      "iteration": 7000,
+      "compare_priors": [
+        "ALS",
+        "LoD2"
+      ],
+      "available_iterations": [
+        7000,
+        30000
+      ]
+    }
+  ],
+  "coverage": "all 203 frozen training views; same float32 r4n depth and sigma maps; missing render is failure",
+  "max_contributor": "argmax alpha times accumulated transmittance over actual contributing individual Gaussians; unavailable if not recoverable; never substitute origin-group dominance",
+  "strata": {
+    "precedence": [
+      "small_raised",
+      "edge_band",
+      "glass_or_textureless",
+      "other"
+    ],
+    "photo_missing": "separate cross-tab for every stratum and an exclusive display row among remaining other",
+    "mvs_rule": "MESHPATCH patch_table: Track-A elem_types rules on roofer_def units; exact joins only, else recompute on own inputs",
+    "manual_glass": "only explicit stored case membership with exact patch identity; absent is unavailable",
+    "holdout": "per-patch only under OUT/holdout; public counts areas ratios only",
+    "hist_log10_range": [
+      -1.5,
+      1.2
+    ],
+    "hist_cells": [
+      1,
+      2
+    ],
+    "representative": "experiment first, development next; corrected cell2 by maximum patch area then stable patch id; evaluation-only selection"
+  },
+  "scientific_verdict": null
+}

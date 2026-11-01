@@ -1,0 +1,98 @@
+{
+  "title": "7,000회: 목표가 있는 화소의 깊이 따름",
+  "values": [
+    {
+      "prior": "ALS",
+      "label": "전체",
+      "target_pixels": 114560443,
+      "inside": 37488398,
+      "missing": 5742,
+      "fraction": 0.3272368456186923,
+      "missing_fraction": 5.0122012883626856e-05
+    },
+    {
+      "prior": "ALS",
+      "label": "사전 패치",
+      "target_pixels": 11876159,
+      "inside": 8030194,
+      "missing": 0,
+      "fraction": 0.6761608698569967,
+      "missing_fraction": 0.0
+    },
+    {
+      "prior": "ALS",
+      "label": "배경 MVS",
+      "target_pixels": 102684284,
+      "inside": 29458204,
+      "missing": 5742,
+      "fraction": 0.28688133035041663,
+      "missing_fraction": 5.5918975877554935e-05
+    },
+    {
+      "prior": "ALS",
+      "label": "사전 지붕",
+      "target_pixels": 11876159,
+      "inside": 8030194,
+      "missing": 0,
+      "fraction": 0.6761608698569967,
+      "missing_fraction": 0.0
+    },
+    {
+      "prior": "ALS",
+      "label": "사전 벽",
+      "target_pixels": 0,
+      "inside": 0,
+      "missing": 0,
+      "fraction": null,
+      "missing_fraction": null
+    },
+    {
+      "prior": "LoD2",
+      "label": "전체",
+      "target_pixels": 116051001,
+      "inside": 39780811,
+      "missing": 7665,
+      "fraction": 0.34278731469106416,
+      "missing_fraction": 6.604854705217063e-05
+    },
+    {
+      "prior": "LoD2",
+      "label": "사전 패치",
+      "target_pixels": 17415076,
+      "inside": 9709472,
+      "missing": 0,
+      "fraction": 0.5575325654622466,
+      "missing_fraction": 0.0
+    },
+    {
+      "prior": "LoD2",
+      "label": "배경 MVS",
+      "target_pixels": 98635925,
+      "inside": 30071339,
+      "missing": 7665,
+      "fraction": 0.3048720737398671,
+      "missing_fraction": 7.771002299618521e-05
+    },
+    {
+      "prior": "LoD2",
+      "label": "사전 지붕",
+      "target_pixels": 10531098,
+      "inside": 7627271,
+      "missing": 0,
+      "fraction": 0.7242617056644995,
+      "missing_fraction": 0.0
+    },
+    {
+      "prior": "LoD2",
+      "label": "사전 벽",
+      "target_pixels": 6883978,
+      "inside": 2082201,
+      "missing": 0,
+      "fraction": 0.3024706063848548,
+      "missing_fraction": 0.0
+    }
+  ],
+  "note": "점선: 전체 화소의 80% 기준 · 부분별 막대는 원인 분해 기록 · 깊이 없음도 미달로 셈",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

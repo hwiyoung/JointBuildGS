@@ -1,0 +1,10 @@
+{
+  "source_sha256": {
+    "scripts/phd/main_meshpatch_v1/track_a/units_lib.py": "66cb835d91f6226f14d77ef4584942f75fe2c101802dc628e62c2c99fafc6c3c",
+    "scripts/phd/main_meshpatch_v1/track_a/planeseg.py": "d067dcbe82eb8f83cb22984f7ee531d330b03a6f4d5168925715fbd594bb206d",
+    "scripts/phd/main_meshpatch_v1/patch_units.py": "7e55e2820b465dee7db7bc10e8f974d19c683d9d78b7eec6fc97618353248a53"
+  },
+  "extracted_sha256": "9ff03977d65128bca320e436d1ac52582cec6d8036af600713124f2ac3fd5385",
+  "method": "AST extraction without changing selected function bodies; removed only unrelated imports and main execution",
+  "runtime_dependency": "read-only existing MESHPATCH numba 0.61.2 and llvmlite 0.44.0; cache only OUT/tmp/r5numba"
+}

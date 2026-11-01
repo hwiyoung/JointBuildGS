@@ -13,6 +13,8 @@ def main():
         for prior in cfg['priors']:
             root=OUT/'r2/stage1'/f'{site}_{prior}';meta=json.loads((root/'seed_receipt.json').read_text())
             assert sha(root/'seeds.npz')==meta['seeds_sha256']
+            assert sha(OUT/'r2/targets'/f'{site}_{prior}.npz')==meta['target_sha256']
+            assert sha(OUT/'r2/background'/site/prior/'background.npz')==meta['background_sha256']
             with np.load(root/'seeds.npz') as z:s={k:z[k] for k in z.files}
             with np.load(OUT/'r2/targets'/f'{site}_{prior}.npz') as z:d={k:z[k] for k in z.files}
             with np.load(OUT/'r2/background'/site/prior/'background.npz') as z:b={k:z[k] for k in z.files}
@@ -21,6 +23,10 @@ def main():
             assert np.array_equal(s['target'],s['xyz'])
             assert np.max(abs(s['xyz'][po]-d['target'][s['patch'][po]]))<=1.6e-5
             assert np.allclose(s['normal'][bg],b['normal'],atol=0,rtol=0)
+            assert np.array_equal(s['sigma'][po],d['sigma'][s['patch'][po]].astype('f4'))
+            assert np.array_equal(s['normal'][po],d['normal'][s['patch'][po]].astype('f4'))
+            assert np.array_equal(s['sigma'][bg],b['sigma'].astype('f4'))
+            assert np.all(b['normal'][b['normal_missing']]==np.array([0,0,1]))
             assert np.allclose(np.linalg.norm(s['normal'],axis=1),1,atol=1e-6,rtol=0)
             assert np.all(s['sigma']>0) and np.isfinite(s['sigma']).all()
             vox=np.floor(b['xyz'].astype(float)/.25).astype('i4');assert len(np.unique(vox,axis=0))==len(vox)
@@ -39,7 +45,7 @@ def main():
             rows.append(dict(site=site,prior=prior,status='PASS',background_points=int(bg.sum()),prior_points=int(po.sum()),
                 independent_cylinder_samples=len(sample),map_files_checked=len(index['views']),scientific_verdict=None))
             print('R2_STAGE1_INPUTS_VERIFIED',site,prior,flush=True)
-    dest=OUT/'r2/verification'/('stage1_'+('_'.join(sys.argv[1:]) or 'all')+'.json')
+    dest=OUT/'r2/verification'/('stage1_'+('_'.join(sys.argv[1:]) or 'all')+'_'+'_'.join(cfg['priors'])+'.json')
     dump(dest,dict(at=stamp(),status='PASS_STAGE1_INPUTS',rows=rows,config_sha256=lock['config_sha256'],scientific_verdict=None))
 
 

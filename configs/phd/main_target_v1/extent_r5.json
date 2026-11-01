@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-01T16:49:40.849565+09:00",
+  "reason": "Infinite corner-ray plane intersections invalid for horizon-facing views. Before footprint calculation, use bounded camera frustum intersection; report views not intersecting plane.",
+  "plane": "median input roof patch height",
+  "camera_depth_m": [
+    0.2,
+    300.0
+  ],
+  "upper_bound_source": "current TSDF depth truncation",
+  "scientific_verdict": null
+}

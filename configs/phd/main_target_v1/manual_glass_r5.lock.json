@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-01T16:54:37.452063+09:00",
+  "reason": "Found original UNCERT region-index glass masks and input-only place_skylight after MESHPATCH case list search. Complete requested manual labels; no result-driven rule change.",
+  "files": {
+    "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/work/places.npz": "769baf275d86c8545235ec7229647f03da69d6f64d2c61ad8f33fc75d63909e2",
+    "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/work/places.json": "a409b47d0a657521883f0de47acf9870b5cc2d81bd8428eabe33c8cc6859cd32",
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/prep/undecidable/definitions.json": "b10c6b6d50fe6ce99394517bac5d7b393a7e65476e980d26c0c3e0387cf474c0",
+    "/repo/scripts/phd/main_fill_v1/undecidable/und_defs.py": "1a56f67bb006dbf06fa720d58d49f08923f3eef60de202b4585d1679e2f7d9d2",
+    "/repo/scripts/phd/main_stage1_v1/regions_v3.py": "559875608f1d2d0bf955e58c4082d79e91cd188dbb30c75b7e5298989ff6c5ff",
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/undecidable/regions_B173nb_b10_ALS.npz": "8bb991a654be94c0f77a9a9b4f9a827df313dc0c3814e8cfe050c0d7fdb73932",
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/undecidable/regions_B173nb_b10_LoD2.npz": "66c3bf1cbd67d7eac9eaa92606f215ca68a6af1f9aff669fce7564d23853d904"
+  },
+  "rule": "Use glass_strip and glass_dome stored indices; use place_skylight, never GT-filtered case_skylight or case_band. Other units only exact centre/normal/area identity; no nearest transfer.",
+  "scientific_verdict": null
+}

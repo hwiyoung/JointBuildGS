@@ -1,0 +1,46 @@
+{
+  "at": "2026-11-01T16:59:36.904009+09:00",
+  "status": "PASS_R5_INDEPENDENT_RECOUNT",
+  "rows": [
+    {
+      "method": "depth_ALS",
+      "prior": "ALS",
+      "views": 203,
+      "status": "PASS_EXACT_ALL_STRATA_RECOUNT"
+    },
+    {
+      "method": "depth_LoD2",
+      "prior": "LoD2",
+      "views": 203,
+      "status": "PASS_EXACT_ALL_STRATA_RECOUNT"
+    },
+    {
+      "method": "image_2dgs",
+      "prior": "ALS",
+      "views": 203,
+      "status": "PASS_EXACT_ALL_STRATA_RECOUNT"
+    },
+    {
+      "method": "image_2dgs",
+      "prior": "LoD2",
+      "views": 203,
+      "status": "PASS_EXACT_ALL_STRATA_RECOUNT"
+    },
+    {
+      "method": "max_individual_contributor",
+      "prior": "ALS",
+      "views": 203,
+      "status": "PASS_ORIGIN_AND_PATCH_ID_RECOUNT"
+    },
+    {
+      "method": "max_individual_contributor",
+      "prior": "LoD2",
+      "views": 203,
+      "status": "PASS_ORIGIN_AND_PATCH_ID_RECOUNT"
+    }
+  ],
+  "place_rows_checked": 1800,
+  "track_a_ast_identity": true,
+  "manual_skylight_input_face_mask_replay": true,
+  "scientific_verdict": null
+}

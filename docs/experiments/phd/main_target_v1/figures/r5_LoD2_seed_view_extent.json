@@ -1,0 +1,22 @@
+{
+  "title": "LoD2: 배경 씨앗·기준선 처음 점·203개 학습 영상의 시야",
+  "values": {
+    "background_seeds": 408243,
+    "baseline_initial_points": 270067,
+    "baseline_initial_byte_equal_r4n_original": true,
+    "baseline_path": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/input.ply",
+    "baseline_sha256": "dbd043c9d0807bbe96e895d6a5ac57a8762b6f1d5bd3f77eb36bb1e78514662c",
+    "views": 203,
+    "plane_intersecting_views": 203,
+    "views_without_plane_intersection": [],
+    "reference_plane_z_m": -28.479999999999905,
+    "camera_depth_range_m": [
+      0.2,
+      300.0
+    ],
+    "footprint_definition": "camera frustum between camera depth .2 and 300m intersect horizontal plane at median input prior-roof height; geometric FOV, not occlusion-aware observed footprint"
+  },
+  "note": "회색: 사전 지붕 중앙 높이 -28.48 m 평면과 0.2~300 m 시야의 교차 · 실제 가림·경사지형 가시성은 뜻하지 않음 · 모든 씨앗을 그림",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

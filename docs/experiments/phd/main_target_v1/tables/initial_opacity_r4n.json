@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-01T16:09:17.081200+09:00",
+  "rows": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "population": "prior_target",
+      "count": 50518,
+      "min": 0.10000000149011612,
+      "median": 0.10000000149011612,
+      "max": 0.10000000149011612,
+      "baseline_nominal": 0.1,
+      "same_baseline_initial_value": true,
+      "snapshot_sha256": "02f73f37efa4858136e9e57916022993049074c122f9b4e2ace996d9b1c9442a"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "population": "MVS_background",
+      "count": 555259,
+      "min": 0.10000000149011612,
+      "median": 0.10000000149011612,
+      "max": 0.10000000149011612,
+      "baseline_nominal": 0.1,
+      "same_baseline_initial_value": true,
+      "snapshot_sha256": "02f73f37efa4858136e9e57916022993049074c122f9b4e2ace996d9b1c9442a"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "population": "prior_target",
+      "count": 258095,
+      "min": 0.10000000149011612,
+      "median": 0.10000000149011612,
+      "max": 0.10000000149011612,
+      "baseline_nominal": 0.1,
+      "same_baseline_initial_value": true,
+      "snapshot_sha256": "ed6fb02fee1903c88f28a0de6bd50ebbb685f3e7ac172cbcb360123f76fdbba5"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "population": "MVS_background",
+      "count": 408243,
+      "min": 0.10000000149011612,
+      "median": 0.10000000149011612,
+      "max": 0.10000000149011612,
+      "baseline_nominal": 0.1,
+      "same_baseline_initial_value": true,
+      "snapshot_sha256": "ed6fb02fee1903c88f28a0de6bd50ebbb685f3e7ac172cbcb360123f76fdbba5"
+    }
+  ],
+  "baseline_source": "r19 scene/gaussian_model.py create_from_pcd inverse_opacity_activation(0.1 * ones); unchanged from base",
+  "background_source": "jbgs_target.py inverse_opacity_activation(torch.full(...,.1))",
+  "scientific_verdict": null
+}

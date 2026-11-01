@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-01T15:52:25.459072+09:00",
+  "status": "AGENT_REVIEWED",
+  "files": [
+    {
+      "path": "figures/r3_initial_depth_gate.png",
+      "sha256": "8341f80856e26f03afb43b51326c9baca6a065eeec70f3e2f8d51bfe1dea1794"
+    },
+    {
+      "path": "figures/r3_rep1_LoD2_initial.png",
+      "sha256": "1902d55caa49c0cb032ead936581fd138095c144cb08ced2bc0fd4d263521cec"
+    },
+    {
+      "path": "figures/r3_rep2_LoD2_initial.png",
+      "sha256": "5b9a7e54ab3576e6a56502cc57ff3abc2db64ed83a7a6130f407bd595394a060"
+    },
+    {
+      "path": "figures/r3_rep3_LoD2_initial.png",
+      "sha256": "851c550c3f2d7d08e18c5b0670e6f218326ccf18492776280f0bf2fa5620ac83"
+    },
+    {
+      "path": "figures/r3_rep4_LoD2_initial.png",
+      "sha256": "8a66b0d8da03d6915ccb227ecb3f061dece4297bfadd9fd8fe1cd42511bb9fc9"
+    }
+  ],
+  "findings": [
+    "Fixed source photos and corresponding initial renders visible.",
+    "Same depth-error colour range 0 to 1 m for all representatives.",
+    "Each image median distinguished from all-view gate.",
+    "White areas are missing or non-prior pixels, not zero error.",
+    "Full scene transparency and overlapping roof/wall outlines visible; no claim of learned improvement."
+  ],
+  "user_acceptance": false,
+  "scientific_verdict": null
+}

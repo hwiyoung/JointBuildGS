@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-01T16:09:56.772384+09:00",
+  "status": "PASS_R3_EVIDENCE",
+  "experiment_status": "STOP_STAGE1_PRIOR_ONLY_DEPTH_5CM",
+  "checks": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "gate": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "median_m": 3.054241180419922,
+      "replay_median_m": 3.054241180419922,
+      "initial_background_over_1m": 1389,
+      "audit": "PASS"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "gate": "PASS",
+      "median_m": 0.013952255249023438,
+      "replay_median_m": 0.013952255249023438,
+      "initial_background_over_1m": 2182,
+      "audit": "PASS"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "gate": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "median_m": 0.1360931396484375,
+      "replay_median_m": 0.1360931396484375,
+      "initial_background_over_1m": 2166,
+      "audit": "PASS"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "gate": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "median_m": 0.9333877563476562,
+      "replay_median_m": 0.9333877563476562,
+      "initial_background_over_1m": 2291,
+      "audit": "PASS"
+    }
+  ],
+  "independent_replayed_views": 982,
+  "representative_renders_checked": 5,
+  "maps_verified_by_r2": 1838,
+  "figure_pairs": 40,
+  "python_syntax_files": 193,
+  "report_sha256": "7878226d4f37a54c12a2ea30a20347ca500251fcffdf2ca2730495886a58a709",
+  "config_sha256": "ea72107679d42838b6245c00926a8836768923ad5b2ec5192ae2c7b73c23b3e0",
+  "training_steps": 0,
+  "pilot_7000": "NOT_RUN",
+  "scientific_verdict": null,
+  "environment": {
+    "python": "3.10.20",
+    "numpy": "1.26.4"
+  }
+}

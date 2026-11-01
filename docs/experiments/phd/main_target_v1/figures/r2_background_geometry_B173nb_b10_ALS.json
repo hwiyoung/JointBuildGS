@@ -1,0 +1,57 @@
+{
+  "title": "B173 주변 · ALS: 신뢰도 통과 MVS에도 큰 배경 원반이 생겼다",
+  "values": {
+    "at": "2026-11-01T15:28:34.451491+09:00",
+    "site": "B173nb_b10",
+    "prior": "ALS",
+    "seed_index": 567741,
+    "background_index": 517223,
+    "source_mvs_index": 12848457,
+    "xyz": [
+      131.7265625,
+      132.02352905273438,
+      -151.22532653808594
+    ],
+    "normal": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "normal_missing": true,
+    "u_replaced": true,
+    "camera": "DJI_20241217101359_0032_D",
+    "pixel_uv": [
+      842,
+      656
+    ],
+    "source_depth_m": 188.1973876953125,
+    "source_confidence": 1.0,
+    "three_neighbor_distances_m": [
+      48.46408062541021,
+      51.31487800692701,
+      52.90393818819042
+    ],
+    "neighbor_seed_indices": [
+      501717,
+      349163,
+      409030
+    ],
+    "cpu_nearest_neighbor_scale_m": 50.92743364026877,
+    "gpu_scale_m": 50.92743682861328,
+    "neighborhood_valid_depth_quantiles_m": [
+      188.1973876953125,
+      188.1973876953125,
+      188.1973876953125,
+      188.1973876953125,
+      188.1973876953125
+    ],
+    "normal_rule": "finite differences, else vertical up; unchanged frozen initialization",
+    "status": "PASS_LINEAGE_AND_SCALE_RECONSTRUCTION",
+    "diagnostic_only": true,
+    "no_filter_or_scale_change": true,
+    "scientific_verdict": null
+  },
+  "note": "원본 신뢰도 1 · CPU 크기 복원 50.927434 m · 씨앗·크기·5 cm 기준 변경 없음",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

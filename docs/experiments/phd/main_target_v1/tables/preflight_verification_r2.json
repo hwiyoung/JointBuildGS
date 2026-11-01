@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-01T16:09:39.773083+09:00",
+  "status": "PASS_PREFLIGHT_EVIDENCE",
+  "initial_render_gate": "FAIL",
+  "checks": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "median_m": 23.093154907226562,
+      "gate": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "audit": "PASS"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "median_m": 45.7165641784668,
+      "gate": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "audit": "PASS"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "median_m": 30.190414428710938,
+      "gate": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "audit": "PASS"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "median_m": 45.29638671875,
+      "gate": "FAIL_INITIAL_RENDER_DEPTH_5CM",
+      "audit": "PASS"
+    }
+  ],
+  "maps_sha256_checked": 1838,
+  "representative_renders_checked": 5,
+  "python_files_syntax_checked": 193,
+  "report_sha256": "db872a3623d55fb0660a5629e7d1300afcc0a213651372e089070fa204b5fc32",
+  "figure_pairs": 41,
+  "config_sha256": "f0ac7c73209929af63d4a2d762f4ad037a3ea5cb36f2031a9568432fdfd0c410",
+  "runtime_lock_sha256": "8f85a758b9cda4593b5cef6b200c8f38080a40042772d71057968b9a4ea008d5",
+  "training_steps": 0,
+  "scientific_verdict": null,
+  "environment": {
+    "python": "3.10.20",
+    "numpy": "1.26.4"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "title": "ALS: 처음 큰 배경의 남은 계보와 자손",
+  "values": {
+    "iteration": 7000,
+    "checkpoint_state": "saved model before scheduled iteration-7000 densification",
+    "initial_large_background_count": 2182,
+    "surviving_gaussians": 274872,
+    "surviving_original_ancestors": 303,
+    "size_max_axis_m": {
+      "min": 0.03144986554980278,
+      "median": 2.2447052001953125,
+      "p95": 9.346270656585649,
+      "max": 48.78740310668945
+    },
+    "opacity": {
+      "min": 0.0008862818940542638,
+      "median": 0.5542063117027283,
+      "p95": 0.9999758005142212,
+      "max": 1.0
+    },
+    "normal_displacement_abs_m": {
+      "min": 0.0,
+      "median": 0.10204362869262695,
+      "p95": 0.12062454223632812,
+      "max": 3.1013526916503906
+    },
+    "tangent_displacement_m": {
+      "min": 0.13112471997737885,
+      "median": 162.5291748046875,
+      "p95": 292.6628173828125,
+      "max": 679.186279296875
+    },
+    "parent_or_child": "combined surviving descendants; immutable init_id retains original ancestor across clone/split/prune",
+    "floating_conclusion": "requires evaluation mesh first hits; tangential spread alone is not a floating surface",
+    "stop_criterion": false,
+    "scientific_verdict": null
+  },
+  "note": "전체 자손 위치 표시 · 접선 이동 제한 없음 · 뜬 면 여부는 메시 채점으로 별도 확인",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

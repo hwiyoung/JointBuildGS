@@ -1,0 +1,50 @@
+{
+  "at": "2026-11-01T17:06:14.336305+09:00",
+  "status": "PASS_DELIVERY_AUDIT",
+  "experiment_status": "STOP_7000_TARGET_COVERAGE",
+  "rows": [
+    {
+      "prior": "ALS",
+      "saved_iteration": 7000,
+      "target_following": 0.3272368456186923,
+      "floating": 0.212266910714879,
+      "validation": "PASS",
+      "pilot_acceptance": "FAIL_TARGET_FOLLOWING",
+      "scientific_verdict": null
+    },
+    {
+      "prior": "LoD2",
+      "saved_iteration": 7000,
+      "target_following": 0.34278731469106416,
+      "floating": 0.21712026510491,
+      "validation": "PASS",
+      "pilot_acceptance": "FAIL_TARGET_FOLLOWING",
+      "scientific_verdict": null
+    }
+  ],
+  "requirements": {
+    "input_rules_and_targets_locked": "PASS",
+    "no_gt_parameter_selection": "recorded sources and locks",
+    "target_off_equivalence": "PASS_DEFAULT_OFF_AST",
+    "initialization_gate": "PASS_USER_DECISION_20261101_R3",
+    "pilot7000": "FAIL_TARGET_FOLLOWING_BOTH_STOPPED",
+    "large_background_ancestry": "RECORDED_NONSTOP",
+    "initial_opacity": "0.1 BOTH_ORIGINS_EQUAL_BASELINE",
+    "remaining_six_and_30000": "NOT_RUN",
+    "direct_target_mesh_and_final_comparisons": "NOT_RUN_PILOT_STOP",
+    "saved_baseline_same_map_comparison": "PASS_3_MODELS_4_COMPARISONS",
+    "individual_contributor": "PASS_406_BYTE_EQUAL_DEPTH_REPLAYS",
+    "both_origin_movement": "COMPLETE",
+    "place_stratification": "PASS_1800_ROWS",
+    "record_only_continuation": "NOT_RUN_NO_OPTIMIZER_STATE",
+    "holdout_patch_details": "EXCLUDED_FROM_PUBLIC_DELIVERY"
+  },
+  "locked_files_checked": 114,
+  "python_files_parsed": 221,
+  "figure_pairs": 142,
+  "r5_verification_sha256": "959d3b2a440ad90968697a103a38a92fe0df1fe3489e63ad3fa2c45f7def4f2e",
+  "report_characters": 6330,
+  "report_sha256": "4335499f893606e8c9b49811cfd1d768503ec4985e392de6f976502b28c1bcca",
+  "visual_review_sha256": "9725f19b11a710450af3b07b719b65722a49150ddf03980fdc69c9906e23f150",
+  "scientific_verdict": null
+}

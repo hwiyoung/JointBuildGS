@@ -291,8 +291,8 @@
     "stage0_unavailable_definition": "missing/zero normal or values still unavailable after same-unit same-kind median filling"
   },
   "stage_status": {
-    "stage0": "R2_LOCKED_BEFORE_RECOMPUTATION",
-    "stage1": "NOT_RETESTED",
+    "stage0": "PASS_R2",
+    "stage1": "PASS_PREFLIGHT_BY_USER_DECISION_R4",
     "stage2": "NOT_STARTED"
   },
   "amendments": [
@@ -347,9 +347,22 @@
       },
       "reason": "user-authorized MVS background and observation repair; input-only audit; no r2 judgments or accuracy inspected",
       "input_audit_sha256": "9d769cbb291ffed9f0d95536841718a312cc5c68f90c90a193c5baba3f7cd1d3"
+    },
+    {
+      "at": "2026-11-01T15:56:20.571559+09:00",
+      "reason": "user explicitly accepts r3 initialization evidence and orders immediate 7000-step pilot",
+      "previous_config_sha256": "ea72107679d42838b6245c00926a8836768923ad5b2ec5192ae2c7b73c23b3e0",
+      "previous_config": "target_v1.stage1.r3.json",
+      "decision_sha256": "9ea679224725ba8a8ca393124a810c86e170cd3e4389669b5b56f2235d5390fd"
+    },
+    {
+      "at": "2026-11-01T16:07:17.334235+09:00",
+      "reason": "Stage1 numerical implementation correction; scientific settings and all prescribed gates unchanged; explicit retry code does not auto-retry any failed run",
+      "previous_config_sha256": "6d821026854aac099aff5be889bd614723253bb67f9bf115011948fc9b55692c",
+      "previous_config": "target_v1.stage1.r4.json"
     }
   ],
-  "revision": "r2_user_decision_20261101",
+  "revision": "r4n_numerical_projection_correction",
   "deferred_sites": [
     "B173_b0"
   ],
@@ -413,7 +426,18 @@
       "sigma_multiple": 1.96,
       "float32_tolerance_m": 3e-05,
       "tangent": "unconstrained",
-      "inheritance": "unchanged GaussianModel init_id parent propagation on split, clone and prune"
+      "inheritance": "unchanged GaussianModel init_id parent propagation on split, clone and prune",
+      "numerical_correction": {
+        "at": "2026-11-01T16:07:17.334235+09:00",
+        "previous": "float32 projection and float32 residual dot product",
+        "current": "float64 intermediate projection, norm2 roundoff correction, float32 model and original float32 1.96*sigma limit, float64 residual measurement",
+        "threshold_m": 3e-05,
+        "statistical_width_changed": false,
+        "tangential_bound_added": false,
+        "reason": "actual 6000 descendants reproduce cancellation-induced float32 residual above threshold while float64 residual is inside tolerance",
+        "prior_runs": "r4 preserved: ALS stopped6100, LoD2 interrupted after3100; no 7000 model",
+        "evidence_sha256": "ae6b0487c16610b54f4e5fde751366f3182b20049508ff163f12a010b0ce01d5"
+      }
     },
     "monitor": {
       "sample_interval": 100,
@@ -430,6 +454,46 @@
       ]
     },
     "stage0_targets": "immutable bytes; never recompute decisions during training",
-    "scientific_verdict": null
+    "scientific_verdict": null,
+    "gate_r3": {
+      "at": "2026-11-01T15:39:20.903222+09:00",
+      "previous": "all initial Gaussians, full target pixels, median <=0.05m",
+      "current": "prior-patch target-seeded Gaussians only, prior-owned target pixels with positive finite rendered depth, median <=0.05m",
+      "criterion_m": 0.05,
+      "missing_render": "reported separately, never counted as correct",
+      "reason": "direct user 11/1 re-stop decision item 2",
+      "full_render": "retain all-Gaussian errors as reference only",
+      "stage0": "r2 judgments, targets and maps unchanged",
+      "background_scale": "baseline nearest-neighbor rule, no cap and no isolated-point filtering",
+      "base_r2_config_sha256": "f0ac7c73209929af63d4a2d762f4ad037a3ea5cb36f2031a9568432fdfd0c410"
+    },
+    "large_background_r3": {
+      "initial_threshold_m": 1.0,
+      "size": "maximum activated tangent scale, metre",
+      "top_k": 10,
+      "ancestry": "immutable initial init_id; surviving Gaussians grouped by original background ancestor, including children",
+      "checkpoint_iteration": 7000,
+      "stop_criterion": false,
+      "measurements": [
+        "count remaining by initial ancestor",
+        "scale and opacity distributions and per-Gaussian arrays",
+        "normal and tangential displacement from initial target plane",
+        "floating map with rendered background and large-background ancestry contributions"
+      ]
+    },
+    "gate_r4": {
+      "at": "2026-11-01T15:56:20.571559+09:00",
+      "authority": "direct user reply 11/1 r3 items 1-5",
+      "previous": "prior-only rendered depth median <=0.05m",
+      "current": "PASS by verified seed target position <=0.008mm, individual patch rendering <=0.035mm and target map height <=1cm",
+      "initial_render_error": "record only, no stop",
+      "missing_depth": "record only, no stop",
+      "trained_7000_coverage": {
+        "min_fraction": 0.8,
+        "width_sigma": 1.96,
+        "unchanged": true
+      },
+      "reason": "user removes untrained blended-render depth from initialization acceptance"
+    }
   }
 }

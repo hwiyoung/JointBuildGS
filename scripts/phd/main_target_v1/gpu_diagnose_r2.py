@@ -52,6 +52,7 @@ def main():
             for key,value in saved.items():setattr(g,key,torch.nn.Parameter(value[keep].detach()))
             part=render(cam,g,pipe,bg);dep=part['surf_depth'].squeeze().cpu().numpy();alp=part['rend_alpha'].squeeze().cpu().numpy()
             mask=valid&p&(dep>0);decomposition[label]=dict(prior_error=stats(abs(dep[mask]-T[mask])),
+                full_error_on_same_pixels=stats(abs(D[mask]-T[mask])),prior_depth_coverage=float(mask.sum()/max(1,(valid&p).sum())),
                 prior_alpha=stats(alp[valid&p]),all_alpha=stats(alp[valid]),depth=stats(dep[valid]))
         for key,value in saved.items():setattr(g,key,value)
         # Camera-z=50 plane, orient every disk identically; no scene observations/GT.

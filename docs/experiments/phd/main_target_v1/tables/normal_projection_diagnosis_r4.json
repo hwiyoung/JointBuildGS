@@ -1,0 +1,159 @@
+{
+  "at": "2026-11-01T16:05:45.659872+09:00",
+  "status": "PASS_NUMERICAL_PROJECTION_CANDIDATE",
+  "rows": [
+    {
+      "shift_m": 0.0,
+      "method": "old_float32",
+      "max_excess_float32_m": 1.570582389831543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.4653773689587979e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": 0.0,
+      "method": "double_intermediate",
+      "max_excess_float32_m": 1.570582389831543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 9.911326969813672e-06,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": 0.01,
+      "method": "old_float32",
+      "max_excess_float32_m": 1.570582389831543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.7647027959810657e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": 0.01,
+      "method": "double_intermediate",
+      "max_excess_float32_m": 1.570582389831543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.036076099580896e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": -0.01,
+      "method": "old_float32",
+      "max_excess_float32_m": 3.859400749206543e-05,
+      "violations_float32": 1,
+      "max_excess_float64_m": 2.8505937564204942e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": -0.01,
+      "method": "double_intermediate",
+      "max_excess_float32_m": 2.333521842956543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.542527434139629e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": 1.0,
+      "method": "old_float32",
+      "max_excess_float32_m": 3.096461296081543e-05,
+      "violations_float32": 1,
+      "max_excess_float64_m": 2.430374566131377e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": 1.0,
+      "method": "double_intermediate",
+      "max_excess_float32_m": 2.333521842956543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.3620733085417669e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": -1.0,
+      "method": "old_float32",
+      "max_excess_float32_m": 2.333521842956543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 2.4707265609436035e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": -1.0,
+      "method": "double_intermediate",
+      "max_excess_float32_m": 2.333521842956543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.3170872421142121e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": 10.0,
+      "method": "old_float32",
+      "max_excess_float32_m": 2.333521842956543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 2.68334005397719e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": 10.0,
+      "method": "double_intermediate",
+      "max_excess_float32_m": 2.333521842956543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.3477273540729584e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": -10.0,
+      "method": "old_float32",
+      "max_excess_float32_m": 3.096461296081543e-05,
+      "violations_float32": 1,
+      "max_excess_float64_m": 2.172074387374323e-05,
+      "violations_float64": 0
+    },
+    {
+      "shift_m": -10.0,
+      "method": "double_intermediate",
+      "max_excess_float32_m": 2.333521842956543e-05,
+      "violations_float32": 0,
+      "max_excess_float64_m": 1.499537594895628e-05,
+      "violations_float64": 0
+    }
+  ],
+  "worst_example": {
+    "excess": 3.859400749206543e-05,
+    "index": 858863,
+    "init_id": 313950,
+    "shift_m": -0.01,
+    "before": [
+      -144.71011352539062,
+      313.059814453125,
+      -11.970757484436035
+    ],
+    "old": [
+      -144.71665954589844,
+      313.0523376464844,
+      -11.971097946166992
+    ],
+    "corrected": [
+      -144.7166748046875,
+      313.05230712890625,
+      -11.971097946166992
+    ],
+    "anchor": [
+      85.67254638671875,
+      112.26991271972656,
+      -40.46226501464844
+    ],
+    "normal": [
+      -0.6582046747207642,
+      -0.7520642280578613,
+      -0.034147266298532486
+    ],
+    "sigma": 0.1688234806060791,
+    "normal_norm2": 1.0000000327441967
+  },
+  "unchanged_inside_count": 715702,
+  "tolerance_m": 3e-05,
+  "band_sigma_multiple": 1.96,
+  "source_snapshot_sha256": "4b7b5865a734ee410db23065b833aeb1325b7728cd45eb4bfebc5065b50bd9ea",
+  "actual_6100_tensor": "not saved; exact failing point cannot be recovered from the STOP scalar",
+  "conclusion": "reproduction uses actual saved 6000 descendants with deterministic normal displacements, not a replay of iteration6100",
+  "training_steps": 0,
+  "scientific_verdict": null
+}

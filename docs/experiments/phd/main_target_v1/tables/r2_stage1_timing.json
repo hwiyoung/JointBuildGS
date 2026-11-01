@@ -1,0 +1,81 @@
+{
+  "started_at": "2026-11-01T14:32:31.801541+09:00",
+  "as_of": "2026-11-01T16:08:46.752322+09:00",
+  "elapsed_minutes": 96.24917968333332,
+  "gpu_invocation_receipts": [
+    {
+      "path": "r2/preflight_commands/B0_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 31.538747549057007,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "r2/preflight_commands/B173nb_b10_ALS/receipt.json",
+      "exit_code": 0,
+      "seconds": 29.75820255279541,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "r2/preflight_commands/B173nb_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 23.11178421974182,
+      "gpu": "1",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "r2/preflight_commands/R1rep_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 33.45999217033386,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "r2/diagnose_commands/B0_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 27.679867029190063,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "r2/diagnose_commands/B173nb_b10_ALS/receipt.json",
+      "exit_code": 0,
+      "seconds": 26.387569665908813,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "r2/diagnose_commands/B173nb_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 19.290521383285522,
+      "gpu": "1",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    },
+    {
+      "path": "r2/diagnose_commands/R1rep_b10_LoD2/receipt.json",
+      "exit_code": 0,
+      "seconds": 27.420925617218018,
+      "gpu": "0",
+      "optimization_steps": 0,
+      "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+      "scientific_verdict": null
+    }
+  ],
+  "training_iterations": 0,
+  "scientific_verdict": null
+}

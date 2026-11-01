@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-01T15:59:21.778048+09:00",
+  "task_id": "PHD-MAIN-TARGET-v1",
+  "iteration": 7000,
+  "mesh": {
+    "voxel_m": 0.05,
+    "sdf_trunc_m": 0.25,
+    "depth_trunc_m": 300.0,
+    "volume_unit_resolution": 16,
+    "depth_sampling_stride": 4,
+    "layout": "auto:16",
+    "cleanup": "none for current scoring mesh",
+    "box": "unchanged gpu_s1.box_of: s02 XY rectangle+2m, s52 GT z p5-5 to max+5; evaluation only",
+    "depth": "saved pre-densification iteration7000 all training views, baseline expected depth",
+    "rgb": "trained SH RGB cache, geometry independent of SH"
+  },
+  "scoring": {
+    "first_hit": "unchanged mesh_worker.first_hit",
+    "classes": "unchanged mesh_common.classes",
+    "cell": "exact r2/S1 truth code mapping; no LT derived cell substitution",
+    "denominator": "LT in_eval and scoring_allowed, exact centre and normal alignment required",
+    "replacement": "r2 any_replaced reported all/original/replaced separately"
+  },
+  "attribution": {
+    "channels": [
+      "background",
+      "initial_background_over_1m_ancestry",
+      "prior"
+    ],
+    "aggregation": "mean alpha-normalized rendered contribution over visible matching views",
+    "visible": "positive camera depth, pixel round nearest, finite cached depth within 0.25m, alpha>1e-5",
+    "map": "floating first-hit points: background-dominant mean fraction>=0.5 highlighted, missing contribution explicit",
+    "interpretation": "contribution association, not a causal proof of mesh generation",
+    "threshold_is_stop": false
+  },
+  "resources": {
+    "shared_tsdf_lock": "main_losstrain_v1/checks/tsdf.lock opened read-only",
+    "minimum_MemAvailable_GiB": 56,
+    "container_limit_GiB": 40,
+    "parallel_large_meshes": 1
+  },
+  "scientific_verdict": null
+}

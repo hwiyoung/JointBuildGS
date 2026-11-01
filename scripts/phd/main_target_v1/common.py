@@ -51,3 +51,10 @@ def locked_r2():
     p=CFG/'revisions/r2/target_v1.json'
     assert sha(p)==lock['config_sha256']
     return json.loads(p.read_text()),lock
+
+
+def locked_r3():
+    lock=json.loads((CFG/'target_v1.stage1.r3.lock.json').read_text())
+    p=CFG/'target_v1.stage1.r3.json'
+    assert sha(p)==lock['config_sha256']
+    return json.loads(p.read_text()),lock

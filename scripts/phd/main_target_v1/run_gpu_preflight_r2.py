@@ -21,7 +21,7 @@ def main():
         cmd+=['-e',env]
     mounts=[(REPO,'/repo','ro'),(ART,'/art','ro'),(ART,'/artifacts/JointBuildGS','ro'),(PH,'/ph','ro'),(OUT,'/out','rw'),
         (PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1','/s0','ro'),(PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1','/p','ro'),
-        (REPO/'src/phd/forks/GeoGS-conf-guided-v1-r19','/source','ro'),(REPO/'configs/phd/main_target_v1','/cfg','ro'),
+        (OUT/'revisions/r2_stage1_source/fork','/source','ro'),(OUT/'revisions/r2_stage1_source/fork','/repo/src/phd/forks/GeoGS-conf-guided-v1-r19','ro'),(REPO/'configs/phd/main_target_v1','/cfg','ro'),
         (REPO/'docs/experiments/phd/main_target_v1','/docs','rw'),
         (PH/'geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights','/weights','ro')]
     for src,dst,mount_mode in mounts:cmd+=['-v',f'{src}:{dst}:{mount_mode}']
@@ -29,6 +29,7 @@ def main():
     cmd+=['-w','/source','--entrypoint','python',IMG,'-B','-u',f'/repo/scripts/phd/main_target_v1/gpu_{script}_r2.py',site,prior]
     if mode=='decompose':cmd+=['decompose']
     binding={str(p.relative_to(REPO)):hashlib.sha256(p.read_bytes()).hexdigest() for root in [REPO/'src/phd/forks/GeoGS-conf-guided-v1-r19',REPO/'scripts/phd/main_target_v1'] for p in root.rglob('*') if p.is_file()}
+    binding.update({str(Path('src/phd/forks/GeoGS-conf-guided-v1-r19')/p.relative_to(OUT/'revisions/r2_stage1_source/fork')):hashlib.sha256(p.read_bytes()).hexdigest() for p in (OUT/'revisions/r2_stage1_source/fork').rglob('*') if p.is_file()})
     (dest/'code_binding.json').write_text(json.dumps(binding,indent=2)+'\n');(dest/'command.json').write_text(json.dumps(cmd,indent=2)+'\n')
     t=time.time()
     with (dest/'run.log').open('x') as f:rc=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT).returncode

@@ -59,6 +59,9 @@ def main():
         for i,col in enumerate(['#d59d3c','#438bb6']):
             mu=fit['means_log10'][i];sd=fit['sd_log10'][i];y=fit['area_weights'][i]*np.exp(-.5*((grid-mu)/sd)**2)/(sd*np.sqrt(2*np.pi));ax.plot(10**grid,y,c=col)
         ax.axvline(fit['T2_m'],color='black',ls='--');ax.set(xscale='log',xlabel='차이 |d| (m)',title=f"{name}\nT2 {fit['T2_m']:.3f} m")
+    ymax=max(ax.get_ylim()[1] for ax in axes)
+    for ax in axes:ax.set_ylim(0,ymax)
+    axes[0].set_ylabel('log10(|d|)당 넓이 밀도')
     fig.subplots_adjust(top=.76,bottom=.2);save(fig,'r2_T2_comparison','앞 셈과 현재 셈은 유의 차이 모집단이 다르다',dict(fits=fits,historical_area_m2=old['historical']['area_m2']),
         '앞 셈: 참값 유래 최소 넓이 제거 후 · r1/r2: 제거 없이 전체 u · r2는 지붕 10 m와 면 찾기 보완')
     for split in ['development','holdout','experiment']:
@@ -95,7 +98,7 @@ def main():
             '고정한 단면 위치와 폭 유지 · 참값은 표시와 평가에만 사용 · 판단 이후 값을 조정하지 않음')
     lines=['# 영역별 목표 학습 보고 v1 · r2 단계 0','',
            '11/1 결정에 따라 단계 0을 재계산했다. 3.5 초기 렌더 점검과 학습은 아직 진행 전이다. `scientific_verdict: null`.','',
-           '## 1. 설정과 원인','',f"r2 설정 SHA-256: `{lock['config_sha256']}`. 원통 길이는 지붕 10 m, 벽 5 m. 원래 면에서 선택한 점이 4개 이상이면 면 찾기를 바꾸지 않았다. 4개 미만이면서 원통 안에는 4개 이상인 경우에만, 같은 0.30 m 층 가운데 점이 가장 많은 층을 고르고(동률이면 바깥층) 그 층 중심의 ±1 m에서 센다. 전체 점의 20% 조건이 여러 면·분산된 점에서 실패하는 것을 보완한다. 보완 후에도 4개 미만이면 관측 없음이다.",'',
+           '## 1. 설정과 원인','',f"r2 설정 SHA-256: `{lock['config_sha256']}`. 원통 길이는 지붕 10 m, 벽 5 m. 원래 면에서 선택한 점이 4개 이상이면 면 찾기를 바꾸지 않았다. 4개 미만이면서 원통 안에는 4개 이상인 경우에만, 같은 0.30 m 높이 구간 가운데 점이 가장 많은 구간을 고르고(동률이면 바깥 구간) 그 중심의 ±1 m에서 센다. 전체 점의 20% 조건이 여러 면·분산된 점에서 실패하는 것을 보완한다. 보완 후에도 4개 미만이면 관측 없음이다.",'',
            'B173 주변 항공 LiDAR 평가 지붕에서 5 m 원통이 비고 10 m에서 관측이 확보되는 넓이는 553.782 m²다. 모든 지역·사전 정보·평가 범위/띠·면 종류의 수와 넓이는 `tables/unobserved_input_audit_r2.csv`에 있다.','',
            '## 2. 둘째 문턱','',
            '| 방식 | 유의 차이 넓이 (m²) | T2 (m) | 용도 |','|---|---:|---:|---|',
@@ -129,7 +132,7 @@ def main():
         '## 8. 출처와 검증','',
         'LoD2 σP 출처: 2026-10-26 방법 재정리 세션이 참값 없이 구한 값이다. 정밀한 MVS(u 5 cm 이하)와 LoD2의 차 분포를 두 무리로 맞추고, 좁은 무리의 폭에서 MVS 흔들림을 뺐다. 참값으로 한 같은 셈(평지붕 17.1 cm)은 점검에만 썼다. 이 출처 설명은 사용자 제공이며 원 적합을 독립 재실행한 것은 아니다.','',
         '항공 LiDAR 띠의 상태 1 진단은 r1에서 완료했다. 빈 원통 대부분이 저장된 LiDAR 점군의 잘라낸 범위 밖에 있었다. `tables/als_status1_diagnosis_r1.json`과 `figures/r1_band_*.png`에 수·넓이·지도를 보존했다. r2는 같은 불확실도 입력과 대체 표시를 사용하며 이 원인으로 멈추지 않는다.','',
-        '원통 보완은 독립 전수 원통 마스크와 층 탐색으로 만든 120개 합성 검증을 통과했다. r1 파일은 보존했다. 현재 결과는 [이 발주에서 냄]이며 과학적 판정은 하지 않는다.',''])
+        '원통 보완은 독립 전수 원통 마스크와 높이 구간 탐색으로 만든 120개 합성 검증을 통과했다. r1 파일은 보존했다. 현재 결과는 [이 발주에서 냄]이며 과학적 판단은 하지 않는다.',''])
     (DOC/'영역별목표학습_보고_r2.md').write_text('\n'.join(lines))
     dump(OUT/'r2/stage0/report_complete.json',dict(at=stamp(),status='STAGE0_REPORT_COMPLETE',scientific_verdict=None))
     print('R2_REPORT_COMPLETE',flush=True)

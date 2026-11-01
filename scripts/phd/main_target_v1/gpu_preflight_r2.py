@@ -41,6 +41,9 @@ def unit_check(opt):
 @torch.no_grad()
 def main():
     site,prior=sys.argv[1:3];cfg,lock=locked_r2()
+    runtime=json.loads((CFG/'target_v1.stage1.r2.lock.json').read_text())
+    assert runtime['config_sha256']==lock['config_sha256']
+    for name,digest in runtime['files'].items():assert sha(REPO/name)==digest,name
     repfile=CFG/'representatives_v1.json';assert sha(repfile)==json.loads((CFG/'representatives_v1.lock.json').read_text())['sha256']
     reps=[r for r in json.loads(repfile.read_text())['rows'] if r['site']==site and prior in r['priors']]
     root=OUT/'r2/preflight'/f'{site}_{prior}';root.mkdir(parents=True,exist_ok=False)

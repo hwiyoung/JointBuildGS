@@ -35,7 +35,8 @@ def main():
                 target_patches_without_baseline_seed=int(((np.bincount(pid,minlength=len(t['region']))==0)&(t['region']>=0)).sum()),
                 background_source='confidence-masked MVS A',baseline_background_source='SfM sparse',
                 prior_scales='retained exactly',background_scales='baseline distCUDA2 rule on combined initial XYZ',
-                seeds_sha256=sha(root/'seeds.npz'),background_sha256=sha(bf),config_sha256=lock['config_sha256'],scientific_verdict=None))
+                seeds_sha256=sha(root/'seeds.npz'),background_sha256=sha(bf),target_sha256=sha(OUT/'r2/targets'/f'{site}_{prior}.npz'),
+                baseline_ply_sha256=sha(ply),config_sha256=lock['config_sha256'],scientific_verdict=None))
             print('R2_SEEDS',site,prior,len(pid),nb,flush=True)
 
 
