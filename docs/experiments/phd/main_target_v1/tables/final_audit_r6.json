@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-01T18:35:21.448924+09:00",
+  "status": "PASS_R6_DELIVERY_AUDIT",
+  "experiment_status": "STOP_R6_7000_AND_SCHEDULED_RESET",
+  "rows": [
+    {
+      "prior": "ALS",
+      "gates": {
+        "health": true,
+        "floating": false,
+        "agreement": true,
+        "no_surface": true
+      },
+      "status": "FAIL",
+      "saved_complete_states": [
+        7000
+      ]
+    },
+    {
+      "prior": "LoD2",
+      "gates": {
+        "health": true,
+        "floating": false,
+        "agreement": false,
+        "no_surface": true
+      },
+      "status": "FAIL",
+      "saved_complete_states": [
+        7000
+      ]
+    }
+  ],
+  "locked_files_checked": 228,
+  "figure_pairs": 40,
+  "report_characters": 6166,
+  "scientific_verdict": null
+}

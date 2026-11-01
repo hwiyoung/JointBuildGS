@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-01T18:06:16.453820+09:00",
+  "status": "PASS_R6_COMPLETE_STATE_AUDIT",
+  "prior": "LoD2",
+  "rows": [
+    {
+      "iteration": 7000,
+      "status": "PASS_COMPLETE_STATE",
+      "gaussians": 1105655,
+      "adam_parameter_groups": 6,
+      "adam_steps": {
+        "xyz": 7000.0,
+        "f_dc": 7000.0,
+        "f_rest": 7000.0,
+        "opacity": 7000.0,
+        "scaling": 7000.0,
+        "rotation": 7000.0
+      },
+      "checkpoint_sha256": "5599433e13a1d81f94e6ad7ee70c86eeaee1c9b80b288591b7af3a1b7174c543",
+      "tags": {
+        "0": 789182,
+        "1": 109230,
+        "2": 207243
+      }
+    },
+    {
+      "iteration": 15000,
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    },
+    {
+      "iteration": 30000,
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    }
+  ],
+  "scientific_verdict": null,
+  "terminal_status_source": "../JointBuildGS-artifacts/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r6/runs/tg_B173nb_b10_LoD2_s0_r6/receipt.json"
+}

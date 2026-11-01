@@ -1,0 +1,123 @@
+{
+  "title": "B173 날개 · LoD2: 목표, 중심과 메시 첫 면을 같은 단면에 놓았다",
+  "values": {
+    "prior": "LoD2",
+    "representative": {
+      "name": "B173 날개",
+      "site": "B173nb_b10",
+      "priors": [
+        "LoD2",
+        "ALS"
+      ],
+      "start": [
+        146.68,
+        96.32
+      ],
+      "end": [
+        136.63,
+        99.34
+      ],
+      "half_width": 0.6,
+      "id": 1,
+      "place_source": "/repo/configs/phd/main_losstrain_v1/losstrain_v1.json",
+      "place_source_sha256": "85a17bfde7315c91e3a34548dca99843ada03503f393c6727458d00c17e78b12",
+      "camera": {
+        "name": "DJI_20241217091253_0149_D",
+        "W": 1024,
+        "H": 741,
+        "fx": 674.4174194335938,
+        "fy": 674.7781982421875,
+        "cx": 513.4158325195312,
+        "cy": 365.0968322753906,
+        "K": [
+          [
+            674.4174327342674,
+            0.0,
+            513.4158321884543
+          ],
+          [
+            0.0,
+            674.7782004194731,
+            365.0968300765191
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "W2C": [
+          [
+            -0.9286742210388184,
+            0.3708697557449341,
+            -0.004453796893358231,
+            99.72074890136719
+          ],
+          [
+            0.3708893358707428,
+            0.9285145998001099,
+            -0.017371028661727905,
+            -122.33798217773438
+          ],
+          [
+            -0.002306973561644554,
+            -0.017783891409635544,
+            -0.999839186668396,
+            34.44392395019531
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "colmap_model": "PINHOLE",
+        "colmap_params": [
+          674.4174327342674,
+          674.7782004194731,
+          513.9158321884543,
+          365.5968300765191
+        ]
+      },
+      "camera_rule": "training camera with most section prior patch centres in frame, then projected bounding area, then name; no rendered output used",
+      "center_xyz": [
+        141.46427146513295,
+        97.87921676218158,
+        -26.398806341042654
+      ],
+      "mesh_views": [
+        {
+          "azimuth": -60,
+          "elevation": 35
+        },
+        {
+          "azimuth": 60,
+          "elevation": 35
+        },
+        {
+          "azimuth": 180,
+          "elevation": 35
+        }
+      ]
+    },
+    "patches": 215,
+    "height_limits_m": [
+      -32.41679004370626,
+      -21.181333984191077
+    ],
+    "saved_centres_in_section": 256,
+    "saved_centres_outside_height": 8,
+    "mesh_patch_z_sha256": "05872f8284070376db1a946824f80f801ff4f8675c699bef487ffaf2e8fbe49f",
+    "baseline_patch_z_path": "/art/phase-payloads/phd/main_losstrain_v1/PHD-MAIN-LOSSTRAIN-v1/patch_z/B173nb_b10__LoD2__nojudge_LoD2_s0.npz",
+    "baseline_sha256": "777ba0690239e3c1c56f3818c49de97c0d8b8704a9ad161b70da624fb8e2bc3a",
+    "reference": "unchanged scorer p_gt; separate from stage0 gt_med",
+    "unavailable": [
+      "iteration30000",
+      "direct_target_mesh"
+    ]
+  },
+  "note": "폭 1.2 m 고정 · 높이 범위는 입력으로 정함 · 첫 면은 사전 패치 법선 채점점 · 30,000회·목표 직접 메시 없음",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

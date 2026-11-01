@@ -1,0 +1,3432 @@
+{
+  "title": "9,000회 정기 초기화 직후의 감시 중단을 7,000회 점검과 구분했다",
+  "values": {
+    "stop": {
+      "at": "2026-11-01T18:06:08.169866+09:00",
+      "reason": {
+        "arm": "B173nb_b10_ALS",
+        "health": {
+          "iteration": 9000,
+          "gaussians": 1740259,
+          "target_opacity_median": 0.009999998845160007,
+          "prior_opacity_median": 0.009999998845160007,
+          "patch_opacity_median": 0.009999998845160007,
+          "max_normal_excess_m": 1.8307491700397804e-06,
+          "loss": 0.16313356161117554,
+          "rgb_loss": 0.12845578789710999,
+          "target_depth_loss": 0.4306356608867645,
+          "camera": "DJI_20241217100331_0020_D",
+          "tags": {
+            "0": 1681997,
+            "1": 51333,
+            "2": 6929
+          },
+          "opacity_population": "immutable prior-seed lineage including released",
+          "scientific_verdict": null,
+          "reason": "prior_seed_lineage_opacity_median_below_0.05"
+        }
+      },
+      "scientific_verdict": null
+    },
+    "runs": [
+      {
+        "prior": "ALS",
+        "curve": [
+          {
+            "iteration": 1,
+            "gaussians": 605777,
+            "target_opacity_median": 0.10000000149011612,
+            "prior_opacity_median": 0.10000000149011612,
+            "patch_opacity_median": 0.10000000149011612,
+            "max_normal_excess_m": 2.996565171997645e-06,
+            "loss": 2.9276788234710693,
+            "rgb_loss": 0.5356068015098572,
+            "target_depth_loss": 47.84143829345703,
+            "camera": "DJI_20241217091147_0116_D",
+            "tags": {
+              "0": 555259,
+              "1": 50518,
+              "2": 0
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 100,
+            "gaussians": 605777,
+            "target_opacity_median": 0.10516554862260818,
+            "prior_opacity_median": 0.10516554862260818,
+            "patch_opacity_median": 0.10557933896780014,
+            "max_normal_excess_m": 3.3887196195792058e-06,
+            "loss": 1.8362302780151367,
+            "rgb_loss": 0.5566809773445129,
+            "target_depth_loss": 25.590986251831055,
+            "camera": "DJI_20241217095147_0080_D",
+            "tags": {
+              "0": 555259,
+              "1": 48042,
+              "2": 2476
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 200,
+            "gaussians": 605777,
+            "target_opacity_median": 0.08915655314922333,
+            "prior_opacity_median": 0.08915655314922333,
+            "patch_opacity_median": 0.09010577946901321,
+            "max_normal_excess_m": 3.5524744816939346e-06,
+            "loss": 0.5349158644676208,
+            "rgb_loss": 0.5348461866378784,
+            "target_depth_loss": 0.0013930702116340399,
+            "camera": "DJI_20241217103005_0028_D",
+            "tags": {
+              "0": 555259,
+              "1": 46603,
+              "2": 3915
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 300,
+            "gaussians": 605777,
+            "target_opacity_median": 0.07191547751426697,
+            "prior_opacity_median": 0.07191547751426697,
+            "patch_opacity_median": 0.0727727860212326,
+            "max_normal_excess_m": 4.5470335408026585e-06,
+            "loss": 1.1161918640136719,
+            "rgb_loss": 0.5002503395080566,
+            "target_depth_loss": 12.318830490112305,
+            "camera": "DJI_20241217091225_0135_D",
+            "tags": {
+              "0": 555259,
+              "1": 45469,
+              "2": 5049
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 400,
+            "gaussians": 605777,
+            "target_opacity_median": 0.06750936806201935,
+            "prior_opacity_median": 0.06750936806201935,
+            "patch_opacity_median": 0.06904467195272446,
+            "max_normal_excess_m": 3.4266995498910546e-06,
+            "loss": 1.432260513305664,
+            "rgb_loss": 0.5062406063079834,
+            "target_depth_loss": 18.520397186279297,
+            "camera": "DJI_20241217094959_0026_D",
+            "tags": {
+              "0": 555259,
+              "1": 44346,
+              "2": 6172
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 500,
+            "gaussians": 605777,
+            "target_opacity_median": 0.06635572016239166,
+            "prior_opacity_median": 0.06635572016239166,
+            "patch_opacity_median": 0.069080650806427,
+            "max_normal_excess_m": 3.1098070394364186e-06,
+            "loss": 0.6854115128517151,
+            "rgb_loss": 0.3341219127178192,
+            "target_depth_loss": 7.025792121887207,
+            "camera": "DJI_20241217084449_0068_D",
+            "tags": {
+              "0": 555259,
+              "1": 43492,
+              "2": 7026
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 600,
+            "gaussians": 448129,
+            "target_opacity_median": 0.09357309341430664,
+            "prior_opacity_median": 0.09357309341430664,
+            "patch_opacity_median": 0.09540291130542755,
+            "max_normal_excess_m": 1.6857526361491182e-06,
+            "loss": 0.7392469644546509,
+            "rgb_loss": 0.4626075029373169,
+            "target_depth_loss": 5.53278923034668,
+            "camera": "DJI_20241217100056_0034_D",
+            "tags": {
+              "0": 415077,
+              "1": 28941,
+              "2": 4111
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 700,
+            "gaussians": 446024,
+            "target_opacity_median": 0.1251646876335144,
+            "prior_opacity_median": 0.1251646876335144,
+            "patch_opacity_median": 0.12853261828422546,
+            "max_normal_excess_m": 1.6561690472371993e-06,
+            "loss": 0.4813062846660614,
+            "rgb_loss": 0.22626113891601562,
+            "target_depth_loss": 5.100902557373047,
+            "camera": "DJI_20241217091117_0101_D",
+            "tags": {
+              "0": 413325,
+              "1": 28350,
+              "2": 4349
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 800,
+            "gaussians": 442187,
+            "target_opacity_median": 0.132480189204216,
+            "prior_opacity_median": 0.132480189204216,
+            "patch_opacity_median": 0.13610544800758362,
+            "max_normal_excess_m": 1.7548416622048535e-06,
+            "loss": 0.4836922883987427,
+            "rgb_loss": 0.2716042697429657,
+            "target_depth_loss": 4.24176025390625,
+            "camera": "DJI_20241217091033_0079_D",
+            "tags": {
+              "0": 409991,
+              "1": 27690,
+              "2": 4506
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 900,
+            "gaussians": 439127,
+            "target_opacity_median": 0.1371365636587143,
+            "prior_opacity_median": 0.1371365636587143,
+            "patch_opacity_median": 0.13961204886436462,
+            "max_normal_excess_m": 1.538492824693094e-06,
+            "loss": 0.44579407572746277,
+            "rgb_loss": 0.25180530548095703,
+            "target_depth_loss": 3.879775285720825,
+            "camera": "DJI_20241217091233_0139_D",
+            "tags": {
+              "0": 407202,
+              "1": 27260,
+              "2": 4665
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1000,
+            "gaussians": 436432,
+            "target_opacity_median": 0.14486141502857208,
+            "prior_opacity_median": 0.14486141502857208,
+            "patch_opacity_median": 0.14725886285305023,
+            "max_normal_excess_m": 1.594732225385087e-06,
+            "loss": 0.21292932331562042,
+            "rgb_loss": 0.1781226098537445,
+            "target_depth_loss": 0.6961342692375183,
+            "camera": "DJI_20241217084501_0074_D",
+            "tags": {
+              "0": 404759,
+              "1": 26798,
+              "2": 4875
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1100,
+            "gaussians": 434143,
+            "target_opacity_median": 0.15469098091125488,
+            "prior_opacity_median": 0.15469098091125488,
+            "patch_opacity_median": 0.15596075356006622,
+            "max_normal_excess_m": 1.617974021428381e-06,
+            "loss": 0.42395299673080444,
+            "rgb_loss": 0.27477794885635376,
+            "target_depth_loss": 2.9835004806518555,
+            "camera": "DJI_20241217101128_0013_D",
+            "tags": {
+              "0": 402579,
+              "1": 26562,
+              "2": 5002
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1200,
+            "gaussians": 435556,
+            "target_opacity_median": 0.1609361171722412,
+            "prior_opacity_median": 0.1609361171722412,
+            "patch_opacity_median": 0.1618184596300125,
+            "max_normal_excess_m": 1.6243689628936409e-06,
+            "loss": 0.22989419102668762,
+            "rgb_loss": 0.1832524538040161,
+            "target_depth_loss": 0.9328346252441406,
+            "camera": "DJI_20241217091117_0101_D",
+            "tags": {
+              "0": 403967,
+              "1": 26471,
+              "2": 5118
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1300,
+            "gaussians": 434867,
+            "target_opacity_median": 0.16552430391311646,
+            "prior_opacity_median": 0.16552430391311646,
+            "patch_opacity_median": 0.16594047844409943,
+            "max_normal_excess_m": 1.7188413039548323e-06,
+            "loss": 0.3416871726512909,
+            "rgb_loss": 0.24517250061035156,
+            "target_depth_loss": 1.930293321609497,
+            "camera": "DJI_20241217101146_0022_D",
+            "tags": {
+              "0": 403298,
+              "1": 26302,
+              "2": 5267
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1400,
+            "gaussians": 436072,
+            "target_opacity_median": 0.1682307869195938,
+            "prior_opacity_median": 0.1682307869195938,
+            "patch_opacity_median": 0.16864928603172302,
+            "max_normal_excess_m": 1.7128077161032706e-06,
+            "loss": 0.19755886495113373,
+            "rgb_loss": 0.18364518880844116,
+            "target_depth_loss": 0.27827340364456177,
+            "camera": "DJI_20241217101138_0018_D",
+            "tags": {
+              "0": 404490,
+              "1": 26235,
+              "2": 5347
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1500,
+            "gaussians": 438497,
+            "target_opacity_median": 0.1728072166442871,
+            "prior_opacity_median": 0.1728072166442871,
+            "patch_opacity_median": 0.17291302978992462,
+            "max_normal_excess_m": 1.7178619486912794e-06,
+            "loss": 0.443697065114975,
+            "rgb_loss": 0.2602730989456177,
+            "target_depth_loss": 3.6684792041778564,
+            "camera": "DJI_20241217095905_0037_D",
+            "tags": {
+              "0": 407008,
+              "1": 26103,
+              "2": 5386
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1600,
+            "gaussians": 442303,
+            "target_opacity_median": 0.17263193428516388,
+            "prior_opacity_median": 0.17263193428516388,
+            "patch_opacity_median": 0.17317324876785278,
+            "max_normal_excess_m": 1.721269654808566e-06,
+            "loss": 0.20012816786766052,
+            "rgb_loss": 0.17868167161941528,
+            "target_depth_loss": 0.4289299547672272,
+            "camera": "DJI_20241217091041_0083_D",
+            "tags": {
+              "0": 410842,
+              "1": 26030,
+              "2": 5431
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1700,
+            "gaussians": 447669,
+            "target_opacity_median": 0.17790351808071136,
+            "prior_opacity_median": 0.17790351808071136,
+            "patch_opacity_median": 0.17839695513248444,
+            "max_normal_excess_m": 1.3788876458420418e-06,
+            "loss": 0.9365065097808838,
+            "rgb_loss": 0.27506354451179504,
+            "target_depth_loss": 13.228858947753906,
+            "camera": "DJI_20241217095123_0068_D",
+            "tags": {
+              "0": 416259,
+              "1": 25924,
+              "2": 5486
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1800,
+            "gaussians": 456047,
+            "target_opacity_median": 0.18273361027240753,
+            "prior_opacity_median": 0.18273361027240753,
+            "patch_opacity_median": 0.18334375321865082,
+            "max_normal_excess_m": 1.5423878494402743e-06,
+            "loss": 0.22272437810897827,
+            "rgb_loss": 0.1860029548406601,
+            "target_depth_loss": 0.7344285845756531,
+            "camera": "DJI_20241217101140_0019_D",
+            "tags": {
+              "0": 424555,
+              "1": 25919,
+              "2": 5573
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1900,
+            "gaussians": 467038,
+            "target_opacity_median": 0.18829891085624695,
+            "prior_opacity_median": 0.18829891085624695,
+            "patch_opacity_median": 0.18970242142677307,
+            "max_normal_excess_m": 1.7607894733373541e-06,
+            "loss": 0.2555369734764099,
+            "rgb_loss": 0.23660555481910706,
+            "target_depth_loss": 0.3786284029483795,
+            "camera": "DJI_20241217100116_0044_D",
+            "tags": {
+              "0": 435453,
+              "1": 25923,
+              "2": 5662
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2000,
+            "gaussians": 480282,
+            "target_opacity_median": 0.1930229812860489,
+            "prior_opacity_median": 0.1930229812860489,
+            "patch_opacity_median": 0.19379445910453796,
+            "max_normal_excess_m": 1.6666116380292806e-06,
+            "loss": 0.21829262375831604,
+            "rgb_loss": 0.1728723645210266,
+            "target_depth_loss": 0.9084053039550781,
+            "camera": "DJI_20241217084531_0089_D",
+            "tags": {
+              "0": 448649,
+              "1": 25898,
+              "2": 5735
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2100,
+            "gaussians": 499727,
+            "target_opacity_median": 0.1981278955936432,
+            "prior_opacity_median": 0.1981278955936432,
+            "patch_opacity_median": 0.19946874678134918,
+            "max_normal_excess_m": 1.523346327303443e-06,
+            "loss": 0.2226555347442627,
+            "rgb_loss": 0.16455118358135223,
+            "target_depth_loss": 1.162087082862854,
+            "camera": "DJI_20241217091237_0141_D",
+            "tags": {
+              "0": 467818,
+              "1": 26118,
+              "2": 5791
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2200,
+            "gaussians": 520444,
+            "target_opacity_median": 0.20330515503883362,
+            "prior_opacity_median": 0.20330515503883362,
+            "patch_opacity_median": 0.2045699805021286,
+            "max_normal_excess_m": 1.7726688383845612e-06,
+            "loss": 0.29091015458106995,
+            "rgb_loss": 0.23948034644126892,
+            "target_depth_loss": 1.0285959243774414,
+            "camera": "DJI_20241217095545_0055_D",
+            "tags": {
+              "0": 488367,
+              "1": 26189,
+              "2": 5888
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2300,
+            "gaussians": 546452,
+            "target_opacity_median": 0.2089417427778244,
+            "prior_opacity_median": 0.2089417427778244,
+            "patch_opacity_median": 0.21051162481307983,
+            "max_normal_excess_m": 1.602213842488709e-06,
+            "loss": 0.19827499985694885,
+            "rgb_loss": 0.168887659907341,
+            "target_depth_loss": 0.5877466797828674,
+            "camera": "DJI_20241217101140_0019_D",
+            "tags": {
+              "0": 514075,
+              "1": 26423,
+              "2": 5954
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2400,
+            "gaussians": 572289,
+            "target_opacity_median": 0.20795877277851105,
+            "prior_opacity_median": 0.20795877277851105,
+            "patch_opacity_median": 0.20955094695091248,
+            "max_normal_excess_m": 1.649590558372438e-06,
+            "loss": 0.16291731595993042,
+            "rgb_loss": 0.14753828942775726,
+            "target_depth_loss": 0.3075804114341736,
+            "camera": "DJI_20241217084503_0075_D",
+            "tags": {
+              "0": 539967,
+              "1": 26306,
+              "2": 6016
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2500,
+            "gaussians": 604756,
+            "target_opacity_median": 0.21731089055538177,
+            "prior_opacity_median": 0.21731089055538177,
+            "patch_opacity_median": 0.21880879998207092,
+            "max_normal_excess_m": 1.756465962898801e-06,
+            "loss": 0.18688148260116577,
+            "rgb_loss": 0.1624544858932495,
+            "target_depth_loss": 0.48854002356529236,
+            "camera": "DJI_20241217091051_0088_D",
+            "tags": {
+              "0": 572253,
+              "1": 26435,
+              "2": 6068
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2600,
+            "gaussians": 639544,
+            "target_opacity_median": 0.2202264368534088,
+            "prior_opacity_median": 0.2202264368534088,
+            "patch_opacity_median": 0.22262707352638245,
+            "max_normal_excess_m": 1.7351812857668847e-06,
+            "loss": 0.5359898209571838,
+            "rgb_loss": 0.1370648443698883,
+            "target_depth_loss": 7.978499412536621,
+            "camera": "DJI_20241217095053_0053_D",
+            "tags": {
+              "0": 606840,
+              "1": 26570,
+              "2": 6134
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2700,
+            "gaussians": 680997,
+            "target_opacity_median": 0.2294211983680725,
+            "prior_opacity_median": 0.2294211983680725,
+            "patch_opacity_median": 0.23088347911834717,
+            "max_normal_excess_m": 1.6662811503920238e-06,
+            "loss": 0.21735890209674835,
+            "rgb_loss": 0.17353299260139465,
+            "target_depth_loss": 0.8765182495117188,
+            "camera": "DJI_20241217095543_0054_D",
+            "tags": {
+              "0": 648100,
+              "1": 26721,
+              "2": 6176
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2800,
+            "gaussians": 724915,
+            "target_opacity_median": 0.23227839171886444,
+            "prior_opacity_median": 0.23227839171886444,
+            "patch_opacity_median": 0.23529791831970215,
+            "max_normal_excess_m": 1.589315502315003e-06,
+            "loss": 0.17243795096874237,
+            "rgb_loss": 0.15380819141864777,
+            "target_depth_loss": 0.3725951910018921,
+            "camera": "DJI_20241217091045_0085_D",
+            "tags": {
+              "0": 691691,
+              "1": 26979,
+              "2": 6245
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2900,
+            "gaussians": 783866,
+            "target_opacity_median": 0.23744496703147888,
+            "prior_opacity_median": 0.23744496703147888,
+            "patch_opacity_median": 0.24050766229629517,
+            "max_normal_excess_m": 1.4494772813122836e-06,
+            "loss": 0.4668043255805969,
+            "rgb_loss": 0.2171109914779663,
+            "target_depth_loss": 4.993866443634033,
+            "camera": "DJI_20241217095103_0058_D",
+            "tags": {
+              "0": 750054,
+              "1": 27438,
+              "2": 6374
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3000,
+            "gaussians": 836767,
+            "target_opacity_median": 0.009999998845160007,
+            "prior_opacity_median": 0.009999998845160007,
+            "patch_opacity_median": 0.009999998845160007,
+            "max_normal_excess_m": 1.7610830695957702e-06,
+            "loss": 0.2030906081199646,
+            "rgb_loss": 0.17224127054214478,
+            "target_depth_loss": 0.6169867515563965,
+            "camera": "DJI_20241217084535_0091_D",
+            "tags": {
+              "0": 802840,
+              "1": 27526,
+              "2": 6401
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3100,
+            "gaussians": 432899,
+            "target_opacity_median": 0.26059889793395996,
+            "prior_opacity_median": 0.26059889793395996,
+            "patch_opacity_median": 0.2671665847301483,
+            "max_normal_excess_m": 1.5122783452170552e-06,
+            "loss": 0.44132745265960693,
+            "rgb_loss": 0.2412596046924591,
+            "target_depth_loss": 4.001357078552246,
+            "camera": "DJI_20241217091147_0116_D",
+            "tags": {
+              "0": 403756,
+              "1": 24053,
+              "2": 5090
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3200,
+            "gaussians": 444148,
+            "target_opacity_median": 0.27540600299835205,
+            "prior_opacity_median": 0.27540600299835205,
+            "patch_opacity_median": 0.28043943643569946,
+            "max_normal_excess_m": 1.632439762033755e-06,
+            "loss": 0.23386283218860626,
+            "rgb_loss": 0.1863887757062912,
+            "target_depth_loss": 0.9494811296463013,
+            "camera": "DJI_20241217102535_0020_D",
+            "tags": {
+              "0": 415021,
+              "1": 24147,
+              "2": 4980
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3300,
+            "gaussians": 468162,
+            "target_opacity_median": 0.2819063365459442,
+            "prior_opacity_median": 0.2819063365459442,
+            "patch_opacity_median": 0.2881578207015991,
+            "max_normal_excess_m": 1.4031028285899083e-06,
+            "loss": 0.1871757209300995,
+            "rgb_loss": 0.16237713396549225,
+            "target_depth_loss": 0.49597182869911194,
+            "camera": "DJI_20241217084529_0088_D",
+            "tags": {
+              "0": 438432,
+              "1": 24621,
+              "2": 5109
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3400,
+            "gaussians": 491570,
+            "target_opacity_median": 0.2832340896129608,
+            "prior_opacity_median": 0.2832340896129608,
+            "patch_opacity_median": 0.2889478802680969,
+            "max_normal_excess_m": 1.8551299945102073e-06,
+            "loss": 0.23955947160720825,
+            "rgb_loss": 0.18051837384700775,
+            "target_depth_loss": 1.1808217763900757,
+            "camera": "DJI_20241217091235_0140_D",
+            "tags": {
+              "0": 461657,
+              "1": 24737,
+              "2": 5176
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3500,
+            "gaussians": 516461,
+            "target_opacity_median": 0.2969053089618683,
+            "prior_opacity_median": 0.2969053089618683,
+            "patch_opacity_median": 0.3011779487133026,
+            "max_normal_excess_m": 1.6229305401793681e-06,
+            "loss": 0.2947823703289032,
+            "rgb_loss": 0.22221383452415466,
+            "target_depth_loss": 1.4513707160949707,
+            "camera": "DJI_20241217095635_0080_D",
+            "tags": {
+              "0": 485934,
+              "1": 25270,
+              "2": 5257
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3600,
+            "gaussians": 541798,
+            "target_opacity_median": 0.2907964289188385,
+            "prior_opacity_median": 0.2907964289188385,
+            "patch_opacity_median": 0.29502007365226746,
+            "max_normal_excess_m": 1.5088221516634803e-06,
+            "loss": 0.1814950704574585,
+            "rgb_loss": 0.15632404386997223,
+            "target_depth_loss": 0.5034205913543701,
+            "camera": "DJI_20241217101124_0011_D",
+            "tags": {
+              "0": 510981,
+              "1": 25425,
+              "2": 5392
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3700,
+            "gaussians": 568450,
+            "target_opacity_median": 0.29768046736717224,
+            "prior_opacity_median": 0.29768046736717224,
+            "patch_opacity_median": 0.30298730731010437,
+            "max_normal_excess_m": 1.8128584997612052e-06,
+            "loss": 0.17086948454380035,
+            "rgb_loss": 0.16232432425022125,
+            "target_depth_loss": 0.17090323567390442,
+            "camera": "DJI_20241217100120_0046_D",
+            "tags": {
+              "0": 537325,
+              "1": 25710,
+              "2": 5415
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3800,
+            "gaussians": 597792,
+            "target_opacity_median": 0.30588164925575256,
+            "prior_opacity_median": 0.30588164925575256,
+            "patch_opacity_median": 0.312129944562912,
+            "max_normal_excess_m": 1.4290329772848054e-06,
+            "loss": 0.14623162150382996,
+            "rgb_loss": 0.13488128781318665,
+            "target_depth_loss": 0.22700676321983337,
+            "camera": "DJI_20241217084503_0075_D",
+            "tags": {
+              "0": 566039,
+              "1": 26238,
+              "2": 5515
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3900,
+            "gaussians": 624382,
+            "target_opacity_median": 0.30451861023902893,
+            "prior_opacity_median": 0.30451861023902893,
+            "patch_opacity_median": 0.3097779154777527,
+            "max_normal_excess_m": 1.3552346445067087e-06,
+            "loss": 0.3277312219142914,
+            "rgb_loss": 0.27675843238830566,
+            "target_depth_loss": 1.019455909729004,
+            "camera": "DJI_20241217095555_0060_D",
+            "tags": {
+              "0": 592325,
+              "1": 26452,
+              "2": 5605
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4000,
+            "gaussians": 652368,
+            "target_opacity_median": 0.30688709020614624,
+            "prior_opacity_median": 0.30688709020614624,
+            "patch_opacity_median": 0.3126283884048462,
+            "max_normal_excess_m": 1.4444731277762912e-06,
+            "loss": 0.3129705488681793,
+            "rgb_loss": 0.26837849617004395,
+            "target_depth_loss": 0.8918412327766418,
+            "camera": "DJI_20241217094014_0032_D",
+            "tags": {
+              "0": 619743,
+              "1": 26922,
+              "2": 5703
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4100,
+            "gaussians": 683549,
+            "target_opacity_median": 0.3193700313568115,
+            "prior_opacity_median": 0.3193700313568115,
+            "patch_opacity_median": 0.324815571308136,
+            "max_normal_excess_m": 1.6242147466982715e-06,
+            "loss": 0.15986570715904236,
+            "rgb_loss": 0.1366211324930191,
+            "target_depth_loss": 0.4648914337158203,
+            "camera": "DJI_20241217101112_0005_D",
+            "tags": {
+              "0": 650248,
+              "1": 27526,
+              "2": 5775
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4200,
+            "gaussians": 716915,
+            "target_opacity_median": 0.3177957832813263,
+            "prior_opacity_median": 0.3177957832813263,
+            "patch_opacity_median": 0.32439738512039185,
+            "max_normal_excess_m": 1.5375851489807246e-06,
+            "loss": 0.24177472293376923,
+            "rgb_loss": 0.21013543009757996,
+            "target_depth_loss": 0.6327857375144958,
+            "camera": "DJI_20241217095553_0059_D",
+            "tags": {
+              "0": 682758,
+              "1": 28256,
+              "2": 5901
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4300,
+            "gaussians": 742761,
+            "target_opacity_median": 0.3114188611507416,
+            "prior_opacity_median": 0.3114188611507416,
+            "patch_opacity_median": 0.3159691095352173,
+            "max_normal_excess_m": 1.5461129265759155e-06,
+            "loss": 0.18967893719673157,
+            "rgb_loss": 0.14857594668865204,
+            "target_depth_loss": 0.822059690952301,
+            "camera": "DJI_20241217091239_0142_D",
+            "tags": {
+              "0": 708332,
+              "1": 28443,
+              "2": 5986
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4400,
+            "gaussians": 773347,
+            "target_opacity_median": 0.31747251749038696,
+            "prior_opacity_median": 0.31747251749038696,
+            "patch_opacity_median": 0.3228292167186737,
+            "max_normal_excess_m": 1.5590196653647581e-06,
+            "loss": 0.18080909550189972,
+            "rgb_loss": 0.16417351365089417,
+            "target_depth_loss": 0.3327116072177887,
+            "camera": "DJI_20241217101144_0021_D",
+            "tags": {
+              "0": 738258,
+              "1": 29046,
+              "2": 6043
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4500,
+            "gaussians": 798464,
+            "target_opacity_median": 0.3150639235973358,
+            "prior_opacity_median": 0.3150639235973358,
+            "patch_opacity_median": 0.3207686245441437,
+            "max_normal_excess_m": 1.7840546888692188e-06,
+            "loss": 0.16208532452583313,
+            "rgb_loss": 0.15107473731040955,
+            "target_depth_loss": 0.2202116847038269,
+            "camera": "DJI_20241217101126_0012_D",
+            "tags": {
+              "0": 763099,
+              "1": 29244,
+              "2": 6121
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4600,
+            "gaussians": 835107,
+            "target_opacity_median": 0.3269529938697815,
+            "prior_opacity_median": 0.3269529938697815,
+            "patch_opacity_median": 0.3332745134830475,
+            "max_normal_excess_m": 1.6570524117298646e-06,
+            "loss": 0.141871377825737,
+            "rgb_loss": 0.128585547208786,
+            "target_depth_loss": 0.26571664214134216,
+            "camera": "DJI_20241217091047_0086_D",
+            "tags": {
+              "0": 798770,
+              "1": 30121,
+              "2": 6216
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4700,
+            "gaussians": 866359,
+            "target_opacity_median": 0.3282312750816345,
+            "prior_opacity_median": 0.3282312750816345,
+            "patch_opacity_median": 0.33487898111343384,
+            "max_normal_excess_m": 1.455525648452749e-06,
+            "loss": 0.2094687670469284,
+            "rgb_loss": 0.16332006454467773,
+            "target_depth_loss": 0.9229741096496582,
+            "camera": "DJI_20241217101325_0015_D",
+            "tags": {
+              "0": 829469,
+              "1": 30531,
+              "2": 6359
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4800,
+            "gaussians": 899577,
+            "target_opacity_median": 0.32765668630599976,
+            "prior_opacity_median": 0.32765668630599976,
+            "patch_opacity_median": 0.3344022035598755,
+            "max_normal_excess_m": 1.4632406646342133e-06,
+            "loss": 0.4867643117904663,
+            "rgb_loss": 0.15643933415412903,
+            "target_depth_loss": 6.606499195098877,
+            "camera": "DJI_20241217091145_0115_D",
+            "tags": {
+              "0": 862186,
+              "1": 30972,
+              "2": 6419
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4900,
+            "gaussians": 929132,
+            "target_opacity_median": 0.33109521865844727,
+            "prior_opacity_median": 0.33109521865844727,
+            "patch_opacity_median": 0.3380934000015259,
+            "max_normal_excess_m": 1.720682803352247e-06,
+            "loss": 0.1294480562210083,
+            "rgb_loss": 0.109100341796875,
+            "target_depth_loss": 0.40695440769195557,
+            "camera": "DJI_20241217091117_0101_D",
+            "tags": {
+              "0": 891148,
+              "1": 31487,
+              "2": 6497
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5000,
+            "gaussians": 960384,
+            "target_opacity_median": 0.3348435163497925,
+            "prior_opacity_median": 0.3348435163497925,
+            "patch_opacity_median": 0.3428126573562622,
+            "max_normal_excess_m": 1.4538695722876582e-06,
+            "loss": 0.14426428079605103,
+            "rgb_loss": 0.12702065706253052,
+            "target_depth_loss": 0.34487247467041016,
+            "camera": "DJI_20241217084527_0087_D",
+            "tags": {
+              "0": 921619,
+              "1": 32208,
+              "2": 6557
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5100,
+            "gaussians": 991660,
+            "target_opacity_median": 0.3406623303890228,
+            "prior_opacity_median": 0.3406623303890228,
+            "patch_opacity_median": 0.34889498353004456,
+            "max_normal_excess_m": 1.4970289612392662e-06,
+            "loss": 0.15666741132736206,
+            "rgb_loss": 0.14055664837360382,
+            "target_depth_loss": 0.32221511006355286,
+            "camera": "DJI_20241217091037_0081_D",
+            "tags": {
+              "0": 952021,
+              "1": 33003,
+              "2": 6636
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5200,
+            "gaussians": 1021603,
+            "target_opacity_median": 0.33483627438545227,
+            "prior_opacity_median": 0.33483627438545227,
+            "patch_opacity_median": 0.3426273465156555,
+            "max_normal_excess_m": 1.8141397504223278e-06,
+            "loss": 0.18830405175685883,
+            "rgb_loss": 0.14531517028808594,
+            "target_depth_loss": 0.8597775101661682,
+            "camera": "DJI_20241217101307_0006_D",
+            "tags": {
+              "0": 981639,
+              "1": 33273,
+              "2": 6691
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5300,
+            "gaussians": 1054297,
+            "target_opacity_median": 0.3387303352355957,
+            "prior_opacity_median": 0.3387303352355957,
+            "patch_opacity_median": 0.34645000100135803,
+            "max_normal_excess_m": 1.6840978673826612e-06,
+            "loss": 0.23943185806274414,
+            "rgb_loss": 0.20307382941246033,
+            "target_depth_loss": 0.7271604537963867,
+            "camera": "DJI_20241217094010_0030_D",
+            "tags": {
+              "0": 1013875,
+              "1": 33657,
+              "2": 6765
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5400,
+            "gaussians": 1085865,
+            "target_opacity_median": 0.33943286538124084,
+            "prior_opacity_median": 0.33943286538124084,
+            "patch_opacity_median": 0.34673699736595154,
+            "max_normal_excess_m": 1.4675131296826294e-06,
+            "loss": 0.1473495215177536,
+            "rgb_loss": 0.12896007299423218,
+            "target_depth_loss": 0.36778903007507324,
+            "camera": "DJI_20241217084527_0087_D",
+            "tags": {
+              "0": 1044837,
+              "1": 34178,
+              "2": 6850
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5500,
+            "gaussians": 1128208,
+            "target_opacity_median": 0.35286945104599,
+            "prior_opacity_median": 0.35286945104599,
+            "patch_opacity_median": 0.3616259694099426,
+            "max_normal_excess_m": 1.735448222461855e-06,
+            "loss": 0.11667627096176147,
+            "rgb_loss": 0.10321323573589325,
+            "target_depth_loss": 0.2692607343196869,
+            "camera": "DJI_20241217084455_0071_D",
+            "tags": {
+              "0": 1085519,
+              "1": 35737,
+              "2": 6952
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5600,
+            "gaussians": 1162228,
+            "target_opacity_median": 0.3449224531650543,
+            "prior_opacity_median": 0.3449224531650543,
+            "patch_opacity_median": 0.35243088006973267,
+            "max_normal_excess_m": 1.850335962672034e-06,
+            "loss": 0.253583699464798,
+            "rgb_loss": 0.12930379807949066,
+            "target_depth_loss": 2.485598087310791,
+            "camera": "DJI_20241217095125_0069_D",
+            "tags": {
+              "0": 1119067,
+              "1": 36086,
+              "2": 7075
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5700,
+            "gaussians": 1193849,
+            "target_opacity_median": 0.34869953989982605,
+            "prior_opacity_median": 0.34869953989982605,
+            "patch_opacity_median": 0.35632458329200745,
+            "max_normal_excess_m": 1.433321131116827e-06,
+            "loss": 0.14454108476638794,
+            "rgb_loss": 0.1275370568037033,
+            "target_depth_loss": 0.3400806188583374,
+            "camera": "DJI_20241217101140_0019_D",
+            "tags": {
+              "0": 1149627,
+              "1": 37063,
+              "2": 7159
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5800,
+            "gaussians": 1227028,
+            "target_opacity_median": 0.346915602684021,
+            "prior_opacity_median": 0.346915602684021,
+            "patch_opacity_median": 0.35470956563949585,
+            "max_normal_excess_m": 1.7474114883953007e-06,
+            "loss": 0.17925269901752472,
+            "rgb_loss": 0.16298805177211761,
+            "target_depth_loss": 0.32529306411743164,
+            "camera": "DJI_20241217094927_0010_D",
+            "tags": {
+              "0": 1182118,
+              "1": 37675,
+              "2": 7235
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5900,
+            "gaussians": 1261161,
+            "target_opacity_median": 0.3462185561656952,
+            "prior_opacity_median": 0.3462185561656952,
+            "patch_opacity_median": 0.3529430031776428,
+            "max_normal_excess_m": 1.3812434644933091e-06,
+            "loss": 0.17390578985214233,
+            "rgb_loss": 0.1415506899356842,
+            "target_depth_loss": 0.6471019983291626,
+            "camera": "DJI_20241217095907_0038_D",
+            "tags": {
+              "0": 1215806,
+              "1": 38057,
+              "2": 7298
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6000,
+            "gaussians": 1295940,
+            "target_opacity_median": 0.009999998845160007,
+            "prior_opacity_median": 0.009999998845160007,
+            "patch_opacity_median": 0.009999998845160007,
+            "max_normal_excess_m": 1.6277313079626765e-06,
+            "loss": 0.1690114289522171,
+            "rgb_loss": 0.1429538130760193,
+            "target_depth_loss": 0.5211523175239563,
+            "camera": "DJI_20241217101122_0010_D",
+            "tags": {
+              "0": 1249537,
+              "1": 38935,
+              "2": 7468
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6100,
+            "gaussians": 732586,
+            "target_opacity_median": 0.34507304430007935,
+            "prior_opacity_median": 0.34507304430007935,
+            "patch_opacity_median": 0.35526397824287415,
+            "max_normal_excess_m": 1.3991576679472928e-06,
+            "loss": 0.2071664035320282,
+            "rgb_loss": 0.17641420662403107,
+            "target_depth_loss": 0.6150438189506531,
+            "camera": "DJI_20241217095541_0053_D",
+            "tags": {
+              "0": 697962,
+              "1": 30672,
+              "2": 3952
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6200,
+            "gaussians": 744405,
+            "target_opacity_median": 0.3891271948814392,
+            "prior_opacity_median": 0.3891271948814392,
+            "patch_opacity_median": 0.4016958177089691,
+            "max_normal_excess_m": 1.974596642639881e-06,
+            "loss": 0.35830509662628174,
+            "rgb_loss": 0.1598655879497528,
+            "target_depth_loss": 3.968790292739868,
+            "camera": "DJI_20241217095141_0077_D",
+            "tags": {
+              "0": 709892,
+              "1": 30570,
+              "2": 3943
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6300,
+            "gaussians": 774940,
+            "target_opacity_median": 0.413889080286026,
+            "prior_opacity_median": 0.413889080286026,
+            "patch_opacity_median": 0.42905399203300476,
+            "max_normal_excess_m": 1.6897451473596448e-06,
+            "loss": 0.21367503702640533,
+            "rgb_loss": 0.17608702182769775,
+            "target_depth_loss": 0.7517603039741516,
+            "camera": "DJI_20241217091035_0080_D",
+            "tags": {
+              "0": 739490,
+              "1": 31405,
+              "2": 4045
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6400,
+            "gaussians": 801040,
+            "target_opacity_median": 0.422908216714859,
+            "prior_opacity_median": 0.422908216714859,
+            "patch_opacity_median": 0.4365708827972412,
+            "max_normal_excess_m": 1.6752901501604356e-06,
+            "loss": 0.3064398169517517,
+            "rgb_loss": 0.19387394189834595,
+            "target_depth_loss": 2.2513177394866943,
+            "camera": "DJI_20241217095629_0077_D",
+            "tags": {
+              "0": 765222,
+              "1": 31690,
+              "2": 4128
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6500,
+            "gaussians": 839808,
+            "target_opacity_median": 0.4342819154262543,
+            "prior_opacity_median": 0.4342819154262543,
+            "patch_opacity_median": 0.44574522972106934,
+            "max_normal_excess_m": 1.8120061895388062e-06,
+            "loss": 0.1988503783941269,
+            "rgb_loss": 0.18502849340438843,
+            "target_depth_loss": 0.2764376997947693,
+            "camera": "DJI_20241217100118_0045_D",
+            "tags": {
+              "0": 802683,
+              "1": 32874,
+              "2": 4251
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6600,
+            "gaussians": 872272,
+            "target_opacity_median": 0.42228493094444275,
+            "prior_opacity_median": 0.42228493094444275,
+            "patch_opacity_median": 0.4317850172519684,
+            "max_normal_excess_m": 1.6811898149171611e-06,
+            "loss": 0.20301921665668488,
+            "rgb_loss": 0.18307159841060638,
+            "target_depth_loss": 0.398952454328537,
+            "camera": "DJI_20241217100114_0043_D",
+            "tags": {
+              "0": 834539,
+              "1": 33358,
+              "2": 4375
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6700,
+            "gaussians": 905912,
+            "target_opacity_median": 0.42248299717903137,
+            "prior_opacity_median": 0.42248299717903137,
+            "patch_opacity_median": 0.43465298414230347,
+            "max_normal_excess_m": 1.5983364392013755e-06,
+            "loss": 0.13528326153755188,
+            "rgb_loss": 0.12365485727787018,
+            "target_depth_loss": 0.23256811499595642,
+            "camera": "DJI_20241217091043_0084_D",
+            "tags": {
+              "0": 867021,
+              "1": 34375,
+              "2": 4516
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6800,
+            "gaussians": 932580,
+            "target_opacity_median": 0.4094591736793518,
+            "prior_opacity_median": 0.4094591736793518,
+            "patch_opacity_median": 0.4201115667819977,
+            "max_normal_excess_m": 1.6791148027550662e-06,
+            "loss": 0.13203738629817963,
+            "rgb_loss": 0.11993274092674255,
+            "target_depth_loss": 0.24209284782409668,
+            "camera": "DJI_20241217091045_0085_D",
+            "tags": {
+              "0": 893510,
+              "1": 34507,
+              "2": 4563
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6900,
+            "gaussians": 977694,
+            "target_opacity_median": 0.42830216884613037,
+            "prior_opacity_median": 0.42830216884613037,
+            "patch_opacity_median": 0.44037166237831116,
+            "max_normal_excess_m": 1.5464634088857565e-06,
+            "loss": 0.15458686649799347,
+            "rgb_loss": 0.13273338973522186,
+            "target_depth_loss": 0.43706944584846497,
+            "camera": "DJI_20241217084535_0091_D",
+            "tags": {
+              "0": 936467,
+              "1": 36435,
+              "2": 4792
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7000,
+            "gaussians": 1015746,
+            "target_opacity_median": 0.41062432527542114,
+            "prior_opacity_median": 0.41062432527542114,
+            "patch_opacity_median": 0.41903209686279297,
+            "max_normal_excess_m": 1.713919573376188e-06,
+            "loss": 0.12559768557548523,
+            "rgb_loss": 0.1108677089214325,
+            "target_depth_loss": 0.29459959268569946,
+            "camera": "DJI_20241217084455_0071_D",
+            "tags": {
+              "0": 973505,
+              "1": 37325,
+              "2": 4916
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7100,
+            "gaussians": 1045042,
+            "target_opacity_median": 0.4123479425907135,
+            "prior_opacity_median": 0.4123479425907135,
+            "patch_opacity_median": 0.4209967255592346,
+            "max_normal_excess_m": 1.844235725911858e-06,
+            "loss": 0.29863113164901733,
+            "rgb_loss": 0.09412629902362823,
+            "target_depth_loss": 3.572889566421509,
+            "camera": "DJI_20241217095053_0053_D",
+            "tags": {
+              "0": 1002175,
+              "1": 37899,
+              "2": 4968
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7200,
+            "gaussians": 1086398,
+            "target_opacity_median": 0.4200592339038849,
+            "prior_opacity_median": 0.4200592339038849,
+            "patch_opacity_median": 0.42776522040367126,
+            "max_normal_excess_m": 1.6941066860454157e-06,
+            "loss": 0.20501352846622467,
+            "rgb_loss": 0.17358368635177612,
+            "target_depth_loss": 0.2745766043663025,
+            "camera": "DJI_20241217100118_0045_D",
+            "tags": {
+              "0": 1042381,
+              "1": 38961,
+              "2": 5056
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7300,
+            "gaussians": 1108701,
+            "target_opacity_median": 0.41674283146858215,
+            "prior_opacity_median": 0.41674283146858215,
+            "patch_opacity_median": 0.4237055778503418,
+            "max_normal_excess_m": 1.6003501741579385e-06,
+            "loss": 0.14284418523311615,
+            "rgb_loss": 0.11624064296483994,
+            "target_depth_loss": 0.33009856939315796,
+            "camera": "DJI_20241217091057_0091_D",
+            "tags": {
+              "0": 1064415,
+              "1": 39158,
+              "2": 5128
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7400,
+            "gaussians": 1144366,
+            "target_opacity_median": 0.4153044819831848,
+            "prior_opacity_median": 0.4153044819831848,
+            "patch_opacity_median": 0.42125070095062256,
+            "max_normal_excess_m": 1.7391801065969048e-06,
+            "loss": 0.14885134994983673,
+            "rgb_loss": 0.12930014729499817,
+            "target_depth_loss": 0.24183624982833862,
+            "camera": "DJI_20241217091041_0083_D",
+            "tags": {
+              "0": 1099248,
+              "1": 39859,
+              "2": 5259
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7500,
+            "gaussians": 1179137,
+            "target_opacity_median": 0.4234127104282379,
+            "prior_opacity_median": 0.4234127104282379,
+            "patch_opacity_median": 0.4298054873943329,
+            "max_normal_excess_m": 1.5423911463585682e-06,
+            "loss": 0.30496323108673096,
+            "rgb_loss": 0.11285406351089478,
+            "target_depth_loss": 3.3995048999786377,
+            "camera": "DJI_20241217095147_0080_D",
+            "tags": {
+              "0": 1133172,
+              "1": 40576,
+              "2": 5389
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7600,
+            "gaussians": 1220938,
+            "target_opacity_median": 0.4225981831550598,
+            "prior_opacity_median": 0.4225981831550598,
+            "patch_opacity_median": 0.4299662113189697,
+            "max_normal_excess_m": 1.7018054450090858e-06,
+            "loss": 0.16192719340324402,
+            "rgb_loss": 0.13911163806915283,
+            "target_depth_loss": 0.3012668788433075,
+            "camera": "DJI_20241217091037_0081_D",
+            "tags": {
+              "0": 1173936,
+              "1": 41486,
+              "2": 5516
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7700,
+            "gaussians": 1250872,
+            "target_opacity_median": 0.4143123924732208,
+            "prior_opacity_median": 0.4143123924732208,
+            "patch_opacity_median": 0.4200361669063568,
+            "max_normal_excess_m": 1.8016720559899113e-06,
+            "loss": 0.13557057082653046,
+            "rgb_loss": 0.10688401758670807,
+            "target_depth_loss": 0.40607771277427673,
+            "camera": "DJI_20241217091115_0100_D",
+            "tags": {
+              "0": 1203278,
+              "1": 41960,
+              "2": 5634
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7800,
+            "gaussians": 1282623,
+            "target_opacity_median": 0.4177878201007843,
+            "prior_opacity_median": 0.4177878201007843,
+            "patch_opacity_median": 0.42415112257003784,
+            "max_normal_excess_m": 1.7064587609638693e-06,
+            "loss": 0.1821759194135666,
+            "rgb_loss": 0.14417704939842224,
+            "target_depth_loss": 0.5211373567581177,
+            "camera": "DJI_20241217091149_0117_D",
+            "tags": {
+              "0": 1234163,
+              "1": 42723,
+              "2": 5737
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7900,
+            "gaussians": 1323327,
+            "target_opacity_median": 0.41296061873435974,
+            "prior_opacity_median": 0.41296061873435974,
+            "patch_opacity_median": 0.41881993412971497,
+            "max_normal_excess_m": 1.8491584796720417e-06,
+            "loss": 0.11153893172740936,
+            "rgb_loss": 0.0934600979089737,
+            "target_depth_loss": 0.2259378731250763,
+            "camera": "DJI_20241217084457_0072_D",
+            "tags": {
+              "0": 1273934,
+              "1": 43562,
+              "2": 5831
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8000,
+            "gaussians": 1355688,
+            "target_opacity_median": 0.4106309115886688,
+            "prior_opacity_median": 0.4106309115886688,
+            "patch_opacity_median": 0.41689032316207886,
+            "max_normal_excess_m": 1.7668872942522285e-06,
+            "loss": 0.16661112010478973,
+            "rgb_loss": 0.12715479731559753,
+            "target_depth_loss": 0.5132302641868591,
+            "camera": "DJI_20241217095635_0080_D",
+            "tags": {
+              "0": 1306012,
+              "1": 43799,
+              "2": 5877
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8100,
+            "gaussians": 1398637,
+            "target_opacity_median": 0.4234652519226074,
+            "prior_opacity_median": 0.4234652519226074,
+            "patch_opacity_median": 0.4304639995098114,
+            "max_normal_excess_m": 1.5140096820687177e-06,
+            "loss": 0.19697856903076172,
+            "rgb_loss": 0.1716243326663971,
+            "target_depth_loss": 0.3546900153160095,
+            "camera": "DJI_20241217100114_0043_D",
+            "tags": {
+              "0": 1347513,
+              "1": 45096,
+              "2": 6028
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8200,
+            "gaussians": 1432173,
+            "target_opacity_median": 0.4134953022003174,
+            "prior_opacity_median": 0.4134953022003174,
+            "patch_opacity_median": 0.4192788302898407,
+            "max_normal_excess_m": 1.8251839719596319e-06,
+            "loss": 0.2165193408727646,
+            "rgb_loss": 0.11863003671169281,
+            "target_depth_loss": 1.7299004793167114,
+            "camera": "DJI_20241217095017_0035_D",
+            "tags": {
+              "0": 1380157,
+              "1": 45900,
+              "2": 6116
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8300,
+            "gaussians": 1475259,
+            "target_opacity_median": 0.4185200333595276,
+            "prior_opacity_median": 0.4185200333595276,
+            "patch_opacity_median": 0.42529264092445374,
+            "max_normal_excess_m": 1.7080228644772433e-06,
+            "loss": 0.1404610276222229,
+            "rgb_loss": 0.1139611303806305,
+            "target_depth_loss": 0.3590485751628876,
+            "camera": "DJI_20241217084533_0090_D",
+            "tags": {
+              "0": 1422055,
+              "1": 46967,
+              "2": 6237
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8400,
+            "gaussians": 1515619,
+            "target_opacity_median": 0.40813586115837097,
+            "prior_opacity_median": 0.40813586115837097,
+            "patch_opacity_median": 0.41319137811660767,
+            "max_normal_excess_m": 1.8070660416924511e-06,
+            "loss": 0.14608711004257202,
+            "rgb_loss": 0.11800451576709747,
+            "target_depth_loss": 0.375336617231369,
+            "camera": "DJI_20241217084245_0006_D",
+            "tags": {
+              "0": 1461616,
+              "1": 47653,
+              "2": 6350
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8500,
+            "gaussians": 1551711,
+            "target_opacity_median": 0.40794843435287476,
+            "prior_opacity_median": 0.40794843435287476,
+            "patch_opacity_median": 0.4138104319572449,
+            "max_normal_excess_m": 1.5462688907064148e-06,
+            "loss": 0.15945762395858765,
+            "rgb_loss": 0.1266464740037918,
+            "target_depth_loss": 0.4516921937465668,
+            "camera": "DJI_20241217091149_0117_D",
+            "tags": {
+              "0": 1497534,
+              "1": 47790,
+              "2": 6387
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8600,
+            "gaussians": 1588352,
+            "target_opacity_median": 0.4099690616130829,
+            "prior_opacity_median": 0.4099690616130829,
+            "patch_opacity_median": 0.4157147705554962,
+            "max_normal_excess_m": 1.7486496517449268e-06,
+            "loss": 0.5904659032821655,
+            "rgb_loss": 0.14166253805160522,
+            "target_depth_loss": 8.56804370880127,
+            "camera": "DJI_20241217091145_0115_D",
+            "tags": {
+              "0": 1533171,
+              "1": 48703,
+              "2": 6478
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8700,
+            "gaussians": 1633644,
+            "target_opacity_median": 0.4115482568740845,
+            "prior_opacity_median": 0.4115482568740845,
+            "patch_opacity_median": 0.41638442873954773,
+            "max_normal_excess_m": 1.6739724060244043e-06,
+            "loss": 0.11249138414859772,
+            "rgb_loss": 0.09766963869333267,
+            "target_depth_loss": 0.176056906580925,
+            "camera": "DJI_20241217084503_0075_D",
+            "tags": {
+              "0": 1577335,
+              "1": 49676,
+              "2": 6633
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8800,
+            "gaussians": 1667730,
+            "target_opacity_median": 0.4044162929058075,
+            "prior_opacity_median": 0.4044162929058075,
+            "patch_opacity_median": 0.4094708263874054,
+            "max_normal_excess_m": 1.7121567452704767e-06,
+            "loss": 0.10501853376626968,
+            "rgb_loss": 0.09042719006538391,
+            "target_depth_loss": 0.17613562941551208,
+            "camera": "DJI_20241217084501_0074_D",
+            "tags": {
+              "0": 1610166,
+              "1": 50778,
+              "2": 6786
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8900,
+            "gaussians": 1707050,
+            "target_opacity_median": 0.40288588404655457,
+            "prior_opacity_median": 0.40288588404655457,
+            "patch_opacity_median": 0.4070385694503784,
+            "max_normal_excess_m": 1.7285198055105866e-06,
+            "loss": 0.11384601145982742,
+            "rgb_loss": 0.09033706039190292,
+            "target_depth_loss": 0.33845022320747375,
+            "camera": "DJI_20241217091113_0099_D",
+            "tags": {
+              "0": 1649198,
+              "1": 51000,
+              "2": 6852
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 9000,
+            "gaussians": 1740259,
+            "target_opacity_median": 0.009999998845160007,
+            "prior_opacity_median": 0.009999998845160007,
+            "patch_opacity_median": 0.009999998845160007,
+            "max_normal_excess_m": 1.8307491700397804e-06,
+            "loss": 0.16313356161117554,
+            "rgb_loss": 0.12845578789710999,
+            "target_depth_loss": 0.4306356608867645,
+            "camera": "DJI_20241217100331_0020_D",
+            "tags": {
+              "0": 1681997,
+              "1": 51333,
+              "2": 6929
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          }
+        ],
+        "receipt": {
+          "at": "2026-11-01T18:06:23.474323+09:00",
+          "exit_code": 1,
+          "seconds": 939.4213299751282,
+          "status": "STOPPED",
+          "automatic_retry": false,
+          "scientific_verdict": null
+        },
+        "health_7000": {
+          "iteration": 7000,
+          "gaussians": 1015746,
+          "target_opacity_median": 0.41062432527542114,
+          "prior_opacity_median": 0.41062432527542114,
+          "patch_opacity_median": 0.41903209686279297,
+          "max_normal_excess_m": 1.713919573376188e-06,
+          "loss": 0.12559768557548523,
+          "rgb_loss": 0.1108677089214325,
+          "target_depth_loss": 0.29459959268569946,
+          "camera": "DJI_20241217084455_0071_D",
+          "tags": {
+            "0": 973505,
+            "1": 37325,
+            "2": 4916
+          },
+          "opacity_population": "immutable prior-seed lineage including released",
+          "scientific_verdict": null,
+          "count_at_6000": 1295940,
+          "status": "PASS_HEALTH"
+        },
+        "checkpoint_7000_sha256": "8aecaf462d09dd7272811c6471a1c55ed1cc7f2db854a15a790ef369e8fd0938"
+      },
+      {
+        "prior": "LoD2",
+        "curve": [
+          {
+            "iteration": 1,
+            "gaussians": 666338,
+            "target_opacity_median": 0.10000000149011612,
+            "prior_opacity_median": 0.10000000149011612,
+            "patch_opacity_median": 0.10000000149011612,
+            "max_normal_excess_m": 7.87827138992725e-06,
+            "loss": 2.1230859756469727,
+            "rgb_loss": 0.5155321359634399,
+            "target_depth_loss": 32.15107345581055,
+            "camera": "DJI_20241217091147_0116_D",
+            "tags": {
+              "0": 408243,
+              "1": 258095,
+              "2": 0
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 100,
+            "gaussians": 666338,
+            "target_opacity_median": 0.13056810200214386,
+            "prior_opacity_median": 0.13056810200214386,
+            "patch_opacity_median": 0.13005860149860382,
+            "max_normal_excess_m": 8.19594856693584e-06,
+            "loss": 1.842345952987671,
+            "rgb_loss": 0.553058922290802,
+            "target_depth_loss": 25.78573989868164,
+            "camera": "DJI_20241217095147_0080_D",
+            "tags": {
+              "0": 408243,
+              "1": 249006,
+              "2": 9089
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 200,
+            "gaussians": 666338,
+            "target_opacity_median": 0.12136294692754745,
+            "prior_opacity_median": 0.12136294692754745,
+            "patch_opacity_median": 0.12094433605670929,
+            "max_normal_excess_m": 8.19408933239174e-06,
+            "loss": 0.5324133634567261,
+            "rgb_loss": 0.5323776006698608,
+            "target_depth_loss": 0.0007149517186917365,
+            "camera": "DJI_20241217103005_0028_D",
+            "tags": {
+              "0": 408243,
+              "1": 243288,
+              "2": 14807
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 300,
+            "gaussians": 666338,
+            "target_opacity_median": 0.11183062940835953,
+            "prior_opacity_median": 0.11183062940835953,
+            "patch_opacity_median": 0.11147260665893555,
+            "max_normal_excess_m": 8.29816417535767e-06,
+            "loss": 0.8439394235610962,
+            "rgb_loss": 0.47761207818984985,
+            "target_depth_loss": 7.326547145843506,
+            "camera": "DJI_20241217091225_0135_D",
+            "tags": {
+              "0": 408243,
+              "1": 238994,
+              "2": 19101
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 400,
+            "gaussians": 666338,
+            "target_opacity_median": 0.10039053112268448,
+            "prior_opacity_median": 0.10039053112268448,
+            "patch_opacity_median": 0.10059288144111633,
+            "max_normal_excess_m": 8.194404472305905e-06,
+            "loss": 1.5893242359161377,
+            "rgb_loss": 0.5000626444816589,
+            "target_depth_loss": 21.785232543945312,
+            "camera": "DJI_20241217094959_0026_D",
+            "tags": {
+              "0": 408243,
+              "1": 235115,
+              "2": 22980
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 500,
+            "gaussians": 666338,
+            "target_opacity_median": 0.09602083265781403,
+            "prior_opacity_median": 0.09602083265781403,
+            "patch_opacity_median": 0.09682399034500122,
+            "max_normal_excess_m": 8.193377652787603e-06,
+            "loss": 0.5448427200317383,
+            "rgb_loss": 0.3284546136856079,
+            "target_depth_loss": 4.327762603759766,
+            "camera": "DJI_20241217084449_0068_D",
+            "tags": {
+              "0": 408243,
+              "1": 231965,
+              "2": 26130
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 600,
+            "gaussians": 493867,
+            "target_opacity_median": 0.12986275553703308,
+            "prior_opacity_median": 0.12986275553703308,
+            "patch_opacity_median": 0.12861163914203644,
+            "max_normal_excess_m": 8.223012628150173e-06,
+            "loss": 0.9413938522338867,
+            "rgb_loss": 0.3672461211681366,
+            "target_depth_loss": 11.482954025268555,
+            "camera": "DJI_20241217100056_0034_D",
+            "tags": {
+              "0": 308619,
+              "1": 164603,
+              "2": 20645
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 700,
+            "gaussians": 488357,
+            "target_opacity_median": 0.15389147400856018,
+            "prior_opacity_median": 0.15389147400856018,
+            "patch_opacity_median": 0.1519020050764084,
+            "max_normal_excess_m": 8.19308843347244e-06,
+            "loss": 0.4133567214012146,
+            "rgb_loss": 0.21339261531829834,
+            "target_depth_loss": 3.999281883239746,
+            "camera": "DJI_20241217091117_0101_D",
+            "tags": {
+              "0": 306753,
+              "1": 158751,
+              "2": 22853
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 800,
+            "gaussians": 484011,
+            "target_opacity_median": 0.1632176637649536,
+            "prior_opacity_median": 0.1632176637649536,
+            "patch_opacity_median": 0.16061463952064514,
+            "max_normal_excess_m": 8.18373655420146e-06,
+            "loss": 0.4105823040008545,
+            "rgb_loss": 0.23924636840820312,
+            "target_depth_loss": 3.4267184734344482,
+            "camera": "DJI_20241217091033_0079_D",
+            "tags": {
+              "0": 304864,
+              "1": 154562,
+              "2": 24585
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 900,
+            "gaussians": 479653,
+            "target_opacity_median": 0.1680489033460617,
+            "prior_opacity_median": 0.1680489033460617,
+            "patch_opacity_median": 0.16483953595161438,
+            "max_normal_excess_m": 8.184901844288106e-06,
+            "loss": 1.103271722793579,
+            "rgb_loss": 0.25641119480133057,
+            "target_depth_loss": 16.937211990356445,
+            "camera": "DJI_20241217091233_0139_D",
+            "tags": {
+              "0": 302598,
+              "1": 150684,
+              "2": 26371
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1000,
+            "gaussians": 475465,
+            "target_opacity_median": 0.17438893020153046,
+            "prior_opacity_median": 0.17438893020153046,
+            "patch_opacity_median": 0.17031808197498322,
+            "max_normal_excess_m": 8.193092071451247e-06,
+            "loss": 0.18998397886753082,
+            "rgb_loss": 0.1704970747232437,
+            "target_depth_loss": 0.3897381126880646,
+            "camera": "DJI_20241217084501_0074_D",
+            "tags": {
+              "0": 300853,
+              "1": 146439,
+              "2": 28173
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1100,
+            "gaussians": 473765,
+            "target_opacity_median": 0.18331089615821838,
+            "prior_opacity_median": 0.18331089615821838,
+            "patch_opacity_median": 0.1783527135848999,
+            "max_normal_excess_m": 8.22259607957676e-06,
+            "loss": 0.4613742232322693,
+            "rgb_loss": 0.2567424476146698,
+            "target_depth_loss": 4.092635154724121,
+            "camera": "DJI_20241217101128_0013_D",
+            "tags": {
+              "0": 299718,
+              "1": 143795,
+              "2": 30252
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1200,
+            "gaussians": 475699,
+            "target_opacity_median": 0.18835465610027313,
+            "prior_opacity_median": 0.18835465610027313,
+            "patch_opacity_median": 0.18217991292476654,
+            "max_normal_excess_m": 8.298689863295294e-06,
+            "loss": 0.22295339405536652,
+            "rgb_loss": 0.18057525157928467,
+            "target_depth_loss": 0.8475629091262817,
+            "camera": "DJI_20241217091117_0101_D",
+            "tags": {
+              "0": 300923,
+              "1": 141819,
+              "2": 32957
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1300,
+            "gaussians": 476079,
+            "target_opacity_median": 0.19858817756175995,
+            "prior_opacity_median": 0.19858817756175995,
+            "patch_opacity_median": 0.18984398245811462,
+            "max_normal_excess_m": 8.193502708309097e-06,
+            "loss": 0.3558666408061981,
+            "rgb_loss": 0.24447551369667053,
+            "target_depth_loss": 2.2278225421905518,
+            "camera": "DJI_20241217101146_0022_D",
+            "tags": {
+              "0": 300692,
+              "1": 139506,
+              "2": 35881
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1400,
+            "gaussians": 479081,
+            "target_opacity_median": 0.20277082920074463,
+            "prior_opacity_median": 0.20277082920074463,
+            "patch_opacity_median": 0.19150029122829437,
+            "max_normal_excess_m": 8.261025868705474e-06,
+            "loss": 0.19050540030002594,
+            "rgb_loss": 0.1760016530752182,
+            "target_depth_loss": 0.2900749146938324,
+            "camera": "DJI_20241217101138_0018_D",
+            "tags": {
+              "0": 301986,
+              "1": 137994,
+              "2": 39101
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1500,
+            "gaussians": 482824,
+            "target_opacity_median": 0.2075049877166748,
+            "prior_opacity_median": 0.2075049877166748,
+            "patch_opacity_median": 0.19247452914714813,
+            "max_normal_excess_m": 8.19140586827416e-06,
+            "loss": 0.418418824672699,
+            "rgb_loss": 0.24900060892105103,
+            "target_depth_loss": 3.38836407661438,
+            "camera": "DJI_20241217095905_0037_D",
+            "tags": {
+              "0": 303771,
+              "1": 136094,
+              "2": 42959
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1600,
+            "gaussians": 487653,
+            "target_opacity_median": 0.21042534708976746,
+            "prior_opacity_median": 0.21042534708976746,
+            "patch_opacity_median": 0.19172246754169464,
+            "max_normal_excess_m": 8.187347702914849e-06,
+            "loss": 0.19532884657382965,
+            "rgb_loss": 0.1745481789112091,
+            "target_depth_loss": 0.41561323404312134,
+            "camera": "DJI_20241217091041_0083_D",
+            "tags": {
+              "0": 306091,
+              "1": 134644,
+              "2": 46918
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1700,
+            "gaussians": 494859,
+            "target_opacity_median": 0.22111162543296814,
+            "prior_opacity_median": 0.22111162543296814,
+            "patch_opacity_median": 0.1971333771944046,
+            "max_normal_excess_m": 8.190202606783714e-06,
+            "loss": 0.8755064010620117,
+            "rgb_loss": 0.28089919686317444,
+            "target_depth_loss": 11.892143249511719,
+            "camera": "DJI_20241217095123_0068_D",
+            "tags": {
+              "0": 309957,
+              "1": 133470,
+              "2": 51432
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1800,
+            "gaussians": 505620,
+            "target_opacity_median": 0.23379889130592346,
+            "prior_opacity_median": 0.23379889130592346,
+            "patch_opacity_median": 0.20338577032089233,
+            "max_normal_excess_m": 8.193508165277308e-06,
+            "loss": 0.21901443600654602,
+            "rgb_loss": 0.18304157257080078,
+            "target_depth_loss": 0.7194572687149048,
+            "camera": "DJI_20241217101140_0019_D",
+            "tags": {
+              "0": 316455,
+              "1": 132447,
+              "2": 56718
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 1900,
+            "gaussians": 517552,
+            "target_opacity_median": 0.24383540451526642,
+            "prior_opacity_median": 0.24383540451526642,
+            "patch_opacity_median": 0.20667850971221924,
+            "max_normal_excess_m": 8.173831702151801e-06,
+            "loss": 0.2516072392463684,
+            "rgb_loss": 0.2248067557811737,
+            "target_depth_loss": 0.5360095500946045,
+            "camera": "DJI_20241217100116_0044_D",
+            "tags": {
+              "0": 323551,
+              "1": 132028,
+              "2": 61973
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2000,
+            "gaussians": 532170,
+            "target_opacity_median": 0.25430673360824585,
+            "prior_opacity_median": 0.25430673360824585,
+            "patch_opacity_median": 0.20977967977523804,
+            "max_normal_excess_m": 8.184663784049917e-06,
+            "loss": 0.2072792947292328,
+            "rgb_loss": 0.16600660979747772,
+            "target_depth_loss": 0.8254536986351013,
+            "camera": "DJI_20241217084531_0089_D",
+            "tags": {
+              "0": 333290,
+              "1": 131195,
+              "2": 67685
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2100,
+            "gaussians": 552379,
+            "target_opacity_median": 0.26708343625068665,
+            "prior_opacity_median": 0.26708343625068665,
+            "patch_opacity_median": 0.2131631076335907,
+            "max_normal_excess_m": 8.1897721884161e-06,
+            "loss": 0.21339541673660278,
+            "rgb_loss": 0.161449134349823,
+            "target_depth_loss": 1.0389255285263062,
+            "camera": "DJI_20241217091237_0141_D",
+            "tags": {
+              "0": 346721,
+              "1": 131497,
+              "2": 74161
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2200,
+            "gaussians": 574208,
+            "target_opacity_median": 0.28192365169525146,
+            "prior_opacity_median": 0.28192365169525146,
+            "patch_opacity_median": 0.2172275334596634,
+            "max_normal_excess_m": 8.195506325137103e-06,
+            "loss": 0.3063488006591797,
+            "rgb_loss": 0.2416631281375885,
+            "target_depth_loss": 1.2937134504318237,
+            "camera": "DJI_20241217095545_0055_D",
+            "tags": {
+              "0": 361855,
+              "1": 131188,
+              "2": 81165
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2300,
+            "gaussians": 599907,
+            "target_opacity_median": 0.2960803806781769,
+            "prior_opacity_median": 0.2960803806781769,
+            "patch_opacity_median": 0.21871091425418854,
+            "max_normal_excess_m": 8.192425411834847e-06,
+            "loss": 0.1888185441493988,
+            "rgb_loss": 0.16231578588485718,
+            "target_depth_loss": 0.5300552248954773,
+            "camera": "DJI_20241217101140_0019_D",
+            "tags": {
+              "0": 379748,
+              "1": 131310,
+              "2": 88849
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2400,
+            "gaussians": 627299,
+            "target_opacity_median": 0.31226447224617004,
+            "prior_opacity_median": 0.31226447224617004,
+            "patch_opacity_median": 0.22111845016479492,
+            "max_normal_excess_m": 8.222152246162295e-06,
+            "loss": 0.15434607863426208,
+            "rgb_loss": 0.14049923419952393,
+            "target_depth_loss": 0.276936799287796,
+            "camera": "DJI_20241217084503_0075_D",
+            "tags": {
+              "0": 400303,
+              "1": 130594,
+              "2": 96402
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2500,
+            "gaussians": 659816,
+            "target_opacity_median": 0.33688101172447205,
+            "prior_opacity_median": 0.33688101172447205,
+            "patch_opacity_median": 0.22637230157852173,
+            "max_normal_excess_m": 8.192622772185132e-06,
+            "loss": 0.17838571965694427,
+            "rgb_loss": 0.15607206523418427,
+            "target_depth_loss": 0.4462730586528778,
+            "camera": "DJI_20241217091051_0088_D",
+            "tags": {
+              "0": 423583,
+              "1": 130614,
+              "2": 105619
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2600,
+            "gaussians": 696996,
+            "target_opacity_median": 0.3597615659236908,
+            "prior_opacity_median": 0.3597615659236908,
+            "patch_opacity_median": 0.22735346853733063,
+            "max_normal_excess_m": 8.311079000122845e-06,
+            "loss": 0.5836543440818787,
+            "rgb_loss": 0.13388630747795105,
+            "target_depth_loss": 8.995360374450684,
+            "camera": "DJI_20241217095053_0053_D",
+            "tags": {
+              "0": 450569,
+              "1": 130857,
+              "2": 115570
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2700,
+            "gaussians": 740895,
+            "target_opacity_median": 0.39438939094543457,
+            "prior_opacity_median": 0.39438939094543457,
+            "patch_opacity_median": 0.23152244091033936,
+            "max_normal_excess_m": 8.221448297263123e-06,
+            "loss": 0.2297837734222412,
+            "rgb_loss": 0.1734534353017807,
+            "target_depth_loss": 1.1266067028045654,
+            "camera": "DJI_20241217095543_0054_D",
+            "tags": {
+              "0": 482935,
+              "1": 131059,
+              "2": 126901
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2800,
+            "gaussians": 786304,
+            "target_opacity_median": 0.43177297711372375,
+            "prior_opacity_median": 0.43177297711372375,
+            "patch_opacity_median": 0.23654450476169586,
+            "max_normal_excess_m": 8.195140253353106e-06,
+            "loss": 0.16814877092838287,
+            "rgb_loss": 0.14901311695575714,
+            "target_depth_loss": 0.38271310925483704,
+            "camera": "DJI_20241217091045_0085_D",
+            "tags": {
+              "0": 515801,
+              "1": 131342,
+              "2": 139161
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 2900,
+            "gaussians": 847350,
+            "target_opacity_median": 0.4891063868999481,
+            "prior_opacity_median": 0.4891063868999481,
+            "patch_opacity_median": 0.24097813665866852,
+            "max_normal_excess_m": 8.188040737988622e-06,
+            "loss": 0.3259351849555969,
+            "rgb_loss": 0.2263283133506775,
+            "target_depth_loss": 1.9921373128890991,
+            "camera": "DJI_20241217095103_0058_D",
+            "tags": {
+              "0": 559011,
+              "1": 132410,
+              "2": 155929
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3000,
+            "gaussians": 900218,
+            "target_opacity_median": 0.009999998845160007,
+            "prior_opacity_median": 0.009999998845160007,
+            "patch_opacity_median": 0.009999998845160007,
+            "max_normal_excess_m": 8.194878484690804e-06,
+            "loss": 0.19829121232032776,
+            "rgb_loss": 0.1684909611940384,
+            "target_depth_loss": 0.5960050821304321,
+            "camera": "DJI_20241217084535_0091_D",
+            "tags": {
+              "0": 599477,
+              "1": 132095,
+              "2": 168646
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3100,
+            "gaussians": 516650,
+            "target_opacity_median": 0.24406753480434418,
+            "prior_opacity_median": 0.24406753480434418,
+            "patch_opacity_median": 0.25730204582214355,
+            "max_normal_excess_m": 8.196186627174029e-06,
+            "loss": 0.35991981625556946,
+            "rgb_loss": 0.2497527301311493,
+            "target_depth_loss": 2.2033417224884033,
+            "camera": "DJI_20241217091147_0116_D",
+            "tags": {
+              "0": 319544,
+              "1": 102608,
+              "2": 94498
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3200,
+            "gaussians": 524502,
+            "target_opacity_median": 0.27190259099006653,
+            "prior_opacity_median": 0.27190259099006653,
+            "patch_opacity_median": 0.27270787954330444,
+            "max_normal_excess_m": 8.167552550730761e-06,
+            "loss": 0.2775551974773407,
+            "rgb_loss": 0.19710734486579895,
+            "target_depth_loss": 1.608957052230835,
+            "camera": "DJI_20241217102535_0020_D",
+            "tags": {
+              "0": 327121,
+              "1": 101359,
+              "2": 96022
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3300,
+            "gaussians": 548064,
+            "target_opacity_median": 0.2855825424194336,
+            "prior_opacity_median": 0.2855825424194336,
+            "patch_opacity_median": 0.28020524978637695,
+            "max_normal_excess_m": 8.191607776097953e-06,
+            "loss": 0.18267585337162018,
+            "rgb_loss": 0.15790042281150818,
+            "target_depth_loss": 0.4955085515975952,
+            "camera": "DJI_20241217084529_0088_D",
+            "tags": {
+              "0": 344524,
+              "1": 102412,
+              "2": 101128
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3400,
+            "gaussians": 569383,
+            "target_opacity_median": 0.2883511781692505,
+            "prior_opacity_median": 0.2883511781692505,
+            "patch_opacity_median": 0.27944403886795044,
+            "max_normal_excess_m": 8.190142580133397e-06,
+            "loss": 0.5088982582092285,
+            "rgb_loss": 0.18102574348449707,
+            "target_depth_loss": 6.557450771331787,
+            "camera": "DJI_20241217091235_0140_D",
+            "tags": {
+              "0": 360920,
+              "1": 102581,
+              "2": 105882
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3500,
+            "gaussians": 594399,
+            "target_opacity_median": 0.296840101480484,
+            "prior_opacity_median": 0.296840101480484,
+            "patch_opacity_median": 0.286392480134964,
+            "max_normal_excess_m": 8.223308213928249e-06,
+            "loss": 0.2714981138706207,
+            "rgb_loss": 0.20633557438850403,
+            "target_depth_loss": 1.3032509088516235,
+            "camera": "DJI_20241217095635_0080_D",
+            "tags": {
+              "0": 379964,
+              "1": 103592,
+              "2": 110843
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3600,
+            "gaussians": 617838,
+            "target_opacity_median": 0.2991950213909149,
+            "prior_opacity_median": 0.2991950213909149,
+            "patch_opacity_median": 0.28777891397476196,
+            "max_normal_excess_m": 8.19285742181819e-06,
+            "loss": 0.1761009246110916,
+            "rgb_loss": 0.15197326242923737,
+            "target_depth_loss": 0.4825531542301178,
+            "camera": "DJI_20241217101124_0011_D",
+            "tags": {
+              "0": 398623,
+              "1": 103886,
+              "2": 115329
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3700,
+            "gaussians": 643408,
+            "target_opacity_median": 0.3050173223018646,
+            "prior_opacity_median": 0.3050173223018646,
+            "patch_opacity_median": 0.2919277548789978,
+            "max_normal_excess_m": 8.178559255611617e-06,
+            "loss": 0.17926447093486786,
+            "rgb_loss": 0.1634061634540558,
+            "target_depth_loss": 0.317166268825531,
+            "camera": "DJI_20241217100120_0046_D",
+            "tags": {
+              "0": 417935,
+              "1": 104603,
+              "2": 120870
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3800,
+            "gaussians": 672367,
+            "target_opacity_median": 0.30831071734428406,
+            "prior_opacity_median": 0.30831071734428406,
+            "patch_opacity_median": 0.29423120617866516,
+            "max_normal_excess_m": 8.181305929610971e-06,
+            "loss": 0.13834422826766968,
+            "rgb_loss": 0.12761402130126953,
+            "target_depth_loss": 0.21460403501987457,
+            "camera": "DJI_20241217084503_0075_D",
+            "tags": {
+              "0": 440065,
+              "1": 105737,
+              "2": 126565
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 3900,
+            "gaussians": 698307,
+            "target_opacity_median": 0.31092604994773865,
+            "prior_opacity_median": 0.31092604994773865,
+            "patch_opacity_median": 0.2960037589073181,
+            "max_normal_excess_m": 8.17641102912603e-06,
+            "loss": 0.31236398220062256,
+            "rgb_loss": 0.22365888953208923,
+            "target_depth_loss": 1.7741016149520874,
+            "camera": "DJI_20241217095555_0060_D",
+            "tags": {
+              "0": 459755,
+              "1": 106139,
+              "2": 132413
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4000,
+            "gaussians": 725606,
+            "target_opacity_median": 0.3167458772659302,
+            "prior_opacity_median": 0.3167458772659302,
+            "patch_opacity_median": 0.3009682595729828,
+            "max_normal_excess_m": 8.171346507879207e-06,
+            "loss": 0.33584046363830566,
+            "rgb_loss": 0.27253472805023193,
+            "target_depth_loss": 1.2661148309707642,
+            "camera": "DJI_20241217094014_0032_D",
+            "tags": {
+              "0": 480272,
+              "1": 107426,
+              "2": 137908
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4100,
+            "gaussians": 755787,
+            "target_opacity_median": 0.3202933967113495,
+            "prior_opacity_median": 0.3202933967113495,
+            "patch_opacity_median": 0.30421802401542664,
+            "max_normal_excess_m": 8.178474672604352e-06,
+            "loss": 0.15548773109912872,
+            "rgb_loss": 0.13271193206310272,
+            "target_depth_loss": 0.4555160105228424,
+            "camera": "DJI_20241217101112_0005_D",
+            "tags": {
+              "0": 504185,
+              "1": 108551,
+              "2": 143051
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4200,
+            "gaussians": 788086,
+            "target_opacity_median": 0.3243938386440277,
+            "prior_opacity_median": 0.3243938386440277,
+            "patch_opacity_median": 0.30754926800727844,
+            "max_normal_excess_m": 8.193561370717362e-06,
+            "loss": 0.23489411175251007,
+            "rgb_loss": 0.20234468579292297,
+            "target_depth_loss": 0.6509884595870972,
+            "camera": "DJI_20241217095553_0059_D",
+            "tags": {
+              "0": 528371,
+              "1": 110164,
+              "2": 149551
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4300,
+            "gaussians": 812539,
+            "target_opacity_median": 0.32525792717933655,
+            "prior_opacity_median": 0.32525792717933655,
+            "patch_opacity_median": 0.30586469173431396,
+            "max_normal_excess_m": 8.149204404617194e-06,
+            "loss": 0.18333294987678528,
+            "rgb_loss": 0.14494405686855316,
+            "target_depth_loss": 0.7677777409553528,
+            "camera": "DJI_20241217091239_0142_D",
+            "tags": {
+              "0": 546554,
+              "1": 110724,
+              "2": 155261
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4400,
+            "gaussians": 842328,
+            "target_opacity_median": 0.3263515830039978,
+            "prior_opacity_median": 0.3263515830039978,
+            "patch_opacity_median": 0.30845123529434204,
+            "max_normal_excess_m": 8.222156793635804e-06,
+            "loss": 0.17659051716327667,
+            "rgb_loss": 0.15919680893421173,
+            "target_depth_loss": 0.34787413477897644,
+            "camera": "DJI_20241217101144_0021_D",
+            "tags": {
+              "0": 569721,
+              "1": 112182,
+              "2": 160425
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4500,
+            "gaussians": 866198,
+            "target_opacity_median": 0.3277938961982727,
+            "prior_opacity_median": 0.3277938961982727,
+            "patch_opacity_median": 0.31034398078918457,
+            "max_normal_excess_m": 8.22062065708451e-06,
+            "loss": 0.16064295172691345,
+            "rgb_loss": 0.1486167311668396,
+            "target_depth_loss": 0.24052435159683228,
+            "camera": "DJI_20241217101126_0012_D",
+            "tags": {
+              "0": 588834,
+              "1": 112588,
+              "2": 164776
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4600,
+            "gaussians": 901259,
+            "target_opacity_median": 0.33570006489753723,
+            "prior_opacity_median": 0.33570006489753723,
+            "patch_opacity_median": 0.31460094451904297,
+            "max_normal_excess_m": 8.182405508705415e-06,
+            "loss": 0.13904324173927307,
+            "rgb_loss": 0.12587493658065796,
+            "target_depth_loss": 0.2633662521839142,
+            "camera": "DJI_20241217091047_0086_D",
+            "tags": {
+              "0": 614228,
+              "1": 114535,
+              "2": 172496
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4700,
+            "gaussians": 931539,
+            "target_opacity_median": 0.33612027764320374,
+            "prior_opacity_median": 0.33612027764320374,
+            "patch_opacity_median": 0.31590771675109863,
+            "max_normal_excess_m": 8.172197340172715e-06,
+            "loss": 0.20630034804344177,
+            "rgb_loss": 0.15302544832229614,
+            "target_depth_loss": 1.065497875213623,
+            "camera": "DJI_20241217101325_0015_D",
+            "tags": {
+              "0": 637722,
+              "1": 115640,
+              "2": 178177
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4800,
+            "gaussians": 963641,
+            "target_opacity_median": 0.3404158055782318,
+            "prior_opacity_median": 0.3404158055782318,
+            "patch_opacity_median": 0.3187049329280853,
+            "max_normal_excess_m": 8.182781584764598e-06,
+            "loss": 0.257990300655365,
+            "rgb_loss": 0.14198842644691467,
+            "target_depth_loss": 2.320037364959717,
+            "camera": "DJI_20241217091145_0115_D",
+            "tags": {
+              "0": 661920,
+              "1": 116841,
+              "2": 184880
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 4900,
+            "gaussians": 993005,
+            "target_opacity_median": 0.34116581082344055,
+            "prior_opacity_median": 0.34116581082344055,
+            "patch_opacity_median": 0.3193453252315521,
+            "max_normal_excess_m": 8.208080544136465e-06,
+            "loss": 0.12396855652332306,
+            "rgb_loss": 0.10534558445215225,
+            "target_depth_loss": 0.37245938181877136,
+            "camera": "DJI_20241217091117_0101_D",
+            "tags": {
+              "0": 684433,
+              "1": 117953,
+              "2": 190619
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5000,
+            "gaussians": 1022748,
+            "target_opacity_median": 0.3434693515300751,
+            "prior_opacity_median": 0.3434693515300751,
+            "patch_opacity_median": 0.32085564732551575,
+            "max_normal_excess_m": 8.184691523638321e-06,
+            "loss": 0.14149168133735657,
+            "rgb_loss": 0.12432585656642914,
+            "target_depth_loss": 0.3433164060115814,
+            "camera": "DJI_20241217084527_0087_D",
+            "tags": {
+              "0": 707483,
+              "1": 119312,
+              "2": 195953
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5100,
+            "gaussians": 1053830,
+            "target_opacity_median": 0.34900379180908203,
+            "prior_opacity_median": 0.34900379180908203,
+            "patch_opacity_median": 0.32515689730644226,
+            "max_normal_excess_m": 8.190222615667153e-06,
+            "loss": 0.15214833617210388,
+            "rgb_loss": 0.13517428934574127,
+            "target_depth_loss": 0.33948078751564026,
+            "camera": "DJI_20241217091037_0081_D",
+            "tags": {
+              "0": 729713,
+              "1": 121238,
+              "2": 202879
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5200,
+            "gaussians": 1082553,
+            "target_opacity_median": 0.3490925431251526,
+            "prior_opacity_median": 0.3490925431251526,
+            "patch_opacity_median": 0.3241545855998993,
+            "max_normal_excess_m": 8.187513913071598e-06,
+            "loss": 0.1992814540863037,
+            "rgb_loss": 0.14566124975681305,
+            "target_depth_loss": 1.072404146194458,
+            "camera": "DJI_20241217101307_0006_D",
+            "tags": {
+              "0": 751776,
+              "1": 121811,
+              "2": 208966
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5300,
+            "gaussians": 1114578,
+            "target_opacity_median": 0.35045140981674194,
+            "prior_opacity_median": 0.35045140981674194,
+            "patch_opacity_median": 0.3247290253639221,
+            "max_normal_excess_m": 8.174170034180861e-06,
+            "loss": 0.25946974754333496,
+            "rgb_loss": 0.2094755917787552,
+            "target_depth_loss": 0.9998831152915955,
+            "camera": "DJI_20241217094010_0030_D",
+            "tags": {
+              "0": 777296,
+              "1": 122548,
+              "2": 214734
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5400,
+            "gaussians": 1145888,
+            "target_opacity_median": 0.35389718413352966,
+            "prior_opacity_median": 0.35389718413352966,
+            "patch_opacity_median": 0.32809919118881226,
+            "max_normal_excess_m": 8.15999601400108e-06,
+            "loss": 0.1457100808620453,
+            "rgb_loss": 0.12749901413917542,
+            "target_depth_loss": 0.3642212748527527,
+            "camera": "DJI_20241217084527_0087_D",
+            "tags": {
+              "0": 801375,
+              "1": 123848,
+              "2": 220665
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5500,
+            "gaussians": 1188268,
+            "target_opacity_median": 0.3630918562412262,
+            "prior_opacity_median": 0.3630918562412262,
+            "patch_opacity_median": 0.3385050892829895,
+            "max_normal_excess_m": 8.155415116561926e-06,
+            "loss": 0.11483382433652878,
+            "rgb_loss": 0.1013900637626648,
+            "target_depth_loss": 0.26887527108192444,
+            "camera": "DJI_20241217084455_0071_D",
+            "tags": {
+              "0": 831136,
+              "1": 127303,
+              "2": 229829
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5600,
+            "gaussians": 1221811,
+            "target_opacity_median": 0.356764554977417,
+            "prior_opacity_median": 0.356764554977417,
+            "patch_opacity_median": 0.3289860785007477,
+            "max_normal_excess_m": 8.17969976196764e-06,
+            "loss": 0.2633189558982849,
+            "rgb_loss": 0.12762273848056793,
+            "target_depth_loss": 2.7139241695404053,
+            "camera": "DJI_20241217095125_0069_D",
+            "tags": {
+              "0": 858327,
+              "1": 127725,
+              "2": 235759
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5700,
+            "gaussians": 1251723,
+            "target_opacity_median": 0.3604033887386322,
+            "prior_opacity_median": 0.3604033887386322,
+            "patch_opacity_median": 0.3332170844078064,
+            "max_normal_excess_m": 8.172637535608374e-06,
+            "loss": 0.14497461915016174,
+            "rgb_loss": 0.1267276108264923,
+            "target_depth_loss": 0.3649400472640991,
+            "camera": "DJI_20241217101140_0019_D",
+            "tags": {
+              "0": 879887,
+              "1": 129816,
+              "2": 242020
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5800,
+            "gaussians": 1285312,
+            "target_opacity_median": 0.36203184723854065,
+            "prior_opacity_median": 0.36203184723854065,
+            "patch_opacity_median": 0.33376696705818176,
+            "max_normal_excess_m": 8.182918008969864e-06,
+            "loss": 0.18871210515499115,
+            "rgb_loss": 0.16008421778678894,
+            "target_depth_loss": 0.5725577473640442,
+            "camera": "DJI_20241217094927_0010_D",
+            "tags": {
+              "0": 905680,
+              "1": 131170,
+              "2": 248462
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 5900,
+            "gaussians": 1317747,
+            "target_opacity_median": 0.3643401563167572,
+            "prior_opacity_median": 0.3643401563167572,
+            "patch_opacity_median": 0.3352518379688263,
+            "max_normal_excess_m": 8.184269063349348e-06,
+            "loss": 0.1943071484565735,
+            "rgb_loss": 0.14042848348617554,
+            "target_depth_loss": 1.0775734186172485,
+            "camera": "DJI_20241217095907_0038_D",
+            "tags": {
+              "0": 930527,
+              "1": 131945,
+              "2": 255275
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6000,
+            "gaussians": 1351843,
+            "target_opacity_median": 0.009999998845160007,
+            "prior_opacity_median": 0.009999998845160007,
+            "patch_opacity_median": 0.009999998845160007,
+            "max_normal_excess_m": 8.188499123207293e-06,
+            "loss": 0.16964729130268097,
+            "rgb_loss": 0.14539411664009094,
+            "target_depth_loss": 0.4850635826587677,
+            "camera": "DJI_20241217101122_0010_D",
+            "tags": {
+              "0": 955829,
+              "1": 133902,
+              "2": 262112
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6100,
+            "gaussians": 822939,
+            "target_opacity_median": 0.25982263684272766,
+            "prior_opacity_median": 0.25982263684272766,
+            "patch_opacity_median": 0.3316970467567444,
+            "max_normal_excess_m": 8.173746209649835e-06,
+            "loss": 0.2180701047182083,
+            "rgb_loss": 0.18226301670074463,
+            "target_depth_loss": 0.7161417007446289,
+            "camera": "DJI_20241217095541_0053_D",
+            "tags": {
+              "0": 577936,
+              "1": 93119,
+              "2": 151884
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6200,
+            "gaussians": 834295,
+            "target_opacity_median": 0.2954882085323334,
+            "prior_opacity_median": 0.2954882085323334,
+            "patch_opacity_median": 0.3705817461013794,
+            "max_normal_excess_m": 8.193098437914159e-06,
+            "loss": 0.3487529456615448,
+            "rgb_loss": 0.14538070559501648,
+            "target_depth_loss": 4.067444801330566,
+            "camera": "DJI_20241217095141_0077_D",
+            "tags": {
+              "0": 588156,
+              "1": 92463,
+              "2": 153676
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6300,
+            "gaussians": 864570,
+            "target_opacity_median": 0.31296306848526,
+            "prior_opacity_median": 0.31296306848526,
+            "patch_opacity_median": 0.3890620470046997,
+            "max_normal_excess_m": 8.190791959350463e-06,
+            "loss": 0.18347452580928802,
+            "rgb_loss": 0.16124886274337769,
+            "target_depth_loss": 0.44451335072517395,
+            "camera": "DJI_20241217091035_0080_D",
+            "tags": {
+              "0": 611024,
+              "1": 94680,
+              "2": 158866
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6400,
+            "gaussians": 890695,
+            "target_opacity_median": 0.31895020604133606,
+            "prior_opacity_median": 0.31895020604133606,
+            "patch_opacity_median": 0.38804036378860474,
+            "max_normal_excess_m": 8.172307843778981e-06,
+            "loss": 0.329745352268219,
+            "rgb_loss": 0.19420930743217468,
+            "target_depth_loss": 2.7107205390930176,
+            "camera": "DJI_20241217095629_0077_D",
+            "tags": {
+              "0": 631312,
+              "1": 95302,
+              "2": 164081
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6500,
+            "gaussians": 930610,
+            "target_opacity_median": 0.3292734622955322,
+            "prior_opacity_median": 0.3292734622955322,
+            "patch_opacity_median": 0.4009040594100952,
+            "max_normal_excess_m": 8.192419954866637e-06,
+            "loss": 0.20644423365592957,
+            "rgb_loss": 0.18531344830989838,
+            "target_depth_loss": 0.42261579632759094,
+            "camera": "DJI_20241217100118_0045_D",
+            "tags": {
+              "0": 660122,
+              "1": 98285,
+              "2": 172203
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6600,
+            "gaussians": 963516,
+            "target_opacity_median": 0.32898852229118347,
+            "prior_opacity_median": 0.32898852229118347,
+            "patch_opacity_median": 0.3940353989601135,
+            "max_normal_excess_m": 8.165960025507957e-06,
+            "loss": 0.21468406915664673,
+            "rgb_loss": 0.18223237991333008,
+            "target_depth_loss": 0.6490338444709778,
+            "camera": "DJI_20241217100114_0043_D",
+            "tags": {
+              "0": 685471,
+              "1": 99577,
+              "2": 178468
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6700,
+            "gaussians": 997018,
+            "target_opacity_median": 0.33246180415153503,
+            "prior_opacity_median": 0.33246180415153503,
+            "patch_opacity_median": 0.3996935188770294,
+            "max_normal_excess_m": 8.184046237147413e-06,
+            "loss": 0.132036030292511,
+            "rgb_loss": 0.11951963603496552,
+            "target_depth_loss": 0.2503279447555542,
+            "camera": "DJI_20241217091043_0084_D",
+            "tags": {
+              "0": 709937,
+              "1": 101851,
+              "2": 185230
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6800,
+            "gaussians": 1021464,
+            "target_opacity_median": 0.32696428894996643,
+            "prior_opacity_median": 0.32696428894996643,
+            "patch_opacity_median": 0.3871516287326813,
+            "max_normal_excess_m": 8.163998472754397e-06,
+            "loss": 0.12781043350696564,
+            "rgb_loss": 0.11555264890193939,
+            "target_depth_loss": 0.2451557219028473,
+            "camera": "DJI_20241217091045_0085_D",
+            "tags": {
+              "0": 731175,
+              "1": 101895,
+              "2": 188394
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 6900,
+            "gaussians": 1068004,
+            "target_opacity_median": 0.34699857234954834,
+            "prior_opacity_median": 0.34699857234954834,
+            "patch_opacity_median": 0.4113268554210663,
+            "max_normal_excess_m": 8.194051588417128e-06,
+            "loss": 0.1554432213306427,
+            "rgb_loss": 0.13288798928260803,
+            "target_depth_loss": 0.4511045515537262,
+            "camera": "DJI_20241217084535_0091_D",
+            "tags": {
+              "0": 759702,
+              "1": 107043,
+              "2": 201259
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7000,
+            "gaussians": 1105655,
+            "target_opacity_median": 0.3368323743343353,
+            "prior_opacity_median": 0.3368323743343353,
+            "patch_opacity_median": 0.3960670530796051,
+            "max_normal_excess_m": 8.190192602341995e-06,
+            "loss": 0.12084368616342545,
+            "rgb_loss": 0.10622772574424744,
+            "target_depth_loss": 0.2923192083835602,
+            "camera": "DJI_20241217084455_0071_D",
+            "tags": {
+              "0": 789182,
+              "1": 109230,
+              "2": 207243
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7100,
+            "gaussians": 1134537,
+            "target_opacity_median": 0.3426652252674103,
+            "prior_opacity_median": 0.3426652252674103,
+            "patch_opacity_median": 0.3997019827365875,
+            "max_normal_excess_m": 8.19288834463805e-06,
+            "loss": 0.30211859941482544,
+            "rgb_loss": 0.0927882194519043,
+            "target_depth_loss": 3.6750338077545166,
+            "camera": "DJI_20241217095053_0053_D",
+            "tags": {
+              "0": 811512,
+              "1": 110268,
+              "2": 212757
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7200,
+            "gaussians": 1175325,
+            "target_opacity_median": 0.3481951653957367,
+            "prior_opacity_median": 0.3481951653957367,
+            "patch_opacity_median": 0.40938958525657654,
+            "max_normal_excess_m": 8.184440957847983e-06,
+            "loss": 0.21346765756607056,
+            "rgb_loss": 0.17085447907447815,
+            "target_depth_loss": 0.3922276794910431,
+            "camera": "DJI_20241217100118_0045_D",
+            "tags": {
+              "0": 843695,
+              "1": 112340,
+              "2": 219290
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7300,
+            "gaussians": 1197185,
+            "target_opacity_median": 0.34776246547698975,
+            "prior_opacity_median": 0.34776246547698975,
+            "patch_opacity_median": 0.4059179127216339,
+            "max_normal_excess_m": 8.160147444868926e-06,
+            "loss": 0.14263184368610382,
+            "rgb_loss": 0.11506640166044235,
+            "target_depth_loss": 0.3348475694656372,
+            "camera": "DJI_20241217091057_0091_D",
+            "tags": {
+              "0": 860321,
+              "1": 112752,
+              "2": 224112
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7400,
+            "gaussians": 1232527,
+            "target_opacity_median": 0.3537687361240387,
+            "prior_opacity_median": 0.3537687361240387,
+            "patch_opacity_median": 0.4074016213417053,
+            "max_normal_excess_m": 8.164801329257898e-06,
+            "loss": 0.1456228792667389,
+            "rgb_loss": 0.12383020669221878,
+            "target_depth_loss": 0.26070380210876465,
+            "camera": "DJI_20241217091041_0083_D",
+            "tags": {
+              "0": 885657,
+              "1": 114720,
+              "2": 232150
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7500,
+            "gaussians": 1265864,
+            "target_opacity_median": 0.35511043667793274,
+            "prior_opacity_median": 0.35511043667793274,
+            "patch_opacity_median": 0.41139429807662964,
+            "max_normal_excess_m": 8.192881978175137e-06,
+            "loss": 0.3138927221298218,
+            "rgb_loss": 0.1110115721821785,
+            "target_depth_loss": 3.610238552093506,
+            "camera": "DJI_20241217095147_0080_D",
+            "tags": {
+              "0": 913097,
+              "1": 115878,
+              "2": 236889
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7600,
+            "gaussians": 1305834,
+            "target_opacity_median": 0.36167702078819275,
+            "prior_opacity_median": 0.36167702078819275,
+            "patch_opacity_median": 0.416227787733078,
+            "max_normal_excess_m": 8.193737357942155e-06,
+            "loss": 0.16666550934314728,
+            "rgb_loss": 0.1334533989429474,
+            "target_depth_loss": 0.4637599289417267,
+            "camera": "DJI_20241217091037_0081_D",
+            "tags": {
+              "0": 944202,
+              "1": 117573,
+              "2": 244059
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7700,
+            "gaussians": 1334511,
+            "target_opacity_median": 0.3577013611793518,
+            "prior_opacity_median": 0.3577013611793518,
+            "patch_opacity_median": 0.4069424867630005,
+            "max_normal_excess_m": 8.190050721168518e-06,
+            "loss": 0.13327057659626007,
+            "rgb_loss": 0.10510706901550293,
+            "target_depth_loss": 0.38979750871658325,
+            "camera": "DJI_20241217091115_0100_D",
+            "tags": {
+              "0": 965974,
+              "1": 118530,
+              "2": 250007
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7800,
+            "gaussians": 1365702,
+            "target_opacity_median": 0.361348420381546,
+            "prior_opacity_median": 0.361348420381546,
+            "patch_opacity_median": 0.4136999249458313,
+            "max_normal_excess_m": 8.17710861156229e-06,
+            "loss": 0.17839844524860382,
+            "rgb_loss": 0.13235490024089813,
+            "target_depth_loss": 0.6812145709991455,
+            "camera": "DJI_20241217091149_0117_D",
+            "tags": {
+              "0": 990153,
+              "1": 120418,
+              "2": 255131
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 7900,
+            "gaussians": 1404155,
+            "target_opacity_median": 0.3654341995716095,
+            "prior_opacity_median": 0.3654341995716095,
+            "patch_opacity_median": 0.4144946336746216,
+            "max_normal_excess_m": 8.184811122191604e-06,
+            "loss": 0.10904856771230698,
+            "rgb_loss": 0.09150542318820953,
+            "target_depth_loss": 0.21758835017681122,
+            "camera": "DJI_20241217084457_0072_D",
+            "tags": {
+              "0": 1018400,
+              "1": 122089,
+              "2": 263666
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8000,
+            "gaussians": 1434654,
+            "target_opacity_median": 0.3628484010696411,
+            "prior_opacity_median": 0.3628484010696411,
+            "patch_opacity_median": 0.4087678790092468,
+            "max_normal_excess_m": 8.190212611225434e-06,
+            "loss": 0.17515148222446442,
+            "rgb_loss": 0.1266348958015442,
+            "target_depth_loss": 0.7036131024360657,
+            "camera": "DJI_20241217095635_0080_D",
+            "tags": {
+              "0": 1043844,
+              "1": 122700,
+              "2": 268110
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8100,
+            "gaussians": 1475623,
+            "target_opacity_median": 0.3720238506793976,
+            "prior_opacity_median": 0.3720238506793976,
+            "patch_opacity_median": 0.4206639528274536,
+            "max_normal_excess_m": 8.137826171095153e-06,
+            "loss": 0.2088414877653122,
+            "rgb_loss": 0.17114484310150146,
+            "target_depth_loss": 0.573693573474884,
+            "camera": "DJI_20241217100114_0043_D",
+            "tags": {
+              "0": 1072908,
+              "1": 125772,
+              "2": 276943
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8200,
+            "gaussians": 1508398,
+            "target_opacity_median": 0.37154752016067505,
+            "prior_opacity_median": 0.37154752016067505,
+            "patch_opacity_median": 0.4163629412651062,
+            "max_normal_excess_m": 8.176476512744557e-06,
+            "loss": 0.2472405731678009,
+            "rgb_loss": 0.12538206577301025,
+            "target_depth_loss": 2.19098162651062,
+            "camera": "DJI_20241217095017_0035_D",
+            "tags": {
+              "0": 1097917,
+              "1": 127372,
+              "2": 283109
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          },
+          {
+            "iteration": 8300,
+            "gaussians": 1549711,
+            "target_opacity_median": 0.37435832619667053,
+            "prior_opacity_median": 0.37435832619667053,
+            "patch_opacity_median": 0.4191174805164337,
+            "max_normal_excess_m": 8.13964970808323e-06,
+            "loss": 0.1400541365146637,
+            "rgb_loss": 0.1134999543428421,
+            "target_depth_loss": 0.35531264543533325,
+            "camera": "DJI_20241217084533_0090_D",
+            "tags": {
+              "0": 1129382,
+              "1": 129570,
+              "2": 290759
+            },
+            "opacity_population": "immutable prior-seed lineage including released",
+            "scientific_verdict": null
+          }
+        ],
+        "receipt": {
+          "at": "2026-11-01T18:06:23.446856+09:00",
+          "exit_code": 137,
+          "seconds": 933.0218975543976,
+          "status": "STOPPED",
+          "automatic_retry": false,
+          "scientific_verdict": null
+        },
+        "health_7000": {
+          "iteration": 7000,
+          "gaussians": 1105655,
+          "target_opacity_median": 0.3368323743343353,
+          "prior_opacity_median": 0.3368323743343353,
+          "patch_opacity_median": 0.3960670530796051,
+          "max_normal_excess_m": 8.190192602341995e-06,
+          "loss": 0.12084368616342545,
+          "rgb_loss": 0.10622772574424744,
+          "target_depth_loss": 0.2923192083835602,
+          "camera": "DJI_20241217084455_0071_D",
+          "tags": {
+            "0": 789182,
+            "1": 109230,
+            "2": 207243
+          },
+          "opacity_population": "immutable prior-seed lineage including released",
+          "scientific_verdict": null,
+          "count_at_6000": 1351843,
+          "status": "PASS_HEALTH"
+        },
+        "checkpoint_7000_sha256": "5599433e13a1d81f94e6ad7ee70c86eeaee1c9b80b288591b7af3a1b7174c543"
+      }
+    ]
+  },
+  "note": "검정 점선: 0.05 · 회색 세로선: 정기 불투명도 초기화 · 7,000회는 두 판 모두 건강 PASS",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

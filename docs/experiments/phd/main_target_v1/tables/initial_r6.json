@@ -1,0 +1,53 @@
+{
+  "at": "2026-11-01T17:59:24.242799+09:00",
+  "status": "PASS_R6_INITIALIZATION",
+  "rows": [
+    {
+      "prior": "ALS",
+      "status": "PASS_IDENTICAL_ACTUAL_INITIALIZATION",
+      "fields": [
+        "xyz",
+        "init_id",
+        "origin",
+        "opacity",
+        "scale",
+        "rotation",
+        "anchor",
+        "normal",
+        "sigma",
+        "region",
+        "initial_scale",
+        "initial_large_background"
+      ],
+      "gaussians": 605777,
+      "opacity_prior": 0.10000000149011612,
+      "opacity_background": 0.10000000149011612,
+      "r4n_snapshot_sha256": "02f73f37efa4858136e9e57916022993049074c122f9b4e2ace996d9b1c9442a",
+      "r6_snapshot_sha256": "16e43c1c09c6e92c3f5e6646f8a4b4751c1482cbb73a6f0d5c04b6aec3266690"
+    },
+    {
+      "prior": "LoD2",
+      "status": "PASS_IDENTICAL_ACTUAL_INITIALIZATION",
+      "fields": [
+        "xyz",
+        "init_id",
+        "origin",
+        "opacity",
+        "scale",
+        "rotation",
+        "anchor",
+        "normal",
+        "sigma",
+        "region",
+        "initial_scale",
+        "initial_large_background"
+      ],
+      "gaussians": 666338,
+      "opacity_prior": 0.10000000149011612,
+      "opacity_background": 0.10000000149011612,
+      "r4n_snapshot_sha256": "ed6fb02fee1903c88f28a0de6bd50ebbb685f3e7ac172cbcb360123f76fdbba5",
+      "r6_snapshot_sha256": "75a64f6c597f8e84709a8e91076d3205b28e0bc2ba89bd768b0b26ecea959ee2"
+    }
+  ],
+  "scientific_verdict": null
+}
