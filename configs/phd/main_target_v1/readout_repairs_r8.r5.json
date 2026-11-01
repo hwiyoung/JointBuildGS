@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-01T23:56:12.956762+09:00",
+  "plot_changes": [
+    {
+      "path": "scripts/phd/main_target_v1/movement_r8.py",
+      "before": "cbb70723c6076cc29dcf0d9afcc96b403c68d96be2beb74e0c0400bae5aad796",
+      "after": "4127d755a6a1db2e80b6e840fd42b150899e5461d14788df7933535342dcba84"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/movement_continue_r7_lod2.py",
+      "before": "819fccc23af0819847dabf97d4f746569ca5c8d7745f33b6be7c34b1e3543c8c",
+      "after": "dcbcf0513d6c9f1bf2c2542b37a76631a6b71455a461400e6c17fa4fb5dbe5f2"
+    }
+  ],
+  "reason": "Top-view height ticks overlap; hide only collapsed height ticks and increase right margin. Preserve points, camera and limits. Redraw does not rewrite numeric outputs.",
+  "verification_resources": {
+    "previous_gib": 8,
+    "current_gib": 32,
+    "shared_serial_tsdf_lock": true,
+    "min_available_gib": 48,
+    "science_script_unchanged": true
+  },
+  "failure": "Independent CPU ray verification exit137; training unaffected",
+  "scientific_verdict": null
+}

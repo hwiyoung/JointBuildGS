@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-02T02:07:08.361849+09:00",
+  "previous_pid": 2796987,
+  "previous_had_children": false,
+  "source": "scripts/phd/main_target_v1/prepare_delivery_r8_r2.py",
+  "sha256": "73c78ba10b0c675a2de878804067268a96078d8a6be22ccaae045ceea80ac37c",
+  "reason": "Run compact report generation in an independent 8 GiB / 2 CPU lane so the first 7000 package does not wait behind later heavy mesh fusion. Heavy mesh serialization and all calculations unchanged.",
+  "scientific_verdict": null
+}

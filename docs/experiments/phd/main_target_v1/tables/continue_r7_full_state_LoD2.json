@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-02T01:38:52.422239+09:00",
+  "status": "PASS_R7_COMPLETE_STATE_AUDIT",
+  "prior": "LoD2",
+  "rows": [
+    {
+      "iteration": 15000,
+      "status": "PASS_COMPLETE_STATE",
+      "gaussians": 2772796,
+      "adam_parameter_groups": 6,
+      "adam_steps": {
+        "xyz": 15000.0,
+        "f_dc": 15000.0,
+        "f_rest": 15000.0,
+        "opacity": 15000.0,
+        "scaling": 15000.0,
+        "rotation": 15000.0
+      },
+      "checkpoint_sha256": "7e4d87a671c58eb8b9c4dca5867341988b4877db4988ac317ceb60a43ae757bf",
+      "tags": {
+        "0": 1915214,
+        "1": 151547,
+        "2": 706035
+      }
+    },
+    {
+      "iteration": 30000,
+      "status": "PASS_COMPLETE_STATE",
+      "gaussians": 2772796,
+      "adam_parameter_groups": 6,
+      "adam_steps": {
+        "xyz": 30000.0,
+        "f_dc": 30000.0,
+        "f_rest": 30000.0,
+        "opacity": 30000.0,
+        "scaling": 30000.0,
+        "rotation": 30000.0
+      },
+      "checkpoint_sha256": "3df5f735c8cb9701cb968935e60a988280b4711a017a8779c80aa7ee23952c8d",
+      "tags": {
+        "0": 1915214,
+        "1": 151453,
+        "2": 706129
+      }
+    }
+  ],
+  "scientific_verdict": null
+}

@@ -1,0 +1,150 @@
+{
+  "at": "2026-11-02T00:36:04.323954+09:00",
+  "status": "STOPPED_CUDA_OOM_AWAIT_USER",
+  "stop": {
+    "at": "2026-11-02T00:27:23.727194+09:00",
+    "prior": "LoD2",
+    "reason": {
+      "arm": "B173nb_b10_LoD2",
+      "execution_exit_code": 1
+    },
+    "scientific_verdict": null
+  },
+  "training_receipt": {
+    "at": "2026-11-02T00:27:23.752444+09:00",
+    "exit_code": 1,
+    "seconds": 4406.583746671677,
+    "status": "STOPPED",
+    "automatic_retry": false,
+    "scientific_verdict": null
+  },
+  "launch": {
+    "at": "2026-11-01T23:13:56.886812+09:00",
+    "gpu": "1",
+    "site": "B173nb_b10",
+    "prior": "LoD2",
+    "container": "jbgs-target-train-r8-B173nb_b10-LoD2",
+    "config_sha256": "547ad0ef1d24e9b4228dadfd6598c11e24cbe4a7da89e0595c03da1ed468d639",
+    "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+    "scientific_verdict": null
+  },
+  "last_displayed_iteration": 14830,
+  "last_health": {
+    "iteration": 14800,
+    "gaussians": 5762626,
+    "target_opacity_median": 0.5755140781402588,
+    "prior_opacity_median": 0.5755140781402588,
+    "patch_opacity_median": 0.43397772312164307,
+    "max_normal_excess_m": 8.173140940925805e-06,
+    "loss": 0.08672767132520676,
+    "rgb_loss": 0.07291953265666962,
+    "target_depth_loss": 0.18582642078399658,
+    "camera": "DJI_20241217091049_0087_D",
+    "tags": {
+      "0": 739776,
+      "1": 209627,
+      "2": 4813223
+    },
+    "opacity_population": "immutable prior-seed lineage including released",
+    "opacity_check_skipped_reset_grace": false,
+    "last_opacity_reset": 12000,
+    "scientific_verdict": null
+  },
+  "reference_6000": {
+    "iteration": 6000,
+    "gaussians": 1280149,
+    "target_opacity_median": 0.009999998845160007,
+    "prior_opacity_median": 0.009999998845160007,
+    "patch_opacity_median": 0.009999998845160007,
+    "max_normal_excess_m": 8.195105246799894e-06,
+    "loss": 0.17153428494930267,
+    "rgb_loss": 0.14604441821575165,
+    "target_depth_loss": 0.5097973346710205,
+    "camera": "DJI_20241217101122_0010_D",
+    "tags": {
+      "0": 355786,
+      "1": 194673,
+      "2": 729690
+    },
+    "opacity_population": "immutable prior-seed lineage including released",
+    "opacity_check_skipped_reset_grace": true,
+    "last_opacity_reset": 6000,
+    "scientific_verdict": null
+  },
+  "last_periodic": {
+    "iteration": 14000,
+    "gaussians": 3557869,
+    "tags": {
+      "0": 632374,
+      "1": 197526,
+      "2": 2727969
+    },
+    "count_at_6000": 1280149,
+    "allocated_bytes": 4409588736,
+    "reserved_bytes": 4976541696,
+    "peak_allocated_bytes": 11334414336,
+    "peak_reserved_bytes": 12322865152,
+    "free_bytes": 19833159680,
+    "total_bytes": 25296044032,
+    "scientific_verdict": null
+  },
+  "first_100_step_record_above_3x": {
+    "iteration": 14200,
+    "gaussians": 4032674,
+    "target_opacity_median": 0.45931148529052734,
+    "prior_opacity_median": 0.45931148529052734,
+    "patch_opacity_median": 0.43757113814353943,
+    "max_normal_excess_m": 8.162791346133513e-06,
+    "loss": 0.1843271255493164,
+    "rgb_loss": 0.14198563992977142,
+    "target_depth_loss": 0.6200717687606812,
+    "camera": "DJI_20241217101319_0012_D",
+    "tags": {
+      "0": 660412,
+      "1": 202047,
+      "2": 3170215
+    },
+    "opacity_population": "immutable prior-seed lineage including released",
+    "opacity_check_skipped_reset_grace": false,
+    "last_opacity_reset": 12000,
+    "scientific_verdict": null
+  },
+  "last_count_ratio": 4.501527556557869,
+  "error": "torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 15.69 GiB. GPU 0 has a total capacty of 23.56 GiB of which 15.46 GiB is free. Process 2348970 has 8.00 GiB memory in use. Of the allocated memory 7.43 GiB is allocated by PyTorch, and 214.98 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF",
+  "checkpoints": [
+    {
+      "iteration": 7000,
+      "point_cloud_exists": true,
+      "state_paths": [
+        "/out/r8/runs/tg_B173nb_b10_LoD2_s0_r8/model/jbgs_complete/iteration_7000/checkpoint.pth"
+      ]
+    },
+    {
+      "iteration": 15000,
+      "point_cloud_exists": false,
+      "state_paths": []
+    },
+    {
+      "iteration": 30000,
+      "point_cloud_exists": false,
+      "state_paths": []
+    }
+  ],
+  "als_receipt": {
+    "at": "2026-11-02T00:07:56.799733+09:00",
+    "exit_code": 0,
+    "seconds": 5760.743923187256,
+    "status": "TRAINING_COMPLETE_30000",
+    "automatic_retry": false,
+    "scientific_verdict": null
+  },
+  "automatic_retry": false,
+  "sources": {
+    "/out/r8/runs/tg_B173nb_b10_LoD2_s0_r8/train.log": "5295fa5e95e7dd4429208fd63eb87218058b5b2b1d6097fadd222f908ada995a",
+    "/out/r8/runs/tg_B173nb_b10_LoD2_s0_r8/model/target_monitor/curve.jsonl": "ea0a6b011a022f347171a2ced0fd6bedd17feb5efcfb1501f4ab21f84e267fca",
+    "/out/r8/runs/tg_B173nb_b10_LoD2_s0_r8/model/target_monitor/memory_1000.jsonl": "836c084cd355180fb4516dce37e45fab7501793cd5b999332dc01210ff03978e",
+    "/out/r8/runs/tg_B173nb_b10_LoD2_s0_r8/receipt.json": "739b2295160e734df84fc1252325add009174f9d2209187d398c9dbc24746d2f",
+    "/out/r8/runs/tg_B173nb_b10_LoD2_s0_r8/launch.json": "28a9acd054128b8db259550897ce542b3b2d369cac28fe3f4afe7bde356adbfa"
+  },
+  "scientific_verdict": null
+}

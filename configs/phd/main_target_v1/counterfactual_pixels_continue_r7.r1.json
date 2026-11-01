@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-01T22:02:40.376353+09:00",
+  "counterfactual": "r7 currently patch-tag Gaussians farther than 0.5m from all valid r7 targets",
+  "enumeration": "all 203 views, every pixel whose saved exact alpha*T argmax is a counterfactual candidate",
+  "floating_geometry": "Inherited ALS store parallelogram: first-hit plane plus a*loc_t1+b*loc_t2, |a| and |b| <= 0.125 m; original XY grid projected onto sloped plane",
+  "visibility": "positive depth, alpha>1e-5, ray-plane depth within 0.25m of saved rendered depth",
+  "reference": "prior projected-centre enumeration retained; new full footprint enumeration additive, no training or gate changes",
+  "scientific_verdict": null,
+  "parent_sha256": "c2ee08f06286e1339a0a7c49c39ff58dbfd2398d12902a4e9b399ddc0eca9ff2",
+  "correction": "Independent validation found ALS area = 0.25^2 / |n_z|, not a tangent square. Use exact stored tangents; earlier square result retained as superseded diagnostic, no training or acceptance-rule change.",
+  "implementation_source": "src/phd/prior_propagation_v6/locations.py:133-168"
+}

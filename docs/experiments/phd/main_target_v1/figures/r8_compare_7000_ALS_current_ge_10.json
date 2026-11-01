@@ -1,0 +1,728 @@
+{
+  "title": "ALS · current: 10 m² 이상 덩어리 달성률, %",
+  "values": {
+    "rows": [
+      {
+        "label": "r6 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.6,
+            "ge_10": 0.8
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.9230769230769231,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "기준선 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.8,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.5333333333333333,
+            "ge_10": 0.6
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.46153846153846156,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "r7 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.8,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.6,
+            "ge_10": 0.6
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.7692307692307693,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "r8 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.7333333333333333,
+            "ge_10": 1.0
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.9230769230769231,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 samepath_ALS",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 0.0,
+            "ge_10": 0.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.0,
+            "ge_10": 0.0
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 geogs_ALS_fix1",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 0.7692307692307693,
+            "ge_10": 0.6666666666666666
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.4,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.3333333333333333,
+            "ge_10": 0.2
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.6923076923076923,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 mvs_a",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.26666666666666666,
+            "ge_10": 0.2
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.3076923076923077,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 imgonly_2dgs_s0",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 0.38461538461538464,
+            "ge_10": 0.3333333333333333
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 0.0,
+            "ge_10": 0.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.4,
+            "ge_10": 0.8
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.07692307692307693,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 mvsfuse_ALS",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.3333333333333333,
+            "ge_10": 0.4
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 1.0,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 cdgsnofit_ALS_s0",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 0.38461538461538464,
+            "ge_10": 0.3333333333333333
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 0.0,
+            "ge_10": 0.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.2,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.0,
+            "ge_10": 0.0
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.15384615384615385,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 prop_ALS_s0",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.6,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.6,
+            "ge_10": 0.6
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.5384615384615384,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 prop_ALS_s1",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": 1.0,
+            "ge_10": 1.0
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": 0.6,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": 0.0,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": 0.5333333333333333,
+            "ge_10": 0.6
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": 0.5384615384615384,
+            "ge_10": null
+          }
+        }
+      },
+      {
+        "label": "참고 mvs_b",
+        "source": "AXES71-v2",
+        "values": {
+          "c_refine": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr14": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_corr4p": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_mask": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_keep_in": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_limit": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_double": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_miss": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_miss_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_inh_invis": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_invis_wrong": {
+            "ge_2.5": null,
+            "ge_10": null
+          },
+          "c_nogt": {
+            "ge_2.5": null,
+            "ge_10": null
+          }
+        }
+      }
+    ],
+    "cells": [
+      "c_refine",
+      "c_corr14",
+      "c_corr4p",
+      "c_keep_mask",
+      "c_keep_in",
+      "c_limit",
+      "c_double",
+      "c_inh_miss",
+      "c_miss_wrong",
+      "c_inh_invis",
+      "c_invis_wrong",
+      "c_nogt"
+    ],
+    "field": "ge_10",
+    "scale": 100
+  },
+  "note": "고정 덩어리 ID · 참값 점의 50% 초과가 τ 안 · 참고의 비가시 칸 등 원래 미제공 값은 —",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

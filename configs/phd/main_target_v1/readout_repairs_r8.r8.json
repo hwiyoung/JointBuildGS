@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-02T01:47:23.016551+09:00",
+  "reason": "Limit first comparison table and figures to all sixteen available 7000 meshes; final remains all 36 planned entries. No numerical method, model or score changes.",
+  "changes": [
+    {
+      "path": "scripts/phd/main_target_v1/report_axes_r8.py",
+      "before": "cca14fd334c992a69acc90042435239c751b56f537628a388048885958f4dd7d",
+      "after": "018d6e813b5c16c4dac658df27a6a13d05d13b1e1f4fa732fd0bd30e3bdb5cbf"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/compare_figures_r8.py",
+      "before": "e39a0829ff511123ee28e12afd4227469674f948b27c6914b478900b676f35c1",
+      "after": "4ade5100687a8ebaa1b3e3eb47cbccd472fb9851efa72473fd8ad08d7ae6ec16"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/audit_package_r8.py",
+      "before": "46055b7cbf3972d3e2149d92e9b16167297fc3069110ded7cad3fbe3a51349bd",
+      "after": "ec8623ee3ab80498694ad37de45d1627180a9aa1e03cc89081dc7e4c80ae030a"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/audit_readout_bindings_r8.py",
+      "before": "8cca167f2924eb29b4c271c20cc9361557d9685d523518020181cf571f9f7553",
+      "after": "081c6c40f6c0c3ea2bb82c09346797aba3f536b6adcb64d86969790f0733d2fb"
+    }
+  ],
+  "previous_sources": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r8/verification/readout_sources_before_r8",
+  "scientific_verdict": null
+}

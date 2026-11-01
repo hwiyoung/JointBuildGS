@@ -1,0 +1,168 @@
+{
+  "at": "2026-11-02T02:26:05.336137+09:00",
+  "status": "PASS_CONTINUATION_DELIVERY_AUDIT",
+  "checks": {
+    "frozen_r21_training_and_inherited_scoring_sources": "PASS",
+    "input_locks": "PASS",
+    "inherited_arithmetic_parity_and_ALS_independent_diagnostic": "PASS",
+    "available_meshes_and_missing_rows": "PASS",
+    "LoD2_independent_first_hit_rays_and_area_recount": "PASS",
+    "LoD2_independent_resume_and_1000_step_memory_records": "PASS",
+    "baseline30000_same_r7_pixel_targets_and_comparison_figures": "PASS"
+  },
+  "training_status": "LoD2 30000 complete; ALS not resumed by r8 decision",
+  "mesh_scores_complete": 20,
+  "mesh_scores_unavailable": 4,
+  "complete": [
+    {
+      "key": "r6_ALS_7000",
+      "kind": "current",
+      "mesh_sha256": "b34f3db1e867af46ba1b34db7471117f882fbd91633815440a62e2ebf8de3501",
+      "verification_sha256": "da081aaee220bbbd0a29c83495933e47f887041cca68d9e0d39752aeed8cacb0"
+    },
+    {
+      "key": "r6_ALS_7000",
+      "kind": "final",
+      "mesh_sha256": "1c44ec4b30cd56a4d96dae3854a9ba6d7daf3fe88ff6bf96ff979cead70b8ee4",
+      "verification_sha256": "ecf1f0db1ef91868ea45583ea2ab0923e2b0f085a0f58d380b0e211f535a0381"
+    },
+    {
+      "key": "base_ALS_7000",
+      "kind": "current",
+      "mesh_sha256": "c82ec1af0426b5c270c266581783d7922e2191bac0f46e10557a51ab423aa2a6",
+      "verification_sha256": "2bd3cb5b3c8c91382107c832c90f6745cc7ecb15fd6478848a15817682279a07"
+    },
+    {
+      "key": "base_ALS_7000",
+      "kind": "final",
+      "mesh_sha256": "d77f3a16a9076e9fdd82fb62f0943eb9e30a0b790e7f637aa5c927592532bc38",
+      "verification_sha256": "840fff2232265bf7112a01afbf8abec4e48013566768f143f0753ed2423c3427"
+    },
+    {
+      "key": "r7_ALS_7000",
+      "kind": "current",
+      "mesh_sha256": "8498c1ee51d1e6744f6cfd392b7f20ad94f1b95dea8853ddf46cb4e84ed722e1",
+      "verification_sha256": "62bb17ef4fa89f05f2ad408c6fbbe9606c169f6c9c61c72f5852716985119377"
+    },
+    {
+      "key": "r7_ALS_7000",
+      "kind": "final",
+      "mesh_sha256": "08d2f9a23861e87309d17681d09d96ac4e2cd2be06342be9df62307e0fb01317",
+      "verification_sha256": "c9af5ecd5dbda84e558d0541ff0930b8dc6cf42a15f3ea9319010d6f90706668"
+    },
+    {
+      "key": "base_ALS_30000",
+      "kind": "current",
+      "mesh_sha256": "b89ce5a08ef2a1145249103f10251abcca138ed5942b3ec1557c7be53ca54703",
+      "verification_sha256": "989c0786a15ffc019b68495130fe8f5992733d524a7ee6be1d81002be0d58b3c"
+    },
+    {
+      "key": "base_ALS_30000",
+      "kind": "final",
+      "mesh_sha256": "d8b24e592528f20c771f4fda46750f4e9a31234ff60c6f3401b8cf9d39e96dbc",
+      "verification_sha256": "789f9cd24e21163147264446b17308201602fb0df9fea0759b129e2e77791748"
+    },
+    {
+      "key": "r6_LoD2_7000",
+      "kind": "current",
+      "mesh_sha256": "4bf65796bc2ce1eaac1c4243422430f40d3d01e81b13c3d54ec5b13d197d4370",
+      "verification_sha256": "0f4b1f90eb772cb35e5de073ce965bf7b9d260a0840fc1596ee54e010173eecf"
+    },
+    {
+      "key": "r6_LoD2_7000",
+      "kind": "final",
+      "mesh_sha256": "046feddcdc411c407b21f1ce22bfed12d75c3f3035273928e3e49c1b152de33c",
+      "verification_sha256": "b5f31dd2c7428d24e6d82c234d8a3cf56fb591dcf11de5941b221c7f8860e561"
+    },
+    {
+      "key": "base_LoD2_7000",
+      "kind": "current",
+      "mesh_sha256": "4f11b53362ff8332e023e84d2043f0b29b37c69dc8b492ec7b307e6bb9495639",
+      "verification_sha256": "920a646a5fe712f11934258c676a6b2b02d5c34a635ecef866a27791cbc28a62"
+    },
+    {
+      "key": "base_LoD2_7000",
+      "kind": "final",
+      "mesh_sha256": "775e4c76ed7d4f1628a2485df4c283051259e2944ad323b09d7f362580df4e4a",
+      "verification_sha256": "ed1329214addd9dfc835cfd489c63c8744f8ce63b11c841a5f0c407c070737c4"
+    },
+    {
+      "key": "r7_LoD2_7000",
+      "kind": "current",
+      "mesh_sha256": "5c480deba9123ea16046d62fdc81f7e9fc592727edf1fef6bdedb461c0038c3a",
+      "verification_sha256": "4ab9ed28acc00a0473ca6907a33cc4dae386776803a75de96a457bca063b6571"
+    },
+    {
+      "key": "r7_LoD2_7000",
+      "kind": "final",
+      "mesh_sha256": "b0babbf08ef8a5c785293f9b908df644c47ea032ddb54017e54a239f47f9aa41",
+      "verification_sha256": "cce5c531729875ad27a8b57270b79e5bf2d34747a55ece1c1253f5b5c32bab04"
+    },
+    {
+      "key": "r7_LoD2_15000",
+      "kind": "current",
+      "mesh_sha256": "c45db756b2c7ffdbed01583f1e66d62002b176c7b2e0387c72d4e96243336843",
+      "verification_sha256": "1585e7c86c2a1d7ec158f4cad1cd39d606df74d302768ece7dfcfb9017e2f316"
+    },
+    {
+      "key": "r7_LoD2_15000",
+      "kind": "final",
+      "mesh_sha256": "191fa93312c62a1ea72b9de10b7f0aa3123603b480d14f3cc99a90c503a17e68",
+      "verification_sha256": "53f3f229587663100f9a1f99307859ddf27d6c598c0945811ad8b95a7431785e"
+    },
+    {
+      "key": "r7_LoD2_30000",
+      "kind": "current",
+      "mesh_sha256": "288e011b013d3eb2982b55f54ac4d954ae05781d797fdfe6d14b841fced25fbe",
+      "verification_sha256": "3cb62e9704ec9180b9d8f611d47069154a2e9772e252628f572f2d8eb5b45c9b"
+    },
+    {
+      "key": "r7_LoD2_30000",
+      "kind": "final",
+      "mesh_sha256": "fc1b11cb3da31d0c0dac3a33e6ddb54b537f22389f8512743b84afb8163f1a31",
+      "verification_sha256": "6676c67aec8bda3fee1e19f8b75389539013ed47034043c56dcaffd3d4262dfb"
+    },
+    {
+      "key": "base_LoD2_30000",
+      "kind": "current",
+      "mesh_sha256": "d49a065268acc08db1b80d854542bc1c4a93c355a3d7f8b42e268da407501b84",
+      "verification_sha256": "a24a3e52483efdc8347d0d396656e1bae774037031486abb9e5c55886eb0c159"
+    },
+    {
+      "key": "base_LoD2_30000",
+      "kind": "final",
+      "mesh_sha256": "43f43c43e4b4afa16a60f0410e635f808647caf23eb97a5b40745edcefed27d4",
+      "verification_sha256": "981d6218392ef39e8e8e03313764d39ebe464ff603f05d89fc147ae8cc408247"
+    }
+  ],
+  "unavailable": [
+    {
+      "key": "r7_ALS_15000",
+      "kind": "current",
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    },
+    {
+      "key": "r7_ALS_15000",
+      "kind": "final",
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    },
+    {
+      "key": "r7_ALS_30000",
+      "kind": "current",
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    },
+    {
+      "key": "r7_ALS_30000",
+      "kind": "final",
+      "status": "NOT_REACHED_TRAINING_STOPPED"
+    }
+  ],
+  "other_six": "NOT_STARTED",
+  "sources": {
+    "/cfg/scoring_continue_r7.json": "22b11bd37cf6d9d1db8e4d8a5325f8411e84c5c258177dc779e3ba2ea7014c7b",
+    "/cfg/scoring_continue_r7.r1.json": "6bb48b428e5e4dd15aa9a0ed11bcda2c769205845afb0d6abb21a5f5e097db45",
+    "/cfg/continue_r7.lod2_r2.json": "e219144609d3e0a5ed95c9ecf577a8a93e34d41204f3ae12b73ff106b5d2b6e9"
+  },
+  "scoring_complete_for_available_models": true,
+  "scientific_verdict": null
+}

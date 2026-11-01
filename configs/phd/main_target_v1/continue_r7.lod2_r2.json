@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-01T21:50:49.629786+09:00",
+  "authority": "decision_20261101_2150_continue_r7.md",
+  "source_commit": "d39308e8b192d2f6a0e04cd78d750e17ef52d35b",
+  "revision": "r7",
+  "priors": [
+    "LoD2"
+  ],
+  "runs": {
+    "LoD2": {
+      "name": "tg_B173nb_b10_LoD2_s0_r7",
+      "checkpoint": "r7/runs/tg_B173nb_b10_LoD2_s0_r7/model/jbgs_complete/iteration_7000/checkpoint.pth",
+      "checkpoint_sha256": "33f00ba39df7f28864ae1e617dc141fedfa2f25919a19738f63ef19e31852497",
+      "original_command_sha256": "f8283a1b0a7939cb3eaf8ef6eb7288434565c5605f07203c0e977f891c6051aa"
+    }
+  },
+  "start_iteration": 7000,
+  "end_iteration": 30000,
+  "checkpoints": [
+    15000,
+    30000
+  ],
+  "original_stop_sha256": "8c1d0bbf1dbffd70ddf3b53f70971cdb49ea6a95c4eba612d2e1d60d11be82c4",
+  "geometry_is_record_only": true,
+  "health": "unchanged frozen r7 including 500-step scheduled opacity reset grace; inherited joint stop on health or execution failure",
+  "other_six": "NOT_AUTHORIZED",
+  "model_output": "r7_continue/lod2_retry/runs/<name>/model",
+  "method_changes": [],
+  "image_id": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+  "scientific_verdict": null,
+  "parent_lock_sha256": "4edb24b7cadf2219cf471d94cae4162b3a59618497ef2ad7e7e55a41d2627582",
+  "restore_validation_compatibility": "Treat both-NaN unused tau argument pairs as equal; original args/checkpoint/optimizer/RNG/algorithm untouched",
+  "preflight_failure_attempt": "r7_continue/runs: zero optimization steps, original logs retained",
+  "independent_stop": true,
+  "observation_only_addition": "count and CUDA current/peak allocated/reserved at 1000-step intervals; no RNG or state mutation",
+  "parent_failure": "r7_continue/attempt2/STOP_BOTH.json"
+}

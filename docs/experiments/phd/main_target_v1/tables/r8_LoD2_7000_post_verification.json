@@ -1,0 +1,37 @@
+{
+  "geometry_checks": [
+    true,
+    true,
+    true
+  ],
+  "iteration": 7000,
+  "at": "2026-11-02T01:16:38.674483+09:00",
+  "status": "PASS_POST_RECOUNT_AND_RAYS",
+  "prior": "LoD2",
+  "floating_area_m2": 335.6875,
+  "evaluation_area_m2": 3809.8125,
+  "floating_fraction": 0.088111291566186,
+  "ray_samples": 2048,
+  "max_ray_difference_m": 0.0,
+  "origin_areas": [
+    {
+      "group": "all_floating",
+      "area_m2": 626.0625,
+      "background_dominant_area_m2": 151.125,
+      "released_dominant_area_m2": 74.75,
+      "origin_unavailable_area_m2": 46.875
+    },
+    {
+      "group": "cell_0_3_floating",
+      "area_m2": 335.6875,
+      "background_dominant_area_m2": 75.75,
+      "released_dominant_area_m2": 37.8125,
+      "origin_unavailable_area_m2": 28.9375
+    }
+  ],
+  "mesh_sha256": "b0241d7759b30ae7d7e284c93143b8cd83a52f0f977f83093075f02216144844",
+  "score_sha256": "cd4e351a9f294b1b31c2262a26ee148e03d120e05cc1e2be3c9b0ab156a4b4a0",
+  "patch_z_sha256": "76c20ddb31b0824ecf2820d44618015ddc11720ffb3e3f97d4476aa36cf7775a",
+  "attribution_sha256": "98f837b9e1fb56e87afb33e9e76b48a21a1beda2ee430acf923e2b17350a7499",
+  "scientific_verdict": null
+}

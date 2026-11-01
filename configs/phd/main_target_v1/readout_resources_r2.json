@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-01T22:56:37.274174+09:00",
+  "task_id": "PHD-MAIN-TARGET-v1",
+  "purpose": "CPU readout execution resource cap only; no training changes",
+  "before": {
+    "container_gib": 40,
+    "min_available_gib": 56
+  },
+  "after": {
+    "container_gib": 32,
+    "min_available_gib": 48
+  },
+  "reserve_beyond_limit_gib": 16,
+  "cpus": 6,
+  "OMP_threads_unchanged": true,
+  "TSDF_auto_budget_unchanged": "auto:16",
+  "voxel_and_truncation_unchanged": true,
+  "serial_heavy_jobs": true,
+  "evidence": [
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7/baselines/base7k_B173nb_b10_ALS_s0/post7000/merged.json",
+      "sha256": "19e018db8ec5ba2de4fa8307330ab800cc2cfb401e5ad459ab3838185980e972",
+      "peak_host_gb": 15.386,
+      "merge_cgroup_peak_gb": 15.716
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7/baselines/base7k_B173nb_b10_LoD2_s0/post7000/merged.json",
+      "sha256": "fc3e2a896165418a8a8658c7ea3f00f8e5e8b0d8622448d1c1325ee2bd233720",
+      "peak_host_gb": 16.316,
+      "merge_cgroup_peak_gb": 16.973
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7/runs/tg_B173nb_b10_ALS_s0_r7/post7000/merged.json",
+      "sha256": "0843e902ca6c215b4608aa1c86e35199d24198c2a94d80a2122466c5a6d16226",
+      "peak_host_gb": 15.992,
+      "merge_cgroup_peak_gb": 16.693
+    },
+    {
+      "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7/runs/tg_B173nb_b10_LoD2_s0_r7/post7000/merged.json",
+      "sha256": "cab71521e8c644355680963f514b89e46ab782883d3147d947a82aa45fd6023d",
+      "peak_host_gb": 17.752,
+      "merge_cgroup_peak_gb": 17.796
+    }
+  ],
+  "reason": "Prior exact current-mesh jobs recorded <=17.796 GiB cgroup peak. 32 GiB cap retains >14 GiB above this observed peak and restores execution with 16 GiB host reserve.",
+  "scientific_verdict": null
+}

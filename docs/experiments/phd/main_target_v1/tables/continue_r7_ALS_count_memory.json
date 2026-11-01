@@ -1,0 +1,708 @@
+{
+  "at": "2026-11-01T21:52:06.468331+09:00",
+  "status": "COMPLETE_READ_ONLY_COMPARISON",
+  "sources": {
+    "/out/r7/runs/tg_B173nb_b10_ALS_s0_r7/model/target_monitor/curve.jsonl": "7d49fccb3040b69466e3c97dc9c1dcdb79933102cc31159ee44a7fab4b56b587",
+    "/out/r7_continue/attempt2/runs/tg_B173nb_b10_ALS_s0_r7/model/target_monitor/curve.jsonl": "c074b879eec665672e6ef1d9b1f31eb4aceb87a71d71d0dcac8b3ead96de2aa7",
+    "/out/r6/runs/tg_B173nb_b10_ALS_s0_r6/model/target_monitor/curve.jsonl": "2c2adbe92f47e8a67b22b682608bb6b6149d5cbaece2cb24feb43427925441cc",
+    "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/jbgs_trace.jsonl": "0b92d9ca6aff50973f5a9efd72d302cfa77de28c7067404f2fd009c5304c8936"
+  },
+  "per_1000": [
+    {
+      "method": "r7",
+      "iteration": 1000,
+      "gaussians": 434221,
+      "background": 403135,
+      "patch": 28520,
+      "released": 2566,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 2000,
+      "gaussians": 477032,
+      "background": 446250,
+      "patch": 27297,
+      "released": 3485,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 3000,
+      "gaussians": 846921,
+      "background": 814048,
+      "patch": 28814,
+      "released": 4059,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 4000,
+      "gaussians": 668868,
+      "background": 636583,
+      "patch": 28553,
+      "released": 3732,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 5000,
+      "gaussians": 986515,
+      "background": 948469,
+      "patch": 33719,
+      "released": 4327,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 6000,
+      "gaussians": 1335353,
+      "background": 1289800,
+      "patch": 40612,
+      "released": 4941,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 7000,
+      "gaussians": 1055539,
+      "background": 1013307,
+      "patch": 39158,
+      "released": 3074,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 8000,
+      "gaussians": 1396931,
+      "background": 1347652,
+      "patch": 45534,
+      "released": 3745,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 9000,
+      "gaussians": 1772964,
+      "background": 1715233,
+      "patch": 53258,
+      "released": 4473,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 10000,
+      "gaussians": 1436986,
+      "background": 1379009,
+      "patch": 54132,
+      "released": 3845,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 11000,
+      "gaussians": 1916621,
+      "background": 1850962,
+      "patch": 61016,
+      "released": 4643,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 12000,
+      "gaussians": 2719647,
+      "background": 2647276,
+      "patch": 66978,
+      "released": 5393,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 13000,
+      "gaussians": 2075065,
+      "background": 2011636,
+      "patch": 59517,
+      "released": 3912,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r7",
+      "iteration": 14000,
+      "gaussians": 3813383,
+      "background": 3743829,
+      "patch": 64734,
+      "released": 4820,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 1000,
+      "gaussians": 436432,
+      "background": 404759,
+      "patch": 26798,
+      "released": 4875,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 2000,
+      "gaussians": 480282,
+      "background": 448649,
+      "patch": 25898,
+      "released": 5735,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 3000,
+      "gaussians": 836767,
+      "background": 802840,
+      "patch": 27526,
+      "released": 6401,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 4000,
+      "gaussians": 652368,
+      "background": 619743,
+      "patch": 26922,
+      "released": 5703,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 5000,
+      "gaussians": 960384,
+      "background": 921619,
+      "patch": 32208,
+      "released": 6557,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 6000,
+      "gaussians": 1295940,
+      "background": 1249537,
+      "patch": 38935,
+      "released": 7468,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 7000,
+      "gaussians": 1015746,
+      "background": 973505,
+      "patch": 37325,
+      "released": 4916,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 8000,
+      "gaussians": 1355688,
+      "background": 1306012,
+      "patch": 43799,
+      "released": 5877,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "r6",
+      "iteration": 9000,
+      "gaussians": 1740259,
+      "background": 1681997,
+      "patch": 51333,
+      "released": 6929,
+      "lineage_status": "available",
+      "peak_cuda_allocated_GiB": null,
+      "peak_cuda_reserved_GiB": null
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 1000,
+      "gaussians": 104220,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 4.93402624130249,
+      "peak_cuda_reserved_GiB": 4.986328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 2000,
+      "gaussians": 171487,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 4.991563320159912,
+      "peak_cuda_reserved_GiB": 5.060546875
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 3000,
+      "gaussians": 573110,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 5.735042572021484,
+      "peak_cuda_reserved_GiB": 5.83203125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 4000,
+      "gaussians": 510831,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 5.735042572021484,
+      "peak_cuda_reserved_GiB": 5.9296875
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 5000,
+      "gaussians": 816755,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 6.292385578155518,
+      "peak_cuda_reserved_GiB": 6.384765625
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 6000,
+      "gaussians": 1155819,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 6.8932785987854,
+      "peak_cuda_reserved_GiB": 7.1015625
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 7000,
+      "gaussians": 980818,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 6.8932785987854,
+      "peak_cuda_reserved_GiB": 7.1015625
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 8000,
+      "gaussians": 1309648,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 7.195048809051514,
+      "peak_cuda_reserved_GiB": 7.4296875
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 9000,
+      "gaussians": 1675995,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 7.888494491577148,
+      "peak_cuda_reserved_GiB": 8.03515625
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 10000,
+      "gaussians": 1385296,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 7.888494491577148,
+      "peak_cuda_reserved_GiB": 8.03515625
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 11000,
+      "gaussians": 1793357,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 8.188784122467041,
+      "peak_cuda_reserved_GiB": 8.5234375
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 12000,
+      "gaussians": 2232152,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 8.989515781402588,
+      "peak_cuda_reserved_GiB": 9.185546875
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 13000,
+      "gaussians": 1743577,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 8.989515781402588,
+      "peak_cuda_reserved_GiB": 9.185546875
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 14000,
+      "gaussians": 2252255,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 9.140388011932373,
+      "peak_cuda_reserved_GiB": 9.478515625
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 15000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 16000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 17000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 18000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 19000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 20000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 21000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 22000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 23000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 24000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 25000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 26000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 27000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 28000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 29000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    },
+    {
+      "method": "nojudge_ALS_s0",
+      "iteration": 30000,
+      "gaussians": 2796061,
+      "background": null,
+      "patch": null,
+      "released": null,
+      "lineage_status": "not recorded; protected count is not a lineage tag",
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    }
+  ],
+  "baseline_14000_to15000": [
+    {
+      "iteration": 14000,
+      "gaussians": 2252255,
+      "peak_cuda_allocated_GiB": 9.140388011932373,
+      "peak_cuda_reserved_GiB": 9.478515625
+    },
+    {
+      "iteration": 14100,
+      "gaussians": 2316383,
+      "peak_cuda_allocated_GiB": 9.140388011932373,
+      "peak_cuda_reserved_GiB": 9.478515625
+    },
+    {
+      "iteration": 14200,
+      "gaussians": 2370005,
+      "peak_cuda_allocated_GiB": 9.140388011932373,
+      "peak_cuda_reserved_GiB": 9.478515625
+    },
+    {
+      "iteration": 14300,
+      "gaussians": 2438922,
+      "peak_cuda_allocated_GiB": 9.140388011932373,
+      "peak_cuda_reserved_GiB": 9.478515625
+    },
+    {
+      "iteration": 14400,
+      "gaussians": 2483236,
+      "peak_cuda_allocated_GiB": 9.140388011932373,
+      "peak_cuda_reserved_GiB": 9.478515625
+    },
+    {
+      "iteration": 14500,
+      "gaussians": 2548566,
+      "peak_cuda_allocated_GiB": 9.663501262664795,
+      "peak_cuda_reserved_GiB": 10.259765625
+    },
+    {
+      "iteration": 14600,
+      "gaussians": 2602713,
+      "peak_cuda_allocated_GiB": 9.663501262664795,
+      "peak_cuda_reserved_GiB": 10.259765625
+    },
+    {
+      "iteration": 14700,
+      "gaussians": 2665420,
+      "peak_cuda_allocated_GiB": 9.663501262664795,
+      "peak_cuda_reserved_GiB": 10.259765625
+    },
+    {
+      "iteration": 14800,
+      "gaussians": 2728114,
+      "peak_cuda_allocated_GiB": 9.663501262664795,
+      "peak_cuda_reserved_GiB": 10.259765625
+    },
+    {
+      "iteration": 14900,
+      "gaussians": 2796061,
+      "peak_cuda_allocated_GiB": 9.663501262664795,
+      "peak_cuda_reserved_GiB": 10.259765625
+    },
+    {
+      "iteration": 15000,
+      "gaussians": 2796061,
+      "peak_cuda_allocated_GiB": 10.223252773284912,
+      "peak_cuda_reserved_GiB": 10.611328125
+    }
+  ],
+  "r7_14100": [
+    {
+      "tag": "background",
+      "count_14100": 4053318,
+      "count_6000": 1289800,
+      "multiple": 3.142594200651264
+    },
+    {
+      "tag": "patch",
+      "count_14100": 64904,
+      "count_6000": 40612,
+      "multiple": 1.5981483305426967
+    },
+    {
+      "tag": "released",
+      "count_14100": 4859,
+      "count_6000": 4941,
+      "multiple": 0.983404169196519
+    }
+  ],
+  "r7_total_14100": 4123081,
+  "r7_total_6000": 1335353,
+  "r7_total_multiple": 3.0876337567669374,
+  "same_iteration_comparison": [
+    {
+      "iteration": 14000,
+      "r7": 3813383,
+      "baseline": 2252255,
+      "multiple_r7_over_baseline": 1.6931399863692167,
+      "difference": 1561128,
+      "relative_increase_pct": 69.31399863692167
+    },
+    {
+      "iteration": 14100,
+      "r7": 4123081,
+      "baseline": 2316383,
+      "multiple_r7_over_baseline": 1.7799651439334514,
+      "difference": 1806698,
+      "relative_increase_pct": 77.99651439334514
+    }
+  ],
+  "baseline_peak_note": "GPU peak counters are cumulative since process start at each logged iteration; not isolated interval peaks",
+  "causal_identification": "not determined by these recorded comparisons; no same-seed replicate training performed",
+  "als_training": "NOT_RESTARTED; submit recorded count difference for decision under 21:50 item 3",
+  "scientific_verdict": null
+}

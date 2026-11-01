@@ -1,0 +1,37 @@
+{
+  "geometry_checks": [
+    true,
+    true,
+    true
+  ],
+  "iteration": 15000,
+  "at": "2026-11-02T02:18:45.810261+09:00",
+  "status": "PASS_POST_RECOUNT_AND_RAYS",
+  "prior": "ALS",
+  "floating_area_m2": 60.56056271395195,
+  "evaluation_area_m2": 2003.8663830326796,
+  "floating_fraction": 0.03022185671995692,
+  "ray_samples": 2048,
+  "max_ray_difference_m": 0.0,
+  "origin_areas": [
+    {
+      "group": "all_floating",
+      "area_m2": 70.31017564573774,
+      "background_dominant_area_m2": 18.915158482725754,
+      "released_dominant_area_m2": 12.951663478945576,
+      "origin_unavailable_area_m2": 6.879724722731939
+    },
+    {
+      "group": "cell_0_3_floating",
+      "area_m2": 60.56056271395195,
+      "background_dominant_area_m2": 16.17845182697748,
+      "released_dominant_area_m2": 11.2109703943362,
+      "origin_unavailable_area_m2": 6.413065769027265
+    }
+  ],
+  "mesh_sha256": "c7027b29a116f55ebdf46b4dfed361bb1e9c1c359eca033981a5db6deb4d896b",
+  "score_sha256": "bc9223ef50f70e260a5a52bc3dd38f03f404e6bd5733cd4b8e4ee4cd837d9296",
+  "patch_z_sha256": "752334d9cebcf7d78721c01cc46fa4b7833e055d8ba51435b00c8b318550e770",
+  "attribution_sha256": "69152b1f4509f04dcf8dbffdf2c1818d31c55d8ac9c3a533d43d5328ec74edf4",
+  "scientific_verdict": null
+}

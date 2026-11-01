@@ -1,0 +1,1773 @@
+{
+  "title": "ALS · current: 참값 기준 평균 거리, cm",
+  "values": {
+    "rows": [
+      {
+        "label": "r6 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": 0.8347850776078579,
+            "P_tau": 0.5679311831910158,
+            "gt_mean": 11.233963045517187,
+            "res_mean": 30.418872812546343,
+            "floating": 0.10675597442835216,
+            "missing": 0.024458979528654435
+          },
+          "c_refine": {
+            "R_tau": 0.9822922172818009,
+            "P_tau": 0.6805928423069845,
+            "gt_mean": 3.634561572788095,
+            "res_mean": 20.900271152833703,
+            "floating": 0.04047746706380056,
+            "missing": 0.00022945566338279045
+          },
+          "c_corr14": {
+            "R_tau": 0.7526595744680851,
+            "P_tau": 0.3982525900078444,
+            "gt_mean": 10.717321536693373,
+            "res_mean": 53.77063050655995,
+            "floating": 0.1368200684334843,
+            "missing": 0.022185800299749477
+          },
+          "c_corr4p": {
+            "R_tau": 0.9274684087649319,
+            "P_tau": 0.6244187404565293,
+            "gt_mean": 6.431564090767574,
+            "res_mean": 44.50944635762618,
+            "floating": 0.14276114002462664,
+            "missing": 0.0388098637719084
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.8975845410628019,
+            "gt_mean": 94.35496358376629,
+            "res_mean": 4.819144797048787,
+            "floating": 0.7088540435706818,
+            "missing": 0.0
+          },
+          "c_keep_in": {
+            "R_tau": 0.8073611708996986,
+            "P_tau": 0.6582714348959614,
+            "gt_mean": 10.130032901359435,
+            "res_mean": 19.03373899292088,
+            "floating": 0.044288893336024725,
+            "missing": 0.0
+          },
+          "c_limit": {
+            "R_tau": 0.36242321542046174,
+            "P_tau": 0.5634346324753402,
+            "gt_mean": 26.662889725472272,
+            "res_mean": 29.959859936642015,
+            "floating": 0.0899428671228184,
+            "missing": 0.008231182193967642
+          },
+          "c_double": {
+            "R_tau": 0.5639520421869558,
+            "P_tau": 0.45211594990666504,
+            "gt_mean": 18.033287248406427,
+            "res_mean": 36.42866702824713,
+            "floating": 0.17759015682830293,
+            "missing": 0.052326013339153106
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.5989304812834224,
+            "gt_mean": 50.3250128030777,
+            "res_mean": 40.85932485454213,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9433962264150944,
+            "P_tau": 0.3185374875515721,
+            "gt_mean": 7.713067157519103,
+            "res_mean": 89.50888359326082,
+            "floating": 0.0,
+            "missing": 0.0
+          },
+          "c_inh_invis": {
+            "R_tau": 0.0,
+            "P_tau": 0.25092250922509224,
+            "gt_mean": 30.202732980251312,
+            "res_mean": 27.66897056645276,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": 0.6560517799352751,
+            "P_tau": 0.5485231868247769,
+            "gt_mean": 14.854213599730004,
+            "res_mean": 26.994383722760507,
+            "floating": 0.09611599369791143,
+            "missing": 0.01612110643574189
+          }
+        }
+      },
+      {
+        "label": "기준선 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": 0.8033879300483239,
+            "P_tau": 0.619638184462266,
+            "gt_mean": 11.979393217928337,
+            "res_mean": 23.689650603343434,
+            "floating": 0.12266644912428606,
+            "missing": 0.028055786733327676
+          },
+          "c_refine": {
+            "R_tau": 0.9500481950188117,
+            "P_tau": 0.6996418760517195,
+            "gt_mean": 6.566246817403052,
+            "res_mean": 18.802337550171146,
+            "floating": 0.053870209095670835,
+            "missing": 0.0
+          },
+          "c_corr14": {
+            "R_tau": 0.7819148936170213,
+            "P_tau": 0.6392937947405511,
+            "gt_mean": 9.571978160695041,
+            "res_mean": 22.376689694442366,
+            "floating": 0.14281387535501075,
+            "missing": 0.01766449869846007
+          },
+          "c_corr4p": {
+            "R_tau": 0.8864600018844813,
+            "P_tau": 0.6220322202041794,
+            "gt_mean": 7.227404534012044,
+            "res_mean": 31.548500192374917,
+            "floating": 0.14141912412456972,
+            "missing": 0.047603262429022054
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.9800524934383202,
+            "gt_mean": 78.78055330717338,
+            "res_mean": 1.943542815522893,
+            "floating": 0.7088540435706818,
+            "missing": 0.0
+          },
+          "c_keep_in": {
+            "R_tau": 0.590830822212656,
+            "P_tau": 0.6312937884265785,
+            "gt_mean": 14.039678203575425,
+            "res_mean": 21.05748007979547,
+            "floating": 0.10815880922248884,
+            "missing": 0.0
+          },
+          "c_limit": {
+            "R_tau": 0.29633552213514086,
+            "P_tau": 0.5867926733078204,
+            "gt_mean": 24.495879094404728,
+            "res_mean": 23.356154457958763,
+            "floating": 0.14816605557534834,
+            "missing": 0.008231182193967642
+          },
+          "c_double": {
+            "R_tau": 0.5374359484602756,
+            "P_tau": 0.5656624127223449,
+            "gt_mean": 19.162304602335855,
+            "res_mean": 25.782852540735057,
+            "floating": 0.18439458140336573,
+            "missing": 0.04961528754401205
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 1.0,
+            "gt_mean": 55.97837209701538,
+            "res_mean": 2.7707791527129966,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9622641509433962,
+            "P_tau": 0.5113345832623146,
+            "gt_mean": 6.242779260589126,
+            "res_mean": 65.34648734155898,
+            "floating": 0.12050593876449275,
+            "missing": 0.0
+          },
+          "c_inh_invis": {
+            "R_tau": 0.0,
+            "P_tau": 0.41924227318045865,
+            "gt_mean": 33.361050486564636,
+            "res_mean": 21.216947604757266,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": 0.5175404530744336,
+            "P_tau": 0.6024342399896638,
+            "gt_mean": 16.832372174659664,
+            "res_mean": 22.52918255909796,
+            "floating": 0.183210555101832,
+            "missing": 0.015662570463371207
+          }
+        }
+      },
+      {
+        "label": "r7 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": 0.8292204586701184,
+            "P_tau": 0.5324242721175164,
+            "gt_mean": 11.784711289580688,
+            "res_mean": 43.50208299074387,
+            "floating": 0.26516622943085333,
+            "missing": 0.021297031487698615
+          },
+          "c_refine": {
+            "R_tau": 0.9806908989148347,
+            "P_tau": 0.6505783058079435,
+            "gt_mean": 3.72773850818278,
+            "res_mean": 29.066098936498737,
+            "floating": 0.08887923282079443,
+            "missing": 0.0002396225326978896
+          },
+          "c_corr14": {
+            "R_tau": 0.7021276595744681,
+            "P_tau": 0.465637310073157,
+            "gt_mean": 11.751710990894084,
+            "res_mean": 49.98827058568786,
+            "floating": 0.3014225787219327,
+            "missing": 0.0
+          },
+          "c_corr4p": {
+            "R_tau": 0.9337290744056032,
+            "P_tau": 0.5342575926559848,
+            "gt_mean": 6.357166370965736,
+            "res_mean": 58.709219429925085,
+            "floating": 0.3303657365286175,
+            "missing": 0.03474955995126609
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.9216052263182455,
+            "gt_mean": 106.85236521486968,
+            "res_mean": 4.956557982790471,
+            "floating": 0.7088540435706818,
+            "missing": 0.0
+          },
+          "c_keep_in": {
+            "R_tau": 0.7626990959965562,
+            "P_tau": 0.6208564096927878,
+            "gt_mean": 10.46075574794123,
+            "res_mean": 21.293604450027143,
+            "floating": 0.2912137274088981,
+            "missing": 0.0
+          },
+          "c_limit": {
+            "R_tau": 0.4092353314975641,
+            "P_tau": 0.5602346104907905,
+            "gt_mean": 26.554270040273725,
+            "res_mean": 24.074782770750478,
+            "floating": 0.24588937681263798,
+            "missing": 0.008231182193967642
+          },
+          "c_double": {
+            "R_tau": 0.5680811899905477,
+            "P_tau": 0.42509535284766575,
+            "gt_mean": 18.468058295029994,
+            "res_mean": 39.478859860000235,
+            "floating": 0.3463075762525053,
+            "missing": 0.04064570276675101
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.5641025641025641,
+            "gt_mean": 84.66877102851868,
+            "res_mean": 10.734624337279595,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9433962264150944,
+            "P_tau": 0.3940634595701126,
+            "gt_mean": 7.295127051777013,
+            "res_mean": 67.19876717957585,
+            "floating": 0.0,
+            "missing": 0.0
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.36936398925052255,
+            "gt_mean": 5.949154496192932,
+            "res_mean": 22.519808988121206,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": 0.6541747572815534,
+            "P_tau": 0.5198011848343089,
+            "gt_mean": 14.981482897467908,
+            "res_mean": 28.312699747078167,
+            "floating": 0.4084092172783395,
+            "missing": 0.01469226817689685
+          }
+        }
+      },
+      {
+        "label": "r7 15,000회 (모델 없음)",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_refine": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_corr14": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_corr4p": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_keep_mask": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_keep_in": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_limit": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_double": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_inh_miss": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_inh_invis": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          }
+        }
+      },
+      {
+        "label": "r7 30,000회 (모델 없음)",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_refine": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_corr14": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_corr4p": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_keep_mask": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_keep_in": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_limit": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_double": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_inh_miss": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_inh_invis": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          }
+        }
+      },
+      {
+        "label": "기준선 30,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": 0.867618596617429,
+            "P_tau": 0.7815398348856268,
+            "gt_mean": 11.5290032595417,
+            "res_mean": 14.313078460637632,
+            "floating": 0.030999087499726345,
+            "missing": 0.019656353145319137
+          },
+          "c_refine": {
+            "R_tau": 0.9884021019246914,
+            "P_tau": 0.8537155651039989,
+            "gt_mean": 6.782279625266109,
+            "res_mean": 10.031282418717366,
+            "floating": 0.015287912042443634,
+            "missing": 0.0
+          },
+          "c_corr14": {
+            "R_tau": 0.8789893617021277,
+            "P_tau": 0.866842626195975,
+            "gt_mean": 7.297606463873037,
+            "res_mean": 8.824385619889135,
+            "floating": 0.07957889686824851,
+            "missing": 0.0
+          },
+          "c_corr4p": {
+            "R_tau": 0.982610425369306,
+            "P_tau": 0.8030881108851426,
+            "gt_mean": 4.848881954361435,
+            "res_mean": 19.125859748141373,
+            "floating": 0.0303765475861958,
+            "missing": 0.03352032544209888
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.9994747899159664,
+            "gt_mean": 98.31900725949485,
+            "res_mean": 1.5253607609765998,
+            "floating": 0.7088540435706818,
+            "missing": 0.0
+          },
+          "c_keep_in": {
+            "R_tau": 0.6330176495910461,
+            "P_tau": 0.7953803604534541,
+            "gt_mean": 14.01767328054807,
+            "res_mean": 13.160831258236918,
+            "floating": 0.05211862189019426,
+            "missing": 0.0
+          },
+          "c_limit": {
+            "R_tau": 0.14636729506460497,
+            "P_tau": 0.6756280381461278,
+            "gt_mean": 31.239261849079792,
+            "res_mean": 18.198120893877903,
+            "floating": 0.07456469634245531,
+            "missing": 0.008231182193967642
+          },
+          "c_double": {
+            "R_tau": 0.5360927317048904,
+            "P_tau": 0.7853172990262781,
+            "gt_mean": 21.392002201842246,
+            "res_mean": 12.066791104383883,
+            "floating": 0.03445463767316267,
+            "missing": 0.03238171445588745
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 1.0,
+            "gt_mean": 63.96458983421326,
+            "res_mean": 2.2413163172918216,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9811320754716981,
+            "P_tau": 0.5708061002178649,
+            "gt_mean": 5.502783907890399,
+            "res_mean": 54.168945890771084,
+            "floating": 0.0,
+            "missing": 0.0
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.6133250311332503,
+            "gt_mean": 0.1670879137236625,
+            "res_mean": 14.548843816213921,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": 0.5986407766990292,
+            "P_tau": 0.735864969400796,
+            "gt_mean": 16.248633452579945,
+            "res_mean": 15.747774861998545,
+            "floating": 0.05921469454430128,
+            "missing": 0.012470076436474463
+          }
+        }
+      },
+      {
+        "label": "r8 7,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": 0.846436046817207,
+            "P_tau": 0.5736363289770416,
+            "gt_mean": 11.735515373127834,
+            "res_mean": 30.537791223887726,
+            "floating": 0.053698987114619574,
+            "missing": 0.03166797975408686
+          },
+          "c_refine": {
+            "R_tau": 0.9886353036286185,
+            "P_tau": 0.6962361362084583,
+            "gt_mean": 3.281219788458975,
+            "res_mean": 19.733590056007998,
+            "floating": 0.03220275973985104,
+            "missing": 0.0
+          },
+          "c_corr14": {
+            "R_tau": 0.7912234042553191,
+            "P_tau": 0.5531357510336774,
+            "gt_mean": 10.29607518474977,
+            "res_mean": 40.0814448782981,
+            "floating": 0.09835089331819484,
+            "missing": 0.01766449869846007
+          },
+          "c_corr4p": {
+            "R_tau": 0.937215364804171,
+            "P_tau": 0.6268969977947944,
+            "gt_mean": 6.235704351746428,
+            "res_mean": 33.99350453583162,
+            "floating": 0.058523099485904305,
+            "missing": 0.05265044104500221
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.7655145326001571,
+            "gt_mean": 50.972528080895266,
+            "res_mean": 10.80974861638885,
+            "floating": 0.7088540435706818,
+            "missing": 0.0
+          },
+          "c_keep_in": {
+            "R_tau": 0.8678433060697374,
+            "P_tau": 0.6642510338017158,
+            "gt_mean": 8.685997814262787,
+            "res_mean": 20.565610898268456,
+            "floating": 0.037941301373461044,
+            "missing": 0.0
+          },
+          "c_limit": {
+            "R_tau": 0.4905740309256513,
+            "P_tau": 0.5578920110485499,
+            "gt_mean": 22.38179543159085,
+            "res_mean": 27.14269739507874,
+            "floating": 0.07782393629268715,
+            "missing": 0.008231182193967642
+          },
+          "c_double": {
+            "R_tau": 0.5824585841500423,
+            "P_tau": 0.44029585356286505,
+            "gt_mean": 17.721471819994893,
+            "res_mean": 38.94500459555984,
+            "floating": 0.07891752182051202,
+            "missing": 0.060751280910998656
+          },
+          "c_inh_miss": {
+            "R_tau": 0.2,
+            "P_tau": 0.8616352201257862,
+            "gt_mean": 21.365332007408142,
+            "res_mean": 7.520359984720594,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.8679245283018868,
+            "P_tau": 0.36316039980961445,
+            "gt_mean": 8.766513184275267,
+            "res_mean": 87.47629985602454,
+            "floating": 0.0,
+            "missing": 0.0
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.4956862745098039,
+            "gt_mean": 6.3446760177612305,
+            "res_mean": 61.185423047203834,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": 0.7365695792880259,
+            "P_tau": 0.553860425518244,
+            "gt_mean": 12.51694160151735,
+            "res_mean": 29.10131555689856,
+            "floating": 0.07182347174125155,
+            "missing": 0.01822635644805283
+          }
+        }
+      },
+      {
+        "label": "r8 15,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": 0.8790229994630676,
+            "P_tau": 0.7225884599905286,
+            "gt_mean": 10.483531755369677,
+            "res_mean": 17.324736617319953,
+            "floating": 0.03185604076419929,
+            "missing": 0.020323841748372068
+          },
+          "c_refine": {
+            "R_tau": 0.9944342526662728,
+            "P_tau": 0.8227301526905575,
+            "gt_mean": 2.715098096960545,
+            "res_mean": 12.494216604751871,
+            "floating": 0.020439782883343836,
+            "missing": 0.0
+          },
+          "c_corr14": {
+            "R_tau": 0.7779255319148937,
+            "P_tau": 0.4848627167630058,
+            "gt_mean": 9.31015210151677,
+            "res_mean": 35.24634357497601,
+            "floating": 0.1017760044870294,
+            "missing": 0.0
+          },
+          "c_corr4p": {
+            "R_tau": 0.9690421600343394,
+            "P_tau": 0.7970144122262703,
+            "gt_mean": 5.711127332362043,
+            "res_mean": 19.659911226540036,
+            "floating": 0.029931295133175072,
+            "missing": 0.03419735070284406
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.8533272974196469,
+            "gt_mean": 110.92638991913705,
+            "res_mean": 4.91372576400885,
+            "floating": 0.7088540435706818,
+            "missing": 0.0
+          },
+          "c_keep_in": {
+            "R_tau": 0.8896900559621179,
+            "P_tau": 0.7974718791514146,
+            "gt_mean": 8.814285856466439,
+            "res_mean": 12.251981405121377,
+            "floating": 0.046656480142895126,
+            "missing": 0.0
+          },
+          "c_limit": {
+            "R_tau": 0.4494810421520864,
+            "P_tau": 0.6863834023157123,
+            "gt_mean": 28.654251323726804,
+            "res_mean": 18.628398629223522,
+            "floating": 0.07339729143517065,
+            "missing": 0.008231182193967642
+          },
+          "c_double": {
+            "R_tau": 0.5861897418038904,
+            "P_tau": 0.6128177975856132,
+            "gt_mean": 19.342652890669598,
+            "res_mean": 21.33312418037294,
+            "floating": 0.042999136392415926,
+            "missing": 0.036068277303614636
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.9791666666666666,
+            "gt_mean": 92.45194673538208,
+            "res_mean": 2.545509355210622,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9622641509433962,
+            "P_tau": 0.4808046940486169,
+            "gt_mean": 7.249757317158412,
+            "res_mean": 63.26530346779665,
+            "floating": 0.0,
+            "missing": 0.0
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.4308275426405559,
+            "gt_mean": 8.670167252421379,
+            "res_mean": 28.40587034434778,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": 0.7693851132686084,
+            "P_tau": 0.7028877601019522,
+            "gt_mean": 13.363298711255823,
+            "res_mean": 16.2490487652084,
+            "floating": 0.04754293044164643,
+            "missing": 0.01247058768850704
+          }
+        }
+      },
+      {
+        "label": "r8 30,000회",
+        "source": "requested checkpoint",
+        "values": {
+          "all": {
+            "R_tau": 0.8846347674546828,
+            "P_tau": 0.7262075367315541,
+            "gt_mean": 9.932844865494548,
+            "res_mean": 17.21441841224172,
+            "floating": 0.02602921384417103,
+            "missing": 0.020062416128852668
+          },
+          "c_refine": {
+            "R_tau": 0.9958490096700974,
+            "P_tau": 0.8236455589179937,
+            "gt_mean": 2.418032313748478,
+            "res_mean": 11.064393128871373,
+            "floating": 0.018229851319805042,
+            "missing": 0.0
+          },
+          "c_corr14": {
+            "R_tau": 0.8045212765957447,
+            "P_tau": 0.5348217389624937,
+            "gt_mean": 8.839226501291183,
+            "res_mean": 28.849643913121476,
+            "floating": 0.036400349609503675,
+            "missing": 0.0
+          },
+          "c_corr4p": {
+            "R_tau": 0.9815530219751458,
+            "P_tau": 0.7933790554392061,
+            "gt_mean": 5.158070038295514,
+            "res_mean": 19.535780329715756,
+            "floating": 0.023902222433296177,
+            "missing": 0.03377742085966481
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.8655383168782322,
+            "gt_mean": 104.77256819886982,
+            "res_mean": 7.117752327722007,
+            "floating": 0.7088540435706818,
+            "missing": 0.0
+          },
+          "c_keep_in": {
+            "R_tau": 0.900990099009901,
+            "P_tau": 0.8068512557869342,
+            "gt_mean": 7.925430740065988,
+            "res_mean": 11.46935570758334,
+            "floating": 0.025476189389489385,
+            "missing": 0.0
+          },
+          "c_limit": {
+            "R_tau": 0.47532302478288496,
+            "P_tau": 0.7118657526269818,
+            "gt_mean": 27.390572587239348,
+            "res_mean": 16.955317208196067,
+            "floating": 0.06175953505449042,
+            "missing": 0.008231182193967642
+          },
+          "c_double": {
+            "R_tau": 0.5323615740510422,
+            "P_tau": 0.5905523329217727,
+            "gt_mean": 20.862698531680664,
+            "res_mean": 23.60282088779547,
+            "floating": 0.035203174468624504,
+            "missing": 0.03399230429238236
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.8604651162790697,
+            "gt_mean": 89.24792766571045,
+            "res_mean": 15.285930683862963,
+            "floating": null,
+            "missing": null
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9622641509433962,
+            "P_tau": 0.45297780616318056,
+            "gt_mean": 6.557719755636633,
+            "res_mean": 74.50023282858281,
+            "floating": 0.0,
+            "missing": 0.0
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.6511794138670479,
+            "gt_mean": 6.120094284415245,
+            "res_mean": 15.756603873941366,
+            "floating": null,
+            "missing": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null,
+            "floating": null,
+            "missing": null
+          },
+          "c_nogt": {
+            "R_tau": 0.7880258899676376,
+            "P_tau": 0.7207999027473864,
+            "gt_mean": 12.466217265098189,
+            "res_mean": 15.901072673618021,
+            "floating": 0.04316473244323429,
+            "missing": 0.013900220732188544
+          }
+        }
+      },
+      {
+        "label": "참고 samepath_ALS",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.5024445367386459,
+            "P_tau": 0.43562448891648203,
+            "gt_mean": 98.43508997217619,
+            "res_mean": 72.03893783123357
+          },
+          "c_refine": {
+            "R_tau": 0.9986629768974845,
+            "P_tau": 0.6340736005164077,
+            "gt_mean": 2.019344144785109,
+            "res_mean": 18.672527605007264
+          },
+          "c_corr14": {
+            "R_tau": 0.35638297872340424,
+            "P_tau": 0.3613274635963427,
+            "gt_mean": 18.999797936115275,
+            "res_mean": 23.008457747455545
+          },
+          "c_corr4p": {
+            "R_tau": 0.003863186657872421,
+            "P_tau": 0.08565216583353465,
+            "gt_mean": 241.97442541997182,
+            "res_mean": 282.2449092222628
+          },
+          "c_keep_mask": {
+            "R_tau": 0.9622641509433962,
+            "P_tau": 0.5263967196309585,
+            "gt_mean": 6.909683913449352,
+            "res_mean": 22.730976966987345
+          },
+          "c_keep_in": {
+            "R_tau": 0.9890228153250108,
+            "P_tau": 0.5217814070223846,
+            "gt_mean": 3.071873319635107,
+            "res_mean": 22.508093484762224
+          },
+          "c_limit": {
+            "R_tau": 0.9449269222622326,
+            "P_tau": 0.5462572019175793,
+            "gt_mean": 4.914507157154908,
+            "res_mean": 32.17316249101696
+          },
+          "c_double": {
+            "R_tau": 0.027660315407193672,
+            "P_tau": 0.31301908317316013,
+            "gt_mean": 162.00441064456356,
+            "res_mean": 80.72294012687719
+          },
+          "c_inh_miss": {
+            "R_tau": 1.0,
+            "P_tau": 0.6212121212121212,
+            "gt_mean": 4.426267519593239,
+            "res_mean": 22.438460496734038
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.07547169811320754,
+            "P_tau": 0.2410453216374269,
+            "gt_mean": 179.41999390440168,
+            "res_mean": 84.5958919605075
+          },
+          "c_inh_invis": {
+            "R_tau": 0.0,
+            "P_tau": 0.08235294117647059,
+            "gt_mean": 22.240468859672546,
+            "res_mean": 41.792926489868584
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.803042071197411,
+            "P_tau": 0.4136311230740421,
+            "gt_mean": 12.171176780387276,
+            "res_mean": 48.311724282304965
+          }
+        }
+      },
+      {
+        "label": "참고 geogs_ALS_fix1",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.5474095330749325,
+            "P_tau": 0.47920042874658025,
+            "gt_mean": 20.27886736533195,
+            "res_mean": 41.910165687878816
+          },
+          "c_refine": {
+            "R_tau": 0.4534529398961475,
+            "P_tau": 0.4623468508078966,
+            "gt_mean": 19.8831064796746,
+            "res_mean": 39.537600189689584
+          },
+          "c_corr14": {
+            "R_tau": 0.42686170212765956,
+            "P_tau": 0.5167986304301305,
+            "gt_mean": 19.573778757953832,
+            "res_mean": 21.505135856096988
+          },
+          "c_corr4p": {
+            "R_tau": 0.7324245945747877,
+            "P_tau": 0.41411515177053926,
+            "gt_mean": 11.478166507128655,
+            "res_mean": 70.93715420686244
+          },
+          "c_keep_mask": {
+            "R_tau": 0.8490566037735849,
+            "P_tau": 0.7509140767824497,
+            "gt_mean": 7.581897302671282,
+            "res_mean": 12.765642380519376
+          },
+          "c_keep_in": {
+            "R_tau": 0.3991605682307361,
+            "P_tau": 0.5726966620102996,
+            "gt_mean": 20.82098769714569,
+            "res_mean": 26.69142660395165
+          },
+          "c_limit": {
+            "R_tau": 0.38021605592035584,
+            "P_tau": 0.5636451406050738,
+            "gt_mean": 20.911301909925346,
+            "res_mean": 25.24771763869065
+          },
+          "c_double": {
+            "R_tau": 0.5368887120043779,
+            "P_tau": 0.6015459944989968,
+            "gt_mean": 19.83960269157378,
+            "res_mean": 28.36536878398382
+          },
+          "c_inh_miss": {
+            "R_tau": 0.6,
+            "P_tau": 0.26264591439688717,
+            "gt_mean": 12.158567607402802,
+            "res_mean": 33.93845258138853
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.5660377358490566,
+            "P_tau": 0.3476011288805268,
+            "gt_mean": 19.58899722909028,
+            "res_mean": 65.92820957089197
+          },
+          "c_inh_invis": {
+            "R_tau": 0.0,
+            "P_tau": 0.22832980972515857,
+            "gt_mean": 64.89333808422089,
+            "res_mean": 59.0148152153089
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.47488673139158577,
+            "P_tau": 0.4481031295555615,
+            "gt_mean": 18.538798644184517,
+            "res_mean": 36.742204975501295
+          }
+        }
+      },
+      {
+        "label": "참고 mvs_a",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.8489867333383488,
+            "P_tau": 0.7403729973743641,
+            "gt_mean": 10.88465983267914,
+            "res_mean": 15.151287387200158
+          },
+          "c_refine": {
+            "R_tau": 0.9785765367992288,
+            "P_tau": 0.8431871057491666,
+            "gt_mean": 6.980249481200603,
+            "res_mean": 10.940524588267222
+          },
+          "c_corr14": {
+            "R_tau": 0.8789893617021277,
+            "P_tau": 0.827772936636375,
+            "gt_mean": 7.239195854689317,
+            "res_mean": 8.561646110334605
+          },
+          "c_corr4p": {
+            "R_tau": 0.9839819089795534,
+            "P_tau": 0.7774202242786086,
+            "gt_mean": 4.776306467173043,
+            "res_mean": 14.706448894046611
+          },
+          "c_keep_mask": {
+            "R_tau": 0.03773584905660377,
+            "P_tau": 0.9132697311361665,
+            "gt_mean": 41.46019356711855,
+            "res_mean": 4.5484125352562685
+          },
+          "c_keep_in": {
+            "R_tau": 0.3934567369780456,
+            "P_tau": 0.6504265402843602,
+            "gt_mean": 16.798326079338505,
+            "res_mean": 16.777141841216146
+          },
+          "c_limit": {
+            "R_tau": 0.17093836051683967,
+            "P_tau": 0.6555462017131997,
+            "gt_mean": 28.84491706350766,
+            "res_mean": 19.508434773634747
+          },
+          "c_double": {
+            "R_tau": 0.39490572608327945,
+            "P_tau": 0.7379741901501186,
+            "gt_mean": 21.94711161040429,
+            "res_mean": 13.541143133302278
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.990909090909091,
+            "gt_mean": 44.61052417755127,
+            "res_mean": 1.3133473299951055
+          },
+          "c_miss_wrong": {
+            "R_tau": 1.0,
+            "P_tau": 0.5448823617563315,
+            "gt_mean": 4.77481109885288,
+            "res_mean": 47.43966779718619
+          },
+          "c_inh_invis": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.5289967637540454,
+            "P_tau": 0.6970416013640796,
+            "gt_mean": 16.87191007584276,
+            "res_mean": 16.60987648492809
+          }
+        }
+      },
+      {
+        "label": "참고 imgonly_2dgs_s0",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.3997773431018615,
+            "P_tau": 0.4199856431272774,
+            "gt_mean": 33.68550469140427,
+            "res_mean": 63.1277725879356
+          },
+          "c_refine": {
+            "R_tau": 0.4052268275240198,
+            "P_tau": 0.4366717129926487,
+            "gt_mean": 21.75084901479197,
+            "res_mean": 67.00126135068187
+          },
+          "c_corr14": {
+            "R_tau": 0.6050531914893617,
+            "P_tau": 0.40144720308505566,
+            "gt_mean": 17.928087663158102,
+            "res_mean": 30.89527919715825
+          },
+          "c_corr4p": {
+            "R_tau": 0.34087125851942585,
+            "P_tau": 0.1750386600490024,
+            "gt_mean": 41.01699544754197,
+            "res_mean": 148.8150370648147
+          },
+          "c_keep_mask": {
+            "R_tau": 0.009433962264150943,
+            "P_tau": 0.37891127303900557,
+            "gt_mean": 54.38796319770363,
+            "res_mean": 19.857055372463975
+          },
+          "c_keep_in": {
+            "R_tau": 0.2601162290142058,
+            "P_tau": 0.5693660299704517,
+            "gt_mean": 28.676849915040215,
+            "res_mean": 23.843608481545285
+          },
+          "c_limit": {
+            "R_tau": 0.12497352255877991,
+            "P_tau": 0.5689897923266456,
+            "gt_mean": 39.84073999364324,
+            "res_mean": 23.247185580277126
+          },
+          "c_double": {
+            "R_tau": 0.43873439132381475,
+            "P_tau": 0.41975070068511433,
+            "gt_mean": 35.43398294641049,
+            "res_mean": 44.097812381420184
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.896,
+            "gt_mean": 49.16978418827057,
+            "res_mean": 8.476295324973762
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.4528301886792453,
+            "P_tau": 0.4411764705882353,
+            "gt_mean": 29.399670213724505,
+            "res_mean": 60.71171488895606
+          },
+          "c_inh_invis": {
+            "R_tau": 0.0,
+            "P_tau": 0.3701948393891522,
+            "gt_mean": 19.330807775259018,
+            "res_mean": 26.678611489459342
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.30414239482200645,
+            "P_tau": 0.5129297480026516,
+            "gt_mean": 27.991209015883072,
+            "res_mean": 34.16342315181709
+          }
+        }
+      },
+      {
+        "label": "참고 mvsfuse_ALS",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.8395927352325556,
+            "P_tau": 0.568607694708776,
+            "gt_mean": 12.464408710107588,
+            "res_mean": 31.45788406843662
+          },
+          "c_refine": {
+            "R_tau": 0.9986007897764373,
+            "P_tau": 0.6453853648703132,
+            "gt_mean": 2.133369925547523,
+            "res_mean": 18.10688078641324
+          },
+          "c_corr14": {
+            "R_tau": 0.4867021276595745,
+            "P_tau": 0.5399024606517402,
+            "gt_mean": 16.157087575726457,
+            "res_mean": 17.380102705994993
+          },
+          "c_corr4p": {
+            "R_tau": 0.9771454296093889,
+            "P_tau": 0.7090792541395051,
+            "gt_mean": 4.936185676801175,
+            "res_mean": 42.70145293695512
+          },
+          "c_keep_mask": {
+            "R_tau": 0.9622641509433962,
+            "P_tau": 0.7596588058203713,
+            "gt_mean": 6.90955188002367,
+            "res_mean": 12.018332084089435
+          },
+          "c_keep_in": {
+            "R_tau": 0.964377959535084,
+            "P_tau": 0.5193546737574146,
+            "gt_mean": 4.480964491410985,
+            "res_mean": 22.44709448550976
+          },
+          "c_limit": {
+            "R_tau": 0.8561745392925227,
+            "P_tau": 0.55386936051561,
+            "gt_mean": 7.52165395443175,
+            "res_mean": 28.903837492288048
+          },
+          "c_double": {
+            "R_tau": 0.3942092433212278,
+            "P_tau": 0.42813147973172405,
+            "gt_mean": 21.817022093900963,
+            "res_mean": 46.227737073337096
+          },
+          "c_inh_miss": {
+            "R_tau": 1.0,
+            "P_tau": 0.8415300546448088,
+            "gt_mean": 4.455063119530678,
+            "res_mean": 9.825079083694604
+          },
+          "c_miss_wrong": {
+            "R_tau": 1.0,
+            "P_tau": 0.4110548271752086,
+            "gt_mean": 4.79796800635017,
+            "res_mean": 63.56347719818021
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.38860103626943004,
+            "gt_mean": 1.0228677652776241,
+            "res_mean": 22.707730062754397
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.8247249190938511,
+            "P_tau": 0.5437312255363049,
+            "gt_mean": 8.208247691281723,
+            "res_mean": 31.215915951238472
+          }
+        }
+      },
+      {
+        "label": "참고 cdgsnofit_ALS_s0",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.18269047444830455,
+            "P_tau": 0.11449913992690366,
+            "gt_mean": 83.40780860871428,
+            "res_mean": 241.67535867305108
+          },
+          "c_refine": {
+            "R_tau": 0.34977146233015144,
+            "P_tau": 0.14922411517640902,
+            "gt_mean": 26.342727888913075,
+            "res_mean": 163.36795921701858
+          },
+          "c_corr14": {
+            "R_tau": 0.2300531914893617,
+            "P_tau": 0.1842636956647232,
+            "gt_mean": 43.53139290565679,
+            "res_mean": 150.4602336863174
+          },
+          "c_corr4p": {
+            "R_tau": 0.028706931750369043,
+            "P_tau": 0.012153372132831223,
+            "gt_mean": 162.88132602501776,
+            "res_mean": 391.6707153869278
+          },
+          "c_keep_mask": {
+            "R_tau": 0.25471698113207547,
+            "P_tau": 0.24294478527607363,
+            "gt_mean": 36.74053544670625,
+            "res_mean": 61.55805465998127
+          },
+          "c_keep_in": {
+            "R_tau": 0.2837925096857512,
+            "P_tau": 0.22126997207343313,
+            "gt_mean": 36.677287677151114,
+            "res_mean": 100.41827755978403
+          },
+          "c_limit": {
+            "R_tau": 0.1590764668502436,
+            "P_tau": 0.1447099557270973,
+            "gt_mean": 41.04666295408401,
+            "res_mean": 110.35230994509868
+          },
+          "c_double": {
+            "R_tau": 0.11258146360877569,
+            "P_tau": 0.15444524455769124,
+            "gt_mean": 103.3801340098996,
+            "res_mean": 228.81545024520133
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.0,
+            "gt_mean": 42.50111937522888,
+            "res_mean": 69.74787739190188
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.03773584905660377,
+            "P_tau": 0.020311442112389978,
+            "gt_mean": 130.4108351047309,
+            "res_mean": 174.67204068614626
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.21770227983907017,
+            "gt_mean": 9.729370102286339,
+            "res_mean": 100.66978077058566
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.25605177993527506,
+            "P_tau": 0.13403716788363124,
+            "gt_mean": 40.6211461349698,
+            "res_mean": 160.1749067793584
+          }
+        }
+      },
+      {
+        "label": "참고 prop_ALS_s0",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.8629722248273005,
+            "P_tau": 0.7673426924586807,
+            "gt_mean": 11.83393503473743,
+            "res_mean": 13.952803975222603
+          },
+          "c_refine": {
+            "R_tau": 0.9865986754143217,
+            "P_tau": 0.8497160196063176,
+            "gt_mean": 6.756578217803601,
+            "res_mean": 10.297245633830626
+          },
+          "c_corr14": {
+            "R_tau": 0.875,
+            "P_tau": 0.8398479188900747,
+            "gt_mean": 7.403737365861006,
+            "res_mean": 8.116764654841994
+          },
+          "c_corr4p": {
+            "R_tau": 0.983353748547379,
+            "P_tau": 0.797025852335297,
+            "gt_mean": 4.8431955689298,
+            "res_mean": 17.233862901478165
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.9858786610878661,
+            "gt_mean": 95.18948683761201,
+            "res_mean": 2.2358841954029463
+          },
+          "c_keep_in": {
+            "R_tau": 0.600731812311666,
+            "P_tau": 0.7867142566530431,
+            "gt_mean": 14.660890777603736,
+            "res_mean": 12.548764873946256
+          },
+          "c_limit": {
+            "R_tau": 0.1012497352255878,
+            "P_tau": 0.6539813098548038,
+            "gt_mean": 36.103388531273545,
+            "res_mean": 17.273155212815396
+          },
+          "c_double": {
+            "R_tau": 0.5282324262474504,
+            "P_tau": 0.7712912754226879,
+            "gt_mean": 22.136619415593522,
+            "res_mean": 11.566321636087972
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 1.0,
+            "gt_mean": 75.17378807067871,
+            "res_mean": 1.8633218620950587
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9811320754716981,
+            "P_tau": 0.5349301397205589,
+            "gt_mean": 4.945356949267663,
+            "res_mean": 61.79111302494709
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.5161290322580645,
+            "gt_mean": 5.106322094798088,
+            "res_mean": 19.871228985355312
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.5603236245954692,
+            "P_tau": 0.7146053641539336,
+            "gt_mean": 17.909383087941524,
+            "res_mean": 15.536758940912554
+          }
+        }
+      },
+      {
+        "label": "참고 prop_ALS_s1",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.865057089001955,
+            "P_tau": 0.7833350732101501,
+            "gt_mean": 11.814964233380438,
+            "res_mean": 13.494347078847927
+          },
+          "c_refine": {
+            "R_tau": 0.9866453157551072,
+            "P_tau": 0.8581775418086228,
+            "gt_mean": 6.827208085055488,
+            "res_mean": 9.991677540852569
+          },
+          "c_corr14": {
+            "R_tau": 0.8537234042553191,
+            "P_tau": 0.8664135312392129,
+            "gt_mean": 7.621468992599942,
+            "res_mean": 7.746085375557205
+          },
+          "c_corr4p": {
+            "R_tau": 0.983092015033973,
+            "P_tau": 0.8232866123127635,
+            "gt_mean": 4.866351994349582,
+            "res_mean": 15.683026151722132
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.9556122448979592,
+            "gt_mean": 100.33663528145485,
+            "res_mean": 2.5965395354472776
+          },
+          "c_keep_in": {
+            "R_tau": 0.5850193715023676,
+            "P_tau": 0.7986605686427793,
+            "gt_mean": 14.614786082379158,
+            "res_mean": 11.880948776035671
+          },
+          "c_limit": {
+            "R_tau": 0.10633340393984325,
+            "P_tau": 0.6656091060847155,
+            "gt_mean": 35.71262928443366,
+            "res_mean": 17.339195371717565
+          },
+          "c_double": {
+            "R_tau": 0.5202228744838565,
+            "P_tau": 0.7810270977853371,
+            "gt_mean": 22.097903752337906,
+            "res_mean": 11.951769391203488
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 1.0,
+            "gt_mean": 87.51065492630005,
+            "res_mean": 2.205101242354282
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9811320754716981,
+            "P_tau": 0.5738213399503722,
+            "gt_mean": 5.723836524016663,
+            "res_mean": 47.06918217664057
+          },
+          "c_inh_invis": {
+            "R_tau": 1.0,
+            "P_tau": 0.49147652766850247,
+            "gt_mean": 4.999080300331116,
+            "res_mean": 21.67564425546091
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.5542394822006472,
+            "P_tau": 0.7337673489494593,
+            "gt_mean": 17.919812844058622,
+            "res_mean": 15.06211281677586
+          }
+        }
+      },
+      {
+        "label": "참고 mvs_b",
+        "source": "AXES71-v2",
+        "values": {
+          "all": {
+            "R_tau": 0.8596158820686223,
+            "P_tau": 0.5440813605651826,
+            "gt_mean": 9.248042776299112,
+            "res_mean": 43.84537641661042
+          },
+          "c_refine": {
+            "R_tau": 0.9512763906594944,
+            "P_tau": 0.5732224132210818,
+            "gt_mean": 6.771177052640377,
+            "res_mean": 62.55206204193341
+          },
+          "c_corr14": {
+            "R_tau": 0.7938829787234043,
+            "P_tau": 0.4030136229358383,
+            "gt_mean": 9.556735010617443,
+            "res_mean": 36.88202364348056
+          },
+          "c_corr4p": {
+            "R_tau": 0.9803909251756232,
+            "P_tau": 0.564795457380811,
+            "gt_mean": 4.416519630928565,
+            "res_mean": 37.55118123363309
+          },
+          "c_keep_mask": {
+            "R_tau": 0.0,
+            "P_tau": 0.6953619114546732,
+            "gt_mean": 35.67252320782194,
+            "res_mean": 15.702850017938733
+          },
+          "c_keep_in": {
+            "R_tau": 0.3697804563065002,
+            "P_tau": 0.5194420685571419,
+            "gt_mean": 22.028212059861772,
+            "res_mean": 35.95109756768685
+          },
+          "c_limit": {
+            "R_tau": 0.4215208642236814,
+            "P_tau": 0.561294127969894,
+            "gt_mean": 25.81987342211603,
+            "res_mean": 30.045108662526637
+          },
+          "c_double": {
+            "R_tau": 0.48505049500024877,
+            "P_tau": 0.550267955638818,
+            "gt_mean": 18.196880579056483,
+            "res_mean": 30.113136363209193
+          },
+          "c_inh_miss": {
+            "R_tau": 0.0,
+            "P_tau": 0.6211180124223602,
+            "gt_mean": 35.62579572200775,
+            "res_mean": 10.553559856910493
+          },
+          "c_miss_wrong": {
+            "R_tau": 0.9811320754716981,
+            "P_tau": 0.4248557838275478,
+            "gt_mean": 4.6350887304453074,
+            "res_mean": 67.86087860810038
+          },
+          "c_inh_invis": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_invis_wrong": {
+            "R_tau": null,
+            "P_tau": null,
+            "gt_mean": null,
+            "res_mean": null
+          },
+          "c_nogt": {
+            "R_tau": 0.466537216828479,
+            "P_tau": 0.5355859139116813,
+            "gt_mean": 20.62863866333009,
+            "res_mean": 29.656254504678365
+          }
+        }
+      }
+    ],
+    "cells": [
+      "all",
+      "c_refine",
+      "c_corr14",
+      "c_corr4p",
+      "c_keep_mask",
+      "c_keep_in",
+      "c_limit",
+      "c_double",
+      "c_inh_miss",
+      "c_miss_wrong",
+      "c_inh_invis",
+      "c_invis_wrong",
+      "c_nogt"
+    ],
+    "field": "gt_mean",
+    "scale": 1
+  },
+  "note": "위: 요청한 저장 시점별 메시 · 아래: AXES71-v2 원래 비교 값(가시/비가시 메시 규칙 유지) · —: 값 없음",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-02T00:38:11.739952+09:00",
+  "reason": "Report actual independent LoD2 stop and preserve pending vs unavailable; fix 3D height-label clipping using same text as 2D artist; no point/camera/range/arithmetic changes.",
+  "changes": [
+    {
+      "path": "scripts/phd/main_target_v1/movement_r8.py",
+      "before": "4127d755a6a1db2e80b6e840fd42b150899e5461d14788df7933535342dcba84",
+      "after": "2a71d00aa8e9334b72187a019bcff20075599ff0df810ce5ad4c593986f2150d"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/movement_continue_r7_lod2.py",
+      "before": "dcbcf0513d6c9f1bf2c2542b37a76631a6b71455a461400e6c17fa4fb5dbe5f2",
+      "after": "c042ca438a4490a77d633b8e2f5c54f931f207d122e89d2a5d04b2999c5ca13d"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/report_axes_r8.py",
+      "before": "a5a7f0b5d406886186c5453055e75428987b7fb6cbdf1a5664ce58164024ab0e",
+      "after": "cca14fd334c992a69acc90042435239c751b56f537628a388048885958f4dd7d"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/status_r8.py",
+      "before": "b3d1acf18b289a74ae8cc7ae22e06a4a888777c7ceabdb550d38f98946ea2e1c",
+      "after": "06b5c7e10ed298652b04e0c03a4c40cc4c75309e383451651a4d5ed977ff2400"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/audit_package_r8.py",
+      "before": "0df222698c1f1b8ba63566cbc3560e1320cdfd2f3186876b37f76465ed03f8b7",
+      "after": "0366ca7fec27dd890f7221fcefa8061b5453c74e91e956b44939bcce5fd33c96"
+    },
+    {
+      "path": "scripts/phd/main_target_v1/audit_readout_bindings_r8.py",
+      "before": "abe4c58573c64a56c5e0f9af84cbce89c831a27bb9f49fd939f3b4cacd196c97",
+      "after": "e11ec9fb5884f29391af280e18eb427c143eadb8745d764adaaf0cc78f906a4c"
+    }
+  ],
+  "scientific_verdict": null
+}

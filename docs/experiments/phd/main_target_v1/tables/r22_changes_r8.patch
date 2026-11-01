@@ -1,0 +1,148 @@
+--- r21/jbgs_state.py
++++ r22/jbgs_state.py
+@@ -89,7 +89,7 @@
+                        'rotation_scale': args.protect_bldg_lr_scale,
+                        'protect_bldg': args.protect_bldg,
+                        'release': args.jbgs_release_protection},
+-        'target_r6': env['target_control'].capture(g) if getattr(args, 'jbgs_target_rev', None) in ['r6', 'r7'] and env.get('target_control') is not None else None,
++        'target_r6': env['target_control'].capture(g) if getattr(args, 'jbgs_target_rev', None) in ['r6', 'r7', 'r8'] and env.get('target_control') is not None else None,
+         'source_sha256': digest(Path(__file__).with_name('train.py')),
+         'implementation_hashes': implementation_hashes(),
+     }
+--- r21/jbgs_target.py
++++ r22/jbgs_target.py
+@@ -13,7 +13,7 @@
+ 
+ def register_args(parser):
+     parser.add_argument('--jbgs_target',choices=['off','on'],default='off')
+-    parser.add_argument('--jbgs_target_rev',choices=['r4n','r6','r7'],default='r4n')
++    parser.add_argument('--jbgs_target_rev',choices=['r4n','r6','r7','r8'],default='r4n')
+     parser.add_argument('--jbgs_target_dir',default='')
+     parser.add_argument('--jbgs_target_lambda',type=float,default=.05)
+ 
+@@ -42,6 +42,10 @@
+         self.depth_lambda=args.jbgs_target_lambda;self.scene=scene;self.n6000=None
+         with np.load(self.root/'seeds.npz') as z:s={k:z[k] for k in z.files}
+         keep=torch.as_tensor(s['keep_original'],device='cuda',dtype=torch.long)
++        bg_rotation=None
++        if args.jbgs_target_rev=='r8':
++            bg_ids=torch.as_tensor(s['background_original'],device='cuda',dtype=torch.long)
++            bg_rotation=g._rotation.detach()[bg_ids].clone()
+         assert len(s['original_xyz'])==len(g._xyz)
+         assert torch.allclose(g._xyz.detach(),torch.as_tensor(s['original_xyz'],device='cuda',dtype=torch.float32),rtol=0,atol=1e-5)
+         for attr in ['_xyz','_features_dc','_features_rest','_opacity','_scaling','_rotation']:
+@@ -64,6 +68,10 @@
+             g._scaling[len(keep):]=scale[len(keep):,None].repeat(1,2)
+         g._xyz.copy_(torch.as_tensor(s['xyz'],device='cuda',dtype=torch.float32))
+         g._rotation.copy_(torch.as_tensor(s['quaternion'],device='cuda',dtype=torch.float32))
++        if bg_rotation is not None:
++            from utils.general_utils import build_rotation
++            g._rotation[len(keep):]=bg_rotation
++            s['normal'][len(keep):]=build_rotation(bg_rotation)[:,:,2].cpu().numpy()
+         # Preserve baseline scale, colour, opacity and number of retained seeds.
+         g.max_radii2D=torch.zeros(count,device='cuda');g.frozen_mask=torch.zeros(count,device='cuda',dtype=torch.bool)
+         g.origin=torch.as_tensor(s['origin'],device='cuda',dtype=torch.int8)
+@@ -212,6 +220,9 @@
+ 
+ @torch.no_grad()
+ def create(args,scene,g,render,pipe):
++    if args.jbgs_target=='on' and args.jbgs_target_rev=='r8':
++        from jbgs_target_r8 import TargetR8
++        return TargetR8(args,scene,g)
+     if args.jbgs_target=='on' and args.jbgs_target_rev=='r7':
+         from jbgs_target_r7 import TargetR7
+         return TargetR7(args,scene,g)
+--- r21/jbgs_target_r8.py
++++ r22/jbgs_target_r8.py
+@@ -0,0 +1,33 @@
++"""r8 monitoring; all patch controller behavior inherited unchanged from r7."""
++import json
++import torch
++from jbgs_target_r7 import TargetR7
++from jbgs_target import write
++
++class TargetR8(TargetR7):
++    @torch.no_grad()
++    def observe(self,iteration,g,loss,rgb,depth,name):
++        if iteration%100 and iteration!=1:return
++        prior=g.origin==1;patch=g.target_tag==1;idx=g.target_index[patch]
++        excess=float((((g._xyz[patch].double()-self.patch_anchor[idx].double())*self.patch_normal[idx].double()).sum(1).abs()-(1.96*self.patch_sigma[idx]).double()).max()) if patch.any() else None
++        median=float(g.get_opacity[prior].median()) if prior.any() else None;grace=self.opacity_grace(iteration)
++        row=dict(iteration=iteration,gaussians=len(g._xyz),target_opacity_median=median,prior_opacity_median=median,
++            patch_opacity_median=float(g.get_opacity[patch].median()) if patch.any() else None,max_normal_excess_m=excess,loss=float(loss),rgb_loss=float(rgb),target_depth_loss=float(depth),camera=name,
++            tags={str(i):int((g.target_tag==i).sum()) for i in range(3)},opacity_population='immutable prior-seed lineage including released',
++            opacity_check_skipped_reset_grace=grace,last_opacity_reset=getattr(self,'last_opacity_reset',-1),scientific_verdict=None)
++        with (self.mon/'curve.jsonl').open('a') as f:f.write(json.dumps(row)+'\n')
++        if iteration==6000:self.n6000=len(g._xyz)
++        if iteration%1000==0:
++            memory=dict(iteration=iteration,gaussians=len(g._xyz),tags=row['tags'],count_at_6000=self.n6000,
++                allocated_bytes=torch.cuda.memory_allocated(),reserved_bytes=torch.cuda.memory_reserved(),
++                peak_allocated_bytes=torch.cuda.max_memory_allocated(),peak_reserved_bytes=torch.cuda.max_memory_reserved(),
++                free_bytes=torch.cuda.mem_get_info()[0],total_bytes=torch.cuda.mem_get_info()[1],scientific_verdict=None)
++            with (self.mon/'memory_1000.jsonl').open('a') as f:f.write(json.dumps(memory)+'\n')
++        reason=None
++        if not torch.isfinite(g._xyz).all() or not torch.isfinite(loss):reason='nonfinite_position_or_loss'
++        elif excess is not None and excess>3e-5:reason='normal_bound_violation'
++        elif iteration>=7000 and not grace and (median is None or median<.05):reason='prior_seed_lineage_opacity_median_below_0.05'
++        elif iteration>=7000 and iteration%1000==0 and self.n6000 is not None and len(g._xyz)>3*self.n6000:reason='count_gt_3x_6000'
++        if reason:write(self.mon/'STOP.json',dict(row,reason=reason));raise RuntimeError('TARGET_STOP_'+reason)
++        if iteration in [6000,7000,15000,30000]:write(self.mon/f'health_{iteration}.json',dict(row,count_at_6000=self.n6000,status='PASS_HEALTH'))
++        if iteration%1000==0:print('[target r8]',row,flush=True)
+--- r21/train.py
++++ r22/train.py
+@@ -823,7 +823,7 @@
+     progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
+     first_iter += 1
+     for iteration in range(first_iter, opt.iterations + 1):
+-        if target_control is not None and args.jbgs_target_rev in ["r6", "r7"]:
++        if target_control is not None and args.jbgs_target_rev in ["r6", "r7", "r8"]:
+             target_control.iteration = iteration
+         iter_start.record()
+         gaussians.update_learning_rate(iteration)
+@@ -1062,7 +1062,7 @@
+             judgment.before_step(gaussians)
+         gaussians.optimizer.step()
+         if target_control is not None:
+-            if args.jbgs_target_rev in ["r6", "r7"] and iteration % 100 == 0:
++            if args.jbgs_target_rev in ["r6", "r7", "r8"] and iteration % 100 == 0:
+                 target_control.reattach(gaussians, "periodic")
+             target_control.project_bounds(gaussians)
+         if appearance is not None:
+@@ -1205,7 +1205,7 @@
+                     if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_monitor_v2 and iteration % opt.opacity_reset_interval == 0:
+                         jbgs_judgment.lt_monitor_step(judgment, iteration, gaussians, cam_name, render, pipe, background, pre_reset=True)
+                     gaussians.reset_opacity(exempt_mask=judgment.exempt_mask(gaussians) if judgment is not None else None)  # [jbgs_judgment]
+-                    if target_control is not None and args.jbgs_target_rev == "r7":
++                    if target_control is not None and args.jbgs_target_rev in ["r7", "r8"]:
+                         target_control.last_opacity_reset = iteration
+                     if judgment is not None and args.jbgs_lt_monitor:
+                         jbgs_judgment.lt_reset_observed(judgment, iteration, iteration % opt.opacity_reset_interval == 0)
+@@ -1313,7 +1313,7 @@
+         if target_control is not None:
+             target_control.project_bounds(gaussians)
+         # r6 saves complete 7000 state even when its following health gate fails.
+-        r6_state_done = target_control is not None and args.jbgs_target_rev in ["r6", "r7"]
++        r6_state_done = target_control is not None and args.jbgs_target_rev in ["r6", "r7", "r8"]
+         r6_stop_after = jbgs_state.after_step(locals()) if r6_state_done else False
+         if target_control is not None:
+             target_control.observe(iteration, gaussians, total_loss, rgb_loss, da_depth_loss, cam_name)
+--- r21/jbgs_target_r6.py
++++ r22/jbgs_target_r6.py
+@@ -154,7 +154,7 @@
+     """Resume exact end-of-iteration state, with no historical stage-switch branching."""
+     import jbgs_state as S
+     args,g,scene=env['args'],env['gaussians'],env['scene'];control=env['target_control']
+-    if args.jbgs_target!='on' or args.jbgs_target_rev not in ['r6','r7']:raise ValueError('r6 state needs r6 controller')
++    if args.jbgs_target!='on' or args.jbgs_target_rev not in ['r6','r7','r8']:raise ValueError('r6 state needs r6 controller')
+     assert state['schema']==S.SCHEMA and state['implementation_hashes']==S.implementation_hashes()
+     assert state['optimization']==vars(env['opt'])
+     allowed=S.NON_METHOD_ARGS|{'jbgs_resume_full','jbgs_stop_after','jbgs_capture_iterations'}
+@@ -167,7 +167,7 @@
+     for k in ['origin','init_id','frozen_mask','completed_mask']:
+         value=state[k];setattr(g,k,None if value is None else value.to(g._xyz.device))
+     for k,v in saved['meta'].items():setattr(g,k,v.to(g._xyz.device))
+-    if args.jbgs_target_rev=='r7':control.last_opacity_reset=saved.get('last_opacity_reset',-1)
++    if args.jbgs_target_rev in ['r7','r8']:control.last_opacity_reset=saved.get('last_opacity_reset',-1)
+     control.n6000=saved['n6000'];control.events=saved['events'];control.iteration=saved['iteration'];g.target_r6=control
+     building=state['building_freeze_mask'];out=dict(state['runtime'],first_iter=state['iteration'],building_freeze_mask=None if building is None else building.to(g._xyz.device))
+     for role,cameras in [('train',scene.getTrainCameras()),('test',scene.getTestCameras())]:
