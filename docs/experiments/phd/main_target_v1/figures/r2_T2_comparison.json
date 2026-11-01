@@ -1,0 +1,165 @@
+{
+  "title": "앞 셈과 현재 셈은 유의 차이 모집단이 다르다",
+  "values": {
+    "fits": [
+      [
+        "앞 셈 · 참고",
+        {
+          "T2_m": 0.8548248176865011,
+          "means_log10": [
+            -0.7508659374625578,
+            0.39414853813102907
+          ],
+          "centres_m": [
+            0.17747372406908757,
+            2.47826953462248
+          ],
+          "sd_log10": [
+            0.24243592263389374,
+            0.2064614993151433
+          ],
+          "area_weights": [
+            0.8347194886155862,
+            0.16528051138441147
+          ],
+          "iterations": 500,
+          "history": [
+            {
+              "iteration": 1,
+              "log_likelihood": -0.8182080790041042
+            },
+            {
+              "iteration": 10,
+              "log_likelihood": -0.42085160629029555
+            },
+            {
+              "iteration": 50,
+              "log_likelihood": -0.4150577171292721
+            },
+            {
+              "iteration": 100,
+              "log_likelihood": -0.40315150771057034
+            },
+            {
+              "iteration": 200,
+              "log_likelihood": -0.4031515051841723
+            },
+            {
+              "iteration": 500,
+              "log_likelihood": -0.4031515051841734
+            }
+          ],
+          "status": "PASS_T2_MIXTURE"
+        }
+      ],
+      [
+        "r1",
+        {
+          "T2_m": 0.5302531550822607,
+          "means_log10": [
+            -0.7366934343136569,
+            0.23826450911188576
+          ],
+          "centres_m": [
+            0.18336082979729135,
+            1.7308702329653556
+          ],
+          "sd_log10": [
+            0.22940334433384,
+            0.29130637439320706
+          ],
+          "area_weights": [
+            0.5563786528184025,
+            0.4436213471815983
+          ],
+          "iterations": 500,
+          "history": [
+            {
+              "iteration": 1,
+              "log_likelihood": -0.9521157549690729
+            },
+            {
+              "iteration": 10,
+              "log_likelihood": -0.6468561555039402
+            },
+            {
+              "iteration": 50,
+              "log_likelihood": -0.6468313725683557
+            },
+            {
+              "iteration": 100,
+              "log_likelihood": -0.6468312606666962
+            },
+            {
+              "iteration": 200,
+              "log_likelihood": -0.6468312605244938
+            },
+            {
+              "iteration": 500,
+              "log_likelihood": -0.6468312605244952
+            }
+          ],
+          "status": "PASS_T2_MIXTURE",
+          "eligible_patches": 44184,
+          "eligible_area_m2": 2951.6116256824353
+        }
+      ],
+      [
+        "r2 · 판단에 사용",
+        {
+          "T2_m": 0.43632712205250607,
+          "means_log10": [
+            -0.7655395833345227,
+            0.32267821563859417
+          ],
+          "centres_m": [
+            0.17157753203751677,
+            2.1022202521798947
+          ],
+          "sd_log10": [
+            0.20999995938616495,
+            0.41558929300898634
+          ],
+          "area_weights": [
+            0.45770217426741006,
+            0.5422978257325841
+          ],
+          "iterations": 500,
+          "history": [
+            {
+              "iteration": 1,
+              "log_likelihood": -1.0882772142279085
+            },
+            {
+              "iteration": 10,
+              "log_likelihood": -0.8010801540561736
+            },
+            {
+              "iteration": 50,
+              "log_likelihood": -0.7977404549216938
+            },
+            {
+              "iteration": 100,
+              "log_likelihood": -0.797733167589814
+            },
+            {
+              "iteration": 200,
+              "log_likelihood": -0.7977331608621648
+            },
+            {
+              "iteration": 500,
+              "log_likelihood": -0.7977331608621636
+            }
+          ],
+          "status": "PASS_T2_MIXTURE",
+          "eligible_patches": 48944,
+          "eligible_area_m2": 3283.5612757336717
+        }
+      ]
+    ],
+    "historical_area_m2": 923.5357125585446
+  },
+  "note": "앞 셈: 참값 유래 최소 넓이 제거 후 · r1/r2: 제거 없이 전체 u · r2는 지붕 10 m와 면 찾기 보완",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

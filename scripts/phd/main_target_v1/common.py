@@ -44,3 +44,10 @@ def training_locked():
     c=json.loads((CFG/'target_v1.json').read_text());lock=json.loads((CFG/'target_v1.stage1.lock.json').read_text())
     assert sha(CFG/'target_v1.json')==lock['config_sha256']
     return c,lock
+
+
+def locked_r2():
+    lock=json.loads((CFG/'target_v1.r2.lock.json').read_text())
+    p=CFG/'revisions/r2/target_v1.json'
+    assert sha(p)==lock['config_sha256']
+    return json.loads(p.read_text()),lock

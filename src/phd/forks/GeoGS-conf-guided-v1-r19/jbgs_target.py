@@ -41,12 +41,28 @@ class Target:
         assert torch.allclose(g._xyz.detach(),torch.as_tensor(s['original_xyz'],device='cuda',dtype=torch.float32),rtol=0,atol=1e-5)
         for attr in ['_xyz','_features_dc','_features_rest','_opacity','_scaling','_rotation']:
             setattr(g,attr,nn.Parameter(getattr(g,attr).detach()[keep].contiguous().requires_grad_(True)))
+        count=len(s['xyz'])
+        if 'background_rgb' in s:
+            from utils.sh_utils import RGB2SH
+            from simple_knn._C import distCUDA2
+            bg_count=count-len(keep)
+            assert bg_count==len(s['background_rgb'])
+            for attr in ['_xyz','_features_dc','_features_rest','_opacity','_scaling','_rotation']:
+                old=getattr(g,attr).detach()
+                extra=torch.zeros((bg_count,)+old.shape[1:],device=old.device,dtype=old.dtype)
+                setattr(g,attr,nn.Parameter(torch.cat([old,extra]).contiguous().requires_grad_(True)))
+            g._features_dc[len(keep):,0,:]=RGB2SH(torch.as_tensor(s['background_rgb'],device='cuda',dtype=torch.float32))
+            g._opacity[len(keep):]=g.inverse_opacity_activation(torch.full((bg_count,1),.1,device='cuda'))
+            # Original nearest-neighbor initialization rule, evaluated on the new combined cloud.
+            initial=torch.as_tensor(s['xyz'],device='cuda',dtype=torch.float32)
+            scale=torch.log(torch.sqrt(torch.clamp_min(distCUDA2(initial),1e-7)))
+            g._scaling[len(keep):]=scale[len(keep):,None].repeat(1,2)
         g._xyz.copy_(torch.as_tensor(s['xyz'],device='cuda',dtype=torch.float32))
         g._rotation.copy_(torch.as_tensor(s['quaternion'],device='cuda',dtype=torch.float32))
         # Preserve baseline scale, colour, opacity and number of retained seeds.
-        g.max_radii2D=torch.zeros(len(keep),device='cuda');g.frozen_mask=torch.zeros(len(keep),device='cuda',dtype=torch.bool)
+        g.max_radii2D=torch.zeros(count,device='cuda');g.frozen_mask=torch.zeros(count,device='cuda',dtype=torch.bool)
         g.origin=torch.as_tensor(s['origin'],device='cuda',dtype=torch.int8)
-        g.init_id=torch.arange(len(keep),device='cuda',dtype=torch.int32)
+        g.init_id=torch.arange(count,device='cuda',dtype=torch.int32)
         self.anchor=torch.as_tensor(s['target'],device='cuda',dtype=torch.float32)
         self.normal=torch.as_tensor(s['normal'],device='cuda',dtype=torch.float32)
         self.sigma=torch.as_tensor(s['sigma'],device='cuda',dtype=torch.float32)
@@ -57,7 +73,7 @@ class Target:
             with np.load(self.root/'maps'/meta['file']) as z:
                 data={k:torch.from_numpy(z[k]).pin_memory() for k in ['depth','sigma','weight','owner']}
             self.maps[name]=data
-        write(self.mon/'initialization.json',dict(seeds=len(keep),prior_seeds=int((s['origin']==1).sum()),
+        write(self.mon/'initialization.json',dict(seeds=count,prior_seeds=int((s['origin']==1).sum()),
             background_seeds=int((s['origin']==0).sum()),target_file_sha256=hashlib.sha256((self.root/'seeds.npz').read_bytes()).hexdigest(),
             maps_host_pinned=all(v.is_pinned() for m in self.maps.values() for v in m.values()),
             old_judgment_module=False,scientific_verdict=None))
@@ -87,13 +103,40 @@ class Target:
             anchor=self.anchor.cpu().numpy(),normal=self.normal.cpu().numpy(),sigma=self.sigma.cpu().numpy(),region=self.region.cpu().numpy())
 
     @torch.no_grad()
+    def checkpoint_evidence(self,iteration,g,renderer,pipe,background):
+        if iteration!=7000:return
+        root=self.mon.parent/'check7000';root.mkdir(exist_ok=False)
+        depthroot=root/'renders';depthroot.mkdir()
+        views=[];inside=0;denominator=0
+        for cam in sorted(self.scene.getTrainCameras(),key=lambda c:c.image_name):
+            pkg=renderer(cam,g,pipe,background)
+            depth=pkg['surf_depth'].squeeze().detach().cpu().numpy()
+            m=self.maps[cam.image_name];target=m['depth'].numpy();sigma=m['sigma'].numpy()
+            good=np.isfinite(target)&(target>0)&np.isfinite(sigma)&(sigma>0)
+            ok=good&np.isfinite(depth)&(depth>0)&(abs(depth-target)<=1.96*sigma)
+            count=int(ok.sum());total=int(good.sum());inside+=count;denominator+=total
+            dest=depthroot/(cam.image_name+'.npz')
+            np.savez_compressed(dest,depth=depth,rgb=(pkg['render'].permute(1,2,0).clamp(0,1).cpu().numpy()*255).astype(np.uint8))
+            views.append(dict(camera=cam.image_name,inside=count,target_pixels=total,
+                K=self.index['views'][cam.image_name]['K'],W2C=self.index['views'][cam.image_name]['W2C']))
+        coverage=inside/denominator if denominator else None
+        record=dict(iteration=iteration,inside=inside,target_pixels=denominator,fraction=coverage,criterion=.8,
+            status='PASS' if coverage is not None and coverage>=.8 else 'FAIL',views=views,scientific_verdict=None)
+        write(root/'coverage.json',record)
+        if record['status']!='PASS':
+            write(self.mon/'STOP.json',dict(iteration=iteration,reason='target_coverage_below_0.8',fraction=coverage,scientific_verdict=None))
+            raise RuntimeError('TARGET_STOP_COVERAGE')
+
+    @torch.no_grad()
     def observe(self,iteration,g,loss,rgb,depth,name):
         if iteration%100 and iteration!=1:return
         ids=g.init_id.long();prior=g.origin==1
-        opacity=float(g.get_opacity[prior].median()) if prior.any() else None
+        opacity=float(g.get_opacity.median()) if len(ids) else None
+        prior_opacity=float(g.get_opacity[prior].median()) if prior.any() else None
         excess=float((((g._xyz-self.anchor[ids])*self.normal[ids]).sum(1).abs()-1.96*self.sigma[ids]).max())
         row=dict(iteration=iteration,gaussians=len(ids),target_opacity_median=opacity,max_normal_excess_m=excess,
-            loss=float(loss),rgb_loss=float(rgb),target_depth_loss=float(depth),camera=name,scientific_verdict=None)
+            loss=float(loss),rgb_loss=float(rgb),target_depth_loss=float(depth),camera=name,
+            opacity_population='all target-bound descendants including MVS background',prior_opacity_median=prior_opacity,scientific_verdict=None)
         with (self.mon/'curve.jsonl').open('a') as f:f.write(json.dumps(row)+'\n')
         if iteration==6000:self.n6000=len(ids)
         reason=None

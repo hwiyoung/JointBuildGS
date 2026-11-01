@@ -1,0 +1,170 @@
+{
+  "title": "실험 지역: r1과 r2 판단 정확도",
+  "values": [
+    {
+      "revision": "r1",
+      "prior": "ALS",
+      "kind": 1,
+      "replacement": "all",
+      "denominator_area_m2": 1535.8939725851437,
+      "wrong_area_m2": 132.2495368397331,
+      "wrong_pct": 8.610590262108847
+    },
+    {
+      "revision": "r1",
+      "prior": "ALS",
+      "kind": 1,
+      "replacement": "original",
+      "denominator_area_m2": 1481.3210706925047,
+      "wrong_area_m2": 102.76784544328993,
+      "wrong_pct": 6.937580749813196
+    },
+    {
+      "revision": "r1",
+      "prior": "ALS",
+      "kind": 1,
+      "replacement": "replaced",
+      "denominator_area_m2": 54.57290189263876,
+      "wrong_area_m2": 29.481691396443168,
+      "wrong_pct": 54.02258332247474
+    },
+    {
+      "revision": "r2",
+      "prior": "ALS",
+      "kind": 1,
+      "replacement": "all",
+      "denominator_area_m2": 2374.125675094563,
+      "wrong_area_m2": 150.17339607612894,
+      "wrong_pct": 6.3254189806168295
+    },
+    {
+      "revision": "r2",
+      "prior": "ALS",
+      "kind": 1,
+      "replacement": "original",
+      "denominator_area_m2": 2296.9040010134368,
+      "wrong_area_m2": 114.36553174762562,
+      "wrong_pct": 4.979116745722304
+    },
+    {
+      "revision": "r2",
+      "prior": "ALS",
+      "kind": 1,
+      "replacement": "replaced",
+      "denominator_area_m2": 77.22167408112631,
+      "wrong_area_m2": 35.807864328503314,
+      "wrong_pct": 46.37022539926402
+    },
+    {
+      "revision": "r1",
+      "prior": "LoD2",
+      "kind": 1,
+      "replacement": "all",
+      "denominator_area_m2": 2613.125,
+      "wrong_area_m2": 217.25,
+      "wrong_pct": 8.313800526189906
+    },
+    {
+      "revision": "r1",
+      "prior": "LoD2",
+      "kind": 1,
+      "replacement": "original",
+      "denominator_area_m2": 2496.1875,
+      "wrong_area_m2": 209.125,
+      "wrong_pct": 8.377776108565563
+    },
+    {
+      "revision": "r1",
+      "prior": "LoD2",
+      "kind": 1,
+      "replacement": "replaced",
+      "denominator_area_m2": 116.9375,
+      "wrong_area_m2": 8.125,
+      "wrong_pct": 6.948156066274719
+    },
+    {
+      "revision": "r2",
+      "prior": "LoD2",
+      "kind": 1,
+      "replacement": "all",
+      "denominator_area_m2": 3376.375,
+      "wrong_area_m2": 206.1875,
+      "wrong_pct": 6.106771315390026
+    },
+    {
+      "revision": "r2",
+      "prior": "LoD2",
+      "kind": 1,
+      "replacement": "original",
+      "denominator_area_m2": 3241.8125,
+      "wrong_area_m2": 196.875,
+      "wrong_pct": 6.072991574929149
+    },
+    {
+      "revision": "r2",
+      "prior": "LoD2",
+      "kind": 1,
+      "replacement": "replaced",
+      "denominator_area_m2": 134.5625,
+      "wrong_area_m2": 9.3125,
+      "wrong_pct": 6.920575940548073
+    },
+    {
+      "revision": "r1",
+      "prior": "LoD2",
+      "kind": 2,
+      "replacement": "all",
+      "denominator_area_m2": 822.875,
+      "wrong_area_m2": 190.3125,
+      "wrong_pct": 23.12775330396476
+    },
+    {
+      "revision": "r1",
+      "prior": "LoD2",
+      "kind": 2,
+      "replacement": "original",
+      "denominator_area_m2": 636.3125,
+      "wrong_area_m2": 156.75,
+      "wrong_pct": 24.634122384834495
+    },
+    {
+      "revision": "r1",
+      "prior": "LoD2",
+      "kind": 2,
+      "replacement": "replaced",
+      "denominator_area_m2": 186.5625,
+      "wrong_area_m2": 33.5625,
+      "wrong_pct": 17.98994974874372
+    },
+    {
+      "revision": "r2",
+      "prior": "LoD2",
+      "kind": 2,
+      "replacement": "all",
+      "denominator_area_m2": 1028.3125,
+      "wrong_area_m2": 212.5,
+      "wrong_pct": 20.66492432990944
+    },
+    {
+      "revision": "r2",
+      "prior": "LoD2",
+      "kind": 2,
+      "replacement": "original",
+      "denominator_area_m2": 647.4375,
+      "wrong_area_m2": 149.6875,
+      "wrong_pct": 23.119992277246837
+    },
+    {
+      "revision": "r2",
+      "prior": "LoD2",
+      "kind": 2,
+      "replacement": "replaced",
+      "denominator_area_m2": 380.875,
+      "wrong_area_m2": 62.8125,
+      "wrong_pct": 16.491631112569742
+    }
+  ],
+  "note": "유의 차이 중 참값 칸 0·1·2의 넓이를 분모로 사용 · 값이 없으면 막대 없음",
+  "scientific_verdict": null,
+  "source_tag": "[이 발주에서 냄]"
+}

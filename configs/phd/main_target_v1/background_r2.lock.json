@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-01T14:35:15.499693+09:00",
+  "config_sha256": "f0ac7c73209929af63d4a2d762f4ad037a3ea5cb36f2031a9568432fdfd0c410",
+  "thinning": "first original UNCERT random-key point per floor(local XYZ/0.25) voxel after exact cylinder exclusion",
+  "normal": "cross product of central finite differences of confidence-masked depth in source training view, outward toward camera, else vertical up",
+  "uncertainty": "unchanged own-unit UNCERT ring1.5m; missing uses same-kind median of valid background point-patches and same-prior raw patches in the same unit; no zero",
+  "rgb": "source training image at the reprojected MVS pixel; calibrated image dimensions",
+  "code_sha256": "d9b575f8019c2423e84f978e0b7b41490c8af0b02aad9254e7cd4662b6a482cf",
+  "exclusion_sha256": "d9c229e9656a9304282cb2fb2591ff4a157fbd6385f15e2095b662d87dfba8c7",
+  "scientific_verdict": null
+}

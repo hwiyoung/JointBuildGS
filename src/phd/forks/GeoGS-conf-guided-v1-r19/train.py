@@ -1159,6 +1159,7 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
                 scene.save(iteration)
                 if target_control is not None:
                     target_control.snapshot(iteration, gaussians)
+                    target_control.checkpoint_evidence(iteration, gaussians, render, pipe, background)
             if appearance is not None and (iteration in saving_iterations or iteration == 1000):
                 appearance.save(os.path.join(scene.model_path, 'appearance', f'iteration_{iteration}.pt'), iteration)
 
