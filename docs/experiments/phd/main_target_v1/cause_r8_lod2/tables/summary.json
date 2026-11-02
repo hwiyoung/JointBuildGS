@@ -1,0 +1,349 @@
+{
+  "at": "2026-11-02T13:00:37.607738+09:00",
+  "states": [
+    {
+      "state": "base_ALS_7000",
+      "gaussians": 935666,
+      "overlaps_total": 2214767005,
+      "overlaps_median": 9688733.0,
+      "overlaps_max": 28982478,
+      "binning_max_GiB": 0.9789279690012336,
+      "tag_counts": {
+        "0": 764723,
+        "1": 170943
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": null
+    },
+    {
+      "state": "r7_ALS_7000",
+      "gaussians": 1016408,
+      "overlaps_total": 2569127275,
+      "overlaps_median": 11684501.0,
+      "overlaps_max": 31196118,
+      "binning_max_GiB": 1.0536953201517463,
+      "tag_counts": {
+        "0": 975245,
+        "1": 38133,
+        "2": 3030
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": 205
+    },
+    {
+      "state": "base_ALS_30000",
+      "gaussians": 2796061,
+      "overlaps_total": 5561060603,
+      "overlaps_median": 26503567.0,
+      "overlaps_max": 69561193,
+      "binning_max_GiB": 2.349512933753431,
+      "tag_counts": {
+        "0": 2400428,
+        "1": 395633
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": null
+    },
+    {
+      "state": "base_LoD2_7000",
+      "gaussians": 1024224,
+      "overlaps_total": 2443592495,
+      "overlaps_median": 10467935.0,
+      "overlaps_max": 32606971,
+      "binning_max_GiB": 1.1013485183939338,
+      "tag_counts": {
+        "0": 395765,
+        "1": 628459
+      },
+      "gradient": {
+        "status": "없음",
+        "searched": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r7/baselines/base7k_B173nb_b10_LoD2_s0/model/jbgs_complete",
+        "reason": "No exact 7000 complete checkpoint; PLY has no accumulated position gradient"
+      },
+      "released_at100": null
+    },
+    {
+      "state": "r7_LoD2_7000",
+      "gaussians": 1032018,
+      "overlaps_total": 2379586350,
+      "overlaps_median": 10184347.0,
+      "overlaps_max": 27164676,
+      "binning_max_GiB": 0.9175306549295783,
+      "tag_counts": {
+        "0": 654359,
+        "1": 106839,
+        "2": 270820
+      },
+      "gradient": {
+        "status": "없음",
+        "threshold": 0.0002,
+        "checkpoint": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r7/runs/tg_B173nb_b10_LoD2_s0_r7/model/jbgs_complete/iteration_7000/checkpoint.pth",
+        "reason": "The scored PLY/snapshot is saved before densification; the complete checkpoint is saved after it. No accumulated gradient for the pre-densification PLY is stored.",
+        "ply_population": 1032018,
+        "checkpoint_population": 1070675,
+        "same_population": false,
+        "checkpoint_accum_nonzero": 0,
+        "checkpoint_denom_positive": 0,
+        "checkpoint_above": 0,
+        "supplement": "Separate post-densification checkpoint table; zero accumulators are reset values, not evidence of the earlier gradients"
+      },
+      "released_at100": 240365
+    },
+    {
+      "state": "r7_LoD2_15000",
+      "gaussians": 2772796,
+      "overlaps_total": 4903055724,
+      "overlaps_median": 19904480.0,
+      "overlaps_max": 131798013,
+      "binning_max_GiB": 4.4516216507181525,
+      "tag_counts": {
+        "0": 1915214,
+        "1": 151547,
+        "2": 706035
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": 645920
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "gaussians": 2772796,
+      "overlaps_total": 4648485631,
+      "overlaps_median": 19253202.0,
+      "overlaps_max": 112916010,
+      "binning_max_GiB": 3.813864349387586,
+      "tag_counts": {
+        "0": 1915214,
+        "1": 151453,
+        "2": 706129
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": 645920
+    },
+    {
+      "state": "base_LoD2_30000",
+      "gaussians": 2983470,
+      "overlaps_total": 6136685900,
+      "overlaps_median": 25025345.0,
+      "overlaps_max": 76872290,
+      "binning_max_GiB": 2.596452592872083,
+      "tag_counts": {
+        "0": 509082,
+        "1": 2474388
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": null
+    },
+    {
+      "state": "r8_ALS_7000",
+      "gaussians": 899833,
+      "overlaps_total": 2265952258,
+      "overlaps_median": 10264926.0,
+      "overlaps_max": 29445641,
+      "binning_max_GiB": 0.9945722809061408,
+      "tag_counts": {
+        "0": 767098,
+        "1": 75116,
+        "2": 57619
+      },
+      "gradient": {
+        "status": "없음",
+        "threshold": 0.0002,
+        "checkpoint": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r8/runs/tg_B173nb_b10_ALS_s0_r8/model/jbgs_complete/iteration_7000/checkpoint.pth",
+        "reason": "The scored PLY/snapshot is saved before densification; the complete checkpoint is saved after it. No accumulated gradient for the pre-densification PLY is stored.",
+        "ply_population": 899833,
+        "checkpoint_population": 936078,
+        "same_population": false,
+        "checkpoint_accum_nonzero": 0,
+        "checkpoint_denom_positive": 0,
+        "checkpoint_above": 0,
+        "supplement": "Separate post-densification checkpoint table; zero accumulators are reset values, not evidence of the earlier gradients"
+      },
+      "released_at100": 6960
+    },
+    {
+      "state": "r8_ALS_15000",
+      "gaussians": 2839544,
+      "overlaps_total": 5845879543,
+      "overlaps_median": 25858869.0,
+      "overlaps_max": 89728267,
+      "binning_max_GiB": 3.030675529502332,
+      "tag_counts": {
+        "0": 2568256,
+        "1": 132107,
+        "2": 139181
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": 17132
+    },
+    {
+      "state": "r8_ALS_30000",
+      "gaussians": 2839544,
+      "overlaps_total": 5554886672,
+      "overlaps_median": 24893045.0,
+      "overlaps_max": 83684564,
+      "binning_max_GiB": 2.826543449424207,
+      "tag_counts": {
+        "0": 2568256,
+        "1": 131932,
+        "2": 139356
+      },
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "released_at100": 17132
+    },
+    {
+      "state": "r8_LoD2_7000",
+      "gaussians": 1018234,
+      "overlaps_total": 2282502450,
+      "overlaps_median": 9692124.0,
+      "overlaps_max": 27052941,
+      "binning_max_GiB": 0.9137564888224006,
+      "tag_counts": {
+        "0": 286563,
+        "1": 152870,
+        "2": 578801
+      },
+      "gradient": {
+        "status": "없음",
+        "threshold": 0.0002,
+        "checkpoint": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r8/runs/tg_B173nb_b10_LoD2_s0_r8/model/jbgs_complete/iteration_7000/checkpoint.pth",
+        "reason": "The scored PLY/snapshot is saved before densification; the complete checkpoint is saved after it. No accumulated gradient for the pre-densification PLY is stored.",
+        "ply_population": 1018234,
+        "checkpoint_population": 1059539,
+        "same_population": false,
+        "checkpoint_accum_nonzero": 0,
+        "checkpoint_denom_positive": 0,
+        "checkpoint_above": 0,
+        "supplement": "Separate post-densification checkpoint table; zero accumulators are reset values, not evidence of the earlier gradients"
+      },
+      "released_at100": 538299
+    }
+  ],
+  "views": 2436,
+  "proof": [
+    {
+      "state": "base_ALS_7000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r7_ALS_7000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "base_ALS_30000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 0,
+      "alpha_absent_in_reference_views": 203,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "base_LoD2_7000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r7_LoD2_7000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r7_LoD2_15000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "base_LoD2_30000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 0,
+      "alpha_absent_in_reference_views": 203,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r8_ALS_7000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r8_ALS_15000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r8_ALS_30000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    },
+    {
+      "state": "r8_LoD2_7000",
+      "views": 203,
+      "conserved_total": true,
+      "depth_equal_views": 203,
+      "alpha_equal_views": 203,
+      "alpha_absent_in_reference_views": 0,
+      "observer_first_view_all_outputs_equal": true
+    }
+  ],
+  "scientific_verdict": null
+}

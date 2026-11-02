@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-02T12:55:25.735252+09:00",
+  "authority": "2026-11-02 user follow-up: use camera median itself, never ground-camera midpoint",
+  "lod2": "/art/phase-payloads/phd/main_design_realchange_survey_v1/PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1/s1/lod2_buildings.json",
+  "range": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173nb_b10/range.json",
+  "camera_index": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7/stage1/B173nb_b10_LoD2/maps/index.json",
+  "files": {
+    "/repo/configs/phd/main_prep_measure_v1/prep_v5.json": "ba95c27a82af00b192d93855e15015b93a873729b81e4f9f87d81bf955c820ef",
+    "/art/phase-payloads/phd/main_design_realchange_survey_v1/PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1/s1/lod2_buildings.json": "55c76dd5300a5ec6f06368ae9183fc3fcca25666fb2b1911f33ebbe335d6ecc4",
+    "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173nb_b10/range.json": "92e059a420f4afcf9b3e2a8f5f95fda5a77faf725b7f5f9acfc531b0ef5b52e8",
+    "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7/stage1/B173nb_b10_LoD2/maps/index.json": "ebbd93ae3acfc685db65ecac046e64c9c243979c9a72718fbe5c05de1bcbf048",
+    "/repo/scripts/phd/main_target_v1/cause_r8_spatial.py": "ba4346d6c968e1ef2735fba24af4359b24c206d0655d16dbbdbf44c565012e36",
+    "/repo/scripts/phd/main_target_v1/cause_r8_spatial_r1.py": "d1eff9e20801493d3d6c8536772bc5dd8071887383d4feae799d28065cddeb54"
+  },
+  "rules": "Clip each original GroundSurface and RoofSurface exterior to fixed evaluation rectangle in UV, linearly interpolating Z on edges. Ground = median Z of per-surface unique clipped vertices; roof = maximum clipped RoofSurface vertex Z. Camera = median training203 centre Z. Three boundaries ground, roof+10, camera. Same for all12. Under ground strict; each next upper boundary inclusive. Distance XY from evaluation rectangle. No learned model or GT used for boundary derivation.",
+  "scientific_verdict": null,
+  "parent_sha256": "1dfdfe2f141d5b23db6f4e9735958e281de1c799c8e5e0768e48e2f76c11730c",
+  "previous_boundaries_local_m": [
+    -43.64000000000003,
+    -10.179999999999993,
+    -21.581747258866905
+  ],
+  "change_reason": "Midpoint below roof+10; user selected camera median as third threshold"
+}

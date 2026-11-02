@@ -1,0 +1,379 @@
+{
+  "at": "2026-11-02T12:50:07.657325+09:00",
+  "states": [
+    {
+      "key": "base_ALS_7000",
+      "gaussians": 935666,
+      "tags": {
+        "0": 764723,
+        "1": 170943
+      },
+      "released_at100": null,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "d29d617f4849d723d46e7511d4f6730756e80519f8e826a9db143d226f52ad01",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r7_ALS_7000",
+      "gaussians": 1016408,
+      "tags": {
+        "0": 975245,
+        "1": 38133,
+        "2": 3030
+      },
+      "released_at100": 205,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "583e396a6905f0c4ec67593a8d0c0d5530baf09eb6fb4c466f0bb3904096525a",
+      "scientific_verdict": null
+    },
+    {
+      "key": "base_ALS_30000",
+      "gaussians": 2796061,
+      "tags": {
+        "0": 2400428,
+        "1": 395633
+      },
+      "released_at100": null,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "41de89a8d6a84a18f80cf02189e165227bdcde066579b6bf51f516e5d0ace30f",
+      "scientific_verdict": null
+    },
+    {
+      "key": "base_LoD2_7000",
+      "gaussians": 1024224,
+      "tags": {
+        "0": 395765,
+        "1": 628459
+      },
+      "released_at100": null,
+      "gradient": {
+        "status": "없음",
+        "searched": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r7/baselines/base7k_B173nb_b10_LoD2_s0/model/jbgs_complete",
+        "reason": "No exact 7000 complete checkpoint; PLY has no accumulated position gradient"
+      },
+      "arrays_sha256": "ea738ed22b58198a639bad385d24f8174ae5247e74e843509702beb345b6615a",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r7_LoD2_7000",
+      "gaussians": 1032018,
+      "tags": {
+        "0": 654359,
+        "1": 106839,
+        "2": 270820
+      },
+      "released_at100": 240365,
+      "gradient": {
+        "status": "없음",
+        "threshold": 0.0002,
+        "checkpoint": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r7/runs/tg_B173nb_b10_LoD2_s0_r7/model/jbgs_complete/iteration_7000/checkpoint.pth",
+        "reason": "The scored PLY/snapshot is saved before densification; the complete checkpoint is saved after it. No accumulated gradient for the pre-densification PLY is stored.",
+        "ply_population": 1032018,
+        "checkpoint_population": 1070675,
+        "same_population": false,
+        "checkpoint_accum_nonzero": 0,
+        "checkpoint_denom_positive": 0,
+        "checkpoint_above": 0,
+        "supplement": "Separate post-densification checkpoint table; zero accumulators are reset values, not evidence of the earlier gradients"
+      },
+      "arrays_sha256": "42695bda5bd0b7e9d7914d6b61dc1bbf8c53eb11e900a83931e8bf4fec47f011",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r7_LoD2_15000",
+      "gaussians": 2772796,
+      "tags": {
+        "0": 1915214,
+        "1": 151547,
+        "2": 706035
+      },
+      "released_at100": 645920,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "5d71c1e2df7b80c7ccc51a98a7b448192d4649d560b959a956db7b81ac0853b8",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r7_LoD2_30000",
+      "gaussians": 2772796,
+      "tags": {
+        "0": 1915214,
+        "1": 151453,
+        "2": 706129
+      },
+      "released_at100": 645920,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "92b939e93ca972f6c3c8d3c49f63dd76c8d804c9c8e0f421242ab70747fc1ec2",
+      "scientific_verdict": null
+    },
+    {
+      "key": "base_LoD2_30000",
+      "gaussians": 2983470,
+      "tags": {
+        "0": 509082,
+        "1": 2474388
+      },
+      "released_at100": null,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "c54c03a3400cb0bf75063f18fd082cb66ec8fb332d36e848dc22826abb533416",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r8_ALS_7000",
+      "gaussians": 899833,
+      "tags": {
+        "0": 767098,
+        "1": 75116,
+        "2": 57619
+      },
+      "released_at100": 6960,
+      "gradient": {
+        "status": "없음",
+        "threshold": 0.0002,
+        "checkpoint": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r8/runs/tg_B173nb_b10_ALS_s0_r8/model/jbgs_complete/iteration_7000/checkpoint.pth",
+        "reason": "The scored PLY/snapshot is saved before densification; the complete checkpoint is saved after it. No accumulated gradient for the pre-densification PLY is stored.",
+        "ply_population": 899833,
+        "checkpoint_population": 936078,
+        "same_population": false,
+        "checkpoint_accum_nonzero": 0,
+        "checkpoint_denom_positive": 0,
+        "checkpoint_above": 0,
+        "supplement": "Separate post-densification checkpoint table; zero accumulators are reset values, not evidence of the earlier gradients"
+      },
+      "arrays_sha256": "8c1f7a8816bf341e7d794d88cc4aaacab512e23d85459b58ac59ab79635f09ea",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r8_ALS_15000",
+      "gaussians": 2839544,
+      "tags": {
+        "0": 2568256,
+        "1": 132107,
+        "2": 139181
+      },
+      "released_at100": 17132,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "573c7bb25debdd20b657124dc72b563550de7b1364ae07f05544e489c9877938",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r8_ALS_30000",
+      "gaussians": 2839544,
+      "tags": {
+        "0": 2568256,
+        "1": 131932,
+        "2": 139356
+      },
+      "released_at100": 17132,
+      "gradient": {
+        "status": "NOT_REQUESTED"
+      },
+      "arrays_sha256": "b25e53857436fb5547e415ab3b33a56eddbb82d107ad51cd2a18e8c930caa106",
+      "scientific_verdict": null
+    },
+    {
+      "key": "r8_LoD2_7000",
+      "gaussians": 1018234,
+      "tags": {
+        "0": 286563,
+        "1": 152870,
+        "2": 578801
+      },
+      "released_at100": 538299,
+      "gradient": {
+        "status": "없음",
+        "threshold": 0.0002,
+        "checkpoint": "/ph/main_target_v1/PHD-MAIN-TARGET-v1/r8/runs/tg_B173nb_b10_LoD2_s0_r8/model/jbgs_complete/iteration_7000/checkpoint.pth",
+        "reason": "The scored PLY/snapshot is saved before densification; the complete checkpoint is saved after it. No accumulated gradient for the pre-densification PLY is stored.",
+        "ply_population": 1018234,
+        "checkpoint_population": 1059539,
+        "same_population": false,
+        "checkpoint_accum_nonzero": 0,
+        "checkpoint_denom_positive": 0,
+        "checkpoint_above": 0,
+        "supplement": "Separate post-densification checkpoint table; zero accumulators are reset values, not evidence of the earlier gradients"
+      },
+      "arrays_sha256": "37b09504832ba29fc55d9fdda4fe815795bc4977d475dd7699ee28df880792bf",
+      "scientific_verdict": null
+    }
+  ],
+  "baseline": [
+    {
+      "prior": "ALS",
+      "gaussians_30000": 2796061,
+      "memory": {
+        "peak_cuda_allocated_bytes": 10977134080,
+        "peak_cuda_reserved_bytes": 11393826816
+      },
+      "records_14000_15000": [
+        {
+          "iteration": 14000,
+          "gaussians": 2252255,
+          "peak_cuda_allocated_bytes": 9814416896,
+          "peak_cuda_reserved_bytes": 10177478656
+        },
+        {
+          "iteration": 14100,
+          "gaussians": 2316383,
+          "peak_cuda_allocated_bytes": 9814416896,
+          "peak_cuda_reserved_bytes": 10177478656
+        },
+        {
+          "iteration": 14200,
+          "gaussians": 2370005,
+          "peak_cuda_allocated_bytes": 9814416896,
+          "peak_cuda_reserved_bytes": 10177478656
+        },
+        {
+          "iteration": 14300,
+          "gaussians": 2438922,
+          "peak_cuda_allocated_bytes": 9814416896,
+          "peak_cuda_reserved_bytes": 10177478656
+        },
+        {
+          "iteration": 14400,
+          "gaussians": 2483236,
+          "peak_cuda_allocated_bytes": 9814416896,
+          "peak_cuda_reserved_bytes": 10177478656
+        },
+        {
+          "iteration": 14500,
+          "gaussians": 2548566,
+          "peak_cuda_allocated_bytes": 10376105472,
+          "peak_cuda_reserved_bytes": 11016339456
+        },
+        {
+          "iteration": 14600,
+          "gaussians": 2602713,
+          "peak_cuda_allocated_bytes": 10376105472,
+          "peak_cuda_reserved_bytes": 11016339456
+        },
+        {
+          "iteration": 14700,
+          "gaussians": 2665420,
+          "peak_cuda_allocated_bytes": 10376105472,
+          "peak_cuda_reserved_bytes": 11016339456
+        },
+        {
+          "iteration": 14800,
+          "gaussians": 2728114,
+          "peak_cuda_allocated_bytes": 10376105472,
+          "peak_cuda_reserved_bytes": 11016339456
+        },
+        {
+          "iteration": 14900,
+          "gaussians": 2796061,
+          "peak_cuda_allocated_bytes": 10376105472,
+          "peak_cuda_reserved_bytes": 11016339456
+        },
+        {
+          "iteration": 15000,
+          "gaussians": 2796061,
+          "peak_cuda_allocated_bytes": 10977134080,
+          "peak_cuda_reserved_bytes": 11393826816
+        }
+      ],
+      "sources": {
+        "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/jbgs_trace.jsonl": "0b92d9ca6aff50973f5a9efd72d302cfa77de28c7067404f2fd009c5304c8936",
+        "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/receipt.json": "7e5cf3f1b4f4ddc042d05b9dd52a2c63c01bf6bea66b896b9d563941fe766030"
+      },
+      "note": "Memory peaks cumulative from original process start; GPU model requires original environment record"
+    },
+    {
+      "prior": "LoD2",
+      "gaussians_30000": 2983470,
+      "memory": {
+        "peak_cuda_allocated_bytes": 12042715136,
+        "peak_cuda_reserved_bytes": 12771655680
+      },
+      "records_14000_15000": [
+        {
+          "iteration": 14000,
+          "gaussians": 2359836,
+          "peak_cuda_allocated_bytes": 10047518720,
+          "peak_cuda_reserved_bytes": 10548674560
+        },
+        {
+          "iteration": 14100,
+          "gaussians": 2429391,
+          "peak_cuda_allocated_bytes": 10047518720,
+          "peak_cuda_reserved_bytes": 10548674560
+        },
+        {
+          "iteration": 14200,
+          "gaussians": 2486333,
+          "peak_cuda_allocated_bytes": 10047518720,
+          "peak_cuda_reserved_bytes": 10548674560
+        },
+        {
+          "iteration": 14300,
+          "gaussians": 2562603,
+          "peak_cuda_allocated_bytes": 10047518720,
+          "peak_cuda_reserved_bytes": 10548674560
+        },
+        {
+          "iteration": 14400,
+          "gaussians": 2614629,
+          "peak_cuda_allocated_bytes": 10047518720,
+          "peak_cuda_reserved_bytes": 10548674560
+        },
+        {
+          "iteration": 14500,
+          "gaussians": 2691197,
+          "peak_cuda_allocated_bytes": 10922796544,
+          "peak_cuda_reserved_bytes": 11492392960
+        },
+        {
+          "iteration": 14600,
+          "gaussians": 2756665,
+          "peak_cuda_allocated_bytes": 10922796544,
+          "peak_cuda_reserved_bytes": 11492392960
+        },
+        {
+          "iteration": 14700,
+          "gaussians": 2829754,
+          "peak_cuda_allocated_bytes": 10922796544,
+          "peak_cuda_reserved_bytes": 11492392960
+        },
+        {
+          "iteration": 14800,
+          "gaussians": 2907144,
+          "peak_cuda_allocated_bytes": 10922796544,
+          "peak_cuda_reserved_bytes": 11492392960
+        },
+        {
+          "iteration": 14900,
+          "gaussians": 2983470,
+          "peak_cuda_allocated_bytes": 10922796544,
+          "peak_cuda_reserved_bytes": 11492392960
+        },
+        {
+          "iteration": 15000,
+          "gaussians": 2983470,
+          "peak_cuda_allocated_bytes": 12042715136,
+          "peak_cuda_reserved_bytes": 12771655680
+        }
+      ],
+      "sources": {
+        "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/jbgs_trace.jsonl": "497f4f58c534d3074d60ee10de0e4e4f69eefc8b24129a82b99064f4fe13c3a8",
+        "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/receipt.json": "b4f89248f3e505328489e5d952c2bb65290106d1f2e74567363947489fb8a5b7"
+      },
+      "note": "Memory peaks cumulative from original process start; GPU model requires original environment record"
+    }
+  ],
+  "training": false,
+  "scientific_verdict": null
+}
