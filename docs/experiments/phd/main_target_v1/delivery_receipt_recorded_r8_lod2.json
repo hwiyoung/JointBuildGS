@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-02T14:57:55.821133+09:00",
+  "zip": "/out/handover/PHD-MAIN-TARGET-v1_원인점검r8LoD2_중단상태_1102-1457.zip",
+  "bytes": 324119454,
+  "sha256": "f967ab99a99e17c1bb7ba9197ce0005558890228e1d9efefdf43882e7bb56e59",
+  "members_verified": 356,
+  "external_payloads": 286,
+  "training": "STOPPED_BUFFER_GUARD",
+  "latest_decision": "NO_ADDITIONAL_TRAINING",
+  "heavy_readout": {
+    "at": "2026-11-02T14:53:17.653652+09:00",
+    "status": "PASS",
+    "render_states": 16,
+    "ranked_views": 20,
+    "all_rank_count_and_overlap_sums_equal": true,
+    "all_histograms_conserve_counts": true,
+    "initial_seed_source_asserted_during_render": true,
+    "counts_from_100_steps_telescope": true,
+    "gradient_rows": 448,
+    "optimization_steps": 0,
+    "scientific_verdict": null
+  },
+  "verification": {
+    "at": "2026-11-02T14:57:29.679141+09:00",
+    "status": "PASS_RECORDS_AND_DELIVERY_INPUTS",
+    "forward_records": 70,
+    "after_iteration_records": 70,
+    "complete_checkpoints": 7,
+    "stopped_state_count": 3504875,
+    "render_exact_tile_views": 203,
+    "full_render_views": 203,
+    "count_and_overlap_sums_equal": true,
+    "original_checkpoint_unchanged": true,
+    "original_r8_source_and_runtime_hashes_equal": true,
+    "scientific_verdict": null,
+    "camera_order_equal_in_shared_every100_records": true
+  },
+  "scientific_verdict": null
+}

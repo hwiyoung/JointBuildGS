@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-02T14:58:54.717481+09:00",
+  "task_id": "PHD-MAIN-TARGET-v1",
+  "latest_authority": "no additional training, saved-state cause diagnosis",
+  "training_resumed_after_stop": false,
+  "other_six_started": false,
+  "checklist": {
+    "heavy_view_top1_top10_distributions_ancestry": "PASS",
+    "same_view_8000_to14000_pre_and_post_baseline30000": "PASS",
+    "all203_top5_tables": "PASS",
+    "pre_density_448_cells_growth_448_cells": "PASS",
+    "camera_overhead_iteration_figures_with_json": "PASS"
+  },
+  "independent_export_rows": 5035124,
+  "visual_inspection": [
+    "heavy_iteration_curve.png",
+    "top1_camera_overhead.png",
+    "top_groups_rgb.png"
+  ],
+  "large_payloads_in_zip": false,
+  "recomputation_requires": [
+    "external payloads in external_payloads.json",
+    "pinned Docker image",
+    "repository sources plus included task scripts and runtime patch"
+  ],
+  "zip_sha256": "f967ab99a99e17c1bb7ba9197ce0005558890228e1d9efefdf43882e7bb56e59",
+  "scientific_verdict": null
+}

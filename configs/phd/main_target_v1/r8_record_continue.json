@@ -1,0 +1,67 @@
+{
+  "task_id": "PHD-MAIN-TARGET-v1",
+  "at": "2026-11-02T13:43:55.894171+09:00",
+  "authority": "2026-11-02 user: continue r8 LoD2 with records and guard",
+  "original_revision": "r8",
+  "source": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r22",
+  "checkpoint": "/out/r8/runs/tg_B173nb_b10_LoD2_s0_r8/model/jbgs_complete/iteration_7000/checkpoint.pth",
+  "checkpoint_sha256": "ce0767b0f2b6fe1b6f08abe06b2a8b9b1a93b724d3b0895da47f23f3e4631770",
+  "model": "/out/r8_recorded_continue/runs/tg_B173nb_b10_LoD2_s0_r8/model",
+  "save_iterations": [
+    6000,
+    7000,
+    8000,
+    9000,
+    10000,
+    11000,
+    12000,
+    13000,
+    14000,
+    15000,
+    30000
+  ],
+  "capture_iterations": [
+    7000,
+    8000,
+    9000,
+    10000,
+    11000,
+    12000,
+    13000,
+    14000,
+    15000,
+    30000
+  ],
+  "additional_readout_suppressed": [
+    8000,
+    9000,
+    10000,
+    11000,
+    12000,
+    13000,
+    14000
+  ],
+  "pre_densification_gradient": "after add_densification_stats and immediately before densify_and_prune at8000..14000; snapshot-time accumulator at15000/30000 where densification is disabled",
+  "every100": "both pre-training-forward and after-iteration counts by4 provenance x4 horizontal x4 height; forward overlap and exact BinningState bytes; GPU memory",
+  "provenance": [
+    "background",
+    "patch",
+    "released_at100_descendants",
+    "other_released"
+  ],
+  "boundaries": "/out/r8_lod2_cause/boundaries.json",
+  "boundary_sha256": "90c2daecbeb0f39e7afa8b30a7a9e644dcd627910ee84f8d79c8d9bcf6f1576b",
+  "guard": {
+    "fraction": 0.5,
+    "strict_greater": true,
+    "free": "cudaMemGetInfo device free immediately before BinningState allocation; cached reserved bytes not added",
+    "scope": "every forward, including ordinary scheduled evaluation; unchanged CUDA math and backward",
+    "automatic_retry": false
+  },
+  "health": "original TargetR8.observe unchanged, including3x n6000 every1000 and opacity reset grace",
+  "densify_grad_threshold": 0.0002,
+  "count_at_6000": 1280149,
+  "training_ends": 30000,
+  "other_six": "NOT_STARTED",
+  "scientific_verdict": null
+}
