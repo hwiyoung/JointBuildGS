@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-02T23:18:33.699383+09:00",
+  "config_sha256": "37d88a061463bf9b1477f4b3a8b5c245da2e95a9f6f2a158f8eaf132577b6618",
+  "source_sha256": {
+    "geometry.py": "f9d98c4034dde57727402ac4b377fc3a261d5ad4efdb7da661087968229f16d2",
+    "cylinder.py": "dde0aa2de02d3f516b93af5e95eac014847db4e78d3b815c68f3bdd326d09045",
+    "cylinders.cpp": "d8cd49b44a5ac3c9b88288cba693b99402eab101d8d933767398e4182394ea52",
+    "u_core.py": "734fad934b5dc3b6134649cf2320a1fdb34eccb1df56de4b98269598b64130b9"
+  },
+  "normal_neighbourhood": "3D sphere at original core; abs(z - TIN z)<=1m; orthogonal least-squares PCA; population residual SD",
+  "normal_fallback": "2m plane when no candidate qualifies; fewer than 3 or degenerate points => unavailable, never invent a normal",
+  "cylinder": "unchanged inherited outer face and +/-1m slab; lengths 5 and 10m",
+  "LoD2_mvs": "reuse verified JUDGENUM cached 10m cylinder at identical core/normal/radius; retain 5m comparison",
+  "als_radius_selection": "all development ALS roof cores with valid fitted normal; smallest median count >=20; no forced fallback",
+  "truth_inputs_opened": false,
+  "scientific_verdict": null
+}

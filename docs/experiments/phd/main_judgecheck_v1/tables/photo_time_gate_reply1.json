@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-03T00:09:41.293530+09:00",
+  "status": "STOP_PHOTO_TIME_ESTIMATE",
+  "ordered_rule": "order_v1.txt sections 1.12 and 4.5: random 200-point elapsed time / 200 * target count",
+  "scope": "Development only; timing sample from target types 1/2. Type 3 not yet counted or evaluated.",
+  "denominator_note": "Target count is a lower bound; elapsed-time extrapolation is an estimate, not a proven runtime lower bound.",
+  "preparation_note": "CPU plane fitting, masks, raw tile loading and KD-tree construction, and MVS camera selection are part of corrected photo preparation. Same preparation is used in both modes.",
+  "amortization_limitation": "The prescribed simple multiplication also repeats shared tile/tree and image decoding overhead. Full-area image/tile batching may reduce it. No optimized full-area runtime has been measured; score-only timing excludes required plane/mask/visibility work.",
+  "gpu_choice": "GPU 1, RTX 3090; no other research compute process at launch; desktop encoder left running on GPU 0",
+  "gpu_wait_for_other_job_seconds": 0,
+  "own_serial_queue_wait_not_gpu_contention": true,
+  "rows": [
+    {
+      "device": "cpu",
+      "points": 200,
+      "target_count_types_1_2": 187523,
+      "target_type3_pending": true,
+      "preparation_seconds": 361.0715266680345,
+      "scoring_seconds": 184.97573739103973,
+      "total_seconds": 546.0472640590742,
+      "seconds_per_point": 2.730236320295371,
+      "linear_estimate_hours": 142.217251525208,
+      "limit_hours": 72,
+      "over_limit": true,
+      "score_only_linear_hours": 48.17667389274992,
+      "decoding_only_linear_hours": 35.76032895276786,
+      "arithmetic_only_linear_hours": 12.004830505763532
+    },
+    {
+      "device": "cuda",
+      "points": 200,
+      "target_count_types_1_2": 187523,
+      "target_type3_pending": true,
+      "preparation_seconds": 361.0715266680345,
+      "scoring_seconds": 192.4228802761063,
+      "total_seconds": 553.4944069441408,
+      "seconds_per_point": 2.767472034720704,
+      "linear_estimate_hours": 144.15684954636959,
+      "limit_hours": 48,
+      "over_limit": true,
+      "score_only_linear_hours": 50.116271913911504,
+      "decoding_only_linear_hours": 38.05098584663373,
+      "arithmetic_only_linear_hours": 11.893952515468705
+    }
+  ],
+  "parity": {
+    "status": "PASS_CPU_GPU_PHOTO_PARITY",
+    "fields": {
+      "curves": {
+        "finite_count": 17071,
+        "max_absolute_difference": 1.860456233515606e-13,
+        "tolerance": 2e-05
+      },
+      "best_score": {
+        "finite_count": 442,
+        "max_absolute_difference": 1.2645440250480533e-13,
+        "tolerance": 2e-05
+      },
+      "texture": {
+        "finite_count": 484,
+        "max_absolute_difference": 5.7553961596568115e-12,
+        "tolerance": 0.0002
+      },
+      "texture_by_view": {
+        "finite_count": 3738,
+        "max_absolute_difference": 1.1517897746671224e-11,
+        "tolerance": 0.0002
+      }
+    },
+    "valid_counts_and_levels_equal": true
+  },
+  "exclusions": {
+    "label": "실험 지역과 사진 점을 공유해 뺀 핵심점",
+    "count": 73,
+    "area_m2": 5.442552935831812
+  },
+  "environment": {
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "torch": "2.4.1+cu121",
+    "commit": "06814177c68aae6750e6f62dbfc03d661f471165",
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "cpu_limit": 4,
+    "memory_limit_gib": 32,
+    "nice": 19
+  },
+  "input_sha256": {
+    "planes.npz": "644d21d82aec3290f4bf096c50cd9cca6378350bb8b09426994e3feb2384f62e",
+    "preparation.json": "db85851b4eb40c67d3ca7a0f78c9b38b4e0783736e2f9a39655a6ef5ab116238",
+    "scores_cpu.npz": "deea4696a46310cdddce5e60333977a38c74dbeeadc85b3bb756431d4d481f19",
+    "scores_cuda.npz": "9b82f34df8c0e22586caa6b6fe7aaec9d28031337f682e1a27bd4dd55be76de9",
+    "timing_cpu.json": "69435f4d3fa4c4bbc061cae33683411c9d4deaca0ed58d59133dd6b382d456a0",
+    "timing_cuda.json": "6988a610d63b54d0752d71b7e77a62e5419eec9edd811e3db03043ed047ce4e2"
+  },
+  "report_a_complete": false,
+  "truth_used": false,
+  "holdout_values_opened": false,
+  "training": false,
+  "scientific_verdict": null,
+  "excluded_shared_photo_cores": {
+    "label": "실험 지역과 사진 점을 공유해 뺀 핵심점",
+    "count": 73,
+    "area_m2": 5.442552935831812
+  }
+}

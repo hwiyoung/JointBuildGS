@@ -1,0 +1,36 @@
+{
+  "source": "identical 200-point planes.npz; CPU and one RTX 3090",
+  "source_tag": "[이 발주에서 냄]",
+  "rows": [
+    {
+      "field": "curves",
+      "finite_count": 17071,
+      "max_absolute_difference": 1.860456233515606e-13,
+      "tolerance": 2e-05
+    },
+    {
+      "field": "best_score",
+      "finite_count": 442,
+      "max_absolute_difference": 1.2645440250480533e-13,
+      "tolerance": 2e-05
+    },
+    {
+      "field": "texture",
+      "finite_count": 484,
+      "max_absolute_difference": 5.7553961596568115e-12,
+      "tolerance": 0.0002
+    },
+    {
+      "field": "texture_by_view",
+      "finite_count": 3738,
+      "max_absolute_difference": 1.1517897746671224e-11,
+      "tolerance": 0.0002
+    }
+  ],
+  "excluded_shared_photo_cores": {
+    "label": "실험 지역과 사진 점을 공유해 뺀 핵심점",
+    "count": 73,
+    "area_m2": 5.442552935831812
+  },
+  "scientific_verdict": null
+}

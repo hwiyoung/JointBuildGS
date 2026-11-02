@@ -1,0 +1,44 @@
+{
+  "source": "r1/photo_benchmark/preparation.json and timing_cpu.json / timing_cuda.json; 200 identical points",
+  "source_tag": "[이 발주에서 냄]",
+  "rows": [
+    {
+      "device": "cpu",
+      "points": 200,
+      "target_count_types_1_2": 187523,
+      "target_type3_pending": true,
+      "preparation_seconds": 361.0715266680345,
+      "scoring_seconds": 184.97573739103973,
+      "total_seconds": 546.0472640590742,
+      "seconds_per_point": 2.730236320295371,
+      "linear_estimate_hours": 142.217251525208,
+      "limit_hours": 72,
+      "over_limit": true,
+      "score_only_linear_hours": 48.17667389274992,
+      "decoding_only_linear_hours": 35.76032895276786,
+      "arithmetic_only_linear_hours": 12.004830505763532
+    },
+    {
+      "device": "cuda",
+      "points": 200,
+      "target_count_types_1_2": 187523,
+      "target_type3_pending": true,
+      "preparation_seconds": 361.0715266680345,
+      "scoring_seconds": 192.4228802761063,
+      "total_seconds": 553.4944069441408,
+      "seconds_per_point": 2.767472034720704,
+      "linear_estimate_hours": 144.15684954636959,
+      "limit_hours": 48,
+      "over_limit": true,
+      "score_only_linear_hours": 50.116271913911504,
+      "decoding_only_linear_hours": 38.05098584663373,
+      "arithmetic_only_linear_hours": 11.893952515468705
+    }
+  ],
+  "excluded_shared_photo_cores": {
+    "label": "실험 지역과 사진 점을 공유해 뺀 핵심점",
+    "count": 73,
+    "area_m2": 5.442552935831812
+  },
+  "scientific_verdict": null
+}

@@ -1,0 +1,40 @@
+{
+  "source": "r1/geometry_calibration.json; no truth in calibration",
+  "source_tag": "[이 발주에서 냄]",
+  "rows": [
+    {
+      "parameter": "sigma_W_m",
+      "group": "shared",
+      "value": 0.02450353934490731,
+      "sample_count": 87,
+      "sample_unit": "building"
+    },
+    {
+      "parameter": "r_m",
+      "group": "ALS_1",
+      "value": 0.016897281827748762,
+      "sample_count": 358281,
+      "sample_unit": "core"
+    },
+    {
+      "parameter": "r_m",
+      "group": "LoD2_1",
+      "value": 0.05085196109104549,
+      "sample_count": 459762,
+      "sample_unit": "core"
+    },
+    {
+      "parameter": "r_m",
+      "group": "LoD2_2",
+      "value": -0.02272214187916248,
+      "sample_count": 574772,
+      "sample_unit": "core"
+    }
+  ],
+  "excluded_shared_photo_cores": {
+    "label": "실험 지역과 사진 점을 공유해 뺀 핵심점",
+    "count": 73,
+    "area_m2": 5.442552935831812
+  },
+  "scientific_verdict": null
+}

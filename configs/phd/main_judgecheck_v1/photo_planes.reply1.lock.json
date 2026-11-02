@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-02T23:44:14.973036+09:00",
+  "config_sha256": "37d88a061463bf9b1477f4b3a8b5c245da2e95a9f6f2a158f8eaf132577b6618",
+  "selection_sha256": "de9c2f9f0c758ed75c04ec4dd7558721642c295e39d13de726a9896251003eeb",
+  "source_sha256": {
+    "photo_planes.py": "066f8f5f145e377ee8beabfb99cd17a945f4d1dd7448591ea5f36ddfb2a3cb86",
+    "photo_cameras.py": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+  },
+  "als_photo_plane": "Apply section 3.3 to the unchanged original photo centre; use globally selected ALS radius",
+  "mvs_band": "original-centre axis distance minus photo ALS cylinder height within core median d +/-0.3m",
+  "least_squares": "orthogonal PCA, one abs(residual)>3*NMAD trim, refit",
+  "sweep": "integer multiples of 0.02m within [-b,b], includes zero; no off-grid endpoints",
+  "masks": "re-evaluate every shifted sample; LoD2 projected same-surf triangle union; ALS 3D distance to retained same-building roof cores; MVS 3D distance to raw points within 0.1m of fitted plane",
+  "unavailable_plane_photo_count": 0,
+  "truth_opened": false,
+  "scientific_verdict": null
+}

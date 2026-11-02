@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-03T00:03:05.257660+09:00",
+  "reason": "CPU/GPU full-curve parity failed at a very low-texture sample. Preserve the same geometry, views, masks, sampling, NCC and tolerances; use float64 interpolation and NCC accumulation.",
+  "previous_config_sha256": "37d88a061463bf9b1477f4b3a8b5c245da2e95a9f6f2a158f8eaf132577b6618",
+  "previous_score_source_sha256": "d580e24472d9b90ad6e8d5eb53ca7edcc1ae8ca1bf862ff3b00972352a61a192",
+  "new_score_source_sha256": "af792fb490b2aaf9e660db54e01a9a72e1842cda45a02cdb965c91f88ec2a99e",
+  "diagnosis_sha256": "19dfdfb734b07da6ea8f14b0e36ac6ed3e4e5b68943693537e7e184fc0cc959a",
+  "changed": "new corrected-photo numerical precision only; inherited curves never recomputed",
+  "heldout_values_opened": false,
+  "GT_used": false,
+  "scientific_verdict": null
+}
