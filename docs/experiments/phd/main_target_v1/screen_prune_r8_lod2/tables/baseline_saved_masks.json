@@ -1,0 +1,27 @@
+{
+  "rows": [
+    {
+      "implementation": "baseline_ALS",
+      "iteration": 30000,
+      "gaussians": 2796061,
+      "frozen_count": 20992,
+      "density_mask_saved": false,
+      "density_mask_count": null,
+      "checkpoint": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/jbgs_complete/iteration_30000/checkpoint.pth",
+      "saved_max_radii_max": 1990277632.0,
+      "cameras_extent": 272.3538131713867
+    },
+    {
+      "implementation": "baseline_LoD2",
+      "iteration": 30000,
+      "gaussians": 2983470,
+      "frozen_count": 41204,
+      "density_mask_saved": false,
+      "density_mask_count": null,
+      "checkpoint": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/jbgs_complete/iteration_30000/checkpoint.pth",
+      "saved_max_radii_max": 2040295296.0,
+      "cameras_extent": 272.3538131713867
+    }
+  ],
+  "scientific_verdict": null
+}

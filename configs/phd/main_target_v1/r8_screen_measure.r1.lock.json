@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-02T20:41:49.415849+09:00",
+  "reason": "Original source casts W2C to float32 then inverts before getNerfppNorm. First diagnostic used exported float64 positions and failed exact equality by 9.8 micrometres. Reproduce source arithmetic; keep prior script and log.",
+  "files": {
+    "/repo/scripts/phd/main_target_v1/r8_screen_measure_r1.py": "372be6e63281b50e2b17bc414b8704eea6df84a5761a10f93ae0bfc8fbe42694",
+    "/cfg/r8_screen.json": "782bb2ca71bbc2494feef7017894349d7adffbfd44fa7812f17415746c4c9875"
+  },
+  "scientific_verdict": null
+}

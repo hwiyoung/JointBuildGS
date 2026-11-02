@@ -1,0 +1,9 @@
+implementation,execution,source,screen_threshold_px,configured_screen_first_iteration,configured_last_densify_iteration,interval,opacity_reset_interval,world_size_multiplier,min_opacity,radii_reset_before_screen_comparison,unconditional_reset_even_without_children,postfix_reset_line,screen_test_line,train_size_threshold_line,exemption,scientific_verdict
+baseline_ALS,EXECUTED,/repo/src/phd/forks/GeoGS-conf-guided-v1-r15,20,3100,14900,100,3000,0.1,0.05,True,True,443,519,1123,"density_exempt: density_mask 있으면 그것, 아니면 frozen_mask; protection=1, judgment=0 실제 실행",
+baseline_LoD2,EXECUTED,/repo/src/phd/forks/GeoGS-conf-guided-v1-r15,20,3100,14900,100,3000,0.1,0.05,True,True,443,519,1123,"density_exempt: density_mask 있으면 그것, 아니면 frozen_mask; protection=1, judgment=0 실제 실행",
+image_only_2DGS,EXECUTED,/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1,20,3100,14900,100,3000,0.1,0.05,True,True,346,398,131,정리 예외 마스크 없음,
+GeoGS_ALS,EXECUTED,/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1,20,3100,14900,100,3000,0.1,0.05,True,True,390,450,1049,8000회 이후 building frozen_mask 정리 제외; freeze_onlybldg=1로 나머지 밀도 제어 지속,
+GeoGS_LoD2,EXECUTED,/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1,20,3100,14900,100,3000,0.1,0.05,True,True,390,450,1049,8000회 이후 building frozen_mask 정리 제외; freeze_onlybldg=1로 나머지 밀도 제어 지속,
+r22_r8,EXECUTED,/repo/src/phd/forks/GeoGS-conf-guided-v1-r22,20,3100,14900,100,3000,0.1,0.05,True,True,446,526,1179,현재 배경·패치·풀림 꼬리표별 예외 없음; 저장 frozen_mask 모두0,
+original_2DGS,NOT_EXECUTED_REFERENCE,/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting,20,3100,14900,100,3000,0.1,0.05,True,True,346,398,131,정리 예외 마스크 없음,
+CDGS_prepared_only,NOT_TRAINED_PREPARATION_GATE,/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/cdgs-release-adapters-v2,20,3100,14900,100,3000,0.1,0.005,True,True,347,398,260,정리 예외 마스크 없음,

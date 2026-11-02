@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-02T21:00:18.796111+09:00",
+  "caption": "전체 장면에서의 실제 합성 기여. 원래 forward와 최대 절대 오차 2.24e-7로 대조했다.",
+  "data": {
+    "center_depth": {
+      "n": 35049,
+      "min": 0.2000981695112216,
+      "p01": 0.22528956858831634,
+      "p05": 0.3220027693035433,
+      "median": 1.3518675752899298,
+      "p95": 3.950756658021532,
+      "p99": 6.072876780304484,
+      "max": 73.41890906638173
+    },
+    "alpha": {
+      "at": "2026-11-02T20:52:17.671501+09:00",
+      "status": "VALIDATED_FLOAT32_CPU_REPLAY",
+      "errors": {
+        "full_alpha_max_abs": 1.7881393432617188e-07,
+        "subset_alpha_max_abs": 5.960464477539063e-08,
+        "full_rgb_max_abs": 2.2351741790771484e-07,
+        "subset_rgb_max_abs": 3.026798367500305e-09
+      },
+      "tolerance": 0.0001,
+      "selected": 35049,
+      "nonzero_max": 1,
+      "zero_max": 35048,
+      "max_alphaT": {
+        "n": 35049,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "median": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.00535042118281126
+      },
+      "nonzero_max_alphaT": {
+        "n": 1,
+        "min": 0.00535042118281126,
+        "p01": 0.00535042118281126,
+        "p05": 0.00535042118281126,
+        "median": 0.00535042118281126,
+        "p95": 0.00535042118281126,
+        "p99": 0.00535042118281126,
+        "max": 0.00535042118281126
+      },
+      "subset_max_alphaT": {
+        "n": 35049,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "median": 0.0,
+        "p95": 0.0,
+        "p99": 0.0,
+        "max": 0.00535042118281126
+      },
+      "accepted_selected_pixel_pairs": 453,
+      "nonzero_subset_pixels": 453,
+      "zero_other_pixels": 758331,
+      "method": "Unmodified original CUDA forward buffers; CPU float32 sorted alpha*T replay validated against actual full/subset RGB and alpha. Omitted pixels have exact zero subset alpha and nonnegative contributions; subset alpha<0.01 precludes early-exit hiding.",
+      "optimization_steps": 0,
+      "scientific_verdict": null
+    },
+    "near_m": 0.2,
+    "behind": 0,
+    "inside_near": 0
+  },
+  "scientific_verdict": null
+}

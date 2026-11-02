@@ -1,0 +1,59 @@
+{
+  "rows": [
+    {
+      "implementation": "baseline_ALS",
+      "cameras_extent_m": 272.3538131713867,
+      "world_size_threshold_m": 27.235381317138675,
+      "canonical_camera_positions_equal": true,
+      "max_camera_position_difference_m": 0.0,
+      "basis": "getNerfppNorm on actual model cameras.json and exact203 train membership",
+      "model_camera_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/cameras.json"
+    },
+    {
+      "implementation": "baseline_LoD2",
+      "cameras_extent_m": 272.3538131713867,
+      "world_size_threshold_m": 27.235381317138675,
+      "canonical_camera_positions_equal": true,
+      "max_camera_position_difference_m": 0.0,
+      "basis": "getNerfppNorm on actual model cameras.json and exact203 train membership",
+      "model_camera_file": "/ph/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/cameras.json"
+    },
+    {
+      "implementation": "image_only_2DGS",
+      "cameras_extent_m": 272.3538131713867,
+      "world_size_threshold_m": 27.235381317138675,
+      "canonical_camera_positions_equal": true,
+      "max_camera_position_difference_m": 0.0,
+      "basis": "getNerfppNorm on actual model cameras.json and exact203 train membership",
+      "model_camera_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/model/cameras.json"
+    },
+    {
+      "implementation": "GeoGS_ALS",
+      "cameras_extent_m": 272.3538131713867,
+      "world_size_threshold_m": 27.235381317138675,
+      "canonical_camera_positions_equal": true,
+      "max_camera_position_difference_m": 0.0,
+      "basis": "getNerfppNorm on actual model cameras.json and exact203 train membership",
+      "model_camera_file": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/model/cameras.json"
+    },
+    {
+      "implementation": "GeoGS_LoD2",
+      "cameras_extent_m": 272.3538131713867,
+      "world_size_threshold_m": 27.235381317138675,
+      "canonical_camera_positions_equal": true,
+      "max_camera_position_difference_m": 0.0,
+      "basis": "getNerfppNorm on actual model cameras.json and exact203 train membership",
+      "model_camera_file": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/model/cameras.json"
+    },
+    {
+      "implementation": "r22_r8",
+      "cameras_extent_m": 272.3538131713867,
+      "world_size_threshold_m": 27.235381317138675,
+      "canonical_camera_positions_equal": true,
+      "max_camera_position_difference_m": 0.0,
+      "basis": "getNerfppNorm on actual model cameras.json and exact203 train membership",
+      "model_camera_file": "/out/r8_recorded_continue/runs/tg_B173nb_b10_LoD2_s0_r8/model/cameras.json"
+    }
+  ],
+  "scientific_verdict": null
+}

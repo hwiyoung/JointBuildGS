@@ -1,0 +1,35 @@
+{
+  "finite": true,
+  "selected": 35049,
+  "subset_alpha_nonzero_pixels": 453,
+  "subset_alpha": {
+    "n": 758784,
+    "min": 0.0,
+    "p01": 0.0,
+    "p05": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "p99": 0.0,
+    "max": 0.0053504109382629395
+  },
+  "subset_rgb_max": 0.0013558788923546672,
+  "max_alphaT_per_gaussian": null,
+  "status": "UNAVAILABLE_PER_GAUSSIAN_MAX_NOT_STORED",
+  "proof": "Every accepted alpha>=1/255 and T>0 before early termination, so an all-zero composed subset alpha implies no selected row accepted any pixel. Adding other rows only reduces transmittance and cannot create acceptance. Full scene per-row contribution is therefore also zero.",
+  "center_depth_m": {
+    "n": 35049,
+    "min": 0.2000981695112216,
+    "p01": 0.22528956858831634,
+    "p05": 0.3220027693035433,
+    "median": 1.3518675752899298,
+    "p95": 3.950756658021532,
+    "p99": 6.072876780304484,
+    "max": 73.41890906638173
+  },
+  "center_behind_or_on_camera": 0,
+  "center_front_inside_near": 0,
+  "center_beyond_near": 35049,
+  "near_m": 0.2,
+  "fragment_depth_is_different": "Pixel ray/surfel intersection depth is tested separately in forward.cu; not inferred from center Z",
+  "scientific_verdict": null
+}
