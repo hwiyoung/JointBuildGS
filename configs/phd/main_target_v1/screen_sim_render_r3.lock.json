@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-02T21:56:00.253371+09:00",
+  "files": {
+    "/repo/scripts/phd/main_target_v1/screen_sim_weights.cu": "c690433fdb6f5268e9e38da0e269976ff8b76e1f0eaddd76d52cdcdffcfb5026",
+    "/repo/scripts/phd/main_target_v1/common.py": "37b2f070e850587dd08b7d518502a94eb4e15c512efbefa977c05bf21711c994",
+    "/repo/configs/phd/main_target_v1/screen_sim.json": "a95091d22ef589f95b6d135b1a77d95f54cddcc26bf103b375cc1eba73f06c64",
+    "/out/screen_sim/inputs/index.json": "d4039c1131b220bf593151cc664770e9fb0edeef0536840fdb791ac95113f7fc",
+    "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/model/cfg_args": "b7adaeba4591425be0f192cc6e6cf90a66b94df05ac38828ba071d0cce78e25a",
+    "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/model/cfg_args": "b7adaeba4591425be0f192cc6e6cf90a66b94df05ac38828ba071d0cce78e25a",
+    "/repo/scripts/phd/main_target_v1/screen_sim_render_r3.py": "e855c2c0a81de8347c02b804d113a69e5b0446095b2e5b4eae07da20f9e1a77e",
+    "/repo/scripts/phd/main_target_v1/screen_sim_launch_r3.py": "343fac547cd7e15a9f5f44ff5c698f87f6a00dbe90f0e5e19cd1299e40f518c3"
+  },
+  "scientific_verdict": null,
+  "reason": "GeoGS adds sparse_dir_name in train.py, not ModelParams parser. Forward-only loader sets it on extracted dataset exactly as original cfg_args; r2 argparse failure preserved, no render occurred."
+}

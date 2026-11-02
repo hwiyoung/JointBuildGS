@@ -1,0 +1,433 @@
+{
+  "status": "PASS",
+  "states": [
+    {
+      "state": "base_ALS_30000",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 2796061,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 5.051981610826317e-10,
+      "scientific_verdict": null
+    },
+    {
+      "state": "base_LoD2_30000",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 2983470,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 4.902964978459323e-10,
+      "scientific_verdict": null
+    },
+    {
+      "state": "r8_ALS_30000",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 2839544,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 5.273245173853525e-10,
+      "scientific_verdict": null
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 2772796,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 5.35951810709534e-10,
+      "scientific_verdict": null
+    },
+    {
+      "state": "r8_LoD2_stop",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 3504875,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 5.254364721096749e-10,
+      "scientific_verdict": null
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 1440563,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 6.022252696524788e-10,
+      "scientific_verdict": null
+    },
+    {
+      "state": "GeoGS_ALS_30000",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 3605015,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 5.794828783489692e-10,
+      "scientific_verdict": null
+    },
+    {
+      "state": "GeoGS_LoD2_30000",
+      "status": "PASS",
+      "raw_radius_views": 203,
+      "gaussians": 3357256,
+      "max_radius_exact": true,
+      "argmax_first_exact": true,
+      "candidate_masks_exact": true,
+      "nested_masks": true,
+      "group_count_conservation": true,
+      "max_fixed_image_MSE_error": 5.501260280649234e-10,
+      "scientific_verdict": null
+    }
+  ],
+  "roi_views_reconciled": 203,
+  "score_partitions": [
+    {
+      "state": "GeoGS_ALS_30000",
+      "variant": "before",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_ALS_30000",
+      "variant": "px20",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_ALS_30000",
+      "variant": "width10",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_ALS_30000",
+      "variant": "width25",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_ALS_30000",
+      "variant": "width50",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_LoD2_30000",
+      "variant": "before",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_LoD2_30000",
+      "variant": "px20",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_LoD2_30000",
+      "variant": "width10",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_LoD2_30000",
+      "variant": "width25",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "GeoGS_LoD2_30000",
+      "variant": "width50",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_ALS_30000",
+      "variant": "before",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_ALS_30000",
+      "variant": "px20",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_ALS_30000",
+      "variant": "width10",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_ALS_30000",
+      "variant": "width25",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_ALS_30000",
+      "variant": "width50",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_LoD2_30000",
+      "variant": "before",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_LoD2_30000",
+      "variant": "px20",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_LoD2_30000",
+      "variant": "width10",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_LoD2_30000",
+      "variant": "width25",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "base_LoD2_30000",
+      "variant": "width50",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "before",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "before",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "px20",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "px20",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "width10",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "width10",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "width25",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "width25",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "width50",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "image_only_2DGS_30000",
+      "variant": "width50",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "variant": "before",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "variant": "px20",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "variant": "width10",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "variant": "width25",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r7_LoD2_30000",
+      "variant": "width50",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_ALS_30000",
+      "variant": "before",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_ALS_30000",
+      "variant": "px20",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_ALS_30000",
+      "variant": "width10",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_ALS_30000",
+      "variant": "width25",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_ALS_30000",
+      "variant": "width50",
+      "prior": "ALS",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_LoD2_stop",
+      "variant": "before",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_LoD2_stop",
+      "variant": "px20",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_LoD2_stop",
+      "variant": "width10",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_LoD2_stop",
+      "variant": "width25",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    },
+    {
+      "state": "r8_LoD2_stop",
+      "variant": "width50",
+      "prior": "LoD2",
+      "cells": 16,
+      "status": "PASS"
+    }
+  ],
+  "meshes": 40,
+  "expected_meshes": 40,
+  "expected_score_partitions": 45,
+  "training": false,
+  "backward": false,
+  "scientific_verdict": null
+}

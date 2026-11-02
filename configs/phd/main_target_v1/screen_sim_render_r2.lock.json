@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-02T21:53:05.214864+09:00",
+  "files": {
+    "/repo/scripts/phd/main_target_v1/screen_sim_weights.cu": "c690433fdb6f5268e9e38da0e269976ff8b76e1f0eaddd76d52cdcdffcfb5026",
+    "/repo/scripts/phd/main_target_v1/common.py": "37b2f070e850587dd08b7d518502a94eb4e15c512efbefa977c05bf21711c994",
+    "/repo/configs/phd/main_target_v1/screen_sim.json": "a95091d22ef589f95b6d135b1a77d95f54cddcc26bf103b375cc1eba73f06c64",
+    "/out/screen_sim/inputs/index.json": "d4039c1131b220bf593151cc664770e9fb0edeef0536840fdb791ac95113f7fc",
+    "/repo/scripts/phd/main_target_v1/screen_sim_render_r2.py": "f45ee13f9b205d47f9bd8aa51aca03796fae751597f025718a22373e7f6aef4b",
+    "/repo/scripts/phd/main_target_v1/screen_sim_launch_r2.py": "1460c6c8532b6254f5715d857079c6652a02e7eb4a80f9e942fb3a6d3a85deab",
+    "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/model/cfg_args": "b7adaeba4591425be0f192cc6e6cf90a66b94df05ac38828ba071d0cce78e25a",
+    "/ph/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/model/cfg_args": "b7adaeba4591425be0f192cc6e6cf90a66b94df05ac38828ba071d0cce78e25a"
+  },
+  "scientific_verdict": null,
+  "reason": "GeoGS original cfg_args uses sparse_dir_name=sparse_lod. First attempt used default sparse and stopped on read-only implicit PLY conversion before any render. Preserve failure, read original correct path."
+}

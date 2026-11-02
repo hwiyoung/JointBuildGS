@@ -1,0 +1,37 @@
+{
+  "rows": [
+    {
+      "state": "GeoGS_ALS_30000",
+      "training_views": 203,
+      "pose_max_abs_difference": 0.0,
+      "intrinsic_max_abs_difference": 0.0,
+      "status": "PASS_EQUIVALENT_REPRESENTATION",
+      "note": "Actual sparse_lod uses text; initial lock contains corresponding binary cameras. Equality is numerical, not byte identity.",
+      "files": {
+        "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/scenes/geogs_als/B173nb_b10/sparse/0/images.bin": "0d5328dc73328563c49c83a33afaf7178617ba72c9f78dc8d633ca6c02b04dcc",
+        "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/scenes/geogs_als/B173nb_b10/sparse/0/cameras.bin": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879",
+        "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/scenes/geogs_als/B173nb_b10/sparse_lod/0/images.txt": "d3a94f9197693b1b5fae23996b66be87c68d9421773925a342549a0870a2c410",
+        "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/scenes/geogs_als/B173nb_b10/sparse_lod/0/cameras.txt": "add0f0faf03e5ba615601d2ede4cc95af98c4735ecf638de170e34fd9b6cf96c",
+        "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/scenes/geogs_als/B173nb_b10/jbgs_calibration.json": "40b6831400f7b4a59d437d9a250d9866cd3b4f100168f23604e263c30356d67b"
+      },
+      "scientific_verdict": null
+    },
+    {
+      "state": "GeoGS_LoD2_30000",
+      "training_views": 203,
+      "pose_max_abs_difference": 0.0,
+      "intrinsic_max_abs_difference": 0.0,
+      "status": "PASS_EQUIVALENT_REPRESENTATION",
+      "note": "Actual sparse_lod uses text; initial lock contains corresponding binary cameras. Equality is numerical, not byte identity.",
+      "files": {
+        "/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/B173nb_b10/scene_fix1/sparse/0/images.bin": "0d5328dc73328563c49c83a33afaf7178617ba72c9f78dc8d633ca6c02b04dcc",
+        "/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/B173nb_b10/scene_fix1/sparse/0/cameras.bin": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879",
+        "/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/B173nb_b10/scene_fix1/sparse_lod/0/images.txt": "b4b00703a55b05e7f77dc74c54edd7babd4cfbb3dccbd4fc5198f31962e72409",
+        "/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/B173nb_b10/scene_fix1/sparse_lod/0/cameras.txt": "add0f0faf03e5ba615601d2ede4cc95af98c4735ecf638de170e34fd9b6cf96c",
+        "/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/B173nb_b10/scene_fix1/jbgs_calibration.json": "40b6831400f7b4a59d437d9a250d9866cd3b4f100168f23604e263c30356d67b"
+      },
+      "scientific_verdict": null
+    }
+  ],
+  "scientific_verdict": null
+}

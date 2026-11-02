@@ -1,0 +1,17 @@
+cell,label,kind,members
+all,전체,전체,기존 AXES71-v2 전체 모집단
+c_refine,다듬기,참값 칸,c_refine
+c_corr14,보정 · 1~4τ,참값 칸,c_corr14
+c_corr4p,보정 · 4τ 넘음,참값 칸,c_corr4p
+c_keep_mask,보존 · 거름,참값 칸,c_keep_mask
+c_keep_in,보존 · 문턱 안,참값 칸,c_keep_in
+c_limit,한계,참값 칸,c_limit
+c_double,이중 오류,참값 칸,c_double
+c_inh_miss,상속 · 결측,참값 칸,c_inh_miss
+c_miss_wrong,결측 · 사전 정보 틀림,참값 칸,c_miss_wrong
+c_inh_invis,상속 · 비가시,참값 칸,c_inh_invis
+c_invis_wrong,비가시 · 사전 정보 틀림,참값 칸,c_invis_wrong
+c_nogt,참값 없음,참값 칸,c_nogt
+s_corr,보정 합,합계,"c_corr14, c_corr4p"
+s_keep,보존 합,합계,"c_keep_mask, c_keep_in"
+s_inh,상속 합,합계,"c_inh_miss, c_inh_invis"

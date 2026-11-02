@@ -1,0 +1,92 @@
+{
+  "at": "2026-11-02T21:46:05.616059+09:00",
+  "patches": [
+    {
+      "implementation": "r15",
+      "source": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r15",
+      "executed": true,
+      "source_hashes": {
+        "scene/gaussian_model.py": "3503252cf971a1d8294af982e18ae8beb849834d3b131e815790e849a7194b2e",
+        "arguments/__init__.py": "059113ea23d1905b750b9849f95aafb1f7ea3f644f8a261a656535454ec0c71c",
+        "train.py": "bc8903ae1d94f2c102436f332558fb60cdd44cd0ac63c7669d9e7421db9c9795"
+      },
+      "patch_sha256": "d281f7363beb83921e647a2669fc8c646b3a1fc8d15210a320ae750fd970bafb",
+      "syntax": "PASS (AST only)",
+      "apply_check": "PASS (not applied)",
+      "threshold_px": null,
+      "applied": false,
+      "protection": "existing density_exempt preserved",
+      "scientific_verdict": null
+    },
+    {
+      "implementation": "r22",
+      "source": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r22",
+      "executed": true,
+      "source_hashes": {
+        "scene/gaussian_model.py": "783d2fd2297beb5be6ffde22835887d1ed1f8608980377061ffc73a2ac2315ba",
+        "arguments/__init__.py": "059113ea23d1905b750b9849f95aafb1f7ea3f644f8a261a656535454ec0c71c",
+        "train.py": "dfcc909f4b4638550cac1e95f6747a78aac96823b523bc94bb152c356cc6cd1b"
+      },
+      "patch_sha256": "647f877ffa0fc91c99d4ef4ed84cd4081fc36ae7079cfb0ed525f8cd41154cfe",
+      "syntax": "PASS (AST only)",
+      "apply_check": "PASS (not applied)",
+      "threshold_px": null,
+      "applied": false,
+      "protection": "existing density_exempt preserved",
+      "scientific_verdict": null
+    },
+    {
+      "implementation": "image_only_2DGS",
+      "source": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1",
+      "executed": true,
+      "source_hashes": {
+        "scene/gaussian_model.py": "9dd1e206ea7d050ef58784ad823b30fcb54258b12bc7434d574f56b7e65d70ec",
+        "arguments/__init__.py": "46d94ea5912f13097c6d3f467267f8451177d6f5ec232f67aac0f2d580fb8c93",
+        "train.py": "ebc9f6e9def7e70733af913d07e00f350ae2e3fdd5cbdcf3e9abc37ccd347196"
+      },
+      "patch_sha256": "65f06f0e808fb8993d7570f114cad73cc00bfe48bf3780904df70d105d09fec7",
+      "syntax": "PASS (AST only)",
+      "apply_check": "PASS (not applied)",
+      "threshold_px": null,
+      "applied": false,
+      "protection": "none",
+      "scientific_verdict": null
+    },
+    {
+      "implementation": "GeoGS",
+      "source": "/ph/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1",
+      "executed": true,
+      "source_hashes": {
+        "scene/gaussian_model.py": "4be070008683ba1943de9e22d1f4d1a9c194aef56010c0b3186d0bd7f6aadb9a",
+        "arguments/__init__.py": "059113ea23d1905b750b9849f95aafb1f7ea3f644f8a261a656535454ec0c71c",
+        "train.py": "4c09f6a117d7f4a13e3bd3c5d9eb49b1830e428950a53c0f86be4001637c7a10"
+      },
+      "patch_sha256": "721d858874e3eca912d96a0f5b4374bcb72ebd412b3c90a89eb8b8de7c6c5c88",
+      "syntax": "PASS (AST only)",
+      "apply_check": "PASS (not applied)",
+      "threshold_px": null,
+      "applied": false,
+      "protection": "none",
+      "scientific_verdict": null
+    },
+    {
+      "implementation": "CDGS_prepared_only",
+      "source": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/cdgs-release-adapters-v2",
+      "executed": false,
+      "source_hashes": {
+        "scene/gaussian_model.py": "5fa0bcc25dce83ca5ed44d264278675ddb6a88befae128d336f3439dbb2656c7",
+        "arguments/__init__.py": "65e346c61ae2af91f16faf3295f3c46bcff792b6b98caeca62cfe7b2d0d30a4f",
+        "train.py": "5b909e5305e158029dc536ef7248e5700896b361437ac7e4c5d3f2c45f162950"
+      },
+      "patch_sha256": "9464c0ff6155de544a393a4dea9d1ba5a1df725c066af825b66d2655fe5c6be4",
+      "syntax": "PASS (AST only)",
+      "apply_check": "PASS (not applied)",
+      "threshold_px": null,
+      "applied": false,
+      "protection": "none",
+      "scientific_verdict": null
+    }
+  ],
+  "training": false,
+  "scientific_verdict": null
+}

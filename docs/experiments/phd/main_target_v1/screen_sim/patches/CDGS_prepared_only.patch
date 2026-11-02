@@ -1,0 +1,82 @@
+--- a/scene/gaussian_model.py
++++ b/scene/gaussian_model.py
+@@ -385,21 +385,29 @@
+         new_rotation = self._rotation[selected_pts_mask]
+ 
+         self.densification_postfix(new_xyz, new_features_dc, new_features_rest, new_opacities, new_scaling, new_rotation)
+ 
+     def densify_and_prune(self, max_grad, min_opacity, extent, max_screen_size):
++        # Screen-only pruning must read the history BEFORE postfix clears it.
++        # Threshold is supplied explicitly; no value is chosen by this patch.
++        if max_screen_size is not None:
++            if not (0 < float(max_screen_size) < float("inf")):
++                raise ValueError("screen_prune_px must be finite and positive")
++            screen_prune = self.max_radii2D > max_screen_size
++            if screen_prune.any():
++                self.prune_points(screen_prune)
++
+         grads = self.xyz_gradient_accum / self.denom
+         grads[grads.isnan()] = 0.0
+ 
+         self.densify_and_clone(grads, max_grad, extent)
+         self.densify_and_split(grads, max_grad, extent)
+ 
+         prune_mask = (self.get_opacity < min_opacity).squeeze()
+         if max_screen_size:
+-            big_points_vs = self.max_radii2D > max_screen_size
+             big_points_ws = self.get_scaling.max(dim=1).values > 0.1 * extent
+-            prune_mask = torch.logical_or(torch.logical_or(prune_mask, big_points_vs), big_points_ws)
++            prune_mask = torch.logical_or(prune_mask, big_points_ws)
+         self.prune_points(prune_mask)
+ 
+         torch.cuda.empty_cache()
+         
+     def add_densification_stats(self, viewspace_point_tensor, update_filter):
+--- a/arguments/__init__.py
++++ b/arguments/__init__.py
+@@ -93,15 +93,17 @@
+         self.rotation_lr = 0.001
+         self.percent_dense = 0.01
+         self.lambda_dssim = 0.2
+         self.densification_interval = 100
+         self.opacity_reset_interval = 3000
++        self.screen_prune_px = 0.0  # type declaration only; parser default below is None
+         self.densify_from_iter = 100 #500
+         self.densify_until_iter = 15_000
+         self.densify_grad_threshold = 0.0002
+         self.random_background = False # At initial version we used, there was no random_background
+         super().__init__(parser, "Optimization Parameters")
++        parser.set_defaults(screen_prune_px=None)  # user must choose after simulation
+ 
+ def get_combined_args(parser : ArgumentParser):
+     cmdlne_string = sys.argv[1:]
+     cfgfile_string = "Namespace()"
+     args_cmdline = parser.parse_args(cmdlne_string)
+--- a/train.py
++++ b/train.py
+@@ -73,10 +73,12 @@
+     if _JBGS["model_path"]:
+         with open(os.path.join(_JBGS["model_path"], name), mode) as f:
+             f.write(_jbgs_json.dumps(rec) + ("\n" if mode == "a" else ""))
+ 
+ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from, usedepth=False, usedepthReg=False):
++    if opt.screen_prune_px is None or not (0 < float(opt.screen_prune_px) < float("inf")):
++        raise ValueError("Choose --screen_prune_px explicitly after the screen-size simulation")
+     first_iter = 0
+     tb_writer = prepare_output_and_logger(dataset)
+     gaussians = GaussianModel(dataset.sh_degree)
+     scene = Scene(dataset, gaussians)
+     gaussians.training_setup(opt)
+@@ -255,11 +257,11 @@
+                 # Keep track of max radii in image-space for pruning
+                 gaussians.max_radii2D[visibility_filter] = torch.max(gaussians.max_radii2D[visibility_filter], radii[visibility_filter])
+                 gaussians.add_densification_stats(viewspace_point_tensor, visibility_filter)
+ 
+                 if iteration > opt.densify_from_iter and iteration % opt.densification_interval == 0:
+-                    size_threshold = 20 if iteration > opt.opacity_reset_interval else None
++                    size_threshold = opt.screen_prune_px if iteration > opt.opacity_reset_interval else None
+                     gaussians.densify_and_prune(opt.densify_grad_threshold, 0.005, scene.cameras_extent, size_threshold)
+                 # Reset opacity if depth is not being used
+                 if not usedepth:
+                     if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
+                         gaussians.reset_opacity()

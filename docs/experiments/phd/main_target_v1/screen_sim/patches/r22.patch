@@ -1,0 +1,91 @@
+--- a/scene/gaussian_model.py
++++ b/scene/gaussian_model.py
+@@ -513,21 +513,32 @@
+ 
+         meta = self.target_r6.child_metadata(self, selected_pts_mask, 1) if self.target_r6 is not None else None
+         self.densification_postfix(new_xyz, new_features_dc, new_features_rest, new_opacities, new_scaling, new_rotation, new_origin=new_origin, new_init_id=new_init_id, new_target_meta=meta)
+ 
+     def densify_and_prune(self, max_grad, min_opacity, extent, max_screen_size):
++        # Screen-only pruning must read the history BEFORE postfix clears it.
++        # Threshold is supplied explicitly; no value is chosen by this patch.
++        if max_screen_size is not None:
++            if not (0 < float(max_screen_size) < float("inf")):
++                raise ValueError("screen_prune_px must be finite and positive")
++            screen_prune = self.max_radii2D > max_screen_size
++            exempt = self.density_exempt()
++            if exempt is not None:
++                screen_prune = torch.logical_and(screen_prune, ~exempt)
++            if screen_prune.any():
++                self.prune_points(screen_prune)
++
+         grads = self.xyz_gradient_accum / self.denom
+         grads[grads.isnan()] = 0.0
+ 
+         self.densify_and_clone(grads, max_grad, extent)
+         self.densify_and_split(grads, max_grad, extent)
+ 
+         prune_mask = (self.get_opacity < min_opacity).squeeze()
+         if max_screen_size:
+-            big_points_vs = self.max_radii2D > max_screen_size
+             big_points_ws = self.get_scaling.max(dim=1).values > 0.1 * extent
+-            prune_mask = torch.logical_or(torch.logical_or(prune_mask, big_points_vs), big_points_ws)
++            prune_mask = torch.logical_or(prune_mask, big_points_ws)
+         _ex = self.density_exempt()  # [jbgs_judgment r13] r12: frozen_mask
+         if _ex is not None:
+             prune_mask = torch.logical_and(prune_mask, ~_ex)
+         self.prune_points(prune_mask)
+ 
+--- a/arguments/__init__.py
++++ b/arguments/__init__.py
+@@ -123,10 +123,11 @@
+         self.lambda_normal = 0.05
+         self.opacity_cull = 0.05
+ 
+         self.densification_interval = 100
+         self.opacity_reset_interval = 3000
++        self.screen_prune_px = 0.0  # type declaration only; parser default below is None
+         self.densify_from_iter = 500
+         self.densify_until_iter = 15_000
+         self.densify_grad_threshold = 0.0002
+ 
+         # Add building-specific loss weights
+@@ -185,10 +186,11 @@
+         self.sigma_normal_min = 0.5       # Minimum sigma value (allows 2x weight increase)
+         self.sigma_normal_max = 2.0       # Maximum sigma value (allows 0.5x weight decrease)
+         self.dynamic_weight_start_iter = 7000  # Start micro-tuning when normal loss activates (align with original 2DGS)
+ 
+         super().__init__(parser, "Optimization Parameters")
++        parser.set_defaults(screen_prune_px=None)  # user must choose after simulation
+ 
+ def get_combined_args(parser : ArgumentParser):
+     cmdlne_string = sys.argv[1:]
+     cfgfile_string = "Namespace()"
+     args_cmdline = parser.parse_args(cmdlne_string)
+--- a/train.py
++++ b/train.py
+@@ -686,10 +686,12 @@
+ import jbgs_target
+ import jbgs_oom_record  # [jbgs r15] read-only record of a CUDA out-of-memory stop (default off)
+ 
+ 
+ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint):
++    if opt.screen_prune_px is None or not (0 < float(opt.screen_prune_px) < float("inf")):
++        raise ValueError("Choose --screen_prune_px explicitly after the screen-size simulation")
+     first_iter = 0
+     tb_writer = prepare_output_and_logger(dataset)
+     mvs_pgsr_control = jbgs_mvs_pgsr.from_environment(dataset, opt, pipe, args)
+     gaussians = GaussianModel(dataset.sh_degree)
+     scene = Scene(dataset, gaussians)
+@@ -1174,11 +1176,11 @@
+                     gaussians.max_radii2D[visibility_filter], radii[visibility_filter]
+                 )
+                 gaussians.add_densification_stats(viewspace_point_tensor, visibility_filter)
+ 
+                 if iteration > opt.densify_from_iter and iteration % opt.densification_interval == 0:
+-                    size_threshold = 20 if iteration > opt.opacity_reset_interval else None
++                    size_threshold = opt.screen_prune_px if iteration > opt.opacity_reset_interval else None
+                     gaussians.densify_and_prune(opt.densify_grad_threshold, opt.opacity_cull, scene.cameras_extent, size_threshold)
+                     # densify_and_prune replaces _xyz/_rotation/_scaling with new nn.Parameter objects,
+                     # which destroys any previously registered gradient hooks. Re-apply attenuation so
+                     # building Gaussians remain protected throughout Stage 2.
+                     if building_freeze_mask is not None and gaussians.frozen_mask is not None and gaussians.frozen_mask.any():

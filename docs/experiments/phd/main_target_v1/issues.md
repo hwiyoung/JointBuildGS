@@ -158,3 +158,10 @@ ALS 6,100회에서 float32 폭 초과 0.030965 mm > 허용 0.030000 mm로 종료
 
 - SCREEN_RADIUS_RESET_BEFORE_PRUNE: r22 gaussian_model.py:521~526은 복제·분할 후 화면 반지름을 비교하고, 두 postfix 호출의 :446은 모든 max_radii2D를 0으로 만든다. r15·고정 2DGS·GeoGS·준비 CDGS에도 같은 순서가 있다. 이번 사용자 지시에 따라 수정하지 않았다.
 - SCREEN_PRE_RADIUS_NOT_SAVED: 8,000~14,000회 직전 PLY·snapshot·gradient에는 max_radii2D가 없다. 역사 반지름 초과·원행 생존 및 미선택 구간 직접 확인은 불가로 기록했다. 재렌더 반지름으로 대체하지 않았다.
+
+- 2026-11-02 화면 정리 모의: GeoGS ALS 첫 장면 로더가 기본 sparse를 읽어 points3D.ply 암묵 변환을 시도했고 read-only mount에서 중단. 학습/원본 변경 없음, 렌더 계산 전 실패. 원 실행 cfg_args의 sparse_lod를 사용하는 읽기 드라이버 r2를 별도 잠금하고 재개. 실패 로그와 작업 폴더 보존.
+- 같은 모의 GeoGS 읽기 r2: sparse_dir_name은 원 train.py에서 별도로 추가한 인자여서 ModelParams CLI가 거부했다. 렌더 전 중단. r3는 원 cfg_args 값을 추출 dataset 속성에 전달하며 원 소스를 수정하지 않는다. 두 실패 로그 보존.
+
+## 화면 크기 정리 모의 · GeoGS 카메라 파일 형식 기록
+
+최초 잠금은 sparse/0의 이진 카메라 파일을 포함했으며, 원 실행과 연결한 실제 sparse_lod/0 입력은 텍스트 형식이었다. 두 사전 정보 각각 학습 영상 203장의 자세·내부 파라미터를 별도 대조한 최대 차이는 모두 0이다. 실제 텍스트 파일의 해시는 렌더 후 대조 시점에 기록했으며 전달 전에 다시 검증했다. 이를 텍스트 파일의 사전 잠금이나 바이트 동일성으로 표시하지 않는다. [파일별 대조](screen_sim/tables/geogs_camera_binding.json). scientific_verdict: null.
