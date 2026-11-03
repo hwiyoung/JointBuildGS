@@ -9,6 +9,11 @@ mkdir -p "$OUT/logs" "$OUT/tmp" "$CFG" "$DOCS"
 tag=$1; shift
 exec 9>"$OUT/task.lock"
 flock -x 9
+if [[ "$1" == photo_prepare_reply2.py ]]; then
+  mkdir -p "$OUT/r2/photo_prepared"
+  exec 8>"$OUT/r2/photo_prepared/$2.lock"
+  flock -x 8
+fi
 nice -n 19 docker run --rm --read-only --network none --runtime runc \
   --name "jbgs-judgecheck-$tag" --user "$(id -u):$(id -g)" \
   --cpus 4 --memory 32g --memory-swap 32g \

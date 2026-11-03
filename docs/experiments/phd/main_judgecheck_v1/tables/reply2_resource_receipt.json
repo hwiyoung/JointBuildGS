@@ -1,0 +1,253 @@
+{
+  "at": "2026-11-03T13:39:41.486670+09:00",
+  "task_first_lock_at": "2026-11-02T22:47:30.493395+09:00",
+  "task_elapsed_seconds": 53530.99327492714,
+  "reply2_start": "2026-11-03T10:14:37.566451+09:00",
+  "elapsed_seconds": 12303.92021894455,
+  "gpu_wait_recorded_minimum_seconds": 3729.0,
+  "gpu_wait_intervals": [
+    {
+      "start": "2026-11-03T12:48:47+09:00",
+      "end": "2026-11-03T12:51:22+09:00",
+      "source": "census_gpu_wait.tsv",
+      "kind": "before_start",
+      "target": "group0 6909_53359"
+    },
+    {
+      "start": "2026-11-03T11:53:03+09:00",
+      "end": "2026-11-03T12:05:28+09:00",
+      "source": "direct_benchmark_gpu_wait.tsv",
+      "kind": "before_start",
+      "target": "whole tile benchmark"
+    },
+    {
+      "start": "2026-11-03T10:58:35+09:00",
+      "end": "2026-11-03T11:01:28+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "kind": "paused"
+    },
+    {
+      "start": "2026-11-03T11:01:49+09:00",
+      "end": "2026-11-03T11:12:16+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "kind": "paused"
+    },
+    {
+      "start": "2026-11-03T11:12:26+09:00",
+      "end": "2026-11-03T11:19:01+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "kind": "paused"
+    },
+    {
+      "start": "2026-11-03T11:19:12+09:00",
+      "end": "2026-11-03T11:28:13+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "kind": "paused"
+    },
+    {
+      "start": "2026-11-03T11:28:24+09:00",
+      "end": "2026-11-03T11:32:34+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "kind": "paused"
+    },
+    {
+      "start": "2026-11-03T11:32:44+09:00",
+      "end": "2026-11-03T11:41:35+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "kind": "paused"
+    },
+    {
+      "start": "2026-11-03T11:41:45+09:00",
+      "end": "2026-11-03T11:46:57+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "kind": "paused"
+    }
+  ],
+  "unclosed_wait_intervals": [
+    {
+      "start": "2026-11-03T11:47:12+09:00",
+      "source": "jbgs-judgecheck-packedverify3_gpu_wait.tsv",
+      "reason": "no exact closing timestamp; excluded from recorded lower bound"
+    }
+  ],
+  "wait_precision": "lower bound from closed pause/resume intervals and first-to-last busy observations; overlaps merged; initial manual pause timestamp was recorded late and aborted sample has no exact final timestamp",
+  "measurement_totals": {
+    "photo_prepared": {
+      "seconds": 3130.0759139489383,
+      "by_device": {
+        "cpu": {
+          "seconds": 3130.0759139489383,
+          "points": 0
+        }
+      },
+      "records": [
+        {
+          "path": "photo_prepared/6907_53359.complete.json",
+          "seconds": 1.9112382857128978,
+          "source_sha256": "3816e6114466f2a284cd2dedc53753d2fa07baa1614997c322c2319d339b41ee"
+        },
+        {
+          "path": "photo_prepared/6907_53360.complete.json",
+          "seconds": 4.202236513607204,
+          "source_sha256": "24c4d209788db08ac057ae153ab9bd55a778d27fafbf0991a83423e30fae6d80"
+        },
+        {
+          "path": "photo_prepared/6908_53358.complete.json",
+          "seconds": 29.587939172051847,
+          "source_sha256": "c909630c88276b12822382966832d0ef2bf6f59a71782ceefc881fe0f9ecba6d"
+        },
+        {
+          "path": "photo_prepared/6908_53359.complete.json",
+          "seconds": 489.14259692747146,
+          "source_sha256": "0255241c76aabed1deaaf50ae2b0385e2ad4ab42dd147c07308f87c3ff48a822"
+        },
+        {
+          "path": "photo_prepared/6908_53360.complete.json",
+          "seconds": 411.803368460387,
+          "source_sha256": "5bb1c6f1f11f437547ac80e51bfa84c72363a44a1f37090defc81c81c240323c"
+        },
+        {
+          "path": "photo_prepared/6908_53361.complete.json",
+          "seconds": 231.72717911191285,
+          "source_sha256": "0b925378188bbb42e7a2c845efa0fff20b1afdc7fc754cb8245515535ceb71c0"
+        },
+        {
+          "path": "photo_prepared/6908_53362.complete.json",
+          "seconds": 19.04852624516934,
+          "source_sha256": "86bbc66f98f99b6959973e7b58ffc4d40d9287bca94927ff79f2f2c56b42edc1"
+        },
+        {
+          "path": "photo_prepared/6909_53358.complete.json",
+          "seconds": 140.51579393539578,
+          "source_sha256": "c5e7555a255a4ef91dc61122c50d0ee599080c993ce3eecdd324d6ffff090435"
+        },
+        {
+          "path": "photo_prepared/6909_53359.complete.json",
+          "seconds": 399.59087517950684,
+          "source_sha256": "ece078bc291943e64a7b6f193be410f808c08a3c71d203e08b05093fd2ac5356"
+        },
+        {
+          "path": "photo_prepared/6909_53360.complete.json",
+          "seconds": 81.15489818807691,
+          "source_sha256": "7e49fa5ed3b2c25653b97df5159788c1ab8afcb1ac60d7b6495f7aeff02d5939"
+        },
+        {
+          "path": "photo_prepared/6909_53361.complete.json",
+          "seconds": 398.7459154929966,
+          "source_sha256": "9bd3b6637670c1fae5c7bd820b16a0f37e9a1ebdc18ebedf6c96274cfb1a3029"
+        },
+        {
+          "path": "photo_prepared/6909_53362.complete.json",
+          "seconds": 206.15076571144164,
+          "source_sha256": "bd9870b04d722cd58648cb11945dd1c98496d386fed0e5e718e059854b961a58"
+        },
+        {
+          "path": "photo_prepared/6909_53363.complete.json",
+          "seconds": 36.08773775026202,
+          "source_sha256": "80db3bf6326adcc337d139cbdae94f75a9ea947178e875b271f8e88a513631f5"
+        },
+        {
+          "path": "photo_prepared/6910_53359.complete.json",
+          "seconds": 65.9673064770177,
+          "source_sha256": "e6f5af743aa904b25191b970dab8ce34bf8dc6c7f6293acea0f09470e0a5bd11"
+        },
+        {
+          "path": "photo_prepared/6910_53360.complete.json",
+          "seconds": 38.06520519219339,
+          "source_sha256": "14c1b4ba3049557714d14042ee5ba58ae0ba9de6067f5f72b99e9ca2947edc86"
+        },
+        {
+          "path": "photo_prepared/6910_53361.complete.json",
+          "seconds": 83.2503163125366,
+          "source_sha256": "f2bcc132d0d2f0f04f880f9fb9cf83fd86cb70460c680b4aea39556c255d23c8"
+        },
+        {
+          "path": "photo_prepared/6910_53362.complete.json",
+          "seconds": 169.6374867875129,
+          "source_sha256": "43ba9a39de99df68b8c40d5529b43c6ce566988d9c4647b8ccf0cb09aadc2950"
+        },
+        {
+          "path": "photo_prepared/6910_53363.complete.json",
+          "seconds": 173.22887224331498,
+          "source_sha256": "c1b72cebb2613977eb69b27f2485f38e10005efd5cc189c20244927eb31be2b1"
+        },
+        {
+          "path": "photo_prepared/6911_53361.complete.json",
+          "seconds": 4.278766467235982,
+          "source_sha256": "d1659aeb875a17e956e0d300d9714db8bdd7655f43de68f9a6e91ad16d1d344d"
+        },
+        {
+          "path": "photo_prepared/6911_53362.complete.json",
+          "seconds": 49.69385142624378,
+          "source_sha256": "4bae81cef349ef9187ab0e121fe8b1c27e044fdad22c967d4b8bcdae95d0edc0"
+        },
+        {
+          "path": "photo_prepared/6911_53363.complete.json",
+          "seconds": 96.28503806889057,
+          "source_sha256": "30a634a094cc41021cb019bb559d2217b2dc1fdd8d88c6c7481279f0b8bc376b"
+        }
+      ]
+    },
+    "photo_scores": {
+      "seconds": 3566.758784371428,
+      "by_device": {
+        "cuda": {
+          "seconds": 914.3131323661655,
+          "points": 35706
+        },
+        "cpu": {
+          "seconds": 2652.4456520052627,
+          "points": 7118
+        }
+      },
+      "records": [
+        {
+          "path": "photo_scores/6908_53359/complete.json",
+          "seconds": 914.3131323661655,
+          "device": "cuda",
+          "points": 35706,
+          "source_sha256": "2cc04299cfb611cd357516bd174cde2014fbb1c14af47a8c53ab97a5315d7b75"
+        },
+        {
+          "path": "photo_scores/6908_53360/group0/complete.json",
+          "seconds": 1384.3475260669366,
+          "device": "cpu",
+          "points": 3415,
+          "source_sha256": "a80645d53fcd2af61a92f0c451b96694438fc0e5ac2bf436a64fb601e8665eef"
+        },
+        {
+          "path": "photo_scores/6909_53359/group0/complete.json",
+          "seconds": 1268.0981259383261,
+          "device": "cpu",
+          "points": 3703,
+          "source_sha256": "7165e22337b005e4832deb2ce931fa33cc02ef6beebaaef0bcd9b5a8904cc66d"
+        }
+      ]
+    },
+    "cpu_benchmark": {
+      "seconds": 2318.9294499699026,
+      "by_device": {
+        "cpu": {
+          "seconds": 2318.9294499699026,
+          "points": 35706
+        }
+      },
+      "records": [
+        {
+          "path": "cpu_benchmark/6908_53359/complete.json",
+          "seconds": 2318.9294499699026,
+          "device": "cpu",
+          "points": 35706,
+          "source_sha256": "2c0284817f2ddfabc78a49ef5eeda831ba640713bafec93179eecc4eec040402"
+        }
+      ]
+    }
+  },
+  "totals_note": "elapsed includes concurrent CPU work and GPU waiting; measured phase totals are not additive wall time; incomplete cache trials excluded from completed scoring totals",
+  "sources": {
+    "census_gpu_wait.tsv": "efe436b70c96c5e260c064bee2e309ac8262ca64683b1643b334dd02cc1fa03a",
+    "direct_benchmark_gpu_wait.tsv": "cdda3e8c3b3b02d900f9eebea82c4f004c41dc2e97cea5e510ab2e503ef5d9f2",
+    "jbgs-judgecheck-packedverify3_gpu_wait.tsv": "5d7c561961284a0ce0f9bc32b60a3aeb33951566548774f24462c0f9fab6b622"
+  },
+  "scientific_verdict": null
+}

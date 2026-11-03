@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-03T10:37:23.240738+09:00",
+  "config_sha256": "f7a6d101dedaed9c25501e7b099ccf5c352e0b33ca14f8e736ff03543ca98e98",
+  "sources": {
+    "photo_score_reply2.py": "2203cc3ec9eecfbc666bf9440dbc0de5fddd11939dffe04206850d048b405dc9",
+    "photo_score.py": "af792fb490b2aaf9e660db54e01a9a72e1842cda45a02cdb965c91f88ec2a99e",
+    "photo_cameras.py": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+  },
+  "chunk_rows": 900000,
+  "batch_rows": 8192,
+  "image_read_rule": "decode each unique image once for this revision; persist all six exact pyramid levels; bounded RAM cache reused across row blocks and roof/wall stages",
+  "scientific_verdict": null
+}

@@ -1,0 +1,154 @@
+{
+  "at": "2026-11-03T12:21:22.044843+09:00",
+  "status": "PASS_CONTINUE_STAGE_A",
+  "benchmark_tile": "6908_53359",
+  "benchmark_points": 35706,
+  "all_targets": 285686,
+  "group_targets": {
+    "ALS_1": 42525,
+    "LoD2_1": 76485,
+    "LoD2_2": 166676
+  },
+  "target3_included": true,
+  "point_ratio": 8.001064246905282,
+  "height_hypothesis_ratio": 7.527358841266126,
+  "measured_preparation": {
+    "at": "2026-11-03T10:36:37.684527+09:00",
+    "tile": "6908_53359",
+    "target_count": 35706,
+    "packed_height_rows": 3307747,
+    "group_counts": {
+      "0": 4891,
+      "1": 11492,
+      "2": 19323
+    },
+    "shared_load_and_tree_seconds": 47.740950271487236,
+    "per_point_geometry_seconds": 420.1275760922581,
+    "visibility_seconds": 17.218151492998004,
+    "total_seconds": 489.14259692747146,
+    "available_planes": [
+      34299,
+      28870
+    ],
+    "peak_rss_gib": 3.6202163696289062,
+    "sources": [
+      {
+        "path": "/out/r2/photo_targets/6908_53359__ALS__1.npz",
+        "sha256": "c09c24e18bbc45701ff1154f2cfbb36ec1cb53b77fbac5b8a72511a57ce689df"
+      },
+      {
+        "path": "/out/r2/photo_targets/6908_53359__LoD2__1.npz",
+        "sha256": "6e5c44f6fcceee4c3d5dc9020af2cbf3eb8fbd9a1f70a1a7520b71aa684a043f"
+      },
+      {
+        "path": "/out/r2/photo_targets/6908_53359__LoD2__2.npz",
+        "sha256": "e692a71f6c688043f19ab25233356cd50d73af5926eefbe37fb359c07379b11f"
+      }
+    ],
+    "output_sha256": "ba4d5a280fc93d25f9d062cc6701720454e2fe98061d2f7f29cc7f5b2e7bcee7",
+    "truth_read": false,
+    "scientific_verdict": null
+  },
+  "measured_scoring": {
+    "at": "2026-11-03T12:21:15.626946+09:00",
+    "points": 35706,
+    "packed_rows": 3307747,
+    "computed_rows": 2423347,
+    "camera_count": 284,
+    "original_image_decodes": 36,
+    "decode_seconds": 61.912533956579864,
+    "image_cache_total_seconds": 449.4704912547022,
+    "image_cache_ram_gib": 9.998928308486938,
+    "image_cache_spill_gib": 13.828753530979156,
+    "gpu_batched_seconds": 441.1999740181491,
+    "upload_seconds": 367.2904461082071,
+    "arithmetic_and_reduction_seconds": 460.98083197139204,
+    "total_seconds": 914.3131323661655,
+    "row_blocks": 3,
+    "batch_rows": 8192,
+    "gpu_calls": 3384,
+    "rows_per_call_quantiles": [
+      1.0,
+      4300.5,
+      8192.0,
+      8192.0,
+      8192.0
+    ],
+    "peak_cpu_rss_gib": 11.526321411132812,
+    "peak_gpu_gib": 16.83490753173828,
+    "numeric_precision": "float64 projection interpolation NCC",
+    "scientific_verdict": null,
+    "tile": "6908_53359",
+    "output_sha256": "a7724811a5a88433baa98ea7f6c875b9bab33834640698bc1b8a5344e8c59b3e",
+    "device": "cuda",
+    "parity_pending": true
+  },
+  "components_seconds": {
+    "tile_load_and_tree_seconds": 1002.559955701232,
+    "per_point_plane_and_visibility_seconds": 3499.2312645191696,
+    "prepared_output_seconds": 32.45166906514408,
+    "gpu_image_cache_read_and_upload_seconds": 50057.987536681816,
+    "gpu_packed_arithmetic_seconds": 705.24115436888
+  },
+  "subtotal_hours": 15.360408772315623,
+  "reserve_factor": 1.25,
+  "estimated_hours": 19.20051096539453,
+  "report_breakdown_required": true,
+  "gpu_limit_hours": 48,
+  "image_passes": 61,
+  "benchmark_recorded_pause_seconds": 0,
+  "benchmark_clock_note": "Measured phases exclude all pre-start GPU queue waiting. Any pauses during measurement remain in measured wall costs and are explicitly listed as a conservative overestimate; no unobserved allocation of a pause to arithmetic is inferred.",
+  "cpu_limit_hours": 72,
+  "cpu_estimated_hours": 21.00363086827971,
+  "cpu_components_seconds": {
+    "tile_load_and_tree_seconds": 1002.559955701232,
+    "per_point_plane_and_visibility_seconds": 3499.2312645191696,
+    "prepared_output_seconds": 32.45166906514408,
+    "cpu_image_cache_read_and_upload_seconds": 43920.56842252426,
+    "cpu_packed_arithmetic_seconds": 12035.64558883577
+  },
+  "measured_cpu_scoring": {
+    "at": "2026-11-03T11:58:02.112230+09:00",
+    "points": 35706,
+    "packed_rows": 3307747,
+    "computed_rows": 2423347,
+    "camera_count": 284,
+    "original_image_decodes": 52,
+    "decode_seconds": 123.76047673821449,
+    "image_cache_total_seconds": 251.7611699970439,
+    "image_cache_ram_gib": 9.998928308486938,
+    "image_cache_spill_gib": 13.828753530979156,
+    "gpu_batched_seconds": 2017.9875360038131,
+    "upload_seconds": 466.27651079464704,
+    "arithmetic_and_reduction_seconds": 2065.1966423625126,
+    "total_seconds": 2318.9294499699026,
+    "row_blocks": 5,
+    "batch_rows": 1024,
+    "gpu_calls": 21716,
+    "rows_per_call_quantiles": [
+      1.0,
+      1024.0,
+      1024.0,
+      1024.0,
+      1024.0
+    ],
+    "peak_cpu_rss_gib": 22.04654312133789,
+    "peak_gpu_gib": null,
+    "numeric_precision": "float64 projection interpolation NCC",
+    "scientific_verdict": null,
+    "tile": "6908_53359",
+    "status": "CPU_WHOLE_TILE_MEASURED",
+    "output_sha256": "cad0d48fbd89c2c64cdf4afa7f6ef7fee4521881d45f73f6ecbb91436241a2b7",
+    "device": "cpu"
+  },
+  "cpu_extrapolation": "whole tile, 2 CPU quota, float64; measured during other research GPU activity; conservative shared image/read/upload cost per nonempty tile/group",
+  "model": "shared tile/tree once per tile; geometry by target count; cache read/upload once per nonempty tile/group pass; arithmetic by pre-counted two-plane height hypotheses; 25% scheduling/IO reserve. Reuse may reduce shared image costs. Already-spent one-time cache trials and GPU queue waits are logged separately.",
+  "inputs_sha256": {
+    "/out/r2/target_census.json": "997920e4ee9e504cca2b912ba8f1f88d4cef0cd615d69a750063678e48fd3c88",
+    "/out/r2/photo_prepared/6908_53359.complete.json": "0255241c76aabed1deaaf50ae2b0385e2ad4ab42dd147c07308f87c3ff48a822",
+    "/out/r2/photo_scores/6908_53359/complete.json": "2cc04299cfb611cd357516bd174cde2014fbb1c14af47a8c53ab97a5315d7b75",
+    "/out/r2/photo_scores/6908_53359/numeric_parity.json": "b785410efcf665b62c32bc7f3199b784be905685419864ad8b2fe7e567bc07bc",
+    "/out/r2/cpu_benchmark/6908_53359/complete.json": "2c0284817f2ddfabc78a49ef5eeda831ba640713bafec93179eecc4eec040402"
+  },
+  "scientific_verdict": null
+}

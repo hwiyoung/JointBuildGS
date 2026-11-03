@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-03T10:28:28.898623+09:00",
+  "config_sha256": "f7a6d101dedaed9c25501e7b099ccf5c352e0b33ca14f8e736ff03543ca98e98",
+  "sources": {
+    "photo_prepare_reply2.py": "7f4d74b8fb3e00d92f095b43f09ff90da081a1b72f54e6334c17c88494bdb813",
+    "photo_planes.py": "066f8f5f145e377ee8beabfb99cd17a945f4d1dd7448591ea5f36ddfb2a3cb86",
+    "photo_cameras.py": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+  },
+  "inherited_methods": "reply1 float64 planes and masks unchanged; exact pruning of impossible MVS/ALS mask shifts; packed heights without padding",
+  "raw_trees": "one ALS tree reused for normals and cylinder height; one MVS tree reused for all target planes and masks per tile",
+  "scientific_verdict": null
+}

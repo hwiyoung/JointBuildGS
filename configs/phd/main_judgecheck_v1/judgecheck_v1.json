@@ -35,7 +35,7 @@
       "mvs_a_a",
       "u_prior"
     ],
-    "source_roles": "Widen cells only for sample/calibration/diagnostics; not geometric decisions",
+    "source_roles": "Widen reference cells and reference heights are evaluation-only, including target 3 and figure selection; geometry calibration, agreement sample, photo views, thresholds and honest judgments do not use reference cells",
     "judgenum": "/art/phase-payloads/phd/main_judgenum_v1/PHD-MAIN-JUDGENUM-v1",
     "target": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1"
   },
@@ -238,7 +238,7 @@
       1
     ],
     "als_radius_count_median_min": 20,
-    "als_selected_radius_m": null,
+    "als_selected_radius_m": 0.75,
     "min_points": 4,
     "nmad_k": 1.4826,
     "L": "1.96*(sqrt(u_M**2+sigma_P**2+sigma_W**2)+abs(r))",
@@ -265,6 +265,15 @@
     "tau_m": {
       "ALS": 0.1266,
       "LoD2": 0.2
+    },
+    "stage_a_observed": {
+      "sigma_W_m": 0.02450353934490731,
+      "r_m": {
+        "ALS_1": 0.016897281827748762,
+        "LoD2_1": 0.05085196109104549,
+        "LoD2_2": -0.02272214187916248
+      },
+      "stage_b_frozen": false
     }
   },
   "photos": {
@@ -330,11 +339,14 @@
     "cell_m": 0.25,
     "component_link_m": 0.36,
     "component_min_area_m2": 1,
-    "montage_per_reason": 4,
+    "montage_per_reason": null,
     "montage_max_per_building": 2,
     "crop_margin_m": 3,
     "holdout_figures": false,
-    "source_of_truth": "ordered_methods_3_to_8 section 8"
+    "source_of_truth": "ordered_methods_3_to_8 section 8",
+    "montage_per_prior": 4,
+    "montage_total": 8,
+    "photo_camera_selection": "largest projected component bounding-box area among selected photos of every point in the component; exact union of projected core cells for outlines"
   },
   "execution": {
     "training": false,
@@ -351,7 +363,7 @@
     ],
     "archive_max_bytes": 399000000,
     "stop_after_report_a": true,
-    "current_payload": "/out/r1",
+    "current_payload": "/out/r2",
     "never_consume_initial_preparation": [
       "/out/inputs",
       "/out/photo_inputs"
@@ -363,7 +375,38 @@
     ],
     "table_exclusion_line_required": true,
     "initial_22_shared_curves_exception_retained": true,
-    "initial_22_shared_curves_contribute_no_values": true
+    "initial_22_shared_curves_contribute_no_values": true,
+    "input_payload": "/out/r1",
+    "stage_a_order": [
+      "ALS_roof",
+      "LoD2_roof",
+      "roof_interim_report_commit_then_continue",
+      "LoD2_wall"
+    ],
+    "revised_benchmark": "whole tile with largest target 1/2/3 count; shared tile/image costs separated from per-point work",
+    "gpu_continue_if_estimated_hours_le": 48,
+    "report_cost_breakdown_if_hours_gt": 10,
+    "old_200point_linear_stop_superseded": true,
+    "stage_b_requires_new_user_reply": true,
+    "photo_image_cache": "prefer immutable PHOTOCHECK grayscale NPY; task-local decode-once six-level cache for misses; 10GiB bounded memory cache",
+    "packed_numeric_verification": "whole maximum tile CPU/GPU plus all common points with original float64 200-point reference",
+    "delivery_subdirectory": "delivery_reply2",
+    "cpu_preparation_workers": {
+      "main_cpus": 4,
+      "auxiliary_cpus": 2,
+      "max_memory_gib_each": 32,
+      "nice": 19,
+      "per_tile_lock": true
+    },
+    "census_device_rule": "try guarded GPU per tile/group; if another research task is active, use the fully verified float64 CPU kernel while the measured CPU estimate stays <=72h; check GPU again for the next tile/group",
+    "core_stacked_axes": [
+      "photo_code",
+      "new_photo_code",
+      "region",
+      "reason",
+      "arm_region",
+      "arm_height_m"
+    ]
   },
   "amendments": [
     {
@@ -386,6 +429,155 @@
       "heldout_values_opened": false,
       "GT_used": false,
       "scientific_verdict": null
+    },
+    {
+      "at": "2026-11-03T10:14:37.566451+09:00",
+      "authority": "reply_2.txt",
+      "authority_at": "2026-11-03T10:20:00+09:00",
+      "authority_sha256": "4225b4f0519e24fd530c02905482a6037d940db1c1c740025bb8e65ce31b1b1d",
+      "previous_config_sha256": "4d6bbe79fcc68023382b1e77cc59cf1be7915dda5b191057a97a0524c09d0d32",
+      "reason": "User authorizes tile/image batching, all target types and conditional continuation after revised 48h estimate",
+      "full_text": "PHD-MAIN-JUDGECHECK-v1 회신 2 (2026-11-03 10시 20분)\n\n시간 점검을 받았다. 200점 측정은 점이 흩어져 사진 읽기와 GPU 호출의 고정 비용이 점당 시간에 섞였다. 사진 529장을 읽고, GPU에 사진 한 장당 평면 1~15개씩만 넘겨 GPU 계산(45.7초)이 CPU(46.1초)와 같았다. 아래 짜임으로 다시 어림하고, 조건을 채우면 묻지 않고 단계 가를 이어 간다.\n\n1. 셈의 짜임\n- PHD-MAIN-PHOTOCHECK-v1과 같은 짜임으로 돌린다. 구역마다 점군과 탐색 구조를 한 번 만들고, 사진 한 장을 한 번만 읽어(사진 메모리 캐시 포함) 그 사진이 보는 모든 대상 점의 두 면과 모든 높이를 한꺼번에 GPU로 계산한다.\n- 참고: PHOTOCHECK-v1은 같은 GPU에서 점마다 높이 141개를 채점해 379,690점을 1.98시간에 셈했다. 이번 대상은 약 19만 점이고 점마다 채점하는 높이는 그보다 적다.\n\n2. 시간 어림\n- 위 짜임으로 대상 점이 가장 많은 구역 하나를 통째로 셈하고, 공통 비용과 점당 비용을 나누어 전체 시간을 어림한다. 대상 3(7절 전용)의 수도 이때 세어 넣는다.\n- 어림이 GPU 한 장 48시간 안이면 멈추지 않고 이어 간다. 어림이 10시간을 넘으면 어디에 시간이 드는지 나누어 보고 가에 적는다.\n\n3. 차례와 중간 보고\n- 사진 셈과 판단은 항공 LiDAR 지붕, LoD2 지붕, LoD2 벽 차례로 한다.\n- 지붕 둘이 끝나면 6~8절을 지붕만으로 낸 중간 보고를 커밋하고, 멈추지 않고 벽을 이어 간다.\n\n4. 보고 가에 함께 적을 것 (이 까닭으로 멈추지 않음)\n- u_M을 구하지 못한 450,713개가 n < 4인 핵심점과 얼마나 겹치는지. n ≥ 4인데 u_M이 없는 핵심점은 '셀 수 없음'으로 두고 수와 넓이를 적는다.\n- 기하 확인 불가 핵심점(항공 LiDAR 12,666, LoD2 지붕 12,626, LoD2 벽 100,042)의 까닭별 수와 넓이.\n- 항공 LiDAR에서 법선 규칙을 채우지 못해 2.0 m 법선을 쓴 핵심점(66,552개, 4,799 m²)이 지붕 가장자리에 몰리는지. 6.2의 판단 정확도를 이 핵심점과 나머지로 나누어 한 번 더 적는다.\n\n5. 그대로인 것\n- 회신 1, LiDAR 원통 반지름 0.75 m, float64로 고친 사진 점수 셈, 발주문의 나머지 규칙. σ_W와 r는 보고 가를 본 뒤 단계 나 전 회신에서 잠근다.\n"
+    },
+    {
+      "at": "2026-11-03T10:47:13.634711+09:00",
+      "reason": "Avoid duplicate raw-image decode and 6-level disk writes by reusing frozen PHOTOCHECK float32 gray cache read-only. Three decoded images matched byte-for-byte; full 200-point parity required before census.",
+      "previous_config_sha256": "f7a6d101dedaed9c25501e7b099ccf5c352e0b33ca14f8e736ff03543ca98e98",
+      "score_arithmetic_changed": false
+    },
+    {
+      "at": "2026-11-03T11:20:34.965683+09:00",
+      "reason": "Separate n=-1 unavailable sentinel from actual 0<=n<4 in missing-u overlap; seven missing-u cores are affected, with no geometry or judgment change",
+      "previous_config_sha256": "f91e077ebea00b1557b80e5b168251bb8f80d9e3b9c651cb8f6c7e2b23a18ec5",
+      "section": "reply2_diagnostics",
+      "key": "negative_n_is_unknown",
+      "value": true
+    },
+    {
+      "at": "2026-11-03T11:32:13.575779+09:00",
+      "reason": "Record the already selected and user-confirmed 0.75m ALS radius in the main config; all prior Reply 1 and Reply 2 calculations used this same value",
+      "previous_config_sha256": "2f54d086107050e41ff4962cee8f81e1caebdf9271ceb4c9b091caf1d42ed9b4",
+      "section": "geometry",
+      "key": "als_selected_radius_m",
+      "value": 0.75
+    },
+    {
+      "at": "2026-11-03T11:32:13.578834+09:00",
+      "reason": "Record inherited Stage-A measured values for inspection only; Stage-B sigma_W and r remain subject to the next explicit user reply",
+      "previous_config_sha256": "0bb36e2b84f5d1dfb36e9dcf12770fef605e09e7757fe4ca1c29e353efcf883f",
+      "section": "geometry",
+      "key": "stage_a_observed",
+      "value": {
+        "sigma_W_m": 0.02450353934490731,
+        "r_m": {
+          "ALS_1": 0.016897281827748762,
+          "LoD2_1": 0.05085196109104549,
+          "LoD2_2": -0.02272214187916248
+        },
+        "stage_b_frozen": false
+      }
+    },
+    {
+      "at": "2026-11-03T11:46:55.088076+09:00",
+      "reason": "Correct the initial metadata interpretation before any figure selection: order 8.2 says four places per prior and eight total, from the union of wrong support and wrong refute",
+      "previous_config_sha256": "c158f7d63c6b7aee73999db633acd1b352051e939cec701f470df4a6575a4ce2",
+      "section": "figures",
+      "key": "montage_per_reason",
+      "value": null
+    },
+    {
+      "at": "2026-11-03T11:46:55.177157+09:00",
+      "reason": "Apply explicit order 8.2 total of eight across ALS and LoD2, maximum two per building",
+      "previous_config_sha256": "3d8279285301ac3b187f6ab0e8195d69e9fff93eb6f168b275cb5643d71ca896",
+      "section": "figures",
+      "key": "montage_per_prior",
+      "value": 4
+    },
+    {
+      "at": "2026-11-03T11:46:55.180192+09:00",
+      "reason": "Order 8.2 explicit total; no outcome-based change",
+      "previous_config_sha256": "d43c69f8bf4e4199630a6e85347fd4b1d8c5bc35e0455e0f64cd01b3468c3573",
+      "section": "figures",
+      "key": "montage_total",
+      "value": 8
+    },
+    {
+      "at": "2026-11-03T12:05:03.016544+09:00",
+      "reason": "Resolve photo montage implementation before outcomes or component selection; include every component point, preserve roof/wall and tile identity",
+      "previous_config_sha256": "9903d21f316b63f5c666acc6975f3650e2f678a2b17853944043f1b64ddc3aa6",
+      "section": "figures",
+      "key": "photo_camera_selection",
+      "value": "largest projected component bounding-box area among selected photos of every point in the component; exact union of projected core cells for outlines"
+    },
+    {
+      "at": "2026-11-03T12:06:00.557297+09:00",
+      "reason": "Combine required whole-tile timing with stronger whole-tile parity while another research task causes long GPU waits; abort redundant scattered 200-point packed run before completion; keep original 200-point float64 parity and exact numerical tolerances",
+      "previous_config_sha256": "b8e9a066a97e48583243b6ddf39746fc3a4b2bb8d5f281340bcac1e0dfdf0d9b",
+      "section": "execution",
+      "key": "packed_numeric_verification",
+      "value": "whole maximum tile CPU/GPU plus all common points with original float64 200-point reference"
+    },
+    {
+      "at": "2026-11-03T12:21:27.448909+09:00",
+      "reason": "Clarify source-role metadata to match implemented GT separation; no numerical or membership change",
+      "previous_config_sha256": "70636fc027051ccd4d9ac4166761c652da66bf758cd8f091c16678f69e083776",
+      "section": "sources",
+      "key": "source_roles",
+      "value": "Widen reference cells and reference heights are evaluation-only, including target 3 and figure selection; geometry calibration, agreement sample, photo views, thresholds and honest judgments do not use reference cells"
+    },
+    {
+      "at": "2026-11-03T12:48:58.178058+09:00",
+      "reason": "Keep large delivery ZIP payloads inside the authorized external task folder; commit reports, figures, source, configuration and archive receipts in the three authorized repository folders",
+      "previous_config_sha256": "d0228a215d223f81463ad70415330635f0202f1a29e63d2e8c5dde5c68b466d9",
+      "section": "execution",
+      "key": "delivery_subdirectory",
+      "value": "delivery_reply2"
+    },
+    {
+      "at": "2026-11-03T12:48:58.194656+09:00",
+      "reason": "Record the operational parallel preparation introduced during the census; both workers reuse the same frozen numerical preparation code and skip completed tiles; prior source locks and runner failures retained",
+      "previous_config_sha256": "c206b4d9c0cdc95ad809449d85084ec0ba14544cf8f97fc4db3705c80876a594",
+      "section": "execution",
+      "key": "cpu_preparation_workers",
+      "value": {
+        "main_cpus": 4,
+        "auxiliary_cpus": 2,
+        "max_memory_gib_each": 32,
+        "nice": 19,
+        "per_tile_lock": true
+      }
+    },
+    {
+      "at": "2026-11-03T12:51:45.874267+09:00",
+      "reason": "Original order 1.1 permits CPU or waiting. Another research training started after whole-tile gate passed; continue on CPU without changing any numerical rule, target, threshold or tolerance",
+      "previous_config_sha256": "5fc450e010f52f65870012c700475f6718b619fc143452fdf5e0e16a652e0f58",
+      "section": "execution",
+      "key": "census_device_rule",
+      "value": "try guarded GPU per tile/group; if another research task is active, use the fully verified float64 CPU kernel while the measured CPU estimate stays <=72h; check GPU again for the next tile/group"
+    },
+    {
+      "at": "2026-11-03T13:31:02.110277+09:00",
+      "reason": "Before the first section 6/7 census aggregation, static review found new_photo_code missing from the stacked-array list. Metrics now share the canonical export schema; no score, target, threshold or numerical decision changed",
+      "previous_config_sha256": "aea84b3f41c2b30ee05589cef9063158c8abad136e5a9a476080d496ac38ef7e",
+      "section": "execution",
+      "key": "core_stacked_axes",
+      "value": [
+        "photo_code",
+        "new_photo_code",
+        "region",
+        "reason",
+        "arm_region",
+        "arm_height_m"
+      ]
     }
-  ]
+  ],
+  "reply2_diagnostics": {
+    "missing_u_overlap_with_n_lt4": true,
+    "geometry_unknown_cause_counts_and_areas": true,
+    "als_normal_fallback_edge_proximity": true,
+    "accuracy_split_by_normal_fallback": true,
+    "missing_values_remain_unavailable": true,
+    "do_not_stop_for_these": true,
+    "negative_n_is_unknown": true
+  }
 }

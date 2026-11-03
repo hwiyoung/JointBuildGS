@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-03T10:47:13.634711+09:00",
+  "config_sha256": "f91e077ebea00b1557b80e5b168251bb8f80d9e3b9c651cb8f6c7e2b23a18ec5",
+  "sources": {
+    "photo_score_reply2.py": "02b34401c87356a4837e3201af852f7638da92e11e598b0a156f2478ff66fa29",
+    "photo_score.py": "af792fb490b2aaf9e660db54e01a9a72e1842cda45a02cdb965c91f88ec2a99e",
+    "photo_cameras.py": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+  },
+  "chunk_rows": 900000,
+  "batch_rows": 8192,
+  "image_read_rule": "decode each unique image once for this revision; persist all six exact pyramid levels; bounded RAM cache reused across row blocks and roof/wall stages",
+  "scientific_verdict": null,
+  "previous_lock_sha256": "56a3b9f674ddbf9c250af79fd330f735d88de2d92eae590039dea33d8d1e41cb",
+  "cache_amendment": "read-only reuse of identical inherited grayscale cache; initial cache-only run interrupted before scoring"
+}
