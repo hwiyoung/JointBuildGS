@@ -23,7 +23,8 @@ def cell_text(row,key):
         if key in ['denominator_count','denominator_area_m2'] or (key=='fraction' and row.get('denominator_area_m2') is None):return '해당 없음'
         return '확인 불가'
     return num(value,6) if isinstance(value,float) else str(value)
-def table(headers,rows):return '\n'.join(['|'+'|'.join(headers)+'|','|'+'|'.join(['---']*len(headers))+'|']+['|'+'|'.join(str(v).replace('|','/') for v in r)+'|' for r in rows])+'\n\n실험 지역과 사진 점을 공유해 뺀 핵심점: 항공 LiDAR 73개·5.442553 m²(발주 전체).\n'
+def table(headers,rows):return '\n'.join(['|'+'|'.join(headers)+'|','|'+'|'.join(['---']*len(headers))+'|']+['|'+'|'.join(str(v).replace('|','/') for v in r)+'|' for r in rows])+'\n\n실험 지역과 사진 점을 공유해 뺀 핵심점: 항공 73개·5.44 m².\n'
+def building_label(value):return value.removeprefix('DEBY_LOD2_')
 def readtable(g,k):return load(D/'tables'/f'{g}_{k}.json')['rows']
 def main(mode='full'):
     resource_receipt();resources=load(BASE/'resource_receipt.json')
@@ -36,7 +37,7 @@ def main(mode='full'):
     s+=['# 판단 검증 — '+('지붕 중간 보고' if mode=='roofs' else '보고 가'),'', '범위: '+'; '.join(ranges)+'.','판단이 틀린 비율(본 규칙 / 늘 사전 정보 / 늘 영상): '+'; '.join(errors)+'.','7절 τ 안 비율(본 방법 / 모두 정답): '+'; '.join(ab)+'.',
         f'확인 불가: n≥4인데 u_M이 없는 {uncountable_u:,}개는 셀 수 없음이다. 기하 검사와 시선 검사의 나머지 확인 불가는 아래에 수·넓이·까닭을 적었다.',f"시간: 회신 2 시작 후 {resources['elapsed_seconds']/3600:.2f}시간 경과, 기록으로 확인된 GPU 대기 최소 {resources['gpu_wait_recorded_minimum_seconds']/3600:.2f}시간. 전체 계산 어림 GPU {timing['estimated_hours']:.2f}시간, CPU {timing['cpu_estimated_hours']:.2f}시간(25% 여유 포함).",
         '',('상태: 지붕의 6~8절 중간 보고다. 이 보고를 커밋한 뒤 벽을 계속한다.' if mode=='roofs' else '상태: 개발용 단계 가를 마쳤다. 이 보고 뒤 멈추며, σ_W와 r의 단계 나 적용값은 다음 회신에서 잠근다.'),
-        '학습 없음. 확인용 곡선·값 미개방. scientific_verdict: null. 새 값은 모두 [이 발주에서 냄].',EX,
+        '학습 없음. 확인용 곡선·값 미개방. scientific_verdict: null. 새 값은 모두 [이 발주에서 냄]. 보고서의 건물 번호는 공통 접두사 DEBY_LOD2_를 생략한다. 표의 제외 행은 발주 전체 공통이다.',EX,
         '처음 연결에서 읽은 공유 곡선 22개에서 나온 값은 이 보고의 어떤 표·그림·설정에도 들어가지 않았다. 처음 준비 파일은 재현 기록으로만 보존하며 전달 묶음에 넣지 않는다.',
         '', '## 기하 검사 (6.5)',f"σ_W={cal['sigma_W_m']*100:.6f} cm. 사용 건물 {cal['building_count']}동, 건물 중앙값의 10·90% 값 {num(cal['building_median_q10_q90_m'][0]*100,4)}, {num(cal['building_median_q10_q90_m'][1]*100,4)} cm. 참값은 이 값과 r을 구하는 데 쓰지 않았다."]
     rows=[]
@@ -74,6 +75,13 @@ def main(mode='full'):
         m=timing[key];rows.append([label,m['points'],m['camera_count'],num(m['image_cache_total_seconds']),num(m['upload_seconds']),num(m['arithmetic_and_reduction_seconds']-m['upload_seconds']),num(m['total_seconds'])])
     s.append(table(['최대 구역 실측','점','사진','읽기(초)','전송(초)','점수·합치기(초)','전체(초)'],rows));s.append(f"전송에는 배열 변환·복사도 포함된다. 구역·자료 판 {timing['image_passes']}회마다 최대 구역의 사진 공통 비용을 보수적으로 넣었다. 시작 전 GPU 대기는 계산 시간에서 분리했다.")
     actual=resources['measurement_totals']['photo_scores']['by_device'];s.append('완료된 사진 계산의 실행 시간(최대 구역 GPU 측정 포함, 별도 CPU 비교 측정 제외): '+'; '.join(('GPU' if k=='cuda' else 'CPU')+f" {v['seconds']/3600:.3f}시간·{v['points']:,}점" for k,v in actual.items())+'. 다른 발주의 GPU 사용 중에는 검증을 마친 동일한 float64 CPU 셈을 사용했다.')
+    if (C/'photo_stream.reply2.lock.json').exists():
+        supply=load(BASE/'image_supply_benchmark.json');verification=load(BASE/'stream_verification/complete.json')
+        applied='후속 계산 설정으로 잠갔다' if mode=='roofs' else '남은 벽 계산에 적용했다'
+        s.append(f"사진 공급 병목: 같은 8장 NPY 읽기·복사 {supply['total_npy_read_seconds']:.3f}초, JPEG 해독 {supply['total_jpeg_decode_seconds']:.3f}초, 픽셀 동일. 읽기·복사에는 메모리 할당도 포함된다. 별도 큰 페이지 요청 on/off/off/on 복사는 10.839/0.068/0.061/0.552초이며 바이트가 같았다. 동시 부하의 부분 측정으로 전체 속도 비율이 아니다. 200점 전체 곡선 차이 {verification['max_curve_difference']:.3g} 확인 뒤 JPEG·4 GiB 캐시·프로세스 내부 큰 페이지 요청 해제를 {applied}. 완료 결과·float64 식·호스트 설정은 그대로다. 이후 JPEG 해독은 아래 배열 공급·전송 시간에 포함된다. 위 어림은 앞 캐시의 측정 기록이다.")
+    if (BASE/'cpu_cohorts').exists():s.append('LoD2 지붕의 남은 독립 구역은 CPU 두 작업으로 나눴다(각 4 CPU·28 GiB·nice 19, 시작 전 가용 36 GiB 확인). NPY 캐시 준비는 공통 잠금으로 직렬화했으며 따로 계측하지 않은 잠금 대기도 포함된다. 두 작업 완료 뒤 판단했다. 실행 시간 합은 병렬 작업의 경과 시간과 다르다.')
+    if (BASE/'cpu_cohorts/group2/plan.json').exists():s.append('벽은 GPU의 다른 연구 사용을 확인한 뒤 같은 한도의 CPU 두 작업으로 끝까지 계산했다. 각 작업의 JPEG 캐시는 독립적이며, 공통 잠금은 축소 단계 번호 준비에만 걸었다. 두 작업이 모두 끝난 뒤 판단·집계했다.')
+    s.append(table(['완료된 사진 계산 실측 합(시)','캐시 준비(대기 포함)','배열 변환·복사/전송','점수·합치기'],[[('GPU' if k=='cuda' else 'CPU')]+[num(v[field]/3600,3) for field in ['image_cache_seconds','upload_seconds','arithmetic_excluding_upload_seconds']] for k,v in actual.items()]))
     census=load(BASE/'target_census.json');targetrows=[]
     for g in groups:
         rr=[r for r in census['rows'] if r['prior']+'_'+str(r['kind'])==g];targetrows.append([LABEL[g]]+[sum(r[k] for r in rr) for k in ['type1_count','type2_count','type3_count','type2_type3_overlap_count','target_count']]+[num(sum(r['target_area_m2'] for r in rr))])
@@ -106,33 +114,36 @@ def main(mode='full'):
         r=summary[g];rows=[[VAR[x['variant']],STRATUM[x['stratum']],num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction']),pct(x['whole_roof_fraction'])] for x in r['accuracy']]
         s.append('### '+LABEL[g]+' 판단 정확도');s.append(table(['판','부분','분모(m²)','틀린 넓이(m²)','틀린 비율','전체 넓이 대비'],rows))
         s.append(f"분모는 새 한계 밖의 칸 0·1·2다. 옛 규칙만 자기 한계와 옛 칸을 썼다. 칸 1에서 보정하지 않음과 칸 2에서 보정함을 틀림으로 셌다. 전체 넓이 대비의 분모는 사전 높이·법선이 있는 {num(r['prior_height_valid_area_m2'])} m²다(법선 부분별 행에도 동일).")
-        rows=[[x['building'],num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction'])] for x in r['top15']];s.append(table(['틀린 넓이가 큰 15동','분모(m²)','틀린 넓이(m²)','틀린 비율'],rows))
+        rows=[[building_label(x['building']),num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction'])] for x in r['top15']];s.append(table(['틀린 넓이가 큰 15동','분모(m²)','틀린 넓이(m²)','틀린 비율'],rows))
         causes=readtable(g,'6_3_causes');rows=[]
         for v in ['new_clipped','new_unclipped','new_oldphoto']:
             rr=[x for x in causes if x['variant']==v];values={x['reason']:x['area_m2'] for x in rr};default=sum(x['area_m2'] for x in rr if x['reason'].startswith('기본 방향:'))
             rows.append([VAR[v],num(values['사진이 틀리게 지지']),num(values['사진이 틀리게 반박']),num(default),num(values['빈 공간 보정이 틀림(6.2 분모 밖)']),num(values['한계 밖 둘 다 틀림']),num(values['한계 안 사진 반박(전체 한계 안 분모)'])])
         s.append(table(['틀림의 까닭(m²)','틀린 지지','틀린 반박','기본 방향','빈 공간(분모 밖)','밖·둘 다 틀림','안·사진 반박'],rows))
-    s.append('참값 없음과 기하 확인 불가는 별도 행으로 남겼다. 모름별 기본 방향 오류와 한계 안 사진 반박 비율은 6.3 상세 표에 있다. 고친 사진의 반박/전체 한계 안 넓이는 대상 1·2에서 확인한 최소 비율이며, 계산한 부분을 분모로 한 값도 함께 남겼다.')
+    s.append('참값 없음·기하 확인 불가와 모름별 기본 방향 오류는 상세 표에 있다. 한계 안 반박은 대상 1·2에서 확인한 최소 비율이며, 계산한 부분을 분모로 한 값도 적었다.')
     s+=['','## 단계별 바꿔 끼우기 (7절)']
     for g in groups:
         rows=[[ARM[r['arm']],pct(r['within_tau_fraction']),num(r['mean_abs_error_m'],4),num(r['median_abs_error_m'],4),num(r['within_tau_difference_pp']),num(r['uncountable_area_m2'])] for r in summary[g]['ablation']]
         main=next(r for r in summary[g]['ablation'] if r['arm']=='main')
         s.append('### '+LABEL[g]);s.append(f"τ 채점 분모 {num(main['scored_area_m2'])} m², 유한 높이 오차 분모 {num(main['finite_error_area_m2'])} m². 아홉 판의 채점 분모는 같다.");s.append(table(['판','τ 안 비율','평균 오차(m)','중앙값(m)','본 방법과 차(%p)','셀 수 없음(m²)'],rows))
-    s.append('높이 오차의 평균·중앙값은 넓이 가중이다. 면 없음은 참값 면이 있는 곳에서 틀림이다. 참값 자체가 없는 칸 6을 빈 공간의 정답으로 간주하지 않았다. 면 없음은 높이 오차 평균·중앙값에서 제외하고 넓이를 따로 적었다. 칸 0~5 표와 계산 가능한 넓이는 상세 표에 있다.')
+    s.append('오차 평균·중앙값은 넓이 가중이다. 면 없음은 참값 면이 있는 곳에서 틀림이며 높이 오차 통계에서 빼고 넓이를 적었다. 참값 없는 칸 6은 빈 공간의 정답으로 보지 않았다. 칸 0~5별 값은 상세 표에 있다.')
     s+=['','## 그림 (8절)']
     for p in sorted((D/'figures').glob('그림*.png')):
         if mode=='roofs' and '_all_' in p.name:continue
         if mode=='full' and p.name.startswith('그림2_LoD2_roofs_'):continue
         meta=load(p.with_suffix('.json'));prior_label='항공 LiDAR' if meta['prior']=='ALS' else 'LoD2'
         if p.name.startswith('그림1'):
-            title=f"{prior_label} {meta['building']}에서 {meta['variant']} 판단과 참값의 짝을 본다."
+            title=f"{prior_label} {building_label(meta['building'])}의 {meta['variant']} 판단을 참값과 비교한다."
             values='틀린 비율: 본 판 '+meta['wrong_rates'][0]+' / 늘 사전 정보 '+meta['wrong_rates'][1]+' / 늘 영상 '+meta['wrong_rates'][2]+'.'
         else:
-            title=f"{prior_label} {meta['building']} {'지붕' if meta['kind']==1 else '벽'}의 {meta['reason']}를 사진에서 확인한다."
+            title=f"{prior_label} {building_label(meta['building'])} {'지붕' if meta['kind']==1 else '벽'}의 {meta['reason']}를 사진에서 확인한다."
             values=f"넓이 {num(meta['area_m2'])} m² / s_P {num(meta['s_P'],3)} / s_M {num(meta['s_M'],3)} / t {num(meta['threshold'],3)}."
         s.append(f"- [{title}](figures/{p.name})")
         s.append('  '+values)
-    s.append('그림마다 같은 이름의 JSON에 쓴 점·사진·값을 남겼다. 지도는 사전 정보 면의 5 cm 격자에 학습 영상을 투영하고 그 면으로 가림을 검사했다. 빨간 테두리는 판단이 해를 끼친 같은 면의 이웃 칸이다. 사진 조각의 수동 까닭은 비워 두었다. 1 m² 미만과 선택 가능한 자리 부족은 그림 2 선택 기록에 남겼다.')
+    s.append('그림별 JSON에 점·사진·값이 있다. 지도는 사전 정보 면의 5 cm 격자에 학습 영상을 투영하고 가림을 검사했다. 빨간 경계는 판단이 해를 끼친 이웃 칸이다. 수동 까닭은 빈칸이다. 1 m² 미만·자리 부족은 아래에 적었다.')
+    for prior in ['ALS','LoD2']:
+        scope='all' if prior=='LoD2' and mode=='full' else 'roofs';sel=load(C/f'figure2.{prior}.{scope}.selection.reply2.json')
+        s.append(f"{'항공 LiDAR' if prior=='ALS' else 'LoD2'} 사진 조각 {sel['selected_count']}/4자리. 1 m² 미만 {sel['below_1m2_count']}개·{num(sel['below_1m2_area_m2'])} m² 제외, 남은 후보 {sel['available_candidates']}개, 채우지 못한 자리 {sel['unfilled_slots']}개.")
     s+=['','## 발주 전 기대와 나란히 놓기 (결론 없음)']
     measured={}
     for g in ['ALS_1','LoD2_1']:
@@ -153,12 +164,12 @@ def main(mode='full'):
     s+=['','## 바꾼 것·확인 불가·시간','회신 1의 공통 제외와 전체 소속 검사, 회신 2의 구역/사진 묶음 계산과 대상 3을 적용했다. 사진 점 번호는 지붕과 벽에서 겹칠 수 있어 (구역, 사전 정보, 지붕/벽, 점 번호)를 연결 키로 쓴다. 옛 곡선은 다시 계산하지 않았다.',
         '원시 이웃 점/화소의 실험 지역 포함은 회신 1에서 허용한 범위다. 실험 지역의 패치·핵심점·사진 곡선·판단·참값은 이 결과의 대상에 포함하지 않았다. 확인용은 전체 소속 검사에서 건물 번호만 확인했다.',
         '시선 검사에 원래 불확실도 제공점이 없는 건물은 대체값을 만들지 않았다. 해당 검사는 확인 불가이며 빈 공간 보정의 근거로 쓰지 않았다. 사진 선택이 3장 미만이면 발주문 순서상 MVS 면 없음보다 사진 부족이 먼저 적용된다.',
-        '다른 발주가 GPU를 쓰는 것이 확인되면 사진 계산을 일시 정지하고 기다렸다. 프로세스 검사·정지·재개 시각은 대기 기록에 남겼다. 시작 전 검사와 실행 중 5초 간격 검사를 구분하며, 처음 실행 중 발견 전의 겹침 가능성도 숨기지 않는다. 대기 시간은 닫힌 정지·재개 구간과 연속 사용 중 관측 구간을 합친 최소값이다. 첫 수동 정지의 기록 지연과 중단한 표본의 마지막 정지 종료 시각 누락은 추정으로 채우지 않았다.',
+        'GPU는 시작 전·실행 중 5초 간격으로 검사했다. 다른 연구를 발견하면 자체 계산을 정지했다. 최초 발견 전 겹침 가능성, 첫 정지 기록 지연과 중단 표본의 종료 시각 누락은 issues.md에 남겼다. 대기는 닫힌 구간과 연속 관측으로 확인한 최소값이며 미기록 시간을 추정하지 않았다.',
         '앞선 캐시 준비 중단, 독립 검사 연결 키 수정과 실패 로그는 issues.md에 보존했다. 설정의 각 변경 시각·까닭·이전 SHA-256은 설정 이력에 있다.',
-        '실행별 Docker 이미지·Git 기준·자원 제한 원장은 11월 3일 13:58부터 수집했다. 앞서 끝난 컨테이너의 해당 값은 추정하지 않았다. 코드·입력·출력 SHA-256과 환경 버전은 별도 잠금 기록에 있다.',
+        '실행별 Docker·Git·자원 원장은 11월 3일 13:58부터 수집했다. 이전 컨테이너 값은 추정하지 않았다. 코드·입출력 SHA-256과 환경 버전은 잠금 기록에 있다.',
         f"현재 설정 SHA-256: `{sha(C/'judgecheck_v1.json')}`.",
         f"첫 설정 이후 총 경과는 {resources['task_elapsed_seconds']/3600:.2f}시간이며, 사용자 회신 대기를 포함한다. 회신 2 이후의 경과와 GPU 대기 최소값은 첫 다섯 줄에 따로 적었다.",
-        '원본 수치와 출처는 tables/*.json 및 *.csv, 보기용 표는 *.md에 있다. 구역별 완료 기록과 시선 검사 기록도 보존했다. 이 보고는 과학적 결론을 내리지 않는다.']
+        '수치·출처는 tables/*.json, *.csv, 보기용 표는 *.md다. 구역 완료·시선 검사 기록도 보존했다. 과학적 결론은 내리지 않는다.']
     text='\n\n'.join(s)+'\n';assert len(text)<=20000,len(text)
     name='판단검증_지붕중간보고_v1.md' if mode=='roofs' else '판단검증_보고가_v1.md';(D/name).write_text(text)
     # Every durable table also has a Markdown view with its exclusion line.

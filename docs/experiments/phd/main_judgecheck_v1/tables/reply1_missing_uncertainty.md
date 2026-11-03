@@ -1,9 +1,9 @@
-# reply1_missing_uncertainty [이 발주에서 냄]
+[이 발주에서 냄]
 
-실험 지역과 사진 점을 공유해 뺀 핵심점: **73개 / 5.442552935831812 m²**. 모든 셈에서 미리 제외했다.
+[반올림 전 값과 출처](reply1_missing_uncertainty.json)
 
-출처: `r1/ring_recompute; inherited finite values unchanged`
+|attempted|recovered|unavailable|
+|---|---|---|
+|451157|444|450713|
 
-| attempted | recovered | unavailable |
-| --- | --- | --- |
-| 451157 | 444 | 450713 |
+실험 지역과 사진 점을 공유해 뺀 핵심점: 항공 73개·5.44 m².

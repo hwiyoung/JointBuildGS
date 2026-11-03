@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-03T14:45:01.379257+09:00",
+  "at": "2026-11-03T17:37:08.353017+09:00",
   "stage": "A",
   "prepared_tiles": 21,
   "total_tiles": 21,
   "processed_points": {
-    "ALS_1": 36499,
-    "LoD2_1": 11492,
+    "ALS_1": 42525,
+    "LoD2_1": 76485,
     "LoD2_2": 19323
   },
   "target_points": {
@@ -14,10 +14,13 @@
     "LoD2_2": 166676
   },
   "completed_by_device": {
-    "cuda": 35706,
-    "cpu": 31608
+    "cpu": 102627,
+    "cuda": 35706
   },
-  "metric_groups": [],
+  "metric_groups": [
+    "ALS_1",
+    "LoD2_1"
+  ],
   "roof_report_committed": false,
   "benchmark_includes_all_three_groups": true,
   "completed_point_processing_does_not_imply_finite_score": true,

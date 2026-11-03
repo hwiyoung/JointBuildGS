@@ -70,6 +70,10 @@ def main():
         full.append((p,'reproduction/'+p.name))
     for p in sorted((BASE/'resources').rglob('*')):
         if p.is_file() and not p.name.endswith('.tmp'):full.append((p,'reproduction/resources/'+str(p.relative_to(BASE/'resources'))))
+    for p in sorted((BASE/'cpu_cohorts').rglob('*')):
+        if p.is_file():full.append((p,'reproduction/cpu_cohorts/'+str(p.relative_to(BASE/'cpu_cohorts'))))
+    for p in sorted((BASE/'stream_verification').rglob('*')):
+        if p.is_file() and p.suffix!='.npz':full.append((p,'reproduction/stream_verification/'+str(p.relative_to(BASE/'stream_verification'))))
     full_records=make('PHD-MAIN-JUDGECHECK-v1_가',full)
     receipt=dict(at=now(),status='PASS_STAGE_A_DELIVERY_INTEGRITY',light=light_records,full=full_records,validation_status=v['status'],
         report_sha256=sha(report),config_sha256=sha(C/'judgecheck_v1.json'),initial_preparation_included=False,holdout_included=False,stop_before_stage_b=True,scientific_verdict=None)

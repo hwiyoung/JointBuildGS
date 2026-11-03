@@ -7,7 +7,7 @@ CFG="$REPO/configs/phd/main_judgecheck_v1"
 DOCS="$REPO/docs/experiments/phd/main_judgecheck_v1"
 mkdir -p "$OUT/logs" "$OUT/tmp" "$CFG" "$DOCS"
 tag=$1; shift
-[[ ( "$#" == 2 && ( "$1" == photo_score_reply2.py || "$1" == photo_score_group_reply2.py ) ) || ( "$#" == 1 && "$1" == photo_score_direct_reply2.py ) ]] || { echo 'GPU is authorized for corrected photo arithmetic only'; exit 2; }
+[[ ( "$#" == 2 && ( "$1" == photo_score_reply2.py || "$1" == photo_score_group_reply2.py || "$1" == photo_stream_score_reply2.py ) ) || ( "$#" == 1 && "$1" == photo_score_direct_reply2.py ) ]] || { echo 'GPU is authorized for corrected photo arithmetic only'; exit 2; }
 exec 9>"$OUT/task.lock"
 flock -x 9
 mkdir -p "$OUT/r2/resources"

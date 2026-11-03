@@ -18,6 +18,9 @@ def main(source=None):
                 savez(replay/folder/f'{path.stem}__{kind}.npz',**data)
     assert inputs,'No canonical delivery NPZ files found'
     M.BASE=replay;M.D=outputs
+    if explicit_source:
+        M.C=source/'settings'
+        assert (M.C/'judgecheck_v1.json').is_file(),'Missing delivered settings'
     for group in range(3):M.main(group)
     checks=[]
     reference_tables=source/'tables' if explicit_source else D/'tables'

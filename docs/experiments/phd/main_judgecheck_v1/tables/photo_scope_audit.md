@@ -1,48 +1,50 @@
-# 사진 점 경계 확인 [이 발주에서 냄]
+[이 발주에서 냄]
 
-넓이의 대상은 해당 사진 점에 연결된 개발용 핵심점이다. 실험 지역의 넓이는 계산하지 않았다.
+[반올림 전 값과 출처](photo_scope_audit.json)
 
-| 사진 점 | 개발용 핵심점 수 | 넓이 (m²) | 개발용 대표 곡선 열람 |
-|---|---:|---:|---|
-| development:ALS:6909_53359:point:4078 | 3 | 0.229904982310 | 예 |
-| development:ALS:6909_53359:point:13536 | 1 | 0.062786313125 | 아니요 |
-| development:ALS:6909_53359:point:13545 | 1 | 0.064222005783 | 아니요 |
-| development:ALS:6909_53359:point:13558 | 1 | 0.064214425180 | 예 |
-| development:ALS:6909_53359:point:13564 | 1 | 0.062529400595 | 아니요 |
-| development:ALS:6909_53359:point:13733 | 1 | 0.062977818496 | 아니요 |
-| development:ALS:6909_53360:point:4147 | 1 | 0.066526461890 | 아니요 |
-| development:ALS:6909_53361:point:5184 | 3 | 0.213487707219 | 예 |
-| development:ALS:6909_53361:point:5353 | 2 | 0.203921465187 | 예 |
-| development:ALS:6909_53361:point:5436 | 2 | 0.148543422261 | 아니요 |
-| development:ALS:6909_53361:point:5601 | 1 | 0.102170480003 | 예 |
-| development:ALS:6909_53361:point:5645 | 2 | 0.161436967890 | 아니요 |
-| development:ALS:6909_53361:point:5688 | 1 | 0.084559418115 | 예 |
-| development:ALS:6909_53361:point:5728 | 3 | 0.217082259498 | 예 |
-| development:ALS:6909_53361:point:5894 | 2 | 0.189829572345 | 예 |
-| development:ALS:6909_53361:point:5936 | 1 | 0.110539554987 | 예 |
-| development:ALS:6909_53361:point:5979 | 1 | 0.081335323209 | 아니요 |
-| development:ALS:6909_53361:point:14840 | 1 | 0.064262308948 | 아니요 |
-| development:ALS:6910_53361:point:2064 | 3 | 0.221272196482 | 예 |
-| development:ALS:6910_53361:point:2140 | 2 | 0.163942377344 | 아니요 |
-| development:ALS:6910_53361:point:2196 | 3 | 0.217899616907 | 예 |
-| development:ALS:6910_53361:point:2255 | 1 | 0.091903261631 | 아니요 |
-| development:ALS:6910_53361:point:2257 | 2 | 0.146610004078 | 예 |
-| development:ALS:6910_53361:point:2258 | 3 | 0.208714366434 | 예 |
-| development:ALS:6910_53361:point:2279 | 2 | 0.167393686357 | 예 |
-| development:ALS:6910_53361:point:2285 | 1 | 0.070872298306 | 아니요 |
-| development:ALS:6910_53361:point:2286 | 2 | 0.140975566990 | 아니요 |
-| development:ALS:6910_53361:point:2307 | 1 | 0.084419746131 | 예 |
-| development:ALS:6910_53361:point:2315 | 1 | 0.072024915222 | 아니요 |
-| development:ALS:6910_53361:point:2316 | 3 | 0.207220898276 | 예 |
-| development:ALS:6910_53361:point:2343 | 2 | 0.140748539621 | 예 |
-| development:ALS:6910_53361:point:2375 | 1 | 0.067707065022 | 아니요 |
-| development:ALS:6910_53361:point:2376 | 3 | 0.211638530376 | 예 |
-| development:ALS:6910_53361:point:2408 | 2 | 0.140529341668 | 예 |
-| development:ALS:6910_53361:point:2442 | 1 | 0.067948919713 | 아니요 |
-| development:ALS:6910_53361:point:2443 | 3 | 0.203121401417 | 예 |
-| development:ALS:6910_53361:point:2477 | 2 | 0.140380515733 | 예 |
-| development:ALS:6910_53361:point:2510 | 1 | 0.069840416840 | 아니요 |
-| development:ALS:6910_53361:point:2511 | 2 | 0.137368085411 | 예 |
-| development:ALS:6910_53361:point:2515 | 1 | 0.074282303601 | 아니요 |
-| development:ALS:6910_53361:point:2544 | 2 | 0.139456851614 | 아니요 |
-| development:ALS:6910_53361:point:2545 | 1 | 0.065952143618 | 아니요 |
+|tile|prior|kind|point_id|geometry_index|representative_building|selected_core_count|selected_core_area_m2|curve_decoded_during_initial_join|
+|---|---|---|---|---|---|---|---|---|
+|6909_53359|ALS|1|development:ALS:6909_53359:point:4078|4078|DEBY_LOD2_4906977|3|0.229905|True|
+|6909_53359|ALS|1|development:ALS:6909_53359:point:13536|13536|DEBY_LOD2_108580336|1|0.062786|False|
+|6909_53359|ALS|1|development:ALS:6909_53359:point:13545|13545|DEBY_LOD2_108580336|1|0.064222|False|
+|6909_53359|ALS|1|development:ALS:6909_53359:point:13558|13558|DEBY_LOD2_4906981|1|0.064214|True|
+|6909_53359|ALS|1|development:ALS:6909_53359:point:13564|13564|DEBY_LOD2_108580336|1|0.062529|False|
+|6909_53359|ALS|1|development:ALS:6909_53359:point:13733|13733|DEBY_LOD2_108580336|1|0.062978|False|
+|6909_53360|ALS|1|development:ALS:6909_53360:point:4147|4147|DEBY_LOD2_4906968|1|0.066526|False|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5184|5184|DEBY_LOD2_60042|3|0.213488|True|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5353|5353|DEBY_LOD2_60042|2|0.203921|True|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5436|5436|DEBY_LOD2_4959460|2|0.148543|False|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5601|5601|DEBY_LOD2_60042|1|0.10217|True|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5645|5645|DEBY_LOD2_4959460|2|0.161437|False|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5688|5688|DEBY_LOD2_60042|1|0.084559|True|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5728|5728|DEBY_LOD2_60042|3|0.217082|True|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5894|5894|DEBY_LOD2_60042|2|0.18983|True|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5936|5936|DEBY_LOD2_60042|1|0.11054|True|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:5979|5979|DEBY_LOD2_4959460|1|0.081335|False|
+|6909_53361|ALS|1|development:ALS:6909_53361:point:14840|14840|DEBY_LOD2_4906968|1|0.064262|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2064|2064|DEBY_LOD2_4959458|3|0.221272|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2140|2140|DEBY_LOD2_4959460|2|0.163942|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2196|2196|DEBY_LOD2_4959458|3|0.2179|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2255|2255|DEBY_LOD2_4959322|1|0.091903|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2257|2257|DEBY_LOD2_4959458|2|0.14661|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2258|2258|DEBY_LOD2_4959458|3|0.208714|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2279|2279|DEBY_LOD2_4959458|2|0.167394|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2285|2285|DEBY_LOD2_4959322|1|0.070872|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2286|2286|DEBY_LOD2_4959322|2|0.140976|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2307|2307|DEBY_LOD2_4959458|1|0.08442|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2315|2315|DEBY_LOD2_4959322|1|0.072025|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2316|2316|DEBY_LOD2_4959458|3|0.207221|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2343|2343|DEBY_LOD2_4959458|2|0.140749|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2375|2375|DEBY_LOD2_4959322|1|0.067707|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2376|2376|DEBY_LOD2_4959458|3|0.211639|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2408|2408|DEBY_LOD2_4959458|2|0.140529|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2442|2442|DEBY_LOD2_4959322|1|0.067949|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2443|2443|DEBY_LOD2_4959458|3|0.203121|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2477|2477|DEBY_LOD2_4959458|2|0.140381|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2510|2510|DEBY_LOD2_4959322|1|0.06984|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2511|2511|DEBY_LOD2_4959458|2|0.137368|True|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2515|2515|DEBY_LOD2_4959460|1|0.074282|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2544|2544|DEBY_LOD2_4959322|2|0.139457|False|
+|6910_53361|ALS|1|development:ALS:6910_53361:point:2545|2545|DEBY_LOD2_4959322|1|0.065952|False|
+
+실험 지역과 사진 점을 공유해 뺀 핵심점: 항공 73개·5.44 m².

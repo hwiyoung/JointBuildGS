@@ -72,6 +72,7 @@ def maps(prior):
     ranking=sorted([(float(g['area'][(g['building']==b)&(g['geometry']==1)].sum()),str(b)) for b in np.unique(g['building'])],key=lambda v:(-v[0],v[1]));chosen=ranking[:4]
     current=json.loads((C/'judgecheck_v1.json').read_text())['figures'].get('selected_buildings') or {};current[prior]=[b for _,b in chosen]
     record_setting('figures','selected_buildings',current,'Freeze ordered top-four outside-limit roof building IDs before figure rendering')
+    record_setting('figures','map_caption_scope','Red boundaries include harmful judgments inside or outside the limit; displayed error rates use section 6.2 outside-limit cells 0, 1 and 2 only.','Visual inspection: make the different scopes of red boundaries and section-6.2 percentages explicit; no selection, value, color or boundary rule changed')
     lock=C/f'figure1.{prior}.selection.reply2.json';dump(lock,dict(at=now(),selection='top four retained roof outside-limit areas, ID tie break',buildings=[dict(building=b,outside_area_m2=a) for a,b in chosen],source_sha256=sha(Path(__file__)),scientific_verdict=None));cam=Cameras();acc=json.loads((D/'tables'/f'{prior}_1_6_2_buildings.json').read_text())['rows'];outputs=[]
     for _,bid in chosen:
         take=np.flatnonzero(g['building']==bid);d={k:(v[:,take] if k in ['region','reason'] else v[take]) for k,v in g.items()};bg,extent,j,meta=background(d,cam,prior);cells=np.floor(d['centre'][:,:2]/.25).astype(int)
@@ -98,7 +99,9 @@ def maps(prior):
             fig.suptitle(f'{"항공 LiDAR" if prior=="ALS" else "LoD2"} · {label}: 같은 색의 짝과 다른 곳을 확인',fontsize=15,y=.98)
             handles=[Patch(facecolor=COLORS[k],label=l) for k,l in [(0,'일치 / 둘 다 맞음'),(1,'보존 / 영상만 틀림'),(2,'보정 / 사전 정보만 틀림'),(4,'결측 / 영상 없음'),(5,'둘 다 틀림'),(6,'한계 밖')]]
             handles.extend([Patch(facecolor='white',edgecolor='#3f4650',hatch='////',label='기본 방향'),Patch(facecolor=COLORS[2],edgecolor='#3f4650',hatch='..',label='빈 공간 보정'),Patch(facecolor=COLORS[7],label='셀 수 없음')])
-            fig.legend(handles=handles,loc='lower center',ncol=3,bbox_to_anchor=(.5,.045),frameon=False);fig.text(.5,.015,f'짝이 맞으면 판단이 맞음  |  틀린 비율: 본 판 {rates[0]} · 늘 사전 정보 {rates[1]} · 늘 영상 {rates[2]}',ha='center',fontsize=9)
+            fig.legend(handles=handles,loc='lower center',ncol=3,bbox_to_anchor=(.5,.045),frameon=False)
+            fig.text(.5,.038,'짝이 맞으면 판단이 맞음 · 빨강: 판단이 해를 끼친 곳(한계 안 포함)',ha='center',fontsize=9)
+            fig.text(.5,.012,f'틀린 비율(한계 밖 칸 0·1·2): 본 판 {rates[0]} · 늘 사전 정보 {rates[1]} · 늘 영상 {rates[2]}',ha='center',fontsize=9)
             fig.subplots_adjust(left=.015,right=.985,top=.88,bottom=.22,wspace=.035)
             out=D/'figures'/f'그림1_{prior}_{bid}_{vi}';out.parent.mkdir(exist_ok=True);fig.savefig(out.with_suffix('.png'),dpi=300);plt.close(fig)
             record=val(dict(at=now(),building=bid,prior=prior,variant=label,camera=cam.names[j] if j is not None else None,background=meta,patch_ids=d['patch_id'].tolist(),photo_point_ids=d['photo_point_id'].tolist(),display_owner_patch_ids=d['patch_id'][ii].tolist(),values={k:d[k].tolist() for k in ['area','geometry','cell']},region=reg.tolist(),reason=why.tolist(),wrong_rates=rates,excluded_shared_cores=EX,scientific_verdict=None));dump(out.with_suffix('.json'),record);outputs.append(str(out.with_suffix('.png')));print('FIGURE_MAP',out.name,flush=True)

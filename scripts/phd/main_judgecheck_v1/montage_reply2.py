@@ -9,6 +9,7 @@ from shapely.geometry import Polygon
 from shapely.ops import unary_union
 from figures_reply2 import plt,BASE,D,C,Path,dump,now,sha,loadz,Cameras,rgb,val,EX
 from photo_planes import tangent
+from record_setting_reply2 import record as record_setting
 
 def main(prior,scope='roofs'):
     files=sorted((BASE/'core_points').glob(f'*__{prior}__*.npz'));files=[p for p in files if scope=='all' or p.stem.endswith('__1')]
@@ -33,7 +34,10 @@ def main(prior,scope='roofs'):
     selection=dict(at=now(),prior=prior,scope=scope,component_rule='same reason, building, kind; 3D centre distance <=0.36m; take four per prior from the union of wrong support/refute in descending area, max two per building; eight across both priors',
         selected=[{k:(g['patch_id'][v].tolist() if k=='indices' else v) for k,v in c.items()} for c in chosen],below_1m2_count=small_count,below_1m2_area_m2=small_area,
         available_candidates=len(candidates),selected_count=len(chosen),unfilled_slots=4-len(chosen),excluded_shared_cores=EX,scientific_verdict=None)
-    dump(C/f'figure2.{prior}.{scope}.selection.reply2.json',selection);cam=Cameras();outputs=[]
+    dump(C/f'figure2.{prior}.{scope}.selection.reply2.json',selection)
+    record_setting('figures','photo_outline_display',dict(prior_linewidth_pt=.12,prior_alpha=.45,component_linewidth_pt=.65,component_alpha=1.),'Visual inspection: lighten dense prior support-cell outlines so the source photograph remains visible; preserve every projected boundary and selected component')
+    record_setting('figures','photo_score_label_display',dict(background='white',background_alpha=1.,zorder=5),'Visual inspection: prevent the threshold line crossing score labels; scores, threshold and bar geometry unchanged')
+    cam=Cameras();outputs=[]
     for number,c in enumerate(chosen,1):
         ix=c['indices'];centre=np.average(g['centre'][ix],axis=0,weights=g['area'][ix]);represent=ix[np.argmin(np.linalg.norm(g['centre'][ix]-centre,axis=1))];pid=g['photo_point_id'][represent]
         targetfile=BASE/'photo_targets'/f'{g["tile"][represent]}__{prior}__{c["kind"]}.npz';old=loadz(targetfile);pi=int(np.flatnonzero(old['point_id']==pid)[0]);new=loadz(BASE/'photo_points'/targetfile.name);t=json.loads((C/f'photo_threshold.{prior}_{c["kind"]}.reply2.lock.json').read_text())['t']
@@ -54,7 +58,7 @@ def main(prior,scope='roofs'):
         if best is not None:
             camera=best[1];e1,e2=tangent(np.mean(g['normal'][ix],axis=0)/np.linalg.norm(np.mean(g['normal'][ix],axis=0)));expanded=np.concatenate([points+u*3*e1+v*3*e2 for u,v in [(-1,-1),(-1,1),(1,-1),(1,1)]]);uv,_,ok=cam.project(expanded,camera)
             x0,y0=np.maximum(0,np.floor(uv[ok].min(0))).astype(int);x1,y1=np.minimum([cam.w,cam.h],np.ceil(uv[ok].max(0))).astype(int);im=rgb(cam,camera);ax.imshow(im[y0:y1,x0:x1],extent=[x0,x1,y1,y0]);crop=[int(x0),int(y0),int(x1),int(y1)]
-            for take,color,width in [(np.flatnonzero((g['building']==c['building'])&(g['kind']==c['kind'])),'#ffffff',.18),(ix,'#ef3434',.65)]:
+            for take,color,width,opacity in [(np.flatnonzero((g['building']==c['building'])&(g['kind']==c['kind'])),'#ffffff',.12,.45),(ix,'#ef3434',.65,1.)]:
                 polys=[]
                 for k in take:
                     n=g['normal'][k]
@@ -65,7 +69,7 @@ def main(prior,scope='roofs'):
                     union=unary_union([Polygon(p).buffer(0) for p in polys]);boundary=union.boundary
                     for line in getattr(boundary,'geoms',[boundary]):
                         xy=np.asarray(line.coords)
-                        if len(xy):ax.plot(xy[:,0],xy[:,1],color=color,lw=width)
+                        if len(xy):ax.plot(xy[:,0],xy[:,1],color=color,lw=width,alpha=opacity)
             ax.set_xlim(x0,x1);ax.set_ylim(y1,y0)
         else:ax.text(.5,.5,'고른 사진 없음',ha='center',va='center',transform=ax.transAxes)
         ax.set_xticks([]);ax.set_yticks([]);ax.set_title('흰색 사전 정보 · 빨강 틀린 덩어리')
@@ -76,7 +80,7 @@ def main(prior,scope='roofs'):
         v=new['best_score'][0,pi]
         for k,s in enumerate(v):
             if np.isfinite(s):barax.barh(k,s,color=['#f39b34','#3f88db'][k],height=.48)
-            barax.text(max(0,float(s))+.02 if np.isfinite(s) else .02,k,f'{s:.3f}' if np.isfinite(s) else '확인 불가',ha='left',va='center')
+            barax.text(max(0,float(s))+.02 if np.isfinite(s) else .02,k,f'{s:.3f}' if np.isfinite(s) else '확인 불가',ha='left',va='center',bbox=dict(facecolor='white',edgecolor='none',pad=1.5),zorder=5)
         if t is not None:barax.axvline(t,color='#9e2830',ls='--',label=f'기준 {t:.3f}');barax.legend(frameon=False)
         barax.set_yticks([0,1],['사전 정보 면','MVS 면']);barax.invert_yaxis();barax.set_xlim(min(-.1,float(np.nanmin(v))-.1) if np.isfinite(v).any() else -.1,1.13);barax.set_title('고친 사진 점수');barax.set_xlabel('사진 점수')
         fig.suptitle(f'{"항공 LiDAR" if prior=="ALS" else "LoD2"} · {c["reason"]}: 두 면의 점수와 사진을 함께 확인',fontsize=14,y=.97);fig.text(.5,.03,f'{c["building"]} · {c["area_m2"]:.2f} m² · {"보존 / 칸 1" if c["reason"]=="틀린 지지" else "보정 / 칸 2"} · {"지붕" if c["kind"]==1 else "벽"}  |  수동 까닭: __________',ha='center',fontsize=9);fig.subplots_adjust(top=.88,bottom=.13)

@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-03T17:15:47.270813+09:00",
+  "points": 200,
+  "packed_rows": 16409,
+  "computed_rows": 10138,
+  "camera_count": 529,
+  "original_image_decodes": 529,
+  "decode_seconds": 319.3989662928507,
+  "image_cache_total_seconds": 0.0001508556306362152,
+  "image_cache_ram_gib": 3.9781728386878967,
+  "image_cache_spill_gib": 0.0,
+  "gpu_batched_seconds": 375.54151782300323,
+  "upload_seconds": 358.4910192284733,
+  "arithmetic_and_reduction_seconds": 375.857825640589,
+  "total_seconds": 391.45824581291527,
+  "row_blocks": 1,
+  "batch_rows": 1024,
+  "gpu_calls": 618,
+  "rows_per_call_quantiles": [
+    1.0,
+    55.0,
+    98.0,
+    175.0,
+    727.0
+  ],
+  "peak_cpu_rss_gib": 5.0886077880859375,
+  "peak_gpu_gib": null,
+  "numeric_precision": "float64 projection interpolation NCC",
+  "scientific_verdict": null,
+  "status": "PASS_STREAM_CACHE_200_POINT_SCORE_PARITY",
+  "errors": {
+    "best_score": 0.0,
+    "best_height": 0.0,
+    "texture": 0.0,
+    "texture_by_view": 0.0
+  },
+  "max_curve_difference": 0.0,
+  "numpy_hugepage_advice": false,
+  "memory_gate_sha256": "64ad8ae6a702b71f3879f6b27fafb85b53b202a722c5ceb76194be8f8bba62d8",
+  "compared_curve_entries": 32818,
+  "sources": {
+    "photo_score_reply2.py": "02b34401c87356a4837e3201af852f7638da92e11e598b0a156f2478ff66fa29",
+    "verify_stream_score_reply2.py": "a6a90b38e3d2c9f697aa837bea2baa5b60e0d68026b27e4a90405d65bae9cc58",
+    "photo_stream_cache_reply2.py": "5f9d62bc6a8869d8ba7bda59ab11a59072989d7f5526adf2cf89e76c521516f1",
+    "photo_cameras.py": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+  },
+  "output_sha256": "a59e70a666b9daeaf4be4fcb1d815298edee113cad0398c4be4992b4fa086b49"
+}

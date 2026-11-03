@@ -1,0 +1,325 @@
+{
+  "at": "2026-11-03T15:22:44.434197+09:00",
+  "group": "ALS_1",
+  "table": "6_5_geometry",
+  "rows": [
+    {
+      "metric": "five_percent_check",
+      "z": 1.645,
+      "reference_only": false,
+      "count": 14834,
+      "area_m2": 968.3287796140501,
+      "denominator_count": 386267,
+      "denominator_area_m2": 26000.351867051373,
+      "fraction": 0.03724291057926615
+    },
+    {
+      "metric": "five_percent_check",
+      "z": 1.96,
+      "reference_only": false,
+      "count": 6542,
+      "area_m2": 427.3587527798228,
+      "denominator_count": 386267,
+      "denominator_area_m2": 26000.351867051373,
+      "fraction": 0.01643665266397367
+    },
+    {
+      "metric": "five_percent_check",
+      "z": 2.576,
+      "reference_only": false,
+      "count": 1118,
+      "area_m2": 73.06415002550526,
+      "denominator_count": 386267,
+      "denominator_area_m2": 26000.351867051373,
+      "fraction": 0.0028101215860118762
+    },
+    {
+      "count": 479848,
+      "area_m2": 32373.68397598843,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "limit_quantile",
+      "q": 0.25,
+      "value_m": 0.0992783911458124
+    },
+    {
+      "count": 479848,
+      "area_m2": 32373.68397598843,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "limit_quantile",
+      "q": 0.5,
+      "value_m": 0.12344441920370333
+    },
+    {
+      "count": 479848,
+      "area_m2": 32373.68397598843,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "limit_quantile",
+      "q": 0.75,
+      "value_m": 0.19336175119681973
+    },
+    {
+      "count": 390291,
+      "area_m2": 26267.165637514045,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "r_reference_cell0_median",
+      "value_m": 0.021185437750144833
+    },
+    {
+      "count": 358281,
+      "area_m2": 24297.171808428608,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "r_agreement_sample",
+      "value_m": 0.016897281827748762,
+      "truth_used": false
+    },
+    {
+      "metric": "missing_before_sight",
+      "half_length_m": 5,
+      "count": 28259,
+      "area_m2": 1924.2964800185823,
+      "denominator_count": 500534,
+      "denominator_area_m2": 33770.54681243817,
+      "fraction": 0.05698150197881417
+    },
+    {
+      "metric": "free_space",
+      "half_length_m": 5,
+      "count": 781,
+      "area_m2": 51.69138269515872,
+      "denominator_count": 500534,
+      "denominator_area_m2": 33770.54681243817,
+      "fraction": 0.0015306646641599553
+    },
+    {
+      "metric": "missing_after_sight",
+      "half_length_m": 5,
+      "count": 27478,
+      "area_m2": 1872.6050973234235,
+      "denominator_count": 500534,
+      "denominator_area_m2": 33770.54681243817,
+      "fraction": 0.05545083731465421
+    },
+    {
+      "metric": "missing_before_sight",
+      "half_length_m": 10,
+      "count": 26782,
+      "area_m2": 1822.045648732892,
+      "denominator_count": 500534,
+      "denominator_area_m2": 33770.54681243817,
+      "fraction": 0.05395369103297453
+    },
+    {
+      "metric": "free_space",
+      "half_length_m": 10,
+      "count": 661,
+      "area_m2": 43.88983614525551,
+      "denominator_count": 500534,
+      "denominator_area_m2": 33770.54681243817,
+      "fraction": 0.0012996483707835686
+    },
+    {
+      "metric": "missing_after_sight",
+      "half_length_m": 10,
+      "count": 26121,
+      "area_m2": 1778.155812587636,
+      "denominator_count": 500534,
+      "denominator_area_m2": 33770.54681243817,
+      "fraction": 0.052654042662190946
+    },
+    {
+      "metric": "sight_unavailable_no_original_u_donors",
+      "count": 143,
+      "area_m2": 9.726954762474968,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.00028716169336005283
+    },
+    {
+      "metric": "normal_radius",
+      "radius_m": 0.5,
+      "count": 317761,
+      "area_m2": 21079.690024927797,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.6223201023218348,
+      "denominator_core_count": 501840,
+      "core_fraction": 0.6331918539773633
+    },
+    {
+      "metric": "normal_radius",
+      "radius_m": 0.75,
+      "count": 96182,
+      "area_m2": 6516.344853935966,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.19237723094932854,
+      "denominator_core_count": 501840,
+      "core_fraction": 0.1916586959987247
+    },
+    {
+      "metric": "normal_radius",
+      "radius_m": 1,
+      "count": 8042,
+      "area_m2": 553.2747166389352,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.016333920369021444,
+      "denominator_core_count": 501840,
+      "core_fraction": 0.0160250278973378
+    },
+    {
+      "metric": "normal_radius",
+      "radius_m": 1.5,
+      "count": 9225,
+      "area_m2": 637.6012750943927,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.018823431003399393,
+      "denominator_core_count": 501840,
+      "core_fraction": 0.01838235294117647
+    },
+    {
+      "metric": "normal_radius",
+      "radius_m": 2,
+      "count": 70630,
+      "area_m2": 5085.833953619386,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.15014531535641587,
+      "denominator_core_count": 501840,
+      "core_fraction": 0.14074206918539775
+    },
+    {
+      "metric": "normal_fallback",
+      "count": 66552,
+      "area_m2": 4798.977724293199,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.14167667099898823
+    },
+    {
+      "metric": "prior_height_missing",
+      "count": 1306,
+      "area_m2": 102.19801177830911,
+      "denominator_count": 501840,
+      "denominator_area_m2": 33872.744824216476,
+      "fraction": 0.0030171163367087154
+    },
+    {
+      "count": 500534,
+      "area_m2": 33770.54681243817,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "TIN_to_new_axis_height_quantile",
+      "q": 0.1,
+      "value_m": -0.02315676843740165
+    },
+    {
+      "count": 500534,
+      "area_m2": 33770.54681243817,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "TIN_to_new_axis_height_quantile",
+      "q": 0.25,
+      "value_m": -0.005788631618616032
+    },
+    {
+      "count": 500534,
+      "area_m2": 33770.54681243817,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "TIN_to_new_axis_height_quantile",
+      "q": 0.5,
+      "value_m": 0.000982193631422446
+    },
+    {
+      "count": 500534,
+      "area_m2": 33770.54681243817,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "TIN_to_new_axis_height_quantile",
+      "q": 0.75,
+      "value_m": 0.008406405860869161
+    },
+    {
+      "count": 500534,
+      "area_m2": 33770.54681243817,
+      "denominator_count": null,
+      "denominator_area_m2": null,
+      "fraction": null,
+      "metric": "TIN_to_new_axis_height_quantile",
+      "q": 0.9,
+      "value_m": 0.03291927823024845
+    }
+  ],
+  "provenance": {
+    "source_tag": "[이 발주에서 냄]",
+    "input_sha256": {
+      "/out/r2/core_points/6907_53359__ALS__1.npz": "df736f23ed0a7662919166a1e1fe2a62767ed0a400939d4e1bf13afdb9762e03",
+      "/out/r2/core_points/6907_53360__ALS__1.npz": "fca1278f6215df68fef6c809bcfa01a24db3aad55cb4a64bd7ff8b55ee1af5c4",
+      "/out/r2/core_points/6908_53358__ALS__1.npz": "9ac09b3902aff8838f0e92dd759eabe96c37d07496304a828ef332f12bd7305f",
+      "/out/r2/core_points/6908_53359__ALS__1.npz": "68ecb7a3eafdc2c010f80a689acc0d577e767fdb30c938af5e5fda63fc4949bb",
+      "/out/r2/core_points/6908_53360__ALS__1.npz": "a250d2cf896482d351d67b0dc2485976cde1a9673da5d66f7fa186d3bfcb1694",
+      "/out/r2/core_points/6908_53361__ALS__1.npz": "5261d1fe7ace2e020c01ae67a6c6200d13e692ec90069ef09ec778e45177a4b7",
+      "/out/r2/core_points/6908_53362__ALS__1.npz": "14966c62f05228f86a5fb3366e3bfe80649db0c19dd77753cd419c8232edc428",
+      "/out/r2/core_points/6909_53358__ALS__1.npz": "7e83a74392a19e4dd31dbb42797bd05e7fd8edb0ab6702e9d6db4cbce570905a",
+      "/out/r2/core_points/6909_53359__ALS__1.npz": "8f7269b5c26923ea7deef3a8cf16b678c7c8d4b35e7aea85627325ecb76dff2a",
+      "/out/r2/core_points/6909_53360__ALS__1.npz": "c5e07b6040b5a71528d6d7d1ebe51ce205afc2671c1adb12acbd95a455821c40",
+      "/out/r2/core_points/6909_53361__ALS__1.npz": "53005a91c22ca7a8a659c588325f0359babaea46be2fc5b1de3d43e98e017b3f",
+      "/out/r2/core_points/6909_53362__ALS__1.npz": "3a52fbd74e89c9a817355563afe1e4c5c2b6c7b23783f8d9e8e7db79717e0b3a",
+      "/out/r2/core_points/6909_53363__ALS__1.npz": "472fda4a6e8064d0857b83a0d4e1b790a3595e6ae7c762bb9b8a839be4491c2e",
+      "/out/r2/core_points/6910_53359__ALS__1.npz": "b6d0567f0d76a79a11d53dac2c18caa7ffa81ad09a39afad2c4a66a454815651",
+      "/out/r2/core_points/6910_53360__ALS__1.npz": "c0974ae9bd93e7dde0cec68382c462e2cc47b3ec45d3c12e7ef39672773f6bdc",
+      "/out/r2/core_points/6910_53361__ALS__1.npz": "6d54f2c875f55272d635cf44a8ac480e00a84cb41d82132bec188e650e51c444",
+      "/out/r2/core_points/6910_53362__ALS__1.npz": "08a2b13f8306af0182846730c5ebb172a8ebf96f352e11493b781c8cc6c08267",
+      "/out/r2/core_points/6910_53363__ALS__1.npz": "c11471f5a0403e0127139f92982b23ebc8b993c326c8bbc2da62081a673cb17e",
+      "/out/r2/core_points/6911_53361__ALS__1.npz": "c99c0fd38bc1dbf462ef507f499652f4c57667a45f012e2b931ffb0d580e00e4",
+      "/out/r2/core_points/6911_53362__ALS__1.npz": "7019abaa8d68c0dcced80d9a9cee1e8928e9afbcad6b656ac6d9b6542fa27e84",
+      "/out/r2/core_points/6911_53363__ALS__1.npz": "70a4c0173e688ae4fc0403fd6eeb585677796ae1cd92874321f8a586eafa1d2e",
+      "/out/r2/photo_points/6907_53359__ALS__1.npz": "c2221867d0c372b8138c6f84019fd429062719d196c80184dea395f82fbb86f3",
+      "/out/r2/photo_points/6907_53360__ALS__1.npz": "3124c79adc44f58fe75d7f944dcf1bd660e1fdcf8ccde9c8f56f532cf3157e86",
+      "/out/r2/photo_points/6908_53358__ALS__1.npz": "c14abb1e60ca95b215b216f39d9afd79d07b3002849621d06710ab52cbdc426a",
+      "/out/r2/photo_points/6908_53359__ALS__1.npz": "01e9e47bf53695ea4872b3065b12a4f7eaf22af5919817efda43853a35f4100c",
+      "/out/r2/photo_points/6908_53360__ALS__1.npz": "57b4c336e4b53d221bb800586c089594cbac9b702a33e265270c30cc9a56d2e3",
+      "/out/r2/photo_points/6908_53361__ALS__1.npz": "77efa38c9f5e4b780945858dc09e458e8247a31193557e54f5b5ce192b1c2f8a",
+      "/out/r2/photo_points/6908_53362__ALS__1.npz": "6086ab1aa688543ac73f8e07fa6052a0056be097eda29622c71fa58d1d28b98c",
+      "/out/r2/photo_points/6909_53358__ALS__1.npz": "065329f4d58903ef52583aa9256dd285e113bc936806aaaf591f43df385f7f1e",
+      "/out/r2/photo_points/6909_53359__ALS__1.npz": "661ea677415d7e37afb4a83bd0e4a7c4257b2b7b3a4cf6f0039f37ca53fbf4c6",
+      "/out/r2/photo_points/6909_53360__ALS__1.npz": "93b7ca4832c67c11c2782e119a095f925174232862e34375f4ab16615518d7b8",
+      "/out/r2/photo_points/6909_53361__ALS__1.npz": "64af0ae107a8cf2d43b5448103eb66cee9e8eb4afe8020da279b7be292e97d26",
+      "/out/r2/photo_points/6909_53362__ALS__1.npz": "ba4eea7f916fd27cd3da1e70e82fe6e17c2e9d3bf6bf9368abfa6394ca2e140f",
+      "/out/r2/photo_points/6909_53363__ALS__1.npz": "0c0f6845aed77e81044f7cac7c691f53261b5fc3f41ef78f67d0892fc4adbff1",
+      "/out/r2/photo_points/6910_53359__ALS__1.npz": "554933341d625965bbbd61f69d1ae41b355bb4125fd2384785371ea98ce1fcdf",
+      "/out/r2/photo_points/6910_53360__ALS__1.npz": "203ae30bc9db4e347dee26cd840456d6322b4171f768c1a59c6d05922dda1108",
+      "/out/r2/photo_points/6910_53361__ALS__1.npz": "5ad6848434fce8c666f901fbec592ba24607cd0b9903b5fe98dd6a97468b4198",
+      "/out/r2/photo_points/6910_53362__ALS__1.npz": "70a15a1b7e39d5b20fbc5039f84ea082faa6ee1dc2274eab3ad3de00078a9115",
+      "/out/r2/photo_points/6910_53363__ALS__1.npz": "9ab35a873c2a99fe4425abae1984c409febb8bbbe474a6ea78d1188d0e56600b",
+      "/out/r2/photo_points/6911_53361__ALS__1.npz": "b2514c77d0ca7ca0ce4132b24ffeda025e6b98bfa880c41dd5b7105fbd0b2bca",
+      "/out/r2/photo_points/6911_53362__ALS__1.npz": "cb271fecd4c0caebb3e0cbb63223f866e4863d7bf486363e0f3934dcfd28df44",
+      "/out/r2/photo_points/6911_53363__ALS__1.npz": "8172294a673023c2fa3a39d2499ac4f7dc4a1390fcd5bd6501dbfe4096ca966b"
+    },
+    "calculation_source_sha256": "356c3d2d2a3112d355cde213dbd5643fb1bbd8ef8b489d49e829b35733a69b78",
+    "config_sha256": "e69675f59489a52ffaa4240c15001e263ba491a1010ec08d9b8fcfe155769468",
+    "photo_scope": "Section 6 corrected-photo diagnostics use original targets 1 or 2 only; type-3-only scores are reserved for the section-7 geometry-oracle arm. Original target-2 membership is preserved at overlaps."
+  },
+  "excluded_shared_cores": {
+    "label": "실험 지역과 사진 점을 공유해 뺀 핵심점",
+    "count": 73,
+    "area_m2": 5.442552935831812
+  },
+  "scientific_verdict": null
+}

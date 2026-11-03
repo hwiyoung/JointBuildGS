@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-03T17:07:20.618729+09:00",
+  "status": "PASS_PROCESS_LOCAL_ARRAY_COPY_IDENTITY",
+  "rows": [
+    {
+      "numpy_hugepage_advice": true,
+      "seconds": 10.83898026496172,
+      "user_seconds": 0.012123000000000009,
+      "system_seconds": 4.7059809999999995,
+      "bytes": 83550720,
+      "pixels_sha256": "e56f3bb16166a94fe87542f5ce32a89cc0fff7ec24f06de1853b2ec4fa97dfcc"
+    },
+    {
+      "numpy_hugepage_advice": false,
+      "seconds": 0.06824732664972544,
+      "user_seconds": 0.006014999999999993,
+      "system_seconds": 0.06224000000000007,
+      "bytes": 83550720,
+      "pixels_sha256": "e56f3bb16166a94fe87542f5ce32a89cc0fff7ec24f06de1853b2ec4fa97dfcc"
+    },
+    {
+      "numpy_hugepage_advice": false,
+      "seconds": 0.0607785414904356,
+      "user_seconds": 0.010046,
+      "system_seconds": 0.05073999999999934,
+      "bytes": 83550720,
+      "pixels_sha256": "e56f3bb16166a94fe87542f5ce32a89cc0fff7ec24f06de1853b2ec4fa97dfcc"
+    },
+    {
+      "numpy_hugepage_advice": true,
+      "seconds": 0.5520576266571879,
+      "user_seconds": 0.0040120000000000156,
+      "system_seconds": 0.5480040000000006,
+      "bytes": 83550720,
+      "pixels_sha256": "e56f3bb16166a94fe87542f5ce32a89cc0fff7ec24f06de1853b2ec4fa97dfcc"
+    }
+  ],
+  "scope": "Single 83.55 MB image, mixed on/off order under concurrent load. Only this test process changes NumPy advice. No host kernel setting or running calculation changed.",
+  "source_sha256": "997c20af8a44dfc7edf05351a5a40c308af389a6023f339425f8ea3c312801eb",
+  "scientific_verdict": null
+}

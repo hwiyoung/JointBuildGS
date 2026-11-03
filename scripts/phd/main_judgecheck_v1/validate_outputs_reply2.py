@@ -6,7 +6,8 @@ from preflight import C,D,O,Path,sha,dump,now
 from geometry import loadz
 BASE=O/'r2';GROUPS=[('ALS',1),('LoD2',1),('LoD2',2)]
 def main(mode='full'):
-    expected=GROUPS if mode=='full' else GROUPS[:2];excluded={v for r in json.loads((O/'r1/scope_audit.json').read_text())['rows'] for v in r['patch_ids']};allowed=set(json.loads((C/'judgecheck_v1.json').read_text())['scope']['development']);counts={};checks=[]
+    assert mode in ['full','roofs','als_numeric']
+    numeric_only=mode=='als_numeric';expected=GROUPS[:1] if numeric_only else GROUPS if mode=='full' else GROUPS[:2];excluded={v for r in json.loads((O/'r1/scope_audit.json').read_text())['rows'] for v in r['patch_ids']};allowed=set(json.loads((C/'judgecheck_v1.json').read_text())['scope']['development']);counts={};checks=[]
     for prior,kind in expected:
         key=f'{prior}_{kind}';count=0;tx=[];tw=[];locked_t=json.loads((C/f'photo_threshold.{key}.reply2.lock.json').read_text())['t']
         for p in sorted((BASE/'core_points').glob(f'*__{prior}__{kind}.npz')):
@@ -82,9 +83,15 @@ def main(mode='full'):
             expected_wrong=next(r['area_m2'] for r in metric['accuracy'] if r['variant']==variant and r['stratum']=='all')
             assert abs(accounted-expected_wrong)<1e-7,(key,variant,'unaccounted error cause')
         for table in ['6_1_cross','6_2_accuracy','6_2_buildings','6_3_causes','6_4_photos','6_4_planes','6_5_geometry','6_5_precision','6_5_cell_cross','7_ablation']:
-            for suffix in ['json','csv','md']:assert (D/'tables'/f'{key}_{table}.{suffix}').exists()
+            for suffix in (['json','csv'] if numeric_only else ['json','csv','md']):assert (D/'tables'/f'{key}_{table}.{suffix}').exists()
             assert json.loads((D/'tables'/f'{key}_{table}.json').read_text())['provenance']==provenance
-    assert counts==({'ALS_1':501840,'LoD2_1':644427,'LoD2_2':1485308} if mode=='full' else {'ALS_1':501840,'LoD2_1':644427}),counts
+    expected_counts={'ALS_1':501840,'LoD2_1':644427,'LoD2_2':1485308}
+    assert counts=={f'{prior}_{kind}':expected_counts[f'{prior}_{kind}'] for prior,kind in expected},counts
+    if numeric_only:
+        result=dict(at=now(),status='PASS_INDEPENDENT_ALS_NUMERICAL_OUTPUTS',counts=counts,core_checks=checks,photo_thresholds_recomputed=True,
+            photo_precedence_recomputed_from_scores=True,all_nine_arm_heights_recomputed=True,report_and_figures_checked=False,
+            training=False,holdout_values_opened=False,source_sha256=sha(Path(__file__)),scientific_verdict=None)
+        dump(BASE/'validation'/f'{mode}.json',result);dump(D/f'validation_{mode}_reply2.json',result);print(result['status'],counts,flush=True);return
     figures=[]
     for prior in ['ALS','LoD2']:
         maps=list((D/'figures').glob(f'그림1_{prior}_*.png'));assert len(maps)==8
@@ -94,9 +101,18 @@ def main(mode='full'):
         scope='all' if prior=='LoD2' and mode=='full' else 'roofs';selection=json.loads((C/f'figure2.{prior}.{scope}.selection.reply2.json').read_text());seen={};reasons={}
         for r in selection['selected']:
             assert r['area_m2']>=1;assert not set(r['indices'])&excluded;seen[r['building']]=seen.get(r['building'],0)+1;reasons[r['reason']]=reasons.get(r['reason'],0)+1
-        assert all(v<=2 for v in seen.values()) and len(selection['selected'])<=4;assert len(list((D/'figures').glob(f'그림2_{prior}_{scope}_*.png')))==selection['selected_count']
+        assert all(v<=2 for v in seen.values()) and len(selection['selected'])<=4
+        montages=sorted((D/'figures').glob(f'그림2_{prior}_{scope}_*.png'));assert len(montages)==selection['selected_count']
+        for p,selected_component in zip(montages,selection['selected']):
+            with Image.open(p) as im:assert im.width>3000 and min(im.info.get('dpi',[0,0]))>=299
+            meta=json.loads(p.with_suffix('.json').read_text())
+            assert meta['building'] in allowed and meta['building']==selected_component['building']
+            assert meta['patch_ids']==selected_component['indices'] and not set(meta['patch_ids'])&excluded
+            assert meta['manual_cause'] is None and meta['scope']==scope and meta['prior']==prior
+            assert abs(meta['area_m2']-selected_component['area_m2'])<1e-10
+            figures.append(str(p))
     report=D/('판단검증_보고가_v1.md' if mode=='full' else '판단검증_지붕중간보고_v1.md');assert len(report.read_text())<=20000
     result=dict(at=now(),status='PASS_INDEPENDENT_STAGE_A_OUTPUTS' if mode=='full' else 'PASS_INDEPENDENT_ROOF_INTERIM',counts=counts,core_checks=checks,photo_thresholds_recomputed=True,
-        training=False,holdout_values_opened=False,photo_precedence_recomputed_from_scores=True,all_nine_arm_heights_recomputed=True,source_sha256=sha(Path(__file__)),report_sha256=sha(report),scientific_verdict=None)
+        training=False,holdout_values_opened=False,photo_precedence_recomputed_from_scores=True,all_nine_arm_heights_recomputed=True,figures_verified=figures,source_sha256=sha(Path(__file__)),report_sha256=sha(report),scientific_verdict=None)
     dump(BASE/'validation'/f'{mode}.json',result);dump(D/f'validation_{mode}_reply2.json',result);print(result['status'],counts,flush=True)
 if __name__=='__main__':main(sys.argv[1] if len(sys.argv)>1 else 'full')

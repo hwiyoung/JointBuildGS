@@ -28,16 +28,25 @@ def main():
         records=[]
         for p in sorted((BASE/folder).rglob('complete.json')) if (BASE/folder).exists() else []:
             r=json.loads(p.read_text())
-            if field in r:records.append(dict(path=str(p.relative_to(BASE)),seconds=r[field],device=r.get('device','cpu'),points=r.get('points',r.get('target_count')),source_sha256=sha(p)))
+            if field in r:
+                rec=dict(path=str(p.relative_to(BASE)),seconds=r[field],device=r.get('device','cpu'),points=r.get('points',r.get('target_count')),source_sha256=sha(p))
+                if folder in ['photo_scores','cpu_benchmark']:
+                    rec.update(image_cache_seconds=r['image_cache_total_seconds'],upload_seconds=r['upload_seconds'],
+                        arithmetic_excluding_upload_seconds=r['arithmetic_and_reduction_seconds']-r['upload_seconds'],
+                        original_image_decodes=r['original_image_decodes'],peak_cpu_rss_gib=r['peak_cpu_rss_gib'])
+                records.append(rec)
         if folder=='photo_prepared':
             for p in sorted((BASE/folder).glob('*.complete.json')):
                 r=json.loads(p.read_text());records.append(dict(path=str(p.relative_to(BASE)),seconds=r[field],source_sha256=sha(p)))
         by_device={}
         for r in records:
             key=r.get('device','cpu');by_device.setdefault(key,dict(seconds=0,points=0));by_device[key]['seconds']+=r['seconds'];by_device[key]['points']+=r.get('points') or 0
+            for component in ['image_cache_seconds','upload_seconds','arithmetic_excluding_upload_seconds']:
+                if component in r:by_device[key][component]=by_device[key].get(component,0.)+r[component]
         durations[folder]=dict(seconds=sum(r['seconds'] for r in records),by_device=by_device,records=records)
     result=dict(at=at,task_first_lock_at=cfg['created_at'],task_elapsed_seconds=stamp(at)-stamp(cfg['created_at']),reply2_start=start,elapsed_seconds=stamp(at)-stamp(start),gpu_wait_recorded_minimum_seconds=sum(hi-lo for lo,hi in merged),gpu_wait_intervals=intervals,unclosed_wait_intervals=open_intervals,
         wait_precision='lower bound from closed pause/resume intervals and first-to-last busy observations; overlaps merged; initial manual pause timestamp was recorded late and aborted sample has no exact final timestamp',
-        measurement_totals=durations,totals_note='elapsed includes concurrent CPU work and GPU waiting; measured phase totals are not additive wall time; incomplete cache trials excluded from completed scoring totals',sources=sources,scientific_verdict=None)
+        measurement_totals=durations,totals_note='elapsed includes concurrent CPU work and GPU waiting; measured phase totals are not additive wall time; incomplete cache trials excluded from completed scoring totals',
+        component_notes='CPU cohort image_cache_seconds includes exclusive cache-lock waiting, which was not separately measured; upload_seconds includes array conversion/copy on CPU and host-to-device transfer on GPU; arithmetic_excluding_upload_seconds subtracts that upload interval',sources=sources,scientific_verdict=None)
     dump(BASE/'resource_receipt.json',result);dump(D/'tables/reply2_resource_receipt.json',result);print('RESOURCE_RECEIPT',result['elapsed_seconds'],result['gpu_wait_recorded_minimum_seconds'],flush=True)
 if __name__=='__main__':main()

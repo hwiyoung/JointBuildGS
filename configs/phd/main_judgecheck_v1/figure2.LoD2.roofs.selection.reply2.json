@@ -1,0 +1,71 @@
+{
+  "at": "2026-11-03T17:31:22.802204+09:00",
+  "prior": "LoD2",
+  "scope": "roofs",
+  "component_rule": "same reason, building, kind; 3D centre distance <=0.36m; take four per prior from the union of wrong support/refute in descending area, max two per building; eight across both priors",
+  "selected": [
+    {
+      "reason": "틀린 반박",
+      "building": "DEBY_LOD2_4906967",
+      "kind": 1,
+      "area_m2": 1.25,
+      "indices": [
+        "LoD2:6908_53360:36119",
+        "LoD2:6908_53360:36195",
+        "LoD2:6908_53360:36196",
+        "LoD2:6908_53360:36197",
+        "LoD2:6908_53360:36200",
+        "LoD2:6908_53360:36274",
+        "LoD2:6908_53360:36275",
+        "LoD2:6908_53360:36276",
+        "LoD2:6908_53360:36277",
+        "LoD2:6908_53360:36278",
+        "LoD2:6908_53360:36279",
+        "LoD2:6908_53360:36354",
+        "LoD2:6908_53360:36357",
+        "LoD2:6908_53360:36358",
+        "LoD2:6908_53360:36433",
+        "LoD2:6908_53360:36434",
+        "LoD2:6908_53360:36437",
+        "LoD2:6908_53360:36438",
+        "LoD2:6908_53360:36517",
+        "LoD2:6908_53360:36518"
+      ]
+    },
+    {
+      "reason": "틀린 지지",
+      "building": "DEBY_LOD2_4906967",
+      "kind": 1,
+      "area_m2": 1.0,
+      "indices": [
+        "LoD2:6909_53359:82339",
+        "LoD2:6909_53359:82340",
+        "LoD2:6909_53359:82373",
+        "LoD2:6909_53359:82374",
+        "LoD2:6909_53359:82407",
+        "LoD2:6909_53359:82408",
+        "LoD2:6909_53359:82441",
+        "LoD2:6909_53359:82442",
+        "LoD2:6909_53359:82475",
+        "LoD2:6909_53359:82476",
+        "LoD2:6909_53359:82509",
+        "LoD2:6909_53359:82510",
+        "LoD2:6909_53359:82543",
+        "LoD2:6909_53359:82544",
+        "LoD2:6909_53359:82577",
+        "LoD2:6909_53359:82578"
+      ]
+    }
+  ],
+  "below_1m2_count": 450,
+  "below_1m2_area_m2": 62.1875,
+  "available_candidates": 2,
+  "selected_count": 2,
+  "unfilled_slots": 2,
+  "excluded_shared_cores": {
+    "label": "실험 지역과 사진 점을 공유해 뺀 핵심점",
+    "count": 73,
+    "area_m2": 5.442552935831812
+  },
+  "scientific_verdict": null
+}

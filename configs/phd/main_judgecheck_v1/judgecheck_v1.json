@@ -302,7 +302,10 @@
     "mvs_support_plane_distance_m": 0.1,
     "threshold_quantile": 0.05,
     "threshold_reference_quantile": 0.1,
-    "t": null,
+    "t": {
+      "ALS_1": 0.21899712837126517,
+      "LoD2_1": 0.2171967818125744
+    },
     "old_delta": 0.1,
     "old_min_score": 0.3,
     "old_peak_gap_m": 0.3,
@@ -332,7 +335,20 @@
     }
   },
   "figures": {
-    "selected_buildings": null,
+    "selected_buildings": {
+      "ALS": [
+        "DEBY_LOD2_4907519",
+        "DEBY_LOD2_8573848",
+        "DEBY_LOD2_4906967",
+        "DEBY_LOD2_60042"
+      ],
+      "LoD2": [
+        "DEBY_LOD2_4906965",
+        "DEBY_LOD2_60042",
+        "DEBY_LOD2_4906967",
+        "DEBY_LOD2_4906981"
+      ]
+    },
     "selection": "top four roof outside-limit area per prior; tie building ID",
     "random_seed": 20261102,
     "dpi": 300,
@@ -347,7 +363,19 @@
     "source_of_truth": "ordered_methods_3_to_8 section 8",
     "montage_per_prior": 4,
     "montage_total": 8,
-    "photo_camera_selection": "largest projected component bounding-box area among selected photos of every point in the component; exact union of projected core cells for outlines"
+    "photo_camera_selection": "largest projected component bounding-box area among selected photos of every point in the component; exact union of projected core cells for outlines",
+    "map_caption_scope": "Red boundaries include harmful judgments inside or outside the limit; displayed error rates use section 6.2 outside-limit cells 0, 1 and 2 only.",
+    "photo_outline_display": {
+      "prior_linewidth_pt": 0.12,
+      "prior_alpha": 0.45,
+      "component_linewidth_pt": 0.65,
+      "component_alpha": 1.0
+    },
+    "photo_score_label_display": {
+      "background": "white",
+      "background_alpha": 1.0,
+      "zorder": 5
+    }
   },
   "execution": {
     "training": false,
@@ -407,7 +435,35 @@
       "reason",
       "arm_region",
       "arm_height_m"
-    ]
+    ],
+    "delivery_replay_settings": "Explicit extracted-bundle replay requires settings/judgecheck_v1.json from that bundle for provenance; all numeric rows come from delivered NPZ arrays",
+    "bounded_cpu_photo_cohort": {
+      "workers": 2,
+      "cpu_quota_each": 4,
+      "memory_gib_each": 28,
+      "nice": 19,
+      "minimum_available_gib_before_launch": 36,
+      "cache_preparation": "exclusive task lock; unchanged ImageCache.prepare",
+      "numerical_kernel": "unchanged float64 score and group sources; same 600000/1024 rows",
+      "order": "one prior/kind only; both workers join before judgments; walls require roof commit"
+    },
+    "stream_photo_cache": {
+      "policy": "read compact original JPEG on cache miss; identical grayscale/pyramid bytes and unchanged float64 score; 4 GiB process LRU reused between tiles",
+      "numerical_kernel_changed": false,
+      "numpy_hugepage_advice": false,
+      "host_kernel_configuration_changed": false,
+      "memory_gate_sha256": "64ad8ae6a702b71f3879f6b27fafb85b53b202a722c5ceb76194be8f8bba62d8",
+      "verification_sha256": "03d064ecbd4bdb24a8845b6b259dc0007dfe42dfb48d9243f45e82123b0f05dc",
+      "sources": {
+        "photo_score_reply2.py": "02b34401c87356a4837e3201af852f7638da92e11e598b0a156f2478ff66fa29",
+        "photo_score_group_reply2.py": "088549230aa469db67483b49d86178947f66d96fe632d6612cb573d38773b96c",
+        "photo_stream_cache_reply2.py": "5f9d62bc6a8869d8ba7bda59ab11a59072989d7f5526adf2cf89e76c521516f1",
+        "photo_stream_score_reply2.py": "6fb126661c7766b97f4f2a00691b245f9a49ee0487cc8c7ae9bf9f8f29055a14",
+        "photo_cameras.py": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+      },
+      "timing": "JPEG decode is deferred to get() and included in upload_seconds; cache preparation only indexes requested levels",
+      "completed_results": "retain all completed scores; apply only to pending tiles"
+    }
   },
   "amendments": [
     {
@@ -578,6 +634,145 @@
       "section": "photos",
       "key": "section6_diagnostic_scope",
       "value": "original target 1 OR target 2; type-3-only scores reserved for section 7; unchanged target-2 overlaps remain in the agreement sample"
+    },
+    {
+      "at": "2026-11-03T15:21:53.933482+09:00",
+      "reason": "Stage A unchanged agreement-sample weighted fifth percentile, frozen before photo judgment; reference data not used",
+      "previous_config_sha256": "83f75ec3b028471bab99c2535cb2505fe89d41148014a8390ba9789759354e85",
+      "section": "photos",
+      "key": "t",
+      "value": {
+        "ALS_1": 0.21899712837126517
+      }
+    },
+    {
+      "at": "2026-11-03T15:24:24.363020+09:00",
+      "reason": "Freeze ordered top-four outside-limit roof building IDs before figure rendering",
+      "previous_config_sha256": "e69675f59489a52ffaa4240c15001e263ba491a1010ec08d9b8fcfe155769468",
+      "section": "figures",
+      "key": "selected_buildings",
+      "value": {
+        "ALS": [
+          "DEBY_LOD2_4907519",
+          "DEBY_LOD2_8573848",
+          "DEBY_LOD2_4906967",
+          "DEBY_LOD2_60042"
+        ]
+      }
+    },
+    {
+      "at": "2026-11-03T15:31:29.694555+09:00",
+      "reason": "Visual inspection: make the different scopes of red boundaries and section-6.2 percentages explicit; no selection, value, color or boundary rule changed",
+      "previous_config_sha256": "9830d09fc46b4a87c9e3d4b17e1620c7095bbad94704f8e0f8c768b10933ff38",
+      "section": "figures",
+      "key": "map_caption_scope",
+      "value": "Red boundaries include harmful judgments inside or outside the limit; displayed error rates use section 6.2 outside-limit cells 0, 1 and 2 only."
+    },
+    {
+      "at": "2026-11-03T15:32:40.515776+09:00",
+      "reason": "Visual inspection: lighten dense prior support-cell outlines so the source photograph remains visible; preserve every projected boundary and selected component",
+      "previous_config_sha256": "3008a531b1a9069c7fe500e0eef80eb1f36c505412a87c941d951b83a6f01a12",
+      "section": "figures",
+      "key": "photo_outline_display",
+      "value": {
+        "prior_linewidth_pt": 0.12,
+        "prior_alpha": 0.45,
+        "component_linewidth_pt": 0.65,
+        "component_alpha": 1.0
+      }
+    },
+    {
+      "at": "2026-11-03T15:37:48.841833+09:00",
+      "reason": "Visual inspection: prevent the threshold line crossing score labels; scores, threshold and bar geometry unchanged",
+      "previous_config_sha256": "c094763dd8c41a47d0443433ebc5b7554f182c181d5c0026214e080409b8e701",
+      "section": "figures",
+      "key": "photo_score_label_display",
+      "value": {
+        "background": "white",
+        "background_alpha": 1.0,
+        "zorder": 5
+      }
+    },
+    {
+      "at": "2026-11-03T15:43:01.742131+09:00",
+      "reason": "Delivery review: do not silently use current workspace settings when a specific extracted bundle is requested; numerical calculations unchanged",
+      "previous_config_sha256": "6550b88a3f77bd16650a7519376e8d13fbc5f54f83a89d827a99dab8e62fdd0e",
+      "section": "execution",
+      "key": "delivery_replay_settings",
+      "value": "Explicit extracted-bundle replay requires settings/judgecheck_v1.json from that bundle for provenance; all numeric rows come from delivered NPZ arrays"
+    },
+    {
+      "at": "2026-11-03T15:57:52.862571+09:00",
+      "reason": "Other research keeps the GPU occupied. Use two CPU workers for independent tiles; serialize all cache preparation to avoid duplicate decode or partial-cache reads, and retain the previously validated numerical code and per-process resource limits",
+      "previous_config_sha256": "27730fcad0784c9d4526b62a386f5e10c9056c1edb82a7799c77555f99886ac2",
+      "section": "execution",
+      "key": "bounded_cpu_photo_cohort",
+      "value": {
+        "workers": 2,
+        "cpu_quota_each": 4,
+        "memory_gib_each": 28,
+        "nice": 19,
+        "minimum_available_gib_before_launch": 36,
+        "cache_preparation": "exclusive task lock; unchanged ImageCache.prepare",
+        "numerical_kernel": "unchanged float64 score and group sources; same 600000/1024 rows",
+        "order": "one prior/kind only; both workers join before judgments; walls require roof commit"
+      }
+    },
+    {
+      "at": "2026-11-03T17:16:38.626113+09:00",
+      "reason": "Eight images showed large NPY read/copy overhead; a separate same-byte copy probe also isolated process-local NumPy huge-page advice overhead (on/off/off/on 10.839/0.068/0.061/0.552s). Use compact JPEG and disable only this process advice, preserving completed results and float64 math; 200-point all-curve parity passed with both changes before adoption",
+      "previous_config_sha256": "53d2b791345c3378332f4055b03dfd076c7ce87463fb5289ddc4d4e1cb5885dd",
+      "section": "execution",
+      "key": "stream_photo_cache",
+      "value": {
+        "policy": "read compact original JPEG on cache miss; identical grayscale/pyramid bytes and unchanged float64 score; 4 GiB process LRU reused between tiles",
+        "numerical_kernel_changed": false,
+        "numpy_hugepage_advice": false,
+        "host_kernel_configuration_changed": false,
+        "memory_gate_sha256": "64ad8ae6a702b71f3879f6b27fafb85b53b202a722c5ceb76194be8f8bba62d8",
+        "verification_sha256": "03d064ecbd4bdb24a8845b6b259dc0007dfe42dfb48d9243f45e82123b0f05dc",
+        "sources": {
+          "photo_score_reply2.py": "02b34401c87356a4837e3201af852f7638da92e11e598b0a156f2478ff66fa29",
+          "photo_score_group_reply2.py": "088549230aa469db67483b49d86178947f66d96fe632d6612cb573d38773b96c",
+          "photo_stream_cache_reply2.py": "5f9d62bc6a8869d8ba7bda59ab11a59072989d7f5526adf2cf89e76c521516f1",
+          "photo_stream_score_reply2.py": "6fb126661c7766b97f4f2a00691b245f9a49ee0487cc8c7ae9bf9f8f29055a14",
+          "photo_cameras.py": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+        },
+        "timing": "JPEG decode is deferred to get() and included in upload_seconds; cache preparation only indexes requested levels",
+        "completed_results": "retain all completed scores; apply only to pending tiles"
+      }
+    },
+    {
+      "at": "2026-11-03T17:27:50.070588+09:00",
+      "reason": "Stage A unchanged agreement-sample weighted fifth percentile, frozen before photo judgment; reference data not used",
+      "previous_config_sha256": "90f24b686def7835742d05bb7d15f0db4982e80859783079040517a8ce5c3caa",
+      "section": "photos",
+      "key": "t",
+      "value": {
+        "ALS_1": 0.21899712837126517,
+        "LoD2_1": 0.2171967818125744
+      }
+    },
+    {
+      "at": "2026-11-03T17:30:25.367749+09:00",
+      "reason": "Freeze ordered top-four outside-limit roof building IDs before figure rendering",
+      "previous_config_sha256": "f2ffed9ebe79209085689760000cd1f6f8873053011d2cf56edd2a1f1828a94b",
+      "section": "figures",
+      "key": "selected_buildings",
+      "value": {
+        "ALS": [
+          "DEBY_LOD2_4907519",
+          "DEBY_LOD2_8573848",
+          "DEBY_LOD2_4906967",
+          "DEBY_LOD2_60042"
+        ],
+        "LoD2": [
+          "DEBY_LOD2_4906965",
+          "DEBY_LOD2_60042",
+          "DEBY_LOD2_4906967",
+          "DEBY_LOD2_4906981"
+        ]
+      }
     }
   ],
   "reply2_diagnostics": {
