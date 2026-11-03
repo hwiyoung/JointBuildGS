@@ -6,6 +6,15 @@ OUT=$(realpath "$REPO/../JointBuildGS-artifacts")/phase-payloads/phd/main_rescor
 cd "$REPO";site=$1
 bash scripts/phd/main_rescore_v1/run.sh "setup-$site" setup_site.py "$site"
 if [[ ! -f "$OUT/views/$site.json" ]]; then bash scripts/phd/main_rescore_v1/run_gpu.sh "jobs/${site}__views.json" freeze_views.py; fi
+if [[ ! -f "$(realpath "$REPO/../JointBuildGS-artifacts")/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/$site/unseen.npz" ]]; then
+ bash scripts/phd/main_rescore_v1/site_inputs.sh "$site"
+ bash scripts/phd/main_rescore_v1/run.sh "targets-$site" targets.py "$site"
+ bash scripts/phd/main_rescore_v1/run.sh "reuse-$site" reused_meshes.py "$site"
+ bash scripts/phd/main_rescore_v1/run.sh "unavailable-$site" unavailable_virtual.py "$site"
+ for prior in ALS LoD2; do bash scripts/phd/main_rescore_v1/run.sh "quality-$site-$prior" target_quality.py "$site" "$prior" judgment_mesh "${site}__${prior}__judgment_mesh"; done
+ echo "SITE_COMPLETE_WITH_UNAVAILABLE_FINAL_VIEWS $site"
+ exit 0
+fi
 mapfile -t jobs < <(python3 - "$OUT/jobs/${site}_index.json" <<'PY'
 import json,sys
 for j in json.load(open(sys.argv[1]))['jobs']:

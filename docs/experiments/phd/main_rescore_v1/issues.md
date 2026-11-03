@@ -11,3 +11,5 @@
 - CDGS 대형 병합 메모리: 원시 삼각형 1억 개 초과로 기존 일괄 병합이 32 GiB를 넘을 가능성. 실제 OOM으로 보고하지 않음. 디스크 배열/동일 순서 병합으로 예방하고 두 사례 바이트 일치 검증. 기존 실행 셸만 타일 완료 시 교체; scientific_verdict: null.
 
 - B173 단계 게시: 추가 점검 해당 판이 없는 LoD2 빈 Markdown 표가 EOF 빈 줄 검사를 실패함. 빈 결과 표기 수정 후 게시 재개. 수치·메시·그림 재계산 없음.
+
+- 2026-11-04 04:47 KST: B0 freeze_views가 원래 unseen.npz 부재로 실패. 원본 stage1 gpu_s1.py:307-314와 fill virtual/vv_defs.py:47-54에서 B0/R1은 가상 시점 대상이 아님을 확인. 발주 1.3·1.5·4.1에 따라 새 시점을 만들거나 학습 시점 메시를 최종 값으로 대체하지 않음. 미실행 freeze_views/run_site/target_quality/publish_tables/report/finalize를 수정하고 unavailable_virtual을 추가: 입력 채점·목표·기존 학습 메시를 계속하며 의존 최종 값은 확인 불가로 기록. B173 완료 결과는 재계산하지 않음.

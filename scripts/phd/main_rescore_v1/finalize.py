@@ -20,6 +20,7 @@ def main():
   if any(x in r['key'] for x in ['baseline_','GeoGS_','2DGS_','CDGS_','r8_','__fusion','__judgment_mesh','__oracle']):
    meta=Path(v['mesh']).with_suffix('.json');m=json.loads(meta.read_text());assert m['voxel_m']==.05 and m['trunc_m']==.25
    assert m.get('cluster_to_keep',50)==50
+   views=json.loads((O/'views'/f"{r['site']}.json").read_text())['views'];assert sum(x['virtual'] for x in views)==16
  checks.append(dict(check='source_hashes_final_mesh_settings_sampling_and_new_wall_tau',status='PASS'))
  repro=json.loads((D/'tables/reproduction_full_replay.json').read_text())['rows'];assert len(repro)==2 and all(r['pass_tolerance'] for r in repro);checks.append(dict(check='existing_actual_geometry_reproduction',status='PASS',rerun=False))
  required=['그림6_2']+[f'그림7_{n}_{prior}' for n in [3,5] for prior in ['ALS','LoD2']]+[f'그림7_{n}_ALS' for n in [4,6,7]]
@@ -34,7 +35,8 @@ def main():
   j=json.loads(p.read_text())
   if 'model' in j and not j['key'].endswith('__freeze_views'):assert (O/'meshes'/j['key']/'train.json').exists(),j['key']
  checks.append(dict(check='training_mesh_present_for_each_trained_checkpoint',status='PASS'))
- dump(D/'final_validation.json',dict(at=now(),status='PASS_TECHNICAL_DELIVERY',checks=checks,optimization_steps=0,writes='only task cfg/scripts/docs/external payload; enforced by read-only Docker mounts',scientific_verdict=None))
+ unavailable=[r for r in tables['table3'] if r.get('completeness') is None]
+ dump(D/'final_validation.json',dict(at=now(),status='PASS_AVAILABLE_ARTIFACTS_WITH_EXPLICIT_UNAVAILABLE_RESULTS',unavailable_scene_rows=len(unavailable),checks=checks,optimization_steps=0,writes='only task cfg/scripts/docs/external payload; enforced by read-only Docker mounts',scientific_verdict=None))
  dump(C/'rescore_v1.final.lock.json',dict(at=now(),phase='after_all_calculations',config_sha256=sha(C/'rescore_v1.json'),initial_lock_sha256=sha(C/'rescore_v1.initial.lock.json'),scripts={str(p.relative_to(R)):sha(p) for p in sorted((R/'scripts/phd/main_rescore_v1').glob('*')) if p.is_file()},validation_sha256=sha(D/'final_validation.json'),scientific_verdict=None))
  progress('모든 셈과 최종 점검 완료. 설정 두 번째 잠금. 묶음에 메시를 넣지 않음. scientific_verdict: null.')
  entries=[]

@@ -9,7 +9,16 @@ def collect(sites,extra=False):
   for prior in ['ALS','LoD2']:
    families=['prior','mvs','fusion','baseline_30000','GeoGS_30000','2DGS_30000','CDGS_30000']+(['r8_30000' if prior=='ALS' else 'r8_7000'] if site=='B173nb_b10' else [])+(['judgment_mesh','oracle'] if extra else [])
    for family in families:
-    key=f'{site}__{prior}__{family}';p=O/'scores'/key/'values.json';assert p.exists(),p;v=json.loads(p.read_text());base=dict(site=site,prior=prior,key=key,method=NAMES[family],source=str(p),source_sha256=sha(p),surface=v['mesh'],surface_sha256=v['mesh_sha256'],source_tag='[이 발주에서 냄]');records.append(v)
+    key=f'{site}__{prior}__{family}';p=O/'scores'/key/'values.json'
+    if not p.exists():
+     absent=json.loads((O/'unavailable'/f'{site}.json').read_text());row=dict(next(r for r in absent['rows'] if r['key']==key),method=NAMES[family]);allrows['3'].append(row)
+     for cell in [0,1,2,4,3]:
+      region=dict(row,cell=cell,cell_name=CELL_NAMES[cell]);allrows['4'].append(region)
+      if family in ['baseline_30000','judgment_mesh','oracle']:allrows['7'].append(region)
+     for cell in [1,2]:
+      for band in ['0–0.5','0.5–1','1–2','2–4','>4']:allrows['5'].append(dict(row,cell=cell,offset_band_m=band))
+     allrows['8'].append(row);continue
+    v=json.loads(p.read_text());base=dict(site=site,prior=prior,key=key,method=NAMES[family],source=str(p),source_sha256=sha(p),surface=v['mesh'],surface_sha256=v['mesh_sha256'],source_tag='[이 발주에서 냄]');records.append(v)
     diagnostic={('n_result_sample_total' if k=='n_result' else k):x for k,x in v['diagnostic'].items()}
     allrows['3'].append(dict(base,**v['scene'],**diagnostic))
     for row in v['cells']:
