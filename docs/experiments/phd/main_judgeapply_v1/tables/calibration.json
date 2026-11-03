@@ -1,0 +1,186 @@
+{
+  "at": "2026-11-03T21:50:58.656675+09:00",
+  "sigma_W_m": 0.021387115582349275,
+  "building_count": 10,
+  "buildings_per_site": {
+    "B0_b10": 5,
+    "B173nb_b10": 3,
+    "R1rep_b10": 2
+  },
+  "buildings": [
+    {
+      "site": "B0_b10",
+      "building": "DEBY_LOD2_108580336",
+      "n": 396,
+      "median_d_m": 0.016819427323497137,
+      "regional_r_m": 0.010643617195992527,
+      "residual_m": 0.00617581012750461
+    },
+    {
+      "site": "B0_b10",
+      "building": "DEBY_LOD2_4959322",
+      "n": 1780,
+      "median_d_m": 0.003384859698837111,
+      "regional_r_m": 0.010643617195992527,
+      "residual_m": -0.007258757497155416
+    },
+    {
+      "site": "B0_b10",
+      "building": "DEBY_LOD2_4959323",
+      "n": 18710,
+      "median_d_m": 0.011053344167967709,
+      "regional_r_m": 0.010643617195992527,
+      "residual_m": 0.0004097269719751818
+    },
+    {
+      "site": "B0_b10",
+      "building": "DEBY_LOD2_4959324",
+      "n": 147,
+      "median_d_m": 0.05245711801727005,
+      "regional_r_m": 0.010643617195992527,
+      "residual_m": 0.04181350082127752
+    },
+    {
+      "site": "B0_b10",
+      "building": "DEBY_LOD2_4959793",
+      "n": 215,
+      "median_d_m": 0.03528746142663545,
+      "regional_r_m": 0.010643617195992527,
+      "residual_m": 0.02464384423064292
+    },
+    {
+      "site": "B173nb_b10",
+      "building": "DEBY_LOD2_108580335",
+      "n": 552,
+      "median_d_m": 0.02320631130703998,
+      "regional_r_m": 0.054370318604769194,
+      "residual_m": -0.031164007297729213
+    },
+    {
+      "site": "B173nb_b10",
+      "building": "DEBY_LOD2_4959326",
+      "n": 3081,
+      "median_d_m": -0.0779679472657758,
+      "regional_r_m": 0.054370318604769194,
+      "residual_m": -0.13233826587054498
+    },
+    {
+      "site": "B173nb_b10",
+      "building": "DEBY_LOD2_4959460",
+      "n": 3380,
+      "median_d_m": 0.07596238477191875,
+      "regional_r_m": 0.054370318604769194,
+      "residual_m": 0.02159206616714955
+    },
+    {
+      "site": "R1rep_b10",
+      "building": "DEBY_LOD2_4906968",
+      "n": 1290,
+      "median_d_m": 0.021426122900299355,
+      "regional_r_m": 0.0130548522311013,
+      "residual_m": 0.008371270669198055
+    },
+    {
+      "site": "R1rep_b10",
+      "building": "DEBY_LOD2_4906975",
+      "n": 18032,
+      "median_d_m": 0.01244230535291493,
+      "regional_r_m": 0.0130548522311013,
+      "residual_m": -0.0006125468781863694
+    }
+  ],
+  "r_rows": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "kind": 1,
+      "agreement_count": 25271,
+      "agreement_area_m2": 1579.4375,
+      "r_m": 0.077527286395522,
+      "source": "/out/geometry_raw/B0_b10__LoD2.npz"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "kind": 2,
+      "agreement_count": 38828,
+      "agreement_area_m2": 2426.75,
+      "r_m": -0.19864878139359315,
+      "source": "/out/geometry_raw/B0_b10__LoD2.npz"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "kind": 1,
+      "agreement_count": 21320,
+      "agreement_area_m2": 1460.7734862878015,
+      "r_m": 0.010643617195992527,
+      "source": "/out/geometry_raw/B0_b10__ALS.npz"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "kind": 1,
+      "agreement_count": 19433,
+      "agreement_area_m2": 1214.5625,
+      "r_m": -0.01654412880931525,
+      "source": "/out/geometry_raw/B173nb_b10__LoD2.npz"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "kind": 2,
+      "agreement_count": 38778,
+      "agreement_area_m2": 2423.625,
+      "r_m": -0.01849931458188869,
+      "source": "/out/geometry_raw/B173nb_b10__LoD2.npz"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "kind": 1,
+      "agreement_count": 7094,
+      "agreement_area_m2": 477.80858868505794,
+      "r_m": 0.054370318604769194,
+      "source": "/out/geometry_raw/B173nb_b10__ALS.npz"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "kind": 1,
+      "agreement_count": 12650,
+      "agreement_area_m2": 790.625,
+      "r_m": 0.0396380433810285,
+      "source": "/out/geometry_raw/R1rep_b10__LoD2.npz"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "kind": 2,
+      "agreement_count": 11235,
+      "agreement_area_m2": 702.1875,
+      "r_m": -0.01646185422335384,
+      "source": "/out/geometry_raw/R1rep_b10__LoD2.npz"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "kind": 1,
+      "agreement_count": 19550,
+      "agreement_area_m2": 1298.2098735294148,
+      "r_m": 0.0130548522311013,
+      "source": "/out/geometry_raw/R1rep_b10__ALS.npz"
+    }
+  ],
+  "prior_reference_only": {
+    "sigma_W_m": 0.02450353934490731,
+    "r_m": {
+      "ALS_1": 0.016897281827748762,
+      "LoD2_1": 0.05085196109104549,
+      "LoD2_2": -0.02272214187916248
+    }
+  },
+  "GT_read": false,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

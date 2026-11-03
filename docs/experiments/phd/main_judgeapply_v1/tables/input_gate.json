@@ -1,0 +1,151 @@
+{
+  "at": "2026-11-03T21:30:03.824252+09:00",
+  "status": "PASS_INPUT_ALIGNMENT",
+  "rows": [
+    {
+      "site": "B0_b10",
+      "train_views": 243,
+      "depths": 243,
+      "missing": [],
+      "max_original_pose_rotation_difference": 0.0,
+      "max_original_pose_translation_difference_m": 0.0,
+      "mvs_camera_names_match": true,
+      "patches": [
+        {
+          "prior": "LoD2",
+          "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/B0_b10_LoD2.npz",
+          "source_sha256": "142327d0f00d635e5a8f29acae2f6eb0e43a6317b666d712c4fa98e5f52f0178",
+          "source_units_sha256": "3eab5ebb0b86a03a673d123ec5d56f93d4621bde83b9965febc469c7d1e7f511",
+          "region_source_sha256": "bb62ec5a7846a9fb0ead2b3c2a631945e57461675e0a80bab2eef75eed6935cd",
+          "frame_shift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eval_count": 82117
+        },
+        {
+          "prior": "ALS",
+          "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/B0_b10_ALS.npz",
+          "source_sha256": "47c2ee77de27f3ef6fdbcd79ff89a132f726a1e80df31c277f8ef9c9c19efa3d",
+          "source_units_sha256": "76f31a9b2b06b19e0a50906f8c752c6edd3606326d93054d50be192365c6a1a2",
+          "region_source_sha256": "3688914603342ff8f71771cfb4be298db9a95dcdfd34c9686251071ad3b66b90",
+          "frame_shift": [
+            -0.048193370826016664,
+            0.04305113898865463,
+            0.0
+          ],
+          "eval_count": 23280
+        }
+      ],
+      "reference_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B0_b10/gt_xyz.npy",
+      "gt_provenance": {
+        "xyz_gt_points": {
+          "points": 26994350,
+          "excluded": 6202832,
+          "kept_in_crop": 5053963
+        },
+        "xyz_gt_primary": {
+          "points": 4709500,
+          "excluded": 101824,
+          "kept_in_crop": 4607676
+        }
+      },
+      "als_shift_equal": true
+    },
+    {
+      "site": "B173nb_b10",
+      "train_views": 203,
+      "depths": 203,
+      "missing": [],
+      "max_original_pose_rotation_difference": 0.0,
+      "max_original_pose_translation_difference_m": 0.0,
+      "mvs_camera_names_match": true,
+      "patches": [
+        {
+          "prior": "LoD2",
+          "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/B173nb_b10_LoD2.npz",
+          "source_sha256": "54d14d6b564f020c0ff550ce319ffebef61749e9f910d21c4a8011040774e5da",
+          "source_units_sha256": "f5d2f8cacc7a6727806af66f3cd5636ee634f5e2fc4d130d5134d3bec835eefc",
+          "region_source_sha256": "b3aa211fe9bb9251ad822e4d7f95e45259ab826c40a8aff56c776398937cc08f",
+          "frame_shift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eval_count": 141534
+        },
+        {
+          "prior": "ALS",
+          "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/B173nb_b10_ALS.npz",
+          "source_sha256": "c88cd7d2fee7d1fcf57521e526d128535f8b041e3628d3c4cae7325a7ef2bb22",
+          "source_units_sha256": "42e3426d92eb0d616aa10d146358b3f105c34aec0e70e82798823ba7307e5ee8",
+          "region_source_sha256": "6d2e35cca0df49470a2e8978a0b2e4a9e5b171ba5288ac7b67d4b18e08aed026",
+          "frame_shift": [
+            -0.05619434746608162,
+            0.06288884357338685,
+            0.0
+          ],
+          "eval_count": 34273
+        }
+      ],
+      "reference_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/gt_xyz.npy",
+      "gt_provenance": {
+        "xyz_gt_points": {
+          "points": 37798404,
+          "excluded": 8932745,
+          "kept_in_crop": 9786075
+        }
+      },
+      "als_shift_equal": true
+    },
+    {
+      "site": "R1rep_b10",
+      "train_views": 333,
+      "depths": 333,
+      "missing": [],
+      "max_original_pose_rotation_difference": 0.0,
+      "max_original_pose_translation_difference_m": 0.0,
+      "mvs_camera_names_match": true,
+      "patches": [
+        {
+          "prior": "LoD2",
+          "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/R1rep_b10_LoD2.npz",
+          "source_sha256": "0630578964afa3b2faeb01a4dbcae8a833738bd71a7edb146a8fe5303263b782",
+          "source_units_sha256": "3daf3ca833a607e896bf6d39cee2487974935767ea76fbd7dd94fad2493e123b",
+          "region_source_sha256": "e54b2646d4e380283c18aab3db25435127dd0b699c5ac14216b0d8db511ef405",
+          "frame_shift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eval_count": 79054
+        },
+        {
+          "prior": "ALS",
+          "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/R1rep_b10_ALS.npz",
+          "source_sha256": "fc142719812c845f3842dbdf72d338c103eff21bcbe9bb9ecde8003ca006988a",
+          "source_units_sha256": "c2a1c2e5a70b0825549d9f0c656de3931bc6c4f98b441f30098520f73499026d",
+          "region_source_sha256": "0ea60fbf9e779a40a4e80fa185a6192fe8932598bbc3cdae43cc103df83af575",
+          "frame_shift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "eval_count": 24189
+        }
+      ],
+      "reference_path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/R1rep_b10/gt_xyz.npy",
+      "gt_provenance": {
+        "xyz_gt_points": {
+          "points": 36405930,
+          "excluded": 7767720,
+          "kept_in_crop": 6533709
+        }
+      },
+      "als_shift_equal": true
+    }
+  ],
+  "scientific_verdict": null,
+  "reference_values_read": false
+}
