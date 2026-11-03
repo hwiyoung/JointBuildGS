@@ -1,0 +1,5 @@
+| camera | gaussian_row_id | per_pixel_terms_equal | per_pixel_maximum_difference | per_pixel_differing_values | summed_parameter_differences | used_for_acceptance |
+|---|---|---|---|---|---|---|
+| DJI_20241217102535_0020_D | 3271259 | True | 0.0 | 0 | {"_xyz": 3.92901711165905e-10, "_features_dc": 9.094947017729282e-12, "_features_rest": 1.6370904631912708e-11, "_scaling": 7.8580342233181e-10, "_rotation": 1.0477378964424133e-09, "_opacity": 1.4210854715202004e-13} | False |
+| DJI_20241217102535_0020_D | 3055338 | True | 0.0 | 0 | {"_xyz": 4.001776687800884e-11, "_features_dc": 6.402842700481415e-10, "_features_rest": 1.1641532182693481e-09, "_scaling": 2.764863893389702e-10, "_rotation": 4.147295840084553e-10, "_opacity": 3.183231456205249e-12} | False |
+| DJI_20241217102535_0020_D | 2351355 | True | 0.0 | 0 | {"_xyz": 2.9103830456733704e-10, "_features_dc": 0.0, "_features_rest": 0.0, "_scaling": 1.8189894035458565e-11, "_rotation": 3.055902197957039e-10, "_opacity": 9.094947017729282e-13} | False |

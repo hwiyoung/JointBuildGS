@@ -1,0 +1,29 @@
+| build | version | file | lines | purpose | sha256 |
+|---|---|---|---|---|---|
+| target | original | cuda_rasterizer/auxiliary.h | [200] | center near culling; XY clause commented | dfef626b19f0828b6ebf3fb486a95a386db5f72a1b04a40031643c27eaa41442 |
+| target | original | cuda_rasterizer/forward.cu | [127] | AABB denominator exact-zero check | 5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53 |
+| target | original | cuda_rasterizer/forward.cu | [387] | native alpha threshold | 5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53 |
+| target | original | cuda_rasterizer/backward.cu | [421] | native atomic gradient addition | fccec0f96fcf71aee4e412138bb30777913d672f3b2b17e6260dcadb1658489f |
+| target | fixed | cuda_rasterizer/rasterizer_impl.cu | [293] | replace tiles_touched only | 278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5 |
+| target | fixed | cuda_rasterizer/rasterizer_impl.cu | [103] | skip impossible tile before duplicate | 278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5 |
+| target | fixed | cuda_rasterizer/rfix_tiles.cuh | [23] | original pixel predicate | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| target | fixed | cuda_rasterizer/rfix_tiles.cuh | [40] | conservative rejection | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| target | fixed | cuda_rasterizer/rfix_tiles.cuh | [63] | any possible pixel retains tile | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| imageonly | original | cuda_rasterizer/auxiliary.h | [200] | center near culling; XY clause commented | dfef626b19f0828b6ebf3fb486a95a386db5f72a1b04a40031643c27eaa41442 |
+| imageonly | original | cuda_rasterizer/forward.cu | [127] | AABB denominator exact-zero check | 5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53 |
+| imageonly | original | cuda_rasterizer/forward.cu | [387] | native alpha threshold | 5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53 |
+| imageonly | original | cuda_rasterizer/backward.cu | [421] | native atomic gradient addition | fccec0f96fcf71aee4e412138bb30777913d672f3b2b17e6260dcadb1658489f |
+| imageonly | fixed | cuda_rasterizer/rasterizer_impl.cu | [293] | replace tiles_touched only | 278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5 |
+| imageonly | fixed | cuda_rasterizer/rasterizer_impl.cu | [103] | skip impossible tile before duplicate | 278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5 |
+| imageonly | fixed | cuda_rasterizer/rfix_tiles.cuh | [23] | original pixel predicate | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| imageonly | fixed | cuda_rasterizer/rfix_tiles.cuh | [40] | conservative rejection | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| imageonly | fixed | cuda_rasterizer/rfix_tiles.cuh | [63] | any possible pixel retains tile | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| geogs | original | cuda_rasterizer/auxiliary.h | [200] | center near culling; XY clause commented | dfef626b19f0828b6ebf3fb486a95a386db5f72a1b04a40031643c27eaa41442 |
+| geogs | original | cuda_rasterizer/forward.cu | [127] | AABB denominator exact-zero check | 5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53 |
+| geogs | original | cuda_rasterizer/forward.cu | [387] | native alpha threshold | 5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53 |
+| geogs | original | cuda_rasterizer/backward.cu | [421] | native atomic gradient addition | fccec0f96fcf71aee4e412138bb30777913d672f3b2b17e6260dcadb1658489f |
+| geogs | fixed | cuda_rasterizer/rasterizer_impl.cu | [293] | replace tiles_touched only | 278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5 |
+| geogs | fixed | cuda_rasterizer/rasterizer_impl.cu | [103] | skip impossible tile before duplicate | 278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5 |
+| geogs | fixed | cuda_rasterizer/rfix_tiles.cuh | [23] | original pixel predicate | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| geogs | fixed | cuda_rasterizer/rfix_tiles.cuh | [40] | conservative rejection | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |
+| geogs | fixed | cuda_rasterizer/rfix_tiles.cuh | [63] | any possible pixel retains tile | 4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e |

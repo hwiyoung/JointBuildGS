@@ -1,0 +1,275 @@
+{
+  "rows": [
+    {
+      "build": "target",
+      "version": "original",
+      "file": "cuda_rasterizer/auxiliary.h",
+      "lines": [
+        200
+      ],
+      "purpose": "center near culling; XY clause commented",
+      "sha256": "dfef626b19f0828b6ebf3fb486a95a386db5f72a1b04a40031643c27eaa41442"
+    },
+    {
+      "build": "target",
+      "version": "original",
+      "file": "cuda_rasterizer/forward.cu",
+      "lines": [
+        127
+      ],
+      "purpose": "AABB denominator exact-zero check",
+      "sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53"
+    },
+    {
+      "build": "target",
+      "version": "original",
+      "file": "cuda_rasterizer/forward.cu",
+      "lines": [
+        387
+      ],
+      "purpose": "native alpha threshold",
+      "sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53"
+    },
+    {
+      "build": "target",
+      "version": "original",
+      "file": "cuda_rasterizer/backward.cu",
+      "lines": [
+        421
+      ],
+      "purpose": "native atomic gradient addition",
+      "sha256": "fccec0f96fcf71aee4e412138bb30777913d672f3b2b17e6260dcadb1658489f"
+    },
+    {
+      "build": "target",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rasterizer_impl.cu",
+      "lines": [
+        293
+      ],
+      "purpose": "replace tiles_touched only",
+      "sha256": "278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5"
+    },
+    {
+      "build": "target",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rasterizer_impl.cu",
+      "lines": [
+        103
+      ],
+      "purpose": "skip impossible tile before duplicate",
+      "sha256": "278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5"
+    },
+    {
+      "build": "target",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        23
+      ],
+      "purpose": "original pixel predicate",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "target",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        40
+      ],
+      "purpose": "conservative rejection",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "target",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        63
+      ],
+      "purpose": "any possible pixel retains tile",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "imageonly",
+      "version": "original",
+      "file": "cuda_rasterizer/auxiliary.h",
+      "lines": [
+        200
+      ],
+      "purpose": "center near culling; XY clause commented",
+      "sha256": "dfef626b19f0828b6ebf3fb486a95a386db5f72a1b04a40031643c27eaa41442"
+    },
+    {
+      "build": "imageonly",
+      "version": "original",
+      "file": "cuda_rasterizer/forward.cu",
+      "lines": [
+        127
+      ],
+      "purpose": "AABB denominator exact-zero check",
+      "sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53"
+    },
+    {
+      "build": "imageonly",
+      "version": "original",
+      "file": "cuda_rasterizer/forward.cu",
+      "lines": [
+        387
+      ],
+      "purpose": "native alpha threshold",
+      "sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53"
+    },
+    {
+      "build": "imageonly",
+      "version": "original",
+      "file": "cuda_rasterizer/backward.cu",
+      "lines": [
+        421
+      ],
+      "purpose": "native atomic gradient addition",
+      "sha256": "fccec0f96fcf71aee4e412138bb30777913d672f3b2b17e6260dcadb1658489f"
+    },
+    {
+      "build": "imageonly",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rasterizer_impl.cu",
+      "lines": [
+        293
+      ],
+      "purpose": "replace tiles_touched only",
+      "sha256": "278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5"
+    },
+    {
+      "build": "imageonly",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rasterizer_impl.cu",
+      "lines": [
+        103
+      ],
+      "purpose": "skip impossible tile before duplicate",
+      "sha256": "278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5"
+    },
+    {
+      "build": "imageonly",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        23
+      ],
+      "purpose": "original pixel predicate",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "imageonly",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        40
+      ],
+      "purpose": "conservative rejection",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "imageonly",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        63
+      ],
+      "purpose": "any possible pixel retains tile",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "geogs",
+      "version": "original",
+      "file": "cuda_rasterizer/auxiliary.h",
+      "lines": [
+        200
+      ],
+      "purpose": "center near culling; XY clause commented",
+      "sha256": "dfef626b19f0828b6ebf3fb486a95a386db5f72a1b04a40031643c27eaa41442"
+    },
+    {
+      "build": "geogs",
+      "version": "original",
+      "file": "cuda_rasterizer/forward.cu",
+      "lines": [
+        127
+      ],
+      "purpose": "AABB denominator exact-zero check",
+      "sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53"
+    },
+    {
+      "build": "geogs",
+      "version": "original",
+      "file": "cuda_rasterizer/forward.cu",
+      "lines": [
+        387
+      ],
+      "purpose": "native alpha threshold",
+      "sha256": "5f99ca4953baf8ce3699e0ded25f9c10ab94f3e3a697ff87e2502a36559cce53"
+    },
+    {
+      "build": "geogs",
+      "version": "original",
+      "file": "cuda_rasterizer/backward.cu",
+      "lines": [
+        421
+      ],
+      "purpose": "native atomic gradient addition",
+      "sha256": "fccec0f96fcf71aee4e412138bb30777913d672f3b2b17e6260dcadb1658489f"
+    },
+    {
+      "build": "geogs",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rasterizer_impl.cu",
+      "lines": [
+        293
+      ],
+      "purpose": "replace tiles_touched only",
+      "sha256": "278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5"
+    },
+    {
+      "build": "geogs",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rasterizer_impl.cu",
+      "lines": [
+        103
+      ],
+      "purpose": "skip impossible tile before duplicate",
+      "sha256": "278fde700b5b9cf7c2bb4bbb6bd9c61fed877459a5fbbcfe990b39a121d3ddc5"
+    },
+    {
+      "build": "geogs",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        23
+      ],
+      "purpose": "original pixel predicate",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "geogs",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        40
+      ],
+      "purpose": "conservative rejection",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    },
+    {
+      "build": "geogs",
+      "version": "fixed",
+      "file": "cuda_rasterizer/rfix_tiles.cuh",
+      "lines": [
+        63
+      ],
+      "purpose": "any possible pixel retains tile",
+      "sha256": "4fb44f3cdf2a5c3fa590d35120141fab7e7c605ef4afba9410e1a4e618e26b8e"
+    }
+  ],
+  "scientific_verdict": null
+}

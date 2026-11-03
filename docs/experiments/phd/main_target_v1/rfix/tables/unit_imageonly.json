@@ -1,0 +1,105 @@
+{
+  "rows": [
+    {
+      "case": {
+        "name": "tilted_close_lens",
+        "xyz": [
+          0,
+          0,
+          0.25
+        ],
+        "scale": [
+          0.4,
+          0.4
+        ],
+        "tilt": 80
+      },
+      "original_overlaps": 2,
+      "fixed_overlaps": 2,
+      "exact_visible_tiles": 2,
+      "radii": [
+        3
+      ],
+      "radii_equal": true,
+      "max_abs": 0.0,
+      "jitter_max_abs": 0.0,
+      "pass_": true
+    },
+    {
+      "case": {
+        "name": "outside_burst",
+        "xyz": [
+          5,
+          0,
+          0.4
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "tilt": 75
+      },
+      "original_overlaps": 16,
+      "fixed_overlaps": 0,
+      "exact_visible_tiles": 0,
+      "radii": [
+        58
+      ],
+      "radii_equal": true,
+      "max_abs": 0.0,
+      "jitter_max_abs": 0.0,
+      "pass_": true
+    },
+    {
+      "case": {
+        "name": "cross_near_partially_visible",
+        "xyz": [
+          0,
+          0,
+          0.4
+        ],
+        "scale": [
+          0.8,
+          0.8
+        ],
+        "tilt": 65
+      },
+      "original_overlaps": 4,
+      "fixed_overlaps": 2,
+      "exact_visible_tiles": 2,
+      "radii": [
+        3
+      ],
+      "radii_equal": true,
+      "max_abs": 0.0,
+      "jitter_max_abs": 0.0,
+      "pass_": true
+    },
+    {
+      "case": {
+        "name": "ordinary",
+        "xyz": [
+          0,
+          0,
+          4
+        ],
+        "scale": [
+          0.1,
+          0.1
+        ],
+        "tilt": 0
+      },
+      "original_overlaps": 4,
+      "fixed_overlaps": 4,
+      "exact_visible_tiles": 4,
+      "radii": [
+        3
+      ],
+      "radii_equal": true,
+      "max_abs": 0.0,
+      "jitter_max_abs": 0.0,
+      "pass_": true
+    }
+  ],
+  "scientific_verdict": null
+}

@@ -1,0 +1,14 @@
+"""Build and loss provenance, including unchanged original kernels and code references."""
+import subprocess,datetime
+from r8_screen_prepare import R,PH,O,C,j,sha,dump
+ROOT=O/'rfix'
+def main():
+ builds={p.parent.name:j(p) for p in (ROOT/'inventory').glob('*/manifest.json')};rows=[]
+ for method,label in [('baseline_r15','target'),('target_r22','target'),('target_r21_r7','target'),('image_only_2DGS_adapter','imageonly'),('GeoGS_adapter','geogs')]:
+  original=builds[label];fixed=ROOT/'builds'/label;receipt=j(fixed/'receipt.json');unchanged={name:sha(fixed/'source'/name)==h for name,h in original['source_files'].items() if name in ['cuda_rasterizer/forward.cu','cuda_rasterizer/backward.cu','cuda_rasterizer/auxiliary.h','cuda_rasterizer/config.h']}
+  assert all(unchanged.values());rows.append(dict(implementation=method,original_source=original['source'],original_extension_sha256=original['extension_sha256'],fixed_extension=receipt['extension'],fixed_extension_sha256=receipt['extension_sha256'],fixed_patch=str(fixed/'renderer.patch'),native_kernel_bytes_unchanged=unchanged,training_source_changed=False,screen_pruning_changed=False))
+ cd=j(ROOT/'cdgs_prepared/receipt.json');rows.append(dict(implementation='CDGS_adapter_v2',status=cd['status'],original_training=cd['original_training'],source=cd['source'],patch_sha256=cd['patch_sha256'],installed_renderer='No completed training arm in READY.json; no installed build substituted'))
+ commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=R,text=True).strip();at=j(C/'rfix.json')['at'];initial=subprocess.check_output(['git','rev-parse','HEAD@{'+at+'}'],cwd=R,text=True,stderr=subprocess.STDOUT).strip()
+ lossrows=[dict(family='baseline r15',rgb='0.8 L1 +0.2(1-SSIM)',normal=.05,distortion=0,mvs=.05,prior=.05,prior_function='native truncated_prior_loss, GW=1 because judgment switch off; full-image denominator',source='r15/jbgs_judgment.py:1262,1320 and r15/train.py'),dict(family='r7/r8',rgb='0.8 L1 +0.2(1-SSIM)',normal=.05,distortion=0,target=.05,target_function='native weighted absolute target-depth error / image pixel count; exact locked per-view weights',source='r22/jbgs_target.py:107'),dict(family='image-only 2DGS',rgb='0.8 L1 +0.2(1-SSIM)',normal=.05,distortion=0,external_depth=0),dict(family='GeoGS',rgb='0.8 L1 +0.2(1-SSIM)',normal=.05,distortion=0,prior=.005,mvs=.05,dynamic_weight='both original run logs show locked0.05; no decay event',prior_function='native compute_depth_loss, valid-GT-depth mean, no scale alignment, no confidence weighting')]
+ dump(ROOT/'provenance.json',dict(at=datetime.datetime.now().astimezone().isoformat(),rows=rows,losses=lossrows,git=dict(head_at_audit=commit,head_at_config_time_from_reflog=initial,config_time=at,content_identity='exact file hashes take precedence over dirty-worktree commit labels'),scientific_verdict=None))
+if __name__=='__main__':main()
