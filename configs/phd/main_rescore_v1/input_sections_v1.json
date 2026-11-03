@@ -1,0 +1,158 @@
+{
+  "rows": [
+    {
+      "id": "A",
+      "name": "날개",
+      "start": [
+        146.68,
+        96.32
+      ],
+      "end": [
+        136.63,
+        99.34
+      ],
+      "half_width": 0.6,
+      "roi_half_width": 3.0,
+      "source": "TARGET representatives_v1.json row 1 unchanged",
+      "selection": "fixed r8 section",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 0.689776424938033,
+            "1": 6.1965141814135265,
+            "2": 1.0610478081146573,
+            "3": 3.663343235343691
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        },
+        "LoD2": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 1.0625,
+            "1": 9.0625,
+            "2": 1.0,
+            "3": 2.3125,
+            "6": 0.4375
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        }
+      },
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "title": "B173 날개 · LoD2"
+    },
+    {
+      "id": "A",
+      "name": "날개",
+      "start": [
+        146.68,
+        96.32
+      ],
+      "end": [
+        136.63,
+        99.34
+      ],
+      "half_width": 0.6,
+      "roi_half_width": 3.0,
+      "source": "TARGET representatives_v1.json row 1 unchanged",
+      "selection": "fixed r8 section",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 0.689776424938033,
+            "1": 6.1965141814135265,
+            "2": 1.0610478081146573,
+            "3": 3.663343235343691
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        },
+        "LoD2": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 1.0625,
+            "1": 9.0625,
+            "2": 1.0,
+            "3": 2.3125,
+            "6": 0.4375
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        }
+      },
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "title": "B173 날개 · ALS"
+    },
+    {
+      "id": "B0",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "title": "B0 모임지붕 끝 · LoD2",
+      "start": [
+        102.00846099346342,
+        -6.266888043124205
+      ],
+      "end": [
+        108.23322760199058,
+        10.83551765517933
+      ],
+      "half_width": 0.25,
+      "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+      "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+      "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+      "cluster": {
+        "patches": 744,
+        "area_m2": 46.5,
+        "u_range": [
+          32.0,
+          38.2
+        ],
+        "v_range": [
+          92.1,
+          103.9
+        ],
+        "faces": {
+          "11": {
+            "patches": 370,
+            "building": "DEBY_LOD2_4959323",
+            "type": "roof"
+          },
+          "8": {
+            "patches": 189,
+            "building": "DEBY_LOD2_4959323",
+            "type": "roof"
+          },
+          "10": {
+            "patches": 185,
+            "building": "DEBY_LOD2_4959323",
+            "type": "roof"
+          }
+        },
+        "prior_above": 744,
+        "prior_below": 0,
+        "ratio_median": 6.1
+      }
+    },
+    {
+      "id": "R1",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "title": "R1 지붕 · LoD2",
+      "start": [
+        20.931309305951753,
+        22.938321841099047
+      ],
+      "end": [
+        25.035551025859778,
+        34.214633290529946
+      ],
+      "half_width": 0.25,
+      "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+      "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+      "selection": "unchanged original R1_low_roof section"
+    }
+  ],
+  "learned_results_used": false,
+  "scientific_verdict": null
+}

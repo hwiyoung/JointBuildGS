@@ -1,0 +1,82 @@
+{
+  "at": "2026-11-04T06:39:05.098111+09:00",
+  "status": "PASS_AVAILABLE_ARTIFACTS_WITH_EXPLICIT_UNAVAILABLE_RESULTS",
+  "unavailable_scene_rows": 38,
+  "checks": [
+    {
+      "check": "nine_tables_json_csv_md",
+      "status": "PASS",
+      "rows": {
+        "table1_tau": 9,
+        "table2_cells": 63,
+        "table3": 74,
+        "table4": 370,
+        "table5": 560,
+        "table6": 154,
+        "table7": 120,
+        "table8": 56,
+        "table9": 14
+      }
+    },
+    {
+      "check": "source_hashes_final_mesh_settings_sampling_and_new_wall_tau",
+      "status": "PASS"
+    },
+    {
+      "check": "exact_training_camera_names_and_order_against_original_split",
+      "status": "PASS",
+      "rows": [
+        {
+          "site": "B0_b10",
+          "training_views": 243,
+          "split_sha256": "e8e4fa6d28798d3cca6ab642eb2c66f911e186d7e94d9dcf6c0ef364214e6ced",
+          "views_sha256": "49fd2f4d1eff907d4f898716e998b7f4174425c962020d3933775b2fcfbf5122"
+        },
+        {
+          "site": "B173nb_b10",
+          "training_views": 203,
+          "split_sha256": "d583fab11cdca2463b782e576c864cea5088563440a59a520a9386f98402e447",
+          "views_sha256": "dac9596c48abf4df4500315377ebca55c9266a5f18ae2d16cadb853dd2874270"
+        },
+        {
+          "site": "R1rep_b10",
+          "training_views": 333,
+          "split_sha256": "86e3071efeae00f8b8ded9e6efb4a712bba63f986f265c075c7c7329b4efbdb1",
+          "views_sha256": "937c18e3acb94fb679dbf185e538800f6d59be1206578e8e413e3a9b48550d62"
+        },
+        {
+          "site": "B173_b0",
+          "training_views": 140,
+          "split_sha256": "6f42ff655f374364b606a7e47414801d5d8dff7eaaa0e1c92d0c65208c807769",
+          "views_sha256": "527da37e3f743d91a4656a6639d991d25aa0cb0eda49ce69f56623a990395f11"
+        }
+      ]
+    },
+    {
+      "check": "existing_actual_geometry_reproduction",
+      "status": "PASS",
+      "rerun": false
+    },
+    {
+      "check": "required_figures_300dpi_metadata_and_once_visual_review",
+      "status": "PASS",
+      "figures": [
+        "그림6_2",
+        "그림7_3_ALS",
+        "그림7_3_LoD2",
+        "그림7_5_ALS",
+        "그림7_5_LoD2",
+        "그림7_4_ALS",
+        "그림7_6_ALS",
+        "그림7_7_ALS"
+      ]
+    },
+    {
+      "check": "training_mesh_present_for_each_trained_checkpoint",
+      "status": "PASS"
+    }
+  ],
+  "optimization_steps": 0,
+  "writes": "only task cfg/scripts/docs/external payload; enforced by read-only Docker mounts",
+  "scientific_verdict": null
+}

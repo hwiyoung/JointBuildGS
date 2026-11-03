@@ -11,12 +11,14 @@ def main():
  assert len(list(CELLS.glob('*.npz')))==6 and len(list((O/'targets_v2').glob('*.npz')))==6
  for p in (O/'targets_v2').glob('*.npz'):
   z=loadz(p,['patch_id','region','target_height_m','target_sigma_m','undecided_before']);assert len(z['patch_id'])==len(np.unique(z['patch_id']));assert np.isnan(z['target_sigma_m'][z['undecided_before']&(z['region']==2)]).all()
+ mesh_hashes={}
  for r in tables['table3']:
   if r.get('completeness') is None:assert r.get('status')=='확인 불가';continue
   assert r['n_gt']>0 and r['n_result']>0 and 0<=r['completeness']<=1 and 0<=r['accuracy']<=1
   p=O/'scores'/r['key']/'values.json';v=json.loads(p.read_text());assert v['scientific_verdict'] is None and v['provenance']['sampling_density_m2']==400
   if v['prior']=='LoD2':assert v['provenance']['tau_assignment']=='reference_surface_kind_v1'
-  assert sha(v['mesh'])==v['mesh_sha256']
+  if v['mesh'] not in mesh_hashes:mesh_hashes[v['mesh']]=sha(v['mesh'])
+  assert mesh_hashes[v['mesh']]==v['mesh_sha256']
   if any(x in r['key'] for x in ['baseline_','GeoGS_','2DGS_','CDGS_','r8_','__fusion','__judgment_mesh','__oracle']):
    meta=Path(v['mesh']).with_suffix('.json');m=json.loads(meta.read_text());assert m['voxel_m']==.05 and m['trunc_m']==.25
    assert m.get('cluster_to_keep',50)==50

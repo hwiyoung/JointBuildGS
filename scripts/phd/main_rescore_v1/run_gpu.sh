@@ -10,10 +10,12 @@ x=json.load(open(sys.argv[1]));print(x['image']);print(x['renderer']);print(x['k
 PY
 )
 image=${fields[0]};source=${fields[1]};key=${fields[2]}
+min_free=8192;fraction=.25
+if [[ "$key" == B173_b0__* ]]; then min_free=16384;fraction=.60;fi
 source=${source/#\/repo/$REPO};source=${source/#\/art/$ART}
 wait_start=$(date +%s)
 while true; do
- gpu=$(nvidia-smi --query-gpu=index,memory.free --format=csv,noheader,nounits | awk -F, '$2>=8192 {if ($2>best) {best=$2; id=$1; ok=1}} END {if(ok)print id}')
+ gpu=$(nvidia-smi --query-gpu=index,memory.free --format=csv,noheader,nounits | awk -F, -v required="$min_free" '$2>=required {if ($2>best) {best=$2; id=$1; ok=1}} END {if(ok)print id}')
  if [[ -n "$gpu" ]]; then break; fi
  sleep 30
 done
@@ -21,7 +23,7 @@ wait_seconds=$(( $(date +%s) - wait_start ))
 nice -n 19 docker run --rm --read-only --network none --gpus "device=$gpu" \
  --name "jbgs-rescore-render-${key//_/-}" --user "$(id -u):$(id -g)" --cpus 4 --memory 32g --memory-swap 32g \
  -e PYTHONDONTWRITEBYTECODE=1 -e PYTHONUNBUFFERED=1 -e OMP_NUM_THREADS=1 -e OPENBLAS_NUM_THREADS=1 -e MKL_NUM_THREADS=1 \
- -e TMPDIR=/out/tmp -e MPLCONFIGDIR=/out/tmp/mpl -e XDG_CACHE_HOME=/out/tmp/cache -e TZ=Asia/Seoul -e RESCORE_GPU_WAIT_SECONDS="$wait_seconds" \
+ -e TMPDIR=/out/tmp -e MPLCONFIGDIR=/out/tmp/mpl -e XDG_CACHE_HOME=/out/tmp/cache -e TZ=Asia/Seoul -e RESCORE_GPU_WAIT_SECONDS="$wait_seconds" -e RESCORE_RENDER_GPU_FRACTION="$fraction" \
  -e RESCORE_IMAGE="$(docker image inspect -f '{{.Id}}' "$image")" -e RESCORE_COMMIT="$(git -C "$REPO" rev-parse HEAD)" \
  -v "$REPO:/repo:ro" -v "$ART:/art:ro" -v "$source:/source:ro" -v "$OUT:/out:rw" \
  -v "$REPO/configs/phd/main_rescore_v1:/cfg:ro" -v "$REPO/docs/experiments/phd/main_rescore_v1:/docs:rw" \
