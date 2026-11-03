@@ -34,6 +34,10 @@ def progress(s):
  with (D/'progress.md').open('a') as f:f.write(f'- {now()}: {s}\n')
 def table(name,rows):
  dump(D/'tables'/f'{name}.json',dict(rows=rows,source_tag='[이 발주에서 냄]',scientific_verdict=None))
+ if not rows:
+  (D/'tables'/f'{name}.csv').write_text('status,reason\n')
+  (D/'tables'/f'{name}.md').write_text('해당 조건에 해당하는 판이 없습니다. [이 발주에서 냄]\n')
+  return
  keys=list(dict.fromkeys(k for r in rows for k in r))
  with (D/'tables'/f'{name}.csv').open('w',newline='') as f:
   w=csv.DictWriter(f,fieldnames=keys,lineterminator='\n');w.writeheader();w.writerows([{k:json.dumps(v,ensure_ascii=False) if isinstance(v,(dict,list)) else v for k,v in r.items()} for r in rows])

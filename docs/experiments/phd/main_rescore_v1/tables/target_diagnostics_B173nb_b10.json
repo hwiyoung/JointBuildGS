@@ -1,0 +1,82 @@
+{
+  "rows": [
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "n": 141534,
+      "source": "/art/phase-payloads/phd/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/core_points/B173nb_b10__LoD2.npz",
+      "source_sha256": "6c2d5979a6d87c52bc3d16aeb3fcb82c42e5e384a932e8deebc789996e422e0b",
+      "output_sha256": "0c3b4f9525aad2902c1b86876ad0cbc276a8e1dc5ed581b92227137e6d101532",
+      "undecided_patches": 9685,
+      "undecided_area_m2": 605.3125,
+      "undecided_regions": {
+        "1": {
+          "n": 0,
+          "area_m2": 0.0
+        },
+        "2": {
+          "n": 9685,
+          "area_m2": 605.3125
+        }
+      },
+      "sigma_missing_area_m2": 605.3125,
+      "sigma_W_used": false,
+      "r_added": false,
+      "training_v2_comparison": {
+        "status": "확인 전",
+        "reason": "JUDGEAPPLY 학습용 v2 파일은 별도 확인"
+      },
+      "finaltrain_target_comparison": {
+        "status": "PASS",
+        "file": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B173nb_b10__LoD2.npz",
+        "sha256": "610cff9a3900540c37ac896dd055e84849af2ad70fdbc9e3c82e88b23b4a1458",
+        "join": "source_index",
+        "max_height_difference_m": 0.0,
+        "finite_mask_equal": true,
+        "n": 125564,
+        "note": "FINALTRAIN target heights only; its missing-sigma training replacement is not copied into RESCORE"
+      },
+      "source_tag": "[이 발주에서 냄]"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "n": 34273,
+      "source": "/art/phase-payloads/phd/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/core_points/B173nb_b10__ALS.npz",
+      "source_sha256": "394ef94b9422dbaf02c47261e611ad2c6a7466701522646635a6c1816c68af65",
+      "output_sha256": "44e6d7c1a161905dcd6d29d78ea8411b88123788f40edbae145549467b1937b7",
+      "undecided_patches": 374,
+      "undecided_area_m2": 26.50262902171517,
+      "undecided_regions": {
+        "1": {
+          "n": 293,
+          "area_m2": 21.052663430015254
+        },
+        "2": {
+          "n": 81,
+          "area_m2": 5.449965591699916
+        }
+      },
+      "sigma_missing_area_m2": 11.773832812050582,
+      "sigma_W_used": false,
+      "r_added": false,
+      "training_v2_comparison": {
+        "status": "확인 전",
+        "reason": "JUDGEAPPLY 학습용 v2 파일은 별도 확인"
+      },
+      "finaltrain_target_comparison": {
+        "status": "PASS",
+        "file": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B173nb_b10__ALS.npz",
+        "sha256": "dc10377655ed8516207172e607b2934839fbb18e93a33a152b488ecc319b550c",
+        "join": "source_index",
+        "max_height_difference_m": 0.0,
+        "finite_mask_equal": true,
+        "n": 33512,
+        "note": "FINALTRAIN target heights only; its missing-sigma training replacement is not copied into RESCORE"
+      },
+      "source_tag": "[이 발주에서 냄]"
+    }
+  ],
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

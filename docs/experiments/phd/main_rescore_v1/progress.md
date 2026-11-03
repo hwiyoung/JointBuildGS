@@ -193,3 +193,67 @@
 - 2026-11-04T03:31:47.178570+09:00: figure_prepare_LoD2_B173nb_b10__LoD2__r8_7000: 268.5초; GPU 대기 0초.
 - 2026-11-04T03:32:22.246598+09:00: 초기 그림 첫 열람에서 7.3 A/B 글자 겹침과 빈 여백, 7.5 숫자의 이미지 경계 겹침 확인. figures.py 비실행 상태에서 표시 여백·주석 위치만 수정. 기존 PNG/JSON은 visual_review_before_layout에 보존하고 캐시에서 다시 그리며 채점·메시·단면 데이터 재계산 없음.
 - 2026-11-04T03:33:30.630848+09:00: B173 주변 두 사전 정보의 그림 7.3·7.5 준비·열람 완료. 같은 A/B/C, LoD2 B는 둘 다 틀림, 숫자는 영역 전체. 표시 겹침을 캐시 재사용으로 수정. 이후 B173 판단 조합·상한·남은 표/그림, B0, R1 순서로 계속함.
+- 2026-11-04T03:33:33.617684+09:00: targets_B173nb_b10: 1.4초; GPU 대기 0초.
+- 2026-11-04T03:34:10.459231+09:00: render_B173nb_b10__LoD2__judgment_mesh: 36.3초; GPU 대기 0초.
+- 2026-11-04T03:34:10.519503+09:00: render_B173nb_b10__ALS__judgment_mesh: 36.3초; GPU 대기 0초.
+- 2026-11-04T03:34:33.958876+09:00: B173nb_b10__LoD2__judgment_mesh_final_prepare: 22.7초; GPU 대기 0초.
+- 2026-11-04T03:34:34.075864+09:00: B173nb_b10__ALS__judgment_mesh_final_prepare: 22.8초; GPU 대기 0초.
+- 2026-11-04T03:34:35.720490+09:00: B173nb_b10__ALS__judgment_mesh_final_plan: 1.1초; GPU 대기 0초.
+- 2026-11-04T03:34:35.979492+09:00: B173nb_b10__LoD2__judgment_mesh_final_plan: 1.4초; GPU 대기 0초.
+- 2026-11-04T03:35:05.750853+09:00: B173nb_b10__ALS__judgment_mesh_final_tile0: 29.5초; GPU 대기 0초.
+- 2026-11-04T03:35:14.224803+09:00: B173nb_b10__ALS__judgment_mesh_final_merge: 7.6초; GPU 대기 0초.
+- 2026-11-04T03:35:16.382154+09:00: bounded_cleanup_B173nb_b10__ALS__judgment_mesh: 1.7초; GPU 대기 0초.
+- 2026-11-04T03:35:16.389226+09:00: B173nb_b10__ALS__judgment_mesh_final_finish: 1.7초; GPU 대기 0초.
+- 2026-11-04T03:36:04.388357+09:00: B173nb_b10__LoD2__judgment_mesh_final_tile0: 88.0초; GPU 대기 0초.
+- 2026-11-04T03:36:06.771702+09:00: score_B173nb_b10__ALS__judgment_mesh: 48.2초; GPU 대기 0초.
+- 2026-11-04T03:36:42.487148+09:00: B173nb_b10__LoD2__judgment_mesh_final_merge: 36.9초; GPU 대기 0초.
+- 2026-11-04T03:36:42.992685+09:00: render_B173nb_b10__ALS__oracle: 35.2초; GPU 대기 0초.
+- 2026-11-04T03:36:47.989461+09:00: bounded_cleanup_B173nb_b10__LoD2__judgment_mesh: 5.1초; GPU 대기 0초.
+- 2026-11-04T03:36:48.029955+09:00: B173nb_b10__LoD2__judgment_mesh_final_finish: 5.1초; GPU 대기 0초.
+- 2026-11-04T03:36:56.623448+09:00: B173nb_b10__ALS__oracle_final_prepare: 12.9초; GPU 대기 0초.
+- 2026-11-04T03:36:58.205851+09:00: B173nb_b10__ALS__oracle_final_plan: 1.1초; GPU 대기 0초.
+- 2026-11-04T03:37:26.274136+09:00: B173nb_b10__ALS__oracle_final_tile0: 27.6초; GPU 대기 0초.
+- 2026-11-04T03:37:34.212793+09:00: B173nb_b10__ALS__oracle_final_merge: 7.1초; GPU 대기 0초.
+- 2026-11-04T03:37:35.840345+09:00: bounded_cleanup_B173nb_b10__ALS__oracle: 1.1초; GPU 대기 0초.
+- 2026-11-04T03:37:35.841431+09:00: B173nb_b10__ALS__oracle_final_finish: 1.1초; GPU 대기 0초.
+- 2026-11-04T03:38:12.799359+09:00: score_B173nb_b10__ALS__oracle: 34.7초; GPU 대기 0초.
+- 2026-11-04T03:38:29.756559+09:00: score_B173nb_b10__LoD2__judgment_mesh: 99.6초; GPU 대기 0초.
+- 2026-11-04T03:39:05.974715+09:00: render_B173nb_b10__LoD2__oracle: 35.2초; GPU 대기 0초.
+- 2026-11-04T03:39:18.666178+09:00: B173nb_b10__LoD2__oracle_final_prepare: 11.9초; GPU 대기 0초.
+- 2026-11-04T03:39:20.643896+09:00: B173nb_b10__LoD2__oracle_final_plan: 1.4초; GPU 대기 0초.
+- 2026-11-04T03:40:47.672353+09:00: B173nb_b10__LoD2__oracle_final_tile0: 86.5초; GPU 대기 0초.
+- 2026-11-04T03:41:22.520718+09:00: B173nb_b10__LoD2__oracle_final_merge: 33.7초; GPU 대기 0초.
+- 2026-11-04T03:41:27.798459+09:00: bounded_cleanup_B173nb_b10__LoD2__oracle: 4.8초; GPU 대기 0초.
+- 2026-11-04T03:41:27.812387+09:00: B173nb_b10__LoD2__oracle_final_finish: 4.8초; GPU 대기 0초.
+- 2026-11-04T03:43:04.050951+09:00: score_B173nb_b10__LoD2__oracle: 94.1초; GPU 대기 0초.
+- 2026-11-04T03:48:03.753052+09:00: training_mesh_reuse_B173nb_b10: 282.0초; GPU 대기 0초.
+- 2026-11-04T03:50:29.105188+09:00: score_B173nb_b10__ALS__r8_30000__train: 142.7초; GPU 대기 0초.
+- 2026-11-04T03:50:51.723364+09:00: B173nb_b10__ALS__r8_30000_coarse_prepare: 21.6초; GPU 대기 0초.
+- 2026-11-04T03:50:57.363777+09:00: B173nb_b10__ALS__r8_30000_coarse_plan: 5.1초; GPU 대기 0초.
+- 2026-11-04T03:52:48.194322+09:00: B173nb_b10__ALS__r8_30000_coarse_tile0: 110.4초; GPU 대기 0초.
+- 2026-11-04T03:53:20.247749+09:00: B173nb_b10__ALS__r8_30000_coarse_merge: 30.7초; GPU 대기 0초.
+- 2026-11-04T03:53:24.266539+09:00: bounded_cleanup_B173nb_b10__ALS__r8_30000: 3.6초; GPU 대기 0초.
+- 2026-11-04T03:53:24.267041+09:00: B173nb_b10__ALS__r8_30000_coarse_finish: 3.6초; GPU 대기 0초.
+- 2026-11-04T03:54:19.640352+09:00: score_B173nb_b10__ALS__r8_30000__coarse: 53.2초; GPU 대기 0초.
+- 2026-11-04T03:56:07.225160+09:00: score_B173nb_b10__ALS__baseline_30000__train: 104.9초; GPU 대기 0초.
+- 2026-11-04T03:56:36.141286+09:00: B173nb_b10__ALS__baseline_30000_coarse_prepare: 27.9초; GPU 대기 0초.
+- 2026-11-04T03:56:41.833664+09:00: B173nb_b10__ALS__baseline_30000_coarse_plan: 5.2초; GPU 대기 0초.
+- 2026-11-04T03:58:29.801612+09:00: B173nb_b10__ALS__baseline_30000_coarse_tile0: 107.5초; GPU 대기 0초.
+- 2026-11-04T03:59:10.470800+09:00: B173nb_b10__ALS__baseline_30000_coarse_merge: 39.4초; GPU 대기 0초.
+- 2026-11-04T03:59:14.587141+09:00: bounded_cleanup_B173nb_b10__ALS__baseline_30000: 3.6초; GPU 대기 0초.
+- 2026-11-04T03:59:14.587554+09:00: B173nb_b10__ALS__baseline_30000_coarse_finish: 3.7초; GPU 대기 0초.
+- 2026-11-04T04:00:30.741352+09:00: score_B173nb_b10__ALS__baseline_30000__coarse: 74.0초; GPU 대기 0초.
+- 2026-11-04T04:02:17.301699+09:00: score_B173nb_b10__LoD2__baseline_30000__train: 103.9초; GPU 대기 0초.
+- 2026-11-04T04:02:48.015344+09:00: B173nb_b10__LoD2__baseline_30000_coarse_prepare: 29.6초; GPU 대기 0초.
+- 2026-11-04T04:02:53.738289+09:00: B173nb_b10__LoD2__baseline_30000_coarse_plan: 5.2초; GPU 대기 0초.
+- 2026-11-04T04:04:44.688500+09:00: B173nb_b10__LoD2__baseline_30000_coarse_tile0: 110.5초; GPU 대기 0초.
+- 2026-11-04T04:05:18.432174+09:00: B173nb_b10__LoD2__baseline_30000_coarse_merge: 32.4초; GPU 대기 0초.
+- 2026-11-04T04:05:22.783960+09:00: bounded_cleanup_B173nb_b10__LoD2__baseline_30000: 3.9초; GPU 대기 0초.
+- 2026-11-04T04:05:22.784419+09:00: B173nb_b10__LoD2__baseline_30000_coarse_finish: 3.9초; GPU 대기 0초.
+- 2026-11-04T04:06:13.209535+09:00: score_B173nb_b10__LoD2__baseline_30000__coarse: 48.2초; GPU 대기 0초.
+- 2026-11-04T04:27:22.570529+09:00: B173 항공 LiDAR CDGS 학습 시점 채점의 원래 Ref.query가 CPU 상한 16을 모두 사용하며 장시간 집계 중. 현재 FINALTRAIN 컨테이너 없음 확인 후 이 컨테이너만 CPU 상한 32로 증가. nice 19·32 GiB·수식·표본은 유지. 후속 기본 채점 상한은 16.
+- 2026-11-04T04:38:53.393817+09:00: score_B173nb_b10__ALS__CDGS_30000__train: 1957.5초; GPU 대기 0초.
+- 2026-11-04T04:41:02.167564+09:00: score_B173nb_b10__ALS__fusion_old: 120.3초; GPU 대기 0초.
+- 2026-11-04T04:41:03.926222+09:00: B173 주변 비교 방법 표 3·4 완료. B173주변_비교방법_채점.md 및 tables/b173_table*.
+- 2026-11-04T04:41:52.328784+09:00: B173 계산·남은 그림 완료. 빈 LoD2 추가 점검 표의 끝 빈 줄 때문에 scoped git diff --check가 실패하여 게시 셸만 종료됨. common.table의 빈 결과 출력을 명시적 해당 없음으로 수정. 계산·PNG를 재실행하지 않고 게시 지점부터 재개. 보고서에 한 건의 CPU 32 예외도 명시.
+- 2026-11-04T04:42:50.494552+09:00: B173 나머지 그림 7.4·7.6·7.7과 CDGS 대표 깊이 그림 열람 완료. 계산 완료 지점에서 after_b173.sh로 이어 B0→R1→B173만 실행; B173 계산 반복 없음.
