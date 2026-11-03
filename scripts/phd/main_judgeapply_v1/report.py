@@ -36,6 +36,8 @@ def main():
     for method,label in zip(METHODS[:6],NAMES[:6]):
       values=[pct(next(r['error_rate_pct'] for r in rates if (r['site'],r['prior'],r['kind'],r['method'])==(s,p,'all',method))) for s in sites for p in ['LoD2','ALS']]
       text.append('| '+label+' | '+' | '.join(values)+' |')
+    text+=['','본 방법의 미판정 상태를 남긴 산술 범위 [이 발주에서 냄]:','','| 지역 | 사전 정보 | 오판율 하한–상한 | 미판정 넓이(m²) | 공통 분모(m²) |','| --- | --- | ---: | ---: | ---: |']
+    for r in selected:text.append(f'| {r["site"]} | {r["prior"]} | {r["error_lower_pct"]:.2f}–{r["error_upper_pct"]:.2f}% | {r["unavailable_cell1_m2"]+r["unavailable_cell2_m2"]:.6f} | {r["denominator_m2"]:.6f} |')
     for prior,stem,title in [('LoD2','fig7_1_LoD2','그림 7.1. 세 지역 LoD2의 판단과 참값 칸을 겹쳐 표시했다.'),('ALS','fig7_2_ALS','그림 7.2. 세 지역 항공 LiDAR 지붕의 판단과 참값 칸을 겹쳐 표시했다.')]:
       rr=[r for r in selected if r['prior']==prior];text+=['',title,'본 방법 분모(m²): '+', '.join(f'{r["site"]} {r["denominator_m2"]:.2f}' for r in rr)+'.',f'![{title}](figures/{stem}.png)']
     text+=['', '각 3×5 합성 그림과 지역별 PNG 6개, 모두 300dpi 및 같은 이름 JSON. 바탕은 지역마다 한 번 만든 5cm 격자이며 두 사전 정보에 공통 사용했다. 위에서 가려지는 벽은 색칠에서 제외하고 수치에는 포함했다. 미판정은 빗금으로 표시했다.',

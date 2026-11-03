@@ -1,0 +1,4796 @@
+{
+  "files": [
+    {
+      "file": "core_points/B0_b10__LoD2.npz",
+      "sha256": "eca6c671750abdd19ee94315a09becf8f865e4783ec5b5823c4578abe255e643",
+      "fields": {
+        "centre": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "roof_type": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U4"
+        },
+        "area": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "u_prior": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "mvs_a_u": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_a": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_status": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "surf": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "building": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U19"
+        },
+        "u": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "a_sensitivity": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "u_replaced": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "sigma_p_replaced": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "any_replaced": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "a_replaced": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "in_eval": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "normal_defined": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "unavailable": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "source_index": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "patch_id": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U18"
+        },
+        "tangent1": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "source_extra": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "u_mvs": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "region_name": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U6"
+        },
+        "prior": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U4"
+        },
+        "prior_n": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "prior_height_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "n": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "mvs_mean_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "mvs_median_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "mvs_sd_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "mvs_face_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "n5": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "n10": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "d10_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "d_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "u_recomputed_status": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "u_source": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U53"
+        },
+        "ring_recompute_status": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "agreement_for_calibration": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "r_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "L_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "geometry": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "photo_code": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "photo_point_id": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U39"
+        },
+        "photo_point_index": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "photo_point_uid": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U19"
+        },
+        "sight_votes": {
+          "shape": [
+            82117,
+            4
+          ],
+          "dtype": "int32"
+        },
+        "sight_disappeared": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "free5": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "free10": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            7,
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            7,
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "prior_weight": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "gt_p": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "gt_status": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "cell": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "tau_m": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    {
+      "file": "photo_points/B0_b10__LoD2.npz",
+      "sha256": "bebc00595ac7e7350c9249cdc7d185b2ec1476f82ae0894c1e567f294ef74286",
+      "fields": {
+        "centres": {
+          "shape": [
+            20048,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normals": {
+          "shape": [
+            20048,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent1": {
+          "shape": [
+            20048,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            20048,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "available": {
+          "shape": [
+            20048,
+            2
+          ],
+          "dtype": "bool"
+        },
+        "selected_images": {
+          "shape": [
+            20048,
+            2,
+            10
+          ],
+          "dtype": "int32"
+        },
+        "prior_height_m": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "prior_n": {
+          "shape": [
+            20048
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_count": {
+          "shape": [
+            20048
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_nmad_m": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "mvs_normal_angle_deg": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "mvs_fit_reason": {
+          "shape": [
+            20048
+          ],
+          "dtype": "<U40"
+        },
+        "mask_fraction_at_zero": {
+          "shape": [
+            20048,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "score": {
+          "shape": [
+            20048,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture": {
+          "shape": [
+            20048,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture_by_view": {
+          "shape": [
+            20048,
+            2,
+            10
+          ],
+          "dtype": "float64"
+        },
+        "valid_image_count": {
+          "shape": [
+            20048,
+            2
+          ],
+          "dtype": "uint8"
+        },
+        "point_id": {
+          "shape": [
+            20048
+          ],
+          "dtype": "<U39"
+        },
+        "source_index": {
+          "shape": [
+            20048
+          ],
+          "dtype": "int64"
+        },
+        "kind": {
+          "shape": [
+            20048
+          ],
+          "dtype": "int64"
+        },
+        "threshold_sample": {
+          "shape": [
+            20048
+          ],
+          "dtype": "bool"
+        },
+        "t": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "photo_code": {
+          "shape": [
+            20048
+          ],
+          "dtype": "int8"
+        },
+        "centre": {
+          "shape": [
+            20048,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "area": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "patch_count": {
+          "shape": [
+            20048
+          ],
+          "dtype": "int64"
+        },
+        "all_within": {
+          "shape": [
+            20048
+          ],
+          "dtype": "bool"
+        },
+        "source": {
+          "shape": [
+            20048
+          ],
+          "dtype": "<U37"
+        },
+        "point_index": {
+          "shape": [
+            20048
+          ],
+          "dtype": "int64"
+        },
+        "point_uid": {
+          "shape": [
+            20048
+          ],
+          "dtype": "<U19"
+        },
+        "s_P": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "s_M": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "selected_image_count": {
+          "shape": [
+            20048,
+            2
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_height_m": {
+          "shape": [
+            20048
+          ],
+          "dtype": "float64"
+        },
+        "threshold_used": {
+          "shape": [
+            20048
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "training_regions/B0_b10__LoD2.npz",
+      "sha256": "49203662956792a5af9fc150a31db9e63551b41d13024f80ccd0fbd4e062d8a9",
+      "fields": {
+        "patch_id": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U18"
+        },
+        "source_index": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "centre": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "area": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "building": {
+          "shape": [
+            82117
+          ],
+          "dtype": "<U19"
+        },
+        "surf": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int64"
+        },
+        "in_eval": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "judge_region": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            82117
+          ],
+          "dtype": "int8"
+        },
+        "h_no_r": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "h_with_r": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "target_no_r": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "target_with_r": {
+          "shape": [
+            82117,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "u": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "u_M": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "r": {
+          "shape": [
+            82117
+          ],
+          "dtype": "float64"
+        },
+        "surface_exists": {
+          "shape": [
+            82117
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "core_points/B0_b10__ALS.npz",
+      "sha256": "1e09a1af0a1eaddd8dbe78c0ee3003a880b3793242180213bbb26ca025dbc47b",
+      "fields": {
+        "centre": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "roof_type": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U1"
+        },
+        "area": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "u_prior": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "mvs_a_u": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_a": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_status": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "surf": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "building": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U19"
+        },
+        "u": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "a_sensitivity": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "u_replaced": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "sigma_p_replaced": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "any_replaced": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "a_replaced": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "in_eval": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "normal_defined": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "unavailable": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "source_index": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "patch_id": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U16"
+        },
+        "tangent1": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "source_extra": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "u_mvs": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "identity_face": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int32"
+        },
+        "sigma_P_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "region_name": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U6"
+        },
+        "prior": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U3"
+        },
+        "old_normal": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal_radius_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "normal_roughness_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "normal_point_count": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int32"
+        },
+        "normal_rule_met": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "prior_n": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "prior_height_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "n": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "mvs_mean_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "mvs_median_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "mvs_sd_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "mvs_face_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "n5": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "n10": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "d10_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "d_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "u_recomputed_status": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "u_source": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U53"
+        },
+        "ring_recompute_status": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "agreement_for_calibration": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "r_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "L_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "geometry": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "photo_code": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "photo_point_id": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U24"
+        },
+        "photo_point_index": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "photo_point_uid": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U17"
+        },
+        "sight_votes": {
+          "shape": [
+            23280,
+            4
+          ],
+          "dtype": "int32"
+        },
+        "sight_disappeared": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "free5": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "free10": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            7,
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            7,
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "prior_weight": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "gt_p": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "gt_status": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "cell": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "tau_m": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    {
+      "file": "photo_points/B0_b10__ALS.npz",
+      "sha256": "722ce095cfdb894f888c3e88a7b59362a60126ebb509907c40c0f4fd4b17d8b2",
+      "fields": {
+        "centres": {
+          "shape": [
+            6155,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normals": {
+          "shape": [
+            6155,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent1": {
+          "shape": [
+            6155,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            6155,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "available": {
+          "shape": [
+            6155,
+            2
+          ],
+          "dtype": "bool"
+        },
+        "selected_images": {
+          "shape": [
+            6155,
+            2,
+            10
+          ],
+          "dtype": "int32"
+        },
+        "prior_height_m": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "prior_n": {
+          "shape": [
+            6155
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_count": {
+          "shape": [
+            6155
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_nmad_m": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "mvs_normal_angle_deg": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "mvs_fit_reason": {
+          "shape": [
+            6155
+          ],
+          "dtype": "<U40"
+        },
+        "mask_fraction_at_zero": {
+          "shape": [
+            6155,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "score": {
+          "shape": [
+            6155,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture": {
+          "shape": [
+            6155,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture_by_view": {
+          "shape": [
+            6155,
+            2,
+            10
+          ],
+          "dtype": "float64"
+        },
+        "valid_image_count": {
+          "shape": [
+            6155,
+            2
+          ],
+          "dtype": "uint8"
+        },
+        "point_id": {
+          "shape": [
+            6155
+          ],
+          "dtype": "<U24"
+        },
+        "source_index": {
+          "shape": [
+            6155
+          ],
+          "dtype": "int64"
+        },
+        "kind": {
+          "shape": [
+            6155
+          ],
+          "dtype": "int8"
+        },
+        "threshold_sample": {
+          "shape": [
+            6155
+          ],
+          "dtype": "bool"
+        },
+        "t": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "photo_code": {
+          "shape": [
+            6155
+          ],
+          "dtype": "int8"
+        },
+        "centre": {
+          "shape": [
+            6155,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "area": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "patch_count": {
+          "shape": [
+            6155
+          ],
+          "dtype": "int64"
+        },
+        "all_within": {
+          "shape": [
+            6155
+          ],
+          "dtype": "bool"
+        },
+        "source": {
+          "shape": [
+            6155
+          ],
+          "dtype": "<U34"
+        },
+        "point_index": {
+          "shape": [
+            6155
+          ],
+          "dtype": "int64"
+        },
+        "point_uid": {
+          "shape": [
+            6155
+          ],
+          "dtype": "<U17"
+        },
+        "s_P": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "s_M": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "selected_image_count": {
+          "shape": [
+            6155,
+            2
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_height_m": {
+          "shape": [
+            6155
+          ],
+          "dtype": "float64"
+        },
+        "threshold_used": {
+          "shape": [
+            6155
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "training_regions/B0_b10__ALS.npz",
+      "sha256": "16a1adb16d51ec2770a88c0aff00725ecada6c7f05fc6e30a079dcebcdc91d48",
+      "fields": {
+        "patch_id": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U16"
+        },
+        "source_index": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "centre": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "area": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "building": {
+          "shape": [
+            23280
+          ],
+          "dtype": "<U19"
+        },
+        "surf": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int64"
+        },
+        "in_eval": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "judge_region": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            23280
+          ],
+          "dtype": "int8"
+        },
+        "h_no_r": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "h_with_r": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "target_no_r": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "target_with_r": {
+          "shape": [
+            23280,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "u": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "u_M": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "r": {
+          "shape": [
+            23280
+          ],
+          "dtype": "float64"
+        },
+        "surface_exists": {
+          "shape": [
+            23280
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "core_points/B173nb_b10__LoD2.npz",
+      "sha256": "6c2d5979a6d87c52bc3d16aeb3fcb82c42e5e384a932e8deebc789996e422e0b",
+      "fields": {
+        "centre": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "roof_type": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U4"
+        },
+        "area": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "u_prior": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "mvs_a_u": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_a": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_status": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "surf": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "building": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U19"
+        },
+        "u": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "a_sensitivity": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "u_replaced": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "sigma_p_replaced": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "any_replaced": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "a_replaced": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "in_eval": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "normal_defined": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "unavailable": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "source_index": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "patch_id": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U22"
+        },
+        "tangent1": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "source_extra": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "u_mvs": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "region_name": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U10"
+        },
+        "prior": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U4"
+        },
+        "prior_n": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "prior_height_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "n": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "mvs_mean_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "mvs_median_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "mvs_sd_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "mvs_face_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "n5": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "n10": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "d10_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "d_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "u_recomputed_status": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "u_source": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U53"
+        },
+        "ring_recompute_status": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "agreement_for_calibration": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "r_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "L_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "geometry": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "photo_code": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "photo_point_id": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U39"
+        },
+        "photo_point_index": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "photo_point_uid": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U23"
+        },
+        "sight_votes": {
+          "shape": [
+            141534,
+            4
+          ],
+          "dtype": "int32"
+        },
+        "sight_disappeared": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "free5": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "free10": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            7,
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            7,
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "prior_weight": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "gt_p": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "gt_status": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "cell": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "tau_m": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    {
+      "file": "photo_points/B173nb_b10__LoD2.npz",
+      "sha256": "ce63db99a2005ba754feae9b570fdff850571f6ad1a95cd66b268cc2336fa9b4",
+      "fields": {
+        "centres": {
+          "shape": [
+            27019,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normals": {
+          "shape": [
+            27019,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent1": {
+          "shape": [
+            27019,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            27019,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "available": {
+          "shape": [
+            27019,
+            2
+          ],
+          "dtype": "bool"
+        },
+        "selected_images": {
+          "shape": [
+            27019,
+            2,
+            10
+          ],
+          "dtype": "int32"
+        },
+        "prior_height_m": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "prior_n": {
+          "shape": [
+            27019
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_count": {
+          "shape": [
+            27019
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_nmad_m": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "mvs_normal_angle_deg": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "mvs_fit_reason": {
+          "shape": [
+            27019
+          ],
+          "dtype": "<U40"
+        },
+        "mask_fraction_at_zero": {
+          "shape": [
+            27019,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "score": {
+          "shape": [
+            27019,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture": {
+          "shape": [
+            27019,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture_by_view": {
+          "shape": [
+            27019,
+            2,
+            10
+          ],
+          "dtype": "float64"
+        },
+        "valid_image_count": {
+          "shape": [
+            27019,
+            2
+          ],
+          "dtype": "uint8"
+        },
+        "point_id": {
+          "shape": [
+            27019
+          ],
+          "dtype": "<U39"
+        },
+        "source_index": {
+          "shape": [
+            27019
+          ],
+          "dtype": "int64"
+        },
+        "kind": {
+          "shape": [
+            27019
+          ],
+          "dtype": "int64"
+        },
+        "threshold_sample": {
+          "shape": [
+            27019
+          ],
+          "dtype": "bool"
+        },
+        "t": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "photo_code": {
+          "shape": [
+            27019
+          ],
+          "dtype": "int8"
+        },
+        "centre": {
+          "shape": [
+            27019,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "area": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "patch_count": {
+          "shape": [
+            27019
+          ],
+          "dtype": "int64"
+        },
+        "all_within": {
+          "shape": [
+            27019
+          ],
+          "dtype": "bool"
+        },
+        "source": {
+          "shape": [
+            27019
+          ],
+          "dtype": "<U37"
+        },
+        "point_index": {
+          "shape": [
+            27019
+          ],
+          "dtype": "int64"
+        },
+        "point_uid": {
+          "shape": [
+            27019
+          ],
+          "dtype": "<U23"
+        },
+        "s_P": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "s_M": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "selected_image_count": {
+          "shape": [
+            27019,
+            2
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_height_m": {
+          "shape": [
+            27019
+          ],
+          "dtype": "float64"
+        },
+        "threshold_used": {
+          "shape": [
+            27019
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "training_regions/B173nb_b10__LoD2.npz",
+      "sha256": "a7444d58cc756100363a637e6b1f5cf84e02fa5079572fb8a32b3c0be129dea2",
+      "fields": {
+        "patch_id": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U22"
+        },
+        "source_index": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "centre": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "area": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "building": {
+          "shape": [
+            141534
+          ],
+          "dtype": "<U19"
+        },
+        "surf": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int64"
+        },
+        "in_eval": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "judge_region": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            141534
+          ],
+          "dtype": "int8"
+        },
+        "h_no_r": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "h_with_r": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "target_no_r": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "target_with_r": {
+          "shape": [
+            141534,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "u": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "u_M": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "r": {
+          "shape": [
+            141534
+          ],
+          "dtype": "float64"
+        },
+        "surface_exists": {
+          "shape": [
+            141534
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "core_points/B173nb_b10__ALS.npz",
+      "sha256": "394ef94b9422dbaf02c47261e611ad2c6a7466701522646635a6c1816c68af65",
+      "fields": {
+        "centre": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "roof_type": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U1"
+        },
+        "area": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "u_prior": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "mvs_a_u": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_a": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_status": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "surf": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "building": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U19"
+        },
+        "u": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "a_sensitivity": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "u_replaced": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "sigma_p_replaced": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "any_replaced": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "a_replaced": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "in_eval": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "normal_defined": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "unavailable": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "source_index": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "patch_id": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U20"
+        },
+        "tangent1": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "source_extra": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "u_mvs": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "identity_face": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int32"
+        },
+        "sigma_P_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "region_name": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U10"
+        },
+        "prior": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U3"
+        },
+        "old_normal": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal_radius_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "normal_roughness_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "normal_point_count": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int32"
+        },
+        "normal_rule_met": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "prior_n": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "prior_height_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "n": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "mvs_mean_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "mvs_median_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "mvs_sd_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "mvs_face_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "n5": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "n10": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "d10_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "d_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "u_recomputed_status": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "u_source": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U53"
+        },
+        "ring_recompute_status": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "agreement_for_calibration": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "r_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "L_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "geometry": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "photo_code": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "photo_point_id": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U28"
+        },
+        "photo_point_index": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "photo_point_uid": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U21"
+        },
+        "sight_votes": {
+          "shape": [
+            34273,
+            4
+          ],
+          "dtype": "int32"
+        },
+        "sight_disappeared": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "free5": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "free10": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            7,
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            7,
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "prior_weight": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "gt_p": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "gt_status": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "cell": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "tau_m": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    {
+      "file": "photo_points/B173nb_b10__ALS.npz",
+      "sha256": "4252bd10036b56208bf02b69445a855ebd1e130a9cc9dbbdbd1af9a87d890dcf",
+      "fields": {
+        "centres": {
+          "shape": [
+            9723,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normals": {
+          "shape": [
+            9723,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent1": {
+          "shape": [
+            9723,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            9723,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "available": {
+          "shape": [
+            9723,
+            2
+          ],
+          "dtype": "bool"
+        },
+        "selected_images": {
+          "shape": [
+            9723,
+            2,
+            10
+          ],
+          "dtype": "int32"
+        },
+        "prior_height_m": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "prior_n": {
+          "shape": [
+            9723
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_count": {
+          "shape": [
+            9723
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_nmad_m": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "mvs_normal_angle_deg": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "mvs_fit_reason": {
+          "shape": [
+            9723
+          ],
+          "dtype": "<U40"
+        },
+        "mask_fraction_at_zero": {
+          "shape": [
+            9723,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "score": {
+          "shape": [
+            9723,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture": {
+          "shape": [
+            9723,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture_by_view": {
+          "shape": [
+            9723,
+            2,
+            10
+          ],
+          "dtype": "float64"
+        },
+        "valid_image_count": {
+          "shape": [
+            9723,
+            2
+          ],
+          "dtype": "uint8"
+        },
+        "point_id": {
+          "shape": [
+            9723
+          ],
+          "dtype": "<U28"
+        },
+        "source_index": {
+          "shape": [
+            9723
+          ],
+          "dtype": "int64"
+        },
+        "kind": {
+          "shape": [
+            9723
+          ],
+          "dtype": "int8"
+        },
+        "threshold_sample": {
+          "shape": [
+            9723
+          ],
+          "dtype": "bool"
+        },
+        "t": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "photo_code": {
+          "shape": [
+            9723
+          ],
+          "dtype": "int8"
+        },
+        "centre": {
+          "shape": [
+            9723,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "area": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "patch_count": {
+          "shape": [
+            9723
+          ],
+          "dtype": "int64"
+        },
+        "all_within": {
+          "shape": [
+            9723
+          ],
+          "dtype": "bool"
+        },
+        "source": {
+          "shape": [
+            9723
+          ],
+          "dtype": "<U34"
+        },
+        "point_index": {
+          "shape": [
+            9723
+          ],
+          "dtype": "int64"
+        },
+        "point_uid": {
+          "shape": [
+            9723
+          ],
+          "dtype": "<U21"
+        },
+        "s_P": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "s_M": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "selected_image_count": {
+          "shape": [
+            9723,
+            2
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_height_m": {
+          "shape": [
+            9723
+          ],
+          "dtype": "float64"
+        },
+        "threshold_used": {
+          "shape": [
+            9723
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "training_regions/B173nb_b10__ALS.npz",
+      "sha256": "317d964d28044ac90f7bf38c94155645b923c9c63d97bf97f30495c2e3f36ad3",
+      "fields": {
+        "patch_id": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U20"
+        },
+        "source_index": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "centre": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "area": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "building": {
+          "shape": [
+            34273
+          ],
+          "dtype": "<U19"
+        },
+        "surf": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int64"
+        },
+        "in_eval": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "judge_region": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            34273
+          ],
+          "dtype": "int8"
+        },
+        "h_no_r": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "h_with_r": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "target_no_r": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "target_with_r": {
+          "shape": [
+            34273,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "u": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "u_M": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "r": {
+          "shape": [
+            34273
+          ],
+          "dtype": "float64"
+        },
+        "surface_exists": {
+          "shape": [
+            34273
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "core_points/R1rep_b10__LoD2.npz",
+      "sha256": "a8cb017fb26f582bfab72205c5505473e27a25391ec52422ef9e8d8a118e5d3d",
+      "fields": {
+        "centre": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "roof_type": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U4"
+        },
+        "area": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "u_prior": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "mvs_a_u": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_a": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_status": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "surf": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "building": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U17"
+        },
+        "u": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "a_sensitivity": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "u_replaced": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "sigma_p_replaced": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "any_replaced": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "a_replaced": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "in_eval": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "normal_defined": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "unavailable": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "source_index": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "patch_id": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U21"
+        },
+        "tangent1": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "source_extra": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "u_mvs": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "region_name": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U9"
+        },
+        "prior": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U4"
+        },
+        "prior_n": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "prior_height_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "n": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "mvs_mean_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "mvs_median_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "mvs_sd_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "mvs_face_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "n5": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "n10": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "d10_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "d_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "u_recomputed_status": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "u_source": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U53"
+        },
+        "ring_recompute_status": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "agreement_for_calibration": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "r_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "L_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "geometry": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "photo_code": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "photo_point_id": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U39"
+        },
+        "photo_point_index": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "photo_point_uid": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U22"
+        },
+        "sight_votes": {
+          "shape": [
+            79054,
+            4
+          ],
+          "dtype": "int32"
+        },
+        "sight_disappeared": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "free5": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "free10": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            7,
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            7,
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "prior_weight": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "gt_p": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "gt_status": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "cell": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "tau_m": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    {
+      "file": "photo_points/R1rep_b10__LoD2.npz",
+      "sha256": "a2f99624fee74788c6a4accfba263108982956d27584ede08e33298d8903042b",
+      "fields": {
+        "centres": {
+          "shape": [
+            18448,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normals": {
+          "shape": [
+            18448,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent1": {
+          "shape": [
+            18448,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            18448,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "available": {
+          "shape": [
+            18448,
+            2
+          ],
+          "dtype": "bool"
+        },
+        "selected_images": {
+          "shape": [
+            18448,
+            2,
+            10
+          ],
+          "dtype": "int32"
+        },
+        "prior_height_m": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "prior_n": {
+          "shape": [
+            18448
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_count": {
+          "shape": [
+            18448
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_nmad_m": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "mvs_normal_angle_deg": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "mvs_fit_reason": {
+          "shape": [
+            18448
+          ],
+          "dtype": "<U40"
+        },
+        "mask_fraction_at_zero": {
+          "shape": [
+            18448,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "score": {
+          "shape": [
+            18448,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture": {
+          "shape": [
+            18448,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture_by_view": {
+          "shape": [
+            18448,
+            2,
+            10
+          ],
+          "dtype": "float64"
+        },
+        "valid_image_count": {
+          "shape": [
+            18448,
+            2
+          ],
+          "dtype": "uint8"
+        },
+        "point_id": {
+          "shape": [
+            18448
+          ],
+          "dtype": "<U39"
+        },
+        "source_index": {
+          "shape": [
+            18448
+          ],
+          "dtype": "int64"
+        },
+        "kind": {
+          "shape": [
+            18448
+          ],
+          "dtype": "int64"
+        },
+        "threshold_sample": {
+          "shape": [
+            18448
+          ],
+          "dtype": "bool"
+        },
+        "t": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "photo_code": {
+          "shape": [
+            18448
+          ],
+          "dtype": "int8"
+        },
+        "centre": {
+          "shape": [
+            18448,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "area": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "patch_count": {
+          "shape": [
+            18448
+          ],
+          "dtype": "int64"
+        },
+        "all_within": {
+          "shape": [
+            18448
+          ],
+          "dtype": "bool"
+        },
+        "source": {
+          "shape": [
+            18448
+          ],
+          "dtype": "<U37"
+        },
+        "point_index": {
+          "shape": [
+            18448
+          ],
+          "dtype": "int64"
+        },
+        "point_uid": {
+          "shape": [
+            18448
+          ],
+          "dtype": "<U22"
+        },
+        "s_P": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "s_M": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "selected_image_count": {
+          "shape": [
+            18448,
+            2
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_height_m": {
+          "shape": [
+            18448
+          ],
+          "dtype": "float64"
+        },
+        "threshold_used": {
+          "shape": [
+            18448
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "training_regions/R1rep_b10__LoD2.npz",
+      "sha256": "ffe6304b1845fa9a4705da53f3ff31bba2273c5e158469f6d9864e8d0fab73ab",
+      "fields": {
+        "patch_id": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U21"
+        },
+        "source_index": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "centre": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "area": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "building": {
+          "shape": [
+            79054
+          ],
+          "dtype": "<U17"
+        },
+        "surf": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int64"
+        },
+        "in_eval": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "judge_region": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            79054
+          ],
+          "dtype": "int8"
+        },
+        "h_no_r": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "h_with_r": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "target_no_r": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "target_with_r": {
+          "shape": [
+            79054,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "u": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "u_M": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "r": {
+          "shape": [
+            79054
+          ],
+          "dtype": "float64"
+        },
+        "surface_exists": {
+          "shape": [
+            79054
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "core_points/R1rep_b10__ALS.npz",
+      "sha256": "6c3b24591225a7da4a7cadf7951e460bc6c2cf60dce50220f06cb5aad5066d6b",
+      "fields": {
+        "centre": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "roof_type": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U1"
+        },
+        "area": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "u_prior": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "mvs_a_u": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_a": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float32"
+        },
+        "mvs_a_status": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "surf": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "building": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U17"
+        },
+        "u": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "a_sensitivity": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "u_replaced": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "sigma_p_replaced": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "any_replaced": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "a_replaced": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "in_eval": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "normal_defined": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "unavailable": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "source_index": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "patch_id": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U19"
+        },
+        "tangent1": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "source_extra": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "u_mvs": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "identity_face": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int32"
+        },
+        "sigma_P_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "region_name": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U9"
+        },
+        "prior": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U3"
+        },
+        "old_normal": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal_radius_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "normal_roughness_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "normal_point_count": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int32"
+        },
+        "normal_rule_met": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "prior_n": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "prior_height_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "n": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "mvs_mean_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "mvs_median_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "mvs_sd_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "mvs_face_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "n5": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "n10": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "d10_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "d_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "u_recomputed_status": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "u_source": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U53"
+        },
+        "ring_recompute_status": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "agreement_for_calibration": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "r_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "L_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "geometry": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "photo_code": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "photo_point_id": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U38"
+        },
+        "photo_point_index": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "photo_point_uid": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U20"
+        },
+        "sight_votes": {
+          "shape": [
+            24189,
+            4
+          ],
+          "dtype": "int32"
+        },
+        "sight_disappeared": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "free5": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "free10": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            7,
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            7,
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "prior_weight": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "gt_p": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "gt_status": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "cell": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "tau_m": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    {
+      "file": "photo_points/R1rep_b10__ALS.npz",
+      "sha256": "dbd975a8fedb5acf01b41c4ec62ca6629dd1cdd5bf027907366db7458774ede8",
+      "fields": {
+        "centres": {
+          "shape": [
+            6950,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normals": {
+          "shape": [
+            6950,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent1": {
+          "shape": [
+            6950,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "tangent2": {
+          "shape": [
+            6950,
+            2,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "available": {
+          "shape": [
+            6950,
+            2
+          ],
+          "dtype": "bool"
+        },
+        "selected_images": {
+          "shape": [
+            6950,
+            2,
+            10
+          ],
+          "dtype": "int32"
+        },
+        "prior_height_m": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "prior_n": {
+          "shape": [
+            6950
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_count": {
+          "shape": [
+            6950
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_nmad_m": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "mvs_normal_angle_deg": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "mvs_fit_reason": {
+          "shape": [
+            6950
+          ],
+          "dtype": "<U40"
+        },
+        "mask_fraction_at_zero": {
+          "shape": [
+            6950,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "score": {
+          "shape": [
+            6950,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture": {
+          "shape": [
+            6950,
+            2
+          ],
+          "dtype": "float64"
+        },
+        "texture_by_view": {
+          "shape": [
+            6950,
+            2,
+            10
+          ],
+          "dtype": "float64"
+        },
+        "valid_image_count": {
+          "shape": [
+            6950,
+            2
+          ],
+          "dtype": "uint8"
+        },
+        "point_id": {
+          "shape": [
+            6950
+          ],
+          "dtype": "<U38"
+        },
+        "source_index": {
+          "shape": [
+            6950
+          ],
+          "dtype": "int64"
+        },
+        "kind": {
+          "shape": [
+            6950
+          ],
+          "dtype": "int64"
+        },
+        "threshold_sample": {
+          "shape": [
+            6950
+          ],
+          "dtype": "bool"
+        },
+        "t": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "photo_code": {
+          "shape": [
+            6950
+          ],
+          "dtype": "int8"
+        },
+        "centre": {
+          "shape": [
+            6950,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "area": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "patch_count": {
+          "shape": [
+            6950
+          ],
+          "dtype": "int64"
+        },
+        "all_within": {
+          "shape": [
+            6950
+          ],
+          "dtype": "bool"
+        },
+        "source": {
+          "shape": [
+            6950
+          ],
+          "dtype": "<U37"
+        },
+        "point_index": {
+          "shape": [
+            6950
+          ],
+          "dtype": "int64"
+        },
+        "point_uid": {
+          "shape": [
+            6950
+          ],
+          "dtype": "<U20"
+        },
+        "s_P": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "s_M": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "selected_image_count": {
+          "shape": [
+            6950,
+            2
+          ],
+          "dtype": "int64"
+        },
+        "mvs_fit_height_m": {
+          "shape": [
+            6950
+          ],
+          "dtype": "float64"
+        },
+        "threshold_used": {
+          "shape": [
+            6950
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    {
+      "file": "training_regions/R1rep_b10__ALS.npz",
+      "sha256": "c2fb5684a86354ae506b01ef1d1d45ef42b941a97cb300a1f77a7f3a046febd9",
+      "fields": {
+        "patch_id": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U19"
+        },
+        "source_index": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "centre": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "normal": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "kind": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "area": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "building": {
+          "shape": [
+            24189
+          ],
+          "dtype": "<U17"
+        },
+        "surf": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int64"
+        },
+        "in_eval": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        },
+        "region": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "judge_region": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "reason": {
+          "shape": [
+            24189
+          ],
+          "dtype": "int8"
+        },
+        "h_no_r": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "h_with_r": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "target_no_r": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "target_with_r": {
+          "shape": [
+            24189,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "u": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "sigma_p": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "u_M": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "sigma_P": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "sigma_W": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "r": {
+          "shape": [
+            24189
+          ],
+          "dtype": "float64"
+        },
+        "surface_exists": {
+          "shape": [
+            24189
+          ],
+          "dtype": "bool"
+        }
+      }
+    }
+  ],
+  "scientific_verdict": null
+}

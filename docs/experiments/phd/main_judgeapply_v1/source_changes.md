@@ -17,11 +17,13 @@
 | inspect_inputs.py:1–29 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
 | judgments.py:1–76 | 지역·종류별 q05/q10, 기존 사진 판단 순서, 6방식 및 TARGET 번호 두 목표 |
 | photo_prepare.py:1–143 | 기존 kind+point_id 연결 및 같은 2×2 규칙 생성; column의 H만 벽5m, 사전 높이 hp+r, 높이 배열 [0.], 자른 mask |
+| photo_receipt.py:1–12 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
 | preserve_b0.py:1–11 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
 | provenance.py:1–40 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
 | reconcile_ring.py:1–34 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
+| record_visual_review.py:1–17 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
 | refresh_b0_truth.py:1–9 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
-| report.py:1–56 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
+| report.py:1–58 | 지역 실행·기록·전달 보조; 원본 상속 파일 변경 없음 |
 | ring_missing.py:1–30 | 누락만 원래 법선·같은 지역 RNG·1.5m 링 재계산 |
 | score.py:1–33 | 상속 score AST의 mode 루프만 range(1); single height, 원본 JPEG4GiB/float64 그대로 |
 | sight.py:1–22 | TARGET r7 지역 시선 검사 상속; 5m/10m 결측 합집합만 계산 |
