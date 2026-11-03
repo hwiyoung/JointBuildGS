@@ -1,0 +1,25 @@
+{
+  "source": "/repo/src/phd/prior_propagation_v5/tolerance.py",
+  "source_sha256": "9dbb1421b657dc2686cd6ad64300483553664463cc3036419caab33cf50808ec",
+  "copy": "/repo/scripts/phd/main_rescore_v1/inherited/tolerance.py",
+  "copy_sha256": "96fcc5b0cf35918cdece75ac95e261d98c5a4b885cc11bed12b7e820490cf6d3",
+  "changed_original_lines": [
+    27
+  ],
+  "diff": [
+    "--- /repo/src/phd/prior_propagation_v5/tolerance.py\n",
+    "+++ /repo/scripts/phd/main_rescore_v1/inherited/tolerance.py\n",
+    "@@ -24,7 +24,7 @@\n",
+    "         return out",
+    "     m1 = float(np.median(x))",
+    "     s1 = float(NMAD_C * np.median(np.abs(x - m1)))",
+    "-    keep = np.abs(x - m1) <= clip * s1 if s1 > 0 else np.ones(x.size, bool)",
+    "+    keep = np.ones(x.size, bool)  # RESCORE: retain every finite residual",
+    "     m2 = float(np.median(x[keep]))",
+    "     s2 = float(NMAD_C * np.median(np.abs(x[keep] - m2)))",
+    "     out.update(median_before=m1, nmad_before=s1, n_kept=int(keep.sum()), clipped_share=float(1.0 - keep.mean()),"
+  ],
+  "residual_source": "scripts/phd/main_prep_discard_rule_v1/s03_stage1.py:243-299",
+  "cell_source": "scripts/phd/main_judgeapply_v1/truth.py:38-48; same rules with tau replaced",
+  "scientific_verdict": null
+}

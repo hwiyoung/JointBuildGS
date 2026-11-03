@@ -32,7 +32,7 @@ def table(name,rows):
  dump(D/'tables'/f'{name}.json',dict(rows=rows,source_tag='[이 발주에서 냄]',scientific_verdict=None))
  keys=list(dict.fromkeys(k for r in rows for k in r))
  with (D/'tables'/f'{name}.csv').open('w',newline='') as f:
-  w=csv.DictWriter(f,fieldnames=keys);w.writeheader();w.writerows([{k:json.dumps(v,ensure_ascii=False) if isinstance(v,(dict,list)) else v for k,v in r.items()} for r in rows])
+  w=csv.DictWriter(f,fieldnames=keys,lineterminator='\n');w.writeheader();w.writerows([{k:json.dumps(v,ensure_ascii=False) if isinstance(v,(dict,list)) else v for k,v in r.items()} for r in rows])
  (D/'tables'/f'{name}.md').write_text('| '+' | '.join(keys)+' |\n| '+' | '.join(['---']*len(keys))+' |\n'+'\n'.join('| '+' | '.join(str(r.get(k,'')) for k in keys)+' |' for r in rows)+'\n')
 def timing(stage,start,**extra):
  d=dict(at=now(),stage=stage,seconds=time.monotonic()-start,gpu_wait_seconds=0,scientific_verdict=None,**extra)
