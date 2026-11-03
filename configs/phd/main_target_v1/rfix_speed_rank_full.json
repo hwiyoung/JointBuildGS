@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-03T14:57:54.869486+09:00",
+  "states": [
+    "r8_LoD2_stop",
+    "GeoGS_LoD2_30000"
+  ],
+  "reason": "Old top8-per-chunk/top16 summaries cannot prove membership for two states; retain old results and repeat saved-state gradients with exact global64 per view and parameter.",
+  "selection": "same30 frozen views and losses; select20 distinct rows by maximum absolute difference, then row, camera, parameter",
+  "ranking": "65 rows per chunk; exact global64 and65th row; delta descending then row ascending",
+  "optimization_steps": 0,
+  "training_use": false,
+  "scientific_verdict": null
+}
