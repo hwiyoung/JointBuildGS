@@ -8,7 +8,7 @@ bash scripts/phd/main_rescore_v1/run.sh "setup-$site" setup_site.py "$site"
 if [[ ! -f "$OUT/views/$site.json" ]]; then bash scripts/phd/main_rescore_v1/run_gpu.sh "jobs/${site}__views.json" freeze_views.py; fi
 if [[ ! -f "$(realpath "$REPO/../JointBuildGS-artifacts")/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/$site/unseen.npz" ]]; then
  bash scripts/phd/main_rescore_v1/site_inputs.sh "$site"
- bash scripts/phd/main_rescore_v1/run.sh "targets-$site" targets.py "$site"
+ if [[ ! -f "$OUT/targets_v2/${site}__ALS.npz" || ! -f "$OUT/targets_v2/${site}__LoD2.npz" ]]; then bash scripts/phd/main_rescore_v1/run.sh "targets-$site" targets.py "$site"; fi
  bash scripts/phd/main_rescore_v1/run.sh "reuse-$site" reused_meshes.py "$site"
  bash scripts/phd/main_rescore_v1/run.sh "unavailable-$site" unavailable_virtual.py "$site"
  for prior in ALS LoD2; do bash scripts/phd/main_rescore_v1/run.sh "quality-$site-$prior" target_quality.py "$site" "$prior" judgment_mesh "${site}__${prior}__judgment_mesh"; done

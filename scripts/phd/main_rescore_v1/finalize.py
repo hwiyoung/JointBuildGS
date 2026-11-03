@@ -22,6 +22,11 @@ def main():
    assert m.get('cluster_to_keep',50)==50
    views=json.loads((O/'views'/f"{r['site']}.json").read_text())['views'];assert sum(x['virtual'] for x in views)==16
  checks.append(dict(check='source_hashes_final_mesh_settings_sampling_and_new_wall_tau',status='PASS'))
+ membership=[]
+ for site in SITES:
+  frozen=json.loads((O/'views'/f'{site}.json').read_text());split=S0/'fork_inputs/s61'/site/'split.json';expected=sorted(json.loads(split.read_text())['train']);actual=[v['name'] for v in frozen['views'] if not v['virtual']];assert actual==expected,site
+  membership.append(dict(site=site,training_views=len(actual),split_sha256=sha(split),views_sha256=sha(O/'views'/f'{site}.json')))
+ checks.append(dict(check='exact_training_camera_names_and_order_against_original_split',status='PASS',rows=membership))
  repro=json.loads((D/'tables/reproduction_full_replay.json').read_text())['rows'];assert len(repro)==2 and all(r['pass_tolerance'] for r in repro);checks.append(dict(check='existing_actual_geometry_reproduction',status='PASS',rerun=False))
  required=['그림6_2']+[f'그림7_{n}_{prior}' for n in [3,5] for prior in ['ALS','LoD2']]+[f'그림7_{n}_ALS' for n in [4,6,7]]
  for stem in required:
