@@ -4,6 +4,7 @@ from scipy.spatial import cKDTree
 from common import *
 from geometry import context,columns,result_sample,MeshScene,closest
 from metrics import four,inherited_result_mask
+from surface_tau import by_wall,RULE
 
 def normal_wall_distance(scene,points,normals,wall):
  q,dist=closest(scene,points)
@@ -33,7 +34,10 @@ def subset_metrics(ctx,rd,nd,rowtau,qtau,owner,good):
 def score(site,prior,key,mesh,legacy=False):
  import open3d as o3d
  start=time.monotonic();cfg();assert '/' not in key and key not in ['.','..'];root=O/'scores'/key;root.mkdir(parents=True,exist_ok=True);ctx=context(site,prior);gt=ctx['gt'];core=ctx['core'];v2=ctx['v2'];tau=v2['tau_v2_m'];cell=v2['cell_v2']
- m=o3d.io.read_triangle_mesh(str(mesh));V=np.asarray(m.vertices);F=np.asarray(m.triangles);assert len(F)>0,'EMPTY_MESH';sample=result_sample(V,F,gt);scene=MeshScene(V,F);ntri=len(F);del m,V,F;gc.collect();print('SAMPLE',key,len(sample),ntri,flush=True)
+ if mesh.suffix=='.npz':
+  arrays=loadz(mesh,['V','F']);V=arrays['V'].astype(float);F=arrays['F'];m=None;del arrays
+ else:m=o3d.io.read_triangle_mesh(str(mesh));V=np.asarray(m.vertices);F=np.asarray(m.triangles)
+ assert len(F)>0,'EMPTY_MESH';sample=result_sample(V,F,gt);scene=MeshScene(V,F);ntri=len(F);del m,V,F;gc.collect();print('SAMPLE',key,len(sample),ntri,flush=True)
  if legacy:gd=scene.distance(gt.Gb).astype(float);rd=scene.distance(ctx['row_points']).astype(float)
  else:
   gd=normal_wall_distance(scene,gt.Gb,ctx['normals'][0][gt.bs_idx],gt.G['vert_gt_points'][gt.bs_idx].astype(bool))
@@ -49,6 +53,7 @@ def score(site,prior,key,mesh,legacy=False):
  inside=owner>=0;gtowner=ctx['scene_owner'];gtin=gtowner>=0;gt_tau=tau[tree.query(gt.Gb,workers=4)[1]].copy();gt_tau[gtin]=tau[gtowner[gtin]]
  qtau=tau[near_q].copy();qtau[inside]=tau[owner[inside]]
  row_owner=ctx['row_owner'];rowok=row_owner>=0;rowtau=np.full(len(rd),np.nan);rowtau[rowok]=tau[row_owner[rowok]]
+ gt_tau=by_wall(ctx,gt.G['vert_gt_points'][gt.bs_idx].astype(bool));qtau=by_wall(ctx,gt.G['vert_gt_points'][gt.bs_idx][near].astype(bool));rowtau=by_wall(ctx,ctx['row_kind']==2)
  if legacy:gt_tau[:]=.147;qtau[:]=.147;rowtau[:]=.147
  vals=four(gd,nd,gt_tau,qtau,result_mask=refgood)
  blocks,band,offsets=subset_metrics(ctx,rd,region_nd,rowtau,qtau,owner,region_good)
@@ -56,7 +61,7 @@ def score(site,prior,key,mesh,legacy=False):
  diagnostic=dict(n_result=len(sample),outside_column_fraction=float((~inside).mean()),multiple_column_fraction=float((hits>1).mean()),roof_column_points=int(roof.sum()),roof_column_nearest_wall_fraction=float(nearest_wall[roof].mean()) if roof.any() else None,reference_unavailable_fraction=float((~refgood).mean()),region_reference_unavailable_fraction=float((~region_good).mean()),undefined_cell_result_points=int((inside&np.isin(np.where(inside,cell[np.maximum(owner,0)],9),[9])).sum()))
  savez(root/'points.npz',sample_xyz=sample.astype('f4'),sample_distance_m=nd.astype('f4'),sample_lat_m=lat.astype('f4'),sample_region_distance_m=region_nd.astype('f4'),sample_region_lat_m=region_lat.astype('f4'),sample_tau_m=qtau,sample_owner=owner,sample_hits=hits,scene_distance_m=gd.astype('f4'),scene_tau_m=gt_tau,scene_owner=gtowner,row_distance_m=rd.astype('f4'),row_tau_m=rowtau,row_owner=row_owner)
  result=dict(site=site,prior=prior,key=key,mesh=str(mesh),mesh_sha256=sha(mesh),scene=vals,cells=blocks,band=band,offsets=offsets,diagnostic=diagnostic,legacy=legacy,rule='legacy_AXES_E' if legacy else 'RESCORE_v1_columns',source_tag='[이 발주에서 냄]',provenance=dict(config_sha256=sha(C/'rescore_v1.json'),cells_sha256=sha(CELLS/f'{site}__{prior}.npz'),scorer_sha256=sha(__file__),geometry_sha256=sha(Path(__file__).with_name('geometry.py')),commit=os.environ.get('RESCORE_COMMIT'),image=os.environ.get('RESCORE_IMAGE'),sampling_density_m2=400,sampling_seed=0,crs='EPSG:25832',optimization_steps=0),scientific_verdict=None)
- dump(root/'values.json',result);timing('score_'+key,start);print('SCORE_COMPLETE',key,vals,flush=True)
+ result['provenance']['tau_assignment']=RULE if not legacy else 'legacy_constant_0.147';dump(root/'values.json',result);timing('score_'+key,start);print('SCORE_COMPLETE',key,vals,flush=True)
  return result
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('site');p.add_argument('prior',choices=['ALS','LoD2']);p.add_argument('key');p.add_argument('mesh',type=Path);p.add_argument('--legacy',action='store_true');a=p.parse_args();score(a.site,a.prior,a.key,a.mesh,a.legacy)
