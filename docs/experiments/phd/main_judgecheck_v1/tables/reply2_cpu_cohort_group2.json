@@ -1,0 +1,50 @@
+{
+  "at": "2026-11-03T17:39:21.796190+09:00",
+  "group": 2,
+  "active_tile_excluded": "none",
+  "assignments": [
+    [
+      "6909_53359",
+      "6909_53361",
+      "6910_53362",
+      "6908_53361",
+      "6911_53363",
+      "6911_53362",
+      "6909_53363",
+      "6908_53358",
+      "6908_53362",
+      "6907_53360"
+    ],
+    [
+      "6908_53360",
+      "6910_53363",
+      "6909_53362",
+      "6909_53358",
+      "6909_53360",
+      "6910_53359",
+      "6910_53361",
+      "6910_53360",
+      "6907_53359"
+    ]
+  ],
+  "kernel_sources": {
+    "photo_score_reply2.py": "02b34401c87356a4837e3201af852f7638da92e11e598b0a156f2478ff66fa29",
+    "photo_score_group_reply2.py": "088549230aa469db67483b49d86178947f66d96fe632d6612cb573d38773b96c"
+  },
+  "wrapper_sha256": "2441c35b6eeebb7a6eb5a79e8ead93f52993dea87410c4e5288c0e4e22c9f799",
+  "config_sha256": "2fbaa8b7e6abb0fe53e0469fbc0afe473d5d5bee9985d66f544c9f010ecbb697",
+  "settings": {
+    "workers": 2,
+    "cpu_quota_each": 4,
+    "memory_gib_each": 28,
+    "nice": 19,
+    "minimum_available_gib_before_launch": 36,
+    "cache_preparation": "exclusive lock for level indexing only; read-only JPEG supply in each worker with 4 GiB LRU; no shared image writes",
+    "numerical_kernel": "unchanged float64 score and group sources; same 600000/1024 rows",
+    "order": "one prior/kind only; both workers join before judgments; walls require roof commit",
+    "numpy_hugepage_advice": false,
+    "stream_lock_sha256": "ffcaaa1583842c69a1173e962521f742d63f243ed5c2e277e0f78ddfaac05c51",
+    "device_choice": "bounded CPU queue selected while another research GPU task is active; choice retained until both workers join"
+  },
+  "scientific_verdict": null
+}

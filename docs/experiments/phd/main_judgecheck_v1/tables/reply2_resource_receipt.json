@@ -1,9 +1,9 @@
 {
-  "at": "2026-11-03T17:35:20.864435+09:00",
+  "at": "2026-11-03T18:18:45.315860+09:00",
   "task_first_lock_at": "2026-11-02T22:47:30.493395+09:00",
-  "task_elapsed_seconds": 67670.3710398674,
+  "task_elapsed_seconds": 70274.82246494293,
   "reply2_start": "2026-11-03T10:14:37.566451+09:00",
-  "elapsed_seconds": 26443.29798388481,
+  "elapsed_seconds": 29047.749408960342,
   "gpu_wait_recorded_minimum_seconds": 3729.0,
   "gpu_wait_intervals": [
     {
@@ -70,6 +70,22 @@
       "reason": "no exact closing timestamp; excluded from recorded lower bound"
     }
   ],
+  "cpu_cohort_elapsed": {
+    "group1": {
+      "start": "2026-11-03T15:57:52.864170+09:00",
+      "end": "2026-11-03T17:27:35.521336+09:00",
+      "elapsed_seconds": 5382.657166004181,
+      "points": 44752,
+      "workers": 2
+    },
+    "group2": {
+      "start": "2026-11-03T17:39:21.796190+09:00",
+      "end": "2026-11-03T18:08:49.608727+09:00",
+      "elapsed_seconds": 1767.8125369548798,
+      "points": 147353,
+      "workers": 2
+    }
+  },
   "wait_precision": "lower bound from closed pause/resume intervals and first-to-last busy observations; overlaps merged; initial manual pause timestamp was recorded late and aborted sample has no exact final timestamp",
   "measurement_totals": {
     "photo_prepared": {
@@ -80,6 +96,7 @@
           "points": 0
         }
       },
+      "by_image_supply": {},
       "records": [
         {
           "path": "photo_prepared/6907_53359.complete.json",
@@ -189,14 +206,14 @@
       ]
     },
     "photo_scores": {
-      "seconds": 22513.715694242157,
+      "seconds": 25903.234787398018,
       "by_device": {
         "cpu": {
-          "seconds": 21599.40256187599,
-          "points": 102627,
-          "image_cache_seconds": 9961.60962423589,
-          "upload_seconds": 7833.828424271196,
-          "arithmetic_excluding_upload_seconds": 3517.1683351276442
+          "seconds": 24988.921655031852,
+          "points": 249980,
+          "image_cache_seconds": 9961.613042704761,
+          "upload_seconds": 9392.623974534683,
+          "arithmetic_excluding_upload_seconds": 5343.796914606355
         },
         "cuda": {
           "seconds": 914.3131323661655,
@@ -204,6 +221,32 @@
           "image_cache_seconds": 449.4704912547022,
           "upload_seconds": 367.2904461082071,
           "arithmetic_excluding_upload_seconds": 93.69038586318493
+        }
+      },
+      "by_image_supply": {
+        "cpu / frozen grayscale NPY cache / ordered_census": {
+          "completed_runs": 39,
+          "points": 102627,
+          "seconds": 21599.40256187599,
+          "camera_visits": 4477,
+          "original_image_decodes": 180,
+          "decode_seconds": 1245.9701531399041
+        },
+        "cpu / original JPEG with 4 GiB process LRU / ordered_census": {
+          "completed_runs": 19,
+          "points": 147353,
+          "seconds": 3389.519093155861,
+          "camera_visits": 2750,
+          "original_image_decodes": 3426,
+          "decode_seconds": 1306.2493449905887
+        },
+        "cuda / frozen grayscale NPY cache / whole_tile_benchmark": {
+          "completed_runs": 1,
+          "points": 35706,
+          "seconds": 914.3131323661655,
+          "camera_visits": 284,
+          "original_image_decodes": 36,
+          "decode_seconds": 61.912533956579864
         }
       },
       "records": [
@@ -217,7 +260,12 @@
           "upload_seconds": 0.6641292292624712,
           "arithmetic_excluding_upload_seconds": 0.331215713173151,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 1.7375068664550781
+          "peak_cpu_rss_gib": 1.7375068664550781,
+          "camera_count": 14,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6907_53359/group1/complete.json",
@@ -229,7 +277,29 @@
           "upload_seconds": 0.5884613450616598,
           "arithmetic_excluding_upload_seconds": 0.42751210927963257,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 16,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6907_53359/group2/complete.json",
+          "seconds": 9.502579861320555,
+          "device": "cpu",
+          "points": 114,
+          "source_sha256": "6a77fbf9855c1018072eb3d7fbc7a2010f3c3509631e61ca102c8dbffbff24e9",
+          "image_cache_seconds": 0.0001352652907371521,
+          "upload_seconds": 9.237169984728098,
+          "arithmetic_excluding_upload_seconds": 0.15018638409674168,
+          "original_image_decodes": 6,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 6,
+          "row_blocks": 1,
+          "decode_seconds": 8.71539618447423,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6907_53360/group0/complete.json",
@@ -241,7 +311,12 @@
           "upload_seconds": 0.17762201931327581,
           "arithmetic_excluding_upload_seconds": 0.22559044044464827,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 1.0807876586914062
+          "peak_cpu_rss_gib": 1.0807876586914062,
+          "camera_count": 7,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6907_53360/group1/complete.json",
@@ -253,7 +328,29 @@
           "upload_seconds": 0.06588189210742712,
           "arithmetic_excluding_upload_seconds": 0.24647537246346474,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 20.24512481689453
+          "peak_cpu_rss_gib": 20.24512481689453,
+          "camera_count": 7,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6907_53360/group2/complete.json",
+          "seconds": 2.186749942600727,
+          "device": "cpu",
+          "points": 9,
+          "source_sha256": "d91c5d07d2358a11aebfdcddff5face3489b33c1cc977a63b72dee7299a6a13c",
+          "image_cache_seconds": 6.927736103534698e-05,
+          "upload_seconds": 1.9845078960061073,
+          "arithmetic_excluding_upload_seconds": 0.14758350141346455,
+          "original_image_decodes": 6,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 6,
+          "row_blocks": 1,
+          "decode_seconds": 1.636431216262281,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53358/group0/complete.json",
@@ -265,7 +362,12 @@
           "upload_seconds": 110.24092795234174,
           "arithmetic_excluding_upload_seconds": 19.48465679306537,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 6.7452239990234375
+          "peak_cpu_rss_gib": 6.7452239990234375,
+          "camera_count": 69,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53358/group1/complete.json",
@@ -277,7 +379,29 @@
           "upload_seconds": 2.353190390393138,
           "arithmetic_excluding_upload_seconds": 22.22828864492476,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 20.24512481689453
+          "peak_cpu_rss_gib": 20.24512481689453,
+          "camera_count": 60,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6908_53358/group2/complete.json",
+          "seconds": 42.982652810402215,
+          "device": "cpu",
+          "points": 680,
+          "source_sha256": "c249eefacab76dc314b613841beb8e07815c0fafbf5cdda18bbf575bbdf3a363",
+          "image_cache_seconds": 9.573623538017273e-05,
+          "upload_seconds": 34.53207913599908,
+          "arithmetic_excluding_upload_seconds": 8.375992358662188,
+          "original_image_decodes": 70,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 70,
+          "row_blocks": 1,
+          "decode_seconds": 29.33529021963477,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53359/complete.json",
@@ -289,7 +413,12 @@
           "upload_seconds": 367.2904461082071,
           "arithmetic_excluding_upload_seconds": 93.69038586318493,
           "original_image_decodes": 36,
-          "peak_cpu_rss_gib": 11.526321411132812
+          "peak_cpu_rss_gib": 11.526321411132812,
+          "camera_count": 284,
+          "row_blocks": 3,
+          "decode_seconds": 61.912533956579864,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "whole_tile_benchmark"
         },
         {
           "path": "photo_scores/6908_53360/group0/complete.json",
@@ -301,7 +430,12 @@
           "upload_seconds": 635.8332458073273,
           "arithmetic_excluding_upload_seconds": 108.37146684713662,
           "original_image_decodes": 47,
-          "peak_cpu_rss_gib": 14.685314178466797
+          "peak_cpu_rss_gib": 14.685314178466797,
+          "camera_count": 268,
+          "row_blocks": 1,
+          "decode_seconds": 358.8621940482408,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53360/group1/complete.json",
@@ -313,7 +447,29 @@
           "upload_seconds": 1209.4321927363053,
           "arithmetic_excluding_upload_seconds": 575.4504751339555,
           "original_image_decodes": 4,
-          "peak_cpu_rss_gib": 21.660301208496094
+          "peak_cpu_rss_gib": 21.660301208496094,
+          "camera_count": 280,
+          "row_blocks": 2,
+          "decode_seconds": 88.95975510310382,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6908_53360/group2/complete.json",
+          "seconds": 546.2056385520846,
+          "device": "cpu",
+          "points": 18063,
+          "source_sha256": "649aa57469d7b3e923f1681384faf381ac534d6c4e757e70b9f04bfed99b5eb6",
+          "image_cache_seconds": 0.0002201031893491745,
+          "upload_seconds": 254.68600460886955,
+          "arithmetic_excluding_upload_seconds": 291.17889896128327,
+          "original_image_decodes": 530,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 315,
+          "row_blocks": 2,
+          "decode_seconds": 213.99693986121565,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53361/group0/complete.json",
@@ -325,7 +481,12 @@
           "upload_seconds": 343.55660839378834,
           "arithmetic_excluding_upload_seconds": 64.30498353485018,
           "original_image_decodes": 19,
-          "peak_cpu_rss_gib": 13.346183776855469
+          "peak_cpu_rss_gib": 13.346183776855469,
+          "camera_count": 181,
+          "row_blocks": 1,
+          "decode_seconds": 44.924646890722215,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53361/group1/complete.json",
@@ -337,7 +498,29 @@
           "upload_seconds": 475.1141310390085,
           "arithmetic_excluding_upload_seconds": 194.73595845047385,
           "original_image_decodes": 1,
-          "peak_cpu_rss_gib": 20.24512481689453
+          "peak_cpu_rss_gib": 20.24512481689453,
+          "camera_count": 179,
+          "row_blocks": 1,
+          "decode_seconds": 0.5669355439022183,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6908_53361/group2/complete.json",
+          "seconds": 238.511537685059,
+          "device": "cpu",
+          "points": 8383,
+          "source_sha256": "9e2655b362bb8e30a1bff684e54c78d9eafb718dabf3dc13c8648cd85fd961ef",
+          "image_cache_seconds": 0.000397498719394207,
+          "upload_seconds": 108.08023085910827,
+          "arithmetic_excluding_upload_seconds": 130.2588760778308,
+          "original_image_decodes": 215,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 215,
+          "row_blocks": 1,
+          "decode_seconds": 89.89782465063035,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53362/group0/complete.json",
@@ -349,7 +532,12 @@
           "upload_seconds": 90.14005651883781,
           "arithmetic_excluding_upload_seconds": 13.931694811210036,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 6.2238311767578125
+          "peak_cpu_rss_gib": 6.2238311767578125,
+          "camera_count": 64,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6908_53362/group1/complete.json",
@@ -361,7 +549,29 @@
           "upload_seconds": 34.66028425004333,
           "arithmetic_excluding_upload_seconds": 14.4224618896842,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 20.24512481689453
+          "peak_cpu_rss_gib": 20.24512481689453,
+          "camera_count": 64,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6908_53362/group2/complete.json",
+          "seconds": 38.63771467562765,
+          "device": "cpu",
+          "points": 957,
+          "source_sha256": "3ca85d38a882f55b7db834b050d6c4f59621eee4de7e3de3e4fbb4674174a195",
+          "image_cache_seconds": 0.00014427583664655685,
+          "upload_seconds": 32.42579244449735,
+          "arithmetic_excluding_upload_seconds": 6.1115263076499104,
+          "original_image_decodes": 57,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 57,
+          "row_blocks": 1,
+          "decode_seconds": 28.372992950491607,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53358/group0/complete.json",
@@ -373,7 +583,12 @@
           "upload_seconds": 145.45359357260168,
           "arithmetic_excluding_upload_seconds": 89.27188432961702,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 13.057197570800781
+          "peak_cpu_rss_gib": 13.057197570800781,
+          "camera_count": 103,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53358/group1/complete.json",
@@ -385,7 +600,29 @@
           "upload_seconds": 48.18270028755069,
           "arithmetic_excluding_upload_seconds": 117.4900694731623,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 90,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6909_53358/group2/complete.json",
+          "seconds": 136.0519787473604,
+          "device": "cpu",
+          "points": 5590,
+          "source_sha256": "46377ed8160b6acaeec6c01bc9f265deb00c2f4c977428fd4aa6fbda3082eb82",
+          "image_cache_seconds": 0.0001698751002550125,
+          "upload_seconds": 64.1487892717123,
+          "arithmetic_excluding_upload_seconds": 71.53771835565567,
+          "original_image_decodes": 152,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 152,
+          "row_blocks": 1,
+          "decode_seconds": 53.480802085250616,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53359/group0/complete.json",
@@ -397,7 +634,12 @@
           "upload_seconds": 748.7530210129917,
           "arithmetic_excluding_upload_seconds": 109.733522715047,
           "original_image_decodes": 45,
-          "peak_cpu_rss_gib": 14.511981964111328
+          "peak_cpu_rss_gib": 14.511981964111328,
+          "camera_count": 289,
+          "row_blocks": 1,
+          "decode_seconds": 203.45778845064342,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53359/group1/complete.json",
@@ -409,7 +651,29 @@
           "upload_seconds": 291.45150394551456,
           "arithmetic_excluding_upload_seconds": 434.8314719116315,
           "original_image_decodes": 2,
-          "peak_cpu_rss_gib": 21.72303009033203
+          "peak_cpu_rss_gib": 21.72303009033203,
+          "camera_count": 287,
+          "row_blocks": 2,
+          "decode_seconds": 20.325892550870776,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6909_53359/group2/complete.json",
+          "seconds": 575.485348704271,
+          "device": "cpu",
+          "points": 18931,
+          "source_sha256": "3099904de370b7f8068c8c77e7b79651ecc515f4f46ea896b41449847c408de2",
+          "image_cache_seconds": 0.0002064034342765808,
+          "upload_seconds": 234.27244536578655,
+          "arithmetic_excluding_upload_seconds": 340.8721570055932,
+          "original_image_decodes": 520,
+          "peak_cpu_rss_gib": 16.06783676147461,
+          "camera_count": 299,
+          "row_blocks": 2,
+          "decode_seconds": 197.76556000765413,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53360/group0/complete.json",
@@ -421,7 +685,12 @@
           "upload_seconds": 355.6973640676588,
           "arithmetic_excluding_upload_seconds": 37.78897351305932,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 11.47503662109375
+          "peak_cpu_rss_gib": 11.47503662109375,
+          "camera_count": 197,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53360/group1/complete.json",
@@ -433,7 +702,29 @@
           "upload_seconds": 523.4038767600432,
           "arithmetic_excluding_upload_seconds": 49.765423140488565,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 207,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6909_53360/group2/complete.json",
+          "seconds": 219.54922205395997,
+          "device": "cpu",
+          "points": 5904,
+          "source_sha256": "2124dee397c6b5f2a247645a951fe27a0c4880aedc0879484ffc1cefa8ab650b",
+          "image_cache_seconds": 0.0002009039744734764,
+          "upload_seconds": 108.57572943624109,
+          "arithmetic_excluding_upload_seconds": 110.8278254615143,
+          "original_image_decodes": 262,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 262,
+          "row_blocks": 1,
+          "decode_seconds": 88.00769055541605,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53361/group0/complete.json",
@@ -445,7 +736,12 @@
           "upload_seconds": 624.8918927107006,
           "arithmetic_excluding_upload_seconds": 80.04390999209136,
           "original_image_decodes": 3,
-          "peak_cpu_rss_gib": 13.384124755859375
+          "peak_cpu_rss_gib": 13.384124755859375,
+          "camera_count": 250,
+          "row_blocks": 1,
+          "decode_seconds": 45.58080427907407,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53361/group1/complete.json",
@@ -457,7 +753,29 @@
           "upload_seconds": 419.86376943904907,
           "arithmetic_excluding_upload_seconds": 244.85929173324257,
           "original_image_decodes": 2,
-          "peak_cpu_rss_gib": 19.919414520263672
+          "peak_cpu_rss_gib": 19.919414520263672,
+          "camera_count": 252,
+          "row_blocks": 1,
+          "decode_seconds": 16.0939948996529,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6909_53361/group2/complete.json",
+          "seconds": 531.295971352607,
+          "device": "cpu",
+          "points": 22836,
+          "source_sha256": "52bb09078bbe2c1a3f41eb8a973f196b9aca588fc660ce6b7a1ea7b6ae9a3f21",
+          "image_cache_seconds": 0.00028118304908275604,
+          "upload_seconds": 245.3983619613573,
+          "arithmetic_excluding_upload_seconds": 285.47337052971125,
+          "original_image_decodes": 582,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 342,
+          "row_blocks": 2,
+          "decode_seconds": 208.2607191875577,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53362/group0/complete.json",
@@ -469,7 +787,12 @@
           "upload_seconds": 86.81119941733778,
           "arithmetic_excluding_upload_seconds": 92.08661392424256,
           "original_image_decodes": 10,
-          "peak_cpu_rss_gib": 14.205368041992188
+          "peak_cpu_rss_gib": 14.205368041992188,
+          "camera_count": 135,
+          "row_blocks": 1,
+          "decode_seconds": 110.66794519964606,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53362/group1/complete.json",
@@ -481,7 +804,29 @@
           "upload_seconds": 330.8800914241001,
           "arithmetic_excluding_upload_seconds": 312.1127042658627,
           "original_image_decodes": 2,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 133,
+          "row_blocks": 2,
+          "decode_seconds": 2.8962604450061917,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6909_53362/group2/complete.json",
+          "seconds": 160.83145518042147,
+          "device": "cpu",
+          "points": 11650,
+          "source_sha256": "d340bd6c91c56b23627ace671d91cbce781b38dc32620d37c2a352f6aca3ca7e",
+          "image_cache_seconds": 0.00016537494957447052,
+          "upload_seconds": 80.99669631291181,
+          "arithmetic_excluding_upload_seconds": 79.66867692768574,
+          "original_image_decodes": 189,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 189,
+          "row_blocks": 1,
+          "decode_seconds": 66.4836050812155,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53363/group0/complete.json",
@@ -493,7 +838,12 @@
           "upload_seconds": 2.0209997929632664,
           "arithmetic_excluding_upload_seconds": 10.216758150607347,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 5.051761627197266
+          "peak_cpu_rss_gib": 5.051761627197266,
+          "camera_count": 52,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6909_53363/group1/complete.json",
@@ -505,7 +855,29 @@
           "upload_seconds": 26.123687979765236,
           "arithmetic_excluding_upload_seconds": 25.433481045998633,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 20.24512481689453
+          "peak_cpu_rss_gib": 20.24512481689453,
+          "camera_count": 50,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6909_53363/group2/complete.json",
+          "seconds": 52.99654796719551,
+          "device": "cpu",
+          "points": 4374,
+          "source_sha256": "1a9d3f904c6df74129a1587ae10a0673152077bdfb6d8ff636aa8e80f79e135e",
+          "image_cache_seconds": 0.00015439465641975403,
+          "upload_seconds": 39.34748724475503,
+          "arithmetic_excluding_upload_seconds": 13.578186336904764,
+          "original_image_decodes": 56,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 56,
+          "row_blocks": 1,
+          "decode_seconds": 35.25722996145487,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53359/group0/complete.json",
@@ -517,7 +889,12 @@
           "upload_seconds": 3.277629998512566,
           "arithmetic_excluding_upload_seconds": 17.30372470524162,
           "original_image_decodes": 7,
-          "peak_cpu_rss_gib": 7.755725860595703
+          "peak_cpu_rss_gib": 7.755725860595703,
+          "camera_count": 86,
+          "row_blocks": 1,
+          "decode_seconds": 15.463164573535323,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53359/group1/complete.json",
@@ -529,7 +906,29 @@
           "upload_seconds": 247.153390632011,
           "arithmetic_excluding_upload_seconds": 37.466131864115596,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 91,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6910_53359/group2/complete.json",
+          "seconds": 152.72699435055256,
+          "device": "cpu",
+          "points": 4093,
+          "source_sha256": "5cca68abaa3165f4339e4bc351db1bfbfd530fe5c99cb97bedc07a34bf7901e0",
+          "image_cache_seconds": 0.0001746043562889099,
+          "upload_seconds": 53.28355314768851,
+          "arithmetic_excluding_upload_seconds": 99.3561778543517,
+          "original_image_decodes": 103,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 103,
+          "row_blocks": 1,
+          "decode_seconds": 45.39844820462167,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53360/group0/complete.json",
@@ -541,7 +940,12 @@
           "upload_seconds": 2.017103474587202,
           "arithmetic_excluding_upload_seconds": 2.330474111251533,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 4.542568206787109
+          "peak_cpu_rss_gib": 4.542568206787109,
+          "camera_count": 48,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53360/group1/complete.json",
@@ -553,7 +957,29 @@
           "upload_seconds": 3.085445586591959,
           "arithmetic_excluding_upload_seconds": 4.9719911916181445,
           "original_image_decodes": 1,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 46,
+          "row_blocks": 1,
+          "decode_seconds": 0.35962548945099115,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6910_53360/group2/complete.json",
+          "seconds": 76.70879299379885,
+          "device": "cpu",
+          "points": 2599,
+          "source_sha256": "da276155ab01063b7b4af60f0301073aa20908e6e69d3a7b58e0f8e7bddccde5",
+          "image_cache_seconds": 0.00012425705790519714,
+          "upload_seconds": 27.423890313133597,
+          "arithmetic_excluding_upload_seconds": 49.213266391307116,
+          "original_image_decodes": 71,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 71,
+          "row_blocks": 1,
+          "decode_seconds": 22.128297203220427,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53361/group0/complete.json",
@@ -565,7 +991,12 @@
           "upload_seconds": 354.73627586569637,
           "arithmetic_excluding_upload_seconds": 27.63323867507279,
           "original_image_decodes": 23,
-          "peak_cpu_rss_gib": 11.341659545898438
+          "peak_cpu_rss_gib": 11.341659545898438,
+          "camera_count": 173,
+          "row_blocks": 1,
+          "decode_seconds": 306.69818984810263,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53361/group1/complete.json",
@@ -577,7 +1008,29 @@
           "upload_seconds": 40.848545426502824,
           "arithmetic_excluding_upload_seconds": 59.94394198153168,
           "original_image_decodes": 2,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 171,
+          "row_blocks": 1,
+          "decode_seconds": 9.719270284287632,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6910_53361/group2/complete.json",
+          "seconds": 191.18937288876623,
+          "device": "cpu",
+          "points": 3674,
+          "source_sha256": "6f35649cdea2ee348c23a89ee4a3214d9d5d848c7c588162320ac5b3301350e3",
+          "image_cache_seconds": 0.0001902347430586815,
+          "upload_seconds": 110.75706900749356,
+          "arithmetic_excluding_upload_seconds": 80.32504422590137,
+          "original_image_decodes": 234,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 234,
+          "row_blocks": 1,
+          "decode_seconds": 92.25403279345483,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53362/group0/complete.json",
@@ -589,7 +1042,12 @@
           "upload_seconds": 16.100741528905928,
           "arithmetic_excluding_upload_seconds": 117.14443729911,
           "original_image_decodes": 9,
-          "peak_cpu_rss_gib": 13.724311828613281
+          "peak_cpu_rss_gib": 13.724311828613281,
+          "camera_count": 104,
+          "row_blocks": 1,
+          "decode_seconds": 18.15845489501953,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53362/group1/complete.json",
@@ -601,7 +1059,29 @@
           "upload_seconds": 59.54322418849915,
           "arithmetic_excluding_upload_seconds": 136.55686412751675,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 19.919414520263672
+          "peak_cpu_rss_gib": 19.919414520263672,
+          "camera_count": 104,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6910_53362/group2/complete.json",
+          "seconds": 133.57740851305425,
+          "device": "cpu",
+          "points": 13466,
+          "source_sha256": "73749f3500e07f75fe8a9e971fb5a7b947a521d447b5270bef5ba489df00ab30",
+          "image_cache_seconds": 0.0001756148412823677,
+          "upload_seconds": 57.03512147255242,
+          "arithmetic_excluding_upload_seconds": 76.39291641116142,
+          "original_image_decodes": 139,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 139,
+          "row_blocks": 1,
+          "decode_seconds": 46.3002591188997,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53363/group0/complete.json",
@@ -613,7 +1093,12 @@
           "upload_seconds": 164.81177562568337,
           "arithmetic_excluding_upload_seconds": 99.30254783574492,
           "original_image_decodes": 3,
-          "peak_cpu_rss_gib": 11.905685424804688
+          "peak_cpu_rss_gib": 11.905685424804688,
+          "camera_count": 81,
+          "row_blocks": 1,
+          "decode_seconds": 3.2352306386455894,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6910_53363/group1/complete.json",
@@ -625,7 +1110,29 @@
           "upload_seconds": 203.39607768133283,
           "arithmetic_excluding_upload_seconds": 210.09602230601013,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 16.312454223632812
+          "peak_cpu_rss_gib": 16.312454223632812,
+          "camera_count": 73,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6910_53363/group2/complete.json",
+          "seconds": 147.03209166415036,
+          "device": "cpu",
+          "points": 14422,
+          "source_sha256": "0c7fa4302593e6165bec8685334394db465427b74007202b0afeadeae1079ab2",
+          "image_cache_seconds": 0.0002186838537454605,
+          "upload_seconds": 38.45143220573664,
+          "arithmetic_excluding_upload_seconds": 107.43397344835103,
+          "original_image_decodes": 93,
+          "peak_cpu_rss_gib": 16.091777801513672,
+          "camera_count": 93,
+          "row_blocks": 1,
+          "decode_seconds": 31.143793012946844,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6911_53361/group1/complete.json",
@@ -637,7 +1144,12 @@
           "upload_seconds": 0.04273913614451885,
           "arithmetic_excluding_upload_seconds": 0.02088931668549776,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 21.204891204833984
+          "peak_cpu_rss_gib": 21.204891204833984,
+          "camera_count": 1,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6911_53362/group0/complete.json",
@@ -649,7 +1161,12 @@
           "upload_seconds": 66.43350053951144,
           "arithmetic_excluding_upload_seconds": 34.965581476688385,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 6.90875244140625
+          "peak_cpu_rss_gib": 6.90875244140625,
+          "camera_count": 70,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6911_53362/group1/complete.json",
@@ -661,7 +1178,29 @@
           "upload_seconds": 33.84618148673326,
           "arithmetic_excluding_upload_seconds": 41.93842720706016,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 20.24512481689453
+          "peak_cpu_rss_gib": 20.24512481689453,
+          "camera_count": 61,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6911_53362/group2/complete.json",
+          "seconds": 60.98852895665914,
+          "device": "cpu",
+          "points": 4482,
+          "source_sha256": "1ededaf828099699329e562c3321bd752e2161cda7f7541da6365ffb6c87068d",
+          "image_cache_seconds": 0.0001398259773850441,
+          "upload_seconds": 29.169273108243942,
+          "arithmetic_excluding_upload_seconds": 31.74366606026888,
+          "original_image_decodes": 73,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 73,
+          "row_blocks": 1,
+          "decode_seconds": 23.89742317609489,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6911_53363/group0/complete.json",
@@ -673,7 +1212,12 @@
           "upload_seconds": 7.961749742738903,
           "arithmetic_excluding_upload_seconds": 37.62020637560636,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 7.437953948974609
+          "peak_cpu_rss_gib": 7.437953948974609,
+          "camera_count": 58,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
         },
         {
           "path": "photo_scores/6911_53363/group1/complete.json",
@@ -685,7 +1229,29 @@
           "upload_seconds": 124.21361137367785,
           "arithmetic_excluding_upload_seconds": 72.07897271867841,
           "original_image_decodes": 0,
-          "peak_cpu_rss_gib": 20.24512481689453
+          "peak_cpu_rss_gib": 20.24512481689453,
+          "camera_count": 56,
+          "row_blocks": 1,
+          "decode_seconds": 0.0,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "ordered_census"
+        },
+        {
+          "path": "photo_scores/6911_53363/group2/complete.json",
+          "seconds": 73.0585062559694,
+          "device": "cpu",
+          "points": 7126,
+          "source_sha256": "3c192179f9dab691890bafa7378184fd9e0b37a74b975c4489044ca9a533b077",
+          "image_cache_seconds": 0.00015495624393224716,
+          "upload_seconds": 28.989916486665606,
+          "arithmetic_excluding_upload_seconds": 43.982536879368126,
+          "original_image_decodes": 68,
+          "peak_cpu_rss_gib": 16.21912384033203,
+          "camera_count": 68,
+          "row_blocks": 1,
+          "decode_seconds": 23.916609520092607,
+          "image_supply": "original JPEG with 4 GiB process LRU",
+          "purpose": "ordered_census"
         }
       ]
     },
@@ -700,6 +1266,16 @@
           "arithmetic_excluding_upload_seconds": 1598.9201315678656
         }
       },
+      "by_image_supply": {
+        "cpu / frozen grayscale NPY cache / whole_tile_benchmark": {
+          "completed_runs": 1,
+          "points": 35706,
+          "seconds": 2318.9294499699026,
+          "camera_visits": 284,
+          "original_image_decodes": 52,
+          "decode_seconds": 123.76047673821449
+        }
+      },
       "records": [
         {
           "path": "cpu_benchmark/6908_53359/complete.json",
@@ -711,13 +1287,18 @@
           "upload_seconds": 466.27651079464704,
           "arithmetic_excluding_upload_seconds": 1598.9201315678656,
           "original_image_decodes": 52,
-          "peak_cpu_rss_gib": 22.04654312133789
+          "peak_cpu_rss_gib": 22.04654312133789,
+          "camera_count": 284,
+          "row_blocks": 5,
+          "decode_seconds": 123.76047673821449,
+          "image_supply": "frozen grayscale NPY cache",
+          "purpose": "whole_tile_benchmark"
         }
       ]
     }
   },
   "totals_note": "elapsed includes concurrent CPU work and GPU waiting; measured phase totals are not additive wall time; incomplete cache trials excluded from completed scoring totals",
-  "component_notes": "CPU cohort image_cache_seconds includes exclusive cache-lock waiting, which was not separately measured; upload_seconds includes array conversion/copy on CPU and host-to-device transfer on GPU; arithmetic_excluding_upload_seconds subtracts that upload interval",
+  "component_notes": "CPU cohort NPY image_cache_seconds includes exclusive cache-lock waiting, which was not separately measured; JPEG decode occurs inside upload_seconds, while its prepare only indexes levels. Upload also includes array conversion/copy on CPU and host-to-device transfer on GPU. Arithmetic excludes this interval. The bounded JPEG LRU may decode a photo again across row blocks after eviction; camera visits and actual decodes are recorded separately. Timings from different target groups are not controlled speedup comparisons.",
   "sources": {
     "census_gpu_wait.tsv": "efe436b70c96c5e260c064bee2e309ac8262ca64683b1643b334dd02cc1fa03a",
     "direct_benchmark_gpu_wait.tsv": "cdda3e8c3b3b02d900f9eebea82c4f004c41dc2e97cea5e510ab2e503ef5d9f2",

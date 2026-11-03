@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-03T18:09:25.584780+09:00",
+  "source_sha256": "27a4ae4cb6bbc29afa6d5747705a72eeeec7f7f3a3ebe06cc7e10f8b90f5d8a9",
+  "variants": [
+    "new_clipped",
+    "new_unclipped",
+    "new_oldphoto",
+    "old_rule",
+    "always_prior",
+    "always_mvs"
+  ],
+  "ablation_arms": [
+    "main",
+    "all_oracle",
+    "geometry_oracle",
+    "cause_oracle",
+    "always_mix",
+    "always_prior",
+    "always_mvs",
+    "default_only",
+    "oldphoto"
+  ],
+  "geometry_unavailable": "n>=4 missing u_M remains 9 in every arm; report uncountable area",
+  "oracle_tie": "choose prior, tie count reported",
+  "scientific_verdict": null
+}
