@@ -1,0 +1,82 @@
+{
+  "rows": [
+    {
+      "key": "r8_ALS_30000",
+      "n_gt": 3881308,
+      "n_result": 2789087,
+      "completeness": 0.8846211122642161,
+      "accuracy": 0.7261867413960196,
+      "gt_mean_m": 0.09932844865494549,
+      "result_mean_m": 0.1721441841224172,
+      "actual_pct_pct_cm_cm": [
+        88.46211122642161,
+        72.61867413960196,
+        9.932844865494548,
+        17.21441841224172
+      ],
+      "expected_pct_pct_cm_cm": [
+        88.5,
+        72.6,
+        9.9,
+        17.2
+      ],
+      "delta_pp_pp_cm_cm": [
+        -0.03788877357838771,
+        0.01867413960196984,
+        0.032844865494547903,
+        0.014418412241720802
+      ],
+      "pass_tolerance": true,
+      "over_stop_tolerance": false,
+      "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r8/scoring/r8_ALS_30000/current/dist/B173nb_b10_ALS__r8_ALS_30000.npz",
+      "source_sha256": "17e02bc41452fd28f499d5c800b1c247869e297772aa95986eeaa748df782510",
+      "normal_source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r8/scoring/r8_ALS_30000/current/dist/B173nb_b10_ALS__r8_ALS_30000__x.npz",
+      "normal_source_sha256": "47fe72c149b08b9eb7450d0cfbb8f0e4aca13d4e0dffc1f772bebe5aa40825ae",
+      "mesh": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r8/runs/tg_B173nb_b10_ALS_s0_r8/post30000/merged.ply",
+      "mesh_sha256": "1eeae298e0c1435994d97471f748b3edd6c658c299f3b308253bbc2de504197d",
+      "n_result_before_reference_eligibility": 2984067,
+      "method": "saved per-point distances recounted by new four(); geometric distance computation reused, not independently rerun",
+      "source_tag": "[이 발주에서 냄]"
+    },
+    {
+      "key": "base_ALS_30000",
+      "n_gt": 3881308,
+      "n_result": 2612371,
+      "completeness": 0.8675946356228365,
+      "accuracy": 0.7815111253340357,
+      "gt_mean_m": 0.115290032595417,
+      "result_mean_m": 0.14313078460637632,
+      "actual_pct_pct_cm_cm": [
+        86.75946356228364,
+        78.15111253340356,
+        11.5290032595417,
+        14.313078460637632
+      ],
+      "expected_pct_pct_cm_cm": [
+        86.8,
+        78.2,
+        11.5,
+        14.3
+      ],
+      "delta_pp_pp_cm_cm": [
+        -0.04053643771635507,
+        -0.04888746659644028,
+        0.029003259541699578,
+        0.013078460637631295
+      ],
+      "pass_tolerance": true,
+      "over_stop_tolerance": false,
+      "source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7_continue/scoring/base_ALS_30000/current/dist/B173nb_b10_ALS__base_ALS_30000.npz",
+      "source_sha256": "8236933c6613e9ba814d30fe7eee379a53dcd092151765f2de13295f581d0915",
+      "normal_source": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/r7_continue/scoring/base_ALS_30000/current/dist/B173nb_b10_ALS__base_ALS_30000__x.npz",
+      "normal_source_sha256": "a69e9b39e92044ab9def3ae1d2c6aa750d36e0e861e9ba23d7db68b9cac93605",
+      "mesh": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/post/mesh_tsdf.ply",
+      "mesh_sha256": "b89ce5a08ef2a1145249103f10251abcca138ed5942b3ec1557c7be53ca54703",
+      "n_result_before_reference_eligibility": 2778361,
+      "method": "saved per-point distances recounted by new four(); geometric distance computation reused, not independently rerun",
+      "source_tag": "[이 발주에서 냄]"
+    }
+  ],
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

@@ -2,3 +2,6 @@
 
 - stage1 첫 실행은 읽기 전용 /repo 아래의 허용 스크립트 사본을 만들려다 차단됨. 계산 시작 전 실패. 호스트에서 허용 경로에 사본을 만들고 컨테이너에서는 읽기만 하도록 수정.
 - stage0 Git diff 일반 검사는 생성 CSV의 CRLF를 공백으로 보고했다. 기존 CSV bytes는 유지하고 이후 검사에는 cr-at-eol을 적용한다.
+
+- FIRST_MERGE_RECEIPT: streamed_tsdf.merge는 merged.ply 저장 후 mean_share_of_pixels_in_box 보조 항목 부재로 실패. 저장 파일과 타일 삼각형 합계를 대조해 복구. 원래 병합 피크 메모리 및 내부 정점 진단은 확인 불가로 유지한다. 원본 코드/타일은 변경하지 않음.
+- FIRST_CLEANUP: 원본 Open3D의 83,029,035 삼각형 정리 호출이 완료 영수증 없이 종료됨. 후속 estimate는 final.json 부재로 실패. 종료 원인은 확인 불가(32 GiB 상한은 유지). 동일 공유변 연결 성분, 50번째 크기 문턱 및 동률, 최소 50 삼각형, 퇴화 삼각형 제거, 평가 범위 규칙을 bounded_cleanup.py/cleanup.cpp로 구현해 계속한다.

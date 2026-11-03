@@ -1,0 +1,54 @@
+{
+  "rows": [
+    {
+      "key": "r8_ALS_30000",
+      "actual": [
+        88.46211122642161,
+        72.61867413960196,
+        9.932844865494548,
+        17.214418412233805
+      ],
+      "expected": [
+        88.5,
+        72.6,
+        9.9,
+        17.2
+      ],
+      "delta": [
+        -0.03788877357838771,
+        0.01867413960196984,
+        0.032844865494547903,
+        0.014418412233805356
+      ],
+      "pass_tolerance": true,
+      "source": "complete geometric replay from bound legacy training mesh",
+      "source_tag": "[이 발주에서 냄]"
+    },
+    {
+      "key": "base_ALS_30000",
+      "actual": [
+        86.75946356228364,
+        78.15111253340356,
+        11.5290032595417,
+        14.313078462086837
+      ],
+      "expected": [
+        86.8,
+        78.2,
+        11.5,
+        14.3
+      ],
+      "delta": [
+        -0.04053643771635507,
+        -0.04888746659644028,
+        0.029003259541699578,
+        0.013078462086836495
+      ],
+      "pass_tolerance": true,
+      "source": "complete geometric replay from bound legacy training mesh",
+      "source_tag": "[이 발주에서 냄]"
+    }
+  ],
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

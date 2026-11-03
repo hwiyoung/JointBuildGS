@@ -3,6 +3,9 @@ import csv, datetime as dt, hashlib, json, os, time
 from pathlib import Path
 import numpy as np
 R,C,D,O=map(Path,('/repo','/cfg','/docs','/out'))
+D=Path(os.environ.get('RESCORE_DOC_ROOT',str(D)))
+O=Path(os.environ.get('RESCORE_OUTPUT_ROOT',str(O)))
+CELLS=Path(os.environ.get('RESCORE_CELLS_ROOT',str(O/'cells_v2')))
 PH=Path('/art/phase-payloads/phd')
 TG=PH/'main_target_v1/PHD-MAIN-TARGET-v1'
 JA=PH/'main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1'
@@ -27,6 +30,7 @@ def cfg():
  assert sha(C/'rescore_v1.json')==json.loads((C/'rescore_v1.initial.lock.json').read_text())['config_sha256']
  return json.loads((C/'rescore_v1.json').read_text())
 def progress(s):
+ D.mkdir(parents=True,exist_ok=True)
  with (D/'progress.md').open('a') as f:f.write(f'- {now()}: {s}\n')
 def table(name,rows):
  dump(D/'tables'/f'{name}.json',dict(rows=rows,source_tag='[이 발주에서 냄]',scientific_verdict=None))
@@ -35,5 +39,5 @@ def table(name,rows):
   w=csv.DictWriter(f,fieldnames=keys,lineterminator='\n');w.writeheader();w.writerows([{k:json.dumps(v,ensure_ascii=False) if isinstance(v,(dict,list)) else v for k,v in r.items()} for r in rows])
  (D/'tables'/f'{name}.md').write_text('| '+' | '.join(keys)+' |\n| '+' | '.join(['---']*len(keys))+' |\n'+'\n'.join('| '+' | '.join(str(r.get(k,'')) for k in keys)+' |' for r in rows)+'\n')
 def timing(stage,start,**extra):
- d=dict(at=now(),stage=stage,seconds=time.monotonic()-start,gpu_wait_seconds=0,scientific_verdict=None,**extra)
+ d=dict(at=now(),stage=stage,seconds=time.monotonic()-start,gpu_wait_seconds=int(os.environ.get('RESCORE_GPU_WAIT_SECONDS','0')),scientific_verdict=None,**extra)
  dump(O/'timing'/f'{stage}.json',d);progress(f'{stage}: {d["seconds"]:.1f}초; GPU 대기 {d["gpu_wait_seconds"]}초.');return d
