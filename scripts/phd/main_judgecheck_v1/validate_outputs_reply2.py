@@ -22,7 +22,7 @@ def main(mode='full'):
                 assert np.array_equal(expected_reg,z['region'][variant]) and np.array_equal(reason,z['reason'][variant])
             assert (z['region'][0,(z['n']>=4)&~np.isfinite(z['u_mvs'])]==9).all();assert not (z['sight_unavailable']&z['free10']).any()
             assert np.all(z['arm_region'][:,missing]==z['region'][0,missing]);assert np.all(np.isnan(z['arm_height_m'][:,z['region'][0]==3]));assert np.isin(z['old_photo_code'],[0,1,2,3,4,9]).all()
-            photo=loadz(BASE/'photo_points'/p.name);owner={v:i for i,v in enumerate(photo['point_id'])};ix=np.array([owner[v] for v in z['photo_point_id']]);assert np.array_equal(z['new_photo_code'],photo['new_code'][:,ix]);assert np.array_equal(z['old_photo_code'],photo['old_code'][ix]);assert np.isin(photo['new_code'],list(range(8))+[9]).all()
+            photo=loadz(BASE/'photo_points'/p.name);owner={v:i for i,v in enumerate(photo['point_id'])};ix=np.array([owner[v] for v in z['photo_point_id']],dtype=np.int64);assert np.array_equal(z['new_photo_code'],photo['new_code'][:,ix]);assert np.array_equal(z['old_photo_code'],photo['old_code'][ix]);assert np.isin(photo['new_code'],list(range(8))+[9]).all()
             assert np.array_equal(photo['selected_count'],(photo['selected_images']>=0).sum(-1))
             assert np.array_equal(photo['computed'],photo['target_type_bits']>0)
             for mode_index in range(2):

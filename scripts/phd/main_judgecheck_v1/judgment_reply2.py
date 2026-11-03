@@ -33,7 +33,7 @@ def main(group):
         geometry_unavailable='n>=4 missing u_M remains 9 in every arm; report uncountable area',oracle_tie='choose prior, tie count reported',scientific_verdict=None))
     files=[]
     for p in sorted((INPUT/'geometry').glob(f'*__{prior}.npz')):
-        tile=p.stem.split('__')[0];allg=loadz(p);ix=np.flatnonzero(allg['kind']==kind);g={k:v[ix] for k,v in allg.items()};photo=loadz(BASE/'photo_points'/f'{tile}__{prior}__{kind}.npz');lookup={v:i for i,v in enumerate(photo['point_id'])};owners=np.array([lookup[v] for v in g['photo_point_id']])
+        tile=p.stem.split('__')[0];allg=loadz(p);ix=np.flatnonzero(allg['kind']==kind);g={k:v[ix] for k,v in allg.items()};photo=loadz(BASE/'photo_points'/f'{tile}__{prior}__{kind}.npz');lookup={v:i for i,v in enumerate(photo['point_id'])};owners=np.array([lookup[v] for v in g['photo_point_id']],dtype=np.int64)
         oldphoto=photo['old_code'][owners];unified=np.select([oldphoto==2,oldphoto==3,oldphoto==4],[8,6,7],default=oldphoto).astype('i1')
         codes=np.vstack([photo['new_code'][:,owners],unified]);s=loadz(BASE/'sight'/p.name);assert np.array_equal(s['patch_id'],allg['patch_id']);free=s['free10'][ix]
         result=[judge(g,v,prior,free) for v in codes];regions=np.vstack([v[0] for v in result]);reasons=np.vstack([v[1] for v in result])

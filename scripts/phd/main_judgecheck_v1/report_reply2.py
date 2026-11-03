@@ -5,6 +5,8 @@ from resources_reply2 import main as resource_receipt
 BASE=O/'r2';LABEL={'ALS_1':'항공 LiDAR 지붕','LoD2_1':'LoD2 지붕','LoD2_2':'LoD2 벽'}
 VAR={'new_clipped':'본 규칙','new_unclipped':'고친 사진·자르지 않음','new_oldphoto':'옛 사진','old_rule':'옛 규칙','always_prior':'늘 사전 정보','always_mvs':'늘 영상'}
 ARM={'main':'본 방법','all_oracle':'모두 정답','geometry_oracle':'기하 검사만 정답','cause_oracle':'원인 판별만 정답','always_mix':'늘 섞음','always_prior':'늘 사전 정보','always_mvs':'늘 영상','default_only':'사진 없이 기본 방향','oldphoto':'옛 사진'}
+STRATUM={'all':'전체','normal_fallback':'2.0 m 대체','normal_rule_met':'규칙 충족'}
+PRECISION={'MVS':'MVS / √(u_M²+σ_W²)','prior_sigmaP':'사전 정보 / σ_P','prior_sigmaP_plus_sigmaW':'사전 정보 / √(σ_P²+σ_W²)'}
 EX='실험 지역과 사진 점을 공유해 뺀 핵심점: 73개, 5.442552935831812 m². 모든 계산의 대상에서 제외했다.'
 DX={'u_M_missing':'u_M 없음','u_M_missing_n_lt4':'u_M 없음·0≤n<4','u_M_missing_n_unknown':'u_M 없음·n 확인 불가','u_M_missing_n_ge4_uncountable':'n≥4·u_M 없음(셀 수 없음)','unknown_reason_exclusive:normal_missing':'기하 확인 불가: 법선 없음','unknown_reason_exclusive:prior_height_missing':'기하 확인 불가: 사전 높이 없음','unknown_reason_exclusive:u_M_missing':'기하 확인 불가: u_M 없음','unknown_reason_exclusive:sigma_P_missing':'기하 확인 불가: σ_P 없음'}
 TIME={'tile_load_and_tree_seconds':'구역 점군·탐색 구조','per_point_plane_and_visibility_seconds':'점마다 면·사진 선택','prepared_output_seconds':'준비 값 저장','gpu_image_cache_read_and_upload_seconds':'사진 읽기·전송(구역·자료 판마다)','gpu_packed_arithmetic_seconds':'사진 점수·합치기'}
@@ -14,6 +16,13 @@ def num(x,d=2):
     value=f'{x:,.{d}f}'
     return value.rstrip('0').rstrip('.') if d else value
 def pct(x):return '확인 불가' if x is None else num(x*100,2)+'%'
+def cell_text(row,key):
+    if key not in row:return ''
+    value=row[key]
+    if value is None:
+        if key in ['denominator_count','denominator_area_m2'] or (key=='fraction' and row.get('denominator_area_m2') is None):return '해당 없음'
+        return '확인 불가'
+    return num(value,6) if isinstance(value,float) else str(value)
 def table(headers,rows):return '\n'.join(['|'+'|'.join(headers)+'|','|'+'|'.join(['---']*len(headers))+'|']+['|'+'|'.join(str(v).replace('|','/') for v in r)+'|' for r in rows])+'\n\n실험 지역과 사진 점을 공유해 뺀 핵심점: 항공 LiDAR 73개·5.442553 m²(발주 전체).\n'
 def readtable(g,k):return load(D/'tables'/f'{g}_{k}.json')['rows']
 def main(mode='full'):
@@ -37,7 +46,7 @@ def main(mode='full'):
     s.append(table(['자료','r(cm)','칸0 d 중앙값(cm, 참고)','L 25/50/75%(cm)'],rows))
     rows=[]
     for g in groups:
-        for r in readtable(g,'6_5_precision'):rows.append([LABEL[g],r['source'],r['roof_type'],r['count'],num(r['normalized_median'],3),num(r['normalized_centered_NMAD'],3)])
+        for r in readtable(g,'6_5_precision'):rows.append([LABEL[g],PRECISION[r['source']],'전체' if r['roof_type']=='all' else r['roof_type'],r['count'],num(r['normalized_median'],3),num(r['normalized_centered_NMAD'],3)])
     s.append(table(['자료','정밀도 식','지붕 형태','표본 수','정규화 오차 중앙값','중앙값을 뺀 NMAD'],rows))
     rows=[]
     for g in groups:
@@ -94,7 +103,7 @@ def main(mode='full'):
         denominator=next(x['denominator_area_m2'] for x in cross if x['cell']<6)
         separate=[x for x in cross if x['variant']=='new_clipped' and x['panel']=='geometry' and x['cell']>=6]
         s.append('### '+LABEL[g]+' 기하·판단과 칸 교차');s.append(f"각 칸은 m²/%다. 분모는 참값이 있고 기하 검사가 가능한 {num(denominator)} m²이며 각 판의 합은 100%다. 별도: "+'; '.join(x['label']+' '+num(x['area_m2'])+' m²' for x in separate)+'.');s.append(table(['판·영역','칸0','칸1','칸2','칸3','칸4','칸5'],rows))
-        r=summary[g];rows=[[VAR[x['variant']],x['stratum'],num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction']),pct(x['whole_roof_fraction'])] for x in r['accuracy']]
+        r=summary[g];rows=[[VAR[x['variant']],STRATUM[x['stratum']],num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction']),pct(x['whole_roof_fraction'])] for x in r['accuracy']]
         s.append('### '+LABEL[g]+' 판단 정확도');s.append(table(['판','부분','분모(m²)','틀린 넓이(m²)','틀린 비율','전체 넓이 대비'],rows))
         s.append(f"분모는 새 한계 밖의 칸 0·1·2다. 옛 규칙만 자기 한계와 옛 칸을 썼다. 칸 1에서 보정하지 않음과 칸 2에서 보정함을 틀림으로 셌다. 전체 넓이 대비의 분모는 사전 높이·법선이 있는 {num(r['prior_height_valid_area_m2'])} m²다(법선 부분별 행에도 동일).")
         rows=[[x['building'],num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction'])] for x in r['top15']];s.append(table(['틀린 넓이가 큰 15동','분모(m²)','틀린 넓이(m²)','틀린 비율'],rows))
@@ -114,8 +123,15 @@ def main(mode='full'):
     for p in sorted((D/'figures').glob('그림*.png')):
         if mode=='roofs' and '_all_' in p.name:continue
         if mode=='full' and p.name.startswith('그림2_LoD2_roofs_'):continue
-        meta=load(p.with_suffix('.json'));title=(f"{meta['building']} · {meta['variant']}의 기하·판단·참값" if p.name.startswith('그림1') else f"{meta['building']} · {meta['reason']} {meta['area_m2']:.2f} m²")
+        meta=load(p.with_suffix('.json'));prior_label='항공 LiDAR' if meta['prior']=='ALS' else 'LoD2'
+        if p.name.startswith('그림1'):
+            title=f"{prior_label} {meta['building']}에서 {meta['variant']} 판단과 참값의 짝을 본다."
+            values='틀린 비율: 본 판 '+meta['wrong_rates'][0]+' / 늘 사전 정보 '+meta['wrong_rates'][1]+' / 늘 영상 '+meta['wrong_rates'][2]+'.'
+        else:
+            title=f"{prior_label} {meta['building']} {'지붕' if meta['kind']==1 else '벽'}의 {meta['reason']}를 사진에서 확인한다."
+            values=f"넓이 {num(meta['area_m2'])} m² / s_P {num(meta['s_P'],3)} / s_M {num(meta['s_M'],3)} / t {num(meta['threshold'],3)}."
         s.append(f"- [{title}](figures/{p.name})")
+        s.append('  '+values)
     s.append('그림마다 같은 이름의 JSON에 쓴 점·사진·값을 남겼다. 지도는 사전 정보 면의 5 cm 격자에 학습 영상을 투영하고 그 면으로 가림을 검사했다. 빨간 테두리는 판단이 해를 끼친 같은 면의 이웃 칸이다. 사진 조각의 수동 까닭은 비워 두었다. 1 m² 미만과 선택 가능한 자리 부족은 그림 2 선택 기록에 남겼다.')
     s+=['','## 발주 전 기대와 나란히 놓기 (결론 없음)']
     measured={}
@@ -150,6 +166,6 @@ def main(mode='full'):
         obj=load(p);rows=obj.get('rows')
         if not isinstance(rows,list) or not rows or not isinstance(rows[0],dict):continue
         fields=list(dict.fromkeys(k for r in rows for k in r if not isinstance(r[k],(list,dict))))
-        content=table(fields,[[num(r.get(k),6) if isinstance(r.get(k),float) else str(r.get(k,'')) for k in fields] for r in rows]);p.with_suffix('.md').write_text('[이 발주에서 냄]\n\n'+f'[반올림 전 값과 출처]({p.name})\n\n'+content)
+        content=table(fields,[[cell_text(r,k) for k in fields] for r in rows]);p.with_suffix('.md').write_text('[이 발주에서 냄]\n\n'+f'[반올림 전 값과 출처]({p.name})\n\n'+content)
     dump(BASE/'reports'/f'{mode}.json',dict(at=now(),report=name,characters=len(text),sha256=sha(D/name),scientific_verdict=None));print('REPORT_WRITTEN',name,len(text),flush=True)
 if __name__=='__main__':main(sys.argv[1] if len(sys.argv)>1 else 'full')

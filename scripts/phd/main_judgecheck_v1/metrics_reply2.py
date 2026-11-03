@@ -21,7 +21,7 @@ def main(group):
     a=g['area'];cell=g['cell'];geom=g['geometry'];N=len(a);prior_valid=np.isfinite(g['prior_height_m'])&np.isfinite(g['normal']).all(1);total=float(a[prior_valid].sum());valid=np.isin(cell,range(6));eligible=valid&(geom!=9);outside=geom==1;tables={}
     def row(mask,den=None,**labels):
         area=float(a[mask].sum());d=float(a[den].sum()) if den is not None else None
-        return dict(**labels,count=int(mask.sum()),area_m2=area,denominator_area_m2=d,fraction=area/d if d else None)
+        return dict(**labels,count=int(mask.sum()),area_m2=area,denominator_count=int(den.sum()) if den is not None else None,denominator_area_m2=d,fraction=area/d if d else None)
     rows=[]
     for vi in [0,2]:
         for panel in ['geometry','judgment']:
@@ -64,7 +64,7 @@ def main(group):
     tables['6_4_photos']=rows
     photo_scope=g['photo_computed']&primary_photo
     angles=g['mvs_normal_angle_deg'];am=np.isfinite(angles)&photo_scope;_,ui=np.unique(g['photo_point_id'][am],return_index=True);unique_angles=angles[am][ui]
-    tables['6_4_planes']=[row(photo_scope&~g['mvs_plane_available'],photo_scope,metric='MVS 면 없음')]+[dict(metric='angle_core_area_weighted_quantile',q=q,value_deg=weighted_quantile(angles[am],a[am],q),count=int(am.sum()),area_m2=float(a[am].sum())) for q in [.1,.25,.5,.75,.9]]+[dict(metric='angle_photo_point_quantile',q=q,value_deg=float(np.quantile(unique_angles,q)) if len(unique_angles) else None,count=len(unique_angles)) for q in [.1,.25,.5,.75,.9]]
+    tables['6_4_planes']=[row(photo_scope&~g['mvs_plane_available'],photo_scope,metric='MVS 면 없음')]+[dict(metric='angle_core_area_weighted_quantile',q=q,value_deg=weighted_quantile(angles[am],a[am],q),count=int(am.sum()),area_m2=float(a[am].sum())) for q in [.1,.25,.5,.75,.9]]+[dict(metric='angle_photo_point_quantile',q=q,value_deg=float(np.quantile(unique_angles,q)) if len(unique_angles) else None,count=len(unique_angles),represented_core_area_m2=float(a[am].sum())) for q in [.1,.25,.5,.75,.9]]
     rows=[]
     for old in range(7):
         for new in list(range(7))+[9]:rows.append(row((g['old_cell']==old)&(cell==new),np.ones(N,bool),old_cell=old,new_cell=new))
@@ -74,8 +74,12 @@ def main(group):
         limit=z*(np.sqrt(g['u_mvs']**2+g['sigma_P_m']**2+g['sigma_W_m']**2)+abs(g['r_m']));den=(cell==0)&np.isfinite(limit)
         rows.append(row(den&(abs(g['d_m'])>limit),den,metric='five_percent_check',z=z,reference_only=(prior=='LoD2' and kind==1)))
     finite_limit=np.isfinite(g['L_m'])&prior_valid
-    for q in [.25,.5,.75]:rows.append(dict(metric='limit_quantile',q=q,value_m=float(np.quantile(g['L_m'][finite_limit],q)) if finite_limit.any() else None,count=int(finite_limit.sum())))
-    rows.append(dict(metric='r_reference_cell0_median',value_m=np.median(g['d_m'][(cell==0)&np.isfinite(g['d_m'])]) if ((cell==0)&np.isfinite(g['d_m'])).any() else None))
+    for q in [.25,.5,.75]:rows.append(dict(**row(finite_limit),metric='limit_quantile',q=q,value_m=float(np.quantile(g['L_m'][finite_limit],q)) if finite_limit.any() else None))
+    reference=(cell==0)&np.isfinite(g['d_m']);rows.append(dict(**row(reference),metric='r_reference_cell0_median',value_m=np.median(g['d_m'][reference]) if reference.any() else None))
+    agreement=(g['n']>=4)&np.isfinite(g['d_m'])&np.isfinite(g['u_mvs'])&np.isfinite(g['sigma_P_m'])&(abs(g['d_m'])<=1.96*np.hypot(g['u_mvs'],g['sigma_P_m']))
+    r_value=float(np.median(g['d_m'][agreement])) if agreement.any() else None
+    if r_value is not None:assert np.allclose(g['r_m'],r_value,rtol=0,atol=1e-12)
+    rows.append(dict(**row(agreement),metric='r_agreement_sample',value_m=r_value,truth_used=False))
     for nn,free in [('5','free5'),('10','free10')]:
         n=g['n5'] if nn=='5' else g['n'];ok=np.isfinite(g['prior_height_m'])&np.isfinite(g['normal']).all(1)
         rows.append(row(ok&(n<4),ok,metric='missing_before_sight',half_length_m=int(nn)));rows.append(row(ok&(n<4)&g[free],ok,metric='free_space',half_length_m=int(nn)));rows.append(row(ok&(n<4)&~g[free],ok,metric='missing_after_sight',half_length_m=int(nn)))
@@ -84,7 +88,7 @@ def main(group):
         for r in [.5,.75,1,1.5,2]:rows.append(dict(**row(g['normal_radius_m']==r,np.ones(N,bool),metric='normal_radius',radius_m=r),denominator_core_count=N,core_fraction=float(np.count_nonzero(g['normal_radius_m']==r)/N)))
         rows.append(row(~g['normal_rule_met'],np.ones(N,bool),metric='normal_fallback'))
         rows.append(row(~np.isfinite(g['prior_height_m']),np.ones(N,bool),metric='prior_height_missing'))
-        for q in [.1,.25,.5,.75,.9]:rows.append(dict(metric='TIN_to_new_axis_height_quantile',q=q,value_m=weighted_quantile(g['prior_height_m'],a,q)))
+        for q in [.1,.25,.5,.75,.9]:rows.append(dict(**row(np.isfinite(g['prior_height_m'])),metric='TIN_to_new_axis_height_quantile',q=q,value_m=weighted_quantile(g['prior_height_m'],a,q)))
     tables['6_5_geometry']=rows
     rows=[];truth=(g['gt_status']==0)&np.isfinite(g['gt_p']);sigmaM=np.hypot(g['u_mvs'],g['sigma_W_m'])
     for label,h,sigma,m in [('MVS',g['mvs_mean_m'],sigmaM,g['n']>=4),('prior_sigmaP',g['prior_height_m'],g['sigma_P_m'],np.ones(N,bool))]+([('prior_sigmaP_plus_sigmaW',g['prior_height_m'],np.hypot(g['sigma_P_m'],g['sigma_W_m']),np.ones(N,bool))] if prior=='ALS' else []):
@@ -99,7 +103,7 @@ def main(group):
         for ai,arm in enumerate(ARMS):
             h=g['arm_height_m'][ai];reg=g['arm_region'][ai];known=scope&((np.isfinite(h))|(reg==3))&(reg!=9);err=abs(h-g['gt_p']);finite=known&np.isfinite(err);right=known&(reg!=3)&(err<=tau)
             den=float(a[known].sum());rowval=dict(arm=arm,cell=cc,reference_area_m2=float(a[scope].sum()),scored_area_m2=den,uncountable_area_m2=float(a[scope&~known].sum()),correct_area_m2=float(a[right].sum()),within_tau_fraction=float(a[right].sum()/den) if den else None,
-                mean_abs_error_m=float(np.average(err[finite],weights=a[finite])) if finite.any() else None,median_abs_error_m=weighted_quantile(err[finite],a[finite],.5),finite_error_area_m2=float(a[finite].sum()),no_face_area_m2=float(a[known&(reg==3)].sum()),count=int(known.sum()))
+                mean_abs_error_m=float(np.average(err[finite],weights=a[finite])) if finite.any() else None,median_abs_error_m=weighted_quantile(err[finite],a[finite],.5),finite_error_count=int(finite.sum()),finite_error_area_m2=float(a[finite].sum()),no_face_area_m2=float(a[known&(reg==3)].sum()),count=int(known.sum()))
             rows.append(rowval)
     base={r['cell']:r for r in rows if r['arm']=='main'}
     for r in rows:
