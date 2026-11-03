@@ -27,8 +27,8 @@ def subset_metrics(ctx,rd,nd,rowtau,qtau,owner,good):
  for j,k in [(1,'prior_height_m'),(2,'mvs_mean_m')]:
   delta=abs(core[k]-core['gt_p'])
   for lo,hi in zip([0.,.5,1.,2.,4.],[.5,1.,2.,4.,np.inf]):
-   take=(cell==j)&(delta>=lo)&(delta<hi);gm,qm=masks(take);v=four(rd,nd,rowtau,qtau,gm,qm)
-   offsets.append(dict(cell=j,lower_m=lo,upper_m=None if np.isinf(hi) else hi,n_gt=v['n_gt'],completeness=v['completeness'],patches=int(take.sum())))
+   take=(cell==j)&((delta>lo) if lo==4 else (delta>=lo))&((delta<=hi) if hi==4 else (delta<hi));gm,qm=masks(take);v=four(rd,nd,rowtau,qtau,gm,qm)
+   offsets.append(dict(cell=j,lower_m=lo,upper_m=None if np.isinf(hi) else hi,lower_inclusive=lo!=4,upper_inclusive=hi==4,n_gt=v['n_gt'],completeness=v['completeness'],patches=int(take.sum())))
  return blocks,bandrow,offsets
 
 def score(site,prior,key,mesh,legacy=False):
