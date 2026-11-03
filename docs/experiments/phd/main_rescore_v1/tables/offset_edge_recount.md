@@ -1,0 +1,11 @@
+| key | exact_4m_patches |
+| --- | --- |
+| B173nb_b10__ALS__baseline_30000 | 0 |
+| B173nb_b10__ALS__mvs | 0 |
+| B173nb_b10__ALS__prior | 0 |
+| B173nb_b10__ALS__r8_30000 | 0 |
+| B173nb_b10__LoD2__GeoGS_30000 | 0 |
+| B173nb_b10__LoD2__baseline_30000 | 0 |
+| B173nb_b10__LoD2__mvs | 0 |
+| B173nb_b10__LoD2__prior | 0 |
+| B173nb_b10__LoD2__r8_7000 | 0 |

@@ -3,7 +3,7 @@ set -euo pipefail
 REPO=$(cd "$(dirname "$0")/../../.." && pwd)
 ART=$(realpath "$REPO/../JointBuildGS-artifacts")
 OUT="$ART/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1"
-job=$1
+job=$1;program=${2:-render_model.py}
 mapfile -t fields < <(python3 - "$OUT/$job" <<'PY'
 import json,sys
 x=json.load(open(sys.argv[1]));print(x['image']);print(x['renderer']);print(x['key'])
@@ -21,9 +21,9 @@ wait_seconds=$(( $(date +%s) - wait_start ))
 nice -n 19 docker run --rm --read-only --network none --gpus "device=$gpu" \
  --name "jbgs-rescore-render-${key//_/-}" --user "$(id -u):$(id -g)" --cpus 4 --memory 32g --memory-swap 32g \
  -e PYTHONDONTWRITEBYTECODE=1 -e PYTHONUNBUFFERED=1 -e OMP_NUM_THREADS=1 -e OPENBLAS_NUM_THREADS=1 -e MKL_NUM_THREADS=1 \
- -e TMPDIR=/out/tmp -e XDG_CACHE_HOME=/out/tmp/cache -e TZ=Asia/Seoul -e RESCORE_GPU_WAIT_SECONDS="$wait_seconds" \
+ -e TMPDIR=/out/tmp -e MPLCONFIGDIR=/out/tmp/mpl -e XDG_CACHE_HOME=/out/tmp/cache -e TZ=Asia/Seoul -e RESCORE_GPU_WAIT_SECONDS="$wait_seconds" \
  -e RESCORE_IMAGE="$(docker image inspect -f '{{.Id}}' "$image")" -e RESCORE_COMMIT="$(git -C "$REPO" rev-parse HEAD)" \
  -v "$REPO:/repo:ro" -v "$ART:/art:ro" -v "$source:/source:ro" -v "$OUT:/out:rw" \
  -v "$REPO/configs/phd/main_rescore_v1:/cfg:ro" -v "$REPO/docs/experiments/phd/main_rescore_v1:/docs:rw" \
- -w /out --entrypoint /bin/bash "$image" -c 'if [ -f /opt/geogs/lib/libstdc++.so.6 ]; then export LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6; fi; exec nice -n 19 python -B -u /repo/scripts/phd/main_rescore_v1/render_model.py "$1"' bash "/out/$job" \
+ -w /out --entrypoint /bin/bash "$image" -c 'if [ -f /opt/geogs/lib/libstdc++.so.6 ]; then export LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6; fi; exec nice -n 19 python -B -u "/repo/scripts/phd/main_rescore_v1/$2" "$1"' bash "/out/$job" "$program" \
  2>&1 | tee "$OUT/logs/render_${key}_$(date -u +%Y%m%dT%H%M%SZ).log"

@@ -1,0 +1,174 @@
+{
+  "site": "B173nb_b10",
+  "shared_across_priors": true,
+  "rows": [
+    {
+      "id": "A",
+      "name": "날개",
+      "start": [
+        146.68,
+        96.32
+      ],
+      "end": [
+        136.63,
+        99.34
+      ],
+      "half_width": 0.6,
+      "roi_half_width": 3.0,
+      "source": "TARGET representatives_v1.json row 1 unchanged",
+      "selection": "fixed r8 section",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 0.689776424938033,
+            "1": 6.1965141814135265,
+            "2": 1.0610478081146573,
+            "3": 3.663343235343691
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        },
+        "LoD2": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 1.0625,
+            "1": 9.0625,
+            "2": 1.0,
+            "3": 2.3125,
+            "6": 0.4375
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        }
+      }
+    },
+    {
+      "id": "B",
+      "name": "채광창",
+      "start": [
+        138.60235979835483,
+        100.53679128769262
+      ],
+      "end": [
+        129.20543359049572,
+        103.95699272094932
+      ],
+      "half_width": 0.6,
+      "roi_half_width": 3.0,
+      "anchor_xyz": [
+        133.90389669442527,
+        102.24689200432097,
+        -30.035664404929523
+      ],
+      "anchor_patch_ids": [
+        "ALS:B173nb_b10:71452",
+        "ALS:B173nb_b10:71453",
+        "ALS:B173nb_b10:71456",
+        "ALS:B173nb_b10:71457",
+        "ALS:B173nb_b10:71461",
+        "ALS:B173nb_b10:71469",
+        "ALS:B173nb_b10:71478",
+        "ALS:B173nb_b10:71479",
+        "ALS:B173nb_b10:71480",
+        "ALS:B173nb_b10:71489",
+        "ALS:B173nb_b10:71490",
+        "ALS:B173nb_b10:71497",
+        "ALS:B173nb_b10:71498",
+        "ALS:B173nb_b10:71499",
+        "ALS:B173nb_b10:71500",
+        "ALS:B173nb_b10:71506",
+        "ALS:B173nb_b10:71507",
+        "ALS:B173nb_b10:71508",
+        "ALS:B173nb_b10:71514",
+        "ALS:B173nb_b10:71515",
+        "ALS:B173nb_b10:71516",
+        "ALS:B173nb_b10:71524",
+        "ALS:B173nb_b10:71525",
+        "ALS:B173nb_b10:71526",
+        "ALS:B173nb_b10:71535",
+        "ALS:B173nb_b10:71536",
+        "ALS:B173nb_b10:71545",
+        "ALS:B173nb_b10:71552",
+        "ALS:B173nb_b10:71553",
+        "ALS:B173nb_b10:71554",
+        "ALS:B173nb_b10:71559"
+      ],
+      "source": "UNCERT work/places.npz glass_strip__ALS",
+      "selection": "largest 0.6m-connected area of existing skylight place in requested correct-preserve cell 2; no learned result read",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 2,
+          "cell_area_m2": {
+            "0": 1.3877048499579745,
+            "1": 0.8630031915499123,
+            "2": 7.375479853906695,
+            "3": 1.9938837109321037
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        },
+        "LoD2": {
+          "cell": 3,
+          "cell_area_m2": {
+            "0": 1.75,
+            "1": 2.6875,
+            "2": 1.375,
+            "3": 7.6875,
+            "5": 0.0625
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        }
+      }
+    },
+    {
+      "id": "C",
+      "name": "부속 지붕",
+      "start": [
+        104.94379597779694,
+        117.29842890039143
+      ],
+      "end": [
+        108.36399741105363,
+        126.69535510825051
+      ],
+      "half_width": 0.6,
+      "roi_half_width": 3.0,
+      "anchor_xyz": [
+        106.65389669442528,
+        121.99689200432097,
+        -28.593584029034304
+      ],
+      "source": "UNCERT flat_roof__ALS place; building DEBY_LOD2_4959460",
+      "selection": "median input-patch centre of existing flat-roof place; no result read",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 12.563081016265368
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        },
+        "LoD2": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 11.9375
+          },
+          "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+        }
+      }
+    }
+  ],
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "view": {
+    "azimuth": -60,
+    "elevation": 35
+  },
+  "scientific_verdict": null
+}

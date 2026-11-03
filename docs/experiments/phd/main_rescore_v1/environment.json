@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-04T02:36:34.257571+09:00",
+  "cpu_model": "AMD Ryzen Threadripper 3990X 64-Core Processor",
+  "logical_cpus": 128,
+  "cpu_limits": {
+    "mesh": 4,
+    "score": 16
+  },
+  "nice": 19,
+  "memory_gib": 32,
+  "gpus": [
+    "0, NVIDIA GeForce RTX 3090, 24576 MiB, 580.82.07",
+    "1, NVIDIA GeForce RTX 3090, 24576 MiB, 580.82.07"
+  ],
+  "images": {
+    "jointbuildgs:dev": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "jointbuildgs:geogs-conf-guided-v1": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+    "jointbuildgs:2dgs-official-f3e3b9f-v1": "sha256:b2be486e519c31364ff73fe0c64d439488f49f84d97e07a14e042acb9b505c82",
+    "jointbuildgs:geogs-official-db40c95-compat-v1": "sha256:c5445549fe7f6995e0478ab9b07565da09947c1f1d54e274802dca50aa1e7f8e",
+    "jointbuildgs:cdgs-official-db853c1-v1": "sha256:4670d5d67bfc12c59147371da19cc9a3b4bfe7cd6debd1519a643c2766ced754"
+  },
+  "scientific_verdict": null
+}
