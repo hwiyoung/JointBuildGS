@@ -11,6 +11,7 @@ def main():
     record('execution','delivery_subdirectory','delivery_reply2','Keep large delivery ZIP payloads inside the authorized external task folder; commit reports, figures, source, configuration and archive receipts in the three authorized repository folders')
     record('execution','cpu_preparation_workers',dict(main_cpus=4,auxiliary_cpus=2,max_memory_gib_each=32,nice=19,per_tile_lock=True),'Record the operational parallel preparation introduced during the census; both workers reuse the same frozen numerical preparation code and skip completed tiles; prior source locks and runner failures retained')
     record('execution','core_stacked_axes',['photo_code','new_photo_code','region','reason','arm_region','arm_height_m'],'Before the first section 6/7 census aggregation, static review found new_photo_code missing from the stacked-array list. Metrics now share the canonical export schema; no score, target, threshold or numerical decision changed')
+    record('photos','section6_diagnostic_scope','original target 1 OR target 2; type-3-only scores reserved for section 7; unchanged target-2 overlaps remain in the agreement sample','Before the first metrics run, enforce order 4.1 evaluation-only target 3 also in inside-limit refutation and plane diagnostics; no photo recomputation, sample change, calibration or honest judgment change')
     files=sorted(root.glob('*.py'))+sorted(root.glob('*.sh'))
     for p in files:
         if p.suffix=='.py':ast.parse(p.read_text(),filename=str(p))

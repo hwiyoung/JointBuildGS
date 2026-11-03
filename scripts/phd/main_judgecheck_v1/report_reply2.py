@@ -44,7 +44,16 @@ def main(mode='full'):
         for r in readtable(g,'6_5_geometry'):
             if r['metric']=='five_percent_check':rows.append([LABEL[g],r['z'],num(r['denominator_area_m2']),num(r['area_m2']),pct(r['fraction'])])
     s.append(table(['자료','계수','칸0 분모(m²)','한계 밖(m²)','비율'],rows));s.append('LoD2 지붕의 5% 확인은 참고값이다. 정밀도 확인에는 참값의 오차 크기로 고른 부분을 쓰지 않았다.')
-    rows=[[r['radius_m'],num(r['q25']),num(r['median']),num(r['q75'])] for r in cal['als_radius_candidates']];s.append(table(['LiDAR 원통 반지름(m)','점 수 25%','중앙값','75%'],rows));s.append('선택한 반지름은 0.75 m다. 법선 반지름 분포, TIN과 새 높이 차, 5·10 m 결측/빈 공간 넓이와 옛 칸·새 칸 교차는 6.5 상세 표에 있다.')
+    rows=[[r['radius_m'],num(r['q25']),num(r['median']),num(r['q75'])] for r in cal['als_radius_candidates']];s.append(table(['LiDAR 원통 반지름(m)','점 수 25%','중앙값','75%'],rows));s.append('선택한 원통 반지름은 0.75 m다.')
+    gg=readtable('ALS_1','6_5_geometry');normal_rows=[r for r in gg if r['metric']=='normal_radius']
+    s.append(table(['법선 반지름(m)','핵심점 수','핵심점 비율','넓이(m²)'],[[r['radius_m'],r['count'],pct(r['core_fraction']),num(r['area_m2'])] for r in normal_rows]))
+    missing_prior=next(r for r in gg if r['metric']=='prior_height_missing');height_changes=[r for r in gg if r['metric']=='TIN_to_new_axis_height_quantile']
+    s.append(f"사전 정보 높이 없음 {missing_prior['count']:,}개·{num(missing_prior['area_m2'])} m². TIN에서 새 축 높이까지 차이의 넓이 가중 10/25/50/75/90% 값(cm): "+'/'.join(num(r['value_m']*100,3) if r['value_m'] is not None else '확인 불가' for r in height_changes)+'.')
+    rows=[]
+    for g in groups:
+        gg=readtable(g,'6_5_geometry');values={(r['half_length_m'],r['metric']):r for r in gg if 'half_length_m' in r}
+        rows.append([LABEL[g]]+[num(values[length,metric]['area_m2']) for length in [5,10] for metric in ['missing_after_sight','free_space']])
+    s.append(table(['시선 검사 뒤 넓이(m²)','5 m 결측','5 m 빈 공간','10 m 결측','10 m 빈 공간'],rows));s.append('옛 칸과 새 칸의 전체 교차표는 6.5 상세 표에 있다.')
     rows=[]
     for r in diagnostics['rows']:
         if r['group'] in groups and (r['metric'].startswith('u_M_missing') or (r['metric'].startswith('unknown_reason_exclusive') and r['count'])):rows.append([LABEL[r['group']],DX.get(r['metric'],r['metric']),r['count'],num(r['area_m2'])])
@@ -58,8 +67,8 @@ def main(mode='full'):
     actual=resources['measurement_totals']['photo_scores']['by_device'];s.append('완료된 사진 계산의 실행 시간(최대 구역 GPU 측정 포함, 별도 CPU 비교 측정 제외): '+'; '.join(('GPU' if k=='cuda' else 'CPU')+f" {v['seconds']/3600:.3f}시간·{v['points']:,}점" for k,v in actual.items())+'. 다른 발주의 GPU 사용 중에는 검증을 마친 동일한 float64 CPU 셈을 사용했다.')
     census=load(BASE/'target_census.json');targetrows=[]
     for g in groups:
-        rr=[r for r in census['rows'] if r['prior']+'_'+str(r['kind'])==g];targetrows.append([LABEL[g]]+[sum(r[k] for r in rr) for k in ['type1_count','type2_count','type3_count','type2_type3_overlap_count','target_count']])
-    s.append(table(['자료','대상1','대상2','대상3','2·3 겹침','중복 뺀 합'],targetrows));s.append('대상 3은 7절의 평가 전용이다. 대상 2와 겹쳐도 원래 일치 표본의 소속을 바꾸지 않았다.')
+        rr=[r for r in census['rows'] if r['prior']+'_'+str(r['kind'])==g];targetrows.append([LABEL[g]]+[sum(r[k] for r in rr) for k in ['type1_count','type2_count','type3_count','type2_type3_overlap_count','target_count']]+[num(sum(r['target_area_m2'] for r in rr))])
+    s.append(table(['자료','대상1','대상2','대상3','2·3 겹침','중복 뺀 합','대상 넓이(m²)'],targetrows));s.append('대상 3은 7절의 평가 전용이다. 대상 2와 겹쳐도 원래 일치 표본의 소속을 바꾸지 않았다.')
     rows=[]
     for g in groups:
         t=load(C/f'photo_threshold.{g}.reply2.lock.json');rows.append([LABEL[g],num(t['t'],6),num(t['t10'],6),t['finite_score_points'],num(t['finite_score_area_m2'])])
@@ -74,7 +83,7 @@ def main(mode='full'):
     rows=[]
     for g in groups:
         rr=readtable(g,'6_4_planes');missing=next(x for x in rr if x['metric']=='MVS 면 없음');angles=[x for x in rr if x['metric']=='angle_photo_point_quantile'];rows.append([LABEL[g],missing['count'],num(missing['area_m2']),' / '.join(num(x['value_deg'],2) for x in angles)])
-    s.append(table(['자료','MVS 면 없음(핵심점)','넓이(m²)','두 면 각 10/25/50/75/90%(°)'],rows));s.append('일치 표본 행은 원래 대상 2만 사용했다. 각도는 중복을 뺀 사진 점의 분포다. 넓이 가중 핵심점 분포는 6.4 상세 표에 있다.')
+    s.append(table(['자료','MVS 면 없음(핵심점)','넓이(m²)','두 면 각 10/25/50/75/90%(°)'],rows));s.append('6절의 고친 사진 진단은 대상 1·2만, 일치 표본 행은 원래 대상 2만 썼다. 대상 3만의 값은 7절 전용이다. 각도는 중복을 뺀 사진 점의 분포이며 넓이 가중 분포도 상세 표에 있다.')
     s+=['','## 판단 (6.1~6.3)']
     for g in groups:
         cross=readtable(g,'6_1_cross');rows=[]
@@ -82,21 +91,24 @@ def main(mode='full'):
             rr=[x for x in cross if x['variant']==variant and x['panel']==panel and x['cell']<6]
             for label in dict.fromkeys(x['label'] for x in rr):
                 cc={x['cell']:x for x in rr if x['label']==label};rows.append([prefix+' '+label]+[num(cc[i]['area_m2'],1)+'/'+num(cc[i]['fraction']*100,1) if cc[i]['fraction'] is not None else '확인 불가' for i in range(6)])
-        s.append('### '+LABEL[g]+' 기하·판단과 칸 교차');s.append('각 칸은 넓이(m²)/전체 유효 참값 넓이 대비 %다. 각 판의 여섯 열과 모든 영역의 비율 합은 100%다.');s.append(table(['판·영역','칸0','칸1','칸2','칸3','칸4','칸5'],rows))
+        denominator=next(x['denominator_area_m2'] for x in cross if x['cell']<6)
+        separate=[x for x in cross if x['variant']=='new_clipped' and x['panel']=='geometry' and x['cell']>=6]
+        s.append('### '+LABEL[g]+' 기하·판단과 칸 교차');s.append(f"각 칸은 m²/%다. 분모는 참값이 있고 기하 검사가 가능한 {num(denominator)} m²이며 각 판의 합은 100%다. 별도: "+'; '.join(x['label']+' '+num(x['area_m2'])+' m²' for x in separate)+'.');s.append(table(['판·영역','칸0','칸1','칸2','칸3','칸4','칸5'],rows))
         r=summary[g];rows=[[VAR[x['variant']],x['stratum'],num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction']),pct(x['whole_roof_fraction'])] for x in r['accuracy']]
         s.append('### '+LABEL[g]+' 판단 정확도');s.append(table(['판','부분','분모(m²)','틀린 넓이(m²)','틀린 비율','전체 넓이 대비'],rows))
-        s.append('분모는 새 한계 밖의 칸 0·1·2다. 옛 규칙만 자기 한계와 옛 칸을 썼다. 칸 1에서 보정하지 않음과 칸 2에서 보정함을 틀림으로 셌다.')
+        s.append(f"분모는 새 한계 밖의 칸 0·1·2다. 옛 규칙만 자기 한계와 옛 칸을 썼다. 칸 1에서 보정하지 않음과 칸 2에서 보정함을 틀림으로 셌다. 전체 넓이 대비의 분모는 사전 높이·법선이 있는 {num(r['prior_height_valid_area_m2'])} m²다(법선 부분별 행에도 동일).")
         rows=[[x['building'],num(x['denominator_area_m2']),num(x['area_m2']),pct(x['fraction'])] for x in r['top15']];s.append(table(['틀린 넓이가 큰 15동','분모(m²)','틀린 넓이(m²)','틀린 비율'],rows))
         causes=readtable(g,'6_3_causes');rows=[]
         for v in ['new_clipped','new_unclipped','new_oldphoto']:
             rr=[x for x in causes if x['variant']==v];values={x['reason']:x['area_m2'] for x in rr};default=sum(x['area_m2'] for x in rr if x['reason'].startswith('기본 방향:'))
             rows.append([VAR[v],num(values['사진이 틀리게 지지']),num(values['사진이 틀리게 반박']),num(default),num(values['빈 공간 보정이 틀림(6.2 분모 밖)']),num(values['한계 밖 둘 다 틀림']),num(values['한계 안 사진 반박(전체 한계 안 분모)'])])
         s.append(table(['틀림의 까닭(m²)','틀린 지지','틀린 반박','기본 방향','빈 공간(분모 밖)','밖·둘 다 틀림','안·사진 반박'],rows))
-    s.append('참값 없음과 기하 확인 불가는 별도 행으로 남겼다. 모름의 종류별 기본 방향 오류와 한계 안 사진 반박 비율은 6.3 상세 표에 있다.')
+    s.append('참값 없음과 기하 확인 불가는 별도 행으로 남겼다. 모름별 기본 방향 오류와 한계 안 사진 반박 비율은 6.3 상세 표에 있다. 고친 사진의 반박/전체 한계 안 넓이는 대상 1·2에서 확인한 최소 비율이며, 계산한 부분을 분모로 한 값도 함께 남겼다.')
     s+=['','## 단계별 바꿔 끼우기 (7절)']
     for g in groups:
         rows=[[ARM[r['arm']],pct(r['within_tau_fraction']),num(r['mean_abs_error_m'],4),num(r['median_abs_error_m'],4),num(r['within_tau_difference_pp']),num(r['uncountable_area_m2'])] for r in summary[g]['ablation']]
-        s.append('### '+LABEL[g]);s.append(table(['판','τ 안 비율','평균 오차(m)','중앙값(m)','본 방법과 차(%p)','셀 수 없음(m²)'],rows))
+        main=next(r for r in summary[g]['ablation'] if r['arm']=='main')
+        s.append('### '+LABEL[g]);s.append(f"τ 채점 분모 {num(main['scored_area_m2'])} m², 유한 높이 오차 분모 {num(main['finite_error_area_m2'])} m². 아홉 판의 채점 분모는 같다.");s.append(table(['판','τ 안 비율','평균 오차(m)','중앙값(m)','본 방법과 차(%p)','셀 수 없음(m²)'],rows))
     s.append('높이 오차의 평균·중앙값은 넓이 가중이다. 면 없음은 참값 면이 있는 곳에서 틀림이다. 참값 자체가 없는 칸 6을 빈 공간의 정답으로 간주하지 않았다. 면 없음은 높이 오차 평균·중앙값에서 제외하고 넓이를 따로 적었다. 칸 0~5 표와 계산 가능한 넓이는 상세 표에 있다.')
     s+=['','## 그림 (8절)']
     for p in sorted((D/'figures').glob('그림*.png')):
@@ -127,6 +139,7 @@ def main(mode='full'):
         '시선 검사에 원래 불확실도 제공점이 없는 건물은 대체값을 만들지 않았다. 해당 검사는 확인 불가이며 빈 공간 보정의 근거로 쓰지 않았다. 사진 선택이 3장 미만이면 발주문 순서상 MVS 면 없음보다 사진 부족이 먼저 적용된다.',
         '다른 발주가 GPU를 쓰는 것이 확인되면 사진 계산을 일시 정지하고 기다렸다. 프로세스 검사·정지·재개 시각은 대기 기록에 남겼다. 시작 전 검사와 실행 중 5초 간격 검사를 구분하며, 처음 실행 중 발견 전의 겹침 가능성도 숨기지 않는다. 대기 시간은 닫힌 정지·재개 구간과 연속 사용 중 관측 구간을 합친 최소값이다. 첫 수동 정지의 기록 지연과 중단한 표본의 마지막 정지 종료 시각 누락은 추정으로 채우지 않았다.',
         '앞선 캐시 준비 중단, 독립 검사 연결 키 수정과 실패 로그는 issues.md에 보존했다. 설정의 각 변경 시각·까닭·이전 SHA-256은 설정 이력에 있다.',
+        '실행별 Docker 이미지·Git 기준·자원 제한 원장은 11월 3일 13:58부터 수집했다. 앞서 끝난 컨테이너의 해당 값은 추정하지 않았다. 코드·입력·출력 SHA-256과 환경 버전은 별도 잠금 기록에 있다.',
         f"현재 설정 SHA-256: `{sha(C/'judgecheck_v1.json')}`.",
         f"첫 설정 이후 총 경과는 {resources['task_elapsed_seconds']/3600:.2f}시간이며, 사용자 회신 대기를 포함한다. 회신 2 이후의 경과와 GPU 대기 최소값은 첫 다섯 줄에 따로 적었다.",
         '원본 수치와 출처는 tables/*.json 및 *.csv, 보기용 표는 *.md에 있다. 구역별 완료 기록과 시선 검사 기록도 보존했다. 이 보고는 과학적 결론을 내리지 않는다.']
@@ -137,6 +150,6 @@ def main(mode='full'):
         obj=load(p);rows=obj.get('rows')
         if not isinstance(rows,list) or not rows or not isinstance(rows[0],dict):continue
         fields=list(dict.fromkeys(k for r in rows for k in r if not isinstance(r[k],(list,dict))))
-        content=table(fields,[[num(r.get(k),6) if isinstance(r.get(k),float) else str(r.get(k,'')) for k in fields] for r in rows]);p.with_suffix('.md').write_text('[이 발주에서 냄]\n\n'+content)
+        content=table(fields,[[num(r.get(k),6) if isinstance(r.get(k),float) else str(r.get(k,'')) for k in fields] for r in rows]);p.with_suffix('.md').write_text('[이 발주에서 냄]\n\n'+f'[반올림 전 값과 출처]({p.name})\n\n'+content)
     dump(BASE/'reports'/f'{mode}.json',dict(at=now(),report=name,characters=len(text),sha256=sha(D/name),scientific_verdict=None));print('REPORT_WRITTEN',name,len(text),flush=True)
 if __name__=='__main__':main(sys.argv[1] if len(sys.argv)>1 else 'full')

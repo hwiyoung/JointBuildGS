@@ -15,7 +15,9 @@ def val(v):
     return v
 
 def main(group):
-    prior,kind=GROUPS[group];name=f'{prior}_{kind}';parts=[loadz(p) for p in sorted((BASE/'core_points').glob(f'*__{prior}__{kind}.npz'))];g={k:np.concatenate([p[k] for p in parts],axis=1 if k in CORE_STACKED else 0) for k in parts[0]};del parts
+    prior,kind=GROUPS[group];name=f'{prior}_{kind}';core_files=sorted((BASE/'core_points').glob(f'*__{prior}__{kind}.npz'));parts=[loadz(p) for p in core_files];g={k:np.concatenate([p[k] for p in parts],axis=1 if k in CORE_STACKED else 0) for k in parts[0]};del parts
+    source_files=core_files+sorted((BASE/'photo_points').glob(f'*__{prior}__{kind}.npz'))
+    provenance=dict(source_tag='[이 발주에서 냄]',input_sha256={str(p):sha(p) for p in source_files},calculation_source_sha256=sha(Path(__file__)),config_sha256=sha(C/'judgecheck_v1.json'),photo_scope='Section 6 corrected-photo diagnostics use original targets 1 or 2 only; type-3-only scores are reserved for the section-7 geometry-oracle arm. Original target-2 membership is preserved at overlaps.')
     a=g['area'];cell=g['cell'];geom=g['geometry'];N=len(a);prior_valid=np.isfinite(g['prior_height_m'])&np.isfinite(g['normal']).all(1);total=float(a[prior_valid].sum());valid=np.isin(cell,range(6));eligible=valid&(geom!=9);outside=geom==1;tables={}
     def row(mask,den=None,**labels):
         area=float(a[mask].sum());d=float(a[den].sum()) if den is not None else None
@@ -40,15 +42,16 @@ def main(group):
         for b in np.unique(g['building']):
             m=g['building']==b;bd=float(a[m&prior_valid].sum());building_rows.append(dict(**row(wrong&m,den&m,variant=variant,building=str(b)),building_area_m2=bd,whole_building_fraction=float(a[wrong&m].sum()/bd) if bd else None))
     tables['6_2_accuracy']=rows;tables['6_2_buildings']=building_rows
-    rows=[]
+    rows=[];primary_photo=sample_mask(g,prior,kind,bits=3)
     for vi in range(3):
         photo=g['photo_code'][vi];den=outside&np.isin(cell,[0,1,2]);variant=VARIANTS[vi]
         for reason,m in [('사진이 틀리게 지지',(cell==1)&(photo==0)),('사진이 틀리게 반박',(cell==2)&(photo==1))]:rows.append(row(den&m,den,variant=variant,reason=reason))
         for code in range(2,10):rows.append(row(den&(cell==(1 if prior=='ALS' else 2))&(photo==code),den,variant=variant,reason='기본 방향:'+PHOTO_LABELS[code]))
         rows.append(row((g['region'][vi]==3)&(cell==4),valid&(g['n']<4),variant=variant,reason='빈 공간 보정이 틀림(6.2 분모 밖)'))
         rows.append(row(outside&(cell==3),outside,variant=variant,reason='한계 밖 둘 다 틀림'))
-        rows.append(row((geom==0)&(photo==1),geom==0,variant=variant,reason='한계 안 사진 반박(전체 한계 안 분모)'))
-        rows.append(row((geom==0)&(photo==1),(geom==0)&g['photo_computed'] if vi<2 else geom==0,variant=variant,reason='한계 안 사진 반박(사진 계산 부분 분모)'))
+        refuted=(geom==0)&(photo==1)&(primary_photo if vi<2 else np.ones(N,bool))
+        rows.append(row(refuted,geom==0,variant=variant,reason='한계 안 사진 반박(전체 한계 안 분모)'))
+        rows.append(row(refuted,(geom==0)&primary_photo if vi<2 else geom==0,variant=variant,reason='한계 안 사진 반박(사진 계산 부분 분모)'))
     tables['6_3_causes']=rows
     rows=[];sample2=sample_mask(g,prior,kind)
     for vi in range(3):
@@ -59,8 +62,9 @@ def main(group):
             if label.startswith('일치'):mask=mask&sample2
             for code in range(10):rows.append(row(mask&(photo==code),mask,variant=VARIANTS[vi],stratum=label,photo=PHOTO_LABELS[code]))
     tables['6_4_photos']=rows
-    angles=g['mvs_normal_angle_deg'];am=np.isfinite(angles)&g['photo_computed'];_,ui=np.unique(g['photo_point_id'][am],return_index=True);unique_angles=angles[am][ui]
-    tables['6_4_planes']=[row(g['photo_computed']&~g['mvs_plane_available'],g['photo_computed'],metric='MVS 면 없음')]+[dict(metric='angle_core_area_weighted_quantile',q=q,value_deg=weighted_quantile(angles[am],a[am],q),count=int(am.sum()),area_m2=float(a[am].sum())) for q in [.1,.25,.5,.75,.9]]+[dict(metric='angle_photo_point_quantile',q=q,value_deg=float(np.quantile(unique_angles,q)) if len(unique_angles) else None,count=len(unique_angles)) for q in [.1,.25,.5,.75,.9]]
+    photo_scope=g['photo_computed']&primary_photo
+    angles=g['mvs_normal_angle_deg'];am=np.isfinite(angles)&photo_scope;_,ui=np.unique(g['photo_point_id'][am],return_index=True);unique_angles=angles[am][ui]
+    tables['6_4_planes']=[row(photo_scope&~g['mvs_plane_available'],photo_scope,metric='MVS 면 없음')]+[dict(metric='angle_core_area_weighted_quantile',q=q,value_deg=weighted_quantile(angles[am],a[am],q),count=int(am.sum()),area_m2=float(a[am].sum())) for q in [.1,.25,.5,.75,.9]]+[dict(metric='angle_photo_point_quantile',q=q,value_deg=float(np.quantile(unique_angles,q)) if len(unique_angles) else None,count=len(unique_angles)) for q in [.1,.25,.5,.75,.9]]
     rows=[]
     for old in range(7):
         for new in list(range(7))+[9]:rows.append(row((g['old_cell']==old)&(cell==new),np.ones(N,bool),old_cell=old,new_cell=new))
@@ -77,7 +81,7 @@ def main(group):
         rows.append(row(ok&(n<4),ok,metric='missing_before_sight',half_length_m=int(nn)));rows.append(row(ok&(n<4)&g[free],ok,metric='free_space',half_length_m=int(nn)));rows.append(row(ok&(n<4)&~g[free],ok,metric='missing_after_sight',half_length_m=int(nn)))
     rows.append(row(g['sight_unavailable'],np.ones(N,bool),metric='sight_unavailable_no_original_u_donors'))
     if prior=='ALS':
-        for r in [.5,.75,1,1.5,2]:rows.append(row(g['normal_radius_m']==r,np.ones(N,bool),metric='normal_radius',radius_m=r))
+        for r in [.5,.75,1,1.5,2]:rows.append(dict(**row(g['normal_radius_m']==r,np.ones(N,bool),metric='normal_radius',radius_m=r),denominator_core_count=N,core_fraction=float(np.count_nonzero(g['normal_radius_m']==r)/N)))
         rows.append(row(~g['normal_rule_met'],np.ones(N,bool),metric='normal_fallback'))
         rows.append(row(~np.isfinite(g['prior_height_m']),np.ones(N,bool),metric='prior_height_missing'))
         for q in [.1,.25,.5,.75,.9]:rows.append(dict(metric='TIN_to_new_axis_height_quantile',q=q,value_m=weighted_quantile(g['prior_height_m'],a,q)))
@@ -102,16 +106,16 @@ def main(group):
         b=base[r['cell']];r['within_tau_difference_pp']=(r['within_tau_fraction']-b['within_tau_fraction'])*100 if r['within_tau_fraction'] is not None and b['within_tau_fraction'] is not None else None
     tables['7_ablation']=rows
     for table,rows in tables.items():
-        rows=val(rows);dest=D/'tables'/f'{name}_{table}';dump(dest.with_suffix('.json'),dict(at=now(),group=name,table=table,rows=rows,excluded_shared_cores=EX,scientific_verdict=None))
+        rows=val(rows);dest=D/'tables'/f'{name}_{table}';dump(dest.with_suffix('.json'),dict(at=now(),group=name,table=table,rows=rows,provenance=provenance,excluded_shared_cores=EX,scientific_verdict=None))
         fields=list(dict.fromkeys(k for r in rows for k in r));fields+=['excluded_shared_count','excluded_shared_area_m2']
         with dest.with_suffix('.csv').open('w') as f:
             w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows);w.writerow(dict(excluded_shared_count=73,excluded_shared_area_m2=EX['area_m2']))
     result=val(dict(at=now(),group=name,core_count=N,area_m2=float(a.sum()),prior_height_valid_count=int(prior_valid.sum()),prior_height_valid_area_m2=total,whole_area_accuracy_denominator='retained area after missing prior height/normal exclusion',accuracy=tables['6_2_accuracy'],ablation=[r for r in tables['7_ablation'] if r['cell']=='all'],top15=sorted([r for r in building_rows if r['variant']=='new_clipped'],key=lambda r:-r['area_m2'])[:15],excluded_shared_cores=EX,scientific_verdict=None))
     dump(BASE/'metrics'/f'{name}.json',result);print('METRICS_COMPLETE',name,flush=True)
 
-def sample_mask(g,prior,kind):
+def sample_mask(g,prior,kind,bits=2):
     ids=set()
     for p in (BASE/'photo_points').glob(f'*__{prior}__{kind}.npz'):
-        with np.load(p) as z:ids.update(z['point_id'][(z['target_type_bits']&2)>0])
+        with np.load(p) as z:ids.update(z['point_id'][(z['target_type_bits']&bits)>0])
     return np.isin(g['photo_point_id'],list(ids))
 if __name__=='__main__':main(int(sys.argv[1]))

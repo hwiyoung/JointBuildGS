@@ -7,7 +7,7 @@ from geometry import loadz,savez
 from preflight import C,D,O,Path,sha,dump,now
 
 def main(source=None):
-    source=Path(source) if source else O;replay=O/'r2/replay_delivery';outputs=replay/'reports';(outputs/'tables').mkdir(parents=True,exist_ok=True)
+    explicit_source=source is not None;source=Path(source) if explicit_source else O;replay=O/'r2/replay_delivery';outputs=replay/'reports';(outputs/'tables').mkdir(parents=True,exist_ok=True)
     inputs={}
     for folder,stacked in [('core_points',CORE_STACKED),('photo_points',PHOTO_STACKED)]:
         for path in sorted((source/folder).glob('*__*.npz')):
@@ -20,7 +20,8 @@ def main(source=None):
     M.BASE=replay;M.D=outputs
     for group in range(3):M.main(group)
     checks=[]
-    reference_tables=source/'tables' if (source/'tables').exists() else D/'tables'
+    reference_tables=source/'tables' if explicit_source else D/'tables'
+    assert reference_tables.is_dir(),f'Missing delivered tables: {reference_tables}'
     for path in sorted((outputs/'tables').glob('*.json')):
         original=reference_tables/path.name;current=json.loads(path.read_text());expected=json.loads(original.read_text())
         assert current['rows']==expected['rows'],path.name

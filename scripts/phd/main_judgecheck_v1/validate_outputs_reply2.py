@@ -51,11 +51,16 @@ def main(mode='full'):
                 assert np.allclose(heights,z['arm_height_m'][arm_index],rtol=0,atol=1e-12,equal_nan=True),(key,tile,arm_index,'chosen height')
             sample=(photo['target_type_bits']&2)>0;tx.append(photo['best_score'][0,sample,0]);tw.append(photo['eligible_area_m2'][sample])
             known=outside&np.isin(z['cell'],[0,1,2]);correct=np.isin(z['region'][0],[2,3]);wrong=known&(((z['cell']==1)&~correct)|((z['cell']==2)&correct))
-            checks.append(dict(group=key,tile=tile,count=n,accuracy_denominator=float(z['area'][known].sum()),wrong_area=float(z['area'][wrong].sum())))
+            primary=(photo['target_type_bits'][ix]&3)>0;missing_plane=primary&z['photo_computed']&~z['mvs_plane_available']
+            checks.append(dict(group=key,tile=tile,count=n,accuracy_denominator=float(z['area'][known].sum()),wrong_area=float(z['area'][wrong].sum()),
+                primary_missing_plane_count=int(missing_plane.sum()),primary_missing_plane_area_m2=float(z['area'][missing_plane].sum()),primary_photo_area_m2=float(z['area'][primary&z['photo_computed']].sum()),
+                primary_inside_refuted_area_m2=[float(z['area'][(geom==0)&primary&(z['photo_code'][vi]==1)].sum()) for vi in range(2)]))
         counts[key]=count;x=np.concatenate(tx);w=np.concatenate(tw);good=np.isfinite(x)&(w>0);xx=x[good];ww=w[good];order=np.argsort(xx,kind='stable');threshold=xx[order][np.flatnonzero(np.cumsum(ww[order])>=.05*ww.sum())[0]] if len(xx) else None
         stored=json.loads((C/f'photo_threshold.{key}.reply2.lock.json').read_text())['t'];assert threshold==stored
         metric=json.loads((BASE/'metrics'/f'{key}.json').read_text());row=next(r for r in metric['accuracy'] if r['variant']=='new_clipped' and r['stratum']=='all');den=sum(r['accuracy_denominator'] for r in checks if r['group']==key);wrong=sum(r['wrong_area'] for r in checks if r['group']==key);assert abs(row['denominator_area_m2']-den)<1e-7 and abs(row['area_m2']-wrong)<1e-7
-        cross=json.loads((D/'tables'/f'{key}_6_1_cross.json').read_text())['rows']
+        cross_file=json.loads((D/'tables'/f'{key}_6_1_cross.json').read_text());cross=cross_file['rows'];provenance=cross_file['provenance']
+        assert provenance['calculation_source_sha256']==sha(Path(__file__).parent/'metrics_reply2.py')
+        for path,digest in provenance['input_sha256'].items():assert sha(Path(path))==digest,path
         for variant in ['new_clipped','new_oldphoto']:
             for panel in ['geometry','judgment']:
                 rows=[r for r in cross if r['variant']==variant and r['panel']==panel and r['cell']<6]
@@ -64,12 +69,21 @@ def main(mode='full'):
         arms=metric['ablation'];reference=next(r for r in arms if r['arm']=='main')
         for arm in arms:assert abs(arm['scored_area_m2']-reference['scored_area_m2'])<1e-7,(key,arm['arm'],'different evaluation denominator')
         causes=json.loads((D/'tables'/f'{key}_6_3_causes.json').read_text())['rows']
+        plane_row=next(r for r in json.loads((D/'tables'/f'{key}_6_4_planes.json').read_text())['rows'] if r['metric']=='MVS 면 없음')
+        tiles=[r for r in checks if r['group']==key]
+        assert plane_row['count']==sum(r['primary_missing_plane_count'] for r in tiles)
+        assert abs(plane_row['area_m2']-sum(r['primary_missing_plane_area_m2'] for r in tiles))<1e-7
+        assert abs(plane_row['denominator_area_m2']-sum(r['primary_photo_area_m2'] for r in tiles))<1e-7
+        for vi,variant in enumerate(['new_clipped','new_unclipped']):
+            observed=next(r['area_m2'] for r in causes if r['variant']==variant and r['reason']=='한계 안 사진 반박(전체 한계 안 분모)')
+            assert abs(observed-sum(r['primary_inside_refuted_area_m2'][vi] for r in tiles))<1e-7,(key,variant,'type 3 entered section 6')
         for variant in ['new_clipped','new_unclipped','new_oldphoto']:
             accounted=sum(r['area_m2'] for r in causes if r['variant']==variant and (r['reason'] in ['사진이 틀리게 지지','사진이 틀리게 반박'] or r['reason'].startswith('기본 방향:')))
             expected_wrong=next(r['area_m2'] for r in metric['accuracy'] if r['variant']==variant and r['stratum']=='all')
             assert abs(accounted-expected_wrong)<1e-7,(key,variant,'unaccounted error cause')
         for table in ['6_1_cross','6_2_accuracy','6_2_buildings','6_3_causes','6_4_photos','6_4_planes','6_5_geometry','6_5_precision','6_5_cell_cross','7_ablation']:
             for suffix in ['json','csv','md']:assert (D/'tables'/f'{key}_{table}.{suffix}').exists()
+            assert json.loads((D/'tables'/f'{key}_{table}.json').read_text())['provenance']==provenance
     assert counts==({'ALS_1':501840,'LoD2_1':644427,'LoD2_2':1485308} if mode=='full' else {'ALS_1':501840,'LoD2_1':644427}),counts
     figures=[]
     for prior in ['ALS','LoD2']:

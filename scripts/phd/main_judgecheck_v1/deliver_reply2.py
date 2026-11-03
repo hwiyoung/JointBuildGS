@@ -68,8 +68,8 @@ def main():
         if p.is_file() and p.suffix in ['.py','.sh','.cpp']:full.append((p,'scripts/'+str(p.relative_to(code))))
     for p in [BASE/'target_census.json',BASE/'timing_estimate.json',BASE/'diagnostics.json',BASE/'audit_inputs.json',O/'r1/resumed_lineage_final_hashes.json']:
         full.append((p,'reproduction/'+p.name))
-    for p in sorted((BASE/'resources').glob('*')):
-        if p.is_file():full.append((p,'reproduction/resources/'+p.name))
+    for p in sorted((BASE/'resources').rglob('*')):
+        if p.is_file() and not p.name.endswith('.tmp'):full.append((p,'reproduction/resources/'+str(p.relative_to(BASE/'resources'))))
     full_records=make('PHD-MAIN-JUDGECHECK-v1_가',full)
     receipt=dict(at=now(),status='PASS_STAGE_A_DELIVERY_INTEGRITY',light=light_records,full=full_records,validation_status=v['status'],
         report_sha256=sha(report),config_sha256=sha(C/'judgecheck_v1.json'),initial_preparation_included=False,holdout_included=False,stop_before_stage_b=True,scientific_verdict=None)

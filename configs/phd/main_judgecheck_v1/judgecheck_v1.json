@@ -308,7 +308,8 @@
     "old_peak_gap_m": 0.3,
     "cpu_stop_hours": 72,
     "gpu_stop_hours": 48,
-    "corrected_photo_numeric_precision": "float64 interpolation and NCC accumulation; inherited grayscale unchanged"
+    "corrected_photo_numeric_precision": "float64 interpolation and NCC accumulation; inherited grayscale unchanged",
+    "section6_diagnostic_scope": "original target 1 OR target 2; type-3-only scores reserved for section 7; unchanged target-2 overlaps remain in the agreement sample"
   },
   "judgment": {
     "default": {
@@ -569,6 +570,14 @@
         "arm_region",
         "arm_height_m"
       ]
+    },
+    {
+      "at": "2026-11-03T14:17:11.397784+09:00",
+      "reason": "Before the first metrics run, enforce order 4.1 evaluation-only target 3 also in inside-limit refutation and plane diagnostics; no photo recomputation, sample change, calibration or honest judgment change",
+      "previous_config_sha256": "caedd77808129714171dc840b3addd631aa63880101699bd622e0cede5412709",
+      "section": "photos",
+      "key": "section6_diagnostic_scope",
+      "value": "original target 1 OR target 2; type-3-only scores reserved for section 7; unchanged target-2 overlaps remain in the agreement sample"
     }
   ],
   "reply2_diagnostics": {
