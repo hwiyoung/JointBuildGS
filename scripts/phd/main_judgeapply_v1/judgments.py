@@ -31,6 +31,11 @@ def main(site):
       pp['photo_code']=code;allcode=np.full(P,9,np.int8);allcode[target]=code;d['photo_code']=allcode[mapping['point_index']]
       d['photo_point_id']=mapping['point_id'];d['photo_point_index']=mapping['point_index']
       pp.update(centre=g['centre'][target],area=g['area'][target],patch_count=g['patch_count'][target],all_within=g['all_within'][target],source=g['source'][target])
+      pp.update(point_index=target,point_uid=np.array([f'{site}:{prior}:{int(k)}:{int(i)}' for k,i in zip(pp['kind'],target)]),
+                s_P=pp['score'][:,0],s_M=pp['score'][:,1],selected_image_count=(pp['selected_images']>=0).sum(-1),
+                mvs_fit_height_m=np.einsum('ij,ij->i',pp['centres'][:,1]-pp['centre'],pp['normals'][:,0]),
+                threshold_used=pp['threshold_sample']&np.isfinite(pp['score'][:,0]))
+      d['photo_point_uid']=np.array([f'{site}:{prior}:{int(k)}:{int(i)}' for k,i in zip(d['kind'],mapping['point_index'])])
       savez(O/'photo_points'/f'{site}__{prior}.npz',**pp)
       sight=loadz(O/'sight'/f'{site}__{prior}.npz');free=np.where(d['kind']==1,sight['free10'],sight['free5'])
       d.update(sight_votes=sight['votes'],sight_disappeared=sight['disappeared'],free5=sight['free5'],free10=sight['free10'])

@@ -1,0 +1,179 @@
+{
+  "rows": [
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "path": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_LoD2/detect/patches.npz",
+      "sha256": "435403e9ed488c89959f824d8c32d0f9caf41673343d1b90e2a84efdb9855e68",
+      "field": "in_change_25",
+      "colour_threshold": 25.0,
+      "decision_lines": "mvsfuse/detect.py:315-353,355-364,725-732,770-772",
+      "rules_source": "scripts/phd/main_baselines_v1/mvsfuse/mf_common.py:56-101",
+      "thresholds": {
+        "pairs": {
+          "flight": "time-sorted names of the 937 posed images; a new flight starts where two consecutive capture times (from the name) differ by more than 60 s",
+          "flight_gap_s": 60.0,
+          "max_view_angle_deg": 20.0,
+          "target_overlap": 0.6,
+          "overlap": "share of view i's MVS points (export mvs map, every 4th pixel in x and y) that project inside view j's frame (prior-free, so both priors get the same pairs)",
+          "overlap_stride_px": 4,
+          "min_overlap_points": 200,
+          "tie": "smaller view angle, then name"
+        },
+        "pixel": {
+          "correspondence": "the prior surface point of the pixel projected into the pair image; the pixel within +-2 px (5 x 5 candidates) with the largest max(0, NCC) of the 3 x 3 grey patches; ties (incl. all 0) -> the candidate nearest to the projection",
+          "search_px": 2,
+          "ncc_window": 3,
+          "grey": "0.299 R + 0.587 G + 0.114 B (the paper's NCC is on intensity)",
+          "occlusion_tolerance_m": 0.05,
+          "occlusion": "ray from the pair camera to the prior point hits the prior surface more than 0.05 m before it -> not judged in that pair",
+          "frame": "the 3 x 3 patch of the pixel and the 7 x 7 search window in the pair image must lie inside the frames",
+          "steep_not_judged": "D1015-1: pixels whose prior surface has |n_z| < 0.5 are not judged (colour test and removed-building test)",
+          "steep_nz": 0.5,
+          "colour": "RMS over R, G, B (0-255) of the pixel and its correspondence",
+          "colour_threshold": 25.0,
+          "colour_threshold_reference": [
+            20.0,
+            30.0
+          ]
+        },
+        "opening": {
+          "relief_height_m": 2.0,
+          "factor": 0.7,
+          "factor_source": "10 / 14.2 (the paper's erosion size / relief displacement of 2 m)",
+          "displacement": "per pair: median over the judged pixels (up to 20,000, strided) of |(p_j(X + 2 m up) - p_j(X)) - (p_i(X + 2 m up) - p_i(X))|, the parallax change of a 2 m height change in that pair's geometry",
+          "kernel": "square k x k, k = round(0.7 x displacement); k < 2 -> no opening",
+          "operation": "opening (erosion then dilation) of the view's binary change image (judged and change = 1, else 0); the result is kept on judged pixels only"
+        },
+        "cells": {
+          "cell_m": 0.25,
+          "view_vote": "a paired view says 'change' for a cell when more than half of its judged pixels whose prior point falls in the cell are change after the opening",
+          "cell_vote": "change cell: more than half of the paired views that judge the cell say change, and at least 2 views judge it",
+          "min_views": 2
+        },
+        "removal": {
+          "share": 0.95,
+          "rule": "per prior building region: every non-steep pixel (D1015-1) of the paired training views whose prior hit is on the building is re-projected through the ground height (ray / horizontal plane), its correspondence found as above (occlusion only by other buildings); if at least 95 % of those pixels (pooled over the views) have a colour RMS at or below the threshold, every plan cell of the building is a change cell",
+          "region_LoD2": "faces of one building (tri_building)",
+          "region_ALS": "vertex-connected components of the building_tri triangles",
+          "ground_LoD2": "median over the building's wall surfaces of the lowest vertex height",
+          "ground_ALS": "median centroid height of the ground (non-building) TIN triangles whose centroid lies in the 2 m band around the building's plan cells",
+          "band_m": 2.0
+        },
+        "growth": {
+          "ring_m": 1.0,
+          "step_m": 2.0,
+          "dz_m": 2.0,
+          "dz_reference_m": 1.5,
+          "piece_min_m2": 1.0,
+          "rule": "search the cells within 1 m of the change cells; a searched prior cell whose median MVS - prior height difference exceeds 2 m in magnitude becomes a change cell; components of the new cells below 1 m2 are removed (D1015-2); then search within 2 m of the new change cells; a searched cell is not searched again; stop when nothing is added",
+          "cell_dz": "per cell: median over every training view's non-steep pixels (|n_z| >= 0.5, D1015-1) whose prior point falls in the cell and that have MVS of (MVS depth - prior depth) x ray z (the height difference along the pixel's ray)"
+        },
+        "size": {
+          "min_extent_m": 2.0,
+          "min_area_m2": 4.0,
+          "min_height_m": 2.0,
+          "connectivity": 8,
+          "stage": "after the growth (the paper's end filter, 3.3)",
+          "extent": "D1015-3: both sides of the minimum-area rotated rectangle (cv2.minAreaRect) around the component's cell corners",
+          "rule": "8-connected components of the change cells; kept when both sides of the minimum-area rotated rectangle are >= 2 m and the area >= 4 m2, and the median over its cells with MVS of |cell height difference| is >= 2 m; when more than half of its cells have no MVS the height is not seen and the component is kept (counted)"
+        },
+        "update": "per training view: a pixel whose prior hit lies in a change cell -> MVS depth (none -> empty); other prior pixels -> prior depth; pixels without prior -> MVS depth (none -> empty). The cell height difference of the growth and the size filter uses the non-steep prior pixels only (D1015-1, the 2.5-D top surface)",
+        "decisions_1015": [
+          "D1015-1",
+          "D1015-2",
+          "D1015-3"
+        ],
+        "filters": "NDVI and road / river masks are not applied (no near-infrared image, no topographic map); the change area outside the evaluation range is recorded"
+      }
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "path": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_ALS/detect/patches.npz",
+      "sha256": "d63f272b709fe9dc16c29c7ddb0ab462291cef673870662749d99e82519b8b84",
+      "field": "in_change_25",
+      "colour_threshold": 25.0,
+      "decision_lines": "mvsfuse/detect.py:315-353,355-364,725-732,770-772",
+      "rules_source": "scripts/phd/main_baselines_v1/mvsfuse/mf_common.py:56-101",
+      "thresholds": {
+        "pairs": {
+          "flight": "time-sorted names of the 937 posed images; a new flight starts where two consecutive capture times (from the name) differ by more than 60 s",
+          "flight_gap_s": 60.0,
+          "max_view_angle_deg": 20.0,
+          "target_overlap": 0.6,
+          "overlap": "share of view i's MVS points (export mvs map, every 4th pixel in x and y) that project inside view j's frame (prior-free, so both priors get the same pairs)",
+          "overlap_stride_px": 4,
+          "min_overlap_points": 200,
+          "tie": "smaller view angle, then name"
+        },
+        "pixel": {
+          "correspondence": "the prior surface point of the pixel projected into the pair image; the pixel within +-2 px (5 x 5 candidates) with the largest max(0, NCC) of the 3 x 3 grey patches; ties (incl. all 0) -> the candidate nearest to the projection",
+          "search_px": 2,
+          "ncc_window": 3,
+          "grey": "0.299 R + 0.587 G + 0.114 B (the paper's NCC is on intensity)",
+          "occlusion_tolerance_m": 0.05,
+          "occlusion": "ray from the pair camera to the prior point hits the prior surface more than 0.05 m before it -> not judged in that pair",
+          "frame": "the 3 x 3 patch of the pixel and the 7 x 7 search window in the pair image must lie inside the frames",
+          "steep_not_judged": "D1015-1: pixels whose prior surface has |n_z| < 0.5 are not judged (colour test and removed-building test)",
+          "steep_nz": 0.5,
+          "colour": "RMS over R, G, B (0-255) of the pixel and its correspondence",
+          "colour_threshold": 25.0,
+          "colour_threshold_reference": [
+            20.0,
+            30.0
+          ]
+        },
+        "opening": {
+          "relief_height_m": 2.0,
+          "factor": 0.7,
+          "factor_source": "10 / 14.2 (the paper's erosion size / relief displacement of 2 m)",
+          "displacement": "per pair: median over the judged pixels (up to 20,000, strided) of |(p_j(X + 2 m up) - p_j(X)) - (p_i(X + 2 m up) - p_i(X))|, the parallax change of a 2 m height change in that pair's geometry",
+          "kernel": "square k x k, k = round(0.7 x displacement); k < 2 -> no opening",
+          "operation": "opening (erosion then dilation) of the view's binary change image (judged and change = 1, else 0); the result is kept on judged pixels only"
+        },
+        "cells": {
+          "cell_m": 0.25,
+          "view_vote": "a paired view says 'change' for a cell when more than half of its judged pixels whose prior point falls in the cell are change after the opening",
+          "cell_vote": "change cell: more than half of the paired views that judge the cell say change, and at least 2 views judge it",
+          "min_views": 2
+        },
+        "removal": {
+          "share": 0.95,
+          "rule": "per prior building region: every non-steep pixel (D1015-1) of the paired training views whose prior hit is on the building is re-projected through the ground height (ray / horizontal plane), its correspondence found as above (occlusion only by other buildings); if at least 95 % of those pixels (pooled over the views) have a colour RMS at or below the threshold, every plan cell of the building is a change cell",
+          "region_LoD2": "faces of one building (tri_building)",
+          "region_ALS": "vertex-connected components of the building_tri triangles",
+          "ground_LoD2": "median over the building's wall surfaces of the lowest vertex height",
+          "ground_ALS": "median centroid height of the ground (non-building) TIN triangles whose centroid lies in the 2 m band around the building's plan cells",
+          "band_m": 2.0
+        },
+        "growth": {
+          "ring_m": 1.0,
+          "step_m": 2.0,
+          "dz_m": 2.0,
+          "dz_reference_m": 1.5,
+          "piece_min_m2": 1.0,
+          "rule": "search the cells within 1 m of the change cells; a searched prior cell whose median MVS - prior height difference exceeds 2 m in magnitude becomes a change cell; components of the new cells below 1 m2 are removed (D1015-2); then search within 2 m of the new change cells; a searched cell is not searched again; stop when nothing is added",
+          "cell_dz": "per cell: median over every training view's non-steep pixels (|n_z| >= 0.5, D1015-1) whose prior point falls in the cell and that have MVS of (MVS depth - prior depth) x ray z (the height difference along the pixel's ray)"
+        },
+        "size": {
+          "min_extent_m": 2.0,
+          "min_area_m2": 4.0,
+          "min_height_m": 2.0,
+          "connectivity": 8,
+          "stage": "after the growth (the paper's end filter, 3.3)",
+          "extent": "D1015-3: both sides of the minimum-area rotated rectangle (cv2.minAreaRect) around the component's cell corners",
+          "rule": "8-connected components of the change cells; kept when both sides of the minimum-area rotated rectangle are >= 2 m and the area >= 4 m2, and the median over its cells with MVS of |cell height difference| is >= 2 m; when more than half of its cells have no MVS the height is not seen and the component is kept (counted)"
+        },
+        "update": "per training view: a pixel whose prior hit lies in a change cell -> MVS depth (none -> empty); other prior pixels -> prior depth; pixels without prior -> MVS depth (none -> empty). The cell height difference of the growth and the size filter uses the non-steep prior pixels only (D1015-1, the 2.5-D top surface)",
+        "decisions_1015": [
+          "D1015-1",
+          "D1015-2",
+          "D1015-3"
+        ],
+        "filters": "NDVI and road / river masks are not applied (no near-infrared image, no topographic map); the change area outside the evaluation range is recorded"
+      }
+    }
+  ],
+  "scientific_verdict": null
+}

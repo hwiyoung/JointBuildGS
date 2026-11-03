@@ -1,0 +1,658 @@
+{
+  "at": "2026-11-03T22:01:25.369099+09:00",
+  "copied_files": [
+    {
+      "source": "scripts/phd/main_judgecheck_v1/cylinder.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/cylinder.py",
+      "sha256": "dde0aa2de02d3f516b93af5e95eac014847db4e78d3b815c68f3bdd326d09045",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/cylinders.cpp",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/cylinders.cpp",
+      "sha256": "d8cd49b44a5ac3c9b88288cba693b99402eab101d8d933767398e4182394ea52",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/geometry.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/geometry.py",
+      "sha256": "f9d98c4034dde57727402ac4b377fc3a261d5ad4efdb7da661087968229f16d2",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_photocheck_v1/cameras.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/main_photocheck_v1__cameras.py",
+      "sha256": "103da705f10b7ea5a672891e6baca5022e7f5e467fdc6da1512aa3e970b5d434",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_target_v1/disappearance_core_r7.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/main_target_v1__disappearance_core_r7.py",
+      "sha256": "9ad08f17f6373d66b620d4f451260c158a2aa7ab2c8ccc1f2dca9e41827bdea9",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_target_v1/disappearance_r7.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/main_target_v1__disappearance_r7.py",
+      "sha256": "f63d577f548bfe53550bbea835f3d7243600505b72c4dd4d29de6d1bca356c70",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_cameras.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_cameras.py",
+      "sha256": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_planes.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_planes.py",
+      "sha256": "066f8f5f145e377ee8beabfb99cd17a945f4d1dd7448591ea5f36ddfb2a3cb86",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_prepare_reply2.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_prepare_reply2.py",
+      "sha256": "7f4d74b8fb3e00d92f095b43f09ff90da081a1b72f54e6334c17c88494bdb813",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_score.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_score.py",
+      "sha256": "af792fb490b2aaf9e660db54e01a9a72e1842cda45a02cdb965c91f88ec2a99e",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_score_group_reply2.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_score_group_reply2.py",
+      "sha256": "088549230aa469db67483b49d86178947f66d96fe632d6612cb573d38773b96c",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_score_reply2.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_score_reply2.py",
+      "sha256": "02b34401c87356a4837e3201af852f7638da92e11e598b0a156f2478ff66fa29",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_stream_cache_reply2.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_stream_cache_reply2.py",
+      "sha256": "5f9d62bc6a8869d8ba7bda59ab11a59072989d7f5526adf2cf89e76c521516f1",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/photo_stream_score_reply2.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/photo_stream_score_reply2.py",
+      "sha256": "6fb126661c7766b97f4f2a00691b245f9a49ee0487cc8c7ae9bf9f8f29055a14",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/preflight.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/preflight.py",
+      "sha256": "4433e3d5b19768a19873fcb260a346404f67bbb849272a0de6c3955dd0aa2d86",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/prepare.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/prepare.py",
+      "sha256": "2496d47d7e7fdb2a06c42ac914863ce9b0f0d6fc25853fb895fc144e15199fc1",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/ring_context.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/ring_context.py",
+      "sha256": "f37324ed9754c26b7f22b175edb2f5b06c44133db18c04994e860d30f105184a",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/ring_kernel.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/ring_kernel.py",
+      "sha256": "52c60af6d08953b80e84200bc6e49ce8f94bdcc641e6456e04c597da937abfcb",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/selected_npz.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/selected_npz.py",
+      "sha256": "2d030958037f41dc364f36dc0938d594f2a43cce15eeb6b66db57204cb9e7354",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/u_core.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/u_core.py",
+      "sha256": "734fad934b5dc3b6134649cf2320a1fdb34eccb1df56de4b98269598b64130b9",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_widen0_v2/face_assignment.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/main_widen0_v2__face_assignment.py",
+      "sha256": "32c5fc0d88da9f0e7f324e0ce7509c1e33ec51d76c48db82f7ce3c49a142a47f",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_photocheck_v1/prepare.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/main_photocheck_v1__prepare.py",
+      "sha256": "9feaef583235b63841f6fd544ee505622cd3d310a1fbaecd71e78e607f0adda8",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_uncert_v1/uc_common.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/main_uncert_v1__uc_common.py",
+      "sha256": "4970b20cdd7ceb5976316f3896169ad3977e43003f4405626ea0c6e096445708",
+      "changed_lines": []
+    },
+    {
+      "source": "scripts/phd/main_judgecheck_v1/figures_reply2.py",
+      "copy": "scripts/phd/main_judgeapply_v1/inherited/figures_reply2.py",
+      "sha256": "de8f32d7542dca2cee51b924f6b317faf1a8867e58648a90458c9ae158c6a090",
+      "changed_lines": []
+    }
+  ],
+  "adapters": [
+    {
+      "path": "scripts/phd/main_judgeapply_v1/calibrate.py",
+      "sha256": "08b12ad21bd827ce6880b9c0249321b23e39e7e1a5b61a34af6eee3866c4888d",
+      "new_lines": [
+        1,
+        35
+      ],
+      "functions": [
+        {
+          "name": "finite",
+          "start": 3,
+          "end": 3
+        },
+        {
+          "name": "main",
+          "start": 4,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/cameras.py",
+      "sha256": "f42f8715d592aecf837b5365b171f5090026738c5888b5c5143ba5b8b6e031f1",
+      "new_lines": [
+        1,
+        30
+      ],
+      "functions": [
+        {
+          "name": "Cameras",
+          "start": 8,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/common.py",
+      "sha256": "34d188995a7553c63862d8f6e6572bb2a2f730366f2eef346d751681584a554c",
+      "new_lines": [
+        1,
+        33
+      ],
+      "functions": [
+        {
+          "name": "now",
+          "start": 14,
+          "end": 14
+        },
+        {
+          "name": "sha",
+          "start": 15,
+          "end": 19
+        },
+        {
+          "name": "dump",
+          "start": 20,
+          "end": 22
+        },
+        {
+          "name": "loadz",
+          "start": 23,
+          "end": 24
+        },
+        {
+          "name": "savez",
+          "start": 25,
+          "end": 26
+        },
+        {
+          "name": "cfg",
+          "start": 27,
+          "end": 29
+        },
+        {
+          "name": "progress",
+          "start": 30,
+          "end": 31
+        },
+        {
+          "name": "issue",
+          "start": 32,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/deliver.py",
+      "sha256": "4ecf31824e6d643d930204fd5740c272021602002ace15391d94ff067dd6d4f0",
+      "new_lines": [
+        1,
+        56
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 5,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/details.py",
+      "sha256": "b9ff08028b1c5adb8167129c9320e0f55e4236f59ec09ae8be93b1da9c50909a",
+      "new_lines": [
+        1,
+        9
+      ],
+      "functions": []
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/figures.py",
+      "sha256": "3f3b0e56ce654410cd2a57a7384c6e8964b2ca82c0ee01b1d6fc4cf8f68a8fbb",
+      "new_lines": [
+        1,
+        76
+      ],
+      "functions": [
+        {
+          "name": "scene_from_prior",
+          "start": 18,
+          "end": 21
+        },
+        {
+          "name": "paint",
+          "start": 24,
+          "end": 33
+        },
+        {
+          "name": "visible_indices",
+          "start": 34,
+          "end": 43
+        },
+        {
+          "name": "fmt",
+          "start": 44,
+          "end": 44
+        },
+        {
+          "name": "main",
+          "start": 45,
+          "end": 75
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/first_region_gate.py",
+      "sha256": "d0b53f2d5e3e9dfbe897eabf22afea0d86e56264067833164f4c24ff70bbba46",
+      "new_lines": [
+        1,
+        17
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 2,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/geometry_run.py",
+      "sha256": "01728ad33897e9dbc00b04ab729ab2a0230d2dd48c23af044fe6b3cbe34c1f1d",
+      "new_lines": [
+        1,
+        54
+      ],
+      "functions": [
+        {
+          "name": "inputs",
+          "start": 13,
+          "end": 27
+        },
+        {
+          "name": "main",
+          "start": 28,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/inherit.py",
+      "sha256": "78cce90a1f7e59d27b954e3b0c2126717541ae37eb425c126386ad8a29556005",
+      "new_lines": [
+        1,
+        9
+      ],
+      "functions": [
+        {
+          "name": "functions",
+          "start": 4,
+          "end": 9
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/input_gate.py",
+      "sha256": "1aa10ad1fa61b4c72056b63feaee434779e7916122221ed09dbdd38072dfcc1c",
+      "new_lines": [
+        1,
+        47
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 5,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/inspect_inputs.py",
+      "sha256": "296283458e7402919a43afa9dd8b8534053866b0bc531aea5a377044613c20ef",
+      "new_lines": [
+        1,
+        29
+      ],
+      "functions": [
+        {
+          "name": "schema",
+          "start": 4,
+          "end": 5
+        },
+        {
+          "name": "main",
+          "start": 6,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/judgments.py",
+      "sha256": "9d6e833337be2b57a08e387d1b7ef014d09754d0ef9b37a51733d98479b3585d",
+      "new_lines": [
+        1,
+        76
+      ],
+      "functions": [
+        {
+          "name": "quantile",
+          "start": 5,
+          "end": 9
+        },
+        {
+          "name": "number",
+          "start": 10,
+          "end": 10
+        },
+        {
+          "name": "main",
+          "start": 11,
+          "end": 75
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/photo_prepare.py",
+      "sha256": "21cb967e262d8c668b3feb3415a8f61c18573fe23283ba733626e58dd5f41fe6",
+      "new_lines": [
+        1,
+        143
+      ],
+      "functions": [
+        {
+          "name": "regional_column",
+          "start": 19,
+          "end": 27
+        },
+        {
+          "name": "mesh_data",
+          "start": 33,
+          "end": 36
+        },
+        {
+          "name": "mesh_scene",
+          "start": 37,
+          "end": 40
+        },
+        {
+          "name": "new_groups",
+          "start": 41,
+          "end": 52
+        },
+        {
+          "name": "group_points",
+          "start": 53,
+          "end": 91
+        },
+        {
+          "name": "main",
+          "start": 92,
+          "end": 142
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/preserve_b0.py",
+      "sha256": "2d6c103ae8af7715d2bae1198149e733dd626a08825d82a91970853fab37811d",
+      "new_lines": [
+        1,
+        11
+      ],
+      "functions": []
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/provenance.py",
+      "sha256": "e96167db41a8ebf79115264282644bc7093287c16c21af6a93858b92b06dc8fc",
+      "new_lines": [
+        1,
+        40
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 4,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/reconcile_ring.py",
+      "sha256": "7ba8154e4536dd5a7e31303e1bca7a570c76465155d879d8aac6414e0be763be",
+      "new_lines": [
+        1,
+        34
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 4,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/refresh_b0_truth.py",
+      "sha256": "db89d4e5aadf3c50278ee469090829b2f2edeaef9a34b6f141badf83b90c0d9b",
+      "new_lines": [
+        1,
+        9
+      ],
+      "functions": []
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/report.py",
+      "sha256": "bdd366c9dfe99e10ab1ecfd885bfb064f10e678cc3c71b920c642958159431e1",
+      "new_lines": [
+        1,
+        56
+      ],
+      "functions": [
+        {
+          "name": "rows",
+          "start": 4,
+          "end": 4
+        },
+        {
+          "name": "pct",
+          "start": 5,
+          "end": 5
+        },
+        {
+          "name": "main",
+          "start": 6,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/ring_missing.py",
+      "sha256": "d6fbb3a7cc6bd83c9728ce23c61aec27c987dfe2bf6e25735ba0f6d186cf8119",
+      "new_lines": [
+        1,
+        30
+      ],
+      "functions": [
+        {
+          "name": "chunk",
+          "start": 8,
+          "end": 8
+        },
+        {
+          "name": "main",
+          "start": 9,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/score.py",
+      "sha256": "7eb5a3cf4b25f3eb0fdcd693359e43f996d24c2bf4de98bb3776a468b1c8eab9",
+      "new_lines": [
+        1,
+        33
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 8,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/sight.py",
+      "sha256": "1aededef017280a7f4a77eaa01fcd50b43201eb67157433419965f179275e9d3",
+      "new_lines": [
+        1,
+        22
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 9,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/supplement.py",
+      "sha256": "983a859e7ed7687c0de4cc10232712d2c527033bed33ea34fc4bae19ed786eef",
+      "new_lines": [
+        1,
+        49
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 4,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/tables.py",
+      "sha256": "2b5c9c03e593426cbecf772f2994e852ce09ee96edb9b7e7377f0382a6b7e0ed",
+      "new_lines": [
+        1,
+        84
+      ],
+      "functions": [
+        {
+          "name": "write_table",
+          "start": 6,
+          "end": 16
+        },
+        {
+          "name": "rate",
+          "start": 17,
+          "end": 27
+        },
+        {
+          "name": "requested",
+          "start": 28,
+          "end": 53
+        },
+        {
+          "name": "main",
+          "start": 54,
+          "end": 83
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/truth.py",
+      "sha256": "b704b191b5fdf244f15c1d26f543396aeeff0195cdb80e4682dbb26e17a22782",
+      "new_lines": [
+        1,
+        40
+      ],
+      "functions": [
+        {
+          "name": "chunk",
+          "start": 12,
+          "end": 12
+        },
+        {
+          "name": "main",
+          "start": 13,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/truth_eval.py",
+      "sha256": "83382ec02a6b65923340c8139147ee3358b4302fe7b1678c3c86931acd46361d",
+      "new_lines": [
+        1,
+        5
+      ],
+      "functions": []
+    },
+    {
+      "path": "scripts/phd/main_judgeapply_v1/verify_once.py",
+      "sha256": "5c233bfaa3ffd6b03336f7c2b6ebb237e52da0442fc8fb92a6a3931feef9b3f6",
+      "new_lines": [
+        1,
+        48
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "start": 3,
+          "end": 47
+        }
+      ]
+    }
+  ],
+  "scientific_verdict": null
+}

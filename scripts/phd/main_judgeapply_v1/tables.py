@@ -4,6 +4,8 @@ from judgments import METHODS,NAMES,quantile,number
 import csv
 REGION_NAMES={0:'일치',1:'보존',2:'보정',3:'보정(빈 공간)',4:'결측',9:'확인 불가'}
 def write_table(name,rows):
+    for r in rows:
+        if 'source' not in r:r['source']=f'core_points/{r["site"]}__{r["prior"]}.npz' if 'site' in r and 'prior' in r else 'calibration.json'
     root=D/'tables';root.mkdir(exist_ok=True);payload=dict(at=now(),rows=rows,source_tag='[이 발주에서 냄]',scientific_verdict=None)
     dump(root/f'{name}.json',payload)
     keys=list(dict.fromkeys(k for r in rows for k in r))
@@ -19,6 +21,7 @@ def rate(d,j,m):
     ma,fa,uma,ufa=A(miss),A(false),A(um),A(uf)
     return dict(method=METHODS[j],method_ko=NAMES[j],count=int(m.sum()),denominator_count=int((c1|c2).sum()),denominator_m2=den,
        error_rate_pct=pct(ma+fa) if uma+ufa==0 else None,missed_pct=pct(ma) if uma==0 else None,false_pct=pct(fa) if ufa==0 else None,
+       error_lower_pct=pct(ma+fa),error_upper_pct=pct(ma+fa+uma+ufa),missed_lower_pct=pct(ma),missed_upper_pct=pct(ma+uma),false_lower_pct=pct(fa),false_upper_pct=pct(fa+ufa),
        missed_known_m2=ma,false_known_m2=fa,missed_mixing_m2=A(miss&(r==0)),missed_one_side_m2=A(miss&(r!=0)),false_mixing_m2=A(false&(r==0)),false_one_side_m2=A(false&(r!=0)),
        unavailable_cell1_m2=uma,unavailable_cell2_m2=ufa,cell4_erased_m2=A(m&(c==4)&(r==3)),cell3_m2=A(m&(c==3)),cell5_m2=A(m&(c==5)),cell6_m2=A(m&(c==6)),cell9_m2=A(m&(c==9)),
        status='확인 불가: 분모 안 미판단 영역' if uma+ufa>0 else ('확인 불가: 분모 0' if den==0 else '계산 완료'))
@@ -59,7 +62,7 @@ def main():
       for dest,rows in zip([cross,split,weights,hist,r8cross],out):dest.extend(rows)
       for kind in cfg()['priors'][prior]:
         m=d['kind']==kind;w=d['area'];v=d['L_m'][m];v=v[np.isfinite(v)]
-        scope.append(dict(site=site,prior=prior,kind=kind,buildings=len(set(d['building'][m])-{''}),count=int(m.sum()),area_m2=float(w[m].sum()),missing_building_count=int((m&(d['building']=='')).sum()),missing_u_count=int((m&~np.isfinite(d['u_mvs'])).sum()),source=source))
+        scope.append(dict(site=site,prior=prior,kind=kind,buildings=len(set(d['building'][m])-{''}),count=int(m.sum()),area_m2=float(w[m].sum()),missing_building_count=int((m&(d['building']=='')).sum()),missing_u_count=int((m&~np.isfinite(d['u_mvs'])).sum()),missing_u_observed_count=int((m&(d['n']>=4)&~np.isfinite(d['u_mvs'])).sum()),unavailable_geometry_count=int((m&(d['geometry']==9)).sum()),source=source))
         limits.append(dict(site=site,prior=prior,kind=kind,count=len(v),L_q25_m=number(np.quantile(v,.25)) if len(v) else None,L_median_m=number(np.quantile(v,.5)) if len(v) else None,L_q75_m=number(np.quantile(v,.75)) if len(v) else None,source=source))
         if (prior=='ALS' and kind==1) or (prior=='LoD2' and kind==2):
          base=m&(d['cell']==0);valid=base&np.isfinite(d['L_m']);den=float(w[base].sum())

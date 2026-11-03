@@ -45,7 +45,7 @@ def fmt(v):return '확인 불가' if v is None else f'{v:.2f} %'
 def main():
     start=time.monotonic();folder=D/'figures';folder.mkdir(exist_ok=True);rates=json.loads((D/'tables/table7_1.json').read_text())['rows'];bgs={};metadata=[]
     for site in cfg()['sites']:
-        d=loadz(O/'core_points'/f'{site}__LoD2.npz');cam=Cameras(site);bg,extent,j,meta=background(d,cam,'LoD2');bgs[site]=(bg,extent,j,cam.names[j] if j is not None else None,meta)
+        d=loadz(O/'core_points'/f'{site}__LoD2.npz');cam=Cameras(site);bg,extent,j,meta=background(d,cam,'LoD2');meta['surface']='registered regional LoD2 prior, surfaces referenced by evaluation cores; common background for both priors';bgs[site]=(bg,extent,j,cam.names[j] if j is not None else None,meta)
         np.save(O/f'background_{site}.npy',bg);print('BACKGROUND_COMPLETE',site,flush=True)
     handles=[Patch(facecolor=c,label=l) for c,l in zip(COLORS,LABELS)]
     for prior,stem in [('LoD2','fig7_1_LoD2'),('ALS','fig7_2_ALS')]:
@@ -65,7 +65,7 @@ def main():
           if col==0:
             axes[row,col].set_ylabel(SITES_KO[site],fontsize=12);rowaxes[col].set_ylabel(SITES_KO[site],fontsize=12)
         record=dict(site=site,prior=prior,core_file=f'core_points/{site}__{prior}.npz',source_sha256=sha(O/'core_points'/f'{site}__{prior}.npz'),core_indices=ix.tolist(),patch_id=d['patch_id'][ix].tolist(),methods=[NAMES[i] for i in ORDER],colour_numbers=colours,colours=COLORS,colour_labels=LABELS,camera_index=j,image_name=image_name,background=meta,wall_included_in_numbers=True,scientific_verdict=None)
-        rowfig.legend(handles=handles,loc='lower center',ncol=7,frameon=False,fontsize=8);rowfig.subplots_adjust(left=.045,right=.995,top=.89,bottom=.19,wspace=.04)
+        rowfig.legend(handles=handles,loc='lower center',bbox_to_anchor=(.5,.03),ncol=7,frameon=False,fontsize=8);rowfig.text(.5,.015,'자주색 중 칸 4의 빈 공간 보정은 분모 밖 · 숫자는 LoD2 벽 포함 · 빗금은 확인 불가',ha='center',fontsize=8);rowfig.subplots_adjust(left=.045,right=.995,top=.89,bottom=.21,wspace=.04)
         out=folder/f'{stem}_{site}.png';rowfig.savefig(out,dpi=300);plt.close(rowfig);dump(out.with_suffix('.json'),record);allmeta.append(record)
       fig.legend(handles=handles,loc='lower center',ncol=7,frameon=False,fontsize=10)
       fig.text(.5,.047,'자주색 중 칸 4의 빈 공간 보정은 틀린 비율 분모 밖 · 숫자는 LoD2 벽 포함 · 빗금은 판단 확인 불가',ha='center',fontsize=9)
