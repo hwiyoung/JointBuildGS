@@ -7,14 +7,16 @@ from release_search import TangentTree
 def main(site,prior,rule,stage):
  cfg();stage=int(stage);name=f'rlog_{prior}_s0' if stage==2 else f'rl_{rule}_{prior}_s0';key=f'{site}__{prior}__{name}';run=O/'runs'/site/name;rec=json.loads((run/'receipt.json').read_text());mon=Path(rec['attempts'][-1]['model'])/'target_monitor';end=15000 if stage==2 else 30000
  target=loadz(FT/'targets'/f'{site}__{prior}.npz');snap=loadz(mon/f'snapshot_{end}.npz');ids=snap['patch_ids'];norm=snap['patch_normal'].astype(float);anchor=snap['patch_anchor'].astype(float);width=(np.float32(1.96)*snap['patch_sigma']).astype(float)
+ # Candidate geometry uses the original float64 target points, as r23 does.
+ anchor=target['target'][ids].astype(float);norm/=np.linalg.norm(norm,axis=1)[:,None]
  tree=TangentTree(anchor,norm,width,ids);parts=[];metadata=[]
  for file in sorted((mon/'release_events').glob('*.npz')):
   a=loadz(file);meta=json.loads(file.with_suffix('.json').read_text());n=len(a['event_id']);d,e,j=tree.query(a['xyz']);old=a['previous_target_index'];valid=old>=0;nearest_region=target['judge_region'][ids[j]];prev_region=np.full(n,-1,'i1');prev_region[valid]=target['judge_region'][ids[old[valid]]]
   diff=np.full(n,np.nan);diff[valid]=((anchor[j[valid]]-anchor[old[valid]])*norm[old[valid]]).sum(1)
+  delta=a['xyz'].astype(float)-a['previous_check_xyz'].astype(float);hn=np.full(n,np.nan);tn=hn.copy();hn[valid]=(delta[valid]*norm[old[valid]]).sum(1);tn[valid]=np.linalg.norm(delta[valid]-hn[valid,None]*norm[old[valid]],axis=1);a['movement_normal_m']=hn;a['movement_tangent_m']=tn
   angle=np.rad2deg(np.arccos(np.clip(abs((a['parent_disk_normal']*norm[j]).sum(1)),-1,1)));birth=np.where(a['birth_iteration']==0,0,np.where(a['birth_iteration']==meta['iteration'],a['birth_kind'],3))
   a.update(iteration=np.full(n,meta['iteration'],'i4'),action=np.full(n,{'release':0,'pull':1,'delete':2}[meta['action']],'i1'),cause=np.full(n,0 if meta['cause']=='density_control' else 1,'i1'),birth_category=birth,case=np.where(d<=.5,1,0).astype('i1'),nearest_target_index=j,nearest_tangent_m=d,nearest_normal_excess_m=e,previous_judgment=prev_region,nearest_judgment=nearest_region,target_normal_height_difference_m=diff,parent_normal_angle_degrees=angle,inside_eval=eval_mask(a['xyz'],site));parts.append(a);metadata.append(dict(path=str(file),sha256=sha(file),**meta))
  fields={k:np.concatenate([a[k] for a in parts]) for k in parts[0]} if parts else {};root=O/'events'/key;root.mkdir(parents=True,exist_ok=True)
- if fields:savez(root/'events.npz',**fields)
  releases=[];desc=[];maxid=int(fields['event_id'].max())+1 if fields else 0
  for it in [7000,15000,30000]:
   file=mon/f'snapshot_{it}.npz'

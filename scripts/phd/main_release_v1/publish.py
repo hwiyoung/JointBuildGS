@@ -20,7 +20,7 @@ def commit(event,paths):
  subprocess.run(['git','add','--',*paths],cwd=R,check=True)
  staged=subprocess.check_output(['git','diff','--cached','--name-only','-z'],cwd=R).decode().split('\0');staged=[p for p in staged if p]
  assert all(any(p==a or p.startswith(a+'/') for a in ALLOWED) for p in staged)
- if staged:subprocess.run(['git','commit','-m','PHD-MAIN-RELEASE-v1 '+event],cwd=R,check=True)
+ if staged:subprocess.run(['git','commit','--quiet','-m','PHD-MAIN-RELEASE-v1 '+event],cwd=R,check=True)
  head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=R,text=True).strip()
  subprocess.run(['git','push','origin','HEAD:exp/main-experiment'],cwd=R,check=True)
  return head
