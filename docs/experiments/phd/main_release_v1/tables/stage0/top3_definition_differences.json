@@ -1,0 +1,56 @@
+{
+  "rows": [
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "cell": 4,
+      "n_gt": 6639,
+      "small": "",
+      "mismatch_fraction": 0.99337249585781,
+      "mvs_column_presence_fraction": 0.8306973941858714,
+      "target_correct_area_m2": 175.5,
+      "valid_target_area_m2": 175.5,
+      "target_correct_fraction": 1.0,
+      "judgment_mesh_completeness": 0.8885374303358939,
+      "confirmed_definition_difference": "핵심점의 MVS n<4 또는 비유한 평균으로 결측을 정의하지만, 원래 MVS 메시의 표면 존재와 전역 최근접 거리는 별개",
+      "mvs_surface_in_column_pct": 83.06973941858715,
+      "causal_contribution": "분리 실험 없음; 각 차이의 기여율은 확인 불가",
+      "source": "tau_cells.py:26-31; score_mesh.py:9-13; geometry.py:21-34"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "cell": 2,
+      "n_gt": 10406,
+      "small": "",
+      "mismatch_fraction": 0.9832788775706324,
+      "mvs_column_presence_fraction": 0.9940418989044781,
+      "target_correct_area_m2": 19.0625,
+      "valid_target_area_m2": 136.8125,
+      "target_correct_fraction": 0.13933302878026496,
+      "judgment_mesh_completeness": 0.9741495291178166,
+      "confirmed_definition_difference": "핵심점 법선 방향의 MVS 평균과 gt_p 차이로 칸2를 정하지만, 표면 채점은 참값 행과 원래 MVS 삼각형의 최근접 거리",
+      "mvs_surface_in_column_pct": 99.40418989044781,
+      "causal_contribution": "분리 실험 없음; 각 차이의 기여율은 확인 불가",
+      "source": "tau_cells.py:26-31; score_mesh.py:9-13; geometry.py:21-34"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "cell": 4,
+      "n_gt": 11953,
+      "small": "",
+      "mismatch_fraction": 0.9821802058060738,
+      "mvs_column_presence_fraction": 0.4309378398728353,
+      "target_correct_area_m2": 165.1875,
+      "valid_target_area_m2": 165.1875,
+      "target_correct_fraction": 1.0,
+      "judgment_mesh_completeness": 0.972057224127834,
+      "confirmed_definition_difference": "핵심점의 MVS n<4 또는 비유한 평균으로 결측을 정의하지만, 원래 MVS 메시의 표면 존재와 전역 최근접 거리는 별개",
+      "mvs_surface_in_column_pct": 43.09378398728353,
+      "causal_contribution": "분리 실험 없음; 각 차이의 기여율은 확인 불가",
+      "source": "tau_cells.py:26-31; score_mesh.py:9-13; geometry.py:21-34"
+    }
+  ],
+  "scientific_verdict": null
+}
