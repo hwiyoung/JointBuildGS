@@ -1,0 +1,666 @@
+{
+  "task_id": "PHD-MAIN-RESCORE-v1-addendum5",
+  "created_at": "2026-11-04T13:27:05.375497+09:00",
+  "residual_rows": [
+    {
+      "search_region": "B0",
+      "prior": "LoD2",
+      "surface": "roof",
+      "n_saved": 2560818,
+      "n_finite": 2560818,
+      "n_nonfinite": 0,
+      "tau_cm": 27.200000000000003,
+      "n_abs_gt_tau": 594247,
+      "pct_abs_gt_tau": 23.20535860025976,
+      "n_abs_gt_2m": 150200,
+      "pct_abs_gt_2m": 5.865313349093922,
+      "stored_unrounded_tau_m": 0.27175899025518446,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/B0/LoD2/residual_samples.npz",
+      "source_sha256": "43924bd06be2f45e6ab7296b34bcd8082df808be0a88bc8d5f7342a1a002b7b4",
+      "array_key": "roof",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "B0",
+      "prior": "LoD2",
+      "surface": "wall",
+      "n_saved": 2664723,
+      "n_finite": 2664723,
+      "n_nonfinite": 0,
+      "tau_cm": 64.3,
+      "n_abs_gt_tau": 409008,
+      "pct_abs_gt_tau": 15.34898749325915,
+      "n_abs_gt_2m": 201441,
+      "pct_abs_gt_2m": 7.559547465158667,
+      "stored_unrounded_tau_m": 0.6425049530044198,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/B0/LoD2/residual_samples.npz",
+      "source_sha256": "43924bd06be2f45e6ab7296b34bcd8082df808be0a88bc8d5f7342a1a002b7b4",
+      "array_key": "wall",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "B0",
+      "prior": "ALS",
+      "surface": "roof",
+      "n_saved": 2483355,
+      "n_finite": 2483355,
+      "n_nonfinite": 0,
+      "tau_cm": 14.7,
+      "n_abs_gt_tau": 300927,
+      "pct_abs_gt_tau": 12.117760046388858,
+      "n_abs_gt_2m": 73025,
+      "pct_abs_gt_2m": 2.940578370792738,
+      "stored_unrounded_tau_m": 0.14737380246492102,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/B0/ALS/residual_samples.npz",
+      "source_sha256": "b77ffda7ad7492671171c81fb1ce5dc3017130f75f19bc5dd332ee67bb761cba",
+      "array_key": "roof",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "R2",
+      "prior": "LoD2",
+      "surface": "roof",
+      "n_saved": 1991449,
+      "n_finite": 1991449,
+      "n_nonfinite": 0,
+      "tau_cm": 24.7,
+      "n_abs_gt_tau": 455243,
+      "pct_abs_gt_tau": 22.85988744878729,
+      "n_abs_gt_2m": 276188,
+      "pct_abs_gt_2m": 13.868695608072313,
+      "stored_unrounded_tau_m": 0.2470203074282035,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R2/LoD2/residual_samples.npz",
+      "source_sha256": "2bcdf9255862ddba75524429a865dc96c55064f6c351c859fe605ea1e331427b",
+      "array_key": "roof",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "R2",
+      "prior": "LoD2",
+      "surface": "wall",
+      "n_saved": 2092171,
+      "n_finite": 2092171,
+      "n_nonfinite": 0,
+      "tau_cm": 39.2,
+      "n_abs_gt_tau": 608484,
+      "pct_abs_gt_tau": 29.083855956324793,
+      "n_abs_gt_2m": 255257,
+      "pct_abs_gt_2m": 12.200580162902554,
+      "stored_unrounded_tau_m": 0.3923140804711729,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R2/LoD2/residual_samples.npz",
+      "source_sha256": "2bcdf9255862ddba75524429a865dc96c55064f6c351c859fe605ea1e331427b",
+      "array_key": "wall",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "R2",
+      "prior": "ALS",
+      "surface": "roof",
+      "n_saved": 1954162,
+      "n_finite": 1954162,
+      "n_nonfinite": 0,
+      "tau_cm": 21.2,
+      "n_abs_gt_tau": 411584,
+      "pct_abs_gt_tau": 21.061918100955808,
+      "n_abs_gt_2m": 296066,
+      "pct_abs_gt_2m": 15.150535114284281,
+      "stored_unrounded_tau_m": 0.21185600298468488,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R2/ALS/residual_samples.npz",
+      "source_sha256": "73dbc21ebb1904304cc1bacb7a984bdc519bc0c6252eb7c8426ea399410ddddf",
+      "array_key": "roof",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "R1",
+      "prior": "LoD2",
+      "surface": "roof",
+      "n_saved": 7990474,
+      "n_finite": 7990474,
+      "n_nonfinite": 0,
+      "tau_cm": 85.5,
+      "n_abs_gt_tau": 1573720,
+      "pct_abs_gt_tau": 19.69495176381276,
+      "n_abs_gt_2m": 706746,
+      "pct_abs_gt_2m": 8.844857013488811,
+      "stored_unrounded_tau_m": 0.8548075853046029,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R1/LoD2/residual_samples.npz",
+      "source_sha256": "c961389edeccc879478fd1d17531dbbe4aec4312406447b09dda4112ddb170b0",
+      "array_key": "roof",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "R1",
+      "prior": "LoD2",
+      "surface": "wall",
+      "n_saved": 8661588,
+      "n_finite": 8661588,
+      "n_nonfinite": 0,
+      "tau_cm": 100.6,
+      "n_abs_gt_tau": 2045077,
+      "pct_abs_gt_tau": 23.610878282365775,
+      "n_abs_gt_2m": 1006780,
+      "pct_abs_gt_2m": 11.623503680849286,
+      "stored_unrounded_tau_m": 1.005505581781268,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R1/LoD2/residual_samples.npz",
+      "source_sha256": "c961389edeccc879478fd1d17531dbbe4aec4312406447b09dda4112ddb170b0",
+      "array_key": "wall",
+      "scientific_verdict": null
+    },
+    {
+      "search_region": "R1",
+      "prior": "ALS",
+      "surface": "roof",
+      "n_saved": 7489460,
+      "n_finite": 7489460,
+      "n_nonfinite": 0,
+      "tau_cm": 13.200000000000001,
+      "n_abs_gt_tau": 1451911,
+      "pct_abs_gt_tau": 19.38605720572645,
+      "n_abs_gt_2m": 277725,
+      "pct_abs_gt_2m": 3.708211272908861,
+      "stored_unrounded_tau_m": 0.1322454981386836,
+      "residual_definition": "(image_depth-prior_depth)*surface_factor",
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R1/ALS/residual_samples.npz",
+      "source_sha256": "2a8c7359de3c00860332c30da33a54a81b823266233034603106f46158448779",
+      "array_key": "roof",
+      "scientific_verdict": null
+    }
+  ],
+  "registration": [
+    {
+      "region": "B0",
+      "prior": "LoD2",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "horizontal_accepted": false,
+      "vertical_accepted": false,
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/B0/LoD2/summary.json",
+      "source_sha256": "ab456fba423201831728238440c8aa9ff61edb6502f287be6a9371bc834b7db0"
+    },
+    {
+      "region": "B0",
+      "prior": "ALS",
+      "shift_xyz_m": [
+        -0.048193370826016664,
+        0.04305113898865463,
+        0.0
+      ],
+      "horizontal_accepted": true,
+      "vertical_accepted": false,
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/B0/ALS/summary.json",
+      "source_sha256": "0e02236883c73aabab21498196421d299b6ec842f54d8264e0aa7e4197175daf"
+    },
+    {
+      "region": "R2",
+      "prior": "LoD2",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "horizontal_accepted": false,
+      "vertical_accepted": false,
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R2/LoD2/summary.json",
+      "source_sha256": "cd9dfe032cb963224c212f6b5bc06273531cf0baed6e33cebe74e2ecb96d1c69"
+    },
+    {
+      "region": "R2",
+      "prior": "ALS",
+      "shift_xyz_m": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "horizontal_accepted": true,
+      "vertical_accepted": false,
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R2/ALS/summary.json",
+      "source_sha256": "cb3730958276df4ca1d0f637e7d7a2aaa92e2d138365b2efc40ff45115bd71a4"
+    },
+    {
+      "region": "R1",
+      "prior": "LoD2",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "horizontal_accepted": false,
+      "vertical_accepted": false,
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R1/LoD2/summary.json",
+      "source_sha256": "be1da70bd9bd8892a059b5e5b136f10f8e688dde2bf2b6cdb9c758ba68ccb286"
+    },
+    {
+      "region": "R1",
+      "prior": "ALS",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "horizontal_accepted": false,
+      "vertical_accepted": false,
+      "source": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/R1/ALS/summary.json",
+      "source_sha256": "8e50fb5e39484869f56c3343b2eea20a97637710240594eebad74e47a68476c3"
+    }
+  ],
+  "fixed_site_registration": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "shift_xyz_m": [
+        -0.048193370826016664,
+        0.04305113898865463,
+        0.0
+      ],
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B0_b10/ALS/summary.json",
+      "source_sha256": "e285f4656a2e03e18ac94f173dc87f402784a85dca8aec7dfa97023e9fefb786",
+      "fixed_from": "/dr/s52/s03/B0/ALS"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B0_b10/LoD2/summary.json",
+      "source_sha256": "15b91223dcd5c468d1b190db68eafe55cd0f83c9869f640620a5cf29f17cdab5",
+      "fixed_from": "/dr/s52/s03/B0/LoD2"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "shift_xyz_m": [
+        -0.05619434746608162,
+        0.06288884357338685,
+        0.0
+      ],
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173nb_b10/ALS/summary.json",
+      "source_sha256": "5de45a5c34a8dbe92aee2fc459eb6dd7daf375bfafb7c3f0eaf39baf3e7e0172",
+      "fixed_from": "/dr/s52/s03/R2/ALS"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173nb_b10/LoD2/summary.json",
+      "source_sha256": "a19f9ca6a549e3d9f77cac3471d7a7239a1c61bccd5ec870f82a07248cd6dba6",
+      "fixed_from": "/dr/s52/s03/R2/LoD2"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/R1rep_b10/ALS/summary.json",
+      "source_sha256": "210f08ef5eae4324d16d8686b0c614dcfecda3569b7e4f49bdcfef6eb9bd7aa3",
+      "fixed_from": "/dr/s52/s03/R1/ALS"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "shift_xyz_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/R1rep_b10/LoD2/summary.json",
+      "source_sha256": "de730d3175f7625e2a646e5f1e30d3aa15863cca3398988abc8e9bfadfc596a5",
+      "fixed_from": "/dr/s52/s03/R1/LoD2"
+    }
+  ],
+  "cameras": [
+    {
+      "path": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_dense/sparse/cameras.bin",
+      "sha256": "652bbe3f674512358edcb148527131581475f0a30b93a8b5250718e30e388f99",
+      "count": 1,
+      "first_camera_id": 1,
+      "model": 1,
+      "width": 1400,
+      "height": 1013
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/scene_LoD2/sparse/0/cameras.bin",
+      "sha256": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879",
+      "count": 1,
+      "first_camera_id": 1,
+      "model": 1,
+      "width": 1024,
+      "height": 741
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/scene_LoD2/sparse/0/cameras.bin",
+      "sha256": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879",
+      "count": 1,
+      "first_camera_id": 1,
+      "model": 1,
+      "width": 1024,
+      "height": 741
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/R1rep_b10/scene_LoD2/sparse/0/cameras.bin",
+      "sha256": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879",
+      "count": 1,
+      "first_camera_id": 1,
+      "model": 1,
+      "width": 1024,
+      "height": 741
+    }
+  ],
+  "image_header_sizes": [
+    {
+      "path": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images/DJI_20241217084241_0004_D.JPG",
+      "size": [
+        1400,
+        1013
+      ]
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/images/DJI_20241217084241_0004_D.jpg",
+      "size": [
+        1024,
+        741
+      ]
+    }
+  ],
+  "method_receipts": {
+    "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/geogs_als/B0_b10_inputs.json": {
+      "sha256": "c49e0c4689ecbbff09919ca2ac30f7e739ae066b102b2a71ffbcc22917ef9dea",
+      "surface": {
+        "source": "main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B0_b10/als_mesh.npz",
+        "tin_vertices": 129319,
+        "tin_faces": 258604,
+        "building_faces": 122260,
+        "building_vertices_used": 61680,
+        "building_rule_ok": true,
+        "rule": {
+          "rule": "faces with >= 1 of their 3 vertices of class 6 (v1, user decision 2026-10-15 option 다); v0 = >= 2 (the npz building_tri)",
+          "version": "v1",
+          "faces_v1": 122260,
+          "faces_v0_building_tri": 121146,
+          "faces_added_one_building_vertex": 1114,
+          "faces_left_out_ground": 136344
+        },
+        "registration_shift": [
+          -0.048193370826016664,
+          0.04305113898865463,
+          0.0
+        ],
+        "registration_source": "main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B0_b10/ALS/summary.json",
+        "area_m2": 29260.6,
+        "steep_rule": "|n_z| < 0.5",
+        "steep_faces": 24986,
+        "steep_face_share": 0.2043677408800916,
+        "steep_area_m2": 26123.1,
+        "steep_area_share": 0.8927733438870891,
+        "upward_normal_area_share": 1.0,
+        "bbox_local": [
+          [
+            72.485,
+            -24.469,
+            -48.114
+          ],
+          [
+            147.761,
+            78.134,
+            -10.873
+          ]
+        ]
+      },
+      "registration_check": {
+        "prior_als_npz": "main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/prior_ALS.npz",
+        "shift_equal": true,
+        "faces_equal": true,
+        "vertices_compared": 61680,
+        "max_abs_diff_m": 0.0,
+        "all_vertices_max_abs_diff_m": 0.0
+      }
+    },
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/scene_B0_b10_ALS.json": {
+      "sha256": "bb65d725bccd94f1e51c94500fc258c282404e66692fccb79cdd8dd8c8a539fd",
+      "prior_depth": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/B0_b10/ALS/prior",
+      "checks": {
+        "images_resolves_as_previous": true,
+        "prior_depth_resolves_as_previous": true,
+        "sparse_cameras.bin_bytes_eq": true,
+        "sparse_images.bin_bytes_eq": true,
+        "sparse_points3D.bin_bytes_eq": true,
+        "split_index.json_bytes_eq": true,
+        "jbgs_calibration.json_bytes_eq": true,
+        "options_s_eq_units_json": true,
+        "v2_records_all_own_observations": true,
+        "v2_records_s_eq_options": true,
+        "options_previous_keys_unchanged": true
+      },
+      "all_checks_pass": true
+    },
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/scene_B0_b10_LoD2.json": {
+      "sha256": "1373d4074b6d3ce0fe9a530ceaa6db455e2810938ae961057771725720c8e89c",
+      "prior_depth": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/B0_b10/LoD2/prior",
+      "checks": {
+        "images_resolves_as_previous": true,
+        "prior_depth_resolves_as_previous": true,
+        "sparse_cameras.bin_bytes_eq": true,
+        "sparse_images.bin_bytes_eq": true,
+        "sparse_points3D.bin_bytes_eq": true,
+        "split_index.json_bytes_eq": true,
+        "jbgs_calibration.json_bytes_eq": true,
+        "options_s_eq_units_json": true,
+        "v2_records_all_own_observations": true,
+        "v2_records_s_eq_options": true,
+        "options_previous_keys_unchanged": true
+      },
+      "all_checks_pass": true
+    },
+    "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/geogs_als/B173nb_b10_inputs.json": {
+      "sha256": "eb1829767420c74624e11af43436ad10a54f970302f027d08541454f000975fb",
+      "surface": {
+        "source": "main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173nb_b10/als_mesh.npz",
+        "tin_vertices": 162260,
+        "tin_faces": 324497,
+        "building_faces": 163470,
+        "building_vertices_used": 82436,
+        "building_rule_ok": true,
+        "rule": {
+          "rule": "faces with >= 1 of their 3 vertices of class 6 (v1, user decision 2026-10-15 option 다); v0 = >= 2 (the npz building_tri)",
+          "version": "v1",
+          "faces_v1": 163470,
+          "faces_v0_building_tri": 162071,
+          "faces_added_one_building_vertex": 1399,
+          "faces_left_out_ground": 161027
+        },
+        "registration_shift": [
+          -0.05619434746608162,
+          0.06288884357338685,
+          0.0
+        ],
+        "registration_source": "main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173nb_b10/ALS/summary.json",
+        "area_m2": 32371.4,
+        "steep_rule": "|n_z| < 0.5",
+        "steep_faces": 25901,
+        "steep_face_share": 0.15844497461307885,
+        "steep_area_m2": 27278.0,
+        "steep_area_share": 0.8426571651404344,
+        "upward_normal_area_share": 1.0,
+        "bbox_local": [
+          [
+            78.28,
+            58.373,
+            -48.907
+          ],
+          [
+            180.402,
+            173.55,
+            -15.863
+          ]
+        ]
+      },
+      "registration_check": {
+        "prior_als_npz": "main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/prior_ALS.npz",
+        "shift_equal": true,
+        "faces_equal": true,
+        "vertices_compared": 82436,
+        "max_abs_diff_m": 0.0,
+        "all_vertices_max_abs_diff_m": 0.0
+      }
+    },
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/scene_B173nb_b10_ALS.json": {
+      "sha256": "73bafe56f81bcc753c5939cc013f823737bb9648e639c93f9b4843d07a20241d",
+      "prior_depth": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/B173nb_b10/ALS/prior",
+      "checks": {
+        "images_resolves_as_previous": true,
+        "prior_depth_resolves_as_previous": true,
+        "sparse_cameras.bin_bytes_eq": true,
+        "sparse_images.bin_bytes_eq": true,
+        "sparse_points3D.bin_bytes_eq": true,
+        "split_index.json_bytes_eq": true,
+        "jbgs_calibration.json_bytes_eq": true,
+        "options_s_eq_units_json": true,
+        "v2_records_all_own_observations": true,
+        "v2_records_s_eq_options": true,
+        "options_previous_keys_unchanged": true
+      },
+      "all_checks_pass": true
+    },
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/scene_B173nb_b10_LoD2.json": {
+      "sha256": "903ad8f17d27302cc94174c72103a0ff6760b53f0be1d8a832260b09ce4208c8",
+      "prior_depth": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/B173nb_b10/LoD2/prior",
+      "checks": {
+        "images_resolves_as_previous": true,
+        "prior_depth_resolves_as_previous": true,
+        "sparse_cameras.bin_bytes_eq": true,
+        "sparse_images.bin_bytes_eq": true,
+        "sparse_points3D.bin_bytes_eq": true,
+        "split_index.json_bytes_eq": true,
+        "jbgs_calibration.json_bytes_eq": true,
+        "options_s_eq_units_json": true,
+        "v2_records_all_own_observations": true,
+        "v2_records_s_eq_options": true,
+        "options_previous_keys_unchanged": true
+      },
+      "all_checks_pass": true
+    },
+    "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/prep/geogs_als/R1rep_b10_inputs.json": {
+      "sha256": "6644752912f920248b3551b82205d08c452cfbd2a4c04313185683696ea80f32",
+      "surface": {
+        "source": "main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/R1rep_b10/als_mesh.npz",
+        "tin_vertices": 126167,
+        "tin_faces": 252301,
+        "building_faces": 133790,
+        "building_vertices_used": 67404,
+        "building_rule_ok": true,
+        "rule": {
+          "rule": "faces with >= 1 of their 3 vertices of class 6 (v1, user decision 2026-10-15 option 다); v0 = >= 2 (the npz building_tri)",
+          "version": "v1",
+          "faces_v1": 133790,
+          "faces_v0_building_tri": 132790,
+          "faces_added_one_building_vertex": 1000,
+          "faces_left_out_ground": 118511
+        },
+        "registration_shift": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "registration_source": "main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/R1rep_b10/ALS/summary.json",
+        "area_m2": 28187.8,
+        "steep_rule": "|n_z| < 0.5",
+        "steep_faces": 31767,
+        "steep_face_share": 0.2374392704985425,
+        "steep_area_m2": 25027.5,
+        "steep_area_share": 0.8878857182134503,
+        "upward_normal_area_share": 1.0,
+        "bbox_local": [
+          [
+            -37.467,
+            -19.674,
+            -47.747
+          ],
+          [
+            53.155,
+            73.878,
+            -12.679
+          ]
+        ]
+      },
+      "registration_check": {
+        "prior_als_npz": "main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/R1rep_b10/prior_ALS.npz",
+        "shift_equal": true,
+        "faces_equal": true,
+        "vertices_compared": 67404,
+        "max_abs_diff_m": 0.0,
+        "all_vertices_max_abs_diff_m": 0.0
+      }
+    },
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/scene_R1rep_b10_ALS.json": {
+      "sha256": "3b02833c89599132871c7b23b4ae4b9250152b8e154aef4b53d8d83052bf30f4",
+      "prior_depth": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/R1rep_b10/ALS/prior",
+      "checks": {
+        "images_resolves_as_previous": true,
+        "prior_depth_resolves_as_previous": true,
+        "sparse_cameras.bin_bytes_eq": true,
+        "sparse_images.bin_bytes_eq": true,
+        "sparse_points3D.bin_bytes_eq": true,
+        "split_index.json_bytes_eq": true,
+        "jbgs_calibration.json_bytes_eq": true,
+        "options_s_eq_units_json": true,
+        "v2_records_all_own_observations": true,
+        "v2_records_s_eq_options": true,
+        "options_previous_keys_unchanged": true
+      },
+      "all_checks_pass": true
+    },
+    "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/prep/cdgs/scene_R1rep_b10_LoD2.json": {
+      "sha256": "4913f7c072f29cb463ea4a4ca749f5b750f3225580376443cee6c18c35b4957f",
+      "prior_depth": "/ph/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/export/R1rep_b10/LoD2/prior",
+      "checks": {
+        "images_resolves_as_previous": true,
+        "prior_depth_resolves_as_previous": true,
+        "sparse_cameras.bin_bytes_eq": true,
+        "sparse_images.bin_bytes_eq": true,
+        "sparse_points3D.bin_bytes_eq": true,
+        "split_index.json_bytes_eq": true,
+        "jbgs_calibration.json_bytes_eq": true,
+        "options_s_eq_units_json": true,
+        "v2_records_all_own_observations": true,
+        "v2_records_s_eq_options": true,
+        "options_previous_keys_unchanged": true
+      },
+      "all_checks_pass": true
+    }
+  },
+  "csv": "/docs/tables/ch6_tau_residual_ratios.csv",
+  "csv_sha256": "8e8f5a5f84f98cfcf55b4e1135ce3ec83e4785c02c016a1cdba95991fb74dffe",
+  "script_sha256": "072396f405547015123aec58ef6096c6875effd9e89baae368059c6d7265b529",
+  "config_sha256": "28b047d5ad7aab837497dc41be4d11d5061449f573149000b5311efd89deaadb",
+  "commit": "76d47e94e8db2a93fc970495f4dabb8c627c84ad",
+  "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "python": "3.11.15",
+  "numpy": "1.26.4",
+  "seconds": 3.188787837512791,
+  "training_steps": 0,
+  "gpu_used": false,
+  "meshes_rebuilt": 0,
+  "scores_rebuilt": 0,
+  "validation": "PASS_SOURCE_HASH_COUNTS_AND_CSV_ARITHMETIC",
+  "scientific_verdict": null
+}

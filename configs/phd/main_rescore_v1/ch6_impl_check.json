@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-MAIN-RESCORE-v1-addendum5",
+  "operation": "read existing implementation and metadata; count only saved residual exceedances",
+  "tau_cm_from_user_table6_5": {
+    "B0": {"LoD2_roof": 27.2, "LoD2_wall": 64.3, "ALS_roof": 14.7},
+    "R2": {"LoD2_roof": 24.7, "LoD2_wall": 39.2, "ALS_roof": 21.2},
+    "R1": {"LoD2_roof": 85.5, "LoD2_wall": 100.6, "ALS_roof": 13.2}
+  },
+  "comparison": "strict abs(saved residual) > threshold; no median subtraction, no trimming",
+  "denominator": "all finite saved residuals; nonfinite count recorded separately",
+  "residual_source": "main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s52/s03/<region>/<prior>/residual_samples.npz",
+  "training_steps": 0,
+  "gpu": false,
+  "rebuild_meshes": false,
+  "rebuild_scores": false,
+  "scientific_verdict": null
+}
