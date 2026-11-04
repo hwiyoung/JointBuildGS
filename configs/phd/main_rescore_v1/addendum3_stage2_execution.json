@@ -1,0 +1,14 @@
+{
+  "task_id": "PHD-MAIN-RESCORE-v1",
+  "stage": 2,
+  "training_steps": 0,
+  "gpu_authority": "User reply: 그림 6.1만: 단계 2는 기존 지시대로 GPU 렌더링 허용",
+  "gpu_scope": "existing saved-model inference and Gaussian contributor attribution only; FINALTRAIN training elsewhere has priority",
+  "figure61_gpu_used": false,
+  "mesh_camera_rule": "all original training cameras of each site; zero virtual cameras",
+  "display_camera_rule": "inherited figures.py orthographic azimuth -60 degrees, elevation 35 degrees; site-specific frozen input box; never used for TSDF",
+  "regional_sections": "existing input_sections_v1 and main_stage1_v1/sections_v1 positions; shared across two priors; new files bind positions and labels before drawing",
+  "sampling_density_m2": 400,
+  "sampling_seed": 0,
+  "scientific_verdict": null
+}

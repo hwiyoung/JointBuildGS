@@ -1,0 +1,281 @@
+{
+  "title": "장면 전체의 완전성과 정확성",
+  "method": "R1rep_b10__ALS__FINALTRAIN_30000",
+  "provisional": false,
+  "views": {
+    "basis": [
+      [
+        0.8660254037844386,
+        0.5000000000000001,
+        -0.0
+      ],
+      [
+        -0.2867882181755231,
+        0.496731764892154,
+        0.8191520442889918
+      ],
+      [
+        -0.409576022144496,
+        0.7094064799162224,
+        -0.573576436351046
+      ]
+    ],
+    "center": [
+      7.84245105512435,
+      27.10218554744209,
+      -26.45206356048584
+    ],
+    "origin": [
+      48.80005326957395,
+      -43.83846244418015,
+      30.90558007461877
+    ],
+    "width": 165.03106575856356,
+    "height": 119.18910304785145,
+    "W": 900,
+    "H": 650
+  },
+  "display_crop_px": [
+    200,
+    690,
+    135,
+    511
+  ],
+  "places": [
+    {
+      "id": "A",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "title": "R1 지붕 · LoD2",
+      "start": [
+        20.931309305951753,
+        22.938321841099047
+      ],
+      "end": [
+        25.035551025859778,
+        34.214633290529946
+      ],
+      "half_width": 0.25,
+      "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+      "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+      "selection": "unchanged original R1_low_roof section",
+      "name": "지붕",
+      "roi_half_width": 3.0,
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 2.0995181183372087,
+            "1": 0.13882712856208412,
+            "2": 1.889180401514541,
+            "3": 0.47601428029574744,
+            "4": 0.12628922395404163,
+            "5": 0.0,
+            "6": 0.0,
+            "9": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        },
+        "LoD2": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 3.4375,
+            "1": 1.5625,
+            "2": 1.0,
+            "3": 0.0,
+            "4": 0.0625,
+            "5": 0.0,
+            "6": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        }
+      }
+    },
+    {
+      "id": "B",
+      "name": "채광 지붕",
+      "start": [
+        -16.9751186714067,
+        48.36586373806775
+      ],
+      "end": [
+        -5.80181177589494,
+        43.988968375061084
+      ],
+      "half_width": 0.25,
+      "roi_half_width": 3.0,
+      "anchor_xyz": [
+        -11.38846522365082,
+        46.17741605656442,
+        -19.687588770740557
+      ],
+      "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+      "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+      "section_id": "R1_translucent",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 1.7437970036456987,
+            "1": 0.12601137792604794,
+            "2": 0.24951256987317633,
+            "3": 0.18922288906455134,
+            "4": 0.25627876537644173,
+            "5": 0.0,
+            "6": 0.06193047320264429,
+            "9": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        },
+        "LoD2": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 0.25,
+            "1": 2.0625,
+            "2": 0.0,
+            "3": 0.3125,
+            "4": 0.0,
+            "5": 0.5625,
+            "6": 0.3125
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        }
+      }
+    }
+  ],
+  "table": "R1rep_b10_table3",
+  "source_scores": [
+    "R1rep_b10__ALS__prior",
+    "R1rep_b10__ALS__mvs",
+    "R1rep_b10__ALS__fusion",
+    "R1rep_b10__ALS__FINALTRAIN_30000"
+  ],
+  "surface_color_rule": "actual orthographic triangle hits; same reference normal distance, lateral eligibility, new tau/columns as scorer",
+  "layout_check": {
+    "status": "PASS",
+    "rule": "all 17 title/caption bounding boxes inside canvas and pairwise disjoint at 300 dpi",
+    "boxes_px": [
+      [
+        455.98750000000007,
+        2231.25,
+        900.6125000000001,
+        2272.25
+      ],
+      [
+        544.8625000000001,
+        1272.25,
+        811.7375000000001,
+        1313.25
+      ],
+      [
+        1745.6125,
+        2231.25,
+        2109.9875,
+        2272.25
+      ],
+      [
+        1794.3625,
+        1272.25,
+        2061.2375,
+        1313.25
+      ],
+      [
+        2998.05,
+        2231.25,
+        3356.55,
+        2272.25
+      ],
+      [
+        3043.8,
+        1272.25,
+        3310.8,
+        1313.25
+      ],
+      [
+        3998.925,
+        2231.25,
+        4854.675,
+        2273.859375
+      ],
+      [
+        4293.3625,
+        1272.25,
+        4560.2375,
+        1313.25
+      ],
+      [
+        455.98750000000007,
+        1083.75,
+        900.6125000000001,
+        1124.75
+      ],
+      [
+        544.8000000000001,
+        150.25,
+        811.8000000000001,
+        191.25
+      ],
+      [
+        1745.6125,
+        1083.75,
+        2109.9875,
+        1124.75
+      ],
+      [
+        1794.3,
+        150.25,
+        2061.3,
+        191.25
+      ],
+      [
+        2998.05,
+        1083.75,
+        3356.55,
+        1124.75
+      ],
+      [
+        3043.8625,
+        150.25,
+        3310.7375,
+        191.25
+      ],
+      [
+        3998.925,
+        1083.75,
+        4854.675,
+        1126.328125
+      ],
+      [
+        4293.3625,
+        150.25,
+        4560.2375,
+        191.25
+      ],
+      [
+        1933.8125,
+        2373.75,
+        3166.1875,
+        2511.75
+      ]
+    ],
+    "repair": "explicit display rows; cached surfaces, scores, camera and colors unchanged"
+  },
+  "site": "R1rep_b10",
+  "mesh_rule": "333 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "6ebb951dea05b7c2edb151fe0103c264df90ddf6eed5e2e37d8ecf1b9714d470",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "places_config_sha256": "ef2d4899785be2c95bc9f54fa83647f8d8e5cf95f7a09348639637abc8dc7824",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

@@ -1,0 +1,75 @@
+{
+  "title": "두 자료가 각각 틀린 곳의 완전성",
+  "method": "B0_b10__ALS__FINALTRAIN_30000",
+  "rows": [
+    {
+      "key": "B0_b10__ALS__prior",
+      "cell1": 72.43243243243244,
+      "cell2": 92.82744282744282
+    },
+    {
+      "key": "B0_b10__ALS__mvs",
+      "cell1": 69.72972972972973,
+      "cell2": 83.991683991684
+    },
+    {
+      "key": "B0_b10__ALS__fusion",
+      "cell1": 38.37837837837838,
+      "cell2": 81.86070686070686
+    },
+    {
+      "key": "B0_b10__ALS__baseline_30000",
+      "cell1": 69.72972972972973,
+      "cell2": 89.44906444906445
+    },
+    {
+      "key": "B0_b10__ALS__GeoGS_30000",
+      "cell1": 60.0,
+      "cell2": 65.9043659043659
+    },
+    {
+      "key": "B0_b10__ALS__2DGS_30000",
+      "cell1": 61.08108108108108,
+      "cell2": 67.3076923076923
+    },
+    {
+      "key": "B0_b10__ALS__CDGS_30000",
+      "cell1": 54.054054054054056,
+      "cell2": 47.66112266112266
+    },
+    {
+      "key": "B0_b10__ALS__judgment_mesh",
+      "cell1": 30.810810810810814,
+      "cell2": 85.34303534303534
+    },
+    {
+      "key": "B0_b10__ALS__oracle",
+      "cell1": 46.48648648648649,
+      "cell2": 83.47193347193347
+    },
+    {
+      "key": "B0_b10__ALS__FINALTRAIN_30000",
+      "cell1": 56.21621621621622,
+      "cell2": 91.06029106029106
+    }
+  ],
+  "provisional": false,
+  "site": "B0_b10",
+  "mesh_rule": "243 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "8d59159329c44bf5db3f74e604888ad3b1f7a737d8e588369879ccff76c48fa2",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "places_config_sha256": "08c00ca26c48a496abc43013e604b69ac62f887887b1c67eee8159086c0c430d",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

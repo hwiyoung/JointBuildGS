@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-04T14:16:34.045854+09:00",
+  "job": {
+    "site": "R1rep_b10",
+    "prior": "LoD2",
+    "family": "FINALTRAIN_30000",
+    "key": "R1rep_b10__LoD2__FINALTRAIN_30000",
+    "views": 333,
+    "box": [
+      [
+        -39.47093121069526,
+        -21.67549428815511,
+        -49.59596252441406
+      ],
+      [
+        55.15583332094396,
+        75.87986538303929,
+        -3.308164596557617
+      ]
+    ],
+    "ply": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/R1rep_b10/ft_LoD2_s0/attempt1/model/point_cloud/iteration_30000/point_cloud.ply",
+    "model_sha256": "b4cd39514052b6fbf5fee57326355654c8a1b628a170c39ed17d2ea4d81403e3",
+    "training_receipt": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/R1rep_b10/ft_LoD2_s0/receipt.json",
+    "training_receipt_sha256": "37478c79c0a72735a67c79c9249628136c2be1c199c04b90d5a06c4f254f967c",
+    "renderer": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r23",
+    "image": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+    "cache": "/out/addendum3_stage2/renders/R1rep_b10__LoD2__FINALTRAIN_30000",
+    "scientific_verdict": null
+  },
+  "renderer_config": {
+    "path": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/rfix_speed/builds/target/extension/jbgs_rfix_speed_target.so",
+    "sha256": "1426e3aae8b24c490821a87e731aee9e834ee3aabb9d3caec0e04cb8365e2245",
+    "validation_sha256": "9a5a37c41e9d7b2886f4a4c9f3d3dc3f39460c28cfbf64aaedfbbf306419a105",
+    "binning_guard_fraction": 0.5
+  },
+  "gpu_authority": "User reply: figure6.1 only has no-GPU restriction; stage2 inference allowed",
+  "scientific_verdict": null
+}

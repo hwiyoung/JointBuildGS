@@ -1,0 +1,75 @@
+{
+  "title": "대표 시점의 렌더 깊이와 참값 깊이",
+  "key": "B0_b10__ALS__2DGS_30000",
+  "view": {
+    "index": 121,
+    "name": "DJI_20241217095631_0078_D",
+    "virtual": false,
+    "K": [
+      [
+        674.4174194335938,
+        0.0,
+        513.4158325195312
+      ],
+      [
+        0.0,
+        674.7781982421875,
+        365.0968322753906
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "W2C": [
+      [
+        -0.566105306148529,
+        -0.8243198990821838,
+        -0.004632160533219576,
+        -16.678152084350586
+      ],
+      [
+        -0.47925806045532227,
+        0.333694189786911,
+        -0.8117634654045105,
+        -64.72220611572266
+      ],
+      [
+        0.6706985235214233,
+        -0.4573236107826233,
+        -0.5839680433273315,
+        90.88329315185547
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "width": 1024,
+    "height": 741
+  },
+  "view_selection": "middle camera in frozen ordered training list; independent of method result",
+  "reference": "cleaned GT points projected with z-buffer; empty pixels remain empty; no interpolation",
+  "render_source": "/out/addendum3_stage2/renders/B0_b10__LoD2__2DGS_30000/0121.npz",
+  "render_sha256": "969e3046651c5dde838295bc3fb120f00feab0eae5b898d179e09a2285939eac",
+  "depth_range_m": [
+    136.11041259765625,
+    190.7218780517578
+  ],
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

@@ -1,0 +1,318 @@
+{
+  "rows": [
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "text": "LoD2 정면 바깥",
+      "color": "#D85A30",
+      "cell": 1,
+      "patches": 985,
+      "selected_cell_area_m2": 61.5625,
+      "whole_region_cell_area_m2": 292.3125,
+      "selection_source": "sites_v1 B0_facade exact GML",
+      "cells_sha256": "ea6754c6898a7a9d11a259aa1f6a6b64458820a44405c1423adb95091b6050bb",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        123.8505557121558,
+        22.95323675435062,
+        -39.753999999999905
+      ],
+      "arrow_uv": [
+        63.928372016850425,
+        108.53098395843581
+      ],
+      "arrow_patch_id": "LoD2:B0_b10:76990",
+      "arrow_source_index": 76990,
+      "label_axes_fraction": [
+        0.06,
+        0.16
+      ],
+      "revision": "text only; original arrow preserved"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "text": "LoD2 지붕 끝 높음",
+      "color": "#D85A30",
+      "cell": 1,
+      "patches": 972,
+      "selected_cell_area_m2": 60.75,
+      "whole_region_cell_area_m2": 292.3125,
+      "selection_source": "existing B0_wrong largest cluster rectangle, unchanged",
+      "cells_sha256": "ea6754c6898a7a9d11a259aa1f6a6b64458820a44405c1423adb95091b6050bb",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        103.53885526984733,
+        -1.4896611874496655,
+        -21.3343532014203
+      ],
+      "arrow_uv": [
+        34.01255049385124,
+        97.80419239453391
+      ],
+      "arrow_patch_id": "LoD2:B0_b10:50406",
+      "arrow_source_index": 50406,
+      "label_axes_fraction": [
+        0.6,
+        0.2
+      ]
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "text": "창 깊이 없음",
+      "color": "#1D9E75",
+      "cell": 4,
+      "patches": 954,
+      "selected_cell_area_m2": 59.625,
+      "whole_region_cell_area_m2": 165.1875,
+      "selection_source": "sites_v1 B0_facade exact GML",
+      "cells_sha256": "ea6754c6898a7a9d11a259aa1f6a6b64458820a44405c1423adb95091b6050bb",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        124.49268783582204,
+        24.58116990278021,
+        -34.003999999999905
+      ],
+      "arrow_uv": [
+        65.67775090453283,
+        108.57760484786408
+      ],
+      "arrow_patch_id": "LoD2:B0_b10:77545",
+      "arrow_source_index": 77545,
+      "label_axes_fraction": [
+        0.35,
+        0.9
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "text": "날개 3.5~6 m 위",
+      "color": "#D85A30",
+      "cell": 1,
+      "patches": 15724,
+      "selected_cell_area_m2": 982.75,
+      "whole_region_cell_area_m2": 1353.4375,
+      "selection_source": "sites_v1 B173_wings exact GML",
+      "cells_sha256": "dae8cb09c8156a83478db4150049ee5ebb601c3c5b5eba8e78b7f1c6ef4dd59f",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        142.73489831377682,
+        97.34025583665596,
+        -22.77867773124822
+      ],
+      "arrow_uv": [
+        140.28813049397075,
+        100.83460242147272
+      ],
+      "arrow_patch_id": "LoD2:B173nb_b10:47652",
+      "arrow_source_index": 47652,
+      "label_axes_fraction": [
+        0.05,
+        0.16
+      ],
+      "revision": "text only; original arrow preserved"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "text": "채광창 깊이 틀림",
+      "color": "#1D9E75",
+      "cell": 2,
+      "patches": 1176,
+      "selected_cell_area_m2": 89.2709284041027,
+      "whole_region_cell_area_m2": 95.00727092676303,
+      "selection_source": "largest cell2 roof component under inherited figure61 clustering; ALS component intersects inherited skylight strip",
+      "cells_sha256": "545b39553131702bc612c1caa846296ca90877ab56b56948019dcdcae98bb1f7",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        139.40389669442527,
+        111.99689200432097,
+        -29.908031098296366
+      ],
+      "arrow_uv": [
+        152.92159369500078,
+        92.69161997720519
+      ],
+      "arrow_patch_id": "ALS:B173nb_b10:70808",
+      "arrow_source_index": 70808,
+      "fallback_to_LoD2": false,
+      "cluster_rank": 1,
+      "cluster_area_m2": 89.2709284041027,
+      "cluster_uv_min": [
+        126.22327071835475,
+        87.02065624651611
+      ],
+      "cluster_uv_max": [
+        190.9411375723926,
+        98.04217813517212
+      ],
+      "clustering": {
+        "grid_m": 0.25,
+        "dilation_iterations": 4,
+        "eight_neighbour_components": true,
+        "source": "/repo/scripts/phd/main_fill_v1/fig61/fig61_notes.py",
+        "source_sha256": "ce61d1785b67269f6949580f6dc343f5fd0d6fa40f129db30b36e2c3361ef98c"
+      },
+      "label_axes_fraction": [
+        0.48,
+        0.91
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "text": "긴 벽 깊이 없음",
+      "color": "#1D9E75",
+      "cell": 4,
+      "patches": 149,
+      "selected_cell_area_m2": 9.3125,
+      "whole_region_cell_area_m2": 167.3125,
+      "selection_source": "frozen unseen wall surf_ext=53",
+      "cells_sha256": "dae8cb09c8156a83478db4150049ee5ebb601c3c5b5eba8e78b7f1c6ef4dd59f",
+      "visible": false,
+      "reason": "해당 자리의 새 칸 넓이 10 m² 미만"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "text": "이웃 벽 깊이 없음",
+      "color": "#1D9E75",
+      "cell": 4,
+      "patches": 182,
+      "selected_cell_area_m2": 11.375,
+      "whole_region_cell_area_m2": 167.3125,
+      "selection_source": "largest cell4 neighboring wall face, excluding B173 building",
+      "cells_sha256": "dae8cb09c8156a83478db4150049ee5ebb601c3c5b5eba8e78b7f1c6ef4dd59f",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        116.27721256166056,
+        130.8040187314262,
+        -32.924999999999955
+      ],
+      "arrow_uv": [
+        162.68472007691133,
+        64.5272293756511
+      ],
+      "arrow_patch_id": "LoD2:B173nb_b10:179831",
+      "arrow_source_index": 179831,
+      "label_axes_fraction": [
+        0.95,
+        0.28
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "text": "LoD2 지붕 낮음",
+      "color": "#D85A30",
+      "cell": 1,
+      "patches": 2264,
+      "selected_cell_area_m2": 141.5,
+      "whole_region_cell_area_m2": 1174.8125,
+      "selection_source": "largest new cell1 low-prior roof face in inherited R1 region",
+      "cells_sha256": "91a84c990d860e4266252ed58a315639106b123194a534aea02a05e7583cfa89",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        10.128807707868628,
+        26.85030281290677,
+        -29.663768423137206
+      ],
+      "arrow_uv": [
+        28.695287683118973,
+        0.3346214440355979
+      ],
+      "arrow_patch_id": "LoD2:R1rep_b10:103265",
+      "arrow_source_index": 103265,
+      "label_axes_fraction": [
+        0.08,
+        0.12
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "text": "지붕 일부 깊이 없음",
+      "color": "#1D9E75",
+      "cell": 4,
+      "patches": 250,
+      "selected_cell_area_m2": 15.625,
+      "whole_region_cell_area_m2": 175.5,
+      "selection_source": "largest new cell4 roof face in inherited R1 region",
+      "cells_sha256": "91a84c990d860e4266252ed58a315639106b123194a534aea02a05e7583cfa89",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        9.616000000038184,
+        18.118999999947846,
+        -33.569999999999936
+      ],
+      "arrow_uv": [
+        20.315156294203554,
+        2.8390212646132205
+      ],
+      "arrow_patch_id": "LoD2:R1rep_b10:81820",
+      "arrow_source_index": 81820,
+      "label_axes_fraction": [
+        0.55,
+        0.9
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "text": "계단 가장자리 깊이 틀림",
+      "color": "#1D9E75",
+      "cell": 2,
+      "patches": 2741,
+      "selected_cell_area_m2": 185.9425515639304,
+      "whole_region_cell_area_m2": 187.2818567444337,
+      "selection_source": "largest R1 ALS cell2 roof component under inherited figure61 clustering",
+      "cells_sha256": "5f4c508788dbfddfa08657930fe44b3135f49e764cf1d02162273c73dfe99b25",
+      "visible": true,
+      "reason": null,
+      "arrow_xyz": [
+        7.654068789304738,
+        24.69950571184489,
+        -28.462518636194808
+      ],
+      "arrow_uv": [
+        25.82778895882257,
+        -1.2552565233409714
+      ],
+      "arrow_patch_id": "ALS:R1rep_b10:25407",
+      "arrow_source_index": 25407,
+      "cluster_rank": 1,
+      "cluster_area_m2": 185.9425515639304,
+      "cluster_uv_min": [
+        1.8129527172298698,
+        -26.587224473403673
+      ],
+      "cluster_uv_max": [
+        53.3224258504072,
+        19.291017740241404
+      ],
+      "clustering": {
+        "grid_m": 0.25,
+        "dilation_iterations": 4,
+        "eight_neighbour_components": true,
+        "source": "/repo/scripts/phd/main_fill_v1/fig61/fig61_notes.py",
+        "source_sha256": "ce61d1785b67269f6949580f6dc343f5fd0d6fa40f129db30b36e2c3361ef98c"
+      },
+      "label_axes_fraction": [
+        0.95,
+        0.4
+      ]
+    }
+  ],
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

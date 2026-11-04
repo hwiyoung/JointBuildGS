@@ -1,0 +1,203 @@
+| at | stage | seconds | gpu_wait_seconds | scientific_verdict | implementation |
+| --- | --- | --- | --- | --- | --- |
+| 2026-11-04T12:20:25.176911+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_merge | 344.4898075135425 | 0 | None | bounded_merge |
+| 2026-11-04T12:03:34.286171+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_plan | 18.75103805679828 | 0 | None |  |
+| 2026-11-04T12:03:14.995502+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_prepare | 16.641951840370893 | 0 | None |  |
+| 2026-11-04T12:06:09.229940+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_tile0 | 154.47475969791412 | 0 | None |  |
+| 2026-11-04T12:07:17.790311+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_tile1 | 67.05592857301235 | 0 | None |  |
+| 2026-11-04T12:10:12.295482+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_tile2 | 172.58430754207075 | 0 | None |  |
+| 2026-11-04T12:11:27.104774+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_tile3 | 73.13369511812925 | 0 | None |  |
+| 2026-11-04T12:13:26.765163+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_tile4 | 118.33193062990904 | 0 | None |  |
+| 2026-11-04T12:14:38.208905+09:00 | B0_b10__ALS__FINALTRAIN_30000_train_tile5 | 69.88208665512502 | 0 | None |  |
+| 2026-11-04T12:25:47.848971+09:00 | B0_b10__ALS__fusion_mvswalls_train_merge | 583.5202830974013 | 0 | None | bounded_merge |
+| 2026-11-04T12:11:06.699216+09:00 | B0_b10__ALS__fusion_mvswalls_train_plan | 5.615039881318808 | 0 | None |  |
+| 2026-11-04T12:11:00.181281+09:00 | B0_b10__ALS__fusion_mvswalls_train_prepare | 34.86575845256448 | 0 | None |  |
+| 2026-11-04T12:16:02.128928+09:00 | B0_b10__ALS__fusion_mvswalls_train_tile0 | 294.8571605803445 | 0 | None |  |
+| 2026-11-04T12:00:52.355862+09:00 | B0_b10__ALS__fusion_train_merge | 6.036286420188844 | 0 | None | bounded_merge |
+| 2026-11-04T12:00:19.321123+09:00 | B0_b10__ALS__fusion_train_plan | 1.1758472071960568 | 0 | None |  |
+| 2026-11-04T12:00:17.614894+09:00 | B0_b10__ALS__fusion_train_prepare | 23.536276006139815 | 0 | None |  |
+| 2026-11-04T12:00:45.530708+09:00 | B0_b10__ALS__fusion_train_tile0 | 25.724077571183443 | 0 | None |  |
+| 2026-11-04T12:39:10.642327+09:00 | B0_b10__ALS__judgment_mesh_mvswalls_train_merge | 413.428432979621 | 0 | None | bounded_merge |
+| 2026-11-04T12:28:13.301324+09:00 | B0_b10__ALS__judgment_mesh_mvswalls_train_plan | 4.155879148282111 | 0 | None |  |
+| 2026-11-04T12:28:08.483890+09:00 | B0_b10__ALS__judgment_mesh_mvswalls_train_prepare | 29.222312128171325 | 0 | None |  |
+| 2026-11-04T12:32:15.412231+09:00 | B0_b10__ALS__judgment_mesh_mvswalls_train_tile0 | 241.31199382059276 | 0 | None |  |
+| 2026-11-04T12:02:51.144447+09:00 | B0_b10__ALS__judgment_mesh_train_merge | 16.395097501575947 | 0 | None | bounded_merge |
+| 2026-11-04T12:02:06.371692+09:00 | B0_b10__ALS__judgment_mesh_train_plan | 1.3157864296808839 | 0 | None |  |
+| 2026-11-04T12:02:04.521262+09:00 | B0_b10__ALS__judgment_mesh_train_prepare | 19.468737933784723 | 0 | None |  |
+| 2026-11-04T12:02:33.987403+09:00 | B0_b10__ALS__judgment_mesh_train_tile0 | 27.085522108711302 | 0 | None |  |
+| 2026-11-04T12:50:24.096837+09:00 | B0_b10__ALS__oracle_mvswalls_train_merge | 150.57513628341258 | 0 | None | bounded_merge |
+| 2026-11-04T12:42:54.611086+09:00 | B0_b10__ALS__oracle_mvswalls_train_plan | 3.9040855895727873 | 0 | None |  |
+| 2026-11-04T12:42:50.149709+09:00 | B0_b10__ALS__oracle_mvswalls_train_prepare | 75.51743998844177 | 0 | None |  |
+| 2026-11-04T12:47:46.326509+09:00 | B0_b10__ALS__oracle_mvswalls_train_tile0 | 291.1053150650114 | 0 | None |  |
+| 2026-11-04T12:04:48.764855+09:00 | B0_b10__ALS__oracle_train_merge | 9.159747823141515 | 0 | None | bounded_merge |
+| 2026-11-04T12:04:06.104026+09:00 | B0_b10__ALS__oracle_train_plan | 1.3497079676017165 | 0 | None |  |
+| 2026-11-04T12:04:04.187037+09:00 | B0_b10__ALS__oracle_train_prepare | 21.2203532429412 | 0 | None |  |
+| 2026-11-04T12:04:38.774368+09:00 | B0_b10__ALS__oracle_train_tile0 | 32.177238083444536 | 0 | None |  |
+| 2026-11-04T12:36:22.370086+09:00 | B0_b10__LoD2__FINALTRAIN_30000_train_merge | 333.82816863432527 | 0 | None | bounded_merge |
+| 2026-11-04T12:22:42.444699+09:00 | B0_b10__LoD2__FINALTRAIN_30000_train_plan | 14.476881204172969 | 0 | None |  |
+| 2026-11-04T12:22:27.425750+09:00 | B0_b10__LoD2__FINALTRAIN_30000_train_prepare | 44.937239616177976 | 0 | None |  |
+| 2026-11-04T12:25:39.684366+09:00 | B0_b10__LoD2__FINALTRAIN_30000_train_tile0 | 176.16170343197882 | 0 | None |  |
+| 2026-11-04T12:27:13.272090+09:00 | B0_b10__LoD2__FINALTRAIN_30000_train_tile1 | 91.53250727523118 | 0 | None |  |
+| 2026-11-04T12:29:41.178721+09:00 | B0_b10__LoD2__FINALTRAIN_30000_train_tile2 | 145.98258618731052 | 0 | None |  |
+| 2026-11-04T12:30:47.283350+09:00 | B0_b10__LoD2__FINALTRAIN_30000_train_tile3 | 64.21204946562648 | 0 | None |  |
+| 2026-11-04T12:08:22.963845+09:00 | B0_b10__LoD2__fusion_train_merge | 22.42623038124293 | 0 | None | bounded_merge |
+| 2026-11-04T12:06:16.472346+09:00 | B0_b10__LoD2__fusion_train_plan | 2.213896849192679 | 0 | None |  |
+| 2026-11-04T12:06:13.679194+09:00 | B0_b10__LoD2__fusion_train_prepare | 17.87059521395713 | 0 | None |  |
+| 2026-11-04T12:07:58.825815+09:00 | B0_b10__LoD2__fusion_train_tile0 | 101.81430858932436 | 0 | None |  |
+| 2026-11-04T12:13:37.833417+09:00 | B0_b10__LoD2__judgment_mesh_train_merge | 37.589949395507574 | 0 | None | bounded_merge |
+| 2026-11-04T12:11:00.842884+09:00 | B0_b10__LoD2__judgment_mesh_train_plan | 3.413524268195033 | 0 | None |  |
+| 2026-11-04T12:10:56.783830+09:00 | B0_b10__LoD2__judgment_mesh_train_prepare | 38.34955634921789 | 0 | None |  |
+| 2026-11-04T12:12:58.957882+09:00 | B0_b10__LoD2__judgment_mesh_train_tile0 | 117.19738900475204 | 0 | None |  |
+| 2026-11-04T12:23:23.035199+09:00 | B0_b10__LoD2__oracle_train_merge | 32.557110043242574 | 0 | None | bounded_merge |
+| 2026-11-04T12:18:11.239167+09:00 | B0_b10__LoD2__oracle_train_plan | 2.2017101291567087 | 0 | None |  |
+| 2026-11-04T12:18:08.204535+09:00 | B0_b10__LoD2__oracle_train_prepare | 129.03528488986194 | 0 | None |  |
+| 2026-11-04T12:22:49.373240+09:00 | B0_b10__LoD2__oracle_train_tile0 | 277.5950303385034 | 0 | None |  |
+| 2026-11-04T12:44:37.547697+09:00 | MVS_wall_variants_depth | 756.8064687922597 | 0 | None |  |
+| 2026-11-04T14:02:46.014709+09:00 | R1rep_b10__ALS__FINALTRAIN_30000_train_merge | 139.50301506649703 | 0 | None | bounded_merge |
+| 2026-11-04T13:51:09.718454+09:00 | R1rep_b10__ALS__FINALTRAIN_30000_train_plan | 16.094708954915404 | 0 | None |  |
+| 2026-11-04T13:50:53.053023+09:00 | R1rep_b10__ALS__FINALTRAIN_30000_train_prepare | 34.17531979549676 | 0 | None |  |
+| 2026-11-04T13:53:40.092339+09:00 | R1rep_b10__ALS__FINALTRAIN_30000_train_tile0 | 149.86651257798076 | 0 | None |  |
+| 2026-11-04T13:56:08.875478+09:00 | R1rep_b10__ALS__FINALTRAIN_30000_train_tile1 | 147.32220103777945 | 0 | None |  |
+| 2026-11-04T13:58:10.090555+09:00 | R1rep_b10__ALS__FINALTRAIN_30000_train_tile2 | 119.77550063002855 | 0 | None |  |
+| 2026-11-04T14:00:25.224671+09:00 | R1rep_b10__ALS__FINALTRAIN_30000_train_tile3 | 133.86719978321344 | 0 | None |  |
+| 2026-11-04T12:58:08.774266+09:00 | R1rep_b10__ALS__fusion_mvswalls_train_merge | 72.85542964469641 | 0 | None | bounded_merge |
+| 2026-11-04T12:45:25.872575+09:00 | R1rep_b10__ALS__fusion_mvswalls_train_plan | 8.268370876088738 | 0 | None |  |
+| 2026-11-04T12:45:16.994666+09:00 | R1rep_b10__ALS__fusion_mvswalls_train_prepare | 36.73528018780053 | 0 | None |  |
+| 2026-11-04T12:52:28.606592+09:00 | R1rep_b10__ALS__fusion_mvswalls_train_tile0 | 422.2381946304813 | 0 | None |  |
+| 2026-11-04T12:56:54.281732+09:00 | R1rep_b10__ALS__fusion_mvswalls_train_tile1 | 264.1328808674589 | 0 | None |  |
+| 2026-11-04T12:27:30.069702+09:00 | R1rep_b10__ALS__fusion_train_merge | 9.045977209694684 | 0 | None | bounded_merge |
+| 2026-11-04T12:26:38.850479+09:00 | R1rep_b10__ALS__fusion_train_plan | 1.48025778029114 | 0 | None |  |
+| 2026-11-04T12:26:36.136146+09:00 | R1rep_b10__ALS__fusion_train_prepare | 31.210533293895423 | 0 | None |  |
+| 2026-11-04T12:27:20.093511+09:00 | R1rep_b10__ALS__fusion_train_tile0 | 40.37958295736462 | 0 | None |  |
+| 2026-11-04T13:08:00.133630+09:00 | R1rep_b10__ALS__judgment_mesh_mvswalls_train_merge | 90.1900680186227 | 0 | None | bounded_merge |
+| 2026-11-04T12:59:36.006071+09:00 | R1rep_b10__ALS__judgment_mesh_mvswalls_train_plan | 7.79316374193877 | 0 | None |  |
+| 2026-11-04T12:59:27.407037+09:00 | R1rep_b10__ALS__judgment_mesh_mvswalls_train_prepare | 30.448255006223917 | 0 | None |  |
+| 2026-11-04T13:03:11.777986+09:00 | R1rep_b10__ALS__judgment_mesh_mvswalls_train_tile0 | 214.95213958900422 | 0 | None |  |
+| 2026-11-04T13:06:28.330936+09:00 | R1rep_b10__ALS__judgment_mesh_mvswalls_train_tile1 | 194.77180489804596 | 0 | None |  |
+| 2026-11-04T12:30:15.818050+09:00 | R1rep_b10__ALS__judgment_mesh_train_merge | 9.60007631406188 | 0 | None | bounded_merge |
+| 2026-11-04T12:29:30.554786+09:00 | R1rep_b10__ALS__judgment_mesh_train_plan | 1.4370338805019855 | 0 | None |  |
+| 2026-11-04T12:29:27.576023+09:00 | R1rep_b10__ALS__judgment_mesh_train_prepare | 28.08537961822003 | 0 | None |  |
+| 2026-11-04T12:30:05.374887+09:00 | R1rep_b10__ALS__judgment_mesh_train_tile0 | 34.26747653540224 | 0 | None |  |
+| 2026-11-04T13:18:06.796972+09:00 | R1rep_b10__ALS__oracle_mvswalls_train_merge | 87.63099085353315 | 0 | None | bounded_merge |
+| 2026-11-04T13:09:59.797273+09:00 | R1rep_b10__ALS__oracle_mvswalls_train_plan | 7.068816349841654 | 0 | None |  |
+| 2026-11-04T13:09:52.055202+09:00 | R1rep_b10__ALS__oracle_mvswalls_train_prepare | 29.15292006917298 | 0 | None |  |
+| 2026-11-04T13:13:21.967322+09:00 | R1rep_b10__ALS__oracle_mvswalls_train_tile0 | 201.6038573347032 | 0 | None |  |
+| 2026-11-04T13:16:37.647678+09:00 | R1rep_b10__ALS__oracle_mvswalls_train_tile1 | 194.17281547375023 | 0 | None |  |
+| 2026-11-04T12:33:55.598871+09:00 | R1rep_b10__ALS__oracle_train_merge | 61.5922121591866 | 0 | None | bounded_merge |
+| 2026-11-04T12:32:19.184379+09:00 | R1rep_b10__ALS__oracle_train_plan | 1.4150286884978414 | 0 | None |  |
+| 2026-11-04T12:32:17.163974+09:00 | R1rep_b10__ALS__oracle_train_prepare | 44.47346783708781 | 0 | None |  |
+| 2026-11-04T12:32:53.196160+09:00 | R1rep_b10__ALS__oracle_train_tile0 | 33.49598822928965 | 0 | None |  |
+| 2026-11-04T14:29:27.335702+09:00 | R1rep_b10__LoD2__FINALTRAIN_30000_train_merge | 117.02699318621308 | 0 | None | bounded_merge |
+| 2026-11-04T14:17:45.308840+09:00 | R1rep_b10__LoD2__FINALTRAIN_30000_train_plan | 16.002210308797657 | 0 | None |  |
+| 2026-11-04T14:17:28.728495+09:00 | R1rep_b10__LoD2__FINALTRAIN_30000_train_prepare | 20.168706416152418 | 0 | None |  |
+| 2026-11-04T14:20:20.359941+09:00 | R1rep_b10__LoD2__FINALTRAIN_30000_train_tile0 | 154.5611596563831 | 0 | None |  |
+| 2026-11-04T14:22:50.158909+09:00 | R1rep_b10__LoD2__FINALTRAIN_30000_train_tile1 | 148.3535136859864 | 0 | None |  |
+| 2026-11-04T14:25:05.205235+09:00 | R1rep_b10__LoD2__FINALTRAIN_30000_train_tile2 | 133.57852560654283 | 0 | None |  |
+| 2026-11-04T14:27:28.950153+09:00 | R1rep_b10__LoD2__FINALTRAIN_30000_train_tile3 | 142.4273108197376 | 0 | None |  |
+| 2026-11-04T12:37:43.276406+09:00 | R1rep_b10__LoD2__fusion_train_merge | 33.28496501687914 | 0 | None | bounded_merge |
+| 2026-11-04T12:35:37.951171+09:00 | R1rep_b10__LoD2__fusion_train_plan | 2.015147417783737 | 0 | None |  |
+| 2026-11-04T12:35:35.371364+09:00 | R1rep_b10__LoD2__fusion_train_prepare | 48.35001971758902 | 0 | None |  |
+| 2026-11-04T12:37:08.672452+09:00 | R1rep_b10__LoD2__fusion_train_tile0 | 90.21045727375895 | 0 | None |  |
+| 2026-11-04T12:44:31.170388+09:00 | R1rep_b10__LoD2__judgment_mesh_train_merge | 117.55955497268587 | 0 | None | bounded_merge |
+| 2026-11-04T12:40:39.791065+09:00 | R1rep_b10__LoD2__judgment_mesh_train_plan | 2.2847582157701254 | 0 | None |  |
+| 2026-11-04T12:40:36.762875+09:00 | R1rep_b10__LoD2__judgment_mesh_train_prepare | 53.65520308539271 | 0 | None |  |
+| 2026-11-04T12:42:32.607112+09:00 | R1rep_b10__LoD2__judgment_mesh_train_tile0 | 112.216802588664 | 0 | None |  |
+| 2026-11-04T12:54:53.229549+09:00 | R1rep_b10__LoD2__oracle_train_merge | 25.6658695647493 | 0 | None | bounded_merge |
+| 2026-11-04T12:50:15.130698+09:00 | R1rep_b10__LoD2__oracle_train_plan | 98.84966785740107 | 0 | None |  |
+| 2026-11-04T12:48:35.497802+09:00 | R1rep_b10__LoD2__oracle_train_prepare | 91.43661187589169 | 0 | None |  |
+| 2026-11-04T12:54:26.422446+09:00 | R1rep_b10__LoD2__oracle_train_tile0 | 250.64100365433842 | 0 | None |  |
+| 2026-11-04T12:03:17.114375+09:00 | bounded_cleanup_B0_b10__ALS__2DGS_30000 | 16.773561405017972 | 0 | None |  |
+| 2026-11-04T12:24:02.802356+09:00 | bounded_cleanup_B0_b10__ALS__CDGS_30000 | 331.39005911536515 | 0 | None |  |
+| 2026-11-04T12:20:37.781231+09:00 | bounded_cleanup_B0_b10__ALS__FINALTRAIN_30000 | 12.041159633547068 | 0 | None |  |
+| 2026-11-04T12:00:58.921739+09:00 | bounded_cleanup_B0_b10__ALS__GeoGS_30000 | 15.878468807786703 | 0 | None |  |
+| 2026-11-04T11:59:16.468557+09:00 | bounded_cleanup_B0_b10__ALS__baseline_30000 | 7.745014162734151 | 0 | None |  |
+| 2026-11-04T12:00:54.285936+09:00 | bounded_cleanup_B0_b10__ALS__fusion | 1.4164046766236424 | 0 | None |  |
+| 2026-11-04T12:25:56.920407+09:00 | bounded_cleanup_B0_b10__ALS__fusion_mvswalls | 8.44433895405382 | 0 | None |  |
+| 2026-11-04T12:02:52.427611+09:00 | bounded_cleanup_B0_b10__ALS__judgment_mesh | 0.753375431522727 | 0 | None |  |
+| 2026-11-04T12:39:20.020957+09:00 | bounded_cleanup_B0_b10__ALS__judgment_mesh_mvswalls | 8.584299674257636 | 0 | None |  |
+| 2026-11-04T12:04:50.328318+09:00 | bounded_cleanup_B0_b10__ALS__oracle | 0.9673490803688765 | 0 | None |  |
+| 2026-11-04T12:50:33.547841+09:00 | bounded_cleanup_B0_b10__ALS__oracle_mvswalls | 8.338488910347223 | 0 | None |  |
+| 2026-11-04T12:56:29.641337+09:00 | bounded_cleanup_B0_b10__LoD2__CDGS_30000 | 30.540373345836997 | 0 | None |  |
+| 2026-11-04T12:36:34.874264+09:00 | bounded_cleanup_B0_b10__LoD2__FINALTRAIN_30000 | 11.920393202453852 | 0 | None |  |
+| 2026-11-04T12:37:30.406002+09:00 | bounded_cleanup_B0_b10__LoD2__GeoGS_30000 | 220.91271675005555 | 0 | None |  |
+| 2026-11-04T12:30:37.420892+09:00 | bounded_cleanup_B0_b10__LoD2__baseline_30000 | 7.596385333687067 | 0 | None |  |
+| 2026-11-04T12:08:28.077151+09:00 | bounded_cleanup_B0_b10__LoD2__fusion | 4.061405121348798 | 0 | None |  |
+| 2026-11-04T12:13:42.738325+09:00 | bounded_cleanup_B0_b10__LoD2__judgment_mesh | 4.14463322237134 | 0 | None |  |
+| 2026-11-04T12:23:27.284824+09:00 | bounded_cleanup_B0_b10__LoD2__oracle | 3.382503184489906 | 0 | None |  |
+| 2026-11-04T12:02:25.902236+09:00 | bounded_cleanup_R1rep_b10__ALS__2DGS_30000 | 17.259187462739646 | 0 | None |  |
+| 2026-11-04T12:04:10.398169+09:00 | bounded_cleanup_R1rep_b10__ALS__CDGS_30000 | 22.824364118278027 | 0 | None |  |
+| 2026-11-04T14:02:59.821293+09:00 | bounded_cleanup_R1rep_b10__ALS__FINALTRAIN_30000 | 13.287738908082247 | 0 | None |  |
+| 2026-11-04T12:00:56.132227+09:00 | bounded_cleanup_R1rep_b10__ALS__GeoGS_30000 | 14.48809933848679 | 0 | None |  |
+| 2026-11-04T11:59:19.742828+09:00 | bounded_cleanup_R1rep_b10__ALS__baseline_30000 | 8.49365997966379 | 0 | None |  |
+| 2026-11-04T12:27:31.667350+09:00 | bounded_cleanup_R1rep_b10__ALS__fusion | 1.0233963448554277 | 0 | None |  |
+| 2026-11-04T12:58:17.665710+09:00 | bounded_cleanup_R1rep_b10__ALS__fusion_mvswalls | 8.300799668766558 | 0 | None |  |
+| 2026-11-04T12:30:17.239113+09:00 | bounded_cleanup_R1rep_b10__ALS__judgment_mesh | 0.9066176330670714 | 0 | None |  |
+| 2026-11-04T13:08:08.770719+09:00 | bounded_cleanup_R1rep_b10__ALS__judgment_mesh_mvswalls | 8.050650835037231 | 0 | None |  |
+| 2026-11-04T12:33:56.980448+09:00 | bounded_cleanup_R1rep_b10__ALS__oracle | 0.8638486843556166 | 0 | None |  |
+| 2026-11-04T13:18:14.829699+09:00 | bounded_cleanup_R1rep_b10__ALS__oracle_mvswalls | 7.515150765888393 | 0 | None |  |
+| 2026-11-04T12:12:20.900284+09:00 | bounded_cleanup_R1rep_b10__LoD2__CDGS_30000 | 55.172465931624174 | 0 | None |  |
+| 2026-11-04T14:29:40.669469+09:00 | bounded_cleanup_R1rep_b10__LoD2__FINALTRAIN_30000 | 12.815880092792213 | 0 | None |  |
+| 2026-11-04T12:07:13.309081+09:00 | bounded_cleanup_R1rep_b10__LoD2__GeoGS_30000 | 30.033965385518968 | 0 | None |  |
+| 2026-11-04T12:05:24.313986+09:00 | bounded_cleanup_R1rep_b10__LoD2__baseline_30000 | 11.240708027034998 | 0 | None |  |
+| 2026-11-04T12:37:46.224652+09:00 | bounded_cleanup_R1rep_b10__LoD2__fusion | 2.4083006409928203 | 0 | None |  |
+| 2026-11-04T12:44:36.150424+09:00 | bounded_cleanup_R1rep_b10__LoD2__judgment_mesh | 4.302061764523387 | 0 | None |  |
+| 2026-11-04T12:54:57.268365+09:00 | bounded_cleanup_R1rep_b10__LoD2__oracle | 3.396882673725486 | 0 | None |  |
+| 2026-11-04T13:06:17.968646+09:00 | render_B0_b10__ALS__CDGS_30000 | 18.957328591495752 | 0 | None |  |
+| 2026-11-04T12:01:58.470813+09:00 | render_B0_b10__ALS__FINALTRAIN_30000 | 27.66359960846603 | 0 | None |  |
+| 2026-11-04T11:59:53.303593+09:00 | render_B0_b10__ALS__fusion | 23.512036954052746 | 0 | None |  |
+| 2026-11-04T12:01:44.284284+09:00 | render_B0_b10__ALS__judgment_mesh | 26.49231357779354 | 0 | None |  |
+| 2026-11-04T12:03:42.216622+09:00 | render_B0_b10__ALS__oracle | 22.54477852769196 | 0 | None |  |
+| 2026-11-04T13:05:51.603837+09:00 | render_B0_b10__LoD2__2DGS_30000 | 7.5610932763665915 | 0 | None |  |
+| 2026-11-04T13:06:30.493961+09:00 | render_B0_b10__LoD2__CDGS_30000 | 9.177634744904935 | 0 | None |  |
+| 2026-11-04T12:02:28.975919+09:00 | render_B0_b10__LoD2__FINALTRAIN_30000 | 27.536809467710555 | 0 | None |  |
+| 2026-11-04T12:05:54.972687+09:00 | render_B0_b10__LoD2__fusion | 30.17681139986962 | 0 | None |  |
+| 2026-11-04T12:10:17.466822+09:00 | render_B0_b10__LoD2__judgment_mesh | 32.15049841068685 | 0 | None |  |
+| 2026-11-04T12:15:57.839477+09:00 | render_B0_b10__LoD2__oracle | 30.87700684927404 | 0 | None |  |
+| 2026-11-04T12:24:10.860502+09:00 | render_R1rep_b10__ALS__CDGS_30000 | 9.297264097258449 | 0 | None |  |
+| 2026-11-04T13:50:17.986681+09:00 | render_R1rep_b10__ALS__FINALTRAIN_30000 | 31.67512138839811 | 0 | None |  |
+| 2026-11-04T12:26:04.038674+09:00 | render_R1rep_b10__ALS__fusion | 38.82203197758645 | 0 | None |  |
+| 2026-11-04T12:28:58.526866+09:00 | render_R1rep_b10__ALS__judgment_mesh | 36.42974177468568 | 0 | None |  |
+| 2026-11-04T12:31:31.876176+09:00 | render_R1rep_b10__ALS__oracle | 30.006146817468107 | 0 | None |  |
+| 2026-11-04T12:23:55.983216+09:00 | render_R1rep_b10__LoD2__2DGS_30000 | 19.711875188164413 | 0 | None |  |
+| 2026-11-04T14:17:07.602194+09:00 | render_R1rep_b10__LoD2__FINALTRAIN_30000 | 31.098912175744772 | 0 | None |  |
+| 2026-11-04T12:34:46.197854+09:00 | render_R1rep_b10__LoD2__fusion | 31.890953700989485 | 0 | None |  |
+| 2026-11-04T12:39:42.005364+09:00 | render_R1rep_b10__LoD2__judgment_mesh | 37.62696328666061 | 0 | None |  |
+| 2026-11-04T12:47:03.085827+09:00 | render_R1rep_b10__LoD2__oracle | 38.3611382432282 | 0 | None |  |
+| 2026-11-04T12:15:59.182720+09:00 | score_B0_b10__ALS__2DGS_30000 | 759.9243518020958 | 0 | None |  |
+| 2026-11-04T12:29:57.797765+09:00 | score_B0_b10__ALS__CDGS_30000 | 352.7542295437306 | 0 | None |  |
+| 2026-11-04T12:21:41.509023+09:00 | score_B0_b10__ALS__FINALTRAIN_30000 | 61.462316039949656 | 0 | None |  |
+| 2026-11-04T12:02:29.384338+09:00 | score_B0_b10__ALS__GeoGS_30000 | 88.32940723653883 | 0 | None |  |
+| 2026-11-04T12:00:06.221584+09:00 | score_B0_b10__ALS__baseline_30000 | 47.62175104394555 | 0 | None |  |
+| 2026-11-04T12:01:16.839915+09:00 | score_B0_b10__ALS__fusion | 20.438487782143056 | 0 | None |  |
+| 2026-11-04T12:27:37.519529+09:00 | score_B0_b10__ALS__fusion_mvswalls | 98.1997194653377 | 0 | None |  |
+| 2026-11-04T12:03:18.715282+09:00 | score_B0_b10__ALS__judgment_mesh | 24.11186841223389 | 0 | None |  |
+| 2026-11-04T12:41:33.439250+09:00 | score_B0_b10__ALS__judgment_mesh_mvswalls | 130.9000791395083 | 0 | None |  |
+| 2026-11-04T12:05:23.688822+09:00 | score_B0_b10__ALS__oracle | 30.952866960316896 | 0 | None |  |
+| 2026-11-04T12:52:35.281669+09:00 | score_B0_b10__ALS__oracle_mvswalls | 119.15638800896704 | 0 | None |  |
+| 2026-11-04T12:55:38.713795+09:00 | score_B0_b10__LoD2__2DGS_30000 | 870.3187264641747 | 0 | None |  |
+| 2026-11-04T13:02:54.184890+09:00 | score_B0_b10__LoD2__CDGS_30000 | 382.30141895543784 | 0 | None |  |
+| 2026-11-04T12:38:00.882520+09:00 | score_B0_b10__LoD2__FINALTRAIN_30000 | 83.83641737420112 | 0 | None |  |
+| 2026-11-04T12:40:17.049923+09:00 | score_B0_b10__LoD2__GeoGS_30000 | 163.48553698975593 | 0 | None |  |
+| 2026-11-04T12:32:06.024669+09:00 | score_B0_b10__LoD2__baseline_30000 | 85.62617453746498 | 0 | None |  |
+| 2026-11-04T12:09:43.973589+09:00 | score_B0_b10__LoD2__fusion | 72.93818620871753 | 0 | None |  |
+| 2026-11-04T12:15:25.490464+09:00 | score_B0_b10__LoD2__judgment_mesh | 100.16170373838395 | 0 | None |  |
+| 2026-11-04T12:25:23.698538+09:00 | score_B0_b10__LoD2__oracle | 114.24629621673375 | 0 | None |  |
+| 2026-11-04T12:03:28.859646+09:00 | score_R1rep_b10__ALS__2DGS_30000 | 60.80039151292294 | 0 | None |  |
+| 2026-11-04T12:04:43.224539+09:00 | score_R1rep_b10__ALS__CDGS_30000 | 30.479762276634574 | 0 | None |  |
+| 2026-11-04T14:04:03.239188+09:00 | score_R1rep_b10__ALS__FINALTRAIN_30000 | 61.255193260498345 | 0 | None |  |
+| 2026-11-04T12:01:39.086378+09:00 | score_R1rep_b10__ALS__GeoGS_30000 | 40.762902930378914 | 0 | None |  |
+| 2026-11-04T12:00:01.816120+09:00 | score_R1rep_b10__ALS__baseline_30000 | 40.00951486732811 | 0 | None |  |
+| 2026-11-04T12:28:20.436187+09:00 | score_R1rep_b10__ALS__fusion | 45.872699957340956 | 0 | None |  |
+| 2026-11-04T12:58:55.771478+09:00 | score_R1rep_b10__ALS__fusion_mvswalls | 35.68412740714848 | 0 | None |  |
+| 2026-11-04T12:31:00.852319+09:00 | score_R1rep_b10__ALS__judgment_mesh | 41.31158606801182 | 0 | None |  |
+| 2026-11-04T13:09:21.599511+09:00 | score_R1rep_b10__ALS__judgment_mesh_mvswalls | 70.41656182799488 | 0 | None |  |
+| 2026-11-04T12:34:13.386000+09:00 | score_R1rep_b10__ALS__oracle | 14.164892293512821 | 0 | None |  |
+| 2026-11-04T13:19:12.980489+09:00 | score_R1rep_b10__ALS__oracle_mvswalls | 55.98316254094243 | 0 | None |  |
+| 2026-11-04T12:10:55.112029+09:00 | score_R1rep_b10__LoD2__2DGS_30000 | 83.06891401298344 | 0 | None |  |
+| 2026-11-04T12:16:48.388213+09:00 | score_R1rep_b10__LoD2__CDGS_30000 | 265.1131299454719 | 0 | None |  |
+| 2026-11-04T14:30:25.223559+09:00 | score_R1rep_b10__LoD2__FINALTRAIN_30000 | 42.424820616841316 | 0 | None |  |
+| 2026-11-04T12:09:13.989657+09:00 | score_R1rep_b10__LoD2__GeoGS_30000 | 117.38054861500859 | 0 | None |  |
+| 2026-11-04T12:06:24.019508+09:00 | score_R1rep_b10__LoD2__baseline_30000 | 57.296963369473815 | 0 | None |  |
+| 2026-11-04T12:39:03.234144+09:00 | score_R1rep_b10__LoD2__fusion | 74.73422009218484 | 0 | None |  |
+| 2026-11-04T12:46:23.382609+09:00 | score_R1rep_b10__LoD2__judgment_mesh | 103.59064013697207 | 0 | None |  |
+| 2026-11-04T12:56:10.168165+09:00 | score_R1rep_b10__LoD2__oracle | 70.53835327271372 | 0 | None |  |

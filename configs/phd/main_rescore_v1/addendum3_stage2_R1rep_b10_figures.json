@@ -1,0 +1,124 @@
+{
+  "site": "R1rep_b10",
+  "rows": [
+    {
+      "id": "A",
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "title": "R1 지붕 · LoD2",
+      "start": [
+        20.931309305951753,
+        22.938321841099047
+      ],
+      "end": [
+        25.035551025859778,
+        34.214633290529946
+      ],
+      "half_width": 0.25,
+      "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+      "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+      "selection": "unchanged original R1_low_roof section",
+      "name": "지붕",
+      "roi_half_width": 3.0,
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 2.0995181183372087,
+            "1": 0.13882712856208412,
+            "2": 1.889180401514541,
+            "3": 0.47601428029574744,
+            "4": 0.12628922395404163,
+            "5": 0.0,
+            "6": 0.0,
+            "9": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        },
+        "LoD2": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 3.4375,
+            "1": 1.5625,
+            "2": 1.0,
+            "3": 0.0,
+            "4": 0.0625,
+            "5": 0.0,
+            "6": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        }
+      }
+    },
+    {
+      "id": "B",
+      "name": "채광 지붕",
+      "start": [
+        -16.9751186714067,
+        48.36586373806775
+      ],
+      "end": [
+        -5.80181177589494,
+        43.988968375061084
+      ],
+      "half_width": 0.25,
+      "roi_half_width": 3.0,
+      "anchor_xyz": [
+        -11.38846522365082,
+        46.17741605656442,
+        -19.687588770740557
+      ],
+      "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+      "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+      "section_id": "R1_translucent",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 1.7437970036456987,
+            "1": 0.12601137792604794,
+            "2": 0.24951256987317633,
+            "3": 0.18922288906455134,
+            "4": 0.25627876537644173,
+            "5": 0.0,
+            "6": 0.06193047320264429,
+            "9": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        },
+        "LoD2": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 0.25,
+            "1": 2.0625,
+            "2": 0.0,
+            "3": 0.3125,
+            "4": 0.0,
+            "5": 0.5625,
+            "6": 0.3125
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        }
+      }
+    }
+  ],
+  "source_sections": [
+    {
+      "path": "/cfg/input_sections_v1.json",
+      "sha256": "df396e82314137a93b519e0b4bee407723736e0cdeab95e9e1c023a6590370e6"
+    },
+    {
+      "path": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+      "sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23"
+    }
+  ],
+  "shared_across_priors": true,
+  "camera": {
+    "azimuth_deg": -60,
+    "elevation_deg": 35,
+    "projection": "orthographic",
+    "source": "/repo/scripts/phd/main_rescore_v1/figures.py:frame",
+    "purpose": "display only; no TSDF integration"
+  },
+  "scientific_verdict": null
+}

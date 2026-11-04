@@ -1,0 +1,8 @@
+| key | baseline | completeness | baseline_minus_method_pp | threshold_pp | trigger | source | source_tag |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| B0_b10__ALS__GeoGS_30000 | 0.9891049161429998 | 0.7489983551937919 | 24.01065609492079 | 30 | False | /out/addendum3_stage2/scores/B0_b10__ALS__GeoGS_30000/values.json | [이 발주에서 냄] |
+| B0_b10__ALS__2DGS_30000 | 0.9891049161429998 | 0.5937398956883584 | 39.53650204546414 | 30 | True | /out/addendum3_stage2/scores/B0_b10__ALS__2DGS_30000/values.json | [이 발주에서 냄] |
+| B0_b10__ALS__CDGS_30000 | 0.9891049161429998 | 0.34834043271055626 | 64.07644834324435 | 30 | True | /out/addendum3_stage2/scores/B0_b10__ALS__CDGS_30000/values.json | [이 발주에서 냄] |
+| B0_b10__LoD2__GeoGS_30000 | 0.9977441729487484 | 0.9481159778212144 | 4.962819512753402 | 30 | False | /out/addendum3_stage2/scores/B0_b10__LoD2__GeoGS_30000/values.json | [이 발주에서 냄] |
+| B0_b10__LoD2__2DGS_30000 | 0.9977441729487484 | 0.8831849025235747 | 11.455927042517366 | 30 | False | /out/addendum3_stage2/scores/B0_b10__LoD2__2DGS_30000/values.json | [이 발주에서 냄] |
+| B0_b10__LoD2__CDGS_30000 | 0.9977441729487484 | 0.5315499549738125 | 46.61942179749359 | 30 | True | /out/addendum3_stage2/scores/B0_b10__LoD2__CDGS_30000/values.json | [이 발주에서 냄] |

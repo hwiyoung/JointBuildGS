@@ -1,0 +1,635 @@
+{
+  "task": "PHD-MAIN-RESCORE-v1",
+  "addendum": 3,
+  "stage": 2,
+  "sites": [
+    "B0_b10",
+    "R1rep_b10"
+  ],
+  "training": false,
+  "gpu": "No GPU launched; clarification pending for stage2 inference scope",
+  "voxel_m": 0.05,
+  "trunc_m": 0.25,
+  "cluster_to_keep": 50,
+  "virtual_views": 0,
+  "sampling_density_m2": 400,
+  "seed": 0,
+  "unchanged": [
+    "judgment",
+    "tau",
+    "cells_v2",
+    "columns"
+  ],
+  "figure61_revision": "four user changes; unchanged other labels/arrows; largest connected cell2 area; ALS skylight first, LoD2 fallback below 10 m2",
+  "sources": {
+    "/out/views/B0_b10.json": "49fd2f4d1eff907d4f898716e998b7f4174425c962020d3933775b2fcfbf5122",
+    "/out/scores/B0_b10__ALS__prior/values.json": "842bba811964433da1171765d676a5745fd4410bb79f81e64b43a5f1cb012877",
+    "/out/scores/B0_b10__ALS__mvs/values.json": "31845abbe63ce18dc579e8db52c734e4f00abe3752b6c54248c28a635f74e25a",
+    "/out/meshes/B0_b10__ALS__baseline_30000/train.json": "4a3f85d55eed880263647b61e0e4a88c3e2cc4be10547ed756d6ed8589403220",
+    "/out/meshes/B0_b10__ALS__GeoGS_30000/train.json": "cd35f5bff79bc92f8225e598d414d2f9f1f2acd4a63b671a2f040d5688e0f43a",
+    "/out/meshes/B0_b10__ALS__2DGS_30000/train.json": "18d3e3eadcd918f3430700d3eeea2fb0554f5d0267a031affb6364a54b70476e",
+    "/out/meshes/B0_b10__ALS__CDGS_30000/train.json": "6d101ef3581392e9ff28633d5bfbfa423cd7866a68a4e381130f852562918d45",
+    "/out/cells_v2/B0_b10__ALS.npz": "b7195cd1c1cb639167c780db9485ff0ea9c0c3e56fac104d012afb3ae686c511",
+    "/out/scores/B0_b10__LoD2__prior/values.json": "3a9dd4fefc5388fe4ce8ade48611bcb1df86f3a0199ee47146e60db0176b7d5c",
+    "/out/scores/B0_b10__LoD2__mvs/values.json": "a2b6a8851cf732c7668235f554f360893e1ae67b4d4edfbe98ae6708443ae553",
+    "/out/meshes/B0_b10__LoD2__baseline_30000/train.json": "0181fa04316d62cc701de752b5d9529266558b698b6f7be763a750aaf07c1d27",
+    "/out/meshes/B0_b10__LoD2__GeoGS_30000/train.json": "2e0d52f44c35f5b9f868127335c7ed21cfa3c64bb6374bde1c5cbe983e38b4c5",
+    "/out/meshes/B0_b10__LoD2__2DGS_30000/train.json": "7774c071c2afc315266017dced7081b561b857aaf6b9e107dcd03ce18b3be287",
+    "/out/meshes/B0_b10__LoD2__CDGS_30000/train.json": "236e58989f1a7eb569090057c29e38b0f87e4259896447345014c9a5d330c7fc",
+    "/out/cells_v2/B0_b10__LoD2.npz": "ea6754c6898a7a9d11a259aa1f6a6b64458820a44405c1423adb95091b6050bb",
+    "/out/views/R1rep_b10.json": "937c18e3acb94fb679dbf185e538800f6d59be1206578e8e413e3a9b48550d62",
+    "/out/scores/R1rep_b10__ALS__prior/values.json": "4626c2ff949e0e2e88cbbd678bd485b79b02c2b3dd006e501e1574580a560b81",
+    "/out/scores/R1rep_b10__ALS__mvs/values.json": "1c15a7507c111fa2a85a47ed410a49fc4f70ad4da3ae40bfff7ec09e3991934d",
+    "/out/meshes/R1rep_b10__ALS__baseline_30000/train.json": "8aec9aa384b29fa1667c4b651c46a8003702fde6e8990685ca4f56dc65ebbe4e",
+    "/out/meshes/R1rep_b10__ALS__GeoGS_30000/train.json": "712deaca0b4da9c625ddd446e34e2ac6ac2819725855ee687674911b610f33fa",
+    "/out/meshes/R1rep_b10__ALS__2DGS_30000/train.json": "56aeae36a35b9319796704ee87035a7c2d096df3c36514328b365d865fc8bd2d",
+    "/out/meshes/R1rep_b10__ALS__CDGS_30000/train.json": "64ecff0007d7eb6b90a4381f9a43a68b0510ec45345bb2fd260ca8bd8b38aa50",
+    "/out/cells_v2/R1rep_b10__ALS.npz": "5f4c508788dbfddfa08657930fe44b3135f49e764cf1d02162273c73dfe99b25",
+    "/out/scores/R1rep_b10__LoD2__prior/values.json": "7f9d8b734e3873d16f8b5471f0c92a10d6f1e2cce8c34405fb3328ea4f5647fb",
+    "/out/scores/R1rep_b10__LoD2__mvs/values.json": "6b4ca8fe6d64f680eda23b8ff2db13c28c7c141175994a743b43dc0c7b5dc6cb",
+    "/out/meshes/R1rep_b10__LoD2__baseline_30000/train.json": "ec6d0b2ac7e3dcb682a0eda981433eab7bad05fe4c583752fb25fc88caaabd67",
+    "/out/meshes/R1rep_b10__LoD2__GeoGS_30000/train.json": "f63621d2c767d18a28b9155a49a17c3fd86faffcc2866f5f83ca95ce5a8e93e4",
+    "/out/meshes/R1rep_b10__LoD2__2DGS_30000/train.json": "4b77fc788f7b824ad09152ba5b79f652309a67cec21e70f4518e3184d74472ce",
+    "/out/meshes/R1rep_b10__LoD2__CDGS_30000/train.json": "b9171addae4567d1e340434b0c46f65964190221cd2f99394785df0151a3e2cf",
+    "/out/cells_v2/R1rep_b10__LoD2.npz": "91a84c990d860e4266252ed58a315639106b123194a534aea02a05e7583cfa89"
+  },
+  "jobs": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "family": "baseline_30000",
+      "key": "B0_b10__ALS__baseline_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__ALS__baseline_30000/train.ply",
+      "raw_sha256": "059eeb1a349df8d8350e269fab1fe456763dff38be95cc6180de48b902af50a3"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "family": "GeoGS_30000",
+      "key": "B0_b10__ALS__GeoGS_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__ALS__GeoGS_30000/train.ply",
+      "raw_sha256": "6a786f3018b6e5ea48cc567a86e785281b0a7673f4b48d248ebadbe4574c5322"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "family": "2DGS_30000",
+      "key": "B0_b10__ALS__2DGS_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__ALS__2DGS_30000/train.ply",
+      "raw_sha256": "fa5cc2a5b5312849410b7ac0b61bea54de27f447d6757e50b13edcb4f2dfea08"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "family": "CDGS_30000",
+      "key": "B0_b10__ALS__CDGS_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__ALS__CDGS_30000/train.ply",
+      "raw_sha256": "0fec980a0df1dcd73ade2c87eb5eb5f321e92fce56a433860874652ea4c2a36a"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "family": "fusion",
+      "key": "B0_b10__ALS__fusion",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/B0_b10__ALS__fusion"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "family": "judgment_mesh",
+      "key": "B0_b10__ALS__judgment_mesh",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/B0_b10__ALS__judgment_mesh"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "family": "oracle",
+      "key": "B0_b10__ALS__oracle",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/B0_b10__ALS__oracle"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "family": "baseline_30000",
+      "key": "B0_b10__LoD2__baseline_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__LoD2__baseline_30000/train.ply",
+      "raw_sha256": "b1f82625662b36383418248d882f20b6991f1a25682bc5e4c120dec261010211"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "family": "GeoGS_30000",
+      "key": "B0_b10__LoD2__GeoGS_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__LoD2__GeoGS_30000/train.ply",
+      "raw_sha256": "02ab94ad7300fc6edd28389a943932df218e546382a2815124daff857d43cc51"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "family": "2DGS_30000",
+      "key": "B0_b10__LoD2__2DGS_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__LoD2__2DGS_30000/train.ply",
+      "raw_sha256": "fa5cc2a5b5312849410b7ac0b61bea54de27f447d6757e50b13edcb4f2dfea08"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "family": "CDGS_30000",
+      "key": "B0_b10__LoD2__CDGS_30000",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/B0_b10__LoD2__CDGS_30000/train.ply",
+      "raw_sha256": "119f8b2a9eea9ca416694c1727bb7510f996a73c8db6e865d6702dd9e4b70f74"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "family": "fusion",
+      "key": "B0_b10__LoD2__fusion",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/B0_b10__LoD2__fusion"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "family": "judgment_mesh",
+      "key": "B0_b10__LoD2__judgment_mesh",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/B0_b10__LoD2__judgment_mesh"
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "family": "oracle",
+      "key": "B0_b10__LoD2__oracle",
+      "views": 243,
+      "box": [
+        [
+          70.53286362167972,
+          -26.512808963511258,
+          -48.94688415527344
+        ],
+        [
+          153.29047575724204,
+          80.0919350227146,
+          -3.3352842330932617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/B0_b10__LoD2__oracle"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "family": "baseline_30000",
+      "key": "R1rep_b10__ALS__baseline_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__ALS__baseline_30000/train.ply",
+      "raw_sha256": "d937b2f1e2354aef34771812baaef1dbab9961298db358fddfe35b96a4bb0812"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "family": "GeoGS_30000",
+      "key": "R1rep_b10__ALS__GeoGS_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__ALS__GeoGS_30000/train.ply",
+      "raw_sha256": "ec6e6bee7f90226952d4e1aa7c1d3c50f6bfaeb29fb40e69c00056bb4690158c"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "family": "2DGS_30000",
+      "key": "R1rep_b10__ALS__2DGS_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__ALS__2DGS_30000/train.ply",
+      "raw_sha256": "0635f9516313139f3788e2f96097b1db12ed2baa526fc600d58b1c40e1417936"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "family": "CDGS_30000",
+      "key": "R1rep_b10__ALS__CDGS_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__ALS__CDGS_30000/train.ply",
+      "raw_sha256": "daa8dbd7a5f4eeccfa898d8645ba2af8e8d68f44208fba584a7a4bd9d46e1ac1"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "family": "fusion",
+      "key": "R1rep_b10__ALS__fusion",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/R1rep_b10__ALS__fusion"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "family": "judgment_mesh",
+      "key": "R1rep_b10__ALS__judgment_mesh",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/R1rep_b10__ALS__judgment_mesh"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "family": "oracle",
+      "key": "R1rep_b10__ALS__oracle",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/R1rep_b10__ALS__oracle"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "family": "baseline_30000",
+      "key": "R1rep_b10__LoD2__baseline_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__LoD2__baseline_30000/train.ply",
+      "raw_sha256": "bfb1e405fcdd974f5b61a5d819f00cff0a5f1df4b5c51b86103b9e6433706550"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "family": "GeoGS_30000",
+      "key": "R1rep_b10__LoD2__GeoGS_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__LoD2__GeoGS_30000/train.ply",
+      "raw_sha256": "dedc4c23903a1811169e10d8549a9c6a900c1e1584a70f25f37666d21a10d166"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "family": "2DGS_30000",
+      "key": "R1rep_b10__LoD2__2DGS_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__LoD2__2DGS_30000/train.ply",
+      "raw_sha256": "0635f9516313139f3788e2f96097b1db12ed2baa526fc600d58b1c40e1417936"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "family": "CDGS_30000",
+      "key": "R1rep_b10__LoD2__CDGS_30000",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "raw_train_mesh": "/out/meshes/R1rep_b10__LoD2__CDGS_30000/train.ply",
+      "raw_sha256": "358306bcaf27ccbea21b8489b629aa824caa67805cd298c1e716747e8d311523"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "family": "fusion",
+      "key": "R1rep_b10__LoD2__fusion",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/R1rep_b10__LoD2__fusion"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "family": "judgment_mesh",
+      "key": "R1rep_b10__LoD2__judgment_mesh",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/R1rep_b10__LoD2__judgment_mesh"
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "family": "oracle",
+      "key": "R1rep_b10__LoD2__oracle",
+      "views": 333,
+      "box": [
+        [
+          -39.47093121069526,
+          -21.67549428815511,
+          -49.59596252441406
+        ],
+        [
+          55.15583332094396,
+          75.87986538303929,
+          -3.308164596557617
+        ]
+      ],
+      "cache": "/out/addendum3_stage2/renders/R1rep_b10__LoD2__oracle"
+    }
+  ],
+  "scientific_verdict": null
+}

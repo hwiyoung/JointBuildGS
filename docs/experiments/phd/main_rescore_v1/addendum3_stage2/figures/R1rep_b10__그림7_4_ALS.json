@@ -1,0 +1,75 @@
+{
+  "title": "두 자료가 각각 틀린 곳의 완전성",
+  "method": "R1rep_b10__ALS__FINALTRAIN_30000",
+  "rows": [
+    {
+      "key": "R1rep_b10__ALS__prior",
+      "cell1": 66.80203045685279,
+      "cell2": 93.86587183308495
+    },
+    {
+      "key": "R1rep_b10__ALS__mvs",
+      "cell1": 62.03045685279188,
+      "cell2": 44.48882265275708
+    },
+    {
+      "key": "R1rep_b10__ALS__fusion",
+      "cell1": 49.9492385786802,
+      "cell2": 56.333830104321905
+    },
+    {
+      "key": "R1rep_b10__ALS__baseline_30000",
+      "cell1": 73.40101522842639,
+      "cell2": 46.640834575260804
+    },
+    {
+      "key": "R1rep_b10__ALS__GeoGS_30000",
+      "cell1": 50.964467005076145,
+      "cell2": 28.48882265275708
+    },
+    {
+      "key": "R1rep_b10__ALS__2DGS_30000",
+      "cell1": 58.680203045685275,
+      "cell2": 26.40834575260805
+    },
+    {
+      "key": "R1rep_b10__ALS__CDGS_30000",
+      "cell1": 2.33502538071066,
+      "cell2": 1.961251862891207
+    },
+    {
+      "key": "R1rep_b10__ALS__judgment_mesh",
+      "cell1": 50.0507614213198,
+      "cell2": 77.91952309985098
+    },
+    {
+      "key": "R1rep_b10__ALS__oracle",
+      "cell1": 55.93908629441624,
+      "cell2": 79.42771982116244
+    },
+    {
+      "key": "R1rep_b10__ALS__FINALTRAIN_30000",
+      "cell1": 68.62944162436548,
+      "cell2": 49.81818181818182
+    }
+  ],
+  "provisional": false,
+  "site": "R1rep_b10",
+  "mesh_rule": "333 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "8d59159329c44bf5db3f74e604888ad3b1f7a737d8e588369879ccff76c48fa2",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "places_config_sha256": "ef2d4899785be2c95bc9f54fa83647f8d8e5cf95f7a09348639637abc8dc7824",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

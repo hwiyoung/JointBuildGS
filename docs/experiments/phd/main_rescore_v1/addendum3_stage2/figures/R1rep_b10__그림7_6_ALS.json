@@ -1,0 +1,104 @@
+{
+  "title": "판단 빼기",
+  "method": "R1rep_b10__ALS__FINALTRAIN_30000",
+  "place": {
+    "id": "B",
+    "name": "채광 지붕",
+    "start": [
+      -16.9751186714067,
+      48.36586373806775
+    ],
+    "end": [
+      -5.80181177589494,
+      43.988968375061084
+    ],
+    "half_width": 0.25,
+    "roi_half_width": 3.0,
+    "anchor_xyz": [
+      -11.38846522365082,
+      46.17741605656442,
+      -19.687588770740557
+    ],
+    "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+    "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+    "section_id": "R1_translucent",
+    "labels_by_prior": {
+      "ALS": {
+        "cell": 0,
+        "cell_area_m2": {
+          "0": 1.7437970036456987,
+          "1": 0.12601137792604794,
+          "2": 0.24951256987317633,
+          "3": 0.18922288906455134,
+          "4": 0.25627876537644173,
+          "5": 0.0,
+          "6": 0.06193047320264429,
+          "9": 0.0
+        },
+        "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+      },
+      "LoD2": {
+        "cell": 1,
+        "cell_area_m2": {
+          "0": 0.25,
+          "1": 2.0625,
+          "2": 0.0,
+          "3": 0.3125,
+          "4": 0.0,
+          "5": 0.5625,
+          "6": 0.3125
+        },
+        "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+      }
+    }
+  },
+  "rows": [
+    {
+      "family": "baseline_30000",
+      "cell": {
+        "cell": 0,
+        "patches": 19798,
+        "area_m2": 1311.2282360273693,
+        "n_gt": 124473,
+        "n_result": 586220,
+        "completeness": 0.974299647313072,
+        "accuracy": 0.8727747262120024,
+        "gt_mean_m": 0.055538265145517504,
+        "result_mean_m": 0.09736886192276487
+      }
+    },
+    {
+      "family": "method",
+      "cell": {
+        "cell": 0,
+        "patches": 19798,
+        "area_m2": 1311.2282360273693,
+        "n_gt": 124473,
+        "n_result": 595355,
+        "completeness": 0.9850248648301237,
+        "accuracy": 0.8605353108649462,
+        "gt_mean_m": 0.050660680062800126,
+        "result_mean_m": 0.1280246740645181
+      }
+    }
+  ],
+  "provisional": false,
+  "site": "R1rep_b10",
+  "mesh_rule": "333 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "8d59159329c44bf5db3f74e604888ad3b1f7a737d8e588369879ccff76c48fa2",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "places_config_sha256": "ef2d4899785be2c95bc9f54fa83647f8d8e5cf95f7a09348639637abc8dc7824",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

@@ -1,0 +1,204 @@
+{
+  "title": "장면 전체의 완전성과 정확성",
+  "method": "B0_b10__ALS__FINALTRAIN_30000",
+  "provisional": false,
+  "views": {
+    "basis": [
+      [
+        0.8660254037844386,
+        0.5000000000000001,
+        -0.0
+      ],
+      [
+        -0.2867882181755231,
+        0.496731764892154,
+        0.8191520442889918
+      ],
+      [
+        -0.409576022144496,
+        0.7094064799162224,
+        -0.573576436351046
+      ]
+    ],
+    "center": [
+      111.91166968946088,
+      26.789563029601666,
+      -26.14108419418335
+    ],
+    "origin": [
+      152.8692719039105,
+      -44.151084962020576,
+      31.21655944092126
+    ],
+    "width": 165.8121803640618,
+    "height": 119.75324137404462,
+    "W": 900,
+    "H": 650
+  },
+  "display_crop_px": [
+    204,
+    696,
+    173,
+    532
+  ],
+  "places": [
+    {
+      "id": "A",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "title": "B0 모임지붕 끝 · LoD2",
+      "start": [
+        102.00846099346342,
+        -6.266888043124205
+      ],
+      "end": [
+        108.23322760199058,
+        10.83551765517933
+      ],
+      "half_width": 0.25,
+      "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+      "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+      "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+      "cluster": {
+        "patches": 744,
+        "area_m2": 46.5,
+        "u_range": [
+          32.0,
+          38.2
+        ],
+        "v_range": [
+          92.1,
+          103.9
+        ],
+        "faces": {
+          "11": {
+            "patches": 370,
+            "building": "DEBY_LOD2_4959323",
+            "type": "roof"
+          },
+          "8": {
+            "patches": 189,
+            "building": "DEBY_LOD2_4959323",
+            "type": "roof"
+          },
+          "10": {
+            "patches": 185,
+            "building": "DEBY_LOD2_4959323",
+            "type": "roof"
+          }
+        },
+        "prior_above": 744,
+        "prior_below": 0,
+        "ratio_median": 6.1
+      },
+      "name": "모임지붕 끝",
+      "roi_half_width": 3.0,
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 9.11635480450412,
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0,
+            "6": 0.0,
+            "9": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        },
+        "LoD2": {
+          "cell": 1,
+          "cell_area_m2": {
+            "0": 4.6875,
+            "1": 5.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0,
+            "6": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        }
+      }
+    },
+    {
+      "id": "B",
+      "name": "정면과 처마",
+      "start": [
+        127.35065352367698,
+        48.17845856328195
+      ],
+      "end": [
+        138.51362368433703,
+        43.77526685814196
+      ],
+      "half_width": 0.25,
+      "roi_half_width": 3.0,
+      "anchor_xyz": [
+        132.932138604007,
+        45.976862710711956,
+        -39.753999999999905
+      ],
+      "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+      "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+      "section_id": "B0_wall_eaves",
+      "labels_by_prior": {
+        "ALS": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 2.9163682337659838,
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0,
+            "6": 0.0,
+            "9": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        },
+        "LoD2": {
+          "cell": 0,
+          "cell_area_m2": {
+            "0": 16.3125,
+            "1": 0.4375,
+            "2": 0.625,
+            "3": 0.0,
+            "4": 0.125,
+            "5": 0.0,
+            "6": 0.0
+          },
+          "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+        }
+      }
+    }
+  ],
+  "table": "B0_b10_table3",
+  "source_scores": [
+    "B0_b10__ALS__prior",
+    "B0_b10__ALS__mvs",
+    "B0_b10__ALS__fusion",
+    "B0_b10__ALS__FINALTRAIN_30000"
+  ],
+  "surface_color_rule": "actual orthographic triangle hits; same reference normal distance, lateral eligibility, new tau/columns as scorer",
+  "site": "B0_b10",
+  "mesh_rule": "243 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "8d59159329c44bf5db3f74e604888ad3b1f7a737d8e588369879ccff76c48fa2",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "places_config_sha256": "08c00ca26c48a496abc43013e604b69ac62f887887b1c67eee8159086c0c430d",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

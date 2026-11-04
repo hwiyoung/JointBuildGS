@@ -1,0 +1,29 @@
+{
+  "title": "정밀도 지도와 오차 지도",
+  "method": "B0_b10__ALS__FINALTRAIN_30000",
+  "range_m": [
+    0,
+    8.086790084838867
+  ],
+  "sigma_source": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B0_b10__ALS.npz:sigma",
+  "distance_source": "/out/addendum3_stage2/scores/B0_b10__ALS__FINALTRAIN_30000/points.npz:row_distance_m",
+  "provisional": false,
+  "site": "B0_b10",
+  "mesh_rule": "243 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "8d59159329c44bf5db3f74e604888ad3b1f7a737d8e588369879ccff76c48fa2",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "places_config_sha256": "08c00ca26c48a496abc43013e604b69ac62f887887b1c67eee8159086c0c430d",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

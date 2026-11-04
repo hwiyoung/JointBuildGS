@@ -1,0 +1,60 @@
+{
+  "rows": [
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "key": "R1rep_b10__ALS__2DGS_30000",
+      "training_mesh_source": "/out/addendum3_stage2/scores/R1rep_b10__ALS__2DGS_30000/values.json",
+      "training_mesh_sha256": "78a0799c6ae576b807714ae83317dbcf262cd0855ce42534977d13c02a167eae",
+      "training_scene": {
+        "n_gt": 2667737,
+        "n_result": 2983087,
+        "completeness": 0.45870188852949145,
+        "accuracy": 0.34160653041631034,
+        "gt_mean_m": 0.278721193070483,
+        "result_mean_m": 0.42624946056863766
+      },
+      "final_mesh_source": null,
+      "final_scene": null,
+      "comparison_note": "덧붙임 3에서 학습 시점 메시가 최종 제출 메시이므로 두 값 동일; 옛 값은 있으면 출처만 보존",
+      "submitted_final_scene": {
+        "n_gt": 2667737,
+        "n_result": 2983087,
+        "completeness": 0.45870188852949145,
+        "accuracy": 0.34160653041631034,
+        "gt_mean_m": 0.278721193070483,
+        "result_mean_m": 0.42624946056863766
+      },
+      "scientific_verdict": null
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "key": "R1rep_b10__ALS__CDGS_30000",
+      "training_mesh_source": "/out/addendum3_stage2/scores/R1rep_b10__ALS__CDGS_30000/values.json",
+      "training_mesh_sha256": "2d6c9b632a5429b852ba9b0440752b967bb36fef3fa627493a52ed61733fe622",
+      "training_scene": {
+        "n_gt": 2667737,
+        "n_result": 389800,
+        "completeness": 0.0663843549795201,
+        "accuracy": 0.2525782452539764,
+        "gt_mean_m": 3.9947329242431824,
+        "result_mean_m": 1.1877682027513854
+      },
+      "final_mesh_source": null,
+      "final_scene": null,
+      "comparison_note": "덧붙임 3에서 학습 시점 메시가 최종 제출 메시이므로 두 값 동일; 옛 값은 있으면 출처만 보존",
+      "submitted_final_scene": {
+        "n_gt": 2667737,
+        "n_result": 389800,
+        "completeness": 0.0663843549795201,
+        "accuracy": 0.2525782452539764,
+        "gt_mean_m": 3.9947329242431824,
+        "result_mean_m": 1.1877682027513854
+      },
+      "scientific_verdict": null
+    }
+  ],
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}

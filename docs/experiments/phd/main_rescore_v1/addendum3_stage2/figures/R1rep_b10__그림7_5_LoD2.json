@@ -1,0 +1,292 @@
+{
+  "title": "대표 자리의 확대 메시와 단면",
+  "method": "R1rep_b10__LoD2__FINALTRAIN_30000",
+  "provisional": false,
+  "places": [
+    {
+      "place": {
+        "id": "A",
+        "site": "R1rep_b10",
+        "prior": "LoD2",
+        "title": "R1 지붕 · LoD2",
+        "start": [
+          20.931309305951753,
+          22.938321841099047
+        ],
+        "end": [
+          25.035551025859778,
+          34.214633290529946
+        ],
+        "half_width": 0.25,
+        "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+        "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+        "selection": "unchanged original R1_low_roof section",
+        "name": "지붕",
+        "roi_half_width": 3.0,
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 0,
+            "cell_area_m2": {
+              "0": 2.0995181183372087,
+              "1": 0.13882712856208412,
+              "2": 1.889180401514541,
+              "3": 0.47601428029574744,
+              "4": 0.12628922395404163,
+              "5": 0.0,
+              "6": 0.0,
+              "9": 0.0
+            },
+            "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+          },
+          "LoD2": {
+            "cell": 0,
+            "cell_area_m2": {
+              "0": 3.4375,
+              "1": 1.5625,
+              "2": 1.0,
+              "3": 0.0,
+              "4": 0.0625,
+              "5": 0.0,
+              "6": 0.0
+            },
+            "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+          }
+        }
+      },
+      "metrics_entire_cell": [
+        {
+          "family": "prior",
+          "cell": 0,
+          "metric": "completeness",
+          "value": 0.9934387158834762,
+          "n_gt": 139302
+        },
+        {
+          "family": "mvs",
+          "cell": 0,
+          "metric": "completeness",
+          "value": 1.0,
+          "n_gt": 139302
+        },
+        {
+          "family": "fusion",
+          "cell": 0,
+          "metric": "completeness",
+          "value": 0.9880331940675654,
+          "n_gt": 139302
+        },
+        {
+          "family": "method",
+          "cell": 0,
+          "metric": "completeness",
+          "value": 0.9903518973166214,
+          "n_gt": 139302
+        }
+      ]
+    },
+    {
+      "place": {
+        "id": "B",
+        "name": "채광 지붕",
+        "start": [
+          -16.9751186714067,
+          48.36586373806775
+        ],
+        "end": [
+          -5.80181177589494,
+          43.988968375061084
+        ],
+        "half_width": 0.25,
+        "roi_half_width": 3.0,
+        "anchor_xyz": [
+          -11.38846522365082,
+          46.17741605656442,
+          -19.687588770740557
+        ],
+        "source": "/repo/configs/phd/main_stage1_v1/sections_v1.json",
+        "source_sha256": "310ac17de171f15802273b0a109dc19d428e3181b19ed6110a1a07b5d9ebfa23",
+        "section_id": "R1_translucent",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 0,
+            "cell_area_m2": {
+              "0": 1.7437970036456987,
+              "1": 0.12601137792604794,
+              "2": 0.24951256987317633,
+              "3": 0.18922288906455134,
+              "4": 0.25627876537644173,
+              "5": 0.0,
+              "6": 0.06193047320264429,
+              "9": 0.0
+            },
+            "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+          },
+          "LoD2": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 0.25,
+              "1": 2.0625,
+              "2": 0.0,
+              "3": 0.3125,
+              "4": 0.0,
+              "5": 0.5625,
+              "6": 0.3125
+            },
+            "label_rule": "dominant evaluable correct cell by area in the inherited section band; roof only except B0 facade/eaves; values use that cell over the whole region"
+          }
+        }
+      },
+      "metrics_entire_cell": [
+        {
+          "family": "prior",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.418703590323239,
+          "n_gt": 63699
+        },
+        {
+          "family": "mvs",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.996860233284667,
+          "n_gt": 63699
+        },
+        {
+          "family": "fusion",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.6297744077615033,
+          "n_gt": 63699
+        },
+        {
+          "family": "method",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.9781472236612819,
+          "n_gt": 63699
+        }
+      ]
+    }
+  ],
+  "views": {
+    "all": {
+      "basis": [
+        [
+          0.8660254037844386,
+          0.5000000000000001,
+          -0.0
+        ],
+        [
+          -0.2867882181755231,
+          0.496731764892154,
+          0.8191520442889918
+        ],
+        [
+          -0.409576022144496,
+          0.7094064799162224,
+          -0.573576436351046
+        ]
+      ],
+      "center": [
+        7.84245105512435,
+        27.10218554744209,
+        -26.45206356048584
+      ],
+      "origin": [
+        48.80005326957395,
+        -43.83846244418015,
+        30.90558007461877
+      ],
+      "width": 165.03106575856356,
+      "height": 119.18910304785145,
+      "W": 900,
+      "H": 650
+    },
+    "A": {
+      "basis": [
+        [
+          0.8660254037844386,
+          0.5000000000000001,
+          -0.0
+        ],
+        [
+          -0.2867882181755231,
+          0.496731764892154,
+          0.8191520442889918
+        ],
+        [
+          -0.409576022144496,
+          0.7094064799162224,
+          -0.573576436351046
+        ]
+      ],
+      "center": [
+        22.983430165905766,
+        28.576477565814496,
+        -29.26263165473938
+      ],
+      "origin": [
+        63.94103238035537,
+        -42.36417042580774,
+        28.09501198036523
+      ],
+      "width": 34.88783052586938,
+      "height": 26.836792712207217,
+      "W": 650,
+      "H": 500
+    },
+    "B": {
+      "basis": [
+        [
+          0.8660254037844386,
+          0.5000000000000001,
+          -0.0
+        ],
+        [
+          -0.2867882181755231,
+          0.496731764892154,
+          0.8191520442889918
+        ],
+        [
+          -0.409576022144496,
+          0.7094064799162224,
+          -0.573576436351046
+        ]
+      ],
+      "center": [
+        -11.38846522365082,
+        46.17741605656442,
+        -25.005407333374023
+      ],
+      "origin": [
+        29.569136990798782,
+        -24.763231935057824,
+        32.352236301730585
+      ],
+      "width": 25.94667983499896,
+      "height": 19.958984488460736,
+      "W": 650,
+      "H": 500
+    }
+  },
+  "table": "R1rep_b10_table4",
+  "note": "Values beneath images are the entire correct-cell region; blue overlays are uncovered GT. Sections are exact triangle-plane intersections.",
+  "site": "R1rep_b10",
+  "mesh_rule": "333 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "8d59159329c44bf5db3f74e604888ad3b1f7a737d8e588369879ccff76c48fa2",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "places_config_sha256": "ef2d4899785be2c95bc9f54fa83647f8d8e5cf95f7a09348639637abc8dc7824",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}
