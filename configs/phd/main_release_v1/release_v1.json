@@ -1,0 +1,384 @@
+{
+  "task_id": "PHD-MAIN-RELEASE-v1",
+  "order_version": 2,
+  "scientific_verdict": null,
+  "created_at": "2026-11-04T21:32:27.594562+09:00",
+  "source_commit": "08344bd5bfb1d252aef36104abf6b5067b09863f",
+  "order_sha256": "e3cd0a24da4e7716717f14e7c17a4b3eced1bcef68961539375d5af4a6dba4b1",
+  "parent_config": "configs/phd/main_finaltrain_v1/finaltrain_v1.json",
+  "parent_config_sha256": "1fb1ee87c7fd5c88e1fc0718f2db64b4ef75864ccffbbb3708d48c95946478c8",
+  "parent_fork": "src/phd/forks/GeoGS-conf-guided-v1-r23",
+  "fork": "src/phd/forks/GeoGS-conf-guided-v1-r24",
+  "V0": "FINALTRAIN r23 30000",
+  "sites": [
+    "B173nb_b10",
+    "B0_b10",
+    "R1rep_b10"
+  ],
+  "priors": [
+    "ALS",
+    "LoD2"
+  ],
+  "seed": 0,
+  "renderer": {
+    "path": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/rfix_speed/builds/target/extension/jbgs_rfix_speed_target.so",
+    "sha256": "1426e3aae8b24c490821a87e731aee9e834ee3aabb9d3caec0e04cb8365e2245",
+    "validation_sha256": "9a5a37c41e9d7b2886f4a4c9f3d3dc3f39460c28cfbf64aaedfbbf306419a105",
+    "binning_guard_fraction": 0.5
+  },
+  "docker_images": {
+    "jointbuildgs:dev": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "jointbuildgs:geogs-conf-guided-v1": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be"
+  },
+  "inherited": {
+    "frozen_judgment": {
+      "calibration_sha256": "cd04d0f4a4c3223d541023839de4290b392303a414b661abfddeae40541fd2f1",
+      "sigma_W_m": 0.021387115582349275,
+      "r_rows": [
+        {
+          "site": "B0_b10",
+          "prior": "LoD2",
+          "kind": 1,
+          "agreement_count": 25271,
+          "agreement_area_m2": 1579.4375,
+          "r_m": 0.077527286395522,
+          "source": "/out/geometry_raw/B0_b10__LoD2.npz"
+        },
+        {
+          "site": "B0_b10",
+          "prior": "LoD2",
+          "kind": 2,
+          "agreement_count": 38828,
+          "agreement_area_m2": 2426.75,
+          "r_m": -0.19864878139359315,
+          "source": "/out/geometry_raw/B0_b10__LoD2.npz"
+        },
+        {
+          "site": "B0_b10",
+          "prior": "ALS",
+          "kind": 1,
+          "agreement_count": 21320,
+          "agreement_area_m2": 1460.7734862878015,
+          "r_m": 0.010643617195992527,
+          "source": "/out/geometry_raw/B0_b10__ALS.npz"
+        },
+        {
+          "site": "B173nb_b10",
+          "prior": "LoD2",
+          "kind": 1,
+          "agreement_count": 19433,
+          "agreement_area_m2": 1214.5625,
+          "r_m": -0.01654412880931525,
+          "source": "/out/geometry_raw/B173nb_b10__LoD2.npz"
+        },
+        {
+          "site": "B173nb_b10",
+          "prior": "LoD2",
+          "kind": 2,
+          "agreement_count": 38778,
+          "agreement_area_m2": 2423.625,
+          "r_m": -0.01849931458188869,
+          "source": "/out/geometry_raw/B173nb_b10__LoD2.npz"
+        },
+        {
+          "site": "B173nb_b10",
+          "prior": "ALS",
+          "kind": 1,
+          "agreement_count": 7094,
+          "agreement_area_m2": 477.80858868505794,
+          "r_m": 0.054370318604769194,
+          "source": "/out/geometry_raw/B173nb_b10__ALS.npz"
+        },
+        {
+          "site": "R1rep_b10",
+          "prior": "LoD2",
+          "kind": 1,
+          "agreement_count": 12650,
+          "agreement_area_m2": 790.625,
+          "r_m": 0.0396380433810285,
+          "source": "/out/geometry_raw/R1rep_b10__LoD2.npz"
+        },
+        {
+          "site": "R1rep_b10",
+          "prior": "LoD2",
+          "kind": 2,
+          "agreement_count": 11235,
+          "agreement_area_m2": 702.1875,
+          "r_m": -0.01646185422335384,
+          "source": "/out/geometry_raw/R1rep_b10__LoD2.npz"
+        },
+        {
+          "site": "R1rep_b10",
+          "prior": "ALS",
+          "kind": 1,
+          "agreement_count": 19550,
+          "agreement_area_m2": 1298.2098735294148,
+          "r_m": 0.0130548522311013,
+          "source": "/out/geometry_raw/R1rep_b10__ALS.npz"
+        }
+      ],
+      "photo_thresholds": [
+        {
+          "site": "B173nb_b10",
+          "prior": "LoD2",
+          "kind": 1,
+          "t": 0.13405972056655352,
+          "t10": 0.18077662311870454,
+          "pool_count": 4776,
+          "sample_count": 4776,
+          "finite_score_count": 4776,
+          "sample_area_m2": 1157.25,
+          "finite_score_area_m2": 1157.25,
+          "source": "photo_points/B173nb_b10__LoD2.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "B173nb_b10",
+          "prior": "LoD2",
+          "kind": 2,
+          "t": -0.04532413847787161,
+          "t10": -0.03276340350729909,
+          "pool_count": 8831,
+          "sample_count": 5000,
+          "finite_score_count": 2227,
+          "sample_area_m2": 1240.0,
+          "finite_score_area_m2": 552.25,
+          "source": "photo_points/B173nb_b10__LoD2.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "B173nb_b10",
+          "prior": "ALS",
+          "kind": 1,
+          "t": 0.3757212232729167,
+          "t10": 0.4481071967735681,
+          "pool_count": 3572,
+          "sample_count": 3572,
+          "finite_score_count": 3435,
+          "sample_area_m2": 824.9871137526243,
+          "finite_score_area_m2": 805.8357893822135,
+          "source": "photo_points/B173nb_b10__ALS.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "B0_b10",
+          "prior": "LoD2",
+          "kind": 1,
+          "t": 0.0457919773315318,
+          "t10": 0.12829183934525126,
+          "pool_count": 6512,
+          "sample_count": 5000,
+          "finite_score_count": 4998,
+          "sample_area_m2": 1218.9375,
+          "finite_score_area_m2": 1218.8125,
+          "source": "photo_points/B0_b10__LoD2.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "B0_b10",
+          "prior": "LoD2",
+          "kind": 2,
+          "t": 0.002707979635261755,
+          "t10": 0.03384877172390702,
+          "pool_count": 10614,
+          "sample_count": 5000,
+          "finite_score_count": 4165,
+          "sample_area_m2": 1225.75,
+          "finite_score_area_m2": 1026.375,
+          "source": "photo_points/B0_b10__LoD2.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "B0_b10",
+          "prior": "ALS",
+          "kind": 1,
+          "t": 0.2330323686975117,
+          "t10": 0.28981166692870475,
+          "pool_count": 5765,
+          "sample_count": 5000,
+          "finite_score_count": 4952,
+          "sample_area_m2": 1308.090278676529,
+          "finite_score_area_m2": 1300.9084684357892,
+          "source": "photo_points/B0_b10__ALS.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "R1rep_b10",
+          "prior": "LoD2",
+          "kind": 1,
+          "t": -0.007758972703794735,
+          "t10": 0.028697421817689712,
+          "pool_count": 3351,
+          "sample_count": 3351,
+          "finite_score_count": 3351,
+          "sample_area_m2": 806.875,
+          "finite_score_area_m2": 806.875,
+          "source": "photo_points/R1rep_b10__LoD2.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "R1rep_b10",
+          "prior": "LoD2",
+          "kind": 2,
+          "t": -0.04093611400771974,
+          "t10": -0.026964303051882372,
+          "pool_count": 2287,
+          "sample_count": 2287,
+          "finite_score_count": 2272,
+          "sample_area_m2": 556.625,
+          "finite_score_area_m2": 554.1875,
+          "source": "photo_points/R1rep_b10__LoD2.npz",
+          "source_tag": "[이 발주에서 냄]"
+        },
+        {
+          "site": "R1rep_b10",
+          "prior": "ALS",
+          "kind": 1,
+          "t": 0.20698522862460156,
+          "t10": 0.28112312710415416,
+          "pool_count": 5370,
+          "sample_count": 5000,
+          "finite_score_count": 4710,
+          "sample_area_m2": 1199.397553334541,
+          "finite_score_area_m2": 1161.932782799165,
+          "source": "photo_points/R1rep_b10__ALS.npz",
+          "source_tag": "[이 발주에서 냄]"
+        }
+      ],
+      "recalibrate": false,
+      "L": "1.96*(sqrt(u_M**2+sigma_P**2+sigma_W**2)+abs(r))",
+      "wall_half_length_m": 5
+    },
+    "targets": {
+      "agreement": "(h_P*u_M**2+h_M*sigma_P**2)/(u_M**2+sigma_P**2)",
+      "agreement_sigma": "sqrt(sigma_P**2*u_M**2/(sigma_P**2+u_M**2))",
+      "preserve_missing": "h_P, sigma_P",
+      "correct": "h_M, u_M",
+      "free_space": "no target",
+      "missing_u": "photo support->preserve; refute->correct; unknown->ALS preserve / LoD2 correct; correct sigma=scene correction u_M median",
+      "sigma_W_used": false,
+      "r_added": false,
+      "outside_timeout_seconds": 3600,
+      "outside_timeout_behavior": "unbound background, MVS depth weight 1",
+      "GT_used": false
+    },
+    "weights": {
+      "power": 1,
+      "sigma_ref": "sum(patch area)/sum(patch area/target sigma)",
+      "scene_scope": "site x prior",
+      "clip": [
+        0.1,
+        10
+      ],
+      "background": 1,
+      "exclude_background_from_sigma_ref": true
+    },
+    "unchanged": {
+      "depth_loss": "absolute",
+      "depth_lambda": 0.05,
+      "reattach_tangent_m": 0.5,
+      "reattach_normal_excess_m": 0.5,
+      "band_sigma": 1.96,
+      "background_bound": false,
+      "photo_loss": true,
+      "two_dgs_terms": true,
+      "optimizer": true,
+      "density_schedule": true,
+      "opacity_reset": true,
+      "initialization": "r8 exact source and exclusion rule"
+    },
+    "health": {
+      "iteration": 7000,
+      "loss_finite": true,
+      "prior_descendant_opacity_median_min": 0.05,
+      "count_reference": 6000,
+      "count_growth_max": 3,
+      "count_check_until": 15000,
+      "other_metrics_record_only": true,
+      "independent_arm_stop": true
+    },
+    "retry": {
+      "execution_or_oom": 1,
+      "same_config": true,
+      "health": 0
+    }
+  },
+  "stage0": {
+    "tau_multipliers": [
+      0.5,
+      0.75,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "cell_ids": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "small_n": 1000,
+    "methods": [
+      "prior",
+      "mvs",
+      "fusion",
+      "baseline_30000",
+      "GeoGS_30000",
+      "2DGS_30000",
+      "CDGS_30000",
+      "judgment_mesh",
+      "FINALTRAIN_30000"
+    ],
+    "best_excludes": [
+      "judgment_mesh"
+    ],
+    "match_tolerance_pp": 0.1,
+    "scorer": "unchanged RESCORE score_mesh.py"
+  },
+  "stage1": {
+    "sites": [
+      "R1rep_b10"
+    ],
+    "checkpoint": 30000,
+    "simulations": [
+      "delete_released",
+      "pull_released",
+      "delete_background"
+    ],
+    "lineage": "inherited max alpha*T, modal depth-matched 0.25m train-view attribution",
+    "GT_selects_interventions": false
+  },
+  "stage2": {
+    "iterations": 30000,
+    "stop_after": 15000,
+    "rules": [
+      "release"
+    ],
+    "release_log": "on",
+    "gpus": {
+      "0": "ALS",
+      "1": "LoD2"
+    }
+  },
+  "stage3": {
+    "iterations": 30000,
+    "rules": [
+      "pull",
+      "delete",
+      "mix"
+    ],
+    "gate": "order_v2 section 5; original cells",
+    "selection": "order_v2 section 6.5; original cells n>=1000",
+    "initially_authorized": false
+  },
+  "output_paths": [
+    "configs/phd/main_release_v1",
+    "scripts/phd/main_release_v1",
+    "docs/experiments/phd/main_release_v1",
+    "src/phd/forks/GeoGS-conf-guided-v1-r24",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_release_v1/PHD-MAIN-RELEASE-v1"
+  ],
+  "cpu_nice": 19,
+  "cpu_memory_gib": 32,
+  "crs": "EPSG:25832"
+}

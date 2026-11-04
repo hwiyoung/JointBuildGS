@@ -1,0 +1,67 @@
+"""r23 opt-in FINALTRAIN inputs and bounded, lightweight operational records.
+
+Optimization, loss, seeding, clone/split/prune and reattachment inherit r8.
+The target/weight arrays are prepared and locked before optimization.
+"""
+import json,time
+from pathlib import Path
+import numpy as np
+import torch
+from jbgs_target import write
+from jbgs_target_r8 import TargetR8
+
+class FinalTrain(TargetR8):
+    def __init__(self,args,scene,g):
+        self.started=time.monotonic()
+        index=json.loads((Path(args.jbgs_target_dir)/'maps/index.json').read_text())
+        self.sigma_ref=index['sigma_ref']
+        assert self.sigma_ref>0 and index['weight_power']==1
+        assert all(v['sigma_ref']==self.sigma_ref for v in index['views'].values())
+        super().__init__(args,scene,g)
+        target_file=self.root.parent.parent/'targets'/(self.root.name+'.npz')
+        with np.load(target_file) as z:
+            assert np.array_equal(self.patch_anchor.cpu().numpy(),z['target'][self.valid_patch].astype('f4'))
+            assert np.array_equal(self.patch_sigma.cpu().numpy(),z['sigma'][self.valid_patch].astype('f4'))
+        write(self.mon/'loaded_targets.json',dict(status='PASS',targets=len(self.valid_patch),sigma_ref=self.sigma_ref,
+            target_sha256=self.target_hash,anchor_and_sigma_equal_file=True,scientific_verdict=None))
+
+    @torch.no_grad()
+    def snapshot(self,iteration,g):
+        if iteration in [7000,15000,30000]:super().snapshot(iteration,g)
+
+    @torch.no_grad()
+    def checkpoint_evidence(self,iteration,g,renderer,pipe,background):
+        # Rendering and scoring are separate jobs. Preserve only the requested
+        # checkpoint statistics here so the other training arm can keep running.
+        if iteration not in [7000,15000,30000]:return
+        seed_region=self.region[g.init_id.long()];prior=g.origin==1;rows=[]
+        for region in [1,2,3,0]:
+            mask=prior&(seed_region==region);n=int(mask.sum());released=int((mask&(g.target_tag==2)).sum())
+            rows.append(dict(region=region,prior_descendants=n,released=released,fraction=released/n if n else None))
+        write(self.mon/f'release_{iteration}.json',dict(iteration=iteration,rows=rows,
+            grouping='immutable original patch region via init_id; includes descendants',scientific_verdict=None))
+
+    @torch.no_grad()
+    def observe(self,iteration,g,loss,rgb,depth,name):
+        if iteration%100 and iteration!=1:return
+        n=len(g._xyz)
+        if iteration==6000:self.n6000=n
+        row=dict(iteration=iteration,gaussians=n,loss=float(loss),rgb_loss=float(rgb),target_depth_loss=float(depth),camera=name,
+            elapsed_seconds=time.monotonic()-self.started,allocated_bytes=torch.cuda.memory_allocated(),reserved_bytes=torch.cuda.memory_reserved(),
+            free_bytes=torch.cuda.mem_get_info()[0],scientific_verdict=None)
+        reason=None
+        if iteration==7000:
+            prior=g.origin==1;median=float(g.get_opacity[prior].median()) if prior.any() else None
+            row['prior_opacity_median']=median
+            if median is None or median<.05:reason='prior_seed_lineage_opacity_median_below_0.05'
+        if 7000<=iteration<=15000 and iteration%1000==0:
+            assert self.n6000 is not None
+            row['count_at_6000']=self.n6000
+            if n>3*self.n6000:reason='count_gt_3x_6000'
+        with (self.mon/'curve.jsonl').open('a') as f:f.write(json.dumps(row,allow_nan=False)+'\n')
+        if iteration in [7000,15000,30000]:
+            write(self.mon/f'health_{iteration}.json',dict(row,status='STOP' if reason else 'PASS_HEALTH'))
+        if reason:
+            write(self.mon/'STOP.json',dict(row,reason=reason))
+            raise RuntimeError('FINALTRAIN_HEALTH_STOP_'+reason)
+        if iteration%1000==0:print('[finaltrain]',row,flush=True)

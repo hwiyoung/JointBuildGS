@@ -1,0 +1,59 @@
+{
+  "rows": [
+    {
+      "item": "비교 대상",
+      "cells": "prior_height_m / mvs_mean_m 대 gt_p",
+      "cells_source": "scripts/phd/main_rescore_v1/tau_cells.py:26-31; tau.search_regions, tau_v2_m",
+      "target": "target_height_m 대 gt_p",
+      "target_source": "scripts/phd/main_rescore_v1/add3_checks.py:13-18; target_height_m, tau_v2_m",
+      "completeness": "참값 점 대 원래 prior 삼각형 / MVS 표면 메시",
+      "completeness_source": "scripts/phd/main_rescore_v1/score_inputs.py:6-7; score_mesh.py:9-13,43-62; geometry.py:21-44; metrics.py:3-10; surface_tau.py:4-8; columns.patch_size_m, roof_half_length_m, wall_half_length_m"
+    },
+    {
+      "item": "단위",
+      "cells": "패치 핵심점마다 칸; 넓이 합",
+      "cells_source": "scripts/phd/main_rescore_v1/tau_cells.py:26-31; tau.search_regions, tau_v2_m",
+      "target": "패치 넓이 가중",
+      "target_source": "scripts/phd/main_rescore_v1/add3_checks.py:13-18; target_height_m, tau_v2_m",
+      "completeness": "참값 행 수 비율; 결과 쪽 400점/m²",
+      "completeness_source": "scripts/phd/main_rescore_v1/score_inputs.py:6-7; score_mesh.py:9-13,43-62; geometry.py:21-44; metrics.py:3-10; surface_tau.py:4-8; columns.patch_size_m, roof_half_length_m, wall_half_length_m"
+    },
+    {
+      "item": "거리",
+      "cells": "패치 법선 방향 스칼라 차",
+      "cells_source": "scripts/phd/main_rescore_v1/tau_cells.py:26-31; tau.search_regions, tau_v2_m",
+      "target": "같은 법선 방향 목표 스칼라 차",
+      "target_source": "scripts/phd/main_rescore_v1/add3_checks.py:13-18; target_height_m, tau_v2_m",
+      "completeness": "가장 가까운 면은 전체 메시에서 검색; 지붕 3차원, 벽은 최근접 벡터의 참값 법선 성분",
+      "completeness_source": "scripts/phd/main_rescore_v1/score_inputs.py:6-7; score_mesh.py:9-13,43-62; geometry.py:21-44; metrics.py:3-10; surface_tau.py:4-8; columns.patch_size_m, roof_half_length_m, wall_half_length_m"
+    },
+    {
+      "item": "문턱",
+      "cells": "tau_v2_m; 핵심점 kind 지붕·벽",
+      "cells_source": "scripts/phd/main_rescore_v1/tau_cells.py:26-31; tau.search_regions, tau_v2_m",
+      "target": "동일 tau_v2_m",
+      "target_source": "scripts/phd/main_rescore_v1/add3_checks.py:13-18; target_height_m, tau_v2_m",
+      "completeness": "동일 지역 τ이나 row_kind / 가까운 참값 면 종류로 지붕·벽 선택",
+      "completeness_source": "scripts/phd/main_rescore_v1/score_inputs.py:6-7; score_mesh.py:9-13,43-62; geometry.py:21-44; metrics.py:3-10; surface_tau.py:4-8; columns.patch_size_m, roof_half_length_m, wall_half_length_m"
+    },
+    {
+      "item": "결측",
+      "cells": "n<4 또는 mvs_mean_m 비유한",
+      "cells_source": "scripts/phd/main_rescore_v1/tau_cells.py:26-31; tau.search_regions, tau_v2_m",
+      "target": "목표/참값 오차 비유한이면 분모에서 제외",
+      "target_source": "scripts/phd/main_rescore_v1/add3_checks.py:13-18; target_height_m, tau_v2_m",
+      "completeness": "원 채점기는 표면 전체 거리; 기둥은 결과점 소속. 새 칸의 결측만 면·기둥 실제 교차 여부로 정의",
+      "completeness_source": "scripts/phd/main_rescore_v1/score_inputs.py:6-7; score_mesh.py:9-13,43-62; geometry.py:21-44; metrics.py:3-10; surface_tau.py:4-8; columns.patch_size_m, roof_half_length_m, wall_half_length_m"
+    },
+    {
+      "item": "입력 표현",
+      "cells": "JUDGEAPPLY core의 원통 내 평균과 참값 대표자리",
+      "cells_source": "scripts/phd/main_rescore_v1/tau_cells.py:26-31; tau.search_regions, tau_v2_m",
+      "target": "FINALTRAIN 목표 파일 source_index 정확 조인",
+      "target_source": "scripts/phd/main_rescore_v1/add3_checks.py:13-18; target_height_m, tau_v2_m",
+      "completeness": "STAGE1 prior V/F; AXES71 MVS mesh_mvs_a.ply",
+      "completeness_source": "scripts/phd/main_rescore_v1/score_inputs.py:6-7; score_mesh.py:9-13,43-62; geometry.py:21-44; metrics.py:3-10; surface_tau.py:4-8; columns.patch_size_m, roof_half_length_m, wall_half_length_m"
+    }
+  ],
+  "scientific_verdict": null
+}
