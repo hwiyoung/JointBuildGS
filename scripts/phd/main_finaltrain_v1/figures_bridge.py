@@ -34,6 +34,8 @@ def representatives(site,root):
     dump(root/'representatives_v1.json',value);return value
 
 def main(site,prior,mode='early'):
+    from scope_policy import require_postprocessing
+    require_postprocessing(site)
     cfg();stem=f'{site}__{prior}';method='ft_'+stem;root=O/'figure_jobs'/stem;root.mkdir(parents=True,exist_ok=True)
     from rescore_bridge import bind
     mod,source=bind();mod.O=root;mod.C=root/'config';mod.C.mkdir(exist_ok=True);mod.D=D

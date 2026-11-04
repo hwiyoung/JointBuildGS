@@ -13,7 +13,10 @@ def bind():
     return mod,source
 
 def main():
-    action,site,prior=sys.argv[1:4];cfg();stem=f'{site}__{prior}';mod,source=bind()
+    action,site,prior=sys.argv[1:4]
+    from scope_policy import require_postprocessing
+    require_postprocessing(site)
+    cfg();stem=f'{site}__{prior}';mod,source=bind()
     if action=='cleanup':
         validation=RS/'validation/cleanup/validation.json'
         assert json.loads(validation.read_text())['status']=='PASS_EXACT_VERTICES_AND_TRIANGLES'

@@ -29,7 +29,10 @@ def finish(site,prior):
         voxel_m=.05,trunc_m=.25,cluster_to_keep=50,training=False,seconds=time.monotonic()-start,scientific_verdict=None))
 
 def main():
-    mode,site,prior=sys.argv[1:4];cfg();wd=O/'meshes'/f'{site}__{prior}'/'final_work';start=time.monotonic()
+    mode,site,prior=sys.argv[1:4]
+    from scope_policy import require_postprocessing
+    require_postprocessing(site)
+    cfg();wd=O/'meshes'/f'{site}__{prior}'/'final_work';start=time.monotonic()
     if mode=='prepare':prepare(site,prior)
     elif mode=='plan':T.plan(wd,'auto:18');T.order(wd)
     elif mode=='tile':T.tile(wd,int(sys.argv[4]))

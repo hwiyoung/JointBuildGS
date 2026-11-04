@@ -14,6 +14,8 @@ G.DR=PH/'main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1'
 
 @torch.no_grad()
 def main(site,prior):
+    from scope_policy import require_postprocessing
+    require_postprocessing(site)
     cfg();install();stem=f'{site}__{prior}';run=O/'runs'/site/f'ft_{prior}_s0';receipt=json.loads((run/'receipt.json').read_text())
     assert receipt['status']=='TRAINING_COMPLETE_30000';model=Path(receipt['attempts'][-1]['model']);root=O/'meshes'/stem/'render';root.mkdir(parents=True,exist_ok=False);start=time.monotonic()
     p=ArgumentParser();lp=ModelParams(p);pp=PipelineParams(p);args=p.parse_args(['-s',str(S0/'fork_inputs/s61'/site/f'scene_{prior}'),'-m',str(model),'--eval','-r','1','--data_device','cpu'])

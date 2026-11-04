@@ -2,6 +2,7 @@
 import fcntl,hashlib,json,subprocess,sys,time,zipfile
 from pathlib import Path
 from gpu_job import R,O,C,D,now,dump
+from scope_policy import training_only
 S=R/'scripts/phd/main_finaltrain_v1';F=R/'src/phd/forks/GeoGS-conf-guided-v1-r23'
 SITES={'B173nb_b10':'B173주변','B0_b10':'B0','R1rep_b10':'R1'};PRIORS={'ALS':'항공LiDAR','LoD2':'LoD2'}
 def sha(p):
@@ -45,6 +46,11 @@ def delivery_paths(site,prior):
     docs=[]
     for path in D.rglob('*'):
         if not path.is_file():continue
+        if training_only(site):
+            selected=path.name==report or path.parent.name=='tables' and stem in path.name and path.name.startswith(('training_summary_','model_paths_','release_'))
+            selected|=path.parent.name=='delivery' and path.name==stem+'.json'
+            selected|=path==D/'source_verification.json'
+            if not selected:continue
         if path.parent==D and path.name.startswith('결과_') and path.name!=report:continue
         if path.parent.name in ['tables','figures','delivery'] and '__' in path.name and stem not in path.name:continue
         docs.append(path)
@@ -57,20 +63,24 @@ def package(site,prior=None):
             if p.is_file():members['docs/'+str(p.relative_to(D))]=p
     else:
         report=D/f'결과_{SITES[site]}_{PRIORS[prior]}.md';assert report.exists();members['docs/'+report.name]=report
-        for name in ['구현변경.md','changes.json','issues.md','source_verification.json']:
+        for name in ([] if training_only(site) else ['구현변경.md','changes.json','issues.md','source_verification.json']):
             if (D/name).exists():members['docs/'+name]=D/name
         for parent in ['tables','figures']:
             for p in (D/parent).glob('*'):
-                if p.is_file() and stem in p.name:members['docs/'+parent+'/'+p.name]=p
+                if p.is_file() and stem in p.name:
+                    if training_only(site) and not (parent=='tables' and p.name.startswith(('training_summary_','model_paths_','release_'))):continue
+                    members['docs/'+parent+'/'+p.name]=p
     for p in C.rglob('*'):
         if p.is_file():members['configs/'+str(p.relative_to(C))]=p
     arms=[(s,p) for s in SITES for p in PRIORS] if all_ else [(site,prior)]
     for s,p in arms:
         st=f'{s}__{p}'
         for f in [O/'targets'/f'{st}.npz',O/'targets'/f'{st}.json',O/'verification'/f'inputs_{st}.json',O/'verification'/f'loaded_{st}.json',O/'verification'/f'delivery_{st}.json',O/'verification'/f'geometry_extension_{s}.json',O/'verification'/f'extension_judgments_{s}.json',O/'outside'/s/'budget_receipt.json',O/'stage1'/st/'ready.json']:
-            if f.exists():members['evidence/'+str(f.relative_to(O))]=f
+            if f.exists() and (not training_only(s) or f==O/'verification'/f'delivery_{st}.json'):members['evidence/'+str(f.relative_to(O))]=f
         for f in [O/'post'/f'{st}.json',O/'verification'/f'visual_{st}.json',O/'scores'/st/'binding.json',O/'rescore/scores'/('ft_'+st)/'values.json']:
-            if f.exists():members['evidence/'+str(f.relative_to(O))]=f
+            if f.exists() and not training_only(s):members['evidence/'+str(f.relative_to(O))]=f
+        report_record=O/'reports'/f'{st}.json'
+        if report_record.exists():members['evidence/'+str(report_record.relative_to(O))]=report_record
         run=O/'runs'/s/f'ft_{p}_s0'
         for f in run.rglob('*'):
             if f.is_file() and (f.name in ['receipt.json','launch.json','input_binding.json','command.json'] or f.parent.name=='target_monitor' and f.suffix in ['.json','.jsonl']):

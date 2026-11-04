@@ -64,6 +64,11 @@ def prepare(site):
     event(f'{site} 두 사전 정보의 목표·학습 입력 대조 통과. 학습 준비 완료.')
 
 def post(site,prior,gpu):
+    from scope_policy import training_only
+    if training_only(site):
+        cpu('training-report-'+site+'__'+prior,'training_report.py',site,prior)
+        publish(site,prior)
+        return
     stem=f'{site}__{prior}';run=O/'runs'/site/f'ft_{prior}_s0';rec=json.loads((run/'receipt.json').read_text())
     if rec['status']=='TRAINING_COMPLETE_30000' and final_views_available(site,prior):
         event(f'{stem} 30,000회 완료. 다른 판과 독립적으로 최종 메시·채점·제출 시작.')

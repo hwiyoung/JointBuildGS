@@ -68,6 +68,10 @@ def comparison(site,prior,current):
 def fmt(value,percent=False):return '확인 불가' if value is None else f'{value*(100 if percent else 1):.2f}'
 
 def main(site,prior):
+    from scope_policy import training_only
+    if training_only(site):
+        from training_report import main as training_report
+        return training_report(site,prior)
     cfg();stem=f'{site}__{prior}';run=O/'runs'/site/f'ft_{prior}_s0';r=json.loads((run/'receipt.json').read_text());status=r['status'];rows,alerts=monitor(site,prior,run)
     current_path=O/'rescore/scores'/('ft_'+stem)/'values.json';current=json.loads(current_path.read_text()) if current_path.exists() else None
     post_path=O/'post'/f'{stem}.json';post=json.loads(post_path.read_text()) if post_path.exists() else None
@@ -142,7 +146,7 @@ if __name__=='__main__':
         for site in SITES:
             for prior in PRIORS:
                 rec=json.loads((O/'reports'/f'{site}__{prior}.json').read_text());p=Path(rec['report'])
-                lines.append(f'| {SITES[site]} {PRIORS[prior]} | {rec["status"]} | '+('RESCORE-v1' if rec['scored'] else ('확인 불가: 원래 가상 시점 입력 없음' if rec.get('post') else '결과 없음 또는 셈 전'))+f' | [{p.name}]({p.name}) |')
+                lines.append(f'| {SITES[site]} {PRIORS[prior]} | {rec["status"]} | '+('RESCORE-v1' if rec['scored'] else ('RESCORE 덧붙임 3에서 수행' if rec.get('scope')=='TRAINING_AND_MODEL_SAVE_ONLY' else '결과 없음 또는 셈 전'))+f' | [{p.name}]({p.name}) |')
         lines+=['','판마다 목표·화소 무게·풀림·가우시안 수·시간은 위 보고와 tables에 있다. 비교 방법의 미완료 행은 셈 전으로 유지했다. 모든 설정과 잠금 기록, 목표 배열, 기록은 전달 ZIP의 SHA256SUMS로 확인할 수 있다.','',
             '단위 점검: 스위치 off의 동일 씨앗 100회 모델·Adam·목표 결정·카메라 순서 일치, 목표 수식 및 장면 기준 무게, 학습 입력의 목표와 정밀도 대조. 각 점검의 계산 수와 원본 해시는 verification 기록에 있다.']
         text='\n'.join(lines)+'\n';assert len(text)<15000;(D/'최종학습_보고_v1.md').write_text(text)
