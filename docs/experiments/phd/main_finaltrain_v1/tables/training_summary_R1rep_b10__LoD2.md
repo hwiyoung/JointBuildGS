@@ -1,0 +1,3 @@
+| site | prior | attempt | status | gpu | start | finish | seconds | hours | model_directory | training_log |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| R1rep_b10 | LoD2 | 1 | TRAINING_COMPLETE_30000 | 1 | 2026-11-04T12:26:49.505132+09:00 | 2026-11-04T14:16:33.230081+09:00 | 6583.724731841125 | 1.8288124255114235 | /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/R1rep_b10/ft_LoD2_s0/attempt1/model | /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/R1rep_b10/ft_LoD2_s0/attempt1/train.log |
