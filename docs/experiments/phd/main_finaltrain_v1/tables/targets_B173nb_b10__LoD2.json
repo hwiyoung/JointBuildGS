@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-04T01:36:36.822366+09:00",
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "output_sha256": "610cff9a3900540c37ac896dd055e84849af2ad70fdbc9e3c82e88b23b4a1458",
+  "patches": 258097,
+  "source_files": {
+    "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/B173nb_b10_LoD2.npz": "54d14d6b564f020c0ff550ce319ffebef61749e9f910d21c4a8011040774e5da",
+    "/art/phase-payloads/phd/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/core_points/B173nb_b10__LoD2.npz": "6c2d5979a6d87c52bc3d16aeb3fcb82c42e5e384a932e8deebc789996e422e0b",
+    "/art/phase-payloads/phd/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/calibration.json": "cd04d0f4a4c3223d541023839de4290b392303a414b661abfddeae40541fd2f1",
+    "/out/outside/B173nb_b10/budget_receipt.json": "fb27d1e53c9eacaea7969b8fd54a76b7989566bc0d87becd875648593fad7ccd",
+    "/out/outside/B173nb_b10/method/B173nb_b10__LoD2.npz": "3664b8982845411ed6a51e11dbf396fd888efe02356fd8dbf044a47de9c43284"
+  },
+  "eval_replay": {
+    "count": 141534,
+    "decision_mismatches": 0,
+    "reason_mismatches": 0,
+    "scope": "exact JUDGEAPPLY decision code on frozen inputs; no recalibration"
+  },
+  "extended_eval_decision_mismatches": 2,
+  "frozen_eval_always_used": true,
+  "outside_status": "PASS",
+  "outside_patches": 116563,
+  "outside_area_m2": 7285.1875,
+  "sigma_ref": 0.05711445407701022,
+  "unclipped_area_weighted_mean": 1.0000000000000002,
+  "correction_u_median": 0.07166797667741776,
+  "unassigned_target_area_m2": 0.125,
+  "regions": [
+    {
+      "region": 0,
+      "patches": 103514,
+      "area_m2": 6469.625,
+      "sigma_q10_q50_q90": [
+        0.02038007491706715,
+        0.04688494226785492,
+        0.11696252315636266
+      ],
+      "undecided_area_m2": 0.0
+    },
+    {
+      "region": 1,
+      "patches": 201,
+      "area_m2": 12.5625,
+      "sigma_q10_q50_q90": [
+        0.11,
+        0.166,
+        0.223
+      ],
+      "undecided_area_m2": 0.0625
+    },
+    {
+      "region": 2,
+      "patches": 51427,
+      "area_m2": 3214.1875,
+      "sigma_q10_q50_q90": [
+        0.02650740072131157,
+        0.07166797667741776,
+        0.24292598366737375
+      ],
+      "undecided_area_m2": 872.125
+    },
+    {
+      "region": 3,
+      "patches": 16452,
+      "area_m2": 1028.25,
+      "sigma_q10_q50_q90": null,
+      "undecided_area_m2": 0.0
+    },
+    {
+      "region": 4,
+      "patches": 86501,
+      "area_m2": 5406.3125,
+      "sigma_q10_q50_q90": [
+        0.11,
+        0.144,
+        0.144
+      ],
+      "undecided_area_m2": 0.0
+    },
+    {
+      "region": 9,
+      "patches": 2,
+      "area_m2": 0.125,
+      "sigma_q10_q50_q90": null,
+      "undecided_area_m2": 0.0
+    }
+  ],
+  "rescore_comparison": {
+    "status": "확인 전"
+  },
+  "sigma_W_used": false,
+  "r_added": false,
+  "GT_used": false,
+  "scientific_verdict": null
+}

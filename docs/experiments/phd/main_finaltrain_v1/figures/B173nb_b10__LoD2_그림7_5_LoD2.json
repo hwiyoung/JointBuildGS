@@ -1,0 +1,418 @@
+{
+  "title": "대표 자리의 확대 메시와 단면",
+  "method": "ft_B173nb_b10__LoD2",
+  "provisional": false,
+  "places": [
+    {
+      "place": {
+        "id": "A",
+        "name": "날개",
+        "start": [
+          146.68,
+          96.32
+        ],
+        "end": [
+          136.63,
+          99.34
+        ],
+        "half_width": 0.6,
+        "roi_half_width": 3.0,
+        "source": "TARGET representatives_v1.json row 1 unchanged",
+        "selection": "fixed r8 section",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 0.689776424938033,
+              "1": 6.1965141814135265,
+              "2": 1.0610478081146573,
+              "3": 3.663343235343691
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 1.0625,
+              "1": 9.0625,
+              "2": 1.0,
+              "3": 2.3125,
+              "6": 0.4375
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        }
+      },
+      "metrics_entire_cell": [
+        {
+          "family": "prior",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.1675030552016433,
+          "n_gt": 115377
+        },
+        {
+          "family": "mvs",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.9461677804068401,
+          "n_gt": 115377
+        },
+        {
+          "family": "fusion",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.8355304783449041,
+          "n_gt": 115377
+        },
+        {
+          "family": "method",
+          "cell": 1,
+          "metric": "completeness",
+          "value": 0.9345883494977335,
+          "n_gt": 115377
+        }
+      ]
+    },
+    {
+      "place": {
+        "id": "B",
+        "name": "채광창",
+        "start": [
+          138.60235979835483,
+          100.53679128769262
+        ],
+        "end": [
+          129.20543359049572,
+          103.95699272094932
+        ],
+        "half_width": 0.6,
+        "roi_half_width": 3.0,
+        "anchor_xyz": [
+          133.90389669442527,
+          102.24689200432097,
+          -30.035664404929523
+        ],
+        "anchor_patch_ids": [
+          "ALS:B173nb_b10:71452",
+          "ALS:B173nb_b10:71453",
+          "ALS:B173nb_b10:71456",
+          "ALS:B173nb_b10:71457",
+          "ALS:B173nb_b10:71461",
+          "ALS:B173nb_b10:71469",
+          "ALS:B173nb_b10:71478",
+          "ALS:B173nb_b10:71479",
+          "ALS:B173nb_b10:71480",
+          "ALS:B173nb_b10:71489",
+          "ALS:B173nb_b10:71490",
+          "ALS:B173nb_b10:71497",
+          "ALS:B173nb_b10:71498",
+          "ALS:B173nb_b10:71499",
+          "ALS:B173nb_b10:71500",
+          "ALS:B173nb_b10:71506",
+          "ALS:B173nb_b10:71507",
+          "ALS:B173nb_b10:71508",
+          "ALS:B173nb_b10:71514",
+          "ALS:B173nb_b10:71515",
+          "ALS:B173nb_b10:71516",
+          "ALS:B173nb_b10:71524",
+          "ALS:B173nb_b10:71525",
+          "ALS:B173nb_b10:71526",
+          "ALS:B173nb_b10:71535",
+          "ALS:B173nb_b10:71536",
+          "ALS:B173nb_b10:71545",
+          "ALS:B173nb_b10:71552",
+          "ALS:B173nb_b10:71553",
+          "ALS:B173nb_b10:71554",
+          "ALS:B173nb_b10:71559"
+        ],
+        "source": "UNCERT work/places.npz glass_strip__ALS",
+        "selection": "largest 0.6m-connected area of existing skylight place in requested correct-preserve cell 2; no learned result read",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 2,
+            "cell_area_m2": {
+              "0": 1.3877048499579745,
+              "1": 0.8630031915499123,
+              "2": 7.375479853906695,
+              "3": 1.9938837109321037
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 3,
+            "cell_area_m2": {
+              "0": 1.75,
+              "1": 2.6875,
+              "2": 1.375,
+              "3": 7.6875,
+              "5": 0.0625
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        }
+      },
+      "metrics_entire_cell": [
+        {
+          "family": "prior",
+          "cell": 3,
+          "metric": "completeness",
+          "value": 0.3415730337078652,
+          "n_gt": 30705
+        },
+        {
+          "family": "mvs",
+          "cell": 3,
+          "metric": "completeness",
+          "value": 0.8202247191011236,
+          "n_gt": 30705
+        },
+        {
+          "family": "fusion",
+          "cell": 3,
+          "metric": "completeness",
+          "value": 0.8005536557563915,
+          "n_gt": 30705
+        },
+        {
+          "family": "method",
+          "cell": 3,
+          "metric": "completeness",
+          "value": 0.8404494382022472,
+          "n_gt": 30705
+        }
+      ]
+    },
+    {
+      "place": {
+        "id": "C",
+        "name": "부속 지붕",
+        "start": [
+          104.94379597779694,
+          117.29842890039143
+        ],
+        "end": [
+          108.36399741105363,
+          126.69535510825051
+        ],
+        "half_width": 0.6,
+        "roi_half_width": 3.0,
+        "anchor_xyz": [
+          106.65389669442528,
+          121.99689200432097,
+          -28.593584029034304
+        ],
+        "source": "UNCERT flat_roof__ALS place; building DEBY_LOD2_4959460",
+        "selection": "median input-patch centre of existing flat-roof place; no result read",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 0,
+            "cell_area_m2": {
+              "0": 12.563081016265368
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 0,
+            "cell_area_m2": {
+              "0": 11.9375
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        }
+      },
+      "metrics_entire_cell": [
+        {
+          "family": "prior",
+          "cell": 0,
+          "metric": "gt_mean_m",
+          "value": 0.07638221210518749,
+          "n_gt": 184059
+        },
+        {
+          "family": "mvs",
+          "cell": 0,
+          "metric": "gt_mean_m",
+          "value": 0.06431313170840822,
+          "n_gt": 184059
+        },
+        {
+          "family": "fusion",
+          "cell": 0,
+          "metric": "gt_mean_m",
+          "value": 0.07131813652569689,
+          "n_gt": 184059
+        },
+        {
+          "family": "method",
+          "cell": 0,
+          "metric": "gt_mean_m",
+          "value": 0.0575508778877726,
+          "n_gt": 184059
+        }
+      ]
+    }
+  ],
+  "views": {
+    "all": {
+      "basis": [
+        [
+          0.8660254037844386,
+          0.5000000000000001,
+          -0.0
+        ],
+        [
+          -0.2867882181755231,
+          0.496731764892154,
+          0.8191520442889918
+        ],
+        [
+          -0.409576022144496,
+          0.7094064799162224,
+          -0.573576436351046
+        ]
+      ],
+      "center": [
+        129.49926549297624,
+        115.89815674453003,
+        -24.94149661064148
+      ],
+      "origin": [
+        170.45686770742583,
+        44.957508752907785,
+        32.41614702446313
+      ],
+      "width": 187.76809867273613,
+      "height": 135.610293485865,
+      "W": 900,
+      "H": 650
+    },
+    "A": {
+      "basis": [
+        [
+          0.8660254037844386,
+          0.5000000000000001,
+          -0.0
+        ],
+        [
+          -0.2867882181755231,
+          0.496731764892154,
+          0.8191520442889918
+        ],
+        [
+          -0.409576022144496,
+          0.7094064799162224,
+          -0.573576436351046
+        ]
+      ],
+      "center": [
+        141.655,
+        97.83,
+        -26.87315845489502
+      ],
+      "origin": [
+        182.6126022144496,
+        26.889352008377756,
+        30.48448518020959
+      ],
+      "width": 24.562652098998072,
+      "height": 18.894347768460054,
+      "W": 650,
+      "H": 500
+    },
+    "B": {
+      "basis": [
+        [
+          0.8660254037844386,
+          0.5000000000000001,
+          -0.0
+        ],
+        [
+          -0.2867882181755231,
+          0.496731764892154,
+          0.8191520442889918
+        ],
+        [
+          -0.409576022144496,
+          0.7094064799162224,
+          -0.573576436351046
+        ]
+      ],
+      "center": [
+        133.90389669442527,
+        102.24689200432097,
+        -27.998607635498047
+      ],
+      "origin": [
+        174.86149890887486,
+        31.306244012698727,
+        29.35903599960656
+      ],
+      "width": 22.22544125132129,
+      "height": 17.096493270247144,
+      "W": 650,
+      "H": 500
+    },
+    "C": {
+      "basis": [
+        [
+          0.8660254037844386,
+          0.5000000000000001,
+          -0.0
+        ],
+        [
+          -0.2867882181755231,
+          0.496731764892154,
+          0.8191520442889918
+        ],
+        [
+          -0.409576022144496,
+          0.7094064799162224,
+          -0.573576436351046
+        ]
+      ],
+      "center": [
+        106.65389669442528,
+        121.99689200432097,
+        -28.231258392333984
+      ],
+      "origin": [
+        147.6114989088749,
+        51.05624401269873,
+        29.126385242770624
+      ],
+      "width": 17.412841520699,
+      "height": 13.394493477460768,
+      "W": 650,
+      "H": 500
+    }
+  },
+  "table": "b173_table4",
+  "note": "Values beneath images are the entire correct-cell region; blue overlays are uncovered GT. Sections are exact triangle-plane intersections.",
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "source_script": "/repo/scripts/phd/main_rescore_v1/figures.py",
+  "source_script_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "target_sha256": "610cff9a3900540c37ac896dd055e84849af2ad70fdbc9e3c82e88b23b4a1458",
+  "places_sha256": "9197f41fe9624ad0c3d18027e93de05afe57cb7a2b508fe811f1661659cca6a1",
+  "pending_families": [],
+  "adaptations": [
+    "output/input roots",
+    "method name",
+    "actual FINALTRAIN sigma",
+    "explicit missing comparison panels",
+    "inherited per-site representative count"
+  ],
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "scientific_verdict": null
+}
