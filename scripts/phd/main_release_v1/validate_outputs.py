@@ -3,6 +3,10 @@ from common import *
 import sys,platform,subprocess
 def main():
  cfg();checks=[];assert json.loads((O/'verification/unit_default.json').read_text())['status']=='PASS';assert json.loads((O/'verification/unit_rules.json').read_text())['status']=='PASS';checks.append('r23/r24 default/log on/off 100-step equality and pull/delete/mix units')
+ runtime=json.loads((C/'runtime.lock.json').read_text());assert runtime['config_sha256']==sha(C/'release_v1.json')
+ for path,h in runtime['files'].items():assert sha(path)==h,path
+ checks.append('r24 sources and target-search binary match the pre-training runtime lock')
+ assert sha(C/'inherited_files.lock.json')==json.loads((C/'release_v1.initial.lock.json').read_text())['inputs_lock_sha256']
  protected=json.loads((C/'inherited_files.lock.json').read_text());host='/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp'
  for path,h in protected.items():assert sha(path.replace(host,str(R),1))==h,path
  checks.append(f'{len(protected)} inherited code/config/report hashes unchanged')
