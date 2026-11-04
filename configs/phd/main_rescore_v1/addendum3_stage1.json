@@ -1,0 +1,450 @@
+{
+  "task": "PHD-MAIN-RESCORE-v1",
+  "addendum": 3,
+  "stage": 1,
+  "sites": [
+    "B173nb_b10"
+  ],
+  "priors": [
+    "ALS",
+    "LoD2"
+  ],
+  "training": false,
+  "views": 203,
+  "virtual_views": 0,
+  "voxel_m": 0.05,
+  "trunc_m": 0.25,
+  "cluster_to_keep": 50,
+  "evaluation_crop": true,
+  "sampling_density_m2": 400,
+  "seed": 0,
+  "tau_cells_columns": "unchanged",
+  "r8_in_primary_tables": false,
+  "previous_final_scores": "mesh-rule diagnostic, preserved",
+  "stage2": "explicit user start only; no polling",
+  "jobs": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "baseline",
+      "key": "B173nb_b10__ALS__baseline_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model",
+      "ply": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 749345987,
+      "rerender_state_present": true,
+      "renderer": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r15",
+      "image": "jointbuildgs:geogs-conf-guided-v1",
+      "seed": 0,
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_ALS_s0/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__ALS__baseline_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__ALS__baseline_30000/train.ply",
+      "raw_sha256": "b89ce5a08ef2a1145249103f10251abcca138ed5942b3ec1557c7be53ca54703"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "GeoGS",
+      "key": "B173nb_b10__ALS__GeoGS_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/model",
+      "ply": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 879625169,
+      "rerender_state_present": true,
+      "renderer": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1",
+      "image": "jointbuildgs:geogs-official-db40c95-compat-v1",
+      "seed": "0: train.py safe_state (random, numpy and torch seeded 0)",
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__ALS__GeoGS_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__ALS__GeoGS_30000/train.ply",
+      "raw_sha256": "111eaab4bc1372457b820a792a6c7246e003c24989188f4ad537d777b3649b36"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "2DGS",
+      "key": "B173nb_b10__ALS__2DGS_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/model",
+      "ply": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 351498881,
+      "rerender_state_present": true,
+      "renderer": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1",
+      "image": "jointbuildgs:2dgs-official-f3e3b9f-v1",
+      "seed": "0: the official train.py's safe_state (random, numpy and torch seeded 0)",
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__ALS__2DGS_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__ALS__2DGS_30000/train.ply",
+      "raw_sha256": "177e468a2526c46a0527abf8db601b56d23b062ccf6d34eebf3559ed3610fd5d"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "CDGS",
+      "key": "B173nb_b10__ALS__CDGS_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/model",
+      "ply": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 379156828,
+      "rerender_state_present": true,
+      "renderer": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/sources/cdgs-release-adapters-v3",
+      "image": "jointbuildgs:cdgs-official-db853c1-v1",
+      "seed": "none fixed by the official code (train.py's safe_state call is commented out; numpy 42 only in the split reader)",
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__ALS__CDGS_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__ALS__CDGS_30000/train.ply",
+      "raw_sha256": "c8bfcb34c2287a99b0e56f82b156eb79a931aae6ee4518889138ba8b4348ed28"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "fusion",
+      "key": "B173nb_b10__ALS__fusion",
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "scientific_verdict": null,
+      "cache": "/out/renders/B173nb_b10__ALS__fusion"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "judgment_mesh",
+      "key": "B173nb_b10__ALS__judgment_mesh",
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "scientific_verdict": null,
+      "cache": "/out/renders/B173nb_b10__ALS__judgment_mesh"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "oracle",
+      "key": "B173nb_b10__ALS__oracle",
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "scientific_verdict": null,
+      "cache": "/out/renders/B173nb_b10__ALS__oracle"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "family": "FINALTRAIN_30000",
+      "key": "B173nb_b10__ALS__FINALTRAIN_30000",
+      "cache": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/meshes/B173nb_b10__ALS/render",
+      "ply": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_ALS_s0/attempt1/model/point_cloud/iteration_30000/point_cloud.ply"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "baseline",
+      "key": "B173nb_b10__LoD2__baseline_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model",
+      "ply": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 799571599,
+      "rerender_state_present": true,
+      "renderer": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r15",
+      "image": "jointbuildgs:geogs-conf-guided-v1",
+      "seed": 0,
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/B173nb_b10/nojudge_LoD2_s0/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__LoD2__baseline_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__LoD2__baseline_30000/train.ply",
+      "raw_sha256": "d49a065268acc08db1b80d854542bc1c4a93c355a3d7f8b42e268da407501b84"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "GeoGS",
+      "key": "B173nb_b10__LoD2__GeoGS_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/model",
+      "ply": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 819171973,
+      "rerender_state_present": true,
+      "renderer": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1",
+      "image": "jointbuildgs:geogs-official-db40c95-compat-v1",
+      "seed": 0,
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__LoD2__GeoGS_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__LoD2__GeoGS_30000/train.ply",
+      "raw_sha256": "cc42f291d9bafa94a5000de9bbf348abb9561ce061e36f860334b42776ed7e48"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "2DGS",
+      "key": "B173nb_b10__LoD2__2DGS_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/model",
+      "ply": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 351498881,
+      "rerender_state_present": true,
+      "renderer": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1",
+      "image": "jointbuildgs:2dgs-official-f3e3b9f-v1",
+      "seed": "0: the official train.py's safe_state (random, numpy and torch seeded 0)",
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__LoD2__2DGS_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__LoD2__2DGS_30000/train.ply",
+      "raw_sha256": "177e468a2526c46a0527abf8db601b56d23b062ccf6d34eebf3559ed3610fd5d"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "CDGS",
+      "key": "B173nb_b10__LoD2__CDGS_30000",
+      "iteration": 30000,
+      "model": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_LoD2_s0/model",
+      "ply": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_LoD2_s0/model/point_cloud/iteration_30000/point_cloud.ply",
+      "saved_bytes": 378210212,
+      "rerender_state_present": true,
+      "renderer": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/sources/cdgs-release-adapters-v3",
+      "image": "jointbuildgs:cdgs-official-db853c1-v1",
+      "seed": "none fixed by the official code (train.py's safe_state call is commented out; numpy 42 only in the split reader)",
+      "renderer_status": "별도 구현; TARGET 수정 전후 비교에 해당 없음",
+      "judgment": "판단 사용 안 함",
+      "provenance": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_LoD2_s0/receipt.json",
+      "provisional": false,
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "cache": "/out/renders/B173nb_b10__LoD2__CDGS_30000",
+      "raw_train_mesh": "/out/meshes/B173nb_b10__LoD2__CDGS_30000/train.ply",
+      "raw_sha256": "9b91ac0fc941c5eb0b7d9d914f36a410f89f2ae4e33a80b4ec0ba78537349243"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "fusion",
+      "key": "B173nb_b10__LoD2__fusion",
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "scientific_verdict": null,
+      "cache": "/out/renders/B173nb_b10__LoD2__fusion"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "judgment_mesh",
+      "key": "B173nb_b10__LoD2__judgment_mesh",
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "scientific_verdict": null,
+      "cache": "/out/renders/B173nb_b10__LoD2__judgment_mesh"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "oracle",
+      "key": "B173nb_b10__LoD2__oracle",
+      "box": [
+        [
+          76.33509104189136,
+          56.30900316074758,
+          -49.026947021484375
+        ],
+        [
+          182.6634399440611,
+          175.48731032831247,
+          -0.856046199798584
+        ]
+      ],
+      "scientific_verdict": null,
+      "cache": "/out/renders/B173nb_b10__LoD2__oracle"
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "family": "FINALTRAIN_30000",
+      "key": "B173nb_b10__LoD2__FINALTRAIN_30000",
+      "cache": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/meshes/B173nb_b10__LoD2/render",
+      "ply": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_LoD2_s0/attempt1/model/point_cloud/iteration_30000/point_cloud.ply"
+    }
+  ],
+  "sources": {
+    "/out/meshes/B173nb_b10__ALS__baseline_30000/train.json": "5c6c5ccf714aed5ba1c9b0d41c040977405e082737a6f70cf3d4005c705d7aff",
+    "/out/meshes/B173nb_b10__ALS__GeoGS_30000/train.json": "28489cf6bfedc04ab9e8a710ffe2816614135f5b6582228b22854e3981375245",
+    "/out/meshes/B173nb_b10__ALS__2DGS_30000/train.json": "f227c99d9c7f8640cf92bade83af1d228e3d9bd9b35f54fbbbf670d28ba9d956",
+    "/out/meshes/B173nb_b10__ALS__CDGS_30000/train.json": "6191d144801bc0ac2ff523e905325a948a6669aa6b62e1978c335dbb3d59d758",
+    "/out/renders/B173nb_b10__ALS__fusion/receipt.json": "62a14c4d48a47bfa488589bb2ff54dfb4e53d2e78d0fe0a802d666ecef317b21",
+    "/out/renders/B173nb_b10__ALS__judgment_mesh/receipt.json": "b70c7bf37760e090b0bd6453d568f971ab611493e3052a4b189630d8b4e753e7",
+    "/out/renders/B173nb_b10__ALS__oracle/receipt.json": "0fa66166fb13bc587f21afc775e9941f02c9bbd819fd76323b13489f7672b667",
+    "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_ALS_s0/attempt1/model/point_cloud/iteration_30000/point_cloud.ply": "de39d1c4b4b66d2c31b82006774fe55f8c857b2f4203684b5f6d081e809b416d",
+    "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/meshes/B173nb_b10__ALS/render/receipt.json": "90c56083c17e8e07c7fb3ba76affcc51b7e58e85da5fdb14112e5806ad7e30f5",
+    "/out/meshes/B173nb_b10__LoD2__baseline_30000/train.json": "1503ab176710f75c9caf62941763ca59d0f5971c6848a1d3662e650638f301f4",
+    "/out/meshes/B173nb_b10__LoD2__GeoGS_30000/train.json": "ce153bbba3d3d5695becfc47e83a0f92421c7093bf11565cb62706cf87360876",
+    "/out/meshes/B173nb_b10__LoD2__2DGS_30000/train.json": "0f5c57f67e6125a9494ed252a885f9de61df9eff0574c6a9a88b5f203a09dec9",
+    "/out/meshes/B173nb_b10__LoD2__CDGS_30000/train.json": "4265756ea6954671c70eaa529c0d33d437a1dfe1da84fd0879abe0bd597751c1",
+    "/out/renders/B173nb_b10__LoD2__fusion/receipt.json": "a677ea5536dc318294014b3072ea420814edae67f481a64fe9a53525b7c17dc7",
+    "/out/renders/B173nb_b10__LoD2__judgment_mesh/receipt.json": "23b1720be6770a3daffb8b62433ecd2a14b03a8ec85bac5202ca913fd045a27e",
+    "/out/renders/B173nb_b10__LoD2__oracle/receipt.json": "33db015c4155a19981b0fd40dabdf8b9839ef9a086fba898d6b614621ab18e87",
+    "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_LoD2_s0/attempt1/model/point_cloud/iteration_30000/point_cloud.ply": "f891e3f3869403c87cfb02f0f18b4a9ec43468211a2af3f6ed8632e0127ea4d3",
+    "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/meshes/B173nb_b10__LoD2/render/receipt.json": "14105c90719b6e25f85021acc7f7845c648c67dda991641cc17067a07529a26d",
+    "/out/cells_v2/B173nb_b10__ALS.npz": "545b39553131702bc612c1caa846296ca90877ab56b56948019dcdcae98bb1f7",
+    "/out/cells_v2/B173nb_b10__LoD2.npz": "dae8cb09c8156a83478db4150049ee5ebb601c3c5b5eba8e78b7f1c6ef4dd59f"
+  },
+  "scientific_verdict": null
+}

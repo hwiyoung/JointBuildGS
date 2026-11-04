@@ -1,0 +1,8 @@
+| judgment_region | judgment_name | points | share | total_points | threshold_m | source | source_sha256 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | 일치 | 0 | 0.0 | 31262 | 1.0 | /out/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz | b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248 |
+| 1 | 보존 | 0 | 0.0 | 31262 | 1.0 | /out/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz | b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248 |
+| 2 | 보정 | 31262 | 1.0 | 31262 | 1.0 | /out/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz | b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248 |
+| 3 | 보정(빈 공간) | 0 | 0.0 | 31262 | 1.0 | /out/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz | b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248 |
+| 4 | 결측 | 0 | 0.0 | 31262 | 1.0 | /out/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz | b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248 |
+| 9 | 미판정 | 0 | 0.0 | 31262 | 1.0 | /out/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz | b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248 |

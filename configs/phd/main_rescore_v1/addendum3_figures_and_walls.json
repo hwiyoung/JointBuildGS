@@ -1,0 +1,54 @@
+{
+  "task": "PHD-MAIN-RESCORE-v1",
+  "addendum": 3,
+  "stage": 1,
+  "received_fig61_correction": true,
+  "fig61": {
+    "sites": [
+      "B0_b10",
+      "B173nb_b10",
+      "R1rep_b10"
+    ],
+    "paint": false,
+    "hatch": false,
+    "B173_only": false,
+    "cell_source": "unchanged cells_v2",
+    "minimum_local_cell_area_m2": 10.0,
+    "colors": {
+      "prior_wrong": "#D85A30",
+      "image_wrong_or_absent": "#1D9E75"
+    },
+    "ortho": "CH6 t3 originals",
+    "caption_rules": "User supplied addendum2 summary, 2026-11-04"
+  },
+  "fig62": {
+    "legend": [
+      "참값",
+      "사전 정보",
+      "영상 깊이"
+    ],
+    "x": "단면을 따른 거리 (m)",
+    "y": "높이 (m)",
+    "titles": [
+      "(가) B173 날개, LoD2",
+      "(나) B173 날개, 항공 LiDAR",
+      "(다) B0 모임지붕 끝, LoD2",
+      "(라) R1 지붕, LoD2"
+    ],
+    "large_title": false
+  },
+  "wall_variants": {
+    "prior": "ALS",
+    "families": [
+      "fusion",
+      "judgment_mesh",
+      "oracle"
+    ],
+    "surface": "existing AXES MVS triangles",
+    "wall_rule": "abs(normal_z)<0.5, inherited 60 degree orientation boundary",
+    "GT_used": false,
+    "depth": "nearest positive hit of existing patch depth and MVS wall depth",
+    "mesh": "same 203 training views, .05/.25, top50, evaluation crop"
+  },
+  "scientific_verdict": null
+}

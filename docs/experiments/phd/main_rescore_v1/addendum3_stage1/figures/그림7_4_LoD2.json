@@ -1,0 +1,73 @@
+{
+  "title": "두 자료가 각각 틀린 곳의 완전성",
+  "method": "B173nb_b10__LoD2__FINALTRAIN_30000",
+  "rows": [
+    {
+      "key": "B173nb_b10__LoD2__prior",
+      "cell1": 16.75030552016433,
+      "cell2": 90.82934609250398
+    },
+    {
+      "key": "B173nb_b10__LoD2__mvs",
+      "cell1": 94.61677804068401,
+      "cell2": 76.95374800637958
+    },
+    {
+      "key": "B173nb_b10__LoD2__fusion",
+      "cell1": 83.81999878658658,
+      "cell2": 93.54066985645933
+    },
+    {
+      "key": "B173nb_b10__LoD2__baseline_30000",
+      "cell1": 92.98127009715974,
+      "cell2": 79.89705669131506
+    },
+    {
+      "key": "B173nb_b10__LoD2__GeoGS_30000",
+      "cell1": 78.27556618736836,
+      "cell2": 75.56183848049876
+    },
+    {
+      "key": "B173nb_b10__LoD2__2DGS_30000",
+      "cell1": 48.86675853939693,
+      "cell2": 61.49050311729738
+    },
+    {
+      "key": "B173nb_b10__LoD2__CDGS_30000",
+      "cell1": 7.4399577038751215,
+      "cell2": 32.81861678990865
+    },
+    {
+      "key": "B173nb_b10__LoD2__judgment_mesh",
+      "cell1": 87.86933270929215,
+      "cell2": 82.55038422502537
+    },
+    {
+      "key": "B173nb_b10__LoD2__oracle",
+      "cell1": 88.31742895031071,
+      "cell2": 93.12744671596346
+    },
+    {
+      "key": "B173nb_b10__LoD2__FINALTRAIN_30000",
+      "cell1": 92.95613510491692,
+      "cell2": 82.74612150210237
+    }
+  ],
+  "provisional": false,
+  "mesh_rule": "203 training views, TSDF .05/.25 m, top50 and evaluation crop",
+  "adapter_sha256": "bbde6109b54339309819978ce32fd64614db65733efb683644a985c9e49f334f",
+  "source_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "source_tag": "[이 발주에서 냄]",
+  "scientific_verdict": null
+}
