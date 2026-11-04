@@ -11,7 +11,11 @@ def main(site,prior):
         E=np.array(v['W2C']);K=np.array(v['K']);q=xyz@E[:3,:3].T+E[:3,3];front=q[:,2]>0;ii=np.flatnonzero(front);a=q[ii];u=np.rint(K[0,0]*a[:,0]/a[:,2]+K[0,2]).astype(int);w=np.rint(K[1,1]*a[:,1]/a[:,2]+K[1,2]).astype(int)
         keep=(u>=0)&(w>=0)&(u<v['width'])&(w<v['height']);ii=ii[keep];u=u[keep];w=w[keep];dep=loadz(rr/v['file'],['depth'])['depth'][w,u];index=loadz(lin/'views'/v['file'],['max_gaussian'])['max_gaussian'][w,u]
         positive=dep>0;unoccluded=positive&(dep>=q[ii,2]-.25);clear[ii[unoccluded]]+=1;unknown[ii[~positive]]+=1
-        match=positive&(abs(dep-q[ii,2])<=.25);match[missing[ii]]=unoccluded[missing[ii]];match&=index>=0
+        match=positive&(abs(dep-q[ii,2])<=.25)
+        # No surface has no surface-depth correspondence to enforce. Count the
+        # actual contributor at the GT projection, including foreground blockers.
+        # Unoccluded-view counts remain a separate quantity above.
+        match[missing[ii]]=positive[missing[ii]];match&=index>=0
         P.append(ii[match]);G.append(index[match])
     a=np.concatenate(P);b=np.concatenate(G);matrix=coo_matrix((np.ones(len(a),'i4'),(a,b)),shape=(N,len(ids))).tocsr();chosen=np.full(N,-1,'i8');votes=np.asarray(matrix.sum(1)).ravel();support=np.zeros(N,'i4')
     for i in np.flatnonzero(np.diff(matrix.indptr)):
@@ -41,6 +45,6 @@ def main(site,prior):
                         m=base&(rows['result_type']==typ)&(tag==label);count=int(m.sum());out.append(dict(site=site,prior=prior,cell_basis=mode,cell=cell,judgment_region=region,result_type=typ,binding=label,n_gt=count,cell_n_gt=den,cell_fraction=count/den if den else None,result_type_fraction=count/typden if typden else None,small='적음' if den<1000 else ''))
     table('stage1/'+stem+'_attribution',out)
     dump(root/'join.json',dict(status='PASS_WITH_EXPLICIT_UNAVAILABLE',rows=N,attributed=int(valid.sum()),unavailable=int((~valid).sum()),
-      bindings={0:'same patch',1:'other patch',2:'released',3:'background',4:'unavailable'},missing_visibility='project GT position; positive saved depth at or behind GT minus 0.25 m; zero-depth views unknown, not asserted clear',sources={str(lin/'receipt.json'):sha(lin/'receipt.json'),str(root/'rows.npz'):sha(root/'rows.npz')},scientific_verdict=None))
+      bindings={0:'same patch',1:'other patch',2:'released',3:'background',4:'unavailable'},missing_attribution='actual max contributor at projected GT pixel in every positive-depth train view, including foreground blockers',missing_visibility='separate count: positive saved depth at or behind GT minus 0.25 m; zero-depth views unknown, not asserted clear',sources={str(lin/'receipt.json'):sha(lin/'receipt.json'),str(root/'rows.npz'):sha(root/'rows.npz')},scientific_verdict=None))
     print('STAGE1_JOIN_COMPLETE',stem,N,int(valid.sum()),flush=True)
 if __name__=='__main__':main(*sys.argv[1:])

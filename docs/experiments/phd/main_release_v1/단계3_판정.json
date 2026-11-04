@@ -1,0 +1,62 @@
+{
+  "at": "2026-11-04T22:26:51.357584+09:00",
+  "stage3_authorized": false,
+  "cell_basis": "original",
+  "condition1": false,
+  "condition1_evidence": [
+    {
+      "cell": 2,
+      "counts": {
+        "0": 50,
+        "1": 732,
+        "2": 2267,
+        "3": 5260,
+        "4": 109
+      },
+      "released_largest": false,
+      "tie_policy": "strictly more than every other label, including unavailable"
+    },
+    {
+      "cell": 4,
+      "counts": {
+        "0": 0,
+        "1": 115,
+        "2": 419,
+        "3": 1287,
+        "4": 34
+      },
+      "released_largest": false,
+      "tie_policy": "strictly more than every other label, including unavailable"
+    }
+  ],
+  "condition2": false,
+  "condition2_evidence": [
+    {
+      "simulation": "delete_released",
+      "cell": 2,
+      "improvement_pp": 1.794336810730257,
+      "above_10pp": false
+    },
+    {
+      "simulation": "delete_released",
+      "cell": 4,
+      "improvement_pp": 5.997130559540892,
+      "above_10pp": false
+    },
+    {
+      "simulation": "pull_released",
+      "cell": 2,
+      "improvement_pp": -5.150521609538,
+      "above_10pp": false
+    },
+    {
+      "simulation": "pull_released",
+      "cell": 4,
+      "improvement_pp": -11.736011477761837,
+      "above_10pp": false
+    }
+  ],
+  "condition2_status": "complete",
+  "source_sha256": "a3cde16925e3c2423438a3c5e74fe68ebe78f7368f97b16242b82eac4356ea7a",
+  "scientific_verdict": null
+}

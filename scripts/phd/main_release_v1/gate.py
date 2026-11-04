@@ -3,7 +3,7 @@ from common import *
 def main():
  rows=json.loads((D/'tables/stage1/R1rep_b10__ALS_attribution.json').read_text())['rows'];evidence=[]
  for cell in [2,4]:
-  counts={label:sum(r['n_gt'] for r in rows if r['cell_basis']=='original' and r['cell']==cell and r['judgment_region']==-1 and r['result_type'] in [1,2,3] and r['binding']==label) for label in range(5)}
+  counts={label:sum(r['n_gt'] for r in rows if r['cell_basis']=='original' and r['cell']==cell and r['judgment_region']==-1 and r['result_type'] in [1,2,3,4] and r['binding']==label) for label in range(5)}
   evidence.append(dict(cell=cell,counts=counts,released_largest=counts[2]>max(v for k,v in counts.items() if k!=2),tie_policy='strictly more than every other label, including unavailable'))
  condition1=any(r['released_largest'] for r in evidence);simulation=[]
  for sim in ['delete_released','pull_released']:
