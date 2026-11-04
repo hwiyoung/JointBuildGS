@@ -51,10 +51,10 @@ def summary():
  for j,prior in enumerate(['ALS','LoD2']):
   root=O/'events'/f'R1rep_b10__{prior}__rlog_{prior}_s0'
   if not (root/'receipt.json').exists():lines.append(f'| {prior} | 결과 없음 | 확인 불가 |');continue
-  rec=json.loads((root/'receipt.json').read_text());z=loadz(root/'events.npz');it=z['iteration'];u,n=np.unique(it,return_counts=True);ax1[j].bar(u,n,width=70);density=np.unique(it[z['cause']==0]);ax1[j].vlines(density,0,max(n)*.06,color='red',linewidth=.5);ax1[j].set(title=prior,xlabel='반복 (빨간 표식: 밀도 제어 사건)',ylabel='풀림 사건 수')
+  rec=json.loads((root/'receipt.json').read_text());z=loadz(root/'events.npz');it=z['iteration'];u,n=np.unique(it,return_counts=True);ax1[j].bar(u,n,width=70);density_source=Path(rec['source_model'])/'target_monitor/reattach.jsonl';density=np.unique([r['iteration'] for r in map(json.loads,density_source.read_text().splitlines()) if r['reason']!='periodic']);ax1[j].vlines(density,0,max(n)*.06,color='red',linewidth=.5);ax1[j].set(title=prior,xlabel='반복 (빨간 표식: 실제 밀도 제어 점검)',ylabel='풀림 사건 수')
   for k,col in [(0,'#d95f02'),(1,'#1b9e77')]:
    take=z['case']==k;ax2[j].scatter(z['xyz'][take,0],z['xyz'][take,1],c=col,s=1,label='가' if k==0 else '나')
-  ax2[j].set(title=prior,xlabel='local X (m)',ylabel='local Y (m)');ax2[j].set_aspect('equal');ax2[j].legend();meta.append(dict(path=str(root/'events.npz'),sha256=sha(root/'events.npz')));lines.append(f"| {prior} | {rec['events']} | {rec['median_iteration_ratio_vs_V0']:.3f} |")
+  ax2[j].set(title=prior,xlabel='local X (m)',ylabel='local Y (m)');ax2[j].set_aspect('equal');ax2[j].legend();meta.append(dict(path=str(root/'events.npz'),sha256=sha(root/'events.npz'),density_source=str(density_source),density_source_sha256=sha(density_source),density_iterations=density.tolist()));lines.append(f"| {prior} | {rec['events']} | {rec['median_iteration_ratio_vs_V0']:.3f} |")
  for fig,name in [(fig1,'event_iterations'),(fig2,'event_locations')]:
   p=D/'figures/stage2'/name;p.parent.mkdir(parents=True,exist_ok=True);fig.tight_layout();fig.savefig(p.with_suffix('.png'),dpi=180);plt.close(fig);dump(p.with_suffix('.json'),dict(sources=meta,crs='EPSG:25832 inherited local shift',scientific_verdict=None))
  lines+=['','시간 비교에는 동시에 실행한 계보 렌더·CPU 작업의 영향이 섞여 있다. 사건은 점마다 쓰지 않고 점검마다 배열로 모아 저장했다. 7,000·15,000회 사건 계보 자손 수는 평가 범위 안·밖을 나눴다.','기본값·기록 on/off의 100회 Adam/복제/분할/정리 상태 동등성과 당김·지움·섞음 단위 점검은 verification에 있다.']
