@@ -1,0 +1,83 @@
+{
+  "title": "두 자료가 각각 틀린 곳의 완전성",
+  "method": "ft_B173nb_b10__LoD2",
+  "rows": [
+    {
+      "key": "B173nb_b10__LoD2__prior",
+      "cell1": 16.75030552016433,
+      "cell2": 90.82934609250398
+    },
+    {
+      "key": "B173nb_b10__LoD2__mvs",
+      "cell1": 94.61677804068401,
+      "cell2": 76.95374800637958
+    },
+    {
+      "key": "B173nb_b10__LoD2__fusion",
+      "cell1": 83.55304783449041,
+      "cell2": 93.49717268377556
+    },
+    {
+      "key": "B173nb_b10__LoD2__baseline_30000",
+      "cell1": 93.41983237560345,
+      "cell2": 80.75975061620994
+    },
+    {
+      "key": "B173nb_b10__LoD2__GeoGS_30000",
+      "cell1": 82.57364986089082,
+      "cell2": 78.62838915470495
+    },
+    {
+      "key": "B173nb_b10__LoD2__2DGS_30000",
+      "cell1": 63.13910051396725,
+      "cell2": 66.4274322169059
+    },
+    {
+      "key": "B173nb_b10__LoD2__CDGS_30000",
+      "cell1": 49.92676183294764,
+      "cell2": 75.1486153400029
+    },
+    {
+      "key": "B173nb_b10__LoD2__judgment_mesh",
+      "cell1": 88.07561299045737,
+      "cell2": 85.20371175873568
+    },
+    {
+      "key": "B173nb_b10__LoD2__oracle",
+      "cell1": 88.34863100964664,
+      "cell2": 93.91764535305205
+    },
+    {
+      "key": "ft_B173nb_b10__LoD2",
+      "cell1": 93.45883494977335,
+      "cell2": 85.92866463679862
+    }
+  ],
+  "provisional": false,
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "source_script": "/repo/scripts/phd/main_rescore_v1/figures.py",
+  "source_script_sha256": "ee00f53640a40f46db053aec68f196ff16565615fa50f72339f647bb08ae79cf",
+  "target_sha256": "610cff9a3900540c37ac896dd055e84849af2ad70fdbc9e3c82e88b23b4a1458",
+  "places_sha256": "9197f41fe9624ad0c3d18027e93de05afe57cb7a2b508fe811f1661659cca6a1",
+  "pending_families": [],
+  "adaptations": [
+    "output/input roots",
+    "method name",
+    "actual FINALTRAIN sigma",
+    "explicit missing comparison panels",
+    "inherited per-site representative count"
+  ],
+  "colors": {
+    "mvs": "#1D9E75",
+    "prior": "#D85A30",
+    "within": "#CFCDC4",
+    "uncovered": "#2457B0",
+    "outlier": "#C2187A",
+    "method": "#4B2E8A",
+    "fusion": "#B9A5E0",
+    "gt": "#000000"
+  },
+  "dpi": 300,
+  "scientific_verdict": null
+}

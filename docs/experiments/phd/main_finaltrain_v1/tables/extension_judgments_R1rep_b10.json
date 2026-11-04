@@ -1,0 +1,66 @@
+{
+  "rows": [
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "eval_patches": 24189,
+      "decision_mismatches": 1,
+      "photo_code_mismatches": 15,
+      "details": [
+        {
+          "source_index": 9566,
+          "centre": [
+            -17.345931210695262,
+            29.69950571184489,
+            -21.51797535532254
+          ],
+          "frozen_region": 1,
+          "full_scope_region": 2,
+          "fields": {
+            "photo_code": {
+              "frozen": 5,
+              "full_scope": 1
+            },
+            "kind": {
+              "frozen": 1,
+              "full_scope": 1
+            },
+            "n": {
+              "frozen": 19,
+              "full_scope": 19
+            },
+            "geometry": {
+              "frozen": 1,
+              "full_scope": 1
+            },
+            "prior_height_m": {
+              "frozen": 0.015590991318088835,
+              "full_scope": 0.015590991318088835
+            },
+            "mvs_mean_m": {
+              "frozen": 0.17188883547657682,
+              "full_scope": 0.17188883547657682
+            },
+            "u_mvs": {
+              "frozen": 0.015741081908345222,
+              "full_scope": 0.015741081908345222
+            },
+            "sigma_P_m": {
+              "frozen": 0.021298933774232864,
+              "full_scope": 0.021298933774232864
+            }
+          }
+        }
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "eval_patches": 79054,
+      "decision_mismatches": 0,
+      "photo_code_mismatches": 41,
+      "details": []
+    }
+  ],
+  "scientific_verdict": null
+}
