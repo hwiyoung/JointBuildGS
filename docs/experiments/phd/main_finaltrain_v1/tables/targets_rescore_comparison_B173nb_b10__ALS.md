@@ -1,0 +1,3 @@
+| site | prior | status | compared | max_height_difference_m | target_sha256 | rescore_sha256 |
+| --- | --- | --- | --- | --- | --- | --- |
+| B173nb_b10 | ALS | PASS | 33512 | 0.0 | dc10377655ed8516207172e607b2934839fbb18e93a33a152b488ecc319b550c | 44e6d7c1a161905dcd6d29d78ea8411b88123788f40edbae145549467b1937b7 |

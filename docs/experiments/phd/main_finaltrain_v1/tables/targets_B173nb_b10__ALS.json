@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-04T01:34:45.286523+09:00",
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "output_sha256": "dc10377655ed8516207172e607b2934839fbb18e93a33a152b488ecc319b550c",
+  "patches": 76657,
+  "source_files": {
+    "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/stage0_r1/inputs/B173nb_b10_ALS.npz": "c88cd7d2fee7d1fcf57521e526d128535f8b041e3628d3c4cae7325a7ef2bb22",
+    "/art/phase-payloads/phd/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/core_points/B173nb_b10__ALS.npz": "394ef94b9422dbaf02c47261e611ad2c6a7466701522646635a6c1816c68af65",
+    "/art/phase-payloads/phd/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/calibration.json": "cd04d0f4a4c3223d541023839de4290b392303a414b661abfddeae40541fd2f1",
+    "/out/outside/B173nb_b10/budget_receipt.json": "fb27d1e53c9eacaea7969b8fd54a76b7989566bc0d87becd875648593fad7ccd",
+    "/out/outside/B173nb_b10/method/B173nb_b10__ALS.npz": "c105d6b2922d3301476d169cd239ef0a5644dba3f968a6f4fd4e32e546f3bf41"
+  },
+  "eval_replay": {
+    "count": 34273,
+    "decision_mismatches": 0,
+    "reason_mismatches": 0,
+    "scope": "exact JUDGEAPPLY decision code on frozen inputs; no recalibration"
+  },
+  "extended_eval_decision_mismatches": 1,
+  "frozen_eval_always_used": true,
+  "outside_status": "PASS",
+  "outside_patches": 42384,
+  "outside_area_m2": 2753.8061433812463,
+  "sigma_ref": 0.014536683573548322,
+  "unclipped_area_weighted_mean": 1.0,
+  "correction_u_median": 0.04303315095603466,
+  "unassigned_target_area_m2": 1567.1385631569592,
+  "regions": [
+    {
+      "region": 0,
+      "patches": 31602,
+      "area_m2": 2058.5707769788683,
+      "sigma_q10_q50_q90": [
+        0.005955281835432817,
+        0.010361737240268227,
+        0.040170491186241324
+      ],
+      "undecided_area_m2": 0.0
+    },
+    {
+      "region": 1,
+      "patches": 5804,
+      "area_m2": 393.54753388099607,
+      "sigma_q10_q50_q90": [
+        0.013837200589478016,
+        0.0352679006755352,
+        0.09711623191833496
+      ],
+      "undecided_area_m2": 30.134401487935875
+    },
+    {
+      "region": 2,
+      "patches": 15203,
+      "area_m2": 1010.0831695797604,
+      "sigma_q10_q50_q90": [
+        0.020634856447577475,
+        0.04303315095603466,
+        0.186896198987961
+      ],
+      "undecided_area_m2": 6.731339538157725
+    },
+    {
+      "region": 3,
+      "patches": 89,
+      "area_m2": 5.7686171559346775,
+      "sigma_q10_q50_q90": null,
+      "undecided_area_m2": 0.0
+    },
+    {
+      "region": 4,
+      "patches": 715,
+      "area_m2": 46.861843344494666,
+      "sigma_q10_q50_q90": [
+        0.006690228637307882,
+        0.01928462740033865,
+        0.11221922412514687
+      ],
+      "undecided_area_m2": 0.0
+    },
+    {
+      "region": 9,
+      "patches": 23244,
+      "area_m2": 1524.8415830088825,
+      "sigma_q10_q50_q90": null,
+      "undecided_area_m2": 0.0
+    }
+  ],
+  "rescore_comparison": {
+    "status": "확인 전"
+  },
+  "sigma_W_used": false,
+  "r_added": false,
+  "GT_used": false,
+  "scientific_verdict": null
+}
