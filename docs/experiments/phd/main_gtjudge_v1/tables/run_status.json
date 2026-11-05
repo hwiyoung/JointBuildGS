@@ -20,8 +20,17 @@
       "site": "R1rep_b10",
       "prior": "ALS",
       "arm": "A2",
-      "status": "PENDING",
-      "iterations": 0
+      "status": "TRAINING_COMPLETE_30000",
+      "iterations": 30000,
+      "psnr_test": 22.82993478191142,
+      "psnr_train": 22.41991195678711,
+      "lambda_fs": 1.3040749728077117e-05,
+      "calibration_iteration": 600,
+      "opacity_pruned_recent_targets": 145652,
+      "scientific_verdict": null,
+      "gaussians": 2919163,
+      "training_seconds": 5175.025884509087,
+      "scene_accuracy_pct": 48.62988721436359
     },
     {
       "site": "R1rep_b10",
