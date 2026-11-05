@@ -1,0 +1,58 @@
+{
+  "at": "2026-11-05T20:50:22.452008+09:00",
+  "status": "PASS_NUMERICAL_CHECKS",
+  "checks": {
+    "precalculation_lock": true,
+    "component_duplicate_and_area_weight": true,
+    "cyclic_eaves_run": true,
+    "inherited_gradient_stencil": true,
+    "count_and_ranking_upper_bound": true,
+    "population_geometry_buildings": 110,
+    "population_with_case_material": 110,
+    "population_missing_case_material": [],
+    "top5_recalculation": [
+      {
+        "building": "DEBY_LOD2_4959326",
+        "case_areas": "PASS",
+        "edge_fractions": "PASS",
+        "coverage": 1.0,
+        "minimum_satisfied_area_m2": 18.0625
+      },
+      {
+        "building": "DEBY_LOD2_4906975",
+        "case_areas": "PASS",
+        "edge_fractions": "PASS",
+        "coverage": 1.0000000000000002,
+        "minimum_satisfied_area_m2": 16.625
+      },
+      {
+        "building": "DEBY_LOD2_4907518",
+        "case_areas": "PASS",
+        "edge_fractions": "PASS",
+        "coverage": 0.0,
+        "minimum_satisfied_area_m2": 11.0
+      },
+      {
+        "building": "DEBY_LOD2_4959461",
+        "case_areas": "PASS",
+        "edge_fractions": "PASS",
+        "coverage": 0.0,
+        "minimum_satisfied_area_m2": 9.0625
+      },
+      {
+        "building": "DEBY_LOD2_4906974",
+        "case_areas": "PASS",
+        "edge_fractions": "PASS",
+        "coverage": 0.0,
+        "minimum_satisfied_area_m2": 7.625
+      }
+    ],
+    "inherited_sources_preserved": true,
+    "gpu_device_files": [],
+    "cpu_max": "800000 100000",
+    "memory_max": "34359738368",
+    "mountinfo": "6174 6515 0:238 / / ro,relatime - overlay overlay rw,lowerdir=/var/lib/docker/overlay2/l/MRJAE7LAJ244JDC4MDRXXKRMBO:/var/lib/docker/overlay2/l/T3TQ6VD7TF5XRGBWLZR7K4CVEL:/var/lib/docker/overlay2/l/M7FBYETL6POPUWCDHTXEC3Y6XA:/var/lib/docker/overlay2/l/HVBLWHBUH4HMK5HF2672DEJZ5W:/var/lib/docker/overlay2/l/QZ4RPQZDBDGCYW375NONY2LQNH:/var/lib/docker/overlay2/l/MZJGOMLRWF6MZTTWC36HAEB3RI:/var/lib/docker/overlay2/l/YRG2VWWTN3EDHSGWVYQY6TRU54:/var/lib/docker/overlay2/l/DRF6KG6UCCHMNXMYUGSFAJWBKW:/var/lib/docker/overlay2/l/3AI6AW6V6BYEHSWTJGCMK7LQR2:/var/lib/docker/overlay2/l/TWPCETYDHRVBUVWI5ZO2SKRGUK:/var/lib/docker/overlay2/l/VJJIWJVMYRKIIVJWEU2RVSNNBZ:/var/lib/docker/overlay2/l/4FCCGT5SVYMWMQ2UHL4JTYBB7Z:/var/lib/docker/overlay2/l/LIIBV2I74AEVQ2XFNMT24332YT:/var/lib/docker/overlay2/l/XBXASMJOBQ6IWJMOMNZLJWVU6A:/var/lib/docker/overlay2/l/5ERRJSLKY4S5VNLLE2CC7DU7YW:/var/lib/docker/overlay2/l/OFQLNVHCF6YZFXY7RDR7TNYLNC:/var/lib/docker/overlay2/l/SJ5D4S4ORLYKBYDPTQT5IGCPRA:/var/lib/docker/overlay2/l/2MATS3R3Z4OVK6VGUEMGH47QYD:/var/lib/docker/overlay2/l/IP7HOJWG3ZKIRH27ZFJVRYIJWX:/var/lib/docker/overlay2/l/EF4I3RTP25SDRM3DVB6YU6WXVQ:/var/lib/docker/overlay2/l/2TDN6UXU32DBW7ZJVABTRQ2QJL,upperdir=/var/lib/docker/overlay2/2cf51ffd04e7c87f0456b473ec3194b5bbe9b19f500cbdf1a265424e7c955406/diff,workdir=/var/lib/docker/overlay2/2cf51ffd04e7c87f0456b473ec3194b5bbe9b19f500cbdf1a265424e7c955406/work,nouserxattr\n6186 6174 0:256 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw\n7416 6174 0:265 / /dev rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64\n7736 7416 0:302 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,gid=5,mode=620,ptmxmode=666\n7747 6174 0:305 / /sys ro,nosuid,nodev,noexec,relatime - sysfs sysfs ro\n7748 7747 0:29 / /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime - cgroup2 cgroup rw,nsdelegate,memory_recursiveprot\n7749 7416 0:349 / /dev/mqueue rw,nosuid,nodev,noexec,relatime - mqueue mqueue rw\n7750 7416 0:350 / /dev/shm rw,nosuid,nodev,noexec,relatime - tmpfs shm rw,size=65536k,inode64\n7751 6174 8:17 /hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd /ph ro,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7752 6174 8:17 /hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/pres_realbldg_v1/PHD-PRES-REALBLDG-v1 /pres rw,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7753 6174 8:17 /hwiyoung/code/JointBuildGS-exp /repo ro,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7754 6174 8:17 /hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1 /out ro,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7755 6174 8:17 /hwiyoung/code/JointBuildGS-artifacts /art ro,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7756 6174 8:17 /hwiyoung/code/JointBuildGS-exp/configs/phd/pres_realbldg_v1 /cfg rw,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7757 6174 259:2 /usr/share/fonts/opentype/noto /fonts ro,relatime - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n7758 6174 8:17 /hwiyoung/code/JointBuildGS-exp/docs/experiments/phd/pres_realbldg_v1 /docs rw,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7759 6174 8:17 /hwiyoung/code/JointBuildGS-artifacts /artifacts/JointBuildGS ro,nosuid,nodev,relatime - ext4 /dev/sdb1 rw\n7760 6174 259:2 /var/lib/docker/containers/3fde9508716031e8e6f3cf3f83d451503205c16b74b74338a22b914347ea18ee/resolv.conf /etc/resolv.conf ro,relatime - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n7761 6174 259:2 /var/lib/docker/containers/3fde9508716031e8e6f3cf3f83d451503205c16b74b74338a22b914347ea18ee/hostname /etc/hostname ro,relatime - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n7765 6174 259:2 /var/lib/docker/containers/3fde9508716031e8e6f3cf3f83d451503205c16b74b74338a22b914347ea18ee/hosts /etc/hosts ro,relatime - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n6516 6186 0:256 /bus /proc/bus ro,nosuid,nodev,noexec,relatime - proc proc rw\n6517 6186 0:256 /fs /proc/fs ro,nosuid,nodev,noexec,relatime - proc proc rw\n6535 6186 0:256 /irq /proc/irq ro,nosuid,nodev,noexec,relatime - proc proc rw\n6536 6186 0:256 /sys /proc/sys ro,nosuid,nodev,noexec,relatime - proc proc rw\n6577 6186 0:256 /sysrq-trigger /proc/sysrq-trigger ro,nosuid,nodev,noexec,relatime - proc proc rw\n6641 6186 0:351 / /proc/asound ro,relatime - tmpfs tmpfs ro,inode64\n6667 6186 0:352 / /proc/acpi ro,relatime - tmpfs tmpfs ro,inode64\n6781 6186 0:265 /null /proc/interrupts rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64\n6855 6186 0:265 /null /proc/kcore rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64\n7006 6186 0:265 /null /proc/keys rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64\n7196 6186 0:265 /null /proc/latency_stats rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64\n7197 6186 0:265 /null /proc/timer_list rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64\n7198 6186 0:353 / /proc/scsi ro,relatime - tmpfs tmpfs ro,inode64\n7199 7747 0:354 / /sys/firmware ro,relatime - tmpfs tmpfs ro,inode64\n7200 7747 0:357 / /sys/devices/virtual/powercap ro,relatime - tmpfs tmpfs ro,inode64\n",
+    "scientific_verdict": null
+  },
+  "scientific_verdict": null
+}

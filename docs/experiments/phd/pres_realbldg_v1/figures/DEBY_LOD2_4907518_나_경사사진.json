@@ -1,0 +1,70 @@
+{
+  "building": "DEBY_LOD2_4907518",
+  "scene": "outside__LoD2",
+  "case_source": "JUDGECHECK-v1 development where exact patch ID matches; otherwise WIDEN0-v2",
+  "case_areas_m2": {
+    "-1": 336.0,
+    "0": 515.375,
+    "1": 118.875,
+    "2": 203.375,
+    "3": 46.625,
+    "4": 19.125
+  },
+  "conditions": {
+    "c1": true,
+    "c2": true,
+    "c3a": false,
+    "c3b": true,
+    "c4": true
+  },
+  "dpi": 300,
+  "crs": "EPSG:25832; local [690953,5336071,604], inherited vertical bridge 45.7m",
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53359/lod2_mesh.npz",
+      "sha256": "17946466583898e41ad62d51457718ef347c4b68e2510c7bdf1027cddb70670b"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53359/LoD2/summary.json",
+      "sha256": "7f9e8d824422a0e30d25003e370c58264c6ed5b5d99c524f21b1a2c9835c29e7"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/6909_53359/als_mesh.npz",
+      "sha256": "48ec4409f9d050cbea67cf4f0f7a4315b8f1f1524ef6769fbe664ae2010bf06c"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/registration/6909_53359/ALS/summary.json",
+      "sha256": "f2e7737093e84a438d5cd2ac1686410d5a9f6041d4a4635a73f11495c350ec62"
+    },
+    {
+      "path": "/pres/data/outside__LoD2.npz",
+      "sha256": "27766917b50f21129b553ed4388bd00194ace7cf747ad4af630942967aed68b5"
+    },
+    {
+      "path": "/pres/ranking.json",
+      "sha256": "fe6ea16d06d6bfd71bef21b76454f11054db7262b58a055f605311a45af7e988"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/figures.py",
+      "sha256": "2332050b3267143725b04aebc1e73ef458a70350970cd508bb46fb0358c82802"
+    }
+  ],
+  "scientific_verdict": null,
+  "camera": "DJI_20241217094548_0030_D.JPG",
+  "camera_tilt_degrees": 69.17878019504441,
+  "oblique_fallback": false,
+  "visible_wall_patches": 6460,
+  "visible_case_points": 7172,
+  "photo_member": "Images/DJI_20241217094548_0030_D.JPG",
+  "photo_crc32": 17324984,
+  "crop": [
+    [
+      531,
+      1210
+    ],
+    [
+      1528,
+      2036
+    ]
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "at": "2026-11-05T20:50:57.789174+09:00",
+  "status": "PASS_DELIVERY_CHECKS_WITH_DECLARED_SCOPE_LIMIT",
+  "versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "shapely": "2.0.6",
+    "matplotlib": "3.9.2",
+    "Pillow": "10.4.0",
+    "open3d": "0.18.0",
+    "opencv": "4.10.0"
+  },
+  "dependency_sources": [
+    {
+      "path": "/repo/scripts/phd/main_judgecheck_v1/photo_cameras.py",
+      "sha256": "27a6a6f9060dcc5dd5bda867b9391a0b2b9b7c81423f8e753b297466999681f2"
+    },
+    {
+      "path": "/repo/scripts/phd/main_judgeapply_v1/cameras.py",
+      "sha256": "f42f8715d592aecf837b5365b171f5090026738c5888b5c5143ba5b8b6e031f1"
+    },
+    {
+      "path": "/repo/scripts/phd/main_recount_v1/recount.py",
+      "sha256": "40039f8146c3a85775296cbec11388f44a01aa38b3046bd8d3317daea56fbf08"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/defs_s1.py",
+      "sha256": "959f3dc76f3333470737276370195323c91103c089f93e4c0b9ac89f4271be0f"
+    },
+    {
+      "path": "/repo/docs/evidence/p0-audit/w3-quality-integration/tables/W3_failure_surface_cause_thresholds.csv",
+      "sha256": "0efa5d3422fda95378f473fd1d0d1b267319e66b0e53c1eda475fa8fa1e38f5c"
+    }
+  ],
+  "task_code": [
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/common.py",
+      "sha256": "4ea748dd4a5803ebe279531a9b103054ecca4dc87589bb41cb73057394d16048"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/delivery_audit.py",
+      "sha256": "2a9a4d35092ed9262154b60a950f2f5cd02b553c7411d73b2f9e5ce4a16cdd95"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/face53_check.py",
+      "sha256": "69f1ccf302a78fd433f5e986211eab0c1c15de21c9cd0d6d072fc32b4fad919b"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/figures.py",
+      "sha256": "2332050b3267143725b04aebc1e73ef458a70350970cd508bb46fb0358c82802"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/finish_measure.py",
+      "sha256": "98ecc4faf06c73f17540dd5e84deecfb423ae3894339dbfc22fd9c8625574c18"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/measure.py",
+      "sha256": "65a9b3aeda04b568538b63dd34d50baee11133d4b16030d240db113836f589a2"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/photos.py",
+      "sha256": "fef6ab196ddf1d051ec816f6d6bc7174327425cee610fbdba0f3b381d6a92d66"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/preflight.py",
+      "sha256": "75406523b3b0d5649a8d642c97ba53c7ba85696876eeaf498ebb251133ec8a9d"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/prepare.py",
+      "sha256": "c3e5cd49ab218c14f4976ef0af26af2e68b4cf5544d7c2e1e5d8a56d4b5e2b90"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/probe.py",
+      "sha256": "142a77163f83f19b51fd65228a03a38c41e68479e16cbf2f44618a2dcbe4587b"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/repair_unassigned.py",
+      "sha256": "3464bfc25d0fe9cba687122042ec3b93b4ac54706edf9951e92c45963f5120a8"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/report.py",
+      "sha256": "3e6bdf961708a5c2e06fac5c4d3934704ccee9759700b1ae7af68ee211be8dae"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/run_cpu.sh",
+      "sha256": "3ec24d50bff38b8adeabf0c9f07be17d61dbfdc3703f551e1abde811ad1db4d8"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/seal.py",
+      "sha256": "f090648cfca2036563eb3c8b461b9a4c78791f0571d81c6d901ee1277d040645"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/validate.py",
+      "sha256": "4b8cdfe2d7d643402222e70bd678b401bb9f62eabdec7ca3bd93cd7d72e2da8a"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/verify_inputs.py",
+      "sha256": "e0ad9d377e07c50d0425d5bfe3e71a32460ac9b18fbff63c83e73b497454d23f"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/visibility.py",
+      "sha256": "8ce1329c8660e600b9ab930cf1682995254ef72012d43871200f5ccb24c53ed3"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/visual_qa.py",
+      "sha256": "e7b7f261b0e5bb47a40efabe349dc8ca6b0ab438d2f054d0c7ba0380e7853026"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/zones.py",
+      "sha256": "78c0ea09597aa123adab9200eb82c01ff6b7da2b2e9f273eef23fae48fd5878a"
+    }
+  ],
+  "photo_inputs_unchanged": true,
+  "reference_scope": "saved roof and wall cases; ground unavailable",
+  "full_spatial_all_five": null,
+  "report_characters": 1759,
+  "visual_review": {
+    "method": "One contact sheet containing all ten images was opened once",
+    "result": "No visible broken image, clipped title, or overlapping label found at contact-sheet scale",
+    "png_decode_and_dpi": "Separately verified all ten PNG files at 3000 x 2400 and 300 dpi",
+    "source_sha256": "Verified all figure source sidecars after unassigned-point correction"
+  },
+  "generation": {
+    "training": false,
+    "mesh_generation": false,
+    "GS_render": false,
+    "GPU": false,
+    "photo_projection": "CPU projection onto existing prior geometry, as requested"
+  },
+  "payload_path": "../JointBuildGS-artifacts/phase-payloads/phd/pres_realbldg_v1/PHD-PRES-REALBLDG-v1",
+  "scientific_verdict": null
+}

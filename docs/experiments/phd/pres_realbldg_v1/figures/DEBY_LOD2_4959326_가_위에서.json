@@ -1,0 +1,63 @@
+{
+  "building": "DEBY_LOD2_4959326",
+  "scene": "B173nb_b10__LoD2",
+  "case_source": "GTJUDGE stage1 normal_line",
+  "case_areas_m2": {
+    "-1": 0.0,
+    "0": 1790.8125,
+    "1": 1300.75,
+    "2": 303.3125,
+    "3": 287.8125,
+    "4": 72.4375
+  },
+  "conditions": {
+    "c1": true,
+    "c2": true,
+    "c3a": true,
+    "c3b": false,
+    "c4": true
+  },
+  "dpi": 300,
+  "crs": "EPSG:25832; local [690953,5336071,604], inherited vertical bridge 45.7m",
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173nb_b10/lod2_mesh.npz",
+      "sha256": "ab371822966242592a91b2f03014cdfba375b8d89ca8210115ee30b531b60220"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173nb_b10/LoD2/summary.json",
+      "sha256": "a19f9ca6a549e3d9f77cac3471d7a7239a1c61bccd5ec870f82a07248cd6dba6"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_prep_discard_rule_v1/PHD-MAIN-PREP-DISCARD-RULE-v1/s02_box/B173nb_b10/als_mesh.npz",
+      "sha256": "36610c908b4a16375d19f2d8eb4728dd03ec287028251a5fd87d677489bbec0a"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/s61/box/B173nb_b10/ALS/summary.json",
+      "sha256": "5de45a5c34a8dbe92aee2fc459eb6dd7daf375bfafb7c3f0eaf39baf3e7e0172"
+    },
+    {
+      "path": "/pres/data/B173nb_b10__LoD2.npz",
+      "sha256": "2b32da8ff4f2d0fb325c4af887d4a8cfb9f88efba7bf09aa34ee0453e1ee7ba5"
+    },
+    {
+      "path": "/pres/ranking.json",
+      "sha256": "fe6ea16d06d6bfd71bef21b76454f11054db7262b58a055f605311a45af7e988"
+    },
+    {
+      "path": "/repo/scripts/phd/pres_realbldg_v1/figures.py",
+      "sha256": "2332050b3267143725b04aebc1e73ef458a70350970cd508bb46fb0358c82802"
+    }
+  ],
+  "scientific_verdict": null,
+  "camera": "DJI_20241217091247_0146_D",
+  "background": {
+    "grid_m": 0.05,
+    "cells": 2075150,
+    "prior_surface_cells": 2029068,
+    "sight_tilt_degrees": 12.39748240944844,
+    "member": "Images/DJI_20241217091247_0146_D.JPG",
+    "crc32": 52831114
+  },
+  "unassigned_projection_correction": "unowned reference rows only; all building data and displayed marks identical"
+}

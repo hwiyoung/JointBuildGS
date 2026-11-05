@@ -1,0 +1,29 @@
+{
+  "task_id": "PHD-PRES-REALBLDG-v1",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "PH_resolution": "../JointBuildGS-artifacts/phase-payloads/phd",
+  "output_paths": ["configs/phd/pres_realbldg_v1/", "scripts/phd/pres_realbldg_v1/", "docs/experiments/phd/pres_realbldg_v1/", "PH/pres_realbldg_v1/PHD-PRES-REALBLDG-v1/"],
+  "source_policy": "Reuse saved GTJUDGE cases where available, otherwise RECOUNT in experiment regions; WIDEN0-v2/JUDGECHECK saved patch cases outside. Do not recompute cases or judgments.",
+  "sites": ["B173nb_b10", "B0_b10", "R1rep_b10"],
+  "priors": ["LoD2", "ALS"],
+  "case_names": {"0": "둘 다 맞음", "1": "영상만 맞음", "2": "사전 정보만 맞음", "3": "둘 다 틀림", "4": "영상 없음"},
+  "building": {"source": "inherited LoD2 building attribute; reference ownership from RECOUNT row_owner", "minimum_footprint_m2": 100, "minimum_eval_coverage_for_top5": 0.8},
+  "area": {"experiment_grid_m": 0.25, "grid_cell_area_m2": 0.0625, "roof_ground_projection": "XY", "wall_projection": "wall plane", "outside": "inherited patch area"},
+  "components": {"experiment_radius_m": 0.6, "outside_radius_m": 0.36, "largest": "largest area, not most points"},
+  "zones": {"eaves": "outer boundary of building LoD2 roof", "roof_interior_distance_gt_m": 1, "inner_edge_distance_le_m": 1, "outer_ground_distance_le_m": 1.5, "outer_wall_drop_le_m": 3},
+  "texture": {"source": "GTJUDGE-v1 order 5.1 / p0-audit scripts/11_survivor_texture_refine.py", "reuse_same_point": true, "near_nadir_degrees": 20, "low_view_fraction_min": 0.5, "fallback_only_if_code_missing": "scene roof gradient lower 20 percent"},
+  "visibility": {"photos": "training only", "occluders": "prior surfaces including terrain", "max_outward_normal_angle_degrees": 80, "projection": "JUDGECHECK appendix C", "candidate_gate": "at least two of c1_roof,c2,c3a,c3b; always include B173nb LoD2 face53", "face53_required": true},
+  "conditions": {
+    "c1": {"case": 0, "roof": "interior and observed textured", "roof_total_area_min_m2": 4, "wall_total_area_min_m2": 4, "wall_visible_views_min": 2, "combine": "both required", "ALS": "roof only"},
+    "c2": {"case": 1, "scope": "roof, wall, roof superstructure", "largest_component_area_min_m2": 4, "changed_building_area_min_m2": 20, "changed_building_absolute_prior_reference_height_gt_m": 1, "superstructure_area_lt_m2": 20, "superstructure": "reference above prior"},
+    "c3a": {"case": 2, "scope": "interior roof and low texture", "largest_component_area_min_m2": 4},
+    "c3b": {"case": 2, "segment_m": 0.5, "outside_reference_points_min": 5, "outside_patches_min": 2, "outside_prior_only_fraction_min": 0.5, "both_wrong_fraction_lt": 0.2, "both_wrong_scopes": "inner and outer separately; omit inner if empty", "continuous_length_min_m": 3, "continuous_segments_min": 6},
+    "c4": {"case_required": false, "visible_views_max": 0, "same_wall_face": true, "largest_component_area_min_m2": 4, "reference_count_low_lt": 100, "reference_prior_tau_fraction": "report only", "ALS": "excluded"}
+  },
+  "relaxation": {"trigger": "no building satisfies that condition in original full eligible population", "passes": 1, "area_min_m2": 2, "continuous_length_min_m": 1.5, "continuous_segments_min": 3, "c4_visible_views_max": 1, "c1_visible_views_min_unchanged": 2, "label": "느슨한 값"},
+  "ranking": ["LoD2 condition count descending", "experiment, development, holdout", "minimum satisfied condition area descending; c3b uses length times 1m", "building ID ascending for otherwise exact ties"],
+  "holdout": {"point_values": "task PH only", "public": "building ID, conditions, areas; top5 figures only"},
+  "figures": {"top": 5, "dpi": 300, "buffer_m": 5, "background_grid_m": 0.05, "oblique_tilt_gt_degrees": 30, "no_oblique_fallback": "maximum tilt with recorded angle", "colors": {"0": "#888780", "1": "#1D9E75", "2": "#D85A30", "4": "#D85A30", "3": "#ffffff"}},
+  "execution": {"cpu_only": true, "cpus": 8, "threads": 4, "memory_gib": 64, "training": false, "mesh_generation": false, "render": false, "scientific_interpretation": false}
+}
