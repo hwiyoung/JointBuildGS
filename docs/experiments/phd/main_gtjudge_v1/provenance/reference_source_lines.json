@@ -1,0 +1,180 @@
+{
+  "rows": [
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/score_scene_only.py",
+      "line": 5,
+      "text": "from score_mesh import normal_wall_distance"
+    },
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/score_scene_only.py",
+      "line": 13,
+      "text": " sample=result_sample(V,F,gt);scene=MeshScene(V,F);del m,V,F;gc.collect();gd=normal_wall_distance(scene,gt.Gb,N,wall);del scene;gc.collect();_,nd,lat,near=ref.query(sample);taurows=json.loads((D/'tables/table1_tau.json').read_text())['rows'];rr=[r for r in taurows if r['search_region']=='R2' and r['prior']==prior];lookup={str(r['kind']):r['new_tau_m'] for r in rr}"
+    },
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/score_mesh.py",
+      "line": 9,
+      "text": "def normal_wall_distance(scene,points,normals,wall):"
+    },
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/score_mesh.py",
+      "line": 43,
+      "text": "  gd=normal_wall_distance(scene,gt.Gb,ctx['normals'][0][gt.bs_idx],gt.G['vert_gt_points'][gt.bs_idx].astype(bool))"
+    },
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/score_mesh.py",
+      "line": 44,
+      "text": "  rd=normal_wall_distance(scene,ctx['row_points'],ctx['row_normals'],ctx['row_kind']==2)"
+    },
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/score_mesh.py",
+      "line": 46,
+      "text": " _,nd,lat,near=ctx['ref'].query(sample);refgood=inherited_result_mask(nd,lat)"
+    },
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/geometry.py",
+      "line": 13,
+      "text": "globals().update(inherit('scripts/phd/main_axes71_v2/a2x_sample.py',['Ref','normals_full'],env))"
+    },
+    {
+      "path": "/repo/scripts/phd/main_rescore_v1/geometry.py",
+      "line": 34,
+      "text": " gt=SiteGT(site);normals=normals_full(site,gt);ref=Ref(gt.Gb,normals[0][gt.bs_idx]);core=loadz(JA/'core_points'/f'{site}__{prior}.npz');v2=loadz(CELLS/f'{site}__{prior}.npz');assert np.array_equal(core['patch_id'],v2['patch_id'])"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/defs_s1.py",
+      "line": 8,
+      "text": "defs/<site>/gt_classes.npz   per GT source (uls; B0 also primary): xyz, use (evaluation range, not excluded), vertical-surface"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/defs_s1.py",
+      "line": 44,
+      "text": "        p = np.load(D / \"gt_primary.npz\")[\"xyz\"].astype(np.float64)"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/defs_s1.py",
+      "line": 156,
+      "text": "    np.savez_compressed(D / \"gt_classes.npz\", **{f\"{k}_{n}\": v[k] if k != \"xyz\" else v[k].astype(np.float32) for n, v in C.items()"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/s1_common.py",
+      "line": 106,
+      "text": "    if site.startswith(\"B0\") and (D / \"gt_primary.npz\").exists():"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/s1_common.py",
+      "line": 107,
+      "text": "        a[\"gt_primary\"] = np.load(D / \"gt_primary.npz\")[\"xyz\"].astype(np.float64)"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/metrics_s1.py",
+      "line": 77,
+      "text": "        G = np.load(D / \"gt_classes.npz\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/metrics_s1.py",
+      "line": 252,
+      "text": "    G = np.load(OUT / \"defs\" / site / \"gt_classes.npz\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/figs_s1.py",
+      "line": 55,
+      "text": "    G = np.load(OUT / \"defs\" / site / \"gt_classes.npz\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/figs_s1.py",
+      "line": 137,
+      "text": "        G = np.load(OUT / \"defs\" / site / \"gt_classes.npz\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/figs_s1.py",
+      "line": 227,
+      "text": "        G = np.load(OUT / \"defs\" / site / \"gt_classes.npz\")[\"xyz_gt_points\"].astype(np.float64)"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/s04_gt_v7.py",
+      "line": 335,
+      "text": "        pth = Path(\"/art/phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/native_example/evaluation_reference/r1_b1_sub002_transformed.ply\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/s04_gt_v7.py",
+      "line": 350,
+      "text": "        np.savez_compressed(D / \"gt_primary.npz\", xyz=Xg.astype(np.float32))"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/s04_gt_v7.py",
+      "line": 357,
+      "text": "        np.savez_compressed(D / \"gt_primary.npz\", xyz=X.astype(np.float32))"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/check_repro.py",
+      "line": 14,
+      "text": "LABEL_FILES = [\"labels_LoD2.npz\", \"labels_ALS.npz\", \"gt_owner_LoD2.npz\", \"gt_owner_ALS.npz\", \"gt_points.npz\", \"gt_primary.npz\", \"exclusion_cells.npz\"]"
+    },
+    {
+      "path": "/repo/scripts/phd/main_stage1_v1/refbias_s1.py",
+      "line": 26,
+      "text": "        G = np.load(OUT / \"defs\" / site / \"gt_classes.npz\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/a9_dist.py",
+      "line": 100,
+      "text": "            Nfull = AXS.normals_full(geom, gt)"
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/a1_normals.py",
+      "line": 7,
+      "text": "the covariance of its neighbours (Open3D estimate_point_covariances: radius search, every neighbour; KNN 10 for the points with fewer than"
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/a1_normals.py",
+      "line": 24,
+      "text": "    return np.asarray(o3d.geometry.PointCloud.estimate_point_covariances(pc, param))"
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/d1_assemble.py",
+      "line": 146,
+      "text": "    exclusion=\"S1/v3/box_gt/<site>/exclusion_cells.npz\", gt_classes=\"S1/defs/<site>/gt_classes.npz\", fixB=\"FT/runs/<site>/fixB_<prior>_s0/model/monitor/locations.npz\","
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/mvs_surface.py",
+      "line": 459,
+      "text": "    g = S1 / \"defs\" / site / \"gt_classes.npz\""
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/mvs_surface.py",
+      "line": 462,
+      "text": "        rows[\"참값 점 (S1/defs gt_classes.npz xyz_gt_points)\"] = dict(path=str(g), vertices=len(X), **ranges(X))"
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/d1_inspect.py",
+      "line": 38,
+      "text": "    out[f\"{site}/gt_classes\"] = keys(S1 / \"defs\" / site / \"gt_classes.npz\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/a2x_sample.py",
+      "line": 71,
+      "text": "def normals_full(site, gt):"
+    },
+    {
+      "path": "/repo/scripts/phd/main_axes71_v2/a2x_sample.py",
+      "line": 122,
+      "text": "    Nfull = normals_full(site, gt)"
+    },
+    {
+      "path": "/repo/scripts/phd/main_dist71_v1/d1_defs.py",
+      "line": 153,
+      "text": "          \"- 파일: 참값 점군 `S1/v3/box_gt/<지역>/gt_points.npz`(드론 LiDAR), B0는 `gt_primary.npz`(주 참값, GeoGS 예제 장면 정리본)도; 제외 칸 `S1/v3/box_gt/<지역>/exclusion_cells.npz`(any); 점마다의 쓰임 `S1/defs/<지역>/gt_classes.npz`(use, roof, wall, excl); 건물 표면 칸 `S1/defs/<지역>/bsurf.npz`.\","
+    },
+    {
+      "path": "/repo/scripts/phd/main_dist71_v1/dm_common.py",
+      "line": 142,
+      "text": "        self.G = np.load(D / \"gt_classes.npz\")"
+    },
+    {
+      "path": "/repo/scripts/phd/main_dist71_v1/probe_map.py",
+      "line": 9,
+      "text": "    G = np.load(S1 / \"defs\" / site / \"gt_classes.npz\")"
+    }
+  ],
+  "scientific_verdict": null
+}

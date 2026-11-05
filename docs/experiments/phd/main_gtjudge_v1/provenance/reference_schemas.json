@@ -1,0 +1,594 @@
+{
+  "at": "2026-11-05T17:29:47.343201+09:00",
+  "files": [
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/gt_classes.npz",
+      "bytes": 379103168,
+      "arrays": [
+        {
+          "name": "xyz_gt_points",
+          "shape": [
+            37798404,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "622792f8",
+          "uncompressed_bytes": 453580976
+        },
+        {
+          "name": "use_gt_points",
+          "shape": [
+            37798404
+          ],
+          "dtype": "bool",
+          "crc32": "8774aabc",
+          "uncompressed_bytes": 37798532
+        },
+        {
+          "name": "vert_gt_points",
+          "shape": [
+            37798404
+          ],
+          "dtype": "bool",
+          "crc32": "685f1ae8",
+          "uncompressed_bytes": 37798532
+        },
+        {
+          "name": "infp_gt_points",
+          "shape": [
+            37798404
+          ],
+          "dtype": "bool",
+          "crc32": "fe0a0ef2",
+          "uncompressed_bytes": 37798532
+        },
+        {
+          "name": "roof_gt_points",
+          "shape": [
+            37798404
+          ],
+          "dtype": "bool",
+          "crc32": "a4e8244b",
+          "uncompressed_bytes": 37798532
+        },
+        {
+          "name": "wall_gt_points",
+          "shape": [
+            37798404
+          ],
+          "dtype": "bool",
+          "crc32": "f3ea7bad",
+          "uncompressed_bytes": 37798532
+        },
+        {
+          "name": "excl_gt_points",
+          "shape": [
+            37798404
+          ],
+          "dtype": "bool",
+          "crc32": "4116e4ad",
+          "uncompressed_bytes": 37798532
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/B173nb_b10/gt_points.npz",
+      "bytes": 376349694,
+      "arrays": [
+        {
+          "name": "xyz",
+          "shape": [
+            37798404,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "622792f8",
+          "uncompressed_bytes": 453580976
+        },
+        {
+          "name": "multi",
+          "shape": [
+            37798404
+          ],
+          "dtype": "bool",
+          "crc32": "81bc373e",
+          "uncompressed_bytes": 37798532
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/B173nb_b10/gt_primary.npz",
+      "bytes": 375220123,
+      "arrays": [
+        {
+          "name": "xyz",
+          "shape": [
+            37798404,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "622792f8",
+          "uncompressed_bytes": 453580976
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_axes71_v2/PHD-MAIN-AXES71-v2/work/normals_B173nb_b10.npz",
+      "bytes": 84197299,
+      "arrays": [
+        {
+          "name": "use_0",
+          "shape": [
+            4717745
+          ],
+          "dtype": "int64",
+          "crc32": "348fca32",
+          "uncompressed_bytes": 37742088
+        },
+        {
+          "name": "normal_0",
+          "shape": [
+            4717745,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "88e08f62",
+          "uncompressed_bytes": 56613068
+        },
+        {
+          "name": "resid_0",
+          "shape": [
+            4717745
+          ],
+          "dtype": "float32",
+          "crc32": "5b5b9c61",
+          "uncompressed_bytes": 18871108
+        },
+        {
+          "name": "count_0",
+          "shape": [
+            4717745
+          ],
+          "dtype": "int32",
+          "crc32": "89f4451e",
+          "uncompressed_bytes": 18871108
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/gt_classes.npz",
+      "bytes": 323886265,
+      "arrays": [
+        {
+          "name": "xyz_gt_points",
+          "shape": [
+            26994350,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "5961cec6",
+          "uncompressed_bytes": 323932328
+        },
+        {
+          "name": "use_gt_points",
+          "shape": [
+            26994350
+          ],
+          "dtype": "bool",
+          "crc32": "ae1c0c72",
+          "uncompressed_bytes": 26994478
+        },
+        {
+          "name": "vert_gt_points",
+          "shape": [
+            26994350
+          ],
+          "dtype": "bool",
+          "crc32": "46b1e6b2",
+          "uncompressed_bytes": 26994478
+        },
+        {
+          "name": "infp_gt_points",
+          "shape": [
+            26994350
+          ],
+          "dtype": "bool",
+          "crc32": "c07dc63c",
+          "uncompressed_bytes": 26994478
+        },
+        {
+          "name": "roof_gt_points",
+          "shape": [
+            26994350
+          ],
+          "dtype": "bool",
+          "crc32": "eea3bfa0",
+          "uncompressed_bytes": 26994478
+        },
+        {
+          "name": "wall_gt_points",
+          "shape": [
+            26994350
+          ],
+          "dtype": "bool",
+          "crc32": "0d510f80",
+          "uncompressed_bytes": 26994478
+        },
+        {
+          "name": "excl_gt_points",
+          "shape": [
+            26994350
+          ],
+          "dtype": "bool",
+          "crc32": "4cdee8dd",
+          "uncompressed_bytes": 26994478
+        },
+        {
+          "name": "xyz_gt_primary",
+          "shape": [
+            4709500,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "3a948ec5",
+          "uncompressed_bytes": 56514128
+        },
+        {
+          "name": "use_gt_primary",
+          "shape": [
+            4709500
+          ],
+          "dtype": "bool",
+          "crc32": "fd34e8e1",
+          "uncompressed_bytes": 4709628
+        },
+        {
+          "name": "vert_gt_primary",
+          "shape": [
+            4709500
+          ],
+          "dtype": "bool",
+          "crc32": "80ad3ac8",
+          "uncompressed_bytes": 4709628
+        },
+        {
+          "name": "infp_gt_primary",
+          "shape": [
+            4709500
+          ],
+          "dtype": "bool",
+          "crc32": "400fd18e",
+          "uncompressed_bytes": 4709628
+        },
+        {
+          "name": "roof_gt_primary",
+          "shape": [
+            4709500
+          ],
+          "dtype": "bool",
+          "crc32": "27875d58",
+          "uncompressed_bytes": 4709628
+        },
+        {
+          "name": "wall_gt_primary",
+          "shape": [
+            4709500
+          ],
+          "dtype": "bool",
+          "crc32": "b6b5a1b3",
+          "uncompressed_bytes": 4709628
+        },
+        {
+          "name": "excl_gt_primary",
+          "shape": [
+            4709500
+          ],
+          "dtype": "bool",
+          "crc32": "ebb4170d",
+          "uncompressed_bytes": 4709628
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/B0_b10/gt_points.npz",
+      "bytes": 273536538,
+      "arrays": [
+        {
+          "name": "xyz",
+          "shape": [
+            26994350,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "5961cec6",
+          "uncompressed_bytes": 323932328
+        },
+        {
+          "name": "multi",
+          "shape": [
+            26994350
+          ],
+          "dtype": "bool",
+          "crc32": "605aaf1b",
+          "uncompressed_bytes": 26994478
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/B0_b10/gt_primary.npz",
+      "bytes": 47555549,
+      "arrays": [
+        {
+          "name": "xyz",
+          "shape": [
+            4709500,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "3a948ec5",
+          "uncompressed_bytes": 56514128
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_axes71_v2/PHD-MAIN-AXES71-v2/work/normals_B0_b10.npz",
+      "bytes": 120361919,
+      "arrays": [
+        {
+          "name": "use_0",
+          "shape": [
+            2187403
+          ],
+          "dtype": "int64",
+          "crc32": "942b03fd",
+          "uncompressed_bytes": 17499352
+        },
+        {
+          "name": "normal_0",
+          "shape": [
+            2187403,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "7c8e30af",
+          "uncompressed_bytes": 26248964
+        },
+        {
+          "name": "resid_0",
+          "shape": [
+            2187403
+          ],
+          "dtype": "float32",
+          "crc32": "3abfb8cf",
+          "uncompressed_bytes": 8749740
+        },
+        {
+          "name": "count_0",
+          "shape": [
+            2187403
+          ],
+          "dtype": "int32",
+          "crc32": "e7958b48",
+          "uncompressed_bytes": 8749740
+        },
+        {
+          "name": "use_1",
+          "shape": [
+            4607676
+          ],
+          "dtype": "int64",
+          "crc32": "b6af72f4",
+          "uncompressed_bytes": 36861536
+        },
+        {
+          "name": "normal_1",
+          "shape": [
+            4607676,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "b063df36",
+          "uncompressed_bytes": 55292240
+        },
+        {
+          "name": "resid_1",
+          "shape": [
+            4607676
+          ],
+          "dtype": "float32",
+          "crc32": "35e9a626",
+          "uncompressed_bytes": 18430832
+        },
+        {
+          "name": "count_1",
+          "shape": [
+            4607676
+          ],
+          "dtype": "int32",
+          "crc32": "f941f785",
+          "uncompressed_bytes": 18430832
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/R1rep_b10/gt_classes.npz",
+      "bytes": 376331207,
+      "arrays": [
+        {
+          "name": "xyz_gt_points",
+          "shape": [
+            36405930,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "7aed684e",
+          "uncompressed_bytes": 436871288
+        },
+        {
+          "name": "use_gt_points",
+          "shape": [
+            36405930
+          ],
+          "dtype": "bool",
+          "crc32": "ffc6bb3d",
+          "uncompressed_bytes": 36406058
+        },
+        {
+          "name": "vert_gt_points",
+          "shape": [
+            36405930
+          ],
+          "dtype": "bool",
+          "crc32": "46f259c6",
+          "uncompressed_bytes": 36406058
+        },
+        {
+          "name": "infp_gt_points",
+          "shape": [
+            36405930
+          ],
+          "dtype": "bool",
+          "crc32": "6d5b8332",
+          "uncompressed_bytes": 36406058
+        },
+        {
+          "name": "roof_gt_points",
+          "shape": [
+            36405930
+          ],
+          "dtype": "bool",
+          "crc32": "4a452648",
+          "uncompressed_bytes": 36406058
+        },
+        {
+          "name": "wall_gt_points",
+          "shape": [
+            36405930
+          ],
+          "dtype": "bool",
+          "crc32": "7685a3c5",
+          "uncompressed_bytes": 36406058
+        },
+        {
+          "name": "excl_gt_points",
+          "shape": [
+            36405930
+          ],
+          "dtype": "bool",
+          "crc32": "694bc012",
+          "uncompressed_bytes": 36406058
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/R1rep_b10/gt_points.npz",
+      "bytes": 373739836,
+      "arrays": [
+        {
+          "name": "xyz",
+          "shape": [
+            36405930,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "7aed684e",
+          "uncompressed_bytes": 436871288
+        },
+        {
+          "name": "multi",
+          "shape": [
+            36405930
+          ],
+          "dtype": "bool",
+          "crc32": "2bd782d6",
+          "uncompressed_bytes": 36406058
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/R1rep_b10/gt_primary.npz",
+      "bytes": 372610482,
+      "arrays": [
+        {
+          "name": "xyz",
+          "shape": [
+            36405930,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "7aed684e",
+          "uncompressed_bytes": 436871288
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_axes71_v2/PHD-MAIN-AXES71-v2/work/normals_R1rep_b10.npz",
+      "bytes": 52735815,
+      "arrays": [
+        {
+          "name": "use_0",
+          "shape": [
+            2965581
+          ],
+          "dtype": "int64",
+          "crc32": "0c889657",
+          "uncompressed_bytes": 23724776
+        },
+        {
+          "name": "normal_0",
+          "shape": [
+            2965581,
+            3
+          ],
+          "dtype": "float32",
+          "crc32": "cc723afa",
+          "uncompressed_bytes": 35587100
+        },
+        {
+          "name": "resid_0",
+          "shape": [
+            2965581
+          ],
+          "dtype": "float32",
+          "crc32": "6b7662c3",
+          "uncompressed_bytes": 11862452
+        },
+        {
+          "name": "count_0",
+          "shape": [
+            2965581
+          ],
+          "dtype": "int32",
+          "crc32": "bc096aa2",
+          "uncompressed_bytes": 11862452
+        }
+      ],
+      "triangle_index_fields": [],
+      "payload_sha256_verified": false
+    }
+  ],
+  "note": "ZIP member headers and CRC metadata inspected; not full payload SHA validation",
+  "scientific_verdict": null
+}

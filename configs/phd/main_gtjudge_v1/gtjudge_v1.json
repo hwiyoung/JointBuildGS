@@ -1,0 +1,262 @@
+{
+  "task_id": "PHD-MAIN-GTJUDGE-v1",
+  "created_at": "2026-11-05T17:29:34.726923+09:00",
+  "source_commit": "c8fbbf7459e14d211d63c263fc87aaa0c2fb2e2e",
+  "order_sha256": "ef2d3012e4da5d7c7cc608880b33ce3ff61051a7c1bec0a6c0faa2356261da61",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_xy_offset_m": [
+    690953.0,
+    5336071.0
+  ],
+  "sites": [
+    "B173nb_b10",
+    "B0_b10",
+    "R1rep_b10"
+  ],
+  "priors": [
+    "ALS",
+    "LoD2"
+  ],
+  "methods": [
+    "prior",
+    "mvs",
+    "fusion",
+    "baseline_30000",
+    "GeoGS_30000",
+    "2DGS_30000",
+    "CDGS_30000",
+    "judgment_mesh",
+    "FINALTRAIN_30000"
+  ],
+  "seed": 0,
+  "iterations": 30000,
+  "normal_line": {
+    "origin_offsets_m": [
+      [
+        0,
+        0
+      ],
+      [
+        0.05,
+        0
+      ],
+      [
+        -0.05,
+        0
+      ],
+      [
+        0,
+        0.05
+      ],
+      [
+        0,
+        -0.05
+      ]
+    ],
+    "ray_directions": [
+      "+n",
+      "-n"
+    ],
+    "nearest_of_all_hits": true,
+    "max_length_roof_m": 10,
+    "max_length_wall_m": 5,
+    "reference_normals": "nearest reference triangle face; roofs up, walls outward",
+    "result_normals": "sampled result triangle face aligned to nearest reference face",
+    "reference_surface_files": null,
+    "missing_reference_policy": "unavailable; no PCA/LoD/prior/MVS substitution"
+  },
+  "scoring": {
+    "tau_source": "/repo/docs/experiments/phd/main_release_v1/tables/stage0/tau_values.csv",
+    "tau_multiplier": 1,
+    "result_density_m2": 400,
+    "result_sampling_seed": 0,
+    "result_exclusion": "no reference point within Euclidean 1 m",
+    "bias": "median of signed hits",
+    "spread": "1.4826 * median(abs(s-median(s)))",
+    "absolute_quantiles": [
+      0.5,
+      0.683,
+      0.95
+    ],
+    "mean_distance": false,
+    "failures": [
+      "far_hit",
+      "no_surface"
+    ],
+    "nearest_only_comparison": true
+  },
+  "stage0": {
+    "cells": "RELEASE score_cell_1p0, identical RECOUNT rows",
+    "min_cell_points": 1000,
+    "both_correct_required_pct": 90,
+    "correction_attempts": 1,
+    "fallback": "RECOUNT cells only after a measured signal persists after one implementation correction",
+    "unavailable_is_measured_signal": false
+  },
+  "majority": {
+    "expected_judgment": {
+      "0": 0,
+      "1": 2,
+      "2": 1,
+      "4": 4
+    },
+    "tie": "agreement if both-correct participates; otherwise inherited judgment",
+    "both_wrong": "inherited judgment",
+    "no_reference": "inherited judgment",
+    "outside_eval": "inherited judgment",
+    "agreement_without_u_M": "preserve",
+    "correction_without_h_M": "inherited judgment",
+    "heights_sigma": "exact FINALTRAIN targets.calculate; only judgment changes"
+  },
+  "stage2": {
+    "texture": "p0-audit 11_survivor_texture_refine.py, fallback roof-gradient lower 20 percent",
+    "near_nadir_degrees": 20,
+    "low_texture_view_fraction": 0.5,
+    "edge_height_difference_m": 0.5,
+    "edge_horizontal_distance_m": 1,
+    "component_connectivity_m": 0.6,
+    "samples_per_group": 2
+  },
+  "freespace": {
+    "mode_default": "off",
+    "first_iteration": 500,
+    "last_iteration": 30000,
+    "calibrate_iteration": 1000,
+    "band_sigma": 1.96,
+    "judgment": "preserve",
+    "select": "not bound to frontmost preserve disc; centre depth < d_target-1.96*sigma_target",
+    "loss": "lambda_fs * mean(selected activated opacity); opacity gradient only",
+    "calibration": "median photo opacity gradient / median unit-loss opacity gradient",
+    "GT_used_for_lambda": false
+  },
+  "checkpoints": [
+    7000,
+    15000,
+    30000
+  ],
+  "health": {
+    "iteration": 7000,
+    "loss_finite": true,
+    "prior_descendant_opacity_median_min": 0.05,
+    "count_reference": 6000,
+    "count_growth_max": 3,
+    "count_check_until": 15000,
+    "other_metrics_record_only": true,
+    "independent_arm_stop": true
+  },
+  "retry": {
+    "execution_or_oom": 1,
+    "same_config": true,
+    "health": 0
+  },
+  "renderer": {
+    "path": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/rfix_speed/builds/target/extension/jbgs_rfix_speed_target.so",
+    "sha256": "1426e3aae8b24c490821a87e731aee9e834ee3aabb9d3caec0e04cb8365e2245",
+    "validation_sha256": "9a5a37c41e9d7b2886f4a4c9f3d3dc3f39460c28cfbf64aaedfbbf306419a105",
+    "binning_guard_fraction": 0.5
+  },
+  "docker_images": {
+    "jointbuildgs:dev": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "jointbuildgs:geogs-conf-guided-v1": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be"
+  },
+  "unchanged": {
+    "depth_loss": "absolute",
+    "depth_lambda": 0.05,
+    "reattach_tangent_m": 0.5,
+    "reattach_normal_excess_m": 0.5,
+    "band_sigma": 1.96,
+    "background_bound": false,
+    "photo_loss": true,
+    "two_dgs_terms": true,
+    "optimizer": true,
+    "density_schedule": true,
+    "opacity_reset": true,
+    "initialization": "r8 exact source and exclusion rule"
+  },
+  "weights": {
+    "power": 1,
+    "sigma_ref": "sum(patch area)/sum(patch area/target sigma)",
+    "scene_scope": "site x prior",
+    "clip": [
+      0.1,
+      10
+    ],
+    "background": 1,
+    "exclude_background_from_sigma_ref": true
+  },
+  "gpu_queue": {
+    "0": [
+      [
+        "R1rep_b10",
+        "ALS",
+        "A1"
+      ],
+      [
+        "R1rep_b10",
+        "ALS",
+        "A2"
+      ],
+      [
+        "B173nb_b10",
+        "ALS",
+        "A1"
+      ],
+      [
+        "B173nb_b10",
+        "ALS",
+        "A2"
+      ],
+      [
+        "B0_b10",
+        "ALS",
+        "A1"
+      ],
+      [
+        "B0_b10",
+        "ALS",
+        "A2"
+      ]
+    ],
+    "1": [
+      [
+        "B173nb_b10",
+        "LoD2",
+        "A1"
+      ],
+      [
+        "B173nb_b10",
+        "LoD2",
+        "A2"
+      ],
+      [
+        "R1rep_b10",
+        "LoD2",
+        "A1"
+      ],
+      [
+        "R1rep_b10",
+        "LoD2",
+        "A2"
+      ],
+      [
+        "B0_b10",
+        "LoD2",
+        "A1"
+      ],
+      [
+        "B0_b10",
+        "LoD2",
+        "A2"
+      ]
+    ]
+  },
+  "output_paths": [
+    "configs/phd/main_gtjudge_v1/",
+    "scripts/phd/main_gtjudge_v1/",
+    "docs/experiments/phd/main_gtjudge_v1/",
+    "PH/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/",
+    "src/phd/forks/GeoGS-conf-guided-v1-r25/"
+  ],
+  "PH_resolution": "../JointBuildGS-artifacts/phase-payloads/phd"
+}

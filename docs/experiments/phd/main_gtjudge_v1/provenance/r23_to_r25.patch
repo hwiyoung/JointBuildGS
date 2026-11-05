@@ -1,0 +1,187 @@
+--- src/phd/forks/GeoGS-conf-guided-v1-r23/jbgs_finaltrain.py
++++ src/phd/forks/GeoGS-conf-guided-v1-r25/jbgs_finaltrain.py
+@@ -18,7 +18,8 @@
+         assert self.sigma_ref>0 and index['weight_power']==1
+         assert all(v['sigma_ref']==self.sigma_ref for v in index['views'].values())
+         super().__init__(args,scene,g)
+-        target_file=self.root.parent.parent/'targets'/(self.root.name+'.npz')
++        from jbgs_gtjudge import target_path
++        target_file=target_path(args,self.root)
+         with np.load(target_file) as z:
+             assert np.array_equal(self.patch_anchor.cpu().numpy(),z['target'][self.valid_patch].astype('f4'))
+             assert np.array_equal(self.patch_sigma.cpu().numpy(),z['sigma'][self.valid_patch].astype('f4'))
+--- src/phd/forks/GeoGS-conf-guided-v1-r23/jbgs_gtjudge.py
++++ src/phd/forks/GeoGS-conf-guided-v1-r25/jbgs_gtjudge.py
+@@ -0,0 +1,117 @@
++"""r25 diagnostic target override and opacity-only preserve freespace primitive.
++
++The activated-opacity penalty and selection have no reference-geometry input.
++This module is preparatory until GTJUDGE's real target/map and stage gates pass.
++"""
++import hashlib
++import json
++from pathlib import Path
++import numpy as np
++import torch
++
++def target_path(args,root):
++    override=getattr(args,'jbgs_targets',None)
++    return Path(override) if override else root.parent.parent/'targets'/(root.name+'.npz')
++
++def verify_override(args,root):
++    if not getattr(args,'jbgs_targets',None):return
++    if args.jbgs_finaltrain!='on' or args.jbgs_target!='on' or args.jbgs_target_rev!='r8':
++        raise ValueError('--jbgs_targets requires FINALTRAIN r8')
++    target=target_path(args,root)
++    index=json.loads((root/'maps/index.json').read_text())
++    actual=hashlib.sha256(target.read_bytes()).hexdigest()
++    if index['target_sha256']!=actual:
++        raise ValueError('Target override and prepared target maps have different hashes')
++    with np.load(target) as z,np.load(root/'seeds.npz') as seeds:
++        prior=seeds['origin']==1
++        ids=seeds['patch'][prior]
++        if not np.array_equal(seeds['target'][prior],z['target'][ids].astype('f4')):
++            raise ValueError('Target override and prepared seed anchors disagree')
++        if not np.array_equal(seeds['sigma'][prior],z['sigma'][ids].astype('f4')):
++            raise ValueError('Target override and prepared seed sigma disagree')
++        if not np.array_equal(seeds['region'][prior],z['region'][ids]):
++            raise ValueError('Target override and prepared seed judgments disagree')
++
++@torch.no_grad()
++def candidate_mask(xyz,bound_patch,depth,sigma,owner,judge_region,K,W2C):
++    """Full target patch IDs, frontmost-disc maps, camera-Z convention."""
++    camera=xyz.detach().double()@W2C[:3,:3].T+W2C[:3,3]
++    z=camera[:,2]
++    projected=camera@K.T
++    finite=torch.isfinite(projected).all(1)&(z>0)
++    uv=torch.zeros((len(xyz),2),device=xyz.device,dtype=torch.long)
++    uv[finite]=torch.floor(projected[finite,:2]/projected[finite,2,None]+.5).long()
++    height,width=depth.shape
++    inside=finite&(uv[:,0]>=0)&(uv[:,0]<width)&(uv[:,1]>=0)&(uv[:,1]<height)
++    ids=torch.where(inside)[0]
++    answer=torch.zeros(len(xyz),device=xyz.device,dtype=torch.bool)
++    if not len(ids):return answer
++    x,y=uv[ids,0],uv[ids,1]
++    patch=owner[y,x].long()
++    has=patch>=0
++    valid=has&torch.isfinite(depth[y,x])&torch.isfinite(sigma[y,x])&(sigma[y,x]>0)
++    # Clamp only to make the gather safe; negative-owner pixels remain excluded.
++    valid&=judge_region[patch.clamp_min(0)]==1
++    valid&=bound_patch[ids]!=patch
++    valid&=z[ids]<(depth[y,x]-1.96*sigma[y,x])
++    answer[ids]=valid
++    return answer
++
++def opacity_penalty(logit_opacity,mask,weight):
++    # A zero scalar touching only opacity makes an empty selection differentiable.
++    if not bool(mask.any()):return logit_opacity.sum()*0
++    return float(weight)*torch.sigmoid(logit_opacity[mask]).mean()
++
++def calibrated_lambda(photo_loss,logit_opacity,mask):
++    if not bool(mask.any()):
++        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_NO_CANDIDATE_AT_1000')
++    grad=torch.autograd.grad(photo_loss,logit_opacity,retain_graph=True)[0].detach()[mask]
++    alpha=torch.sigmoid(logit_opacity.detach()[mask])
++    derivative=alpha*(1-alpha)
++    if not bool(torch.isfinite(grad).all()&(derivative>0).all()):
++        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_INVALID_OPACITY_GRADIENT')
++    # Compare derivatives w.r.t. activated opacity, not its optimizer logit.
++    photo_median=torch.quantile((grad/derivative).abs().double().reshape(-1),.5)
++    unit_gradient=1./int(mask.sum())
++    value=float(photo_median/unit_gradient)
++    return value,dict(photo_opacity_gradient_median=float(photo_median),
++        unit_fs_opacity_gradient_median=unit_gradient,candidates=int(mask.sum()),GT_used=False)
++
++class PreserveFreespace:
++    def __init__(self,args,control):
++        if control is None or args.jbgs_finaltrain!='on':
++            raise ValueError('Preserve freespace requires FINALTRAIN controller and prepared maps')
++        self.control=control
++        with np.load(target_path(args,control.root)) as z:self.judge=torch.from_numpy(z['judge_region'].copy())
++        self.weight=None
++        self.calibration=None
++        self.path=control.mon/'preserve_freespace.jsonl'
++
++    def loss(self,iteration,g,photo_loss,name):
++        if not 500<=iteration<=30000:return g._opacity.sum()*0
++        control=self.control;m=control.maps[name];device=g._xyz.device
++        meta=control.index['views'][name]
++        with torch.no_grad():
++            bound=torch.full((len(g._xyz),),-1,device=device,dtype=torch.long)
++            attached=g.target_tag==1
++            mapping=torch.as_tensor(control.valid_patch,device=device,dtype=torch.long)
++            bound[attached]=mapping[g.target_index[attached]]
++            mask=candidate_mask(g._xyz,bound,m['depth'].to(device),m['sigma'].to(device),
++                m['owner'].to(device),self.judge.to(device),
++                torch.as_tensor(meta['K'],device=device,dtype=torch.float64),
++                torch.as_tensor(meta['W2C'],device=device,dtype=torch.float64))
++        if iteration==1000:
++            if self.weight is not None:raise RuntimeError('FS_LAMBDA_ALREADY_CALIBRATED')
++            self.weight,self.calibration=calibrated_lambda(photo_loss,g._opacity,mask)
++        if iteration>1000 and self.weight is None:raise RuntimeError('FS_LAMBDA_NOT_CALIBRATED')
++        # No numeric weight is given for 500..999 in the order. Do not invent one.
++        # This is a deliberate execution gate, not an assertion of A-2 readiness.
++        if self.weight is None:
++            raise RuntimeError('FS_PRE1000_WEIGHT_UNSPECIFIED: order starts loss at 500 but calibrates at 1000')
++        if iteration in [1000,7000,15000,30000]:
++            alpha=g.get_opacity.detach()[mask]
++            row=dict(iteration=iteration,lambda_fs=self.weight,candidates=int(mask.sum()),
++                opacity_median=float(torch.quantile(alpha.double().reshape(-1),.5)) if len(alpha) else None,
++                calibration=self.calibration,scientific_verdict=None)
++            with self.path.open('a') as f:f.write(json.dumps(row,allow_nan=False)+'\n')
++        return opacity_penalty(g._opacity,mask,self.weight)
+--- src/phd/forks/GeoGS-conf-guided-v1-r23/jbgs_target.py
++++ src/phd/forks/GeoGS-conf-guided-v1-r25/jbgs_target.py
+@@ -12,6 +12,8 @@
+ 
+ 
+ def register_args(parser):
++    parser.add_argument('--jbgs_targets',default=None)
++    parser.add_argument('--jbgs_preserve_freespace',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_finaltrain',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_target',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_target_rev',choices=['r4n','r6','r7','r8'],default='r4n')
+@@ -221,6 +223,9 @@
+ 
+ @torch.no_grad()
+ def create(args,scene,g,render,pipe):
++    if getattr(args,'jbgs_targets',None):
++        from jbgs_gtjudge import verify_override
++        verify_override(args,Path(args.jbgs_target_dir))
+     if getattr(args,'jbgs_finaltrain','off')=='on':
+         if args.jbgs_target!='on' or args.jbgs_target_rev!='r8':
+             raise ValueError('FINALTRAIN requires the unchanged r8 controller base')
+--- src/phd/forks/GeoGS-conf-guided-v1-r23/jbgs_target_r6.py
++++ src/phd/forks/GeoGS-conf-guided-v1-r25/jbgs_target_r6.py
+@@ -15,7 +15,8 @@
+     def __init__(self,args,scene,g):
+         self.ready=False
+         super().__init__(args,scene,g)
+-        target_file=self.root.parent.parent/'targets'/(self.root.name+'.npz')
++        from jbgs_gtjudge import target_path
++        target_file=target_path(args,self.root)
+         with np.load(target_file) as z:
+             self.valid_patch=np.flatnonzero((z['region']>=0)&np.isfinite(z['target']).all(1)&np.isfinite(z['normal']).all(1)&np.isfinite(z['sigma'])&(z['sigma']>0))
+             self.points=np.asarray(z['target'][self.valid_patch],np.float64)
+--- src/phd/forks/GeoGS-conf-guided-v1-r23/train.py
++++ src/phd/forks/GeoGS-conf-guided-v1-r25/train.py
+@@ -695,6 +695,10 @@
+     scene = Scene(dataset, gaussians)
+ 
+     target_control = jbgs_target.create(args, scene, gaussians, render, pipe)
++    preserve_freespace = None
++    if args.jbgs_preserve_freespace == 'on':
++        from jbgs_gtjudge import PreserveFreespace
++        preserve_freespace = PreserveFreespace(args,target_control)
+     gaussians.training_setup(opt)
+     if checkpoint:
+         (model_params, first_iter) = torch.load(checkpoint)
+@@ -1056,6 +1060,8 @@
+                 judgment.lambda_mvs * mvs_term + judgment.lambda_prior * prior_term, render_pkg, cam_name)
+         if target_control is not None:
+             target_control.check_loss(iteration, total_loss)
++        if preserve_freespace is not None:
++            total_loss = total_loss + preserve_freespace.loss(iteration,gaussians,rgb_loss,cam_name)
+         total_loss.backward()
+         mvs_pgsr_control.after_backward(iteration, gaussians)
+         if judgment is not None:  # [jbgs_judgment] remember locked rows before the Adam step
