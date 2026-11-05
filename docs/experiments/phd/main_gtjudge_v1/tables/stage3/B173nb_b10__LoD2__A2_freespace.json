@@ -1,0 +1,60 @@
+{
+  "rows": [
+    {
+      "iteration": 500,
+      "lambda_fs": null,
+      "calibration_iteration": null,
+      "candidates": 1,
+      "opacity_median": 0.052535220980644226,
+      "calibration": null,
+      "opacity_pruned_recent_targets": 0,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 600,
+      "lambda_fs": 4.234649782119959e-05,
+      "calibration_iteration": 600,
+      "candidates": 448,
+      "opacity_median": 0.27405238151550293,
+      "calibration": {
+        "photo_opacity_gradient_median": 9.452343263660623e-08,
+        "unit_fs_opacity_gradient_median": 0.002232142857142857,
+        "candidates": 448,
+        "GT_used": false
+      },
+      "opacity_pruned_recent_targets": 0,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 1000,
+      "lambda_fs": 4.234649782119959e-05,
+      "calibration_iteration": 600,
+      "candidates": 280,
+      "opacity_median": 0.09829332306981087,
+      "calibration": {
+        "photo_opacity_gradient_median": 9.452343263660623e-08,
+        "unit_fs_opacity_gradient_median": 0.002232142857142857,
+        "candidates": 448,
+        "GT_used": false
+      },
+      "opacity_pruned_recent_targets": 1108,
+      "scientific_verdict": null
+    },
+    {
+      "iteration": 7000,
+      "lambda_fs": 4.234649782119959e-05,
+      "calibration_iteration": 600,
+      "candidates": 41,
+      "opacity_median": 0.2698602080345154,
+      "calibration": {
+        "photo_opacity_gradient_median": 9.452343263660623e-08,
+        "unit_fs_opacity_gradient_median": 0.002232142857142857,
+        "candidates": 448,
+        "GT_used": false
+      },
+      "opacity_pruned_recent_targets": 80427,
+      "scientific_verdict": null
+    }
+  ],
+  "scientific_verdict": null
+}
