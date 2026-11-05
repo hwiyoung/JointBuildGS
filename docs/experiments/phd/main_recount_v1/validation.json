@@ -1,0 +1,61 @@
+{
+  "at": "2026-11-05T12:39:37.314729+09:00",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "설정을 첫 계산 전에 잠갔다",
+      "status": "PASS",
+      "locked_at": "2026-11-05T12:28:05.724764+09:00",
+      "first_calculation_at": "2026-11-05T12:30:10.088377+09:00",
+      "config_sha256": "917d4ccb9025aed1b89e716ec8fbc3a7a1861e8a68a386b84f6228764d3ba669"
+    },
+    {
+      "check": "채점 기준 칸·완전성 RELEASE table4 τ 1배 0.1%p 내 일치",
+      "status": "PASS",
+      "comparisons": 324,
+      "max_delta_pp": 0.0
+    },
+    {
+      "check": "판단은 네 경우의 정확 일치만 맞음",
+      "status": "PASS",
+      "scenes": 6,
+      "free_space_and_unknown_never_correct": true
+    },
+    {
+      "check": "판단 표 비어 있지 않은 행 비율 합 100%",
+      "status": "PASS",
+      "nonempty_rows": 30,
+      "empty_rows_not_applicable": 0,
+      "max_sum_error_pp": 1.4210854715202004e-14
+    },
+    {
+      "check": "학습·렌더·메시 재생성 없음",
+      "status": "PASS",
+      "execution": {
+        "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+        "cpu_only": true,
+        "nice": 19,
+        "cpus": 6,
+        "memory_gib": 32,
+        "training": false,
+        "render": false,
+        "mesh_generation": false
+      },
+      "runtime_evidence": "provenance/docker_runtime.json",
+      "note": "new work is table aggregation, cached-surface closest-point query and section intersection, static plotting"
+    },
+    {
+      "check": "지정한 네 폴더 밖에 쓰지 않음",
+      "status": "PASS",
+      "writable_container_mounts": [
+        "/cfg",
+        "/docs",
+        "/recount"
+      ],
+      "host_edit_scope": "scripts/phd/main_recount_v1 plus other three authorized folders",
+      "boundary_evidence": "provenance/write_boundary.json",
+      "note": "Git metadata for authorized final commit/push is operational metadata"
+    }
+  ],
+  "scientific_verdict": null
+}

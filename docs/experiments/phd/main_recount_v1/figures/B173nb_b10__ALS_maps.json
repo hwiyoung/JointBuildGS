@@ -1,0 +1,86 @@
+{
+  "title": "경우·판단 맞음·결과 τ 안 세 지도",
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "n_gt": 210800,
+  "n_judgment_eligible": 202357,
+  "judgment_correct_pct": 80.91442351883059,
+  "case_colors": {
+    "0": "#92948d",
+    "1": "#0072B2",
+    "2": "#D55E00",
+    "4": "#CC79A7",
+    "3": "#332c50",
+    "-1": "#dddddd"
+  },
+  "status_colors": {
+    "correct": "#66645e",
+    "wrong": "#0072B2",
+    "excluded": "#dddddd"
+  },
+  "extent": [
+    [
+      90.1676025390625,
+      73.88629913330078
+    ],
+    [
+      166.84339904785156,
+      152.72579956054688
+    ]
+  ],
+  "display_order": "all rows, ascending Z so highest point is painted last; no downsampling",
+  "section": {
+    "status": "PASS",
+    "start": [
+      129.2336734132322,
+      103.7788580821003
+    ],
+    "end": [
+      141.96194549268193,
+      99.48550005829978
+    ],
+    "anchor_xyz": [
+      135.84410095214844,
+      101.54910278320312,
+      -29.925607681274414
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 785,
+    "component_unique_points": 785,
+    "components": 153,
+    "all_case2_n_gt": 9913,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9475471611831021,
+      -0.3196159841651297
+    ],
+    "length_m": 13.432863925799001
+  },
+  "sources": [
+    {
+      "path": "/release/stage0/B173nb_b10__ALS/cells.npz",
+      "sha256": "702d558dae55814a9240039d75f674dafdee9c52ee881354ff41434b218c29e2"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B173nb_b10__ALS.npz",
+      "sha256": "dc10377655ed8516207172e607b2934839fbb18e93a33a152b488ecc319b550c"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__ALS/reference_rows.npz",
+      "sha256": "f1673b8dd224aa63fb1a124b7f2a45774478f13cba32b3394c1e315ef01ee6fb"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__ALS/section.json",
+      "sha256": "8e07ccae9672de4aeb6b0c00f3f16a8f624f0eaabc304a77efc9efad0187aa0d"
+    },
+    {
+      "path": "/out/addendum3_stage1/scores/B173nb_b10__ALS__FINALTRAIN_30000/points.npz",
+      "sha256": "84bb6e910edfb8ee8cb75a9a3a07b6b9d7ece2b1f806b56a8bf3dccfecce034b"
+    }
+  ],
+  "config_sha256": "917d4ccb9025aed1b89e716ec8fbc3a7a1861e8a68a386b84f6228764d3ba669",
+  "script_sha256": "8411ae169a3d6880c62b93bef9d4898b62808c49edea6cb7875117a24d917046",
+  "dpi": 300,
+  "crs": "EPSG:25832 with inherited local XY shift [690953,5336071] m",
+  "scientific_verdict": null
+}

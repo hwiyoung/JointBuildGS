@@ -1,0 +1,55 @@
+site,prior,cell_basis,case_id,case_name,method,method_name,n_gt,n_wall,n_wall_within_tau,n_wall_within_tau_farther_1m,farther_1m_pct,small,trigger_eligible,exceeds_2pct,wall_n_at_least_1000,status
+R1rep_b10,LoD2,score,0,둘 다 맞음,prior,사전 정보,191669,57681,57681,3440,5.963835578440041,,True,True,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,prior,사전 정보,45397,12027,0,0,,,True,False,True,해당 없음: 벽 τ 안 점 없음
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,prior,사전 정보,453,14,14,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,prior,사전 정보,1677,1587,1587,8,0.5040957781978576,,True,False,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,prior,사전 정보,144,103,0,0,,적음,False,False,False,해당 없음: 벽 τ 안 점 없음
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),prior,사전 정보,219,3,3,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,0,둘 다 맞음,mvs,MVS,191669,57681,57681,112,0.1941713909259548,,True,False,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,mvs,MVS,45397,12027,12027,0,0.0,,True,False,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,mvs,MVS,453,14,0,0,,적음,False,False,False,해당 없음: 벽 τ 안 점 없음
+R1rep_b10,LoD2,score,4,영상 없음,mvs,MVS,1677,1587,1564,153,9.782608695652174,,True,True,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,mvs,MVS,144,103,103,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),mvs,MVS,219,3,3,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,0,둘 다 맞음,fusion,결합,191669,57681,57119,1110,1.943311332481311,,True,False,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,fusion,결합,45397,12027,9628,898,9.32696302451184,,True,True,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,fusion,결합,453,14,14,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,fusion,결합,1677,1587,1570,169,10.764331210191083,,True,True,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,fusion,결합,144,103,28,1,3.5714285714285716,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),fusion,결합,219,3,1,1,100.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,0,둘 다 맞음,baseline_30000,"기준선 30,000회",191669,57681,57596,327,0.5677477602611293,,True,False,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,baseline_30000,"기준선 30,000회",45397,12027,11664,551,4.723936899862826,,True,True,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,baseline_30000,"기준선 30,000회",453,14,14,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,baseline_30000,"기준선 30,000회",1677,1587,1474,135,9.15875169606513,,True,True,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,baseline_30000,"기준선 30,000회",144,103,103,6,5.825242718446602,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),baseline_30000,"기준선 30,000회",219,3,3,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,0,둘 다 맞음,GeoGS_30000,GeoGS,191669,57681,57239,1654,2.8896381837558307,,True,True,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,GeoGS_30000,GeoGS,45397,12027,8721,1283,14.71161564040821,,True,True,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,GeoGS_30000,GeoGS,453,14,14,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,GeoGS_30000,GeoGS,1677,1587,1504,225,14.960106382978724,,True,True,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,GeoGS_30000,GeoGS,144,103,78,12,15.384615384615385,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),GeoGS_30000,GeoGS,219,3,2,2,100.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,0,둘 다 맞음,2DGS_30000,2DGS,191669,57681,56012,3338,5.959437263443548,,True,True,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,2DGS_30000,2DGS,45397,12027,12027,134,1.1141598071006902,,True,False,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,2DGS_30000,2DGS,453,14,4,4,100.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,2DGS_30000,2DGS,1677,1587,1402,302,21.540656205420827,,True,True,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,2DGS_30000,2DGS,144,103,103,6,5.825242718446602,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),2DGS_30000,2DGS,219,3,3,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,0,둘 다 맞음,CDGS_30000,CDGS,191669,57681,43119,15168,35.17706811382453,,True,True,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,CDGS_30000,CDGS,45397,12027,8524,3641,42.7146879399343,,True,True,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,CDGS_30000,CDGS,453,14,5,2,40.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,CDGS_30000,CDGS,1677,1587,502,280,55.776892430278885,,True,True,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,CDGS_30000,CDGS,144,103,41,9,21.951219512195124,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),CDGS_30000,CDGS,219,3,0,0,,적음,False,False,False,해당 없음: 벽 τ 안 점 없음
+R1rep_b10,LoD2,score,0,둘 다 맞음,judgment_mesh,판단으로 조합한 메시,191669,57681,56529,2168,3.8351996320472677,,True,True,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,judgment_mesh,판단으로 조합한 메시,45397,12027,11193,531,4.744036451353525,,True,True,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,judgment_mesh,판단으로 조합한 메시,453,14,6,6,100.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,judgment_mesh,판단으로 조합한 메시,1677,1587,1585,5,0.31545741324921134,,True,False,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,judgment_mesh,판단으로 조합한 메시,144,103,99,17,17.171717171717173,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),judgment_mesh,판단으로 조합한 메시,219,3,3,2,66.66666666666667,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,0,둘 다 맞음,FINALTRAIN_30000,본 방법,191669,57681,57152,3272,5.72508398656215,,True,True,True,PASS
+R1rep_b10,LoD2,score,1,영상만 맞음,FINALTRAIN_30000,본 방법,45397,12027,12027,1415,11.765194977966242,,True,True,True,PASS
+R1rep_b10,LoD2,score,2,사전 정보만 맞음,FINALTRAIN_30000,본 방법,453,14,5,4,80.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,4,영상 없음,FINALTRAIN_30000,본 방법,1677,1587,1506,345,22.90836653386454,,True,True,True,PASS
+R1rep_b10,LoD2,score,3,둘 다 틀림,FINALTRAIN_30000,본 방법,144,103,103,0,0.0,적음,False,False,False,PASS
+R1rep_b10,LoD2,score,-1,사전 정보 면 없음(별도),FINALTRAIN_30000,본 방법,219,3,3,1,33.333333333333336,적음,False,False,False,PASS

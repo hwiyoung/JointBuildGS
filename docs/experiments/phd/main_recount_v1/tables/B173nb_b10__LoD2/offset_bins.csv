@@ -1,0 +1,71 @@
+site,prior,cell_basis,case_id,case_name,distance_source,lower_m,upper_m,lower_inclusive,upper_inclusive,method,method_name,n_gt,n_within_tau,completeness_pct,small,nonfinite_distance_rows
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.0,0.5,True,False,prior,사전 정보,17801,0,0.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.5,1.0,True,False,prior,사전 정보,17340,0,0.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,1.0,2.0,True,False,prior,사전 정보,33422,0,0.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,2.0,4.0,True,True,prior,사전 정보,44530,0,0.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,4.0,,False,True,prior,사전 정보,294,0,0.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.0,0.5,True,False,prior,사전 정보,7674,7674,100.0,,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.5,1.0,True,False,prior,사전 정보,962,962,100.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,1.0,2.0,True,False,prior,사전 정보,23,23,100.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,2.0,4.0,True,True,prior,사전 정보,0,0,,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,4.0,,False,True,prior,사전 정보,0,0,,적음,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.0,0.5,True,False,mvs,MVS,17801,17801,100.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.5,1.0,True,False,mvs,MVS,17340,17340,100.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,1.0,2.0,True,False,mvs,MVS,33422,33422,100.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,2.0,4.0,True,True,mvs,MVS,44530,44530,100.0,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,4.0,,False,True,mvs,MVS,294,294,100.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.0,0.5,True,False,mvs,MVS,7674,0,0.0,,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.5,1.0,True,False,mvs,MVS,962,0,0.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,1.0,2.0,True,False,mvs,MVS,23,0,0.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,2.0,4.0,True,True,mvs,MVS,0,0,,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,4.0,,False,True,mvs,MVS,0,0,,적음,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.0,0.5,True,False,fusion,결합,17801,7438,41.78416942868378,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.5,1.0,True,False,fusion,결합,17340,12585,72.57785467128028,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,1.0,2.0,True,False,fusion,결합,33422,31789,95.11399676859554,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,2.0,4.0,True,True,fusion,결합,44530,44328,99.5463732315293,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,4.0,,False,True,fusion,결합,294,294,100.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.0,0.5,True,False,fusion,결합,7674,7154,93.22387281730519,,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.5,1.0,True,False,fusion,결합,962,895,93.03534303534303,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,1.0,2.0,True,False,fusion,결합,23,13,56.52173913043478,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,2.0,4.0,True,True,fusion,결합,0,0,,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,4.0,,False,True,fusion,결합,0,0,,적음,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.0,0.5,True,False,baseline_30000,"기준선 30,000회",17801,15917,89.41632492556597,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.5,1.0,True,False,baseline_30000,"기준선 30,000회",17340,16333,94.19261822376009,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,1.0,2.0,True,False,baseline_30000,"기준선 30,000회",33422,33365,99.82945365328227,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,2.0,4.0,True,True,baseline_30000,"기준선 30,000회",44530,44363,99.6249719290366,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,4.0,,False,True,baseline_30000,"기준선 30,000회",294,294,100.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.0,0.5,True,False,baseline_30000,"기준선 30,000회",7674,2109,27.48240813135262,,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.5,1.0,True,False,baseline_30000,"기준선 30,000회",962,34,3.5343035343035343,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,1.0,2.0,True,False,baseline_30000,"기준선 30,000회",23,0,0.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,2.0,4.0,True,True,baseline_30000,"기준선 30,000회",0,0,,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,4.0,,False,True,baseline_30000,"기준선 30,000회",0,0,,적음,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.0,0.5,True,False,GeoGS_30000,GeoGS,17801,9216,51.772372338632664,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.5,1.0,True,False,GeoGS_30000,GeoGS,17340,11929,68.79469434832757,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,1.0,2.0,True,False,GeoGS_30000,GeoGS,33422,28650,85.72197953443839,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,2.0,4.0,True,True,GeoGS_30000,GeoGS,44530,39010,87.60386256456322,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,4.0,,False,True,GeoGS_30000,GeoGS,294,134,45.57823129251701,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.0,0.5,True,False,GeoGS_30000,GeoGS,7674,4443,57.89679437060203,,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.5,1.0,True,False,GeoGS_30000,GeoGS,962,462,48.024948024948024,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,1.0,2.0,True,False,GeoGS_30000,GeoGS,23,0,0.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,2.0,4.0,True,True,GeoGS_30000,GeoGS,0,0,,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,4.0,,False,True,GeoGS_30000,GeoGS,0,0,,적음,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.0,0.5,True,False,judgment_mesh,판단으로 조합한 메시,17801,14111,79.27082748160215,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.5,1.0,True,False,judgment_mesh,판단으로 조합한 메시,17340,13274,76.55132641291812,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,1.0,2.0,True,False,judgment_mesh,판단으로 조합한 메시,33422,33258,99.5093052480402,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,2.0,4.0,True,True,judgment_mesh,판단으로 조합한 메시,44530,44487,99.9034358859196,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,4.0,,False,True,judgment_mesh,판단으로 조합한 메시,294,294,100.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.0,0.5,True,False,judgment_mesh,판단으로 조합한 메시,7674,2745,35.77013291634089,,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.5,1.0,True,False,judgment_mesh,판단으로 조합한 메시,962,155,16.112266112266113,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,1.0,2.0,True,False,judgment_mesh,판단으로 조합한 메시,23,1,4.3478260869565215,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,2.0,4.0,True,True,judgment_mesh,판단으로 조합한 메시,0,0,,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,4.0,,False,True,judgment_mesh,판단으로 조합한 메시,0,0,,적음,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.0,0.5,True,False,FINALTRAIN_30000,본 방법,17801,16620,93.36554126172688,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,0.5,1.0,True,False,FINALTRAIN_30000,본 방법,17340,17090,98.55824682814303,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,1.0,2.0,True,False,FINALTRAIN_30000,본 방법,33422,33270,99.54520974208604,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,2.0,4.0,True,True,FINALTRAIN_30000,본 방법,44530,44419,99.75072984504828,,0
+B173nb_b10,LoD2,score,1,영상만 맞음,prior_distance_m,4.0,,False,True,FINALTRAIN_30000,본 방법,294,294,100.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.0,0.5,True,False,FINALTRAIN_30000,본 방법,7674,2270,29.580401355225437,,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,0.5,1.0,True,False,FINALTRAIN_30000,본 방법,962,58,6.029106029106029,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,1.0,2.0,True,False,FINALTRAIN_30000,본 방법,23,0,0.0,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,2.0,4.0,True,True,FINALTRAIN_30000,본 방법,0,0,,적음,0
+B173nb_b10,LoD2,score,2,사전 정보만 맞음,mvs_distance_m,4.0,,False,True,FINALTRAIN_30000,본 방법,0,0,,적음,0

@@ -1,0 +1,192 @@
+{
+  "task_id": "PHD-MAIN-RECOUNT-v1",
+  "created_at": "2026-11-05T12:28:05.724409+09:00",
+  "source_commit": "7540c1b8108aa183419708adaab3bb67132c6d15",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_xy_offset_m": [
+    690953.0,
+    5336071.0
+  ],
+  "sites": [
+    "B173nb_b10",
+    "B0_b10",
+    "R1rep_b10"
+  ],
+  "priors": [
+    "ALS",
+    "LoD2"
+  ],
+  "methods": [
+    "prior",
+    "mvs",
+    "fusion",
+    "baseline_30000",
+    "GeoGS_30000",
+    "2DGS_30000",
+    "CDGS_30000",
+    "judgment_mesh",
+    "FINALTRAIN_30000"
+  ],
+  "case_ids": [
+    0,
+    1,
+    2,
+    4,
+    3
+  ],
+  "judgment_ids": [
+    0,
+    1,
+    2,
+    4,
+    3,
+    9
+  ],
+  "cases": {
+    "0": "둘 다 맞음",
+    "1": "영상만 맞음",
+    "2": "사전 정보만 맞음",
+    "4": "영상 없음",
+    "3": "둘 다 틀림",
+    "-1": "사전 정보 면 없음(별도)"
+  },
+  "judgments": {
+    "0": "일치",
+    "1": "보존",
+    "2": "보정",
+    "4": "결측",
+    "3": "보정(빈 공간)",
+    "9": "미판정"
+  },
+  "exact_expected": {
+    "0": 0,
+    "1": 2,
+    "2": 1,
+    "4": 4
+  },
+  "small_n": 1000,
+  "tau_multiplier": 1,
+  "table4_source": "/repo/docs/experiments/phd/main_release_v1/tables/stage0/table4_all.csv",
+  "tau_source": "/repo/docs/experiments/phd/main_release_v1/tables/stage0/tau_values.csv",
+  "cell_basis": "score",
+  "cells": "saved RELEASE score_cell_1p0; no reconstruction",
+  "unit": "inherited RESCORE thin reference rows, unchanged multiplicity and row_owner",
+  "judgment_join": "FINALTRAIN judge_region[JA source_index][row_owner]; assert exact patch_id",
+  "denominator": "assigned rows in cases 0,1,2,4; all six judgment labels included; case 3 and -1 counts separate",
+  "best_excludes": [
+    "prior",
+    "mvs",
+    "judgment_mesh"
+  ],
+  "summary_cases": [
+    0,
+    1,
+    2,
+    4,
+    3
+  ],
+  "summary_metrics": [
+    "completeness",
+    "accuracy"
+  ],
+  "summary_small_cells_excluded": true,
+  "gap": "eligible best minus method, percentage points; not clamped",
+  "offsets": {
+    "edges_m": [
+      0,
+      0.5,
+      1,
+      2,
+      4,
+      null
+    ],
+    "intervals": [
+      "[0,0.5)",
+      "[0.5,1)",
+      "[1,2)",
+      "[2,4]",
+      "(4,inf]"
+    ],
+    "methods": [
+      "prior",
+      "mvs",
+      "fusion",
+      "baseline_30000",
+      "GeoGS_30000",
+      "judgment_mesh",
+      "FINALTRAIN_30000"
+    ],
+    "distance": "saved RELEASE prior_distance_m for case 1, mvs_distance_m for case 2"
+  },
+  "wall": {
+    "kind_source": "S1 defs rows_PRIOR.npz kind[thin]",
+    "nearest_point": "nearest point on exact scored result triangle surface, inherited closest()",
+    "distance_3d_m": 1.0,
+    "trigger_pct": 2.0,
+    "trigger_min_n_gt": 1000,
+    "ratio_denominator": "wall reference rows accepted by original tau",
+    "scope": "all five cases and all nine methods; unassigned separate",
+    "sensitivity": "if any qualifying cell exceeds 2%, add d3d<=1 m to walls only; original scores unchanged"
+  },
+  "figures": {
+    "scenes": [
+      [
+        "B173nb_b10",
+        "ALS"
+      ],
+      [
+        "B173nb_b10",
+        "LoD2"
+      ],
+      [
+        "R1rep_b10",
+        "ALS"
+      ]
+    ],
+    "maps": "three top XY reference-row maps per scene; case, exact judgment correctness, FINALTRAIN within tau",
+    "section": "one per scene through largest case-2 0.6m-connected reference-point component; count-weighted major XY axis; anchor is member nearest centroid",
+    "connectivity_m": 0.6,
+    "half_width_m": 0.6,
+    "section_pad_m": 2.0,
+    "section_geometry": "reuse RESCORE exact triangle-plane intersection; target centre+height*normal; no rendering",
+    "map_colors": {
+      "0": "#92948d",
+      "1": "#0072B2",
+      "2": "#D55E00",
+      "4": "#CC79A7",
+      "3": "#332c50",
+      "-1": "#dddddd"
+    },
+    "status_colors": {
+      "correct": "#66645e",
+      "wrong": "#0072B2",
+      "excluded": "#dddddd"
+    }
+  },
+  "execution": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "cpu_only": true,
+    "nice": 19,
+    "cpus": 6,
+    "memory_gib": 32,
+    "training": false,
+    "render": false,
+    "mesh_generation": false
+  },
+  "output_paths": [
+    "configs/phd/main_recount_v1/",
+    "scripts/phd/main_recount_v1/",
+    "docs/experiments/phd/main_recount_v1/",
+    "PH/main_recount_v1/PHD-MAIN-RECOUNT-v1/"
+  ],
+  "PH_resolution": "/art/phase-payloads/phd = ../JointBuildGS-artifacts/phase-payloads/phd",
+  "checks": [
+    "precalculation_lock",
+    "RELEASE_match_within_0.1pp",
+    "exact_judgment",
+    "row_percent_sums_100",
+    "no_training_render_mesh",
+    "writes_in_scope"
+  ]
+}

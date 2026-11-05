@@ -1,0 +1,97 @@
+{
+  "title": "참값·사전 정보·MVS·목표·본 방법·기준선 단면",
+  "site": "B173nb_b10",
+  "prior": "LoD2",
+  "section": {
+    "status": "PASS",
+    "start": [
+      124.56523013339445,
+      89.49214757577045
+    ],
+    "end": [
+      137.0767773935098,
+      84.44879130607623
+    ],
+    "anchor_xyz": [
+      130.65199279785156,
+      87.0385971069336,
+      -30.60430908203125
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 531,
+    "component_unique_points": 531,
+    "components": 187,
+    "all_case2_n_gt": 8659,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9274831811901465,
+      -0.37386488014977537
+    ],
+    "length_m": 13.489783441744489
+  },
+  "sources": [
+    {
+      "path": "/release/stage0/B173nb_b10__LoD2/cells.npz",
+      "sha256": "1ece51788de4e07a783e47e8f668e6d099e55a56e472fc3b6046490d85af04e8"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B173nb_b10__LoD2.npz",
+      "sha256": "610cff9a3900540c37ac896dd055e84849af2ad70fdbc9e3c82e88b23b4a1458"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__LoD2/reference_rows.npz",
+      "sha256": "b4f39ad8b52da9b6168b3ff93684d5a16e619d8a17b63de957364a363e8a5196"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__LoD2/section.json",
+      "sha256": "983ae15a9f973e28eace40db6cb369118561811bc6b311a362adc0e727e0e25b"
+    },
+    {
+      "path": "/out/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz",
+      "sha256": "b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__LoD2/section_points.npz",
+      "sha256": "f300d11ea4cb66002211d23e357de9a8399b030f7c69a8cb405ca8a5cc4e726b"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__LoD2/prior_section.npz",
+      "sha256": "5be2b98dfb77e50a527d08241b015d4517a32b41b33496bf24cc7f2344a38273"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__LoD2/mvs_section.npz",
+      "sha256": "9bd385fb70971dc544ab2383121a7be3af349c49057894263cf46e24b4b81c60"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__LoD2/FINALTRAIN_30000_section.npz",
+      "sha256": "3c687956ba1b13976ed34934b914c044a06eead390b1a6b4c962f0090386662b"
+    },
+    {
+      "path": "/recount/scenes/B173nb_b10__LoD2/baseline_30000_section.npz",
+      "sha256": "0e1fd1019b5694b4ef01d42bb973a00d3e9c1501a0a578450fe346f8bca16c93"
+    }
+  ],
+  "colors": {
+    "prior": "#D85A30",
+    "mvs": "#1D9E75",
+    "FINALTRAIN_30000": "#4B2E8A",
+    "baseline_30000": "#0072B2"
+  },
+  "point_band_halfwidth_m": 0.6,
+  "surface_rule": "exact inherited triangle-plane intersections; cached surfaces unchanged",
+  "reference_points": 1598,
+  "target_points": 964,
+  "xlim": [
+    0.0,
+    13.489783441744489
+  ],
+  "ylim": [
+    -32.00000762939453,
+    -20.87000000253312
+  ],
+  "config_sha256": "917d4ccb9025aed1b89e716ec8fbc3a7a1861e8a68a386b84f6228764d3ba669",
+  "script_sha256": "8411ae169a3d6880c62b93bef9d4898b62808c49edea6cb7875117a24d917046",
+  "dpi": 300,
+  "crs": "EPSG:25832 with inherited local XY shift [690953,5336071] m",
+  "scientific_verdict": null
+}
