@@ -1,0 +1,34 @@
+--- r25/jbgs_gtjudge.py
++++ r26/jbgs_gtjudge.py
+@@ -82,7 +82,20 @@
+         if control is None or args.jbgs_finaltrain!='on':
+             raise ValueError('Preserve freespace requires FINALTRAIN controller and prepared maps')
+         self.control=control
+-        with np.load(target_path(args,control.root)) as z:self.judge=torch.from_numpy(z['judge_region'].copy())
++        with np.load(target_path(args,control.root)) as z:
++            self.judge=torch.from_numpy(z['judge_region'].copy())
++            selected=getattr(args,'jbgs_freespace_patches',None)
++            if selected:
++                with np.load(selected,allow_pickle=False) as patches:ids=patches['patch_id'].copy()
++                all_ids=z['patch_id']
++                if len(np.unique(ids))!=len(ids) or not np.isin(ids,all_ids).all():
++                    raise ValueError('Freespace patch IDs must be unique exact target-file members')
++                mask=np.isin(all_ids,ids)
++                if int(mask.sum())!=len(ids):raise ValueError('Ambiguous target patch IDs')
++                self.judge=torch.from_numpy(mask.astype(np.int8))
++                (control.mon/'freespace_patch_binding.json').write_text(json.dumps(dict(
++                    path=str(selected),sha256=hashlib.sha256(Path(selected).read_bytes()).hexdigest(),
++                    patches=len(ids),selection='explicit patch_id file',GT_used=False,scientific_verdict=None),indent=2)+'\n')
+         self.weight=None
+         self.calibration=None
+         self.calibration_iteration=None
+--- r25/jbgs_target.py
++++ r26/jbgs_target.py
+@@ -13,6 +13,7 @@
+ 
+ def register_args(parser):
+     parser.add_argument('--jbgs_targets',default=None)
++    parser.add_argument('--jbgs_freespace_patches',default=None)
+     parser.add_argument('--jbgs_preserve_freespace',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_finaltrain',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_target',choices=['off','on'],default='off')
