@@ -46,6 +46,12 @@ def training(site,prior,arm):
     text='\n'.join(text)+'\n';assert len(text)<1500;(D/f'결과_{site}_{prior}_{arm}.md').write_text(text)
 
 def reports():
+    component_summaries=[]
+    for site in SITES:
+        components=rows(D/'tables/addendum2'/f'alt_da_components_{site}.json')
+        if components:
+            component_summaries.append(dict(site=site,components=len(components),preserved_area_m2=sum(x['area_m2'] for x in components if x['keep']),remaining_correction_area_m2=sum(x['area_m2'] for x in components if not x['keep']),remaining_reasons=[dict(reason=reason,components=sum(x['reason']==reason for x in components),area_m2=sum(x['area_m2'] for x in components if x['reason']==reason)) for reason in ['image_greater','equal','no_adjacent_decision']]))
+    dump(D/'tables/addendum2/alt_da_summary.json',dict(rows=component_summaries,scientific_verdict=None))
     events=O/'queue/addendum2/events.jsonl'
     order=[json.loads(line) for line in events.read_text().splitlines() if json.loads(line)['event']=='TRAINING_STARTED'] if events.exists() else []
     dump(D/'tables/addendum2/execution_order.json',dict(rows=order,scientific_verdict=None))
@@ -136,5 +142,7 @@ def main(mode,*args):
         paths=['configs/phd/main_gtjudge_v1','scripts/phd/main_gtjudge_v1','docs/experiments/phd/main_gtjudge_v1','src/phd/forks/GeoGS-conf-guided-v1-r26']
         subprocess.run(['git','add','--',*paths],cwd=R,check=True)
         if subprocess.run(['git','diff','--cached','--quiet','--',*paths],cwd=R).returncode:subprocess.run(['git','commit','--only','-m','PHD-MAIN-GTJUDGE-v1 addendum2 '+label,'--',*paths],cwd=R,check=True)
-        subprocess.run(['git','push','origin','HEAD:exp/main-experiment'],cwd=R,check=True);event('PACKAGE',label=label,**rec);print('PACKAGE_READY',json.dumps(rec,ensure_ascii=False),flush=True)
+        subprocess.run(['git','push','origin','HEAD:exp/main-experiment'],cwd=R,check=True)
+        event('PACKAGE',label=label,package_at=rec['at'],**{k:v for k,v in rec.items() if k!='at'})
+        print('PACKAGE_READY',json.dumps(rec,ensure_ascii=False),flush=True)
 if __name__=='__main__':main(*sys.argv[1:])
