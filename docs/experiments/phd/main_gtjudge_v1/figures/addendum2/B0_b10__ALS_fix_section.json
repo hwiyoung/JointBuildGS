@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-06T06:32:23.473083+09:00",
+  "section": {
+    "status": "PASS",
+    "start": [
+      94.93817766665929,
+      2.3190030654517795
+    ],
+    "end": [
+      95.34944218407536,
+      11.515835319705769
+    ],
+    "anchor_xyz": [
+      95.17623901367188,
+      7.642609119415283,
+      -22.705625534057617
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 138,
+    "component_unique_points": 138,
+    "components": 143,
+    "all_case2_n_gt": 1263,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.04467341774554557,
+      0.9990016445166303
+    ],
+    "length_m": 9.206023137933773,
+    "small_component": true
+  },
+  "methods": [
+    "FINALTRAIN_30000",
+    "fix"
+  ],
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B0_b10__ALS.npz",
+      "sha256": "46335ab5ff75a80da871707f80d558ce6c1b6e904396b37d0befcd069a43ddb4"
+    }
+  ],
+  "script_sha256": "a8956e4ac191607f6cae3de65b1c64fa35fb12a71f7dbbcd49c172fbb49b97e9",
+  "scientific_verdict": null
+}
