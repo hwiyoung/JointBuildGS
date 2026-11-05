@@ -1,0 +1,149 @@
+"""r25 diagnostic target override and opacity-only preserve freespace primitive.
+
+The activated-opacity penalty and selection have no reference-geometry input.
+This module is preparatory until GTJUDGE's real target/map and stage gates pass.
+"""
+import hashlib
+import json
+from pathlib import Path
+import numpy as np
+import torch
+
+def target_path(args,root):
+    override=getattr(args,'jbgs_targets',None)
+    return Path(override) if override else root.parent.parent/'targets'/(root.name+'.npz')
+
+def verify_override(args,root):
+    if not getattr(args,'jbgs_targets',None):return
+    if args.jbgs_finaltrain!='on' or args.jbgs_target!='on' or args.jbgs_target_rev!='r8':
+        raise ValueError('--jbgs_targets requires FINALTRAIN r8')
+    target=target_path(args,root)
+    index=json.loads((root/'maps/index.json').read_text())
+    actual=hashlib.sha256(target.read_bytes()).hexdigest()
+    if index['target_sha256']!=actual:
+        raise ValueError('Target override and prepared target maps have different hashes')
+    with np.load(target) as z,np.load(root/'seeds.npz') as seeds:
+        prior=seeds['origin']==1
+        ids=seeds['patch'][prior]
+        if not np.array_equal(seeds['target'][prior],z['target'][ids].astype('f4')):
+            raise ValueError('Target override and prepared seed anchors disagree')
+        if not np.array_equal(seeds['sigma'][prior],z['sigma'][ids].astype('f4')):
+            raise ValueError('Target override and prepared seed sigma disagree')
+        if not np.array_equal(seeds['region'][prior],z['region'][ids]):
+            raise ValueError('Target override and prepared seed judgments disagree')
+
+@torch.no_grad()
+def candidate_mask(xyz,bound_patch,depth,sigma,owner,judge_region,K,W2C):
+    """Full target patch IDs, frontmost-disc maps, camera-Z convention."""
+    camera=xyz.detach().double()@W2C[:3,:3].T+W2C[:3,3]
+    z=camera[:,2]
+    projected=camera@K.T
+    finite=torch.isfinite(projected).all(1)&(z>0)
+    uv=torch.zeros((len(xyz),2),device=xyz.device,dtype=torch.long)
+    uv[finite]=torch.floor(projected[finite,:2]/projected[finite,2,None]+.5).long()
+    height,width=depth.shape
+    inside=finite&(uv[:,0]>=0)&(uv[:,0]<width)&(uv[:,1]>=0)&(uv[:,1]<height)
+    ids=torch.where(inside)[0]
+    answer=torch.zeros(len(xyz),device=xyz.device,dtype=torch.bool)
+    if not len(ids):return answer
+    x,y=uv[ids,0],uv[ids,1]
+    patch=owner[y,x].long()
+    has=patch>=0
+    valid=has&torch.isfinite(depth[y,x])&torch.isfinite(sigma[y,x])&(sigma[y,x]>0)
+    # Clamp only to make the gather safe; negative-owner pixels remain excluded.
+    valid&=judge_region[patch.clamp_min(0)]==1
+    valid&=bound_patch[ids]!=patch
+    valid&=z[ids]<(depth[y,x]-1.96*sigma[y,x])
+    answer[ids]=valid
+    return answer
+
+def opacity_penalty(logit_opacity,mask,weight):
+    # A zero scalar touching only opacity makes an empty selection differentiable.
+    if not bool(mask.any()):return logit_opacity.sum()*0
+    return float(weight)*torch.sigmoid(logit_opacity[mask]).mean()
+
+def calibrated_lambda(photo_loss,logit_opacity,mask):
+    if not bool(mask.any()):
+        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_NO_CANDIDATE')
+    grad=torch.autograd.grad(photo_loss,logit_opacity,retain_graph=True)[0].detach()[mask]
+    alpha=torch.sigmoid(logit_opacity.detach()[mask])
+    derivative=alpha*(1-alpha)
+    if not bool(torch.isfinite(grad).all()&(derivative>0).all()):
+        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_INVALID_OPACITY_GRADIENT')
+    # Compare derivatives w.r.t. activated opacity, not its optimizer logit.
+    photo_median=torch.quantile((grad/derivative).abs().double().reshape(-1),.5)
+    unit_gradient=1./int(mask.sum())
+    value=float(photo_median/unit_gradient)
+    return value,dict(photo_opacity_gradient_median=float(photo_median),
+        unit_fs_opacity_gradient_median=unit_gradient,candidates=int(mask.sum()),GT_used=False)
+
+class PreserveFreespace:
+    def __init__(self,args,control):
+        if control is None or args.jbgs_finaltrain!='on':
+            raise ValueError('Preserve freespace requires FINALTRAIN controller and prepared maps')
+        self.control=control
+        with np.load(target_path(args,control.root)) as z:
+            self.judge=torch.from_numpy(z['judge_region'].copy())
+            selected=getattr(args,'jbgs_freespace_patches',None)
+            if selected:
+                with np.load(selected,allow_pickle=False) as patches:ids=patches['patch_id'].copy()
+                all_ids=z['patch_id']
+                if len(np.unique(ids))!=len(ids) or not np.isin(ids,all_ids).all():
+                    raise ValueError('Freespace patch IDs must be unique exact target-file members')
+                mask=np.isin(all_ids,ids)
+                if int(mask.sum())!=len(ids):raise ValueError('Ambiguous target patch IDs')
+                self.judge=torch.from_numpy(mask.astype(np.int8))
+                (control.mon/'freespace_patch_binding.json').write_text(json.dumps(dict(
+                    path=str(selected),sha256=hashlib.sha256(Path(selected).read_bytes()).hexdigest(),
+                    patches=len(ids),selection='explicit patch_id file',GT_used=False,scientific_verdict=None),indent=2)+'\n')
+        self.weight=None
+        self.calibration=None
+        self.calibration_iteration=None
+        self.last_targeted=None
+        self.pruned_recent=0
+        self.iteration=0
+        self.path=control.mon/'preserve_freespace.jsonl'
+
+    def loss(self,iteration,g,photo_loss,name):
+        self.iteration=iteration
+        if self.last_targeted is None:
+            self.last_targeted=torch.full((len(g._xyz),),-100000,device=g._xyz.device,dtype=torch.int32)
+        if not 500<=iteration<=30000:return g._opacity.sum()*0
+        control=self.control;m=control.maps[name];device=g._xyz.device
+        meta=control.index['views'][name]
+        with torch.no_grad():
+            bound=torch.full((len(g._xyz),),-1,device=device,dtype=torch.long)
+            attached=g.target_tag==1
+            mapping=torch.as_tensor(control.valid_patch,device=device,dtype=torch.long)
+            bound[attached]=mapping[g.target_index[attached]]
+            mask=candidate_mask(g._xyz,bound,m['depth'].to(device),m['sigma'].to(device),
+                m['owner'].to(device),self.judge.to(device),
+                torch.as_tensor(meta['K'],device=device,dtype=torch.float64),
+                torch.as_tensor(meta['W2C'],device=device,dtype=torch.float64))
+        count=int(mask.sum())
+        enough=(count>=100) if iteration==500 else (count>100)
+        if self.weight is None and iteration%100==0 and enough:
+            self.weight,self.calibration=calibrated_lambda(photo_loss,g._opacity,mask)
+            self.calibration_iteration=iteration
+            record=dict(iteration=iteration,lambda_fs=self.weight,calibration=self.calibration,scientific_verdict=None)
+            (control.mon/'preserve_freespace_lambda.json').write_text(json.dumps(record,indent=2)+'\n')
+        if self.weight is not None:self.last_targeted[mask]=iteration
+        if iteration in [500,1000,7000,15000,30000] or iteration==self.calibration_iteration:
+            alpha=g.get_opacity.detach()[mask]
+            row=dict(iteration=iteration,lambda_fs=self.weight,calibration_iteration=self.calibration_iteration,candidates=count,
+                opacity_median=float(torch.quantile(alpha.double().reshape(-1),.5)) if len(alpha) else None,
+                calibration=self.calibration,opacity_pruned_recent_targets=self.pruned_recent,scientific_verdict=None)
+            with self.path.open('a') as f:f.write(json.dumps(row,allow_nan=False)+'\n')
+        return opacity_penalty(g._opacity,mask,self.weight if self.weight is not None else 0.)
+
+    def extend(self,count,device):
+        # Only Gaussians themselves targeted by this term count; children start unmarked.
+        if self.last_targeted is not None:
+            self.last_targeted=torch.cat([self.last_targeted,torch.full((count,),-100000,device=device,dtype=torch.int32)])
+
+    def before_prune(self,mask,opacity_mask=None):
+        if self.last_targeted is None:return
+        if opacity_mask is not None:
+            recent=(self.iteration-self.last_targeted>=0)&(self.iteration-self.last_targeted<100)
+            self.pruned_recent+=int((mask&opacity_mask&recent).sum())
+        self.last_targeted=self.last_targeted[~mask]

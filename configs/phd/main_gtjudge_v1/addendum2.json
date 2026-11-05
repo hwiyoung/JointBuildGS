@@ -1,0 +1,90 @@
+{
+  "task": "PHD-MAIN-GTJUDGE-v1",
+  "addendum": 2,
+  "created_at": "2026-11-05T23:55:21.921562+09:00",
+  "sites": [
+    "B173nb_b10",
+    "B0_b10",
+    "R1rep_b10"
+  ],
+  "variants": [
+    "alt_ga",
+    "alt_na",
+    "alt_da"
+  ],
+  "editable": {
+    "prior": "LoD2",
+    "judge_region": 2,
+    "reason": 2
+  },
+  "adjacency": {
+    "group": [
+      "building",
+      "surf"
+    ],
+    "radius_m": 0.36,
+    "prior_side": "photo-supported preserve or missing",
+    "image_side": "photo-refuted correction",
+    "weight": "patch area",
+    "tie": "correction"
+  },
+  "target_rule": "unchanged FINALTRAIN 2.2",
+  "selection": {
+    "cases": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "guard_cases": [
+      0,
+      1,
+      4
+    ],
+    "minimum_gt": 1000,
+    "maximum_drop_pp": 2.0,
+    "objective_case": 2,
+    "objective": "unweighted mean across all three LoD2 scenes",
+    "tie_within_pp": 1.0,
+    "tie_rule": "smaller largest guard-cell decrease",
+    "fallback": "alt_ga",
+    "exact_secondary_tie": "alt_na before alt_da; logged inherited deterministic order",
+    "round_before_choice": false
+  },
+  "freespace": {
+    "target_condition": "surface_exists and abs(target_height_m-prior_height_m)<=1.96*sigma_P_m",
+    "inputs": "FINALTRAIN and JUDGEAPPLY training-only",
+    "patch_id": "external patch_id; join exactly to target array indices",
+    "lambda_rule": "addendum1 unchanged"
+  },
+  "accuracy": {
+    "ALS_exclude_abs_normal_z_below": 0.5,
+    "LoD2_unchanged": true,
+    "exclude_no_gt_within_m": 1.0,
+    "before_and_after": true
+  },
+  "features": {
+    "sample_max_per_cell": 50000,
+    "seed": 20261105,
+    "base": "order_v1 section5.1"
+  },
+  "queue": {
+    "shared_gpus": [
+      0,
+      1
+    ],
+    "priority": [
+      "R1 A1 ALS/LoD2",
+      "R1 A2 ALS/LoD2",
+      "fix R1 ALS",
+      "fix R1 LoD2",
+      "fix B173 LoD2",
+      "fix B173 ALS",
+      "fix B0 LoD2",
+      "fix B0 ALS",
+      "remaining A in original6.4 order",
+      "optional seed1"
+    ]
+  },
+  "scientific_verdict": null
+}
