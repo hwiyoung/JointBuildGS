@@ -1,0 +1,61 @@
+{
+  "at": "2026-11-05T19:41:58.536585+09:00",
+  "stage": 2,
+  "site": "R1rep_b10",
+  "prior": "ALS",
+  "feature": "textureless",
+  "rank": 2,
+  "n_gt": 4256,
+  "section": {
+    "status": "PASS",
+    "start": [
+      -1.0993921211269306,
+      16.708892250256042
+    ],
+    "end": [
+      27.05257374897017,
+      34.05169822114068
+    ],
+    "anchor_xyz": [
+      13.5600004196167,
+      25.739700317382812,
+      -28.719207763671875
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 4256,
+    "component_unique_points": 4256,
+    "components": 1,
+    "all_case2_n_gt": 4256,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.8514082251929252,
+      0.5245036073029747
+    ],
+    "length_m": 33.06517958963573
+  },
+  "image": {
+    "archive": "/art/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+    "member": "Images/DJI_20241217084543_0095_D.JPG",
+    "crc32": 2857108954,
+    "size": 5316608
+  },
+  "view_name": "DJI_20241217084543_0095_D",
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/preservation_features.npz",
+      "sha256": "04a13cd70f759771b942db2226eaddb829e750058a288110520dac44f44ea8a3"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/R1rep_b10__ALS.npz",
+      "sha256": "d2408dfbba0d60e8a1d1783d0d3f834fad6641d958facace1b736a78889f537b"
+    }
+  ],
+  "script_sha256": "a8956e4ac191607f6cae3de65b1c64fa35fb12a71f7dbbcd49c172fbb49b97e9",
+  "scientific_verdict": null
+}
