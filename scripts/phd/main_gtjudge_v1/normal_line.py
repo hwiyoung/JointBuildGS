@@ -1,4 +1,4 @@
-"""Order 2.1 rays. Callers must supply reference-triangle normals, never PCA."""
+"""Order 2.1 rays with addendum-authorized AXES71 PCA reference normals."""
 import sys
 import numpy as np
 sys.path.insert(0, '/repo')
@@ -8,7 +8,7 @@ def unit_normals(normals):
     n = np.asarray(normals, dtype=np.float64)
     length = np.linalg.norm(n, axis=1)
     if n.ndim != 2 or n.shape[1] != 3 or not np.isfinite(n).all() or (length <= 0).any():
-        raise ValueError('Missing or invalid face normals; do not substitute PCA/prior normals')
+        raise ValueError('Missing or invalid locked measurement normals')
     return n / length[:,None]
 
 def tangents(n):
@@ -17,7 +17,7 @@ def tangents(n):
     a = unit_normals(np.cross(n,axis))
     return a, np.cross(n,a)
 
-def measure(scene, points, normals, wall):
+def measure(scene, points, normals, wall, extra_diagonals=False):
     p = np.asarray(points,np.float64)
     n = unit_normals(normals)
     assert p.shape == n.shape and np.isfinite(p).all()
@@ -27,7 +27,9 @@ def measure(scene, points, normals, wall):
     best = np.full(len(p),np.inf)
     signed = np.full(len(p),np.nan)
     offset_id = np.full(len(p),-1,np.int8)
-    for k,shift in enumerate([np.zeros_like(p),.05*a,-.05*a,.05*b,-.05*b]):
+    shifts=[np.zeros_like(p),.05*a,-.05*a,.05*b,-.05*b]
+    if extra_diagonals:shifts += [.05/np.sqrt(2)*(x*a+y*b) for x,y in [(1,1),(1,-1),(-1,1),(-1,-1)]]
+    for k,shift in enumerate(shifts):
         for sign in [1,-1]:
             distance = scene.cast(p+shift,n*sign).astype(float)
             take = np.isfinite(distance)&(distance<=limit)&(distance<best)

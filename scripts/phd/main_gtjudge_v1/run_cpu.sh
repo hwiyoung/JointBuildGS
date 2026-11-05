@@ -7,6 +7,9 @@ OUT="$PAY/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1"
 mkdir -p "$OUT/tmp" "$OUT/logs"
 tag=$1
 shift
+if [[ "$tag" == "distance-B173nb_b10-ALS" ]]; then
+  docker wait jbgs-gtjudge-early-B173-ALS >/dev/null 2>&1 || true
+fi
 nice -n 19 docker run --rm --read-only --network none --runtime runc \
  --name "jbgs-gtjudge-$tag" --user "$(id -u):$(id -g)" --cpus 6 --memory 32g --memory-swap 32g \
  -e CUDA_VISIBLE_DEVICES= -e NVIDIA_VISIBLE_DEVICES=void -e PYTHONDONTWRITEBYTECODE=1 -e PYTHONUNBUFFERED=1 \

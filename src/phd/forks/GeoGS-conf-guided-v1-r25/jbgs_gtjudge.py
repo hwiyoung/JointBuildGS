@@ -64,7 +64,7 @@ def opacity_penalty(logit_opacity,mask,weight):
 
 def calibrated_lambda(photo_loss,logit_opacity,mask):
     if not bool(mask.any()):
-        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_NO_CANDIDATE_AT_1000')
+        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_NO_CANDIDATE')
     grad=torch.autograd.grad(photo_loss,logit_opacity,retain_graph=True)[0].detach()[mask]
     alpha=torch.sigmoid(logit_opacity.detach()[mask])
     derivative=alpha*(1-alpha)
@@ -85,9 +85,16 @@ class PreserveFreespace:
         with np.load(target_path(args,control.root)) as z:self.judge=torch.from_numpy(z['judge_region'].copy())
         self.weight=None
         self.calibration=None
+        self.calibration_iteration=None
+        self.last_targeted=None
+        self.pruned_recent=0
+        self.iteration=0
         self.path=control.mon/'preserve_freespace.jsonl'
 
     def loss(self,iteration,g,photo_loss,name):
+        self.iteration=iteration
+        if self.last_targeted is None:
+            self.last_targeted=torch.full((len(g._xyz),),-100000,device=g._xyz.device,dtype=torch.int32)
         if not 500<=iteration<=30000:return g._opacity.sum()*0
         control=self.control;m=control.maps[name];device=g._xyz.device
         meta=control.index['views'][name]
@@ -100,18 +107,30 @@ class PreserveFreespace:
                 m['owner'].to(device),self.judge.to(device),
                 torch.as_tensor(meta['K'],device=device,dtype=torch.float64),
                 torch.as_tensor(meta['W2C'],device=device,dtype=torch.float64))
-        if iteration==1000:
-            if self.weight is not None:raise RuntimeError('FS_LAMBDA_ALREADY_CALIBRATED')
+        count=int(mask.sum())
+        enough=(count>=100) if iteration==500 else (count>100)
+        if self.weight is None and iteration%100==0 and enough:
             self.weight,self.calibration=calibrated_lambda(photo_loss,g._opacity,mask)
-        if iteration>1000 and self.weight is None:raise RuntimeError('FS_LAMBDA_NOT_CALIBRATED')
-        # No numeric weight is given for 500..999 in the order. Do not invent one.
-        # This is a deliberate execution gate, not an assertion of A-2 readiness.
-        if self.weight is None:
-            raise RuntimeError('FS_PRE1000_WEIGHT_UNSPECIFIED: order starts loss at 500 but calibrates at 1000')
-        if iteration in [1000,7000,15000,30000]:
+            self.calibration_iteration=iteration
+            record=dict(iteration=iteration,lambda_fs=self.weight,calibration=self.calibration,scientific_verdict=None)
+            (control.mon/'preserve_freespace_lambda.json').write_text(json.dumps(record,indent=2)+'\n')
+        if self.weight is not None:self.last_targeted[mask]=iteration
+        if iteration in [500,1000,7000,15000,30000] or iteration==self.calibration_iteration:
             alpha=g.get_opacity.detach()[mask]
-            row=dict(iteration=iteration,lambda_fs=self.weight,candidates=int(mask.sum()),
+            row=dict(iteration=iteration,lambda_fs=self.weight,calibration_iteration=self.calibration_iteration,candidates=count,
                 opacity_median=float(torch.quantile(alpha.double().reshape(-1),.5)) if len(alpha) else None,
-                calibration=self.calibration,scientific_verdict=None)
+                calibration=self.calibration,opacity_pruned_recent_targets=self.pruned_recent,scientific_verdict=None)
             with self.path.open('a') as f:f.write(json.dumps(row,allow_nan=False)+'\n')
-        return opacity_penalty(g._opacity,mask,self.weight)
+        return opacity_penalty(g._opacity,mask,self.weight if self.weight is not None else 0.)
+
+    def extend(self,count,device):
+        # Only Gaussians themselves targeted by this term count; children start unmarked.
+        if self.last_targeted is not None:
+            self.last_targeted=torch.cat([self.last_targeted,torch.full((count,),-100000,device=device,dtype=torch.int32)])
+
+    def before_prune(self,mask,opacity_mask=None):
+        if self.last_targeted is None:return
+        if opacity_mask is not None:
+            recent=(self.iteration-self.last_targeted>=0)&(self.iteration-self.last_targeted<100)
+            self.pruned_recent+=int((mask&opacity_mask&recent).sum())
+        self.last_targeted=self.last_targeted[~mask]

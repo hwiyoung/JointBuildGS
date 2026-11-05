@@ -48,7 +48,31 @@ def cfg():
     path = C / 'gtjudge_v1.json'
     lock = json.loads((C / 'gtjudge_v1.initial.lock.json').read_text())
     assert sha(path) == lock['config_sha256']
-    return json.loads(path.read_text())
+    value=json.loads(path.read_text())
+    add=C/'gtjudge_v1.add1.json'
+    if add.exists():
+        lock=json.loads((C/'gtjudge_v1.add1.lock.json').read_text())
+        assert sha(add)==lock['config_sha256']
+        update=json.loads(add.read_text())
+        for key,item in update.items():
+            if isinstance(item,dict) and isinstance(value.get(key),dict):value[key].update(item)
+            else:value[key]=item
+    return value
+
+def loadz(p,keys=None):
+    import numpy as np
+    with np.load(p,allow_pickle=False) as z:return {k:z[k] for k in (z.files if keys is None else keys)}
+
+def savez(p,**v):
+    import numpy as np
+    p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);np.savez_compressed(p,**v)
+
+def issue(message):
+    with (D/'issues.md').open('a') as f:f.write('- '+now()+': '+message+'\n')
+
+def stage_lock(stage):
+    p=C/f'stage{stage}.add1.initial.lock.json'
+    if not p.exists():dump(p,dict(at=now(),config_sha256=sha(C/'gtjudge_v1.add1.json'),scientific_verdict=None))
 
 def score_dir(site, prior, method):
     phase = 'addendum3_stage1' if site == 'B173nb_b10' else 'addendum3_stage2'

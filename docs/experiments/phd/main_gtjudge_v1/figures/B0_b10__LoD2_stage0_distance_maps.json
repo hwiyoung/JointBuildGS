@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-05T19:38:42.746948+09:00",
+  "stage": 0,
+  "section": {
+    "status": "PASS",
+    "start": [
+      84.89255403971346,
+      3.41204974379914
+    ],
+    "end": [
+      94.49841704503325,
+      -0.071364226032951
+    ],
+    "anchor_xyz": [
+      89.94930267333984,
+      1.5782999992370605,
+      -36.88880920410156
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 380,
+    "component_unique_points": 380,
+    "components": 82,
+    "all_case2_n_gt": 605,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9400956518467283,
+      -0.3409107880060046
+    ],
+    "length_m": 10.217963444943068,
+    "small_component": false
+  },
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/rows.npz",
+      "sha256": "527e6d96e0b6435a423dc576e530c3a72b5521f3a21dc30b77c9ae44d2132cce"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/stage1_cells.npz",
+      "sha256": "aa6139469f13b494f766011a775bf1d6f0e92bdbc57b2c82cc9f38c09daefcc3"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/section.json",
+      "sha256": "0d300b45e42ecaa8259e65267ece04e26c4b5b06edd05a4958a90b3a9215e0bd"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "d9b7fcde20bde879b46593e540e0d2045e113a6747719ea59145db57f99dedb7"
+    }
+  ],
+  "script_sha256": "a8956e4ac191607f6cae3de65b1c64fa35fb12a71f7dbbcd49c172fbb49b97e9",
+  "scientific_verdict": null
+}

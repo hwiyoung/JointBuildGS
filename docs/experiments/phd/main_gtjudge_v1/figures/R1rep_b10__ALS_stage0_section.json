@@ -1,0 +1,55 @@
+{
+  "at": "2026-11-05T19:13:31.800820+09:00",
+  "stage": 0,
+  "section": {
+    "status": "PASS",
+    "start": [
+      -10.301976349915051,
+      7.456777618889092
+    ],
+    "end": [
+      39.6471348025373,
+      35.224239170755084
+    ],
+    "anchor_xyz": [
+      12.512700080871582,
+      20.139799118041992,
+      -33.57550811767578
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 7592,
+    "component_unique_points": 7592,
+    "components": 314,
+    "all_case2_n_gt": 24399,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.87402386146794,
+      0.48588299989264006
+    ],
+    "length_m": 57.14845252458194,
+    "reused_source": "/art/phase-payloads/phd/main_recount_v1/PHD-MAIN-RECOUNT-v1/scenes/R1rep_b10__ALS/section.json",
+    "reused_sha256": "6b78a304521a26e6115fb7607c759bb236d39e39d08465e34a70fd1418e20265"
+  },
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/stage1_cells.npz",
+      "sha256": "3bb92121f55976eaba387b5feb049da9e955708ddc86bc170424ab953cef7b86"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/section.json",
+      "sha256": "5da705e5ba323f86828616200952bab39f6b2fd4a2e267c65b27a261fc33b520"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "249dccdbafaa4498e87655ddf53f57f279ee27c0a510083bbf10a6a6d425fcea"
+    }
+  ],
+  "script_sha256": "a8956e4ac191607f6cae3de65b1c64fa35fb12a71f7dbbcd49c172fbb49b97e9",
+  "scientific_verdict": null
+}

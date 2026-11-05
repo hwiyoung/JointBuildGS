@@ -699,6 +699,7 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
     if args.jbgs_preserve_freespace == 'on':
         from jbgs_gtjudge import PreserveFreespace
         preserve_freespace = PreserveFreespace(args,target_control)
+        gaussians.preserve_freespace = preserve_freespace
     gaussians.training_setup(opt)
     if checkpoint:
         (model_params, first_iter) = torch.load(checkpoint)
@@ -1062,6 +1063,7 @@ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, ch
             target_control.check_loss(iteration, total_loss)
         if preserve_freespace is not None:
             total_loss = total_loss + preserve_freespace.loss(iteration,gaussians,rgb_loss,cam_name)
+            target_control.check_loss(iteration, total_loss)
         total_loss.backward()
         mvs_pgsr_control.after_backward(iteration, gaussians)
         if judgment is not None:  # [jbgs_judgment] remember locked rows before the Adam step

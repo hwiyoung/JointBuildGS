@@ -369,7 +369,9 @@ class GaussianModel:
                 optimizable_tensors[group["name"]] = group["params"][0]
         return optimizable_tensors
 
-    def prune_points(self, mask):
+    def prune_points(self, mask, opacity_mask=None):
+        if getattr(self,'preserve_freespace',None) is not None:
+            self.preserve_freespace.before_prune(mask,opacity_mask)
         valid_points_mask = ~mask
         optimizable_tensors = self._prune_optimizer(valid_points_mask)
 
@@ -460,6 +462,8 @@ class GaussianModel:
             self.init_id = torch.cat((self.init_id, new_init_id.to(torch.int32)), dim=0)
         if self.target_r6 is not None:
             self.target_r6.extended(self, new_target_meta)
+        if getattr(self,'preserve_freespace',None) is not None:
+            self.preserve_freespace.extend(len(new_xyz),self._xyz.device)
 
     def densify_and_split(self, grads, grad_threshold, scene_extent, N=2):
         n_init_points = self.get_xyz.shape[0]
@@ -529,7 +533,7 @@ class GaussianModel:
         _ex = self.density_exempt()  # [jbgs_judgment r13] r12: frozen_mask
         if _ex is not None:
             prune_mask = torch.logical_and(prune_mask, ~_ex)
-        self.prune_points(prune_mask)
+        self.prune_points(prune_mask,opacity_mask=(self.get_opacity < min_opacity).squeeze())
 
         torch.cuda.empty_cache()
 
