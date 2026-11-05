@@ -40,3 +40,5 @@
 - 2026-11-06T00:47:16.012976+09:00: B0_b10__LoD2: 가장자리 이웃은 상속 0.25 m 패치의 접선 네 방향, 중심 0.125 m 내 짝으로 고정; 수직 영상이 없는 점의 무늬는 확인 불가 별도 행.
 - 2026-11-06T00:47:30.867897+09:00: R1rep_b10__ALS: 가장자리 이웃은 상속 0.25 m 패치의 접선 네 방향, 중심 0.125 m 내 짝으로 고정; 수직 영상이 없는 점의 무늬는 확인 불가 별도 행.
 - 2026-11-06T00:47:42.078108+09:00: R1rep_b10__LoD2: 가장자리 이웃은 상속 0.25 m 패치의 접선 네 방향, 중심 0.125 m 내 짝으로 고정; 수직 영상이 없는 점의 무늬는 확인 불가 별도 행.
+- 2026-11-06T02:47:00.938917+09:00: 덧붙임2 fix-figures-R1rep_b10-ALS 동일 설정 2회 오류(137); 로그 /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/logs/add2-host-fix-figures-R1rep_b10-ALS-attempt2.log. 다른 학습은 계속.
+- 2026-11-06T02:47:00.953162+09:00: 덧붙임2 후처리 ('R1rep_b10', 'ALS', 'fix') 오류 AssertionError(); 다음 학습 계속.
