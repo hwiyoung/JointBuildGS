@@ -26,11 +26,16 @@ def training(site,prior,arm):
         x=next((x for x in metrics if x['method']==m and x['surface']=='all' and x['case_id']=='all'),None);v[m+'_accuracy_pct']=x['accuracy_pct'] if x else None
     # Parent PSNR is copied from the existing FINALTRAIN summary, never rerendered.
     parent=D.parent/'main_finaltrain_v1/tables'/f'training_summary_{site}__{prior}.json'
+    if not parent.exists():parent=D.parent/'main_finaltrain_v1/tables'/f'training_{site}__{prior}.json'
     v['FINALTRAIN_psnr_test']=None
     if parent.exists():
         parent_rows=json.loads(parent.read_text())['rows']
-        for parent_row in parent_rows:
-            log=Path(parent_row['training_log'])
+        logs={Path(x['training_log']) for x in parent_rows if 'training_log' in x}
+        parent_run=PH/'main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs'/site/f'ft_{prior}_s0'
+        if not logs and (parent_run/'receipt.json').exists():
+            attempts=json.loads((parent_run/'receipt.json').read_text()).get('attempts',[])
+            logs={parent_run/f"attempt{x['attempt']}"/'train.log' for x in attempts if x['status']=='TRAINING_COMPLETE_30000'}
+        for log in sorted(logs):
             if log.exists():
                 with log.open(errors='replace') as f:
                     for line in f:
@@ -39,7 +44,8 @@ def training(site,prior,arm):
                             if match:v['FINALTRAIN_psnr_test']=float(match[1])
     v['scene_comparison']=[dict(method='FINALTRAIN',accuracy_pct=v.get('FINALTRAIN_30000_accuracy_pct'),psnr_test=v['FINALTRAIN_psnr_test']),dict(method=arm,accuracy_pct=v.get(arm+'_accuracy_pct'),psnr_test=v['psnr_test'])]
     dump(D/'tables/addendum2/fix'/f'{site}__{prior}_{arm}_training.json',v)
-    text=[f'# {site} {prior} '+('고친 판' if arm=='fix' else arm),'',f"상태 {r['status']}; {v['iterations']}회. scientific_verdict: null.",f"λ_fs {fmt(v['lambda_fs'])}; 결정 {fmt(v['calibration_iteration'])}회; 최근 대상 불투명도 정리 {fmt(v['opacity_pruned_recent_targets'])}개.",f"PSNR(test) {fmt(v['psnr_test'])}; 정확성 {fmt(v.get(arm+'_accuracy_pct'))}%.",'','|경우|참값 행|완전성 %|정확성 %|','|---|---:|---:|---:|']
+    fs_line='빈 공간 항 미적용(off).' if arm=='A1' else f"λ_fs {fmt(v['lambda_fs'])}; 결정 {fmt(v['calibration_iteration'])}회; 최근 대상 불투명도 정리 {fmt(v['opacity_pruned_recent_targets'])}개."
+    text=[f'# {site} {prior} '+('고친 판' if arm=='fix' else arm),'',f"상태 {r['status']}; {v['iterations']}회. scientific_verdict: null.",fs_line,f"PSNR(test) {fmt(v['psnr_test'])}; 정확성 {fmt(v.get(arm+'_accuracy_pct'))}%.",'','|경우|참값 행|완전성 %|정확성 %|','|---|---:|---:|---:|']
     for x in metrics:
         if x['method']==arm and x['surface']=='all':text.append('|'+ '|'.join(fmt(x[k]) for k in ['case_id','n_gt','completeness_pct','accuracy_pct'])+'|')
     text+=['',f"FINALTRAIN → {arm}: 장면 정확성 {fmt(v.get('FINALTRAIN_30000_accuracy_pct'))} → {fmt(v.get(arm+'_accuracy_pct'))}%; PSNR(test) {fmt(v['FINALTRAIN_psnr_test'])} → {fmt(v['psnr_test'])} dB.",'참값은 채점과 위험 확인에만 사용. 판단·목표·빈 공간 대상·λ_fs에는 사용하지 않음.' if arm=='fix' else '정답 판단 진단 학습.','세부 값과 위험 확인: tables/addendum2/fix.']
@@ -61,7 +67,16 @@ def reports():
             text=f"- {event_row['at']}: 실제 발사 GPU {event_row['gpu']}: {' / '.join(event_row['job'])}."
             if text not in progress:handle.write(text+'\n')
     selection=D/'판고르기.json';s=json.loads(selection.read_text()) if selection.exists() else None
-    t=['# 정답 판단 학습 덧붙임 2','',f"고른 판: {s['selected'] if s else '선택 전'}. {s['reason'] if s else '세 판 채점 중.'}", '1부 판 고르기는 참값 채점 사용. 2부 판단·목표·빈 공간 대상·λ_fs에는 참값 미사용. scientific_verdict: null.','','|장면|경우|판 가 %|판 나 %|판 다 %|','|---|---|---:|---:|---:|']
+    decision=s['reason'] if s else '세 판 채점 중.'
+    if s:
+        notes=[]
+        for variant in ['alt_na','alt_da']:
+            guard=[x for x in s['checks'] if x['variant']==variant and x['used_for_guard']]
+            worst=min(guard,key=lambda x:x['delta_pp'])
+            passed=all(x['pass_guard'] for x in guard)
+            notes.append(f"{variant}: {worst['site']} 경우 {worst['case_id']}의 최저 차이 {worst['delta_pp']:.2f}%p, 2.0%p 조건 {'통과' if passed else '불통과'}")
+        decision='; '.join(notes)
+    t=['# 정답 판단 학습 덧붙임 2','',f"고른 판: {s['selected'] if s else '선택 전'}. {decision}", '1부 판 고르기는 참값 채점 사용. 2부 판단·목표·빈 공간 대상·λ_fs에는 참값 미사용. scientific_verdict: null.','','|장면|경우|판 가 %|판 나 %|판 다 %|','|---|---|---:|---:|---:|---:|']
     rr=rows(D/'tables/addendum2/alternative_metrics.json')
     for site in SITES:
         for case in [0,1,2,4]:
@@ -136,6 +151,13 @@ def main(mode,*args):
         else:
             label='CPU보완' if mode=='cpu' else '고친판'
             if mode=='cpu':assert cpu('validate-cpu','add2_validate.py')
+            if mode=='fixed':
+                for site in SITES:
+                    for prior in ['ALS','LoD2']:
+                        post=json.loads((O/'queue/addendum2/post'/f'{site}__{prior}__fix.json').read_text())
+                        if post['mesh_scored']:
+                            assert (D/'tables/addendum2/fix'/f'{site}__{prior}_risks_and_strata.json').exists()
+                            assert (D/'figures/addendum2'/f'{site}__{prior}_fix_preservation_maps.png').exists()
             assert cpu('qa-'+mode,'add2_qa.py',mode)
             reports();diff()
         rec=package(label)

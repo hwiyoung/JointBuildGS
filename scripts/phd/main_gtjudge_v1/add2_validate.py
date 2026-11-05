@@ -24,6 +24,15 @@ def main():
             assert np.array_equal(loadz(O/'freespace_targets'/f'{site}__{prior}.npz')['patch_id'],target['patch_id'][expected])
             assert (D/'tables/addendum2'/f'feature_comparison_{site}__{prior}.json').exists()
             for stage in ['stage0','stage1']:assert (D/'tables/addendum2'/stage/f'{site}__{prior}.json').exists()
+            before=json.loads((D/'tables/stage1'/f'{site}__{prior}_metrics.json').read_text())['rows']
+            after=json.loads((D/'tables/addendum2/stage1'/f'{site}__{prior}.json').read_text())['rows']
+            lookup={(x['method'],x['case_id']):x for x in after if x['surface']=='all'}
+            for old in before:
+                if (old['method'],old['case_id']) not in lookup:continue
+                new=lookup[(old['method'],old['case_id'])]
+                assert new['completeness_pct']==old['completeness_pct'] and new['n_gt']==old['n_gt']
+                assert new['accuracy_before_pct']==old['accuracy_pct']
+                if prior=='LoD2':assert new['accuracy_pct']==old['accuracy_pct']
     selected=json.loads((D/'판고르기.json').read_text());summary=[]
     for variant in ['alt_na','alt_da']:
         checks=[c for c in selected['checks'] if c['variant']==variant];guards=[c for c in checks if c['case_id'] in [0,1,4] and c['n_gt']>=1000];gain=[c['variant_pct']-c['ga_pct'] for c in checks if c['case_id']==2]

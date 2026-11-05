@@ -1,0 +1,58 @@
+{
+  "at": "2026-11-06T00:24:53.920392+09:00",
+  "section": {
+    "status": "PASS",
+    "start": [
+      124.56523013339445,
+      89.49214757577045
+    ],
+    "end": [
+      137.0767773935098,
+      84.44879130607623
+    ],
+    "anchor_xyz": [
+      130.65199279785156,
+      87.0385971069336,
+      -30.60430908203125
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 531,
+    "component_unique_points": 531,
+    "components": 187,
+    "all_case2_n_gt": 8659,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9274831811901465,
+      -0.37386488014977537
+    ],
+    "length_m": 13.489783441744489,
+    "reused_source": "/art/phase-payloads/phd/main_recount_v1/PHD-MAIN-RECOUNT-v1/scenes/B173nb_b10__LoD2/section.json",
+    "reused_sha256": "983ae15a9f973e28eace40db6cb369118561811bc6b311a362adc0e727e0e25b"
+  },
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/rows.npz",
+      "sha256": "d5002e9f9885c7ec23c4e21c8b7e4bc64ffa2452d8f2c0ec4514694db52b1086"
+    },
+    {
+      "path": "/docs/판고르기.json",
+      "sha256": "310a66a779f88f88cfb09c62aebb3a45db3e4d0910149dcfb3e87ce52dd8bf20"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/judgment_mesh.npz",
+      "sha256": "277e5b65e85bfcd52aba86cc0185eb8050c4dcb6a866d28575e42bdf089a6408"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/alt_na.npz",
+      "sha256": "75b400ef378e0c44251234aaccd25736b52998eeb177f673c3caa7a01ee28538"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/alt_da.npz",
+      "sha256": "4437227cfbb559a2b18ed9310eb1f4a537df92852f6788458f027623be931f32"
+    }
+  ],
+  "script_sha256": "a8956e4ac191607f6cae3de65b1c64fa35fb12a71f7dbbcd49c172fbb49b97e9",
+  "scientific_verdict": null
+}

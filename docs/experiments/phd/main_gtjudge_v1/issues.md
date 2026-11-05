@@ -28,3 +28,5 @@
 - 고친 판 위험 확인의 목표 바깥쪽 거리는 목표 법선을 해당 참값 AXES71 법선과 같은 쪽으로 맞춘 뒤 점-목표의 내적으로 기록한다. 이 참값 사용은 저장된 학습 대상 파일의 사후 위험 확인에만 한정한다.
 - 2026-11-06T00:19:51.469544+09:00: 덧붙임2 후처리 ('B173nb_b10', 'ALS', 'A1') 오류 CalledProcessError(1, ['/home/innopam/miniconda3/bin/python', '/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/scripts/phd/main_gtjudge_v1/add2_publish.py', 'run', 'B173nb_b10', 'ALS', 'A1']); 다음 학습 계속.
 - 2026-11-06T00:24:53.457955+09:00: B173 항공 LiDAR A-1 메시·채점·묶음·커밋·푸시는 끝났으나 완료 이벤트의 at 키 중복으로 후처리 오류가 기록됨. 이벤트 기록만 고치고 저장된 산출물로 발행을 마감한다; 학습·채점·그림 재실행 없음.
+- 2026-11-06T00:28:28.784234+09:00: 덧붙임2 wall-views 동일 설정 2회 오류(1); 로그 /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/logs/add2-host-wall-views-attempt2.log. 다른 학습은 계속.
+- 2026-11-06T00:29:46.966226+09:00: R1 LoD2 벽 다각도 그림에서 상속 그림 함수가 baseline의 새 samples 파일을 찾음. 이미 있는 RESCORE baseline points.npz의 sample_xyz를 그대로 연결하여 고침; 새 표본·채점 없음. 끝난 1번·3번·지붕벽 표와 지도·단면은 다시 만들지 않고 미완료 벽 그림부터 이음.
