@@ -1,0 +1,112 @@
+{
+  "at": "2026-11-06T12:37:06.217809+09:00",
+  "stage": 3,
+  "methods": [
+    "FINALTRAIN_30000",
+    "A1",
+    "A2"
+  ],
+  "section": {
+    "status": "PASS",
+    "start": [
+      94.93817766665929,
+      2.3190030654517795
+    ],
+    "end": [
+      95.34944218407536,
+      11.515835319705769
+    ],
+    "anchor_xyz": [
+      95.17623901367188,
+      7.642609119415283,
+      -22.705625534057617
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 138,
+    "component_unique_points": 138,
+    "components": 143,
+    "all_case2_n_gt": 1263,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.04467341774554557,
+      0.9990016445166303
+    ],
+    "length_m": 9.206023137933773,
+    "small_component": true
+  },
+  "face_color": "nearest saved result-side cylinder sample",
+  "camera_angles": [
+    [
+      90,
+      -90
+    ],
+    [
+      35,
+      -55
+    ],
+    [
+      35,
+      125
+    ]
+  ],
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz",
+      "sha256": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/section.json",
+      "sha256": "fa9906bc261dfbdebfad9d9365b63802ececf34451544c20f5255b160992651f"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "8b4f3194279984b1c07e82febfec8d57cab990643bd66550ace3e1436d1173f4"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A1.npz",
+      "sha256": "efcddee13ae51165adaec37c83138b3c709f2330855c2ad4162c9962c6c680a2"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A2.npz",
+      "sha256": "7ff60c98aafbdc428192b1e1e3ec7e477749e88345e18f252ff84f638d90bcd0"
+    }
+  ],
+  "script_sha256": "633c7bdb6e4e2a83c8cf9f623809c98e429c8f0e574e2c462dac4b9a3c915551",
+  "memory_recovery": "same full layout, ROI and faces; render one panel per process",
+  "faces_by_method": [
+    {
+      "method": "FINALTRAIN_30000",
+      "faces": 241245,
+      "zmin": -43.223976527626185,
+      "zmax": -22.18133646358146,
+      "mesh_sha256": "10c90b46f50280e174a0b2e5e952064e6d1e69a9eb65e47d8a527cd3a9f8dd8e",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    },
+    {
+      "method": "A1",
+      "faces": 252105,
+      "zmin": -43.63716232588484,
+      "zmax": -22.176155587580773,
+      "mesh_sha256": "8828e33c323e1ec4fb53e744c71bf7be7ce3b1b5ac42796f9b8830d3e54212a5",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    },
+    {
+      "method": "A2",
+      "faces": 295189,
+      "zmin": -44.09078850266645,
+      "zmax": -22.180218066993053,
+      "mesh_sha256": "6f1f4e741c598ebd6aa52debecaa5f82484560c5a1fda1c81aae5ca952bb2207",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    }
+  ],
+  "scientific_verdict": null
+}
