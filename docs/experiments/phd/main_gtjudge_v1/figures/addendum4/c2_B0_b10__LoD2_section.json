@@ -1,0 +1,711 @@
+{
+  "at": "2026-11-06T18:12:07.138626+09:00",
+  "size_px": [
+    1200,
+    720
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "4ea3a0ea85a3a5d14d00c1795e3b95741ecb1185d8613149187e9dbc3036e495"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "c97e29d780c975efe339e9a101a4efc9fde71da8923ce007070591832e816163"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "8caac3919d028d90a27ecf80089eddf3ce395b1c3e4398910ffbe73739bfed3e"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_prior.png",
+      "sha256": "eba8c43bcc56472f9ce6deea6aa3acec5776d787c4101f26867dd407bdf78cb1"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_mvs.png",
+      "sha256": "be96b396f9161fc039c6fa174950439a6c41df15baa7a81eff472154ffc96dbf"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_fusion.png",
+      "sha256": "653cbe5379638bbe74cb26a544aca0b02720f6da61218aba19c2a10d903a26d8"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_GeoGS_30000.png",
+      "sha256": "6829e27a61ba092e24c401b8030c5590e7cfaa101e1931ab09893fc815169791"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_FINALTRAIN_30000.png",
+      "sha256": "a77d666e7622bf1c6b69fae5ea1df94769f5902af6680428ee6392a6a0029e7d"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_2DGS_30000.png",
+      "sha256": "be421890b27f6857b292d98e401d44d48359028de53a37e2acc2f2e84c189c36"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_prior.json",
+      "sha256": "663b43792d7f4fdab657d5779e007fd061cf5d6d1195da57d95c65b87d4c3269"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_mvs.json",
+      "sha256": "9a66ae6382c4a03dfaae995724be7b792a0a291784ee4f9e2eb266a4f155f6bd"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_fusion.json",
+      "sha256": "f4e3aec356f31cffda6d9692ea80707982164afdb4d314fee2fc00cd5b2fab77"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_GeoGS_30000.json",
+      "sha256": "86ca72771e480eb8ac5fa799f0f86a516e30deb51fa2ce52c5953a7468fa7845"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_FINALTRAIN_30000.json",
+      "sha256": "96043a57488e98f8c80b104c02c236812bb7d80f81657fbfd4f86c6d0973f0c7"
+    },
+    {
+      "path": "/docs/figures/addendum4/c2_B0_b10__LoD2/section_2DGS_30000.json",
+      "sha256": "f55fdcb995a46ba619654bff5100fc17c77bfc2e32e2a83ca7ebe08072d1b8a3"
+    }
+  ],
+  "case": "c2_B0_b10__LoD2",
+  "rows": [
+    {
+      "case": "c2_B0_b10__LoD2",
+      "method": "prior",
+      "section": {
+        "id": "B0",
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "title": "B0 모임지붕 끝 · LoD2",
+        "start": [
+          102.00846099346342,
+          -6.266888043124205
+        ],
+        "end": [
+          108.23322760199058,
+          10.83551765517933
+        ],
+        "half_width": 0.5,
+        "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+        "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+        "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+        "cluster": {
+          "patches": 744,
+          "area_m2": 46.5,
+          "u_range": [
+            32.0,
+            38.2
+          ],
+          "v_range": [
+            92.1,
+            103.9
+          ],
+          "faces": {
+            "11": {
+              "patches": 370,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "8": {
+              "patches": 189,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "10": {
+              "patches": 185,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            }
+          },
+          "prior_above": 744,
+          "prior_below": 0,
+          "ratio_median": 6.1
+        },
+        "length_m": 18.2
+      },
+      "axis_bounds": [
+        0,
+        18.2,
+        -45.57874765396119,
+        -19.096299266815187
+      ],
+      "vertical_exaggeration": 0.06872476341286435,
+      "A_px": [
+        0,
+        27.430425069163256
+      ],
+      "Aprime_px": [
+        1200,
+        27.430425069163256
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 3425,
+      "completeness_pct": 74.51094890510949,
+      "far_hit_pct": 25.284671532846716,
+      "no_surface_pct": 0.20437956204379562,
+      "scale_bar": {
+        "horizontal_m": 2,
+        "vertical_m": 1,
+        "horizontal_px": 131.86813186813185,
+        "vertical_px": 4.53130308216688,
+        "origin_px": [
+          24.0,
+          18.0
+        ]
+      },
+      "target_overlay": null
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "method": "mvs",
+      "section": {
+        "id": "B0",
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "title": "B0 모임지붕 끝 · LoD2",
+        "start": [
+          102.00846099346342,
+          -6.266888043124205
+        ],
+        "end": [
+          108.23322760199058,
+          10.83551765517933
+        ],
+        "half_width": 0.5,
+        "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+        "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+        "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+        "cluster": {
+          "patches": 744,
+          "area_m2": 46.5,
+          "u_range": [
+            32.0,
+            38.2
+          ],
+          "v_range": [
+            92.1,
+            103.9
+          ],
+          "faces": {
+            "11": {
+              "patches": 370,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "8": {
+              "patches": 189,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "10": {
+              "patches": 185,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            }
+          },
+          "prior_above": 744,
+          "prior_below": 0,
+          "ratio_median": 6.1
+        },
+        "length_m": 18.2
+      },
+      "axis_bounds": [
+        0,
+        18.2,
+        -45.57874765396119,
+        -19.096299266815187
+      ],
+      "vertical_exaggeration": 0.06872476341286435,
+      "A_px": [
+        0,
+        27.430425069163256
+      ],
+      "Aprime_px": [
+        1200,
+        27.430425069163256
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 3425,
+      "completeness_pct": 82.91970802919708,
+      "far_hit_pct": 2.218978102189781,
+      "no_surface_pct": 14.861313868613138,
+      "scale_bar": null,
+      "target_overlay": null
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "method": "fusion",
+      "section": {
+        "id": "B0",
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "title": "B0 모임지붕 끝 · LoD2",
+        "start": [
+          102.00846099346342,
+          -6.266888043124205
+        ],
+        "end": [
+          108.23322760199058,
+          10.83551765517933
+        ],
+        "half_width": 0.5,
+        "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+        "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+        "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+        "cluster": {
+          "patches": 744,
+          "area_m2": 46.5,
+          "u_range": [
+            32.0,
+            38.2
+          ],
+          "v_range": [
+            92.1,
+            103.9
+          ],
+          "faces": {
+            "11": {
+              "patches": 370,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "8": {
+              "patches": 189,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "10": {
+              "patches": 185,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            }
+          },
+          "prior_above": 744,
+          "prior_below": 0,
+          "ratio_median": 6.1
+        },
+        "length_m": 18.2
+      },
+      "axis_bounds": [
+        0,
+        18.2,
+        -45.57874765396119,
+        -19.096299266815187
+      ],
+      "vertical_exaggeration": 0.06872476341286435,
+      "A_px": [
+        0,
+        27.430425069163256
+      ],
+      "Aprime_px": [
+        1200,
+        27.430425069163256
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 3425,
+      "completeness_pct": 74.51094890510949,
+      "far_hit_pct": 25.313868613138688,
+      "no_surface_pct": 0.17518248175182483,
+      "scale_bar": null,
+      "target_overlay": null
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "method": "GeoGS_30000",
+      "section": {
+        "id": "B0",
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "title": "B0 모임지붕 끝 · LoD2",
+        "start": [
+          102.00846099346342,
+          -6.266888043124205
+        ],
+        "end": [
+          108.23322760199058,
+          10.83551765517933
+        ],
+        "half_width": 0.5,
+        "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+        "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+        "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+        "cluster": {
+          "patches": 744,
+          "area_m2": 46.5,
+          "u_range": [
+            32.0,
+            38.2
+          ],
+          "v_range": [
+            92.1,
+            103.9
+          ],
+          "faces": {
+            "11": {
+              "patches": 370,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "8": {
+              "patches": 189,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "10": {
+              "patches": 185,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            }
+          },
+          "prior_above": 744,
+          "prior_below": 0,
+          "ratio_median": 6.1
+        },
+        "length_m": 18.2
+      },
+      "axis_bounds": [
+        0,
+        18.2,
+        -45.57874765396119,
+        -19.096299266815187
+      ],
+      "vertical_exaggeration": 0.06872476341286435,
+      "A_px": [
+        0,
+        27.430425069163256
+      ],
+      "Aprime_px": [
+        1200,
+        27.430425069163256
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 3425,
+      "completeness_pct": 91.47445255474453,
+      "far_hit_pct": 4.759124087591241,
+      "no_surface_pct": 3.7664233576642334,
+      "scale_bar": null,
+      "target_overlay": null
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "method": "FINALTRAIN_30000",
+      "section": {
+        "id": "B0",
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "title": "B0 모임지붕 끝 · LoD2",
+        "start": [
+          102.00846099346342,
+          -6.266888043124205
+        ],
+        "end": [
+          108.23322760199058,
+          10.83551765517933
+        ],
+        "half_width": 0.5,
+        "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+        "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+        "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+        "cluster": {
+          "patches": 744,
+          "area_m2": 46.5,
+          "u_range": [
+            32.0,
+            38.2
+          ],
+          "v_range": [
+            92.1,
+            103.9
+          ],
+          "faces": {
+            "11": {
+              "patches": 370,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "8": {
+              "patches": 189,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "10": {
+              "patches": 185,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            }
+          },
+          "prior_above": 744,
+          "prior_below": 0,
+          "ratio_median": 6.1
+        },
+        "length_m": 18.2
+      },
+      "axis_bounds": [
+        0,
+        18.2,
+        -45.57874765396119,
+        -19.096299266815187
+      ],
+      "vertical_exaggeration": 0.06872476341286435,
+      "A_px": [
+        0,
+        27.430425069163256
+      ],
+      "Aprime_px": [
+        1200,
+        27.430425069163256
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 3425,
+      "completeness_pct": 81.95620437956204,
+      "far_hit_pct": 8.233576642335766,
+      "no_surface_pct": 9.81021897810219,
+      "scale_bar": null,
+      "target_overlay": null
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "method": "2DGS_30000",
+      "section": {
+        "id": "B0",
+        "site": "B0_b10",
+        "prior": "LoD2",
+        "title": "B0 모임지붕 끝 · LoD2",
+        "start": [
+          102.00846099346342,
+          -6.266888043124205
+        ],
+        "end": [
+          108.23322760199058,
+          10.83551765517933
+        ],
+        "half_width": 0.5,
+        "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+        "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+        "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+        "cluster": {
+          "patches": 744,
+          "area_m2": 46.5,
+          "u_range": [
+            32.0,
+            38.2
+          ],
+          "v_range": [
+            92.1,
+            103.9
+          ],
+          "faces": {
+            "11": {
+              "patches": 370,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "8": {
+              "patches": 189,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            },
+            "10": {
+              "patches": 185,
+              "building": "DEBY_LOD2_4959323",
+              "type": "roof"
+            }
+          },
+          "prior_above": 744,
+          "prior_below": 0,
+          "ratio_median": 6.1
+        },
+        "length_m": 18.2
+      },
+      "axis_bounds": [
+        0,
+        18.2,
+        -45.57874765396119,
+        -19.096299266815187
+      ],
+      "vertical_exaggeration": 0.06872476341286435,
+      "A_px": [
+        0,
+        27.430425069163256
+      ],
+      "Aprime_px": [
+        1200,
+        27.430425069163256
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 3425,
+      "completeness_pct": 65.75182481751825,
+      "far_hit_pct": 5.751824817518248,
+      "no_surface_pct": 28.496350364963504,
+      "scale_bar": null,
+      "target_overlay": null
+    }
+  ],
+  "axis_bounds": [
+    0,
+    18.2,
+    -45.57874765396119,
+    -19.096299266815187
+  ],
+  "A_px": [
+    0,
+    27.430425069163256
+  ],
+  "Aprime_px": [
+    1200,
+    27.430425069163256
+  ],
+  "box_corners_px": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      720
+    ],
+    [
+      0,
+      720
+    ]
+  ]
+}

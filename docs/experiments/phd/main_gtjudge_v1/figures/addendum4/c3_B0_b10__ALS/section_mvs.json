@@ -1,0 +1,129 @@
+{
+  "at": "2026-11-06T18:12:32.978826+09:00",
+  "size_px": [
+    1200,
+    120
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "4ea3a0ea85a3a5d14d00c1795e3b95741ecb1185d8613149187e9dbc3036e495"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "c97e29d780c975efe339e9a101a4efc9fde71da8923ce007070591832e816163"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "8caac3919d028d90a27ecf80089eddf3ce395b1c3e4398910ffbe73739bfed3e"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/main_axes71_v2/PHD-MAIN-AXES71-v2/mvs/B0_b10/mesh_mvs_a.ply",
+      "sha256": "92163133705cb66d22089d056a4ffb05ef617fbbddac50cc7406faf990ca915a"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/mvs.npz",
+      "sha256": "2cfb3da7059c36e9ff93632d93652323fdb61e9ed2eaa54083074586fdd8da47"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/gtjudge/addendum4/cases/c3_B0_b10__ALS.json",
+      "sha256": "c8cd7bfc6ba789f9dd5a530e1f70a44a9c6bddb9d3c9ca296282ff2fc51e2b5a"
+    }
+  ],
+  "case": "c3_B0_b10__ALS",
+  "method": "mvs",
+  "section": {
+    "status": "PASS",
+    "start": [
+      86.59057865396345,
+      2.962928468714156
+    ],
+    "end": [
+      92.90435672478432,
+      0.5160766468159832
+    ],
+    "anchor_xyz": [
+      89.94100189208984,
+      1.6644999980926514,
+      -36.90401077270508
+    ],
+    "half_width": 0.5,
+    "component_n_gt": 104,
+    "component_unique_points": 104,
+    "components": 1,
+    "all_case2_n_gt": 104,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9324283878612614,
+      -0.3613548138747417
+    ],
+    "length_m": 6.771327592570379
+  },
+  "axis_bounds": [
+    0,
+    6.771327592570379,
+    -43.9111047934113,
+    -24.41679933836291
+  ],
+  "vertical_exaggeration": 0.03473490044661645,
+  "A_px": [
+    0,
+    76.86682531862178
+  ],
+  "Aprime_px": [
+    1200,
+    76.86682531862178
+  ],
+  "box_corners_px": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      120
+    ],
+    [
+      0,
+      120
+    ]
+  ],
+  "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+  "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+  "n_gt": 237,
+  "completeness_pct": 25.738396624472575,
+  "far_hit_pct": 74.26160337552743,
+  "no_surface_pct": 0.0,
+  "scale_bar": null,
+  "target_overlay": null
+}

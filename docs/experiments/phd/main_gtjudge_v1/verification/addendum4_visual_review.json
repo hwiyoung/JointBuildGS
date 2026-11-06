@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-06T18:48:37.739132+09:00",
+  "status": "PROFILE_VIEWS_REVISED_AND_VISUALLY_INSPECTED",
+  "review_images": [
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/addendum4/verification/context_repair_preview.png",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/addendum4/verification/presentation_preview.png"
+  ],
+  "changes": [
+    "c1 colored MVS side view at 30 degrees with building context",
+    "c2 colored MVS side view at 30 degrees with roof and eaves",
+    "c3 explicitly clipped local low-roof view at 30 degrees; original roof semantics independently checked",
+    "c3 same-camera prior view and supplementary input section at equal metric x/z scale",
+    "c4 existing training photograph retained",
+    "all original full-range sections and scores retained",
+    "addendum5 case colors and ordered overpainting in eight top panels only"
+  ],
+  "primary_context_sources": {
+    "c1": "colored MVS, synthetic camera",
+    "c2": "colored MVS, synthetic camera",
+    "c3": "colored MVS local cutaway, synthetic camera",
+    "c4": "training photograph"
+  },
+  "limits": [
+    "c3 local cutaway intentionally omits surrounding geometry; its cut boundary is not a source hole",
+    "GT surface mesh unavailable; original PCA-shaded points supplied",
+    "original addendum3 unavailable; fallback definitions recorded"
+  ],
+  "human_visual_acceptance": null,
+  "scientific_verdict": null,
+  "c1_final_frame_fill_fraction": 0.72,
+  "addendum5_top_panels_visually_inspected": true
+}

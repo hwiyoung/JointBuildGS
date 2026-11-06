@@ -52,3 +52,15 @@
 - 2026-11-06T11:15:03.147160+09:00: B0 LoD2 A2 attempt1은 ENOSPC로 중단되고 receipt가 0바이트로 남음. 빈 원본을 별도 보존하고 실행 오류 기록을 복구; 동일 설정의 허용된 attempt2를 실행한다.
 - 2026-11-06T11:25:56.400130+09:00: R1 LoD2·B173 ALS fix 병합: 타일 2 안의 별개 Open3D 꼭짓점 두 개에 같은 재구성 edge code가 붙음. 좌표 차이는 각각 5.55e-17 m, 1.42e-14 m. 원본 V/C/F와 허용오차를 바꾸지 않고 해당 두 식별자만 inherited unsettled/exact-coordinate 경로로 넘긴다. 타일 밖 같은 좌표 없음과 원본 NPZ 해시를 확인한다. verification/addendum2_recovery_seams_* 및 recovery_merge_*에 기록.
 - 2026-11-06T11:25:56.400130+09:00: 그림 OOM 복구: ROI·모든 삼각형·세 카메라·색을 유지하고 패널별 프로세스로 그린 뒤 합침. 12패널 검증에서 기존 동시 그리기와 픽셀 일치 PASS. 기존 그림은 재생성하지 않는다.
+
+- 2026-11-06 addendum4: 덧붙임 3 원문 미발견. 자리 상자는 기존 정사영상 u-v 축의 해당 모임 경계 +3m, 조명은 카메라 방향 고정광(ambient .35, diffuse .65)으로 기록. 참값은 새 삼각화 없이 기존 점군과 PCA 법선으로 회색 점 렌더; 참값 메시 요구는 확인 불가로 구분.
+- 2026-11-06 addendum4: 첫 camera 준비에서 numpy bool의 JSON 직렬화 오류. Python bool로 변환하여 수정; 계산 정의 변경 없음.
+- 2026-11-06 addendum4: 첫 미배포 사진의 광축이 수직이고 선이 가장자리로 밀린 것을 시각 확인. 카메라 선택의 고도를 frozen gravity 기준 광축 경사로 명확히 하고, 중심 4:5 crop이 원본에 들어가는 조건을 적용. 기존 사례/단면/채점 정의는 유지.
+- 2026-11-06T17:23:18.538843+09:00: addendum4 cases execution error; see /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/addendum4/failure_cases.txt
+- 2026-11-06T17:39:07.180171+09:00: addendum4 keep execution error; see /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/addendum4/failure_keep.txt
+- 2026-11-06 addendum4: 초기 사례 묶음은 무결성 검사 후 시각 검토 전에 전달한 오류. 1~3행이 낮은 각도로 가려진 지붕 대신 벽/수목을 보였음. 해당 ZIP은 visual_rejected_20261106T1742에 보존하고 배포 철회. 시점 고도는 camera centre→section centre와 frozen gravity의 각도로 바로잡고 재시각검토 후 재배포. 단면선/채점/집계값은 유지.
+- 2026-11-06 addendum4: 늘 보존 분류 확장에서 LoD2의 0길이 사전 정보 법선 때문에 중단. 앞 단계에서 이미 쓴 유효 법선 조건(길이>0)을 동일하게 적용하고 저장된 보존 칸 분류와의 완전 일치 검사 후 이어감. 완성된 메시/채점은 재실행하지 않음.
+- 2026-11-06 addendum4: 거리 그림의 삼각형 중심 한 점 색이 큰 LoD2 삼각형 안의 차이를 숨길 수 있음을 시각 검토에서 확인. 각 화소의 실제 면 교차점에서 같은 법선 원기둥 정의로 색을 계산하도록 수정. 기존 채점/표/단면 수치는 불변.
+- 2026-11-06 addendum4 user revision: 건물 전체·처마·지붕 위치를 알아보기 어렵다는 피드백에 따라 좁은 4:5 사진 선택 조건보다 건물 맥락을 우선. 사용자가 사진이 부적절하면 MVS 등 실제 자료의 보기로 대체를 허용. 실제 색 MVS의 가상 카메라를 검토하고 사진과 명확히 구분한다. 기존 단면 XY와 채점은 변경하지 않으며 표시는 원래 참값 지붕 점 높이를 따르고 다른 지붕 높이 사이를 연결하지 않는다.
+- 2026-11-06: 사용자 후속 시점 요청으로 c1/c2를 30도 측면으로 수정. c3는 원 LoD2 RoofSurface의 낮은 평지붕임을 확인했으나 나무와 주변 벽의 가림이 있어 동일 범위 국소 절개 렌더와 별도 확대 단면을 제공한다. 원 단면 XY, 전체 범위 단면, 저장 채점값 유지. scientific_verdict: null.
+- 2026-11-06: 덧붙임 5의 경우 색·칠하는 순서를 별도 설정으로 잠금. 앞선 시점 수정 완료 후 위 사진 8장만 재생성하며 다른 그림 바이트와 기존 좌표·점 수·크기·불투명도를 대조한다. 발표 이름만 LGDM, 파일·표 이름 유지.

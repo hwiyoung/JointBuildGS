@@ -1,0 +1,153 @@
+{
+  "at": "2026-11-06T18:12:07.023120+09:00",
+  "size_px": [
+    1200,
+    120
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "4ea3a0ea85a3a5d14d00c1795e3b95741ecb1185d8613149187e9dbc3036e495"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "c97e29d780c975efe339e9a101a4efc9fde71da8923ce007070591832e816163"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "8caac3919d028d90a27ecf80089eddf3ce395b1c3e4398910ffbe73739bfed3e"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/out/addendum3_stage2/meshes/B0_b10__LoD2__FINALTRAIN_30000/primary.ply",
+      "sha256": "007cc6423bbe55fde5adba006d6dbc311265e2b196807ec60e8f344ff8ca3e1d"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "d9b7fcde20bde879b46593e540e0d2045e113a6747719ea59145db57f99dedb7"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/rows.npz",
+      "sha256": "527e6d96e0b6435a423dc576e530c3a72b5521f3a21dc30b77c9ae44d2132cce"
+    },
+    {
+      "path": "/gtjudge/addendum4/cases/c2_B0_b10__LoD2.json",
+      "sha256": "c5c50de9ace54989ace5a7728867c8d561c674ce6c8199471f9b482df628a336"
+    }
+  ],
+  "case": "c2_B0_b10__LoD2",
+  "method": "FINALTRAIN_30000",
+  "section": {
+    "id": "B0",
+    "site": "B0_b10",
+    "prior": "LoD2",
+    "title": "B0 모임지붕 끝 · LoD2",
+    "start": [
+      102.00846099346342,
+      -6.266888043124205
+    ],
+    "end": [
+      108.23322760199058,
+      10.83551765517933
+    ],
+    "half_width": 0.5,
+    "source": "/art/phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/work/fig61/notes.json",
+    "source_sha256": "38be8a79f3f3afb3acebf56fc81d3e3022f0797cfa1b579ef9f000399776598a",
+    "selection": "fixed largest B0_wrong cluster of prior work, centre-v cut extending 3m before and 9m after its u range",
+    "cluster": {
+      "patches": 744,
+      "area_m2": 46.5,
+      "u_range": [
+        32.0,
+        38.2
+      ],
+      "v_range": [
+        92.1,
+        103.9
+      ],
+      "faces": {
+        "11": {
+          "patches": 370,
+          "building": "DEBY_LOD2_4959323",
+          "type": "roof"
+        },
+        "8": {
+          "patches": 189,
+          "building": "DEBY_LOD2_4959323",
+          "type": "roof"
+        },
+        "10": {
+          "patches": 185,
+          "building": "DEBY_LOD2_4959323",
+          "type": "roof"
+        }
+      },
+      "prior_above": 744,
+      "prior_below": 0,
+      "ratio_median": 6.1
+    },
+    "length_m": 18.2
+  },
+  "axis_bounds": [
+    0,
+    18.2,
+    -45.57874765396119,
+    -19.096299266815187
+  ],
+  "vertical_exaggeration": 0.06872476341286435,
+  "A_px": [
+    0,
+    27.430425069163256
+  ],
+  "Aprime_px": [
+    1200,
+    27.430425069163256
+  ],
+  "box_corners_px": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      120
+    ],
+    [
+      0,
+      120
+    ]
+  ],
+  "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+  "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+  "n_gt": 3425,
+  "completeness_pct": 81.95620437956204,
+  "far_hit_pct": 8.233576642335766,
+  "no_surface_pct": 9.81021897810219,
+  "scale_bar": null,
+  "target_overlay": null
+}

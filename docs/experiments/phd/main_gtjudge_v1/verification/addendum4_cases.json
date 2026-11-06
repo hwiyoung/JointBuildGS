@@ -1,0 +1,93 @@
+{
+  "at": "2026-11-06T18:48:03.471670+09:00",
+  "status": "PASS_REQUESTED_CHECKS_WITH_DISCLOSED_REFERENCE_MESH_UNAVAILABLE",
+  "checks": [
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "same_camera": true,
+      "same_section_axes": true,
+      "no_added_text": true,
+      "sRGB": true,
+      "exact_existing_section": true,
+      "section_width_m": 1.0,
+      "n_reference_rows": 869,
+      "saved_distances_reused": true
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "same_camera": true,
+      "same_section_axes": true,
+      "no_added_text": true,
+      "sRGB": true,
+      "exact_existing_section": true,
+      "section_width_m": 1.0,
+      "n_reference_rows": 3425,
+      "saved_distances_reused": true
+    },
+    {
+      "case": "c3_B0_b10__ALS",
+      "same_camera": true,
+      "same_section_axes": true,
+      "no_added_text": true,
+      "sRGB": true,
+      "exact_existing_section": true,
+      "section_width_m": 1.0,
+      "n_reference_rows": 237,
+      "saved_distances_reused": true
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "same_camera": true,
+      "same_section_axes": true,
+      "no_added_text": true,
+      "sRGB": true,
+      "exact_existing_section": true,
+      "section_width_m": 1.0,
+      "n_reference_rows": 2947,
+      "saved_distances_reused": true
+    }
+  ],
+  "summary": [
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "image": "MVS_virtual_c1_2_profile30",
+      "source_type": "colored MVS render, not a photograph",
+      "section_our_completeness_pct": 75.71921749136939,
+      "n_gt": 869,
+      "reference_mesh": "확인 불가: PCA-normal point rendering supplied",
+      "camera_fallback": true
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "image": "MVS_virtual_c2_2_profile30",
+      "source_type": "colored MVS render, not a photograph",
+      "section_our_completeness_pct": 81.95620437956205,
+      "n_gt": 3425,
+      "reference_mesh": "확인 불가: PCA-normal point rendering supplied",
+      "camera_fallback": true
+    },
+    {
+      "case": "c3_B0_b10__ALS",
+      "image": "MVS_virtual_c3_1_profile30_cutaway",
+      "source_type": "colored MVS local cutaway, not a photograph",
+      "section_our_completeness_pct": 70.042194092827,
+      "n_gt": 237,
+      "reference_mesh": "확인 불가: PCA-normal point rendering supplied",
+      "camera_fallback": true
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "image": "DJI_20241217103051_0002_D",
+      "source_type": "training photograph",
+      "section_our_completeness_pct": 34.238208347472,
+      "n_gt": 2947,
+      "reference_mesh": "확인 불가: PCA-normal point rendering supplied",
+      "camera_fallback": true
+    }
+  ],
+  "training_started": false,
+  "training_interrupted": false,
+  "GT_triangulated": false,
+  "addendum3_original_available": false,
+  "scientific_verdict": null
+}

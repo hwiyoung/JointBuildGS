@@ -1,0 +1,125 @@
+{
+  "task_id": "PHD-MAIN-GTJUDGE-v1",
+  "addendum": 4,
+  "order_sha256": "f88a9b33d894861ad37d03780b5d6717b7ea5e4955381b896a31737fec7a60c2",
+  "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+  "scientific_verdict": null,
+  "training": false,
+  "GPU": false,
+  "section_width_m": 1.0,
+  "section_size_px": [
+    1200,
+    120
+  ],
+  "photo_render_width_px": 1600,
+  "top_crop_aspect": [
+    5,
+    4
+  ],
+  "oblique_crop_aspect": [
+    4,
+    5
+  ],
+  "component_connectivity_m": 0.6,
+  "box_padding_m": 3,
+  "case_colors": {
+    "0": "#7FA7D9",
+    "1": "#D85A30",
+    "2": "#1D9E75",
+    "4": "#E8B931",
+    "3": "#8C95A3"
+  },
+  "gt_colors": [
+    "#3a3a3a",
+    "#2a78d6",
+    "#eb6834"
+  ],
+  "method_colors": {
+    "prior": "#D85A30",
+    "mvs": "#1D9E75",
+    "fusion": "#8E7CC3",
+    "GeoGS_30000": "#D39A3C",
+    "FINALTRAIN_30000": "#4B3A99",
+    "2DGS_30000": "#4F86B8",
+    "A1": "#16263D",
+    "judgment_mesh": "#C2378A"
+  },
+  "always_keep": {
+    "voxel_m": 0.05,
+    "trunc_m": [
+      0.25,
+      0.1
+    ],
+    "same_inherited_views": true
+  },
+  "missing_definitions": {
+    "addendum3": "not present in workspace or supplied attachments; repeat definitions from addendum4 and inherited implementation",
+    "box": "rectangle in inherited ortho u-v frame around the matching 0.6m component +3m",
+    "lighting": "fixed camera headlight, ambient 0.35 + 0.65 absolute normal dot view; inherited literal light was not found",
+    "truth_gray": "use existing GT surface if present, otherwise render PCA-normal point splats without triangulation and disclose limitation"
+  },
+  "cases": [
+    {
+      "id": "c1_B173nb_b10__ALS",
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "case_id": 1,
+      "section_source": "configs/phd/main_rescore_v1/input_sections_v1.json",
+      "section_index": 1,
+      "methods": [
+        "prior",
+        "mvs",
+        "fusion",
+        "GeoGS_30000",
+        "FINALTRAIN_30000"
+      ]
+    },
+    {
+      "id": "c2_B0_b10__LoD2",
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "case_id": 1,
+      "section_source": "configs/phd/main_rescore_v1/input_sections_v1.json",
+      "section_index": 2,
+      "methods": [
+        "prior",
+        "mvs",
+        "fusion",
+        "GeoGS_30000",
+        "FINALTRAIN_30000",
+        "2DGS_30000"
+      ]
+    },
+    {
+      "id": "c3_B0_b10__ALS",
+      "site": "B0_b10",
+      "prior": "ALS",
+      "case_id": 2,
+      "section_source": "docs/experiments/phd/main_gtjudge_v1/figures/B0_b10__ALS_stage2_textureless1.json",
+      "feature": "textureless",
+      "methods": [
+        "prior",
+        "mvs",
+        "fusion",
+        "GeoGS_30000",
+        "FINALTRAIN_30000"
+      ]
+    },
+    {
+      "id": "c4_R1rep_b10__ALS",
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "case_id": 2,
+      "section_source": "docs/experiments/phd/main_gtjudge_v1/figures/R1rep_b10__ALS_stage2_edge1.json",
+      "feature": "edge",
+      "methods": [
+        "prior",
+        "mvs",
+        "fusion",
+        "GeoGS_30000",
+        "FINALTRAIN_30000",
+        "A1"
+      ]
+    }
+  ]
+}

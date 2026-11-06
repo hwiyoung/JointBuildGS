@@ -1,0 +1,129 @@
+{
+  "at": "2026-11-06T18:47:59.519881+09:00",
+  "size_px": [
+    1600,
+    1478
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "4ea3a0ea85a3a5d14d00c1795e3b95741ecb1185d8613149187e9dbc3036e495"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "5e2c641b341d1109392dd1f02c6e937a4fce1a72e94d20cc93353437daa309da"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "2cdf8ab2492858dbe567b439d80b12600537a733b171d81789cd2006e17cac2a"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/ch6_support_v1/PHD-CH6-SUPPORT-v1/t3/ortho_R1rep_b10.npz",
+      "sha256": "a4dda3acf9914e1509454df9c2f218b10ed50252b8192651b306e08c8b427b39"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/stage1_cells.npz",
+      "sha256": "3bb92121f55976eaba387b5feb049da9e955708ddc86bc170424ab953cef7b86"
+    },
+    {
+      "path": "/gtjudge/addendum4/cases/c4_R1rep_b10__ALS.json",
+      "sha256": "00698667e8933fe48f53606701c00465f6b44cb3beece17cd3c93883bcc21f45"
+    },
+    {
+      "path": "/cfg/addendum5.json",
+      "sha256": "22829c0135379458b04b82ceb371c88dbb2fcae173c863233727847bae294de9"
+    },
+    {
+      "path": "/cfg/addendum5.lock.json",
+      "sha256": "a6a7dcd886781922ed6ae9853d7f0785f9fb35b67847395d730f9b7791c5c59f"
+    }
+  ],
+  "case": "c4_R1rep_b10__ALS",
+  "panel": "top",
+  "case_basis": "stage1 normal_line",
+  "case_point_counts": {
+    "0": 119009,
+    "1": 1602,
+    "2": 23910,
+    "4": 2543,
+    "3": 2382
+  },
+  "point_diameter_m": 0.25,
+  "point_alpha": {
+    "0": 0.35,
+    "other": 0.55
+  },
+  "case_colors": {
+    "0": "#7FA7D9",
+    "1": "#1D9E75",
+    "2": "#D85A30",
+    "4": "#F0A07F",
+    "3": "#8C95A3"
+  },
+  "paint_order_case_ids": [
+    0,
+    3,
+    1,
+    2,
+    4
+  ],
+  "overlap_rule": "class order first; higher-z last within a class",
+  "A_px": [
+    179.73747381651467,
+    494.2719476178263
+  ],
+  "Aprime_px": [
+    1269.0400555727977,
+    1409.880298974612
+  ],
+  "box_corners_px": [
+    [
+      275.5210639139065,
+      266.8599222041534
+    ],
+    [
+      1475.0238652607788,
+      266.8599222041534
+    ],
+    [
+      1475.0238652607788,
+      1275.3908251752453
+    ],
+    [
+      275.5210639139065,
+      1275.3908251752453
+    ]
+  ],
+  "bounds_uv": [
+    -4.0,
+    60.3,
+    -31.6,
+    27.8
+  ]
+}

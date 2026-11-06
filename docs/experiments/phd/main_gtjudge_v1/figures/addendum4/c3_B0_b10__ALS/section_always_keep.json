@@ -1,0 +1,183 @@
+{
+  "at": "2026-11-06T18:02:36.888503+09:00",
+  "size_px": [
+    1200,
+    240
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "719e74e76c4321f7ddf6b5bd76521954be6949a5bb06d43a547d5b30881a8ba1"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "c97e29d780c975efe339e9a101a4efc9fde71da8923ce007070591832e816163"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "330bf9386cc603894a8e6ee8bd7df8f934f2af30d92cb2bb720c08f4983188c0"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/prior_ALS.npz",
+      "sha256": "c51fe864498968cc48b40ea1f9e0816a98b4815ebb2e24144fd7d8067b85b1bd"
+    },
+    {
+      "path": "/gtjudge/meshes/B0_b10__ALS__always_keep_mesh/final.ply",
+      "sha256": "13211f2ab365c7004fd39a07fdf4e7669fa9a4f81cf5e2baaab9a28a3d73e359"
+    },
+    {
+      "path": "/gtjudge/meshes/B0_b10__ALS__always_keep_mesh_t010/final.ply",
+      "sha256": "0ca88f5b18d226be99aeb285a235f243943546b87a9fac3c3dd922d3f1e0f58a"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh.npz",
+      "sha256": "ce97303bcd3192742c0cd268ea832489185426babfe3d0728d3fcaf7166e3fc3"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "a88db17b7240d2ae5673b938109fcbc3e10edf824689781772d19c64a7217fed"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    }
+  ],
+  "case": "c3_B0_b10__ALS",
+  "section": {
+    "status": "PASS",
+    "start": [
+      86.59057865396345,
+      2.962928468714156
+    ],
+    "end": [
+      92.90435672478432,
+      0.5160766468159832
+    ],
+    "anchor_xyz": [
+      89.94100189208984,
+      1.6644999980926514,
+      -36.90401077270508
+    ],
+    "half_width": 0.5,
+    "component_n_gt": 104,
+    "component_unique_points": 104,
+    "components": 1,
+    "all_case2_n_gt": 104,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9324283878612614,
+      -0.3613548138747417
+    ],
+    "length_m": 6.771327592570379
+  },
+  "rows": [
+    {
+      "method": "always_keep_mesh",
+      "n_gt": 237,
+      "completeness_pct": 90.29535864978902,
+      "metric_population": "this 1m-wide section strip only",
+      "n": 237,
+      "n_excluded": 0,
+      "n_hit": 224,
+      "within_pct": 90.29535864978902,
+      "far_hit_pct": 4.219409282700422,
+      "no_surface_pct": 5.485232067510548,
+      "median_signed_m": -0.013978562317788601,
+      "nmad_m": 0.032410440617613494,
+      "abs_p50_p683_p95_m": [
+        0.031336791813373566,
+        0.04099734665825963,
+        0.12322774305939672
+      ]
+    },
+    {
+      "method": "always_keep_mesh_t010",
+      "n_gt": 237,
+      "completeness_pct": 76.37130801687763,
+      "metric_population": "this 1m-wide section strip only",
+      "n": 237,
+      "n_excluded": 0,
+      "n_hit": 181,
+      "within_pct": 76.37130801687763,
+      "far_hit_pct": 0.0,
+      "no_surface_pct": 23.628691983122362,
+      "median_signed_m": -0.02101821079850197,
+      "nmad_m": 0.026266058966517448,
+      "abs_p50_p683_p95_m": [
+        0.02713022567331791,
+        0.03632796511054039,
+        0.06529977172613144
+      ]
+    }
+  ],
+  "axis_bounds": [
+    0,
+    6.771327592570379,
+    -42.92055458710442,
+    -36.20432610980772
+  ],
+  "vertical_exaggeration": 0.10082038774380488,
+  "A_px": [
+    0,
+    12.5013852389784
+  ],
+  "Aprime_px": [
+    1200,
+    12.5013852389784
+  ],
+  "box_corners_px": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      240
+    ],
+    [
+      0,
+      240
+    ]
+  ],
+  "scale_bar": {
+    "horizontal_m": 2,
+    "vertical_m": 1,
+    "horizontal_px": 354.43566526500985,
+    "vertical_px": 17.867170601125867
+  },
+  "colors": {
+    "prior": "#D85A30",
+    "always_keep_mesh": "#4B3A99",
+    "always_keep_mesh_t010": "#1D9E75"
+  },
+  "producer": {
+    "path": "/repo/scripts/phd/main_gtjudge_v1/add4_keep_report.py",
+    "sha256": "3ceafde5861088c8bec7ddee96ffd718af9b2df3751b172b6d0438a7d7b68d42"
+  }
+}

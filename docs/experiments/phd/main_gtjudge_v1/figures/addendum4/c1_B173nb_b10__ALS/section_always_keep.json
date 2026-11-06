@@ -1,0 +1,199 @@
+{
+  "at": "2026-11-06T18:02:34.308087+09:00",
+  "size_px": [
+    1200,
+    240
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "719e74e76c4321f7ddf6b5bd76521954be6949a5bb06d43a547d5b30881a8ba1"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "c97e29d780c975efe339e9a101a4efc9fde71da8923ce007070591832e816163"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "330bf9386cc603894a8e6ee8bd7df8f934f2af30d92cb2bb720c08f4983188c0"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/prior_ALS.npz",
+      "sha256": "621f4e0f73da6d81bddd05151e71d35a440145ae43ce596f815d09a7a277001c"
+    },
+    {
+      "path": "/gtjudge/meshes/B173nb_b10__ALS__always_keep_mesh/final.ply",
+      "sha256": "be73d5d7b6479110757d692c036d64bd6f1e35ecd791bd6884302e3bd23efe5b"
+    },
+    {
+      "path": "/gtjudge/meshes/B173nb_b10__ALS__always_keep_mesh_t010/final.ply",
+      "sha256": "4609143980b8a11e395fab55baed2fcb55994da9bce8e719323d798b573334d4"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B173nb_b10__ALS/always_keep_mesh.npz",
+      "sha256": "993bbc6e25b5383b049460dff09bdd0bd95e49e0c660dc478eb1ba0de26c796e"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B173nb_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "300ce7ff3e3998a15808e8fe71621cce85ce9be66b00ad6e882ddf363306946c"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    }
+  ],
+  "case": "c1_B173nb_b10__ALS",
+  "section": {
+    "id": "A",
+    "name": "날개",
+    "start": [
+      146.68,
+      96.32
+    ],
+    "end": [
+      136.63,
+      99.34
+    ],
+    "half_width": 0.5,
+    "roi_half_width": 3.0,
+    "source": "TARGET representatives_v1.json row 1 unchanged",
+    "selection": "fixed r8 section",
+    "labels_by_prior": {
+      "ALS": {
+        "cell": 1,
+        "cell_area_m2": {
+          "0": 0.689776424938033,
+          "1": 6.1965141814135265,
+          "2": 1.0610478081146573,
+          "3": 3.663343235343691
+        },
+        "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+      },
+      "LoD2": {
+        "cell": 1,
+        "cell_area_m2": {
+          "0": 1.0625,
+          "1": 9.0625,
+          "2": 1.0,
+          "3": 2.3125,
+          "6": 0.4375
+        },
+        "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+      }
+    },
+    "site": "B173nb_b10",
+    "prior": "ALS",
+    "title": "B173 날개 · ALS",
+    "length_m": 10.493945873693093
+  },
+  "rows": [
+    {
+      "method": "always_keep_mesh",
+      "n_gt": 869,
+      "completeness_pct": 2.3014959723820483,
+      "metric_population": "this 1m-wide section strip only",
+      "n": 869,
+      "n_excluded": 0,
+      "n_hit": 808,
+      "within_pct": 2.3014959723820483,
+      "far_hit_pct": 90.67894131185271,
+      "no_surface_pct": 7.019562715765248,
+      "median_signed_m": 4.343688726425171,
+      "nmad_m": 0.8052886057376861,
+      "abs_p50_p683_p95_m": [
+        4.343688726425171,
+        4.717542981624604,
+        8.79878568649292
+      ]
+    },
+    {
+      "method": "always_keep_mesh_t010",
+      "n_gt": 869,
+      "completeness_pct": 9.205983889528193,
+      "metric_population": "this 1m-wide section strip only",
+      "n": 869,
+      "n_excluded": 0,
+      "n_hit": 785,
+      "within_pct": 9.205983889528193,
+      "far_hit_pct": 81.1277330264672,
+      "no_surface_pct": 9.666283084004602,
+      "median_signed_m": 4.4117817878723145,
+      "nmad_m": 0.8884852812767028,
+      "abs_p50_p683_p95_m": [
+        4.4117817878723145,
+        4.836783950805664,
+        8.752450370788564
+      ]
+    }
+  ],
+  "axis_bounds": [
+    0,
+    10.493945873693093,
+    -32.019151180796094,
+    -21.51762500796948
+  ],
+  "vertical_exaggeration": 0.09992781716667876,
+  "A_px": [
+    0,
+    70.85693248814835
+  ],
+  "Aprime_px": [
+    1200,
+    70.85693248814835
+  ],
+  "box_corners_px": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      240
+    ],
+    [
+      0,
+      240
+    ]
+  ],
+  "scale_bar": {
+    "horizontal_m": 2,
+    "vertical_m": 1,
+    "horizontal_px": 228.7032951081324,
+    "vertical_px": 11.426910529491215
+  },
+  "colors": {
+    "prior": "#D85A30",
+    "always_keep_mesh": "#4B3A99",
+    "always_keep_mesh_t010": "#1D9E75"
+  },
+  "producer": {
+    "path": "/repo/scripts/phd/main_gtjudge_v1/add4_keep_report.py",
+    "sha256": "3ceafde5861088c8bec7ddee96ffd718af9b2df3751b172b6d0438a7d7b68d42"
+  }
+}

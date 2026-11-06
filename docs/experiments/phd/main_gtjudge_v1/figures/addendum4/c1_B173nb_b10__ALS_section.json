@@ -1,0 +1,567 @@
+{
+  "at": "2026-11-06T18:09:56.252462+09:00",
+  "size_px": [
+    1200,
+    600
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "4ea3a0ea85a3a5d14d00c1795e3b95741ecb1185d8613149187e9dbc3036e495"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "c97e29d780c975efe339e9a101a4efc9fde71da8923ce007070591832e816163"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "8caac3919d028d90a27ecf80089eddf3ce395b1c3e4398910ffbe73739bfed3e"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_prior.png",
+      "sha256": "0f74e65fbd74bd9390b02892ae75d1d32883c4eba62811d25ad5d4fefde9e19c"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_mvs.png",
+      "sha256": "92137a75d132e79abb084082c85d06f53653d4a29e28360e6d520f983f810b17"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_fusion.png",
+      "sha256": "1c2d0bd4306ed3a70ec0a5176ff38ab4ca86799340c9cbcf0356cc538789abc9"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_GeoGS_30000.png",
+      "sha256": "9db47b6041ff873a41dbe02657fefcd9764533e96cde9a6127a7399021e23414"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_FINALTRAIN_30000.png",
+      "sha256": "a603db06fc2948d1cc507de4b4b6d2483f77b1b17ffbf2628d621381c9c05189"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_prior.json",
+      "sha256": "14148d93b9b322e5409effc6034e2becfc2f45561042137a3ab7f9dc299d397d"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_mvs.json",
+      "sha256": "c44d482fca4f39301d1b42f7124894e1b9ee534553ebbb3475b4ba4f76379a1e"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_fusion.json",
+      "sha256": "98ee240ac95b9f9781745f77a0101c755dda26af6956a4ca2ebe82c48b21b53d"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_GeoGS_30000.json",
+      "sha256": "ddb62dd7e96a3d6ba49f9144ecbbbabffd4e8186d87c37423e66234656a2f7b3"
+    },
+    {
+      "path": "/docs/figures/addendum4/c1_B173nb_b10__ALS/section_FINALTRAIN_30000.json",
+      "sha256": "2d3c45ddc2a4fd020712502dda3153e616ac146e680db32053352bfd0f1d0b2a"
+    }
+  ],
+  "case": "c1_B173nb_b10__ALS",
+  "rows": [
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "prior",
+      "section": {
+        "id": "A",
+        "name": "날개",
+        "start": [
+          146.68,
+          96.32
+        ],
+        "end": [
+          136.63,
+          99.34
+        ],
+        "half_width": 0.5,
+        "roi_half_width": 3.0,
+        "source": "TARGET representatives_v1.json row 1 unchanged",
+        "selection": "fixed r8 section",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 0.689776424938033,
+              "1": 6.1965141814135265,
+              "2": 1.0610478081146573,
+              "3": 3.663343235343691
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 1.0625,
+              "1": 9.0625,
+              "2": 1.0,
+              "3": 2.3125,
+              "6": 0.4375
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        },
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "title": "B173 날개 · ALS",
+        "length_m": 10.493945873693093
+      },
+      "axis_bounds": [
+        0,
+        10.493945873693093,
+        -32.019151180796094,
+        -21.51762500796948
+      ],
+      "vertical_exaggeration": 0.09992781716667876,
+      "A_px": [
+        0,
+        70.85693248814835
+      ],
+      "Aprime_px": [
+        1200,
+        70.85693248814835
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 869,
+      "completeness_pct": 13.118527042577675,
+      "far_hit_pct": 82.96892980437285,
+      "no_surface_pct": 3.9125431530494823,
+      "scale_bar": {
+        "horizontal_m": 2,
+        "vertical_m": 1,
+        "horizontal_px": 228.70329510813244,
+        "vertical_px": 11.426910529491215,
+        "origin_px": [
+          24.0,
+          18.0
+        ]
+      },
+      "target_overlay": null
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "mvs",
+      "section": {
+        "id": "A",
+        "name": "날개",
+        "start": [
+          146.68,
+          96.32
+        ],
+        "end": [
+          136.63,
+          99.34
+        ],
+        "half_width": 0.5,
+        "roi_half_width": 3.0,
+        "source": "TARGET representatives_v1.json row 1 unchanged",
+        "selection": "fixed r8 section",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 0.689776424938033,
+              "1": 6.1965141814135265,
+              "2": 1.0610478081146573,
+              "3": 3.663343235343691
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 1.0625,
+              "1": 9.0625,
+              "2": 1.0,
+              "3": 2.3125,
+              "6": 0.4375
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        },
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "title": "B173 날개 · ALS",
+        "length_m": 10.493945873693093
+      },
+      "axis_bounds": [
+        0,
+        10.493945873693093,
+        -32.019151180796094,
+        -21.51762500796948
+      ],
+      "vertical_exaggeration": 0.09992781716667876,
+      "A_px": [
+        0,
+        70.85693248814835
+      ],
+      "Aprime_px": [
+        1200,
+        70.85693248814835
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 869,
+      "completeness_pct": 82.16340621403913,
+      "far_hit_pct": 17.836593785960876,
+      "no_surface_pct": 0.0,
+      "scale_bar": null,
+      "target_overlay": null
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "fusion",
+      "section": {
+        "id": "A",
+        "name": "날개",
+        "start": [
+          146.68,
+          96.32
+        ],
+        "end": [
+          136.63,
+          99.34
+        ],
+        "half_width": 0.5,
+        "roi_half_width": 3.0,
+        "source": "TARGET representatives_v1.json row 1 unchanged",
+        "selection": "fixed r8 section",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 0.689776424938033,
+              "1": 6.1965141814135265,
+              "2": 1.0610478081146573,
+              "3": 3.663343235343691
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 1.0625,
+              "1": 9.0625,
+              "2": 1.0,
+              "3": 2.3125,
+              "6": 0.4375
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        },
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "title": "B173 날개 · ALS",
+        "length_m": 10.493945873693093
+      },
+      "axis_bounds": [
+        0,
+        10.493945873693093,
+        -32.019151180796094,
+        -21.51762500796948
+      ],
+      "vertical_exaggeration": 0.09992781716667876,
+      "A_px": [
+        0,
+        70.85693248814835
+      ],
+      "Aprime_px": [
+        1200,
+        70.85693248814835
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 869,
+      "completeness_pct": 67.89413118527042,
+      "far_hit_pct": 16.340621403912543,
+      "no_surface_pct": 15.76524741081703,
+      "scale_bar": null,
+      "target_overlay": null
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "GeoGS_30000",
+      "section": {
+        "id": "A",
+        "name": "날개",
+        "start": [
+          146.68,
+          96.32
+        ],
+        "end": [
+          136.63,
+          99.34
+        ],
+        "half_width": 0.5,
+        "roi_half_width": 3.0,
+        "source": "TARGET representatives_v1.json row 1 unchanged",
+        "selection": "fixed r8 section",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 0.689776424938033,
+              "1": 6.1965141814135265,
+              "2": 1.0610478081146573,
+              "3": 3.663343235343691
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 1.0625,
+              "1": 9.0625,
+              "2": 1.0,
+              "3": 2.3125,
+              "6": 0.4375
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        },
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "title": "B173 날개 · ALS",
+        "length_m": 10.493945873693093
+      },
+      "axis_bounds": [
+        0,
+        10.493945873693093,
+        -32.019151180796094,
+        -21.51762500796948
+      ],
+      "vertical_exaggeration": 0.09992781716667876,
+      "A_px": [
+        0,
+        70.85693248814835
+      ],
+      "Aprime_px": [
+        1200,
+        70.85693248814835
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 869,
+      "completeness_pct": 66.16800920598389,
+      "far_hit_pct": 33.71691599539701,
+      "no_surface_pct": 0.11507479861910241,
+      "scale_bar": null,
+      "target_overlay": null
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "FINALTRAIN_30000",
+      "section": {
+        "id": "A",
+        "name": "날개",
+        "start": [
+          146.68,
+          96.32
+        ],
+        "end": [
+          136.63,
+          99.34
+        ],
+        "half_width": 0.5,
+        "roi_half_width": 3.0,
+        "source": "TARGET representatives_v1.json row 1 unchanged",
+        "selection": "fixed r8 section",
+        "labels_by_prior": {
+          "ALS": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 0.689776424938033,
+              "1": 6.1965141814135265,
+              "2": 1.0610478081146573,
+              "3": 3.663343235343691
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          },
+          "LoD2": {
+            "cell": 1,
+            "cell_area_m2": {
+              "0": 1.0625,
+              "1": 9.0625,
+              "2": 1.0,
+              "3": 2.3125,
+              "6": 0.4375
+            },
+            "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+          }
+        },
+        "site": "B173nb_b10",
+        "prior": "ALS",
+        "title": "B173 날개 · ALS",
+        "length_m": 10.493945873693093
+      },
+      "axis_bounds": [
+        0,
+        10.493945873693093,
+        -32.019151180796094,
+        -21.51762500796948
+      ],
+      "vertical_exaggeration": 0.09992781716667876,
+      "A_px": [
+        0,
+        70.85693248814835
+      ],
+      "Aprime_px": [
+        1200,
+        70.85693248814835
+      ],
+      "box_corners_px": [
+        [
+          0,
+          0
+        ],
+        [
+          1200,
+          0
+        ],
+        [
+          1200,
+          120
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+      "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+      "n_gt": 869,
+      "completeness_pct": 75.71921749136939,
+      "far_hit_pct": 24.280782508630608,
+      "no_surface_pct": 0.0,
+      "scale_bar": null,
+      "target_overlay": null
+    }
+  ],
+  "axis_bounds": [
+    0,
+    10.493945873693093,
+    -32.019151180796094,
+    -21.51762500796948
+  ],
+  "A_px": [
+    0,
+    70.85693248814835
+  ],
+  "Aprime_px": [
+    1200,
+    70.85693248814835
+  ],
+  "box_corners_px": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      600
+    ],
+    [
+      0,
+      600
+    ]
+  ]
+}

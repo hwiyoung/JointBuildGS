@@ -1,0 +1,145 @@
+{
+  "at": "2026-11-06T18:09:56.030512+09:00",
+  "size_px": [
+    1200,
+    120
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953,
+    5336071,
+    604
+  ],
+  "config_sha256": "58385d85530f438878e38557f0cee2ad66cf419dc53320286a743c3bf51af46d",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b10d4064bd0ff706c73326dfbe1158d7b5acf71b",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_common.py",
+      "sha256": "4ea3a0ea85a3a5d14d00c1795e3b95741ecb1185d8613149187e9dbc3036e495"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_prepare.py",
+      "sha256": "6e2a1bd078ae018f94d94205fc45135b20f2d7a6f1878d261f2a8f015de82b6a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_figures.py",
+      "sha256": "c97e29d780c975efe339e9a101a4efc9fde71da8923ce007070591832e816163"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "8caac3919d028d90a27ecf80089eddf3ce395b1c3e4398910ffbe73739bfed3e"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/main_axes71_v2/PHD-MAIN-AXES71-v2/mvs/B173nb_b10/mesh_mvs_a.ply",
+      "sha256": "fccf201390ac3eb23530d34c4760e8facd82be7f300cf3e5825182f8bc8502cd"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/mvs.npz",
+      "sha256": "3f3786818f2b1df1e4b96d4d5e03e5f4eeb586c8a383e6415249486895a06c20"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/gtjudge/addendum4/cases/c1_B173nb_b10__ALS.json",
+      "sha256": "6b16fee1d2c701dbf2601dd5242770645d38cea34504b48cdda651097aff6f4b"
+    }
+  ],
+  "case": "c1_B173nb_b10__ALS",
+  "method": "mvs",
+  "section": {
+    "id": "A",
+    "name": "날개",
+    "start": [
+      146.68,
+      96.32
+    ],
+    "end": [
+      136.63,
+      99.34
+    ],
+    "half_width": 0.5,
+    "roi_half_width": 3.0,
+    "source": "TARGET representatives_v1.json row 1 unchanged",
+    "selection": "fixed r8 section",
+    "labels_by_prior": {
+      "ALS": {
+        "cell": 1,
+        "cell_area_m2": {
+          "0": 0.689776424938033,
+          "1": 6.1965141814135265,
+          "2": 1.0610478081146573,
+          "3": 3.663343235343691
+        },
+        "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+      },
+      "LoD2": {
+        "cell": 1,
+        "cell_area_m2": {
+          "0": 1.0625,
+          "1": 9.0625,
+          "2": 1.0,
+          "3": 2.3125,
+          "6": 0.4375
+        },
+        "label_rule": "dominant roof cell by area in the fixed section band; displayed metric is this cell over the entire evaluation region"
+      }
+    },
+    "site": "B173nb_b10",
+    "prior": "ALS",
+    "title": "B173 날개 · ALS",
+    "length_m": 10.493945873693093
+  },
+  "axis_bounds": [
+    0,
+    10.493945873693093,
+    -32.019151180796094,
+    -21.51762500796948
+  ],
+  "vertical_exaggeration": 0.09992781716667876,
+  "A_px": [
+    0,
+    70.85693248814835
+  ],
+  "Aprime_px": [
+    1200,
+    70.85693248814835
+  ],
+  "box_corners_px": [
+    [
+      0,
+      0
+    ],
+    [
+      1200,
+      0
+    ],
+    [
+      1200,
+      120
+    ],
+    [
+      0,
+      120
+    ]
+  ],
+  "horizontal_end_meaning": "A at x=0; Aprime at x=1200; Y is the annotation plane altitude",
+  "metric_population": "reference rows inside this 1m-wide section strip only; not the whole scene",
+  "n_gt": 869,
+  "completeness_pct": 82.16340621403913,
+  "far_hit_pct": 17.836593785960876,
+  "no_surface_pct": 0.0,
+  "scale_bar": null,
+  "target_overlay": null
+}
