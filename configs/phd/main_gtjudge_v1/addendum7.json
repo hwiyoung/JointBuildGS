@@ -1,0 +1,42 @@
+{
+  "task_id": "PHD-MAIN-GTJUDGE-v1",
+  "addendum": 7,
+  "scientific_verdict": null,
+  "training": false,
+  "new_images": false,
+  "candidate_selection": false,
+  "requested_rounded_xy": [
+    [
+      102.00846,
+      -6.26689
+    ],
+    [
+      108.23323,
+      10.83552
+    ]
+  ],
+  "xy_rule": "reuse the exact full-precision addendum4 line; validate its rounding to the user coordinates",
+  "half_width_m": 0.5,
+  "methods": [
+    "prior",
+    "mvs",
+    "fusion",
+    "GeoGS_30000",
+    "FINALTRAIN_30000",
+    "judgment_mesh"
+  ],
+  "metric_case_id": 1,
+  "expected_order": [
+    "FINALTRAIN_30000",
+    "GeoGS_30000",
+    "fusion"
+  ],
+  "image_stems": [
+    "c2_B0_b10__LoD2_top_crop_noline",
+    "c2_B0_b10__LoD2_wrong_dist_noline",
+    "c2_B0_b10__LoD2_result_dist_FINALTRAIN_30000"
+  ],
+  "source_commit": "5d469708f0a4318928429d058e116a51fbfce29d",
+  "projection_z": "exact addendum4 annotation_line_xyz and disconnected segment mask",
+  "occlusion": "exact addendum6 mesh ray 0.15m rule; MVS vertical proxy for ortho with missing source depth"
+}

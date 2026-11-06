@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-06T22:18:49.758023+09:00",
+  "status": "PASS_FIXED_LINE_SAVED_SCORES_PROJECTIONS_AND_PRESERVATION",
+  "methods": [
+    {
+      "method": "prior",
+      "n": 869,
+      "completeness_pct": 0.0,
+      "original_intersection_edges_preserved": true
+    },
+    {
+      "method": "mvs",
+      "n": 869,
+      "completeness_pct": 100.0,
+      "original_intersection_edges_preserved": true
+    },
+    {
+      "method": "fusion",
+      "n": 869,
+      "completeness_pct": 0.23014959723820483,
+      "original_intersection_edges_preserved": true
+    },
+    {
+      "method": "GeoGS_30000",
+      "n": 869,
+      "completeness_pct": 84.92520138089759,
+      "original_intersection_edges_preserved": true
+    },
+    {
+      "method": "FINALTRAIN_30000",
+      "n": 869,
+      "completeness_pct": 78.36593785960875,
+      "original_intersection_edges_preserved": true
+    },
+    {
+      "method": "judgment_mesh",
+      "n": 869,
+      "completeness_pct": 87.57192174913693,
+      "original_intersection_edges_preserved": true
+    }
+  ],
+  "frames": [
+    {
+      "image": "c2_B0_b10__LoD2_top_crop_noline.png",
+      "line_inside_fraction": 1.0,
+      "occluded_n": 6,
+      "unknown_visibility_n": 8
+    },
+    {
+      "image": "c2_B0_b10__LoD2_wrong_dist_noline.png",
+      "line_inside_fraction": 1.0,
+      "occluded_n": 127,
+      "unknown_visibility_n": 6
+    },
+    {
+      "image": "c2_B0_b10__LoD2_result_dist_FINALTRAIN_30000.png",
+      "line_inside_fraction": 1.0,
+      "occluded_n": 0,
+      "unknown_visibility_n": 14
+    }
+  ],
+  "old_figure_files_preserved": 370,
+  "new_figures": 0,
+  "new_meshes": 0,
+  "new_scores": 0,
+  "new_candidates": 0,
+  "training_started": false,
+  "training_interrupted": false,
+  "scientific_verdict": null
+}
