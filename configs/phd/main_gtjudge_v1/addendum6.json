@@ -1,0 +1,110 @@
+{
+  "task_id": "PHD-MAIN-GTJUDGE-v1",
+  "addendum": 6,
+  "scientific_verdict": null,
+  "training": false,
+  "GPU": false,
+  "source_commit": "464647a0e6af9d0c8e23c5cf6a6c9b5f2398a2a9",
+  "order_sha256": "054c3c307b107a08312cc67c9cac7b211452435dd4466e85b7e64df4dd334565",
+  "candidate_spacing_m": 1.0,
+  "half_width_m": 0.5,
+  "end_padding_m": 1.0,
+  "ranking_tolerance_pp": 1.0,
+  "minimum_points": {
+    "c1": 300,
+    "c2": 300,
+    "c3": 100,
+    "c4": 300
+  },
+  "targets": {
+    "c1": {
+      "FINALTRAIN_30000": 98.8,
+      "GeoGS_30000": 79.1,
+      "fusion": 73.4
+    },
+    "c2": {
+      "FINALTRAIN_30000": 85.3,
+      "GeoGS_30000": 60.3,
+      "fusion": 11.1
+    },
+    "c3": {
+      "FINALTRAIN_30000": 74.1,
+      "fusion": 73.0,
+      "GeoGS_30000": 56.3
+    },
+    "c4": {
+      "judgment_mesh": 75.9,
+      "FINALTRAIN_30000": 60.3,
+      "fusion": 55.9,
+      "GeoGS_30000": 49.5
+    }
+  },
+  "PCA_weights": "inherited RELEASE area_per_gt: core patch area divided by its reference-row count; unowned rows weight zero; record these counts; all scene rows of requested case, no feature subset",
+  "directions": {
+    "c1": [
+      "perpendicular"
+    ],
+    "c2": [
+      "perpendicular",
+      "parallel"
+    ],
+    "c3": [
+      "perpendicular",
+      "parallel"
+    ],
+    "c4": [
+      "perpendicular",
+      "parallel",
+      "inherited"
+    ]
+  },
+  "ranking": "all earlier methods may trail any later method by at most 1 percentage point; prefer rank-passing candidates; minimize sum absolute gaps from rounded ordered targets; tie most case points, then deterministic candidate id",
+  "roof_boundary": {
+    "definition": "Prior roof mesh faces under frozen 75deg/1m rule; group roof patches by exact inherited core building identity (source_index), joining roof tiers of the same building and separating adjacent buildings. Only unnamed patches use 3D 0.6m components. Endpoints are the exact prior roof center-plane intersection extrema plus 1m, not footprint edges.",
+    "prior_patch_radius_m": 1.0,
+    "roof_max_tilt_deg": 75.0,
+    "roof_group_connectivity_m": 0.6,
+    "reason": "XY connectivity joined neighboring buildings; 3D connectivity split roof tiers. Reuse existing stable building identity for grouping only; selection count/rank/score rules remain unchanged.",
+    "roof_group_space": "inherited building identity plus GroundSurface XY identity fallback",
+    "prior_patch_in_eval": true,
+    "unknown_identity": "For unnamed prior patches, use shared GroundSurface XY buffered 1m for identity only; resolve overlaps by nearest existing prior roof support in 3D. Unresolved patches cannot define a building-wide candidate. No ground or roof Z/edge is substituted for prior mesh endpoints."
+  },
+  "check_plot": {
+    "width_px": 1600,
+    "vertical_exaggeration": 3.0,
+    "z_margin_m": 2.0
+  },
+  "c3_camera": {
+    "elevation_candidates_deg": [
+      60,
+      70,
+      45
+    ],
+    "output_size_px": [
+      1600,
+      2000
+    ],
+    "context_padding_m": 8,
+    "occluder_policy": "remove only full original triangles hit before the target roof by camera-to-target rays; record exact face ids and source hashes; no replacement triangles"
+  },
+  "case_colors": {
+    "0": "#7FA7D9",
+    "1": "#1D9E75",
+    "2": "#D85A30",
+    "4": "#F0A07F",
+    "3": "#8C95A3"
+  },
+  "paint_order_case_ids": [
+    0,
+    3,
+    1,
+    2,
+    4
+  ],
+  "precision": {
+    "population": "same inherited stage1 sample_reference_row case bins and sample_eligible; use saved sample_s/sample_tau without rescoring",
+    "nearest_reference": "nearest 3D scoring row for feature/LGDM-absence split; separately retain inherited same-owner assignment for per-case population",
+    "feature_source": "addendum4 expanded features; preserve unavailable quadrant -2 separately"
+  },
+  "undefined_fallback": "If no min-count candidate exists, report unavailable; do not lower the count. Keep rank fallback as expressly ordered."
+}

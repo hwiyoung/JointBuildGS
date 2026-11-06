@@ -1,0 +1,159 @@
+{
+  "at": "2026-11-06T20:37:32.150766+09:00",
+  "status": "PASS_SELECTION_SAVED_SCORES_AND_PRESERVATION",
+  "old_figure_files_preserved": 312,
+  "checks": [
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "selected_candidate": "perpendicular_+0024_g0001",
+      "target_case_n": 1333,
+      "all_strip_n": 2104,
+      "rank_condition": true,
+      "rank_fallback": false,
+      "source_scores_reused": true,
+      "frames": [
+        {
+          "method": "FINALTRAIN_30000",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "fusion",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "GeoGS_30000",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "top_crop_noline",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "wrong_dist_noline",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        }
+      ]
+    },
+    {
+      "case": "c2_B0_b10__LoD2",
+      "selected_candidate": "perpendicular_-0027_g0002",
+      "target_case_n": 394,
+      "all_strip_n": 3801,
+      "rank_condition": true,
+      "rank_fallback": false,
+      "source_scores_reused": true,
+      "frames": [
+        {
+          "method": "FINALTRAIN_30000",
+          "line_inside_fraction": 0.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "fusion",
+          "line_inside_fraction": 0.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "GeoGS_30000",
+          "line_inside_fraction": 0.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "wrong_dist_noline",
+          "line_inside_fraction": 0.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "top_crop_noline",
+          "line_inside_fraction": 0.0,
+          "removed_triangles": 0
+        }
+      ]
+    },
+    {
+      "case": "c3_B0_b10__ALS",
+      "selected_candidate": "perpendicular_+0010_g0002",
+      "target_case_n": 165,
+      "all_strip_n": 2360,
+      "rank_condition": true,
+      "rank_fallback": false,
+      "source_scores_reused": true,
+      "frames": [
+        {
+          "method": "FINALTRAIN_30000",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "fusion",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "GeoGS_30000",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "top_crop_noline_v2",
+          "line_inside_fraction": 0.42412451361867703,
+          "removed_triangles": 0
+        },
+        {
+          "method": "wrong_dist_v2",
+          "line_inside_fraction": 1.0,
+          "removed_triangles": 0
+        },
+        {
+          "method": "top_crop_noline",
+          "line_inside_fraction": 0.0,
+          "removed_triangles": 0
+        }
+      ]
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "selected_candidate": "perpendicular_+0003_g0001",
+      "target_case_n": 520,
+      "all_strip_n": 3875,
+      "rank_condition": true,
+      "rank_fallback": false,
+      "source_scores_reused": true,
+      "frames": [
+        {
+          "method": "FINALTRAIN_30000",
+          "line_inside_fraction": 0.5914396887159533,
+          "removed_triangles": 0
+        },
+        {
+          "method": "fusion",
+          "line_inside_fraction": 0.5914396887159533,
+          "removed_triangles": 0
+        },
+        {
+          "method": "GeoGS_30000",
+          "line_inside_fraction": 0.5914396887159533,
+          "removed_triangles": 0
+        },
+        {
+          "method": "top_crop_noline",
+          "line_inside_fraction": 0.8793774319066148,
+          "removed_triangles": 0
+        },
+        {
+          "method": "oblique_noline",
+          "line_inside_fraction": 0.5914396887159533,
+          "removed_triangles": 0
+        }
+      ]
+    }
+  ],
+  "training_started": false,
+  "training_interrupted": false,
+  "scientific_verdict": null
+}

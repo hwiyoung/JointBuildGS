@@ -1,0 +1,87 @@
+{
+  "at": "2026-11-06T20:39:24.233270+09:00",
+  "status": "PASS_INTEGRITY_WITH_DISPLAY_LIMITATIONS",
+  "old_figure_files_preserved": 312,
+  "first_delivery_figure_and_table_bytes_preserved": true,
+  "archive_receipts": [
+    {
+      "at": "2026-11-06T20:37:33.738518+09:00",
+      "status": "PASS_ZIP_CRC_AND_MEMBER_SHA256",
+      "path": "/gtjudge/delivery/PHD-MAIN-GTJUDGE-v1_사례단면렌더.zip",
+      "sha256": "7d9073034948f6ef167d16424c66f4391e70f29d3a63fa37e7b72ac9b454ff5d",
+      "bytes": 24438949,
+      "members": 60,
+      "scientific_verdict": null
+    },
+    {
+      "at": "2026-11-06T20:39:23.145505+09:00",
+      "status": "PASS_ZIP_CRC_AND_MEMBER_SHA256",
+      "path": "/gtjudge/delivery/PHD-MAIN-GTJUDGE-v1_정확성확인.zip",
+      "sha256": "2dcad7682e72e03a83dd0f2b6704f97a8b729dc70cb1418c07aa5ea4d0153f7b",
+      "bytes": 6375825,
+      "members": 7,
+      "scientific_verdict": null
+    }
+  ],
+  "precision_csv_rows": 144,
+  "report_characters": 2570,
+  "visual_review": "Section maps, four input/result check plots, twelve c3 MVS camera candidates, all primary panels and both precision maps inspected.",
+  "display_limitations": "New c2 line is outside inherited frames; c3/c4 some inherited crops are partial. Source ortho depth unavailable; top annotations use explicitly recorded MVS proxy.",
+  "training_started": false,
+  "training_interrupted": false,
+  "scientific_verdict": null,
+  "code": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_camera_review.py",
+      "sha256": "43946f95b99ed752e217443df74bbc79b2acc6fbf856a6175cc016ddcdaa4377"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_common.py",
+      "sha256": "af7d636a1da1443b0a2186fe8e237e63cf6383031807408e0166ba69bb86dd79"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_final_audit.py",
+      "sha256": "bc864df6cf037ae43bbb7823f5571dcec70544a94fa8efc41677617d4f223750"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_precision.py",
+      "sha256": "5f271d6a401159db390494cc38b15536144095acdf608c804266eebf12af32a8"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_publish.py",
+      "sha256": "fc53cbb6d5807c8e1053686e194cf5cec83f92a64c5a4ddbc731f98a08f99536"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_refresh_annotations.py",
+      "sha256": "f6bbffc500b140c09f9a7aa25d2d555074bec4ab00551bbfe5a7a17d4f927c99"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_render.py",
+      "sha256": "c003d3e7de47ada5ec9903bde8b1275d04217e54e57c1e49900672a63aab6e49"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_review.py",
+      "sha256": "18156d7b50c4761847294507752a1d563cd702fe0d5e5cf640b04038bbdae06f"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_roof_audit.py",
+      "sha256": "ffd55118faabc1911dba816a5b0b7610b5e03cf72435857dbb4f60a575308484"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_sections.py",
+      "sha256": "aedd2bbb3eada0c0dc2f85cb3479f21f39b2c3aa226105e2527af2786c9623cd"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_select.py",
+      "sha256": "b99b4971ef229ff02b2d289321f1d19c92b680570e34767d08accc34032ae52d"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_top_occlusion.py",
+      "sha256": "010f8c236b619a7225b2e7a8e230b7f2be770bbd703decd4491ffffc71e5508b"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_validate.py",
+      "sha256": "fea8e30171d25464d24232abbbe253c2ff9ca55b0a740a50cc7d3b8f4098a4aa"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "at": "2026-11-06T20:38:00.286971+09:00",
+  "status": "PASS_SAVED_ACCURACY_REPRODUCTION_AND_PARTITIONS",
+  "checks": [
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "FINALTRAIN_30000",
+      "version": "stage1_original",
+      "eligible_n": 560813,
+      "bad_n": 203650,
+      "accuracy_pct": 63.68664777742313,
+      "table_accuracy_pct": 63.68664777742313,
+      "source": {
+        "path": "/docs/tables/stage1/B173nb_b10__ALS_metrics.csv",
+        "sha256": "e7b8b0c46bfb1359f202a808ffd1edc9fd176bc488f69185ee926e3e0c1ff9f5"
+      }
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "FINALTRAIN_30000",
+      "version": "addendum2_steep_excluded",
+      "eligible_n": 401369,
+      "bad_n": 100808,
+      "accuracy_pct": 74.88395964810437,
+      "table_accuracy_pct": 74.88395964810437,
+      "source": {
+        "path": "/docs/tables/addendum2/stage1/B173nb_b10__ALS.csv",
+        "sha256": "eb0479c12ab576b7d240447dfe590fcc998509d8be66965abdb11c341c3d10ba"
+      }
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "fusion",
+      "version": "stage1_original",
+      "eligible_n": 385672,
+      "bad_n": 91288,
+      "accuracy_pct": 76.33014582339398,
+      "table_accuracy_pct": 76.33014582339398,
+      "source": {
+        "path": "/docs/tables/stage1/B173nb_b10__ALS_metrics.csv",
+        "sha256": "e7b8b0c46bfb1359f202a808ffd1edc9fd176bc488f69185ee926e3e0c1ff9f5"
+      }
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "fusion",
+      "version": "addendum2_steep_excluded",
+      "eligible_n": 335913,
+      "bad_n": 65100,
+      "accuracy_pct": 80.61998195961455,
+      "table_accuracy_pct": 80.61998195961455,
+      "source": {
+        "path": "/docs/tables/addendum2/stage1/B173nb_b10__ALS.csv",
+        "sha256": "eb0479c12ab576b7d240447dfe590fcc998509d8be66965abdb11c341c3d10ba"
+      }
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "method": "FINALTRAIN_30000",
+      "version": "stage1_original",
+      "eligible_n": 122023,
+      "bad_n": 58619,
+      "accuracy_pct": 51.96069593437303,
+      "table_accuracy_pct": 51.96069593437303,
+      "source": {
+        "path": "/docs/tables/stage1/R1rep_b10__ALS_metrics.csv",
+        "sha256": "4457bafa93723b31bb9b37e2a3ae1d6ae948b62a3506c1188ff6bc881d8aa42d"
+      }
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "method": "FINALTRAIN_30000",
+      "version": "addendum2_steep_excluded",
+      "eligible_n": 96549,
+      "bad_n": 40432,
+      "accuracy_pct": 58.12281846523527,
+      "table_accuracy_pct": 58.12281846523527,
+      "source": {
+        "path": "/docs/tables/addendum2/stage1/R1rep_b10__ALS.csv",
+        "sha256": "f7f36dda8f051dd23f7f1d2c6a177e15eaf663e80b25fc45c4fb7e7db7137384"
+      }
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "method": "fusion",
+      "version": "stage1_original",
+      "eligible_n": 91603,
+      "bad_n": 38582,
+      "accuracy_pct": 57.88129209742039,
+      "table_accuracy_pct": 57.88129209742039,
+      "source": {
+        "path": "/docs/tables/stage1/R1rep_b10__ALS_metrics.csv",
+        "sha256": "4457bafa93723b31bb9b37e2a3ae1d6ae948b62a3506c1188ff6bc881d8aa42d"
+      }
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "method": "fusion",
+      "version": "addendum2_steep_excluded",
+      "eligible_n": 79629,
+      "bad_n": 28898,
+      "accuracy_pct": 63.70920142159264,
+      "table_accuracy_pct": 63.70920142159264,
+      "source": {
+        "path": "/docs/tables/addendum2/stage1/R1rep_b10__ALS.csv",
+        "sha256": "f7f36dda8f051dd23f7f1d2c6a177e15eaf663e80b25fc45c4fb7e7db7137384"
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "FINALTRAIN_30000",
+      "reference_assignment_differs_from_global_nearest": 551999,
+      "eligible_original_n": 560813,
+      "feature_unavailable_n": 2
+    },
+    {
+      "case": "c1_B173nb_b10__ALS",
+      "method": "fusion",
+      "reference_assignment_differs_from_global_nearest": 381526,
+      "eligible_original_n": 385672,
+      "feature_unavailable_n": 0
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "method": "FINALTRAIN_30000",
+      "reference_assignment_differs_from_global_nearest": 56172,
+      "eligible_original_n": 122023,
+      "feature_unavailable_n": 0
+    },
+    {
+      "case": "c4_R1rep_b10__ALS",
+      "method": "fusion",
+      "reference_assignment_differs_from_global_nearest": 40026,
+      "eligible_original_n": 91603,
+      "feature_unavailable_n": 0
+    }
+  ],
+  "original_assignment": "RELEASE stage0.py 56-65: nearest 3D reference row restricted to the existing sample_owner; no owned-row match gives -1. GTJUDGE stage0.py 58-62 reuses it; collect.py 30-38 applies stage1 case_id to the assigned row and sample_eligible to the denominator.",
+  "addendum2": "add2_scores.py 18-25 retains assignment and additionally excludes ALS result normals with abs(n_z)<0.5; both versions are separately reproduced, not pooled.",
+  "sources": [
+    {
+      "path": "/repo/scripts/phd/main_release_v1/stage0.py",
+      "sha256": "122fcd64723940d945d60e7c32e48d878f7d673cb26a5847e21a078af8b8f025"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/stage0.py",
+      "sha256": "aaf1a741e94da4560996a840d9288c5dd2816e64fc9713f6c620ffa85adc58db"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/collect.py",
+      "sha256": "ebed734170d997ddf0070005a12ed46cb736f52327d3a92046f351a9ca0d909e"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add2_scores.py",
+      "sha256": "7da4220c0fd975f4a03d1f3efad89c864398efd8e6b935923000a3dd39896d9d"
+    }
+  ],
+  "scientific_verdict": null
+}

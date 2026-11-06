@@ -1,0 +1,103 @@
+{
+  "at": "2026-11-06T20:28:51.414095+09:00",
+  "size_px": [
+    1600,
+    2482
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "bd4c0ec6e89147d6ce7fcf83701a3ea90889caa87b3da57868cec62dc80fbbdc",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "464647a0e6af9d0c8e23c5cf6a6c9b5f2398a2a9",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "sources": [
+    {
+      "path": "/docs/figures/addendum6/c1_B173nb_b10__ALS_section_data.json",
+      "sha256": "c120ab5cd61de866edda3ba37a5d8f1beb2f44946b31dc1a0064be6aeaf9c43c"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_sections.py",
+      "sha256": "aedd2bbb3eada0c0dc2f85cb3479f21f39b2c3aa226105e2527af2786c9623cd"
+    }
+  ],
+  "case": "c1_B173nb_b10__ALS",
+  "panels": [
+    {
+      "role": "inputs",
+      "methods": [
+        "prior",
+        "mvs"
+      ],
+      "plot_bounds_px": [
+        48,
+        48,
+        1552,
+        1173
+      ],
+      "axis_bounds": [
+        0,
+        27.232992988440007,
+        -32.177507400512695,
+        -25.387508392333984
+      ],
+      "vertical_exaggeration": 3.000062825806331,
+      "A_px": [
+        48,
+        427.3852872891628
+      ],
+      "Aprime_px": [
+        1552,
+        427.3852872891628
+      ]
+    },
+    {
+      "role": "results",
+      "methods": [
+        "fusion",
+        "GeoGS_30000",
+        "FINALTRAIN_30000"
+      ],
+      "plot_bounds_px": [
+        48,
+        1309,
+        1552,
+        2434
+      ],
+      "axis_bounds": [
+        0,
+        27.232992988440007,
+        -32.177507400512695,
+        -25.387508392333984
+      ],
+      "vertical_exaggeration": 3.000062825806331,
+      "A_px": [
+        48,
+        1688.3852872891628
+      ],
+      "Aprime_px": [
+        1552,
+        1688.3852872891628
+      ]
+    }
+  ],
+  "A_px": [
+    48,
+    427.3852872891628
+  ],
+  "Aprime_px": [
+    1552,
+    427.3852872891628
+  ],
+  "box_corners_px": null,
+  "line_drawn": false
+}

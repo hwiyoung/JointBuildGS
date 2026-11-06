@@ -1,0 +1,103 @@
+{
+  "at": "2026-11-06T20:30:19.439360+09:00",
+  "size_px": [
+    1600,
+    2412
+  ],
+  "color_space": "sRGB",
+  "text_in_figure": false,
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "bd4c0ec6e89147d6ce7fcf83701a3ea90889caa87b3da57868cec62dc80fbbdc",
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "464647a0e6af9d0c8e23c5cf6a6c9b5f2398a2a9",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "sources": [
+    {
+      "path": "/docs/figures/addendum6/c3_B0_b10__ALS_section_data.json",
+      "sha256": "4f952f91cc03fa34a79625dfa1667927cbb7db65f6fc6ab753f283c8e650b587"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_sections.py",
+      "sha256": "aedd2bbb3eada0c0dc2f85cb3479f21f39b2c3aa226105e2527af2786c9623cd"
+    }
+  ],
+  "case": "c3_B0_b10__ALS",
+  "panels": [
+    {
+      "role": "inputs",
+      "methods": [
+        "prior",
+        "mvs"
+      ],
+      "plot_bounds_px": [
+        48,
+        48,
+        1552,
+        1138
+      ],
+      "axis_bounds": [
+        0,
+        26.933167472037784,
+        -25.770444869995117,
+        -19.265439987182617
+      ],
+      "vertical_exaggeration": 3.000671589401279,
+      "A_px": [
+        48,
+        634.2481029152358
+      ],
+      "Aprime_px": [
+        1552,
+        634.2481029152358
+      ]
+    },
+    {
+      "role": "results",
+      "methods": [
+        "fusion",
+        "GeoGS_30000",
+        "FINALTRAIN_30000"
+      ],
+      "plot_bounds_px": [
+        48,
+        1274,
+        1552,
+        2364
+      ],
+      "axis_bounds": [
+        0,
+        26.933167472037784,
+        -25.770444869995117,
+        -19.265439987182617
+      ],
+      "vertical_exaggeration": 3.000671589401279,
+      "A_px": [
+        48,
+        1860.248102915236
+      ],
+      "Aprime_px": [
+        1552,
+        1860.248102915236
+      ]
+    }
+  ],
+  "A_px": [
+    48,
+    634.2481029152358
+  ],
+  "Aprime_px": [
+    1552,
+    634.2481029152358
+  ],
+  "box_corners_px": null,
+  "line_drawn": false
+}
