@@ -1,0 +1,87 @@
+{
+  "task": "PHD-MAIN-GTJUDGE-v1",
+  "addendum": 9,
+  "scientific_verdict": null,
+  "source_commit": "22dc9b6c2b1d2aedff755ff7db2698cd66fe95ae",
+  "case_colors": {
+    "0": "#7FA7D9",
+    "1": "#1D9E75",
+    "2": "#D85A30",
+    "4": "#F0A07F",
+    "3": "#8C95A3"
+  },
+  "paint_order": [
+    0,
+    3,
+    1,
+    2,
+    4
+  ],
+  "point_colors": {
+    "in": "#3A3A3A",
+    "far": "#2A78D6",
+    "none": "#EB6834"
+  },
+  "split_colors": {
+    "1": "#2A78D6",
+    "2": "#D85A30",
+    "3": "#7B3FA0",
+    "0": "#8C95A3"
+  },
+  "split_source": "unchanged preservation_features.npz from same preservation.py as R1",
+  "photo": {
+    "size": [
+      1600,
+      1280
+    ],
+    "optical_elevation_deg": [
+      30,
+      60
+    ],
+    "occlusion_margin_m": 0.15,
+    "diameter_px": 6,
+    "alpha": 0.6,
+    "desaturation": 0.35,
+    "selection": "whole building and unobscured target first, then maximum cropped building occupancy; if unavailable maximize building visible fraction with target in frame"
+  },
+  "closeup": {
+    "size": [
+      804,
+      1072
+    ],
+    "line_width_fraction": 0.4
+  },
+  "point_panel": {
+    "size": [
+      1200,
+      760
+    ],
+    "length_extra_each_m": 2,
+    "width_m": 4.4,
+    "desaturation": 0.3
+  },
+  "c3_interval_m": [
+    22.6,
+    25.6
+  ],
+  "box_extra_each_m": 2,
+  "box_half_width_m": 3,
+  "edge": {
+    "lengths_m": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "minimum_case_points": 20,
+    "min_distance_from_current_m": 5,
+    "candidate_centers": "unique 0.25m XY cells of edge-only case2 points",
+    "orientation": "local PCA of inherited edge patch XY within 2m, line perpendicular to major axis",
+    "objective": "same add6 rank tolerance and minimum absolute completeness difference; all case2 points in 1m strip",
+    "fallback": "if no rank-passing candidates, minimum difference among count-qualified candidates, disclose"
+  },
+  "no_training": true,
+  "no_new_scores": true,
+  "no_new_mesh": true,
+  "no_check_figures": true
+}

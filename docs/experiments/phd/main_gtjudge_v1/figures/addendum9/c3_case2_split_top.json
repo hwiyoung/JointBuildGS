@@ -1,0 +1,256 @@
+{
+  "at": "2026-11-07T02:22:27.492178+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "79a888ef279dcddd385a2e4e1b3ba8007ae4880228f4567171a41083ad795be0",
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/ch6_support_v1/PHD-CH6-SUPPORT-v1/t3/ortho_B0_b10.npz",
+      "sha256": "28bdcd5f22298ac0dacb06b3994cbcfeb597a52a7e618f617aeb5e076ff81dc6"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz",
+      "sha256": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/preservation_features.npz",
+      "sha256": "9d2102e441f9922e37458c4f6b47056526baf7cee86c04c5dd6114c91f82f442"
+    }
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "22dc9b6c2b1d2aedff755ff7db2698cd66fe95ae",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "size_px": [
+    1600,
+    1280
+  ],
+  "text_in_figure": false,
+  "line_drawn": false,
+  "box_drawn": false,
+  "color_space": "sRGB",
+  "bounds_uv": [
+    29.117940569515383,
+    97.80305258659476,
+    67.52375193139503,
+    122.47184154505851
+  ],
+  "split_colors": {
+    "1": "#2A78D6",
+    "2": "#D85A30",
+    "3": "#7B3FA0",
+    "0": "#8C95A3"
+  },
+  "division_counts": [
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "division_id": 1,
+      "division": "무늬 없음만",
+      "n_gt": 110,
+      "percent": 7.586206896551724,
+      "prior_completeness_pct": 100.0,
+      "prior_n_in": 110,
+      "prior_n_far": 0,
+      "prior_n_none": 0,
+      "mvs_completeness_pct": 0.0,
+      "mvs_n_in": 0,
+      "mvs_n_far": 110,
+      "mvs_n_none": 0,
+      "judgment_mesh_completeness_pct": 79.0909090909091,
+      "judgment_mesh_n_in": 87,
+      "judgment_mesh_n_far": 23,
+      "judgment_mesh_n_none": 0,
+      "gt_judgment_mesh_completeness_pct": 80.0,
+      "gt_judgment_mesh_n_in": 88,
+      "gt_judgment_mesh_n_far": 22,
+      "gt_judgment_mesh_n_none": 0,
+      "always_keep_mesh_completeness_pct": 76.36363636363636,
+      "always_keep_mesh_n_in": 84,
+      "always_keep_mesh_n_far": 26,
+      "always_keep_mesh_n_none": 0,
+      "fusion_completeness_pct": 76.36363636363636,
+      "fusion_n_in": 84,
+      "fusion_n_far": 26,
+      "fusion_n_none": 0,
+      "GeoGS_30000_completeness_pct": 68.18181818181819,
+      "GeoGS_30000_n_in": 75,
+      "GeoGS_30000_n_far": 35,
+      "GeoGS_30000_n_none": 0,
+      "FINALTRAIN_30000_completeness_pct": 85.45454545454545,
+      "FINALTRAIN_30000_n_in": 94,
+      "FINALTRAIN_30000_n_far": 16,
+      "FINALTRAIN_30000_n_none": 0
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "division_id": 2,
+      "division": "높이가 꺾이는 곳만",
+      "n_gt": 399,
+      "percent": 27.517241379310345,
+      "prior_completeness_pct": 100.0,
+      "prior_n_in": 399,
+      "prior_n_far": 0,
+      "prior_n_none": 0,
+      "mvs_completeness_pct": 0.0,
+      "mvs_n_in": 0,
+      "mvs_n_far": 399,
+      "mvs_n_none": 0,
+      "judgment_mesh_completeness_pct": 73.1829573934837,
+      "judgment_mesh_n_in": 292,
+      "judgment_mesh_n_far": 70,
+      "judgment_mesh_n_none": 37,
+      "gt_judgment_mesh_completeness_pct": 74.18546365914787,
+      "gt_judgment_mesh_n_in": 296,
+      "gt_judgment_mesh_n_far": 69,
+      "gt_judgment_mesh_n_none": 34,
+      "always_keep_mesh_completeness_pct": 73.6842105263158,
+      "always_keep_mesh_n_in": 294,
+      "always_keep_mesh_n_far": 67,
+      "always_keep_mesh_n_none": 38,
+      "fusion_completeness_pct": 73.6842105263158,
+      "fusion_n_in": 294,
+      "fusion_n_far": 68,
+      "fusion_n_none": 37,
+      "GeoGS_30000_completeness_pct": 54.636591478696744,
+      "GeoGS_30000_n_in": 218,
+      "GeoGS_30000_n_far": 180,
+      "GeoGS_30000_n_none": 1,
+      "FINALTRAIN_30000_completeness_pct": 74.68671679197995,
+      "FINALTRAIN_30000_n_in": 298,
+      "FINALTRAIN_30000_n_far": 101,
+      "FINALTRAIN_30000_n_none": 0
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "division_id": 3,
+      "division": "둘 다",
+      "n_gt": 792,
+      "percent": 54.62068965517241,
+      "prior_completeness_pct": 100.0,
+      "prior_n_in": 792,
+      "prior_n_far": 0,
+      "prior_n_none": 0,
+      "mvs_completeness_pct": 0.0,
+      "mvs_n_in": 0,
+      "mvs_n_far": 792,
+      "mvs_n_none": 0,
+      "judgment_mesh_completeness_pct": 74.24242424242425,
+      "judgment_mesh_n_in": 588,
+      "judgment_mesh_n_far": 107,
+      "judgment_mesh_n_none": 97,
+      "gt_judgment_mesh_completeness_pct": 76.01010101010101,
+      "gt_judgment_mesh_n_in": 602,
+      "gt_judgment_mesh_n_far": 108,
+      "gt_judgment_mesh_n_none": 82,
+      "always_keep_mesh_completeness_pct": 77.77777777777777,
+      "always_keep_mesh_n_in": 616,
+      "always_keep_mesh_n_far": 85,
+      "always_keep_mesh_n_none": 91,
+      "fusion_completeness_pct": 77.65151515151516,
+      "fusion_n_in": 615,
+      "fusion_n_far": 95,
+      "fusion_n_none": 82,
+      "GeoGS_30000_completeness_pct": 57.196969696969695,
+      "GeoGS_30000_n_in": 453,
+      "GeoGS_30000_n_far": 337,
+      "GeoGS_30000_n_none": 2,
+      "FINALTRAIN_30000_completeness_pct": 74.24242424242425,
+      "FINALTRAIN_30000_n_in": 588,
+      "FINALTRAIN_30000_n_far": 198,
+      "FINALTRAIN_30000_n_none": 6
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "division_id": 0,
+      "division": "둘 다 아님",
+      "n_gt": 149,
+      "percent": 10.275862068965518,
+      "prior_completeness_pct": 100.0,
+      "prior_n_in": 149,
+      "prior_n_far": 0,
+      "prior_n_none": 0,
+      "mvs_completeness_pct": 0.0,
+      "mvs_n_in": 0,
+      "mvs_n_far": 149,
+      "mvs_n_none": 0,
+      "judgment_mesh_completeness_pct": 48.993288590604024,
+      "judgment_mesh_n_in": 73,
+      "judgment_mesh_n_far": 76,
+      "judgment_mesh_n_none": 0,
+      "gt_judgment_mesh_completeness_pct": 46.308724832214764,
+      "gt_judgment_mesh_n_in": 69,
+      "gt_judgment_mesh_n_far": 80,
+      "gt_judgment_mesh_n_none": 0,
+      "always_keep_mesh_completeness_pct": 43.624161073825505,
+      "always_keep_mesh_n_in": 65,
+      "always_keep_mesh_n_far": 84,
+      "always_keep_mesh_n_none": 0,
+      "fusion_completeness_pct": 43.624161073825505,
+      "fusion_n_in": 65,
+      "fusion_n_far": 84,
+      "fusion_n_none": 0,
+      "GeoGS_30000_completeness_pct": 47.651006711409394,
+      "GeoGS_30000_n_in": 71,
+      "GeoGS_30000_n_far": 78,
+      "GeoGS_30000_n_none": 0,
+      "FINALTRAIN_30000_completeness_pct": 63.758389261744966,
+      "FINALTRAIN_30000_n_in": 95,
+      "FINALTRAIN_30000_n_far": 54,
+      "FINALTRAIN_30000_n_none": 0
+    }
+  ],
+  "n_case2": 1450,
+  "points_inside_image": 1450,
+  "ortho_source_matches_addendum6": true,
+  "extent_rule": "whole building support and all scene case2 points plus 1m margin",
+  "final_implementation": [
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_common.py",
+      "sha256": "4f084ff8e9a57f521e3a68f432a604652ccedee0f89819cdabcc7ccf80c6e4e5"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_counts.py",
+      "sha256": "c71fced2c1c1036fc99ac7c40b86ebce1d3de0ec4cd4db91a9c10dc1b2b7162f"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_detail.py",
+      "sha256": "9ad69fefc9b4404369a7536000895ca101110f8c032e69c10a8431445cde40a0"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_edge.py",
+      "sha256": "baec421d7b3f38622413713ef66ceec02c4bf68bfd8ed14e1b2265fe85b8ff12"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_photos.py",
+      "sha256": "ff097de716eced027f1593e84d611f681b5393fcfd09caa3732b18b8e637a0ec"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_publish.py",
+      "sha256": "a95035459a42d58e03cac2eb910c7fc45cc4cdf087e823e5b83a8e20d1afce7f"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_sections.py",
+      "sha256": "86149ce6e34e50abe3b5d144cbf86fe530d4001efa34027735f3c4487af96385"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_split.py",
+      "sha256": "7888b0b238a0e9900ee4e735e498c068a3a7bb0cfb71214e9fb08beaff748dba"
+    }
+  ],
+  "metadata_finalization": "Carry inherited c2 discontinuous-line mask; final replay implementation hashes; original source and producer hashes retained"
+}

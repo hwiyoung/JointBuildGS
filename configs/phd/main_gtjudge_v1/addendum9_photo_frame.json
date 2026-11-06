@@ -1,0 +1,5 @@
+{
+  "rule": "Only inherited GroundSurface XY identifies building; frame is convex hull of registered stage1 reference XYZ, never original LoD2 Z",
+  "reason": "Visual audit found photo frame mixed unregistered raw LoD2 Z with registered scoring XYZ; remove those raw vertices",
+  "scientific_verdict": null
+}

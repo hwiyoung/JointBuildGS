@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-06T17:31:00.943080+00:00",
+  "reason": "Projected building hull alone admitted foreground-occluded roofs; all current c3 GT-height lines were MVS-occluded",
+  "selection": "whole building in frame; MVS surface-draped target visibility and roof coverage >=98% first, then proxy target visibility, roof visibility, and building occupancy",
+  "roof_proxy": "highest saved reference point in each 0.75m XY cell within building footprint, vertically draped to existing MVS; up to 2000 deterministic points",
+  "line_proxy": "vertical intersection with existing MVS at exactly the requested XY; selection only, delivered annotation retains original GT heights",
+  "point_display_occlusion_unchanged": true,
+  "scientific_verdict": null
+}

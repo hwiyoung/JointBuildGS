@@ -1,0 +1,226 @@
+{
+  "at": "2026-11-07T02:28:50.947980+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "79a888ef279dcddd385a2e4e1b3ba8007ae4880228f4567171a41083ad795be0",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/stage1_cells.npz",
+      "sha256": "2c7a1c294734f32e05e8afe173cb724ba592c3d42fc8d8dbff117427488cc792"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/rows.npz",
+      "sha256": "d5002e9f9885c7ec23c4e21c8b7e4bc64ffa2452d8f2c0ec4514694db52b1086"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/stage1_cells.npz",
+      "sha256": "c77a242d7f97dd75336589437986ef15ef6d12a3f7930eec241761287e9f2ca5"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz",
+      "sha256": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/rows.npz",
+      "sha256": "527e6d96e0b6435a423dc576e530c3a72b5521f3a21dc30b77c9ae44d2132cce"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/stage1_cells.npz",
+      "sha256": "aa6139469f13b494f766011a775bf1d6f0e92bdbc57b2c82cc9f38c09daefcc3"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/stage1_cells.npz",
+      "sha256": "3bb92121f55976eaba387b5feb049da9e955708ddc86bc170424ab953cef7b86"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/rows.npz",
+      "sha256": "4d6947fd5225c99fe56837338d3562dbecee33089b631d4f3403b74799ae7c72"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/stage1_cells.npz",
+      "sha256": "35c023d509a8c7d18b4797c6c0286e1ecdc62f00c56623d0400bd841df3d97a5"
+    }
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "22dc9b6c2b1d2aedff755ff7db2698cd66fe95ae",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "rows": [
+    {
+      "site": "B173nb_b10",
+      "prior": "ALS",
+      "n_total": 210800,
+      "case_0": 81015,
+      "case_1": 107563,
+      "case_2": 11062,
+      "case_3": 10909,
+      "case_4": 251,
+      "n_unassigned": 0,
+      "prior_surface_absent_total": 1524,
+      "prior_surface_absent_within_cases": 1524,
+      "prior_absent_case1": 1050,
+      "prior_absent_case3": 474,
+      "prior_surface_absent": 0,
+      "invalid_tau": 0,
+      "other_unassigned": 0,
+      "case_0_pct": 38.432163187855785,
+      "case_1_pct": 51.026091081593925,
+      "case_2_pct": 5.2476280834914615,
+      "case_3_pct": 5.175047438330171,
+      "case_4_pct": 0.11907020872865275,
+      "unassigned_pct": 0.0,
+      "denominator_definition": "all saved stage1 reference rows; per-case presentation completeness uses the corresponding case subset",
+      "same_stage1_population": true
+    },
+    {
+      "site": "B173nb_b10",
+      "prior": "LoD2",
+      "n_total": 373752,
+      "case_0": 223405,
+      "case_1": 116190,
+      "case_2": 15811,
+      "case_3": 15125,
+      "case_4": 3221,
+      "n_unassigned": 0,
+      "prior_surface_absent_total": 1473,
+      "prior_surface_absent_within_cases": 1473,
+      "prior_absent_case1": 695,
+      "prior_absent_case3": 778,
+      "prior_surface_absent": 0,
+      "invalid_tau": 0,
+      "other_unassigned": 0,
+      "case_0_pct": 59.77359318478563,
+      "case_1_pct": 31.087459063764207,
+      "case_2_pct": 4.230345255677562,
+      "case_3_pct": 4.046801087352041,
+      "case_4_pct": 0.861801408420557,
+      "unassigned_pct": 0.0,
+      "denominator_definition": "all saved stage1 reference rows; per-case presentation completeness uses the corresponding case subset",
+      "same_stage1_population": true
+    },
+    {
+      "site": "B0_b10",
+      "prior": "ALS",
+      "n_total": 145160,
+      "case_0": 142131,
+      "case_1": 757,
+      "case_2": 1450,
+      "case_3": 694,
+      "case_4": 128,
+      "n_unassigned": 0,
+      "prior_surface_absent_total": 77,
+      "prior_surface_absent_within_cases": 77,
+      "prior_absent_case1": 0,
+      "prior_absent_case3": 77,
+      "prior_surface_absent": 0,
+      "invalid_tau": 0,
+      "other_unassigned": 0,
+      "case_0_pct": 97.91333700744006,
+      "case_1_pct": 0.5214935243868835,
+      "case_2_pct": 0.9988977679801598,
+      "case_3_pct": 0.4780931386056765,
+      "case_4_pct": 0.08817856158721411,
+      "unassigned_pct": 0.0,
+      "denominator_definition": "all saved stage1 reference rows; per-case presentation completeness uses the corresponding case subset",
+      "same_stage1_population": true
+    },
+    {
+      "site": "B0_b10",
+      "prior": "LoD2",
+      "n_total": 382591,
+      "case_0": 329595,
+      "case_1": 31852,
+      "case_2": 3975,
+      "case_3": 4197,
+      "case_4": 12972,
+      "n_unassigned": 0,
+      "prior_surface_absent_total": 2223,
+      "prior_surface_absent_within_cases": 2223,
+      "prior_absent_case1": 939,
+      "prior_absent_case3": 1284,
+      "prior_surface_absent": 0,
+      "invalid_tau": 0,
+      "other_unassigned": 0,
+      "case_0_pct": 86.14813207838135,
+      "case_1_pct": 8.325339592410694,
+      "case_2_pct": 1.0389685068388959,
+      "case_3_pct": 1.0969939177868795,
+      "case_4_pct": 3.3905659045821777,
+      "unassigned_pct": 0.0,
+      "denominator_definition": "all saved stage1 reference rows; per-case presentation completeness uses the corresponding case subset",
+      "same_stage1_population": true
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "ALS",
+      "n_total": 149446,
+      "case_0": 119009,
+      "case_1": 1602,
+      "case_2": 23910,
+      "case_3": 2382,
+      "case_4": 2543,
+      "n_unassigned": 0,
+      "prior_surface_absent_total": 52,
+      "prior_surface_absent_within_cases": 52,
+      "prior_absent_case1": 3,
+      "prior_absent_case3": 49,
+      "prior_surface_absent": 0,
+      "invalid_tau": 0,
+      "other_unassigned": 0,
+      "case_0_pct": 79.6334461946121,
+      "case_1_pct": 1.0719591022844372,
+      "case_2_pct": 15.999089972297686,
+      "case_3_pct": 1.5938867550821032,
+      "case_4_pct": 1.7016179757236727,
+      "unassigned_pct": 0.0,
+      "denominator_definition": "all saved stage1 reference rows; per-case presentation completeness uses the corresponding case subset",
+      "same_stage1_population": true
+    },
+    {
+      "site": "R1rep_b10",
+      "prior": "LoD2",
+      "n_total": 239559,
+      "case_0": 165396,
+      "case_1": 51393,
+      "case_2": 8822,
+      "case_3": 8076,
+      "case_4": 5872,
+      "n_unassigned": 0,
+      "prior_surface_absent_total": 1762,
+      "prior_surface_absent_within_cases": 1762,
+      "prior_absent_case1": 1250,
+      "prior_absent_case3": 512,
+      "prior_surface_absent": 0,
+      "invalid_tau": 0,
+      "other_unassigned": 0,
+      "case_0_pct": 69.04186442588257,
+      "case_1_pct": 21.453170200242948,
+      "case_2_pct": 3.6826001110373645,
+      "case_3_pct": 3.3711945700224164,
+      "case_4_pct": 2.451170692814714,
+      "unassigned_pct": 0.0,
+      "denominator_definition": "all saved stage1 reference rows; per-case presentation completeness uses the corresponding case subset",
+      "same_stage1_population": true
+    }
+  ],
+  "denominator_statement": "same saved stage1 reference-row population and case masks as pages 15-18; whole-scene N differs from each per-case completeness denominator, no area weighting; stage1 normal_line.cases assigns prior-absent rows to cases1/3 and records absence as an overlapping flag, not an exclusion"
+}
