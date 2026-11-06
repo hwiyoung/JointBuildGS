@@ -1,0 +1,212 @@
+{
+  "at": "2026-11-06T22:47:36.748355+09:00",
+  "case": "c3_B0_b10__ALS",
+  "method": "FINALTRAIN_30000",
+  "size_px": [
+    1600,
+    2000
+  ],
+  "camera": {
+    "name": "add6_c3_el60_az0",
+    "source_type": "synthetic camera for original meshes",
+    "training_camera": false,
+    "parameters": [
+      8376.428810143858,
+      8376.428810143858,
+      781.3860756954577,
+      812.4179589806502,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "R": [
+      [
+        -0.9396871991414417,
+        0.3420181700084622,
+        -0.0033969329953898327
+      ],
+      [
+        0.2973050545682062,
+        0.8118480198438415,
+        -0.5025062160847659
+      ],
+      [
+        -0.16910846311733904,
+        -0.47320858409341665,
+        -0.8645669225932688
+      ]
+    ],
+    "t": [
+      95.0939439452,
+      -45.79834682158017,
+      175.22022409824817
+    ],
+    "centre": [
+      132.60586464643225,
+      87.57315464225995,
+      128.79868371632455
+    ],
+    "crop_xyxy_px": [
+      0,
+      0,
+      1600,
+      2000
+    ],
+    "output_size_px": [
+      1600,
+      2000
+    ],
+    "source_size_px": [
+      1600,
+      2000
+    ],
+    "elevation_deg": 60,
+    "azimuth_basis_deg": 0,
+    "angle_definition": "synthetic_optical_axis_elevation_frozen_gravity",
+    "calibration_model": "synthetic pinhole zero distortion",
+    "context_bounds_uv": [
+      [
+        27.80559359692004,
+        73.7907988352834
+      ],
+      [
+        46.58257293110501,
+        116.58042174891068
+      ]
+    ]
+  },
+  "mesh": {
+    "path": "/out/addendum3_stage2/meshes/B0_b10__ALS__FINALTRAIN_30000/primary.ply",
+    "sha256": "10c90b46f50280e174a0b2e5e952064e6d1e69a9eb65e47d8a527cd3a9f8dd8e"
+  },
+  "source_render": {
+    "path": "/docs/figures/addendum6/c3_B0_b10__ALS_result_dist_FINALTRAIN_30000.png",
+    "sha256": "767e093ea764edbe1f973ee5970096fe593012747fff7ce8339fbe57b2e75ef7"
+  },
+  "source_render_metadata": {
+    "path": "/docs/figures/addendum6/c3_B0_b10__ALS_result_dist_FINALTRAIN_30000.json",
+    "sha256": "c37d035c31a813397e9d653cf6de8146ce7941320752e9856a852c92a919201b"
+  },
+  "saved_pixel_cache": {
+    "path": "/gtjudge/addendum6/render_cache/c3_B0_b10__ALS_result_dist_FINALTRAIN_30000.npz",
+    "sha256": "26e607351ca52ce0d514cafa66c33ecd7d198b70ee45a415398f7f62e7932483"
+  },
+  "removed_original_triangle_ids": [],
+  "display_clip": null,
+  "light_direction": {
+    "model": "camera headlight, per-pixel direction toward the camera, inherited from addendum4",
+    "source_local_xyz": [
+      132.60586464643225,
+      87.57315464225995,
+      128.79868371632455
+    ],
+    "center_pixel_toward_light_unit_xyz": [
+      0.16453520121624035,
+      0.4540834945692867,
+      0.8756348254383649
+    ],
+    "direction_rule": "negative normalized original camera ray",
+    "two_sided": true
+  },
+  "shading_brightness_range": [
+    0.55,
+    1.0
+  ],
+  "actual_visible_brightness_range": [
+    0.5521569848060608,
+    0.9999995231628418
+  ],
+  "lighting_formula": "0.55 + 0.45 * abs(unit_triangle_normal dot unit_direction_toward_camera)",
+  "rgb_rule": "multiply the exact original 8-bit sRGB pixel by brightness; within-tau base [255,255,255] becomes gray; background remains white",
+  "base_color_rule": "same saved oriented normal-cylinder distances: white within tau, red above, blue below, saturation at abs 1m, no reference #8C95A3",
+  "base_palette": {
+    "within_tau": "#FFFFFF",
+    "positive_endpoint": "#D83730",
+    "negative_endpoint": "#2A78D6",
+    "no_reference": "#8C95A3",
+    "background": "#FFFFFF"
+  },
+  "pixel_counts": {
+    "background": 1183702,
+    "within_tau": 1798085,
+    "above": 20033,
+    "below": 35603,
+    "no_reference": 162577
+  },
+  "visible_mesh_pixels": 2016298,
+  "pixel_percent_visible_mesh": {
+    "within_tau": 89.17754220854259,
+    "above": 0.9935535322655679,
+    "below": 1.7657608151176065,
+    "no_reference": 8.063143444074239
+  },
+  "pixel_percent_whole_image": {
+    "background": 36.9906875,
+    "within_tau": 56.19015625,
+    "above": 0.62603125,
+    "below": 1.11259375,
+    "no_reference": 5.08053125
+  },
+  "original_unshaded_pixels_exact": true,
+  "classifications_identical_to_original": true,
+  "reference_distances_reused": true,
+  "new_distances_calculated": false,
+  "scoring_values_changed": false,
+  "line_drawn": false,
+  "text_in_figure": false,
+  "new_camera": false,
+  "color_space": "sRGB",
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "19bd59ac67b7503570686fd611aff708deef04c9",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "config_sha256": "9ff08221afcc0005ee48c4b9c4e247796cd33fde78feaf99fb43eefe891e4e80",
+  "sources": [
+    {
+      "path": "/out/addendum3_stage2/meshes/B0_b10__ALS__FINALTRAIN_30000/primary.ply",
+      "sha256": "10c90b46f50280e174a0b2e5e952064e6d1e69a9eb65e47d8a527cd3a9f8dd8e"
+    },
+    {
+      "path": "/gtjudge/addendum6/render_cache/c3_B0_b10__ALS_result_dist_FINALTRAIN_30000.npz",
+      "sha256": "26e607351ca52ce0d514cafa66c33ecd7d198b70ee45a415398f7f62e7932483"
+    },
+    {
+      "path": "/docs/figures/addendum6/c3_B0_b10__ALS_result_dist_FINALTRAIN_30000.png",
+      "sha256": "767e093ea764edbe1f973ee5970096fe593012747fff7ce8339fbe57b2e75ef7"
+    },
+    {
+      "path": "/docs/figures/addendum6/c3_B0_b10__ALS_result_dist_FINALTRAIN_30000.json",
+      "sha256": "c37d035c31a813397e9d653cf6de8146ce7941320752e9856a852c92a919201b"
+    },
+    {
+      "path": "/cfg/addendum8.json",
+      "sha256": "9ff08221afcc0005ee48c4b9c4e247796cd33fde78feaf99fb43eefe891e4e80"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add8_shaded.py",
+      "sha256": "d35a9025f330818270c26a9641ee66a81c99900809a07a44303fd1e125c2d0d0"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "2cdf8ab2492858dbe567b439d80b12600537a733b171d81789cd2006e17cac2a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_render.py",
+      "sha256": "c003d3e7de47ada5ec9903bde8b1275d04217e54e57c1e49900672a63aab6e49"
+    }
+  ],
+  "scientific_verdict": null
+}

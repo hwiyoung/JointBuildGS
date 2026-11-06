@@ -1,0 +1,61 @@
+{
+  "task_id": "PHD-MAIN-GTJUDGE-v1",
+  "addendum": 8,
+  "scientific_verdict": null,
+  "source_commit": "19bd59ac67b7503570686fd611aff708deef04c9",
+  "training": false,
+  "new_cameras": false,
+  "new_sections": false,
+  "new_check_figures": false,
+  "distance_values": "reuse exact addendum4/addendum6 visible-pixel cache; never recalculate distances",
+  "lighting": {
+    "direction": "same camera headlight as addendum4 add4_render.py; two-sided absolute normal dot view",
+    "ambient": 0.55,
+    "diffuse": 0.45,
+    "brightness_range": [
+      0.55,
+      1.0
+    ],
+    "multiplication_space": "same 8-bit sRGB code values",
+    "background": "#FFFFFF"
+  },
+  "normal_geometry": "original triangle vertices cast to float32 exactly as MeshScene; no smoothing or new geometry",
+  "pixel_proportions_denominator": "visible mesh pixels, background excluded; whole-image proportions also recorded",
+  "jobs": [
+    {
+      "case": "c2",
+      "camera_name": "MVS_virtual_c2_2_profile30",
+      "method": "prior"
+    },
+    {
+      "case": "c2",
+      "camera_name": "MVS_virtual_c2_2_profile30",
+      "method": "FINALTRAIN_30000"
+    },
+    {
+      "case": "c3",
+      "camera_name": "add6_c3_el60_az0",
+      "method": "mvs"
+    },
+    {
+      "case": "c3",
+      "camera_name": "add6_c3_el60_az0",
+      "method": "FINALTRAIN_30000"
+    },
+    {
+      "case": "c1",
+      "camera_name": "MVS_virtual_c1_2_profile30",
+      "method": "prior"
+    },
+    {
+      "case": "c1",
+      "camera_name": "MVS_virtual_c1_2_profile30",
+      "method": "FINALTRAIN_30000"
+    },
+    {
+      "case": "c4",
+      "camera_name": "DJI_20241217103051_0002_D",
+      "method": "FINALTRAIN_30000"
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "at": "2026-11-06T22:47:22.001910+09:00",
+  "case": "c2_B0_b10__LoD2",
+  "method": "prior",
+  "size_px": [
+    1600,
+    1280
+  ],
+  "camera": {
+    "name": "MVS_virtual_c2_2_profile30",
+    "source_type": "colored MVS render, not a photograph",
+    "training_camera": false,
+    "parameters": [
+      5291.408610818163,
+      5291.408610818163,
+      616.391448702382,
+      412.0786784525641,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "R": [
+      [
+        0.537955410277574,
+        0.8429706977262739,
+        -0.0020926843924017387
+      ],
+      [
+        0.4233907294738904,
+        -0.27233865363300486,
+        -0.8640439502322375
+      ],
+      [
+        -0.7289336504433404,
+        0.46393109457358134,
+        -0.5034120307850266
+      ]
+    ],
+    "t": [
+      -55.733804608604785,
+      -64.6900693998187,
+      211.28849205630036
+    ],
+    "centre": [
+      211.38676920872575,
+      -68.65894363639778,
+      50.353472499517636
+    ],
+    "crop_xyxy_px": [
+      0,
+      0,
+      1600,
+      1280
+    ],
+    "output_size_px": [
+      1600,
+      1280
+    ],
+    "source_size_px": [
+      1600,
+      1280
+    ],
+    "calibration_model": "synthetic pinhole zero distortion",
+    "angle_definition": "synthetic_optical_axis_elevation_frozen_gravity",
+    "elevation_deg": 29.999999999999996,
+    "azimuth_deg": 302.5441699043128,
+    "selection_fallback": true,
+    "crop_policy": "whole_context_MVS_user_authorized",
+    "captured_at": null,
+    "context_variant": 2,
+    "context_bounds_uv": [
+      [
+        19.8665848191035,
+        78.65167847012759
+      ],
+      [
+        50.714242036631155,
+        116.89224974585773
+      ]
+    ]
+  },
+  "mesh": {
+    "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/prior_LoD2.npz",
+    "sha256": "2f1c214b3c85d00318a679f0ade403a8ccd34817ab32d97c89dde74fcaf8e75e"
+  },
+  "source_render": {
+    "path": "/docs/figures/addendum6/c2_B0_b10__LoD2_wrong_dist_noline.png",
+    "sha256": "39bdc1ee4e01190118e1e6cada3c784203780f50a77dcb4e53f10f84070910ec"
+  },
+  "source_render_metadata": {
+    "path": "/docs/figures/addendum6/c2_B0_b10__LoD2_wrong_dist_noline.json",
+    "sha256": "5c003826207223b4f79c56e57242065db3cd6b6c4d7e6d300076451841204f90"
+  },
+  "saved_pixel_cache": {
+    "path": "/gtjudge/addendum4/renders/c2_B0_b10__LoD2_pixel_distance.npz",
+    "sha256": "c918345689b63f8e5fff25acbff22c6a2c738d31eda6f5e2e12c4741e2280771"
+  },
+  "removed_original_triangle_ids": [],
+  "display_clip": null,
+  "light_direction": {
+    "model": "camera headlight, per-pixel direction toward the camera, inherited from addendum4",
+    "source_local_xyz": [
+      211.38676920872575,
+      -68.65894363639778,
+      50.353472499517636
+    ],
+    "center_pixel_toward_light_unit_xyz": [
+      0.6908779230526685,
+      -0.48076649543959465,
+      0.5399548798753111
+    ],
+    "direction_rule": "negative normalized original camera ray",
+    "two_sided": true
+  },
+  "shading_brightness_range": [
+    0.55,
+    1.0
+  ],
+  "actual_visible_brightness_range": [
+    0.5934881567955017,
+    0.9550771117210388
+  ],
+  "lighting_formula": "0.55 + 0.45 * abs(unit_triangle_normal dot unit_direction_toward_camera)",
+  "rgb_rule": "multiply the exact original 8-bit sRGB pixel by brightness; within-tau base [255,255,255] becomes gray; background remains white",
+  "base_color_rule": "same saved oriented normal-cylinder distances: white within tau, red above, blue below, saturation at abs 1m, no reference #8C95A3",
+  "base_palette": {
+    "within_tau": "#FFFFFF",
+    "positive_endpoint": "#D83730",
+    "negative_endpoint": "#2A78D6",
+    "no_reference": "#8C95A3",
+    "background": "#FFFFFF"
+  },
+  "pixel_counts": {
+    "background": 553982,
+    "within_tau": 1023881,
+    "above": 78092,
+    "below": 24039,
+    "no_reference": 368006
+  },
+  "visible_mesh_pixels": 1494018,
+  "pixel_percent_visible_mesh": {
+    "within_tau": 68.53203910528521,
+    "above": 5.226978523685792,
+    "below": 1.609016758834231,
+    "no_reference": 24.631965612194765
+  },
+  "pixel_percent_whole_image": {
+    "background": 27.04990234375,
+    "within_tau": 49.994189453125,
+    "above": 3.8130859375,
+    "below": 1.173779296875,
+    "no_reference": 17.96904296875
+  },
+  "original_unshaded_pixels_exact": true,
+  "classifications_identical_to_original": true,
+  "reference_distances_reused": true,
+  "new_distances_calculated": false,
+  "scoring_values_changed": false,
+  "line_drawn": false,
+  "text_in_figure": false,
+  "new_camera": false,
+  "color_space": "sRGB",
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "19bd59ac67b7503570686fd611aff708deef04c9",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "config_sha256": "9ff08221afcc0005ee48c4b9c4e247796cd33fde78feaf99fb43eefe891e4e80",
+  "sources": [
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/prior_LoD2.npz",
+      "sha256": "2f1c214b3c85d00318a679f0ade403a8ccd34817ab32d97c89dde74fcaf8e75e"
+    },
+    {
+      "path": "/gtjudge/addendum4/renders/c2_B0_b10__LoD2_pixel_distance.npz",
+      "sha256": "c918345689b63f8e5fff25acbff22c6a2c738d31eda6f5e2e12c4741e2280771"
+    },
+    {
+      "path": "/docs/figures/addendum6/c2_B0_b10__LoD2_wrong_dist_noline.png",
+      "sha256": "39bdc1ee4e01190118e1e6cada3c784203780f50a77dcb4e53f10f84070910ec"
+    },
+    {
+      "path": "/docs/figures/addendum6/c2_B0_b10__LoD2_wrong_dist_noline.json",
+      "sha256": "5c003826207223b4f79c56e57242065db3cd6b6c4d7e6d300076451841204f90"
+    },
+    {
+      "path": "/cfg/addendum8.json",
+      "sha256": "9ff08221afcc0005ee48c4b9c4e247796cd33fde78feaf99fb43eefe891e4e80"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add8_shaded.py",
+      "sha256": "d35a9025f330818270c26a9641ee66a81c99900809a07a44303fd1e125c2d0d0"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "2cdf8ab2492858dbe567b439d80b12600537a733b171d81789cd2006e17cac2a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_render.py",
+      "sha256": "c003d3e7de47ada5ec9903bde8b1275d04217e54e57c1e49900672a63aab6e49"
+    }
+  ],
+  "scientific_verdict": null
+}

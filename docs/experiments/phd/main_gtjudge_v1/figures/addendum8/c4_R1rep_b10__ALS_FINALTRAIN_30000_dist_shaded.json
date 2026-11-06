@@ -1,0 +1,224 @@
+{
+  "at": "2026-11-06T22:47:46.964977+09:00",
+  "case": "c4_R1rep_b10__ALS",
+  "method": "FINALTRAIN_30000",
+  "size_px": [
+    1600,
+    2000
+  ],
+  "camera": {
+    "j": 304,
+    "name": "DJI_20241217103051_0002_D",
+    "elevation_deg": 24.63701968166367,
+    "azimuth_deg": 80.94225430459815,
+    "perpendicular_error_deg": 69.10768985975307,
+    "elevation_violation_deg": 5.36298031833633,
+    "line_inside": true,
+    "inside_fraction": 1.0,
+    "centered_portrait_fits": true,
+    "optical_axis_elevation_deg": 38.36721310884809,
+    "angle_definition": "camera_centre_to_section_centre_frozen_gravity",
+    "crop_policy": "tight_line_1p25",
+    "selection_fallback": true,
+    "eligible_candidates": 0,
+    "total_training_candidates": 333,
+    "image_original": "/gtjudge/addendum4/sources/DJI_20241217103051_0002_D.JPG",
+    "image_member": "Images/DJI_20241217103051_0002_D.JPG",
+    "image_sha256": "1e815c28b9194d58928059be5d04f5d33301d1d779e8cbb87b0de4b4556b7dfb",
+    "archive": "/art/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+    "crc32": 3358878996,
+    "captured_at": "2024:12:17 10:30:51",
+    "capture_time_timezone": null,
+    "calibration_model": "FULL_OPENCV",
+    "parameters": [
+      3717.199209328326,
+      3717.199209328326,
+      2649.8785097217174,
+      1951.823292554264,
+      -0.1049826415750395,
+      -0.003823249957903659,
+      -0.00021362365060863573,
+      -0.00019476144102977563,
+      -0.014886189391970492,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "R": [
+      [
+        -0.3926674568807291,
+        -0.9196580591565444,
+        0.006428260669839092
+      ],
+      [
+        -0.570268198011936,
+        0.23799246382895356,
+        -0.7862275557984749
+      ],
+      [
+        0.7215306304260691,
+        -0.3123918074934785,
+        -0.6179036397108513
+      ]
+    ],
+    "t": [
+      -29.366251632075073,
+      -40.103886868298616,
+      72.36244197499859
+    ],
+    "centre": [
+      -86.61286102153626,
+      5.142946907458903,
+      13.371009244622996
+    ],
+    "source_size_px": [
+      5280,
+      3956
+    ],
+    "crop_xyxy_px": [
+      62.7725109626349,
+      552.1063863788271,
+      1376.3337973892822,
+      2194.057994412136
+    ],
+    "crop_fits_source": true,
+    "native_crop_size_px": [
+      1313.5612864266473,
+      1641.951608033309
+    ],
+    "photo_resampling": "bicubic to 1600x2000; native crop size disclosed",
+    "output_size_px": [
+      1600,
+      2000
+    ]
+  },
+  "mesh": {
+    "path": "/out/addendum3_stage2/meshes/R1rep_b10__ALS__FINALTRAIN_30000/primary.ply",
+    "sha256": "c2d755cf5b54a8107374084be42c917488e710898a638a138993e8a82597f8b6"
+  },
+  "source_render": {
+    "path": "/docs/figures/addendum6/c4_R1rep_b10__ALS_result_dist_FINALTRAIN_30000.png",
+    "sha256": "d6cf6b1cadd24e553cc13bf16d7203871d51b8e551decfe27e15415e4771ee4d"
+  },
+  "source_render_metadata": {
+    "path": "/docs/figures/addendum6/c4_R1rep_b10__ALS_result_dist_FINALTRAIN_30000.json",
+    "sha256": "160613635f0a2f74378dbd81249c2841333bd90e9e500d36bc2252071c4516b7"
+  },
+  "saved_pixel_cache": {
+    "path": "/gtjudge/addendum6/render_cache/c4_R1rep_b10__ALS_result_dist_FINALTRAIN_30000.npz",
+    "sha256": "a7c9672856b9181c4e9f23bdf60e7f2bf47c931d2f3d467c073d157470c41304"
+  },
+  "removed_original_triangle_ids": [],
+  "display_clip": null,
+  "light_direction": {
+    "model": "camera headlight, per-pixel direction toward the camera, inherited from addendum4",
+    "source_local_xyz": [
+      -86.61286102153626,
+      5.142946907458903,
+      13.371009244622996
+    ],
+    "center_pixel_toward_light_unit_xyz": [
+      -0.8933559787555646,
+      -0.12500144698644644,
+      0.43161294405170675
+    ],
+    "direction_rule": "negative normalized original camera ray",
+    "two_sided": true
+  },
+  "shading_brightness_range": [
+    0.55,
+    1.0
+  ],
+  "actual_visible_brightness_range": [
+    0.551024854183197,
+    0.9999982118606567
+  ],
+  "lighting_formula": "0.55 + 0.45 * abs(unit_triangle_normal dot unit_direction_toward_camera)",
+  "rgb_rule": "multiply the exact original 8-bit sRGB pixel by brightness; within-tau base [255,255,255] becomes gray; background remains white",
+  "base_color_rule": "same saved oriented normal-cylinder distances: white within tau, red above, blue below, saturation at abs 1m, no reference #8C95A3",
+  "base_palette": {
+    "within_tau": "#FFFFFF",
+    "positive_endpoint": "#D83730",
+    "negative_endpoint": "#2A78D6",
+    "no_reference": "#8C95A3",
+    "background": "#FFFFFF"
+  },
+  "pixel_counts": {
+    "background": 1435106,
+    "within_tau": 783112,
+    "above": 252413,
+    "below": 237123,
+    "no_reference": 492246
+  },
+  "visible_mesh_pixels": 1764894,
+  "pixel_percent_visible_mesh": {
+    "within_tau": 44.371616652331525,
+    "above": 14.301878753058258,
+    "below": 13.43553777167354,
+    "no_reference": 27.890966822936676
+  },
+  "pixel_percent_whole_image": {
+    "background": 44.8470625,
+    "within_tau": 24.47225,
+    "above": 7.88790625,
+    "below": 7.41009375,
+    "no_reference": 15.3826875
+  },
+  "original_unshaded_pixels_exact": true,
+  "classifications_identical_to_original": true,
+  "reference_distances_reused": true,
+  "new_distances_calculated": false,
+  "scoring_values_changed": false,
+  "line_drawn": false,
+  "text_in_figure": false,
+  "new_camera": false,
+  "color_space": "sRGB",
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "19bd59ac67b7503570686fd611aff708deef04c9",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "config_sha256": "9ff08221afcc0005ee48c4b9c4e247796cd33fde78feaf99fb43eefe891e4e80",
+  "sources": [
+    {
+      "path": "/out/addendum3_stage2/meshes/R1rep_b10__ALS__FINALTRAIN_30000/primary.ply",
+      "sha256": "c2d755cf5b54a8107374084be42c917488e710898a638a138993e8a82597f8b6"
+    },
+    {
+      "path": "/gtjudge/addendum6/render_cache/c4_R1rep_b10__ALS_result_dist_FINALTRAIN_30000.npz",
+      "sha256": "a7c9672856b9181c4e9f23bdf60e7f2bf47c931d2f3d467c073d157470c41304"
+    },
+    {
+      "path": "/docs/figures/addendum6/c4_R1rep_b10__ALS_result_dist_FINALTRAIN_30000.png",
+      "sha256": "d6cf6b1cadd24e553cc13bf16d7203871d51b8e551decfe27e15415e4771ee4d"
+    },
+    {
+      "path": "/docs/figures/addendum6/c4_R1rep_b10__ALS_result_dist_FINALTRAIN_30000.json",
+      "sha256": "160613635f0a2f74378dbd81249c2841333bd90e9e500d36bc2252071c4516b7"
+    },
+    {
+      "path": "/cfg/addendum8.json",
+      "sha256": "9ff08221afcc0005ee48c4b9c4e247796cd33fde78feaf99fb43eefe891e4e80"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add8_shaded.py",
+      "sha256": "d35a9025f330818270c26a9641ee66a81c99900809a07a44303fd1e125c2d0d0"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add4_render.py",
+      "sha256": "2cdf8ab2492858dbe567b439d80b12600537a733b171d81789cd2006e17cac2a"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_render.py",
+      "sha256": "c003d3e7de47ada5ec9903bde8b1275d04217e54e57c1e49900672a63aab6e49"
+    }
+  ],
+  "scientific_verdict": null
+}
