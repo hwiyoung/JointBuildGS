@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-06T11:19:23.899917+09:00",
+  "status": "EXACT_SEAM_CHECK_FAILED",
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "vertices": 31480524,
+  "mismatched_copies": {
+    "coordinates": 1,
+    "colours": 1,
+    "within_same_tile": 1
+  },
+  "max_abs_difference": {
+    "coordinates": 1.4210854715202004e-14,
+    "colours": 1.1102230246251565e-16
+  },
+  "examples": [
+    {
+      "vertex": 22377484,
+      "representative": 22377388,
+      "tiles": [
+        2,
+        2
+      ],
+      "edge_code": 602575995533040,
+      "xyz": [
+        [
+          115.32500000000002,
+          128.525,
+          -28.975
+        ],
+        [
+          115.325,
+          128.525,
+          -28.975
+        ]
+      ],
+      "rgb": [
+        [
+          0.776470588235294,
+          0.7647058823529411,
+          0.7607843137254902
+        ],
+        [
+          0.7764705882352941,
+          0.7647058823529411,
+          0.7607843137254902
+        ]
+      ]
+    }
+  ],
+  "read_only": true,
+  "tolerance_changed": false,
+  "geometry_changed": false,
+  "source": "/gtjudge/meshes/B173nb_b10__ALS__fix/final_work/bounded_merge",
+  "script_sha256": "0ae35ed443e6d3bcad257999a2a42c02b59509ffec384e4e4d66378c524dd05f",
+  "scientific_verdict": null
+}

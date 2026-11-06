@@ -1,0 +1,97 @@
+{
+  "at": "2026-11-06T12:16:38.435087+09:00",
+  "stage": 3,
+  "methods": [
+    "FINALTRAIN_30000",
+    "A1",
+    "fix"
+  ],
+  "section": {
+    "status": "PASS",
+    "start": [
+      129.2336734132322,
+      103.7788580821003
+    ],
+    "end": [
+      141.96194549268193,
+      99.48550005829978
+    ],
+    "anchor_xyz": [
+      135.84410095214844,
+      101.54910278320312,
+      -29.925607681274414
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 785,
+    "component_unique_points": 785,
+    "components": 153,
+    "all_case2_n_gt": 9913,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9475471611831021,
+      -0.3196159841651297
+    ],
+    "length_m": 13.432863925799001,
+    "reused_source": "/art/phase-payloads/phd/main_recount_v1/PHD-MAIN-RECOUNT-v1/scenes/B173nb_b10__ALS/section.json",
+    "reused_sha256": "8e07ccae9672de4aeb6b0c00f3f16a8f624f0eaabc304a77efc9efad0187aa0d"
+  },
+  "face_color": "nearest saved result-side cylinder sample",
+  "camera_angles": [
+    [
+      90,
+      -90
+    ],
+    [
+      35,
+      -55
+    ],
+    [
+      35,
+      125
+    ]
+  ],
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B173nb_b10__ALS.npz",
+      "sha256": "dc10377655ed8516207172e607b2934839fbb18e93a33a152b488ecc319b550c"
+    }
+  ],
+  "script_sha256": "633c7bdb6e4e2a83c8cf9f623809c98e429c8f0e574e2c462dac4b9a3c915551",
+  "memory_recovery": "same full layout, ROI and faces; render one panel per process",
+  "faces_by_method": [
+    {
+      "method": "FINALTRAIN_30000",
+      "faces": 312513,
+      "zmin": -31.625000000000004,
+      "zmax": -26.355642380665614,
+      "mesh_sha256": "5fff9b5c0f14b8e65a5b0d89afcae731bed9b10754c90ba58a23e4fc0f99661c",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    },
+    {
+      "method": "A1",
+      "faces": 320043,
+      "zmin": -31.135407178744583,
+      "zmax": -26.499634074066496,
+      "mesh_sha256": "3326495540ae619a5ce3429961f4b30e9251d3333f6b5fbc96a96f98f4bdf555",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    },
+    {
+      "method": "fix",
+      "faces": 318333,
+      "zmin": -31.840546527185484,
+      "zmax": -26.117490906895053,
+      "mesh_sha256": "e1d3029a1ffd463dc5c1135e72bb761762ffc6f2e88fe62658ca2cb42136ca8e",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    }
+  ],
+  "scientific_verdict": null
+}

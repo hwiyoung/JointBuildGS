@@ -1,0 +1,29 @@
+{
+  "site": "R1rep_b10",
+  "prior": "LoD2",
+  "arm": "fix",
+  "status": "TRAINING_COMPLETE_30000",
+  "iterations": 30000,
+  "lambda_fs": 0.000599671681030145,
+  "calibration_iteration": 500,
+  "opacity_pruned_recent_targets": 2049188,
+  "psnr_test": 22.258751635648764,
+  "scientific_verdict": null,
+  "gaussians": 2176167,
+  "loss": 0.09554587304592133,
+  "FINALTRAIN_30000_accuracy_pct": 71.45262744633321,
+  "fix_accuracy_pct": 72.0601434604466,
+  "FINALTRAIN_psnr_test": 22.388853442912197,
+  "scene_comparison": [
+    {
+      "method": "FINALTRAIN",
+      "accuracy_pct": 71.45262744633321,
+      "psnr_test": 22.388853442912197
+    },
+    {
+      "method": "fix",
+      "accuracy_pct": 72.0601434604466,
+      "psnr_test": 22.258751635648764
+    }
+  ]
+}

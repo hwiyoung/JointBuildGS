@@ -46,3 +46,9 @@
 - 2026-11-06T03:34:36.017948+09:00: 덧붙임2 후처리 ('R1rep_b10', 'LoD2', 'fix') 오류 AssertionError(); 다음 학습 계속.
 - 2026-11-06T04:59:09.320051+09:00: 덧붙임2 B173nb_b10-ALS-fix-merge 동일 설정 2회 오류(1); 로그 /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/logs/add2-host-B173nb_b10-ALS-fix-merge-attempt2.log. 다른 학습은 계속.
 - 2026-11-06T04:59:09.320479+09:00: 덧붙임2 후처리 ('B173nb_b10', 'ALS', 'fix') 오류 AssertionError(); 다음 학습 계속.
+- 2026-11-06T08:18:56.969627+09:00: 덧붙임2 B0_b10-ALS-A2-tile0 동일 설정 2회 오류(1); 로그 /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/logs/add2-host-B0_b10-ALS-A2-tile0-attempt2.log. 다른 학습은 계속.
+- 2026-11-06T08:18:56.983693+09:00: 덧붙임2 후처리 ('B0_b10', 'ALS', 'A2') 오류 AssertionError(); 다음 학습 계속.
+- 2026-11-06T11:15:03.146867+09:00: B0 LoD2 A1 attempt1은 ENOSPC로 중단되고 receipt가 0바이트로 남음. 빈 원본을 별도 보존하고 실행 오류 기록을 복구; 동일 설정의 허용된 attempt2를 실행한다.
+- 2026-11-06T11:15:03.147160+09:00: B0 LoD2 A2 attempt1은 ENOSPC로 중단되고 receipt가 0바이트로 남음. 빈 원본을 별도 보존하고 실행 오류 기록을 복구; 동일 설정의 허용된 attempt2를 실행한다.
+- 2026-11-06T11:25:56.400130+09:00: R1 LoD2·B173 ALS fix 병합: 타일 2 안의 별개 Open3D 꼭짓점 두 개에 같은 재구성 edge code가 붙음. 좌표 차이는 각각 5.55e-17 m, 1.42e-14 m. 원본 V/C/F와 허용오차를 바꾸지 않고 해당 두 식별자만 inherited unsettled/exact-coordinate 경로로 넘긴다. 타일 밖 같은 좌표 없음과 원본 NPZ 해시를 확인한다. verification/addendum2_recovery_seams_* 및 recovery_merge_*에 기록.
+- 2026-11-06T11:25:56.400130+09:00: 그림 OOM 복구: ROI·모든 삼각형·세 카메라·색을 유지하고 패널별 프로세스로 그린 뒤 합침. 12패널 검증에서 기존 동시 그리기와 픽셀 일치 PASS. 기존 그림은 재생성하지 않는다.

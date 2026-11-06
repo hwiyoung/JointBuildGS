@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-06T11:11:48.986804+09:00",
+  "status": "PASS",
+  "deleted_files": 429,
+  "deleted_allocated_bytes": 174108962816,
+  "by_group_allocated_bytes": {
+    "GTJUDGE": 82757070848,
+    "RESCORE": 91351891968
+  },
+  "remaining_targets": 0,
+  "retained_files_verified": 36363,
+  "retained_final_mesh_hashes_verified": 33,
+  "failed_merge_scratch_preserved": [
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/meshes/B173nb_b10__ALS__fix/final_work/bounded_merge",
+    "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/meshes/R1rep_b10__LoD2__fix/final_work/bounded_merge"
+  ],
+  "filesystem_before": {
+    "at": "2026-11-06T11:11:01.214663+09:00",
+    "available_bytes": 41293389824,
+    "free_bytes": 441388257280,
+    "used_bytes": 7495914119168
+  },
+  "filesystem_after": {
+    "at": "2026-11-06T11:11:48.986643+09:00",
+    "available_bytes": 215398858752,
+    "free_bytes": 615493726208,
+    "used_bytes": 7321808650240
+  },
+  "available_delta_bytes": 174105468928,
+  "limitation": "Filesystem delta can include unrelated concurrent writes or deletions; /proc checks had permission-limited coverage",
+  "scientific_verdict": null,
+  "permanent_audit_directory": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/verification/disk_cleanup_20261106T111050",
+  "audit_inventory_sha256": "1fa255114cd72e08f3aed70d0756cb4b611082d25cf2532b89d2c084264c52fe",
+  "approved_manifest_sha256": "d0467351cd7d748e7cb9820786f2b32ea901ca3448f0e829b5217a450f84d889"
+}

@@ -1,0 +1,29 @@
+{
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "arm": "fix",
+  "status": "TRAINING_COMPLETE_30000",
+  "iterations": 30000,
+  "lambda_fs": 0.00021709585610096838,
+  "calibration_iteration": 500,
+  "opacity_pruned_recent_targets": 501365,
+  "psnr_test": 22.957347738331762,
+  "scientific_verdict": null,
+  "gaussians": 2647457,
+  "loss": 0.08077529817819595,
+  "FINALTRAIN_30000_accuracy_pct": 69.20431309956082,
+  "fix_accuracy_pct": 70.3552603243494,
+  "FINALTRAIN_psnr_test": 22.648612482794398,
+  "scene_comparison": [
+    {
+      "method": "FINALTRAIN",
+      "accuracy_pct": 69.20431309956082,
+      "psnr_test": 22.648612482794398
+    },
+    {
+      "method": "fix",
+      "accuracy_pct": 70.3552603243494,
+      "psnr_test": 22.957347738331762
+    }
+  ]
+}

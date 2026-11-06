@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-06T11:26:53.600209+09:00",
+  "commands": [
+    {
+      "arm": "gt",
+      "status": "PASS",
+      "training_settings_unchanged": true,
+      "gpu_assignment_before_after": [
+        "device=1",
+        "device=0"
+      ],
+      "normalized": [
+        "attempt output paths",
+        "container attempt suffix",
+        "GPU 0/1 shared-queue assignment"
+      ]
+    },
+    {
+      "arm": "gtfs",
+      "status": "PASS",
+      "training_settings_unchanged": true,
+      "gpu_assignment_before_after": [
+        "device=0",
+        "device=1"
+      ],
+      "normalized": [
+        "attempt output paths",
+        "container attempt suffix",
+        "GPU 0/1 shared-queue assignment"
+      ]
+    }
+  ],
+  "runtime_locks": [
+    {
+      "file": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/configs/phd/main_gtjudge_v1/runtime.add1.lock.json",
+      "files": 127,
+      "mismatches": []
+    },
+    {
+      "file": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp/configs/phd/main_gtjudge_v1/runtime.add2.lock.json",
+      "files": 118,
+      "mismatches": []
+    }
+  ],
+  "syntax": "PASS",
+  "scientific_verdict": null
+}

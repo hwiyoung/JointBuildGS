@@ -43,9 +43,12 @@ def training(site,prior,arm):
                             match=re.search(r'Evaluating test.*PSNR ([0-9.eE+-]+)',line)
                             if match:v['FINALTRAIN_psnr_test']=float(match[1])
     v['scene_comparison']=[dict(method='FINALTRAIN',accuracy_pct=v.get('FINALTRAIN_30000_accuracy_pct'),psnr_test=v['FINALTRAIN_psnr_test']),dict(method=arm,accuracy_pct=v.get(arm+'_accuracy_pct'),psnr_test=v['psnr_test'])]
+    failure=O/'queue/recovery_20261106/errors'/f'{site}__{prior}__{arm}.json'
+    if failure.exists():v['postprocessing_error']=json.loads(failure.read_text())['error']
     dump(D/'tables/addendum2/fix'/f'{site}__{prior}_{arm}_training.json',v)
     fs_line='빈 공간 항 미적용(off).' if arm=='A1' else f"λ_fs {fmt(v['lambda_fs'])}; 결정 {fmt(v['calibration_iteration'])}회; 최근 대상 불투명도 정리 {fmt(v['opacity_pruned_recent_targets'])}개."
     text=[f'# {site} {prior} '+('고친 판' if arm=='fix' else arm),'',f"상태 {r['status']}; {v['iterations']}회. scientific_verdict: null.",fs_line,f"PSNR(test) {fmt(v['psnr_test'])}; 정확성 {fmt(v.get(arm+'_accuracy_pct'))}%.",'','|경우|참값 행|완전성 %|정확성 %|','|---|---:|---:|---:|']
+    if failure.exists():text.insert(3,'후처리 일부 확인 불가: '+v['postprocessing_error'][:240])
     for x in metrics:
         if x['method']==arm and x['surface']=='all':text.append('|'+ '|'.join(fmt(x[k]) for k in ['case_id','n_gt','completeness_pct','accuracy_pct'])+'|')
     text+=['',f"FINALTRAIN → {arm}: 장면 정확성 {fmt(v.get('FINALTRAIN_30000_accuracy_pct'))} → {fmt(v.get(arm+'_accuracy_pct'))}%; PSNR(test) {fmt(v['FINALTRAIN_psnr_test'])} → {fmt(v['psnr_test'])} dB.",'참값은 채점과 위험 확인에만 사용. 판단·목표·빈 공간 대상·λ_fs에는 사용하지 않음.' if arm=='fix' else '정답 판단 진단 학습.','세부 값과 위험 확인: tables/addendum2/fix.']
@@ -98,6 +101,10 @@ def reports():
     if risks:
         t+=['','|장면|사전 정보|위험 확인|참값 행|FINALTRAIN %|고친 판 %|','|---|---|---|---:|---:|---:|']
         for x in risks:t.append('|'+ '|'.join(fmt(x.get(k)) for k in ['site','prior','division','n_gt','FINALTRAIN_30000_completeness_pct','fix_completeness_pct'])+'|')
+    failures=[]
+    for path in sorted((O/'queue/recovery_20261106/errors').glob('*.json')):
+        item=json.loads(path.read_text());failures.append(' / '.join(item['job'])+': '+item['error'][:180])
+    if failures:t+=['','후처리 확인 불가(학습 완료와 구별):',*['- '+x for x in failures]]
     t+=['','실행 문제와 정의 보완은 issues.md에 기록했다. 먼저 만든 결과와 ZIP은 보존했다.'];text='\n'.join(t)+'\n';assert len(text)<8000;(D/'보고_덧붙임2.md').write_text(text)
 
 def diff():
@@ -155,9 +162,12 @@ def main(mode,*args):
                 for site in SITES:
                     for prior in ['ALS','LoD2']:
                         post=json.loads((O/'queue/addendum2/post'/f'{site}__{prior}__fix.json').read_text())
-                        if post['mesh_scored']:
+                        if post['mesh_scored'] and post.get('status')!='NO_RESULT_POSTPROCESSING':
                             assert (D/'tables/addendum2/fix'/f'{site}__{prior}_risks_and_strata.json').exists()
                             assert (D/'figures/addendum2'/f'{site}__{prior}_fix_preservation_maps.png').exists()
+                coverage=[dict(site=s,prior=p,**json.loads((O/'queue/addendum2/post'/f'{s}__{p}__fix.json').read_text())) for s in SITES for p in ['ALS','LoD2']]
+                dump(D/'verification/addendum2_fixed_coverage.json',dict(runs=coverage,
+                     status='PARTIAL' if any(x.get('status')=='NO_RESULT_POSTPROCESSING' or not x['mesh_scored'] for x in coverage) else 'PASS',scientific_verdict=None))
             assert cpu('qa-'+mode,'add2_qa.py',mode)
             reports();diff()
         rec=package(label)

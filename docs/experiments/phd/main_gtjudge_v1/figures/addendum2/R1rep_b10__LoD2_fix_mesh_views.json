@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-06T12:02:28.764047+09:00",
+  "stage": 3,
+  "methods": [
+    "FINALTRAIN_30000",
+    "A1",
+    "A2",
+    "fix"
+  ],
+  "section": {
+    "status": "PASS",
+    "start": [
+      -14.989373793425091,
+      16.58485090216189
+    ],
+    "end": [
+      -0.7969192055568843,
+      15.636629990011839
+    ],
+    "anchor_xyz": [
+      -9.847299575805664,
+      16.241300582885742,
+      -33.532405853271484
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 299,
+    "component_unique_points": 299,
+    "components": 12,
+    "all_case2_n_gt": 453,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9977755479341577,
+      -0.06666300281784135
+    ],
+    "length_m": 14.224095406279442,
+    "small_component": false
+  },
+  "face_color": "nearest saved result-side cylinder sample",
+  "camera_angles": [
+    [
+      90,
+      -90
+    ],
+    [
+      35,
+      -55
+    ],
+    [
+      35,
+      125
+    ]
+  ],
+  "dpi": 300,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/rows.npz",
+      "sha256": "4d6947fd5225c99fe56837338d3562dbecee33089b631d4f3403b74799ae7c72"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/R1rep_b10__LoD2.npz",
+      "sha256": "e0f37d92ad55fe42ae28ab05bb7c633f2f10fd433cb657bf2b813e6767037e50"
+    }
+  ],
+  "script_sha256": "633c7bdb6e4e2a83c8cf9f623809c98e429c8f0e574e2c462dac4b9a3c915551",
+  "memory_recovery": "same full layout, ROI and faces; render one panel per process",
+  "faces_by_method": [
+    {
+      "method": "FINALTRAIN_30000",
+      "faces": 396153,
+      "zmin": -42.12500000000001,
+      "zmax": -25.233267142543067,
+      "mesh_sha256": "a3faf4437b04751ce16415d7aa286d506c42f26d95de736bac23f039defde41c",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    },
+    {
+      "method": "A1",
+      "faces": 419731,
+      "zmin": -42.293876800134484,
+      "zmax": -25.224168031980604,
+      "mesh_sha256": "4fe34fa52e4ace21cd5fbf9a64d554bb47818ebdc0f3b61461e532e11c4c1a87",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    },
+    {
+      "method": "A2",
+      "faces": 499274,
+      "zmin": -41.62500000000001,
+      "zmax": -25.163722724657262,
+      "mesh_sha256": "1dcf7830fa9c81b5b8062b72e14ede65a3d720826895451b939f59cba1e999ed",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    },
+    {
+      "method": "fix",
+      "faces": 389788,
+      "zmin": -41.83184493471387,
+      "zmax": -25.275000000000002,
+      "mesh_sha256": "1339f0b1dcb60f7d31d7e4b4c8f65954cf51f5716de34c6fc10e5466beb69a64",
+      "geometry_filter": "inherited inclusive face-centroid XY ROI",
+      "faces_dropped_for_memory": 0
+    }
+  ],
+  "scientific_verdict": null
+}
