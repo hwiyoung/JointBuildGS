@@ -1,0 +1,228 @@
+{
+  "at": "2026-11-07T14:43:21.146473+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz",
+      "sha256": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60"
+    },
+    {
+      "path": "/docs/tables/stage1/B0_b10__ALS_metrics.json",
+      "sha256": "549626e9dd8d1404c19419eb299db8c8c289f5804d20d3944b3c48b7e10aaf6a"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "4ce5341a10bc77011583a8ad4138f0d1fa9e2c4fafeef8de60d85ecb532b3c37"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A1.npz",
+      "sha256": "efcddee13ae51165adaec37c83138b3c709f2330855c2ad4162c9962c6c680a2"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A2.npz",
+      "sha256": "7ff60c98aafbdc428192b1e1e3ec7e477749e88345e18f252ff84f638d90bcd0"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "6111503b0ac5e3097b68f5524ba1320e9e9222c09d1973aefa286c2acda1bdcd"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "8b4f3194279984b1c07e82febfec8d57cab990643bd66550ace3e1436d1173f4"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "5353593b58edfe6024fd8f9a40fc73bfdd50cbcbefb20bbcc7965fe4167b6fbe"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2728cb4b3b72292f855079f7efa479db48a022d7f257d65d8b70fa23009571cd"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fix.npz",
+      "sha256": "6632c86ce30cd427f537dcb38171e71ce3a867c2ea5037b24c1458d035ac955c"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fusion.npz",
+      "sha256": "a151e13c4995b28fb861fef54282bc2d52241150c5c119bfb9c5ff1b92901b8f"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "2585ccdbf470d5aa579535d93ab495464ab7c5788ff8b2af7208770553580cef"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "b4f50ba96d8d4a4e8f17292c889f38727e82ed198b2fb351acb5c40e7425e6ca"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/mvs.npz",
+      "sha256": "2cfb3da7059c36e9ff93632d93652323fdb61e9ed2eaa54083074586fdd8da47"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/prior.npz",
+      "sha256": "59097b84a91371c295f0dfa9c04f159d6348d0a3004a380e53d8271e6489177a"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh.npz",
+      "sha256": "ce97303bcd3192742c0cd268ea832489185426babfe3d0728d3fcaf7166e3fc3"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "a88db17b7240d2ae5673b938109fcbc3e10edf824689781772d19c64a7217fed"
+    }
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "case": "c3",
+  "scene": {
+    "id": "c3_B0_b10__ALS",
+    "site": "B0_b10",
+    "prior": "ALS",
+    "case_id": 2,
+    "section_source": "docs/experiments/phd/main_gtjudge_v1/figures/B0_b10__ALS_stage2_textureless1.json",
+    "feature": "textureless",
+    "methods": [
+      "prior",
+      "mvs",
+      "fusion",
+      "GeoGS_30000",
+      "FINALTRAIN_30000"
+    ]
+  },
+  "rows": 145160,
+  "methods": [
+    "2DGS_30000",
+    "A1",
+    "A2",
+    "CDGS_30000",
+    "FINALTRAIN_30000",
+    "GeoGS_30000",
+    "baseline_30000",
+    "fix",
+    "fusion",
+    "gt_judgment_mesh",
+    "judgment_mesh",
+    "mvs",
+    "prior",
+    "always_keep_mesh",
+    "always_keep_mesh_t010"
+  ],
+  "missing_methods": [],
+  "score_sources": {
+    "2DGS_30000": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "4ce5341a10bc77011583a8ad4138f0d1fa9e2c4fafeef8de60d85ecb532b3c37"
+    },
+    "A1": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A1.npz",
+      "sha256": "efcddee13ae51165adaec37c83138b3c709f2330855c2ad4162c9962c6c680a2"
+    },
+    "A2": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A2.npz",
+      "sha256": "7ff60c98aafbdc428192b1e1e3ec7e477749e88345e18f252ff84f638d90bcd0"
+    },
+    "CDGS_30000": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "6111503b0ac5e3097b68f5524ba1320e9e9222c09d1973aefa286c2acda1bdcd"
+    },
+    "FINALTRAIN_30000": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "8b4f3194279984b1c07e82febfec8d57cab990643bd66550ace3e1436d1173f4"
+    },
+    "GeoGS_30000": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "5353593b58edfe6024fd8f9a40fc73bfdd50cbcbefb20bbcc7965fe4167b6fbe"
+    },
+    "baseline_30000": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2728cb4b3b72292f855079f7efa479db48a022d7f257d65d8b70fa23009571cd"
+    },
+    "fix": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fix.npz",
+      "sha256": "6632c86ce30cd427f537dcb38171e71ce3a867c2ea5037b24c1458d035ac955c"
+    },
+    "fusion": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fusion.npz",
+      "sha256": "a151e13c4995b28fb861fef54282bc2d52241150c5c119bfb9c5ff1b92901b8f"
+    },
+    "gt_judgment_mesh": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "2585ccdbf470d5aa579535d93ab495464ab7c5788ff8b2af7208770553580cef"
+    },
+    "judgment_mesh": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "b4f50ba96d8d4a4e8f17292c889f38727e82ed198b2fb351acb5c40e7425e6ca"
+    },
+    "mvs": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/mvs.npz",
+      "sha256": "2cfb3da7059c36e9ff93632d93652323fdb61e9ed2eaa54083074586fdd8da47"
+    },
+    "prior": {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/prior.npz",
+      "sha256": "59097b84a91371c295f0dfa9c04f159d6348d0a3004a380e53d8271e6489177a"
+    },
+    "always_keep_mesh": {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh.npz",
+      "sha256": "ce97303bcd3192742c0cd268ea832489185426babfe3d0728d3fcaf7166e3fc3"
+    },
+    "always_keep_mesh_t010": {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "a88db17b7240d2ae5673b938109fcbc3e10edf824689781772d19c64a7217fed"
+    }
+  },
+  "reference_source": {
+    "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+    "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+  },
+  "case_source": {
+    "path": "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz",
+    "sha256": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60"
+  },
+  "radius_m": 0.08986448243196006,
+  "nearest_neighbor_spacing_m": {
+    "median": 0.08986448243196006,
+    "minimum": 0.00973572012526289,
+    "maximum": 6.613117290763761
+  },
+  "eligible_definition": "all saved stage1 rows, matching collect.metrics; no extra geometry/visibility/case filtering",
+  "sd_definition": "stored signed surface-minus-reference displacement along oriented normal; positive is upward on roofs, toward nearest training camera on walls",
+  "method_aliases": {
+    "2DGS": "2DGS_30000",
+    "CDGS": "CDGS_30000",
+    "LGDM": "fusion",
+    "본 방법": "FINALTRAIN_30000",
+    "정답 판단으로 만든 면": "gt_judgment_mesh",
+    "늘 보존 면": "always_keep_mesh"
+  },
+  "none_sd_representation": "empty CSV field; saved nonfinite row_s; no imputation",
+  "no_case_count": 0,
+  "case_counts": {
+    "0": 142131,
+    "1": 757,
+    "2": 1450,
+    "3": 694,
+    "4": 128
+  },
+  "denominator_check": {
+    "case": "c3",
+    "rows": 145160,
+    "checked_method_case_pairs": 50,
+    "maximum_completeness_difference_pp": 0.0,
+    "all_match": true
+  }
+}

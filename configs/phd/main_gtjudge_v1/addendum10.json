@@ -1,0 +1,142 @@
+{
+  "task": "PHD-MAIN-GTJUDGE-v1/addendum10",
+  "revision": "2026-11-07 14:40",
+  "cases": [
+    "c1",
+    "c2",
+    "c3",
+    "c4"
+  ],
+  "render_methods": [
+    "prior",
+    "mvs",
+    "fusion",
+    "GeoGS_30000",
+    "FINALTRAIN_30000"
+  ],
+  "c4_extra": [
+    "judgment_mesh"
+  ],
+  "row_cylinder_radius_m": 0.3,
+  "row_objective": "minimum perpendicular distance; unrestricted axial coordinate within all saved scene rows",
+  "row_tie_break": "absolute axial distance then smallest row_id",
+  "disc_radius": "median 3D nearest-neighbor spacing of all saved scene rows, including cases -1",
+  "depth": "unit-ray range in metres; no mesh hit = +inf",
+  "shade": "uint8 round(255*(0.55+0.45*abs(n dot ray_direction))); background 255",
+  "reference_disc": "analytic two-sided oriented circular discs, closest positive ray-plane intersection, no triangulation",
+  "training": false,
+  "rescore": false,
+  "mesh_regeneration": false,
+  "scientific_verdict": null,
+  "window_polygons_base_photo_px": {
+    "left_large": [
+      [
+        153,
+        480
+      ],
+      [
+        248,
+        459
+      ],
+      [
+        285,
+        589
+      ],
+      [
+        185,
+        611
+      ]
+    ],
+    "right_large": [
+      [
+        480,
+        408
+      ],
+      [
+        565,
+        389
+      ],
+      [
+        603,
+        517
+      ],
+      [
+        513,
+        536
+      ]
+    ],
+    "bottom_large": [
+      [
+        251,
+        823
+      ],
+      [
+        339,
+        799
+      ],
+      [
+        378,
+        932
+      ],
+      [
+        284,
+        957
+      ]
+    ],
+    "left_small": [
+      [
+        130,
+        387
+      ],
+      [
+        224,
+        364
+      ],
+      [
+        245,
+        432
+      ],
+      [
+        149,
+        456
+      ]
+    ],
+    "right_small": [
+      [
+        450,
+        314
+      ],
+      [
+        532,
+        293
+      ],
+      [
+        553,
+        362
+      ],
+      [
+        468,
+        383
+      ]
+    ],
+    "bottom_small": [
+      [
+        212,
+        719
+      ],
+      [
+        310,
+        695
+      ],
+      [
+        332,
+        765
+      ],
+      [
+        229,
+        790
+      ]
+    ]
+  },
+  "window_rule": "Manually fixed inner glazing polygons in existing 804x1072 photo; counts use actual 3D-point projection; area from backprojection onto fitted reference roof plane. Also export XY-plane footprint counts to disclose perspective/height sensitivity."
+}

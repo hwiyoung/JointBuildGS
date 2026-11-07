@@ -1,0 +1,189 @@
+{
+  "at": "2026-11-07T14:46:40.552531+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a",
+  "sources": [],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "rows": [
+    {
+      "region": "left_large",
+      "roi_pixels": 13466,
+      "prior_hit_pixels": 13466,
+      "prior_hit_pct": 100.0,
+      "mvs_hit_pixels": 13466,
+      "mvs_hit_pct": 100.0,
+      "FINALTRAIN_30000_hit_pixels": 13466,
+      "FINALTRAIN_30000_hit_pct": 100.0
+    },
+    {
+      "region": "right_large",
+      "roi_pixels": 11875,
+      "prior_hit_pixels": 11875,
+      "prior_hit_pct": 100.0,
+      "mvs_hit_pixels": 11875,
+      "mvs_hit_pct": 100.0,
+      "FINALTRAIN_30000_hit_pixels": 11875,
+      "FINALTRAIN_30000_hit_pct": 100.0
+    },
+    {
+      "region": "bottom_large",
+      "roi_pixels": 13035,
+      "prior_hit_pixels": 13035,
+      "prior_hit_pct": 100.0,
+      "mvs_hit_pixels": 13035,
+      "mvs_hit_pct": 100.0,
+      "FINALTRAIN_30000_hit_pixels": 13035,
+      "FINALTRAIN_30000_hit_pct": 100.0
+    },
+    {
+      "region": "left_small",
+      "roi_pixels": 6978,
+      "prior_hit_pixels": 6978,
+      "prior_hit_pct": 100.0,
+      "mvs_hit_pixels": 6978,
+      "mvs_hit_pct": 100.0,
+      "FINALTRAIN_30000_hit_pixels": 6978,
+      "FINALTRAIN_30000_hit_pct": 100.0
+    },
+    {
+      "region": "right_small",
+      "roi_pixels": 6173,
+      "prior_hit_pixels": 6173,
+      "prior_hit_pct": 100.0,
+      "mvs_hit_pixels": 6173,
+      "mvs_hit_pct": 100.0,
+      "FINALTRAIN_30000_hit_pixels": 6173,
+      "FINALTRAIN_30000_hit_pct": 100.0
+    },
+    {
+      "region": "bottom_small",
+      "roi_pixels": 7565,
+      "prior_hit_pixels": 7565,
+      "prior_hit_pct": 100.0,
+      "mvs_hit_pixels": 7565,
+      "mvs_hit_pct": 100.0,
+      "FINALTRAIN_30000_hit_pixels": 7565,
+      "FINALTRAIN_30000_hit_pct": 100.0
+    },
+    {
+      "region": "all_glazing",
+      "roi_pixels": 59092,
+      "prior_hit_pixels": 59092,
+      "prior_hit_pct": 100.0,
+      "mvs_hit_pixels": 59092,
+      "mvs_hit_pct": 100.0,
+      "FINALTRAIN_30000_hit_pixels": 59092,
+      "FINALTRAIN_30000_hit_pct": 100.0
+    }
+  ],
+  "roi_definition": "same fixed inner glazing pixel polygons as numerical raw/reference density diagnostic",
+  "camera": {
+    "name": "DJI_20241217084256_0012_D",
+    "j": 7,
+    "parameters": [
+      3717.199209328326,
+      3717.199209328326,
+      2649.8785097217174,
+      1951.823292554264,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "original_FULL_OPENCV_parameters": [
+      3717.199209328326,
+      3717.199209328326,
+      2649.8785097217174,
+      1951.823292554264,
+      -0.1049826415750395,
+      -0.003823249957903659,
+      -0.00021362365060863573,
+      -0.00019476144102977563,
+      -0.014886189391970492,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "R": [
+      [
+        -0.8347701739647315,
+        0.5505887122807683,
+        -0.0032903750389999646
+      ],
+      [
+        0.5505648775879773,
+        0.8346381422376812,
+        -0.016046404225496115
+      ],
+      [
+        -0.006088696529436416,
+        -0.015206624577391345,
+        -0.9998658341715327
+      ]
+    ],
+    "t": [
+      84.75190953627768,
+      -34.79360844567855,
+      33.12801790562707
+    ],
+    "centre": [
+      90.10621148982985,
+      -17.119606688784888,
+      32.84412651972204
+    ],
+    "crop_xyxy_px": [
+      3159.6044560213645,
+      3111.520262953266,
+      3652.805645647734,
+      3769.121849121758
+    ],
+    "source_size_px": [
+      5280,
+      3956
+    ],
+    "output_size_px": [
+      804,
+      1072
+    ],
+    "source": {
+      "archive": "/art/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+      "member": "Images/DJI_20241217084256_0012_D.JPG",
+      "crc32": 2125051614,
+      "size": 6823936,
+      "undistorted_valid_pixel_fraction": 1.0
+    },
+    "calibration_model": "undistorted pinhole with original fx fy cx cy",
+    "training_camera": true,
+    "selection": {
+      "j": 7,
+      "name": "DJI_20241217084256_0012_D",
+      "crop": [
+        3159.6044560213645,
+        3111.520262953266,
+        3652.805645647734,
+        3769.121849121758
+      ],
+      "native_width": 493.2011896263691,
+      "line_width_fraction": 0.4,
+      "visible_fraction": 0.10894941634241245,
+      "same_as_whole_photo": false,
+      "sufficient_native_pixels": false
+    },
+    "projection": "perspective"
+  }
+}

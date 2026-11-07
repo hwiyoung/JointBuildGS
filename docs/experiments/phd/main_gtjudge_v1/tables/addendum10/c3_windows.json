@@ -1,0 +1,1134 @@
+{
+  "at": "2026-11-07T14:48:00.684000+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a",
+  "sources": [
+    {
+      "path": "/art/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/B0_b10/gt_primary.npz",
+      "sha256": "64836f19c6562f2149c191acca7b4a8a40e711554994c3c23b724b5d0c626a8b"
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/v3/box_gt/B0_b10/gt_summary.json",
+      "sha256": "234fb0678cb39d5279bf770f6256b6ec4570b057f5081e045c467c1fe280496a"
+    },
+    {
+      "path": "/docs/figures/addendum9/c3_points_mvs.json",
+      "sha256": "2df57f2481e13298505213a10356a6cbd01fc296a7d5db6ce5b1085cea5e79ff"
+    },
+    {
+      "path": "/docs/figures/addendum9/c3_closeup_photo.json",
+      "sha256": "2fc521fcee6178d2f79c13a132471cc83978af8f358324dd5f9840ef5a1b66ae"
+    },
+    {
+      "path": "/docs/figures/addendum6/c3_B0_b10__ALS_section_data.json",
+      "sha256": "4f952f91cc03fa34a79625dfa1667927cbb7db65f6fc6ab753f283c8e650b587"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add9_detail.py",
+      "sha256": "9ad69fefc9b4404369a7536000895ca101110f8c032e69c10a8431445cde40a0"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add6_sections.py",
+      "sha256": "aedd2bbb3eada0c0dc2f85cb3479f21f39b2c3aa226105e2527af2786c9623cd"
+    }
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "regions": [
+    {
+      "region": "left_large",
+      "plan_area_m2": 0.9948818605156805,
+      "surface_area_m2": 1.0607686017465336,
+      "stage1_rows": 8,
+      "stage1_rows_per_plan_m2": 8.04115575677833,
+      "stage1_rows_per_surface_m2": 7.541701353931635,
+      "case_counts": {
+        "-1": 0,
+        "0": 5,
+        "1": 0,
+        "2": 2,
+        "3": 1,
+        "4": 0
+      },
+      "no_case_reasons": {
+        "": 8
+      },
+      "ids_in_add9_points": 8,
+      "ids_in_add6_section": 6,
+      "add9_colored_case2": 2,
+      "add9_other_case_gray": 6,
+      "XY_plane_pullback_rows": 14,
+      "XY_plane_pullback_case_counts": {
+        "-1": 0,
+        "0": 11,
+        "1": 0,
+        "2": 2,
+        "3": 1,
+        "4": 0
+      },
+      "row_ids": [
+        70363,
+        79476,
+        81298,
+        81569,
+        118824,
+        121962,
+        122888,
+        127654
+      ],
+      "raw_drone_points": 1138,
+      "raw_drone_points_per_plan_m2": 1143.8544064017174,
+      "raw_drone_points_per_surface_m2": 1072.807017596775,
+      "raw_drone_XY_plane_pullback_points": 1476,
+      "primary_dense_reference_points": 43,
+      "primary_dense_reference_points_per_plan_m2": 43.221212192683524
+    },
+    {
+      "region": "right_large",
+      "plan_area_m2": 0.8798684448851803,
+      "surface_area_m2": 0.9381383428962813,
+      "stage1_rows": 2,
+      "stage1_rows_per_plan_m2": 2.2730670836377054,
+      "stage1_rows_per_surface_m2": 2.1318817369999725,
+      "case_counts": {
+        "-1": 0,
+        "0": 2,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "no_case_reasons": {
+        "": 2
+      },
+      "ids_in_add9_points": 2,
+      "ids_in_add6_section": 2,
+      "add9_colored_case2": 0,
+      "add9_other_case_gray": 2,
+      "XY_plane_pullback_rows": 7,
+      "XY_plane_pullback_case_counts": {
+        "-1": 0,
+        "0": 6,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 0
+      },
+      "row_ids": [
+        122007,
+        126685
+      ],
+      "raw_drone_points": 586,
+      "raw_drone_points_per_plan_m2": 666.0086555058476,
+      "raw_drone_points_per_surface_m2": 624.641348940992,
+      "raw_drone_XY_plane_pullback_points": 835,
+      "primary_dense_reference_points": 0,
+      "primary_dense_reference_points_per_plan_m2": 0.0
+    },
+    {
+      "region": "bottom_large",
+      "plan_area_m2": 0.908527657932102,
+      "surface_area_m2": 0.9686955322043479,
+      "stage1_rows": 86,
+      "stage1_rows_per_plan_m2": 94.65864825265136,
+      "stage1_rows_per_surface_m2": 88.7791851422085,
+      "case_counts": {
+        "-1": 0,
+        "0": 72,
+        "1": 0,
+        "2": 14,
+        "3": 0,
+        "4": 0
+      },
+      "no_case_reasons": {
+        "": 86
+      },
+      "ids_in_add9_points": 25,
+      "ids_in_add6_section": 0,
+      "add9_colored_case2": 14,
+      "add9_other_case_gray": 72,
+      "XY_plane_pullback_rows": 91,
+      "XY_plane_pullback_case_counts": {
+        "-1": 0,
+        "0": 75,
+        "1": 0,
+        "2": 16,
+        "3": 0,
+        "4": 0
+      },
+      "row_ids": [
+        117460,
+        117464,
+        117473,
+        117474,
+        117479,
+        117498,
+        117514,
+        117515,
+        117535,
+        117537,
+        117538,
+        117549,
+        117550,
+        117551,
+        117560,
+        118572,
+        118580,
+        118584,
+        118592,
+        118606,
+        118607,
+        118615,
+        118616,
+        118626,
+        118633,
+        118646,
+        118650,
+        118651,
+        118657,
+        118667,
+        119662,
+        119679,
+        119683,
+        119684,
+        119700,
+        119706,
+        119717,
+        119734,
+        119735,
+        119742,
+        119765,
+        119766,
+        119768,
+        119781,
+        119793,
+        120732,
+        120733,
+        120755,
+        120780,
+        120781,
+        120796,
+        120801,
+        120814,
+        120818,
+        120819,
+        120828,
+        121698,
+        121710,
+        121715,
+        121742,
+        121749,
+        121758,
+        121769,
+        121779,
+        121787,
+        121802,
+        122623,
+        122652,
+        122654,
+        122655,
+        122691,
+        122700,
+        122704,
+        122712,
+        122723,
+        122733,
+        126047,
+        126048,
+        126052,
+        126064,
+        126067,
+        126090,
+        126107,
+        126446,
+        126892,
+        126902
+      ],
+      "raw_drone_points": 2554,
+      "raw_drone_points_per_plan_m2": 2811.14171671246,
+      "raw_drone_points_per_surface_m2": 2636.5353355023317,
+      "raw_drone_XY_plane_pullback_points": 1082,
+      "primary_dense_reference_points": 0,
+      "primary_dense_reference_points_per_plan_m2": 0.0
+    },
+    {
+      "region": "left_small",
+      "plan_area_m2": 0.5266420113474368,
+      "surface_area_m2": 0.5615192438109567,
+      "stage1_rows": 48,
+      "stage1_rows_per_plan_m2": 91.14350728911634,
+      "stage1_rows_per_surface_m2": 85.48237754815018,
+      "case_counts": {
+        "-1": 0,
+        "0": 35,
+        "1": 0,
+        "2": 0,
+        "3": 13,
+        "4": 0
+      },
+      "no_case_reasons": {
+        "": 48
+      },
+      "ids_in_add9_points": 48,
+      "ids_in_add6_section": 0,
+      "add9_colored_case2": 0,
+      "add9_other_case_gray": 48,
+      "XY_plane_pullback_rows": 49,
+      "XY_plane_pullback_case_counts": {
+        "-1": 0,
+        "0": 37,
+        "1": 0,
+        "2": 0,
+        "3": 12,
+        "4": 0
+      },
+      "row_ids": [
+        79312,
+        93314,
+        120026,
+        120035,
+        120041,
+        120042,
+        120050,
+        122091,
+        122098,
+        122102,
+        122103,
+        122107,
+        122117,
+        122118,
+        123013,
+        123015,
+        123016,
+        123017,
+        123199,
+        123284,
+        123290,
+        123295,
+        123306,
+        123788,
+        124234,
+        124246,
+        126229,
+        126711,
+        126730,
+        126731,
+        127083,
+        127096,
+        127145,
+        127149,
+        127150,
+        127151,
+        127626,
+        127639,
+        127643,
+        128000,
+        128061,
+        128062,
+        128069,
+        128464,
+        128479,
+        128482,
+        128498,
+        128499
+      ],
+      "raw_drone_points": 863,
+      "raw_drone_points_per_plan_m2": 1638.684308135571,
+      "raw_drone_points_per_surface_m2": 1536.901913001117,
+      "raw_drone_XY_plane_pullback_points": 779,
+      "primary_dense_reference_points": 12,
+      "primary_dense_reference_points_per_plan_m2": 22.785876822279086
+    },
+    {
+      "region": "right_small",
+      "plan_area_m2": 0.4671981735933408,
+      "surface_area_m2": 0.4981386966732533,
+      "stage1_rows": 11,
+      "stage1_rows_per_plan_m2": 23.544612589976932,
+      "stage1_rows_per_surface_m2": 22.08220335714109,
+      "case_counts": {
+        "-1": 0,
+        "0": 11,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "no_case_reasons": {
+        "": 11
+      },
+      "ids_in_add9_points": 11,
+      "ids_in_add6_section": 0,
+      "add9_colored_case2": 0,
+      "add9_other_case_gray": 11,
+      "XY_plane_pullback_rows": 9,
+      "XY_plane_pullback_case_counts": {
+        "-1": 0,
+        "0": 9,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0
+      },
+      "row_ids": [
+        122153,
+        122194,
+        123375,
+        125713,
+        125718,
+        125870,
+        126266,
+        126695,
+        127050,
+        127562,
+        128036
+      ],
+      "raw_drone_points": 707,
+      "raw_drone_points_per_plan_m2": 1513.2764637376083,
+      "raw_drone_points_per_surface_m2": 1419.2834339544318,
+      "raw_drone_XY_plane_pullback_points": 505,
+      "primary_dense_reference_points": 0,
+      "primary_dense_reference_points_per_plan_m2": 0.0
+    },
+    {
+      "region": "bottom_small",
+      "plan_area_m2": 0.5395475043109147,
+      "surface_area_m2": 0.5752794119967777,
+      "stage1_rows": 47,
+      "stage1_rows_per_plan_m2": 87.11003132157241,
+      "stage1_rows_per_surface_m2": 81.6994299115701,
+      "case_counts": {
+        "-1": 0,
+        "0": 46,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 0
+      },
+      "no_case_reasons": {
+        "": 47
+      },
+      "ids_in_add9_points": 47,
+      "ids_in_add6_section": 0,
+      "add9_colored_case2": 1,
+      "add9_other_case_gray": 46,
+      "XY_plane_pullback_rows": 51,
+      "XY_plane_pullback_case_counts": {
+        "-1": 0,
+        "0": 50,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 0
+      },
+      "row_ids": [
+        117599,
+        117612,
+        117618,
+        117627,
+        117639,
+        118701,
+        118702,
+        118709,
+        118710,
+        118732,
+        119812,
+        119817,
+        119829,
+        119839,
+        120864,
+        120871,
+        120875,
+        120876,
+        121815,
+        121846,
+        121857,
+        121862,
+        122780,
+        122783,
+        122790,
+        122812,
+        125946,
+        126002,
+        126031,
+        126340,
+        126346,
+        126347,
+        126362,
+        126363,
+        126367,
+        126374,
+        126400,
+        126408,
+        126841,
+        127266,
+        127280,
+        127301,
+        127686,
+        127694,
+        128108,
+        128135,
+        128206
+      ],
+      "raw_drone_points": 949,
+      "raw_drone_points_per_plan_m2": 1758.8812707270683,
+      "raw_drone_points_per_surface_m2": 1649.6331699165964,
+      "raw_drone_XY_plane_pullback_points": 827,
+      "primary_dense_reference_points": 1,
+      "primary_dense_reference_points_per_plan_m2": 1.853404921735583
+    },
+    {
+      "region": "all_glazing",
+      "plan_area_m2": 4.316665652584655,
+      "surface_area_m2": 4.60253982932815,
+      "stage1_rows": 202,
+      "stage1_rows_per_plan_m2": 46.7953777886527,
+      "stage1_rows_per_surface_m2": 43.88881085022282,
+      "case_counts": {
+        "-1": 0,
+        "0": 171,
+        "1": 0,
+        "2": 17,
+        "3": 14,
+        "4": 0
+      },
+      "no_case_reasons": {
+        "": 202
+      },
+      "ids_in_add9_points": 141,
+      "ids_in_add6_section": 8,
+      "add9_colored_case2": 17,
+      "add9_other_case_gray": 185,
+      "XY_plane_pullback_rows": 221,
+      "XY_plane_pullback_case_counts": {
+        "-1": 0,
+        "0": 188,
+        "1": 0,
+        "2": 20,
+        "3": 13,
+        "4": 0
+      },
+      "row_ids": [
+        70363,
+        79312,
+        79476,
+        81298,
+        81569,
+        93314,
+        117460,
+        117464,
+        117473,
+        117474,
+        117479,
+        117498,
+        117514,
+        117515,
+        117535,
+        117537,
+        117538,
+        117549,
+        117550,
+        117551,
+        117560,
+        117599,
+        117612,
+        117618,
+        117627,
+        117639,
+        118572,
+        118580,
+        118584,
+        118592,
+        118606,
+        118607,
+        118615,
+        118616,
+        118626,
+        118633,
+        118646,
+        118650,
+        118651,
+        118657,
+        118667,
+        118701,
+        118702,
+        118709,
+        118710,
+        118732,
+        118824,
+        119662,
+        119679,
+        119683,
+        119684,
+        119700,
+        119706,
+        119717,
+        119734,
+        119735,
+        119742,
+        119765,
+        119766,
+        119768,
+        119781,
+        119793,
+        119812,
+        119817,
+        119829,
+        119839,
+        120026,
+        120035,
+        120041,
+        120042,
+        120050,
+        120732,
+        120733,
+        120755,
+        120780,
+        120781,
+        120796,
+        120801,
+        120814,
+        120818,
+        120819,
+        120828,
+        120864,
+        120871,
+        120875,
+        120876,
+        121698,
+        121710,
+        121715,
+        121742,
+        121749,
+        121758,
+        121769,
+        121779,
+        121787,
+        121802,
+        121815,
+        121846,
+        121857,
+        121862,
+        121962,
+        122007,
+        122091,
+        122098,
+        122102,
+        122103,
+        122107,
+        122117,
+        122118,
+        122153,
+        122194,
+        122623,
+        122652,
+        122654,
+        122655,
+        122691,
+        122700,
+        122704,
+        122712,
+        122723,
+        122733,
+        122780,
+        122783,
+        122790,
+        122812,
+        122888,
+        123013,
+        123015,
+        123016,
+        123017,
+        123199,
+        123284,
+        123290,
+        123295,
+        123306,
+        123375,
+        123788,
+        124234,
+        124246,
+        125713,
+        125718,
+        125870,
+        125946,
+        126002,
+        126031,
+        126047,
+        126048,
+        126052,
+        126064,
+        126067,
+        126090,
+        126107,
+        126229,
+        126266,
+        126340,
+        126346,
+        126347,
+        126362,
+        126363,
+        126367,
+        126374,
+        126400,
+        126408,
+        126446,
+        126685,
+        126695,
+        126711,
+        126730,
+        126731,
+        126841,
+        126892,
+        126902,
+        127050,
+        127083,
+        127096,
+        127145,
+        127149,
+        127150,
+        127151,
+        127266,
+        127280,
+        127301,
+        127562,
+        127626,
+        127639,
+        127643,
+        127654,
+        127686,
+        127694,
+        128000,
+        128036,
+        128061,
+        128062,
+        128069,
+        128108,
+        128135,
+        128206,
+        128464,
+        128479,
+        128482,
+        128498,
+        128499
+      ],
+      "raw_drone_points": 6797,
+      "raw_drone_points_per_plan_m2": 1574.5949645023388,
+      "raw_drone_points_per_surface_m2": 1476.793303707745,
+      "raw_drone_XY_plane_pullback_points": 5504,
+      "primary_dense_reference_points": 56,
+      "primary_dense_reference_points_per_plan_m2": 12.97297602061659
+    }
+  ],
+  "window_polygons_photo_px": {
+    "left_large": [
+      [
+        153,
+        480
+      ],
+      [
+        248,
+        459
+      ],
+      [
+        285,
+        589
+      ],
+      [
+        185,
+        611
+      ]
+    ],
+    "right_large": [
+      [
+        480,
+        408
+      ],
+      [
+        565,
+        389
+      ],
+      [
+        603,
+        517
+      ],
+      [
+        513,
+        536
+      ]
+    ],
+    "bottom_large": [
+      [
+        251,
+        823
+      ],
+      [
+        339,
+        799
+      ],
+      [
+        378,
+        932
+      ],
+      [
+        284,
+        957
+      ]
+    ],
+    "left_small": [
+      [
+        130,
+        387
+      ],
+      [
+        224,
+        364
+      ],
+      [
+        245,
+        432
+      ],
+      [
+        149,
+        456
+      ]
+    ],
+    "right_small": [
+      [
+        450,
+        314
+      ],
+      [
+        532,
+        293
+      ],
+      [
+        553,
+        362
+      ],
+      [
+        468,
+        383
+      ]
+    ],
+    "bottom_small": [
+      [
+        212,
+        719
+      ],
+      [
+        310,
+        695
+      ],
+      [
+        332,
+        765
+      ],
+      [
+        229,
+        790
+      ]
+    ]
+  },
+  "window_polygons_local_xyz": {
+    "left_large": [
+      [
+        94.25331735608958,
+        5.414765312600405,
+        -23.768808224734222
+      ],
+      [
+        93.41092218008184,
+        5.743688071713041,
+        -23.783829148025667
+      ],
+      [
+        93.76147550277598,
+        6.762667460382509,
+        -23.386678614564282
+      ],
+      [
+        94.64105244624774,
+        6.418027782699568,
+        -23.371400143637516
+      ]
+    ],
+    "right_large": [
+      [
+        91.35323030667632,
+        6.549533819503953,
+        -23.819709772740474
+      ],
+      [
+        90.5970712526809,
+        6.8430096054671665,
+        -23.833793323792925
+      ],
+      [
+        90.95092915715524,
+        7.846940826127781,
+        -23.441236641042863
+      ],
+      [
+        91.7400593599676,
+        7.531091434759546,
+        -23.4297778639627
+      ]
+    ],
+    "bottom_large": [
+      [
+        95.14789024501762,
+        8.078636065806858,
+        -22.733832707978138
+      ],
+      [
+        94.36104076480888,
+        8.349747850437694,
+        -22.760079477316516
+      ],
+      [
+        94.69713275909845,
+        9.358552468454516,
+        -22.368537439484022
+      ],
+      [
+        95.52822289319988,
+        9.06667385822296,
+        -22.342682956249654
+      ]
+    ],
+    "left_small": [
+      [
+        93.97674743596305,
+        4.692030258932164,
+        -24.05468301636585
+      ],
+      [
+        93.1276780587262,
+        5.004416779078049,
+        -24.076296676682674
+      ],
+      [
+        93.30096425007441,
+        5.553153314447929,
+        -23.86474683860247
+      ],
+      [
+        94.16713691631284,
+        5.2384889467052105,
+        -23.84134005793986
+      ]
+    ],
+    "right_small": [
+      [
+        91.11054590461092,
+        5.791122153010928,
+        -24.112571241087466
+      ],
+      [
+        90.36335952233794,
+        6.058162897906243,
+        -24.134250032508376
+      ],
+      [
+        90.55273343103266,
+        6.609817868519322,
+        -23.919301956365764
+      ],
+      [
+        91.32021496862332,
+        6.328904231428588,
+        -23.899272975988218
+      ]
+    ],
+    "bottom_small": [
+      [
+        94.95168118959488,
+        7.237057691110223,
+        -23.047854566349777
+      ],
+      [
+        94.08322031124682,
+        7.557564137553975,
+        -23.06962857257649
+      ],
+      [
+        94.25158358115056,
+        8.10367750486731,
+        -22.859703719672204
+      ],
+      [
+        95.15959473660227,
+        7.766517293261018,
+        -22.837634002584302
+      ]
+    ]
+  },
+  "camera": {
+    "name": "DJI_20241217084256_0012_D",
+    "j": 7,
+    "parameters": [
+      3717.199209328326,
+      3717.199209328326,
+      2649.8785097217174,
+      1951.823292554264,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "original_FULL_OPENCV_parameters": [
+      3717.199209328326,
+      3717.199209328326,
+      2649.8785097217174,
+      1951.823292554264,
+      -0.1049826415750395,
+      -0.003823249957903659,
+      -0.00021362365060863573,
+      -0.00019476144102977563,
+      -0.014886189391970492,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "R": [
+      [
+        -0.8347701739647315,
+        0.5505887122807683,
+        -0.0032903750389999646
+      ],
+      [
+        0.5505648775879773,
+        0.8346381422376812,
+        -0.016046404225496115
+      ],
+      [
+        -0.006088696529436416,
+        -0.015206624577391345,
+        -0.9998658341715327
+      ]
+    ],
+    "t": [
+      84.75190953627768,
+      -34.79360844567855,
+      33.12801790562707
+    ],
+    "centre": [
+      90.10621148982985,
+      -17.119606688784888,
+      32.84412651972204
+    ],
+    "crop_xyxy_px": [
+      3159.6044560213645,
+      3111.520262953266,
+      3652.805645647734,
+      3769.121849121758
+    ],
+    "source_size_px": [
+      5280,
+      3956
+    ],
+    "output_size_px": [
+      804,
+      1072
+    ],
+    "source": {
+      "archive": "/art/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+      "member": "Images/DJI_20241217084256_0012_D.JPG",
+      "crc32": 2125051614,
+      "size": 6823936,
+      "undistorted_valid_pixel_fraction": 1.0
+    },
+    "calibration_model": "undistorted pinhole with original fx fy cx cy",
+    "training_camera": true,
+    "selection": {
+      "j": 7,
+      "name": "DJI_20241217084256_0012_D",
+      "crop": [
+        3159.6044560213645,
+        3111.520262953266,
+        3652.805645647734,
+        3769.121849121758
+      ],
+      "native_width": 493.2011896263691,
+      "line_width_fraction": 0.4,
+      "visible_fraction": 0.10894941634241245,
+      "same_as_whole_photo": false,
+      "sufficient_native_pixels": false
+    },
+    "projection": "perspective"
+  },
+  "window_definition": "Manually fixed inner glazing polygons in existing 804x1072 photo; counts use actual 3D-point projection; area from backprojection onto fitted reference roof plane. Also export XY-plane footprint counts to disclose perspective/height sensitivity.",
+  "reference_area_plane": {
+    "point": [
+      92.72472154230312,
+      7.166307873915935,
+      -23.4055615283441
+    ],
+    "unit_normal": [
+      -0.14057201987784812,
+      -0.3171846545225929,
+      0.9378877343066414
+    ],
+    "support_rows": 1104,
+    "support_s_m": [
+      22.6,
+      25.6
+    ],
+    "support_width_m": 4.4,
+    "fit_residual": {
+      "n": 1104,
+      "minimum_m": -0.28612226150906395,
+      "maximum_m": 0.3668372103987778,
+      "range_m": 0.6529594719078418,
+      "std_m": 0.11490679203858921
+    }
+  },
+  "raw_lidar": {
+    "source": {
+      "path": "/art/phase-payloads/p0-audit/data/raw/tum2twin/TUM_Downtown_ULS_20241217_nadir.laz",
+      "sha256": "50783bfb205ea5532ac2a300d7e41b6b6426e45009d6c961d603e079cc5ae7b4"
+    },
+    "header": {
+      "point_count": 177981904,
+      "point_format": 3,
+      "min_xyz": [
+        690783.6963,
+        5335829.5007,
+        368.9931
+      ],
+      "max_xyz": [
+        691260.3581,
+        5336389.0657,
+        617.6899000000001
+      ]
+    },
+    "points_scanned": 177981904,
+    "z_shift_to_stage1_m": -0.043807299569302446,
+    "no_filtering": true,
+    "spatial_prefilter": "union photo rays at raw header min/max Z, hence contains all positive-depth glazing rays within source height bounds"
+  },
+  "selection_code_difference": {
+    "add9": "add9_detail.panels: XY rectangle length7m width4.4m around s22.6..25.6; all cases included in JSON, only case2 colored by status, other cases gray radius1.8px",
+    "add6": "add6_sections.main: full26.933m line, width1m, all cases in gt_points, no visibility filter",
+    "no_reference_row_dropped_by_case_in_either_json": true
+  }
+}

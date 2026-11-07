@@ -1,0 +1,229 @@
+{
+  "at": "2026-11-07T14:43:31.633794+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/stage1_cells.npz",
+      "sha256": "3bb92121f55976eaba387b5feb049da9e955708ddc86bc170424ab953cef7b86"
+    },
+    {
+      "path": "/docs/tables/stage1/R1rep_b10__ALS_metrics.json",
+      "sha256": "8d75ea91aa9fd4b05efb5edb3ecbe88a3552e970ddd8cfd93619474800109395"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "751756566c852796d4aa47e75989ba2600eb209e3044e8039d95900177dad70c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/A1.npz",
+      "sha256": "45886ba28791a090f981624729f3c18e1bab235e9630247ea6dd184a9ea6af49"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/A2.npz",
+      "sha256": "024dede00c8a0350672c4c29fa457cec82ae94fde911e8c1d1a9b7f31f8bf2f6"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "f023fa89ceeba4688a28224f9bf85c8952e07917e1047e234510a00ec1db432e"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "249dccdbafaa4498e87655ddf53f57f279ee27c0a510083bbf10a6a6d425fcea"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "7adff95de071a3bdc17bf0afb775fd4cc3361c27a431bb335df0e57cdce8620b"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2490d41bddf0581602baa235eceb3081a271a5f228bfd6d55834af93a3227f0c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fix.npz",
+      "sha256": "07ba7dfd20d55b822d5c3232c3b89561c6f5a816b583409c7b91f6f229a73e63"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fusion.npz",
+      "sha256": "0394bf382dc0d51272469400143c54f7fa4952c5500a269fd4005d73bd33a78c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "c8e2badca50957d79aa85a9e3edd041f6cf1e1085256e538201fb394594dac9c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "127068753eb8063db264c9822d1e972599df09a0d0f0b8fdd10e514ef5b99217"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/mvs.npz",
+      "sha256": "4c8352850192ac3e105418a865224e1e1e44f13a0bd058b31f9f6c51bf2444c6"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/prior.npz",
+      "sha256": "6640cee1a31b24de24c1bc9a176766060ea18df647fc98ce2e6ba1df66885eb5"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/R1rep_b10__ALS/always_keep_mesh.npz",
+      "sha256": "fc63653fe26144777aa8ec80f2d2a3a1a8b60c86a13734d4441798a08838bab3"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/R1rep_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "3d48af31dc30edfbce3d5cddd191d7a6274ad5e5f676518668b7eec23e2ef35c"
+    }
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "case": "c4",
+  "scene": {
+    "id": "c4_R1rep_b10__ALS",
+    "site": "R1rep_b10",
+    "prior": "ALS",
+    "case_id": 2,
+    "section_source": "docs/experiments/phd/main_gtjudge_v1/figures/R1rep_b10__ALS_stage2_edge1.json",
+    "feature": "edge",
+    "methods": [
+      "prior",
+      "mvs",
+      "fusion",
+      "GeoGS_30000",
+      "FINALTRAIN_30000",
+      "A1"
+    ]
+  },
+  "rows": 149446,
+  "methods": [
+    "2DGS_30000",
+    "A1",
+    "A2",
+    "CDGS_30000",
+    "FINALTRAIN_30000",
+    "GeoGS_30000",
+    "baseline_30000",
+    "fix",
+    "fusion",
+    "gt_judgment_mesh",
+    "judgment_mesh",
+    "mvs",
+    "prior",
+    "always_keep_mesh",
+    "always_keep_mesh_t010"
+  ],
+  "missing_methods": [],
+  "score_sources": {
+    "2DGS_30000": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "751756566c852796d4aa47e75989ba2600eb209e3044e8039d95900177dad70c"
+    },
+    "A1": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/A1.npz",
+      "sha256": "45886ba28791a090f981624729f3c18e1bab235e9630247ea6dd184a9ea6af49"
+    },
+    "A2": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/A2.npz",
+      "sha256": "024dede00c8a0350672c4c29fa457cec82ae94fde911e8c1d1a9b7f31f8bf2f6"
+    },
+    "CDGS_30000": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "f023fa89ceeba4688a28224f9bf85c8952e07917e1047e234510a00ec1db432e"
+    },
+    "FINALTRAIN_30000": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "249dccdbafaa4498e87655ddf53f57f279ee27c0a510083bbf10a6a6d425fcea"
+    },
+    "GeoGS_30000": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "7adff95de071a3bdc17bf0afb775fd4cc3361c27a431bb335df0e57cdce8620b"
+    },
+    "baseline_30000": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2490d41bddf0581602baa235eceb3081a271a5f228bfd6d55834af93a3227f0c"
+    },
+    "fix": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fix.npz",
+      "sha256": "07ba7dfd20d55b822d5c3232c3b89561c6f5a816b583409c7b91f6f229a73e63"
+    },
+    "fusion": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fusion.npz",
+      "sha256": "0394bf382dc0d51272469400143c54f7fa4952c5500a269fd4005d73bd33a78c"
+    },
+    "gt_judgment_mesh": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "c8e2badca50957d79aa85a9e3edd041f6cf1e1085256e538201fb394594dac9c"
+    },
+    "judgment_mesh": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "127068753eb8063db264c9822d1e972599df09a0d0f0b8fdd10e514ef5b99217"
+    },
+    "mvs": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/mvs.npz",
+      "sha256": "4c8352850192ac3e105418a865224e1e1e44f13a0bd058b31f9f6c51bf2444c6"
+    },
+    "prior": {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/prior.npz",
+      "sha256": "6640cee1a31b24de24c1bc9a176766060ea18df647fc98ce2e6ba1df66885eb5"
+    },
+    "always_keep_mesh": {
+      "path": "/gtjudge/addendum4/keep_scores/R1rep_b10__ALS/always_keep_mesh.npz",
+      "sha256": "fc63653fe26144777aa8ec80f2d2a3a1a8b60c86a13734d4441798a08838bab3"
+    },
+    "always_keep_mesh_t010": {
+      "path": "/gtjudge/addendum4/keep_scores/R1rep_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "3d48af31dc30edfbce3d5cddd191d7a6274ad5e5f676518668b7eec23e2ef35c"
+    }
+  },
+  "reference_source": {
+    "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+    "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+  },
+  "case_source": {
+    "path": "/gtjudge/scenes/R1rep_b10__ALS/stage1_cells.npz",
+    "sha256": "3bb92121f55976eaba387b5feb049da9e955708ddc86bc170424ab953cef7b86"
+  },
+  "radius_m": 0.08800823632415081,
+  "nearest_neighbor_spacing_m": {
+    "median": 0.08800823632415081,
+    "minimum": 0.008710424346694258,
+    "maximum": 3.3710884560330947
+  },
+  "eligible_definition": "all saved stage1 rows, matching collect.metrics; no extra geometry/visibility/case filtering",
+  "sd_definition": "stored signed surface-minus-reference displacement along oriented normal; positive is upward on roofs, toward nearest training camera on walls",
+  "method_aliases": {
+    "2DGS": "2DGS_30000",
+    "CDGS": "CDGS_30000",
+    "LGDM": "fusion",
+    "본 방법": "FINALTRAIN_30000",
+    "정답 판단으로 만든 면": "gt_judgment_mesh",
+    "늘 보존 면": "always_keep_mesh"
+  },
+  "none_sd_representation": "empty CSV field; saved nonfinite row_s; no imputation",
+  "no_case_count": 0,
+  "case_counts": {
+    "0": 119009,
+    "1": 1602,
+    "2": 23910,
+    "3": 2382,
+    "4": 2543
+  },
+  "denominator_check": {
+    "case": "c4",
+    "rows": 149446,
+    "checked_method_case_pairs": 60,
+    "maximum_completeness_difference_pp": 0.0,
+    "all_match": true
+  }
+}

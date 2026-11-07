@@ -1,0 +1,342 @@
+{
+  "at": "2026-11-07T14:43:31.702338+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a",
+  "sources": [
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/stage1_cells.npz",
+      "sha256": "2c7a1c294734f32e05e8afe173cb724ba592c3d42fc8d8dbff117427488cc792"
+    },
+    {
+      "path": "/docs/tables/stage1/B173nb_b10__ALS_metrics.json",
+      "sha256": "5234a618724cc83ce5bbdaccd3aa27619163fb0115335c4031eb5763c1213350"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "186dc8b1b6037472cf187d7defbbaa3c06de5f05e5094adf27626b38d0aedeaf"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/A1.npz",
+      "sha256": "88f2a53a5bcab01088fe0a4fa6a228d4e6773cc3228be30eae759416ead57a76"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "63d4907c5968166018a8d73493c585a1da0732f7de9a3626965008fef0b159ec"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "fe20f9080df96f8ac3e806122a316186e8d6e277c941aa15824920d8ec1daa22"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "98ded4f83c1936f744d1b8d64ff90571c990de1d094a1e22910aaa143f878fd4"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "5dc22e0de3efe304d425925e803ea1091a3da5bbe1753658b51b64ade4053fff"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/fix.npz",
+      "sha256": "afa779e962357b7892bdd614802a70274f40088b2e96bf059419d9786c623571"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/fusion.npz",
+      "sha256": "6c66c8e4bcf2ec4c72dc00c8cd428ce1c15e6284f361b4c47f2d983c6845fd19"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "069536c7059101a9eff4d85102e0f0eaad8e3ab817fa3b116d04dd4ac56f1358"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "f1e1e7ec9980d60e007e722f791f9956eebce7f6591b936d3df7496b01ab2cbe"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/mvs.npz",
+      "sha256": "3f3786818f2b1df1e4b96d4d5e03e5f4eeb586c8a383e6415249486895a06c20"
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/prior.npz",
+      "sha256": "d6856bd86e1e98de37d2c466ac1e27fb5e9d71efe4d084595fdd5515ffbf8286"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B173nb_b10__ALS/always_keep_mesh.npz",
+      "sha256": "993bbc6e25b5383b049460dff09bdd0bd95e49e0c660dc478eb1ba0de26c796e"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B173nb_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "300ce7ff3e3998a15808e8fe71621cce85ce9be66b00ad6e882ddf363306946c"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/rows.npz",
+      "sha256": "527e6d96e0b6435a423dc576e530c3a72b5521f3a21dc30b77c9ae44d2132cce"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/stage1_cells.npz",
+      "sha256": "aa6139469f13b494f766011a775bf1d6f0e92bdbc57b2c82cc9f38c09daefcc3"
+    },
+    {
+      "path": "/docs/tables/stage1/B0_b10__LoD2_metrics.json",
+      "sha256": "c8a5597e7257c769791e9172aa9e8552de82084a18bb024d9587504374dd699a"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/2DGS_30000.npz",
+      "sha256": "8340c5e0659d01ea3e564375ecab6048826c81b4273c1c9a71141361a0119170"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/A1.npz",
+      "sha256": "dcfd4751c09539da5b32d76be21f7e8f03426b624b6df9196400d9020211543e"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/A2.npz",
+      "sha256": "3d5214d6c8b958002c720ba5f5398daea577dce90b0b1414f560ddd774118e0f"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/CDGS_30000.npz",
+      "sha256": "7e22880eddfd285ae3d3e39c400b6265066fdb3e9c890d5cac1ea741d325a629"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "d9b7fcde20bde879b46593e540e0d2045e113a6747719ea59145db57f99dedb7"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/GeoGS_30000.npz",
+      "sha256": "09c503014cca875f609eb3107662ec3ff88a9c47484258b3fabd10d9edb54687"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/alt_da.npz",
+      "sha256": "062d9e5107dc953275c38c880584f64dfb6000fa43d8fe73ba16e6bb5489f068"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/alt_na.npz",
+      "sha256": "0003e0f5decab75ce852a9b74b9724972d067177575286631673a5da15790f94"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/baseline_30000.npz",
+      "sha256": "ff7edd0d286dbf51ad79331f62da4bb74aedc6aaf9a6127f163f162f8469b4c7"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/fix.npz",
+      "sha256": "7f49797120bbb84c97dbdf548036f7278f56297d2a6a9477d98eb55aedd03a66"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/fusion.npz",
+      "sha256": "6a75c9e2035ddcae728fb8af0c80ea21dbabddb2a3e0960d82fe47875d7a897b"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/gt_judgment_mesh.npz",
+      "sha256": "eb74d6aaaa62371985c679610f26b6af6552cf09c8e822ca7976d400cb63b3af"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/judgment_mesh.npz",
+      "sha256": "91136c7f8f5e5baca84385a5a7b6a735f2f709cd89375d2ed8548d29d2a544e0"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/mvs.npz",
+      "sha256": "3d8196ccb9bd83c098bce5d197dd5a27f045289803326945692d8221d6e331ea"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/prior.npz",
+      "sha256": "f4a4d04d6c517f9f44cb0f78ca6028f610395e26986198638c18a24150073a77"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__LoD2/always_keep_mesh.npz",
+      "sha256": "8bda3c6bd5fcc3e08005a537b6ae71fe5ef51eb470a28b05ea0e82e025106e5b"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__LoD2/always_keep_mesh_t010.npz",
+      "sha256": "281306713ed5e54aaaac04c713d2d12c9d5132a88d65564fac78dadd030b3def"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz",
+      "sha256": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60"
+    },
+    {
+      "path": "/docs/tables/stage1/B0_b10__ALS_metrics.json",
+      "sha256": "549626e9dd8d1404c19419eb299db8c8c289f5804d20d3944b3c48b7e10aaf6a"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "4ce5341a10bc77011583a8ad4138f0d1fa9e2c4fafeef8de60d85ecb532b3c37"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A1.npz",
+      "sha256": "efcddee13ae51165adaec37c83138b3c709f2330855c2ad4162c9962c6c680a2"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/A2.npz",
+      "sha256": "7ff60c98aafbdc428192b1e1e3ec7e477749e88345e18f252ff84f638d90bcd0"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "6111503b0ac5e3097b68f5524ba1320e9e9222c09d1973aefa286c2acda1bdcd"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "8b4f3194279984b1c07e82febfec8d57cab990643bd66550ace3e1436d1173f4"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "5353593b58edfe6024fd8f9a40fc73bfdd50cbcbefb20bbcc7965fe4167b6fbe"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2728cb4b3b72292f855079f7efa479db48a022d7f257d65d8b70fa23009571cd"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fix.npz",
+      "sha256": "6632c86ce30cd427f537dcb38171e71ce3a867c2ea5037b24c1458d035ac955c"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fusion.npz",
+      "sha256": "a151e13c4995b28fb861fef54282bc2d52241150c5c119bfb9c5ff1b92901b8f"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "2585ccdbf470d5aa579535d93ab495464ab7c5788ff8b2af7208770553580cef"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "b4f50ba96d8d4a4e8f17292c889f38727e82ed198b2fb351acb5c40e7425e6ca"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/mvs.npz",
+      "sha256": "2cfb3da7059c36e9ff93632d93652323fdb61e9ed2eaa54083074586fdd8da47"
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/prior.npz",
+      "sha256": "59097b84a91371c295f0dfa9c04f159d6348d0a3004a380e53d8271e6489177a"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh.npz",
+      "sha256": "ce97303bcd3192742c0cd268ea832489185426babfe3d0728d3fcaf7166e3fc3"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/B0_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "a88db17b7240d2ae5673b938109fcbc3e10edf824689781772d19c64a7217fed"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/stage1_cells.npz",
+      "sha256": "3bb92121f55976eaba387b5feb049da9e955708ddc86bc170424ab953cef7b86"
+    },
+    {
+      "path": "/docs/tables/stage1/R1rep_b10__ALS_metrics.json",
+      "sha256": "8d75ea91aa9fd4b05efb5edb3ecbe88a3552e970ddd8cfd93619474800109395"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "751756566c852796d4aa47e75989ba2600eb209e3044e8039d95900177dad70c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/A1.npz",
+      "sha256": "45886ba28791a090f981624729f3c18e1bab235e9630247ea6dd184a9ea6af49"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/A2.npz",
+      "sha256": "024dede00c8a0350672c4c29fa457cec82ae94fde911e8c1d1a9b7f31f8bf2f6"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "f023fa89ceeba4688a28224f9bf85c8952e07917e1047e234510a00ec1db432e"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "249dccdbafaa4498e87655ddf53f57f279ee27c0a510083bbf10a6a6d425fcea"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "7adff95de071a3bdc17bf0afb775fd4cc3361c27a431bb335df0e57cdce8620b"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2490d41bddf0581602baa235eceb3081a271a5f228bfd6d55834af93a3227f0c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fix.npz",
+      "sha256": "07ba7dfd20d55b822d5c3232c3b89561c6f5a816b583409c7b91f6f229a73e63"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fusion.npz",
+      "sha256": "0394bf382dc0d51272469400143c54f7fa4952c5500a269fd4005d73bd33a78c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "c8e2badca50957d79aa85a9e3edd041f6cf1e1085256e538201fb394594dac9c"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "127068753eb8063db264c9822d1e972599df09a0d0f0b8fdd10e514ef5b99217"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/mvs.npz",
+      "sha256": "4c8352850192ac3e105418a865224e1e1e44f13a0bd058b31f9f6c51bf2444c6"
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/prior.npz",
+      "sha256": "6640cee1a31b24de24c1bc9a176766060ea18df647fc98ce2e6ba1df66885eb5"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/R1rep_b10__ALS/always_keep_mesh.npz",
+      "sha256": "fc63653fe26144777aa8ec80f2d2a3a1a8b60c86a13734d4441798a08838bab3"
+    },
+    {
+      "path": "/gtjudge/addendum4/keep_scores/R1rep_b10__ALS/always_keep_mesh_t010.npz",
+      "sha256": "3d48af31dc30edfbce3d5cddd191d7a6274ad5e5f676518668b7eec23e2ef35c"
+    }
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "scenes": [
+    {
+      "case": "c1",
+      "rows": 210800,
+      "checked_method_case_pairs": 50,
+      "maximum_completeness_difference_pp": 0.0,
+      "all_match": true
+    },
+    {
+      "case": "c2",
+      "rows": 382591,
+      "checked_method_case_pairs": 50,
+      "maximum_completeness_difference_pp": 0.0,
+      "all_match": true
+    },
+    {
+      "case": "c3",
+      "rows": 145160,
+      "checked_method_case_pairs": 50,
+      "maximum_completeness_difference_pp": 0.0,
+      "all_match": true
+    },
+    {
+      "case": "c4",
+      "rows": 149446,
+      "checked_method_case_pairs": 60,
+      "maximum_completeness_difference_pp": 0.0,
+      "all_match": true
+    }
+  ],
+  "all_match": true
+}

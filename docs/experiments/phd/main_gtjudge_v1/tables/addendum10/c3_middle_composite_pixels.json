@@ -1,0 +1,194 @@
+{
+  "at": "2026-11-07T14:46:40.423101+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a",
+  "sources": [],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "checks": [
+    {
+      "method": "mvs",
+      "central_region_pixels": 17685,
+      "central_counts": {
+        "in": 11293,
+        "far": 6384,
+        "none": 0,
+        "unmapped_mesh": 8,
+        "background": 0
+      },
+      "percent_all_region": {
+        "in": 63.8563754594289,
+        "far": 36.09838846480068,
+        "none": 0.0,
+        "unmapped_mesh": 0.04523607577042692,
+        "background": 0.0
+      },
+      "percent_status_pixels": {
+        "in": 63.88527465067602,
+        "far": 36.11472534932398,
+        "none": 0.0
+      },
+      "central_reference_row_selected_pixels": 22239,
+      "central_reference_row_status_counts": {
+        "in": 13948,
+        "far": 8291,
+        "none": 0
+      },
+      "central_roi_local_xyz": [
+        [
+          93.63045529495749,
+          7.09965484192023,
+          -23.54520606994629
+        ],
+        [
+          92.28132537248372,
+          7.7552831301185945,
+          -23.54520606994629
+        ],
+        [
+          91.84423984701816,
+          6.855863181802747,
+          -23.54520606994629
+        ],
+        [
+          93.19336976949192,
+          6.2002348936043825,
+          -23.54520606994629
+        ]
+      ],
+      "central_roi_px": [
+        [
+          313.9001528524705,
+          605.0802592838738
+        ],
+        [
+          474.8905699528793,
+          583.9924376369719
+        ],
+        [
+          460.40696032356703,
+          476.0128339967311
+        ],
+        [
+          299.463960340998,
+          497.0978883977811
+        ]
+      ],
+      "central_roi_definition": "s23.2..24.7m, transverse +-0.5m, projected at median reference height; all pixel centers in polygon",
+      "composition": {
+        "colors": {
+          "in": "#2EAA5A",
+          "far": "#D83730",
+          "none": "#3A3A3A"
+        },
+        "unmapped_mesh_base": "#DCDCDC",
+        "background": "#FFFFFF",
+        "formula": "saved row status base RGB multiplied by exported uint8 shade/255 on hit pixels; no mesh uses front reference disc status without shade"
+      },
+      "photo_background": false,
+      "line_drawn": false,
+      "text_in_figure": false,
+      "size_px": [
+        804,
+        1072
+      ]
+    },
+    {
+      "method": "FINALTRAIN_30000",
+      "central_region_pixels": 17685,
+      "central_counts": {
+        "in": 17669,
+        "far": 13,
+        "none": 3,
+        "unmapped_mesh": 0,
+        "background": 0
+      },
+      "percent_all_region": {
+        "in": 99.90952784845915,
+        "far": 0.07350862312694374,
+        "none": 0.016963528413910092,
+        "unmapped_mesh": 0.0,
+        "background": 0.0
+      },
+      "percent_status_pixels": {
+        "in": 99.90952784845915,
+        "far": 0.07350862312694374,
+        "none": 0.016963528413910092
+      },
+      "central_reference_row_selected_pixels": 20613,
+      "central_reference_row_status_counts": {
+        "in": 20613,
+        "far": 0,
+        "none": 0
+      },
+      "central_roi_local_xyz": [
+        [
+          93.63045529495749,
+          7.09965484192023,
+          -23.54520606994629
+        ],
+        [
+          92.28132537248372,
+          7.7552831301185945,
+          -23.54520606994629
+        ],
+        [
+          91.84423984701816,
+          6.855863181802747,
+          -23.54520606994629
+        ],
+        [
+          93.19336976949192,
+          6.2002348936043825,
+          -23.54520606994629
+        ]
+      ],
+      "central_roi_px": [
+        [
+          313.9001528524705,
+          605.0802592838738
+        ],
+        [
+          474.8905699528793,
+          583.9924376369719
+        ],
+        [
+          460.40696032356703,
+          476.0128339967311
+        ],
+        [
+          299.463960340998,
+          497.0978883977811
+        ]
+      ],
+      "central_roi_definition": "s23.2..24.7m, transverse +-0.5m, projected at median reference height; all pixel centers in polygon",
+      "composition": {
+        "colors": {
+          "in": "#2EAA5A",
+          "far": "#D83730",
+          "none": "#3A3A3A"
+        },
+        "unmapped_mesh_base": "#DCDCDC",
+        "background": "#FFFFFF",
+        "formula": "saved row status base RGB multiplied by exported uint8 shade/255 on hit pixels; no mesh uses front reference disc status without shade"
+      },
+      "photo_background": false,
+      "line_drawn": false,
+      "text_in_figure": false,
+      "size_px": [
+        804,
+        1072
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "scientific_verdict": null,
+  "source_commit_before_task": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+  "implementation": [
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_common.py",
+      "sha256": "b159380b39a6f6f6840812c0cb887748b131ba6809d16e1b870d5df8031a0b80"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_composite.py",
+      "sha256": "93cc174041aba82a00545bed77656af12a44cfe94a63001afd7d9293067bfbb0"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_diagnostics.py",
+      "sha256": "1a90eda8d6f2b6b4ef51965d60b8cad7daf2a17e8320954208a0c3ff26e3296a"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_export.py",
+      "sha256": "9fb0f0ca723195a94dcd86457bdf1a65d83b4d32b55283ee998a34fed2a65f38"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_geometry.cpp",
+      "sha256": "17993177faa3df3d65248794cdcf7847bdfc8a11743ee665e70190a476757398"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_publish.py",
+      "sha256": "a83a2093f26e3ab61bf77b18a6c6e682647238b015c376c942a2a376c99df425"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_render.py",
+      "sha256": "c95841dc18a6dc146fb26150a092db9e9331fcfed1285ee7fed90ee7b7905b52"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add10_verify_geometry.py",
+      "sha256": "f7a83a93b96ab1690a71e5f2660dfd189a415deb86fcdb4b0cbc604dbfe8159a"
+    },
+    {
+      "path": "configs/phd/main_gtjudge_v1/addendum10.json",
+      "sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a"
+    },
+    {
+      "path": "configs/phd/main_gtjudge_v1/addendum10.lock.json",
+      "sha256": "a0c9701920079b1c394482c4fb9c24626143786f45c4a326685591824409d5e2"
+    }
+  ],
+  "replay": [
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-export add10_export.py",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-geometry-check add10_verify_geometry.py",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-render-c3 add10_render.py c3",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-render-c1 add10_render.py c1",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-render-c2 add10_render.py c2",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-render-c4 add10_render.py c4",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-diagnostics add10_diagnostics.py",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-composite add10_composite.py",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add10-publish add10_publish.py"
+  ],
+  "replay_note": "Use an isolated empty addendum10 output folder; preserve delivered archive. All inherited inputs read-only. This list does not authorize training or mesh generation.",
+  "visual_review": {
+    "files": [
+      "figures/addendum10/c3_a_closeup_mvs_check.png",
+      "figures/addendum10/c3_a_closeup_FINALTRAIN_30000_check.png"
+    ],
+    "observed": "Both 804x1072 composites opened successfully; geometric shading visible, no photo background, text, boxes or lines.",
+    "new_preview_images": 0
+  }
+}

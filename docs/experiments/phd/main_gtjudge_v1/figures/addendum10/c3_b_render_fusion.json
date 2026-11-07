@@ -1,0 +1,71 @@
+{
+  "at": "2026-11-07T14:44:42.656333+09:00",
+  "scientific_verdict": null,
+  "crs": "EPSG:25832",
+  "local_world_shift": [
+    690953.0,
+    5336071.0,
+    604.0
+  ],
+  "config_sha256": "ab5bef71ceb84c9161117473e40c87aae392b9953fedf88d4e211871b21acc1a",
+  "sources": [
+    {
+      "path": "/out/addendum3_stage2/meshes/B0_b10__ALS__fusion/primary.ply",
+      "sha256": "06cc83923a815c8447f0dce7bb5bb9318f53c65d0a435bfb7e054765453cb60d"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add10_render.py",
+      "sha256": "c95841dc18a6dc146fb26150a092db9e9331fcfed1285ee7fed90ee7b7905b52"
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add10_geometry.cpp",
+      "sha256": "17993177faa3df3d65248794cdcf7847bdfc8a11743ee665e70190a476757398"
+    }
+  ],
+  "runtime": {
+    "image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "source_commit": "b98e36dba4fa531129b6c6a1b72b47935655cf97",
+    "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+    "numpy": "1.26.4"
+  },
+  "case": "c3",
+  "method": "fusion",
+  "camera_id": "b_render",
+  "camera_metadata": "c3_b_render_camera.json",
+  "size_px": [
+    1600,
+    2000
+  ],
+  "mesh": {
+    "path": "/out/addendum3_stage2/meshes/B0_b10__ALS__fusion/primary.ply",
+    "sha256": "06cc83923a815c8447f0dce7bb5bb9318f53c65d0a435bfb7e054765453cb60d"
+  },
+  "mesh_changed": false,
+  "removed_triangles": 0,
+  "hit_pixels": 1575670,
+  "hit_without_reference_row": 1574,
+  "row_query_radius_m": 0.3,
+  "row_query_objective": "minimum perpendicular distance; unrestricted axial coordinate within all saved scene rows",
+  "tie_break": "absolute axial distance then smallest row_id",
+  "maximum_selected_side_distance_m": 0.29977587610869344,
+  "depth_definition": "unit-ray range in metres; no mesh hit = +inf",
+  "npz_keys": {
+    "depth": "depth_m",
+    "row": "row_id"
+  },
+  "shade_definition": "uint8 round(255*(0.55+0.45*abs(n dot ray_direction))); background 255",
+  "light_direction": "negative normalized per-pixel camera ray; two-sided",
+  "pixel_center": [
+    0.5,
+    0.5
+  ],
+  "no_hit_row_id": -1,
+  "new_scoring_distances": false,
+  "saved_stage1_scores_source": {
+    "path": "/gtjudge/scenes/B0_b10__ALS/distances/fusion.npz",
+    "sha256": "a151e13c4995b28fb861fef54282bc2d52241150c5c119bfb9c5ff1b92901b8f"
+  },
+  "photo_background": false,
+  "line_drawn": false,
+  "text_in_figure": false
+}
