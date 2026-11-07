@@ -8,22 +8,32 @@ def normal_z(site,prior,method):
     meta=json.loads((root/f'{method}.json').read_text())
     return loadz(O/'shared'/site/meta['mesh_sha256']/('cylinder_roof.npz' if prior=='ALS' else 'cylinder.npz'),['sample_normal'])['sample_normal'][:,2]
 
-def metric_rows(site,prior,methods=None,split=True):
-    config2();stem=f'{site}__{prior}';root=O/'scenes'/stem;row=loadz(root/'rows.npz');cells=loadz(root/'stage1_cells.npz');labels=cells['case_id'];out=[]
+def metric_rows(site,prior,methods=None,split=True,*,prepared=None,accuracy_rule='euclidean_1m',tau_multiplier=1.,case_override=None,extended=False,distance_statistics=True):
+    """Original scorer; addendum11 optionally supplies cached arrays and an eligibility switch."""
+    assert accuracy_rule in ['euclidean_1m','normal_cylinder_1m']
+    from functools import partial
+    calc=partial(values,distance_statistics=distance_statistics)
+    config2();stem=f'{site}__{prior}';root=O/'scenes'/stem;row=prepared['row'] if prepared is not None else loadz(root/'rows.npz');cells=prepared['cells'] if prepared is not None else loadz(root/'stage1_cells.npz');labels=cells['case_id'] if case_override is None else case_override;out=[]
     methods=methods or METHODS+['gt_judgment_mesh','alt_na','alt_da','A1','A2','fix','seed1_ft','seed1_base']
     for method in methods:
         actual='judgment_mesh' if method=='alt_ga' else method;p=root/'distances'/f'{actual}.npz'
         if not p.exists():continue
-        z=loadz(p);ix=z['sample_reference_row'];ok=ix>=0;qc=np.full(len(ix),-1,'i1');qc[ok]=labels[ix[ok]]
-        qw=np.zeros(len(ix),bool);qw[ok]=row['wall'][ix[ok]];steep=abs(normal_z(site,prior,actual))<.5 if prior=='ALS' else np.zeros(len(ix),bool)
+        z=prepared['scores'][actual] if prepared is not None else loadz(p);ix=z['sample_reference_row'];ok=ix>=0;qc=np.full(len(ix),-1,'i1');qc[ok]=labels[ix[ok]]
+        qw=np.zeros(len(ix),bool);qw[ok]=row['wall'][ix[ok]];steep=prepared['steep'][actual] if prepared is not None else abs(normal_z(site,prior,actual))<.5 if prior=='ALS' else np.zeros(len(ix),bool)
+        observed=z['sample_eligible'] if accuracy_rule=='euclidean_1m' else z['sample_observed_cylinder_1m']
         for surface in (['all','roof','wall'] if split and prior=='LoD2' else ['all']):
             surf=np.ones(len(labels),bool) if surface=='all' else row['wall'] if surface=='wall' else ~row['wall']
             qs=np.ones(len(ix),bool) if surface=='all' else (ok&qw if surface=='wall' else ok&~qw)
             for case in [0,1,2,4,3,'all','prior_absent']:
                 mask=surf&(np.ones(len(labels),bool) if case=='all' else cells['prior_absent'] if case=='prior_absent' else labels==case)
                 qm=qs&(np.ones(len(ix),bool) if case=='all' else np.where(ok,cells['prior_absent'][ix.clip(0)],False) if case=='prior_absent' else qc==case)
-                v=values(z['row_s'][mask],row['row_tau_m'][mask]);before=values(z['sample_s'][qm],z['sample_tau'][qm],z['sample_eligible'][qm]);after=values(z['sample_s'][qm],z['sample_tau'][qm],(z['sample_eligible']&~steep)[qm])
+                v=calc(z['row_s'][mask],row['row_tau_m'][mask]*tau_multiplier);before=calc(z['sample_s'][qm],z['sample_tau'][qm]*tau_multiplier,z['sample_eligible'][qm]);after=calc(z['sample_s'][qm],z['sample_tau'][qm]*tau_multiplier,(observed&~steep)[qm])
                 out.append(dict(site=site,prior=prior,method=method,surface=surface,case_id=case,n_gt=v['n'],small='적음' if v['n']<1000 else '',completeness_pct=v['within_pct'],accuracy_before_pct=before['within_pct'],accuracy_pct=after['within_pct'],accuracy_excluded_steep_total=int((qm&steep).sum()),accuracy_excluded_steep_additional=int((qm&steep&z['sample_eligible']).sum()),accuracy_excluded_no_reference_1m=int((qm&~z['sample_eligible']).sum()),**{'gt_'+k:v for k,v in v.items()},**{'result_'+k:v for k,v in after.items()}))
+                if extended:
+                    old=calc(z['sample_s'][qm],z['sample_tau'][qm]*tau_multiplier,(z['sample_eligible']&~steep)[qm]);g=abs(z['row_s'][mask]);g=g[np.isfinite(g)];r=abs(z['sample_s'][qm&(observed&~steep)&np.isfinite(z['sample_s'])]);x=out[-1]
+                    x.update(accuracy_rule=accuracy_rule,tau_multiplier=tau_multiplier,accuracy_old_pct=old['within_pct'],accuracy_new_pct=after['within_pct'],result_old_n=old['n'],result_new_n=after['n'],excluded_old_n=old['n_excluded'],excluded_new_n=after['n_excluded'],excluded_new_no_reference_cylinder_n=int((qm&~observed).sum()),newly_included_n=int((qm&observed&~z['sample_eligible']&~steep).sum()),reference_none_pct=v['no_surface_pct'],result_none_pct=after['no_surface_pct'])
+                    for prefix,a,vv in [('reference',g,v),('result',r,after)]:
+                        quant=vv['abs_p50_p683_p95_m'];x.update({prefix+'_distance_n':len(a),prefix+'_distance_sum_m':float(a.sum()),prefix+'_mean_abs_m':float(a.mean()) if len(a) else None,prefix+'_median_abs_m':quant[0] if quant else None,prefix+'_p95_abs_m':quant[2] if quant else None})
     return out
 
 def all_tables(site,prior):

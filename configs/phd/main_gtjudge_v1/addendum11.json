@@ -1,0 +1,79 @@
+{
+  "task": "PHD-MAIN-GTJUDGE-v1",
+  "addendum": 11,
+  "scientific_verdict": null,
+  "presentation_scenes": [
+    [
+      "B0_b10",
+      "ALS"
+    ],
+    [
+      "B173nb_b10",
+      "ALS"
+    ],
+    [
+      "R1rep_b10",
+      "ALS"
+    ],
+    [
+      "B0_b10",
+      "LoD2"
+    ]
+  ],
+  "remaining_scenes": [
+    [
+      "B173nb_b10",
+      "LoD2"
+    ],
+    [
+      "R1rep_b10",
+      "LoD2"
+    ]
+  ],
+  "presentation_methods": [
+    "FINALTRAIN_30000",
+    "fusion",
+    "GeoGS_30000",
+    "2DGS_30000",
+    "CDGS_30000"
+  ],
+  "methods": [
+    "prior",
+    "mvs",
+    "fusion",
+    "baseline_30000",
+    "GeoGS_30000",
+    "2DGS_30000",
+    "CDGS_30000",
+    "judgment_mesh",
+    "gt_judgment_mesh",
+    "FINALTRAIN_30000"
+  ],
+  "tau_multipliers": [
+    0.5,
+    0.75,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "presentation_cases": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "observed_cylinder_radius_m": 1.0,
+  "score_cylinder_radius_m": 0.05,
+  "roof_half_length_m": 10.0,
+  "wall_half_length_m": 5.0,
+  "steep_ALS_abs_normal_z_lt": 0.5,
+  "float_dtype": "float32",
+  "new_distance_policy": "Only missing small-cylinder distances for previously excluded, newly observable, non-steep points; all stored finite distances and stored eligible misses reused unchanged",
+  "sign_export": "surface minus reference: reference_s unchanged; result_s = -stored sample_s",
+  "figure_policy": "exactly two PNG files; embed requested two-panel tau line plot below the single section in second PNG",
+  "section_rule": "most newly included case1 points pooled over FINALTRAIN and2DGS in inherited 1m XY grid; pass cell center in inherited add6 c1 section direction; width1m; full projected reference/result XY extent",
+  "scientific_images_only": true,
+  "training": false,
+  "mesh_regeneration": false,
+  "rendering": false
+}

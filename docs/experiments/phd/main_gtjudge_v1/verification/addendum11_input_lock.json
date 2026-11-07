@@ -1,0 +1,1311 @@
+{
+  "at": "2026-11-07T22:26:25.264426+09:00",
+  "scientific_verdict": null,
+  "config_sha256": "ad12ca56ec37398a5080950cdda17e5d51f39c08a0bfaf5f2122a99e2da0d6c8",
+  "source_commit": "2ca63aa8a634b894b1d1c0407f3406589a6f71d8",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+  "numpy": "1.26.4",
+  "sources": [
+    {
+      "path": "/cfg/addendum11.json",
+      "sha256": "ad12ca56ec37398a5080950cdda17e5d51f39c08a0bfaf5f2122a99e2da0d6c8",
+      "bytes": 1804
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add11.py",
+      "sha256": "ad65d9c492bbb9ef6151b8810fdacacfc74644b1fb572dda959fd888841507b8",
+      "bytes": 16079
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/add2_scores.py",
+      "sha256": "2f85b6d3173b654eb459a2096d1ef2b00fc00e0902eb6ff418271e4bf336f05f",
+      "bytes": 8788
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/normal_line.py",
+      "sha256": "a2bb90c20368de555226763808bf8085ac240121e87da56a2d4df80360f2d836",
+      "bytes": 3276
+    },
+    {
+      "path": "/repo/scripts/phd/main_gtjudge_v1/cylinder.cpp",
+      "sha256": "a3fd2195215acbebc8e703bc7c7ffd3bf3d68f2072ebe86e076fd050e1460599",
+      "bytes": 3468
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07",
+      "bytes": 6211349
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz",
+      "sha256": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60",
+      "bytes": 298933
+    },
+    {
+      "path": "/gtjudge/reference/B0_b10/dense.npz",
+      "sha256": "042da3f205be5e225400a533cf18cc0dde9a026f380b5808e0cfeb7a23a1c6e3",
+      "bytes": 218723101
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/prior.npz",
+      "sha256": "59097b84a91371c295f0dfa9c04f159d6348d0a3004a380e53d8271e6489177a",
+      "bytes": 58241579
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/mvs.npz",
+      "sha256": "2cfb3da7059c36e9ff93632d93652323fdb61e9ed2eaa54083074586fdd8da47",
+      "bytes": 35507726
+    },
+    {
+      "path": "/docs/tables/addendum2/stage1/B0_b10__ALS.csv",
+      "sha256": "61fb541c0086dac8be747d09f6ba808104793c00f73e269e73c589a277fb2de8",
+      "bytes": 39442
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "8b4f3194279984b1c07e82febfec8d57cab990643bd66550ace3e1436d1173f4",
+      "bytes": 33979022
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/FINALTRAIN_30000.json",
+      "sha256": "fa7d537d2f09277394cad1249f6c8bc218122ae4347da663ca25135d2c773153",
+      "bytes": 699
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__FINALTRAIN_30000/points.npz",
+      "sha256": "667af08700af064eecf970b909f7484a98b98ad6a803a1448ecbef9d251aefd2",
+      "bytes": 81293791
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/10c90b46f50280e174a0b2e5e952064e6d1e69a9eb65e47d8a527cd3a9f8dd8e/cylinder_roof.npz",
+      "sha256": "5da2ab909deb02bf67dc64d7627c6ef0da20e9f01e8790fd99c979a48bad310b",
+      "bytes": 85141744
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fusion.npz",
+      "sha256": "a151e13c4995b28fb861fef54282bc2d52241150c5c119bfb9c5ff1b92901b8f",
+      "bytes": 15637548
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/fusion.json",
+      "sha256": "f277523ff252750e7a01eafd0c2c79f9066c7e7f5ae8cef951c1e8fefc788928",
+      "bytes": 669
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__fusion/points.npz",
+      "sha256": "053bbc262651e32fdb0e7f1558006a9fa4a8b0b7147d6aef4dac52d4a9b5e117",
+      "bytes": 36776431
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/06cc83923a815c8447f0dce7bb5bb9318f53c65d0a435bfb7e054765453cb60d/cylinder_roof.npz",
+      "sha256": "b8f1d6a49c2e054c20c9b0459f105c74b82f45c132322676cbc51274783aa78a",
+      "bytes": 32067738
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "5353593b58edfe6024fd8f9a40fc73bfdd50cbcbefb20bbcc7965fe4167b6fbe",
+      "bytes": 45293190
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/GeoGS_30000.json",
+      "sha256": "a56219f1487331dfbf4b6df6b1bb586b2066bcc3b48c9df43559ea2007db8dd3",
+      "bytes": 684
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__GeoGS_30000/points.npz",
+      "sha256": "0ed487efaf59ff381c94e990bd15d0c653c596c3345acba05743d7c823446a14",
+      "bytes": 106548348
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/6a9346a56af1877f0cebb0f25a3b9c69773995e573bd2cf611b1bd25c489649c/cylinder_roof.npz",
+      "sha256": "7e097f13df2a75e6d99b41ecbd012bd145d451c31276354eec3993b4d466c5fc",
+      "bytes": 114561553
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "4ce5341a10bc77011583a8ad4138f0d1fa9e2c4fafeef8de60d85ecb532b3c37",
+      "bytes": 46320413
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/2DGS_30000.json",
+      "sha256": "f289f30ceae60999ed82dba78ca5bcbe6a4b0542ebd9986f29bea2a015b951b2",
+      "bytes": 681
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__2DGS_30000/points.npz",
+      "sha256": "c44955101e6c335e5b8b7bb3543320a7bd7d4eb7c3e5354dc61fd36be1f8d043",
+      "bytes": 123467149
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/7a11727c55d758c700ae6ee11cf4df00f914033cd0b0436af7ea317f3e3529c3/cylinder_roof.npz",
+      "sha256": "17368756ebc5daaf43cf547e64b8e611067c19f3e7d5d2384a817a1b6d413b34",
+      "bytes": 122901327
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "6111503b0ac5e3097b68f5524ba1320e9e9222c09d1973aefa286c2acda1bdcd",
+      "bytes": 31979287
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/CDGS_30000.json",
+      "sha256": "02a241784853ad512118cf43c1b3c26d410b5beca2f0a9c6e0b3bafa7ecd4376",
+      "bytes": 682
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__CDGS_30000/points.npz",
+      "sha256": "d9c737febc7e677f20c10b6ea289550893c0044d785fabda5f3c33f194e03627",
+      "bytes": 81491677
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/40d68428e865db251bc441448d4e72eea1e48ae609f870b7d0b7167bfd9ca3fc/cylinder_roof.npz",
+      "sha256": "e5498e02256853a5be84d382ccde10185d4d51adac666a336b3eced7140b4ab9",
+      "bytes": 78255769
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1",
+      "bytes": 9260145
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/stage1_cells.npz",
+      "sha256": "2c7a1c294734f32e05e8afe173cb724ba592c3d42fc8d8dbff117427488cc792",
+      "bytes": 551770
+    },
+    {
+      "path": "/gtjudge/reference/B173nb_b10/dense.npz",
+      "sha256": "f48064eb7394c67e2f20ae5a9250840555fb5f6c8798f88dca5c7929b39ce851",
+      "bytes": 129711344
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/prior.npz",
+      "sha256": "d6856bd86e1e98de37d2c466ac1e27fb5e9d71efe4d084595fdd5515ffbf8286",
+      "bytes": 48723545
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/mvs.npz",
+      "sha256": "3f3786818f2b1df1e4b96d4d5e03e5f4eeb586c8a383e6415249486895a06c20",
+      "bytes": 38734563
+    },
+    {
+      "path": "/docs/tables/addendum2/stage1/B173nb_b10__ALS.csv",
+      "sha256": "eb0479c12ab576b7d240447dfe590fcc998509d8be66965abdb11c341c3d10ba",
+      "bytes": 38385
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "fe20f9080df96f8ac3e806122a316186e8d6e277c941aa15824920d8ec1daa22",
+      "bytes": 38162362
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/FINALTRAIN_30000.json",
+      "sha256": "af8475e87f93347c6290b9eaf4f9645133f22ead09cee76e5caf725954d1b0e6",
+      "bytes": 710
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__FINALTRAIN_30000/points.npz",
+      "sha256": "84bb6e910edfb8ee8cb75a9a3a07b6b9d7ece2b1f806b56a8bf3dccfecce034b",
+      "bytes": 98825097
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/5fff9b5c0f14b8e65a5b0d89afcae731bed9b10754c90ba58a23e4fc0f99661c/cylinder_roof.npz",
+      "sha256": "00d4f066e8c5863479d87b29412c84a13b13119a16efdce16f8c974e2abea083",
+      "bytes": 92506131
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/fusion.npz",
+      "sha256": "6c66c8e4bcf2ec4c72dc00c8cd428ce1c15e6284f361b4c47f2d983c6845fd19",
+      "bytes": 16750747
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/fusion.json",
+      "sha256": "5bdbd5a06ba999ff6308f2003a6c8214bf8729588c8068d9571b99ede22236a1",
+      "bytes": 680
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__fusion/points.npz",
+      "sha256": "2c32908655371ee4c1f9c9d291ad3c5dec0cf4b6ffe48ae4cd82466dde07a112",
+      "bytes": 47219149
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/7a6715c0eafda57697be84dade1e2057ef963be21abd3f2faea9fb3eb7652d6f/cylinder_roof.npz",
+      "sha256": "359484aeff0fea054391b1d464a66be92ed2220056706b23d99229329452c6ce",
+      "bytes": 33730831
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "98ded4f83c1936f744d1b8d64ff90571c990de1d094a1e22910aaa143f878fd4",
+      "bytes": 44643830
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/GeoGS_30000.json",
+      "sha256": "10c5d23e5ad447f240863b6690f1006cc1e75b83cf7af61a15c7ad4a2e55c11e",
+      "bytes": 695
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__GeoGS_30000/points.npz",
+      "sha256": "e98bb05e4a5c5c4706d62d4162c564aa1b295366adda03b7c4681565945851c7",
+      "bytes": 112548296
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/4f0ea34152bbbef1b256549aa4b5f816e19759c871f82dd6bcce35ab15847487/cylinder_roof.npz",
+      "sha256": "052bdde9e66706b4e9ea5287520662827f677908cf33071f89e47a0c049467c8",
+      "bytes": 107906940
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "186dc8b1b6037472cf187d7defbbaa3c06de5f05e5094adf27626b38d0aedeaf",
+      "bytes": 41825768
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/2DGS_30000.json",
+      "sha256": "91049d3e92031d929b78647bcfbba3da8423959b3101b5ed4d2c6ac58ff09059",
+      "bytes": 692
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__2DGS_30000/points.npz",
+      "sha256": "2616a93493591965d110122fab191026ccaada4970e19ae0a9836f9c9404bba4",
+      "bytes": 110886968
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/24bbdedc5cbbc3abd891c040f2982a2b03146164dab6b71fd4a90317b4da51c8/cylinder_roof.npz",
+      "sha256": "be9f64de7918737ca1c0190e112919e9de9f369bbd4fc5d37569506c3c3814f3",
+      "bytes": 102951356
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "63d4907c5968166018a8d73493c585a1da0732f7de9a3626965008fef0b159ec",
+      "bytes": 19578094
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/CDGS_30000.json",
+      "sha256": "38dfe1c38df57ce5f98fb17266b5b86e2372906251e8d681bb7e6ca42be8f2c1",
+      "bytes": 693
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__CDGS_30000/points.npz",
+      "sha256": "b2a6be0bd3f8bf265d674213c66b3ef3b6225e6efe02e3906d2411e8805ab5a6",
+      "bytes": 75727055
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/dce5149077de5a2de6f793ba3db520ca2f73550b3a30404c3c78c771b9626601/cylinder_roof.npz",
+      "sha256": "0d3f2a0f6d698b22f9d84402daa6be0dfaac4ff51b9b92f49748417bde86f058",
+      "bytes": 51218428
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78",
+      "bytes": 6732556
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/stage1_cells.npz",
+      "sha256": "3bb92121f55976eaba387b5feb049da9e955708ddc86bc170424ab953cef7b86",
+      "bytes": 374190
+    },
+    {
+      "path": "/gtjudge/reference/R1rep_b10/dense.npz",
+      "sha256": "ea1e208d4b4f237987dd1151ec102ad1f8a2d2c6c0ad1f9c2f94cc92c99512a7",
+      "bytes": 92536951
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/prior.npz",
+      "sha256": "6640cee1a31b24de24c1bc9a176766060ea18df647fc98ce2e6ba1df66885eb5",
+      "bytes": 41438035
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/mvs.npz",
+      "sha256": "4c8352850192ac3e105418a865224e1e1e44f13a0bd058b31f9f6c51bf2444c6",
+      "bytes": 38447487
+    },
+    {
+      "path": "/docs/tables/addendum2/stage1/R1rep_b10__ALS.csv",
+      "sha256": "f7f36dda8f051dd23f7f1d2c6a177e15eaf663e80b25fc45c4fb7e7db7137384",
+      "bytes": 40858
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "249dccdbafaa4498e87655ddf53f57f279ee27c0a510083bbf10a6a6d425fcea",
+      "bytes": 29986914
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/FINALTRAIN_30000.json",
+      "sha256": "5a384bb3f7fee2fdde01490ec3ac79cc83dd86ea3e3acded5c1fce1f15b26b64",
+      "bytes": 708
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__FINALTRAIN_30000/points.npz",
+      "sha256": "df6cb210128c766124fde5f297ff45956addb4a33bf7030797a8911f5c856549",
+      "bytes": 75833797
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/c2d755cf5b54a8107374084be42c917488e710898a638a138993e8a82597f8b6/cylinder_roof.npz",
+      "sha256": "a1ef4da12372936d8953f526bdc817ec2dd5c2ae30bd453aea26377e8fd76969",
+      "bytes": 72985714
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fusion.npz",
+      "sha256": "0394bf382dc0d51272469400143c54f7fa4952c5500a269fd4005d73bd33a78c",
+      "bytes": 12066111
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/fusion.json",
+      "sha256": "ab347d1f9326046c107590f417e7d30d459573c7d1bcc241640936ef1edcc1c2",
+      "bytes": 678
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__fusion/points.npz",
+      "sha256": "7a9bc219d7446e1260fa6c0befc9b353fff3d3ac3b984342e4689a06f61cd830",
+      "bytes": 33255576
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/82321312229d44fc6cb62ce897831b88723d78ef9c11234e13d5d61af8c30d15/cylinder_roof.npz",
+      "sha256": "baba600131c68d2fe3abc99200ec34ecdd09b8b64adca7afeb124ffc82d74777",
+      "bytes": 24045198
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/GeoGS_30000.npz",
+      "sha256": "7adff95de071a3bdc17bf0afb775fd4cc3361c27a431bb335df0e57cdce8620b",
+      "bytes": 34552038
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/GeoGS_30000.json",
+      "sha256": "d6f13eb231977cbd2a07687fc7215e66addc579377e3f15e219f53c44f8f4346",
+      "bytes": 693
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__GeoGS_30000/points.npz",
+      "sha256": "06ac6409e52692c3bc4196b8aeaba04a6d9b8ee85a1cd4cad03ad5c4ea32099b",
+      "bytes": 82909270
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/1b0dca628072d71fc0f235fe2657c40bcefb79a750bb6c0d6adfd0e6a3985eec/cylinder_roof.npz",
+      "sha256": "4724291efee438a22f54ed63398e276e7580896e314894058e9d9fceaf401657",
+      "bytes": 81105118
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/2DGS_30000.npz",
+      "sha256": "751756566c852796d4aa47e75989ba2600eb209e3044e8039d95900177dad70c",
+      "bytes": 41315014
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/2DGS_30000.json",
+      "sha256": "1ea7f0c246f698aa0f099b259ec5a692408bcc9ef5eb57ede1268ab2c99962ca",
+      "bytes": 690
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__2DGS_30000/points.npz",
+      "sha256": "574f6b4b5325449618145cacdb6f829d66cc5e42e51cc8d3100764869b0ed04f",
+      "bytes": 102259783
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/78a0799c6ae576b807714ae83317dbcf262cd0855ce42534977d13c02a167eae/cylinder_roof.npz",
+      "sha256": "6ef4737fb46ace04ba5d66ffe2ab08b6b3240fa9ce187176287ff9fefa4baaa5",
+      "bytes": 101323254
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/CDGS_30000.npz",
+      "sha256": "f023fa89ceeba4688a28224f9bf85c8952e07917e1047e234510a00ec1db432e",
+      "bytes": 5410275
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/CDGS_30000.json",
+      "sha256": "d006a6cefe86876b2b7d68160e018c212a858ef1dd329d2cafcb8fc0f2fd3b9b",
+      "bytes": 690
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__CDGS_30000/points.npz",
+      "sha256": "d75b0deb4020b4934ef01eb1d5f97e0f20dda097e3a00a37c84566ed75608e87",
+      "bytes": 24190809
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/2d6c9b632a5429b852ba9b0440752b967bb36fef3fa627493a52ed61733fe622/cylinder_roof.npz",
+      "sha256": "f44cbc51753dcb67e45f5ad7ba12ccc74fa59e33e46e8e7ae2636b4ba10af535",
+      "bytes": 11611587
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/rows.npz",
+      "sha256": "527e6d96e0b6435a423dc576e530c3a72b5521f3a21dc30b77c9ae44d2132cce",
+      "bytes": 16554785
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/stage1_cells.npz",
+      "sha256": "aa6139469f13b494f766011a775bf1d6f0e92bdbc57b2c82cc9f38c09daefcc3",
+      "bytes": 881723
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/prior.npz",
+      "sha256": "f4a4d04d6c517f9f44cb0f78ca6028f610395e26986198638c18a24150073a77",
+      "bytes": 30919732
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/mvs.npz",
+      "sha256": "3d8196ccb9bd83c098bce5d197dd5a27f045289803326945692d8221d6e331ea",
+      "bytes": 43499212
+    },
+    {
+      "path": "/docs/tables/addendum2/stage1/B0_b10__LoD2.csv",
+      "sha256": "626d921223da7a020f8eb37ed640d7c7aa648d8d844649921d135a3b31c344eb",
+      "bytes": 139776
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "d9b7fcde20bde879b46593e540e0d2045e113a6747719ea59145db57f99dedb7",
+      "bytes": 43795618
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/FINALTRAIN_30000.json",
+      "sha256": "12059d4c6163a84aaf2b89f3fbfb6ca0bbc4ed7f3ce5584c2fb880dc4f205353",
+      "bytes": 702
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__FINALTRAIN_30000/points.npz",
+      "sha256": "3bed3c6bd23df02ba8ceae5bc0ef0e0423794520c6774dd816922d248efe8549",
+      "bytes": 91226587
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/007cc6423bbe55fde5adba006d6dbc311265e2b196807ec60e8f344ff8ca3e1d/cylinder.npz",
+      "sha256": "5b601475491c689c75fa1a079de601de871642057df9b01ecde103483e6e37e4",
+      "bytes": 88968566
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/fusion.npz",
+      "sha256": "6a75c9e2035ddcae728fb8af0c80ea21dbabddb2a3e0960d82fe47875d7a897b",
+      "bytes": 44540607
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/fusion.json",
+      "sha256": "58145c578f0087d2cecc533b35f6bedd06c7bfb1962bf7089012f81998cbedc9",
+      "bytes": 673
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__fusion/points.npz",
+      "sha256": "344b7d557ef2c81a0e5c78f95f8bd83222ffff881c7166bb31ce75ef960a613a",
+      "bytes": 92021768
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/f9af8c14706d4f315de20d0f7f49a027faacb125c1ac1d04e5a1b9cc7b036ae1/cylinder.npz",
+      "sha256": "e581068e756070fa4d06d16baab921be1791a5504c3bb286551e7a0eeb164143",
+      "bytes": 90574196
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/GeoGS_30000.npz",
+      "sha256": "09c503014cca875f609eb3107662ec3ff88a9c47484258b3fabd10d9edb54687",
+      "bytes": 49034396
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/GeoGS_30000.json",
+      "sha256": "9e2539a704e04e3d3fbf98e63f5229acd8c803dfa0f178e1c8aa8d6a3d52a242",
+      "bytes": 688
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__GeoGS_30000/points.npz",
+      "sha256": "2af19af37e54a01468546164357e804db680fb273e5ba60a4a8691326440a4a3",
+      "bytes": 101302686
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/ad77e48f8ae4bb3ad9bf3a297386a0808c1f7ec38c832c730c477b3e9ec9eb19/cylinder.npz",
+      "sha256": "ecc5b74d0d5d7c314f9a88229c2eed69b17e4c19eedb552e3de61081717b0e79",
+      "bytes": 100618093
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/2DGS_30000.npz",
+      "sha256": "8340c5e0659d01ea3e564375ecab6048826c81b4273c1c9a71141361a0119170",
+      "bytes": 55771290
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/2DGS_30000.json",
+      "sha256": "e33f3fb2a693c6cbcd739467fad403537c89af3b76bf25a2ac48facf347146ad",
+      "bytes": 685
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__2DGS_30000/points.npz",
+      "sha256": "9494b66fa822b43fbb0fb6f648674987a8770465fedf9cbcc2a8af7965bc61d3",
+      "bytes": 132073351
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/7a11727c55d758c700ae6ee11cf4df00f914033cd0b0436af7ea317f3e3529c3/cylinder.npz",
+      "sha256": "d3e2b3f7987d11ad0c8ea3a54f9c1a683a979aafb2ffac59eef97cf6026a9c99",
+      "bytes": 122715605
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/CDGS_30000.npz",
+      "sha256": "7e22880eddfd285ae3d3e39c400b6265066fdb3e9c890d5cac1ea741d325a629",
+      "bytes": 45955468
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/CDGS_30000.json",
+      "sha256": "eb30d8dceacfbecba61394e2b423e896975faab116b0ef5d8a9899485364160c",
+      "bytes": 686
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__CDGS_30000/points.npz",
+      "sha256": "e509c87ef73457a2414e9b81194438e8bc3c3ad65dc7c3d561707e088524f9e7",
+      "bytes": 105411163
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/e085b0ac6ab77863fbd70b0c1cdf24579678f1236536e60d06cc54a49f80795f/cylinder.npz",
+      "sha256": "f6631d165714b37f9289358fd58cec6146d9a094820b2c63395bbbbf84da242a",
+      "bytes": 98875342
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/prior.json",
+      "sha256": "98e3a16c5ccbedbea4f2c6e4a3a745205d9a2a5939e848c9d51cb3cf7910c981",
+      "bytes": 692
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__prior/points.npz",
+      "sha256": "1d6c10eaf055e783f88ad827b681fa2b73eceaa9cf74ec711e092f28f7e2be15",
+      "bytes": 142051583
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/c51fe864498968cc48b40ea1f9e0816a98b4815ebb2e24144fd7d8067b85b1bd/cylinder_roof.npz",
+      "sha256": "e4685835e250110374017e0c671fd5f074fe6e63bcd9691e3ec7c4cfbb31fa00",
+      "bytes": 147482589
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/mvs.json",
+      "sha256": "db102c6aee46f7e8c5e7c759aa582d6346651ccaf8755f1e27d0349258510268",
+      "bytes": 687
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__mvs/points.npz",
+      "sha256": "97a619d79df69c3e99206d893c8ba255fb5dfba7a41875aee9eec953177342af",
+      "bytes": 82997190
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/92163133705cb66d22089d056a4ffb05ef617fbbddac50cc7406faf990ca915a/cylinder_roof.npz",
+      "sha256": "3e6447188c7eed17c13d0abd1d213a878082d2fb4d062914c273d80967bc2316",
+      "bytes": 88101708
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2728cb4b3b72292f855079f7efa479db48a022d7f257d65d8b70fa23009571cd",
+      "bytes": 30662060
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/baseline_30000.json",
+      "sha256": "534a9a423d1a2975ddd646837b13ffbda5826b4bf8f76e6d4318487439f86443",
+      "bytes": 693
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__baseline_30000/points.npz",
+      "sha256": "65799bd2061ec16e44fb032f40e1059bc33562e0f24ee65fb43770b78dbc5906",
+      "bytes": 72632207
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/4f873e69edf694fcd71746a2fbb61fb339b0a04c514e90f1d7d69ebe1801d239/cylinder_roof.npz",
+      "sha256": "188dcc98a2c1a89bc1063a264f758a34f712d4a828abdc7874927cde29d20364",
+      "bytes": 75753088
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "b4f50ba96d8d4a4e8f17292c889f38727e82ed198b2fb351acb5c40e7425e6ca",
+      "bytes": 15950462
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/judgment_mesh.json",
+      "sha256": "5a937ec1c8fe08d8ef7b638ce7ed2a9b17e19bd25f24dbce4d486a2d26011eca",
+      "bytes": 690
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__ALS__judgment_mesh/points.npz",
+      "sha256": "66862dc8eabaf1e2ee4eb8990893f5343b6c657e4d03d61fb324b063398c7c7c",
+      "bytes": 37341903
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/0b9419cd6ab183a8bd55879b6d5a51c5eb1ffcc52c902da70632873a12085da0/cylinder_roof.npz",
+      "sha256": "9f05a0e939bf9acb74e29ce8e56f1fdeee22c59d0a9590c7ed38c1052d4aa85f",
+      "bytes": 32742329
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "2585ccdbf470d5aa579535d93ab495464ab7c5788ff8b2af7208770553580cef",
+      "bytes": 11037596
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/gt_judgment_mesh.json",
+      "sha256": "205f838425d4a4a8509efd3a7fef2f11b24d86254a4e3770208e6da8f26def56",
+      "bytes": 495
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__ALS/distances/gt_judgment_mesh_samples.npz",
+      "sha256": "4a0f54d87fab0e1f504a37bda95753912f6907ae7de544d4411a4c03cffd8660",
+      "bytes": 23922717
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/prior.json",
+      "sha256": "273fce10ae3109daf8807ae1f1c8458d18b36a7a4ddcd18f1b0d595918fbde5c",
+      "bytes": 703
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__prior/points.npz",
+      "sha256": "d28091e33de53fab36c67cf4f2c02b1fcef3eca45ef11f0891aece5a71288664",
+      "bytes": 155472304
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/621f4e0f73da6d81bddd05151e71d35a440145ae43ce596f815d09a7a277001c/cylinder_roof.npz",
+      "sha256": "7330bb2c07b594030b535005aadc4fb1e5f28d4f696f13a61237560ab2cbdbf5",
+      "bytes": 125953914
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/mvs.json",
+      "sha256": "edf1403e213719152dc2a5c06f7fcd5b3add9a19f7112fb7fcdd30fc1dfa5689",
+      "bytes": 699
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__mvs/points.npz",
+      "sha256": "b5135a4d11b652d9d1b873f7e48d9c3a8423bf345f7413324c6500c799f61e11",
+      "bytes": 98410596
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/fccf201390ac3eb23530d34c4760e8facd82be7f300cf3e5825182f8bc8502cd/cylinder_roof.npz",
+      "sha256": "0ae6e1604bcdd612ee4bd2654bb74da74962f60746b3edd564398a03f2eedbee",
+      "bytes": 93189221
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "5dc22e0de3efe304d425925e803ea1091a3da5bbe1753658b51b64ade4053fff",
+      "bytes": 34104430
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/baseline_30000.json",
+      "sha256": "722e41ac04efa3ce5c99484f513cfaf20eef9d6847714e251aa2264db1be93dc",
+      "bytes": 704
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__baseline_30000/points.npz",
+      "sha256": "ba335bb2881944f3db4d473be87d0125fc1ca4082b1d819cbc216f414cd112f8",
+      "bytes": 87983648
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/8d6bb594decceebd64d0cf48babe9deb6221b084c4408130168ee29ecb5647bd/cylinder_roof.npz",
+      "sha256": "210df18407f773c1ff53938318a246b54e54c4b7d91f43ec9aec28db70328207",
+      "bytes": 81316096
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "f1e1e7ec9980d60e007e722f791f9956eebce7f6591b936d3df7496b01ab2cbe",
+      "bytes": 15697945
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/judgment_mesh.json",
+      "sha256": "17404647a763a52a4c365990fd4c9605f98fc7bf7379066325ae3a021d3b0102",
+      "bytes": 701
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__ALS__judgment_mesh/points.npz",
+      "sha256": "db9fbd2f9d0e6d9b9fb8372f2e11f36ae3b14685d7adedc97073fc125d6bf330",
+      "bytes": 45878846
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/07cce6300410604c113640ca4e65d503446a50d21473d65405fe66df6dbd3ae5/cylinder_roof.npz",
+      "sha256": "ee18f2e122b2aadee88af3ce3fd90365c4375cfd256b570ab57c29613d8e97ef",
+      "bytes": 31479134
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "069536c7059101a9eff4d85102e0f0eaad8e3ab817fa3b116d04dd4ac56f1358",
+      "bytes": 11110026
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/gt_judgment_mesh.json",
+      "sha256": "64663f15275a95c10f3d77477011205783b02e4882b029592c7f4e86e4e02e7f",
+      "bytes": 507
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__ALS/distances/gt_judgment_mesh_samples.npz",
+      "sha256": "22618f38869ecc00a471368c5f28a6e57ed4e023522b86169f1d9c570cd91cfe",
+      "bytes": 23973447
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/prior.json",
+      "sha256": "1f3f9d76991ff59f04cc4c82272533df019c1ca37f83148710e9aa6abf56df1d",
+      "bytes": 701
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__prior/points.npz",
+      "sha256": "0d2b04c841df951b2f5c0e0c1961bbcb443befd313e9f09fcf4ec2189f49ec1b",
+      "bytes": 108157809
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/94b1c8ab41144a1e6b68f4188d4e5799cb8db03508511bf47ff887f31dee31e1/cylinder_roof.npz",
+      "sha256": "66c7cc7b51cf2b24bfeabf1b1cdfffbe5fd46061dde4fb24f1b26740f899eedd",
+      "bytes": 102098966
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/mvs.json",
+      "sha256": "e3dc8695665c208945f8817fd39b1e861bac014445657e9d18cdb55f309f9dea",
+      "bytes": 697
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__mvs/points.npz",
+      "sha256": "f3ef17945b4c715e9e1a6395a03f19c9c44595d6e29a1a1d1b37709001d9d98c",
+      "bytes": 93467446
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/667516d188cbb553b5d71520c174ef67ff973c7b25b70a360b6224f8b46431d4/cylinder_roof.npz",
+      "sha256": "0e257945b56ce132b3815cc24340532e28645d99a91be6c02b3f4a6bbe009f91",
+      "bytes": 93034619
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/baseline_30000.npz",
+      "sha256": "2490d41bddf0581602baa235eceb3081a271a5f228bfd6d55834af93a3227f0c",
+      "bytes": 28262299
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/baseline_30000.json",
+      "sha256": "986c891814746ae6da8d61f7258f52b1d6b4dfc48d65087cda48fbfa3290de8a",
+      "bytes": 702
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__baseline_30000/points.npz",
+      "sha256": "442ecd31da55fc96f600d5664a6340df9d6e1bb687a5dc23f5514d666f93cb0d",
+      "bytes": 71397556
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/4b835882fbcf0d0a9e01176d1dafa13897765e82c3e5888365e80e0049dc53aa/cylinder_roof.npz",
+      "sha256": "0af9088e3c517aabd8fbdff9754af0ff663788fc1784bd96eabb9d1cfad00f21",
+      "bytes": 68116505
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/judgment_mesh.npz",
+      "sha256": "127068753eb8063db264c9822d1e972599df09a0d0f0b8fdd10e514ef5b99217",
+      "bytes": 11839547
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/judgment_mesh.json",
+      "sha256": "e3a406143579bf3ab9de23f68668d6330c68c0fc63c4cde0aa8c3a23e6934590",
+      "bytes": 699
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__ALS__judgment_mesh/points.npz",
+      "sha256": "39c9f30138f4d3678812d50dbaf15314332c34571ce7b76677e60863cdc8a686",
+      "bytes": 32772740
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/e4f74aaddf4e5f8a1eb18b0913f99190cb643161eaf395768062dfb2c3142843/cylinder_roof.npz",
+      "sha256": "da10f68105ad2ff6624ce87a4184d60a832656968cc072e5a87ebbea5e274373",
+      "bytes": 23596213
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/gt_judgment_mesh.npz",
+      "sha256": "c8e2badca50957d79aa85a9e3edd041f6cf1e1085256e538201fb394594dac9c",
+      "bytes": 8135254
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/gt_judgment_mesh.json",
+      "sha256": "2b141df106393a690865cf8f044c5d5047edc00a5dedd29ef775e632f118516e",
+      "bytes": 501
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__ALS/distances/gt_judgment_mesh_samples.npz",
+      "sha256": "2fb371e0468fcb858813692453ec1c4cc649d4d7faec4a04aa041d34e94bddc4",
+      "bytes": 17518899
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/prior.json",
+      "sha256": "4b5034f8cb708cccd9cf50d2ab580df7c5411e080ba54e57e9bfe04e98e1745e",
+      "bytes": 695
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__prior/points.npz",
+      "sha256": "59dce70168b368f0d899537926a91ca12067a890677d3219f67f41aad9438e9e",
+      "bytes": 66338336
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/2f1c214b3c85d00318a679f0ade403a8ccd34817ab32d97c89dde74fcaf8e75e/cylinder.npz",
+      "sha256": "82f7b0ca53603c9b899b1cd6685e18c84211abaa0b85b0292292591cf7958977",
+      "bytes": 42501649
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/mvs.json",
+      "sha256": "82790b2fdf2e23351c7c48c89c3f16274bc2570b628bbb594d9fe3cd77149937",
+      "bytes": 691
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__mvs/points.npz",
+      "sha256": "f5b7fb7d35ebea5aec068e67aec76dfbf7e64aa190a32f15ea5b62db212f2cb8",
+      "bytes": 90000592
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/92163133705cb66d22089d056a4ffb05ef617fbbddac50cc7406faf990ca915a/cylinder.npz",
+      "sha256": "0e9be7d894d146ae6fcf08e695a52b358e93a53a22ef22be36e8dc532cb78449",
+      "bytes": 87939966
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/baseline_30000.npz",
+      "sha256": "ff7edd0d286dbf51ad79331f62da4bb74aedc6aaf9a6127f163f162f8469b4c7",
+      "bytes": 37540601
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/baseline_30000.json",
+      "sha256": "b2820f910547482cee254a13997b78a765dce8025cf216e2c051cb16621a6967",
+      "bytes": 697
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__baseline_30000/points.npz",
+      "sha256": "a13b8a99bc401ed7c869e15061547aea471228a9b90538c29867ba178f29a0dd",
+      "bytes": 78350231
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/0050261e55cd4316d99efd8e866b28ea79ea2ea9989893b289116ca1ddbcc1d6/cylinder.npz",
+      "sha256": "e103109446a90751385f4b894e2f541fb46c59b27da0c0f6ad0206534eb818ea",
+      "bytes": 75095743
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/judgment_mesh.npz",
+      "sha256": "91136c7f8f5e5baca84385a5a7b6a735f2f709cd89375d2ed8548d29d2a544e0",
+      "bytes": 56978316
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/judgment_mesh.json",
+      "sha256": "181ee886d25c7f3cba55ac9a2df7cc14aa88fa2ed8fcd3b9b237ad3a9d3e2010",
+      "bytes": 694
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/B0_b10__LoD2__judgment_mesh/points.npz",
+      "sha256": "42db07b3ff7327b80188e946e9aba946f1f58963f7b9b26c28deb199b8ac5c55",
+      "bytes": 114982992
+    },
+    {
+      "path": "/gtjudge/shared/B0_b10/db74625fbfe9b69b0c601b1afe32379e55999e33bcc8b7eaf3603a969d346be9/cylinder.npz",
+      "sha256": "edd63264315ac7005d54dbdf98893ab07a118a7f4cd19e24fc98ffb7e24c8ab4",
+      "bytes": 117029182
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/gt_judgment_mesh.npz",
+      "sha256": "eb74d6aaaa62371985c679610f26b6af6552cf09c8e822ca7976d400cb63b3af",
+      "bytes": 39274748
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/gt_judgment_mesh.json",
+      "sha256": "45a3a186a4fcc4ba602b0faf135527da37db870c28037773cf4d1802e64317ef",
+      "bytes": 504
+    },
+    {
+      "path": "/gtjudge/scenes/B0_b10__LoD2/distances/gt_judgment_mesh_samples.npz",
+      "sha256": "52e7f38afa6405cb77b56d3776896f4e04c97e1dfaa2a4843f1cba6d48f6881b",
+      "bytes": 90823335
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/rows.npz",
+      "sha256": "d5002e9f9885c7ec23c4e21c8b7e4bc64ffa2452d8f2c0ec4514694db52b1086",
+      "bytes": 16277821
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/stage1_cells.npz",
+      "sha256": "c77a242d7f97dd75336589437986ef15ef6d12a3f7930eec241761287e9f2ca5",
+      "bytes": 906555
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/prior.npz",
+      "sha256": "d7fe1a167c356fc632c7dc1fbc323bc9b7c6a4e37bb60b7b24f7344b1c0ae28c",
+      "bytes": 36300839
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/mvs.npz",
+      "sha256": "06f4678b9116fd0be8d030890bddccb182dca17b15579e6af9ed358bf06a0f7e",
+      "bytes": 43224470
+    },
+    {
+      "path": "/docs/tables/addendum2/stage1/B173nb_b10__LoD2.csv",
+      "sha256": "81fdc56949517b6cb1f9e94fcd127aff83a54412673bf27f543897ae9033e4a8",
+      "bytes": 121606
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/prior.json",
+      "sha256": "31baa653dfe8e2c4587641f0e5758e765c5708492bb8656aebd3025e961523d6",
+      "bytes": 671
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__prior/points.npz",
+      "sha256": "7158312010bd94f05aeb1b983faf0b72a4d148dba1d1a399098d6091fa1365b2",
+      "bytes": 109025652
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/521717e043837b7726fbc0f4a334d5e01b9b7f2159125f0d8088e9896dd3e866/cylinder.npz",
+      "sha256": "70ee043fe82566a578170c9d4a19fcedcfe9337a4d241414b30cf5b2fd95e47d",
+      "bytes": 55915507
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/mvs.json",
+      "sha256": "d5a4723f28a3955675e2ec40d5754c4d719327d2761b6540b8992f50c72e8fca",
+      "bytes": 666
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__mvs/points.npz",
+      "sha256": "ed99d8be591e5887d645401c4be7dd8819c34f45974681f9d25fb1d4818310f5",
+      "bytes": 105483444
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/fccf201390ac3eb23530d34c4760e8facd82be7f300cf3e5825182f8bc8502cd/cylinder.npz",
+      "sha256": "35f6dfb967526938229ed0e8e5e0717c098b4f5109ac12f9b78852dfda73355e",
+      "bytes": 92836715
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/fusion.npz",
+      "sha256": "adc96c87d514f75728848d2669e781c91b042158a9249f6ec9889140391b0d6e",
+      "bytes": 44220826
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/fusion.json",
+      "sha256": "45d85935b31e36216233e0596be30ef65313d7baa3b1d0a363a353468afcb479",
+      "bytes": 648
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__fusion/points.npz",
+      "sha256": "bbbcf4c6d4faa2709d472c61416ac9e615dfaaad96fdca8b731683188ab01bed",
+      "bytes": 107844363
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/023b63eb8f938b1257efa71eb40a59d21f6696130510ebd8c880fd30c5cd9480/cylinder.npz",
+      "sha256": "cf1202ffcf0053ea15e98f3cd18cd6511cd01eb8c12fbfae611345f06f88f914",
+      "bytes": 95403749
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/baseline_30000.npz",
+      "sha256": "12585a76ef8116e4b68c944afbb2548d6f312768584a713714d7a1a3346bd0cb",
+      "bytes": 37853689
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/baseline_30000.json",
+      "sha256": "4692ba4d1b6fc57db68cc5ff9b0469ca310d7eb96488c21d15c3ba37608e02ce",
+      "bytes": 671
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__baseline_30000/points.npz",
+      "sha256": "4fbc11b2faff3427fa4375501ac53883f13924ce5db3285702fd2665859ed1b7",
+      "bytes": 93739516
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/ff49a3bb2da5a0334b64b3947507013346cd4191c23a788aa6135b0faee4d120/cylinder.npz",
+      "sha256": "8d15313ea5d46c425b431860aba4ee6d8e889b99dbe1e145987e79716067b0c5",
+      "bytes": 80453458
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/GeoGS_30000.npz",
+      "sha256": "2729b8f9cb1af1f348665c24cdd4e3ce86ace504a080e2f30998de82ac8e9f47",
+      "bytes": 45310467
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/GeoGS_30000.json",
+      "sha256": "47427a1d9c8e5fac53486b83089ebe2003854e869657a681ae215858b98eec76",
+      "bytes": 663
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__GeoGS_30000/points.npz",
+      "sha256": "75f0dbf198af9b662588579de94b3202154de1ddf94b64dee8c963a834f75aa0",
+      "bytes": 113591860
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/1ef453df77a851be5c47d455ae706e318bb8db4a59988d475a02c0d194375eb5/cylinder.npz",
+      "sha256": "42cb54ef04e7fea6daf5456cb0b7841805af41b8981064342af14069e324034a",
+      "bytes": 99936409
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/2DGS_30000.npz",
+      "sha256": "250bfaf613a5bd9961ad7530be82d24eb3004b012490492c65c8fdd24e3cf1c9",
+      "bytes": 46174408
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/2DGS_30000.json",
+      "sha256": "8f284fcd1a121a9ef066cac41c9b75b2aa7c7710ac8c064f6ec97555181cee12",
+      "bytes": 660
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__2DGS_30000/points.npz",
+      "sha256": "4c536cf7cdfb5cca0bb1d217eed7230f798142d2cc9d4532e1992a9b498e9222",
+      "bytes": 118607052
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/24bbdedc5cbbc3abd891c040f2982a2b03146164dab6b71fd4a90317b4da51c8/cylinder.npz",
+      "sha256": "60129bd7d10ed8c5f82af903425cd9c0d40ea95d0d8a6e1bb3c6129d43cbcbdf",
+      "bytes": 102425288
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/CDGS_30000.npz",
+      "sha256": "93d3af887b36c2ab2343298cc8de4abd23b4ec9c3133dc2055a9ea35eda6e09e",
+      "bytes": 32100683
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/CDGS_30000.json",
+      "sha256": "156f1ac91e89fcdbbcb01ad4c34087ca801b3ea9c8ec5b817dc451444f81c113",
+      "bytes": 661
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__CDGS_30000/points.npz",
+      "sha256": "6fe864441da1cba321b08d2d56a27f505f248f6d13ce2c0429881d0284fe000c",
+      "bytes": 101500774
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/67ab25a8a4edf454a0db8541e88f0fb10e00cbdcbb7deb27c651ebd8bd227266/cylinder.npz",
+      "sha256": "ba00d30f1d662571e5fb184977fd8bc9fe45a559fbc219efd88041c5c3135ee7",
+      "bytes": 75106550
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/judgment_mesh.npz",
+      "sha256": "277e5b65e85bfcd52aba86cc0185eb8050c4dcb6a866d28575e42bdf089a6408",
+      "bytes": 48746546
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/judgment_mesh.json",
+      "sha256": "9e4463023282368f1d249309cc49d2675317fa763778f48c6d65f13198712b31",
+      "bytes": 669
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__judgment_mesh/points.npz",
+      "sha256": "f6701bae9bc1ec871c722938ae84435ab6ee6759105cbe9b2d203f1535113548",
+      "bytes": 122676651
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/91d350799303dc0183f6997655e192ebef98c7d8df454f3742bb3207d19cdddc/cylinder.npz",
+      "sha256": "0b3872ab1cdd64ff495bde9f75d36577a7ff0bca3b719fee4f6cacd696c035f0",
+      "bytes": 108646617
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/gt_judgment_mesh.npz",
+      "sha256": "06c0a07207f68212b2c620a0115526e086d086629a8bace6b853da627d6d3ea9",
+      "bytes": 32597291
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/gt_judgment_mesh.json",
+      "sha256": "e75ffff1b9b22abda7fb1e0d97a1771715c0429ed2988917112723df2aa9308e",
+      "bytes": 512
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/gt_judgment_mesh_samples.npz",
+      "sha256": "14ea5a7f4727e97b9e423203ef09f3a987d7d572f0ebc5d3f49ceea6a0e27588",
+      "bytes": 90720883
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "89d14d3624a50bfd3939cd7132a26770833528b671c2dfdff7a4b0d4e75813cd",
+      "bytes": 38025767
+    },
+    {
+      "path": "/gtjudge/scenes/B173nb_b10__LoD2/distances/FINALTRAIN_30000.json",
+      "sha256": "10c0e40d79e4b7c6854863bbf23dd937fda252c45af610548a57c3f6f2588470",
+      "bytes": 677
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/scores/B173nb_b10__LoD2__FINALTRAIN_30000/points.npz",
+      "sha256": "b7ecaf63312ceaaa82821e9602def8e84a40472e505ed4c3be1f1967418a9248",
+      "bytes": 96407013
+    },
+    {
+      "path": "/gtjudge/shared/B173nb_b10/4ee4b4b2de5a238311050eed729bd31f2d57c3bbb839ed57c013cadaf9b76249/cylinder.npz",
+      "sha256": "e28f19a588f5a6bab567749b95596ff12e4b1fca7560a0ecaed347791b152ff4",
+      "bytes": 81848203
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/rows.npz",
+      "sha256": "4d6947fd5225c99fe56837338d3562dbecee33089b631d4f3403b74799ae7c72",
+      "bytes": 10732511
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/stage1_cells.npz",
+      "sha256": "35c023d509a8c7d18b4797c6c0286e1ecdc62f00c56623d0400bd841df3d97a5",
+      "bytes": 613728
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/prior.npz",
+      "sha256": "2912097f124ff5549c5f2ceea5288caac2ef4406247b78c8bf65890184dd91f5",
+      "bytes": 23034073
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/mvs.npz",
+      "sha256": "d8429d1ab780074c3bbce9fa33d3af10a4784f52c9ebd6a3845cbbd0d06d827a",
+      "bytes": 42335210
+    },
+    {
+      "path": "/docs/tables/addendum2/stage1/R1rep_b10__LoD2.csv",
+      "sha256": "fd0cf60c9997da4b3150660ef1d06d5bc33f4c9f60d30a616ee515b660caf855",
+      "bytes": 139979
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/prior.json",
+      "sha256": "6d10e648c15e13ab638379168778de8c79c3488bd3e0cc51a4374a8d0ccb8335",
+      "bytes": 668
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__prior/points.npz",
+      "sha256": "d3649aa68049b77d87ab89bdc2b2a74f7032b8f40bb7d8d200d7c35126bc3525",
+      "bytes": 63682311
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/3666ce061b136dc8e4ddcea6f7e39f5488bee0126845754ded3b007c17142550/cylinder.npz",
+      "sha256": "660ff94dd27eee54da767c4957c7a77e6298317e1b6e56ad2cb7949536a9d28f",
+      "bytes": 34524935
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/mvs.json",
+      "sha256": "b0b77a509f9cf8797e92f70dee7727e8293241135d3e26541acb725ab100cd96",
+      "bytes": 663
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__mvs/points.npz",
+      "sha256": "6de775343d2df0818647e10eec076e092dd2cddcc24373620a5e6d21d50dac27",
+      "bytes": 99883084
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/667516d188cbb553b5d71520c174ef67ff973c7b25b70a360b6224f8b46431d4/cylinder.npz",
+      "sha256": "5f2575775c1363f4fdb2cd262eaa7561f50574e3fbc660ad7b0d10e6379403e7",
+      "bytes": 92860701
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/fusion.npz",
+      "sha256": "50829e57d1edd054f5d6be9b392a21c04a8840c556ac038f1390bdce161d8d3c",
+      "bytes": 29572065
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/fusion.json",
+      "sha256": "b244e730cd62db26faa7e7c3f741aef99cc0eb597629d501a779e4a34d703d64",
+      "bytes": 645
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__fusion/points.npz",
+      "sha256": "4183fa4084b6b50726d1364f81e24fe7e535cb6dfe8e6469e1f201346f56774f",
+      "bytes": 76014104
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/7800f894a1767e444780aa976cf4933c69f9dbf9de2c0b74f93573a9b0da472f/cylinder.npz",
+      "sha256": "b399b818a8d902b3f002f86ea5c0c8183a466ba3bb571904756ff64ea543d8d5",
+      "bytes": 65344712
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/baseline_30000.npz",
+      "sha256": "c1ce93d561b10ebafb55d64ae1abe9c8e9f767250905923b9df7ebef141cc7e9",
+      "bytes": 41562304
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/baseline_30000.json",
+      "sha256": "8e63f05ade4f16e4c2be6cd017567827688c9e711a97b876046b9dc2e2e71ab7",
+      "bytes": 669
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__baseline_30000/points.npz",
+      "sha256": "5ae80d4a75470cc2bf7c28440cba32621522d91e73e0ac9d05cc2dce669fdcbf",
+      "bytes": 98022229
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/db4dc355a30e1ade0e901ce953c6541be0bb39287b5ace6e35a4aa9e88fd1b03/cylinder.npz",
+      "sha256": "9a957a4421b30eb9f8ca3f22d58d6cd93ea0e90049506aee3b20a93709c8b812",
+      "bytes": 91319575
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/GeoGS_30000.npz",
+      "sha256": "98d6f42e77015a5ded6c7741561a4a4927d3bb333f565778eac44ff54d913e26",
+      "bytes": 47345028
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/GeoGS_30000.json",
+      "sha256": "d365b284dfbc25113b33cfa66b17b7e10c8c10abc741844bde8975f3c92ed899",
+      "bytes": 659
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__GeoGS_30000/points.npz",
+      "sha256": "9e7bb96a683577d0d4e606632f6d65de3f4d29f048ee99fb00e7e73a803d99c1",
+      "bytes": 112869544
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/2337b5cce47437084c5b6d9dc940ab17f8fe0e32aec64bc8e0ebe9a3f073e964/cylinder.npz",
+      "sha256": "ee727ddfaea9449cade834b965d1a8dfc1595a224c30fd4de366e18014c04561",
+      "bytes": 106033220
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/2DGS_30000.npz",
+      "sha256": "8954af963ec99726c4d0e85b7db1d83f9fd9f9659c2491bdbc146cf87ebfe7e4",
+      "bytes": 45426685
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/2DGS_30000.json",
+      "sha256": "20f0fbc89c91cf70de946050b7eec0f5b54ebd47472936f9d901f05a900b4bab",
+      "bytes": 657
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__2DGS_30000/points.npz",
+      "sha256": "2201e8b09661c8ca3c70080f6f8b31a705a41d8e66618b61ceb05ed258180f98",
+      "bytes": 108946575
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/78a0799c6ae576b807714ae83317dbcf262cd0855ce42534977d13c02a167eae/cylinder.npz",
+      "sha256": "64ad14042c613c69c2e80789f858e80402e14f43daea9e0269777bb8de8d5f59",
+      "bytes": 101017315
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/CDGS_30000.npz",
+      "sha256": "19a8a1c5c5146608fcc518f3386d3aadaef6c874e623e97bfc12b4611a321ead",
+      "bytes": 24116982
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/CDGS_30000.json",
+      "sha256": "0d60faddde2f521886e9419c5e2670bc3c5206ea638b98073a82593c96504a92",
+      "bytes": 657
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__CDGS_30000/points.npz",
+      "sha256": "fe6a1664dd6c39c3605987237804b208207fc78e49c040afbdb9995f8eca88c3",
+      "bytes": 63684561
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/9b2fcc1cb5869a7ab65a8d1504a14306993126a74ba775fddc5d3c0f8d054046/cylinder.npz",
+      "sha256": "c3a48870ce1611cd4b083e439bb2e3a09342f47198d8a10e5a6892ffeab92e18",
+      "bytes": 51637774
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/judgment_mesh.npz",
+      "sha256": "9e04b95e980012cd2001f27f5e7824cb8cbb755b12ba37a1b16d34e1d3b3d610",
+      "bytes": 41596509
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/judgment_mesh.json",
+      "sha256": "54ccc6c04c4b22d62909523de13fada37f625e2f99b913de103829cb0eb00cc7",
+      "bytes": 666
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__judgment_mesh/points.npz",
+      "sha256": "9a3c162c27cf4d26975b2365f01a069c31f46eb025a12329f1d73ddb5ff148d8",
+      "bytes": 99534882
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/0d15999ae7d1c0625bddd307d4a78a5b7c95e977398d1c9300f441c070976e60/cylinder.npz",
+      "sha256": "9d2a5b865c52d75e70c3e4f7ef45784ba874e799c96750346fcd9a0a34a84763",
+      "bytes": 92083438
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/gt_judgment_mesh.npz",
+      "sha256": "c77a3fee46a279c55d65c48460164f5073feb49eccfb3f5f5583a65fa6238844",
+      "bytes": 26157513
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/gt_judgment_mesh.json",
+      "sha256": "c6135537505bea21c7331795ad745a11faf30c2d9225c79bb38d08840751a0de",
+      "bytes": 510
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/gt_judgment_mesh_samples.npz",
+      "sha256": "bb0a4b4b2a66f6bd5849f7f2074fbac9d3e6c89280d98bed6ddaf55848c605a7",
+      "bytes": 70497152
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "ad16157514f67244f51444f44b0cabfb913b111b841257cc5154efcff8dc5151",
+      "bytes": 35800445
+    },
+    {
+      "path": "/gtjudge/scenes/R1rep_b10__LoD2/distances/FINALTRAIN_30000.json",
+      "sha256": "8f029f7c09308344cffb9854d9cb3466a45321a5f06e30623b7839df1ba41b65",
+      "bytes": 675
+    },
+    {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/scores/R1rep_b10__LoD2__FINALTRAIN_30000/points.npz",
+      "sha256": "cf0b973a97391801cc15d714eae117b5d8accfbdb6029a553151679be93a354f",
+      "bytes": 86921442
+    },
+    {
+      "path": "/gtjudge/shared/R1rep_b10/a3faf4437b04751ce16415d7aa286d506c42f26d95de736bac23f039defde41c/cylinder.npz",
+      "sha256": "fee10e61cb9d7943e770960868983eb21be0cfaaaa2a67ec150206c81c8f149e",
+      "bytes": 78087805
+    }
+  ]
+}

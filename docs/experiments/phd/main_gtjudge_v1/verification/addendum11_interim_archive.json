@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-07T22:16:48.451826+09:00",
+  "scientific_verdict": null,
+  "config_sha256": "ad12ca56ec37398a5080950cdda17e5d51f39c08a0bfaf5f2122a99e2da0d6c8",
+  "source_commit": "2ca63aa8a634b894b1d1c0407f3406589a6f71d8",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+  "numpy": "1.26.4",
+  "status": "PASS_ZIP_CRC_AND_MEMBER_SHA256",
+  "phase": "interim",
+  "path": "/gtjudge/delivery/PHD-MAIN-GTJUDGE-v1_네값_중간.zip",
+  "sha256": "382cf4b2ee486bf597d293fa729f67071b4c8851bbb6b22a8a187c68a8d33491",
+  "bytes": 1621988906,
+  "members": 22,
+  "point_sources": [
+    {
+      "scene": "B0_b10__ALS",
+      "methods": [
+        "2DGS_30000",
+        "CDGS_30000",
+        "FINALTRAIN_30000",
+        "GeoGS_30000",
+        "fusion"
+      ],
+      "bytes": 421782083,
+      "sha256": "57c476f6436b7039584c0745d187f232df076338f9d83d2a3edc7f9ea62ff4e0"
+    },
+    {
+      "scene": "B0_b10__LoD2",
+      "methods": [
+        "2DGS_30000",
+        "CDGS_30000",
+        "FINALTRAIN_30000",
+        "GeoGS_30000",
+        "fusion"
+      ],
+      "bytes": 519817307,
+      "sha256": "5d18678073f60304df17207e24e7a36556f89c8cf4f68f28c241a34f2e201bea"
+    },
+    {
+      "scene": "B173nb_b10__ALS",
+      "methods": [
+        "2DGS_30000",
+        "CDGS_30000",
+        "FINALTRAIN_30000",
+        "GeoGS_30000",
+        "fusion"
+      ],
+      "bytes": 391650254,
+      "sha256": "2195e12e1ad71a7edfe7fdea8b67df2613903392dcc0390d3b09628cf797124c"
+    },
+    {
+      "scene": "R1rep_b10__ALS",
+      "methods": [
+        "2DGS_30000",
+        "CDGS_30000",
+        "FINALTRAIN_30000",
+        "GeoGS_30000",
+        "fusion"
+      ],
+      "bytes": 286781536,
+      "sha256": "fb4d4e2f82602ff731190402ace2bbc50c150bae877358087334f7b0e19602a1"
+    }
+  ]
+}

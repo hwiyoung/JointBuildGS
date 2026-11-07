@@ -46,7 +46,7 @@ def align_result_normals(result_normals, reference_normals):
         raise ValueError('Perpendicular result/reference normals cannot have positive dot by sign flip')
     return n * np.where(dot<0,-1.,1.)[:,None]
 
-def values(signed,tau,eligible=None):
+def values(signed,tau,eligible=None,*,distance_statistics=True):
     s = np.asarray(signed,float)
     tau = np.broadcast_to(np.asarray(tau,float),s.shape)
     mask = np.ones(len(s),bool) if eligible is None else np.asarray(eligible,bool)
@@ -56,12 +56,12 @@ def values(signed,tau,eligible=None):
     absent = mask&~hit
     denominator = int(mask.sum())
     pct = lambda x:100*int(x.sum())/denominator if denominator else None
-    median = float(np.median(s[hit])) if hit.any() else None
+    median = float(np.median(s[hit])) if distance_statistics and hit.any() else None
     return dict(n=denominator,n_excluded=int((~mask).sum()),n_hit=int(hit.sum()),
         within_pct=pct(within),far_hit_pct=pct(far),no_surface_pct=pct(absent),
         median_signed_m=median,
-        nmad_m=float(1.4826*np.median(abs(s[hit]-median))) if hit.any() else None,
-        abs_p50_p683_p95_m=np.quantile(abs(s[hit]),[.5,.683,.95]).tolist() if hit.any() else None)
+        nmad_m=float(1.4826*np.median(abs(s[hit]-median))) if median is not None else None,
+        abs_p50_p683_p95_m=np.quantile(abs(s[hit]),[.5,.683,.95]).tolist() if distance_statistics and hit.any() else None)
 
 def cases(prior,mvs,tau):
     prior=np.asarray(prior);mvs=np.asarray(mvs)

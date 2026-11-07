@@ -1,0 +1,80 @@
+{
+  "scientific_verdict": null,
+  "source_commit_before_task": "2ca63aa8a634b894b1d1c0407f3406589a6f71d8",
+  "implementation": [
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add11.py",
+      "sha256": "ad65d9c492bbb9ef6151b8810fdacacfc74644b1fb572dda959fd888841507b8"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add11_check.py",
+      "sha256": "e82701c803f956aaa1dce06ff2a6049f7c02360381e91e1e07fb032f9623efd3"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add11_figures.py",
+      "sha256": "957f9e4b5d519e4a1284842351ef8757fe2a6a9161e0024c19844926ce39fca3"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add11_publish.py",
+      "sha256": "ad4f9df41c67a342b9bdd87601f9482a58cf7d5c3f7298a36360d1c53faa2e07"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add2_scores.py",
+      "sha256": "2f85b6d3173b654eb459a2096d1ef2b00fc00e0902eb6ff418271e4bf336f05f"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/normal_line.py",
+      "sha256": "a2bb90c20368de555226763808bf8085ac240121e87da56a2d4df80360f2d836"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/cylinder.py",
+      "sha256": "c0751b37fe76ca9a311a4d05ae31591ee2601a2a0e0a499d719fc71c4648107d"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/cylinder.cpp",
+      "sha256": "a3fd2195215acbebc8e703bc7c7ffd3bf3d68f2072ebe86e076fd050e1460599"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/run_cpu.sh",
+      "sha256": "c4db67720056636798d6facc966d4f1681ae09df3505757ec08c37fbf2a9bb5b"
+    },
+    {
+      "path": "configs/phd/main_gtjudge_v1/addendum11.json",
+      "sha256": "ad12ca56ec37398a5080950cdda17e5d51f39c08a0bfaf5f2122a99e2da0d6c8"
+    },
+    {
+      "path": "configs/phd/main_gtjudge_v1/addendum11.lock.json",
+      "sha256": "42f205b1d1ed0dc1933d9b6e1ac8d60f941f935310cb57587d9360a17137ba60"
+    }
+  ],
+  "execution": [
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add11-new-rule-check add11_check.py",
+    "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add11-ordered add11.py"
+  ],
+  "replay_note": "Use isolated empty addendum11 payload/figure/table outputs and archive destinations. Keep completed deliveries unchanged. Reuse inherited inputs read-only. The commands do not authorize training, rendering or mesh creation.",
+  "visual_review": {
+    "files": [
+      "figures/addendum11/rule_top.png",
+      "figures/addendum11/rule_section_and_tau.png"
+    ],
+    "opened_once_each": true,
+    "observed": "Both figures opened successfully. Map panels, section and tau panels, labels and legends are visible. No additional preview image was generated.",
+    "new_preview_images": 0
+  },
+  "source_lock_external": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/addendum11/final_input_lock.json",
+  "method_receipts_external": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/addendum11/receipts",
+  "run_log_external": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/logs/add11-ordered.log",
+  "figure_count": 2,
+  "training": false,
+  "rendering": false,
+  "mesh_read": false,
+  "mesh_regeneration": false,
+  "method_pairs": 60,
+  "interim_delivered_before_remaining_processing": true,
+  "stored_distances_preserved_all_pairs": true,
+  "new_observability_tests_n": 24256828,
+  "missing_thin_distances_computed_n": 10382762,
+  "old_rule_values_checked": 1680,
+  "old_rule_maximum_difference_pp": 0.0,
+  "locked_source_files": 260
+}

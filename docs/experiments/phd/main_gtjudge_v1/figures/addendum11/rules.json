@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-07T22:16:30.898799+09:00",
+  "scientific_verdict": null,
+  "config_sha256": "ad12ca56ec37398a5080950cdda17e5d51f39c08a0bfaf5f2122a99e2da0d6c8",
+  "source_commit": "2ca63aa8a634b894b1d1c0407f3406589a6f71d8",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+  "numpy": "1.26.4",
+  "colors": {
+    "지금 규칙에서도 셈에 듦": "#3978B7",
+    "바꾼 규칙으로 새로 셈에 듦": "#D85A30",
+    "두 규칙 모두 뺌": "#7955A1"
+  },
+  "source_methods": [
+    "FINALTRAIN_30000",
+    "2DGS_30000"
+  ],
+  "reference_source": {
+    "path": "/gtjudge/scenes/B173nb_b10__ALS/rows.npz",
+    "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1",
+    "bytes": 9260145
+  },
+  "line": {
+    "A_local_xy": [
+      162.68383867339102,
+      131.7161876216946
+    ],
+    "Aprime_local_xy": [
+      113.45726394461028,
+      150.7919985219511
+    ],
+    "A_EPSG25832_xy": [
+      691115.6838386734,
+      5336202.7161876215
+    ],
+    "Aprime_EPSG25832_xy": [
+      691066.4572639446,
+      5336221.791998522
+    ],
+    "direction_unit_xy": [
+      -0.93243819011066,
+      0.36132951944610997
+    ],
+    "length_m": 52.79339183108602,
+    "width_m": 1.0,
+    "selection_cell_local_xy": [
+      155,
+      134
+    ],
+    "selection_cell_new_points": 2863,
+    "selection": "maximum pooled newly included case1 point count in1m XY cell; lexicographic tie; inherited c1 section direction",
+    "direction_source": {
+      "path": "/gtjudge/addendum6/selected/c1_B173nb_b10__ALS.json",
+      "sha256": "7e796d807fc70de802de2784c2756000b15101db1e1679fa17dc623969150545",
+      "bytes": 36129
+    }
+  },
+  "section_counts": {
+    "FINALTRAIN_30000": {
+      "지금 규칙에서도 셈에 듦": 7756,
+      "바꾼 규칙으로 새로 셈에 듦": 97,
+      "두 규칙 모두 뺌": 2569
+    },
+    "2DGS_30000": {
+      "지금 규칙에서도 셈에 듦": 5952,
+      "바꾼 규칙으로 새로 셈에 듦": 4374,
+      "두 규칙 모두 뺌": 8676
+    }
+  },
+  "section_reference_n": 2174,
+  "map_all_points_drawn": true,
+  "new_mesh": false,
+  "mesh_rendering": false,
+  "tau_plot_combined_to_obey_two_image_limit": true
+}

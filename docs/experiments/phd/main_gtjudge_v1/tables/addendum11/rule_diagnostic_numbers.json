@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-07T22:26:25.264179+09:00",
+  "scientific_verdict": null,
+  "config_sha256": "ad12ca56ec37398a5080950cdda17e5d51f39c08a0bfaf5f2122a99e2da0d6c8",
+  "source_commit": "2ca63aa8a634b894b1d1c0407f3406589a6f71d8",
+  "container_image": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+  "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+  "numpy": "1.26.4",
+  "rows": [
+    {
+      "figure_method": "FINALTRAIN_30000",
+      "newly_included_case1_n": 13061,
+      "newly_included_case1_bad_pct": 100.0,
+      "newly_included_case1_far_hit_pct": 82.9492381900314,
+      "newly_included_case1_none_pct": 17.05076180996861,
+      "both_excluded_case1_n": 185324,
+      "both_excluded_steep_pct": 97.41156029440332,
+      "both_excluded_window_pct": null
+    },
+    {
+      "figure_method": "2DGS_30000",
+      "newly_included_case1_n": 127686,
+      "newly_included_case1_bad_pct": 100.0,
+      "newly_included_case1_far_hit_pct": 90.51188070736025,
+      "newly_included_case1_none_pct": 9.488119292639757,
+      "both_excluded_case1_n": 315246,
+      "both_excluded_steep_pct": 94.5778852071081,
+      "both_excluded_window_pct": null
+    }
+  ]
+}
