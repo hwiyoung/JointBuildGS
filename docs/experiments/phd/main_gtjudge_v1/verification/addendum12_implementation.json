@@ -1,0 +1,57 @@
+{
+  "scientific_verdict": null,
+  "source_commit_before_task": "37c299b064ae969e5f9e5538eef787e92f86ac19",
+  "implementation": [
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add12.py",
+      "sha256": "c29e776e6eb52bcde3afe6974476e83611fb9d7b3c228c281a8c1d59f4a265cf"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add11.py",
+      "sha256": "ad65d9c492bbb9ef6151b8810fdacacfc74644b1fb572dda959fd888841507b8"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/add2_scores.py",
+      "sha256": "2f85b6d3173b654eb459a2096d1ef2b00fc00e0902eb6ff418271e4bf336f05f"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/normal_line.py",
+      "sha256": "a2bb90c20368de555226763808bf8085ac240121e87da56a2d4df80360f2d836"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/cylinder.py",
+      "sha256": "c0751b37fe76ca9a311a4d05ae31591ee2601a2a0e0a499d719fc71c4648107d"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/cylinder.cpp",
+      "sha256": "a3fd2195215acbebc8e703bc7c7ffd3bf3d68f2072ebe86e076fd050e1460599"
+    },
+    {
+      "path": "scripts/phd/main_gtjudge_v1/run_cpu.sh",
+      "sha256": "c4db67720056636798d6facc966d4f1681ae09df3505757ec08c37fbf2a9bb5b"
+    },
+    {
+      "path": "configs/phd/main_gtjudge_v1/addendum12.json",
+      "sha256": "91f0c671a55c2f38123d0a9700ae90fe6616c00e6febc1e248191ca5c3a4b26c"
+    },
+    {
+      "path": "configs/phd/main_gtjudge_v1/addendum12.lock.json",
+      "sha256": "409a4d61bfe5f5fadf9401b388174b3607b0d9418c064e902f53df51135abf1a"
+    }
+  ],
+  "execution": "bash scripts/phd/main_gtjudge_v1/run_cpu.sh add12-A1 add12.py",
+  "replay_note": "Use isolated empty addendum12 destinations and preserve the delivered archive. Reuse all inherited arrays and add11 code. No training, rendering or mesh generation.",
+  "inherited_scoring_files_changed": false,
+  "new_figure_count": 0,
+  "spatial_index_reconstruction": "Identical add11 code and dense reference, once per physical region; previous process destroyed its memory-only trees.",
+  "spatial_indices": 3,
+  "optional_R1_LoD2_included": true,
+  "checks": {
+    "old_rule_max_difference_pp": 0.0,
+    "FINALTRAIN_pair_max_difference_pp": 0.0,
+    "add10_completeness_match": true,
+    "all_five_point_npz_recount_match": true,
+    "archive_integrity": "PASS_ZIP_CRC_AND_MEMBER_SHA256"
+  },
+  "archive_sha256": "d28fde7dad9f6693cea3e7a1aabc46149a903a25904ba075575c4fc16110ed29"
+}
