@@ -1,0 +1,117 @@
+{
+  "at": "2026-11-09T13:25:50.957626+09:00",
+  "config_sha256": "7175ff8a1e36d32e383da4938e276704a738d8db825923a15625c44822ba5855",
+  "sources": {
+    "outline": {
+      "path": "/repo/docs/experiments/phd/main_gtjudge_v1/tables/addendum10/c1_outline.geojson",
+      "sha256": "3ad9a972172acad63a0d4746f6b843eac86f280b0e3f9108634c3d6adcd31e99",
+      "bytes": 2911
+    },
+    "case_box": {
+      "path": "/repo/docs/experiments/phd/main_gtjudge_v1/tables/addendum10/c1_boxes.json",
+      "sha256": "47f288f9c23be3e664817eaab3f5f32e38802c15650937d9d85f3303fef3e617",
+      "bytes": 1616
+    },
+    "ground_dtm": {
+      "path": "/art/phase-payloads/phd/main_design_realchange_survey_v1/PHD-MAIN-DESIGN-REALCHANGE-SURVEY-v1/derived.npz",
+      "sha256": "9e6c10a996c25a01f1941a1248ee7039827f248133b94154bd8ce2d25cdc65bb",
+      "bytes": 14285824
+    },
+    "prior": {
+      "path": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B173nb_b10/prior_ALS.npz",
+      "sha256": "621f4e0f73da6d81bddd05151e71d35a440145ae43ce596f815d09a7a277001c",
+      "bytes": 3349192
+    },
+    "mvs_points": {
+      "path": "/art/phase-payloads/phd/main_uncert_v1/PHD-MAIN-UNCERT-v1/points/B173nb_b10/mvs_a_xyz.npy",
+      "sha256": "f7dfb7aff98891a4aba4d257300f0ae873c051f6a9fb40cbf603e58be986f297",
+      "bytes": 227830892
+    },
+    "target": {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B173nb_b10__ALS.npz",
+      "sha256": "dc10377655ed8516207172e607b2934839fbb18e93a33a152b488ecc319b550c",
+      "bytes": 6834003
+    },
+    "seeds": {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/stage1/B173nb_b10__ALS/seeds.npz",
+      "sha256": "09406de72774b0495ade23a5d520b492a2c117d82bede912fe2089984fbd3b89",
+      "bytes": 3671374
+    },
+    "snapshot_initial_fields": {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_ALS_s0/attempt1/model/target_monitor/snapshot_7000.npz",
+      "sha256": "b3adc0afe4b8bb881c8e5acf17c5eed804f3cfe3999b4b6e0dc5fcf5f9e40d15",
+      "bytes": 37885564
+    },
+    "reference_rows": {
+      "path": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1",
+      "bytes": 9260145
+    },
+    "reference_cases": {
+      "path": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/scenes/B173nb_b10__ALS/stage1_cells.npz",
+      "sha256": "2c7a1c294734f32e05e8afe173cb724ba592c3d42fc8d8dbff117427488cc792",
+      "bytes": 551770
+    },
+    "core": {
+      "path": "/art/phase-payloads/phd/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/core_points/B173nb_b10__ALS.npz",
+      "sha256": "394ef94b9422dbaf02c47261e611ad2c6a7466701522646635a6c1816c68af65",
+      "bytes": 6987570
+    },
+    "section": {
+      "path": "/repo/docs/experiments/phd/main_gtjudge_v1/figures/addendum6/c1_B173nb_b10__ALS_section_data.json",
+      "sha256": "c120ab5cd61de866edda3ba37a5d8f1beb2f44946b31dc1a0064be6aeaf9c43c",
+      "bytes": 2631205
+    },
+    "result_mesh": {
+      "path": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage1/meshes/B173nb_b10__ALS__FINALTRAIN_30000/primary.ply",
+      "sha256": "5fff9b5c0f14b8e65a5b0d89afcae731bed9b10754c90ba58a23e4fc0f99661c",
+      "bytes": 322555328
+    },
+    "gravity": {
+      "path": "/art/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+      "sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8",
+      "bytes": 2951
+    },
+    "checkpoint_7000": {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_ALS_s0/attempt1/model/jbgs_complete/iteration_7000/checkpoint.pth",
+      "sha256": "e0902150a656177b4d04ce112b0c984834aa4569a2b6dc8cccbbc03fdc1a9f93",
+      "bytes": 693535394
+    },
+    "checkpoint_15000": {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_ALS_s0/attempt1/model/jbgs_complete/iteration_15000/checkpoint.pth",
+      "sha256": "867a7fbb2482c0423b2fe9994ab1ad632425e7ce170a8f18afea1b08020428a5",
+      "bytes": 2114560226
+    },
+    "checkpoint_30000": {
+      "path": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B173nb_b10/ft_ALS_s0/attempt1/model/jbgs_complete/iteration_30000/checkpoint.pth",
+      "sha256": "fb4c54dc10cbf548fe5299936be5c5c17f845b488ed3dc26e36071dae4b31c05",
+      "bytes": 2114577122
+    },
+    "finaltrain_config": {
+      "path": "/repo/configs/phd/main_finaltrain_v1/finaltrain_v1.json",
+      "sha256": "1fb1ee87c7fd5c88e1fc0718f2db64b4ef75864ccffbbb3708d48c95946478c8",
+      "bytes": 10050
+    },
+    "runtime_lock": {
+      "path": "/repo/configs/phd/main_finaltrain_v1/runtime.lock.json",
+      "sha256": "9d04075181cf2fd98e7d26b02ee24cbfbad2da21189b7e4ff4d4b060d6a60cca",
+      "bytes": 18168
+    },
+    "initialization_code": {
+      "path": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r23/jbgs_target.py",
+      "sha256": "2ee2fe9142e4b8f581053411c372814035b94fb30fbb16e53f3e6a549d290967",
+      "bytes": 15911
+    },
+    "training_code": {
+      "path": "/repo/src/phd/forks/GeoGS-conf-guided-v1-r23/train.py",
+      "sha256": "dfcc909f4b4638550cac1e95f6747a78aac96823b523bc94bb152c356cc6cd1b",
+      "bytes": 77920
+    },
+    "seed_code": {
+      "path": "/repo/scripts/phd/main_finaltrain_v1/prepare_inputs.py",
+      "sha256": "a53814327b4975ed8c3e63922c2b053fedba13e3677a423a60f418d2e6ff0b1d",
+      "bytes": 7394
+    }
+  },
+  "scientific_verdict": null
+}

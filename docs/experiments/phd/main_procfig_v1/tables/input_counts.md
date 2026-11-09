@@ -1,0 +1,3 @@
+| panel | prior_roof_area_m2 | mvs_points | gaussians |
+|---|---|---|---|
+| input | 1708.6358971016107 | 3917168 | not applicable |

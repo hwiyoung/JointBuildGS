@@ -1,0 +1,58 @@
+{
+  "at": "2026-11-09T13:34:09.344354+09:00",
+  "building_counts": [
+    {
+      "iteration": 0,
+      "scene_gaussians": 59725,
+      "building_gaussians": 28857,
+      "roof": 27267,
+      "wall": 1590,
+      "roof_prior_area_m2": 1708.6358971016107
+    },
+    {
+      "iteration": 7000,
+      "scene_gaussians": 953848,
+      "building_gaussians": 29360,
+      "roof": 25977,
+      "wall": 3383,
+      "roof_prior_area_m2": 1708.6358971016107
+    },
+    {
+      "iteration": 15000,
+      "scene_gaussians": 2908431,
+      "building_gaussians": 58316,
+      "roof": 46509,
+      "wall": 11807,
+      "roof_prior_area_m2": 1708.6358971016107
+    },
+    {
+      "iteration": 30000,
+      "scene_gaussians": 2908431,
+      "building_gaussians": 58324,
+      "roof": 45966,
+      "wall": 12358,
+      "roof_prior_area_m2": 1708.6358971016107
+    }
+  ],
+  "selected_wrong_patches": 3088,
+  "selected_control_patches": 13670,
+  "roof_area_m2": 1708.6358971016107,
+  "configuration_sha256": "7175ff8a1e36d32e383da4938e276704a738d8db825923a15625c44822ba5855",
+  "scientific_verdict": null,
+  "initialization": {
+    "method": {
+      "mode": "CPU reconstruction from frozen r23 seeds and immutable snapshot initial fields",
+      "reason": "r23 initializer requires CUDA tensors, CUDA KNN and random rotations; section 1 is CPU-only",
+      "positions": "exact seeds.xyz",
+      "scale": "snapshot_7000.initial_scale immutable initialization record",
+      "opacity": 0.1,
+      "rotation": "inherited quat_from_normal on saved initialization normal; initial tangent scales are equal so disc geometry is invariant to twist",
+      "not_a_resumable_training_checkpoint": true
+    },
+    "exact_initial_disc_geometry": true,
+    "axes_equal": true,
+    "optimizer_steps": 0
+  },
+  "reference_join": "saved row_owner -> core.source_index with exact patch_id assertion",
+  "sources_sha256": "d6b53c596a1c7aecd6089cf033d829e7ecc2c7879afa12afc563257131376eab"
+}
