@@ -1,0 +1,15 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1",
+ "addendum": "1 reference variant",
+ "created_at": "2026-11-11T23:42:41.883363+09:00",
+ "base_config_sha256": "ec31f97520b61e869e62daa5ec53206652da13845e572d3c49e91988f20e0917",
+ "reason": "Under visibility_a1 the south-wall behind-wall result points (> 0.64 m behind the face) are blocked by the real wall in the MVS and prior meshes: checks 3/4 give 3-마 99.6/99.9 % and 4-마 99.9 % (no seen view). The order-defined tables are kept unchanged.",
+ "variant": {
+  "name": "wallref (참고)",
+  "points": "the same south-wall behind/face sets (addendum1/wall/<arm>_points.npz)",
+  "visibility": "inside the image, z > 0, and the camera ray is not hit more than tau before the point by the arm trained mesh only (the point own surface within 0.1 m never blocks); MVS and prior meshes not used",
+  "classes": "v1 check 3 and check 4 (result-point meaning) unchanged",
+  "labels": "all tables and figures marked 참고; never mixed with the order-defined na_south_wall_checks"
+ },
+ "scientific_verdict": null
+}

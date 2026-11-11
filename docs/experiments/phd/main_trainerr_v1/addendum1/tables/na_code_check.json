@@ -1,0 +1,41 @@
+{
+ "rows": [
+  {
+   "item": "위치 제약",
+   "where": "jbgs_target_r6.py:67 project_bounds (r23/r25)",
+   "bound": "묶인 것(target_tag 1)만 법선 방향 1.96σ 구간으로 투영",
+   "unbound": "없음"
+  },
+  {
+   "item": "재할당·풀림",
+   "where": "jbgs_target_r7.py:46 reattach (100회 점검, 복제·분할·지우기 뒤)",
+   "bound": "접선 0.5 m·법선 초과 0.5 m 밖이면 풀림(target_tag 2)",
+   "unbound": "해당 없음(배경·풀린 것은 다시 묶이지 않음)"
+  },
+  {
+   "item": "불투명도 되돌리기",
+   "where": "scene/gaussian_model.py:244-248 reset_opacity, train.py:1207(r23)/1215(r25) exempt_mask=None",
+   "bound": "같음(모두 0.01로 낮춤)",
+   "unbound": "같음"
+  },
+  {
+   "item": "지우기(불투명도·화면 크기·세계 크기)",
+   "where": "scene/gaussian_model.py:524-531(r23)/528-536(r25) densify_and_prune; density_exempt :67-72 = frozen_mask",
+   "bound": "같음(frozen_mask 모두 거짓: jbgs_target.py:77)",
+   "unbound": "같음"
+  },
+  {
+   "item": "분할·복제",
+   "where": "scene/gaussian_model.py:464-474·496-503(r23)/468-478·500-507(r25); child_metadata jbgs_target_r6.py:71",
+   "bound": "같은 규칙. 자식은 부모의 꼬리표·패치를 물려받고 바로 재할당 점검",
+   "unbound": "같은 규칙"
+  },
+  {
+   "item": "건강 점검",
+   "where": "jbgs_target_r7.py observe / jbgs_finaltrain.py observe",
+   "bound": "패치 출신 계보 불투명도 중간값 < 0.05면 멈춤(기록만, 개체 처리 없음)",
+   "unbound": "해당 없음"
+  }
+ ],
+ "scientific_verdict": null
+}

@@ -36,15 +36,18 @@ def wall_gt():
 
 def views():
     c = acfg(); t = Timer('a1_na_views'); info = []
-    G = wall_gt(); savez(A1O/'wall/gt_points.npz', **G)
+    G = wall_gt(); savez(A1O/'wall/face_gt_rows.npz', **G)
     for arm in ARMS:
         scenes = blockers(STEM, arm)
         P = point_table(STEM, arm); Nn = P['normal']/np.linalg.norm(P['normal'], axis=1)[:, None]
-        pr, inf, _ = vis_a1(STEM, arm, P['xyz'], Nn, P['tau'], P['result'], maps=True, scenes=scenes, progress=f'a1_{arm}'); savez(A1O/'views'/f'{STEM}__{arm}__a1.npz', **add_v1_keys(pr)); info.append(dict(set='v1 points', arm=arm, **inf))
-        W, st = wall_sets(arm, c); savez(A1O/'wall'/f'{arm}_points.npz', **W); Nw = W['normal']/np.linalg.norm(W['normal'], axis=1)[:, None]
-        pr, inf, _ = vis_a1(STEM, arm, W['xyz'], Nw, W['tau'], np.ones(len(W['xyz']), bool), maps=True, scenes=scenes, progress=f'wall_{arm}'); savez(A1O/'views'/f'{STEM}__{arm}__wall.npz', **add_v1_keys(pr)); info.append(dict(set='south wall result points', arm=arm, **inf, **st))
+        W, st = wall_sets(arm, c); st.pop('arm'); savez(A1O/'wall'/f'{arm}_points.npz', **W); Nw = W['normal']/np.linalg.norm(W['normal'], axis=1)[:, None]
         Ng = G['normal']/np.linalg.norm(G['normal'], axis=1)[:, None]
-        pr, inf, _ = vis_a1(STEM, arm, G['xyz'], Ng, G['tau'], np.zeros(len(G['xyz']), bool), maps=True, scenes=scenes, progress=f'wallgt_{arm}'); savez(A1O/'views'/f'{STEM}__{arm}__wallgt.npz', **add_v1_keys(pr)); info.append(dict(set='wall face GT rows', arm=arm, **inf))
+        for tag, X_, N_, T_, R_, label, extra in [('a1', P['xyz'], Nn, P['tau'], P['result'], 'v1 points', {}), ('wall', W['xyz'], Nw, W['tau'], np.ones(len(W['xyz']), bool), 'south wall result points', st),
+                                                  ('wallgt', G['xyz'], Ng, G['tau'], np.zeros(len(G['xyz']), bool), 'wall face GT rows', {})]:
+            f = A1O/'views'/f'{STEM}__{arm}__{tag}.npz'; fj = f.with_suffix('.json')
+            if not (f.exists() and fj.exists()):
+                pr, inf, _ = vis_a1(STEM, arm, X_, N_, T_, R_, maps=True, scenes=scenes, progress=f'{tag}_{arm}'); savez(f, **add_v1_keys(pr)); dump(fj, inf)
+            info.append(dict(set=label, arm=arm, **json.loads(fj.read_text()), **extra))
     atable('na_visibility', [{k: (json.dumps(v) if isinstance(v, dict) else v) for k, v in r.items()} for r in info]); aprogress(f'일 나 보는 영상 ({t.done():.0f} s)')
 
 def per_view_render(name, X, Nn):
@@ -117,7 +120,7 @@ def analyze():
             dump(A1D/'figures'/f'na_wall_{key}_{arm}.json', dict(arm=arm, view='wall face elevation (along e, height); grey = face points, colours = behind-wall points by class', scientific_verdict=None))
     T['na_south_wall_checks'] = rows3; T['na_south_wall_drawers'] = extra
     # ---- 4.3 observation of the two walls' face GT rows ----
-    G = loadz(A1O/'wall/gt_points.npz'); obs = []; obs_bin = []
+    G = loadz(A1O/'wall/face_gt_rows.npz'); obs = []; obs_bin = []
     for arm in ARMS:
         Ng = G['normal']/np.linalg.norm(G['normal'], axis=1)[:, None]; V, Rr, Xw, dv, empty = per_view_render(f'{STEM}__{arm}__wallgt', G['xyz'], Ng); pt = V['point']; n = len(G['xyz'])
         wn = np.where(G['wall'][pt][:, None] == 0, np.array(wall_normal('south')), np.array(wall_normal('long'))); views = train_views(SITE); Es = np.array([v['W2C'] for v in views])
@@ -195,5 +198,47 @@ def analyze():
     for k, rows in T.items(): atable(k, rows)
     aprogress(f'일 나 분석 ({t.done():.0f} s)'); print('NA_DONE', {k: len(v) for k, v in T.items()}, flush=True)
 
+
+def wallref():
+    """참고 variant (configs addendum1_ref.json): south-wall sets, trained-mesh-only visibility, checks 3/4."""
+    t = Timer('a1_na_wallref'); info = []
+    for arm in ARMS:
+        W = loadz(A1O/'wall'/f'{arm}_points.npz'); Nw = W['normal']/np.linalg.norm(W['normal'], axis=1)[:, None]; f = A1O/'views'/f'{STEM}__{arm}__wallref.npz'
+        if not f.exists():
+            pr, inf, _ = vis_a1(STEM, arm, W['xyz'], Nw, W['tau'], np.ones(len(W['xyz']), bool), maps=True, scenes={'trained': scene_ply(trained_mesh(STEM, arm))}, progress=f'wallref_{arm}')
+            savez(f, **add_v1_keys(pr)); dump(f.with_suffix('.json'), inf)
+        info.append(dict(arm=arm, **json.loads(f.with_suffix('.json').read_text())))
+    atable('na_visibility_wallref_ref', [{k: (json.dumps(v) if isinstance(v, dict) else v) for k, v in r.items()} for r in info]); aprogress(f'일 나 참고 판 보는 영상 ({t.done():.0f} s)')
+def wallref_analyze():
+    c = acfg(); rows3, extra = [], []
+    import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt; from matplotlib import font_manager as fm
+    fm.fontManager.addfont('/fonts/NotoSansCJK-Regular.ttc'); plt.rcParams['font.family'] = fm.FontProperties(fname='/fonts/NotoSansCJK-Regular.ttc').get_name()
+    from te_figs import COL
+    for arm in ARMS:
+        W = loadz(A1O/'wall'/f'{arm}_points.npz'); Nw = W['normal']/np.linalg.norm(W['normal'], axis=1)[:, None]
+        snap = loadz(arm_paths(STEM, arm)['model']/'target_monitor/snapshot_30000.npz', ['xyz', 'opacity', 'origin', 'target_tag', 'target_index', 'patch_ids'])
+        r = classes34(f'{STEM}__{arm}__wallref', W['xyz'], Nw, W['tau'], W['patch_row'], snap, snap['patch_ids'])
+        savez(A1O/'points'/f'na_wallref_{arm}.npz', **{k: W[k] for k in ['point_id', 'xyz', 'case_id', 'd', 'a', 'set', 'patch_row']}, **{k: (v.astype('U12') if v.dtype.kind == 'U' else v) for k, v in r.items()})
+        for split, sm in [('all', np.ones(len(W['set']), bool)), ('case0', W['case_id'] == 0), ('case4', W['case_id'] == 4)]:
+            B = sm & (W['set'] == 0); F_ = sm & (W['set'] == 1)
+            for key in ['check3', 'check4']:
+                for k_ in sorted(set(r[key].tolist())):
+                    a_ = 100*float((r[key][B] == k_).mean()) if B.any() else None; b_ = 100*float((r[key][F_] == k_).mean()) if F_.any() else None
+                    rows3.append(dict(variant='참고: 학습 뒤 메시만 가림', arm=arm, split=split, check=key, cls=k_, behind_n=int((r[key][B] == k_).sum()), behind_pct=a_, face_n=int((r[key][F_] == k_).sum()), face_pct=b_, ratio=(a_/b_ if a_ is not None and b_ else None)))
+        B = W['set'] == 0; gi = r['drawer'][B]; ok = gi >= 0; dn = np.array(wall_normal('south')); dd = (snap['xyz'][gi[ok], :2]-np.array(c['places']['south_wall']['p0']))@dn[:2]; op = snap['opacity'][gi[ok]]; ori = snap['origin'][gi[ok]]; tg_ = snap['target_tag'][gi[ok]]
+        q = lambda v, p: float(np.quantile(v, p)) if len(v) else None
+        extra.append(dict(variant='참고: 학습 뒤 메시만 가림', arm=arm, behind_points=int(B.sum()), with_drawer=int(ok.sum()), seen_views_median_behind=float(np.median(r['seen'][B])), drawer_offset_p10=q(dd, .1), drawer_offset_p50=q(dd, .5), drawer_offset_p90=q(dd, .9),
+                          drawer_opacity_p10=q(op, .1), drawer_opacity_p50=q(op, .5), drawer_opacity_p90=q(op, .9), drawer_origin_patch_pct=100*float((ori == 1).mean()) if ok.any() else None, drawer_origin_background_pct=100*float((ori == 0).mean()) if ok.any() else None,
+                          drawer_bound_pct=100*float((tg_ == 1).mean()) if ok.any() else None, drawer_released_pct=100*float((tg_ == 2).mean()) if ok.any() else None))
+        for key in ['check3', 'check4']:
+            fig, ax = plt.subplots(figsize=(12, 5)); s_ = W['set'] == 1; ax.scatter(W['a'][s_], W['xyz'][s_, 2], s=.4, c='#dddddd', lw=0, rasterized=True)
+            for k_ in sorted(set(r[key][B].tolist())):
+                qq = B & (r[key] == k_); ax.scatter(W['a'][qq], W['xyz'][qq, 2], s=2, c=COL.get(k_, '#000000'), lw=0, label=k_)
+            ax.set_xlabel('벽 방향 거리 (m)'); ax.set_ylabel('높이 (m)'); ax.legend(fontsize=7, markerscale=4); ax.set_title(f'남쪽 끝 벽 · {"본 방법 판정" if arm == "own" else "정답 판정"} · 참고(학습 뒤 메시만 가림)', fontsize=9)
+            fig.savefig(A1D/'figures'/f'na_wallref_{key}_{arm}.png', dpi=180, bbox_inches='tight'); plt.close(fig); dump(A1D/'figures'/f'na_wallref_{key}_{arm}.json', dict(arm=arm, variant='addendum1_ref.json', scientific_verdict=None))
+    atable('na_south_wall_checks_ref', rows3); atable('na_south_wall_drawers_ref', extra); print('WALLREF', extra, flush=True)
+
+def gtrows():
+    savez(A1O/'wall/face_gt_rows.npz', **wall_gt())  # same deterministic rows and order as the views step
 if __name__ == '__main__':
-    {'views': views, 'analyze': analyze}[sys.argv[1]]()
+    {'views': views, 'analyze': analyze, 'gtrows': gtrows, 'wallref': wallref, 'wallref_analyze': wallref_analyze}[sys.argv[1]]()
