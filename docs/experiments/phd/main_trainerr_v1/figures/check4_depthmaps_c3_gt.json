@@ -1,0 +1,43 @@
+{
+ "at": "2026-11-12T05:37:50.374798+09:00",
+ "figure": "check4_depthmaps_c3_gt.png",
+ "script": "scripts/phd/main_trainerr_v1/te_figs.py",
+ "cell": "c3",
+ "arm": "gt",
+ "representative": {
+  "point_id": 1157243,
+  "cls": "4-가",
+  "tau": 0.2717590034008026,
+  "views": {
+   "facing": {
+    "view": "DJI_20241217093905_0026_D",
+    "j": 61,
+    "u": 492.8166039027785,
+    "v": 246.42258982250627,
+    "crop": [
+     393,
+     146,
+     593,
+     346
+    ],
+    "point_camera_z": 93.23347523731022
+   },
+   "oblique": {
+    "view": "DJI_20241217084256_0012_D",
+    "j": 7,
+    "u": 500.4394782541111,
+    "v": 514.6696544243657,
+    "crop": [
+     400,
+     415,
+     600,
+     615
+    ],
+    "point_camera_z": 75.4324344484389
+   }
+  }
+ },
+ "rule": "render depth (camera z) minus the point camera z; alpha < 0.5 blank; + = point pixel",
+ "text_in_figure": "cell name, axes, legend only",
+ "scientific_verdict": null
+}

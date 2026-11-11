@@ -221,5 +221,18 @@ def check6(stem, arm, family, tag=''):
         fig.suptitle(f'{NAME[cell]} · {ARMN[arm]} · {family}', fontsize=9)
         save(fig, f'check6_{cell}_{arm}_{family}', dict(stem=stem, arm=arm, cell=cell, family=family, before=str(ap['trained_mesh']), after=str(after), views='top, azimuth 45 / 225 elevation 35 (orthographic vertex depth splat inside the record range)'))
 
+def check4maps(tag=''):
+    idx = json.loads((O/'depthmaps/index.json').read_text())['maps']
+    for key, m in idx.items():
+        cell, arm = key.split('_'); fig, axes = plt.subplots(1, 2, figsize=(10, 4.6))
+        for ax, grp, lab in [(axes[0], 'facing', '마주 본 영상'), (axes[1], 'oblique', '비스듬한 영상')]:
+            r = m['views'].get(grp)
+            if r is None: ax.axis('off'); ax.set_title(f'{lab}: 없음', fontsize=8); continue
+            z = loadz(O/'depthmaps'/f'{key}_{grp}.npz'); d = np.where(z['alpha'] >= .5, z['depth']-r['point_camera_z'], np.nan)
+            im = ax.imshow(d, cmap='RdBu_r', vmin=-2, vmax=2); ax.plot([r['u']-r['crop'][0]], [r['v']-r['crop'][1]], 'k+', ms=14, mew=2)
+            ax.set_xticks([]); ax.set_yticks([]); ax.set_title(lab, fontsize=8); plt.colorbar(im, ax=ax, shrink=.8, label='렌더 깊이 − 점 깊이 (m), 빔 흰색')
+        fig.suptitle(f'{NAME[cell]} · {ARMN[arm]} · {m["cls"]}', fontsize=9)
+        save(fig, f'check4_depthmaps_{cell}_{arm}', dict(cell=cell, arm=arm, representative=m, rule='render depth (camera z) minus the point camera z; alpha < 0.5 blank; + = point pixel'))
+
 if __name__ == '__main__':
     globals()[sys.argv[1]](*sys.argv[2:])

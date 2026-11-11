@@ -1,0 +1,74 @@
+{
+ "at": "2026-11-12T05:35:24.473806+09:00",
+ "figure": "check5_c3_own.png",
+ "script": "scripts/phd/main_trainerr_v1/te_figs.py",
+ "run": "tl_B0_LoD2_own",
+ "cell": "c3",
+ "arm": "own",
+ "representatives": [
+  {
+   "cls": "5-가",
+   "gaussian": 445549,
+   "uid": 4868014,
+   "point": 3173
+  },
+  {
+   "cls": "5-나",
+   "gaussian": 1737247,
+   "uid": 9076790,
+   "point": 3094
+  },
+  {
+   "cls": "5-다",
+   "gaussian": 1638612,
+   "uid": 8919910,
+   "point": 3590
+  },
+  {
+   "cls": "5-라",
+   "gaussian": 1549707,
+   "uid": 8773432,
+   "point": 5013
+  },
+  {
+   "cls": "5-마",
+   "gaussian": 1740620,
+   "uid": 9081614,
+   "point": 3152
+  },
+  {
+   "cls": "5-확인불가",
+   "gaussian": 1101656,
+   "uid": 7948751,
+   "point": 3735
+  }
+ ],
+ "section": {
+  "start": [
+   105.94440701470339,
+   -3.919967653774401
+  ],
+  "end": [
+   95.67291170517062,
+   -3.6355478576869
+  ],
+  "rule": "largest 0.6 m cluster of lost points, principal XY axis"
+ },
+ "keys": [
+  "0",
+  "100",
+  "300",
+  "1000",
+  "2000",
+  "3000_pre_reset",
+  "3000",
+  "5000",
+  "7000",
+  "10000",
+  "15000",
+  "20000",
+  "30000"
+ ],
+ "text_in_figure": "cell name, axes, legend only",
+ "scientific_verdict": null
+}
