@@ -38,7 +38,9 @@ def main(stem, arm, tag=''):
         return out
     point_id = col('point_id', -1, np.int64); patch_row = col('patch_row', -1, np.int64); trained_s = col('trained_s_m'); trained_state = col('trained_state', 0, np.int64)
     wall = col('wall', 0, np.int64).astype(bool)
-    model = Path(ap['model']) if not tag else O/'runs'/site/f'tl_{site.split("_")[0].replace("rep","")}_{prior}_{arm}'/'model'
+    if tag:  # record run: newest attempt with TRAINING_COMPLETE.json
+        rr = O/'runs'/site/f'tl_{site.split("_")[0].replace("rep","")}_{prior}_{arm}'; model = next(a/'model' for a in sorted(rr.glob('attempt*'), reverse=True) if (a/'TRAINING_COMPLETE.json').exists())
+    else: model = Path(ap['model'])
     trained_mesh = ap['trained_mesh'] if not tag else O/'gtj/meshes'/f'{stem}__{tag}_{arm}_30000'/'final.ply'
     sc = scene_of(trained_mesh)
     # ---------------- check 1 ----------------
