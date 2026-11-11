@@ -44,7 +44,7 @@ def score(stem, family):
     rows = metric_rows(site, prior, [family], True, prepared=dict(row=row, cells=cell, scores={family: z}, steep={family: steep}), accuracy_rule='normal_cylinder_1m', extended=True)
     lab = cell['case_id']; ix = z['sample_reference_row']; ok = ix >= 0; qc = np.full(N, -1, 'i1'); qc[ok] = lab[ix[ok]]
     eligible = observed & ~steep; hitm = np.isfinite(z['sample_s']); state = np.zeros(N, 'u1'); state[~oldeligible & eligible] = 1; state[eligible & ~hitm] = 4; state[~observed] = 2; state[steep] = 3
-    s_res = -z['sample_s']; within = eligible & hitm & (np.abs(z['sample_s']) <= z['sample_tau'])
+    s_res = -z['sample_s']; within = hitm & (np.abs(z['sample_s']) <= z['sample_tau'])  # addendum11/12 bit: distance only (accuracy = eligible_new & within)
     rs = z['row_s']; rwithin = np.isfinite(rs) & (np.abs(rs) <= row['row_tau_m'])
     out = Path('/te/meshes')/f'{stem}__{family}'; out.mkdir(parents=True, exist_ok=True)
     savez(out/'points.npz', reference__s_m=rs.astype('f4'), reference__state=(~np.isfinite(rs)).astype('u1'), reference__within_tau1=rwithin.astype('u1'), reference__offset=z['row_offset'],
