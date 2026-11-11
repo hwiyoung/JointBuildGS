@@ -1,0 +1,180 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1",
+ "scientific_verdict": null,
+ "branch": "exp/main-experiment",
+ "order": "docs/experiments/phd/main_trainerr_v1/학습오류원인확인_발주문_v1.md",
+ "payload_root": "../JointBuildGS-artifacts/phase-payloads/phd/main_trainerr_v1/PHD-MAIN-TRAINERR-v1",
+ "coordinates": {"frame": "inherited local training frame (GTJUDGE reference/scenes)", "shift_to_EPSG25832_m": [690953.0, 5336071.0, 604.0], "crs": "EPSG:25832"},
+ "cells": {
+  "c1": {"site": "B0_b10", "prior": "LoD2", "case_id": 2, "case_name": "영상 깊이 오류", "metric": "completeness", "expected": {"gt": [87.8, 81.2], "own": [77.5, 79.7]}},
+  "c2": {"site": "R1rep_b10", "prior": "ALS", "case_id": 2, "case_name": "영상 깊이 오류", "metric": "completeness", "expected": {"gt": [76.8, 62.3], "own": [75.9, 60.3]}},
+  "c3": {"site": "B0_b10", "prior": "LoD2", "case_id": 4, "case_name": "영상 깊이 결측", "metric": "accuracy", "expected": {"gt": [91.7, 65.3], "own": [91.9, 77.7]}}
+ },
+ "case_ids": {"0": "두 자료 모두 유효(둘 다 맞음)", "1": "사전정보 오류(영상만 맞음)", "2": "영상 깊이 오류(사전 정보만 맞음)", "3": "둘 다 틀림", "4": "영상 깊이 결측(영상 없음)", "source": "GTJUDGE scenes/<stem>/stage1_cells.npz case_id (stage-1 normal-line cells, tau=1)"},
+ "arms": {
+  "own": {"name": "본 방법 판정 판", "fork": "r23", "target_surface": "RESCORE addendum3_stage2/meshes/<stem>__judgment_mesh/primary.ply", "target_surface_method": "judgment_mesh", "trained_mesh": "RESCORE addendum3_stage2/meshes/<stem>__FINALTRAIN_30000/primary.ply", "trained_method": "FINALTRAIN_30000", "model": "FINALTRAIN runs/<site>/ft_<prior>_s0/attempt1/model", "targets": "FINALTRAIN targets/<stem>.npz", "target_dir": "FINALTRAIN stage1/<stem>"},
+  "gt": {"name": "정답 판정 판(GTJUDGE A-1)", "fork": "r25", "target_surface": "GTJUDGE meshes/<stem>__gt_judgment_mesh/final.ply", "target_surface_method": "gt_judgment_mesh", "trained_mesh": "GTJUDGE meshes/<stem>__A1/final.ply", "trained_method": "A1", "model": {"B0_b10__LoD2": "GTJUDGE runs/B0_b10/gt_LoD2_s0/attempt2/model", "R1rep_b10__ALS": "GTJUDGE runs/R1rep_b10/gt_ALS_s0/attempt1/model"}, "targets": "GTJUDGE targets_gt/<stem>.npz", "target_dir": "GTJUDGE stage1/<stem>"}
+ },
+ "scoring": {
+  "completeness": "GTJUDGE stage-1 normal-line distance (normal_line.measure: 5 rays at 0/±0.05 m tangent shifts, both directions, limit roof 10 m / wall 5 m); within = |s| <= row tau (reference__<method>__within_tau1 from unrounded distance)",
+  "accuracy": "addendum 11/12 normal_cylinder_1m rule (eligible_new & within_tau1 / eligible_new). This is the rule that gives the order 0.1 table values 65.3/77.7; the 'addendum 2 3.4' wording is not present in the GTJUDGE configs, the old euclidean_1m rule is recounted alongside",
+  "stored_point_data": {"judgment_mesh|gt_judgment_mesh|FINALTRAIN_30000": "GTJUDGE addendum11/final_data/<stem>.npz", "A1": "GTJUDGE addendum12/distance_A1/<stem>.npz"},
+  "new_meshes": "unchanged GTJUDGE score_new + addendum11 rule (as TRAINLOG tl_mesh.score); scorer validated by re-scoring the stored A1 meshes before use",
+  "tau": "docs/experiments/phd/main_release_v1/tables/stage0/tau_values.csv (B0 LoD2 roof 0.27176 / wall 0.64250 m; R1 ALS 0.13225 m all)",
+  "reproduction_tolerance_pp": 0.1
+ },
+ "point_sets": {
+  "c1_c2_lost": "reference rows with case_id==cell case, target-surface within_tau1==1 and trained within_tau1==0 (far hit or no surface)",
+  "c1_c2_control": "same case, both within_tau1==1",
+  "c3_lost": "trained-mesh result samples with case_id==4, eligible_new==1, within_tau1==0, and target-surface distance > tau. Target-surface distance = normal_line.measure from the result point along its stored (reference-aligned) normal against the target-surface mesh; no hit within roof 10 / wall 5 m counts as > tau",
+  "c3_control": "case_id==4, eligible_new==1, within_tau1==1 result samples",
+  "subsample": {"max_points": 50000, "seed": 20261111, "rng": "numpy.random.default_rng(seed).choice(n, 50000, replace=False), sorted"},
+  "few_flag": {"lost_below": 1000, "label": "적음"},
+  "columns": ["point_id", "x", "y", "z", "nx", "ny", "nz", "cell", "arm", "set", "wall", "tau_m", "core_owner", "patch_row", "patch_id", "judge_own", "judge_gt", "judge_gt_cells", "judge_original_cells", "target_s_m", "target_state", "trained_s_m", "trained_state"],
+  "patch_of_point": "column patch = GTJUDGE rows.npz row_owner (JUDGEAPPLY core point index) -> core_points.source_index -> target-file row; result samples use the stored sample column owner",
+  "file": "sets/<cell>_<own|gt>.parquet"
+ },
+ "visibility": {
+  "views": "all real training views of the site (GTJUDGE views/<site>.json, K/W2C/size)",
+  "pixel": "floor(K X / z + 0.5), the jbgs_gtjudge.candidate_mask convention",
+  "reference_points_c1_c2": "GT mesh is not in the repository (GT is used as a point cloud, GT_triangulated=False). Substitute: per view z-buffer of the GTJUDGE reference dense points (minimum camera z per nearest pixel). A point is seen when inside the image, z>0 and z_point - zbuffer <= 0.05 m",
+  "result_points_c3": "trained (result) mesh ray cast from the camera centre; seen when first hit >= |X - C| - 0.05 m",
+  "facing_group": "angle between point-to-camera direction and the reference normal (c3: stored reference-aligned result normal) <= 30 deg; else oblique"
+ },
+ "check1": {
+  "order": ["1-마", "1-나", "1-가", "1-다", "1-라"],
+  "1-마": "stored state==1 (no trained-mesh hit within roof 10 / wall 5 m)",
+  "1-나": "closest-point (unsigned) distance from the point to the trained mesh <= tau while |s| > tau",
+  "1-가": "tau < |s| <= 2 tau",
+  "1-다": "first hit X = p + shift(offset id) + s n is within tau of a reference dense point q that is not on the point's own surface: |n_p.(q - p)| > tau",
+  "1-라": "none of the above",
+  "c3_order": ["1-나", "1-가", "1-라"],
+  "c3_1-나": "nearest reference dense point within tau while the normal_cylinder_1m distance is > tau or missing",
+  "c3_1-가": "tau < |s_m| <= 2 tau (s_m = result-minus-reference cylinder distance)",
+  "forward": {"c1_c2": ["1-다", "1-라", "1-마"], "c3": ["1-라"]},
+  "tau_multipliers": [0.5, 1.0, 1.5, 2.0],
+  "tau_multiplier_cells": "cells fixed at tau=1 (GTJUDGE 가 rule), scoring threshold multiplied",
+  "quantiles": [0.5, 0.683, 0.95]
+ },
+ "check2": {
+  "applies": "c1, c2: lost points forwarded by check 1 and all control points",
+  "order": ["2-가", "2-나", "2-라", "2-다", "2-마", "2-바"],
+  "2-가": "row_owner < 0, or the column target row is not a valid patch of the arm's target file (r6 valid_patch: region>=0, finite target/normal, finite sigma>0)",
+  "2-나": "|t| > tau, t = ray parameter from p along n_p to the patch target plane (target point, patch normal); |n_patch.n_p| < 1e-6 counts as > tau",
+  "2-라": "seen views < 3",
+  "2-다": "seen views whose target-map owner at the point's pixel equals the column target row < 3. Maps = the exact stored maps the arm trained with (stage1/<stem>/maps, sha checked; owner = frontmost patch disc row index)",
+  "2-마": "more than half of the views counted in 2-다 have weight <= 0.1 + 1e-6 (floor 0.1)",
+  "2-바": "none of the above",
+  "extra": "distributions of seen views, owner-matching views and weights for lost and control points"
+ },
+ "check3": {
+  "drawer": "PROCFIG/TRAINLOG lineage: for each seen view the max alpha*T Gaussian at the point's pixel from the TARGET r5 maxid rasterizer on the arm's 30000 model (point_cloud/iteration_30000/point_cloud.ply), modal over seen views, ties lowest index; per-Gaussian tag/index/origin from target_monitor/snapshot_30000.npz (row order checked against the PLY)",
+  "order_1ra": ["3-마", "3-가", "3-나", "3-다", "3-라"],
+  "3-마": "no seen view, no drawer, or the modal Gaussian count < half of the seen views",
+  "3-가": "drawer target_tag==1 and its bound patch (valid_patch[target_index]) is the column target row",
+  "3-나": "drawer target_tag==1 bound to another patch",
+  "3-다": "drawer origin==1 (patch seed lineage) and target_tag!=1",
+  "3-라": "drawer origin==0 (background) and target_tag!=1",
+  "applies_1ra": "c1/c2 1-라 points, all c3 lost points, all control points",
+  "order_empty": ["3-바", "3-사"],
+  "3-바": "at 30000 some Gaussian with target_tag==1 bound to the column target row has |n_p.(x - p)| <= tau",
+  "3-사": "otherwise",
+  "applies_empty": "c1/c2 1-다 and 1-마 points (control points get the same test)",
+  "3-가_detail": "h = n_patch.(x - target), width = 1.96 sigma_patch; '원반 기울기' when |n_p.(x - p)| <= tau, else '구간 안 τ 밖'",
+  "page50": {"note": "check_cause_range.py is not in the repository, payloads or this host; recount with the definition below", "surface_point": "c1/c2: trained first hit X (points with a hit); c3: the result point", "distance": "|n_patch.(X - target_patch)| for the column patch", "fixed_radius_m": {"ALS": 0.56, "LoD2": 0.95}, "per_patch_radius": "1.96 sigma_patch + 0.5 m", "population": "lost points beyond tau with a surface vs control points"}
+ },
+ "check4": {
+  "applies": "c1/c2 1-라 and 3-바 points, all c3 lost points; control points get the same per-view test",
+  "per_view": "render depth D (2DGS surf_depth, camera z) of the arm's 30000 model at the point's exact projection; X_v = back-projection of the exact (u,v) at depth D; d = n.(X_v - p). |d|<=tau 맞음, else 틀림; render alpha < 0.5 빔",
+  "c3_meaning": "맞음 = render depth reproduces the result point (|n_r.(X_v - p_r)| <= tau)",
+  "order": ["4-마", "4-라", "4-나", "4-가", "4-다"],
+  "4-마": "seen views < 3",
+  "4-라": "more than half of the seen views 빔",
+  "4-나": "both groups have >= 2 non-empty views and the group majorities (맞음 vs 틀림, ties = no majority) are both defined and differ",
+  "4-가": "c1/c2: more than half of the seen views 맞음 (mesh is wrong by construction); c3: more than half do not reproduce the result point",
+  "4-다": "c1/c2: more than half 틀림; c3: more than half reproduce the result point",
+  "rest": "확인 불가(섞임)",
+  "four_depths": "same ray: reference depth (c1/c2 the point z; c3 the reference z-buffer), target-map depth, render depth, trained-mesh first hit (ray cast, camera z)",
+  "renderer_check": "maxid render depth compared with the speed renderer depth at the sampled pixels; differences recorded"
+ },
+ "cross_tables": {"pairs": [["check1", "check2"], ["check2", "check3"], ["check3", "check4"]], "unit": "points and percent of all lost points of the cell x arm"},
+ "culprit": {"classes": ["3-가", "3-나", "3-다", "3-라"], "share_min": 0.5, "ratio_min": 2.0, "share_denominator": "all lost points of the cell x arm (control: all control points)", "none": "후보 없음"},
+ "region": {
+  "lost_sources": {"B0_b10__LoD2": ["c1/own", "c1/gt", "c3/own", "c3/gt"], "R1rep_b10__ALS": ["c2/own", "c2/gt"]},
+  "link_m": 0.6, "xy_pad_m": 2.0, "z_below_m": 1.0, "z_above_m": 4.0,
+  "union": "boxes snapped outward to a 0.25 m voxel grid; inside = voxel lookup (exact union of the snapped boxes)",
+  "file": "region/<site>__<prior>.json"
+ },
+ "record_runs": {
+  "runs": {"tl_R1_ALS_gt": ["R1rep_b10", "ALS", "gt"], "tl_B0_LoD2_gt": ["B0_b10", "LoD2", "gt"], "tl_R1_ALS_own": ["R1rep_b10", "ALS", "own"], "tl_B0_LoD2_own": ["B0_b10", "LoD2", "own"]},
+  "switches": "--jbgs_trainlog on --jbgs_trainlog_region <region file> --jbgs_trainlog_grads on, seed 0, 30000 iterations, otherwise the original command",
+  "save_iterations": "TRAINLOG 2.2: 0..3000 every 100, 3000..15000 every 500, 15000..30000 every 2500, plus states just before each opacity reset (3000, 6000, 9000, 12000)",
+  "key_iterations": [0, 100, 300, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 30000],
+  "key_extra": "3000_pre_reset scene state and mesh (TRAINLOG: the end-of-iteration 3000 state is right after the opacity reset)",
+  "scene_dump": "key iterations and 3000_pre_reset only",
+  "state_budget_GB": 50, "state_budget_action": "3000..15000 interval 1000",
+  "gradients": "at every save iteration, before total_loss.backward(): torch.autograd.grad(term, [_xyz, _opacity], retain_graph=True, allow_unused=True) for photo = rgb_loss, depth = depth_lambda * target depth loss, gs2d = dist_loss + normal_loss (the terms as added to the total loss); record per in-range Gaussian uid, |dL/dxyz| and |dL/dopacity_logit|",
+  "key_mesh_scoring": "30000: full scorer; other key iterations: normal-line measure of the record-run lost and control points only",
+  "comparison": {"iterations": [7000, 15000, 30000], "count_tolerance_pct": 5, "value_tolerance_pp": 2, "label": "원래 판과 같은 판"}
+ },
+ "check5": {
+  "lost": "redefined on the record run 30000 mesh with the same point-set rule; drawers found with the check-3 method on the record 30000 model",
+  "applies": "unique drawer Gaussians of 3-나, 3-다, 3-라 points (also reported point-weighted)",
+  "order": ["5-가", "5-나", "5-다", "5-라", "5-마"],
+  "5-가": "at 30000 target_tag==1 bound to a patch other than the point's column patch and |n_q.(x - target_q)| <= tau",
+  "5-나": "record 30000 mesh in the region split into pieces (faces sharing a vertex after merging vertices closer than 0.1 m, dihedral angle <= 30 deg); the piece of the face closest to the Gaussian centre has >= 30 % of its area (face centroids) within tau of a reference dense point not on the lost point's surface (|n_p.(q-p)| > tau)",
+  "5-다": "|x_30000 - x_birth| <= tau; birth = state 0 position (initial) or the birth event position (clone/split; parent birth position also recorded); birth outside the range = 확인 불가",
+  "5-라": "moved > tau, closest-point distance from x_30000 to the AXES71 MVS mesh (main_axes71_v2 mvs/<site>/mesh_mvs_a.ply) <= tau, and summed |dL/dxyz| over saved iterations from birth to the first saved iteration within tau of the final position: photo > depth",
+  "5-마": "none of the above",
+  "empty_points": "3-사 points: Gaussians bound to the column patch at any saved state; fate from events: 5-바 delete (by reason), 5-사 release then inside the range at 30000 (cell and normal height difference recorded), 5-아 left the range; point class = modal fate (ties 바, 사, 아); none found = 확인 불가",
+  "curves": "key-iteration meshes: share of record-run lost points within tau; culprit-population counts per saved state"
+ },
+ "check6": {
+  "populations": {"3-라": "origin==0 and target_tag!=1", "3-다": "origin==1 and target_tag==2", "3-나": "target_tag==1 and bound patch != column patch at the Gaussian centre", "3-가": "target_tag==1 and bound patch == column patch at the Gaussian centre"},
+  "where": "inside the scene's record range",
+  "opacity_zero": "the Gaussians are removed from the rendered model (identical to opacity 0)",
+  "mesh": "all training views re-rendered, unchanged GTJUDGE/RESCORE mesh recipe, full scorer",
+  "recovery": "(after - trained) / (target - trained) on the cell value; lost-point recovery (share of lost points within tau after) reported alongside",
+  "control_loss_pp": "c1/c2: drop of control points within tau; c3: share of control result-point locations without a new-mesh surface within tau",
+  "scene_accuracy_loss_pp": "trained scene accuracy (all) - after",
+  "view_groups": "4-나 >= 50 %: facing-only and oblique-only meshes with views grouped by the dominant group of the lost points that see them; 4-가 >= 50 %: drop views that are 틀림 for the majority of 4-가 points that see them",
+  "confirm_training": {"select": "per scene x arm the culprit with the largest simulation recovery >= 20 %", "max_runs": 4, "name": "cf_<site>_<prior>_<own|gt>_<bindbg|rebind|reassign>_s0", "switch": {"3-라": "--jbgs_bind_background on", "3-다": "--jbgs_rebind_released on", "3-나": "--jbgs_reassign_same on"}, "logging": "off"},
+  "classes": {"6-가": "recovery >= 50 % and control loss <= 2 pp and scene accuracy loss <= 2 pp", "6-나": "recovery >= 50 % and a loss > 2 pp", "6-다": "20 % <= recovery < 50 %", "6-라": "recovery < 20 %"}
+ },
+ "intervention_switches": {
+  "GT_used": false,
+  "default": "off for all three; with all off r28 makes the r23 decisions (with --jbgs_targets the r25 decisions)",
+  "--jbgs_bind_background": "at every periodic 100-step check, after the inherited reattach: unbound Gaussians with origin==0 (target_tag==0) that meet the reattach rule (TargetR7.candidates: tangent <= 0.5 m from a patch anchor and normal excess beyond 1.96 sigma <= 0.5 m) get target_tag=1 and that patch, then the inherited project_bounds",
+  "--jbgs_rebind_released": "same for target_tag==2",
+  "--jbgs_reassign_same": "in every reattach, candidate patches of a bound Gaussian are limited to patches with the same patch_region as its current patch and |n_cur.(anchor_new - anchor_cur)| <= 1.96 sigma_cur; no candidate = released"
+ },
+ "fork": {"new": "src/phd/forks/GeoGS-conf-guided-v1-r28", "parent": "src/phd/forks/GeoGS-conf-guided-v1-r27", "merged": "r25 --jbgs_targets / --jbgs_preserve_freespace (jbgs_gtjudge.py, target_path, verify_override, prune opacity mask hook)", "changed_lines": "docs/experiments/phd/main_trainerr_v1/r28_changed_lines.diff"},
+ "unit_checks": {
+  "replay": "TRAINLOG replay_test.py adapted: real complete state at iteration 200 of a small-example probe, deterministic synthetic loss, inherited controller and density control for 300 iterations; byte comparison of model, Adam, density statistics, target metadata, controller events, RNG",
+  "default": "r23 FinalTrain vs r28 (all switches off) on own targets: byte-identical replay",
+  "gt_targets": "r25 vs r28 with --jbgs_targets on gt targets: byte-identical replay",
+  "record_invariance": "r28 off vs r28 trainlog + region + gradients on: byte-identical replay; plus the TRAINLOG alternative real-run test with two runs each (cross-pair median <= same-setting maximum, 300 iterations, densification from 100, opacity reset 200)",
+  "numbers_events": "TRAINLOG probe_check: parent uid, no uid reuse, unique uids per state, (after) = (before) + born - deleted + in - out",
+  "switches": "each switch on vs off for one periodic reattach on the replay state: only Gaussians of its defined set change tag/index/position; all others byte-identical"
+ },
+ "figures": {"rule": "one script for all cells and arms, same colours and legends, no text except cell name, axes, legend; json provenance per figure", "list": "order 7.2"},
+ "execution": {"retry": "one retry with the same settings on error/OOM, then 결과 없음", "gpu_check": "nvidia-smi before each GPU job; never stop other GPU processes", "long_jobs": "nohup/background, checks only at end and 7000 health"},
+ "reading_appendix_verbatim": [
+  ["1-가 + 1-나 > 50 %", "그 칸의 하락은 주로 채점 문턱과 방식 탓이다. 개선 대상이 아니라 원고에서 τ 민감도와 함께 적는다"],
+  ["1-다 > 50 %", "'떠 있는 면'이 아니라 '위 물체 아래를 비운 것'으로 고쳐 부른다"],
+  ["2-가 또는 2-나가 가장 큼", "판정은 맞았지만 목표가 없거나 틀렸다. 목표 만들기를 고친다"],
+  ["2-다가 가장 큼", "앞 패치 목표가 가려 그 점의 목표가 학습에 들어가지 않았다. 목표 깊이 지도 규칙을 고친다"],
+  ["2-라가 가장 큼", "영상으로 관측되지 않는 자리다. 범위·한계로 적는다"],
+  ["2-마가 가장 큼", "목표는 들어갔으나 무게가 약하다. 정밀도 무게를 본다"],
+  ["3번 범인 후보가 하나", "'판정이 맞은 곳의 틀린 면은 ○○ 가우시안이 그린다'(배율과 함께)"],
+  ["범인 후보가 없음", "원인이 한 무리로 모이지 않는다. 분류별 비율을 그대로 적는다"],
+  ["4-가가 가장 큼", "표면 추출 단계의 문제다. 학습 쪽 고침보다 추출 쪽을 먼저 본다(메시 규칙을 바꿀지는 사용자 결정)"],
+  ["4-나가 가장 큼", "특정 시점에서만 앞을 덮는 가우시안이 생긴다. 그 시점 묶음의 학습을 본다"],
+  ["4-다 또는 4-라가 가장 큼", "가우시안 장면 자체의 문제다"],
+  ["5번 가장 큰 분류", "가: 재할당 조건, 나: 가장자리 처리, 다: 초기화와 밀도 제어, 라: 광도와 깊이 무게를 고칠 곳으로 본다"],
+  ["6-가", "원인 확인. 그 개입을 개선 설계의 출발점으로 쓴다"],
+  ["6-나", "원인이지만 무리 전체를 바꾸면 맞는 면도 해친다. 무리 안에서 고르는 규칙이 필요하다"],
+  ["6-다, 6-라", "원인이 더 있거나 다른 곳이다. 교차표의 다음 칸을 본다"]
+ ],
+ "reading_appendix_use": "분석 세션용. 이 작업은 쓰지 않는다(분류와 숫자만 낸다)"
+}

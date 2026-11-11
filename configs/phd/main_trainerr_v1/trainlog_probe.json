@@ -1,0 +1,33 @@
+{
+ "training_log": {
+  "save_iterations": [
+   0,
+   50,
+   100,
+   150,
+   200,
+   250,
+   300
+  ],
+  "scene_dump": true,
+  "flush_every": 100,
+  "curve_every": 100
+ },
+ "coordinates": {
+  "crs": "EPSG:25832",
+  "local_to_world_translation": [
+   690953.0,
+   5336071.0,
+   604.0
+  ],
+  "up": [
+   -0.0022003022295437485,
+   0.0038866451918428023,
+   0.9999900262798882
+  ],
+  "gravity_source": "/art/phase-payloads/p0-audit/data/work/gate_s0/freeze_recovery_v1/P2-GATE-S0-FREEZE-RECOVERY-v1/checkpoints/030-dense_mvs_and_gravity.json",
+  "gravity_sha256": "b301d3dc7dec2423ff5760c47db4dfef4f62e919b5aac5808a30c82a9330a8f8"
+ },
+ "note": "unit-check schedule only (small example, 300 iterations)",
+ "scientific_verdict": null
+}

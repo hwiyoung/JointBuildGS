@@ -1,0 +1,13 @@
+cell,arm,stage,method,metric,expected,recounted,diff_pp,over_0p1,denominator,old_rule_accuracy
+c1,own,target,judgment_mesh,completeness,77.5,77.5346,0.0346,False,3975,
+c1,own,trained,FINALTRAIN_30000,completeness,79.7,79.7484,0.0484,False,3975,
+c1,gt,target,gt_judgment_mesh,completeness,87.8,87.8239,0.0239,False,3975,
+c1,gt,trained,A1,completeness,81.2,81.2075,0.0075,False,3975,
+c3,own,target,judgment_mesh,accuracy,91.9,91.9242,0.0242,False,129313,91.9555
+c3,own,trained,FINALTRAIN_30000,accuracy,77.7,77.7386,0.0386,False,80480,80.99
+c3,gt,target,gt_judgment_mesh,accuracy,91.7,91.7233,0.0233,False,130173,91.7445
+c3,gt,trained,A1,accuracy,65.3,65.3448,0.0448,False,93377,71.156
+c2,own,target,judgment_mesh,completeness,75.9,75.918,0.018,False,23910,
+c2,own,trained,FINALTRAIN_30000,completeness,60.3,60.2844,-0.0156,False,23910,
+c2,gt,target,gt_judgment_mesh,completeness,76.8,76.8214,0.0214,False,23910,
+c2,gt,trained,A1,completeness,62.3,62.2585,-0.0415,False,23910,
