@@ -1,0 +1,124 @@
+{
+ "place": "south_wall_missing",
+ "group": "마주",
+ "image": "DJI_20241217093905_0026_D",
+ "j": 61,
+ "place_gt_rows": 4386,
+ "seen_place_points": 3921,
+ "blocked_pairs_this_view": {
+  "mvs": 309,
+  "prior": 3,
+  "trained": 25
+ },
+ "camera": {
+  "model": "undistorted pinhole crop of the FULL_OPENCV training camera",
+  "fx": 3717.199209328326,
+  "fy": 3717.199209328326,
+  "cx": 2649.8785097217174,
+  "cy": 1951.823292554264,
+  "full_opencv": [
+   3717.199209328326,
+   3717.199209328326,
+   2649.8785097217174,
+   1951.823292554264,
+   -0.1049826415750395,
+   -0.003823249957903659,
+   -0.00021362365060863573,
+   -0.00019476144102977563,
+   -0.014886189391970492,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "width": 5280,
+  "height": 3956,
+  "R": [
+   [
+    0.9139346665312743,
+    -0.4058048413539236,
+    -0.006771709244013463
+   ],
+   [
+    -0.16464285241022636,
+    -0.3554474262377778,
+    -0.920081441140492
+   ],
+   [
+    0.3709665166326914,
+    0.8420092386159769,
+    -0.39166859157041256
+   ]
+  ],
+  "t": [
+   -96.6637196071345,
+   -41.156526681812956,
+   43.636087335211165
+  ],
+  "crop_xyxy": [
+   2089.800839822991,
+   526.9558297692322,
+   3065.228259355939,
+   1307.2977653955907
+  ],
+  "output_size": [
+   1600,
+   1280
+  ],
+  "pixel_rule": "output pixel (i+.5) maps to crop[0]+(i+.5)*(crop[2]-crop[0])/W"
+ },
+ "source": {
+  "archive": "/art/phase-payloads/p0-audit/data/raw/uav/Images.zip",
+  "member": "Images/DJI_20241217093905_0026_D.JPG",
+  "crc32": 2963227661,
+  "size": 6504448,
+  "undistorted_valid_pixel_fraction": 1.0
+ },
+ "corners_xyz": [
+  [
+   93.64191,
+   -1.2798699999999998,
+   -43.3
+  ],
+  [
+   93.64191,
+   -1.2798699999999998,
+   -25.0
+  ],
+  [
+   110.96409,
+   -8.05213,
+   -25.0
+  ],
+  [
+   110.96409,
+   -8.05213,
+   -43.3
+  ]
+ ],
+ "corners_px": [
+  [
+   254.43317203460126,
+   1284.1050518961413
+  ],
+  [
+   191.08648080759667,
+   18.579949616823676
+  ],
+  [
+   1487.18253560313,
+   6.80277073607967
+  ],
+  [
+   1452.2377944175375,
+   1263.5746486036912
+  ]
+ ],
+ "kind": "결과",
+ "mesh": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__LoD2__FINALTRAIN_30000/primary.ply",
+ "mesh_sha256": "007cc6423bbe55fde5adba006d6dbc311265e2b196807ec60e8f344ff8ca3e1d",
+ "hit_pixels": 1935476,
+ "color_rule": "GTJUDGE addendum6 palette: result minus reference along the oriented triangle normal (cylinder query), white within tau, red above (outside), blue below (inside), saturation 1 m, no reference #8C95A3",
+ "at": "2026-11-11T22:45:15.957118+09:00",
+ "text_in_figure": false,
+ "scientific_verdict": null
+}

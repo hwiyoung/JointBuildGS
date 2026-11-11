@@ -1,0 +1,63 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1",
+ "addendum": 1,
+ "scientific_verdict": null,
+ "order": "docs/experiments/phd/main_trainerr_v1/addendum1/덧붙임1_발주문.md",
+ "folders": {"docs": "docs/experiments/phd/main_trainerr_v1/addendum1/", "payload": "PH/main_trainerr_v1/PHD-MAIN-TRAINERR-v1/addendum1/", "tables": "docs/experiments/phd/main_trainerr_v1/addendum1/tables/", "figures": "docs/experiments/phd/main_trainerr_v1/addendum1/figures/", "scripts": "scripts/phd/main_trainerr_v1/addendum1/", "configs": "configs/phd/main_trainerr_v1/addendum1.json (+ .lock.json)"},
+ "folder_note": "order 1.1 says only v1-folder/addendum1/; tables/figures go under the docs addendum1 folder (the order's tables/addendum1 and figures/addendum1 paths are read relative to it)",
+ "places": {
+  "frame": "B0_b10__LoD2 local frame = GTJUDGE addendum11 final_data reference__xyz",
+  "south_wall": {"p0": [92.990, -1.025], "e": [0.9313, -0.3641], "n_out": [-0.3641, -0.9313], "along_m": [0.7, 19.3], "z_m": [-43.3, -25.0], "offset_m": [-5.0, 2.0],
+                  "offset_rule": "d = (xy - p0).n_out: +2 m in front (outside) to -5 m behind; wall face d = 0; behind-wall result point = d < -0.64",
+                  "missing_part": "GT rows in the zone with case_id 4 (영상 깊이 결측)", "valid_part": "GT rows in the zone with case_id 0 (두 자료 모두 유효)",
+                  "corners": "zone corners on the wall face: along 0.7/19.3 x z -43.3/-25.0 at d = 0"},
+  "long_wall": {"corner": "p0 + 20 e", "axis": "-n_out (the wall runs from the corner in the -n_out direction)", "along_m": [5.0, 25.0], "z_m": [-43.3, -25.0], "n_out": "+e (outside = continuing the south-wall direction beyond the corner)", "offset_m": [-5.0, 2.0],
+                "corners": "along 5/25 x z -43.3/-25.0 at the face (offset 0)"},
+  "annex_roof_edge": {"centre": [89.8, 1.7, -36.9], "x": [87.7, 92.0], "y": [0.8, 2.5], "z_m": [-38.9, -34.9], "z_rule": "centre z +/- 2 m (the order gives only XY)", "corners": "x 87.7/92.0 x y 0.8/2.5 at z -36.9"},
+  "back_wall_bottom": {"centres": [[103.0, 21.5, -43.3], [110.5, 40.4, -43.4]], "radius_m": 2.0, "rule": "3D distance <= 2 m to either centre", "corners": "the two centres +/- 2 m along their connecting horizontal direction (4 points at their z)"},
+  "check": "GT wall points of the zone must cluster at d ~ 0; reported in tables/place_check.csv; if not, the nearest wall plane is fitted and reported first"
+ },
+ "visibility_a1": {
+  "rule": "inside the image, z > 0, and the camera-to-point ray is not hit more than tau (the point's tau) before the point by (1) the site MVS mesh (AXES71 mvs/<site>/mesh_mvs_a.ply), (2) the site prior mesh (STAGE1 defs/<site>/prior_<prior>.npz V,F), (3) the arm's trained mesh. Result points: hits within 0.1 m of the point never block (tau > 0.1 already covers it)",
+  "coverage_note": "the MVS mesh and the ALS prior mesh cover the unit box only (buildings outside the box are missing); the LoD2 prior mesh holds whole buildings and reaches outside the box",
+  "rule_check": "c3 control result points: share of seen views whose render depth reproduces the result surface (|n.(X_v - p)| <= tau); PASS >= 90 %; reported first, never stops",
+  "facing": "angle between point-to-camera direction and the reference normal (result points: stored reference-aligned normal) <= 30 deg",
+  "pixel": "floor(K X / z + 0.5) on the 1024x741 training camera (same as v1)"
+ },
+ "work_ga": {
+  "places": ["south_wall_missing", "south_wall_valid", "annex_roof_edge", "back_wall_bottom"],
+  "points_for_selection": "GT rows (rows.npz) of the place; visibility_a1 with the own arm's trained mesh",
+  "select": "per place the training image with most seen place points among facing views and among oblique views; ties smaller image name",
+  "camera": "full-resolution FULL_OPENCV camera of the training image (FINALTRAIN inherited_judgeapply Cameras), photo from p0-audit raw Images.zip; crop undistorted with the GTJUDGE addendum9 undistort_crop rule to 1600x1280 (pinhole fx,fy,cx,cy of the same camera); 3D points projected with the same pinhole",
+  "crop": "GTJUDGE addendum9 bounds_crop (aspect 1.25, padding 1.06) around the projected seen place points",
+  "points_overlay": "seen GT rows coloured by case (addendum6 case_colors), c1 own lost points blue (#1F5FD6), c3 own wrong result points red (#D62728); only seen points (visibility_a1)",
+  "surfaces": "own arm trained mesh and own target surface (judgment_mesh) ray cast per crop pixel; colour = GTJUDGE addendum6 palette (result minus reference along the oriented triangle normal, cylinder query; white within tau, red above, blue below, saturation 1 m, no reference #8C95A3)",
+  "arm": "own (본 방법 판정): the red points are own-arm result points",
+  "corner_marks": "small crosses at the place corners (places.*.corners)",
+  "legend": "one separate legend image, no text inside the photo figures"
+ },
+ "work_ra": {
+  "scenes": ["B0_b10__ALS", "B0_b10__LoD2", "B173nb_b10__ALS", "B173nb_b10__LoD2", "R1rep_b10__ALS", "R1rep_b10__LoD2"],
+  "arms": {"own": "all six", "gt": "five (B173nb_b10__LoD2 has no A1 run: 없음)"},
+  "completeness_points": "GT rows within tau on the arm's target surface (addendum11 reference__<target>__within_tau1); > 200000 -> random 200000 (seed 20261111); outcome = within tau on the trained mesh",
+  "point_values": {"seen_views": "visibility_a1", "applied_views": "seen views with map owner == point column patch row", "supervision": "sum of map weights over applied views", "weight_median": "median map weight over applied views", "bound_opacity": "max opacity among Gaussians bound (target_tag 1) to the point's column patch with |n.(x-p)| <= tau; none = '없음'"},
+  "accuracy_patches": "per prior patch (valid target row): trained-mesh result samples (eligible_new) whose column owner maps to the patch; outcome = share outside tau; target-surface share from the target-mesh result samples the same way",
+  "patch_values": {"supervision": "sum over all training views of the map weights of pixels owned by the patch / patch area", "applied_views": "views with >= 1 owned pixel", "bound": "count, max and median opacity of Gaussians bound to the patch at 30000"},
+  "bins": {"deciles": "per scene x arm x case, value deciles (quantile edges, ties merged); '없음' its own bin", "two_axis": "applied views x weight median quintiles (5x5)", "hypotheses": "supervision quintiles x opacity bins [없음, <0.1, 0.1-0.5, >=0.5]", "pooled": "all scenes pooled with the same bins computed on the pooled values"},
+  "figures": "per scene x arm: outcome vs supervision (log x) by case; outcome by opacity bin bars; R1 ALS and R1 LoD2 top maps (supervision, bound opacity, outcome)",
+  "case_colors": "GTJUDGE addendum6 case_colors"
+ },
+ "work_da": {"points": "v1 sets c2 lost and control (R1rep_b10__ALS)", "remain": "v1 3-바 test for every point (bound to the column patch with |n.(x-p)| <= tau)", "opacity_bins": [0.1, 0.5],
+             "order": "seen views (v1 rule): share where the drawer (v1 render, max alpha*T) is closer to the camera than the nearest remaining bound Gaussian (camera z of centres)",
+             "refsim": "check6 refsim_<arm>_bg model: per lost-point seen view render depth class: floor (|d| <= tau), other surface, empty (alpha < 0.5)"},
+ "work_na": {
+  "recount": "B0 c1 and c3 checks 2-4 with visibility_a1 (v1 rules, orders, thresholds); control points too; tables suffix _a1; c1 split by place (annex_roof_edge, back_wall_bottom, other)",
+  "south_wall_sets": {"behind": "trained result samples in the zone with eligible_new and not within tau and d < -0.64", "face": "zone result samples eligible_new and within tau", "max": 50000, "seed": 20261111, "split": "all, case 0, case 4 (sample_reference_row case)"},
+  "observation": "GT rows on the two wall faces (|d| <= tau_wall and wall flag): seen views (visibility_a1), incidence angle (min, median), applied views, weight median, render-depth offset along the wall normal (behind positive; median per point; also by incidence 0-30/30-60/>60)",
+  "opacity": "patches whose target lies in the wall zone (|d_target| <= 1 m): bound Gaussians count, per m2, opacity bins and median; retained share from initial seeds (init_id of the patch seeds still bound to the same patch); patch area share with no bound Gaussian; split south wall case 0 / case 4 by the patch's GT rows majority",
+  "code_check": "file:line list of opacity reset, opacity/size pruning, clone/split paths and any bound/unbound distinction in r23/r25",
+  "baseline": "RESCORE addendum3_stage2 B0_b10__LoD2__baseline_30000 with addendum11 stored distances"
+ },
+ "points_files": "npz per work (parquet engine not available); > 200 MB -> random 200000 rows",
+ "commits": "only addendum1 paths (configs/phd/main_trainerr_v1/addendum1.json + lock, scripts/phd/main_trainerr_v1/addendum1/, docs/experiments/phd/main_trainerr_v1/addendum1/)"
+}

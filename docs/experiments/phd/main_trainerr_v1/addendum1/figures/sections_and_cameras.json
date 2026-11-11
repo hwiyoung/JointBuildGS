@@ -1,0 +1,112 @@
+{
+ "at": "2026-11-11T22:52:45.850720+09:00",
+ "sections": {
+  "c1_own": {
+   "stem": "B0_b10__LoD2",
+   "start_xy": [
+    84.89255403971346,
+    3.41204974379914
+   ],
+   "end_xy": [
+    94.49841704503325,
+    -0.071364226032951
+   ],
+   "half_width_m": 0.6,
+   "thickness_m": 1.2,
+   "rule": "GTJUDGE section.json"
+  },
+  "c1_gt": {
+   "stem": "B0_b10__LoD2",
+   "start_xy": [
+    84.89255403971346,
+    3.41204974379914
+   ],
+   "end_xy": [
+    94.49841704503325,
+    -0.071364226032951
+   ],
+   "half_width_m": 0.6,
+   "thickness_m": 1.2,
+   "rule": "GTJUDGE section.json"
+  },
+  "c2_own": {
+   "stem": "R1rep_b10__ALS",
+   "start_xy": [
+    -10.301976349915051,
+    7.456777618889092
+   ],
+   "end_xy": [
+    39.6471348025373,
+    35.224239170755084
+   ],
+   "half_width_m": 0.6,
+   "thickness_m": 1.2,
+   "rule": "GTJUDGE section.json"
+  },
+  "c2_gt": {
+   "stem": "R1rep_b10__ALS",
+   "start_xy": [
+    -10.301976349915051,
+    7.456777618889092
+   ],
+   "end_xy": [
+    39.6471348025373,
+    35.224239170755084
+   ],
+   "half_width_m": 0.6,
+   "thickness_m": 1.2,
+   "rule": "GTJUDGE section.json"
+  },
+  "c3_own": {
+   "stem": "B0_b10__LoD2",
+   "start_xy": [
+    105.72112284390238,
+    -5.603803648691695
+   ],
+   "end_xy": [
+    100.99213248813714,
+    -2.264597301289398
+   ],
+   "half_width_m": 0.6,
+   "thickness_m": 1.2,
+   "rule": "largest 0.6 m cluster of lost points, principal XY axis"
+  },
+  "c3_gt": {
+   "stem": "B0_b10__LoD2",
+   "start_xy": [
+    106.24052915177111,
+    -4.387560258179986
+   ],
+   "end_xy": [
+    97.33418788365574,
+    -1.6687483740600786
+   ],
+   "half_width_m": 0.6,
+   "thickness_m": 1.2,
+   "rule": "largest 0.6 m cluster of lost points, principal XY axis"
+  }
+ },
+ "cameras": {
+  "check6": {
+   "projection": "orthographic vertex depth splat inside the record range box (region/<stem>.json grid bounds)",
+   "views": [
+    {
+     "azimuth_deg": 0,
+     "elevation_deg": 90,
+     "name": "top"
+    },
+    {
+     "azimuth_deg": 45,
+     "elevation_deg": 35
+    },
+    {
+     "azimuth_deg": 225,
+     "elevation_deg": 35
+    }
+   ],
+   "rule": "te_figs.splat: forward = -(cos e cos a, cos e sin a, sin e); right = forward x z_up; image 900x900, extent = max span of the projected vertices"
+  }
+ },
+ "frame": "site local frame; EPSG:25832 = local + [690953, 5336071, 604]",
+ "scientific_verdict": null
+}
