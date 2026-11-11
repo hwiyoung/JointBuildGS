@@ -9,6 +9,7 @@ STAGES = {
                   cfg=['trainlog_v1.json', 'trainlog_v1.lock.json', 'trainlog_v1.unitcheck_v2.json', 'trainlog_v1.unitcheck_v2.lock.json', 'trainlog_v1.runtime.lock.json', 'trainlog_v1.runtime.lock.attempt1_superseded.json'],
                   payload=['renders', 'frames', 'video', 'figures', 'analysis', 'lineage', 'meshes', 'events_small']),
 }
+STAGES['video_v2'] = dict(docs=['동영상_v2_읽는법.md', 'issues.md', 'progress.md'], cfg=['trainlog_v1.video_v2.json', 'trainlog_v1.video_v2.lock.json'], payload=['video_v2/video', 'video_v2/frames'])
 PAYLOAD_SKIP = ('data.npz', 'vertices', '.ply')
 def main(stage):
     spec = STAGES[stage]; stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M')
