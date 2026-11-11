@@ -59,6 +59,7 @@ def run(cmd, log):
 
 def job(script, *args, gpu=None, fork=FORK, name=None, cpus=8, memory='40g', env=(), split_site=None, cfg_rw=False):
     stem = Path(script).stem; name = name or f'jbgs-trainerr-{stem}-{"-".join(args)}'[:120].replace(':', '').replace('/', '_')
+    import re; name = re.sub(r'[^a-zA-Z0-9_.-]', 'x', name)  # docker names are ASCII only
     log = O/'logs'/f'{dt.datetime.now().strftime("%Y%m%dT%H%M%S")}_{stem}_{"_".join(args)[:60].replace("/", "_")}.log'
     cmd = command(name, script, list(args), gpu=gpu, fork=fork, cpus=cpus, memory=memory, env=env, split_site=split_site, cfg_rw=cfg_rw)
     rc, s = run(cmd, log); print(script, args, rc, round(s), log, flush=True)

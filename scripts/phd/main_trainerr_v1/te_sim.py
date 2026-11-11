@@ -14,7 +14,7 @@ def ply_filter(src, dst, keep):
             if line.strip() == b'end_header': break
         props = [l.split()[1] for l in head.decode('ascii').splitlines() if l.startswith('property')]
         n = int(next(l.split()[2] for l in head.decode('ascii').splitlines() if l.startswith('element vertex'))); size = {b'float': 4, 'float': 4}
-        rec = 4*len(props); assert all(p == 'float' for p in props), 'non-float PLY property'
+        rec = 4*len(props); assert all(p in ('float', 'int', 'uint', 'float32', 'int32', 'uint32') for p in props), 'non-4-byte PLY property'
         data = np.frombuffer(f.read(n*rec), dtype=np.uint8).reshape(n, rec)
     out = data[keep]; h = head.decode('ascii').replace(f'element vertex {n}', f'element vertex {len(out)}')
     Path(dst).parent.mkdir(parents=True, exist_ok=True)
@@ -26,7 +26,7 @@ def region_inside(stem, xyz):
         b = np.asarray(b[:6], float); i0 = np.floor((b[[0, 2, 4]]-lo)/v+1e-9).astype(int); i1 = np.ceil((b[[1, 3, 5]]-lo)/v-1e-9).astype(int); occ[i0[0]:i1[0], i0[1]:i1[1], i0[2]:i1[2]] = True
     k = np.floor((xyz-lo)/v).astype(int); ok = ((k >= 0) & (k < np.array(shape))).all(1); out = np.zeros(len(xyz), bool); out[ok] = occ[k[ok, 0], k[ok, 1], k[ok, 2]]; return out
 
-def prep(stem, arm, cls, tag=''):
+def prep(stem, arm, cls, prefix='sim'):
     from s0_sets import columns
     ap = arm_paths(stem, arm); model = Path(ap['model']); snap = loadz(model/'target_monitor/snapshot_30000.npz', ['xyz', 'origin', 'target_tag', 'target_index', 'patch_ids'])
     ins = region_inside(stem, snap['xyz'].astype(float)); tag_ = snap['target_tag']; ori = snap['origin']
@@ -36,7 +36,7 @@ def prep(stem, arm, cls, tag=''):
         b = np.flatnonzero(ins & (tag_ == 1)); core = loadz(JA/'core_points'/f'{stem}.npz'); own, _ = columns(snap['xyz'][b].astype('f8'), core, O/'work/columns'/f'sim_{stem}_{arm}')
         colrow = np.where(own >= 0, core['source_index'][np.clip(own, 0, None)], -1); bp = snap['patch_ids'][snap['target_index'][b]]
         pick = (bp == colrow) if cls == '3-가' else (bp != colrow); sel = np.zeros(len(ins), bool); sel[b[pick]] = True
-    fam = f'sim_{arm}_{POP[cls]}'; drop = np.flatnonzero(sel); ply = model/'point_cloud/iteration_30000/point_cloud.ply'
+    fam = f'{prefix}_{arm}_{POP[cls]}'; drop = np.flatnonzero(sel); ply = model/'point_cloud/iteration_30000/point_cloud.ply'
     out = O/'sim'/f'{stem}__{fam}'; savez(out/'drop.npz', full_index=drop); ply_filter(ply, out/'point_cloud.ply', ~sel)
     dump(out/'prep.json', dict(at=now(), stem=stem, arm=arm, cls=cls, family=fam, population=cfg()['check6']['populations'][cls], in_range=int(ins.sum()), dropped=len(drop),
          gaussians=len(sel), source_ply=str(ply), source_sha256=sha(ply), ply=str(out/'point_cloud.ply'), ply_sha256=sha(out/'point_cloud.ply'), rule='removed Gaussians = opacity 0', scientific_verdict=None))
@@ -80,12 +80,12 @@ def eval_(stem, arm, family):
     A11.close()
     dump(O/'sim'/f'{stem}__{family}'/'eval.json', dict(at=now(), rows=rows, scientific_verdict=None)); print('EVAL', rows, flush=True)
 
-def host(gpu, stem, arm, *classes):
+def host(gpu, stem, arm, prefix, *classes):
     sys.path.insert(0, str(Path(__file__).parent)); import launch as Lc
     from te_pipeline import must
     for cls in classes:
-        fam = f'sim_{arm}_{POP[cls]}'; wd = Lc.O/'gtj/meshes'/f'{stem}__{fam}'/'final_work'; final = Lc.O/'gtj/meshes'/f'{stem}__{fam}'/'final.ply'
-        if not (Lc.O/'sim'/f'{stem}__{fam}'/'prep.json').exists(): must(Lc.job('te_sim.py', 'prep', stem, arm, cls, cpus=12, memory='40g'), 'prep')
+        fam = f'{prefix}_{arm}_{POP[cls]}'; wd = Lc.O/'gtj/meshes'/f'{stem}__{fam}'/'final_work'; final = Lc.O/'gtj/meshes'/f'{stem}__{fam}'/'final.ply'
+        if not (Lc.O/'sim'/f'{stem}__{fam}'/'prep.json').exists(): must(Lc.job('te_sim.py', 'prep', stem, arm, cls, prefix, cpus=12, memory='40g'), 'prep')
         ply = f'/te/sim/{stem}__{fam}/point_cloud.ply'
         if not final.exists():
             if not (Lc.O/'gtj/renders'/f'{stem}__{fam}'/'receipt.json').exists(): must(Lc.gtj('render', stem, fam, ply, int(gpu)), 'render')

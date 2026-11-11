@@ -1,0 +1,29 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1",
+ "addendum": "check6_v1",
+ "created_at": "2026-11-11T19:06:26.535317+09:00",
+ "base_config_sha256": "461258434bfacdf358211a1668284892d2318c51ab702e6821f1da82c7065be8",
+ "reference_simulation": {
+  "decided_by": "사용자(2026-11-11 19시경 대화: 참고로 돌리기)",
+  "status": "참고 — 발주 4.5 범인 후보 아님(② 3-라 잃은 점 42.9/49.3 %, 문턱 50 %)",
+  "cells": [
+   "c2"
+  ],
+  "scene": "R1rep_b10__ALS",
+  "arms": [
+   "own",
+   "gt"
+  ],
+  "cls": "3-라",
+  "population": "trainerr_v1.json check6.populations 3-라 (origin==0 and target_tag!=1) inside the record range, removed = opacity 0",
+  "family": "refsim_<arm>_bg",
+  "outputs": "recovery, lost-point recovery, control loss, scene accuracy loss, 6-가..라 computed by the same rule but reported only as 참고; not entered in the culprit table, the 6.3 classification table or the confirm-run selection"
+ },
+ "c3_view_drop": {
+  "trigger": "order 6.1: 4-가 >= 50 % of the cell lost points (c3: 73.4 own / 67.1 gt)",
+  "wrong_view_meaning_c3": "in c3 맞음 means the render depth reproduces the wrong result surface (order 4.4); the views that make the wrong surface are therefore the reproducing views. A view is dropped when it reproduces the result point for more than half of the c3 4-가 points that see it",
+  "wrong_view_meaning_c1_c2": "views that are 틀림 (|d|>tau) for more than half of the 4-가 points that see them (not triggered: 4-가 < 50 %)",
+  "mesh": "unchanged mesh recipe on the stored 30000 render depths with the dropped views removed; diagnostic only"
+ },
+ "scientific_verdict": null
+}
