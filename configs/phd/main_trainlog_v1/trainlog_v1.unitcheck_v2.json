@@ -1,0 +1,21 @@
+{
+ "task_id": "PHD-MAIN-TRAINLOG-v1",
+ "revision": "unit_check_v2",
+ "created_at": "2026-11-11T12:14:08.643913+09:00",
+ "base_config_sha256": "98c9a727a00b23af7426a358b06cd2413c56764e43adfcd731515d4aa2c8810e",
+ "reason": "v1 operationalization compared the maximum over four on/off cross pairs with a single off/off and a single on/on pair; with nondeterministic CUDA atomics (same-setting runs already differ: 100 it xyz max 1.305/1.310 m, 300 it count 43/375) this is biased toward failure. Observed before this revision: v1 fails by small margins (100 it xyz max cross 1.396 vs 1.305/1.310; 300 it count cross 213 vs 43). Reported as such.",
+ "decision_invariance": {
+  "A": "deterministic real-state replay (replay_test.py): byte-identical model, Adam, density stats, target metadata, controller events, RNG; off vs on and r23 vs r27-off",
+  "B": "GPU repeats: off a,b,c,d and on a,b,c,d (on c,d = final refactored code). For each quantity and iteration 100/200/300: median over the 16 on/off cross pairs <= maximum over the 12 same-setting pairs (6 off/off + 6 on/on)",
+  "quantities": [
+   "count difference",
+   "tag-count L1 difference",
+   "bound count difference",
+   "at equal counts: xyz/scaling/opacity max abs diff, tag mismatch, target_index mismatch"
+  ],
+  "r23": "same rule B with r23 vs off a..d (4 pairs) against off/off pairs; plus replay r23 vs r27-off byte-identical",
+  "status_rule": "PASS iff A PASS and B PASS for every quantity; otherwise stop and ask (order 1.11)"
+ },
+ "event_balance": "uid sets replayed in seq order (exit and re-entry within one interval allowed); count equation unchanged",
+ "scientific_verdict": null
+}

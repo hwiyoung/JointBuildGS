@@ -1,0 +1,111 @@
+{
+  "at": "2026-11-11T12:12:14.637723+09:00",
+  "start": "/tl/probe/r27_off_a/model/jbgs_complete/iteration_200/checkpoint.pth",
+  "start_sha256": "3f4cd0b525f02b21b981e2471e8e792dedf7e137e098056409cbca0965ae2c3d",
+  "iterations": [
+    201,
+    500
+  ],
+  "deterministic_algorithms": true,
+  "parts_byte_equal": {
+    "model": true,
+    "adam": true,
+    "meta": true,
+    "events": true,
+    "rng": true,
+    "trace": true
+  },
+  "status": "PASS",
+  "trace_off": [
+    [
+      250,
+      61406,
+      46315,
+      3288
+    ],
+    [
+      300,
+      30125,
+      20320,
+      1544
+    ],
+    [
+      350,
+      30125,
+      20320,
+      1544
+    ],
+    [
+      400,
+      14747,
+      10598,
+      517
+    ],
+    [
+      450,
+      14747,
+      10598,
+      517
+    ],
+    [
+      500,
+      14747,
+      10588,
+      527
+    ]
+  ],
+  "trace_on": [
+    [
+      250,
+      61406,
+      46315,
+      3288
+    ],
+    [
+      300,
+      30125,
+      20320,
+      1544
+    ],
+    [
+      350,
+      30125,
+      20320,
+      1544
+    ],
+    [
+      400,
+      14747,
+      10598,
+      517
+    ],
+    [
+      450,
+      14747,
+      10598,
+      517
+    ],
+    [
+      500,
+      14747,
+      10588,
+      527
+    ]
+  ],
+  "events_recorded": {
+    "birth": 72,
+    "delete": 28935,
+    "opacity_reset": 1,
+    "range": 396,
+    "release": 3389,
+    "retarget": 22367
+  },
+  "delete_reasons": {
+    "1": 28935
+  },
+  "birth_how": {
+    "2": 72
+  },
+  "controller_events": 11,
+  "scientific_verdict": null
+}

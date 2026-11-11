@@ -1,0 +1,858 @@
+{
+  "at": "2026-11-11T12:19:47.433907+09:00",
+  "status": "FAIL",
+  "checks": {
+    "decision_invariance_replay": true,
+    "r23_replay": true,
+    "gpu_repeat_rule_B": false,
+    "id_tracking": true,
+    "event_balance": true,
+    "self_check": true
+  },
+  "rule": {
+    "A": "deterministic real-state replay (replay_test.py): byte-identical model, Adam, density stats, target metadata, controller events, RNG; off vs on and r23 vs r27-off",
+    "B": "GPU repeats: off a,b,c,d and on a,b,c,d (on c,d = final refactored code). For each quantity and iteration 100/200/300: median over the 16 on/off cross pairs <= maximum over the 12 same-setting pairs (6 off/off + 6 on/on)",
+    "quantities": [
+      "count difference",
+      "tag-count L1 difference",
+      "bound count difference",
+      "at equal counts: xyz/scaling/opacity max abs diff, tag mismatch, target_index mismatch"
+    ],
+    "r23": "same rule B with r23 vs off a..d (4 pairs) against off/off pairs; plus replay r23 vs r27-off byte-identical",
+    "status_rule": "PASS iff A PASS and B PASS for every quantity; otherwise stop and ask (order 1.11)"
+  },
+  "runs": [
+    "r23",
+    "r27_off_a",
+    "r27_off_b",
+    "r27_off_c",
+    "r27_off_d",
+    "r27_on_a",
+    "r27_on_b",
+    "r27_on_c",
+    "r27_on_d"
+  ],
+  "gpu_repeat": [
+    {
+      "iteration": 100,
+      "quantity": "bound",
+      "same_n": 12,
+      "same_min": 0,
+      "same_max": 9,
+      "cross_n": 16,
+      "cross_median": 3.5,
+      "cross_max": 9,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 3.5,
+      "offoff_max": 8,
+      "rule_r23": true
+    },
+    {
+      "iteration": 100,
+      "quantity": "count",
+      "same_n": 12,
+      "same_min": 0,
+      "same_max": 0,
+      "cross_n": 16,
+      "cross_median": 0.0,
+      "cross_max": 0,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 0.0,
+      "offoff_max": 0,
+      "rule_r23": true
+    },
+    {
+      "iteration": 100,
+      "quantity": "index_mismatch",
+      "same_n": 12,
+      "same_min": 1066,
+      "same_max": 1564,
+      "cross_n": 16,
+      "cross_median": 1350.5,
+      "cross_max": 1581,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 1424.5,
+      "offoff_max": 1564,
+      "rule_r23": true
+    },
+    {
+      "iteration": 100,
+      "quantity": "opacity_max",
+      "same_n": 12,
+      "same_min": 0.8527766466140747,
+      "same_max": 1.4650336503982544,
+      "cross_n": 16,
+      "cross_median": 0.9596362560987473,
+      "cross_max": 1.5820600986480713,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 1.593959093093872,
+      "offoff_max": 1.095858097076416,
+      "rule_r23": false
+    },
+    {
+      "iteration": 100,
+      "quantity": "scaling_max",
+      "same_n": 12,
+      "same_min": 0.08795523643493652,
+      "same_max": 0.1419990062713623,
+      "cross_n": 16,
+      "cross_median": 0.11492729187011719,
+      "cross_max": 0.1374807357788086,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 0.11988109350204468,
+      "offoff_max": 0.1419990062713623,
+      "rule_r23": true
+    },
+    {
+      "iteration": 100,
+      "quantity": "tag_l1",
+      "same_n": 12,
+      "same_min": 0,
+      "same_max": 18,
+      "cross_n": 16,
+      "cross_median": 7.0,
+      "cross_max": 18,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 7.0,
+      "offoff_max": 16,
+      "rule_r23": true
+    },
+    {
+      "iteration": 100,
+      "quantity": "tag_mismatch",
+      "same_n": 12,
+      "same_min": 31,
+      "same_max": 50,
+      "cross_n": 16,
+      "cross_median": 40.5,
+      "cross_max": 52,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 38.5,
+      "offoff_max": 49,
+      "rule_r23": true
+    },
+    {
+      "iteration": 100,
+      "quantity": "xyz_max",
+      "same_n": 12,
+      "same_min": 0.9753894805908203,
+      "same_max": 1.3643264770507812,
+      "cross_n": 16,
+      "cross_median": 1.3185653686523438,
+      "cross_max": 1.3959579467773438,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 1.3885574340820312,
+      "offoff_max": 1.3299560546875,
+      "rule_r23": false
+    },
+    {
+      "iteration": 200,
+      "quantity": "bound",
+      "same_n": 12,
+      "same_min": 1,
+      "same_max": 45,
+      "cross_n": 16,
+      "cross_median": 20.5,
+      "cross_max": 57,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 16.5,
+      "offoff_max": 42,
+      "rule_r23": true
+    },
+    {
+      "iteration": 200,
+      "quantity": "count",
+      "same_n": 12,
+      "same_min": 1,
+      "same_max": 43,
+      "cross_n": 16,
+      "cross_median": 16.5,
+      "cross_max": 49,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 16.5,
+      "offoff_max": 40,
+      "rule_r23": true
+    },
+    {
+      "iteration": 200,
+      "quantity": "tag_l1",
+      "same_n": 12,
+      "same_min": 17,
+      "same_max": 118,
+      "cross_n": 16,
+      "cross_median": 49.0,
+      "cross_max": 105,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 52.5,
+      "offoff_max": 118,
+      "rule_r23": true
+    },
+    {
+      "iteration": 300,
+      "quantity": "bound",
+      "same_n": 12,
+      "same_min": 8,
+      "same_max": 365,
+      "cross_n": 16,
+      "cross_median": 152.0,
+      "cross_max": 369,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 100.0,
+      "offoff_max": 208,
+      "rule_r23": true
+    },
+    {
+      "iteration": 300,
+      "quantity": "count",
+      "same_n": 12,
+      "same_min": 12,
+      "same_max": 544,
+      "cross_n": 16,
+      "cross_median": 193.5,
+      "cross_max": 448,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 66.5,
+      "offoff_max": 286,
+      "rule_r23": true
+    },
+    {
+      "iteration": 300,
+      "quantity": "tag_l1",
+      "same_n": 12,
+      "same_min": 32,
+      "same_max": 544,
+      "cross_n": 16,
+      "cross_median": 215.5,
+      "cross_max": 448,
+      "rule_B": true,
+      "r23_n": 4,
+      "r23_median": 162.5,
+      "offoff_max": 286,
+      "rule_r23": true
+    }
+  ],
+  "replay": {
+    "at": "2026-11-11T12:12:47.415040+09:00",
+    "start": "/tl/probe/r27_off_a/model/jbgs_complete/iteration_200/checkpoint.pth",
+    "start_sha256": "3f4cd0b525f02b21b981e2471e8e792dedf7e137e098056409cbca0965ae2c3d",
+    "iterations": [
+      201,
+      500
+    ],
+    "deterministic_algorithms": true,
+    "parts_byte_equal": {
+      "model": true,
+      "adam": true,
+      "meta": true,
+      "events": true,
+      "rng": true,
+      "trace": true
+    },
+    "status": "PASS",
+    "trace_off": [
+      [
+        250,
+        61406,
+        46315,
+        3288
+      ],
+      [
+        300,
+        54754,
+        38411,
+        5359
+      ],
+      [
+        350,
+        54754,
+        38411,
+        5359
+      ],
+      [
+        400,
+        49127,
+        34038,
+        4536
+      ],
+      [
+        450,
+        49127,
+        34038,
+        4536
+      ],
+      [
+        500,
+        49127,
+        33973,
+        4601
+      ]
+    ],
+    "trace_on": [
+      [
+        250,
+        61406,
+        46315,
+        3288
+      ],
+      [
+        300,
+        54754,
+        38411,
+        5359
+      ],
+      [
+        350,
+        54754,
+        38411,
+        5359
+      ],
+      [
+        400,
+        49127,
+        34038,
+        4536
+      ],
+      [
+        450,
+        49127,
+        34038,
+        4536
+      ],
+      [
+        500,
+        49127,
+        33973,
+        4601
+      ]
+    ],
+    "events_recorded": {
+      "birth": 152,
+      "delete": 8758,
+      "opacity_reset": 1,
+      "range": 489,
+      "release": 3587,
+      "retarget": 30884
+    },
+    "delete_reasons": {
+      "1": 8752,
+      "2": 1,
+      "5": 5
+    },
+    "birth_how": {
+      "2": 142,
+      "3": 10
+    },
+    "controller_events": 11,
+    "extent": 272.3538131713867,
+    "scientific_verdict": null
+  },
+  "r23_replay": {
+    "at": "2026-11-11T12:13:44.511457+09:00",
+    "a": "r23",
+    "b": "r27off",
+    "parts_byte_equal": {
+      "model": true,
+      "adam": true,
+      "meta": true,
+      "events": true,
+      "rng": true,
+      "trace": true
+    },
+    "status": "PASS",
+    "trace": [
+      [
+        250,
+        61406,
+        46315,
+        3288
+      ],
+      [
+        300,
+        54754,
+        38411,
+        5359
+      ],
+      [
+        350,
+        54754,
+        38411,
+        5359
+      ],
+      [
+        400,
+        49127,
+        34038,
+        4536
+      ],
+      [
+        450,
+        49127,
+        34038,
+        4536
+      ],
+      [
+        500,
+        49127,
+        33973,
+        4601
+      ]
+    ],
+    "scientific_verdict": null
+  },
+  "tracking": {
+    "r27_on_a": {
+      "label": "r27_on_a",
+      "saves": [
+        "0",
+        "50",
+        "100",
+        "150",
+        "200_pre_reset",
+        "200",
+        "250",
+        "300"
+      ],
+      "failures": [],
+      "balance": [
+        {
+          "state": "50",
+          "before": 28857,
+          "births": 0,
+          "deletions": 0,
+          "enter": 90,
+          "exit": 144,
+          "after": 28803,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "100",
+          "before": 28803,
+          "births": 0,
+          "deletions": 0,
+          "enter": 57,
+          "exit": 64,
+          "after": 28796,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "150",
+          "before": 28796,
+          "births": 0,
+          "deletions": 0,
+          "enter": 39,
+          "exit": 56,
+          "after": 28779,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200_pre_reset",
+          "before": 28779,
+          "births": 379,
+          "deletions": 194,
+          "enter": 40,
+          "exit": 47,
+          "after": 28957,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200",
+          "before": 28957,
+          "births": 0,
+          "deletions": 0,
+          "enter": 0,
+          "exit": 0,
+          "after": 28957,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "250",
+          "before": 28957,
+          "births": 0,
+          "deletions": 0,
+          "enter": 28,
+          "exit": 50,
+          "after": 28935,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "300",
+          "before": 28935,
+          "births": 163,
+          "deletions": 5063,
+          "enter": 38,
+          "exit": 41,
+          "after": 24032,
+          "count_equal": true,
+          "uid_set_equal": true
+        }
+      ],
+      "event_counts": {
+        "birth": 542,
+        "delete": 5257,
+        "opacity_reset": 1,
+        "range": 694,
+        "release": 3629,
+        "retarget": 50556
+      },
+      "delete_reasons": {
+        "1": 5229,
+        "5": 28
+      },
+      "birth_how": {
+        "2": 493,
+        "3": 49
+      }
+    },
+    "r27_on_b": {
+      "label": "r27_on_b",
+      "saves": [
+        "0",
+        "50",
+        "100",
+        "150",
+        "200_pre_reset",
+        "200",
+        "250",
+        "300"
+      ],
+      "failures": [],
+      "balance": [
+        {
+          "state": "50",
+          "before": 28857,
+          "births": 0,
+          "deletions": 0,
+          "enter": 90,
+          "exit": 144,
+          "after": 28803,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "100",
+          "before": 28803,
+          "births": 0,
+          "deletions": 0,
+          "enter": 59,
+          "exit": 66,
+          "after": 28796,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "150",
+          "before": 28796,
+          "births": 0,
+          "deletions": 0,
+          "enter": 33,
+          "exit": 58,
+          "after": 28771,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200_pre_reset",
+          "before": 28771,
+          "births": 371,
+          "deletions": 197,
+          "enter": 44,
+          "exit": 49,
+          "after": 28940,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200",
+          "before": 28940,
+          "births": 0,
+          "deletions": 0,
+          "enter": 0,
+          "exit": 0,
+          "after": 28940,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "250",
+          "before": 28940,
+          "births": 0,
+          "deletions": 0,
+          "enter": 28,
+          "exit": 48,
+          "after": 28920,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "300",
+          "before": 28920,
+          "births": 150,
+          "deletions": 5307,
+          "enter": 34,
+          "exit": 36,
+          "after": 23761,
+          "count_equal": true,
+          "uid_set_equal": true
+        }
+      ],
+      "event_counts": {
+        "birth": 521,
+        "delete": 5504,
+        "opacity_reset": 1,
+        "range": 689,
+        "release": 3652,
+        "retarget": 50606
+      },
+      "delete_reasons": {
+        "1": 5474,
+        "5": 30
+      },
+      "birth_how": {
+        "2": 470,
+        "3": 51
+      }
+    },
+    "r27_on_c": {
+      "label": "r27_on_c",
+      "saves": [
+        "0",
+        "50",
+        "100",
+        "150",
+        "200_pre_reset",
+        "200",
+        "250",
+        "300"
+      ],
+      "failures": [],
+      "balance": [
+        {
+          "state": "50",
+          "before": 28857,
+          "births": 0,
+          "deletions": 0,
+          "enter": 90,
+          "exit": 144,
+          "after": 28803,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "100",
+          "before": 28803,
+          "births": 0,
+          "deletions": 0,
+          "enter": 56,
+          "exit": 63,
+          "after": 28796,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "150",
+          "before": 28796,
+          "births": 0,
+          "deletions": 0,
+          "enter": 34,
+          "exit": 54,
+          "after": 28776,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200_pre_reset",
+          "before": 28776,
+          "births": 373,
+          "deletions": 197,
+          "enter": 42,
+          "exit": 48,
+          "after": 28946,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200",
+          "before": 28946,
+          "births": 0,
+          "deletions": 0,
+          "enter": 0,
+          "exit": 0,
+          "after": 28946,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "250",
+          "before": 28946,
+          "births": 0,
+          "deletions": 0,
+          "enter": 33,
+          "exit": 55,
+          "after": 28924,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "300",
+          "before": 28924,
+          "births": 153,
+          "deletions": 5000,
+          "enter": 39,
+          "exit": 42,
+          "after": 24074,
+          "count_equal": true,
+          "uid_set_equal": true
+        }
+      ],
+      "event_counts": {
+        "birth": 526,
+        "delete": 5197,
+        "opacity_reset": 1,
+        "range": 700,
+        "release": 3653,
+        "retarget": 50564
+      },
+      "delete_reasons": {
+        "1": 5170,
+        "5": 27
+      },
+      "birth_how": {
+        "2": 478,
+        "3": 48
+      }
+    },
+    "r27_on_d": {
+      "label": "r27_on_d",
+      "saves": [
+        "0",
+        "50",
+        "100",
+        "150",
+        "200_pre_reset",
+        "200",
+        "250",
+        "300"
+      ],
+      "failures": [],
+      "balance": [
+        {
+          "state": "50",
+          "before": 28857,
+          "births": 0,
+          "deletions": 0,
+          "enter": 90,
+          "exit": 144,
+          "after": 28803,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "100",
+          "before": 28803,
+          "births": 0,
+          "deletions": 0,
+          "enter": 58,
+          "exit": 65,
+          "after": 28796,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "150",
+          "before": 28796,
+          "births": 0,
+          "deletions": 0,
+          "enter": 36,
+          "exit": 57,
+          "after": 28775,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200_pre_reset",
+          "before": 28775,
+          "births": 371,
+          "deletions": 177,
+          "enter": 42,
+          "exit": 48,
+          "after": 28963,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200",
+          "before": 28963,
+          "births": 0,
+          "deletions": 0,
+          "enter": 0,
+          "exit": 0,
+          "after": 28963,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "250",
+          "before": 28963,
+          "births": 0,
+          "deletions": 0,
+          "enter": 29,
+          "exit": 48,
+          "after": 28944,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "300",
+          "before": 28944,
+          "births": 159,
+          "deletions": 5010,
+          "enter": 36,
+          "exit": 42,
+          "after": 24087,
+          "count_equal": true,
+          "uid_set_equal": true
+        }
+      ],
+      "event_counts": {
+        "birth": 530,
+        "delete": 5187,
+        "opacity_reset": 1,
+        "range": 695,
+        "release": 3649,
+        "retarget": 50456
+      },
+      "delete_reasons": {
+        "1": 5158,
+        "5": 29
+      },
+      "birth_how": {
+        "2": 480,
+        "3": 50
+      }
+    }
+  },
+  "self_check_runs": {
+    "r27_on_b": true,
+    "r27_on_d": true
+  },
+  "scientific_verdict": null
+}
