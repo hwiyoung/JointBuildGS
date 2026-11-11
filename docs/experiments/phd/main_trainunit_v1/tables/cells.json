@@ -1,0 +1,460 @@
+{
+  "at": "2026-11-11T21:31:01.890366+09:00",
+  "rule": {
+    "method": "VastGaussian (Lin et al. 2024) progressive partition",
+    "ground_plane": "local x-y (EPSG:25832 axes); camera centres projected by dropping z",
+    "count": "k = round(819/200) = 4 -> m x n = 2 x 2; split x into m columns with equal camera counts (median), then each column along y into n rows with equal counts; outer boundaries extend to infinity",
+    "expand": "each finite cell edge moved outward by 20 % of the cell's extent along that axis (extent of the cell's own camera centres when the cell is unbounded on the opposite side)",
+    "camera_selection": "(1) cameras whose centre lies in the expanded cell; (2) other training cameras if the convex hull of the projected 8 corners of the expanded cell box, clipped to the image, covers >= 25 % of the image area; box z range = 0.5th-99.5th percentile of campus SfM z inside the expanded cell",
+    "points_and_targets": "SfM points and campus patches whose centre xy lies in the expanded cell; maps drawn from those patches only; sigma_ref and background sigma kept at the campus values (one scene = campus)",
+    "merge": "after training, keep Gaussians whose xy lies in the original (unexpanded) cell; concatenate the four 30,000-iteration point_cloud.ply files",
+    "records": "per cell image count, SfM point count, prior patch count, seeds; for each evaluation box: which cells it touches and whether a cell boundary crosses it",
+    "boundary_band": "evaluation reference rows within 2 m (xy) of an original cell boundary line; completeness and floating fraction (rows with signed normal-line distance s > +tau) counted separately"
+  },
+  "k": 4,
+  "m": 2,
+  "n": 2,
+  "x_cut": -3.794835525528808,
+  "y_cuts": null,
+  "train_images": 819,
+  "outer_limits_sfm_p05_p995": [
+    [
+      -178.3592834444587,
+      -198.72024147604742
+    ],
+    [
+      200.464803480057,
+      274.7147207883283
+    ]
+  ],
+  "boundaries": [
+    {
+      "cell": 0,
+      "axis": "x",
+      "at": -3.794835525528808,
+      "lo": [
+        -3.794835525528808,
+        -1000000.0
+      ],
+      "hi": [
+        -3.794835525528808,
+        -55.31725534129716
+      ]
+    },
+    {
+      "cell": 0,
+      "axis": "y",
+      "at": -55.31725534129716,
+      "lo": [
+        -1000000.0,
+        -55.31725534129716
+      ],
+      "hi": [
+        -3.794835525528808,
+        -55.31725534129716
+      ]
+    },
+    {
+      "cell": 1,
+      "axis": "x",
+      "at": -3.794835525528808,
+      "lo": [
+        -3.794835525528808,
+        -55.31725534129716
+      ],
+      "hi": [
+        -3.794835525528808,
+        1000000.0
+      ]
+    },
+    {
+      "cell": 1,
+      "axis": "y",
+      "at": -55.31725534129716,
+      "lo": [
+        -1000000.0,
+        -55.31725534129716
+      ],
+      "hi": [
+        -3.794835525528808,
+        -55.31725534129716
+      ]
+    },
+    {
+      "cell": 2,
+      "axis": "x",
+      "at": -3.794835525528808,
+      "lo": [
+        -3.794835525528808,
+        -1000000.0
+      ],
+      "hi": [
+        -3.794835525528808,
+        67.26633449601721
+      ]
+    },
+    {
+      "cell": 2,
+      "axis": "y",
+      "at": 67.26633449601721,
+      "lo": [
+        -3.794835525528808,
+        67.26633449601721
+      ],
+      "hi": [
+        1000000.0,
+        67.26633449601721
+      ]
+    },
+    {
+      "cell": 3,
+      "axis": "x",
+      "at": -3.794835525528808,
+      "lo": [
+        -3.794835525528808,
+        67.26633449601721
+      ],
+      "hi": [
+        -3.794835525528808,
+        1000000.0
+      ]
+    },
+    {
+      "cell": 3,
+      "axis": "y",
+      "at": 67.26633449601721,
+      "lo": [
+        -3.794835525528808,
+        67.26633449601721
+      ],
+      "hi": [
+        1000000.0,
+        67.26633449601721
+      ]
+    }
+  ],
+  "evaluation_boxes": [
+    {
+      "site": "B0_b10",
+      "box_min": [
+        70.53286362167972,
+        -26.512808963511258
+      ],
+      "box_max": [
+        153.29047575724204,
+        80.0919350227146
+      ],
+      "cells": [
+        2,
+        3
+      ],
+      "boundary_crosses_box": true,
+      "nearest_boundary_distance_m": 0.0,
+      "within_2m_band": true,
+      "nearest": [
+        {
+          "segment": {
+            "cell": 2,
+            "axis": "y",
+            "at": 67.26633449601721,
+            "lo": [
+              -3.794835525528808,
+              67.26633449601721
+            ],
+            "hi": [
+              1000000.0,
+              67.26633449601721
+            ]
+          },
+          "distance_m": 0.0
+        },
+        {
+          "segment": {
+            "cell": 3,
+            "axis": "y",
+            "at": 67.26633449601721,
+            "lo": [
+              -3.794835525528808,
+              67.26633449601721
+            ],
+            "hi": [
+              1000000.0,
+              67.26633449601721
+            ]
+          },
+          "distance_m": 0.0
+        }
+      ]
+    },
+    {
+      "site": "R1rep_b10",
+      "box_min": [
+        -39.47093121069526,
+        -21.67549428815511
+      ],
+      "box_max": [
+        55.15583332094396,
+        75.87986538303929
+      ],
+      "cells": [
+        1,
+        2,
+        3
+      ],
+      "boundary_crosses_box": true,
+      "nearest_boundary_distance_m": 0.0,
+      "within_2m_band": true,
+      "nearest": [
+        {
+          "segment": {
+            "cell": 1,
+            "axis": "x",
+            "at": -3.794835525528808,
+            "lo": [
+              -3.794835525528808,
+              -55.31725534129716
+            ],
+            "hi": [
+              -3.794835525528808,
+              1000000.0
+            ]
+          },
+          "distance_m": 0.0
+        },
+        {
+          "segment": {
+            "cell": 2,
+            "axis": "x",
+            "at": -3.794835525528808,
+            "lo": [
+              -3.794835525528808,
+              -1000000.0
+            ],
+            "hi": [
+              -3.794835525528808,
+              67.26633449601721
+            ]
+          },
+          "distance_m": 0.0
+        }
+      ]
+    },
+    {
+      "site": "B173nb_b10",
+      "box_min": [
+        76.33509104189136,
+        56.30900316074758
+      ],
+      "box_max": [
+        182.6634399440611,
+        175.48731032831247
+      ],
+      "cells": [
+        2,
+        3
+      ],
+      "boundary_crosses_box": true,
+      "nearest_boundary_distance_m": 0.0,
+      "within_2m_band": true,
+      "nearest": [
+        {
+          "segment": {
+            "cell": 2,
+            "axis": "y",
+            "at": 67.26633449601721,
+            "lo": [
+              -3.794835525528808,
+              67.26633449601721
+            ],
+            "hi": [
+              1000000.0,
+              67.26633449601721
+            ]
+          },
+          "distance_m": 0.0
+        },
+        {
+          "segment": {
+            "cell": 3,
+            "axis": "y",
+            "at": 67.26633449601721,
+            "lo": [
+              -3.794835525528808,
+              67.26633449601721
+            ],
+            "hi": [
+              1000000.0,
+              67.26633449601721
+            ]
+          },
+          "distance_m": 0.0
+        }
+      ]
+    }
+  ],
+  "images_per_cell": [
+    308,
+    471,
+    544,
+    324
+  ],
+  "scientific_verdict": null,
+  "cells": [
+    {
+      "id": 0,
+      "column": 0,
+      "row": 0,
+      "original_min": [
+        -1000000000.0,
+        -1000000000.0
+      ],
+      "original_max": [
+        -3.794835525528808,
+        -55.31725534129716
+      ],
+      "expanded_min": [
+        -1000000000.0,
+        -1000000000.0
+      ],
+      "expanded_max": [
+        26.972874847487883,
+        -30.50957319415631
+      ],
+      "projection_box_min": [
+        -178.3592834444587,
+        -198.72024147604742,
+        -43.947834278304406
+      ],
+      "projection_box_max": [
+        26.972874847487883,
+        -30.50957319415631,
+        -9.13780333253832
+      ],
+      "own_cameras": 204,
+      "position_selected": 274,
+      "visibility_added": 34,
+      "coverage_quantiles_of_others": [
+        0.0,
+        0.0,
+        0.20814416063785632
+      ]
+    },
+    {
+      "id": 1,
+      "column": 0,
+      "row": 1,
+      "original_min": [
+        -1000000000.0,
+        -55.31725534129716
+      ],
+      "original_max": [
+        -3.794835525528808,
+        1000000000.0
+      ],
+      "expanded_min": [
+        -1000000000.0,
+        -100.33204015686567
+      ],
+      "expanded_max": [
+        24.48907396423013,
+        1000000000.0
+      ],
+      "projection_box_min": [
+        -178.3592834444587,
+        -100.33204015686567,
+        -47.275108998263406
+      ],
+      "projection_box_max": [
+        24.48907396423013,
+        274.7147207883283,
+        -18.130214757318914
+      ],
+      "own_cameras": 205,
+      "position_selected": 382,
+      "visibility_added": 89,
+      "coverage_quantiles_of_others": [
+        0.0,
+        0.034918587285766585,
+        0.3769063325845378
+      ]
+    },
+    {
+      "id": 2,
+      "column": 1,
+      "row": 0,
+      "original_min": [
+        -3.794835525528808,
+        -1000000000.0
+      ],
+      "original_max": [
+        1000000000.0,
+        67.26633449601721
+      ],
+      "expanded_min": [
+        -38.004487585678,
+        -1000000000.0
+      ],
+      "expanded_max": [
+        1000000000.0,
+        121.44668037074123
+      ],
+      "projection_box_min": [
+        -38.004487585678,
+        -198.72024147604742,
+        -47.06133132718006
+      ],
+      "projection_box_max": [
+        200.464803480057,
+        121.44668037074123,
+        -11.6062123005932
+      ],
+      "own_cameras": 205,
+      "position_selected": 388,
+      "visibility_added": 156,
+      "coverage_quantiles_of_others": [
+        0.0,
+        0.11319945816308596,
+        0.5302356627945947
+      ]
+    },
+    {
+      "id": 3,
+      "column": 1,
+      "row": 1,
+      "original_min": [
+        -3.794835525528808,
+        67.26633449601721
+      ],
+      "original_max": [
+        1000000000.0,
+        1000000000.0
+      ],
+      "expanded_min": [
+        -42.01385377014045,
+        27.895883383355496
+      ],
+      "expanded_max": [
+        1000000000.0,
+        1000000000.0
+      ],
+      "projection_box_min": [
+        -42.01385377014045,
+        27.895883383355496,
+        -47.27200316896688
+      ],
+      "projection_box_max": [
+        200.464803480057,
+        274.7147207883283,
+        -19.258377321170716
+      ],
+      "own_cameras": 205,
+      "position_selected": 273,
+      "visibility_added": 51,
+      "coverage_quantiles_of_others": [
+        0.0,
+        0.0,
+        0.23837240987352526
+      ]
+    }
+  ]
+}

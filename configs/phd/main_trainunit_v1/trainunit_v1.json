@@ -1,0 +1,95 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "scientific_verdict": null,
+  "order_file": "docs/experiments/phd/main_trainunit_v1/학습단위비교_발주문_v1.md",
+  "worktree": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-wt-trainunit",
+  "branch": "exp/train-unit-v1",
+  "branch_parent_commit": "40e57e60",
+  "payload_root": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1",
+  "write_paths": [
+    "configs/phd/main_trainunit_v1",
+    "scripts/phd/main_trainunit_v1",
+    "docs/experiments/phd/main_trainunit_v1",
+    "PH/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1"
+  ],
+  "crs": "EPSG:25832; local frame origin [690953, 5336071, 604] m (inherited COLMAP frame)",
+  "method": {
+    "fork": "src/phd/forks/GeoGS-conf-guided-v1-r23 (read-only, unchanged)",
+    "docker_image": "jointbuildgs:geogs-conf-guided-v1 sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+    "renderer": "FINALTRAIN renderer.install() (rfix speed build, sha256 1426e3aa...)",
+    "train_flags_from": "scripts/phd/main_finaltrain_v1/gpu_job.py train() args, unchanged except -s, -m, --jbgs_target_dir, --jbgs_seed, --iterations and (판 나 only) the four schedule values",
+    "unchanged": ["judgment rule and frozen values", "FINALTRAIN 2.2 target rule (scripts/phd/main_finaltrain_v1/targets.py calculate())", "pixel weight clip(sigma_ref/sigma,0.1,10)", "depth loss and lambda 0.05", "photo loss", "2DGS terms", "learning rates", "density-control rule", "opacity reset rule", "1.96 sigma bound", "0.5 m reattach", "health check", "mesh rule", "tau", "scorer"],
+    "changed": ["region", "training image list", "iterations (판 나 only)", "seed (씨앗 반복 only)"]
+  },
+  "runs": {
+    "baseline": {"name": "FINALTRAIN ft_<prior>_s0", "training": false, "source": "PH/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/<site>/ft_<prior>_s0/attempt1/model"},
+    "seed1": {"name": "seed1_<site>_<prior>", "units": ["B0_b10", "R1rep_b10", "B173nb_b10"], "iterations": 30000, "seed": 1,
+      "inputs": "FINALTRAIN stage1/<stem> seeds+maps and targets/<stem>.npz, read-only", "existing_gtjudge_stage4": "none found on disk (checked 2026-11-11); all are trained here"},
+    "ga": {"name": "campus30k_<prior>_s0", "region": "campus", "iterations": 30000, "seed": 0},
+    "da": {"name": "cells_<prior>_s0", "region": "campus split into cells (2.2)", "iterations_per_cell": 30000, "seed": 0, "cell_run_name": "cells_<prior>_s0/cell<k>"},
+    "na": {"name": "campus120k_<prior>_s0", "region": "campus", "iterations": 120000, "seed": 0, "training_now": false,
+      "schedule_x4": {"densify_from_iter": 2000, "densify_until_iter": 60000, "densification_interval": 400, "opacity_reset_interval": 12000},
+      "unchanged_note": "position_lr_max_steps and all learning rates keep the code values (학습률 불변)",
+      "checkpoints": [28000, 60000, 120000]}
+  },
+  "campus_inputs": {
+    "images": "WIDEN0-v2 image_split.json: train 819 (training list), evaluation 118 (--eval test list). Same 937-model poses and PINHOLE K scaled to 1024x741 as fork_inputs_v6; JPGs resized from p0-audit colmap_dense/images with cv2.INTER_AREA, JPEG 95 (fork_inputs_v6 rule)",
+    "sfm_points": "WIDEN0-v2 mvs/full/sparse/points3D.bin (training-only campus subset model)",
+    "mvs_background": "WIDEN0-v2 mvs/full/stereo/depth_maps/<name>.JPG.geometric.bin (1024x741), conf = depth>0 (same as the stage0 export: verified on B0 view DJI_20241217084241_0004_D, box export == box geometric depth>0 exactly)",
+    "patches_and_judgments": {
+      "site_patches": "for the three FINALTRAIN sites: FINALTRAIN targets/<site>__<prior>.npz rows copied unchanged (h, sigma, region, judge_region, reason, normal, area)",
+      "other_patches": "JUDGECHECK-v1 core_points/<tile>__<prior>.npz (development buildings: ALS roof 122, LoD2 roof+wall 125): rule row 0 'new_clipped' of region/reason, photo_code row 0; targets by FINALTRAIN targets.calculate() applied once to all non-site patches of one prior (correction u_M median over those patches)",
+      "dedup": "a JUDGECHECK building that already has patches in any FINALTRAIN site stage0 input (TARGET stage0_r1 'building') is taken from the site file only; JUDGECHECK patch_id duplicates across tiles are dropped (first tile in sorted order)",
+      "no_judgment": "buildings without a new-rule judgment (19 confirmation buildings: only old-rule judgments exist; other LoD2 buildings outside the judged scope) get no prior patch and are background; count and footprint area are recorded",
+      "GT_fields": "JUDGECHECK gt_p, gt_status, cell, old_cell are never read",
+      "sigma_ref": "one per campus x prior: area-weighted rule of FINALTRAIN over all active campus patches (site + other)",
+      "prior_seeds": "site patches: FINALTRAIN site seeds (origin 1 rows of stage1/<stem>/seeds.npz: xyz=target, normal, quaternion) unchanged; other patches: one seed per active patch at its target with quat_from_normal(normal) (LoD2 site rule = one seed per active patch; ALS site rule used TIN vertices, campus TIN vertices are not available -> nearest rule, recorded)",
+      "background_seeds": "campus SfM points minus exclusion cylinders of all campus patches (exclude_cylinders_r2.cpp, radii configs/phd/main_target_v1/revisions/r2/target_v1.json inherited_radius, half-length roof 10 m wall 5 m)",
+      "background_sigma": "hypot(median of finite kind-1 MVS u over all campus patches, 0.0275)",
+      "maps": "prepare_maps_r7.py rasterizer/draw unchanged; background pixels = campus MVS depth where conf>0, weight 1"
+    },
+    "scene_extent": "code default (scene.cameras_extent = nerf_normalization radius); recorded per run with percent_dense*extent and 0.1*extent"
+  },
+  "cells": {
+    "method": "VastGaussian (Lin et al. 2024) progressive partition",
+    "ground_plane": "local x-y (EPSG:25832 axes); camera centres projected by dropping z",
+    "count": "k = round(819/200) = 4 -> m x n = 2 x 2; split x into m columns with equal camera counts (median), then each column along y into n rows with equal counts; outer boundaries extend to infinity",
+    "expand": "each finite cell edge moved outward by 20 % of the cell's extent along that axis (extent of the cell's own camera centres when the cell is unbounded on the opposite side)",
+    "camera_selection": "(1) cameras whose centre lies in the expanded cell; (2) other training cameras if the convex hull of the projected 8 corners of the expanded cell box, clipped to the image, covers >= 25 % of the image area; box z range = 0.5th-99.5th percentile of campus SfM z inside the expanded cell",
+    "points_and_targets": "SfM points and campus patches whose centre xy lies in the expanded cell; maps drawn from those patches only; sigma_ref and background sigma kept at the campus values (one scene = campus)",
+    "merge": "after training, keep Gaussians whose xy lies in the original (unexpanded) cell; concatenate the four 30,000-iteration point_cloud.ply files",
+    "records": "per cell image count, SfM point count, prior patch count, seeds; for each evaluation box: which cells it touches and whether a cell boundary crosses it",
+    "boundary_band": "evaluation reference rows within 2 m (xy) of an original cell boundary line; completeness and floating fraction (rows with signed normal-line distance s > +tau) counted separately"
+  },
+  "mesh": {
+    "rule": "PHD-RESCORE-v1 addendum 3 mesh rule as run by GTJUDGE mesh_job.py (render_model surf_depth, TSDF 0.05/0.25, auto:18 tiles, bounded cleanup)",
+    "views": "for every run the baseline site training view list: RESCORE addendum3_stage2/views/B0_b10.json (243), R1rep_b10.json (333), RESCORE views/B173nb_b10.json non-virtual (203)",
+    "execution": "GTJUDGE scripts unchanged; /gtjudge mounted at PH/main_trainunit_v1/.../gt with read-only links to the GTJUDGE inputs they read"
+  },
+  "scoring": {
+    "scorer": "GTJUDGE score_new.py (normal-line rows, stage1 cells, tau of RELEASE stage0) + add2_scores.metric_rows(accuracy_rule='euclidean_1m') = addendum 2 section 3.4 accuracy rule",
+    "baseline_values": "docs/experiments/phd/main_gtjudge_v1/tables/addendum2/stage1/<site>__<prior>.csv method FINALTRAIN_30000 and comparison methods prior, mvs, fusion, baseline_30000, GeoGS_30000, 2DGS_30000, CDGS_30000",
+    "four_cases": "case_id 0 both right, 1 image only right, 2 prior only right, 4 no image; scene = case 'all'",
+    "max_gap_to_best": "per site x prior: over the four cases, max over cases of (best completeness among {run, prior, mvs, fusion, baseline_30000, GeoGS_30000, 2DGS_30000, CDGS_30000} minus run completeness), same for accuracy; cells with n_gt < 1000 excluded"
+  },
+  "comparisons": [
+    {"id": 1, "a": "baseline", "b": "seed1", "question": "흔들림 폭"},
+    {"id": 2, "a": "ga", "b": "na", "question": "영상당 학습 횟수"},
+    {"id": 3, "a": "na", "b": "da", "question": "같은 학습 횟수에서 전체 대 칸"},
+    {"id": 4, "a": "da", "b": "baseline", "question": "건물 중심 대 영상 수 칸; 칸 경계 띠 따로"}
+  ],
+  "gpu": {
+    "priority": "PHD-MAIN-TRAINERR-v1 first; launch only when nvidia-smi shows no compute process on that GPU (desktop graphics processes excluded)",
+    "deadline": "2026-11-12T11:00:00+09:00",
+    "pre_launch": "do not launch if now + minimum FINALTRAIN wall time of the same prior (ALS 4468 s, LoD2 6557 s) > deadline; the 500-iteration rule then decides",
+    "at_500": "projected total = 147.1 x elapsed at iteration 500 (largest total/elapsed500 among the six FINALTRAIN runs); if now + projected - elapsed > deadline the run is stopped and recorded as not completed (time)",
+    "at_deadline": "a running run gets a stop file; at its next multiple of 100 iterations the unchanged jbgs_state capture writes a complete state, then it stops",
+    "order": ["ga ALS GPU0 | da ALS GPU1", "ga LoD2 | da LoD2", "seed1 (B0, R1, B173 order; reduced from B173 first)"],
+    "idle_fill": "if a GPU is free while campus/cell inputs are not ready, a seed1 run may be launched when its pre-launch estimate ends before the expected input-ready time",
+    "retry": "execution error or OOM: one retry with the same settings; then 결과 없음 with Gaussian count and GPU memory at failure",
+    "check_interval_minutes_min": 10
+  },
+  "outputs_psnr": "train PSNR = code's 5 training-camera evaluation line at 30,000 (log); test PSNR = metrics_30000.txt; both recorded",
+  "appendix_selection_rule": "order appendix copied verbatim in the order file; not used by this agent",
+  "GT_use": "scoring and figures only"
+}

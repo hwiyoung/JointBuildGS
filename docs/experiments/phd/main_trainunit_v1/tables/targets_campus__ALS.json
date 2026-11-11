@@ -1,0 +1,359 @@
+{
+  "at": "2026-11-11T21:29:25.140443+09:00",
+  "prior": "ALS",
+  "seconds": 23.1323110004887,
+  "output": "/tu/targets/campus__ALS.npz",
+  "output_sha256": "7f16acf7d0ec4e18a68763842fd506bcdda3f7a26e2880378c5cf9a41d1d7c47",
+  "patches": 652991,
+  "active": 597313,
+  "sigma_ref_campus": 0.010222436194325397,
+  "sigma_ref_sites": {
+    "B0_b10": 0.009634881048347976,
+    "R1rep_b10": 0.01286865653867791,
+    "B173nb_b10": 0.014536683573548322
+  },
+  "unclipped_area_weighted_mean": 0.9999999999999998,
+  "judgecheck": {
+    "tiles": [
+      {
+        "file": "6907_53359__ALS.npz",
+        "sha256": "7fd257287ff80a26a6ab3f42b4209c4ec269c69c6c94cd70f73f599a758559f2",
+        "kept": 70
+      },
+      {
+        "file": "6907_53360__ALS.npz",
+        "sha256": "ec99856716ba5ee84e107071b8ee8a41c019076369762f59657b52e026e04d66",
+        "kept": 97
+      },
+      {
+        "file": "6908_53358__ALS.npz",
+        "sha256": "0a9c3b817e5c65c4f0f03056cd772d6cddad02a4c2bd6312f319c20ef14d64f5",
+        "kept": 7485
+      },
+      {
+        "file": "6908_53359__ALS.npz",
+        "sha256": "50d2479b6e91f4db8507e12d0a795e8f8459ada54e214491368f4a6699207409",
+        "kept": 48867
+      },
+      {
+        "file": "6908_53360__ALS.npz",
+        "sha256": "6f0bf41225a0b5931bd2613e3211c9c45de5f3006146f8a78eb053ed5a39e38f",
+        "kept": 42826
+      },
+      {
+        "file": "6908_53361__ALS.npz",
+        "sha256": "71663c23a98890769ebc3e42aa8b993f1b0ce5d87b0de37bcadaba7575072321",
+        "kept": 27849
+      },
+      {
+        "file": "6908_53362__ALS.npz",
+        "sha256": "60584fa01f68e9bd91df7112f2eb11010bddeb6c0da513dd3d25bd5a2cfc5c3b",
+        "kept": 5217
+      },
+      {
+        "file": "6909_53358__ALS.npz",
+        "sha256": "0c232e170e34df262e879e3e4e0f709804c9dc189852e85ec75d737e811a0884",
+        "kept": 50701
+      },
+      {
+        "file": "6909_53359__ALS.npz",
+        "sha256": "0b84ded2dd18862c4dceb63725091f02415f92f99352ff46581005094a6f9475",
+        "kept": 56275
+      },
+      {
+        "file": "6909_53360__ALS.npz",
+        "sha256": "ab1ffc36f3d121d60611d662e922ee274dd4c671a6133af875915cd8ef4252cb",
+        "kept": 9125
+      },
+      {
+        "file": "6909_53361__ALS.npz",
+        "sha256": "9978b8911977b9c7c85bcca3a16f97eebd1977556921c5745233345a83612d84",
+        "kept": 42530
+      },
+      {
+        "file": "6909_53362__ALS.npz",
+        "sha256": "29b98f06bef9f62fb56fe34437fa828680b4d9e87f3b0bd655f9c40469e82a45",
+        "kept": 53769
+      },
+      {
+        "file": "6909_53363__ALS.npz",
+        "sha256": "38980b30d5969e9d6d33830da2596ef0868a6b15d74563b2674917e681dbb19e",
+        "kept": 10085
+      },
+      {
+        "file": "6910_53359__ALS.npz",
+        "sha256": "d4e3db782bc2db04f6fb01be326868c8a3862efc47616f769a16cc3a3bd45789",
+        "kept": 15943
+      },
+      {
+        "file": "6910_53360__ALS.npz",
+        "sha256": "7251727b539a3fd819dae5b97eaeb553e87582abb5f406a06bdfb662b1ba2c66",
+        "kept": 330
+      },
+      {
+        "file": "6910_53361__ALS.npz",
+        "sha256": "6d867261345de75da7350665fc55dcbfacd8da80ac0f9d4de740b62d78ffa461",
+        "kept": 14230
+      },
+      {
+        "file": "6910_53362__ALS.npz",
+        "sha256": "d6fb9851bed0a0e2f0508dff6af0dea3e641e79ea163a70e77f9ed9cbdc54a1f",
+        "kept": 33333
+      },
+      {
+        "file": "6910_53363__ALS.npz",
+        "sha256": "2b430600c31582eed5c888ec971b85603a0b4b4948211f8619039a5a800774ef",
+        "kept": 48030
+      },
+      {
+        "file": "6911_53361__ALS.npz",
+        "sha256": "fb2e340e5ad6b7be60fc2bc65fcca2ab294f0d40c98a623a7185ca5954b4faa0",
+        "kept": 3
+      },
+      {
+        "file": "6911_53362__ALS.npz",
+        "sha256": "724fc4475793bb17330fdb45a9f58584294f991c4953e3167fa139a1c60733af",
+        "kept": 15792
+      },
+      {
+        "file": "6911_53363__ALS.npz",
+        "sha256": "dddc4aafcc159753afb9a1117d796fa3a7cf852e1ddc57788bb5ce9da947fc2a",
+        "kept": 19283
+      }
+    ],
+    "rule_row": "region[0]=new_clipped, reason[0], photo_code[0]",
+    "patches": 485125,
+    "buildings": 121,
+    "duplicates_dropped": 0,
+    "addendum1_spatial_dropped": {
+      "patches": 16715,
+      "area_m2": 1106.328662617279,
+      "buildings": [
+        "DEBY_LOD2_42364663",
+        "DEBY_LOD2_42364667",
+        "DEBY_LOD2_4908025",
+        "DEBY_LOD2_4908026",
+        "DEBY_LOD2_4908027",
+        "DEBY_LOD2_4908028",
+        "DEBY_LOD2_4959325",
+        "DEBY_LOD2_4959458",
+        "DEBY_LOD2_4959459",
+        "DEBY_LOD2_60042"
+      ]
+    },
+    "site_building_overlap_dropped": {
+      "patches": 0,
+      "area_m2": 0.0,
+      "buildings": []
+    },
+    "correction_u_median": 0.07130136713385582,
+    "undecided_area_m2": 341.7876070931398
+  },
+  "sites": {
+    "B0_b10": {
+      "patches": 44994,
+      "buildings": 1
+    },
+    "R1rep_b10": {
+      "patches": 46215,
+      "buildings": 1
+    },
+    "B173nb_b10": {
+      "patches": 76657,
+      "buildings": 1
+    }
+  },
+  "judged_buildings": 122,
+  "lod2_buildings_listed": 154,
+  "unjudged_buildings": 33,
+  "unjudged_footprint_area_m2": 23462.60210597594,
+  "unjudged_area_known_for": 33,
+  "holdout_buildings": 19,
+  "holdout_in_judged": 0,
+  "regions": [
+    {
+      "region": "일치",
+      "source": "all",
+      "patches": 507826,
+      "area_m2": 34232.08138981805
+    },
+    {
+      "region": "일치",
+      "source": "judgecheck",
+      "patches": 412653,
+      "area_m2": 27878.152486894964
+    },
+    {
+      "region": "일치",
+      "source": "B0_b10",
+      "patches": 31164,
+      "area_m2": 2121.1920173432227
+    },
+    {
+      "region": "일치",
+      "source": "R1rep_b10",
+      "patches": 32407,
+      "area_m2": 2174.166108600995
+    },
+    {
+      "region": "일치",
+      "source": "B173nb_b10",
+      "patches": 31602,
+      "area_m2": 2058.5707769788683
+    },
+    {
+      "region": "보존",
+      "source": "all",
+      "patches": 44330,
+      "area_m2": 2975.370615899442
+    },
+    {
+      "region": "보존",
+      "source": "judgecheck",
+      "patches": 34458,
+      "area_m2": 2301.897450266891
+    },
+    {
+      "region": "보존",
+      "source": "B0_b10",
+      "patches": 1490,
+      "area_m2": 98.81323295027282
+    },
+    {
+      "region": "보존",
+      "source": "R1rep_b10",
+      "patches": 2736,
+      "area_m2": 189.33544525789796
+    },
+    {
+      "region": "보존",
+      "source": "B173nb_b10",
+      "patches": 5646,
+      "area_m2": 385.32448742438
+    },
+    {
+      "region": "보정",
+      "source": "all",
+      "patches": 18774,
+      "area_m2": 1255.105587844794
+    },
+    {
+      "region": "보정",
+      "source": "judgecheck",
+      "patches": 3201,
+      "area_m2": 219.31898044282423
+    },
+    {
+      "region": "보정",
+      "source": "B0_b10",
+      "patches": 154,
+      "area_m2": 10.129615275357594
+    },
+    {
+      "region": "보정",
+      "source": "R1rep_b10",
+      "patches": 216,
+      "area_m2": 15.57382254685178
+    },
+    {
+      "region": "보정",
+      "source": "B173nb_b10",
+      "patches": 15203,
+      "area_m2": 1010.0831695797604
+    },
+    {
+      "region": "결측",
+      "source": "all",
+      "patches": 26383,
+      "area_m2": 1798.9048094401185
+    },
+    {
+      "region": "결측",
+      "source": "judgecheck",
+      "patches": 25168,
+      "area_m2": 1715.1447934079088
+    },
+    {
+      "region": "결측",
+      "source": "B0_b10",
+      "patches": 138,
+      "area_m2": 9.073363941824688
+    },
+    {
+      "region": "결측",
+      "source": "R1rep_b10",
+      "patches": 885,
+      "area_m2": 61.89874243735119
+    },
+    {
+      "region": "결측",
+      "source": "B173nb_b10",
+      "patches": 192,
+      "area_m2": 12.787909653034024
+    },
+    {
+      "region": "보정(빈 공간)",
+      "source": "all",
+      "patches": 843,
+      "area_m2": 55.70646182617362
+    },
+    {
+      "region": "보정(빈 공간)",
+      "source": "judgecheck",
+      "patches": 660,
+      "area_m2": 43.827329967924726
+    },
+    {
+      "region": "보정(빈 공간)",
+      "source": "B0_b10",
+      "patches": 0,
+      "area_m2": 0.0
+    },
+    {
+      "region": "보정(빈 공간)",
+      "source": "R1rep_b10",
+      "patches": 94,
+      "area_m2": 6.110514702314211
+    },
+    {
+      "region": "보정(빈 공간)",
+      "source": "B173nb_b10",
+      "patches": 89,
+      "area_m2": 5.7686171559346775
+    },
+    {
+      "region": "목표 없음",
+      "source": "all",
+      "patches": 54835,
+      "area_m2": 3641.6425823995232
+    },
+    {
+      "region": "목표 없음",
+      "source": "judgecheck",
+      "patches": 8985,
+      "area_m2": 608.0751206186911
+    },
+    {
+      "region": "목표 없음",
+      "source": "B0_b10",
+      "patches": 12048,
+      "area_m2": 809.3948711523049
+    },
+    {
+      "region": "목표 없음",
+      "source": "R1rep_b10",
+      "patches": 9877,
+      "area_m2": 657.0340274715672
+    },
+    {
+      "region": "목표 없음",
+      "source": "B173nb_b10",
+      "patches": 23925,
+      "area_m2": 1567.1385631569592
+    }
+  ],
+  "sigma_W_used": false,
+  "r_added": false,
+  "GT_used": false,
+  "scientific_verdict": null
+}

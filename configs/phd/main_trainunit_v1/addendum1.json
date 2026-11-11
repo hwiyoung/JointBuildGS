@@ -1,0 +1,8 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 1,
+  "reason": "Locked dedup by building does not work for ALS: TARGET stage0_r1 ALS site inputs carry one building value per site, so 15,489 JUDGECHECK ALS patches (10 buildings) lie within 0.3 m of FINALTRAIN site ALS patches (record: PH/.../targets/overlap_check.json). Same place would be supervised twice.",
+  "rule": "in addition to the building rule, a JUDGECHECK patch is dropped when the nearest FINALTRAIN site patch centre of the same prior is closer than 1.0 m (3D); applied to both priors; site rows unchanged",
+  "scope": "campus target file only; judgment, target rule and all method values unchanged",
+  "scientific_verdict": null
+}
