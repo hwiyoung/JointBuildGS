@@ -42,11 +42,13 @@ def main(run):
             # result samples differ between meshes: overlap = share of new lost points within 0.05 m of an original lost point
             from scipy.spatial import cKDTree
             ol = loadz(O/'sets'/f'{cell}_{arm}_lost.npz', ['xyz'])['xyz']; d, _ = cKDTree(ol).query(T['result__xyz'][lost].astype(float)); ov = np.flatnonzero(d <= .05); new_lost = lost
+            ov_tau = np.flatnonzero(d <= T['result__tau_m'][lost]); d2, _ = cKDTree(T['result__xyz'][lost].astype(float)).query(ol); orig_tau = int((d2 <= loadz(O/'sets'/f'{cell}_{arm}_lost.npz', ['tau_m'])['tau_m']).sum())
             value = 100*float((e & w).sum())/max(1, int(e.sum()))
         out.append(dict(run=run, cell=cell, arm=arm, metric=cs['metric'], record_value=value, original_trained=cs['expected'][arm][1], diff_pp=value-cs['expected'][arm][1],
                         record_lost=len(new_lost), original_lost=len(orig_lost), overlap=len(ov), overlap_pct_of_record=100*len(ov)/max(1, len(new_lost)),
                         overlap_pct_of_original=(100*len(ov)/max(1, len(orig_lost))) if cs['metric'] == 'completeness' else None,
-                        same_value=abs(value-cs['expected'][arm][1]) <= c['record_runs']['comparison']['value_tolerance_pp']))
+                        same_value=abs(value-cs['expected'][arm][1]) <= c['record_runs']['comparison']['value_tolerance_pp'],
+                        **({} if cs['metric'] == 'completeness' else dict(overlap_rule='c3 result samples differ between meshes: 0.05 m and tau proximity', overlap_tau_pct_of_record=100*len(ov_tau)/max(1, len(new_lost)), overlap_tau_pct_of_original=100*orig_tau/max(1, len(orig_lost))))))
     dump(O/'sets_tl'/f'{run}.json', dict(at=now(), run=run, rows=out, seconds=t.done(), scientific_verdict=None)); print('SETS_TL', out, flush=True)
 
 if __name__ == '__main__': main(*sys.argv[1:])

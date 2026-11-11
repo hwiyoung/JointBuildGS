@@ -19,7 +19,8 @@ def main(run):
     for r in st:
         rows.append(dict(run=run, iteration=30000, item=f"{r['cell']} {r['metric']}", original=r['original_trained'], record=r['record_value'], diff_pp=r['diff_pp'], within=r['same_value']))
         rows.append(dict(run=run, iteration=30000, item=f"{r['cell']} lost overlap", original=r['original_lost'], record=r['record_lost'], overlap=r['overlap'],
-                         overlap_pct_of_record=r['overlap_pct_of_record'], overlap_pct_of_original=r['overlap_pct_of_original']))
+                         overlap_pct_of_record=r['overlap_pct_of_record'], overlap_pct_of_original=r['overlap_pct_of_original'],
+                         overlap_tau_pct_of_record=r.get('overlap_tau_pct_of_record'), overlap_tau_pct_of_original=r.get('overlap_tau_pct_of_original')))
     same = all(r['within'] for r in rows if 'within' in r)
     table(f'record_compare_{run}', rows)
     man = []
