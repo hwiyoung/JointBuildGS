@@ -12,6 +12,7 @@ STAGES = {
 STAGES['video_v2'] = dict(docs=['동영상_v2_읽는법.md', 'issues.md', 'progress.md'], cfg=['trainlog_v1.video_v2.json', 'trainlog_v1.video_v2.lock.json'], payload=['video_v2/video', 'video_v2/frames'])
 STAGES['video_v3'] = dict(docs=['동영상_v3_읽는법.md', 'issues.md', 'progress.md'], cfg=['trainlog_v1.video_v3.json', 'trainlog_v1.video_v3.lock.json'], payload=['video_v3/video', 'video_v3/frames'])
 STAGES['video_v4'] = dict(docs=['동영상_v4_읽는법.md', 'issues.md', 'progress.md'], cfg=['trainlog_v1.video_v4.json', 'trainlog_v1.video_v4.lock.json'], payload=['video_v4/video', 'video_v4/frames'])
+STAGES['video_v5'] = dict(docs=['동영상_v5_띠그림_읽는법.md', 'issues.md', 'progress.md', 'figures_spot', 'tables/spot_strip_measures.csv'], cfg=['trainlog_v1.video_v5.json', 'trainlog_v1.video_v5.lock.json'], payload=['video_v5/video', 'video_v5/frames', 'spot_strips', 'analysis/spots_v5'])
 PAYLOAD_SKIP = ('data.npz', 'vertices', '.ply')
 def main(stage):
     spec = STAGES[stage]; stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M')
@@ -28,7 +29,7 @@ def main(stage):
             for f in sorted(q for q in p.rglob('*') if q.is_file()):
                 if rel == 'events_small' and (f.name.startswith('link') or f.suffix == '.npz'): continue
                 if rel == 'analysis' and f.name.startswith('mesh_') and f.suffix == '.npz': continue
-                if f.suffix == '.npz' and rel in ('renders',): continue
+                if f.suffix == '.npz' and rel in ('renders', 'spot_strips'): continue
                 add(f, ('events/' if rel == 'events_small' else rel+'/')+str(f.relative_to(p)))
         for rel in ['scripts/phd/main_trainlog_v1', 'src/phd/forks/GeoGS-conf-guided-v1-r27/jbgs_trainlog.py']:
             p = R/rel

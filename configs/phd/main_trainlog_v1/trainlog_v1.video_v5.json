@@ -1,0 +1,49 @@
+{
+ "task_id": "PHD-MAIN-TRAINLOG-v1",
+ "revision": "video_v5_and_spot_strips",
+ "created_at": "2026-11-12T01:20:30.195867+09:00",
+ "base": "trainlog_v1.video_v4.json",
+ "user_decisions_2026_11_11": [
+  "두 갈래: 동영상(전체) + 자리별 띠 그림 세 장",
+  "동영상에 입력(사전 정보, MVS)을 보이기",
+  "확대 자리는 논문의 B173 그림 자리 셋(1단계 장면 1·3·5)",
+  "띠 그림 가우시안 칸은 보이는 원반만"
+ ],
+ "video_v5": {
+  "camera": "az 270 el 35 orthographic, fixed; azimuth = largest smallest-visible-share of the three places over 0..315 step 45 (spots_v5.json)",
+  "row2": [
+   "입력 1: 사전 정보 지붕면(항공 LiDAR TIN, |nz|>=0.3, 바닥 위 2 m)",
+   "입력 2: 영상 MVS (패치마다 한 점, 지붕 패치는 수평 원반)",
+   "F 가우시안 + 판정 영역",
+   "G 메시"
+  ],
+  "removed": "판단이 틀린 자리 분홍 윤곽(상시 강조)",
+  "places": "①②③ 점선 상자 = spot_strips 창",
+  "H": "영상 MVS(같은 띠) 추가",
+  "I": "GTJUDGE case 1(사전 정보가 틀린 곳) 메시 완전성(주요 메시) + 옛 지붕에 놓인 가우시안 수"
+ },
+ "spot_strips": {
+  "places": {
+   "wing": "sections_v1 B173_wing, 단면 길이 x 8 m 창",
+   "wall": "fig_views_v1 unseen_face(면 53), 가운데 24 m, 벽 면 ±3 m",
+   "glass": "sections_v1 B173_sawtooth, 단면 길이 x 8 m 창"
+  },
+  "note_places_v1": "places_v1.npz b173_wing__ALS는 옛 박공 지붕 전체(115-164 x 75-150 m)라 1단계 단면 기하를 씀",
+  "columns": [
+   "입력·감독",
+   "0",
+   "1000",
+   "2000",
+   "3000_pre_reset",
+   "7000",
+   "10000",
+   "15000",
+   "30000"
+  ],
+  "gaussian_row": "같은 확대 시점 실제 렌더(r27 렌더러, TARGET r5 maxid)에서 화소마다 가장 많이 기여한 원반만, 2σ, 진하기 = 불투명도; 자리 상자 +2 m, 시선 방향 ±40 m 원반만 렌더(멀리 배경 원반이 화면을 덮는 것을 막음), 벽은 벽 면 ±3 m",
+  "mesh_row": "면 색 = G와 같음(참값 21 cm 안 판정색, 넘으면 보라)",
+  "section_row": "단면 ±25 cm: 원반(점, 진하기 = 불투명도), 메시 단면(남색), 밀집 참값(검정); 사전 정보 단면은 첫 열에만",
+  "measures": "tables/spot_strip_measures.csv: 지붕 = 참값 점(|nz|>=0.5, 바닥 위 10 m 이상) 중 메시 21 cm 안 비율, 같은 조건 면의 참값 21 cm 안 넓이 비율; 벽 = 면 53 패치 중 메시 0.25 m 안 비율(main_baselines 벽 셈)"
+ },
+ "scientific_verdict": null
+}
