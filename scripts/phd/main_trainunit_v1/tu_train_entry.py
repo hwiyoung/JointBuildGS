@@ -43,7 +43,9 @@ def main():
     assert sha(C / 'trainunit_v1.json') == lock['config_sha256'], 'TRAINUNIT config changed after lock'
     cfg = json.loads((C / 'trainunit_v1.json').read_text())
     deadline = dt.datetime.fromisoformat(cfg['gpu']['deadline'])
-    factor = 147.1
+    add2 = json.loads((C / 'addendum2.json').read_text())
+    assert sha(C / 'addendum2.json') == json.loads((C / 'addendum2.lock.json').read_text())['sha256']
+    factor = 229.7
     argv = sys.argv[2:]
     model = Path(argv[argv.index('-m') + 1])
     assert not model.exists(), model
@@ -74,10 +76,13 @@ def main():
             state['checked500'] = True
             rows = [json.loads(l) for l in (model / 'target_monitor/curve.jsonl').read_text().splitlines() if l.strip()]
             elapsed = next(r['elapsed_seconds'] for r in rows if r['iteration'] == 500)
+            e1 = next(r['elapsed_seconds'] for r in rows if r['iteration'] == 1)
+            d = elapsed - e1
             total_iter = args.iterations
-            projected = factor * elapsed * (total_iter / 30000.0)
-            end = now() + dt.timedelta(seconds=projected - elapsed)
-            rec = dict(at=now().isoformat(), iteration=500, elapsed_seconds=elapsed, clock='target_monitor curve.jsonl elapsed_seconds',
+            projected = factor * d * (total_iter / 30000.0)
+            end = now() + dt.timedelta(seconds=projected - d)
+            rec = dict(at=now().isoformat(), iteration=500, elapsed_seconds=elapsed, elapsed_at_1=e1, d_1_to_500=d,
+                       rule='addendum2: projected end = now + (factor - 1) x d', clock='target_monitor curve.jsonl elapsed_seconds',
                        factor=factor, projected_total_seconds=projected, projected_end=end.isoformat(), deadline=deadline.isoformat(),
                        gaussians=len(env['gaussians'].get_xyz),
                        peak_reserved_bytes=torch.cuda.max_memory_reserved(), scientific_verdict=None)

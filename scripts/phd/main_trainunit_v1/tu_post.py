@@ -25,6 +25,10 @@ RS = PH / 'main_rescore_v1/PHD-MAIN-RESCORE-v1'
 RL = PH / 'main_release_v1/PHD-MAIN-RELEASE-v1'
 M = TU / 'gt'
 CG = '/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1'
+EXP = Path('/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-exp')
+# GTJUDGE -> RESCORE geometry imports scripts/phd/main_dist71_v1 and main_fill_v1, which exist only untracked in the exp
+# checkout. GTJUDGE containers therefore see the exp checkout's scripts/phd (read-only; same commit 40e57e60 + those folders).
+EXTRA = ['-v', f'{EXP}/scripts/phd:/repo/scripts/phd:ro']
 BASE_METHODS = ['prior', 'mvs', 'fusion', 'baseline_30000', 'GeoGS_30000', '2DGS_30000', 'CDGS_30000', 'FINALTRAIN_30000']
 PRIORS = ['ALS', 'LoD2']
 
@@ -65,7 +69,7 @@ def gt_cpu(tag, script, *args, cpus='6', mem='32g'):
            '-e', 'GTJUDGE_IMAGE=jointbuildgs:dev',
            '-v', f'{R}:/repo:ro', '-v', f'{ART}:/art:ro', '-v', f'{ART}:/artifacts/JointBuildGS:ro', '-v', f'{PH}:/ph:ro',
            '-v', f'{RS}:/out:ro', '-v', f'{RL}:/release:ro', '-v', f'{M}:/gtjudge:rw', '-v', f'{TU}:/tu:ro',
-           '-v', f'{R}/configs/phd/main_gtjudge_v1:/cfg:ro', '-v', f'{M}/docs:/docs:rw',
+           '-v', f'{R}/configs/phd/main_gtjudge_v1:/cfg:ro', '-v', f'{M}/docs:/docs:rw', *EXTRA,
            '-v', '/usr/share/fonts/opentype/noto:/fonts:ro', '-w', '/gtjudge', '--entrypoint', 'nice', 'jointbuildgs:dev', '-n', '19', 'python', '-B', '-u',
            f'/repo/scripts/phd/main_gtjudge_v1/{script}', *map(str, args)]
     return cmd
@@ -84,6 +88,7 @@ def gt_gpu(gpu, tag, script, *args, site='R1rep_b10'):
               (PH / 'geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights', '/weights', 'ro')]
     for s, d, m in mounts:
         cmd += ['-v', f'{s}:{d}:{m}']
+    cmd += EXTRA
     return cmd + ['-w', '/source', '--entrypoint', 'python', IMAGE, '-B', '-u', f'/repo/scripts/phd/main_gtjudge_v1/{script}', *map(str, args)]
 
 
@@ -141,9 +146,9 @@ def gpu_free_mb(gpu):
 
 
 def big_run_gpus():
-    """GPUs running a campus or cell training of this task: no render there (its memory peak is a result)."""
+    """GPUs running a campus training of this task: no render there (its memory peak is a result). Cell runs are site-sized."""
     out = set()
-    for launch in list((TU / 'runs/campus').glob('*/attempt*/launch.json')) + list((TU / 'runs/cells').glob('*/cell*/attempt*/launch.json')):
+    for launch in list((TU / 'runs/campus').glob('*/attempt*/launch.json')):
         if not (launch.parent / 'receipt.json').exists():
             out.add(int(json.loads(launch.read_text())['gpu']))
     return out
@@ -216,7 +221,7 @@ def one_site(key, site, prior, ply):
     t3 = time.monotonic()
     ok = ok and score(key, site, prior)
     t4 = time.monotonic()
-    dump(TU / 'post' / key / f'{site}_timing.json', dict(at=now(), key=key, family=fam, site=site, prior=prior, ok=bool(ok),
+    dump(TU / 'post' / key / f'{site}_timing.json', dict(at=now().isoformat(), key=key, family=fam, site=site, prior=prior, ok=bool(ok),
          crop_seconds=t1 - start, render_seconds=t2 - t1, mesh_seconds=t3 - t2, score_seconds=t4 - t3, scientific_verdict=None))
     progress(f'후처리 {key} {site}: {"완료" if ok else "실패"} (자르기 {t1-start:.0f}s, 렌더 {t2-t1:.0f}s, 메시 {t3-t2:.0f}s, 채점 {t4-t3:.0f}s)')
     return ok
@@ -229,7 +234,7 @@ def run(key):
         return False
     with concurrent.futures.ThreadPoolExecutor(3) as pool:
         res = list(pool.map(lambda s: one_site(key, s, prior, ply), sites))
-    dump(TU / 'post' / key / 'done.json', dict(at=now(), key=key, sites=sites, ok=res, scientific_verdict=None))
+    dump(TU / 'post' / key / 'done.json', dict(at=now().isoformat(), key=key, sites=sites, ok=res, scientific_verdict=None))
     return all(res)
 
 

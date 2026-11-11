@@ -1,0 +1,10 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 2,
+  "reason": "Implementation error in the 500-iteration time rule: elapsed_seconds of curve.jsonl starts at target-controller creation, so it includes the setup (pinning the per-view target maps). Setup scales with view count (campus ALS: 581.5 s before iteration 1; FINALTRAIN 10-56 s). The order measures time per iteration over the first 500 iterations.",
+  "rule": "per-iteration basis: d = elapsed(500) - elapsed(1) on the curve.jsonl clock; factor = max over the six FINALTRAIN runs of (elapsed(30000) - elapsed(1)) / d = 229.7 (B173nb ALS); projected end = now + (factor - 1) x d x iterations/30000; stop when projected end > deadline",
+  "factor_rows": {"B0_ALS": 193.8, "B0_LoD2": 179.0, "B173nb_ALS": 229.7, "B173nb_LoD2": 177.4, "R1rep_ALS": 137.7, "R1rep_LoD2": 135.6},
+  "affected": "campus30k_ALS_s0 attempt (TIME_STOP_500 at 23:12, d = 109.2 s) and any cell run launched before this addendum and stopped by the old rule are set aside under runs/<unit>/_void/ with their records and launched again",
+  "scope": "time rule only; no method value",
+  "scientific_verdict": null
+}

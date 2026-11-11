@@ -186,7 +186,8 @@ def pick(gpu):
     idle_until = dt.datetime.fromisoformat(idle) if idle else None
     primary_pending = []
     prim = [j for j in table if j['kind'] != 'seed1']
-    prim = [j for j in prim if j['gpu_pref'] == gpu] + [j for j in prim if j['gpu_pref'] != gpu]
+    # ALS stage (가·다) before LoD2 stage; inside a stage this GPU's preferred unit first
+    prim = sorted(prim, key=lambda j: (j['prior'] != 'ALS', j['gpu_pref'] != gpu))
     for job in prim:
         if job['run'].exists():
             continue
