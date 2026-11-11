@@ -11,6 +11,7 @@ STAGES = {
 }
 STAGES['video_v2'] = dict(docs=['동영상_v2_읽는법.md', 'issues.md', 'progress.md'], cfg=['trainlog_v1.video_v2.json', 'trainlog_v1.video_v2.lock.json'], payload=['video_v2/video', 'video_v2/frames'])
 STAGES['video_v3'] = dict(docs=['동영상_v3_읽는법.md', 'issues.md', 'progress.md'], cfg=['trainlog_v1.video_v3.json', 'trainlog_v1.video_v3.lock.json'], payload=['video_v3/video', 'video_v3/frames'])
+STAGES['video_v4'] = dict(docs=['동영상_v4_읽는법.md', 'issues.md', 'progress.md'], cfg=['trainlog_v1.video_v4.json', 'trainlog_v1.video_v4.lock.json'], payload=['video_v4/video', 'video_v4/frames'])
 PAYLOAD_SKIP = ('data.npz', 'vertices', '.ply')
 def main(stage):
     spec = STAGES[stage]; stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M')
