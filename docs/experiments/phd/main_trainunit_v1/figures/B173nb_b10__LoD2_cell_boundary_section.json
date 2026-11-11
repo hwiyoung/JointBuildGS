@@ -1,0 +1,55 @@
+{
+  "at": "2026-11-12T06:49:34.319851+09:00",
+  "runs": [
+    [
+      "기준",
+      "FINALTRAIN_30000"
+    ],
+    [
+      "씨앗 반복",
+      "seed1_s1"
+    ]
+  ],
+  "section": {
+    "start": [
+      129.49926549297624,
+      55.26633449601721
+    ],
+    "end": [
+      129.49926549297624,
+      79.26633449601721
+    ],
+    "half_width": 0.6
+  },
+  "boundary": {
+    "cell": 2,
+    "axis": "y",
+    "at": 67.26633449601721,
+    "lo": [
+      -3.794835525528808,
+      67.26633449601721
+    ],
+    "hi": [
+      1000000.0,
+      67.26633449601721
+    ]
+  },
+  "dpi": 200,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__LoD2/rows.npz",
+      "sha256": "d5002e9f9885c7ec23c4e21c8b7e4bc64ffa2452d8f2c0ec4514694db52b1086"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "89d14d3624a50bfd3939cd7132a26770833528b671c2dfdff7a4b0d4e75813cd"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__LoD2/distances/seed1_s1.npz",
+      "sha256": "9a11c63ef49d3a0141ac3139a33fb4429921fd92d2c93c4bf58885909f37f9e5"
+    }
+  ],
+  "script_sha256": "090e8d3e09abc6b7f4e098dc4eb0ad3de648492d427bfa948aabc943be973eb1",
+  "scientific_verdict": null
+}

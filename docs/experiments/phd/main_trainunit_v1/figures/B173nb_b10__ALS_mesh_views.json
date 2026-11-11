@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-12T05:56:40.146999+09:00",
+  "runs": [
+    [
+      "기준",
+      "FINALTRAIN_30000"
+    ],
+    [
+      "씨앗 반복",
+      "seed1_s1"
+    ]
+  ],
+  "roi": "GTJUDGE section.json ±2 m",
+  "section": {
+    "status": "PASS",
+    "start": [
+      129.2336734132322,
+      103.7788580821003
+    ],
+    "end": [
+      141.96194549268193,
+      99.48550005829978
+    ],
+    "anchor_xyz": [
+      135.84410095214844,
+      101.54910278320312,
+      -29.925607681274414
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 785,
+    "component_unique_points": 785,
+    "components": 153,
+    "all_case2_n_gt": 9913,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9475471611831021,
+      -0.3196159841651297
+    ],
+    "length_m": 13.432863925799001,
+    "reused_source": "/art/phase-payloads/phd/main_recount_v1/PHD-MAIN-RECOUNT-v1/scenes/B173nb_b10__ALS/section.json",
+    "reused_sha256": "8e07ccae9672de4aeb6b0c00f3f16a8f624f0eaabc304a77efc9efad0187aa0d"
+  },
+  "camera_angles": [
+    [
+      90,
+      -90
+    ],
+    [
+      35,
+      -55
+    ],
+    [
+      35,
+      125
+    ]
+  ],
+  "dpi": 200,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/FINALTRAIN_30000.npz",
+      "sha256": "fe20f9080df96f8ac3e806122a316186e8d6e277c941aa15824920d8ec1daa22"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/seed1_s1.npz",
+      "sha256": "f27ff1500fb6bcffe26945be130e2e5834122c984c3c99a277370e6e407b01fc"
+    }
+  ],
+  "script_sha256": "090e8d3e09abc6b7f4e098dc4eb0ad3de648492d427bfa948aabc943be973eb1",
+  "scientific_verdict": null
+}

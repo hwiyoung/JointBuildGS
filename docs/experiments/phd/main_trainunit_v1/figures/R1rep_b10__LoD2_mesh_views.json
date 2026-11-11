@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-12T05:55:27.476616+09:00",
+  "runs": [
+    [
+      "기준",
+      "FINALTRAIN_30000"
+    ],
+    [
+      "씨앗 반복",
+      "seed1_s1"
+    ]
+  ],
+  "roi": "GTJUDGE section.json ±2 m",
+  "section": {
+    "status": "PASS",
+    "start": [
+      -14.989373793425091,
+      16.58485090216189
+    ],
+    "end": [
+      -0.7969192055568843,
+      15.636629990011839
+    ],
+    "anchor_xyz": [
+      -9.847299575805664,
+      16.241300582885742,
+      -33.532405853271484
+    ],
+    "half_width": 0.6,
+    "component_n_gt": 299,
+    "component_unique_points": 299,
+    "components": 12,
+    "all_case2_n_gt": 453,
+    "rule": "largest 0.6m-connected component of case-2 XYZ; size in inherited reference rows; weighted principal XY axis",
+    "direction_xy": [
+      0.9977755479341577,
+      -0.06666300281784135
+    ],
+    "length_m": 14.224095406279442,
+    "small_component": false
+  },
+  "camera_angles": [
+    [
+      90,
+      -90
+    ],
+    [
+      35,
+      -55
+    ],
+    [
+      35,
+      125
+    ]
+  ],
+  "dpi": 200,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/R1rep_b10__LoD2/rows.npz",
+      "sha256": "4d6947fd5225c99fe56837338d3562dbecee33089b631d4f3403b74799ae7c72"
+    },
+    {
+      "path": "/tu/gt/scenes/R1rep_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "ad16157514f67244f51444f44b0cabfb913b111b841257cc5154efcff8dc5151"
+    },
+    {
+      "path": "/tu/gt/scenes/R1rep_b10__LoD2/distances/seed1_s1.npz",
+      "sha256": "699b9fc82678331702b6234758239c5344661a734f3fe8efbed7b96f73b4b4a1"
+    }
+  ],
+  "script_sha256": "090e8d3e09abc6b7f4e098dc4eb0ad3de648492d427bfa948aabc943be973eb1",
+  "scientific_verdict": null
+}

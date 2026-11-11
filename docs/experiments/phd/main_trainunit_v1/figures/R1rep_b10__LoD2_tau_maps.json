@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-12T05:54:20.024021+09:00",
+  "runs": [
+    [
+      "기준",
+      "FINALTRAIN_30000"
+    ],
+    [
+      "씨앗 반복",
+      "seed1_s1"
+    ]
+  ],
+  "dpi": 200,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/R1rep_b10__LoD2/rows.npz",
+      "sha256": "4d6947fd5225c99fe56837338d3562dbecee33089b631d4f3403b74799ae7c72"
+    },
+    {
+      "path": "/tu/gt/scenes/R1rep_b10__LoD2/distances/FINALTRAIN_30000.npz",
+      "sha256": "ad16157514f67244f51444f44b0cabfb913b111b841257cc5154efcff8dc5151"
+    },
+    {
+      "path": "/tu/gt/scenes/R1rep_b10__LoD2/distances/seed1_s1.npz",
+      "sha256": "699b9fc82678331702b6234758239c5344661a734f3fe8efbed7b96f73b4b4a1"
+    }
+  ],
+  "script_sha256": "090e8d3e09abc6b7f4e098dc4eb0ad3de648492d427bfa948aabc943be973eb1",
+  "scientific_verdict": null
+}

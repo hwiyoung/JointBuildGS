@@ -46,9 +46,9 @@ def main():
     print('\n## 메모리와 시간\n')
     print('| 단위 | 사전 정보 | 판 | 상태 | 학습 영상 | 영상당 학습 횟수 | 학습 시간 (시간) | 가우시안 최종 / 최대 | GPU 예약 최대 (GiB) | PSNR 학습 5장 / 평가 |\n|---|---|---|---|---|---|---|---|---|---|')
     for r in st:
-        print(f"| {r['unit']} | {PR[r['prior']]} | {r['label']} | {r.get('status', 'FINALTRAIN 완료')} | {r['train_images']} | {f(r['iterations_per_image'])} | "
-              f"{f(r['train_seconds'] / 3600 if r['train_seconds'] else None, 2)} | {r['final_gaussians'] or '—'} / {r['max_gaussians'] or '—'} | "
-              f"{f(r['peak_reserved_GiB'], 1)} | {f(r['psnr_train_5views'], 2)} / {f(r['psnr_test'], 2)} |")
+        print(f"| {r['unit']} | {PR[r['prior']]} | {r['label']} | {r.get('status', 'FINALTRAIN 완료')} | {r['train_images']} | {f(r.get('iterations_per_image'))} | "
+              f"{f(r.get('train_seconds') / 3600 if r.get('train_seconds') else None, 2)} | {r.get('final_gaussians') or '—'} / {r.get('max_gaussians') or '—'} | "
+              f"{f(r.get('peak_reserved_GiB'), 1)} | {f(r.get('psnr_train_5views'), 2)} / {f(r.get('psnr_test'), 2)} |")
     band = rows('cells_boundary_band')
     if band:
         print('\n## 칸 경계 띠 (원래 칸 경계 ±2 m 안 참값 점)\n')
