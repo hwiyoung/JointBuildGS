@@ -10,6 +10,7 @@ O = PH/'main_trainerr_v1/PHD-MAIN-TRAINERR-v1'; C = R/'configs/phd/main_trainerr
 GPU_IMAGE = 'sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be'
 CPU_IMAGE = 'sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774'
 FORK = 'GeoGS-conf-guided-v1-r28'
+FAST = Path(os.environ['TE_FASTWORK']) if os.environ.get('TE_FASTWORK') else None
 def now(): return dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat()
 def dump(p, v): p.parent.mkdir(parents=True, exist_ok=True); p.write_text(json.dumps(v, ensure_ascii=False, indent=1)+'\n')
 
@@ -46,6 +47,7 @@ def gtjcmd(step, stem, family, ply='', gpu=None, name=None):
     mounts = [(R, '/repo', 'ro'), (ART, '/art', 'ro'), (ART, '/artifacts/JointBuildGS', 'ro'), (PH, '/ph', 'ro'), (PH/'main_rescore_v1/PHD-MAIN-RESCORE-v1', '/out', 'ro'),
               (PH/'main_release_v1/PHD-MAIN-RELEASE-v1', '/release', 'ro'), (sh, '/gtjudge', 'rw'), (R/'configs/phd/main_gtjudge_v1', '/cfg', 'ro'),
               (O/'gtj_docs', '/docs', 'rw'), (O, '/te', 'rw'), (R/'src/phd/forks'/FORK, '/source', 'ro'), (Path('/usr/share/fonts/opentype/noto'), '/fonts', 'ro')]
+    if FAST: mounts.append((FAST, str(FAST), 'rw'))  # NVMe work folders (symlinked final_work), same path inside and outside
     for s_, d, m in mounts: cmd += ['-v', f'{s_}:{d}:{m}']
     pre = 'if [ -f /opt/geogs/lib/libstdc++.so.6 ]; then export LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6; fi; ' if gpu is not None else ''
     args = [a for a in [step, stem, family, ply] if a]
