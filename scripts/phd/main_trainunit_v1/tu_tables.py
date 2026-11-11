@@ -155,6 +155,8 @@ def band():
                 cl = np.clip(xy, lo, hi)
                 d = np.minimum(d, np.linalg.norm(xy - cl, axis=1))
             m = d <= 2.
+            out.append(dict(site=site, prior=prior, run='(참값 점)', part='경계까지 가장 가까운 참값 점', rows=int(len(d)), nearest_reference_row_to_boundary_m=float(d.min()),
+                            rows_within_2m=int(m.sum()), rows_within_5m=int((d <= 5).sum()), status='기록'))
             for label, fam in fams(prior).items():
                 p = TU / 'gt/scenes' / stem / 'distances' / f'{fam}.npz'
                 if not p.exists():
@@ -191,7 +193,11 @@ def run_stats():
             mm = re.search(r'PSNR: ([0-9.]+)', mt.read_text())
             psnr_test = float(mm.group(1)) if mm else None
         g = [r['gaussians'] for r in rows]
-        return dict(run=name, final_gaussians=g[-1] if g else None, max_gaussians=max(g) if g else None,
+        mon = model / 'target_monitor/curve.jsonl'
+        if mon.exists():
+            cg = [json.loads(l)['gaussians'] for l in mon.read_text().splitlines() if l.strip()]
+            g = g + cg
+        return dict(run=name, last_iteration=rows[-1]['iteration'] if rows else None, final_gaussians=g[-1] if g else None, max_gaussians=max(g) if g else None,
                     peak_reserved_GiB=max(r['peak_cuda_reserved_bytes'] for r in rows) / 2**30 if rows else None,
                     train_seconds=rows[-1]['elapsed_seconds'] if rows else None, iterations=iters, train_images=n_train,
                     iterations_per_image=iters / n_train if n_train else None, psnr_train_5views=psnr_train, psnr_test=psnr_test)
@@ -202,23 +208,31 @@ def run_stats():
             rec = TU / 'runs' / site / f'seed1_{prior}' / 'receipt.json'
             if rec.exists():
                 r = json.loads(rec.read_text())
-                a = r['attempts'][-1]['attempt']
-                out.append(dict(unit=site, prior=prior, label='씨앗 반복', status=r['status'], **stats(f'seed1_{site}_{prior}', rec.parent / f'attempt{a}/model', 30000, n)))
+                if r['attempts']:
+                    a = r['attempts'][-1]['attempt']
+                    out.append(dict(unit=site, prior=prior, label='씨앗 반복', status=r['status'], **stats(f'seed1_{site}_{prior}', rec.parent / f'attempt{a}/model', 30000, n)))
     split = json.loads((TU / 'scenes/campus/split.json').read_text())
+    def add(unit, prior, label, name, rec, n):
+        if not rec.exists():
+            return
+        r = json.loads(rec.read_text())
+        if not r['attempts']:
+            out.append(dict(unit=unit, prior=prior, label=label, status=r['status'], reason=r.get('reason'), run=name, train_images=n,
+                            iterations_per_image=30000 / n))
+            return
+        for att in r['attempts']:
+            a = att['attempt']
+            row = dict(unit=unit, prior=prior, label=label, status=r['status'], attempt=a, attempt_status=att['status'], exit_code=att.get('exit_code'),
+                       **stats(name, rec.parent / f'attempt{a}/model', 30000, n))
+            dl = rec.parent / f'attempt{a}' / 'DEADLINE_STOP.json'
+            if dl.exists():
+                row['stopped_at_iteration'] = json.loads(dl.read_text())['iteration']
+            out.append(row)
     for prior in PRIORS:
-        rec = TU / 'runs/campus' / f'campus30k_{prior}_s0' / 'receipt.json'
-        if rec.exists():
-            r = json.loads(rec.read_text())
-            a = r['attempts'][-1]['attempt']
-            out.append(dict(unit='campus', prior=prior, label='가', status=r['status'], **stats(f'campus30k_{prior}_s0', rec.parent / f'attempt{a}/model', 30000, len(split['train']))))
+        add('campus', prior, '가', f'campus30k_{prior}_s0', TU / 'runs/campus' / f'campus30k_{prior}_s0' / 'receipt.json', len(split['train']))
         cells = json.loads((TU / 'cells/cells.json').read_text())['cells'] if (TU / 'cells/cells.json').exists() else []
         for c in cells:
-            rec = TU / 'runs/cells' / f'cells_{prior}_s0' / f'cell{c["id"]}' / 'receipt.json'
-            if rec.exists():
-                r = json.loads(rec.read_text())
-                a = r['attempts'][-1]['attempt']
-                out.append(dict(unit=f'cell{c["id"]}', prior=prior, label='다', status=r['status'],
-                                **stats(f'cells_{prior}_s0/cell{c["id"]}', rec.parent / f'attempt{a}/model', 30000, len(c['images']))))
+            add(f'cell{c["id"]}', prior, '다', f'cells_{prior}_s0/cell{c["id"]}', TU / 'runs/cells' / f'cells_{prior}_s0' / f'cell{c["id"]}' / 'receipt.json', len(c['images']))
     table('run_stats', out)
 
 
