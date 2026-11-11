@@ -1,0 +1,27 @@
+{
+ "at": "2026-11-11T18:52:59.385564+09:00",
+ "figure": "check4_c2_gt.png",
+ "script": "scripts/phd/main_trainerr_v1/te_figs.py",
+ "cell": "c2",
+ "arm": "gt",
+ "representatives": [
+  {
+   "cls": "4-다",
+   "point_id": 92870,
+   "seen_views": 39
+  },
+  {
+   "cls": "4-마",
+   "point_id": 844,
+   "seen_views": 2
+  },
+  {
+   "cls": "4-가",
+   "point_id": 89218,
+   "seen_views": 10
+  }
+ ],
+ "rule": "same-ray four depths per seen view; reference depth = point camera z (c1/c2) or reference z-buffer (c3)",
+ "text_in_figure": "cell name, axes, legend only",
+ "scientific_verdict": null
+}

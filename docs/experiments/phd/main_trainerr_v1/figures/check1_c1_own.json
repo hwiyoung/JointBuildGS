@@ -1,0 +1,28 @@
+{
+ "at": "2026-11-11T18:54:06.737698+09:00",
+ "figure": "check1_c1_own.png",
+ "script": "scripts/phd/main_trainerr_v1/te_figs.py",
+ "cell": "c1",
+ "arm": "own",
+ "section": {
+  "start": [
+   84.89255403971346,
+   3.41204974379914
+  ],
+  "end": [
+   94.49841704503325,
+   -0.071364226032951
+  ],
+  "half_width": 0.6,
+  "rule": "GTJUDGE section.json"
+ },
+ "lost_in_slab": 131,
+ "sources": {
+  "target_mesh": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__LoD2__judgment_mesh/primary.ply",
+  "trained_mesh": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__LoD2__FINALTRAIN_30000/primary.ply",
+  "reference": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/reference/B0_b10/dense.npz",
+  "tau_table": "tables/tau.csv"
+ },
+ "text_in_figure": "cell name, axes, legend only",
+ "scientific_verdict": null
+}

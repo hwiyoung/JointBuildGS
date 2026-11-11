@@ -1,0 +1,28 @@
+{
+ "at": "2026-11-11T18:54:37.084158+09:00",
+ "figure": "check1_c1_gt.png",
+ "script": "scripts/phd/main_trainerr_v1/te_figs.py",
+ "cell": "c1",
+ "arm": "gt",
+ "section": {
+  "start": [
+   84.89255403971346,
+   3.41204974379914
+  ],
+  "end": [
+   94.49841704503325,
+   -0.071364226032951
+  ],
+  "half_width": 0.6,
+  "rule": "GTJUDGE section.json"
+ },
+ "lost_in_slab": 135,
+ "sources": {
+  "target_mesh": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/meshes/B0_b10__LoD2__gt_judgment_mesh/final.ply",
+  "trained_mesh": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/meshes/B0_b10__LoD2__A1/final.ply",
+  "reference": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/reference/B0_b10/dense.npz",
+  "tau_table": "tables/tau.csv"
+ },
+ "text_in_figure": "cell name, axes, legend only",
+ "scientific_verdict": null
+}

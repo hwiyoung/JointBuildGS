@@ -1,0 +1,28 @@
+{
+ "at": "2026-11-11T18:56:49.010820+09:00",
+ "figure": "check1_c3_gt.png",
+ "script": "scripts/phd/main_trainerr_v1/te_figs.py",
+ "cell": "c3",
+ "arm": "gt",
+ "section": {
+  "start": [
+   106.24052915177111,
+   -4.387560258179986
+  ],
+  "end": [
+   97.33418788365574,
+   -1.6687483740600786
+  ],
+  "half_width": 0.6,
+  "rule": "largest 0.6 m cluster of lost points, principal XY axis"
+ },
+ "lost_in_slab": 8630,
+ "sources": {
+  "target_mesh": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/meshes/B0_b10__LoD2__gt_judgment_mesh/final.ply",
+  "trained_mesh": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/meshes/B0_b10__LoD2__A1/final.ply",
+  "reference": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/reference/B0_b10/dense.npz",
+  "tau_table": "tables/tau.csv"
+ },
+ "text_in_figure": "cell name, axes, legend only",
+ "scientific_verdict": null
+}

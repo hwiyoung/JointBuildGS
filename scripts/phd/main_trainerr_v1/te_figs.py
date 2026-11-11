@@ -108,10 +108,10 @@ def check2(tag=''):
                     idx = json.loads((arm_paths(stem, arm)['target_dir']/'maps/index.json').read_text())['views'][vw['name']]
                     own = loadz(arm_paths(stem, arm)['target_dir']/'maps'/idx['file'], ['owner'])['owner']; r = 70; x0, x1 = int(max(0, u-r)), int(min(im.shape[1], u+r)); y0, y1 = int(max(0, v-r)), int(min(im.shape[0], v+r))
                     crop = im[y0:y1, x0:x1]; oc = own[y0:y1, x0:x1]; edge = np.zeros(oc.shape, bool); edge[:, :-1] |= oc[:, 1:] != oc[:, :-1]; edge[:-1, :] |= oc[1:, :] != oc[:-1, :]
-                    mine = oc == z['patch_row'][i]; a2.imshow(crop); ov = np.zeros(crop.shape[:2]+(4,)); ov[edge] = [1, 1, 1, .9]; ov[mine & ~edge] = [1, .85, 0, .35]; a2.imshow(ov)
+                    mine = oc == z['patch_row'][i]; a2.imshow(crop); ov = np.zeros(crop.shape[:2]+(4,)); ov[edge] = [1, 1, 1, .25]; ov[mine] = [1, .85, 0, .75]; a2.imshow(ov)
                     a2.plot([u-x0], [v-y0], 'o', mfc='none', mec='r', ms=8, mew=1.5); a2.set_xticks([]); a2.set_yticks([]); a2.set_title(big, fontsize=9)
                     meta.update(representative=dict(point_id=int(z['point_id'][i]), cls=str(big), view=vw['name'], uv=[u, v], patch_row=int(z['patch_row'][i]),
-                                overlay='white = target-map owner boundaries, yellow = pixels whose owner is the point patch, red = point'))
+                                overlay='faint white = target-map owner boundaries, yellow = pixels whose owner is the point patch, red = point'))
             save(fig, f'check2_{cell}_{arm}', meta)
 
 def check3(tag=''):

@@ -80,7 +80,7 @@ def main(tag=''):
             for k in C4:
                 sel = np.isin(pr['point'], np.flatnonzero(L & (z['check4'] == k)))
                 if not sel.any(): continue
-                ref = pr['ref_z'][sel].astype(float)
+                ref = pr['ref_z'][sel].astype(float); ref[~np.isfinite(ref)] = np.nan  # empty reference z-buffer pixel (c3) = missing
                 T['four_depths'].append(dict(cell=cell, arm=arm, run=tag or 'stored', cls=k, pairs=int(sel.sum()), render_minus_ref_p50=float(np.nanmedian(pr['render_z'][sel]-ref)),
                                              mesh_minus_ref_p50=float(np.nanmedian(pr['mesh_z'][sel]-ref)), target_minus_ref_p50=float(np.nanmedian(np.where(pr['target_z'][sel] > 0, pr['target_z'][sel]-ref, np.nan))),
                                              empty_pct=100*float(pr['empty'][sel].mean())))
@@ -93,8 +93,11 @@ def main(tag=''):
             T['summary'].append(dict(cell=cell, arm=arm, run=tag or 'stored', lost=nl, control=nc, few=nl < 1000, culprit=','.join(cand) or '후보 없음',
                                      **{f'{k}_largest': v[0] for k, v in big.items()}, **{f'{k}_largest_pct_of_lost': v[1] for k, v in big.items()}))
     suf = f'_{tag}' if tag else ''
+    def clean(v):
+        if isinstance(v, (float, np.floating)) and not np.isfinite(v): return None if np.isnan(v) else ('inf' if v > 0 else '-inf')
+        return v.item() if isinstance(v, np.generic) else v
     for k, rows in T.items():
-        if rows: table(f'{k}{suf}', rows)
+        if rows: table(f'{k}{suf}', [{a_: clean(b_) for a_, b_ in r.items()} for r in rows])
     print('TABLES', {k: len(v) for k, v in T.items()}); [print(r) for r in T['summary']]
 
 if __name__ == '__main__': main(*sys.argv[1:])
