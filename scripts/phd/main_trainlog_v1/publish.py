@@ -4,6 +4,7 @@ from common import *
 STAGES = {
     'stage1': dict(docs=['단계1_보고.md', 'issues.md', 'progress.md', 'r27_changed_lines.diff', 'camera_choice.json', 'tables/unit_checks_gpu_repeat.csv', 'tables/unit_checks_event_balance.csv', 'tables/unit_checks_r23_diagnostic.csv', 'tables/camera_choice.csv', 'verification'],
                    cfg=['trainlog_v1.json', 'trainlog_v1.lock.json', 'trainlog_v1.unitcheck_v2.json', 'trainlog_v1.unitcheck_v2.lock.json'], payload=[]),
+    'stage3_compare': dict(docs=['단계3_대조표.md', 'comparison.json', 'tables/comparison_original_vs_new.csv', 'issues.md', 'progress.md'], cfg=['trainlog_v1.json', 'trainlog_v1.lock.json', 'trainlog_v1.runtime.lock.json'], payload=[]),
 }
 def main(stage):
     spec = STAGES[stage]; stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M')

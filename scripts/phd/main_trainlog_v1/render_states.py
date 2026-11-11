@@ -1,7 +1,7 @@
 """Render every saved state after training (order 3 '학습 중 렌더'), r27 renderer = FINALTRAIN rfix speed .so, inference only.
 View camera: PROCFIG rank-1 direction (az 180, el 35), far perspective; building-scope Gaussians only.
 Two training images: full scene, active SH degree, black background (as training); per-pixel max alpha*T id (TARGET r5 maxid .so)."""
-import sys, math, importlib.util
+import sys, math, time, importlib.util
 from types import SimpleNamespace
 from common import *
 sys.path.insert(0, '/source'); sys.path.append('/repo/scripts/phd/main_finaltrain_v1')
@@ -25,8 +25,8 @@ def view_camera(c):
     east = np.array([1., 0, 0]); east -= (east@up)*up; east /= np.linalg.norm(east); north = np.cross(up, east)
     a, e = np.radians(vc['azimuth_deg']), np.radians(vc['elevation_deg'])
     out = np.cos(e)*(np.cos(a)*east+np.sin(a)*north)+np.sin(e)*up; f = -out; r = np.cross(f, up); r /= np.linalg.norm(r); u = np.cross(r, f)
-    from shapely.geometry import shape
-    b = shape(c['scope']['buffered_footprint']).bounds; z0, z1 = c['scope']['z_min'], c['scope']['z_max']
+    g_ = c['scope']['buffered_footprint']; rings = g_['coordinates'] if g_['type'] == 'Polygon' else [r for poly in g_['coordinates'] for r in poly]
+    xy = np.concatenate([np.asarray(r, float)[:, :2] for r in rings]); b = (xy[:, 0].min(), xy[:, 1].min(), xy[:, 0].max(), xy[:, 1].max()); z0, z1 = c['scope']['z_min'], c['scope']['z_max']
     corners = np.array([[x, y, z] for x in (b[0], b[2]) for y in (b[1], b[3]) for z in (z0, z1)]); ctr = corners.mean(0)
     W, H, D_ = vc['width'], vc['height'], 500.
     q = (corners-ctr)@np.stack([r, u]).T; width = max(np.ptp(q[:, 0]), np.ptp(q[:, 1])*W/H)*1.08
@@ -50,7 +50,7 @@ def load(path, keep=None):
 @torch.no_grad()
 def main(only=None):
     c = cfg(); torch.cuda.set_per_process_memory_fraction(.6)
-    run = O/'runs'/SITE/RUN/'attempt1/model/trainlog'; saves = [json.loads(l) for l in (run/'saves.jsonl').read_text().splitlines()]
+    run = RUNM/'trainlog'; saves = [json.loads(l) for l in (run/'saves.jsonl').read_text().splitlines()]
     choice = json.loads((D/'camera_choice.json').read_text())['chosen']; views = {v['name']: v for v in json.loads((RS/'views'/f'{SITE}.json').read_text())['views']}
     trains = [views[x['name']] for x in choice]; vc = view_camera(c); light = np.array(c['renders']['light']); light /= np.linalg.norm(light)
     from renderer import install

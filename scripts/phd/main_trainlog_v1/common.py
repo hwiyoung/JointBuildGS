@@ -11,7 +11,8 @@ RS = PH/'main_rescore_v1/PHD-MAIN-RESCORE-v1'
 S1 = PH/'main_stage1_v1/PHD-MAIN-STAGE1-v1'
 JA = PH/'main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1'
 SITE = 'B173nb_b10'; PRIOR = 'ALS'; STEM = SITE+'__'+PRIOR; CASE = 'c1_'+STEM
-RUN = 'tl_B173nb_b10_ALS_s0'
+RUN = 'tl_B173nb_b10_ALS_s0'; ATTEMPT = 'attempt2'
+RUNM = O/'runs'/SITE/RUN/ATTEMPT/'model'; DER = O/'runs'/SITE/RUN/'derived'
 ORIG = FT/'runs'/SITE/'ft_ALS_s0/attempt1/model'
 SHIFT = np.array([690953., 5336071., 604.])
 def now(): return dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat()

@@ -55,6 +55,16 @@ def tracking(label, scope):
         mism = int((ref != sc['inside'].numpy()).sum())
         if mism: out['failures'].append(f'{s["name"]}: inside flag vs shapely mismatch {mism}')
         if seen_dead & set(uid_all.tolist()): out['failures'].append(f'{s["name"]}: deleted uid reappears')
+        if 'release_event' in sc and 'release' in ev:
+            ids = set(np.unique(sc['release_event'].numpy()[sc['release_event'].numpy() >= 0]).tolist())
+            if not ids <= set(ev['release']['event_id'].tolist()): out['failures'].append(f'{s["name"]}: release_event not recorded')
+            out.setdefault('release_event_checked', 0); out['release_event_checked'] += 1
+        if 'link' in ev and prev is not None:
+            newu = set(uid_all[uid_all > prev[0].max()].tolist())
+            if not newu <= set(ev['link']['uid'].tolist()): out['failures'].append(f'{s["name"]}: new uid missing from link events')
+            par = dict(zip(ev['link']['uid'].tolist(), ev['link']['parent_uid'].tolist()))
+            if 'parent_uid' in sc and any(par[u] != pu for u, pu in zip(uid_all.tolist(), sc['parent_uid'].numpy().tolist()) if u in newu): out['failures'].append(f'{s["name"]}: link parent mismatch')
+            out.setdefault('link_checked', 0); out['link_checked'] += 1
         if prev is not None:
             pu, pst, pseq = prev
             gone = set(pu.tolist()) - set(uid_all.tolist()); seen_dead |= gone
@@ -120,8 +130,8 @@ def main():
                              r23_n=len(rv), r23_median=float(np.median(rv)) if rv else None, offoff_max=max(ov) if ov else None, rule_r23=ok23))
             status &= ok  # locked v2 status_rule: PASS iff A and B; r23 GPU line is reported (rule_r23) and diagnosed with four r23 runs
     replay = json.loads((O/'verification/replay_test.json').read_text()); r23rep = json.loads((O/'verification/replay_compare_r23_r27off.json').read_text())
-    track = {l: tracking(l, c['scope']) for l in on}
-    selfcheck = {l: 'TRAINLOG_SELFCHECK_CHANGED' not in (P/l/'train.log').read_text() for l in on if 'JBGS_TRAINLOG_SELFCHECK=1' in (P/l/'command.json').read_text()}
+    track = {l: tracking(l, c['scope']) for l in on+[x for x in ['r27_on_e'] if (P/x/'TRAINING_COMPLETE.json').exists()]}
+    selfcheck = {l: 'TRAINLOG_SELFCHECK_CHANGED' not in (P/l/'train.log').read_text() for l in list(track) if 'JBGS_TRAINLOG_SELFCHECK=1' in (P/l/'command.json').read_text()}
     diag = json.loads((O/'verification/unit_checks_r23_diagnostic.json').read_text()) if (O/'verification/unit_checks_r23_diagnostic.json').exists() else None
     checks = dict(decision_invariance_replay=replay['status'] == 'PASS', r23_replay=r23rep['status'] == 'PASS', gpu_repeat_rule_B=status,
                   id_tracking=all(not [f for f in t['failures'] if 'balance' not in f] for t in track.values()),

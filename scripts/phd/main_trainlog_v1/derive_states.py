@@ -30,7 +30,7 @@ def derive(z, t, s, valid, seedgroup, up):
     return {k: (v.astype('f4') if np.issubdtype(v.dtype, np.floating) else v) for k, v in g.items()}
 
 def main(root=None):
-    c = cfg(); root = Path(root) if root else O/'runs'/SITE/RUN/'attempt1/model/trainlog'
+    c = cfg(); root = Path(root) if root else RUNM/'trainlog'
     t, s, valid, group, seedgroup = inputs(c); up = np.array(c['coordinates']['up']); out = root.parent.parent.parent/'derived'/'gaussians'
     saves = [json.loads(l) for l in (root/'saves.jsonl').read_text().splitlines()]; rec = []
     for sv in saves:

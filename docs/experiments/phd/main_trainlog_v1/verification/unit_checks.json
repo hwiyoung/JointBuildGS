@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-11T12:25:18.503668+09:00",
+  "at": "2026-11-11T12:32:06.728736+09:00",
   "status": "PASS",
   "checks": {
     "decision_invariance_replay": true,
@@ -280,7 +280,7 @@
     }
   ],
   "replay": {
-    "at": "2026-11-11T12:12:47.415040+09:00",
+    "at": "2026-11-11T12:30:23.613181+09:00",
     "start": "/tl/probe/r27_off_a/model/jbgs_complete/iteration_200/checkpoint.pth",
     "start_sha256": "3f4cd0b525f02b21b981e2471e8e792dedf7e137e098056409cbca0965ae2c3d",
     "iterations": [
@@ -376,6 +376,7 @@
     "events_recorded": {
       "birth": 152,
       "delete": 8758,
+      "link": 383,
       "opacity_reset": 1,
       "range": 489,
       "release": 3587,
@@ -883,11 +884,124 @@
         "2": 480,
         "3": 50
       }
+    },
+    "r27_on_e": {
+      "label": "r27_on_e",
+      "saves": [
+        "0",
+        "50",
+        "100",
+        "150",
+        "200_pre_reset",
+        "200",
+        "250",
+        "300"
+      ],
+      "failures": [],
+      "release_event_checked": 8,
+      "link_checked": 7,
+      "balance": [
+        {
+          "state": "50",
+          "before": 28857,
+          "births": 0,
+          "deletions": 0,
+          "enter": 90,
+          "exit": 144,
+          "after": 28803,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "100",
+          "before": 28803,
+          "births": 0,
+          "deletions": 0,
+          "enter": 57,
+          "exit": 64,
+          "after": 28796,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "150",
+          "before": 28796,
+          "births": 0,
+          "deletions": 0,
+          "enter": 36,
+          "exit": 55,
+          "after": 28777,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200_pre_reset",
+          "before": 28777,
+          "births": 356,
+          "deletions": 190,
+          "enter": 42,
+          "exit": 42,
+          "after": 28943,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "200",
+          "before": 28943,
+          "births": 0,
+          "deletions": 0,
+          "enter": 0,
+          "exit": 0,
+          "after": 28943,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "250",
+          "before": 28943,
+          "births": 0,
+          "deletions": 0,
+          "enter": 32,
+          "exit": 54,
+          "after": 28921,
+          "count_equal": true,
+          "uid_set_equal": true
+        },
+        {
+          "state": "300",
+          "before": 28921,
+          "births": 153,
+          "deletions": 5030,
+          "enter": 41,
+          "exit": 39,
+          "after": 24046,
+          "count_equal": true,
+          "uid_set_equal": true
+        }
+      ],
+      "event_counts": {
+        "birth": 509,
+        "delete": 5220,
+        "link": 3073,
+        "opacity_reset": 1,
+        "range": 696,
+        "release": 3679,
+        "retarget": 50581
+      },
+      "delete_reasons": {
+        "1": 5192,
+        "5": 28
+      },
+      "birth_how": {
+        "2": 463,
+        "3": 46
+      }
     }
   },
   "self_check_runs": {
     "r27_on_b": true,
-    "r27_on_d": true
+    "r27_on_d": true,
+    "r27_on_e": true
   },
   "scientific_verdict": null
 }

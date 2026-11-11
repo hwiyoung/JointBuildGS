@@ -5,6 +5,7 @@ R = Path(__file__).resolve().parents[3]; ART = R.parent/'JointBuildGS-artifacts'
 O = PH/'main_trainlog_v1/PHD-MAIN-TRAINLOG-v1'; C = R/'configs/phd/main_trainlog_v1'; D = R/'docs/experiments/phd/main_trainlog_v1'
 GPU_IMAGE = 'sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be'
 CPU_IMAGE = 'sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774'
+VIDEO_IMAGE = 'sha256:4130d2597c2c3c2804a7cacb8302be948314bc37ba81a1a21383e1c8b7fbba73'  # jointbuildgs:geogs-da3-3d835ec-v1 (imageio_ffmpeg)
 SITE = 'B173nb_b10'; PRIOR = 'ALS'
 def now(): return dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat()
 def dump(p, v): p.parent.mkdir(parents=True, exist_ok=True); p.write_text(json.dumps(v, ensure_ascii=False, indent=2)+'\n')
@@ -19,7 +20,8 @@ def command(name, script, args=(), gpu=None, fork='GeoGS-conf-guided-v1-r27', en
         cmd += ['-e', e]
     mounts = [(R, '/repo', 'ro'), (ART, '/art', 'ro'), (ART, '/artifacts/JointBuildGS', 'ro'), (PH, '/ph', 'ro'), (O, '/tl', 'rw'), (C, '/cfg', 'rw' if script in ['freeze.py', 'seal_runtime.py'] else 'ro'), (D, '/docs', 'rw'),
               (PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1', '/p', 'ro'), (PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1', '/s0', 'ro'),
-              (R/'src/phd/forks'/fork, '/source', 'ro'), (PH/'geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights', '/weights', 'ro')]
+              (R/'src/phd/forks'/fork, '/source', 'ro'), (PH/'geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights', '/weights', 'ro'),
+              (Path('/usr/share/fonts/opentype/noto'), '/fonts', 'ro')]
     for s, d, m in mounts: cmd += ['-v', f'{s}:{d}:{m}']
     pre = 'if [ -f /opt/geogs/lib/libstdc++.so.6 ]; then export LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6; fi; ' if gpu is not None else ''
     return cmd + ['-w', '/source', '--entrypoint', '/bin/bash', image, '-c', pre+'exec python -B -u "/repo/scripts/phd/main_trainlog_v1/$0" "$@"', script, *args]
@@ -37,7 +39,8 @@ PROBES = {'r23': ('GeoGS-conf-guided-v1-r23', None, ()), 'r27_off_a': ('GeoGS-co
           'r27_on_a': ('GeoGS-conf-guided-v1-r27', 'on', ()), 'r27_on_b': ('GeoGS-conf-guided-v1-r27', 'on', ('JBGS_TRAINLOG_SELFCHECK=1',)),
           'r27_off_c': ('GeoGS-conf-guided-v1-r27', 'off', ()), 'r27_off_d': ('GeoGS-conf-guided-v1-r27', 'off', ()),
           'r23_b': ('GeoGS-conf-guided-v1-r23', None, ()), 'r23_c': ('GeoGS-conf-guided-v1-r23', None, ()), 'r23_d': ('GeoGS-conf-guided-v1-r23', None, ()),
-          'r27_on_c': ('GeoGS-conf-guided-v1-r27', 'on', ()), 'r27_on_d': ('GeoGS-conf-guided-v1-r27', 'on', ('JBGS_TRAINLOG_SELFCHECK=1',))}
+          'r27_on_c': ('GeoGS-conf-guided-v1-r27', 'on', ()), 'r27_on_d': ('GeoGS-conf-guided-v1-r27', 'on', ('JBGS_TRAINLOG_SELFCHECK=1',)),
+          'r27_on_e': ('GeoGS-conf-guided-v1-r27', 'on', ('JBGS_TRAINLOG_SELFCHECK=1',))}
 def probe(labels):
     cfgp = O/'probe/trainlog_probe.json'
     if not cfgp.exists():
@@ -53,11 +56,11 @@ def probe(labels):
         dump(root/'command.json', cmd); rc, s = run(cmd, root/'train.log')
         dump(root/'receipt.json', dict(at=now(), label=label, exit_code=rc, seconds=s, scientific_verdict=None)); print(label, rc, round(s), flush=True)
         if rc: raise SystemExit(f'probe {label} failed')
-def train(gpu=0):
-    root = O/'runs'/SITE/'tl_B173nb_b10_ALS_s0'/'attempt1'; root.mkdir(parents=True, exist_ok=False)
+def train(gpu=0, attempt=1):
+    root = O/'runs'/SITE/'tl_B173nb_b10_ALS_s0'/f'attempt{attempt}'; root.mkdir(parents=True, exist_ok=False)
     extra = ['--jbgs_capture_iterations', '7000', '15000', '30000', '--test_iterations', '7000', '15000', '30000', '--save_iterations', '7000', '15000', '30000', '--jbgs_trainlog', 'on']
     model = '/tl/'+str((root/'model').relative_to(O))
-    cmd = command('jbgs-trainlog-B173nb_b10-ALS-a1', 'train_entry.py', train_args(model, 30000, extra), gpu=int(gpu),
+    cmd = command(f'jbgs-trainlog-B173nb_b10-ALS-a{attempt}', 'train_entry.py', train_args(model, 30000, extra), gpu=int(gpu),
                   env=['JBGS_TRAINLOG_CONFIG=/cfg/trainlog_v1.json', 'TRAINLOG_REQUIRE_RUNTIME=1'])
     dump(root/'command.json', cmd); dump(root/'launch.json', dict(at=now(), gpu=int(gpu), scientific_verdict=None))
     rc, s = run(cmd, root/'train.log')
@@ -65,7 +68,7 @@ def train(gpu=0):
 def job(kind, script, *args, gpu=None, name=None, fork='GeoGS-conf-guided-v1-r27', cpus=8, memory='40g'):
     name = name or f'jbgs-trainlog-{kind}-{Path(script).stem}'
     log = O/'logs'/f'{dt.datetime.now().strftime("%Y%m%dT%H%M%S")}_{Path(script).stem}_{"_".join(args)[:60]}.log'
-    cmd = command(name, script, list(args), gpu=gpu, fork=fork, cpus=cpus, memory=memory, image=GPU_IMAGE if kind == 'torch' else None)
+    cmd = command(name, script, list(args), gpu=gpu, fork=fork, cpus=cpus, memory=memory, image=GPU_IMAGE if kind == 'torch' else (VIDEO_IMAGE if kind == 'video' else None))
     rc, s = run(cmd, log); print(script, args, rc, round(s), log, flush=True); return rc
 
 def meshcmd(step, family='', ply='', gpu=None):
@@ -101,7 +104,7 @@ if __name__ == '__main__':
     a = sys.argv[1:]
     if a[0] == 'probe': probe(a[1:] or list(PROBES))
     elif a[0] == 'train': train(*a[1:])
-    elif a[0] in ['cpu', 'torch']: sys.exit(job(a[0], a[1], *a[2:]))
+    elif a[0] in ['cpu', 'torch', 'video']: sys.exit(job(a[0], a[1], *a[2:]))
     elif a[0] == 'gpu': sys.exit(job('gpu', a[2], *a[3:], gpu=int(a[1])))
     elif a[0] == 'gpufork': sys.exit(job('gpu', a[3], *a[4:], gpu=int(a[1]), fork=a[2], name=f'jbgs-trainlog-gpufork-{a[2][-3:]}'))
     elif a[0] == 'mesh': mesh(a[1], *a[2:4], gpu=int(a[4]) if len(a) > 4 else None)

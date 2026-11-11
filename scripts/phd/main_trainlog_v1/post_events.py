@@ -22,11 +22,11 @@ def flat(d):
 
 def main(root=None):
     from release_search import TangentTree
-    root = Path(root) if root else O/'runs'/SITE/RUN/'attempt1/model/trainlog'; out = root.parent.parent.parent/'derived'/'events'; out.mkdir(parents=True, exist_ok=True)
+    root = Path(root) if root else RUNM/'trainlog'; out = root.parent.parent.parent/'derived'/'events'; out.mkdir(parents=True, exist_ok=True)
     t = loadz(FT/'targets'/f'{STEM}.npz'); valid = np.flatnonzero((t['region'] >= 0) & np.isfinite(t['target']).all(1) & np.isfinite(t['normal']).all(1) & np.isfinite(t['sigma']) & (t['sigma'] > 0))
     anchor = t['target'][valid].astype(float); norm = t['normal'][valid].astype(float); norm /= np.linalg.norm(norm, axis=1)[:, None]; width = (np.float32(1.96)*t['sigma'][valid].astype('f4')).astype(float)
     rec = {}
-    for kind in ['birth', 'delete', 'release', 'retarget', 'range', 'opacity_reset']:
+    for kind in ['birth', 'delete', 'release', 'retarget', 'range', 'opacity_reset', 'link']:
         a = load(root, kind)
         if not a: rec[kind] = 0; continue
         if kind == 'release':

@@ -19,7 +19,7 @@ from jbgs_finaltrain import FinalTrain
 from jbgs_target import write
 from utils.general_utils import build_rotation
 
-TL = ('tl_uid', 'tl_parent', 'tl_born', 'tl_how', 'tl_inside', 'tl_last_xyz', 'tl_parent_scale', 'tl_parent_normal')
+TL = ('tl_uid', 'tl_parent', 'tl_born', 'tl_how', 'tl_inside', 'tl_last_xyz', 'tl_parent_scale', 'tl_parent_normal', 'tl_event')
 TEMP = ('tl_parent_xyz', 'tl_parent_scale2')
 # born_how: 0 patch seed, 1 initial background, 2 clone, 3 split
 # delete reason: 1 opacity threshold, 2 world size, 3 screen size, 4 other cull, 5 split parent replaced
@@ -67,6 +67,7 @@ class TrainLog(FinalTrain):
         g.tl_last_xyz = g._xyz.detach().clone()
         g.tl_parent_scale = torch.full((n,), float('nan'), device=dev)
         g.tl_parent_normal = torch.full((n, 3), float('nan'), device=dev)
+        g.tl_event = torch.full((n,), -1, device=dev, dtype=torch.int64)  # last release event id, inherited by children (r24 rl_event)
         self.next_uid = n; self.seq = 0; self.next_event = 0; self.chunk = 0
         self.buf = {}; self.ctx = None; self.g = g
         self.t_last = None; self.it_last = None; self.saves = []
@@ -173,6 +174,7 @@ class TrainLog(FinalTrain):
         count = len(meta['tl_uid'])
         for k in TL: setattr(g, k, torch.cat([getattr(g, k), meta[k]]))
         new = torch.arange(len(g._xyz) - count, len(g._xyz), device=g._xyz.device)
+        self.push('link', uid=g.tl_uid[new], parent_uid=g.tl_parent[new], how=g.tl_how[new])  # scene-wide birth links
         ins = self.inside(g._xyz[new]); g.tl_inside[new] = ins
         r = new[ins]
         if len(r):
@@ -206,6 +208,7 @@ class TrainLog(FinalTrain):
     def record_release(self, g, rows, reason, old):
         # Same fields as r24 jbgs_release.Release.record (action='release').
         n = len(rows); ids = torch.arange(self.next_event, self.next_event + n, device=rows.device, dtype=torch.int64); self.next_event += n
+        g.tl_event[rows] = ids
         valid = old >= 0; normal = torch.zeros((n, 3), device=rows.device, dtype=torch.float64)
         normal[valid] = self.patch_normal[old[valid]].double()
         delta = g._xyz[rows].double() - g.tl_last_xyz[rows].double(); hn = (delta * normal).sum(1)
@@ -266,14 +269,15 @@ class TrainLog(FinalTrain):
         t0 = time.perf_counter(); ins = g.tl_inside; r = torch.nonzero(ins).squeeze(1)
         data = dict(xyz=g._xyz[r], rotation=g.get_rotation[r], scale=g.get_scaling[r], opacity=g.get_opacity[r, 0], origin=g.origin[r], init_id=g.init_id[r],
             target_tag=g.target_tag[r], target_index=g.target_index[r], target_released_at=g.target_released_at[r], full_gaussian_index=r,
-            uid=g.tl_uid[r], parent_uid=g.tl_parent[r], born_at=g.tl_born[r], born_how=g.tl_how[r])
+            uid=g.tl_uid[r], parent_uid=g.tl_parent[r], born_at=g.tl_born[r], born_how=g.tl_how[r], release_event=g.tl_event[r])
         np.savez(self.out / 'states' / f'{name}.npz', **{k: v.detach().cpu().numpy() for k, v in data.items()})
         if self.scene_dump:
             torch.save(dict(iteration=self.iteration, name=name, active_sh_degree=g.active_sh_degree,
                 xyz=g._xyz.detach().cpu(), f_dc=g._features_dc.detach().cpu(), f_rest=g._features_rest.detach().cpu(),
                 opacity=g._opacity.detach().cpu(), scaling=g._scaling.detach().cpu(), rotation=g._rotation.detach().cpu(),
                 origin=g.origin.cpu(), init_id=g.init_id.cpu(), target_tag=g.target_tag.cpu(), target_index=g.target_index.cpu(),
-                uid=g.tl_uid.cpu(), inside=g.tl_inside.cpu()), self.out / 'scene' / f'{name}.pt')
+                uid=g.tl_uid.cpu(), inside=g.tl_inside.cpu(), parent_uid=g.tl_parent.cpu(), born_at=g.tl_born.cpu(), born_how=g.tl_how.cpu(),
+                release_event=g.tl_event.cpu(), target_released_at=g.target_released_at.cpu()), self.out / 'scene' / f'{name}.pt')
         rec = dict(name=name, iteration=self.iteration, seq=self.seq, gaussians=len(g._xyz), inside=len(r), seconds=time.perf_counter() - t0,
             phase='pre opacity reset, after this iteration densify/prune' if name.endswith('pre_reset') else
                   ('before first iteration, after r23 initialization' if name == '0' else 'end of iteration after update, densify/prune, opacity reset, 100-step check and final projection'))

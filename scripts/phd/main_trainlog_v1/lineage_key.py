@@ -3,7 +3,7 @@
   lineage <name>  : PROCFIG-v1 attribution.py rule on the mesh-render model: per training view max alpha*T id (TARGET r5 maxid .so),
                     GT rows of groups 1 (틀린 판정) and 2 (보정 비교) to nearest pixel, |saved render depth - point depth| <= 0.25 m,
                     modal Gaussian over views, ties lowest id. Saved depth = this family's mesh render (gtj/renders/<key>)."""
-import sys, math, importlib.util
+import sys, math, time, importlib.util
 from types import SimpleNamespace
 from common import *
 sys.path.insert(0, '/source'); sys.path.append('/repo/scripts/phd/main_finaltrain_v1')
@@ -14,7 +14,7 @@ from gaussian_renderer import render
 from scipy.sparse import coo_matrix
 from render_states import camera, load
 MAXID = PH/'main_target_v1/PHD-MAIN-TARGET-v1/r5/runtime/maxid_build/jbgs_target_r5_maxid.so'
-TL_RUN = O/'runs'/SITE/RUN/'attempt1/model'
+TL_RUN = RUNM
 
 def family(name): return f'tl_{name}'
 

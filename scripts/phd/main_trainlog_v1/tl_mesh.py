@@ -46,6 +46,8 @@ def score(family):
 def main(step, family=None, ply=None):
     if step == 'shadow': return shadow()
     if step == 'score': return score(family)
+    if step == 'recover':
+        import tl_recover; return tl_recover.main(family)
     import mesh_job
     mesh_job.main(SITE, PRIOR, family, step, ply)
 
