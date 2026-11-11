@@ -20,7 +20,9 @@ def point_table(stem, arm, sets_root=None):
 def zbuffer(Pc, z, K, W, H):
     u = np.floor(K[0, 0]*Pc[:, 0]/z+K[0, 2]+.5).astype(np.int64); v = np.floor(K[1, 1]*Pc[:, 1]/z+K[1, 2]+.5).astype(np.int64)
     ok = (z > 0) & (u >= 0) & (v >= 0) & (u < W) & (v < H); lin = v[ok]*W+u[ok]; zz = z[ok]
-    buf = np.full(W*H, np.inf, np.float32); order = np.lexsort((zz, lin)); lin, zz = lin[order], zz[order]
+    buf = np.full(W*H, np.inf, np.float32)
+    if not len(lin): return buf.reshape(H, W)
+    order = np.lexsort((zz, lin)); lin, zz = lin[order], zz[order]
     first = np.r_[True, lin[1:] != lin[:-1]]; buf[lin[first]] = zz[first]; return buf.reshape(H, W)
 
 def main(stem, arms='own,gt', meshes='', tag='', sets_root=''):

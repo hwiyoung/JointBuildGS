@@ -68,6 +68,9 @@ def main(step, stem, family=None, ply=None):
     site, prior = stem.split('__')
     if step == 'score': return score(stem, family)
     if step == 'clean': return clean(stem, family)
+    if step == 'recover':
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('te_recover', '/repo/scripts/phd/main_trainerr_v1/te_recover.py'); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m.main(stem, family)
     import mesh_job
     mesh_job.main(site, prior, family, step, ply)
 

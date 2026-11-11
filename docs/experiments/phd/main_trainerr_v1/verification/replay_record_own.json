@@ -1,0 +1,120 @@
+{
+ "at": "2026-11-11T18:26:00.110216+09:00",
+ "arm": "own",
+ "start": "/te/probe/r28off_a/model/jbgs_complete/iteration_200/checkpoint.pth",
+ "start_sha256": "6ba03dec4a96861307262c059ea26000b6f86c48fcf0c2e2a0ea4372ad001a03",
+ "deterministic_algorithms": true,
+ "parts_byte_equal": {
+  "model": true,
+  "adam": true,
+  "meta": true,
+  "events": true,
+  "rng": true,
+  "trace": true
+ },
+ "status": "PASS",
+ "trace_off": [
+  [
+   250,
+   48781,
+   38477,
+   2321
+  ],
+  [
+   300,
+   43956,
+   35607,
+   3156
+  ],
+  [
+   350,
+   43956,
+   35607,
+   3156
+  ],
+  [
+   400,
+   39237,
+   32093,
+   2797
+  ],
+  [
+   450,
+   39237,
+   32093,
+   2797
+  ],
+  [
+   500,
+   39237,
+   32025,
+   2865
+  ]
+ ],
+ "trace_on": [
+  [
+   250,
+   48781,
+   38477,
+   2321
+  ],
+  [
+   300,
+   43956,
+   35607,
+   3156
+  ],
+  [
+   350,
+   43956,
+   35607,
+   3156
+  ],
+  [
+   400,
+   39237,
+   32093,
+   2797
+  ],
+  [
+   450,
+   39237,
+   32093,
+   2797
+  ],
+  [
+   500,
+   39237,
+   32025,
+   2865
+  ]
+ ],
+ "events_recorded": {
+  "birth": 13,
+  "delete": 5788,
+  "link": 592,
+  "opacity_reset": 1,
+  "range": 6543,
+  "release": 1622,
+  "retarget": 17634
+ },
+ "gradient_iterations": [
+  250,
+  300
+ ],
+ "gradient_columns": [
+  "depth_opacity",
+  "depth_value",
+  "depth_xyz",
+  "gs2d_opacity",
+  "gs2d_value",
+  "gs2d_xyz",
+  "iteration",
+  "photo_opacity",
+  "photo_value",
+  "photo_xyz",
+  "uid"
+ ],
+ "gradient_rows": 18246,
+ "scientific_verdict": null
+}

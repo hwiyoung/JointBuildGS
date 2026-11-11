@@ -85,7 +85,9 @@ PROBES = {'r23_a': ('GeoGS-conf-guided-v1-r23', 'own', 'off', ()), 'r23_b': ('Ge
           'r28off_a': (FORK, 'own', 'off', ()), 'r28off_b': (FORK, 'own', 'off', ()),
           'r28on_a': (FORK, 'own', 'on', ()), 'r28on_b': (FORK, 'own', 'on', ('JBGS_TRAINLOG_SELFCHECK=1',)),
           'r25gt_a': ('GeoGS-conf-guided-v1-r25', 'gt', 'off', ()), 'r25gt_b': ('GeoGS-conf-guided-v1-r25', 'gt', 'off', ()),
-          'r28gt_a': (FORK, 'gt', 'off', ()), 'r28gt_b': (FORK, 'gt', 'off', ())}
+          'r28gt_a': (FORK, 'gt', 'off', ()), 'r28gt_b': (FORK, 'gt', 'off', ()),
+          'r23_c': ('GeoGS-conf-guided-v1-r23', 'own', 'off', ()), 'r23_d': ('GeoGS-conf-guided-v1-r23', 'own', 'off', ()), 'r28off_c': (FORK, 'own', 'off', ()), 'r28off_d': (FORK, 'own', 'off', ()),
+          'r25gt_c': ('GeoGS-conf-guided-v1-r25', 'gt', 'off', ()), 'r25gt_d': ('GeoGS-conf-guided-v1-r25', 'gt', 'off', ()), 'r28gt_c': (FORK, 'gt', 'off', ()), 'r28gt_d': (FORK, 'gt', 'off', ())}
 def probe(gpu, labels):
     for label in labels:
         fork, arm, switch, env = PROBES[label]; root = O/'probe'/label; root.mkdir(parents=True, exist_ok=False)
@@ -96,6 +98,23 @@ def probe(gpu, labels):
         dump(root/'command.json', cmd); rc, s = run(cmd, root/'train.log')
         dump(root/'receipt.json', dict(at=now(), label=label, exit_code=rc, seconds=s, scientific_verdict=None)); print(label, rc, round(s), flush=True)
 
+RUNS = {'tl_R1_ALS_gt': ('R1rep_b10', 'ALS', 'gt'), 'tl_B0_LoD2_gt': ('B0_b10', 'LoD2', 'gt'), 'tl_R1_ALS_own': ('R1rep_b10', 'ALS', 'own'), 'tl_B0_LoD2_own': ('B0_b10', 'LoD2', 'own')}
+def train(run, gpu, attempt=1, extra_switch=None):
+    """record run (order 3.1) or confirm run (6.2: run name cf_..., extra_switch = '--jbgs_bind_background' etc., logging off)."""
+    if run.startswith('cf_'):  # cf_<site>_<prior>_<own|gt>_<bindbg|rebind|reassign>_s0, site = e.g. B0_b10
+        q = run.split('_'); site, prior, arm = q[1]+'_'+q[2], q[3], q[4]
+    else: site, prior, arm = RUNS[run]
+    stem = f'{site}__{prior}'; root = O/'runs'/site/run/f'attempt{attempt}'; root.mkdir(parents=True, exist_ok=False); model = f'/te/runs/{site}/{run}/attempt{attempt}/model'
+    extra = ['--jbgs_capture_iterations', '7000', '15000', '30000', '--test_iterations', '7000', '15000', '30000', '--save_iterations', '7000', '15000', '30000']
+    if run.startswith('tl_'): extra += ['--jbgs_trainlog', 'on', '--jbgs_trainlog_region', f'/te/region/{stem}.json', '--jbgs_trainlog_grads', 'on']
+    if extra_switch: extra += [extra_switch, 'on']
+    cmd = command(f'jbgs-trainerr-{run}-a{attempt}', 'te_train_entry.py', train_args(site, prior, arm, model, 30000, extra), gpu=int(gpu), env=['JBGS_TRAINLOG_CONFIG=/cfg/trainlog_te.json', 'TE_REQUIRE_RUNTIME=1'], split_site=site)
+    dump(root/'command.json', cmd); dump(root/'launch.json', dict(at=now(), gpu=int(gpu), run=run, scientific_verdict=None))
+    rc, s = run_(cmd, root/'train.log')
+    dump(root/'receipt.json', dict(at=now(), exit_code=rc, seconds=s, status='COMPLETED_30000' if rc == 0 and (root/'TRAINING_COMPLETE.json').exists() else 'ERROR', scientific_verdict=None))
+    return rc
+run_ = run
+
 if __name__ == '__main__':
     a = sys.argv[1:]
     if a[0] == 'cpu': sys.exit(job(a[1], *a[2:]))
@@ -103,6 +122,7 @@ if __name__ == '__main__':
     if a[0] == 'cpubig': sys.exit(job(a[1], *a[2:], cpus=16, memory='60g'))
     if a[0] == 'gpu': sys.exit(job(a[2], *a[3:], gpu=int(a[1])))
     if a[0] == 'gpufork': sys.exit(job(a[3], *a[4:], gpu=int(a[1]), fork=a[2], name=f'jbgs-trainerr-gpufork-{a[2][-3:]}-{Path(a[3]).stem}-{"-".join(a[4:])}'[:120]))
+    if a[0] == 'train': sys.exit(train(a[1], a[2], int(a[3]) if len(a) > 3 else 1, a[4] if len(a) > 4 else None))
     if a[0] == 'probe': sys.exit(probe(a[1], a[2:]))
     if a[0] == 'gtj': sys.exit(gtj(a[1], a[2], a[3], a[4] if len(a) > 4 and a[4] != '-' else '', int(a[5]) if len(a) > 5 else None))
     raise SystemExit(f'unknown {a}')

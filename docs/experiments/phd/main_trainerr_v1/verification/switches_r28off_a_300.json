@@ -1,0 +1,52 @@
+{
+ "at": "2026-11-11T18:25:04.721892+09:00",
+ "rows": [
+  {
+   "switch": "jbgs_bind_background",
+   "probe": "r28off_a",
+   "iteration": 300,
+   "gaussians": 37479,
+   "changed": 892,
+   "changed_outside_defined_set": 0,
+   "kept_rows_changed": 0,
+   "defined_set": 2593,
+   "bound_after_on": 34398,
+   "bound_after_off": 33506,
+   "released_after_on": 1380,
+   "released_after_off": 1380,
+   "status": "PASS"
+  },
+  {
+   "switch": "jbgs_rebind_released",
+   "probe": "r28off_a",
+   "iteration": 300,
+   "gaussians": 37479,
+   "changed": 246,
+   "changed_outside_defined_set": 0,
+   "kept_rows_changed": 0,
+   "defined_set": 1380,
+   "bound_after_on": 33752,
+   "bound_after_off": 33506,
+   "released_after_on": 1134,
+   "released_after_off": 1380,
+   "status": "PASS"
+  },
+  {
+   "switch": "jbgs_reassign_same",
+   "probe": "r28off_a",
+   "iteration": 300,
+   "gaussians": 37479,
+   "changed": 2,
+   "changed_outside_defined_set": 0,
+   "kept_rows_changed": 0,
+   "defined_set": 33506,
+   "bound_after_on": 33506,
+   "bound_after_off": 33506,
+   "released_after_on": 1380,
+   "released_after_off": 1380,
+   "status": "PASS"
+  }
+ ],
+ "status": "PASS",
+ "scientific_verdict": null
+}

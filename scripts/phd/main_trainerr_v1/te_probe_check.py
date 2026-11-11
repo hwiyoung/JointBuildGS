@@ -122,7 +122,9 @@ def region_inside(stem):
     return f
 
 PAIRINGS = {'record_invariance': (['r28off_a', 'r28off_b'], ['r28on_a', 'r28on_b']), 'default_r23': (['r23_a', 'r23_b'], ['r28off_a', 'r28off_b']),
-            'gt_r25': (['r25gt_a', 'r25gt_b'], ['r28gt_a', 'r28gt_b'])}
+            'gt_r25': (['r25gt_a', 'r25gt_b'], ['r28gt_a', 'r28gt_b']),
+            'default_r23_four': (['r23_a', 'r23_b', 'r23_c', 'r23_d'], ['r28off_a', 'r28off_b', 'r28off_c', 'r28off_d']),
+            'gt_r25_four': (['r25gt_a', 'r25gt_b', 'r25gt_c', 'r25gt_d'], ['r28gt_a', 'r28gt_b', 'r28gt_c', 'r28gt_d'])}
 def main():
     S = {l: {it: load(l, it) for it in ITS} for l in sorted(p.name for p in P.iterdir()) if (P/l/'TRAINING_COMPLETE.json').exists()}
     rows = []; status = {}
@@ -141,8 +143,11 @@ def main():
     # initial state (snapshot 0) byte equality: r23 vs r28 off, r25 vs r28 gt
     init = {}
     for a, b in [('r23_a', 'r28off_a'), ('r25gt_a', 'r28gt_a'), ('r28off_a', 'r28on_a')]:
-        za, zb = loadz(P/a/'model/target_monitor/snapshot_0.npz'), loadz(P/b/'model/target_monitor/snapshot_0.npz')
-        init[f'{a}_vs_{b}'] = all(np.array_equal(za[k], zb[k]) for k in za if k in zb)
+        # FinalTrain keeps no iteration-0 snapshot: compare the initialization records (seed counts, target/seed hashes, large-background list)
+        eq = True
+        for f in ['initialization.json', 'loaded_targets.json', 'initial_large_background.json']:
+            ja, jb = (json.loads((P/x/'model/target_monitor'/f).read_text()) for x in (a, b)); ja.pop('at', None); jb.pop('at', None); eq &= ja == jb
+        init[f'{a}_vs_{b}'] = eq
     loaded = {l: json.loads((P/l/'model/target_monitor/loaded_targets.json').read_text())['target_sha256'] for l in S}
     tsha = {'own': sha(FT/'targets/R1rep_b10__ALS.npz'), 'gt': sha(GT/'targets_gt/R1rep_b10__ALS.npz')}
     targets_ok = all(loaded[l] == tsha['gt' if 'gt' in l else 'own'] for l in loaded)
@@ -154,14 +159,16 @@ def main():
         p = O/'verification'/f'{name}.json'; rep[name] = json.loads(p.read_text())['status'] if p.exists() else None
     sw = {}
     for p in sorted((O/'verification').glob('switches_*.json')): sw[p.stem] = json.loads(p.read_text())['status']
-    checks = dict(default_r23_replay=rep['replay_compare_r23d_r28d'] == 'PASS', default_r23_gpu_rule_B=status['default_r23'], default_r23_initial_state=init['r23_a_vs_r28off_a'],
-                  gt_r25_replay=rep['replay_compare_r25g_r28g'] == 'PASS', gt_r25_gpu_rule_B=status['gt_r25'], gt_r25_initial_state=init['r25gt_a_vs_r28gt_a'], targets_loaded=targets_ok,
+    v2 = json.loads((C/'unitcheck_v2.json').read_text()); assert sha(C/'unitcheck_v2.json') == json.loads((C/'unitcheck_v2.lock.json').read_text())['config_sha256']
+    reported = dict(default_r23_gpu_rule_B=status['default_r23'], gt_r25_gpu_rule_B=status['gt_r25'], default_r23_four_runs=status.get('default_r23_four'), gt_r25_four_runs=status.get('gt_r25_four'))  # unit_check_v2: reported, not in status
+    checks = dict(default_r23_replay=rep['replay_compare_r23d_r28d'] == 'PASS', default_r23_initial_state=init['r23_a_vs_r28off_a'],
+                  gt_r25_replay=rep['replay_compare_r25g_r28g'] == 'PASS', gt_r25_initial_state=init['r25gt_a_vs_r28gt_a'], targets_loaded=targets_ok,
                   record_replay=rep['replay_record_own'] == 'PASS' and rep['replay_record_gt'] == 'PASS', record_gpu_rule_B=status['record_invariance'],
                   id_tracking=all(not [f for f in t['failures'] if 'balance' not in f] for t in track.values()) and bool(track),
                   event_balance=all(all(b['count_equal'] and b['uid_set_equal'] is not False for b in t['balance']) for t in track.values()) and bool(track),
                   self_check=all(selfcheck.values()) and bool(selfcheck), gradients_written=all(len(v) >= 5 for v in grads.values()) and bool(grads),
                   switches=bool(sw) and all(v == 'PASS' for v in sw.values()))
-    res = dict(at=now(), status='PASS' if all(checks.values()) else 'FAIL', checks=checks, runs=list(S), rule_B=rows, initial_state_equal=init, loaded_targets=loaded,
+    res = dict(at=now(), status='PASS' if all(checks.values()) else 'FAIL', checks=checks, reported_not_in_status=reported, rule=v2['status_rule'], runs=list(S), rule_B=rows, initial_state_equal=init, loaded_targets=loaded,
                replay=rep, switches=sw, tracking=track, self_check_runs=selfcheck, gradient_iterations=grads, scientific_verdict=None)
     dump(O/'verification/unit_checks.json', res); table('unit_checks_rule_B', rows); table('unit_checks_event_balance', [dict(run=l, **b) for l, t in track.items() for b in t['balance']])
     table('unit_checks_summary', [dict(check=k, passed=v) for k, v in checks.items()])

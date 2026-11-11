@@ -1,0 +1,120 @@
+{
+ "at": "2026-11-11T18:26:39.325973+09:00",
+ "arm": "gt",
+ "start": "/te/probe/r28gt_b/model/jbgs_complete/iteration_200/checkpoint.pth",
+ "start_sha256": "6fe6711ea12415624ff35152484df575377a977711ff755fa28b606fc105ecca",
+ "deterministic_algorithms": true,
+ "parts_byte_equal": {
+  "model": true,
+  "adam": true,
+  "meta": true,
+  "events": true,
+  "rng": true,
+  "trace": true
+ },
+ "status": "PASS",
+ "trace_off": [
+  [
+   250,
+   48913,
+   38600,
+   2308
+  ],
+  [
+   300,
+   44025,
+   35589,
+   3231
+  ],
+  [
+   350,
+   44025,
+   35589,
+   3231
+  ],
+  [
+   400,
+   39307,
+   32081,
+   2870
+  ],
+  [
+   450,
+   39307,
+   32081,
+   2870
+  ],
+  [
+   500,
+   39307,
+   31999,
+   2952
+  ]
+ ],
+ "trace_on": [
+  [
+   250,
+   48913,
+   38600,
+   2308
+  ],
+  [
+   300,
+   44025,
+   35589,
+   3231
+  ],
+  [
+   350,
+   44025,
+   35589,
+   3231
+  ],
+  [
+   400,
+   39307,
+   32081,
+   2870
+  ],
+  [
+   450,
+   39307,
+   32081,
+   2870
+  ],
+  [
+   500,
+   39307,
+   31999,
+   2952
+  ]
+ ],
+ "events_recorded": {
+  "birth": 35,
+  "delete": 5843,
+  "link": 593,
+  "opacity_reset": 1,
+  "range": 6742,
+  "release": 1743,
+  "retarget": 17654
+ },
+ "gradient_iterations": [
+  250,
+  300
+ ],
+ "gradient_columns": [
+  "depth_opacity",
+  "depth_value",
+  "depth_xyz",
+  "gs2d_opacity",
+  "gs2d_value",
+  "gs2d_xyz",
+  "iteration",
+  "photo_opacity",
+  "photo_value",
+  "photo_xyz",
+  "uid"
+ ],
+ "gradient_rows": 18372,
+ "scientific_verdict": null
+}

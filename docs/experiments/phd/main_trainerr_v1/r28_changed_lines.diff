@@ -1,0 +1,504 @@
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/jbgs_finaltrain.py GeoGS-conf-guided-v1-r28/jbgs_finaltrain.py
+--- GeoGS-conf-guided-v1-r27/jbgs_finaltrain.py	2026-11-04 01:28:40.001581917 +0900
++++ GeoGS-conf-guided-v1-r28/jbgs_finaltrain.py	2026-11-11 18:10:34.242725880 +0900
+@@ -18,7 +18,8 @@
+         assert self.sigma_ref>0 and index['weight_power']==1
+         assert all(v['sigma_ref']==self.sigma_ref for v in index['views'].values())
+         super().__init__(args,scene,g)
+-        target_file=self.root.parent.parent/'targets'/(self.root.name+'.npz')
++        from jbgs_gtjudge import target_path
++        target_file=target_path(args,self.root)
+         with np.load(target_file) as z:
+             assert np.array_equal(self.patch_anchor.cpu().numpy(),z['target'][self.valid_patch].astype('f4'))
+             assert np.array_equal(self.patch_sigma.cpu().numpy(),z['sigma'][self.valid_patch].astype('f4'))
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/jbgs_gtjudge.py GeoGS-conf-guided-v1-r28/jbgs_gtjudge.py
+--- GeoGS-conf-guided-v1-r27/jbgs_gtjudge.py	1970-01-01 09:00:00.000000000 +0900
++++ GeoGS-conf-guided-v1-r28/jbgs_gtjudge.py	2026-11-11 18:10:34.238725664 +0900
+@@ -0,0 +1,136 @@
++"""r25 diagnostic target override and opacity-only preserve freespace primitive.
++
++The activated-opacity penalty and selection have no reference-geometry input.
++This module is preparatory until GTJUDGE's real target/map and stage gates pass.
++"""
++import hashlib
++import json
++from pathlib import Path
++import numpy as np
++import torch
++
++def target_path(args,root):
++    override=getattr(args,'jbgs_targets',None)
++    return Path(override) if override else root.parent.parent/'targets'/(root.name+'.npz')
++
++def verify_override(args,root):
++    if not getattr(args,'jbgs_targets',None):return
++    if args.jbgs_finaltrain!='on' or args.jbgs_target!='on' or args.jbgs_target_rev!='r8':
++        raise ValueError('--jbgs_targets requires FINALTRAIN r8')
++    target=target_path(args,root)
++    index=json.loads((root/'maps/index.json').read_text())
++    actual=hashlib.sha256(target.read_bytes()).hexdigest()
++    if index['target_sha256']!=actual:
++        raise ValueError('Target override and prepared target maps have different hashes')
++    with np.load(target) as z,np.load(root/'seeds.npz') as seeds:
++        prior=seeds['origin']==1
++        ids=seeds['patch'][prior]
++        if not np.array_equal(seeds['target'][prior],z['target'][ids].astype('f4')):
++            raise ValueError('Target override and prepared seed anchors disagree')
++        if not np.array_equal(seeds['sigma'][prior],z['sigma'][ids].astype('f4')):
++            raise ValueError('Target override and prepared seed sigma disagree')
++        if not np.array_equal(seeds['region'][prior],z['region'][ids]):
++            raise ValueError('Target override and prepared seed judgments disagree')
++
++@torch.no_grad()
++def candidate_mask(xyz,bound_patch,depth,sigma,owner,judge_region,K,W2C):
++    """Full target patch IDs, frontmost-disc maps, camera-Z convention."""
++    camera=xyz.detach().double()@W2C[:3,:3].T+W2C[:3,3]
++    z=camera[:,2]
++    projected=camera@K.T
++    finite=torch.isfinite(projected).all(1)&(z>0)
++    uv=torch.zeros((len(xyz),2),device=xyz.device,dtype=torch.long)
++    uv[finite]=torch.floor(projected[finite,:2]/projected[finite,2,None]+.5).long()
++    height,width=depth.shape
++    inside=finite&(uv[:,0]>=0)&(uv[:,0]<width)&(uv[:,1]>=0)&(uv[:,1]<height)
++    ids=torch.where(inside)[0]
++    answer=torch.zeros(len(xyz),device=xyz.device,dtype=torch.bool)
++    if not len(ids):return answer
++    x,y=uv[ids,0],uv[ids,1]
++    patch=owner[y,x].long()
++    has=patch>=0
++    valid=has&torch.isfinite(depth[y,x])&torch.isfinite(sigma[y,x])&(sigma[y,x]>0)
++    # Clamp only to make the gather safe; negative-owner pixels remain excluded.
++    valid&=judge_region[patch.clamp_min(0)]==1
++    valid&=bound_patch[ids]!=patch
++    valid&=z[ids]<(depth[y,x]-1.96*sigma[y,x])
++    answer[ids]=valid
++    return answer
++
++def opacity_penalty(logit_opacity,mask,weight):
++    # A zero scalar touching only opacity makes an empty selection differentiable.
++    if not bool(mask.any()):return logit_opacity.sum()*0
++    return float(weight)*torch.sigmoid(logit_opacity[mask]).mean()
++
++def calibrated_lambda(photo_loss,logit_opacity,mask):
++    if not bool(mask.any()):
++        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_NO_CANDIDATE')
++    grad=torch.autograd.grad(photo_loss,logit_opacity,retain_graph=True)[0].detach()[mask]
++    alpha=torch.sigmoid(logit_opacity.detach()[mask])
++    derivative=alpha*(1-alpha)
++    if not bool(torch.isfinite(grad).all()&(derivative>0).all()):
++        raise RuntimeError('FS_CALIBRATION_UNAVAILABLE_INVALID_OPACITY_GRADIENT')
++    # Compare derivatives w.r.t. activated opacity, not its optimizer logit.
++    photo_median=torch.quantile((grad/derivative).abs().double().reshape(-1),.5)
++    unit_gradient=1./int(mask.sum())
++    value=float(photo_median/unit_gradient)
++    return value,dict(photo_opacity_gradient_median=float(photo_median),
++        unit_fs_opacity_gradient_median=unit_gradient,candidates=int(mask.sum()),GT_used=False)
++
++class PreserveFreespace:
++    def __init__(self,args,control):
++        if control is None or args.jbgs_finaltrain!='on':
++            raise ValueError('Preserve freespace requires FINALTRAIN controller and prepared maps')
++        self.control=control
++        with np.load(target_path(args,control.root)) as z:self.judge=torch.from_numpy(z['judge_region'].copy())
++        self.weight=None
++        self.calibration=None
++        self.calibration_iteration=None
++        self.last_targeted=None
++        self.pruned_recent=0
++        self.iteration=0
++        self.path=control.mon/'preserve_freespace.jsonl'
++
++    def loss(self,iteration,g,photo_loss,name):
++        self.iteration=iteration
++        if self.last_targeted is None:
++            self.last_targeted=torch.full((len(g._xyz),),-100000,device=g._xyz.device,dtype=torch.int32)
++        if not 500<=iteration<=30000:return g._opacity.sum()*0
++        control=self.control;m=control.maps[name];device=g._xyz.device
++        meta=control.index['views'][name]
++        with torch.no_grad():
++            bound=torch.full((len(g._xyz),),-1,device=device,dtype=torch.long)
++            attached=g.target_tag==1
++            mapping=torch.as_tensor(control.valid_patch,device=device,dtype=torch.long)
++            bound[attached]=mapping[g.target_index[attached]]
++            mask=candidate_mask(g._xyz,bound,m['depth'].to(device),m['sigma'].to(device),
++                m['owner'].to(device),self.judge.to(device),
++                torch.as_tensor(meta['K'],device=device,dtype=torch.float64),
++                torch.as_tensor(meta['W2C'],device=device,dtype=torch.float64))
++        count=int(mask.sum())
++        enough=(count>=100) if iteration==500 else (count>100)
++        if self.weight is None and iteration%100==0 and enough:
++            self.weight,self.calibration=calibrated_lambda(photo_loss,g._opacity,mask)
++            self.calibration_iteration=iteration
++            record=dict(iteration=iteration,lambda_fs=self.weight,calibration=self.calibration,scientific_verdict=None)
++            (control.mon/'preserve_freespace_lambda.json').write_text(json.dumps(record,indent=2)+'\n')
++        if self.weight is not None:self.last_targeted[mask]=iteration
++        if iteration in [500,1000,7000,15000,30000] or iteration==self.calibration_iteration:
++            alpha=g.get_opacity.detach()[mask]
++            row=dict(iteration=iteration,lambda_fs=self.weight,calibration_iteration=self.calibration_iteration,candidates=count,
++                opacity_median=float(torch.quantile(alpha.double().reshape(-1),.5)) if len(alpha) else None,
++                calibration=self.calibration,opacity_pruned_recent_targets=self.pruned_recent,scientific_verdict=None)
++            with self.path.open('a') as f:f.write(json.dumps(row,allow_nan=False)+'\n')
++        return opacity_penalty(g._opacity,mask,self.weight if self.weight is not None else 0.)
++
++    def extend(self,count,device):
++        # Only Gaussians themselves targeted by this term count; children start unmarked.
++        if self.last_targeted is not None:
++            self.last_targeted=torch.cat([self.last_targeted,torch.full((count,),-100000,device=device,dtype=torch.int32)])
++
++    def before_prune(self,mask,opacity_mask=None):
++        if self.last_targeted is None:return
++        if opacity_mask is not None:
++            recent=(self.iteration-self.last_targeted>=0)&(self.iteration-self.last_targeted<100)
++            self.pruned_recent+=int((mask&opacity_mask&recent).sum())
++        self.last_targeted=self.last_targeted[~mask]
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/jbgs_target.py GeoGS-conf-guided-v1-r28/jbgs_target.py
+--- GeoGS-conf-guided-v1-r27/jbgs_target.py	2026-11-11 11:46:14.549531639 +0900
++++ GeoGS-conf-guided-v1-r28/jbgs_target.py	2026-11-11 18:12:17.195294219 +0900
+@@ -12,8 +12,15 @@
+ 
+ 
+ def register_args(parser):
++    parser.add_argument('--jbgs_targets',default=None)
++    parser.add_argument('--jbgs_preserve_freespace',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_finaltrain',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_trainlog',choices=['off','on'],default='off')  # r27 PHD-MAIN-TRAINLOG-v1
++    parser.add_argument('--jbgs_trainlog_region',default=None)  # r28 PHD-MAIN-TRAINERR-v1: voxelised box range file
++    parser.add_argument('--jbgs_trainlog_grads',choices=['off','on'],default='off')  # r28: per-loss gradient magnitudes at save iterations
++    parser.add_argument('--jbgs_bind_background',choices=['off','on'],default='off')  # r28 diagnostic switch
++    parser.add_argument('--jbgs_rebind_released',choices=['off','on'],default='off')  # r28 diagnostic switch
++    parser.add_argument('--jbgs_reassign_same',choices=['off','on'],default='off')  # r28 diagnostic switch
+     parser.add_argument('--jbgs_target',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_target_rev',choices=['r4n','r6','r7','r8'],default='r4n')
+     parser.add_argument('--jbgs_target_dir',default='')
+@@ -222,12 +229,24 @@
+ 
+ @torch.no_grad()
+ def create(args,scene,g,render,pipe):
++    if getattr(args,'jbgs_targets',None):
++        from jbgs_gtjudge import verify_override
++        verify_override(args,Path(args.jbgs_target_dir))
+     if getattr(args,'jbgs_finaltrain','off')=='on':
+         if args.jbgs_target!='on' or args.jbgs_target_rev!='r8':
+             raise ValueError('FINALTRAIN requires the unchanged r8 controller base')
++        from jbgs_trainerr import any_switch  # r28: diagnostic switches; all off = r27/r25 classes unchanged
+         if getattr(args,'jbgs_trainlog','off')=='on':  # r27: recording only
++            if any_switch(args):
++                from jbgs_trainerr import trainlog_class
++                return trainlog_class()(args,scene,g)
+             from jbgs_trainlog import TrainLog
+             return TrainLog(args,scene,g)
++        if getattr(args,'jbgs_trainlog_region',None) or getattr(args,'jbgs_trainlog_grads','off')=='on':
++            raise ValueError('r28 --jbgs_trainlog_region/--jbgs_trainlog_grads need --jbgs_trainlog on')
++        if any_switch(args):
++            from jbgs_trainerr import FinalTrainX
++            return FinalTrainX(args,scene,g)
+         from jbgs_finaltrain import FinalTrain
+         return FinalTrain(args,scene,g)
+     if args.jbgs_target=='on' and args.jbgs_target_rev=='r8':
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/jbgs_target_r6.py GeoGS-conf-guided-v1-r28/jbgs_target_r6.py
+--- GeoGS-conf-guided-v1-r27/jbgs_target_r6.py	2026-11-01 22:28:23.217435508 +0900
++++ GeoGS-conf-guided-v1-r28/jbgs_target_r6.py	2026-11-11 18:10:34.246726096 +0900
+@@ -15,7 +15,8 @@
+     def __init__(self,args,scene,g):
+         self.ready=False
+         super().__init__(args,scene,g)
+-        target_file=self.root.parent.parent/'targets'/(self.root.name+'.npz')
++        from jbgs_gtjudge import target_path
++        target_file=target_path(args,self.root)
+         with np.load(target_file) as z:
+             self.valid_patch=np.flatnonzero((z['region']>=0)&np.isfinite(z['target']).all(1)&np.isfinite(z['normal']).all(1)&np.isfinite(z['sigma'])&(z['sigma']>0))
+             self.points=np.asarray(z['target'][self.valid_patch],np.float64)
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/jbgs_trainerr.py GeoGS-conf-guided-v1-r28/jbgs_trainerr.py
+--- GeoGS-conf-guided-v1-r27/jbgs_trainerr.py	1970-01-01 09:00:00.000000000 +0900
++++ GeoGS-conf-guided-v1-r28/jbgs_trainerr.py	2026-11-11 18:24:44.875661014 +0900
+@@ -0,0 +1,111 @@
++"""r28 PHD-MAIN-TRAINERR-v1: three diagnostic intervention switches (all default off). No reference geometry is read.
++
++--jbgs_bind_background on : at every periodic 100-step check, after the inherited reattach, unbound background
++                             Gaussians (origin==0, target_tag==0) meeting the inherited reattach rule
++                             (TargetR7.candidates: tangent <= 0.5 m, normal excess beyond 1.96 sigma <= 0.5 m) are bound.
++--jbgs_rebind_released on  : the same for released Gaussians (target_tag==2).
++--jbgs_reassign_same on    : in every reattach, a bound Gaussian may only be reassigned to a patch with the same
++                             judgment (patch_region) as its current patch and |n_cur.(anchor_new - anchor_cur)| <= 1.96 sigma_cur;
++                             no candidate = released (inherited release path).
++With every switch off this module is not imported (r23 / r25 / r27 classes are used unchanged).
++"""
++import json
++import numpy as np
++import torch
++from jbgs_finaltrain import FinalTrain
++from jbgs_target_r7 import TargetR7
++from jbgs_target import normal_projection
++
++SWITCHES = ('jbgs_bind_background', 'jbgs_rebind_released', 'jbgs_reassign_same')
++
++
++def any_switch(args):
++    return any(getattr(args, k, 'off') == 'on' for k in SWITCHES)
++
++
++class Intervene:
++    def init_intervene(self, args):
++        self.iv_bind_bg = getattr(args, 'jbgs_bind_background', 'off') == 'on'
++        self.iv_rebind = getattr(args, 'jbgs_rebind_released', 'off') == 'on'
++        self.iv_same = getattr(args, 'jbgs_reassign_same', 'off') == 'on'
++        self._iv_cur = None
++
++    def candidates(self, xyz):
++        if self._iv_cur is None: return super().candidates(xyz)
++        return self.candidates_same(xyz, self._iv_cur)
++
++    def candidates_same(self, xyz, cur):
++        """TargetR7.candidates with the extra same-judgment / height-within-interval filter per query row."""
++        q = xyz.detach().double().cpu().numpy(); n = len(q); assert len(cur) == n
++        chosen = np.zeros(n, np.int64); best_t = np.full(n, np.inf); best_e = np.full(n, np.inf)
++        TargetR7.candidates(self, xyz[:0])  # build the inherited cache (normal, width, groups) without queries
++        normal, width, groups = self._candidate_cache
++        region = self.patch_region.cpu().numpy()
++        for start in range(0, n, 512):
++            stop = min(n, start + 512); x = q[start:stop]; cc = cur[start:stop]
++            for ids, tree, radius in groups:
++                lists = tree.query_ball_point(x, radius, workers=1); lengths = np.fromiter(map(len, lists), dtype=np.int64, count=len(x))
++                if not lengths.sum(): continue
++                row = np.repeat(np.arange(len(x)), lengths); idx = ids[np.concatenate(lists).astype(np.int64)]
++                delta = x[row] - self.points[idx]; h = np.einsum('ij,ij->i', delta, normal[idx]); tan = np.linalg.norm(delta - h[:, None] * normal[idx], axis=1)
++                excess = np.maximum(abs(h) - width[idx], 0); ok = (tan <= .5) & (excess <= .5)
++                c0 = cc[row]
++                same = region[idx] == region[c0]
++                dh = np.abs(np.einsum('ij,ij->i', self.points[idx] - self.points[c0], normal[c0]))
++                ok &= same & (dh <= width[c0])
++                row, idx, tan, excess = row[ok], idx[ok], tan[ok], excess[ok]
++                if not len(row): continue
++                order = np.lexsort((self.valid_patch[idx], excess, tan, row)); row, idx, tan, excess = row[order], idx[order], tan[order], excess[order]
++                first = np.r_[True, row[1:] != row[:-1]]; row, idx, tan, excess = row[first] + start, idx[first], tan[first], excess[first]
++                better = (tan < best_t[row]) | ((tan == best_t[row]) & ((excess < best_e[row]) | ((excess == best_e[row]) & (self.valid_patch[idx] < self.valid_patch[chosen[row]]))))
++                rr = row[better]; chosen[rr] = idx[better]; best_t[rr] = tan[better]; best_e[rr] = excess[better]
++        return best_t, best_e, chosen
++
++    @torch.no_grad()
++    def reattach(self, g, reason):
++        if self.iv_same:
++            rows = torch.where(g.target_tag == 1)[0]
++            self._iv_cur = g.target_index[rows].detach().cpu().numpy().astype(np.int64)
++        try:
++            super().reattach(g, reason)
++        finally:
++            self._iv_cur = None
++        if reason == 'periodic' and (self.iv_bind_bg or self.iv_rebind): self.bind_unbound(g)
++
++    @torch.no_grad()
++    def bind_unbound(self, g):
++        sel = torch.zeros(len(g._xyz), dtype=torch.bool, device=g._xyz.device)
++        if self.iv_bind_bg: sel |= (g.target_tag == 0) & (g.origin == 0)
++        if self.iv_rebind: sel |= g.target_tag == 2
++        rows = torch.where(sel)[0]
++        if not len(rows): return
++        tangent, excess, idx = TargetR7.candidates(self, g._xyz[rows])
++        ok = torch.tensor(np.isfinite(tangent), device=rows.device); r = rows[ok]
++        was = g.target_tag[r].clone()
++        g.target_tag[r] = 1; g.target_index[r] = torch.tensor(idx, device=rows.device)[ok]
++        before = g._xyz[r].clone()
++        if len(r):  # project only the newly bound rows (a second whole-scene projection would round other bound rows)
++            idx = g.target_index[r]; g._xyz[r] = normal_projection(g._xyz[r], self.patch_anchor[idx], self.patch_normal[idx], self.patch_sigma[idx])
++        move = float(torch.linalg.vector_norm(g._xyz[r].double() - before.double(), dim=1).max()) if len(r) else 0.
++        if move > .5 + 3e-5: raise RuntimeError('R28_BIND_PROJECTION_GT_HALF_METRE')
++        row = dict(iteration=self.iteration, queried=len(rows), bound=len(r), from_background=int((was == 0).sum()), from_released=int((was == 2).sum()),
++                   max_projection_m=move, current_patch=int((g.target_tag == 1).sum()), rule='TargetR7.candidates (tangent<=0.5, normal excess<=0.5)')
++        if getattr(self, 'trainlog_on', False):
++            self.push('bind', uid=g.tl_uid[r], was=was, new=g.target_index[r], xyz=g._xyz[r]); g.tl_last_xyz[r] = g._xyz[r].detach()
++        with (self.mon / 'intervene.jsonl').open('a') as f: f.write(json.dumps(row) + '\n')
++
++
++class FinalTrainX(Intervene, FinalTrain):
++    def __init__(self, args, scene, g):
++        self.init_intervene(args)
++        FinalTrain.__init__(self, args, scene, g)
++
++
++def trainlog_class():
++    from jbgs_trainlog import TrainLog
++
++    class TrainLogX(Intervene, TrainLog):
++        def __init__(self, args, scene, g):
++            self.init_intervene(args)
++            TrainLog.__init__(self, args, scene, g)
++    return TrainLogX
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/jbgs_trainlog.py GeoGS-conf-guided-v1-r28/jbgs_trainlog.py
+--- GeoGS-conf-guided-v1-r27/jbgs_trainlog.py	2026-11-11 12:29:51.693870400 +0900
++++ GeoGS-conf-guided-v1-r28/jbgs_trainlog.py	2026-11-11 18:11:37.053119172 +0900
+@@ -39,24 +39,41 @@
+ class TrainLog(FinalTrain):
+     def __init__(self, args, scene, g):
+         self.trainlog_on = False
++        self.tl_region_file = getattr(args, 'jbgs_trainlog_region', None)  # r28 PHD-MAIN-TRAINERR-v1: voxelised box range
++        self.trainlog_grads_on = getattr(args, 'jbgs_trainlog_grads', 'off') == 'on'  # r28: per-loss gradient magnitudes
+         super().__init__(args, scene, g)
+         self.init_log(Path(args.model_path), g)
+ 
+     def init_log(self, model_path, g):
+         cfg = json.loads(Path(os.environ['JBGS_TRAINLOG_CONFIG']).read_text())
+         self.cfg = cfg['training_log']
+-        sc = cfg['scope']
+         dev = g._xyz.device
+-        e = rings(sc['buffered_footprint'])
+-        self.edges = torch.tensor(e, device=dev, dtype=torch.float64)
+-        self.box = (float(e[:, [0, 2]].min()), float(e[:, [0, 2]].max()), float(e[:, [1, 3]].min()), float(e[:, [1, 3]].max()))
+-        self.zr = (float(sc['z_min']), float(sc['z_max']))
++        self.voxel = None
++        if self.tl_region_file:  # r28: union of boxes snapped outward to the region voxel grid
++            reg = json.loads(Path(self.tl_region_file).read_text()); v = float(reg['voxel_m'])
++            lo = np.asarray(reg['grid_origin'], np.float64); shape = tuple(int(x) for x in reg['grid_shape']); occ = np.zeros(shape, bool)
++            for b in reg['boxes']:
++                b = np.asarray(b[:6], np.float64)
++                i0 = np.floor((b[[0, 2, 4]] - lo) / v + 1e-9).astype(int); i1 = np.ceil((b[[1, 3, 5]] - lo) / v - 1e-9).astype(int)
++                occ[i0[0]:i1[0], i0[1]:i1[1], i0[2]:i1[2]] = True
++            assert int(occ.sum()) == int(reg['occupied_voxels']), 'TRAINERR region voxel count mismatch'
++            self.voxel = (torch.tensor(occ, device=dev), torch.tensor(lo, device=dev, dtype=torch.float64), v)
++            e = np.zeros((1, 4)); hi = lo + np.asarray(shape) * v
++            self.box = (float(lo[0]), float(hi[0]), float(lo[1]), float(hi[1])); self.zr = (float(lo[2]), float(hi[2]))
++            self.edges = None
++        else:
++            sc = cfg['scope']
++            e = rings(sc['buffered_footprint'])
++            self.edges = torch.tensor(e, device=dev, dtype=torch.float64)
++            self.box = (float(e[:, [0, 2]].min()), float(e[:, [0, 2]].max()), float(e[:, [1, 3]].min()), float(e[:, [1, 3]].max()))
++            self.zr = (float(sc['z_min']), float(sc['z_max']))
+         self.up = torch.tensor(cfg['coordinates']['up'], device=dev, dtype=torch.float32)
+         self.save_set = set(int(i) for i in self.cfg['save_iterations'])
+-        self.scene_dump = bool(self.cfg['scene_dump'])
++        sd = self.cfg['scene_dump']  # r28: bool (r27) or list of state names
++        self.scene_dump = sd if isinstance(sd, bool) else set(str(x) for x in sd)
+         self.flush_every = int(self.cfg['flush_every'])
+         self.out = Path(model_path) / 'trainlog'
+-        for d in ['states', 'scene', 'events', 'debug']:
++        for d in ['states', 'scene', 'events', 'debug'] + (['grads'] if self.trainlog_grads_on else []):
+             (self.out / d).mkdir(parents=True, exist_ok=False)
+         n = len(g._xyz)
+         g.tl_uid = torch.arange(n, device=dev, dtype=torch.int64)
+@@ -75,7 +92,8 @@
+         self._wrap(g)
+         self.trainlog_on = True
+         write(self.out / 'start.json', dict(gaussians=n, inside=int(g.tl_inside.sum()), edges=len(e), box=self.box, z=self.zr,
+-            save_iterations=sorted(self.save_set), scene_dump=self.scene_dump, scientific_verdict=None))
++            save_iterations=sorted(self.save_set), scene_dump=self.scene_dump if isinstance(self.scene_dump, bool) else sorted(self.scene_dump),
++            region_file=self.tl_region_file, gradients=self.trainlog_grads_on, scientific_verdict=None))
+ 
+     # ---------- geometry ----------
+     @torch.no_grad()
+@@ -86,6 +104,11 @@
+         c = (x[:, 0] >= b[0]) & (x[:, 0] <= b[1]) & (x[:, 1] >= b[2]) & (x[:, 1] <= b[3]) & (x[:, 2] >= self.zr[0]) & (x[:, 2] <= self.zr[1])
+         idx = torch.nonzero(c).squeeze(1)
+         if not len(idx): return out
++        if self.voxel is not None:  # r28 voxel lookup
++            occ, lo, v = self.voxel; k = torch.floor((x[idx] - lo) / v).long()
++            for a in range(3): k[:, a] = k[:, a].clamp(0, occ.shape[a] - 1)
++            out[idx] = occ[k[:, 0], k[:, 1], k[:, 2]]
++            return out
+         e = self.edges; x1, y1, x2, y2 = e[:, 0], e[:, 1], e[:, 2], e[:, 3]
+         for s in range(0, len(idx), 16384):
+             j = idx[s:s + 16384]; px = x[j, 0:1]; py = x[j, 1:2]
+@@ -120,9 +143,9 @@
+             old = self.ctx; self.ctx = ('split',) + (old[1:] if old else ())
+             try: return das(*a, **k)
+             finally: self.ctx = old
+-        def prune_points(mask):
++        def prune_points(mask, opacity_mask=None):  # r28: r25 prune signature (opacity_mask only used by preserve_freespace)
+             self.before_prune(g, mask)
+-            return pp(mask)
++            return pp(mask, opacity_mask=opacity_mask)
+         g.densify_and_prune, g.densify_and_split, g.prune_points = densify_and_prune, densify_and_split, prune_points
+ 
+     @torch.no_grad()
+@@ -258,6 +281,24 @@
+             after = self.fingerprint(g)
+             assert before == after, ('TRAINLOG_SELFCHECK_CHANGED', iteration)
+ 
++    def trainlog_grads(self, iteration, g, terms):
++        """r28: |dL_term/dxyz| and |dL_term/d opacity logit| of in-range Gaussians before the normal backward.
++        torch.autograd.grad returns values only: no .grad, optimizer, densification statistic or RNG is touched."""
++        if not self.trainlog_grads_on or iteration not in self.save_set: return
++        t0 = time.perf_counter()
++        with torch.no_grad(): ins = self.inside(g._xyz); r = torch.nonzero(ins).squeeze(1)
++        data = dict(uid=g.tl_uid[r].detach().cpu().numpy(), iteration=np.int32(iteration))
++        for name, term in terms.items():
++            if torch.is_tensor(term) and term.requires_grad:
++                gx, go = torch.autograd.grad(term, [g._xyz, g._opacity], retain_graph=True, allow_unused=True)
++            else: gx = go = None
++            with torch.no_grad():
++                data[name + '_xyz'] = (torch.linalg.vector_norm(gx[r], dim=1) if gx is not None else torch.zeros(len(r), device=r.device)).float().cpu().numpy()
++                data[name + '_opacity'] = (go[r, 0].abs() if go is not None else torch.zeros(len(r), device=r.device)).float().cpu().numpy()
++                data[name + '_value'] = np.float64(float(term)) if torch.is_tensor(term) else np.float64(term)
++        np.savez_compressed(self.out / 'grads' / f'{iteration}.npz', **data)
++        with (self.out / 'grads.jsonl').open('a') as f: f.write(json.dumps(dict(iteration=iteration, inside=len(r), seconds=time.perf_counter() - t0)) + '\n')
++
+     def fingerprint(self, g):
+         import random
+         vals = [float(getattr(g, a).detach().double().sum()) for a in ['_xyz', '_scaling', '_opacity', '_rotation', '_features_dc']]
+@@ -271,7 +312,7 @@
+             target_tag=g.target_tag[r], target_index=g.target_index[r], target_released_at=g.target_released_at[r], full_gaussian_index=r,
+             uid=g.tl_uid[r], parent_uid=g.tl_parent[r], born_at=g.tl_born[r], born_how=g.tl_how[r], release_event=g.tl_event[r])
+         np.savez(self.out / 'states' / f'{name}.npz', **{k: v.detach().cpu().numpy() for k, v in data.items()})
+-        if self.scene_dump:
++        if self.scene_dump is True or (not isinstance(self.scene_dump, bool) and name in self.scene_dump):
+             torch.save(dict(iteration=self.iteration, name=name, active_sh_degree=g.active_sh_degree,
+                 xyz=g._xyz.detach().cpu(), f_dc=g._features_dc.detach().cpu(), f_rest=g._features_rest.detach().cpu(),
+                 opacity=g._opacity.detach().cpu(), scaling=g._scaling.detach().cpu(), rotation=g._rotation.detach().cpu(),
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/scene/gaussian_model.py GeoGS-conf-guided-v1-r28/scene/gaussian_model.py
+--- GeoGS-conf-guided-v1-r27/scene/gaussian_model.py	2026-11-01 17:50:21.880922464 +0900
++++ GeoGS-conf-guided-v1-r28/scene/gaussian_model.py	2026-11-11 18:10:34.263727012 +0900
+@@ -369,7 +369,9 @@
+                 optimizable_tensors[group["name"]] = group["params"][0]
+         return optimizable_tensors
+ 
+-    def prune_points(self, mask):
++    def prune_points(self, mask, opacity_mask=None):
++        if getattr(self,'preserve_freespace',None) is not None:
++            self.preserve_freespace.before_prune(mask,opacity_mask)
+         valid_points_mask = ~mask
+         optimizable_tensors = self._prune_optimizer(valid_points_mask)
+ 
+@@ -460,6 +462,8 @@
+             self.init_id = torch.cat((self.init_id, new_init_id.to(torch.int32)), dim=0)
+         if self.target_r6 is not None:
+             self.target_r6.extended(self, new_target_meta)
++        if getattr(self,'preserve_freespace',None) is not None:
++            self.preserve_freespace.extend(len(new_xyz),self._xyz.device)
+ 
+     def densify_and_split(self, grads, grad_threshold, scene_extent, N=2):
+         n_init_points = self.get_xyz.shape[0]
+@@ -529,7 +533,7 @@
+         _ex = self.density_exempt()  # [jbgs_judgment r13] r12: frozen_mask
+         if _ex is not None:
+             prune_mask = torch.logical_and(prune_mask, ~_ex)
+-        self.prune_points(prune_mask)
++        self.prune_points(prune_mask,opacity_mask=(self.get_opacity < min_opacity).squeeze())
+ 
+         torch.cuda.empty_cache()
+ 
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r27/train.py GeoGS-conf-guided-v1-r28/train.py
+--- GeoGS-conf-guided-v1-r27/train.py	2026-11-11 11:46:14.550531697 +0900
++++ GeoGS-conf-guided-v1-r28/train.py	2026-11-11 18:12:17.195294219 +0900
+@@ -695,6 +695,11 @@
+     scene = Scene(dataset, gaussians)
+ 
+     target_control = jbgs_target.create(args, scene, gaussians, render, pipe)
++    preserve_freespace = None
++    if args.jbgs_preserve_freespace == 'on':
++        from jbgs_gtjudge import PreserveFreespace
++        preserve_freespace = PreserveFreespace(args,target_control)
++        gaussians.preserve_freespace = preserve_freespace
+     gaussians.training_setup(opt)
+     if checkpoint:
+         (model_params, first_iter) = torch.load(checkpoint)
+@@ -1058,6 +1063,11 @@
+                 judgment.lambda_mvs * mvs_term + judgment.lambda_prior * prior_term, render_pkg, cam_name)
+         if target_control is not None:
+             target_control.check_loss(iteration, total_loss)
++        if preserve_freespace is not None:
++            total_loss = total_loss + preserve_freespace.loss(iteration,gaussians,rgb_loss,cam_name)
++            target_control.check_loss(iteration, total_loss)
++        if target_control is not None and getattr(target_control, 'trainlog_grads_on', False):  # r28 TRAINERR: gradient record before backward (values only)
++            target_control.trainlog_grads(iteration, gaussians, dict(photo=rgb_loss, depth=target_control.depth_lambda * da_depth_loss, gs2d=dist_loss + normal_loss))
+         total_loss.backward()
+         mvs_pgsr_control.after_backward(iteration, gaussians)
+         if judgment is not None:  # [jbgs_judgment] remember locked rows before the Adam step

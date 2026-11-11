@@ -1,0 +1,74 @@
+diff -ruN -x __pycache__ -x jbgs_trainlog.py -x jbgs_trainerr.py GeoGS-conf-guided-v1-r25/jbgs_target.py GeoGS-conf-guided-v1-r28/jbgs_target.py
+--- GeoGS-conf-guided-v1-r25/jbgs_target.py	2026-11-05 17:34:02.704367452 +0900
++++ GeoGS-conf-guided-v1-r28/jbgs_target.py	2026-11-11 18:12:17.195294219 +0900
+@@ -15,6 +15,12 @@
+     parser.add_argument('--jbgs_targets',default=None)
+     parser.add_argument('--jbgs_preserve_freespace',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_finaltrain',choices=['off','on'],default='off')
++    parser.add_argument('--jbgs_trainlog',choices=['off','on'],default='off')  # r27 PHD-MAIN-TRAINLOG-v1
++    parser.add_argument('--jbgs_trainlog_region',default=None)  # r28 PHD-MAIN-TRAINERR-v1: voxelised box range file
++    parser.add_argument('--jbgs_trainlog_grads',choices=['off','on'],default='off')  # r28: per-loss gradient magnitudes at save iterations
++    parser.add_argument('--jbgs_bind_background',choices=['off','on'],default='off')  # r28 diagnostic switch
++    parser.add_argument('--jbgs_rebind_released',choices=['off','on'],default='off')  # r28 diagnostic switch
++    parser.add_argument('--jbgs_reassign_same',choices=['off','on'],default='off')  # r28 diagnostic switch
+     parser.add_argument('--jbgs_target',choices=['off','on'],default='off')
+     parser.add_argument('--jbgs_target_rev',choices=['r4n','r6','r7','r8'],default='r4n')
+     parser.add_argument('--jbgs_target_dir',default='')
+@@ -229,6 +235,18 @@
+     if getattr(args,'jbgs_finaltrain','off')=='on':
+         if args.jbgs_target!='on' or args.jbgs_target_rev!='r8':
+             raise ValueError('FINALTRAIN requires the unchanged r8 controller base')
++        from jbgs_trainerr import any_switch  # r28: diagnostic switches; all off = r27/r25 classes unchanged
++        if getattr(args,'jbgs_trainlog','off')=='on':  # r27: recording only
++            if any_switch(args):
++                from jbgs_trainerr import trainlog_class
++                return trainlog_class()(args,scene,g)
++            from jbgs_trainlog import TrainLog
++            return TrainLog(args,scene,g)
++        if getattr(args,'jbgs_trainlog_region',None) or getattr(args,'jbgs_trainlog_grads','off')=='on':
++            raise ValueError('r28 --jbgs_trainlog_region/--jbgs_trainlog_grads need --jbgs_trainlog on')
++        if any_switch(args):
++            from jbgs_trainerr import FinalTrainX
++            return FinalTrainX(args,scene,g)
+         from jbgs_finaltrain import FinalTrain
+         return FinalTrain(args,scene,g)
+     if args.jbgs_target=='on' and args.jbgs_target_rev=='r8':
+diff -ruN -x __pycache__ -x jbgs_trainlog.py -x jbgs_trainerr.py GeoGS-conf-guided-v1-r25/train.py GeoGS-conf-guided-v1-r28/train.py
+--- GeoGS-conf-guided-v1-r25/train.py	2026-11-05 18:19:18.941878762 +0900
++++ GeoGS-conf-guided-v1-r28/train.py	2026-11-11 18:12:17.195294219 +0900
+@@ -825,6 +825,8 @@
+         da_consecutive = jbgs_restored["da_consecutive"]
+         da_locked_weight = jbgs_restored["da_locked_weight"]
+ 
++    if target_control is not None and getattr(target_control, 'trainlog_on', False):  # r27 trainlog: state before first iteration
++        target_control.trainlog_begin(gaussians)
+     progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
+     first_iter += 1
+     for iteration in range(first_iter, opt.iterations + 1):
+@@ -1064,6 +1066,8 @@
+         if preserve_freespace is not None:
+             total_loss = total_loss + preserve_freespace.loss(iteration,gaussians,rgb_loss,cam_name)
+             target_control.check_loss(iteration, total_loss)
++        if target_control is not None and getattr(target_control, 'trainlog_grads_on', False):  # r28 TRAINERR: gradient record before backward (values only)
++            target_control.trainlog_grads(iteration, gaussians, dict(photo=rgb_loss, depth=target_control.depth_lambda * da_depth_loss, gs2d=dist_loss + normal_loss))
+         total_loss.backward()
+         mvs_pgsr_control.after_backward(iteration, gaussians)
+         if judgment is not None:  # [jbgs_judgment] remember locked rows before the Adam step
+@@ -1212,6 +1216,8 @@
+                 if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
+                     if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_monitor_v2 and iteration % opt.opacity_reset_interval == 0:
+                         jbgs_judgment.lt_monitor_step(judgment, iteration, gaussians, cam_name, render, pipe, background, pre_reset=True)
++                    if target_control is not None and getattr(target_control, 'trainlog_on', False):  # r27 trainlog: state just before reset
++                        target_control.trainlog_pre_reset(iteration, gaussians)
+                     gaussians.reset_opacity(exempt_mask=judgment.exempt_mask(gaussians) if judgment is not None else None)  # [jbgs_judgment]
+                     if target_control is not None and args.jbgs_target_rev in ["r7", "r8"]:
+                         target_control.last_opacity_reset = iteration
+@@ -1320,6 +1326,8 @@
+ 
+         if target_control is not None:
+             target_control.project_bounds(gaussians)
++        if target_control is not None and getattr(target_control, 'trainlog_on', False):  # r27 trainlog: end-of-iteration record
++            target_control.trainlog_end(iteration, gaussians, dict(rgb=rgb_loss, depth=da_depth_loss, dist=dist_loss, normal=normal_loss, total=total_loss), cam_name)
+         # r6 saves complete 7000 state even when its following health gate fails.
+         r6_state_done = target_control is not None and args.jbgs_target_rev in ["r6", "r7", "r8"]
+         r6_stop_after = jbgs_state.after_step(locals()) if r6_state_done else False

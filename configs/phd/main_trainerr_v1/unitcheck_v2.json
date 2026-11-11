@@ -1,0 +1,25 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1",
+ "revision": "unit_check_v2",
+ "created_at": "2026-11-11T18:29:02.481646+09:00",
+ "base_config_sha256": "461258434bfacdf358211a1668284892d2318c51ab702e6821f1da82c7065be8",
+ "reason": "GPU training is nondeterministic (CUDA atomics in the rasterizer backward): two runs of the same setting already differ at 100 iterations (bound count 1-16, opacity max 0.47-0.70). With two runs per setting the GPU rule B compares a cross-pair median with only two same-setting pairs. Observed before this revision: record_invariance rule B PASS; default_r23 and gt_r25 rule B fail by small margins (e.g. r23 100 it bound cross median 5 vs same max 3; r25 300 it bound 39 vs 16). The code paths with every switch off are byte-identical in the deterministic real-state replay.",
+ "status_rule": {
+  "default_r23": "PASS iff deterministic replay r23 vs r28 byte-identical and initialization records equal; GPU rule B reported (TRAINLOG unit_check_v2 r23 line practice) and diagnosed with four runs per setting",
+  "gt_r25": "PASS iff deterministic replay r25 vs r28 (gt targets) byte-identical, initialization records equal and the loaded target sha = targets_gt; GPU rule B reported and diagnosed with four runs per setting",
+  "record_invariance": "PASS iff replay off vs on (+region +gradients) byte-identical AND the order alternative GPU test (two runs each, cross median <= same max) passes",
+  "numbers_events": "TRAINLOG tracking and balance on both recorded probes",
+  "switches": "one periodic reattach per switch on two real states: only the defined set changes"
+ },
+ "diagnostic_runs": [
+  "r23_c",
+  "r23_d",
+  "r28off_c",
+  "r28off_d",
+  "r25gt_c",
+  "r25gt_d",
+  "r28gt_c",
+  "r28gt_d"
+ ],
+ "scientific_verdict": null
+}
