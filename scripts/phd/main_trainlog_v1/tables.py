@@ -181,6 +181,12 @@ def fates(c, defs, SV, E, d0, n0, W0, Winit, t, prior_xyz, resets, key):
                 else:
                     rs = e['reason'][m][on]
                     for rr, rn in {1: 'opacity', 2: 'world_size', 3: 'screen_size', 4: 'other', 5: 'split_parent'}.items(): row[f'deleted_{rn}'] = int((rs == rr).sum())
+            rel = E['release']
+            if rel:
+                m = (rel['seq'] > lo) & (rel['seq'] <= hi)
+                if m.any():
+                    dd, _ = defs.tr.query(rel['xyz'][m][:, :2].astype(float)); row['released_on_site'] = int((dd <= .25).sum())
+                else: row['released_on_site'] = 0
         ra.append(row); prev = sv
     table('fate_ra_bound_site', ra)
     # ---- 4.4 trajectories

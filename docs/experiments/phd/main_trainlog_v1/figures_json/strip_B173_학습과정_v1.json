@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-11T16:17:07.080417+09:00",
+  "iterations": [
+    0,
+    1000,
+    3000,
+    7000,
+    15000,
+    30000
+  ],
+  "states": [
+    "0",
+    "1000",
+    "3000_pre_reset",
+    "7000",
+    "15000",
+    "30000"
+  ],
+  "note_3000": "column 3,000 uses the state just before the opacity reset (3000_pre_reset); the end-of-iteration 3,000 value is in the curve",
+  "rows": [
+    "surface mesh (key iteration)",
+    "inner disks (drawing = lineage)",
+    "section band"
+  ],
+  "camera": {
+    "basis": [
+      [
+        -1.2335639418852505e-16,
+        -0.9999924469294851,
+        0.0038866546001427543
+      ],
+      [
+        0.5717726658436051,
+        0.0031886584737710263,
+        0.8204059062752014
+      ],
+      [
+        0.8204121029056659,
+        -0.002222282861937035,
+        -0.5717683472043416
+      ]
+    ],
+    "center": [
+      139.8850047192512,
+      112.0847340048501,
+      -30.620511230468743
+    ],
+    "projection": "orthographic az180 el35"
+  },
+  "band": {
+    "b0": -6.754726745175503,
+    "width_m": 1
+  },
+  "sources": {
+    "0": "ceee4829d0a86f91a86e6c3d11857ef507d095f0efb5e0618fe086195fbb81cb",
+    "1000": "d4a34b367c176a6b0ac29df72b8d54fa5383d6aa8855fa5a4557ce7576bd2988",
+    "3000_pre_reset": "d12e2a8820a8c33fa663cbd4921009df3a20d25a8dea9833dcf3b20479095f8c",
+    "7000": "61de5a497ea29e190640f2d0122d20a02fa420dc6c8b351d9a96e5c5ddbcd333",
+    "15000": "2c9ea90b61dc6b6c31482c506a000d07965455aaf147fa186591a7d35be4639b",
+    "30000": "fe1a6961821bdd2d7a23354708902a825ea370c9fb830b40b711c26671810cd7"
+  },
+  "meshes": {
+    "0": "4cf03872dabf8bfea4180e0deee43d3b7146db3b6f7282dc07796ac3d62f8dd1",
+    "1000": "cea4f2096cfb82bc82d4e0accb5dd115cf8c7eb84063b4230e3897642bb528fc",
+    "3000_pre_reset": "6bddf0f809f1d6a7e14cb2dd220d94630e9f5a07eb83f7799d50e5580d21cbbd",
+    "7000": "6f00c83914402036a289a500fb89d4fbc516b7b5f6692d3246e82fde2590d475",
+    "15000": "0774e8b9bfbd9497756801de068c3e823f233952e6503f13d8a6dad07e7502f0",
+    "30000": "643d80a7efd70c6dfaec6759d723a8162bc463ed992bc14242678a98adaf71c7"
+  },
+  "plate": "새 판 (tl_B173nb_b10_ALS_s0 attempt2)",
+  "scientific_verdict": null
+}

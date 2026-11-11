@@ -5,7 +5,11 @@ STAGES = {
     'stage1': dict(docs=['단계1_보고.md', 'issues.md', 'progress.md', 'r27_changed_lines.diff', 'camera_choice.json', 'tables/unit_checks_gpu_repeat.csv', 'tables/unit_checks_event_balance.csv', 'tables/unit_checks_r23_diagnostic.csv', 'tables/camera_choice.csv', 'verification'],
                    cfg=['trainlog_v1.json', 'trainlog_v1.lock.json', 'trainlog_v1.unitcheck_v2.json', 'trainlog_v1.unitcheck_v2.lock.json'], payload=[]),
     'stage3_compare': dict(docs=['단계3_대조표.md', 'comparison.json', 'tables/comparison_original_vs_new.csv', 'issues.md', 'progress.md'], cfg=['trainlog_v1.json', 'trainlog_v1.lock.json', 'trainlog_v1.runtime.lock.json'], payload=[]),
+    'final': dict(docs=['보고_v1.md', '단계1_보고.md', '단계3_대조표.md', 'issues.md', 'progress.md', 'r27_changed_lines.diff', 'camera_choice.json', 'comparison.json', 'key_iterations.json', 'tables', 'verification', 'manifests', 'figures_json'],
+                  cfg=['trainlog_v1.json', 'trainlog_v1.lock.json', 'trainlog_v1.unitcheck_v2.json', 'trainlog_v1.unitcheck_v2.lock.json', 'trainlog_v1.runtime.lock.json', 'trainlog_v1.runtime.lock.attempt1_superseded.json'],
+                  payload=['renders', 'frames', 'video', 'figures', 'analysis', 'lineage', 'meshes', 'events_small']),
 }
+PAYLOAD_SKIP = ('data.npz', 'vertices', '.ply')
 def main(stage):
     spec = STAGES[stage]; stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M')
     out = O/'delivery'/f'PHD-MAIN-TRAINLOG-v1_{stage}_{stamp}.zip'; out.parent.mkdir(parents=True, exist_ok=True); members = []
@@ -16,6 +20,13 @@ def main(stage):
             p = D/rel
             for f in ([p] if p.is_file() else sorted(q for q in p.rglob('*') if q.is_file())): add(f, 'docs/'+str(f.relative_to(D)))
         for rel in spec['cfg']: add(C/rel, 'configs/'+rel)
+        for rel in spec.get('payload', []):
+            p = O/rel if rel != 'events_small' else DER/'events'
+            for f in sorted(q for q in p.rglob('*') if q.is_file()):
+                if rel == 'events_small' and (f.name.startswith('link') or f.suffix == '.npz'): continue
+                if rel == 'analysis' and f.name.startswith('mesh_') and f.suffix == '.npz': continue
+                if f.suffix == '.npz' and rel in ('renders',): continue
+                add(f, ('events/' if rel == 'events_small' else rel+'/')+str(f.relative_to(p)))
         for rel in ['scripts/phd/main_trainlog_v1', 'src/phd/forks/GeoGS-conf-guided-v1-r27/jbgs_trainlog.py']:
             p = R/rel
             for f in ([p] if p.is_file() else sorted(q for q in p.rglob('*.py') if '__pycache__' not in q.parts)): add(f, 'code/'+str(f.relative_to(R)))

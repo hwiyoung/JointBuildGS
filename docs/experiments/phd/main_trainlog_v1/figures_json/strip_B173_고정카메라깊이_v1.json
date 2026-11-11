@@ -1,0 +1,73 @@
+{
+  "at": "2026-11-11T16:15:27.831047+09:00",
+  "iterations": [
+    0,
+    1000,
+    3000,
+    7000,
+    15000,
+    30000
+  ],
+  "cameras": [
+    "DJI_20241217091247_0146_D",
+    "DJI_20241217091133_0109_D"
+  ],
+  "depth": "mesh-render surf_depth (SH0, RESCORE box crop)",
+  "reference": "original FINALTRAIN 30,000 render of the same view",
+  "colour": {
+    "depth": "viridis, per-image 1-99 percentile of the original",
+    "difference": "RdBu_r ±1 m"
+  },
+  "values": {
+    "DJI_20241217091247_0146_D_0": {
+      "median_abs_diff_m": 1.5372772216796875,
+      "valid_pixels": 503235
+    },
+    "DJI_20241217091247_0146_D_1000": {
+      "median_abs_diff_m": 0.3861083984375,
+      "valid_pixels": 617495
+    },
+    "DJI_20241217091247_0146_D_3000": {
+      "median_abs_diff_m": 0.8239974975585938,
+      "valid_pixels": 628891
+    },
+    "DJI_20241217091247_0146_D_7000": {
+      "median_abs_diff_m": 0.13120269775390625,
+      "valid_pixels": 641796
+    },
+    "DJI_20241217091247_0146_D_15000": {
+      "median_abs_diff_m": 0.042644500732421875,
+      "valid_pixels": 640943
+    },
+    "DJI_20241217091247_0146_D_30000": {
+      "median_abs_diff_m": 0.026096343994140625,
+      "valid_pixels": 640979
+    },
+    "DJI_20241217091133_0109_D_0": {
+      "median_abs_diff_m": 1.4812374114990234,
+      "valid_pixels": 549316
+    },
+    "DJI_20241217091133_0109_D_1000": {
+      "median_abs_diff_m": 0.46436309814453125,
+      "valid_pixels": 654874
+    },
+    "DJI_20241217091133_0109_D_3000": {
+      "median_abs_diff_m": 1.05615234375,
+      "valid_pixels": 649378
+    },
+    "DJI_20241217091133_0109_D_7000": {
+      "median_abs_diff_m": 0.06368255615234375,
+      "valid_pixels": 655519
+    },
+    "DJI_20241217091133_0109_D_15000": {
+      "median_abs_diff_m": 0.026885986328125,
+      "valid_pixels": 655858
+    },
+    "DJI_20241217091133_0109_D_30000": {
+      "median_abs_diff_m": 0.016754150390625,
+      "valid_pixels": 655715
+    }
+  },
+  "plate": "새 판 (다시 돌린 판) 대 원래 판",
+  "scientific_verdict": null
+}

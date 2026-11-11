@@ -1,0 +1,61 @@
+{
+ "videos": [
+  {
+   "file": "B173_학습과정_결과판_v1.mp4",
+   "frames": 65,
+   "video_frames": 90,
+   "seconds": 22.5,
+   "sha256": "1b58363419794d79cb2d686662a14a4c38dc45bc0a212bd6875eb1f46d04e8bc"
+  },
+  {
+   "file": "B173_학습과정_결과판_v1.gif",
+   "frames": 65,
+   "width": 1280,
+   "durations_ms": "250, hold 1500",
+   "sha256": "64036d5dce9a4afea082e1a55ad6e3d32eb6114927f300c0809b82148408b071"
+  },
+  {
+   "file": "B173_학습과정_surface칸_v1.mp4",
+   "crop_px": [
+    272,
+    58,
+    886,
+    403
+   ],
+   "frames": 65,
+   "video_frames": 90,
+   "sha256": "85f0ea6ff6731c8f16a1d9a74be02698a631fe8874ad016e09bc5708ab8ca0b5"
+  },
+  {
+   "file": "B173_학습과정_section칸_v1.mp4",
+   "crop_px": [
+    1142,
+    59,
+    1829,
+    452
+   ],
+   "frames": 65,
+   "video_frames": 90,
+   "sha256": "91b75d3b6bb783a795fec7f4d92e91db287b6eca2f5d5bab1914064eaffcba50"
+  },
+  {
+   "file": "B173_학습과정_모든가우시안판_v1.mp4",
+   "frames": 65,
+   "video_frames": 90,
+   "seconds": 22.5,
+   "sha256": "196b50a3a26380a69f9dcab5193e43580191902fd1f49c34e6b8f861b373dd47"
+  }
+ ],
+ "fps": 4,
+ "hold_frames": 6,
+ "hold_iterations": [
+  0,
+  3000,
+  7000,
+  15000,
+  30000
+ ],
+ "encoder": "libx264 -preset veryfast yuv420p (imageio_ffmpeg 7.0.2 static)",
+ "interpolation": false,
+ "scientific_verdict": null
+}

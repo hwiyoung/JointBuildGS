@@ -107,5 +107,6 @@ if __name__ == '__main__':
     elif a[0] in ['cpu', 'torch', 'video']: sys.exit(job(a[0], a[1], *a[2:]))
     elif a[0] == 'gpu': sys.exit(job('gpu', a[2], *a[3:], gpu=int(a[1])))
     elif a[0] == 'gpufork': sys.exit(job('gpu', a[3], *a[4:], gpu=int(a[1]), fork=a[2], name=f'jbgs-trainlog-gpufork-{a[2][-3:]}'))
+    elif a[0] == 'cpuname': sys.exit(job('cpu', a[2], *a[3:], name=a[1]))
     elif a[0] == 'mesh': mesh(a[1], *a[2:4], gpu=int(a[4]) if len(a) > 4 else None)
     elif a[0] == 'mesh_all': mesh_all(a[1], a[2], int(a[3]) if len(a) > 3 else 0)

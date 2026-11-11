@@ -21,7 +21,7 @@ def mp4(folder, out, n):
 def main():
     V.mkdir(exist_ok=True); rec = []
     for mode, tag in [('result', '결과판'), ('all', '모든가우시안판')]:
-        meta = json.loads((FR/'frames_frames.json').read_text())['frames']; fr = sorted([m for m in meta if m['mode'] == mode], key=lambda m: m['order'])
+        meta = json.loads((FR/f'frames_{mode}.json').read_text())['frames']; fr = sorted([m for m in meta if m['mode'] == mode], key=lambda m: m['order'])
         files = [m['file'] for m in fr]; holds = [m['hold'] for m in fr]; tmp = O/'tmp/video'/mode; n = seq(files, holds, tmp)
         out = V/f'B173_학습과정_{tag}_v1.mp4'; mp4(tmp, out, n); rec.append(dict(file=out.name, frames=len(files), video_frames=n, seconds=n/FPS, sha256=sha(out)))
         if mode == 'result':
