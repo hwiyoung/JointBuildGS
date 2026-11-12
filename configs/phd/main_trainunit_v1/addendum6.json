@@ -1,0 +1,12 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 6,
+  "amends": "addendum 5 (sha256 2b3f186c...), before any seed/map/training computation; only tu_probes.py define had run",
+  "fact": "tu_probes.py define: the 판 다 visibility rule (projected region box >= 25 % of the image) adds 0 campus training images to the B0 region; the coverage of the other 576 campus training images is 0 at the 10/50/90 % quantiles. FINALTRAIN B0 already trains on every image that sees its region (243 images over 8,822 m2), while 판 다 cells train 308-544 images over 45,000-59,000 m2 inside their bounds, i.e. fewer images per initialised area.",
+  "changes": {
+    "probe2": "not run: identical to probe0 (0 images added). The image-density question is answered by the definition step above, without training.",
+    "probe1": "images chosen by the 판 다 rule on the x5 region (camera centre inside the region, plus cameras whose projected x5 region box covers >= 25 % of the image; z range = SfM p0.5..p99.5 inside the x5 region), instead of the 243 B0 images, so that probe1 is a cell-like unit of x5 area centred on B0 and its outer seeds are observed as in a cell. Test images stay the 35 of FINALTRAIN B0."
+  },
+  "unchanged": "everything else in addendum 5 (probe0 definition, ALS, seed 0, train_args, stop after 15,000, lifted deadline rules, record-only count rule, guards, retry)",
+  "scientific_verdict": null
+}

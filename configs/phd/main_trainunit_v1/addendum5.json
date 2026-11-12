@@ -1,0 +1,22 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 5,
+  "instruction": "user, 2026-11-12 15:3x KST: '원인 확인부터' (판 다 2x2 cells are not processable; before redesigning the partition, find what drives the Gaussian count)",
+  "question": "Why did 판 다 cells grow 2-4x more Gaussians than the FINALTRAIN scenes (cell0 > 9.6 M, 24 GB limit) while the FINALTRAIN scenes stay at 2.4-3.3 M?",
+  "fact_before_lock": "FINALTRAIN B0_b10 ALS seeds its initial cloud only inside the scene box (SfM background 14,503 points, x 73.9..150.7, y -21.8..77.7); 판 다 cells seed SfM and prior patches over the whole expanded cell. Inside the B0 box the campus SfM has 19,922 points against 14,211 of the scene SfM (similar density).",
+  "base": "FINALTRAIN B0_b10 ALS (seed 0): 243 training images, max Gaussians 7,000-15,000 = 2,384,995; seed-1 repeat as spread reference",
+  "probes": {
+    "probe0": "control: the 판 다 input pipeline (campus targets/sigma_ref, campus SfM, WIDEN0 MVS background depth) on the B0 region only. region = GTJUDGE views/B0_b10.json box (xy); images = FINALTRAIN B0_b10 split (243 train, 35 test)",
+    "probe1": "initialised area x5: same as probe0 but region = the B0 box scaled about its centre by sqrt(5) per side (area x5, within the cells' 45,000-59,000 m2 inside-bounds range); same 243 / 35 images",
+    "probe2": "images: same region as probe0; training images = the 243 plus every campus training image (WIDEN0 train) whose projected region box covers >= 25 % of the image (the 판 다 visibility rule, z range = SfM p0.5..p99.5 inside the region); same 35 test images"
+  },
+  "prior": "ALS only (the cells that failed were ALS; LoD2 is not run in this addendum)",
+  "unchanged": "train_args of 판 다 (FINALTRAIN r8 values, seed 0, --iterations 30000 so every schedule is the same), renderer, fork r23, pixel-weight rule, cylinder exclusion, map rule",
+  "iterations": "each probe stops right after iteration 15,000 (end of densification; Gaussian count is flat after it in every run so far); the 7,000 and 15,000 complete states are kept as usual",
+  "rules_lifted_for_probes": "11:00 deadline and the 500-iteration time stop do not apply; FINALTRAIN count rule (count_gt_3x_6000) is recorded, not enforced (as addendum 4)",
+  "measured": "Gaussian count every 100 iterations, max 7,000-15,000, count at 6,000, peak GPU reserved, peak host RSS, seconds per iteration, initial prior/background seeds, occupied 1 m cells and density at 7,000 (inside the region and total)",
+  "not_measured": "no mesh, no scoring, no GT read",
+  "resources": "a probe starts only on a GPU with no other compute process (TRAINERR priority); container memory cap 48 GB; a host guard kills this task's container first when host MemAvailable < 20 GB",
+  "retry": "execution error: one retry with the same command; GPU memory stop (binning guard / OOM) is a result, recorded with count and memory",
+  "scientific_verdict": null
+}

@@ -73,6 +73,12 @@ def main():
     if (C / 'addendum3.json').exists() and run_name.startswith('cells_'):
         assert sha(C / 'addendum3.json') == json.loads((C / 'addendum3.lock.json').read_text())['sha256']
         lifted = True  # addendum 3: no 11:00 deadline and no 500-iteration time stop for 판 다
+    probe_stop = None
+    if run_name.startswith('probe'):
+        # addendum 5 (원인 확인): no deadline / 500-iteration stop; count rule recorded only; stop right after iteration 15,000
+        assert sha(C / 'addendum5.json') == json.loads((C / 'addendum5.lock.json').read_text())['sha256']
+        lifted = True
+        probe_stop = 15000
     argv = sys.argv[2:]
     model = Path(argv[argv.index('-m') + 1])
     assert not model.exists(), model
@@ -108,12 +114,13 @@ def main():
         return original_restore(path, saved, env)
 
     jbgs_target_r6.restore_complete = restore_complete
-    if (C / 'addendum4.json').exists() and run_name.startswith('cells_'):
+    if probe_stop is not None or ((C / 'addendum4.json').exists() and run_name.startswith('cells_')):
         # addendum 4 (user '이어 돌리기'): the FINALTRAIN count rule is recorded, not enforced, for 판 다 cells.
         assert sha(C / 'addendum4.json') == json.loads((C / 'addendum4.lock.json').read_text())['sha256']
         import jbgs_finaltrain
         install_count_record_only(jbgs_finaltrain.FinalTrain)
-        dump(root / 'addendum4_entry.json', dict(at=now().isoformat(), count_rule='record-only', scientific_verdict=None))
+        dump(root / ('addendum5_entry.json' if probe_stop else 'addendum4_entry.json'),
+             dict(at=now().isoformat(), count_rule='record-only', probe_stop=probe_stop, scientific_verdict=None))
     original = jbgs_state.after_step
     state = dict(checked500=False, stop_capture=None)
 
@@ -151,6 +158,13 @@ def main():
                  scientific_verdict=None))
             original(env)
             print('TRAINUNIT_DEADLINE_STOP', it, flush=True)
+            return True
+        if probe_stop is not None and it == probe_stop:
+            out = original(env)  # unchanged hook first (the 15,000 complete state is captured as in every run)
+            dump(root / 'PROBE_STOP.json', dict(at=now().isoformat(), iteration=it, gaussians=len(env['gaussians'].get_xyz),
+                 peak_reserved_bytes=torch.cuda.max_memory_reserved(), peak_allocated_bytes=torch.cuda.max_memory_allocated(),
+                 hook_returned=bool(out), scientific_verdict=None))
+            print('TRAINUNIT_PROBE_STOP', it, flush=True)
             return True
         return original(env)
 
