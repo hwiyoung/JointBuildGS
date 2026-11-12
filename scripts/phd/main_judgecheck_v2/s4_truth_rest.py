@@ -79,6 +79,11 @@ def main(tile):
             o, h = prism(X[sel[qi]], c[pm], a[pm], b[pm], n[pm], length[pm], O/'tmp'/f'prism_{tile}_{prior}_{kind}')
             owner[qi[o >= 0]] = pm[o[o >= 0]]; hits[qi] = h
         paired = np.flatnonzero(owner >= 0); po = owner[paired]; gi = sel[paired]
+        pair_count = np.bincount(po, minlength=len(p['kind']))
+        # 안쪽 반기둥(지붕 아래 10 m, 벽 뒤 5 m)에 든 참값 점(구역 중심의 모든 점, 종류 무관; 5.2 나·다의 '참값이 지나 본 사전 정보 면')
+        corepts = np.flatnonzero(core); half = length/2
+        o2, _ = prism(X[corepts], c - half[:, None]*n, a, b, n, half, O/'tmp'/f'prism_{tile}_{prior}_inner')
+        inner_count = np.bincount(o2[o2 >= 0], minlength=len(p['kind']))
         # 솎기 0.1 m: 지붕·땅 수평 칸, 벽은 LoD2 면마다 벽 평면
         keep = np.zeros(len(paired), bool); wk = p['kind'][po] == 2
         if (~wk).any(): keep[~wk] = thin.keep_nearest(X[gi[~wk], :2], 0.1)
@@ -109,13 +114,19 @@ def main(tile):
         del scene_p
         out[prior] = dict(xyz=X[gi], gt_index=gi, normal=Nm, normal_count=cnt, normal_resid=resid, gt_kind=gkind[gi], hag=hag[gi], patch_id=p['patch_id'][po], patch_tile=p['tile'][po], building=p['building'][po], region=p['region'][po],
                           s_P=sP, s_M=sM, offset_P=offP, offset_M=offM, hits=hits[paired][keep])
-        out[prior + '_unpaired'] = dict(count_by_kind=np.bincount(gkind[sel[owner < 0]], minlength=4))
+        un = sel[owner < 0]; ku = np.zeros(len(un), bool); nw = gkind[un] != 2   # 판정 없음 점도 0.1 m 칸으로 솎아 셈 (짝 면이 없는 벽 점은 0.1 m 3차원 칸)
+        if nw.any(): ku[nw] = thin.keep_nearest(X[un[nw], :2], 0.1)
+        if (~nw).any():
+            q = np.floor(X[un[~nw]]/0.1).astype(np.int64); _, first = np.unique(q, axis=0, return_index=True); kw = np.zeros(int((~nw).sum()), bool); kw[first] = True; ku[~nw] = kw
+        out[prior + '_unpaired'] = dict(count_by_kind=np.bincount(gkind[un[ku]], minlength=4), count_by_kind_before_thinning=np.bincount(gkind[un], minlength=4))
+        out[prior + '_patch'] = dict(patch_id=p['patch_id'], pair_count=pair_count, inner_count=inner_count)
         T.mark(prior)
     save = {}
     for prior in ['LoD2', 'ALS']:
         if prior in out:
             for k, v in out[prior].items(): save[f'{prior}__{k}'] = v
-            save[f'{prior}__unpaired_by_kind'] = out[prior + '_unpaired']['count_by_kind']
+            save[f'{prior}__unpaired_by_kind'] = out[prior + '_unpaired']['count_by_kind']; save[f'{prior}__unpaired_by_kind_before_thinning'] = out[prior + '_unpaired']['count_by_kind_before_thinning']
+            for k, v in out[prior + '_patch'].items(): save[f'{prior}__patch_{k}'] = v
     savez(dest, **save)
     rec = dict(at=now(), tile=tile, gt_points=len(X), core=int(core.sum()), in_eval_boxes=int((core & inbox).sum()), used=len(sel), kind_counts={str(k): int((gkind[sel] == k).sum()) for k in [1, 2, 3]},
                rows={pr: int(len(out[pr]['xyz'])) for pr in ['LoD2', 'ALS'] if pr in out}, unpaired={pr: out[pr + '_unpaired']['count_by_kind'].tolist() for pr in ['LoD2', 'ALS'] if pr in out}, marks=T.marks, scientific_verdict=None)
