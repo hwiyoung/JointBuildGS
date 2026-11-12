@@ -1,0 +1,18 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 3,
+  "instruction": "user, 2026-11-12 10:0x KST: 판 다를 끝까지 진행한다",
+  "deadline": "lifted for 판 다 (no 11:00 limit, no 500-iteration time stop)",
+  "gpu": "TRAINERR priority kept: a run is launched only when nvidia-smi shows no other compute process on that GPU",
+  "runs": {
+    "cells_ALS_s0/cell0": "resume from attempt1 complete state iteration 12,700 (--jbgs_resume_full), new attempt directory",
+    "cells_ALS_s0/cell1": "resume from attempt1 complete state iteration 5,600",
+    "cells_ALS_s0/cell2, cell3": "start from iteration 0 (placeholder NOT_LAUNCHED_TIME receipt kept as record)",
+    "cells_LoD2_s0/cell0..3": "start from iteration 0 after the ALS cells (same placeholders)"
+  },
+  "order": "ALS cells (resumed first) then LoD2 cells; any free GPU",
+  "unchanged": "all method values, seeds 0, 30,000 iterations per cell, merge rule (original cell bounds), mesh rule, scorer",
+  "retry": "execution error or OOM: one retry with the same command (same resume state)",
+  "not_included": "판 가 (campus30k) and 판 나 (campus120k) are not launched by this addendum",
+  "scientific_verdict": null
+}

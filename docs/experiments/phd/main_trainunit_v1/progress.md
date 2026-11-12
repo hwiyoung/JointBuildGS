@@ -50,3 +50,16 @@
 - 2026-11-12T06:47:50.049850+09:00: 후처리 seed1_B173nb_b10_LoD2 B173nb_b10: 완료 (자르기 2s, 렌더 23s, 메시 488s, 채점 50s)
 - 2026-11-12T06:51:50+09:00: 씨앗 반복 여섯 판 학습·메시·채점 끝. 최종 표·그림·보고. 대기열·후처리 감시·OOM 감시 멈춤. 11:00 이후 새 판 없음.
 - 2026-11-12T06:52:02+09:00: 최종 묶음 PHD-MAIN-TRAINUNIT-v1_1112-0651.zip(PH/.../delivery/, 234 파일 + SHA256SUMS).
+- 2026-11-12T10:08:46.017944+09:00: 덧붙임 3 칸 대기열 시작 GPU 0.
+- 2026-11-12T10:08:46.083774+09:00: cells_ALS_s0_cell0 시도 2 시작, GPU 0 (상태 12700회에서 이어 돌림)
+- 2026-11-12T10:08:49.018675+09:00: 덧붙임 3 칸 대기열 시작 GPU 1.
+- 2026-11-12T10:08:49.084016+09:00: cells_ALS_s0_cell1 시도 2 시작, GPU 1 (상태 5600회에서 이어 돌림)
+- 2026-11-12T10:10:40.475371+09:00: cells_ALS_s0_cell0 시도 2 끝: EXECUTION_ERROR, 0.03시간, 오류 ValueError: R6 resume settings changed: {'jbgs_tau_v': [nan, nan], 'jbgs_tau_roof': [nan, nan], 'jbgs_tau_wall': [nan, nan]}
+- 2026-11-12T10:10:40.506609+09:00: cells_ALS_s0_cell0 시도 3 시작, GPU 0 (상태 12700회에서 이어 돌림)
+- 2026-11-12T10:10:54.185148+09:00: cells_ALS_s0_cell1 시도 2 끝: EXECUTION_ERROR, 0.03시간, 오류 ValueError: R6 resume settings changed: {'jbgs_tau_v': [nan, nan], 'jbgs_tau_roof': [nan, nan], 'jbgs_tau_wall': [nan, nan]}
+- 2026-11-12T10:10:54.234337+09:00: cells_ALS_s0_cell1 시도 3 시작, GPU 1 (상태 5600회에서 이어 돌림)
+- 2026-11-12T10:11:06.460574+09:00: cells_ALS_s0_cell0 시도 3 끝: EXECUTION_ERROR, 0.01시간, 오류 ValueError: R6 resume settings changed: {'jbgs_tau_v': [nan, nan], 'jbgs_tau_roof': [nan, nan], 'jbgs_tau_wall': [nan, nan]}
+- 2026-11-12T10:11:06.524367+09:00: cells_ALS_s0_cell2 시도 1 시작, GPU 0
+- 2026-11-12T10:11:29.033628+09:00: cells_ALS_s0_cell1 시도 3 끝: EXECUTION_ERROR, 0.01시간, 오류 ValueError: R6 resume settings changed: {'jbgs_tau_v': [nan, nan], 'jbgs_tau_roof': [nan, nan], 'jbgs_tau_wall': [nan, nan]}
+- 2026-11-12T10:11:29.114153+09:00: cells_ALS_s0_cell3 시도 1 시작, GPU 1
+- 2026-11-12T10:16:11+09:00: 덧붙임 3(sha256 b616fea3…, 사용자 지시 '다를 끝까지'): 11:00 제한 해제. NaN 감싸기 뒤 이어 돌리기 시험 통과(칸1 5,600회 상태 복원, 100회 진행, 가우시안 1,598,244 그대로; tests/resume_cell1). 대기열 차례: 칸2(GPU 0)·칸3(GPU 1) 학습 중 → 칸0(12,700회부터)·칸1(5,600회부터) → LoD2 칸 넷.

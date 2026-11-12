@@ -46,6 +46,10 @@ def main():
     add2 = json.loads((C / 'addendum2.json').read_text())
     assert sha(C / 'addendum2.json') == json.loads((C / 'addendum2.lock.json').read_text())['sha256']
     factor = 229.7
+    lifted = False
+    if (C / 'addendum3.json').exists() and run_name.startswith('cells_'):
+        assert sha(C / 'addendum3.json') == json.loads((C / 'addendum3.lock.json').read_text())['sha256']
+        lifted = True  # addendum 3: no 11:00 deadline and no 500-iteration time stop for 판 다
     argv = sys.argv[2:]
     model = Path(argv[argv.index('-m') + 1])
     assert not model.exists(), model
@@ -65,13 +69,29 @@ def main():
 
     sys.path.insert(0, '/source')
     import jbgs_state
+    import math
+    import jbgs_target_r6
+    original_restore = jbgs_target_r6.restore_complete
+
+    def restore_complete(path, saved, env):
+        # addendum 3: r6 resume compares saved and current args with !=, which is True for NaN == NaN defaults
+        # (jbgs_tau_v/roof/wall). Only keys whose saved and current values are both NaN are treated as equal.
+        args = env['args']
+        same_nan = [k for k, v in saved['args'].items() if isinstance(v, float) and isinstance(getattr(args, k, None), float)
+                    and math.isnan(v) and math.isnan(getattr(args, k))]
+        for k in same_nan:
+            del saved['args'][k]
+        dump(root / 'resume_nan_args.json', dict(at=now().isoformat(), checkpoint=str(path), keys_both_nan=same_nan, scientific_verdict=None))
+        return original_restore(path, saved, env)
+
+    jbgs_target_r6.restore_complete = restore_complete
     original = jbgs_state.after_step
     state = dict(checked500=False, stop_capture=None)
 
     def after_step(env):
         it = env['iteration']
         args = env['args']
-        if it == 501 and not state['checked500']:
+        if it == 501 and not state['checked500'] and not lifted:
             # same clock as the locked factor: target_monitor/curve.jsonl elapsed_seconds at iteration 500
             state['checked500'] = True
             rows = [json.loads(l) for l in (model / 'target_monitor/curve.jsonl').read_text().splitlines() if l.strip()]
