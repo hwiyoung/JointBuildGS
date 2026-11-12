@@ -37,6 +37,29 @@ def dump(p, v):
     p.write_text(json.dumps(v, ensure_ascii=False, indent=2, allow_nan=False) + '\n')
 
 
+def install_count_record_only(cls):
+    """addendum 4: when FINALTRAIN would raise FINALTRAIN_HEALTH_STOP_count_gt_3x_6000, rename its STOP.json to
+    health_override_<iteration>.json, append health_override.jsonl and let training continue. Other errors are re-raised."""
+    original_observe = cls.observe
+
+    def observe(self, iteration, g, loss, rgb, depth, name):
+        try:
+            return original_observe(self, iteration, g, loss, rgb, depth, name)
+        except RuntimeError as e:
+            if str(e) != 'FINALTRAIN_HEALTH_STOP_count_gt_3x_6000':
+                raise
+            stop = self.mon / 'STOP.json'
+            rec = json.loads(stop.read_text())
+            stop.rename(self.mon / f'health_override_{iteration}.json')
+            with (self.mon / 'health_override.jsonl').open('a') as f:
+                f.write(json.dumps(dict(at=now().isoformat(), iteration=iteration, gaussians=rec['gaussians'],
+                                        count_at_6000=rec.get('count_at_6000'), reason=rec['reason'], addendum=4,
+                                        action='recorded, training continues', scientific_verdict=None)) + '\n')
+            print('TRAINUNIT_HEALTH_OVERRIDE', iteration, rec['gaussians'], rec.get('count_at_6000'), flush=True)
+
+    cls.observe = observe
+
+
 def main():
     run_name = sys.argv[1]
     lock = json.loads((C / 'trainunit_v1.initial.lock.json').read_text())
@@ -85,6 +108,12 @@ def main():
         return original_restore(path, saved, env)
 
     jbgs_target_r6.restore_complete = restore_complete
+    if (C / 'addendum4.json').exists() and run_name.startswith('cells_'):
+        # addendum 4 (user '이어 돌리기'): the FINALTRAIN count rule is recorded, not enforced, for 판 다 cells.
+        assert sha(C / 'addendum4.json') == json.loads((C / 'addendum4.lock.json').read_text())['sha256']
+        import jbgs_finaltrain
+        install_count_record_only(jbgs_finaltrain.FinalTrain)
+        dump(root / 'addendum4_entry.json', dict(at=now().isoformat(), count_rule='record-only', scientific_verdict=None))
     original = jbgs_state.after_step
     state = dict(checked500=False, stop_capture=None)
 

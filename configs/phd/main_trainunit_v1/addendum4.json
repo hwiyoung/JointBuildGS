@@ -1,0 +1,20 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 4,
+  "instruction": "user, 2026-11-12 12:4x KST: '이어 돌리기' (answer to: 건강 규칙에 멈춘 칸을 저장된 15,000회 상태에서 30,000회까지 이어 돌릴까요?)",
+  "applies_to": "판 다 cells only (run names cells_*), both priors",
+  "rule": {
+    "count_rule": "FINALTRAIN health rule 'count_gt_3x_6000' (checked every 1,000 iterations from 7,000 to 15,000) no longer ends a cell. It is recorded, not enforced.",
+    "already_stopped": "a cell already stopped by the count rule continues from the latest complete state in its own attempt lineage at or before the stop iteration (cells_ALS_s0/cell2: attempt1 jbgs_complete/iteration_15000, captured before the check by the unchanged loop order)",
+    "new_launches": "every cell attempt launched under this addendum installs the record-only count rule in the entry: when FINALTRAIN would raise FINALTRAIN_HEALTH_STOP_count_gt_3x_6000, its STOP.json is renamed health_override_<iteration>.json, health_override.jsonl gets a row, and training continues unchanged",
+    "running_attempts": "the two attempts running without this entry (cells_ALS_s0 cell0 attempt2, cell3 attempt1) are stopped with the existing stop file (complete state at the next multiple of 100) and resumed from that state under this addendum",
+    "other_rules_unchanged": "the 7,000-iteration prior-opacity rule (prior_seed_lineage_opacity_median_below_0.05) still stops a cell; that would be reported to the user"
+  },
+  "resume_point": "latest jbgs_complete/iteration_N (N < 30,000) across the cell's attemptK directories (excluding _void*)",
+  "order": "ALS cells then LoD2 cells, any GPU with no other compute process (TRAINERR priority kept)",
+  "unchanged": "all method values, seed 0, 30,000 iterations per cell, image lists, merge rule (original cell bounds), mesh rule, scorer",
+  "retry": "execution error or OOM: one retry with the same command (same resume state)",
+  "reporting": "tables and report mark these cells as '건강 규칙(수 3배) 넘음 뒤 이어 감' with the iteration and counts",
+  "not_included": "판 가 and 판 나",
+  "scientific_verdict": null
+}

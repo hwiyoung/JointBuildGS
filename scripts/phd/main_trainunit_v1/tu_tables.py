@@ -227,7 +227,27 @@ def run_stats():
             dl = rec.parent / f'attempt{a}' / 'DEADLINE_STOP.json'
             if dl.exists():
                 row['stopped_at_iteration'] = json.loads(dl.read_text())['iteration']
+            mon = rec.parent / f'attempt{a}' / 'model/target_monitor'
+            if (mon / 'STOP.json').exists():
+                s = json.loads((mon / 'STOP.json').read_text())
+                row.update(health_stop_reason=s.get('reason'), health_stop_iteration=s.get('iteration'), health_stop_gaussians=s.get('gaussians'),
+                           health_stop_count_at_6000=s.get('count_at_6000'))
+            if (mon / 'health_override.jsonl').exists():
+                ov = [json.loads(l) for l in (mon / 'health_override.jsonl').read_text().splitlines() if l.strip()]
+                row['health_override_iterations'] = [o['iteration'] for o in ov]  # addendum 4: count rule recorded, not enforced
+            ckpt = att.get('resume_from')
+            row['resume_iteration'] = int(ckpt.split('iteration_')[1].split('/')[0]) if ckpt else None
+            row['attempt_seconds'] = att.get('seconds')
             out.append(row)
+        if len(r['attempts']) > 1:
+            # chained attempts (stop -> resume): one total row per unit; time = sum of attempt wall time (includes map loading)
+            last = r['attempts'][-1]['attempt']
+            tot = dict(unit=unit, prior=prior, label=label, status=r['status'], attempt='합계', run=name, train_images=n, iterations=30000,
+                       iterations_per_image=30000 / n, attempts=len(r['attempts']),
+                       wall_seconds_sum=sum(a.get('seconds') or 0 for a in r['attempts']),
+                       **{k: v for k, v in stats(name, rec.parent / f'attempt{last}/model', 30000, n).items()
+                          if k in ('last_iteration', 'final_gaussians', 'psnr_train_5views', 'psnr_test')})
+            out.append(tot)
     for prior in PRIORS:
         add('campus', prior, '가', f'campus30k_{prior}_s0', TU / 'runs/campus' / f'campus30k_{prior}_s0' / 'receipt.json', len(split['train']))
         cells = json.loads((TU / 'cells/cells.json').read_text())['cells'] if (TU / 'cells/cells.json').exists() else []
