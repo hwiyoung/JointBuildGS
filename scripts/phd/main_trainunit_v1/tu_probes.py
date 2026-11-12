@@ -40,9 +40,12 @@ def define():
     cov1 = {n: coverage(cams[n], np.r_[lo1, z10], np.r_[hi1, z11]) for n in campus['train'] if n not in set(pos1) | set(base_test)}
     vis1 = sorted(n for n, f in cov1.items() if f >= .25)
     images1 = sorted(pos1 + vis1)
+    # addendum 7: probe0 keeps only the B0 training images that are WIDEN0 training images (the 판 다 image rule)
+    assert sha(C / 'addendum7.json') == json.loads((C / 'addendum7.lock.json').read_text())['sha256'], 'addendum 7 changed after lock'
+    images0 = sorted(n for n in base_train if n in set(campus['train']))
     probes = [
         dict(id=0, name='probe0', role='control: 판 다 pipeline on the B0 region', region_min=lo0.tolist(), region_max=hi0.tolist(),
-             area_m2=float(np.prod(hi0 - lo0)), images=base_train, test_images=base_test),
+             area_m2=float(np.prod(hi0 - lo0)), images=images0, test_images=base_test, base_images_dropped_widen0_evaluation=len(base_train) - len(images0)),
         dict(id=1, name='probe1', role='cell-like unit of x5 area centred on B0 (addendum 6)', region_min=lo1.tolist(), region_max=hi1.tolist(),
              area_m2=float(np.prod(hi1 - lo1)), images=images1, test_images=base_test, position_selected=len(pos1), visibility_added=len(vis1),
              base_images_included=len(set(images1) & set(base_train)), projection_box_min=[*lo1.tolist(), float(z10)],
@@ -53,7 +56,7 @@ def define():
              coverage_quantiles_of_candidates=np.quantile(list(cov.values()), [.1, .5, .9]).tolist()),
     ]
     out = TU / 'probes/probes.json'
-    dump(out, dict(at=now(), addendum=5, addendum_sha256=sha(C5), addendum6_sha256=sha(C / 'addendum6.json'), probe2_run=False, base=f'FINALTRAIN {site} ALS', box_source=b['source'],
+    dump(out, dict(at=now(), addendum=5, addendum_sha256=sha(C5), addendum6_sha256=sha(C / 'addendum6.json'), addendum7_sha256=sha(C / 'addendum7.json'), probe2_run=False, base=f'FINALTRAIN {site} ALS', box_source=b['source'],
                    sfm_points_in_region0=int(ins.sum()), probes=probes, scientific_verdict=None))
     for p in probes:
         print('PROBE', p['name'], round(p['area_m2']), len(p['images']), len(p['test_images']), flush=True)

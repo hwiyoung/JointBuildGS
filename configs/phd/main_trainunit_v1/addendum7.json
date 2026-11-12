@@ -1,0 +1,10 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 7,
+  "amends": "addendum 5/6 probe0 image list, before any probe0 training (probe0 maps failed, no probe0 run)",
+  "fact": "32 of the 243 FINALTRAIN B0 training images are WIDEN0 evaluation images; WIDEN0 full MVS has no geometric depth map for them, so the 판 다 map rule (background depth = WIDEN0 MVS) cannot build their maps (FileNotFoundError ...0066_D.JPG.geometric.bin). 판 다 cells never use WIDEN0 evaluation images.",
+  "change": "probe0 training images = FINALTRAIN B0 training images that are WIDEN0 training images (211 of 243), i.e. the 판 다 image rule applied to the B0 image list. Test images unchanged (35).",
+  "also_recorded": "probe1 first try is void: the docker client lost the running container (unexpected EOF) under host memory pressure, the queue started a second attempt on the same GPU, the host guard stopped it; the orphan container was killed at about iteration 900 and the run moved to runs/probes/_void_20261112-1544. The queue now follows the container state and returns a host-guard-stopped probe to the queue (at most 3 times); it starts a probe only when host MemAvailable >= 45 GB.",
+  "unchanged": "probe1 definition (addendum 6) and everything else in addendum 5",
+  "scientific_verdict": null
+}
