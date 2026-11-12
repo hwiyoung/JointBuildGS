@@ -23,7 +23,7 @@ def patches(prior, variants):
             if v == 'base': e['s_P'] = j['s_P']; e['s_M'] = j['s_M']; e['region_all'] = j['region']; e['reason_all'] = j['reason']
         A.append(e)
     keys = set.intersection(*[set(a) for a in A])
-    return {k: np.concatenate([a[k] for a in A]) for k in keys}
+    return {k: np.concatenate([a[k] for a in A], axis=1 if k in ('region_all', 'reason_all') else 0) for k in keys}
 def five_percent(prior, P, variants):
     rows = []; ok = (P['n'] >= 4) & np.isfinite(P['gt_p']) & np.isfinite(P['prior_height_m']) & np.isfinite(P['mvs_mean_m'])
     cell0 = ok & (np.abs(P['prior_height_m'] - P['gt_p']) <= P['tau']) & (np.abs(P['mvs_mean_m'] - P['gt_p']) <= P['tau'])
@@ -162,7 +162,7 @@ def misalignment():
 def main():
     cfg(); T = Timer(); allv = [v for v in SENS if (O/'judge'/f'{v}.json').exists()]
     F5 = []; PR = []; SE = []; PH1 = []; PH2 = []; SD = []; BH = []; ER = []; PRN = []; BDN = []
-    for prior in ['LoD2', 'ALS']:
+    for prior in (sys.argv[1:] or ['LoD2', 'ALS']):
         d = loadz(O/'analysis'/f'gt_{prior}.npz'); P = patches(prior, allv)
         F5.append(five_percent(prior, P, allv)); PR.append(precision(prior, P)); SE.append(sensitivity(prior, P, d, allv))
         a, b, cols, scope, nou = photo_checks(prior, d, P); PH1.append(a); PH2.append(b)

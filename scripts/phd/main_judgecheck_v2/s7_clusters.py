@@ -10,7 +10,7 @@ from shapely.geometry import Polygon, Point
 from shapely import contains_xy
 from shapely.ops import unary_union
 import jc2_judge as J
-from s7_tables import write, area, JUD
+from s7_tables import write, area, JUD, truth_hits
 TYPES = ['윤곽 밖의 새 면', '윤곽 안의 사전 정보 없음', '두 자료가 같은 쪽으로 어긋남', '두 자료가 다른 쪽으로 어긋남', '사전 정보 틀림·영상 깊이 없음', '참값이 지나 본 사전 정보 면', '참값이 관측하지 못한 사전 정보 면']
 def footprints():
     out = {}
@@ -49,7 +49,7 @@ def inner_counts(prior):
     return tot, inn
 def main():
     cfg(); T = Timer(); FP = footprints(); allc = []; tsum = []; whole = []
-    for prior in ['LoD2', 'ALS']:
+    for prior in (sys.argv[1:] or ['LoD2', 'ALS']):
         d = loadz(O/'analysis'/f'gt_{prior}.npz'); PA = patch_arrays(prior); mi = J.VARIANTS.index('method'); paired = d['paired']
         out4 = np.flatnonzero(paired & (d['nine'] >= 4)); rows = []
         gpid = np.full(len(d['src']), -1); look = {s: i for i, s in enumerate(PA['patch_id'])}; gpid[paired] = [look[s] for s in d['patch_id'][paired]]
@@ -74,7 +74,7 @@ def main():
                 elif maj == 5: r['geometry_type'] = TYPES[4]
                 rows.append(r)
         # 참값 없는 패치
-        tot, inn = inner_counts(prior); has = np.zeros(len(PA['patch_id']), bool); has[np.unique(gpid[paired])] = True
+        tot, inn = inner_counts(prior); has = np.zeros(len(PA['patch_id']), bool); has[np.unique(gpid[paired])] = True; has |= truth_hits(prior, PA['patch_id'])
         nog = np.flatnonzero(~has)
         for b in sorted(set(PA['building'][nog])):
             ix = nog[PA['building'][nog] == b]; k, lab = components(PA['centre'][ix])

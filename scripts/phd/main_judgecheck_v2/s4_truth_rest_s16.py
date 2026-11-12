@@ -52,6 +52,8 @@ def main(tile):
     X = np.load(WI/'points'/tile/'gt_xyz.npy').astype(np.float64); core = ((X[:, :2] >= lo) & (X[:, :2] < hi)).all(1)
     uv = X[:, :2] @ BASIS.T; inbox = np.zeros(len(X), bool)
     for (u, v) in BOXES.values(): inbox |= (uv[:, 0] >= u[0]) & (uv[:, 0] <= u[1]) & (uv[:, 1] >= v[0]) & (uv[:, 1] <= v[1])
+    if not len(X) or not core.any():   # 참값 점이 없는 구역(예: 6912_53362): 빈 결과
+        savez(dest, empty=np.array(True)); dump(dest.with_suffix('.json'), dict(at=now(), tile=tile, gt_points=int(len(X)), core=int(core.sum()), rows={}, note='no GT points in tile core', scientific_verdict=None)); print('TRUTH_REST_EMPTY', tile); return
     vert = vertical_points(X); T.mark('vertical')
     Dg = dict(np.load(SURVEY/'derived.npz')); dtm = Dg['dtm'].astype(float)
     E = X[:, 0] + 690953.0; Nn = X[:, 1] + 5336071.0; ix = np.floor((E - 690700.0)/0.5).astype(int); iy = np.floor((Nn - 5335820.0)/0.5).astype(int)

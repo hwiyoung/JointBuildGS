@@ -27,7 +27,7 @@ def main(prior):
     tiles_ = [p.stem.split('__')[0] for p in sorted((O/'geometry_raw').glob(f'*__{prior}.npz'))]; look = {}; PT = {}
     for t in tiles_:
         g = loadz(O/'geometry_raw'/f'{t}__{prior}.npz', ['patch_id', 'centre', 'normal', 'kind', 'surf', 'area', 'building', 'region', 'prior_height_m', 'mvs_mean_m', 'n', 'roof_type'])
-        jb = loadz(O/'judge/base'/f'{t}__{prior}.npz', ['region', 'reason', 'target_h', 'photo_code', 'photo_point'])
+        jb = loadz(O/'judge/base'/f'{t}__{prior}.npz', ['region', 'reason', 'target_h', 'photo_code', 'photo_point']); jb['j_region'] = jb.pop('region'); jb['j_reason'] = jb.pop('reason')
         pl = loadz(O/'place'/f'{t}__{prior}.npz', ['place', 'face']); tx = loadz(O/'texture'/f'{t}__{prior}.npz', ['textureless'])
         g.update(jb); g['place'] = pl['place']; g['face'] = pl['face']; g['textureless'] = tx['textureless']
         for v in SENS:
@@ -76,7 +76,7 @@ def main(prior):
     for t in tiles_:
         m = np.flatnonzero(paired & (pt == t))
         if not len(m): continue
-        g = PT[t]; reg[:, m] = g['region'][:, pi[m]]; why[:, m] = g['reason'][:, pi[m]]
+        g = PT[t]; reg[:, m] = g['j_region'][:, pi[m]]; why[:, m] = g['j_reason'][:, pi[m]]
         for j in range(len(J.VARIANTS)): tdist[j, m] = plane_distance(d['xyz'][m], d['normal'][m], pc[m], pn[m], g['target_h'][j, pi[m]], wall[m])
     d['region_v'] = reg; d['reason_v'] = why; d['target_distance_v'] = tdist
     d['target_ok_v'] = np.abs(tdist) <= tv[None, :]
@@ -94,7 +94,7 @@ def main(prior):
     gid = np.full(N, -1, np.int64); off = {}; base = 0
     for t in tiles_: off[t] = base; base += len(PT[t]['patch_id'])
     gid[paired] = np.array([off[t] for t in pt[paired]]) + pi[paired]
-    Mreg = np.concatenate([PT[t]['region'][J.VARIANTS.index('method')] for t in tiles_]); U = np.concatenate([loadz(O/'geometry/base'/f'{t}__{prior}.npz', ['u_M'])['u_M'] for t in tiles_]); HM = np.concatenate([PT[t]['mvs_mean_m'] for t in tiles_])
+    Mreg = np.concatenate([PT[t]['j_region'][J.VARIANTS.index('method')] for t in tiles_]); U = np.concatenate([loadz(O/'geometry/base'/f'{t}__{prior}.npz', ['u_M'])['u_M'] for t in tiles_]); HM = np.concatenate([PT[t]['mvs_mean_m'] for t in tiles_])
     orc, counts = J.oracle(Mreg, d['case'], gid, U, HM)
     j = J.VARIANTS.index('oracle'); reg[j, paired] = orc[gid[paired]]
     Hp = np.concatenate([PT[t]['prior_height_m'] for t in tiles_]); SP = np.concatenate([loadz(O/'geometry/base'/f'{t}__{prior}.npz', ['sigma_P'])['sigma_P'] for t in tiles_]); SW = float(json.loads((O/'calib/base.json').read_text())['sigma_W_m'])

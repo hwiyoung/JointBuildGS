@@ -106,13 +106,22 @@ def nine_tables(prior, d):
         brow.append(dict(prior=prior, building=b, group=d['group'][bm][0], n=n, outside_n=int(o.sum()), outside_pct=100*o.sum()/n, outside_area_m2=area(d['cell'][o]), prior_wrong_or_none_pct=100*float(np.isin(d['state_P'][bm], [1, 2]).mean())))
     bdf = pd.DataFrame(brow).sort_values('outside_area_m2', ascending=False)
     return pd.DataFrame(rows), mp, bdf
+def truth_hits(prior, patch_ids):
+    """패치마다 캠퍼스 참값 점이 기둥 안에 있는지 (s4_unpaired patchhits, 평가 상자 안 점 포함). 짝 행이 없어도 참값이 있는 패치를 가린다."""
+    tot = {}
+    for p in (O/'truth/unpaired').glob(f'*__{prior}_patchhits.npz'):
+        z = loadz(p)
+        for s, h in zip(z['patch_id'], z['hits']):
+            if h: tot[s] = tot.get(s, 0) + int(h)
+    return np.array([tot.get(s, 0) > 0 for s in patch_ids], bool)
 def nogt(prior):
-    rows = []; mi = J.VARIANTS.index('method'); a = loadz(O/'analysis'/f'gt_{prior}.npz', ['gid', 'paired']); has = np.zeros(int(a['gid'].max()) + 2, bool); has[a['gid'][a['paired']]] = True
-    off = 0; acc = []
+    rows = []; mi = J.VARIANTS.index('method'); a = loadz(O/'analysis'/f'gt_{prior}.npz', ['gid', 'paired']); acc = []
     for p in sorted((O/'geometry_raw').glob(f'*__{prior}.npz')):
-        g = loadz(p, ['kind', 'area', 'patch_id']); j = loadz(O/'judge/base'/p.name, ['region']); n = len(g['kind']); h = has[off:off+n] if off+n <= len(has) else np.r_[has[off:], np.zeros(off+n-len(has), bool)]
-        acc.append(dict(kind=g['kind'], area=g['area'], reg=j['region'][mi], has=h)); off += n
-    A = {k: np.concatenate([x[k] for x in acc]) for k in acc[0]}
+        g = loadz(p, ['kind', 'area', 'patch_id']); j = loadz(O/'judge/base'/p.name, ['region']); acc.append(dict(kind=g['kind'], area=g['area'], reg=j['region'][mi], pid=g['patch_id']))
+    Ntot = sum(len(x['kind']) for x in acc); has = np.zeros(Ntot, bool); has[a['gid'][a['paired']]] = True
+    off = 0
+    for x in acc: n = len(x['kind']); x['has'] = has[off:off + n]; off += n
+    A = {k: np.concatenate([x[k] for x in acc]) for k in acc[0]}; A['has'] = A['has'] | truth_hits(prior, A['pid'])
     for kn, km in ([('지붕', A['kind'] == 1), ('벽', A['kind'] == 2)] if prior == 'LoD2' else [('지붕', A['kind'] == 1)]):
         m = km & ~A['has']; r = dict(prior=prior, surface=kn, patches=int(m.sum()), area_m2=float(A['area'][m].sum()), all_patches=int(km.sum()), share_pct=100*m.sum()/km.sum())
         for j, jn in JUD.items(): r[f'method_{jn}_pct'] = 100*float(A['area'][m & (A['reg'] == j)].sum()/max(A['area'][m].sum(), 1e-9))
@@ -129,12 +138,11 @@ def exp_training(prior, d):
     return pd.DataFrame(rows)
 def main():
     cfg(); T = Timer()
-    for prior in ['LoD2', 'ALS']:
-        d = load(prior); ru = 0
-        for p in (O/'truth/rest').glob('*.npz'):
-            z = loadz(p); k = f'{prior}__unpaired_by_kind'
-            if k in z: ru += int(z[k].sum())
-        cf = confusion(prior, d, ru); write(f'c1_confusion_{prior}', cf, note=f'확인 1 혼동 행렬 ({prior}). 칸: 그 줄 안 비율, 참값 점 수, 그 칸의 목표 맞음 %. 판정 없음 = 짝 패치가 없는 참값 점 수(나머지 건물은 0.1 m 칸으로 솎은 수).',
+    for prior in (sys.argv[1:] or ['LoD2', 'ALS']):
+        d = load(prior); ru = 0   # 나머지 건물: 건물에 딸린(윤곽 안 지붕·땅, 윤곽 1 m 안 벽) 짝 없는 참값 점, 0.1 m 솎은 수 (s4_unpaired)
+        for p in (O/'truth/unpaired').glob('*.json'):
+            ru += int(json.loads(p.read_text()).get('priors', {}).get(prior, {}).get('unpaired_building_related_thinned', 0))
+        cf = confusion(prior, d, ru); write(f'c1_confusion_{prior}', cf, note=f'확인 1 혼동 행렬 ({prior}). 칸: 그 줄 안 비율, 참값 점 수, 그 칸의 목표 맞음 %. 판정 없음 = 짝 패치가 없는 참값 점 수(세 지역 저장 행 + 나머지 건물의 윤곽 안 지붕·땅·윤곽 1 m 안 벽 점, 0.1 m 칸으로 솎은 수).',
                                                   md_rows=lambda x: x[(x.group == '전체') & (x.place == '모든 자리') & (x.surface == ('모두' if prior == 'LoD2' else '지붕')) & (x.definition == '지금 정의')], md_cols=['case', 'judgment', 'n', 'ratio_pct', 'target_ok_pct', 'area_m2', 'small'])
         sm = summary(prior, d); write(f'c1_case_summary_{prior}', sm, note=f'확인 1 경우별 요약 ({prior}): 판마다 목표 맞음 %와 판정 이름 맞음 %(정답 판정 줄 = 패치 다수결 상한).',
                                        md_rows=lambda x: x[(x.group == '전체') & (x.place == '모든 자리') & (x.surface == ('모두' if prior == 'LoD2' else '지붕'))], md_cols=['variant', 'case', 'n', 'target_ok_pct', 'name_ok_pct', 'small'])
