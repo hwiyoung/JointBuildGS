@@ -1,0 +1,117 @@
+{
+ "task_id": "PHD-MAIN-JUDGECHECK-v2",
+ "order": "configs/phd/main_judgecheck_v2/order_v2.txt",
+ "created_at": "2026-11-12T13:50:00+09:00",
+ "scientific_verdict": null,
+ "branch": "exp/judgecheck-v2 (git worktree ../JointBuildGS-wt-judgecheck2, from exp/main-experiment 24a4344b)",
+ "frame": {"local": "EPSG:25832 minus [690953, 5336071, 604] m; ALS z +45.7 m bridge before 604 (WIDEN0-v2)", "crs": "EPSG:25832"},
+ "scope": {
+  "buildings": "W/inputs/lod2_buildings.json (154) with LoD2 patches AND ALS patches in WIDEN0-v2 patch_values (development + holdout/patch_values); LoD2-only buildings excluded",
+  "groups": {"experiment": "buildings of the JUDGEAPPLY-v1 evaluation-range core points of B0_b10, B173nb_b10, R1rep_b10", "rest": "all other in-scope buildings"},
+  "old_split_column_only": "W/building_split.json development / holdout",
+  "search_regions": ["SW", "R1", "R2", "R3E", "R4", "R5", "B0"],
+  "search_region_polygons": "DR/s02/<region>/range.json polygon_local",
+  "building_to_region": "region holding the largest LoD2+ALS patch area of the building (raw_centre XY in polygon); none -> 'none'",
+  "none_region_values": "r, t, tau pooled over all buildings of the seven search regions",
+  "registration": {"ALS": "shift_applied of DR/s52/s03/<region>/ALS/summary.json for the building's region (experiment rule); none region -> 0", "LoD2": "0 (all experiment regions 0)", "patch_centre_used": "WIDEN0 raw_centre + shift (WIDEN0 per-tile registered centre is NOT used)", "ALS_points": "W/inputs/points/<tile>/als.bin classes 2,6, unregistered; ALS normal and LiDAR height are computed at raw_centre (translation invariant)", "MVS_points": "unshifted"},
+  "patches": "WIDEN0-v2 0.25 m patches (development + holdout), patch_id = WIDEN0 patch_id"
+ },
+ "data": {
+  "MVS": "WIDEN0-v2 campus MVS (819 training views, COLMAP geometric depth, depth>0 = valid): points W/holdout/internal/points/<tile>/mvs_a_{xyz,view,key}.npy, depth W/mvs/full/stereo/depth_maps, cameras W/mvs/full/sparse",
+  "MVS_choice_reason": "the only MVS covering every building; JUDGECHECK-v1 used it for buildings outside the experiment regions; order 2.1 names WIDEN0-v2 as MVS depth source. Experiment-site MVS (UNCERT mvs_a from STAGE0 s61) is used only for the current judgments (JUDGEAPPLY/FINALTRAIN files)",
+  "photo_points": "PHOTOCHECK-v1 points (+holdout) roof, WALLPHOTO-v1 points (+holdout) LoD2 wall; missing members -> JUDGEAPPLY 2x2 rule",
+  "images": "p0-audit/data/raw/uav/Images.zip original JPEG, FULL_OPENCV cameras (p0 colmap_input_db_ids/cameras.txt) with WIDEN0 poses",
+  "GT_points": "experiment groups inside evaluation boxes: GTJUDGE-v1 scenes/<site>__<prior>/rows.npz + distances (stored); elsewhere WIDEN0 W/holdout/internal/points/<tile>/gt_xyz.npy (ULS nadir, trees/transients removed, z -0.0438 m), tile core only",
+  "current_judgments": "FINALTRAIN-v1 targets/<site>__<prior>.npz judge_region (JUDGEAPPLY-v1 + 11/4 u_M-missing rule)"
+ },
+ "geometry": {
+  "mvs_cylinder": {"radius_m": {"LoD2_roof": 0.075, "LoD2_wall": 0.125, "ALS_roof": 0.075}, "half_length_m": {"roof": 10, "wall": 5}, "outer_face": {"layer_thickness_m": 0.3, "layer_step_m": 0.05, "layer_share": 0.2, "slab_half_m": 1.0}, "code": "JUDGECHECK-v1 cylinders.cpp via inherited cylinder.py"},
+  "als": {"normal": "JUDGECHECK-v1 geometry.fit_normals (radii 0.5,0.75,1,1.5,2 m; n>=10 and r>=25 sd else 2 m)", "lidar_cylinder_radius_m": 0.75, "prior_height": "mean of LiDAR cylinder points (outer face) along refit normal, NaN if n<4"},
+  "lod2_prior_height_m": 0,
+  "d": "MVS mean height - prior height (m, outside +)",
+  "min_points": 4,
+  "sigma_P": {"ALS": "ALS ring uncertainty u (UNCERT kernel on ALS points, same radius as the variant), no floor", "LoD2_roof_by_roof_type": {"1000": 0.166, "2100": 0.098, "3100": 0.223, "3200": 0.114, "3900": 0.238, "other": 0.11}, "LoD2_wall": 0.144},
+  "ring": {"kernel": "UNCERT-v1 u2_run one_patch (JUDGECHECK-v1 ring_kernel.py copy), config configs/phd/main_uncert_v1/uncert_v1.json defs", "inner_radius_m": 0.5, "base_outer_radius_m": 1.5, "sensitivity_outer_radii_m": [1.0, 3.0], "seed": "WIDEN0 widen0_v2.json split.seed with [tile index, prior set, data, R id {1.0:0,1.5:1,3.0:2}, WIDEN0 patch index]", "reuse": "R1.5 u_mvs / als_u of WIDEN0-v2 reused only where the WIDEN0 centre equals the centre used here; otherwise recomputed", "normal": "WIDEN0 patch normal (ALS: TIN normal, as JUDGEAPPLY ring_missing)", "same_face": "R 1.5 m; inner and ring points kept only when their projection along the patch normal onto the prior surface lands on the same face (section place.faces); fewer than min_inner 5 / min_ring 20 left -> u_M missing rule"},
+  "agreement_for_calibration": "n>=4 and finite d,u_M,sigma_P and |d| <= 1.96*sqrt(u_M^2+sigma_P^2)",
+  "r": "median d of agreement patches per search region x prior x kind (none region: pooled over the seven search regions)",
+  "sigma_W": "ALS roof, every in-scope building with >=100 agreement patches: building median d minus its region r; NMAD (1.4826) of those values; same value for LoD2; reference 0.02138712 m (JUDGEAPPLY-v1)",
+  "L": "z * (sqrt(u_M^2 + sigma_P^2 + sigma_W^2) + |r|), z = 1.96",
+  "geometry_code": {"inside": 0, "outside": 1, "n_lt_4": 2, "unavailable": 9}
+ },
+ "sight": {"rule": "TARGET-v1 addendum 2 r7 test (JUDGEAPPLY-v1 sight.py / JUDGECHECK-v1 sight_reply2.py) on WIDEN0 training depth maps and cameras", "tested": "0<=n5<4 or 0<=n10<4", "free": "roof free10, wall free5", "outcome": "n<4 and free -> remove (3), else missing (4)"},
+ "photo": {
+  "unit": "50 cm photo point (2x2 patches)", "scope": "every photo point with at least one member patch n>=4 (scored once and stored; all variants reuse the stored s_P, s_M)",
+  "prior_plane": "centre + (h_P + r_region)*n, prior slope", "mvs_plane": "MVS points within 0.5 m of the axis, outer face, |t - h_P - dbar| <= 0.3 m, >=20 points, PCA plane + 3 NMAD refit",
+  "selection": "<=60 deg, 20 px margin, occlusion +0.3 m (prior: mesh raycast, MVS: MVS depth), most frontal then most diverse, <=10 views, <3 -> photo shortage",
+  "score": "PHOTOCHECK-v1 4.4 25x25 at 2 cm, single height, trimmed mask only, mean pairwise NCC, float64", "texture": "median over views of masked gray std; both < 5 -> texture-less code",
+  "t": "per search region x prior x kind: area-weighted lower 5 % of s_P of photo points whose members are all inside L (base variant); >5000 -> random 5000 with seed 20261112; t10 recorded; none region pooled",
+  "codes": {"0": "support", "1": "refute", "2": "both low", "3": "both high", "4": "no MVS plane", "5": "piece shortage", "6": "texture-less", "7": "photo shortage", "9": "not scored"},
+  "precedence": "7 > 6 > 4 > 5 > 0-3 (JUDGEAPPLY judgments.py order)",
+  "device": "GPU float64 (JUDGECHECK-v1 photo_score_reply2), CPU if both GPUs busy > 30 min",
+  "image_supply": "original JPEG, 4 GiB process LRU, NumPy hugepage advice off (photo_stream.reply2.lock.json)"
+ },
+ "judgment": {
+  "order": ["n<4 -> sight (remove/missing)", "u_M missing (n>=4, finite heights) -> photo: support keep-prior, refute use-image, else default (11/4)", "|d|<=L -> agree", "|d|>L -> photo: support keep-prior, refute use-image, else default"],
+  "default": {"ALS": 1, "LoD2": 2},
+  "region_codes": {"0": "일치", "1": "사전정보 사용", "2": "영상 깊이 사용", "3": "제거", "4": "결측", "9": "미판정"},
+  "reason_codes": {"0": "사진 지지", "1": "사진 반박", "2": "기본 판정", "9": "해당 없음"},
+  "target": "agree: precision-weighted mean (MVS weight 1/(u_M^2+sigma_W^2), prior 1/sigma_P^2); keep-prior and missing: prior height; use-image: MVS mean height; remove/undecided: no target; r not added",
+  "target_plane": "through centre + target*n, normal n (prior normal)"
+ },
+ "variants": {
+  "method": "base",
+  "prior_only": "n<4 missing, n>=4 keep-prior",
+  "image_only": "n<4 sight, n>=4 use-image",
+  "geometry_only": "n<4 sight; inside L agree; outside L default; u_M missing -> default",
+  "photo_only": "n<4 sight; n>=4 support keep-prior, refute use-image, else default (no geometry check)",
+  "alt_na": "base, but indistinguishable photo results (default) get the opposite: LoD2 keep-prior, ALS use-image",
+  "alt_da": "base; default-judged patches grouped per building and face (LoD2 surf, ALS face of section place), connected within 0.36 m; bordering patches: prior side = keep-prior by photo support or missing, image side = use-image by photo refute; LoD2 default patches -> keep-prior if prior side > image side; ALS default patches -> use-image if image side > prior side (GTJUDGE add2_targets.py 2.1, reversed for ALS)",
+  "oracle": "GTJUDGE majority.decide on base judgments with current-definition cases (tie with case 0 -> agree; single winner 0/1/2/4 -> agree/use-image/keep-prior/missing; else base kept; agree without u_M -> keep-prior; use-image without MVS height -> base)",
+  "rule": "comparison rows only; no variant is selected by its results"
+ },
+ "sensitivity": {
+  "variants": {"ring_1.0": "outer ring 1.0 m (u_M and ALS sigma_P)", "ring_3.0": "outer ring 3.0 m", "z_1.645": "1.96 -> 1.645 in L", "z_2.576": "1.96 -> 2.576 in L", "centre_shift": "|d - r| <= 1.96*sqrt(u_M^2+sigma_P^2+sigma_W^2)", "building_r": "r per building with >=100 agreement patches, else region r", "same_face_ring": "ring 1.5 m, same-face points only"},
+  "recompute_per_variant": "u_M, ALS sigma_P, agreement, r, sigma_W, L, t (stored scores), judgments; place and texture unchanged",
+  "reduction_order_if_late": ["centre_shift", "building_r", "z_1.645/z_2.576", "ring_3.0"], "never_dropped": ["same_face_ring"]
+ },
+ "place": {
+  "circle_radius_m": 1.5, "grid_m": 0.18, "plane": "patch tangent plane (t1, t2)", "occupied": "a prior patch centre (same prior) within 0.18 m of the grid sample in the tangent-plane projection and |normal offset| <= 1.5 m",
+  "classes": {"0": "면 안쪽: every sample occupied by the same face", "1": "면 경계: some sample occupied only by another face of the same building or another building", "2": "건물 가장자리: some sample unoccupied (edge wins over boundary)"},
+  "faces": {"LoD2": "surf", "ALS": "connected components of same-building patches within 0.36 m whose refit normals differ <= 20 deg and centre heights differ <= 0.5 m"},
+  "fixed": "decided once with 1.5 m, unchanged in sensitivity variants"
+ },
+ "texture_less": {"rule": "GTJUDGE-v1 preservation.py: training views whose sightline to the patch centre is within 20 deg of the frozen terrain up (p0 checkpoint 030), projection inside image, PIL grayscale/255 np.gradient norm < 0.02137 (p0 W3 texture_gradient_low_max); texture-less if low views >= half of seen views; no near-nadir view -> unavailable", "photo_texture_column": "photo-score texture strength kept separately"},
+ "truth": {
+  "tau": "RESCORE-v1 3.1: robust_width without trimming (NMAD x 2.5) of DR/s52/s03/<region>/<prior>/residual_samples.npz per search region, LoD2 roof / LoD2 wall / ALS; none region pooled samples of the seven regions; experiment regions must equal B0 27.18/64.25/14.74, R2 24.70/39.23/21.19, R1 85.48/100.55/13.22 cm (else current values)",
+  "tau_assignment": "by the region of the building of the patch the GT point is paired with (roof patch -> roof tau, wall patch -> wall tau); unpaired points use the building region of the nearest patch",
+  "distance": "GTJUDGE-v1 normal_line.measure: rays +-n from the point and four 5 cm tangent offsets, nearest hit within 10 m (roof, ground) / 5 m (wall), signed (+ along n)",
+  "experiment_regions": "stored GTJUDGE rows (xyz, normal, row_kind) and distances/prior.npz, mvs.npz row_s inside the evaluation boxes",
+  "rest": {"gt_points": "WIDEN0 gt_xyz, tile core ownership, excluding points inside the three evaluation boxes of the experiment group", "normals": "AXES71 a1_normals PCA radius 0.5 m (nearest 10 if < 10 neighbours) on the tile GT points (with buffer); roof/ground nz>=0, wall towards the nearest training camera centre", "kind": "wall = s4.vertical_points (0.5 m voxel, >=5 points, PCA |nz|<0.5); ground = non-wall with z - DTM <= 0.5 m (survey derived.npz dtm, 0.5 m grid); roof = other non-wall", "pairing_then_thinning": "0.1 m cells: roof and ground horizontal, wall on the wall plane per LoD2 surface (src.phd.metrics_v3.thin.keep_nearest)", "prior_surface": "LoD2: WIDEN0 prior_tiles lod2_mesh without bottom faces (tri_type != 2); ALS: als_mesh (TIN) with the building region shift", "mvs_surface": "AXES71 mvs_surface.py rule: Open3D ScalableTSDFVolume voxel 0.05 m, truncation 0.25 m, depth_trunc 300 m, WIDEN0 geometric depth > 0 of all 819 training views, per tile core + 12 m box, no post-processing"},
+  "state": {"right": "|s| <= tau", "wrong": "|s| > tau", "none": "no hit within range"},
+  "nine": {"order": "prior right/wrong/none x image right/wrong/none = 0..8", "names": ["두 자료 모두 유효", "영상 깊이 오류", "영상 깊이 결측", "사전정보 오류", "밖1 둘 다 틀림", "밖2 사전 정보 틀림·영상 없음", "밖3 사전 정보 없음·영상 맞음", "밖4 사전 정보 없음·영상 틀림", "밖5 둘 다 없음"]},
+  "current_cases": "GTJUDGE normal_line.cases: 0 both valid, 1 prior error (includes 밖3), 2 image depth error, 4 image depth missing, 3 others",
+  "pairing": "RESCORE column rule: square cross-section +-0.125 m in (t1, t2) around the patch centre, axis through centre + h_P*n, length 10 m roof / 5 m wall; GT wall points pair with wall patches only, roof/ground points with roof patches only; nearest |axial offset| wins; unpaired -> 판정 없음",
+  "target_correct": "normal-line distance from the GT point along its normal to the target plane of its patch within +-10/5 m and |.| <= tau; no target -> wrong",
+  "area": "0.25 m cells (roof/ground horizontal, wall on the wall plane) x 0.0625 m2",
+  "small": {"cell_points": 1000, "building_cell_points": 200}
+ },
+ "analysis": {
+  "true_error": "four-case GT point whose name differs from the matching judgment and whose target is outside tau",
+  "matching": {"0": 0, "1": 2, "2": 1, "4": 4},
+  "error_rules": ["inside-L agree", "refute", "support", "default (both low, both high, no MVS plane, piece shortage, texture-less, photo shortage)", "u_M missing", "sight (missing/remove)"],
+  "mixed_patch_flag": "majority case of the patch differs from the point case",
+  "judgment_made_error": "base target outside tau while prior-only or image-only target inside tau",
+  "judgment_saved": "base target inside tau while both baselines outside tau",
+  "five_percent_check": "patch case (JUDGEAPPLY 5.2 cell from patch-level GT position and tau) both valid; area outside L with z 1.645/1.96/2.576",
+  "precision_check": "(data height - GT position) / precision, NMAD after median; MVS sqrt(u_M^2+sigma_W^2), ALS sigma_P and sqrt(sigma_P^2+sigma_W^2), LoD2 per roof type and wall",
+  "patch_gt_position": "UNCERT GT plane kernel (data gt) on the GT points; experiment regions JUDGEAPPLY gt_p",
+  "building_misalignment": "agreement patches: building median d minus region r; list |.| > 2 sigma_W",
+  "clusters": "outside-four-case GT points connected within 0.6 m (and prior patches without GT); < 1 m2 counted only",
+  "geometry_types": ["윤곽 밖의 새 면", "윤곽 안의 사전 정보 없음", "두 자료가 같은 쪽으로 어긋남", "두 자료가 다른 쪽으로 어긋남", "사전 정보 틀림·영상 깊이 없음", "참값이 지나 본 사전 정보 면", "참값이 관측하지 못한 사전 정보 면"],
+  "whole_building_changed": "more than half of the building GT points have prior wrong or none",
+  "no_cause_names": true
+ },
+ "figures": {"dpi": 300, "ortho": "drone LiDAR colour (p0 TUM_Downtown_ULS_20241217_nadir.laz), 0.25 m grid, highest point colour, same colours for all buildings", "selection": "figure 1: three experiment scenes + six rest buildings (top three true-error area, top three outside-four-case area, next on overlap); figure 5: largest precision residual 0.6 m clusters, two boundary + two edge per prior; figure 6: 20 largest clusters per prior (<=2 per building) + largest remaining cluster per geometry type + campus map; figure 7: per prior 4 wrong support, 4 wrong refute, 2 texture-less both high, 2 image-depth-error both low (largest area first)", "json_per_figure": true},
+ "resources": {"cpu": "nice -n 19, container <= 32 GB, no new process when host memory use > 80 %", "gpu": "free GPU by nvidia-smi; both busy > 30 min -> same computation on CPU", "priority": "PHD-MAIN-TRAINERR-v1 first; TRAINUNIT files and processes untouched"},
+ "seed": 20261112
+}
