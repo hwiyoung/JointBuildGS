@@ -138,6 +138,26 @@ def figures():
             del S
     bprogress('일 나 단면 그림')
 
+def radii():
+    """Reference only (outside the order's 0.2 m rule; purpose: show whether the 0.2 m '없음' comes from large Gaussians centred farther away; no criterion):
+    share of spots with >= 1 centre (opacity >= 0.1) within 0.2/0.5/1/2 m, and the Gaussians inside the annex_under box."""
+    c = bcfg(); rows, box = [], []; bx = c['places']['annex_under']
+    for arm in ARMS:
+        z = loadz(A2O/'points'/f'na_{arm}.npz')
+        for stem in ['B0_b10__LoD2', 'B0_b10__ALS', 'R1rep_b10__ALS']:
+            S = Snap(stem, arm)
+            for nm in [n for n in SETS if STEM_OF[n] == stem]:
+                for side, key in [('spot', f'{nm}__spot'), ('gt', f'{nm}__gt_spot')]:
+                    P = z[key].astype('f8'); P = P[np.isfinite(P).all(1)]; r = dict(arm=arm, set=nm, side='틀린 면 자리' if side == 'spot' and nm.endswith(('behind', 'under', 'wrong')) else ('그 점의 자리' if side == 'spot' else '참값 면 자리'), spots=len(P))
+                    for rad in [0.2, 0.5, 1.0, 2.0]: r[f'within_{rad}m_pct'] = pct([len(q) > 0 for q in S.tree.query_ball_point(P, rad, workers=8)]) if len(P) else None
+                    rows.append(r)
+            if stem == 'B0_b10__ALS':
+                x = S.xyz; m = (x[:, 0] >= bx['x'][0]) & (x[:, 0] <= bx['x'][1]) & (x[:, 1] >= bx['y'][0]) & (x[:, 1] <= bx['y'][1]) & (x[:, 2] >= -46) & (x[:, 2] <= -30)
+                box.append(dict(arm=arm, box='annex_under x 86-98, y -1-7, z -46 to -30', gaussians=int(m.sum()), opacity_ge_0p1=int((m & (S.opacity >= .1)).sum()), **{f'size_m_{k}': v for k, v in qs(S.size[m]).items()},
+                                bound=int((m & (S.tag == 1)).sum()), released=int((m & (S.tag == 2)).sum()), background=int((m & (S.tag == 0)).sum())))
+            del S
+    btable('na_reference_radii', rows); btable('na_reference_annex_box', box); print('NA_RADII', len(rows), flush=True)
+
 if __name__ == '__main__':
     a = sys.argv[1:]
-    {'sets': lambda: sets(a[1]), 'tables': tables, 'figures': figures}[a[0]]()
+    {'sets': lambda: sets(a[1]), 'tables': tables, 'figures': figures, 'radii': radii}[a[0]]()
