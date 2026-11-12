@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-12T12:40:38.746280+09:00",
+  "rule": "Concept figure draft (2026-11-12): for reviewers who do not know Gaussian splatting. One real training camera (DJI_20241217091247_0146_D) in every panel,\nso every row shows the same pixels. CPU, reads concept_prep.py / concept_mesh.py / renders outputs only.\n  A (how it learns, this run): columns = input, 0, 300, 1,000, 2,000, 10,000, 30,000 iterations; rows =\n     1 discs: the Gaussians that are the per-pixel top contributor somewhere in the frame, drawn as their 1-sigma ellipse filled with the SH-degree-0 colour,\n       far first, alpha = opacity (floor 0.15); 2 render (r27 renderer, renders/<state>/train1_rgb.png) with PSNR to the photo;\n     3 render depth minus the TARGET depth map of this camera (only where the target has weight > 0 and render alpha > 0.5);\n     4 mesh (TSDF of the 203 real views, gtj pipeline) ray-cast from the camera, grey headlight shading.\n  B (why, 30,000 iterations, the same camera): image-only 2DGS, prior-first GeoGS (ALS), this method; rows = render with PSNR, mesh coloured where the\n     mesh face is farther than TAU from the GT dense reference (GT for colouring only, red = above, blue = below).\nscientific_verdict: null",
+  "crop_a": [
+    520,
+    20,
+    760,
+    260
+  ],
+  "crop_b": [
+    440,
+    0,
+    800,
+    741
+  ],
+  "tau_m": 0.212,
+  "scientific_verdict": null,
+  "B": [
+    {
+      "column": "사진만 쓴 2DGS",
+      "psnr": 24.907104995980287,
+      "mesh_pixels_in_crop": 218727,
+      "within_tau_pct": 46.16942581391415
+    },
+    {
+      "column": "사전 정보를 미리 믿는 GeoGS (ALS)",
+      "psnr": 25.314462489655224,
+      "mesh_pixels_in_crop": 211621,
+      "within_tau_pct": 61.393718014752785
+    },
+    {
+      "column": "본 방법",
+      "psnr": 25.833104727352463,
+      "mesh_pixels_in_crop": 218451,
+      "within_tau_pct": 89.89613231342499
+    }
+  ]
+}
