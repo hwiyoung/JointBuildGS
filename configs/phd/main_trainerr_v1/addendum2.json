@@ -1,0 +1,97 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1",
+ "addendum": 2,
+ "scientific_verdict": null,
+ "order": "docs/experiments/phd/main_trainerr_v1/addendum2/덧붙임2_발주문.md",
+ "training": false,
+ "folders": {"docs": "docs/experiments/phd/main_trainerr_v1/addendum2/", "payload": "PH/main_trainerr_v1/PHD-MAIN-TRAINERR-v1/addendum2/", "tables": "docs/experiments/phd/main_trainerr_v1/addendum2/tables/", "figures": "docs/experiments/phd/main_trainerr_v1/addendum2/figures/", "scripts": "scripts/phd/main_trainerr_v1/addendum2/", "configs": "configs/phd/main_trainerr_v1/addendum2.json (+ .lock.json)"},
+ "folder_note": "order 1.1 allows only v1-folder/addendum2/; order 6 'tables/addendum2/' is read relative to it (same as addendum 1). The config path is the one the order names (1.3).",
+ "places": {
+  "inherit": "configs/phd/main_trainerr_v1/addendum1.json places (south_wall, long_wall with the fitted long-wall shift of addendum1 long_wall_fit.json, annex_roof_edge, back_wall_bottom), unchanged",
+  "annex_under": {"stem": "B0_b10__ALS", "x": [86.0, 98.0], "y": [-1.0, 7.0], "rule": "trained result samples of the arm (own FINALTRAIN_30000, gt A1) with x, y in the box, result case_id 2, eligible_new, finite s_m and |s_m| > 1.0 m (s_m = stored result-to-reference normal distance)"}
+ },
+ "common": {
+  "model": "arm 30000 model: own FINALTRAIN ft_<prior>_s0 attempt1, gt GTJUDGE gt_<prior>_s0 (B0_b10__LoD2 attempt2, others attempt1); per-Gaussian fields from target_monitor/snapshot_30000.npz (same rows and values as point_cloud/iteration_30000/point_cloud.ply: xyz equal, sigmoid(opacity) equal; checked for B0_b10__LoD2 both arms)",
+  "spot_gaussians": {"radius_m": 0.2, "distance": "3D distance from the Gaussian centre to the spot", "opacity_min": 0.1},
+  "states": {"same_patch": "target_tag 1 and bound patch (patch_ids[target_index]) == the point's column patch", "other_patch": "target_tag 1 and another patch", "released": "target_tag 2", "background": "target_tag 0", "note": "v1 3-가/3-나/3-다/3-라"},
+  "column_patch": "GT rows: rows.npz row_owner -> JUDGEAPPLY core_points source_index (target row); result samples: s0_sets.columns on the stored result xyz (A1: GTJUDGE distances/A1_samples.npz owner); kept only when the target row is a valid patch (valid_patch)",
+  "born_kind": {"origin": "snapshot origin 1 = patch, 0 = background", "seed_or_child": "seed = rows before the first row whose init_id does not increase (original rows stay first and in init order; densification appends); child = the rest",
+                "validation": "record runs (TRAINERR r28 trainlog states 30000, true born_at): all seeds precede all children in full index order and the prefix length equals the true seed count (B0 LoD2 own 5712 = 5712)"},
+  "bound_target": {"distance": "h = (x - patch_anchor[target_index]) . patch_normal[target_index]", "band": "1.96 x patch_sigma[target_index] (jbgs_target_r6.project_bounds, normal_projection limit)"},
+  "size": "max of the two activated scales",
+  "visibility": "not used (order 0.2); work 다 uses only 'inside the image' (no occlusion)",
+  "judgment_names": {"0": "일치", "1": "보존", "2": "보정", "3": "빈 공간 보정", "4": "결측", "9": "셀 수 없음", "-1": "패치 없음"},
+  "judgment_source": "targets judge_region of the column patch before validity filtering (own: FINALTRAIN targets/<stem>.npz, gt: GTJUDGE targets_gt/<stem>.npz)",
+  "case_names": {"0": "두 자료 모두 유효", "1": "사전정보 오류", "2": "영상 깊이 오류", "3": "둘 다 틀림", "4": "영상 깊이 결측"},
+  "patch_case": "modal stage1 case_id of the patch's GT rows (ties: smaller case, addendum1 rule); no GT rows -> -1 '없음'",
+  "seed": 20261112
+ },
+ "work_ga": {
+  "scenes": ["B0_b10__ALS", "B0_b10__LoD2", "B173nb_b10__ALS", "B173nb_b10__LoD2", "R1rep_b10__ALS", "R1rep_b10__LoD2"],
+  "arms": {"own": "six", "gt": "five (B173nb_b10__LoD2: no A1 run)"},
+  "maps": "training target maps the run read (jbgs_target.py maps: own FINALTRAIN stage1/<stem>/maps, gt GTJUDGE stage1/<stem>/maps; keys depth, sigma, weight, owner; 1024 x 741 training camera K and W2C from maps/index.json)",
+  "target_pixels": "owner >= 0; target depth = maps depth there (exact target-disc camera depth, prepare_maps_r7.draw)",
+  "image_depth": {"before_mask": "STAGE0 fork_inputs/s61/<site>/maps/mvs/<view>.npy", "after_mask": "same where finite, > 0 and conf > 0 (fork_inputs maps/conf) = the rule prepare_inputs uses to put MVS depth into background pixels"},
+  "classes": {"front": "image depth < target depth - 1.0 m", "same": "|image depth - target depth| <= 1.0 m", "behind": "image depth > target depth + 1.0 m (order: 함께 적는다)", "none": "image depth not finite or <= 0", "image_depth": "before mask"},
+  "split": "scene x arm x patch case; B0_b10__LoD2 also by place: south_wall / long_wall = patches whose target centre lies in the addendum1 zone with |d| <= 1 m (addendum1 4.4 rule), other = the rest",
+  "patch_front_bins": {"value": "front pixels / target pixels of the patch over all training views (patches with no target pixel excluded and counted)", "edges": "[0], (0, 0.1], (0.1, 0.3], (0.3, 0.6], (0.6, 1]",
+                       "outcome": "per bin: trained wrong result point share = sum patch_trained_far / sum patch_trained_n, target share the same with patch_target_* (addendum1 work 라 ra/<stem>__<arm>.npz, order addendum1 6.3)"},
+  "patch_values_check": "applied views and supervision per patch recomputed from the same maps and compared with addendum1 ra patch_applied_views / patch_supervision",
+  "qualitative": {
+   "stem": "B0_b10__LoD2",
+   "images": "DJI_20241217094933_0013_D, DJI_20241217093905_0026_D and the three training images with most target pixels owned by south-wall patches in the own arm maps (excluding the two; ties smaller name); the gt arm's top three are reported",
+   "camera_crop": "addendum1 work 가: full-resolution FULL_OPENCV camera, GTJUDGE addendum9 undistort_crop to 1600 x 1280 pinhole, crop = bounds_crop around the south-wall zone corners (place_corners south_wall) projected with the full camera",
+   "map_sampling": "each output pixel ray (crop pinhole) -> training camera of the map (map K, W2C rotation; rotation difference to the full camera reported) -> pixel floor(u + 0.5) (v1 rule); nearest sample, no interpolation",
+   "panels": {"원본": "photo", "목표깊이": "maps depth at owner >= 0 (target pixels only)", "영상깊이_전": "raw MVS depth", "영상깊이_후": "MVS depth after the conf mask", "출처": "owner patch kind (LoD2 wall kind 2 / roof) x patch case colour; MVS background pixel grey; no target dark",
+              "차이": "target depth - raw MVS depth, diverging -3..+3 m; target pixel without MVS depth #FFD700; no target white"},
+   "depth_colour": "same colour range for the three depth panels of one image: 2-98 % of the target depths inside the crop",
+   "arms": "target-dependent panels (목표깊이, 출처, 차이) for own and gt; photo and MVS panels once",
+   "text_in_figure": false
+  }
+ },
+ "work_na": {
+  "sets": {
+   "south_behind": {"stem": "B0_b10__LoD2", "rule": "addendum1 4.2: trained result samples in the south-wall zone, eligible_new, not within tau, d < -0.64"},
+   "south_face": {"stem": "B0_b10__LoD2", "rule": "trained result samples in the south-wall zone, eligible_new, within tau (control)"},
+   "long_face": {"stem": "B0_b10__LoD2", "rule": "trained result samples in the long-wall zone (fitted shift), eligible_new, within tau (control)"},
+   "annex_under": {"stem": "B0_b10__ALS", "rule": "places.annex_under"},
+   "annex_control": {"stem": "B0_b10__ALS", "rule": "trained result samples with case_id 2, eligible_new, within tau, whole scene (control)"},
+   "edge_wrong": {"stem": "B0_b10__LoD2", "rule": "v1 sets c1_<arm>_lost: spot = X + s n (trained_s_m; X + s n lies on the trained mesh, median 0.02-0.03 m); no finite s -> '면 없음' (counted, no spot)"},
+   "edge_control": {"stem": "B0_b10__LoD2", "rule": "v1 sets c1_<arm>_control, spot = X + s n"},
+   "floor_wrong": {"stem": "R1rep_b10__ALS", "rule": "v1 sets c2_<arm>_lost, spot = X + s n"},
+   "floor_control": {"stem": "R1rep_b10__ALS", "rule": "v1 sets c2_<arm>_control, spot = X + s n"}
+  },
+  "max_points": 50000,
+  "gt_spot": "nearest GT reference row (addendum11 final_data reference__xyz of the stem) to the spot; for edge/floor sets the lost/control GT point itself; gaussians within 0.2 m of that row (same rules)",
+  "values": "state distribution by count and by opacity sum, share of spots with no Gaussian, opacity and size quantiles (10/25/50/75/90), born kind, bound target |h| and band, the same for the GT spot; distance spot -> GT spot",
+  "figures": {
+   "south": {"stem": "B0_b10__LoD2", "horizontal": "z in [-38, -34.5], (a, d) with a in [0, 20], d in [-5, 2]; mesh lines cut at z = -36.25", "vertical": "a = 7.6 and 13.5 (slab +/- 0.25 m), (d, z) with d in [-5, 2], z in [-44, -24]",
+             "colours": "bound to a south-wall patch (addendum1 4.4 zone rule), bound to another patch, released, background; marker size by opacity; GT rows grey, target mesh and trained mesh section lines"},
+   "annex": {"stem": "B0_b10__ALS", "vertical": "y = 1.7 +/- 0.25 m (through the addendum1 annex_roof_edge centre), x in [84, 100], z in [-44, -31]", "colours": "bound to a patch whose target lies in the annex_under box, bound to another patch, released, background"},
+   "gaussians_drawn": "opacity >= 0.1 inside the slab", "arms": "own and gt"
+  }
+ },
+ "work_da": {
+  "stem": "B0_b10__ALS",
+  "points": "annex_under of the own arm (all points)",
+  "inside": "projects inside the full-resolution image with camera z > 0 (no occlusion test; recorded in every json)",
+  "groups": {"수직에 가까움": "angle between point-to-camera direction and the stored result normal <= 30 deg (addendum1 facing rule)", "비스듬": "> 30 deg"},
+  "select": "per group the training image with most inside points; ties smaller name",
+  "crop": "bounds_crop around the projections of the box: annex_under x, y bounding box +/- 5 m, z from the points' min to their max + 4 m (the roof is 2.6-3.8 m above)",
+  "panels": {"원본": "photo", "점": "annex_under points of the arm (#D62728) drawn when inside", "결과": "trained mesh, addendum6 palette", "목표": "target mesh, addendum6 palette", "렌더": "arm 30000 model RGB render at the crop pinhole camera (1600 x 1280), inherited renderer (te_render), model cropped to the views box, black background"},
+  "arms": "own and gt (same two images)"
+ },
+ "work_ra": {
+  "scenes": ["B0_b10__ALS", "B0_b10__LoD2", "B173nb_b10__ALS", "B173nb_b10__LoD2", "R1rep_b10__ALS", "R1rep_b10__LoD2"],
+  "arms": {"own": "six", "gt": "five"},
+  "points": "addendum11 final_data reference rows (eligible) of the stem; target within = reference__<judgment_mesh|gt_judgment_mesh>__within_tau1 (addendum11), trained within = own reference__FINALTRAIN_30000__within_tau1 (addendum11), gt reference__A1__within_tau1 (addendum12 distance_A1); > 300000 -> random 300000 (seed 20261112)",
+  "groups": {"지킴": "target in, trained in", "잃음": "target in, trained out", "고침": "target out, trained in", "둘 다 틀림": "target out, trained out"},
+  "values": {"judgment": "common.judgment_source", "target_distance": "(X - target[patch]) . normal[patch] of the valid column patch", "applied_views": "patch target applied views (0.3; maps owner)", "supervision": "sum of the patch's map weights / patch area (0.3)",
+             "bound": "count of Gaussians bound to the patch at 30000, max opacity, initial patch seeds (seeds.npz origin 1, patch)", "gt_spot": "Gaussians within 0.2 m of the point (common rules): state counts, opacity max and sum, none", "mvs_within": "addendum11 reference__mvs__within_tau1"},
+  "applied_view_bins": "quintile edges of the points' patch applied views pooled over all scenes and arms (ties merged); points without a valid patch their own bin",
+  "comparisons": ["case 1: 고침 vs 둘 다 틀림", "case 2 and case 4: 잃음 vs 지킴"],
+  "figures": "per scene x arm top view, the four groups coloured (지킴 grey, 잃음 blue, 고침 green, 둘 다 틀림 red)"
+ },
+ "points_files": "npz per work in the payload addendum2/points/; > 200 MB -> random subsample (recorded)",
+ "commits": "only addendum2 paths: configs/phd/main_trainerr_v1/addendum2.json + lock, scripts/phd/main_trainerr_v1/addendum2/, docs/experiments/phd/main_trainerr_v1/addendum2/"
+}
