@@ -1,0 +1,90 @@
+{
+  "rows": [
+    {
+      "key": "base_s0",
+      "label": "기준 B0 ALS 씨앗 0",
+      "late_iteration": 15000,
+      "prior_seeds": 36156,
+      "prior_lineage_late": 131976,
+      "prior_lineage_growth": 52106,
+      "share_prior_lineage_late_in_top1pct_families": 0.7232375583439413,
+      "largest_family": 15288,
+      "families_ge_100": 114,
+      "families_ge_1000": 16,
+      "background_lineage_late": 2253019,
+      "background_lineage_growth": 1300698
+    },
+    {
+      "key": "probe0",
+      "label": "probe0 (다 입력, B0 상자)",
+      "late_iteration": 15000,
+      "prior_seeds": 37628,
+      "prior_lineage_late": 112788,
+      "prior_lineage_growth": 34809,
+      "share_prior_lineage_late_in_top1pct_families": 0.6140458204773558,
+      "largest_family": 3813,
+      "families_ge_100": 176,
+      "families_ge_1000": 9,
+      "background_lineage_late": 3034102,
+      "background_lineage_growth": 2063811
+    },
+    {
+      "key": "probe1",
+      "label": "probe1 (다 입력, 넓이 ×5)",
+      "late_iteration": 15000,
+      "prior_seeds": 98050,
+      "prior_lineage_late": 492217,
+      "prior_lineage_growth": 167199,
+      "share_prior_lineage_late_in_top1pct_families": 0.5406599121931993,
+      "largest_family": 11034,
+      "families_ge_100": 905,
+      "families_ge_1000": 19,
+      "background_lineage_late": 2634984,
+      "background_lineage_growth": 1423300
+    },
+    {
+      "key": "cell0",
+      "label": "다 칸 0",
+      "late_iteration": 13200,
+      "prior_seeds": 170979,
+      "prior_lineage_late": 4305851,
+      "prior_lineage_growth": 3646924,
+      "share_prior_lineage_late_in_top1pct_families": 0.9194890858973058,
+      "largest_family": 3256282,
+      "families_ge_100": 1565,
+      "families_ge_1000": 77,
+      "background_lineage_late": 1613628,
+      "background_lineage_growth": 488580
+    },
+    {
+      "key": "cell2",
+      "label": "다 칸 2",
+      "late_iteration": 15000,
+      "prior_seeds": 245493,
+      "prior_lineage_late": 3444382,
+      "prior_lineage_growth": 2993163,
+      "share_prior_lineage_late_in_top1pct_families": 0.9058310024846257,
+      "largest_family": 2433186,
+      "families_ge_100": 1539,
+      "families_ge_1000": 69,
+      "background_lineage_late": 2253078,
+      "background_lineage_growth": 1314823
+    },
+    {
+      "key": "cell3",
+      "label": "다 칸 3",
+      "late_iteration": 10600,
+      "prior_seeds": 295444,
+      "prior_lineage_late": 2465636,
+      "prior_lineage_growth": 1058803,
+      "share_prior_lineage_late_in_top1pct_families": 0.6623001124253539,
+      "largest_family": 447163,
+      "families_ge_100": 3696,
+      "families_ge_1000": 140,
+      "background_lineage_late": 2685158,
+      "background_lineage_growth": 898485
+    }
+  ],
+  "note": "prior seed families (init_id) between the saved 7,000 state and the last saved state; no training, no GT",
+  "scientific_verdict": null
+}
