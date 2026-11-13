@@ -424,5 +424,37 @@ def summary():
     write('roof_summary', rows, 'cause-check runs side by side: extent used, counts, largest seed family of any lineage at the last saved state and its signed distance to the nearest unit edge (negative = outside the unit; cells: expanded bounds); no GT')
 
 
+def elongation():
+    """CityGaussianV2 (ICLR 2025) reports that degenerate, highly elongated 2D Gaussians accumulate large view-space gradients and
+    drive the count explosion in parallel training. Here: elongation rate (smaller / larger scale axis) of the largest family of
+    each run against the rest of the run, at the last saved state."""
+    from tu_cause import ply, state
+    cfg()
+    S = {r['run']: r for r in json.loads((D / 'tables/roof_summary.json').read_text())['rows']}
+    R = {r['key']: r for r in cause_runs()}
+    paths = {}
+    for k in ['base_s0', 'probe0', 'probe1', 'cell0', 'cell2', 'cell3']:
+        r = R[k]
+        paths[k] = state(r.get('late_att', r['atts'][-1]) / 'model', r['late'])
+    for e in ['probe3', 'probe3own', 'probe4']:
+        att, _ = monitor_rows(e)
+        paths[e] = state(att[-1] / 'model', S[e]['last_iteration'])
+    rows = []
+    for k, p in paths.items():
+        l = ply(p, ('scale_0', 'scale_1', 'init_id'))
+        s0, s1 = np.exp(l['scale_0']), np.exp(l['scale_1'])
+        el = np.minimum(s0, s1) / np.maximum(s0, s1)
+        cnt = np.bincount(l['init_id'][l['init_id'] >= 0])
+        i = int(np.argmax(cnt))
+        fam = l['init_id'] == i
+        for name, m in [('1위 계보', fam), ('나머지', ~fam)]:
+            e_ = el[m]
+            rows.append(dict(run=k, group=name, gaussians=int(m.sum()), elongation_p10_p50_p90=[float(v) for v in np.quantile(e_, [.1, .5, .9])],
+                             share_elongation_lt_0p1=float((e_ < .1).mean()), share_elongation_lt_0p02=float((e_ < .02).mean()),
+                             min_scale_m_p50=float(np.median(np.minimum(s0, s1)[m])), max_scale_m_p50=float(np.median(np.maximum(s0, s1)[m]))))
+        print('EL', k, i, int(fam.sum()), [round(v, 3) for v in rows[-2]['elongation_p10_p50_p90']], [round(v, 3) for v in rows[-1]['elongation_p10_p50_p90']], flush=True)
+    write('roof_elongation', rows, 'elongation rate (smaller/larger scale axis) of the largest family vs the rest, last saved state of each run; CityGaussianV2 elongation-filter check; no GT')
+
+
 if __name__ == '__main__':
-    dict(images=images, prior=prior, monitor=monitor, families=families, where=where, summary=summary)[sys.argv[1]](*sys.argv[2:])
+    dict(images=images, prior=prior, monitor=monitor, families=families, where=where, summary=summary, elongation=elongation)[sys.argv[1]](*sys.argv[2:])
