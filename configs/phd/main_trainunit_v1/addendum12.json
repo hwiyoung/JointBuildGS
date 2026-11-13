@@ -1,0 +1,24 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 12,
+  "instruction": "user, 2026-11-13 KST: '그래 그러자' (reply to the recommendation: test the CityGaussianV2 elongation filter alone first, on the runs that blew up and on the FINALTRAIN B0 baseline)",
+  "basis": {
+    "literature": "CityGaussianV2 (Liu et al., ICLR 2025, arXiv 2411.00771 v2, sec. 3.2): degenerate, highly elongated 2D Gaussians project to tiny points from distant views, accumulate large view-space gradients and trigger an exponential Gaussian-count increase and OOM in block-wise parallel tuning; surfels whose elongation rate min(s_u, s_v) / max(s_u, s_v) is below a threshold are excluded from cloning and splitting.",
+    "code": "github.com/Linketic/CityGaussian main, internal/density_controllers/citygsv2_density_controller.py (last commit 3041bf5a, 2025-01-10): axis_ratio_threshold = 0.01 (dataclass default, not overridden by any configs/citygsv2_*.yaml); a Gaussian is eligible for clone and for split only if axis_ratio > 0.01.",
+    "measurement": "tables/roof_elongation.* (commit f2959935): the largest family of every run that ran away is needle-shaped (median elongation 0.0003-0.0014, 93-100 % below 0.02), the rest of each run has median 0.13-0.27."
+  },
+  "filter": "In tu_train_entry.py (no change to the fork files): before each unchanged GaussianModel.densify_and_prune call, rows whose elongation rate min(scale)/max(scale) <= 0.01 get xyz_gradient_accum = 0, so grads = accum/denom is 0 for them and neither the clone nor the split selection (both use grads >= densify_grad_threshold) can pick them. Pruning is unchanged (it does not read the gradient). xyz_gradient_accum is reset for all rows by densification_postfix right after, as before. Nothing else reads it.",
+  "threshold": "0.01, taken from the CityGaussianV2 code, not from our measurements",
+  "runs": {
+    "probe3ef_ALS_s0": "probe3 unit (addendum 8), scene extent fixed to 185.84960770264462 m (addendum 9), filter on, stop right after iteration 15,000",
+    "probe4ef_ALS_s0": "probe4 unit, scene extent fixed to 199.23552905804456 m, filter on, stop right after 15,000",
+    "cell0ef_ALS_s0": "판 다 cell0 unit unchanged (scene, split, stage1 targets and seeds as cells_ALS_s0_cell0; its own fork extent), filter on, stop right after 15,000 (end of densification; the original cell0 stopped on GPU memory at 13,800)",
+    "B0ef_ALS_s0": "FINALTRAIN B0_b10 ALS inputs unchanged (as seed1_B0_b10_ALS but seed 0, i.e. the FINALTRAIN baseline run), filter on, full 30,000 iterations; FINALTRAIN count rule enforced as in FINALTRAIN; then the unchanged GTJUDGE post-processing (crop, render, mesh, score) as the seed-1 repeat, family label ef_s0"
+  },
+  "monitor": "the read-only family monitor of addendum 8 on all four runs, plus per group the count of needle rows (elongation <= 0.01) and the count of gradient-selected rows excluded by the filter; watched families: probe3/probe4 watch.json, cell0 top-3 families of the original run (init 124654, 123105, 130744), B0 base top prior families (17310, 15779, 17176) and its largest background family (45212)",
+  "measured": "Gaussian count every 100 iterations, peak GPU memory, largest family and its needle share, status; for B0ef the GTJUDGE scores against the FINALTRAIN seed-0 baseline and the seed-1 repeat (seed spread)",
+  "pass_marks_not_set": "no pass/fail threshold is set here; readings are reported against the original runs and the seed spread",
+  "resources": "a run starts only on a GPU with no other compute process (TRAINERR priority) and with host MemAvailable >= 45 GB; container memory 48 GB (B0ef 40 GB as the seed-1 runs); host guard stops this task's container below 20 GB and returns the run to the queue (at most 3 times); GPU memory stop is a result; execution error gets one retry",
+  "unchanged": "everything else: fork r23, renderer, train_args (FINALTRAIN r8 values, seed 0, --iterations 30000 schedule), pixel-weight rule, inputs",
+  "scientific_verdict": null
+}

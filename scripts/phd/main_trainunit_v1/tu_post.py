@@ -6,7 +6,7 @@ GTJUDGE scripts run unchanged with /gtjudge = PH/main_trainunit_v1/.../gt, a mir
   python3 tu_post.py mirror
   python3 tu_post.py run <run_key>            # crop -> render (GPU when free memory allows) -> mesh -> score, per site
   python3 tu_post.py watch                    # loop over control/post_requests
-run_key: seed1_<site>_<prior> | campus30k_<prior>_s0 | cells_<prior>_s0
+run_key: seed1_<site>_<prior> | campus30k_<prior>_s0 | cells_<prior>_s0 | ef_B0_b10_ALS (addendum 12, family ef_s0)
 """
 import concurrent.futures
 import datetime as dt
@@ -112,6 +112,8 @@ def sh(cmd, log):
 def family_of(key):
     if key.startswith('seed1_'):
         return 'seed1_s1'
+    if key.startswith('ef_'):
+        return 'ef_s0'   # addendum 12: elongation-filter repeat of the FINALTRAIN seed-0 run
     return key  # campus30k_<prior>_s0 / cells_<prior>_s0
 
 
@@ -121,6 +123,11 @@ def runs_of(key):
         _, a, b, prior = key.split('_')
         site = f'{a}_{b}'
         rec = TU / 'runs' / site / f'seed1_{prior}' / 'receipt.json'
+        sites = [site]
+    elif key.startswith('ef_'):
+        _, a, b, prior = key.split('_')
+        site = f'{a}_{b}'
+        rec = TU / 'runs/ef' / f'{a}ef_{prior}_s0' / 'receipt.json'
         sites = [site]
     elif key.startswith('campus'):
         prior = key.split('_')[1]

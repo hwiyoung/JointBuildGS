@@ -15,6 +15,13 @@ import time
 from pathlib import Path
 
 C = Path('/repo/configs/phd/main_trainunit_v1')
+# addendum 12: elongation-filter runs (stop iteration, fixed extent, watched families)
+EF = {
+    'probe3ef_ALS_s0': dict(stop=15000, extent=185.84960770264462, watch_unit='probe3'),
+    'probe4ef_ALS_s0': dict(stop=15000, extent=199.23552905804456, watch_unit='probe4'),
+    'cell0ef_ALS_s0': dict(stop=15000, extent=None, watch={'cell0#1': [124654], 'cell0#2': [123105], 'cell0#3': [130744]}),
+    'B0ef_ALS_s0': dict(stop=None, extent=None, watch={'base_s0#1': [17310], 'base_s0#2': [15779], 'base_s0#3': [17176], 'base_s0#bg1': [45212]}),
+}
 FTC = Path('/repo/configs/phd/main_finaltrain_v1/finaltrain_v1.json')
 KST = dt.timezone(dt.timedelta(hours=9))
 
@@ -60,15 +67,39 @@ def install_count_record_only(cls):
     cls.observe = observe
 
 
-def install_family_monitor(root, watch_path, state):
+def install_elongation_filter(root, threshold=0.01):
+    """addendum 12: CityGaussianV2 elongation filter (axis_ratio_threshold 0.01, Linketic/CityGaussian 3041bf5a). Rows whose
+    min(scale)/max(scale) <= threshold get xyz_gradient_accum = 0 before the unchanged densify_and_prune, so neither clone nor split
+    (both select grads = accum/denom >= threshold) picks them. Pruning does not read the gradient; densification_postfix resets the
+    accumulator for all rows right after, as before."""
+    import torch
+    from scene.gaussian_model import GaussianModel
+    original = GaussianModel.densify_and_prune
+
+    def densify_and_prune(self, max_grad, min_opacity, extent, max_screen_size):
+        with torch.no_grad():
+            s = self.get_scaling
+            needle = (s.min(dim=1).values / s.max(dim=1).values) <= threshold
+            self.xyz_gradient_accum[needle] = 0.0
+        return original(self, max_grad, min_opacity, extent, max_screen_size)
+
+    GaussianModel.densify_and_prune = densify_and_prune
+    dump(root / 'addendum12_filter.json', dict(at=now().isoformat(), threshold=threshold, rule='axis_ratio > threshold eligible for clone and split',
+                                               source='Linketic/CityGaussian 3041bf5a citygsv2_density_controller.py', scientific_verdict=None))
+
+
+def install_family_monitor(root, watch_path, state, watch=None, filter_threshold=None):
     """addendum 8: read-only record of each densification step, grouped by seed family (init_id) and lineage (origin).
     Recomputes on copies the clone/split selection of the unchanged densify_and_prune, then calls it unchanged.
-    No random numbers are drawn and no model tensor is written."""
+    No random numbers are drawn and no model tensor is written.
+    addendum 12: watch may be given directly; with filter_threshold the recorded clone/split are those after the elongation filter,
+    and every group also records needle rows (elongation <= 0.01) and gradient-selected rows excluded by the filter."""
     import time as _t
     import torch
     from scene.gaussian_model import GaussianModel
-    w = json.loads(Path(watch_path).read_text())
-    watch = {f"{f['cell']}#{f['rank']}": [int(i) for i in f['unit_init_ids']] for f in w['families']}
+    if watch is None:
+        w = json.loads(Path(watch_path).read_text())
+        watch = {f"{f['cell']}#{f['rank']}": [int(i) for i in f['unit_init_ids']] for f in w['families']}
     original = GaussianModel.densify_and_prune
     out = (root / 'family_monitor.jsonl').open('a')
 
@@ -85,14 +116,19 @@ def install_family_monitor(root, watch_path, state):
             g[g.isnan()] = 0.0
             g = g.reshape(-1)
             den = self.denom.reshape(-1)
-            ms = self.get_scaling.max(dim=1).values
+            sc = self.get_scaling
+            ms = sc.max(dim=1).values
+            ar = sc.min(dim=1).values / ms
+            needle = ar <= .01
             op = self.get_opacity.reshape(-1)
             thr = self.percent_dense * extent
             sel = g >= max_grad
-            clone, split = sel & (ms <= thr), sel & (ms > thr)
             ex = self.density_exempt()
             if ex is not None:
-                clone, split = clone & ~ex, split & ~ex
+                sel = sel & ~ex
+            excluded = sel & (ar <= filter_threshold) if filter_threshold is not None else torch.zeros_like(sel)
+            sel = sel & ~excluded
+            clone, split = sel & (ms <= thr), sel & (ms > thr)
             iid = self.init_id.long()
             org = self.origin.long() if self.origin is not None else torch.full_like(iid, -1)
             cnt = torch.bincount(iid[iid >= 0])
@@ -102,6 +138,7 @@ def install_family_monitor(root, watch_path, state):
 
             def stat(m):
                 return dict(n=int(m.sum()), clone=int((clone & m).sum()), split=int((split & m).sum()),
+                            needle=int((needle & m).sum()), filter_excluded=int((excluded & m).sum()),
                             grad_p50_p90=qs(g[m], [.5, .9]), grad_max=float(g[m].max()) if m.any() else None,
                             denom_p50=qs(den[m], [.5]), max_scale_p50_p90=qs(ms[m], [.5, .9]), opacity_p50=qs(op[m], [.5]),
                             radii2d_p50_p90=qs(self.max_radii2D[m], [.5, .9]))
@@ -124,7 +161,8 @@ def install_family_monitor(root, watch_path, state):
             b['pruned_est'] = b['n'] + b['clone'] + b['split'] - after[k]  # split: +2 children -1 parent
         rec = dict(iteration=state.get('it', 0) + 1, n_before=n0, n_after=len(iid2), max_grad=float(max_grad), min_opacity=float(min_opacity),
                    extent=float(extent), clone_scale_threshold=float(thr), max_screen_size=max_screen_size,
-                   clone_total=int(clone.sum()), split_total=int(split.sum()), groups=before,
+                   clone_total=int(clone.sum()), split_total=int(split.sum()), needle_total=int(needle.sum()),
+                   filter_excluded_total=int(excluded.sum()), filter_threshold=filter_threshold, groups=before,
                    monitor_seconds=(t1 - t0) + (_t.perf_counter() - t2), densify_seconds=t2 - t1)
         out.write(json.dumps(rec) + '\n')
         out.flush()
@@ -149,7 +187,12 @@ def main():
         assert sha(C / 'addendum3.json') == json.loads((C / 'addendum3.lock.json').read_text())['sha256']
         lifted = True  # addendum 3: no 11:00 deadline and no 500-iteration time stop for 판 다
     probe_stop = None
-    if run_name.startswith('probe'):
+    if run_name in EF:
+        # addendum 12: no deadline / 500-iteration stop (the TRAINUNIT deadline has passed); stop as locked per run
+        assert sha(C / 'addendum12.json') == json.loads((C / 'addendum12.lock.json').read_text())['sha256']
+        lifted = True
+        probe_stop = EF[run_name]['stop']
+    elif run_name.startswith('probe'):
         # addendum 5 (원인 확인): no deadline / 500-iteration stop; count rule recorded only; stop right after iteration 15,000
         assert sha(C / 'addendum5.json') == json.loads((C / 'addendum5.lock.json').read_text())['sha256']
         lifted = True
@@ -198,7 +241,25 @@ def main():
              dict(at=now().isoformat(), count_rule='record-only', probe_stop=probe_stop, scientific_verdict=None))
     original = jbgs_state.after_step
     state = dict(checked500=False, stop_capture=None)
-    if run_name.startswith(('probe3', 'probe4')):
+    if run_name in EF:
+        # addendum 12: elongation filter first, then the read-only monitor around it; probe units keep the addendum 9 extent
+        e = EF[run_name]
+        install_elongation_filter(root, 0.01)
+        if e.get('watch_unit'):
+            install_family_monitor(root, Path('/tu/stage1') / f'{e["watch_unit"]}__ALS' / 'watch.json', state, filter_threshold=0.01)
+        else:
+            install_family_monitor(root, None, state, watch=e['watch'], filter_threshold=0.01)
+        import scene.dataset_readers as dr
+        fork_norm12 = dr.getNerfppNorm
+
+        def getNerfppNorm12(cam_info):
+            n = fork_norm12(cam_info)
+            dump(root / 'extent_override.json', dict(at=now().isoformat(), run=run_name, fork_radius=float(n['radius']), cameras=len(cam_info), addendum=12,
+                                                     used_radius=float(e['extent'] or n['radius']), fixed=e['extent'] is not None, scientific_verdict=None))
+            return dict(n, radius=float(e['extent'])) if e['extent'] is not None else n
+
+        dr.getNerfppNorm = getNerfppNorm12
+    elif run_name.startswith(('probe3', 'probe4')):
         # addendum 8: runaway-roof probes get the read-only family monitor
         assert sha(C / 'addendum8.json') == json.loads((C / 'addendum8.lock.json').read_text())['sha256']
         install_family_monitor(root, Path('/tu/stage1') / f'{run_name.split("_")[0].replace("own", "")}__ALS' / 'watch.json', state)
