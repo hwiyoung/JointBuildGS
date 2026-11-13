@@ -1,0 +1,242 @@
+{
+  "at": "2026-11-13T11:48:37.884759+09:00",
+  "rule": "Concept video v2 side check (2026-11-13, user: 'find a real image-error -> 보존 place for zone 1'). Read-only; writes docs figures_concept_v2/zone1_find/zone1_find.json only.\nPatch classes over all valid FT target patches of B173 x ALS (judge_region 0 일치, 2 보정, 1 보존, 4 결측):\n  image depth = MVS patch mean point (centre + normal x mvs_mean_m); 'image wrong' = its distance to GT dense > 0.5 m;\n  'prior kept right' = 보존 patch whose chosen target is within TAU (0.211856 m) of GT; 'prior kept wrong' = 보존 target > 0.5 m from GT.\n  wanted = 보존 & image wrong & prior kept right (the zone-1 story in the request: image depth wrong, judgment keeps the prior).\nCandidates: 3 m xy cells ranked by the patch area of 'wanted'; for the top cells (non-overlapping), a 12 x 8 m box on the cell's 'wanted' centroid, long axis = the\nprincipal xy axis of the 'wanted' patches within 6 m (the spots_v5 window size used for zone 1). For each box: patch counts by judgment, wanted / kept-wrong /\nimage-wrong counts, mean normal z, height, and the 30,000 mesh completeness inside the box (GTJUDGE rows, |row_s| <= row_tau_m, normal_line.values) for this\nmethod, judgment off (203-view) and image-only 2DGS (203-view); and whether the box centre is inside the ① camera crop.\nGT is used only to classify patches and to score. No pass criteria. scientific_verdict: null",
+  "scientific_verdict": null,
+  "overall": {
+    "valid_patches": 52643,
+    "by_judgment": {
+      "일치": 31602,
+      "보정": 15203,
+      "보존": 5646,
+      "결측": 192
+    },
+    "image_wrong_by_judgment": {
+      "일치": 17362,
+      "보정": 695,
+      "보존": 1150,
+      "결측": 64
+    },
+    "keep_n": 5646,
+    "keep_prior_right_n": 375,
+    "keep_prior_wrong_n": 5114,
+    "keep_image_wrong_n": 1150,
+    "wanted_n": 34,
+    "wanted_area_m2": 2.56,
+    "keep_image_right_prior_wrong_n": 4001
+  },
+  "candidates": [
+    {
+      "centre_xy": [
+        136.44593429347267,
+        97.2346712245864
+      ],
+      "axis_xy": [
+        0.21270000020877955,
+        0.9771175517363225
+      ],
+      "box_xy": [
+        [
+          139.07820449916528,
+          90.52116591333335
+        ],
+        [
+          141.63060450167063,
+          102.24657653416922
+        ],
+        [
+          133.81366408778007,
+          103.94817653583947
+        ],
+        [
+          131.26126408527472,
+          92.22276591500359
+        ]
+      ],
+      "cell_wanted_area_m2": 1.01,
+      "box_patches": 1258,
+      "box_by_judgment": {
+        "일치": 599,
+        "보정": 391,
+        "보존": 268,
+        "결측": 0
+      },
+      "box_wanted_n": 24,
+      "box_kept_wrong_n": 171,
+      "box_image_wrong_n": 154,
+      "wanted_height_median_m": 13.52,
+      "wanted_normal_z_abs_median": 0.86,
+      "wanted_image_error_median_m": 0.58,
+      "gt_rows_in_box": 6425,
+      "completeness_30000_pct": {
+        "ours": 72.6,
+        "nojudge": 65.1,
+        "img2dgs": 41.4
+      },
+      "in_camera_crop": true,
+      "camera_uv": [
+        591.2436365878824,
+        251.31272063689354
+      ]
+    },
+    {
+      "centre_xy": [
+        130.5593101647503,
+        88.16479282350414
+      ],
+      "axis_xy": [
+        -0.9771592371073168,
+        0.21250841238841917
+      ],
+      "box_xy": [
+        [
+          137.27229923694784,
+          90.79837929760289
+        ],
+        [
+          125.54638839166006,
+          93.34848024626392
+        ],
+        [
+          123.8463210925527,
+          85.5312063494054
+        ],
+        [
+          135.5722319378405,
+          82.98110540074437
+        ]
+      ],
+      "cell_wanted_area_m2": 0.53,
+      "box_patches": 1272,
+      "box_by_judgment": {
+        "일치": 223,
+        "보정": 778,
+        "보존": 269,
+        "결측": 2
+      },
+      "box_wanted_n": 8,
+      "box_kept_wrong_n": 177,
+      "box_image_wrong_n": 163,
+      "wanted_height_median_m": 13.68,
+      "wanted_normal_z_abs_median": 0.9,
+      "wanted_image_error_median_m": 0.81,
+      "gt_rows_in_box": 6234,
+      "completeness_30000_pct": {
+        "ours": 67.0,
+        "nojudge": 66.5,
+        "img2dgs": 49.5
+      },
+      "in_camera_crop": true,
+      "camera_uv": [
+        613.8320635767692,
+        137.51727901362878
+      ]
+    },
+    {
+      "centre_xy": [
+        137.655852652623,
+        108.50135369958265
+      ],
+      "axis_xy": [
+        1.0,
+        0.0
+      ],
+      "box_xy": [
+        [
+          131.655852652623,
+          104.50135369958265
+        ],
+        [
+          143.655852652623,
+          104.50135369958265
+        ],
+        [
+          143.655852652623,
+          112.50135369958265
+        ],
+        [
+          131.655852652623,
+          112.50135369958265
+        ]
+      ],
+      "cell_wanted_area_m2": 0.07,
+      "box_patches": 1250,
+      "box_by_judgment": {
+        "일치": 576,
+        "보정": 451,
+        "보존": 223,
+        "결측": 0
+      },
+      "box_wanted_n": 1,
+      "box_kept_wrong_n": 159,
+      "box_image_wrong_n": 65,
+      "wanted_height_median_m": 13.41,
+      "wanted_normal_z_abs_median": 0.85,
+      "wanted_image_error_median_m": 0.51,
+      "gt_rows_in_box": 5952,
+      "completeness_30000_pct": {
+        "ours": 82.6,
+        "nojudge": 81.9,
+        "img2dgs": 39.7
+      },
+      "in_camera_crop": true,
+      "camera_uv": [
+        624.1306022454751,
+        368.4257199751431
+      ]
+    },
+    {
+      "centre_xy": [
+        153.65712923166362,
+        146.24494394649153
+      ],
+      "axis_xy": [
+        1.0,
+        0.0
+      ],
+      "box_xy": [
+        [
+          147.65712923166362,
+          142.24494394649153
+        ],
+        [
+          159.65712923166362,
+          142.24494394649153
+        ],
+        [
+          159.65712923166362,
+          150.24494394649153
+        ],
+        [
+          147.65712923166362,
+          150.24494394649153
+        ]
+      ],
+      "cell_wanted_area_m2": 0.06,
+      "box_patches": 1313,
+      "box_by_judgment": {
+        "일치": 1087,
+        "보정": 140,
+        "보존": 83,
+        "결측": 3
+      },
+      "box_wanted_n": 1,
+      "box_kept_wrong_n": 41,
+      "box_image_wrong_n": 414,
+      "wanted_height_median_m": 12.93,
+      "wanted_normal_z_abs_median": 1.0,
+      "wanted_image_error_median_m": 0.97,
+      "gt_rows_in_box": 4410,
+      "completeness_30000_pct": {
+        "ours": 86.2,
+        "nojudge": 82.7,
+        "img2dgs": 28.0
+      },
+      "in_camera_crop": false,
+      "camera_uv": [
+        615.0551099438027,
+        810.5258998956625
+      ]
+    }
+  ],
+  "seconds": 5.8
+}

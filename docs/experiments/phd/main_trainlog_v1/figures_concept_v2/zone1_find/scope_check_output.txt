@@ -1,0 +1,15 @@
+== all valid: 52643
+   일치 n= 31602 image wrong  54.9 %  target <= tau  43.8 %  target > 0.5 m  54.5 %  | image wrong & target right 129  image right & target > 0.5 m 0  target-GT median 1.62 m
+   보정 n= 15203 image wrong   4.6 %  target <= tau  88.6 %  target > 0.5 m   4.6 %  | image wrong & target right 0  image right & target > 0.5 m 0  target-GT median 0.05 m
+   보존 n=  5646 image wrong  20.4 %  target <= tau   6.6 %  target > 0.5 m  90.6 %  | image wrong & target right 34  image right & target > 0.5 m 4001  target-GT median 4.45 m
+   결측 n=   192 image wrong  33.3 %  target <= tau  12.5 %  target > 0.5 m  87.0 %  | image wrong & target right 3  image right & target > 0.5 m 107  target-GT median 10.38 m
+== inside building scope: 24136
+   일치 n=  4431 image wrong   2.9 %  target <= tau  97.9 %  target > 0.5 m   0.0 %  | image wrong & target right 128  image right & target > 0.5 m 0  target-GT median 0.05 m
+   보정 n= 14897 image wrong   2.6 %  target <= tau  90.4 %  target > 0.5 m   2.6 %  | image wrong & target right 0  image right & target > 0.5 m 0  target-GT median 0.05 m
+   보존 n=  4793 image wrong   6.6 %  target <= tau   7.5 %  target > 0.5 m  89.3 %  | image wrong & target right 33  image right & target > 0.5 m 4000  target-GT median 4.30 m
+   결측 n=    15 image wrong  26.7 %  target <= tau  40.0 %  target > 0.5 m  60.0 %  | image wrong & target right 3  image right & target > 0.5 m 8  target-GT median 4.14 m
+== outside building scope: 28507
+   일치 n= 27171 image wrong  63.4 %  target <= tau  35.0 %  target > 0.5 m  63.4 %  | image wrong & target right 1  image right & target > 0.5 m 0  target-GT median 3.81 m
+   보정 n=   306 image wrong  99.3 %  target <= tau   0.7 %  target > 0.5 m  99.3 %  | image wrong & target right 0  image right & target > 0.5 m 0  target-GT median 20.15 m
+   보존 n=   853 image wrong  97.8 %  target <= tau   1.8 %  target > 0.5 m  97.8 %  | image wrong & target right 1  image right & target > 0.5 m 1  target-GT median 13.65 m
+   결측 n=   177 image wrong  33.9 %  target <= tau  10.2 %  target > 0.5 m  89.3 %  | image wrong & target right 0  image right & target > 0.5 m 99  target-GT median 11.50 m
