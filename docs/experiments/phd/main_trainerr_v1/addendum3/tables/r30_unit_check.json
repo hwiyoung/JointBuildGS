@@ -1,0 +1,23 @@
+{
+ "rows": [
+  {
+   "check": "결정적 재생 r27 대 r30(스위치 끔), 300회",
+   "status": "PASS",
+   "detail": "model=True; adam=True; meta=True; events=True; rng=True; trace=True",
+   "source": "verification/replay_compare_r27_r30.json"
+  },
+  {
+   "check": "스위치 판정 함수 1~30,000회",
+   "status": "PASS",
+   "detail": "기본값 법선 같음=True, 기본값 재설정 같음=True, 인자 없음 같음=True, 법선 끔=늘 꺼짐 True, 7,000 뒤 재설정 없음 → 남는 재설정 [3000, 6000]",
+   "source": "verification/gates.json"
+  },
+  {
+   "check": "r28 대 r30 바뀐 파일",
+   "status": "PASS",
+   "detail": "바뀜 ['train.py'], r30에만 ['jbgs_a3.py']",
+   "source": "verification/diff.json"
+  }
+ ],
+ "scientific_verdict": null
+}

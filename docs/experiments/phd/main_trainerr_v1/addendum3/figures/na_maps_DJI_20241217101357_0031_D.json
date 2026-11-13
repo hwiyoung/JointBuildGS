@@ -1,0 +1,23 @@
+{
+ "at": "2026-11-14T00:56:31.515447+09:00",
+ "figure": "na_maps_DJI_20241217101357_0031_D.png",
+ "view": "DJI_20241217101357_0031_D",
+ "models": [
+  "FINALTRAIN_30000",
+  "record_7000",
+  "record_15000"
+ ],
+ "sources": [
+  "/te/addendum3/na/FINALTRAIN_30000__DJI_20241217101357_0031_D.npz",
+  "/te/addendum3/na/record_7000__DJI_20241217101357_0031_D.npz",
+  "/te/addendum3/na/record_15000__DJI_20241217101357_0031_D.npz"
+ ],
+ "crop": "bounding box of the south-wall target pixels +- 8 px",
+ "bins": {
+  "front": "목표 앞 (1 m 넘게 가까움)",
+  "target": "목표 ±1 m",
+  "behind_near": "목표 뒤 1~5 m",
+  "behind_far": "목표 뒤 5 m 넘게"
+ },
+ "scientific_verdict": null
+}

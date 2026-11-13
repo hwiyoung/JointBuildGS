@@ -1,0 +1,48 @@
+{
+ "at": "2026-11-14T01:18:35.175902+09:00",
+ "figure": "ga_strip_edge_back.png",
+ "place": "edge_back",
+ "run": "tl_B0_LoD2_own",
+ "section": {
+  "origin": [
+   103.05139923095703,
+   21.428499221801758,
+   -43.22100830078125
+  ],
+  "h_axis": [
+   -0.9307956226983387,
+   0.365540023479799,
+   0.0
+  ],
+  "slab_normal": [
+   -0.365540023479799,
+   -0.9307956226983387,
+   0.0
+  ],
+  "window_h_z": [
+   -4.076143701035676,
+   4.517525043281852,
+   -46.55281066894531,
+   -40.05910873413086
+  ],
+  "thickness_m": 0.5
+ },
+ "times": [
+  "5000",
+  "7000",
+  "9000_pre_reset",
+  "9000",
+  "12000_pre_reset",
+  "12000",
+  "15000",
+  "30000"
+ ],
+ "meshes": {
+  "5000": "/te/gtj/meshes/B0_b10__LoD2__tl_own_5000/final.ply",
+  "7000": "/te/gtj/meshes/B0_b10__LoD2__tl_own_7000/final.ply",
+  "15000": "/te/gtj/meshes/B0_b10__LoD2__tl_own_15000/final.ply",
+  "30000": "/te/gtj/meshes/B0_b10__LoD2__tl_own_30000/final.ply"
+ },
+ "colours": "state relative to the place patch set (bound to a place patch / other patch / released / background); marker size = opacity",
+ "scientific_verdict": null
+}

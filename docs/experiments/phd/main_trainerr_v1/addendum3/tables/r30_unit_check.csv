@@ -1,0 +1,4 @@
+check,status,detail,source
+"결정적 재생 r27 대 r30(스위치 끔), 300회",PASS,model=True; adam=True; meta=True; events=True; rng=True; trace=True,verification/replay_compare_r27_r30.json
+"스위치 판정 함수 1~30,000회",PASS,"기본값 법선 같음=True, 기본값 재설정 같음=True, 인자 없음 같음=True, 법선 끔=늘 꺼짐 True, 7,000 뒤 재설정 없음 → 남는 재설정 [3000, 6000]",verification/gates.json
+r28 대 r30 바뀐 파일,PASS,"바뀜 ['train.py'], r30에만 ['jbgs_a3.py']",verification/diff.json

@@ -1,0 +1,6 @@
+item,where,record
+화소에 어느 패치의 목표를 적는가,scripts/phd/main_finaltrain_v1/prepare_inputs.py:59-67; scripts/phd/main_target_v1/prepare_maps_r7.py:19-25; scripts/phd/main_target_v1/target_discs.cpp:6-26,"목표 원판(패치 목표점·법선·반지름 sqrt(area/pi), surface_exists인 패치만) z-버퍼: 화소마다 가장 가까운 원판의 행 번호가 owner, 그 깊이가 목표. 가림은 그 원판끼리만 계산; 영상 깊이는 쓰지 않음; 원판 목록 밖(패치가 없는 물체, 장면 상자 밖)의 것은 가림에 들어가지 않음"
+영상 깊이와 목표 깊이를 비교해 목표를 빼거나 무게를 줄이는 규칙,prepare_inputs.py:67-70; src/phd/forks/GeoGS-conf-guided-v1-r27/jbgs_target.py:116-122,"없음. 무게는 owner 화소 clip(sigma_ref/sigma, 0.1, 10), 배경 1. 학습 손실의 유효 화소 조건은 목표 유한·>0, 렌더 깊이 유한·>0, 무게 >0뿐"
+영상 깊이가 없는 화소,prepare_inputs.py:69,owner 화소는 영상 깊이와 상관없이 목표를 그대로 적음. owner가 없는 화소만 영상 깊이가 유한·>0·conf>0일 때 배경 목표(무게 1)
+영상 0013 남쪽 끝 벽 화소,tables/da_view0013.csv,원판 z-버퍼에서 남쪽 끝 벽 패치가 가장 가까움 → owner; 비교 규칙 없음 → 통과; 영상 깊이 점의 자리와 가장 가까운 원판까지 거리는 표
+깊이 손실의 렌더 깊이와 불투명도 기울기(고침 1),"gaussian_renderer/__init__.py:132,144-146,155; arguments/__init__.py:104; jbgs_target.py:116-122; train.py:902; rfix_speed builds/target/source/cuda_rasterizer/backward.cu:367,370,381,443","surf_depth = (Σ w_i z_i)/(Σ w_i) (depth_ratio 0; render_alpha로 나눔, detach 없음). 손실 = Σ|D−목표|·화소무게 / 화소 수, 총손실에 jbgs_target_lambda 0.05를 곱함(train.py:902). CUDA 역전파: 깊이 채널(367)과 누적 불투명도 채널(370)이 dL_dalpha에 더해지고 T를 곱한 뒤(381) dL_dopacity += G·dL_dalpha(443)"

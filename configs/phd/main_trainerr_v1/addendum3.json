@@ -1,0 +1,150 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1 addendum 3",
+ "scientific_verdict": null,
+ "branch": "exp/main-experiment",
+ "order": {
+  "file": "docs/experiments/phd/main_trainerr_v1/addendum3/덧붙임3_발주문.md",
+  "sha256": "25f3bffa1c3ad556fb1bca7279be3b33bd6d86de560fdaa910cf347b5fbcb8f7",
+  "correction_1": "docs/experiments/phd/main_trainerr_v1/addendum3/덧붙임3_고침1.md",
+  "correction_1_sha256": "eb7b7aca0ecbf48fd8c70bdf0b0009ba5be3b50de89369467942e6100a5a1a19"
+ },
+ "folders": {
+  "docs": "docs/experiments/phd/main_trainerr_v1/addendum3",
+  "tables": "docs/experiments/phd/main_trainerr_v1/addendum3/tables (order 8 'tables/addendum3/' kept inside addendum3/ by the 1.1 folder rule)",
+  "payload": "PH/main_trainerr_v1/PHD-MAIN-TRAINERR-v1/addendum3",
+  "scripts": "scripts/phd/main_trainerr_v1/addendum3",
+  "logs": "payload addendum3/logs (a3_launch.py; launch.py logs to v1 logs/ are not used)"
+ },
+ "fork": {
+  "name": "GeoGS-conf-guided-v1-r30",
+  "why_not_r29": "src/phd/forks/GeoGS-conf-guided-v1-r29 already exists (PHD-STORAGE-v1 commit 82ed6ac4, storage rules only, its 300-iteration check pending); the next free number r30 is used, untouched r29",
+  "parent": "GeoGS-conf-guided-v1-r28 committed files (117), byte copy checked by sha256",
+  "switches": {
+   "--jbgs_a3_normal": "inherit (default) | off: lambda_normal stays 0 after iteration 7000 (inherited rule: lambda_normal if iteration > 7000 else 0)",
+   "--jbgs_a3_reset_after": "-1 (default, every opacity reset kept) | N: no opacity reset and no pre-reset record at iterations > N"
+  },
+  "changed_lines_file": "docs/experiments/phd/main_trainerr_v1/addendum3/r30_changed_lines.diff (order: r29_changed_lines.diff)",
+  "unit_check": {
+   "replay": "TRAINERR te_replay rule (real-state deterministic replay of 300 iterations from probe r28off_a iteration 200, R1rep_b10 x ALS): /source = r27 and /source = r30 dumps byte-equal in model, adam, meta, events, rng, trace",
+   "gates": "jbgs_a3.normal_active and reset_allowed over iterations 1..30000 with defaults equal the inherited expressions (iteration > 7000; True); with switches on: normal never active, reset_allowed false only after N",
+   "diff": "r30 vs r28 differs only in train.py (4 places) and the new jbgs_a3.py; r28 vs r27 = the TRAINERR-checked r28 change set",
+   "pass": "all three"
+  }
+ },
+ "places": {
+  "frame": "site local training frame (EPSG:25832 translation in site metadata); GT = GTJUDGE addendum11 final_data reference__* (point_id indexes GTJUDGE rows.npz)",
+  "visible_wall": {
+   "zone_file": "PH/main_trainlog_v1/PHD-MAIN-TRAINLOG-v1/concept_v2/case_B0_b10__LoD2/concept_v2/case_zones.json zone 2 (sha256 2da7fd5d016c132679bdcf6b2ca8469be95d8d478144e490b10c3e29a5ca36db)",
+   "points": "GT wall rows (reference__wall) inside the zone-2 box polygon with |normal_xy . wall_normal_out_xy| > 0.9",
+   "heights": {"low": [0, 5], "high": [5, 10]},
+   "ground_z": "TRAINLOG case scope ground_z -43.12701416015625 (height = z - ground_z)",
+   "out": "zone-2 wall_normal_out_xy [0.36246, 0.93200, 0]",
+   "control": "the same zone's corner side wall: GT wall rows inside the zone-2 box with |normal_xy . out| < 0.3, height 0-10 m"
+  },
+  "south_wall": {
+   "rule": "addendum1.json places.south_wall: GT wall rows with along 0.7-19.3 m, z -43.3 to -25.0, |d| <= 1 m (wall face)",
+   "out": "south_wall n_out",
+   "control": "long_wall (addendum1 rule, fitted face shift), the same |d| <= 1 m, out = +e"
+  },
+  "edge_band": {
+   "rule": "c1 (B0 x LoD2, case 2, completeness) lost points of the record run (sets_tl/c1_own_lost) inside addendum1 places back_wall_bottom and annex_roof_edge, two places",
+   "control": "sets_tl/c1_own_control points inside the same place mask; when fewer than 50, all c1 own control points inside the record region (voxel lookup)"
+  },
+  "floor_band": {
+   "rule": "sets_tl/c2_own_lost (R1rep x ALS, case 2, completeness) of the record run",
+   "control": "sets_tl/c2_own_control points inside the record region (voxel lookup)"
+  },
+  "work_da_sets": "the original-run sets (sets/c1_own_lost in the two edge places, sets/c2_own_lost) because the target maps are the FINALTRAIN maps",
+  "annex_box": {"x": [86, 98], "y": [-1, 7], "z": [-46, -30]},
+  "edge_floater": {
+   "source": "TRAINLOG cv2_floater.py (floater_check) rule",
+   "rule": "uncut mesh final.ply (before the building-scope cut): face centre planar distance outside the LoD2 footprint 0 < de <= 3 m, height above the scope ground >= 12 m, distance to GT dense > 1 m",
+   "footprint": "TRAINLOG scope footprint of the site (B173: TRAINLOG config; B0: case config)",
+   "off_gt_building": "faces within the render box of the building scope (inside the footprint buffer 1 m) farther than 1 m from GT dense: area"
+  }
+ },
+ "common": {
+  "column_patch": "GT point -> GTJUDGE rows row_owner -> JUDGEAPPLY core_points source_index -> target row; sets_tl patch_row; Gaussian target_index = index into the valid target rows (valid_patch order)",
+  "target_plane": "patch anchor (targets 'target'), patch normal, sigma of the column patch",
+  "outward_normal": "walls of visible/south/long wall: the place out direction; other walls (|n_z| < 0.5): sign making p + 0.5 n outside and p - 0.5 n inside the LoD2 prior solid (open3d occupancy), else the stored patch normal; non-walls: n_z > 0 (floor/roof front = up)",
+  "area": "GT area of a place = occupied 0.25 m voxels of its GT points x 0.0625 m2",
+  "opacity_half": 0.5,
+  "prune_threshold": "opt.opacity_cull 0.05 (arguments/__init__.py; delete reason 1 = opacity < min_opacity)",
+  "front_back": "a Gaussian belongs to the place surface when its centre lies within 0.5 m tangentially of a place GT point (tangent distance in that point's target plane); s = (x - anchor).n_out of that point's column patch; front 0.2 < s <= 3 m, back -3 <= s < -0.2 m; counts and opacity sums by constraint state (same patch = bound to a place patch, other patch, released, background)",
+  "events": "between consecutive saved states by seq (seq_prev, seq_cur]: delete rows with tag 1 and target_index in the place patches by reason (1 opacity, 2 world size, 3 screen size, 4 other, 5 split parent); release with previous_target_index in the place patches; retarget out (old in, new out) and in; births = Gaussians of the later state bound to the place patches with born_at in (it_prev, it_cur]. Events exist only for Gaussians inside the record range at the last range check (TRAINLOG: buffered footprint x [z_min, z_max]; TRAINERR: voxel region)",
+  "completeness": "GTJUDGE rule: share of place GT points with |row_s| <= row_tau_m on the mesh of that iteration (stored score distances, or te_mesh score points.npz)"
+ },
+ "work_ga": {
+  "runs": {
+   "tl_B0_b10_LoD2_s0": {"places": ["visible_wall", "south_wall"], "states": "TRAINLOG scene/*.pt (all Gaussians, 65 states incl. 4 pre_reset)", "events": "trainlog/events", "meshes": "TRAINLOG case meshes tl_<n> + the four added meshes"},
+   "tl_B0_LoD2_own": {"places": ["edge_band"], "states": "TRAINERR trainlog/states/*.npz (Gaussians inside the voxel region, 65 states incl. 4 pre_reset)", "events": "trainlog/events", "meshes": "TRAINERR record meshes where present"},
+   "tl_R1_ALS_own": {"places": ["floor_band"], "states": "same as tl_B0_LoD2_own", "events": "trainlog/events", "meshes": "TRAINERR record meshes where present"}
+  },
+  "time_points": "every saved state; <it>_pre_reset and <it> counted separately",
+  "added_meshes": {"run": "tl_B0_b10_LoD2_s0", "states": ["9000_pre_reset", "9000", "12000_pre_reset", "12000"], "rule": "scene .pt -> ply (TRAINLOG lineage_key ply rule) -> GTJUDGE mesh_job render/prepare/plan/tile/merge/finish + te_mesh score, the record run's view list", "value": "visible-wall completeness"},
+  "curve_lines": {"opacity_reset": [3000, 6000, 9000, 12000], "normal_on": 7000, "densify_end": 15000},
+  "strip_times": ["5000", "7000", "9000_pre_reset", "9000", "12000_pre_reset", "12000", "15000", "30000"],
+  "section": "vertical plane through the place GT centroid; walls: across the wall (in-plane horizontal axis = out); bands: across the minor principal XY axis of the place points; thickness +-0.25 m; Gaussian centres coloured by state, size by opacity; GT grey, target plane blue, mesh red where a mesh exists"
+ },
+ "work_da": {
+  "code_check": ["the rule choosing which patch target is written to a pixel (occlusion: prior faces only, image depth, outside the unit box)", "a rule comparing image depth and target depth that removes or down-weights a target (condition, threshold) or none", "pixels without image depth", "image 0013 south-wall pixels through those rules", "correction 1: depth-loss rendered depth formula (divided by the weight sum or not), opacity gradient, where the depth weight and pixel weight multiply"],
+  "scenes": ["B0_b10__ALS", "B0_b10__LoD2", "B173nb_b10__ALS", "B173nb_b10__LoD2", "R1rep_b10__ALS", "R1rep_b10__LoD2"],
+  "arm": "own (본 방법 판정; FINALTRAIN maps) only - the closest single definition (order 1.5)",
+  "pixel_classes": "addendum2: front = image depth < target - 1 m, behind = image depth > target + 1 m (image depth finite, > 0 and conf > 0)",
+  "diff": "front: target - image depth; behind: image depth - target",
+  "thresholds_m": [1, 2, 3, 5, 10, 30],
+  "place_patch_sets": {
+   "floor_band": "column patches of sets/c2_own_lost",
+   "edge_band": "column patches of sets/c1_own_lost inside back_wall_bottom / annex_roof_edge",
+   "south_wall": "addendum2 wall_zone_patches south (valid patches, centre in the zone, |d| <= 1 m)",
+   "visible_wall": "column patches of the visible-wall GT points (0-10 m)",
+   "fixed_by_judgment": "column patches of addendum2 work-ra points (own) in group 'fixed' of case 1 (사전정보 오류), split by their patch judgment 보존 / 일치 / 보정",
+   "kept_by_scene": "column patches of addendum2 work-ra points (own) in group 'kept', per scene"
+  },
+  "patch_stat": "per patch with >= 1 front (behind) pixel: share of its front (behind) pixels whose diff exceeds the threshold; per place set: median, p10, p90 over patches",
+  "consistency": "per patch: views with >= 1 front pixel; std over views of the per-view median diff (views with >= 5 front pixels)",
+  "gradient": "correction 1: R1 floor band and its control: |d photo / d opacity logit| and |d depth / d opacity logit| of Gaussians bound to the place patches from the record-run grads/*.npz (uid join to states) at every gradient iteration; median and sum per place"
+ },
+ "work_na": {
+  "models": {"FINALTRAIN_30000": "FINALTRAIN ft_LoD2_s0 B0 point_cloud iteration_30000", "record_7000": "tl_B0_b10_LoD2_s0 scene/7000.pt", "record_15000": "tl_B0_b10_LoD2_s0 scene/15000.pt"},
+  "views": ["DJI_20241217094933_0013_D", "DJI_20241217093905_0026_D", "DJI_20241217101357_0031_D"],
+  "pixels": "pixels whose target owner is a south-wall patch (addendum2 wall_zone_patches south); classes front / same / no image depth (addendum2)",
+  "decomposition": "2DGS ray-splat intersection compositing re-implemented in torch with the same camera and the inherited rasterizer rules (per-pixel sorted contributions w_i = alpha_i T_i, depth = ray-splat intersection depth); checked against the CUDA render (accumulated opacity and depth) at the same pixels",
+  "bins": {"front": "depth < target - 1 m", "target": "|depth - target| <= 1 m", "behind_near": "target + 1 < depth <= target + 5 m", "behind_far": "depth > target + 5 m"},
+  "values": ["accumulated opacity", "rendered depth = weighted mean (2DGS expected depth / accumulated opacity, depth_ratio 0)", "depth where the cumulative weight reaches 0.5", "weight per bin by constraint state"]
+ },
+ "work_ma": {
+  "scene": "B173nb_b10__ALS, mesh = TRAINLOG tl_30000 uncut final.ply (the floater_check mesh)",
+  "image_points": "all finite > 0 MVS depth pixels of every training view before the confidence mask (s61 maps mvs), unprojected with the training camera",
+  "sfm_points": "scene_ALS sparse/0/points3D",
+  "radii_m": [0.3, 1.0],
+  "control": "faces of the same mesh within 0.2 m of GT dense, inside the footprint, same height range (>= 12 m)",
+  "photos": "two training views with camera centre east of the floater centroid and elevation 20-60 deg seen from the floater, most projected floater vertices inside the image (20 px margin); no occlusion test",
+  "states": "tl_B173nb_b10_ALS_s0 attempt2 scene/*.pt at the work-ga strip times: Gaussians within 0.5 m of edge-floater face centres: count, opacity, size, constraint state"
+ },
+ "work_ra": {
+  "models": {"B0_b10__ALS": "FINALTRAIN_30000", "B173nb_b10__ALS": "FINALTRAIN_30000", "B0_b10__LoD2": "FINALTRAIN_30000"},
+  "variants": {
+   "base": "unchanged rule (rebuilt; compared with the stored mesh)",
+   "opacity_0.5": "pixels with accumulated opacity < 0.5 get no depth",
+   "opacity_0.8": "accumulated opacity < 0.8",
+   "discontinuity_0.5": "pixels whose rendered depth differs from any 4-neighbour by > 0.5 m get no depth",
+   "median_depth": "depth where the cumulative weight reaches 0.5 (2DGS median depth) instead of the weighted mean"
+  },
+  "values": ["scene completeness and accuracy, case values (addendum11 rule via te_mesh score)", "annex box: result points farther than 1 m from GT (B0 ALS)", "edge floater area, off-GT building area", "south wall: share of result points behind the wall by more than 0.64 m, wall accuracy (B0 LoD2)", "loss of right surface: GT points within tau on base, outside tau on the variant"],
+  "diagnostic_only": true
+ },
+ "work_ba": {
+  "runs": {
+   "ba1_B0_LoD2_nonormal": {"base": "tl_B0_b10_LoD2_s0 command (TRAINLOG case config, trainlog on)", "change": "--jbgs_a3_normal off"},
+   "ba2_B0_LoD2_noreset": {"base": "tl_B0_b10_LoD2_s0 command", "change": "--jbgs_a3_reset_after 7000"},
+   "ba3_B0_ALS_record": {"base": "FINALTRAIN ft_ALS_s0 B0 command + TRAINERR record options (trainlog on with /cfg/trainlog_te.json, voxel region = the annex box snapped outward to 0.25 m, gradients on)", "change": "none"},
+   "ba4_B173_ALS_nojudge": {"status": "stop condition of correction 1 checked before training; see issues.md"}
+  },
+  "iterations": 30000, "seed": 0,
+  "meshes": {"ba1": [7000, 10000, 15000, 30000], "ba2": [7000, 10000, 15000, 30000], "ba3": [30000]},
+  "gpu_rule": "start on a GPU with >= 14 GiB free memory and at most one addendum-3 training per GPU; other jobs are never stopped",
+  "report_with": "ba1/ba2 scene values beside the record run and the original FINALTRAIN run"
+ },
+ "reading_appendix": "order appendix (analysis session); not used to choose or stop anything here"
+}
