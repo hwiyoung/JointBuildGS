@@ -62,20 +62,27 @@ from matplotlib.patches import Patch, FancyArrowPatch
 from PIL import Image
 FONT = '/fonts/NotoSansCJK-Regular.ttc'; fm.fontManager.addfont(FONT); plt.rcParams['font.family'] = fm.FontProperties(fname=FONT).get_name(); plt.rcParams['axes.unicode_minus'] = False
 V2 = O/'concept_v2'; FIGD = D/'figures_concept_v2'
+# another case (TL_CASE=<site>__<prior>, 2026-11-13 B0_b10 x LoD2): O, D are the case roots (launch.py); figures go straight into the case docs folder;
+# zones from concept_v2/case_zones.json (cv2_case_zones.py), camera = camera_choice.json train1, both zones against image-only 2DGS.
+if TL_CASE: FIGD = D
 # test variant (2026-11-13, user '시험 장면 만들어'): CV2_VARIANT=z1b moves zone 1 to the line chosen by cv2_zone1b.py (concept_v2/zone1b_line.json) and writes
 # its own static_z1b.*, sections_z1b/ and frames_r6test/; without it every path and rule is the r5 one (r1-r5 outputs are not touched).
 # r6 (2026-11-13, user '응 진행하자'): CV2_VARIANT=r6 = the r5 zone 1 (static.json, sections_r3, read only) with the zone-1 comparison = image-only 2DGS (as zone 2);
 # writes frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.* only.
 VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b', 'r6'), VAR
 REV = {'': 'r5', 'z1b': 'r6test', 'r6': 'r6'}[VAR]; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'; IS_Z1B = VAR == 'z1b'
+if TL_CASE: REV = 'v1'; FR = V2/f'frames_{REV}'   # another case: its first cut
 STJ = V2/('static_z1b.json' if IS_Z1B else 'static.json'); STN = V2/('static_z1b.npz' if IS_Z1B else 'static.npz'); SECD = V2/('sections_z1b' if IS_Z1B else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
-EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: 25.0}
+EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: None} if TL_CASE else {1: None, 2: 25.0}
 RESETS = [3000, 6000, 9000, 12000]; DENSIFY_END = 15000; RESC = '#D85A30'
-CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
+CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; BNAME = 'B173'; V30 = '_v203'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
 STATES = ['0', '100', '300', '1000', '2000', '3000', '5000', '7000', '10000', '15000', '30000']; FRAMES = ['input']+STATES
 COMP = {1: dict(run='nojudge', name='판단 끈 학습', saved=[15000, 30000]), 2: dict(run='2dgs', name='사진만 쓴 2DGS', saved=[7000, 30000])}
 if VAR == 'r6': COMP[1] = dict(COMP[2])   # r6: the 'judgment off' run is the stage-3 r15 fork, not this method minus the judgment -> zone 1 also against image-only 2DGS
 ZNAME = {1: '유리 채광창', 2: '바뀐 날개 지붕'}
+if TL_CASE:   # case: camera, mesh-render file of that camera (its index in the GTJUDGE view list), 30,000 comparison family without the B173 '_v203' suffix (no virtual views)
+    CAM = json.loads((D/'camera_choice.json').read_text())['chosen'][0]['name']; CAM_FILE = f"{[v['name'] for v in json.loads((GT/'views'/f'{SITE}.json').read_text())['views']].index(CAM):04d}.npz"
+    BNAME = SITE.split('_')[0]; V30 = ''; COMP[1] = dict(COMP[2]); ZNAME = {k: z['name'] for k, z in ((int(k), z) for k, z in json.loads((V2/'case_zones.json').read_text())['zones'].items())}
 JC = {0: '#7FA7D9', 2: '#D85A30', 1: '#1D9E75', 4: '#E8B931'}; JN = {0: '일치', 2: '보정', 1: '보존', 4: '결측'}
 NAVY = '#16263d'; GTC = '#1b1b1b'; PRC = '#E07B00'; MVC = '#2E9E4F'; MSC = '#1F5FBF'; RED = '#D62728'; EMPTY = '#F4F3EF'
 PRIOR_RGB = np.array(to_rgb('#F2B872')); PRIOR_ALPHA = .6
@@ -118,6 +125,13 @@ class Static:
         self.c = cfg(); sc = self.c['scope']; self.ground = sc['ground_z']; self.zr = (sc['z_min'], sc['z_max'])
         cams = json.loads((O/'renders/cameras.json').read_text()); vb = cams['view']; self.B = np.asarray(vb['basis'], float); self.ctr = np.asarray(vb['center'], float)
         tr = [v for v in cams['training'] if v['name'] == CAM][0]; self.K = np.asarray(tr['K'], float); self.E = np.asarray(tr['W2C'], float); self.W, self.H = tr['width'], tr['height']
+        self.cam_cache = {}
+        if TL_CASE:   # case zones (cv2_case_zones.py)
+            self.sec = None; self.zones = {}; czj = json.loads((V2/'case_zones.json').read_text())
+            for k, z in czj['zones'].items():
+                o, t, n = line_frame(z['line_origin_xy'], z['line_unit_xy']); self.zones[int(k)] = dict(o=o, t=t, n=n, L=float(z['line_length_m']), poly=Polygon(z['box_polygon_xy']), ground=self.ground,
+                                                                                            source=z['rule'], zoom_az=float(z['zoom_azimuth_deg']))
+            return
         self.sec = sec = json.loads(Path('/repo/configs/phd/main_stage1_v1/sections_v1.json').read_text())['sections']['B173_sawtooth']; pf = json.loads((PF/'figures/proc_section_data.json').read_text())
         sj = STJ; z1src = ZONE1_RULE
         if sj.exists():   # zone 1 line as fixed by setup() (zone1_line)
@@ -134,7 +148,9 @@ class Static:
         self.cam_cache = {}
     def proj(self, P, B=None, ctr=None): q = (np.asarray(P, float)-(self.ctr if ctr is None else ctr))@(self.B if B is None else B).T; return q[:, 0], q[:, 1], q[:, 2]
     def zview(self, k):
-        z = self.zones[k]; B = basis(self.c['coordinates']['up'], zone_az(z['t'])); return B, np.r_[np.asarray(z['poly'].centroid.coords[0]), self.ground+12.]
+        z = self.zones[k]
+        if 'zoom_az' in z: return basis(self.c['coordinates']['up'], z['zoom_az']), np.r_[np.asarray(z['poly'].centroid.coords[0]), self.ground+7.]   # case: wall seen from outside
+        B = basis(self.c['coordinates']['up'], zone_az(z['t'])); return B, np.r_[np.asarray(z['poly'].centroid.coords[0]), self.ground+12.]
     def pix(self, P):
         Xc = np.asarray(P, float)@self.E[:3, :3].T+self.E[:3, 3]; return self.K[0, 0]*Xc[:, 0]/Xc[:, 2]+self.K[0, 2], self.K[1, 1]*Xc[:, 1]/Xc[:, 2]+self.K[1, 2], Xc[:, 2]
     def backproject(self, depth):
@@ -151,15 +167,17 @@ def setup():
     tok = np.isfinite(td) & (td > 0) & (tw > 0); Pt, rn = S.backproject(np.where(tok, td, 0.)); ht = np.where(tok, Pt[..., 2]-S.ground, np.nan)
     cls = np.full(td.shape, -2, 'i1'); cls[tok & (own < 0)] = -1; m = tok & (own >= 0); cls[m] = tg['judge_region'][own[m]]
     # zone 1 line (ZONE1_RULE)
-    sec = S.sec; t = np.asarray(sec['t'][:2], float); t /= np.linalg.norm(t); n = np.array([-t[1], t[0]]); c0 = np.asarray(sec['centre'][:2], float)
-    u0, v0, u1, v1 = RECT_V1; rm = np.zeros_like(tok); rm[v0:v1, u0:u1] = True; g0 = tok & rm & (cls == 0); q = Pt[g0][:, :2]-c0
-    n_c = float(np.median(q@n)); s_top = float((q@t).max())+1.0; o1, t1, n1 = line_frame(c0+n_c*n+s_top*t, -t); L1 = float(sec['L'])
-    zone1_rec = dict(rule=ZONE1_RULE, sawtooth_centre_xy=c0.tolist(), sawtooth_unit_xy=t.tolist(), agree_pixels_used=int(g0.sum()), lateral_offset_m=n_c, start_along_axis_m=s_top,
-                     zoom_v1_class_pixels={str(int(k)): int((cls[rm & tok] == k).sum()) for k in np.unique(cls[rm & tok])})
-    if IS_Z1B:   # z1b test: Static() already holds the cv2_zone1b.py line; the r5 rule values above are kept only as the record of what was moved
-        zb = json.loads(Z1B.read_text()); o1, t1, n1, L1 = S.zones[1]['o'], S.zones[1]['t'], S.zones[1]['n'], S.zones[1]['L']
-        zone1_rec = dict(rule=zb['rule'], selection=zb['selection'], zone1b_line_sha256=sha(Z1B), r5_rule=zone1_rec)
-    S.zones[1].update(o=o1, t=t1, n=n1, L=L1, poly=Polygon([o1+a*t1+b*n1 for a, b in [(0, -4), (L1, -4), (L1, 4), (0, 4)]]))
+    if TL_CASE: zone1_rec = dict(rule=S.zones[1]['source'], case_zones=str(V2/'case_zones.json'), case_zones_sha256=sha(V2/'case_zones.json'))   # case: zones from cv2_case_zones.py
+    else:
+        sec = S.sec; t = np.asarray(sec['t'][:2], float); t /= np.linalg.norm(t); n = np.array([-t[1], t[0]]); c0 = np.asarray(sec['centre'][:2], float)
+        u0, v0, u1, v1 = RECT_V1; rm = np.zeros_like(tok); rm[v0:v1, u0:u1] = True; g0 = tok & rm & (cls == 0); q = Pt[g0][:, :2]-c0
+        n_c = float(np.median(q@n)); s_top = float((q@t).max())+1.0; o1, t1, n1 = line_frame(c0+n_c*n+s_top*t, -t); L1 = float(sec['L'])
+        zone1_rec = dict(rule=ZONE1_RULE, sawtooth_centre_xy=c0.tolist(), sawtooth_unit_xy=t.tolist(), agree_pixels_used=int(g0.sum()), lateral_offset_m=n_c, start_along_axis_m=s_top,
+                         zoom_v1_class_pixels={str(int(k)): int((cls[rm & tok] == k).sum()) for k in np.unique(cls[rm & tok])})
+        if IS_Z1B:   # z1b test: Static() already holds the cv2_zone1b.py line; the r5 rule values above are kept only as the record of what was moved
+            zb = json.loads(Z1B.read_text()); o1, t1, n1, L1 = S.zones[1]['o'], S.zones[1]['t'], S.zones[1]['n'], S.zones[1]['L']
+            zone1_rec = dict(rule=zb['rule'], selection=zb['selection'], zone1b_line_sha256=sha(Z1B), r5_rule=zone1_rec)
+        S.zones[1].update(o=o1, t=t1, n=n1, L=L1, poly=Polygon([o1+a*t1+b*n1 for a, b in [(0, -4), (L1, -4), (L1, 4), (0, 4)]]))
     # crop of the camera = building-scope target pixels
     insc = tok.copy(); insc[tok] = scope_mask(Pt[tok], c); vv, uu = np.nonzero(insc); pad = 10
     crop = [int(max(uu.min()-pad, 0)), int(max(vv.min()-pad, 0)), int(min(uu.max()+pad+1, S.W)), int(min(vv.max()+pad+1, S.H))]
@@ -167,7 +185,7 @@ def setup():
     lo, hi = np.percentile(ht[insc], [2, 98]); bins = np.linspace(lo, hi, NBIN+1)   # heights of this camera's building-scope target points
     gt_lohi = np.percentile(gs[:, 2]-S.ground, [2, 98]).tolist()                       # (GT dense in scope, walls included: 2-98 % recorded only)
     zmask = {}; zrec = {}
-    pr = loadz(S1/'defs'/SITE/'prior_ALS.npz', ['V', 'F']); PV, PFc = pr['V'].astype(float), pr['F'].astype('i8')
+    pr = loadz(S1/'defs'/SITE/f'prior_{PRIOR}.npz', ['V', 'F']); PV, PFc = pr['V'].astype(float), pr['F'].astype('i8')
     valid = (tg['region'] >= 0) & np.isfinite(tg['target']).all(1) & np.isfinite(tg['normal']).all(1) & np.isfinite(tg['sigma']) & (tg['sigma'] > 0) & np.isin(tg['judge_region'], [0, 1, 2, 4])
     mv = np.isfinite(tg['mvs_mean_m']); MP = tg['centre'][mv]+tg['normal'][mv]*tg['mvs_mean_m'][mv][:, None]
     out = dict(crop=np.array(crop), bins=bins, ht=ht.astype('f4'), cls=cls, tok=tok, rn=rn.astype('f4'), mvs_xyz=MP.astype('f4'))
@@ -188,20 +206,21 @@ def setup():
         gz = gs[in_zone(gs, z, S.zr)]; zh = float(np.median(gz[:, 2]))
         ring = np.asarray(z['poly'].exterior.coords)[:-1]; ZB, zc = S.zview(k); x, y, _ = S.proj(np.r_[np.c_[ring, np.full(len(ring), y0+S.ground)], np.c_[ring, np.full(len(ring), y1+S.ground)]], ZB, zc)
         zrec[k] = dict(name=ZNAME[k], source=z['source'], line_origin_xy=z['o'].tolist(), line_unit_xy=z['t'].tolist(), line_length_m=z['L'], band_half_width_m=BAND,
-                       box_polygon_xy=ring.tolist(), box_z=list(S.zr), outline_z=zh, zoom_azimuth_deg=zone_az(z['t']), zoom_elevation_deg=35, zoom_basis=ZB.tolist(), zoom_centre=zc.tolist(), zoom_extent=[float(x.min()), float(x.max()), float(y.min()), float(y.max())],
+                       box_polygon_xy=ring.tolist(), box_z=list(S.zr), outline_z=zh, zoom_azimuth_deg=z.get('zoom_az', zone_az(z['t'])), zoom_elevation_deg=35, zoom_basis=ZB.tolist(), zoom_centre=zc.tolist(), zoom_extent=[float(x.min()), float(x.max()), float(y.min()), float(y.max())],
                        section_height_limits_m=[y0, y1], camera_pixels=int(zp.sum()), gt_in_band=int(len(out[f'gt{k}'])), mvs_in_band=int(len(out[f'mvs{k}'])), targets_in_band=int(len(ix)),
                        prior_cut_segments=int(len(out[f'prior{k}'])), target_judgments_in_band={JN[int(j)]: int((tg['judge_region'][ix] == j).sum()) for j in (0, 2, 1, 4)},
                        target_judgments_in_box={JN[int(j)]: int((tg['judge_region'][valid & in_zone(tg['target'], z, S.zr)] == j).sum()) for j in (0, 2, 1, 4)},
                        camera_pixel_classes={str(int(cl)): int((cls[zp] == cl).sum()) for cl in np.unique(cls[zp])})
         if k == 1: zrec[k]['line_rule'] = zone1_rec
-    r1 = zmask[1]; vv, uu = np.nonzero(r1); zrec[1]['share_of_camera_pixels_inside_concept_v1_zoom_520_20_760_260'] = float(((uu >= 520) & (uu < 760) & (vv >= 20) & (vv < 260)).mean()) if len(uu) else None
+    r1 = zmask[1]; vv, uu = np.nonzero(r1)
+    if not TL_CASE: zrec[1]['share_of_camera_pixels_inside_concept_v1_zoom_520_20_760_260'] = float(((uu >= 520) & (uu < 760) & (vv >= 20) & (vv < 260)).mean()) if len(uu) else None
     zrec[1]['camera_pixel_bbox_uv'] = [int(uu.min()), int(vv.min()), int(uu.max()), int(vv.max())] if len(uu) else None
     vv, uu = np.nonzero(zmask[2]); zrec[2]['camera_pixel_bbox_uv'] = [int(uu.min()), int(vv.min()), int(uu.max()), int(vv.max())] if len(uu) else None
     # overview framing: scope footprint x [ground, z_max]
     fp = np.asarray(c['scope']['footprint']['coordinates'][0], float)[:, :2]; corners = np.array([[x, y, zz] for x, y in fp for zz in (S.ground, S.zr[1])]); x, y, _ = S.proj(corners)
     rec.update(camera=dict(name=CAM, K=S.K.tolist(), W2C=S.E.tolist(), crop_u0v0u1v1=crop), oblique=dict(basis=S.B.tolist(), centre=S.ctr.tolist(), projection='orthographic', azimuth_deg=180, elevation_deg=35,
                overview_extent=[float(x.min()), float(x.max()), float(y.min()), float(y.max())]), colour_range=dict(height_above_ground_m=[float(lo), float(hi)], bins=bins.tolist(), source='target-map 3-D points of this camera inside the building scope, 2-98 % (GT dense in scope incl. walls would give '+', '.join(f'{v:.2f}' for v in gt_lohi)+' m and leave the roofs in one or two steps)', ground_z=S.ground),
-               zones=zrec, judgment_class_pixels={str(int(k)): int((cls == k).sum()) for k in np.unique(cls)}, prior_mesh=str(S1/'defs'/SITE/'prior_ALS.npz'), gt=str(GT/'reference'/SITE/'dense.npz'),
+               zones=zrec, judgment_class_pixels={str(int(k)): int((cls == k).sum()) for k in np.unique(cls)}, prior_mesh=str(S1/'defs'/SITE/f'prior_{PRIOR}.npz'), gt=str(GT/'reference'/SITE/'dense.npz'),
                targets=str(FT/'targets'/f'{STEM}.npz'), target_map=str(O/'concept/inputs.npz'), seconds=round(time.monotonic()-t0, 1))
     savez(STN, **out); dump(STJ, rec); print('STATIC', json.dumps(zrec, ensure_ascii=False)[:1500], crop, bins, flush=True)
 
@@ -217,7 +236,7 @@ class Frame:
             lo, hi = np.floor(min(vals)*2)/2-.25, np.ceil(max(vals)*2)/2+.25; top = ZTOP[k] if ZTOP[k] is not None and hi > ZTOP[k] else hi
             self.yr[k] = (lo, lo, top, hi)
         b = self.st['bins']; self.bins = b; cmap = plt.get_cmap('viridis'); self.hcol = np.array([cmap((i+.5)/NBIN)[:3] for i in range(NBIN)])
-        pr = loadz(S1/'defs'/SITE/'prior_ALS.npz', ['V', 'F']); self.PV, self.PF = pr['V'].astype(float), pr['F'].astype('i8')
+        pr = loadz(S1/'defs'/SITE/f'prior_{PRIOR}.npz', ['V', 'F']); self.PV, self.PF = pr['V'].astype(float), pr['F'].astype('i8')
         keep = scope_mask(self.PV[self.PF].mean(1), self.S.c); self.PFs = self.PF[keep]
         self.fig = None
     def h(self, p):
@@ -332,7 +351,7 @@ def draw(F, label, cache):
     S = F.S; st = F.st; it = None if label == 'input' else int(label); t0 = time.monotonic(); rec = dict(frame=label, iteration=it, sources={}, counts={})
     F.fig = fig = plt.figure(figsize=(W_/100, H_/100), dpi=100, facecolor='white')
     # top
-    fig.text(16/W_, 1-24/H_, 'B173 · 입력' if it is None else f'B173 · 반복 {it:,} / 30,000'+(' · 불투명도 초기화 직후' if it in RESETS else ''), fontsize=19, color=NAVY, va='center', fontweight='bold')
+    fig.text(16/W_, 1-24/H_, f'{BNAME} · 입력' if it is None else f'{BNAME} · 반복 {it:,} / 30,000'+(' · 불투명도 초기화 직후' if it in RESETS else ''), fontsize=19, color=NAVY, va='center', fontweight='bold')
     xs = np.linspace(1040, 1890, len(FRAMES)); cur = FRAMES.index(label); ax = fig.add_axes([0, 1-44/H_, 1, 44/H_]); ax.set_xlim(0, W_); ax.set_ylim(44, 0); ax.axis('off')
     ax.plot([xs[0], xs[-1]], [16, 16], color='#D3D1C7', lw=1, zorder=1)
     for i, (x, f) in enumerate(zip(xs, FRAMES)):
@@ -407,6 +426,7 @@ def draw(F, label, cache):
     x += NBIN*22+18
     if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('box', STRIPC, '25 m 위(압축)'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
     else: items = [('band', GTB, '참값'), ('line', MSC, '메시'), ('box', STRIPC, '25 m 위(압축)'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
+    if all(v is None for v in ZTOP.values()): items = [i for i in items if i[2] != '25 m 위(압축)']   # case: no compressed band, so no legend entry
     for kind, col, txt in items:
         if kind == 'pt': lax.plot(x+5, 17, 'o', ms=4.5, color=col)
         elif kind == 'box': lax.add_patch(plt.Rectangle((x, 11), 11, 12, color=col, alpha=.75))
@@ -464,9 +484,9 @@ def numbers():
             for k in (1, 2):
                 cs = comp_state(k, int(lab)); r[f'zone{k}_comparison_iteration'] = cs
                 if cs is not None:
-                    fam = f"cmp_{COMP[k]['run']}_{cs}"+('_v203' if cs == 30000 else ''); scc = mesh_scores(V2/'gtj/scenes'/STEM/'distances', fam); r[f'zone{k}_comparison_family'] = fam
+                    fam = f"cmp_{COMP[k]['run']}_{cs}"+(V30 if cs == 30000 else ''); scc = mesh_scores(V2/'gtj/scenes'/STEM/'distances', fam); r[f'zone{k}_comparison_family'] = fam
                     r[f'zone{k}_comparison_mesh_completeness_pct'] = scc[0][k]['completeness_pct'] if scc else None; r[f'zone{k}_comparison_mesh_accuracy_pct'] = scc[0][k]['accuracy_pct'] if scc else None
-                    if cs == 30000:   # record: RESCORE's 219-view mesh of the same state
+                    if cs == 30000 and not TL_CASE:   # record: RESCORE's 219-view mesh of the same state
                         s2 = mesh_scores(V2/'gtj/scenes'/STEM/'distances', f"cmp_{COMP[k]['run']}_30000")
                         r[f'zone{k}_comparison_rescore219_completeness_pct'] = s2[0][k]['completeness_pct'] if s2 else None; r[f'zone{k}_comparison_rescore219_accuracy_pct'] = s2[0][k]['accuracy_pct'] if s2 else None
         rows_out.append(r); print('ROW', r, flush=True)

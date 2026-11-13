@@ -12,8 +12,13 @@ S1 = PH/'main_stage1_v1/PHD-MAIN-STAGE1-v1'
 JA = PH/'main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1'
 SITE = 'B173nb_b10'; PRIOR = 'ALS'; STEM = SITE+'__'+PRIOR; CASE = 'c1_'+STEM
 RUN = 'tl_B173nb_b10_ALS_s0'; ATTEMPT = 'attempt2'
+# another case (2026-11-13, user '그 이야기로 만들어': B0_b10 x LoD2): TL_CASE=<site>__<prior>. launch.py then mounts the case roots as /tl
+# (PH/.../concept_v2/case_<stem>), /docs (docs/.../figures_concept_v2/case_<stem>) and /cfg (its config/), so O, D, C keep their meaning; unset = B173 as before.
+TL_CASE = os.environ.get('TL_CASE', '')
+if TL_CASE:
+    SITE, PRIOR = TL_CASE.split('__'); STEM = TL_CASE; CASE = 'case_'+STEM; RUN = f'tl_{SITE}_{PRIOR}_s0'; ATTEMPT = os.environ.get('TL_ATTEMPT', 'attempt1')
 RUNM = O/'runs'/SITE/RUN/ATTEMPT/'model'; DER = O/'runs'/SITE/RUN/'derived'
-ORIG = FT/'runs'/SITE/'ft_ALS_s0/attempt1/model'
+ORIG = FT/'runs'/SITE/f'ft_{PRIOR}_s0/attempt1/model'
 SHIFT = np.array([690953., 5336071., 604.])
 def now(): return dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat()
 def sha(p):

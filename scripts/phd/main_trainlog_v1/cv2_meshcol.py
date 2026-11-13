@@ -29,6 +29,10 @@ SRC = {**{f'ours_{n}': (O/'analysis'/f'mesh_{n}.npz', O/'gtj/renders'/f'{STEM}__
        'nojudge_30000_rescore219': (RSM/'meshes/B173nb_b10__ALS__baseline_30000/final.ply', RSM/'renders/B173nb_b10__ALS__baseline_30000'),
        '2dgs_30000_rescore219': (RSM/'meshes/B173nb_b10__LoD2__2DGS_30000/final.ply', RSM/'renders/B173nb_b10__LoD2__2DGS_30000')}
 
+if TL_CASE:   # another case (launch.py TL_CASE): ours from the uncut original-rule mesh (scope cut here, as frames.prep_mesh), 2DGS only, no virtual views
+    SRC = {**{f'ours_{n}': (O/'gtj/meshes'/f'{STEM}__tl_{n}'/'final.ply', O/'gtj/renders'/f'{STEM}__tl_{n}') for n in STATES},
+           '2dgs_7000': SRC['2dgs_7000'], '2dgs_30000': (V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_30000/final.ply', V2/'gtj/renders'/f'{STEM}__cmp_2dgs_30000')}
+
 def mesh(key, c):
     p, _ = SRC[key]
     if p.suffix == '.npz': z = loadz(p, ['vertices', 'faces']); return z['vertices'].astype(float), z['faces'].astype('i8')

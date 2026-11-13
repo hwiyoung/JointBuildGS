@@ -2,7 +2,7 @@
 Distinct Open3D vertices inside ONE tile that received the same reconstructed edge code are sent to the inherited
 exact-coordinate fallback (vcode=-1 in a read-time view). Vertices, colours, faces, TSDF settings, tolerances unchanged.
 Run inside the tl_mesh container (shadow /gtjudge)."""
-import sys
+import os, sys
 sys.path.insert(0, '/repo/scripts/phd/main_gtjudge_v1')
 import numpy as np
 from inherited import O, D, Path, json, dump, sha, now, module
@@ -21,7 +21,7 @@ def diagnose(stem):
     return n, counts, sorted(bad_codes)
 
 def main(family):
-    stem = f'B173nb_b10__ALS__{family}'; wd = O/'meshes'/stem/'final_work'
+    stem = f"{os.environ.get('TL_CASE') or 'B173nb_b10__ALS'}__{family}"; wd = O/'meshes'/stem/'final_work'
     if (wd/'merged.json').exists(): print('ALREADY_MERGED'); return
     n, counts, codes = diagnose(stem); rec = dict(at=now(), stem=stem, vertices=n, mismatched_copies=counts, edge_codes=len(codes))
     assert counts['across_tiles'] == 0, 'collision across tiles: not the inherited same-tile case'

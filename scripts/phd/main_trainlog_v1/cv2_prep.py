@@ -16,6 +16,7 @@ COMP = {'nojudge_15000': PH/f'main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/{SITE}/noju
         'nojudge_30000': PH/f'main_stage3_v1/PHD-MAIN-STAGE3-v1/runs/{SITE}/nojudge_ALS_s0/model/point_cloud/iteration_30000/point_cloud.ply',
         '2dgs_7000': PH/f'main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/{SITE}/imgonly_2dgs_s0/model/point_cloud/iteration_7000/point_cloud.ply',
         '2dgs_30000': PH/f'main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/{SITE}/imgonly_2dgs_s0/model/point_cloud/iteration_30000/point_cloud.ply'}
+if TL_CASE: COMP = {k: v for k, v in COMP.items() if k.startswith('2dgs_')}   # another case (launch.py TL_CASE): image-only 2DGS only
 TYPES = {'float': 'f4', 'float32': 'f4', 'double': 'f8', 'uchar': 'u1', 'uint8': 'u1', 'int': 'i4', 'int32': 'i4', 'uint': 'u4', 'short': 'i2', 'ushort': 'u2'}
 
 def read_ply(p):

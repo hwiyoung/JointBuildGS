@@ -8,15 +8,15 @@ import sys, os, time, json, gc
 from pathlib import Path
 sys.path.insert(0, '/repo/scripts/phd/main_gtjudge_v1')
 import numpy as np
-SITE, PRIOR = 'B173nb_b10', 'ALS'; STEM = SITE+'__'+PRIOR
+SITE, PRIOR = os.environ['TL_CASE'].split('__') if os.environ.get('TL_CASE') else ('B173nb_b10', 'ALS'); STEM = SITE+'__'+PRIOR   # TL_CASE: another case (launch.py)
 G = Path('/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1')
 SH = Path('/gtjudge')
 
 def shadow():
-    for rel in ['reference/B173nb_b10/dense.npz', 'reference/B173nb_b10/normal_points.npz', 'scenes/B173nb_b10__ALS/rows.npz', 'scenes/B173nb_b10__ALS/stage1_cells.npz']:
+    for rel in [f'reference/{SITE}/dense.npz', f'reference/{SITE}/normal_points.npz', f'scenes/{STEM}/rows.npz', f'scenes/{STEM}/stage1_cells.npz']:
         dst = SH/rel; dst.parent.mkdir(parents=True, exist_ok=True)
         if not dst.exists(): os.symlink(G/rel, dst)
-    for d in ['jobs', 'meshes', 'renders', 'scenes/B173nb_b10__ALS/distances', 'timing', 'bin', 'tmp']: (SH/d).mkdir(parents=True, exist_ok=True)
+    for d in ['jobs', 'meshes', 'renders', f'scenes/{STEM}/distances', 'timing', 'bin', 'tmp']: (SH/d).mkdir(parents=True, exist_ok=True)
     print('SHADOW_READY', flush=True)
 
 def score(family):

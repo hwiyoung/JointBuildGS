@@ -1,0 +1,101 @@
+{
+  "at": "2026-11-13T17:13:57.163972+09:00",
+  "rule": "Concept video, another case (TL_CASE=B0_b10__LoD2, 2026-11-13): the two zones. Read-only on inputs; writes /tl/concept_v2/case_zones.json and a copy in /docs.\nWall zones. The section line of a zone runs perpendicular to one LoD2 prior wall face (horizontal face normal), 12 m long, centred on the wall (6 m inside,\n6 m outside); box = line x +-4 m along the wall (12 x 8 m, as the B173 zone 1); the ② zoom looks at the wall from outside (azimuth of the outward normal,\nelevation 35).\n  zone 1 'hidden wall' = the place of the user's story: GTJUDGE GT rows (rows.npz) that are wall rows with the prior right (<= TAU) and no / wrong image depth,\n         dense part = 4 m cells with >= 200 such rows (cv2_site_look.py cluster A); centre = their median xy; the wall face = the LoD2 wall face (|n.up| < 0.3,\n         area >= 2 m2) nearest that centre.\n  zone 2 'seen wall' (control: a wall the photos see) = among LoD2 wall faces of area >= 20 m2, the one whose GT wall rows within 0.5 m of the face plane and\n         inside the face extent are most often 'prior right and image depth right' (share, then count); centre = the median xy of those rows.\nChosen BY GT rows (places of a story, not representative places); recorded. GT is used only to place the zones, to score and to draw. scientific_verdict: null",
+  "scientific_verdict": null,
+  "zones": {
+    "1": {
+      "name": "가려진 벽",
+      "rule": "zone 1: dense case rows (wall, prior right, image depth absent or > 0.5 m), nearest LoD2 wall face",
+      "wall_face_index": 47,
+      "wall_face_area_m2": 182.72,
+      "wall_normal_out_xy": [
+        -0.3684808280587321,
+        -0.9296353475170526
+      ],
+      "wall_foot_xy": [
+        98.93482437681277,
+        -3.5536186315012475
+      ],
+      "line_origin_xy": [
+        101.14570934516516,
+        2.0241934536010677
+      ],
+      "line_unit_xy": [
+        -0.3684808280587321,
+        -0.9296353475170526
+      ],
+      "line_length_m": 12.0,
+      "box_polygon_xy": [
+        [
+          97.42716795509695,
+          3.498116765835996
+        ],
+        [
+          93.00539801839216,
+          -7.6575074043686335
+        ],
+        [
+          100.44248079852858,
+          -10.60535402883849
+        ],
+        [
+          104.86425073523337,
+          0.5502701413661393
+        ]
+      ],
+      "zoom_azimuth_deg": 248.4,
+      "case_rows": 3050,
+      "case_centre_xy": [
+        98.99655151367188,
+        -3.3978880643844604
+      ]
+    },
+    "2": {
+      "name": "잘 보이는 벽",
+      "rule": "zone 2: LoD2 wall face (area >= 20 m2) whose GT wall rows near the face are most often prior right & image depth right",
+      "wall_face_index": 67,
+      "wall_face_area_m2": 54.92,
+      "wall_normal_out_xy": [
+        0.3624552721760118,
+        0.9320011672051774
+      ],
+      "wall_foot_xy": [
+        99.06256335002061,
+        15.60641973023419
+      ],
+      "line_origin_xy": [
+        96.88783171696454,
+        10.014412727003126
+      ],
+      "line_unit_xy": [
+        0.3624552721760118,
+        0.9320011672051774
+      ],
+      "line_length_m": 12.0,
+      "box_polygon_xy": [
+        [
+          100.61583638578526,
+          8.56459163829908
+        ],
+        [
+          104.9652996518974,
+          19.748605644761206
+        ],
+        [
+          97.50929031425596,
+          22.648247822169303
+        ],
+        [
+          93.15982704814382,
+          11.464233815707173
+        ]
+      ],
+      "zoom_azimuth_deg": 68.7,
+      "face_rows": 4606,
+      "prior_and_image_right_share": 0.965
+    }
+  },
+  "prior": "/art/phase-payloads/phd/main_stage1_v1/PHD-MAIN-STAGE1-v1/defs/B0_b10/prior_LoD2.npz",
+  "rows": "/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/scenes/B0_b10__LoD2/rows.npz",
+  "seconds": 0.3
+}

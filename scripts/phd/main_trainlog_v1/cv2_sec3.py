@@ -19,6 +19,7 @@ assert VAR != 'r6', 'r6 reads sections_r3 unchanged (it already holds the 2DGS c
 MESH = {**{f'ours_{n}': O/'gtj/meshes'/f'{STEM}__tl_{n}'/'final.ply' for n in STATES},
         'nojudge_15000': V2/'gtj/meshes'/f'{STEM}__cmp_nojudge_15000'/'final.ply', 'nojudge_30000': V2/'gtj/meshes'/f'{STEM}__cmp_nojudge_30000_v203'/'final.ply',
         '2dgs_7000': V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_7000'/'final.ply', '2dgs_30000': V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_30000_v203'/'final.ply'}
+if TL_CASE: MESH = {**{k: v for k, v in MESH.items() if k.startswith('ours_')}, '2dgs_7000': MESH['2dgs_7000'], '2dgs_30000': V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_30000'/'final.ply'}   # case: 2DGS only, no virtual views (no _v203)
 
 def gaussians(key):
     if key.startswith('ours_'):

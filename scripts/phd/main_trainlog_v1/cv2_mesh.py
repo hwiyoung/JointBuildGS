@@ -24,6 +24,9 @@ FAM = {'chk_2dgs_30000': dict(ply=f'{A_}/main_baselines_v1/PHD-MAIN-BASELINES-v1
 LINKED = {'cmp_nojudge_30000': f'{A_}/main_rescore_v1/PHD-MAIN-RESCORE-v1/meshes/B173nb_b10__ALS__baseline_30000/final.ply',
           'cmp_2dgs_30000': f'{A_}/main_rescore_v1/PHD-MAIN-RESCORE-v1/meshes/B173nb_b10__LoD2__2DGS_30000/final.ply'}
 LOG = V2/'logs'
+if os.environ.get('TL_CASE'):   # another case (launch.py TL_CASE): image-only 2DGS at 7,000 and 30,000 only, all real views (no virtual -> no _v203), r27 renderer as for B173;
+    FAM = {'cmp_2dgs_7000': FAM['cmp_2dgs_7000'], 'cmp_2dgs_30000': FAM['cmp_2dgs_30000_v203']}; LINKED = {}   # TL_CMP_SHADOW = NVMe shadow root for these meshes
+    SH = Path(os.environ['TL_CMP_SHADOW']) if os.environ.get('TL_CMP_SHADOW') else SH
 
 def base(name, gpu, cpus, memory):
     cmd = ['nice', '-n', '19', 'docker', 'run', '--rm', '--read-only', '--network', 'none', '--name', name, '--user', f'{os.getuid()}:{os.getgid()}',
@@ -33,7 +36,7 @@ def base(name, gpu, cpus, memory):
 def render_cmd(family, gpu):
     f = FAM[family]; cmd = base(f'jbgs-trainlog-cv2-render-{family}', gpu, 4, '32g')
     for e in ['PYTHONDONTWRITEBYTECODE=1', 'PYTHONUNBUFFERED=1', 'OMP_NUM_THREADS=1', 'TZ=Asia/Seoul', 'RESCORE_OUTPUT_ROOT=/gtjudge', 'RESCORE_DOC_ROOT=/docs',
-              'RESCORE_RENDER_GPU_FRACTION=.25', 'TMPDIR=/gtjudge/tmp', 'MPLCONFIGDIR=/gtjudge/tmp/mpl', 'XDG_CACHE_HOME=/gtjudge/tmp/cache']: cmd += ['-e', e]
+              'RESCORE_RENDER_GPU_FRACTION=.25', 'TMPDIR=/gtjudge/tmp', 'MPLCONFIGDIR=/gtjudge/tmp/mpl', 'XDG_CACHE_HOME=/gtjudge/tmp/cache', *([f"TL_CASE={os.environ['TL_CASE']}"] if os.environ.get('TL_CASE') else [])]: cmd += ['-e', e]
     for s, d, m in [(R, '/repo', 'ro'), (ART, '/art', 'ro'), (R/'src/phd/forks'/f['source'], '/source', 'ro'), (SH, '/gtjudge', 'rw'),
                     (R/'configs/phd/main_rescore_v1', '/cfg', 'ro'), (V2/'rescore_docs', '/docs', 'rw')]: cmd += ['-v', f'{s}:{d}:{m}']
     return cmd + ['-w', '/gtjudge', '--entrypoint', '/bin/bash', GPU_IMAGE, '-c',
@@ -43,7 +46,7 @@ def render_cmd(family, gpu):
 def mesh_cmd(step, family):
     cmd = base(f'jbgs-trainlog-cv2-mesh-{step.replace(":", "")}-{family}'[:120], None, 12, '40g')
     for e in ['PYTHONDONTWRITEBYTECODE=1', 'PYTHONUNBUFFERED=1', 'OMP_NUM_THREADS=8', 'OPENBLAS_NUM_THREADS=1', 'MKL_NUM_THREADS=1', 'TMPDIR=/gtjudge/tmp',
-              'MPLCONFIGDIR=/gtjudge/tmp/mpl', 'XDG_CACHE_HOME=/gtjudge/tmp/cache', 'TZ=Asia/Seoul']: cmd += ['-e', e]
+              'MPLCONFIGDIR=/gtjudge/tmp/mpl', 'XDG_CACHE_HOME=/gtjudge/tmp/cache', 'TZ=Asia/Seoul', *([f"TL_CASE={os.environ['TL_CASE']}"] if os.environ.get('TL_CASE') else [])]: cmd += ['-e', e]
     for s, d, m in [(R, '/repo', 'ro'), (ART, '/art', 'ro'), (ART, '/artifacts/JointBuildGS', 'ro'), (PH, '/ph', 'ro'), (PH/'main_rescore_v1/PHD-MAIN-RESCORE-v1', '/out', 'ro'),
                     (PH/'main_release_v1/PHD-MAIN-RELEASE-v1', '/release', 'ro'), (SH, '/gtjudge', 'rw'), (R/'configs/phd/main_gtjudge_v1', '/cfg', 'ro'),
                     (V2/'gtj_docs', '/docs', 'rw'), (V2, '/tl', 'rw'), (R/'src/phd/forks/GeoGS-conf-guided-v1-r27', '/source', 'ro'), (Path('/usr/share/fonts/opentype/noto'), '/fonts', 'ro')]:
@@ -58,7 +61,7 @@ def go(cmd, tag):
 def setup():
     for d in ['jobs', 'views', 'meshes', 'renders', 'tmp']: (SH/d).mkdir(parents=True, exist_ok=True)
     for d in [V2/'gtj_docs', V2/'rescore_docs']: d.mkdir(parents=True, exist_ok=True)
-    src = O/'gtj/views'/f'{SITE}.json'; dst = SH/'views'/f'{SITE}.json'
+    src = (PH/'main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/views' if os.environ.get('TL_CASE') else O/'gtj/views')/f'{SITE}.json'; dst = SH/'views'/f'{SITE}.json'
     if not dst.exists(): dst.write_bytes(src.read_bytes())
     view = json.loads(dst.read_text())
     for fam, f in FAM.items():

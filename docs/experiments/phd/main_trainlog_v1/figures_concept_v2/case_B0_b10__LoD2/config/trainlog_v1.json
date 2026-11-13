@@ -1,0 +1,1004 @@
+{
+  "task_id": "PHD-MAIN-TRAINLOG-v1",
+  "created_at": "2026-11-13T17:11:31.579185+09:00",
+  "scientific_verdict": null,
+  "branch": "exp/main-experiment",
+  "source_commit": "3f07b607d6c89fb474365e5bb967c182aab6c16d",
+  "order": {
+    "path": "docs/experiments/phd/main_trainlog_v1/본실험_학습과정연속기록_발주문_v1.md",
+    "sha256": "9d6fc0d7eceb502768d97dfadb2ea388a3fbc635df19f0455919efca11c0dd4e"
+  },
+  "reference_code": {
+    "path": "docs/experiments/phd/main_trainlog_v1/ref/trainlog_proto_v1.py",
+    "sha256": "7881136abfb2cf82ea427c0a6c408db5d9457af052c9089a5c252d5d4c133baf"
+  },
+  "fork": "src/phd/forks/GeoGS-conf-guided-v1-r27",
+  "parent_fork": "src/phd/forks/GeoGS-conf-guided-v1-r23",
+  "fork_number_rule": "r24 (RELEASE-v1), r25 and r26 (GTJUDGE-v1) already exist; next free number r27",
+  "inherited_record_code": "src/phd/forks/GeoGS-conf-guided-v1-r24/jbgs_release.py Release.record (release fields copied verbatim)",
+  "switch": "--jbgs_trainlog {off,on}; off = r23 FinalTrain path unchanged; on = TrainLog(FinalTrain) recording only",
+  "target": {
+    "site": "B0_b10",
+    "prior": "LoD2",
+    "case": "case_B0_b10__LoD2",
+    "seed": 0,
+    "iterations": 30000,
+    "run": "tl_B0_b10_LoD2_s0",
+    "original_run": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B0_b10/ft_LoD2_s0/attempt1",
+    "original_command": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/runs/B0_b10/ft_LoD2_s0/attempt1/command.json",
+    "change_vs_original": "same argv as original command.json plus --jbgs_trainlog on (launch.train_args), as the B173 run; output under the case root",
+    "target_dir": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/stage1/B0_b10__LoD2",
+    "targets": "/art/phase-payloads/phd/main_finaltrain_v1/PHD-MAIN-FINALTRAIN-v1/targets/B0_b10__LoD2.npz",
+    "gpu": 1,
+    "docker_image": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be",
+    "renderer": {
+      "path": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/rfix_speed/builds/target/extension/jbgs_rfix_speed_target.so",
+      "sha256": "1426e3aae8b24c490821a87e731aee9e834ee3aabb9d3caec0e04cb8365e2245",
+      "validation_sha256": "9a5a37c41e9d7b2886f4a4c9f3d3dc3f39460c28cfbf64aaedfbbf306419a105",
+      "binning_guard_fraction": 0.5
+    }
+  },
+  "scope": {
+    "building_id": "DEBY_LOD2_4959323",
+    "footprint": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            111.43999999994412,
+            -8.509999999776483
+          ],
+          [
+            93.44999999995343,
+            -1.3799999998882413
+          ],
+          [
+            93.64000000001397,
+            -0.8899999996647239
+          ],
+          [
+            95.07999999995809,
+            2.7199999997392297
+          ],
+          [
+            89.68000000005122,
+            4.849999999627471
+          ],
+          [
+            92.1600000000326,
+            11.110000000335276
+          ],
+          [
+            94.63000000000466,
+            17.330000000074506
+          ],
+          [
+            100.03000000002794,
+            15.230000000447035
+          ],
+          [
+            112.10999999998603,
+            45.99000000022352
+          ],
+          [
+            117.47999999998137,
+            59.65000000037253
+          ],
+          [
+            117.68999999994412,
+            60.17999999970198
+          ],
+          [
+            135.72999999998137,
+            53.07000000029802
+          ],
+          [
+            111.43999999994412,
+            -8.509999999776483
+          ]
+        ]
+      ]
+    },
+    "buffered_footprint": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            112.37024751333246,
+            -8.87693264187148
+          ],
+          [
+            112.32975592861962,
+            -8.966436619020392
+          ],
+          [
+            112.28067772730586,
+            -9.051535740718775
+          ],
+          [
+            112.22348654006286,
+            -9.131408755309234
+          ],
+          [
+            112.15873429217935,
+            -9.20528484583968
+          ],
+          [
+            112.08704587718927,
+            -9.272451068855714
+          ],
+          [
+            112.00911312631779,
+            -9.332259234683086
+          ],
+          [
+            111.92568813194309,
+            -9.384132162801821
+          ],
+          [
+            111.83757598950599,
+            -9.42756925194435
+          ],
+          [
+            111.74562702791201,
+            -9.462151311163238
+          ],
+          [
+            111.65072860340639,
+            -9.487544605246148
+          ],
+          [
+            111.55379653611574,
+            -9.503504075437645
+          ],
+          [
+            111.45576627189814,
+            -9.509875704386147
+          ],
+          [
+            111.35758385479441,
+            -9.506598002493055
+          ],
+          [
+            111.26019679720144,
+            -9.493702601319995
+          ],
+          [
+            111.16454493587501,
+            -9.471313948327467
+          ],
+          [
+            111.07155136200666,
+            -9.439648105890848
+          ],
+          [
+            93.08155136201597,
+            -2.3096481060026077
+          ],
+          [
+            92.9926172015536,
+            -2.2692699115168393
+          ],
+          [
+            92.9080463282204,
+            -2.220408363539552
+          ],
+          [
+            92.82864552138018,
+            -2.1635295857731394
+          ],
+          [
+            92.75517223959883,
+            -2.099176183754622
+          ],
+          [
+            92.68832739472931,
+            -2.027962068570576
+          ],
+          [
+            92.6287486654344,
+            -1.950566600339668
+          ],
+          [
+            92.57700441393413,
+            -1.8677281073321552
+          ],
+          [
+            92.53358826401012,
+            -1.780236842551876
+          ],
+          [
+            92.49891439199084,
+            -1.6889274449727187
+          ],
+          [
+            92.47331357564065,
+            -1.5946709773469836
+          ],
+          [
+            92.45703003864452,
+            -1.4983666165424308
+          ],
+          [
+            92.45021912079144,
+            -1.4009330756795602
+          ],
+          [
+            92.45294579608202,
+            -1.3032998398992295
+          ],
+          [
+            92.46518405289699,
+            -1.2063982993686024
+          ],
+          [
+            92.4868171421399,
+            -1.111152864113751
+          ],
+          [
+            92.51763869098653,
+            -1.0184721454405967
+          ],
+          [
+            92.70763869104707,
+            -0.5284721452170793
+          ],
+          [
+            92.71116884483843,
+            -0.5194967133429171
+          ],
+          [
+            93.77923902277608,
+            2.158095885176487
+          ],
+          [
+            89.31306881045955,
+            3.919751913305957
+          ],
+          [
+            89.22357262144732,
+            3.960239330649142
+          ],
+          [
+            89.13848040838297,
+            4.009311869677096
+          ],
+          [
+            89.05861320891077,
+            4.066496039333599
+          ],
+          [
+            88.98474164557,
+            4.131240081070471
+          ],
+          [
+            88.91757849021317,
+            4.202919292654793
+          ],
+          [
+            88.85777178661381,
+            4.280842055795068
+          ],
+          [
+            88.80589859762252,
+            4.364256509426971
+          ],
+          [
+            88.76245943720352,
+            4.452357804269491
+          ],
+          [
+            88.72787344107621,
+            4.5442958686537205
+          ],
+          [
+            88.70247432255893,
+            4.639183610693356
+          ],
+          [
+            88.68650715263618,
+            4.736105477655845
+          ],
+          [
+            88.68012599531815,
+            4.834126289946494
+          ],
+          [
+            88.68339242110797,
+            4.932300264468237
+          ],
+          [
+            88.69627491292036,
+            5.029680140292452
+          ],
+          [
+            88.71864917018367,
+            5.125326318589088
+          ],
+          [
+            88.75029930819099,
+            5.218315928626733
+          ],
+          [
+            91.23029930817236,
+            11.478315929334538
+          ],
+          [
+            93.70059876085908,
+            17.699070910164515
+          ],
+          [
+            93.74104552207922,
+            17.787995563564277
+          ],
+          [
+            93.78997605100656,
+            17.872549320514263
+          ],
+          [
+            93.84692337745139,
+            17.951925239319994
+          ],
+          [
+            93.91134402264048,
+            18.02536579316382
+          ],
+          [
+            93.98262318592555,
+            18.09217009958824
+          ],
+          [
+            94.0600806121544,
+            18.151700609391778
+          ],
+          [
+            94.14297708370943,
+            18.203389191101788
+          ],
+          [
+            94.23052147525647,
+            18.246742552956725
+          ],
+          [
+            94.32187830387664,
+            18.281346950653106
+          ],
+          [
+            94.41617570252647,
+            18.306872135928508
+          ],
+          [
+            94.51251374073097,
+            18.323074508297264
+          ],
+          [
+            94.60997301310124,
+            18.329799439860093
+          ],
+          [
+            94.70762341371146,
+            18.32698275100077
+          ],
+          [
+            94.80453301259686,
+            18.31465132288654
+          ],
+          [
+            94.8997769496595,
+            18.29292284092674
+          ],
+          [
+            94.9924462611024,
+            18.26200467163805
+          ],
+          [
+            99.46353222697803,
+            16.523249018557912
+          ],
+          [
+            111.17920437728769,
+            46.35554002370332
+          ],
+          [
+            116.54933134149799,
+            60.01586315527713
+          ],
+          [
+            116.55031849965314,
+            60.01836436882782
+          ],
+          [
+            116.76031849961589,
+            60.548364368157266
+          ],
+          [
+            116.8008491815326,
+            60.6376142718987
+          ],
+          [
+            116.84992307480367,
+            60.722467288896965
+          ],
+          [
+            116.9070686636485,
+            60.802108127479094
+          ],
+          [
+            116.97173687716332,
+            60.87577157604954
+          ],
+          [
+            117.04330636494892,
+            60.942749855458565
+          ],
+          [
+            117.12108946722026,
+            61.00239941954361
+          ],
+          [
+            117.20433882203518,
+            61.054147138501904
+          ],
+          [
+            117.2922545461584,
+            61.09749580568301
+          ],
+          [
+            117.38399192056474,
+            61.13202891489024
+          ],
+          [
+            117.47866950673736,
+            61.15741466228945
+          ],
+          [
+            117.57537761577706,
+            61.17340913447368
+          ],
+          [
+            117.67318704894942,
+            61.17985865205182
+          ],
+          [
+            117.77115802568768,
+            61.17670124624349
+          ],
+          [
+            117.86834921326907,
+            61.16396725429248
+          ],
+          [
+            117.9638267714045,
+            61.141779027978004
+          ],
+          [
+            118.05667332483902,
+            61.11034975802436
+          ],
+          [
+            136.09667332487626,
+            54.00034975862041
+          ],
+          [
+            136.18611341937293,
+            53.95992165339505
+          ],
+          [
+            136.27115933443022,
+            53.91092007660662
+          ],
+          [
+            136.3509917409176,
+            53.85381710759345
+          ],
+          [
+            136.42484153644898,
+            53.78916287420026
+          ],
+          [
+            136.49199725488603,
+            53.71758025286736
+          ],
+          [
+            136.5518119205761,
+            53.639758867862525
+          ],
+          [
+            136.60370928129123,
+            53.55644844746692
+          ],
+          [
+            136.64718935982017,
+            53.468451601121146
+          ],
+          [
+            136.68183327073015,
+            53.376616087116226
+          ],
+          [
+            136.7073072558931,
+            53.28182664532231
+          ],
+          [
+            136.72336589989908,
+            53.18499647363819
+          ],
+          [
+            136.72985449437874,
+            53.087058430277274
+          ],
+          [
+            136.72671052845823,
+            52.98895604664683
+          ],
+          [
+            136.7139642909863,
+            52.89163443740204
+          ],
+          [
+            136.69173857873292,
+            52.7960311952472
+          ],
+          [
+            136.6602475133697,
+            52.70306735820302
+          ],
+          [
+            112.37024751333246,
+            -8.87693264187148
+          ]
+        ]
+      ]
+    },
+    "xy_buffer_m": 1,
+    "z_min": -42.82701416015625,
+    "z_max": -18.529999999999973,
+    "ground_z": -43.12701416015625,
+    "old_roof_max_z": -20.529999999999973,
+    "ground_rule": "PROCFIG-v1 freeze.py rule: survey DTM 0.5 m cell at the case-box XY centre; no LoD2 Z",
+    "ground_cell_iy_ix": [
+      506,
+      716
+    ],
+    "ground_query_xy": [
+      105.120844297727,
+      2.284314806027563
+    ],
+    "zoom_box_xy": [
+      [
+        104.14349856916981,
+        -9.172333714673027
+      ],
+      [
+        111.73634575099965,
+        11.688842466774144
+      ],
+      [
+        106.09819002628419,
+        13.740963326728153
+      ],
+      [
+        98.50534284445435,
+        -7.120212854719018
+      ]
+    ]
+  },
+  "coordinates": {
+    "crs": "EPSG:25832",
+    "local_to_world_translation": [
+      690953.0,
+      5336071.0,
+      604.0
+    ],
+    "up": [
+      -0.0022003022295437485,
+      0.0038866451918428023,
+      0.9999900262798882
+    ]
+  },
+  "scope_source": "/repo/docs/experiments/phd/main_gtjudge_v1/tables/addendum10/c2_outline.geojson (+ /repo/docs/experiments/phd/main_gtjudge_v1/tables/addendum10/c2_boxes.json); rule of scripts/phd/main_procfig_v1/freeze.py",
+  "training_log": {
+    "save_iterations": [
+      0,
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000,
+      1100,
+      1200,
+      1300,
+      1400,
+      1500,
+      1600,
+      1700,
+      1800,
+      1900,
+      2000,
+      2100,
+      2200,
+      2300,
+      2400,
+      2500,
+      2600,
+      2700,
+      2800,
+      2900,
+      3000,
+      3500,
+      4000,
+      4500,
+      5000,
+      5500,
+      6000,
+      6500,
+      7000,
+      7500,
+      8000,
+      8500,
+      9000,
+      9500,
+      10000,
+      10500,
+      11000,
+      11500,
+      12000,
+      12500,
+      13000,
+      13500,
+      14000,
+      14500,
+      15000,
+      17500,
+      20000,
+      22500,
+      25000,
+      27500,
+      30000
+    ],
+    "save_rule": {
+      "dense": "0-3000 every 100 (31)",
+      "mid": "3000-15000 every 500 (24)",
+      "late": "15000-30000 every 2500 (6)",
+      "opacity_reset": "every actual opacity reset: <it>_pre_reset = just before reset_opacity in that iteration (after its densify/prune); post = end of that iteration (<it>)"
+    },
+    "phase": "end of iteration: after Adam update, 100-step reattach, densify/prune, opacity reset and final project_bounds (same point as jbgs_complete capture)",
+    "state_zero": "after r23 initialization and training_setup, before first iteration (not reconstructed)",
+    "state_columns": [
+      "xyz",
+      "rotation",
+      "scale",
+      "opacity",
+      "origin",
+      "init_id",
+      "target_tag",
+      "target_index",
+      "target_released_at",
+      "full_gaussian_index",
+      "uid",
+      "parent_uid",
+      "born_at",
+      "born_how"
+    ],
+    "derived_columns": "PROCFIG-v1 measure.py rules (normal, wall, current_patch, judgment, initial_patch, group33, target_xyz, target_sigma, normal_offset) computed on CPU from saved columns",
+    "scene_dump": true,
+    "scene_dump_note": "full scene raw parameters at every saved state (torch.save), rendered after training",
+    "flush_every": 500,
+    "curve_every": 100,
+    "uid_rules": {
+      "uid": "int64, initial arange, children next_uid++, never reused",
+      "parent_uid": "clone/split child -> parent uid; initial -1",
+      "born_at": "iteration; initial 0",
+      "born_how": "0 patch seed, 1 initial background, 2 clone, 3 split"
+    },
+    "events": {
+      "birth": "iteration, seq, uid, parent_uid, how, parent tag, xyz, scale, parent xyz, parent scale (only children inside scope at birth)",
+      "delete": "iteration, seq, uid, reason (1 opacity<min_opacity, 2 world size >0.1*extent, 3 screen size >max_screen, 4 other, 5 split parent replaced), flags bitmask (1 opacity,2 world,4 screen), opacity, scale, tag (only rows inside at last range check)",
+      "release": "r24 Release.record fields + cause (0 density control, 1 100-step) + inside; classification case A/B by exact tangent search on CPU after training (RELEASE-v1 event_report.py rule)",
+      "retarget": "bound before and after reattach with changed target_index, inside: uid, old, new valid-target index, cause; judgments and target height difference on CPU",
+      "range": "end of every iteration (and before each opacity reset): uid, enter(1)/exit(0)",
+      "opacity_reset": "iteration"
+    },
+    "conservation": "count(state_b)=count(state_a)+births-deletions+enter-exit over events with seq in (seq_a,seq_b]"
+  },
+  "unit_checks": {
+    "example": "real scene B173nb_b10 x ALS, seed 0, 300 iterations; probe-only schedule --densify_from_iter 100 --opacity_reset_interval 200 (densify/prune at 200 and 300, opacity reset at 200, screen-size pruning at 300); saves every 50 + pre-reset",
+    "runs": [
+      "r23",
+      "r27_off_a",
+      "r27_off_b",
+      "r27_on_a",
+      "r27_on_b"
+    ],
+    "decision_invariance": "on vs off: counts, tags, bound patches equal; xyz/scale/opacity byte-equal. If not byte-equal (nondeterministic CUDA atomics), report max difference and show max|on-off| <= max|off_a-off_b| and <= max|on_a-on_b| per quantity",
+    "self_check": "r27_on_b runs with JBGS_TRAINLOG_SELFCHECK=1: model sums, tags, counts and python/torch/cuda RNG identical before and after each end-of-iteration record",
+    "id_tracking": "child parent_uid points to a uid alive at birth; deleted uid never reappears; uid unique within each state",
+    "event_balance": "conservation equation between every consecutive pair of states",
+    "same_as_r23": "r27_off vs r23 under the same rule as decision_invariance",
+    "stop": "any failure -> stop and ask (order 1.11)"
+  },
+  "time_rule": {
+    "limit_ratio": 1.5,
+    "reference": "original curve.jsonl elapsed_seconds per 100 iterations (174.7 ms/it overall)",
+    "measure": "new curve seconds_per_iteration and wall time; if >1.5x, try batching (decision-neutral); if still >1.5x stop and ask"
+  },
+  "comparison": {
+    "iterations": [
+      7000,
+      15000,
+      30000
+    ],
+    "count_tolerance_pct": 5,
+    "metric_tolerance_pp": 2,
+    "original_values": {
+      "completeness_case1_pct": 98.75,
+      "accuracy_case1_pct": 72.524
+    },
+    "label_if_within": "원래 판과 같은 판",
+    "label_if_not": "다시 돌린 판 (보고서 맨 앞)",
+    "original_states": "PROCFIG-v1 gaussians/{7000,15000,30000}.npz (complete checkpoints)"
+  },
+  "renders": {
+    "mode": "scene state dumped at each saved iteration, rendered after training with r23 renderer (FINALTRAIN rfix_speed .so, guard 0.5)",
+    "view_camera": {
+      "azimuth_deg": 282,
+      "elevation_deg": 35,
+      "basis": "PROCFIG render.py frame()",
+      "projection": "perspective, distance 500 m along -forward from scope box centre, horizontal FOV = 2*atan(ortho_width/2/500), ortho_width as PROCFIG (max(span_x,span_y*W/H)*1.08)",
+      "width": 1600,
+      "height": 900
+    },
+    "training_images": {
+      "count": 2,
+      "rule": "largest fraction of case-1 GT rows inside building scope (PROCFIG camera-ranking population) visible unoccluded: projects inside image, in front, and no original 30,000 mesh hit closer than distance-0.15 m",
+      "mesh": "RESCORE addendum3 B173nb_b10__ALS__FINALTRAIN_30000 primary.ply"
+    },
+    "outputs": [
+      "rgb",
+      "normal (2DGS rend_normal, world) + fixed-light shaded image",
+      "depth (surf_depth)",
+      "opacity (rend_alpha)",
+      "training images: |render-photo| map and PSNR"
+    ],
+    "light": [
+      -0.35,
+      -0.45,
+      0.82
+    ],
+    "shade": "0.55+0.45*|n.light|"
+  },
+  "key_iterations": [
+    0,
+    100,
+    300,
+    1000,
+    2000,
+    3000,
+    5000,
+    7000,
+    10000,
+    15000,
+    20000,
+    30000
+  ],
+  "mesh": {
+    "rule": "RESCORE-v1 addendum3 result mesh: 203 training views, TSDF 0.05/0.25 m, depth_trunc 300, bounded merge, 50 largest components, evaluation-rectangle crop; via GTJUDGE mesh_job.py render/prepare/plan/tile/merge/finish",
+    "scorer": "GTJUDGE score_new.py + addendum11 rule (completeness: normal lines |s|<=tau; accuracy: normal_cylinder_1m) -> four cases 0,1,2,4 + scene; case 1 = 사전 정보 오류",
+    "tau_m": 0.211856,
+    "all_saved_if_minutes_le": 10,
+    "timing_rule": "time one key-iteration mesh first; if <=10 min mesh all saved iterations else key iterations only",
+    "ply_source": "key iterations: scene dump converted with GaussianModel.save_ply; 30,000 comparison also from point_cloud/iteration_30000 as original",
+    "vertex_error": "signed distance of each mesh vertex to nearest dense GT point (GTJUDGE reference dense.npz), sign by GT normal oriented nz>=0 (up +)",
+    "strip_extra": "c1 1 m strip completeness from row distances (addendum6 strip_row_ids) as extra column"
+  },
+  "lineage": {
+    "key": "PROCFIG-v1 attribution.py: per training view (203) max alpha*T id (TARGET r5 maxid .so), GT rows of groups 1 and 2 projected to nearest pixel, |rendered depth - point camera depth|<=0.25 m, mode over views, ties lowest id",
+    "other": "union of per-pixel max alpha*T ids in the two training images = 면을 그리는 가우시안",
+    "depth_gate": "rfix depth used for the 0.25 m test; maxid surf_depth difference recorded"
+  },
+  "definitions": {
+    "correction_site": "0회 상태에서 판정 보정(judge_region 2) & 벽 아님 & 묶인 씨앗의 목표 점 = 기준 목표면; 수평 거리 0.25 m 안 = 보정 자리 위",
+    "distance": "목표 점 수평 0.5 m 안 기준 목표 점(>=5)으로 평면 SVD, 부호 있는 법선 거리(위 +); 5개 미만이면 수직 거리",
+    "tau_cm": 21.2,
+    "interval": "해당 목표 ±1.96σ",
+    "site": "묶임=묶인 패치 판정; 아니면 수평 0.35 m·높이 0.5 m 안 가장 가까운 0회 목표 점 판정, 없으면 가까운 목표 없음",
+    "band": "30,000회 보정 자리 위 묶이지 않은 것이 가장 많은 폭 1 m 띠 (제2 주축 v, 1 m 구간 최빈)",
+    "same_as": "trainlog_proto_v1.py site/nrm/band"
+  },
+  "tables": {
+    "per_state": "PROCFIG building_counts + filling_intervals + wrong_patch_lineage columns; plus correction-site bound/unbound counts, interval-in, tau-in, below/above tau fractions, distance median, opacity median, long/short axis medians",
+    "fate": {
+      "ga": "wrong-lineage initial seeds (group33=1) and descendants: cumulative deletions by reason, released alive, bound alive, exited; opacity trajectory (median, p25, p75) before deletion; within old roof z±0.5 m before deletion",
+      "na": "30,000 (and 15,000) unbound tau-in on correction site: ① existed at 7,000 and tau-out, ② existed at 7,000 and tau-in, ③ born after 7,000 (parent tau-in at birth or not); counts and drawing share (key lineage, 30,000 only)",
+      "da": "release events by interval (<=100,101-600,601-3000,3001-7000,7001-15000,>15000) x case x birth x cause; weights: events, 30,000 descendants, correction-site descendants",
+      "ra": "correction-site bound counts per saved iteration, births (clone/split), deletions by reason, opacity reset marks",
+      "ma": "long, short, ratio medians per saved iteration for bound and unbound"
+    },
+    "trajectories": {
+      "rule1": "wrong-lineage initial seed inside case box (addendum10 c1_boxes panel1) that lived longest (tie smallest uid)",
+      "rule2": "① with largest 30,000 drawing share; else ① with smallest |distance| at 30,000",
+      "rule3": "initial background alive at 30,000 on correction site within tau, smallest uid"
+    }
+  },
+  "figures": {
+    "frame_px": [
+      1920,
+      1080
+    ],
+    "background": "white",
+    "layout": "top: surface (wide) | section; middle: inner disks | trajectories; bottom: curves; legend row",
+    "colors": {
+      "agreement": "#7FA7D9",
+      "correct": "#D85A30",
+      "preserve": "#1D9E75",
+      "missing": "#E8B931",
+      "none": "#C9C7BE",
+      "wrong_lineage": "#C2378A",
+      "pale": "#EEECE6",
+      "bound_draw": "#D85A30",
+      "unbound_draw": "#F0B49C"
+    },
+    "unbound_tint": "color*0.45 + #EEECE6*0.55",
+    "inner": {
+      "scale": 0.6,
+      "alpha_draw": "0.25+0.75*alpha",
+      "alpha_other": 0.06,
+      "camera": "PROCFIG rank-1 (az 180, el 35, orthographic), common extent over all frames",
+      "scale_bar_m": 5
+    },
+    "surface": {
+      "camera": "same orthographic rank-1",
+      "color": "signed vertex distance: |d|<=tau light grey, >tau red (above), <-tau blue (below), range ±1 m fixed",
+      "fallback": "previous mesh, header \"메시: N회\""
+    },
+    "section": {
+      "y_cm": [
+        -60,
+        40
+      ],
+      "clip": "values outside drawn on end rows",
+      "surface_line": "key: mesh section; other: two training-image depth back-projected to band"
+    },
+    "curves": {
+      "left": "case-1 completeness/accuracy at key iterations; lines: 판단만 66.6, LGDM 73.4/78.1, GeoGS 79.1/49.3, 원래 판 98.8/72.5",
+      "right": "median depth error of two training images vs GT; tau-in of drawing gaussians (dark) and all (pale)",
+      "marks": "current iteration line, densify interval shade, opacity-reset ticks"
+    },
+    "text": "panel names, axes, legend, iteration only; no interpretation",
+    "video": {
+      "mp4": "H.264 -preset veryfast 1920x1080, 0.25 s/frame, 1.5 s hold at 0,3000,7000,15000,30000",
+      "gif": "width 1280 same order/holds",
+      "panel_videos": [
+        "surface",
+        "section"
+      ],
+      "all_gaussians_version": "inner panel others also 0.25+0.75*alpha"
+    },
+    "strip": {
+      "iterations": [
+        0,
+        1000,
+        3000,
+        7000,
+        15000,
+        30000
+      ],
+      "rows": [
+        "surface",
+        "inner",
+        "section"
+      ],
+      "bottom": "completeness curve",
+      "formats": [
+        "png 300 dpi",
+        "pdf"
+      ]
+    }
+  },
+  "reading_rules": [
+    {
+      "q": "가",
+      "result": "틀린 판정 계보 씨앗의 절반 넘게가 불투명도 문턱으로 지워짐",
+      "sentence": "영상과 맞지 않는 옛 지붕 가우시안은 투명해져 지워진다"
+    },
+    {
+      "q": "가",
+      "result": "절반 넘게가 풀리거나 옮겨 가 남음",
+      "sentence": "옛 지붕 가우시안은 풀려서 다른 자리로 옮겨 간다(옮겨 간 자리를 함께 적는다)"
+    },
+    {
+      "q": "나",
+      "result": "①(옮겨 옴)이 ①+③의 절반 넘음",
+      "sentence": "묶이지 않은 가우시안이 깊이 목표를 따라 목표면으로 옮겨 온다"
+    },
+    {
+      "q": "나",
+      "result": "③(새로 생김)이 절반 넘고, 그 부모가 대부분 τ 안",
+      "sentence": "목표면 근처의 가우시안이 복제·분할로 면을 채운다"
+    },
+    {
+      "q": "나",
+      "result": "③이 절반 넘고, 부모가 대부분 τ 밖",
+      "sentence": "아래에서 태어난 가우시안이 목표면으로 옮겨 와 채운다(추가 확인 필요로 적음)"
+    },
+    {
+      "q": "다",
+      "result": "3,000회 전 풀림 사건의 절반 넘게가 분할 자식이 태어날 때",
+      "sentence": "풀림은 주로 분할 자식이 태어날 때 일어난다"
+    },
+    {
+      "q": "다",
+      "result": "절반 넘게가 처음 씨앗",
+      "sentence": "처음 원반에서 바로 풀린다(처음 크기와 함께 적음)"
+    },
+    {
+      "q": "라",
+      "result": "줄어든 묶인 가우시안의 절반 넘게가 되돌림 뒤 불투명도 문턱으로 지워짐",
+      "sentence": "불투명도 되돌림 뒤 지우기로 줄었다가 밀도 제어로 다시 는다"
+    },
+    {
+      "q": "바",
+      "result": "사례 자리 완전성이 처음으로 66.6 %(판단만), 79.1 %(GeoGS), 95 %를 넘는 주요 반복",
+      "sentence": "본 방법의 면은 N회에 판단만으로 만든 면을, M회에 비교 방법을 넘는다(넘지 못하면 그대로 적음)"
+    },
+    {
+      "q": "바",
+      "result": "그 반복에서 면을 그리는 가우시안의 묶인 몫",
+      "sentence": "절반 넘으면 면은 주로 묶인 가우시안이 그린다, 아니면 묶이지 않은 가우시안이 깊이 목표를 따라 함께 그린다"
+    },
+    {
+      "q": "전체",
+      "result": "3절에서 원래 판과 같은 판이 아님",
+      "sentence": "위 문장은 '다시 돌린 판에서'를 붙여서만 쓴다"
+    },
+    {
+      "q": "기타",
+      "result": "어느 줄에도 들지 않음",
+      "sentence": "그대로 적고 문장을 만들지 않는다"
+    }
+  ],
+  "GT_use": "채점, 개체 고르기의 자리 정하기, 칠하기, 표시 카메라 고르기에만; 학습에 쓰지 않음",
+  "write_roots": [
+    "scripts/phd/main_trainlog_v1",
+    "docs/experiments/phd/main_trainlog_v1/figures_concept_v2/case_B0_b10__LoD2",
+    "PH/main_trainlog_v1/PHD-MAIN-TRAINLOG-v1/concept_v2/case_B0_b10__LoD2"
+  ],
+  "PH_resolution": "/art/phase-payloads/phd = /media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-artifacts/phase-payloads/phd",
+  "payload_root": "PH/main_trainlog_v1/PHD-MAIN-TRAINLOG-v1/concept_v2/case_B0_b10__LoD2",
+  "docker_images": {
+    "cpu": "sha256:251f83c17879a83b0c3dda5b9d71cbf45ca72cc0fdcbc89994194dc3edb86774",
+    "gpu": "sha256:ff4eba02c450573e3258ec4946b9c536f32c213dde9abc83ee2969aaf18384be"
+  },
+  "crs": "EPSG:25832",
+  "renderer": {
+    "path": "/art/phase-payloads/phd/main_target_v1/PHD-MAIN-TARGET-v1/rfix_speed/builds/target/extension/jbgs_rfix_speed_target.so",
+    "sha256": "1426e3aae8b24c490821a87e731aee9e834ee3aabb9d3caec0e04cb8365e2245",
+    "validation_sha256": "9a5a37c41e9d7b2886f4a4c9f3d3dc3f39460c28cfbf64aaedfbbf306419a105",
+    "binning_guard_fraction": 0.5
+  },
+  "case": {
+    "stem": "B0_b10__LoD2",
+    "created_at": "2026-11-13T17:11:31.578981+09:00",
+    "reason": "user 2026-11-13 '그 이야기로 만들어': B0 x LoD2, the courtyard wall hidden by a tree (image depth absent, LoD2 right)",
+    "base_config": {
+      "path": "/repo/configs/phd/main_trainlog_v1/trainlog_v1.json",
+      "sha256": "98c9a727a00b23af7426a358b06cd2413c56764e43adfcd731515d4aa2c8810e"
+    },
+    "changed_fields": [
+      "target",
+      "scope",
+      "scope_source",
+      "renders.view_camera.azimuth_deg",
+      "case",
+      "payload_root",
+      "write_roots"
+    ],
+    "view_azimuth_rule": "scope centre -> train1 camera, rounded",
+    "runtime_lock": "not sealed for the case (train_entry TRAINLOG_REQUIRE_RUNTIME off); the fork r27 files are bound by input_binding.json at training start"
+  }
+}
