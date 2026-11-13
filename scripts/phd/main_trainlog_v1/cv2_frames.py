@@ -1,4 +1,4 @@
-"""PHD-MAIN-TRAINLOG-v1 concept video v2, first cut r2 (request 2026-11-12; r2 2026-11-13: sections show processing results only). CPU, no training; draws saved states only (nothing interpolated).
+"""PHD-MAIN-TRAINLOG-v1 concept video v2, first cut r4 (request 2026-11-12; r2-r4 2026-11-13: sections show results only, + GT, unfiltered mesh; r4: fewer symbols). CPU, no training; draws saved states only (nothing interpolated).
 One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000, 10,000, 15,000, 30,000), 1920 x 1080, white.
   top      'B173 · 반복 N / 30,000' and the 12-point dot row (current dark, past grey)
   upper    ① 2x2 for the real training camera DJI_20241217091247_0146_D (cropped to the building-scope pixels): photo, render (renders/<n>/train1_rgb.png,
@@ -18,6 +18,16 @@ One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000,
            judgment; ③ comparison = that run's own inputs only (judgment off: prior and image depth, both its targets; image-only 2DGS: none, panel empty).
            section height range (all frames, same axes as the input frame) = targets above 5 m (-1 m) to the prior or target top (+0.8 m).
            input frame ②: prior surface at alpha 0.6 over the image-depth points. Legend line lists only what the frame draws.
+           r3 rule (user, 2026-11-13): the sections add GT dense points as a light grey reference and show the result UNFILTERED (cv2_sec3.py): all Gaussians
+           of the saved state in the band (no building-scope mask, any opacity; colour Purples 0.3 + 0.7 x opacity so that opacity 0 stays visible), the cut of
+           the uncut mesh, and 3 m drawn beyond each line end (light dotted lines at s = 0 and L). Height axis: the r2 range (section_height_limits_m) keeps
+           13 % of the panel above/below for everything outside it, compressed linearly to the overall min/max of all states (light band, dashed break,
+           end ticks give the real heights). Same axes in every frame and in both sections of a zone.
+           r4 rule (user, 2026-11-13: 'too many symbols, the intent is unclear'): iteration-frame sections = GT as a wide light grey band + the uncut mesh cut
+           as a thin blue line on top, nothing else (Gaussian centres removed: ② shows the Gaussians; floaters stay visible through the uncut mesh). Height
+           axis = plain linear from the overall min of all drawn layers (mesh of every state, GT, prior, targets) to the overall max, except zone 2 where the
+           linear part stops at 25 m (the building) and one compressed band above holds the early-state pieces up to the overall max. ① render depth: no red
+           outline; ① depth target: judgment boundaries only in the input frame. Legend lists only what the frame draws.
            camera height colours: this camera's building-scope target heights, 2-98 %, 7 steps (static.json colour_range).
            zone 1 glass skylight in the concept-v1 zoom (ZONE1_RULE: B173_sawtooth direction, placed on this camera's target map; 12 m line, box 12 x 8 m), comparison = judgment off
                   (main_stage3_v1 nojudge_ALS_s0 = RESCORE baseline_30000; saved 15,000 and 30,000)
@@ -25,7 +35,7 @@ One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000,
                   2DGS (main_baselines_v1 imgonly_2dgs_s0; saved 7,000 and 30,000)
            comparison state = the nearest saved iteration <= the frame's; none before the first saved one (section and mesh panels left empty, '비교: 저장 상태 없음').
 Modes: setup (static layers -> concept_v2/static.npz, static.json) | frames [labels] | table (numbers) | contact (one sheet of all frames).
-r2 writes concept_v2/frames_r2/, docs contact_sheet_r2.png and frames_json_r2/; the first cut (frames/, contact_sheet.png, frames_json/) is kept.
+r2 / r3 write concept_v2/frames_<rev>/, docs contact_sheet_<rev>.png and frames_json_<rev>/; the first cut (frames/, contact_sheet.png, frames_json/) and r2 are kept.
 GT is used only for colour ranges, colouring, section drawing and the numbers. scientific_verdict: null"""
 import sys, time
 from common import *
@@ -42,7 +52,8 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Patch, FancyArrowPatch
 from PIL import Image
 FONT = '/fonts/NotoSansCJK-Regular.ttc'; fm.fontManager.addfont(FONT); plt.rcParams['font.family'] = fm.FontProperties(fname=FONT).get_name(); plt.rcParams['axes.unicode_minus'] = False
-V2 = O/'concept_v2'; REV = 'r2'; FR = V2/f'frames_{REV}'; FIGD = D/'figures_concept_v2'
+V2 = O/'concept_v2'; REV = 'r4'; FR = V2/f'frames_{REV}'; FIGD = D/'figures_concept_v2'
+EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: 25.0}
 CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
 STATES = ['0', '100', '300', '1000', '2000', '3000', '5000', '7000', '10000', '15000', '30000']; FRAMES = ['input']+STATES
 COMP = {1: dict(run='nojudge', name='판단 끈 학습', saved=[15000, 30000]), 2: dict(run='2dgs', name='사진만 쓴 2DGS', saved=[7000, 30000])}
@@ -173,6 +184,13 @@ def setup():
 class Frame:
     def __init__(self):
         self.S = Static(); self.st = loadz(V2/'static.npz'); self.sj = json.loads((V2/'static.json').read_text()); self.sha = {}
+        self.sgt = loadz(V2/'sections_r3'/'gt.npz'); s3 = json.loads((V2/'sections_r3.json').read_text()); self.yr = {}
+        for k in (1, 2):   # r4 height axis: linear over every drawn layer (mesh of all states, GT, prior, targets); zone 2 linear to ZTOP + one compressed band above
+            zs = [r['zones'][str(k)] for r in s3['keys'].values()]
+            vals = [v for z in zs if z['mesh_height_min_max'] for v in z['mesh_height_min_max']] + [float(self.sgt[f'gt{k}'][:, 1].min()), float(self.sgt[f'gt{k}'][:, 1].max())]
+            vals += [float(self.st[f'prior{k}'][..., 1].min()), float(self.st[f'prior{k}'][..., 1].max()), float(self.st[f'tq{k}'][..., 1].min()), float(self.st[f'tq{k}'][..., 1].max())]
+            lo, hi = np.floor(min(vals)*2)/2-.25, np.ceil(max(vals)*2)/2+.25; top = ZTOP[k] if ZTOP[k] is not None and hi > ZTOP[k] else hi
+            self.yr[k] = (lo, lo, top, hi)
         b = self.st['bins']; self.bins = b; cmap = plt.get_cmap('viridis'); self.hcol = np.array([cmap((i+.5)/NBIN)[:3] for i in range(NBIN)])
         pr = loadz(S1/'defs'/SITE/'prior_ALS.npz', ['V', 'F']); self.PV, self.PF = pr['V'].astype(float), pr['F'].astype('i8')
         keep = scope_mask(self.PV[self.PF].mean(1), self.S.c); self.PFs = self.PF[keep]
@@ -244,22 +262,39 @@ class Frame:
         ax.plot(np.r_[x, x[:1]], np.r_[y, y[:1]], color='white', lw=2.4, zorder=15); ax.plot(np.r_[x, x[:1]], np.r_[y, y[:1]], color=NAVY, lw=1.1, zorder=16)
         if label: self.badge(ax, x.mean(), y.max(), k, 10)
     # -------- ③ sections
-    def section(self, ax, k, discs=None, mesh=None, layers=('gt', 'prior', 'mvs', 'targets')):
-        zj = self.sj['zones'][str(k)]; L = zj['line_length_m']; y0, y1 = zj['section_height_limits_m']; st = self.st
-        if 'gt' in layers: g = st[f'gt{k}']; ax.scatter(g[:, 0], g[:, 1], s=.25, c=GTC, lw=0, zorder=3, rasterized=True)
-        if 'prior' in layers and len(st[f'prior{k}']): ax.add_collection(LineCollection(st[f'prior{k}'], colors=PRC, linewidths=1.4, linestyles=(0, (3, 2)), zorder=4))
-        if 'mvs' in layers: mv = st[f'mvs{k}']; ax.scatter(mv[:, 0], mv[:, 1], s=4, c=MVC, lw=0, zorder=5)
+    def ymap(self, k, h):
+        lo, y0, y1, hi = self.yr[k]; h = np.asarray(h, float); b = STRIP if lo < y0 else 0.; t = STRIP if hi > y1 else 0.
+        return np.where(h < y0, b*(h-lo)/max(y0-lo, 1e-9), np.where(h > y1, 1-t+t*(h-y1)/max(hi-y1, 1e-9), b+(1-b-t)*(h-y0)/(y1-y0)))
+    def section(self, ax, k, sec=None, layers=('gt', 'prior', 'mvs', 'targets')):
+        zj = self.sj['zones'][str(k)]; L = zj['line_length_m']; lo, y0, y1, hi = self.yr[k]; st = self.st; Y = lambda h: self.ymap(k, h)
+        b = STRIP if lo < y0 else 0.; t = STRIP if hi > y1 else 0.
+        for a0, a1 in ([(0, b)] if b else [])+([(1-t, 1)] if t else []): ax.axhspan(a0, a1, color=STRIPC, zorder=0, lw=0)
+        for yy in ([b] if b else [])+([1-t] if t else []): ax.axhline(yy, color='#9C9A92', lw=.6, ls=(0, (4, 2)), zorder=1)
+        for xl in (0, L): ax.axvline(xl, color='#B4B2A9', lw=.6, ls=':', zorder=1)
+        g = self.sgt[f'gt{k}']
+        if 'gt' in layers: ax.scatter(g[:, 0], Y(g[:, 1]), s=.25, c=GTC, lw=0, zorder=3, rasterized=True)
+        if 'gtlight' in layers: ax.scatter(g[:, 0], Y(g[:, 1]), s=.2, c=GTL, lw=0, zorder=3, rasterized=True)
+        if 'gtband' in layers: ax.scatter(g[:, 0], Y(g[:, 1]), s=9, c=GTB, lw=0, zorder=3, rasterized=True)
+        if 'prior' in layers and len(st[f'prior{k}']):
+            q = st[f'prior{k}'].astype(float).copy(); q[..., 1] = Y(q[..., 1]); ax.add_collection(LineCollection(q, colors=PRC, linewidths=1.4, linestyles=(0, (3, 2)), zorder=4))
+        if 'mvs' in layers: mv = st[f'mvs{k}']; ax.scatter(mv[:, 0], Y(mv[:, 1]), s=4, c=MVC, lw=0, zorder=5)
         if 'targets' in layers:
-            ax.add_collection(PolyCollection(st[f'tq{k}'], facecolors=[JC[int(j)] for j in st[f'tj{k}']], edgecolors=[JC[int(j)] for j in st[f'tj{k}']], linewidths=1.2, alpha=.6, zorder=4.5))
-        n_g = None
-        if discs is not None:
-            z = discs; P = z['xyz'].astype(float); s, v = sv(P, self.S.zones[k]); b = (np.abs(v) <= BAND) & (s >= 0) & (s <= L) & (P[:, 2]-self.S.ground >= y0) & (P[:, 2]-self.S.ground <= y1)
-            o = np.argsort(z['opacity'][b]); ax.scatter(s[b][o], P[b, 2][o]-self.S.ground, s=4, c=z['opacity'][b][o], cmap='Purples', vmin=-.15, vmax=1, lw=0, zorder=6); n_g = int(b.sum())
-        n_m = None
-        if mesh is not None:
-            seg = cut(mesh['V'].astype(float), mesh['F'].astype('i8'), self.S.zones[k]); ax.add_collection(LineCollection(seg, colors=MSC, linewidths=1.3, zorder=7)); n_m = int(len(seg))
-        ax.set_xlim(0, L); ax.set_ylim(y0, y1); ax.tick_params(labelsize=7, length=2, pad=1, colors='#5F5E5A')
-        ax.set_xticks(np.arange(0, L+.01, 5 if L > 15 else 2)); ax.set_yticks(np.arange(np.ceil(y0), y1, 2 if y1-y0 > 6 else 1))
+            q = st[f'tq{k}'].astype(float).copy(); q[..., 1] = Y(q[..., 1])
+            ax.add_collection(PolyCollection(q, facecolors=[JC[int(j)] for j in st[f'tj{k}']], edgecolors=[JC[int(j)] for j in st[f'tj{k}']], linewidths=1.2, alpha=.6, zorder=4.5))
+        n_g = n_m = None
+        if sec is not None and 'gaussians' in layers:   # r3 only (r4 draws no Gaussian centres)
+            s, h, op = sec[f'g{k}_s'].astype(float), sec[f'g{k}_h'].astype(float), sec[f'g{k}_op'].astype(float); o = np.argsort(op)
+            ax.scatter(s[o], Y(h[o]), s=4, c=plt.get_cmap('Purples')(.3+.7*np.clip(op[o], 0, 1)), lw=0, zorder=6); n_g = int(len(s))
+        if sec is not None:   # unfiltered: the uncut mesh cut
+            seg = sec[f'm{k}'].astype(float).copy()
+            if len(seg): seg[..., 1] = Y(seg[..., 1]); ax.add_collection(LineCollection(seg, colors=MSC, linewidths=1.3, zorder=7))
+            n_m = int(len(seg))
+        ax.set_xlim(-EXT, L+EXT); ax.set_ylim(0, 1); ax.tick_params(labelsize=7, length=2, pad=1, colors='#5F5E5A')
+        ax.set_xticks(np.arange(0, L+.01, 5 if L > 15 else 2))
+        stp = 1 if y1-y0 <= 6 else (2 if y1-y0 <= 14 else 5); tk = list(np.arange(np.ceil(y0/stp)*stp, y1+1e-6, stp)); pos = [float(v) for v in Y(np.array(tk))]; lab = [f'{v:.0f}' for v in tk]
+        if b: pos = [0.]+pos; lab = [f'{lo:.0f}']+lab
+        if t: pos = pos+[1.]; lab = lab+[f'{hi:.0f}']
+        ax.set_yticks(pos); ax.set_yticklabels(lab)
         ax.text(.995, .02, 'm', transform=ax.transAxes, ha='right', va='bottom', fontsize=7, color='#5F5E5A'); ax.text(.005, .98, '높이 m', transform=ax.transAxes, ha='left', va='top', fontsize=7, color='#5F5E5A')
         return n_g, n_m
 
@@ -282,7 +317,7 @@ def draw(F, label, cache):
     u0, v0, u1, v1 = st['crop']; ph = 250; pw = int(round(ph*(u1-u0)/(v1-v0))); X0, Y0 = 16, 66; gap = 8
     inp = loadz(O/'concept/inputs.npz', ['photo']); photo = inp['photo'].astype(float)/255.; rec['sources']['photo_and_target_map'] = F.h(O/'concept/inputs.npz')
     a = F.axes(X0, Y0, pw, ph, '① 사진'); F.cam(a, photo)
-    a = F.axes(X0, Y0+ph+24, pw, ph, '① 깊이 목표'); F.cam(a, F.hrgb(st['ht']), dotted=True)
+    a = F.axes(X0, Y0+ph+24, pw, ph, '① 깊이 목표'); F.cam(a, F.hrgb(st['ht']), dotted=it is None)
     a1 = F.axes(X0+pw+gap, Y0, pw, ph, '① 렌더'); a2 = F.axes(X0+pw+gap, Y0+ph+24, pw, ph, '① 렌더 깊이')
     if it is None: F.blank(a1); F.blank(a2)
     else:
@@ -290,7 +325,7 @@ def draw(F, label, cache):
         gp = O/'gtj/renders'/f'{STEM}__tl_{label}'/CAM_FILE; rd = loadz(gp, ['depth'])['depth'].astype(float); rec['sources']['render_depth'] = F.h(gp)
         rok = rd > 0; Pr, _ = S.backproject(np.where(rok, rd, 0.)); hr = np.where(rok, Pr[..., 2]-S.ground, np.nan)
         td = loadz(O/'concept/inputs.npz', ['target_depth'])['target_depth'].astype(float); dist = np.abs(rd-np.where(st['tok'], td, np.nan))*st['rn']
-        far = st['tok'] & rok & (dist > TAU); F.cam(a2, F.hrgb(hr), outline=far); rec['counts']['render_far_from_target_pixels_in_crop'] = int(far[v0:v1, u0:u1].sum())
+        far = st['tok'] & rok & (dist > TAU); F.cam(a2, F.hrgb(hr)); rec['counts']['render_far_from_target_pixels_in_crop'] = int(far[v0:v1, u0:u1].sum())
         cache['dist'] = dist; cache['rok'] = rok
     ar = FancyArrowPatch(((X0+2*pw+gap+6)/W_, 1-(Y0+ph+12)/H_), ((X0+2*pw+gap+46)/W_, 1-(Y0+ph+12)/H_), transform=fig.transFigure, arrowstyle='-|>', mutation_scale=22, color=NAVY, lw=2); fig.patches.append(ar)
     # ② overview
@@ -324,13 +359,15 @@ def draw(F, label, cache):
         else:
             sel = zsel(dz['xyz'].astype(float)); rec['counts'][f'zone{k}_discs'] = F.discs(a_g, dz, sel, zext, wz, edge=True, view=zv)
             fsel = zsel(mz['V'][mz['F']].mean(1).astype(float)); img, _ = F.raster(mz['V'], mz['F'][fsel], mz['C'].astype(float), zext, wz, hz, 3, view=zv); F.show(a_m, img, zext)
-            ng, nm = F.section(a_s, k, discs=dz, mesh=mz, layers=()); rec['counts'][f'zone{k}_band_gaussians'] = ng; rec['counts'][f'zone{k}_mesh_cut_segments'] = nm
+            sp = V2/'sections_r3'/f'ours_{label}.npz'; rec['sources'][f'section{k}'] = F.h(sp)
+            ng, nm = F.section(a_s, k, sec=loadz(sp), layers=('gtband',)); rec['counts'][f'zone{k}_band_gaussians'] = ng; rec['counts'][f'zone{k}_mesh_cut_segments'] = nm
             if cs is None: F.blank(a_c); F.blank(a_cm)
             else:
                 ck = f"{COMP[k]['run']}_{cs}"
                 if ck not in cache: cache.clear() if len(cache) > 12 else None; cache[ck] = (loadz(V2/'discs'/f'{ck}.npz'), loadz(V2/'meshcol'/f'{ck}.npz'))
                 cd, cm = cache[ck]; rec['sources'][f'comparison{k}_discs'] = F.h(V2/'discs'/f'{ck}.npz'); rec['sources'][f'comparison{k}_mesh'] = F.h(V2/'meshcol'/f'{ck}.npz')
-                ng, nm = F.section(a_c, k, discs=cd, mesh=cm, layers=()); rec['counts'][f'zone{k}_comparison_band_gaussians'] = ng
+                cp = V2/'sections_r3'/f'{ck}.npz'; rec['sources'][f'comparison{k}_section'] = F.h(cp)
+                ng, nm = F.section(a_c, k, sec=loadz(cp), layers=('gtband',)); rec['counts'][f'zone{k}_comparison_band_gaussians'] = ng
                 fsel = zsel(cm['V'][cm['F']].mean(1).astype(float)); img, _ = F.raster(cm['V'], cm['F'][fsel], cm['C'].astype(float), zext, wz, hz, 3, view=zv); F.show(a_cm, img, zext)
         rec[f'zone{k}'] = dict(zoom_extent=list(zext), comparison_run=COMP[k]['run'], comparison_name=cn, comparison_iteration=cs, comparison_label=ctitle)
     # legend (one line)
@@ -339,11 +376,12 @@ def draw(F, label, cache):
     for i in range(NBIN): lax.add_patch(plt.Rectangle((x+i*22, 9), 22, 14, color=F.hcol[i]))
     for i in range(NBIN+1): lax.text(x+i*22, 4.5, f'{F.bins[i]:.0f}', fontsize=7, ha='center', va='center', color='#5F5E5A')
     x += NBIN*22+18
-    if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자')]
-    else: items = [('pt', '#54278F', '가우시안 중심(진할수록 불투명)'), ('line', MSC, '메시'), ('line', RED, f'목표와 τ {TAU:.3f} m 넘게 다른 렌더 깊이'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자')]
+    if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('box', STRIPC, '25 m 위(압축)'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자')]
+    else: items = [('band', GTB, '참값'), ('line', MSC, '메시'), ('box', STRIPC, '25 m 위(압축)'), ('line', NAVY, '구역 상자')]
     for kind, col, txt in items:
         if kind == 'pt': lax.plot(x+5, 17, 'o', ms=4.5, color=col)
         elif kind == 'box': lax.add_patch(plt.Rectangle((x, 11), 11, 12, color=col, alpha=.75))
+        elif kind == 'band': lax.plot([x, x+18], [17, 17], color=col, lw=5, solid_capstyle='butt')
         else: lax.plot([x, x+18], [17, 17], color=col, lw=1.6, ls={'dash': (0, (3, 2)), 'dot': ':', 'line': '-'}[kind])
         x += (14 if kind in ('pt', 'box') else 22); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
     png = FR/f'frame_{FRAMES.index(label):02d}_{label}.png'; FR.mkdir(parents=True, exist_ok=True); fig.savefig(png, dpi=100, facecolor='white'); plt.close(fig)

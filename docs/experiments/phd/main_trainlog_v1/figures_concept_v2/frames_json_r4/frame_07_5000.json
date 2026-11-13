@@ -1,0 +1,388 @@
+{
+  "frame": "5000",
+  "iteration": 5000,
+  "sources": {
+    "photo_and_target_map": "455ebc720d41da19fc9aab14b3921b46b4d48cceb5d10415e58c317b20b032a8",
+    "render_rgb": "96c62323d0cbd3a11974e73cecbe5784df2589ab24978e4af1ac14d944f092ef",
+    "render_depth": "b86c9a0d3102c4cb5cacef2bcda32b5e0d9a748431d40d98544e2f644c2c5d16",
+    "discs": "f09ec7954f961aecc9361ef4421535e70ba95af968c9d82386793edced04338d",
+    "mesh": "6b4a7c719179a7bb3f3e2f5fb23e1626941bad0753f1a7ed1156d0bacbe448e2",
+    "section1": "4cd0ff2e6f4ee7f745e831af9d4a2297cc76440cb97b339f71187a147d359c2a",
+    "section2": "4cd0ff2e6f4ee7f745e831af9d4a2297cc76440cb97b339f71187a147d359c2a"
+  },
+  "counts": {
+    "render_far_from_target_pixels_in_crop": 106213,
+    "discs_drawn_overview": 39900,
+    "zone1_discs": 1441,
+    "zone1_band_gaussians": null,
+    "zone1_mesh_cut_segments": 2067,
+    "zone2_discs": 3852,
+    "zone2_band_gaussians": null,
+    "zone2_mesh_cut_segments": 4565
+  },
+  "overview_extent": [
+    -39.02145602963807,
+    39.01975804705092,
+    -26.03784138039799,
+    25.791811567872006
+  ],
+  "zone1": {
+    "zoom_extent": [
+      -6.3695429376198085,
+      6.3626667590462915,
+      -3.6667537903459104,
+      5.663720491180391
+    ],
+    "comparison_run": "nojudge",
+    "comparison_name": "판단 끈 학습",
+    "comparison_iteration": null,
+    "comparison_label": "비교: 저장 상태 없음"
+  },
+  "zone2": {
+    "zoom_extent": [
+      -16.590249550996326,
+      16.55491564302158,
+      -7.949054763628201,
+      16.340531943438357
+    ],
+    "comparison_run": "2dgs",
+    "comparison_name": "사진만 쓴 2DGS",
+    "comparison_iteration": null,
+    "comparison_label": "비교: 저장 상태 없음"
+  },
+  "png": "/tl/concept_v2/frames_r4/frame_07_5000.png",
+  "png_sha256": "fb7a82f63091f7d0981adf8fa99b867bce554a619fdae8f4612e968f333ab297",
+  "seconds": 17.4,
+  "camera": {
+    "name": "DJI_20241217091247_0146_D",
+    "K": [
+      [
+        674.4174194335938,
+        0.0,
+        513.4158325195312
+      ],
+      [
+        0.0,
+        674.7781982421875,
+        365.0968322753906
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "W2C": [
+      [
+        -0.9288420081138611,
+        0.37045663595199585,
+        -0.0037921136245131493,
+        97.85848999023438
+      ],
+      [
+        0.37046509981155396,
+        0.9286871552467346,
+        -0.017197512090206146,
+        -151.96771240234375
+      ],
+      [
+        -0.0028492454439401627,
+        -0.017378617078065872,
+        -0.9998449087142944,
+        35.00795364379883
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "crop_u0v0u1v1": [
+      447,
+      0,
+      793,
+      741
+    ]
+  },
+  "oblique": {
+    "basis": [
+      [
+        -1.2335639418852505e-16,
+        -0.9999924469294851,
+        0.0038866546001427543
+      ],
+      [
+        0.5717726658436051,
+        0.0031886584737710263,
+        0.8204059062752014
+      ],
+      [
+        0.8204121029056659,
+        -0.002222282861937035,
+        -0.5717683472043416
+      ]
+    ],
+    "centre": [
+      139.8850047192512,
+      112.08473400485012,
+      -30.620511230468743
+    ],
+    "projection": "orthographic",
+    "azimuth_deg": 180,
+    "elevation_deg": 35,
+    "overview_extent": [
+      -37.884933494540654,
+      37.88323551195351,
+      -25.04002640233073,
+      24.79399658980475
+    ]
+  },
+  "zones": {
+    "1": {
+      "name": "유리 채광창",
+      "source": "glass skylight in the concept-v1 zoom pixels (520,20)-(760,260): the thesis section B173_sawtooth lies on the same skylight but outside these pixels (checked: 0 % of its pixels inside), so the line keeps the B173_sawtooth direction (the skylight long axis) and is placed by the target map of this camera: lateral position = median offset of the 3-D target points of the judgment-0 (agree) pixels inside the zoom (the glass panels), start = their largest along-axis position + 1.0 m (the glass top end), running 12 m (= B173_sawtooth L) into the skylight; box = line x +-4 m (spots_v5 window rule)",
+      "line_origin_xy": [
+        129.62570786151622,
+        87.32164719414013
+      ],
+      "line_unit_xy": [
+        0.3654518144211199,
+        0.9308302591430466
+      ],
+      "line_length_m": 12.0,
+      "band_half_width_m": 0.5,
+      "box_polygon_xy": [
+        [
+          133.3490288980884,
+          85.85983993645564
+        ],
+        [
+          137.73445067114184,
+          97.0298030461722
+        ],
+        [
+          130.2878085979975,
+          99.95341756154117
+        ],
+        [
+          125.90238682494403,
+          88.78345445182461
+        ]
+      ],
+      "box_z": [
+        -43.1730224609375,
+        -18.067999999999984
+      ],
+      "outline_z": -30.028207778930664,
+      "zoom_azimuth_deg": 338.5646092247293,
+      "zoom_elevation_deg": 35,
+      "zoom_basis": [
+        [
+          0.36545092978365146,
+          0.9308263537926905,
+          -0.0028137173400463473
+        ],
+        [
+          -0.5357033925562178,
+          0.2127921536609357,
+          0.8171544373887347
+        ],
+        [
+          -0.761227622412655,
+          0.29712253099579256,
+          -0.5764119260135331
+        ]
+      ],
+      "zoom_centre": [
+        131.81841874804294,
+        92.9066287489984,
+        -31.4730224609375
+      ],
+      "zoom_extent": [
+        -6.009197380166994,
+        6.002321201593477,
+        -2.999769724855759,
+        4.99673642569024
+      ],
+      "section_height_limits_m": [
+        11.167458101121426,
+        15.276347634323031
+      ],
+      "camera_pixels": 10640,
+      "gt_in_band": 9640,
+      "mvs_in_band": 131,
+      "targets_in_band": 121,
+      "prior_cut_segments": 115,
+      "target_judgments_in_band": {
+        "일치": 95,
+        "보정": 1,
+        "보존": 25,
+        "결측": 0
+      },
+      "target_judgments_in_box": {
+        "일치": 699,
+        "보정": 287,
+        "보존": 177,
+        "결측": 0
+      },
+      "camera_pixel_classes": {
+        "-1": 5015,
+        "0": 3618,
+        "1": 1034,
+        "2": 967,
+        "4": 6
+      },
+      "line_rule": {
+        "rule": "glass skylight in the concept-v1 zoom pixels (520,20)-(760,260): the thesis section B173_sawtooth lies on the same skylight but outside these pixels (checked: 0 % of its pixels inside), so the line keeps the B173_sawtooth direction (the skylight long axis) and is placed by the target map of this camera: lateral position = median offset of the 3-D target points of the judgment-0 (agree) pixels inside the zoom (the glass panels), start = their largest along-axis position + 1.0 m (the glass top end), running 12 m (= B173_sawtooth L) into the skylight; box = line x +-4 m (spots_v5 window rule)",
+        "sawtooth_centre_xy": [
+          145.8573898185912,
+          111.19480351012703
+        ],
+        "sawtooth_unit_xy": [
+          -0.3654518144211199,
+          -0.9308302591430466
+        ],
+        "agree_pixels_used": 3913,
+        "lateral_offset_m": -6.384452430795198,
+        "start_along_axis_m": 28.153753902492166,
+        "zoom_v1_class_pixels": {
+          "-1": 25094,
+          "0": 3913,
+          "1": 9003,
+          "2": 18778,
+          "4": 45
+        }
+      },
+      "share_of_camera_pixels_inside_concept_v1_zoom_520_20_760_260": 1.0,
+      "camera_pixel_bbox_uv": [
+        577,
+        119,
+        683,
+        256
+      ]
+    },
+    "2": {
+      "name": "바뀐 날개 지붕",
+      "source": "PROCFIG-v1 proc_section_data.json line A-Aprime; box = trainlog_v1.json scope zoom_box_xy",
+      "line_origin_xy": [
+        142.8989278426903,
+        83.3301937673299
+      ],
+      "line_unit_xy": [
+        -0.93243819011066,
+        0.36132951944610997
+      ],
+      "line_length_m": 27.232992988440007,
+      "band_half_width_m": 0.5,
+      "box_polygon_xy": [
+        [
+          145.84779278124995,
+          85.40484929876966
+        ],
+        [
+          116.72495732737003,
+          96.69025164614641
+        ],
+        [
+          114.55698021069337,
+          91.09562250548245
+        ],
+        [
+          143.6798156645733,
+          79.81022015810571
+        ]
+      ],
+      "box_z": [
+        -43.1730224609375,
+        -18.067999999999984
+      ],
+      "outline_z": -27.711008071899414,
+      "zoom_azimuth_deg": 68.81813116753989,
+      "zoom_elevation_deg": 35,
+      "zoom_basis": [
+        [
+          -0.9324359329874826,
+          0.36131881626007284,
+          -0.0034559933713092022
+        ],
+        [
+          -0.2090519784980644,
+          -0.5316385536436982,
+          0.8207665432787093
+        ],
+        [
+          -0.29472105652601005,
+          -0.7660346997989428,
+          -0.5712533041866243
+        ]
+      ],
+      "zoom_centre": [
+        130.20238649597164,
+        88.25023590212608,
+        -31.4730224609375
+      ],
+      "zoom_extent": [
+        -15.652178837958084,
+        15.616844929983337,
+        -1.8563555665766018,
+        10.247832746386758
+      ],
+      "section_height_limits_m": [
+        11.880149054071182,
+        22.34380226135254
+      ],
+      "camera_pixels": 21232,
+      "gt_in_band": 30283,
+      "mvs_in_band": 218,
+      "targets_in_band": 248,
+      "prior_cut_segments": 222,
+      "target_judgments_in_band": {
+        "일치": 6,
+        "보정": 160,
+        "보존": 82,
+        "결측": 0
+      },
+      "target_judgments_in_box": {
+        "일치": 111,
+        "보정": 1312,
+        "보존": 395,
+        "결측": 3
+      },
+      "camera_pixel_classes": {
+        "-1": 11860,
+        "0": 528,
+        "1": 2814,
+        "2": 5995,
+        "4": 35
+      },
+      "camera_pixel_bbox_uv": [
+        442,
+        58,
+        776,
+        173
+      ]
+    }
+  },
+  "colour_range": {
+    "height_above_ground_m": [
+      12.447006016139104,
+      21.425428135239827
+    ],
+    "bins": [
+      12.447006016139104,
+      13.729637747439208,
+      15.012269478739311,
+      16.294901210039413,
+      17.577532941339516,
+      18.86016467263962,
+      20.142796403939723,
+      21.425428135239827
+    ],
+    "source": "target-map 3-D points of this camera inside the building scope, 2-98 % (GT dense in scope incl. walls would give 2.15, 16.13 m and leave the roofs in one or two steps)",
+    "ground_z": -43.4730224609375
+  },
+  "static_sha256": "b175261001913fd90fe080eeca32cec0b9eb7dd2330b1e95dd4b179edf07aa80",
+  "rule": "PHD-MAIN-TRAINLOG-v1 concept video v2, first cut r4 (request 2026-11-12; r2-r4 2026-11-13: sections show results only, + GT, unfiltered mesh; r4: fewer symbols). CPU, no training; draws saved states only (nothing interpolated).",
+  "scientific_verdict": null
+}
