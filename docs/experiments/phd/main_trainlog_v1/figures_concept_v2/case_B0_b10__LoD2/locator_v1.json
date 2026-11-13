@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-13T22:36:08.250857+09:00",
+  "rule": "Concept video, another case (TL_CASE=B0_b10__LoD2, 2026-11-13, user: '가우시안/메시 확대와 단면도가 어디를 가리키는지 모르겠어'): one locator figure.\nRead-only on every input; writes /docs/locator_v1.png + locator_v1.json. No new geometry, no scoring; the video frames are not touched.\nTop row, the same ours-30,000 mesh (concept_v2/meshcol/ours_30000.npz) and photo as the video:\n  plan (seen from straight above, north up), overview (the ② view of the video), photo 0031 (the ① photo, same crop).\n  Each zone k: section line = cv2_case_zones.py line (origin = 6 m inside the wall, 12 m along the outward wall normal); its vertical cut plane =\n  that line x scope z_min..z_max (filled, zone colour); dot = the section's 0 m end; arrow = the ② zoom view direction (azimuth = outward wall normal,\n  elevation 35, aimed at the box centre), drawn outside the 12 m line; thin rectangle = zone box (counting box of the numbers table).\n  Photo: zone 1 plane filled, zone 2 plane (behind the building from this camera) dashed outline only.\nBottom row per zone: ②-k mesh zoom of 30,000 (exactly the video's view and box crop) with the cut plane drawn (it is seen edge-on: the view direction\nlies in the section plane, so it is a vertical line), and ③-k this-method section of 30,000 (the video's section) framed in the zone colour.\nText: panel names, one legend line. scientific_verdict: null",
+  "sources": {
+    "mesh": "b4b3078b479649a5dfdd8a1b3d5eea44022af0c3da65d91eb69577f022ea3661",
+    "photo": "5b419c0b053e59d13beb1f1383dcd00e7220e83b3608af8296d137e105063b3c",
+    "section1": "e6788ac73c2a74aba15ed6f07adb688ec630f6c7d436d5ded4470887e0fd892b",
+    "section2": "e6788ac73c2a74aba15ed6f07adb688ec630f6c7d436d5ded4470887e0fd892b"
+  },
+  "scientific_verdict": null,
+  "layout_note": {
+    "photo_width_px": 566,
+    "overview_extent": [
+      -47.724272413045504,
+      49.023382339164066,
+      -30.26305768435695,
+      29.567728807141073
+    ],
+    "plan_extent": [
+      -46.60807844141421,
+      45.16451092162475,
+      -43.7148387401998,
+      39.233463184085416
+    ]
+  },
+  "zone1_cut_line_in_zoom_x_spread_m": 0.08917802997429047,
+  "zone2_cut_line_in_zoom_x_spread_m": 0.09425195570921487,
+  "png": "/docs/locator_v1.png",
+  "seconds": 14.1
+}
