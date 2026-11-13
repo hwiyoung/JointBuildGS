@@ -71,17 +71,24 @@ if TL_CASE: FIGD = D
 # writes frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.* only.
 VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b', 'r6'), VAR
 REV = {'': 'r5', 'z1b': 'r6test', 'r6': 'r6'}[VAR]; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'; IS_Z1B = VAR == 'z1b'
-if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2', 'v3'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
+if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2', 'v3', 'v4'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
 # case v2 (2026-11-13, user '둘 다 진행' after 'are ②-1/②-2 seen from above? what area?'): the zone box is drawn as the pillar it is (xy box x scope z_min..z_max:
 # top ring solid, bottom ring dashed, four vertical edges) in the ① camera panels and the ② overviews, instead of one ring at the median height inside the box
 # (which read as a roof patch). Only the drawing changes; static layers, sections and numbers are the v1 ones (frames, contact, video only; v1 files untouched).
-PILLAR = bool(TL_CASE) and REV in ('v2', 'v3')
+PILLAR = bool(TL_CASE) and REV in ('v2', 'v3', 'v4')
 # case v3 (2026-11-13, user '진행하자'): zones from case_zones_v3.json (cv2_case_zones.py v3: zone 2 slid 5 m along its wall off the inner corner, zone 1 unchanged),
 # its own static_v3.*, sections_v3/, frames_v3/, numbers_v3, contact_sheet_v3, video_v3 (v1/v2 files untouched); box drawn as the v2 pillar.
-ZONEF = V2/('case_zones_v3.json' if TL_CASE and REV == 'v3' else 'case_zones.json')
+ZONEF = V2/('case_zones_v3.json' if TL_CASE and REV in ('v3', 'v4') else 'case_zones.json')
+# case v4 (2026-11-14, user '둘 다 바꾸기' after 'the zones look stacked; should the sections look the same?'): zones v3 unchanged (boxes, scores), and two drawing
+# changes: (a) the ② overview looks from azimuth OV_AZ4 = 192 (math deg; perpendicular to the zone-1 -> zone-2 foot line at 102.2, which the photo-side
+# overview at 282 looked straight along, so the zones stood one behind the other); (b) each section is cut along its zone line from SEC_IN m beyond the line
+# origin (inside) to SEC_OUT m beyond the line end (outside) and drawn in one world direction (x = sign * s, sign = sign(t . u), u = zone-1 -> zone-2 foot
+# direction): both read 'left = the zone-1 side, right = the zone-2 side'; the 12 m line (the zone box width that is scored) is shaded.
+SEC4 = bool(TL_CASE) and REV == 'v4'; OV_AZ4 = 192.; SEC_IN = 16.; SEC_OUT = 4.
 STJ = V2/('static_z1b.json' if IS_Z1B else 'static.json'); STN = V2/('static_z1b.npz' if IS_Z1B else 'static.npz'); SECD = V2/('sections_z1b' if IS_Z1B else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
 if TL_CASE and REV == 'v3': STJ, STN, SECD = V2/'static_v3.json', V2/'static_v3.npz', V2/'sections_v3'; SECJ = V2/f'{SECD.name}.json'
-EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: None} if TL_CASE else {1: None, 2: 25.0}
+if SEC4: STJ, STN, SECD = V2/'static_v4.json', V2/'static_v4.npz', V2/'sections_v4'; SECJ = V2/f'{SECD.name}.json'
+SPANC = '#E4EEF5'; EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: None} if TL_CASE else {1: None, 2: 25.0}
 RESETS = [3000, 6000, 9000, 12000]; DENSIFY_END = 15000; RESC = '#D85A30'
 CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; BNAME = 'B173'; V30 = '_v203'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
 STATES = ['0', '100', '300', '1000', '2000', '3000', '5000', '7000', '10000', '15000', '30000']; FRAMES = ['input']+STATES
@@ -125,6 +132,7 @@ def basis(up, az, el=35.):
     up = np.asarray(up, float); up /= np.linalg.norm(up); east = np.array([1., 0, 0]); east -= (east@up)*up; east /= np.linalg.norm(east); north = np.cross(up, east)
     a, e = np.radians(az), np.radians(el); out = np.cos(e)*(np.cos(a)*east+np.sin(a)*north)+np.sin(e)*up; f = -out; r = np.cross(f, up); r /= np.linalg.norm(r); return np.stack([r, np.cross(r, f), f])
 def zone_az(t): return float(np.degrees(np.arctan2(-t[0], t[1])) % 360)   # screen right = +t (section x grows to the right)
+COMPASS16 = ['북', '북북동', '북동', '동북동', '동', '동남동', '남동', '남남동', '남', '남남서', '남서', '서남서', '서', '서북서', '북서', '북북서']
 def in_zone(P, z, zr):
     return shapely.contains_xy(z['poly'], P[:, 0], P[:, 1]) & (P[:, 2] >= zr[0]) & (P[:, 2] <= zr[1])
 
@@ -139,6 +147,13 @@ class Static:
             for k, z in czj['zones'].items():
                 o, t, n = line_frame(z['line_origin_xy'], z['line_unit_xy']); self.zones[int(k)] = dict(o=o, t=t, n=n, L=float(z['line_length_m']), poly=Polygon(z['box_polygon_xy']), ground=self.ground,
                                                                                             source=z['rule'], zoom_az=float(z['zoom_azimuth_deg']))
+            if SEC4:
+                vc = self.c['renders']['view_camera']; self.B = basis(self.c['coordinates']['up'], OV_AZ4, vc.get('elevation_deg', 35.))
+                u = np.asarray(czj['zones']['2']['wall_foot_xy'], float)-np.asarray(czj['zones']['1']['wall_foot_xy'], float); u /= np.linalg.norm(u)
+                for k, z in self.zones.items():
+                    L0 = z['L']; sg = 1. if z['t']@u > 0 else -1.; right = sg*z['t']; brg = (90.-np.degrees(np.arctan2(right[1], right[0])))%360.
+                    z.update(o=z['o']-SEC_IN*z['t'], L=L0+SEC_IN+SEC_OUT, section_world=dict(sign=sg, shift=SEC_IN, scored_length=L0, u_xy=u.tolist(), right_bearing_deg=float(brg),
+                             right_name=COMPASS16[int(round(brg/22.5))%16], left_name=COMPASS16[int(round(((brg+180.)%360.)/22.5))%16]))
             return
         self.sec = sec = json.loads(Path('/repo/configs/phd/main_stage1_v1/sections_v1.json').read_text())['sections']['B173_sawtooth']; pf = json.loads((PF/'figures/proc_section_data.json').read_text())
         sj = STJ; z1src = ZONE1_RULE
@@ -220,6 +235,7 @@ def setup():
                        target_judgments_in_box={JN[int(j)]: int((tg['judge_region'][valid & in_zone(tg['target'], z, S.zr)] == j).sum()) for j in (0, 2, 1, 4)},
                        camera_pixel_classes={str(int(cl)): int((cls[zp] == cl).sum()) for cl in np.unique(cls[zp])})
         if k == 1: zrec[k]['line_rule'] = zone1_rec
+        if 'section_world' in z: zrec[k]['section_world'] = z['section_world']
     r1 = zmask[1]; vv, uu = np.nonzero(r1)
     if not TL_CASE: zrec[1]['share_of_camera_pixels_inside_concept_v1_zoom_520_20_760_260'] = float(((uu >= 520) & (uu < 760) & (vv >= 20) & (vv < 260)).mean()) if len(uu) else None
     zrec[1]['camera_pixel_bbox_uv'] = [int(uu.min()), int(vv.min()), int(uu.max()), int(vv.max())] if len(uu) else None
@@ -335,30 +351,38 @@ class Frame:
         return np.where(h < y0, b*(h-lo)/max(y0-lo, 1e-9), np.where(h > y1, 1-t+t*(h-y1)/max(hi-y1, 1e-9), b+(1-b-t)*(h-y0)/(y1-y0)))
     def section(self, ax, k, sec=None, layers=('gt', 'prior', 'mvs', 'targets')):
         zj = self.sj['zones'][str(k)]; L = zj['line_length_m']; lo, y0, y1, hi = self.yr[k]; st = self.st; Y = lambda h: self.ymap(k, h)
+        sw = zj.get('section_world') if SEC4 else None   # case v4: x = metres from the zone wall in one world direction (right = sw['right_name'])
+        XF = (lambda x: x) if sw is None else (lambda x, sg=sw['sign'], c0=sw['shift']+sw['scored_length']/2: sg*(np.asarray(x, float)-c0))
         b = STRIP if lo < y0 else 0.; t = STRIP if hi > y1 else 0.
         for a0, a1 in ([(0, b)] if b else [])+([(1-t, 1)] if t else []): ax.axhspan(a0, a1, color=STRIPC, zorder=0, lw=0)
         for yy in ([b] if b else [])+([1-t] if t else []): ax.axhline(yy, color='#9C9A92', lw=.6, ls=(0, (4, 2)), zorder=1)
-        for xl in (0, L): ax.axvline(xl, color='#B4B2A9', lw=.6, ls=':', zorder=1)
-        g = self.sgt[f'gt{k}']
-        if 'gt' in layers: ax.scatter(g[:, 0], Y(g[:, 1]), s=.25, c=GTC, lw=0, zorder=3, rasterized=True)
-        if 'gtlight' in layers: ax.scatter(g[:, 0], Y(g[:, 1]), s=.2, c=GTL, lw=0, zorder=3, rasterized=True)
-        if 'gtband' in layers: ax.scatter(g[:, 0], Y(g[:, 1]), s=9, c=GTB, lw=0, zorder=3, rasterized=True)
+        if sw is None:
+            for xl in (0, L): ax.axvline(xl, color='#B4B2A9', lw=.6, ls=':', zorder=1)
+        else:
+            hw = sw['scored_length']/2; ax.axvspan(-hw, hw, color=SPANC, zorder=0, lw=0)
+            for xl in (-hw, hw): ax.axvline(xl, color='#B4B2A9', lw=.6, ls=':', zorder=1)
+        g = self.sgt[f'gt{k}']; gx_ = XF(g[:, 0])
+        if 'gt' in layers: ax.scatter(gx_, Y(g[:, 1]), s=.25, c=GTC, lw=0, zorder=3, rasterized=True)
+        if 'gtlight' in layers: ax.scatter(gx_, Y(g[:, 1]), s=.2, c=GTL, lw=0, zorder=3, rasterized=True)
+        if 'gtband' in layers: ax.scatter(gx_, Y(g[:, 1]), s=9, c=GTB, lw=0, zorder=3, rasterized=True)
         if 'prior' in layers and len(st[f'prior{k}']):
-            q = st[f'prior{k}'].astype(float).copy(); q[..., 1] = Y(q[..., 1]); ax.add_collection(LineCollection(q, colors=PRC, linewidths=1.4, linestyles=(0, (3, 2)), zorder=4))
-        if 'mvs' in layers: mv = st[f'mvs{k}']; ax.scatter(mv[:, 0], Y(mv[:, 1]), s=4, c=MVC, lw=0, zorder=5)
+            q = st[f'prior{k}'].astype(float).copy(); q[..., 0] = XF(q[..., 0]); q[..., 1] = Y(q[..., 1]); ax.add_collection(LineCollection(q, colors=PRC, linewidths=1.4, linestyles=(0, (3, 2)), zorder=4))
+        if 'mvs' in layers: mv = st[f'mvs{k}']; ax.scatter(XF(mv[:, 0]), Y(mv[:, 1]), s=4, c=MVC, lw=0, zorder=5)
         if 'targets' in layers:
-            q = st[f'tq{k}'].astype(float).copy(); q[..., 1] = Y(q[..., 1])
+            q = st[f'tq{k}'].astype(float).copy(); q[..., 0] = XF(q[..., 0]); q[..., 1] = Y(q[..., 1])
             ax.add_collection(PolyCollection(q, facecolors=[JC[int(j)] for j in st[f'tj{k}']], edgecolors=[JC[int(j)] for j in st[f'tj{k}']], linewidths=1.2, alpha=.6, zorder=4.5))
         n_g = n_m = None
         if sec is not None and 'gaussians' in layers:   # r3 only (r4 draws no Gaussian centres)
             s, h, op = sec[f'g{k}_s'].astype(float), sec[f'g{k}_h'].astype(float), sec[f'g{k}_op'].astype(float); o = np.argsort(op)
-            ax.scatter(s[o], Y(h[o]), s=4, c=plt.get_cmap('Purples')(.3+.7*np.clip(op[o], 0, 1)), lw=0, zorder=6); n_g = int(len(s))
+            ax.scatter(XF(s[o]), Y(h[o]), s=4, c=plt.get_cmap('Purples')(.3+.7*np.clip(op[o], 0, 1)), lw=0, zorder=6); n_g = int(len(s))
         if sec is not None:   # unfiltered: the uncut mesh cut
             seg = sec[f'm{k}'].astype(float).copy()
-            if len(seg): seg[..., 1] = Y(seg[..., 1]); ax.add_collection(LineCollection(seg, colors=MSC, linewidths=1.3, zorder=7))
+            if len(seg): seg[..., 0] = XF(seg[..., 0]); seg[..., 1] = Y(seg[..., 1]); ax.add_collection(LineCollection(seg, colors=MSC, linewidths=1.3, zorder=7))
             n_m = int(len(seg))
         ax.set_xlim(-EXT, L+EXT); ax.set_ylim(0, 1); ax.tick_params(labelsize=7, length=2, pad=1, colors='#5F5E5A')
         ax.set_xticks(np.arange(0, L+.01, 5 if L > 15 else 2))
+        if sw is not None:
+            xa, xb = sorted([float(XF(0.)), float(XF(L))]); ax.set_xlim(xa, xb); ax.set_xticks([v for v in np.arange(-24, 25, 4) if xa <= v <= xb])
         stp = 1 if y1-y0 <= 6 else (2 if y1-y0 <= 14 else 5); tk = list(np.arange(np.ceil(y0/stp)*stp, y1+1e-6, stp)); pos = [float(v) for v in Y(np.array(tk))]; lab = [f'{v:.0f}' for v in tk]
         if b: pos = [0.]+pos; lab = [f'{lo:.0f}']+lab
         if t: pos = pos+[1.]; lab = lab+[f'{hi:.0f}']
@@ -451,13 +475,17 @@ def draw(F, label, cache):
     if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('box', STRIPC, '25 m 위(압축)'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
     else: items = [('band', GTB, '참값'), ('line', MSC, '메시'), ('box', STRIPC, '25 m 위(압축)'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
     if all(v is None for v in ZTOP.values()): items = [i for i in items if i[2] != '25 m 위(압축)']   # case: no compressed band, so no legend entry
+    if SEC4:   # v4: shaded zone-box width in the sections, and the world direction of the section x axis
+        swr = F.sj['zones']['2']['section_world']; items = items+[('span', SPANC, '구역 상자 폭(벽 ±6 m)'), ('text', None, f"단면: 0 = 벽, 왼쪽 {swr['left_name']} · 오른쪽 {swr['right_name']}")]
     for kind, col, txt in items:
         if kind == 'pt': lax.plot(x+5, 17, 'o', ms=4.5, color=col)
         elif kind == 'box': lax.add_patch(plt.Rectangle((x, 11), 11, 12, color=col, alpha=.75))
         elif kind == 'band': lax.plot([x, x+18], [17, 17], color=col, lw=5, solid_capstyle='butt')
         elif kind == 'reset': lax.plot(x+5, 17, 'v', ms=6, color=col, mec='white', mew=.4)
+        elif kind == 'span': lax.add_patch(plt.Rectangle((x, 9), 18, 16, fc=col, ec='#B4B2A9', lw=.6, ls=':'))
+        elif kind == 'text': pass
         else: lax.plot([x, x+18], [17, 17], color=col, lw=1.6, ls={'dash': (0, (3, 2)), 'dot': ':', 'line': '-'}[kind])
-        x += (14 if kind in ('pt', 'box', 'reset') else 22); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
+        x += (14 if kind in ('pt', 'box', 'reset') else (0 if kind == 'text' else 22)); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
     png = FR/f'frame_{FRAMES.index(label):02d}_{label}.png'; FR.mkdir(parents=True, exist_ok=True); fig.savefig(png, dpi=100, facecolor='white'); plt.close(fig)
     rec.update(png=str(png), png_sha256=sha(png), seconds=round(time.monotonic()-t0, 1), camera=F.sj['camera'], oblique=F.sj['oblique'], zones=F.sj['zones'], colour_range=F.sj['colour_range'],
                static_sha256=F.h(STN), rule=__doc__.split('\n')[0], scientific_verdict=None)
