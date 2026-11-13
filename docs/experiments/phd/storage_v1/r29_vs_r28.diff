@@ -1,0 +1,74 @@
+diff -ru -x __pycache__ GeoGS-conf-guided-v1-r28/jbgs_state.py GeoGS-conf-guided-v1-r29/jbgs_state.py
+--- GeoGS-conf-guided-v1-r28/jbgs_state.py	2026-11-01 22:28:23.218435565 +0900
++++ GeoGS-conf-guided-v1-r29/jbgs_state.py	2026-11-13 23:16:36.236389017 +0900
+@@ -22,7 +22,7 @@
+     'da_monitor_depth', 'da_monitor_rgb', 'da_last_check', 'da_consecutive', 'da_locked_weight',
+ )
+ NON_METHOD_ARGS = {'model_path', 'quiet', 'ip', 'port', 'checkpoint_iterations', 'start_checkpoint',
+-                   'save_iterations'}
++                   'save_iterations', 'jbgs_keep_checkpoints'}
+ 
+ 
+ def digest(path):
+@@ -35,13 +35,20 @@
+ 
+ def register_args(parser):
+     parser.add_argument('--jbgs_resume_full')
+-    parser.add_argument('--jbgs_capture_iterations', type=int, nargs='+', default=[8000, 30000])
++    # [jbgs r29 storage] default captures only the final iteration (added in validate_args)
++    parser.add_argument('--jbgs_capture_iterations', type=int, nargs='+', default=[])
++    # [jbgs r29 storage] keep checkpoint.pth of the last N complete states (0 = keep all); ply and receipt are always kept
++    parser.add_argument('--jbgs_keep_checkpoints', type=int, default=1)
+     parser.add_argument('--jbgs_stop_after', type=int, default=0)
+     parser.add_argument('--jbgs_release_protection', action='store_true')
+     parser.add_argument('--jbgs_input_manifest')
+ 
+ 
+ def validate_args(args):
++    if args.iterations not in args.jbgs_capture_iterations:  # [jbgs r29 storage] final state is always captured
++        args.jbgs_capture_iterations = list(args.jbgs_capture_iterations) + [args.iterations]
++    if args.jbgs_keep_checkpoints < 0:
++        raise ValueError('--jbgs_keep_checkpoints must be >= 0')
+     if args.start_checkpoint:
+         raise ValueError('Use a complete state; upstream checkpoint omits required state')
+     if args.jbgs_release_protection and not args.jbgs_resume_full:
+@@ -172,6 +179,20 @@
+     return out
+ 
+ 
++def prune_checkpoints(root, keep):
++    """[jbgs r29 storage] Remove checkpoint.pth of older complete states, keeping the newest `keep`.
++    point_cloud.ply and receipt.json stay; removed.json records what was removed (sha256 is in receipt.json)."""
++    if keep <= 0:
++        return
++    states = sorted((int(d.name.split('_', 1)[1]), d) for d in root.glob('iteration_*')
++                    if d.name.split('_', 1)[1].isdigit() and (d / 'checkpoint.pth').is_file())
++    for it, d in states[:-keep]:
++        ck = d / 'checkpoint.pth'; size = ck.stat().st_size; ck.unlink()
++        with (d / 'removed.json').open('w') as f:
++            json.dump({'removed': 'checkpoint.pth', 'bytes': size, 'reason': f'jbgs_keep_checkpoints={keep}',
++                       'scientific_verdict': None}, f, indent=2)
++
++
+ def after_step(env):
+     iteration, args, g = env['iteration'], env['args'], env['gaussians']
+     if iteration % 100 == 0 or iteration in args.jbgs_capture_iterations:
+@@ -199,4 +220,5 @@
+         with (root / 'receipt.json').open('x') as f:
+             json.dump(receipt, f, indent=2)
+         print(f'[JBGS] Complete state captured after iteration {iteration}')
++        prune_checkpoints(Path(args.model_path) / 'jbgs_complete', args.jbgs_keep_checkpoints)
+     return bool(args.jbgs_stop_after and iteration >= args.jbgs_stop_after)
+diff -ru -x __pycache__ GeoGS-conf-guided-v1-r28/train.py GeoGS-conf-guided-v1-r29/train.py
+--- GeoGS-conf-guided-v1-r28/train.py	2026-11-11 18:12:17.195294219 +0900
++++ GeoGS-conf-guided-v1-r29/train.py	2026-11-13 23:16:36.231388729 +0900
+@@ -1425,7 +1425,8 @@
+     parser.add_argument("--port", type=int, default=6009)
+     parser.add_argument("--detect_anomaly", action="store_true", default=False)
+     parser.add_argument("--test_iterations", nargs="+", type=int, default=[8_000, 30_000])
+-    parser.add_argument("--save_iterations", nargs="+", type=int, default=[8_000, 30_000])
++    # [jbgs r29 storage] default saves only the final iteration (appended below); record runs pass explicit lists
++    parser.add_argument("--save_iterations", nargs="+", type=int, default=[])
+     parser.add_argument("--quiet", action="store_true")
+     parser.add_argument("--checkpoint_iterations", nargs="+", type=int, default=[])
+     parser.add_argument("--start_checkpoint", type=str, default=None)
