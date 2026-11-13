@@ -6,24 +6,24 @@ import subprocess, sys
 from common import *
 from PIL import Image
 import imageio_ffmpeg
-V2 = O/'concept_v2'; FR = V2/'frames'; OUTV = V2/'video'; FIGD = D/'figures_concept_v2'; STEP, LAST = 1.2, 3.0
+V2 = O/'concept_v2'; REV = 'r2'; FR = V2/f'frames_{REV}'; OUTV = V2/f'video_{REV}'; FIGD = D/'figures_concept_v2'; STEP, LAST = 1.2, 3.0   # r2 (2026-11-13): sections show results only; the first cut video/ is kept
 
 def main():
     frames = sorted(FR.glob('frame_*.png')); assert len(frames) == 12, len(frames); OUTV.mkdir(parents=True, exist_ok=True); FIGD.mkdir(parents=True, exist_ok=True)
     lst = OUTV/'concat.txt'; lines = []
     for i, p in enumerate(frames): lines += [f"file '{p}'", f'duration {LAST if i == len(frames)-1 else STEP}']
     lines.append(f"file '{frames[-1]}'"); lst.write_text('\n'.join(lines)+'\n')
-    mp4 = OUTV/'B173_학습과정_개념동영상_v2.mp4'; ff = imageio_ffmpeg.get_ffmpeg_exe()
+    mp4 = OUTV/f'B173_학습과정_개념동영상_v2_{REV}.mp4'; ff = imageio_ffmpeg.get_ffmpeg_exe()
     cmd = [ff, '-y', '-hide_banner', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', str(lst), '-vf', 'fps=25,format=yuv420p', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18',
            '-movflags', '+faststart', str(mp4)]
     subprocess.run(cmd, check=True)
     probe = subprocess.run([ff, '-hide_banner', '-i', str(mp4)], capture_output=True, text=True).stderr
     ims = [Image.open(p).convert('RGB').resize((1280, 720), Image.LANCZOS) for p in frames]; pal = [im.quantize(colors=256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE) for im in ims]
-    gif = OUTV/'B173_학습과정_개념동영상_v2.gif'
+    gif = OUTV/f'B173_학습과정_개념동영상_v2_{REV}.gif'
     pal[0].save(gif, save_all=True, append_images=pal[1:], duration=[int(STEP*1000)]*(len(pal)-1)+[int(LAST*1000)], loop=0, optimize=False, disposal=1)
     dur = [l for l in probe.splitlines() if 'Duration' in l or 'Video:' in l]
     rec = dict(at=now(), rule=__doc__, frames=[dict(png=str(p), sha256=sha(p)) for p in frames], mp4=dict(path=str(mp4), sha256=sha(mp4), bytes=mp4.stat().st_size, ffmpeg=ff, command=cmd, probe=dur),
                gif=dict(path=str(gif), sha256=sha(gif), bytes=gif.stat().st_size, width=1280), expected_seconds=STEP*(len(frames)-1)+LAST, scientific_verdict=None)
-    dump(OUTV/'video.json', rec); dump(FIGD/'video.json', rec); print('VIDEO', rec['mp4']['bytes'], rec['gif']['bytes'], dur, flush=True)
+    dump(OUTV/'video.json', rec); dump(FIGD/f'video_{REV}.json', rec); print('VIDEO', rec['mp4']['bytes'], rec['gif']['bytes'], dur, flush=True)
 
 if __name__ == '__main__': main()

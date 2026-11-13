@@ -1,4 +1,4 @@
-"""PHD-MAIN-TRAINLOG-v1 concept video v2, first cut (request 2026-11-12). CPU, no training; draws saved states only (nothing interpolated).
+"""PHD-MAIN-TRAINLOG-v1 concept video v2, first cut r2 (request 2026-11-12; r2 2026-11-13: sections show processing results only). CPU, no training; draws saved states only (nothing interpolated).
 One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000, 10,000, 15,000, 30,000), 1920 x 1080, white.
   top      'B173 · 반복 N / 30,000' and the 12-point dot row (current dark, past grey)
   upper    ① 2x2 for the real training camera DJI_20241217091247_0146_D (cropped to the building-scope pixels): photo, render (renders/<n>/train1_rgb.png,
@@ -11,16 +11,21 @@ One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000,
            far first; mesh = the original-rule mesh (203 views, TSDF 0.05 / 0.25 m, cleanup) coloured by cv2_meshcol.py, headlight shade 0.72 + 0.28 |n.f|.
   zones    one row per zone: ②-k discs zoom, ②-k mesh zoom (contents whose centre is inside the zone box; own orthographic view at elevation 35 and the azimuth
            that puts the zone line left-to-right on screen, so zoom and section read in the same direction), ③-k sections of this method and of the comparison
-           run (band of 1 m around the zone line: GT dense points (black), prior ALS surface cut, image depth = FT patch MVS mean points, judgment target +-1.96 sigma
-           quads coloured by judgment, Gaussian centres in the band in purple shaded by opacity, mesh cut on the band centre plane), ③-k comparison mesh zoom.
-           section height range = targets above 5 m (-1 m) to the prior or target top (+0.8 m); input frame: prior surface at alpha 0.6 over the image-depth points.
+           run (band of 1 m around the zone line), ③-k comparison mesh zoom.
+           r2 rule (user, 2026-11-13): a section shows the processing result only = Gaussian centres in the band in purple shaded by opacity and the mesh cut on
+           the band centre plane (blue); no GT, prior, image depth or targets in the iteration frames. All data only in the input frame: ③ this method = GT dense
+           points (black), prior ALS surface cut (orange dashed), image depth = FT patch MVS mean points (green), judgment target +-1.96 sigma quads coloured by
+           judgment; ③ comparison = that run's own inputs only (judgment off: prior and image depth, both its targets; image-only 2DGS: none, panel empty).
+           section height range (all frames, same axes as the input frame) = targets above 5 m (-1 m) to the prior or target top (+0.8 m).
+           input frame ②: prior surface at alpha 0.6 over the image-depth points. Legend line lists only what the frame draws.
            camera height colours: this camera's building-scope target heights, 2-98 %, 7 steps (static.json colour_range).
            zone 1 glass skylight in the concept-v1 zoom (ZONE1_RULE: B173_sawtooth direction, placed on this camera's target map; 12 m line, box 12 x 8 m), comparison = judgment off
                   (main_stage3_v1 nojudge_ALS_s0 = RESCORE baseline_30000; saved 15,000 and 30,000)
            zone 2 changed wing roof = PROCFIG-v1 section line (proc_section_data.json, 27.2 m), box = trainlog_v1.json scope zoom_box_xy, comparison = image-only
                   2DGS (main_baselines_v1 imgonly_2dgs_s0; saved 7,000 and 30,000)
-           comparison state = the nearest saved iteration <= the frame's; none before the first saved one (panel left empty, '비교: 저장 상태 없음').
+           comparison state = the nearest saved iteration <= the frame's; none before the first saved one (section and mesh panels left empty, '비교: 저장 상태 없음').
 Modes: setup (static layers -> concept_v2/static.npz, static.json) | frames [labels] | table (numbers) | contact (one sheet of all frames).
+r2 writes concept_v2/frames_r2/, docs contact_sheet_r2.png and frames_json_r2/; the first cut (frames/, contact_sheet.png, frames_json/) is kept.
 GT is used only for colour ranges, colouring, section drawing and the numbers. scientific_verdict: null"""
 import sys, time
 from common import *
@@ -37,7 +42,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Patch, FancyArrowPatch
 from PIL import Image
 FONT = '/fonts/NotoSansCJK-Regular.ttc'; fm.fontManager.addfont(FONT); plt.rcParams['font.family'] = fm.FontProperties(fname=FONT).get_name(); plt.rcParams['axes.unicode_minus'] = False
-V2 = O/'concept_v2'; FR = V2/'frames'; FIGD = D/'figures_concept_v2'
+V2 = O/'concept_v2'; REV = 'r2'; FR = V2/f'frames_{REV}'; FIGD = D/'figures_concept_v2'
 CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
 STATES = ['0', '100', '300', '1000', '2000', '3000', '5000', '7000', '10000', '15000', '30000']; FRAMES = ['input']+STATES
 COMP = {1: dict(run='nojudge', name='판단 끈 학습', saved=[15000, 30000]), 2: dict(run='2dgs', name='사진만 쓴 2DGS', saved=[7000, 30000])}
@@ -239,12 +244,12 @@ class Frame:
         ax.plot(np.r_[x, x[:1]], np.r_[y, y[:1]], color='white', lw=2.4, zorder=15); ax.plot(np.r_[x, x[:1]], np.r_[y, y[:1]], color=NAVY, lw=1.1, zorder=16)
         if label: self.badge(ax, x.mean(), y.max(), k, 10)
     # -------- ③ sections
-    def section(self, ax, k, discs=None, mesh=None, targets=True):
+    def section(self, ax, k, discs=None, mesh=None, layers=('gt', 'prior', 'mvs', 'targets')):
         zj = self.sj['zones'][str(k)]; L = zj['line_length_m']; y0, y1 = zj['section_height_limits_m']; st = self.st
-        g = st[f'gt{k}']; ax.scatter(g[:, 0], g[:, 1], s=.25, c=GTC, lw=0, zorder=3, rasterized=True)
-        if len(st[f'prior{k}']): ax.add_collection(LineCollection(st[f'prior{k}'], colors=PRC, linewidths=1.4, linestyles=(0, (3, 2)), zorder=4))
-        mv = st[f'mvs{k}']; ax.scatter(mv[:, 0], mv[:, 1], s=4, c=MVC, lw=0, zorder=5)
-        if targets:
+        if 'gt' in layers: g = st[f'gt{k}']; ax.scatter(g[:, 0], g[:, 1], s=.25, c=GTC, lw=0, zorder=3, rasterized=True)
+        if 'prior' in layers and len(st[f'prior{k}']): ax.add_collection(LineCollection(st[f'prior{k}'], colors=PRC, linewidths=1.4, linestyles=(0, (3, 2)), zorder=4))
+        if 'mvs' in layers: mv = st[f'mvs{k}']; ax.scatter(mv[:, 0], mv[:, 1], s=4, c=MVC, lw=0, zorder=5)
+        if 'targets' in layers:
             ax.add_collection(PolyCollection(st[f'tq{k}'], facecolors=[JC[int(j)] for j in st[f'tj{k}']], edgecolors=[JC[int(j)] for j in st[f'tj{k}']], linewidths=1.2, alpha=.6, zorder=4.5))
         n_g = None
         if discs is not None:
@@ -313,17 +318,19 @@ def draw(F, label, cache):
             if key not in cache:
                 fsel = in_zone(F.PV[F.PF].mean(1), S.zones[k], S.zr); cache[key] = F.raster(F.PV, F.PF[fsel], None, zext, wz, hz, 3, PRIOR_RGB, view=zv)
             img, dep = cache[key]; F.show_prior(a_g, img, dep, zext); F.mvs_points(a_g, dep, zext, wz, hz, 3, 5, zone=k, view=zv); F.blank(a_m); F.blank(a_cm)
-            F.section(a_s, k); F.section(a_c, k, targets=False)
+            F.section(a_s, k)
+            if COMP[k]['run'] == 'nojudge': F.section(a_c, k, layers=('prior', 'mvs'))   # its inputs = both targets, no judgment
+            else: F.blank(a_c)                                                          # image-only 2DGS: no section input
         else:
             sel = zsel(dz['xyz'].astype(float)); rec['counts'][f'zone{k}_discs'] = F.discs(a_g, dz, sel, zext, wz, edge=True, view=zv)
             fsel = zsel(mz['V'][mz['F']].mean(1).astype(float)); img, _ = F.raster(mz['V'], mz['F'][fsel], mz['C'].astype(float), zext, wz, hz, 3, view=zv); F.show(a_m, img, zext)
-            ng, nm = F.section(a_s, k, discs=dz, mesh=mz); rec['counts'][f'zone{k}_band_gaussians'] = ng; rec['counts'][f'zone{k}_mesh_cut_segments'] = nm
-            if cs is None: F.section(a_c, k, targets=False); F.blank(a_cm)
+            ng, nm = F.section(a_s, k, discs=dz, mesh=mz, layers=()); rec['counts'][f'zone{k}_band_gaussians'] = ng; rec['counts'][f'zone{k}_mesh_cut_segments'] = nm
+            if cs is None: F.blank(a_c); F.blank(a_cm)
             else:
                 ck = f"{COMP[k]['run']}_{cs}"
                 if ck not in cache: cache.clear() if len(cache) > 12 else None; cache[ck] = (loadz(V2/'discs'/f'{ck}.npz'), loadz(V2/'meshcol'/f'{ck}.npz'))
                 cd, cm = cache[ck]; rec['sources'][f'comparison{k}_discs'] = F.h(V2/'discs'/f'{ck}.npz'); rec['sources'][f'comparison{k}_mesh'] = F.h(V2/'meshcol'/f'{ck}.npz')
-                ng, nm = F.section(a_c, k, discs=cd, mesh=cm, targets=False); rec['counts'][f'zone{k}_comparison_band_gaussians'] = ng
+                ng, nm = F.section(a_c, k, discs=cd, mesh=cm, layers=()); rec['counts'][f'zone{k}_comparison_band_gaussians'] = ng
                 fsel = zsel(cm['V'][cm['F']].mean(1).astype(float)); img, _ = F.raster(cm['V'], cm['F'][fsel], cm['C'].astype(float), zext, wz, hz, 3, view=zv); F.show(a_cm, img, zext)
         rec[f'zone{k}'] = dict(zoom_extent=list(zext), comparison_run=COMP[k]['run'], comparison_name=cn, comparison_iteration=cs, comparison_label=ctitle)
     # legend (one line)
@@ -332,8 +339,8 @@ def draw(F, label, cache):
     for i in range(NBIN): lax.add_patch(plt.Rectangle((x+i*22, 9), 22, 14, color=F.hcol[i]))
     for i in range(NBIN+1): lax.text(x+i*22, 4.5, f'{F.bins[i]:.0f}', fontsize=7, ha='center', va='center', color='#5F5E5A')
     x += NBIN*22+18
-    items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('pt', '#54278F', '가우시안 중심(진할수록 불투명)'),
-             ('line', MSC, '메시'), ('line', RED, f'목표와 τ {TAU:.3f} m 넘게 다른 렌더 깊이'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자')]
+    if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자')]
+    else: items = [('pt', '#54278F', '가우시안 중심(진할수록 불투명)'), ('line', MSC, '메시'), ('line', RED, f'목표와 τ {TAU:.3f} m 넘게 다른 렌더 깊이'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자')]
     for kind, col, txt in items:
         if kind == 'pt': lax.plot(x+5, 17, 'o', ms=4.5, color=col)
         elif kind == 'box': lax.add_patch(plt.Rectangle((x, 11), 11, 12, color=col, alpha=.75))
@@ -414,9 +421,9 @@ def numbers():
 def contact():
     ims = [Image.open(p).convert('RGB').resize((480, 270), Image.LANCZOS) for p in sorted(FR.glob('frame_*.png'))]; sheet = Image.new('RGB', (480*4, 270*3), 'white')
     for i, im in enumerate(ims): sheet.paste(im, ((i % 4)*480, (i//4)*270))
-    FIGD.mkdir(parents=True, exist_ok=True); sheet.save(FIGD/'contact_sheet.png')
-    (FIGD/'frames_json').mkdir(exist_ok=True)
-    for j in sorted(FR.glob('frame_*.json')): (FIGD/'frames_json'/j.name).write_bytes(j.read_bytes())   # frame records in git; PNG frames stay in the payload
+    FIGD.mkdir(parents=True, exist_ok=True); sheet.save(FIGD/f'contact_sheet_{REV}.png')
+    (FIGD/f'frames_json_{REV}').mkdir(exist_ok=True)
+    for j in sorted(FR.glob('frame_*.json')): (FIGD/f'frames_json_{REV}'/j.name).write_bytes(j.read_bytes())   # frame records in git; PNG frames stay in the payload
     print('CONTACT', len(ims), flush=True)
 
 if __name__ == '__main__':
