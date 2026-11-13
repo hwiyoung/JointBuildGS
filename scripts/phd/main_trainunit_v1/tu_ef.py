@@ -119,24 +119,28 @@ def scores():
     gcommon.D = TU / 'gt/docs'
     import add2_scores
     site, prior = 'B0_b10', 'ALS'
-    fams = dict(기준='FINALTRAIN_30000', 씨앗반복='seed1_s1', 필터='ef_s0')
+    fams = dict(필터없음_씨앗0='FINALTRAIN_30000', 필터없음_씨앗1='seed1_s1', 필터_씨앗0='ef_s0', 필터_씨앗1='ef_s1')   # addendum 13: four runs
     have = [m for m in fams.values() if (TU / 'gt/scenes' / f'{site}__{prior}' / 'distances' / f'{m}.npz').exists()]
     rows = add2_scores.metric_rows(site, prior, have)
     look = {(r['method'], r['surface'], r['case_id']): r for r in rows}
     names = {0: '둘 다 맞음', 1: '영상만 맞음', 2: '사전 정보만 맞음', 4: '영상 없음', 'all': '장면 전체'}
+    d = lambda a, b: a - b if a is not None and b is not None else None
     out = []
     for case in [0, 1, 2, 4, 'all']:
         for metric, k in [('완전성', 'completeness_pct'), ('정확성', 'accuracy_pct')]:
             v = {lab: (look.get((m, 'all', case)) or {}).get(k) for lab, m in fams.items()}
             n = (look.get(('FINALTRAIN_30000', 'all', case)) or {}).get('n_gt')
-            spread = abs(v['씨앗반복'] - v['기준']) if v['씨앗반복'] is not None and v['기준'] is not None else None
-            diff = v['필터'] - v['기준'] if v['필터'] is not None and v['기준'] is not None else None
-            out.append(dict(case=names[case], metric=metric, n_gt=n, 기준=v['기준'], 씨앗반복=v['씨앗반복'], 필터=v['필터'],
-                            필터_빼기_기준_pp=diff, 씨앗_흔들림폭_pp=spread,
-                            흔들림폭_안=(abs(diff) <= spread) if diff is not None and spread is not None else None))
-    write('ef_scores_B0_b10__ALS', out, 'addendum 12: GTJUDGE completeness/accuracy (unchanged scorer, §3.4 rule) of the elongation-filter B0 ALS run against the FINALTRAIN seed-0 baseline and the seed-1 repeat; spread = |seed1 - seed0|; no pass mark set')
+            row = dict(case=names[case], metric=metric, n_gt=n) | v
+            row['씨앗차_필터없음_pp'] = abs(d(v['필터없음_씨앗1'], v['필터없음_씨앗0'])) if d(v['필터없음_씨앗1'], v['필터없음_씨앗0']) is not None else None
+            row['씨앗차_필터_pp'] = abs(d(v['필터_씨앗1'], v['필터_씨앗0'])) if d(v['필터_씨앗1'], v['필터_씨앗0']) is not None else None
+            row['필터효과_씨앗0_pp'] = d(v['필터_씨앗0'], v['필터없음_씨앗0'])
+            row['필터효과_씨앗1_pp'] = d(v['필터_씨앗1'], v['필터없음_씨앗1'])
+            ok = [x for x in [v['필터_씨앗0'], v['필터_씨앗1']] if x is not None], [x for x in [v['필터없음_씨앗0'], v['필터없음_씨앗1']] if x is not None]
+            row['필터효과_평균_pp'] = (sum(ok[0]) / len(ok[0]) - sum(ok[1]) / len(ok[1])) if len(ok[0]) == 2 and len(ok[1]) == 2 else None
+            out.append(row)
+    write('ef_scores_B0_b10__ALS', out, 'addenda 12/13: GTJUDGE completeness/accuracy (unchanged scorer, §3.4 rule) of B0 ALS with and without the elongation filter, seeds 0 and 1; seed difference = |seed1 - seed0| per setting; filter effect = filter - no filter per seed and of the two-seed means; no pass mark set')
     for r in out:
-        print('SC', r['case'], r['metric'], r['기준'], r['씨앗반복'], r['필터'], r['필터_빼기_기준_pp'], r['씨앗_흔들림폭_pp'], flush=True)
+        print('SC', r['case'], r['metric'], r['n_gt'], [None if r[k] is None else round(r[k], 2) for k in fams], 'seeddiff', r['씨앗차_필터없음_pp'], r['씨앗차_필터_pp'], 'effect', r['필터효과_씨앗0_pp'], r['필터효과_씨앗1_pp'], r['필터효과_평균_pp'], flush=True)
 
 
 if __name__ == '__main__':

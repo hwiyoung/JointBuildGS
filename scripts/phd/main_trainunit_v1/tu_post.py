@@ -114,6 +114,8 @@ def family_of(key):
         return 'seed1_s1'
     if key.startswith('ef_'):
         return 'ef_s0'   # addendum 12: elongation-filter repeat of the FINALTRAIN seed-0 run
+    if key.startswith('efs1_'):
+        return 'ef_s1'   # addendum 13: the same with seed 1
     return key  # campus30k_<prior>_s0 / cells_<prior>_s0
 
 
@@ -124,10 +126,10 @@ def runs_of(key):
         site = f'{a}_{b}'
         rec = TU / 'runs' / site / f'seed1_{prior}' / 'receipt.json'
         sites = [site]
-    elif key.startswith('ef_'):
-        _, a, b, prior = key.split('_')
+    elif key.startswith(('ef_', 'efs1_')):
+        tag, a, b, prior = key.split('_')
         site = f'{a}_{b}'
-        rec = TU / 'runs/ef' / f'{a}ef_{prior}_s0' / 'receipt.json'
+        rec = TU / 'runs/ef' / f'{a}ef_{prior}_{"s1" if tag == "efs1" else "s0"}' / 'receipt.json'
         sites = [site]
     elif key.startswith('campus'):
         prior = key.split('_')[1]

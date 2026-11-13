@@ -12,7 +12,7 @@ import time
 
 from tu_host import FT, TU, command, dump, gpu_busy, issue, now, progress, train_args
 
-ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0']   # longest expected first
+ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0', 'B0ef_ALS_s1']   # longest expected first; addendum 13 last
 JOBS = {
     'B0ef_ALS_s0': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
                         ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g'),
@@ -22,6 +22,9 @@ JOBS = {
                             ready=TU / 'stage1/probe3__ALS/ready.json', memory='48g'),
     'probe4ef_ALS_s0': dict(scene='/tu/scenes/probe4/scene_ALS', split='/tu/scenes/probe4/split.json', target='/tu/stage1/probe4__ALS',
                             ready=TU / 'stage1/probe4__ALS/ready.json', memory='48g'),
+    # addendum 13: B0ef with seed 1
+    'B0ef_ALS_s1': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
+                        ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g', seed=1),
 }
 FLOOR_GB, START_GB, MAX_GUARD = 20, 45, 3
 
@@ -55,11 +58,11 @@ def attempt(gpu, name, run, a):
     root = run / f'attempt{a}'
     root.mkdir()
     model = '/tu/' + str((root / 'model').relative_to(TU))
-    args = [name, *train_args(j['scene'], model, j['target'], 0, 30000)]
+    args = [name, *train_args(j['scene'], model, j['target'], j.get('seed', 0), 30000)]
     cname = f'jbgs-trainunit-{name.replace("_", "-").lower()}-a{a}'
     cmd = command(gpu, cname, 'tu_train_entry.py', args, j['split'], j['memory'])
     dump(root / 'command.json', cmd)
-    dump(root / 'launch.json', dict(at=now().isoformat(), gpu=gpu, name=name, attempt=a, addendum=12,
+    dump(root / 'launch.json', dict(at=now().isoformat(), gpu=gpu, name=name, attempt=a, addendum=13 if name == 'B0ef_ALS_s1' else 12, seed=j.get('seed', 0),
                                    nvidia_smi_compute_apps=gpu_busy(gpu), host_available_GiB=avail_gb(), scientific_verdict=None))
     progress(f'{name} 시도 {a} 시작, GPU {gpu} (덧붙임 12, 길쭉함 필터)')
     start = time.monotonic()

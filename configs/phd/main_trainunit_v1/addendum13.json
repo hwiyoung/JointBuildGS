@@ -1,0 +1,11 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 13,
+  "instruction": "user, 2026-11-13 KST: '필터 넣은 판 씨앗1은 진행하자'",
+  "question": "Is the lower B0 ALS score of the elongation-filter run where only the prior is right (case 2, 1,450 reference points: accuracy 74.92 -> 67.44, completeness 74.14 -> 71.79) an effect of the filter or seed variation? The seed spread so far is one pair (FINALTRAIN seed 0 vs seed-1 repeat).",
+  "run": "B0ef_ALS_s1: identical to B0ef_ALS_s0 (addendum 12: FINALTRAIN B0_b10 ALS inputs, elongation filter 0.01, full 30,000 iterations, FINALTRAIN count rule enforced, read-only monitor) except --jbgs_seed 1, the seed of the seed-1 repeat seed1_B0_b10_ALS",
+  "scoring": "unchanged GTJUDGE post-processing (crop, render, mesh, score), family label ef_s1; table with four runs: no filter seed 0 (FINALTRAIN), no filter seed 1 (seed1_s1), filter seed 0 (ef_s0), filter seed 1 (ef_s1), per case: the two seed differences and the filter-minus-no-filter difference per seed",
+  "resources": "same queue rules as addendum 12 (GPU with no other compute process, host MemAvailable >= 45 GB, host guard 20 GB); scoring starts after training ends",
+  "pass_marks_not_set": "no pass/fail threshold; reported as numbers",
+  "scientific_verdict": null
+}

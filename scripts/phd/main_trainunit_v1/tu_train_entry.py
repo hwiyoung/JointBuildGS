@@ -21,6 +21,8 @@ EF = {
     'probe4ef_ALS_s0': dict(stop=15000, extent=199.23552905804456, watch_unit='probe4'),
     'cell0ef_ALS_s0': dict(stop=15000, extent=None, watch={'cell0#1': [124654], 'cell0#2': [123105], 'cell0#3': [130744]}),
     'B0ef_ALS_s0': dict(stop=None, extent=None, watch={'base_s0#1': [17310], 'base_s0#2': [15779], 'base_s0#3': [17176], 'base_s0#bg1': [45212]}),
+    # addendum 13: the same run with seed 1 (the seed of the seed-1 repeat)
+    'B0ef_ALS_s1': dict(stop=None, extent=None, watch={'base_s0#1': [17310], 'base_s0#2': [15779], 'base_s0#3': [17176], 'base_s0#bg1': [45212]}),
 }
 FTC = Path('/repo/configs/phd/main_finaltrain_v1/finaltrain_v1.json')
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -190,6 +192,8 @@ def main():
     if run_name in EF:
         # addendum 12: no deadline / 500-iteration stop (the TRAINUNIT deadline has passed); stop as locked per run
         assert sha(C / 'addendum12.json') == json.loads((C / 'addendum12.lock.json').read_text())['sha256']
+        if run_name == 'B0ef_ALS_s1':
+            assert sha(C / 'addendum13.json') == json.loads((C / 'addendum13.lock.json').read_text())['sha256']
         lifted = True
         probe_stop = EF[run_name]['stop']
     elif run_name.startswith('probe'):
