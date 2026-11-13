@@ -18,9 +18,9 @@ def note(**kw):
     LOG.parent.mkdir(parents=True, exist_ok=True)
     with LOG.open('a') as f: f.write(json.dumps(dict(at=LA.now(), **kw), ensure_ascii=False)+'\n')
     print(json.dumps(kw, ensure_ascii=False), flush=True)
-def step(name, fn, *a):
-    t = time.monotonic(); rc = fn(*a); note(step=name, seconds=round(time.monotonic()-t, 1), rc=rc)
-    if rc: raise SystemExit(f'{name} failed ({rc})')
+def step(label, fn, *a, **kw):
+    t = time.monotonic(); rc = fn(*a, **kw); note(step=label, seconds=round(time.monotonic()-t, 1), rc=rc)
+    if rc: raise SystemExit(f'{label} failed ({rc})')
 
 def gpu_phase(gpu):
     need = [n for n in STATES if not (O/'renders'/n/'render.json').exists()]
