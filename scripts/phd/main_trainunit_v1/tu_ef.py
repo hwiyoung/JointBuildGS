@@ -143,5 +143,89 @@ def scores():
         print('SC', r['case'], r['metric'], r['n_gt'], [None if r[k] is None else round(r[k], 2) for k in fams], 'seeddiff', r['씨앗차_필터없음_pp'], r['씨앗차_필터_pp'], 'effect', r['필터효과_씨앗0_pp'], r['필터효과_씨앗1_pp'], r['필터효과_평균_pp'], flush=True)
 
 
+def cells():
+    """addendum 14: 판 다 ALS cells with the filter (merged) against single-site runs with and without the filter, the cell
+    boundary band, and per-cell time/count/memory. Unchanged scorer (add2_scores.metric_rows) and band rule (tu_tables.band)."""
+    import tu_tables as tt   # binds the GTJUDGE common paths as in tu_tables
+    assert sha(C / 'addendum14.json') == json.loads((C / 'addendum14.lock.json').read_text())['sha256']
+    prior = 'ALS'
+    F = dict(판다필터='cellsef_ALS_s0', 단일필터_씨앗0='ef_s0', 단일필터_씨앗1='ef_s1', 단일_씨앗0='FINALTRAIN_30000', 단일_씨앗1='seed1_s1')
+    names = {0: '둘 다 맞음', 1: '영상만 맞음', 2: '사전 정보만 맞음', 4: '영상 없음', 'all': '장면 전체'}
+    d = lambda a, b: a - b if a is not None and b is not None else None
+    out = []
+    for site in SITES:
+        stem = f'{site}__{prior}'
+        have = [m for m in F.values() if (TU / 'gt/scenes' / stem / 'distances' / f'{m}.npz').exists()]
+        look = {(r['method'], r['surface'], r['case_id']): r for r in tt.add2_scores.metric_rows(site, prior, have)}
+        for case in [0, 1, 2, 4, 'all']:
+            for metric, k in [('완전성', 'completeness_pct'), ('정확성', 'accuracy_pct')]:
+                v = {lab: (look.get((m, 'all', case)) or {}).get(k) for lab, m in F.items()}
+                n = (look.get(('FINALTRAIN_30000', 'all', case)) or {}).get('n_gt')
+                row = dict(site=site, case=names[case], metric=metric, n_gt=n, n_gt_under_1000=bool(n is not None and n < 1000)) | v
+                row['판다필터-단일필터_씨앗0_pp'] = d(v['판다필터'], v['단일필터_씨앗0'])
+                row['판다필터-단일필터_평균_pp'] = d(v['판다필터'], (v['단일필터_씨앗0'] + v['단일필터_씨앗1']) / 2) if v['단일필터_씨앗1'] is not None and v['단일필터_씨앗0'] is not None else None
+                row['판다필터-단일_씨앗0_pp'] = d(v['판다필터'], v['단일_씨앗0'])
+                row['씨앗차_단일_pp'] = abs(d(v['단일_씨앗1'], v['단일_씨앗0'])) if d(v['단일_씨앗1'], v['단일_씨앗0']) is not None else None
+                row['씨앗차_단일필터_pp'] = abs(d(v['단일필터_씨앗1'], v['단일필터_씨앗0'])) if d(v['단일필터_씨앗1'], v['단일필터_씨앗0']) is not None else None
+                row['단일필터-단일_씨앗0_pp'] = d(v['단일필터_씨앗0'], v['단일_씨앗0'])
+                out.append(row)
+    write('cellsef_scores_ALS', out, 'addendum 14: GTJUDGE completeness/accuracy (unchanged scorer, section 3.4 rule) of the merged 판 다 ALS cells with the elongation filter (판다필터) against single-site runs with the filter (seed 0; B0 also seed 1) and without (FINALTRAIN seed 0, seed-1 repeat); seed differences |seed1-seed0|; no pass mark')
+    for r in out:
+        print('CS', r['site'], r['case'], r['metric'], r['n_gt'], [None if r[x] is None else round(r[x], 2) for x in F], 'cell-single_f', r['판다필터-단일필터_씨앗0_pp'], 'seeddiff', r['씨앗차_단일_pp'], r['씨앗차_단일필터_pp'], flush=True)
+    # boundary band (trainunit_v1 cells.boundary_band rule, as tu_tables.band)
+    segs = json.loads((TU / 'cells/cells.json').read_text())['boundaries']
+    band = []
+    for site in SITES:
+        stem = f'{site}__{prior}'
+        row = loadz(TU / 'gt/scenes' / stem / 'rows.npz', ['xyz', 'row_tau_m'])
+        xy = row['xyz'][:, :2]
+        dist = np.full(len(xy), np.inf)
+        for sg in segs:
+            lo, hi = np.array(sg['lo']), np.array(sg['hi'])
+            dist = np.minimum(dist, np.linalg.norm(xy - np.clip(xy, lo, hi), axis=1))
+        m = dist <= 2.
+        for lab, fam in F.items():
+            p = TU / 'gt/scenes' / stem / 'distances' / f'{fam}.npz'
+            if not p.exists():
+                continue
+            s = loadz(p, ['row_s'])['row_s']
+            tau = row['row_tau_m']
+            for part, mm in [('띠', m), ('띠 밖', ~m)]:
+                if not mm.any():
+                    band.append(dict(site=site, run=lab, part=part, rows=0))
+                    continue
+                v = tt.values(s[mm], tau[mm])
+                fl = np.isfinite(s[mm]) & (s[mm] > tau[mm])
+                band.append(dict(site=site, run=lab, part=part, rows=int(mm.sum()), nearest_row_to_boundary_m=float(dist.min()), completeness_pct=v['within_pct'],
+                                 floating_pct=100. * float(fl.mean()), no_surface_pct=v['no_surface_pct']))
+    write('cellsef_boundary_band_ALS', band, 'addendum 14: reference rows within 2 m (xy) of an original cell boundary (띠) and the rest (띠 밖): completeness, floating (s > tau) and no-surface shares per run')
+    # per-cell and single-site run records
+    stats = []
+    for name in [f'cellsef_ALS_s0_cell{k}' for k in range(4)] + ['R1repef_ALS_s0', 'B173nbef_ALS_s0', 'B0ef_ALS_s0', 'B0ef_ALS_s1']:
+        rec = TU / 'runs/ef' / name / 'receipt.json'
+        if not rec.exists():
+            stats.append(dict(run=name, status='없음'))
+            continue
+        r = json.loads(rec.read_text())
+        hrs = sum(a.get('seconds', 0) for a in r['attempts']) / 3600
+        att = TU / 'runs/ef' / name / f'attempt{r["attempts"][-1]["attempt"]}'
+        t = [json.loads(l) for l in (att / 'model/jbgs_trace.jsonl').read_text().splitlines() if l.strip()] if (att / 'model/jbgs_trace.jsonl').exists() else []
+        gmax = max([x['gaussians'] for x in t] or [0])
+        peak = max([x['peak_cuda_reserved_bytes'] for x in t] or [0]) / 2 ** 30
+        if name.endswith('cell0'):   # first half = cell0ef to 15,000
+            t0 = [json.loads(l) for l in (TU / 'runs/ef/cell0ef_ALS_s0/attempt1/model/jbgs_trace.jsonl').read_text().splitlines() if l.strip()]
+            hrs += json.loads((TU / 'runs/ef/cell0ef_ALS_s0/receipt.json').read_text())['attempts'][0]['seconds'] / 3600
+            gmax, peak = max(gmax, max(x['gaussians'] for x in t0)), max(peak, max(x['peak_cuda_reserved_bytes'] for x in t0) / 2 ** 30)
+        ov = att / 'model/target_monitor/health_override.jsonl'
+        stats.append(dict(run=name, status=r['status'], attempts=len(r['attempts']), hours=hrs, max_gaussians=gmax, peak_reserved_GiB=peak,
+                          count_rule_records=len([l for l in ov.read_text().splitlines() if l.strip()]) if ov.exists() else 0))
+    cells_h = sum(s.get('hours') or 0 for s in stats if s['run'].startswith('cellsef_'))
+    single_h = sum(s.get('hours') or 0 for s in stats if s['run'] in ('R1repef_ALS_s0', 'B173nbef_ALS_s0', 'B0ef_ALS_s0'))
+    stats.append(dict(run='합: 칸 넷 대 단일 필터 셋(씨앗 0)', hours=cells_h, single_site_hours=single_h))
+    write('cellsef_runs_ALS', stats, 'addendum 14: per-cell status, GPU hours (cell0 includes cell0ef to 15,000), max gaussians, peak reserved memory and count-rule records; single-site filter runs alongside; last row: hour sums')
+    for s in stats:
+        print('RUN', s, flush=True)
+
+
 if __name__ == '__main__':
-    dict(runs=runs, scores=scores)[sys.argv[1]](*sys.argv[2:])
+    dict(runs=runs, scores=scores, cells=cells)[sys.argv[1]](*sys.argv[2:])

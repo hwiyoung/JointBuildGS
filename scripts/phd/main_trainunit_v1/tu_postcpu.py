@@ -2,7 +2,7 @@
 merge the four cell models of a prior keeping Gaussians inside their original (unexpanded) cell.
 
   python tu_postcpu.py crop <ply> <site> <out>
-  python tu_postcpu.py merge <prior>
+  python tu_postcpu.py merge <prior> [cellsef]     (cellsef: addendum 14 filter cells under runs/ef)
 """
 import sys
 
@@ -32,12 +32,13 @@ def crop(ply, site, out):
     print('CROP', site, len(v), int(inside.sum()), flush=True)
 
 
-def merge(prior):
+def merge(prior, kind='cells'):
     cells = json.loads((TU / 'cells/cells.json').read_text())['cells']
+    assert kind in ('cells', 'cellsef')
     parts = []
     rec = []
     for c in cells:
-        run = TU / 'runs/cells' / f'cells_{prior}_s0' / f'cell{c["id"]}'
+        run = TU / 'runs/cells' / f'cells_{prior}_s0' / f'cell{c["id"]}' if kind == 'cells' else TU / 'runs/ef' / f'cellsef_{prior}_s0_cell{c["id"]}'
         r = json.loads((run / 'receipt.json').read_text())
         assert r['status'] == 'TRAINING_COMPLETE'
         ply = run / f'attempt{r["attempts"][-1]["attempt"]}' / 'model/point_cloud/iteration_30000/point_cloud.ply'
@@ -48,7 +49,7 @@ def merge(prior):
         parts.append(v[keep])
         rec.append(dict(cell=c['id'], ply=str(ply), sha256=sha(ply), total=len(v), kept=int(keep.sum())))
     data = np.concatenate(parts)
-    out = TU / 'runs/cells' / f'cells_{prior}_s0' / 'merged/point_cloud.ply'
+    out = TU / ('runs/cells' if kind == 'cells' else 'runs/ef') / f'{kind}_{prior}_s0' / 'merged/point_cloud.ply'
     write(out, data)
     dump(out.with_suffix('.json'), dict(at=now(), prior=prior, cells=rec, merged=len(data), output_sha256=sha(out),
          rule='keep xy in original cell [min, max); concatenate', scientific_verdict=None))

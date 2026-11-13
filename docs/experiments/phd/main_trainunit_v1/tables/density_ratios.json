@@ -1,0 +1,44 @@
+{
+  "rows": [
+    {
+      "ratio": "per_image",
+      "cell0": 12400.198051948051,
+      "probe3": 21627.912162162163,
+      "probe4": 81696.47727272728,
+      "B0": 9210.388888888889,
+      "median": 17014.05510705511,
+      "min": 9210.388888888889,
+      "max": 81696.47727272728,
+      "relative_range": 4.2603652055753045
+    },
+    {
+      "ratio": "per_seed_point",
+      "cell0": 13.59167615658363,
+      "probe3": 36.59838099267102,
+      "probe4": 60.138273133354524,
+      "B0": 45.24571422795456,
+      "median": 40.92204761031279,
+      "min": 13.59167615658363,
+      "max": 60.138273133354524,
+      "relative_range": 1.13744545287711
+    },
+    {
+      "ratio": "per_occupied_m2",
+      "cell0": 120.39027234901022,
+      "probe3": 375.6961267605634,
+      "probe4": 439.2283724340176,
+      "B0": 544.820959104187,
+      "median": 407.4622495972905,
+      "min": 120.39027234901022,
+      "max": 544.820959104187,
+      "relative_range": 1.041644194461344
+    },
+    {
+      "ratio": "B0_two_seed_count_difference",
+      "B0": 199405.0,
+      "relative_range": 0.08909468619819853
+    }
+  ],
+  "note": "addendum 14 part A: gaussians at 15,000 per training image, per seed point and per seed-occupied m2 over the four distinct units (B0 = mean of seeds 0 and 1); relative_range = (max-min)/median; last row: B0 seed-0 vs seed-1 count difference",
+  "scientific_verdict": null
+}

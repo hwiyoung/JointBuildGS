@@ -1,0 +1,44 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 14,
+  "instruction": "user, 2026-11-13 KST: '응 그렇게 진행하자' (reply to the recommendation: first measure Gaussians per area from the elongation-filter runs without training, then rerun 판 다 with the filter)",
+  "part_A_density": {
+    "purpose": "a measured basis for the unit-size upper bound: how many Gaussians a unit ends with, per training image, per seed point and per seed-occupied area, and how much GPU memory that takes",
+    "units": "the five elongation-filter runs of addenda 12/13: cell0ef_ALS_s0, probe3ef_ALS_s0, probe4ef_ALS_s0, B0ef_ALS_s0, B0ef_ALS_s1 (B0 twice: same unit, two seeds)",
+    "per_unit": {
+      "gaussians": "jbgs_trace.jsonl 'gaussians' at iteration 15,000 (end of densification; the count does not change after it, checked on B0ef s0/s1)",
+      "peak_memory": "max of jbgs_trace.jsonl peak_cuda_reserved_bytes over the run (cells and probes stop at 15,000, B0 runs go to 30,000)",
+      "images": "training cameras passed to the scene normalisation (extent_override.json 'cameras')",
+      "seed_points": "rows of the unit's stage-1 seeds.npz (prior and background separately and together)",
+      "occupied_area": "number of 2 m x 2 m xy grid squares (local frame) holding at least one seed point, times 4 m2"
+    },
+    "ratios": "gaussians per image, per seed point, per occupied m2; for each: median, min, max and (max-min)/median over the four distinct units (B0 seed 0 and seed 1 averaged into one unit; the two-seed difference of B0 reported separately)",
+    "memory_line": "least-squares line peak GiB = a + b x gaussians (millions) over the five runs; the Gaussian count at which the line reaches 24 GiB",
+    "predictions_before_training": "written to tables/density_predictions.* before any part-B cell starts: for cellsef cells 0-3 the Gaussian count predicted by each ratio median from that cell's own images, seed points and occupied area, and the peak memory from the line; for the campus as one unit the same; afterwards compared with the measured cells",
+    "no_margin_chosen": "the memory margin under 24 GiB is not chosen here; the counts at 16, 20 and 24 GiB are reported"
+  },
+  "part_B_cells": {
+    "runs": "cellsef_ALS_s0_cell0 .. cell3: 판 다 ALS cells unchanged (cells.json partition, scenes/cell<k>, stage1/cell<k>__ALS seeds/maps/targets, split.json, seed 0, 30,000 iterations, each cell's own fork scene extent) + the addendum-12 elongation filter (threshold 0.01, gradient accumulation set to 0 before densify_and_prune) + the read-only family monitor (no watched families; top-5 families and lineage groups)",
+    "cell0": "resumes from runs/ef/cell0ef_ALS_s0/attempt1/model/jbgs_complete/iteration_15000 (--jbgs_resume_full): the same inputs, filter and extent; densification ends at 15,000, so the filter no longer acts after the resume point; its 2.38 h to 15,000 is counted in the cell time",
+    "count_rule": "FINALTRAIN count rule (count_gt_3x_6000) recorded only, as addendum 4 for 판 다 cells; the opacity rule still stops a cell",
+    "deadline": "none (as addenda 3 and 12)",
+    "finished": "a cell is finished when it reaches TRAINING_COMPLETE at 30,000; the user's rule (2026-11-12): if any cell is not processed, the partition is not good"
+  },
+  "part_C_single_site_filter": {
+    "runs": "R1repef_ALS_s0 and B173nbef_ALS_s0: FINALTRAIN site inputs unchanged (as seed1_<site>_ALS but seed 0) + elongation filter, 30,000 iterations, FINALTRAIN count rule enforced (as B0ef); family ef_s0",
+    "purpose": "every site then has a filter single-site run, so merged cells minus single-site is a partition difference with the filter on both sides (B0 already has ef_s0 and ef_s1)"
+  },
+  "merge": "unchanged 판 다 rule: keep Gaussians whose xy lies in the original (unexpanded) cell [min, max); concatenate the four 30,000-iteration point_cloud.ply; output runs/ef/cellsef_ALS_s0/merged/point_cloud.ply",
+  "post": "unchanged GTJUDGE crop, render, mesh and score for B0_b10, R1rep_b10, B173nb_b10, family cellsef_ALS_s0; started after all part-B/C training has ended; sites one after another (host memory)",
+  "read_out": {
+    "scores": "per site x case (0 both right, 1 image only right, 2 prior only right, 4 no image, all) x completeness/accuracy (unchanged scorer, section 3.4 rule): cellsef vs filter single-site (ef_s0, and ef_s1 for B0) and vs no-filter single-site (FINALTRAIN_30000, seed1_s1); seed differences from the available pairs; cells with n_gt < 1000 marked",
+    "boundary_band": "trainunit_v1 cells.boundary_band: reference rows within 2 m (xy) of an original cell boundary, completeness and floating fraction separately",
+    "time_and_memory": "per cell: status, hours, max Gaussians, peak memory, count-rule records; sum of the four cells' GPU hours vs the three single-site filter runs",
+    "density_check": "measured cell Gaussian counts and peak memory vs the part-A predictions"
+  },
+  "pass_marks_not_set": "no pass/fail threshold; readings against the single-site runs and the seed differences",
+  "resources": "tu_ef_queue.py rules: start only on a GPU with no other compute process (TRAINERR and other sessions first) and host MemAvailable >= 45 GB; container 48 GB (cells) / 40 GB (single sites); host guard below 20 GB stops this task's container and returns the run (at most 3 times); GPU memory stop is a result; execution error gets one retry; order cell2, cell1, cell3, cell0, R1repef, B173nbef",
+  "unchanged": "fork r23, renderer, train_args (FINALTRAIN r8 values), pixel-weight rule, judgment, inputs, mesh rule, scorer",
+  "not_included": "LoD2 cells and LoD2 single-site filter runs (after the ALS reading, if asked)",
+  "scientific_verdict": null
+}

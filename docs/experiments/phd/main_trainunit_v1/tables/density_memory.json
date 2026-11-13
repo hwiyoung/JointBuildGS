@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "fit": "peak_GiB = a + b * gaussians_M",
+      "a": 0.1716499777766863,
+      "b": 2.118719710504372,
+      "max_abs_residual_GiB": 0.3009311275740094,
+      "runs": 5,
+      "fitted_gaussians_M_min": 2.138422,
+      "fitted_gaussians_M_max": 3.819261,
+      "gaussians_M_at_16GiB": 7.470714480895302,
+      "gaussians_M_at_20GiB": 9.358647075361883,
+      "gaussians_M_at_24GiB": 11.246579669828463
+    }
+  ],
+  "note": "addendum 14 part A: least-squares line of peak reserved GPU memory against gaussians (millions) over the five filter runs; counts where the line reaches 16, 20 and 24 GiB (extrapolated beyond the fitted range); no margin chosen",
+  "scientific_verdict": null
+}

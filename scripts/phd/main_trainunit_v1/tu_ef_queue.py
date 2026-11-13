@@ -12,7 +12,9 @@ import time
 
 from tu_host import FT, TU, command, dump, gpu_busy, issue, now, progress, train_args
 
-ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0', 'B0ef_ALS_s1']   # longest expected first; addendum 13 last
+ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0', 'B0ef_ALS_s1',   # longest expected first; addendum 13 last
+         # addendum 14: 판 다 ALS cells with the filter (most images first; cell0 resumes from cell0ef at 15,000), then filter single sites
+         'cellsef_ALS_s0_cell2', 'cellsef_ALS_s0_cell1', 'cellsef_ALS_s0_cell3', 'cellsef_ALS_s0_cell0', 'R1repef_ALS_s0', 'B173nbef_ALS_s0']
 JOBS = {
     'B0ef_ALS_s0': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
                         ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g'),
@@ -25,7 +27,13 @@ JOBS = {
     # addendum 13: B0ef with seed 1
     'B0ef_ALS_s1': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
                         ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g', seed=1),
+    # addendum 14
+    **{f'cellsef_ALS_s0_cell{k}': dict(scene=f'/tu/scenes/cell{k}/scene_ALS', split=f'/tu/scenes/cell{k}/split.json', target=f'/tu/stage1/cell{k}__ALS',
+                                      ready=TU / f'stage1/cell{k}__ALS/ready.json', memory='48g', addendum=14) for k in range(4)},
+    **{f'{s.split("_")[0]}ef_ALS_s0': dict(scene=f'/p/fork_inputs/s61/{s}/scene_ALS', split=f'/p/fork_inputs/s61/{s}/split.json', target=f'/ft/stage1/{s}__ALS',
+                                          ready=FT / f'stage1/{s}__ALS/ready.json', memory='40g', addendum=14) for s in ['R1rep_b10', 'B173nb_b10']},
 }
+JOBS['cellsef_ALS_s0_cell0']['resume'] = TU / 'runs/ef/cell0ef_ALS_s0/attempt1/model/jbgs_complete/iteration_15000/checkpoint.pth'
 FLOOR_GB, START_GB, MAX_GUARD = 20, 45, 3
 
 
@@ -58,13 +66,17 @@ def attempt(gpu, name, run, a):
     root = run / f'attempt{a}'
     root.mkdir()
     model = '/tu/' + str((root / 'model').relative_to(TU))
-    args = [name, *train_args(j['scene'], model, j['target'], j.get('seed', 0), 30000)]
+    ad = j.get('addendum', 13 if name == 'B0ef_ALS_s1' else 12)
+    extra = ['--jbgs_resume_full', '/tu/' + str(j['resume'].relative_to(TU))] if j.get('resume') else []
+    if extra:
+        assert j['resume'].is_file(), j['resume']
+    args = [name, *train_args(j['scene'], model, j['target'], j.get('seed', 0), 30000, extra)]
     cname = f'jbgs-trainunit-{name.replace("_", "-").lower()}-a{a}'
     cmd = command(gpu, cname, 'tu_train_entry.py', args, j['split'], j['memory'])
     dump(root / 'command.json', cmd)
-    dump(root / 'launch.json', dict(at=now().isoformat(), gpu=gpu, name=name, attempt=a, addendum=13 if name == 'B0ef_ALS_s1' else 12, seed=j.get('seed', 0),
+    dump(root / 'launch.json', dict(at=now().isoformat(), gpu=gpu, name=name, attempt=a, addendum=ad, seed=j.get('seed', 0), resume_from=extra[1] if extra else None,
                                    nvidia_smi_compute_apps=gpu_busy(gpu), host_available_GiB=avail_gb(), scientific_verdict=None))
-    progress(f'{name} 시도 {a} 시작, GPU {gpu} (덧붙임 12, 길쭉함 필터)')
+    progress(f'{name} 시도 {a} 시작, GPU {gpu} (덧붙임 {ad}, 길쭉함 필터' + (', cell0ef 15,000회 상태에서 이어 돌림)' if extra else ')'))
     start = time.monotonic()
     guard = None
     client_lost = False
@@ -107,7 +119,7 @@ def attempt(gpu, name, run, a):
     last = json.loads(trace.read_text().strip().splitlines()[-1]) if trace.exists() and trace.read_text().strip() else None
     rec = dict(at=now().isoformat(), attempt=a, gpu=gpu, exit_code=rc, docker_client_lost_container=client_lost, seconds=sec, status=st,
                error=err, last_trace=last, host_guard=guard, killed_after_probe_stop=killed_after_stop, min_host_available_GiB=min_avail,
-               model=model, addendum=12, scientific_verdict=None)
+               model=model, addendum=ad, scientific_verdict=None)
     dump(root / 'receipt.json', rec)
     progress(f'{name} 시도 {a} 끝: {st}, {sec/3600:.2f}시간' + (f', 오류 {etext[:160]}' if etext else '')
              + (f', 호스트 가용 {guard["available_GiB"]:.1f} GB로 멈춤(다시 대기열로)' if guard else ''))
@@ -130,7 +142,7 @@ def run_one(gpu, name):
     st = recs[-1]['status']
     guards = sum(r['status'] == 'HOST_GUARD_STOP' for r in attempts)
     final = 'NO_RESULT' if st == 'EXECUTION_ERROR' else st
-    dump(run / 'receipt.json', dict(at=now().isoformat(), name=name, status=final, attempts=attempts, host_guard_stops=guards, addendum=12,
+    dump(run / 'receipt.json', dict(at=now().isoformat(), name=name, status=final, attempts=attempts, host_guard_stops=guards, addendum=JOBS[name].get('addendum', 12),
                                    scientific_verdict=None))
     if st == 'HOST_GUARD_STOP' and guards < MAX_GUARD:
         (run / 'claim').rmdir()

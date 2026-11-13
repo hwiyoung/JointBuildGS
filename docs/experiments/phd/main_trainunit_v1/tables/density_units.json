@@ -1,0 +1,71 @@
+{
+  "rows": [
+    {
+      "run": "cell0ef_ALS_s0",
+      "unit": "cell0",
+      "images": 308,
+      "seed_points": 281000,
+      "prior_seeds": 170979,
+      "background_seeds": 110021,
+      "occupied_m2": 31724.0,
+      "gaussians_15000": 3819261,
+      "gaussians_max": 3819261,
+      "last_iteration": 15000,
+      "peak_reserved_GiB": 8.03515625
+    },
+    {
+      "run": "probe3ef_ALS_s0",
+      "unit": "probe3",
+      "images": 148,
+      "seed_points": 87461,
+      "prior_seeds": 50342,
+      "background_seeds": 37119,
+      "occupied_m2": 8520.0,
+      "gaussians_15000": 3200931,
+      "gaussians_max": 3200931,
+      "last_iteration": 15000,
+      "peak_reserved_GiB": 6.943359375
+    },
+    {
+      "run": "probe4ef_ALS_s0",
+      "unit": "probe4",
+      "images": 44,
+      "seed_points": 59773,
+      "prior_seeds": 48887,
+      "background_seeds": 10886,
+      "occupied_m2": 8184.0,
+      "gaussians_15000": 3594645,
+      "gaussians_max": 3658412,
+      "last_iteration": 15000,
+      "peak_reserved_GiB": 8.017578125
+    },
+    {
+      "run": "B0ef_ALS_s0",
+      "unit": "B0",
+      "images": 243,
+      "seed_points": 49466,
+      "prior_seeds": 36156,
+      "background_seeds": 13310,
+      "occupied_m2": 4108.0,
+      "gaussians_15000": 2337827,
+      "gaussians_max": 2337827,
+      "last_iteration": 30000,
+      "peak_reserved_GiB": 5.42578125
+    },
+    {
+      "run": "B0ef_ALS_s1",
+      "unit": "B0",
+      "images": 243,
+      "seed_points": 49466,
+      "prior_seeds": 36156,
+      "background_seeds": 13310,
+      "occupied_m2": 4108.0,
+      "gaussians_15000": 2138422,
+      "gaussians_max": 2138422,
+      "last_iteration": 30000,
+      "peak_reserved_GiB": 4.41015625
+    }
+  ],
+  "note": "addendum 14 part A: elongation-filter runs; gaussians at 15,000 (end of densification), peak reserved GPU memory over the run, training cameras, seed points and 2 m seed-occupied area; no GT",
+  "scientific_verdict": null
+}

@@ -23,6 +23,10 @@ EF = {
     'B0ef_ALS_s0': dict(stop=None, extent=None, watch={'base_s0#1': [17310], 'base_s0#2': [15779], 'base_s0#3': [17176], 'base_s0#bg1': [45212]}),
     # addendum 13: the same run with seed 1 (the seed of the seed-1 repeat)
     'B0ef_ALS_s1': dict(stop=None, extent=None, watch={'base_s0#1': [17310], 'base_s0#2': [15779], 'base_s0#3': [17176], 'base_s0#bg1': [45212]}),
+    # addendum 14: 판 다 ALS cells with the filter (count rule recorded only, as addendum 4) and filter single-site runs of R1rep/B173nb
+    **{f'cellsef_ALS_s0_cell{k}': dict(stop=None, extent=None, watch={}, count_record_only=True, addendum=14) for k in range(4)},
+    'R1repef_ALS_s0': dict(stop=None, extent=None, watch={}, addendum=14),
+    'B173nbef_ALS_s0': dict(stop=None, extent=None, watch={}, addendum=14),
 }
 FTC = Path('/repo/configs/phd/main_finaltrain_v1/finaltrain_v1.json')
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -194,6 +198,8 @@ def main():
         assert sha(C / 'addendum12.json') == json.loads((C / 'addendum12.lock.json').read_text())['sha256']
         if run_name == 'B0ef_ALS_s1':
             assert sha(C / 'addendum13.json') == json.loads((C / 'addendum13.lock.json').read_text())['sha256']
+        if EF[run_name].get('addendum') == 14:
+            assert sha(C / 'addendum14.json') == json.loads((C / 'addendum14.lock.json').read_text())['sha256']
         lifted = True
         probe_stop = EF[run_name]['stop']
     elif run_name.startswith('probe'):
@@ -236,7 +242,7 @@ def main():
         return original_restore(path, saved, env)
 
     jbgs_target_r6.restore_complete = restore_complete
-    if probe_stop is not None or ((C / 'addendum4.json').exists() and run_name.startswith('cells_')):
+    if probe_stop is not None or EF.get(run_name, {}).get('count_record_only') or ((C / 'addendum4.json').exists() and run_name.startswith('cells_')):
         # addendum 4 (user '이어 돌리기'): the FINALTRAIN count rule is recorded, not enforced, for 판 다 cells.
         assert sha(C / 'addendum4.json') == json.loads((C / 'addendum4.lock.json').read_text())['sha256']
         import jbgs_finaltrain

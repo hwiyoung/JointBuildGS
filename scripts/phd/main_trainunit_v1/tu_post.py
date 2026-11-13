@@ -6,7 +6,7 @@ GTJUDGE scripts run unchanged with /gtjudge = PH/main_trainunit_v1/.../gt, a mir
   python3 tu_post.py mirror
   python3 tu_post.py run <run_key>            # crop -> render (GPU when free memory allows) -> mesh -> score, per site
   python3 tu_post.py watch                    # loop over control/post_requests
-run_key: seed1_<site>_<prior> | campus30k_<prior>_s0 | cells_<prior>_s0 | ef_B0_b10_ALS (addendum 12, family ef_s0)
+run_key: seed1_<site>_<prior> | campus30k_<prior>_s0 | cells_<prior>_s0 | ef_<site>_ALS (addenda 12/14, family ef_s0) | efs1_B0_b10_ALS | cellsef_ALS_s0 (addendum 14; optional 2nd arg = parallel sites)
 """
 import concurrent.futures
 import datetime as dt
@@ -137,7 +137,7 @@ def runs_of(key):
         sites = SITES
     else:
         prior = key.split('_')[1]
-        merged = TU / 'runs/cells' / key / 'merged/point_cloud.ply'
+        merged = TU / ('runs/ef' if key.startswith('cellsef_') else 'runs/cells') / key / 'merged/point_cloud.ply'   # addendum 14: cellsef_<prior>_s0
         return prior, SITES, merged if merged.exists() else None
     if not rec.exists():
         return prior, sites, None
@@ -236,12 +236,12 @@ def one_site(key, site, prior, ply):
     return ok
 
 
-def run(key):
+def run(key, workers='3'):
     prior, sites, ply = runs_of(key)
     if ply is None:
         print('NOT_READY', key, flush=True)
         return False
-    with concurrent.futures.ThreadPoolExecutor(3) as pool:
+    with concurrent.futures.ThreadPoolExecutor(int(workers)) as pool:   # addendum 14: cellsef sites one after another (host memory)
         res = list(pool.map(lambda s: one_site(key, s, prior, ply), sites))
     dump(TU / 'post' / key / 'done.json', dict(at=now().isoformat(), key=key, sites=sites, ok=res, scientific_verdict=None))
     return all(res)
@@ -281,7 +281,7 @@ if __name__ == '__main__':
     if mode == 'mirror':
         mirror()
     elif mode == 'run':
-        run(sys.argv[2])
+        run(*sys.argv[2:4])
     elif mode == 'watch':
         watch()
     else:
