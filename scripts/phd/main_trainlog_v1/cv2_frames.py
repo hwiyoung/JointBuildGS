@@ -71,7 +71,11 @@ if TL_CASE: FIGD = D
 # writes frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.* only.
 VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b', 'r6'), VAR
 REV = {'': 'r5', 'z1b': 'r6test', 'r6': 'r6'}[VAR]; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'; IS_Z1B = VAR == 'z1b'
-if TL_CASE: REV = 'v1'; FR = V2/f'frames_{REV}'   # another case: its first cut
+if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
+# case v2 (2026-11-13, user '둘 다 진행' after 'are ②-1/②-2 seen from above? what area?'): the zone box is drawn as the pillar it is (xy box x scope z_min..z_max:
+# top ring solid, bottom ring dashed, four vertical edges) in the ① camera panels and the ② overviews, instead of one ring at the median height inside the box
+# (which read as a roof patch). Only the drawing changes; static layers, sections and numbers are the v1 ones (frames, contact, video only; v1 files untouched).
+PILLAR = bool(TL_CASE) and REV == 'v2'
 STJ = V2/('static_z1b.json' if IS_Z1B else 'static.json'); STN = V2/('static_z1b.npz' if IS_Z1B else 'static.npz'); SECD = V2/('sections_z1b' if IS_Z1B else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
 EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: None} if TL_CASE else {1: None, 2: 25.0}
 RESETS = [3000, 6000, 9000, 12000]; DENSIFY_END = 15000; RESC = '#D85A30'
@@ -264,7 +268,12 @@ class Frame:
                     if (a[zm] > 0).any() and (a[zm] < 1).any(): ax.contour(uu, vv, np.ma.masked_where(~zm, a), levels=[.5], colors='#2C2C2A', linewidths=.7, linestyles=':')
         if zones:
             for k, z in self.S.zones.items():
-                ring = np.asarray(self.sj['zones'][str(k)]['box_polygon_xy']); P = np.c_[ring, np.full(len(ring), self.sj['zones'][str(k)]['outline_z'])]; u, v, _ = self.S.pix(P)
+                if PILLAR:
+                    (u, v), (ub, vb) = self.pillar(ax, k, lambda P: self.S.pix(P)[:2], 2.2, 1.0)
+                    if k == 1: self.badge(ax, ub[np.argmax(vb)], vb.max()+14, k)
+                    else: self.badge(ax, u.mean(), v.min()-14, k)
+                    continue
+                ring =np.asarray(self.sj['zones'][str(k)]['box_polygon_xy']); P = np.c_[ring, np.full(len(ring), self.sj['zones'][str(k)]['outline_z'])]; u, v, _ = self.S.pix(P)
                 ax.plot(np.r_[u, u[:1]], np.r_[v, v[:1]], color='white', lw=2.2); ax.plot(np.r_[u, u[:1]], np.r_[v, v[:1]], color=NAVY, lw=1.0)
                 if k == 1: self.badge(ax, u[np.argmax(v)], v.max()+14, k)
                 else: self.badge(ax, u.mean(), v.min()-14, k)
@@ -301,8 +310,19 @@ class Frame:
         ec = np.c_[np.full((len(o), 3), .15), .45*op[o]] if edge else 'none'
         ax.add_collection(EllipseCollection(big[o], small[o], ang[o], units='xy', offsets=np.c_[x[o], y[o]], offset_transform=ax.transData, facecolors=fc, edgecolors=ec, linewidths=.3 if edge else 0))
         ax.set_xlim(ext[0], ext[1]); ax.set_ylim(ext[2], ext[3]); ax.set_aspect('equal'); return int(len(o))
+    def pillar(self, ax, k, fn, halo, lw):   # case v2: the zone box as a pillar (top ring solid, bottom ring dashed, vertical edges); fn: (N, 3) -> (x, y)
+        ring = np.asarray(self.sj['zones'][str(k)]['box_polygon_xy']); zb, zt = self.S.zr
+        (xt, yt), (xb, yb) = fn(np.c_[ring, np.full(len(ring), zt)]), fn(np.c_[ring, np.full(len(ring), zb)])
+        segs = [(np.r_[xt, xt[:1]], np.r_[yt, yt[:1]], '-'), (np.r_[xb, xb[:1]], np.r_[yb, yb[:1]], (0, (3, 2)))]+[([xt[i], xb[i]], [yt[i], yb[i]], '-') for i in range(len(ring))]
+        for x, y, ls in segs:
+            ax.plot(x, y, color='white', lw=halo, zorder=15, solid_capstyle='round'); ax.plot(x, y, color=NAVY, lw=lw, ls=ls, zorder=16)
+        return (np.asarray(xt), np.asarray(yt)), (np.asarray(xb), np.asarray(yb))
     def zone_outline(self, ax, k, label=True):
-        zj = self.sj['zones'][str(k)]; ring = np.asarray(zj['box_polygon_xy']); x, y, _ = self.S.proj(np.c_[ring, np.full(len(ring), zj['outline_z'])])
+        if PILLAR:
+            (x, y), _ = self.pillar(ax, k, lambda P: self.S.proj(P)[:2], 2.4, 1.1)
+            if label: self.badge(ax, x.mean(), y.max(), k, 10)
+            return
+        zj =self.sj['zones'][str(k)]; ring = np.asarray(zj['box_polygon_xy']); x, y, _ = self.S.proj(np.c_[ring, np.full(len(ring), zj['outline_z'])])
         ax.plot(np.r_[x, x[:1]], np.r_[y, y[:1]], color='white', lw=2.4, zorder=15); ax.plot(np.r_[x, x[:1]], np.r_[y, y[:1]], color=NAVY, lw=1.1, zorder=16)
         if label: self.badge(ax, x.mean(), y.max(), k, 10)
     # -------- ③ sections

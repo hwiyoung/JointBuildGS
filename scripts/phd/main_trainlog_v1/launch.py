@@ -22,7 +22,7 @@ def command(name, script, args=(), gpu=None, fork='GeoGS-conf-guided-v1-r27', en
     cmd += ['--gpus', f'device={gpu}'] if gpu is not None else ['--runtime', 'runc', '-e', 'NVIDIA_VISIBLE_DEVICES=void', '-e', 'CUDA_VISIBLE_DEVICES=']
     for e in ['PYTHONDONTWRITEBYTECODE=1', 'PYTHONUNBUFFERED=1', 'OMP_NUM_THREADS=4', 'OPENBLAS_NUM_THREADS=1', 'MKL_NUM_THREADS=1',
               'PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True', f'JBGS_SPLIT_JSON=/p/fork_inputs/s61/{SITE}/split.json',
-              'TMPDIR=/tl/tmp', 'MPLCONFIGDIR=/tl/tmp/mpl', 'XDG_CACHE_HOME=/tl/tmp/cache', 'TORCH_HOME=/weights/torch', 'TZ=Asia/Seoul', *([f'TL_CASE={TL_CASE}'] if TL_CASE else []), *env]:
+              'TMPDIR=/tl/tmp', 'MPLCONFIGDIR=/tl/tmp/mpl', 'XDG_CACHE_HOME=/tl/tmp/cache', 'TORCH_HOME=/weights/torch', 'TZ=Asia/Seoul', *([f'TL_CASE={TL_CASE}'] if TL_CASE else []), *([f"CV2_CASE_REV={os.environ['CV2_CASE_REV']}"] if os.environ.get('CV2_CASE_REV') else []), *env]:
         cmd += ['-e', e]
     mounts = [(R, '/repo', 'ro'), (ART, '/art', 'ro'), (ART, '/artifacts/JointBuildGS', 'ro'), (PH, '/ph', 'ro'), (O, '/tl', 'rw'), (C, '/cfg', 'rw' if script in ['freeze.py', 'seal_runtime.py', 'cv2_case_config.py'] else 'ro'), (D, '/docs', 'rw'),
               (PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1', '/p', 'ro'), (PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1', '/s0', 'ro'),

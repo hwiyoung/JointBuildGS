@@ -1,0 +1,369 @@
+{
+  "frame": "2000",
+  "iteration": 2000,
+  "sources": {
+    "photo_and_target_map": "5b419c0b053e59d13beb1f1383dcd00e7220e83b3608af8296d137e105063b3c",
+    "render_rgb": "8a2d078f2be3086fd682b21e3886b092458c9a9476fd27e328258eccf38b7efc",
+    "render_depth": "ab059a9b08611b079a9f27d7994e1758fc801201efc56b9c760c3f1eef434cbc",
+    "discs": "09093451b645477de2f5675784a9e2d64a1a535edbcb067ee9e379e97ae10b5e",
+    "mesh": "7fc833fc5968f1cae91310336e69cb059e656f1d87749d8ebcbf237d2612ec87",
+    "section1": "323b320be78919c3805024ecf1fb49532938b3e30d66b0634cbb06025e2bfa81",
+    "section2": "323b320be78919c3805024ecf1fb49532938b3e30d66b0634cbb06025e2bfa81"
+  },
+  "counts": {
+    "render_far_from_target_pixels_in_crop": 109420,
+    "discs_drawn_overview": 73800,
+    "zone1_discs": 2849,
+    "zone1_band_gaussians": null,
+    "zone1_mesh_cut_segments": 1726,
+    "zone2_discs": 4291,
+    "zone2_band_gaussians": null,
+    "zone2_mesh_cut_segments": 3141
+  },
+  "overview_extent": [
+    -33.89016433785323,
+    35.18927426397179,
+    -30.26305768435695,
+    29.567728807141073
+  ],
+  "zone1": {
+    "zoom_extent": [
+      -15.56109635904598,
+      15.603633623726772,
+      -6.417661384193478,
+      16.4206140230293
+    ],
+    "comparison_run": "2dgs",
+    "comparison_name": "사진만 쓴 2DGS",
+    "comparison_iteration": null,
+    "comparison_label": "비교: 저장 상태 없음"
+  },
+  "zone2": {
+    "zoom_extent": [
+      -15.256265269495323,
+      15.2162429593179,
+      -6.4210554930567945,
+      15.909942903630757
+    ],
+    "comparison_run": "2dgs",
+    "comparison_name": "사진만 쓴 2DGS",
+    "comparison_iteration": null,
+    "comparison_label": "비교: 저장 상태 없음"
+  },
+  "png": "/tl/concept_v2/frames_v2/frame_05_2000.png",
+  "png_sha256": "964042c0afec3ff787be7cd81fc639a29f48ad535b702139246818e94f500449",
+  "seconds": 13.4,
+  "camera": {
+    "name": "DJI_20241217101357_0031_D",
+    "K": [
+      [
+        674.4174194335938,
+        0.0,
+        513.4158325195312
+      ],
+      [
+        0.0,
+        674.7781982421875,
+        365.0968322753906
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "W2C": [
+      [
+        0.7646396160125732,
+        0.6443566679954529,
+        -0.011434715241193771,
+        -71.61786651611328
+      ],
+      [
+        0.21815696358680725,
+        -0.2754947543144226,
+        -0.9362212419509888,
+        -46.55250930786133
+      ],
+      [
+        -0.6064106225967407,
+        0.7133772373199463,
+        -0.3512250781059265,
+        104.00345611572266
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "crop_u0v0u1v1": [
+      482,
+      226,
+      1024,
+      676
+    ]
+  },
+  "oblique": {
+    "basis": [
+      [
+        0.9781452329633261,
+        0.2079184853832089,
+        0.0013441231613051156
+      ],
+      [
+        -0.12105534009185141,
+        0.5642209109839453,
+        0.8167009050097183
+      ],
+      [
+        -0.1690488327861704,
+        0.7990148102785073,
+        -0.5770596373766184
+      ]
+    ],
+    "centre": [
+      112.70499024484845,
+      25.834991473832837,
+      -30.678507080078113
+    ],
+    "projection": "orthographic",
+    "azimuth_deg": 180,
+    "elevation_deg": 35,
+    "overview_extent": [
+      -26.901684416761828,
+      28.20079434288039,
+      -29.39173555098562,
+      28.69640667376974
+    ]
+  },
+  "zones": {
+    "1": {
+      "name": "가려진 벽",
+      "source": "zone 1: dense case rows (wall, prior right, image depth absent or > 0.5 m), nearest LoD2 wall face",
+      "line_origin_xy": [
+        101.14570934516516,
+        2.0241934536010677
+      ],
+      "line_unit_xy": [
+        -0.3684808280587321,
+        -0.9296353475170526
+      ],
+      "line_length_m": 12.0,
+      "band_half_width_m": 0.5,
+      "box_polygon_xy": [
+        [
+          97.42716795509695,
+          3.498116765835996
+        ],
+        [
+          93.00539801839216,
+          -7.6575074043686335
+        ],
+        [
+          100.44248079852858,
+          -10.60535402883849
+        ],
+        [
+          104.86425073523337,
+          0.5502701413661393
+        ]
+      ],
+      "box_z": [
+        -42.82701416015625,
+        -18.529999999999973
+      ],
+      "outline_z": -24.69540786743164,
+      "zoom_azimuth_deg": 248.4,
+      "zoom_elevation_deg": 35,
+      "zoom_basis": [
+        [
+          0.929774235208176,
+          -0.368113820937677,
+          0.0034765468090040166
+        ],
+        [
+          0.20934467587467753,
+          0.5364794143914897,
+          0.8175357145819933
+        ],
+        [
+          0.30281129144399077,
+          0.7593958472159484,
+          -0.5758674057499645
+        ]
+      ],
+      "zoom_centre": [
+        98.93482437681276,
+        -3.553618631501247,
+        -36.12701416015625
+      ],
+      "zoom_extent": [
+        -4.012126540421089,
+        4.05466380510188,
+        -5.771295099083399,
+        15.77424773791922
+      ],
+      "section_height_limits_m": [
+        4.182014159725625,
+        22.05347899417327
+      ],
+      "camera_pixels": 12337,
+      "gt_in_band": 30529,
+      "mvs_in_band": 320,
+      "targets_in_band": 417,
+      "prior_cut_segments": 4,
+      "target_judgments_in_band": {
+        "일치": 203,
+        "보정": 97,
+        "보존": 0,
+        "결측": 117
+      },
+      "target_judgments_in_box": {
+        "일치": 1854,
+        "보정": 753,
+        "보존": 0,
+        "결측": 667
+      },
+      "camera_pixel_classes": {
+        "-1": 866,
+        "0": 6405,
+        "2": 2677,
+        "4": 2389
+      },
+      "line_rule": {
+        "rule": "zone 1: dense case rows (wall, prior right, image depth absent or > 0.5 m), nearest LoD2 wall face",
+        "case_zones": "/tl/concept_v2/case_zones.json",
+        "case_zones_sha256": "2da7fd5d016c132679bdcf6b2ca8469be95d8d478144e490b10c3e29a5ca36db"
+      },
+      "camera_pixel_bbox_uv": [
+        463,
+        302,
+        638,
+        588
+      ]
+    },
+    "2": {
+      "name": "잘 보이는 벽",
+      "source": "zone 2: LoD2 wall face (area >= 20 m2) whose GT wall rows near the face are most often prior right & image depth right",
+      "line_origin_xy": [
+        96.88783171696454,
+        10.014412727003126
+      ],
+      "line_unit_xy": [
+        0.36245527217601187,
+        0.9320011672051776
+      ],
+      "line_length_m": 12.0,
+      "band_half_width_m": 0.5,
+      "box_polygon_xy": [
+        [
+          100.61583638578526,
+          8.56459163829908
+        ],
+        [
+          104.9652996518974,
+          19.748605644761206
+        ],
+        [
+          97.50929031425596,
+          22.648247822169303
+        ],
+        [
+          93.15982704814382,
+          11.464233815707173
+        ]
+      ],
+      "box_z": [
+        -42.82701416015625,
+        -18.529999999999973
+      ],
+      "outline_z": -25.621307373046875,
+      "zoom_azimuth_deg": 68.7,
+      "zoom_elevation_deg": 35,
+      "zoom_basis": [
+        [
+          -0.9316889722705198,
+          0.36324051916000755,
+          -0.003461818867416336
+        ],
+        [
+          -0.2101542239923754,
+          -0.5312101262027177,
+          0.8207624528192402
+        ],
+        [
+          -0.2962952262316508,
+          -0.7654228420030729,
+          -0.5712591459681621
+        ]
+      ],
+      "zoom_centre": [
+        99.06256335002061,
+        15.606419730234192,
+        -36.12701416015625
+      ],
+      "zoom_extent": [
+        -4.054971176414106,
+        4.014948866236682,
+        -5.789046104471297,
+        15.277933515045259
+      ],
+      "section_height_limits_m": [
+        4.139013819355483,
+        21.4220503813527
+      ],
+      "camera_pixels": 2371,
+      "gt_in_band": 26608,
+      "mvs_in_band": 414,
+      "targets_in_band": 418,
+      "prior_cut_segments": 3,
+      "target_judgments_in_band": {
+        "일치": 379,
+        "보정": 28,
+        "보존": 0,
+        "결측": 11
+      },
+      "target_judgments_in_box": {
+        "일치": 4195,
+        "보정": 97,
+        "보존": 0,
+        "결측": 42
+      },
+      "camera_pixel_classes": {
+        "-1": 31,
+        "0": 2277,
+        "2": 40,
+        "4": 23
+      },
+      "camera_pixel_bbox_uv": [
+        599,
+        279,
+        722,
+        473
+      ]
+    }
+  },
+  "colour_range": {
+    "height_above_ground_m": [
+      0.8136493576712386,
+      22.223309716965694
+    ],
+    "bins": [
+      0.8136493576712386,
+      3.872172266141875,
+      6.930695174612511,
+      9.989218083083149,
+      13.047740991553784,
+      16.10626390002442,
+      19.16478680849506,
+      22.223309716965694
+    ],
+    "source": "target-map 3-D points of this camera inside the building scope, 2-98 % (GT dense in scope incl. walls would give 1.07, 22.35 m and leave the roofs in one or two steps)",
+    "ground_z": -43.12701416015625
+  },
+  "static_sha256": "82cfaaf130e379e8f5f139e83c6f1799575cef6aadcf748bf752885df5d940aa",
+  "rule": "PHD-MAIN-TRAINLOG-v1 concept video v2, first cut r5 (request 2026-11-12; r2-r5 2026-11-13: sections show results only, + GT, unfiltered mesh, fewer symbols; r5: timeline facts). CPU, no training; draws saved states only (nothing interpolated).",
+  "scientific_verdict": null
+}

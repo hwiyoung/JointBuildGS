@@ -6,7 +6,7 @@ import os, subprocess, sys
 from common import *
 from PIL import Image
 import imageio_ffmpeg
-V2 = O/'concept_v2'; REV = 'v1' if TL_CASE else {'': 'r5', 'r6': 'r6'}[os.environ.get('CV2_VARIANT', '')]; BNAME = SITE.split('_')[0] if TL_CASE else 'B173'; FIGD0 = D if TL_CASE else D/'figures_concept_v2'; FR = V2/f'frames_{REV}'; OUTV = V2/f'video_{REV}'; FIGD = FIGD0; STEP, LAST = 1.2, 3.0   # r2 (2026-11-13): sections show results only; the first cut video/ is kept
+V2 = O/'concept_v2'; REV = os.environ.get('CV2_CASE_REV', 'v1') if TL_CASE else {'': 'r5', 'r6': 'r6'}[os.environ.get('CV2_VARIANT', '')]; BNAME = SITE.split('_')[0] if TL_CASE else 'B173'; FIGD0 = D if TL_CASE else D/'figures_concept_v2'; FR = V2/f'frames_{REV}'; OUTV = V2/f'video_{REV}'; FIGD = FIGD0; STEP, LAST = 1.2, 3.0   # r2 (2026-11-13): sections show results only; the first cut video/ is kept
 
 def main():
     frames = sorted(FR.glob('frame_*.png')); assert len(frames) == 12, len(frames); OUTV.mkdir(parents=True, exist_ok=True); FIGD.mkdir(parents=True, exist_ok=True)

@@ -48,4 +48,40 @@ def main():
     out['b_completeness'] = b; out['seconds'] = round(time.monotonic()-t0, 1); out['scientific_verdict'] = None
     dump(D/'case_check_v1.json', out); print('CHECK', json.dumps(out['a_target_pixels'], ensure_ascii=False)[:800], json.dumps(b['zone1_story_rows'])[:600], flush=True)
 
-if __name__ == '__main__': main()
+def targets():
+    """(c) 'targets' (2026-11-13, user '둘 다 진행' = the handoff to the analysis session): writes /docs/case_check_targets_v1.json (case_check_v1.json untouched).
+    Same rows as (b). Each row takes the nearest FINALTRAIN target patch (FT/targets/<stem>.npz, valid patches, centre within 0.5 m; the cv2_zone_why.py rule);
+    target offset = (target - row xyz) . row normal (GTJUDGE row normal as stored); target right = |offset| <= row_tau_m. Per zone, wall rows by height and the
+    zone-1 story rows: judgment share of the nearest patch (agree 0 / correct 2 / keep 1 / missing 4 / no patch), target right %, and the completeness of
+    ours at 7,000 and 30,000 per judgment. Purpose: split 'target already wrong' from 'worse during training' as the B173 zone-1 handoff did; no pass line."""
+    import time; from scipy.spatial import cKDTree; t0 = time.monotonic(); S = F.Static()
+    row = loadz(GT/'scenes'/STEM/'rows.npz', ['xyz', 'normal', 'row_tau_m', 'wall', 'prior_distance_m', 'prior_presence', 'mvs_distance_m', 'mvs_presence'])
+    X = row['xyz'].astype(float); Nr = row['normal'].astype(float); W = row['wall'].astype(bool); tau = row['row_tau_m']; ground = float(cfg()['scope']['ground_z']); h = X[:, 2]-ground
+    pr = row['prior_presence'].astype(bool) & (row['prior_distance_m'] <= TAU); mp = row['mvs_presence'].astype(bool); story = W & pr & (~mp | (mp & (row['mvs_distance_m'] > .5)))
+    tg = loadz(FT/'targets'/f'{STEM}.npz', ['target', 'sigma', 'judge_region', 'region', 'centre'])
+    valid = (tg['region'] >= 0) & np.isfinite(tg['target']).all(1) & np.isfinite(tg['sigma']) & (tg['sigma'] > 0) & np.isin(tg['judge_region'], [0, 1, 2, 4])
+    iv = np.flatnonzero(valid); dd, kk = cKDTree(tg['centre'][iv]).query(X, k=1, distance_upper_bound=.5); hit = np.isfinite(dd)
+    pi = np.full(len(X), -1); pi[hit] = iv[kk[hit]]; jr = np.full(len(X), -1); jr[hit] = tg['judge_region'][pi[hit]]
+    toff = np.full(len(X), np.nan); toff[hit] = np.einsum('ij,ij->i', tg['target'][pi[hit]]-X[hit], Nr[hit]); tright = hit & (np.abs(np.nan_to_num(toff, nan=9.)) <= tau)
+    ours = {n: loadz(O/'gtj/scenes'/STEM/'distances'/f'tl_{n}.npz', ['row_s'])['row_s'] for n in ('7000', '30000')}
+    JN = {0: 'agree', 2: 'correct', 1: 'keep', 4: 'missing', -1: 'no_patch'}
+    def block(m):
+        r = dict(rows=int(m.sum()), target_right_pct=round(float(100*tright[m].mean()), 1) if m.any() else None, by_judgment={})
+        for j, name in JN.items():
+            mj = m & (jr == j)
+            if not mj.any(): continue
+            off = np.abs(toff[mj & hit & ~tright])
+            r['by_judgment'][name] = dict(rows=int(mj.sum()), share_pct=round(float(100*mj.sum()/m.sum()), 1), target_right_pct=round(float(100*tright[mj].mean()), 1) if j >= 0 else None,
+                                          target_wrong_median_abs_m=round(float(np.median(off)), 2) if len(off) else None,
+                                          **{f'ours_{n}': round(float(nl.values(ours[n][mj], tau[mj])['within_pct']), 1) for n in ours})
+        return r
+    z = {k: F.in_zone(X, S.zones[k], S.zr) for k in (1, 2)}; out = dict(at=now(), rule=targets.__doc__, ground_z=ground, targets=str(FT/'targets'/f'{STEM}.npz'))
+    out['zone1_story_rows'] = block(z[1] & story)
+    for k in (1, 2): out[f'zone{k}_wall_by_height'] = {f'{lo}-{hi} m': block(z[k] & W & (h >= lo) & (h < hi)) for lo, hi in [(0, 5), (5, 10), (10, 15), (15, 25)]}
+    out['seconds'] = round(time.monotonic()-t0, 1); out['scientific_verdict'] = None; dump(D/'case_check_targets_v1.json', out)
+    print('TARGETS', json.dumps(out['zone1_story_rows'], ensure_ascii=False)[:700], flush=True)
+
+if __name__ == '__main__':
+    import sys
+    if sys.argv[1:] == ['targets']: targets()
+    else: main()
