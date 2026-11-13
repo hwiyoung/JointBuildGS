@@ -8,7 +8,7 @@ sys.path.insert(0, '/repo/scripts/phd/main_trainerr_v1/addendum3')
 from a3_common import *
 from a3_ga import REASON_NAMES
 BA3 = A3O/'runs/B0_b10/ba3_B0_ALS_record/attempt1/model'
-MESH_ITS = ['7000', '10000', '15000', '30000']
+MESH_ITS = ['7000', '10000', '12000', '15000', '30000']   # 12000: ba2 stopped there (issues.md); record run mesh from this addendum (2.3)
 
 def annex():
     c = ccfg()['places']['annex_box']; lo = np.array([c['x'][0], c['y'][0], c['z'][0]]); hi = np.array([c['x'][1], c['y'][1], c['z'][1]]); rows = []; win = []
@@ -52,13 +52,15 @@ def tables():
             for p in ['visible_low', 'visible_high', 'visible_side']:
                 P = place_points(p); v = rs[P['point_id']]; comp.append(dict(run=run, iteration=int(it), place=p, completeness_pct=100*float((np.isfinite(v) & (np.abs(v) <= tau[P['point_id']])).mean())))
             scene += [dict(run=run, iteration=int(it), **r) for r in scene_rows(A3O/'meshes'/f'B0_b10__LoD2__{short}_{it}/score.json', run)]
-    for it in MESH_ITS:   # record run
-        f = TLC/'gtj/scenes/B0_b10__LoD2/distances'/f'tl_{it}.npz'
+    for it in MESH_ITS:   # record run (TRAINLOG meshes; 12000 = the 2.3 mesh of this addendum)
+        f = next((q for q in [TLC/'gtj/scenes/B0_b10__LoD2/distances'/f'tl_{it}.npz', A3O/'gtj/scenes/B0_b10__LoD2/distances'/f'tl_{it}.npz'] if q.exists()), TLC/'gtj/scenes/B0_b10__LoD2/distances'/f'tl_{it}.npz')
         if f.exists():
             rs = loadz(f, ['row_s'])['row_s']; tau = loadz(GT/'scenes/B0_b10__LoD2/rows.npz', ['row_tau_m'])['row_tau_m']
             for p in ['visible_low', 'visible_high', 'visible_side']:
                 P = place_points(p); v = rs[P['point_id']]; comp.append(dict(run='tl_B0_b10_LoD2_s0', iteration=int(it), place=p, completeness_pct=100*float((np.isfinite(v) & (np.abs(v) <= tau[P['point_id']])).mean())))
-        scene += [dict(run='tl_B0_b10_LoD2_s0', iteration=int(it), **r) for r in scene_rows(TLC/'meshes'/f'tl_{it}/score.json', 'record')]
+        sj = TLC/'meshes'/f'tl_{it}/score.json'
+        if not sj.exists(): sj = A3O/'meshes'/f'B0_b10__LoD2__tl_{it}/score.json'
+        scene += [dict(run='tl_B0_b10_LoD2_s0', iteration=int(it), **r) for r in scene_rows(sj, 'record')]
     ref = a11_ref('B0_b10__LoD2'); a = np.load(GT/'addendum11/final_data/B0_b10__LoD2.npz'); w = a['reference__FINALTRAIN_30000__within_tau1'].astype(bool); a.close()
     pid_pos = {int(x): i for i, x in enumerate(ref['point_id'])}
     for p in ['visible_low', 'visible_high', 'visible_side']:
