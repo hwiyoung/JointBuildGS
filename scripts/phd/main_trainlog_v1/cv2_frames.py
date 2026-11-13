@@ -40,6 +40,9 @@ One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000,
            comparison state = the nearest saved iteration <= the frame's; none before the first saved one (section and mesh panels left empty, '비교: 저장 상태 없음').
 Modes: setup (static layers -> concept_v2/static.npz, static.json) | frames [labels] | table (numbers) | contact (one sheet of all frames).
 r2 / r3 write concept_v2/frames_<rev>/, docs contact_sheet_<rev>.png and frames_json_<rev>/; the first cut (frames/, contact_sheet.png, frames_json/) and r2 are kept.
+r6 (user 2026-11-13 '응 진행하자'): CV2_VARIANT=r6 = r5 with the zone-1 comparison = image-only 2DGS (main_baselines_v1 imgonly_2dgs_s0, saved 7,000 and 30,000) as in zone 2,
+because the 'judgment off' run is the stage-3 r15 fork (rho_truncated prior term, separate MVS term), not this method (FINALTRAIN r23) minus the judgment;
+static.json and sections_r3 are read unchanged (both already hold the 2DGS cuts of zone 1); frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.*.
 r6test (user 2026-11-13 '시험 장면 만들어'): CV2_VARIANT=z1b = zone 1 moved to the line chosen by cv2_zone1b.py (same direction, length and box rule; place chosen BY
 SCORE = largest 30,000 band completeness difference this method - judgment off); static_z1b.*, sections_z1b/, frames_r6test/; all other rules as r5.
 GT is used only for colour ranges, colouring, section drawing and the numbers. scientific_verdict: null"""
@@ -61,14 +64,17 @@ FONT = '/fonts/NotoSansCJK-Regular.ttc'; fm.fontManager.addfont(FONT); plt.rcPar
 V2 = O/'concept_v2'; FIGD = D/'figures_concept_v2'
 # test variant (2026-11-13, user '시험 장면 만들어'): CV2_VARIANT=z1b moves zone 1 to the line chosen by cv2_zone1b.py (concept_v2/zone1b_line.json) and writes
 # its own static_z1b.*, sections_z1b/ and frames_r6test/; without it every path and rule is the r5 one (r1-r5 outputs are not touched).
-VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b'), VAR
-REV = 'r6test' if VAR else 'r5'; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'
-STJ = V2/('static_z1b.json' if VAR else 'static.json'); STN = V2/('static_z1b.npz' if VAR else 'static.npz'); SECD = V2/('sections_z1b' if VAR else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
+# r6 (2026-11-13, user '응 진행하자'): CV2_VARIANT=r6 = the r5 zone 1 (static.json, sections_r3, read only) with the zone-1 comparison = image-only 2DGS (as zone 2);
+# writes frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.* only.
+VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b', 'r6'), VAR
+REV = {'': 'r5', 'z1b': 'r6test', 'r6': 'r6'}[VAR]; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'; IS_Z1B = VAR == 'z1b'
+STJ = V2/('static_z1b.json' if IS_Z1B else 'static.json'); STN = V2/('static_z1b.npz' if IS_Z1B else 'static.npz'); SECD = V2/('sections_z1b' if IS_Z1B else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
 EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: 25.0}
 RESETS = [3000, 6000, 9000, 12000]; DENSIFY_END = 15000; RESC = '#D85A30'
 CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
 STATES = ['0', '100', '300', '1000', '2000', '3000', '5000', '7000', '10000', '15000', '30000']; FRAMES = ['input']+STATES
 COMP = {1: dict(run='nojudge', name='판단 끈 학습', saved=[15000, 30000]), 2: dict(run='2dgs', name='사진만 쓴 2DGS', saved=[7000, 30000])}
+if VAR == 'r6': COMP[1] = dict(COMP[2])   # r6: the 'judgment off' run is the stage-3 r15 fork, not this method minus the judgment -> zone 1 also against image-only 2DGS
 ZNAME = {1: '유리 채광창', 2: '바뀐 날개 지붕'}
 JC = {0: '#7FA7D9', 2: '#D85A30', 1: '#1D9E75', 4: '#E8B931'}; JN = {0: '일치', 2: '보정', 1: '보존', 4: '결측'}
 NAVY = '#16263d'; GTC = '#1b1b1b'; PRC = '#E07B00'; MVC = '#2E9E4F'; MSC = '#1F5FBF'; RED = '#D62728'; EMPTY = '#F4F3EF'
@@ -116,8 +122,8 @@ class Static:
         sj = STJ; z1src = ZONE1_RULE
         if sj.exists():   # zone 1 line as fixed by setup() (zone1_line)
             z1 = json.loads(sj.read_text())['zones']['1']; o1, t1, n1 = line_frame(z1['line_origin_xy'], z1['line_unit_xy']); L1 = z1['line_length_m']
-            if VAR: z1src = z1['source']
-        elif VAR:   # z1b test: the line chosen by cv2_zone1b.py
+            if IS_Z1B: z1src = z1['source']
+        elif IS_Z1B:   # z1b test: the line chosen by cv2_zone1b.py
             z1 = json.loads(Z1B.read_text()); o1, t1, n1 = line_frame(z1['line_origin_xy'], z1['line_unit_xy']); L1 = float(z1['line_length_m']); z1src = z1['rule']
         else: o1, t1, n1 = line_frame(sec['centre'][:2], sec['t']); L1 = float(sec['L'])   # placeholder until setup() fixes it
         poly1 = Polygon([o1+a*t1+b*n1 for a, b in [(0, -4), (L1, -4), (L1, 4), (0, 4)]])
@@ -137,6 +143,7 @@ class Static:
 
 # ---------------------------------------------------------------- setup: static layers
 def setup():
+    assert VAR != 'r6', 'r6 reads the r5 static layers; setup would overwrite static.json'
     S = Static(); c = S.c; t0 = time.monotonic(); rec = dict(at=now(), rule=__doc__, scientific_verdict=None)
     inp = loadz(O/'concept/inputs.npz'); assert str(inp['name']) == CAM and np.allclose(inp['K'], S.K) and np.allclose(inp['W2C'], S.E)
     tg = loadz(FT/'targets'/f'{STEM}.npz', ['target', 'normal', 'sigma', 'judge_region', 'area', 'region', 'centre', 'mvs_mean_m'])
@@ -149,7 +156,7 @@ def setup():
     n_c = float(np.median(q@n)); s_top = float((q@t).max())+1.0; o1, t1, n1 = line_frame(c0+n_c*n+s_top*t, -t); L1 = float(sec['L'])
     zone1_rec = dict(rule=ZONE1_RULE, sawtooth_centre_xy=c0.tolist(), sawtooth_unit_xy=t.tolist(), agree_pixels_used=int(g0.sum()), lateral_offset_m=n_c, start_along_axis_m=s_top,
                      zoom_v1_class_pixels={str(int(k)): int((cls[rm & tok] == k).sum()) for k in np.unique(cls[rm & tok])})
-    if VAR:   # z1b test: Static() already holds the cv2_zone1b.py line; the r5 rule values above are kept only as the record of what was moved
+    if IS_Z1B:   # z1b test: Static() already holds the cv2_zone1b.py line; the r5 rule values above are kept only as the record of what was moved
         zb = json.loads(Z1B.read_text()); o1, t1, n1, L1 = S.zones[1]['o'], S.zones[1]['t'], S.zones[1]['n'], S.zones[1]['L']
         zone1_rec = dict(rule=zb['rule'], selection=zb['selection'], zone1b_line_sha256=sha(Z1B), r5_rule=zone1_rec)
     S.zones[1].update(o=o1, t=t1, n=n1, L=L1, poly=Polygon([o1+a*t1+b*n1 for a, b in [(0, -4), (L1, -4), (L1, 4), (0, 4)]]))
@@ -463,8 +470,9 @@ def numbers():
                         s2 = mesh_scores(V2/'gtj/scenes'/STEM/'distances', f"cmp_{COMP[k]['run']}_30000")
                         r[f'zone{k}_comparison_rescore219_completeness_pct'] = s2[0][k]['completeness_pct'] if s2 else None; r[f'zone{k}_comparison_rescore219_accuracy_pct'] = s2[0][k]['accuracy_pct'] if s2 else None
         rows_out.append(r); print('ROW', r, flush=True)
-    FIGD.mkdir(parents=True, exist_ok=True); p = table('numbers', rows_out, folder=FIGD)
-    dump(FIGD/'numbers.json', dict(at=now(), rows=rows_out, rule=dict(
+    NB = 'numbers' if REV == 'r5' else f'numbers_{REV}'   # r6: its own table (the r5 numbers.* stay)
+    FIGD.mkdir(parents=True, exist_ok=True); p = table(NB, rows_out, folder=FIGD)
+    dump(FIGD/f'{NB}.json', dict(at=now(), rows=rows_out, rule=dict(
         psnr='renders/<n>/render.json train1_psnr (this camera, r27 renderer, full scene)',
         target_within_10cm='pixels of this camera whose target 3-D point is inside the zone box; render depth = the mesh-input render (gtj/renders, surf_depth, building box); distance = |render z - target z| x |pixel ray (x, y, 1)|; pixels without render depth count as not within',
         mesh_completeness='GTJUDGE rows (rows.npz) inside the zone box, |row_s| <= row_tau_m (0.211856 m), normal_line.values (no surface = not within)',
@@ -477,7 +485,7 @@ def numbers():
         cc = lambda k: '—' if r.get(f'zone{k}_comparison_iteration') is None else f"{r[f'zone{k}_comparison_iteration']:,}회: {f(r.get(f'zone{k}_comparison_mesh_completeness_pct'))} / {f(r.get(f'zone{k}_comparison_mesh_accuracy_pct'))}"
         md.append(f"| {int(r['frame']):,} | {f(r['psnr_db'])} | {f(r['zone1_target_within_10cm_pct'])} | {f(r['zone2_target_within_10cm_pct'])} | {f(r.get('zone1_mesh_completeness_pct'))} | {f(r.get('zone1_mesh_accuracy_pct'))} | "
                   f"{f(r.get('zone2_mesh_completeness_pct'))} | {f(r.get('zone2_mesh_accuracy_pct'))} | {r['gaussians_building_scope']:,} | {cc(1)} | {cc(2)} |")
-    (FIGD/'numbers.md').write_text('\n'.join(md)+'\n'); print('TABLE', p, flush=True)
+    (FIGD/f'{NB}.md').write_text('\n'.join(md)+'\n'); print('TABLE', p, flush=True)
 
 def contact():
     ims = [Image.open(p).convert('RGB').resize((480, 270), Image.LANCZOS) for p in sorted(FR.glob('frame_*.png'))]; sheet = Image.new('RGB', (480*4, 270*3), 'white')

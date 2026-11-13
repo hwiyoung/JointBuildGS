@@ -1,12 +1,12 @@
 """Concept video v2 (first cut): MP4 and GIF from the 12 frames of cv2_frames.py (video image: imageio_ffmpeg's ffmpeg, Pillow). No new drawing.
   MP4  H.264 (libx264 -preset veryfast, yuv420p, crf 18, 25 fps constant), every frame 1.2 s, the last one 3.0 s (ffmpeg concat demuxer durations)
   GIF  1280 px wide (Lanczos), the same order and durations (Pillow per-frame durations 1200 ms / last 3000 ms, adaptive 256-colour palette per frame, loop)
-Writes concept_v2/video/ (mp4, gif, video.json) and a copy of video.json in docs figures_concept_v2/ (the binaries stay in the payload, as the earlier videos). scientific_verdict: null"""
-import subprocess, sys
+r6 (CV2_VARIANT=r6, 2026-11-13): frames_r6 -> video_r6. Writes concept_v2/video/ (mp4, gif, video.json) and a copy of video.json in docs figures_concept_v2/ (the binaries stay in the payload, as the earlier videos). scientific_verdict: null"""
+import os, subprocess, sys
 from common import *
 from PIL import Image
 import imageio_ffmpeg
-V2 = O/'concept_v2'; REV = 'r5'; FR = V2/f'frames_{REV}'; OUTV = V2/f'video_{REV}'; FIGD = D/'figures_concept_v2'; STEP, LAST = 1.2, 3.0   # r2 (2026-11-13): sections show results only; the first cut video/ is kept
+V2 = O/'concept_v2'; REV = {'': 'r5', 'r6': 'r6'}[os.environ.get('CV2_VARIANT', '')]; FR = V2/f'frames_{REV}'; OUTV = V2/f'video_{REV}'; FIGD = D/'figures_concept_v2'; STEP, LAST = 1.2, 3.0   # r2 (2026-11-13): sections show results only; the first cut video/ is kept
 
 def main():
     frames = sorted(FR.glob('frame_*.png')); assert len(frames) == 12, len(frames); OUTV.mkdir(parents=True, exist_ok=True); FIGD.mkdir(parents=True, exist_ok=True)

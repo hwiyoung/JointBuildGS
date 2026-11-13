@@ -15,6 +15,7 @@ from cv2_frames import *
 import torch
 from cv2_prep import read_ply, COMP as CPLY
 OUTS = SECD; EXT = 3.0   # sections_r3 (r5) or sections_z1b (CV2_VARIANT=z1b, cv2_frames)
+assert VAR != 'r6', 'r6 reads sections_r3 unchanged (it already holds the 2DGS cuts of zone 1)'
 MESH = {**{f'ours_{n}': O/'gtj/meshes'/f'{STEM}__tl_{n}'/'final.ply' for n in STATES},
         'nojudge_15000': V2/'gtj/meshes'/f'{STEM}__cmp_nojudge_15000'/'final.ply', 'nojudge_30000': V2/'gtj/meshes'/f'{STEM}__cmp_nojudge_30000_v203'/'final.ply',
         '2dgs_7000': V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_7000'/'final.ply', '2dgs_30000': V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_30000_v203'/'final.ply'}
