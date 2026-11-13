@@ -1,4 +1,4 @@
-"""PHD-MAIN-TRAINLOG-v1 concept video v2, first cut r4 (request 2026-11-12; r2-r4 2026-11-13: sections show results only, + GT, unfiltered mesh; r4: fewer symbols). CPU, no training; draws saved states only (nothing interpolated).
+"""PHD-MAIN-TRAINLOG-v1 concept video v2, first cut r5 (request 2026-11-12; r2-r5 2026-11-13: sections show results only, + GT, unfiltered mesh, fewer symbols; r5: timeline facts). CPU, no training; draws saved states only (nothing interpolated).
 One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000, 10,000, 15,000, 30,000), 1920 x 1080, white.
   top      'B173 · 반복 N / 30,000' and the 12-point dot row (current dark, past grey)
   upper    ① 2x2 for the real training camera DJI_20241217091247_0146_D (cropped to the building-scope pixels): photo, render (renders/<n>/train1_rgb.png,
@@ -28,6 +28,10 @@ One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000,
            axis = plain linear from the overall min of all drawn layers (mesh of every state, GT, prior, targets) to the overall max, except zone 2 where the
            linear part stops at 25 m (the building) and one compressed band above holds the early-state pieces up to the overall max. ① render depth: no red
            outline; ① depth target: judgment boundaries only in the input frame. Legend lists only what the frame draws.
+           r5 (user, 2026-11-13): timeline facts from the r27 fork (train.py 1173: densification and opacity reset only while iteration < densify_until_iter
+           15,000; opacity_reset_interval 3,000; saved *_pre_reset states 3,000 / 6,000 / 9,000 / 12,000): a small mark at each reset (3,000, 6,000, 9,000,
+           12,000; placed by linear interpolation between the frame dots), '≈' on the line between 15,000 and 30,000 (frames skip 15,000 iterations), the
+           note '가우시안 늘리기 끝' under 15,000, and '· 불투명도 초기화 직후' in the 3,000 frame title. No frames added after 15,000 (user decision).
            camera height colours: this camera's building-scope target heights, 2-98 %, 7 steps (static.json colour_range).
            zone 1 glass skylight in the concept-v1 zoom (ZONE1_RULE: B173_sawtooth direction, placed on this camera's target map; 12 m line, box 12 x 8 m), comparison = judgment off
                   (main_stage3_v1 nojudge_ALS_s0 = RESCORE baseline_30000; saved 15,000 and 30,000)
@@ -52,8 +56,9 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Patch, FancyArrowPatch
 from PIL import Image
 FONT = '/fonts/NotoSansCJK-Regular.ttc'; fm.fontManager.addfont(FONT); plt.rcParams['font.family'] = fm.FontProperties(fname=FONT).get_name(); plt.rcParams['axes.unicode_minus'] = False
-V2 = O/'concept_v2'; REV = 'r4'; FR = V2/f'frames_{REV}'; FIGD = D/'figures_concept_v2'
+V2 = O/'concept_v2'; REV = 'r5'; FR = V2/f'frames_{REV}'; FIGD = D/'figures_concept_v2'
 EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: 25.0}
+RESETS = [3000, 6000, 9000, 12000]; DENSIFY_END = 15000; RESC = '#D85A30'
 CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
 STATES = ['0', '100', '300', '1000', '2000', '3000', '5000', '7000', '10000', '15000', '30000']; FRAMES = ['input']+STATES
 COMP = {1: dict(run='nojudge', name='판단 끈 학습', saved=[15000, 30000]), 2: dict(run='2dgs', name='사진만 쓴 2DGS', saved=[7000, 30000])}
@@ -307,12 +312,16 @@ def draw(F, label, cache):
     S = F.S; st = F.st; it = None if label == 'input' else int(label); t0 = time.monotonic(); rec = dict(frame=label, iteration=it, sources={}, counts={})
     F.fig = fig = plt.figure(figsize=(W_/100, H_/100), dpi=100, facecolor='white')
     # top
-    fig.text(16/W_, 1-24/H_, 'B173 · 입력' if it is None else f'B173 · 반복 {it:,} / 30,000', fontsize=19, color=NAVY, va='center', fontweight='bold')
+    fig.text(16/W_, 1-24/H_, 'B173 · 입력' if it is None else f'B173 · 반복 {it:,} / 30,000'+(' · 불투명도 초기화 직후' if it in RESETS else ''), fontsize=19, color=NAVY, va='center', fontweight='bold')
     xs = np.linspace(1040, 1890, len(FRAMES)); cur = FRAMES.index(label); ax = fig.add_axes([0, 1-44/H_, 1, 44/H_]); ax.set_xlim(0, W_); ax.set_ylim(44, 0); ax.axis('off')
     ax.plot([xs[0], xs[-1]], [16, 16], color='#D3D1C7', lw=1, zorder=1)
     for i, (x, f) in enumerate(zip(xs, FRAMES)):
         col, sz = (NAVY, 11) if i == cur else (('#9C9A92', 7) if i < cur else ('#E3E1D9', 7)); ax.plot(x, 16, 'o', ms=sz, color=col, mec='white' if i != cur else NAVY, zorder=3)
         ax.text(x, 36, '입력' if f == 'input' else f'{int(f):,}', ha='center', va='center', fontsize=8.5 if i != cur else 9.5, color=NAVY if i == cur else '#77756D', fontweight='bold' if i == cur else 'normal')
+    fit = np.array([int(f) for f in FRAMES[1:]], float)   # r5 timeline facts
+    for n in RESETS: ax.plot(np.interp(n, fit, xs[1:]), 5, 'v', ms=5.5, color=RESC, mec='white', mew=.4, zorder=4)
+    ax.text((xs[-2]+xs[-1])/2, 16, '≈', ha='center', va='center', fontsize=12, color='#77756D', zorder=5, bbox=dict(boxstyle='square,pad=.05', fc='white', ec='none'))
+    fig.text(np.interp(DENSIFY_END, fit, xs[1:])/W_, 1-52/H_, '가우시안 늘리기 끝', ha='center', va='center', fontsize=7.5, color='#77756D')
     # ① camera 2x2
     u0, v0, u1, v1 = st['crop']; ph = 250; pw = int(round(ph*(u1-u0)/(v1-v0))); X0, Y0 = 16, 66; gap = 8
     inp = loadz(O/'concept/inputs.npz', ['photo']); photo = inp['photo'].astype(float)/255.; rec['sources']['photo_and_target_map'] = F.h(O/'concept/inputs.npz')
@@ -376,14 +385,15 @@ def draw(F, label, cache):
     for i in range(NBIN): lax.add_patch(plt.Rectangle((x+i*22, 9), 22, 14, color=F.hcol[i]))
     for i in range(NBIN+1): lax.text(x+i*22, 4.5, f'{F.bins[i]:.0f}', fontsize=7, ha='center', va='center', color='#5F5E5A')
     x += NBIN*22+18
-    if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('box', STRIPC, '25 m 위(압축)'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자')]
-    else: items = [('band', GTB, '참값'), ('line', MSC, '메시'), ('box', STRIPC, '25 m 위(압축)'), ('line', NAVY, '구역 상자')]
+    if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('box', STRIPC, '25 m 위(압축)'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
+    else: items = [('band', GTB, '참값'), ('line', MSC, '메시'), ('box', STRIPC, '25 m 위(압축)'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
     for kind, col, txt in items:
         if kind == 'pt': lax.plot(x+5, 17, 'o', ms=4.5, color=col)
         elif kind == 'box': lax.add_patch(plt.Rectangle((x, 11), 11, 12, color=col, alpha=.75))
         elif kind == 'band': lax.plot([x, x+18], [17, 17], color=col, lw=5, solid_capstyle='butt')
+        elif kind == 'reset': lax.plot(x+5, 17, 'v', ms=6, color=col, mec='white', mew=.4)
         else: lax.plot([x, x+18], [17, 17], color=col, lw=1.6, ls={'dash': (0, (3, 2)), 'dot': ':', 'line': '-'}[kind])
-        x += (14 if kind in ('pt', 'box') else 22); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
+        x += (14 if kind in ('pt', 'box', 'reset') else 22); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
     png = FR/f'frame_{FRAMES.index(label):02d}_{label}.png'; FR.mkdir(parents=True, exist_ok=True); fig.savefig(png, dpi=100, facecolor='white'); plt.close(fig)
     rec.update(png=str(png), png_sha256=sha(png), seconds=round(time.monotonic()-t0, 1), camera=F.sj['camera'], oblique=F.sj['oblique'], zones=F.sj['zones'], colour_range=F.sj['colour_range'],
                static_sha256=F.h(V2/'static.npz'), rule=__doc__.split('\n')[0], scientific_verdict=None)

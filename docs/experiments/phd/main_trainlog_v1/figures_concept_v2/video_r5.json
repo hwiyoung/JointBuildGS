@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-13T11:31:33.722610+09:00",
+  "rule": "Concept video v2 (first cut): MP4 and GIF from the 12 frames of cv2_frames.py (video image: imageio_ffmpeg's ffmpeg, Pillow). No new drawing.\n  MP4  H.264 (libx264 -preset veryfast, yuv420p, crf 18, 25 fps constant), every frame 1.2 s, the last one 3.0 s (ffmpeg concat demuxer durations)\n  GIF  1280 px wide (Lanczos), the same order and durations (Pillow per-frame durations 1200 ms / last 3000 ms, adaptive 256-colour palette per frame, loop)\nWrites concept_v2/video/ (mp4, gif, video.json) and a copy of video.json in docs figures_concept_v2/ (the binaries stay in the payload, as the earlier videos). scientific_verdict: null",
+  "frames": [
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_00_input.png",
+      "sha256": "c0a952ed8d2adb54b958b028e056f68d33c237a748023380e4d863c10ff1ae01"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_01_0.png",
+      "sha256": "02b1e6c5e130e94487ae5de218b8c6dc8c92987716f8199e3ba0f89c546a33f2"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_02_100.png",
+      "sha256": "56370d92a7afaa5dba0771078b8c215ae47d1d83327211267fdf52cb004b7e0e"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_03_300.png",
+      "sha256": "510aee3c4d417a633410d245c32bf6ac87be532806fbb4f3eb85f6a0ce31f15d"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_04_1000.png",
+      "sha256": "20367c8981385bfe7cdbbad09e7a1c096ea9b72e732c6add9e21c1405c77ce16"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_05_2000.png",
+      "sha256": "ed42795a33ed1bf7b002f017fe572807e5897ced16bbe34c52df2dee59df59e7"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_06_3000.png",
+      "sha256": "b9f298103b85f9f29c0a8f69d2903c5e8608ce422f6688e161cebe4bce305474"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_07_5000.png",
+      "sha256": "e78c92f13d1f1f82137d426a05fd8d1163e64ff931dbb785f5f4d16f9aa21ed6"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_08_7000.png",
+      "sha256": "a820a7abc7d49ecc4e958ad755f4409f3664cf670a1330710170436268d8ffe5"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_09_10000.png",
+      "sha256": "43f44edc2c99a6237efaed8657d358cf07372b0ea272dac01018eded779677b8"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_10_15000.png",
+      "sha256": "d3741d6b21e6bac1f7e6e16a7e63578596994c3890d56e0c36e1fc94a9f72c5d"
+    },
+    {
+      "png": "/tl/concept_v2/frames_r5/frame_11_30000.png",
+      "sha256": "defd48a00a6524b9e9f5b2b6275d12d29dedc79ba0f6647abd0cde7c8c86c350"
+    }
+  ],
+  "mp4": {
+    "path": "/tl/concept_v2/video_r5/B173_학습과정_개념동영상_v2_r5.mp4",
+    "sha256": "5f7de82a12eb0065481e866e56f37dab690f8bfe8d27e93b6194d08303e4d2a5",
+    "bytes": 2262758,
+    "ffmpeg": "/opt/conda/lib/python3.11/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2",
+    "command": [
+      "/opt/conda/lib/python3.11/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2",
+      "-y",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-f",
+      "concat",
+      "-safe",
+      "0",
+      "-i",
+      "/tl/concept_v2/video_r5/concat.txt",
+      "-vf",
+      "fps=25,format=yuv420p",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "veryfast",
+      "-crf",
+      "18",
+      "-movflags",
+      "+faststart",
+      "/tl/concept_v2/video_r5/B173_학습과정_개념동영상_v2_r5.mp4"
+    ],
+    "probe": [
+      "  Duration: 00:00:16.24, start: 0.000000, bitrate: 1114 kb/s",
+      "  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 1111 kb/s, 25 fps, 25 tbr, 12800 tbn (default)"
+    ]
+  },
+  "gif": {
+    "path": "/tl/concept_v2/video_r5/B173_학습과정_개념동영상_v2_r5.gif",
+    "sha256": "a26f69338fcba056b262bd2761d1be4b6b02ef9c6debb43c6e0de81c924a24b0",
+    "bytes": 3455395,
+    "width": 1280
+  },
+  "expected_seconds": 16.2,
+  "scientific_verdict": null
+}
