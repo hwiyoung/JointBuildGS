@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-13T10:43:15.726302+09:00",
+  "rule": "Concept video v2 side check, part 2 (2026-11-13): where do the roof-height floaters along the building edge come from. Read-only; prints and writes\ndocs figures_concept_v2/floater_check/floater_source.json only.\nEdge floaters of a mesh = faces of the UNCUT original-rule mesh outside the LoD2 footprint by at most 3 m, >= 12 m above the scope ground, farther than 1 m from\nGT dense (same selection as cv2_floater.py part 2). For each of this method (tl_30000), judgment off (cmp_nojudge_30000_v203) and image-only 2DGS\n(cmp_2dgs_30000_v203): their area, the east-half share, the area within 0.25 / 0.5 m of the prior ALS surface (defs prior_ALS.npz, open3d distance), and the\narea within 1 m (xy) of the edge floaters of this method (same place or not).\nFor this method's edge floaters also: the judgment of the nearest valid target (FT targets, judge_region) when one lies within 0.5 m of the face centre.\nGT is used only to tell on-surface from off-surface faces. scientific_verdict: null",
+  "meshes": {
+    "ours_30000": {
+      "mesh": "/tl/gtj/meshes/B173nb_b10__ALS__tl_30000/final.ply",
+      "mesh_sha256": "643d80a7efd70c6dfaec6759d723a8162bc463ed992bc14242678a98adaf71c7",
+      "edge_floater_area_m2": 636.7,
+      "east_share_pct": 99.4,
+      "within_0p25m_of_prior_pct": 0.9,
+      "within_0p5m_of_prior_pct": 6.0,
+      "prior_distance_median_m": 1.277,
+      "height_above_ground_p10_p50_p90": [
+        17.13,
+        19.22,
+        22.37
+      ],
+      "nearest_target_within_0p5m_area_pct": 0.0,
+      "nearest_target_judgment_area_pct": {
+        "보존": 100.0
+      }
+    },
+    "nojudge_30000": {
+      "mesh": "/tl/concept_v2/gtj/meshes/B173nb_b10__ALS__cmp_nojudge_30000_v203/final.ply",
+      "mesh_sha256": "6d35c6b423defabf415ae9ee2893234a834464a79d79fa5b5bf11b90d2785e35",
+      "edge_floater_area_m2": 123.9,
+      "east_share_pct": 98.5,
+      "within_0p25m_of_prior_pct": 3.7,
+      "within_0p5m_of_prior_pct": 12.4,
+      "prior_distance_median_m": 2.195,
+      "height_above_ground_p10_p50_p90": [
+        17.08,
+        18.65,
+        22.73
+      ],
+      "same_place_as_ours_within_1m_xy_pct": 95.7
+    },
+    "2dgs_30000": {
+      "mesh": "/tl/concept_v2/gtj/meshes/B173nb_b10__ALS__cmp_2dgs_30000_v203/final.ply",
+      "mesh_sha256": "0b03a1f6bdc86b64127a7956d9b1981ca1f548c7803019109b8d00f0d1a0952b",
+      "edge_floater_area_m2": 1046.9,
+      "east_share_pct": 99.4,
+      "within_0p25m_of_prior_pct": 1.8,
+      "within_0p5m_of_prior_pct": 6.8,
+      "prior_distance_median_m": 2.532,
+      "height_above_ground_p10_p50_p90": [
+        17.44,
+        20.85,
+        25.81
+      ],
+      "same_place_as_ours_within_1m_xy_pct": 88.9
+    }
+  },
+  "scientific_verdict": null,
+  "seconds": 381.9
+}

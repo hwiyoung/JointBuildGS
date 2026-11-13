@@ -1,0 +1,35 @@
+# cv2_floater_ring.py (2026-11-13, read-only, printed output)
+scope keys ['building_id', 'footprint', 'buffered_footprint', 'xy_buffer_m', 'z_min', 'z_max', 'ground_z', 'old_roof_max_z', 'ground_rule', 'ground_cell_iy_ix', 'ground_query_xy', 'zoom_box_xy']
+buffered footprint area m2 2020 z -43.1730224609375 -18.067999999999984
+footprint area m2 1822 buffer m 1 ground_z -43.4730224609375
+GT keys ['xyz', 'normal', 'wall', 'cameras', 'radius']
+GT points 3881308 height above ground 0/2/50/98/100 % [-5.56, -0.07, 14.91, 16.03, 21.36]
+== ours_30000: mesh area 6,202 m2; >1 m from GT 786 m2 (12.7 %)
+   far, outside footprint: 529 m2; height above ground: <1 m 0, 1-5 m 15, 5-12 m 13, >=12 m 500 m2; brightness (0-255) area-weighted median 71; distance to GT median 3.2 m
+   far, inside footprint: 257 m2; height above ground: <1 m 0, 1-5 m 38, 5-12 m 49, >=12 m 170 m2; brightness (0-255) area-weighted median 130; distance to GT median 1.6 m
+   dark faces (mean RGB < 50): 539 m2, of which >1 m from GT 51 %, outside footprint 43 %
+   accuracy samples 2,915,242; >1 m from GT 183,752 (6.3 %); of those counted in accuracy (observed & not steep) 34.4 %; accuracy 67.3 % (n 1,578,386); accuracy if far samples were not there 70.1 %
+== nojudge_30000: mesh area 5,387 m2; >1 m from GT 331 m2 (6.1 %)
+   far, outside footprint: 94 m2; height above ground: <1 m 2, 1-5 m 25, 5-12 m 22, >=12 m 45 m2; brightness (0-255) area-weighted median 101; distance to GT median 1.5 m
+   far, inside footprint: 237 m2; height above ground: <1 m 0, 1-5 m 29, 5-12 m 31, >=12 m 177 m2; brightness (0-255) area-weighted median 117; distance to GT median 1.8 m
+   dark faces (mean RGB < 50): 366 m2, of which >1 m from GT 30 %, outside footprint 17 %
+   accuracy samples 2,791,264; >1 m from GT 153,239 (5.5 %); of those counted in accuracy (observed & not steep) 33.3 %; accuracy 69.8 % (n 1,511,234); accuracy if far samples were not there 72.2 %
+== 2dgs_30000: mesh area 7,400 m2; >1 m from GT 1,687 m2 (22.8 %)
+   far, outside footprint: 569 m2; height above ground: <1 m 0, 1-5 m 15, 5-12 m 16, >=12 m 538 m2; brightness (0-255) area-weighted median 85; distance to GT median 4.1 m
+   far, inside footprint: 1,117 m2; height above ground: <1 m 0, 1-5 m 60, 5-12 m 107, >=12 m 950 m2; brightness (0-255) area-weighted median 92; distance to GT median 2.0 m
+   dark faces (mean RGB < 50): 381 m2, of which >1 m from GT 4 %, outside footprint 16 %
+   accuracy samples 3,479,826; >1 m from GT 653,899 (18.8 %); of those counted in accuracy (observed & not steep) 38.4 %; accuracy 32.9 % (n 1,801,788); accuracy if far samples were not there 38.3 %
+rc 0 686
+
+# cv2_floater_ring2.py (2026-11-13, read-only, printed output)
+xy buffer m 1 scope z above ground 0.3 25.41
+== ours_7000: area 7,714 m2, >1 m from GT 12.7 %; face centroids inside buffered footprint 100.0 %
+== ours_15000: area 6,198 m2, >1 m from GT 11.8 %; face centroids inside buffered footprint 100.0 %
+== ours_30000: area 6,202 m2, >1 m from GT 12.7 %; face centroids inside buffered footprint 100.0 %
+   far-outside faces: distance outside the footprint edge median 0.47 m, 95 % 0.87 m, max 1.00 m
+   direction from footprint centre (deg, 0=+x east, 90=+y north): area share per 90 deg sector 0-90: 27 %, 90-180: 0 %, 180-270: 6 %, 270-360: 67 %
+   views per vertex (of 203) median: far-outside 9, near GT (<=0.2 m) 12
+   colour brightness median: far-outside 71, near GT 125
+   Gaussians within 0.5 m of far-outside faces: faces with none 65 %, opacity median 0.11, share opacity < 0.1 49 %
+   Gaussians within 0.5 m of near GT faces: faces with none 13 %, opacity median 0.52, share opacity < 0.1 28 %
+rc 0 338

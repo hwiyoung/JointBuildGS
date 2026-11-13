@@ -1,0 +1,178 @@
+{
+  "at": "2026-11-13T10:39:22.403550+09:00",
+  "rule": "Concept video v2 side check (2026-11-13, user request): what are the floating mesh pieces outside the building (east edge, roof height) seen in ② of the frames.\nRead-only on all inputs; no training, no meshing, no scoring change. Writes docs figures_concept_v2/floater_check/ (floater_check.json, floater_map.png, floater_photos.png).\n  1. uncut meshes (the original-rule final.ply before the building-scope cut: this method tl_30000 and judgment off cmp_nojudge_30000_v203):\n     face area by planar distance outside the LoD2 footprint (0 inside; 0-1 m = the 1 m buffer kept in the frames; 1-3, 3-10, >10 m) x height above\n     the scope ground (<0.3 m = below the scope z_min, 0.3-12 m, >=12 m), east half share, and the area farther than 1 m from GT dense.\n  2. the largest concentration of this method's roof-height floaters = off-GT (>1 m) faces outside the footprint by at most 3 m and >= 12 m above\n     the scope ground (5 m bins along the footprint edge, the top bin and its two neighbours; first run without the 3 m / 12 m limits picked the bare\n     ground 14 m north of the building, which GT does not cover) projected into the real training views (render receipt K, W2C; pixel centre at integer u); the three views with the most projected points\n     inside the image (20 px margin), photo crops plain and with the projected points.\nGT is used only to tell on-surface from off-surface faces (distance). scientific_verdict: null",
+  "render_box": [
+    [
+      76.33509104189136,
+      56.30900316074758,
+      -49.026947021484375
+    ],
+    [
+      182.6634399440611,
+      175.48731032831247,
+      -0.856046199798584
+    ]
+  ],
+  "footprint_area_m2": 1821.7023999989,
+  "scope_xy_buffer_m": 1,
+  "meshes": {
+    "ours_30000": {
+      "mesh": "/tl/gtj/meshes/B173nb_b10__ALS__tl_30000/final.ply",
+      "mesh_sha256": "643d80a7efd70c6dfaec6759d723a8162bc463ed992bc14242678a98adaf71c7",
+      "faces": 12026763,
+      "area_m2": 10512.0,
+      "area_by_distance_outside_footprint_and_height_m2": {
+        "inside": {
+          "h_lt0.3": 6.5,
+          "h_0.3_12": 1219.8,
+          "h_ge12": 3774.3
+        },
+        "out_0_1m": {
+          "h_lt0.3": 67.4,
+          "h_0.3_12": 318.4,
+          "h_ge12": 889.7
+        },
+        "out_1_3m": {
+          "h_lt0.3": 93.1,
+          "h_0.3_12": 341.6,
+          "h_ge12": 228.7
+        },
+        "out_3_10m": {
+          "h_lt0.3": 447.2,
+          "h_0.3_12": 290.0,
+          "h_ge12": 29.7
+        },
+        "out_gt10m": {
+          "h_lt0.3": 635.8,
+          "h_0.3_12": 1306.4,
+          "h_ge12": 863.5
+        }
+      },
+      "outside_area_m2": 5511.4,
+      "outside_off_gt_1m_area_m2": 2144.4,
+      "outside_off_gt_east_share_pct": 38.1,
+      "outside_max_distance_m": 25.99,
+      "vertex_bbox_min": [
+        91.17500000000001,
+        71.13502403530784,
+        -47.175000000000004
+      ],
+      "vertex_bbox_max": [
+        167.4410349374791,
+        160.62500000000003,
+        -18.425
+      ]
+    },
+    "nojudge_30000": {
+      "mesh": "/tl/concept_v2/gtj/meshes/B173nb_b10__ALS__cmp_nojudge_30000_v203/final.ply",
+      "mesh_sha256": "6d35c6b423defabf415ae9ee2893234a834464a79d79fa5b5bf11b90d2785e35",
+      "faces": 11107968,
+      "area_m2": 9757.6,
+      "area_by_distance_outside_footprint_and_height_m2": {
+        "inside": {
+          "h_lt0.3": 9.2,
+          "h_0.3_12": 932.4,
+          "h_ge12": 3463.1
+        },
+        "out_0_1m": {
+          "h_lt0.3": 65.9,
+          "h_0.3_12": 511.1,
+          "h_ge12": 480.0
+        },
+        "out_1_3m": {
+          "h_lt0.3": 148.5,
+          "h_0.3_12": 291.1,
+          "h_ge12": 154.8
+        },
+        "out_3_10m": {
+          "h_lt0.3": 477.5,
+          "h_0.3_12": 253.1,
+          "h_ge12": 17.2
+        },
+        "out_gt10m": {
+          "h_lt0.3": 767.6,
+          "h_0.3_12": 1327.9,
+          "h_ge12": 858.2
+        }
+      },
+      "outside_area_m2": 5352.9,
+      "outside_off_gt_1m_area_m2": 1675.1,
+      "outside_off_gt_east_share_pct": 16.9,
+      "outside_max_distance_m": 25.99,
+      "vertex_bbox_min": [
+        91.17361396992261,
+        71.15638655477618,
+        -49.12500000000001
+      ],
+      "vertex_bbox_max": [
+        167.41905388686163,
+        160.62500000000003,
+        -18.175
+      ]
+    }
+  },
+  "scientific_verdict": null,
+  "concentration": {
+    "edge_bin_m": 5,
+    "top_bin": 33,
+    "top_bins_area_m2": 177.8,
+    "share_of_off_gt_outside_pct": 27.9,
+    "centroid_xyz": [
+      143.70947256455204,
+      83.42427377568656,
+      -23.523995995020194
+    ],
+    "height_above_ground_median_m": 19.731355794270836,
+    "distance_outside_footprint_median_m": 0.7445790363896901,
+    "distance_outside_footprint_max_m": 2.999966290682678
+  },
+  "photo_views": [
+    {
+      "name": "DJI_20241217091247_0146_D",
+      "points_inside": 4000,
+      "depth_median_m": 56.829262847015265,
+      "image_size": [
+        1024,
+        741
+      ],
+      "crop_xyxy": [
+        356.828913279619,
+        0.0,
+        556.1142100820878,
+        280.0423909671076
+      ]
+    },
+    {
+      "name": "DJI_20241217091249_0147_D",
+      "points_inside": 4000,
+      "depth_median_m": 56.67041925261665,
+      "image_size": [
+        1024,
+        741
+      ],
+      "crop_xyxy": [
+        362.5660587331706,
+        81.66389147263013,
+        561.3246103660717,
+        392.59161977649467
+      ]
+    },
+    {
+      "name": "DJI_20241217091251_0148_D",
+      "points_inside": 4000,
+      "depth_median_m": 56.46786870982067,
+      "image_size": [
+        1024,
+        741
+      ],
+      "crop_xyxy": [
+        370.76119258875207,
+        188.33718897537517,
+        568.8276432149739,
+        511.40855439572874
+      ]
+    }
+  ],
+  "photo_rule": "top-3 real views by projected concentration points inside the image (20 px margin); points sampled 4,000 of the concentration",
+  "seconds": 159.4
+}
