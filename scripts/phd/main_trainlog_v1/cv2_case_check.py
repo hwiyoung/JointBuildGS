@@ -81,7 +81,42 @@ def targets():
     out['seconds'] = round(time.monotonic()-t0, 1); out['scientific_verdict'] = None; dump(D/'case_check_targets_v1.json', out)
     print('TARGETS', json.dumps(out['zone1_story_rows'], ensure_ascii=False)[:700], flush=True)
 
+def v3check():
+    """(d) 'v3' (2026-11-13, user '진행하자' = zone 2 slid off the inner corner): writes /docs/case_check_v3.json (earlier files untouched). No pass line.
+    Row kinds in a zone box (GTJUDGE wall flag and row normal against the zone wall's outward normal): chosen wall (|n.out| > .9), perpendicular wall
+    (|n.along| > .9, along = up x out), other wall, non-wall. Zones: zone 1 (unchanged), zone 2 v1 (case_zones.json) and zone 2 v3 (case_zones_v3.json).
+    Per zone: kind counts; chosen-wall rows by height (0-5, 5-10, 10-15, 15-25 m): target right % (nearest FINALTRAIN patch, cv2_zone_why rule) and
+    completeness of ours 7,000 / 10,000 / 15,000 / 30,000, the original run (GTJUDGE FINALTRAIN_30000), image-only 2DGS 30,000, the image-depth mesh, LoD2.
+    Corner table: the zone-2 v1 wall rows below 10 m within 1 m of the wall plane by distance from the inner corner (corner = along -1.1 m from the v1 foot).
+    Purpose: the v1 zone-2 numbers mixed the corner wall in; this keeps the corrected numbers (the correction note and the v3 report) reproducible."""
+    import time; from scipy.spatial import cKDTree; from shapely.geometry import Polygon; t0 = time.monotonic(); c = cfg(); S = F.Static()
+    up = np.asarray(c['coordinates']['up'], float); up /= np.linalg.norm(up); g = float(c['scope']['ground_z'])
+    row = loadz(GT/'scenes'/STEM/'rows.npz', ['xyz', 'normal', 'wall', 'row_tau_m']); X = row['xyz'].astype(float); N = row['normal'].astype(float); W = row['wall'].astype(bool); tau = row['row_tau_m']; h = X[:, 2]-g
+    tg = loadz(FT/'targets'/f'{STEM}.npz', ['target', 'sigma', 'judge_region', 'region', 'centre'])
+    valid = (tg['region'] >= 0) & np.isfinite(tg['target']).all(1) & np.isfinite(tg['sigma']) & (tg['sigma'] > 0) & np.isin(tg['judge_region'], [0, 1, 2, 4])
+    iv = np.flatnonzero(valid); dd, kk = cKDTree(tg['centre'][iv]).query(X, k=1, distance_upper_bound=.5); hit = np.isfinite(dd); pi = np.full(len(X), -1); pi[hit] = iv[kk[hit]]
+    toff = np.full(len(X), np.nan); toff[hit] = np.einsum('ij,ij->i', tg['target'][pi[hit]]-X[hit], N[hit]); tright = hit & (np.abs(np.nan_to_num(toff, nan=9.)) <= tau)
+    fams = {**{f'ours_{n}': O/'gtj/scenes'/STEM/'distances'/f'tl_{n}.npz' for n in ('7000', '10000', '15000', '30000')}, 'original_30000': GT/'scenes'/STEM/'distances/FINALTRAIN_30000.npz',
+            '2dgs_30000': F.V2/'gtj/scenes'/STEM/'distances/cmp_2dgs_30000.npz', 'image_depth_mesh': GT/'scenes'/STEM/'distances/mvs.npz', 'lod2': GT/'scenes'/STEM/'distances/prior.npz'}
+    Dz = {k: loadz(p, ['row_s'])['row_s'] for k, p in fams.items()}
+    def comp(m): return dict(rows=int(m.sum()), target_right_pct=round(float(100*tright[m].mean()), 1) if m.any() else None, **{k: round(float(nl.values(v[m], tau[m])['within_pct']), 1) if m.sum() >= 20 else None for k, v in Dz.items()})
+    v1 = json.loads((O/'concept_v2'/'case_zones.json').read_text())['zones']; v3 = json.loads((O/'concept_v2'/'case_zones_v3.json').read_text())['zones']
+    out = dict(at=now(), rule=v3check.__doc__, ground_z=g, zones={}, scientific_verdict=None)
+    for name, z in (('zone1', v1['1']), ('zone2_v1', v1['2']), ('zone2_v3', v3['2'])):
+        o = np.r_[z['wall_normal_out_xy'], 0.]; al = np.cross(up, o); al /= np.linalg.norm(al); zz = dict(poly=Polygon(z['box_polygon_xy']))
+        rin = F.in_zone(X, zz, S.zr); fac = W & (np.abs(N@o) > .9); per = W & (np.abs(N@al) > .9)
+        r = dict(kinds=dict(chosen_wall=int((rin & fac).sum()), perpendicular_wall=int((rin & per).sum()), other_wall=int((rin & W & ~fac & ~per).sum()), non_wall=int((rin & ~W).sum())),
+                 chosen_wall_all=comp(rin & fac), chosen_wall_below_10m=comp(rin & fac & (h < 10)),
+                 chosen_wall_by_height={f'{lo}-{hi} m': comp(rin & fac & (h >= lo) & (h < hi)) for lo, hi in [(0, 5), (5, 10), (10, 15), (15, 25)]})
+        if name == 'zone2_v1':
+            rel = X-np.r_[z['wall_foot_xy'], g]; xa, yo = rel@al, rel@o; m0 = fac & (np.abs(yo) < 1.) & (h < 10)
+            r['corner_distance_below_10m'] = {f'{lo}-{hi} m': comp(m0 & (xa+1.1 >= lo) & (xa+1.1 < hi)) for lo, hi in [(0, 2), (2, 4), (4, 6), (6, 8)]}
+        out['zones'][name] = r
+    out['seconds'] = round(time.monotonic()-t0, 1); dump(D/'case_check_v3.json', out)
+    print('V3CHECK', json.dumps({k: (v['kinds'], v['chosen_wall_below_10m']) for k, v in out['zones'].items()}, ensure_ascii=False)[:1500], flush=True)
+
 if __name__ == '__main__':
     import sys
     if sys.argv[1:] == ['targets']: targets()
+    elif sys.argv[1:] == ['v3']: v3check()
     else: main()

@@ -51,5 +51,24 @@ def main():
     rec = dict(at=now(), rule=__doc__, scientific_verdict=None, zones={'1': z1, '2': z2}, prior=str(S1/'defs'/SITE/f'prior_{PRIOR}.npz'), rows=str(GT/'scenes'/STEM/'rows.npz'), seconds=round(time.monotonic()-t0, 1))
     dump(O/'concept_v2'/'case_zones.json', rec); dump(D/'case_zones.json', rec); print('ZONES', json.dumps(rec['zones'], ensure_ascii=False)[:1500], flush=True)
 
+def v3(shift=5.0):
+    """Zones v3 (2026-11-13, user '진행하자' after the zone-2 corner was found): zone 1 = the v1 zone 1 unchanged; zone 2 = the v1 zone-2 line slid `shift` m
+    along its own wall, in the direction cross(up, outward) (away from the inner corner, which lies 1.1 m on the other side of the v1 line), so the 8 m box holds
+    that wall only. Read-only on the v1 file; writes /tl/concept_v2/case_zones_v3.json and /docs/case_zones_v3.json.
+    Why (GT rows, recorded): the v1 zone-2 box straddled an inner corner (wall rows facing the zone direction 3,332, perpendicular corner wall 7,357);
+    slid 5 m: 1,806 and 40; image depth right on that wall 99.7 %, LoD2 right 99.9 %. 4 m kept 123 corner rows, 6 m keeps fewer wall rows (wall ends
+    ~8 m from the corner inside the building scope). GT used only to place the zone, to score and to draw."""
+    c = cfg(); up = np.asarray(c['coordinates']['up'], float); up /= np.linalg.norm(up)
+    v1 = json.loads((O/'concept_v2'/'case_zones.json').read_text()); z = json.loads(json.dumps(v1['zones']['2']))
+    out = np.r_[z['wall_normal_out_xy'], 0.]; al = np.cross(up, out); a2 = al[:2]/np.linalg.norm(al[:2]); d = shift*a2
+    t = np.asarray(z['line_unit_xy'], float); o = np.asarray(z['line_origin_xy'], float)+d; nn = np.array([-t[1], t[0]])
+    z.update(line_origin_xy=o.tolist(), wall_foot_xy=(np.asarray(z['wall_foot_xy'], float)+d).tolist(), box_polygon_xy=[(o+a*t+b*nn).tolist() for a, b in [(0, -HALF), (L, -HALF), (L, HALF), (0, HALF)]],
+             rule=z['rule']+f'; v3: line slid {shift} m along the wall (cross(up, outward)), away from the inner corner, so the box holds this wall only', v1_line_origin_xy=v1['zones']['2']['line_origin_xy'],
+             slide_m=shift, slide_unit_xy=a2.tolist())
+    rec = dict(at=now(), rule=v3.__doc__, scientific_verdict=None, zones={'1': v1['zones']['1'], '2': z}, v1=str(O/'concept_v2'/'case_zones.json'), v1_sha256=sha(O/'concept_v2'/'case_zones.json'))
+    dump(O/'concept_v2'/'case_zones_v3.json', rec); dump(D/'case_zones_v3.json', rec); print('ZONES_V3', json.dumps(z, ensure_ascii=False)[:600], flush=True)
+
 if __name__ == '__main__':
-    import time, shapely; main()
+    import time, shapely, sys
+    if sys.argv[1:] == ['v3']: v3()
+    else: main()

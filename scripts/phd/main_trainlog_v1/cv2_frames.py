@@ -71,12 +71,16 @@ if TL_CASE: FIGD = D
 # writes frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.* only.
 VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b', 'r6'), VAR
 REV = {'': 'r5', 'z1b': 'r6test', 'r6': 'r6'}[VAR]; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'; IS_Z1B = VAR == 'z1b'
-if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
+if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2', 'v3'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
 # case v2 (2026-11-13, user '둘 다 진행' after 'are ②-1/②-2 seen from above? what area?'): the zone box is drawn as the pillar it is (xy box x scope z_min..z_max:
 # top ring solid, bottom ring dashed, four vertical edges) in the ① camera panels and the ② overviews, instead of one ring at the median height inside the box
 # (which read as a roof patch). Only the drawing changes; static layers, sections and numbers are the v1 ones (frames, contact, video only; v1 files untouched).
-PILLAR = bool(TL_CASE) and REV == 'v2'
+PILLAR = bool(TL_CASE) and REV in ('v2', 'v3')
+# case v3 (2026-11-13, user '진행하자'): zones from case_zones_v3.json (cv2_case_zones.py v3: zone 2 slid 5 m along its wall off the inner corner, zone 1 unchanged),
+# its own static_v3.*, sections_v3/, frames_v3/, numbers_v3, contact_sheet_v3, video_v3 (v1/v2 files untouched); box drawn as the v2 pillar.
+ZONEF = V2/('case_zones_v3.json' if TL_CASE and REV == 'v3' else 'case_zones.json')
 STJ = V2/('static_z1b.json' if IS_Z1B else 'static.json'); STN = V2/('static_z1b.npz' if IS_Z1B else 'static.npz'); SECD = V2/('sections_z1b' if IS_Z1B else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
+if TL_CASE and REV == 'v3': STJ, STN, SECD = V2/'static_v3.json', V2/'static_v3.npz', V2/'sections_v3'; SECJ = V2/f'{SECD.name}.json'
 EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: None} if TL_CASE else {1: None, 2: 25.0}
 RESETS = [3000, 6000, 9000, 12000]; DENSIFY_END = 15000; RESC = '#D85A30'
 CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; BNAME = 'B173'; V30 = '_v203'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
@@ -86,7 +90,7 @@ if VAR == 'r6': COMP[1] = dict(COMP[2])   # r6: the 'judgment off' run is the st
 ZNAME = {1: '유리 채광창', 2: '바뀐 날개 지붕'}
 if TL_CASE:   # case: camera, mesh-render file of that camera (its index in the GTJUDGE view list), 30,000 comparison family without the B173 '_v203' suffix (no virtual views)
     CAM = json.loads((D/'camera_choice.json').read_text())['chosen'][0]['name']; CAM_FILE = f"{[v['name'] for v in json.loads((GT/'views'/f'{SITE}.json').read_text())['views']].index(CAM):04d}.npz"
-    BNAME = SITE.split('_')[0]; V30 = ''; COMP[1] = dict(COMP[2]); ZNAME = {k: z['name'] for k, z in ((int(k), z) for k, z in json.loads((V2/'case_zones.json').read_text())['zones'].items())}
+    BNAME = SITE.split('_')[0]; V30 = ''; COMP[1] = dict(COMP[2]); ZNAME = {k: z['name'] for k, z in ((int(k), z) for k, z in json.loads(ZONEF.read_text())['zones'].items())}
 JC = {0: '#7FA7D9', 2: '#D85A30', 1: '#1D9E75', 4: '#E8B931'}; JN = {0: '일치', 2: '보정', 1: '보존', 4: '결측'}
 NAVY = '#16263d'; GTC = '#1b1b1b'; PRC = '#E07B00'; MVC = '#2E9E4F'; MSC = '#1F5FBF'; RED = '#D62728'; EMPTY = '#F4F3EF'
 PRIOR_RGB = np.array(to_rgb('#F2B872')); PRIOR_ALPHA = .6
@@ -131,7 +135,7 @@ class Static:
         tr = [v for v in cams['training'] if v['name'] == CAM][0]; self.K = np.asarray(tr['K'], float); self.E = np.asarray(tr['W2C'], float); self.W, self.H = tr['width'], tr['height']
         self.cam_cache = {}
         if TL_CASE:   # case zones (cv2_case_zones.py)
-            self.sec = None; self.zones = {}; czj = json.loads((V2/'case_zones.json').read_text())
+            self.sec = None; self.zones = {}; czj = json.loads(ZONEF.read_text())
             for k, z in czj['zones'].items():
                 o, t, n = line_frame(z['line_origin_xy'], z['line_unit_xy']); self.zones[int(k)] = dict(o=o, t=t, n=n, L=float(z['line_length_m']), poly=Polygon(z['box_polygon_xy']), ground=self.ground,
                                                                                             source=z['rule'], zoom_az=float(z['zoom_azimuth_deg']))
@@ -171,7 +175,7 @@ def setup():
     tok = np.isfinite(td) & (td > 0) & (tw > 0); Pt, rn = S.backproject(np.where(tok, td, 0.)); ht = np.where(tok, Pt[..., 2]-S.ground, np.nan)
     cls = np.full(td.shape, -2, 'i1'); cls[tok & (own < 0)] = -1; m = tok & (own >= 0); cls[m] = tg['judge_region'][own[m]]
     # zone 1 line (ZONE1_RULE)
-    if TL_CASE: zone1_rec = dict(rule=S.zones[1]['source'], case_zones=str(V2/'case_zones.json'), case_zones_sha256=sha(V2/'case_zones.json'))   # case: zones from cv2_case_zones.py
+    if TL_CASE: zone1_rec = dict(rule=S.zones[1]['source'], case_zones=str(ZONEF), case_zones_sha256=sha(ZONEF))   # case: zones from cv2_case_zones.py
     else:
         sec = S.sec; t = np.asarray(sec['t'][:2], float); t /= np.linalg.norm(t); n = np.array([-t[1], t[0]]); c0 = np.asarray(sec['centre'][:2], float)
         u0, v0, u1, v1 = RECT_V1; rm = np.zeros_like(tok); rm[v0:v1, u0:u1] = True; g0 = tok & rm & (cls == 0); q = Pt[g0][:, :2]-c0

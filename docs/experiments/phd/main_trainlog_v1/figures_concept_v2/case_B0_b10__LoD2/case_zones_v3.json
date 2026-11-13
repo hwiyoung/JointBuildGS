@@ -1,0 +1,109 @@
+{
+  "at": "2026-11-13T23:16:27.747966+09:00",
+  "rule": "Zones v3 (2026-11-13, user '진행하자' after the zone-2 corner was found): zone 1 = the v1 zone 1 unchanged; zone 2 = the v1 zone-2 line slid `shift` m\n    along its own wall, in the direction cross(up, outward) (away from the inner corner, which lies 1.1 m on the other side of the v1 line), so the 8 m box holds\n    that wall only. Read-only on the v1 file; writes /tl/concept_v2/case_zones_v3.json and /docs/case_zones_v3.json.\n    Why (GT rows, recorded): the v1 zone-2 box straddled an inner corner (wall rows facing the zone direction 3,332, perpendicular corner wall 7,357);\n    slid 5 m: 1,806 and 40; image depth right on that wall 99.7 %, LoD2 right 99.9 %. 4 m kept 123 corner rows, 6 m keeps fewer wall rows (wall ends\n    ~8 m from the corner inside the building scope). GT used only to place the zone, to score and to draw.",
+  "scientific_verdict": null,
+  "zones": {
+    "1": {
+      "name": "가려진 벽",
+      "rule": "zone 1: dense case rows (wall, prior right, image depth absent or > 0.5 m), nearest LoD2 wall face",
+      "wall_face_index": 47,
+      "wall_face_area_m2": 182.72,
+      "wall_normal_out_xy": [
+        -0.3684808280587321,
+        -0.9296353475170526
+      ],
+      "wall_foot_xy": [
+        98.93482437681277,
+        -3.5536186315012475
+      ],
+      "line_origin_xy": [
+        101.14570934516516,
+        2.0241934536010677
+      ],
+      "line_unit_xy": [
+        -0.3684808280587321,
+        -0.9296353475170526
+      ],
+      "line_length_m": 12.0,
+      "box_polygon_xy": [
+        [
+          97.42716795509695,
+          3.498116765835996
+        ],
+        [
+          93.00539801839216,
+          -7.6575074043686335
+        ],
+        [
+          100.44248079852858,
+          -10.60535402883849
+        ],
+        [
+          104.86425073523337,
+          0.5502701413661393
+        ]
+      ],
+      "zoom_azimuth_deg": 248.4,
+      "case_rows": 3050,
+      "case_centre_xy": [
+        98.99655151367188,
+        -3.3978880643844604
+      ]
+    },
+    "2": {
+      "name": "잘 보이는 벽",
+      "rule": "zone 2: LoD2 wall face (area >= 20 m2) whose GT wall rows near the face are most often prior right & image depth right; v3: line slid 5.0 m along the wall (cross(up, outward)), away from the inner corner, so the box holds this wall only",
+      "wall_face_index": 67,
+      "wall_face_area_m2": 54.92,
+      "wall_normal_out_xy": [
+        0.3624552721760118,
+        0.9320011672051774
+      ],
+      "wall_foot_xy": [
+        94.40255751399472,
+        17.41869609111425
+      ],
+      "line_origin_xy": [
+        92.22782588093865,
+        11.826689087883185
+      ],
+      "line_unit_xy": [
+        0.3624552721760118,
+        0.9320011672051774
+      ],
+      "line_length_m": 12.0,
+      "box_polygon_xy": [
+        [
+          95.95583054975937,
+          10.376867999179138
+        ],
+        [
+          100.30529381587151,
+          21.560882005641268
+        ],
+        [
+          92.84928447823008,
+          24.460524183049365
+        ],
+        [
+          88.49982121211794,
+          13.276510176587232
+        ]
+      ],
+      "zoom_azimuth_deg": 68.7,
+      "face_rows": 4606,
+      "prior_and_image_right_share": 0.965,
+      "v1_line_origin_xy": [
+        96.88783171696454,
+        10.014412727003126
+      ],
+      "slide_m": 5.0,
+      "slide_unit_xy": [
+        -0.9320011672051774,
+        0.3624552721760118
+      ]
+    }
+  },
+  "v1": "/tl/concept_v2/case_zones.json",
+  "v1_sha256": "2da7fd5d016c132679bdcf6b2ca8469be95d8d478144e490b10c3e29a5ca36db"
+}
