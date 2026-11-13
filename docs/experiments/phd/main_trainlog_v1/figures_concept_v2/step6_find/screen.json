@@ -1,0 +1,219 @@
+{
+  "at": "2026-11-13T16:53:24.986545+09:00",
+  "rule": "Step-6 screening (2026-11-13, user: 'make it for another building too'). Read-only; writes docs figures_concept_v2/step6_find/screen.json only.\nFor every GTJUDGE scene (site x prior): GT rows with the prior right (present, distance <= TAU), split by the image depth (MVS) PRESENT but > 0.5 m off\n(image wrong) and ABSENT (no image depth), roof / wall, with the 30,000 completeness (|row_s| <= row_tau_m) of FINALTRAIN_30000 (this method),\n2DGS_30000 (image only), mvs (image-depth mesh) and prior (prior surface). The step-6 case of the TRAINLOG order is 'image depth wrong, prior right'.\nGT is used only to classify rows and to score. No pass criteria. scientific_verdict: null",
+  "rows": [
+    {
+      "scene": "B0_b10__ALS",
+      "surface": "roof",
+      "case": "image_wrong",
+      "rows": 41,
+      "completeness_30000_pct": {
+        "ours": 53.7,
+        "twodgs": 0.0,
+        "image_depth_mesh": 0.0,
+        "prior_surface": 87.8
+      }
+    },
+    {
+      "scene": "B0_b10__ALS",
+      "surface": "roof",
+      "case": "image_absent",
+      "rows": 11,
+      "completeness_30000_pct": {
+        "ours": 54.5,
+        "twodgs": 63.6,
+        "image_depth_mesh": 0.0,
+        "prior_surface": 100.0
+      }
+    },
+    {
+      "scene": "B0_b10__LoD2",
+      "surface": "roof",
+      "case": "image_wrong",
+      "rows": 130,
+      "completeness_30000_pct": {
+        "ours": 40.8,
+        "twodgs": 2.3,
+        "image_depth_mesh": 0.0,
+        "prior_surface": 100.0
+      }
+    },
+    {
+      "scene": "B0_b10__LoD2",
+      "surface": "roof",
+      "case": "image_absent",
+      "rows": 197,
+      "completeness_30000_pct": {
+        "ours": 100.0,
+        "twodgs": 88.8,
+        "image_depth_mesh": 74.1,
+        "prior_surface": 88.8
+      }
+    },
+    {
+      "scene": "B0_b10__LoD2",
+      "surface": "wall",
+      "case": "image_wrong",
+      "rows": 67,
+      "completeness_30000_pct": {
+        "ours": 35.8,
+        "twodgs": 32.8,
+        "image_depth_mesh": 11.9,
+        "prior_surface": 37.3
+      }
+    },
+    {
+      "scene": "B0_b10__LoD2",
+      "surface": "wall",
+      "case": "image_absent",
+      "rows": 3927,
+      "completeness_30000_pct": {
+        "ours": 92.5,
+        "twodgs": 32.6,
+        "image_depth_mesh": 1.0,
+        "prior_surface": 96.3
+      }
+    },
+    {
+      "scene": "B173nb_b10__ALS",
+      "surface": "roof",
+      "case": "image_wrong",
+      "rows": 404,
+      "completeness_30000_pct": {
+        "ours": 15.1,
+        "twodgs": 0.5,
+        "image_depth_mesh": 0.0,
+        "prior_surface": 92.3
+      }
+    },
+    {
+      "scene": "B173nb_b10__ALS",
+      "surface": "roof",
+      "case": "image_absent",
+      "rows": 319,
+      "completeness_30000_pct": {
+        "ours": 20.1,
+        "twodgs": 15.7,
+        "image_depth_mesh": 16.9,
+        "prior_surface": 85.3
+      }
+    },
+    {
+      "scene": "B173nb_b10__LoD2",
+      "surface": "roof",
+      "case": "image_wrong",
+      "rows": 667,
+      "completeness_30000_pct": {
+        "ours": 1.8,
+        "twodgs": 1.9,
+        "image_depth_mesh": 0.0,
+        "prior_surface": 81.6
+      }
+    },
+    {
+      "scene": "B173nb_b10__LoD2",
+      "surface": "roof",
+      "case": "image_absent",
+      "rows": 0,
+      "completeness_30000_pct": null
+    },
+    {
+      "scene": "B173nb_b10__LoD2",
+      "surface": "wall",
+      "case": "image_wrong",
+      "rows": 84,
+      "completeness_30000_pct": {
+        "ours": 1.2,
+        "twodgs": 1.2,
+        "image_depth_mesh": 0.0,
+        "prior_surface": 79.8
+      }
+    },
+    {
+      "scene": "B173nb_b10__LoD2",
+      "surface": "wall",
+      "case": "image_absent",
+      "rows": 1070,
+      "completeness_30000_pct": {
+        "ours": 54.1,
+        "twodgs": 50.0,
+        "image_depth_mesh": 12.7,
+        "prior_surface": 82.8
+      }
+    },
+    {
+      "scene": "R1rep_b10__ALS",
+      "surface": "roof",
+      "case": "image_wrong",
+      "rows": 2239,
+      "completeness_30000_pct": {
+        "ours": 12.8,
+        "twodgs": 0.7,
+        "image_depth_mesh": 0.0,
+        "prior_surface": 95.8
+      }
+    },
+    {
+      "scene": "R1rep_b10__ALS",
+      "surface": "roof",
+      "case": "image_absent",
+      "rows": 160,
+      "completeness_30000_pct": {
+        "ours": 74.4,
+        "twodgs": 21.2,
+        "image_depth_mesh": 1.2,
+        "prior_surface": 98.1
+      }
+    },
+    {
+      "scene": "R1rep_b10__LoD2",
+      "surface": "roof",
+      "case": "image_wrong",
+      "rows": 2010,
+      "completeness_30000_pct": {
+        "ours": 9.1,
+        "twodgs": 2.6,
+        "image_depth_mesh": 2.0,
+        "prior_surface": 94.6
+      }
+    },
+    {
+      "scene": "R1rep_b10__LoD2",
+      "surface": "roof",
+      "case": "image_absent",
+      "rows": 72,
+      "completeness_30000_pct": {
+        "ours": 34.7,
+        "twodgs": 11.1,
+        "image_depth_mesh": 18.1,
+        "prior_surface": 97.2
+      }
+    },
+    {
+      "scene": "R1rep_b10__LoD2",
+      "surface": "wall",
+      "case": "image_wrong",
+      "rows": 528,
+      "completeness_30000_pct": {
+        "ours": 19.1,
+        "twodgs": 13.3,
+        "image_depth_mesh": 18.0,
+        "prior_surface": 97.0
+      }
+    },
+    {
+      "scene": "R1rep_b10__LoD2",
+      "surface": "wall",
+      "case": "image_absent",
+      "rows": 1217,
+      "completeness_30000_pct": {
+        "ours": 48.4,
+        "twodgs": 60.5,
+        "image_depth_mesh": 3.3,
+        "prior_surface": 99.0
+      }
+    }
+  ],
+  "seconds": 0.4,
+  "scientific_verdict": null
+}
