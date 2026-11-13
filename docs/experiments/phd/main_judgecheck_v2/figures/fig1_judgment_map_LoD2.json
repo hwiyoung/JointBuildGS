@@ -1,0 +1,798 @@
+{
+ "prior": "LoD2",
+ "scenes": [
+  {
+   "scene": "B0_b10",
+   "extent": [
+    83.44139862060547,
+    139.6424560546875,
+    -11.998687744140625,
+    66.05379867553711
+   ],
+   "gt_points": 382591,
+   "patches": 37283
+  },
+  {
+   "scene": "B173nb_b10",
+   "extent": [
+    88.1676025390625,
+    168.84339904785156,
+    70.46759796142578,
+    154.80999755859375
+   ],
+   "gt_points": 373752,
+   "patches": 61218
+  },
+  {
+   "scene": "R1rep_b10",
+   "extent": [
+    -27.569000244140625,
+    40.45869827270508,
+    2.5114998817443848,
+    63.946800231933594
+   ],
+   "gt_points": 239559,
+   "patches": 41183
+  },
+  {
+   "scene": "60042",
+   "extent": [
+    -82.17539999994915,
+    57.06140000000596,
+    21.96279999986291,
+    126.67439999990165
+   ],
+   "gt_points": 648405,
+   "patches": 118316
+  },
+  {
+   "scene": "4906967",
+   "extent": [
+    -85.98739999998361,
+    -3.2610000000568107,
+    -110.1703000003472,
+    -40.94979999959469
+   ],
+   "gt_points": 296068,
+   "patches": 58828
+  },
+  {
+   "scene": "4906965",
+   "extent": [
+    -130.9849000000395,
+    -20.144800000009127,
+    -139.49590000044554,
+    -43.07290000002831
+   ],
+   "gt_points": 453961,
+   "patches": 118138
+  },
+  {
+   "scene": "4906982",
+   "extent": [
+    -30.881300000008196,
+    27.99750000005588,
+    119.5362999998033,
+    179.66469999961555
+   ],
+   "gt_points": 276792,
+   "patches": 24347
+  },
+  {
+   "scene": "4959325",
+   "extent": [
+    103.51829999999609,
+    148.9771999999648,
+    152.95249999966472,
+    202.17920000012964
+   ],
+   "gt_points": 162146,
+   "patches": 14503
+  },
+  {
+   "scene": "4959461",
+   "extent": [
+    57.193500000052154,
+    108.22999999998137,
+    166.55719999969006,
+    216.4993000002578
+   ],
+   "gt_points": 137848,
+   "patches": 14986
+  }
+ ],
+ "chosen_rule": "rest buildings: top 3 true-error area, top 3 outside-four area (nine 4-8), next on overlap",
+ "chosen": [
+  "DEBY_LOD2_60042",
+  "DEBY_LOD2_4906967",
+  "DEBY_LOD2_4906965",
+  "DEBY_LOD2_4906982",
+  "DEBY_LOD2_4959325",
+  "DEBY_LOD2_4959461"
+ ],
+ "selection_table": [
+  {
+   "building": "DEBY_LOD2_104583447",
+   "true_error_area": 0.0,
+   "outside_area": 0.0
+  },
+  {
+   "building": "DEBY_LOD2_104586480",
+   "true_error_area": 2.125,
+   "outside_area": 2.0625
+  },
+  {
+   "building": "DEBY_LOD2_108246888",
+   "true_error_area": 1.6875,
+   "outside_area": 3.125
+  },
+  {
+   "building": "DEBY_LOD2_108250120",
+   "true_error_area": 0.875,
+   "outside_area": 2.875
+  },
+  {
+   "building": "DEBY_LOD2_42364609",
+   "true_error_area": 0.0,
+   "outside_area": 0.0
+  },
+  {
+   "building": "DEBY_LOD2_42364657",
+   "true_error_area": 18.0,
+   "outside_area": 10.8125
+  },
+  {
+   "building": "DEBY_LOD2_42364659",
+   "true_error_area": 10.9375,
+   "outside_area": 1.75
+  },
+  {
+   "building": "DEBY_LOD2_42364661",
+   "true_error_area": 4.625,
+   "outside_area": 8.1875
+  },
+  {
+   "building": "DEBY_LOD2_42364663",
+   "true_error_area": 55.5,
+   "outside_area": 24.6875
+  },
+  {
+   "building": "DEBY_LOD2_42364665",
+   "true_error_area": 27.375,
+   "outside_area": 10.625
+  },
+  {
+   "building": "DEBY_LOD2_42364667",
+   "true_error_area": 27.375,
+   "outside_area": 12.125
+  },
+  {
+   "building": "DEBY_LOD2_4906965",
+   "true_error_area": 553.5,
+   "outside_area": 184.0625
+  },
+  {
+   "building": "DEBY_LOD2_4906966",
+   "true_error_area": 200.875,
+   "outside_area": 96.9375
+  },
+  {
+   "building": "DEBY_LOD2_4906967",
+   "true_error_area": 556.9375,
+   "outside_area": 225.875
+  },
+  {
+   "building": "DEBY_LOD2_4906969",
+   "true_error_area": 50.625,
+   "outside_area": 14.375
+  },
+  {
+   "building": "DEBY_LOD2_4906970",
+   "true_error_area": 27.5625,
+   "outside_area": 8.625
+  },
+  {
+   "building": "DEBY_LOD2_4906972",
+   "true_error_area": 53.0,
+   "outside_area": 23.9375
+  },
+  {
+   "building": "DEBY_LOD2_4906973",
+   "true_error_area": 10.125,
+   "outside_area": 6.0
+  },
+  {
+   "building": "DEBY_LOD2_4906974",
+   "true_error_area": 155.75,
+   "outside_area": 37.1875
+  },
+  {
+   "building": "DEBY_LOD2_4906976",
+   "true_error_area": 93.0,
+   "outside_area": 32.75
+  },
+  {
+   "building": "DEBY_LOD2_4906977",
+   "true_error_area": 140.25,
+   "outside_area": 42.25
+  },
+  {
+   "building": "DEBY_LOD2_4906980",
+   "true_error_area": 14.0,
+   "outside_area": 9.3125
+  },
+  {
+   "building": "DEBY_LOD2_4906981",
+   "true_error_area": 102.625,
+   "outside_area": 45.3125
+  },
+  {
+   "building": "DEBY_LOD2_4906982",
+   "true_error_area": 536.0625,
+   "outside_area": 339.3125
+  },
+  {
+   "building": "DEBY_LOD2_4906983",
+   "true_error_area": 95.5625,
+   "outside_area": 74.9375
+  },
+  {
+   "building": "DEBY_LOD2_4906984",
+   "true_error_area": 34.1875,
+   "outside_area": 16.5625
+  },
+  {
+   "building": "DEBY_LOD2_4906985",
+   "true_error_area": 181.125,
+   "outside_area": 124.25
+  },
+  {
+   "building": "DEBY_LOD2_4906986",
+   "true_error_area": 12.8125,
+   "outside_area": 11.4375
+  },
+  {
+   "building": "DEBY_LOD2_4906987",
+   "true_error_area": 60.6875,
+   "outside_area": 29.875
+  },
+  {
+   "building": "DEBY_LOD2_4906988",
+   "true_error_area": 13.6875,
+   "outside_area": 11.9375
+  },
+  {
+   "building": "DEBY_LOD2_4906989",
+   "true_error_area": 56.4375,
+   "outside_area": 22.9375
+  },
+  {
+   "building": "DEBY_LOD2_4906990",
+   "true_error_area": 11.375,
+   "outside_area": 3.9375
+  },
+  {
+   "building": "DEBY_LOD2_4906991",
+   "true_error_area": 9.0625,
+   "outside_area": 3.8125
+  },
+  {
+   "building": "DEBY_LOD2_4906992",
+   "true_error_area": 1.5,
+   "outside_area": 3.75
+  },
+  {
+   "building": "DEBY_LOD2_4906993",
+   "true_error_area": 48.0,
+   "outside_area": 6.625
+  },
+  {
+   "building": "DEBY_LOD2_4906994",
+   "true_error_area": 0.4375,
+   "outside_area": 1.875
+  },
+  {
+   "building": "DEBY_LOD2_4907017",
+   "true_error_area": 0.8125,
+   "outside_area": 3.0
+  },
+  {
+   "building": "DEBY_LOD2_4907018",
+   "true_error_area": 35.5625,
+   "outside_area": 24.1875
+  },
+  {
+   "building": "DEBY_LOD2_4907020",
+   "true_error_area": 83.3125,
+   "outside_area": 25.125
+  },
+  {
+   "building": "DEBY_LOD2_4907023",
+   "true_error_area": 17.8125,
+   "outside_area": 11.4375
+  },
+  {
+   "building": "DEBY_LOD2_4907024",
+   "true_error_area": 29.375,
+   "outside_area": 17.3125
+  },
+  {
+   "building": "DEBY_LOD2_4907025",
+   "true_error_area": 82.875,
+   "outside_area": 69.25
+  },
+  {
+   "building": "DEBY_LOD2_4907026",
+   "true_error_area": 11.375,
+   "outside_area": 19.3125
+  },
+  {
+   "building": "DEBY_LOD2_4907028",
+   "true_error_area": 0.25,
+   "outside_area": 0.5625
+  },
+  {
+   "building": "DEBY_LOD2_4907173",
+   "true_error_area": 41.875,
+   "outside_area": 29.3125
+  },
+  {
+   "building": "DEBY_LOD2_4907175",
+   "true_error_area": 7.75,
+   "outside_area": 5.6875
+  },
+  {
+   "building": "DEBY_LOD2_4907176",
+   "true_error_area": 3.0,
+   "outside_area": 2.75
+  },
+  {
+   "building": "DEBY_LOD2_4907177",
+   "true_error_area": 2.9375,
+   "outside_area": 5.25
+  },
+  {
+   "building": "DEBY_LOD2_4907178",
+   "true_error_area": 34.0,
+   "outside_area": 22.375
+  },
+  {
+   "building": "DEBY_LOD2_4907179",
+   "true_error_area": 34.375,
+   "outside_area": 25.0625
+  },
+  {
+   "building": "DEBY_LOD2_4907180",
+   "true_error_area": 59.625,
+   "outside_area": 26.3125
+  },
+  {
+   "building": "DEBY_LOD2_4907181",
+   "true_error_area": 2.8125,
+   "outside_area": 2.6875
+  },
+  {
+   "building": "DEBY_LOD2_4907182",
+   "true_error_area": 14.375,
+   "outside_area": 8.9375
+  },
+  {
+   "building": "DEBY_LOD2_4907183",
+   "true_error_area": 71.5,
+   "outside_area": 29.5625
+  },
+  {
+   "building": "DEBY_LOD2_4907184",
+   "true_error_area": 79.375,
+   "outside_area": 35.375
+  },
+  {
+   "building": "DEBY_LOD2_4907185",
+   "true_error_area": 7.6875,
+   "outside_area": 7.375
+  },
+  {
+   "building": "DEBY_LOD2_4907196",
+   "true_error_area": 52.5,
+   "outside_area": 27.5
+  },
+  {
+   "building": "DEBY_LOD2_4907198",
+   "true_error_area": 3.1875,
+   "outside_area": 2.5
+  },
+  {
+   "building": "DEBY_LOD2_4907201",
+   "true_error_area": 11.625,
+   "outside_area": 7.6875
+  },
+  {
+   "building": "DEBY_LOD2_4907202",
+   "true_error_area": 10.0625,
+   "outside_area": 2.125
+  },
+  {
+   "building": "DEBY_LOD2_4907204",
+   "true_error_area": 24.375,
+   "outside_area": 19.0625
+  },
+  {
+   "building": "DEBY_LOD2_4907205",
+   "true_error_area": 0.0625,
+   "outside_area": 0.0
+  },
+  {
+   "building": "DEBY_LOD2_4907206",
+   "true_error_area": 10.6875,
+   "outside_area": 9.875
+  },
+  {
+   "building": "DEBY_LOD2_4907207",
+   "true_error_area": 43.4375,
+   "outside_area": 22.0
+  },
+  {
+   "building": "DEBY_LOD2_4907208",
+   "true_error_area": 0.1875,
+   "outside_area": 0.8125
+  },
+  {
+   "building": "DEBY_LOD2_4907505",
+   "true_error_area": 8.25,
+   "outside_area": 15.25
+  },
+  {
+   "building": "DEBY_LOD2_4907506",
+   "true_error_area": 24.375,
+   "outside_area": 36.8125
+  },
+  {
+   "building": "DEBY_LOD2_4907507",
+   "true_error_area": 41.0,
+   "outside_area": 33.5
+  },
+  {
+   "building": "DEBY_LOD2_4907508",
+   "true_error_area": 29.4375,
+   "outside_area": 36.0
+  },
+  {
+   "building": "DEBY_LOD2_4907509",
+   "true_error_area": 28.0625,
+   "outside_area": 5.375
+  },
+  {
+   "building": "DEBY_LOD2_4907510",
+   "true_error_area": 13.25,
+   "outside_area": 19.125
+  },
+  {
+   "building": "DEBY_LOD2_4907514",
+   "true_error_area": 115.25,
+   "outside_area": 18.8125
+  },
+  {
+   "building": "DEBY_LOD2_4907515",
+   "true_error_area": 95.3125,
+   "outside_area": 44.3125
+  },
+  {
+   "building": "DEBY_LOD2_4907516",
+   "true_error_area": 82.3125,
+   "outside_area": 26.375
+  },
+  {
+   "building": "DEBY_LOD2_4907517",
+   "true_error_area": 58.3125,
+   "outside_area": 24.5
+  },
+  {
+   "building": "DEBY_LOD2_4907518",
+   "true_error_area": 48.625,
+   "outside_area": 25.3125
+  },
+  {
+   "building": "DEBY_LOD2_4907519",
+   "true_error_area": 259.3125,
+   "outside_area": 90.4375
+  },
+  {
+   "building": "DEBY_LOD2_4907520",
+   "true_error_area": 52.8125,
+   "outside_area": 9.6875
+  },
+  {
+   "building": "DEBY_LOD2_4907521",
+   "true_error_area": 30.6875,
+   "outside_area": 13.3125
+  },
+  {
+   "building": "DEBY_LOD2_4908023",
+   "true_error_area": 41.5,
+   "outside_area": 6.9375
+  },
+  {
+   "building": "DEBY_LOD2_4908024",
+   "true_error_area": 38.5,
+   "outside_area": 2.9375
+  },
+  {
+   "building": "DEBY_LOD2_4908025",
+   "true_error_area": 25.5625,
+   "outside_area": 2.8125
+  },
+  {
+   "building": "DEBY_LOD2_4908026",
+   "true_error_area": 25.8125,
+   "outside_area": 1.4375
+  },
+  {
+   "building": "DEBY_LOD2_4908027",
+   "true_error_area": 26.25,
+   "outside_area": 2.0625
+  },
+  {
+   "building": "DEBY_LOD2_4908028",
+   "true_error_area": 31.0625,
+   "outside_area": 1.8125
+  },
+  {
+   "building": "DEBY_LOD2_4908032",
+   "true_error_area": 3.0625,
+   "outside_area": 0.375
+  },
+  {
+   "building": "DEBY_LOD2_4908033",
+   "true_error_area": 4.1875,
+   "outside_area": 0.375
+  },
+  {
+   "building": "DEBY_LOD2_4908034",
+   "true_error_area": 0.625,
+   "outside_area": 4.625
+  },
+  {
+   "building": "DEBY_LOD2_4908046",
+   "true_error_area": 1.125,
+   "outside_area": 0.8125
+  },
+  {
+   "building": "DEBY_LOD2_4908048",
+   "true_error_area": 0.0,
+   "outside_area": 0.0
+  },
+  {
+   "building": "DEBY_LOD2_4908050",
+   "true_error_area": 1.3125,
+   "outside_area": 1.25
+  },
+  {
+   "building": "DEBY_LOD2_4908166",
+   "true_error_area": 0.0,
+   "outside_area": 1.0
+  },
+  {
+   "building": "DEBY_LOD2_4908168",
+   "true_error_area": 0.3125,
+   "outside_area": 0.5
+  },
+  {
+   "building": "DEBY_LOD2_4908169",
+   "true_error_area": 0.3125,
+   "outside_area": 0.5625
+  },
+  {
+   "building": "DEBY_LOD2_4908176",
+   "true_error_area": 0.8125,
+   "outside_area": 2.0625
+  },
+  {
+   "building": "DEBY_LOD2_4908178",
+   "true_error_area": 0.0,
+   "outside_area": 0.375
+  },
+  {
+   "building": "DEBY_LOD2_4908351",
+   "true_error_area": 0.4375,
+   "outside_area": 0.25
+  },
+  {
+   "building": "DEBY_LOD2_4908352",
+   "true_error_area": 0.25,
+   "outside_area": 0.5625
+  },
+  {
+   "building": "DEBY_LOD2_4908353",
+   "true_error_area": 9.0,
+   "outside_area": 6.3125
+  },
+  {
+   "building": "DEBY_LOD2_4908354",
+   "true_error_area": 2.9375,
+   "outside_area": 2.6875
+  },
+  {
+   "building": "DEBY_LOD2_4959294",
+   "true_error_area": 0.1875,
+   "outside_area": 2.1875
+  },
+  {
+   "building": "DEBY_LOD2_4959298",
+   "true_error_area": 62.125,
+   "outside_area": 22.125
+  },
+  {
+   "building": "DEBY_LOD2_4959299",
+   "true_error_area": 0.0,
+   "outside_area": 0.1875
+  },
+  {
+   "building": "DEBY_LOD2_4959314",
+   "true_error_area": 1.125,
+   "outside_area": 1.1875
+  },
+  {
+   "building": "DEBY_LOD2_4959320",
+   "true_error_area": 1.1875,
+   "outside_area": 0.625
+  },
+  {
+   "building": "DEBY_LOD2_4959325",
+   "true_error_area": 401.4375,
+   "outside_area": 246.1875
+  },
+  {
+   "building": "DEBY_LOD2_4959327",
+   "true_error_area": 107.8125,
+   "outside_area": 47.1875
+  },
+  {
+   "building": "DEBY_LOD2_4959336",
+   "true_error_area": 58.75,
+   "outside_area": 58.5625
+  },
+  {
+   "building": "DEBY_LOD2_4959340",
+   "true_error_area": 61.4375,
+   "outside_area": 16.9375
+  },
+  {
+   "building": "DEBY_LOD2_4959457",
+   "true_error_area": 205.375,
+   "outside_area": 77.375
+  },
+  {
+   "building": "DEBY_LOD2_4959458",
+   "true_error_area": 66.0625,
+   "outside_area": 24.4375
+  },
+  {
+   "building": "DEBY_LOD2_4959459",
+   "true_error_area": 164.625,
+   "outside_area": 61.5
+  },
+  {
+   "building": "DEBY_LOD2_4959461",
+   "true_error_area": 297.875,
+   "outside_area": 142.875
+  },
+  {
+   "building": "DEBY_LOD2_4959463",
+   "true_error_area": 25.0625,
+   "outside_area": 6.9375
+  },
+  {
+   "building": "DEBY_LOD2_4959464",
+   "true_error_area": 114.25,
+   "outside_area": 32.75
+  },
+  {
+   "building": "DEBY_LOD2_4959465",
+   "true_error_area": 50.3125,
+   "outside_area": 13.9375
+  },
+  {
+   "building": "DEBY_LOD2_4959466",
+   "true_error_area": 47.0625,
+   "outside_area": 20.5
+  },
+  {
+   "building": "DEBY_LOD2_4959753",
+   "true_error_area": 6.25,
+   "outside_area": 4.375
+  },
+  {
+   "building": "DEBY_LOD2_4959758",
+   "true_error_area": 3.875,
+   "outside_area": 6.8125
+  },
+  {
+   "building": "DEBY_LOD2_4959759",
+   "true_error_area": 3.1875,
+   "outside_area": 1.3125
+  },
+  {
+   "building": "DEBY_LOD2_4959760",
+   "true_error_area": 2.75,
+   "outside_area": 0.0
+  },
+  {
+   "building": "DEBY_LOD2_4959794",
+   "true_error_area": 6.25,
+   "outside_area": 0.5625
+  },
+  {
+   "building": "DEBY_LOD2_60042",
+   "true_error_area": 1065.25,
+   "outside_area": 412.5
+  },
+  {
+   "building": "DEBY_LOD2_60043",
+   "true_error_area": 0.0,
+   "outside_area": 2.25
+  },
+  {
+   "building": "DEBY_LOD2_60097",
+   "true_error_area": 2.0,
+   "outside_area": 1.375
+  },
+  {
+   "building": "DEBY_LOD2_8568363",
+   "true_error_area": 4.5625,
+   "outside_area": 2.0
+  },
+  {
+   "building": "DEBY_LOD2_8568403",
+   "true_error_area": 0.0625,
+   "outside_area": 0.125
+  },
+  {
+   "building": "DEBY_LOD2_8573846",
+   "true_error_area": 37.8125,
+   "outside_area": 20.0625
+  },
+  {
+   "building": "DEBY_LOD2_8573847",
+   "true_error_area": 77.6875,
+   "outside_area": 44.8125
+  },
+  {
+   "building": "DEBY_LOD2_8573848",
+   "true_error_area": 206.9375,
+   "outside_area": 99.5625
+  },
+  {
+   "building": "DEBY_LOD2_8573849",
+   "true_error_area": 179.0,
+   "outside_area": 85.5
+  }
+ ],
+ "colours": {
+  "nine": [
+   "#bdbdbd",
+   "#ff7f0e",
+   "#9467bd",
+   "#1f77b4",
+   "#d62728",
+   "#8c564b",
+   "#17becf",
+   "#e377c2",
+   "#111111"
+  ],
+  "judgment": {
+   "0": "#bdbdbd",
+   "1": "#ff7f0e",
+   "2": "#2ca02c",
+   "4": "#9467bd",
+   "3": "#111111",
+   "9": "#ffff33"
+  },
+  "target": {
+   "0": "#a6d96a",
+   "1": "#fdae61",
+   "2": "#d7191c"
+  }
+ },
+ "ortho": "figures_cache/ortho_campus.npz",
+ "scientific_verdict": null
+}

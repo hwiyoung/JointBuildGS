@@ -1,0 +1,61 @@
+{
+ "prior": "LoD2",
+ "clusters": [
+  {
+   "cluster_id": 285,
+   "page": 4,
+   "view": "DJI_20241217084425_0056_D.JPG",
+   "crop": [
+    4637,
+    2546,
+    4968,
+    3956
+   ],
+   "section_direction": [
+    0.3843492499443941,
+    0.9231877675030046,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 16644,
+   "page": 4,
+   "view": "DJI_20241217084523_0085_D.JPG",
+   "crop": [
+    4632,
+    2926,
+    5280,
+    3705
+   ],
+   "section_direction": [
+    -0.5258901557655925,
+    -0.8505524934234459,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 20803,
+   "page": 4,
+   "view": "DJI_20241217100319_0014_D.JPG",
+   "crop": [
+    591,
+    1852,
+    3564,
+    2240
+   ],
+   "section_direction": [
+    -0.3596747342781175,
+    -0.9330777489159012,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  }
+ ],
+ "rule": "20 largest clusters (<=2 per building) + largest remaining per geometry type",
+ "scientific_verdict": null
+}

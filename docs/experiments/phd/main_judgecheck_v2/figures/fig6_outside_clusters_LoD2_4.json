@@ -1,0 +1,107 @@
+{
+ "prior": "LoD2",
+ "clusters": [
+  {
+   "cluster_id": 19056,
+   "page": 3,
+   "view": null,
+   "crop": null,
+   "section_direction": [
+    -0.9372395386343911,
+    0.3486861729698978,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 14469,
+   "page": 3,
+   "view": null,
+   "crop": null,
+   "section_direction": [
+    -0.38365529052908554,
+    -0.9234763765516922,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 11451,
+   "page": 3,
+   "view": "DJI_20241217100351_0030_D.JPG",
+   "crop": [
+    3387,
+    0,
+    5280,
+    1818
+   ],
+   "section_direction": [
+    0.8791268074168295,
+    -0.4765879315311004,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 12051,
+   "page": 3,
+   "view": "DJI_20241217090931_0048_D.JPG",
+   "crop": [
+    4891,
+    390,
+    5280,
+    790
+   ],
+   "section_direction": [
+    0.8548017393080021,
+    -0.5189547056112069,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 3278,
+   "page": 3,
+   "view": "DJI_20241217102949_0020_D.JPG",
+   "crop": [
+    419,
+    1042,
+    1690,
+    2918
+   ],
+   "section_direction": [
+    -0.36034942779982937,
+    -0.9328173936437589,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": [
+    "R1rep_b10"
+   ]
+  },
+  {
+   "cluster_id": 12762,
+   "page": 3,
+   "view": "DJI_20241217095903_0036_D.JPG",
+   "crop": [
+    1853,
+    1292,
+    2271,
+    2100
+   ],
+   "section_direction": [
+    -0.3569941418176277,
+    -0.9341066227727408,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  }
+ ],
+ "rule": "20 largest clusters (<=2 per building) + largest remaining per geometry type",
+ "scientific_verdict": null
+}

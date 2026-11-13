@@ -1,0 +1,30 @@
+{
+ "prior": "LoD2",
+ "source": "tables/c1_buildings_LoD2.csv",
+ "rule": "건물 x 경우, 참값 200개 이상만",
+ "quartiles": {
+  "두 자료 모두 유효": [
+   91.4,
+   94.9,
+   97.2
+  ],
+  "사전정보 오류": [
+   50.8,
+   69.8,
+   83.1
+  ],
+  "영상 깊이 오류": [
+   28.3,
+   37.5,
+   56.1
+  ],
+  "영상 깊이 결측": [
+   84.6,
+   89.2,
+   95.3
+  ]
+ },
+ "png": "fig2_building_distribution_LoD2.png",
+ "dpi": 300,
+ "scientific_verdict": null
+}

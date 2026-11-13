@@ -116,8 +116,10 @@ def fig6():
                 span = max(np.ptp((X - ctr) @ dirn), 2); ax.set_xlim(-span/2 - 3, span/2 + 3); ax.set_ylim(X[:, 2].min() - 6, X[:, 2].max() + 6); ax.set_aspect('equal', adjustable='datalim')
                 ax.set_title('(다) 단면 ±0.25 m', fontsize=7); ax.legend(fontsize=5, loc='upper right', markerscale=4, frameon=False)
                 txt = f"{row.geometry_type} · {str(row.building).replace('DEBY_LOD2_', '')} · {row.area_m2:.1f} m² · {row.gt_kind}"
-                if row.cluster_source == '참값 점': txt += f" · 사전 정보 {row.prior_state} {row.s_P_median_m:+.2f} m · 영상 깊이 {row.image_state} {row.s_M_median_m:+.2f} m · 윤곽 밖 {row.outside_footprint_pct:.0f} %"
-                else: txt += f" · 참값 없는 패치, 안쪽에 참값 있는 패치 {row.inner_truth_patches_pct:.0f} %"
+                if row.cluster_source == '참값 점': txt += f"\n사전 정보 {row.prior_state} {row.s_P_median_m:+.2f} m · 영상 깊이 {row.image_state} {row.s_M_median_m:+.2f} m · 윤곽 밖 {row.outside_footprint_pct:.0f} %"
+                else: txt += f"\n참값 없는 패치, 안쪽에 참값 있는 패치 {row.inner_truth_patches_pct:.0f} %"
+                fm = lambda v, f: '-' if not np.isfinite(v) else format(v, f)
+                txt += f"\n무늬 세기 {fm(row.texture_median, '.1f')} · 포화 {fm(row.saturated_pct, '.1f')} %"
                 axs[r, 0].set_xlabel(txt + '   원인: ________', fontsize=6.5, loc='left')
                 meta.append(dict(cluster_id=cid, page=pg, view=None if j is None else cam().names[j], crop=crop, section_direction=dirn.tolist(), section_band_m=.25, sites=sorted(sites)))
             fig.legend(handles=[Patch(color=cc, label=n) for cc, n in zip(NINE_C, NINE_N)], ncol=9, fontsize=6, loc='lower center', frameon=False)

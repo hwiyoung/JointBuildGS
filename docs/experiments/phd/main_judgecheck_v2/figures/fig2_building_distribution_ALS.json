@@ -1,0 +1,30 @@
+{
+ "prior": "ALS",
+ "source": "tables/c1_buildings_ALS.csv",
+ "rule": "건물 x 경우, 참값 200개 이상만",
+ "quartiles": {
+  "두 자료 모두 유효": [
+   92.1,
+   96.3,
+   98.3
+  ],
+  "사전정보 오류": [
+   29.4,
+   36.2,
+   50.0
+  ],
+  "영상 깊이 오류": [
+   58.9,
+   67.3,
+   79.4
+  ],
+  "영상 깊이 결측": [
+   84.9,
+   91.4,
+   96.0
+  ]
+ },
+ "png": "fig2_building_distribution_ALS.png",
+ "dpi": 300,
+ "scientific_verdict": null
+}
