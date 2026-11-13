@@ -14,7 +14,7 @@ import sys
 from cv2_frames import *
 import torch
 from cv2_prep import read_ply, COMP as CPLY
-OUTS = V2/'sections_r3'; EXT = 3.0
+OUTS = SECD; EXT = 3.0   # sections_r3 (r5) or sections_z1b (CV2_VARIANT=z1b, cv2_frames)
 MESH = {**{f'ours_{n}': O/'gtj/meshes'/f'{STEM}__tl_{n}'/'final.ply' for n in STATES},
         'nojudge_15000': V2/'gtj/meshes'/f'{STEM}__cmp_nojudge_15000'/'final.ply', 'nojudge_30000': V2/'gtj/meshes'/f'{STEM}__cmp_nojudge_30000_v203'/'final.ply',
         '2dgs_7000': V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_7000'/'final.ply', '2dgs_30000': V2/'gtj/meshes'/f'{STEM}__cmp_2dgs_30000_v203'/'final.ply'}
@@ -31,7 +31,7 @@ def cut_ext(V, F, z, L):
     seg = cut(V, F, zz); seg[:, :, 0] -= EXT-.5; return seg
 
 def main(keys):
-    S = Static(); sj = json.loads((V2/'static.json').read_text()); OUTS.mkdir(parents=True, exist_ok=True); jp = V2/'sections_r3.json'
+    S = Static(); sj = json.loads(STJ.read_text()); OUTS.mkdir(parents=True, exist_ok=True); jp = SECJ
     rec = dict(rule=__doc__, ext_m=EXT, keys={}, scientific_verdict=None)
     G = loadz(Path(sj['gt']), ['xyz'])['xyz'].astype(float); gout = {}
     for k in (1, 2):

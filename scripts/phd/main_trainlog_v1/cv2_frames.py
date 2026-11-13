@@ -40,8 +40,10 @@ One frame per time point (input, 0, 100, 300, 1,000, 2,000, 3,000, 5,000, 7,000,
            comparison state = the nearest saved iteration <= the frame's; none before the first saved one (section and mesh panels left empty, '비교: 저장 상태 없음').
 Modes: setup (static layers -> concept_v2/static.npz, static.json) | frames [labels] | table (numbers) | contact (one sheet of all frames).
 r2 / r3 write concept_v2/frames_<rev>/, docs contact_sheet_<rev>.png and frames_json_<rev>/; the first cut (frames/, contact_sheet.png, frames_json/) and r2 are kept.
+r6test (user 2026-11-13 '시험 장면 만들어'): CV2_VARIANT=z1b = zone 1 moved to the line chosen by cv2_zone1b.py (same direction, length and box rule; place chosen BY
+SCORE = largest 30,000 band completeness difference this method - judgment off); static_z1b.*, sections_z1b/, frames_r6test/; all other rules as r5.
 GT is used only for colour ranges, colouring, section drawing and the numbers. scientific_verdict: null"""
-import sys, time
+import os, sys, time
 from common import *
 from derive_states import scope_mask
 import shapely
@@ -56,7 +58,12 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Patch, FancyArrowPatch
 from PIL import Image
 FONT = '/fonts/NotoSansCJK-Regular.ttc'; fm.fontManager.addfont(FONT); plt.rcParams['font.family'] = fm.FontProperties(fname=FONT).get_name(); plt.rcParams['axes.unicode_minus'] = False
-V2 = O/'concept_v2'; REV = 'r5'; FR = V2/f'frames_{REV}'; FIGD = D/'figures_concept_v2'
+V2 = O/'concept_v2'; FIGD = D/'figures_concept_v2'
+# test variant (2026-11-13, user '시험 장면 만들어'): CV2_VARIANT=z1b moves zone 1 to the line chosen by cv2_zone1b.py (concept_v2/zone1b_line.json) and writes
+# its own static_z1b.*, sections_z1b/ and frames_r6test/; without it every path and rule is the r5 one (r1-r5 outputs are not touched).
+VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b'), VAR
+REV = 'r6test' if VAR else 'r5'; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'
+STJ = V2/('static_z1b.json' if VAR else 'static.json'); STN = V2/('static_z1b.npz' if VAR else 'static.npz'); SECD = V2/('sections_z1b' if VAR else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
 EXT = 3.0; STRIP = .13; STRIPC = '#E9E6DC'; GTL = '#B4B2A9'; GTB = '#D3D1C7'; ZTOP = {1: None, 2: 25.0}
 RESETS = [3000, 6000, 9000, 12000]; DENSIFY_END = 15000; RESC = '#D85A30'
 CAM = 'DJI_20241217091247_0146_D'; CAM_FILE = '0077.npz'; TAU = 0.211856; NEAR = .10; BAND = .5; NBIN = 7; OPMIN = .01
@@ -106,13 +113,16 @@ class Static:
         cams = json.loads((O/'renders/cameras.json').read_text()); vb = cams['view']; self.B = np.asarray(vb['basis'], float); self.ctr = np.asarray(vb['center'], float)
         tr = [v for v in cams['training'] if v['name'] == CAM][0]; self.K = np.asarray(tr['K'], float); self.E = np.asarray(tr['W2C'], float); self.W, self.H = tr['width'], tr['height']
         self.sec = sec = json.loads(Path('/repo/configs/phd/main_stage1_v1/sections_v1.json').read_text())['sections']['B173_sawtooth']; pf = json.loads((PF/'figures/proc_section_data.json').read_text())
-        sj = V2/'static.json'
+        sj = STJ; z1src = ZONE1_RULE
         if sj.exists():   # zone 1 line as fixed by setup() (zone1_line)
             z1 = json.loads(sj.read_text())['zones']['1']; o1, t1, n1 = line_frame(z1['line_origin_xy'], z1['line_unit_xy']); L1 = z1['line_length_m']
+            if VAR: z1src = z1['source']
+        elif VAR:   # z1b test: the line chosen by cv2_zone1b.py
+            z1 = json.loads(Z1B.read_text()); o1, t1, n1 = line_frame(z1['line_origin_xy'], z1['line_unit_xy']); L1 = float(z1['line_length_m']); z1src = z1['rule']
         else: o1, t1, n1 = line_frame(sec['centre'][:2], sec['t']); L1 = float(sec['L'])   # placeholder until setup() fixes it
         poly1 = Polygon([o1+a*t1+b*n1 for a, b in [(0, -4), (L1, -4), (L1, 4), (0, 4)]])
         o2, t2, n2 = line_frame(pf['line']['A_local_xyz'], np.asarray(pf['line']['Aprime_local_xyz'])-np.asarray(pf['line']['A_local_xyz']))
-        self.zones = {1: dict(o=o1, t=t1, n=n1, L=L1, poly=poly1, ground=self.ground, source=ZONE1_RULE),
+        self.zones = {1: dict(o=o1, t=t1, n=n1, L=L1, poly=poly1, ground=self.ground, source=z1src),
                       2: dict(o=o2, t=t2, n=n2, L=float(pf['line']['length_m']), poly=Polygon(sc['zoom_box_xy']), ground=self.ground,
                               source='PROCFIG-v1 proc_section_data.json line A-Aprime; box = trainlog_v1.json scope zoom_box_xy')}
         self.cam_cache = {}
@@ -137,9 +147,12 @@ def setup():
     sec = S.sec; t = np.asarray(sec['t'][:2], float); t /= np.linalg.norm(t); n = np.array([-t[1], t[0]]); c0 = np.asarray(sec['centre'][:2], float)
     u0, v0, u1, v1 = RECT_V1; rm = np.zeros_like(tok); rm[v0:v1, u0:u1] = True; g0 = tok & rm & (cls == 0); q = Pt[g0][:, :2]-c0
     n_c = float(np.median(q@n)); s_top = float((q@t).max())+1.0; o1, t1, n1 = line_frame(c0+n_c*n+s_top*t, -t); L1 = float(sec['L'])
-    S.zones[1].update(o=o1, t=t1, n=n1, L=L1, poly=Polygon([o1+a*t1+b*n1 for a, b in [(0, -4), (L1, -4), (L1, 4), (0, 4)]]))
     zone1_rec = dict(rule=ZONE1_RULE, sawtooth_centre_xy=c0.tolist(), sawtooth_unit_xy=t.tolist(), agree_pixels_used=int(g0.sum()), lateral_offset_m=n_c, start_along_axis_m=s_top,
                      zoom_v1_class_pixels={str(int(k)): int((cls[rm & tok] == k).sum()) for k in np.unique(cls[rm & tok])})
+    if VAR:   # z1b test: Static() already holds the cv2_zone1b.py line; the r5 rule values above are kept only as the record of what was moved
+        zb = json.loads(Z1B.read_text()); o1, t1, n1, L1 = S.zones[1]['o'], S.zones[1]['t'], S.zones[1]['n'], S.zones[1]['L']
+        zone1_rec = dict(rule=zb['rule'], selection=zb['selection'], zone1b_line_sha256=sha(Z1B), r5_rule=zone1_rec)
+    S.zones[1].update(o=o1, t=t1, n=n1, L=L1, poly=Polygon([o1+a*t1+b*n1 for a, b in [(0, -4), (L1, -4), (L1, 4), (0, 4)]]))
     # crop of the camera = building-scope target pixels
     insc = tok.copy(); insc[tok] = scope_mask(Pt[tok], c); vv, uu = np.nonzero(insc); pad = 10
     crop = [int(max(uu.min()-pad, 0)), int(max(vv.min()-pad, 0)), int(min(uu.max()+pad+1, S.W)), int(min(vv.max()+pad+1, S.H))]
@@ -183,13 +196,13 @@ def setup():
                overview_extent=[float(x.min()), float(x.max()), float(y.min()), float(y.max())]), colour_range=dict(height_above_ground_m=[float(lo), float(hi)], bins=bins.tolist(), source='target-map 3-D points of this camera inside the building scope, 2-98 % (GT dense in scope incl. walls would give '+', '.join(f'{v:.2f}' for v in gt_lohi)+' m and leave the roofs in one or two steps)', ground_z=S.ground),
                zones=zrec, judgment_class_pixels={str(int(k)): int((cls == k).sum()) for k in np.unique(cls)}, prior_mesh=str(S1/'defs'/SITE/'prior_ALS.npz'), gt=str(GT/'reference'/SITE/'dense.npz'),
                targets=str(FT/'targets'/f'{STEM}.npz'), target_map=str(O/'concept/inputs.npz'), seconds=round(time.monotonic()-t0, 1))
-    savez(V2/'static.npz', **out); dump(V2/'static.json', rec); print('STATIC', json.dumps(zrec, ensure_ascii=False)[:1500], crop, bins, flush=True)
+    savez(STN, **out); dump(STJ, rec); print('STATIC', json.dumps(zrec, ensure_ascii=False)[:1500], crop, bins, flush=True)
 
 # ---------------------------------------------------------------- drawing helpers
 class Frame:
     def __init__(self):
-        self.S = Static(); self.st = loadz(V2/'static.npz'); self.sj = json.loads((V2/'static.json').read_text()); self.sha = {}
-        self.sgt = loadz(V2/'sections_r3'/'gt.npz'); s3 = json.loads((V2/'sections_r3.json').read_text()); self.yr = {}
+        self.S = Static(); self.st = loadz(STN); self.sj = json.loads(STJ.read_text()); self.sha = {}
+        self.sgt = loadz(SECD/'gt.npz'); s3 = json.loads(SECJ.read_text()); self.yr = {}
         for k in (1, 2):   # r4 height axis: linear over every drawn layer (mesh of all states, GT, prior, targets); zone 2 linear to ZTOP + one compressed band above
             zs = [r['zones'][str(k)] for r in s3['keys'].values()]
             vals = [v for z in zs if z['mesh_height_min_max'] for v in z['mesh_height_min_max']] + [float(self.sgt[f'gt{k}'][:, 1].min()), float(self.sgt[f'gt{k}'][:, 1].max())]
@@ -368,14 +381,14 @@ def draw(F, label, cache):
         else:
             sel = zsel(dz['xyz'].astype(float)); rec['counts'][f'zone{k}_discs'] = F.discs(a_g, dz, sel, zext, wz, edge=True, view=zv)
             fsel = zsel(mz['V'][mz['F']].mean(1).astype(float)); img, _ = F.raster(mz['V'], mz['F'][fsel], mz['C'].astype(float), zext, wz, hz, 3, view=zv); F.show(a_m, img, zext)
-            sp = V2/'sections_r3'/f'ours_{label}.npz'; rec['sources'][f'section{k}'] = F.h(sp)
+            sp = SECD/f'ours_{label}.npz'; rec['sources'][f'section{k}'] = F.h(sp)
             ng, nm = F.section(a_s, k, sec=loadz(sp), layers=('gtband',)); rec['counts'][f'zone{k}_band_gaussians'] = ng; rec['counts'][f'zone{k}_mesh_cut_segments'] = nm
             if cs is None: F.blank(a_c); F.blank(a_cm)
             else:
                 ck = f"{COMP[k]['run']}_{cs}"
                 if ck not in cache: cache.clear() if len(cache) > 12 else None; cache[ck] = (loadz(V2/'discs'/f'{ck}.npz'), loadz(V2/'meshcol'/f'{ck}.npz'))
                 cd, cm = cache[ck]; rec['sources'][f'comparison{k}_discs'] = F.h(V2/'discs'/f'{ck}.npz'); rec['sources'][f'comparison{k}_mesh'] = F.h(V2/'meshcol'/f'{ck}.npz')
-                cp = V2/'sections_r3'/f'{ck}.npz'; rec['sources'][f'comparison{k}_section'] = F.h(cp)
+                cp = SECD/f'{ck}.npz'; rec['sources'][f'comparison{k}_section'] = F.h(cp)
                 ng, nm = F.section(a_c, k, sec=loadz(cp), layers=('gtband',)); rec['counts'][f'zone{k}_comparison_band_gaussians'] = ng
                 fsel = zsel(cm['V'][cm['F']].mean(1).astype(float)); img, _ = F.raster(cm['V'], cm['F'][fsel], cm['C'].astype(float), zext, wz, hz, 3, view=zv); F.show(a_cm, img, zext)
         rec[f'zone{k}'] = dict(zoom_extent=list(zext), comparison_run=COMP[k]['run'], comparison_name=cn, comparison_iteration=cs, comparison_label=ctitle)
@@ -396,7 +409,7 @@ def draw(F, label, cache):
         x += (14 if kind in ('pt', 'box', 'reset') else 22); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
     png = FR/f'frame_{FRAMES.index(label):02d}_{label}.png'; FR.mkdir(parents=True, exist_ok=True); fig.savefig(png, dpi=100, facecolor='white'); plt.close(fig)
     rec.update(png=str(png), png_sha256=sha(png), seconds=round(time.monotonic()-t0, 1), camera=F.sj['camera'], oblique=F.sj['oblique'], zones=F.sj['zones'], colour_range=F.sj['colour_range'],
-               static_sha256=F.h(V2/'static.npz'), rule=__doc__.split('\n')[0], scientific_verdict=None)
+               static_sha256=F.h(STN), rule=__doc__.split('\n')[0], scientific_verdict=None)
     dump(png.with_suffix('.json'), rec); print('FRAME', label, rec['seconds'], rec['counts'], flush=True)
 
 def mvs_points(self, ax, dep, ext, w, h, ss, size, zone=None, view=None):
@@ -415,7 +428,7 @@ def frames(labels):
 
 # ---------------------------------------------------------------- numbers
 def numbers():
-    S = Static(); st = loadz(V2/'static.npz'); inp = loadz(O/'concept/inputs.npz', ['target_depth']); td = inp['target_depth'].astype(float)
+    S = Static(); st = loadz(STN); inp = loadz(O/'concept/inputs.npz', ['target_depth']); td = inp['target_depth'].astype(float)
     row = loadz(GT/'scenes'/STEM/'rows.npz', ['xyz', 'row_tau_m']); rows_out = []
     rin = {k: in_zone(row['xyz'].astype(float), S.zones[k], S.zr) for k in (1, 2)}
     import importlib.util

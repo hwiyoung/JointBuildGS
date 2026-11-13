@@ -82,8 +82,10 @@ def mesh(fam):
 def job(kind, script, *args):
     """launch.command (same mounts and images) with the log in concept_v2/logs instead of the TRAINLOG logs folder."""
     from launch import command, VIDEO_IMAGE
-    cmd = command(f'jbgs-trainlog-cv2-{Path(script).stem}-{"-".join(args)[:30]}'.rstrip('-').replace(',', '-'), script, list(args), image=VIDEO_IMAGE if kind == 'video' else None, cpus=12, memory='48g')
-    return go(cmd, f'{Path(script).stem}_{"_".join(args)[:40]}')
+    var = os.environ.get('CV2_VARIANT', ''); tag = f'{Path(script).stem}{"_"+var if var else ""}'   # CV2_VARIANT (cv2_frames test variant) passed into the container
+    cmd = command(f'jbgs-trainlog-cv2-{tag.replace("_", "-")}-{"-".join(args)[:30]}'.rstrip('-').replace(',', '-'), script, list(args), image=VIDEO_IMAGE if kind == 'video' else None, cpus=12, memory='48g',
+                  env=[f'CV2_VARIANT={var}'] if var else ())
+    return go(cmd, f'{tag}_{"_".join(args)[:40]}')
 
 if __name__ == '__main__':
     a = sys.argv[1:]
