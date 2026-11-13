@@ -207,7 +207,8 @@ def cells():
             stats.append(dict(run=name, status='없음'))
             continue
         r = json.loads(rec.read_text())
-        hrs = sum(a.get('seconds', 0) for a in r['attempts']) / 3600
+        hrs = r['attempts'][-1].get('seconds', 0) / 3600   # the attempt that produced the result; host-guard stops (machine, not partition) apart
+        lost = sum(a.get('seconds', 0) for a in r['attempts'][:-1]) / 3600
         att = TU / 'runs/ef' / name / f'attempt{r["attempts"][-1]["attempt"]}'
         t = [json.loads(l) for l in (att / 'model/jbgs_trace.jsonl').read_text().splitlines() if l.strip()] if (att / 'model/jbgs_trace.jsonl').exists() else []
         gmax = max([x['gaussians'] for x in t] or [0])
@@ -217,12 +218,13 @@ def cells():
             hrs += json.loads((TU / 'runs/ef/cell0ef_ALS_s0/receipt.json').read_text())['attempts'][0]['seconds'] / 3600
             gmax, peak = max(gmax, max(x['gaussians'] for x in t0)), max(peak, max(x['peak_cuda_reserved_bytes'] for x in t0) / 2 ** 30)
         ov = att / 'model/target_monitor/health_override.jsonl'
-        stats.append(dict(run=name, status=r['status'], attempts=len(r['attempts']), hours=hrs, max_gaussians=gmax, peak_reserved_GiB=peak,
+        stats.append(dict(run=name, status=r['status'], attempts=len(r['attempts']), hours=hrs, stopped_attempt_hours=lost,
+                          host_guard_stops=r.get('host_guard_stops', 0), max_gaussians=gmax, peak_reserved_GiB=peak,
                           count_rule_records=len([l for l in ov.read_text().splitlines() if l.strip()]) if ov.exists() else 0))
     cells_h = sum(s.get('hours') or 0 for s in stats if s['run'].startswith('cellsef_'))
     single_h = sum(s.get('hours') or 0 for s in stats if s['run'] in ('R1repef_ALS_s0', 'B173nbef_ALS_s0', 'B0ef_ALS_s0'))
     stats.append(dict(run='합: 칸 넷 대 단일 필터 셋(씨앗 0)', hours=cells_h, single_site_hours=single_h))
-    write('cellsef_runs_ALS', stats, 'addendum 14: per-cell status, GPU hours (cell0 includes cell0ef to 15,000), max gaussians, peak reserved memory and count-rule records; single-site filter runs alongside; last row: hour sums')
+    write('cellsef_runs_ALS', stats, 'addendum 14: per-cell status, GPU hours of the attempt that produced the result (cell0 includes cell0ef to 15,000; hours of host-guard-stopped attempts apart), max gaussians, peak reserved memory and count-rule records; single-site filter runs alongside; last row: hour sums')
     for s in stats:
         print('RUN', s, flush=True)
 
