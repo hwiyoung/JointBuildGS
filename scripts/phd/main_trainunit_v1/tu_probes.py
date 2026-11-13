@@ -62,5 +62,76 @@ def define():
         print('PROBE', p['name'], round(p['area_m2']), len(p['images']), len(p['test_images']), flush=True)
 
 
+C8 = C / 'addendum8.json'
+ROOFS = dict(probe3=('roof A', 'DEBY_LOD2_4906972', (-5.0464, -138.9285)), probe4=('roof B', 'DEBY_LOD2_4959327', (112.5560, 228.3277)))
+
+
+def define8():
+    """addendum 8: small units around the two runaway roofs, 판 다 image rule on a square of the probe0 area."""
+    cfg()
+    assert sha(C8) == json.loads((C / 'addendum8.lock.json').read_text())['sha256'], 'addendum 8 changed after lock'
+    area = float(json.loads((TU / 'probes/probes.json').read_text())['probes'][0]['area_m2'])
+    half = np.sqrt(area) / 2
+    campus = json.loads((CAMPUS / 'split.json').read_text())
+    train, test = list(campus['train']), list(campus['test'])
+    sfm, _ = read_points3d_bin(WD / 'mvs/full/sparse/points3D.bin')
+    cams = {x['name']: x for x in cameras(train + test)}
+    centre = {n: -np.asarray(cams[n]['W2C'], float)[:3, :3].T @ np.asarray(cams[n]['W2C'], float)[:3, 3] for n in cams}
+    probes = []
+    for name, (label, building, c) in ROOFS.items():
+        c = np.array(c, float)
+        lo, hi = c - half, c + half
+        ins = (sfm[:, 0] >= lo[0]) & (sfm[:, 0] < hi[0]) & (sfm[:, 1] >= lo[1]) & (sfm[:, 1] < hi[1])
+        z0, z1 = np.percentile(sfm[ins, 2], [.5, 99.5])
+        blo, bhi = np.r_[lo, z0], np.r_[hi, z1]
+        inside = lambda n: lo[0] <= centre[n][0] < hi[0] and lo[1] <= centre[n][1] < hi[1]
+        pos = [n for n in train if inside(n)]
+        cov = {n: coverage(cams[n], blo, bhi) for n in train if n not in set(pos)}
+        vis = sorted(n for n, f in cov.items() if f >= .25)
+        tst = [n for n in test if inside(n)]
+        tst_cov = []
+        if len(tst) < 5:
+            tst_cov = sorted(n for n in test if n not in set(tst) and coverage(cams[n], blo, bhi) >= .25)
+        probes.append(dict(id=int(name[5:]), name=name, role=f'{label} {building}: runaway family roof alone, 판 다 pipeline (addendum 8)',
+                           region_min=lo.tolist(), region_max=hi.tolist(), area_m2=float(np.prod(hi - lo)), centre=c.tolist(),
+                           images=sorted(pos + vis), test_images=sorted(tst + tst_cov), position_selected=len(pos), visibility_added=len(vis),
+                           test_position=len(tst), test_coverage_added=len(tst_cov), projection_box_min=blo.tolist(), projection_box_max=bhi.tolist(),
+                           sfm_points_in_region=int(ins.sum()),
+                           coverage_quantiles_of_others=np.quantile(list(cov.values()), [.1, .5, .9]).tolist()))
+    out = TU / 'probes/probes_add8.json'
+    dump(out, dict(at=now(), addendum=8, addendum_sha256=sha(C8), base='판 다 pipeline (campus targets, campus SfM, WIDEN0 MVS background), ALS',
+                   probes=probes, scientific_verdict=None))
+    for p in probes:
+        print('PROBE', p['name'], round(p['area_m2']), len(p['images']), p['position_selected'], p['visibility_added'], len(p['test_images']), flush=True)
+
+
+def watch(unit):
+    """addendum 8: the unit's prior seeds (init_id = seeds.npz row) whose campus patch is the seed patch of a cell top-3 family."""
+    cfg()
+    assert sha(C8) == json.loads((C / 'addendum8.lock.json').read_text())['sha256'], 'addendum 8 changed after lock'
+    p = next(x for x in json.loads((TU / 'probes/probes_add8.json').read_text())['probes'] if x['name'] == unit)
+    lo, hi = np.array(p['region_min']), np.array(p['region_max'])
+    fam = json.loads((D / 'tables/cause_top_families.json').read_text())
+    fam = fam['rows'] if isinstance(fam, dict) else fam
+    sd = loadz(TU / 'stage1' / f'{unit}__ALS/seeds.npz', ['origin', 'patch'])
+    ci_unit = loadz(TU / 'targets' / f'{unit}__ALS.npz', ['campus_index'])['campus_index']
+    rows = []
+    for r in fam:
+        if not r['key'].startswith('cell'):
+            continue
+        x, y = r['seed_xyz'][:2]
+        if not (lo[0] <= x < hi[0] and lo[1] <= y < hi[1]):
+            continue
+        ci_cell = loadz(TU / 'targets' / f'{r["key"]}__ALS.npz', ['campus_index'])['campus_index']
+        campus_patch = int(ci_cell[r['patch']])
+        hit = np.flatnonzero((sd['origin'] == 1) & (sd['patch'] >= 0) & (ci_unit[np.maximum(sd['patch'], 0)] == campus_patch))
+        rows.append(dict(cell=r['key'], rank=r['rank'], cell_init_id=r['init_id'], cell_family_late=r['family_late'], building=r['patch_building'],
+                         campus_patch=campus_patch, unit_init_ids=hit.tolist()))
+    out = TU / 'stage1' / f'{unit}__ALS/watch.json'
+    dump(out, dict(at=now(), unit=unit, addendum=8, families=rows, scientific_verdict=None))
+    for w in rows:
+        print('WATCH', unit, w['cell'], w['rank'], w['campus_patch'], w['unit_init_ids'], flush=True)
+
+
 if __name__ == '__main__':
-    dict(define=define)[sys.argv[1]](*sys.argv[2:])
+    dict(define=define, define8=define8, watch=watch)[sys.argv[1]](*sys.argv[2:])

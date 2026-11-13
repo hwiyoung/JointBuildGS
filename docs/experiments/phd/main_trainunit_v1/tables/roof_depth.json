@@ -1,0 +1,75 @@
+{
+  "rows": [
+    {
+      "roof": "A",
+      "unit": "probe3",
+      "pixels_in_box": 2895710,
+      "prior_pixels": 1653456,
+      "background_mvs_pixels": 1005835,
+      "empty_pixels": 236419,
+      "prior_with_mvs": 1311376,
+      "target_minus_mvs_m_p05_p25_p50_p75_p95": [
+        -0.0345916748046875,
+        0.0065155029296875,
+        0.022747039794921875,
+        0.07418060302734375,
+        1.2254095077514648
+      ],
+      "abs_gt_0p5m_share": 0.058470644574858774,
+      "abs_gt_2m_share": 0.049468649723649054,
+      "pixel_weight_p10_p50_p90": [
+        0.4305160641670227,
+        0.7972683310508728,
+        1.2228938341140747
+      ]
+    },
+    {
+      "roof": "B",
+      "unit": "probe4",
+      "pixels_in_box": 289085,
+      "prior_pixels": 230794,
+      "background_mvs_pixels": 57529,
+      "empty_pixels": 762,
+      "prior_with_mvs": 229322,
+      "target_minus_mvs_m_p05_p25_p50_p75_p95": [
+        -0.048107147216796875,
+        0.006501197814941406,
+        0.045726776123046875,
+        0.09764480590820312,
+        0.1881940841674804
+      ],
+      "abs_gt_0p5m_share": 0.018886107743696635,
+      "abs_gt_2m_share": 0.011119735568327505,
+      "pixel_weight_p10_p50_p90": [
+        0.3991656005382538,
+        0.7682058215141296,
+        1.2961347103118896
+      ]
+    },
+    {
+      "roof": "ctl",
+      "unit": "probe0",
+      "pixels_in_box": 7523314,
+      "prior_pixels": 307826,
+      "background_mvs_pixels": 5798020,
+      "empty_pixels": 1417468,
+      "prior_with_mvs": 298560,
+      "target_minus_mvs_m_p05_p25_p50_p75_p95": [
+        -0.19422550201416017,
+        -0.036296844482421875,
+        -0.01581573486328125,
+        0.0603790283203125,
+        8.02820606231688
+      ],
+      "abs_gt_0p5m_share": 0.16303925509110398,
+      "abs_gt_2m_share": 0.11183346730975348,
+      "pixel_weight_p10_p50_p90": [
+        0.34268924593925476,
+        1.0493738651275635,
+        1.6860313415527344
+      ]
+    }
+  ],
+  "note": "pixels of the probe maps inside the projected family box: prior target depth minus WIDEN0 MVS depth; no GT",
+  "scientific_verdict": null
+}

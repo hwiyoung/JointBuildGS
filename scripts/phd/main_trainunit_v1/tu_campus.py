@@ -241,7 +241,9 @@ def unit_members(unit, prior, U, sfm_xyz):
         return np.ones(len(U['area']), bool), np.ones(len(sfm_xyz), bool), split['train'], split['test']
     if unit.startswith('probe'):
         # addendum 5: probe regions and image lists from /tu/probes/probes.json (tu_probes.py)
-        p = next(x for x in json.loads((TU / 'probes/probes.json').read_text())['probes'] if x['name'] == unit)
+        # addendum 8: probe3/probe4 (runaway roofs) from /tu/probes/probes_add8.json
+        src = 'probes.json' if unit in ('probe0', 'probe1', 'probe2') else 'probes_add8.json'
+        p = next(x for x in json.loads((TU / 'probes' / src).read_text())['probes'] if x['name'] == unit)
         lo, hi = np.array(p['region_min'], float), np.array(p['region_max'], float)
         inside = lambda xy: (xy[:, 0] >= lo[0]) & (xy[:, 0] < hi[0]) & (xy[:, 1] >= lo[1]) & (xy[:, 1] < hi[1])
         return inside(U['centre'][:, :2]), inside(sfm_xyz[:, :2]), p['images'], p['test_images']

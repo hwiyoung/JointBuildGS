@@ -60,6 +60,81 @@ def install_count_record_only(cls):
     cls.observe = observe
 
 
+def install_family_monitor(root, watch_path, state):
+    """addendum 8: read-only record of each densification step, grouped by seed family (init_id) and lineage (origin).
+    Recomputes on copies the clone/split selection of the unchanged densify_and_prune, then calls it unchanged.
+    No random numbers are drawn and no model tensor is written."""
+    import time as _t
+    import torch
+    from scene.gaussian_model import GaussianModel
+    w = json.loads(Path(watch_path).read_text())
+    watch = {f"{f['cell']}#{f['rank']}": [int(i) for i in f['unit_init_ids']] for f in w['families']}
+    original = GaussianModel.densify_and_prune
+    out = (root / 'family_monitor.jsonl').open('a')
+
+    def qs(x, q):
+        if x.numel() == 0:
+            return None
+        y = x[::max(1, x.numel() // 1_000_000)].float()
+        return [float(v) for v in torch.quantile(y, torch.tensor(q, device=y.device))]
+
+    def densify_and_prune(self, max_grad, min_opacity, extent, max_screen_size):
+        t0 = _t.perf_counter()
+        with torch.no_grad():
+            g = self.xyz_gradient_accum / self.denom
+            g[g.isnan()] = 0.0
+            g = g.reshape(-1)
+            den = self.denom.reshape(-1)
+            ms = self.get_scaling.max(dim=1).values
+            op = self.get_opacity.reshape(-1)
+            thr = self.percent_dense * extent
+            sel = g >= max_grad
+            clone, split = sel & (ms <= thr), sel & (ms > thr)
+            ex = self.density_exempt()
+            if ex is not None:
+                clone, split = clone & ~ex, split & ~ex
+            iid = self.init_id.long()
+            org = self.origin.long() if self.origin is not None else torch.full_like(iid, -1)
+            cnt = torch.bincount(iid[iid >= 0])
+            top = torch.topk(cnt, min(5, cnt.numel()))
+            groups = {f'watch:{k}': torch.tensor(v, device=iid.device) for k, v in watch.items() if v}
+            groups |= {f'top{r + 1}:{int(i)}': torch.tensor([int(i)], device=iid.device) for r, i in enumerate(top.indices.tolist())}
+
+            def stat(m):
+                return dict(n=int(m.sum()), clone=int((clone & m).sum()), split=int((split & m).sum()),
+                            grad_p50_p90=qs(g[m], [.5, .9]), grad_max=float(g[m].max()) if m.any() else None,
+                            denom_p50=qs(den[m], [.5]), max_scale_p50_p90=qs(ms[m], [.5, .9]), opacity_p50=qs(op[m], [.5]),
+                            radii2d_p50_p90=qs(self.max_radii2D[m], [.5, .9]))
+            masks = {k: torch.isin(iid, v) for k, v in groups.items()}
+            masks |= {'prior_lineage': org == 1, 'background_lineage': org == 0}
+            before = {k: stat(m) for k, m in masks.items()}
+            ids = {k: v for k, v in groups.items()}
+            n0 = len(iid)
+        t1 = _t.perf_counter()
+        res = original(self, max_grad, min_opacity, extent, max_screen_size)
+        t2 = _t.perf_counter()
+        with torch.no_grad():
+            iid2 = self.init_id.long()
+            org2 = self.origin.long() if self.origin is not None else torch.full_like(iid2, -1)
+            after = {k: int(torch.isin(iid2, v).sum()) for k, v in ids.items()}
+            after |= {'prior_lineage': int((org2 == 1).sum()), 'background_lineage': int((org2 == 0).sum())}
+        for k in before:
+            b = before[k]
+            b['n_after'] = after[k]
+            b['pruned_est'] = b['n'] + b['clone'] + b['split'] - after[k]  # split: +2 children -1 parent
+        rec = dict(iteration=state.get('it', 0) + 1, n_before=n0, n_after=len(iid2), max_grad=float(max_grad), min_opacity=float(min_opacity),
+                   extent=float(extent), clone_scale_threshold=float(thr), max_screen_size=max_screen_size,
+                   clone_total=int(clone.sum()), split_total=int(split.sum()), groups=before,
+                   monitor_seconds=(t1 - t0) + (_t.perf_counter() - t2), densify_seconds=t2 - t1)
+        out.write(json.dumps(rec) + '\n')
+        out.flush()
+        return res
+
+    GaussianModel.densify_and_prune = densify_and_prune
+    dump(root / 'addendum8_monitor.json', dict(at=now().isoformat(), watch=watch, groups='watched families, 5 largest families, prior/background lineage',
+                                               scientific_verdict=None))
+
+
 def main():
     run_name = sys.argv[1]
     lock = json.loads((C / 'trainunit_v1.initial.lock.json').read_text())
@@ -123,9 +198,30 @@ def main():
              dict(at=now().isoformat(), count_rule='record-only', probe_stop=probe_stop, scientific_verdict=None))
     original = jbgs_state.after_step
     state = dict(checked500=False, stop_capture=None)
+    if run_name.startswith(('probe3', 'probe4')):
+        # addendum 8: runaway-roof probes get the read-only family monitor
+        assert sha(C / 'addendum8.json') == json.loads((C / 'addendum8.lock.json').read_text())['sha256']
+        install_family_monitor(root, Path('/tu/stage1') / f'{run_name.split("_")[0].replace("own", "")}__ALS' / 'watch.json', state)
+        # addendum 9: probe3/probe4 use the scene extent of the cell where the roof ran away (probe3own keeps its own)
+        assert sha(C / 'addendum9.json') == json.loads((C / 'addendum9.lock.json').read_text())['sha256']
+        fixed = {'probe3_ALS_s0': 185.84960770264462, 'probe4_ALS_s0': 199.23552905804456}.get(run_name)
+        import scene.dataset_readers as dr
+        fork_norm = dr.getNerfppNorm
+
+        def getNerfppNorm(cam_info):
+            n = fork_norm(cam_info)
+            rec = dict(at=now().isoformat(), run=run_name, fork_radius=float(n['radius']), cameras=len(cam_info), addendum=9,
+                       used_radius=float(fixed) if fixed is not None else float(n['radius']), fixed=fixed is not None, scientific_verdict=None)
+            dump(root / 'extent_override.json', rec)
+            if fixed is not None:
+                n = dict(n, radius=float(fixed))
+            return n
+
+        dr.getNerfppNorm = getNerfppNorm
 
     def after_step(env):
         it = env['iteration']
+        state['it'] = it
         args = env['args']
         if it == 501 and not state['checked500'] and not lifted:
             # same clock as the locked factor: target_monitor/curve.jsonl elapsed_seconds at iteration 500

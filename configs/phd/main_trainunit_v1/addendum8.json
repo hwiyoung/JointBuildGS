@@ -1,0 +1,28 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 8,
+  "instruction": "user, 2026-11-13 KST: '그래 확인해보자' (reply to the proposal: train only the runaway roof in a small unit to see whether it blows up again, and look at that roof's images and prior, before redesigning the partition)",
+  "question": "Does the runaway prior-seed family of the 판 다 cells grow again when its roof is trained alone in a small unit with the 판 다 pipeline (location, not partition)? If so, at which densification steps does it grow, through which branch (clone or split), and with which values (view-space gradient, scale, opacity, visible-view count)?",
+  "fact_before_lock": {
+    "source": "cause read-out, commit 024732aa (tables/cause_top_families.*, cause_probes.*, cells_growth.*)",
+    "roof_A": "DEBY_LOD2_4906972: cell0 rank-1 family (init 124654, seed patch 127019) 3,743 at 7,000 -> 3,256,282 at 13,200; cell2 rank-1 family (init 151385, seed patch 170082) 485 at 7,000 -> 2,433,186 at 15,000; family median xy at the last saved state (-9.077, -137.577) and (-1.016, -140.280)",
+    "roof_B": "DEBY_LOD2_4959327: cell3 rank-1 family (init 197332, seed patch 235129) 8,138 at 7,000 -> 447,163 at 10,600; family median xy (112.556, 228.328)",
+    "control": "probe0 (same 판 다 pipeline, 8,822 m2 at B0, 211 images): max 3.15 M, largest family 3,813",
+    "thresholds": "clone/split threshold percent_dense (0.01) x scene extent: cell0 1.86 m, cell2 2.28 m, cell3 1.99 m, FINALTRAIN B0 2.25 m (extent = 1.1 x max camera distance from the mean, tu_growth.py); the runaway families' median max-axis scale is 1.1 m, i.e. they are in the clone branch in every unit"
+  },
+  "probes": {
+    "probe3": "roof A. region = square of the probe0 area (8,822.354 m2, side 93.927 m) centred at (-5.0464, -138.9285), the midpoint of the two roof-A family medians",
+    "probe4": "roof B. region = same square size centred at (112.5560, 228.3277), the cell3 rank-1 family median",
+    "images": "판 다 rule on the square, as probe1 (addendum 6): WIDEN0 training images whose camera centre lies inside the square, then every other WIDEN0 training image whose projected region box (z = campus SfM p0.5..p99.5 inside the square) covers >= 25 % of the image",
+    "test_images": "WIDEN0 evaluation images whose camera centre lies inside the square (as the cells); if fewer than 5, also those with >= 25 % projected coverage. Test images never enter training.",
+    "seeds_maps": "tu_campus.py seeds / maps / index unchanged with unit = probe3 / probe4 (prior seeds and SfM background inside the square, cylinder exclusion, WIDEN0 MVS background depth)"
+  },
+  "watch": "families to follow by name: the unit's prior seeds whose campus patch equals the seed patch of any cell top-3 family (cause_top_families, cells 0/2/3) lying inside the square; mapped through targets/<cell>__ALS.npz campus_index before training",
+  "monitor": "read-only wrapper around GaussianModel.densify_and_prune in tu_train_entry.py for probe3/probe4 only. Before the unchanged call it recomputes, on copies, grads = xyz_gradient_accum / denom (NaN -> 0) and the same clone mask (|grad| >= threshold and max scale <= percent_dense x extent) and split mask (> percent_dense x extent), excluding the density-exempt rows as the fork does; after the call it counts again. Groups: watched families, the 5 largest families at that step, all prior lineage (origin 1), background lineage (origin 0). Per group: count before/after, clone-selected, split-selected, grad p50/p90/max, denom p50, max-scale p50/p90, opacity p50 (deterministic stride subsample <= 1,000,000 rows for quantiles). No random numbers are drawn and no model tensor is written; the extra seconds are recorded. One json line per densification step in <run>/attempt<k>/family_monitor.jsonl.",
+  "unchanged": "everything in addendum 5 for the runs: ALS prior only, train_args of 판 다 (FINALTRAIN r8 values, seed 0, --iterations 30000 so every schedule is the same), renderer, fork r23, pixel-weight rule, cylinder exclusion, map rule; stop right after iteration 15,000; FINALTRAIN count rule recorded, not enforced; 11:00 deadline and 500-iteration time stop not applied",
+  "resources": "a probe starts only on a GPU with no other compute process (TRAINERR priority) and with host MemAvailable >= 45 GB; container memory cap 48 GB; host guard kills this task's container first below 20 GB (returns to the queue, at most 3 times); GPU memory stop (binning guard / OOM) is a result, recorded with count and memory; execution error: one retry",
+  "order": "probe3 first; probe4 on the other GPU at the same time when both GPUs are free",
+  "read_out_without_training": "for each roof: which training images see the watched family region (projection), a few photo crops of the roof, the ALS prior patches on the roof (sigma, judged region, pixel weight, prior target depth minus WIDEN0 MVS depth along the view), and the monitor curves next to the cell curves and probe0",
+  "not_measured": "no mesh, no scoring, no GT read",
+  "scientific_verdict": null
+}

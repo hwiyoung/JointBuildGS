@@ -1,0 +1,15 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 9,
+  "amends": "addendum 8, before any probe3/probe4 training (only a monitor test run in /tu/tests/add8_montest, stopped at iteration 700 by its stop file)",
+  "fact": "The monitor test on probe4 shows the fork's scene extent of a small unit is 78.3 m (1.1 x max distance of its 44 training cameras from their mean), so the clone/split threshold is 0.78 m. In the cells it was 1.86 m (cell0), 2.28 m (cell2), 1.99 m (cell3). The runaway families' median max-axis scale is 1.1 m: cloned in the cells, but split in a small unit. The extent also scales the position learning rate (spatial_lr_scale) and the large-Gaussian prune (0.1 x extent). A small unit with its own extent therefore does not repeat the cells' densification regime.",
+  "change": {
+    "probe3_ALS_s0": "roof A, scene extent fixed to the cell0 value 185.84960770264462 m (tu_growth.py rule, tables/cells_growth.*), set by replacing the radius returned by scene.dataset_readers.getNerfppNorm (translate unchanged) inside tu_train_entry.py; this one value enters every place the fork uses the extent",
+    "probe4_ALS_s0": "roof B, scene extent fixed to the cell3 value 199.23552905804456 m, same way",
+    "probe3own_ALS_s0": "roof A with the unit's own extent (fork rule unchanged): shows whether a small unit avoids the runaway only through its smaller extent"
+  },
+  "order": "probe3 and probe4 at the same time on the two GPUs, then probe3own on the first GPU that is free",
+  "recorded": "each run writes extent_override.json (fork-computed radius, value used) or the fork radius for probe3own; the family monitor records the extent and the clone threshold at every densification step",
+  "unchanged": "everything else in addendum 8 (regions, images, seeds, maps, watch lists, read-only monitor, stop right after 15,000, resources, retry)",
+  "scientific_verdict": null
+}

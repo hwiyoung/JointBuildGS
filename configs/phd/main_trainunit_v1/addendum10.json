@@ -1,0 +1,9 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 10,
+  "amends": "addendum 8/9 stop point for probe3_ALS_s0 only",
+  "fact": "probe3_ALS_s0 (roof A, cell0 extent) at iteration 13,900: 8,467,714 Gaussians, one prior-seed family (init 6913) 3,025,743 (36 %), 7.9 s per iteration and rising; at that rate iteration 15,000 is more than 2 h away and the run may stop on the GPU binning guard first (cell0 stopped at 13,800 with 9.58 M). The question of addendum 8 (does a single family run away again when the roof is trained in a small unit) is already answered by the record up to 13,900.",
+  "change": "probe3_ALS_s0 is stopped through the existing stop file (/tu/control/STOP_probe3_ALS_s0): the unchanged capture code writes a complete state at the next multiple of 100, then training stops. The GPU 0 probe queue (no probes left for it) is ended first so that it does not count the stop as an execution error and restart the run; the attempt receipt is written by hand from the run files with status STOP_FILE_SAVED.",
+  "unchanged": "probe4_ALS_s0 (finished at 15,000) and probe3own_ALS_s0 (continues to 15,000) and everything else in addenda 8/9",
+  "scientific_verdict": null
+}

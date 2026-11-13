@@ -1,0 +1,9 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 11,
+  "amends": "addendum 8/9 stop point for probe3own_ALS_s0 only",
+  "fact": "probe3own_ALS_s0 (roof A, own extent 134.8 m) at iteration 13,800: 1.15 s per iteration and rising; its largest family (prior seed init 6917, building DEBY_LOD2_4907520, the same roof where probe3 ran away) was 1,106,039 at 13,700. probe3 was stopped at 14,000 by addendum 10.",
+  "change": "probe3own_ALS_s0 is stopped the same way as probe3 (addendum 10): GPU 1 probe queue (no probes left) ended first, stop file /tu/control/STOP_probe3own_ALS_s0, complete state at the next multiple of 100 (14,000 when the file is seen before it), receipt by hand with status STOP_FILE_SAVED, so probe3 and probe3own are compared at the same iteration.",
+  "unchanged": "everything else in addenda 8-10",
+  "scientific_verdict": null
+}
