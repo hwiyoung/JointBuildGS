@@ -1,6 +1,7 @@
 """Figures of PHD-MAIN-TRAINUNIT-v1 with the GTJUDGE figure functions (colors, map_ax, multiview rule).
 
-  python tu_figures.py <site> <prior>
+  python tu_figures.py <site> <prior> [ef]
+(addendum 16: with 'ef' the filter families of ALS: 기준 ef_s0, 씨앗 반복 ef_s1, 가 campusef30k, 나 campusef120k, 다 cellsef; names <stem>_ef_*)
 (1) tau in/out maps of all reference rows per run (기준, 씨앗 반복, 가, 다) with the original cell boundaries;
 (2) three-view result meshes (top, two obliques) of the same runs in the GTJUDGE section ROI (±2 m), faces coloured by the
     nearest saved result sample's normal-line distance vs tau (GTJUDGE multiview rule);
@@ -33,7 +34,12 @@ def mesh_path(m):
     return m
 
 
-def runs(prior):
+EFRUNS = [('기준', 'ef_s0'), ('씨앗 반복', 'ef_s1'), ('가', 'campusef30k_ALS_s0'), ('나', 'campusef120k_ALS_s0'), ('다', 'cellsef_ALS_s0')]
+
+
+def runs(prior, ef=False):
+    if ef:
+        return EFRUNS   # addendum 16
     return [('기준', 'FINALTRAIN_30000'), ('씨앗 반복', 'seed1_s1'), ('가', f'campus30k_{prior}_s0'), ('다', f'cells_{prior}_s0')]
 
 
@@ -53,14 +59,15 @@ def save(fig, name, meta, sources):
          sources=[dict(path=str(x), sha256=sha(x)) for x in sources if Path(x).exists()], script_sha256=sha(__file__), scientific_verdict=None))
 
 
-def main(site, prior):
+def main(site, prior, ef=''):
     cfg()
     stem = f'{site}__{prior}'
+    tag = stem + ('_ef' if ef else '')
     root = TU / 'gt/scenes' / stem
     row = loadz(root / 'rows.npz', ['xyz', 'row_tau_m'])
     P, tau = row['xyz'], row['row_tau_m']
     cells = json.loads((TU / 'cells/cells.json').read_text())
-    have = [(l, m) for l, m in runs(prior) if (root / 'distances' / f'{m}.npz').exists()]
+    have = [(l, m) for l, m in runs(prior, bool(ef)) if (root / 'distances' / f'{m}.npz').exists()]
     lo, hi = P[:, :2].min(0), P[:, :2].max(0)
     # (1) tau maps
     fig, axes = plt.subplots(1, len(have), figsize=(6.2 * len(have), 7.2), squeeze=False)
@@ -76,7 +83,7 @@ def main(site, prior):
         gf.legend(ax, gf.DIST)
         srcs.append(root / 'distances' / f'{m}.npz')
     fig.suptitle(f'{site} · {prior} · 참값 점의 τ 안/밖 (법선 측정선 거리) · 청록 점선 = 판 다의 원래 칸 경계')
-    save(fig, f'{stem}_tau_maps', dict(runs=have), srcs)
+    save(fig, f'{tag}_tau_maps', dict(runs=have), srcs)
     # (2) three views in the GTJUDGE section ROI
     sec = json.loads((G / 'scenes' / stem / 'section.json').read_text())
     if sec['status'] == 'PASS':
@@ -106,7 +113,7 @@ def main(site, prior):
                 ax.set_zlim(min(zl) - .2, max(zl) + .2); ax.set_box_aspect((rhi[0] - rlo[0], rhi[1] - rlo[1], max(zl) - min(zl) + .4))
         fig.suptitle(f'{stem} · 결과 메시 (GTJUDGE 단면 자리 ±2 m) · 흰색 τ 안 / 파랑 음 / 빨강 양 / 회색 면 없음')
         fig.subplots_adjust(top=.95, wspace=.12, hspace=.12)
-        save(fig, f'{stem}_mesh_views', dict(runs=have, roi='GTJUDGE section.json ±2 m', section=sec, camera_angles=[[90, -90], [35, -55], [35, 125]]), srcs)
+        save(fig, f'{tag}_mesh_views', dict(runs=have, roi='GTJUDGE section.json ±2 m', section=sec, camera_angles=[[90, -90], [35, -55], [35, 125]]), srcs)
     # (3) section across the nearest cell boundary
     rel = next(r for r in cells['evaluation_boxes'] if r['site'] == site)
     sg = rel['nearest'][0]['segment']
@@ -121,7 +128,7 @@ def main(site, prior):
         start, end = [x0, y0 - 12], [x0, y0 + 12]
     bsec = dict(start=start, end=end, half_width=.6)
     fig, ax = plt.subplots(figsize=(13, 6)); fig.subplots_adjust(bottom=.22, top=.86)
-    for (label, m), col in zip(have, ['#4B2E8A', '#999999', '#009e73', '#d55e00']):
+    for (label, m), col in zip(have, ['#4B2E8A', '#999999', '#009e73', '#e69f00', '#d55e00'] if ef else ['#4B2E8A', '#999999', '#009e73', '#d55e00']):
         meta = json.loads((root / 'distances' / f'{m}.json').read_text())
         V, F = read_surface(mesh_path(meta['mesh']))
         ax.add_collection(LineCollection(section_segments(V, F, bsec), colors=col, lw=1, label=label)); del V, F; gc.collect()
@@ -132,7 +139,7 @@ def main(site, prior):
     ax.autoscale_view(); ax.set(xlim=(0, 24), xlabel='단면 거리 (m)', ylabel='지역 높이 (m)')
     ax.legend(loc='upper center', bbox_to_anchor=(.5, -.13), ncol=6, frameon=False)
     fig.suptitle(f'{stem} · 칸 경계({sg["axis"]} = {sg["at"]:.1f} m)를 가로지르는 단면 · 상자와 경계 거리 {rel["nearest_boundary_distance_m"]:.1f} m')
-    save(fig, f'{stem}_cell_boundary_section', dict(runs=have, section=bsec, boundary=sg), srcs)
+    save(fig, f'{tag}_cell_boundary_section', dict(runs=have, section=bsec, boundary=sg), srcs)
     print('FIGURES_DONE', stem, flush=True)
 
 
