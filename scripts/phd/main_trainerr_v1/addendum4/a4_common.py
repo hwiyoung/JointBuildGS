@@ -56,3 +56,16 @@ def pct(m): m = np.asarray(m); return 100*float(m.mean()) if m.size else None
 def raw_state(model, name): return loadz(model/'trainlog/states'/f'{name}.npz')
 PLACE_KO.update({'edge_back_control': '대조: 같은 범위의 지킨 점(뒤쪽 벽 아랫단 쪽)', 'edge_annex_control': '대조: 같은 범위의 지킨 점(별채 평지붕 쪽)',
                  'floor_control': '대조: 옆의 정상 바닥·지붕', 'edge_back': '가장자리 띠: 뒤쪽 벽 맨 아랫단', 'edge_annex': '가장자리 띠: 별채 평지붕 가장자리'})
+
+def place_points_cached(place):
+    """place_points computed once in the CPU image (shapely) and cached in addendum4/places/<place>.npz for the GPU image."""
+    p = A4O/'places'/f'{place}.npz'
+    if not p.exists():
+        P = place_points(place); p.parent.mkdir(parents=True, exist_ok=True)
+        savez(p, **{k: np.asarray(v) for k, v in P.items() if k not in ('T', 'rule') and v is not None}, has_u=np.asarray(P['u'] is not None))
+    z = loadz(p); P = {k: z[k] for k in z if k != 'has_u'}; P['stem'] = str(P['stem']); P['area_m2'] = float(P['area_m2'])
+    if not bool(z['has_u']): P['u'] = None
+    P['T'] = Targets(P['stem']); return P
+
+if __name__ == '__main__' and len(sys.argv) > 2 and sys.argv[1] == 'cache':
+    for pl in sys.argv[2:]: place_points_cached(pl); print('CACHED', pl, flush=True)

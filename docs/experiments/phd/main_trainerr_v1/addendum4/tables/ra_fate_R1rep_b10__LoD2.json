@@ -1,0 +1,38 @@
+{
+ "rows": [
+  {
+   "stem": "R1rep_b10__LoD2",
+   "set": "fixed",
+   "patches": 1700,
+   "seeds": 1687,
+   "deleted_pct": 91.58269116775341,
+   "released_pct": 1.6004742145820983,
+   "other_target_pct": 6.224066390041494,
+   "same_target_pct": 0.5927682276229994,
+   "rule": "lineage by init_id in the FINALTRAIN 30000 snapshot; a seed counts by its best descendant: same patch > other patch > released; no descendant = deleted"
+  },
+  {
+   "stem": "R1rep_b10__LoD2",
+   "set": "kept",
+   "patches": 1956,
+   "seeds": 1946,
+   "deleted_pct": 81.39773895169579,
+   "released_pct": 0.8735868448098663,
+   "other_target_pct": 17.574511819116136,
+   "same_target_pct": 0.1541623843782117,
+   "rule": "lineage by init_id in the FINALTRAIN 30000 snapshot; a seed counts by its best descendant: same patch > other patch > released; no descendant = deleted"
+  },
+  {
+   "stem": "R1rep_b10__LoD2",
+   "set": "both_wrong",
+   "patches": 1682,
+   "seeds": 1681,
+   "deleted_pct": 95.95478881618085,
+   "released_pct": 0.4759071980963712,
+   "other_target_pct": 3.4503271861986913,
+   "same_target_pct": 0.1189767995240928,
+   "rule": "lineage by init_id in the FINALTRAIN 30000 snapshot; a seed counts by its best descendant: same patch > other patch > released; no descendant = deleted"
+  }
+ ],
+ "scientific_verdict": null
+}

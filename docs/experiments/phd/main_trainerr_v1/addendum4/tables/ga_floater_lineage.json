@@ -1,0 +1,45 @@
+{
+ "rows": [
+  {
+   "place": "floater",
+   "place_ko": "가장자리 뜬 면",
+   "gaussians_30000": 1255,
+   "bound_30000": 0,
+   "released_30000": 138,
+   "background_30000": 1117,
+   "lineage_bound_ever": 133,
+   "self_prior_seed": 0,
+   "self_background_seed": 0,
+   "child_clone": 1230,
+   "child_split": 25,
+   "released_at_median": 200.0,
+   "last_patch_dist_m_median": 3.177213706718309,
+   "last_patch_tangent_m_median": 2.265030802487304,
+   "last_patch_normal_m_median": 1.8420824285360813,
+   "release_state_tangent_m_median": 0.3426675450638797,
+   "gt_dist_of_last_patch_m_median": 0.14086180708240284,
+   "rule": "state-based: TRAINLOG records events only inside the 1 m footprint buffer; release iteration = target_released_at; last bound patch from the latest saved state where the uid or an ancestor was bound"
+  },
+  {
+   "place": "floater_control",
+   "place_ko": "대조: 건물 안 맞는 면",
+   "gaussians_30000": 44823,
+   "bound_30000": 23363,
+   "released_30000": 10895,
+   "background_30000": 10565,
+   "lineage_bound_ever": 33902,
+   "self_prior_seed": 3530,
+   "self_background_seed": 181,
+   "child_clone": 40332,
+   "child_split": 780,
+   "released_at_median": 1600.0,
+   "last_patch_dist_m_median": 0.18300588617088068,
+   "last_patch_tangent_m_median": 0.16294224064999455,
+   "last_patch_normal_m_median": 0.010630986777248632,
+   "release_state_tangent_m_median": 0.12388936908514384,
+   "gt_dist_of_last_patch_m_median": 0.048908733666834375,
+   "rule": "state-based: TRAINLOG records events only inside the 1 m footprint buffer; release iteration = target_released_at; last bound patch from the latest saved state where the uid or an ancestor was bound"
+  }
+ ],
+ "scientific_verdict": null
+}
