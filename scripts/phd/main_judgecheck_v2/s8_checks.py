@@ -176,7 +176,7 @@ def main():
     write('c2_sensitivity', cat(SE), note='확인 2 민감도: 판마다 경우별 목표 맞음·판정 이름 맞음(참값 점), 본값과 판정이 달라진 넓이와 바뀐 방향(패치).', md_rows=lambda x: x[(x.place == '모든 자리') & (x.kind != '패치')], md_cols=['prior', 'variant', 'case', 'n', 'target_ok_pct', 'name_ok_pct'])
     write('c3_photo_by_case', cat(PH1), note='확인 3: 본값 한계 밖·u_M 없는 패치의 참값 점, 경우 x 광도 결과(줄 안 비율).', md_rows=lambda x: x[(x.texture == '모두') & (x.place == '모든 자리')])
     write('c3_photo_correct', cat(PH2), note='확인 3: 반박 가운데 사전정보 오류 비율, 지지 가운데 영상 깊이 오류 비율.', md_rows=lambda x: x[x.place == '모든 자리'])
-    write('c3_score_distribution', cat(SD), note='확인 3: 두 점수의 10·50·90 % 값 (무늬 세기 = 두 조각 무늬 세기의 큰 값, 사분위 구간).', md_rows=lambda x: x.head(0))
+    write('c3_score_distribution', cat(SD), note='확인 3: 두 점수의 10·50·90 % 값 (무늬 세기 = 두 조각 무늬 세기의 큰 값, 사분위 구간).', md_cols=['prior', 'case_group', 'texture_quartile', 'n', 's_P_p10', 's_P_p50', 's_P_p90', 's_M_p10', 's_M_p50', 's_M_p90'])
     write('c3_both_high_in_limit', cat(BH), note='확인 3: 한계 안 참값 점에서 광도 결과 둘 다 높음 비율.')
     write('c4_error_rules', cat(ER), note='확인 4: 진짜 판정 오류(이름이 맞는 짝과 다르고 목표도 τ 밖)를 생긴 규칙으로 나눔. 패치 안 경우 섞임은 따로 셈.', md_rows=lambda x: x[(x.group == '전체') & (x.place == '모든 자리')].sort_values('true_error_n', ascending=False).head(24),
           md_cols=['prior', 'case', 'rule', 'case_n', 'true_error_n', 'true_error_pct_of_case', 'true_error_mixed_patch_n', 'name_wrong_target_ok_n'])

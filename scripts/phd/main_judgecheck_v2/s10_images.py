@@ -54,8 +54,13 @@ def slice_mesh(V, F, p0, nrm, lo, hi):
         if len(pts) == 2 and ((np.array(pts) >= lo - .5).all() and (np.array(pts) <= hi + .5).all()): segs.append(pts)
     return np.array(segs)
 FTMESH = {'B0_b10': 'addendum3_stage2', 'B173nb_b10': 'addendum3_stage1', 'R1rep_b10': 'addendum3_stage2'}
-def fig6():
+def fig6gt():
+    """그림 6 덧붙임(사용자 결정 11/13): 참값 점 모임만 놓고 같은 규칙(넓이 큰 20개, 한 건물 둘까지). 유형마다 하나 더함은 없음. 규칙 판(fig6_outside_clusters_*)은 그대로 둠."""
+    fig6(only_gt=True)
+def fig6(only_gt=False):
     C = pd.read_csv(O/'analysis/clusters.csv'); O_ = ortho()
+    stem = 'fig6_gt_clusters' if only_gt else 'fig6_outside_clusters'
+    rule = '20 largest truth-point clusters (<=2 per building), added by user decision 2026-11-13' if only_gt else '20 largest clusters (<=2 per building) + largest remaining per geometry type'
     for prior in ['LoD2', 'ALS']:
         d = loadz(O/'analysis'/f'gt_{prior}.npz'); P = patch_arrays(prior); look = {}; tiles_ = []
         for p in sorted((O/'geometry_raw').glob(f'*__{prior}.npz')):
@@ -64,11 +69,12 @@ def fig6():
         mi = J.VARIANTS.index('method'); TH = np.concatenate([loadz(O/'judge/base'/p.name, ['target_h'])['target_h'][mi] for p in sorted((O/'geometry_raw').glob(f'*__{prior}.npz'))])
         ptile = np.concatenate([np.full(len(loadz(p, ['kind'])['kind']), p.stem.split('__')[0]) for p in sorted((O/'geometry_raw').glob(f'*__{prior}.npz'))])
         c = C[(C.prior == prior) & (C['size'] == '1 m2 이상')].sort_values('area_m2', ascending=False); chosen = []; perb = {}
+        if only_gt: c = c[c.cluster_source == '참값 점']
         for _, r in c.iterrows():
             if len(chosen) >= 20: break
             if perb.get(r.building, 0) >= 2: continue
             chosen.append(int(r.cluster_id)); perb[r.building] = perb.get(r.building, 0) + 1
-        for tname in sorted(set(c['geometry_type'].dropna())):
+        for tname in ([] if only_gt else sorted(set(c['geometry_type'].dropna()))):
             x = c[(c.geometry_type == tname) & ~c.cluster_id.isin(chosen)]
             if len(x): chosen.append(int(x.iloc[0].cluster_id))
         meta = []; pages = [chosen[i:i+6] for i in range(0, len(chosen), 6)]
@@ -123,10 +129,11 @@ def fig6():
                 axs[r, 0].set_xlabel(txt + '   원인: ________', fontsize=6.5, loc='left')
                 meta.append(dict(cluster_id=cid, page=pg, view=None if j is None else cam().names[j], crop=crop, section_direction=dirn.tolist(), section_band_m=.25, sites=sorted(sites)))
             fig.legend(handles=[Patch(color=cc, label=n) for cc, n in zip(NINE_C, NINE_N)], ncol=9, fontsize=6, loc='lower center', frameon=False)
-            fig.suptitle(f'{prior}: 네 경우 밖 모임 — 아홉 조합, 비스듬한 학습 영상, 단면 ({pg + 1}/{len(pages)})', fontsize=9); fig.tight_layout(rect=[0, .02, 1, .98])
-            name = f'fig6_outside_clusters_{prior}_{pg + 1}'; fig.savefig(FIG/f'{name}.png', dpi=300, facecolor='white', bbox_inches='tight'); plt.close(fig)
-            dump(FIG/f'{name}.json', dict(prior=prior, clusters=[m for m in meta if m['page'] == pg], rule='20 largest clusters (<=2 per building) + largest remaining per geometry type', scientific_verdict=None))
-        print('FIG6', prior, len(chosen), flush=True)
+            head = '네 경우 밖 참값 점 모임(덧붙임)' if only_gt else '네 경우 밖 모임'
+            fig.suptitle(f'{prior}: {head} — 아홉 조합, 비스듬한 학습 영상, 단면 ({pg + 1}/{len(pages)})', fontsize=9); fig.tight_layout(rect=[0, .02, 1, .98])
+            name = f'{stem}_{prior}_{pg + 1}'; fig.savefig(FIG/f'{name}.png', dpi=300, facecolor='white', bbox_inches='tight'); plt.close(fig)
+            dump(FIG/f'{name}.json', dict(prior=prior, clusters=[m for m in meta if m['page'] == pg], rule=rule, scientific_verdict=None))
+        print('FIG6', stem, prior, len(chosen), flush=True)
 def components(P, r):
     pairs = cKDTree(P).query_pairs(r, output_type='ndarray'); g = coo_matrix((np.ones(len(pairs)), (pairs[:, 0], pairs[:, 1])), shape=(len(P), len(P))); return connected_components(g, directed=False)
 def fig5():
@@ -191,8 +198,11 @@ def fig7():
         d = loadz(O/'analysis'/f'gt_{prior}.npz', ['gid', 'paired', 'case', 'patch_majority_case']); A = []
         for p in sorted((O/'geometry_raw').glob(f'*__{prior}.npz')):
             t = p.stem.split('__')[0]; g = loadz(p, ['patch_id', 'centre', 'building', 'kind', 'area']); j = loadz(O/'judge/base'/p.name, ['photo_code', 'photo_point', 's_P', 's_M', 't', 'region'])
-            tx = loadz(O/'texture'/p.name, ['textureless'])['textureless']; A.append(dict(g, photo_code=j['photo_code'], photo_point=j['photo_point'], s_P=j['s_P'], s_M=j['s_M'], t=j['t'], region=j['region'][J.VARIANTS.index('method')], textureless=tx, tile=np.full(len(tx), t)))
-        P = {k: np.concatenate([a[k] for a in A]) for k in A[0]}; N = len(P['kind'])
+            tx = loadz(O/'texture'/p.name, ['textureless'])['textureless']; gb = loadz(O/'geometry/base'/p.name, ['geometry', 'u_M']); nn = loadz(p, ['n'])['n']
+            # 확인 3과 같은 범위(11/15 고침): 한계 밖이거나 u_M 없는 패치(광도 결과가 판정에 쓰이는 곳)
+            scope = (gb['geometry'] == 1) | ((nn >= 4) & (gb['geometry'] == 9) & ~np.isfinite(gb['u_M']))
+            A.append(dict(g, photo_code=j['photo_code'], photo_point=j['photo_point'], s_P=j['s_P'], s_M=j['s_M'], t=j['t'], region=j['region'][J.VARIANTS.index('method')], textureless=tx, tile=np.full(len(tx), t), scope=scope))
+        P = {k: np.concatenate([a[k] for a in A]) for k in A[0]}; N = len(P['kind']); P['photo_code'] = np.where(P['scope'], P['photo_code'], -1)
         maj = np.full(N, -1); has = d['paired']; cnt = np.zeros((N, 5)); np.add.at(cnt, (d['gid'][has], np.clip(d['case'][has], 0, 4)), 1); hm = cnt.sum(1) > 0; maj[hm] = cnt[hm].argmax(1)
         cats = [('틀린 지지', (P['photo_code'] == 0) & (maj == 1), 4), ('틀린 반박', (P['photo_code'] == 1) & (maj == 2), 4), ('무늬 없음 둘 다 높음', (P['photo_code'] == 3) & (P['textureless'] == 1), 2), ('영상 깊이 오류 둘 다 낮음', (P['photo_code'] == 2) & (maj == 2), 2)]
         items = []
@@ -226,7 +236,7 @@ def fig7():
             meta.append(dict(category=name, building=b, area_m2=a, patch_id=P['patch_id'][i], tile=t, s_P=float(P['s_P'][i]), s_M=float(P['s_M'][i]), t=float(P['t'][i]), views=labels))
         fig.suptitle(f'{prior}: 사진 조각 — 틀린 지지·틀린 반박·무늬 없음 둘 다 높음·영상 깊이 오류 둘 다 낮음', fontsize=9); fig.tight_layout()
         fig.savefig(FIG/f'fig7_photo_pieces_{prior}.png', dpi=300, facecolor='white', bbox_inches='tight'); plt.close(fig)
-        dump(FIG/f'fig7_photo_pieces_{prior}.json', dict(prior=prior, rule='같은 범주·건물 0.36 m 로 이은 패치 넓이 큰 차례, 건물마다 둘까지; 경우 = 패치 다수결', items=meta, scientific_verdict=None))
+        dump(FIG/f'fig7_photo_pieces_{prior}.json', dict(prior=prior, rule='한계 밖·u_M 없는 패치(확인 3 범위)에서, 같은 범주·건물 0.36 m 로 이은 패치 넓이 큰 차례, 건물마다 둘까지; 경우 = 패치 다수결', items=meta, scientific_verdict=None))
         print('FIG7', prior, len(items), flush=True)
 if __name__ == '__main__':
     for f in sys.argv[1:]: globals()[f]()

@@ -1,7 +1,7 @@
 """세 실험 지역의 참값 행 (발주 2.3: 저장된 GTJUDGE 사전 정보 면·MVS 면·거리 다시 씀). 참값은 평가에만.
 - 행: GTJUDGE scenes/<site>__<prior>/rows.npz (xyz, normal, row_kind, row_owner = JUDGEAPPLY 핵심점 차례), distances/prior.npz·mvs.npz row_s.
 - 본값 패치와의 짝: RESCORE 기둥 규칙(prism.cpp) - 벽 행 ↔ 벽 패치, 지붕 행 ↔ 지붕 패치 (s4_truth_rest 와 같음).
-- 지금 판: row_owner → JUDGEAPPLY patch_id → FINALTRAIN targets (judge_region, target_height_m, centre, normal).
+- 지금 판: RESCORE 기둥 규칙으로 JUDGEAPPLY 핵심점 패치에 짝 → FINALTRAIN targets (judge_region, target_height_m, centre, normal). GTJUDGE row_owner 짝은 *_rowowner 칸(비교용).
 - 학습 뒤: distances/FINALTRAIN_30000.npz, judgment_mesh.npz row_s 의 |s| <= τ."""
 from common import *
 import s4_truth_rest as TR
@@ -43,18 +43,33 @@ def main():
                 o, h = TR.prism(X[qi], c[pm], a[pm], b[pm], n[pm], length[pm], O/'tmp'/f'prism_exp_{site}_{prior}_{kind}')
                 owner[qi[o >= 0]] = pm[o[o >= 0]]; hits[qi] = h
             pid = np.where(owner >= 0, p['patch_id'][np.maximum(owner, 0)], '')
-            # 지금 판
-            core = loadz(JA/'core_points'/f'{site}__{prior}.npz', ['patch_id']); f = loadz(FT/'targets'/f'{site}__{prior}.npz', ['patch_id', 'judge_region', 'reason', 'target_height_m', 'centre', 'normal', 'in_eval'])
-            pos = {s: i for i, s in enumerate(f['patch_id'])}; ro = r['row_owner']; has = (ro >= 0) & (ro < len(core['patch_id']))
-            fi = np.full(len(X), -1); fi[has] = [pos[s] for s in core['patch_id'][ro[has]]]
-            cur_reg = np.where(fi >= 0, f['judge_region'][np.maximum(fi, 0)], -1).astype(np.int8)
-            cur_t = np.full(len(X), np.nan); m = fi >= 0
-            cur_t[m] = plane_distance(X[m], Nm[m], f['centre'][fi[m]], f['normal'][fi[m]], f['target_height_m'][fi[m]], wall[m])
+            # 지금 판: 발주 2.5 짝짓기(RESCORE 기둥 규칙)로 JUDGEAPPLY 핵심점 패치에 놓고 FINALTRAIN targets 의 판정·목표를 받음.
+            # (11/14 고침: 앞 판은 GTJUDGE row_owner 로 짝지었음 → *_rowowner 칸으로 남김)
+            core = loadz(JA/'core_points'/f'{site}__{prior}.npz', ['patch_id', 'centre', 'normal', 'tangent1', 'tangent2', 'kind', 'prior_height_m']); f = loadz(FT/'targets'/f'{site}__{prior}.npz', ['patch_id', 'judge_region', 'reason', 'target_height_m', 'centre', 'normal', 'in_eval'])
+            pos = {s: i for i, s in enumerate(f['patch_id'])}
+            cn = core['normal'].astype(float); ca = core['tangent1'].astype(float); cb = core['tangent2'].astype(float)
+            if prior == 'ALS':
+                for i in np.flatnonzero(np.isfinite(cn).all(1)):
+                    e = np.array([1., 0., 0.]) if abs(cn[i, 0]) < .9 else np.array([0., 1., 0.]); e = e - cn[i]*(e@cn[i]); e /= np.linalg.norm(e); ca[i] = e; cb[i] = np.cross(cn[i], e)
+            cc = core['centre'] + np.nan_to_num(core['prior_height_m'])[:, None]*cn; clen = np.where(core['kind'] == 1, 10., 5.); cown = np.full(len(X), -1, np.int64)
+            for kind, gm in [(1, ~wall), (2, wall)]:
+                pm = np.flatnonzero(core['kind'] == kind); qi = np.flatnonzero(gm)
+                if not len(pm) or not len(qi): continue
+                o, _ = TR.prism(X[qi], cc[pm], ca[pm], cb[pm], cn[pm], clen[pm], O/'tmp'/f'prism_cur_{site}_{prior}_{kind}')
+                cown[qi[o >= 0]] = pm[o[o >= 0]]
+            def judged(owner):
+                fi = np.full(len(X), -1); h = owner >= 0; fi[h] = [pos[s] for s in core['patch_id'][owner[h]]]
+                reg = np.where(fi >= 0, f['judge_region'][np.maximum(fi, 0)], -1).astype(np.int8); t = np.full(len(X), np.nan); m = fi >= 0
+                t[m] = plane_distance(X[m], Nm[m], f['centre'][fi[m]], f['normal'][fi[m]], f['target_height_m'][fi[m]], wall[m])
+                return reg, t
+            cur_reg, cur_t = judged(cown)
+            ro = r['row_owner']; ro = np.where((ro >= 0) & (ro < len(core['patch_id'])), ro, -1); own_reg, own_t = judged(ro)
             tau = r['row_tau_m']
             savez(dest, xyz=X, normal=Nm, row_kind=r['row_kind'], gt_kind=gk, hag=hag, s_P=sP, s_M=sM, tau=tau, case_stored=cell['case_id'], prior_absent_stored=cell['prior_absent'],
                   patch_id=pid, building=np.where(owner >= 0, p['building'][np.maximum(owner, 0)], ''), region=np.where(owner >= 0, p['region'][np.maximum(owner, 0)], SITE_REGION[site]), hits=hits,
-                  current_patch_id=np.where(has, core['patch_id'][np.where(has, ro, 0)], ''), current_region=cur_reg, current_target_distance=cur_t,
+                  current_patch_id=np.where(cown >= 0, core['patch_id'][np.maximum(cown, 0)], ''), current_region=cur_reg, current_target_distance=cur_t,
+                  current_patch_id_rowowner=np.where(ro >= 0, core['patch_id'][np.maximum(ro, 0)], ''), current_region_rowowner=own_reg, current_target_distance_rowowner=own_t,
                   finaltrain_s=ft, judgment_mesh_s=jm, site=np.full(len(X), site))
-            print('TRUTH_EXP', site, prior, len(X), int((owner >= 0).sum()), int((fi >= 0).sum()), round(T.mark(site+prior)), flush=True)
+            print('TRUTH_EXP', site, prior, len(X), int((owner >= 0).sum()), int((cur_reg >= 0).sum()), int((own_reg >= 0).sum()), round(T.mark(site+prior)), flush=True)
     dump(O/'truth/exp/complete.json', dict(at=now(), seconds=T.mark('end'), scientific_verdict=None))
 if __name__ == '__main__': main()
