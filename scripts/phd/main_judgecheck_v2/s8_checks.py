@@ -122,7 +122,8 @@ def score_dist(prior, d, P):
         m = inl & tm; pcc = gt_patch_cols(d, P, prior, ['base:photo_code'])[0]['base:photo_code']
         bh.append(dict(prior=prior, texture=tn, in_limit_n=int(m.sum()), both_high_pct=100*float((pcc[m] == 3).mean()) if m.any() else np.nan))
     return pd.DataFrame(rows), pd.DataFrame(bh)
-def error_rules(prior, d, P, cols, nou):
+def point_rules(d, cols, nou):
+    """참값 점마다: 네 경우 안, 이름 틀림, 목표 틀림, 생긴 규칙, 패치 안 경우 섞임 (6.3). s9_extra 도 같은 함수를 씀."""
     pc = cols['base:photo_code']; geom = cols['base:geometry']; mi = J.VARIANTS.index('method'); reg = d['region_v'][mi]; why = d['reason_v'][mi]
     four = d['paired'] & np.isin(d['case'], [0, 1, 2, 4]); match = np.array([MATCH.get(int(c), -9) for c in d['case']]); name_wrong = four & (reg != match); tgt_wrong = ~d['target_ok_v'][mi]
     rule = np.full(len(d['src']), '', dtype='<U40')
@@ -131,6 +132,10 @@ def error_rules(prior, d, P, cols, nou):
     for k, kn in PCODE.items(): rule[dm & (pc == k)] = f'기본 판정: {kn}'
     rule[nou] = 'u_M 없음'; rule[np.isin(reg, [3, 4])] = '가시성 검사'; rule[reg == 9] = '미판정'
     mixed = d['patch_majority_case'] != d['case']
+    return four, name_wrong, tgt_wrong, rule, mixed
+def error_rules(prior, d, P, cols, nou):
+    pc = cols['base:photo_code']; geom = cols['base:geometry']; mi = J.VARIANTS.index('method'); reg = d['region_v'][mi]; why = d['reason_v'][mi]
+    four, name_wrong, tgt_wrong, rule, mixed = point_rules(d, cols, nou)
     rows = []
     for gn, gm in [('전체', np.ones(len(d['src']), bool)), ('세 실험 지역', d['group'] == 'experiment'), ('나머지', d['group'] == 'rest')]:
         for pn, pm in [('모든 자리', np.ones(len(d['src']), bool))] + [(PLACE[k], d['place'] == k) for k in PLACE]:
