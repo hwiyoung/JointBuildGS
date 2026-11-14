@@ -16,7 +16,7 @@ ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0', 
          # addendum 14: 판 다 ALS cells with the filter (most images first; cell0 resumes from cell0ef at 15,000), then filter single sites
          'cellsef_ALS_s0_cell2', 'cellsef_ALS_s0_cell1', 'cellsef_ALS_s0_cell3', 'cellsef_ALS_s0_cell0', 'R1repef_ALS_s0', 'B173nbef_ALS_s0',
          'R1repef_ALS_s1',   # addendum 15
-         'campusef30k_ALS_s0', 'cellsef_ALS_s0_cell1fix', 'campusef120k_ALS_s0', 'B173nbef_ALS_s1']   # addenda 16, 17 (120k held: not run)
+         'cellsef_ALS_s0_cell1fix', 'B173nbef_ALS_s1', 'campusef30k_ALS_s0']   # addenda 16-18 (campusef120k_ALS_s0 not run: out of ORDER, addendum 18)
 JOBS = {
     'B0ef_ALS_s0': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
                         ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g'),

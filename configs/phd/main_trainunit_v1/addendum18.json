@@ -1,0 +1,18 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 18,
+  "instruction": "user, 2026-11-15 00:09 KST: '진행상황 확인하자' (addendum 17 still stands: LiDAR-only comparison set, 판 가 not stopped, 판 나 not run; results wanted by 11-15, advisor meeting 11-16). Execution-only change under the standing rule that execution problems which change no setting or result proceed by the recommended way and are reported.",
+  "found": {
+    "판 가 attempt 1": "campusef30k_ALS_s0 attempt 1 stopped by the host guard at 2026-11-14 15:43:44 (MemAvailable 17.5 GiB < floor 20 GiB) at iteration 4,400 after 2,006 s (peak RSS 34.1 GiB, 1.55 M Gaussians). This lab's table and figure test runs (tu_add16.py table and fig, guarded 16g and 6g) ended at 15:42:59 and 15:43:02; other sessions' containers were also running. What held the memory at 15:43:44 is not recorded.",
+    "queue deadlock": "after the guard stop the queue released the claim for a retry (1 of 3), but its campus rule counted the hold claim of campusef120k_ALS_s0 (claim directory, no receipt) as a live campus run, so the retry waited from 15:44 to 2026-11-15 00:10 (about 8.5 h, both GPUs idle at the end). tu_add17_after.sh waited for that queue and started nothing."
+  },
+  "changes_to_addendum17": {
+    "ORDER": "campusef120k_ALS_s0 is removed from the queue ORDER (판 나 not run, addendum 17); its claim directory stays as a record. This removes the deadlock.",
+    "order": "cellsef_ALS_s0_cell1fix, then B173nbef_ALS_s1, then 판 가 attempt 2 (from iteration 0, same arguments), each alone on GPU 1 with one queue process. Reason: the 판 다 check and the B173 seed spread complete the core comparison set first and do not depend on the long campus run; one training at a time because host memory (cell 25.0 GiB, B173 16.4 GiB, campus 34+ GiB peak RSS, next to other sessions' containers) left the earlier paired cell runs at 20.6 GiB minimum available.",
+    "post order": "merge cellsef1fix_ALS_s0 and post R1rep_b10; post efs1_B173nb_b10_ALS; tables and figures (core set); then 판 가 training; then post campusef30k_ALS_s0 and tables and figures again. No table, figure or mesh job runs while 판 가 trains."
+  },
+  "unchanged": "fork r23, renderer, train_args, elongation filter 0.01, scene radius rule of addendum 17, judgment, inputs, mesh rule, scorer, merge rule, cells, queue memory rules (start 45 GiB, campus 60 GiB, floor 20 GiB, up to 3 guard retries), appendix selection rule (user / analysis session)",
+  "gpu": "GPU 1 only; GPU 0 is left for TRAINERR",
+  "not_included": "판 나, LoD2",
+  "scientific_verdict": null
+}
