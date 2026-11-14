@@ -1,0 +1,41 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1 addendum 4 (b): place and value details fixed before the first work-ga/na computation",
+ "scientific_verdict": null,
+ "parent": "addendum4.json",
+ "annex": {
+  "run": "addendum3 ba3_B0_ALS_record (B0 x ALS, r30, record range = annex box)",
+  "stem": "B0_b10__ALS",
+  "place": "bound to own target patches whose anchor lies in the annex box and is farther than 1 m from every GT reference point of the scene (GTJUDGE addendum11 reference__xyz): wrong target (지붕 아래 틀린 면 쪽)",
+  "control": "patches whose anchor lies in the annex box within 0.2 m of a GT reference point (맞는 면)",
+  "why": "the record range covers only the annex box, so no outside control exists; the closest single definition (order 1.5)"
+ },
+ "floater": {
+  "run": "TRAINLOG tl_B173nb_b10_ALS_s0 attempt2 (scene .pt, all Gaussians)",
+  "faces": "addendum3 ma/points.npz edge_face_centres (floater_check rule)",
+  "place": "Gaussians within 0.5 m of an edge-floater face centre at the 30000 state and their ancestors (parent_uid chain) for the event values",
+  "control": "the same for the control faces (addendum3 work_ma control: inside the footprint, >= 12 m, <= 0.2 m from GT dense), at most 20000 centres sampled with seed 20261115"
+ },
+ "events": {
+  "self_or_child": "born_how 0/1 = seed itself (prior seed / background seed), 2 = clone child, 3 = split child (TRAINLOG born_how)",
+  "first_place": "seed: state 0 xyz; child: birth event xyz",
+  "release_condition": "at the event: tangent distance and normal excess to the previous target patch (r7 candidate test); tangent > 0.5 m, normal excess > 0.5 m, or both; no other patch qualified by rule",
+  "retarget_condition": "tangent and normal excess to the old and new patch at the event",
+  "fate": "last saved state of the run (30000; sa-1 6000): alive bound / alive released / deleted (delete event by uid, reason) / never rebound (release is irreversible: r7)",
+  "balance": "per window between saved states: start + born + in - deleted - released - out = end (bound to the place patches, in-range Gaussians)"
+ },
+ "na": {
+  "occlusion": "per Gaussian and training view whose image contains its projected centre (in front of the camera): at the centre pixel, accumulated opacity of the splats whose ray-splat depth is smaller than the Gaussian centre depth minus 0.05 m (2DGS torch compositing of addendum3 work na, same renderer rules)",
+  "colour_weight": "alpha*T of the Gaussian itself at its centre pixel, summed over the views (centre pixel only; replaces the 9x9 window of addendum4.json work_na before any computation, cost)",
+  "front_kind": "weight (alpha*T) of the splats in front by kind relative to the Gaussian: same patch, other patch, released, background",
+  "states": {
+   "R1": "sa-1 scene dumps 3000_pre_reset and 3500",
+   "B0_edge": "TRAINERR tl_B0_LoD2_own has no scene dumps at 3000_pre_reset / 3500 -> occlusion not available; B0 values from the TRAINLOG record run tl_B0_b10_LoD2_s0 scene dumps (3000_pre_reset, 3500) for the edge places (same scene and command family)",
+   "annex": "ba3 scene dumps if present at 3000_pre_reset / 3500, else not available"
+  },
+  "survived": "present (same uid) in the 6000_pre_reset state; deleted = a delete event by uid before 6000"
+ },
+ "sa1_check": {
+  "compare": "sa-1 6000 vs record run 6000 states: in-range Gaussians, bound / released / background counts, bound to the floor band patches; curve losses at 6000; scene Gaussian count",
+  "scene_value": "no 6000 mesh exists for the record run; scene values at 6000 = curve and counts only (stated)"
+ }
+}

@@ -1,0 +1,52 @@
+diff -ru '--exclude=__pycache__' ../../../../src/phd/forks/GeoGS-conf-guided-v1-r31/jbgs_a4.py ../../../../src/phd/forks/GeoGS-conf-guided-v1-r32/jbgs_a4.py
+--- ../../../../src/phd/forks/GeoGS-conf-guided-v1-r31/jbgs_a4.py	2026-11-15 00:11:21.402067175 +0900
++++ ../../../../src/phd/forks/GeoGS-conf-guided-v1-r32/jbgs_a4.py	2026-11-15 00:17:54.473117359 +0900
+@@ -9,6 +9,8 @@
+ --jbgs_a4_occl_mask_m M    : (work sa-2) before training, target-depth pixels whose image depth (STAGE0 s61 maps/mvs, finite and > 0)
+                              is closer than the written target depth by more than M metres get depth-supervision weight 0.
+                              Pixels without image depth are unchanged. Default -1 = off (maps untouched).
++--jbgs_a4_dual_depth on   : (r32, work sa-3) target maps carry depth2/weight2 (image depth); Target.loss adds the same weighted absolute
++                             difference for them with the same full-image denominator. Default off = r31.
+ With every switch at its default no model, optimizer, map or random state is touched by this module.
+ """
+ import json
+@@ -22,6 +24,7 @@
+     parser.add_argument('--jbgs_a4_stop_at', type=int, default=-1)
+     parser.add_argument('--jbgs_a4_occl_mask_m', type=float, default=-1.)
+     parser.add_argument('--jbgs_a4_mvs_dir', default='')
++    parser.add_argument('--jbgs_a4_dual_depth', choices=['on', 'off'], default='off')  # [r32] sa-3: maps carry depth2/weight2 (image depth), loss adds that term
+ 
+ 
+ def grad_signed(args):
+diff -ru '--exclude=__pycache__' ../../../../src/phd/forks/GeoGS-conf-guided-v1-r31/jbgs_target.py ../../../../src/phd/forks/GeoGS-conf-guided-v1-r32/jbgs_target.py
+--- ../../../../src/phd/forks/GeoGS-conf-guided-v1-r31/jbgs_target.py	2026-11-14 00:22:55.810003775 +0900
++++ ../../../../src/phd/forks/GeoGS-conf-guided-v1-r32/jbgs_target.py	2026-11-15 00:17:54.473117359 +0900
+@@ -49,6 +49,7 @@
+         if args.jbgs_appearance!='off' or args.jbgs_mv_consistency!='off':raise ValueError('TARGET auxiliary module enabled')
+         self.root=Path(args.jbgs_target_dir);self.mon=Path(args.model_path)/'target_monitor';self.mon.mkdir(parents=True)
+         self.depth_lambda=args.jbgs_target_lambda;self.scene=scene;self.n6000=None
++        self.a4_dual=getattr(args,'jbgs_a4_dual_depth','off')=='on'  # [jbgs r32] default off = r31 behaviour
+         with np.load(self.root/'seeds.npz') as z:s={k:z[k] for k in z.files}
+         keep=torch.as_tensor(s['keep_original'],device='cuda',dtype=torch.long)
+         bg_rotation=None
+@@ -106,6 +107,7 @@
+         for name,meta in self.index['views'].items():
+             with np.load(self.root/'maps'/meta['file']) as z:
+                 data={k:torch.from_numpy(z[k]).pin_memory() for k in ['depth','sigma','weight','owner']}
++                if self.a4_dual:data.update({k:torch.from_numpy(z[k]).pin_memory() for k in ['depth2','weight2']})  # [jbgs r32] sa-3 second depth term
+             self.maps[name]=data
+         write(self.mon/'initialization.json',dict(seeds=count,prior_seeds=int((s['origin']==1).sum()),
+             background_seeds=int((s['origin']==0).sum()),target_file_sha256=hashlib.sha256((self.root/'seeds.npz').read_bytes()).hexdigest(),
+@@ -118,7 +120,11 @@
+         target=m['depth'].to(D.device,non_blocking=True);w=m['weight'].to(D.device,non_blocking=True)
+         valid=torch.isfinite(target)&(target>0)&torch.isfinite(D)&(D>0)&(w>0)
+         # Same weighted absolute depth difference and full-image denominator as nojudge.
+-        return (torch.abs(D[valid]-target[valid])*w[valid]).sum()/float(D.numel())
++        if not self.a4_dual:return (torch.abs(D[valid]-target[valid])*w[valid]).sum()/float(D.numel())
++        # [jbgs r32] sa-3: the same expression for the second map (image depth), added with the same denominator
++        t2=m['depth2'].to(D.device,non_blocking=True);w2=m['weight2'].to(D.device,non_blocking=True)
++        v2=torch.isfinite(t2)&(t2>0)&torch.isfinite(D)&(D>0)&(w2>0)
++        return ((torch.abs(D[valid]-target[valid])*w[valid]).sum()+(torch.abs(D[v2]-t2[v2])*w2[v2]).sum())/float(D.numel())
+ 
+     @torch.no_grad()
+     def project_bounds(self,g):

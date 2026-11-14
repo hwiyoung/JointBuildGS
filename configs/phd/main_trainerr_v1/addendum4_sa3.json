@@ -1,0 +1,47 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1 addendum 4 work sa-3",
+ "scientific_verdict": null,
+ "parent_config": "addendum4.json",
+ "scene": "B173nb_b10__ALS",
+ "fork": "GeoGS-conf-guided-v1-r32 (= r31 + --jbgs_a4_dual_depth; default off = r31)",
+ "targets": {
+  "source": "FINALTRAIN targets/B173nb_b10__ALS.npz (every field kept; only the decision-derived fields replaced)",
+  "judgment": "skipped: every patch with finite prior_height_m, finite sigma_P_m > 0 and a finite non-zero normal gets the inherited keep rule (judge_region 1 -> region code 2): h = prior_height_m, sigma = sigma_P_m; every other patch has no target (region code -1, surface_exists false)",
+  "target": "centre + h * normal (prior face)",
+  "sigma_ref": "inherited formula area-weighted over the surface patches"
+ },
+ "seeds": "FINALTRAIN prepare_inputs.seeds unchanged with the new targets: prior points located on surface patches seeded at the prior face, SfM background unchanged (r8 rules)",
+ "position_constraint": "inherited project_bounds and reattach on the prior-face targets (patch anchor = prior face)",
+ "maps": {
+  "term1": "inherited disc rasterization of the prior-face targets: depth, owner, sigma, weight = clip(sigma_ref / sigma, 0.1, 10) on owner pixels; no background fill in this map",
+  "term2": "depth2 = image depth (STAGE0 s61 maps/mvs) on every pixel with finite > 0 depth and conf > 0 (the inherited background-fill condition), weight2 = 1 (inherited background weight)",
+  "loss": "Target.loss with --jbgs_a4_dual_depth on: (sum |D - depth| w + sum |D - depth2| w2) / pixels, times the inherited --jbgs_target_lambda 0.05"
+ },
+ "why_closest": "order 8 sa-3 asks for both prior target and image depth in the depth supervision for every patch and seeds / position constraint on the prior faces; the inherited code has one map per view, so the second term is a second map with the inherited background weight rule (the closest single definition, order 1.5)",
+ "train": {
+  "base": "TRAINLOG tl_B173nb_b10_ALS_s0 attempt2 command (trainlog on, TRAINLOG trainlog_v1.json config)",
+  "change": [
+   "--jbgs_target_dir <sa3 stage1>",
+   "--jbgs_targets <sa3 targets>",
+   "--jbgs_a4_dual_depth on"
+  ],
+  "iterations": 30000,
+  "seed": 0,
+  "meshes": [
+   7000,
+   10000,
+   15000,
+   30000
+  ]
+ },
+ "values": [
+  "edge floater area (addendum3 places.edge_floater rule)",
+  "building-scope faces farther than 1 m from GT: area",
+  "scene values (addendum11 rule)",
+  "Gaussians within 0.5 m of edge-floater face centres: count, kinds"
+ ],
+ "compare_with": [
+  "TRAINLOG tl_B173nb_b10_ALS_s0 (본 방법 기록 판, 637 m2)",
+  "r15 nojudge_ALS_s0 (판단을 끈 옛 판, 124 m2 as given by the order)"
+ ]
+}

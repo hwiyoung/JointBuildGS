@@ -1,0 +1,25 @@
+__pycache__/
+*.pyc
+.vscode
+.idea
+
+# training / rendering output
+output/
+build/
+*.egg-info/
+
+# large data — bring your own, never commit
+data/*
+!data/*.py
+!data/*.sh
+LoD2Depth/data/
+LoD2Depth/output/
+evaluation_data/
+example_scene/
+
+# generated point clouds / meshes
+*.ply
+*.obj
+
+logs/
+*.log

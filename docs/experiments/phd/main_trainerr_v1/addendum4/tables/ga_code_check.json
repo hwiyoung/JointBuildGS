@@ -1,0 +1,42 @@
+[
+ {
+  "item": "묶인 가우시안의 허용 범위",
+  "file_line": "jbgs_target.py:35-43 normal_projection; jbgs_target_r6.py:68-70 project_bounds",
+  "record": "법선 방향: 자기 목표(target_index)의 기준점에서 ±1.96σ(σ = 패치 sigma, m). 접선 방향: 범위 없음(normal_projection 주석 \"without tangent bounds\"). 재할당·풀림 판정의 접선 범위는 아래 줄"
+ },
+ {
+  "item": "project_bounds가 하는 일",
+  "file_line": "jbgs_target_r6.py:68-70; train.py:1080-1082(optimizer.step 바로 뒤, 매 반복), train.py:1332-1333(반복 끝, 매 반복)",
+  "record": "target_tag==1인 행만, 자기 목표 기준점·법선에 대한 법선 성분 h를 [−1.96σ, +1.96σ]로 자른다. 법선 방향만 옮긴다(접선 성분은 그대로)."
+ },
+ {
+  "item": "풀림이 일어나는 조건",
+  "file_line": "jbgs_target_r7.py:46-61 reattach, 16-44 candidates; 부르는 곳 train.py:1080-1081(iteration % 100 == 0, optimizer.step 뒤, \"periodic\"), jbgs_target_r6.py:73-76 extended(분할·복제 직후 \"clone_or_split\"), 77-80 pruned(제거 직후 \"prune\"), gaussian_model.py:464, 400",
+  "record": "묶인 모든 가우시안마다 모든 목표 패치의 기준점에 대해 접선 거리 tan ≤ 0.5 m 이고 법선 초과 max(|h|−1.96σ, 0) ≤ 0.5 m 인 후보를 찾는다. 후보가 하나도 없으면 풀림(target_tag 2, 되돌림 없음). 검사 시점: 100회마다 + 가우시안 늘리기(분할·복제) 직후 + 제거 직후. 기준점은 패치 중심 한 점이다(패치 넓이 아님)."
+ },
+ {
+  "item": "재할당이 일어나는 조건",
+  "file_line": "jbgs_target_r7.py:33-43(차례), 52-53",
+  "record": "같은 검사에서 후보가 있으면 접선 거리 최소 → 법선 초과 최소 → 원래 패치 번호 최소인 패치로 target_index를 바꾼다(지금 패치가 아니어도). 판정(보존·일치·보정)은 보지 않는다. 바꾼 뒤 project_bounds(r6:68-70)로 새 패치 범위 안에 넣는다."
+ },
+ {
+  "item": "분할과 복제로 생긴 자식",
+  "file_line": "scene/gaussian_model.py:468-498 densify_and_split, 500-519 densify_and_clone, 464 extended; jbgs_target_r6.py:72 child_metadata",
+  "record": "복제: 부모와 같은 자리, 부모의 target_tag·target_index 복사. 분할(N=2): 부모 원판 평면 안에서 표준편차 = 부모 크기로 뽑은 자리(법선 성분 0, 원판 법선 기준), 크기 부모/1.6, 묶임 복사, 부모는 제거(사유 5). 자식이 붙은 직후 reattach(\"clone_or_split\")가 모든 묶인 가우시안에 같은 후보 검사를 한다: 후보 없으면 그 자리에서 풀림, 있으면 가장 가까운 패치로 재할당 후 법선 범위로 투영."
+ },
+ {
+  "item": "불투명도 재설정",
+  "file_line": "scene/gaussian_model.py:244-250 reset_opacity; train.py:1219-1228; arguments/__init__.py:127(opacity_reset_interval 3000), train.py:1186(densify_until_iter 15000 전만)",
+  "record": "3,000회마다(3,000·6,000·9,000·12,000) 모든 가우시안의 불투명도를 min(지금, 0.01)로. exempt_mask는 옛 판정 모듈(꺼짐)만 → 묶인 가우시안을 따로 다루지 않는다."
+ },
+ {
+  "item": "제거",
+  "file_line": "scene/gaussian_model.py:521-536 densify_and_prune, 67-72 density_exempt; train.py:1193-1195; arguments/__init__.py:124(opacity_cull 0.05), 126(densification_interval 100), 128(densify_from_iter 500); jbgs_target.py:85(frozen_mask 모두 0)",
+  "record": "500회 넘고 15,000회 전, 100회마다: 불투명도 < 0.05 제거. 3,000회 넘으면(size_threshold 20) 화면 반지름 > 20 px 또는 세계 크기 > 0.1 × 장면 반경도 제거. 묶인 가우시안을 따로 다루지 않는다(frozen_mask 0, density_mask 없음)."
+ },
+ {
+  "item": "재설정 뒤 검사 유예",
+  "file_line": "jbgs_target_r7.py:66-69 opacity_grace; jbgs_target_r8.py:24",
+  "record": "재설정 뒤 500회 안에는 건강 점검(사전 정보 계보 불투명도 중앙값 < 0.05)만 건너뛴다. 제거 규칙에는 유예가 없다."
+ }
+]

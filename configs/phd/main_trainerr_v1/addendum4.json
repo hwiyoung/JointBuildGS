@@ -1,0 +1,218 @@
+{
+ "task_id": "PHD-MAIN-TRAINERR-v1 addendum 4",
+ "scientific_verdict": null,
+ "branch": "exp/main-experiment",
+ "order": {
+  "file": "docs/experiments/phd/main_trainerr_v1/addendum4/덧붙임4_발주문.md",
+  "sha256": "69176298158269fbf4626e6c0cadbc8e41c9cd47eab50482f37bc13a9045986d"
+ },
+ "folders": {
+  "docs": "docs/experiments/phd/main_trainerr_v1/addendum4",
+  "tables": "docs/experiments/phd/main_trainerr_v1/addendum4/tables (order 9 tables/addendum4/ kept inside addendum4/ by order 1.1)",
+  "payload": "PH/main_trainerr_v1/PHD-MAIN-TRAINERR-v1/addendum4",
+  "scripts": "scripts/phd/main_trainerr_v1/addendum4",
+  "configs": "configs/phd/main_trainerr_v1/addendum4*.json"
+ },
+ "inherits": {
+  "addendum3_config": "configs/phd/main_trainerr_v1/addendum3.json",
+  "addendum3_sha256": "20f714972794f8928ebb9625e5eb0bec1863d73b493b666d078702133ff0c2b6",
+  "rule": "order 1.7: places, controls, common definitions (column patch, target plane, outward normal, area, front/back, events, completeness) are those of addendum3.json places/common unchanged"
+ },
+ "fork": {
+  "name": "GeoGS-conf-guided-v1-r31",
+  "parent": "GeoGS-conf-guided-v1-r30 committed files (118), byte copy checked by sha256 (ALL_EQUAL)",
+  "switches": {
+   "--jbgs_a4_grad_signed": "off (default) | on: r28 gradient record also stores signed dL/dxyz (3) and signed dL/d opacity logit per term",
+   "--jbgs_a4_stop_at": "-1 (default) | N: leave the loop after iteration N records; --iterations unchanged (schedules unchanged)",
+   "--jbgs_a4_occl_mask_m": "-1 (default) | M: depth weight 0 where image depth finite>0 and image depth < target - M (sa-2, M=10)",
+   "--jbgs_a4_mvs_dir": "image depth folder for the mask (STAGE0 s61 <site>/maps/mvs)"
+  },
+  "changed_files": [
+   "train.py (import, mask call, stop, register)",
+   "jbgs_trainlog.py (two signed fields)",
+   "jbgs_a4.py (new)"
+  ],
+  "unit_check": {
+   "replay": "te_replay deterministic 300-iteration real-state replay (probe r28off_a it 200, R1rep x ALS): /source=r30 vs /source=r31 byte-equal in every part",
+   "functions": "stop_now never true and apply_occl_mask returns without touching maps when defaults / args missing",
+   "diff": "r31 vs r30 differs only in train.py, jbgs_trainlog.py and new jbgs_a4.py",
+   "sa1": "with records added: 6000 counts (Gaussians, region bound/released/background) and curve losses beside the record run; r28 magnitude fields = |signed vector| (float32 tolerance 1e-5 relative)"
+  }
+ },
+ "work_sa": {
+  "sa1": {
+   "scene": "R1rep_b10__ALS",
+   "base": "TRAINERR tl_R1_ALS_own command (r28) unchanged with fork r31",
+   "add": [
+    "--jbgs_a4_grad_signed on",
+    "--jbgs_a4_stop_at 6000",
+    "--jbgs_capture_iterations 6000 7000 15000 30000"
+   ],
+   "trainlog_config": "configs/phd/main_trainerr_v1/addendum4_trainlog_sa1.json",
+   "trainlog_config_sha256": "4f3ac0c08bab811cb9e3bbec9ed5737e27dc6af28ebe67c737bec380f1520c37",
+   "region": "TRAINERR region/R1rep_b10__ALS.json (same voxel range as the record run)",
+   "record": "states and gradients every 20 to 1000, every 100 to 6000; scene dumps 0,1000,3000_pre_reset,3000,3500,5000,6000"
+  },
+  "sa2": {
+   "scene": "B0_b10__LoD2",
+   "base": "addendum3 a3_train.py tl_B0_b10_LoD2_s0 command (TRAINLOG case config, trainlog on), fork r31",
+   "add": [
+    "--jbgs_a4_occl_mask_m 10",
+    "--jbgs_a4_mvs_dir /s0/fork_inputs/s61/B0_b10/maps/mvs"
+   ],
+   "image_depth": "finite and > 0 (addendum2 class rule, no confidence filter)",
+   "iterations": 30000,
+   "seed": 0,
+   "meshes": [
+    7000,
+    10000,
+    15000,
+    30000
+   ],
+   "report_with": [
+    "TRAINLOG record run tl_B0_b10_LoD2_s0",
+    "FINALTRAIN original ft_LoD2_s0",
+    "addendum3 ba1",
+    "addendum3 ba2b"
+   ],
+   "masked_share": "per place: masked target pixels / target pixels of the place column patches over all training views"
+  },
+  "sa3": {
+   "scene": "B173nb_b10__ALS",
+   "rule": "order 8 sa-3; input build rule fixed in configs/phd/main_trainerr_v1/addendum4_sa3.json before the build (or the closest method in issues.md); not trained when not buildable within half a day",
+   "iterations": 30000,
+   "seed": 0,
+   "meshes": [
+    7000,
+    10000,
+    15000,
+    30000
+   ]
+  },
+  "gpu_rule": "start on a GPU with >= 14 GiB free memory, at most one addendum-4 training per GPU, other jobs never stopped"
+ },
+ "work_ga": {
+  "places": [
+   "floor_band (R1, tl_R1_ALS_own + sa1)",
+   "annex_box (B0 x ALS, addendum3 ba3 record)",
+   "edge_band back_wall_bottom / annex_roof_edge (tl_B0_LoD2_own)",
+   "edge_floater (B173 x ALS, TRAINLOG tl_B173nb_b10_ALS_s0 attempt2 scene states)"
+  ],
+  "controls": "addendum3 controls (floor/edge: record-region control points; annex: GT points of the B0 ALS scene inside the record region outside the annex box; floater: addendum3 work_ma control faces)",
+  "code_check": "file:line table only (2.1), files copied into the bundle",
+  "event_values": [
+   "cause by condition",
+   "normal and tangent distance to the original target plane at the event (outward +)",
+   "movement since first placement (normal, tangent)",
+   "self (init_id seed, born_how 0/1 at uid 0..n0) or child (split/clone)",
+   "fate at the last saved state (alive / deleted / rebound; distance when alive)"
+  ],
+  "gradient_windows": [
+   [
+    0,
+    200
+   ],
+   [
+    200,
+    1000
+   ],
+   [
+    1000,
+    3000
+   ],
+   [
+    3000,
+    6000
+   ]
+  ],
+  "gradient_sign": "outward normal of the column target plane (addendum3 common.outward_normal); value = -dL/dxyz . n (the step direction of gradient descent along n; + = moved outward/towards camera) and raw dL/dxyz . n both written",
+  "released_split": "Gaussians released at any time up to 6000 vs bound at every recorded iteration until 6000"
+ },
+ "work_na": {
+  "reset": 3000,
+  "groups": "bound to the place patches at 3000_pre_reset; survived = present at the 5900..6000 states (last record before 6000 reset: 6000_pre_reset if present else 5900), deleted = absent",
+  "occlusion": "per Gaussian and training view whose image contains its centre: accumulated opacity of the rendered splats in front of the Gaussian centre depth along the centre pixel ray (2DGS torch compositing of addendum3 work na); median over views; states 3000_pre_reset and 3500",
+  "colour_weight": "sum over the pixels of the views of alpha*T of that Gaussian (centre-pixel 9x9 window, 3000_pre_reset)",
+  "views": "training views whose image contains the centre (in front of the camera)",
+  "front_kind": "weight of the splats in front by kind (same patch, other patch, released, background)",
+  "gradient": "sa-1 signed opacity-logit gradients by term, every 100 from 3000 to 6000; B0: addendum3 record-run states only (no signed gradients -> sign not available; magnitude only)"
+ },
+ "work_da": {
+  "tolerance": "GTJUDGE row_tau_m of the scene",
+  "models_visible_wall": [
+   "tl_B0_b10_LoD2_s0 7000/15000/30000",
+   "ba2b 15000/30000"
+  ],
+  "front_band": [
+   0.2,
+   3.0
+  ],
+  "floater_radius_m": 0.5,
+  "wrong_points": {
+   "annex": "30000 mesh vertices in the annex box farther than 1 m from GT",
+   "south_wall": "vertices behind the south wall face by more than 0.64 m",
+   "sample": 2000,
+   "seed": 0
+  },
+  "depth_bins_wrong": {
+   "front": "< wrong depth - 0.5 m",
+   "at": "within +-0.5 m",
+   "behind": "> wrong depth + 0.5 m"
+  },
+  "edge_occlusion": {
+   "unoccluded_m": 1.0,
+   "photos": "two views with largest and two with smallest median (target - image depth)"
+  }
+ },
+ "work_ra": {
+  "points_per_scene": 2000,
+  "seed": 0,
+  "views_per_point": 3,
+  "view_rule": "three training views with the point in front of the camera, inside the image and least occluded (smallest |rendered depth - point depth|)",
+  "tolerance": "GTJUDGE row_tau_m",
+  "history": "record runs where they exist (B0 LoD2 TRAINLOG, R1 ALS TRAINERR); else not available"
+ },
+ "work_ma": {
+  "scenes": [
+   "R1rep_b10__LoD2",
+   "B173nb_b10__LoD2"
+  ],
+  "lost": "addendum2 work-ra lost points (own) of the scene",
+  "cluster_link_m": 0.5,
+  "surface_kind": "GT reference class (wall / roof / ground)",
+  "top": 5,
+  "figure_sets": 3,
+  "no_gaussian_radius_m": 0.2,
+  "image_depth_front": "image depth < target - 1 m (addendum2)"
+ },
+ "work_ba": {
+  "cases": [
+   "floor_band",
+   "edge_back_wall_bottom",
+   "edge_annex_roof_edge",
+   "annex_underside",
+   "south_wall",
+   "visible_wall",
+   "fixed_two (two judgments)",
+   "edge_floater",
+   "ma clusters 6"
+  ],
+  "stage_times": [
+   "1000",
+   "3000_pre_reset",
+   "5000",
+   "7000",
+   "15000",
+   "30000"
+  ],
+  "colours": {
+   "gt": "grey",
+   "target": "blue",
+   "mesh30000": "red",
+   "photo_only_2dgs": "green"
+  },
+  "summary_min_width_px": 1600,
+  "photo_only_2dgs": "FINALTRAIN/AXES71 photo-only 2DGS mesh of the scene (as in earlier figures)"
+ },
+ "reading_appendix": "order appendix (analysis session); not used to choose or stop anything here"
+}
