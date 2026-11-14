@@ -1,0 +1,99 @@
+{
+  "rows": [
+    {
+      "run": "cellsef_ALS_s0_cell0",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 2,
+      "hours": 3.9751685287377767,
+      "stopped_attempt_hours": 0.2840302106333345,
+      "host_guard_stops": 1,
+      "max_gaussians": 3819261,
+      "peak_reserved_GiB": 8.03515625,
+      "count_rule_records": 0
+    },
+    {
+      "run": "cellsef_ALS_s0_cell1",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 3,
+      "hours": 2.9667843254616675,
+      "stopped_attempt_hours": 0.763078591294446,
+      "host_guard_stops": 2,
+      "max_gaussians": 3231493,
+      "peak_reserved_GiB": 6.35546875,
+      "count_rule_records": 0
+    },
+    {
+      "run": "cellsef_ALS_s0_cell2",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 3,
+      "hours": 2.8584564304355524,
+      "stopped_attempt_hours": 1.3745366630377773,
+      "host_guard_stops": 2,
+      "max_gaussians": 3123569,
+      "peak_reserved_GiB": 6.533203125,
+      "count_rule_records": 0
+    },
+    {
+      "run": "cellsef_ALS_s0_cell3",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 2,
+      "hours": 6.3780193822141635,
+      "stopped_attempt_hours": 2.350806100271111,
+      "host_guard_stops": 1,
+      "max_gaussians": 6423189,
+      "peak_reserved_GiB": 13.486328125,
+      "count_rule_records": 0
+    },
+    {
+      "run": "R1repef_ALS_s0",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours": 1.1694960199036157,
+      "stopped_attempt_hours": 0.0,
+      "host_guard_stops": 0,
+      "max_gaussians": 2245016,
+      "peak_reserved_GiB": 5.173828125,
+      "count_rule_records": 0
+    },
+    {
+      "run": "B173nbef_ALS_s0",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours": 1.4556165622027766,
+      "stopped_attempt_hours": 0.0,
+      "host_guard_stops": 0,
+      "max_gaussians": 2721464,
+      "peak_reserved_GiB": 5.271484375,
+      "count_rule_records": 0
+    },
+    {
+      "run": "B0ef_ALS_s0",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours": 1.1889426499858342,
+      "stopped_attempt_hours": 0.0,
+      "host_guard_stops": 0,
+      "max_gaussians": 2337827,
+      "peak_reserved_GiB": 5.42578125,
+      "count_rule_records": 0
+    },
+    {
+      "run": "B0ef_ALS_s1",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours": 1.1317363581830553,
+      "stopped_attempt_hours": 0.0,
+      "host_guard_stops": 0,
+      "max_gaussians": 2138422,
+      "peak_reserved_GiB": 4.41015625,
+      "count_rule_records": 0
+    },
+    {
+      "run": "합: 칸 넷 대 단일 필터 셋(씨앗 0)",
+      "hours": 16.17842866684916,
+      "single_site_hours": 3.814055232092226
+    }
+  ],
+  "note": "addendum 14: per-cell status, GPU hours of the attempt that produced the result (cell0 includes cell0ef to 15,000; hours of host-guard-stopped attempts apart), max gaussians, peak reserved memory and count-rule records; single-site filter runs alongside; last row: hour sums",
+  "scientific_verdict": null
+}
