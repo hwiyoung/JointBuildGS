@@ -4,7 +4,9 @@
 Runs (addendum3.json work_ba.runs):
   ba1_B0_LoD2_nonormal : tl_B0_b10_LoD2_s0 command (TRAINLOG case trainlog config) + --jbgs_a3_normal off
   ba2_B0_LoD2_noreset  : tl_B0_b10_LoD2_s0 command + --jbgs_a3_reset_after 7000
-  ba3_B0_ALS_record    : FINALTRAIN ft_ALS_s0 B0 command + TRAINERR record options (trainlog_te.json, annex voxel region, gradients)"""
+  ba3_B0_ALS_record    : FINALTRAIN ft_ALS_s0 B0 command + TRAINERR record options (trainlog_te.json, annex voxel region, gradients)
+  ba2b_B0_LoD2_noreset_nocheck : ba-2 rerun to 30000 (user decision 2026-11-14): ba2 command + --jbgs_a3_count_check off. The inherited FINALTRAIN
+                         health stop count_gt_3x_6000 (a no_grad count read) stopped ba2 at 12000; with the switch the row is flagged and training continues."""
 import json, subprocess, sys, time
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -13,7 +15,8 @@ ARTC = '/art/phase-payloads/phd'
 CASE_CFG = '/repo/docs/experiments/phd/main_trainlog_v1/figures_concept_v2/case_B0_b10__LoD2/config/trainlog_v1.json'
 RUNS = {'ba1_B0_LoD2_nonormal': ('B0_b10', 'LoD2', 'case', ['--jbgs_a3_normal', 'off']),
         'ba2_B0_LoD2_noreset': ('B0_b10', 'LoD2', 'case', ['--jbgs_a3_reset_after', '7000']),
-        'ba3_B0_ALS_record': ('B0_b10', 'ALS', 'te', [])}
+        'ba3_B0_ALS_record': ('B0_b10', 'ALS', 'te', []),
+        'ba2b_B0_LoD2_noreset_nocheck': ('B0_b10', 'LoD2', 'case', ['--jbgs_a3_reset_after', '7000', '--jbgs_a3_count_check', 'off'])}
 
 def region_annex():
     """annex box snapped outward to the 0.25 m grid, in the TRAINERR region file layout (single box)."""

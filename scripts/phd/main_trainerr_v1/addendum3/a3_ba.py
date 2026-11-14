@@ -1,7 +1,8 @@
 """Work ba (order 7) outputs after the trainings.
   annex     : ba3 (B0 x ALS record): Gaussians inside the annex box per saved state (count, size, opacity, constraint state, origin) and per interval
               deletions by reason, births, range enter/exit -> tables/ba3_annex_states.csv, ba3_annex_windows.csv; 30000 mesh: result points in the box > 1 m from GT
-  tables    : ba1/ba2 visible-wall completeness (7000/10000/15000/30000) beside the record run; scene values (all / case rows) beside the record and original runs
+  tables    : ba1/ba2/ba2b visible-wall completeness (7000/10000/15000/30000) beside the record run; scene values (all / case rows) beside the record and original runs
+              (ba2b = ba-2 rerun to 30000 with --jbgs_a3_count_check off; ba2 = first ba-2, stopped at 12000; both rows kept)
   figures   : ba curves in the work-ga format, record run as the light line"""
 import sys
 sys.path.insert(0, '/repo/scripts/phd/main_trainerr_v1/addendum3')
@@ -44,7 +45,7 @@ def scene_rows(score_json, label):
 def tables():
     import csv
     comp = []; scene = []
-    for run, short in [('ba1_B0_LoD2_nonormal', 'ba1'), ('ba2_B0_LoD2_noreset', 'ba2')]:
+    for run, short in [('ba1_B0_LoD2_nonormal', 'ba1'), ('ba2_B0_LoD2_noreset', 'ba2'), ('ba2b_B0_LoD2_noreset_nocheck', 'ba2b')]:
         for it in MESH_ITS:
             f = A3O/'gtj/scenes/B0_b10__LoD2/distances'/f'{short}_{it}.npz'
             if not f.exists(): continue
@@ -76,13 +77,13 @@ def tables():
 def figures():
     plt = korean_plt(); GA = A3O/'ga'; c = ccfg()['work_ga']
     from a3_ga_out import all_rows
-    rows = {r: all_rows([r]) for r in ['tl_B0_b10_LoD2_s0', 'ba1_B0_LoD2_nonormal', 'ba2_B0_LoD2_noreset'] if (GA/f'{r}.json').exists()}
+    rows = {r: all_rows([r]) for r in ['tl_B0_b10_LoD2_s0', 'ba1_B0_LoD2_nonormal', 'ba2_B0_LoD2_noreset', 'ba2b_B0_LoD2_noreset_nocheck'] if (GA/f'{r}.json').exists()}
     comp = json.loads((A3D/'tables/ba_visible_wall_completeness.json').read_text())['rows'] if (A3D/'tables/ba_visible_wall_completeness.json').exists() else []
     for place in ['visible_low', 'visible_high', 'south_wall']:
         panels = [('bound_per_m2', '목표면에 묶인 가우시안 (참값 1 m²당)'), ('bound_op_ge05_pct', '그중 불투명도 0.5 이상 (%)'), ('front_op_per_m2', '목표면 앞 0.2~3 m 불투명도 합 (참값 1 m²당)'), ('back_op_per_m2', '목표면 뒤 0.2~3 m 불투명도 합 (참값 1 m²당)'), ('completeness_pct', '완전성 (%)')]
         fig, axs = plt.subplots(len(panels), 1, figsize=(10, 13), dpi=110, sharex=True)
         for ax, (k, lab) in zip(axs, panels):
-            for run, col, lw, nm in [('tl_B0_b10_LoD2_s0', '#95A5A6', 1., '기록 판'), ('ba1_B0_LoD2_nonormal', '#C0392B', 1.5, '바-1 법선 항 없음'), ('ba2_B0_LoD2_noreset', '#1F5FD6', 1.5, '바-2 7,000회 뒤 재설정 없음')]:
+            for run, col, lw, nm in [('tl_B0_b10_LoD2_s0', '#95A5A6', 1., '기록 판'), ('ba1_B0_LoD2_nonormal', '#C0392B', 1.5, '바-1 법선 항 없음'), ('ba2_B0_LoD2_noreset', '#85A9E8', 1., '바-2 첫 학습 (12,000회 멈춤)'), ('ba2b_B0_LoD2_noreset_nocheck', '#1F5FD6', 1.8, '바-2 다시 학습 (멈춤 점검 끔)')]:
                 q = sorted([r for r in rows.get(run, []) if r['place'] == place], key=lambda r: (r['iteration'], 0 if r['pre_reset'] else 1))
                 if k == 'completeness_pct' and place != 'south_wall':
                     q2 = sorted([r for r in comp if r['run'] == run and r['place'] == place], key=lambda r: r['iteration'])

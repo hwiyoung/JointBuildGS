@@ -6,7 +6,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import a3_launch as A, a3_mesh as M
 SHORT = {'ba1_B0_LoD2_nonormal': ('ba1', 'B0_b10__LoD2', ['7000', '10000', '15000', '30000']), 'ba2_B0_LoD2_noreset': ('ba2', 'B0_b10__LoD2', ['7000', '10000', '15000', '30000']),
-         'ba3_B0_ALS_record': ('ba3', 'B0_b10__ALS', ['30000'])}
+         'ba3_B0_ALS_record': ('ba3', 'B0_b10__ALS', ['30000']),
+         'ba2b_B0_LoD2_noreset_nocheck': ('ba2b', 'B0_b10__LoD2', ['7000', '10000', '12000', '15000', '30000'])}   # 12000: beside ba2 (stopped there) and the record run 2.3 mesh
 def post(run):
     short, stem, its = SHORT[run]; root = A.A3O/'runs/B0_b10'/run/'attempt1'
     while not (root/'receipt.json').exists(): time.sleep(60)

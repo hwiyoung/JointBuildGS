@@ -1,0 +1,94 @@
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r28/jbgs_a3.py GeoGS-conf-guided-v1-r30/jbgs_a3.py
+--- GeoGS-conf-guided-v1-r28/jbgs_a3.py	1970-01-01 09:00:00.000000000 +0900
++++ GeoGS-conf-guided-v1-r30/jbgs_a3.py	2026-11-14 12:35:08.170376004 +0900
+@@ -0,0 +1,29 @@
++"""r30 PHD-MAIN-TRAINERR-v1 addendum 3: diagnostic switches for order 7 (work ba-1, ba-2). Defaults = r27/r28 behaviour.
++
++--jbgs_a3_normal off       : the 2DGS normal-consistency term stays off after iteration 7000 (inherited: on when iteration > 7000).
++--jbgs_a3_reset_after N    : no opacity reset (and no pre-reset record) at iterations > N (inherited -1 = every reset kept).
++--jbgs_a3_count_check off  : (added for the ba-2 rerun) the FINALTRAIN health stop 'count_gt_3x_6000' is evaluated and written to the
++                             monitor row but does not stop training (inherited 'on' = stop). It is a no_grad read of the Gaussian count only.
++Only the two train.py gates and the FINALTRAIN monitor call this module; no model, optimizer or random state is touched here.
++"""
++
++
++def register_args(parser):
++    parser.add_argument('--jbgs_a3_normal', choices=['inherit', 'off'], default='inherit')
++    parser.add_argument('--jbgs_a3_reset_after', type=int, default=-1)
++    parser.add_argument('--jbgs_a3_count_check', choices=['on', 'off'], default='on')
++
++
++def normal_active(iteration, args):
++    """inherited train.py rule: lambda_normal if iteration > 7000 else 0."""
++    return iteration > 7000 and getattr(args, 'jbgs_a3_normal', 'inherit') != 'off'
++
++
++def reset_allowed(iteration, args):
++    n = getattr(args, 'jbgs_a3_reset_after', -1)
++    return n < 0 or iteration <= n
++
++
++def count_check_active(args):
++    """inherited jbgs_finaltrain.py rule: stop when count > 3 x count at 6000 (iterations 7000..15000, every 1000)."""
++    return getattr(args, 'jbgs_a3_count_check', 'on') != 'off'
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r28/jbgs_finaltrain.py GeoGS-conf-guided-v1-r30/jbgs_finaltrain.py
+--- GeoGS-conf-guided-v1-r28/jbgs_finaltrain.py	2026-11-11 18:10:34.242725880 +0900
++++ GeoGS-conf-guided-v1-r30/jbgs_finaltrain.py	2026-11-14 12:35:08.170376004 +0900
+@@ -13,6 +13,7 @@
+ class FinalTrain(TargetR8):
+     def __init__(self,args,scene,g):
+         self.started=time.monotonic()
++        import jbgs_a3;self.a3_count_check=jbgs_a3.count_check_active(args)  # [jbgs r30] ba-2 rerun switch (default on = inherited)
+         index=json.loads((Path(args.jbgs_target_dir)/'maps/index.json').read_text())
+         self.sigma_ref=index['sigma_ref']
+         assert self.sigma_ref>0 and index['weight_power']==1
+@@ -58,7 +59,9 @@
+         if 7000<=iteration<=15000 and iteration%1000==0:
+             assert self.n6000 is not None
+             row['count_at_6000']=self.n6000
+-            if n>3*self.n6000:reason='count_gt_3x_6000'
++            if n>3*self.n6000:
++                if self.a3_count_check:reason='count_gt_3x_6000'
++                else:row['a3_count_check_off_would_stop']='count_gt_3x_6000'  # [jbgs r30] recorded, training continues
+         with (self.mon/'curve.jsonl').open('a') as f:f.write(json.dumps(row,allow_nan=False)+'\n')
+         if iteration in [7000,15000,30000]:
+             write(self.mon/f'health_{iteration}.json',dict(row,status='STOP' if reason else 'PASS_HEALTH'))
+diff -ruN -x __pycache__ GeoGS-conf-guided-v1-r28/train.py GeoGS-conf-guided-v1-r30/train.py
+--- GeoGS-conf-guided-v1-r28/train.py	2026-11-11 18:12:17.195294219 +0900
++++ GeoGS-conf-guided-v1-r30/train.py	2026-11-14 00:23:20.204447791 +0900
+@@ -685,6 +685,7 @@
+ import jbgs_judgment  # [jbgs_judgment]
+ import jbgs_target
+ import jbgs_oom_record  # [jbgs r15] read-only record of a CUDA out-of-memory stop (default off)
++import jbgs_a3  # [jbgs r30] PHD-MAIN-TRAINERR-v1 addendum 3 switches (default = inherited behaviour)
+ 
+ 
+ def training(dataset, opt, pipe, args, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint):
+@@ -885,7 +886,7 @@
+             rgb_loss = rgb_loss + appearance.penalty(cam_name)
+ 
+         # Regularizers
+-        lambda_normal_default = opt.lambda_normal if iteration > 7000 else 0.0
++        lambda_normal_default = opt.lambda_normal if jbgs_a3.normal_active(iteration, args) else 0.0  # [jbgs r30] inherited: iteration > 7000
+         lambda_dist = opt.lambda_dist if iteration > 3000 else 0.0
+ 
+         rend_dist = render_pkg["rend_dist"]
+@@ -1213,7 +1214,9 @@
+                                     apply_rotation=True, apply_scaling=True
+                                 )
+ 
+-                if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
++                if (iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter)) and not jbgs_a3.reset_allowed(iteration, args):
++                    print(f"[jbgs r30] opacity reset skipped at {iteration} (--jbgs_a3_reset_after {args.jbgs_a3_reset_after})", flush=True)
++                elif iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
+                     if judgment is not None and args.jbgs_lt_monitor and args.jbgs_lt_monitor_v2 and iteration % opt.opacity_reset_interval == 0:
+                         jbgs_judgment.lt_monitor_step(judgment, iteration, gaussians, cam_name, render, pipe, background, pre_reset=True)
+                     if target_control is not None and getattr(target_control, 'trainlog_on', False):  # r27 trainlog: state just before reset
+@@ -1494,6 +1497,7 @@
+     jbgs_appearance.register_args(parser)
+     jbgs_mv_consistency.register_args(parser)
+     jbgs_oom_record.register_args(parser)  # [jbgs r15]
++    jbgs_a3.register_args(parser)  # [jbgs r30]
+     args = parser.parse_args(sys.argv[1:])
+     jbgs_state.validate_args(args)
+     args.save_iterations.append(args.iterations)

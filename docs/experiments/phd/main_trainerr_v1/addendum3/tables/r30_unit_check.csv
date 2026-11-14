@@ -2,3 +2,7 @@ check,status,detail,source
 "결정적 재생 r27 대 r30(스위치 끔), 300회",PASS,model=True; adam=True; meta=True; events=True; rng=True; trace=True,verification/replay_compare_r27_r30.json
 "스위치 판정 함수 1~30,000회",PASS,"기본값 법선 같음=True, 기본값 재설정 같음=True, 인자 없음 같음=True, 법선 끔=늘 꺼짐 True, 7,000 뒤 재설정 없음 → 남는 재설정 [3000, 6000]",verification/gates.json
 r28 대 r30 바뀐 파일,PASS,"바뀜 ['train.py'], r30에만 ['jbgs_a3.py']",verification/diff.json
+"[바-2 다시] 결정적 재생 r27 대 r30c(스위치 셋 기본), 300회",PASS,model=True; adam=True; meta=True; events=True; rng=True; trace=True,verification/replay_compare_r27_r30c.json
+"[바-2 다시] 스위치 판정 함수 셋 1~30,000회",PASS,"기본값 법선·재설정 같음, 인자 없음 같음, 멈춤 점검 기본 on·off면 꺼짐, parser 기본값 {'jbgs_a3_normal': 'inherit', 'jbgs_a3_reset_after': -1, 'jbgs_a3_count_check': 'on'}",verification/gates_c.json
+"[바-2 다시] 멈춤 점검 함수(가짜 모델, 6,000회 10개 → 9,000회 31개)",PASS,"r28 = r30 기본 = r30 on 출력 파일 바이트 같음(9,000회 멈춤); r30 off 멈춤 없음, 9,000·10,000·15,000회 행에 a3_count_check_off_would_stop, STOP.json 없음, 9,000회 전 행 on과 같음",verification/count_compare_c.json
+[바-2 다시] r28 대 r30 바뀐 파일,PASS,"바뀜 ['jbgs_finaltrain.py', 'train.py'], r30에만 ['jbgs_a3.py'], __init__이 스위치를 읽는 줄 있음",verification/diff_c.json

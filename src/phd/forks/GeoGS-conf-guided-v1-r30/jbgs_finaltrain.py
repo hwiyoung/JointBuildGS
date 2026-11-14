@@ -13,6 +13,7 @@ from jbgs_target_r8 import TargetR8
 class FinalTrain(TargetR8):
     def __init__(self,args,scene,g):
         self.started=time.monotonic()
+        import jbgs_a3;self.a3_count_check=jbgs_a3.count_check_active(args)  # [jbgs r30] ba-2 rerun switch (default on = inherited)
         index=json.loads((Path(args.jbgs_target_dir)/'maps/index.json').read_text())
         self.sigma_ref=index['sigma_ref']
         assert self.sigma_ref>0 and index['weight_power']==1
@@ -58,7 +59,9 @@ class FinalTrain(TargetR8):
         if 7000<=iteration<=15000 and iteration%1000==0:
             assert self.n6000 is not None
             row['count_at_6000']=self.n6000
-            if n>3*self.n6000:reason='count_gt_3x_6000'
+            if n>3*self.n6000:
+                if self.a3_count_check:reason='count_gt_3x_6000'
+                else:row['a3_count_check_off_would_stop']='count_gt_3x_6000'  # [jbgs r30] recorded, training continues
         with (self.mon/'curve.jsonl').open('a') as f:f.write(json.dumps(row,allow_nan=False)+'\n')
         if iteration in [7000,15000,30000]:
             write(self.mon/f'health_{iteration}.json',dict(row,status='STOP' if reason else 'PASS_HEALTH'))

@@ -10,7 +10,8 @@ RUNS = {'tl_B0_b10_LoD2_s0': dict(stem='B0_b10__LoD2', model=TLC/'runs/B0_b10/tl
         'tl_B0_LoD2_own': dict(stem='B0_b10__LoD2', model=O/'runs/B0_b10/tl_B0_LoD2_own/attempt1/model', kind='states', places=['edge_back', 'edge_annex', 'edge_back_control', 'edge_annex_control']),
         'tl_R1_ALS_own': dict(stem='R1rep_b10__ALS', model=O/'runs/R1rep_b10/tl_R1_ALS_own/attempt1/model', kind='states', places=['floor_band', 'floor_control']),
         'ba1_B0_LoD2_nonormal': dict(stem='B0_b10__LoD2', model=A3O/'runs/B0_b10/ba1_B0_LoD2_nonormal/attempt1/model', kind='scene', places=['visible_low', 'visible_high', 'visible_side', 'south_wall', 'long_wall'], short='ba1'),
-        'ba2_B0_LoD2_noreset': dict(stem='B0_b10__LoD2', model=A3O/'runs/B0_b10/ba2_B0_LoD2_noreset/attempt1/model', kind='scene', places=['visible_low', 'visible_high', 'visible_side', 'south_wall', 'long_wall'], short='ba2')}
+        'ba2_B0_LoD2_noreset': dict(stem='B0_b10__LoD2', model=A3O/'runs/B0_b10/ba2_B0_LoD2_noreset/attempt1/model', kind='scene', places=['visible_low', 'visible_high', 'visible_side', 'south_wall', 'long_wall'], short='ba2'),
+        'ba2b_B0_LoD2_noreset_nocheck': dict(stem='B0_b10__LoD2', model=A3O/'runs/B0_b10/ba2b_B0_LoD2_noreset_nocheck/attempt1/model', kind='scene', places=['visible_low', 'visible_high', 'visible_side', 'south_wall', 'long_wall'], short='ba2b')}
 CONTROL_OF = {'visible_low': 'visible_side', 'visible_high': 'visible_side', 'south_wall': 'long_wall', 'edge_back': 'edge_back_control', 'edge_annex': 'edge_annex_control', 'floor_band': 'floor_control'}
 PLACE_KO = {'visible_low': '잘 보이는 벽 0~5 m', 'visible_high': '잘 보이는 벽 5~10 m', 'visible_side': '대조: 모서리 옆벽', 'south_wall': '남쪽 끝 벽', 'long_wall': '대조: 길 쪽 긴 벽',
             'edge_back': '가장자리 띠: 뒤쪽 벽 맨 아랫단', 'edge_annex': '가장자리 띠: 별채 평지붕 가장자리', 'edge_back_control': '대조: 칸 ① 대조 점(뒤쪽 벽 아랫단)',
