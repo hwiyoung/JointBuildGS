@@ -250,8 +250,15 @@
 - 2026-11-14T15:10:34.195037+09:00: campusef30k_ALS_s0 시도 1 시작, GPU 1 (덧붙임 16, 길쭉함 필터)
 - 2026-11-14T15:10:36.126130+09:00: 덧붙임 12 대기열 시작 GPU 0.
 - 2026-11-14T15:12:36.192195+09:00: 덧붙임 12 대기열 GPU 0: 남은 판 없음, 끝.
-- 2026-11-14T15:30+09:00: 덧붙임 16 시작(사용자 '2번으로 가자. 네 비교 표에 대한 산출물이 나와야 한다는걸 명심해'). 설정 `addendum16.json` 15:09:12 잠금(df6870d0…), 실행기 커밋 77a15087.
+- 2026-11-14T15:20+09:00: 덧붙임 16 시작(사용자 '2번으로 가자. 네 비교 표에 대한 산출물이 나와야 한다는걸 명심해'). 설정 `addendum16.json` 15:09:12 잠금(df6870d0…), 실행기 커밋 77a15087.
   - 목적: 0.3의 네 비교를 항공 LiDAR에서 모든 판에 길쭉함 필터를 넣고 채움. 기준 = 필터 단일 판(ef_s0), 씨앗 반복 = ef_s1, 가 = campusef30k_ALS_s0, 나 = campusef120k_ALS_s0(준비된 일정 ×4, 명령 인자가 준비된 판 나와 같음 확인), 다 = cellsef_ALS_s0.
   - 새 판 셋: campusef30k_ALS_s0(15:10 GPU 1 시작, 호스트 가용 63.5 GB, 컨테이너 64 GB, 개수 규칙 기록만 = 판 다 칸과 같음), campusef120k_ALS_s0, B173nbef_ALS_s1(B173nb 씨앗 흔들림). GPU 0은 TRAINERR(덧붙임 3) 사용 중.
   - 차례 장치: 캠퍼스 학습과 메시 작업은 호스트 메모리에 함께 못 들어감(판 가 RSS 500회에 34 GB). 그래서 `tu_add16_after_ga.sh`가 campusef120k·B173nbef_s1의 claim 폴더를 만들어 대기열이 건너뛰게 하고(15:12), 판 가가 끝나면 판 가 후처리(장면 하나씩)를 마친 뒤 campusef120k의 claim을 지우고 두 GPU 대기열을 다시 연다. B173nbef_s1은 판 나 뒤.
   - 표 스크립트 `tu_add16.py table`(없는 판은 '결과 없음'): add16_summary_ALS, add16_comparisons_ALS, add16_comparisons_scene_ALS, add16_band_ALS, add16_runs_ALS. 그림은 `tu_figures.py <site> ALS ef`(이름 <stem>_ef_*). 지금 있는 판으로 먼저 계산함(비교 1은 B0·R1rep, 비교 4는 셋, 비교 2·3은 아직 없음).
+- 2026-11-14T15:44:00.082581+09:00: campusef30k_ALS_s0 시도 1 끝: HOST_GUARD_STOP, 0.56시간, 호스트 가용 17.5 GB로 멈춤(다시 대기열로)
+- 2026-11-14T15:58+09:00: 덧붙임 17(사용자: 16일 지도교수 미팅, 15일까지 결과; '그럼 lidar로만 맞춰서 일단 판단 셋을 만들까? 판 가 멈추지 말고 말이야. 판 다는 다 돼있다는거지? R1만 하면', 이어서 '그럼 lidar 기준으로 비교 셋을 만들자. 빠트리지 말고 잘 준비하자'). 설정 `addendum17.json` 15:39:32 잠금(614e55cd…).
+  - 덧붙임 16 바꿈: 판 나(campusef120k)는 돌리지 않음(claim 폴더를 보류로 둠). 까닭: 한 GPU로 하루~하루 반, 다른 캠퍼스 판과 호스트 메모리를 함께 못 씀, 관련 연구가 넓은 항공 장면을 칸으로 나눔. 비교 2·3은 '하지 않음'으로 적음. 판 가는 그대로 돎.
+  - 새 판 cellsef_ALS_s0_cell1fix: cellsef_ALS_s0_cell1과 같고 장면 반지름만 229.69646911621095 m(R1repef_ALS_s0의 포크 값)로 고정. 합치기는 칸 0·2·3 그대로 + 새 칸 1(cellsef1fix_ALS_s0), 후처리는 R1rep_b10만(B0·B173 자르기 상자는 x ≥ 70.5 m로 칸1(x < −3.79 m)에 닿지 않아 다와 바이트가 같음).
+  - 옛 후속 스크립트(tu_add16_after_ga.sh, 판 나를 풀어 주는 것)는 15:4x에 멈춤(그때까지 한 일: 보류 폴더 둘 만들기뿐). 새 후속 `tu_add17_after.sh`: 판 가 끝 → 판 가 후처리 → B173nbef_s1 보류 풀고 대기열 둘(칸1고정 먼저, 그다음 B173 씨앗 1) → 합치기·후처리 → 표(add16 table/cellfix/fig) → 필터 판 그림 세 상자.
+  - 표 스크립트 넓힘: 판 '다_칸1고정', 추가 비교(가−기준, 가−다, 다_칸1고정−기준, 다_칸1고정−다; 0.3 비교와 따로 표시), 비교 방법 표(add16_methods_ALS), 판마다 장면 반지름. 그림 add16_comparisons_ALS·add16_runs_ALS. tu_post.py run에 장면 지정(셋째 인자), tu_postcpu.py merge에 cellsef1fix, tu_package.py에 필터 판 기록(반지름·필터·합치기·ef_s1 채점 json).
+  - 산출물 대조(발주 5절, 항공 LiDAR): 5.1 판×장면 네 경우·장면 전체·최대 격차(add16_summary_ALS, add16_methods_ALS) / 판마다 PSNR·가우시안·GPU·시간·영상당 횟수(add16_runs_ALS) / 네 비교 + 흔들림 폭(add16_comparisons_ALS, _scene) / 경계 띠(add16_band_ALS, add15_where_band) / 140동 어림(보고.md, add16_runs_ALS 시간) · 5.2 메시 세 시점·τ 지도·경계 단면(<stem>_ef_*) · 5.3 보고.md·zip. 빠지는 것: 판 나, LoD2 전부.

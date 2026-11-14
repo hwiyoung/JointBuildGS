@@ -16,7 +16,7 @@ ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0', 
          # addendum 14: 판 다 ALS cells with the filter (most images first; cell0 resumes from cell0ef at 15,000), then filter single sites
          'cellsef_ALS_s0_cell2', 'cellsef_ALS_s0_cell1', 'cellsef_ALS_s0_cell3', 'cellsef_ALS_s0_cell0', 'R1repef_ALS_s0', 'B173nbef_ALS_s0',
          'R1repef_ALS_s1',   # addendum 15
-         'campusef30k_ALS_s0', 'campusef120k_ALS_s0', 'B173nbef_ALS_s1']   # addendum 16
+         'campusef30k_ALS_s0', 'cellsef_ALS_s0_cell1fix', 'campusef120k_ALS_s0', 'B173nbef_ALS_s1']   # addenda 16, 17 (120k held: not run)
 JOBS = {
     'B0ef_ALS_s0': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
                         ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g'),
@@ -45,6 +45,8 @@ JOBS['campusef120k_ALS_s0'] = dict(_CAMPUS, iterations=120000,
                                    extra=['--densify_from_iter', '2000', '--densify_until_iter', '60000',
                                           '--densification_interval', '400', '--opacity_reset_interval', '12000'])
 JOBS['B173nbef_ALS_s1'] = dict(JOBS['B173nbef_ALS_s0'], seed=1, addendum=16)
+# addendum 17: cell 1 of 판 다 with the fixed scene radius (the radius is set in tu_train_entry.EF)
+JOBS['cellsef_ALS_s0_cell1fix'] = dict(JOBS['cellsef_ALS_s0_cell1'], addendum=17)
 JOBS['cellsef_ALS_s0_cell0']['resume'] = TU / 'runs/ef/cell0ef_ALS_s0/attempt1/model/jbgs_complete/iteration_15000/checkpoint.pth'
 FLOOR_GB, START_GB, MAX_GUARD = 20, 45, 3
 

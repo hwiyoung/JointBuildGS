@@ -1,0 +1,25 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 17,
+  "instruction": "user, 2026-11-14 KST (advisor meeting 11-16, results wanted by 11-15): '그럼 lidar로만 맞춰서 일단 판단 셋을 만들까? 판 가 멈추지 말고 말이야. 판 다는 다 돼있다는거지? R1만 하면' (after: 판 나 likely not worth its 1-1.5 days; 판 다 is the main candidate by related work; the only open point of 판 다 is the R1rep cell-1 loss)",
+  "changes_to_addendum16": {
+    "판 나": "campusef120k_ALS_s0 is not run (its claim directory stays as a hold); comparisons 2 and 3 are written as not run, with the reasons (time 1-1.5 days on one GPU, host memory excludes running it next to another campus run, related work partitions wide aerial scenes)",
+    "판 가": "campusef30k_ALS_s0 keeps running unchanged",
+    "order": "after 판 가 and its post-processing: cellsef_ALS_s0_cell1fix, then B173nbef_ALS_s1 (same queue rules)"
+  },
+  "intent": "check whether the R1rep loss of 판 다 (in the part of R1rep inside cell 1, accuracy -6.6 / -8.5 %p against the two filter single-site seeds) goes away when cell 1 trains with the scene radius of the R1rep single-site run instead of its own larger radius (282.1 m vs 229.7 m). The fork scales the position learning rate, the clone/split size threshold (percent_dense x radius) and the large-point prune threshold (0.1 x radius) by this radius. If the loss goes away, a fixed per-cell radius is a candidate rule of the partition; if it stays, the radius is not the cause. This is a diagnosis run next to 판 다; it does not replace 판 다.",
+  "run": {
+    "name": "cellsef_ALS_s0_cell1fix",
+    "same_as": "cellsef_ALS_s0_cell1 (scenes/cell1 scene_ALS and split.json, stage1/cell1__ALS, seed 0, 30,000 iterations, unchanged train_args, elongation filter 0.01, FINALTRAIN count rule recorded only, read-only family monitor without watched families, container 48 GB)",
+    "only_change": "scene radius fixed to 229.69646911621095 m (R1repef_ALS_s0 extent_override.json used_radius, the fork's own value for the R1rep single-site cameras) through the addendum 12 fixed-extent path"
+  },
+  "merge_and_post": {
+    "merge": "unchanged 판 다 rule (keep xy in the original cell [min, max), concatenate) with cells 0, 2, 3 of cellsef_ALS_s0 and the new cell 1 -> runs/ef/cellsef1fix_ALS_s0/merged",
+    "post": "unchanged GTJUDGE crop, render, mesh, score for R1rep_b10 only (family cellsef1fix_ALS_s0). The B0_b10 and B173nb_b10 crop boxes (x from 70.5 and 76.3 m) do not reach cell 1 (x < -3.79 m), so their crops and scores are those of cellsef_ALS_s0 by construction; tables reuse them with that note"
+  },
+  "read_out": "add16 tables with the extra plan 다_칸1고정 next to 다 and 기준 (difference and seed spread side by side); R1rep by original cell (addendum 15 part B counting) for 다, 다_칸1고정, ef_s0, ef_s1",
+  "pass_marks_not_set": "none",
+  "unchanged": "fork r23, renderer, train_args, filter, judgment, inputs, mesh rule, scorer, merge rule, cells, appendix selection rule (user / analysis session)",
+  "not_included": "fixed radius for the other cells, a second seed, LoD2",
+  "scientific_verdict": null
+}

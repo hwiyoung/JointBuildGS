@@ -33,6 +33,8 @@ EF = {
     'campusef30k_ALS_s0': dict(stop=None, extent=None, watch={}, count_record_only=True, addendum=16),
     'campusef120k_ALS_s0': dict(stop=None, extent=None, watch={}, count_record_only=True, addendum=16),
     'B173nbef_ALS_s1': dict(stop=None, extent=None, watch={}, addendum=16),
+    # addendum 17: 판 다 cell 1 with the scene radius of the R1rep single-site run (R1repef_ALS_s0 extent_override.json)
+    'cellsef_ALS_s0_cell1fix': dict(stop=None, extent=229.69646911621095, watch={}, count_record_only=True, addendum=17),
 }
 FTC = Path('/repo/configs/phd/main_finaltrain_v1/finaltrain_v1.json')
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -210,6 +212,8 @@ def main():
             assert sha(C / 'addendum15.json') == json.loads((C / 'addendum15.lock.json').read_text())['sha256']
         if EF[run_name].get('addendum') == 16:
             assert sha(C / 'addendum16.json') == json.loads((C / 'addendum16.lock.json').read_text())['sha256']
+        if EF[run_name].get('addendum') == 17:
+            assert sha(C / 'addendum17.json') == json.loads((C / 'addendum17.lock.json').read_text())['sha256']
         lifted = True
         probe_stop = EF[run_name]['stop']
     elif run_name.startswith('probe'):

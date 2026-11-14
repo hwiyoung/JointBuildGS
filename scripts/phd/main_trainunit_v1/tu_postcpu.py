@@ -34,11 +34,13 @@ def crop(ply, site, out):
 
 def merge(prior, kind='cells'):
     cells = json.loads((TU / 'cells/cells.json').read_text())['cells']
-    assert kind in ('cells', 'cellsef')
+    assert kind in ('cells', 'cellsef', 'cellsef1fix')
     parts = []
     rec = []
     for c in cells:
         run = TU / 'runs/cells' / f'cells_{prior}_s0' / f'cell{c["id"]}' if kind == 'cells' else TU / 'runs/ef' / f'cellsef_{prior}_s0_cell{c["id"]}'
+        if kind == 'cellsef1fix' and c['id'] == 1:
+            run = TU / 'runs/ef' / f'cellsef_{prior}_s0_cell1fix'   # addendum 17: cell 1 with the fixed scene radius
         r = json.loads((run / 'receipt.json').read_text())
         assert r['status'] == 'TRAINING_COMPLETE'
         ply = run / f'attempt{r["attempts"][-1]["attempt"]}' / 'model/point_cloud/iteration_30000/point_cloud.ply'

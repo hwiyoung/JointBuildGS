@@ -20,7 +20,10 @@
       "psnr_train_5views": 23.990513801574707,
       "psnr_test": 22.681095913478305,
       "min_host_available_GiB": 28.94074249267578,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 224.9043121337891,
+      "scene_radius_fork_m": 224.9043121337891,
+      "scene_radius_fixed": false
     },
     {
       "plan": "씨앗반복",
@@ -42,7 +45,10 @@
       "psnr_train_5views": 24.942423629760743,
       "psnr_test": 22.749230085100447,
       "min_host_available_GiB": 49.045936584472656,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 224.9043121337891,
+      "scene_radius_fork_m": 224.9043121337891,
+      "scene_radius_fixed": false
     },
     {
       "plan": "기준",
@@ -64,7 +70,10 @@
       "psnr_train_5views": 22.48603553771973,
       "psnr_test": 23.167772409867265,
       "min_host_available_GiB": 43.36249923706055,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 229.69646911621095,
+      "scene_radius_fork_m": 229.69646911621095,
+      "scene_radius_fixed": false
     },
     {
       "plan": "씨앗반복",
@@ -86,7 +95,10 @@
       "psnr_train_5views": 24.02903099060059,
       "psnr_test": 22.66488698064064,
       "min_host_available_GiB": 20.484519958496094,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 229.69646911621095,
+      "scene_radius_fork_m": 229.69646911621095,
+      "scene_radius_fixed": false
     },
     {
       "plan": "기준",
@@ -108,7 +120,10 @@
       "psnr_train_5views": 25.789901351928712,
       "psnr_test": 23.18899309224096,
       "min_host_available_GiB": 34.3456916809082,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 272.3538131713867,
+      "scene_radius_fork_m": 272.3538131713867,
+      "scene_radius_fixed": false
     },
     {
       "plan": "씨앗반복",
@@ -132,7 +147,7 @@
       "plan": "나",
       "unit": "campus",
       "run": "campusef120k_ALS_s0",
-      "status": "결과 없음",
+      "status": "하지 않음(덧붙임 17)",
       "train_images": 819,
       "iterations": 120000,
       "passes_per_image": 146.5201465201465
@@ -157,7 +172,10 @@
       "psnr_train_5views": 24.790388488769533,
       "psnr_test": 22.537412713213666,
       "min_host_available_GiB": 28.05148696899414,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 185.84959564208987,
+      "scene_radius_fork_m": 185.84959564208987,
+      "scene_radius_fixed": false
     },
     {
       "plan": "다",
@@ -179,7 +197,10 @@
       "psnr_train_5views": 24.19979476928711,
       "psnr_test": 22.178086280822754,
       "min_host_available_GiB": 29.54434585571289,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 282.1421783447266,
+      "scene_radius_fork_m": 282.1421783447266,
+      "scene_radius_fixed": false
     },
     {
       "plan": "다",
@@ -201,7 +222,10 @@
       "psnr_train_5views": 24.077625656127932,
       "psnr_test": 22.33486510222813,
       "min_host_available_GiB": 20.554691314697266,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 228.03077545166016,
+      "scene_radius_fork_m": 228.03077545166016,
+      "scene_radius_fixed": false
     },
     {
       "plan": "다",
@@ -223,7 +247,19 @@
       "psnr_train_5views": 27.797139739990236,
       "psnr_test": 24.897357990867214,
       "min_host_available_GiB": 21.38488006591797,
-      "count_rule_records": 0
+      "count_rule_records": 0,
+      "scene_radius_m": 199.23553619384768,
+      "scene_radius_fork_m": 199.23553619384768,
+      "scene_radius_fixed": false
+    },
+    {
+      "plan": "다_칸1고정",
+      "unit": "cell1",
+      "run": "cellsef_ALS_s0_cell1fix",
+      "status": "결과 없음",
+      "train_images": 471,
+      "iterations": 30000,
+      "passes_per_image": 63.69426751592356
     },
     {
       "plan": "다",

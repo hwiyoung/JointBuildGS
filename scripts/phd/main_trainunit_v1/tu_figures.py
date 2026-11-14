@@ -34,7 +34,7 @@ def mesh_path(m):
     return m
 
 
-EFRUNS = [('기준', 'ef_s0'), ('씨앗 반복', 'ef_s1'), ('가', 'campusef30k_ALS_s0'), ('나', 'campusef120k_ALS_s0'), ('다', 'cellsef_ALS_s0')]
+EFRUNS = [('기준', 'ef_s0'), ('씨앗 반복', 'ef_s1'), ('가', 'campusef30k_ALS_s0'), ('나', 'campusef120k_ALS_s0'), ('다', 'cellsef_ALS_s0'), ('다 칸1 고정', 'cellsef1fix_ALS_s0')]   # addendum 17: R1rep only
 
 
 def runs(prior, ef=False):
@@ -128,7 +128,7 @@ def main(site, prior, ef=''):
         start, end = [x0, y0 - 12], [x0, y0 + 12]
     bsec = dict(start=start, end=end, half_width=.6)
     fig, ax = plt.subplots(figsize=(13, 6)); fig.subplots_adjust(bottom=.22, top=.86)
-    for (label, m), col in zip(have, ['#4B2E8A', '#999999', '#009e73', '#e69f00', '#d55e00'] if ef else ['#4B2E8A', '#999999', '#009e73', '#d55e00']):
+    for (label, m), col in zip(have, ['#4B2E8A', '#999999', '#009e73', '#e69f00', '#d55e00', '#cc79a7'] if ef else ['#4B2E8A', '#999999', '#009e73', '#d55e00']):
         meta = json.loads((root / 'distances' / f'{m}.json').read_text())
         V, F = read_surface(mesh_path(meta['mesh']))
         ax.add_collection(LineCollection(section_segments(V, F, bsec), colors=col, lw=1, label=label)); del V, F; gc.collect()

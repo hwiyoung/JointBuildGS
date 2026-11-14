@@ -137,7 +137,7 @@ def runs_of(key):
         sites = SITES
     else:
         prior = key.split('_')[1]
-        merged = TU / ('runs/ef' if key.startswith('cellsef_') else 'runs/cells') / key / 'merged/point_cloud.ply'   # addendum 14: cellsef_<prior>_s0
+        merged = TU / ('runs/ef' if key.startswith('cellsef') else 'runs/cells') / key / 'merged/point_cloud.ply'   # addenda 14/17: cellsef_<prior>_s0, cellsef1fix_<prior>_s0
         return prior, SITES, merged if merged.exists() else None
     if not rec.exists():
         return prior, sites, None
@@ -237,8 +237,10 @@ def one_site(key, site, prior, ply):
     return ok
 
 
-def run(key, workers='3'):
+def run(key, workers='3', only=None):
     prior, sites, ply = runs_of(key)
+    if only:   # addendum 17: comma list of sites (cellsef1fix: R1rep_b10 only)
+        sites = [s for s in sites if s in only.split(',')]
     if ply is None:
         print('NOT_READY', key, flush=True)
         return False
@@ -282,7 +284,7 @@ if __name__ == '__main__':
     if mode == 'mirror':
         mirror()
     elif mode == 'run':
-        run(*sys.argv[2:4])
+        run(*sys.argv[2:5])
     elif mode == 'watch':
         watch()
     else:

@@ -16,7 +16,10 @@ RECORD_GLOBS = ['cells/cells.json', 'targets/*.json', 'targets/overlap_check.jso
                 'runs/*/*/attempt*/DEADLINE_STOP.json', 'runs/*/*/attempt*/ERROR.json', 'runs/*/*/*/receipt.json',
                 'runs/*/*/*/attempt*/receipt.json', 'runs/*/*/*/attempt*/time_check_500.json', 'runs/*/*/*/attempt*/ERROR.json',
                 'runs/cells/*/merged/point_cloud.json', 'post/*/*.json', 'prepared/*/*.json', 'gt/meshes/*/final.json',
-                'gt/scenes/*/distances/*_s0.json', 'gt/scenes/*/distances/seed1_s1.json']
+                'gt/scenes/*/distances/*_s0.json', 'gt/scenes/*/distances/seed1_s1.json',
+                # addenda 12-17: filter runs (scene radius, filter record), merged filter cells, seed-1 filter scores
+                'runs/*/*/attempt*/extent_override.json', 'runs/*/*/attempt*/addendum12_filter.json', 'runs/ef/*/merged/point_cloud.json',
+                'gt/scenes/*/distances/ef_s1.json']
 
 
 def sha(p):

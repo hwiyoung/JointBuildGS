@@ -44,7 +44,7 @@
     {
       "site": "B0_b10",
       "plan": "나",
-      "status": "결과 없음"
+      "status": "하지 않음(덧붙임 17)"
     },
     {
       "site": "B0_b10",
@@ -63,6 +63,24 @@
       "floating_pct": 0.32378065582805177,
       "no_surface_pct": 0.07784513640121246,
       "status": "있음"
+    },
+    {
+      "site": "B0_b10",
+      "plan": "다_칸1고정",
+      "part": "띠",
+      "rows": 0,
+      "status": "참값 점 없음"
+    },
+    {
+      "site": "B0_b10",
+      "plan": "다_칸1고정",
+      "part": "띠 밖",
+      "rows": 145160,
+      "nearest_row_to_boundary_m": 4.199436150069943,
+      "completeness_pct": 98.32529622485534,
+      "floating_pct": 0.32378065582805177,
+      "no_surface_pct": 0.07784513640121246,
+      "status": "다와 같음(평가 상자가 칸1에 닿지 않음)"
     },
     {
       "site": "R1rep_b10",
@@ -116,7 +134,7 @@
     {
       "site": "R1rep_b10",
       "plan": "나",
-      "status": "결과 없음"
+      "status": "하지 않음(덧붙임 17)"
     },
     {
       "site": "R1rep_b10",
@@ -139,6 +157,11 @@
       "floating_pct": 7.942088466732555,
       "no_surface_pct": 0.3251676763714003,
       "status": "있음"
+    },
+    {
+      "site": "R1rep_b10",
+      "plan": "다_칸1고정",
+      "status": "결과 없음"
     },
     {
       "site": "B173nb_b10",
@@ -171,7 +194,7 @@
     {
       "site": "B173nb_b10",
       "plan": "나",
-      "status": "결과 없음"
+      "status": "하지 않음(덧붙임 17)"
     },
     {
       "site": "B173nb_b10",
@@ -190,6 +213,24 @@
       "floating_pct": 5.27988614800759,
       "no_surface_pct": 0.04601518026565465,
       "status": "있음"
+    },
+    {
+      "site": "B173nb_b10",
+      "plan": "다_칸1고정",
+      "part": "띠",
+      "rows": 0,
+      "status": "참값 점 없음"
+    },
+    {
+      "site": "B173nb_b10",
+      "plan": "다_칸1고정",
+      "part": "띠 밖",
+      "rows": 210800,
+      "nearest_row_to_boundary_m": 7.619964637283573,
+      "completeness_pct": 92.52561669829223,
+      "floating_pct": 5.27988614800759,
+      "no_surface_pct": 0.04601518026565465,
+      "status": "다와 같음(평가 상자가 칸1에 닿지 않음)"
     }
   ],
   "note": "addendum 16: reference rows within 2 m (xy) of an original 판 다 cell boundary (띠) and the rest, per plan: completeness, floating (s > tau) and no-surface shares (tu_tables.band rule)",
