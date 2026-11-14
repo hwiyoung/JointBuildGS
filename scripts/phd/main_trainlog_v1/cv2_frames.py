@@ -71,20 +71,34 @@ if TL_CASE: FIGD = D
 # writes frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.* only.
 VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b', 'r6'), VAR
 REV = {'': 'r5', 'z1b': 'r6test', 'r6': 'r6'}[VAR]; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'; IS_Z1B = VAR == 'z1b'
-if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2', 'v3', 'v4'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
+if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2', 'v3', 'v4', 'v5'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
 # case v2 (2026-11-13, user '둘 다 진행' after 'are ②-1/②-2 seen from above? what area?'): the zone box is drawn as the pillar it is (xy box x scope z_min..z_max:
 # top ring solid, bottom ring dashed, four vertical edges) in the ① camera panels and the ② overviews, instead of one ring at the median height inside the box
 # (which read as a roof patch). Only the drawing changes; static layers, sections and numbers are the v1 ones (frames, contact, video only; v1 files untouched).
-PILLAR = bool(TL_CASE) and REV in ('v2', 'v3', 'v4')
+PILLAR = bool(TL_CASE) and REV in ('v2', 'v3', 'v4', 'v5')
 # case v3 (2026-11-13, user '진행하자'): zones from case_zones_v3.json (cv2_case_zones.py v3: zone 2 slid 5 m along its wall off the inner corner, zone 1 unchanged),
 # its own static_v3.*, sections_v3/, frames_v3/, numbers_v3, contact_sheet_v3, video_v3 (v1/v2 files untouched); box drawn as the v2 pillar.
-ZONEF = V2/('case_zones_v3.json' if TL_CASE and REV in ('v3', 'v4') else 'case_zones.json')
+ZONEF = V2/('case_zones_v3.json' if TL_CASE and REV in ('v3', 'v4', 'v5') else 'case_zones.json')
 # case v4 (2026-11-14, user '둘 다 바꾸기' after 'the zones look stacked; should the sections look the same?'): zones v3 unchanged (boxes, scores), and two drawing
 # changes: (a) the ② overview looks from azimuth OV_AZ4 = 192 (math deg; perpendicular to the zone-1 -> zone-2 foot line at 102.2, which the photo-side
 # overview at 282 looked straight along, so the zones stood one behind the other); (b) each section is cut along its zone line from SEC_IN m beyond the line
 # origin (inside) to SEC_OUT m beyond the line end (outside) and drawn in one world direction (x = sign * s, sign = sign(t . u), u = zone-1 -> zone-2 foot
 # direction): both read 'left = the zone-1 side, right = the zone-2 side'; the 12 m line (the zone box width that is scored) is shaded.
-SEC4 = bool(TL_CASE) and REV == 'v4'; OV_AZ4 = 192.; SEC_IN = 16.; SEC_OUT = 4.
+SEC4 = bool(TL_CASE) and REV in ('v4', 'v5'); OV_AZ4 = 192.; SEC_IN = 16.; SEC_OUT = 4.
+# case v5 (2026-11-14, user '아 이제야 이해가 된다. 진행하자' after scratch drafts A-D): numbers, scores, training, zones (v3) and the static_v4 / sections_v4 files
+# unchanged (read only); only the drawing of the zone rows and the zone marks changes. Each zone gets one block, the two blocks side by side:
+#   ②-k plan   the scope footprint from above, this zone's chosen wall as a thick orange segment (foot +-4 m along the wall), the other zone's wall grey,
+#              an arrow from outside = the side the next panel looks from
+#   ②-k side   the whole building (this frame's mesh; input frame: the LoD2 surface) from that side (orthographic, azimuth = the zone's zoom_azimuth_deg,
+#              which points along the wall's outward normal; elevation WALL_EL) with the chosen wall as an orange rectangle (8 m x WALL_H m from the ground)
+#   ③-k front  that rectangle seen straight from outside (x = metres along the wall, screen right = up x out; y = height above ground): GT rows of the wall
+#              (GTJUDGE rows.npz, wall and |n.out| > 0.9, inside the zone box) as light grey dots, over them the mesh faces whose centroid is within
+#              TAU = 0.211856 m of the wall plane at all three corners (the completeness tolerance) in their fused render colour, so grey left visible = no mesh there; zone 1:
+#              thick navy outline of the 1 m cells where the story rows (wall, LoD2 right, image depth absent or > 0.5 m off; cv2_case_check rule) are
+#              at least half of the GT rows = where the photos miss the wall. Comparison panel: image-only 2DGS of the nearest saved state (7,000 / 30,000).
+#              Input frame: ③ = LoD2 faces within TAU (orange) and image-depth points within TAU (green).
+#   ① camera and ② overview: the chosen-wall rectangle (orange; dashed where the wall faces away from the viewer) instead of the zone-box pillar.
+V5 = bool(TL_CASE) and REV == 'v5'; WALLC = '#D85A30'; WALL_HW = 4.; WALL_H = 19.; WALL_EL = 15.; STORYC = NAVY_ = '#16263d'; GTDOT = '#C9C6BC'
 STJ = V2/('static_z1b.json' if IS_Z1B else 'static.json'); STN = V2/('static_z1b.npz' if IS_Z1B else 'static.npz'); SECD = V2/('sections_z1b' if IS_Z1B else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
 if TL_CASE and REV == 'v3': STJ, STN, SECD = V2/'static_v3.json', V2/'static_v3.npz', V2/'sections_v3'; SECJ = V2/f'{SECD.name}.json'
 if SEC4: STJ, STN, SECD = V2/'static_v4.json', V2/'static_v4.npz', V2/'sections_v4'; SECJ = V2/f'{SECD.name}.json'
@@ -288,6 +302,9 @@ class Frame:
                     if (a[zm] > 0).any() and (a[zm] < 1).any(): ax.contour(uu, vv, np.ma.masked_where(~zm, a), levels=[.5], colors='#2C2C2A', linewidths=.7, linestyles=':')
         if zones:
             for k, z in self.S.zones.items():
+                if V5:   # v5: the chosen-wall rectangle, dashed where the wall faces away from this camera
+                    self.v5_init(); cc = -self.S.E[:3, :3].T@self.S.E[:3, 3]; W5 = self.w5[k]
+                    u, v = self.v5_rect(ax, k, lambda P: self.S.pix(P)[:2], bool(W5['o']@(cc-W5['foot']) > 0), 1.4); self.badge(ax, u[:4].mean(), v[:4].min()-14, k); continue
                 if PILLAR:
                     (u, v), (ub, vb) = self.pillar(ax, k, lambda P: self.S.pix(P)[:2], 2.2, 1.0)
                     if k == 1: self.badge(ax, ub[np.argmax(vb)], vb.max()+14, k)
@@ -338,6 +355,10 @@ class Frame:
             ax.plot(x, y, color='white', lw=halo, zorder=15, solid_capstyle='round'); ax.plot(x, y, color=NAVY, lw=lw, ls=ls, zorder=16)
         return (np.asarray(xt), np.asarray(yt)), (np.asarray(xb), np.asarray(yb))
     def zone_outline(self, ax, k, label=True):
+        if V5:   # v5: the chosen-wall rectangle in the ② overview, dashed where the wall faces away
+            self.v5_init(); W5 = self.w5[k]; x, y = self.v5_rect(ax, k, lambda P: self.S.proj(P)[:2], bool(W5['o']@(-self.S.B[2]) > 0), 1.6)
+            if label: self.badge(ax, x[:4].mean(), y[:4].max(), k, 10)
+            return
         if PILLAR:
             (x, y), _ = self.pillar(ax, k, lambda P: self.S.proj(P)[:2], 2.4, 1.1)
             if label: self.badge(ax, x.mean(), y.max(), k, 10)
@@ -437,7 +458,8 @@ def draw(F, label, cache):
         img, _ = F.raster(mz['V'], mz['F'], mz['C'].astype(float), ext, w2, h2, 2); F.show(am, img, ext); F.zone_outline(am, 1); F.zone_outline(am, 2)
     # zone rows
     wz, ws, gz = 262, (W_-32-3*262-4*12)//2, 12; hz = 192
-    for row, k in enumerate((1, 2)):
+    if V5: draw_v5_zones(F, it, label, rec, cache, dz if it is not None else None, mz if it is not None else None)
+    for row, k in enumerate(() if V5 else (1, 2)):
         Y = 616+row*226; zj = F.sj['zones'][str(k)]; zext = F.frame_ext(zj['zoom_extent'], wz, hz, .06); zv = (np.asarray(zj['zoom_basis']), np.asarray(zj['zoom_centre'])); cs = comp_state(k, it); cn = COMP[k]['name']
         xg = 16; xm = xg+wz+gz; xs1 = xm+wz+gz; xs2 = xs1+ws+gz; xc = xs2+ws+gz
         a_g = F.axes(xg, Y, wz, hz, f'②-{k} 가우시안 확대 · {ZNAME[k]}' if it is not None else f'②-{k} 입력 확대 · {ZNAME[k]}'); a_m = F.axes(xm, Y, wz, hz, f'②-{k} 메시 확대')
@@ -475,7 +497,9 @@ def draw(F, label, cache):
     if it is None: items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), *[('box', JC[j], f'목표 {JN[j]}') for j in (0, 2, 1, 4)], ('box', STRIPC, '25 m 위(압축)'), ('dot', '#2C2C2A', '판정 경계'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
     else: items = [('band', GTB, '참값'), ('line', MSC, '메시'), ('box', STRIPC, '25 m 위(압축)'), ('line', NAVY, '구역 상자'), ('reset', RESC, '불투명도 초기화')]
     if all(v is None for v in ZTOP.values()): items = [i for i in items if i[2] != '25 m 위(압축)']   # case: no compressed band, so no legend entry
-    if SEC4:   # v4: shaded zone-box width in the sections, and the world direction of the section x axis
+    if V5:   # v5: what the frame draws
+        items = ([('dot', '#2C2C2A', '판정 경계'), ('box', PRIOR_RGB, 'LoD2 면'), ('pt', MVC, '사진 깊이')] if it is None else [])+[('pt', GTDOT, '참값 벽'), ('rect', WALLC, '고른 벽 (폭 8 m)'), ('thick', STORYC, '사진이 못 보는 자리'), ('reset', RESC, '불투명도 초기화')]
+    elif SEC4:   # v4: shaded zone-box width in the sections, and the world direction of the section x axis
         swr = F.sj['zones']['2']['section_world']; items = items+[('span', SPANC, '구역 상자 폭(벽 ±6 m)'), ('text', None, f"단면: 0 = 벽, 왼쪽 {swr['left_name']} · 오른쪽 {swr['right_name']}")]
     for kind, col, txt in items:
         if kind == 'pt': lax.plot(x+5, 17, 'o', ms=4.5, color=col)
@@ -484,12 +508,39 @@ def draw(F, label, cache):
         elif kind == 'reset': lax.plot(x+5, 17, 'v', ms=6, color=col, mec='white', mew=.4)
         elif kind == 'span': lax.add_patch(plt.Rectangle((x, 9), 18, 16, fc=col, ec='#B4B2A9', lw=.6, ls=':'))
         elif kind == 'text': pass
+        elif kind == 'rect': lax.add_patch(plt.Rectangle((x+3, 9), 12, 16, fc='none', ec=col, lw=1.8))
+        elif kind == 'thick': lax.plot([x, x+18], [17, 17], color=col, lw=2.4)
         else: lax.plot([x, x+18], [17, 17], color=col, lw=1.6, ls={'dash': (0, (3, 2)), 'dot': ':', 'line': '-'}[kind])
-        x += (14 if kind in ('pt', 'box', 'reset') else (0 if kind == 'text' else 22)); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
+        x += (14 if kind in ('pt', 'box', 'reset') else (20 if kind == 'rect' else (0 if kind == 'text' else 22))); t = lax.text(x, 17, txt, fontsize=9, va='center', color='#2C2C2A'); x += t.get_window_extent(fig.canvas.get_renderer()).width+16
     png = FR/f'frame_{FRAMES.index(label):02d}_{label}.png'; FR.mkdir(parents=True, exist_ok=True); fig.savefig(png, dpi=100, facecolor='white'); plt.close(fig)
     rec.update(png=str(png), png_sha256=sha(png), seconds=round(time.monotonic()-t0, 1), camera=F.sj['camera'], oblique=F.sj['oblique'], zones=F.sj['zones'], colour_range=F.sj['colour_range'],
                static_sha256=F.h(STN), rule=__doc__.split('\n')[0], scientific_verdict=None)
     dump(png.with_suffix('.json'), rec); print('FRAME', label, rec['seconds'], rec['counts'], flush=True)
+
+def draw_v5_zones(F, it, label, rec, cache, dz, mz):
+    """case v5 zone blocks (see the V5 note at the top): ②-k plan, ②-k side view, ③-k front of this method, ③-k front of the comparison."""
+    S = F.S; F.v5_init(); Y = 618; hb = H_-34-10-Y; bw = (W_-32-24)//2; wp, wb, gp = 196, 330, 10; wf = (bw-wp-wb-3*gp)//2
+    for col, k in enumerate((1, 2)):
+        x0 = 16+col*(bw+24); cs = comp_state(k, it); cn = COMP[k]['name']; W5 = F.w5[k]
+        a_p = F.axes(x0, Y, wp, hb, f'②-{k} {ZNAME[k]} · 위에서'); F.v5_plan(a_p, k)
+        a_b = F.axes(x0+wp+gp, Y, wb, hb, '②-'+str(k)+' 화살표 쪽에서 본 건물'); xf = x0+wp+wb+2*gp
+        if it is None:
+            key = f'v5_prior_side{k}'
+            if key not in cache: cache[key] = F.raster(F.PV, F.PFs, None, F.frame_ext(W5['ext'], wb, hb, .04), wb, hb, 2, PRIOR_RGB, view=(W5['B'], W5['ctr']))
+            F.show(a_b, cache[key][0], F.frame_ext(W5['ext'], wb, hb, .04)); F.v5_rect(a_b, k, lambda P: S.proj(P, W5['B'], W5['ctr'])[:2], True, 2.)
+            a_f = F.axes(xf, Y, wf, hb, f'③-{k} 입력 · LoD2 면'); rec['counts'][f'zone{k}_front_faces'] = F.v5_front(a_f, k, F.PV, F.PF, None, PRIOR_RGB)
+            a_c = F.axes(xf+wf+gp, Y, wf, hb, f'③-{k} 입력 · 사진 깊이'); rec['counts'][f'zone{k}_front_comparison_points'] = F.v5_front(a_c, k, pts=F.st['mvs_xyz'].astype(float))
+        else:
+            V, Fc, C = mz['V'].astype(float), mz['F'].astype('i8'), mz['C'].astype(float); F.v5_side(a_b, k, V, Fc, C, None, wb, hb)
+            a_f = F.axes(xf, Y, wf, hb, f'③-{k} 본 방법 · 벽 정면'); rec['counts'][f'zone{k}_front_faces'] = F.v5_front(a_f, k, V, Fc, C)
+            ctitle = f'{cs:,}회' if cs is not None else '저장 상태 없음'; a_c = F.axes(xf+wf+gp, Y, wf, hb, f'③-{k} 비교 2DGS · {ctitle}')
+            if cs is None: F.blank(a_c)
+            else:
+                ck = f"{COMP[k]['run']}_{cs}"; key = f'v5_{ck}'
+                if key not in cache: cm = loadz(V2/'meshcol'/f'{ck}.npz'); cache[key] = (cm['V'].astype(float), cm['F'].astype('i8'), cm['C'].astype(float))
+                rec['sources'][f'comparison{k}_mesh'] = F.h(V2/'meshcol'/f'{ck}.npz'); rec['counts'][f'zone{k}_front_comparison_faces'] = F.v5_front(a_c, k, *cache[key])
+        rec[f'zone{k}'] = dict(comparison_run=COMP[k]['run'], comparison_name=cn, comparison_iteration=cs, v5_wall=dict(azimuth_deg=W5['azimuth_deg'], elevation_deg=WALL_EL, half_width_m=WALL_HW, height_m=WALL_H,
+                               gt_rows_drawn=W5['gt_rows'], story_rows=W5['story_rows'], story_cells_1m=W5['story_cells'], face_tolerance_m=TAU, side_extent=W5['ext']))
 
 def mvs_points(self, ax, dep, ext, w, h, ss, size, zone=None, view=None):
     P = self.st['mvs_xyz'].astype(float)
@@ -500,6 +551,71 @@ def mvs_points(self, ax, dep, ext, w, h, ss, size, zone=None, view=None):
     ax.scatter(x[ins & ~vis], y[ins & ~vis], s=size, c=MVC, lw=0, zorder=1)   # behind the prior surface: seen through it (the surface is drawn at alpha PRIOR_ALPHA)
     ax.scatter(x[vis], y[vis], s=size, c=MVC, lw=0, zorder=8); ax.set_xlim(x0, x1); ax.set_ylim(y0, y1); return int(vis.sum()), int((ins & ~vis).sum())
 Frame.mvs_points = mvs_points
+
+# ---------------------------------------------------------------- case v5: where on the building -> the wall seen from the front
+def v5_init(self):
+    if hasattr(self, 'w5'): return
+    c = self.S.c; up = np.asarray(c['coordinates']['up'], float); up /= np.linalg.norm(up); self.up = up; czj = json.loads(ZONEF.read_text())['zones']; self.w5 = {}
+    row = loadz(GT/'scenes'/STEM/'rows.npz', ['xyz', 'normal', 'wall', 'prior_distance_m', 'prior_presence', 'mvs_distance_m', 'mvs_presence'])
+    X = row['xyz'].astype(float); Nr = row['normal'].astype(float); W = row['wall'].astype(bool); h = X[:, 2]-self.S.ground
+    pr = row['prior_presence'].astype(bool) & (row['prior_distance_m'] <= TAU); mp = row['mvs_presence'].astype(bool); story = W & pr & (~mp | (mp & (row['mvs_distance_m'] > .5)))
+    fp = np.asarray(c['scope']['footprint']['coordinates'][0], float)[:, :2]; self.fp5 = fp
+    for k in (1, 2):
+        z = czj[str(k)]; o = np.r_[z['wall_normal_out_xy'], 0.]; al = np.cross(up, o); al /= np.linalg.norm(al); foot = np.r_[z['wall_foot_xy'], self.S.ground]
+        rin = in_zone(X, self.S.zones[k], self.S.zr); fac = rin & W & (np.abs(Nr@o) > .9); rel = X-foot; xa = rel@al
+        xe = np.arange(-WALL_HW, WALL_HW+1e-6, 1.); ye = np.arange(0, WALL_H+1e-6, 1.)
+        n, _, _ = np.histogram2d(xa[fac], h[fac], [xe, ye]); ns, _, _ = np.histogram2d(xa[rin & story], h[rin & story], [xe, ye])
+        cell = (ns/np.maximum(n, 1)).T >= .5; cell &= n.T > 0
+        B = basis(up, float(z['zoom_azimuth_deg']), WALL_EL); ctr = np.r_[fp.mean(0), self.S.ground+10.]
+        ring = np.array([foot-WALL_HW*al, foot+WALL_HW*al, foot+WALL_HW*al+WALL_H*up, foot-WALL_HW*al+WALL_H*up, foot-WALL_HW*al])
+        corners = np.r_[np.array([[x, y, zz] for x, y in fp for zz in (self.S.ground, self.S.zr[1])]), ring]; x, y, _ = self.S.proj(corners, B, ctr)   # footprint box + the wall rectangle
+        self.w5[k] = dict(o=o, al=al, foot=foot, gx=xa[fac], gy=h[fac], xe=xe, ye=ye, cell=cell, B=B, ctr=ctr, ext=[float(x.min()), float(x.max()), float(y.min()), float(y.max())], ring=ring,
+                          gt_rows=int(fac.sum()), story_rows=int((rin & story).sum()), story_cells=int(cell.sum()), azimuth_deg=float(z['zoom_azimuth_deg']))
+Frame.v5_init = v5_init
+
+def v5_rect(self, ax, k, fn, facing, lw=1.8):   # chosen-wall rectangle; fn: (N, 3) -> (x, y); dashed when the wall faces away from the viewer
+    x, y = fn(self.w5[k]['ring']); ls = '-' if facing else (0, (3, 2))
+    ax.plot(x, y, color='white', lw=lw+1.6, zorder=15, solid_capstyle='round'); ax.plot(x, y, color=WALLC, lw=lw, ls=ls, zorder=16); return np.asarray(x), np.asarray(y)
+Frame.v5_rect = v5_rect
+
+def v5_plan(self, ax, k):
+    from matplotlib.patches import FancyArrow
+    fp = self.fp5; ax.fill(fp[:, 0], fp[:, 1], color='#E6E3DA', ec='#77756D', lw=.8, zorder=1)
+    for kk in (1, 2):
+        w = self.w5[kk]; s = np.array([w['foot'][:2]-WALL_HW*w['al'][:2], w['foot'][:2]+WALL_HW*w['al'][:2]])
+        ax.plot(s[:, 0], s[:, 1], color=WALLC if kk == k else '#B4B2A9', lw=4.5 if kk == k else 2.5, solid_capstyle='butt', zorder=3)
+        if kk != k: ax.text(*(w['foot'][:2]+w['o'][:2]*5), f'{kk}', fontsize=7.5, color='#9C9A92', ha='center', va='center')
+    w = self.w5[k]; o = w['o'][:2]; st0 = w['foot'][:2]+o*15; ax.add_patch(FancyArrow(st0[0], st0[1], *(-o*9), width=.9, head_width=3.4, head_length=3.2, color=NAVY, zorder=4))
+    ax.set_aspect('equal'); ax.set_xlim(fp[:, 0].min()-14, fp[:, 0].max()+14); ax.set_ylim(fp[:, 1].min()-14, fp[:, 1].max()+14)
+    ax.text(.04, .97, '북 ↑', transform=ax.transAxes, fontsize=7.5, va='top', color='#5F5E5A')
+Frame.v5_plan = v5_plan
+
+def v5_side(self, ax, k, V, Fc, C, tint, w, h):
+    W5 = self.w5[k]; ext = self.frame_ext(W5['ext'], w, h, .04); img, _ = self.raster(V, Fc, C, ext, w, h, 2, tint, view=(W5['B'], W5['ctr'])); self.show(ax, img, ext)
+    self.v5_rect(ax, k, lambda P: self.S.proj(P, W5['B'], W5['ctr'])[:2], True, 2.)
+Frame.v5_side = v5_side
+
+def v5_front(self, ax, k, V=None, Fc=None, C=None, tint=None, pts=None):
+    W5 = self.w5[k]; ax.set_facecolor('white'); ax.scatter(W5['gx'], W5['gy'], s=1.0, c=GTDOT, lw=0, zorder=1, rasterized=True); n = 0
+    if V is not None:
+        o, al, foot = W5['o'], W5['al'], W5['foot']; T = V[Fc]-foot; off = np.abs(T@o).max(1); xa = T@al; hh = T@self.up   # every corner within TAU of the wall plane (large LoD2 triangles too)
+        ok = (off <= TAU) & (xa.max(1) > -WALL_HW-1) & (xa.min(1) < WALL_HW+1) & (hh.max(1) > -1) & (hh.min(1) < WALL_H+1); P = np.stack([xa[ok], hh[ok]], 2)
+        col = np.broadcast_to(tint, (int(ok.sum()), 3)) if tint is not None else C[Fc[ok]].mean(1)[:, :3]/255.
+        ax.add_collection(PolyCollection(P, facecolors=col, edgecolors=col, linewidths=.2, zorder=2)); n = int(ok.sum())
+    if pts is not None:
+        q = pts-W5['foot']; ok = (np.abs(q@W5['o']) <= TAU) & (np.abs(q@W5['al']) <= WALL_HW+1); ax.scatter(q[ok]@W5['al'], q[ok]@self.up, s=5, c=MVC, lw=0, zorder=3); n = int(ok.sum())
+    if k == 1:
+        xe, ye, m = W5['xe'], W5['ye'], W5['cell']; M = np.pad(m, 1); seg = []
+        for i, j in zip(*np.nonzero(m)):
+            if not M[i, j+1]: seg.append([(xe[j], ye[i]), (xe[j+1], ye[i])])
+            if not M[i+2, j+1]: seg.append([(xe[j], ye[i+1]), (xe[j+1], ye[i+1])])
+            if not M[i+1, j]: seg.append([(xe[j], ye[i]), (xe[j], ye[i+1])])
+            if not M[i+1, j+2]: seg.append([(xe[j+1], ye[i]), (xe[j+1], ye[i+1])])
+        ax.add_collection(LineCollection(seg, colors=STORYC, linewidths=2.0, zorder=5))
+    ax.set_xlim(-WALL_HW, WALL_HW); ax.set_ylim(0, WALL_H); ax.set_aspect('equal'); ax.set_xticks([-4, 0, 4]); ax.set_yticks([0, 5, 10, 15])
+    ax.tick_params(labelsize=7, length=2, pad=1, colors='#5F5E5A'); ax.text(.02, .995, '높이 m', transform=ax.transAxes, ha='left', va='top', fontsize=6.5, color='#5F5E5A', zorder=6, bbox=dict(fc='white', ec='none', pad=.5))
+    return n
+Frame.v5_front = v5_front
 
 def frames(labels):
     F = Frame(); cache = {}
