@@ -133,7 +133,7 @@ def runs_of(key):
         sites = [site]
     elif key.startswith('campus'):
         prior = key.split('_')[1]
-        rec = TU / 'runs/campus' / key / 'receipt.json'
+        rec = TU / ('runs/ef' if key.startswith('campusef') else 'runs/campus') / key / 'receipt.json'   # addendum 16: campusef<30k|120k>_<prior>_s0
         sites = SITES
     else:
         prior = key.split('_')[1]
@@ -145,7 +145,8 @@ def runs_of(key):
     if r['status'] != 'TRAINING_COMPLETE':
         return prior, sites, None
     att = r['attempts'][-1]['attempt']
-    ply = rec.parent / f'attempt{att}' / 'model/point_cloud/iteration_30000/point_cloud.ply'
+    final = 120000 if '120k' in key else 30000
+    ply = rec.parent / f'attempt{att}' / f'model/point_cloud/iteration_{final}/point_cloud.ply'
     return prior, sites, ply
 
 
@@ -157,7 +158,7 @@ def gpu_free_mb(gpu):
 def big_run_gpus():
     """GPUs running a campus training of this task: no render there (its memory peak is a result). Cell runs are site-sized."""
     out = set()
-    for launch in list((TU / 'runs/campus').glob('*/attempt*/launch.json')):
+    for launch in list((TU / 'runs/campus').glob('*/attempt*/launch.json')) + list((TU / 'runs/ef').glob('campusef*/attempt*/launch.json')):
         if not (launch.parent / 'receipt.json').exists():
             out.add(int(json.loads(launch.read_text())['gpu']))
     return out

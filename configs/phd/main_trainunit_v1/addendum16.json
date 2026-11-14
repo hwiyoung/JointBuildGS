@@ -1,0 +1,37 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 16,
+  "instruction": "user, 2026-11-14 KST: '2번으로 가자. 네 비교 표에 대한 산출물이 나와야 한다는걸 명심해' (reply to: comparisons 2 and 3 of section 0.3 have no numbers because 판 가 stopped on host memory before the elongation filter existed and 판 나 was only prepared; option 2 = run 판 가 with the filter first)",
+  "intent": "fill the four comparisons of section 0.3 for ALS with every plan under the elongation filter, so that the comparison table of section 5.1 (difference next to the seed spread) exists for all four rows. The filter (addendum 12) is now part of every plan; the reference plan is therefore the filter single-site run.",
+  "plans_ALS": {
+    "기준": "filter single-site runs, family ef_s0: B0ef_ALS_s0, R1repef_ALS_s0, B173nbef_ALS_s0 (existing)",
+    "씨앗 반복": "family ef_s1: B0ef_ALS_s1, R1repef_ALS_s1 (existing), B173nbef_ALS_s1 (new here)",
+    "가": "campusef30k_ALS_s0 (new here)",
+    "나": "campusef120k_ALS_s0 (new here)",
+    "다": "cellsef_ALS_s0 (existing, addendum 14)"
+  },
+  "runs": {
+    "campusef30k_ALS_s0": "inputs of 판 가 (scenes/campus scene_ALS and split.json, stage1/campus__ALS), seed 0, 30,000 iterations, unchanged train_args, elongation filter 0.01, FINALTRAIN count rule recorded only (as the 판 다 cells, addenda 4 and 14, so that comparison 3 has the same rules on both sides), scene radius as computed by the fork (not fixed, as the cells), read-only family monitor without watched families",
+    "campusef120k_ALS_s0": "the same with 120,000 iterations and the prepared 판 나 schedule x4 (densify_from_iter 2000, densify_until_iter 60000, densification_interval 400, opacity_reset_interval 12000; capture/test/save 28000 60000 120000); learning rates and position_lr_max_steps keep the code values, the 7,000 health check and the count check until 15,000 stay at the code iterations (as prepared 2026-11-11)",
+    "B173nbef_ALS_s1": "identical to B173nbef_ALS_s0 (FINALTRAIN B173nb_b10 ALS inputs, filter, count rule enforced, 30,000) except --jbgs_seed 1"
+  },
+  "order_and_resources": {
+    "order": "campusef30k_ALS_s0, then campusef120k_ALS_s0, then B173nbef_ALS_s1; any GPU queue takes the first runnable one",
+    "queue_rules": "tu_ef_queue.py unchanged: start only on a GPU with no other compute process (TRAINERR first); host guard kills this task's container below 20 GB MemAvailable and returns the run to the queue (at most 3 times); GPU memory stop is a result; execution error gets one retry",
+    "start_memory": "campus runs start only with MemAvailable >= 60 GB (판 가 attempt 1 had RSS 36.3 GB at 4,800 iterations; container 64 GB as prepared); B173nbef_ALS_s1 >= 45 GB, container 40 GB",
+    "post_gpu": "no render on a GPU that runs a campus training of this task"
+  },
+  "post": "unchanged GTJUDGE crop of the three evaluation boxes from the campus model, render, mesh (mesh image lists as the reference scenes), score; families campusef30k_ALS_s0, campusef120k_ALS_s0 and ef_s1 (B173nb_b10)",
+  "outputs": {
+    "comparison_table": "per site (B0_b10, R1rep_b10, B173nb_b10) and ALS: comparisons 1 (씨앗 - 기준), 2 (가 - 나), 3 (나 - 다), 4 (다 - 기준): four cases and scene completeness and accuracy, largest gap to the best comparison method, the difference next to the seed spread |ef_s1 - ef_s0| and max(seed spread, 2 %p); cases with n_gt < 1000 flagged",
+    "per_run": "training PSNR, Gaussians final and max, GPU reserved max, training time, passes per image (actual)",
+    "cells_boundary": "the boundary band table of 판 다 (addendum 15 part B)",
+    "scale_estimate": "time for one campus training with 가 and with 다 (and 나 as measured), and the sum for about 140 buildings with the comparison methods",
+    "qualitative": "the existing figure scripts on the new families (mesh views, tau maps)",
+    "report": "보고.md (under 5,000 characters, facts only) and PHD-MAIN-TRAINUNIT-v1_<MMDD>-<HHMM>.zip"
+  },
+  "not_included": "LoD2 for every plan (needs about 13 more runs), second seeds of 가, 나 and 다, any change of method values or rules",
+  "unchanged": "fork r23, renderer, train_args, filter, judgment, inputs, mesh rule, scorer, merge rule, 판 다 cells, appendix selection rule (applied by the user / analysis session)",
+  "pass_marks_not_set": "none",
+  "scientific_verdict": null
+}

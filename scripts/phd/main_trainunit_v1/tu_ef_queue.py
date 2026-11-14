@@ -15,7 +15,8 @@ from tu_host import FT, TU, command, dump, gpu_busy, issue, now, progress, train
 ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0', 'B0ef_ALS_s1',   # longest expected first; addendum 13 last
          # addendum 14: 판 다 ALS cells with the filter (most images first; cell0 resumes from cell0ef at 15,000), then filter single sites
          'cellsef_ALS_s0_cell2', 'cellsef_ALS_s0_cell1', 'cellsef_ALS_s0_cell3', 'cellsef_ALS_s0_cell0', 'R1repef_ALS_s0', 'B173nbef_ALS_s0',
-         'R1repef_ALS_s1']   # addendum 15
+         'R1repef_ALS_s1',   # addendum 15
+         'campusef30k_ALS_s0', 'campusef120k_ALS_s0', 'B173nbef_ALS_s1']   # addendum 16
 JOBS = {
     'B0ef_ALS_s0': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
                         ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g'),
@@ -36,6 +37,14 @@ JOBS = {
 }
 # addendum 15: R1repef with seed 1 (same inputs and rules as R1repef_ALS_s0)
 JOBS['R1repef_ALS_s1'] = dict(JOBS['R1repef_ALS_s0'], seed=1, addendum=15)
+# addendum 16: 판 가 / 판 나 inputs with the filter (나: prepared schedule x4), B173nbef with seed 1
+_CAMPUS = dict(scene='/tu/scenes/campus/scene_ALS', split='/tu/scenes/campus/split.json', target='/tu/stage1/campus__ALS',
+               ready=TU / 'stage1/campus__ALS/ready.json', memory='64g', start_gb=60, addendum=16, campus=True)
+JOBS['campusef30k_ALS_s0'] = dict(_CAMPUS)
+JOBS['campusef120k_ALS_s0'] = dict(_CAMPUS, iterations=120000,
+                                   extra=['--densify_from_iter', '2000', '--densify_until_iter', '60000',
+                                          '--densification_interval', '400', '--opacity_reset_interval', '12000'])
+JOBS['B173nbef_ALS_s1'] = dict(JOBS['B173nbef_ALS_s0'], seed=1, addendum=16)
 JOBS['cellsef_ALS_s0_cell0']['resume'] = TU / 'runs/ef/cell0ef_ALS_s0/attempt1/model/jbgs_complete/iteration_15000/checkpoint.pth'
 FLOOR_GB, START_GB, MAX_GUARD = 20, 45, 3
 
@@ -73,7 +82,7 @@ def attempt(gpu, name, run, a):
     extra = ['--jbgs_resume_full', '/tu/' + str(j['resume'].relative_to(TU))] if j.get('resume') else []
     if extra:
         assert j['resume'].is_file(), j['resume']
-    args = [name, *train_args(j['scene'], model, j['target'], j.get('seed', 0), 30000, extra)]
+    args = [name, *train_args(j['scene'], model, j['target'], j.get('seed', 0), j.get('iterations', 30000), extra + j.get('extra', []))]
     cname = f'jbgs-trainunit-{name.replace("_", "-").lower()}-a{a}'
     cmd = command(gpu, cname, 'tu_train_entry.py', args, j['split'], j['memory'])
     dump(root / 'command.json', cmd)
@@ -168,7 +177,16 @@ def main(gpu):
         if gpu_busy(gpu) or avail_gb() < START_GB:
             time.sleep(60)
             continue
+        # addendum 16: a run with a higher start memory waits (and holds its place); a campus run waits while another campus run trains
         n = todo[0]
+        campus_live = any(JOBS[m].get('campus') and (TU / 'runs/ef' / m / 'claim').exists() and not (TU / 'runs/ef' / m / 'receipt.json').exists()
+                          for m in ORDER)
+        if avail_gb() < JOBS[n].get('start_gb', START_GB) or (JOBS[n].get('campus') and campus_live):
+            rest = [m for m in todo[1:] if not JOBS[m].get('campus') and avail_gb() >= JOBS[m].get('start_gb', START_GB)]
+            if not rest:
+                time.sleep(60)
+                continue
+            n = rest[0]
         if not claim(TU / 'runs/ef' / n):
             continue
         try:
