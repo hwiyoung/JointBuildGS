@@ -1,0 +1,33 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": 15,
+  "instruction": "user, 2026-11-14 KST: '확인해보자. 의도를 잘 생각해' (reply to the proposal: R1rep filter single-site run with seed 1, and where in R1rep the 판 다 accuracy fell, before fixing the unit; the user had rejected one scene per building as inefficient and unlike related work)",
+  "intent": {
+    "question_1": "Is the R1rep difference of 판 다 with the filter (cellsef_ALS_s0 - ef_s0: accuracy -4.59 %p, completeness -1.18 %p) larger than what changing only the seed makes with the filter on? Until now the R1rep seed spread came from the no-filter pair (accuracy 2.45 %p), while the B0 filter pair moved 3.20 %p.",
+    "question_2": "If it is larger, where does it sit? At the cell seams (merge/overlap rule), in one cell (that cell's image assignment, passes per image or scene extent), or everywhere (cells as such)? The answer says which part of the partition to fix; it does not choose the unit.",
+    "why_three_sites": "B0 and B173nb (no difference beyond the criterion) are binned the same way, so a pattern seen at R1rep can be checked where it did not show",
+    "why_seed_difference_per_bin": "a bin difference means something only next to the seed difference of the same bin (ef_s1 - ef_s0), counted the same way"
+  },
+  "part_A_seed1": {
+    "run": "R1repef_ALS_s1: identical to R1repef_ALS_s0 (FINALTRAIN R1rep_b10 ALS inputs, elongation filter 0.01, FINALTRAIN count rule enforced, 30,000 iterations, read-only family monitor) except --jbgs_seed 1 (the seed of the seed-1 repeat and of B0ef_ALS_s1)",
+    "post": "unchanged GTJUDGE crop, render, mesh, score as family ef_s1 (run key efs1_R1rep_b10_ALS); if the mesh merge stops on the known copy-coordinate roundoff, tu_post_fix.py (tolerance 1e-12 m, as before)",
+    "resources": "tu_ef_queue.py rules unchanged (GPU with no other compute process, TRAINERR first; MemAvailable >= 45 GB; host guard below 20 GB; container 40 GB)"
+  },
+  "part_B_where": {
+    "training": "none; reads only GTJUDGE distance and sample files of cellsef_ALS_s0, ef_s0 and ef_s1 (where present) for B0_b10, R1rep_b10, B173nb_b10 (ALS)",
+    "counted": "accuracy: mesh samples counted by the unchanged §3.4 rule (sample_eligible and not steep, |normal_z| < 0.5 excluded) located by their sample xyz; completeness: reference rows located by their xyz; case labels as in add2_scores.metric_rows",
+    "bins": [
+      "original cell (cells.json original_min/max, half-open as the merge rule)",
+      "xy distance to the nearest original cell boundary segment: [0,2), [2,5), [5,10), [10,20), [20,inf) m",
+      "case (0 both right, 1 image only right, 2 prior only right, 4 no image) x original cell"
+    ],
+    "per_bin": "n, within %, outward (s > tau) %, inward (s < -tau) %, no surface % (normal_line.values); differences cellsef - ef_s0, cellsef - ef_s1, ef_s1 - ef_s0",
+    "check": "bins summed back reproduce metric_rows accuracy and completeness per case and scene (|diff| < 1e-9)",
+    "cell_context": "per cell: training images, passes per image (30,000 / images), scene radius used by the fork vs the single-site radius, max Gaussians (records only)"
+  },
+  "read_out_rule_quantities": "for R1rep scene and cases with n_gt >= 1000: cellsef - ef_s0, cellsef - ef_s1, cellsef - mean(ef_s0, ef_s1), |ef_s1 - ef_s0| and max(|ef_s1 - ef_s0|, 2 %p) side by side; the appendix selection rule itself is applied by the user / analysis session, not here",
+  "pass_marks_not_set": "no pass/fail threshold for the bins",
+  "unchanged": "fork r23, renderer, train_args, filter, judgment, inputs, mesh rule, scorer, merge rule, 판 다 cells",
+  "not_included": "a second seed of the 판 다 cells (16 GPU h), LoD2, 판 가 with the filter",
+  "scientific_verdict": null
+}

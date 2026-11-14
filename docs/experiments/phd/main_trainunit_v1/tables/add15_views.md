@@ -1,0 +1,6 @@
+| site | cell | rows | cell_training_images | single_training_images | shared_training_images | 칸_cameras_median | 칸_cameras_p10 | 칸_rows_under_10_cameras_pct | 칸_distance_median_m | 칸_sectors_median | 칸_rows_under_4_sectors_pct | 단일_cameras_median | 단일_cameras_p10 | 단일_rows_under_10_cameras_pct | 단일_distance_median_m | 단일_sectors_median | 단일_rows_under_4_sectors_pct | 카메라수_칸-단일_median_of_row_difference | rows_with_fewer_cameras_in_cell_pct |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| B0_b10 | 칸2 | 145160 | 544 | 243 | 191 | 80.000 | 66.000 | 0.000 | 122.320 | 8.000 | 0.000 | 98.000 | 87.000 | 0.000 | 177.222 | 8.000 | 0.000 | -21.000 | 100.000 |
+| R1rep_b10 | 칸1 | 40526 | 471 | 333 | 215 | 99.000 | 83.000 | 0.000 | 109.248 | 8.000 | 0.000 | 121.000 | 96.000 | 0.000 | 120.231 | 8.000 | 0.000 | -22.000 | 100.000 |
+| R1rep_b10 | 칸2 | 108920 | 544 | 333 | 264 | 109.000 | 97.000 | 0.000 | 121.383 | 8.000 | 0.000 | 129.000 | 115.000 | 0.000 | 127.921 | 8.000 | 0.000 | -19.000 | 100.000 |
+| B173nb_b10 | 칸3 | 210800 | 324 | 203 | 123 | 23.000 | 18.000 | 0.000 | 74.720 | 7.000 | 0.050 | 63.000 | 56.000 | 0.000 | 230.658 | 7.000 | 0.000 | -38.000 | 100.000 |

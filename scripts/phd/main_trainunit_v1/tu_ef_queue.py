@@ -14,7 +14,8 @@ from tu_host import FT, TU, command, dump, gpu_busy, issue, now, progress, train
 
 ORDER = ['B0ef_ALS_s0', 'cell0ef_ALS_s0', 'probe3ef_ALS_s0', 'probe4ef_ALS_s0', 'B0ef_ALS_s1',   # longest expected first; addendum 13 last
          # addendum 14: 판 다 ALS cells with the filter (most images first; cell0 resumes from cell0ef at 15,000), then filter single sites
-         'cellsef_ALS_s0_cell2', 'cellsef_ALS_s0_cell1', 'cellsef_ALS_s0_cell3', 'cellsef_ALS_s0_cell0', 'R1repef_ALS_s0', 'B173nbef_ALS_s0']
+         'cellsef_ALS_s0_cell2', 'cellsef_ALS_s0_cell1', 'cellsef_ALS_s0_cell3', 'cellsef_ALS_s0_cell0', 'R1repef_ALS_s0', 'B173nbef_ALS_s0',
+         'R1repef_ALS_s1']   # addendum 15
 JOBS = {
     'B0ef_ALS_s0': dict(scene='/p/fork_inputs/s61/B0_b10/scene_ALS', split='/p/fork_inputs/s61/B0_b10/split.json', target='/ft/stage1/B0_b10__ALS',
                         ready=FT / 'stage1/B0_b10__ALS/ready.json', memory='40g'),
@@ -33,6 +34,8 @@ JOBS = {
     **{f'{s.split("_")[0]}ef_ALS_s0': dict(scene=f'/p/fork_inputs/s61/{s}/scene_ALS', split=f'/p/fork_inputs/s61/{s}/split.json', target=f'/ft/stage1/{s}__ALS',
                                           ready=FT / f'stage1/{s}__ALS/ready.json', memory='40g', addendum=14) for s in ['R1rep_b10', 'B173nb_b10']},
 }
+# addendum 15: R1repef with seed 1 (same inputs and rules as R1repef_ALS_s0)
+JOBS['R1repef_ALS_s1'] = dict(JOBS['R1repef_ALS_s0'], seed=1, addendum=15)
 JOBS['cellsef_ALS_s0_cell0']['resume'] = TU / 'runs/ef/cell0ef_ALS_s0/attempt1/model/jbgs_complete/iteration_15000/checkpoint.pth'
 FLOOR_GB, START_GB, MAX_GUARD = 20, 45, 3
 

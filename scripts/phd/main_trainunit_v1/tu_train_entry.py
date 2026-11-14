@@ -27,6 +27,8 @@ EF = {
     **{f'cellsef_ALS_s0_cell{k}': dict(stop=None, extent=None, watch={}, count_record_only=True, addendum=14) for k in range(4)},
     'R1repef_ALS_s0': dict(stop=None, extent=None, watch={}, addendum=14),
     'B173nbef_ALS_s0': dict(stop=None, extent=None, watch={}, addendum=14),
+    # addendum 15: R1repef with seed 1 (filter seed spread at R1rep)
+    'R1repef_ALS_s1': dict(stop=None, extent=None, watch={}, addendum=15),
 }
 FTC = Path('/repo/configs/phd/main_finaltrain_v1/finaltrain_v1.json')
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -200,6 +202,8 @@ def main():
             assert sha(C / 'addendum13.json') == json.loads((C / 'addendum13.lock.json').read_text())['sha256']
         if EF[run_name].get('addendum') == 14:
             assert sha(C / 'addendum14.json') == json.loads((C / 'addendum14.lock.json').read_text())['sha256']
+        if EF[run_name].get('addendum') == 15:
+            assert sha(C / 'addendum15.json') == json.loads((C / 'addendum15.lock.json').read_text())['sha256']
         lifted = True
         probe_stop = EF[run_name]['stop']
     elif run_name.startswith('probe'):

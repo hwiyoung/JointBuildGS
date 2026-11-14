@@ -1,0 +1,9 @@
+| run | radius_m | position_lr_init | clone_split_size_threshold_m | prune_size_threshold_m |
+| --- | --- | --- | --- | --- |
+| cellsef_ALS_s0_cell0 | 185.850 | 0.030 | 1.858 | 18.585 |
+| cellsef_ALS_s0_cell1 | 282.142 | 0.045 | 2.821 | 28.214 |
+| cellsef_ALS_s0_cell2 | 228.031 | 0.036 | 2.280 | 22.803 |
+| cellsef_ALS_s0_cell3 | 199.236 | 0.032 | 1.992 | 19.924 |
+| R1repef_ALS_s0 | 229.696 | 0.037 | 2.297 | 22.970 |
+| B173nbef_ALS_s0 | 272.354 | 0.044 | 2.724 | 27.235 |
+| B0ef_ALS_s0 | 224.904 | 0.036 | 2.249 | 22.490 |

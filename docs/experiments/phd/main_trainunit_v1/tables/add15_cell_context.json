@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "unit": "칸0",
+      "training_images": 308,
+      "passes_per_image": 97.40259740259741,
+      "scene_radius_m": 185.84959564208987,
+      "max_gaussians": 3819261
+    },
+    {
+      "unit": "칸1",
+      "training_images": 471,
+      "passes_per_image": 63.69426751592356,
+      "scene_radius_m": 282.1421783447266,
+      "max_gaussians": 3231493
+    },
+    {
+      "unit": "칸2",
+      "training_images": 544,
+      "passes_per_image": 55.14705882352941,
+      "scene_radius_m": 228.03077545166016,
+      "max_gaussians": 3123569
+    },
+    {
+      "unit": "칸3",
+      "training_images": 324,
+      "passes_per_image": 92.5925925925926,
+      "scene_radius_m": 199.23553619384768,
+      "max_gaussians": 6423189
+    },
+    {
+      "unit": "R1repef_ALS_s0",
+      "training_images": 333,
+      "passes_per_image": 90.09009009009009,
+      "scene_radius_m": 229.69646911621095
+    },
+    {
+      "unit": "B173nbef_ALS_s0",
+      "training_images": 203,
+      "passes_per_image": 147.7832512315271,
+      "scene_radius_m": 272.3538131713867
+    },
+    {
+      "unit": "B0ef_ALS_s0",
+      "training_images": 243,
+      "passes_per_image": 123.45679012345678,
+      "scene_radius_m": 224.9043121337891
+    }
+  ],
+  "note": "addendum 15: per cell and single-site filter run: training images, passes per image (30,000 / images), scene radius used by the fork, max Gaussians (cells; cell0 from the resumed run); records only",
+  "scientific_verdict": null
+}

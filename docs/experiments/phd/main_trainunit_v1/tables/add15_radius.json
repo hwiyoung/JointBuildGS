@@ -1,0 +1,55 @@
+{
+  "rows": [
+    {
+      "run": "cellsef_ALS_s0_cell0",
+      "radius_m": 185.84959564208987,
+      "position_lr_init": 0.02973593530273438,
+      "clone_split_size_threshold_m": 1.8584959564208987,
+      "prune_size_threshold_m": 18.584959564208987
+    },
+    {
+      "run": "cellsef_ALS_s0_cell1",
+      "radius_m": 282.1421783447266,
+      "position_lr_init": 0.045142748535156256,
+      "clone_split_size_threshold_m": 2.8214217834472657,
+      "prune_size_threshold_m": 28.21421783447266
+    },
+    {
+      "run": "cellsef_ALS_s0_cell2",
+      "radius_m": 228.03077545166016,
+      "position_lr_init": 0.036484924072265626,
+      "clone_split_size_threshold_m": 2.2803077545166017,
+      "prune_size_threshold_m": 22.80307754516602
+    },
+    {
+      "run": "cellsef_ALS_s0_cell3",
+      "radius_m": 199.23553619384768,
+      "position_lr_init": 0.03187768579101563,
+      "clone_split_size_threshold_m": 1.9923553619384768,
+      "prune_size_threshold_m": 19.92355361938477
+    },
+    {
+      "run": "R1repef_ALS_s0",
+      "radius_m": 229.69646911621095,
+      "position_lr_init": 0.036751435058593754,
+      "clone_split_size_threshold_m": 2.2969646911621093,
+      "prune_size_threshold_m": 22.969646911621098
+    },
+    {
+      "run": "B173nbef_ALS_s0",
+      "radius_m": 272.3538131713867,
+      "position_lr_init": 0.04357661010742188,
+      "clone_split_size_threshold_m": 2.7235381317138674,
+      "prune_size_threshold_m": 27.235381317138675
+    },
+    {
+      "run": "B0ef_ALS_s0",
+      "radius_m": 224.9043121337891,
+      "position_lr_init": 0.03598468994140626,
+      "clone_split_size_threshold_m": 2.2490431213378907,
+      "prune_size_threshold_m": 22.490431213378912
+    }
+  ],
+  "note": "addendum 15 supplement: scene radius used by the fork and the three quantities it scales (fork r23 scene/gaussian_model.py: position_lr_init 0.00016 x radius; clone if max scale <= percent_dense 0.01 x radius, else split; prune if max scale > 0.1 x radius after the opacity reset); code facts, no training",
+  "scientific_verdict": null
+}

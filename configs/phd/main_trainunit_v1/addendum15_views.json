@@ -1,0 +1,17 @@
+{
+  "task_id": "PHD-MAIN-TRAINUNIT-v1",
+  "addendum": "15 supplement (views)",
+  "instruction": "same user instruction as addendum 15 ('확인해보자. 의도를 잘 생각해'); written after the first part-B read-out, before this computation",
+  "found_first": "R1rep loss of 판 다 + filter sits in the part of R1rep inside cell 1 (accuracy -6.59, completeness -4.90 %p vs ef_s0; mostly 2-20 m from the boundary, not 0-2 m); the cell-2 part moves -2.75 / +0.21. Cell 1 differs from the single-site run in two ways: its scene radius is 282 m vs 230 m, and only 215 of the 333 single-site training images are in its training list (cell 2: 264).",
+  "intent": "tell the two apart: (a) image assignment - the cell-1 part of R1rep is seen by fewer or narrower training views in cell 1 than in the single-site run; (b) scene radius - the fork scales position learning rate, the clone/split size threshold (percent_dense x radius) and the large-point prune threshold (0.1 x radius) by the radius (code facts, scene/gaussian_model.py, scene/__init__.py). (a) is measured here; (b) is only stated from code, no training",
+  "measure": {
+    "points": "reference rows of R1rep_b10, B0_b10, B173nb_b10 (ALS), grouped by original cell as in addendum 15 part B",
+    "training_sets": "the training list of the cell holding the row (scenes/cell<k>/split.json train) and the single-site training list (STAGE0 fork_inputs/s61/<site>/split.json train)",
+    "per_row": "number of training cameras of each set whose image contains the projected row with positive depth (campus poses and calibration through tu_campus.cameras; no occlusion test); among them the median camera distance and the number of 45-degree azimuth sectors (camera centre around the row, xy) that hold at least one camera",
+    "per_group": "median and 10th percentile of the camera count, median distance, median sectors, share of rows seen by fewer than 10 cameras; for each set and their difference",
+    "records": "per cell: radius used (extent_override.json) and the three radius-scaled quantities (position lr scale, clone/split size threshold, prune size threshold) next to the single-site run"
+  },
+  "pass_marks_not_set": "none",
+  "unchanged": "everything of addendum 15",
+  "scientific_verdict": null
+}
