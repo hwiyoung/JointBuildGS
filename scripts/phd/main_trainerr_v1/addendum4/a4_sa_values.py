@@ -28,7 +28,7 @@ def sa2():
     sys.path.insert(0, '/repo/scripts/phd/main_trainerr_v1/addendum1'); import a1_common as A1
     places = {p: place_points(p) for p in ['visible_low', 'visible_high', 'visible_side', 'south_wall', 'long_wall', 'edge_back', 'edge_annex']}
     runs = [('사-2 가림 화소 감독 끔', A4O/'gtj/scenes/B0_b10__LoD2/distances', 'sa2_{}', A4O/'meshes', A4O/'gtj/meshes'),
-            ('기록 판(TRAINLOG)', TLC/'gtj/scenes/B0_b10__LoD2/distances', 'tl_{}', TLC/'meshes', TLC/'gtj/meshes'),
+            ('기록 판(TRAINLOG)', A4O/'gtj/scenes/B0_b10__LoD2/distances', 'tlre_{}', A4O/'meshes', A4O/'gtj/meshes'),   # record meshes re-scored here with the same direct-sample rule (old TRAINLOG score.json used the older accuracy rule)
             ('바-1 법선 항 없음', A3O/'gtj/scenes/B0_b10__LoD2/distances', 'ba1_{}', A3O/'meshes', A3O/'gtj/meshes'),
             ('바-2 다시 학습(재설정 7,000 뒤 없음)', A3O/'gtj/scenes/B0_b10__LoD2/distances', 'ba2b_{}', A3O/'meshes', A3O/'gtj/meshes')]
     comp = []; scene = []; south = []
@@ -75,7 +75,7 @@ def sa2():
 def sa3():
     import torch, shapely
     rows = []; scene = []
-    for lab, gm, md, fam in [('사-3 판단 끔', A4O/'gtj/meshes', A4O/'meshes', 'sa3_{}'), ('본 방법 기록 판(TRAINLOG)', TLM/'gtj/meshes', TLM/'meshes', 'tl_{}')]:
+    for lab, gm, md, fam in [('사-3 판단 끔', A4O/'gtj/meshes', A4O/'meshes', 'sa3_{}'), ('본 방법 기록 판(TRAINLOG)', A4O/'gtj/meshes', A4O/'meshes', 'tlre_{}')]:
         for it in ITS:
             f = fam.format(it); p = gm/f'B173nb_b10__ALS__{f}'/'final.ply'
             if not p.exists(): continue

@@ -8,7 +8,9 @@ from a4_common import *
 from a4_da import contrib, gmodel, gpu_setup, load_pt, TLCASE
 import time
 RA = A4O/'ra'; SCENES = ['B0_b10__ALS', 'B0_b10__LoD2', 'B173nb_b10__ALS', 'B173nb_b10__LoD2', 'R1rep_b10__ALS', 'R1rep_b10__LoD2']
-RECORD = {'B0_b10__LoD2': (TLCASE, 'scene'), 'R1rep_b10__ALS': (RUNS4['tl_R1_ALS_own']['model'], 'scene13')}
+RECORD = {'B0_b10__LoD2': (TLCASE, 'scene'), 'R1rep_b10__ALS': (RUNS4['tl_R1_ALS_own']['model'], 'scene13'),
+          # added 11-15: existing record runs of the two ALS scenes (no new training)
+          'B0_b10__ALS': (RUNS4['ba3_B0_ALS_record']['model'], 'scene13'), 'B173nb_b10__ALS': (RUNS4['tl_B173nb_b10_ALS_s0']['model'], 'scene')}
 JUD = {0: '일치', 1: '보존', 2: '보정'}
 
 def points(stem):

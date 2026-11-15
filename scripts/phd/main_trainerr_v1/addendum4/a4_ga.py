@@ -1,6 +1,7 @@
 """Work ga (order 2): why release and retarget happen (addendum4.json work_ga + addendum4_b.json events).
   events <run>   : per release / retarget event of the place patches: condition (tangent / normal excess to the previous patch), position at the
                    event (normal + outward, tangent), movement since first placement, self or child, fate at the last state -> addendum4/ga/events_<run>.npz + tables
+  balance2 <run> : per-Gaussian replay of the same count (exact start + in - out = replayed end; unlogged changes and order conflicts counted)
   balance <run>  : per window between saved states: start + born + in - deleted - released - out (+ range in/out) = end, per place
   floater        : B173 x ALS edge floater and control (scene states, state-based: released_at, last bound patch)
   grads          : sa-1 signed position gradients along the outward target normal by term, window, place, released-ever vs bound
@@ -134,6 +135,58 @@ def balance(run):
     dtable(f'ga_balance_{run}', rows); res = [abs(x['residual']) for x in rows]
     print('GA_BALANCE', run, 'windows', len(rows), 'nonzero residual', sum(1 for x in res if x), 'max', max(res) if res else None, flush=True)
 
+def balance2(run):
+    """per-Gaussian replay (fixes the per-kind window count): for each window between saved states, every uid with an event in the window or in the
+    start/end place set is replayed in seq order from its start membership (bound to a place patch at the start state). Each event that flips the
+    membership is counted by kind (in: birth / retarget / range enter; out: delete / release / retarget / range exit). Targets that birth and range
+    events do not log are taken as in balance(): the next event's old target in the window, else the end-state target.
+    start + in - out = replayed end holds exactly; end - replayed end is split into uids whose end membership no logged event explains
+    (unlogged_in: in at the end but replayed out; unlogged_out: replayed in but out at the end), and event-order conflicts (an event whose logged
+    'old' target disagrees with the replayed membership) are counted."""
+    cfgr = RUNS4[run]; model = cfgr['model']; E = load_events(model, ('delete', 'release', 'retarget', 'birth', 'range')); sv = saves(model); rows = []
+    d, r, t, bth, g = E['delete'], E['release'], E['retarget'], E['birth'], E['range']
+    # one event table: kind, seq, uid, old target (-1 unknown/none), new target (-1 none), flag
+    K = []; 
+    def add(kind, ev, old, new, ok):
+        if len(ev): K.append((np.full(int(ok.sum()), kind), ev['seq'][ok], ev['uid'][ok], old[ok], new[ok]))
+    if len(d): add('delete', d, np.where(d['tag'] == 1, d['target_index'], -1), np.full(len(d['uid']), -1), np.ones(len(d['uid']), bool))
+    if len(r): add('release', r, r['previous_target_index'], np.full(len(r['uid']), -1), np.ones(len(r['uid']), bool))
+    if len(t): add('retarget', t, t['old'], t['new'], np.ones(len(t['uid']), bool))
+    if len(bth): add('birth', bth, np.full(len(bth['uid']), -1), np.full(len(bth['uid']), -2), bth['tag'] == 1)       # -2 = inherited, resolved below
+    if len(g): add('range_enter', g, np.full(len(g['uid']), -1), np.full(len(g['uid']), -2), (g['tag'] == 1) & g['enter'])
+    if len(g): add('range_exit', g, np.full(len(g['uid']), -1), np.full(len(g['uid']), -1), (g['tag'] == 1) & ~g['enter'])
+    kind = np.concatenate([k[0] for k in K]); seq = np.concatenate([k[1] for k in K]); uid = np.concatenate([k[2] for k in K]).astype(np.int64)
+    old = np.concatenate([k[3] for k in K]).astype(np.int64); new = np.concatenate([k[4] for k in K]).astype(np.int64)
+    o = np.lexsort((seq, uid)); kind, seq, uid, old, new = kind[o], seq[o], uid[o], old[o], new[o]
+    starts = np.flatnonzero(np.r_[True, uid[1:] != uid[:-1]]); ends = np.r_[starts[1:], len(uid)]; span = {int(uid[a]): (a, b) for a, b in zip(starts, ends)}
+    INS = ['birth', 'retarget', 'range_enter']; OUTS = ['delete', 'release', 'retarget', 'range_exit']
+    for place in cfgr['places']:
+        Sp = place_patches(place)['v']; SpS = set(Sp.tolist()); prev = None
+        for s in sv:
+            S = raw_state(model, s['name']); tgt = np.where(S['target_tag'] == 1, S['target_index'], -1); cur = set(S['uid'][np.isin(tgt, Sp)].tolist()); endt = dict(zip(S['uid'].tolist(), tgt.tolist()))
+            if prev is not None:
+                q0, q1 = prev[1], s['seq']; cnt = {f'in_{k}': 0 for k in INS}; cnt.update({f'out_{k}': 0 for k in OUTS}); conflict = 0; rep_end = set()
+                inw = (seq > q0) & (seq <= q1); touched = set(uid[inw].tolist()) | prev[0] | cur
+                for u in touched:
+                    m = u in prev[0]; a, b = span.get(u, (0, 0)); idx = [i for i in range(a, b) if q0 < seq[i] <= q1]
+                    for j, i in enumerate(idx):
+                        k = kind[i]; nw = int(new[i])
+                        if nw == -2:   # inherited / entering target: next event's old target in the window, else the end-state target
+                            nxt = next((int(old[i2]) for i2 in idx[j+1:] if old[i2] >= 0), None); nw = nxt if nxt is not None else endt.get(u, -1)
+                        if old[i] >= 0 and (int(old[i]) in SpS) != m: conflict += 1
+                        m2 = (nw in SpS) if k in ('birth', 'retarget', 'range_enter') else False
+                        if m2 and not m: cnt[f'in_{k}'] += 1
+                        elif m and not m2: cnt[f'out_{k}'] += 1
+                        m = m2
+                    if m: rep_end.add(u)
+                start, end = len(prev[0]), len(cur); ins = sum(cnt[f'in_{k}'] for k in INS); outs = sum(cnt[f'out_{k}'] for k in OUTS)
+                assert start + ins - outs == len(rep_end)
+                rows.append(dict(run=run, place=place, place_ko=PLACE_KO.get(place, place), window=f'{prev[3]}–{s["name"]}', start=start, **cnt, end=end, replayed_end=len(rep_end),
+                                 unlogged_in=len(cur - rep_end), unlogged_out=len(rep_end - cur), residual=end-len(rep_end), order_conflicts=conflict))
+            prev = (cur, s['seq'], s['iteration'], s['name'])
+    dtable(f'ga_balance2_{run}', rows); res = [abs(x['residual']) for x in rows]
+    print('GA_BALANCE2', run, 'windows', len(rows), 'nonzero residual', sum(1 for x in res if x), 'abs sum', sum(res), 'unlogged in/out', sum(x['unlogged_in'] for x in rows), sum(x['unlogged_out'] for x in rows), 'conflicts', sum(x['order_conflicts'] for x in rows), flush=True)
+
 def floater():
     """state-based (TRAINLOG records events only inside the footprint buffer): uids within 0.5 m of the face centres at 30000 + ancestors."""
     import torch
@@ -230,4 +283,4 @@ def check6000():
 
 if __name__ == '__main__':
     a = sys.argv[1:]
-    {'events': lambda: events(a[1]), 'balance': lambda: balance(a[1]), 'floater': floater, 'grads': grads, 'check6000': check6000}[a[0]]()
+    {'events': lambda: events(a[1]), 'balance': lambda: balance(a[1]), 'balance2': lambda: balance2(a[1]), 'floater': floater, 'grads': grads, 'check6000': check6000}[a[0]]()
