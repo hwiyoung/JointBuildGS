@@ -38,3 +38,10 @@ scientific_verdict: null.
 - **처리:** 덧붙임 3 바-2 때 사용자 결정(11-14)과 같이 r31의 `--jbgs_a3_count_check off`로 처음부터 다시 학습한다(`sb4b_B173_LoD2_record_nocheck`, 설정 `addendum4_c2.json` 잠금). 이 스위치는 점검이 학습을 멈추지 않게만 한다(no_grad 수 읽기, 계산 불변).
 - **첫 시도:** 그대로 둔다(영수증 ERROR).
 - **GPU:** 다른 학습이 없는 GPU에서만 시작하도록 대기열을 고쳤다(모든 대기열의 실행 중 컨테이너를 본다).
+
+## 11-16 02시: R1 × LoD2 그리기 파일을 사본 없이 다시 씀
+
+- **무엇:** sb3 후처리의 `a4_ra.py draw R1rep_b10__LoD2`가 payload `ra/draw_R1rep_b10__LoD2.npz`를 다시 썼다. 사본(`_finalonly_v1`)을 미리 만들지 않았다.
+- **되살림:** 첫 판 파일이 묶음 `PHD-MAIN-TRAINERR-v1_덧붙임4라_1115-0134.zip`에 있었다. 꺼내 `ra/draw_R1rep_b10__LoD2_finalonly_v1.npz`로 두었다.
+- **확인:** 첫 판 열 11개(`final__*`, `set_names`)가 새 파일과 모두 같다. 새 파일은 `record__*` 열 10개만 더했다. 그래서 FINALTRAIN 값은 바뀌지 않았다.
+- **B173 × LoD2:** sb4b 그리기 전에 `ra/draw_B173nb_b10__LoD2_finalonly_v1.npz` 사본을 만들어 두었다.
