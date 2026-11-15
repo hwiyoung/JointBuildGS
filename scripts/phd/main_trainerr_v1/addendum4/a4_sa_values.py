@@ -14,6 +14,11 @@ def scene_rows(score_json, label, it):
     return [dict(run=label, iteration=int(it), surface=x['surface'], case_id=str(x['case_id']), n_gt=x['n_gt'], completeness_pct=x['completeness_pct'], accuracy_pct=x.get('accuracy_pct'))
             for x in json.loads(Path(score_json).read_text())['rows'] if x['surface'] in ('all', 'wall', 'roof') and str(x['case_id']) in ('all', '1', '2')]
 
+def mdir(md, stem, f):
+    # TRAINLOG mesh folders carry no scene prefix (meshes/tl_<it>/)
+    d = md/f'{stem}__{f}'
+    return d if d.exists() else md/f
+
 def comp_of(dist_npz, P):
     if not Path(dist_npz).exists(): return None
     rs = loadz(dist_npz, ['row_s'])['row_s']; tau = loadz(GT/'scenes/B0_b10__LoD2/rows.npz', ['row_tau_m'])['row_tau_m']; v = rs[P['point_id']]
@@ -31,8 +36,8 @@ def sa2():
         for it in ITS:
             f = fam.format(it); r = dict(run=lab, iteration=int(it))
             for p in ['visible_low', 'visible_high', 'visible_side', 'south_wall', 'long_wall', 'edge_back', 'edge_annex']: r[f'{p}_completeness_pct'] = comp_of(dd/f'{f}.npz', places[p])
-            comp.append(r); scene += scene_rows(md/f'B0_b10__LoD2__{f}'/'score.json', lab, it)
-            pz = md/f'B0_b10__LoD2__{f}'/'points.npz'
+            comp.append(r); scene += scene_rows(mdir(md, 'B0_b10__LoD2', f)/'score.json', lab, it)
+            pz = mdir(md, 'B0_b10__LoD2', f)/'points.npz'
             if pz.exists():
                 z = loadz(pz, ['result__xyz', 'result__eligible_new', 'result__within_tau1']); X = z['result__xyz'].astype('f8'); a_, d_, zone = A1.wall_coords(X, 'south'); e = z['result__eligible_new'].astype(bool); w = z['result__within_tau1'].astype(bool)
                 sw = A1.acfg()['places']['south_wall']; zz = (a_ >= sw['along_m'][0]) & (a_ <= sw['along_m'][1]) & (X[:, 2] >= sw['z_m'][0]) & (X[:, 2] <= sw['z_m'][1])
@@ -74,7 +79,7 @@ def sa3():
         for it in ITS:
             f = fam.format(it); p = gm/f'B173nb_b10__ALS__{f}'/'final.ply'
             if not p.exists(): continue
-            r = dict(run=lab, iteration=int(it), **face_values('B173nb_b10__ALS', p)); rows.append(r); scene += scene_rows(md/f'B173nb_b10__ALS__{f}'/'score.json', lab, it); print('SA3', r, flush=True)
+            r = dict(run=lab, iteration=int(it), **face_values('B173nb_b10__ALS', p)); rows.append(r); scene += scene_rows(mdir(md, 'B173nb_b10__ALS', f)/'score.json', lab, it); print('SA3', r, flush=True)
     dtable('sa3_floater', rows); dtable('sa3_scene_values', scene)
     # Gaussians within 0.5 m of the sa-3 30000 edge-floater faces
     from a3_ga import load_mesh
