@@ -1,0 +1,7 @@
+{
+ "purpose": "rerun of sb4_B173_LoD2_record (addendum4_c.json): attempt 1 stopped at 14,000 by the inherited FINALTRAIN health stop count_gt_3x_6000 (Gaussian count > 3x the count at 6,000). Same handling as the addendum-3 ba-2 rerun (user decision 2026-11-14): r30/r31 switch --jbgs_a3_count_check off, which only stops the health check from halting the run (the check is a no_grad count read; computation unchanged). Everything else as sb4.",
+ "runs": {"sb4b_B173_LoD2_record_nocheck": {"site": "B173nb_b10", "prior": "LoD2", "as": "sb4_B173_LoD2_record", "switches": ["--jbgs_a3_count_check off"]}},
+ "gpu_rule": "start only on a GPU with no addendum-4 training running (any queue) and >= 14 GiB free",
+ "kept": "attempt 1 of sb4 (stopped at 14,000) is kept as it is; its receipt status ERROR",
+ "scientific_verdict": null
+}

@@ -17,7 +17,9 @@ RUNS = {'sa1_R1_ALS_record6000': ('R1rep_b10', 'ALS', 'sa1'),
         # follow-up record runs (addendum4_c.json, locked)
         'sb1_B0_LoD2_record6000': ('B0_b10', 'LoD2', 'sb6000'), 'sb2_B0_ALS_record6000': ('B0_b10', 'ALS', 'sb6000'),
         'sb3_R1_LoD2_record': ('R1rep_b10', 'LoD2', 'sbscene'), 'sb4_B173_LoD2_record': ('B173nb_b10', 'LoD2', 'sbscene'),
-        'sb5_R1_ALS_record_signed': ('R1rep_b10', 'ALS', 'sbsigned')}
+        'sb5_R1_ALS_record_signed': ('R1rep_b10', 'ALS', 'sbsigned'),
+        'sb4b_B173_LoD2_record_nocheck': ('B173nb_b10', 'LoD2', 'sbscene')}   # addendum4_c2.json: sb4 rerun, health stop off
+EXTRA = {'sb4b_B173_LoD2_record_nocheck': ['--jbgs_a3_count_check', 'off']}
 SB_REGION = {'sb1_B0_LoD2_record6000': '/te/region/B0_b10__LoD2.json', 'sb2_B0_ALS_record6000': '/te/addendum3/region/B0_b10__ALS_annex.json',
              'sb5_R1_ALS_record_signed': '/te/region/R1rep_b10__ALS.json'}
 FORK = {'sa3_B173_ALS_nojudge': 'GeoGS-conf-guided-v1-r32'}
@@ -40,6 +42,7 @@ def args_for(run):
         a += ['--jbgs_trainlog_region', SB_REGION[run], '--jbgs_trainlog_grads', 'on', '--jbgs_a4_grad_signed', 'on']
         env = ['JBGS_TRAINLOG_CONFIG=/cfg/trainlog_te.json']
     elif kind == 'sbscene':
+        a += EXTRA.get(run, [])
         env = ['JBGS_TRAINLOG_CONFIG=/repo/configs/phd/main_trainlog_v1/trainlog_v1.json']
     elif kind == 'sa3':
         new = '/te/addendum4/sa3'; i = a.index('--jbgs_target_dir'); a[i+1] = f'{new}/stage1/{stem}_nojudge'
@@ -50,7 +53,16 @@ def args_for(run):
         env = ['JBGS_TRAINLOG_CONFIG='+CASE_CFG, 'TL_CASE=B0_b10__LoD2']
     return a, env, site
 
+def running_elsewhere():
+    """GPUs of addendum-4 trainings started by any queue whose container is still running"""
+    out = set()
+    for l in (A.A4O/'runs').glob('*/*/attempt1/launch.json'):
+        run = l.parent.parent.name
+        if subprocess.run(['docker', 'ps', '-q', '-f', f'name=^jbgs-te-a4-{run}$'], capture_output=True, text=True).stdout.strip(): out.add(json.loads(l.read_text())['gpu'])
+    return out
+
 def free_gpus(busy):
+    busy = set(busy) | running_elsewhere()
     q = subprocess.run(['nvidia-smi', '--query-gpu=index,memory.free', '--format=csv,noheader,nounits'], capture_output=True, text=True).stdout.split('\n')
     return [int(i) for i, f in (x.split(', ') for x in q if x.strip()) if int(f) >= 14*1024 and int(i) not in busy]
 

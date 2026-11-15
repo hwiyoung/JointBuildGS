@@ -8,7 +8,7 @@ import json, sys, time
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import a4_launch as A, a4_mesh as M
-SITE = {'sb1_B0_LoD2_record6000': 'B0_b10', 'sb2_B0_ALS_record6000': 'B0_b10', 'sb3_R1_LoD2_record': 'R1rep_b10', 'sb4_B173_LoD2_record': 'B173nb_b10', 'sb5_R1_ALS_record_signed': 'R1rep_b10'}
+SITE = {'sb1_B0_LoD2_record6000': 'B0_b10', 'sb2_B0_ALS_record6000': 'B0_b10', 'sb3_R1_LoD2_record': 'R1rep_b10', 'sb4_B173_LoD2_record': 'B173nb_b10', 'sb5_R1_ALS_record_signed': 'R1rep_b10', 'sb4b_B173_LoD2_record_nocheck': 'B173nb_b10'}
 def idle_gpu():
     """first GPU with no addendum-4 training running on it (launch.json without TRAINING_COMPLETE / receipt) and >= 14 GiB free; waits until one exists,
     so a follow-up GPU step never shares a GPU with a training"""
