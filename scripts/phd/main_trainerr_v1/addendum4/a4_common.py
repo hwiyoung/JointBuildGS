@@ -11,6 +11,12 @@ RUNS4 = {
     'ba3_B0_ALS_record': dict(stem='B0_b10__ALS', model=A3O/'runs/B0_b10/ba3_B0_ALS_record/attempt1/model', kind='states', places=['annex_wrong', 'annex_right'], last='30000'),
     'tl_B0_LoD2_own': dict(stem='B0_b10__LoD2', model=O/'runs/B0_b10/tl_B0_LoD2_own/attempt1/model', kind='states', places=['edge_back', 'edge_annex', 'edge_back_control', 'edge_annex_control'], last='30000'),
     'tl_B173nb_b10_ALS_s0': dict(stem='B173nb_b10__ALS', model=TLM/'runs/B173nb_b10/tl_B173nb_b10_ALS_s0/attempt2/model', kind='scene', places=['floater', 'floater_control'], last='30000'),
+    # follow-up record runs (addendum4_c.json)
+    'sb1_B0_LoD2_record6000': dict(stem='B0_b10__LoD2', model=A4O/'runs/B0_b10/sb1_B0_LoD2_record6000/attempt1/model', kind='states', places=['edge_back', 'edge_annex', 'edge_back_control', 'edge_annex_control'], last='6000'),
+    'sb2_B0_ALS_record6000': dict(stem='B0_b10__ALS', model=A4O/'runs/B0_b10/sb2_B0_ALS_record6000/attempt1/model', kind='states', places=['annex_wrong', 'annex_right'], last='6000'),
+    'sb3_R1_LoD2_record': dict(stem='R1rep_b10__LoD2', model=A4O/'runs/R1rep_b10/sb3_R1_LoD2_record/attempt1/model', kind='scene', places=[], last='30000'),
+    'sb4_B173_LoD2_record': dict(stem='B173nb_b10__LoD2', model=A4O/'runs/B173nb_b10/sb4_B173_LoD2_record/attempt1/model', kind='scene', places=[], last='30000'),
+    'sb5_R1_ALS_record_signed': dict(stem='R1rep_b10__ALS', model=A4O/'runs/R1rep_b10/sb5_R1_ALS_record_signed/attempt1/model', kind='states', places=['floor_band', 'floor_control'], last='30000'),
     'tl_B0_b10_LoD2_s0': dict(stem='B0_b10__LoD2', model=TLC/'runs/B0_b10/tl_B0_b10_LoD2_s0/attempt1/model', kind='scene', places=['edge_back', 'edge_annex', 'edge_back_control', 'edge_annex_control'], last='30000'),
 }
 PLACE_KO.update({'annex_wrong': '별채 상자: 틀린 목표(참값 1 m 밖)', 'annex_right': '대조: 별채 상자 맞는 목표(참값 0.2 m 안)', 'floater': '가장자리 뜬 면', 'floater_control': '대조: 건물 안 맞는 면',

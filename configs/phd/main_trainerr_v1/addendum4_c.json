@@ -1,0 +1,14 @@
+{
+ "purpose": "addendum 4 follow-up record runs (user go-ahead 2026-11-15 22:2x, 'Start all now'): fill values that had no record in the existing runs. Method settings and rules unchanged; fork r31 (switch defaults = r30 behaviour); FINALTRAIN own inputs (verified by a4_train_entry.py).",
+ "runs": {
+  "sb1_B0_LoD2_record6000": {"site": "B0_b10", "prior": "LoD2", "fills": "work na B0 edge bands: signed opacity gradients, 3,500 state", "record": "addendum4_trainlog_sa1.json", "region": "/te/region/B0_b10__LoD2.json", "switches": ["--jbgs_trainlog_grads on", "--jbgs_a4_grad_signed on", "--jbgs_a4_stop_at 6000"]},
+  "sb2_B0_ALS_record6000": {"site": "B0_b10", "prior": "ALS", "fills": "work na annex boxes: signed opacity gradients, 3,500 state", "record": "addendum4_trainlog_sa1.json", "region": "/te/addendum3/region/B0_b10__ALS_annex.json", "switches": ["--jbgs_trainlog_grads on", "--jbgs_a4_grad_signed on", "--jbgs_a4_stop_at 6000"]},
+  "sb3_R1_LoD2_record": {"site": "R1rep_b10", "prior": "LoD2", "fills": "work ra history, work ma stage sections (no record run existed)", "record": "/repo/configs/phd/main_trainlog_v1/trainlog_v1.json (full-scene dump at all 61 saves, as TRAINLOG B173)", "region": null, "switches": []},
+  "sb4_B173_LoD2_record": {"site": "B173nb_b10", "prior": "LoD2", "fills": "work ra history, work ma stage sections (no record run existed)", "record": "/repo/configs/phd/main_trainlog_v1/trainlog_v1.json", "region": null, "switches": []},
+  "sb5_R1_ALS_record_signed": {"site": "R1rep_b10", "prior": "ALS", "fills": "work ga 2.3 position gradients by loss after 7,000 (2DGS normal term on), signed", "record": "trainlog_te.json (as the TRAINERR record run)", "region": "/te/region/R1rep_b10__ALS.json", "switches": ["--jbgs_trainlog_grads on", "--jbgs_a4_grad_signed on"]}
+ },
+ "common": "30,000 iterations unless stop_at; seed 0; meshes for the 30,000-iteration record runs at 7,000 / 15,000 / 30,000 (work ma stage sections use these states, as the FINALTRAIN saves)",
+ "gpu_rule": "as addendum4.json work_sa.gpu_rule; mesh tile steps at most two at a time (issues.md, cgroup memory.high 60 GiB)",
+ "caveat": "new runs are not byte-identical to the existing runs (GPU nondeterminism); values are reported with the run named",
+ "scientific_verdict": null
+}

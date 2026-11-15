@@ -13,12 +13,18 @@ ARTC = '/art/phase-payloads/phd'
 CASE_CFG = '/repo/docs/experiments/phd/main_trainlog_v1/figures_concept_v2/case_B0_b10__LoD2/config/trainlog_v1.json'
 RUNS = {'sa1_R1_ALS_record6000': ('R1rep_b10', 'ALS', 'sa1'),
         'sa2_B0_LoD2_occlmask': ('B0_b10', 'LoD2', 'case'),
-        'sa3_B173_ALS_nojudge': ('B173nb_b10', 'ALS', 'sa3')}
+        'sa3_B173_ALS_nojudge': ('B173nb_b10', 'ALS', 'sa3'),
+        # follow-up record runs (addendum4_c.json, locked)
+        'sb1_B0_LoD2_record6000': ('B0_b10', 'LoD2', 'sb6000'), 'sb2_B0_ALS_record6000': ('B0_b10', 'ALS', 'sb6000'),
+        'sb3_R1_LoD2_record': ('R1rep_b10', 'LoD2', 'sbscene'), 'sb4_B173_LoD2_record': ('B173nb_b10', 'LoD2', 'sbscene'),
+        'sb5_R1_ALS_record_signed': ('R1rep_b10', 'ALS', 'sbsigned')}
+SB_REGION = {'sb1_B0_LoD2_record6000': '/te/region/B0_b10__LoD2.json', 'sb2_B0_ALS_record6000': '/te/addendum3/region/B0_b10__ALS_annex.json',
+             'sb5_R1_ALS_record_signed': '/te/region/R1rep_b10__ALS.json'}
 FORK = {'sa3_B173_ALS_nojudge': 'GeoGS-conf-guided-v1-r32'}
 
 def args_for(run):
     site, prior, kind = RUNS[run]; stem = f'{site}__{prior}'; model = f'/te/addendum4/runs/{site}/{run}/attempt1/model'
-    cap = ['6000', '7000', '15000', '30000'] if kind == 'sa1' else ['7000', '15000', '30000']
+    cap = ['6000', '7000', '15000', '30000'] if kind in ('sa1', 'sb6000') else ['7000', '15000', '30000']
     a = [site, prior, run, '-s', f'/p/fork_inputs/s61/{site}/scene_{prior}', '-m', model, '--eval', '-r', '1', '--data_device', 'cpu',
          '--lod_depth_path', '/p/fork_none', '--da_depth_path', '/p/fork_none', '--stage_switch_iter', '0', '--lambda_lod_init', '0', '--lambda_lod_anchor', '0', '--lambda_da_depth', '0',
          '--jbgs_judgment', 'off', '--jbgs_target', 'on', '--jbgs_target_rev', 'r8', '--jbgs_finaltrain', 'on',
@@ -27,6 +33,14 @@ def args_for(run):
     if kind == 'sa1':
         a += ['--jbgs_trainlog_region', f'/te/region/{stem}.json', '--jbgs_trainlog_grads', 'on', '--jbgs_a4_grad_signed', 'on', '--jbgs_a4_stop_at', '6000']
         env = ['JBGS_TRAINLOG_CONFIG=/cfg/addendum4_trainlog_sa1.json']
+    elif kind == 'sb6000':
+        a += ['--jbgs_trainlog_region', SB_REGION[run], '--jbgs_trainlog_grads', 'on', '--jbgs_a4_grad_signed', 'on', '--jbgs_a4_stop_at', '6000']
+        env = ['JBGS_TRAINLOG_CONFIG=/cfg/addendum4_trainlog_sa1.json']
+    elif kind == 'sbsigned':
+        a += ['--jbgs_trainlog_region', SB_REGION[run], '--jbgs_trainlog_grads', 'on', '--jbgs_a4_grad_signed', 'on']
+        env = ['JBGS_TRAINLOG_CONFIG=/cfg/trainlog_te.json']
+    elif kind == 'sbscene':
+        env = ['JBGS_TRAINLOG_CONFIG=/repo/configs/phd/main_trainlog_v1/trainlog_v1.json']
     elif kind == 'sa3':
         new = '/te/addendum4/sa3'; i = a.index('--jbgs_target_dir'); a[i+1] = f'{new}/stage1/{stem}_nojudge'
         a += ['--jbgs_targets', f'{new}/targets/{stem}_nojudge.npz', '--jbgs_a4_dual_depth', 'on']

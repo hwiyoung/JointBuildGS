@@ -38,3 +38,4 @@ scientific_verdict: null. 발주문 `덧붙임4_발주문.md`. 설정 `configs/p
 - [x] 정량(표)과 정성(그림)을 함께 냈다.
 - [x] `addendum4/`와 새 판 폴더 밖에 쓰지 않았다. 예외: payload `addendum4/` 아래 작업 결과, NVMe 작업 폴더(임시).
 - 21:40–22:30 다시 확인 뒤 고침: 기록 판 메시 여덟 개 다시 채점(`tlre_*`), 사-2·사-3 값 다시 계산, 사건 수 맞추기 가우시안별 차례 셈(`ga_balance2_*`, 잔차 0), 일 라 이력 두 장면 추가(B0·B173 × 항공 LiDAR), 요약·보고 고침(issues.md).
+- 22:20 사용자 결정("Start all now"): 추가 기록 판 다섯. 설정 `addendum4_c.json` 잠금(sha256 7c88cb04…, r31, 방법 설정 그대로). 22:24 sb4 B173 × LoD2(GPU 0), 22:26 sb1 B0 × LoD2 6,000(GPU 1) 시작. 대기열: sb2 → sb3 → sb5. 후처리 구동기 `a4_sb_post.py` 다섯(GPU 단계는 그 GPU에 학습이 없을 때만, 메시 작업자 하나씩).

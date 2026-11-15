@@ -17,6 +17,9 @@ def run_info(run):
     if run == 'tl_B0_LoD2_own': return O/'runs/B0_b10/tl_B0_LoD2_own/attempt1/model', lambda n: O/'gtj/meshes'/f'B0_b10__LoD2__tl_own_{n}'/'final.ply'
     if run == 'tlcase': return TLCASE, lambda n: TLC/'gtj/meshes'/f'B0_b10__LoD2__tl_{n}'/'final.ply'
     if run == 'ba3': return A3O/'runs/B0_b10/ba3_B0_ALS_record/attempt1/model', lambda n: A3O/'gtj/meshes'/f'B0_b10__ALS__ba3_{n}'/'final.ply'
+    if run in ('sb3', 'sb4'):   # follow-up record runs (addendum4_c.json): stage sections and curves of the work-ma clusters
+        rn, st = {'sb3': ('sb3_R1_LoD2_record', 'R1rep_b10__LoD2'), 'sb4': ('sb4_B173_LoD2_record', 'B173nb_b10__LoD2')}[run]
+        return RUNS4[rn]['model'], lambda n: A4O/'gtj/meshes'/f'{st}__{run}_{n}'/'final.ply'
     if run == 'tlb173': return TLM/'runs/B173nb_b10/tl_B173nb_b10_ALS_s0/attempt2/model', lambda n: TLM/'gtj/meshes'/f'B173nb_b10__ALS__tl_{n}'/'final.ply'
     return None, None
 
@@ -113,7 +116,7 @@ def case_def(name):
         _, stem_key, rank = name.split('_', 2); stem = {'R1': 'R1rep_b10__LoD2', 'B173': 'B173nb_b10__LoD2'}[stem_key]; z = loadz(A4O/'ma'/f'{stem}.npz'); m = z['cluster_rank'] == int(rank)
         X = z['xyz'][m].astype('f8'); ref = a11_ref(stem); lut = {int(p): i for i, p in enumerate(ref['point_id'])}; N = np.array([ref['normal'][lut[int(p)]] for p in z['point_id'][m]])
         T = Targets(stem); v = np.unique(T.v_of_rows(gt_row_patch(stem)[z['point_id'][m]])); v = v[v >= 0]
-        return dict(stem=stem, title=f'{stem.split("_")[0]} × LoD2 잃은 점 덩어리 {rank}: 판단 메시는 맞는데 학습 뒤 면이 없음', X=X, N=N, wall=bool(z['wall'][m].mean() >= .5), vplace=v, run=None, photo2=False, place_label='잃은 점(참값 점)')
+        return dict(stem=stem, title=f'{stem.split("_")[0]} × LoD2 잃은 점 덩어리 {rank}: 판단 메시는 맞는데 학습 뒤 면이 없음', X=X, N=N, wall=bool(z['wall'][m].mean() >= .5), vplace=v, run=({'R1': 'sb3', 'B173': 'sb4'}[stem_key] if (RUNS4[{'R1': 'sb3_R1_LoD2_record', 'B173': 'sb4_B173_LoD2_record'}[stem_key]]['model']/'trainlog/scene/30000.pt').exists() else None), photo2=False, place_label='잃은 점(참값 점)')
     raise ValueError(name)
 
 def pick_views(stem, X, mode, n=1):

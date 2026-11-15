@@ -234,8 +234,10 @@ def floater():
     GA.mkdir(parents=True, exist_ok=True); np.savez_compressed(GA/'floater_lineage.npz', **{f'{p}__{k}': v for p, d in save.items() for k, v in d.items()}); dtable('ga_floater_lineage', rows)
 
 WINDOWS = [(0, 200), (200, 1000), (1000, 3000), (3000, 6000)]
-def grads():
-    run = 'sa1_R1_ALS_record6000'; model = RUNS4[run]['model']; files = sorted((model/'trainlog/grads').glob('*.npz'), key=lambda p: int(p.stem))
+WINDOWS_SB5 = [(0, 200), (200, 1000), (1000, 3000), (3000, 6000), (6000, 7000), (7000, 10000), (10000, 15000), (15000, 30000)]
+def grads(run='sa1_R1_ALS_record6000'):
+    W = WINDOWS if run == 'sa1_R1_ALS_record6000' else WINDOWS_SB5; tag = '' if run == 'sa1_R1_ALS_record6000' else '_sb5'; last = int(RUNS4[run]['last'])
+    model = RUNS4[run]['model']; files = sorted((model/'trainlog/grads').glob('*.npz'), key=lambda p: int(p.stem))
     E = load_events(model, ('release',)); rel_uid = set(E['release']['uid'].tolist()); rows = []; per = {}
     pps = {pl: place_patches(pl) for pl in ['floor_band', 'floor_control']}
     for f in files:
@@ -251,8 +253,8 @@ def grads():
                 vec = g[f'{term}_xyzvec'][sel].astype('f8'); comp = -(vec*nout).sum(1)   # gradient-descent direction along the outward normal (+ = towards the outside / camera side)
                 per.setdefault((pl, term), []).append((it, comp, ever, g[f'{term}_xyz'][sel], g[f'{term}_opacity_signed'][sel] if f'{term}_opacity_signed' in g else None))
     for (pl, term), lst in per.items():
-        for a, b_ in WINDOWS:
-            for grp, gm in [('all', None), ('released_by_6000', True), ('bound_to_6000', False)]:
+        for a, b_ in W:
+            for grp, gm in [('all', None), ('released_by_6000' if last == 6000 else 'released_by_end', True), ('bound_to_6000' if last == 6000 else 'bound_to_end', False)]:
                 parts = [(c if gm is None else c[e == gm]) for it, c, e, _, _ in lst if a < it <= b_ or (a == 0 and it == 0)]
                 parts_mag = [(m if gm is None else m[e == gm]) for it, c, e, m, _ in lst if a < it <= b_ or (a == 0 and it == 0)]
                 c = np.concatenate(parts) if parts else np.zeros(0); mg = np.concatenate(parts_mag) if parts_mag else np.zeros(0)
@@ -261,8 +263,8 @@ def grads():
                                  sum_descent_out=float(c.sum()), median_descent_out_nonzero=med(cn), outward_pct_nonzero=pct(cn > 0) if len(cn) else None, mean_abs_normal_nonzero=float(np.abs(cn).mean()) if len(cn) else None,
                                  median_tangent_abs_nonzero=med(tg), median_magnitude_nonzero=med(mn), normal_share_of_magnitude_median=med(np.abs(cn)/mn) if len(cn) else None,
                                  rule='value = -dL/dxyz . n_out (gradient-descent direction along the outward target normal; + = outside / camera side); nonzero = the Gaussian received a gradient from that iteration view'))
-    dtable('ga_grad_normal', rows)
-    np.savez_compressed(A4O/'ga/grad_normal.npz', **{f'{pl}__{term}__{k}': np.concatenate([x[i] for x in lst]) if lst else np.zeros(0) for (pl, term), lst in per.items()
+    dtable(f'ga_grad_normal{tag}', rows)
+    np.savez_compressed(A4O/f'ga/grad_normal{tag}.npz', **{f'{pl}__{term}__{k}': np.concatenate([x[i] for x in lst]) if lst else np.zeros(0) for (pl, term), lst in per.items()
                                                     for i, k in [(1, 'descent_out')]}, **{f'{pl}__{term}__iteration': np.concatenate([np.full(len(x[1]), x[0]) for x in lst]) for (pl, term), lst in per.items()},
                         **{f'{pl}__{term}__released_by_6000': np.concatenate([x[2] for x in lst]) for (pl, term), lst in per.items()})
     print('GRADS', len(files), flush=True)
@@ -283,4 +285,4 @@ def check6000():
 
 if __name__ == '__main__':
     a = sys.argv[1:]
-    {'events': lambda: events(a[1]), 'balance': lambda: balance(a[1]), 'balance2': lambda: balance2(a[1]), 'floater': floater, 'grads': grads, 'check6000': check6000}[a[0]]()
+    {'events': lambda: events(a[1]), 'balance': lambda: balance(a[1]), 'balance2': lambda: balance2(a[1]), 'floater': floater, 'grads': lambda: grads(a[1]) if len(a) > 1 else grads(), 'check6000': check6000}[a[0]]()

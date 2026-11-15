@@ -11,7 +11,11 @@ NA = A4O/'na'
 NARUNS = {'sa1_R1_ALS_record6000': dict(places=['floor_band', 'floor_control'], states=['3000_pre_reset', '3500'], surv='6000_pre_reset'),
           'tl_B0_b10_LoD2_s0': dict(places=['edge_back', 'edge_annex', 'edge_back_control', 'edge_annex_control'], states=['3000_pre_reset', '3500'], surv='6000_pre_reset'),
           'ba3_B0_ALS_record': dict(places=['annex_wrong', 'annex_right'], states=['3000_pre_reset'], surv='6000_pre_reset'),
-          'tl_B0_LoD2_own': dict(places=['edge_back', 'edge_annex', 'edge_back_control'], states=['3000_pre_reset'], surv='6000_pre_reset')}
+          'tl_B0_LoD2_own': dict(places=['edge_back', 'edge_annex', 'edge_back_control'], states=['3000_pre_reset'], surv='6000_pre_reset'),
+          # follow-up record runs with signed gradients and the 3,500 state (addendum4_c.json)
+          'sb1_B0_LoD2_record6000': dict(places=['edge_back', 'edge_annex', 'edge_back_control', 'edge_annex_control'], states=['3000_pre_reset', '3500'], surv='6000_pre_reset'),
+          'sb2_B0_ALS_record6000': dict(places=['annex_wrong', 'annex_right'], states=['3000_pre_reset', '3500'], surv='6000_pre_reset')}
+GTAG = {'sa1_R1_ALS_record6000': 'sa1', 'sb1_B0_LoD2_record6000': 'sb1', 'sb2_B0_ALS_record6000': 'sb2'}
 
 def load_pt(model, name):
     import torch
@@ -131,7 +135,7 @@ def summarize(run):
                     per_g[(pl, grp_name)] = dict(uid=gu)
             rows.append(r)
     dtable(f'na_groups_{run}', rows); print('NA_GROUPS', run, len(rows), flush=True)
-    if run == 'sa1_R1_ALS_record6000': grad_series(run, cf)
+    if run in GTAG: grad_series(run, cf)
     if run == 'tl_B0_b10_LoD2_s0': grad_magnitude_b0()
 
 def grad_series(run, cf):
@@ -147,7 +151,7 @@ def grad_series(run, cf):
                     up = -g[f'{term}_opacity_signed'][m].astype('f8')   # gradient-descent step direction on the opacity logit: + raises opacity
                     nz = up[up != 0]; r[f'{ko}_raise_sum'] = float(up.sum()); r[f'{ko}_raise_median'] = med(nz); r[f'{ko}_raise_pct'] = pct(nz > 0) if len(nz) else None; r[f'{ko}_nonzero'] = len(nz)
                 rows.append(r)
-    dtable('na_opacity_grad_sa1', rows)
+    dtable(f'na_opacity_grad_{GTAG[run]}', rows)
     agg = []
     for pl in cf['places']:
         for grp in ['살아남음', '제거됨']:
@@ -158,7 +162,7 @@ def grad_series(run, cf):
                                 **{f'{ko}_nonzero_samples': int(sum(r[f'{ko}_nonzero'] for r in qq)) for ko in ['광도', '깊이']},
                                 **{f'{ko}_raise_pct_of_nonzero': (100*sum(r[f'{ko}_raise_pct']*r[f'{ko}_nonzero']/100 for r in qq if r[f'{ko}_raise_pct'] is not None)/max(1, sum(r[f'{ko}_nonzero'] for r in qq))) for ko in ['광도', '깊이']},
                                 **{f'{ko}_raise_median_of_iterations': med([r[f'{ko}_raise_median'] for r in qq if r[f'{ko}_raise_median'] is not None]) for ko in ['광도', '깊이']}))
-    dtable('na_opacity_grad_sa1_windows', agg)
+    dtable(f'na_opacity_grad_{GTAG[run]}_windows', agg)
 
 def grad_magnitude_b0():
     run = 'tl_B0_LoD2_own'; model = RUNS4[run]['model']; pre = raw_state(model, '3000_pre_reset'); surv = set(raw_state(model, '6000_pre_reset')['uid'].tolist()); rows = []

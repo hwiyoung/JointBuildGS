@@ -10,7 +10,9 @@ import time
 RA = A4O/'ra'; SCENES = ['B0_b10__ALS', 'B0_b10__LoD2', 'B173nb_b10__ALS', 'B173nb_b10__LoD2', 'R1rep_b10__ALS', 'R1rep_b10__LoD2']
 RECORD = {'B0_b10__LoD2': (TLCASE, 'scene'), 'R1rep_b10__ALS': (RUNS4['tl_R1_ALS_own']['model'], 'scene13'),
           # added 11-15: existing record runs of the two ALS scenes (no new training)
-          'B0_b10__ALS': (RUNS4['ba3_B0_ALS_record']['model'], 'scene13'), 'B173nb_b10__ALS': (RUNS4['tl_B173nb_b10_ALS_s0']['model'], 'scene')}
+          'B0_b10__ALS': (RUNS4['ba3_B0_ALS_record']['model'], 'scene13'), 'B173nb_b10__ALS': (RUNS4['tl_B173nb_b10_ALS_s0']['model'], 'scene'),
+          # follow-up record runs (addendum4_c.json)
+          'R1rep_b10__LoD2': (RUNS4['sb3_R1_LoD2_record']['model'], 'scene'), 'B173nb_b10__LoD2': (RUNS4['sb4_B173_LoD2_record']['model'], 'scene')}
 JUD = {0: '일치', 1: '보존', 2: '보정'}
 
 def points(stem):
