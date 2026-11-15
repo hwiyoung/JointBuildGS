@@ -71,20 +71,20 @@ if TL_CASE: FIGD = D
 # writes frames_r6/, contact_sheet_r6, frames_json_r6/, numbers_r6.* only.
 VAR = os.environ.get('CV2_VARIANT', ''); assert VAR in ('', 'z1b', 'r6'), VAR
 REV = {'': 'r5', 'z1b': 'r6test', 'r6': 'r6'}[VAR]; FR = V2/f'frames_{REV}'; Z1B = V2/'zone1b_line.json'; IS_Z1B = VAR == 'z1b'
-if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2', 'v3', 'v4', 'v5', 'w1', 'w2', 'w3'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
+if TL_CASE: REV = os.environ.get('CV2_CASE_REV', 'v1'); assert REV in ('v1', 'v2', 'v3', 'v4', 'v5', 'w1', 'w2', 'w3', 'w4'), REV; FR = V2/f'frames_{REV}'   # another case: v1 first cut
 # case v2 (2026-11-13, user '둘 다 진행' after 'are ②-1/②-2 seen from above? what area?'): the zone box is drawn as the pillar it is (xy box x scope z_min..z_max:
 # top ring solid, bottom ring dashed, four vertical edges) in the ① camera panels and the ② overviews, instead of one ring at the median height inside the box
 # (which read as a roof patch). Only the drawing changes; static layers, sections and numbers are the v1 ones (frames, contact, video only; v1 files untouched).
-PILLAR = bool(TL_CASE) and REV in ('v2', 'v3', 'v4', 'v5', 'w1', 'w2', 'w3')
+PILLAR = bool(TL_CASE) and REV in ('v2', 'v3', 'v4', 'v5', 'w1', 'w2', 'w3', 'w4')
 # case v3 (2026-11-13, user '진행하자'): zones from case_zones_v3.json (cv2_case_zones.py v3: zone 2 slid 5 m along its wall off the inner corner, zone 1 unchanged),
 # its own static_v3.*, sections_v3/, frames_v3/, numbers_v3, contact_sheet_v3, video_v3 (v1/v2 files untouched); box drawn as the v2 pillar.
-ZONEF = V2/('case_zones_v3.json' if TL_CASE and REV in ('v3', 'v4', 'v5', 'w1', 'w2', 'w3') else 'case_zones.json')
+ZONEF = V2/('case_zones_v3.json' if TL_CASE and REV in ('v3', 'v4', 'v5', 'w1', 'w2', 'w3', 'w4') else 'case_zones.json')
 # case v4 (2026-11-14, user '둘 다 바꾸기' after 'the zones look stacked; should the sections look the same?'): zones v3 unchanged (boxes, scores), and two drawing
 # changes: (a) the ② overview looks from azimuth OV_AZ4 = 192 (math deg; perpendicular to the zone-1 -> zone-2 foot line at 102.2, which the photo-side
 # overview at 282 looked straight along, so the zones stood one behind the other); (b) each section is cut along its zone line from SEC_IN m beyond the line
 # origin (inside) to SEC_OUT m beyond the line end (outside) and drawn in one world direction (x = sign * s, sign = sign(t . u), u = zone-1 -> zone-2 foot
 # direction): both read 'left = the zone-1 side, right = the zone-2 side'; the 12 m line (the zone box width that is scored) is shaded.
-SEC4 = bool(TL_CASE) and REV in ('v4', 'v5', 'w1', 'w2', 'w3'); OV_AZ4 = 192.; SEC_IN = 16.; SEC_OUT = 4.
+SEC4 = bool(TL_CASE) and REV in ('v4', 'v5', 'w1', 'w2', 'w3', 'w4'); OV_AZ4 = 192.; SEC_IN = 16.; SEC_OUT = 4.
 # case v5 (2026-11-14, user '아 이제야 이해가 된다. 진행하자' after scratch drafts A-D): numbers, scores, training, zones (v3) and the static_v4 / sections_v4 files
 # unchanged (read only); only the drawing of the zone rows and the zone marks changes. Each zone gets one block, the two blocks side by side:
 #   ②-k plan   the scope footprint from above, this zone's chosen wall as a thick orange segment (foot +-4 m along the wall), the other zone's wall grey,
@@ -113,15 +113,21 @@ W1 = bool(TL_CASE) and REV == 'w1'; W1_NEAR = 1.5; W1_BINS = [-15., -5., 5., 15.
 # south end wall); GT non-wall rows above 8 m within W2_REACH m of that edge line and inside its span, whose normal leans towards it (horizontal part . outward > 0.5, 0.3 < n_z < 0.95)
 # = the end roof face; front = that face seen along its mean normal (x along the edge, y up the slope), signed distance along the row normal turned to the
 # mean normal (+ = above / outside). Same colours, distribution panel and tolerance (row_tau_m of the face rows) as w1.
-W2 = bool(TL_CASE) and REV in ('w2', 'w3'); WS = W1 or W2; W2_REACH = 15.
+W2 = bool(TL_CASE) and REV in ('w2', 'w3', 'w4'); WS = W1 or W2; W2_REACH = 15.
 # case w3 (2026-11-15, user '정면 뷰만 보면 단순화된 게 세밀화됐다는 게 안 보이지 않아?' -> sections, '진행하자'): the same two faces (w2 rules, unchanged)
 # shown by SECTIONS instead of the signed-distance fronts. Wall: horizontal cuts at W3_H m above ground, the central 2 x W3_SPAN m of the wall (rule, not chosen
 # by look), seen from above, x along the wall, y = outward offset from the footprint edge line (W3_WYL m, vertical scale W3_WEX x). Roof: the vertical cut
 # through the face centre (u = 0) along the outward horizontal of its edge, scale 1:1 (W3_RX, W3_RZ). Input frame: GT points of a +-W3_SLAB m slab (grey),
 # LoD2 cut (orange dashed) / image-depth points of a +-W3_MSLAB m slab (green). Iteration frames (r4 rule): GT slab (light grey) + the uncut mesh cut (thin
 # line), this method and the image-only 2DGS in their own panels; nothing else. Distribution panels = the w2 ones. Plan: the cut segment / line marked.
-W3 = bool(TL_CASE) and REV == 'w3'; W3_H = (3., 9.); W3_SPAN = 7.5; W3_WYL = (-.9, .35); W3_WEX = 1.5; W3_SLAB = .10; W3_MSLAB = .25; W3_RX = (-14., 4.); W3_RZ = (14., 24.)
-V5 = bool(TL_CASE) and REV in ('v5', 'w1', 'w2', 'w3'); WALLC = '#D85A30'; WALL_HW = 4.; WALL_H = 19.; WALL_EL = 15.; STORYC = NAVY_ = '#16263d'; GTDOT = '#C9C6BC'
+W3 = bool(TL_CASE) and REV in ('w3', 'w4'); W3_H = (3., 9.); W3_SPAN = 7.5; W3_WYL = (-.9, .35); W3_WEX = 1.5; W3_SLAB = .10; W3_MSLAB = .25; W3_RX = (-14., 4.); W3_RZ = (14., 24.)
+# case w4 (2026-11-15, user: '3, 9 m가 창 줄이라는 게 파악이 안 되는데 ② 가우시안과 메시를 돌려서 그 면을 보여 주던가 표시하던가', 'w4 먼저'): w3 plus
+# (a) the ② overview looks from azimuth OV_AZ_W4 (math deg; between the east wall outward 338.5 and the south roof 270, so both chosen faces face the viewer)
+# instead of OV_AZ4 = 192 (which showed the WEST facade and hid the chosen east wall); extent = the scope footprint box projected in that view;
+# (b) the section places drawn on ① photo and both ② panels (navy): the two wall cuts (W3_H, central 2 x W3_SPAN m on the footprint edge line) and the roof
+# cut (top of the GT points of the +-W3_SLAB slab at u = 0, per 0.25 m of s); (c) wall section titles name the window row (W4_ROW) and the 0 line = LoD2 wall.
+W4 = bool(TL_CASE) and REV == 'w4'; OV_AZ_W4 = 315.; W4_ROW = {3.: '1층 창 줄', 9.: '2층 창 줄'}
+V5 = bool(TL_CASE) and REV in ('v5', 'w1', 'w2', 'w3', 'w4'); WALLC = '#D85A30'; WALL_HW = 4.; WALL_H = 19.; WALL_EL = 15.; STORYC = NAVY_ = '#16263d'; GTDOT = '#C9C6BC'
 STJ = V2/('static_z1b.json' if IS_Z1B else 'static.json'); STN = V2/('static_z1b.npz' if IS_Z1B else 'static.npz'); SECD = V2/('sections_z1b' if IS_Z1B else 'sections_r3'); SECJ = V2/f'{SECD.name}.json'
 if TL_CASE and REV == 'v3': STJ, STN, SECD = V2/'static_v3.json', V2/'static_v3.npz', V2/'sections_v3'; SECJ = V2/f'{SECD.name}.json'
 if SEC4: STJ, STN, SECD = V2/'static_v4.json', V2/'static_v4.npz', V2/'sections_v4'; SECJ = V2/f'{SECD.name}.json'
@@ -185,7 +191,7 @@ class Static:
                 o, t, n = line_frame(z['line_origin_xy'], z['line_unit_xy']); self.zones[int(k)] = dict(o=o, t=t, n=n, L=float(z['line_length_m']), poly=Polygon(z['box_polygon_xy']), ground=self.ground,
                                                                                             source=z['rule'], zoom_az=float(z['zoom_azimuth_deg']))
             if SEC4:
-                vc = self.c['renders']['view_camera']; self.B = basis(self.c['coordinates']['up'], OV_AZ4, vc.get('elevation_deg', 35.))
+                vc = self.c['renders']['view_camera']; self.B = basis(self.c['coordinates']['up'], OV_AZ_W4 if W4 else OV_AZ4, vc.get('elevation_deg', 35.))
                 u = np.asarray(czj['zones']['2']['wall_foot_xy'], float)-np.asarray(czj['zones']['1']['wall_foot_xy'], float); u /= np.linalg.norm(u)
                 for k, z in self.zones.items():
                     L0 = z['L']; sg = 1. if z['t']@u > 0 else -1.; right = sg*z['t']; brg = (90.-np.degrees(np.arctan2(right[1], right[0])))%360.
@@ -461,6 +467,7 @@ def draw(F, label, cache):
     u0, v0, u1, v1 = st['crop']; ph = 250; pw = int(round(ph*(u1-u0)/(v1-v0))); X0, Y0 = 16, 66; gap = 8
     inp = loadz(O/'concept/inputs.npz', ['photo']); photo = inp['photo'].astype(float)/255.; rec['sources']['photo_and_target_map'] = F.h(O/'concept/inputs.npz')
     a = F.axes(X0, Y0, pw, ph, '① 사진'); F.cam(a, photo)
+    if W4: w4_marks(F, a, lambda P: S.pix(P)[:2], cache)
     a = F.axes(X0, Y0+ph+24, pw, ph, '① 깊이 목표'); F.cam(a, F.hrgb(st['ht']), dotted=it is None)
     a1 = F.axes(X0+pw+gap, Y0, pw, ph, '① 렌더'); a2 = F.axes(X0+pw+gap, Y0+ph+24, pw, ph, '① 렌더 깊이')
     if it is None: F.blank(a1); F.blank(a2)
@@ -473,16 +480,18 @@ def draw(F, label, cache):
         cache['dist'] = dist; cache['rok'] = rok
     ar = FancyArrowPatch(((X0+2*pw+gap+6)/W_, 1-(Y0+ph+12)/H_), ((X0+2*pw+gap+46)/W_, 1-(Y0+ph+12)/H_), transform=fig.transFigure, arrowstyle='-|>', mutation_scale=22, color=NAVY, lw=2); fig.patches.append(ar)
     # ② overview
-    X2 = X0+2*pw+gap+56; w2 = (W_-16-X2-12)//2; h2 = 2*ph+24; ext = F.frame_ext(F.sj['oblique']['overview_extent'], w2, h2, .03); rec['overview_extent'] = list(ext)
-    ag = F.axes(X2, Y0, w2, h2, '② 가우시안 3D' if it is not None else '② 입력 3D: 사전 정보 면 · 영상 깊이 점'); am = F.axes(X2+w2+12, Y0, w2, h2, '② 메시 3D')
+    X2 = X0+2*pw+gap+56; w2 = (W_-16-X2-12)//2; h2 = 2*ph+24; ext = F.frame_ext(w4_overview_ext(F) if W4 else F.sj['oblique']['overview_extent'], w2, h2, .03); rec['overview_extent'] = list(ext)
+    ag = F.axes(X2, Y0, w2, h2, '② 가우시안 3D'+(' · 남동쪽에서' if W4 else '') if it is not None else '② 입력 3D: 사전 정보 면 · 영상 깊이 점'+(' · 남동쪽에서' if W4 else '')); am = F.axes(X2+w2+12, Y0, w2, h2, '② 메시 3D'+(' · 남동쪽에서' if W4 else ''))
     if it is None:
         img, dep = cache.setdefault('prior_overview', F.raster(F.PV, F.PFs, None, ext, w2, h2, 2, PRIOR_RGB)); F.show_prior(ag, img, dep, ext)
         F.mvs_points(ag, dep, ext, w2, h2, 2, 1.2); F.zone_outline(ag, 1); F.zone_outline(ag, 2); F.blank(am)
+        if W4: w4_marks(F, ag, lambda P: S.proj(P)[:2], cache)
     else:
         dz = loadz(V2/'discs'/f'ours_{label}.npz'); rec['sources']['discs'] = F.h(V2/'discs'/f'ours_{label}.npz')
         rec['counts']['discs_drawn_overview'] = F.discs(ag, dz, np.ones(len(dz['xyz']), bool), ext, w2); ag.set_facecolor('white'); F.zone_outline(ag, 1); F.zone_outline(ag, 2)
         mz = loadz(V2/'meshcol'/f'ours_{label}.npz'); rec['sources']['mesh'] = F.h(V2/'meshcol'/f'ours_{label}.npz')
         img, _ = F.raster(mz['V'], mz['F'], mz['C'].astype(float), ext, w2, h2, 2); F.show(am, img, ext); F.zone_outline(am, 1); F.zone_outline(am, 2)
+        if W4: w4_marks(F, ag, lambda P: S.proj(P)[:2], cache); w4_marks(F, am, lambda P: S.proj(P)[:2], cache)
     # zone rows
     wz, ws, gz = 262, (W_-32-3*262-4*12)//2, 12; hz = 192
     if W3: draw_w3(F, it, label, rec, cache, mz if it is not None else None)
@@ -936,10 +945,10 @@ def draw_w3(F, it, label, rec, cache, mz):
             for c, hh in enumerate(W3_H):
                 gt = geo[f'gt_wall{hh:g}']
                 for j, (nm, kw) in enumerate(layers(f'wall{hh:g}')):
-                    ax = F.axes(xs+c*(ws+gp), Y+j*(hp+20), ws, hp, f'③-1 높이 {hh:g} m 가로 단면 · {nm}', fs=9.5)
+                    ax = F.axes(xs+c*(ws+gp), Y+j*(hp+20), ws, hp, (f'③-1 {W4_ROW[hh]} (높이 {hh:g} m) 가로 단면 · {nm}' if W4 else f'③-1 높이 {hh:g} m 가로 단면 · {nm}'), fs=9.5)
                     if kw is None: F.blank(ax); continue
                     w3_panel(ax, 'wall', gt, **kw); ax.tick_params(labelbottom=j == 1); rec['counts'][f'w3_wall{hh:g}_{j}_segments'] = int(len(kw.get('segs', ())) if kw.get('segs') is not None else 0)
-                    if j == 0 and c == 0: ax.text(.003, .98, '바깥 cm (0 = 평면 외곽선)', transform=ax.transAxes, fontsize=6.5, color='#5F5E5A', va='top', bbox=dict(fc='white', ec='none', pad=.5))
+                    if j == 0 and c == 0: ax.text(.003, .98, '바깥 cm (0 = 평면 외곽선 = LoD2 벽 자리)' if W4 else '바깥 cm (0 = 평면 외곽선)', transform=ax.transAxes, fontsize=6.5, color='#5F5E5A', va='top', bbox=dict(fc='white', ec='none', pad=.5))
                 rec['counts'][f'w3_wall{hh:g}_gt_points'] = int(len(gt))
             ex = (hp/(W3_WYL[1]-W3_WYL[0]))/(ws/(2*W3_SPAN)); rec['counts']['w3_wall_vertical_exaggeration'] = round(float(ex), 2); xh = xh_w
         else:
@@ -960,6 +969,26 @@ def draw_w3(F, it, label, rec, cache, mz):
         ah = F.axes(xh, Y, W_-16-xh, hr, f'③-{k} 떨어진 거리 분포 (면 전체)'); w1_hist(F, ah, series, k, '실제 면에서 떨어진 거리 cm (+ = 바깥·위)' if k == 2 else ''); ah.legend(fontsize=7, frameon=False, loc='upper left')
         rec[f'zone{k}'] = dict(w3_face=dict(name=W['name'], edge=W['edge'], gt_rows=W['gt_rows'], comparison_iteration=cs, wall_heights_m=list(W3_H), wall_span_m=2*W3_SPAN,
                                             roof_section=dict(u_m=0., s_m=list(W3_RX), height_m=list(W3_RZ)), gt_slab_m=W3_SLAB, mvs_slab_m=W3_MSLAB))
+
+# ---------------------------------------------------------------- case w4: section places on ① and ②, overview from the south-east (see the W4 note)
+def w4_overview_ext(F):
+    S = F.S; fp = F.S.c['scope']['footprint']['coordinates'][0]; P = np.array([[x, y, zz] for x, y, *_ in fp for zz in (S.ground, S.zr[1])], float); x, y, _ = S.proj(P)
+    return [float(x.min()), float(x.max()), float(y.min()), float(y.max())]
+def w4_lines(F, cache):
+    if 'w4_lines' in cache: return cache['w4_lines']
+    F.v5_init(); geo = w3_geom(F, cache); W1_, W2_ = F.w5[1], F.w5[2]; out = []
+    for hh in W3_H: out.append((f'{hh:g} m', np.array([W1_['foot']-W3_SPAN*W1_['al'], W1_['foot']+W3_SPAN*W1_['al']])+np.r_[0., 0., hh]))
+    r = geo['gt_roof']; b = np.floor(r[:, 0]/.25).astype(int); top = {}
+    for k_, z_ in zip(b, r[:, 1]): top[k_] = max(top.get(k_, -1e9), z_)
+    ks = np.array(sorted(top)); sv_ = (ks+.5)*.25; hv = np.array([top[k_] for k_ in ks]); hor = geo['hor']
+    P = np.c_[W2_['foot'][0]+sv_*hor[0], W2_['foot'][1]+sv_*hor[1], F.S.ground+hv]; out.append(('지붕', P[(sv_ >= W3_RX[0]) & (sv_ <= W3_RX[1])]))
+    cache['w4_lines'] = out; return out
+def w4_marks(F, ax, fn, cache):
+    """Section places (navy, white halo) with a small label at the line end."""
+    for lab, P in w4_lines(F, cache):
+        x, y = fn(P); x, y = np.asarray(x), np.asarray(y)
+        ax.plot(x, y, color='white', lw=3.6, zorder=17, solid_capstyle='round'); ax.plot(x, y, color=NAVY, lw=1.8, zorder=18, solid_capstyle='round')
+        j = int(np.argmax(x)); ax.text(x[j], y[j], ' '+lab, fontsize=7.5, color=NAVY, ha='left', va='center', zorder=19, clip_on=True, bbox=dict(fc='white', ec='none', pad=.4, alpha=.85))
 
 if __name__ == '__main__':
     a = sys.argv[1:]
