@@ -1,0 +1,69 @@
+{
+ "prior": "LoD2",
+ "patch_case": "영상 깊이 오류",
+ "rule": "patch case = order case, majority share < 0.8, place 건물 가장자리 then 면 안쪽, most GT points first, one per building",
+ "patches": [
+  {
+   "place": "건물 가장자리",
+   "patch_gid": 559534,
+   "building": "DEBY_LOD2_60042",
+   "gt_points": 15,
+   "majority_share": 0.5333333333333333,
+   "case_counts": [
+    0,
+    7,
+    8,
+    0,
+    0
+   ],
+   "view": "DJI_20241217102937_0014_D.JPG"
+  },
+  {
+   "place": "건물 가장자리",
+   "patch_gid": 2297917,
+   "building": "DEBY_LOD2_4959326",
+   "gt_points": 13,
+   "majority_share": 0.5384615384615384,
+   "case_counts": [
+    0,
+    6,
+    7,
+    0,
+    0
+   ],
+   "view": "DJI_20241217084459_0073_D.JPG"
+  },
+  {
+   "place": "면 안쪽",
+   "patch_gid": 60986,
+   "building": "DEBY_LOD2_4906965",
+   "gt_points": 13,
+   "majority_share": 0.6153846153846154,
+   "case_counts": [
+    5,
+    0,
+    8,
+    0,
+    0
+   ],
+   "view": "DJI_20241217095421_0013_D.JPG"
+  },
+  {
+   "place": "면 안쪽",
+   "patch_gid": 911862,
+   "building": "DEBY_LOD2_4906972",
+   "gt_points": 12,
+   "majority_share": 0.5833333333333334,
+   "case_counts": [
+    5,
+    0,
+    7,
+    0,
+    0
+   ],
+   "view": "DJI_20241217101807_0021_D.JPG"
+  }
+ ],
+ "at": "2026-11-17T23:16:28+09:00",
+ "scientific_verdict": null
+}

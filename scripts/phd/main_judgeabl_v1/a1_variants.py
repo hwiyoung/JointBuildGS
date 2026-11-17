@@ -96,6 +96,9 @@ def main(prior):
     assert (reg == d['j_region'][:, mi]).all()
     for nm, j in [('본 방법', mi), ('사전 정보 단독', 0), ('영상 단독', 1), ('기하 일관성 검사 단독', 2), ('광도 일관성 검사 단독', 3), ('유보 2 기본 판정의 반대', 5), ('패치 다수결 상한', 7)]:
         add(nm, d['j_region'][:, j], d['j_reason'][:, j], d['target_h'][:, j], stored=True)
+    # 11-17 고침(덧붙임 2 중 발견): JC judge/base 의 oracle 칸은 본 방법 복사본 -> 상한의 패치 판정은 JC analysis/patches_<prior>.npz oracle_region. 점 채점은 원래부터 JC 저장 값.
+    orc = loadz(JC/'analysis'/f'patches_{prior}.npz', ['oracle_region'])['oracle_region']; assert len(orc) == N
+    add('패치 다수결 상한', orc, np.where(orc == d['j_region'][:, mi], d['j_reason'][:, mi], 9).astype(np.int8), tgt(orc)[0], stored=True)
     # ---- 3절 기존 방법
     def present_rule(go_image, why_code):
         def f(m):
