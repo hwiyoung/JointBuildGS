@@ -13,7 +13,10 @@
 "n_imgerr": 563,
 "n_priorerr": 119,
 "n_bothvalid": 3643,
-"rank": 1
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -28,7 +31,10 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "ALS",
@@ -43,7 +49,10 @@
 "n_imgerr": 597,
 "n_priorerr": 179,
 "n_bothvalid": 3474,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "ALS",
@@ -58,7 +67,10 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "ALS",
@@ -73,7 +85,10 @@
 "n_imgerr": 597,
 "n_priorerr": 179,
 "n_bothvalid": 3474,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "ALS",
@@ -88,7 +103,10 @@
 "n_imgerr": 597,
 "n_priorerr": 179,
 "n_bothvalid": 3474,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "ALS",
@@ -103,7 +121,10 @@
 "n_imgerr": 547,
 "n_priorerr": 159,
 "n_bothvalid": 3337,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "ALS",
@@ -118,7 +139,10 @@
 "n_imgerr": 562,
 "n_priorerr": 173,
 "n_bothvalid": 3433,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "ALS",
@@ -133,7 +157,28 @@
 "n_imgerr": 563,
 "n_priorerr": 120,
 "n_bothvalid": 3643,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 8.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.6002127394,
+"auc_imgerr_vs_bothvalid": 0.3216909722,
+"key": 0.1392608836,
+"n_imgerr": 562,
+"n_priorerr": 173,
+"n_bothvalid": 3433,
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "ALS",
@@ -148,7 +193,10 @@
 "n_imgerr": 402,
 "n_priorerr": 92,
 "n_bothvalid": 3022,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "ALS",
@@ -163,7 +211,28 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 11.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.5978445291,
+"auc_imgerr_vs_bothvalid": 0.3691202326,
+"key": 0.1143621482,
+"n_imgerr": 562,
+"n_priorerr": 173,
+"n_bothvalid": 3433,
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "ALS",
@@ -178,7 +247,10 @@
 "n_imgerr": 394,
 "n_priorerr": 92,
 "n_bothvalid": 3008,
-"rank": 12
+"detection_statistic": false,
+"photometric": true,
+"rank": 14.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -193,7 +265,28 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 13.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.5892229476,
+"auc_imgerr_vs_bothvalid": 0.405591514,
+"key": 0.0918157168,
+"n_imgerr": 562,
+"n_priorerr": 173,
+"n_bothvalid": 3433,
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "ALS",
@@ -208,7 +301,46 @@
 "n_imgerr": 562,
 "n_priorerr": 173,
 "n_bothvalid": 3433,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 15.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.4346270324,
+"auc_imgerr_vs_bothvalid": 0.5967384239,
+"key": 0.0810556958,
+"n_imgerr": 595,
+"n_priorerr": 179,
+"n_bothvalid": 3472,
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 16.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.4336741251,
+"auc_imgerr_vs_bothvalid": 0.5862582406,
+"key": 0.0762920577,
+"n_imgerr": 595,
+"n_priorerr": 179,
+"n_bothvalid": 3472,
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "ALS",
@@ -223,7 +355,46 @@
 "n_imgerr": 562,
 "n_priorerr": 173,
 "n_bothvalid": 3433,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.5498733439,
+"auc_imgerr_vs_bothvalid": 0.414482966,
+"key": 0.0676951889,
+"n_imgerr": 595,
+"n_priorerr": 179,
+"n_bothvalid": 3472,
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 19.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.4490536912,
+"auc_imgerr_vs_bothvalid": 0.5838719168,
+"key": 0.0674091128,
+"n_imgerr": 597,
+"n_priorerr": 179,
+"n_bothvalid": 3474,
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 20.0
 },
 {
 "prior": "ALS",
@@ -238,7 +409,28 @@
 "n_imgerr": 562,
 "n_priorerr": 173,
 "n_bothvalid": 3433,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 23.0,
+"rank_no_photo": 21.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.5086040591,
+"auc_imgerr_vs_bothvalid": 0.6136369657,
+"key": 0.0611205124,
+"n_imgerr": 595,
+"n_priorerr": 179,
+"n_bothvalid": 3472,
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "ALS",
@@ -253,7 +445,10 @@
 "n_imgerr": 534,
 "n_priorerr": 159,
 "n_bothvalid": 3315,
-"rank": 17
+"detection_statistic": false,
+"photometric": true,
+"rank": 25.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -268,7 +463,10 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 23.0
 },
 {
 "prior": "ALS",
@@ -283,7 +481,10 @@
 "n_imgerr": 597,
 "n_priorerr": 179,
 "n_bothvalid": 3474,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 24.0
 },
 {
 "prior": "ALS",
@@ -298,7 +499,10 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 28.0,
+"rank_no_photo": 25.0
 },
 {
 "prior": "ALS",
@@ -313,7 +517,10 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 26.0
 },
 {
 "prior": "ALS",
@@ -328,7 +535,28 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 30.0,
+"rank_no_photo": 27.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.5391873161,
+"auc_imgerr_vs_bothvalid": 0.4454867079,
+"key": 0.0468503041,
+"n_imgerr": 595,
+"n_priorerr": 179,
+"n_bothvalid": 3472,
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
 },
 {
 "prior": "ALS",
@@ -343,22 +571,10 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 23
-},
-{
-"prior": "ALS",
-"unit": "ALS_roof",
-"version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4763449743,
-"auc_imgerr_vs_bothvalid": 0.5303733904,
-"key": 0.027014208,
-"n_imgerr": 759,
-"n_priorerr": 214,
-"n_bothvalid": 4258,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
 },
 {
 "prior": "ALS",
@@ -373,7 +589,28 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 25
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.5039681112,
+"auc_imgerr_vs_bothvalid": 0.5020167114,
+"key": 0.0029924113,
+"n_imgerr": 595,
+"n_priorerr": 179,
+"n_bothvalid": 3472,
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "ALS",
@@ -388,7 +625,28 @@
 "n_imgerr": 759,
 "n_priorerr": 214,
 "n_bothvalid": 4258,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4763449743,
+"auc_imgerr_vs_bothvalid": 0.5303733904,
+"key": 0.027014208,
+"n_imgerr": 759,
+"n_priorerr": 214,
+"n_bothvalid": 4258,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -403,7 +661,10 @@
 "n_imgerr": 301,
 "n_priorerr": 32,
 "n_bothvalid": 3257,
-"rank": 1
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -418,7 +679,10 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "ALS",
@@ -433,7 +697,10 @@
 "n_imgerr": 320,
 "n_priorerr": 51,
 "n_bothvalid": 3058,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "ALS",
@@ -448,7 +715,28 @@
 "n_imgerr": 301,
 "n_priorerr": 32,
 "n_bothvalid": 3257,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 3.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.6411425167,
+"auc_imgerr_vs_bothvalid": 0.3019735029,
+"key": 0.1695845069,
+"n_imgerr": 297,
+"n_priorerr": 50,
+"n_bothvalid": 3021,
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "ALS",
@@ -463,7 +751,10 @@
 "n_imgerr": 297,
 "n_priorerr": 50,
 "n_bothvalid": 3021,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "ALS",
@@ -478,7 +769,10 @@
 "n_imgerr": 292,
 "n_priorerr": 47,
 "n_bothvalid": 2943,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "ALS",
@@ -493,7 +787,10 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "ALS",
@@ -508,7 +805,10 @@
 "n_imgerr": 320,
 "n_priorerr": 51,
 "n_bothvalid": 3058,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "ALS",
@@ -523,7 +823,10 @@
 "n_imgerr": 320,
 "n_priorerr": 51,
 "n_bothvalid": 3058,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "ALS",
@@ -538,7 +841,10 @@
 "n_imgerr": 217,
 "n_priorerr": 26,
 "n_bothvalid": 2737,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "ALS",
@@ -553,7 +859,28 @@
 "n_imgerr": 210,
 "n_priorerr": 26,
 "n_bothvalid": 2726,
-"rank": 11
+"detection_statistic": false,
+"photometric": true,
+"rank": 12.0,
+"rank_no_photo": null
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.6232037806,
+"auc_imgerr_vs_bothvalid": 0.3672975634,
+"key": 0.1279531086,
+"n_imgerr": 297,
+"n_priorerr": 50,
+"n_bothvalid": 3021,
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "ALS",
@@ -568,7 +895,10 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "ALS",
@@ -583,7 +913,28 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 13.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.6107219571,
+"auc_imgerr_vs_bothvalid": 0.40896596,
+"key": 0.1008779986,
+"n_imgerr": 297,
+"n_priorerr": 50,
+"n_bothvalid": 3021,
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "ALS",
@@ -598,7 +949,10 @@
 "n_imgerr": 297,
 "n_priorerr": 50,
 "n_bothvalid": 3021,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "ALS",
@@ -613,7 +967,46 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 16.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.4115229979,
+"auc_imgerr_vs_bothvalid": 0.5952691027,
+"key": 0.0918730524,
+"n_imgerr": 318,
+"n_priorerr": 51,
+"n_bothvalid": 3056,
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 17.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.402535975,
+"auc_imgerr_vs_bothvalid": 0.5826916308,
+"key": 0.0900778279,
+"n_imgerr": 318,
+"n_priorerr": 51,
+"n_bothvalid": 3056,
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 18.0
 },
 {
 "prior": "ALS",
@@ -628,7 +1021,28 @@
 "n_imgerr": 297,
 "n_priorerr": 50,
 "n_bothvalid": 3021,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 19.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.5415363291,
+"auc_imgerr_vs_bothvalid": 0.6242868168,
+"key": 0.0829115729,
+"n_imgerr": 318,
+"n_priorerr": 51,
+"n_bothvalid": 3056,
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 20.0
 },
 {
 "prior": "ALS",
@@ -643,7 +1057,10 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 23.0,
+"rank_no_photo": 21.0
 },
 {
 "prior": "ALS",
@@ -658,7 +1075,10 @@
 "n_imgerr": 297,
 "n_priorerr": 50,
 "n_bothvalid": 3021,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "ALS",
@@ -673,7 +1093,10 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 25.0,
+"rank_no_photo": 23.0
 },
 {
 "prior": "ALS",
@@ -688,7 +1111,46 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 24.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.5343461943,
+"auc_imgerr_vs_bothvalid": 0.4137615358,
+"key": 0.0602923293,
+"n_imgerr": 318,
+"n_priorerr": 51,
+"n_bothvalid": 3056,
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 25.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.4507926999,
+"auc_imgerr_vs_bothvalid": 0.5515471999,
+"key": 0.05037725,
+"n_imgerr": 320,
+"n_priorerr": 51,
+"n_bothvalid": 3058,
+"detection_statistic": false,
+"photometric": false,
+"rank": 28.0,
+"rank_no_photo": 26.0
 },
 {
 "prior": "ALS",
@@ -703,7 +1165,10 @@
 "n_imgerr": 320,
 "n_priorerr": 51,
 "n_bothvalid": 3058,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 27.0
 },
 {
 "prior": "ALS",
@@ -718,7 +1183,10 @@
 "n_imgerr": 282,
 "n_priorerr": 47,
 "n_bothvalid": 2928,
-"rank": 22
+"detection_statistic": false,
+"photometric": true,
+"rank": 30.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -733,7 +1201,10 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 23
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
 },
 {
 "prior": "ALS",
@@ -748,22 +1219,46 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
 "version": "섞인 패치 뺌",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4478368572,
-"auc_imgerr_vs_bothvalid": 0.5278103915,
-"key": 0.0399867671,
-"n_imgerr": 398,
-"n_priorerr": 58,
-"n_bothvalid": 3668,
-"rank": 25
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.5051064225,
+"auc_imgerr_vs_bothvalid": 0.4499303101,
+"key": 0.0275880562,
+"n_imgerr": 318,
+"n_priorerr": 51,
+"n_bothvalid": 3056,
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.5384001313,
+"auc_imgerr_vs_bothvalid": 0.4901071133,
+"key": 0.024146509,
+"n_imgerr": 318,
+"n_priorerr": 51,
+"n_bothvalid": 3056,
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "ALS",
@@ -778,7 +1273,64 @@
 "n_imgerr": 398,
 "n_priorerr": 58,
 "n_bothvalid": 3668,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4478368572,
+"auc_imgerr_vs_bothvalid": 0.5278103915,
+"key": 0.0399867671,
+"n_imgerr": 398,
+"n_priorerr": 58,
+"n_bothvalid": 3668,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.810198937,
+"auc_imgerr_vs_bothvalid": 0.6316569579,
+"key": 0.2209279474,
+"n_imgerr": 1323,
+"n_priorerr": 8492,
+"n_bothvalid": 6338,
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.7907096947,
+"auc_imgerr_vs_bothvalid": 0.6332683138,
+"key": 0.2119890042,
+"n_imgerr": 1323,
+"n_priorerr": 8492,
+"n_bothvalid": 6338,
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -793,7 +1345,46 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 3.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.2007007885,
+"auc_imgerr_vs_bothvalid": 0.3888274113,
+"key": 0.2052359001,
+"n_imgerr": 1323,
+"n_priorerr": 8492,
+"n_bothvalid": 6338,
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 4.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2106967689,
+"auc_imgerr_vs_bothvalid": 0.3958783682,
+"key": 0.1967124315,
+"n_imgerr": 1323,
+"n_priorerr": 8492,
+"n_bothvalid": 6338,
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -808,7 +1399,10 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -823,7 +1417,10 @@
 "n_imgerr": 1444,
 "n_priorerr": 8816,
 "n_bothvalid": 6546,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -838,7 +1435,10 @@
 "n_imgerr": 1026,
 "n_priorerr": 8231,
 "n_bothvalid": 5412,
-"rank": 4
+"detection_statistic": false,
+"photometric": true,
+"rank": 8.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -853,7 +1453,10 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -868,7 +1471,46 @@
 "n_imgerr": 1152,
 "n_priorerr": 8377,
 "n_bothvalid": 5773,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 9.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2949369263,
+"auc_imgerr_vs_bothvalid": 0.4584351303,
+"key": 0.1233139717,
+"n_imgerr": 1152,
+"n_priorerr": 8377,
+"n_bothvalid": 5773,
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 10.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.316448943,
+"auc_imgerr_vs_bothvalid": 0.4465188762,
+"key": 0.1185160904,
+"n_imgerr": 1152,
+"n_priorerr": 8377,
+"n_bothvalid": 5773,
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -883,7 +1525,10 @@
 "n_imgerr": 1444,
 "n_priorerr": 8816,
 "n_bothvalid": 6546,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -898,7 +1543,10 @@
 "n_imgerr": 1444,
 "n_priorerr": 8816,
 "n_bothvalid": 6546,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -913,7 +1561,10 @@
 "n_imgerr": 1188,
 "n_priorerr": 10108,
 "n_bothvalid": 8920,
-"rank": 9
+"detection_statistic": false,
+"photometric": true,
+"rank": 15.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -928,7 +1579,10 @@
 "n_imgerr": 859,
 "n_priorerr": 8222,
 "n_bothvalid": 5309,
-"rank": 10
+"detection_statistic": false,
+"photometric": true,
+"rank": 16.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -943,7 +1597,10 @@
 "n_imgerr": 1444,
 "n_priorerr": 8816,
 "n_bothvalid": 6546,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -958,7 +1615,28 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.3286815628,
+"auc_imgerr_vs_bothvalid": 0.4837889535,
+"key": 0.0937647419,
+"n_imgerr": 1152,
+"n_priorerr": 8377,
+"n_bothvalid": 5773,
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -973,22 +1651,28 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_all",
 "version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.467093472,
-"auc_imgerr_vs_bothvalid": 0.3699039223,
-"key": 0.0815013028,
-"n_imgerr": 1673,
-"n_priorerr": 10224,
-"n_bothvalid": 9553,
-"rank": 14
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.6351531354,
+"auc_imgerr_vs_bothvalid": 0.5462122203,
+"key": 0.0906826778,
+"n_imgerr": 1444,
+"n_priorerr": 8816,
+"n_bothvalid": 6546,
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
 },
 {
 "prior": "LoD2",
@@ -1003,7 +1687,10 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 19.0
 },
 {
 "prior": "LoD2",
@@ -1018,7 +1705,10 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 23.0,
+"rank_no_photo": 20.0
 },
 {
 "prior": "LoD2",
@@ -1033,7 +1723,10 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 21.0
 },
 {
 "prior": "LoD2",
@@ -1048,7 +1741,10 @@
 "n_imgerr": 1152,
 "n_priorerr": 8377,
 "n_bothvalid": 5773,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 25.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "LoD2",
@@ -1063,7 +1759,10 @@
 "n_imgerr": 1090,
 "n_priorerr": 8312,
 "n_bothvalid": 5604,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 23.0
 },
 {
 "prior": "LoD2",
@@ -1078,7 +1777,28 @@
 "n_imgerr": 1152,
 "n_priorerr": 8377,
 "n_bothvalid": 5773,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 24.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.6101107031,
+"auc_imgerr_vs_bothvalid": 0.4959999637,
+"key": 0.0570553697,
+"n_imgerr": 1323,
+"n_priorerr": 8492,
+"n_bothvalid": 6338,
+"detection_statistic": false,
+"photometric": false,
+"rank": 28.0,
+"rank_no_photo": 25.0
 },
 {
 "prior": "LoD2",
@@ -1093,7 +1813,10 @@
 "n_imgerr": 1152,
 "n_priorerr": 8377,
 "n_bothvalid": 5773,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 26.0
 },
 {
 "prior": "LoD2",
@@ -1108,7 +1831,28 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 30.0,
+"rank_no_photo": 27.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.5950067628,
+"auc_imgerr_vs_bothvalid": 0.494691583,
+"key": 0.0501575899,
+"n_imgerr": 1323,
+"n_priorerr": 8492,
+"n_bothvalid": 6338,
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
 },
 {
 "prior": "LoD2",
@@ -1123,7 +1867,10 @@
 "n_imgerr": 1274,
 "n_priorerr": 10154,
 "n_bothvalid": 9251,
-"rank": 23
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
 },
 {
 "prior": "LoD2",
@@ -1138,7 +1885,10 @@
 "n_imgerr": 951,
 "n_priorerr": 8302,
 "n_bothvalid": 5526,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
 },
 {
 "prior": "LoD2",
@@ -1153,7 +1903,10 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 25
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "LoD2",
@@ -1168,7 +1921,28 @@
 "n_imgerr": 1673,
 "n_priorerr": 10224,
 "n_bothvalid": 9553,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.467093472,
+"auc_imgerr_vs_bothvalid": 0.3699039223,
+"key": 0.0815013028,
+"n_imgerr": 1673,
+"n_priorerr": 10224,
+"n_bothvalid": 9553,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1183,7 +1957,64 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.8450067083,
+"auc_imgerr_vs_bothvalid": 0.6076056675,
+"key": 0.2263061879,
+"n_imgerr": 791,
+"n_priorerr": 6204,
+"n_bothvalid": 3855,
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.8266770103,
+"auc_imgerr_vs_bothvalid": 0.6117923592,
+"key": 0.2192346848,
+"n_imgerr": 791,
+"n_priorerr": 6204,
+"n_bothvalid": 3855,
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 3.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.1682281975,
+"auc_imgerr_vs_bothvalid": 0.4238788839,
+"key": 0.2039464593,
+"n_imgerr": 791,
+"n_priorerr": 6204,
+"n_bothvalid": 3855,
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -1198,7 +2029,28 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 5.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.1830004866,
+"auc_imgerr_vs_bothvalid": 0.4381327876,
+"key": 0.1894333629,
+"n_imgerr": 791,
+"n_priorerr": 6204,
+"n_bothvalid": 3855,
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -1213,7 +2065,10 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -1228,7 +2083,10 @@
 "n_imgerr": 886,
 "n_priorerr": 6459,
 "n_bothvalid": 4002,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -1243,7 +2101,10 @@
 "n_imgerr": 886,
 "n_priorerr": 6459,
 "n_bothvalid": 4002,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -1258,7 +2119,10 @@
 "n_imgerr": 459,
 "n_priorerr": 6020,
 "n_bothvalid": 3063,
-"rank": 6
+"detection_statistic": false,
+"photometric": true,
+"rank": 10.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1273,7 +2137,28 @@
 "n_imgerr": 886,
 "n_priorerr": 6459,
 "n_bothvalid": 4002,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 10.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2959552461,
+"auc_imgerr_vs_bothvalid": 0.521812302,
+"key": 0.112928528,
+"n_imgerr": 685,
+"n_priorerr": 6124,
+"n_bothvalid": 3406,
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -1288,7 +2173,10 @@
 "n_imgerr": 598,
 "n_priorerr": 6026,
 "n_bothvalid": 3134,
-"rank": 8
+"detection_statistic": false,
+"photometric": true,
+"rank": 13.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1303,7 +2191,10 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -1318,7 +2209,10 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -1333,7 +2227,28 @@
 "n_imgerr": 685,
 "n_priorerr": 6124,
 "n_bothvalid": 3406,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 14.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.3353225553,
+"auc_imgerr_vs_bothvalid": 0.5357865681,
+"key": 0.1002320064,
+"n_imgerr": 685,
+"n_priorerr": 6124,
+"n_bothvalid": 3406,
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -1348,7 +2263,10 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -1363,7 +2281,10 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -1378,7 +2299,28 @@
 "n_imgerr": 642,
 "n_priorerr": 6080,
 "n_bothvalid": 3281,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.3182008563,
+"auc_imgerr_vs_bothvalid": 0.5060247909,
+"key": 0.0939119673,
+"n_imgerr": 685,
+"n_priorerr": 6124,
+"n_bothvalid": 3406,
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 19.0
 },
 {
 "prior": "LoD2",
@@ -1393,7 +2335,10 @@
 "n_imgerr": 886,
 "n_priorerr": 6459,
 "n_bothvalid": 4002,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 20.0
 },
 {
 "prior": "LoD2",
@@ -1408,7 +2353,28 @@
 "n_imgerr": 651,
 "n_priorerr": 7385,
 "n_bothvalid": 5815,
-"rank": 16
+"detection_statistic": false,
+"photometric": true,
+"rank": 23.0,
+"rank_no_photo": null
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.6513229655,
+"auc_imgerr_vs_bothvalid": 0.5151508614,
+"key": 0.0832369134,
+"n_imgerr": 886,
+"n_priorerr": 6459,
+"n_bothvalid": 4002,
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 21.0
 },
 {
 "prior": "LoD2",
@@ -1423,7 +2389,10 @@
 "n_imgerr": 685,
 "n_priorerr": 6124,
 "n_bothvalid": 3406,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 25.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "LoD2",
@@ -1438,22 +2407,28 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 23.0
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_all",
 "version": "섞인 패치 뺌",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.5118052961,
-"auc_imgerr_vs_bothvalid": 0.3681227619,
-"key": 0.0718412671,
-"n_imgerr": 1029,
-"n_priorerr": 7467,
-"n_bothvalid": 6317,
-"rank": 19
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.602383683,
+"auc_imgerr_vs_bothvalid": 0.4579435314,
+"key": 0.0722200758,
+"n_imgerr": 791,
+"n_priorerr": 6204,
+"n_bothvalid": 3855,
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 24.0
 },
 {
 "prior": "LoD2",
@@ -1468,7 +2443,28 @@
 "n_imgerr": 685,
 "n_priorerr": 6124,
 "n_bothvalid": 3406,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 28.0,
+"rank_no_photo": 25.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.5830918595,
+"auc_imgerr_vs_bothvalid": 0.453429716,
+"key": 0.0648310718,
+"n_imgerr": 791,
+"n_priorerr": 6204,
+"n_bothvalid": 3855,
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 26.0
 },
 {
 "prior": "LoD2",
@@ -1483,7 +2479,10 @@
 "n_imgerr": 685,
 "n_priorerr": 6124,
 "n_bothvalid": 3406,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 30.0,
+"rank_no_photo": 27.0
 },
 {
 "prior": "LoD2",
@@ -1498,7 +2497,10 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
 },
 {
 "prior": "LoD2",
@@ -1513,7 +2515,10 @@
 "n_imgerr": 721,
 "n_priorerr": 7416,
 "n_bothvalid": 6106,
-"rank": 23
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
 },
 {
 "prior": "LoD2",
@@ -1528,7 +2533,10 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
 },
 {
 "prior": "LoD2",
@@ -1543,7 +2551,10 @@
 "n_imgerr": 530,
 "n_priorerr": 6073,
 "n_bothvalid": 3230,
-"rank": 25
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "LoD2",
@@ -1558,7 +2569,28 @@
 "n_imgerr": 1029,
 "n_priorerr": 7467,
 "n_bothvalid": 6317,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.5118052961,
+"auc_imgerr_vs_bothvalid": 0.3681227619,
+"key": 0.0718412671,
+"n_imgerr": 1029,
+"n_priorerr": 7467,
+"n_bothvalid": 6317,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1573,7 +2605,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6544,
 "n_bothvalid": 3638,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -1588,7 +2623,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -1603,7 +2641,46 @@
 "n_imgerr": 576,
 "n_priorerr": 6200,
 "n_bothvalid": 2894,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 3.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.6974172561,
+"auc_imgerr_vs_bothvalid": 0.6296452735,
+"key": 0.1635312648,
+"n_imgerr": 594,
+"n_priorerr": 6246,
+"n_bothvalid": 3067,
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 4.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2736582389,
+"auc_imgerr_vs_bothvalid": 0.4107354383,
+"key": 0.1578031614,
+"n_imgerr": 594,
+"n_priorerr": 6246,
+"n_bothvalid": 3067,
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -1618,7 +2695,46 @@
 "n_imgerr": 597,
 "n_priorerr": 6246,
 "n_bothvalid": 3067,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 6.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2760788945,
+"auc_imgerr_vs_bothvalid": 0.44570228,
+"key": 0.1391094128,
+"n_imgerr": 589,
+"n_priorerr": 6228,
+"n_bothvalid": 2977,
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 7.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.2951664149,
+"auc_imgerr_vs_bothvalid": 0.4284396514,
+"key": 0.1381969668,
+"n_imgerr": 594,
+"n_priorerr": 6246,
+"n_bothvalid": 3067,
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -1633,7 +2749,10 @@
 "n_imgerr": 589,
 "n_priorerr": 6228,
 "n_bothvalid": 2977,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -1648,7 +2767,28 @@
 "n_imgerr": 549,
 "n_priorerr": 6150,
 "n_bothvalid": 2865,
-"rank": 6
+"detection_statistic": false,
+"photometric": true,
+"rank": 10.0,
+"rank_no_photo": null
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.3121216904,
+"auc_imgerr_vs_bothvalid": 0.4230777785,
+"key": 0.1324002655,
+"n_imgerr": 589,
+"n_priorerr": 6228,
+"n_bothvalid": 2977,
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -1663,22 +2803,28 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_roof",
 "version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4340136399,
-"auc_imgerr_vs_bothvalid": 0.3096695539,
-"key": 0.1281584031,
-"n_imgerr": 633,
-"n_priorerr": 6545,
-"n_bothvalid": 3649,
-"rank": 8
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.6415146771,
+"auc_imgerr_vs_bothvalid": 0.6136111139,
+"key": 0.1275628955,
+"n_imgerr": 594,
+"n_priorerr": 6246,
+"n_bothvalid": 3067,
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -1693,7 +2839,10 @@
 "n_imgerr": 549,
 "n_priorerr": 6151,
 "n_bothvalid": 2876,
-"rank": 9
+"detection_statistic": false,
+"photometric": true,
+"rank": 14.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1708,7 +2857,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6543,
 "n_bothvalid": 3638,
-"rank": 10
+"detection_statistic": false,
+"photometric": true,
+"rank": 15.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1723,7 +2875,28 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.6917221635,
+"auc_imgerr_vs_bothvalid": 0.5181051906,
+"key": 0.104913677,
+"n_imgerr": 594,
+"n_priorerr": 6246,
+"n_bothvalid": 3067,
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -1738,7 +2911,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -1753,7 +2929,10 @@
 "n_imgerr": 597,
 "n_priorerr": 6246,
 "n_bothvalid": 3067,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -1768,7 +2947,28 @@
 "n_imgerr": 589,
 "n_priorerr": 6228,
 "n_bothvalid": 2977,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.3223925467,
+"auc_imgerr_vs_bothvalid": 0.5105106895,
+"key": 0.0940590714,
+"n_imgerr": 589,
+"n_priorerr": 6228,
+"n_bothvalid": 2977,
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
 },
 {
 "prior": "LoD2",
@@ -1783,7 +2983,28 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 19.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.6760419598,
+"auc_imgerr_vs_bothvalid": 0.4901138875,
+"key": 0.0929640361,
+"n_imgerr": 594,
+"n_priorerr": 6246,
+"n_bothvalid": 3067,
+"detection_statistic": false,
+"photometric": false,
+"rank": 23.0,
+"rank_no_photo": 20.0
 },
 {
 "prior": "LoD2",
@@ -1798,7 +3019,10 @@
 "n_imgerr": 597,
 "n_priorerr": 6246,
 "n_bothvalid": 3067,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 21.0
 },
 {
 "prior": "LoD2",
@@ -1813,7 +3037,10 @@
 "n_imgerr": 589,
 "n_priorerr": 6228,
 "n_bothvalid": 2977,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 25.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "LoD2",
@@ -1828,7 +3055,10 @@
 "n_imgerr": 597,
 "n_priorerr": 6246,
 "n_bothvalid": 3067,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 23.0
 },
 {
 "prior": "LoD2",
@@ -1843,7 +3073,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 24.0
 },
 {
 "prior": "LoD2",
@@ -1858,7 +3091,10 @@
 "n_imgerr": 576,
 "n_priorerr": 6201,
 "n_bothvalid": 2905,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 28.0,
+"rank_no_photo": 25.0
 },
 {
 "prior": "LoD2",
@@ -1873,7 +3109,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 26.0
 },
 {
 "prior": "LoD2",
@@ -1888,7 +3127,10 @@
 "n_imgerr": 589,
 "n_priorerr": 6228,
 "n_bothvalid": 2977,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 30.0,
+"rank_no_photo": 27.0
 },
 {
 "prior": "LoD2",
@@ -1903,7 +3145,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 23
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
 },
 {
 "prior": "LoD2",
@@ -1918,7 +3163,28 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.522272747,
+"auc_imgerr_vs_bothvalid": 0.5646212805,
+"key": 0.0434470138,
+"n_imgerr": 597,
+"n_priorerr": 6246,
+"n_bothvalid": 3067,
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
 },
 {
 "prior": "LoD2",
@@ -1933,7 +3199,10 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 25
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "LoD2",
@@ -1948,7 +3217,28 @@
 "n_imgerr": 633,
 "n_priorerr": 6545,
 "n_bothvalid": 3649,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4340136399,
+"auc_imgerr_vs_bothvalid": 0.3096695539,
+"key": 0.1281584031,
+"n_imgerr": 633,
+"n_priorerr": 6545,
+"n_bothvalid": 3649,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1963,7 +3253,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -1978,7 +3271,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -1993,7 +3289,10 @@
 "n_imgerr": 242,
 "n_priorerr": 4456,
 "n_bothvalid": 1225,
-"rank": 3
+"detection_statistic": false,
+"photometric": true,
+"rank": 3.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2008,7 +3307,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4698,
 "n_bothvalid": 1761,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "LoD2",
@@ -2023,7 +3325,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -2038,7 +3343,28 @@
 "n_imgerr": 291,
 "n_priorerr": 4697,
 "n_bothvalid": 1761,
-"rank": 6
+"detection_statistic": false,
+"photometric": true,
+"rank": 6.0,
+"rank_no_photo": null
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.3266196825,
+"auc_imgerr_vs_bothvalid": 0.6102069546,
+"key": 0.1417936361,
+"n_imgerr": 264,
+"n_priorerr": 4497,
+"n_bothvalid": 1305,
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -2053,7 +3379,10 @@
 "n_imgerr": 258,
 "n_priorerr": 4485,
 "n_bothvalid": 1238,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -2068,7 +3397,100 @@
 "n_imgerr": 264,
 "n_priorerr": 4497,
 "n_bothvalid": 1305,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 7.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2660439451,
+"auc_imgerr_vs_bothvalid": 0.5429452572,
+"key": 0.138450656,
+"n_imgerr": 264,
+"n_priorerr": 4497,
+"n_bothvalid": 1305,
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 8.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.7033710357,
+"auc_imgerr_vs_bothvalid": 0.5686484093,
+"key": 0.1360097225,
+"n_imgerr": 266,
+"n_priorerr": 4509,
+"n_bothvalid": 1384,
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 9.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.6707403906,
+"auc_imgerr_vs_bothvalid": 0.4000567713,
+"key": 0.1353418097,
+"n_imgerr": 266,
+"n_priorerr": 4509,
+"n_bothvalid": 1384,
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 10.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.6908822289,
+"auc_imgerr_vs_bothvalid": 0.4266944457,
+"key": 0.1320938916,
+"n_imgerr": 266,
+"n_priorerr": 4509,
+"n_bothvalid": 1384,
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 11.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.254979598,
+"auc_imgerr_vs_bothvalid": 0.5039441088,
+"key": 0.1244822554,
+"n_imgerr": 266,
+"n_priorerr": 4509,
+"n_bothvalid": 1384,
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -2083,7 +3505,10 @@
 "n_imgerr": 269,
 "n_priorerr": 4509,
 "n_bothvalid": 1384,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -2098,7 +3523,28 @@
 "n_imgerr": 264,
 "n_priorerr": 4497,
 "n_bothvalid": 1305,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 14.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.2823959433,
+"auc_imgerr_vs_bothvalid": 0.5192737081,
+"key": 0.1184388824,
+"n_imgerr": 266,
+"n_priorerr": 4509,
+"n_bothvalid": 1384,
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -2113,7 +3559,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -2128,7 +3577,10 @@
 "n_imgerr": 264,
 "n_priorerr": 4497,
 "n_bothvalid": 1305,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -2143,7 +3595,28 @@
 "n_imgerr": 269,
 "n_priorerr": 4509,
 "n_bothvalid": 1384,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.6487167686,
+"auc_imgerr_vs_bothvalid": 0.5639776826,
+"key": 0.1063472256,
+"n_imgerr": 266,
+"n_priorerr": 4509,
+"n_bothvalid": 1384,
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 19.0
 },
 {
 "prior": "LoD2",
@@ -2158,7 +3631,10 @@
 "n_imgerr": 269,
 "n_priorerr": 4509,
 "n_bothvalid": 1384,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 20.0
 },
 {
 "prior": "LoD2",
@@ -2173,7 +3649,28 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 23.0,
+"rank_no_photo": 21.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.3274384101,
+"auc_imgerr_vs_bothvalid": 0.5233426216,
+"key": 0.0979521057,
+"n_imgerr": 264,
+"n_priorerr": 4497,
+"n_bothvalid": 1305,
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "LoD2",
@@ -2188,7 +3685,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 25.0,
+"rank_no_photo": 23.0
 },
 {
 "prior": "LoD2",
@@ -2203,7 +3703,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 24.0
 },
 {
 "prior": "LoD2",
@@ -2218,22 +3721,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 18
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_roof",
-"version": "섞인 패치 뺌",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4832358131,
-"auc_imgerr_vs_bothvalid": 0.3368551365,
-"key": 0.0899545252,
-"n_imgerr": 291,
-"n_priorerr": 4699,
-"n_bothvalid": 1771,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 25.0
 },
 {
 "prior": "LoD2",
@@ -2248,7 +3739,10 @@
 "n_imgerr": 242,
 "n_priorerr": 4457,
 "n_bothvalid": 1235,
-"rank": 20
+"detection_statistic": false,
+"photometric": true,
+"rank": 28.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2263,7 +3757,10 @@
 "n_imgerr": 264,
 "n_priorerr": 4497,
 "n_bothvalid": 1305,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 26.0
 },
 {
 "prior": "LoD2",
@@ -2278,7 +3775,10 @@
 "n_imgerr": 269,
 "n_priorerr": 4509,
 "n_bothvalid": 1384,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 30.0,
+"rank_no_photo": 27.0
 },
 {
 "prior": "LoD2",
@@ -2293,7 +3793,10 @@
 "n_imgerr": 258,
 "n_priorerr": 4486,
 "n_bothvalid": 1248,
-"rank": 23
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
 },
 {
 "prior": "LoD2",
@@ -2308,7 +3811,10 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
 },
 {
 "prior": "LoD2",
@@ -2323,7 +3829,28 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 25
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.5151460812,
+"auc_imgerr_vs_bothvalid": 0.5263822335,
+"key": 0.0207641574,
+"n_imgerr": 269,
+"n_priorerr": 4509,
+"n_bothvalid": 1384,
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "LoD2",
@@ -2338,7 +3865,28 @@
 "n_imgerr": 291,
 "n_priorerr": 4699,
 "n_bothvalid": 1771,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4832358131,
+"auc_imgerr_vs_bothvalid": 0.3368551365,
+"key": 0.0899545252,
+"n_imgerr": 291,
+"n_priorerr": 4699,
+"n_bothvalid": 1771,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2353,7 +3901,64 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.8715912575,
+"auc_imgerr_vs_bothvalid": 0.6478879323,
+"key": 0.2597395949,
+"n_imgerr": 729,
+"n_priorerr": 2246,
+"n_bothvalid": 3271,
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.8707102522,
+"auc_imgerr_vs_bothvalid": 0.6127929735,
+"key": 0.2417516128,
+"n_imgerr": 729,
+"n_priorerr": 2246,
+"n_bothvalid": 3271,
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 3.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.1737718144,
+"auc_imgerr_vs_bothvalid": 0.3543829278,
+"key": 0.2359226289,
+"n_imgerr": 729,
+"n_priorerr": 2246,
+"n_bothvalid": 3271,
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -2368,7 +3973,10 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -2383,7 +3991,10 @@
 "n_imgerr": 514,
 "n_priorerr": 2111,
 "n_bothvalid": 2699,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -2398,7 +4009,28 @@
 "n_imgerr": 641,
 "n_priorerr": 3610,
 "n_bothvalid": 5613,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 7.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2440748192,
+"auc_imgerr_vs_bothvalid": 0.3800853743,
+"key": 0.1879199033,
+"n_imgerr": 729,
+"n_priorerr": 2246,
+"n_bothvalid": 3271,
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -2413,7 +4045,10 @@
 "n_imgerr": 847,
 "n_priorerr": 2570,
 "n_bothvalid": 3479,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -2428,7 +4063,10 @@
 "n_imgerr": 375,
 "n_priorerr": 2102,
 "n_bothvalid": 2632,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -2443,7 +4081,10 @@
 "n_imgerr": 847,
 "n_priorerr": 2570,
 "n_bothvalid": 3479,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -2458,7 +4099,10 @@
 "n_imgerr": 555,
 "n_priorerr": 3565,
 "n_bothvalid": 5282,
-"rank": 8
+"detection_statistic": false,
+"photometric": true,
+"rank": 12.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2473,7 +4117,10 @@
 "n_imgerr": 477,
 "n_priorerr": 2080,
 "n_bothvalid": 2536,
-"rank": 9
+"detection_statistic": false,
+"photometric": true,
+"rank": 13.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2488,7 +4135,28 @@
 "n_imgerr": 310,
 "n_priorerr": 2072,
 "n_bothvalid": 2444,
-"rank": 10
+"detection_statistic": false,
+"photometric": true,
+"rank": 14.0,
+"rank_no_photo": null
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.7019418502,
+"auc_imgerr_vs_bothvalid": 0.5209620007,
+"key": 0.1114519254,
+"n_imgerr": 847,
+"n_priorerr": 2570,
+"n_bothvalid": 3479,
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -2503,7 +4171,10 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -2518,7 +4189,10 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -2533,7 +4207,10 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -2548,22 +4225,28 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
 "version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4573590754,
-"auc_imgerr_vs_bothvalid": 0.4062539087,
-"key": 0.0681935079,
-"n_imgerr": 1040,
-"n_priorerr": 3679,
-"n_bothvalid": 5904,
-"rank": 15
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.4036918324,
+"auc_imgerr_vs_bothvalid": 0.455671576,
+"key": 0.0703182958,
+"n_imgerr": 563,
+"n_priorerr": 2149,
+"n_bothvalid": 2796,
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -2578,7 +4261,10 @@
 "n_imgerr": 563,
 "n_priorerr": 2149,
 "n_bothvalid": 2796,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
 },
 {
 "prior": "LoD2",
@@ -2593,7 +4279,10 @@
 "n_imgerr": 563,
 "n_priorerr": 2149,
 "n_bothvalid": 2796,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 19.0
 },
 {
 "prior": "LoD2",
@@ -2608,7 +4297,28 @@
 "n_imgerr": 847,
 "n_priorerr": 2570,
 "n_bothvalid": 3479,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 23.0,
+"rank_no_photo": 20.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.4111961884,
+"auc_imgerr_vs_bothvalid": 0.4664531261,
+"key": 0.0611753427,
+"n_imgerr": 729,
+"n_priorerr": 2246,
+"n_bothvalid": 3271,
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 21.0
 },
 {
 "prior": "LoD2",
@@ -2623,7 +4333,10 @@
 "n_imgerr": 563,
 "n_priorerr": 2149,
 "n_bothvalid": 2796,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 25.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "LoD2",
@@ -2638,7 +4351,28 @@
 "n_imgerr": 563,
 "n_priorerr": 2149,
 "n_bothvalid": 2796,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 23.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.4212583489,
+"auc_imgerr_vs_bothvalid": 0.475319665,
+"key": 0.051710993,
+"n_imgerr": 563,
+"n_priorerr": 2149,
+"n_bothvalid": 2796,
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 24.0
 },
 {
 "prior": "LoD2",
@@ -2653,7 +4387,10 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 28.0,
+"rank_no_photo": 25.0
 },
 {
 "prior": "LoD2",
@@ -2668,7 +4405,28 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 26.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.4394071512,
+"auc_imgerr_vs_bothvalid": 0.4741993764,
+"key": 0.0431967362,
+"n_imgerr": 563,
+"n_priorerr": 2149,
+"n_bothvalid": 2796,
+"detection_statistic": false,
+"photometric": false,
+"rank": 30.0,
+"rank_no_photo": 27.0
 },
 {
 "prior": "LoD2",
@@ -2683,7 +4441,10 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 23
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
 },
 {
 "prior": "LoD2",
@@ -2698,7 +4459,10 @@
 "n_imgerr": 847,
 "n_priorerr": 2570,
 "n_bothvalid": 3479,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
 },
 {
 "prior": "LoD2",
@@ -2713,7 +4477,28 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 25
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.4696378381,
+"auc_imgerr_vs_bothvalid": 0.5018709959,
+"key": 0.0161165789,
+"n_imgerr": 729,
+"n_priorerr": 2246,
+"n_bothvalid": 3271,
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "LoD2",
@@ -2728,7 +4513,28 @@
 "n_imgerr": 1040,
 "n_priorerr": 3679,
 "n_bothvalid": 5904,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4573590754,
+"auc_imgerr_vs_bothvalid": 0.4062539087,
+"key": 0.0681935079,
+"n_imgerr": 1040,
+"n_priorerr": 3679,
+"n_bothvalid": 5904,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2743,7 +4549,28 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다12",
+"obs": "mv_all_front_0p2",
+"obs_ko": "모든 사진 앞 가림 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.8790863885,
+"auc_imgerr_vs_bothvalid": 0.628293153,
+"key": 0.2536897707,
+"n_imgerr": 525,
+"n_priorerr": 1695,
+"n_bothvalid": 2471,
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -2758,7 +4585,46 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 3.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다13",
+"obs": "mv_all_median_absdiff",
+"obs_ko": "모든 사진 |D − z| 중앙값",
+"auc_imgerr_vs_priorerr": 0.8783520157,
+"auc_imgerr_vs_bothvalid": 0.5978589736,
+"key": 0.2381054947,
+"n_imgerr": 525,
+"n_priorerr": 1695,
+"n_bothvalid": 2471,
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 4.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다9",
+"obs": "mv_all_agree_0p2",
+"obs_ko": "모든 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.1786295828,
+"auc_imgerr_vs_bothvalid": 0.3760987454,
+"key": 0.2226358359,
+"n_imgerr": 525,
+"n_priorerr": 1695,
+"n_bothvalid": 2471,
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -2773,7 +4639,10 @@
 "n_imgerr": 384,
 "n_priorerr": 1594,
 "n_bothvalid": 2033,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -2788,7 +4657,10 @@
 "n_imgerr": 430,
 "n_priorerr": 2718,
 "n_bothvalid": 4345,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -2803,7 +4675,28 @@
 "n_imgerr": 360,
 "n_priorerr": 2688,
 "n_bothvalid": 4054,
-"rank": 5
+"detection_statistic": false,
+"photometric": true,
+"rank": 8.0,
+"rank_no_photo": null
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다8",
+"obs": "mv_all_agree_0p1",
+"obs_ko": "모든 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.2571945498,
+"auc_imgerr_vs_bothvalid": 0.403604864,
+"key": 0.1696002931,
+"n_imgerr": 525,
+"n_priorerr": 1695,
+"n_bothvalid": 2471,
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -2818,7 +4711,10 @@
 "n_imgerr": 617,
 "n_priorerr": 1950,
 "n_bothvalid": 2618,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -2833,7 +4729,10 @@
 "n_imgerr": 272,
 "n_priorerr": 1588,
 "n_bothvalid": 1992,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -2848,7 +4747,10 @@
 "n_imgerr": 617,
 "n_priorerr": 1950,
 "n_bothvalid": 2618,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -2863,7 +4765,10 @@
 "n_imgerr": 356,
 "n_priorerr": 1569,
 "n_bothvalid": 1899,
-"rank": 9
+"detection_statistic": false,
+"photometric": true,
+"rank": 13.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2878,7 +4783,28 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 12.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다14",
+"obs": "n_all_with_D",
+"obs_ko": "모든 사진 수",
+"auc_imgerr_vs_priorerr": 0.7009408636,
+"auc_imgerr_vs_bothvalid": 0.4961391216,
+"key": 0.102400871,
+"n_imgerr": 617,
+"n_priorerr": 1950,
+"n_bothvalid": 2618,
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -2893,22 +4819,10 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 11
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_wall",
-"version": "섞인 패치 뺌",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4389049454,
-"auc_imgerr_vs_bothvalid": 0.3762633579,
-"key": 0.0924158484,
-"n_imgerr": 738,
-"n_priorerr": 2768,
-"n_bothvalid": 4546,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -2923,7 +4837,10 @@
 "n_imgerr": 217,
 "n_priorerr": 1564,
 "n_bothvalid": 1838,
-"rank": 13
+"detection_statistic": false,
+"photometric": true,
+"rank": 17.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2938,7 +4855,10 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -2953,7 +4873,28 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다10",
+"obs": "mv_all_behind_0p1",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.3912841691,
+"auc_imgerr_vs_bothvalid": 0.4640265171,
+"key": 0.0723446569,
+"n_imgerr": 525,
+"n_priorerr": 1695,
+"n_bothvalid": 2471,
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -2968,7 +4909,10 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
 },
 {
 "prior": "LoD2",
@@ -2983,7 +4927,10 @@
 "n_imgerr": 617,
 "n_priorerr": 1950,
 "n_bothvalid": 2618,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 22.0,
+"rank_no_photo": 19.0
 },
 {
 "prior": "LoD2",
@@ -2998,7 +4945,10 @@
 "n_imgerr": 421,
 "n_priorerr": 1627,
 "n_bothvalid": 2101,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 23.0,
+"rank_no_photo": 20.0
 },
 {
 "prior": "LoD2",
@@ -3013,7 +4963,10 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 24.0,
+"rank_no_photo": 21.0
 },
 {
 "prior": "LoD2",
@@ -3028,7 +4981,10 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 25.0,
+"rank_no_photo": 22.0
 },
 {
 "prior": "LoD2",
@@ -3043,7 +4999,46 @@
 "n_imgerr": 617,
 "n_priorerr": 1950,
 "n_bothvalid": 2618,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 26.0,
+"rank_no_photo": 23.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다7",
+"obs": "mv_sel_share_abs0p2",
+"obs_ko": "고른 사진 일치 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.4401102535,
+"auc_imgerr_vs_bothvalid": 0.4872252892,
+"key": 0.0363322287,
+"n_imgerr": 421,
+"n_priorerr": 1627,
+"n_bothvalid": 2101,
+"detection_statistic": false,
+"photometric": false,
+"rank": 27.0,
+"rank_no_photo": 24.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다11",
+"obs": "mv_all_behind_0p2",
+"obs_ko": "모든 사진 지나쳐 봄 비율 0.2 m",
+"auc_imgerr_vs_priorerr": 0.4466672285,
+"auc_imgerr_vs_bothvalid": 0.4918617872,
+"key": 0.0307354921,
+"n_imgerr": 525,
+"n_priorerr": 1695,
+"n_bothvalid": 2471,
+"detection_statistic": false,
+"photometric": false,
+"rank": 28.0,
+"rank_no_photo": 25.0
 },
 {
 "prior": "LoD2",
@@ -3058,7 +5053,10 @@
 "n_imgerr": 421,
 "n_priorerr": 1627,
 "n_bothvalid": 2101,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 29.0,
+"rank_no_photo": 26.0
 },
 {
 "prior": "LoD2",
@@ -3073,7 +5071,10 @@
 "n_imgerr": 421,
 "n_priorerr": 1627,
 "n_bothvalid": 2101,
-"rank": 23
+"detection_statistic": false,
+"photometric": false,
+"rank": 30.0,
+"rank_no_photo": 27.0
 },
 {
 "prior": "LoD2",
@@ -3088,7 +5089,46 @@
 "n_imgerr": 421,
 "n_priorerr": 1627,
 "n_bothvalid": 2101,
-"rank": 24
+"detection_statistic": false,
+"photometric": false,
+"rank": 31.0,
+"rank_no_photo": 28.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다6",
+"obs": "mv_sel_share_abs0p1",
+"obs_ko": "고른 사진 일치 비율 0.1 m",
+"auc_imgerr_vs_priorerr": 0.4571504905,
+"auc_imgerr_vs_bothvalid": 0.5080433364,
+"key": 0.025446423,
+"n_imgerr": 421,
+"n_priorerr": 1627,
+"n_bothvalid": 2101,
+"detection_statistic": false,
+"photometric": false,
+"rank": 32.0,
+"rank_no_photo": 29.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "다5",
+"obs": "mv_sel_share_abs0p05",
+"obs_ko": "고른 사진 일치 비율 0.05 m",
+"auc_imgerr_vs_priorerr": 0.4641435281,
+"auc_imgerr_vs_bothvalid": 0.4946530382,
+"key": 0.0206017169,
+"n_imgerr": 421,
+"n_priorerr": 1627,
+"n_bothvalid": 2101,
+"detection_statistic": false,
+"photometric": false,
+"rank": 33.0,
+"rank_no_photo": 30.0
 },
 {
 "prior": "LoD2",
@@ -3103,7 +5143,10 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 25
+"detection_statistic": false,
+"photometric": false,
+"rank": 34.0,
+"rank_no_photo": 31.0
 },
 {
 "prior": "LoD2",
@@ -3118,7 +5161,28 @@
 "n_imgerr": 738,
 "n_priorerr": 2768,
 "n_bothvalid": 4546,
-"rank": 26
+"detection_statistic": false,
+"photometric": false,
+"rank": 35.0,
+"rank_no_photo": 32.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4389049454,
+"auc_imgerr_vs_bothvalid": 0.3762633579,
+"key": 0.0924158484,
+"n_imgerr": 738,
+"n_priorerr": 2768,
+"n_bothvalid": 4546,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 }
 ],
 "note": "확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %.",

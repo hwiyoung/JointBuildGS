@@ -45,7 +45,7 @@ def run(extra=None, only_region=None):
                                                reject_pct=100*A[gm & (rej_lo[k] | rej_hi[k])].sum()/a if a else np.nan))
                 if u == 'LoD2_all' or ver != '섞인 패치 뺌': continue
                 # 둘씩 묶음
-                aa = pd.DataFrame([r for r in A_rows if r['unit'] == u and r['version'] == ver and r['prior'] == prior]).sort_values('key', ascending=False)
+                aa = pd.DataFrame([r for r in A_rows if r['unit'] == u and r['version'] == ver and r['prior'] == prior and r['obs'] != 'd_over_L']).sort_values('key', ascending=False)   # 검출 통계 뺌
                 top = list(aa['obs'][:5])
                 for i in range(5):
                     for j in range(i + 1, 5):
@@ -63,11 +63,15 @@ def run(extra=None, only_region=None):
         print('GA', prior, round(T.s()), flush=True)
     sfx = '' if extra is None else f'_{only_region}_mvs_views'
     note = '확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %.'
-    dfA = pd.DataFrame(A_rows); dfA['rank'] = dfA.groupby(['prior', 'unit', 'version'])['key'].rank(ascending=False, method='first').astype(int)
-    write('ga_auc' + sfx, dfA.sort_values(['prior', 'unit', 'version', 'rank']), note=note, md_filter=lambda x: x[x['version'] == '섞인 패치 뺌'][['unit', 'rank', 'obs_no', 'obs_ko', 'auc_imgerr_vs_priorerr', 'auc_imgerr_vs_bothvalid', 'n_imgerr', 'n_priorerr', 'n_bothvalid']])
+    dfA = pd.DataFrame(A_rows)
+    # 11-17 사용자 결정(뒤에 바꿈): 13 |d|/L 은 검출 통계라 순위에서 뺌(표에는 남김). 광도 점수(7, 8, 9)를 뺀 순위도 함께.
+    dfA['detection_statistic'] = dfA['obs'] == 'd_over_L'; dfA['photometric'] = dfA['obs'].isin(['s_P', 's_M', 'sM_minus_sP'])
+    dfA['rank'] = dfA['key'].where(~dfA['detection_statistic']).groupby([dfA['prior'], dfA['unit'], dfA['version']]).rank(ascending=False, method='first')
+    dfA['rank_no_photo'] = dfA['key'].where(~dfA['detection_statistic'] & ~dfA['photometric']).groupby([dfA['prior'], dfA['unit'], dfA['version']]).rank(ascending=False, method='first')
+    write('ga_auc' + sfx, dfA.sort_values(['prior', 'unit', 'version', 'rank']), note=note, md_filter=lambda x: x[x['version'] == '섞인 패치 뺌'][['unit', 'rank', 'rank_no_photo', 'obs_no', 'obs_ko', 'auc_imgerr_vs_priorerr', 'auc_imgerr_vs_bothvalid', 'n_imgerr', 'n_priorerr', 'n_bothvalid']])
     write('ga_distribution' + sfx, pd.DataFrame(D_rows), note=note, md_filter=lambda x: x[(x['version'] == '섞인 패치 뺌') & (x['unit'] != 'LoD2_all')][['unit', 'obs_no', 'obs_ko', 'group', 'n', 'q10', 'q25', 'q50', 'q75', 'q90']])
     write('ga_reject' + sfx, pd.DataFrame(R_rows), note=note + ' 기각 = 기준 밖(아래 5 % 또는 위 5 %). u_M 없음 줄은 기하 검사를 건너뛴 패치.', md_filter=lambda x: x[(x['version'] == '섞인 패치 뺌')][['unit', 'target', 'obs_no', 'obs_ko', 'case', 'n', 'low_reject_pct', 'high_reject_pct', 'reject_pct']])
-    write('ga_pairs' + sfx, pd.DataFrame(P_rows), note=note + ' 단위마다 구별 정도 큰 다섯의 둘씩 묶음, 하나라도 기각이면 기각. 섞인 패치 뺌.')
+    write('ga_pairs' + sfx, pd.DataFrame(P_rows), note=note + ' 단위마다 구별 정도 큰 다섯(13 |d|÷L 뺌)의 둘씩 묶음, 하나라도 기각이면 기각. 섞인 패치 뺌.')
     write('ga_splits' + sfx, pd.DataFrame(S_rows), note=note + ' 자리·무늬 없음 나눔, 섞인 패치 뺌.')
     write('ga_thresholds' + sfx, pd.DataFrame(TH_rows), note='후보 관측의 기준 (한계 안 패치, 참값 없음).')
     progress(f'확인 가{sfx} 표 끝 ({round(T.s())} 초)')

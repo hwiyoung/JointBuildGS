@@ -4,21 +4,6 @@
 "prior": "ALS",
 "unit": "ALS_roof",
 "version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.083614243,
-"auc_imgerr_vs_bothvalid": 0.6696347894,
-"key": 0.2930102732,
-"n_imgerr": 12953,
-"n_priorerr": 14692,
-"n_bothvalid": 36899,
-"rank": 1
-},
-{
-"prior": "ALS",
-"unit": "ALS_roof",
-"version": "섞인 패치 넣음",
 "obs_no": "9",
 "obs": "sM_minus_sP",
 "obs_ko": "s_M − s_P",
@@ -28,7 +13,10 @@
 "n_imgerr": 9512,
 "n_priorerr": 13586,
 "n_bothvalid": 30464,
-"rank": 2
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -43,7 +31,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "ALS",
@@ -58,7 +49,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "ALS",
@@ -73,7 +67,10 @@
 "n_imgerr": 11797,
 "n_priorerr": 14233,
 "n_bothvalid": 33670,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "ALS",
@@ -88,7 +85,10 @@
 "n_imgerr": 11274,
 "n_priorerr": 14094,
 "n_bothvalid": 33834,
-"rank": 6
+"detection_statistic": false,
+"photometric": true,
+"rank": 5.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -103,7 +103,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "ALS",
@@ -118,7 +121,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "ALS",
@@ -133,7 +139,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "ALS",
@@ -148,7 +157,10 @@
 "n_imgerr": 11797,
 "n_priorerr": 14233,
 "n_bothvalid": 33670,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "ALS",
@@ -163,7 +175,10 @@
 "n_imgerr": 10461,
 "n_priorerr": 13983,
 "n_bothvalid": 32198,
-"rank": 11
+"detection_statistic": false,
+"photometric": true,
+"rank": 10.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -178,7 +193,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "ALS",
@@ -193,7 +211,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "ALS",
@@ -208,7 +229,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "ALS",
@@ -223,7 +247,10 @@
 "n_imgerr": 10214,
 "n_priorerr": 13690,
 "n_bothvalid": 30821,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "ALS",
@@ -238,7 +265,10 @@
 "n_imgerr": 11567,
 "n_priorerr": 14151,
 "n_bothvalid": 33915,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "ALS",
@@ -253,7 +283,10 @@
 "n_imgerr": 11797,
 "n_priorerr": 14233,
 "n_bothvalid": 33670,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "ALS",
@@ -268,7 +301,10 @@
 "n_imgerr": 11167,
 "n_priorerr": 14075,
 "n_bothvalid": 32587,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "ALS",
@@ -283,7 +319,10 @@
 "n_imgerr": 11797,
 "n_priorerr": 14233,
 "n_bothvalid": 33670,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "ALS",
@@ -298,7 +337,10 @@
 "n_imgerr": 12942,
 "n_priorerr": 14689,
 "n_bothvalid": 36882,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "ALS",
@@ -313,7 +355,10 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "ALS",
@@ -328,22 +373,28 @@
 "n_imgerr": 12953,
 "n_priorerr": 14692,
 "n_bothvalid": 36899,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"version": "섞인 패치 뺌",
+"version": "섞인 패치 넣음",
 "obs_no": "13",
 "obs": "d_over_L",
 "obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.0618432218,
-"auc_imgerr_vs_bothvalid": 0.6991560981,
-"key": 0.3186564381,
-"n_imgerr": 10309,
-"n_priorerr": 13034,
-"n_bothvalid": 32277,
-"rank": 1
+"auc_imgerr_vs_priorerr": 0.083614243,
+"auc_imgerr_vs_bothvalid": 0.6696347894,
+"key": 0.2930102732,
+"n_imgerr": 12953,
+"n_priorerr": 14692,
+"n_bothvalid": 36899,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -358,7 +409,10 @@
 "n_imgerr": 7882,
 "n_priorerr": 12398,
 "n_bothvalid": 27437,
-"rank": 2
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -373,7 +427,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "ALS",
@@ -388,7 +445,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "ALS",
@@ -403,7 +463,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "ALS",
@@ -418,7 +481,10 @@
 "n_imgerr": 9532,
 "n_priorerr": 12763,
 "n_bothvalid": 29812,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "ALS",
@@ -433,7 +499,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "ALS",
@@ -448,7 +517,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "ALS",
@@ -463,7 +535,10 @@
 "n_imgerr": 9178,
 "n_priorerr": 12719,
 "n_bothvalid": 30091,
-"rank": 9
+"detection_statistic": false,
+"photometric": true,
+"rank": 8.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -478,7 +553,10 @@
 "n_imgerr": 9532,
 "n_priorerr": 12763,
 "n_bothvalid": 29812,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "ALS",
@@ -493,7 +571,10 @@
 "n_imgerr": 8498,
 "n_priorerr": 12607,
 "n_bothvalid": 28691,
-"rank": 11
+"detection_statistic": false,
+"photometric": true,
+"rank": 10.0,
+"rank_no_photo": null
 },
 {
 "prior": "ALS",
@@ -508,7 +589,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "ALS",
@@ -523,7 +607,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "ALS",
@@ -538,7 +625,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "ALS",
@@ -553,7 +643,10 @@
 "n_imgerr": 8483,
 "n_priorerr": 12473,
 "n_bothvalid": 27701,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "ALS",
@@ -568,7 +661,10 @@
 "n_imgerr": 9452,
 "n_priorerr": 12760,
 "n_bothvalid": 30152,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "ALS",
@@ -583,7 +679,10 @@
 "n_imgerr": 9094,
 "n_priorerr": 12671,
 "n_bothvalid": 28969,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "ALS",
@@ -598,7 +697,10 @@
 "n_imgerr": 9532,
 "n_priorerr": 12763,
 "n_bothvalid": 29812,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "ALS",
@@ -613,7 +715,10 @@
 "n_imgerr": 9532,
 "n_priorerr": 12763,
 "n_bothvalid": 29812,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "ALS",
@@ -628,7 +733,10 @@
 "n_imgerr": 10304,
 "n_priorerr": 13033,
 "n_bothvalid": 32267,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "ALS",
@@ -643,7 +751,10 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "ALS",
@@ -658,7 +769,28 @@
 "n_imgerr": 10309,
 "n_priorerr": 13034,
 "n_bothvalid": 32277,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "ALS",
+"unit": "ALS_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.0618432218,
+"auc_imgerr_vs_bothvalid": 0.6991560981,
+"key": 0.3186564381,
+"n_imgerr": 10309,
+"n_priorerr": 13034,
+"n_bothvalid": 32277,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -673,7 +805,10 @@
 "n_imgerr": 6954,
 "n_priorerr": 107791,
 "n_bothvalid": 73067,
-"rank": 1
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -688,7 +823,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -703,7 +841,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -718,7 +859,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "LoD2",
@@ -733,7 +877,10 @@
 "n_imgerr": 12164,
 "n_priorerr": 134653,
 "n_bothvalid": 105080,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -748,7 +895,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -763,7 +913,10 @@
 "n_imgerr": 12164,
 "n_priorerr": 134653,
 "n_bothvalid": 105080,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -778,7 +931,10 @@
 "n_imgerr": 12164,
 "n_priorerr": 134653,
 "n_bothvalid": 105080,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -793,7 +949,10 @@
 "n_imgerr": 9693,
 "n_priorerr": 123652,
 "n_bothvalid": 104911,
-"rank": 9
+"detection_statistic": false,
+"photometric": true,
+"rank": 9.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -808,7 +967,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -823,7 +985,10 @@
 "n_imgerr": 7903,
 "n_priorerr": 112809,
 "n_bothvalid": 77407,
-"rank": 11
+"detection_statistic": false,
+"photometric": true,
+"rank": 11.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -838,7 +1003,10 @@
 "n_imgerr": 12164,
 "n_priorerr": 134653,
 "n_bothvalid": 105080,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -853,7 +1021,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -868,7 +1039,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -883,22 +1057,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 15
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_all",
-"version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4875642291,
-"auc_imgerr_vs_bothvalid": 0.6153326607,
-"key": 0.0638842158,
-"n_imgerr": 14447,
-"n_priorerr": 144741,
-"n_bothvalid": 128005,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -913,7 +1075,10 @@
 "n_imgerr": 10600,
 "n_priorerr": 128871,
 "n_bothvalid": 112454,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -928,7 +1093,10 @@
 "n_imgerr": 7654,
 "n_priorerr": 112982,
 "n_bothvalid": 80319,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -943,7 +1111,10 @@
 "n_imgerr": 8612,
 "n_priorerr": 117031,
 "n_bothvalid": 83908,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -958,7 +1129,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -973,7 +1147,10 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -988,7 +1165,28 @@
 "n_imgerr": 14447,
 "n_priorerr": 144741,
 "n_bothvalid": 128005,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 넣음",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4875642291,
+"auc_imgerr_vs_bothvalid": 0.6153326607,
+"key": 0.0638842158,
+"n_imgerr": 14447,
+"n_priorerr": 144741,
+"n_bothvalid": 128005,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1003,7 +1201,10 @@
 "n_imgerr": 4717,
 "n_priorerr": 97111,
 "n_bothvalid": 62793,
-"rank": 1
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1018,7 +1219,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -1033,7 +1237,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -1048,7 +1255,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "LoD2",
@@ -1063,7 +1273,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -1078,7 +1291,10 @@
 "n_imgerr": 6496,
 "n_priorerr": 110007,
 "n_bothvalid": 90007,
-"rank": 6
+"detection_statistic": false,
+"photometric": true,
+"rank": 6.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1093,7 +1309,10 @@
 "n_imgerr": 8447,
 "n_priorerr": 120758,
 "n_bothvalid": 90059,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -1108,7 +1327,10 @@
 "n_imgerr": 8447,
 "n_priorerr": 120758,
 "n_bothvalid": 90059,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -1123,7 +1345,10 @@
 "n_imgerr": 8447,
 "n_priorerr": 120758,
 "n_bothvalid": 90059,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -1138,7 +1363,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -1153,7 +1381,10 @@
 "n_imgerr": 5413,
 "n_priorerr": 101448,
 "n_bothvalid": 66245,
-"rank": 11
+"detection_statistic": false,
+"photometric": true,
+"rank": 11.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1168,7 +1399,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -1183,7 +1417,10 @@
 "n_imgerr": 8447,
 "n_priorerr": 120758,
 "n_bothvalid": 90059,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -1198,7 +1435,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -1213,22 +1453,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 15
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_all",
-"version": "섞인 패치 뺌",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4923739703,
-"auc_imgerr_vs_bothvalid": 0.6389691756,
-"key": 0.0732976027,
-"n_imgerr": 9966,
-"n_priorerr": 128446,
-"n_bothvalid": 108990,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -1243,7 +1471,10 @@
 "n_imgerr": 5204,
 "n_priorerr": 101592,
 "n_bothvalid": 69220,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -1258,7 +1489,10 @@
 "n_imgerr": 7119,
 "n_priorerr": 114336,
 "n_bothvalid": 96369,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -1273,7 +1507,10 @@
 "n_imgerr": 5921,
 "n_priorerr": 105157,
 "n_bothvalid": 72045,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -1288,7 +1525,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -1303,7 +1543,10 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -1318,7 +1561,28 @@
 "n_imgerr": 9966,
 "n_priorerr": 128446,
 "n_bothvalid": 108990,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_all",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4923739703,
+"auc_imgerr_vs_bothvalid": 0.6389691756,
+"key": 0.0732976027,
+"n_imgerr": 9966,
+"n_priorerr": 128446,
+"n_bothvalid": 108990,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1333,7 +1597,10 @@
 "n_imgerr": 5196,
 "n_priorerr": 81629,
 "n_bothvalid": 36669,
-"rank": 1
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1348,7 +1615,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -1363,7 +1633,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -1378,7 +1651,10 @@
 "n_imgerr": 5996,
 "n_priorerr": 85266,
 "n_bothvalid": 43117,
-"rank": 4
+"detection_statistic": false,
+"photometric": true,
+"rank": 4.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1393,7 +1669,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "LoD2",
@@ -1408,7 +1687,10 @@
 "n_imgerr": 5780,
 "n_priorerr": 85243,
 "n_bothvalid": 39713,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -1423,7 +1705,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -1438,7 +1723,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -1453,7 +1741,10 @@
 "n_imgerr": 5270,
 "n_priorerr": 83449,
 "n_bothvalid": 36990,
-"rank": 9
+"detection_statistic": false,
+"photometric": true,
+"rank": 9.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1468,22 +1759,10 @@
 "n_imgerr": 6131,
 "n_priorerr": 86525,
 "n_bothvalid": 43407,
-"rank": 10
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_roof",
-"version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.423103083,
-"auc_imgerr_vs_bothvalid": 0.618695378,
-"key": 0.0977961475,
-"n_imgerr": 6202,
-"n_priorerr": 87411,
-"n_bothvalid": 43702,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -1498,7 +1777,10 @@
 "n_imgerr": 5780,
 "n_priorerr": 85243,
 "n_bothvalid": 39713,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -1513,7 +1795,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -1528,7 +1813,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -1543,7 +1831,10 @@
 "n_imgerr": 5780,
 "n_priorerr": 85243,
 "n_bothvalid": 39713,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -1558,7 +1849,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -1573,7 +1867,10 @@
 "n_imgerr": 5780,
 "n_priorerr": 85243,
 "n_bothvalid": 39713,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -1588,7 +1885,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -1603,7 +1903,10 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -1618,7 +1921,10 @@
 "n_imgerr": 5471,
 "n_priorerr": 83451,
 "n_bothvalid": 37541,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -1633,7 +1939,10 @@
 "n_imgerr": 5514,
 "n_priorerr": 84206,
 "n_bothvalid": 37702,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -1648,7 +1957,28 @@
 "n_imgerr": 6202,
 "n_priorerr": 87411,
 "n_bothvalid": 43702,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 넣음",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.423103083,
+"auc_imgerr_vs_bothvalid": 0.618695378,
+"key": 0.0977961475,
+"n_imgerr": 6202,
+"n_priorerr": 87411,
+"n_bothvalid": 43702,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1663,7 +1993,10 @@
 "n_imgerr": 3521,
 "n_priorerr": 73730,
 "n_bothvalid": 29710,
-"rank": 1
+"detection_statistic": false,
+"photometric": true,
+"rank": 1.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1678,7 +2011,10 @@
 "n_imgerr": 4050,
 "n_priorerr": 76344,
 "n_bothvalid": 34769,
-"rank": 2
+"detection_statistic": false,
+"photometric": true,
+"rank": 2.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1693,7 +2029,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -1708,7 +2047,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -1723,7 +2065,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "LoD2",
@@ -1738,7 +2083,10 @@
 "n_imgerr": 3915,
 "n_priorerr": 76746,
 "n_bothvalid": 32139,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -1753,7 +2101,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -1768,7 +2119,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -1783,22 +2137,10 @@
 "n_imgerr": 3567,
 "n_priorerr": 75395,
 "n_bothvalid": 29957,
-"rank": 9
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_roof",
-"version": "섞인 패치 뺌",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.4267648826,
-"auc_imgerr_vs_bothvalid": 0.6577874625,
-"key": 0.11551129,
-"n_imgerr": 4188,
-"n_priorerr": 78276,
-"n_bothvalid": 35227,
-"rank": 10
+"detection_statistic": false,
+"photometric": true,
+"rank": 9.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1813,7 +2155,10 @@
 "n_imgerr": 3915,
 "n_priorerr": 76746,
 "n_bothvalid": 32139,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -1828,7 +2173,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -1843,7 +2191,10 @@
 "n_imgerr": 3915,
 "n_priorerr": 76746,
 "n_bothvalid": 32139,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -1858,7 +2209,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -1873,7 +2227,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -1888,7 +2245,10 @@
 "n_imgerr": 4137,
 "n_priorerr": 77494,
 "n_bothvalid": 35001,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -1903,7 +2263,10 @@
 "n_imgerr": 3915,
 "n_priorerr": 76746,
 "n_bothvalid": 32139,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -1918,7 +2281,10 @@
 "n_imgerr": 3740,
 "n_priorerr": 76000,
 "n_bothvalid": 30515,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -1933,7 +2299,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 19
+"detection_statistic": false,
+"photometric": false,
+"rank": 18.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -1948,7 +2317,10 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -1963,7 +2335,10 @@
 "n_imgerr": 3711,
 "n_priorerr": 75324,
 "n_bothvalid": 30402,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -1978,7 +2353,28 @@
 "n_imgerr": 4188,
 "n_priorerr": 78276,
 "n_bothvalid": 35227,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_roof",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.4267648826,
+"auc_imgerr_vs_bothvalid": 0.6577874625,
+"key": 0.11551129,
+"n_imgerr": 4188,
+"n_priorerr": 78276,
+"n_bothvalid": 35227,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -1993,7 +2389,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -2008,7 +2407,10 @@
 "n_imgerr": 6384,
 "n_priorerr": 49410,
 "n_bothvalid": 65367,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -2023,7 +2425,10 @@
 "n_imgerr": 6384,
 "n_priorerr": 49410,
 "n_bothvalid": 65367,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "LoD2",
@@ -2038,7 +2443,10 @@
 "n_imgerr": 6384,
 "n_priorerr": 49410,
 "n_bothvalid": 65367,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -2053,7 +2461,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -2068,7 +2479,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -2083,7 +2497,10 @@
 "n_imgerr": 1758,
 "n_priorerr": 26162,
 "n_bothvalid": 36398,
-"rank": 7
+"detection_statistic": false,
+"photometric": true,
+"rank": 7.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2098,7 +2515,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 8
+"detection_statistic": false,
+"photometric": false,
+"rank": 8.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -2113,7 +2533,10 @@
 "n_imgerr": 6384,
 "n_priorerr": 49410,
 "n_bothvalid": 65367,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -2128,7 +2551,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -2143,7 +2569,10 @@
 "n_imgerr": 2633,
 "n_priorerr": 29360,
 "n_bothvalid": 40417,
-"rank": 11
+"detection_statistic": false,
+"photometric": true,
+"rank": 11.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2158,7 +2587,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -2173,7 +2605,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 13
+"detection_statistic": false,
+"photometric": false,
+"rank": 13.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -2188,7 +2623,10 @@
 "n_imgerr": 3098,
 "n_priorerr": 32825,
 "n_bothvalid": 46206,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -2203,7 +2641,10 @@
 "n_imgerr": 2183,
 "n_priorerr": 29531,
 "n_bothvalid": 42778,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -2218,7 +2659,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 16
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -2233,22 +2677,10 @@
 "n_imgerr": 4469,
 "n_priorerr": 42346,
 "n_bothvalid": 69047,
-"rank": 17
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_wall",
-"version": "섞인 패치 넣음",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.5323010812,
-"auc_imgerr_vs_bothvalid": 0.6344435587,
-"key": 0.0833723199,
-"n_imgerr": 8245,
-"n_priorerr": 57330,
-"n_bothvalid": 84303,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -2263,7 +2695,10 @@
 "n_imgerr": 3697,
 "n_priorerr": 38386,
 "n_bothvalid": 61794,
-"rank": 19
+"detection_statistic": false,
+"photometric": true,
+"rank": 18.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2278,7 +2713,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -2293,7 +2731,10 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -2308,7 +2749,28 @@
 "n_imgerr": 8245,
 "n_priorerr": 57330,
 "n_bothvalid": 84303,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 넣음",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.5323010812,
+"auc_imgerr_vs_bothvalid": 0.6344435587,
+"key": 0.0833723199,
+"n_imgerr": 8245,
+"n_priorerr": 57330,
+"n_bothvalid": 84303,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2323,7 +2785,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 1
+"detection_statistic": false,
+"photometric": false,
+"rank": 1.0,
+"rank_no_photo": 1.0
 },
 {
 "prior": "LoD2",
@@ -2338,7 +2803,10 @@
 "n_imgerr": 4532,
 "n_priorerr": 44012,
 "n_bothvalid": 57920,
-"rank": 2
+"detection_statistic": false,
+"photometric": false,
+"rank": 2.0,
+"rank_no_photo": 2.0
 },
 {
 "prior": "LoD2",
@@ -2353,7 +2821,10 @@
 "n_imgerr": 4532,
 "n_priorerr": 44012,
 "n_bothvalid": 57920,
-"rank": 3
+"detection_statistic": false,
+"photometric": false,
+"rank": 3.0,
+"rank_no_photo": 3.0
 },
 {
 "prior": "LoD2",
@@ -2368,7 +2839,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 4
+"detection_statistic": false,
+"photometric": false,
+"rank": 4.0,
+"rank_no_photo": 4.0
 },
 {
 "prior": "LoD2",
@@ -2383,7 +2857,10 @@
 "n_imgerr": 4532,
 "n_priorerr": 44012,
 "n_bothvalid": 57920,
-"rank": 5
+"detection_statistic": false,
+"photometric": false,
+"rank": 5.0,
+"rank_no_photo": 5.0
 },
 {
 "prior": "LoD2",
@@ -2398,7 +2875,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 6
+"detection_statistic": false,
+"photometric": false,
+"rank": 6.0,
+"rank_no_photo": 6.0
 },
 {
 "prior": "LoD2",
@@ -2413,7 +2893,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 7
+"detection_statistic": false,
+"photometric": false,
+"rank": 7.0,
+"rank_no_photo": 7.0
 },
 {
 "prior": "LoD2",
@@ -2428,7 +2911,10 @@
 "n_imgerr": 1196,
 "n_priorerr": 23381,
 "n_bothvalid": 33083,
-"rank": 8
+"detection_statistic": false,
+"photometric": true,
+"rank": 8.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2443,7 +2929,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 9
+"detection_statistic": false,
+"photometric": false,
+"rank": 9.0,
+"rank_no_photo": 8.0
 },
 {
 "prior": "LoD2",
@@ -2458,7 +2947,10 @@
 "n_imgerr": 4532,
 "n_priorerr": 44012,
 "n_bothvalid": 57920,
-"rank": 10
+"detection_statistic": false,
+"photometric": false,
+"rank": 10.0,
+"rank_no_photo": 9.0
 },
 {
 "prior": "LoD2",
@@ -2473,7 +2965,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 11
+"detection_statistic": false,
+"photometric": false,
+"rank": 11.0,
+"rank_no_photo": 10.0
 },
 {
 "prior": "LoD2",
@@ -2488,7 +2983,10 @@
 "n_imgerr": 2181,
 "n_priorerr": 29157,
 "n_bothvalid": 41530,
-"rank": 12
+"detection_statistic": false,
+"photometric": false,
+"rank": 12.0,
+"rank_no_photo": 11.0
 },
 {
 "prior": "LoD2",
@@ -2503,7 +3001,10 @@
 "n_imgerr": 1846,
 "n_priorerr": 26053,
 "n_bothvalid": 36288,
-"rank": 13
+"detection_statistic": false,
+"photometric": true,
+"rank": 13.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2518,7 +3019,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 14
+"detection_statistic": false,
+"photometric": false,
+"rank": 14.0,
+"rank_no_photo": 12.0
 },
 {
 "prior": "LoD2",
@@ -2533,7 +3037,10 @@
 "n_imgerr": 1493,
 "n_priorerr": 26268,
 "n_bothvalid": 38818,
-"rank": 15
+"detection_statistic": false,
+"photometric": false,
+"rank": 15.0,
+"rank_no_photo": 13.0
 },
 {
 "prior": "LoD2",
@@ -2548,22 +3055,10 @@
 "n_imgerr": 2982,
 "n_priorerr": 36842,
 "n_bothvalid": 61368,
-"rank": 16
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_wall",
-"version": "섞인 패치 뺌",
-"obs_no": "13",
-"obs": "d_over_L",
-"obs_ko": "|d| ÷ L",
-"auc_imgerr_vs_priorerr": 0.5343044897,
-"auc_imgerr_vs_bothvalid": 0.6510996598,
-"key": 0.0927020748,
-"n_imgerr": 5778,
-"n_priorerr": 50170,
-"n_bothvalid": 73763,
-"rank": 17
+"detection_statistic": false,
+"photometric": false,
+"rank": 16.0,
+"rank_no_photo": 14.0
 },
 {
 "prior": "LoD2",
@@ -2578,7 +3073,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 18
+"detection_statistic": false,
+"photometric": false,
+"rank": 17.0,
+"rank_no_photo": 15.0
 },
 {
 "prior": "LoD2",
@@ -2593,7 +3091,10 @@
 "n_imgerr": 2446,
 "n_priorerr": 33663,
 "n_bothvalid": 55238,
-"rank": 19
+"detection_statistic": false,
+"photometric": true,
+"rank": 18.0,
+"rank_no_photo": null
 },
 {
 "prior": "LoD2",
@@ -2608,7 +3109,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 20
+"detection_statistic": false,
+"photometric": false,
+"rank": 19.0,
+"rank_no_photo": 16.0
 },
 {
 "prior": "LoD2",
@@ -2623,7 +3127,10 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 21
+"detection_statistic": false,
+"photometric": false,
+"rank": 20.0,
+"rank_no_photo": 17.0
 },
 {
 "prior": "LoD2",
@@ -2638,7 +3145,28 @@
 "n_imgerr": 5778,
 "n_priorerr": 50170,
 "n_bothvalid": 73763,
-"rank": 22
+"detection_statistic": false,
+"photometric": false,
+"rank": 21.0,
+"rank_no_photo": 18.0
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"version": "섞인 패치 뺌",
+"obs_no": "13",
+"obs": "d_over_L",
+"obs_ko": "|d| ÷ L",
+"auc_imgerr_vs_priorerr": 0.5343044897,
+"auc_imgerr_vs_bothvalid": 0.6510996598,
+"key": 0.0927020748,
+"n_imgerr": 5778,
+"n_priorerr": 50170,
+"n_bothvalid": 73763,
+"detection_statistic": true,
+"photometric": false,
+"rank": null,
+"rank_no_photo": null
 }
 ],
 "note": "확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %.",

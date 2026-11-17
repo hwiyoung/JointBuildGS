@@ -3,6 +3,17 @@
  "config_sha256": "536f248485530b1b89e21f052d22cc0d892a5cddb152401fc26dec85a133d534",
  "locked_at": "2026-11-17T14:29:05+09:00",
  "note": "locked before the first computation",
- "later_additions": [],
+ "later_additions": [
+  {
+   "at": "2026-11-17T15:2x+09:00",
+   "by": "user decision after review",
+   "changes": [
+    "13 |d|/L marked detection statistic: kept in tables, removed from ranking, pairs and figure 2 (ALS figure 2 redrawn with next observation)",
+    "ga_auc: rank_no_photo column (ranking without photometric 7, 8, 9)",
+    "check da 5.2 recount (p4c_da_abs.py): absolute thresholds 0.05/0.1/0.2 m on selected views; all training views facing the MVS plane (<= 60 deg, 20 px margin) with signed D - z: agree / front (occluding) / behind (seen through), median |D - z|; rows 다5~다14",
+    "da_survey: row for the experiment-site MVS (prep box MVS used by the current judgments)"
+   ]
+  }
+ ],
  "scientific_verdict": null
 }

@@ -1,4 +1,4 @@
-확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %. 단위마다 구별 정도 큰 다섯의 둘씩 묶음, 하나라도 기각이면 기각. 섞인 패치 뺌.
+확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %. 단위마다 구별 정도 큰 다섯(13 |d|÷L 뺌)의 둘씩 묶음, 하나라도 기각이면 기각. 섞인 패치 뺌.
 
 | prior | unit | pair | obs_a | obs_b | case | n | reject_pct |
 |---|---|---|---|---|---|---|---|
@@ -62,18 +62,6 @@
 | LoD2 | LoD2_wall | 10a+6 | views_P | plane_angle | 두 자료 모두 유효 | 73763 | 14.05 |
 | LoD2 | LoD2_wall | 10a+6 | views_P | plane_angle | 사전정보 오류 | 50170 | 13.19 |
 | LoD2 | LoD2_wall | 10a+6 | views_P | plane_angle | 영상 깊이 오류 | 5778 | 32.71 |
-| ALS | ALS_roof | 13+9 | d_over_L | sM_minus_sP | 두 자료 모두 유효 | 32277 | 100 |
-| ALS | ALS_roof | 13+9 | d_over_L | sM_minus_sP | 사전정보 오류 | 13034 | 100 |
-| ALS | ALS_roof | 13+9 | d_over_L | sM_minus_sP | 영상 깊이 오류 | 10309 | 100 |
-| ALS | ALS_roof | 13+5 | d_over_L | fit_count | 두 자료 모두 유효 | 32277 | 100 |
-| ALS | ALS_roof | 13+5 | d_over_L | fit_count | 사전정보 오류 | 13034 | 100 |
-| ALS | ALS_roof | 13+5 | d_over_L | fit_count | 영상 깊이 오류 | 10309 | 100 |
-| ALS | ALS_roof | 13+1 | d_over_L | n | 두 자료 모두 유효 | 32277 | 100 |
-| ALS | ALS_roof | 13+1 | d_over_L | n | 사전정보 오류 | 13034 | 100 |
-| ALS | ALS_roof | 13+1 | d_over_L | n | 영상 깊이 오류 | 10309 | 100 |
-| ALS | ALS_roof | 13+3 | d_over_L | u_M | 두 자료 모두 유효 | 32277 | 100 |
-| ALS | ALS_roof | 13+3 | d_over_L | u_M | 사전정보 오류 | 13034 | 100 |
-| ALS | ALS_roof | 13+3 | d_over_L | u_M | 영상 깊이 오류 | 10309 | 100 |
 | ALS | ALS_roof | 9+5 | sM_minus_sP | fit_count | 두 자료 모두 유효 | 32277 | 42.01 |
 | ALS | ALS_roof | 9+5 | sM_minus_sP | fit_count | 사전정보 오류 | 13034 | 86.34 |
 | ALS | ALS_roof | 9+5 | sM_minus_sP | fit_count | 영상 깊이 오류 | 10309 | 69.17 |
@@ -83,12 +71,24 @@
 | ALS | ALS_roof | 9+3 | sM_minus_sP | u_M | 두 자료 모두 유효 | 32277 | 38.08 |
 | ALS | ALS_roof | 9+3 | sM_minus_sP | u_M | 사전정보 오류 | 13034 | 81.51 |
 | ALS | ALS_roof | 9+3 | sM_minus_sP | u_M | 영상 깊이 오류 | 10309 | 43.05 |
+| ALS | ALS_roof | 9+4 | sM_minus_sP | fit_nmad | 두 자료 모두 유효 | 32277 | 38.16 |
+| ALS | ALS_roof | 9+4 | sM_minus_sP | fit_nmad | 사전정보 오류 | 13034 | 81.95 |
+| ALS | ALS_roof | 9+4 | sM_minus_sP | fit_nmad | 영상 깊이 오류 | 10309 | 43 |
 | ALS | ALS_roof | 5+1 | fit_count | n | 두 자료 모두 유효 | 32277 | 29.51 |
 | ALS | ALS_roof | 5+1 | fit_count | n | 사전정보 오류 | 13034 | 23.74 |
 | ALS | ALS_roof | 5+1 | fit_count | n | 영상 깊이 오류 | 10309 | 50.63 |
 | ALS | ALS_roof | 5+3 | fit_count | u_M | 두 자료 모두 유효 | 32277 | 42.9 |
 | ALS | ALS_roof | 5+3 | fit_count | u_M | 사전정보 오류 | 13034 | 21.16 |
 | ALS | ALS_roof | 5+3 | fit_count | u_M | 영상 깊이 오류 | 10309 | 50.2 |
+| ALS | ALS_roof | 5+4 | fit_count | fit_nmad | 두 자료 모두 유효 | 32277 | 43.61 |
+| ALS | ALS_roof | 5+4 | fit_count | fit_nmad | 사전정보 오류 | 13034 | 23.77 |
+| ALS | ALS_roof | 5+4 | fit_count | fit_nmad | 영상 깊이 오류 | 10309 | 54.3 |
 | ALS | ALS_roof | 1+3 | n | u_M | 두 자료 모두 유효 | 32277 | 38.78 |
 | ALS | ALS_roof | 1+3 | n | u_M | 사전정보 오류 | 13034 | 19.99 |
 | ALS | ALS_roof | 1+3 | n | u_M | 영상 깊이 오류 | 10309 | 45.07 |
+| ALS | ALS_roof | 1+4 | n | fit_nmad | 두 자료 모두 유효 | 32277 | 39.42 |
+| ALS | ALS_roof | 1+4 | n | fit_nmad | 사전정보 오류 | 13034 | 22.08 |
+| ALS | ALS_roof | 1+4 | n | fit_nmad | 영상 깊이 오류 | 10309 | 47.65 |
+| ALS | ALS_roof | 3+4 | u_M | fit_nmad | 두 자료 모두 유효 | 32277 | 31.49 |
+| ALS | ALS_roof | 3+4 | u_M | fit_nmad | 사전정보 오류 | 13034 | 5.665 |
+| ALS | ALS_roof | 3+4 | u_M | fit_nmad | 영상 깊이 오류 | 10309 | 26.41 |

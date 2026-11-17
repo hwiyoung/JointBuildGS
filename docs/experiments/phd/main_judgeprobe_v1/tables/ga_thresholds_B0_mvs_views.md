@@ -24,6 +24,16 @@
 | LoD2_roof | SW | mean_minus_median | -0.06902 | 0.0548 | 34912 |
 | LoD2_roof | SW | face_minus_mean | 0.1121 | 0.3276 | 34912 |
 | LoD2_roof | SW | n10_over_n | 1 | 1 | 34912 |
+| LoD2_roof | SW | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_roof | SW | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_roof | SW | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_roof | SW | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_roof | SW | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_roof | SW | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_roof | SW | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_roof | SW | mv_all_front_0p2 |  |  | 0 |
+| LoD2_roof | SW | mv_all_median_absdiff |  |  | 0 |
+| LoD2_roof | SW | n_all_with_D |  |  | 0 |
 | LoD2_roof | SW | mv_share_0p5 |  |  | 0 |
 | LoD2_roof | SW | mv_share_1 |  |  | 0 |
 | LoD2_roof | SW | mv_share_2 |  |  | 0 |
@@ -50,6 +60,16 @@
 | LoD2_roof | R1 | mean_minus_median | -0.03415 | 0.05855 | 162646 |
 | LoD2_roof | R1 | face_minus_mean | 0.1074 | 0.259 | 162646 |
 | LoD2_roof | R1 | n10_over_n | 1 | 1 | 162646 |
+| LoD2_roof | R1 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_roof | R1 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_roof | R1 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_roof | R1 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_roof | R1 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_roof | R1 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_roof | R1 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_roof | R1 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_roof | R1 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_roof | R1 | n_all_with_D |  |  | 0 |
 | LoD2_roof | R1 | mv_share_0p5 |  |  | 0 |
 | LoD2_roof | R1 | mv_share_1 |  |  | 0 |
 | LoD2_roof | R1 | mv_share_2 |  |  | 0 |
@@ -76,6 +96,16 @@
 | LoD2_roof | R2 | mean_minus_median | -0.07481 | 0.0459 | 33680 |
 | LoD2_roof | R2 | face_minus_mean | 0.1107 | 0.3359 | 33680 |
 | LoD2_roof | R2 | n10_over_n | 1 | 1 | 33680 |
+| LoD2_roof | R2 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_roof | R2 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_roof | R2 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_roof | R2 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_roof | R2 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_roof | R2 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_roof | R2 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_roof | R2 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_roof | R2 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_roof | R2 | n_all_with_D |  |  | 0 |
 | LoD2_roof | R2 | mv_share_0p5 |  |  | 0 |
 | LoD2_roof | R2 | mv_share_1 |  |  | 0 |
 | LoD2_roof | R2 | mv_share_2 |  |  | 0 |
@@ -102,6 +132,16 @@
 | LoD2_roof | R3E | mean_minus_median | -0.02315 | 0.02967 | 80683 |
 | LoD2_roof | R3E | face_minus_mean | 0.1168 | 0.2285 | 80683 |
 | LoD2_roof | R3E | n10_over_n | 1 | 1 | 80683 |
+| LoD2_roof | R3E | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_roof | R3E | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_roof | R3E | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_roof | R3E | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_roof | R3E | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_roof | R3E | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_roof | R3E | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_roof | R3E | mv_all_front_0p2 |  |  | 0 |
+| LoD2_roof | R3E | mv_all_median_absdiff |  |  | 0 |
+| LoD2_roof | R3E | n_all_with_D |  |  | 0 |
 | LoD2_roof | R3E | mv_share_0p5 |  |  | 0 |
 | LoD2_roof | R3E | mv_share_1 |  |  | 0 |
 | LoD2_roof | R3E | mv_share_2 |  |  | 0 |
@@ -128,6 +168,16 @@
 | LoD2_roof | R4 | mean_minus_median | -0.02205 | 0.032 | 78754 |
 | LoD2_roof | R4 | face_minus_mean | 0.1141 | 0.2414 | 78754 |
 | LoD2_roof | R4 | n10_over_n | 1 | 1 | 78754 |
+| LoD2_roof | R4 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_roof | R4 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_roof | R4 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_roof | R4 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_roof | R4 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_roof | R4 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_roof | R4 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_roof | R4 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_roof | R4 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_roof | R4 | n_all_with_D |  |  | 0 |
 | LoD2_roof | R4 | mv_share_0p5 |  |  | 0 |
 | LoD2_roof | R4 | mv_share_1 |  |  | 0 |
 | LoD2_roof | R4 | mv_share_2 |  |  | 0 |
@@ -154,6 +204,16 @@
 | LoD2_roof | R5 | mean_minus_median | -0.01634 | 0.01672 | 50148 |
 | LoD2_roof | R5 | face_minus_mean | 0.1145 | 0.1914 | 50148 |
 | LoD2_roof | R5 | n10_over_n | 1 | 1 | 50148 |
+| LoD2_roof | R5 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_roof | R5 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_roof | R5 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_roof | R5 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_roof | R5 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_roof | R5 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_roof | R5 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_roof | R5 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_roof | R5 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_roof | R5 | n_all_with_D |  |  | 0 |
 | LoD2_roof | R5 | mv_share_0p5 |  |  | 0 |
 | LoD2_roof | R5 | mv_share_1 |  |  | 0 |
 | LoD2_roof | R5 | mv_share_2 |  |  | 0 |
@@ -180,6 +240,16 @@
 | LoD2_roof | B0 | mean_minus_median | -0.03739 | 0.07727 | 110888 |
 | LoD2_roof | B0 | face_minus_mean | 0.09717 | 0.2595 | 110888 |
 | LoD2_roof | B0 | n10_over_n | 1 | 1 | 110888 |
+| LoD2_roof | B0 | mv_sel_share_abs0p05 | 0.2 | 1 | 109160 |
+| LoD2_roof | B0 | mv_sel_share_abs0p1 | 0.5 | 1 | 109160 |
+| LoD2_roof | B0 | mv_sel_share_abs0p2 | 0.8 | 1 | 109160 |
+| LoD2_roof | B0 | mv_all_agree_0p1 | 0.275 | 1 | 109451 |
+| LoD2_roof | B0 | mv_all_agree_0p2 | 0.3571 | 1 | 109451 |
+| LoD2_roof | B0 | mv_all_behind_0p1 | 0 | 0.2222 | 109451 |
+| LoD2_roof | B0 | mv_all_behind_0p2 | 0 | 0.1111 | 109451 |
+| LoD2_roof | B0 | mv_all_front_0p2 | 0 | 0.5909 | 109451 |
+| LoD2_roof | B0 | mv_all_median_absdiff | 0.005254 | 12.49 | 109451 |
+| LoD2_roof | B0 | n_all_with_D | 6 | 51 | 109456 |
 | LoD2_roof | B0 | mv_share_0p5 | 0.9 | 1 | 109160 |
 | LoD2_roof | B0 | mv_share_1 | 1 | 1 | 109160 |
 | LoD2_roof | B0 | mv_share_2 | 1 | 1 | 109160 |
@@ -206,6 +276,16 @@
 | LoD2_roof | none | mean_minus_median | -0.03309 | 0.04823 | 551711 |
 | LoD2_roof | none | face_minus_mean | 0.1106 | 0.2573 | 551711 |
 | LoD2_roof | none | n10_over_n | 1 | 1 | 551711 |
+| LoD2_roof | none | mv_sel_share_abs0p05 | 0.2 | 1 | 109160 |
+| LoD2_roof | none | mv_sel_share_abs0p1 | 0.5 | 1 | 109160 |
+| LoD2_roof | none | mv_sel_share_abs0p2 | 0.8 | 1 | 109160 |
+| LoD2_roof | none | mv_all_agree_0p1 | 0.275 | 1 | 109451 |
+| LoD2_roof | none | mv_all_agree_0p2 | 0.3571 | 1 | 109451 |
+| LoD2_roof | none | mv_all_behind_0p1 | 0 | 0.2222 | 109451 |
+| LoD2_roof | none | mv_all_behind_0p2 | 0 | 0.1111 | 109451 |
+| LoD2_roof | none | mv_all_front_0p2 | 0 | 0.5909 | 109451 |
+| LoD2_roof | none | mv_all_median_absdiff | 0.005254 | 12.49 | 109451 |
+| LoD2_roof | none | n_all_with_D | 6 | 51 | 109456 |
 | LoD2_roof | none | mv_share_0p5 | 0.9 | 1 | 109160 |
 | LoD2_roof | none | mv_share_1 | 1 | 1 | 109160 |
 | LoD2_roof | none | mv_share_2 | 1 | 1 | 109160 |
@@ -232,6 +312,16 @@
 | LoD2_wall | SW | mean_minus_median | -0.03853 | 0.05715 | 36027 |
 | LoD2_wall | SW | face_minus_mean | 0.1151 | 0.3168 | 36027 |
 | LoD2_wall | SW | n10_over_n | 0.7727 | 1.643 | 36027 |
+| LoD2_wall | SW | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_wall | SW | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_wall | SW | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_wall | SW | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_wall | SW | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_wall | SW | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_wall | SW | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_wall | SW | mv_all_front_0p2 |  |  | 0 |
+| LoD2_wall | SW | mv_all_median_absdiff |  |  | 0 |
+| LoD2_wall | SW | n_all_with_D |  |  | 0 |
 | LoD2_wall | SW | mv_share_0p5 |  |  | 0 |
 | LoD2_wall | SW | mv_share_1 |  |  | 0 |
 | LoD2_wall | SW | mv_share_2 |  |  | 0 |
@@ -258,6 +348,16 @@
 | LoD2_wall | R1 | mean_minus_median | -0.05682 | 0.07236 | 246264 |
 | LoD2_wall | R1 | face_minus_mean | 0.1055 | 0.3168 | 246264 |
 | LoD2_wall | R1 | n10_over_n | 1 | 2.259 | 246264 |
+| LoD2_wall | R1 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_wall | R1 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_wall | R1 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_wall | R1 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_wall | R1 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_wall | R1 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_wall | R1 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_wall | R1 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_wall | R1 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_wall | R1 | n_all_with_D |  |  | 0 |
 | LoD2_wall | R1 | mv_share_0p5 |  |  | 0 |
 | LoD2_wall | R1 | mv_share_1 |  |  | 0 |
 | LoD2_wall | R1 | mv_share_2 |  |  | 0 |
@@ -284,6 +384,16 @@
 | LoD2_wall | R2 | mean_minus_median | -0.02574 | 0.03677 | 71617 |
 | LoD2_wall | R2 | face_minus_mean | 0.1183 | 0.2433 | 71617 |
 | LoD2_wall | R2 | n10_over_n | 0.6667 | 2.176 | 71617 |
+| LoD2_wall | R2 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_wall | R2 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_wall | R2 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_wall | R2 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_wall | R2 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_wall | R2 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_wall | R2 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_wall | R2 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_wall | R2 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_wall | R2 | n_all_with_D |  |  | 0 |
 | LoD2_wall | R2 | mv_share_0p5 |  |  | 0 |
 | LoD2_wall | R2 | mv_share_1 |  |  | 0 |
 | LoD2_wall | R2 | mv_share_2 |  |  | 0 |
@@ -310,6 +420,16 @@
 | LoD2_wall | R3E | mean_minus_median | -0.03523 | 0.05198 | 98715 |
 | LoD2_wall | R3E | face_minus_mean | 0.1161 | 0.2843 | 98715 |
 | LoD2_wall | R3E | n10_over_n | 1 | 1 | 98715 |
+| LoD2_wall | R3E | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_wall | R3E | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_wall | R3E | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_wall | R3E | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_wall | R3E | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_wall | R3E | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_wall | R3E | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_wall | R3E | mv_all_front_0p2 |  |  | 0 |
+| LoD2_wall | R3E | mv_all_median_absdiff |  |  | 0 |
+| LoD2_wall | R3E | n_all_with_D |  |  | 0 |
 | LoD2_wall | R3E | mv_share_0p5 |  |  | 0 |
 | LoD2_wall | R3E | mv_share_1 |  |  | 0 |
 | LoD2_wall | R3E | mv_share_2 |  |  | 0 |
@@ -336,6 +456,16 @@
 | LoD2_wall | R4 | mean_minus_median | -0.03449 | 0.04675 | 64575 |
 | LoD2_wall | R4 | face_minus_mean | 0.1212 | 0.3135 | 64575 |
 | LoD2_wall | R4 | n10_over_n | 0.875 | 1.857 | 64575 |
+| LoD2_wall | R4 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_wall | R4 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_wall | R4 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_wall | R4 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_wall | R4 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_wall | R4 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_wall | R4 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_wall | R4 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_wall | R4 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_wall | R4 | n_all_with_D |  |  | 0 |
 | LoD2_wall | R4 | mv_share_0p5 |  |  | 0 |
 | LoD2_wall | R4 | mv_share_1 |  |  | 0 |
 | LoD2_wall | R4 | mv_share_2 |  |  | 0 |
@@ -362,6 +492,16 @@
 | LoD2_wall | R5 | mean_minus_median | -0.03417 | 0.04363 | 71887 |
 | LoD2_wall | R5 | face_minus_mean | 0.1189 | 0.2597 | 71887 |
 | LoD2_wall | R5 | n10_over_n | 1 | 1 | 71887 |
+| LoD2_wall | R5 | mv_sel_share_abs0p05 |  |  | 0 |
+| LoD2_wall | R5 | mv_sel_share_abs0p1 |  |  | 0 |
+| LoD2_wall | R5 | mv_sel_share_abs0p2 |  |  | 0 |
+| LoD2_wall | R5 | mv_all_agree_0p1 |  |  | 0 |
+| LoD2_wall | R5 | mv_all_agree_0p2 |  |  | 0 |
+| LoD2_wall | R5 | mv_all_behind_0p1 |  |  | 0 |
+| LoD2_wall | R5 | mv_all_behind_0p2 |  |  | 0 |
+| LoD2_wall | R5 | mv_all_front_0p2 |  |  | 0 |
+| LoD2_wall | R5 | mv_all_median_absdiff |  |  | 0 |
+| LoD2_wall | R5 | n_all_with_D |  |  | 0 |
 | LoD2_wall | R5 | mv_share_0p5 |  |  | 0 |
 | LoD2_wall | R5 | mv_share_1 |  |  | 0 |
 | LoD2_wall | R5 | mv_share_2 |  |  | 0 |
@@ -388,6 +528,16 @@
 | LoD2_wall | B0 | mean_minus_median | -0.04806 | 0.07193 | 191281 |
 | LoD2_wall | B0 | face_minus_mean | 0.1106 | 0.3186 | 191281 |
 | LoD2_wall | B0 | n10_over_n | 1 | 1 | 191281 |
+| LoD2_wall | B0 | mv_sel_share_abs0p05 | 0 | 1 | 174131 |
+| LoD2_wall | B0 | mv_sel_share_abs0p1 | 0.1 | 1 | 174131 |
+| LoD2_wall | B0 | mv_sel_share_abs0p2 | 0.4 | 1 | 174131 |
+| LoD2_wall | B0 | mv_all_agree_0p1 | 0 | 1 | 183565 |
+| LoD2_wall | B0 | mv_all_agree_0p2 | 0 | 1 | 183565 |
+| LoD2_wall | B0 | mv_all_behind_0p1 | 0 | 0.4062 | 183565 |
+| LoD2_wall | B0 | mv_all_behind_0p2 | 0 | 0.2368 | 183565 |
+| LoD2_wall | B0 | mv_all_front_0p2 | 0 | 1 | 183565 |
+| LoD2_wall | B0 | mv_all_median_absdiff | 0.0147 | 72.83 | 183565 |
+| LoD2_wall | B0 | n_all_with_D | 6 | 55 | 186293 |
 | LoD2_wall | B0 | mv_share_0p5 | 0.7 | 1 | 174131 |
 | LoD2_wall | B0 | mv_share_1 | 0.9 | 1 | 174131 |
 | LoD2_wall | B0 | mv_share_2 | 1 | 1 | 174131 |
@@ -414,6 +564,16 @@
 | LoD2_wall | none | mean_minus_median | -0.04454 | 0.0623 | 780366 |
 | LoD2_wall | none | face_minus_mean | 0.1125 | 0.3049 | 780366 |
 | LoD2_wall | none | n10_over_n | 1 | 1.35 | 780366 |
+| LoD2_wall | none | mv_sel_share_abs0p05 | 0 | 1 | 174131 |
+| LoD2_wall | none | mv_sel_share_abs0p1 | 0.1 | 1 | 174131 |
+| LoD2_wall | none | mv_sel_share_abs0p2 | 0.4 | 1 | 174131 |
+| LoD2_wall | none | mv_all_agree_0p1 | 0 | 1 | 183565 |
+| LoD2_wall | none | mv_all_agree_0p2 | 0 | 1 | 183565 |
+| LoD2_wall | none | mv_all_behind_0p1 | 0 | 0.4062 | 183565 |
+| LoD2_wall | none | mv_all_behind_0p2 | 0 | 0.2368 | 183565 |
+| LoD2_wall | none | mv_all_front_0p2 | 0 | 1 | 183565 |
+| LoD2_wall | none | mv_all_median_absdiff | 0.0147 | 72.83 | 183565 |
+| LoD2_wall | none | n_all_with_D | 6 | 55 | 186293 |
 | LoD2_wall | none | mv_share_0p5 | 0.7 | 1 | 174131 |
 | LoD2_wall | none | mv_share_1 | 0.9 | 1 | 174131 |
 | LoD2_wall | none | mv_share_2 | 1 | 1 | 174131 |
@@ -440,6 +600,16 @@
 | ALS_roof | SW | mean_minus_median | -0.06902 | 0.05127 | 23558 |
 | ALS_roof | SW | face_minus_mean | 0.1104 | 0.3187 | 23558 |
 | ALS_roof | SW | n10_over_n | 1 | 1 | 23558 |
+| ALS_roof | SW | mv_sel_share_abs0p05 |  |  | 0 |
+| ALS_roof | SW | mv_sel_share_abs0p1 |  |  | 0 |
+| ALS_roof | SW | mv_sel_share_abs0p2 |  |  | 0 |
+| ALS_roof | SW | mv_all_agree_0p1 |  |  | 0 |
+| ALS_roof | SW | mv_all_agree_0p2 |  |  | 0 |
+| ALS_roof | SW | mv_all_behind_0p1 |  |  | 0 |
+| ALS_roof | SW | mv_all_behind_0p2 |  |  | 0 |
+| ALS_roof | SW | mv_all_front_0p2 |  |  | 0 |
+| ALS_roof | SW | mv_all_median_absdiff |  |  | 0 |
+| ALS_roof | SW | n_all_with_D |  |  | 0 |
 | ALS_roof | SW | mv_share_0p5 |  |  | 0 |
 | ALS_roof | SW | mv_share_1 |  |  | 0 |
 | ALS_roof | SW | mv_share_2 |  |  | 0 |
@@ -466,6 +636,16 @@
 | ALS_roof | R1 | mean_minus_median | -0.03371 | 0.05367 | 153178 |
 | ALS_roof | R1 | face_minus_mean | 0.1071 | 0.2428 | 153178 |
 | ALS_roof | R1 | n10_over_n | 1 | 1 | 153178 |
+| ALS_roof | R1 | mv_sel_share_abs0p05 | 0 | 0.9 | 8 |
+| ALS_roof | R1 | mv_sel_share_abs0p1 | 0.4 | 1 | 8 |
+| ALS_roof | R1 | mv_sel_share_abs0p2 | 0.6 | 1 | 8 |
+| ALS_roof | R1 | mv_all_agree_0p1 | 0.2564 | 0.9565 | 8 |
+| ALS_roof | R1 | mv_all_agree_0p2 | 0.3111 | 1 | 8 |
+| ALS_roof | R1 | mv_all_behind_0p1 | 0 | 0.4872 | 8 |
+| ALS_roof | R1 | mv_all_behind_0p2 | 0 | 0.2667 | 8 |
+| ALS_roof | R1 | mv_all_front_0p2 | 0 | 0.4565 | 8 |
+| ALS_roof | R1 | mv_all_median_absdiff | 0.02644 | 1.169 | 8 |
+| ALS_roof | R1 | n_all_with_D | 33 | 55 | 8 |
 | ALS_roof | R1 | mv_share_0p5 | 0.6 | 1 | 8 |
 | ALS_roof | R1 | mv_share_1 | 0.9 | 1 | 8 |
 | ALS_roof | R1 | mv_share_2 | 1 | 1 | 8 |
@@ -492,6 +672,16 @@
 | ALS_roof | R2 | mean_minus_median | -0.02215 | 0.03008 | 24224 |
 | ALS_roof | R2 | face_minus_mean | 0.1101 | 0.246 | 24224 |
 | ALS_roof | R2 | n10_over_n | 1 | 1 | 24224 |
+| ALS_roof | R2 | mv_sel_share_abs0p05 |  |  | 0 |
+| ALS_roof | R2 | mv_sel_share_abs0p1 |  |  | 0 |
+| ALS_roof | R2 | mv_sel_share_abs0p2 |  |  | 0 |
+| ALS_roof | R2 | mv_all_agree_0p1 |  |  | 0 |
+| ALS_roof | R2 | mv_all_agree_0p2 |  |  | 0 |
+| ALS_roof | R2 | mv_all_behind_0p1 |  |  | 0 |
+| ALS_roof | R2 | mv_all_behind_0p2 |  |  | 0 |
+| ALS_roof | R2 | mv_all_front_0p2 |  |  | 0 |
+| ALS_roof | R2 | mv_all_median_absdiff |  |  | 0 |
+| ALS_roof | R2 | n_all_with_D |  |  | 0 |
 | ALS_roof | R2 | mv_share_0p5 |  |  | 0 |
 | ALS_roof | R2 | mv_share_1 |  |  | 0 |
 | ALS_roof | R2 | mv_share_2 |  |  | 0 |
@@ -518,6 +708,16 @@
 | ALS_roof | R3E | mean_minus_median | -0.02004 | 0.02981 | 75341 |
 | ALS_roof | R3E | face_minus_mean | 0.1152 | 0.2154 | 75341 |
 | ALS_roof | R3E | n10_over_n | 1 | 1 | 75341 |
+| ALS_roof | R3E | mv_sel_share_abs0p05 | 0.3 | 1 | 8 |
+| ALS_roof | R3E | mv_sel_share_abs0p1 | 0.8 | 1 | 8 |
+| ALS_roof | R3E | mv_sel_share_abs0p2 | 1 | 1 | 8 |
+| ALS_roof | R3E | mv_all_agree_0p1 | 0.8421 | 1 | 8 |
+| ALS_roof | R3E | mv_all_agree_0p2 | 1 | 1 | 8 |
+| ALS_roof | R3E | mv_all_behind_0p1 | 0 | 0.05263 | 8 |
+| ALS_roof | R3E | mv_all_behind_0p2 | 0 | 0 | 8 |
+| ALS_roof | R3E | mv_all_front_0p2 | 0 | 0 | 8 |
+| ALS_roof | R3E | mv_all_median_absdiff | 0.01572 | 0.05425 | 8 |
+| ALS_roof | R3E | n_all_with_D | 38 | 47 | 8 |
 | ALS_roof | R3E | mv_share_0p5 | 1 | 1 | 8 |
 | ALS_roof | R3E | mv_share_1 | 1 | 1 | 8 |
 | ALS_roof | R3E | mv_share_2 | 1 | 1 | 8 |
@@ -544,6 +744,16 @@
 | ALS_roof | R4 | mean_minus_median | -0.02082 | 0.02924 | 65657 |
 | ALS_roof | R4 | face_minus_mean | 0.1164 | 0.2295 | 65657 |
 | ALS_roof | R4 | n10_over_n | 1 | 1 | 65657 |
+| ALS_roof | R4 | mv_sel_share_abs0p05 |  |  | 0 |
+| ALS_roof | R4 | mv_sel_share_abs0p1 |  |  | 0 |
+| ALS_roof | R4 | mv_sel_share_abs0p2 |  |  | 0 |
+| ALS_roof | R4 | mv_all_agree_0p1 |  |  | 0 |
+| ALS_roof | R4 | mv_all_agree_0p2 |  |  | 0 |
+| ALS_roof | R4 | mv_all_behind_0p1 |  |  | 0 |
+| ALS_roof | R4 | mv_all_behind_0p2 |  |  | 0 |
+| ALS_roof | R4 | mv_all_front_0p2 |  |  | 0 |
+| ALS_roof | R4 | mv_all_median_absdiff |  |  | 0 |
+| ALS_roof | R4 | n_all_with_D |  |  | 0 |
 | ALS_roof | R4 | mv_share_0p5 |  |  | 0 |
 | ALS_roof | R4 | mv_share_1 |  |  | 0 |
 | ALS_roof | R4 | mv_share_2 |  |  | 0 |
@@ -570,6 +780,16 @@
 | ALS_roof | R5 | mean_minus_median | -0.0155 | 0.01518 | 47713 |
 | ALS_roof | R5 | face_minus_mean | 0.1136 | 0.1818 | 47713 |
 | ALS_roof | R5 | n10_over_n | 1 | 1 | 47713 |
+| ALS_roof | R5 | mv_sel_share_abs0p05 |  |  | 0 |
+| ALS_roof | R5 | mv_sel_share_abs0p1 |  |  | 0 |
+| ALS_roof | R5 | mv_sel_share_abs0p2 |  |  | 0 |
+| ALS_roof | R5 | mv_all_agree_0p1 |  |  | 0 |
+| ALS_roof | R5 | mv_all_agree_0p2 |  |  | 0 |
+| ALS_roof | R5 | mv_all_behind_0p1 |  |  | 0 |
+| ALS_roof | R5 | mv_all_behind_0p2 |  |  | 0 |
+| ALS_roof | R5 | mv_all_front_0p2 |  |  | 0 |
+| ALS_roof | R5 | mv_all_median_absdiff |  |  | 0 |
+| ALS_roof | R5 | n_all_with_D |  |  | 0 |
 | ALS_roof | R5 | mv_share_0p5 |  |  | 0 |
 | ALS_roof | R5 | mv_share_1 |  |  | 0 |
 | ALS_roof | R5 | mv_share_2 |  |  | 0 |
@@ -596,6 +816,16 @@
 | ALS_roof | B0 | mean_minus_median | -0.03988 | 0.04987 | 101001 |
 | ALS_roof | B0 | face_minus_mean | 0.1037 | 0.2294 | 101001 |
 | ALS_roof | B0 | n10_over_n | 1 | 1 | 101001 |
+| ALS_roof | B0 | mv_sel_share_abs0p05 | 0.2 | 1 | 99710 |
+| ALS_roof | B0 | mv_sel_share_abs0p1 | 0.6 | 1 | 99710 |
+| ALS_roof | B0 | mv_sel_share_abs0p2 | 0.8889 | 1 | 99710 |
+| ALS_roof | B0 | mv_all_agree_0p1 | 0.3333 | 1 | 99996 |
+| ALS_roof | B0 | mv_all_agree_0p2 | 0.4062 | 1 | 99996 |
+| ALS_roof | B0 | mv_all_behind_0p1 | 0 | 0.2 | 99996 |
+| ALS_roof | B0 | mv_all_behind_0p2 | 0 | 0.1 | 99996 |
+| ALS_roof | B0 | mv_all_front_0p2 | 0 | 0.5556 | 99996 |
+| ALS_roof | B0 | mv_all_median_absdiff | 0.005151 | 9.709 | 99996 |
+| ALS_roof | B0 | n_all_with_D | 6 | 51 | 100002 |
 | ALS_roof | B0 | mv_share_0p5 | 0.9 | 1 | 99710 |
 | ALS_roof | B0 | mv_share_1 | 1 | 1 | 99710 |
 | ALS_roof | B0 | mv_share_2 | 1 | 1 | 99710 |
@@ -622,6 +852,16 @@
 | ALS_roof | none | mean_minus_median | -0.03032 | 0.04156 | 490672 |
 | ALS_roof | none | face_minus_mean | 0.1107 | 0.2335 | 490672 |
 | ALS_roof | none | n10_over_n | 1 | 1 | 490672 |
+| ALS_roof | none | mv_sel_share_abs0p05 | 0.2 | 1 | 99726 |
+| ALS_roof | none | mv_sel_share_abs0p1 | 0.6 | 1 | 99726 |
+| ALS_roof | none | mv_sel_share_abs0p2 | 0.8889 | 1 | 99726 |
+| ALS_roof | none | mv_all_agree_0p1 | 0.3333 | 1 | 100012 |
+| ALS_roof | none | mv_all_agree_0p2 | 0.4062 | 1 | 100012 |
+| ALS_roof | none | mv_all_behind_0p1 | 0 | 0.2 | 100012 |
+| ALS_roof | none | mv_all_behind_0p2 | 0 | 0.1 | 100012 |
+| ALS_roof | none | mv_all_front_0p2 | 0 | 0.5556 | 100012 |
+| ALS_roof | none | mv_all_median_absdiff | 0.005151 | 9.709 | 100012 |
+| ALS_roof | none | n_all_with_D | 6 | 51 | 100018 |
 | ALS_roof | none | mv_share_0p5 | 0.9 | 1 | 99726 |
 | ALS_roof | none | mv_share_1 | 1 | 1 | 99726 |
 | ALS_roof | none | mv_share_2 | 1 | 1 | 99726 |

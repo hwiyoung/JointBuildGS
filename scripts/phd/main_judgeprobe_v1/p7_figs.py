@@ -18,7 +18,7 @@ def box(ax, x, r, c, w=.18):
 def fig1():
     Dd = pd.read_csv(TAB/'ga_distribution.csv'); A = pd.read_csv(TAB/'ga_auc.csv')
     for prior, unit in [('LoD2', 'LoD2_all'), ('ALS', 'ALS_roof')]:
-        a = A[(A.unit == unit) & (A.version == '섞인 패치 뺌')].sort_values('rank'); obs = list(a.obs); nc = 6; nr = int(np.ceil(len(obs)/nc))
+        a = A[(A.unit == unit) & (A.version == '섞인 패치 뺌')].sort_values('rank', na_position='last'); obs = list(a.obs); nc = 6; nr = int(np.ceil(len(obs)/nc))
         fig, axs = plt.subplots(nr, nc, figsize=(12, 2.0*nr), squeeze=False)
         for i, k in enumerate(obs):
             ax = axs[i//nc, i % nc]; q = Dd[(Dd.unit == unit) & (Dd.version == '섞인 패치 뺌') & (Dd.obs == k)]
@@ -29,7 +29,7 @@ def fig1():
             ax.set_title(f"{OBS_NO[k]}. {OBS_KO[k]}\nAUC {rr.auc_imgerr_vs_priorerr:.2f} / {rr.auc_imgerr_vs_bothvalid:.2f}", fontsize=6.5)
         for j in range(len(obs), nr*nc): axs[j//nc, j % nc].axis('off')
         fig.legend(handles=[plt.Rectangle((0, 0), 1, 1, fc=c, ec='k', lw=.3) for c in CC.values()], labels=['한계 안 두 자료 모두 유효(기준)', '한계 밖 두 자료 모두 유효', '한계 밖 사전정보 오류', '한계 밖 영상 깊이 오류'], ncol=4, loc='lower center', frameon=False, fontsize=7)
-        fig.suptitle(f'그림 1 ({prior}): 후보 관측의 경우별 분포 (상자 25–75 %, 선 10–90 %, 굵은 선 중앙값; 넓이 가중, 섞인 패치 뺌). AUC = 영상 깊이 오류 대 사전정보 오류 / 대 두 자료 모두 유효', fontsize=8)
+        fig.suptitle(f'그림 1 ({prior}): 후보 관측의 경우별 분포 (13 |d|÷L 은 검출 통계라 순위 밖, 맨 뒤) (상자 25–75 %, 선 10–90 %, 굵은 선 중앙값; 넓이 가중, 섞인 패치 뺌). AUC = 영상 깊이 오류 대 사전정보 오류 / 대 두 자료 모두 유효', fontsize=8)
         fig.tight_layout(rect=[0, .03, 1, .97]); save(fig, f'fig1_distributions_{prior}', dict(prior=prior, unit=unit, source='tables/ga_distribution.csv, ga_auc.csv', order='ranking key descending', obs=obs))
 def fig3():
     S = pd.read_csv(TAB/'na_summary.csv'); V = ['본값 판', '판 가 (t_M)', '사전 정보 단독', '영상 단독', '패치 다수결 상한']; col = ['#444', '#d62728', '#ff7f0e', '#1f77b4', '#aaa']
@@ -96,13 +96,14 @@ def comps(P, building, idx):
         n, lab = connected_components(coo_matrix((np.ones(len(pr)), (pr[:, 0], pr[:, 1])), shape=(len(ii), len(ii))), directed=False)
         for k in range(n): out.append((b, ii[lab == k]))
     return out
-def fig2():
+def fig2(only=('LoD2', 'ALS')):
     A = pd.read_csv(TAB/'ga_auc.csv'); TH = pd.read_csv(TAB/'ga_thresholds.csv')
     for prior, unit in [('LoD2', 'LoD2_all'), ('ALS', 'ALS_roof')]:
+        if prior not in only: continue
         d = loadz(O/f'patch_{prior}.npz'); o = observations(d); ts = list(d['tiles'])
         Ph = loadz(O/f'photo_{prior}.npz', ['tile', 'row', 'centre_M', 'normal_M']); key_pp = Ph['tile'].astype(np.int64)*10**7 + Ph['row']; order = np.argsort(key_pp)
         g = loadz(JC/'analysis'/f'gt_{prior}.npz', ['xyz']); gtree = cKDTree(g['xyz'][:, :2])
-        top = list(A[(A.unit == unit) & (A.version == '섞인 패치 뺌')].sort_values('rank').obs[:2])
+        top = list(A[(A.unit == unit) & (A.version == '섞인 패치 뺌') & A['rank'].notna()].sort_values('rank').obs[:2])
         base = (d['geometry'] == 1) & (d['case'] == 2) & ~d['mixed']; X0 = d['centre'] + np.nan_to_num(d['prior_height_m'])[:, None]*np.nan_to_num(d['normal'])
         for k in top:
             lo = np.full(len(base), np.nan); hi = lo.copy()
@@ -152,4 +153,8 @@ def fig2():
             fig.tight_layout(rect=[0, 0, 1, .98]); save(fig, f'fig2_sites_{prior}_{k}', dict(prior=prior, unit=unit, obs=k, rule='image-depth-error outside-limit patches excluding mixed; connected within 0.36 m per building; area descending; <= 2 per building', panels=meta))
             print('FIG2', prior, k, flush=True)
 if __name__ == '__main__':
-    cfg(); T = Timer(); fig1(); fig3(); fig4(); print('FIG134', round(T.s()), flush=True); fig2(); progress(f'그림 1~4 끝 ({round(T.s())} 초)')
+    cfg(); T = Timer()
+    if sys.argv[1:] == ['redo']:   # 11-17 순위 규칙 고침 뒤: 그림 1 과 항공 LiDAR 그림 2 만 다시
+        fig1(); fig2(only=('ALS',)); progress(f'그림 1·항공 LiDAR 그림 2 다시 그림 ({round(T.s())} 초)')
+    else:
+        fig1(); fig3(); fig4(); print('FIG134', round(T.s()), flush=True); fig2(); progress(f'그림 1~4 끝 ({round(T.s())} 초)')

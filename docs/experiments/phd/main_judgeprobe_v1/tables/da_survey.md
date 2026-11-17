@@ -15,5 +15,6 @@
 | 시점별 법선 지도 | 남아 있음: normal_maps/ geometric 819 + photometric 819 (1024 x 741 x 3 float32), 합 각 6.95 GiB | PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/stereo/normal_maps |
 | 신뢰도 지도 | 없음 (COLMAP patch_match_stereo 는 신뢰도 지도를 쓰지 않음; write_consistency_graph 0 이라 consistency_graphs/ 비어 있음) | PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/stereo/consistency_graphs (0 파일) |
 | 탐색 지역마다 | 깊이 지도는 캠퍼스 하나(WIDEN0 full, 819장)이며 일곱 탐색 지역이 모두 같은 지도를 씀; JC 본값 MVS 와 같음(JC 설정 MVS_choice_reason) | JC configs judgecheck_v2.json data.MVS |
+| 세 실험 지역의 지금 판정 MVS | JC 패치 값에는 쓰이지 않음. B0_b10·B173nb_b10·R1rep_b10(+B173_b0)은 준비 단계 상자 MVS(PH/main_prep_measure_v1/.../mvs/box_<site>; 243·203·333·140장)를 씀(STAGE0 s61 fork_inputs.json 규칙 문장 "prep step06/box_view"). 같은 COLMAP 설정: geom_consistency 0→1, filter 0→1, filter_min_num_consistent 2; 기하·광도 깊이 지도 모두 남아 있음 | PH/main_stage0_v1/.../fork_inputs/s61/<site>/fork_inputs.json, PH/main_prep_measure_v1/.../mvs/box_*/ (patch_match 로그) |
 | 다시 만들 때 시간 | 다시 만들 필요 없음(남아 있음). 참고: 같은 설정 한 번 = 약 2.8 시간(GPU 하나) | colmap_receipt.json seconds |
 | 사진 고르기와의 관계 | 영상 깊이 면의 사진 고르기가 이미 기하 깊이 지도로 가림 검사(거리 ≤ D 거리 + 0.3 m, D > 0)를 함 | JC inherited/photo_cameras.choose_mvs_views |

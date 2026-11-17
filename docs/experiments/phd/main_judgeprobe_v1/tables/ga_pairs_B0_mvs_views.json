@@ -303,6 +303,36 @@
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
+"pair": "1+다12",
+"obs_a": "n",
+"obs_b": "mv_all_front_0p2",
+"case": "두 자료 모두 유효",
+"n": 4546,
+"reject_pct": 22.5912890453
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"pair": "1+다12",
+"obs_a": "n",
+"obs_b": "mv_all_front_0p2",
+"case": "사전정보 오류",
+"n": 2768,
+"reject_pct": 26.950867052
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
+"pair": "1+다12",
+"obs_a": "n",
+"obs_b": "mv_all_front_0p2",
+"case": "영상 깊이 오류",
+"n": 738,
+"reject_pct": 31.9783197832
+},
+{
+"prior": "LoD2",
+"unit": "LoD2_wall",
 "pair": "1+10a",
 "obs_a": "n",
 "obs_b": "views_P",
@@ -333,29 +363,29 @@
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+11b",
+"pair": "1+다13",
 "obs_a": "n",
-"obs_b": "texture_M",
+"obs_b": "mv_all_median_absdiff",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 23.7571491421
+"reject_pct": 26.9247690277
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+11b",
+"pair": "1+다13",
 "obs_a": "n",
-"obs_b": "texture_M",
+"obs_b": "mv_all_median_absdiff",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 27.5289017341
+"reject_pct": 31.25
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+11b",
+"pair": "1+다13",
 "obs_a": "n",
-"obs_b": "texture_M",
+"obs_b": "mv_all_median_absdiff",
 "case": "영상 깊이 오류",
 "n": 738,
 "reject_pct": 32.2493224932
@@ -363,242 +393,212 @@
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+11a",
+"pair": "1+다9",
 "obs_a": "n",
-"obs_b": "texture_P",
+"obs_b": "mv_all_agree_0p2",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 24.2630884294
+"reject_pct": 22.5912890453
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+11a",
+"pair": "1+다9",
 "obs_a": "n",
-"obs_b": "texture_P",
+"obs_b": "mv_all_agree_0p2",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 27.7456647399
+"reject_pct": 26.950867052
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+11a",
+"pair": "1+다9",
 "obs_a": "n",
-"obs_b": "texture_P",
+"obs_b": "mv_all_agree_0p2",
 "case": "영상 깊이 오류",
 "n": 738,
-"reject_pct": 34.0108401084
+"reject_pct": 31.9783197832
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+7",
-"obs_a": "n",
-"obs_b": "s_P",
+"pair": "다12+10a",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "views_P",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 29.5424549054
+"reject_pct": 17.1359436868
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+7",
-"obs_a": "n",
-"obs_b": "s_P",
+"pair": "다12+10a",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "views_P",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 34.6098265896
+"reject_pct": 4.9855491329
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "1+7",
-"obs_a": "n",
-"obs_b": "s_P",
+"pair": "다12+10a",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "views_P",
 "case": "영상 깊이 오류",
 "n": 738,
-"reject_pct": 39.4308943089
+"reject_pct": 57.3170731707
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+11b",
-"obs_a": "views_P",
-"obs_b": "texture_M",
+"pair": "다12+다13",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "mv_all_median_absdiff",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 18.4997800264
+"reject_pct": 4.6634403872
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+11b",
-"obs_a": "views_P",
-"obs_b": "texture_M",
+"pair": "다12+다13",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "mv_all_median_absdiff",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 5.7803468208
+"reject_pct": 4.4075144509
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+11b",
-"obs_a": "views_P",
-"obs_b": "texture_M",
+"pair": "다12+다13",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "mv_all_median_absdiff",
 "case": "영상 깊이 오류",
 "n": 738,
-"reject_pct": 58.2655826558
+"reject_pct": 0.5420054201
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+11a",
-"obs_a": "views_P",
-"obs_b": "texture_P",
+"pair": "다12+다9",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "mv_all_agree_0p2",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 19.1377034756
+"reject_pct": 0.0
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+11a",
-"obs_a": "views_P",
-"obs_b": "texture_P",
+"pair": "다12+다9",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "mv_all_agree_0p2",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 5.9248554913
+"reject_pct": 0.0
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+11a",
-"obs_a": "views_P",
-"obs_b": "texture_P",
+"pair": "다12+다9",
+"obs_a": "mv_all_front_0p2",
+"obs_b": "mv_all_agree_0p2",
 "case": "영상 깊이 오류",
 "n": 738,
-"reject_pct": 60.298102981
+"reject_pct": 0.0
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+7",
+"pair": "10a+다13",
 "obs_a": "views_P",
-"obs_b": "s_P",
+"obs_b": "mv_all_median_absdiff",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 25.3409590849
+"reject_pct": 20.2595688517
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+7",
+"pair": "10a+다13",
 "obs_a": "views_P",
-"obs_b": "s_P",
+"obs_b": "mv_all_median_absdiff",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 13.9089595376
+"reject_pct": 9.0679190751
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "10a+7",
+"pair": "10a+다13",
 "obs_a": "views_P",
-"obs_b": "s_P",
+"obs_b": "mv_all_median_absdiff",
 "case": "영상 깊이 오류",
 "n": 738,
-"reject_pct": 65.7181571816
+"reject_pct": 57.5880758808
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "11b+11a",
-"obs_a": "texture_M",
-"obs_b": "texture_P",
+"pair": "10a+다9",
+"obs_a": "views_P",
+"obs_b": "mv_all_agree_0p2",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 3.3435987681
+"reject_pct": 17.1359436868
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "11b+11a",
-"obs_a": "texture_M",
-"obs_b": "texture_P",
+"pair": "10a+다9",
+"obs_a": "views_P",
+"obs_b": "mv_all_agree_0p2",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 1.9147398844
+"reject_pct": 4.9855491329
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "11b+11a",
-"obs_a": "texture_M",
-"obs_b": "texture_P",
+"pair": "10a+다9",
+"obs_a": "views_P",
+"obs_b": "mv_all_agree_0p2",
 "case": "영상 깊이 오류",
 "n": 738,
-"reject_pct": 4.2005420054
+"reject_pct": 57.3170731707
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "11b+7",
-"obs_a": "texture_M",
-"obs_b": "s_P",
+"pair": "다13+다9",
+"obs_a": "mv_all_median_absdiff",
+"obs_b": "mv_all_agree_0p2",
 "case": "두 자료 모두 유효",
 "n": 4546,
-"reject_pct": 10.7787065552
+"reject_pct": 4.6634403872
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "11b+7",
-"obs_a": "texture_M",
-"obs_b": "s_P",
+"pair": "다13+다9",
+"obs_a": "mv_all_median_absdiff",
+"obs_b": "mv_all_agree_0p2",
 "case": "사전정보 오류",
 "n": 2768,
-"reject_pct": 10.3684971098
+"reject_pct": 4.4075144509
 },
 {
 "prior": "LoD2",
 "unit": "LoD2_wall",
-"pair": "11b+7",
-"obs_a": "texture_M",
-"obs_b": "s_P",
+"pair": "다13+다9",
+"obs_a": "mv_all_median_absdiff",
+"obs_b": "mv_all_agree_0p2",
 "case": "영상 깊이 오류",
 "n": 738,
-"reject_pct": 9.891598916
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_wall",
-"pair": "11a+7",
-"obs_a": "texture_P",
-"obs_b": "s_P",
-"case": "두 자료 모두 유효",
-"n": 4546,
-"reject_pct": 11.4386273647
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_wall",
-"pair": "11a+7",
-"obs_a": "texture_P",
-"obs_b": "s_P",
-"case": "사전정보 오류",
-"n": 2768,
-"reject_pct": 10.838150289
-},
-{
-"prior": "LoD2",
-"unit": "LoD2_wall",
-"pair": "11a+7",
-"obs_a": "texture_P",
-"obs_b": "s_P",
-"case": "영상 깊이 오류",
-"n": 738,
-"reject_pct": 13.0081300813
+"reject_pct": 0.5420054201
 },
 {
 "prior": "ALS",
@@ -693,32 +693,32 @@
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "7+다4",
+"pair": "7+다5",
 "obs_a": "s_P",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "두 자료 모두 유효",
 "n": 3668,
-"reject_pct": 41.4839533967
+"reject_pct": 30.7240801573
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "7+다4",
+"pair": "7+다5",
 "obs_a": "s_P",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "사전정보 오류",
 "n": 58,
-"reject_pct": 67.3492478799
+"reject_pct": 65.6085313013
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "7+다4",
+"pair": "7+다5",
 "obs_a": "s_P",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "영상 깊이 오류",
 "n": 398,
-"reject_pct": 46.7520037558
+"reject_pct": 39.7782437109
 },
 {
 "prior": "ALS",
@@ -783,32 +783,32 @@
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "3+다4",
+"pair": "3+다5",
 "obs_a": "u_M",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "두 자료 모두 유효",
 "n": 3668,
-"reject_pct": 35.0707884923
+"reject_pct": 23.5736194379
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "3+다4",
+"pair": "3+다5",
 "obs_a": "u_M",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "사전정보 오류",
 "n": 58,
-"reject_pct": 59.403803266
+"reject_pct": 60.9348382637
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "3+다4",
+"pair": "3+다5",
 "obs_a": "u_M",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "영상 깊이 오류",
 "n": 398,
-"reject_pct": 44.5515176051
+"reject_pct": 35.3558724625
 },
 {
 "prior": "ALS",
@@ -843,64 +843,64 @@
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "4+다4",
+"pair": "4+다5",
 "obs_a": "fit_nmad",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "두 자료 모두 유효",
 "n": 3668,
-"reject_pct": 34.7371208034
+"reject_pct": 26.5500276876
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "4+다4",
+"pair": "4+다5",
 "obs_a": "fit_nmad",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "사전정보 오류",
 "n": 58,
-"reject_pct": 58.5898215969
+"reject_pct": 55.3176108997
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "4+다4",
+"pair": "4+다5",
 "obs_a": "fit_nmad",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "영상 깊이 오류",
 "n": 398,
-"reject_pct": 41.3589001662
+"reject_pct": 35.2337766266
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "11a+다4",
+"pair": "11a+다5",
 "obs_a": "texture_P",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "두 자료 모두 유효",
 "n": 3668,
-"reject_pct": 34.7434195783
+"reject_pct": 19.5968848457
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "11a+다4",
+"pair": "11a+다5",
 "obs_a": "texture_P",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "사전정보 오류",
 "n": 58,
-"reject_pct": 58.1921706533
+"reject_pct": 51.5440215784
 },
 {
 "prior": "ALS",
 "unit": "ALS_roof",
-"pair": "11a+다4",
+"pair": "11a+다5",
 "obs_a": "texture_P",
-"obs_b": "mv_median_absdiff",
+"obs_b": "mv_sel_share_abs0p05",
 "case": "영상 깊이 오류",
 "n": 398,
-"reject_pct": 42.054277817
+"reject_pct": 31.3826641994
 }
 ],
-"note": "확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %. 단위마다 구별 정도 큰 다섯의 둘씩 묶음, 하나라도 기각이면 기각. 섞인 패치 뺌.",
+"note": "확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %. 단위마다 구별 정도 큰 다섯(13 |d|÷L 뺌)의 둘씩 묶음, 하나라도 기각이면 기각. 섞인 패치 뺌.",
 "scientific_verdict": null
 }
