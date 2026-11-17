@@ -92,46 +92,68 @@ def gmed(key, val, n):
     o = np.lexsort((v, k)); k = k[o]; v = v[o]; st = np.searchsorted(k, np.arange(n+1)); c = st[1:]-st[:-1]; h = np.flatnonzero(c)
     out[h] = .5*(v[st[h]+(c[h]-1)//2]+v[st[h]+c[h]//2]); return out
 
-def labels(stem):
-    c = ccfg6()['work_da']; P = loadz(PTS/f'sel_{stem}.npz'); z = loadz(DA6/f'pix_{stem}.npz'); sel = z['sel']; n = len(sel); pos = np.full(len(P['state']), -1, 'i8'); pos[sel] = np.arange(n)
-    k = pos[z['pt']]; tau = P['tau'][sel].astype('f8'); tl = tau[k]; d = z['mean']-z['zp']
-    M = {nm: gmed(k, z['w3'][:, i], n) for i, nm in enumerate(['front', 'within', 'behind'])}; M['acc'] = gmed(k, z['acc'], n); M['mean_off'] = gmed(k, d, n); M['median_off'] = gmed(k, z['median']-z['zp'], n)
-    vf = np.isfinite(d) & (d < -tl); vb = np.isfinite(d) & (d > tl); vw = np.isfinite(d) & ~vf & ~vb; nv = np.bincount(k, minlength=n).astype(float)
-    sf = np.bincount(k, vf, n)/np.maximum(nv, 1); sb = np.bincount(k, vb, n)/np.maximum(nv, 1); sw = np.bincount(k, vw, n)/np.maximum(nv, 1)
-    h = c['half']; l1 = np.where(M['within'] >= h, 0, np.where(M['front'] >= h, 1, np.where((M['behind'] >= h) | (M['acc'] < h), 2, 3)))
-    sp = c['split_share']
+def facing(stem, P, sel, z):
+    """per pair: camera centre on the outward side of the point (outward = target normal oriented by addendum3 outward(): non-walls up, walls by the LoD2 solid; no GT)."""
+    sys.path.insert(0, '/repo/scripts/phd/main_trainerr_v1/addendum3')
+    T = Targets(stem); v = P['v'][sel]; X = P['xyz'][sel].astype('f8'); nrm = np.where((v >= 0)[:, None], T.normal[np.clip(v, 0, None)], np.nan)
+    ok = np.isfinite(nrm).all(1); out = np.full_like(nrm, np.nan); out[ok] = outward(stem, X[ok], nrm[ok])[0]
+    mi = json.loads((maps_dir(stem, 'own')/'index.json').read_text())['views']; vn = sorted(mi); C = np.zeros((len(vn), 3))
+    for j, nm in enumerate(vn): M = np.asarray(mi[nm]['W2C']); C[j] = -M[:3, :3].T@M[:3, 3]
+    pos = np.full(len(P['state']), -1, 'i8'); pos[sel] = np.arange(len(sel)); k = pos[z['pt']]
+    return ((C[z['view'].astype('i8')]-X[k])*out[k]).sum(1) > 0
+
+def labels_of(c, z, k, n, tau, use):
+    kk = k[use]; tl = tau[kk]; d = (z['mean']-z['zp'])[use]
+    M = {nm: gmed(kk, z['w3'][use, i], n) for i, nm in enumerate(['front', 'within', 'behind'])}; M['acc'] = gmed(kk, z['acc'][use], n); M['mean_off'] = gmed(kk, d, n); M['median_off'] = gmed(kk, (z['median']-z['zp'])[use], n)
+    vf = np.isfinite(d) & (d < -tl); vb = np.isfinite(d) & (d > tl); vw = np.isfinite(d) & ~vf & ~vb; nv = np.bincount(kk, minlength=n).astype(float)
+    sf = np.bincount(kk, vf, n)/np.maximum(nv, 1); sb = np.bincount(kk, vb, n)/np.maximum(nv, 1); sw = np.bincount(kk, vw, n)/np.maximum(nv, 1)
+    h = c['half']; sp = c['split_share']
+    l1 = np.where(M['within'] >= h, 0, np.where(M['front'] >= h, 1, np.where((M['behind'] >= h) | (M['acc'] < h), 2, 3)))
     l2 = np.where(z['within_n'] == 0, 0, np.where((M['mean_off'] < -tau) & (M['front'] > M['within']), 1, np.where((M['mean_off'] > tau) & (M['behind'] > M['within']), 2,
                   np.where((sf >= sp) & (sb >= sp) & (sw < h), 3, np.where(sw >= h, 4, 5)))))
     nov = nv == 0; l1 = np.where(nov, -1, l1); l2 = np.where(nov & (z['within_n'] > 0), -1, l2)
-    savez(DA6/f'labels_{stem}.npz', sel=sel, state=P['state'][sel], group=P['group'][sel], label1=l1.astype('i1'), label2=l2.astype('i1'), views=nv.astype('i4'), share_front=sf, share_behind=sb, share_within=sw,
-          **{f'med_{kk}': v for kk, v in M.items()})
-    return P, z, sel, l1, l2, M, sf, sb, sw, nv, k
+    return l1, l2, M, sf, sb, sw, nv
+
+VIEWSETS = ['화면에 드는 모든 영상(발주문 정의)', '점의 바깥쪽에서 보는 영상']
+
+def labels(stem):
+    c = ccfg6()['work_da']; P = loadz(PTS/f'sel_{stem}.npz'); z = loadz(DA6/f'pix_{stem}.npz'); sel = z['sel']; n = len(sel); pos = np.full(len(P['state']), -1, 'i8'); pos[sel] = np.arange(n)
+    k = pos[z['pt']]; tau = P['tau'][sel].astype('f8'); fc = facing(stem, P, sel, z); res = {}
+    for vs, use in zip(VIEWSETS, [np.ones(len(k), bool), fc]): res[vs] = labels_of(c, z, k, n, tau, use)
+    savez(DA6/f'labels_{stem}.npz', sel=sel, state=P['state'][sel], group=P['group'][sel], facing_pairs=fc,
+          **{f'{t}__{nm}': v for t, vs in zip(['all', 'facing'], VIEWSETS) for nm, v in zip(['label1', 'label2'], res[vs][:2])},
+          **{f'{t}__views': res[vs][6].astype('i4') for t, vs in zip(['all', 'facing'], VIEWSETS)},
+          **{f'{t}__share_{x}': res[vs][j] for t, vs in zip(['all', 'facing'], VIEWSETS) for x, j in [('front', 3), ('behind', 4), ('within', 5)]},
+          **{f'{t}__med_{kk_}': v for t, vs in zip(['all', 'facing'], VIEWSETS) for kk_, v in res[vs][2].items()})
+    return P, z, sel, k, res, fc
 
 def tables():
     rows1, rows2 = [], []
     for stem in cfg6()['points']['scenes']:
         if not (DA6/f'pix_{stem}.npz').exists(): continue
-        P, z, sel, l1, l2, M, sf, sb, sw, nv, k = labels(stem); st = P['state'][sel]; g = P['group'][sel]
-        fk = np.zeros((len(sel), 4)); np.add.at(fk, k, z['wk'][:, 0, :]); wk_in = np.zeros((len(sel), 4)); np.add.at(wk_in, k, z['wk'][:, 1, :])
-        for stt, lab, rows in [(1, L1, rows1), (2, L2, rows2)]:
-            for gk in range(4):
-                m = (st == stt) & (g == gk); nn = int(m.sum())
-                if not nn: continue
-                L = l1 if stt == 1 else l2
-                r = dict(stem=stem, state=f'상태 {stt}', group=GROUP_KO[gk], n=nn, small=nn < 30, no_view_pct=pct(nv[m] == 0), views_median=med(nv[m]))
-                r.update({f'{x}_pct': pct(L[m] == i) for i, x in enumerate(lab)})
-                r.update(weight_front_median=med(M['front'][m]), weight_within_median=med(M['within'][m]), weight_behind_median=med(M['behind'][m]), opacity_sum_median=med(M['acc'][m]),
-                         mean_depth_minus_point_m_median=med(M['mean_off'][m]), median_depth_minus_point_m_median=med(M['median_off'][m]),
-                         front_offset_m_median=med(gmed(k, z['front_off'], len(sel))[m]), size_within_m_median=med(gmed(k, z['size_within'], len(sel))[m]), size_front_m_median=med(gmed(k, z['size_front'], len(sel))[m]),
-                         dist_within_m_median=med(gmed(k, z['dist_within'], len(sel))[m]))
-                tf = max(1e-12, float(fk[m].sum())); ti = max(1e-12, float(wk_in[m].sum()))
-                r.update({f'front_weight_{x}_pct': 100*float(fk[m][:, i].sum())/tf for i, x in enumerate(KIND4)}); r.update({f'within_weight_{x}_pct': 100*float(wk_in[m][:, i].sum())/ti for i, x in enumerate(KIND4)})
-                if stt == 2:
-                    r.update(nearest_m_median=med(z['near_d'][m]), nearest_normal_abs_m_median=med(np.abs(z['near_n'][m])), nearest_tangent_m_median=med(z['near_t'][m]), within_tau_count_median=med(z['within_n'][m]),
-                             within_tau_opacity_max_median=med(z['within_op_max'][m]), within_tau_size_median=med(z['within_size_med'][m]), within_tau_angle_deg_median=med(z['within_angle_med'][m]),
-                             view_within_share_median=med(sw[m]), view_front_share_median=med(sf[m]), view_behind_share_median=med(sb[m]))
-                    wk = z['within_kind'][m]; tw = max(1, int(wk.sum())); r.update({f'within_tau_{x}_pct': 100*float(wk[:, i].sum())/tw for i, x in enumerate(KIND4)})
-                rows.append(r)
+        P, z, sel, k, res, fc = labels(stem); st = P['state'][sel]; g = P['group'][sel]
+        for vs in VIEWSETS:
+          l1, l2, M, sf, sb, sw, nv = res[vs]; use = fc if vs != VIEWSETS[0] else np.ones(len(k), bool)
+          fk = np.zeros((len(sel), 4)); np.add.at(fk, k[use], z['wk'][use, 0, :]); wk_in = np.zeros((len(sel), 4)); np.add.at(wk_in, k[use], z['wk'][use, 1, :])
+          for stt, lab, rows in [(1, L1, rows1), (2, L2, rows2)]:
+              for gk in range(4):
+                  m = (st == stt) & (g == gk); nn = int(m.sum())
+                  if not nn: continue
+                  L = l1 if stt == 1 else l2
+                  r = dict(stem=stem, views=vs, state=f'상태 {stt}', group=GROUP_KO[gk], n=nn, small=nn < 30, no_view_pct=pct(nv[m] == 0), views_median=med(nv[m]))
+                  r.update({f'{x}_pct': pct(L[m] == i) for i, x in enumerate(lab)})
+                  r.update(weight_front_median=med(M['front'][m]), weight_within_median=med(M['within'][m]), weight_behind_median=med(M['behind'][m]), opacity_sum_median=med(M['acc'][m]),
+                           mean_depth_minus_point_m_median=med(M['mean_off'][m]), median_depth_minus_point_m_median=med(M['median_off'][m]),
+                           front_offset_m_median=med(gmed(k[use], z['front_off'][use], len(sel))[m]), size_within_m_median=med(gmed(k[use], z['size_within'][use], len(sel))[m]), size_front_m_median=med(gmed(k[use], z['size_front'][use], len(sel))[m]),
+                           dist_within_m_median=med(gmed(k[use], z['dist_within'][use], len(sel))[m]))
+                  tf = max(1e-12, float(fk[m].sum())); ti = max(1e-12, float(wk_in[m].sum()))
+                  r.update({f'front_weight_{x}_pct': 100*float(fk[m][:, i].sum())/tf for i, x in enumerate(KIND4)}); r.update({f'within_weight_{x}_pct': 100*float(wk_in[m][:, i].sum())/ti for i, x in enumerate(KIND4)})
+                  if stt == 2:
+                      r.update(nearest_m_median=med(z['near_d'][m]), nearest_normal_abs_m_median=med(np.abs(z['near_n'][m])), nearest_tangent_m_median=med(z['near_t'][m]), within_tau_count_median=med(z['within_n'][m]),
+                               within_tau_opacity_max_median=med(z['within_op_max'][m]), within_tau_size_median=med(z['within_size_med'][m]), within_tau_angle_deg_median=med(z['within_angle_med'][m]),
+                               view_within_share_median=med(sw[m]), view_front_share_median=med(sf[m]), view_behind_share_median=med(sb[m]))
+                      wk = z['within_kind'][m]; tw = max(1, int(wk.sum())); r.update({f'within_tau_{x}_pct': 100*float(wk[:, i].sum())/tw for i, x in enumerate(KIND4)})
+                  rows.append(r)
         print('DA6_TABLE', stem, flush=True)
     table6('da_state1', rows1); table6('da_state2', rows2)
 

@@ -8,6 +8,13 @@ import a3_launch as A
 A.A3O = A.O/'addendum6'; A.LOGS = A.A3O/'logs'; A.FORK = 'GeoGS-conf-guided-v1-r31'; A.LOGS.mkdir(parents=True, exist_ok=True)
 import a3_mesh as M
 M.SH = A.A3O/'gtj'
+import itertools
+_SEQ = itertools.count()
+_run = A.run
+def _run_unique(cmd, log):   # two workers can start the same step in the same second (shadow rows.npz is a container-path symlink, so the host check re-runs it): one log name per thread
+    with LOCK: k = next(_SEQ)
+    return _run(cmd, log.with_name(f'{log.stem}_n{k}{log.suffix}'))
+A.run = _run_unique
 LOCK = threading.Lock(); TAKEN = set(); GPUS = [1, 0]
 
 def one(job, gpu):

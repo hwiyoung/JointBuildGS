@@ -23,17 +23,30 @@ def select(stem):
         ii = np.flatnonzero(g == k)
         if k != 1 and len(ii) > c['points']['others_per_scene_per_group']: ii = np.sort(rng.choice(ii, c['points']['others_per_scene_per_group'], replace=False))
         idx.append(ii)
-    idx = np.sort(np.concatenate(idx)); pr = z['patch_row'][idx]
-    st = np.where(pr < 0, 4, np.where(z['spot_n_all'][idx] > 0, 2, np.where(z['seeds'][idx] > 0, 1, 3))).astype('i1')
-    A, j = a11_index(stem, z['point_id'][idx]); tw = A['reference__judgment_mesh__within_tau1'].astype(bool)[j]; tau = A['reference__tau_m'][j].astype('f4')
+    idx = np.sort(np.concatenate(idx)); pr = z['patch_row'][idx]; spot = z['spot_n_all'][idx]; seeds = z['seeds'][idx]; pid = z['point_id'][idx]; xyz = z['xyz'][idx]; gg = g[idx]
+    case = z['case_id'][idx]; judge = z['judge'][idx]; ra_index = idx; added = np.zeros(len(idx), bool)
+    A = np.load(GT/'addendum11/final_data'/f'{stem}.npz')
+    if len(z['group']) < int(A['reference__eligible'].sum()):
+        # addendum 2 subsampled this scene to 300,000 points: the lost points it left out are added from the GT point data with the same rules (a2_ra.points)
+        el = A['reference__eligible'].astype(bool); lost = el & A['reference__judgment_mesh__within_tau1'].astype(bool) & ~A['reference__FINALTRAIN_30000__within_tau1'].astype(bool)
+        new = np.setdiff1d(A['reference__point_id'][lost], z['point_id']); rp_ = A['reference__point_id']; o = np.argsort(rp_); jn = o[np.searchsorted(rp_[o], new)]
+        t = loadz(targets_of(stem, 'own'), ['target', 'normal', 'sigma', 'region', 'judge_region', 'area']); vp = np.flatnonzero(valid_patch(t)); N = len(t['area'])
+        praw = gt_row_patch(stem)[new]; prow = np.where(np.isin(praw, vp), praw, -1)
+        sd = loadz(maps_dir(stem, 'own').parent/'seeds.npz', ['origin', 'patch']); scnt = np.bincount(sd['patch'][(sd['origin'] == 1) & (sd['patch'] >= 0)], minlength=N)
+        Sn = Snap(stem, 'own'); sp_n = np.array([len(q) for q in Sn.spots(A['reference__xyz'][jn].astype('f8'))])
+        pr = np.r_[pr, prow]; spot = np.r_[spot, sp_n]; seeds = np.r_[seeds, np.where(prow >= 0, scnt[np.clip(prow, 0, None)], -1)]; pid = np.r_[pid, new]; xyz = np.r_[xyz, A['reference__xyz'][jn].astype('f4')]
+        gg = np.r_[gg, np.ones(len(new), 'i1')]; case = np.r_[case, A['reference__case_id'][jn]]; judge = np.r_[judge, np.where(praw >= 0, t['judge_region'][np.clip(praw, 0, None)], -1).astype('i1')]
+        ra_index = np.r_[ra_index, np.full(len(new), -1)]; added = np.r_[added, np.ones(len(new), bool)]
+    st = np.where(pr < 0, 4, np.where(spot > 0, 2, np.where(seeds > 0, 1, 3))).astype('i1')
+    A, j = a11_index(stem, pid); tw = A['reference__judgment_mesh__within_tau1'].astype(bool)[j]; tau = A['reference__tau_m'][j].astype('f4')
     mp = loadz(O/c['runs'][stem]['mesh_30000']/'points.npz', ['reference__within_tau1']); assert len(mp['reference__within_tau1']) == len(A['reference__point_id'])
     rw = mp['reference__within_tau1'].astype(bool)[j]; g_rec = np.where(tw, np.where(rw, 0, 1), np.where(rw, 2, 3)).astype('i1')
     T = Targets(stem); v = T.v_of_rows(pr)
-    savez(PTS/f'sel_{stem}.npz', ra_index=idx, point_id=z['point_id'][idx], xyz=z['xyz'][idx], group=g[idx], group_rec=g_rec, state=st, patch_row=pr, v=v, seeds=z['seeds'][idx],
-          tau=tau, a11_row=j, case_id=z['case_id'][idx], judge=z['judge'][idx])
-    full = dict(all_points=len(g), **{f'group{k}_all': int((g == k).sum()) for k in range(4)}, **{f'group{k}_selected': int((g[idx] == k).sum()) for k in range(4)})
+    savez(PTS/f'sel_{stem}.npz', ra_index=ra_index, added_from_gt=added, point_id=pid, xyz=xyz, group=gg, group_rec=g_rec, state=st, patch_row=pr, v=v, seeds=seeds,
+          tau=tau, a11_row=j, case_id=case, judge=judge)
+    full = dict(all_points=len(g), lost_added_from_gt=int(added.sum()), **{f'group{k}_all': int((g == k).sum()) for k in range(4)}, **{f'group{k}_selected': int((gg == k).sum()) for k in range(4)})
     dump(PTS/f'sel_{stem}.json', dict(at=now(), stem=stem, **full, record_mesh=c['runs'][stem]['mesh_30000'], seconds=time.monotonic()-t0, scientific_verdict=None))
-    print('GA6_SELECT', stem, len(idx), flush=True)
+    print('GA6_SELECT', stem, len(gg), int(added.sum()), flush=True)
 
 def dump_order(model):
     names = [p.stem for p in (model/'trainlog/scene').glob('*.pt')]

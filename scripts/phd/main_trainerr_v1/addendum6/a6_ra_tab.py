@@ -27,7 +27,7 @@ def mesh_dir(stem, model, var):
 def earlier(stem, model):
     """earlier mesh (final.ply / primary.ply) and its per-GT-row within tau for the base check."""
     site, prior = stem.split('__')
-    if model == 'ft': return RS/'addendum3_stage2/meshes'/f'{stem}__FINALTRAIN_30000/primary.ply', ('a11', f'reference__FINALTRAIN_30000__within_tau1')
+    if model == 'ft': return RS/('addendum3_stage1' if stem.startswith('B173') else 'addendum3_stage2')/'meshes'/f'{stem}__FINALTRAIN_30000/primary.ply', ('a11', f'reference__FINALTRAIN_30000__within_tau1')
     it = model.split('_')[1]
     if model.startswith('sb3'): return A4O/'gtj/meshes'/f'{stem}__sb3_{it}/final.ply', ('pts', A4O/'meshes'/f'{stem}__sb3_{it}/points.npz')
     if model.startswith('tl'): return A4O/'gtj/meshes'/f'{stem}__tlre_{it}/final.ply', ('pts', A4O/'meshes'/f'{stem}__tlre_{it}/points.npz')
