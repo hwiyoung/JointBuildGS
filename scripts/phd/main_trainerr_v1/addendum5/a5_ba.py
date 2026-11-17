@@ -127,9 +127,10 @@ def rays():
             if not len(C): continue
             acc, mean, medd = D4.per_pixel(C, len(sel))
             for k in range(len(sel)):
-                c = C[C[:, 0] == k]; zp = z['problem__zpt'][sel[k]]; ww = c[np.abs(c[:, 3]-zp) <= .5, 2].sum(); wb = c[c[:, 3] < zp-.5, 2].sum()   # wall in front of the behind-face point
-                cands.append((min(ww, wb), j, sel[k], c, mean[k], medd[k], float(td[z['problem__v'][sel[k]], z['problem__u'][sel[k]]]), zp))
-    cands.sort(key=lambda t: -t[0]); top = [t for t in cands if t[0] > .2][:3] or cands[:3]
+                c = C[C[:, 0] == k]; zp = z['problem__zpt'][sel[k]]; wf = c[np.abs(c[:, 3]-zp) <= .5, 2].sum()   # weight at the behind-face depth +- 0.5 m
+                cands.append((wf, j, sel[k], c, mean[k], medd[k], float(td[z['problem__v'][sel[k]], z['problem__u'][sel[k]]]), zp))
+    # representative = the pixels at the 25 / 50 / 75 % quantiles of the weight at the behind-face depth (no selection towards either reading)
+    cands.sort(key=lambda t: t[0]); top = [cands[int(q*(len(cands)-1))] for q in (.25, .5, .75)]
     for i, (sc, j, s, c, mn, mdd, tdv, zp) in enumerate(top):
         out.update({f'p{i}__depth': c[:, 3], f'p{i}__weight': c[:, 2], f'p{i}__tag': S['target_tag'].numpy()[c[:, 1].astype('i8')], f'p{i}__mean': np.float64(mn), f'p{i}__median': np.float64(mdd),
                     f'p{i}__target': np.float64(tdv), f'p{i}__behind_point': np.float64(zp), f'p{i}__view': np.array(names[j]), f'p{i}__uv': np.array([z['problem__u'][s], z['problem__v'][s]])})
@@ -144,9 +145,12 @@ def south_wall():
         ax.bar(bins[:-1]+.05, hst, width=.09, color='#7f7f7f', label='시선 위 가우시안 무게(0.1 m 칸 합)')
         ax.axvline(t, color=BLUE, lw=2.5, label=f'목표 깊이 {t:.2f} m'); ax.axvline(m, color=RED, lw=2.5, label=f'평균 깊이(메시에 쓰임) {m:.2f} m'); ax.axvline(md, color='k', lw=2, ls='--', label=f'중앙 깊이 {md:.2f} m')
         ax.annotate('벽 뒤로 튀어나온 면의 자리', xy=(bp, max(hst.max()*.05, 1e-3)), xytext=(bp+.8, hst.max()*.6), arrowprops=dict(arrowstyle='->', lw=1.8), fontsize=12, weight='bold', bbox=dict(fc='white', ec='k'))
-        ax.set_xlim(lo, hi); ax.set_ylabel('무게 αT'); ax.set_xlabel('카메라에서 깊이 (m)  → 벽 뒤'); ax.legend(loc='upper left', fontsize=10); ax.set_title(f'대표 화소 {i+1} (영상 {str(z[f"p{i}__view"])[-9:-2]})', fontsize=12); ax.grid(alpha=.3)
+        wf = float(w[np.abs(d-bp) <= .5].sum())
+        ax.set_xlim(lo, hi); ax.set_ylabel('무게 αT'); ax.set_xlabel('카메라에서 깊이 (m)  → 벽 뒤'); ax.legend(loc='upper left', fontsize=10); ax.grid(alpha=.3)
+        ax.set_title(f'대표 화소 {i+1} (영상 {str(z[f"p{i}__view"])[-9:-2]}): 튀어나온 면 깊이 ±0.5 m의 무게 {wf:.2f} ({["25","50","75"][i]} % 분위 화소)', fontsize=12)
         pts.update({f'p{i}__bin_left': bins[:-1], f'p{i}__bin_weight': hst})
-    fig.suptitle('벽 뒤로 튀어나온 면의 자리에는 가우시안이 거의 없고, 벽의 가우시안과 그 뒤 가우시안 사이에 평균 깊이가 놓인다', fontsize=16, weight='bold'); fig.tight_layout(rect=(0, 0, 1, .95))
+    fig.suptitle('벽 뒤로 튀어나온 면의 자리에는 가우시안이 거의 없고, 벽의 가우시안과 그 뒤 가우시안 사이에 평균 깊이가 놓인다', fontsize=16, weight='bold')
+    fig.text(.5, .93, '(발주문의 문장. 대표 화소는 튀어나온 면 깊이 ±0.5 m 무게의 25·50·75 % 분위 화소, 덧붙임 4 일 다 4.3 화소 635개 가운데)', ha='center', fontsize=11, color='#444'); fig.tight_layout(rect=(0, 0, 1, .91))
     save('south_wall', fig, dict(case='south_wall', model='TRAINLOG 기록 판 30,000회', pixels='payload addendum5/ba/rays_south.npz (벽 깊이 무게와 그 뒤 무게가 모두 큰 화소 셋)'), pts)
 
 def visible_wall():
@@ -197,9 +201,9 @@ def floater():
     G = loadz(GT/'reference/B173nb_b10/dense.npz', ['xyz', 'wall']); Gw = G['xyz'][G['wall'].astype(bool)].astype('f8')
     tc = cKDTree(C); cnt_ = np.array([len(q) for q in tc.query_ball_point(C, 1.)]); o = C[int(np.argmax(cnt_))]
     _, j = cKDTree(Gw[:, :2]).query(o[:2]); hvec = np.r_[o[:2]-Gw[j, :2], 0.]; hvec /= max(np.linalg.norm(hvec), 1e-9); e = np.cross([0, 0, 1.], hvec)
-    L = 6.; zr = (o[2]-14., o[2]+4.); VF = b.mesh(TLM/'gtj/meshes'/'B173nb_b10__ALS__tl_30000'/'final.ply')
+    L = 6.; zr = (o[2]-8., o[2]+3.); VF = b.mesh(TLM/'gtj/meshes'/'B173nb_b10__ALS__tl_30000'/'final.ply')
     fig = plt.figure(figsize=(18, 10)); ax = fig.add_axes([.05, .08, .55, .82]); pts = sec_lines(ax, stem, o-0*hvec, hvec, e, L, zr, VF)
-    wl = (Gw[j]-o)@hvec; ax.axvline(wl, color='k', ls='--', lw=1.5); arrow(ax, (wl, zr[0]+2), '건물 벽(참값)', (1.2, 1.5)); arrow(ax, (0., o[2]), '허공에 세로로 선 면', (1.5, 1.2))
+    wl = (Gw[j]-o)@hvec; ax.axvline(wl, color='k', ls='--', lw=1.5); arrow(ax, (wl, o[2]-5.5), '건물 벽 자리(참값 벽 점에서 가장 가까운 곳)', (1.2, -1.2)); arrow(ax, (0., o[2]), '허공에 세로로 선 면', (1.5, 1.2))
     ax.legend(loc='upper left', fontsize=11); ax.set_xlabel('벽에 수직인 가로 위치 (m)  → 건물 바깥'); ax.set_ylabel('높이 (m)')
     ax2 = fig.add_axes([.67, .15, .3, .7]); ax2.plot(its, cnt, '-o', ms=3, color='#ff7f0e'); ax2.axvline(15000, color='#7b3294', ls='--'); ax2.text(15200, max(cnt)*.9, '15,000회\n늘리기 끝', fontsize=11)
     ax2.set_xlabel('반복 수'); ax2.set_ylabel('뜬 면 0.5 m 안 가우시안 수'); ax2.grid(alpha=.3)

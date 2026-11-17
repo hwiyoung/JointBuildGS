@@ -26,6 +26,16 @@ def run(stem):
     for u, it in zip(E['release'].get('uid', []), E['release'].get('iteration', [])): rel.setdefault(int(u), []).append(int(it))
     for u, it in zip(E['retarget'].get('uid', []), E['retarget'].get('iteration', [])): ret.setdefault(int(u), []).append(int(it))
     S30 = D4.load_pt(m_, '30000'); live_init = set(S30['init_id'].numpy().tolist()); alive30 = set(S30['uid'].numpy().tolist())
+    # seeds outside the record range have no delete event: deletion = first full-scene dump without the seed (reason unknown, -1)
+    allu = np.concatenate([uid0[v] for v in sets.values()]); miss = {int(x) for x in allu if int(x) not in dl and int(x) not in alive30}
+    if miss:
+        names_ = sorted({p.stem for p in (m_/'trainlog/scene').glob('*.pt')}, key=lambda n: (int(n.split('_')[0]), 0 if 'pre' in n else 1)); left = set(miss)
+        for n in names_:
+            if not left: break
+            us = set(D4.load_pt(m_, n)['uid'].numpy().tolist()); gone = {x for x in left if x not in us}
+            for x in gone: dl[x] = (-1, int(n.split('_')[0]))
+            left -= gone
+        print('MA FALLBACK', stem, len(miss), 'unresolved', len(left), flush=True)
     out = {}
     for name, seeds in sets.items():
         u = uid0[seeds]; d_it = np.array([dl.get(int(x), (0, -1))[1] for x in u]); d_rs = np.array([dl.get(int(x), (0, -1))[0] for x in u])
@@ -76,6 +86,7 @@ def tables():
                 d = o['del_it'][m]; dd = d[d >= 0]
                 r['deleted_iteration_q'] = q4(dd); r['deleted_at_first_check_after_reset_pct'] = pct(np.isin(dd, [x+100 for x in RESETS])) if len(dd) else None
                 rs = o['del_reason'][m][d >= 0]; r['reason_opacity_pct'] = pct(rs == 1) if len(rs) else None; r['reason_size_pct'] = pct((rs == 2) | (rs == 3)) if len(rs) else None
+                r['reason_unknown_outside_record_range'] = int((rs == -1).sum()); r['deleted_iteration_rule'] = 'delete event; reason -1 = no event (outside the record range): first full-scene dump without the seed'
                 r['released_before_pct'] = pct(o['released_before'][m]); r['retargeted_before_pct'] = pct(o['retargeted_before'][m])
                 # values at the reset before deletion (deleted) or at 3000 (surviving)
                 cw, ov, nv, fk = [], [], [], np.zeros(4); used = []
