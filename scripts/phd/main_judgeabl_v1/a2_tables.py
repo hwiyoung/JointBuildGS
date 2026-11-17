@@ -32,7 +32,7 @@ def summary3(df, by):
     oks = [f'ok_{c}' for c in CN]; df = df.copy(); df['요약 가 평균'] = df[oks].mean(1); df['요약 나 최솟값'] = df[oks].min(1); df['요약 나 경우'] = [CN[int(np.nanargmin(v))] if np.isfinite(v).any() else '' for v in df[oks].values]
     gap = []
     for _, q in df.groupby(by, sort=False):
-        pool = q[~q['variant'].isin(NO_BEST) & ~q['gt_selected'] & ~q['reference']]; best = pool[oks].max(0)
+        pool = q[~q['variant'].isin(NO_BEST) & ~q['gt_selected'] & ~q['reference'] & (q['family'] != 'fix')]; best = pool[oks].max(0)   # 덧붙임 1 판은 기준에서 뺌(앞서 낸 값 유지)
         for i, r in q.iterrows(): gap.append((i, float(np.nanmax((best.values - r[oks].values.astype(float))))))
     g = dict(gap); df['요약 다 최대 격차'] = [g[i] for i in df.index]; return df
 def main():

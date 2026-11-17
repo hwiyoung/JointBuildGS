@@ -4,11 +4,14 @@ import zipfile, datetime as dt
 def main(tag):
     ts = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M'); out = O/'delivery'/f'PHD-MAIN-JUDGEABL-v1_{tag}_{ts}_light.zip'; out.parent.mkdir(exist_ok=True)
     files = [D/'판단비교절제_보고_v1.md', D/'issues.md', D/'progress.md', C/'judgeabl_v1.json', C/'judgeabl_v1.lock.json'] + sorted((D/'tables').glob('*')) + sorted((D/'figures').glob('*'))
+    if tag == '다':   # 덧붙임 1
+        files = [D/'판단비교절제_덧붙임1_보고_v1.md', D/'issues.md', D/'progress.md'] + sorted(C.glob('judgeabl_v1*.json')) + sorted((D/'tables/addendum1').glob('*')) + sorted((D/'figures/addendum1').glob('*')) \
+                + sorted((D/'figures').glob('fig2_*')) + [D/'tables'/f'{n}.{e}' for n in ['s_all_variants', 's_transitions', 's_building_diff', 's_name_made'] for e in ['csv', 'md']]
     if tag == '가': files = [f for f in files if not (f.parent.name == 'figures' and not f.name.startswith(('fig1', 'fig2', 'fig5')))]
     sums = []
     with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
         for f in files:
-            arc = ('configs/' if f.parent == C else '') + str(f.relative_to(D)) if f.parent != C else 'configs/' + f.name
+            arc = str(f.relative_to(D)) if f.parent != C else 'configs/' + f.name
             z.write(f, arc); sums.append(f'{sha(f)}  {arc}')
         z.writestr('SHA256SUMS', '\n'.join(sums) + '\n')
     if out.stat().st_size > 28*2**20:   # 원격 보기 첨부 30 MiB 한도: 같은 내용을 두 조각으로도 (조각 2 = 그림 3 PNG)

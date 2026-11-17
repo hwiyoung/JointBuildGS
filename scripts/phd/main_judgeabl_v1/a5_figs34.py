@@ -74,6 +74,10 @@ def fusion_scope(prior, keep, g):
     return f3
 def fig4():
     for prior in ['LoD2', 'ALS']:
+        changed(prior, [(vo, lab, '본 방법', [('본 방법만 맞음', 'b_only'), (f'{lab}만 맞음', 'o_only')], 3, f"fig4_changed_{'old2' if lab == '기존 2' else 'old3'}_{prior}", FIG) for vo, lab in [('기존 2 대표(저장된 L)', '기존 2'), ('기존 3 아래 5 %', '기존 3')]])
+def changed(prior, jobs):
+    """jobs: (vo, lab, vb, [(kind label, 'b_only'|'o_only')], n each, file name, folder). b_only = vb 맞음·vo 틀림."""
+    if True:
         names, bits, n, keep = okmat(prior)
         g = loadz(JC/'analysis'/f'gt_{prior}.npz', ['xyz', 'gid', 'cell', 'building', 'case']); g = {k: v[keep] for k, v in g.items()}
         d = loadz(JP/f'patch_{prior}.npz', ['tile', 'centre', 'normal', 'tangent1', 'prior_height_m', 'mvs_mean_m', 'case', 'building', 'region', 'd_for_check', 'L_m', 's_P', 's_M', 't', 'j_region', 'target_h', 'tiles', 'kind'])
@@ -84,10 +88,11 @@ def fig4():
             if p.exists(): VZ[r] = np.load(p)
         def var_of(i, v):
             z = VZ[d['region'][i]]; vn = list(z['variants']); k = int(np.flatnonzero(z['patch_id'] == pid[i])[0]); j = vn.index(v); return int(z['region'][j, k]), float(z['target_h'][j, k])
-        gtree = cKDTree(g['xyz'][:, :2]); okm = ok_of(names, bits, n, '본 방법')
-        for vo, lab in [('기존 2 대표(저장된 L)', '기존 2'), ('기존 3 아래 5 %', '기존 3')]:
-            oko = ok_of(names, bits, n, vo); sets = {}
-            for kind, m in [('본 방법만 맞음', okm & ~oko), (f'{lab}만 맞음', ~okm & oko)]:
+        gtree = cKDTree(g['xyz'][:, :2])
+        for vo, lab, vb, kinds_, n_each, fname, folder in jobs:
+            okm = ok_of(names, bits, n, vb); oko = ok_of(names, bits, n, vo); sets = {}
+            for kind, sel in kinds_:
+                m = okm & ~oko if sel == 'b_only' else ~okm & oko
                 idx = np.flatnonzero(m); df = pd.DataFrame(dict(b=g['building'][idx], c=g['cell'][idx], x=g['xyz'][idx, 0], y=g['xyz'][idx, 1], z=g['xyz'][idx, 2], i=idx))
                 cells = df.groupby(['b', 'c']).agg(x=('x', 'mean'), y=('y', 'mean'), z=('z', 'mean')).reset_index(); comps = []
                 for b, q in cells.groupby('b'):
@@ -98,9 +103,9 @@ def fig4():
                 for b, cs, a in comps:
                     if b in seen: continue
                     pick.append((b, cs, a)); seen.add(b)
-                    if len(pick) == 3: break
+                    if len(pick) == n_each: break
                 sets[kind] = [(b, df['i'].values[(df['b'].values == b) & df['c'].isin(cs).values], a) for b, cs, a in pick]
-            fig, axs = plt.subplots(6, 2, figsize=(8, 18), squeeze=False); meta = []; r_ = 0
+            nr = n_each*len(kinds_); fig, axs = plt.subplots(nr, 2, figsize=(8, 3*nr), squeeze=False); meta = []; r_ = 0
             for kind, pk in sets.items():
                 for b, pts, a in pk:
                     axA, axB = axs[r_, 0], axs[r_, 1]; gids = g['gid'][pts]; ug, cnt = np.unique(gids, return_counts=True); i = int(ug[np.argmax(cnt)])
@@ -115,18 +120,22 @@ def fig4():
                     if len(M) > 5000: M = M[np.random.default_rng(1).choice(len(M), 5000, replace=False)]
                     axB.scatter((M - c0) @ t1, (M - c0) @ nn, s=.5, c='#1f77b4', lw=0, alpha=.5, label='영상 깊이 점'); axB.scatter((G - c0) @ t1, (G - c0) @ nn, s=.8, c='#333', lw=0, label='참값')
                     aa = [-3, 3]; hp = d['prior_height_m'][i]; axB.plot(aa, [hp, hp], c='#ff7f0e', lw=1, label='사전 정보')
-                    rm, hm = int(d['j_region'][i, 4]), float(d['target_h'][i, 4]); ro, ho = var_of(i, vo)
-                    if np.isfinite(hm): axB.plot([-1.5, 1.5], [hm, hm], c='#1f4e9c', lw=1.6, ls='--', label='본 방법 목표')
+                    rm, hm = (int(d['j_region'][i, 4]), float(d['target_h'][i, 4])) if vb == '본 방법' else var_of(i, vb); ro, ho = var_of(i, vo)
+                    if np.isfinite(hm): axB.plot([-1.5, 1.5], [hm, hm], c='#1f4e9c', lw=1.6, ls='--', label=f'{vb} 목표')
                     if np.isfinite(ho): axB.plot([-1.5, 1.5], [ho, ho], c='#8e44ad', lw=1.6, ls=':', label=f'{lab} 목표')
                     axB.set_xlim(-3, 3); axB.set_ylim(-3, 3); axB.set_aspect('equal'); axB.tick_params(labelsize=5); axB.set_title('나. 단면 ±0.15 m', fontsize=6.5)
                     if r_ == 0: axB.legend(fontsize=4.5, loc='lower left', markerscale=3, frameon=False)
                     cs = CASE.get(int(d['case'][i]), '네 경우 밖') if d['case'][i] >= 0 else '없음'
-                    line = f"{b.replace('DEBY_LOD2_', '')} · {cs} · 본 방법 {JUD.get(rm)} / {lab} {JUD.get(ro)}\nd {d['d_for_check'][i]:.2f} L {d['L_m'][i]:.2f} s_P {d['s_P'][i]:.2f} s_M {d['s_M'][i]:.2f} t {d['t'][i]:.2f}"
+                    line = f"{b.replace('DEBY_LOD2_', '')} · {cs} · {vb} {JUD.get(rm)} / {lab} {JUD.get(ro)}\nd {d['d_for_check'][i]:.2f} L {d['L_m'][i]:.2f} s_P {d['s_P'][i]:.2f} s_M {d['s_M'][i]:.2f} t {d['t'][i]:.2f}"
                     axB.set_xlabel(line, fontsize=5); meta.append(dict(type=kind, building=b, area_m2=a, gt_points=len(pts), patches=len(ug), section_patch=int(i), view=None if j is None else P7.cam().names[j], line=line)); r_ += 1
-            for k in range(r_, 6): axs[k, 0].axis('off'); axs[k, 1].axis('off')
-            fig.suptitle(f"{'LoD2' if prior == 'LoD2' else '항공 LiDAR'}: {lab}와 본 방법의 목표 맞음이 달라진 자리 (넓이 큰 차례, 한 건물에서 하나)", fontsize=8)
-            fig.tight_layout(rect=[0, 0, 1, .98]); save(fig, f"fig4_changed_{'old2' if lab == '기존 2' else 'old3'}_{prior}", dict(figure=4, prior=prior, pair=[vo, '본 방법'], rule='GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625', clusters=meta))
+            for k in range(r_, nr): axs[k, 0].axis('off'); axs[k, 1].axis('off')
+            fig.suptitle(f"{'LoD2' if prior == 'LoD2' else '항공 LiDAR'}: {lab}와 {vb}의 목표 맞음이 달라진 자리 (넓이 큰 차례, 한 건물에서 하나)", fontsize=8)
+            fig.tight_layout(rect=[0, 0, 1, .98]); folder.mkdir(parents=True, exist_ok=True); fig.savefig(folder/f'{fname}.png', dpi=300, facecolor='white', bbox_inches='tight'); plt.close(fig); dump(folder/f'{fname}.json', dict(at=now(), scientific_verdict=None, figure=fname, prior=prior, pair=[vo, vb], rule='GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625', clusters=meta))  #
             print('FIG4', prior, lab, flush=True)
+def fig9():
+    """덧붙임 1 확인 9 정성: 기준 10 %·무늬 8 이 본값과 달라 목표가 맞게 바뀐 곳 둘, 틀리게 바뀐 곳 둘."""
+    for prior in ['LoD2', 'ALS']:
+        changed(prior, [('본 방법', '본값', v, [('맞게 바뀜', 'b_only'), ('틀리게 바뀜', 'o_only')], 2, f'figA9_changed_{tag}_{prior}', FIG/'addendum1') for v, tag in [('고정 2 기준 10 %', 't10'), ('고정 4 무늬 8', 'tex8')]])
 if __name__ == '__main__':
     for f in sys.argv[1:]: globals()[f]()
     progress('그림 ' + ', '.join(sys.argv[1:]) + ' 끝')

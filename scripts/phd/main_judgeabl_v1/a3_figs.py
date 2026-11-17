@@ -37,11 +37,11 @@ def fig1(S, fus_all):
                     three_region={v: {c: float(q3.loc[v, f'ok_{c}']) for c in xs} for v, _, _ in it3 if v in q3.index}, n={c: int(b[f'n_{c}']) for c in CN}, source='tables/s_all_variants.csv')
         save(fig, f'fig1_old_vs_method_{prior}', meta)
 def fig2(S):
-    groups = [('검출', '검출'), ('식별', '식별'), ('유보', '유보'), ('처리', '처리'), ('가시성', '가시성')]
+    groups = [('검출', '검출'), ('식별', '식별'), ('유보', '유보'), ('처리', '처리'), ('가시성', '가시성')] + ([('고정', '고정 값')] if (S['family'] == 'fix').any() else [])
     for prior in ['LoD2', 'ALS']:
         q = rows(S, prior); b = q.loc['본 방법']
-        vs = {g: sorted([v for v in q.index if v.startswith(g + ' ')]) for g, _ in groups}
-        fig, axs = plt.subplots(1, 5, figsize=(13, 3.6), sharey=True, gridspec_kw=dict(width_ratios=[max(len(vs[g]), 1) + .6 for g, _ in groups]))
+        vs = {g: sorted([v for v in q.index if v.startswith(g + ' ')], key=lambda v: (int(v.split(' ')[1]) if v.split(' ')[1].isdigit() else 0, v)) for g, _ in groups}
+        fig, axs = plt.subplots(1, len(groups), figsize=(13 + 4*(len(groups) > 5), 3.6), sharey=True, gridspec_kw=dict(width_ratios=[max(len(vs[g]), 1) + .6 for g, _ in groups]))
         meta = dict(figure=2, prior=prior, surface=PSURF[prior], base={c: float(b[f'ok_{c}']) for c in CN}, values={})
         for ax, (g, lab) in zip(axs, groups):
             for c in CN: ax.axhline(b[f'ok_{c}'], color=CCOL[c], lw=.8, ls='--', alpha=.8)

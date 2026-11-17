@@ -1,0 +1,53 @@
+{
+ "at": "2026-11-17T21:19:54+09:00",
+ "scientific_verdict": null,
+ "figure": "figA9_changed_t10_ALS",
+ "prior": "ALS",
+ "pair": [
+  "본 방법",
+  "고정 2 기준 10 %"
+ ],
+ "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "clusters": [
+  {
+   "type": "맞게 바뀜",
+   "building": "DEBY_LOD2_4959326",
+   "area_m2": 2.375,
+   "gt_points": 114,
+   "patches": 24,
+   "section_patch": 575707,
+   "view": "DJI_20241217091121_0103_D.JPG",
+   "line": "4959326 · 사전정보 오류 · 고정 2 기준 10 % 영상 깊이 사용 / 본값 사전정보 사용\nd -4.59 L 0.12 s_P 0.29 s_M 0.72 t 0.24"
+  },
+  {
+   "type": "맞게 바뀜",
+   "building": "DEBY_LOD2_4907519",
+   "area_m2": 1.3125,
+   "gt_points": 105,
+   "patches": 20,
+   "section_patch": 149436,
+   "view": "DJI_20241217084347_0037_D.JPG",
+   "line": "4907519 · 사전정보 오류 · 고정 2 기준 10 % 영상 깊이 사용 / 본값 사전정보 사용\nd -0.33 L 0.11 s_P 0.20 s_M 0.67 t 0.18"
+  },
+  {
+   "type": "틀리게 바뀜",
+   "building": "DEBY_LOD2_4906986",
+   "area_m2": 4.375,
+   "gt_points": 373,
+   "patches": 61,
+   "section_patch": 461860,
+   "view": null,
+   "line": "4906986 · 영상 깊이 오류 · 고정 2 기준 10 % 영상 깊이 사용 / 본값 사전정보 사용\nd -0.23 L 0.10 s_P 0.19 s_M 0.37 t 0.18"
+  },
+  {
+   "type": "틀리게 바뀜",
+   "building": "DEBY_LOD2_4959326",
+   "area_m2": 3.1875,
+   "gt_points": 115,
+   "patches": 31,
+   "section_patch": 570409,
+   "view": "DJI_20241217091117_0101_D.JPG",
+   "line": "4959326 · 사전정보 오류 · 고정 2 기준 10 % 사전정보 사용 / 본값 영상 깊이 사용\nd -6.86 L 0.26 s_P -0.00 s_M 0.29 t 0.24"
+  }
+ ]
+}

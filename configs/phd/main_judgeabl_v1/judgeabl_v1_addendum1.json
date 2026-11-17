@@ -1,0 +1,38 @@
+{
+ "task_id": "PHD-MAIN-JUDGEABL-v1 addendum 1",
+ "order": "판단 비교·절제 덧붙임 1 (확정, 2026-11-17 사용자 확인)",
+ "scientific_verdict": null,
+ "no_training": true, "no_rule_change": true, "device": "CPU only (same limits as the main order)",
+ "note_order": "the main order's bundle 가 and 나 were both delivered before this addendum arrived; the addendum runs after them",
+ "gt_use": "checks 1-8: no GT; the population is in-limit patches (JC base geometry code 0, base judgment 일치) and photo points whose member patches are all inside L (JC all_within). check 9: GT only for scoring (main order 1.7)",
+ "weights": "area-weighted 10/25/50/75/90 % (JC quantile rule); per prior unit (LoD2 roof, LoD2 wall, ALS roof) and search region plus pooled",
+ "inputs": {
+  "patch": "JP patch_<prior>.npz (JC values in JC gid order): centre, normal, kind, area, region, building, face (JC place), place, d_for_check, r_m, u_M, sigma_P, n, geometry, texture_P",
+  "ring_counts": "WIDEN0 patch_values (+ holdout/patch_values) <tile>__<prior>__R1.5.npz joined by patch_id, only for patches with geometry_raw widen0_same_centre (JC base u_M = WIDEN0 u for those): mvs_a_n_ring (points used, capped 8000), mvs_a_ring_found (found), mvs_a_n_inner_all, mvs_a_s0 (LMedS ring-plane scale = ring scatter s); ALS prior also als_* for sigma_P",
+  "ring_sens": "JC geometry/ring_1.0, ring_3.0, same_face_ring u_M",
+  "photo": "JP photo_<prior>.npz (all_within, kind, region, area, s_P, s_M, texture)",
+  "t": "JC/JP t per search region x prior x kind"
+ },
+ "check1": {
+  "variogram": "in-limit patches, value e = d - r; pairs within the same building and the same JC face (place face); 3-D centre distance bins 0.25 m over 0-6 m; per prior unit x search region at most 2,000,000 random pairs (anchors drawn with seed 20261117, all neighbours within 6 m of each anchor, then a random subset); semivariance per bin = NMAD(e_i - e_j)^2 / 2; plateau = mean of the bins in 4-6 m; correlation distance = first bin centre where the semivariance >= 95 % (and 50 %) of the plateau; 'not reached' if none; also first bin / plateau",
+  "condition_a": "(0.5 + R) / 2 >= the 95 % correlation distance of the ALS roof unit (image-depth error) of the same search region; LoD2 units reported on their own variogram too",
+  "condition_b": "sigma_face = s / sqrt(N) * sqrt(1 + 4 * 0.5^2 / (R^2 + 0.5^2)); s = mvs_a_s0, N = mvs_a_n_ring at R = 1.5; for R = 1.0 and 3.0 N = min(8000, ring_found * (R^2 - 0.25) / (1.5^2 - 0.25)) and s unchanged (approximation, stated); N_eff = min(N, pi (R^2 - 0.25) / L50^2) with L50 = 50 % correlation distance of the unit and region; condition sigma_face <= u_M / 3 (u_M of that radius: JC base for 1.5, JC ring_1.0 / ring_3.0); reference rows 20 s and 25 s, share 25 s <= 1.5 m",
+  "condition_c": "distance from the patch centre to the nearest boundary patch of the same building and face (a patch of the face with fewer than 8 same-face patches within 0.36 m); condition distance >= R; compare share >= 1.5 m with JC place '면 안쪽'",
+  "radii": [1.0, 1.5, 3.0],
+  "stability": "u_M(1.0)/u_M(1.5), u_M(3.0)/u_M(1.5), u_M(same face)/u_M(1.5) by place"
+ },
+ "check2": {"density": "n / (pi r^2), r = 0.075 m roof, 0.125 m wall; with and without n < 4", "rule": "smallest r with P(Poisson(rho pi r^2) >= 4) = 0.95 (lambda = 7.754) at the 10 % and 50 % density"},
+ "check3": {"d": "|d| of n >= 4 patches (all geometry codes); 90, 99, 99.9 % and max; share within 1 m of the length end (roof 9-10 m, wall 4-5 m); the 10 m wall cylinder = not stored for the campus patches -> 확인 불가 unless found"},
+ "check4": {"ring_bins": [20, 40, 80, 160], "inner_bins": [5, 10, 20, 40], "fit_bins": [20, 40, 80], "building": "agreement_for_calibration patches per building (JC geometry/base) n_b, NMAD of d - r; SE = 1.2533 NMAD / sqrt(n_b); n_eff = min(n_b, building agreement area / L50^2); n_needed = (1.2533 NMAD / (sigma_W / 3))^2"},
+ "check5": {"bins": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20], "rule1": "smallest texture bin (lower edge) from which the share of s_P < t is below 10 % in every higher bin", "rule2": "sample photo points: noise per image pair = SD of the residual after a linear gain/offset fit of one view's patch intensities to the other's / sqrt(2); sigma_n = median over pairs; texture threshold = sigma_n sqrt(t / (1 - t)) per region (t <= 0 -> 구할 수 없음)"},
+ "sample": {"photo_points": 3000, "per": "prior", "seed": 20261117, "allocation": "proportional to the area of all_within photo points per search region", "code": "JC photo_cameras.Cameras projection and the photo_score.py patch grid (25 x 25, 2 cm, pyramid level by ground sample distance) re-implemented on CPU for the sample only"},
+ "check9": {
+  "variants": {"고정 1 기준 1 %": "t = area-weighted 1 % of s_P over the same all_within sample as JC t (per region x prior x kind)", "고정 2 기준 10 %": "10 %", "고정 3 무늬 3": "photo code 6 when both texture < 3 (instead of 5)", "고정 4 무늬 8": "texture < 8"},
+  "texture_3_missing_scores": "photo points that leave code 6 but have no stored s_P or s_M keep the base code (area recorded)",
+  "rest": "photo code order, decision table, default, targets, all other values = JC base; then the main order's scoring",
+  "jc_sensitivity": "JC judge/<ring_1.0|ring_3.0|z_1.645|z_2.576|centre_shift|building_r|same_face_ring> method region and target_h read and scored the same way (names 고정 5..11)",
+  "check": "기준 5 % and 무늬 5 recomputed = base",
+  "qualitative": "기준 10 % and 무늬 8 vs base: GT points whose target-ok changed, 0.25 m cells joined within 0.6 m per building, two largest became-right and two largest became-wrong (one per building), layout of main figure 4"
+ },
+ "reduce_when_late": ["check 8", "check 7", "check 6", "check 9 qualitative figure"]
+}

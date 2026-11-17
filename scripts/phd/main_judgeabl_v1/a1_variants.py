@@ -176,6 +176,10 @@ def main(prior):
     # ---- 4.6 참고 줄 (a4_lr.py 가 만든 판정; 참값으로 학습)
     if (O/f'lr_{prior}.npz').exists():
         z = loadz(O/f'lr_{prior}.npz', ['region', 'reason', 'target_h']); add('참고 참값으로 학습한 결합', z['region'], z['reason'], z['target_h'], family='ref')
+    # ---- 덧붙임 1 확인 9 (b9_variants.py; 고정 값을 바꾼 판, JC 민감도 판)
+    if (O/f'extra_variants_{prior}.npz').exists():
+        z = np.load(O/f'extra_variants_{prior}.npz')
+        for k, nm in enumerate(z['names']): add(str(nm), z['region'][k], z['reason'][k], z['target_h'][k], family='fix')
     print('VARIANTS', prior, len(V), round(T.s()), flush=True)
 
     # ================= 채점 (참값)

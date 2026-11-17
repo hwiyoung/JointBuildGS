@@ -1,0 +1,53 @@
+{
+ "at": "2026-11-17T21:19:29+09:00",
+ "scientific_verdict": null,
+ "figure": "figA9_changed_tex8_LoD2",
+ "prior": "LoD2",
+ "pair": [
+  "본 방법",
+  "고정 4 무늬 8"
+ ],
+ "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "clusters": [
+  {
+   "type": "맞게 바뀜",
+   "building": "DEBY_LOD2_4906968",
+   "area_m2": 0.5,
+   "gt_points": 14,
+   "patches": 4,
+   "section_patch": 1507356,
+   "view": "DJI_20241217103003_0027_D.JPG",
+   "line": "4906968 · 사전정보 오류 · 고정 4 무늬 8 영상 깊이 사용 / 본값 사전정보 사용\nd 3.70 L 0.35 s_P 0.05 s_M -0.09 t 0.01"
+  },
+  {
+   "type": "맞게 바뀜",
+   "building": "DEBY_LOD2_60042",
+   "area_m2": 0.375,
+   "gt_points": 22,
+   "patches": 4,
+   "section_patch": 1427737,
+   "view": "DJI_20241217090855_0030_D.JPG",
+   "line": "60042 · 사전정보 오류 · 고정 4 무늬 8 영상 깊이 사용 / 본값 사전정보 사용\nd 2.57 L 0.40 s_P 0.14 s_M -0.11 t 0.01"
+  },
+  {
+   "type": "틀리게 바뀜",
+   "building": "DEBY_LOD2_4907516",
+   "area_m2": 0.5,
+   "gt_points": 22,
+   "patches": 4,
+   "section_patch": 252826,
+   "view": "DJI_20241217095005_0029_D.JPG",
+   "line": "4907516 · 두 자료 모두 유효 · 고정 4 무늬 8 영상 깊이 사용 / 본값 사전정보 사용\nd 2.04 L 0.45 s_P 0.48 s_M -0.01 t 0.00"
+  },
+  {
+   "type": "틀리게 바뀜",
+   "building": "DEBY_LOD2_60042",
+   "area_m2": 0.5,
+   "gt_points": 24,
+   "patches": 4,
+   "section_patch": 1483786,
+   "view": "DJI_20241217090913_0039_D.JPG",
+   "line": "60042 · 두 자료 모두 유효 · 고정 4 무늬 8 영상 깊이 사용 / 본값 사전정보 사용\nd 1.19 L nan s_P 0.16 s_M -0.03 t 0.01"
+  }
+ ]
+}
