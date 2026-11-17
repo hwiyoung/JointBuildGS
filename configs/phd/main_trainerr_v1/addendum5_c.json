@@ -1,0 +1,15 @@
+{
+ "task": "PHD-MAIN-TRAINERR-v1 addendum 5, work ma: photo-loss difference with / without the seed (order 7, last row). User approved 2026-11-17 ('진행하자'). No training, renders only.",
+ "scenes": {
+  "B0_b10__LoD2": {"record_run": "TRAINLOG tl_B0_b10_LoD2_s0 (addendum-4 work ra RECORD)", "images": "PHD-MAIN-STAGE0-v1/fork_inputs/s61/B0_b10/scene_LoD2/images"},
+  "B173nb_b10__ALS": {"record_run": "TRAINLOG tl_B173nb_b10_ALS_s0 (addendum-4 work ra RECORD)", "images": "PHD-MAIN-STAGE0-v1/fork_inputs/s61/B173nb_b10/scene_ALS/images"}
+ },
+ "groups": "same as tables/ma_seeds: wrong-target seeds deleted, control (kept-point) seeds deleted, control seeds surviving to 30,000; seeds and deletion iterations from payload addendum5/ma/seeds_<stem>.npz",
+ "state_rule": "same as tables/ma_seeds: deleted -> the last <reset>_pre_reset scene dump before the deletion; surviving -> 3000_pre_reset; the seed Gaussian (uid at 0) must be alive in that dump",
+ "sample_per_group": 150,
+ "sample_rng_seed": 0,
+ "views": "every training view of the maps index whose image contains the seed centre in front of the camera (same as work ma 'views')",
+ "loss": "training photometric loss of fork r31 train.py 885-886: (1 - 0.2) * L1 + 0.2 * (1 - SSIM), render with black background (white_background False), no appearance model (jbgs_appearance off), image clamp 0..1",
+ "difference": "dL = L(seed removed: its opacity logit set to -30) - L(scene as dumped), per view; reported as dL * H * W (pixel-sum units) and its sign; dL > 0: removing the seed makes the render farther from the photo",
+ "scientific_verdict": null
+}

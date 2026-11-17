@@ -1,0 +1,179 @@
+{
+ "rows": [
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "틀린 목표 씨앗 · 제거됨",
+   "eligible": 1222,
+   "sampled": 150,
+   "seeds_with_views": 150,
+   "small_group": false,
+   "views": 18396,
+   "reset_used": {
+    "3000": 95,
+    "6000": 31,
+    "9000": 15,
+    "12000": 9
+   },
+   "dL_pix_per_view_q": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "view_removal_worse_pct": 11.420961078495324,
+   "view_removal_better_pct": 9.920634920634921,
+   "view_no_change_pct": 78.65840400086975,
+   "dL_pix_per_seed_sum_q": [
+    -0.5088043212890625,
+    0.3250694274902344,
+    2.510101318359375
+   ],
+   "seed_removal_worse_pct": 59.333333333333336,
+   "rule": "dL = loss(seed removed) - loss(as dumped), training photo loss 0.8 L1 + 0.2 (1-SSIM), x H*W; > 0: removing the seed moves the render away from the photo"
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "대조: 지킨 점 씨앗 · 제거됨",
+   "eligible": 1298,
+   "sampled": 150,
+   "seeds_with_views": 150,
+   "small_group": false,
+   "views": 17603,
+   "reset_used": {
+    "3000": 84,
+    "6000": 54,
+    "9000": 5,
+    "12000": 7
+   },
+   "dL_pix_per_view_q": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "view_removal_worse_pct": 10.316423336931205,
+   "view_removal_better_pct": 10.145997841277055,
+   "view_no_change_pct": 79.53757882179174,
+   "dL_pix_per_seed_sum_q": [
+    -0.6275253295898438,
+    0.0791473388671875,
+    1.1914501190185547
+   ],
+   "seed_removal_worse_pct": 54.0,
+   "rule": "dL = loss(seed removed) - loss(as dumped), training photo loss 0.8 L1 + 0.2 (1-SSIM), x H*W; > 0: removing the seed moves the render away from the photo"
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "대조: 지킨 점 씨앗 · 살아남음",
+   "eligible": 517,
+   "sampled": 150,
+   "seeds_with_views": 150,
+   "small_group": false,
+   "views": 15897,
+   "reset_used": {
+    "3000": 150
+   },
+   "dL_pix_per_view_q": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "view_removal_worse_pct": 13.744731710385608,
+   "view_removal_better_pct": 16.59432597345411,
+   "view_no_change_pct": 69.66094231616027,
+   "dL_pix_per_seed_sum_q": [
+    -0.7547264099121094,
+    0.06218719482421875,
+    1.629587173461914
+   ],
+   "seed_removal_worse_pct": 51.33333333333333,
+   "rule": "dL = loss(seed removed) - loss(as dumped), training photo loss 0.8 L1 + 0.2 (1-SSIM), x H*W; > 0: removing the seed moves the render away from the photo"
+  },
+  {
+   "stem": "B173nb_b10__ALS",
+   "group": "틀린 목표 씨앗 · 제거됨",
+   "eligible": 1232,
+   "sampled": 150,
+   "seeds_with_views": 150,
+   "small_group": false,
+   "views": 9024,
+   "reset_used": {
+    "3000": 60,
+    "6000": 69,
+    "9000": 6,
+    "12000": 15
+   },
+   "dL_pix_per_view_q": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "view_removal_worse_pct": 14.295212765957446,
+   "view_removal_better_pct": 11.402925531914894,
+   "view_no_change_pct": 74.30186170212765,
+   "dL_pix_per_seed_sum_q": [
+    -0.21200180053710938,
+    0.2854957580566406,
+    3.189920425415039
+   ],
+   "seed_removal_worse_pct": 62.66666666666667,
+   "rule": "dL = loss(seed removed) - loss(as dumped), training photo loss 0.8 L1 + 0.2 (1-SSIM), x H*W; > 0: removing the seed moves the render away from the photo"
+  },
+  {
+   "stem": "B173nb_b10__ALS",
+   "group": "대조: 지킨 점 씨앗 · 제거됨",
+   "eligible": 1142,
+   "sampled": 150,
+   "seeds_with_views": 150,
+   "small_group": false,
+   "views": 9905,
+   "reset_used": {
+    "3000": 57,
+    "6000": 64,
+    "9000": 14,
+    "12000": 15
+   },
+   "dL_pix_per_view_q": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "view_removal_worse_pct": 15.527511357900051,
+   "view_removal_better_pct": 14.46744068652196,
+   "view_no_change_pct": 70.005047955578,
+   "dL_pix_per_seed_sum_q": [
+    -0.8677940368652344,
+    0.0791473388671875,
+    1.3681182861328125
+   ],
+   "seed_removal_worse_pct": 57.99999999999999,
+   "rule": "dL = loss(seed removed) - loss(as dumped), training photo loss 0.8 L1 + 0.2 (1-SSIM), x H*W; > 0: removing the seed moves the render away from the photo"
+  },
+  {
+   "stem": "B173nb_b10__ALS",
+   "group": "대조: 지킨 점 씨앗 · 살아남음",
+   "eligible": 478,
+   "sampled": 150,
+   "seeds_with_views": 150,
+   "small_group": false,
+   "views": 10413,
+   "reset_used": {
+    "3000": 150
+   },
+   "dL_pix_per_view_q": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "view_removal_worse_pct": 17.862287525208874,
+   "view_removal_better_pct": 14.712378757322577,
+   "view_no_change_pct": 67.42533371746855,
+   "dL_pix_per_seed_sum_q": [
+    -0.7094993591308594,
+    0.4635772705078125,
+    2.4818344116210938
+   ],
+   "seed_removal_worse_pct": 61.33333333333333,
+   "rule": "dL = loss(seed removed) - loss(as dumped), training photo loss 0.8 L1 + 0.2 (1-SSIM), x H*W; > 0: removing the seed moves the render away from the photo"
+  }
+ ],
+ "scientific_verdict": null
+}
