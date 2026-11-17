@@ -1,0 +1,86 @@
+{
+  "note": "order v2 3.5 row 2: elongation min(scale)/max(scale) of every saved file of cells_ALS_s0_cell3 (point_cloud.ply and jbgs_complete checkpoints), shares < 0.01 and < 0.1",
+  "rows": [
+    {
+      "group": "cells_ALS_s0_cell3",
+      "run": "cell3/a1",
+      "kind": "stopped",
+      "iteration": 7000,
+      "file": "point_cloud.ply",
+      "gaussians": 3085376,
+      "elong_lt_001": 7.940685349208654e-05,
+      "elong_lt_01": 0.08413658497376009,
+      "elong_q01_q10_q50": [
+        0.04356749355792999,
+        0.1097247377038002,
+        0.40354418754577637
+      ],
+      "status": "있음"
+    },
+    {
+      "group": "cells_ALS_s0_cell3",
+      "run": "cell3/a1",
+      "kind": "stopped",
+      "iteration": 10600,
+      "file": "checkpoint.pth",
+      "gaussians": 5150794,
+      "elong_lt_001": 0.09979296395856639,
+      "elong_lt_01": 0.26522163379082914,
+      "elong_q01_q10_q50": [
+        0.000499650021083653,
+        0.010339691769331716,
+        0.23578424751758575
+      ],
+      "status": "있음"
+    },
+    {
+      "group": "cells_ALS_s0_cell3",
+      "run": "cellsef_ALS_s0_cell3/a2",
+      "kind": "finished",
+      "iteration": 15000,
+      "file": "point_cloud.ply",
+      "gaussians": 6423189,
+      "elong_lt_001": 0.002263050332163665,
+      "elong_lt_01": 0.31654167423689383,
+      "elong_q01_q10_q50": [
+        0.012900207825005054,
+        0.04018971249461175,
+        0.17882490158081055
+      ],
+      "status": "있음"
+    },
+    {
+      "group": "cells_ALS_s0_cell3",
+      "run": "cellsef_ALS_s0_cell3/a2",
+      "kind": "finished",
+      "iteration": 30000,
+      "file": "point_cloud.ply",
+      "gaussians": 6423189,
+      "elong_lt_001": 0.0042963082668126375,
+      "elong_lt_01": 0.3733467908230631,
+      "elong_q01_q10_q50": [
+        0.012696684412658215,
+        0.03557389974594116,
+        0.14588381350040436
+      ],
+      "status": "있음"
+    },
+    {
+      "group": "cells_ALS_s0_cell3",
+      "run": "cellsef_ALS_s0_cell3/a2",
+      "kind": "finished",
+      "iteration": 7000,
+      "file": "point_cloud.ply",
+      "gaussians": 3080451,
+      "elong_lt_001": 5.096656301301335e-05,
+      "elong_lt_01": 0.08695382591704916,
+      "elong_q01_q10_q50": [
+        0.04011156037449837,
+        0.10783468931913376,
+        0.4013841450214386
+      ],
+      "status": "있음"
+    }
+  ],
+  "scientific_verdict": null
+}

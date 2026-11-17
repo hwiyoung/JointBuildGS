@@ -1,0 +1,194 @@
+{
+  "note": "order v2 3.5 row 6: command.json of the stopped attempt against the final attempt of the nearest finished run, line by line (run and attempt names masked); entry-level differences are in the report",
+  "rows": [
+    {
+      "group": "campus30k_ALS_s0",
+      "run": "campus30k_ALS_s0/a1",
+      "nearest": "campusef30k_ALS_s0/a2",
+      "differences": [
+        "-jbgs-trainunit-campusef30k-als-s0-a2",
+        "+jbgs-trainunit-campus30k-als-s0-a1",
+        "-device=1",
+        "+device=0",
+        "-campusef30k_ALS_s0",
+        "+campus30k_ALS_s0",
+        "-/tu/runs/ef/campusef30k_ALS_s0/attemptN/model",
+        "+/tu/runs/campus/campus30k_ALS_s0/attemptN/model"
+      ]
+    },
+    {
+      "group": "campus30k_ALS_s0",
+      "run": "campus30k_ALS_s0/a2",
+      "nearest": "campusef30k_ALS_s0/a2",
+      "differences": [
+        "-jbgs-trainunit-campusef30k-als-s0-a2",
+        "+jbgs-trainunit-campus30k-als-s0-a2",
+        "-device=1",
+        "+device=0",
+        "-campusef30k_ALS_s0",
+        "+campus30k_ALS_s0",
+        "-/tu/runs/ef/campusef30k_ALS_s0/attemptN/model",
+        "+/tu/runs/campus/campus30k_ALS_s0/attemptN/model"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell0",
+      "run": "cell0/a1",
+      "nearest": "cellsef_ALS_s0_cell0/a2",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell0-a2",
+        "+jbgs-trainunit-cells-als-s0-cell0-a1",
+        "-cellsef_ALS_s0_cell0",
+        "+cells_ALS_s0_cell0",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell0/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell0/attemptN/model",
+        "-/tu/runs/ef/cell0ef_ALS_s0/attemptN/model/jbgs_complete/iteration_15000/checkpoint.pth"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell0",
+      "run": "cell0/a2",
+      "nearest": "cellsef_ALS_s0_cell0/a2",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell0-a2",
+        "+jbgs-trainunit-cells-als-s0-cell0-a2",
+        "-device=1",
+        "+device=0",
+        "-cellsef_ALS_s0_cell0",
+        "+cells_ALS_s0_cell0",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell0/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell0/attemptN/model",
+        "-/tu/runs/ef/cell0ef_ALS_s0/attemptN/model/jbgs_complete/iteration_15000/checkpoint.pth",
+        "+/tu/runs/cells/cells_ALS_s0/cell0/attemptN/model/jbgs_complete/iteration_12700/checkpoint.pth"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell0",
+      "run": "cell0/a3",
+      "nearest": "cellsef_ALS_s0_cell0/a2",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell0-a2",
+        "+jbgs-trainunit-cells-als-s0-cell0-a3",
+        "-cellsef_ALS_s0_cell0",
+        "+cells_ALS_s0_cell0",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell0/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell0/attemptN/model",
+        "-/tu/runs/ef/cell0ef_ALS_s0/attemptN/model/jbgs_complete/iteration_15000/checkpoint.pth",
+        "+/tu/runs/cells/cells_ALS_s0/cell0/attemptN/model/jbgs_complete/iteration_13200/checkpoint.pth"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell0",
+      "run": "cell0/a4",
+      "nearest": "cellsef_ALS_s0_cell0/a2",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell0-a2",
+        "+jbgs-trainunit-cells-als-s0-cell0-a4",
+        "-cellsef_ALS_s0_cell0",
+        "+cells_ALS_s0_cell0",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell0/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell0/attemptN/model",
+        "-/tu/runs/ef/cell0ef_ALS_s0/attemptN/model/jbgs_complete/iteration_15000/checkpoint.pth",
+        "+/tu/runs/cells/cells_ALS_s0/cell0/attemptN/model/jbgs_complete/iteration_13200/checkpoint.pth"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell1",
+      "run": "cell1/a1",
+      "nearest": "cellsef_ALS_s0_cell1/a3",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell1-a3",
+        "+jbgs-trainunit-cells-als-s0-cell1-a1",
+        "-device=1",
+        "+device=0",
+        "-cellsef_ALS_s0_cell1",
+        "+cells_ALS_s0_cell1",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell1/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell1/attemptN/model"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell2",
+      "run": "cell2/a1",
+      "nearest": "cellsef_ALS_s0_cell2/a3",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell2-a3",
+        "+jbgs-trainunit-cells-als-s0-cell2-a1",
+        "-cellsef_ALS_s0_cell2",
+        "+cells_ALS_s0_cell2",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell2/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell2/attemptN/model"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell2",
+      "run": "cell2/a2",
+      "nearest": "cellsef_ALS_s0_cell2/a3",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell2-a3",
+        "+jbgs-trainunit-cells-als-s0-cell2-a2",
+        "-cellsef_ALS_s0_cell2",
+        "+cells_ALS_s0_cell2",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell2/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell2/attemptN/model",
+        "+--jbgs_resume_full",
+        "+/tu/runs/cells/cells_ALS_s0/cell2/attemptN/model/jbgs_complete/iteration_15000/checkpoint.pth"
+      ]
+    },
+    {
+      "group": "cells_ALS_s0_cell3",
+      "run": "cell3/a1",
+      "nearest": "cellsef_ALS_s0_cell3/a2",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell3-a2",
+        "+jbgs-trainunit-cells-als-s0-cell3-a1",
+        "-device=0",
+        "+device=1",
+        "-cellsef_ALS_s0_cell3",
+        "+cells_ALS_s0_cell3",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell3/attemptN/model",
+        "+/tu/runs/cells/cells_ALS_s0/cell3/attemptN/model"
+      ]
+    },
+    {
+      "group": "cellsef_ALS_s0_cell1fix",
+      "run": "cellsef_ALS_s0_cell1fix/a1",
+      "nearest": "cellsef_ALS_s0_cell1/a3",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell1-a3",
+        "+jbgs-trainunit-cellsef-als-s0-cell1fix-a1",
+        "-cellsef_ALS_s0_cell1",
+        "+cellsef_ALS_s0_cell1fix",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell1/attemptN/model",
+        "+/tu/runs/ef/cellsef_ALS_s0_cell1fix/attemptN/model"
+      ]
+    },
+    {
+      "group": "cellsef_ALS_s0_cell1fix",
+      "run": "cellsef_ALS_s0_cell1fix/a2",
+      "nearest": "cellsef_ALS_s0_cell1/a3",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell1-a3",
+        "+jbgs-trainunit-cellsef-als-s0-cell1fix-a2",
+        "-cellsef_ALS_s0_cell1",
+        "+cellsef_ALS_s0_cell1fix",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell1/attemptN/model",
+        "+/tu/runs/ef/cellsef_ALS_s0_cell1fix/attemptN/model"
+      ]
+    },
+    {
+      "group": "cellsef_ALS_s0_cell1fix",
+      "run": "cellsef_ALS_s0_cell1fix/a3",
+      "nearest": "cellsef_ALS_s0_cell1/a3",
+      "differences": [
+        "-jbgs-trainunit-cellsef-als-s0-cell1-a3",
+        "+jbgs-trainunit-cellsef-als-s0-cell1fix-a3",
+        "-cellsef_ALS_s0_cell1",
+        "+cellsef_ALS_s0_cell1fix",
+        "-/tu/runs/ef/cellsef_ALS_s0_cell1/attemptN/model",
+        "+/tu/runs/ef/cellsef_ALS_s0_cell1fix/attemptN/model"
+      ]
+    }
+  ],
+  "scientific_verdict": null
+}

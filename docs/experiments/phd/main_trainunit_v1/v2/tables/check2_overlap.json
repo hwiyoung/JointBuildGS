@@ -1,0 +1,97 @@
+{
+ "task": "PHD-MAIN-TRAINUNIT-v1 v2 확인 2: ALS 판정 122 + 배경 33 = 155 vs LoD2 목록 154",
+ "sources": {
+  "code": "scripts/phd/main_trainunit_v1/tu_campus.py targets(): 사이트 행 building 169행 (raw['building'], TG/stage0_r1/inputs/<site>_<prior>.npz), 이름 기반 사이트 제외 136행, judged = set(U['building']) 194행, unjudged = all_b - judged 207행",
+  "targets_als": "TU1/targets/campus__ALS.npz, campus__ALS.json",
+  "targets_lod2": "TU1/targets/campus__LoD2.npz, campus__LoD2.json",
+  "lod2_list": "ART/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/inputs/lod2_buildings.json (154행, id 고유 154)",
+  "compute": "jointbuildgs:dev 컨테이너, CPU, 읽기 전용 마운트, np.load allow_pickle=False"
+ },
+ "finding": "ALS judged 122 = JUDGECHECK 행의 LoD2 id 121개 + 빈 문자열 '' 1개. 세 장면(B0_b10, R1rep_b10, B173nb_b10) ALS 사이트 행의 building 값이 모두 ''이라 ''가 판정 건물 하나로 셈에 들어갔다. ''는 LoD2 목록에 없으므로 unjudged = 154 - 121 = 33. 122 + 33 = 155는 ''를 건물로 센 결과이고, LoD2 건물만 세면 121 + 33 = 154.",
+ "ALS": {
+  "rows": 652991,
+  "judged_reported": 122,
+  "judged_distinct_values": 122,
+  "distinct_per_source": {
+   "0": 1,
+   "1": 1,
+   "2": 1,
+   "3": 121
+  },
+  "outside_list": [
+   {
+    "name": "",
+    "rows": 167866,
+    "source_counts": {
+     "0": 44994,
+     "1": 46215,
+     "2": 76657
+    },
+    "area_m2": 11192.395285628898
+   }
+  ],
+  "judged_lod2_ids": 121,
+  "unjudged": 33,
+  "check": "121 + 33 = 154"
+ },
+ "LoD2": {
+  "rows": 2604813,
+  "judged": 135,
+  "distinct_per_source": {
+   "0": 5,
+   "1": 2,
+   "2": 4,
+   "3": 124
+  },
+  "site_buildings": {
+   "0": [
+    "DEBY_LOD2_108580336",
+    "DEBY_LOD2_4959322",
+    "DEBY_LOD2_4959323",
+    "DEBY_LOD2_4959324",
+    "DEBY_LOD2_4959793"
+   ],
+   "1": [
+    "DEBY_LOD2_4906968",
+    "DEBY_LOD2_4906975"
+   ],
+   "2": [
+    "DEBY_LOD2_108580335",
+    "DEBY_LOD2_4959325",
+    "DEBY_LOD2_4959326",
+    "DEBY_LOD2_4959460"
+   ]
+  },
+  "outside_list": [],
+  "unjudged": 19,
+  "check": "사이트 건물 11 + JUDGECHECK 124 = 135 (겹침 0), 135 + 19 = 154"
+ },
+ "side_effects": {
+  "name_based_site_drop_ALS": "ALS 사이트 건물 이름이 ''이라 136행 이름 기반 제외가 아무것도 빼지 못함 (campus__ALS.json site_building_overlap_dropped patches 0). 겹침은 1.0 m 공간 제외(addendum1)로만 걸러짐 (16,715 패치, 1,106.3 m2). LoD2는 이름 기반으로 DEBY_LOD2_4959325 62,871 패치를 뺌.",
+  "DEBY_LOD2_4959325": "LoD2에서는 B173nb_b10 사이트 건물(source 2). ALS에서는 공간 제외 뒤에도 JUDGECHECK 행 6,246개가 남아 121개 안에 있음.",
+  "als_unjudged_minus_lod2_unjudged": {
+   "count": 14,
+   "lod2_site_buildings": [
+    "DEBY_LOD2_108580335",
+    "DEBY_LOD2_108580336",
+    "DEBY_LOD2_4906968",
+    "DEBY_LOD2_4906975",
+    "DEBY_LOD2_4959322",
+    "DEBY_LOD2_4959323",
+    "DEBY_LOD2_4959324",
+    "DEBY_LOD2_4959326",
+    "DEBY_LOD2_4959460",
+    "DEBY_LOD2_4959793"
+   ],
+   "others": [
+    "DEBY_LOD2_108247714",
+    "DEBY_LOD2_42364663",
+    "DEBY_LOD2_4959342",
+    "DEBY_LOD2_60098"
+   ],
+   "note": "ALS 배경 33 = LoD2 배경 19 전부 + 14. 14 중 10은 LoD2 기준 사이트 건물로, ALS에서는 이름 '' 사이트 행으로 대상에 들어 있으나 이름이 없어 배경으로 셈해짐. 나머지 4는 ALS JUDGECHECK에 행이 없음."
+  },
+  "lod2_unjudged_subset_of_als_unjudged": true
+ },
+ "scientific_verdict": null
+}

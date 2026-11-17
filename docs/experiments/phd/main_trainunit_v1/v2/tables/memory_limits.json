@@ -1,0 +1,492 @@
+{
+  "note": "order v2 2.1 no. 4: every attempt of v1 and v2: container memory limit (--memory of command.json), recorded peak RSS (jbgs_trace), cgroup peak (v2 trace1000)",
+  "rows": [
+    {
+      "run": "B0_b10/seed1_ALS/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 16.61181640625,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "B0_b10/seed1_LoD2/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 15.1556396484375,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "B173nb_b10/seed1_ALS/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 16.552021026611328,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "B173nb_b10/seed1_LoD2/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 17.97885513305664,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "R1rep_b10/seed1_ALS/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 17.45849609375,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "R1rep_b10/seed1_LoD2/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 17.51061248779297,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": 20700
+    },
+    {
+      "run": "R1rep_b10/seed1_LoD2/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 18.393444061279297,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "campus/_void/campus30k_ALS_s0__timerule_error_2311/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "64g",
+      "peak_rss_GiB": 33.54909133911133,
+      "cgroup_peak_GiB": null,
+      "status": "TIME_STOP_500",
+      "last_iteration": 500
+    },
+    {
+      "run": "campus/campus30k_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "64g",
+      "peak_rss_GiB": 33.79388427734375,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": 4800
+    },
+    {
+      "run": "campus/campus30k_ALS_s0/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "64g",
+      "peak_rss_GiB": null,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": null
+    },
+    {
+      "run": "cells/_void/cells_ALS_s0_cell1__timerule_error_2322/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.55440902709961,
+      "cgroup_peak_GiB": null,
+      "status": "TIME_STOP_500",
+      "last_iteration": 500
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell0/_void_addendum3_nan/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": null,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": null
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell0/_void_addendum3_nan/attempt3",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": null,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": null
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 15.432548522949219,
+      "cgroup_peak_GiB": null,
+      "status": "DEADLINE_STOP_SAVED",
+      "last_iteration": 12700
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell0/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 13.43747329711914,
+      "cgroup_peak_GiB": null,
+      "status": "DEADLINE_STOP_SAVED",
+      "last_iteration": 13200
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell0/attempt3",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 14.018646240234375,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": 13800
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell0/attempt4",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 14.046733856201172,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": 13600
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell1/_void_addendum3_nan/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": null,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": null
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell1/_void_addendum3_nan/attempt3",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": null,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": null
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell1/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.337303161621094,
+      "cgroup_peak_GiB": null,
+      "status": "DEADLINE_STOP_SAVED",
+      "last_iteration": 5600
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell2/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 33.055755615234375,
+      "cgroup_peak_GiB": null,
+      "status": "HEALTH_STOP",
+      "last_iteration": 15000
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell2/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 23.043746948242188,
+      "cgroup_peak_GiB": null,
+      "status": "DEADLINE_STOP_SAVED",
+      "last_iteration": 20600
+    },
+    {
+      "run": "cells/cells_ALS_s0/cell3/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 21.128822326660156,
+      "cgroup_peak_GiB": null,
+      "status": "DEADLINE_STOP_SAVED",
+      "last_iteration": 10600
+    },
+    {
+      "run": "ef/B0ef_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 16.120880126953125,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/B0ef_ALS_s1/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 15.408863067626953,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/B173nbef_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 16.39960479736328,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/B173nbef_ALS_s1/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 16.422225952148438,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/R1repef_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 18.055740356445312,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/R1repef_ALS_s1/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "40g",
+      "peak_rss_GiB": 18.210708618164062,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/campusef30k_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "64g",
+      "peak_rss_GiB": 34.10098648071289,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 4400
+    },
+    {
+      "run": "ef/campusef30k_ALS_s0/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "64g",
+      "peak_rss_GiB": 34.91716003417969,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/cell0ef_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 21.360984802246094,
+      "cgroup_peak_GiB": null,
+      "status": "PROBE_STOP_15000",
+      "last_iteration": 15000
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 13.653095245361328,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 17300
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell0/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 21.369125366210938,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell1/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.72415542602539,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 4500
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell1/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.51080322265625,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 5700
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell1/attempt3",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 24.98590087890625,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell1fix/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.510089874267578,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 700
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell1fix/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.708938598632812,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 8900
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell1fix/attempt3",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.398929595947266,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 11600
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell2/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 22.348426818847656,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 10700
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell2/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 22.206729888916016,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 4300
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell2/attempt3",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 26.228321075439453,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell3/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 21.170146942138672,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": 10200
+    },
+    {
+      "run": "ef/cellsef_ALS_s0_cell3/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 30.608280181884766,
+      "cgroup_peak_GiB": null,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "ef/probe3ef_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 15.296855926513672,
+      "cgroup_peak_GiB": null,
+      "status": "PROBE_STOP_15000",
+      "last_iteration": 15000
+    },
+    {
+      "run": "ef/probe4ef_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 13.90390396118164,
+      "cgroup_peak_GiB": null,
+      "status": "PROBE_STOP_15000",
+      "last_iteration": 15000
+    },
+    {
+      "run": "probes/_void_20261112-1544/probe1_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 11.76132583618164,
+      "cgroup_peak_GiB": null,
+      "status": "EXECUTION_ERROR",
+      "last_iteration": 1100
+    },
+    {
+      "run": "probes/_void_20261112-1544/probe1_ALS_s0/attempt2",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": null,
+      "cgroup_peak_GiB": null,
+      "status": "HOST_GUARD_STOP",
+      "last_iteration": null
+    },
+    {
+      "run": "probes/probe0_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 16.803359985351562,
+      "cgroup_peak_GiB": null,
+      "status": "PROBE_STOP_15000",
+      "last_iteration": 15000
+    },
+    {
+      "run": "probes/probe1_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 18.239303588867188,
+      "cgroup_peak_GiB": null,
+      "status": "PROBE_STOP_15000",
+      "last_iteration": 15000
+    },
+    {
+      "run": "probes/probe3_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 11.420734405517578,
+      "cgroup_peak_GiB": null,
+      "status": "STOP_FILE_SAVED",
+      "last_iteration": 14000
+    },
+    {
+      "run": "probes/probe3own_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 11.708026885986328,
+      "cgroup_peak_GiB": null,
+      "status": "STOP_FILE_SAVED",
+      "last_iteration": 13800
+    },
+    {
+      "run": "probes/probe4_ALS_s0/attempt1",
+      "payload": "v1",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 25.865570068359375,
+      "cgroup_peak_GiB": null,
+      "status": "PROBE_STOP_15000",
+      "last_iteration": 15000
+    }
+  ],
+  "scientific_verdict": null
+}

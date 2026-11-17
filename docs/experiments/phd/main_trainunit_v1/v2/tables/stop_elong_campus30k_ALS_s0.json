@@ -1,0 +1,54 @@
+{
+  "note": "order v2 3.5 row 2: elongation min(scale)/max(scale) of every saved file of campus30k_ALS_s0 (point_cloud.ply and jbgs_complete checkpoints), shares < 0.01 and < 0.1",
+  "rows": [
+    {
+      "group": "campus30k_ALS_s0",
+      "run": "campusef30k_ALS_s0/a2",
+      "kind": "finished",
+      "iteration": 15000,
+      "file": "point_cloud.ply",
+      "gaussians": 3439948,
+      "elong_lt_001": 0.0005069844079038404,
+      "elong_lt_01": 0.23632799100451518,
+      "elong_q01_q10_q50": [
+        0.02196255575865507,
+        0.05708788856863976,
+        0.22767072170972824
+      ],
+      "status": "있음"
+    },
+    {
+      "group": "campus30k_ALS_s0",
+      "run": "campusef30k_ALS_s0/a2",
+      "kind": "finished",
+      "iteration": 30000,
+      "file": "point_cloud.ply",
+      "gaussians": 3439948,
+      "elong_lt_001": 0.0013761835934729247,
+      "elong_lt_01": 0.2892633842139474,
+      "elong_q01_q10_q50": [
+        0.019673603195697068,
+        0.04889472089707851,
+        0.1901242360472679
+      ],
+      "status": "있음"
+    },
+    {
+      "group": "campus30k_ALS_s0",
+      "run": "campusef30k_ALS_s0/a2",
+      "kind": "finished",
+      "iteration": 7000,
+      "file": "point_cloud.ply",
+      "gaussians": 1572778,
+      "elong_lt_001": 6.358176424136146e-07,
+      "elong_lt_01": 0.01884245583292747,
+      "elong_q01_q10_q50": [
+        0.08060698352754116,
+        0.20717760324478152,
+        0.592651754617691
+      ],
+      "status": "있음"
+    }
+  ],
+  "scientific_verdict": null
+}
