@@ -1,0 +1,63 @@
+{
+  "at": "2026-11-15T12:32:43.459553+09:00",
+  "runs": [
+    [
+      "기준",
+      "ef_s0"
+    ],
+    [
+      "씨앗 반복",
+      "ef_s1"
+    ],
+    [
+      "다",
+      "cellsef_ALS_s0"
+    ]
+  ],
+  "section": {
+    "start": [
+      111.91166968946088,
+      55.26633449601721
+    ],
+    "end": [
+      111.91166968946088,
+      79.26633449601721
+    ],
+    "half_width": 0.6
+  },
+  "boundary": {
+    "cell": 2,
+    "axis": "y",
+    "at": 67.26633449601721,
+    "lo": [
+      -3.794835525528808,
+      67.26633449601721
+    ],
+    "hi": [
+      1000000.0,
+      67.26633449601721
+    ]
+  },
+  "dpi": 200,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/ef_s0.npz",
+      "sha256": "bfd5a31b28c50650cd0c67c00671e73842230e3bdbf37b25413217d155916faa"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/ef_s1.npz",
+      "sha256": "bcac804b4f2b902afad954e95ddc5fcdb663812f54b66c49a0e6015962713b44"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/cellsef_ALS_s0.npz",
+      "sha256": "5f4ef8632cd61278b2e1c816e8df876234235c2045e8435d009c89db6c8f96fd"
+    }
+  ],
+  "script_sha256": "3234f043825c1500ac4fe74865e9e3b15fb680b32d6a19e068833ef683f90a85",
+  "scientific_verdict": null
+}

@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-15T12:44:24.616087+09:00",
+  "runs": [
+    [
+      "기준",
+      "ef_s0"
+    ],
+    [
+      "씨앗 반복",
+      "ef_s1"
+    ],
+    [
+      "다",
+      "cellsef_ALS_s0"
+    ]
+  ],
+  "dpi": 200,
+  "crs": "EPSG:25832; inherited local XY [690953,5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/ef_s0.npz",
+      "sha256": "7122af5bb6aecd2a4e1e6e8adab6ed2537bce5b94d98139d589cbc6c82c168c6"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/ef_s1.npz",
+      "sha256": "57dce6000d04daff8a6d9328c863d4c854935a396bec75211be24e687b922fe2"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/cellsef_ALS_s0.npz",
+      "sha256": "4228587a098f333980fc70c8d5257af7babfac89b0e9bd8f5286b99bfd2a41d1"
+    }
+  ],
+  "script_sha256": "3234f043825c1500ac4fe74865e9e3b15fb680b32d6a19e068833ef683f90a85",
+  "scientific_verdict": null
+}
