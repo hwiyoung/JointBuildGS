@@ -20,5 +20,10 @@ def main():
     F = F[F['variant'].isin(['사전 정보 단독', '영상 단독', '기존 4 결합(세 실험 지역)', '기존 2 대표(저장된 L)', '기존 3 아래 5 %', '본 방법', '패치 다수결 상한'])]
     out += ['\n<!-- fusion3 -->', '| 사전 정보 | 판 | 두 자료 모두 유효 | 사전정보 오류 | 영상 깊이 오류 | 영상 깊이 결측 | 전체 |', '|---|---|---|---|---|---|---|']
     for _, r in F.iterrows(): out.append(f"| {r['prior']} | {r['variant']} | " + ' | '.join(f(r[f'ok_{c}']) for c in CN + ['전체']) + ' |')
+    if (TAB/'s_fusion_all_scope.csv').exists():   # 5절: 기존 4 결합(전 건물)이 덮은 범위
+        F = pd.read_csv(TAB/'s_fusion_all_scope.csv'); F = F[((F['prior'] == 'LoD2') & (F['surface'] == '모두')) | (F['prior'] == 'ALS')]
+        F = F[F['variant'].isin(['사전 정보 단독', '영상 단독', '기존 4 결합(전 건물)', '기존 1 T=0.5 m', '기존 2 대표(저장된 L)', '기존 3 아래 5 %', '기존 5 T=0.5 m', '본 방법', '패치 다수결 상한'])]
+        out += ['\n<!-- fusion_all -->', '| 사전 정보 | 판 | 두 자료 모두 유효 | 사전정보 오류 | 영상 깊이 오류 | 영상 깊이 결측 | 전체 | 참값 점 (네 경우) |', '|---|---|---|---|---|---|---|---|']
+        for _, r in F.iterrows(): out.append(f"| {r['prior']} | {r['variant']} | " + ' | '.join(f(r[f'ok_{c}']) for c in CN + ['전체']) + ' | ' + ' / '.join(f"{int(r[f'n_{c}']):,}" for c in CN) + ' |')
     (TAB/'report_fragments.md').write_text('\n'.join(out) + '\n')
 if __name__ == '__main__': main()

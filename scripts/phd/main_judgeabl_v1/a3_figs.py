@@ -27,14 +27,25 @@ def fig1(S, fus_all):
         items = [('사전 정보 단독', '사전 정보 단독', VCOL['사전 정보 단독']), ('영상 단독', '영상 단독', VCOL['영상 단독'])] + OLD
         if fus_all: items.append(('기존 4 결합(전 건물)', '기존 4', '#5dade2'))
         items += [('본 방법', '본 방법', VCOL['본 방법']), ('패치 다수결 상한', '상한', 'white')]
-        fig, axs = plt.subplots(1, 2, figsize=(11, 3.2), gridspec_kw=dict(width_ratios=[2.6, 1.2]))
+        qa = rows(S, prior, '결합 전 건물 범위'); fus_part = '기존 4 결합(전 건물)' in qa.index      # 5절: 결합이 덮은 범위(일곱 탐색 지역)
+        if fus_part:
+            fig, axs = plt.subplots(1, 3, figsize=(15, 3.2), gridspec_kw=dict(width_ratios=[2.6, 1.2, 2.6]))
+        else:
+            fig, axs = plt.subplots(1, 2, figsize=(11, 3.2), gridspec_kw=dict(width_ratios=[2.6, 1.2]))
         bars(axs[0], q.rename(columns={'ok_전체': 'ok_전체'}), items, xs); axs[0].set_title(f'{PNAME[prior]}: 전 건물', fontsize=8); axs[0].legend(fontsize=5.5, ncol=6, loc='upper center', bbox_to_anchor=(.5, -.1), framealpha=.9)
         it3 = [('사전 정보 단독', '사전 정보 단독', VCOL['사전 정보 단독']), ('영상 단독', '영상 단독', VCOL['영상 단독']), ('기존 4 결합(세 실험 지역)', '기존 4', '#5dade2'), ('본 방법', '본 방법', VCOL['본 방법']), ('패치 다수결 상한', '상한', 'white')]
         bars(axs[1], q3, it3, xs); axs[1].set_title('세 실험 지역만 (기존 4가 있는 참값 점)', fontsize=8); axs[1].legend(fontsize=5.5, ncol=3, loc='upper center', bbox_to_anchor=(.5, -.18), framealpha=.9); axs[1].tick_params(axis='x', labelsize=5.5, labelrotation=20)
+        if fus_part:
+            ita = [i for i in items if i[0] != '기존 4 결합(전 건물)']; ita.insert(len(ita) - 2, ('기존 4 결합(전 건물)', '기존 4', '#5dade2'))
+            bars(axs[2], qa, ita, xs); axs[2].set_title('결합이 덮은 범위 (일곱 탐색 지역 참값 점, 모든 판 같은 점)', fontsize=8)
+            axs[2].legend(fontsize=5.5, ncol=6, loc='upper center', bbox_to_anchor=(.5, -.1), framealpha=.9)
         b = q.loc['본 방법']; fig.suptitle(f'{PNAME[prior]}: 기존 방법과 본 방법의 경우별 목표 맞음', fontsize=9)
-        fig.text(.01, -.16, '본 방법 ' + ' / '.join(f'{b[f"ok_{c}"]:.1f}' for c in CN) + f' %, 전체 {b["ok_전체"]:.1f} %' + ('' if fus_all else '. 기존 4는 묶음 가에서 세 실험 지역 값만'), fontsize=6.5)
+        fig.text(.01, -.16, '본 방법 ' + ' / '.join(f'{b[f"ok_{c}"]:.1f}' for c in CN) + f' %, 전체 {b["ok_전체"]:.1f} %' + ('' if fus_all else '. 기존 4는 묶음 가에서 세 실험 지역 값만')
+                 + ('. 기존 4 전 건물 판은 none 지역과 탐색 지역 범위 밖 패치가 확인 불가라 오른쪽 범위에서만' if fus_part and '기존 4 결합(전 건물)' not in q.index else ''), fontsize=6.5)
         meta = dict(figure=1, prior=prior, surface=PSURF[prior], items=[i[0] for i in items], values={v: {c: float(q.loc[v, f'ok_{c}']) for c in xs} for v, _, _ in items if v in q.index},
-                    three_region={v: {c: float(q3.loc[v, f'ok_{c}']) for c in xs} for v, _, _ in it3 if v in q3.index}, n={c: int(b[f'n_{c}']) for c in CN}, source='tables/s_all_variants.csv')
+                    three_region={v: {c: float(q3.loc[v, f'ok_{c}']) for c in xs} for v, _, _ in it3 if v in q3.index}, n={c: int(b[f'n_{c}']) for c in CN}, source='tables/s_all_variants.csv',
+                    fusion_all_scope=({v: {c: float(qa.loc[v, f'ok_{c}']) for c in xs} for v, _, _ in items if v in qa.index} if fus_part else None),
+                    fusion_all_scope_n=({c: int(qa.loc['본 방법', f'n_{c}']) for c in CN} if fus_part else None))
         save(fig, f'fig1_old_vs_method_{prior}', meta)
 def fig2(S):
     groups = [('검출', '검출'), ('식별', '식별'), ('유보', '유보'), ('처리', '처리'), ('가시성', '가시성')] + ([('고정', '고정 값')] if (S['family'] == 'fix').any() else [])
@@ -74,6 +85,11 @@ def fig5(S, fus_all):
                 if v in q.index:
                     ax.plot(q.loc[v, 'ok_사전정보 오류'], q.loc[v, f'ok_{yc}'], mk, ms=8 if mk == '*' else 5.5, color=col, mec='k', mew=.4, label=SHORT.get(v, v.replace('기존 5 T=', '기존 5 ')))
                     meta['points'][v] = [float(q.loc[v, 'ok_사전정보 오류']), float(q.loc[v, 'ok_영상 깊이 오류']), float(q.loc[v, 'ok_두 자료 모두 유효'])]
+            qa = rows(S, prior, '결합 전 건물 범위')
+            if '기존 4 결합(전 건물)' in qa.index and '기존 4 결합(전 건물)' not in q.index:     # 5절: 덮인 범위의 값 (같은 범위의 본 방법과 함께)
+                for v, col, mk, lab in [('기존 4 결합(전 건물)', '#5dade2', 'X', '기존 4 (일곱 탐색 지역 범위)'), ('본 방법', VCOL['본 방법'], '*', '본 방법 (같은 범위)')]:
+                    ax.plot(qa.loc[v, 'ok_사전정보 오류'], qa.loc[v, f'ok_{yc}'], mk, ms=8 if mk == '*' else 6, mfc='none' if v == '본 방법' else col, mec=col if v == '본 방법' else 'k', mew=.8, label=lab)
+                    meta['points'][v + ' (결합 전 건물 범위)'] = [float(qa.loc[v, 'ok_사전정보 오류']), float(qa.loc[v, 'ok_영상 깊이 오류']), float(qa.loc[v, 'ok_두 자료 모두 유효'])]
             v = '기존 4 결합(세 실험 지역)'
             if v in q3.index:
                 ax.plot(q3.loc[v, 'ok_사전정보 오류'], q3.loc[v, f'ok_{yc}'], 'X', ms=6, mfc='none', mec='#2471a3', mew=1, label='기존 4 (세 실험 지역만)')

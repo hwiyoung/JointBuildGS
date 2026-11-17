@@ -180,6 +180,12 @@ def main(prior):
     if (O/f'extra_variants_{prior}.npz').exists():
         z = np.load(O/f'extra_variants_{prior}.npz')
         for k, nm in enumerate(z['names']): add(str(nm), z['region'][k], z['reason'][k], z['target_h'][k], family='fix')
+    # 5절 기존 4 결합(전 건물): fusion_all/fusion_<prior>.npz (JC 패치 순서; 덮이지 않은 패치 = 9, 채점은 덮인 범위 'fusion_all' 에서만)
+    FA = O/'fusion_all'/f'fusion_{prior}.npz'; fa_cov = np.zeros(N, bool)
+    if FA.exists():
+        z = loadz(FA, ['region', 'target_h', 'covered']); assert len(z['region']) == N; fa_cov = z['covered']
+        add('기존 4 결합(전 건물)', z['region'], np.full(N, 9, np.int8), z['target_h'], family='old4', covered_patches=int(fa_cov.sum()), covered_area_m2=float(A[fa_cov].sum()),
+            scope='JC 패치 가운데 결합 판정이 덮은 것(일곱 탐색 지역); none 지역은 확인 불가', source=str(FA))
     print('VARIANTS', prior, len(V), round(T.s()), flush=True)
 
     # ================= 채점 (참값)
@@ -204,7 +210,8 @@ def main(prior):
         f3[rr] = True; f_reg[rr] = fr; f_dist[rr] = dist
         FCHK.append(dict(prior=prior, site=site, gt_rows_all=len(allrows), gt_rows=len(rows), with_JA_patch=int(h.sum()), fusion_image_area_m2=float(dec['area'][dec['region'][4] == 2].sum()), fusion_prior_area_m2=float(dec['area'][dec['region'][4] == 1].sum())))
     del gall, gx
-    code = ((((ci*2 + ki)*2 + gi)*4 + pi)*3 + xi)*2 + f3.astype(int); NC = 4*2*2*4*3*2
+    fa_g = fa_cov[gid]; FA_FULL = bool(fa_cov.all())
+    code = (((((ci*2 + ki)*2 + gi)*4 + pi)*3 + xi)*2 + f3.astype(int))*2 + fa_g.astype(int); NC = 4*2*2*4*3*2*2
     bu, bidx = np.unique(G['building'], return_inverse=True); bcode = bidx*8 + ci*2 + ki
     ok0 = G['target_ok_v'][mi]; d0 = G['target_distance_v'][mi]; po = G['target_ok_v'][0]; io = G['target_ok_v'][1]
     exp_reg = np.array([MATCH[c] for c in CASES])[ci]; ncell = np.bincount(code, minlength=NC); nb = np.bincount(bcode, minlength=len(bu)*8)
@@ -219,7 +226,7 @@ def main(prior):
         return ok, dist, rg
     def record(name, ok, dist, rg, fam, patch_reg=None):
         CROSS.append(dict(variant=name, family=fam, ok=np.bincount(code, weights=ok, minlength=NC), name=np.bincount(code, weights=(rg == exp_reg), minlength=NC), made=np.bincount(code, weights=~ok & (po | io), minlength=NC)))
-        if fam != 'old4_3':
+        if fam != 'old4_3' and not (fam == 'old4' and not FA_FULL):     # 덮이지 않은 건물이 있으면 건물별 값은 내지 않음
             BLD.append(dict(variant=name, ok=np.bincount(bcode, weights=ok, minlength=len(bu)*8)))
         c0 = ci == 0
         for sn, sm in ([('지붕', ki == 0), ('벽', ki == 1), ('모두', np.ones(Ng, bool))] if prior == 'LoD2' else [('지붕', ki == 0)]):
@@ -245,7 +252,7 @@ def main(prior):
             r2 = V['기존 2 대표(저장된 L)'][0]; CHK.append(dict(prior=prior, check='기존 2 배수 1.96 = 기존 2 대표(저장된 L) 판정', equal_pct=100*float(np.mean(reg == r2)), n=N))
         if name == '유보 1 없음' or name.startswith('식별'):
             pass
-        record(name, ok, dist, rg, fam, patch_reg=reg)
+        record(name, ok, dist, rg, fam, patch_reg=np.where(fa_cov, reg, rb) if fam == 'old4' else reg)
         NOTES[name] = {k: v for k, v in meta.items()}
         NOTES[name]['changed_area_m2'] = float(A[reg != rb].sum()); NOTES[name]['changed_patches'] = int((reg != rb).sum())
     # 기존 4 세 실험 지역
@@ -254,8 +261,8 @@ def main(prior):
     # 쓰기
     dims = []
     for c in range(NC):
-        r = c; f = r % 2; r //= 2; x = r % 3; r //= 3; p = r % 4; r //= 4; gg = r % 2; r //= 2; k = r % 2; r //= 2; cc = r
-        dims.append(dict(case=CASE[CASES[cc]], kind='지붕' if k == 0 else '벽', group='세 실험 지역' if gg else '나머지', place={0: '없음', 1: '면 안쪽', 2: '면 경계', 3: '건물 가장자리'}[p], textureless={0: '없음', 1: '무늬 있음', 2: '무늬 없음'}[x], fusion3=bool(f), n=int(ncell[c])))
+        r = c; fa_ = r % 2; r //= 2; f = r % 2; r //= 2; x = r % 3; r //= 3; p = r % 4; r //= 4; gg = r % 2; r //= 2; k = r % 2; r //= 2; cc = r
+        dims.append(dict(case=CASE[CASES[cc]], kind='지붕' if k == 0 else '벽', group='세 실험 지역' if gg else '나머지', place={0: '없음', 1: '면 안쪽', 2: '면 경계', 3: '건물 가장자리'}[p], textureless={0: '없음', 1: '무늬 있음', 2: '무늬 없음'}[x], fusion3=bool(f), fusion_all=bool(fa_), n=int(ncell[c])))
     dimdf = pd.DataFrame(dims); out = []
     for e in CROSS:
         df = dimdf.copy(); df['variant'] = e['variant']; df['family'] = e['family']; df['ok'] = e['ok']; df['name_ok'] = e['name']; df['made'] = e['made']; out.append(df[df['n'] > 0])
