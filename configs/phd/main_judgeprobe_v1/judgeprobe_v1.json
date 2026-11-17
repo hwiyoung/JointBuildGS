@@ -1,0 +1,80 @@
+{
+ "task_id": "PHD-MAIN-JUDGEPROBE-v1",
+ "order_date": "2026-11-17 (user confirmation 14:19)",
+ "scientific_verdict": null,
+ "branch": "exp/judgeprobe-v1 from exp/judgecheck-v2 1ff772b4 (git worktree ../JointBuildGS-wt-judgeprobe1)",
+ "no_training": true, "no_new_photo_scores": true, "device": "CPU only, nice -n 19, container <= 32 GB, wait when host memory use > 80 %",
+ "inputs": {
+  "JC": "PH/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2 (read only)",
+  "patch_values": "JC geometry_raw/<tile>__<prior>.npz (n, mvs_sd_m, mvs_mean_m, mvs_median_m, mvs_face_m, d_m, area, kind, region, building, surf, centre, normal, prior_height_m), JC geometry/base (u_M, sigma_P, sigma_W, r_m, L_m, geometry), JC judge/base (region[8], reason[8], target_h[8], photo_code, photo_point, s_P, s_M, t), JC place, JC texture, JC sight",
+  "photo_point_values": "JC photo_prepared/<tile>.npz (source_index, prior, kind, area, all_within, available, selected_images, mvs_fit_count, mvs_fit_nmad_m, mvs_normal_angle_deg, mask_fraction_at_zero, centres, normals) + JC photo_scores/<tile>/scores.npz (score, texture, valid_image_count); photo point -> patches via JC photo_groups patch_point",
+  "gt_point_values": "JC analysis/gt_<prior>.npz (case, s_P, s_M, tau, gid, place, target_ok_v, target_distance_v, region_v, patch_majority_case ...) and analysis/patches_<prior>.npz majority_counts (cases 0..4 per patch, gid order = sorted geometry_raw tiles)",
+  "tau": "JC stage0/tau.json", "t": "JC judge/base.json t_rows", "sigma_W": "JC calib/base.json sigma_W_m"
+ },
+ "definitions": {
+  "case_order": ["두 자료 모두 유효 (0)", "사전정보 오류 (1)", "영상 깊이 오류 (2)", "영상 깊이 결측 (4)"],
+  "patch_case": "argmax of JC majority_counts (GT points of the patch, current-definition cases 0..4; 3 = outside four cases); patches without GT points have no case",
+  "mixed_patch": "share of the majority case < 0.80 (order 0.3; differs from JUDGECHECK-v2 mixed_patch_flag, which is point-level)",
+  "outside_limit_patch": "JC geometry code 1 (n >= 4 and |d| > L)",
+  "no_uM_patch": "n >= 4, finite prior and MVS height, geometry code 9 and u_M not finite (11/4 rule) - counted on its own row",
+  "inside_limit_patch": "JC geometry code 0",
+  "units": {"LoD2_roof": ["LoD2", 1], "LoD2_wall": ["LoD2", 2], "ALS_roof": ["ALS", 1]},
+  "area_weight": "patch area (JC geometry_raw area, m2); target-ok and name-ok % are GT point shares as in JUDGECHECK-v2 s7_tables",
+  "photo_point_to_patch": "every member patch receives the values of its photo point (judge/base photo_point -> photo_prepared row with source_index == photo_point and same prior)"
+ },
+ "candidates": [
+  {"id": 1, "name": "n", "def": "MVS points in the cylinder (geometry_raw n)"},
+  {"id": 2, "name": "mvs_sd", "def": "SD of MVS heights in the cylinder (geometry_raw mvs_sd_m)"},
+  {"id": 3, "name": "u_M", "def": "geometry/base u_M"},
+  {"id": 4, "name": "fit_nmad", "def": "MVS plane fit residual NMAD (photo_prepared mvs_fit_nmad_m)"},
+  {"id": 5, "name": "fit_count", "def": "points used in the MVS plane fit (photo_prepared mvs_fit_count)"},
+  {"id": 6, "name": "plane_angle", "def": "angle between MVS plane and prior normal, deg (photo_prepared mvs_normal_angle_deg)"},
+  {"id": 7, "name": "s_P", "def": "photo score of the prior plane (photo_scores score[:,0])"},
+  {"id": 8, "name": "s_M", "def": "photo score of the MVS plane (score[:,1])"},
+  {"id": 9, "name": "sM_minus_sP", "def": "s_M - s_P"},
+  {"id": 10, "name": "views_min", "def": "valid image count used in scoring, min of the two planes (scores valid_image_count); prior and MVS values also kept as 10a views_P, 10b views_M"},
+  {"id": 11, "name": "texture_min", "def": "texture strength, min of the two pieces (scores texture); 11a texture_P, 11b texture_M kept"},
+  {"id": 12, "name": "mask_frac_min", "def": "remaining sample (trimmed mask) fraction, min of the two planes (photo_prepared mask_fraction_at_zero); 12a, 12b kept"},
+  {"id": 13, "name": "d_over_L", "def": "|d| / L (geometry/base d_for_check, L_m)"},
+  {"id": 14, "name": "mean_minus_median", "def": "mvs_mean_m - mvs_median_m (geometry_raw)"},
+  {"id": 15, "name": "face_minus_mean", "def": "mvs_face_m - mvs_mean_m (outer-face height minus mean; stored geometry_raw column linked to MVS quality, added before first computation)"},
+  {"id": 16, "name": "n10_over_n", "def": "n10 / n (MVS points within the wider stored count n10 relative to n; stored geometry_raw column, added before first computation)"}
+ ],
+ "check_ga": {
+  "targets": "outside-limit patches with a patch case 0, 1 or 2; versions: excluding mixed patches and including them; no-uM patches on their own row",
+  "quantiles": [0.10, 0.25, 0.50, 0.75, 0.90], "reference_row": "inside-limit patches with patch case 0",
+  "auc": "area-weighted Mann-Whitney AUC = P(x_imgerr > x_other) + 0.5 P(tie), weights = area products; two AUCs: image-depth error vs prior error, image-depth error vs both valid; discrimination = |AUC - 0.5|; ranking key = mean of the two |AUC - 0.5| (excluding-mixed version)",
+  "five_percent": "per search region x unit: area-weighted 5 % and 95 % of the observation over inside-limit patches (no GT used; all inside-limit patches regardless of GT presence); region 'none' pooled over the seven search regions; below 5 % = low reject, above 95 % = high reject; rejection share = area share of the case",
+  "pairs": "five observations with the largest ranking key per unit; ten pairs; reject when either observation rejects (either side)",
+  "splits_in_files": "place (면 안쪽, 면 경계, 건물 가장자리) and texture-less (GTJUDGE rule, JC texture) x the AUC and rejection shares"
+ },
+ "check_na": {
+  "t_M": "JC s5_judge rule on s_M: photo points whose members are all inside L (base), per search region x prior x kind, area-weighted lower 5 %, > 5000 -> random 5000 with the same seed list as t; 'none' pooled",
+  "variant_ga": "photo code with s_P vs t and s_M vs t_M (support = s_P >= t and s_M < t_M; refute = s_P < t and s_M >= t_M; both low; both high), other codes and the order 7 > 6 > 4 > 5 unchanged; then JC decide and target_height; GT target-ok recomputed only for patches whose method target changed (JC s4_truth_exp.plane_distance)",
+  "check": "base recomputed from stored values must reproduce JC judge/base method region (100 %) and the c1 case summary target-ok values",
+  "rows": "base and variant ga; prior only, image only, oracle (patch majority upper bound) as stored"
+ },
+ "check_da": {
+  "survey": "tool, version, command and options from WIDEN0 mvs/full (colmap_receipt.json, container_launch.json, patch_match.log, stereo/patch-match.cfg), point producer scripts/phd/main_widen0_v2/mvs_points.py; file counts, sizes, resolution",
+  "multi_view": "only search region B0; photo points of B0 buildings; X = MVS plane centre (photo_prepared centres[:,1]); views = selected_images[:,1] (MVS-plane photo selection); z = camera axial depth of X in WIDEN0 pose (Cameras.M, K, 1024 x 741); D = geometric depth at rint pixel; observations: share of views with |D - z| / z <= 1 % (also 0.5 %, 2 %), median |D - z|; counted like check ga (added rows)",
+  "budget": "skip 5.2 if the estimate exceeds 2 hours"
+ },
+ "check_ra": {"mde": "2.80 * sqrt(u_M^2 + sigma_P^2 + sigma_W^2) + |r| per patch (inside and outside limit, finite u_M)", "split": "unit x place", "tau": "region tau of the unit", "inside_agree_error_points": "GT points with method region 0 via geometry code 0, case in 1, 2, 4, target outside tau (JC 6.3 true error, inside-L agree rule); share with |s_P - s_M| < patch MDE; split by mixed patch"},
+ "recount": {
+  "1": "roof faces (LoD2 surf, ALS face of JC place) per building: median s_P and s_M of case-0 GT points; first DEBY_LOD2_4959460, 4906982, 4907509 (suffix match), then all; flag faces holding GT member rows of JC clusters with geometry_type '두 자료가 같은 쪽으로 어긋남'",
+  "2": "drop GT points with |s_P| or |s_M| in [0.8 tau, 1.2 tau]; target-ok % per case for method, prior only, image only, oracle; with and without the drop",
+  "3": "LoD2 case 0, method region 2 (use image), target outside tau: diff = target distance (GT point to the cylinder-height plane, stored) - s_M; distribution, share |diff| > tau",
+  "4": "photo code 7 (photo shortage) GT points: roof / wall x short side (prior plane < 3 views, MVS plane < 3, both); GT cell area and share per case",
+  "5": "20 more '윤곽 밖의 새 면' clusters by area after the ones in JUDGECHECK-v2 figure 6 (same layout); first to drop when late",
+  "6": "inside-L agree true error points: patch L / tau distribution, share L > tau, cross table with mixed patch"
+ },
+ "figures": {
+  "dpi": 300, "json_per_figure": true,
+  "fig1": "per prior: per observation boxes of the three cases (outside limit, excluding mixed) + inside-limit both-valid reference, ordered by ranking key",
+  "fig2": "per prior, the two observations with the largest ranking key (LoD2 ranked on LoD2 roof+wall pooled AUC): image-depth-error patches (excluding mixed), six rejected + six not rejected; patches connected within 0.36 m per building; components by area descending; at most two per building; panel (a) oblique training image (JC s10_images.oblique_view rule) with the component patches, (b) section through the component's largest patch centre along tangent1 x normal, +-0.15 m slab, +-3 m: GT points, prior plane line, MVS points, MVS plane line",
+  "fig3": "per prior: target-ok % per case for base, variant ga, prior only, image only, oracle",
+  "fig4": "per prior: MDE distribution by place with region tau marks"
+ },
+ "seed": 20261112,
+ "reduce_when_late": ["recount 5", "check da 5.2", "recount 1"]
+}
