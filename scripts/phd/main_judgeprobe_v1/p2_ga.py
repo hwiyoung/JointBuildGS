@@ -4,7 +4,7 @@ from obs import *
 from tables import write
 import pandas as pd
 QS = [.1, .25, .5, .75, .9]
-def run(extra=None):
+def run(extra=None, only_region=None):
     cfg(); T = Timer(); D_rows, A_rows, R_rows, P_rows, S_rows, TH_rows = [], [], [], [], [], []
     for prior in ['LoD2', 'ALS']:
         d = loadz(O/f'patch_{prior}.npz', ['kind', 'area', 'region', 'geometry', 'case', 'mixed', 'no_uM', 'place', 'textureless', 'n', 'n10', 'mvs_sd_m', 'u_M', 'fit_nmad', 'fit_count', 'plane_angle', 's_P', 's_M',
@@ -23,9 +23,10 @@ def run(extra=None):
         for u in units:
             um = (d['kind'] > 0) if u == 'LoD2_all' else unit_mask(d, u)
             for ver, vm in [('섞인 패치 뺌', ~d['mixed']), ('섞인 패치 넣음', np.ones(len(A), bool))]:
+                if only_region is not None: vm = vm & (d['region'] == only_region)   # 확인 다 5.2: B0 패치만
                 grp = {c: um & outside & vm & (d['case'] == c) for c in [0, 1, 2]}
                 grp_nou = {c: um & d['no_uM'] & vm & (d['case'] == c) for c in [0, 1, 2]}
-                ref = um & inside & (d['case'] == 0)
+                ref = um & inside & (d['case'] == 0) & (np.ones(len(A), bool) if only_region is None else d['region'] == only_region)
                 for k, x in o.items():
                     fin = np.isfinite(x)
                     for gname, gm in [('한계 안 두 자료 모두 유효(기준 줄)', ref)] + [(CASE[c], grp[c]) for c in [0, 1, 2]]:
@@ -60,7 +61,7 @@ def run(extra=None):
                             gm = grp[c] & smask; a = A[gm].sum(); row[f'n_{c}'] = int(gm.sum()); row[f'reject_pct_{CASE[c]}'] = 100*A[gm & (rej_lo[k] | rej_hi[k])].sum()/a if a else np.nan
                         S_rows.append(row)
         print('GA', prior, round(T.s()), flush=True)
-    sfx = '' if extra is None else '_with_mvs_views'
+    sfx = '' if extra is None else f'_{only_region}_mvs_views'
     note = '확인 가. 대상 = 한계 밖 패치(기하 코드 1), 패치의 경우 = 참값 점 다수 경우, 섞인 패치 = 다수 비율 < 80 %. 넓이 가중. 기준 = 한계 안 패치(참값 없음) 탐색 지역 x 단위의 넓이 가중 5 %·95 %.'
     dfA = pd.DataFrame(A_rows); dfA['rank'] = dfA.groupby(['prior', 'unit', 'version'])['key'].rank(ascending=False, method='first').astype(int)
     write('ga_auc' + sfx, dfA.sort_values(['prior', 'unit', 'version', 'rank']), note=note, md_filter=lambda x: x[x['version'] == '섞인 패치 뺌'][['unit', 'rank', 'obs_no', 'obs_ko', 'auc_imgerr_vs_priorerr', 'auc_imgerr_vs_bothvalid', 'n_imgerr', 'n_priorerr', 'n_bothvalid']])
