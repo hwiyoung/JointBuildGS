@@ -2,7 +2,7 @@
 import sys
 sys.path.insert(0, '/repo/scripts/phd/main_trainerr_v1/addendum5')
 from a5_common import *
-RUNS = ['sa1_R1_ALS_record6000', 'sb5_R1_ALS_record_signed', 'sb2_B0_ALS_record6000', 'ba3_B0_ALS_record', 'sb1_B0_LoD2_record6000', 'tl_B0_b10_LoD2_s0', 'tl_B173nb_b10_ALS_s0', 'sb3_R1_LoD2_record']
+RUNS = ['sa1_R1_ALS_record6000', 'sb5_R1_ALS_record_signed', 'sb2_B0_ALS_record6000', 'ba3_B0_ALS_record', 'sb1_B0_LoD2_record6000', 'tl_B0_b10_LoD2_s0', 'tl_B173nb_b10_ALS_s0', 'sb3_R1_LoD2_record', 'sc1_B173_ALS_signed', 'sc2_R1_LoD2_signed', 'sc3_B0_ALS_signed', 'sc4_B0_LoD2_signed']
 rows = []
 for r in RUNS:
     m = RUNS4[r]['model']; t = m/'trainlog'; g = sorted((t/'grads').glob('*.npz'), key=lambda p: int(p.stem)) if (t/'grads').exists() else []
