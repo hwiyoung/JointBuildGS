@@ -1,0 +1,88 @@
+{
+ "task_id": "PHD-MAIN-JUDGEABL-v1",
+ "order": "판단 비교·절제 발주문 v1 고침 1 (2026-11-17, 사용자 전달 20시대)",
+ "scientific_verdict": null,
+ "branch": "exp/judgeabl-v1 from exp/judgeprobe-v1 d60a8b06 (git worktree ../JointBuildGS-wt-judgeabl1)",
+ "no_training": "true (except the 4.6 logistic regression reference row)", "no_new_photo_scores": true,
+ "device": "CPU only, nice -n 19, container <= 32 GB, wait when host memory use > 80 %",
+ "inputs": {
+  "JC": "PH/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2 (read only): analysis/gt_<prior>.npz (GT points: paired, gid, case, xyz, normal, gt_kind, tau, patch_kind, group, place, textureless, building, src, site, target_ok_v[8], region_v[8], target_distance_v[8]), geometry_raw (patch_id), truth/gt_patch (gt_p for the 5 % check), sight (free5, free10), stage0/tau.json, judge/base.json t_rows",
+  "JP": "PH/main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1 (read only): patch_<prior>.npz (JC patch values in JC gid order), photo_<prior>.npz (photo points), na_<prior>.npz (variant ga = t_M)",
+  "JA": "PH/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1 (read only): decisions/<site>__<prior>.npz region[4] = fusion (mvsfuse in_change_25 -> 2 else 1), core_points; JC truth/exp/<site>__<prior>.npz current_patch_id (GT rows -> JUDGEAPPLY patches by the RESCORE prism rule, JUDGECHECK-v2 2.5)",
+  "code": "JC scripts/phd/main_judgecheck_v2/jc2_judge.py (decide, threshold, quantile, target_height, photo_code) and JP scripts (common, p3_na rescoring rule) copied by import, not modified"
+ },
+ "scoring": {
+  "rule": "JUDGECHECK-v2 2.5: GT point takes the judgment and target of its patch (gid); target ok = |plane distance along the GT normal to the target plane (patch centre + h normal)| <= tau; no target = wrong. Distance recomputed (JC plane_distance) only for patches whose target height differs from the stored base method target; other points keep the stored base target_ok.",
+  "cases": "JC current definition 0 both valid, 1 prior error, 2 image-depth error, 4 image-depth missing; always the four in this order",
+  "total": "all paired GT points of the four cases",
+  "summary": {"a": "mean of the four case target-ok % (equal weight)", "b": "minimum of the four and its case", "c": "max over cases of (best target-ok % among variants that do not use GT, same prior x surface x scope) - this variant; excluded from the best: oracle (upper bound), 4.6 reference, 3.1 GT-selected rows, and the three-region-only 기존 4 row when the scope is all buildings"},
+  "name_ok": "region == expected judgment of the case (0->일치, 1->영상 깊이 사용, 2->사전정보 사용, 4->결측)",
+  "made_error": "share of the case's GT points where this variant's target is outside tau but the prior-only or image-only target is inside tau (JC made_saved rule)",
+  "vs_base": "target-ok %p per case; changed area = sum of patch area with region different from base (patches holding GT or not), transition table from->to",
+  "per_building": "building x case target-ok %; difference to base per building x case cell with >= 200 GT points: median, IQR, count base better / worse",
+  "splits_in_files": "group (전체, 세 실험 지역, 나머지 = JC gt group), place (면 안쪽, 면 경계, 건물 가장자리 = JC gt place), textureless (JC gt textureless 1/0)",
+  "surfaces": "LoD2: 지붕, 벽, 모두 (patch_kind of the GT point's patch); ALS: 지붕"
+ },
+ "common_patch_sets": {
+  "valid": "finite prior height and finite patch normal",
+  "missing": "valid and 0 <= n < 4",
+  "present": "valid and n >= 4 and finite MVS mean height",
+  "outside": "valid and geometry code 1 (base L unless the variant changes detection)",
+  "no_uM": "present and geometry code 9 and u_M not finite (11/4 rule)",
+  "inside": "valid and geometry code 0",
+  "free": "JC sight free10 for roof patches, free5 for wall patches (base)",
+  "default": "LoD2 영상 깊이 사용 (2), ALS 사전정보 사용 (1)",
+  "photo_codes_1_4": "photo code 7 사진 부족, 6 무늬 없음, 4 MVS 면 없음, 5 조각 부족 (and 9 셈 안 함, no score) -> default where the order says '차례 1~4는 그대로 기본 판정'",
+  "target_height": "JC target_height: 일치 = precision-weighted mean with base u_M, sigma_P, sigma_W; 사전정보 사용·결측 = prior height; 영상 깊이 사용 = MVS mean height; 제거·미판정 = none",
+  "reason_codes": {"0": "사진 지지", "1": "사진 반박", "2": "기본 판정", "3": "높이 차이 규칙(기존 1, 2, 5)", "4": "점수 비교(기존 3, 식별 3~7, 유보 1)", "5": "규칙으로 전부(식별 1, 2)", "6": "결합(기존 4)", "9": "해당 없음"}
+ },
+ "baselines_section3": {
+  "missing_rule": "n < 4 (missing set) -> 결측 (prior kept) for 기존 1, 2, 3, 5 (no sight test); patches outside valid/present/missing stay 미판정",
+  "d": "JC geometry/base d_for_check (= d_m = MVS mean height - prior height along the normal)",
+  "old1": {"name": "기존 1 높이 빼기", "rule": "present: |d| <= T -> 사전정보 사용, else 영상 깊이 사용", "representative_T_m": [0.5, 1.0], "sweep_T_m": [0.1, 0.2, 0.3, 0.5, 0.75, 1.0, 1.5, 2.0]},
+  "old2": {"name": "기존 2 유의 차이 검출", "rule": "present: |d| <= L_k -> 사전정보 사용, else 영상 깊이 사용; L_k = k (sqrt(u_M^2 + sigma_P^2 + sigma_W^2) + |r|) with base u_M, sigma_P, sigma_W, r; L_k not finite -> 사전정보 사용 (area recorded)", "representative_k": 1.96, "sweep_k": [1.0, 1.645, 1.96, 2.576, 3.29]},
+  "old3": {"name": "기존 3 사전 정보를 영상으로 검증", "rule": "present: s_P available and s_P < t_q -> 영상 깊이 사용, else 사전정보 사용", "s_P_available": "photo point scored, finite s_P, selected images of the prior plane >= 3, texture strength of the prior piece >= 5 (the s_P-side parts of photo codes 7, 6, 5)", "t_q": "JC t rule with quantile q: photo points whose member patches are all inside base L, per search region x prior x kind ('none' = seven regions pooled), same <= 5000 random sample and seed list as JC/JP t (seed 20261112, [seed, region index or 7, prior 0/1, kind]); area-weighted quantile q of s_P", "representative_q": 0.05, "sweep_q": [0.01, 0.05, 0.10, 0.25, 0.50]},
+  "old4": {"name": "기존 4 MVS 기반 결합", "three_regions": "JUDGEAPPLY decisions region[4] (mvsfuse_<prior> detect in_change_25 -> 영상 깊이 사용, else 사전정보 사용; all patches including n < 4) scored on JC GT rows of the three experiment sites (src 1) via truth/exp current_patch_id and the JUDGEAPPLY core patch plane (centre, normal; target = prior height or MVS mean height); compared rows use the same GT rows", "all_buildings": "section 5 (bundle 나)"},
+  "old5": {"name": "기존 5 두 단서 결합", "rule": "present: |d| > T and s_P available and s_P < t -> 영상 깊이 사용, else 사전정보 사용", "rows": ["T = 0.5 m", "T = L (base L, 1.96; L not finite -> 사전정보 사용)"]},
+  "gt_selected": "per type (기존 1, 2, 3) and prior x surface: the sweep value with the highest summary (a); marked '참값으로 고름'; excluded from the best in summary (c)"
+ },
+ "ablations_section4": {
+  "one_change": "every variant changes only the listed item from the base; tau, r, t, sigma_W, cylinders, photo selection, decision table, default, targets = JC base stored values",
+  "detect": {
+   "det1": "fixed threshold 0.5 m instead of L for all present patches (incl. no u_M): |d| <= 0.5 -> 일치, else identification as base (photo code)",
+   "det2": "same with 1.0 m",
+   "det3": "one limit per search region x prior x kind: over present patches (n >= 4, finite d) of that region ('none' patches use the seven regions pooled), area-weighted median m and NMAD = 1.4826 x area-weighted median |d - m|; |d - m| <= 1.96 NMAD -> 일치",
+   "det4": "u_M = SD of MVS heights in the cylinder / sqrt(n) (geometry_raw mvs_sd_m, n); L = 1.96 (sqrt(u^2 + sigma_P^2 + sigma_W^2) + |r|); applied to no-u_M patches too; L not finite -> as base no-u_M (photo)",
+   "det5": "L = 1.96 sqrt(u_M^2 + sigma_P^2) + 1.96 |r| (sigma_W removed)",
+   "det6": "L = 1.96 sqrt(u_M^2 + sigma_P^2 + sigma_W^2) (r removed)",
+   "det7": "L = 1.96 (sqrt(u_M^2 + sigma_W^2) + |r|) (sigma_P removed)",
+   "agree_target": "precision-weighted mean with base weights; base u_M not finite -> mean of prior and MVS heights (area recorded)",
+   "five_percent": "JC s8 five_percent: patches with n >= 4, finite gt_p, prior and MVS height both within tau of gt_p (cell 0) and finite variant limit; area share with |d| beyond the variant limit; per kind"
+  },
+  "identify": {
+   "applies_to": "outside and no-u_M patches of the base; inside stays 일치",
+   "id1": "all -> 영상 깊이 사용", "id2": "all -> 사전정보 사용",
+   "id3": "s_P available and s_P < t -> 영상 깊이 사용; s_P available and s_P >= t -> 사전정보 사용; else default",
+   "id4": "s_M available and s_M >= t -> 영상 깊이 사용; s_M available and s_M < t -> 사전정보 사용; else default; s_M available = scored, finite s_M, MVS plane available, selected images of the MVS plane >= 3, texture of the MVS piece >= 5",
+   "id5": "c_lo, c_hi = area-weighted 5 % and 95 % of (s_M - s_P) over the same photo-point sample as t (per region x prior x kind); photo codes 7, 6, 4, 5, 9 -> default; s_M - s_P > c_hi -> 영상 깊이 사용; < c_lo -> 사전정보 사용; else default",
+   "id6": "photo codes 7, 6, 4, 5, 9 -> default; s_M > s_P -> 영상 깊이 사용, else 사전정보 사용",
+   "id7": "reference = the same photo-point sample as t; q_P = area-weighted CDF of s_P in the sample's s_P distribution, q_M likewise in its s_M distribution; codes 7, 6, 4, 5, 9 -> default; q_M > q_P -> 영상 깊이 사용, else 사전정보 사용",
+   "id8": "JP na_<prior>.npz region_new, target_h_new (s_P vs t, s_M vs t_M)",
+   "check": "geometry-consistency-only (JC) = id1 for LoD2, id2 for ALS"
+  },
+  "abstain": {"ab1": "photo codes 2 (both low) and 3 (both high): s_M > s_P -> 영상 깊이 사용, else 사전정보 사용; others as base", "ab2": "JC alt_na (판 나) stored region and target"},
+  "process": {"pr1": "일치 target = prior height", "pr2": "일치 target = MVS mean height", "extra": "case-0 GT points: median and NMAD of |distance to target| (base vs variant)"},
+  "visibility": {"vis1": "missing (n < 4) -> 결측 for all (no sight test)", "vis2": "missing -> 제거 for all"}
+ },
+ "reference_4_6": {"bundle": "나", "model": "three-class multinomial logistic regression (sklearn, lbfgs, C = 1.0, max_iter 2000), area-weighted, standardised inputs", "target": "patch case 0, 1, 2 for n >= 4 and not mixed patches", "inputs": "JP obs.py candidate observations 1-14 (the 14 listed in the JUDGEPROBE-v1 order 3.1; 15 and 16 were added by that task and are not used; 10-12 as the min forms), prior type as an indicator over a model fitted on both priors pooled, roof/wall indicator; missing -> median + missing flag", "cv": "building-level 5-fold (seed 20261117)", "mapping": "0 -> 일치, 1 -> 영상 깊이 사용, 2 -> 사전정보 사용; n < 4 and mixed -> base", "budget_h": 1},
+ "fusion_all_section5": {"bundle": "나", "rule": "the same mvsfuse detect implementation and colour threshold 25 over all buildings; budget 3 h estimated from the first search region"},
+ "figures": {
+  "dpi": 300, "json_per_figure": true,
+  "fig1": "per prior: x = four cases + 전체, bars = prior only, image only, 기존 1 (0.5 m, 1.0 m), 기존 2, 기존 3, 기존 5 (0.5 m, L), 본 방법, 상한; 기존 4 three-region-only bar in a separate panel of the same figure (bundle 가)",
+  "fig2": "per prior (LoD2 = 모두): columns 검출, 식별, 유보, 처리, 가시성; per variant four case points; base as horizontal lines per case",
+  "fig5": "per prior two panels: left x prior-error target-ok, y image-depth-error; right x prior-error, y both-valid; 기존 1, 2, 3 sweeps as lines; prior only, image only, 기존 4 (three regions, marked), 기존 5, 본 방법, 상한 as points",
+  "fig3_fig4": "bundle 나 (order 6절)"
+ },
+ "outputs": {"variants_npz": "PH/main_judgeabl_v1/PHD-MAIN-JUDGEABL-v1/variants/<search region>__<prior>.npz: patch_id, variant names, region[V,N], reason[V,N], target_h[V,N]"},
+ "reduce_when_late": ["4.6", "fig4", "section 5 (three regions only)", "4.5", "4.4"]
+}
