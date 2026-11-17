@@ -106,7 +106,7 @@ class Near:
     def offsets(self, X):
         d, j = self.tree.query(np.asarray(X, 'f8'), distance_upper_bound=50.); return np.where(np.isfinite(d), d, np.nan), np.zeros(len(d)), j
 
-STAGE_IT = {'0': 0, '1000': 1000, '3000_pre_reset': 3000, '5000': 5000, '7000': 7000, '15000': 15000, '30000': 30000}
+STAGE_IT = {'0': 0, '1000': 1000, '3000_pre_reset': 3000, '5000': 5000, '6000_pre_reset': 6000, '7000': 7000, '9000_pre_reset': 9000, '10000': 10000, '12000_pre_reset': 12000, '15000': 15000, '30000': 30000}
 class PixG:
     """pixel-defined group (a5_pix.py group files): membership by uid in the group of the latest computed stage at or before the state.
     vset = the place patches (annex wrong / right patches, south wall / long wall column patches); dn = distance to the nearest of those target anchors."""

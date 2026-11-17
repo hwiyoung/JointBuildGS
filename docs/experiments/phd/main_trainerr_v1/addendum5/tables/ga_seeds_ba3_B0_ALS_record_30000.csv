@@ -1,0 +1,15 @@
+run,state,group,gaussians,small_group,kind_같은 목표에 묶인 것,kind_다른 목표에 묶인 것,kind_풀린 것,kind_묶이지 않은 것,value,prior_seed_pct,background_seed_pct,q25_q50_q75,gt_1m_pct,within_tangent_pct,rule,seeds,top10_seed_share_pct,top1,pct,seeds_large,n,large_bg_pct,seed_size_median
+ba3_B0_ALS_record,30000,문제 무리,10,True,0,0,0,10,씨앗 종류,0.0,100.0,,,,,,,,,,,,
+ba3_B0_ALS_record,30000,문제 무리,10,True,0,0,0,10,씨앗 처음 크기(m),,,"[0.4199152737855911, 0.5677221119403839, 0.9438695907592773]",10.0,,,,,,,,,,
+ba3_B0_ALS_record,30000,문제 무리,10,True,0,0,0,10,씨앗 처음 자리: 목표면 법선 거리(m),,,"[17.044651808789453, 21.69778587417019, 22.071133170051848]",,100.0,nan = no place point within 0.25 m tangent (seed not above the place),,,,,,,,
+ba3_B0_ALS_record,30000,문제 무리,10,True,0,0,0,10,씨앗 처음 자리: 참값 점까지 거리(m),,,"[2.302595210449251, 8.328664663392587, 9.299037458878416]",70.0,,,,,,,,,,
+ba3_B0_ALS_record,30000,문제 무리,10,True,0,0,0,10,씨앗 하나의 후손 수,,,"[1.0, 1.0, 1.5]",,,,7,100.0,3,,,,,
+ba3_B0_ALS_record,30000,문제 무리,10,True,0,0,0,10,처음부터 큰 배경 씨앗(1 m 초과)의 후손,,,,,,jbgs_target.py initial_large_background: origin 0 and max initial scale > 1 m (0.pt),,,,10.0,1,,,
+ba3_B0_ALS_record,30000,문제 무리,10,True,0,0,0,10,종류별: 묶이지 않은 것,,100.0,,,,,,,,,,10,10.0,0.5677221119403839
+ba3_B0_ALS_record,30000,대조 무리,24,True,0,0,0,24,씨앗 종류,0.0,100.0,,,,,,,,,,,,
+ba3_B0_ALS_record,30000,대조 무리,24,True,0,0,0,24,씨앗 처음 크기(m),,,"[0.4002551808953285, 0.41418296098709106, 0.5024171620607376]",12.5,,,,,,,,,,
+ba3_B0_ALS_record,30000,대조 무리,24,True,0,0,0,24,씨앗 처음 자리: 목표면 법선 거리(m),,,"[18.127310059077107, 19.01202831396889, 21.646440084781993]",,100.0,nan = no place point within 0.25 m tangent (seed not above the place),,,,,,,,
+ba3_B0_ALS_record,30000,대조 무리,24,True,0,0,0,24,씨앗 처음 자리: 참값 점까지 거리(m),,,"[8.442611413174715, 9.584512807446318, 16.623741365795148]",87.5,,,,,,,,,,
+ba3_B0_ALS_record,30000,대조 무리,24,True,0,0,0,24,씨앗 하나의 후손 수,,,"[1.5, 2.0, 4.0]",,,,7,100.0,10,,,,,
+ba3_B0_ALS_record,30000,대조 무리,24,True,0,0,0,24,처음부터 큰 배경 씨앗(1 m 초과)의 후손,,,,,,jbgs_target.py initial_large_background: origin 0 and max initial scale > 1 m (0.pt),,,,12.5,1,,,
+ba3_B0_ALS_record,30000,대조 무리,24,True,0,0,0,24,종류별: 묶이지 않은 것,,100.0,,,,,,,,,,24,12.5,0.41418296098709106
