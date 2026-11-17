@@ -1,0 +1,74 @@
+{
+  "purpose": "PHD-MAIN-TRAINERR-v1 addendum 5: problem-making Gaussians (unbound, released, other-target) vs control, by place. Counting only, no new training, no method change.",
+  "order": "docs/experiments/phd/main_trainerr_v1/addendum5/덧붙임5_발주문.md",
+  "fork_for_rendering": "GeoGS-conf-guided-v1-r31 (read only; no new fork, no training)",
+  "stages": ["1000", "3000_pre_reset", "5000", "7000", "15000", "30000"],
+  "intervals": [[0, 1000], [1000, 3000], [3000, 5000], [5000, 7000], [7000, 15000], [15000, 30000]],
+  "interval_rule": "interval (a, b]: start state = a ('0' for 0, '3000_pre_reset' for 3000), end state = b ('3000_pre_reset' for 3000)",
+  "resets": [3000, 6000, 9000, 12000],
+  "reset_check_rule": "member of the group in the <reset>_pre_reset state and not deleted in (reset, reset + 100] (delete events); first prune check after the reset is at reset + 100",
+  "kinds": {"0": "같은 목표에 묶인 것 (target_tag 1 and target_index in the place patches)", "1": "다른 목표에 묶인 것 (target_tag 1, other patch)", "2": "풀린 것 (target_tag 2)", "3": "묶이지 않은 것 (target_tag 0: background seeds and their children)"},
+  "places": {
+    "floor_band": {
+      "site": "R1 x 항공 LiDAR", "stem": "R1rep_b10__ALS", "place_points": "addendum3 place_points('floor_band') (c2_own_lost)", "control": "floor_control (c2_own_control inside the record range)",
+      "problem_group": "Gaussian centre with normal offset dn in [0.2, 3.0] m above the target plane of a place point (dn = (x - anchor) . n_out of that point's column patch; GT point plane when the point has no patch) and tangent offset <= 0.25 m from that place point; group re-defined at each stage",
+      "control_group": "same rule on the floor_control points",
+      "runs": {"sa1_R1_ALS_record6000": "0-6000, states every 20/100, signed gradients", "sb5_R1_ALS_record_signed": "0-30000, states (61 saves), signed gradients"},
+      "bound_floor_reference": "addendum 4: Gaussians bound to floor_band patches (target_tag 1, target_index in the floor_band patches)"
+    },
+    "annex_under": {
+      "site": "B0 x 항공 LiDAR", "stem": "B0_b10__ALS",
+      "problem_group": "addendum 4 work da 4.3 (a4_da.wrong('annex')): pixels whose rendered surface lies on the wrong face (mesh vertices in the annex box > 1 m from GT); Gaussians giving weight within the wrong-face depth +- 0.5 m",
+      "control_group": "Gaussians drawing the roof at right-roof pixels (annex box mesh vertices <= 0.2 m from GT, not wall)",
+      "runs": {"sb2_B0_ALS_record6000": "0-6000 signed", "ba3_B0_ALS_record": "addendum 3 ba-3 record run, 30000"}
+    },
+    "south_wall": {
+      "site": "B0 x LoD2", "stem": "B0_b10__LoD2",
+      "problem_group": "addendum 4 work da 4.3 (a4_da.wrong('south')): pixels of mesh vertices behind the south wall (> 0.64 m); Gaussians giving weight within that depth +- 0.5 m",
+      "control_group": "Gaussians drawing the long street-side wall (addendum3 place long_wall)",
+      "runs": {"sb1_B0_LoD2_record6000": "0-6000 signed", "tl_B0_b10_LoD2_s0": "TRAINLOG record run, 30000 (scene dumps)"}
+    },
+    "floater": {
+      "site": "B173 x 항공 LiDAR", "stem": "B173nb_b10__ALS",
+      "problem_group": "Gaussian centre within 0.5 m of an addendum3 work-ma edge floater face centre", "control_group": "within 0.5 m of the control vertices (addendum3 ma)",
+      "runs": {"tl_B173nb_b10_ALS_s0": "TRAINLOG B173 record run (scene dumps); no signed gradients -> work da = 확인 불가 and order 2.4 question"}
+    },
+    "r1_lod2_wall1": {
+      "site": "R1 x LoD2", "stem": "R1rep_b10__LoD2",
+      "problem_group": "Gaussian centre 0.2-3 m in front (outward) of the target plane at the addendum4 ma cluster 1 lost points (tangent <= 0.25 m), at 30000",
+      "control_group": "same rule at kept wall points of the same scene (FINALTRAIN kept set, wall points of R1 x LoD2 within 30 m of cluster 1)",
+      "runs": {"sb3_R1_LoD2_record": "addendum 4 follow-up record run, 30000 (scene dumps)"}
+    }
+  },
+  "work_na": {
+    "states": ["3000_pre_reset", "30000"],
+    "views": "all training views whose image contains the pixel (maps index of the scene)",
+    "pixels": "per view, pixel grid with stride 4 inside the union of the 3-sigma screen footprints of the problem/control group Gaussians; a pixel belongs to the group when the group's alpha*T sum > 1e-3",
+    "supervised": "target depth finite and > 0 and map weight > 0 (jbgs_target.py loss rule)",
+    "rendered_depth": "expected depth sum(alpha*T*z)/sum(alpha*T) (pipe.depth_ratio = 0)",
+    "tolerance": "+- 1.96 sigma of the map sigma",
+    "weight_split": "per pixel alpha*T before target - 1.96 sigma, within, after"
+  },
+  "work_da": {
+    "windows": [[0, 1000], [1000, 3000], [3000, 7000], [7000, 15000], [15000, 30000]],
+    "distance_bins_m": [[0.2, 0.5], [0.5, 1.0], [1.0, 3.0]],
+    "post_reset": "record iteration in (reset, reset + 100]",
+    "opacity_up": "-dL/d(opacity logit) > 0",
+    "position": "-dL/dxyz . n_out (+ = away from the target plane)",
+    "scale_gradient": "not recorded (trainlog r31 stores xyz and opacity only) -> 확인 불가"
+  },
+  "work_ra": {
+    "models": {"record": "tl_B0_b10_LoD2_s0 at 7000, 15000, 30000", "sa2": "addendum 4 sa-2 (occluded-pixel supervision off) at the same iterations"},
+    "height_bins_m": [[0, 5], [5, 10]],
+    "points": "visible_low / visible_high GT points",
+    "views": "every training view whose image contains the point (owner not required)",
+    "classes": "rendered depth vs point depth: beyond (> truncation farther), stop (> truncation nearer), right (within truncation); truncation from the mesh code"
+  },
+  "work_ma": {
+    "seeds": "addendum 4 work ra fate: seeds first bound to a wrong target (fixed points) that were deleted; control = seeds first bound to kept-point targets, deleted and survived; six record scenes",
+    "values": "addendum 4 work na definitions (open views, colour weight, front kinds) at the reset before deletion"
+  },
+  "work_ba": {"min_width_px": 1600, "max_lines": 3, "colours": {"gt": "gray", "target": "blue", "surface": "red"}},
+  "small_group_n": 30,
+  "scientific_verdict": null
+}

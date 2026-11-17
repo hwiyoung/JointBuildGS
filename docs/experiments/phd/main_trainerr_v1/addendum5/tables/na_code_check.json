@@ -1,0 +1,54 @@
+{
+ "rows": [
+  {
+   "item": "화소 무게 지도(weight)를 만드는 식",
+   "file": "scripts/phd/main_finaltrain_v1/prepare_inputs.py",
+   "lines": "59, 66-70",
+   "rule": "목표 원판 화소(owner>=0): weight = clip(sigma_ref/sigma_patch, 0.1, 10) (weight_power 1). 목표 원판이 없고 영상 깊이(MVS)가 있고 conf>0인 화소: depth = MVS 깊이, sigma = 배경 sigma, weight = 1. 그 밖: weight 0",
+   "depends": "패치 sigma(정밀도)에 따른다. 판정 값은 식에 직접 들어가지 않는다. 목표 원판은 surface_exists 패치만 그린다(line 59)"
+  },
+  {
+   "item": "목표가 없는 화소",
+   "file": "scripts/phd/main_finaltrain_v1/prepare_inputs.py",
+   "lines": "69-70",
+   "rule": "건물 밖 배경 화소에도 영상 깊이(MVS)를 목표 깊이로 적고 무게 1을 준다. 영상 깊이가 없거나 conf 0이면 목표 없음(무게 0)",
+   "depends": ""
+  },
+  {
+   "item": "학습이 읽는 지도",
+   "file": "src/phd/forks/GeoGS-conf-guided-v1-r31/jbgs_target.py",
+   "lines": "50, 104-108",
+   "rule": "--jbgs_target_dir = FINALTRAIN stage1/<장면>/maps (sb5 command.json 확인). depth, sigma, weight, owner를 읽는다",
+   "depends": ""
+  },
+  {
+   "item": "깊이 손실에 들어가는 그린 깊이",
+   "file": "src/phd/forks/GeoGS-conf-guided-v1-r31/jbgs_target.py; gaussian_renderer/__init__.py; train.py",
+   "lines": "jbgs_target.py 116-121; __init__.py 145, 155; train.py 903",
+   "rule": "surf_depth = 가중 평균 깊이 sum(αT·z)/불투명도 합(render_alpha로 나눔), depth_ratio = 0 (arguments/__init__.py 104). 손실 = sum(|D-목표|·weight)/영상 전체 화소 수, 목표 유한·>0, D 유한·>0, weight>0인 화소만",
+   "depends": ""
+  },
+  {
+   "item": "깊이 손실 무게",
+   "file": "command.json (sb5); train.py",
+   "lines": "train.py 905",
+   "rule": "--jbgs_target_lambda 0.05; total = rgb + dist + normal + 0.05·깊이",
+   "depends": ""
+  },
+  {
+   "item": "광도 손실 식",
+   "file": "src/phd/forks/GeoGS-conf-guided-v1-r31/train.py; arguments/__init__.py",
+   "lines": "train.py 885-886; arguments 120",
+   "rule": "rgb = 0.8·L1 + 0.2·(1-SSIM) (lambda_dssim 0.2)",
+   "depends": ""
+  },
+  {
+   "item": "2DGS 정규화 항",
+   "file": "src/phd/forks/GeoGS-conf-guided-v1-r31/train.py; arguments/__init__.py",
+   "lines": "train.py 891-892, 899; arguments 121-123",
+   "rule": "법선 항 0.05 (7,000회 뒤), 왜곡 항 lambda_dist 0.0 (3,000회 뒤에도 0)",
+   "depends": ""
+  }
+ ],
+ "scientific_verdict": null
+}

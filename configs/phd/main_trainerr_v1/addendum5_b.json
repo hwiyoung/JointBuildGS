@@ -1,0 +1,14 @@
+{
+  "purpose": "PHD-MAIN-TRAINERR-v1 addendum 5, order 2.4 record runs: the user approved (2026-11-17, '넷 다 학습') four 30,000-iteration runs with the method unchanged and only records added (signed gradients, states, scene dumps).",
+  "runs": {
+    "sc1_B173_ALS_signed": {"site": "B173nb_b10", "prior": "ALS", "region": "/te/addendum5/region/B173nb_b10__ALS.json", "for": "floater (work da, and ga/na with signed gradients)"},
+    "sc2_R1_LoD2_signed": {"site": "R1rep_b10", "prior": "LoD2", "region": "/te/addendum5/region/R1rep_b10__LoD2.json", "for": "R1 x LoD2 wall 1"},
+    "sc3_B0_ALS_signed": {"site": "B0_b10", "prior": "ALS", "region": "/te/addendum3/region/B0_b10__ALS_annex.json", "for": "B0 annex under face after 6,000"},
+    "sc4_B0_LoD2_signed": {"site": "B0_b10", "prior": "LoD2", "region": "/te/addendum5/region/B0_b10__LoD2.json", "for": "B0 south wall after 6,000"}
+  },
+  "command": "addendum 4 sb5 (kind sbsigned): FINALTRAIN own command, fork r31, --jbgs_trainlog on, --jbgs_trainlog_region <region>, --jbgs_trainlog_grads on, --jbgs_a4_grad_signed on, record config trainlog_te.json (61 saves, 13 scene dumps); every switch default = current behaviour",
+  "region": {"margin_m": 3.5, "floater_margin_m": 1.0, "r1_lod2_control_radius_m": 30.0, "cells": "1 m cells, dilated 2 cells, connected components -> boxes + margin, 0.25 m voxels"},
+  "gpu_rule": ">= 14 GiB free and no other addendum-4/5 training on it",
+  "health_check": "if a run stops on the FINALTRAIN health check (count_gt_3x_6000), it is rerun once with --jbgs_a3_count_check off (count only; addendum4_c2.json precedent) and recorded",
+  "scientific_verdict": null
+}
