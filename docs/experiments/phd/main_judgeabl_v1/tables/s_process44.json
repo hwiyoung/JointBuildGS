@@ -1,0 +1,186 @@
+{
+"rows": [
+{
+"prior": "LoD2",
+"variant": "본 방법",
+"surface": "지붕",
+"n_case0": 4107533,
+"n_finite": 4098470,
+"abs_dist_median_m": 0.0371372866,
+"abs_dist_nmad_m": 0.0357450953
+},
+{
+"prior": "LoD2",
+"variant": "본 방법",
+"surface": "벽",
+"n_case0": 2567489,
+"n_finite": 2532211,
+"abs_dist_median_m": 0.0554018715,
+"abs_dist_nmad_m": 0.0567837206
+},
+{
+"prior": "LoD2",
+"variant": "본 방법",
+"surface": "모두",
+"n_case0": 6675022,
+"n_finite": 6630681,
+"abs_dist_median_m": 0.0428613867,
+"abs_dist_nmad_m": 0.042384607
+},
+{
+"prior": "LoD2",
+"variant": "사전 정보 단독",
+"surface": "지붕",
+"n_case0": 4107533,
+"n_finite": 4098496,
+"abs_dist_median_m": 0.0729776461,
+"abs_dist_nmad_m": 0.0719745449
+},
+{
+"prior": "LoD2",
+"variant": "사전 정보 단독",
+"surface": "벽",
+"n_case0": 2567489,
+"n_finite": 2549158,
+"abs_dist_median_m": 0.0854128048,
+"abs_dist_nmad_m": 0.1007736079
+},
+{
+"prior": "LoD2",
+"variant": "사전 정보 단독",
+"surface": "모두",
+"n_case0": 6675022,
+"n_finite": 6647654,
+"abs_dist_median_m": 0.0763939591,
+"abs_dist_nmad_m": 0.0814975725
+},
+{
+"prior": "LoD2",
+"variant": "영상 단독",
+"surface": "지붕",
+"n_case0": 4107533,
+"n_finite": 4098459,
+"abs_dist_median_m": 0.038263592,
+"abs_dist_nmad_m": 0.0371981192
+},
+{
+"prior": "LoD2",
+"variant": "영상 단독",
+"surface": "벽",
+"n_case0": 2567489,
+"n_finite": 2532122,
+"abs_dist_median_m": 0.0582653609,
+"abs_dist_nmad_m": 0.0610668139
+},
+{
+"prior": "LoD2",
+"variant": "영상 단독",
+"surface": "모두",
+"n_case0": 6675022,
+"n_finite": 6630581,
+"abs_dist_median_m": 0.0444161242,
+"abs_dist_nmad_m": 0.0446135219
+},
+{
+"prior": "LoD2",
+"variant": "처리 1 일치는 사전 정보 높이",
+"surface": "지붕",
+"n_case0": 4107533,
+"n_finite": 4098470,
+"abs_dist_median_m": 0.0711358799,
+"abs_dist_nmad_m": 0.0700245028
+},
+{
+"prior": "LoD2",
+"variant": "처리 1 일치는 사전 정보 높이",
+"surface": "벽",
+"n_case0": 2567489,
+"n_finite": 2532258,
+"abs_dist_median_m": 0.0829270252,
+"abs_dist_nmad_m": 0.0973682356
+},
+{
+"prior": "LoD2",
+"variant": "처리 1 일치는 사전 정보 높이",
+"surface": "모두",
+"n_case0": 6675022,
+"n_finite": 6630728,
+"abs_dist_median_m": 0.0744420599,
+"abs_dist_nmad_m": 0.0789923152
+},
+{
+"prior": "LoD2",
+"variant": "처리 2 일치는 영상 깊이 높이",
+"surface": "지붕",
+"n_case0": 4107533,
+"n_finite": 4098470,
+"abs_dist_median_m": 0.0382540763,
+"abs_dist_nmad_m": 0.0371809225
+},
+{
+"prior": "LoD2",
+"variant": "처리 2 일치는 영상 깊이 높이",
+"surface": "벽",
+"n_case0": 2567489,
+"n_finite": 2532149,
+"abs_dist_median_m": 0.0582534032,
+"abs_dist_nmad_m": 0.0610515726
+},
+{
+"prior": "LoD2",
+"variant": "처리 2 일치는 영상 깊이 높이",
+"surface": "모두",
+"n_case0": 6675022,
+"n_finite": 6630619,
+"abs_dist_median_m": 0.0444040933,
+"abs_dist_nmad_m": 0.0445928118
+},
+{
+"prior": "ALS",
+"variant": "본 방법",
+"surface": "지붕",
+"n_case0": 3965752,
+"n_finite": 3933116,
+"abs_dist_median_m": 0.0357897828,
+"abs_dist_nmad_m": 0.0271239195
+},
+{
+"prior": "ALS",
+"variant": "사전 정보 단독",
+"surface": "지붕",
+"n_case0": 3965752,
+"n_finite": 3957788,
+"abs_dist_median_m": 0.0381024138,
+"abs_dist_nmad_m": 0.0285193955
+},
+{
+"prior": "ALS",
+"variant": "영상 단독",
+"surface": "지붕",
+"n_case0": 3965752,
+"n_finite": 3957518,
+"abs_dist_median_m": 0.0344569345,
+"abs_dist_nmad_m": 0.0322258049
+},
+{
+"prior": "ALS",
+"variant": "처리 1 일치는 사전 정보 높이",
+"surface": "지붕",
+"n_case0": 3965752,
+"n_finite": 3933130,
+"abs_dist_median_m": 0.0380074121,
+"abs_dist_nmad_m": 0.028402255
+},
+{
+"prior": "ALS",
+"variant": "처리 2 일치는 영상 깊이 높이",
+"surface": "지붕",
+"n_case0": 3965752,
+"n_finite": 3933114,
+"abs_dist_median_m": 0.0327945918,
+"abs_dist_nmad_m": 0.0301968859
+}
+],
+"note": "4.4: 두 자료 모두 유효 참값 점에서 목표 면까지 거리 절댓값의 중앙값과 NMAD (m).",
+"scientific_verdict": null
+}

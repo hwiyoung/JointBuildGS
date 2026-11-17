@@ -1,0 +1,104 @@
+{
+"rows": [
+{
+"prior": "LoD2",
+"check": "사진 점에서 다시 낸 t = 패치의 저장된 t",
+"equal_pct": 100.0,
+"n": 2647999,
+"equal_ok_pct": null
+},
+{
+"prior": "LoD2",
+"check": "본값 판정 다시 냄 = JC 본 방법",
+"equal_pct": 100.0,
+"n": 3177706,
+"equal_ok_pct": null
+},
+{
+"prior": "LoD2",
+"check": "본값 목표 다시 냄 = JC 본 방법",
+"equal_pct": 100.0,
+"n": 3177706,
+"equal_ok_pct": null
+},
+{
+"prior": "LoD2",
+"check": "본값 목표 맞음 다시 셈 = JC 저장 값",
+"equal_pct": 100.0,
+"n": 8141189,
+"equal_ok_pct": null
+},
+{
+"prior": "LoD2",
+"check": "기존 2 배수 1.96 = 기존 2 대표(저장된 L) 판정",
+"equal_pct": 100.0,
+"n": 3177706,
+"equal_ok_pct": null
+},
+{
+"prior": "LoD2",
+"check": "식별 1 없음·영상 깊이 사용 = JC 기하 일관성 검사 단독 (판정, 목표 맞음)",
+"equal_pct": 100.0,
+"n": 3177706,
+"equal_ok_pct": 100.0
+},
+{
+"prior": "LoD2",
+"check": "식별 2 없음·사전정보 사용 = JC 기하 일관성 검사 단독 (판정, 목표 맞음)",
+"equal_pct": 77.3160260893,
+"n": 3177706,
+"equal_ok_pct": 86.1347894024
+},
+{
+"prior": "ALS",
+"check": "사진 점에서 다시 낸 t = 패치의 저장된 t",
+"equal_pct": 99.9785232314,
+"n": 768272,
+"equal_ok_pct": null
+},
+{
+"prior": "ALS",
+"check": "본값 판정 다시 냄 = JC 본 방법",
+"equal_pct": 100.0,
+"n": 789428,
+"equal_ok_pct": null
+},
+{
+"prior": "ALS",
+"check": "본값 목표 다시 냄 = JC 본 방법",
+"equal_pct": 100.0,
+"n": 789428,
+"equal_ok_pct": null
+},
+{
+"prior": "ALS",
+"check": "본값 목표 맞음 다시 셈 = JC 저장 값",
+"equal_pct": 100.0,
+"n": 4474266,
+"equal_ok_pct": null
+},
+{
+"prior": "ALS",
+"check": "기존 2 배수 1.96 = 기존 2 대표(저장된 L) 판정",
+"equal_pct": 100.0,
+"n": 789428,
+"equal_ok_pct": null
+},
+{
+"prior": "ALS",
+"check": "식별 1 없음·영상 깊이 사용 = JC 기하 일관성 검사 단독 (판정, 목표 맞음)",
+"equal_pct": 88.8607954114,
+"n": 789428,
+"equal_ok_pct": 95.1033756151
+},
+{
+"prior": "ALS",
+"check": "식별 2 없음·사전정보 사용 = JC 기하 일관성 검사 단독 (판정, 목표 맞음)",
+"equal_pct": 100.0,
+"n": 789428,
+"equal_ok_pct": 100.0
+}
+],
+"note": "검산.",
+"scientific_verdict": null
+}
