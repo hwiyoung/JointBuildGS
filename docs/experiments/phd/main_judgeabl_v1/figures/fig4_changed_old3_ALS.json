@@ -1,48 +1,50 @@
 {
- "figure": 4,
+ "at": "2026-11-17T22:02:56+09:00",
+ "scientific_verdict": null,
+ "figure": "fig4_changed_old3_ALS",
  "prior": "ALS",
  "pair": [
   "기존 3 아래 5 %",
   "본 방법"
  ],
- "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "rule": "GT points whose target-ok differs; 0.1 m voxel centres joined within 0.6 m per building (point-distance tolerance <= 0.17 m); area = JC 0.25 m cells x 0.0625",
  "clusters": [
   {
    "type": "본 방법만 맞음",
+   "building": "DEBY_LOD2_4906965",
+   "area_m2": 19.25,
+   "gt_points": 883,
+   "patches": 300,
+   "section_patch": 13030,
+   "view": null,
+   "line": "4906965 · 두 자료 모두 유효 · 본 방법 일치 / 기존 3 사전정보 사용\nd 0.26 L 0.56 s_P 0.67 s_M 0.59 t 0.12"
+  },
+  {
+   "type": "본 방법만 맞음",
    "building": "DEBY_LOD2_4906982",
-   "area_m2": 18.6875,
-   "gt_points": 729,
-   "patches": 257,
+   "area_m2": 18.8125,
+   "gt_points": 731,
+   "patches": 259,
    "section_patch": 404620,
    "view": "DJI_20241217090915_0040_D.JPG",
    "line": "4906982 · 두 자료 모두 유효 · 본 방법 일치 / 기존 3 사전정보 사용\nd 0.15 L 0.81 s_P 0.61 s_M 0.87 t 0.29"
   },
   {
    "type": "본 방법만 맞음",
-   "building": "DEBY_LOD2_4907514",
-   "area_m2": 15.4375,
-   "gt_points": 723,
-   "patches": 233,
-   "section_patch": 47361,
-   "view": "DJI_20241217102026_0012_D.JPG",
-   "line": "4907514 · 두 자료 모두 유효 · 본 방법 일치 / 기존 3 사전정보 사용\nd 0.22 L 0.46 s_P 0.74 s_M 0.51 t 0.12"
-  },
-  {
-   "type": "본 방법만 맞음",
    "building": "DEBY_LOD2_4906985",
-   "area_m2": 13.6875,
-   "gt_points": 772,
-   "patches": 174,
-   "section_patch": 441376,
-   "view": "DJI_20241217090815_0010_D.JPG",
-   "line": "4906985 · 영상 깊이 오류 · 본 방법 일치 / 기존 3 영상 깊이 사용\nd 0.15 L 0.70 s_P 0.14 s_M 0.17 t 0.29"
+   "area_m2": 17.375,
+   "gt_points": 1044,
+   "patches": 222,
+   "section_patch": 442592,
+   "view": "DJI_20241217090805_0005_D.JPG",
+   "line": "4906985 · 영상 깊이 오류 · 본 방법 일치 / 기존 3 영상 깊이 사용\nd 0.40 L 0.53 s_P 0.27 s_M 0.19 t 0.29"
   },
   {
    "type": "기존 3만 맞음",
    "building": "DEBY_LOD2_4906967",
-   "area_m2": 9.8125,
-   "gt_points": 634,
-   "patches": 120,
+   "area_m2": 10.3125,
+   "gt_points": 649,
+   "patches": 128,
    "section_patch": 221955,
    "view": "DJI_20241217103545_0062_D.JPG",
    "line": "4906967 · 두 자료 모두 유효 · 본 방법 미판정 / 기존 3 영상 깊이 사용\nd 0.00 L nan s_P 0.07 s_M 0.12 t 0.12"
@@ -50,9 +52,9 @@
   {
    "type": "기존 3만 맞음",
    "building": "DEBY_LOD2_4907519",
-   "area_m2": 8.4375,
-   "gt_points": 372,
-   "patches": 135,
+   "area_m2": 8.5625,
+   "gt_points": 376,
+   "patches": 137,
    "section_patch": 753,
    "view": "DJI_20241217084635_0121_D.JPG",
    "line": "4907519 · 두 자료 모두 유효 · 본 방법 제거 / 기존 3 결측\nd -0.13 L 0.15 s_P 0.95 s_M nan t 0.18"
@@ -67,7 +69,5 @@
    "view": "DJI_20241217091145_0115_D.JPG",
    "line": "4959326 · 영상 깊이 오류 · 본 방법 일치 / 기존 3 사전정보 사용\nd 0.18 L 0.61 s_P 0.69 s_M 0.87 t 0.24"
   }
- ],
- "at": "2026-11-17T20:55:10+09:00",
- "scientific_verdict": null
+ ]
 }

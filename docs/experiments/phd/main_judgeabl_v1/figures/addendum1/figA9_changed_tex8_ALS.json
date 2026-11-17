@@ -1,5 +1,5 @@
 {
- "at": "2026-11-17T21:20:15+09:00",
+ "at": "2026-11-17T22:05:44+09:00",
  "scientific_verdict": null,
  "figure": "figA9_changed_tex8_ALS",
  "prior": "ALS",
@@ -7,7 +7,7 @@
   "본 방법",
   "고정 4 무늬 8"
  ],
- "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "rule": "GT points whose target-ok differs; 0.1 m voxel centres joined within 0.6 m per building (point-distance tolerance <= 0.17 m); area = JC 0.25 m cells x 0.0625",
  "clusters": [
   {
    "type": "맞게 바뀜",
@@ -21,13 +21,13 @@
   },
   {
    "type": "맞게 바뀜",
-   "building": "DEBY_LOD2_4906965",
+   "building": "DEBY_LOD2_4907519",
    "area_m2": 0.25,
-   "gt_points": 15,
-   "patches": 2,
-   "section_patch": 76035,
-   "view": null,
-   "line": "4906965 · 두 자료 모두 유효 · 고정 4 무늬 8 사전정보 사용 / 본값 영상 깊이 사용\nd 1.00 L 0.38 s_P 0.12 s_M 0.22 t 0.12"
+   "gt_points": 12,
+   "patches": 4,
+   "section_patch": 146707,
+   "view": "DJI_20241217084627_0117_D.JPG",
+   "line": "4907519 · 두 자료 모두 유효 · 고정 4 무늬 8 사전정보 사용 / 본값 영상 깊이 사용\nd 0.18 L 0.13 s_P 0.15 s_M 0.32 t 0.18"
   },
   {
    "type": "틀리게 바뀜",

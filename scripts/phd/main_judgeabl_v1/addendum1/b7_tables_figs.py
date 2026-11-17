@@ -30,42 +30,42 @@ def main():
     write('check5_texture_rules', pd.DataFrame(R52), '확인 5: 규칙 1(저장 값, s_P < t 비율이 10 % 아래로) 문턱, 규칙 2(표본, σ_n √(t/(1−t))) 문턱, 지금 5. σ_n = 사진 쌍마다 일차식 맞춘 뒤 남은 차이 표준 편차 ÷ √2 의 중앙값(회색 0~255). 표본은 조각 전체(마스크 없음)로 다시 셈; 저장 값과의 상관 함께.')
     # 6
     bins = [0, 20, 30, 40, 50, 60, 70, 80]
-    for u, q in PR.groupby('unit'):
-        v = VW[VW.unit == u]; base = q[q.max_angle < 40]['ncc'].median(); first = None
+    for (u, rg), q in [((u, '전체'), q) for u, q in PR.groupby('unit')] + list(PR.groupby(['unit', 'region'])):
+        v = VW[VW.unit == u] if rg == '전체' else VW.iloc[:0]; base = q[q.max_angle < 40]['ncc'].median(); first = None
         for a, b in zip(bins[:-1], bins[1:]):
             m = q[(q.max_angle >= a) & (q.max_angle < b)]; vv = v[(v.angle >= a) & (v.angle < b)]
             med = m['ncc'].median() if len(m) else np.nan
             if first is None and a >= 40 and np.isfinite(med) and med < base - .1: first = f'{a}~{b}'
-            R6.append(dict(unit=u, angle_bin=f'{a}~{b}°', pairs=len(m), ncc_q10=m['ncc'].quantile(.1) if len(m) else np.nan, ncc_q50=med, ncc_q90=m['ncc'].quantile(.9) if len(m) else np.nan,
+            R6.append(dict(unit=u, region=rg, angle_bin=f'{a}~{b}°', pairs=len(m), ncc_q10=m['ncc'].quantile(.1) if len(m) else np.nan, ncc_q50=med, ncc_q90=m['ncc'].quantile(.9) if len(m) else np.nan,
                            below_t_pct=100*m['below_t'].mean() if len(m) else np.nan, footprint_q50_m=vv['footprint_m'].median() if len(vv) else np.nan, footprint_over_2cm=vv['footprint_m'].median()/.02 if len(vv) else np.nan))
-        R6.append(dict(unit=u, angle_bin='0~40° 중앙값 − 0.1 아래 첫 구간', pairs=np.nan, ncc_q50=base, note=first or '없음'))
+        R6.append(dict(unit=u, region=rg, angle_bin='0~40° 중앙값 − 0.1 아래 첫 구간', pairs=np.nan, ncc_q50=base, note=first or '없음'))
     write('check6_view_angle', pd.DataFrame(R6), '확인 6: 표본 사진 점, 80°까지 넓힌 사진(가림 = MVS 깊이 0.5 m)의 모든 쌍. 각 = 두 사진 가운데 큰 쪽. 화소 크기 = (거리 ÷ 초점) × 2^단계 ÷ cos 각.')
     # 7
     k10 = SP[SP.filter(like='s_k10').notna().any(axis=1)] if 's_k10' in SP else SP.iloc[:0]
-    for u, q in k10.groupby('unit'):
+    for (u, rg), q in [((u, '전체'), q) for u, q in k10.groupby('unit')] + list(k10.groupby(['unit', 'region'])):
         ref = nmad(q['s_k9'] - q['s_k10']); found = None
         for k in range(2, 11):
             dlt = q[f's_k{k}'] - q['s_k10']; nm = nmad(dlt)
             if found is None and k < 10 and np.isfinite(nm) and nm < 1.5*ref: found = k
-            R7.append(dict(unit=u, k=k, points=int(dlt.notna().sum()), diff_median=float(dlt.median()), diff_nmad=nm))
-        R7.append(dict(unit=u, k='편차 < 1.5 × (9와 10 사이) 인 가장 작은 k', points=len(q), diff_nmad=ref, note=found))
+            R7.append(dict(unit=u, region=rg, k=k, points=int(dlt.notna().sum()), diff_median=float(dlt.median()), diff_nmad=nm))
+        R7.append(dict(unit=u, region=rg, k='편차 < 1.5 × (9와 10 사이) 인 가장 작은 k', points=len(q), diff_nmad=ref, note=found))
     for prior in ['LoD2', 'ALS']:
         Ph = loadz(JP/f'photo_{prior}.npz', ['kind', 'area', 'all_within', 'n_selected'])
         for kind in ([1, 2] if prior == 'LoD2' else [1]):
             m = (Ph['kind'] == kind) & Ph['all_within']; ns = Ph['n_selected'][:, 0]
-            for k in range(0, 11): R7.append(dict(unit=f"{'LoD2' if prior == 'LoD2' else '항공 LiDAR'} {'지붕' if kind == 1 else '벽'}", k=f'본값 사진 수 {k}장', area_pct=100*Ph['area'][m & (ns == k)].sum()/Ph['area'][m].sum()))
+            for k in range(0, 11): R7.append(dict(region='전체', unit=f"{'LoD2' if prior == 'LoD2' else '항공 LiDAR'} {'지붕' if kind == 1 else '벽'}", k=f'본값 사진 수 {k}장', area_pct=100*Ph['area'][m & (ns == k)].sum()/Ph['area'][m].sum()))
     write('check7_view_count', pd.DataFrame(R7), '확인 7: 고른 사진 10장인 표본 점에서 저장 차례(첫 장 = 가장 정면, 다음은 방향이 가장 다른 것)로 앞 k장만 쓴 s_P(k) − s_P(10). 본값 사진 수별 넓이 비율(한계 안 사진 점).')
     # 8
-    for u, q in SP.groupby('unit'):
-        cl = q['corr_len_m']; R8.append(dict(unit=u, item='무늬 닮는 거리(1/e, m)', q10=cl.quantile(.1), q50=cl.median(), q90=cl.quantile(.9), note=f'조각 안 독립 표본 수 ≈ {(0.5/cl.median())**2:.0f}' if cl.median() > 0 else ''))
-        fp = q['footprint_m']; R8.append(dict(unit=u, item='화소 크기(면 위, m)', q10=fp.quantile(.1), q50=fp.median(), q90=fp.quantile(.9), note=f'÷ 2 cm 중앙값 {fp.median()/.02:.2f}'))
+    for (u, rg), q in [((u, '전체'), q) for u, q in SP.groupby('unit')] + list(SP.groupby(['unit', 'region'])):
+        cl = q['corr_len_m']; R8.append(dict(unit=u, region=rg, item='무늬 닮는 거리(1/e, m)', q10=cl.quantile(.1), q50=cl.median(), q90=cl.quantile(.9), note=f'조각 안 독립 표본 수 ≈ {(0.5/cl.median())**2:.0f}' if cl.median() > 0 else ''))
+        fp = q['footprint_m']; R8.append(dict(unit=u, region=rg, item='화소 크기(면 위, m)', q10=fp.quantile(.1), q50=fp.median(), q90=fp.quantile(.9), note=f'÷ 2 cm 중앙값 {fp.median()/.02:.2f}'))
         for k in [15, 20]:
-            dd = q[f's_P_{k}'] - q['s_P_full']; R8.append(dict(unit=u, item=f'조각 {k}x{k} − 25x25 s_P 차이', q10=dd.quantile(.1), q50=dd.median(), q90=dd.quantile(.9), note=f'NMAD {nmad(dd):.4f}'))
+            dd = q[f's_P_{k}'] - q['s_P_full']; R8.append(dict(unit=u, region=rg, item=f'조각 {k}x{k} − 25x25 s_P 차이', q10=dd.quantile(.1), q50=dd.median(), q90=dd.quantile(.9), note=f'NMAD {nmad(dd):.4f}'))
     VS = pd.read_csv(TAB/'variogram_summary.csv')
     for prior, kind, lab in B1.UNITS3:
         d = B1.load(prior); inl = (d['geometry'] == 0) & (d['kind'] == kind) & np.isfinite(d['m_ninner']); L50 = VS[(VS.unit == lab) & (VS.region == '전체')]['L50'].iloc[0]
         x = d['m_ninner']; ne = np.minimum(x, np.pi*.25/L50**2)
-        R8.append(dict(unit=lab, item='고리 안쪽 원 점 수 (한계 안)', q10=wq_(x, d['area']*inl, .1), q50=wq_(x, d['area']*inl, .5), q90=wq_(x, d['area']*inl, .9), note=f'유효 표본 수 = min(n, π 0.5² ÷ L50²), L50 {L50:.3f} m → {float(np.pi*.25/L50**2):.2f}'))
+        R8.append(dict(unit=lab, region='전체', item='고리 안쪽 원 점 수 (한계 안)', q10=wq_(x, d['area']*inl, .1), q50=wq_(x, d['area']*inl, .5), q90=wq_(x, d['area']*inl, .9), note=f'유효 표본 수 = min(n, π 0.5² ÷ L50²), L50 {L50:.3f} m → {float(np.pi*.25/L50**2):.2f}'))
     write('check8_patch_inner', pd.DataFrame(R8), '확인 8: 표본 사진 점의 조각(25 x 25, 2 cm)과 고리 안쪽 원.')
     # ---- 그림 A1
     VG = pd.read_csv(TAB/'variogram_bins.csv'); C1 = pd.read_csv(TAB/'check1_conditions.csv'); BD = np.load(A1/'boundary_dist.npz')
@@ -96,8 +96,22 @@ def main():
         if k5 is not None: ax.axvline(k5 - .5, color='k', ls='--', lw=.8)
         r = R52d[(R52d.unit == lab) & (R52d.region == '전체')]
         ttl = f"{lab}: 규칙 1 {q['rule1_threshold'].iloc[0]:g}, 규칙 2 {r['rule2_threshold'].iloc[0]:.2f}" if len(r) else lab
-        ax.set_title(ttl + ', 지금 5(점선)', fontsize=7)
+        xs = np.r_[np.array(lo, float), 25.]
+        for val, col_, nm_ in [(q['rule1_threshold'].iloc[0], '#d62728', '규칙 1'), (r['rule2_threshold'].iloc[0] if len(r) else np.nan, '#2ca02c', '규칙 2')]:
+            if np.isfinite(val): ax.axvline(np.interp(val, xs, np.arange(len(xs))) - .5, color=col_, ls='-.', lw=1, label=nm_)
+        ax.legend(fontsize=5, loc='lower right')
+        ax.set_title(ttl + ', 지금 5(검은 점선)', fontsize=7)
     fig.suptitle('그림 A2: 무늬 세기에 따른 s_P 분포와 s_P < t 비율 (한계 안 사진 점)', fontsize=9); fig.tight_layout(); save(fig, 'figA2_texture', dict(source='tables/addendum1/check5_texture.csv, check5_texture_rules.csv'))
+    # ---- 그림 A2b: 표본의 (무늬 세기, s_P)와 기댓값 곡선 E = T^2 / (T^2 + σ_n^2)
+    fig, axs = plt.subplots(1, 3, figsize=(12, 3.4)); meta = {}
+    for ax, lab in zip(axs, ['LoD2 지붕', 'LoD2 벽', '항공 LiDAR 지붕']):
+        q = SP[(SP.unit == lab) & SP.texture_full.notna() & SP.s_P_full.notna()]; sn = q['sigma_n'].median(); t = q['t'].median()
+        ax.scatter(q.texture_full, q.s_P_full, s=1, alpha=.3, color='#1f77b4', lw=0, label='표본 사진 점'); tx = np.linspace(0, 40, 200); ax.plot(tx, tx**2/(tx**2 + sn**2), 'k-', lw=1, label=f'기댓값 (σ_n {sn:.1f})')
+        ax.axhline(t, color='r', ls=':', lw=.8, label=f't 중앙값 {t:.2f}'); ax.axvline(5, color='k', ls='--', lw=.8, label='지금 문턱 5')
+        if 0 < t < 1: ax.axvline(sn*np.sqrt(t/(1 - t)), color='#2ca02c', ls='-.', lw=1, label='규칙 2')
+        ax.set_xlim(0, 40); ax.set_ylim(-.5, 1); ax.set_xlabel('무늬 세기 (조각 전체, 회색 단위)'); ax.set_ylabel('s_P (조각 전체)'); ax.set_title(lab, fontsize=8); ax.legend(fontsize=5, loc='lower right')
+        meta[lab] = dict(points=len(q), sigma_n_median=sn, t_median=t)
+    fig.suptitle('그림 A2b: 무늬 세기와 s_P (표본), 사진 잡음에서 나온 기댓값 곡선', fontsize=9); fig.tight_layout(); save(fig, 'figA2b_texture_noise', dict(source='addendum1/sample_points_*.csv', units=meta))
     # ---- 보고서 앞 표 (값을 바꾼 판정)
     S = pd.read_csv(D/'tables/s_all_variants.csv'); S = S[(S.scope == '전체') & (((S.prior == 'LoD2') & (S.surface == '모두')) | (S.prior == 'ALS'))]
     rows = []

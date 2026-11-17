@@ -94,17 +94,20 @@ def changed(prior, jobs):
             for kind, sel in kinds_:
                 m = okm & ~oko if sel == 'b_only' else ~okm & oko
                 idx = np.flatnonzero(m); df = pd.DataFrame(dict(b=g['building'][idx], c=g['cell'][idx], x=g['xyz'][idx, 0], y=g['xyz'][idx, 1], z=g['xyz'][idx, 2], i=idx))
-                cells = df.groupby(['b', 'c']).agg(x=('x', 'mean'), y=('y', 'mean'), z=('z', 'mean')).reset_index(); comps = []
-                for b, q in cells.groupby('b'):
+                # 11-17 고침: 참값 점을 0.6 m 안으로 잇기 = 0.1 m 칸(점 사이 거리와의 차이 ≤ 0.17 m) 중심을 0.6 m 안으로 이음. 넓이 = JC 0.25 m 칸 수 x 0.0625.
+                vx = np.floor(g['xyz'][idx]/.1).astype(np.int64); df['v'] = (vx[:, 0]*100003 + vx[:, 1])*100003 + vx[:, 2]
+                vc = df.groupby(['b', 'v']).agg(x=('x', 'mean'), y=('y', 'mean'), z=('z', 'mean')).reset_index(); vc['comp'] = ''
+                for b, q in vc.groupby('b'):
                     P = q[['x', 'y', 'z']].values; pr = cKDTree(P).query_pairs(.6, output_type='ndarray')
                     nc, lab_ = connected_components(coo_matrix((np.ones(len(pr)), (pr[:, 0], pr[:, 1])), shape=(len(P), len(P))), directed=False)
-                    for k in range(nc): comps.append((b, set(q['c'].values[lab_ == k]), int((lab_ == k).sum())*.0625))
-                comps.sort(key=lambda c: -c[2]); pick, seen = [], set()
-                for b, cs, a in comps:
-                    if b in seen: continue
-                    pick.append((b, cs, a)); seen.add(b)
+                    vc.loc[q.index, 'comp'] = [f'{b}#{k}' for k in lab_]
+                df = df.merge(vc[['b', 'v', 'comp']], on=['b', 'v'], how='left'); ar = df.groupby('comp').agg(b=('b', 'first'), a=('c', 'nunique')); ar['a'] *= .0625
+                pick, seen = [], set()
+                for cid, rr in ar.sort_values('a', ascending=False).iterrows():
+                    if rr.b in seen: continue
+                    pick.append((rr.b, cid, float(rr.a))); seen.add(rr.b)
                     if len(pick) == n_each: break
-                sets[kind] = [(b, df['i'].values[(df['b'].values == b) & df['c'].isin(cs).values], a) for b, cs, a in pick]
+                sets[kind] = [(b, df['i'].values[df['comp'].values == cid], a) for b, cid, a in pick]
             nr = n_each*len(kinds_); fig, axs = plt.subplots(nr, 2, figsize=(8, 3*nr), squeeze=False); meta = []; r_ = 0
             for kind, pk in sets.items():
                 for b, pts, a in pk:
@@ -130,7 +133,7 @@ def changed(prior, jobs):
                     axB.set_xlabel(line, fontsize=5); meta.append(dict(type=kind, building=b, area_m2=a, gt_points=len(pts), patches=len(ug), section_patch=int(i), view=None if j is None else P7.cam().names[j], line=line)); r_ += 1
             for k in range(r_, nr): axs[k, 0].axis('off'); axs[k, 1].axis('off')
             fig.suptitle(f"{'LoD2' if prior == 'LoD2' else '항공 LiDAR'}: {lab}와 {vb}의 목표 맞음이 달라진 자리 (넓이 큰 차례, 한 건물에서 하나)", fontsize=8)
-            fig.tight_layout(rect=[0, 0, 1, .98]); folder.mkdir(parents=True, exist_ok=True); fig.savefig(folder/f'{fname}.png', dpi=300, facecolor='white', bbox_inches='tight'); plt.close(fig); dump(folder/f'{fname}.json', dict(at=now(), scientific_verdict=None, figure=fname, prior=prior, pair=[vo, vb], rule='GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625', clusters=meta))  #
+            fig.tight_layout(rect=[0, 0, 1, .98]); folder.mkdir(parents=True, exist_ok=True); fig.savefig(folder/f'{fname}.png', dpi=300, facecolor='white', bbox_inches='tight'); plt.close(fig); dump(folder/f'{fname}.json', dict(at=now(), scientific_verdict=None, figure=fname, prior=prior, pair=[vo, vb], rule='GT points whose target-ok differs; 0.1 m voxel centres joined within 0.6 m per building (point-distance tolerance <= 0.17 m); area = JC 0.25 m cells x 0.0625', clusters=meta))  #
             print('FIG4', prior, lab, flush=True)
 def fig9():
     """덧붙임 1 확인 9 정성: 기준 10 %·무늬 8 이 본값과 달라 목표가 맞게 바뀐 곳 둘, 틀리게 바뀐 곳 둘."""

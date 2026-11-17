@@ -1,5 +1,5 @@
 {
- "at": "2026-11-17T21:18:53+09:00",
+ "at": "2026-11-17T22:04:28+09:00",
  "scientific_verdict": null,
  "figure": "figA9_changed_t10_LoD2",
  "prior": "LoD2",
@@ -7,7 +7,7 @@
   "본 방법",
   "고정 2 기준 10 %"
  ],
- "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "rule": "GT points whose target-ok differs; 0.1 m voxel centres joined within 0.6 m per building (point-distance tolerance <= 0.17 m); area = JC 0.25 m cells x 0.0625",
  "clusters": [
   {
    "type": "맞게 바뀜",
@@ -21,13 +21,23 @@
   },
   {
    "type": "맞게 바뀜",
-   "building": "DEBY_LOD2_4906967",
-   "area_m2": 0.9375,
-   "gt_points": 43,
+   "building": "DEBY_LOD2_108580336",
+   "area_m2": 1.125,
+   "gt_points": 51,
    "patches": 8,
-   "section_patch": 303278,
-   "view": "DJI_20241217102531_0018_D.JPG",
-   "line": "4906967 · 두 자료 모두 유효 · 고정 2 기준 10 % 사전정보 사용 / 본값 영상 깊이 사용\nd 5.20 L 0.79 s_P 0.06 s_M -0.02 t -0.04"
+   "section_patch": 2072204,
+   "view": "DJI_20241217084535_0091_D.JPG",
+   "line": "108580336 · 두 자료 모두 유효 · 고정 2 기준 10 % 사전정보 사용 / 본값 영상 깊이 사용\nd 1.14 L 0.37 s_P 0.55 s_M 0.07 t 0.04"
+  },
+  {
+   "type": "틀리게 바뀜",
+   "building": "DEBY_LOD2_4906968",
+   "area_m2": 0.8125,
+   "gt_points": 27,
+   "patches": 8,
+   "section_patch": 1143349,
+   "view": "DJI_20241217102953_0022_D.JPG",
+   "line": "4906968 · 사전정보 오류 · 고정 2 기준 10 % 사전정보 사용 / 본값 영상 깊이 사용\nd -0.80 L 0.60 s_P 0.02 s_M -0.03 t -0.04"
   },
   {
    "type": "틀리게 바뀜",
@@ -38,16 +48,6 @@
    "section_patch": 434509,
    "view": "DJI_20241217095605_0065_D.JPG",
    "line": "4907184 · 사전정보 오류 · 고정 2 기준 10 % 사전정보 사용 / 본값 영상 깊이 사용\nd 0.76 L 0.36 s_P 0.06 s_M 0.04 t 0.00"
-  },
-  {
-   "type": "틀리게 바뀜",
-   "building": "DEBY_LOD2_4906968",
-   "area_m2": 0.625,
-   "gt_points": 18,
-   "patches": 6,
-   "section_patch": 1130719,
-   "view": "DJI_20241217103051_0002_D.JPG",
-   "line": "4906968 · 사전정보 오류 · 고정 2 기준 10 % 사전정보 사용 / 본값 영상 깊이 사용\nd -1.38 L 0.76 s_P 0.02 s_M -0.02 t -0.04"
   }
  ]
 }

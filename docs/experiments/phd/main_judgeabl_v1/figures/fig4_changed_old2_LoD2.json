@@ -1,18 +1,20 @@
 {
- "figure": 4,
+ "at": "2026-11-17T22:00:55+09:00",
+ "scientific_verdict": null,
+ "figure": "fig4_changed_old2_LoD2",
  "prior": "LoD2",
  "pair": [
   "기존 2 대표(저장된 L)",
   "본 방법"
  ],
- "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "rule": "GT points whose target-ok differs; 0.1 m voxel centres joined within 0.6 m per building (point-distance tolerance <= 0.17 m); area = JC 0.25 m cells x 0.0625",
  "clusters": [
   {
    "type": "본 방법만 맞음",
    "building": "DEBY_LOD2_4959460",
-   "area_m2": 220.5625,
-   "gt_points": 13636,
-   "patches": 3500,
+   "area_m2": 220.625,
+   "gt_points": 13637,
+   "patches": 3501,
    "section_patch": 2593648,
    "view": "DJI_20241217100345_0027_D.JPG",
    "line": "4959460 · 사전정보 오류 · 본 방법 일치 / 기존 2 사전정보 사용\nd -0.16 L 0.31 s_P 0.05 s_M 0.53 t 0.03"
@@ -40,9 +42,9 @@
   {
    "type": "기존 2만 맞음",
    "building": "DEBY_LOD2_4906974",
-   "area_m2": 34.625,
-   "gt_points": 2191,
-   "patches": 537,
+   "area_m2": 34.6875,
+   "gt_points": 2192,
+   "patches": 538,
    "section_patch": 945658,
    "view": "DJI_20241217103413_0016_D.JPG",
    "line": "4906974 · 영상 깊이 오류 · 본 방법 영상 깊이 사용 / 기존 2 사전정보 사용\nd 3.95 L nan s_P nan s_M nan t 0.00"
@@ -60,14 +62,12 @@
   {
    "type": "기존 2만 맞음",
    "building": "DEBY_LOD2_4959461",
-   "area_m2": 32.6875,
-   "gt_points": 1946,
-   "patches": 375,
+   "area_m2": 33.625,
+   "gt_points": 1984,
+   "patches": 384,
    "section_patch": 2663561,
    "view": "DJI_20241217090933_0049_D.JPG",
    "line": "4959461 · 영상 깊이 오류 · 본 방법 일치 / 기존 2 사전정보 사용\nd -0.27 L 0.55 s_P 0.13 s_M 0.94 t 0.03"
   }
- ],
- "at": "2026-11-17T20:53:39+09:00",
- "scientific_verdict": null
+ ]
 }

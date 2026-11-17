@@ -3,7 +3,7 @@ from common import *
 import zipfile, datetime as dt
 def main(tag):
     ts = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M'); out = O/'delivery'/f'PHD-MAIN-JUDGEABL-v1_{tag}_{ts}_light.zip'; out.parent.mkdir(exist_ok=True)
-    files = [D/'판단비교절제_보고_v1.md', D/'issues.md', D/'progress.md', C/'judgeabl_v1.json', C/'judgeabl_v1.lock.json'] + sorted((D/'tables').glob('*')) + sorted((D/'figures').glob('*'))
+    files = [D/'판단비교절제_보고_v1.md', D/'판단비교절제_보고_v1_부록.md', D/'issues.md', D/'progress.md', C/'judgeabl_v1.json', C/'judgeabl_v1.lock.json'] + sorted(x for x in (D/'tables').glob('*') if x.is_file()) + sorted(x for x in (D/'figures').glob('*') if x.is_file())
     if tag == '다':   # 덧붙임 1
         files = [D/'판단비교절제_덧붙임1_보고_v1.md', D/'issues.md', D/'progress.md'] + sorted(C.glob('judgeabl_v1*.json')) + sorted((D/'tables/addendum1').glob('*')) + sorted((D/'figures/addendum1').glob('*')) \
                 + sorted((D/'figures').glob('fig2_*')) + [D/'tables'/f'{n}.{e}' for n in ['s_all_variants', 's_transitions', 's_building_diff', 's_name_made'] for e in ['csv', 'md']]

@@ -1,5 +1,5 @@
 {
- "at": "2026-11-17T21:19:29+09:00",
+ "at": "2026-11-17T22:05:04+09:00",
  "scientific_verdict": null,
  "figure": "figA9_changed_tex8_LoD2",
  "prior": "LoD2",
@@ -7,7 +7,7 @@
   "본 방법",
   "고정 4 무늬 8"
  ],
- "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "rule": "GT points whose target-ok differs; 0.1 m voxel centres joined within 0.6 m per building (point-distance tolerance <= 0.17 m); area = JC 0.25 m cells x 0.0625",
  "clusters": [
   {
    "type": "맞게 바뀜",
