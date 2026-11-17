@@ -4,6 +4,9 @@ import zipfile, datetime as dt
 def main(tag):
     ts = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M'); out = O/'delivery'/f'PHD-MAIN-JUDGEABL-v1_{tag}_{ts}_light.zip'; out.parent.mkdir(exist_ok=True)
     files = [D/'판단비교절제_보고_v1.md', D/'판단비교절제_보고_v1_부록.md', D/'issues.md', D/'progress.md', C/'judgeabl_v1.json', C/'judgeabl_v1.lock.json'] + sorted(x for x in (D/'tables').glob('*') if x.is_file()) + sorted(x for x in (D/'figures').glob('*') if x.is_file())
+    if tag == '전체':   # 본 작업 + 덧붙임 1 한 파일 (사용자 요청 11-17)
+        files = [D/'판단비교절제_보고_v1.md', D/'판단비교절제_보고_v1_부록.md', D/'판단비교절제_덧붙임1_보고_v1.md', D/'issues.md', D/'progress.md'] + sorted(C.glob('judgeabl_v1*.json')) \
+                + sorted(x for x in (D/'tables').rglob('*') if x.is_file()) + sorted(x for x in (D/'figures').rglob('*') if x.is_file())
     if tag == '다':   # 덧붙임 1
         files = [D/'판단비교절제_덧붙임1_보고_v1.md', D/'issues.md', D/'progress.md'] + sorted(C.glob('judgeabl_v1*.json')) + sorted((D/'tables/addendum1').glob('*')) + sorted((D/'figures/addendum1').glob('*')) \
                 + sorted((D/'figures').glob('fig2_*')) + [D/'tables'/f'{n}.{e}' for n in ['s_all_variants', 's_transitions', 's_building_diff', 's_name_made'] for e in ['csv', 'md']]
@@ -14,7 +17,7 @@ def main(tag):
             arc = str(f.relative_to(D)) if f.parent != C else 'configs/' + f.name
             z.write(f, arc); sums.append(f'{sha(f)}  {arc}')
         z.writestr('SHA256SUMS', '\n'.join(sums) + '\n')
-    if out.stat().st_size > 28*2**20:   # 원격 보기 첨부 30 MiB 한도: 같은 내용을 두 조각으로도 (조각 2 = 그림 3 PNG)
+    if out.stat().st_size > 28*2**20 and tag != '전체':   # 원격 보기 첨부 30 MiB 한도: 같은 내용을 두 조각으로도 (조각 2 = 그림 3 PNG)
         with zipfile.ZipFile(out) as z0:
             names = [n for n in z0.namelist() if n != 'SHA256SUMS']; big = [n for n in names if n.startswith('figures/fig3') and n.endswith('.png')]
             for k, part in enumerate([[n for n in names if n not in big], big], 1):
