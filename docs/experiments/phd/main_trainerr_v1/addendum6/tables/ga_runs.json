@@ -1,0 +1,83 @@
+{
+ "rows": [
+  {
+   "stem": "R1rep_b10__LoD2",
+   "run": "sb3_R1_LoD2_record",
+   "model": "payload/addendum4/runs/R1rep_b10/sb3_R1_LoD2_record/attempt1/model",
+   "whole_scene_dumps": 65,
+   "dumps": "0 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400 2500 2600 2700 2800 2900 3000_pre_reset 3000 3500 4000 4500 5000 5500 6000_pre_reset 6000 6500 7000 7500 8000 8500 9000_pre_reset 9000 9500 10000 10500 11000 11500 12000_pre_reset 12000 12500 13000 13500 14000 14500 15000 17500 20000 22500 25000 27500 30000",
+   "event_scope_gaussians_at_0": 0,
+   "gaussians_at_0": 140694,
+   "region_file": null,
+   "record_mesh_30000": "addendum4/meshes/R1rep_b10__LoD2__sb3_30000",
+   "tie": "",
+   "event_rule": "delete / birth / retarget events only for Gaussians in the record scope; release and split links scene-wide; outside the scope the dumps are used"
+  },
+  {
+   "stem": "R1rep_b10__ALS",
+   "run": "tl_R1_ALS_own",
+   "model": "payload/runs/R1rep_b10/tl_R1_ALS_own/attempt1/model",
+   "whole_scene_dumps": 13,
+   "dumps": "0 100 300 1000 2000 3000_pre_reset 3000 5000 7000 10000 15000 20000 30000",
+   "event_scope_gaussians_at_0": 18607,
+   "gaussians_at_0": 47615,
+   "region_file": "/te/region/R1rep_b10__ALS.json",
+   "record_mesh_30000": "meshes/R1rep_b10__ALS__tl_own_30000",
+   "tie": "sb5_R1_ALS_record_signed (13 dumps, no 30000 mesh)",
+   "event_rule": "delete / birth / retarget events only for Gaussians in the record scope; release and split links scene-wide; outside the scope the dumps are used"
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "run": "tl_B0_b10_LoD2_s0",
+   "model": "/art/phase-payloads/phd/main_trainlog_v1/PHD-MAIN-TRAINLOG-v1/concept_v2/case_B0_b10__LoD2/runs/B0_b10/tl_B0_b10_LoD2_s0/attempt1/model",
+   "whole_scene_dumps": 65,
+   "dumps": "0 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400 2500 2600 2700 2800 2900 3000_pre_reset 3000 3500 4000 4500 5000 5500 6000_pre_reset 6000 6500 7000 7500 8000 8500 9000_pre_reset 9000 9500 10000 10500 11000 11500 12000_pre_reset 12000 12500 13000 13500 14000 14500 15000 17500 20000 22500 25000 27500 30000",
+   "event_scope_gaussians_at_0": 71233,
+   "gaussians_at_0": 150054,
+   "region_file": null,
+   "record_mesh_30000": "addendum4/meshes/B0_b10__LoD2__tlre_30000",
+   "tie": "",
+   "event_rule": "delete / birth / retarget events only for Gaussians in the record scope; release and split links scene-wide; outside the scope the dumps are used"
+  },
+  {
+   "stem": "B0_b10__ALS",
+   "run": "ba3_B0_ALS_record",
+   "model": "payload/addendum3/runs/B0_b10/ba3_B0_ALS_record/attempt1/model",
+   "whole_scene_dumps": 13,
+   "dumps": "0 100 300 1000 2000 3000_pre_reset 3000 5000 7000 10000 15000 20000 30000",
+   "event_scope_gaussians_at_0": 149,
+   "gaussians_at_0": 49466,
+   "region_file": "/te/addendum3/region/B0_b10__ALS_annex.json",
+   "record_mesh_30000": "addendum3/meshes/B0_b10__ALS__ba3_30000",
+   "tie": "sc3_B0_ALS_signed (13 dumps, no 30000 mesh)",
+   "event_rule": "delete / birth / retarget events only for Gaussians in the record scope; release and split links scene-wide; outside the scope the dumps are used"
+  },
+  {
+   "stem": "B173nb_b10__ALS",
+   "run": "tl_B173nb_b10_ALS_s0",
+   "model": "/art/phase-payloads/phd/main_trainlog_v1/PHD-MAIN-TRAINLOG-v1/runs/B173nb_b10/tl_B173nb_b10_ALS_s0/attempt2/model",
+   "whole_scene_dumps": 65,
+   "dumps": "0 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400 2500 2600 2700 2800 2900 3000_pre_reset 3000 3500 4000 4500 5000 5500 6000_pre_reset 6000 6500 7000 7500 8000 8500 9000_pre_reset 9000 9500 10000 10500 11000 11500 12000_pre_reset 12000 12500 13000 13500 14000 14500 15000 17500 20000 22500 25000 27500 30000",
+   "event_scope_gaussians_at_0": 28857,
+   "gaussians_at_0": 59725,
+   "region_file": null,
+   "record_mesh_30000": "addendum4/meshes/B173nb_b10__ALS__tlre_30000",
+   "tie": "",
+   "event_rule": "delete / birth / retarget events only for Gaussians in the record scope; release and split links scene-wide; outside the scope the dumps are used"
+  },
+  {
+   "stem": "B173nb_b10__LoD2",
+   "run": "sb4_B173_LoD2_record",
+   "model": "payload/addendum4/runs/B173nb_b10/sb4b_B173_LoD2_record_nocheck/attempt1/model",
+   "whole_scene_dumps": 65,
+   "dumps": "0 100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400 2500 2600 2700 2800 2900 3000_pre_reset 3000 3500 4000 4500 5000 5500 6000_pre_reset 6000 6500 7000 7500 8000 8500 9000_pre_reset 9000 9500 10000 10500 11000 11500 12000_pre_reset 12000 12500 13000 13500 14000 14500 15000 17500 20000 22500 25000 27500 30000",
+   "event_scope_gaussians_at_0": 92194,
+   "gaussians_at_0": 247081,
+   "region_file": null,
+   "record_mesh_30000": "addendum4/meshes/B173nb_b10__LoD2__sb4_30000",
+   "tie": "",
+   "event_rule": "delete / birth / retarget events only for Gaussians in the record scope; release and split links scene-wide; outside the scope the dumps are used"
+  }
+ ],
+ "scientific_verdict": null
+}

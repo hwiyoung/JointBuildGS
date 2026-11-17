@@ -1,0 +1,109 @@
+{
+ "purpose": "PHD-MAIN-TRAINERR-v1 addendum 6: a cause for every lost point (works ga-ba). Counting only: no training, no method change, no fix tried.",
+ "order": "docs/experiments/phd/main_trainerr_v1/addendum6/덧붙임6_발주문.md",
+ "fork_for_rendering": "GeoGS-conf-guided-v1-r31 (read only; no new fork, no training)",
+ "points": {
+  "source": "addendum2/points/ra_<stem>__own.npz (FINALTRAIN 30000, own judgment)",
+  "scenes": [
+   "R1rep_b10__LoD2",
+   "R1rep_b10__ALS",
+   "B0_b10__LoD2",
+   "B0_b10__ALS",
+   "B173nb_b10__ALS",
+   "B173nb_b10__LoD2"
+  ],
+  "groups": {
+   "0": "지킨 점",
+   "1": "잃은 점",
+   "2": "고친 점",
+   "3": "목표도 결과도 틀린 점"
+  },
+  "lost": "all points of group 1",
+  "others_per_scene_per_group": 20000,
+  "rng_seed": 20261117,
+  "sample_rule": "numpy default_rng(rng_seed + scene index in 'scenes'), choice without replacement per group 0/2/3, sorted; all if fewer"
+ },
+ "point_state": {
+  "radius_m": 0.2,
+  "opacity_min": 0.1,
+  "model": "FINALTRAIN 30000 snapshot (target_monitor/snapshot_30000.npz)",
+  "rule": "4 = patch_row < 0; else 2 = spot_n_all > 0 (a Gaussian with opacity >= 0.1 within 0.2 m, addendum2 spot); else 1 = seeds > 0; else 3 (seeds = 0)",
+  "names": {
+   "1": "상태 1. 배치했으나 학습 뒤 없다",
+   "2": "상태 2. 학습 뒤에도 있다",
+   "3": "상태 3. 배치하지 않았고 학습 뒤에도 없다",
+   "4": "상태 4. 목표 조각이 유효하지 않다"
+  }
+ },
+ "runs": {
+  "rule": "per scene the record run with the densest whole-scene dumps (trainlog/scene/*.pt); tie -> the one that already has a 30000 mesh scored with the GTJUDGE rule",
+  "R1rep_b10__LoD2": {
+   "run": "sb3_R1_LoD2_record",
+   "mesh_30000": "addendum4/meshes/R1rep_b10__LoD2__sb3_30000"
+  },
+  "R1rep_b10__ALS": {
+   "run": "tl_R1_ALS_own",
+   "mesh_30000": "meshes/R1rep_b10__ALS__tl_own_30000",
+   "tie": "sb5_R1_ALS_record_signed (13 dumps, no 30000 mesh)"
+  },
+  "B0_b10__LoD2": {
+   "run": "tl_B0_b10_LoD2_s0",
+   "mesh_30000": "addendum4/meshes/B0_b10__LoD2__tlre_30000"
+  },
+  "B0_b10__ALS": {
+   "run": "ba3_B0_ALS_record",
+   "mesh_30000": "addendum3/meshes/B0_b10__ALS__ba3_30000",
+   "tie": "sc3_B0_ALS_signed (13 dumps, no 30000 mesh)"
+  },
+  "B173nb_b10__ALS": {
+   "run": "tl_B173nb_b10_ALS_s0",
+   "mesh_30000": "addendum4/meshes/B173nb_b10__ALS__tlre_30000"
+  },
+  "B173nb_b10__LoD2": {
+   "run": "sb4_B173_LoD2_record",
+   "mesh_30000": "addendum4/meshes/B173nb_b10__LoD2__sb4_30000",
+   "note": "model = sb4b_B173_LoD2_record_nocheck (addendum4_c2.json)"
+  }
+ },
+ "regroup": "target right = A11 reference__judgment_mesh__within_tau1 (as addendum2); result right = record-run 30000 mesh points.npz reference__within_tau1; same 4-group rule; agreement = share of the selected points whose group is the same under both definitions",
+ "work_ga": {
+  "stages": [
+   "0",
+   "1000",
+   "3000_pre_reset",
+   "3500",
+   "5000",
+   "6000_pre_reset",
+   "7000",
+   "9000_pre_reset",
+   "12000_pre_reset",
+   "15000",
+   "30000"
+  ],
+  "all_dumps_used_for_empty_and_exits": true,
+  "bound": "target_tag == 1 and target_index == the point's patch (valid-patch index, Targets.vidx[patch_row])",
+  "empty_iteration": "first dump (in iteration order, pre_reset before post) with 0 bound; 'never' if none; 'empty from 0' if 0 at dump 0",
+  "refill": "a later dump with >= 1 bound after the first empty dump",
+  "exit": "a Gaussian bound to the patch in dump a and not bound to it in the next dump b; one exit per (Gaussian, consecutive dump pair)",
+  "paths": {
+   "release": "present in b with target_tag != 1; movement from the release event (scene-wide) of that uid in (a, b] when present",
+   "retarget": "present in b with target_tag == 1 and another target_index; distance from the point to the new patch anchor; whether the new anchor is within 0.5 m of the old patch anchor",
+   "reset_delete": "absent in b, not replaced by split, and (delete event reason 1 at iteration R+100 for a reset R) or (no delete event and a = the post-reset dump of R): written '재설정 뒤 <b - R>회 안' (window kept per exit; 500 for dumps every 500, 2,000 for runs with sparse dumps)",
+   "other_delete": "absent in b, not split, delete event with another reason or iteration, or no event and (a, b] holds no reset check R+100: '그 저장 사이에 없어짐', reason '확인 불가'",
+   "delete_window_with_reset": "absent in b, no event, a is not the post-reset dump and (a, b] holds a reset check R+100: '재설정이 든 저장 사이에 없어짐', reason '확인 불가' (counted with other_delete for the main path, shown separately)",
+   "split": "absent in b and a link event how=3 (split) with parent_uid = uid in (a, b]; whether a child is bound to the same patch in b"
+  },
+  "resets": [
+   3000,
+   6000,
+   9000,
+   12000
+  ],
+  "check_after": 100,
+  "retarget_near_m": 0.5,
+  "main_path": "the most frequent path among the patch's exits (ties: order release, retarget, reset_delete, other_delete, split); 'none' if no exit",
+  "relock_note": "re-locked before any computation (2026-11-17): reset_delete / delete_window_with_reset reworded so sparse-dump runs (post-reset dump 3000 -> next dump 5000) are covered"
+ },
+ "small_n": 30,
+ "scientific_verdict": null
+}

@@ -1,0 +1,43 @@
+{
+ "purpose": "PHD-MAIN-TRAINERR-v1 addendum 6 works ra / da / ba (order 6, 5, 8). Diagnostic re-extraction only (models unchanged), no training.",
+ "order": "docs/experiments/phd/main_trainerr_v1/addendum6/덧붙임6_발주문.md",
+ "work_ra": {
+  "rule": "GTJUDGE mesh_job unchanged (RESCORE render_model render -> mesh_pipeline -> tiled TSDF (voxel 0.05, trunc 0.25) -> merge -> finish) and te_mesh scoring; only the per-pixel depth handed to the TSDF changes (a6_ra_render.py, from addendum3 a3_ra_render.py)",
+  "variants": {
+   "base": "unchanged",
+   "occl_10": "drop the pixel when the training target pixel exists (target depth finite > 0, weight > 0) and the image depth (STAGE0 s61 <site>/maps/mvs, finite > 0) is closer than the target depth by more than 10 m (sa-2 rule, jbgs_a4.apply_occl_mask)",
+   "median_depth": "depth_ratio 1 (the depth where T crosses 0.5) instead of the weighted mean",
+   "occl_10_median": "both",
+   "target_only": "keep only pixels whose training target is a prior disc (maps owner >= 0 and target valid)"
+  },
+  "views": "the mesh view list equals the training views (B0 243, R1 333, B173 203; checked); maps shape asserted equal to the render size",
+  "models": {
+   "FINALTRAIN 30000 (six scenes)": "FINALTRAIN runs/<site>/ft_<prior>_s0/attempt1/model/point_cloud/iteration_30000/point_cloud.ply",
+   "B0_b10__LoD2 record 7000 / 30000": "TRAINLOG concept_v2 case run tl_B0_b10_LoD2_s0 point_cloud/iteration_<it>",
+   "B0_b10__LoD2 sa-2 30000": "addendum4 ply/sa2_B0_LoD2_occlmask/30000.ply",
+   "R1rep_b10__LoD2 sb3 7000 / 30000": "addendum4 ply/sb3_R1_LoD2_record/<it>.ply"
+  },
+  "reuse": "addendum3 ra_base / ra_median_depth of FINALTRAIN B0 x ALS, B0 x LoD2, B173 x ALS (same render code and pipeline; base byte-equal to the stored meshes, addendum3 ra_base_check.csv)",
+  "base_check": "base final.ply sha256 / vertices / faces and per-GT-row within-tau vs the earlier mesh (FINALTRAIN: RESCORE addendum3_stage2 primary.ply; record: addendum4 gtj meshes tlre_<it> / sa2_30000 / sb3_<it>)",
+  "surface_at_point": "te_mesh score reference__within_tau1 of the point (the GTJUDGE rule)",
+  "places": "B0 visible wall 0-5 / 5-10 m (addendum3 places visible_low / visible_high), R1 x LoD2 wall 1 (addendum5 r1_lod2_wall1), B0 south wall (addendum3 south_wall)",
+  "voxel_values": {"points": "GT points of B0 visible wall (0-10 m) and R1 x LoD2 wall 1", "offsets_m": [-0.25, -0.2, -0.15, -0.1, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25],
+                   "rule": "TSDF value and weight after integrating every view (same integration as the pipeline: voxel 0.05, trunc 0.25, depth handed by the variant), at the point and along the outward normal; per view the handed depth at the point's pixel, the added sdf and whether the pixel is occluded (image depth < target depth - 10 m)"}
+ },
+ "work_da": {
+  "model": "FINALTRAIN 30000 (ply rows = snapshot rows, checked)",
+  "points": "selected points of state 1 and 2, all four groups",
+  "views": "every training view whose image contains the point (camera z > 0.2); the pixel = floor of the projection",
+  "tolerance": "tau of the GT point (A11 reference tau_m)",
+  "compositing": "addendum4 a4_da.contrib (2DGS alpha*T per splat at the pixel, wmin 1e-4); front: splat depth < point depth - tau; within: |splat depth - point depth| <= tau; behind: > point depth + tau",
+  "state1_labels": "per point, medians over its views of the three weights and the accumulated opacity: '이웃이 그린다' within >= 0.5; else '앞이 가려진다' front >= 0.5; else '뚫려 있다' behind >= 0.5 or accumulated < 0.5; else '섞여 있다'",
+  "state2_labels": "in order: '가우시안이 어긋나 있다' no Gaussian (opacity >= 0.1) centre within tau of the point; '앞으로 당겨진다' median over views of (weighted-mean depth - point depth) < -tau and median front weight > median within weight; '뒤로 밀린다' the same with > tau and behind; '영상마다 다르다' view shares: front views (mean depth < point - tau) >= 0.2 and behind views >= 0.2 and within views < 0.5; '그린 깊이는 맞다' within views >= 0.5; else '나뉘지 않음(그 밖)'",
+  "half": 0.5, "split_share": 0.2
+ },
+ "work_ba": {
+  "order": "order 8 table, first match: 1 patch_row < 0; 2 seeds = 0; 3 Gaussian within 0.2 m (state 2) and the point within tau in the occl_10 re-extraction (or occl_10_median); 4 state 2 and within tau only in the median_depth re-extraction; 5 state 2 and in no re-extraction; 6-9 by the main path of the point's patch (work ga) for state 1 points: release / retarget / reset_delete / other_delete or split; 10 otherwise",
+  "secondary": "3-5 with the work-da state-2 label; 6-9 with the work-da state-1 label",
+  "groups_other_than_lost": "the same rule on the samples; for groups 0 and 2 ('result right' in FINALTRAIN) 3-5 read 'the point is within tau in the re-extraction' as in the base mesh as well (recorded as such)"
+ },
+ "scientific_verdict": null
+}

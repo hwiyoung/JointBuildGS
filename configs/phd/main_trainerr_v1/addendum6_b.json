@@ -1,0 +1,28 @@
+{
+ "purpose": "PHD-MAIN-TRAINERR-v1 addendum 6 work na (order 4): survival over an opacity reset. Backpropagation without any parameter update; no training.",
+ "order": "docs/experiments/phd/main_trainerr_v1/addendum6/덧붙임6_발주문.md",
+ "work_na": {
+  "states": {"all six scenes (addendum6.json runs)": [3000], "R1rep_b10__LoD2, B0_b10__LoD2": [6000, 9000, 12000]},
+  "record_check_runs": ["sa1_R1_ALS_record6000", "sb1_B0_LoD2_record6000", "sb2_B0_ALS_record6000"],
+  "reset_rule": "opacity := min(opacity, 0.01) for every Gaussian (gaussian_model.reset_opacity; exempt_mask unused: TARGET runs require judgment off)",
+  "views": "every training view of the stage1 maps index (= the training cameras, asserted by jbgs_target)",
+  "photo_loss": "(1 - lambda_dssim) L1(render, photo) + lambda_dssim (1 - SSIM), render not clamped (train.py 884-886); photo = fork_inputs/s61/<site>/scene_<prior>/images",
+  "depth_loss": "depth_lambda x sum(|surf_depth - target| x weight over valid pixels) / pixel count (jbgs_target.Target.loss)",
+  "depth_lambda": 0.05, "lambda_dssim": 0.2, "depth_ratio": 0.0,
+  "gradient": "d loss / d opacity logit per view, each loss alone (torch.autograd.grad, retain_graph); 'raises opacity' = gradient < 0 (a descent step increases the logit)",
+  "values": {"views_with_gradient_share": "views with a nonzero photo or depth gradient / training views", "up_share_photo|depth": "views with gradient < 0 / views with nonzero gradient of that loss",
+             "sum_photo|depth": "sum over views", "abs_photo|depth": "sum of |gradient| over views", "consistency_photo|depth": "sum / abs (-1..1); nan when abs = 0"},
+  "survival": "uid present in the first whole-scene dump after the post-reset dump (3500 / 6500 / 9500 / 12500 for dumps every 500; 5000 for the 13-dump runs); split-replaced parents flagged from link events (how 3)",
+  "kind": "0 bound to the column patch at the centre (RESCORE columns on the centre), 1 bound to another patch, 2 released, 3 unbound",
+  "patch_group": "majority group of all addendum-2 points whose patch is the Gaussian's bound patch (ties: lower code); unbound / released / no point -> '묶인 조각 없음'",
+  "bins": 10, "bin_rule": "deciles of the value over all Gaussians of the run x reset (ties merged)",
+  "logistic": {"features": ["views_with_gradient_share", "up_share_photo", "up_share_depth", "sum_photo", "sum_depth", "abs_photo", "abs_depth", "consistency_photo", "consistency_depth"],
+               "kind": "one-hot (3 dummies, base = 0)", "transform": "within run x reset percentile rank (nan -> 0.5)", "split": "50 / 50, numpy default_rng(20261117)",
+               "fit": "IRLS logistic regression with L2 1e-3 on standardized features, 50 iterations", "metrics": "test accuracy at 0.5 and AUC (Mann-Whitney)",
+               "drop_one": "refit without each of the four value families (gradient views, up share, sum/abs, consistency) and without kind; AUC change"},
+  "prereset_sample": 20000, "prereset_rng_seed": 20261117,
+  "prereset_values": "addendum 4/5 work na at the centre pixel over every training view containing the centre (opacity as dumped): seeing views, open views (front accumulated opacity < 0.5, front = depth < centre z - 0.05), colour weight (sum of own alpha*T), size (largest scale)",
+  "record_check": "in-range Gaussians of the record_check_runs: sign of the computed per-view gradient for the view trained at each recorded iteration in (3000, 3100] (curve.jsonl camera) and of the all-view sum vs the recorded signed opacity gradient (photo, depth); opacity at the saved states 3000 and 3100 by survival"
+ },
+ "scientific_verdict": null
+}
