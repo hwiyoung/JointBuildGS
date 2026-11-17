@@ -1,0 +1,38 @@
+{
+"rows": [
+{
+"prior": "LoD2",
+"kind": "지붕",
+"from_judgment": "영상 깊이 사용",
+"to_judgment": "사전정보 사용",
+"patches": 8687,
+"area_m2": 542.9375
+},
+{
+"prior": "LoD2",
+"kind": "벽",
+"from_judgment": "영상 깊이 사용",
+"to_judgment": "사전정보 사용",
+"patches": 5929,
+"area_m2": 370.5625
+},
+{
+"prior": "ALS",
+"kind": "지붕",
+"from_judgment": "사전정보 사용",
+"to_judgment": "영상 깊이 사용",
+"patches": 331,
+"area_m2": 21.8528976834
+},
+{
+"prior": "ALS",
+"kind": "지붕",
+"from_judgment": "영상 깊이 사용",
+"to_judgment": "사전정보 사용",
+"patches": 271,
+"area_m2": 18.3806511369
+}
+],
+"note": "확인 나. t_M = 한계 안 사진 점(구성 패치 모두 한계 안, 본값)의 s_M 넓이 가중 아래 5 %, t 와 같은 표본(5000개, 같은 씨앗). 판 가는 비교 줄이며 본값을 바꾸지 않는다. 판정이 바뀐 패치의 넓이 (본값 -> 판 가).",
+"scientific_verdict": null
+}
