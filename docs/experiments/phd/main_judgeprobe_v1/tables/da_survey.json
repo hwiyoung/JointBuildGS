@@ -1,0 +1,80 @@
+{
+"rows": [
+{
+"item": "도구",
+"value": "COLMAP patch_match_stereo (CUDA), 이미지 colmap/colmap@sha256:187ca5ec98e5…; 판 번호는 기록에 없고 이미지가 이 컴퓨터에 없어 확인 불가",
+"source": "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/colmap_receipt.json image, container_launch.json"
+},
+{
+"item": "실행",
+"value": "2026-10-23 15:43 UTC, GPU 1, 10,246 초(169.75 분), exit 0, 학습 영상 819장 (WIDEN0 image_split train)",
+"source": "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/colmap_receipt.json, patch_match.log 끝줄"
+},
+{
+"item": "명령",
+"value": "colmap patch_match_stereo --workspace_format COLMAP --PatchMatchStereo.geom_consistency true --max_image_size 1024 --num_iterations 3 --filter true --cache_size 32",
+"source": "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/container_launch.json args"
+},
+{
+"item": "짝 영상",
+"value": "영상마다 __auto__, 20 (COLMAP 자동 고르기, 짝 20장)",
+"source": "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/stereo/patch-match.cfg"
+},
+{
+"item": "1차(광도)",
+"value": "geom_consistency 0, filter 0: 광도 깊이 지도 *.photometric.bin (걸러내기 전)",
+"source": "patch_match.log PatchMatchOptions 첫 블록 x 819"
+},
+{
+"item": "2차(기하)",
+"value": "geom_consistency 1 (regularizer 0.3, max_cost 3 px), filter 1: 기하 깊이 지도 *.geometric.bin (걸러낸 뒤)",
+"source": "patch_match.log geom_consistency: 1 블록 x 819"
+},
+{
+"item": "걸러내기 규칙",
+"value": "filter_min_num_consistent 2 (일치하는 다른 시점 최소 2), filter_geom_consistency_max_cost 1 px (재투영 차이), filter_min_ncc 0.1, filter_min_triangulation_angle 3 도",
+"source": "patch_match.log filter_* 줄"
+},
+{
+"item": "그 밖 설정",
+"value": "window_radius 5, num_samples 15, ncc_sigma 0.6, min_triangulation_angle 1, incident_angle_sigma 0.9, depth_min/max 영상마다(약 40~96 m)",
+"source": "patch_match.log"
+},
+{
+"item": "점군",
+"value": "stereo_fusion 없음. scripts/phd/main_widen0_v2/mvs_points.py 가 기하 깊이 지도의 유한하고 0보다 큰 모든 화소를 역투영(1024 x 741, 정수 화소 중심)",
+"source": "mvs_points.py, JC 설정 data.MVS \"COLMAP geometric depth, depth>0 = valid\""
+},
+{
+"item": "시점별 깊이 지도",
+"value": "남아 있음: depth_maps/ geometric 819 + photometric 819, 파일마다 3,035,147 B (1024 x 741 float32), 합 각 2.32 GiB",
+"source": "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/stereo/depth_maps"
+},
+{
+"item": "시점별 법선 지도",
+"value": "남아 있음: normal_maps/ geometric 819 + photometric 819 (1024 x 741 x 3 float32), 합 각 6.95 GiB",
+"source": "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/stereo/normal_maps"
+},
+{
+"item": "신뢰도 지도",
+"value": "없음 (COLMAP patch_match_stereo 는 신뢰도 지도를 쓰지 않음; write_consistency_graph 0 이라 consistency_graphs/ 비어 있음)",
+"source": "PH/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/stereo/consistency_graphs (0 파일)"
+},
+{
+"item": "탐색 지역마다",
+"value": "깊이 지도는 캠퍼스 하나(WIDEN0 full, 819장)이며 일곱 탐색 지역이 모두 같은 지도를 씀; JC 본값 MVS 와 같음(JC 설정 MVS_choice_reason)",
+"source": "JC configs judgecheck_v2.json data.MVS"
+},
+{
+"item": "다시 만들 때 시간",
+"value": "다시 만들 필요 없음(남아 있음). 참고: 같은 설정 한 번 = 약 2.8 시간(GPU 하나)",
+"source": "colmap_receipt.json seconds"
+},
+{
+"item": "사진 고르기와의 관계",
+"value": "영상 깊이 면의 사진 고르기가 이미 기하 깊이 지도로 가림 검사(거리 ≤ D 거리 + 0.3 m, D > 0)를 함",
+"source": "JC inherited/photo_cameras.choose_mvs_views"
+}
+],
+"scientific_verdict": null
+}

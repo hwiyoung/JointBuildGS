@@ -1,0 +1,118 @@
+{
+ "prior": "LoD2",
+ "clusters": [
+  {
+   "cluster_id": 4878,
+   "page": 2,
+   "view": "DJI_20241217090905_0035_D.JPG",
+   "crop": [
+    438,
+    290,
+    743,
+    548
+   ],
+   "section_direction": [
+    -0.029252365584187718,
+    -0.9995720579866811,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 7679,
+   "page": 2,
+   "view": "DJI_20241217084911_0199_D.JPG",
+   "crop": [
+    482,
+    216,
+    809,
+    510
+   ],
+   "section_direction": [
+    0.9836959491285604,
+    -0.17983959427239787,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 8130,
+   "page": 2,
+   "view": "DJI_20241217101747_0011_D.JPG",
+   "crop": [
+    4987,
+    1547,
+    5247,
+    2173
+   ],
+   "section_direction": [
+    0.9148460025708539,
+    -0.4038029118024399,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 10085,
+   "page": 2,
+   "view": "DJI_20241217101259_0002_D.JPG",
+   "crop": [
+    4907,
+    970,
+    5116,
+    1222
+   ],
+   "section_direction": [
+    -0.3262198469639098,
+    -0.9452939285993766,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": [
+    "B173nb_b10"
+   ]
+  },
+  {
+   "cluster_id": 6183,
+   "page": 2,
+   "view": "DJI_20241217084807_0167_D.JPG",
+   "crop": [
+    4424,
+    31,
+    4759,
+    231
+   ],
+   "section_direction": [
+    -0.9298663087762513,
+    0.3678976050517717,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 6556,
+   "page": 2,
+   "view": "DJI_20241217084831_0179_D.JPG",
+   "crop": [
+    4861,
+    3200,
+    5202,
+    3469
+   ],
+   "section_direction": [
+    -0.18362538951613877,
+    -0.9829962951736116,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  }
+ ],
+ "rule": "recount 5: '윤곽 밖의 새 면' clusters after those in JC figure 6, area descending, <= 2 per building, 20; drawn by JC s10_images.fig6 (only_gt path, title text from JC code)",
+ "scientific_verdict": null,
+ "source_stem": "fig6_gt_clusters_LoD2_3"
+}

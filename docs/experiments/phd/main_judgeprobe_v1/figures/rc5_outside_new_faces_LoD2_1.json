@@ -1,0 +1,116 @@
+{
+ "prior": "LoD2",
+ "clusters": [
+  {
+   "cluster_id": 5297,
+   "page": 0,
+   "view": "DJI_20241217090953_0059_D.JPG",
+   "crop": [
+    548,
+    3692,
+    1092,
+    3895
+   ],
+   "section_direction": [
+    -0.3666719663375596,
+    -0.9303502937615205,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 9769,
+   "page": 0,
+   "view": "DJI_20241217091211_0128_D.JPG",
+   "crop": [
+    4687,
+    2611,
+    5280,
+    2928
+   ],
+   "section_direction": [
+    -0.8666620253264133,
+    -0.498895714410456,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 3569,
+   "page": 0,
+   "view": "DJI_20241217084539_0093_D.JPG",
+   "crop": [
+    4796,
+    1628,
+    5280,
+    1840
+   ],
+   "section_direction": [
+    0.6579144614231258,
+    0.7530926645840591,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 1500,
+   "page": 0,
+   "view": "DJI_20241217084245_0006_D.JPG",
+   "crop": [
+    4378,
+    316,
+    4927,
+    569
+   ],
+   "section_direction": [
+    -0.39507255049991685,
+    -0.9186499223542616,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 4643,
+   "page": 0,
+   "view": "DJI_20241217084355_0041_D.JPG",
+   "crop": [
+    4395,
+    386,
+    4879,
+    614
+   ],
+   "section_direction": [
+    -0.30881935026820284,
+    -0.9511207120549553,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 12480,
+   "page": 0,
+   "view": "DJI_20241217091215_0130_D.JPG",
+   "crop": [
+    160,
+    2490,
+    330,
+    3001
+   ],
+   "section_direction": [
+    0.9285341259285492,
+    -0.37124705653527434,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  }
+ ],
+ "rule": "recount 5: '윤곽 밖의 새 면' clusters after those in JC figure 6, area descending, <= 2 per building, 20; drawn by JC s10_images.fig6 (only_gt path, title text from JC code)",
+ "scientific_verdict": null,
+ "source_stem": "fig6_gt_clusters_LoD2_1"
+}

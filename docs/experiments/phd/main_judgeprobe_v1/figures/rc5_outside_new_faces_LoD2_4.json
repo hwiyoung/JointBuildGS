@@ -1,0 +1,39 @@
+{
+ "prior": "LoD2",
+ "clusters": [
+  {
+   "cluster_id": 5912,
+   "page": 3,
+   "view": null,
+   "crop": null,
+   "section_direction": [
+    -0.19956131233301594,
+    -0.9798853415680451,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 1738,
+   "page": 3,
+   "view": "DJI_20241217095017_0035_D.JPG",
+   "crop": [
+    536,
+    3212,
+    989,
+    3464
+   ],
+   "section_direction": [
+    -0.33089982227743453,
+    -0.9436658877043095,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  }
+ ],
+ "rule": "recount 5: '윤곽 밖의 새 면' clusters after those in JC figure 6, area descending, <= 2 per building, 20; drawn by JC s10_images.fig6 (only_gt path, title text from JC code)",
+ "scientific_verdict": null,
+ "source_stem": "fig6_gt_clusters_LoD2_4"
+}

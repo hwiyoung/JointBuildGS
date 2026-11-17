@@ -1,0 +1,111 @@
+{
+ "prior": "LoD2",
+ "clusters": [
+  {
+   "cluster_id": 9770,
+   "page": 1,
+   "view": "DJI_20241217091213_0129_D.JPG",
+   "crop": [
+    4753,
+    3048,
+    5226,
+    3372
+   ],
+   "section_direction": [
+    0.9997214524505923,
+    0.023601218402401536,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 7878,
+   "page": 1,
+   "view": "DJI_20241217084915_0201_D.JPG",
+   "crop": [
+    0,
+    2425,
+    396,
+    2683
+   ],
+   "section_direction": [
+    0.31584777941687475,
+    0.9488098757061023,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 14155,
+   "page": 1,
+   "view": null,
+   "crop": null,
+   "section_direction": [
+    0.6557440978466786,
+    0.7549832303695528,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 699,
+   "page": 1,
+   "view": "DJI_20241217103059_0006_D.JPG",
+   "crop": [
+    2232,
+    2333,
+    2605,
+    2513
+   ],
+   "section_direction": [
+    -0.9368487007299476,
+    0.34973491667348466,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 3618,
+   "page": 1,
+   "view": "DJI_20241217084545_0096_D.JPG",
+   "crop": [
+    4802,
+    3355,
+    5202,
+    3638
+   ],
+   "section_direction": [
+    -0.7873412362035344,
+    -0.616517459423081,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  },
+  {
+   "cluster_id": 5777,
+   "page": 1,
+   "view": "DJI_20241217091025_0075_D.JPG",
+   "crop": [
+    4711,
+    3147,
+    5036,
+    3351
+   ],
+   "section_direction": [
+    -0.4324311774473092,
+    -0.9016669433729584,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  }
+ ],
+ "rule": "recount 5: '윤곽 밖의 새 면' clusters after those in JC figure 6, area descending, <= 2 per building, 20; drawn by JC s10_images.fig6 (only_gt path, title text from JC code)",
+ "scientific_verdict": null,
+ "source_stem": "fig6_gt_clusters_LoD2_2"
+}

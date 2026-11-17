@@ -1,0 +1,26 @@
+{
+ "prior": "ALS",
+ "clusters": [
+  {
+   "cluster_id": 30719,
+   "page": 0,
+   "view": "DJI_20241217095859_0034_D.JPG",
+   "crop": [
+    3263,
+    461,
+    3439,
+    632
+   ],
+   "section_direction": [
+    -0.9238329595391498,
+    0.382795850120055,
+    0.0
+   ],
+   "section_band_m": 0.25,
+   "sites": []
+  }
+ ],
+ "rule": "recount 5: '윤곽 밖의 새 면' clusters after those in JC figure 6, area descending, <= 2 per building, 20; drawn by JC s10_images.fig6 (only_gt path, title text from JC code)",
+ "scientific_verdict": null,
+ "source_stem": "fig6_gt_clusters_ALS_1"
+}
