@@ -56,13 +56,14 @@ def edge_back():
     if len(px): arrow(ax, (float(np.median(px)), float(np.median(pz))), '이 자리: 벽이 바닥과 만나는 곳', (.35, -.55))
     ax.legend(loc='upper left', fontsize=12); axis_labels(ax, True)
     fig.suptitle('벽이 바닥과 만나는 자리에 목표면은 있는데, 학습 뒤 표면은 그 위에서 끝난다', fontsize=17, weight='bold')
-    ax.set_title('B0 × LoD2 뒤쪽 벽 맨 아랫단, 30,000회 (TRAINERR 다시 학습 판), 단면 두께 ±0.25 m, 가로 2 m × 세로 2 m', fontsize=11)
+    ax.set_title('B0 × LoD2 뒤쪽 벽 맨 아랫단, 본 방법을 다시 학습한 판 30,000회, 단면 두께 ±0.25 m, 가로 2 m × 세로 2 m', fontsize=11)
     save('edge_back', fig, dict(case='edge_back', mesh=str(mp), origin=o.tolist(), h=h.tolist(), e=e.tolist(), window_m=[2*L, zr[1]-zr[0]]), dict(place_h=px, place_z=pz, **pts))
 
 def edge_annex():
-    b = B(); plt = korean_plt(); cd = b.case_def('edge_annex'); o, h, e = frame_of(cd); L = 1.5; zr = (o[2]-1.5, o[2]+1.5)
-    runs = [('FINALTRAIN 본 방법', b.final_mesh('B0_b10__LoD2')), ('TRAINERR 다시 학습', O/'gtj/meshes/B0_b10__LoD2__tl_own_30000/final.ply'),
-            ('TRAINLOG 기록 판', TLC/'gtj/meshes/B0_b10__LoD2__tl_30000/final.ply'), ('덧붙임 5 기록 판 sc4', A5O/'gtj/meshes/B0_b10__LoD2__sc4_30000/final.ply')]
+    b = B(); plt = korean_plt(); cd = b.case_def('edge_annex'); o, h, e = frame_of(cd); L = 1.0; zr = (o[2]-1.0, o[2]+1.0)
+    runs = [('학습 1 (본 결과)', b.final_mesh('B0_b10__LoD2')), ('학습 2', O/'gtj/meshes/B0_b10__LoD2__tl_own_30000/final.ply'),
+            ('학습 3', TLC/'gtj/meshes/B0_b10__LoD2__tl_30000/final.ply'), ('학습 4', A5O/'gtj/meshes/B0_b10__LoD2__sc4_30000/final.ply')]
+    RUNKEY = {'학습 1 (본 결과)': 'FINALTRAIN', '학습 2': 'TRAINERR tl_B0_LoD2_own', '학습 3': 'TRAINLOG tl_B0_b10_LoD2_s0', '학습 4': 'addendum5 sc4_B0_LoD2_signed'}
     runs = [(n, p) for n, p in runs if Path(p).exists()]
     fig, axs = plt.subplots(1, len(runs), figsize=(max(16, 5.2*len(runs)), 6.8)); axs = np.atleast_1d(axs); pts = {}
     rel = cd['X']-o; pm = (np.abs(rel@e) <= .25) & (np.abs(rel@h) <= L); px = (rel@h)[pm]; lo_, hi_ = (float(px.min()), float(px.max())) if len(px) else (-.2, .2)
@@ -73,9 +74,10 @@ def edge_annex():
             dv, _ = cKDTree(VF[0]).query(cd['X'], distance_upper_bound=.2); cov = pct(np.isfinite(dv))
         ax.set_title(f'{nm}\n자리 점 0.2 m 안 표면 {cov:.0f} %' if cov is not None else nm, fontsize=12); axis_labels(ax, True)
         pts.update({f'run{i}__{k}': v for k, v in q.items()}); pts[f'run{i}__coverage_pct'] = np.float64(cov if cov is not None else np.nan)
+        ax.annotate('이 자리', xy=((lo_+hi_)/2, zr[0]+.15*(zr[1]-zr[0])), xytext=((lo_+hi_)/2-.75, zr[0]+.05*(zr[1]-zr[0])), arrowprops=dict(arrowstyle='->', lw=1.8), fontsize=12, weight='bold', bbox=dict(fc='white', ec='k'))
         if i == 0: ax.legend(loc='upper left', fontsize=10)
     fig.suptitle('같은 설정의 학습에서 별채 평지붕 가장자리의 표면이 있기도 하고 없기도 하다', fontsize=17, weight='bold'); fig.tight_layout(rect=(0, 0, 1, .92))
-    save('edge_annex', fig, dict(case='edge_annex', meshes={n: str(p) for n, p in runs}, origin=o.tolist(), h=h.tolist(), note='같은 설정 30,000회 메시가 있는 판은 넷(issues.md)'), dict(place_lo_hi=np.array([lo_, hi_]), **pts))
+    save('edge_annex', fig, dict(case='edge_annex', meshes={n: str(p) for n, p in runs}, run_names={n: RUNKEY[n] for n, _ in runs}, place_width_share=float((hi_-lo_)/(2*L)), origin=o.tolist(), h=h.tolist(), note='같은 설정 30,000회 메시가 있는 판은 넷(issues.md)'), dict(place_lo_hi=np.array([lo_, hi_]), **pts))
 
 def disk_segments(S, rows, o, h, e, L, zr, k=2.):
     """2DGS disks of the given rows cut by the section plane (normal e): segment along d = n x e, half length k * radius of the ellipse along d."""
@@ -90,6 +92,15 @@ def disk_segments(S, rows, o, h, e, L, zr, k=2.):
         segs.append([[(p0-o)@h, p0[2]], [(p1-o)@h, p1[2]]]); keep.append(i)
     return np.array(segs) if segs else np.zeros((0, 2, 2)), np.array(keep, 'i8')
 
+def disc_segments_slab(T, o, h, e, L, zr, slab):
+    """target discs passing through the section slab |d| <= slab, drawn as their chord at the plane nearest to the disc centre (same slab as the GT points)."""
+    a = T.anchor; n = T.normal; r = T.radius; d = (a-o)@e; ok = (np.abs(d) < r+slab) & (np.abs((a-o)@h) <= L+1) & (a[:, 2] >= zr[0]-1) & (a[:, 2] <= zr[1]+1); segs = []
+    for ai, ni, ri, di in zip(a[ok], n[ok], r[ok], d[ok]):
+        u = np.cross(e, ni); nu = np.linalg.norm(u)
+        if nu < 1e-6: continue
+        u /= nu; dd = max(abs(di)-slab, 0.); hl = np.sqrt(max(ri**2-dd**2, 0)); c = ai-di*e; p0 = c-hl*u; p1 = c+hl*u; segs.append([[(p0-o)@h, p0[2]], [(p1-o)@h, p1[2]]])
+    return np.array(segs) if segs else np.zeros((0, 2, 2))
+
 def annex_under():
     b = B(); plt = korean_plt(); cd = b.case_def('annex_under'); import torch
     S = torch.load(RUNS4['ba3_B0_ALS_record']['model']/'trainlog/scene/30000.pt', map_location='cpu', weights_only=False)
@@ -99,16 +110,20 @@ def annex_under():
     fr = json.loads((A4D/'figures/ba_annex_under_section.json').read_text()); o = np.asarray(fr['origin']); h = np.asarray(fr['h']); e = np.cross([0, 0, 1.], h); e /= np.linalg.norm(e)
     L = 6.; zr = (-44., -32.)
     VF = b.mesh(A3O/'gtj/meshes/B0_b10__ALS__ba3_30000/final.ply')
-    fig, ax = plt.subplots(figsize=(16, 11)); pts = sec_lines(ax, 'B0_b10__ALS', o, h, e, L, zr, VF)
+    fig, ax = plt.subplots(figsize=(16, 11)); pts = sec_lines(ax, 'B0_b10__ALS', o, h, e, L, zr, VF, target=False)
+    T = Targets('B0_b10__ALS'); tsg = disc_segments_slab(T, o, h, e, L, zr, .25)
+    from matplotlib.collections import LineCollection
+    if len(tsg): ax.add_collection(LineCollection(tsg, colors=BLUE, linewidths=2.6, label='목표면', zorder=3))
+    pts['target_segments'] = tsg; print('ANNEX_TARGET_SEGMENTS', len(tsg), flush=True)
     rel = X-o; near = (np.abs(rel@e) <= 1.5) & (np.abs(rel@h) <= L) & (X[:, 2] >= zr[0]) & (X[:, 2] <= zr[1]); sg, kk = disk_segments(S, rows[near], o, h, e, L, zr)
     from matplotlib.collections import LineCollection
     if len(sg): ax.add_collection(LineCollection(sg, colors='#ff7f0e', linewidths=4, alpha=.8, label=f'틀린 면을 그리는 가우시안의 원판 (2σ, 단면 ±1.5 m 안 {len(sg)}개)', zorder=5))
     ax.scatter((rel@h)[near], X[near, 2], s=30, c='#ff7f0e', edgecolors='k', zorder=6)
     sz = np.exp(S['scaling'][rows].numpy()).max(1)
-    if len(sg): arrow(ax, tuple(sg[int(np.argmax(np.linalg.norm(sg[:, 1]-sg[:, 0], axis=1)))].mean(0)), f'비스듬한 틀린 면: 큰 가우시안 {len(rows)}개\n(최대 크기 중앙값 {np.median(sz):.2f} m)', (1.2, -1.4))
-    ax.legend(loc='upper left', fontsize=11); axis_labels(ax, False)
+    if len(sg): arrow(ax, tuple(sg[int(np.argmax(np.linalg.norm(sg[:, 1]-sg[:, 0], axis=1)))].mean(0)), f'비스듬한 틀린 면: 큰 가우시안 {len(rows)}개\n(최대 크기 중앙값 {np.median(sz):.2f} m)', (-4.2, -4.6))
+    ax.legend(loc='upper left', fontsize=11); ax.set_xlabel('단면 가로 위치 (m)  → 카메라 쪽(바깥)'); ax.set_ylabel('높이 (m)')
     fig.suptitle('지붕은 맞는데, 지붕 가장자리에서 아래 바닥까지 비스듬한 면이 하나 더 있고, 그 면은 큰 가우시안 몇 개의 원판이다', fontsize=16, weight='bold')
-    ax.set_title('B0 × 항공 LiDAR 별채, 덧붙임 3 바-3 기록 판 30,000회, 단면 두께 ±0.25 m (원판은 ±1.5 m 안)', fontsize=11)
+    ax.set_title('B0 × 항공 LiDAR 별채, 기록을 더한 학습 30,000회, 단면 두께 ±0.25 m (목표면은 그 두께를 지나는 원판, 가우시안 원판은 ±1.5 m 안)', fontsize=11)
     save('annex_under', fig, dict(case='annex_under', model=str(RUNS4['ba3_B0_ALS_record']['model']), group='pixel group (addendum4 work da 4.3 pixels)', origin=o.tolist(), h=h.tolist(), e=e.tolist()),
          dict(disk_segments=sg, gauss_h=(rel@h)[near], gauss_z=X[near, 2], gauss_size=sz, **pts))
 
@@ -150,12 +165,12 @@ def south_wall():
         ax.set_title(f'대표 화소 {i+1} (영상 {str(z[f"p{i}__view"])[-9:-2]}): 튀어나온 면 깊이 ±0.5 m의 무게 {wf:.2f} ({["25","50","75"][i]} % 분위 화소)', fontsize=12)
         pts.update({f'p{i}__bin_left': bins[:-1], f'p{i}__bin_weight': hst})
     fig.suptitle('벽 뒤로 튀어나온 면의 자리에는 가우시안이 거의 없고, 벽의 가우시안과 그 뒤 가우시안 사이에 평균 깊이가 놓인다', fontsize=16, weight='bold')
-    fig.text(.5, .93, '(발주문의 문장. 대표 화소는 튀어나온 면 깊이 ±0.5 m 무게의 25·50·75 % 분위 화소, 덧붙임 4 일 다 4.3 화소 635개 가운데)', ha='center', fontsize=11, color='#444'); fig.tight_layout(rect=(0, 0, 1, .91))
-    save('south_wall', fig, dict(case='south_wall', model='TRAINLOG 기록 판 30,000회', pixels='payload addendum5/ba/rays_south.npz (벽 깊이 무게와 그 뒤 무게가 모두 큰 화소 셋)'), pts)
+    fig.text(.5, .93, '(대표 화소는 튀어나온 면 깊이 ±0.5 m 무게의 25·50·75 % 분위 화소, 앞 분석에서 고른 화소 635개 가운데)', ha='center', fontsize=11, color='#444'); fig.tight_layout(rect=(0, 0, 1, .91))
+    save('south_wall', fig, dict(case='south_wall', model='TRAINLOG 기록 판 30,000회', pixels='payload addendum5/ba/rays_south.npz (튀어나온 면 깊이 ±0.5 m 무게의 25·50·75 % 분위 화소 셋)'), pts)
 
 def visible_wall():
     b = B(); plt = korean_plt(); cd = b.case_def('visible_wall'); o, h, e = frame_of(cd); L, zr = b.window(cd, o, h, e); L = min(L, 4.)
-    runs = [('본 방법 (TRAINLOG 기록 판)', TLC/'gtj/meshes/B0_b10__LoD2__tl_30000/final.ply'), ('가려진 화소의 깊이 감독을 끈 학습 (사-2)', A4O/'gtj/meshes/B0_b10__LoD2__sa2_30000/final.ply')]
+    runs = [('본 방법', TLC/'gtj/meshes/B0_b10__LoD2__tl_30000/final.ply'), ('가려진 화소의 깊이 감독을 끈 학습', A4O/'gtj/meshes/B0_b10__LoD2__sa2_30000/final.ply')]
     fig = plt.figure(figsize=(16, 15)); pts = {}
     for i, (nm, p) in enumerate(runs):
         ax = fig.add_axes([.06+i*.48, .42, .42, .5]); q = sec_lines(ax, 'B0_b10__LoD2', o, h, e, L, zr, b.mesh(p)); axis_labels(ax, True)
@@ -189,7 +204,7 @@ def fixed():
     m1 = near & (cls == 1)
     if m1.any(): arrow(ax, tuple(G[m1, :2].mean(0)), '표면을 그리는 것은\n옆 목표에 묶인 가우시안', (R*.3, R*.3))
     fig.suptitle('틀린 목표면에서 떨어진 실제 면에, 옆의 맞는 목표에 묶인 가우시안이 놓여 표면을 만든다', fontsize=17, weight='bold')
-    ax.set_title(f'B0 × LoD2 학습 후 고쳐진 자리 ({str(z[k+"__label"])}), TRAINLOG 기록 판 30,000회, 위에서 본 그림, 고친 점 0.2 m 안 가우시안', fontsize=11)
+    ax.set_title(f'B0 × LoD2 학습 후 고쳐진 자리 ({str(z[k+"__label"])}), 30,000회, 위에서 본 그림, 고친 점 0.2 m 안 가우시안', fontsize=11)
     save('fixed', fig, dict(case='fixed_a', model='TRAINLOG 기록 판 30,000회', rule='가우시안 중심이 고친 점 0.2 m 안'), dict(points=X, gauss_xyz=G[near], gauss_class=cls[near], wrong_patches=vfix))
 
 def floater():

@@ -1,15 +1,22 @@
 {
- "at": "2026-11-17T15:41:26.042320+09:00",
+ "at": "2026-11-17T16:14:31.494223+09:00",
  "figure": "bb_edge_annex.png",
  "width_px": 3376,
  "points_npz": "payload addendum5/ba/bb_edge_annex.npz",
  "case": "edge_annex",
  "meshes": {
-  "FINALTRAIN 본 방법": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__LoD2__FINALTRAIN_30000/primary.ply",
-  "TRAINERR 다시 학습": "/te/gtj/meshes/B0_b10__LoD2__tl_own_30000/final.ply",
-  "TRAINLOG 기록 판": "/art/phase-payloads/phd/main_trainlog_v1/PHD-MAIN-TRAINLOG-v1/concept_v2/case_B0_b10__LoD2/gtj/meshes/B0_b10__LoD2__tl_30000/final.ply",
-  "덧붙임 5 기록 판 sc4": "/te/addendum5/gtj/meshes/B0_b10__LoD2__sc4_30000/final.ply"
+  "학습 1 (본 결과)": "/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__LoD2__FINALTRAIN_30000/primary.ply",
+  "학습 2": "/te/gtj/meshes/B0_b10__LoD2__tl_own_30000/final.ply",
+  "학습 3": "/art/phase-payloads/phd/main_trainlog_v1/PHD-MAIN-TRAINLOG-v1/concept_v2/case_B0_b10__LoD2/gtj/meshes/B0_b10__LoD2__tl_30000/final.ply",
+  "학습 4": "/te/addendum5/gtj/meshes/B0_b10__LoD2__sc4_30000/final.ply"
  },
+ "run_names": {
+  "학습 1 (본 결과)": "FINALTRAIN",
+  "학습 2": "TRAINERR tl_B0_LoD2_own",
+  "학습 3": "TRAINLOG tl_B0_b10_LoD2_s0",
+  "학습 4": "addendum5 sc4_B0_LoD2_signed"
+ },
+ "place_width_share": 0.2769535965728143,
  "origin": [
   90.31780242919922,
   1.563599944114685,

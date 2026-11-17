@@ -1,0 +1,17 @@
+{
+ "at": "2026-11-17T16:24:29.985778+09:00",
+ "figure": "na_rep_pixels.png",
+ "width_px": 3020,
+ "state": "30000",
+ "specs": [
+  "sb5_R1_ALS_record_signed:R1 바닥 띠 (R1 × 항공 LiDAR)",
+  "tl_B173nb_b10_ALS_s0:뜬 면 (B173 × 항공 LiDAR)",
+  "ba3_B0_ALS_record:B0 별채 지붕 아래 면 (B0 × 항공 LiDAR)",
+  "tl_B0_b10_LoD2_s0:B0 남쪽 끝 벽 (B0 × LoD2)",
+  "sb3_R1_LoD2_record:R1 × LoD2 1번 벽"
+ ],
+ "rule": "problem group supervised pixels; 25/50/75 % quantiles of the group weight (alpha*T) in the pixel",
+ "table": "tables/na_rep_pixels.csv",
+ "points_npz": "payload addendum5/na/na_rep_pixels.npz",
+ "scientific_verdict": null
+}

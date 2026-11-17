@@ -10,8 +10,17 @@ GA5 = A5O/'ga'
 
 def it_of(st): return int(str(st).split('_')[0])
 
+# runs whose record range (states) does not cover the place: read the full-scene dumps (trainlog/scene/<name>.pt, same fields) instead (issues.md)
+SCENE_STATE_RUNS = {'sb3_R1_LoD2_record'}
+def state_of(run, st):
+    if run not in SCENE_STATE_RUNS: return raw_state(run_model(run), st)
+    import torch
+    s = torch.load(run_model(run)/'trainlog/scene'/f'{st}.pt', map_location='cpu', weights_only=False)
+    return {k: (v.numpy() if hasattr(v, 'numpy') else v) for k, v in s.items() if k in ('xyz', 'origin', 'init_id', 'target_tag', 'target_index', 'uid', 'parent_uid', 'born_at', 'born_how', 'release_event', 'target_released_at')}
+def scene_names(run): return {p.stem for p in (run_model(run)/'trainlog/scene').glob('*.pt')}
+
 def groups_at(run, st, bands):
-    S = raw_state(run_model(run), st); out = {}
+    S = state_of(run, st); out = {}
     for nm, B in bands.items():
         m, dn, k = member_of(B, S, it_of(st)); out[nm] = dict(rows=np.flatnonzero(m), dn=dn[m], kind=kind_of5(S['target_tag'][m], S['target_index'][m], B.vset), stage_used=k)
     return S, out
@@ -66,7 +75,7 @@ def seeds(run, place, control, st='30000'):
     table5(f'ga_seeds_{run}_{st}', rows); print('SEEDS', run, flush=True)
 
 def flows(run, place, control):
-    c = cfg5(); model = run_model(run); bands = bands_of(place, control); av = available(run); E = load_events(model, ('delete', 'birth', 'range'))
+    c = cfg5(); model = run_model(run); bands = bands_of(place, control); av = scene_names(run) if run in SCENE_STATE_RUNS else available(run); E = load_events(model, ('delete', 'birth', 'range'))
     de = E['delete']; dpos = {}
     for i, u in enumerate(de['uid'].tolist()): dpos[u] = i
     rows = []
@@ -98,6 +107,7 @@ def flows(run, place, control):
                      moved_out=int((dr == -1).sum()), left_record_range=int((dr == -2).sum()))
             r['balance_residual'] = r['start']+r['born_clone']+r['born_split']+r['moved_in']-(len(gone))-r['end']
             r['gone_total'] = len(gone)
+            if run in SCENE_STATE_RUNS: r['deleted_no_event'] = r.pop('left_record_range')   # full scene: gone = deleted; the delete event is missing outside the record range
             r['parent_in_group_pct'] = pct(np.array(pin)) if pin else None
             for k in range(4): r[f'parent_kind_{KIND_KO[k]}'] = int(sum(1 for x in pk if x == k))
             r['parent_born_in_interval_or_outside'] = int(sum(1 for x in pk if x == -1))
@@ -107,18 +117,21 @@ def flows(run, place, control):
     table5(f'ga_flows_{run}', rows); print('FLOWS', run, flush=True)
 
 def resets(run, place, control):
-    c = cfg5(); model = run_model(run); bands = bands_of(place, control); av = available(run); de = load_events(model, ('delete',))['delete']; rows = []
+    c = cfg5(); model = run_model(run); bands = bands_of(place, control); av = scene_names(run) if run in SCENE_STATE_RUNS else available(run); de = load_events(model, ('delete',))['delete']; rows = []
     vb = np.unique(place_points5(place)['v']) if place == 'floor_band' else None
     for rs in c['resets']:
         st = f'{rs}_pre_reset'
         if st not in av or int(RUNS4[run]['last']) < rs+100: continue   # the first prune check after the reset must be inside the run
         S, G = groups_at(run, st, bands); win = (de['iteration'] > rs) & (de['iteration'] <= rs+100); du = de['uid'][win]; dre = de['reason'][win]
+        rule = 'delete events in (reset, reset+100]'
+        if run in SCENE_STATE_RUNS:   # events cover the record range only: absent from the next full-scene dump instead (500 iterations after, not 100)
+            nxt = state_of(run, str(rs+500)); du = np.setdiff1d(S['uid'], nxt['uid']); dre = np.full(len(du), -1); rule = f'absent from scene dump {rs+500} (no delete events outside the record range)'
         groups = {nm: S['uid'][g['rows']] for nm, g in G.items()}
         if vb is not None: groups['바닥에 묶인 가우시안(덧붙임 4)'] = S['uid'][(S['target_tag'] == 1) & np.isin(S['target_index'], vb[vb >= 0])]
         for nm, us in groups.items():
             dd = np.isin(us, du); op = np.isin(us, du[dre == 1])
             r = dict(run=run, reset=rs, group=nm, before=len(us), survived_pct=pct(~dd), deleted_any=int(dd.sum()), deleted_opacity=int(op.sum()), small_group=len(us) < 30,
-                     group_stage_used=G[nm]['stage_used'] if nm in G else None)
+                     group_stage_used=G[nm]['stage_used'] if nm in G else None, deletion_rule=rule)
             if nm in G:
                 for k in range(4):
                     mk = G[nm]['kind'] == k; r[f'{KIND_KO[k]}_n'] = int(mk.sum()); r[f'{KIND_KO[k]}_survived_pct'] = pct(~dd[mk]) if mk.any() else None
