@@ -1,0 +1,73 @@
+{
+ "figure": 4,
+ "prior": "LoD2",
+ "pair": [
+  "기존 3 아래 5 %",
+  "본 방법"
+ ],
+ "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "clusters": [
+  {
+   "type": "본 방법만 맞음",
+   "building": "DEBY_LOD2_4906965",
+   "area_m2": 332.9375,
+   "gt_points": 30113,
+   "patches": 5516,
+   "section_patch": 58136,
+   "view": "DJI_20241217084707_0137_D.JPG",
+   "line": "4906965 · 사전정보 오류 · 본 방법 영상 깊이 사용 / 기존 3 사전정보 사용\nd 1.14 L 1.10 s_P 0.01 s_M 0.55 t -0.04"
+  },
+  {
+   "type": "본 방법만 맞음",
+   "building": "DEBY_LOD2_4906981",
+   "area_m2": 310.8125,
+   "gt_points": 24964,
+   "patches": 4119,
+   "section_patch": 993479,
+   "view": "DJI_20241217084411_0049_D.JPG",
+   "line": "4906981 · 사전정보 오류 · 본 방법 영상 깊이 사용 / 기존 3 사전정보 사용\nd 1.08 L 0.34 s_P 0.00 s_M 0.78 t -0.01"
+  },
+  {
+   "type": "본 방법만 맞음",
+   "building": "DEBY_LOD2_4906968",
+   "area_m2": 262.625,
+   "gt_points": 17952,
+   "patches": 4693,
+   "section_patch": 1197089,
+   "view": "DJI_20241217103051_0002_D.JPG",
+   "line": "4906968 · 사전정보 오류 · 본 방법 영상 깊이 사용 / 기존 3 사전정보 사용\nd -2.02 L 0.36 s_P 0.16 s_M 0.97 t 0.01"
+  },
+  {
+   "type": "기존 3만 맞음",
+   "building": "DEBY_LOD2_108580336",
+   "area_m2": 197.8125,
+   "gt_points": 7534,
+   "patches": 2681,
+   "section_patch": 1046405,
+   "view": "DJI_20241217101453_0037_D.JPG",
+   "line": "108580336 · 두 자료 모두 유효 · 본 방법 영상 깊이 사용 / 기존 3 사전정보 사용\nd 0.57 L 0.43 s_P 0.08 s_M 0.07 t 0.04"
+  },
+  {
+   "type": "기존 3만 맞음",
+   "building": "DEBY_LOD2_4906975",
+   "area_m2": 111.1875,
+   "gt_points": 8368,
+   "patches": 1642,
+   "section_patch": 1214737,
+   "view": "DJI_20241217084433_0060_D.JPG",
+   "line": "4906975 · 영상 깊이 오류 · 본 방법 영상 깊이 사용 / 기존 3 사전정보 사용\nd 2.49 L 0.58 s_P 0.07 s_M 0.53 t -0.04"
+  },
+  {
+   "type": "기존 3만 맞음",
+   "building": "DEBY_LOD2_60042",
+   "area_m2": 100.3125,
+   "gt_points": 5818,
+   "patches": 1452,
+   "section_patch": 1340268,
+   "view": "DJI_20241217084753_0160_D.JPG",
+   "line": "60042 · 영상 깊이 결측 · 본 방법 영상 깊이 사용 / 기존 3 사전정보 사용\nd 3.12 L 0.54 s_P 0.06 s_M 0.15 t -0.04"
+  }
+ ],
+ "at": "2026-11-17T20:54:22+09:00",
+ "scientific_verdict": null
+}

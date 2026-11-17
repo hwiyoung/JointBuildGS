@@ -50,6 +50,7 @@
 | LoD2 | 처리 2 일치는 영상 깊이 높이 |  | 0.00 | 0.00 | pr |  |  |  |  |  |  |  |
 | LoD2 | 가시성 1 모두 결측 |  | 1408.50 | 22536.00 | vis |  |  |  |  |  |  |  |
 | LoD2 | 가시성 2 모두 제거 |  | 42014.68 | 672250.00 | vis |  |  |  |  |  |  |  |
+| LoD2 | 참고 참값으로 학습한 결합 |  | 13870.44 | 221927.00 | ref |  |  |  |  |  |  |  |
 | LoD2 | 기존 4 결합(세 실험 지역) |  |  |  | old4_3 |  |  |  |  |  | 세 실험 지역 GT rows with a JUDGEAPPLY patch | [{"prior": "LoD2", "site": "B0_b10", "gt_rows_all": 382591, "gt_rows": 367660, "with_JA_patch": 367438, "fusion_image_area_m2": 61.4375, "fusion_prior_area_m2": 5070.81584436015}, {"prior": "LoD2", "site": "B173nb_b10", "gt_rows_all": 373752, "gt_rows": 342773, "with_JA_patch": 342134, "fusion_image_area_m2": 4960.8125, "fusion_prior_area_m2": 3885.0625}, {"prior": "LoD2", "site": "R1rep_b10", "gt_rows_all": 239559, "gt_rows": 220723, "with_JA_patch": 220721, "fusion_image_area_m2": 1697.9375, "fusion_prior_area_m2": 3242.9375}] |
 | ALS | 본 방법 | True | 0.00 | 0.00 |  |  |  |  |  |  |  |  |
 | ALS | 사전 정보 단독 | True | 46210.53 | 690700.00 |  |  |  |  |  |  |  |  |
@@ -99,4 +100,5 @@
 | ALS | 처리 2 일치는 영상 깊이 높이 |  | 0.00 | 0.00 | pr |  |  |  |  |  |  |  |
 | ALS | 가시성 1 모두 결측 |  | 48.67 | 740.00 | vis |  |  |  |  |  |  |  |
 | ALS | 가시성 2 모두 제거 |  | 2070.12 | 30249.00 | vis |  |  |  |  |  |  |  |
+| ALS | 참고 참값으로 학습한 결합 |  | 3331.23 | 50641.00 | ref |  |  |  |  |  |  |  |
 | ALS | 기존 4 결합(세 실험 지역) |  |  |  | old4_3 |  |  |  |  |  | 세 실험 지역 GT rows with a JUDGEAPPLY patch | [{"prior": "ALS", "site": "B0_b10", "gt_rows_all": 145160, "gt_rows": 127101, "with_JA_patch": 117400, "fusion_image_area_m2": 1.9866998503197157, "fusion_prior_area_m2": 1590.9064143420433}, {"prior": "ALS", "site": "B173nb_b10", "gt_rows_all": 210800, "gt_rows": 146396, "with_JA_patch": 124087, "fusion_image_area_m2": 1221.9707441489534, "fusion_prior_area_m2": 1063.896636418737}, {"prior": "ALS", "site": "R1rep_b10", "gt_rows_all": 149446, "gt_rows": 134459, "with_JA_patch": 129438, "fusion_image_area_m2": 87.39467370851871, "fusion_prior_area_m2": 1523.1346438556252}] |

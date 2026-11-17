@@ -4,6 +4,7 @@ import pandas as pd
 TAB = D/'tables'
 CN = [CASE[c] for c in CASES]
 BASELINE = ['사전 정보 단독', '영상 단독', '본 방법', '패치 다수결 상한']
+REP_EXTRA = ['참고 참값으로 학습한 결합']
 REP = ['기존 1 T=0.5 m', '기존 1 T=1 m', '기존 2 대표(저장된 L)', '기존 3 아래 5 %', '기존 4 결합(세 실험 지역)', '기존 4 결합(전 건물)', '기존 5 T=0.5 m', '기존 5 T=L']
 NO_BEST = ['패치 다수결 상한', '기존 4 결합(세 실험 지역)']   # + 참값으로 고름, 참고 줄(4.6)
 def write(name, df, note='', md=None):
@@ -64,7 +65,7 @@ def main():
                 BD.append(r)
             if sn == '지붕' or prior == 'LoD2':
                 bb = b.copy(); bb.insert(0, 'surface', sn); bb.insert(0, 'prior', prior); SW.append(bb)
-    S = pd.concat(S, ignore_index=True); S['gt_selected'] = False; S['reference'] = False
+    S = pd.concat(S, ignore_index=True); S['gt_selected'] = False; S['reference'] = S['family'] == 'ref'
     # 3.1 참값으로 고른 값: 유형마다 요약 (가)가 가장 높은 값
     oks = [f'ok_{c}' for c in CN]; extra = []
     for (prior, sn, scope), q in S[S['scope'] == '전체'].groupby(['prior', 'surface', 'scope'], sort=False):
@@ -87,7 +88,7 @@ def main():
     note = '목표 맞음 % = 참값 점 비율(JC 2.5). 요약 가 = 네 경우 평균, 나 = 최솟값과 그 경우, 다 = 경우마다 (참값을 쓰지 않는 판 가운데 가장 높은 값 − 이 판) 의 최댓값(상한·참값으로 고름·기존 4 세 지역 줄은 기준에서 뺌). 범위 "세 실험 지역 결합 범위" = 기존 4(JUDGEAPPLY 결합)가 있는 세 실험 지역 참값 점만.'
     write('s_all_variants', S, note=note, md=lambda d: d[(d['scope'] == '전체')][['prior', 'surface', 'variant'] + oks + ['ok_전체', '요약 가 평균', '요약 나 최솟값', '요약 나 경우', '요약 다 최대 격차']])
     # 요약 표 (보고서 2): 사전 정보마다, LoD2 = 모두
-    order = BASELINE + REP + [v for v in S['variant'].unique() if v.split(' ')[0] in ('검출', '식별', '유보', '처리', '가시성')]
+    order = BASELINE + REP + [v for v in S['variant'].unique() if v.split(' ')[0] in ('검출', '식별', '유보', '처리', '가시성')] + REP_EXTRA
     main_rows = S[(S['scope'] == '전체') & (((S['prior'] == 'LoD2') & (S['surface'] == '모두')) | ((S['prior'] == 'ALS') & (S['surface'] == '지붕'))) & S['variant'].isin(order)].copy()
     main_rows['o'] = main_rows['variant'].map({v: i for i, v in enumerate(order)}); main_rows = main_rows.sort_values(['prior', 'o'], ascending=[False, True])
     cols = ['prior', 'variant'] + oks + ['ok_전체', '요약 가 평균', '요약 나 최솟값', '요약 나 경우', '요약 다 최대 격차'] + [f'diff_pp_{c}' for c in CN] + ['building_diff_median_pp']

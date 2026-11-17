@@ -11,5 +11,12 @@ def main(tag):
             arc = ('configs/' if f.parent == C else '') + str(f.relative_to(D)) if f.parent != C else 'configs/' + f.name
             z.write(f, arc); sums.append(f'{sha(f)}  {arc}')
         z.writestr('SHA256SUMS', '\n'.join(sums) + '\n')
+    if out.stat().st_size > 28*2**20:   # 원격 보기 첨부 30 MiB 한도: 같은 내용을 두 조각으로도 (조각 2 = 그림 3 PNG)
+        with zipfile.ZipFile(out) as z0:
+            names = [n for n in z0.namelist() if n != 'SHA256SUMS']; big = [n for n in names if n.startswith('figures/fig3') and n.endswith('.png')]
+            for k, part in enumerate([[n for n in names if n not in big], big], 1):
+                q = out.with_name(out.stem + f'_part{k}.zip')
+                with zipfile.ZipFile(q, 'w', zipfile.ZIP_DEFLATED) as z: [z.writestr(n, z0.read(n)) for n in part]; z.writestr('SHA256SUMS', z0.read('SHA256SUMS'))
+                print('PART', q, q.stat().st_size)
     print('PACKAGE', out, len(files), out.stat().st_size); progress(f'묶음 {tag}: {out.name} ({len(files)} 파일, {out.stat().st_size} B)')
 if __name__ == '__main__': main(sys.argv[1])

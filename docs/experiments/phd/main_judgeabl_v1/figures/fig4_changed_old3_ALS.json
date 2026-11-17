@@ -1,0 +1,73 @@
+{
+ "figure": 4,
+ "prior": "ALS",
+ "pair": [
+  "기존 3 아래 5 %",
+  "본 방법"
+ ],
+ "rule": "GT points whose target-ok differs; 0.25 m cells (JC cell) joined within 0.6 m per building; area = cells x 0.0625",
+ "clusters": [
+  {
+   "type": "본 방법만 맞음",
+   "building": "DEBY_LOD2_4906982",
+   "area_m2": 18.6875,
+   "gt_points": 729,
+   "patches": 257,
+   "section_patch": 404620,
+   "view": "DJI_20241217090915_0040_D.JPG",
+   "line": "4906982 · 두 자료 모두 유효 · 본 방법 일치 / 기존 3 사전정보 사용\nd 0.15 L 0.81 s_P 0.61 s_M 0.87 t 0.29"
+  },
+  {
+   "type": "본 방법만 맞음",
+   "building": "DEBY_LOD2_4907514",
+   "area_m2": 15.4375,
+   "gt_points": 723,
+   "patches": 233,
+   "section_patch": 47361,
+   "view": "DJI_20241217102026_0012_D.JPG",
+   "line": "4907514 · 두 자료 모두 유효 · 본 방법 일치 / 기존 3 사전정보 사용\nd 0.22 L 0.46 s_P 0.74 s_M 0.51 t 0.12"
+  },
+  {
+   "type": "본 방법만 맞음",
+   "building": "DEBY_LOD2_4906985",
+   "area_m2": 13.6875,
+   "gt_points": 772,
+   "patches": 174,
+   "section_patch": 441376,
+   "view": "DJI_20241217090815_0010_D.JPG",
+   "line": "4906985 · 영상 깊이 오류 · 본 방법 일치 / 기존 3 영상 깊이 사용\nd 0.15 L 0.70 s_P 0.14 s_M 0.17 t 0.29"
+  },
+  {
+   "type": "기존 3만 맞음",
+   "building": "DEBY_LOD2_4906967",
+   "area_m2": 9.8125,
+   "gt_points": 634,
+   "patches": 120,
+   "section_patch": 221955,
+   "view": "DJI_20241217103545_0062_D.JPG",
+   "line": "4906967 · 두 자료 모두 유효 · 본 방법 미판정 / 기존 3 영상 깊이 사용\nd 0.00 L nan s_P 0.07 s_M 0.12 t 0.12"
+  },
+  {
+   "type": "기존 3만 맞음",
+   "building": "DEBY_LOD2_4907519",
+   "area_m2": 8.4375,
+   "gt_points": 372,
+   "patches": 135,
+   "section_patch": 753,
+   "view": "DJI_20241217084635_0121_D.JPG",
+   "line": "4907519 · 두 자료 모두 유효 · 본 방법 제거 / 기존 3 결측\nd -0.13 L 0.15 s_P 0.95 s_M nan t 0.18"
+  },
+  {
+   "type": "기존 3만 맞음",
+   "building": "DEBY_LOD2_4959326",
+   "area_m2": 5.1875,
+   "gt_points": 239,
+   "patches": 65,
+   "section_patch": 767352,
+   "view": "DJI_20241217091145_0115_D.JPG",
+   "line": "4959326 · 영상 깊이 오류 · 본 방법 일치 / 기존 3 사전정보 사용\nd 0.18 L 0.61 s_P 0.69 s_M 0.87 t 0.24"
+  }
+ ],
+ "at": "2026-11-17T20:55:10+09:00",
+ "scientific_verdict": null
+}

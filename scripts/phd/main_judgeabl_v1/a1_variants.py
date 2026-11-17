@@ -173,6 +173,9 @@ def main(prior):
     # ---- 4.5 가시성
     for nm, miss in [('가시성 1 모두 결측', 'all4'), ('가시성 2 모두 제거', 'all3')]:
         reg, why = assemble(inside, outside, photo_base, miss=miss); add(nm, reg, why, tgt(reg)[0], family='vis')
+    # ---- 4.6 참고 줄 (a4_lr.py 가 만든 판정; 참값으로 학습)
+    if (O/f'lr_{prior}.npz').exists():
+        z = loadz(O/f'lr_{prior}.npz', ['region', 'reason', 'target_h']); add('참고 참값으로 학습한 결합', z['region'], z['reason'], z['target_h'], family='ref')
     print('VARIANTS', prior, len(V), round(T.s()), flush=True)
 
     # ================= 채점 (참값)

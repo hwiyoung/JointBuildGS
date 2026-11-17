@@ -25,3 +25,4 @@ def issue(s):
     with (D/'issues.md').open('a') as f: f.write(f'- {now()}: {s}\n')
 def nmad_w(x, w):
     m = wq(x, w, .5); return m, 1.4826*wq(np.abs(x - m), w, .5)
+WI = JPC.WI; UNITS = JPC.UNITS
