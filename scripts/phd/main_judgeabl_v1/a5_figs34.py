@@ -12,7 +12,7 @@ from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import connected_components
 FIG = D/'figures'; CN = [CASE[c] for c in CASES]
 OK_C = {1: '#a6d96a', 0: '#fdae61'}   # JC 그림 1: 목표 맞음, 목표 틀림
-COLS = [('기존 1 T=0.5 m', '기존 1 (0.5 m)'), ('기존 2 대표(저장된 L)', '기존 2'), ('기존 3 아래 5 %', '기존 3'), ('기존 4 결합(세 실험 지역)', '기존 4'), ('본 방법', '본 방법'), ('패치 다수결 상한', '정답 판정')]
+COLS = [('기존 1 T=0.5 m', '기존 1 (0.5 m)'), ('기존 2 대표(저장된 L)', '기존 2'), ('기존 3 아래 5 %', '기존 3'), ('기존 4 결합(전 건물)', '기존 4'), ('본 방법', '본 방법'), ('패치 다수결 상한', '정답 판정')]
 def save(fig, name, meta):
     fig.savefig(FIG/f'{name}.png', dpi=300, facecolor='white', bbox_inches='tight'); plt.close(fig); dump(FIG/f'{name}.json', dict(meta, at=now(), scientific_verdict=None))
 def okmat(prior):
@@ -48,11 +48,11 @@ def fig3():
         for r, (nm, m, ext) in enumerate(scenes):
             top = m & (g['gt_kind'] != 2); row = dict(scene=nm, gt_points=int(m.sum()), extent=ext, values={})
             for c, (v, lab) in enumerate(COLS):
-                ax = axs[r, c]; background(ax, ext, O_); sel = top & (f3 if v.startswith('기존 4') else True)
-                if v.startswith('기존 4') and not (m & f3).any():
+                ax = axs[r, c]; background(ax, ext, O_); sel = top & (f3 if (v == '기존 4 결합(세 실험 지역)') else True)
+                if (v == '기존 4 결합(세 실험 지역)') and not (m & f3).any():
                     ax.text(.5, .5, '없음\n(세 실험 지역만)', ha='center', va='center', transform=ax.transAxes, fontsize=7, bbox=dict(fc='white', alpha=.8)); row['values'][lab] = None
                 else:
-                    paint(ax, g['xyz'][sel, :2], OK[v][sel].astype(int), OK_C, ext); mm = m & (f3 if v.startswith('기존 4') else True)
+                    paint(ax, g['xyz'][sel, :2], OK[v][sel].astype(int), OK_C, ext); mm = m & (f3 if (v == '기존 4 결합(세 실험 지역)') else True)
                     pc = [100*OK[v][mm & (ci == k)].mean() if (mm & (ci == k)).any() else np.nan for k in range(4)]; row['values'][lab] = pc
                     ax.set_xlabel(' / '.join('-' if not np.isfinite(x) else f'{x:.0f}' for x in pc), fontsize=6.5)
                 if r == 0: ax.set_title(lab, fontsize=8)

@@ -49,7 +49,7 @@ def main():
         fa_part = has_fa and bool((~x['fusion_all'].astype(bool) & (x['n'] > 0)).any())       # 5절: 덮이지 않은 참값 점이 있으면 '전체' 에서 뺀다
         drop_full = lambda q: q[(q['family'] != 'old4_3') & ~((q['family'] == 'old4') & fa_part)]
         for sn, kinds in surfaces(prior):
-            for scope in ['전체', '세 실험 지역 결합 범위'] + (['결합 전 건물 범위'] if has_fa else []):
+            for scope in ['전체', '세 실험 지역 결합 범위'] + (['결합 전 건물 범위'] if has_fa and fa_part else []):   # 11-18: 캠퍼스 판은 덮임 100 % -> 따로 범위 없음
                 q = x[x['kind'].isin(kinds)]
                 if scope == '전체': q = drop_full(q)
                 elif scope == '세 실험 지역 결합 범위': q = q[q['fusion3'] & ~((q['family'] == 'old4') & fa_part)]   # 5절 판은 덮이지 않은 점이 섞여 뺌

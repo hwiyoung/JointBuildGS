@@ -184,11 +184,11 @@ def main(prior):
         z = np.load(O/f'extra_variants_{prior}.npz')
         for k, nm in enumerate(z['names']): add(str(nm), z['region'][k], z['reason'][k], z['target_h'][k], family='fix')
     # 5절 기존 4 결합(전 건물): fusion_all/fusion_<prior>.npz (JC 패치 순서; 덮이지 않은 패치 = 9, 채점은 덮인 범위 'fusion_all' 에서만)
-    FA = O/'fusion_all'/f'fusion_{prior}.npz'; fa_cov = np.zeros(N, bool)
+    FA = O/'fusion_all'/'campus'/f'fusion_campus_{prior}.npz'; fa_cov = np.zeros(N, bool)   # 11-18: 캠퍼스 판(WIDEN0 MVS, 151동 덮임 100 %). 지역 MVS 판(fusion_<prior>.npz, 66 %)은 비교용으로 fusion_all 보고에만
     if FA.exists():
         z = loadz(FA, ['region', 'target_h', 'covered']); assert len(z['region']) == N; fa_cov = z['covered']
         add('기존 4 결합(전 건물)', z['region'], np.full(N, 9, np.int8), z['target_h'], family='old4', covered_patches=int(fa_cov.sum()), covered_area_m2=float(A[fa_cov].sum()),
-            scope='JC 패치 가운데 결합 판정이 덮은 것(일곱 탐색 지역); none 지역은 확인 불가', source=str(FA))
+            scope='JC 151동 전체(WIDEN0 캠퍼스 MVS, 본 방법과 같은 MVS)', source=str(FA))
     print('VARIANTS', prior, len(V), round(T.s()), flush=True)
 
     # ================= 채점 (참값)

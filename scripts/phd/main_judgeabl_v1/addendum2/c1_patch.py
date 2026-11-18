@@ -53,7 +53,7 @@ def main():
         # 판마다
         for v in names:
             ok = np.unpackbits(z['bits'][names.index(v)])[:n].astype(bool)
-            if v.startswith('기존 4'): continue
+            if v == '기존 4 결합(세 실험 지역)': continue
             num = np.bincount(gid[same], weights=ok[same], minlength=NP); den = np.bincount(gid[same], minlength=NP); pok = (den > 0) & (num/np.maximum(den, 1) >= .5)
             reg = REG[vnames.index(v)]; exp_ = np.full(NP, -1); exp_[valid_pc] = np.array([MATCH[int(c)] for c in pc[valid_pc]]); pname = reg == exp_
             for sn, kk in ([('지붕', [1]), ('벽', [2]), ('모두', [1, 2])] if prior == 'LoD2' else [('지붕', [1])]):
