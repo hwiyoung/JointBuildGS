@@ -1,0 +1,123 @@
+{
+  "note": "addendum 1 item 6: Gaussians of the saved 30,000 model inside the box (넷/아홉: merged model, also per owner cell): opacity sigmoid, scales exp (2DGS two axes), 10/50/90 % values",
+  "rows": [
+    {
+      "site": "R1rep_b10",
+      "plan": "건물단위_s0",
+      "ply": "/tu1/runs/ef/R1repef_ALS_s0/attempt1/model/point_cloud/iteration_30000/point_cloud.ply",
+      "gaussians_in_box": 224816,
+      "opacity_q10_q50_q90": [
+        0.004621032258559086,
+        0.3494440183076436,
+        0.9996342074423114
+      ],
+      "scale_max_q10_q50_q90_m": [
+        0.2967205450271502,
+        0.7701824038607188,
+        1.5580620321987442
+      ],
+      "scale_min_q10_q50_q90_m": [
+        0.02438349743738695,
+        0.06411575313603253,
+        0.2647839916138245
+      ],
+      "elong_lt_001_pct": 0.20372215500676108
+    },
+    {
+      "site": "R1rep_b10",
+      "plan": "건물단위_s1",
+      "ply": "/tu1/runs/ef/R1repef_ALS_s1/attempt1/model/point_cloud/iteration_30000/point_cloud.ply",
+      "gaussians_in_box": 207135,
+      "opacity_q10_q50_q90": [
+        0.004232503793362093,
+        0.36290888413104083,
+        0.9997390426143419
+      ],
+      "scale_max_q10_q50_q90_m": [
+        0.29500412246321334,
+        0.7889152924367391,
+        1.5710581394974572
+      ],
+      "scale_min_q10_q50_q90_m": [
+        0.02462518694567833,
+        0.06532067207108931,
+        0.2691087480480058
+      ],
+      "elong_lt_001_pct": 0.17042025732010524
+    },
+    {
+      "site": "R1rep_b10",
+      "plan": "전체",
+      "ply": "/tu1/runs/ef/campusef30k_ALS_s0/attempt2/model/point_cloud/iteration_30000/point_cloud.ply",
+      "gaussians_in_box": 157510,
+      "opacity_q10_q50_q90": [
+        0.0039140425386398146,
+        0.27066560130155426,
+        0.999365206850543
+      ],
+      "scale_max_q10_q50_q90_m": [
+        0.3248293585894662,
+        0.8369618266796168,
+        1.789266745907867
+      ],
+      "scale_min_q10_q50_q90_m": [
+        0.03872326350408584,
+        0.10140781762270845,
+        0.3631507391351062
+      ],
+      "elong_lt_001_pct": 0.025395213002349055
+    },
+    {
+      "site": "R1rep_b10",
+      "plan": "넷",
+      "ply": "/tu1/runs/ef/cellsef_ALS_s0/merged/point_cloud.ply",
+      "gaussians_in_box": 247620,
+      "opacity_q10_q50_q90": [
+        0.003929239141440177,
+        0.2865309601085211,
+        0.9994653425340952
+      ],
+      "scale_max_q10_q50_q90_m": [
+        0.273110187986505,
+        0.7263620094033634,
+        1.5216378592038258
+      ],
+      "scale_min_q10_q50_q90_m": [
+        0.028217854058833418,
+        0.06989705288925915,
+        0.2616989150945695
+      ],
+      "elong_lt_001_pct": 0.056538244083676595,
+      "gaussians_in_box_cell1": 132276,
+      "gaussians_in_box_cell2": 74814,
+      "gaussians_in_box_cell3": 40530
+    },
+    {
+      "site": "R1rep_b10",
+      "plan": "아홉",
+      "ply": "/tu/runs/cells9ef_ALS_s0/merged/point_cloud.ply",
+      "gaussians_in_box": 253123,
+      "opacity_q10_q50_q90": [
+        0.004147254234884951,
+        0.35471872980749075,
+        0.9996377754999894
+      ],
+      "scale_max_q10_q50_q90_m": [
+        0.26691452136028104,
+        0.6852750269406522,
+        1.3858405319480578
+      ],
+      "scale_min_q10_q50_q90_m": [
+        0.024559040516947517,
+        0.062191593659613374,
+        0.24416497486760494
+      ],
+      "elong_lt_001_pct": 0.08691426697692427,
+      "gaussians_in_box_cell4": 188805,
+      "gaussians_in_box_cell5": 12502,
+      "gaussians_in_box_cell6": 9783,
+      "gaussians_in_box_cell7": 42033
+    }
+  ],
+  "scientific_verdict": null
+}

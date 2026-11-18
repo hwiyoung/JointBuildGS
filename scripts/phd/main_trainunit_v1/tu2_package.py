@@ -25,7 +25,7 @@ def main(stage):
     for p in sorted((D / 'v2').rglob('*')):
         if p.is_file():
             files.append((p, 'docs/' + str(p.relative_to(D / 'v2'))))
-    for p in [D / '보고_v2.md', D / '학습단위비교_발주문_v2.md']:
+    for p in sorted(D.glob('보고_v2*.md')) + sorted(D.glob('학습단위비교_발주문_v2*.md')):
         if p.exists():
             files.append((p, 'docs/' + p.name))
     for p in [R / 'configs/phd/main_trainunit_v1/trainunit_v2.json', R / 'configs/phd/main_trainunit_v1/trainunit_v2.lock.json']:

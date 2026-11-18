@@ -1,0 +1,37 @@
+{
+  "site": "R1rep_b10",
+  "rows": [
+    {
+      "site": "R1rep_b10",
+      "plan": "전체",
+      "case0_out_samples": 122840,
+      "building_s0_in_tau_within_0p1m": 95918,
+      "building_s0_out_within_0p1m": 23724,
+      "no_building_s0_sample_within_0p1m": 3198,
+      "case0_out_building_s0": 50608,
+      "case0_used_building_s0": 525737
+    },
+    {
+      "site": "R1rep_b10",
+      "plan": "넷",
+      "case0_out_samples": 106099,
+      "building_s0_in_tau_within_0p1m": 80267,
+      "building_s0_out_within_0p1m": 23580,
+      "no_building_s0_sample_within_0p1m": 2252,
+      "case0_out_building_s0": 50608,
+      "case0_used_building_s0": 525737
+    },
+    {
+      "site": "R1rep_b10",
+      "plan": "아홉",
+      "case0_out_samples": 121117,
+      "building_s0_in_tau_within_0p1m": 92661,
+      "building_s0_out_within_0p1m": 25548,
+      "no_building_s0_sample_within_0p1m": 2908,
+      "case0_out_building_s0": 50608,
+      "case0_used_building_s0": 525737
+    }
+  ],
+  "rule": "넷 τ 밖(둘 다 맞음, 정확성에 쓰는 표본) 중 건물 단위 씨앗 0의 가장 가까운 둘 다 맞음 표본이 0.1 m 안에서 τ 안이면 넷에만 τ 밖",
+  "scientific_verdict": null
+}
