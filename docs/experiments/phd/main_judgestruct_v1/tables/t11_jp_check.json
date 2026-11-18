@@ -1,0 +1,50 @@
+{
+"rows": [
+{
+"prior": "LoD2",
+"surface": "지붕",
+"jp_rule_prior_err_patches": 78276,
+"jp_rule_image_err_patches": 4188,
+"jp_rule_ratio": "94.9 : 5.1",
+"state_prior_err_patches": 80809,
+"state_image_err_patches": 5221,
+"state_ratio_patches": "93.9 : 6.1",
+"state_ratio_area": "93.9 : 6.1"
+},
+{
+"prior": "LoD2",
+"surface": "벽",
+"jp_rule_prior_err_patches": 50170,
+"jp_rule_image_err_patches": 5778,
+"jp_rule_ratio": "89.7 : 10.3",
+"state_prior_err_patches": 42731,
+"state_image_err_patches": 5462,
+"state_ratio_patches": "88.7 : 11.3",
+"state_ratio_area": "88.7 : 11.3"
+},
+{
+"prior": "LoD2",
+"surface": "모두",
+"jp_rule_prior_err_patches": 128446,
+"jp_rule_image_err_patches": 9966,
+"jp_rule_ratio": "92.8 : 7.2",
+"state_prior_err_patches": 123540,
+"state_image_err_patches": 10683,
+"state_ratio_patches": "92.0 : 8.0",
+"state_ratio_area": "92.0 : 8.0"
+},
+{
+"prior": "항공 LiDAR",
+"surface": "지붕",
+"jp_rule_prior_err_patches": 13034,
+"jp_rule_image_err_patches": 10309,
+"jp_rule_ratio": "55.8 : 44.2",
+"state_prior_err_patches": 11112,
+"state_image_err_patches": 9830,
+"state_ratio_patches": "53.1 : 46.9",
+"state_ratio_area": "53.3 : 46.7"
+}
+],
+"note": "검산 참고: JUDGEPROBE-v1 정의(한계 밖, JP 패치 경우, 섞인 패치 = 다수 비율 < 0.8 뺌)로 센 사전정보 오류 : 영상 깊이 오류 패치 수, 그리고 이 셈의 정의(덧붙임 2 처음 상태, 섞인 패치 넣음)의 패치 수·넓이 비.",
+"scientific_verdict": null
+}

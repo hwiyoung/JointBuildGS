@@ -1,0 +1,79 @@
+{
+ "task_id": "PHD-MAIN-JUDGESTRUCT-v1",
+ "order": "본 실험 판단 구조 셈 발주문 v1 (11/18 밤 확정, 판단 보강 세션 → 실험 에이전트)",
+ "scientific_verdict": null,
+ "branch": "exp/judgestruct-v1 from exp/judgeabl-v1 561b9bae (git worktree ../JointBuildGS-wt-judgestruct1)",
+ "no_training": true, "no_new_photo_scores": true, "no_new_geometry": true,
+ "device": "CPU only, nice -n 19, container <= 32 GB, wait when host memory use > 80 %",
+ "inputs": {
+  "JC": "PH/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2 (read only): analysis/gt_<prior>.npz (GT points), analysis/patches_<prior>.npz (majority_counts), geometry_raw patch_id, sight free5/free10, stage0/tau.json, figures_cache/ortho_campus.npz, docs fig1_judgment_map_<prior>.json (scenes)",
+  "JP": "PH/main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1 (read only): patch_<prior>.npz (JC patch values in JC gid order, incl. case, mixed, building, place)",
+  "JABL": "PH/main_judgeabl_v1/PHD-MAIN-JUDGEABL-v1 (read only): variants/<region>__<prior>.npz (식별 1 판정), addendum2/patch_case_<prior>.npz (patch case pc, tot, share); docs tables s_main_summary, s_all_variants, addendum2/p_patch_unit",
+  "code": "JUDGEABL a1_variants.load (patch arrays), JC jc2_judge.target_height, JP plane_distance, JP p7_figs (oblique_view, draw_on_view, mvs_near) imported, not modified"
+ },
+ "definitions": {
+  "cases": "JC 0 두 자료 모두 유효, 1 사전정보 오류, 2 영상 깊이 오류, 4 영상 깊이 결측; always in this order",
+  "valid": "finite prior height and finite patch normal (JUDGEABL)",
+  "significant": "차이가 유의한 패치 = valid and n >= 4 and base geometry code 1 (outside base L; = base '한계 밖')",
+  "no_limit": "한계가 없는 패치 = valid and n >= 4 and base L not finite (u_M or sigma_P etc. missing); counted on its own; patches of this set without a finite MVS mean height cannot take 영상 깊이 사용 and keep the base judgment in every variant (count recorded)",
+  "inside": "valid and geometry code 0 (일치)",
+  "missing": "valid and 0 <= n < 4 (base sight rule: 결측 or 제거)",
+  "patch_state": "JUDGEABL addendum 2 patch case: majority of all GT point cases in the patch (majority_counts over the five JC cases), a tie containing case 0 -> 0, other ties -> 동률 (excluded), fewer than 3 GT points -> excluded (count written), no GT point -> 참값 없음; 3 = 네 경우 밖",
+  "image_error_patch": "significant and patch state 2",
+  "place": "patch place (JP patch place: 0 면 안쪽, 1 면 경계, 2 건물 가장자리)",
+  "region": "patch search region (SW R1 R2 R3E R4 R5 B0 none)",
+  "point_count_view": "GT points (paired) in the patches, by the point's own case (four cases + 네 경우 밖 = other paired cases)"
+ },
+ "section_3_1": {
+  "shares": "area share of patch states (0, 1, 2, 4, 네 경우 밖) over significant patches with a state; also area of 동률, <3 points, no GT; and GT point share by point case",
+  "splits": ["prior", "surface (LoD2 지붕, 벽, 모두; ALS 지붕)", "search region", "place"],
+  "by_building": "per building (patch building), significant area >= 5 m2; area share of each state over the building's significant area with a state; 10, 50, 90 % quantiles (unweighted over buildings), building count",
+  "reach": "for GT points of case 2 (and case 1, likewise all four cases): share by the point's patch set: significant / inside (일치) / no_limit / n < 4 / other (invalid, n >= 4 without finite MVS height and not inside or outside, no patch)",
+  "jp_check": "roof significant patches with JP case 1 vs 2, excluding JP mixed (majority share < 0.8) = JUDGEPROBE-v1 report sample counts; and the same with the addendum 2 patch state, mixed included"
+ },
+ "section_3_2_lower": {
+  "name": "구조 하한",
+  "rule": "start from the base judgment; significant -> 영상 깊이 사용 (2); inside stays 일치 (precision-weighted mean target), missing stays the base sight result (결측 / 제거), everything else the base judgment",
+  "no_limit": {"가 (main)": "base judgment kept", "나": "영상 깊이 사용 where a finite MVS mean height exists, else base"},
+  "target": "JC target_height with base u_M, sigma_P, sigma_W",
+  "compare": "same-judgment share with JUDGEABL '식별 1 없음·영상 깊이 사용' (variants npz), area and patch count; if 100 % its values are reused and that is written"
+ },
+ "section_3_3_upper": {
+  "upper": "구조 상한 (참값으로): 구조 하한 (가) with image-error patches -> 사전정보 사용 (1, target = prior height)",
+  "upper2": "구조 상한 2 (참값으로): 구조 하한 (가) with significant patches where, over the patch's GT points of the four cases (>= 3 points), share of points within tau of the image-depth target (MVS mean height) < 0.5 and share within tau of the prior target (prior height) >= 0.5 -> 사전정보 사용; the >= 0.5 rule is the addendum 2 patch target rule",
+  "rows": ["본 방법", "사전 정보 단독", "영상 단독", "패치 다수결 상한", "구조 하한", "구조 하한 (나)", "구조 상한", "구조 상한 2", "기존 2 대표(저장된 L)", "기존 3 아래 5 %", "기존 4 결합(전 건물)", "기존 5 T=0.5 m", "기존 5 T=L"],
+  "stored_rows": "rows other than the structure rows come from JUDGEABL s_all_variants (point) and addendum2 p_patch_unit (patch), not recomputed",
+  "summary": "a = mean of four case target-ok %, b = minimum and its case, c = max over cases of (best target-ok % among the JUDGEABL non-GT pool + 구조 하한 (가), (나)) - this row; JUDGEABL pool = not 패치 다수결 상한, not 기존 4 세 실험 지역, not 참값으로 고름, not reference, not family fix, not family old4 in scope 전체",
+  "name_ok": "region == expected judgment of the case (0 일치, 1 영상 깊이 사용, 2 사전정보 사용, 4 결측)",
+  "building_diff": "building x case cells with >= 200 GT points (surface pooled as the row's surface): median of (row - 본 방법) %p (JUDGEABL a2 rule)"
+ },
+ "scoring": {
+  "point": "JUDGECHECK-v2 2.5: GT point takes its patch judgment and target; ok = |plane distance along the GT normal to (patch centre + h normal)| <= tau (JP plane_distance); distance recomputed only for patches whose target height differs from the stored base target (JUDGEABL a1 rule)",
+  "patch": "addendum 2: patch ok = at least half of the GT points whose case equals the patch state are within tau; area-weighted over patches with that state; total = patches with one of the four states"
+ },
+ "section_3_4_grid": {
+  "detector": "expected value, no sampling: image-error patches switch to 사전정보 사용 with probability R, other significant patches (all significant patches not in state 2, including states 0, 1, 4, 네 경우 밖, 동률, < 3 points, no GT) with probability F",
+  "per_patch": "point view: per case, number of GT points within tau under 영상 깊이 사용 (MVS mean height) and under 사전정보 사용 (prior height); patch view: patch ok under each",
+  "R": [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+  "F": [0, 0.01, 0.02, 0.05, 0.1, 0.2, 0.3, 0.5],
+  "precision": "R A_E / (R A_E + F A_O), A_E = image-error patch area, A_O = other significant patch area (all); second column with A_O restricted to patches with a state (0, 1, 4, 네 경우 밖)",
+  "boundary": "per F, smallest R where the row exceeds 본 방법 (strict >), three criteria: (1) total target-ok, (2) mean of four cases, (3) prior-error and image-error case both >= 본 방법; reported as the grid R and as the exact R from the linear expectation (values are linear in R for fixed F); none if not reached at R = 1",
+  "splits": "prior x surface (LoD2 지붕, 벽, 모두; ALS 지붕)",
+  "limitation": "real detectors miss non-randomly; this is an estimate of required performance"
+ },
+ "figures": {
+  "dpi": 300, "json_per_figure": true,
+  "fig11": "per prior: three experiment sites + the six JUDGECHECK-v2 figure 1 buildings (scenes and extents from its json); roof patches only drawn (walls are not visible from above, as JC figure 1); significant patches coloured by patch state; ortho background JC figures_cache; caption = state area shares of the scene (roof + wall)",
+  "fig13_maps": "same scenes, three columns 본 방법 / 구조 하한 / 구조 상한: roof GT points (not walls) coloured target ok / wrong",
+  "fig13_examples": "six image-error patches, largest connected groups first (image-error significant patches connected within 0.36 m per building, group area descending, one per building); per panel: oblique training image crop (JP p7 oblique_view rule) with the patch, section ±0.15 m slab ±1.5 m: GT points, prior plane, MVS points, patch boundaries; text d, L, s_P, s_M, base judgment",
+  "fig12": "bars of the 3.3 rows per case (point view), and patch view in a second row",
+  "fig14": "per prior (LoD2 모두, ALS 지붕): x = F, y = R, colour = total target-ok minus 본 방법 (point view), three boundary lines"
+ },
+ "checks": [
+  "base values = JUDGEABL s_main_summary (all cells) and s_all_variants (per surface)",
+  "per significant surface: state counts + < 3 points + tie (+ no GT) = significant patch count",
+  "grid R = 0, F = 0 equals 구조 하한; R = 1, F = 0 equals 구조 상한 (point and patch views)",
+  "구조 하한 vs 식별 1: patches with different judgment, count and reason"
+ ],
+ "package": "PHD-MAIN-JUDGESTRUCT-v1_<MMDD>-<HHMM>_light.zip (report, tables, figures, configs, scripts)"
+}

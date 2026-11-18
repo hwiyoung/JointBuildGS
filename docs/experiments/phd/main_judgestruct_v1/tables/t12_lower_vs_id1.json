@@ -1,0 +1,38 @@
+{
+"rows": [
+{
+"prior": "LoD2",
+"variant": "구조 하한",
+"same_patch_pct": 99.9969789527,
+"same_area_pct": 99.9969789337,
+"diff_patches": 96,
+"diff_area_m2": 6.0
+},
+{
+"prior": "LoD2",
+"variant": "구조 하한 (나)",
+"same_patch_pct": 100.0,
+"same_area_pct": 100.0,
+"diff_patches": 0,
+"diff_area_m2": 0.0
+},
+{
+"prior": "항공 LiDAR",
+"variant": "구조 하한",
+"same_patch_pct": 98.7978637697,
+"same_area_pct": 98.8399097548,
+"diff_patches": 9490,
+"diff_area_m2": 612.4968627682
+},
+{
+"prior": "항공 LiDAR",
+"variant": "구조 하한 (나)",
+"same_patch_pct": 98.9836945231,
+"same_area_pct": 98.9250219482,
+"diff_patches": 8023,
+"diff_area_m2": 567.5598833933
+}
+],
+"note": "셈 1-2: 구조 하한과 JUDGEABL \"식별 1 없음·영상 깊이 사용\" 의 패치 판정이 같은 비율(패치 수, 넓이). 다른 패치의 까닭은 페이로드 <prior>/id1_diff_*.csv.",
+"scientific_verdict": null
+}
