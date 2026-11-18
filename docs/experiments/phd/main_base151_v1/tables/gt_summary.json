@@ -1,0 +1,47 @@
+{
+ "at": "2026-11-19T01:25:55.386870+09:00",
+ "note": "2.3: totals per prior over the 151 buildings; missing membership rows: none",
+ "rows": [
+  {
+   "prior": "LoD2",
+   "buildings_in_scope": 151,
+   "buildings_with_gt": 141,
+   "buildings_without_gt": 10,
+   "gt_points": 8338989,
+   "gt_points_file_paired": 8338989,
+   "rows_file": 8378612,
+   "case0_두 자료 모두 유효": 6675022,
+   "case1_사전정보 오류": 1054946,
+   "case2_영상 깊이 오류": 189107,
+   "case4_영상 깊이 결측": 222114,
+   "case3_네 경우 밖": 197800,
+   "points_outside_building_cell": 624587,
+   "tau_min": 0.18383591734548096,
+   "tau_max": 1.1577050026590003,
+   "tau_nonfinite": 0,
+   "source": "JUDGECHECK-v2 analysis/gt_LoD2.npz",
+   "source_sha256": "7ed94761e6e07d6369dea5e7780520645591abcaad6855e8a2336efe60f79172"
+  },
+  {
+   "prior": "ALS",
+   "buildings_in_scope": 151,
+   "buildings_with_gt": 135,
+   "buildings_without_gt": 16,
+   "gt_points": 4564406,
+   "gt_points_file_paired": 4564406,
+   "rows_file": 4653657,
+   "case0_두 자료 모두 유효": 3965752,
+   "case1_사전정보 오류": 134435,
+   "case2_영상 깊이 오류": 317090,
+   "case4_영상 깊이 결측": 56989,
+   "case3_네 경우 밖": 90140,
+   "points_outside_building_cell": 369753,
+   "tau_min": 0.10919892980251461,
+   "tau_max": 0.21185600298468488,
+   "tau_nonfinite": 0,
+   "source": "JUDGECHECK-v2 analysis/gt_ALS.npz",
+   "source_sha256": "a2b3c6ef88db725304cd3f9c2da6d085c061cd82f1fb984d55d0ccb0d3f96639"
+  }
+ ],
+ "scientific_verdict": null
+}

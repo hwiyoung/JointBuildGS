@@ -1,0 +1,573 @@
+{
+ "task_id": "PHD-MAIN-BASE151-v1",
+ "scientific_verdict": null,
+ "order": "docs/experiments/phd/main_base151_v1/비교방법151_발주문_v1.md",
+ "order_sha256": "a99162c814b3074516249d886339be325c0f526407a6cdcee9753f398b397a31",
+ "worktree": "JointBuildGS-wt-trainunit",
+ "branch": "exp/train-unit-v1",
+ "roots": {
+  "artifacts": "JointBuildGS-artifacts (paths below are relative to it)",
+  "out": "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1",
+  "delivery": "phase-payloads/phd/delivery",
+  "trainunit_v1": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1",
+  "trainunit_v2": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v2",
+  "baselines": "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1",
+  "fix": "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1",
+  "fill": "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1",
+  "gtjudge": "phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1",
+  "rescore": "phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1",
+  "judgecheck_v2": "phase-payloads/phd/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2"
+ },
+ "cells": {
+  "rule": "TRAINUNIT 넷 판(cellsef_ALS_s0): VastGaussian 2 x 2, edges expanded 20 %, camera selection (centre in expanded cell, or >= 25 % image coverage of the expanded-cell box) - read only, never recomputed",
+  "file": {
+   "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/cells/cells.json",
+   "sha256": "4b43fa28e71ae156355f9ba5fcbb34e40eac4986a002005b34c38cea8088b758"
+  },
+  "campus_images": {
+   "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/campus/images",
+   "count": 937,
+   "receipt": {
+    "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/campus/scene_receipt.json",
+    "sha256": "51c1bce0105bf64f036ff0ef53793221d62c8bda7ca09a986bcaee5e31bbf987"
+   }
+  },
+  "campus_split": {
+   "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/campus/split.json",
+   "sha256": "a7bd928f033c9fa6279ce6f93347d57f3d6fa4f62dab6e9f5d08817fb37a78fa"
+  },
+  "per_cell": [
+   {
+    "id": 0,
+    "original_min": [
+     -1000000000.0,
+     -1000000000.0
+    ],
+    "original_max": [
+     -3.794835525528808,
+     -55.31725534129716
+    ],
+    "expanded_min": [
+     -1000000000.0,
+     -1000000000.0
+    ],
+    "expanded_max": [
+     26.972874847487883,
+     -30.50957319415631
+    ],
+    "projection_box_min": [
+     -178.3592834444587,
+     -198.72024147604742,
+     -43.947834278304406
+    ],
+    "projection_box_max": [
+     26.972874847487883,
+     -30.50957319415631,
+     -9.13780333253832
+    ],
+    "train_images": 308,
+    "test_images_candidates": 41,
+    "split": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell0/split.json",
+     "sha256": "2fe391152e45d20138d91a19ab256718e9e55faa3f40340c17e7308283bbddf9"
+    },
+    "sparse": {
+     "cameras.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell0/scene_ALS/sparse/0/cameras.bin",
+      "sha256": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879"
+     },
+     "images.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell0/scene_ALS/sparse/0/images.bin",
+      "sha256": "80577a9d3167daf126716a7161e64b599a9d4c03d67388eaff2c04527a3f41a4"
+     },
+     "points3D.ply": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell0/scene_ALS/sparse/0/points3D.ply",
+      "sha256": "5da5276f8b56ee6ff851312cd50163efc29c00539b32bf2f440b67e6f2bce6d4"
+     },
+     "origin.npy": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell0/scene_ALS/sparse/0/origin.npy",
+      "sha256": "8205e53b8cb703bbd9c324420ca8b89a3b78f5989b72f21a2d29c3e8c09836cf"
+     }
+    },
+    "calibration": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell0/scene_ALS/jbgs_calibration.json",
+     "sha256": "2019c12ef4d03df9ad653c14239f7fbb2b68d22f07532a1642eed8501410f9ef"
+    },
+    "run_of_trainunit": "TRAINUNIT-v1 runs/ef/cellsef_ALS_s0_cell0"
+   },
+   {
+    "id": 1,
+    "original_min": [
+     -1000000000.0,
+     -55.31725534129716
+    ],
+    "original_max": [
+     -3.794835525528808,
+     1000000000.0
+    ],
+    "expanded_min": [
+     -1000000000.0,
+     -100.33204015686567
+    ],
+    "expanded_max": [
+     24.48907396423013,
+     1000000000.0
+    ],
+    "projection_box_min": [
+     -178.3592834444587,
+     -100.33204015686567,
+     -47.275108998263406
+    ],
+    "projection_box_max": [
+     24.48907396423013,
+     274.7147207883283,
+     -18.130214757318914
+    ],
+    "train_images": 471,
+    "test_images_candidates": 54,
+    "split": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell1/split.json",
+     "sha256": "dbc1d7d502f9b5ae8ca9d2052e82d7232b663712414ac854abd9d69e2ae72b69"
+    },
+    "sparse": {
+     "cameras.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell1/scene_ALS/sparse/0/cameras.bin",
+      "sha256": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879"
+     },
+     "images.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell1/scene_ALS/sparse/0/images.bin",
+      "sha256": "7d8893b106f6758c28178b6aa14c88be83bc780bc1e29843574d4bcc73bfc6cb"
+     },
+     "points3D.ply": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell1/scene_ALS/sparse/0/points3D.ply",
+      "sha256": "31b527f67684037b6f32c29782950ea6148ab6734d1df6fb062b1f7fcc2f4095"
+     },
+     "origin.npy": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell1/scene_ALS/sparse/0/origin.npy",
+      "sha256": "34ade7f938fbe3c952990078210c0ccb551f8c5110160d48cb37cc6554b36db3"
+     }
+    },
+    "calibration": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell1/scene_ALS/jbgs_calibration.json",
+     "sha256": "92bfde99998ad1a2d53a62570f444ebea446e6449b3b38afcf7f1335d41eb7cc"
+    },
+    "run_of_trainunit": "TRAINUNIT-v1 runs/ef/cellsef_ALS_s0_cell1"
+   },
+   {
+    "id": 2,
+    "original_min": [
+     -3.794835525528808,
+     -1000000000.0
+    ],
+    "original_max": [
+     1000000000.0,
+     67.26633449601721
+    ],
+    "expanded_min": [
+     -38.004487585678,
+     -1000000000.0
+    ],
+    "expanded_max": [
+     1000000000.0,
+     121.44668037074123
+    ],
+    "projection_box_min": [
+     -38.004487585678,
+     -198.72024147604742,
+     -47.06133132718006
+    ],
+    "projection_box_max": [
+     200.464803480057,
+     121.44668037074123,
+     -11.6062123005932
+    ],
+    "train_images": 544,
+    "test_images_candidates": 53,
+    "split": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell2/split.json",
+     "sha256": "96b88c6265d9588382eb2b64a3db904ec3e0343dd4aca038fc78952745cf7b20"
+    },
+    "sparse": {
+     "cameras.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell2/scene_ALS/sparse/0/cameras.bin",
+      "sha256": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879"
+     },
+     "images.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell2/scene_ALS/sparse/0/images.bin",
+      "sha256": "aaffd0386e7d9bf144e509a8fa86fdd793418515feb6e933ba75acb342a5fca2"
+     },
+     "points3D.ply": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell2/scene_ALS/sparse/0/points3D.ply",
+      "sha256": "b5961ab4026c16b18375fa3543ffa84455201b453812b9145e0e4361f11c0e87"
+     },
+     "origin.npy": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell2/scene_ALS/sparse/0/origin.npy",
+      "sha256": "b9b3a0788dfb9710f784f6f0de566dc34cf30cf53d7099720117e2e14435610f"
+     }
+    },
+    "calibration": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell2/scene_ALS/jbgs_calibration.json",
+     "sha256": "a8f5f803d71abbf24823ee933eda6c288bbc68c70e5fb2cad002243c2e09e27e"
+    },
+    "run_of_trainunit": "TRAINUNIT-v1 runs/ef/cellsef_ALS_s0_cell2"
+   },
+   {
+    "id": 3,
+    "original_min": [
+     -3.794835525528808,
+     67.26633449601721
+    ],
+    "original_max": [
+     1000000000.0,
+     1000000000.0
+    ],
+    "expanded_min": [
+     -42.01385377014045,
+     27.895883383355496
+    ],
+    "expanded_max": [
+     1000000000.0,
+     1000000000.0
+    ],
+    "projection_box_min": [
+     -42.01385377014045,
+     27.895883383355496,
+     -47.27200316896688
+    ],
+    "projection_box_max": [
+     200.464803480057,
+     274.7147207883283,
+     -19.258377321170716
+    ],
+    "train_images": 324,
+    "test_images_candidates": 38,
+    "split": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell3/split.json",
+     "sha256": "22711cb496ff0abefd26cdd9aaf97c3019c32d7341dc73ec59c009301936ed43"
+    },
+    "sparse": {
+     "cameras.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell3/scene_ALS/sparse/0/cameras.bin",
+      "sha256": "f1f20f6eb0db9ca3e18b5fba1d597709bbc29398f1373d382c691b78520e3879"
+     },
+     "images.bin": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell3/scene_ALS/sparse/0/images.bin",
+      "sha256": "27eda66d6870096bc40b317905479912f053be76c06c1cbd1f6b1121c5c35c01"
+     },
+     "points3D.ply": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell3/scene_ALS/sparse/0/points3D.ply",
+      "sha256": "14cad2c8dedefd6945de7eeeb9c95582519d31a7cfe6c4bdd21b8597ef37395b"
+     },
+     "origin.npy": {
+      "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell3/scene_ALS/sparse/0/origin.npy",
+      "sha256": "5e00c87dc550b045cabf841ba5f1fb7f5ca596ff82e8f7b8fd829b9a781776e6"
+     }
+    },
+    "calibration": {
+     "path": "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/cell3/scene_ALS/jbgs_calibration.json",
+     "sha256": "2aae0a1bbb54b6f8d117c94162e97ce5c432584665f333f6adc316b6aae1d757"
+    },
+    "run_of_trainunit": "TRAINUNIT-v1 runs/ef/cellsef_ALS_s0_cell3"
+   }
+  ],
+  "test_images_rule": "campus WIDEN0 evaluation images that are in the cell test_images list (tu_campus.unit_members), = TRAINUNIT split.json"
+ },
+ "runs": [
+  {
+   "name": "b151_2DGS_s0",
+   "method": "2DGS",
+   "prior": null,
+   "cells": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b151_GeoGS_ALS_s0",
+   "method": "GeoGS",
+   "prior": "ALS",
+   "cells": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b151_GeoGS_LoD2_s0",
+   "method": "GeoGS",
+   "prior": "LoD2",
+   "cells": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b151_CDGS_ALS_s0",
+   "method": "CDGS",
+   "prior": "ALS",
+   "cells": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b151_CDGS_LoD2_s0",
+   "method": "CDGS",
+   "prior": "LoD2",
+   "cells": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b151_LGDM_ALS",
+   "method": "LGDM",
+   "prior": "ALS",
+   "cells": null
+  },
+  {
+   "name": "b151_LGDM_LoD2",
+   "method": "LGDM",
+   "prior": "LoD2",
+   "cells": null
+  }
+ ],
+ "training_order": [
+  "b151_2DGS_s0",
+  "b151_GeoGS_ALS_s0",
+  "b151_GeoGS_LoD2_s0",
+  "b151_CDGS_ALS_s0",
+  "b151_CDGS_LoD2_s0"
+ ],
+ "cell_order": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "iterations": 30000,
+ "seed": 0,
+ "priors_rule": "previous work ran GeoGS (ALS: geogs_ALS_fix1, LoD2: trust_LoD2_fix1), CDGS variant (cdgsnofit_ALS_s0, cdgsnofit_LoD2_s0) and LGDM (mvsfuse_ALS, mvsfuse_LoD2) with both priors -> both priors here",
+ "methods": {
+  "2DGS": {
+   "previous_runs": [
+    "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/imgonly_2dgs_s0",
+    "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/imgonly_2dgs_s0",
+    "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/imgonly_2dgs_s0"
+   ],
+   "source": {
+    "path": "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1",
+    "train_py": {
+     "path": "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1/train.py",
+     "sha256": "ebc9f6e9def7e70733af913d07e00f350ae2e3fdd5cbdcf3e9abc37ccd347196"
+    },
+    "gaussian_model": {
+     "path": "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1/scene/gaussian_model.py",
+     "sha256": "9dd1e206ea7d050ef58784ad823b30fcb54258b12bc7434d574f56b7e65d70ec"
+    },
+    "dataset_readers": {
+     "path": "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/sources/2d-gaussian-splatting-adapters-v1/scene/dataset_readers.py",
+     "sha256": "5cbe9bee35701a52ac2fae25fc9dc328b85f59ee4f8a5503d2ba4de7e7e55765"
+    },
+    "official": "github.com/hbb1/2d-gaussian-splatting f3e3b9fa67bbd1c75e05167ff37391d8dab2a678"
+   },
+   "image": "jointbuildgs:2dgs-official-f3e3b9f-v1-b151",
+   "image_note": "the original jointbuildgs:2dgs-official-f3e3b9f-v1 is no longer on the host; rebuilt from the repository Dockerfile.2dgs-official-v1 (same build context SB/sources/2d-gaussian-splatting) on base jointbuildgs:geogs-official-db40c95-compat-v1 because the original base jointbuildgs:geogs-official-db40c95-v1 is gone too (compat = that base + matplotlib 3.9.2 + LD_PRELOAD/LD_LIBRARY_PATH)",
+   "gaussian": "2D (two scale columns, scene/gaussian_model.py create_from_pcd repeat(1, 2))",
+   "train_args": [
+    "train.py",
+    "-s",
+    "/scene",
+    "-m",
+    "/o/model",
+    "--eval",
+    "-r",
+    "1",
+    "--data_device",
+    "cpu"
+   ],
+   "env": {
+    "JBGS_SPLIT_JSON": "/split.json",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+   },
+   "defaults": "iterations 30000, densify 500..15000 every 100, opacity reset 3000 (arguments/__init__.py, not passed)",
+   "scene_rule": "SB twodgs/prep_scenes_2dgs.py rule on the TRAINUNIT cell scene: sparse/0 cameras.bin, images.bin and jbgs_calibration.json byte copies of TU1 scenes/cell<k>/scene_ALS; points3D.ply = only its origin-0 rows (SfM points of the expanded cell; the prior rows never enter 2DGS); images = TU1 campus images (same bytes as the fork site images); split = TU1 scenes/cell<k>/split.json",
+   "docker": {
+    "cpus": "16",
+    "memory": "48g",
+    "shm_size": "8g",
+    "note": "previous 46g / 16 CPUs per site; 48g = the TRAINUNIT cell limit"
+   }
+  },
+  "GeoGS": {
+   "previous_runs": {
+    "ALS": [
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/geogs_ALS_fix1",
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/geogs_ALS_fix1",
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/geogs_ALS_fix1"
+    ],
+    "LoD2": [
+     "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/B0_b10/trust_LoD2_fix1",
+     "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/B173nb_b10/trust_LoD2_fix1",
+     "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/runs/R1rep_b10/trust_LoD2_fix1"
+    ]
+   },
+   "source": {
+    "path": "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1",
+    "train_py": {
+     "path": "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1/train.py",
+     "sha256": "4c09f6a117d7f4a13e3bd3c5d9eb49b1830e428950a53c0f86be4001637c7a10"
+    },
+    "gaussian_model": {
+     "path": "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1/scene/gaussian_model.py",
+     "sha256": "4be070008683ba1943de9e22d1f4d1a9c194aef56010c0b3186d0bd7f6aadb9a"
+    }
+   },
+   "image": "jointbuildgs:geogs-official-db40c95-compat-v1",
+   "gaussian": "2D (scene/gaussian_model.py repeat(1, 2))",
+   "train_args": [
+    "train.py",
+    "-s",
+    "/scene",
+    "-m",
+    "/o/model",
+    "--lod_depth_path",
+    "/scene/lod2_prior",
+    "--da_depth_path",
+    "/scene/da3_prior",
+    "--lod2_pcd_path",
+    "/scene/lod2_pcd.ply",
+    "--eval",
+    "--lod_init",
+    "--freeze_onlybldg",
+    "--protect_bldg",
+    "--dynamic_depth_weight",
+    "-r",
+    "1",
+    "--port",
+    "0",
+    "--iterations",
+    "30000",
+    "--stage_switch_iter",
+    "8000",
+    "--lambda_lod_init",
+    "0.08",
+    "--lambda_lod_anchor",
+    "0.005"
+   ],
+   "inputs_rule": "configs/phd/main_base151_v1/inputs_GeoGS.json (locked before its first input computation): the stage-1/FIX/BASELINES scene rules (prior depth maps, DA3 depth consec12, protection cloud, initial points) with the cell as the region"
+  },
+  "CDGS": {
+   "previous_runs": {
+    "ALS": [
+     "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_ALS_s0",
+     "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_ALS_s0",
+     "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_ALS_s0"
+    ],
+    "LoD2": [
+     "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B0_b10/cdgsnofit_LoD2_s0",
+     "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/B173nb_b10/cdgsnofit_LoD2_s0",
+     "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/runs/R1rep_b10/cdgsnofit_LoD2_s0"
+    ]
+   },
+   "source": {
+    "path": "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/sources/cdgs-release-adapters-v3"
+   },
+   "image": "jointbuildgs:cdgs-official-db853c1-v1-b151",
+   "image_note": "the original jointbuildgs:cdgs-official-db853c1-v1 is no longer on the host; rebuilt from the repository Dockerfile.cdgs-official-v1 with every pip install constrained to the original freeze (configs/phd/main_base151_v1/docker/)",
+   "gaussian": "3D (three scale columns)",
+   "inputs_rule": "configs/phd/main_base151_v1/inputs_CDGS.json (locked before its first input computation): the FILL cdgsnofit scene rule (prior depth per view) with the cell as the region"
+  },
+  "LGDM": {
+   "previous_runs": {
+    "ALS": [
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_ALS",
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_ALS",
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_ALS"
+    ],
+    "LoD2": [
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_LoD2",
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_LoD2",
+     "phase-payloads/phd/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_LoD2"
+    ]
+   },
+   "training": null,
+   "threshold_m": 2.0,
+   "inputs_rule": "configs/phd/main_base151_v1/inputs_LGDM.json (locked before its first computation): the BASELINES mvsfuse rule over the campus; MVS = the JUDGECHECK-v2 base-value campus MVS (WIDEN0 819 images)"
+  }
+ },
+ "filter": {
+  "threshold": 0.01,
+  "comparison": "<= (the TRAINUNIT code tu_train_entry.install_elongation_filter; the order text says \"smaller than\"; equality has measure zero)",
+  "flat_2D": "axis ratio = min(scale) / max(scale) over the two scale columns; rows with ratio <= 0.01 get xyz_gradient_accum = 0 right before the unchanged densify_and_prune, so neither densify_and_clone nor densify_and_split selects them (same code as TRAINUNIT)",
+  "volumetric_3D": "axis ratio = (second largest scale) / (largest scale) over the three scale columns; rows with ratio <= 0.01 get xyz_gradient_accum = 0 right before the unchanged densify_and_prune (order 1.7: needles, long in one direction only)",
+  "where": "scripts/phd/main_base151_v1/b151_entry.py install_filter (monkey patch of GaussianModel.densify_and_prune; method files unchanged)",
+  "source": "CityGaussianV2 elongation filter (Linketic/CityGaussian 3041bf5a, axis_ratio_threshold 0.01)"
+ },
+ "gpu": {
+  "device": 1,
+  "one_cell_at_a_time": true,
+  "cap_rule": "JBGS_GPU_CAP_GIB = (free memory of GPU 1 right before the launch, nvidia-smi) - 2 GiB; set with torch.cuda.set_per_process_memory_fraction; recorded per attempt (order 1.2; no fixed value)",
+  "start_rule": "launch only when GPU 1 has >= 12 GiB free (another task may use GPU 1; it keeps priority through share_rule) and host MemAvailable >= 45 GB",
+  "share_rule": "TRAINUNIT-v2 rule: GPU 1 free < 1.5 GiB -> STOP file -> the entry saves a checkpoint at the next multiple of 100 and exits; free < 0.75 GiB -> kill; a paused cell resumes from its checkpoint (--start_checkpoint) when GPU 1 is free again (not a stop under 1.9)",
+  "host_guard": "host MemAvailable < 20 GB -> kill this task's training container (memory snapshot recorded); post-processing containers of this task are stopped first at < 25 GB",
+  "explosion_guard": "TRAINUNIT-v2 cell rule: gaussian count > 3 x the count at iteration 6,000 is recorded (health_override.jsonl), training continues; the per-process CUDA cap keeps an explosion inside this run",
+  "no_new_cell_after": "2026-11-24T00:00:00+09:00"
+ },
+ "records": {
+  "every": 1000,
+  "fields": [
+   "gaussians",
+   "elong_lt_001",
+   "elong_lt_01",
+   "elong quantiles",
+   "VmRSS/VmHWM",
+   "cgroup memory.current/peak",
+   "cuda allocated/reserved now and peak"
+  ],
+  "iteration_500": "seconds per iteration from 1 to 500 (time_check_500.json)",
+  "psnr": "train/test PSNR of the method train.py training_report at its test iterations (log), plus the test-view PSNR of the final model"
+ },
+ "merge": "after all four cells: keep Gaussians whose xy is in the original (unexpanded) cell [min, max); concatenate the four iteration-30000 point_cloud.ply files (TRAINUNIT tu_postcpu.merge rule)",
+ "membership": {
+  "rule": "building footprint centroid cell (TRAINUNIT-v2 table, 154 buildings; the 151 in-scope buildings of JUDGECHECK-v2 are taken from it)",
+  "table": {
+   "path": "/media/innopam/InnoPAM-8TB/hwiyoung/code/JointBuildGS-wt-trainunit/docs/experiments/phd/main_trainunit_v1/v2/tables/building_membership.csv",
+   "sha256": "d99d902f5bc8c91696fe526c56fc6379ce6d480e95ffe3f60430e80815fc6ecd"
+  }
+ },
+ "scoring": {
+  "4.1": {
+   "sites": [
+    "B0_b10",
+    "R1rep_b10",
+    "B173nb_b10"
+   ],
+   "crop": "merged model, gaussians inside the GTJUDGE views/<site>.json box (tu_postcpu.crop)",
+   "render": "RESCORE scripts/phd/main_rescore_v1/render_model.py with the method's own renderer and image (depth = surf_depth for 2D methods, depth for CDGS) at the GTJUDGE views/<site>.json view list (the building-unit scene list: B0 243 ...)",
+   "mesh": "GTJUDGE mesh_job.py prepare / plan / tile / merge / finish (streamed TSDF voxel 0.05 m, trunc 0.25 m, bounded cleanup) = the TRAINUNIT-v2 mesh rule",
+   "scorer": "GTJUDGE score_new.py (normal-line distance, cylinder accuracy samples) and add2_scores.metric_rows (section 3.4 accuracy rule)",
+   "previous": "GTJUDGE scenes/<site>__<prior>/distances/{2DGS_30000, GeoGS_30000, CDGS_30000, fusion}.npz through the same metric_rows; their meshes are RESCORE addendum3 primary.ply (the method's own TSDF + cleanup), recorded as a mesh difference"
+  },
+  "4.2": {
+   "gt": "JUDGECHECK-v2 analysis/gt_<prior>.npz: paired GT points of the 151 in-scope buildings with case (0 both, 1 image only, 2 prior only, 4 image missing; 3 = outside the four cases) and tau",
+   "mesh": "per cell from that cell's own model, rendered at that cell's training images with the method's renderer, the same TSDF voxel/trunc and cleanup rule, kept inside the original cell; a building is scored on the mesh of its cell",
+   "distance": "GTJUDGE normal_line.measure (point + four 5 cm tangent offsets, +-n, roof 10 m / wall 5 m)",
+   "completeness": "|s| <= tau of the GT point; no surface = not within",
+   "accuracy": "GTJUDGE section 3.4 rule: mesh samples 400 / m2, eligible within 1 m of the GT points, cylinder distance, the tau and case of the assigned GT point; ALS: samples with |n_z| < 0.5 excluded",
+   "details": "configs/phd/main_base151_v1/score151.json, locked before the first 151-building scoring",
+   "small_n": 200,
+   "two_groups": "three evaluation regions (experiment buildings of JUDGECHECK-v2) vs the rest"
+  }
+ },
+ "rerun_rule": "order 1.9: a stop is checked first (table 3.3); a setting/code error is fixed and rerun; otherwise one rerun with the same setting, a second stop is final (결과 없음)"
+}
