@@ -129,7 +129,9 @@ def inputs(site):
             row.update(paired=int(pair.sum()), only_this_plan=int(len(only_here)), only_this_plan_area_m2=float(T['area'][only_here].sum()),
                        only_this_plan_active=int(T['surface_exists'][only_here].sum()), only_building_unit=int(len(only_bu)),
                        only_building_unit_area_m2=float(T0['area'][only_bu].sum()),
-                       paired_target_max_abs_diff_m=float(np.abs(T['target'][pi] - T0['target'][pj]).max()) if len(pi) else None,
+                       paired_target_max_abs_diff_m=float(np.abs(T['target'][pi[act_pair]] - T0['target'][pj[act_pair]]).max()) if act_pair.any() else None,
+                       paired_target_nan_both=int((~np.isfinite(T['target'][pi]).all(1) & ~np.isfinite(T0['target'][pj]).all(1)).sum()) if len(pi) else 0,
+                       paired_target_nan_one_side=int((np.isfinite(T['target'][pi]).all(1) != np.isfinite(T0['target'][pj]).all(1)).sum()) if len(pi) else 0,
                        paired_sigma_max_rel_diff=float(np.nanmax(np.abs(T['sigma'][pi] / T0['sigma'][pj] - 1))) if len(pi) else None,
                        paired_region_same_pct=100. * float((T['region'][pi] == T0['region'][pj]).mean()) if len(pi) else None,
                        paired_active_same_pct=100. * float((T['surface_exists'][pi] == T0['surface_exists'][pj]).mean()) if len(pi) else None,
@@ -361,26 +363,30 @@ def join(site):
     out = D / 'figures' / f'add1_case0_out_{site}'
     fig.savefig(out.with_suffix('.png'), dpi=150); plt.close(fig)
     dump(out.with_suffix('.json'), dict(site=site, rows=t8, rule='넷 τ 밖(둘 다 맞음, 정확성에 쓰는 표본) 중 건물 단위 씨앗 0의 가장 가까운 둘 다 맞음 표본이 0.1 m 안에서 τ 안이면 넷에만 τ 밖', scientific_verdict=None))
-    # owner-cell accuracy of 넷 and 아홉 (case 0 and all used samples of case 0 parts only -> case 0)
+    # owner-cell accuracy of 넷 and 아홉: every original cell that owns part of the box; case 0 and all cases (§3.4 samples)
+    A = {p: classes(site, FAM[p]) for p in ['건물단위_s0', '건물단위_s1', '넷', '아홉']}
+    def acc(xyz, cl, case, o, h, which):
+        k = (xyz[:, 0] >= o[0]) & (xyz[:, 0] < h[0]) & (xyz[:, 1] >= o[1]) & (xyz[:, 1] < h[1]) & (cl <= 3)
+        if which == 0:
+            k &= case == 0
+        return int(k.sum()), (100. * float((k & (cl == 0)).sum() / k.sum()) if k.any() else None)
     for plan in ['넷', '아홉']:
-        if plan not in P:
-            continue
-        q = P[plan]
-        for c in cells_json(plan)['cells']:
+        xyz, cl, case = A[plan]
+        cmap = {c['id']: c for c in cells_json(plan)['cells']}
+        for cid in owner_cells(site, plan):
+            c = cmap[cid]
             o = np.array(c['original_min'], float); h = np.array(c['original_max'], float)
-            k2 = (q['xy'][:, 0] >= o[0]) & (q['xy'][:, 0] < h[0]) & (q['xy'][:, 1] >= o[1]) & (q['xy'][:, 1] < h[1])
-            if not k2.any():
-                continue
-            row = dict(site=site, plan=plan, cell=c['id'], case0_used_samples=int(k2.sum()), case0_in_tau=int((k2 & (q['cl'] == 0)).sum()),
-                       case0_accuracy_pct=100. * float((k2 & (q['cl'] == 0)).sum() / k2.sum()))
-            for ref in ['건물단위_s0', '건물단위_s1']:
-                if ref in P:
-                    b = P[ref]
-                    kb = (b['xy'][:, 0] >= o[0]) & (b['xy'][:, 0] < h[0]) & (b['xy'][:, 1] >= o[1]) & (b['xy'][:, 1] < h[1])
-                    row[f'{ref}_same_area_accuracy_pct'] = 100. * float((kb & (b['cl'] == 0)).sum() / max(1, kb.sum()))
-                    row[f'{ref}_same_area_samples'] = int(kb.sum())
+            row = dict(site=site, plan=plan, cell=cid)
+            for which, nm in [(0, '둘다맞음'), ('all', '장면전체')]:
+                n, a_ = acc(xyz, cl, case, o, h, which)
+                row[f'{nm}_samples'] = n
+                row[f'{nm}_accuracy_pct'] = a_ if n else '없음(표본 0)'
+                for ref in ['건물단위_s0', '건물단위_s1']:
+                    nb, ab = acc(*A[ref], o, h, which)
+                    row[f'{ref}_{nm}_same_area_samples'] = nb
+                    row[f'{ref}_{nm}_same_area_accuracy_pct'] = ab if nb else '없음(표본 0)'
             t8.append(row)
-    write(f'add1_8_where_{site}', t8, 'addendum 1 item 8: case 0 (둘 다 맞음) samples used for accuracy (§3.4: reference within 1 m, not steep; no-distance counted as not in tau): out-of-tau samples of each group plan against the nearest building-unit s0 sample (0.1 m); 넷/아홉 accuracy per original owner cell with the building-unit accuracy over the same xy area')
+    write(f'add1_8_where_{site}', t8, 'addendum 1 item 8: case 0 (둘 다 맞음) samples used for accuracy (§3.4: reference within 1 m, not steep; no-distance counted as not in tau): out-of-tau samples of each group plan against the nearest building-unit s0 sample (0.1 m); 넷/아홉 accuracy per original owner cell of the box (case 0 and all cases; 없음 = no sample) with the building-unit s0/s1 accuracy over the same xy area')
     print('JOIN', site, flush=True)
 
 
