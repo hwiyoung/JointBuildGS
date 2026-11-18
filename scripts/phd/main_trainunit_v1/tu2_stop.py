@@ -247,6 +247,19 @@ def trace():
                     continue
                 dl = [x for x in difflib.unified_diff(norm_cmd(fc), norm_cmd(c), lineterm='', n=0) if not x.startswith(('---', '+++', '@@'))]
                 diffs.append(dict(group=g, run=label, nearest=fl, differences=dl))
+        if spec.get('v2'):
+            # v2 stopped attempts (3.5 row 6): against the run's own finished attempt and against the first finished nine-cell run (cell 4)
+            stopped = [(l, a, r) for l, a, r in attempts(spec['stopped']) if r.get('status') != 'TRAINING_COMPLETE']
+            refs = [x for x in [final_attempt(spec['stopped']), final_attempt(TU / 'runs/cells9ef_ALS_s0_cell4')]
+                    if x and x[2].get('status') == 'TRAINING_COMPLETE']
+            for label, att, rec in stopped:
+                for fl, fa, _ in refs:
+                    c, fc = cmd_of(att), cmd_of(fa)
+                    if not c or not fc:
+                        diffs.append(dict(group=g, run=label, nearest=fl, differences='command.json 없음'))
+                        continue
+                    dl = [x for x in difflib.unified_diff(norm_cmd(fc), norm_cmd(c), lineterm='', n=0) if not x.startswith(('---', '+++', '@@'))]
+                    diffs.append(dict(group=g, run=label, nearest=fl, differences=dl))
         fig_trend(g, series)
     # memory limits and maxima of every run of v1 and v2 (order 2.1 no. 4)
     for rp in sorted(list(V1.glob('**/attempt*/command.json')) + list((TU / 'runs').glob('*/attempt*/command.json'))):

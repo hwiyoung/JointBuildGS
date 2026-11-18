@@ -161,6 +161,12 @@ def runs():
                     continue
                 run = TU1 / 'runs/ef' / f'{short}ef_{prior}_s{seed}'
                 out.append(run_row(f'건물단위_s{seed}', prior, f'{short}ef_{prior}_s{seed}', run, n))
+    # existing building-unit runs without the elongation filter (LoD2 reference by user decision 2026-11-17; ALS for the filter contrast)
+    for prior in ['ALS', 'LoD2']:
+        for site, short in SHORT.items():
+            n = len(json.loads((S0 / 'fork_inputs/s61' / site / 'split.json').read_text())['train'])
+            out.append(run_row('건물단위_s0_필터없음', prior, f'FINALTRAIN {site} ft_{prior}_s0', FT / 'runs' / site / f'ft_{prior}_s0', n))
+            out.append(run_row('건물단위_s1_필터없음', prior, f'v1 {site} seed1_{prior}', TU1 / 'runs' / site / f'seed1_{prior}', n))
     out.append(run_row('전체', 'ALS', 'campusef30k_ALS_s0', TU1 / 'runs/ef/campusef30k_ALS_s0', 819))
     for k in range(4):
         n = len(json.loads((TU1 / f'scenes/cell{k}/split.json').read_text())['train'])
@@ -178,7 +184,7 @@ def runs():
             out.append(dict(plan=plan, prior='ALS', run=f'칸 {len(cs)}개 합' + (' (칸 3·0·2 학습 안 함)' if plan == '아홉' else ''), status='합', hours_result=sum(r['hours_result'] for r in cs),
                             max_gaussians=max(r['max_gaussians'] or 0 for r in cs), peak_gpu_reserved_GiB=max(r['peak_gpu_reserved_GiB'] for r in cs),
                             peak_host_rss_GiB=max(r['peak_host_rss_GiB'] for r in cs)))
-    write('v2_runs', out, 'order v2 5.1: per run: status, hours of the attempt with the result (넷 cell 0 includes cell0ef to 15,000) and of all attempts, gaussians final/max, GPU reserved max, host RSS max, s/iteration 100->500 of the first attempt from 0, PSNR train (5 views) / test at 30,000')
+    write('v2_runs', out, 'order v2 5.1: per run: status, hours of the attempt with the result (넷 cell 0 includes cell0ef to 15,000) and of all attempts, gaussians final/max, GPU reserved max, host RSS max, s/iteration 100->500 of the first attempt from 0, PSNR train (5 views) / test at 30,000; 필터없음 rows = existing runs without the elongation filter (FINALTRAIN ft_<prior>_s0, v1 seed1_<prior>)')
 
 
 def all_():

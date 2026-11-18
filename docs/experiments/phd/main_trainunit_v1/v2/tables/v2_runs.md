@@ -1,4 +1,4 @@
-order v2 5.1: per run: status, hours of the attempt with the result (넷 cell 0 includes cell0ef to 15,000) and of all attempts, gaussians final/max, GPU reserved max, host RSS max, s/iteration 100->500 of the first attempt from 0, PSNR train (5 views) / test at 30,000
+order v2 5.1: per run: status, hours of the attempt with the result (넷 cell 0 includes cell0ef to 15,000) and of all attempts, gaussians final/max, GPU reserved max, host RSS max, s/iteration 100->500 of the first attempt from 0, PSNR train (5 views) / test at 30,000; 필터없음 rows = existing runs without the elongation filter (FINALTRAIN ft_<prior>_s0, v1 seed1_<prior>)
 
 | plan | prior | run | status | attempts | hours_result | hours_all_attempts | final_gaussians | max_gaussians | peak_gpu_reserved_GiB | peak_host_rss_GiB | sec_per_iter_100_500 | psnr_train | psnr_test | train_images |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -14,6 +14,18 @@ order v2 5.1: per run: status, hours of the attempt with the result (넷 cell 0 
 | 건물단위_s1 | LoD2 | R1repef_LoD2_s1 | 결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1) |  |  |  |  |  |  |  |  |  |  | 333 |
 | 건물단위_s0 | LoD2 | B173nbef_LoD2_s0 | 결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1) |  |  |  |  |  |  |  |  |  |  | 203 |
 | 건물단위_s1 | LoD2 | B173nbef_LoD2_s1 | 결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1) |  |  |  |  |  |  |  |  |  |  | 203 |
+| 건물단위_s0_필터없음 | ALS | FINALTRAIN B0_b10 ft_ALS_s0 | TRAINING_COMPLETE_30000 | 1 | 1.244 | 1.244 | 2384995 | 2384995 | 5.053 | 16.27 | 0.04591 | 23.97 | 22.68 | 243 |
+| 건물단위_s1_필터없음 | ALS | v1 B0_b10 seed1_ALS | TRAINING_COMPLETE | 1 | 1.44 | 1.44 | 2564063 | 2564063 | 5.346 | 16.61 | 0.04551 | 25 | 22.72 | 243 |
+| 건물단위_s0_필터없음 | ALS | FINALTRAIN R1rep_b10 ft_ALS_s0 | TRAINING_COMPLETE_30000 | 1 | 1.377 | 1.377 | 2853522 | 2853522 | 5.598 | 19.99 | 0.07132 | 22.34 | 23.07 | 333 |
+| 건물단위_s1_필터없음 | ALS | v1 R1rep_b10 seed1_ALS | TRAINING_COMPLETE | 1 | 1.236 | 1.236 | 2167892 | 2167892 | 4.449 | 17.46 | 0.07317 | 23.95 | 22.83 | 333 |
+| 건물단위_s0_필터없음 | ALS | FINALTRAIN B173nb_b10 ft_ALS_s0 | TRAINING_COMPLETE_30000 | 1 | 1.462 | 1.462 | 2908431 | 2908431 | 5.857 | 16.52 | 0.04577 | 25.8 | 22.65 | 203 |
+| 건물단위_s1_필터없음 | ALS | v1 B173nb_b10 seed1_ALS | TRAINING_COMPLETE | 1 | 1.512 | 1.512 | 2928501 | 2928501 | 5.717 | 16.55 | 0.05729 | 25.84 | 23.64 | 203 |
+| 건물단위_s0_필터없음 | LoD2 | FINALTRAIN B0_b10 ft_LoD2_s0 | TRAINING_COMPLETE_30000 | 1 | 1.85 | 1.85 | 3263402 | 3263402 | 7.047 | 19.41 | 0.07517 | 23.41 | 22.47 | 243 |
+| 건물단위_s1_필터없음 | LoD2 | v1 B0_b10 seed1_LoD2 | TRAINING_COMPLETE | 1 | 1.721 | 1.721 | 2173451 | 2173451 | 4.705 | 15.16 | 0.09121 | 23.65 | 22.53 | 243 |
+| 건물단위_s0_필터없음 | LoD2 | FINALTRAIN R1rep_b10 ft_LoD2_s0 | TRAINING_COMPLETE_30000 | 1 | 1.829 | 1.829 | 2386332 | 2386332 | 5.203 | 18.25 | 0.09615 | 21.98 | 22.39 | 333 |
+| 건물단위_s1_필터없음 | LoD2 | v1 R1rep_b10 seed1_LoD2 | TRAINING_COMPLETE | 2 | 1.875 | 3.341 | 2389156 | 2389156 | 4.871 | 18.39 | 0.08641 | 23.53 | 22.14 | 333 |
+| 건물단위_s0_필터없음 | LoD2 | FINALTRAIN B173nb_b10 ft_LoD2_s0 | TRAINING_COMPLETE_30000 | 1 | 2.182 | 2.182 | 2990321 | 2990321 | 5.869 | 16.81 | 0.08856 | 25.9 | 23.2 | 203 |
+| 건물단위_s1_필터없음 | LoD2 | v1 B173nb_b10 seed1_LoD2 | TRAINING_COMPLETE | 1 | 2.238 | 2.238 | 3347703 | 3347703 | 6.885 | 17.98 | 0.09216 | 25.81 | 23.11 | 203 |
 | 전체 | ALS | campusef30k_ALS_s0 | TRAINING_COMPLETE | 2 | 4.033 | 4.591 | 3439948 | 3439948 | 7.102 | 34.92 | 0.1723 | 23.65 | 21.84 | 819 |
 | 넷 | ALS | cellsef_ALS_s0_cell0 | TRAINING_COMPLETE | 2 | 3.975 | 4.259 | 3819261 | 3819261 | 8.035 | 21.37 |  | 24.79 | 22.54 | 308 |
 | 넷 | ALS | cellsef_ALS_s0_cell1 | TRAINING_COMPLETE | 3 | 2.967 | 3.73 | 3231493 | 3231493 | 6.355 | 24.99 | 0.1142 | 24.2 | 22.18 | 471 |
