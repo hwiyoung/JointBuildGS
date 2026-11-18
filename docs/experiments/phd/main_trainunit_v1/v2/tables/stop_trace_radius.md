@@ -22,3 +22,11 @@ order v2 3.5 row 7: scene radius used (fork getNerfppNorm or fixed); clone/split
 | cellsef_ALS_s0_cell1fix | cellsef_ALS_s0_cell1fix/a2 | stopped | extent_override.json | 282.1 | 229.7 | True |
 | cellsef_ALS_s0_cell1fix | cellsef_ALS_s0_cell1fix/a3 | stopped | extent_override.json | 282.1 | 229.7 | True |
 | cellsef_ALS_s0_cell1fix | cellsef_ALS_s0_cell1/a3 | finished | extent_override.json | 282.1 | 282.1 | False |
+| cells9ef_ALS_s0_cell1 | cells9ef_ALS_s0_cell1/a1 | stopped | extent_override.json | 125.1 | 125.1 | False |
+| cells9ef_ALS_s0_cell4 | cells9ef_ALS_s0_cell4/a1 | stopped | extent_override.json | 204.6 | 204.6 | False |
+| cells9ef_ALS_s0_cell5 | cells9ef_ALS_s0_cell5/a1 | stopped | extent_override.json | 184 | 184 | False |
+| cells9ef_ALS_s0_cell5 | cells9ef_ALS_s0_cell5/a2 | stopped | extent_override.json | 184 | 184 | False |
+| cells9ef_ALS_s0_cell6 | cells9ef_ALS_s0_cell6/a1 | stopped | extent_override.json | 202.7 | 202.7 | False |
+| cells9ef_ALS_s0_cell7 | cells9ef_ALS_s0_cell7/a1 | stopped | extent_override.json | 182 | 182 | False |
+| cells9ef_ALS_s0_cell8 | cells9ef_ALS_s0_cell8/a1 | stopped | extent_override.json | 158.8 | 158.8 | False |
+| cells9ef_ALS_s0_cell8 | cells9ef_ALS_s0_cell8/a2 | stopped | extent_override.json | 158.8 | 158.8 | False |

@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-18T12:18:30.825477+09:00",
+  "plans": [
+    {
+      "plan": "건물단위_s0",
+      "family": "ef_s0",
+      "status": "있음",
+      "tau_within_pct": 93.15370018975332,
+      "rows": 210800
+    },
+    {
+      "plan": "건물단위_s1",
+      "family": "ef_s1",
+      "status": "있음",
+      "tau_within_pct": 93.16318785578747,
+      "rows": 210800
+    },
+    {
+      "plan": "전체",
+      "family": "campusef30k_ALS_s0",
+      "status": "있음",
+      "tau_within_pct": 91.12333965844402,
+      "rows": 210800
+    },
+    {
+      "plan": "넷",
+      "family": "cellsef_ALS_s0",
+      "status": "있음",
+      "tau_within_pct": 92.52561669829223,
+      "rows": 210800
+    },
+    {
+      "plan": "아홉",
+      "family": "cells9ef_ALS_s0",
+      "status": "있음",
+      "tau_within_pct": 93.01328273244782,
+      "rows": 210800
+    }
+  ],
+  "dpi": 200,
+  "crs": "EPSG:25832; local XY = EPSG:25832 - [690953, 5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/ef_s0.npz",
+      "sha256": "7122af5bb6aecd2a4e1e6e8adab6ed2537bce5b94d98139d589cbc6c82c168c6"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/ef_s1.npz",
+      "sha256": "57dce6000d04daff8a6d9328c863d4c854935a396bec75211be24e687b922fe2"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/campusef30k_ALS_s0.npz",
+      "sha256": "dfd80de6318674e4638f791c4bc16283241f97b724b81f434657a5aad7b4fbe3"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/cellsef_ALS_s0.npz",
+      "sha256": "4228587a098f333980fc70c8d5257af7babfac89b0e9bd8f5286b99bfd2a41d1"
+    },
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/distances/cells9ef_ALS_s0.npz",
+      "sha256": "fb54cd93d25f88689eac8d3fc02ed916cb4ef7f99ce003df25633617ce5e851d"
+    }
+  ],
+  "script_sha256": "d7f0b17a777cb181cca2d1a5f0511b45fd1174701a4549cda2ca873b4d9897cd",
+  "scientific_verdict": null
+}

@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-18T12:11:54.179539+09:00",
+  "plans": [
+    {
+      "plan": "건물단위_s0",
+      "family": "ef_s0",
+      "status": "있음",
+      "tau_within_pct": 98.1613392119041,
+      "rows": 145160
+    },
+    {
+      "plan": "건물단위_s1",
+      "family": "ef_s1",
+      "status": "있음",
+      "tau_within_pct": 98.20818407274731,
+      "rows": 145160
+    },
+    {
+      "plan": "전체",
+      "family": "campusef30k_ALS_s0",
+      "status": "있음",
+      "tau_within_pct": 98.09864976577569,
+      "rows": 145160
+    },
+    {
+      "plan": "넷",
+      "family": "cellsef_ALS_s0",
+      "status": "있음",
+      "tau_within_pct": 98.32529622485534,
+      "rows": 145160
+    },
+    {
+      "plan": "아홉",
+      "family": "cells9ef_ALS_s0",
+      "status": "있음",
+      "tau_within_pct": 97.90231468724167,
+      "rows": 145160
+    }
+  ],
+  "dpi": 200,
+  "crs": "EPSG:25832; local XY = EPSG:25832 - [690953, 5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/ef_s0.npz",
+      "sha256": "bfd5a31b28c50650cd0c67c00671e73842230e3bdbf37b25413217d155916faa"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/ef_s1.npz",
+      "sha256": "bcac804b4f2b902afad954e95ddc5fcdb663812f54b66c49a0e6015962713b44"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/campusef30k_ALS_s0.npz",
+      "sha256": "d43974e4435f9869998e16a670151745d659bbde47627006f9359ab36ab42881"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/cellsef_ALS_s0.npz",
+      "sha256": "5f4ef8632cd61278b2e1c816e8df876234235c2045e8435d009c89db6c8f96fd"
+    },
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/distances/cells9ef_ALS_s0.npz",
+      "sha256": "fed702728d33a8a160bce7a2d03cd7e75a2c4867605d6201c681100ef9f7dcba"
+    }
+  ],
+  "script_sha256": "d7f0b17a777cb181cca2d1a5f0511b45fd1174701a4549cda2ca873b4d9897cd",
+  "scientific_verdict": null
+}

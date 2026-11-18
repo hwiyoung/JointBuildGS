@@ -2,6 +2,78 @@
   "note": "order v2 2.1 no. 4: every attempt of v1 and v2: container memory limit (--memory of command.json), recorded peak RSS (jbgs_trace), cgroup peak (v2 trace1000)",
   "rows": [
     {
+      "run": "cells9ef_ALS_s0_cell1/attempt1",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.51900863647461,
+      "cgroup_peak_GiB": 25.45500946044922,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "cells9ef_ALS_s0_cell4/attempt1",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 22.053619384765625,
+      "cgroup_peak_GiB": 26.476421356201172,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "cells9ef_ALS_s0_cell5/attempt1",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 15.722602844238281,
+      "cgroup_peak_GiB": 18.983383178710938,
+      "status": "GPU_MEMORY_STOP",
+      "last_iteration": 11800
+    },
+    {
+      "run": "cells9ef_ALS_s0_cell5/attempt2",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 22.676368713378906,
+      "cgroup_peak_GiB": 29.71490478515625,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "cells9ef_ALS_s0_cell6/attempt1",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 14.621063232421875,
+      "cgroup_peak_GiB": 16.776729583740234,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "cells9ef_ALS_s0_cell7/attempt1",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 16.884098052978516,
+      "cgroup_peak_GiB": 21.023757934570312,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
+      "run": "cells9ef_ALS_s0_cell8/attempt1",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 19.33272933959961,
+      "cgroup_peak_GiB": 23.070220947265625,
+      "status": "GPU_MEMORY_STOP",
+      "last_iteration": 8000
+    },
+    {
+      "run": "cells9ef_ALS_s0_cell8/attempt2",
+      "payload": "v2",
+      "container_memory_limit": "48g",
+      "peak_rss_GiB": 27.530536651611328,
+      "cgroup_peak_GiB": 33.89226150512695,
+      "status": "TRAINING_COMPLETE",
+      "last_iteration": 30000
+    },
+    {
       "run": "B0_b10/seed1_ALS/attempt1",
       "payload": "v1",
       "container_memory_limit": "40g",

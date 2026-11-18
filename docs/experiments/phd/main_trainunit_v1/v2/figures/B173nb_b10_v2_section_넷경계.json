@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-18T12:19:18.550576+09:00",
+  "plans_drawn": [
+    "건물단위_s0",
+    "건물단위_s1",
+    "전체",
+    "넷",
+    "아홉"
+  ],
+  "plans_missing": [],
+  "section": {
+    "start": [
+      129.49926549297624,
+      55.26633449601721
+    ],
+    "end": [
+      129.49926549297624,
+      79.26633449601721
+    ],
+    "half_width": 0.6
+  },
+  "boundary": {
+    "cell": 2,
+    "axis": "y",
+    "at": 67.26633449601721,
+    "lo": [
+      -3.794835525528808,
+      67.26633449601721
+    ],
+    "hi": [
+      1000000.0,
+      67.26633449601721
+    ]
+  },
+  "box_distance_m": 0.0,
+  "crosses_box": true,
+  "dpi": 200,
+  "crs": "EPSG:25832; local XY = EPSG:25832 - [690953, 5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B173nb_b10__ALS/rows.npz",
+      "sha256": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B173nb_b10_건물단위_s0_sections.npz",
+      "sha256": "1d38493abcdd4de20db0c6964b7eadbe1c7f850b1f50c57cbcfb23743a810975"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B173nb_b10_건물단위_s1_sections.npz",
+      "sha256": "9806866f95a0f7e67dd26bb7e23ddee38968a3aeeb1133018d7e410875bbca81"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B173nb_b10_전체_sections.npz",
+      "sha256": "60cba799ad36fdf4b12f854c2f6a642386217fd4bbb8980248938ef27e4304d1"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B173nb_b10_넷_sections.npz",
+      "sha256": "624c0002f2309781cedbc4abd88567967a59e99e66c2e59863ec6f4dd97c58b1"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B173nb_b10_아홉_sections.npz",
+      "sha256": "41964df1e20b1591b4ed66feb18b797f76290322f412148b9cd49d48c8020204"
+    }
+  ],
+  "script_sha256": "d7f0b17a777cb181cca2d1a5f0511b45fd1174701a4549cda2ca873b4d9897cd",
+  "scientific_verdict": null
+}

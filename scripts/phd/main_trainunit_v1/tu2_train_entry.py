@@ -7,6 +7,7 @@
 """
 import hashlib
 import json
+import os
 import runpy
 import sys
 import time
@@ -92,4 +93,13 @@ def run_path(path, run_name=None):
 
 
 runpy.run_path = run_path
+# GPU 1 sharing with TRAINERR (user 2026-11-17 14:3x): this process may hold at most JBGS_GPU_CAP_GIB of CUDA memory, so TRAINERR keeps
+# >= 14 GiB free on the GPU (its start rule) and room to grow. Above the cap only this run fails (CUDA out of memory). No optimisation value changes.
+cap = os.environ.get('JBGS_GPU_CAP_GIB')
+if cap:
+    import torch
+    total = torch.cuda.get_device_properties(0).total_memory
+    torch.cuda.set_per_process_memory_fraction(min(1.0, float(cap) * 2 ** 30 / total), 0)
+    T.dump(root / 'gpu_cap.json', dict(at=T.now().isoformat(), cap_GiB=float(cap), device_total_bytes=total, fraction=min(1.0, float(cap) * 2 ** 30 / total),
+                                      reason='GPU 1 shared with TRAINERR (user approval 2026-11-17)', scientific_verdict=None))
 T.main()

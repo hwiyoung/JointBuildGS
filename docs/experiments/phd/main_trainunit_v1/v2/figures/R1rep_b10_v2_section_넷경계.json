@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-18T12:18:24.027473+09:00",
+  "plans_drawn": [
+    "건물단위_s0",
+    "건물단위_s1",
+    "전체",
+    "넷",
+    "아홉"
+  ],
+  "plans_missing": [],
+  "section": {
+    "start": [
+      -15.794835525528807,
+      31.258699417114258
+    ],
+    "end": [
+      8.205164474471193,
+      31.258699417114258
+    ],
+    "half_width": 0.6
+  },
+  "boundary": {
+    "cell": 1,
+    "axis": "x",
+    "at": -3.794835525528808,
+    "lo": [
+      -3.794835525528808,
+      -55.31725534129716
+    ],
+    "hi": [
+      -3.794835525528808,
+      1000000.0
+    ]
+  },
+  "box_distance_m": 0.0,
+  "crosses_box": true,
+  "dpi": 200,
+  "crs": "EPSG:25832; local XY = EPSG:25832 - [690953, 5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/R1rep_b10__ALS/rows.npz",
+      "sha256": "3840237963f9bf5c0eb3000416b88f5dd9253061922b7f01add1256f21fe9e78"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/R1rep_b10_건물단위_s0_sections.npz",
+      "sha256": "08f1fd4a91efd34fe69d39a7090443a9897caaed358769990feae6c91a38a37c"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/R1rep_b10_건물단위_s1_sections.npz",
+      "sha256": "7571ff05b1f3005995ee715634059582661a72c083244634add77ddd79264eeb"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/R1rep_b10_전체_sections.npz",
+      "sha256": "fc3264ca358edaf1b864369259b064844a6263c85524c88747cd8d07681cde8b"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/R1rep_b10_넷_sections.npz",
+      "sha256": "6329cfa1a23d14cd4dab504b8eba15f67aea0d3e2a1bcac4dd4a4e83742c5214"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/R1rep_b10_아홉_sections.npz",
+      "sha256": "bdcf26e12635b5b2024b660935bcf05589e6c8dc5440e1ec3d33ea78aca6c0df"
+    }
+  ],
+  "script_sha256": "d7f0b17a777cb181cca2d1a5f0511b45fd1174701a4549cda2ca873b4d9897cd",
+  "scientific_verdict": null
+}

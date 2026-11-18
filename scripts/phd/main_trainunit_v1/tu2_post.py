@@ -36,9 +36,10 @@ def mirror():
     P.mirror()
     v1 = '/art/phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/gt/scenes'
     n = 0
-    for site in SITES:
-        stem = f'{site}__ALS'
-        for fam in ['ef_s0', 'ef_s1', 'cellsef_ALS_s0', 'cellsef1fix_ALS_s0']:
+    for site, prior in [(s_, p_) for s_ in SITES for p_ in ['ALS', 'LoD2']]:
+        stem = f'{site}__{prior}'
+        # seed1_s1 = v1 building-unit seed 1 without the filter (LoD2 reference, user decision 2026-11-17)
+        for fam in ['ef_s0', 'ef_s1', 'cellsef_ALS_s0', 'cellsef1fix_ALS_s0', 'seed1_s1']:
             for suf in ['.npz', '_samples.npz', '.json']:
                 if (TU1 / 'gt/scenes' / stem / 'distances' / f'{fam}{suf}').exists():
                     P.link(f'{v1}/{stem}/distances/{fam}{suf}', M / 'scenes' / stem / 'distances' / f'{fam}{suf}')
@@ -65,7 +66,8 @@ def ply_of(key):
 
 
 def wait_gpu():
-    while Q.gpu_busy(Q.GPU):
+    # GPU 1 shared with TRAINERR (user 2026-11-17): render when GPU 1 has >= 14 GiB free (render is short)
+    while Q.gpu_free_mib() < Q.NEED_MIB:
         time.sleep(120)
 
 

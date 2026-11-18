@@ -269,7 +269,11 @@ def merge():
     cfg2()
     cells = json.loads((TU / 'cells/cells.json').read_text())['cells']
     parts, rec = [], []
+    skip = json.loads((Path(__file__).resolve().parents[3] / 'configs/phd/main_trainunit_v1/trainunit_v2_skip.json').read_text())['skip_cells9']
     for c in cells:
+        if c['id'] in skip:   # user decision 2026-11-17: not trained (outside every evaluation box)
+            rec.append(dict(cell=c['id'], skipped='학습 안 함: 평가 상자 밖, 사용자 결정 2026-11-17'))
+            continue
         run = TU / 'runs' / f'cells9ef_ALS_s0_cell{c["id"]}'
         r = json.loads((run / 'receipt.json').read_text())
         assert r['status'] == 'TRAINING_COMPLETE', (run, r['status'])
@@ -283,7 +287,7 @@ def merge():
     data = np.concatenate(parts)
     out = TU / 'runs/cells9ef_ALS_s0/merged/point_cloud.ply'
     write(out, data)
-    dump(out.with_suffix('.json'), dict(at=now(), prior='ALS', cells=rec, merged=len(data), output_sha256=sha(out),
+    dump(out.with_suffix('.json'), dict(at=now(), prior='ALS', cells=rec, merged=len(data), skipped_cells=skip, output_sha256=sha(out),
          rule='keep xy in original cell [min, max); concatenate (v1 tu_postcpu.merge)', scientific_verdict=None))
     print('MERGED9', len(data), flush=True)
 

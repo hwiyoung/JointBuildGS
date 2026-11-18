@@ -107,43 +107,43 @@
       "plan": "건물단위_s0",
       "prior": "LoD2",
       "run": "B0ef_LoD2_s0",
-      "status": "결과 없음",
-      "train_images": 243
+      "train_images": 243,
+      "status": "결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1)"
     },
     {
       "plan": "건물단위_s1",
       "prior": "LoD2",
       "run": "B0ef_LoD2_s1",
-      "status": "결과 없음",
-      "train_images": 243
+      "train_images": 243,
+      "status": "결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1)"
     },
     {
       "plan": "건물단위_s0",
       "prior": "LoD2",
       "run": "R1repef_LoD2_s0",
-      "status": "결과 없음",
-      "train_images": 333
+      "train_images": 333,
+      "status": "결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1)"
     },
     {
       "plan": "건물단위_s1",
       "prior": "LoD2",
       "run": "R1repef_LoD2_s1",
-      "status": "결과 없음",
-      "train_images": 333
+      "train_images": 333,
+      "status": "결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1)"
     },
     {
       "plan": "건물단위_s0",
       "prior": "LoD2",
       "run": "B173nbef_LoD2_s0",
-      "status": "결과 없음",
-      "train_images": 203
+      "train_images": 203,
+      "status": "결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1)"
     },
     {
       "plan": "건물단위_s1",
       "prior": "LoD2",
       "run": "B173nbef_LoD2_s1",
-      "status": "결과 없음",
-      "train_images": 203
+      "train_images": 203,
+      "status": "결과 없음(학습 안 함: 사용자 결정 2026-11-17, LoD2 기준 = 기존 필터 없음 판 FINALTRAIN_30000·seed1_s1)"
     },
     {
       "plan": "전체",
@@ -234,63 +234,123 @@
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell0",
-      "status": "결과 없음",
+      "status": "결과 없음(학습 안 함: 평가 상자 밖, 사용자 결정 2026-11-17)",
       "train_images": 198
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell1",
-      "status": "결과 없음",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours_result": 2.842827378129441,
+      "hours_all_attempts": 2.842827378129441,
+      "final_gaussians": 3188618,
+      "max_gaussians": 3188618,
+      "peak_gpu_reserved_GiB": 6.572265625,
+      "peak_host_rss_GiB": 19.51900863647461,
+      "sec_per_iter_100_500": 0.09386341002260451,
+      "psnr_train": 24.15247268676758,
+      "psnr_test": 21.953930922916957,
       "train_images": 259
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell2",
-      "status": "결과 없음",
+      "status": "결과 없음(학습 안 함: 평가 상자 밖, 사용자 결정 2026-11-17)",
       "train_images": 186
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell3",
-      "status": "결과 없음",
+      "status": "결과 없음(학습 안 함: 평가 상자 밖, 사용자 결정 2026-11-17)",
       "train_images": 201
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell4",
-      "status": "결과 없음",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours_result": 1.7058705673863976,
+      "hours_all_attempts": 1.7058705673863976,
+      "final_gaussians": 2491857,
+      "max_gaussians": 2491857,
+      "peak_gpu_reserved_GiB": 5.400390625,
+      "peak_host_rss_GiB": 22.053619384765625,
+      "sec_per_iter_100_500": 0.11793896636503633,
+      "psnr_train": 25.104336929321292,
+      "psnr_test": 22.265556762958393,
       "train_images": 466
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell5",
-      "status": "결과 없음",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 2,
+      "hours_result": 3.8387215972202666,
+      "hours_all_attempts": 5.519087272488056,
+      "final_gaussians": 5071914,
+      "max_gaussians": 5071914,
+      "peak_gpu_reserved_GiB": 10.107421875,
+      "peak_host_rss_GiB": 22.676368713378906,
+      "sec_per_iter_100_500": 0.09182273387996247,
+      "psnr_train": 26.93471336364746,
+      "psnr_test": 25.274737809833727,
       "train_images": 207
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell6",
-      "status": "결과 없음",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours_result": 1.4657270830780584,
+      "hours_all_attempts": 1.4657270830780584,
+      "final_gaussians": 2148219,
+      "max_gaussians": 2148219,
+      "peak_gpu_reserved_GiB": 4.54296875,
+      "peak_host_rss_GiB": 14.621063232421875,
+      "sec_per_iter_100_500": 0.10225950198000647,
+      "psnr_train": 25.36344337463379,
+      "psnr_test": 20.92760211543033,
       "train_images": 217
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell7",
-      "status": "결과 없음",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 1,
+      "hours_result": 2.018064923000541,
+      "hours_all_attempts": 2.018064923000541,
+      "final_gaussians": 2634615,
+      "max_gaussians": 2634615,
+      "peak_gpu_reserved_GiB": 5.595703125,
+      "peak_host_rss_GiB": 16.884098052978516,
+      "sec_per_iter_100_500": 0.10252739201503573,
+      "psnr_train": 25.429523468017578,
+      "psnr_test": 24.40834652293812,
       "train_images": 233
     },
     {
       "plan": "아홉",
       "prior": "ALS",
       "run": "cells9ef_ALS_s0_cell8",
-      "status": "결과 없음",
+      "status": "TRAINING_COMPLETE",
+      "attempts": 2,
+      "hours_result": 5.327067138556109,
+      "hours_all_attempts": 6.695057178131667,
+      "final_gaussians": 6515841,
+      "max_gaussians": 6515841,
+      "peak_gpu_reserved_GiB": 13.4453125,
+      "peak_host_rss_GiB": 27.530536651611328,
+      "sec_per_iter_100_500": 0.0938082539649622,
+      "psnr_train": 29.063997650146487,
+      "psnr_test": 25.35547057787577,
       "train_images": 217
     },
     {
@@ -302,6 +362,16 @@
       "max_gaussians": 6423189,
       "peak_gpu_reserved_GiB": 13.486328125,
       "peak_host_rss_GiB": 30.608280181884766
+    },
+    {
+      "plan": "아홉",
+      "prior": "ALS",
+      "run": "칸 6개 합 (칸 3·0·2 학습 안 함)",
+      "status": "합",
+      "hours_result": 17.198278687370813,
+      "max_gaussians": 6515841,
+      "peak_gpu_reserved_GiB": 13.4453125,
+      "peak_host_rss_GiB": 27.530536651611328
     }
   ],
   "scientific_verdict": null

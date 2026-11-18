@@ -1,1 +1,48 @@
 - 2026-11-17T13:11:10.116936+09:00: v2 대기열 시작 (GPU 1, pid 889750). 차례 ['POST:render:campusef30k_ALS_s0', 'POST:finish:campusef30k_ALS_s0', 'cells9ef_ALS_s0_cell4', 'cells9ef_ALS_s0_cell1', 'cells9ef_ALS_s0_cell7', 'cells9ef_ALS_s0_cell6', 'cells9ef_ALS_s0_cell8', 'cells9ef_ALS_s0_cell5', 'cells9ef_ALS_s0_cell3', 'cells9ef_ALS_s0_cell0', 'cells9ef_ALS_s0_cell2', 'POST:merge9', 'POST:render:cells9ef_ALS_s0', 'POST:finish:cells9ef_ALS_s0', 'POST:tables:ga', 'R1repef_LoD2_s0', 'B173nbef_LoD2_s0', 'B0ef_LoD2_s0', 'R1repef_LoD2_s1', 'B173nbef_LoD2_s1', 'B0ef_LoD2_s1', 'POST:render:ef_R1rep_b10_LoD2', 'POST:render:ef_B173nb_b10_LoD2', 'POST:render:ef_B0_b10_LoD2', 'POST:render:efs1_R1rep_b10_LoD2', 'POST:render:efs1_B173nb_b10_LoD2', 'POST:render:efs1_B0_b10_LoD2', 'POST:finish:ef_R1rep_b10_LoD2', 'POST:finish:ef_B173nb_b10_LoD2', 'POST:finish:ef_B0_b10_LoD2', 'POST:finish:efs1_R1rep_b10_LoD2', 'POST:finish:efs1_B173nb_b10_LoD2', 'POST:finish:efs1_B0_b10_LoD2', 'POST:tables:final']
+- 2026-11-17T14:34:34+09:00: 사용자 승인(14:3x): GPU 1을 TRAINERR와 함께 씀. 시작 = GPU 1 남은 메모리 >= 14 GiB(TRAINERR 시작 규칙과 같은 값) + 호스트 가용 >= 45 GB; 이 작업 CUDA 메모리 상한 9 GiB(set_per_process_memory_fraction), 남은 메모리 < 1.5 GiB면 상태 저장 뒤 멈춤, < 0.75 GiB면 즉시 멈춤, 나중에 저장 상태에서 이어 돌림(1.8의 멈춤으로 세지 않음). 렌더도 남은 14 GiB 이상일 때만. 대기열 다시 시작.
+- 2026-11-17T14:34:34.517863+09:00: v2 대기열 시작 (GPU 1, pid 1190782). 차례 ['POST:render:campusef30k_ALS_s0', 'POST:finish:campusef30k_ALS_s0', 'cells9ef_ALS_s0_cell4', 'cells9ef_ALS_s0_cell1', 'cells9ef_ALS_s0_cell7', 'cells9ef_ALS_s0_cell6', 'cells9ef_ALS_s0_cell8', 'cells9ef_ALS_s0_cell5', 'cells9ef_ALS_s0_cell3', 'cells9ef_ALS_s0_cell0', 'cells9ef_ALS_s0_cell2', 'POST:merge9', 'POST:render:cells9ef_ALS_s0', 'POST:finish:cells9ef_ALS_s0', 'POST:tables:ga', 'R1repef_LoD2_s0', 'B173nbef_LoD2_s0', 'B0ef_LoD2_s0', 'R1repef_LoD2_s1', 'B173nbef_LoD2_s1', 'B0ef_LoD2_s1', 'POST:render:ef_R1rep_b10_LoD2', 'POST:render:ef_B173nb_b10_LoD2', 'POST:render:ef_B0_b10_LoD2', 'POST:render:efs1_R1rep_b10_LoD2', 'POST:render:efs1_B173nb_b10_LoD2', 'POST:render:efs1_B0_b10_LoD2', 'POST:finish:ef_R1rep_b10_LoD2', 'POST:finish:ef_B173nb_b10_LoD2', 'POST:finish:ef_B0_b10_LoD2', 'POST:finish:efs1_R1rep_b10_LoD2', 'POST:finish:efs1_B173nb_b10_LoD2', 'POST:finish:efs1_B0_b10_LoD2', 'POST:tables:final']
+- 2026-11-17T14:35:08.295571+09:00: 후처리 campusef30k_ALS_s0 B0_b10: 자르기·렌더 완료 (0s, 34s)
+- 2026-11-17T14:35:58.507663+09:00: 후처리 campusef30k_ALS_s0 R1rep_b10: 자르기·렌더 완료 (5s, 45s)
+- 2026-11-17T14:36:31.546395+09:00: 후처리 campusef30k_ALS_s0 B173nb_b10: 자르기·렌더 완료 (5s, 28s)
+- 2026-11-17T14:36:31.556684+09:00: POST:render:campusef30k_ALS_s0: 끝 (exit 0, 2.0분)
+- 2026-11-17T14:51:20.331645+09:00: 후처리 campusef30k_ALS_s0 B0_b10: 메시·채점 완료 (메시 844s, 채점 44s)
+- 2026-11-17T15:02:38.241089+09:00: 후처리 campusef30k_ALS_s0 R1rep_b10: 메시·채점 완료 (메시 644s, 채점 34s)
+- 2026-11-17T15:11:33.037402+09:00: 후처리 campusef30k_ALS_s0 B173nb_b10: 메시·채점 완료 (메시 481s, 채점 54s)
+- 2026-11-17T15:11:33.063223+09:00: POST:finish:campusef30k_ALS_s0: 끝 (exit 0, 35.0분)
+- 2026-11-17T15:11:33.167435+09:00: cells9ef_ALS_s0_cell4 시도 1 시작, GPU 1
+- 2026-11-17T16:53:54.302157+09:00: cells9ef_ALS_s0_cell4 시도 1 끝: TRAINING_COMPLETE, 1.71시간
+- 2026-11-17T16:53:54.472868+09:00: cells9ef_ALS_s0_cell1 시도 1 시작, GPU 1
+- 2026-11-17T19:44:28.680405+09:00: cells9ef_ALS_s0_cell1 시도 1 끝: TRAINING_COMPLETE, 2.84시간
+- 2026-11-17T19:44:28.817729+09:00: cells9ef_ALS_s0_cell7 시도 1 시작, GPU 1
+- 2026-11-17T19:47:58+09:00: 사용자 결정(19:4x): 아홉 칸 중 평가 상자 밖 칸 3·0·2 학습 안 함 (configs/phd/main_trainunit_v1/trainunit_v2_skip.json). 상자와 겹치는 원래 칸 = B0 6·7, R1rep 4·5·6·7, B173nb 7·8 (다시 계산). 칸 1은 결정 전에 끝나 합치기에 넣음. 옛 대기열은 칸 7이 끝나면 QUEUE_STOP으로 끝나고 새 코드로 다시 켬(칸 6·8·5 → 합치기 → 채점).
+- 2026-11-17T19:57:09+09:00: 사용자 결정: 건물 단위 LoD2 여섯 판(<장면>ef_LoD2_s0·s1) 학습 안 함(발주문 3.3 변경, trainunit_v2_skip.json). LoD2 건물 단위 기준 = 기존 필터 없음 판(씨앗 0 FINALTRAIN_30000, 씨앗 1 v1 seed1_s1, v2 거울에 연결). 대기열에서 LoD2 학습·후처리 뺌(다시 켜질 때 적용). 표: v2_compare_ALS에 필터 있음−없음(씨앗별) 열, v2_compare_LoD2 = 필터 없음 두 씨앗, v2_runs에 LoD2 학습 안 함 표시. 시험 계산 끝(TABLES 27).
+- 2026-11-17T20:52:33+09:00: 5.2 정성 그림 tu2_qual.py(v1 tu_figures 규칙, 한 컨테이너에 장면 × 판 하나, 24 GiB): 세 장면 τ 지도·메시 세 시점·넷/아홉 경계 단면 그림 끝(20:24–20:51, 실패 없음). 아홉은 채점 뒤 tau·geom 아홉·join을 다시 그림.
+- 2026-11-17T21:45:33.924817+09:00: cells9ef_ALS_s0_cell7 시도 1 끝: TRAINING_COMPLETE, 2.02시간
+- 2026-11-17T21:45:33.925236+09:00: v2 대기열 멈춤 파일로 끝.
+- 2026-11-17T21:45:45.398567+09:00: v2 대기열 시작 (GPU 1, pid 3170249). 차례 ['POST:render:campusef30k_ALS_s0', 'POST:finish:campusef30k_ALS_s0', 'cells9ef_ALS_s0_cell4', 'cells9ef_ALS_s0_cell1', 'cells9ef_ALS_s0_cell7', 'cells9ef_ALS_s0_cell6', 'cells9ef_ALS_s0_cell8', 'cells9ef_ALS_s0_cell5', 'POST:merge9', 'POST:render:cells9ef_ALS_s0', 'POST:finish:cells9ef_ALS_s0', 'POST:tables:ga', 'POST:tables:final']
+- 2026-11-17T21:45:45.510008+09:00: cells9ef_ALS_s0_cell6 시도 1 시작, GPU 1
+- 2026-11-17T23:13:42.275967+09:00: cells9ef_ALS_s0_cell6 시도 1 끝: TRAINING_COMPLETE, 1.47시간
+- 2026-11-17T23:13:42.420468+09:00: cells9ef_ALS_s0_cell8 시도 1 시작, GPU 1
+- 2026-11-18T00:35:50.063144+09:00: cells9ef_ALS_s0_cell8 시도 1 끝: GPU_MEMORY_STOP, 1.37시간, 오류 OutOfMemoryError: CUDA out of memory. Tried to allocate 74.00 MiB. GPU 0 has a total capacty of 23.56 GiB of which 14.17 GiB is free. Process 3567468 has 9.28 G
+- 2026-11-18T00:35:50.206816+09:00: cells9ef_ALS_s0_cell5 시도 1 시작, GPU 1
+- 2026-11-18T00:39:33+09:00: 칸 8 시도 1 멈춤(00:35, GPU_MEMORY_STOP, 8,000회) 원인 확인 = 이 작업이 더한 GPU 상한 9 GiB(그때 GPU 1 남은 14.2 GiB); 가우시안 4.8 M(칸 1·4의 2~3배), 길쭉한 비율 0.01 % 이하(폭증 아님). 가름 = 설정 잘못(3.5), 고침 = 칸 8만 상한 20 GiB(control/gpu_cap_by_run.json), 처음부터 다시(멈춤 횟수에 안 넣음). 대기열 코드 고침(판별 상한, fixed 표시) → 칸 5가 끝나면 대기열 다시 켬. 기록 runs/cells9ef_ALS_s0_cell8/cause_attempt1.json
+- 2026-11-18T02:16:42.301734+09:00: cells9ef_ALS_s0_cell5 시도 1 끝: GPU_MEMORY_STOP, 1.68시간, 오류 OutOfMemoryError: CUDA out of memory. Tried to allocate 38.00 MiB. GPU 0 has a total capacty of 23.56 GiB of which 14.11 GiB is free. Process 3894313 has 9.34 G
+- 2026-11-18T02:16:42.302292+09:00: v2 대기열 멈춤 파일로 끝.
+- 2026-11-18T02:17:33.903323+09:00: v2 대기열 시작 (GPU 1, pid 114489). 차례 ['POST:render:campusef30k_ALS_s0', 'POST:finish:campusef30k_ALS_s0', 'cells9ef_ALS_s0_cell4', 'cells9ef_ALS_s0_cell1', 'cells9ef_ALS_s0_cell7', 'cells9ef_ALS_s0_cell6', 'cells9ef_ALS_s0_cell8', 'cells9ef_ALS_s0_cell5', 'POST:merge9', 'POST:render:cells9ef_ALS_s0', 'POST:finish:cells9ef_ALS_s0', 'POST:tables:ga', 'POST:tables:final']
+- 2026-11-18T02:17:34.010794+09:00: cells9ef_ALS_s0_cell8 시도 2 시작, GPU 1
+- 2026-11-18T02:20:03+09:00: 칸 5 시도 1 멈춤(02:16, GPU_MEMORY_STOP, 11,800회) 원인 = 칸 8과 같음(상한 9 GiB, 그때 GPU 1 남은 14.1 GiB, 가우시안 4.78 M, 폭증 아님). 고침 = 칸 5도 상한 20 GiB, 처음부터 다시(멈춤 횟수에 안 넣음). 대기열은 이미 새 코드(판별 상한)로 돌고 있어 칸 8 뒤에 칸 5를 다시 돌림. 기록 runs/cells9ef_ALS_s0_cell5/cause_attempt1.json
+- 2026-11-18T07:37:11.593960+09:00: cells9ef_ALS_s0_cell8 시도 2 끝: TRAINING_COMPLETE, 5.33시간
+- 2026-11-18T07:37:11.761571+09:00: cells9ef_ALS_s0_cell5 시도 2 시작, GPU 1
+- 2026-11-18T11:27:31.396306+09:00: cells9ef_ALS_s0_cell5 시도 2 끝: TRAINING_COMPLETE, 3.84시간
+- 2026-11-18T11:28:31.794824+09:00: POST:merge9: 끝 (exit 0, 1.0분)
+- 2026-11-18T11:29:03.654086+09:00: 후처리 cells9ef_ALS_s0 B0_b10: 자르기·렌더 완료 (5s, 27s)
+- 2026-11-18T11:29:41.605270+09:00: 후처리 cells9ef_ALS_s0 R1rep_b10: 자르기·렌더 완료 (5s, 33s)
+- 2026-11-18T11:30:11.176150+09:00: 후처리 cells9ef_ALS_s0 B173nb_b10: 자르기·렌더 완료 (5s, 25s)
+- 2026-11-18T11:30:11.186946+09:00: POST:render:cells9ef_ALS_s0: 끝 (exit 0, 1.7분)
+- 2026-11-18T11:40:33.057112+09:00: 후처리 cells9ef_ALS_s0 B0_b10: 메시·채점 완료 (메시 581s, 채점 41s)
+- 2026-11-18T11:51:03.952284+09:00: 후처리 cells9ef_ALS_s0 R1rep_b10: 메시·채점 완료 (메시 595s, 채점 36s)
+- 2026-11-18T12:00:37.356656+09:00: 후처리 cells9ef_ALS_s0 B173nb_b10: 메시·채점 완료 (메시 481s, 채점 92s)
+- 2026-11-18T12:00:37.454863+09:00: POST:finish:cells9ef_ALS_s0: 끝 (exit 0, 30.4분)
+- 2026-11-18T12:00:37.501444+09:00: POST:tables:ga: 끝 (exit 0, 0.0분)
+- 2026-11-18T12:00:37.508448+09:00: POST:tables:final: 끝 (exit 0, 0.0분)
+- 2026-11-18T12:00:37.509072+09:00: v2 대기열: 남은 판 없음, 끝.

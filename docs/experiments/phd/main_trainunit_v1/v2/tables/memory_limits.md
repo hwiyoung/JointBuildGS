@@ -2,6 +2,14 @@ order v2 2.1 no. 4: every attempt of v1 and v2: container memory limit (--memory
 
 | run | payload | container_memory_limit | peak_rss_GiB | cgroup_peak_GiB | status | last_iteration |
 | --- | --- | --- | --- | --- | --- | --- |
+| cells9ef_ALS_s0_cell1/attempt1 | v2 | 48g | 19.52 | 25.46 | TRAINING_COMPLETE | 30000 |
+| cells9ef_ALS_s0_cell4/attempt1 | v2 | 48g | 22.05 | 26.48 | TRAINING_COMPLETE | 30000 |
+| cells9ef_ALS_s0_cell5/attempt1 | v2 | 48g | 15.72 | 18.98 | GPU_MEMORY_STOP | 11800 |
+| cells9ef_ALS_s0_cell5/attempt2 | v2 | 48g | 22.68 | 29.71 | TRAINING_COMPLETE | 30000 |
+| cells9ef_ALS_s0_cell6/attempt1 | v2 | 48g | 14.62 | 16.78 | TRAINING_COMPLETE | 30000 |
+| cells9ef_ALS_s0_cell7/attempt1 | v2 | 48g | 16.88 | 21.02 | TRAINING_COMPLETE | 30000 |
+| cells9ef_ALS_s0_cell8/attempt1 | v2 | 48g | 19.33 | 23.07 | GPU_MEMORY_STOP | 8000 |
+| cells9ef_ALS_s0_cell8/attempt2 | v2 | 48g | 27.53 | 33.89 | TRAINING_COMPLETE | 30000 |
 | B0_b10/seed1_ALS/attempt1 | v1 | 40g | 16.61 |  | TRAINING_COMPLETE | 30000 |
 | B0_b10/seed1_LoD2/attempt1 | v1 | 40g | 15.16 |  | TRAINING_COMPLETE | 30000 |
 | B173nb_b10/seed1_ALS/attempt1 | v1 | 40g | 16.55 |  | TRAINING_COMPLETE | 30000 |

@@ -269,6 +269,286 @@
       "rise_across_save_eval_GiB": 0.0,
       "rise_elsewhere_GiB": 0.0,
       "steps_over_025GiB": []
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell1",
+      "run": "cells9ef_ALS_s0_cell1/a1",
+      "status": "TRAINING_COMPLETE",
+      "exit_code": 0,
+      "last_iteration": 30000,
+      "gaussians_at_stop": 3188618,
+      "peak_rss_at_stop_GiB": 19.51900863647461,
+      "peak_cuda_reserved_at_stop_GiB": 6.572265625,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 57.46684646606445,
+      "error": "",
+      "rss_at_first_row_GiB": 11.114639282226562,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 19.51900863647461,
+      "rise_across_save_eval_GiB": 6.169681549072266,
+      "rise_elsewhere_GiB": 2.2346878051757812,
+      "steps_over_025GiB": [
+        [
+          6900,
+          7000,
+          2.46
+        ],
+        [
+          7000,
+          7100,
+          0.86
+        ],
+        [
+          14900,
+          15000,
+          3.71
+        ],
+        [
+          15000,
+          15100,
+          1.38
+        ]
+      ]
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell4",
+      "run": "cells9ef_ALS_s0_cell4/a1",
+      "status": "TRAINING_COMPLETE",
+      "exit_code": 0,
+      "last_iteration": 30000,
+      "gaussians_at_stop": 2491857,
+      "peak_rss_at_stop_GiB": 22.053619384765625,
+      "peak_cuda_reserved_at_stop_GiB": 5.400390625,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 46.99930191040039,
+      "error": "",
+      "rss_at_first_row_GiB": 18.761341094970703,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 22.053619384765625,
+      "rise_across_save_eval_GiB": 2.2213821411132812,
+      "rise_elsewhere_GiB": 1.0708961486816406,
+      "steps_over_025GiB": [
+        [
+          14900,
+          15000,
+          2.22
+        ],
+        [
+          15000,
+          15100,
+          1.07
+        ]
+      ]
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell5",
+      "run": "cells9ef_ALS_s0_cell5/a1",
+      "status": "GPU_MEMORY_STOP",
+      "exit_code": 1,
+      "last_iteration": 11800,
+      "gaussians_at_stop": 4781287,
+      "peak_rss_at_stop_GiB": 15.722602844238281,
+      "peak_cuda_reserved_at_stop_GiB": 8.955078125,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 35.30062484741211,
+      "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 38.00 MiB. GPU 0 has a total capacty of 23.56 GiB of which 14.11 GiB is free. Process 3894313 has 9.34 GiB memory in use. Of the allocated memor",
+      "rss_at_first_row_GiB": 8.926326751708984,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 15.722602844238281,
+      "rise_across_save_eval_GiB": 5.623687744140625,
+      "rise_elsewhere_GiB": 1.1725883483886719,
+      "steps_over_025GiB": [
+        [
+          6900,
+          7000,
+          5.62
+        ],
+        [
+          7000,
+          7100,
+          1.17
+        ]
+      ]
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell5",
+      "run": "cells9ef_ALS_s0_cell5/a2",
+      "status": "TRAINING_COMPLETE",
+      "exit_code": 0,
+      "last_iteration": 30000,
+      "gaussians_at_stop": 5071914,
+      "peak_rss_at_stop_GiB": 22.676368713378906,
+      "peak_cuda_reserved_at_stop_GiB": 10.107421875,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 38.79827880859375,
+      "error": "",
+      "rss_at_first_row_GiB": 8.835811614990234,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 22.676368713378906,
+      "rise_across_save_eval_GiB": 12.651371002197266,
+      "rise_elsewhere_GiB": 1.1891860961914062,
+      "steps_over_025GiB": [
+        [
+          6900,
+          7000,
+          5.7
+        ],
+        [
+          7000,
+          7100,
+          1.1
+        ],
+        [
+          14900,
+          15000,
+          6.95
+        ]
+      ]
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell6",
+      "run": "cells9ef_ALS_s0_cell6/a1",
+      "status": "TRAINING_COMPLETE",
+      "exit_code": 0,
+      "last_iteration": 30000,
+      "gaussians_at_stop": 2148219,
+      "peak_rss_at_stop_GiB": 14.621063232421875,
+      "peak_cuda_reserved_at_stop_GiB": 4.54296875,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 30.165428161621094,
+      "error": "",
+      "rss_at_first_row_GiB": 9.283771514892578,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 14.621063232421875,
+      "rise_across_save_eval_GiB": 3.9731101989746094,
+      "rise_elsewhere_GiB": 1.3641815185546875,
+      "steps_over_025GiB": [
+        [
+          6900,
+          7000,
+          1.14
+        ],
+        [
+          7000,
+          7100,
+          0.49
+        ],
+        [
+          14900,
+          15000,
+          2.83
+        ],
+        [
+          15000,
+          15100,
+          0.87
+        ]
+      ]
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell7",
+      "run": "cells9ef_ALS_s0_cell7/a1",
+      "status": "TRAINING_COMPLETE",
+      "exit_code": 0,
+      "last_iteration": 30000,
+      "gaussians_at_stop": 2634615,
+      "peak_rss_at_stop_GiB": 16.884098052978516,
+      "peak_cuda_reserved_at_stop_GiB": 5.595703125,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 47.58307647705078,
+      "error": "",
+      "rss_at_first_row_GiB": 9.982662200927734,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 16.884098052978516,
+      "rise_across_save_eval_GiB": 5.180622100830078,
+      "rise_elsewhere_GiB": 1.7208137512207031,
+      "steps_over_025GiB": [
+        [
+          6900,
+          7000,
+          1.39
+        ],
+        [
+          7000,
+          7100,
+          0.58
+        ],
+        [
+          14900,
+          15000,
+          3.79
+        ],
+        [
+          15000,
+          15100,
+          1.14
+        ]
+      ]
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell8",
+      "run": "cells9ef_ALS_s0_cell8/a1",
+      "status": "GPU_MEMORY_STOP",
+      "exit_code": 1,
+      "last_iteration": 8000,
+      "gaussians_at_stop": 4792638,
+      "peak_rss_at_stop_GiB": 19.33272933959961,
+      "peak_cuda_reserved_at_stop_GiB": 8.9921875,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 27.742095947265625,
+      "error": "OutOfMemoryError: CUDA out of memory. Tried to allocate 74.00 MiB. GPU 0 has a total capacty of 23.56 GiB of which 14.17 GiB is free. Process 3567468 has 9.28 GiB memory in use. Of the allocated memor",
+      "rss_at_first_row_GiB": 9.549407958984375,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 19.33272933959961,
+      "rise_across_save_eval_GiB": 8.702079772949219,
+      "rise_elsewhere_GiB": 1.0812416076660156,
+      "steps_over_025GiB": [
+        [
+          6900,
+          7000,
+          8.7
+        ],
+        [
+          7000,
+          7100,
+          1.08
+        ]
+      ]
+    },
+    {
+      "group": "cells9ef_ALS_s0_cell8",
+      "run": "cells9ef_ALS_s0_cell8/a2",
+      "status": "TRAINING_COMPLETE",
+      "exit_code": 0,
+      "last_iteration": 30000,
+      "gaussians_at_stop": 6515841,
+      "peak_rss_at_stop_GiB": 27.530536651611328,
+      "peak_cuda_reserved_at_stop_GiB": 13.4453125,
+      "host_available_at_guard_GiB": null,
+      "min_host_available_GiB": 50.8105583190918,
+      "error": "",
+      "rss_at_first_row_GiB": 9.390914916992188,
+      "first_row_iteration": 100,
+      "rss_last_GiB": 27.530536651611328,
+      "rise_across_save_eval_GiB": 17.06509017944336,
+      "rise_elsewhere_GiB": 1.0745315551757812,
+      "steps_over_025GiB": [
+        [
+          6900,
+          7000,
+          8.84
+        ],
+        [
+          7000,
+          7100,
+          0.96
+        ],
+        [
+          14900,
+          15000,
+          8.23
+        ]
+      ]
     }
   ],
   "scientific_verdict": null

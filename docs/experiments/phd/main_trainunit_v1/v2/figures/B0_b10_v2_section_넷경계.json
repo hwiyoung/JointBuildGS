@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-18T12:12:23.128555+09:00",
+  "plans_drawn": [
+    "건물단위_s0",
+    "건물단위_s1",
+    "전체",
+    "넷",
+    "아홉"
+  ],
+  "plans_missing": [],
+  "section": {
+    "start": [
+      111.91166968946088,
+      55.26633449601721
+    ],
+    "end": [
+      111.91166968946088,
+      79.26633449601721
+    ],
+    "half_width": 0.6
+  },
+  "boundary": {
+    "cell": 2,
+    "axis": "y",
+    "at": 67.26633449601721,
+    "lo": [
+      -3.794835525528808,
+      67.26633449601721
+    ],
+    "hi": [
+      1000000.0,
+      67.26633449601721
+    ]
+  },
+  "box_distance_m": 0.0,
+  "crosses_box": true,
+  "dpi": 200,
+  "crs": "EPSG:25832; local XY = EPSG:25832 - [690953, 5336071]",
+  "sources": [
+    {
+      "path": "/tu/gt/scenes/B0_b10__ALS/rows.npz",
+      "sha256": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B0_b10_건물단위_s0_sections.npz",
+      "sha256": "6df60c0332412ff89710013b6c84f9b780a1259e41a45990dfd21763398e3a65"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B0_b10_건물단위_s1_sections.npz",
+      "sha256": "d9fd267fb008c5b78b34fd90c10feec48137df602577b3c28fb6b854f84a5731"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B0_b10_전체_sections.npz",
+      "sha256": "6245b34eba25ad750d57359cdc1408d58e11deeb3772889103529967df1b95c1"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B0_b10_넷_sections.npz",
+      "sha256": "9f6951669f404e6ab3592a9e813e532083821d787d3b7ec42c9843f2101c3ecb"
+    },
+    {
+      "path": "/repo/docs/experiments/phd/main_trainunit_v1/figures/_parts/B0_b10_아홉_sections.npz",
+      "sha256": "4983157b37aa04c0b347eed9530c0027013255ae7677f7648901804d1fe6a0ea"
+    }
+  ],
+  "script_sha256": "d7f0b17a777cb181cca2d1a5f0511b45fd1174701a4549cda2ca873b4d9897cd",
+  "scientific_verdict": null
+}
