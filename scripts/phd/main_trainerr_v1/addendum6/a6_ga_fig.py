@@ -42,6 +42,8 @@ def main():
                 v = r.get(f'exits_{nm}_share_pct') or 0; ax.barh(3-gk-.18, v, left=left, height=.34, color=PCOL[i], alpha=.45); left += v
             out[f'{stem}__{gk}'] = np.array([[r.get(f'main_{nm}_pct') or 0 for nm in PATH_KO], [r.get(f'exits_{nm}_share_pct') or 0 for nm in PATH_KO]])
         ax.set_yticks([3, 2, 1, 0]); ax.set_yticklabels([f'{GROUP_KO[g]}\n위: 조각의 주된 길 / 아래: 나간 사건' for g in range(4)], fontsize=9); ax.set_xlim(0, 100); ax.set_title(SC_KO[stem], fontsize=13, loc='left'); ax.set_xlabel('%'); ax.grid(axis='x', alpha=.3)
+    r0 = [r for r in rows if r['stem'] == scenes[0] and r['definition'] == 'FINALTRAIN' and r['state'] == '전체' and r['group'] == GROUP_KO[1]][0]
+    xm = (r0.get('main_풀림_pct') or 0)+(r0.get('main_재할당_pct') or 0)/2; axs[0].annotate('잃은 점: 주된 길은 재할당', xy=(xm, 2.18), xytext=(xm-35, 2.75), arrowprops=dict(arrowstyle='->', lw=2), fontsize=12, weight='bold', bbox=dict(fc='white', ec='k'))
     axs[0].legend(loc='lower left', bbox_to_anchor=(0, 1.08), ncol=5, fontsize=11, frameon=False)
     fig.suptitle('잃은 점의 조각에서 가우시안이 나간 길의 비율 (네 무리 나란히)', fontsize=16, weight='bold'); fig.tight_layout(rect=(0, 0, 1, .93)); fig.savefig(FIG/'ga_exit_paths.png', dpi=110); plt.close(fig)
     savez(GA6/'fig_exit_paths.npz', **out); dump(FIG/'ga_exit_paths.json', dict(at=now(), figure='ga_exit_paths.png', values='payload addendum6/ga/fig_exit_paths.npz', table='tables/ga_paths.csv', scientific_verdict=None))

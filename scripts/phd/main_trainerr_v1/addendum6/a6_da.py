@@ -35,7 +35,7 @@ def pix(stem):
     sys.path.insert(0, '/repo/scripts/phd/main_trainerr_v1'); sys.path.insert(0, '/repo/scripts/phd/main_trainerr_v1/addendum4'); import a4_da as D4
     camera = D4.gpu_setup(); t0 = time.monotonic(); P = loadz(PTS/f'sel_{stem}.npz'); sel = np.flatnonzero(np.isin(P['state'], [1, 2])); X = P['xyz'][sel].astype('f8'); tau = P['tau'][sel].astype('f8'); v = P['v'][sel]
     g, tag, tidx, ply = load_ft(stem); size = torch.exp(g._scaling).max(1).values.cpu().numpy(); op = torch.sigmoid(g._opacity[:, 0]).cpu().numpy()
-    md, mi = D4.views_of(stem); vn = sorted(mi); recs = {k: [] for k in ['pt', 'view', 'zp', 'acc', 'mean', 'median', 'w3', 'wk', 'front_off', 'size_within', 'size_front', 'dist_within']}
+    md, mi = D4.views_of(stem); vn = sorted(mi); recs = {k: [] for k in ['pt', 'view', 'zp', 'acc', 'mean', 'median', 'w3', 'wk', 'front_off', 'size_within', 'size_front', 'dist_within', 'behind_off', 'size_behind']}
     with torch.no_grad():
         for j, nm in enumerate(vn):
             mm = mi[nm]; K = np.asarray(mm['K']); M = np.asarray(mm['W2C']); Xc = X@M[:3, :3].T+M[:3, 3]; z = Xc[:, 2]; okz = z > .2
@@ -48,7 +48,7 @@ def pix(stem):
             b = np.where(dep < zp-tl, 0, np.where(dep > zp+tl, 2, 1)); vp = v[ins][p]
             kd = np.where(tag[gi] == 1, np.where(tidx[gi] == vp, 0, 1), np.where(tag[gi] == 2, 2, 3))
             w3 = np.zeros((n, 3)); np.add.at(w3, (p, b), w); wk = np.zeros((n, 3, 4)); np.add.at(wk, (p, b, kd), w)
-            fo = np.bincount(p, w*(zp-dep)*(b == 0), n)/np.maximum(w3[:, 0], 1e-12)
+            fo = np.bincount(p, w*(zp-dep)*(b == 0), n)/np.maximum(w3[:, 0], 1e-12); bo = np.bincount(p, w*(dep-zp)*(b == 2), n)/np.maximum(w3[:, 2], 1e-12)
             def wmed(mask, val):
                 out = np.full(n, np.nan); q = np.flatnonzero(mask)
                 if len(q):
@@ -56,9 +56,9 @@ def pix(stem):
                     for i in np.flatnonzero(st[1:] > st[:-1]):
                         a_, e_ = st[i], st[i+1]; c0 = cs[a_-1] if a_ else 0.; k = np.searchsorted(cs[a_:e_]-c0, .5*(cs[e_-1]-c0)); out[i] = vq[a_+min(k, e_-a_-1)]
                 return out
-            sw = wmed(b == 1, size[gi]); sf = wmed(b == 0, size[gi]); dw = wmed(b == 1, np.abs(dep-zp))
+            sw = wmed(b == 1, size[gi]); sf = wmed(b == 0, size[gi]); dw = wmed(b == 1, np.abs(dep-zp)); sb_ = wmed(b == 2, size[gi])
             for k_, val in [('pt', sel[ins]), ('view', np.full(n, j, 'i2')), ('zp', z[ins]), ('acc', acc), ('mean', mean), ('median', med_), ('w3', w3), ('wk', wk), ('front_off', fo),
-                            ('size_within', sw), ('size_front', sf), ('dist_within', dw)]: recs[k_].append(np.asarray(val))
+                            ('size_within', sw), ('size_front', sf), ('dist_within', dw), ('behind_off', bo), ('size_behind', sb_)]: recs[k_].append(np.asarray(val))
             if j % 20 == 0: print('DA6_PIX', stem, j, len(vn), n, round(time.monotonic()-t0), flush=True)
     out = {k: np.concatenate(v_) for k, v_ in recs.items()}
     # nearest Gaussians (opacity >= 0.1) around each point
@@ -134,7 +134,7 @@ def tables():
         P, z, sel, k, res, fc = labels(stem); st = P['state'][sel]; g = P['group'][sel]
         for vs in VIEWSETS:
           l1, l2, M, sf, sb, sw, nv = res[vs]; use = fc if vs != VIEWSETS[0] else np.ones(len(k), bool)
-          fk = np.zeros((len(sel), 4)); np.add.at(fk, k[use], z['wk'][use, 0, :]); wk_in = np.zeros((len(sel), 4)); np.add.at(wk_in, k[use], z['wk'][use, 1, :])
+          fk = np.zeros((len(sel), 4)); np.add.at(fk, k[use], z['wk'][use, 0, :]); wk_in = np.zeros((len(sel), 4)); np.add.at(wk_in, k[use], z['wk'][use, 1, :]); bk = np.zeros((len(sel), 4)); np.add.at(bk, k[use], z['wk'][use, 2, :])
           for stt, lab, rows in [(1, L1, rows1), (2, L2, rows2)]:
               for gk in range(4):
                   m = (st == stt) & (g == gk); nn = int(m.sum())
@@ -144,10 +144,11 @@ def tables():
                   r.update({f'{x}_pct': pct(L[m] == i) for i, x in enumerate(lab)})
                   r.update(weight_front_median=med(M['front'][m]), weight_within_median=med(M['within'][m]), weight_behind_median=med(M['behind'][m]), opacity_sum_median=med(M['acc'][m]),
                            mean_depth_minus_point_m_median=med(M['mean_off'][m]), median_depth_minus_point_m_median=med(M['median_off'][m]),
-                           front_offset_m_median=med(gmed(k[use], z['front_off'][use], len(sel))[m]), size_within_m_median=med(gmed(k[use], z['size_within'][use], len(sel))[m]), size_front_m_median=med(gmed(k[use], z['size_front'][use], len(sel))[m]),
-                           dist_within_m_median=med(gmed(k[use], z['dist_within'][use], len(sel))[m]))
+                           front_offset_m_median=med(gmed(k[use], np.where(z['w3'][:, 0] > 0, z['front_off'], np.nan)[use], len(sel))[m]), size_within_m_median=med(gmed(k[use], z['size_within'][use], len(sel))[m]), size_front_m_median=med(gmed(k[use], z['size_front'][use], len(sel))[m]),
+                           dist_within_m_median=med(gmed(k[use], z['dist_within'][use], len(sel))[m]),
+                           behind_offset_m_median=med(gmed(k[use], np.where(z['w3'][:, 2] > 0, z['behind_off'], np.nan)[use], len(sel))[m]) if 'behind_off' in z else None, size_behind_m_median=med(gmed(k[use], z['size_behind'][use], len(sel))[m]) if 'size_behind' in z else None)
                   tf = max(1e-12, float(fk[m].sum())); ti = max(1e-12, float(wk_in[m].sum()))
-                  r.update({f'front_weight_{x}_pct': 100*float(fk[m][:, i].sum())/tf for i, x in enumerate(KIND4)}); r.update({f'within_weight_{x}_pct': 100*float(wk_in[m][:, i].sum())/ti for i, x in enumerate(KIND4)})
+                  r.update({f'front_weight_{x}_pct': 100*float(fk[m][:, i].sum())/tf for i, x in enumerate(KIND4)}); r.update({f'within_weight_{x}_pct': 100*float(wk_in[m][:, i].sum())/ti for i, x in enumerate(KIND4)}); tb_ = max(1e-12, float(bk[m].sum())); r.update({f'behind_weight_{x}_pct': 100*float(bk[m][:, i].sum())/tb_ for i, x in enumerate(KIND4)})
                   if stt == 2:
                       r.update(nearest_m_median=med(z['near_d'][m]), nearest_normal_abs_m_median=med(np.abs(z['near_n'][m])), nearest_tangent_m_median=med(z['near_t'][m]), within_tau_count_median=med(z['within_n'][m]),
                                within_tau_opacity_max_median=med(z['within_op_max'][m]), within_tau_size_median=med(z['within_size_med'][m]), within_tau_angle_deg_median=med(z['within_angle_med'][m]),

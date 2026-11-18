@@ -1,0 +1,114 @@
+{
+ "at": "2026-11-18T10:20:32.296991+09:00",
+ "figure": "da_pix_present.png",
+ "model": "FINALTRAIN 30000",
+ "items": [
+  {
+   "stem": "R1rep_b10__ALS",
+   "label": "가우시안이 어긋나 있다",
+   "n_label": 343,
+   "li": 5405,
+   "sel": 6096,
+   "pair": 1411180,
+   "view": 130,
+   "view_name": "DJI_20241217095055_0054_D",
+   "zp": 214.13088123098805,
+   "tau": 0.1322454959154129,
+   "mean": 197.86649208772863,
+   "median": 190.2335968017578,
+   "acc": 0.9996708547696471,
+   "xyz": [
+    30.368000030517578,
+    37.05059814453125,
+    -33.522308349609375
+   ]
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "label": "앞으로 당겨진다",
+   "n_label": 2189,
+   "li": 41681,
+   "sel": 41681,
+   "pair": 3672169,
+   "view": 121,
+   "view_name": "DJI_20241217095631_0078_D",
+   "zp": 181.143382478147,
+   "tau": 0.6425049304962158,
+   "mean": 160.2918424467688,
+   "median": 141.32740783691406,
+   "acc": 0.9997123032881063,
+   "xyz": [
+    103.82864379882812,
+    -5.177382946014404,
+    -31.259641647338867
+   ]
+  },
+  {
+   "stem": "B0_b10__ALS",
+   "label": "뒤로 밀린다",
+   "n_label": 30,
+   "li": 7760,
+   "sel": 8083,
+   "pair": 1776567,
+   "view": 166,
+   "view_name": "DJI_20241217101313_0009_D",
+   "zp": 48.71202125467414,
+   "tau": 0.14737379550933838,
+   "mean": 49.00727856514173,
+   "median": 47.97129440307617,
+   "acc": 0.9993571667437209,
+   "xyz": [
+    119.35964965820312,
+    37.54920959472656,
+    -20.462461471557617
+   ]
+  },
+  {
+   "stem": "R1rep_b10__LoD2",
+   "label": "영상마다 다르다",
+   "n_label": 690,
+   "li": 47365,
+   "sel": 47728,
+   "pair": 19856,
+   "view": 12,
+   "view_name": "DJI_20241217084431_0059_D",
+   "zp": 67.24020527327852,
+   "tau": 1.0055055618286133,
+   "mean": 67.17206218658056,
+   "median": 67.05353546142578,
+   "acc": 0.8798490618355572,
+   "xyz": [
+    9.910400390625,
+    15.159299850463867,
+    -34.36090850830078
+   ]
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "label": "그린 깊이는 맞다",
+   "n_label": 442,
+   "li": 26777,
+   "sel": 26777,
+   "pair": 5470486,
+   "view": 172,
+   "view_name": "DJI_20241217101327_0016_D",
+   "zp": 36.39487440559151,
+   "tau": 0.6425049304962158,
+   "mean": 36.35835967461915,
+   "median": 36.30830001831055,
+   "acc": 0.9995194746297784,
+   "xyz": [
+    119.96286010742188,
+    13.686416625976562,
+    -32.25604248046875
+   ]
+  }
+ ],
+ "rule": [
+  "            the point's median within-tau weight; for each the view whose within weight is closest to that median -> figures/da_pix_absent.png",
+  "  present : lost state-2 points, one per work-da label (5.3): the scene with the most lost points of that label, the point at the median of its (mean depth - point depth),",
+  "            the view closest to that median -> figures/da_pix_present.png",
+  "Each panel: splat weight alpha*T along the pixel ray against (splat depth - point depth), 0.1 m bins, stacked by kind relative to the point's patch; tau band; lines at the"
+ ],
+ "scientific_verdict": null
+}

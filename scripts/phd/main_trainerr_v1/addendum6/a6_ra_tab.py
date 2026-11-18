@@ -74,14 +74,19 @@ def tables():
         print('RA6_TAB', stem, len(W), flush=True)
     table6('ra_base_check', base_chk); table6('ra_groups', groups); table6('ra_scene', scene); table6('ra_places', places)
 
-def voxels(stem, model, var):
+def voxels(stem, model, var, pts=None, tag=''):
+    """pts = (X, outward normals, labels, tau, label names dict) for other point sets (order 5.3 '그린 깊이는 맞다' points); default the two walls."""
     c = ccfg6()['work_ra']['voxel_values']; offs = np.asarray(c['offsets_m'], 'f8'); TR = .25
     _, _, rd = mesh_dir(stem, model, var); rec = json.loads((rd/'receipt.json').read_text()); views = rec['views']
-    pls = ['visible_low', 'visible_high'] if stem == 'B0_b10__LoD2' else ['r1_lod2_wall1']; X = []; N_ = []; lab = []; tau = []
-    A = np.load(GT/'addendum11/final_data'/f'{stem}.npz'); rp = A['reference__point_id']; o = np.argsort(rp)
-    for pl in pls:
-        P = place_points5(pl); X.append(P['xyz']); N_.append(P['out']); lab += [pl]*len(P['xyz']); j = o[np.searchsorted(rp[o], P['point_id'])]; tau.append(A['reference__tau_m'][j])
-    X = np.concatenate(X).astype('f8'); N_ = np.concatenate(N_).astype('f8'); n = len(X); V = X[:, None, :]+offs[None, :, None]*N_[:, None, :]   # n x k x 3
+    if pts is None:
+        pls = ['visible_low', 'visible_high'] if stem == 'B0_b10__LoD2' else ['r1_lod2_wall1']; X = []; N_ = []; lab = []; tau = []
+        A = np.load(GT/'addendum11/final_data'/f'{stem}.npz'); rp = A['reference__point_id']; o = np.argsort(rp)
+        for pl in pls:
+            P = place_points5(pl); X.append(P['xyz']); N_.append(P['out']); lab += [pl]*len(P['xyz']); j = o[np.searchsorted(rp[o], P['point_id'])]; tau.append(A['reference__tau_m'][j])
+        X = np.concatenate(X).astype('f8'); N_ = np.concatenate(N_).astype('f8'); NAMES = PLACES
+    else:
+        X, N_, lab, tau, NAMES = pts; lab = list(lab); pls = list(dict.fromkeys(lab)); tau = [tau]
+    n = len(X); V = X[:, None, :]+offs[None, :, None]*N_[:, None, :]   # n x k x 3
     mi = json.loads((FT/'stage1'/stem/'maps/index.json').read_text())['views']; site = stem.split('__')[0]; MV = PH/'main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61'/site/'maps/mvs'
     tsum = np.zeros(V.shape[:2]); wsum = np.zeros(V.shape[:2]); pv = {k: [] for k in ['view', 'handed', 'z0', 'added0', 'occluded']}
     for vi, v in enumerate(views):
@@ -98,11 +103,11 @@ def voxels(stem, model, var):
             pv['view'].append(np.c_[ii, np.full(len(ii), vi)]); pv['handed'].append(dd[ii, k0]); pv['z0'].append(z[ii, k0]); pv['added0'].append(np.where(up[ii, k0], t[ii, k0], np.nan)); pv['occluded'].append(occ)
     tsdf = np.where(wsum > 0, tsum/np.maximum(wsum, 1), np.nan); pvv = {k: np.concatenate(v_) for k, v_ in pv.items()}
     sg = np.sign(tsdf); change = np.array([bool(np.any((sg[i, :-1]*sg[i, 1:]) < 0)) for i in range(n)])
-    savez(RA6/f'voxels_{stem}__{model}__{var}.npz', xyz=X, out=N_, place=np.array(lab), tau=np.concatenate(tau), offsets=offs, tsdf=tsdf, weight=wsum, sign_change=change, **{f'view_{k}': v for k, v in pvv.items()})
+    savez(RA6/f'voxels{tag}_{stem}__{model}__{var}.npz', xyz=X, out=N_, place=np.array(lab), tau=np.concatenate(tau), offsets=offs, tsdf=tsdf, weight=wsum, sign_change=change, **{f'view_{k}': v for k, v in pvv.items()})
     rows = []
     for pl in pls:
         m = np.array(lab) == pl; k0 = int(np.argmin(np.abs(offs)))
-        r = dict(stem=stem, model=MODEL_KO[model], variant=var, place=PLACES[pl], points=int(m.sum()), sign_change_pct=pct(change[m]), tsdf_at_point_q=q4(tsdf[m, k0]), weight_at_point_q=q4(wsum[m, k0]),
+        r = dict(stem=stem, model=MODEL_KO[model], variant=var, place=NAMES[pl], points=int(m.sum()), sign_change_pct=pct(change[m]), tsdf_at_point_q=q4(tsdf[m, k0]), weight_at_point_q=q4(wsum[m, k0]),
                  no_change_all_positive_pct=pct((~change[m]) & np.all((tsdf[m] > 0) | np.isnan(tsdf[m]), 1)), no_change_all_negative_pct=pct((~change[m]) & np.all((tsdf[m] < 0) | np.isnan(tsdf[m]), 1)))
         pm = m[pvv['view'][:, 0]]
         r.update(view_pairs=int(pm.sum()), occluded_pairs_pct=pct(pvv['occluded'][pm]), added_at_point_occluded_q=q4(pvv['added0'][pm & pvv['occluded']]), added_at_point_open_q=q4(pvv['added0'][pm & ~pvv['occluded']]),
@@ -110,9 +115,18 @@ def voxels(stem, model, var):
                  no_depth_handed_pct=pct(pvv['handed'][pm] <= 0))
         for kk, of in enumerate(offs): r[f'tsdf_median_at_{of:+.2f}m'] = med(tsdf[m, kk])
         rows.append(r)
-    p = A6D/'tables'/'ra_voxels.json'; old = json.loads(p.read_text())['rows'] if p.exists() else []
-    old = [x for x in old if not (x['stem'] == stem and x['model'] == MODEL_KO[model] and x['variant'] == var)]+rows; table6('ra_voxels', old); print('RA6_VOX', stem, model, var, n, flush=True)
+    p = A6D/'tables'/f'{"ra_voxels" if not tag else "da_ok_voxels"}.json'; old = json.loads(p.read_text())['rows'] if p.exists() else []
+    old = [x for x in old if not (x['stem'] == stem and x['model'] == MODEL_KO[model] and x['variant'] == var)]+rows; table6('ra_voxels' if not tag else 'da_ok_voxels', old); print('RA6_VOX', stem, model, var, n, flush=True)
+
+def voxels_ok(stem):
+    """order 5.3: points labelled '그린 깊이는 맞다' (state 2, either work-da view set), FINALTRAIN base and occl_10 re-extractions; outward = target normal oriented by outward() (no GT)."""
+    S = loadz(A6O/'points'/f'sel_{stem}.npz'); D = loadz(A6O/'da'/f'labels_{stem}.npz'); sel = D['sel']; ok = (D['all__label2'] == 4) | (D['facing__label2'] == 4); ii = sel[ok]
+    if not len(ii): print('RA6_OK none', stem, flush=True); return
+    T = Targets(stem); v = S['v'][ii]; X = S['xyz'][ii].astype('f8'); N0 = T.normal[v]; out, _ = outward(stem, X, N0)
+    lab = np.array([f"{GROUP_KO[int(g)]}" for g in S['group'][ii]]); names = {g: f'그린 깊이는 맞다 · {g}' for g in GROUP_KO.values()}
+    savez(RA6/f'ok_points_{stem}.npz', sel_index=ii, def_all=D['all__label2'][ok] == 4, def_facing=D['facing__label2'][ok] == 4)
+    for var in ['base', 'occl_10']: voxels(stem, 'ft', var, pts=(X, out, lab, S['tau'][ii].astype('f8'), names), tag='_ok')
 
 if __name__ == '__main__':
     a = sys.argv[1:]
-    {'tables': tables, 'voxels': lambda: voxels(*a[1:4])}[a[0]]()
+    {'tables': tables, 'voxels': lambda: voxels(*a[1:4]), 'voxels_ok': lambda: [voxels_ok(x) for x in a[1:]]}[a[0]]()

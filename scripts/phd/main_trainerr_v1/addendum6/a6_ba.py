@@ -64,6 +64,9 @@ def tables():
             mm = m & (c == ci)
             if mm.any(): ax.scatter(xy[mm, 0], xy[mm, 1], s=2.5, c=CCOL[ci], lw=0, rasterized=True, label=f'{CAUSE[ci]} {int(mm.sum()):,}')
         ax.set_aspect('equal'); ax.set_title(f'{SC_KO[stem]} — 잃은 점 {int(m.sum()):,}', fontsize=14, loc='left'); ax.legend(markerscale=5, fontsize=10, loc='upper right'); ax.set_xlabel('x (m)'); ax.set_ylabel('y (m)')
+        mm6 = m & (c == 6)
+        if mm6.any():
+            cx_ = np.median(xy[mm6], 0); ax.annotate('재할당으로 나간 잃은 점', xy=tuple(cx_), xytext=(cx_[0]-10, cx_[1]-12), arrowprops=dict(arrowstyle='->', lw=2), fontsize=12, weight='bold', bbox=dict(fc='white', ec='k'))
         ax.annotate('', xy=(.04, .14), xytext=(.04, .04), xycoords='axes fraction', arrowprops=dict(arrowstyle='->', lw=2)); ax.text(.05, .14, '북', transform=ax.transAxes, fontsize=12)
     fig.suptitle('잃은 점에 붙인 원인 (위에서 본 그림, 회색 = 지킨 점 표본)', fontsize=18, weight='bold'); fig.tight_layout(rect=(0, 0, 1, .96)); FIG.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG/'ba_cause_map.png', dpi=100); plt.close(fig)

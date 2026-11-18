@@ -25,9 +25,40 @@ def main():
             if i == 0: ax.set_title(RUN_KO[run], fontsize=14)
             if j == 0: ax.set_ylabel(f'{vko}\n재설정 뒤 살아남은 비율 (%)', fontsize=11)
             if i == len(VALS)-1: ax.set_xlabel('값의 십분위 칸 (1 = 가장 작음, 장면 안 모든 가우시안 기준)')
+    axs[1, 0].annotate('값이 클수록 많이 살아남는다', xy=(10, 75), xytext=(2.5, 85), arrowprops=dict(arrowstyle='->', lw=2), fontsize=12, weight='bold', bbox=dict(fc='white', ec='k'))
     axs[0, 0].legend(fontsize=10, loc='upper left'); fig.suptitle('재설정 뒤 살아남는 비율은 이 값에 따라 달라진다 (3,000회 재설정, 빈 동그라미 = 칸 안 가우시안 30개 미만)', fontsize=17, weight='bold')
     fig.tight_layout(rect=(0, 0, 1, .96)); FIG.mkdir(parents=True, exist_ok=True); fig.savefig(FIG/'na_survival.png', dpi=95); plt.close(fig)
     savez(A6O/'na/fig_survival.npz', **out); dump(FIG/'na_survival.json', dict(at=now(), figure='na_survival.png', table='tables/na_bins.csv', values='payload addendum6/na/fig_survival.npz', reset=3000, scientific_verdict=None))
     print('NA6_FIG', flush=True)
 
-if __name__ == '__main__': main()
+if __name__ == '__main__' and len(sys.argv) == 1: main()
+
+def record():
+    """order 4.3 figure: opacity of the in-range Gaussians at the saved states 3000_pre_reset, 3000, 3100 (the only saved states in 3000-3100), survived vs deleted
+    (survival = present in the first whole-scene dump after the reset, work na). -> figures/na_record_opacity.png (+ json, payload addendum6/na/fig_record_opacity.npz)"""
+    plt = korean_plt(); runs = [('sa1_R1_ALS_record6000', 'R1 × 항공 LiDAR'), ('sb1_B0_LoD2_record6000', 'B0 × LoD2'), ('sb2_B0_ALS_record6000', 'B0 × 항공 LiDAR')]
+    fig, axs = plt.subplots(1, 3, figsize=(27, 9), sharey=True); out = {}; xs = [0, 1, 2]; lab = ['3,000회\n재설정 직전', '3,000회\n재설정 직후', '3,100회\n(첫 점검)']
+    for ax, (run, ko) in zip(axs, runs):
+        z = loadz(A6O/'na'/f'grads_{run}_3000.npz', ['uid', 'alive', 'inside_rows']); ins = z['inside_rows']; uid = z['uid'][ins]; al = z['alive'][ins]; m = RUNS4[run]['model']
+        o = np.argsort(uid); vals = {}
+        for k, st in enumerate(['3000_pre_reset', '3000', '3100']):
+            s = loadz(m/'trainlog/states'/f'{st}.npz', ['uid', 'opacity']); v = np.full(len(uid), np.nan); p = np.clip(np.searchsorted(uid[o], s['uid']), 0, len(uid)-1); ok = uid[o][p] == s['uid']; v[o[p[ok]]] = s['opacity'][ok]; vals[st] = v
+        Y = np.stack([vals[s] for s in ['3000_pre_reset', '3000', '3100']], 1); out[f'{run}__opacity'] = Y; out[f'{run}__alive'] = al
+        rng = np.random.default_rng(0)
+        for flag, col, nm in [(True, '#2ca02c', '살아남은 것'), (False, '#d62728', '지워진 것')]:
+            mm = np.flatnonzero(al == flag); pick = rng.choice(mm, min(150, len(mm)), replace=False) if len(mm) else []
+            for i in pick: ax.plot(xs, Y[i], color=col, alpha=.08, lw=.8)
+            q = np.nanquantile(Y[mm], [.25, .5, .75], axis=0) if len(mm) else np.full((3, 3), np.nan)
+            ax.plot(xs, q[1], '-o', color=col, lw=3, ms=8, label=f'{nm} {len(mm):,}개 (중앙값, 띠 = 25–75 %)'); ax.fill_between(xs, q[0], q[2], color=col, alpha=.18)
+        ax.axhline(.05, color='k', ls='--', lw=1.5); ax.text(2.05, .05, '지우는 문턱 0.05', va='center', fontsize=11)
+        ax.set_yscale('log'); ax.set_ylim(.005, 1.); ax.set_xticks(xs); ax.set_xticklabels(lab, fontsize=12); ax.set_xlim(-.2, 2.6); ax.grid(alpha=.3)
+        ax.set_title(f'{ko} (기록 범위 안 가우시안)', fontsize=14, loc='left'); ax.legend(loc='lower left', fontsize=11)
+        if not np.isfinite(Y[:, 2]).any(): ax.text(1, .3, '3,100회 저장 없음', ha='center')
+    axs[0].set_ylabel('불투명도 (로그 눈금)', fontsize=12)
+    axs[0].annotate('재설정: 모두 0.01', xy=(1, .01), xytext=(.35, .0065), arrowprops=dict(arrowstyle='->', lw=1.8), fontsize=12)
+    fig.suptitle('재설정 뒤 100회 동안 불투명도가 올라간 정도: 살아남은 것과 지워진 것 (저장된 상태는 3,000·3,100회 둘뿐)', fontsize=17, weight='bold'); fig.tight_layout(rect=(0, 0, 1, .93))
+    fig.savefig(FIG/'na_record_opacity.png', dpi=100); plt.close(fig); savez(A6O/'na/fig_record_opacity.npz', **out)
+    dump(FIG/'na_record_opacity.json', dict(at=now(), figure='na_record_opacity.png', states=['3000_pre_reset', '3000', '3100'], note='no saved state between 3000 and 3100 (records every 100 there)', values='payload addendum6/na/fig_record_opacity.npz', scientific_verdict=None))
+    print('NA6_RECFIG', flush=True)
+
+if __name__ == '__main__' and len(sys.argv) > 1 and sys.argv[1] == 'record': record()

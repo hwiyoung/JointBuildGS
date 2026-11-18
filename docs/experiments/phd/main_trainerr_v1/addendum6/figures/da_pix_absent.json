@@ -1,0 +1,140 @@
+{
+ "at": "2026-11-18T10:19:22.331482+09:00",
+ "figure": "da_pix_absent.png",
+ "model": "FINALTRAIN 30000",
+ "items": [
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "지킨 점",
+   "quantile": 25,
+   "li": 53342,
+   "sel": 53499,
+   "pair": 1387161,
+   "view": 70,
+   "label": "앞이 가려진다",
+   "view_name": "DJI_20241217094925_0009_D",
+   "zp": 232.89823332796163,
+   "tau": 0.6425049304962158,
+   "mean": 120.41359281425936,
+   "median": 102.00639343261719,
+   "acc": 0.9997000194853172,
+   "xyz": [
+    104.79979705810547,
+    26.15250015258789,
+    -40.64801025390625
+   ]
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "지킨 점",
+   "quantile": 50,
+   "li": 31019,
+   "sel": 31019,
+   "pair": 5888698,
+   "view": 191,
+   "label": "이웃이 그린다",
+   "view_name": "DJI_20241217101538_0006_D",
+   "zp": 65.03954115987176,
+   "tau": 0.6425049304962158,
+   "mean": 65.035463165544,
+   "median": 65.42831420898438,
+   "acc": 0.9542380709317513,
+   "xyz": [
+    111.42095947265625,
+    -8.424484252929688,
+    -43.343624114990234
+   ]
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "지킨 점",
+   "quantile": 75,
+   "li": 25709,
+   "sel": 25709,
+   "pair": 5028122,
+   "view": 163,
+   "label": "이웃이 그린다",
+   "view_name": "DJI_20241217101307_0006_D",
+   "zp": 43.52349022620501,
+   "tau": 0.6425049304962158,
+   "mean": 43.51242206833644,
+   "median": 43.691741943359375,
+   "acc": 0.9994360785931349,
+   "xyz": [
+    133.23333740234375,
+    47.03321838378906,
+    -26.050107955932617
+   ]
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "잃은 점",
+   "quantile": 25,
+   "li": 40604,
+   "sel": 40604,
+   "pair": 1757738,
+   "view": 77,
+   "label": "앞이 가려진다",
+   "view_name": "DJI_20241217094957_0025_D",
+   "zp": 205.39784028386032,
+   "tau": 0.6425049304962158,
+   "mean": 83.2809473384375,
+   "median": 82.65471649169922,
+   "acc": 0.9993422315092175,
+   "xyz": [
+    109.67364501953125,
+    -7.586182117462158,
+    -36.7596435546875
+   ]
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "잃은 점",
+   "quantile": 50,
+   "li": 54104,
+   "sel": 54261,
+   "pair": 484377,
+   "view": 23,
+   "label": "앞이 가려진다",
+   "view_name": "DJI_20241217084457_0072_D",
+   "zp": 75.7096606707529,
+   "tau": 0.6425049304962158,
+   "mean": 56.7322080390199,
+   "median": 56.81836700439453,
+   "acc": 0.9993589283549227,
+   "xyz": [
+    110.6094970703125,
+    40.015098571777344,
+    -42.99040985107422
+   ]
+  },
+  {
+   "stem": "B0_b10__LoD2",
+   "group": "잃은 점",
+   "quantile": 75,
+   "li": 36732,
+   "sel": 36732,
+   "pair": 5039021,
+   "view": 163,
+   "label": "앞이 가려진다",
+   "view_name": "DJI_20241217101307_0006_D",
+   "zp": 46.890201980409074,
+   "tau": 0.6425049304962158,
+   "mean": 46.08666877137237,
+   "median": 46.18006134033203,
+   "acc": 0.9994365726233809,
+   "xyz": [
+    129.04843139648438,
+    38.565521240234375,
+    -29.547422409057617
+   ]
+  }
+ ],
+ "rule": [
+  "            the point's median within-tau weight; for each the view whose within weight is closest to that median -> figures/da_pix_absent.png",
+  "  present : lost state-2 points, one per work-da label (5.3): the scene with the most lost points of that label, the point at the median of its (mean depth - point depth),",
+  "            the view closest to that median -> figures/da_pix_present.png",
+  "Each panel: splat weight alpha*T along the pixel ray against (splat depth - point depth), 0.1 m bins, stacked by kind relative to the point's patch; tau band; lines at the"
+ ],
+ "scientific_verdict": null
+}
