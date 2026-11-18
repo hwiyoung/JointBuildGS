@@ -33,7 +33,7 @@ def images(site):
         img = cv2.imread(str(src / f"{x}.JPG"))
         cv2.imwrite(str(q), cv2.resize(img, (M.W, M.H), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 95])
         made += 1
-    FC.jdump(Path(s["images_dir"]).parent / "images.json", dict(site=site, train=len(tr), made=made, without_depth_map=dropped, source=str(src),
+    FC.jdump(FC.RES / "inputs" / f"images_{site}.json", dict(site=site, train=len(tr), made=made, without_depth_map=dropped, source=str(src),
                                                                  rule="cv2.resize INTER_AREA to 1024 x 741, JPEG 95 (= fork_inputs_v6.py:108-109)",
                                                                  seconds=round(time.time() - t0, 1), scientific_verdict=None))
     M.log(site, "images", len(tr), "made", made, round(time.time() - t0, 1), "s")

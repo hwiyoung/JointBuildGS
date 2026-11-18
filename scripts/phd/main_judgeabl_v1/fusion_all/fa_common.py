@@ -9,6 +9,7 @@
   격자       range.json polygon_local + 10 m, 0.25 m (원래와 같음); 평가 범위는 판정에 쓰이지 않으므로 전부 참
 쓰는 곳: /res (PH/main_judgeabl_v1/PHD-MAIN-JUDGEABL-v1/fusion_all) 만. scientific_verdict: null."""
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -21,8 +22,8 @@ import detect as DT  # noqa: E402
 from common import Views, read_depth_bin  # noqa: E402  (/repo/scripts/phd/main_stage0_v1, mf_common 이 넣은 경로)
 
 RES = Path("/res")
-CFGP = Path("/cfg/judgeabl_v1_fusion_all.json")
-LOCK = Path("/cfg/judgeabl_v1_fusion_all.lock.json")
+CFGP = Path("/cfg") / os.environ.get("FA_CFG", "judgeabl_v1_fusion_all.json")      # 캠퍼스 판: FA_CFG=judgeabl_v1_fusion_campus.json
+LOCK = CFGP.with_name(CFGP.stem + ".lock.json")
 
 
 def sha(p):
@@ -39,7 +40,10 @@ def cfg():
 
 
 C = cfg()
-SITES = C["sites"]
+SITES = dict(C.get("sites", {}))
+if C.get("sites_file") and Path(C["sites_file"]).exists():      # 캠퍼스 판: fa_campus.py prepare 가 만든 묶음 설정 (규칙은 설정에 잠김)
+    SITES.update(json.loads(Path(C["sites_file"]).read_text())["sites"])
+RES = RES / C.get("res_sub", "")
 M.SB = RES / "sb"                      # pairs_<site>.json 를 쓰고 읽는 곳 (원래 SB/prep/mvsfuse)
 _V = None
 
@@ -68,8 +72,9 @@ def train_views(site):
     s = site_cfg(site)
     lst = json.loads(Path(s["views_file"]).read_text())
     lst = lst[s.get("views_key", "train")] if isinstance(lst, dict) else lst
+    pat = s.get("depth_name", "{stem}.JPG.geometric.bin")
     stems = [n.rsplit(".", 1)[0] for n in lst]
-    have = [x for x in stems if (Path(s["mvs_dir"]) / "stereo/depth_maps" / f"{x}.JPG.geometric.bin").exists()]
+    have = [x for x in stems if (Path(s["mvs_dir"]) / "stereo/depth_maps" / pat.format(stem=x)).exists()]
     return have, sorted(set(stems) - set(have))
 
 
@@ -111,7 +116,10 @@ def read_rgb(site, stem):
 
 
 def shift_of(site, prior):
-    f = Path(site_cfg(site)["shift_from"].format(prior=prior))
+    s = site_cfg(site)
+    if "shift" in s:                                           # 캠퍼스 판: JC 패치와 같은 이동 (LoD2 0, ALS 탐색 지역 값, none 0)
+        return np.asarray(s["shift"][prior], np.float64)
+    f = Path(s["shift_from"].format(prior=prior))
     return np.asarray(json.loads(f.read_text())["registration"]["shift_applied"], np.float64)
 
 
