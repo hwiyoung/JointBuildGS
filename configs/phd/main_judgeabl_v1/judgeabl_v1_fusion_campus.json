@@ -1,0 +1,21 @@
+{
+ "task": "PHD-MAIN-JUDGEABL-v1 5절 기존 4 결합(전 건물) 캠퍼스 판 (메인 세션 전달 사용자 결정 2026-11-18 \"진행하자\")",
+ "method": "inherited/ 결합 구현 바이트 그대로(지역 판과 같은 sha), 입력 층(fa_common)만",
+ "res_sub": "campus",
+ "sites_file": "/res/campus/sites.json",
+ "colour_threshold_used": 25,
+ "decision_field": "final_25",
+ "mvs": "WIDEN0 캠퍼스 MVS (main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full, 학습 819장, 기하 깊이 지도), 본 방법(JC)과 같은 MVS",
+ "cameras": "Views() 937 영상 모델 (WIDEN0 sparse 와 자세·K 같음: JC photo_cameras.py 가 모든 학습 영상에서 확인; 여기서도 K 와 첫 영상 자세 확인)",
+ "images": "p0-audit colmap_dense/images 를 1024 x 741 INTER_AREA, JPEG 95 (WIDEN0 mvs/full/images 와 같은 원본 크기 1400 x 1013)",
+ "prior_mesh": "WIDEN0 holdout/internal/prior_tiles/<tile>/{lod2,als}_mesh.npz 를 묶음마다 합침 (fa_campus.py 머리말)",
+ "shift": "JC 패치와 같은 이동: LoD2 0, ALS = 건물의 탐색 지역 als_shift_m (none 0). WIDEN0 타일 정합(holdout/internal/registration) 은 쓰지 않음: 타일 값이 JC 패치 좌표와 다름(예: 6907_53359 LoD2 (1.14, -0.27) m, 6911_53361 ALS z -3.76 m) — 결합 칸을 JC 패치 중심에 이으므로 패치와 같은 자리의 사전 정보를 던져야 함",
+ "groups": "탐색 지역마다 하나, none 건물은 첫 타일마다 하나",
+ "region_rule": "JC 패치 중심의 0.25 m 칸이 최종 변화 칸이면 2 (목표 mvs_mean_m), 아니면 1 (목표 prior_height_m); 자기 묶음 격자 밖 = 9 (덮이지 않음); n<4 도 같은 규칙",
+ "time_rule": "첫 묶음 실측으로 어림, 전체가 3시간을 넘을 것 같으면 끝난 묶음까지만",
+ "check_rule": "세 실험 지역 상자 결과(JUDGEAPPLY region[4]) 와 넓이 차이, 지역 MVS 판(fusion_LoD2/ALS.npz) 과 덮인 공통 패치의 구분 차이를 기록(같을 필요 없음)",
+ "no_rerun": "a1~a8 다시 돌리지 않음 (메인 세션이 함)",
+ "dense_images": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+ "nproc": 16,
+ "scientific_verdict": null
+}

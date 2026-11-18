@@ -32,7 +32,9 @@ def summary3(df, by):
     oks = [f'ok_{c}' for c in CN]; df = df.copy(); df['요약 가 평균'] = df[oks].mean(1); df['요약 나 최솟값'] = df[oks].min(1); df['요약 나 경우'] = [CN[int(np.nanargmin(v))] if np.isfinite(v).any() else '' for v in df[oks].values]
     gap = []
     for _, q in df.groupby(by, sort=False):
-        pool = q[~q['variant'].isin(NO_BEST) & ~q['gt_selected'] & ~q['reference'] & (q['family'] != 'fix')]; best = pool[oks].max(0)   # 덧붙임 1 판은 기준에서 뺌(앞서 낸 값 유지)
+        pool = q[~q['variant'].isin(NO_BEST) & ~q['gt_selected'] & ~q['reference'] & (q['family'] != 'fix')]
+        if 'scope' in q.columns: pool = pool[~((pool['family'] == 'old4') & (pool['scope'] != '결합 전 건물 범위'))]   # 5절 판은 자기 범위에서만 기준에 (앞서 낸 값 유지)
+        best = pool[oks].max(0)   # 덧붙임 1 판은 기준에서 뺌(앞서 낸 값 유지)
         for i, r in q.iterrows(): gap.append((i, float(np.nanmax((best.values - r[oks].values.astype(float))))))
     g = dict(gap); df['요약 다 최대 격차'] = [g[i] for i in df.index]; return df
 def main():
@@ -43,14 +45,18 @@ def main():
     S, SPL, BD, SW = [], [], [], []
     for prior, (x, a1) in OUTS.items():
         bl = pd.read_csv(O/f'building_{prior}.csv')
+        has_fa = 'fusion_all' in x.columns and (x['variant'] == '기존 4 결합(전 건물)').any()
+        fa_part = has_fa and bool((~x['fusion_all'].astype(bool) & (x['n'] > 0)).any())       # 5절: 덮이지 않은 참값 점이 있으면 '전체' 에서 뺀다
+        drop_full = lambda q: q[(q['family'] != 'old4_3') & ~((q['family'] == 'old4') & fa_part)]
         for sn, kinds in surfaces(prior):
-            for scope in ['전체', '세 실험 지역 결합 범위']:
+            for scope in ['전체', '세 실험 지역 결합 범위'] + (['결합 전 건물 범위'] if has_fa else []):
                 q = x[x['kind'].isin(kinds)]
-                if scope == '전체': q = q[q['family'] != 'old4_3']
-                else: q = q[q['fusion3']]
+                if scope == '전체': q = drop_full(q)
+                elif scope == '세 실험 지역 결합 범위': q = q[q['fusion3'] & ~((q['family'] == 'old4') & fa_part)]   # 5절 판은 덮이지 않은 점이 섞여 뺌
+                else: q = q[q['fusion_all'].astype(bool) & (q['family'] != 'old4_3')]
                 w = wide(agg(q, ['variant', 'family']), ['variant', 'family']); w.insert(0, 'scope', scope); w.insert(0, 'surface', sn); w.insert(0, 'prior', prior); S.append(w)
             # 나눔 (전체 범위)
-            q = x[x['kind'].isin(kinds) & (x['family'] != 'old4_3')]
+            q = drop_full(x[x['kind'].isin(kinds)])
             for dim in ['group', 'place', 'textureless']:
                 w = wide(agg(q, ['variant', dim]), ['variant', dim]).rename(columns={dim: 'split_value'}); w.insert(0, 'split', dim); w.insert(0, 'surface', sn); w.insert(0, 'prior', prior); SPL.append(w)
             # 건물별
@@ -95,6 +101,10 @@ def main():
     write('s_main_summary', main_rows[cols + [f'n_{c}' for c in CN]], note=note + ' LoD2 = 지붕과 벽 합침, 항공 LiDAR = 지붕.', md=lambda d: d[cols])
     f3 = S[(S['scope'] == '세 실험 지역 결합 범위') & S['variant'].isin(BASELINE + REP)]
     write('s_fusion3_scope', f3, note=note + ' 세 실험 지역 결합 범위만(기존 4를 같은 참값 점에서).', md=lambda d: d[['prior', 'surface', 'variant'] + oks + ['ok_전체'] + [f'n_{c}' for c in CN]])
+    if (S['scope'] == '결합 전 건물 범위').any():
+        fa = S[(S['scope'] == '결합 전 건물 범위') & S['variant'].isin(BASELINE + REP)]
+        write('s_fusion_all_scope', fa, note=note + ' 5절: 기존 4 결합(전 건물)이 덮은 범위(일곱 탐색 지역 패치의 참값 점; none 지역은 확인 불가)만, 모든 판을 같은 참값 점에서.',
+              md=lambda d: d[['prior', 'surface', 'variant'] + oks + ['ok_전체'] + [f'n_{c}' for c in CN]])
     # 값 훑기 (3.1)
     sw = S[(S['scope'] == '전체') & (S['family'].isin(['old1', 'old2', 'old3']) | S['gt_selected'])]
     write('s_sweep', sw, note=note + ' 3.1 값 훑기. "참값으로 고름" 줄은 요약 가가 가장 높은 값을 참값으로 고른 참고 줄.', md=lambda d: d[['prior', 'surface', 'variant'] + oks + ['ok_전체', '요약 가 평균', '요약 나 최솟값', '요약 나 경우', '요약 다 최대 격차']])

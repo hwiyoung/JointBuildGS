@@ -1,0 +1,1 @@
+- 2026-11-17 22:37: R2_search ALS 실행이 판정을 끝내고 cells/detect/views/timing 을 쓴 뒤, 실행기 run_fa.sh 마지막 줄에서 'run_fa.sh: 줄 28: -u: 명령어를 찾을 수 없음' 으로 0 아닌 값을 냈다(FAIL 표시). 까닭: 돌던 중 run_fa.sh 에 /docs 연결을 더해 고쳤고, bash 가 고친 파일을 이어 읽음. 결과 파일은 온전함(다음 실행부터 새 파일을 읽음).

@@ -1,0 +1,133 @@
+{
+ "task": "PHD-MAIN-JUDGEABL-v1 5절 기존 4 결합(전 건물)",
+ "locked_at": "2026-11-17",
+ "method": "MVS 기반 결합 (Zhou 외 2020 재현), scripts/phd/main_baselines_v1/mvsfuse (BASELINES-v1 handover, SHA256SUMS 와 같음) 을 inherited/ 로 옮김; 규칙·값 바꾸지 않음",
+ "colour_threshold_used": 25,
+ "decision_field": "final_25",
+ "region_rule": "JC 패치 중심의 0.25 m 칸이 최종 변화 칸이면 2 (영상 깊이 사용, 목표 = mvs_mean_m), 아니면 1 (사전정보 사용, 목표 = prior_height_m); n<4 도 같은 규칙(결합 규칙: 변화 칸 -> MVS, 없으면 빈 칸 = 목표 NaN); 패치가 자기 탐색 지역 격자(범위 + 10 m) 밖 -> 덮이지 않음 = 9 (v2)",
+ "not_covered": "탐색 지역이 none 인 패치와 끝내지 못한 지역의 패치: 판정 9, 목표 NaN, 채점에서 뺌(덮인 범위를 표에 적음)",
+ "inputs_rule": "지역: DISCARD-RULE-v1 의 탐색 지역 COLMAP 조밀 MVS(/dr/mvs/<지역>, 학습 영상 = /dr/mvs_lists/<지역>.json train), 메시 /dr/s02/<지역>, 정합 이동 = /dr/s52/s03/<지역>/<prior>/summary.json (JC buildings.json als_shift_m 과 같음, 확인). GPU 단계(COLMAP) 없음: 이미 있다.",
+ "time_rule": "B0 탐색 지역으로 걸린 시간을 재고 일곱 지역 전체가 3시간 안에 끝날 것 같으면 잇는다, 아니면 끝난 지역까지만",
+ "check_rule": "세 실험 지역 상자에서 같은 구현으로 다시 낸 구분이 JUDGEAPPLY 저장 구분(region[4])과 넓이로 99 % 넘게 같은지",
+ "dense_images": "/art/phase-payloads/p0-audit/data/work/mvs/colmap_dense/images",
+ "nproc": 16,
+ "sites": {
+  "B0_b10": {
+   "kind": "box_check",
+   "mesh_dir": "/dr/s02_box/B0_b10",
+   "mvs_dir": "/prep/mvs/box_B0_b10",
+   "shift_from": "/s0/s61/box/B0_b10/{prior}/summary.json",
+   "views_file": "/s0/fork_inputs/s61/B0_b10/split.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/B0_b10/images",
+   "compare_cells": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B0_b10/mvsfuse_{prior}/detect/cells.npz",
+   "compare_decisions": "/ph/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/decisions/B0_b10__{prior}.npz",
+   "compare_regions": "/out/regions_v3/regions_ext_v3_B0_b10_{prior}.npz"
+  },
+  "B173nb_b10": {
+   "kind": "box_check",
+   "mesh_dir": "/dr/s02_box/B173nb_b10",
+   "mvs_dir": "/prep/mvs/box_B173nb_b10",
+   "shift_from": "/s0/s61/box/B173nb_b10/{prior}/summary.json",
+   "views_file": "/s0/fork_inputs/s61/B173nb_b10/split.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/B173nb_b10/images",
+   "compare_cells": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/B173nb_b10/mvsfuse_{prior}/detect/cells.npz",
+   "compare_decisions": "/ph/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/decisions/B173nb_b10__{prior}.npz",
+   "compare_regions": "/out/regions_v3/regions_ext_v3_B173nb_b10_{prior}.npz"
+  },
+  "R1rep_b10": {
+   "kind": "box_check",
+   "mesh_dir": "/dr/s02_box/R1rep_b10",
+   "mvs_dir": "/prep/mvs/box_R1rep_b10",
+   "shift_from": "/s0/s61/box/R1rep_b10/{prior}/summary.json",
+   "views_file": "/s0/fork_inputs/s61/R1rep_b10/split.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/R1rep_b10/images",
+   "compare_cells": "/ph/main_baselines_v1/PHD-MAIN-BASELINES-v1/runs/R1rep_b10/mvsfuse_{prior}/detect/cells.npz",
+   "compare_decisions": "/ph/main_judgeapply_v1/PHD-MAIN-JUDGEAPPLY-v1/decisions/R1rep_b10__{prior}.npz",
+   "compare_regions": "/out/regions_v3/regions_ext_v3_R1rep_b10_{prior}.npz"
+  },
+  "B0_search": {
+   "kind": "search_region",
+   "search_region": "B0",
+   "mesh_dir": "/dr/s02/B0",
+   "mvs_dir": "/dr/mvs/B0",
+   "shift_from": "/dr/s52/s03/B0/{prior}/summary.json",
+   "views_file": "/dr/mvs_lists/B0.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/B0_search/images"
+  },
+  "R1_search": {
+   "kind": "search_region",
+   "search_region": "R1",
+   "mesh_dir": "/dr/s02/R1",
+   "mvs_dir": "/dr/mvs/R1",
+   "shift_from": "/dr/s52/s03/R1/{prior}/summary.json",
+   "views_file": "/dr/mvs_lists/R1.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/R1_search/images"
+  },
+  "R2_search": {
+   "kind": "search_region",
+   "search_region": "R2",
+   "mesh_dir": "/dr/s02/R2",
+   "mvs_dir": "/dr/mvs/R2",
+   "shift_from": "/dr/s52/s03/R2/{prior}/summary.json",
+   "views_file": "/dr/mvs_lists/R2.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/R2_search/images"
+  },
+  "R3E_search": {
+   "kind": "search_region",
+   "search_region": "R3E",
+   "mesh_dir": "/dr/s02/R3E",
+   "mvs_dir": "/dr/mvs/R3E",
+   "shift_from": "/dr/s52/s03/R3E/{prior}/summary.json",
+   "views_file": "/dr/mvs_lists/R3E.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/R3E_search/images"
+  },
+  "R4_search": {
+   "kind": "search_region",
+   "search_region": "R4",
+   "mesh_dir": "/dr/s02/R4",
+   "mvs_dir": "/dr/mvs/R4",
+   "shift_from": "/dr/s52/s03/R4/{prior}/summary.json",
+   "views_file": "/dr/mvs_lists/R4.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/R4_search/images"
+  },
+  "R5_search": {
+   "kind": "search_region",
+   "search_region": "R5",
+   "mesh_dir": "/dr/s02/R5",
+   "mvs_dir": "/dr/mvs/R5",
+   "shift_from": "/dr/s52/s03/R5/{prior}/summary.json",
+   "views_file": "/dr/mvs_lists/R5.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/R5_search/images"
+  },
+  "SW_search": {
+   "kind": "search_region",
+   "search_region": "SW",
+   "mesh_dir": "/dr/s02/SW",
+   "mvs_dir": "/dr/mvs/SW",
+   "shift_from": "/dr/s52/s03/SW/{prior}/summary.json",
+   "views_file": "/dr/mvs_lists/SW.json",
+   "views_key": "train",
+   "images_dir": "/res/inputs/SW_search/images"
+  }
+ },
+ "scientific_verdict": null,
+ "revisions": [
+  {
+   "rev": 2,
+   "at": "2026-11-17 22:55",
+   "before_scoring": true,
+   "previous_config_sha256": "10a1629baa4e1f51329589e82d33910d8351ba02e036d97add85fa2fa90b54e8",
+   "what": "격자 밖 패치: 1(사전정보 사용) -> 9(덮이지 않음, 채점에서 뺌)",
+   "why": "연결 결과 B0 탐색 지역 JC 패치의 54 %(LoD2 211,475개)·R1 65,777개 등이 지역 MVS 범위 + 10 m 밖: 결합이 영상·MVS 를 하나도 보지 않은 패치를 '사전정보 사용' 판정으로 세지 않기 위함. 판정 칸은 그대로(다시 돌리지 않음)."
+  }
+ ]
+}
