@@ -14,6 +14,7 @@ Installed before train.py runs (runpy, /source on sys.path):
      iteration 1 and every 1,000 -> <root>/trace1000.jsonl (gaussians, ratio < 0.01 / < 0.1 shares and quantiles, VmRSS/VmHWM,
      cgroup memory.current/peak, CUDA allocated/reserved now and peak); iteration 500 -> time_check_500.json (seconds 1 -> 500).
      Count rule (TRAINUNIT-v2 cells, record only): gaussians > 3 x the count at 6,000 -> health_override.jsonl, training continues.
+  0. CDGS only: B151_NODEBUG=1 sets PipelineParams.debug = False after parsing (FILL jbgs_nodebug.py), B151_CWD = working folder.
   4. GPU sharing pause (TRAINUNIT-v2 rule): at every multiple of 100, if /control/STOP_<run>_cell<k> exists, the state is saved with the
      official capture() as <model>/chkpnt_pause<it-1>.pth (resumable with the official --start_checkpoint) and the process exits (code 75).
 Outputs next to the model (<root> = parent of -m). scientific_verdict: null
@@ -51,8 +52,20 @@ def jl(name, v):
 
 
 sys.path.insert(0, '/source')
-os.chdir('/source')
+os.chdir(os.environ.get('B151_CWD', '/source'))   # CDGS: the attempt folder (previous runs: -w <run dir>); 2DGS / GeoGS: /source
 import torch  # noqa: E402
+if os.environ.get('B151_NODEBUG') == '1':
+    # PHD-MAIN-FILL-v1 jbgs_nodebug.py rule (user decision 10-18): PipelineParams.debug = False after train.py parses its arguments
+    import argparse
+    _parse = argparse.ArgumentParser.parse_args
+
+    def _parse_nodebug(self, *a, **k):
+        ns = _parse(self, *a, **k)
+        if hasattr(ns, 'debug'):
+            ns.debug = False
+            print('[jbgs_nodebug] PipelineParams.debug = False', flush=True)
+        return ns
+    argparse.ArgumentParser.parse_args = _parse_nodebug
 
 cap = os.environ.get('JBGS_GPU_CAP_GIB')
 if cap:

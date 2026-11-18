@@ -1,0 +1,8 @@
+# PHD-MAIN-BASE151-v1 (2026-11-19): rebuild of jointbuildgs:geogs-official-db40c95-rtree-v1 (PHD-MAIN-FIX-v1
+# scripts/phd/main_fix_v1/docker/geogs_rtree.Dockerfile), which is no longer on the host, nor is its base
+# jointbuildgs:geogs-official-db40c95-v1. Base here = jointbuildgs:geogs-official-db40c95-compat-v1 (that base + matplotlib 3.9.2 +
+# LD_PRELOAD / LD_LIBRARY_PATH). The same single addition: rtree 1.3.0, the spatial index trimesh's ray module needs.
+#   docker build -f configs/phd/main_base151_v1/docker/Dockerfile.geogs-rtree-b151 -t jointbuildgs:geogs-official-db40c95-rtree-v1-b151 configs/phd/main_base151_v1/docker
+# scientific_verdict: null
+FROM jointbuildgs:geogs-official-db40c95-compat-v1
+RUN /opt/geogs/bin/pip install --no-deps --no-cache-dir rtree==1.3.0 && /opt/geogs/bin/python -c "import rtree, trimesh; print(rtree.__version__, trimesh.__version__)"

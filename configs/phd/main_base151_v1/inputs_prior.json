@@ -1,0 +1,20 @@
+{
+ "task_id": "PHD-MAIN-BASE151-v1",
+ "addendum": "inputs_prior",
+ "scientific_verdict": null,
+ "governs": "the cell prior surfaces shared by the GeoGS, CDGS and LGDM inputs (scripts/phd/main_base151_v1/b151_prior.py)",
+ "source": "phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/prior_tiles/<tile>/{lod2_mesh,als_mesh}.npz = the surfaces JUDGECHECK-v2 measured the 151 buildings against (s4_truth_rest.py: WI/prior_tiles)",
+ "tile_union": "keep a tile triangle when its centroid xy is in the tile core [E0, E0+100) x [N0, N0+100) (local frame = EPSG:25832 - (690953, 5336071))",
+ "cell_range": "centroid xy in the expanded cell + 20 m (s02 site-mesh rule range + 20 m)",
+ "registration": {
+  "LoD2": "shift 0 (JUDGECHECK-v2)",
+  "ALS": "each vertex + als_shift_m of the building of the nearest JUDGECHECK-v2 ALS patch (geometry_raw/<tile>__ALS.npz centre xy, shift_m)"
+ },
+ "face_use": {
+  "GeoGS_LoD2": "tri_type != 2 (stage-1 geogs_prep.py lod2.obj)",
+  "GeoGS_ALS": "faces with >= 1 vertex of class 6 (BASELINES als_rule.py v1)",
+  "CDGS_and_LGDM": "all faces (stage-0 export prior depth: LoD2 polygons + caps, ALS full TIN of classes 2 and 6)"
+ },
+ "differences_from_previous": "previous site meshes: s02 box range + 20 m and the stage-0 box registration shift of the site; here: tile union over the cell and the JUDGECHECK-v2 shifts (LoD2 0, ALS per building)",
+ "decision_request": "준비.md 1절 3번 (holdout folder) - proceeding with the recommendation"
+}

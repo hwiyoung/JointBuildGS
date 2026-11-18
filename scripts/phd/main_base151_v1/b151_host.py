@@ -12,7 +12,8 @@ Rules (configs/phd/main_base151_v1/base151_v1.json gpu, rerun_rule):
     container (snapshot recorded); GPU 1 free < 1.5 GiB -> STOP file (the entry saves and exits); < 0.75 GiB -> kill;
   - a paused cell resumes from its checkpoint (not a stop); a host-guard stop or a CUDA out-of-memory is rerun once with the same setting,
     a second stop is final ('NO_RESULT'); any other error stops the queue (QUEUE_HALTED.json) for the cause check (order 1.9);
-  - no launch (new cell or resume) at or after 2026-11-24 00:00 KST; control/QUEUE_STOP ends the queue after the running cell.
+  - no launch (new cell or resume) at or after 2026-11-24 00:00 KST; control/QUEUE_STOP ends the queue after the running cell;
+    control/HOLD_GPU holds new launches while this task's own GPU preprocessing (DA3) runs on GPU 1.
   - when the four cells of a run are complete: merge (CPU container) -> OUT/runs/<run>/merged/point_cloud.ply.
 scientific_verdict: null
 """
@@ -140,7 +141,8 @@ def cell_mounts(spec, k):
     lk = json.loads((C / f'inputs_{m}.lock.json').read_text())
     assert sha(spec['addendum']) == lk['config_sha256'], f'inputs_{m}.json changed after lock'
     run_spec = add['runs'][spec['run']]
-    spec.update(dim=add['dim'], image=add['image'], source=ART / add['source'], args=run_spec['args'], cpus=add['cpus'], memory=add['memory'], shm=add['shm'])
+    spec.update(dim=add['dim'], image=add['image'], source=ART / add['source'], args=run_spec['args'], cpus=add['cpus'], memory=add['memory'], shm=add['shm'],
+                no_alloc_conf=bool(add.get('no_alloc_conf')), attempt_scene=run_spec.get('attempt_scene'))
     mounts = [(ART / p if not str(p).startswith('/') else Path(p), d, mode) for p, d, mode in
               [(x[0].replace('<k>', str(k)), x[1], x[2]) for x in run_spec['mounts']]]
     return mounts, [e.replace('<k>', str(k)) for e in run_spec.get('env', [])]
@@ -148,11 +150,22 @@ def cell_mounts(spec, k):
 
 def command(spec, k, attempt_dir, cap_gib, resume=None):
     mounts, env = cell_mounts(spec, k)
+    if spec.get('attempt_scene'):
+        # CDGS writes plydummy/ and confidence_map/ into its scene: a per-attempt copy of the template with links to the read-only inputs
+        import shutil
+        a = spec['attempt_scene']
+        shutil.copytree(ART / a['template'].replace('<k>', str(k)), attempt_dir / 'scene')
+        for nm, target in a['links'].items():
+            os.symlink(target, attempt_dir / 'scene' / nm)
     name = f'jbgs-b151-train-{spec["run"]}-cell{k}-{attempt_dir.name}'.replace('_', '-').lower()
     cmd = ['docker', 'run', '--rm', '--name', name, '--network', 'none', '--user', f'{os.getuid()}:{os.getgid()}', '--gpus', f'device={GPU}',
            '--cpus', spec['cpus'], '--memory', spec['memory'], '--memory-swap', spec['memory'], '--shm-size', spec['shm'], '--oom-score-adj', '300']
-    for e in ['PYTHONUNBUFFERED=1', 'PYTHONDONTWRITEBYTECODE=1', 'HOME=/tmp', 'MPLCONFIGDIR=/tmp/mpl', 'OMP_NUM_THREADS=16', 'TORCH_HOME=/tmp/torch',
-              'PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True', f'JBGS_GPU_CAP_GIB={cap_gib:.3f}', 'TZ=Asia/Seoul'] + env:
+    base = ['PYTHONUNBUFFERED=1', 'PYTHONDONTWRITEBYTECODE=1', 'HOME=/tmp', 'MPLCONFIGDIR=/tmp/mpl', 'OMP_NUM_THREADS=16', 'TORCH_HOME=/tmp/torch',
+            f'JBGS_GPU_CAP_GIB={cap_gib:.3f}', 'TZ=Asia/Seoul']
+    if not spec.get('no_alloc_conf'):
+        base.append('PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True')
+    keys = {e.split('=', 1)[0] for e in env}
+    for e in [b for b in base if b.split('=', 1)[0] not in keys] + env:
         cmd += ['-e', e]
     for s, d, mode in [(spec['source'], '/source', 'ro')] + mounts + [(attempt_dir, '/o', 'rw'), (SCRIPTS, '/b151s', 'ro'), (OUT / 'control', '/control', 'ro')] + \
             ([(resume.parent.parent, '/prev', 'ro')] if resume else []):
@@ -282,9 +295,16 @@ def merge(run):
 
 
 def wait_launch():
+    held = False
     while True:
         if (OUT / 'control/QUEUE_STOP').exists() or now() >= DEADLINE:
             return False
+        if list((OUT / 'control').glob('HOLD_GPU*')):   # this task's own short GPU job (DA3, smoke test) has GPU 1; no cell launch meanwhile
+            if not held:
+                progress('대기열: HOLD_GPU — 이 작업의 GPU 전처리가 끝날 때까지 새 칸을 걸지 않음')
+                held = True
+            time.sleep(60)
+            continue
         fr, av = gpu_free_mib(), avail_gb()
         if fr >= NEED_MIB and av >= START_GB:
             return True

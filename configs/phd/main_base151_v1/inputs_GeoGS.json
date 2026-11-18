@@ -1,0 +1,147 @@
+{
+ "task_id": "PHD-MAIN-BASE151-v1",
+ "addendum": "inputs_GeoGS",
+ "scientific_verdict": null,
+ "dim": "2D",
+ "image": "jointbuildgs:geogs-official-db40c95-compat-v1",
+ "source": "phase-payloads/phd/main_fix_v1/PHD-MAIN-FIX-v1/geogs/source/GeoGS-official-adapters-v1-fix1",
+ "cpus": "8",
+ "memory": "48g",
+ "shm": "8g",
+ "docker_note": "previous: --cpus 8 --memory 46g --shm-size 8g; 48g = the TRAINUNIT cell limit",
+ "scene_rules": {
+  "images_poses": "stage-1 geogs_prep.py: copies of the cell images (TU1 campus images, train + test of the cell), TU1 cell scene cameras.bin / images.bin, empty points3D.bin, COLMAP text export, jbgs_calibration.json, split.json = TU1 cell split",
+  "surface": {
+   "LoD2": "inputs_prior cell LoD2 mesh, faces tri_type != 2 -> lod2.obj (6 decimals)",
+   "ALS": "inputs_prior cell ALS TIN, faces with >= 1 class-6 vertex (als_rule v1) -> als_building.obj (round-trip floats)"
+  },
+  "protection_cloud": "1,000,000 points uniform by area, face normals, numpy default_rng(0)",
+  "prior_depth": "official LoD2Depth/main.py --generate_maps --z_offset 0 on every image of the cell scene",
+  "initial_points": "official data/generate_pcd.py (fix1: 5 cm first-hit visibility), 100,000 samples, 2..15 observations, seeds 0; BASELINES als_pcd.py run_parallel (pieces broad phase, 24 workers) checked equal to the official function on the first 300 points",
+  "da3": "FIX geogs_da3_fix.py --rule consec12 --save (DA3NESTED-GIANT-LARGE, official get_da3_depth_with_colmap.py inference, process_res 840, align_to_input_ext_scale, seed 0), on the sorted cell training views, ceil(N/12) consecutive balanced groups; GPU 1 while the queue holds (control/HOLD_GPU); shared by the ALS and LoD2 scenes of a cell"
+ },
+ "scripts": [
+  "scripts/phd/main_base151_v1/b151_geogs_inputs.py",
+  "scripts/phd/main_base151_v1/run_geogs_cpu.sh",
+  "scripts/phd/main_base151_v1/run_da3.sh"
+ ],
+ "runs": {
+  "b151_GeoGS_ALS_s0": {
+   "args": [
+    "-s",
+    "/scene",
+    "-m",
+    "/o/model",
+    "--lod_depth_path",
+    "/scene/lod2_prior",
+    "--da_depth_path",
+    "/scene/da3_prior",
+    "--lod2_pcd_path",
+    "/scene/lod2_pcd.ply",
+    "--eval",
+    "--lod_init",
+    "--freeze_onlybldg",
+    "--protect_bldg",
+    "--dynamic_depth_weight",
+    "-r",
+    "1",
+    "--port",
+    "0",
+    "--iterations",
+    "30000",
+    "--stage_switch_iter",
+    "8000",
+    "--lambda_lod_init",
+    "0.08",
+    "--lambda_lod_anchor",
+    "0.005"
+   ],
+   "mounts": [
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/scenes/GeoGS_ALS/cell<k>",
+     "/scene",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/da3/geogs/cell<k>/da3_prior_consec12",
+     "/scene/da3_prior",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/scenes/GeoGS_ALS/cell<k>/split.json",
+     "/split.json",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights",
+     "/weights",
+     "ro"
+    ]
+   ],
+   "env": [
+    "JBGS_SPLIT_JSON=/split.json",
+    "TORCH_HOME=/weights/torch",
+    "LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6"
+   ]
+  },
+  "b151_GeoGS_LoD2_s0": {
+   "args": [
+    "-s",
+    "/scene",
+    "-m",
+    "/o/model",
+    "--lod_depth_path",
+    "/scene/lod2_prior",
+    "--da_depth_path",
+    "/scene/da3_prior",
+    "--lod2_pcd_path",
+    "/scene/lod2_pcd.ply",
+    "--eval",
+    "--lod_init",
+    "--freeze_onlybldg",
+    "--protect_bldg",
+    "--dynamic_depth_weight",
+    "-r",
+    "1",
+    "--port",
+    "0",
+    "--iterations",
+    "30000",
+    "--stage_switch_iter",
+    "8000",
+    "--lambda_lod_init",
+    "0.08",
+    "--lambda_lod_anchor",
+    "0.005"
+   ],
+   "mounts": [
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/scenes/GeoGS_LoD2/cell<k>",
+     "/scene",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/da3/geogs/cell<k>/da3_prior_consec12",
+     "/scene/da3_prior",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/scenes/GeoGS_LoD2/cell<k>/split.json",
+     "/split.json",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights",
+     "/weights",
+     "ro"
+    ]
+   ],
+   "env": [
+    "JBGS_SPLIT_JSON=/split.json",
+    "TORCH_HOME=/weights/torch",
+    "LD_PRELOAD=/opt/geogs/lib/libstdc++.so.6"
+   ]
+  }
+ },
+ "differences_from_previous": "region = the expanded cell (prior faces in the expanded cell + 20 m); views = the cell views; 100,000 initial samples and 1,000,000 protection points over the whole cell surface (same numbers as the site runs, so fewer per m2); prior registration per inputs_prior"
+}

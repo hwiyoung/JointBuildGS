@@ -1,0 +1,115 @@
+{
+ "task_id": "PHD-MAIN-BASE151-v1",
+ "addendum": "inputs_CDGS",
+ "scientific_verdict": null,
+ "dim": "3D",
+ "image": "jointbuildgs:cdgs-official-db853c1-v1-b151",
+ "source": "phase-payloads/phd/main_fill_v1/PHD-MAIN-FILL-v1/sources/cdgs-release-adapters-v3",
+ "cpus": "16",
+ "memory": "48g",
+ "shm": "8g",
+ "no_alloc_conf": true,
+ "docker_note": "previous: --cpus 16 --memory 46g --shm-size 8g, no PYTORCH_CUDA_ALLOC_CONF (torch 2.0.1 rejects expandable_segments); 48g = TRAINUNIT cell limit; debug off as FILL (jbgs_nodebug rule inside b151_entry.py, B151_NODEBUG=1); working folder = the attempt folder",
+ "scene_rules": {
+  "sparse": "BASELINES cdgs_scenes.py build with the WIDEN0 campus model WD/mvs/full/sparse in place of the box model: cell poses / ids / names, training-view 2-D observations scaled 1024/1400, 741/1013, points inside the expanded cell with >= 2 cell-training observations, tracks restricted, ids 1..N",
+  "split": "split_index.json = indices of the TU1 cell split into the name-sorted images.bin list; no center.npy",
+  "units": "s = median camera-z of own observed points of the training views / TT 2.646066780584012 (cdgs_units.target_depths)",
+  "prior_depth": "stage-0 export prior rule on the inputs_prior cell surface (all faces): camera-z, pixel centres +0.5, NaN no hit, training views only",
+  "options": "FILL options without v2_reference (no official fit run)",
+  "per_attempt_scene": "<attempt>/scene = copy of scenes/CDGS_<prior>/cell<k> + links images -> /ro_images, prior_depth -> /ro_prior (CDGS writes plydummy/, confidence_map/ into its scene)"
+ },
+ "scripts": [
+  "scripts/phd/main_base151_v1/b151_cdgs_inputs.py"
+ ],
+ "runs": {
+  "b151_CDGS_ALS_s0": {
+   "args": [
+    "-s",
+    "/o/scene",
+    "-m",
+    "/o/model",
+    "--depth",
+    "-r",
+    "1",
+    "--eval",
+    "--use_predefined_depth",
+    "--predefined_depth_path",
+    "/o/scene/prior_depth"
+   ],
+   "mounts": [
+    [
+     "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/campus/images",
+     "/ro_images",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/priordepth/ALS/cell<k>",
+     "/ro_prior",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights",
+     "/weights",
+     "ro"
+    ]
+   ],
+   "env": [
+    "TORCH_HOME=/weights/torch",
+    "B151_NODEBUG=1",
+    "B151_CWD=/o"
+   ],
+   "attempt_scene": {
+    "template": "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/scenes/CDGS_ALS/cell<k>",
+    "links": {
+     "images": "/ro_images",
+     "prior_depth": "/ro_prior"
+    }
+   }
+  },
+  "b151_CDGS_LoD2_s0": {
+   "args": [
+    "-s",
+    "/o/scene",
+    "-m",
+    "/o/model",
+    "--depth",
+    "-r",
+    "1",
+    "--eval",
+    "--use_predefined_depth",
+    "--predefined_depth_path",
+    "/o/scene/prior_depth"
+   ],
+   "mounts": [
+    [
+     "phase-payloads/phd/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/campus/images",
+     "/ro_images",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/priordepth/LoD2/cell<k>",
+     "/ro_prior",
+     "ro"
+    ],
+    [
+     "phase-payloads/phd/geogs_p1p2p3_v1/PHD-GEOGS-P1P2P3-v1/runtime/weights",
+     "/weights",
+     "ro"
+    ]
+   ],
+   "env": [
+    "TORCH_HOME=/weights/torch",
+    "B151_NODEBUG=1",
+    "B151_CWD=/o"
+   ],
+   "attempt_scene": {
+    "template": "phase-payloads/phd/main_base151_v1/PHD-MAIN-BASE151-v1/scenes/CDGS_LoD2/cell<k>",
+    "links": {
+     "images": "/ro_images",
+     "prior_depth": "/ro_prior"
+    }
+   }
+  }
+ },
+ "differences_from_previous": "campus SfM model (WD, 819 training images) instead of the box SfM models; the cell as region; s recomputed per cell; the 1.5 M densify stop of CDGS applies to the whole cell"
+}

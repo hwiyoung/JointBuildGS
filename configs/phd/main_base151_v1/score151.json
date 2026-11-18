@@ -1,0 +1,51 @@
+{
+ "task_id": "PHD-MAIN-BASE151-v1",
+ "addendum": "score151",
+ "scientific_verdict": null,
+ "governs": "order 4.2 meshes and scoring of the 151 buildings (scripts/phd/main_base151_v1/b151_units.py, b151_score151.py)",
+ "units": {
+  "rule": "mesh unit = (cell k, JUDGECHECK-v2 100 m tile t): xy rectangle = tile core [E0, E0+100) x [N0, N0+100) intersected with the ORIGINAL cell k rectangle; units are made for every (k, t) whose rectangle holds >= 1 paired GT point of the 151 buildings (either prior)",
+  "z_range": "[5th percentile of the GT points in the unit - 5 m, max + 5 m] (BASELINES gpu_s1.box_of rule: GT 5 % - 5 m, max + 5 m)",
+  "views": "the cell k training views whose image is covered by the projected unit box (TRAINUNIT tu_cells.coverage > 0); views file = GTJUDGE views format (K of jbgs_calibration.json, W2C)",
+  "why": "the existing mesh rule was made for site boxes of about 100 x 100 m (TRAINUNIT B0 6 TSDF tiles, 8-10 min, 3.7 GB cleanup); a whole cell (up to 240 x 330 m) is several site boxes, so the cell is cut along the 100 m tile grid of the GT points"
+ },
+ "mesh": {
+  "model": "GS methods: the final iteration-30000 model of cell k (all its Gaussians; render_model keeps the Gaussians inside the unit box); LGDM: see inputs_LGDM",
+  "render": "RESCORE render_model.py with the method renderer at the unit views (depth masked to the unit box)",
+  "tsdf": "src/phd/streamed_tsdf (voxel 0.05 m, trunc 0.25 m, depth trunc 300 m) via RESCORE mesh_pipeline.prepare, plan auto:10 (tiling changes memory only, not the mesh), order, tile, bounded_merge",
+  "cleanup": "RESCORE cleanup.cpp unchanged (shared-edge components, cutoff max(50, 50th-largest), degenerate removed, all vertices inside the rectangle) with the unit rectangle (cos 1, sin 0: u = x, v = -y)",
+  "keep": "the unit rectangle lies inside the original cell, so the cell mesh is kept inside the original cell boundary"
+ },
+ "completeness": {
+  "rows": "JUDGECHECK-v2 analysis/gt_<prior>.npz paired rows of the 151 buildings (b151_gtcheck.py -> OUT/gt/gt151_<prior>.npz)",
+  "distance": "GTJUDGE normal_line.measure(scene, xyz, normal, wall) (point + four 5 cm tangent offsets, +-n, roof 10 m / wall 5 m); wall = paired patch kind 2",
+  "within": "|s| <= tau of the row; no hit = not within",
+  "main": "decision request 1 (recommended, proceeding): each row is scored on the mesh of the unit that contains it (the cell that contains the point)",
+  "literal": "also reported: a row of building b (cell c_b) is scored on the mesh of unit (c_b, tile of the row); rows outside c_b therefore have no surface unless that unit mesh reaches them"
+ },
+ "accuracy": {
+  "samples": "GTJUDGE geometry_add1.sample_normals: 400 / m2, numpy default_rng(0), triangles kept when their centroid is in a sample cell or area > 0.01, samples kept in sample cells",
+  "sample_cells": "0.5 m cells of the campus grid of the site rule (e0 690700, n0 5335820, nx 1000) that hold >= 1 paired GT row of the prior (site rule: cells holding GT points inside footprint + 2 m)",
+  "reference": "all rows of JUDGECHECK-v2 analysis/gt_<prior>.npz inside the unit rectangle + 1 m (paired or not); radius = median nearest-neighbour spacing of that reference",
+  "eligible": "Euclidean distance to the reference <= 1 m",
+  "distance": "GTJUDGE Cylinder.query along the sample normal (flipped to the nearest reference normal; ALS reference normals up), length 5 m wall / 10 m roof by the nearest reference row",
+  "owner": "RESCORE geometry.columns rule: prism columns of the JUDGECHECK-v2 patches of the unit (geometry_raw, centre + prior_height_m * n, half width 0.125 m, roof 10 m / wall 5 m; ALS tangents as s4_truth_rest), RESCORE prism.cpp",
+  "assigned_row": "the nearest paired row with the same owner patch (GTJUDGE score_new rule); case and building of that row",
+  "tau": "tau of the assigned row; samples without an assigned row: tau of the nearest paired row",
+  "steep": "ALS: samples with |n_z| < 0.5 excluded (add2_scores.metric_rows)",
+  "within": "|cylinder distance| <= tau over eligible (and not steep) samples",
+  "building_of_sample": "assigned row building; else the building of the nearest paired row within 1 m"
+ },
+ "outputs": {
+  "total": "151 buildings together: per case (0, 1, 2, 4) and all rows: completeness, accuracy, n",
+  "per_building": "same per building, n per case, flag n < 200",
+  "groups": "experiment buildings (JUDGECHECK-v2 group experiment, 10) vs rest (141)",
+  "twodgs": "2DGS mesh shared by both priors, scored with each prior's rows"
+ },
+ "differences_from_GTJUDGE": [
+  "rows = JUDGECHECK-v2 points (0.1 m thinning outside the three sites) instead of the GTJUDGE site rows",
+  "tau per row (region and kind) instead of one value per site and kind",
+  "sample cells from the paired GT rows instead of footprint + 2 m cells",
+  "mesh unit = cell x 100 m tile instead of the site box"
+ ]
+}
