@@ -1,0 +1,29 @@
+{
+ "at": "2026-11-19T13:47:46.345660+09:00",
+ "note": "3.3: every stop (training attempts not TRAINING_COMPLETE; mesh / score steps), cause first, then the handling",
+ "rows": [
+  {
+   "at": "2026-11-19T11:29",
+   "step": "4.2 mesh merge",
+   "run": "b151_2DGS_s0",
+   "unit": "c1_6907_53360",
+   "attempts": 2,
+   "cause": "RESCORE bounded_merge AssertionError: in the one tile, two Open3D vertices got one reconstructed global edge code (coordinates differ by 2.8e-14 m, colours equal; meshcheck/dup_*.json)",
+   "kind": "code (edge-code rule at one vertex pair)",
+   "handling": "GTJUDGE recovery_merge rule: same-tile collisions keep their own Open3D vertices (b151_units.merge_keep_open3d); tile files, TSDF values unchanged; rerun 13:40",
+   "log": "logs/post42/c1_6907_53360__ALS__b151_2DGS_s0.log"
+  },
+  {
+   "at": "2026-11-19T13:26",
+   "step": "4.2 mesh plan",
+   "run": "b151_LGDM_ALS",
+   "unit": "c1_6909_53363",
+   "attempts": 2,
+   "cause": "streamed_tsdf.plan: e_lat 0.5008 m >= 0.5 m (the margin argument for proxy depths at tile seams); the only unit of 32 over 0.5 m (meshcheck/elat.json), the same for every method",
+   "kind": "code (check that applies to tile seams only)",
+   "handling": "one-tile layout only: check passed over, proxy pixels checked 0 before the merge (else stop); more tiles -> stop; rerun 13:40",
+   "log": "logs/post42/c1_6909_53363__ALS__b151_LGDM_ALS.log"
+  }
+ ],
+ "scientific_verdict": null
+}

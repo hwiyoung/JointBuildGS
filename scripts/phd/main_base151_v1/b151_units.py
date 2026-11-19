@@ -159,6 +159,44 @@ def cleanup(key):
     print('MESH_COMPLETE', key, v['final_triangles'], flush=True)
 
 
+def merge_keep_open3d(wd, why):
+    """GTJUDGE recovery_merge rule (addendum 2), for every tile: vertices of one tile that share a reconstructed global edge code are not
+    seam copies (Open3D makes one vertex per edge inside a volume), so their edge identity is set unsettled (vcode -1, read-time only;
+    the tile files are not changed) and bounded_merge runs unchanged (its inherited exact-coordinate fallback, which only joins vertices
+    of other tiles). Vertices, colours, faces, TSDF settings unchanged; copies at the seams must still agree exactly."""
+    sys.path.insert(0, '/repo/scripts/phd/main_gtjudge_v1')
+    from recovery_merge import NumpyView
+    lay = json.loads((wd / 'plan/layout.json').read_text())
+    changes, rows = {}, []
+    for t in lay['tiles']:
+        p = wd / 'tiles' / f"tile{t['k']}.npz"
+        with np.load(p) as z:
+            vc, V = z['vcode'], z['V']
+        known = np.flatnonzero(vc >= 0)
+        s = known[np.argsort(vc[known], kind='stable')]
+        dup = np.flatnonzero(vc[s][1:] == vc[s][:-1])
+        ids = np.unique(np.r_[s[dup], s[dup + 1]])
+        if len(ids):
+            changes[str(p)] = ids
+            rows.append(dict(tile=t['k'], tile_sha256=gsha(p), vertices=int(len(ids)), edge_codes=int(len(np.unique(vc[ids]))),
+                             pairs_other_coordinates=int((V[s[dup]] != V[s[dup + 1]]).any(1).sum())))
+    assert changes, 'no same-tile edge-code collision: the stop has another cause'
+    rec = dict(at=BC.now(), why=why, tiles=rows, rule='GTJUDGE recovery_merge.py (same-tile collisions -> unsettled identity; source npz unchanged)',
+               scientific_verdict=None)
+    BC.dump(wd / 'b151_identity_repair.json', rec)
+    merger = module('bounded_merge')
+    merger.np = NumpyView(changes)
+    result = merger.merge(wd, wd / 'merged.ply', wd / 'merged.json')
+    for r in rows:
+        assert gsha(wd / 'tiles' / f"tile{r['tile']}.npz") == r['tile_sha256']
+    vinfo = result['tiled']['vertices']
+    assert vinfo['copies_with_other_coordinates'] == vinfo['copies_with_other_colours'] == 0
+    result['identity_repair'] = rec
+    BC.dump(wd / 'merged.json', result)
+    BC.dump(wd / 'b151_identity_repair.json', dict(rec, status='PASS', merged_mesh_sha256=result['mesh_sha256'], vertices=vinfo))
+    print('IDENTITY_REPAIR_MERGE', json.dumps(rows), flush=True)
+
+
 def mesh(key, step):
     gt_cfg()
     jobd = json.loads((O / 'jobs' / f'{key}.json').read_text())
@@ -168,12 +206,33 @@ def mesh(key, step):
     if step == 'prepare':
         module('mesh_pipeline').prepare(jobd, 'final')
     elif step == 'plan':
-        T.plan(wd, 'auto:10')
+        try:
+            T.plan(wd, 'auto:10')
+        except SystemExit as e:
+            # e_lat bounds how far a pixel ray passes from a voxel; it matters only for the proxies of a tile next to another tile. With one
+            # tile every box-masked point lies in E_t, so the tile depth is the depth itself (checked: proxy pixels 0 before the merge).
+            if not str(e).startswith('e_lat'):
+                raise
+            T.ELAT_MAX = float('inf')
+            T.plan(wd, 'auto:10')
+            lay = json.loads((wd / 'plan/layout.json').read_text())
+            if len(lay['tiles']) != 1:
+                (wd / 'plan/layout.json').rename(wd / 'plan/layout_rejected.json')
+                raise SystemExit(f'{e}; {len(lay["tiles"])} tiles (stop, report)')
+            BC.dump(wd / 'plan/b151_elat_one_tile.json', dict(at=BC.now(), message=str(e), e_lat_max_m=lay.get('e_lat_max_m'), tiles=1,
+                                                              rule='one tile: no seam, no proxy; tile depth = depth (proxy pixels checked 0)', scientific_verdict=None))
         T.order(wd)
     elif step.startswith('tile:'):
         T.tile(wd, int(step.split(':')[1]))
     elif step == 'merge':
-        module('bounded_merge').merge(wd, wd / 'merged.ply', wd / 'merged.json')
+        if (wd / 'plan/b151_elat_one_tile.json').exists():
+            k = json.loads((wd / 'plan/layout.json').read_text())['tiles'][0]['k']
+            px = json.loads((wd / 'tiles' / f'tile{k}.json').read_text())['pixels']
+            assert px['proxy'] == 0, px
+        try:
+            module('bounded_merge').merge(wd, wd / 'merged.ply', wd / 'merged.json')
+        except AssertionError as e:
+            merge_keep_open3d(wd, f'bounded_merge AssertionError {e!r} (copies of one edge code differ)')
     elif step == 'finish':
         cleanup(key)
     else:

@@ -34,6 +34,10 @@ def priors_of(run):
     return ('ALS', ['ALS', 'LoD2']) if m == '2DGS' else (run.split('_')[2], [run.split('_')[2]])
 
 
+def scored(run, uname):
+    return all((M / 'score151' / f'{run}__{p}' / f'{uname}.npz').exists() for p in priors_of(run)[1])
+
+
 def unit(run, uname):
     t0 = time.monotonic()
     key_prior, score_priors = priors_of(run)
@@ -117,6 +121,9 @@ def watch(workers='2', which='gs'):
                 units = lay()
                 for u in units:
                     item = (run, u['unit'])
+                    if item not in running.values() and scored(run, u['unit']):   # scored outside this watcher (a rerun after a fix) or before a restart
+                        done.add(item)
+                        failed.discard(item)
                     if item in done or item in failed or item in running.values() or len(running) >= int(workers):
                         continue
                     if which == 'lgdm' or cell_done(run, u['cell']):
