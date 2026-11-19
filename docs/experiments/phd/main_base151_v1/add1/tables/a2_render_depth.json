@@ -1,0 +1,90 @@
+{
+ "note": "가-2: camera-z depth difference (m) on building pixels, method render (4.2 unit renders) minus campus MVS and minus the prior depth map (OUT/priordepth); negative = the render is nearer to the camera (surface higher for nadir views)",
+ "rows": [
+  {
+   "run": "b151_2DGS_s0",
+   "cell": 2,
+   "views": 20,
+   "views_available": 495,
+   "building_pixels": 1401420,
+   "render_minus_mvs_median": -0.17614269256591797,
+   "render_minus_mvs_nmad": 0.37197201290130616,
+   "render_minus_mvs_p10": -2.5934089660644535,
+   "render_minus_mvs_p90": 0.14765167236328125,
+   "render_minus_prior_median": -0.27094268798828125,
+   "render_minus_prior_nmad": 0.4075475921630859,
+   "prior_pixels": 1400954
+  },
+  {
+   "run": "b151_2DGS_s0",
+   "cell": 3,
+   "views": 20,
+   "views_available": 306,
+   "building_pixels": 3629196,
+   "render_minus_mvs_median": -0.3388252258300781,
+   "render_minus_mvs_nmad": 0.4167041221618652,
+   "render_minus_mvs_p10": -3.780122756958008,
+   "render_minus_mvs_p90": 0.010119438171386719,
+   "render_minus_prior_median": -0.3586845397949219,
+   "render_minus_prior_nmad": 0.4329146867752075,
+   "prior_pixels": 3629196
+  },
+  {
+   "run": "b151_GeoGS_ALS_s0",
+   "cell": 2,
+   "views": 20,
+   "views_available": 495,
+   "building_pixels": 1406584,
+   "render_minus_mvs_median": -0.23499679565429688,
+   "render_minus_mvs_nmad": 0.24539952850341795,
+   "render_minus_mvs_p10": -0.6109901428222655,
+   "render_minus_mvs_p90": 0.06534194946289062,
+   "render_minus_prior_median": -0.30133056640625,
+   "render_minus_prior_nmad": 0.2400605758666992,
+   "prior_pixels": 1406133
+  },
+  {
+   "run": "b151_GeoGS_ALS_s0",
+   "cell": 3,
+   "views": 20,
+   "views_available": 306,
+   "building_pixels": 3634042,
+   "render_minus_mvs_median": -0.4485206604003906,
+   "render_minus_mvs_nmad": 0.3327287315368652,
+   "render_minus_mvs_p10": -0.9942279815673827,
+   "render_minus_mvs_p90": -0.09329624176025408,
+   "render_minus_prior_median": -0.45827770233154297,
+   "render_minus_prior_nmad": 0.3311522134780884,
+   "prior_pixels": 3634042
+  },
+  {
+   "run": "b151_LGDM_ALS",
+   "cell": 2,
+   "views": 20,
+   "views_available": 495,
+   "building_pixels": 1404638,
+   "render_minus_mvs_median": 0.050136566162109375,
+   "render_minus_mvs_nmad": 0.06966088943481445,
+   "render_minus_mvs_p10": -0.06128425598144527,
+   "render_minus_mvs_p90": 0.277577590942383,
+   "render_minus_prior_median": 0.0,
+   "render_minus_prior_nmad": 0.0,
+   "prior_pixels": 1404172
+  },
+  {
+   "run": "b151_LGDM_ALS",
+   "cell": 3,
+   "views": 20,
+   "views_available": 306,
+   "building_pixels": 3626625,
+   "render_minus_mvs_median": 0.025371551513671875,
+   "render_minus_mvs_nmad": 0.06523249969482421,
+   "render_minus_mvs_p10": -0.061511993408203125,
+   "render_minus_mvs_p90": 0.22014617919921875,
+   "render_minus_prior_median": 0.0,
+   "render_minus_prior_nmad": 0.0,
+   "prior_pixels": 3626625
+  }
+ ],
+ "scientific_verdict": null
+}

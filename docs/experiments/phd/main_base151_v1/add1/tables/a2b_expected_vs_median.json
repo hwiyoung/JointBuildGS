@@ -1,0 +1,66 @@
+{
+ "note": "가-2 check: whole cell model rendered at the same 20 views per cell; camera-z depth minus campus MVS on building pixels for the expected depth (depth_ratio 0, the mesh rule) and the median depth (depth_ratio 1); alpha of the pixels",
+ "rows": [
+  {
+   "run": "b151_2DGS_s0",
+   "cell": 2,
+   "status": "있음",
+   "views": 20,
+   "building_pixels": 4231370,
+   "expected_minus_mvs_median": -0.23905181884765625,
+   "expected_minus_mvs_nmad": 0.4856863311767578,
+   "median_minus_mvs_median": -0.20229339599609375,
+   "median_minus_mvs_nmad": 0.4824569435119629,
+   "median_minus_expected_median": 0.00261688232421875,
+   "alpha_median": 0.9998430609703064,
+   "alpha_p10": 0.9990497827529907,
+   "alpha_lt_099_pct": 1.4146482108631484
+  },
+  {
+   "run": "b151_2DGS_s0",
+   "cell": 3,
+   "status": "있음",
+   "views": 20,
+   "building_pixels": 5549438,
+   "expected_minus_mvs_median": -0.39795684814453125,
+   "expected_minus_mvs_nmad": 0.5111990592956542,
+   "median_minus_mvs_median": -0.33422088623046875,
+   "median_minus_mvs_nmad": 0.5394830657958984,
+   "median_minus_expected_median": -0.001323699951171875,
+   "alpha_median": 0.9998268485069275,
+   "alpha_p10": 0.9974386096000671,
+   "alpha_lt_099_pct": 4.272865108142483
+  },
+  {
+   "run": "b151_GeoGS_ALS_s0",
+   "cell": 2,
+   "status": "있음",
+   "views": 20,
+   "building_pixels": 4231370,
+   "expected_minus_mvs_median": -0.18163681030273438,
+   "expected_minus_mvs_nmad": 0.25607177810668946,
+   "median_minus_mvs_median": -0.08969497680664062,
+   "median_minus_mvs_nmad": 0.23135084381103516,
+   "median_minus_expected_median": 0.044677734375,
+   "alpha_median": 0.999843418598175,
+   "alpha_p10": 0.9988035500049591,
+   "alpha_lt_099_pct": 2.4233758806249512
+  },
+  {
+   "run": "b151_GeoGS_ALS_s0",
+   "cell": 3,
+   "status": "있음",
+   "views": 20,
+   "building_pixels": 5549438,
+   "expected_minus_mvs_median": -0.44380950927734375,
+   "expected_minus_mvs_nmad": 0.4324721305847168,
+   "median_minus_mvs_median": -0.20014190673828125,
+   "median_minus_mvs_nmad": 0.34085592956542965,
+   "median_minus_expected_median": 0.11975860595703125,
+   "alpha_median": 0.999829888343811,
+   "alpha_p10": 0.9974661886692047,
+   "alpha_lt_099_pct": 4.512871393463627
+  }
+ ],
+ "scientific_verdict": null
+}

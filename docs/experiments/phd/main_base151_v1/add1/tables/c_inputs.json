@@ -1,0 +1,207 @@
+{
+ "note": "다: per cell inputs of this task (2DGS, GeoGS ALS, CDGS; TU1 cell scenes) and TRAINUNIT cellsef_ALS_s0 cell 3. nerf_norm = getNerfppNorm of the training cameras (centre = mean camera centre, radius = 1.1 x the largest distance); it sets cameras_extent only (densify / prune thresholds), the Gaussian positions stay in the scene frame, so there is nothing to undo at the merge",
+ "rows": [
+  {
+   "cell": 0,
+   "train_views": 308,
+   "test_views": 41,
+   "pose_max_abs_diff_vs_campus_m": 0.0,
+   "intrinsics": "PINHOLE 674.42 / 674.78 / 513.92 / 365.60, one camera for all views (cameras.bin)",
+   "cam_z_p10": -8.822099197887296,
+   "cam_z_p50": -1.5995220509909274,
+   "cam_z_p90": 32.81614337339005,
+   "gt_z_median": -26.513907299569304,
+   "cam_height_above_gt_median_m": 24.914385248578377,
+   "views_axis_within_15deg_of_down_pct": 30.519480519480517,
+   "view_tilt_median_deg": 39.124265091831305,
+   "nerf_norm_centre": [
+    -49.34,
+    -103.15,
+    5.39
+   ],
+   "nerf_norm_radius_m": 185.84960770264465,
+   "clone_split_size_threshold_m": 1.8584960770264465,
+   "prune_big_world_size_m": 18.584960770264466,
+   "init_2DGS": {
+    "n": 119304,
+    "z_p5": -43.22343578338623,
+    "z_p50": -30.104580879211426,
+    "z_p95": -19.103218650817873
+   },
+   "init_GeoGS_ALS": {
+    "n": 52854,
+    "z_p5": -41.63858470916748,
+    "z_p50": -30.867490768432617,
+    "z_p95": -17.810740566253664
+   },
+   "init_CDGS_kept": 114970,
+   "geogs_prior_depth_maps": 349,
+   "geogs_protection_points": 1000000,
+   "da3_batches": 26,
+   "da3_scale_median": 0.385575534216508,
+   "da3_scale_min": 0.13868446427795236,
+   "da3_scale_max": 0.5550104516724623,
+   "da3_residual_rel_median": 0.004513283735637239,
+   "da3_residual_rel_p90": 0.02178272471047082,
+   "merge_2DGS_kept_of_total": "1347961 / 2153433",
+   "merge_GeoGS_ALS_kept_of_total": "1764248 / 3069956",
+   "merge_transform": "없음 (keep xy in the original cell, concatenate; no coordinate change: tu_postcpu.merge rule)"
+  },
+  {
+   "cell": 1,
+   "train_views": 471,
+   "test_views": 54,
+   "pose_max_abs_diff_vs_campus_m": 0.0,
+   "intrinsics": "PINHOLE 674.42 / 674.78 / 513.92 / 365.60, one camera for all views (cameras.bin)",
+   "cam_z_p10": -7.859511772281486,
+   "cam_z_p50": 0.5166884320223417,
+   "cam_z_p90": 32.833956477432665,
+   "gt_z_median": -23.314407299569247,
+   "cam_height_above_gt_median_m": 23.83109573159159,
+   "views_axis_within_15deg_of_down_pct": 33.33333333333333,
+   "view_tilt_median_deg": 38.40925488544956,
+   "nerf_norm_centre": [
+    -43.34,
+    2.96,
+    8.41
+   ],
+   "nerf_norm_radius_m": 282.1421820260114,
+   "clone_split_size_threshold_m": 2.8214218202601145,
+   "prune_big_world_size_m": 28.214218202601145,
+   "init_2DGS": {
+    "n": 164609,
+    "z_p5": -43.87034683227539,
+    "z_p50": -27.918197631835938,
+    "z_p95": -20.405574798583984
+   },
+   "init_GeoGS_ALS": {
+    "n": 50716,
+    "z_p5": -42.28743076324463,
+    "z_p50": -29.900598526000977,
+    "z_p95": -19.504191875457764
+   },
+   "init_CDGS_kept": 159404,
+   "geogs_prior_depth_maps": 525,
+   "geogs_protection_points": 1000000,
+   "da3_batches": 40,
+   "da3_scale_median": 0.33427097239108966,
+   "da3_scale_min": 0.10008484789246873,
+   "da3_scale_max": 0.5471253555129254,
+   "da3_residual_rel_median": 0.004300471957515231,
+   "da3_residual_rel_p90": 0.028058782336476573,
+   "merge_2DGS_kept_of_total": "908895 / 1724133",
+   "merge_GeoGS_ALS_kept_of_total": "1150342 / 2621151",
+   "merge_transform": "없음 (keep xy in the original cell, concatenate; no coordinate change: tu_postcpu.merge rule)"
+  },
+  {
+   "cell": 2,
+   "train_views": 544,
+   "test_views": 53,
+   "pose_max_abs_diff_vs_campus_m": 0.0,
+   "intrinsics": "PINHOLE 674.42 / 674.78 / 513.92 / 365.60, one camera for all views (cameras.bin)",
+   "cam_z_p10": -7.96398860077845,
+   "cam_z_p50": 0.7426136713687583,
+   "cam_z_p90": 32.83368596784747,
+   "gt_z_median": -23.805207299569282,
+   "cam_height_above_gt_median_m": 24.54782097093804,
+   "views_axis_within_15deg_of_down_pct": 37.31617647058824,
+   "view_tilt_median_deg": 38.399122463641795,
+   "nerf_norm_centre": [
+    16.75,
+    -5.91,
+    8.9
+   ],
+   "nerf_norm_radius_m": 228.03078969175266,
+   "clone_split_size_threshold_m": 2.2803078969175266,
+   "prune_big_world_size_m": 22.803078969175267,
+   "init_2DGS": {
+    "n": 168260,
+    "z_p5": -43.964158821105954,
+    "z_p50": -33.03318977355957,
+    "z_p95": -17.766433620452883
+   },
+   "init_GeoGS_ALS": {
+    "n": 60367,
+    "z_p5": -42.04840316772461,
+    "z_p50": -30.549867630004883,
+    "z_p95": -17.509779167175296
+   },
+   "init_CDGS_kept": 165537,
+   "geogs_prior_depth_maps": 597,
+   "geogs_protection_points": 1000000,
+   "da3_batches": 46,
+   "da3_scale_median": 0.31296273846779216,
+   "da3_scale_min": 0.1284461981820012,
+   "da3_scale_max": 1.3575877265287515,
+   "da3_residual_rel_median": 0.004145605926752262,
+   "da3_residual_rel_p90": 0.025403240720765902,
+   "merge_2DGS_kept_of_total": "552084 / 1732898",
+   "merge_GeoGS_ALS_kept_of_total": "864778 / 2570824",
+   "merge_transform": "없음 (keep xy in the original cell, concatenate; no coordinate change: tu_postcpu.merge rule)"
+  },
+  {
+   "cell": 3,
+   "train_views": 324,
+   "test_views": 38,
+   "pose_max_abs_diff_vs_campus_m": 0.0,
+   "intrinsics": "PINHOLE 674.42 / 674.78 / 513.92 / 365.60, one camera for all views (cameras.bin)",
+   "cam_z_p10": -4.630699534857671,
+   "cam_z_p50": 32.76823130176344,
+   "cam_z_p90": 32.84802872232141,
+   "gt_z_median": -27.254207299569238,
+   "cam_height_above_gt_median_m": 60.02243860133268,
+   "views_axis_within_15deg_of_down_pct": 61.419753086419746,
+   "view_tilt_median_deg": 0.991429864210446,
+   "nerf_norm_centre": [
+    42.11,
+    116.32,
+    18.97
+   ],
+   "nerf_norm_radius_m": 199.2355290580446,
+   "clone_split_size_threshold_m": 1.992355290580446,
+   "prune_big_world_size_m": 19.92355290580446,
+   "init_2DGS": {
+    "n": 131905,
+    "z_p5": -44.10269317626953,
+    "z_p50": -29.761049270629883,
+    "z_p95": -21.18235054016113
+   },
+   "init_GeoGS_ALS": {
+    "n": 48836,
+    "z_p5": -42.681307792663574,
+    "z_p50": -30.9457426071167,
+    "z_p95": -21.29834270477295
+   },
+   "init_CDGS_kept": 128020,
+   "geogs_prior_depth_maps": 362,
+   "geogs_protection_points": 1000000,
+   "da3_batches": 27,
+   "da3_scale_median": 0.22593424341451093,
+   "da3_scale_min": 0.12636008647026942,
+   "da3_scale_max": 0.4495184858382226,
+   "da3_residual_rel_median": 0.004750248571937304,
+   "da3_residual_rel_p90": 0.03737166867932682,
+   "merge_2DGS_kept_of_total": "3260278 / 4516553",
+   "merge_GeoGS_ALS_kept_of_total": "2908723 / 4609383",
+   "merge_transform": "없음 (keep xy in the original cell, concatenate; no coordinate change: tu_postcpu.merge rule)"
+  },
+  {
+   "cell": "3 (cellsef_ALS_s0, TRAINUNIT)",
+   "train_views": 324,
+   "scene": "/tu/scenes/cell3/scene_ALS",
+   "same_cameras_bin_images_bin_as_this_task": "yes (byte copies, sha256 equal)",
+   "nerf_norm_radius_m": 199.23553619384768,
+   "init_points_all_origins": {
+    "n": 427349,
+    "z_p5": -43.77403945922852,
+    "z_p50": -26.08740234375,
+    "z_p95": -20.259364700317384
+   },
+   "init_points_origin0": null,
+   "init_points_prior_rows": null,
+   "supervision": "target maps (jbgs_target on, lambda .05, /tu/stage1/cell3__ALS), finaltrain on, filter (addendum 12); DA3 / LoD depth off",
+   "argv": "-s /tu/scenes/cell3/scene_ALS -m /tu/runs/ef/cellsef_ALS_s0_cell3/attempt2/model --eval -r 1 --data_device cpu --lod_depth_path /p/fork_none --da_depth_path /p/fork_none --stage_switch_iter 0 --lambda_lod_init 0 --lambda_lod_anchor 0 --lambda_da_depth 0 --jbgs_judgment off --jbgs_target on --jbgs_target_rev r8 --jbgs_finaltrain on --jbgs_capture_iterations 7000 15000 30000 --jbgs_target_dir /tu/stage1/cell3__ALS --jbgs_target_lambda .05 --jbgs_seed 0 --iterations 30000 --test_iterations 7000 15000 30000 --save_iterations 7000 15000 30000"
+  }
+ ],
+ "scientific_verdict": null
+}
