@@ -111,15 +111,17 @@ def main(prior):
                 pm = m[pg_all]; npts = int(pm.sum()); row['gt_points'] = npts
                 for c in CASES: row[f'pt_pct_{CASE[c]}'] = 100*(pm & (pcase_all == c)).sum()/npts if npts else np.nan
                 row['pt_pct_네 경우 밖'] = 100*(pm & ~np.isin(pcase_all, CASES)).sum()/npts if npts else np.nan
+                stw = np.bincount(pg_all[pm], minlength=N); sw_ = (stw > 0) & np.isin(pc, STATE_ORDER); wt = stw[sw_].sum()
+                for s_ in STATE_ORDER: row[f'ptw_pct_{STATE[s_]}'] = 100*stw[sw_ & (pc == s_)].sum()/wt if wt else np.nan
                 IS.append(row)
     pd.DataFrame(IS).to_csv(OUT/'t11_initial_state.csv', index=False)
     # 건물마다
     BB = []
-    for sn, kk in SURF[prior]:
-        km = np.isin(d['kind'], kk); m = sig & km
+    for (setname, S), (sn, kk) in [(a, b) for a in [('차이가 유의한 패치', sig), ('한계가 없는 패치', nolim)] for b in SURF[prior]]:
+        km = np.isin(d['kind'], kk); m = S & km
         ub, bi = np.unique(pb[m], return_inverse=True); At = np.bincount(bi, weights=A[m]); st = np.isin(pc[m], STATE_ORDER); Ast = np.bincount(bi, weights=A[m]*st, minlength=len(ub))
         for b_, name in enumerate(ub):
-            r = dict(prior=prior, surface=sn, building=str(name), sig_area_m2=float(At[b_]), area_with_state_m2=float(Ast[b_]))
+            r = dict(prior=prior, set=setname, surface=sn, building=str(name), sig_area_m2=float(At[b_]), area_with_state_m2=float(Ast[b_]))
             for s_ in STATE_ORDER:
                 v = np.bincount(bi, weights=A[m]*(pc[m] == s_), minlength=len(ub))[b_]; r[f'area_pct_{STATE[s_]}'] = 100*v/Ast[b_] if Ast[b_] else np.nan
             BB.append(r)
@@ -128,10 +130,12 @@ def main(prior):
     cat = np.full(N, 4, np.int8); cat[missing] = 3; cat[nolim] = 2; cat[inside] = 0; cat[sig] = 1
     CATN = {1: '차이가 유의한 패치', 0: '한계 안(일치)', 2: '한계가 없는 패치', 3: '영상 깊이 점 4개 미만', 4: '그 밖'}
     RE = []
-    for sn, kk in SURF[prior]:
-        kp = np.isin(pkind, kk)
+    preg = reg_name[gid]; ppl = pl[gid]
+    rsplits = [('전체', '전체', np.ones(Ng, bool))] + [('탐색 지역', r_, preg == r_) for r_ in REGIONS + ['none']] + [('자리', PLACE[k_], ppl == k_) for k_ in [0, 1, 2]]
+    for (sn, kk), (spn, spv, spm) in [(a, b) for a in SURF[prior] for b in rsplits]:
+        kp = np.isin(pkind, kk) & spm
         for c in CASES:
-            m = kp & (cs == c); row = dict(prior=prior, surface=sn, case=CASE[c], gt_points=int(m.sum()))
+            m = kp & (cs == c); row = dict(prior=prior, surface=sn, split=spn, split_value=spv, case=CASE[c], gt_points=int(m.sum()))
             for k_ in [1, 0, 2, 3, 4]: row[f'pct_{CATN[k_]}'] = 100*(m & (cat[gid] == k_)).sum()/m.sum() if m.sum() else np.nan
             ms = m & sig[gid]; row['차이가 유의한 패치 안: 처음 상태 영상 깊이 오류 패치 %'] = 100*(ms & E[gid]).sum()/ms.sum() if ms.sum() else np.nan
             for s_, lab_ in [(0, '두 자료 모두 유효'), (1, '사전정보 오류')]: row[f'차이가 유의한 패치 안: 처음 상태 {lab_} 패치 %'] = 100*(ms & (pc[gid] == s_)).sum()/ms.sum() if ms.sum() else np.nan

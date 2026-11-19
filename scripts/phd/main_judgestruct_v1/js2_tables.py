@@ -29,21 +29,22 @@ def main():
         out = q[['prior', 'surface', 'set', 'split', 'split_value', 'patches', 'area_m2']].copy()
         out['넓이 % (유효/사전 오류/영상 오류/결측/네 경우 밖)'] = [' / '.join(f1(r[f'area_pct_{s}']) for s in SN) for _, r in q.iterrows()]
         out['참값 점 % (같은 차례)'] = [' / '.join(f1(r[f'pt_pct_{c}']) for c in CN + ['네 경우 밖']) for _, r in q.iterrows()]
+        out['참값 점 수 무게 처음 상태 % (같은 차례)'] = [' / '.join(f1(r[f'ptw_pct_{s}']) for s in SN) for _, r in q.iterrows()]
         out['동률·3개 미만·참값 없음 패치'] = [f"{int(r['n_동률'])} · {int(r['n_참값 점 3개 미만'])} · {int(r['n_참값 없음'])}" for _, r in q.iterrows()]
         return out
     IS['prior'] = IS['prior'].map(PN)
-    write('t11_initial_state', IS, note='셈 1-1. 차이가 유의한 패치(영상 깊이 점 4개 이상, 본값 L 밖)와 한계가 없는 패치(점 4개 이상, L 없음)의 처음 상태. 넓이 % = 처음 상태가 있는 넓이(네 경우 + 네 경우 밖) 가운데; 참값 점 % = 그 패치들의 참값 점(짝 있음)을 점 자신의 경우로 셈. 처음 상태 = 덧붙임 2 패치 다수결.', md=is_md)
+    write('t11_initial_state', IS, note='셈 1-1. 차이가 유의한 패치(영상 깊이 점 4개 이상, 본값 L 밖)와 한계가 없는 패치(점 4개 이상, L 없음)의 처음 상태. 넓이 % = 처음 상태가 있는 넓이(네 경우 + 네 경우 밖) 가운데; 참값 점 % = 그 패치들의 참값 점(짝 있음)을 점 자신의 경우로 셈; 참값 점 수 무게 = 패치의 처음 상태를 그 패치의 참값 점 수로 무게 둠(둘째 읽기). 처음 상태 = 덧붙임 2 패치 다수결.', md=is_md)
     BB = pd.concat([pd.read_csv(O/p/'t11_by_building_rows.csv') for p in ['LoD2', 'ALS']], ignore_index=True); BB['prior'] = BB['prior'].map(PN)
     BB.to_csv(D/'tables/t11_by_building_rows.csv', index=False)
     QB = []
-    for (p, s), q in BB.groupby(['prior', 'surface'], sort=False):
-        q = q[q.sig_area_m2 >= 5]; r = dict(prior=p, surface=s, buildings=len(q))
+    for (p, st_, s), q in BB.groupby(['prior', 'set', 'surface'], sort=False):
+        q = q[q.sig_area_m2 >= 5]; r = dict(prior=p, set=st_, surface=s, buildings=len(q))
         for st in SN:
             v = q[f'area_pct_{st}'].dropna(); r[f'{st} 10·50·90 %'] = ' · '.join(f1(np.quantile(v, x)) for x in [.1, .5, .9]) if len(v) else ''
         QB.append(r)
-    write('t11_by_building', pd.DataFrame(QB), note='셈 1-1 건물마다. 차이가 유의한 넓이가 5 m² 이상인 건물만; 건물마다 처음 상태 넓이 비율(분모 = 처음 상태가 있는 넓이)의 건물 사이 10·50·90 % 값(건물마다 같은 무게). 건물마다 값은 t11_by_building_rows.csv.')
+    write('t11_by_building', pd.DataFrame(QB), note='셈 1-1 건물마다. 그 패치 묶음(차이가 유의한 패치 / 한계가 없는 패치)의 넓이가 5 m² 이상인 건물만; 건물마다 처음 상태 넓이 비율(분모 = 처음 상태가 있는 넓이)의 건물 사이 10·50·90 % 값(건물마다 같은 무게). 건물마다 값은 t11_by_building_rows.csv.')
     RE = pd.concat([pd.read_csv(O/p/'t11_reach.csv') for p in ['LoD2', 'ALS']], ignore_index=True); RE['prior'] = RE['prior'].map(PN)
-    write('t11_reach', RE, note='셈 1-1 닿는 범위. 경우마다 참값 점(짝 있음)이 든 패치의 갈래 비율 %: 차이가 유의한 패치 / 한계 안(일치) / 한계가 없는 패치 / 영상 깊이 점 4개 미만 / 그 밖(사전 정보 높이나 법선이 없음, 또는 점 4개 이상인데 MVS 높이가 없고 한계 안팎이 아님). 새 구조의 4단계(영상 오류 찾기)는 차이가 유의한 패치에만 닿는다.')
+    write('t11_reach', RE, md=lambda q: q[q.split == '전체'].drop(columns=['split', 'split_value']), note='셈 1-1 닿는 범위. 경우마다 참값 점(짝 있음)이 든 패치의 갈래 비율 %: 차이가 유의한 패치 / 한계 안(일치) / 한계가 없는 패치 / 영상 깊이 점 4개 미만 / 그 밖(사전 정보 높이나 법선이 없음, 또는 점 4개 이상인데 MVS 높이가 없고 한계 안팎이 아님). 새 구조의 4단계(영상 오류 찾기)는 차이가 유의한 패치에만 닿는다. md 는 전체 나눔만; 탐색 지역·자리 나눔은 csv(split, split_value).')
     JPK = pd.concat([pd.read_csv(O/p/'t11_jp_check.csv') for p in ['LoD2', 'ALS']], ignore_index=True); JPK['prior'] = JPK['prior'].map(PN)
     write('t11_jp_check', JPK, note='검산 참고: JUDGEPROBE-v1 정의(한계 밖, JP 패치 경우, 섞인 패치 = 다수 비율 < 0.8 뺌)로 센 사전정보 오류 : 영상 깊이 오류 패치 수, 그리고 이 셈의 정의(덧붙임 2 처음 상태, 섞인 패치 넣음)의 패치 수·넓이 비.')
     # ======== 셈 1-2·1-3

@@ -29,6 +29,19 @@ def paint(ax, xy, val, colors, ext, res=.25, alpha=.8):
         m = ok & (val == k)
         if m.any(): img[iy[m], ix[m]] = to_rgba(c, alpha)
     ax.imshow(img, origin='lower', extent=[x0, x0 + W*res, y0, y0 + H*res], interpolation='nearest')
+def any_view(X):
+    """P7.oblique_view 규칙에서 35~65° 각도 제한만 뺀 판(덧붙임: 비스듬한 영상이 없을 때만). 보이는 점 수가 가장 많은 영상."""
+    c = P7.cam(); best = None
+    for j in range(len(c.names)):
+        q = X @ c.M[j, :3, :3].T + c.M[j, :3, 3]; z = q[:, 2]; uv = q[:, :2]/z[:, None]*[c.K[0, 0], c.K[1, 1]] + [c.K[0, 2], c.K[1, 2]]
+        ins = (z > 0) & (uv[:, 0] >= 0) & (uv[:, 0] < 1024) & (uv[:, 1] >= 0) & (uv[:, 1] < 741)
+        if ins.sum() < max(3, .5*len(X)): continue
+        dep = P7.depth(j)
+        if dep is None: continue
+        px = np.clip(np.rint(uv[ins]).astype(int), [0, 0], [1023, 740]); dd = dep[px[:, 1], px[:, 0]]; vis = np.isfinite(dd) & (dd > 0) & (z[ins] <= dd + .5)
+        sc = (int(vis.sum()), -float(np.linalg.norm(c.centres[j] - X.mean(0))))
+        if best is None or sc > best[0]: best = (sc, j)
+    return None if best is None or best[0][0] == 0 else best[1]
 def scenes(prior):
     j = json.loads((JC_DOC/'figures'/f'fig1_judgment_map_{prior}.json').read_text()); chosen = j['chosen']; out = []
     for s in j['scenes']:
@@ -95,11 +108,12 @@ def main(prior):
             cn = np.concatenate([d['centre'][k] + d['prior_height_m'][k]*d['normal'][k] + sq[:, :1]*d['tangent1'][k] + sq[:, 1:]*np.cross(d['normal'][k], d['tangent1'][k]) for k in near])
             mn = np.flatnonzero(g['paired'] & np.isin(g['gid'], near)); X = np.r_[cn, g['xyz'][mn]]; cols = ['#ffe600']*len(cn) + [ST_C.get(int(c), 'k') for c in g['case'][mn]]
             j = P7.oblique_view(X); view_rule = '단면 패치 둘레 1.5 m'
+        if j is None: j = any_view(X); view_rule += ' → 각도 제한 없이 가장 많이 보이는 영상' if j is not None else ''
         if j is None: axs[r, 0].text(.5, .5, '비스듬한 영상 없음', ha='center', transform=axs[r, 0].transAxes); axs[r, 0].axis('off')
         else:   # P7.draw_on_view 은 영상 안 점만 그리고 색은 그대로 받으므로, 같은 규칙으로 먼저 거름
             cm_ = P7.cam(); uv, _, okv = cm_.project(X, j); okv &= (uv[:, 0] >= 0) & (uv[:, 0] < cm_.w) & (uv[:, 1] >= 0) & (uv[:, 1] < cm_.h)
             P7.draw_on_view(axs[r, 0], j, X[okv], list(np.array(cols, dtype=object)[okv]), pad=40)
-        axs[r, 0].set_title(f"{str(d['building'][i]).replace('DEBY_LOD2_', '')} · {PLACE.get(int(d['place'][i]), '')} · 모임 {len(mem)} 패치 {ca[cc]:.1f} m² · 참값 점 {len(mine)}", fontsize=6.5)
+        axs[r, 0].set_title(f"{str(d['building'][i]).replace('DEBY_LOD2_', '')} · {PLACE.get(int(d['place'][i]), '')} · 모임 {len(mem)} 패치 {ca[cc]:.1f} m² · 참값 점 {len(mine)}" + (' · 영상: 각도 제한 없음' if '각도' in view_rule else ''), fontsize=6.5)
         B = axs[r, 1]; own = (g['xyz'][g['paired'] & (g['gid'] == i)] - c0) @ nn; ys = np.r_[own, [hp, hm]]; ys = ys[np.isfinite(ys)]
         ylo, yhi = (ys.min() - .5, ys.max() + .5) if len(ys) else (-1.5, 1.5)
         if yhi - ylo < 3: m_ = (ylo + yhi)/2; ylo, yhi = m_ - 1.5, m_ + 1.5
