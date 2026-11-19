@@ -1,0 +1,41 @@
+{
+ "task_id": "PHD-MAIN-MVSFILTER-v1",
+ "scientific_verdict": null,
+ "note": "발주문 4절의 원래 값. 결과를 보고 바꾸지 않는다. 참값은 걸러내기에 쓰지 않는다.",
+ "inputs": {
+  "campus_mvs": "phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full",
+  "campus_points": "phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points",
+  "box_mvs_root": "phase-payloads/phd/main_prep_measure_v1",
+  "judgecheck_v2": "phase-payloads/phd/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2",
+  "judgestruct_v1": "phase-payloads/phd/main_judgestruct_v1/PHD-MAIN-JUDGESTRUCT-v1",
+  "colmap_image": "colmap/colmap@sha256:187ca5ec98e55ed8fbec5f43f9d8f78b7a322b3b7413356634191f7a43c1efcf"
+ },
+ "method_A_colmap_stereo_fusion": {
+  "command": "colmap stereo_fusion --workspace_format COLMAP --input_type geometric --output_type PLY",
+  "options": "COLMAP 4.0.4 기본값 (실행 기록에서 읽어 영수증에 적음)",
+  "reference_defaults_fusion_h": {"min_num_pixels": 5, "max_num_pixels": 10000, "max_traversal_depth": 100, "max_reproj_error": 2, "max_depth_error": 0.01, "max_normal_error": 10, "check_num_images": 50, "max_image_size": -1, "cache_size": 32, "use_cache": 0},
+  "execution_only": {"StereoFusion.num_threads": 16, "fusion_cfg": "stereo/fusion.cfg = patch-match.cfg 의 영상 819장 (image_undistorter 가 만드는 기본 목록과 같은 뜻)"},
+  "survival": {"rule": "융합 점을 .vis 의 영상마다 투영해 가장 가까운 화소의 깊이가 융합 점 깊이와 상대 1 % 안이면 그 화소 살아남음", "relative_depth_tol": 0.01, "nearest_pixel": "round"}
+ },
+ "method_B_wolff2016": {
+  "paper": "Wolff et al. 2016, 3DV, Eq. 1-10",
+  "sigma": "영상마다 (depth_max - depth_min) x 0.01, depth_min/max 는 patch_match.log 의 그 영상 값",
+  "t_d_over_sigma": 0.1,
+  "t_p": 0.2,
+  "color_range": [0, 1],
+  "t_v_original": "입력 깊이 지도 수 x 0.075",
+  "t_v_view": "그 점을 화면 안에 담는 영상 수 x 0.075 (올림, 최소 2) - 세션이 정한 판, 논문 값 아님",
+  "view_direction_rule": "V_j . V_i > 0 (논문)",
+  "origin_view": "점 자신의 깊이 지도는 거리 0, 시점 수에 넣음 (논문)",
+  "range_surface": "깊이 지도 화소 격자의 두 삼각형(유효한 세 꼭짓점) 무게중심 보간",
+  "normal": "영상 공간 3x3 이웃의 PCA, 카메라 쪽으로 (논문)"
+ },
+ "method_C_statistical": {"k": 50, "std_ratio": 1.0, "unit": "건물마다, 윤곽 5 m 여유", "reference": "PCL StatisticalOutlierRemoval 예제 값"},
+ "method_D_optional": {"gpu_only_when_free": true, "site": "B0", "patch_match": "--PatchMatchStereo.filter false, 그 밖 같음", "conditions": {"filter_min_ncc": 0.1, "filter_min_triangulation_angle": 3, "filter_min_num_consistent": 2}},
+ "rejudge": {
+  "rule": "JUDGESTRUCT-v1 구조 하한: 점 4개 미만은 가시성 검사대로(결측 4·제거 3), 한계 안 = 일치 0, 차이가 유의 = 영상 깊이 사용 2. 새 광도 점수 없음(저장된 광도 결과는 JUDGESTRUCT 구조 하한과 같이 그대로 둠)",
+  "fixed_from_judgecheck_v2": ["r_m", "sigma_W", "sigma_P", "tau", "z=1.96", "ring R1.5"],
+  "recomputed": ["n", "n5", "n10", "mvs_mean_m", "u_M (R1.5 고리)", "L_m", "d", "geometry", "가시성 검사 (살아남은 화소만 남긴 깊이 지도)"]
+ },
+ "resources": {"nice": 19, "max_mem_gb_per_process": 32, "host_mem_wait_pct": 80, "gpu_bundles_ga_na": false}
+}
