@@ -1,0 +1,119 @@
+{
+ "task": "PHD-MAIN-GTTARGET-v1",
+ "title": "참값 목표 판(진단용)",
+ "diagnostic_only": true,
+ "GT_used_as_target": true,
+ "decisions": {
+  "2026-11-19_patch_rule": "사용자 결정: 참값 점을 평면 영역으로 나눈 뒤 본 방법 LoD2 조각 규칙 build_plane_store(src/phd/prior_propagation_v6/locations.py:93-134)를 코드 그대로 적용",
+  "2026-11-19_patch_size": "사용자 결정: 0.25 m (본 방법 규칙 prep_v5.json judgment.cell_m; 발주문의 0.3 m 대신)",
+  "2026-11-19_precheck": "사용자 결정: 5절 목표 메시(94.2~99.0 %)·목표 깊이(98.3~99.4 %) 미달을 감안하고 조각 원판 목표로 학습한다. 근거: 조각 정사각형이 참값 행의 99.5~99.97 %를 τ 안에서 덮고, 미달은 TSDF 메시 단계와 원판 경계(0.6~1.7 % 화소)에서 생김. 7절에 목표 메시 τ 안 비율과 조각 가장자리 근처 점의 잃은 점 비율을 나란히 낸다"
+ },
+ "sites": [
+  "B0_b10",
+  "B173nb_b10",
+  "R1rep_b10"
+ ],
+ "scenes": [
+  "R1rep_b10__ALS",
+  "R1rep_b10__LoD2",
+  "B0_b10__LoD2",
+  "B173nb_b10__LoD2",
+  "B173nb_b10__ALS",
+  "B0_b10__ALS"
+ ],
+ "gt_surface": {
+  "source": "GTJUDGE reference/<site>/dense.npz + normal_points.npz (같은 TUM2TWIN ULS 원자료; 평가 행 rows.npz는 normal_points의 부분집합, 정확성 채점 참값은 dense)",
+  "mesh_existed": false,
+  "crop": "GTJUDGE views/<site>.json box (3D)",
+  "voxel_m": 0.05,
+  "neighbours_k": 32,
+  "neighbour_radius_m": 0.35,
+  "grow_angle_deg": 20.0,
+  "grow_plane_distance_m": 0.08,
+  "refit_growth_factor": 1.5,
+  "min_region_voxels": 12,
+  "polygon_raster_m": 0.25,
+  "polygon_closing_cells": 0,
+  "polygon_triangulation": "조각 격자(원점 o = 영역 중심, 축 = _plane_axes(법선), 0.25 m)에 맞춘 점유 칸의 행별 연속 구간 = 직사각형 2삼각형. 점이 든 칸 = 칸 중심이 다각형 안",
+  "normal_orientation": "영역 PCA 법선의 부호를 먼저 AXES71 점 법선 평균과 같게 하고, 다음에 영역마다 학습 영상 전부에서 그 영역이 가장 앞 원판인 화소를 앞면/뒷면으로 세어 뒷면이 많으면 뒤집는다(g1_orient.py, 바깥 = 영상이 보는 쪽)",
+  "cell_m": 0.25,
+  "grow_normal": "axes71",
+  "merge_rms_m": 0.05,
+  "merge_angle_deg": 15.0,
+  "absorb_distance_m": 0.08,
+  "aligned": true,
+  "trials": "surface_trials/R1rep_b10/a~l (1단계 잠금 고침 1 전 시험, 결과 아님): 덮는 비율·겹침으로 고름, issues.md",
+  "source_sets": "dense+normal_points"
+ },
+ "targets": {
+  "sigma": "그 장면 FINALTRAIN 목표 파일의 sigma_ref 하나",
+  "region_code": 1,
+  "judge_region_code": 0,
+  "note_region": "region 값은 학습 동작에 쓰이지 않고 기록(release_<it>.json)에만 쓰인다(r28 jbgs_target*.py 확인). valid_patch 조건 region>=0을 넘기 위한 값"
+ },
+ "seeds": {
+  "gt_seed": "참값 조각마다 하나, 조각 중심. 회전 = quat_from_normal(조각 법선)",
+  "scale_colour_opacity": "r8 규칙대로 원래 SfM 행(keep_original)의 값을 물려받는다. 참값 조각에는 그 장면 사전 정보 SfM 점(origin 1, seat>=0) 가운데 가장 가까운 것의 행을 쓴다(중복 허용). 거리 분포를 적는다",
+  "background": "그 장면 FINALTRAIN seeds.npz의 배경 부분 그대로",
+  "near_background_m": 0.3
+ },
+ "maps": {
+  "rasterizer": "scripts/phd/main_target_v1/prepare_maps_r7.py rasterizer/draw (target_discs.cpp) 그대로, 원판 반지름 sqrt(area/pi)",
+  "backface": "가장 앞 원판의 법선이 카메라 반대쪽이면 차례 2(감독 없음)",
+  "gt_point_occlusion": "참값 점 깊이 버퍼(3x3 최소)가 목표 깊이보다 margin 넘게 앞이면 차례 2",
+  "gt_point_occlusion_margin_m": 0.5,
+  "mvs_occlusion_m": 10.0,
+  "background": "차례 3 = FINALTRAIN 규칙 그대로(owner<0, mvs 유한·양수, conf>0; 무게 1)"
+ },
+ "precheck": {
+  "target_mesh_within_tau_min_pct": 99.0,
+  "target_depth_within_tau_min_pct": 99.0,
+  "occlusion_violations_max": 0,
+  "user_override": true
+ },
+ "training": {
+  "fork": "GeoGS-conf-guided-v1-r28",
+  "same_as": "FINALTRAIN r23 (TRAINERR launch.train_args, 30,000회, 난수 씨앗 0)",
+  "trainlog": "on, gradients off, region = 장면 상자 전체",
+  "save_iterations": [
+   0,
+   1000,
+   3000,
+   3500,
+   5000,
+   7000,
+   15000,
+   30000
+  ],
+  "scene_dump": [
+   "0",
+   "1000",
+   "3000_pre_reset",
+   "3500",
+   "5000",
+   "6000_pre_reset",
+   "7000",
+   "9000_pre_reset",
+   "12000_pre_reset",
+   "15000",
+   "30000"
+  ],
+  "order": [
+   "R1rep_b10__ALS",
+   "R1rep_b10__LoD2",
+   "B0_b10__LoD2",
+   "B173nb_b10__LoD2",
+   "B173nb_b10__ALS",
+   "B0_b10__ALS"
+  ],
+  "optional_seed1": [
+   "R1rep_b10__ALS",
+   "R1rep_b10__LoD2"
+  ]
+ },
+ "points": {
+  "others_per_scene": 20000,
+  "rng_seed": 20261119
+ },
+ "scientific_verdict": null
+}
