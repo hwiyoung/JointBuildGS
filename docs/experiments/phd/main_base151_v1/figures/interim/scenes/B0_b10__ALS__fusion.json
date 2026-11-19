@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-19T18:47:17.775197+09:00",
+  "figure": "B0_b10__ALS__fusion.png",
+  "title": "B0_b10 · ALS 참값 · LGDM · 앞 작업 건물 단위 (fusion)",
+  "pixel_m": 0.25,
+  "clip_m": 0.5,
+  "extent": [
+    70.53286362167972,
+    153.53286362167972,
+    -26.512808963511258,
+    80.23719103648874
+  ],
+  "cases": [
+    {
+      "case": "두 자료 모두 유효",
+      "n_gt": 142131,
+      "completeness_pct": 98.19532684636005,
+      "no_surface": 480
+    },
+    {
+      "case": "사전정보 오류",
+      "n_gt": 757,
+      "completeness_pct": 16.380449141347423,
+      "no_surface": 263
+    },
+    {
+      "case": "영상 깊이 오류",
+      "n_gt": 1450,
+      "completeness_pct": 72.96551724137932,
+      "no_surface": 119
+    },
+    {
+      "case": "영상 깊이 결측",
+      "n_gt": 128,
+      "completeness_pct": 92.96875,
+      "no_surface": 8
+    },
+    {
+      "case": "장면 전체",
+      "n_gt": 145160,
+      "completeness_pct": 97.07632956737393,
+      "no_surface": 1106
+    }
+  ],
+  "rule": "GT points from above; left: median signed normal-line distance per pixel, grey: pixels whose GT points have no surface; right: share of GT points with |s| <= tau (no surface = outside)",
+  "site": "B0_b10",
+  "prior": "ALS",
+  "method": "LGDM",
+  "result": "fusion",
+  "version": "앞 작업 건물 단위",
+  "inputs": {
+    "/gtjudge/scenes/B0_b10__ALS/rows.npz": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07",
+    "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60",
+    "/gtjudge/scenes/B0_b10__ALS/distances/fusion.npz": "a151e13c4995b28fb861fef54282bc2d52241150c5c119bfb9c5ff1b92901b8f"
+  },
+  "scientific_verdict": null
+}

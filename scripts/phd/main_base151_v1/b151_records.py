@@ -23,6 +23,16 @@ POST_STOPS = [
          cause='streamed_tsdf.plan: e_lat 0.5008 m >= 0.5 m (the margin argument for proxy depths at tile seams); the only unit of 32 over 0.5 m (meshcheck/elat.json), the same for every method',
          kind='code (check that applies to tile seams only)', handling='one-tile layout only: check passed over, proxy pixels checked 0 before the merge (else stop); more tiles -> stop; rerun 13:40',
          log='logs/post42/c1_6909_53363__ALS__b151_LGDM_ALS.log'),
+    dict(at='2026-11-19T17:45~18:06', step='4.2 render', run='b151_2DGS_s0', unit='c2_6909_53361, c2_6910_53359~53361, c3_6909_53361~53363, c3_6910_53361~53363, c3_6911_53361 (11)',
+         attempts=2, cause="image jointbuildgs:2dgs-official-f3e3b9f-v1-b151 not on the host ('pull access denied'); the b151 images of 2DGS, CDGS and GeoGS-rtree and the build cache "
+                           'were removed from the host (not by this task)', kind='environment',
+         handling='rebuilt from the same Dockerfile, sources and build arguments (2DGS b97ade3c0050 18:11, CDGS cb11b4e1870e 18:20, 47 packages = pins); held by stopped containers '
+                  'jbgs-b151-keep-2dgs / -cdgs; units rerun by the restarted watcher (18:12)', log='logs/post42/<unit>__ALS__b151_2DGS_s0.log, logs/build_*_r2.log'),
+    dict(at='2026-11-19T18:12 / 18:46', step='4.2 score / tile (watcher handover)', run='b151_2DGS_s0', unit='c2_6909_53360 (18:12), c3_6909_53363 and c3_6910_53361 (18:46)',
+         attempts=2, cause='docker name conflict: the step container started by the stopped watcher was still running when the new watcher started the same step '
+                           '(the wait before the restart read an empty docker ps)', kind='operation (this task)',
+         handling='the running step finished by itself; the unit counted done when its score files exist (c2_6909_53360) or finished by hand (19:00); sh() now waits while a '
+                  'container of the same name exists (b151_post41.name_busy)', log='logs/post42/<unit>__ALS__b151_2DGS_s0.log'),
 ]
 
 

@@ -44,7 +44,7 @@ def write(name, rows, note):
 def main():
     out = []
     for method, by in RUNS.items():
-        for prior in ['ALS', 'LoD2']:
+        for prior in [p for p in ['ALS', 'LoD2'] if p in by]:
             for site in SITES:
                 stem = f'{site}__{prior}'
                 for version, fam in [('2x2', by[prior]), ('건물 단위(앞 작업)', PREV[method])]:
@@ -67,4 +67,9 @@ def main():
 
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:   # interim bundle: only the named runs (method_prior keys of RUNS), written to tables_b151/interim/
+        keep = set(sys.argv[1:])
+        RUNS = {m: {p: r for p, r in by.items() if r in keep} for m, by in RUNS.items()}
+        RUNS = {m: by for m, by in RUNS.items() if by}
+        T = O / 'tables_b151' / 'interim'
     main()

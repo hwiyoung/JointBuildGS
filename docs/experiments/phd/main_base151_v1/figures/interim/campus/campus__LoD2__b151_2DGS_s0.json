@@ -1,0 +1,81 @@
+{
+  "at": "2026-11-19T21:41:46.270443+09:00",
+  "figure": "campus__LoD2__b151_2DGS_s0.png",
+  "title": "캠퍼스 151동 · LoD2 참값 · 2DGS · b151_2DGS_s0 (점이 든 칸의 메시, 검은 선 = 원래 칸 경계)",
+  "pixel_m": 1.0,
+  "clip_m": 0.5,
+  "extent": [
+    -169.9943000000203,
+    235.0056999999797,
+    -238.17300000041723,
+    323.82699999958277
+  ],
+  "cases": [
+    {
+      "case": "두 자료 모두 유효",
+      "n_gt": 6675022,
+      "completeness_pct": 63.1604809692013,
+      "no_surface": 395693
+    },
+    {
+      "case": "사전정보 오류",
+      "n_gt": 1054946,
+      "completeness_pct": 61.08786610878661,
+      "no_surface": 65567
+    },
+    {
+      "case": "영상 깊이 오류",
+      "n_gt": 189107,
+      "completeness_pct": 39.90809435927808,
+      "no_surface": 21649
+    },
+    {
+      "case": "영상 깊이 결측",
+      "n_gt": 222114,
+      "completeness_pct": 39.03536022042735,
+      "no_surface": 60602
+    },
+    {
+      "case": "장면 전체",
+      "n_gt": 8338989,
+      "completeness_pct": 60.99240567411709,
+      "no_surface": 572511
+    }
+  ],
+  "rule": "GT points from above; left: median signed normal-line distance per pixel, grey: pixels whose GT points have no surface; right: share of GT points with |s| <= tau (no surface = outside)",
+  "run": "b151_2DGS_s0",
+  "prior": "LoD2",
+  "method": "2DGS",
+  "buildings_with_gt": 141,
+  "per_cell": [
+    {
+      "cell": 0,
+      "n_gt": 1294414,
+      "median_s_m": 0.0519026555120945,
+      "completeness_pct": 87.65178683172462
+    },
+    {
+      "cell": 1,
+      "n_gt": 1972078,
+      "median_s_m": 0.09843621402978897,
+      "completeness_pct": 65.202390574815
+    },
+    {
+      "cell": 2,
+      "n_gt": 2193276,
+      "median_s_m": 0.048317909240722656,
+      "completeness_pct": 67.85283749058486
+    },
+    {
+      "cell": 3,
+      "n_gt": 2879221,
+      "median_s_m": 0.27092520892620087,
+      "completeness_pct": 40.897555276236176
+    }
+  ],
+  "inputs": {
+    "/b151/gt/gt151_LoD2.npz": "e74b0af2d0ffbc2868b07312a98276d60de30ccea9e3017bbef96ec28b76772a",
+    "/gtjudge/score151/b151_2DGS_s0__LoD2/rows.npz": "91a36dad2cd25c11b01c6c700939a5c674dcfc3f7c9fc1a9a6260f4b3735180f"
+  },
+  "scientific_verdict": null
+}

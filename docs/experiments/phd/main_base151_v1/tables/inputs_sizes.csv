@@ -1,0 +1,29 @@
+method,prior,cell,train_views,test_views,initial_points,note,prior_cell_mesh_vertices,prior_cell_mesh_faces,surface_vertices,surface_faces,prior_depth_maps,protection_cloud_points,da3_views,da3_batches,cdgs_s,composite_depth_maps,change_area_m2,prior_surface_vertices,prior_surface_faces
+2DGS,없음,0,308,41,119304,"TU1 cell scene SfM points, origin 0",,,,,,,,,,,,,
+2DGS,없음,1,471,54,164609,"TU1 cell scene SfM points, origin 0",,,,,,,,,,,,,
+2DGS,없음,2,544,53,168260,"TU1 cell scene SfM points, origin 0",,,,,,,,,,,,,
+2DGS,없음,3,324,38,131905,"TU1 cell scene SfM points, origin 0",,,,,,,,,,,,,
+GeoGS,ALS,0,308,41,52854,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",1097900,2182085,1097900,1096643,349,1000000,308,26,,,,,
+GeoGS,ALS,1,471,54,50716,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",1378984,2739341,1378984,1637951,525,1000000,471,40,,,,,
+GeoGS,ALS,2,544,53,60367,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",1716372,3406436,1716372,1422579,597,1000000,544,46,,,,,
+GeoGS,ALS,3,324,38,48836,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",1475778,2928188,1475778,1532158,362,1000000,324,27,,,,,
+GeoGS,LoD2,0,308,41,84673,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",13863,4621,13863,3845,349,1000000,308,26,,,,,
+GeoGS,LoD2,1,471,54,73238,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",30042,10014,30042,7728,525,1000000,471,40,,,,,
+GeoGS,LoD2,2,544,53,91499,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",13683,4561,13683,3856,597,1000000,544,46,,,,,
+GeoGS,LoD2,3,324,38,65031,"prior depth maps = all cell images (train + test), as the previous GeoGS scenes",29346,9782,29346,7485,362,1000000,324,27,,,,,
+CDGS,ALS,0,308,41,114970,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,308,,,,17.02790175951051,,,,
+CDGS,ALS,1,471,54,159404,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,471,,,,19.322569629102507,,,,
+CDGS,ALS,2,544,53,165537,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,544,,,,21.452590704465237,,,,
+CDGS,ALS,3,324,38,128020,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,324,,,,22.658649237214256,,,,
+CDGS,LoD2,0,308,41,114970,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,308,,,,17.02790175951051,,,,
+CDGS,LoD2,1,471,54,159404,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,471,,,,19.322569629102507,,,,
+CDGS,LoD2,2,544,53,165537,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,544,,,,21.452590704465237,,,,
+CDGS,LoD2,3,324,38,128020,WD campus SfM observations on the cell poses; points with >= 2 training observations in the expanded cell,,,,,324,,,,22.658649237214256,,,,
+LGDM,ALS,0,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,308,15535.31,3556910,7070427
+LGDM,ALS,1,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,471,15535.31,3556910,7070427
+LGDM,ALS,2,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,544,15535.31,3556910,7070427
+LGDM,ALS,3,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,324,15535.31,3556910,7070427
+LGDM,LoD2,0,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,308,3365.69,58848,19616
+LGDM,LoD2,1,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,471,3365.69,58848,19616
+LGDM,LoD2,2,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,544,3365.69,58848,19616
+LGDM,LoD2,3,,,,"judge / decide over the campus (819 training views), composite per cell; change area = campus total",,,,,,,,,,324,3365.69,58848,19616

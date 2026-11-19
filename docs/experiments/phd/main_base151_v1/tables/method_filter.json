@@ -1,0 +1,47 @@
+{
+ "at": "2026-11-19T22:03:42.250028+09:00",
+ "note": "1.7: Gaussian form and elongation filter per method (order text: ratio < 0.01; the TRAINUNIT code used here is <= 0.01)",
+ "rows": [
+  {
+   "method": "2DGS",
+   "gaussian_axes": "2 (납작한 것)",
+   "definition": "min/max scale",
+   "comparison": "<=",
+   "threshold": 0.01,
+   "where": "scripts/phd/main_base151_v1/b151_entry.py: ratio() lines 83-87, densify_and_prune wrapper lines 90-112 (needle = ratio <= 0.01 at line 97, xyz_gradient_accum[needle] = 0 at line 101, then the unchanged densify_and_prune at line 105)",
+   "method_code_changed": "없음 (the method code is not edited; the wrapper is installed by the entry before train.py runs)",
+   "record": "OUT/runs/<run>/cell<k>/attempt<a>/filter.json, densify.jsonl"
+  },
+  {
+   "method": "GeoGS",
+   "gaussian_axes": "2 (납작한 것)",
+   "definition": "min/max scale",
+   "comparison": "<=",
+   "threshold": 0.01,
+   "where": "scripts/phd/main_base151_v1/b151_entry.py: ratio() lines 83-87, densify_and_prune wrapper lines 90-112 (needle = ratio <= 0.01 at line 97, xyz_gradient_accum[needle] = 0 at line 101, then the unchanged densify_and_prune at line 105)",
+   "method_code_changed": "없음 (the method code is not edited; the wrapper is installed by the entry before train.py runs)",
+   "record": "OUT/runs/<run>/cell<k>/attempt<a>/filter.json, densify.jsonl"
+  },
+  {
+   "method": "CDGS",
+   "gaussian_axes": "3 (3차원)",
+   "definition": "second largest / largest scale",
+   "comparison": "<=",
+   "threshold": 0.01,
+   "where": "scripts/phd/main_base151_v1/b151_entry.py: ratio() lines 83-87, densify_and_prune wrapper lines 90-112 (needle = ratio <= 0.01 at line 97, xyz_gradient_accum[needle] = 0 at line 101, then the unchanged densify_and_prune at line 105)",
+   "method_code_changed": "없음 (the method code is not edited; the wrapper is installed by the entry before train.py runs)",
+   "record": "OUT/runs/<run>/cell<k>/attempt<a>/filter.json, densify.jsonl"
+  },
+  {
+   "method": "LGDM",
+   "gaussian_axes": "없음 (가우시안 없음, 학습 없음)",
+   "definition": "없음",
+   "comparison": null,
+   "threshold": null,
+   "where": "없음",
+   "method_code_changed": "없음",
+   "record": "없음"
+  }
+ ],
+ "scientific_verdict": null
+}

@@ -15,7 +15,7 @@ import time
 from pathlib import Path
 
 from b151_host import C, OUT, avail_gb, dump, gpu_free_mib, issue, now, progress
-from b151_post41 import M, gt_cpu, render_cmd, sh
+from b151_post41 import M, gpu_ready, gt_cpu, render_cmd, sh, work_back, work_on_nvme
 
 GPU_LOCK = threading.Lock()
 
@@ -53,7 +53,7 @@ def unit(run, uname):
             return False
     if not (M / 'renders' / key / 'receipt.json').exists():
         with GPU_LOCK:
-            while gpu_free_mib() < 10 * 1024:
+            while not gpu_ready():
                 time.sleep(120)
             if not sh(render_cmd(run.split('_')[1], key), log):
                 return False
@@ -61,6 +61,7 @@ def unit(run, uname):
     root = M / 'meshes' / key
     wd = root / 'final_work'
     if not (root / 'final.json').exists():
+        work_on_nvme(key)
         for step in ['prepare', 'plan']:
             if step == 'prepare' and (wd / 'inputs/meta.json').exists():
                 continue
@@ -79,6 +80,7 @@ def unit(run, uname):
         for step in ['merge', 'finish']:
             if not sh(gt_cpu(f'{tag}-{step}', '/b151s/b151_units.py', 'mesh', key, step, cpus='6', mem='32g'), log):
                 return False
+    work_back(key)
     t2 = time.monotonic()
     for prior in score_priors:
         if not (M / 'score151' / f'{run}__{prior}' / f'{uname}.npz').exists():

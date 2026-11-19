@@ -30,6 +30,76 @@ RL = PH / 'main_release_v1/PHD-MAIN-RELEASE-v1'
 M = OUT / 'gt'
 CG = '/art/phase-payloads/phd/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1'
 EXP = (W.parent / 'JointBuildGS-exp').resolve()
+# User decision 2026-11-19 17:2x: the mesh work folder of a unit / site (TSDF inputs, tiles, merge cache, merged.ply) lives on the
+# system NVMe; the records (every .json of it) come back to OUT/gt/meshes/<key>/final_work and the NVMe copy is removed after the mesh
+# (final.ply, final.json on the HDD as before). Meshes and scores are unchanged (same files, same code); only where the work lies.
+NV = Path('/home/innopam/jbgs_b151_work')
+NV_FREE_GB = 60
+
+
+def gpu1_others():
+    """compute processes on GPU 1 that are not in a jbgs-b151-* container of this task (interim-bundle request 2026-11-19: finish
+    the scoring of the finished runs only while GPU 1 has no other process). A pid whose container cannot be read counts as other."""
+    import re
+    q = subprocess.run(['nvidia-smi', '--id=1', '--query-compute-apps=pid', '--format=csv,noheader'], capture_output=True, text=True)
+    others = []
+    for pid in q.stdout.split():
+        try:
+            m = re.search(r'docker-([0-9a-f]{64})', Path(f'/proc/{pid}/cgroup').read_text())
+        except OSError:
+            m = None
+        name = subprocess.run(['docker', 'inspect', '--format', '{{.Name}}', m.group(1)], capture_output=True, text=True).stdout.strip() if m else ''
+        if not name.startswith('/jbgs-b151-'):
+            others.append(pid)
+    return others
+
+
+def gpu_ready():
+    return gpu_free_mib() >= 10 * 1024 and not gpu1_others()
+
+
+def work_on_nvme(key):
+    """before prepare: OUT/gt/meshes/<key>/final_work -> symlink to NV/<key>/final_work (only for a key without a work folder yet)."""
+    root = M / 'meshes' / key
+    wd = root / 'final_work'
+    if wd.exists() or wd.is_symlink() or (root / 'final.json').exists():
+        return
+    NV.mkdir(exist_ok=True)
+    while shutil.disk_usage(NV).free < NV_FREE_GB * 2 ** 30:
+        time.sleep(300)
+    tgt = NV / key / 'final_work'
+    tgt.mkdir(parents=True, exist_ok=True)
+    root.mkdir(parents=True, exist_ok=True)
+    wd.symlink_to(tgt)
+
+
+def work_back(key):
+    """after final.json: copy every .json of the NVMe work folder back (same relative paths), list the removed files, remove the NVMe copy."""
+    root = M / 'meshes' / key
+    wd = root / 'final_work'
+    if not wd.is_symlink() or not (root / 'final.json').exists():
+        return
+    tgt = Path(os.readlink(wd))
+    assert tgt.is_relative_to(NV), tgt
+    stage = root / 'final_work.records'
+    kept, removed = [], []
+    for f in sorted(tgt.rglob('*')):
+        if not f.is_file():
+            continue
+        rel = f.relative_to(tgt)
+        if f.suffix == '.json':
+            (stage / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(f, stage / rel)
+            kept.append(str(rel))
+        else:
+            removed.append(dict(file=str(rel), bytes=f.stat().st_size))
+    merged = json.loads((tgt / 'merged.json').read_text()) if (tgt / 'merged.json').exists() else {}
+    dump(stage / 'b151_nvme_work.json', dict(at=now().isoformat(), key=key, work=str(tgt), kept_json=kept, removed=removed,
+                                             removed_bytes=sum(r['bytes'] for r in removed), merged_ply_sha256=merged.get('mesh_sha256'),
+                                             rule='user decision 2026-11-19: work on NVMe, records back, work removed after the mesh', scientific_verdict=None))
+    wd.unlink()
+    stage.rename(wd)
+    shutil.rmtree(tgt.parent)
 SITES = ['B0_b10', 'R1rep_b10', 'B173nb_b10']
 PRIORS = ['ALS', 'LoD2']
 BASE_METHODS = ['prior', 'mvs', 'fusion', 'baseline_30000', 'GeoGS_30000', '2DGS_30000', 'CDGS_30000', 'FINALTRAIN_30000']
@@ -64,8 +134,19 @@ def mirror():
     print('MIRROR_READY', flush=True)
 
 
+def name_busy(cmd):
+    """a container with this step's --name still exists (a step left running by a stopped watcher): wait for it instead of a name conflict."""
+    if '--name' not in cmd:
+        return False
+    name = cmd[cmd.index('--name') + 1]
+    r = subprocess.run(['docker', 'inspect', '--format', '{{.State.Status}}', name], capture_output=True, text=True)
+    return r.returncode == 0 and r.stdout.strip() in ('running', 'created', 'restarting')
+
+
 def sh(cmd, log, tries=2):
     Path(log).parent.mkdir(parents=True, exist_ok=True)
+    while name_busy(cmd):
+        time.sleep(30)
     for attempt in range(1, tries + 1):
         with open(log, 'a') as f:
             f.write(f'\n### {now().isoformat()} attempt {attempt}\n')
@@ -89,6 +170,7 @@ def gt_cpu(tag, script, *args, cpus='6', mem='32g'):
             '-v', f'{RS}:/out:ro', '-v', f'{RL}:/release:ro', '-v', f'{M}:/gtjudge:rw', '-v', f'{OUT}:/b151:ro',
             '-v', f'{W}/configs/phd/main_gtjudge_v1:/cfg:ro', '-v', f'{M}/docs:/docs:rw', '-v', f'{EXP}/scripts/phd:/repo/scripts/phd:ro',
             '-v', f'{W}/scripts/phd/main_base151_v1:/b151s:ro', '-v', f'{W}/scripts/phd/main_trainunit_v1:/tus:ro',
+            '-v', f'{NV}:{NV}:rw',
             '-v', '/usr/share/fonts/opentype/noto:/fonts:ro', '-w', '/gtjudge', '--entrypoint', 'nice', 'jointbuildgs:dev', '-n', '19', 'python', '-B', '-u',
             script if script.startswith('/') else f'/repo/scripts/phd/main_gtjudge_v1/{script}', *map(str, args)]
 
@@ -139,7 +221,7 @@ def one(run, site):
         dump(job, dict(site=site, prior=first, family=METHOD[method]['family'], key=key, ply=f'/b151/post/{run}/{site}.ply', box=box,
                        run=run, renderer=str(METHOD[method]['source']), image=METHOD[method]['image'], scientific_verdict=None))
     if not (M / 'renders' / key / 'receipt.json').exists():
-        while gpu_free_mib() < 10 * 1024:
+        while not gpu_ready():
             time.sleep(120)
         if not sh(render_cmd(method, key), OUT / 'logs' / f'post41_render_{key}.log'):
             return False
@@ -148,6 +230,7 @@ def one(run, site):
     root = M / 'meshes' / key
     wd = root / 'final_work'
     if not (root / 'final.json').exists():
+        work_on_nvme(key)
         for step in ['prepare', 'plan']:
             if step == 'prepare' and (wd / 'inputs/meta.json').exists():
                 continue
@@ -165,6 +248,7 @@ def one(run, site):
         for step in ['merge', 'finish']:
             if not sh(gt_cpu(f'{tag}-{step}', 'mesh_job.py', site, first, fam, step), OUT / 'logs' / f'post41_mesh_{key}.log'):
                 return False
+    work_back(key)
     t3 = time.monotonic()
     for prior in priors[1:]:       # 2DGS: the same mesh for the LoD2 rows
         k2 = f'{site}__{prior}__{fam}'

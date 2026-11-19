@@ -1,0 +1,93 @@
+{
+ "at": "2026-11-19T22:03:42.787498+09:00",
+ "note": "바: runs not finished at the time of writing (trace every 1000 iterations; end estimate = start + the range of the finished cells of the same method, or, with none, the trace rate), then the 4.1 / 4.2 state of every run x prior (state = 채점)",
+ "rows": [
+  {
+   "run": "b151_CDGS_LoD2_s0",
+   "cell": 0,
+   "state": "학습 중",
+   "attempt": "attempt1",
+   "started": "2026-11-19T21:41:59.650895+09:00",
+   "iteration": 18000,
+   "gaussians": 1516520,
+   "elong_lt_001": 0.0006402816507034004,
+   "trace_at": "2026-11-19T22:03:17.823682+09:00",
+   "end_estimate": "11-19 22:07 ~ 11-19 22:14 (start + the 4 finished cells of this method, 0.43-0.54 h)"
+  },
+  {
+   "run": "b151_CDGS_LoD2_s0",
+   "cell": 1,
+   "state": "대기",
+   "end_estimate": "not started; no finished cell of this method yet"
+  },
+  {
+   "run": "b151_CDGS_LoD2_s0",
+   "cell": 2,
+   "state": "대기",
+   "end_estimate": "not started; no finished cell of this method yet"
+  },
+  {
+   "run": "b151_CDGS_LoD2_s0",
+   "cell": 3,
+   "state": "대기",
+   "end_estimate": "not started; no finished cell of this method yet"
+  },
+  {
+   "run": "b151_2DGS_s0",
+   "prior": "ALS",
+   "state": "채점",
+   "step_41": "끝 (2026-11-19T12:46)",
+   "step_42": "끝, 모음 11-19 19:19"
+  },
+  {
+   "run": "b151_2DGS_s0",
+   "prior": "LoD2",
+   "state": "채점",
+   "step_41": "끝 (2026-11-19T12:46)",
+   "step_42": "끝, 모음 11-19 19:24"
+  },
+  {
+   "run": "b151_GeoGS_ALS_s0",
+   "prior": "ALS",
+   "state": "채점",
+   "step_41": "끝 (2026-11-19T18:15)",
+   "step_42": "끝, 모음 11-19 21:39"
+  },
+  {
+   "run": "b151_GeoGS_LoD2_s0",
+   "prior": "LoD2",
+   "state": "채점",
+   "step_41": "끝 (2026-11-19T21:01)",
+   "step_42": "9/32 단위 채점됨"
+  },
+  {
+   "run": "b151_CDGS_ALS_s0",
+   "prior": "ALS",
+   "state": "채점",
+   "step_41": "안 끝남",
+   "step_42": "0/32 단위 채점됨"
+  },
+  {
+   "run": "b151_CDGS_LoD2_s0",
+   "prior": "LoD2",
+   "state": "채점",
+   "step_41": "안 끝남",
+   "step_42": "0/32 단위 채점됨"
+  },
+  {
+   "run": "b151_LGDM_ALS",
+   "prior": "ALS",
+   "state": "채점",
+   "step_41": "끝 (2026-11-19T11:48)",
+   "step_42": "끝, 모음 11-19 17:22"
+  },
+  {
+   "run": "b151_LGDM_LoD2",
+   "prior": "LoD2",
+   "state": "채점",
+   "step_41": "끝 (2026-11-19T12:17)",
+   "step_42": "끝, 모음 11-19 19:44"
+  }
+ ],
+ "scientific_verdict": null
+}

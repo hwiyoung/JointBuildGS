@@ -102,13 +102,14 @@ def main():
         allr, alls = np.ones(len(g['case']), bool), np.ones(len(z['ss']), bool)
         b = block(z, g, allr, alls)
         have[(method, prior)] = b
-        total.append(dict(head, status='있음', units_scored=f"{z['units']}/{z['units_all']}", rows_on_a_unit=int(z['covered'].sum()), rows=int(len(g['case'])),
+        total.append(dict(head, status='있음', units_scored=f"{z['units']}/{z['units_all']}", buildings=151, buildings_with_gt=int(len(g['code_of'])),
+                          rows_on_a_unit=int(z['covered'].sum()), rows=int(len(g['case'])),
                           samples=int(len(z['ss'])), samples_steep_excluded=z['steep'], samples_without_building=int((z['sbld'] < 0).sum()), **flat(b)))
         for gname in ['experiment', 'rest']:
             names = [n for n, v in grp.items() if (v == 'experiment') == (gname == 'experiment')]
             codes = np.array([g['code_of'][n] for n in names if n in g['code_of']], np.int64)
             bb = block(z, g, np.isin(g['bcode'], codes), np.isin(z['sbld'], codes))
-            groups.append(dict(head, group=gname, buildings=int(len(names)), status='있음', **flat(bb)))
+            groups.append(dict(head, group=gname, buildings=int(len(names)), buildings_with_gt=int(len(codes)), status='있음', **flat(bb)))
         for name in sorted(grp):
             c = g['code_of'].get(name, -2)
             bb = block(z, g, g['bcode'] == c, z['sbld'] == c)
@@ -137,4 +138,8 @@ def main():
 
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:   # interim bundle: only the named runs, written to tables_b151/interim/
+        keep = set(sys.argv[1:])
+        RUNS[:] = [r for r in RUNS if r[2] in keep]
+        T = O / 'tables_b151' / 'interim'
     main()

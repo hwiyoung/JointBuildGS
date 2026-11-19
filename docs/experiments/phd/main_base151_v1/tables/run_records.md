@@ -13,15 +13,15 @@ scientific_verdict: null
 | b151_GeoGS_ALS_s0 | GeoGS | ALS | 0 | 1 | TRAINING_COMPLETE | 0 | 1.34 | 30000 | 3069956 | 3069956 | 0.01 | 21.52 | 24086 | 12.10 | 12.23 | 12.42 | 6240 | 37.80 | 22.23 | 24.04 |  |  |  |  |  |
 | b151_GeoGS_ALS_s0 | GeoGS | ALS | 1 | 1 | TRAINING_COMPLETE | 0 | 1.15 | 30000 | 2621151 | 2621151 | 0.00 | 21.51 | 24070 | 11.36 | 15.31 | 15.85 | 11092 | 29.70 | 21.87 | 23.36 |  |  |  |  |  |
 | b151_GeoGS_ALS_s0 | GeoGS | ALS | 2 | 1 | TRAINING_COMPLETE | 0 | 1.00 | 30000 | 2570824 | 2570824 | 0.00 | 21.51 | 24070 | 12.16 | 17.30 | 17.27 | 10270 | 36.80 | 22.09 | 23.01 |  |  |  |  |  |
-| b151_GeoGS_ALS_s0 | GeoGS | ALS | 3 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 0 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 1 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 2 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 3 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_CDGS_ALS_s0 | CDGS | ALS | 0 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_CDGS_ALS_s0 | CDGS | ALS | 1 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_CDGS_ALS_s0 | CDGS | ALS | 2 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| b151_CDGS_ALS_s0 | CDGS | ALS | 3 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| b151_GeoGS_ALS_s0 | GeoGS | ALS | 3 | 1 | TRAINING_COMPLETE | 0 | 1.25 | 30000 | 4609383 | 4609383 | 0.00 | 21.51 | 24070 | 14.83 | 15.16 | 17.14 | 5936 | 33.90 | 24.50 | 27.13 |  |  |  |  |  |
+| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 0 | 1 | TRAINING_COMPLETE | 0 | 1.46 | 30000 | 2961581 | 2961581 | 0.01 | 21.47 | 24030 | 11.39 | 12.15 | 12.37 | 8654 | 27.40 | 22.05 | 23.97 |  |  |  |  |  |
+| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 1 | 1 | TRAINING_COMPLETE | 0 | 1.22 | 30000 | 2574029 | 2574029 | 0.00 | 21.52 | 24088 | 11.10 | 15.54 | 18.24 | 10392 | 28.90 | 21.84 | 23.31 |  |  |  |  |  |
+| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 2 | 1 | TRAINING_COMPLETE | 0 | 1.20 | 30000 | 2556482 | 2556482 | 0.00 | 21.52 | 24088 | 12.55 | 17.32 | 18.33 | 7610 | 53.20 | 22.08 | 22.97 |  |  |  |  |  |
+| b151_GeoGS_LoD2_s0 | GeoGS | LoD2 | 3 | 1 | TRAINING_COMPLETE | 0 | 1.16 | 30000 | 4523167 | 4523167 | 0.00 | 21.52 | 24088 | 13.31 | 15.03 | 15.29 | 10091 | 52.50 | 24.61 | 27.05 |  |  |  |  |  |
+| b151_CDGS_ALS_s0 | CDGS | ALS | 0 | 1 | TRAINING_COMPLETE | 0 | 0.48 | 30000 | 1512100 | 1512100 | 0.01 | 21.52 | 24088 | 11.90 | 12.63 | 14.89 | 7368 | 44.30 | 21.59 | 24.66 |  |  |  |  |  |
+| b151_CDGS_ALS_s0 | CDGS | ALS | 1 | 1 | TRAINING_COMPLETE | 0 | 0.54 | 30000 | 1508658 | 1508658 | 0.01 | 21.52 | 24088 | 15.22 | 16.56 | 20.80 | 5644 | 47.30 | 21.10 | 22.14 |  |  |  |  |  |
+| b151_CDGS_ALS_s0 | CDGS | ALS | 2 | 1 | TRAINING_COMPLETE | 0 | 0.50 | 30000 | 1510673 | 1510673 | 0.01 | 21.52 | 24088 | 16.98 | 18.22 | 22.81 | 7061 | 50.80 | 19.93 | 23.03 |  |  |  |  |  |
+| b151_CDGS_ALS_s0 | CDGS | ALS | 3 | 1 | TRAINING_COMPLETE | 0 | 0.43 | 30000 | 1578905 | 1578905 | 0.02 | 21.52 | 24088 | 11.43 | 13.25 | 18.27 | 7466 | 49.40 | 23.28 | 25.42 |  |  |  |  |  |
 | b151_CDGS_LoD2_s0 | CDGS | LoD2 | 0 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | b151_CDGS_LoD2_s0 | CDGS | LoD2 | 1 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | b151_CDGS_LoD2_s0 | CDGS | LoD2 | 2 |  | NO_RECEIPT (running or waiting) |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |

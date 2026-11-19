@@ -1,0 +1,81 @@
+{
+  "at": "2026-11-19T21:41:52.816268+09:00",
+  "figure": "campus__ALS__b151_GeoGS_ALS_s0.png",
+  "title": "캠퍼스 151동 · ALS 참값 · GeoGS · b151_GeoGS_ALS_s0 (점이 든 칸의 메시, 검은 선 = 원래 칸 경계)",
+  "pixel_m": 1.0,
+  "clip_m": 0.5,
+  "extent": [
+    -167.74399999994785,
+    231.25600000005215,
+    -238.17300000041723,
+    323.82699999958277
+  ],
+  "cases": [
+    {
+      "case": "두 자료 모두 유효",
+      "n_gt": 3965752,
+      "completeness_pct": 45.272699856168515,
+      "no_surface": 37057
+    },
+    {
+      "case": "사전정보 오류",
+      "n_gt": 134435,
+      "completeness_pct": 30.199724774054374,
+      "no_surface": 1111
+    },
+    {
+      "case": "영상 깊이 오류",
+      "n_gt": 317090,
+      "completeness_pct": 34.13794190923713,
+      "no_surface": 3688
+    },
+    {
+      "case": "영상 깊이 결측",
+      "n_gt": 56989,
+      "completeness_pct": 27.828177367562162,
+      "no_surface": 3902
+    },
+    {
+      "case": "장면 전체",
+      "n_gt": 4564406,
+      "completeness_pct": 43.37629036505517,
+      "no_surface": 48187
+    }
+  ],
+  "rule": "GT points from above; left: median signed normal-line distance per pixel, grey: pixels whose GT points have no surface; right: share of GT points with |s| <= tau (no surface = outside)",
+  "run": "b151_GeoGS_ALS_s0",
+  "prior": "ALS",
+  "method": "GeoGS",
+  "buildings_with_gt": 135,
+  "per_cell": [
+    {
+      "cell": 0,
+      "n_gt": 686574,
+      "median_s_m": 0.014359221793711185,
+      "completeness_pct": 70.87335086968046
+    },
+    {
+      "cell": 1,
+      "n_gt": 954997,
+      "median_s_m": 0.11219948530197144,
+      "completeness_pct": 38.93876106417088
+    },
+    {
+      "cell": 2,
+      "n_gt": 1260154,
+      "median_s_m": -0.0002623019536258653,
+      "completeness_pct": 65.91178538496088
+    },
+    {
+      "cell": 3,
+      "n_gt": 1662681,
+      "median_s_m": 0.46488291025161743,
+      "completeness_pct": 17.490907756809634
+    }
+  ],
+  "inputs": {
+    "/b151/gt/gt151_ALS.npz": "9b794ef0ffe19b1a0d521f7249dd4d7c046e1b1e05caaf8d02d2dade2adbf490",
+    "/gtjudge/score151/b151_GeoGS_ALS_s0__ALS/rows.npz": "136e4a01ec18e1e0f98dc00993a83f3cb5c1f89f59688aa6ba61ef6a02e4dc52"
+  },
+  "scientific_verdict": null
+}

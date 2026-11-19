@@ -1,0 +1,12 @@
+# method_filter
+
+1.7: Gaussian form and elongation filter per method (order text: ratio < 0.01; the TRAINUNIT code used here is <= 0.01)
+
+scientific_verdict: null
+
+| method | gaussian_axes | definition | comparison | threshold | where | method_code_changed | record |
+|---|---|---|---|---|---|---|---|
+| 2DGS | 2 (납작한 것) | min/max scale | <= | 0.01 | scripts/phd/main_base151_v1/b151_entry.py: ratio() lines 83-87, densify_and_prune wrapper lines 90-112 (needle = ratio <= 0.01 at line 97, xyz_gradient_accum[needle] = 0 at line 101, then the unchanged densify_and_prune at line 105) | 없음 (the method code is not edited; the wrapper is installed by the entry before train.py runs) | OUT/runs/<run>/cell<k>/attempt<a>/filter.json, densify.jsonl |
+| GeoGS | 2 (납작한 것) | min/max scale | <= | 0.01 | scripts/phd/main_base151_v1/b151_entry.py: ratio() lines 83-87, densify_and_prune wrapper lines 90-112 (needle = ratio <= 0.01 at line 97, xyz_gradient_accum[needle] = 0 at line 101, then the unchanged densify_and_prune at line 105) | 없음 (the method code is not edited; the wrapper is installed by the entry before train.py runs) | OUT/runs/<run>/cell<k>/attempt<a>/filter.json, densify.jsonl |
+| CDGS | 3 (3차원) | second largest / largest scale | <= | 0.01 | scripts/phd/main_base151_v1/b151_entry.py: ratio() lines 83-87, densify_and_prune wrapper lines 90-112 (needle = ratio <= 0.01 at line 97, xyz_gradient_accum[needle] = 0 at line 101, then the unchanged densify_and_prune at line 105) | 없음 (the method code is not edited; the wrapper is installed by the entry before train.py runs) | OUT/runs/<run>/cell<k>/attempt<a>/filter.json, densify.jsonl |
+| LGDM | 없음 (가우시안 없음, 학습 없음) | 없음 | 없음 | 없음 | 없음 | 없음 | 없음 |

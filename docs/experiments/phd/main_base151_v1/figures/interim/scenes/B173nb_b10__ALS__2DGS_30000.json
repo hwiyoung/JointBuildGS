@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-19T18:46:59.903851+09:00",
+  "figure": "B173nb_b10__ALS__2DGS_30000.png",
+  "title": "B173nb_b10 · ALS 참값 · 2DGS · 앞 작업 건물 단위 (2DGS_30000)",
+  "pixel_m": 0.25,
+  "clip_m": 0.5,
+  "extent": [
+    76.33509104189136,
+    182.83509104189136,
+    56.30900316074758,
+    175.55900316074758
+  ],
+  "cases": [
+    {
+      "case": "두 자료 모두 유효",
+      "n_gt": 81015,
+      "completeness_pct": 47.89853730790594,
+      "no_surface": 92
+    },
+    {
+      "case": "사전정보 오류",
+      "n_gt": 107563,
+      "completeness_pct": 42.28963491163318,
+      "no_surface": 354
+    },
+    {
+      "case": "영상 깊이 오류",
+      "n_gt": 11062,
+      "completeness_pct": 10.423069969264148,
+      "no_surface": 3
+    },
+    {
+      "case": "영상 깊이 결측",
+      "n_gt": 251,
+      "completeness_pct": 20.318725099601593,
+      "no_surface": 0
+    },
+    {
+      "case": "장면 전체",
+      "n_gt": 210800,
+      "completeness_pct": 42.26280834914611,
+      "no_surface": 582
+    }
+  ],
+  "rule": "GT points from above; left: median signed normal-line distance per pixel, grey: pixels whose GT points have no surface; right: share of GT points with |s| <= tau (no surface = outside)",
+  "site": "B173nb_b10",
+  "prior": "ALS",
+  "method": "2DGS",
+  "result": "2DGS_30000",
+  "version": "앞 작업 건물 단위",
+  "inputs": {
+    "/gtjudge/scenes/B173nb_b10__ALS/rows.npz": "c0872f8fab9efe1c89fce1d4c94f579acb001835df2db58c42b9dcda006aa9c1",
+    "/gtjudge/scenes/B173nb_b10__ALS/stage1_cells.npz": "2c7a1c294734f32e05e8afe173cb724ba592c3d42fc8d8dbff117427488cc792",
+    "/gtjudge/scenes/B173nb_b10__ALS/distances/2DGS_30000.npz": "186dc8b1b6037472cf187d7defbbaa3c06de5f05e5094adf27626b38d0aedeaf"
+  },
+  "scientific_verdict": null
+}
