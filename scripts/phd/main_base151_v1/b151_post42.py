@@ -40,7 +40,11 @@ def unit(run, uname):
     key = f'{uname}__{key_prior}__{run}'
     tag = key.replace('_', '-').lower()
     log = OUT / 'logs' / 'post42' / f'{key}.log'
-    if not (M / 'jobs' / f'{key}.json').exists():
+    if run.split('_')[1] == 'LGDM':   # depth composite in place of the render (user decision 2026-11-19)
+        if not (M / 'renders' / key / 'receipt.json').exists():
+            if not sh(gt_cpu(f'{tag}-lgdm', '/b151s/b151_lgdm_renders.py', 'unit', run, uname, cpus='4', mem='16g'), log):
+                return False
+    elif not (M / 'jobs' / f'{key}.json').exists():
         if not sh(gt_cpu(f'{tag}-job', '/b151s/b151_units.py', 'job', run, uname, cpus='2', mem='4g'), log):
             return False
     if not (M / 'renders' / key / 'receipt.json').exists():
@@ -93,8 +97,10 @@ def gather(run):
     return ok
 
 
-def watch(workers='2'):
+def watch(workers='2', which='gs'):
     c = json.loads((C / 'base151_v1.json').read_text())
+    if which == 'lgdm':   # LGDM runs: no training, every unit at once
+        c = dict(c, training_order=['b151_LGDM_ALS', 'b151_LGDM_LoD2'])
     done, failed = set(), set()
     with concurrent.futures.ThreadPoolExecutor(int(workers)) as pool:
         running = {}
@@ -113,7 +119,7 @@ def watch(workers='2'):
                     item = (run, u['unit'])
                     if item in done or item in failed or item in running.values() or len(running) >= int(workers):
                         continue
-                    if cell_done(run, u['cell']):
+                    if which == 'lgdm' or cell_done(run, u['cell']):
                         running[pool.submit(unit, run, u['unit'])] = item
                 if all((run, u['unit']) in done for u in units):
                     gather(run)

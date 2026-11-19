@@ -117,7 +117,9 @@ def one(run, site):
     method = method_of(run)
     fam = run
     crop = OUT / 'post' / run / f'{site}.ply'
-    if not crop.exists():
+    if method == 'LGDM':
+        pass
+    elif not crop.exists():
         if not sh(['bash', str(SCRIPTS / 'run_cpu.sh'), f'crop-{run}-{site}'.replace('_', '-').lower(), '8', '48g', 'b151_post.py', 'crop',
                    f'/b151/runs/{run}/merged/point_cloud.ply', f'/b151/gt/views/{site}.json', f'/b151/post/{run}/{site}.ply'],
                   OUT / 'logs' / f'post41_crop_{run}_{site}.log'):
@@ -125,10 +127,15 @@ def one(run, site):
     t1 = time.monotonic()
     priors = ['ALS', 'LoD2'] if method == '2DGS' else [run.split('_')[2]]
     first = priors[0]
-    box = json.loads((M / 'views' / f'{site}.json').read_text())['box']
+    box = json.loads((G / 'views' / f'{site}.json').read_text())['box']   # host side: the mirror link points to a container path
     key = f'{site}__{first}__{fam}'
     job = M / 'jobs' / f'{key}.json'
-    if not job.exists():
+    if method == 'LGDM':   # depth composite in place of the render (user decision 2026-11-19)
+        if not (M / 'renders' / key / 'receipt.json').exists():
+            if not sh(gt_cpu(f'{key}-lgdm'.replace('_', '-').lower(), '/b151s/b151_lgdm_renders.py', 'site', run, site, cpus='4', mem='16g'),
+                      OUT / 'logs' / f'post41_render_{key}.log'):
+                return False
+    elif not job.exists():
         dump(job, dict(site=site, prior=first, family=METHOD[method]['family'], key=key, ply=f'/b151/post/{run}/{site}.ply', box=box,
                        run=run, renderer=str(METHOD[method]['source']), image=METHOD[method]['image'], scientific_verdict=None))
     if not (M / 'renders' / key / 'receipt.json').exists():
@@ -191,11 +198,11 @@ def watch():
     c = json.loads((C / 'base151_v1.json').read_text())
     while True:
         pending = 0
-        for r in c['training_order']:
+        for r in c['training_order'] + ['b151_LGDM_ALS', 'b151_LGDM_LoD2']:
             if (OUT / 'post' / r / 'done41.json').exists():
                 continue
             pending += 1
-            if (OUT / 'runs' / r / 'merged/point_cloud.ply').exists():
+            if r.startswith('b151_LGDM') or (OUT / 'runs' / r / 'merged/point_cloud.ply').exists():
                 run(r)
         if pending == 0 or (OUT / 'control/POST_STOP').exists():
             return
