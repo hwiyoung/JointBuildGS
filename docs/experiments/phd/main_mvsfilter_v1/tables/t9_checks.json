@@ -1,0 +1,47 @@
+{
+ "at": "2026-11-20T14:50:27+09:00",
+ "checks": [
+  {
+   "check": "점검 1: 방법 없이 다시 낸 구조 하한 = JUDGESTRUCT-v1 구조 하한 (모든 칸, 정확히 같음)",
+   "cells": 64,
+   "equal": 64,
+   "max_abs_diff": 0.0,
+   "passed": true
+  },
+  {
+   "check": "점검 4: 차이가 유의한 패치의 수·넓이·처음 상태 수 = JUDGESTRUCT-v1 t11_initial_state (전체 행)",
+   "cells": 44,
+   "equal": 44,
+   "passed": true,
+   "not_equal": []
+  },
+  {
+   "check": "점검 2 (A): 구역마다 지금 점 = 살아남은 점 + 지워진 점 (지워진 점은 마스크 0 비트로 따로 셈)",
+   "points": 714687387,
+   "survived": 133158315,
+   "removed": 581529072,
+   "passed": true,
+   "bad_tiles": []
+  },
+  {
+   "check": "점검 2 (A): 패치마다 원통 안 점 raw_n(방법) ≤ raw_n(지금 점군)",
+   "patches": 3966928,
+   "violations": 0,
+   "passed": true
+  },
+  {
+   "check": "점검 3: masks/A.json 기록(mf1)",
+   "record": {
+    "check3": {
+     "sample": 10000,
+     "within_1pct": 9991,
+     "median_dist_m": 0.06635626134215482,
+     "max_ratio": 0.011598877844359298
+    }
+   }
+  }
+ ],
+ "seconds": 144.50895033800043,
+ "GT_read": false,
+ "scientific_verdict": null
+}
