@@ -52,6 +52,17 @@ def main(methods):
         out.append(dict(check=f'점검 2 ({m}): 구역마다 지금 점 = 살아남은 점 + 지워진 점 (지워진 점은 마스크 0 비트로 따로 셈)', points=tot, survived=sur, removed=rem,
                         passed=bool(not bad_tiles and tot == sur + rem), bad_tiles=bad_tiles))
         out.append(dict(check=f'점검 2 ({m}): 패치마다 원통 안 점 raw_n(방법) ≤ raw_n(지금 점군)', patches=raw_n, violations=raw_bad, passed=raw_bad == 0))
+        if (O/'patch'/f'{m}_rm').is_dir():   # 지워진 점만으로 따로 센 원통 수(mf2 <m>_rm)
+            npt = neq = 0; miss = []
+            for t in tiles():
+                f_ = O/'patch'/f'{m}_rm'/f'{t}.npz'
+                if not (O/'patch'/m/f'{t}.npz').exists(): continue
+                if not f_.exists(): miss.append(t); continue
+                zn = np.load(O/'patch'/'none'/f'{t}.npz'); zm = np.load(O/'patch'/m/f'{t}.npz'); zr = np.load(f_)
+                for p in zm['priors']:
+                    a_, b_, c_ = zn[f'{p}__raw_n'], zm[f'{p}__raw_n'], zr[f'{p}__raw_n']; v = a_ >= 0; npt += int(v.sum()); neq += int((a_[v] == b_[v] + c_[v]).sum())
+            out.append(dict(check=f'점검 2 ({m}): 패치마다 원통 안 지금 점 = 살아남은 점 + 지워진 점 (지워진 점만으로 원통을 따로 셈)', patches=npt, equal=neq, missing_tiles=miss,
+                            passed=bool(npt == neq and not miss)))
     a3 = json.loads((O/'masks'/'A.json').read_text())
     out.append(dict(check='점검 3: masks/A.json 기록(mf1)', record={k: v for k, v in a3.items() if 'check' in k.lower() or '검' in k}))
     dump(DOC/'t9_checks.json', dict(at=now(), checks=out, seconds=T.s(), GT_read=False, scientific_verdict=None))

@@ -28,6 +28,7 @@ def footprints():
 def main():
     cf = cfg()['method_C_statistical']; T = Timer(); FP = footprints(); k = cf['k']; sr = cf['std_ratio']
     tmp = O/'tmp/statC'; tmp.mkdir(parents=True, exist_ok=True)
+    for f_ in tmp.glob('*.npz'): f_.unlink()
     bytile = {}
     for b, e in FP.items():
         for t in e['tiles']: bytile.setdefault(t, []).append(b)
@@ -38,12 +39,15 @@ def main():
             x = np.asarray(X[s:s+20_000_000]); v = np.asarray(V[s:s+20_000_000]); p = np.asarray(pix[s:s+20_000_000])
             for b in bs:
                 x0, y0, x1, y1 = FP[b]['poly'].bounds; m = (x[:, 0] >= x0) & (x[:, 0] <= x1) & (x[:, 1] >= y0) & (x[:, 1] <= y1)
-                if m.any(): parts[b].append((x[m], v[m].astype(np.int64)*(H*Wd) + p[m]))
+                if m.any():   # 메모리 대신 디스크에(151동 점을 한꺼번에 들면 24 GB 넘음, issues.md)
+                    f_ = tmp/f'{b}__{len(parts[b])}.npz'; np.savez(f_, x=x[m], k=v[m].astype(np.int64)*(H*Wd) + p[m]); parts[b].append(f_)
         print('tile read', t, round(T.s()), flush=True)
     removed = []; REC = []
     for b, e in FP.items():
         if not parts[b]: REC.append(dict(building=b, points=0)); continue
-        x = np.concatenate([q[0] for q in parts[b]]); key = np.concatenate([q[1] for q in parts[b]]); parts[b] = None
+        zz = [np.load(f_) for f_ in parts[b]]; x = np.concatenate([z['x'] for z in zz]); key = np.concatenate([z['k'] for z in zz]); del zz
+        for f_ in parts[b]: f_.unlink()
+        parts[b] = None
         key, first = np.unique(key, return_index=True); x = x[first]
         poly = e['poly']; inside = np.zeros(len(x), bool)
         geoms = list(poly.geoms) if hasattr(poly, 'geoms') else [poly]

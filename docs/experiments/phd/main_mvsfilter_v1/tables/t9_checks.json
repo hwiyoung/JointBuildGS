@@ -1,5 +1,5 @@
 {
- "at": "2026-11-20T14:50:27+09:00",
+ "at": "2026-11-20T15:47:46+09:00",
  "checks": [
   {
    "check": "점검 1: 방법 없이 다시 낸 구조 하한 = JUDGESTRUCT-v1 구조 하한 (모든 칸, 정확히 같음)",
@@ -30,6 +30,13 @@
    "passed": true
   },
   {
+   "check": "점검 2 (A): 패치마다 원통 안 지금 점 = 살아남은 점 + 지워진 점 (지워진 점만으로 원통을 따로 셈)",
+   "patches": 3966928,
+   "equal": 3966928,
+   "missing_tiles": [],
+   "passed": true
+  },
+  {
    "check": "점검 3: masks/A.json 기록(mf1)",
    "record": {
     "check3": {
@@ -41,7 +48,7 @@
    }
   }
  ],
- "seconds": 144.50895033800043,
+ "seconds": 73.83740038902033,
  "GT_read": false,
  "scientific_verdict": null
 }

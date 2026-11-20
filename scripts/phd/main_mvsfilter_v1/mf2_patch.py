@@ -3,7 +3,7 @@
   - 원통(JC s1_geometry 와 같은 cylinders.cpp, 같은 반지름·길이·면 찾기): n, n5, n10, mvs_mean/median/sd, raw_n(면 찾기 전 원통 안 모든 점)
   - 고리 u_M R1.5 (JC s1_ring = UNCERT 고리 커널, 같은 시드 규칙, 솎기는 살아남은 점의 키 앞부분)
 none: 원통은 모두 다시 셈(저장 값과 같아야 함), u_M 은 JC 저장 값 + 재현 표본 200개.
-사용: mf2_patch.py <method> <tile> [<tile> ...]"""
+사용: mf2_patch.py <method> <tile> [<tile> ...]   (<method>_rm = 그 방법이 지운 점만, 원통 수만 — 점검 2)"""
 import sys
 sys.path.insert(0, '/repo/scripts/phd/main_mvsfilter_v1')
 from mfcommon import *
@@ -18,6 +18,7 @@ K = RING.K
 def survived(method, tile):
     P = WI/'points'/tile; V = np.load(P/'mvs_a_view.npy'); pix = np.load(O/'pixmap'/f'{tile}.npy'); assert len(V) == len(pix)
     if method == 'none': return np.ones(len(V), bool)
+    if method.endswith('_rm'): return ~survived(method[:-3], tile)   # 점검 2: 지워진 점만(원통 수만 셈)
     M = np.load(O/'masks'/f'{method}.npy'); s = np.zeros(len(V), bool)   # 통째로 읽음(메모리 압박에서 메모리 맵 페이지가 밀려남)
     order = np.argsort(V, kind='stable'); Vs = V[order]; cuts = np.flatnonzero(np.diff(Vs)) + 1
     for seg in np.split(order, cuts):
@@ -60,6 +61,9 @@ def main(method, tile):
         res[prior] = r
         for f in FAST.glob(f'cyl_{method}_{tile}_{prior}.*'): f.unlink()
     T.mark('cylinders')
+    if method.endswith('_rm'):
+        tmp.unlink(); savez(dest, **{f'{p}__{k}': v for p in res for k, v in res[p].items()}, priors=np.array(priors))
+        rec.update(seconds=T.s(), marks=T.marks, GT_read=False, scientific_verdict=None); dump(dest.with_suffix('.json'), rec); lockf.unlink(missing_ok=True); print('PATCH', json.dumps(jsafe(rec)), flush=True); return
     # 고리 u_M R1.5 (none: 저장 값 사용; MF_RING_REPRO=0 이면 재현 표본 생략 — 공용 메모리 한도 때문, issues.md)
     if method == 'none' and os.environ.get('MF_RING_REPRO', '1') == '0':
         for prior in priors:
