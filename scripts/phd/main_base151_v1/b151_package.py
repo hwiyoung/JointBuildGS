@@ -41,7 +41,7 @@ def main(label, *extra):
                 files.append((p, str(p.relative_to(W))))
     for g in extra:
         for p in sorted(OUT.glob(g)):
-            if p.is_file():
+            if p.is_file() and ('payload/' + str(p.relative_to(OUT))) not in {a for _, a in files}:
                 files.append((p, 'payload/' + str(p.relative_to(OUT))))
     man = []
     with zipfile.ZipFile(dest, 'w', zipfile.ZIP_DEFLATED) as z:

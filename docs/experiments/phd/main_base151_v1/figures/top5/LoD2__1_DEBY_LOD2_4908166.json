@@ -1,0 +1,224 @@
+{
+  "at": "2026-11-21T00:21:57.126205+09:00",
+  "prior": "LoD2",
+  "rank": 1,
+  "building": "DEBY_LOD2_4908166",
+  "spread_pp": 99.81957600360847,
+  "completeness_scene": {
+    "2DGS": 0.0,
+    "GeoGS": 43.66260712674786,
+    "CDGS": 0.04510599909788002,
+    "LGDM": 99.81957600360847
+  },
+  "candidates": 98,
+  "rule": "group != experiment, GT >= 2000, max - min of 완전성_장면 전체 over the four methods",
+  "runs": {
+    "b151_2DGS_s0": {
+      "at": "2026-11-20T23:54:48.015260+09:00",
+      "prior": "LoD2",
+      "run": "b151_2DGS_s0",
+      "building": "DEBY_LOD2_4908166",
+      "cell": 1,
+      "status": "있음",
+      "meshes": [
+        "/gtjudge/meshes/c1_6908_53361__ALS__b151_2DGS_s0/final.ply"
+      ],
+      "box": [
+        [
+          -92.97309999994468,
+          112.34850000031292
+        ],
+        [
+          -83.01699999999255,
+          122.00760000012815
+        ]
+      ],
+      "z_range_from_reference": [
+        -42.46330729956927,
+        -36.05780729956931
+      ],
+      "faces": 198539,
+      "samples_in_box": 12717,
+      "colour_rule": "nearest accuracy sample of the run (score151 samples.npz) inside the box",
+      "camera_angles": [
+        [
+          90,
+          -90
+        ],
+        [
+          35,
+          -55
+        ],
+        [
+          35,
+          125
+        ]
+      ],
+      "scientific_verdict": null
+    },
+    "b151_GeoGS_LoD2_s0": {
+      "at": "2026-11-21T00:01:24.413192+09:00",
+      "prior": "LoD2",
+      "run": "b151_GeoGS_LoD2_s0",
+      "building": "DEBY_LOD2_4908166",
+      "cell": 1,
+      "status": "있음",
+      "meshes": [
+        "/gtjudge/meshes/c1_6908_53361__LoD2__b151_GeoGS_LoD2_s0/final.ply"
+      ],
+      "box": [
+        [
+          -92.97309999994468,
+          112.34850000031292
+        ],
+        [
+          -83.01699999999255,
+          122.00760000012815
+        ]
+      ],
+      "z_range_from_reference": [
+        -42.46330729956927,
+        -36.05780729956931
+      ],
+      "faces": 154105,
+      "samples_in_box": 17975,
+      "colour_rule": "nearest accuracy sample of the run (score151 samples.npz) inside the box",
+      "camera_angles": [
+        [
+          90,
+          -90
+        ],
+        [
+          35,
+          -55
+        ],
+        [
+          35,
+          125
+        ]
+      ],
+      "scientific_verdict": null
+    },
+    "b151_CDGS_LoD2_s0": {
+      "at": "2026-11-21T00:09:16.661900+09:00",
+      "prior": "LoD2",
+      "run": "b151_CDGS_LoD2_s0",
+      "building": "DEBY_LOD2_4908166",
+      "cell": 1,
+      "status": "있음",
+      "meshes": [
+        "/gtjudge/meshes/c1_6908_53361__LoD2__b151_CDGS_LoD2_s0/final.ply"
+      ],
+      "box": [
+        [
+          -92.97309999994468,
+          112.34850000031292
+        ],
+        [
+          -83.01699999999255,
+          122.00760000012815
+        ]
+      ],
+      "z_range_from_reference": [
+        -42.46330729956927,
+        -36.05780729956931
+      ],
+      "faces": 34634,
+      "samples_in_box": 129,
+      "colour_rule": "nearest accuracy sample of the run (score151 samples.npz) inside the box",
+      "camera_angles": [
+        [
+          90,
+          -90
+        ],
+        [
+          35,
+          -55
+        ],
+        [
+          35,
+          125
+        ]
+      ],
+      "scientific_verdict": null
+    },
+    "b151_LGDM_LoD2": {
+      "at": "2026-11-21T00:18:13.153627+09:00",
+      "prior": "LoD2",
+      "run": "b151_LGDM_LoD2",
+      "building": "DEBY_LOD2_4908166",
+      "cell": 1,
+      "status": "있음",
+      "meshes": [
+        "/gtjudge/meshes/c1_6908_53361__LoD2__b151_LGDM_LoD2/final.ply"
+      ],
+      "box": [
+        [
+          -92.97309999994468,
+          112.34850000031292
+        ],
+        [
+          -83.01699999999255,
+          122.00760000012815
+        ]
+      ],
+      "z_range_from_reference": [
+        -42.46330729956927,
+        -36.05780729956931
+      ],
+      "faces": 82992,
+      "samples_in_box": 13308,
+      "colour_rule": "nearest accuracy sample of the run (score151 samples.npz) inside the box",
+      "camera_angles": [
+        [
+          90,
+          -90
+        ],
+        [
+          35,
+          -55
+        ],
+        [
+          35,
+          125
+        ]
+      ],
+      "scientific_verdict": null
+    }
+  },
+  "photo": {
+    "status": "있음",
+    "image": "/ph/main_trainunit_v1/PHD-MAIN-TRAINUNIT-v1/scenes/campus/images/DJI_20241217102531_0018_D.jpg",
+    "image_sha256": "0e82fcc5192a6c04b367642fc79422b6f35bb6bb6647eaa920394d9e2b4080d0",
+    "view": "DJI_20241217102531_0018_D",
+    "unit": "c1_6908_53361",
+    "centre_offset_px": 110.2607040211423
+  },
+  "photo_rule": "training view of the cell units with all box corners in front, building GT centre nearest the image centre",
+  "dpi": 100,
+  "crs": "EPSG:25832; local XY = EPSG:25832 - [690953, 5336071]",
+  "sources": [
+    {
+      "path": "/gtjudge/tables_b151/t42_buildings.json",
+      "sha256": "04e01d121799cf2fae48e35adc941a501fcb33f15c8bc6a9d09b62203aea92eb"
+    },
+    {
+      "path": "/gtjudge/figs_b151/_parts/top5/LoD2__1_DEBY_LOD2_4908166__b151_2DGS_s0_views.png",
+      "sha256": "407be81b876ca3b35ac7ef3e3fdcb8a59115f3b80c00a1eaa2cfbdeaf3d28fb4"
+    },
+    {
+      "path": "/gtjudge/figs_b151/_parts/top5/LoD2__1_DEBY_LOD2_4908166__b151_GeoGS_LoD2_s0_views.png",
+      "sha256": "d82da7bd6c0502d21d1709941b5efbc67354d70071a433d6ef0d8bf9eea3e5fc"
+    },
+    {
+      "path": "/gtjudge/figs_b151/_parts/top5/LoD2__1_DEBY_LOD2_4908166__b151_CDGS_LoD2_s0_views.png",
+      "sha256": "81d0fa9bdb811785a6351b01cab392cf5dbc42b8d3c383b660b61082947bc5a0"
+    },
+    {
+      "path": "/gtjudge/figs_b151/_parts/top5/LoD2__1_DEBY_LOD2_4908166__b151_LGDM_LoD2_views.png",
+      "sha256": "c37ec64acc542343a437329dacc3f3c4e09b927938de87343fea27f10aebd080"
+    }
+  ],
+  "script_sha256": "0392cc3bae790a7de38c5b6d64c2f411a5eff0406dd878f0a923055705f3641d",
+  "scientific_verdict": null
+}

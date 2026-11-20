@@ -1,5 +1,5 @@
 {
- "at": "2026-11-19T22:03:41.468152+09:00",
+ "at": "2026-11-20T22:23:21.511964+09:00",
  "note": "3.3: every stop (training attempts not TRAINING_COMPLETE; mesh / score steps), cause first, then the handling",
  "rows": [
   {
@@ -45,6 +45,50 @@
    "kind": "operation (this task)",
    "handling": "the running step finished by itself; the unit counted done when its score files exist (c2_6909_53360) or finished by hand (19:00); sh() now waits while a container of the same name exists (b151_post41.name_busy)",
    "log": "logs/post42/<unit>__ALS__b151_2DGS_s0.log"
+  },
+  {
+   "at": "2026-11-19T20:28 (found 2026-11-20T22:10)",
+   "step": "4.1 mesh merge",
+   "run": "b151_GeoGS_LoD2_s0",
+   "unit": "R1rep_b10 (LoD2)",
+   "attempts": 2,
+   "cause": "RESCORE bounded_merge AssertionError (copies of one edge code differ), the same stop as 2DGS c1_6907_53360; the 4.1 path (GTJUDGE mesh_job.py merge) has no same-tile repair, done41.json ok=false, not seen until b151_figs.py printed NO_RESULT on 11-20",
+   "kind": "code (edge-code rule), operation (stop not reported)",
+   "handling": "2026-11-20 22:1x: b151_units.py mesh <key> merge (bounded_merge, on its AssertionError the same merge_keep_open3d rule), then GTJUDGE mesh_job.py finish and score_new.py as in 4.1; tile files unchanged",
+   "log": "logs/post41_mesh_R1rep_b10__LoD2__b151_GeoGS_LoD2_s0.log"
+  },
+  {
+   "at": "2026-11-20T02:02~10:26",
+   "step": "4.2 / 4.1 mesh tiles",
+   "run": "b151_CDGS_ALS_s0, b151_CDGS_LoD2_s0",
+   "unit": "CDGS ALS c0_6909_53359 tile 8, c0_6908_53359 tile 18; CDGS LoD2 B0_b10 tile 4",
+   "attempts": 1,
+   "cause": "no progress for 8 h: docker-workloads.slice memory.high 60 GiB exceeded (65.3 GB with other work) -> reclaim wait (D, mem_cgroup_handle_over_high); the watcher gate reads host MemAvailable only",
+   "kind": "environment (shared memory slice)",
+   "handling": "user decision: docker stop to tile 8, which had finished by itself before (rc 0); values unchanged, nothing rerun",
+   "log": "issues.md 11/20 10:25"
+  },
+  {
+   "at": "2026-11-20T10:37~10:45",
+   "step": "4.2 mesh tile / merge, 4.1 mesh tile",
+   "run": "b151_CDGS_ALS_s0, b151_CDGS_LoD2_s0",
+   "unit": "CDGS ALS c0_6909_53359, c0_6908_53359, c1_6908_53361 (merge), c1_6908_53360 (tile 10); CDGS LoD2 B0_b10 (tile 8)",
+   "attempts": 2,
+   "cause": "OSError ENOSPC: the NVMe work folder disk (/) full",
+   "kind": "environment (disk)",
+   "handling": "POST_STOP; user decision: TRAINLOG NVMe folder 224 GB removed after an HDD copy (receipt), uv / pip caches removed; watchers restarted 10:52, failed steps rerun from their saved tiles",
+   "log": "logs/post42/<unit>__ALS__b151_CDGS_ALS_s0.log, logs/post41_mesh_B0_b10__LoD2__b151_CDGS_LoD2_s0.log"
+  },
+  {
+   "at": "2026-11-19T23:44 ~ 2026-11-20T11:02",
+   "step": "4.2 score",
+   "run": "b151_CDGS_ALS_s0",
+   "unit": "c0_6907_53359",
+   "attempts": 4,
+   "cause": "geometry_add1.sample_normals IndexError: no triangle of the unit mesh has its centre in a 0.5 m sample cell or area > 0.01 m2 (GT rows of the unit 80; GeoGS ALS 3,110, 2DGS 1,102, CDGS ALS 0 triangles in sample cells)",
+   "kind": "code (zero samples not handled)",
+   "handling": "user decision '표본 없음': b151_score151.py lines 132-137 / 148, zero kept triangles -> zero accuracy samples, completeness rows unchanged (80 rows: within tau 0, no surface 78, surface outside tau 2); rescored 16:2x; no other unit of the eight runs has zero samples",
+   "log": "logs/post42/c0_6907_53359__ALS__b151_CDGS_ALS_s0.score_empty_1120.log"
   }
  ],
  "scientific_verdict": null

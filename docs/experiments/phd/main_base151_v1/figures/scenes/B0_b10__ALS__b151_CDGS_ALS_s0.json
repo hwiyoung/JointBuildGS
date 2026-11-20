@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-20T22:12:10.931588+09:00",
+  "figure": "B0_b10__ALS__b151_CDGS_ALS_s0.png",
+  "title": "B0_b10 · ALS 참값 · CDGS · 이 작업 2 × 2 (b151_CDGS_ALS_s0)",
+  "pixel_m": 0.25,
+  "clip_m": 0.5,
+  "extent": [
+    70.53286362167972,
+    153.53286362167972,
+    -26.512808963511258,
+    80.23719103648874
+  ],
+  "cases": [
+    {
+      "case": "두 자료 모두 유효",
+      "n_gt": 142131,
+      "completeness_pct": 17.1461539002751,
+      "no_surface": 29819
+    },
+    {
+      "case": "사전정보 오류",
+      "n_gt": 757,
+      "completeness_pct": 28.137384412153235,
+      "no_surface": 171
+    },
+    {
+      "case": "영상 깊이 오류",
+      "n_gt": 1450,
+      "completeness_pct": 12.0,
+      "no_surface": 478
+    },
+    {
+      "case": "영상 깊이 결측",
+      "n_gt": 128,
+      "completeness_pct": 0.78125,
+      "no_surface": 16
+    },
+    {
+      "case": "장면 전체",
+      "n_gt": 145160,
+      "completeness_pct": 17.159685863874344,
+      "no_surface": 30667
+    }
+  ],
+  "rule": "GT points from above; left: median signed normal-line distance per pixel, grey: pixels whose GT points have no surface; right: share of GT points with |s| <= tau (no surface = outside)",
+  "site": "B0_b10",
+  "prior": "ALS",
+  "method": "CDGS",
+  "result": "b151_CDGS_ALS_s0",
+  "version": "이 작업 2 × 2",
+  "inputs": {
+    "/gtjudge/scenes/B0_b10__ALS/rows.npz": "bc287f6aada4a62ca4a7d85c59777d9e76dac6ca0b70c7a486908e87a592dc07",
+    "/gtjudge/scenes/B0_b10__ALS/stage1_cells.npz": "af44ef654a9aa14509ef86522e0e434637443f858a984c99cc59cb7748c78c60",
+    "/gtjudge/scenes/B0_b10__ALS/distances/b151_CDGS_ALS_s0.npz": "6d3c5281598baf18be403ada531b514c80b29a2961fb75cf3f80b69613b34c91"
+  },
+  "scientific_verdict": null
+}

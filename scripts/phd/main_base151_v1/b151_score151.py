@@ -129,7 +129,12 @@ def unit(run, prior, uname):
     del sc
     # accuracy samples
     grid = CampusGrid(g['xyz'])
-    Ps, Ns = sample_normals(V, F, grid)
+    # 11-20: sample_normals fails when no triangle passes its keep test (centroid in a sample cell or area > 0.01 m2);
+    # same keep test here, zero triangles kept -> zero accuracy samples ("표본 없음"), completeness rows above unchanged.
+    kept_any = any((grid.in_cells(V[F[i:i + 500000]].mean(1)) | (.5 * np.linalg.norm(np.cross(
+        V[F[i:i + 500000]][:, 1] - V[F[i:i + 500000]][:, 0], V[F[i:i + 500000]][:, 2] - V[F[i:i + 500000]][:, 0]), axis=1) > .01)).any()
+        for i in range(0, len(F), 500000))
+    Ps, Ns = sample_normals(V, F, grid) if kept_any else (np.zeros((0, 3)), np.zeros((0, 3)))
     del V, F
     inrect = (Ps[:, :2] >= lo).all(1) & (Ps[:, :2] <= hi).all(1)
     Ps, Ns = Ps[inrect], Ns[inrect]
@@ -140,7 +145,7 @@ def unit(run, prior, uname):
     if prior == 'ALS':
         rn[rn[:, 2] < 0] *= -1
     res = dict(rows=rows.astype('i8'), row_main=np.r_[np.ones(len(main_rows), bool), np.zeros(len(lit_rows), bool)], row_s=s.astype('f8'), row_offset=off,
-               samples=np.int64(len(Ps)))
+               samples=np.int64(len(Ps)), kept_triangles_any=np.bool_(kept_any))
     if len(Ps) and len(rx):
         tree = cKDTree(rx)
         euc, idx = tree.query(Ps, workers=4)
