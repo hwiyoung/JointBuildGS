@@ -36,6 +36,16 @@ def survived_of(method, tile, idx):
         m = V == v; row = np.unpackbits(np.asarray(MASKS[method][int(v)]), count=MC.H*MC.Wd).astype(bool); s[m] = row[pix[m]]
     return s
 
+CMAP_ = None
+COLOR_C = False   # 덧붙임 1 4절: A2 판에서 단면의 영상 깊이 점을 c(일치 시점 수)로 칠함
+C_COL = [((1, 2), '#d7301f', 'c 1~2'), ((3, 4), '#fdae61', 'c 3~4'), ((5, 10**6), '#1a9850', 'c 5 이상')]
+def c_of(tile, idx):
+    global CMAP_
+    if CMAP_ is None: CMAP_ = np.memmap(MC.O/'a2/px_c.u16', dtype='<u2', mode='r', shape=(819, MC.H*MC.Wd))
+    V = np.load(WI_/'points'/tile/'mvs_a_view.npy', mmap_mode='r')[idx]; pix = np.load(MC.O/'pixmap'/f'{tile}.npy', mmap_mode='r')[idx]; out = np.zeros(len(idx), int)
+    for v in np.unique(V): m = V == v; out[m] = np.asarray(CMAP_[int(v)])[pix[m]]
+    return out
+
 def groups(mask, d, A):
     ie = np.flatnonzero(mask); X0 = d['centre'][ie] + np.nan_to_num(d['prior_height_m'][ie])[:, None]*np.nan_to_num(d['normal'][ie])
     pr = cKDTree(X0).query_pairs(.36, output_type='ndarray'); pr = pr[d['building'][ie[pr[:, 0]]] == d['building'][ie[pr[:, 1]]]]
@@ -76,9 +86,13 @@ def examples(prior, method, kind_, d, g, Z, Pn, Pm, title):
         sec = lambda Q: (np.abs((Q - c0) @ t2) <= .15) & (np.abs((Q - c0) @ t1) <= 1.5) & ((Q - c0) @ nn >= ylo) & ((Q - c0) @ nn <= yhi)
         nb = gtree.query_ball_point(c0[:2], 2.5); G = g['xyz'][nb]; gc = g['case'][nb]; sm = sec(G); G, gc = G[sm], gc[sm]
         M, mid = mvs_near_idx(ts[d['tile'][i]], c0 - 2.5 + np.minimum(0, ylo)*np.abs(nn), c0 + 2.5 + np.maximum(0, yhi)*np.abs(nn)); k_ = sec(M); M, mid = M[k_], mid[k_]
-        sv = survived_of(method, ts[d['tile'][i]], mid)
-        if len(M) > 4000: ch = np.random.default_rng(1).choice(len(M), 4000, replace=False); M, sv = M[ch], sv[ch]
-        for val, lab in [(0, '영상 깊이 점: 지워짐'), (1, '영상 깊이 점: 살아남음')]:
+        sv = survived_of(method, ts[d['tile'][i]], mid); cv = c_of(ts[d['tile'][i]], mid) if COLOR_C else np.zeros(len(mid), int)
+        if len(M) > 4000: ch = np.random.default_rng(1).choice(len(M), 4000, replace=False); M, sv, cv = M[ch], sv[ch], cv[ch]
+        if COLOR_C:
+            for (a_, b_), col_, lab in C_COL:
+                m = (cv >= a_) & (cv <= b_); B.scatter((M[m] - c0) @ t1, (M[m] - c0) @ nn, s=.7, c=col_, lw=0, label=f'영상 깊이 점: {lab}', alpha=.8)
+        else:
+          for val, lab in [(0, '영상 깊이 점: 지워짐'), (1, '영상 깊이 점: 살아남음')]:
             m = sv == bool(val); B.scatter((M[m] - c0) @ t1, (M[m] - c0) @ nn, s=.7, c=SURV_C[val], lw=0, label=lab, alpha=.8)
         for c in [0, 1, 2, 4, 3]:
             m = gc == c
@@ -96,7 +110,8 @@ def examples(prior, method, kind_, d, g, Z, Pn, Pm, title):
         moved = {f'{JUD.get(int(a))}→{JUD.get(int(b))}': float(a0[(Pn['lo'][pm_] == a) & (Pm['lo'][pm_] == b)].sum()) for a in np.unique(Pn['lo'][pm_]) for b in np.unique(Pm['lo'][pm_]) if ((Pn['lo'][pm_] == a) & (Pm['lo'][pm_] == b)).any()}
         meta.append(dict(rank=r + 1, building=str(d['building'][i]), group_patches=int(len(mem)), group_area_m2=area, section_patch_gid=i, view=None if j is None else P7.cam().names[j], view_rule=view_rule,
                          section_cyl_points_before=rn0, section_cyl_points_after=rn1, section_survive_pct=sr, group_survive_pct=float(sr_g), judgment_before=JUD.get(int(Pn['lo'][i])), judgment_after=JUD.get(int(Pm['lo'][i])),
-                         group_judgment_area_m2=moved, section_mvs_points_drawn=int(len(M)), section_survived_drawn=int(sv.sum())))
+                         group_judgment_area_m2=moved, section_mvs_points_drawn=int(len(M)), section_survived_drawn=int(sv.sum()),
+                         **({'section_drawn_by_c': {lab: int(((cv >= a_) & (cv <= b_)).sum()) for (a_, b_), _, lab in C_COL}} if COLOR_C else {})))
     fig.suptitle(title, fontsize=8); fig.tight_layout(rect=[0, 0, 1, .98])
     return fig, meta
 
@@ -110,6 +125,12 @@ def main(prior, methods):
         for kind_, nm, tt in [('image', 'examples', '영상 오류 패치(처음 상태 영상 깊이 오류) 본보기 — JUDGESTRUCT 그림 13 과 같은 자리'), ('prior', 'prior_error', '사전정보 오류 패치 본보기 — 같은 고르기 규칙')]:
             fig, meta = examples(prior, method, kind_, d, g, Z, Pn, Pm, f'{PN[prior]} · {MC.MNAME[method]}: {tt}')
             J3.save(fig, f'fig7_{nm}_{prior}_{method}', dict(prior=prior, method=method, rule='JS js3 그림 13 고르기 규칙 (0.36 m 이어짐, 넓은 모임 차례, 한 건물에서 하나, 단면 = 모임에서 참값 점이 가장 많은 패치)', groups=meta))
+        if method == 'A2':   # 덧붙임 1 4절: c 로 칠한 판
+            global COLOR_C
+            COLOR_C = True
+            fig, meta = examples(prior, method, 'image', d, g, Z, Pn, Pm, f'{PN[prior]} · {MC.MNAME[method]}: 영상 오류 패치 본보기 — 단면의 영상 깊이 점을 c(일치 시점 수, 자기 포함)로 칠함')
+            COLOR_C = False
+            J3.save(fig, f'fig7_examples_{prior}_A2_c', dict(prior=prior, method=method, colors={lab: col_ for _, col_, lab in C_COL}, rule='fig7_examples_<prior>_A2 와 같은 자리·같은 영상', groups=meta))
     # 지도: 세 실험 지역
     if 'A' in methods:
         O_ = J3.ortho(); SC = J3.scenes(prior)[:3]; A_ = d['area']; kind = d['kind']; PA = dict(np.load(jd/'patch_A.npz'))

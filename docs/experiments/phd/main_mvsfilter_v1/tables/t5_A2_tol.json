@@ -1,0 +1,43 @@
+{
+ "rows": [
+  {
+   "tol": 0.01,
+   "tag": "1p0",
+   "method": "A2",
+   "survived_pct": 68.74781816227508,
+   "c_ge2_pct": 86.82956315969032,
+   "same_as_a2": {
+    "c": true,
+    "f": true,
+    "o": true,
+    "m": true,
+    "q": true
+   }
+  },
+  {
+   "tol": 0.005,
+   "tag": "0p5",
+   "method": "A2d0p5",
+   "survived_pct": 68.4246983090666,
+   "c_ge2_pct": 86.53009368673408,
+   "same_as_a2": null
+  },
+  {
+   "tol": 0.002,
+   "tag": "0p2",
+   "method": "A2d0p2",
+   "survived_pct": 65.8922509295449,
+   "c_ge2_pct": 84.73404242355875,
+   "same_as_a2": null
+  },
+  {
+   "tol": 0.001,
+   "tag": "0p1",
+   "method": "A2d0p1",
+   "survived_pct": 60.4721375380167,
+   "c_ge2_pct": 81.29528239136614,
+   "same_as_a2": null
+  }
+ ],
+ "scientific_verdict": null
+}

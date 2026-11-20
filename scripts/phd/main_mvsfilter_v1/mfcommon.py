@@ -10,7 +10,7 @@ JS = PH/'main_judgestruct_v1/PHD-MAIN-JUDGESTRUCT-v1'
 JP = PH/'main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1'
 JABL = PH/'main_judgeabl_v1/PHD-MAIN-JUDGEABL-v1'
 METHODS = ['none', 'A', 'B_orig', 'B_view', 'C']
-MNAME = {'none': '지금 점군', 'A': '방법 A (COLMAP 2단계)', 'B_orig': '방법 B-원문 (Wolff 외)', 'B_view': '방법 B-시점 (세션 판)', 'C': '방법 C (통계적, 참고)'}
+MNAME = {'none': '지금 점군', 'A': '방법 A (COLMAP 2단계)', 'B_orig': '방법 B-원문 (Wolff 외)', 'B_view': '방법 B-시점 (세션 판)', 'C': '방법 C (통계적, 참고)', 'A2': '방법 A2 (일치 시점 수 c≥5, 세션 판)', 'A2d0p5': '방법 A2-깊이 0.5 % (세션 판)', 'A2d0p2': '방법 A2-깊이 0.2 % (세션 판)', 'A2d0p1': '방법 A2-깊이 0.1 % (세션 판)'}
 H, Wd = 741, 1024
 def now(): return dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(timespec='seconds')
 def sha(p):

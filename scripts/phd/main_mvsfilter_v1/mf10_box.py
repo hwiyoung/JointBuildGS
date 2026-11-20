@@ -17,7 +17,7 @@ import a1_variants as A1
 import js3_figs as J3
 import pandas as pd
 from mfcommon import *   # jscommon 의 O·cfg·D 등이 덮은 이름을 이 발주 것으로 되돌림 (SURF·STATE·PN·wq·JABL 은 jscommon 것 유지)
-MLABEL = {'A': 'A', 'B_orig': 'B-원문', 'B_view': 'B-시점 (세션이 정한 판)', 'C': 'C'}
+MLABEL = {'A': 'A', 'A2': 'A2 (세션 판)', 'B_orig': 'B-원문', 'B_view': 'B-시점 (세션이 정한 판)', 'C': 'C'}
 BOXR = PH/'main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1/mvs'
 
 def survive(site):
@@ -130,7 +130,7 @@ def table(sites):
           if not f.exists(): continue
           z0 = np.load(f); ix = z0['idx']; a = A[ix]; r0 = z0['none__raw_n']; within = lambda med: np.isfinite(gtp[ix]) & np.isfinite(med) & (np.abs(med - gtp[ix]) <= taup[ix])
           w0 = within(z0['none__med']); few0 = (z0['none__n'] >= 0) & (z0['none__n'] < 4)
-          for meth in ['A', 'B_orig', 'B_view', 'C']:   # A 는 mf10_box, B·C 는 mf10b_box_bc
+          for meth in ['A', 'A2', 'B_orig', 'B_view', 'C']:   # A 는 mf10_box, B·C 는 mf10b_box_bc
             fm = f if meth == 'A' else O/'box'/f'{site}__{prior}__{meth}.npz'
             if not fm.exists(): continue
             z = np.load(fm); assert np.array_equal(z['idx'], ix)

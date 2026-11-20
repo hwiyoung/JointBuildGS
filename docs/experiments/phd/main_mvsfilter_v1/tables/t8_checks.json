@@ -1,0 +1,95 @@
+{
+ "at": "2026-11-21T03:23:29+09:00",
+ "checks": [
+  {
+   "prior": "LoD2",
+   "check": "점검 판에서 바꾼 패치 0 = 구조 하한(지금)",
+   "points": 8141189,
+   "equal": 8141189,
+   "passed": true
+  },
+  {
+   "prior": "LoD2",
+   "check": "구조 상한 다시 냄(JS fig_arrays up) = t6 구조 상한 (점 단위 전체, 면마다)",
+   "diffs": {
+    "지붕": 1.4210854715202004e-14,
+    "벽": 0.0,
+    "모두": 1.4210854715202004e-14
+   },
+   "passed": true
+  },
+  {
+   "prior": "LoD2",
+   "check": "A2 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 3177706,
+   "equal": 3177706,
+   "passed": true
+  },
+  {
+   "prior": "LoD2",
+   "check": "A2d0p5 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 3177706,
+   "equal": 3177706,
+   "passed": true
+  },
+  {
+   "prior": "LoD2",
+   "check": "A2d0p2 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 3177706,
+   "equal": 3177706,
+   "passed": true
+  },
+  {
+   "prior": "LoD2",
+   "check": "A2d0p1 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 3177706,
+   "equal": 3177706,
+   "passed": true
+  },
+  {
+   "prior": "항공 LiDAR",
+   "check": "점검 판에서 바꾼 패치 0 = 구조 하한(지금)",
+   "points": 4474266,
+   "equal": 4474266,
+   "passed": true
+  },
+  {
+   "prior": "항공 LiDAR",
+   "check": "구조 상한 다시 냄(JS fig_arrays up) = t6 구조 상한 (점 단위 전체, 면마다)",
+   "diffs": {
+    "지붕": 0.0
+   },
+   "passed": true
+  },
+  {
+   "prior": "항공 LiDAR",
+   "check": "A2 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 789222,
+   "equal": 789222,
+   "passed": true
+  },
+  {
+   "prior": "항공 LiDAR",
+   "check": "A2d0p5 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 789222,
+   "equal": 789222,
+   "passed": true
+  },
+  {
+   "prior": "항공 LiDAR",
+   "check": "A2d0p2 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 789222,
+   "equal": 789222,
+   "passed": true
+  },
+  {
+   "prior": "항공 LiDAR",
+   "check": "A2d0p1 패치 값의 원통 점 수 = patch/none raw_n",
+   "patches": 789222,
+   "equal": 789222,
+   "passed": true
+  }
+ ],
+ "seconds": 193.9287965509575,
+ "scientific_verdict": null
+}
