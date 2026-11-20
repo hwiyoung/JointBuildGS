@@ -1,0 +1,35 @@
+{
+ "title": "참값 목표 판(진단용)",
+ "rows": [
+  {
+   "title": "참값 목표 판(진단용)",
+   "stem": "B173nb_b10__LoD2",
+   "arm": "참값 목표 판 참고 줄(gtt_s0_rerun1 15,000회 모델, 30,000회 아님)",
+   "gt_rows": 373752,
+   "target_within_n": 359236,
+   "target_within_pct": 96.116,
+   "lost_n": 12983,
+   "lost_pct_of_target_within": 3.614,
+   "back_occl_pct": 4.521,
+   "back_median_pct": 38.381,
+   "not_back_pct": 57.098,
+   "completeness_pct": {
+    "base": 95.88,
+    "occl": 90.631,
+    "median_depth": 94.74,
+    "occl_median": 89.438
+   }
+  },
+  {
+   "title": "참값 목표 판(진단용)",
+   "stem": "B173nb_b10__LoD2",
+   "arm": "본 방법 판(FINALTRAIN 30,000)",
+   "gt_rows": 373752,
+   "target_within_n": 307376,
+   "target_within_pct": 82.241,
+   "lost_n": 5905,
+   "lost_pct_of_target_within": 1.921
+  }
+ ],
+ "scientific_verdict": null
+}

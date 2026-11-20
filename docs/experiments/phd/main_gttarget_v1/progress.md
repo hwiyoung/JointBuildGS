@@ -23,3 +23,8 @@ FINALTRAIN 30,000회의 실제 걸린 시간으로 어림했다. TRAINERR 기록
 - 2026-11-19T02:03:29+09:00: 1단계 시작. 사용자 결정 둘(평면 나누기 뒤 LoD2 규칙, 0.25 m). 참값 조각 세 지역, 목표 파일·씨앗 여섯 장면, 목표 깊이 지도 첫 판 → 법선 부호 고침(issues.md) → 다시 만듦.
 - 2026-11-19T09:50:40+09:00: 1단계 목표 메시 채점에서 5절 기준(99 %) 미달 다섯 장면 → 멈춤, 사용자에게 물음. 나머지 점검(깊이·가림·범위·씨앗) 계산 중.
 - 2026-11-19T10:33:59+09:00: 사용자 결정(조각 원판으로 학습). 2단계 잠금. 300회 시험(R1 × 항공 LiDAR, 215 s, loaded_targets PASS) — GPU 1에서 본 실험(b151)과 잠깐 겹침, 이후 GPU 0만 씀. 대기열 시작.
+- 2026-11-20T15:39:07.921191+09:00: g3_ga: tables ga_size/ga_scene/ga_edge/na_cross/na_seed/da_cells/da_places, absent ['B173nb_b10__LoD2'], 144 s
+- 2026-11-20T15:48:49.067296+09:00: g3_tables8: scenes ['R1rep_b10__ALS'], absent ['R1rep_b10__LoD2', 'B0_b10__LoD2', 'B173nb_b10__LoD2', 'B173nb_b10__ALS', 'B0_b10__ALS']
+- 2026-11-20T16:16:09.185471+09:00: g3_tables8: scenes ['R1rep_b10__ALS', 'R1rep_b10__LoD2', 'B0_b10__LoD2', 'B173nb_b10__ALS', 'B0_b10__ALS'], absent ['B173nb_b10__LoD2']
+- 2026-11-20T16:18:39.516301+09:00: g3_tables8: scenes ['R1rep_b10__ALS', 'R1rep_b10__LoD2', 'B0_b10__LoD2', 'B173nb_b10__ALS', 'B0_b10__ALS'], absent ['B173nb_b10__LoD2']
+- 2026-11-20T16:40+09:00: 3단계 끝. 표 ga_size·ga_scene·ga_edge·na_cross·na_seed·da_cells·da_places·ca_state·ra_share·ma_state·da_labels·da_front·ga_course·ba_causes·ba_unexplained·check8·check11·cmd_diff·ga_reference, 그림 lostmap·ra_bars·cells_map·unexplained_map·case_*(여섯), 보고.md, 점검_11절.md. B173 × LoD2 결과 없음(멈춤 3회).

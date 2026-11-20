@@ -1,0 +1,21 @@
+{
+ "at": "2026-11-20T16:16:42.055513+09:00",
+ "figure": "lostmap.png",
+ "title": "참값 목표 판(진단용)",
+ "points": "payload figdata/lostmap.npz",
+ "frame": "local training frame (m), +y = north",
+ "scenes": [
+  "R1rep_b10__ALS",
+  "R1rep_b10__LoD2",
+  "B0_b10__LoD2",
+  "B173nb_b10__ALS",
+  "B0_b10__ALS"
+ ],
+ "colours": {
+  "both": "#6a3d9a",
+  "method only": "#1f78b4",
+  "gtt only": "#e31a1c",
+  "kept sample (60,000, rng 0)": "#d9d9d9"
+ },
+ "scientific_verdict": null
+}

@@ -115,5 +115,20 @@
   "others_per_scene": 20000,
   "rng_seed": 20261119
  },
- "scientific_verdict": null
+ "scientific_verdict": null,
+ "extraction": {
+  "iteration": 30000,
+  "variants": {
+   "base": "FINALTRAIN render rule (TRAINERR a6_ra_render base)",
+   "occl": "drop pixels with stage-1 occl code==2 (GT-occluded / backface / image depth >10 m nearer) before TSDF",
+   "median_depth": "median depth (depth_ratio 1)",
+   "occl_median": "both"
+  },
+  "mesh": "TSDF mesh_job prepare/plan/tile/merge/finish, te_mesh score (GTJUDGE score_new + addendum11)",
+  "runs": [
+   "gtt_s0",
+   "gtt_s1 (R1 only)"
+  ],
+  "health_stop_runs": "B173nb_b10__LoD2 gtt_s0: no iteration 30000, not extracted"
+ }
 }
