@@ -1,0 +1,100 @@
+{
+ "at": "2026-11-20T18:06:39.287178+09:00",
+ "figure": "case_cell2.png",
+ "width_px": 2700,
+ "title": "참값 목표 판(진단용) — 칸 2 · R1 × 항공 LiDAR 영상 깊이 오류 완전성: 본 방법 판 / 참값 목표 판 기준 추출 / 가림 제외 추출",
+ "stem": "R1rep_b10__ALS",
+ "place": "cell2",
+ "view": "DJI_20241217103611_0075_D",
+ "camera": {
+  "K": [
+   [
+    674.4174194335938,
+    0.0,
+    513.4158325195312
+   ],
+   [
+    0.0,
+    674.7781982421875,
+    365.0968322753906
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "W2C": [
+   [
+    0.9998871684074402,
+    0.014337182976305485,
+    -0.00448255892843008,
+    -38.71155548095703
+   ],
+   [
+    0.0082095293328166,
+    -0.7714577317237854,
+    -0.6362276077270508,
+    -0.9197423458099365
+   ],
+   [
+    -0.01257981639355421,
+    0.6361190676689148,
+    -0.7714883685112,
+    5.722086429595947
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "width": 1024,
+  "height": 741
+ },
+ "crop_xxyy": [
+  0,
+  691,
+  174,
+  644
+ ],
+ "meshes": {
+  "본 방법 판": "payload/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/R1rep_b10__ALS__FINALTRAIN_30000/primary.ply",
+  "참값 목표 판 기준 추출": "/gt/gtj/meshes/R1rep_b10__ALS__gtt_s0_base/final.ply",
+  "참값 목표 판 가림 제외 추출": "/gt/gtj/meshes/R1rep_b10__ALS__gtt_s0_occl/final.ply"
+ },
+ "section": {
+  "A": [
+   15.173255789829442,
+   27.00374219727338,
+   -33.57080841064453
+  ],
+  "B": [
+   21.94934476559048,
+   18.50225832152545,
+   -33.57080841064453
+  ],
+  "h": [
+   0.6232863460063595,
+   -0.7819936897968172,
+   0.0
+  ],
+  "e": [
+   0.7819936897968173,
+   0.6232863460063596,
+   -0.0
+  ],
+  "slab_m": 0.25,
+  "z_range": [
+   -36.12140655517578,
+   -26.52016677856445
+  ]
+ },
+ "red_rule": "fill: mesh hit points > 0.5 m from every GT point and within the case radius of the place; hatch: place GT points without a mesh vertex within 0.2 m",
+ "points_npz": "payload addendum6/case/case_cell2.npz",
+ "scientific_verdict": null,
+ "place_rule": "g3_case2.py docstring, place cell2",
+ "place_points": "payload case/place_cell2.npz",
+ "place_n": 1893
+}

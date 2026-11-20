@@ -30,6 +30,11 @@ def section(ax, stem, *a, **k):
     try: return _section(ax, stem, *a, **k)
     finally: K.Targets = ORIG_T
 K.section = section
+_ab = K.ab
+def ab(ax, ua, va, crop):   # A / B labels clipped to the panel (the section line can leave the photo crop; addendum 6 drew the circles outside the panel)
+    n0 = len(ax.texts); _ab(ax, ua, va, crop)
+    for t in ax.texts[n0:]: t.set_clip_on(True)
+K.ab = ab
 K.FIG = Path('/docs/figures'); K.CS6 = GTO/'case'
 
 def run(name):

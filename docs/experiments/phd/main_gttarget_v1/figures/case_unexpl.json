@@ -1,0 +1,100 @@
+{
+ "at": "2026-11-20T18:00:15.096382+09:00",
+ "figure": "case_unexpl.png",
+ "width_px": 2700,
+ "title": "참값 목표 판(진단용) — 설명되지 않는 잃은 점 · B0 × LoD2: 본 방법 판 / 참값 목표 판 기준 추출 / 가림 제외 추출",
+ "stem": "B0_b10__LoD2",
+ "place": "unexpl",
+ "view": "DJI_20241217101150_0024_D",
+ "camera": {
+  "K": [
+   [
+    674.4174194335938,
+    0.0,
+    513.4158325195312
+   ],
+   [
+    0.0,
+    674.7781982421875,
+    365.0968322753906
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "W2C": [
+   [
+    -0.9461729526519775,
+    0.32365477085113525,
+    -0.002069855807349086,
+    101.93870544433594
+   ],
+   [
+    0.2707635760307312,
+    0.7880146503448486,
+    -0.5529195070266724,
+    -101.9762954711914
+   ],
+   [
+    -0.17732395231723785,
+    -0.5237179398536682,
+    -0.8332321047782898,
+    61.886512756347656
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "width": 1024,
+  "height": 741
+ },
+ "crop_xxyy": [
+  602,
+  822,
+  105,
+  254
+ ],
+ "meshes": {
+  "본 방법 판": "payload/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__LoD2__FINALTRAIN_30000/primary.ply",
+  "참값 목표 판 기준 추출": "/gt/gtj/meshes/B0_b10__LoD2__gtt_s0_base/final.ply",
+  "참값 목표 판 가림 제외 추출": "/gt/gtj/meshes/B0_b10__LoD2__gtt_s0_occl/final.ply"
+ },
+ "section": {
+  "A": [
+   120.19478425160177,
+   63.06840800974822,
+   -25.234128952026367
+  ],
+  "B": [
+   117.80790129527323,
+   57.56361103322053,
+   -25.234128952026367
+  ],
+  "h": [
+   -0.3978138260547574,
+   -0.9174661627546136,
+   -0.0
+  ],
+  "e": [
+   0.9174661627546137,
+   -0.39781382605475746,
+   0.0
+  ],
+  "slab_m": 0.25,
+  "z_range": [
+   -28.235810470581054,
+   -22.235810470581054
+  ]
+ },
+ "red_rule": "fill: mesh hit points > 0.5 m from every GT point and within the case radius of the place; hatch: place GT points without a mesh vertex within 0.2 m",
+ "points_npz": "payload addendum6/case/case_unexpl.npz",
+ "scientific_verdict": null,
+ "place_rule": "g3_case2.py docstring, place unexpl",
+ "place_points": "payload case/place_unexpl.npz",
+ "place_n": 68
+}

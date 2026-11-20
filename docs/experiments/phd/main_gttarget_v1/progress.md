@@ -28,3 +28,4 @@ FINALTRAIN 30,000회의 실제 걸린 시간으로 어림했다. TRAINERR 기록
 - 2026-11-20T16:16:09.185471+09:00: g3_tables8: scenes ['R1rep_b10__ALS', 'R1rep_b10__LoD2', 'B0_b10__LoD2', 'B173nb_b10__ALS', 'B0_b10__ALS'], absent ['B173nb_b10__LoD2']
 - 2026-11-20T16:18:39.516301+09:00: g3_tables8: scenes ['R1rep_b10__ALS', 'R1rep_b10__LoD2', 'B0_b10__LoD2', 'B173nb_b10__ALS', 'B0_b10__ALS'], absent ['B173nb_b10__LoD2']
 - 2026-11-20T16:40+09:00: 3단계 끝. 표 ga_size·ga_scene·ga_edge·na_cross·na_seed·da_cells·da_places·ca_state·ra_share·ma_state·da_labels·da_front·ga_course·ba_causes·ba_unexplained·check8·check11·cmd_diff·ga_reference, 그림 lostmap·ra_bars·cells_map·unexplained_map·case_*(여섯), 보고.md, 점검_11절.md. B173 × LoD2 결과 없음(멈춤 3회).
+- 2026-11-20T18:01:50+09:00: 발주문 대조 뒤 채움 — case_unexpl, case_cell1~3, da_annex, 뜬 면 그림 다시, 보고.md·점검_11절.md 고침.

@@ -1,0 +1,100 @@
+{
+ "at": "2026-11-20T17:54:59.607035+09:00",
+ "figure": "case_cell3.png",
+ "width_px": 2700,
+ "title": "참값 목표 판(진단용) — 칸 3 · B0 × LoD2 영상 깊이 결측 정확성: 본 방법 판 / 참값 목표 판 기준 추출 / 가림 제외 추출",
+ "stem": "B0_b10__LoD2",
+ "place": "cell3",
+ "view": "DJI_20241217084256_0012_D",
+ "camera": {
+  "K": [
+   [
+    674.4174194335938,
+    0.0,
+    513.4158325195312
+   ],
+   [
+    0.0,
+    674.7781982421875,
+    365.0968322753906
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "W2C": [
+   [
+    -0.8347702026367188,
+    0.5505887269973755,
+    -0.0032903749961405993,
+    84.75190734863281
+   ],
+   [
+    0.5505648851394653,
+    0.8346381187438965,
+    -0.01604640483856201,
+    -34.793609619140625
+   ],
+   [
+    -0.0060886964201927185,
+    -0.015206624753773212,
+    -0.9998658299446106,
+    33.12801742553711
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "width": 1024,
+  "height": 741
+ },
+ "crop_xxyy": [
+  442,
+  662,
+  444,
+  593
+ ],
+ "meshes": {
+  "본 방법 판": "payload/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__LoD2__FINALTRAIN_30000/primary.ply",
+  "참값 목표 판 기준 추출": "/gt/gtj/meshes/B0_b10__LoD2__gtt_s0_base/final.ply",
+  "참값 목표 판 가림 제외 추출": "/gt/gtj/meshes/B0_b10__LoD2__gtt_s0_occl/final.ply"
+ },
+ "section": {
+  "A": [
+   95.77366225009816,
+   -6.931900150141155,
+   -40.652523040771484
+  ],
+  "B": [
+   94.8714183163081,
+   3.0453342264503593,
+   -40.652523040771484
+  ],
+  "h": [
+   -0.09006276320986197,
+   0.9959360916660287,
+   -0.0
+  ],
+  "e": [
+   -0.9959360916660287,
+   -0.09006276320986197,
+   0.0
+  ],
+  "slab_m": 0.25,
+  "z_range": [
+   -44.28711795806885,
+   -25.664022159576415
+  ]
+ },
+ "red_rule": "fill: mesh hit points > 0.5 m from every GT point and within the case radius of the place; hatch: place GT points without a mesh vertex within 0.2 m",
+ "points_npz": "payload addendum6/case/case_cell3.npz",
+ "scientific_verdict": null,
+ "place_rule": "g3_case2.py docstring, place cell3",
+ "place_points": "payload case/place_cell3.npz",
+ "place_n": 2282
+}
