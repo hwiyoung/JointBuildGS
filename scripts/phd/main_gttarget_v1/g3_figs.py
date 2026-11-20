@@ -39,8 +39,8 @@ def bars():
     pooled = [r for r in R_ if str(r.get('stem', '')).startswith('합(')]; r1 = [r for r in R_ if r.get('stem') in ('R1rep_b10__ALS', 'R1rep_b10__LoD2')]
     def sumrows(rows, arm):
         rr = [r for r in rows if r['arm'] == arm]; n = sum(r['lost_n'] for r in rr); return n, [100*sum(r[f'{k}_n'] for r in rr)/max(1, n) for k in keys]
-    panels = [('다섯 장면 합', [(r['arm'], r['lost_n'], [r[f'{k}_pct'] for k in keys]) for r in pooled if r['arm'] != '참값 목표 판 씨앗 1']),
-              ('R1 두 장면 합 (씨앗 1이 있는 장면)', [(a, *sumrows(r1, a)) for a in ['본 방법 판(FINALTRAIN, 덧붙임 6)', '참값 목표 판 씨앗 0', '참값 목표 판 씨앗 1']])]
+    panels = [('다섯 장면 합', [(r['arm'], r['lost_n'], [r[f'{k}_pct'] for k in keys]) for r in pooled if r['arm'] != '참값 목표 판 씨앗 1(30,000회)']),
+              ('R1 두 장면 합 (씨앗 1이 있는 장면)', [(a, *sumrows(r1, a)) for a in ['본 방법 판(FINALTRAIN 30,000회, 덧붙임 6)', '참값 목표 판 씨앗 0(30,000회)', '참값 목표 판 씨앗 1(30,000회)']])]
     fig, axs = plt.subplots(1, 2, figsize=(22, 7.5)); data = {}
     for ax, (ttl, rows) in zip(axs, panels):
         for i, (arm, n, sh) in enumerate(rows):

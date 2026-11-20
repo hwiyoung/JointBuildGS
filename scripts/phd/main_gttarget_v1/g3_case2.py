@@ -61,9 +61,9 @@ def cells():
 def annex():
     sys.path.insert(0, '/repo/scripts/phd/main_gttarget_v1'); from gt_common import table, TITLE as T_
     bx = b.ANNEX; G = np.load(GTJ/'reference/B0_b10/dense.npz')['xyz'].astype('f8'); tree = cKDTree(G); rows = []
-    for arm, p in [('본 방법 판(FINALTRAIN)', GC.ft_mesh('B0_b10__ALS')), ('패치 다수결 판(A-1)', GTJ/'meshes/B0_b10__ALS__A1/final.ply'),
-                   ('참값 목표 판 기준 추출', GC.gtt_mesh('B0_b10__ALS', 'base')), ('참값 목표 판 가림 제외 추출', GC.gtt_mesh('B0_b10__ALS', 'occl')),
-                   ('참값 목표 판 중앙 깊이 추출', GC.gtt_mesh('B0_b10__ALS', 'median_depth')), ('참값 목표 판 둘 다 추출', GC.gtt_mesh('B0_b10__ALS', 'occl_median'))]:
+    for arm, p in [('본 방법 판(FINALTRAIN 30,000회)', GC.ft_mesh('B0_b10__ALS')), ('패치 다수결 판(A-1 30,000회)', GTJ/'meshes/B0_b10__ALS__A1/final.ply'),
+                   ('참값 목표 판(씨앗 0, 30,000회) 기준 추출', GC.gtt_mesh('B0_b10__ALS', 'base')), ('참값 목표 판(씨앗 0, 30,000회) 가림 제외 추출', GC.gtt_mesh('B0_b10__ALS', 'occl')),
+                   ('참값 목표 판(씨앗 0, 30,000회) 중앙 깊이 추출', GC.gtt_mesh('B0_b10__ALS', 'median_depth')), ('참값 목표 판(씨앗 0, 30,000회) 둘 다 추출', GC.gtt_mesh('B0_b10__ALS', 'occl_median'))]:
         V, F = b.mesh(p); inb = (V[:, 0] >= bx['x'][0]) & (V[:, 0] <= bx['x'][1]) & (V[:, 1] >= bx['y'][0]) & (V[:, 1] <= bx['y'][1]) & (V[:, 2] >= bx['z'][0]) & (V[:, 2] <= bx['z'][1])
         d, _ = tree.query(V[inb]); far = d > 1.
         fm = inb[F].all(1); Vf = V[F[fm]]; area = .5*np.linalg.norm(np.cross(Vf[:, 1]-Vf[:, 0], Vf[:, 2]-Vf[:, 0]), axis=1); cen = Vf.mean(1); dc, _ = tree.query(cen)

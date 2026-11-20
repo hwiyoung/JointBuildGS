@@ -13,9 +13,9 @@ TITLE = '참값 목표 판(진단용)'
 GTO = Path('/gt'); RS = Path('/art/phase-payloads/phd/main_rescore_v1/PHD-MAIN-RESCORE-v1')
 NAMES = {'visible_wall': ('visible_wall', 'B0 × LoD2 잘 보이는 벽 0–10 m', True, 0., False), 'south_wall': ('south_wall', 'B0 × LoD2 남쪽 끝 벽', False, 4., True),
          'r1_wall1': ('ma_R1_1', 'R1 × LoD2 1번 벽', True, 0., False), 'floor_band': ('floor_band', 'R1 × 항공 LiDAR 바닥 띠', True, 3., False),
-         'annex_under': ('annex_under', 'B0 × 항공 LiDAR 별채', False, 1.5, True), 'floater': ('floater', 'B173 × 항공 LiDAR 가장자리 뜬 면', False, 1., False)}
-STEM = {'visible_wall': 'B0_b10__LoD2', 'south_wall': 'B0_b10__LoD2', 'r1_wall1': 'R1rep_b10__LoD2', 'floor_band': 'R1rep_b10__ALS', 'annex_under': 'B0_b10__ALS', 'floater': 'B173nb_b10__ALS'}
-ARROW = {'visible_wall': '벽', 'south_wall': '벽 뒤', 'r1_wall1': '벽', 'floor_band': '바닥 자리', 'annex_under': '별채 지붕 아래', 'floater': '뜬 면 자리'}
+         'annex_under': ('annex_under', 'B0 × 항공 LiDAR 별채', False, 1.5, True), 'edge_annex': ('edge_annex', 'B0 × LoD2 별채 평지붕 가장자리', True, 0., False), 'floater': ('floater', 'B173 × 항공 LiDAR 가장자리 뜬 면', False, 1., False)}
+STEM = {'visible_wall': 'B0_b10__LoD2', 'south_wall': 'B0_b10__LoD2', 'r1_wall1': 'R1rep_b10__LoD2', 'floor_band': 'R1rep_b10__ALS', 'annex_under': 'B0_b10__ALS', 'edge_annex': 'B0_b10__LoD2', 'floater': 'B173nb_b10__ALS'}
+ARROW = {'visible_wall': '벽', 'south_wall': '벽 뒤', 'r1_wall1': '벽', 'floor_band': '바닥 자리', 'annex_under': '별채 지붕 아래', 'edge_annex': '지붕 가장자리', 'floater': '뜬 면 자리'}
 def ft_mesh(stem): return RS/('addendum3_stage1' if stem.startswith('B173') else 'addendum3_stage2')/'meshes'/f'{stem}__FINALTRAIN_30000/primary.ply'
 def gtt_mesh(stem, v): return GTO/'gtj/meshes'/f'{stem}__gtt_s0_{v}/final.ply'
 

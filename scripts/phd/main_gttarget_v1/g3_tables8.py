@@ -30,7 +30,7 @@ def main():
     for stem in stems:
         Z = loadz(CA/f'causes_{stem}_gtt_s0.npz'); T6 = loadz(TE/'addendum6/ba'/f'causes_{stem}.npz'); g = Z['group']; st = Z['state']; c = Z['cause']
         # ---- 8.1 state ----
-        for arm, gg, ss in [('참값 목표 판', g, st), ('본 방법 판(FINALTRAIN, 덧붙임 6)', T6['group'], T6['state'])]:
+        for arm, gg, ss in [('참값 목표 판(씨앗 0, 30,000회)', g, st), ('본 방법 판(FINALTRAIN 30,000회, 덧붙임 6)', T6['group'], T6['state'])]:
             for gk in (0, 1):
                 m = gg == gk; n = int(m.sum()); cnt = np.bincount(ss[m], minlength=5)
                 state_r.append(dict(title=TITLE, stem=stem, arm=arm, group=GRP[gk], n=n, sample='전부' if gk == 1 else '표본 20,000', **{f'상태{k}_n': int(cnt[k]) for k in range(1, 5)}, **{f'상태{k}_pct': share(cnt[k], n) for k in range(1, 5)}, small=small(n)))
@@ -40,11 +40,11 @@ def main():
             if not (O/'meshes'/f'{stem}__{run}_occl_median/points.npz').exists(): continue
             W = {v: np.load(O/'meshes'/f'{stem}__{run}_{v}/points.npz')['reference__within_tau1'].astype(bool) for v in ['base', 'occl', 'median_depth', 'occl_median']}
             lost = el & tw & ~W['base']; rec = np.where(W['occl'], 0, np.where(W['median_depth'] | W['occl_median'], 1, 2)); cnt = np.bincount(rec[lost], minlength=3); n = int(lost.sum())
-            ra_r.append(dict(title=TITLE, stem=stem, arm=f'참값 목표 판 씨앗 {run[-1]}', lost_n=n, **{f'{RA_KO[i]}_n': int(cnt[i]) for i in range(3)}, **{f'{RA_KO[i]}_pct': share(cnt[i], n) for i in range(3)}, sum_equals_lost=int(cnt.sum()) == n, small=small(n)))
+            ra_r.append(dict(title=TITLE, stem=stem, arm=f'참값 목표 판 씨앗 {run[-1]}(30,000회)', lost_n=n, **{f'{RA_KO[i]}_n': int(cnt[i]) for i in range(3)}, **{f'{RA_KO[i]}_pct': share(cnt[i], n) for i in range(3)}, sum_equals_lost=int(cnt.sum()) == n, small=small(n)))
             for i in range(3): add(pool[key], i, int(cnt[i]))
         m6 = T6['group'] == 1; W6 = loadz(TE/'addendum6/ra'/f'within_{stem}.npz', ['ft__occl_10', 'ft__median_depth', 'ft__occl_10_median']); assert len(W6['ft__occl_10']) == len(T6['group'])
         r6 = np.where(W6['ft__occl_10'][m6], 0, np.where(W6['ft__median_depth'][m6] | W6['ft__occl_10_median'][m6], 1, 2)); cnt = np.bincount(r6, minlength=3); n = int(m6.sum())
-        ra_r.append(dict(title=TITLE, stem=stem, arm='본 방법 판(FINALTRAIN, 덧붙임 6)', lost_n=n, **{f'{RA_KO[i]}_n': int(cnt[i]) for i in range(3)}, **{f'{RA_KO[i]}_pct': share(cnt[i], n) for i in range(3)}, sum_equals_lost=True, small=small(n)))
+        ra_r.append(dict(title=TITLE, stem=stem, arm='본 방법 판(FINALTRAIN 30,000회, 덧붙임 6)', lost_n=n, **{f'{RA_KO[i]}_n': int(cnt[i]) for i in range(3)}, **{f'{RA_KO[i]}_pct': share(cnt[i], n) for i in range(3)}, sum_equals_lost=True, small=small(n)))
         for i in range(3): add(pool['ra_m'], i, int(cnt[i]))
         # selected-point recovery equals the full-row count (check)
         chk.append(dict(title=TITLE, stem=stem, check='표 라: 고른 점의 잃은 점 수 = 전체 행의 잃은 점 수', selected_lost=int((g == 1).sum()), all_rows_lost=int((el & tw & ~np.load(O/'meshes'/f'{stem}__gtt_s0_base/points.npz')['reference__within_tau1'].astype(bool)).sum())))
@@ -93,7 +93,7 @@ def main():
                                      **{f'first_empty_{names[k]}_pct': pct(fe == k) for k in range(1, len(names))}, refilled_pct_of_emptied=pct(rf[fe >= 0] >= 0) if (fe >= 0).any() else None,
                                      **{f'main_{CAm.PATH_KO[p]}_pct': pct(mp == i) for i, p in enumerate(CAm.PATHS)}, main_none_pct=pct(mp < 0), small=small(n)))
         # ---- 8.4 causes ----
-        for arm, gg, cc, key in [('참값 목표 판', g, c, 'ba_g'), ('본 방법 판(FINALTRAIN, 덧붙임 6)', T6['group'], T6['cause'], 'ba_m')]:
+        for arm, gg, cc, key in [('참값 목표 판(씨앗 0, 30,000회)', g, c, 'ba_g'), ('본 방법 판(FINALTRAIN 30,000회, 덧붙임 6)', T6['group'], T6['cause'], 'ba_m')]:
             for gk in (0, 1):
                 m = gg == gk; n = int(m.sum()); cnt = np.bincount(cc[m], minlength=10)
                 if gk == 1:
@@ -107,13 +107,13 @@ def main():
     # ---- pooled rows ----
     if stems:
         lbl = f"합({len(stems)} 장면)"
-        for key, arm in [('ra_m', '본 방법 판(FINALTRAIN, 덧붙임 6)'), ('ra_g', '참값 목표 판 씨앗 0'), ('ra_s1', '참값 목표 판 씨앗 1')]:
+        for key, arm in [('ra_m', '본 방법 판(FINALTRAIN 30,000회, 덧붙임 6)'), ('ra_g', '참값 목표 판 씨앗 0(30,000회)'), ('ra_s1', '참값 목표 판 씨앗 1(30,000회)')]:
             if pool[key]:
                 n = sum(pool[key].values()); ra_r.append(dict(title=TITLE, stem=lbl if key != 'ra_s1' else 'R1 두 장면 합', arm=arm, lost_n=n, **{f'{RA_KO[i]}_n': pool[key].get(i, 0) for i in range(3)}, **{f'{RA_KO[i]}_pct': share(pool[key].get(i, 0), n) for i in range(3)}, sum_equals_lost=True, small=small(n)))
         ra_r.append(dict(title=TITLE, stem='발주문 값(여섯 장면)', arm='본 방법 판', **{f'{k}_pct': v for k, v in ORDER_RA.items()}))
         ng, nm_ = sum(pool['ma_g'].values()), sum(pool['ma_m'].values())
         for nm in pool['ma_g']: ma_r.append(dict(title=TITLE, stem=lbl, line=nm, gtt_n=pool['ma_g'][nm], gtt_pct=share(pool['ma_g'][nm], ng), gtt_occlusion_checked_n=pool['ma_gc'][nm], gtt_occlusion_checked_pct=share(pool['ma_gc'][nm], ng), method_n=pool['ma_m'][nm], method_pct=share(pool['ma_m'][nm], nm_), order_method_pct=ORDER_MA[nm], gtt_not_back=ng, method_not_back=nm_))
-        for key, arm in [('ba_g', '참값 목표 판'), ('ba_m', '본 방법 판(FINALTRAIN, 덧붙임 6)')]:
+        for key, arm in [('ba_g', '참값 목표 판(씨앗 0, 30,000회)'), ('ba_m', '본 방법 판(FINALTRAIN 30,000회, 덧붙임 6)')]:
             n = sum(pool[key].values()); ba_r.append(dict(title=TITLE, stem=lbl, arm=arm, group='잃은 점', n=n, **{f'{CAm.CAUSE[i]}_n': pool[key].get(i, 0) for i in range(10)}, **{f'{CAm.CAUSE[i]}_pct': share(pool[key].get(i, 0), n) for i in range(10)}))
         tot_un = sum(r['unexplained_n'] for r in un_r); tot_nb = sum(r['not_back_lost'] for r in un_r)
         un_r.append(dict(title=TITLE, stem=lbl, not_back_lost=tot_nb, unexplained_n=tot_un, unexplained_pct_of_not_back=share(tot_un, tot_nb), map_needed=tot_un > 100))

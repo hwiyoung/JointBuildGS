@@ -4,7 +4,7 @@
   {
    "title": "참값 목표 판(진단용)",
    "place": "B0 × 항공 LiDAR 별채 상자(덧붙임 4 ANNEX)",
-   "arm": "본 방법 판(FINALTRAIN)",
+   "arm": "본 방법 판(FINALTRAIN 30,000회)",
    "mesh": "payload/main_rescore_v1/PHD-MAIN-RESCORE-v1/addendum3_stage2/meshes/B0_b10__ALS__FINALTRAIN_30000/primary.ply",
    "vertices_in_box": 158553,
    "vertices_farther_1m": 86705,
@@ -16,7 +16,7 @@
   {
    "title": "참값 목표 판(진단용)",
    "place": "B0 × 항공 LiDAR 별채 상자(덧붙임 4 ANNEX)",
-   "arm": "패치 다수결 판(A-1)",
+   "arm": "패치 다수결 판(A-1 30,000회)",
    "mesh": "payload/main_gtjudge_v1/PHD-MAIN-GTJUDGE-v1/meshes/B0_b10__ALS__A1/final.ply",
    "vertices_in_box": 175399,
    "vertices_farther_1m": 79539,
@@ -28,7 +28,7 @@
   {
    "title": "참값 목표 판(진단용)",
    "place": "B0 × 항공 LiDAR 별채 상자(덧붙임 4 ANNEX)",
-   "arm": "참값 목표 판 기준 추출",
+   "arm": "참값 목표 판(씨앗 0, 30,000회) 기준 추출",
    "mesh": "/gt/gtj/meshes/B0_b10__ALS__gtt_s0_base/final.ply",
    "vertices_in_box": 171595,
    "vertices_farther_1m": 64798,
@@ -40,7 +40,7 @@
   {
    "title": "참값 목표 판(진단용)",
    "place": "B0 × 항공 LiDAR 별채 상자(덧붙임 4 ANNEX)",
-   "arm": "참값 목표 판 가림 제외 추출",
+   "arm": "참값 목표 판(씨앗 0, 30,000회) 가림 제외 추출",
    "mesh": "/gt/gtj/meshes/B0_b10__ALS__gtt_s0_occl/final.ply",
    "vertices_in_box": 168726,
    "vertices_farther_1m": 60558,
@@ -52,7 +52,7 @@
   {
    "title": "참값 목표 판(진단용)",
    "place": "B0 × 항공 LiDAR 별채 상자(덧붙임 4 ANNEX)",
-   "arm": "참값 목표 판 중앙 깊이 추출",
+   "arm": "참값 목표 판(씨앗 0, 30,000회) 중앙 깊이 추출",
    "mesh": "/gt/gtj/meshes/B0_b10__ALS__gtt_s0_median_depth/final.ply",
    "vertices_in_box": 190266,
    "vertices_farther_1m": 102100,
@@ -64,7 +64,7 @@
   {
    "title": "참값 목표 판(진단용)",
    "place": "B0 × 항공 LiDAR 별채 상자(덧붙임 4 ANNEX)",
-   "arm": "참값 목표 판 둘 다 추출",
+   "arm": "참값 목표 판(씨앗 0, 30,000회) 둘 다 추출",
    "mesh": "/gt/gtj/meshes/B0_b10__ALS__gtt_s0_occl_median/final.ply",
    "vertices_in_box": 165506,
    "vertices_farther_1m": 94714,

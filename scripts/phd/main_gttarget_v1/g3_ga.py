@@ -19,7 +19,7 @@ from scipy.spatial import cKDTree
 
 A12D = GT/'addendum12/distance_A1'
 VARIANTS = ['base', 'occl', 'median_depth', 'occl_median']
-ARM_KO = {'method': '본 방법 판(FINALTRAIN)', 'A1': '패치 다수결 판(A-1)', 'gtt': '참값 목표 판'}
+ARM_KO = {'method': '본 방법 판(FINALTRAIN 30,000회)', 'A1': '패치 다수결 판(A-1 30,000회)', 'gtt': '참값 목표 판(씨앗 0, 30,000회)'}   # order 1.7: run name and iterations with every value
 G4 = {0: '지킴', 1: '잃음', 2: '고침', 3: '둘 다 틀림'}
 GG = {0: '지킴', 1: '잃음', 2: '목표 밖(지킴)', 3: '목표 밖(틀림)'}
 TE_CELLS = json.loads((R/'configs/phd/main_trainerr_v1/trainerr_v1.json').read_text())['cells']
